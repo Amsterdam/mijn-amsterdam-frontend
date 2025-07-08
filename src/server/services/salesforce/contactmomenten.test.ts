@@ -1,5 +1,5 @@
-import { fetchContactmomenten } from './contactmomenten';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
+import { fetchContactmomenten } from './contactmomenten.ts';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 
 const responseData = {
   results: [

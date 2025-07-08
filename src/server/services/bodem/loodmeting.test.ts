@@ -4,11 +4,11 @@ import {
   fetchLoodMetingDocument,
   fetchLoodMetingNotifications,
   fetchLoodmetingen,
-} from './loodmetingen';
+} from './loodmetingen.ts';
 import document from '../../../../mocks/fixtures/loodmeting-rapport.json';
 import metingen from '../../../../mocks/fixtures/loodmetingen.json';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import { AuthProfileAndToken } from '../../auth/auth-types.ts';
 
 vi.mock('../../routing/route-helpers.ts', async (importOriginal) => {
   return {

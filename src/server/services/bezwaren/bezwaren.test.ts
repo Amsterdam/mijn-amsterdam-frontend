@@ -6,14 +6,14 @@ import {
   fetchBezwaren,
   fetchBezwarenNotifications,
   forTesting,
-} from './bezwaren';
-import { BezwaarSourceStatus } from './types';
+} from './bezwaren.ts';
+import { BezwaarSourceStatus } from './types.ts';
 import bezwarenDocumenten from '../../../../mocks/fixtures/bezwaren-documents.json';
 import bezwarenStatus from '../../../../mocks/fixtures/bezwaren-status.json';
 import bezwarenApiResponse from '../../../../mocks/fixtures/bezwaren.json';
-import { remoteApiHost } from '../../../testing/setup';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
-import { range } from '../../../universal/helpers/utils';
+import { remoteApiHost } from '../../../testing/setup.ts';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import { range } from '../../../universal/helpers/utils.ts';
 
 const endpointBase = '/bezwaren/zgw/v1/zaken';
 

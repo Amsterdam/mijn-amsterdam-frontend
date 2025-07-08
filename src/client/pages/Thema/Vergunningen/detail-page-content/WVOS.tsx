@@ -1,12 +1,12 @@
 import { UnorderedList } from '@amsterdam/design-system-react';
 
-import { commonTransformers, getRows } from './fields-config';
+import { commonTransformers, getRows } from './fields-config.tsx';
 import styles from './fields-config.module.scss';
 import {
   VergunningFrontend,
   WerkzaamhedenEnVervoerOpStraat,
-} from '../../../../../server/services/vergunningen/config-and-types';
-import { Datalist } from '../../../../components/Datalist/Datalist';
+} from '../../../../../server/services/vergunningen/config-and-types.ts';
+import { Datalist } from '../../../../components/Datalist/Datalist.tsx';
 
 export function WVOSContent({
   vergunning,

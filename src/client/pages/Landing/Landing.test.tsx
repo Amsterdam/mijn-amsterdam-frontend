@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { LandingPage } from './Landing';
-import { bffApi } from '../../../testing/utils';
-import { SessionState, sessionAtom } from '../../hooks/api/useSessionApi';
-import MockApp from '../MockApp';
+import { LandingPage } from './Landing.tsx';
+import { bffApi } from '../../../testing/utils.ts';
+import { SessionState, sessionAtom } from '../../hooks/api/useSessionApi.ts';
+import MockApp from '../MockApp.tsx';
 
 const appState = { isAuthenticated: false } as SessionState;
 

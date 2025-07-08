@@ -1,13 +1,13 @@
 import { useParams } from 'react-router';
 
 import styles from './HLIThema.module.scss';
-import { useHliThemaData } from './useHliThemaData';
-import type { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
-import { Datalist, Row } from '../../../components/Datalist/Datalist';
-import DocumentListV2 from '../../../components/DocumentList/DocumentListV2';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { useHliThemaData } from './useHliThemaData.ts';
+import type { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types.ts';
+import { Datalist, Row } from '../../../components/Datalist/Datalist.tsx';
+import DocumentListV2 from '../../../components/DocumentList/DocumentListV2.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 type DetailPageContentProps = {
   hliRegeling: HLIRegelingFrontend;

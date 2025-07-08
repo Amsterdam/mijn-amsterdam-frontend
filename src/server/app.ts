@@ -3,8 +3,6 @@
 
 /* tslint:disable:no-implicit-dependencies */
 /* tslint:disable:no-submodule-imports */
-import dotenv from 'dotenv';
-import dotenvExpand from 'dotenv-expand';
 import {
   IS_AP,
   IS_DEVELOPMENT,
@@ -12,19 +10,8 @@ import {
   IS_PRODUCTION,
 } from '../universal/config/env.ts';
 
-if (IS_DEVELOPMENT) {
-  const ENV_FILE = '.env.local';
-  // This runs local only and -
-  // we can't load the logger before we loader our environment variables.
-  // eslint-disable-next-line no-console
-  console.debug(`Using local env file ${ENV_FILE}`);
-  const envConfig = dotenv.config({ path: ENV_FILE });
-  dotenvExpand.expand(envConfig);
-}
-
-if (process.env.DEBUG_RESPONSE_DATA) {
-    process.env.DEBUG = `source-api-request:request,${process.env.DEBUG ?? ''}`;
-}
+// Important: modules afterwards depend on this.
+import './load-env.ts';
 
 // Note: Keep this line after loading in env files or LOG_LEVEL will be undefined.
 import { logger } from './logging.ts';
@@ -35,21 +22,24 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { NextFunction, Request, Response } from 'express';
 
-import { BFF_PORT, ONE_MINUTE_SECONDS, ONE_SECOND_MS } from './config/app';
-import { BFF_BASE_PATH, BffEndpoints } from './routing/bff-routes';
-import { nocache, requestID } from './routing/route-handlers';
-import { send404 } from './routing/route-helpers';
-import { adminRouter } from './routing/router-admin';
-import { authRouterDevelopment } from './routing/router-development';
-import { oidcRouter } from './routing/router-oidc';
-import { router as protectedRouter } from './routing/router-protected';
-import { legacyRouter, router as publicRouter } from './routing/router-public';
-import { stadspasExternalConsumerRouter } from './routing/router-stadspas-external-consumer';
-import { captureException } from './services/monitoring';
+import { BFF_PORT, ONE_MINUTE_SECONDS, ONE_SECOND_MS } from './config/app.ts';
+import { BFF_BASE_PATH, BffEndpoints } from './routing/bff-routes.ts';
+import { nocache, requestID } from './routing/route-handlers.ts';
+import { send404 } from './routing/route-helpers.ts';
+import { adminRouter } from './routing/router-admin.ts';
+import { authRouterDevelopment } from './routing/router-development.ts';
+import { oidcRouter } from './routing/router-oidc.ts';
+import { router as protectedRouter } from './routing/router-protected.ts';
+import {
+  legacyRouter,
+  router as publicRouter,
+} from './routing/router-public.ts';
+import { stadspasExternalConsumerRouter } from './routing/router-stadspas-external-consumer.ts';
+import { captureException } from './services/monitoring.ts';
 
-import { getFromEnv } from './helpers/env';
-import { notificationsExternalConsumerRouter } from './routing/router-notifications-external-consumer';
-import { FeatureToggle } from '../universal/config/feature-toggles';
+import { getFromEnv } from './helpers/env.ts';
+import { notificationsExternalConsumerRouter } from './routing/router-notifications-external-consumer.ts';
+import { FeatureToggle } from '../universal/config/feature-toggles.ts';
 import process from 'node:process';
 
 const app = express();
@@ -59,7 +49,7 @@ app.set('trust proxy', true);
 // Security, disable express header.
 app.disable('x-powered-by');
 
-const viewDir = __dirname.split('/').slice(-2, -1);
+const viewDir = import.meta.dirname.split('/').slice(-2, -1);
 
 // Set-up view engine voor SSR
 app.set('view engine', 'pug');
@@ -197,10 +187,8 @@ async function startServerBFF() {
   server.headersTimeout = HEADER_TIMEOUT_SECONDS * ONE_SECOND_MS; // This should be bigger than `keepAliveTimeout + your server's expected response time`
 }
 
-if (
-  require.main?.filename.endsWith('bffserver.ts') ||
-  require.main?.filename.endsWith('app.js')
-) {
+const entryPoint = process.argv[1];
+if (entryPoint.endsWith('bffserver.ts') || entryPoint.endsWith('app.js')) {
   startServerBFF();
 }
 

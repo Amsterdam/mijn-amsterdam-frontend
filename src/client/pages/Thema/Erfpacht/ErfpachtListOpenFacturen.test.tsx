@@ -2,14 +2,14 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
-import { routeConfig } from './Erfpacht-thema-config';
-import { ErfpachtListOpenFacturen } from './ErfpachtListOpenFacturen';
+import { routeConfig } from './Erfpacht-thema-config.ts';
+import { ErfpachtListOpenFacturen } from './ErfpachtListOpenFacturen.tsx';
 import ERFPACHT_DOSSIERS from '../../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
-import { transformDossierResponse } from '../../../../server/services/erfpacht/erfpacht';
-import type { ErfpachtDossiersResponse } from '../../../../server/services/erfpacht/erfpacht-types';
-import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
-import MockApp from '../../MockApp';
+import { transformDossierResponse } from '../../../../server/services/erfpacht/erfpacht.ts';
+import type { ErfpachtDossiersResponse } from '../../../../server/services/erfpacht/erfpacht-types.ts';
+import { AppState } from '../../../../universal/types/App.types.ts';
+import { appStateAtom } from '../../../hooks/useAppState.ts';
+import MockApp from '../../MockApp.tsx';
 
 describe('<ErfpachtOpenFacturen />', () => {
   const routeEntry = generatePath(routeConfig.listPageOpenFacturen.path);

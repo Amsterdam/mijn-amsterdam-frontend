@@ -6,26 +6,26 @@ import { BrowserRouter, useLocation, useNavigate } from 'react-router';
 import { RecoilRoot } from 'recoil';
 
 import styles from './App.module.scss';
-import { PrivateRoutes, PublicRoutes } from './App.routes';
-import { AutoLogoutDialog } from './components/AutoLogoutDialog/AutoLogoutDialog';
-import { ErrorMessages } from './components/ErrorMessages/ErrorMessages';
-import { MainFooter } from './components/MainFooter/MainFooter';
-import { MainHeader } from './components/MainHeader/MainHeader';
-import { routeConfig as buurtRouteConfig } from './components/MyArea/MyArea-thema-config';
-import { loginUrlByAuthMethod } from './config/api';
-import { useMonitoring } from './helpers/monitoring';
-import { useAnalytics } from './hooks/analytics.hook';
-import { useSessionApi } from './hooks/api/useSessionApi';
-import { useAppStateRemote } from './hooks/useAppState';
+import { PrivateRoutes, PublicRoutes } from './App.routes.tsx';
+import { AutoLogoutDialog } from './components/AutoLogoutDialog/AutoLogoutDialog.tsx';
+import { ErrorMessages } from './components/ErrorMessages/ErrorMessages.tsx';
+import { MainFooter } from './components/MainFooter/MainFooter.tsx';
+import { MainHeader } from './components/MainHeader/MainHeader.tsx';
+import { routeConfig as buurtRouteConfig } from './components/MyArea/MyArea-thema-config.ts';
+import { loginUrlByAuthMethod } from './config/api.ts';
+import { useMonitoring } from './helpers/monitoring.ts';
+import { useAnalytics } from './hooks/analytics.hook.ts';
+import { useSessionApi } from './hooks/api/useSessionApi.ts';
+import { useAppStateRemote } from './hooks/useAppState.ts';
 import {
   clearDeeplinkEntry,
   useDeeplinkRedirect,
   useSetDeeplinkEntry,
-} from './hooks/useDeeplink.hook';
-import { useProfileTypeValue } from './hooks/useProfileType';
-import { useScrollToTop } from './hooks/useScrollToTop';
-import { useTrackThemas } from './hooks/useTrackThemas.hook';
-import { useUsabilla } from './hooks/useUsabilla';
+} from './hooks/useDeeplink.hook.ts';
+import { useProfileTypeValue } from './hooks/useProfileType.ts';
+import { useScrollToTop } from './hooks/useScrollToTop.ts';
+import { useTrackThemas } from './hooks/useTrackThemas.hook.ts';
+import { useUsabilla } from './hooks/useUsabilla.ts';
 
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);

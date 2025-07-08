@@ -1,12 +1,12 @@
-import { isVergunning } from './helper';
-import { useVarenDetailPage } from './useVarenDetailPage.hook';
-import { VarenDetailPageContentExploitatie } from './VarenDetailExploitatie';
-import { VarenDetailPageContentExploitatieHernoemen } from './VarenDetailExploitatieHernoemen';
-import { VarenDetailPageContentExploitatieOverdragen } from './VarenDetailExploitatieOverdragen';
-import { VarenDetailPageContentExploitatieVerbouwen } from './VarenDetailExploitatieVerbouwen';
-import { VarenDetailPageContentExploitatieVervangen } from './VarenDetailExploitatieVervangen';
-import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { isVergunning } from './helper.ts';
+import { useVarenDetailPage } from './useVarenDetailPage.hook.ts';
+import { VarenDetailPageContentExploitatie } from './VarenDetailExploitatie.tsx';
+import { VarenDetailPageContentExploitatieHernoemen } from './VarenDetailExploitatieHernoemen.tsx';
+import { VarenDetailPageContentExploitatieOverdragen } from './VarenDetailExploitatieOverdragen.tsx';
+import { VarenDetailPageContentExploitatieVerbouwen } from './VarenDetailExploitatieVerbouwen.tsx';
+import { VarenDetailPageContentExploitatieVervangen } from './VarenDetailExploitatieVervangen.tsx';
+import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function VarenDetail() {
   const {

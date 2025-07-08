@@ -2,13 +2,13 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
-import { routeConfig } from './Erfpacht-thema-config';
-import { ErfpachtThema } from './ErfpachtThema';
+import { routeConfig } from './Erfpacht-thema-config.ts';
+import { ErfpachtThema } from './ErfpachtThema.tsx';
 import ERFPACHT_DOSSIERS from '../../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
-import { transformDossierResponse } from '../../../../server/services/erfpacht/erfpacht';
-import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
-import MockApp from '../../MockApp';
+import { transformDossierResponse } from '../../../../server/services/erfpacht/erfpacht.ts';
+import { AppState } from '../../../../universal/types/App.types.ts';
+import { appStateAtom } from '../../../hooks/useAppState.ts';
+import MockApp from '../../MockApp.tsx';
 
 describe('<Erfpacht />', () => {
   const routeEntry = generatePath(routeConfig.themaPage.path);

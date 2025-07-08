@@ -2,11 +2,11 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
-import { routeConfig } from './Klachten-thema-config';
-import { KlachtenDetail } from './KlachtenDetail';
-import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
-import MockApp from '../../MockApp';
+import { routeConfig } from './Klachten-thema-config.ts';
+import { KlachtenDetail } from './KlachtenDetail.tsx';
+import { AppState } from '../../../../universal/types/App.types.ts';
+import { appStateAtom } from '../../../hooks/useAppState.ts';
+import MockApp from '../../MockApp.tsx';
 
 const testState = {
   KLACHTEN: {

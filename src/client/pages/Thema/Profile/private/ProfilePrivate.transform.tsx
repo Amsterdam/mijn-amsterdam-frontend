@@ -6,27 +6,27 @@ import type {
   Persoon,
   Adres,
   VerbintenisHistorisch,
-} from '../../../../../server/services/profile/brp.types';
-import { FeatureToggle } from '../../../../../universal/config/feature-toggles';
+} from '../../../../../server/services/profile/brp.types.ts';
+import { FeatureToggle } from '../../../../../universal/config/feature-toggles.ts';
 import {
   formatBirthdate,
   getFullAddress,
   hasDutchNationality,
   isMokum,
-} from '../../../../../universal/helpers/brp';
-import { defaultDateFormat } from '../../../../../universal/helpers/date';
-import type { AppState } from '../../../../../universal/types/App.types';
-import LoadingContent from '../../../../components/LoadingContent/LoadingContent';
-import { featureToggle, profileLinks } from '../Profile-thema-config';
+} from '../../../../../universal/helpers/brp.ts';
+import { defaultDateFormat } from '../../../../../universal/helpers/date.ts';
+import type { AppState } from '../../../../../universal/types/App.types.ts';
+import LoadingContent from '../../../../components/LoadingContent/LoadingContent.tsx';
+import { featureToggle, profileLinks } from '../Profile-thema-config.ts';
 import {
   ProfileLabels,
   formatProfileSectionData,
-} from '../profileDataFormatter';
+} from '../profileDataFormatter.ts';
 import {
   ActionLink,
   PanelConfig,
   ProfileSectionData,
-} from '../ProfileSectionPanel';
+} from '../ProfileSectionPanel.tsx';
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading
  * into the Profile page data.

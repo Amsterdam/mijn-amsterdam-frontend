@@ -3,16 +3,16 @@ import { Alert, Link, Paragraph } from '@amsterdam/design-system-react';
 import {
   BB_VERGUNNING_DISCLAIMER,
   useToeristischeVerhuurThemaData,
-} from './useToeristischeVerhuur.hook';
+} from './useToeristischeVerhuur.hook.ts';
 import {
   LVVRegistratie,
   ToeristischeVerhuurVergunning,
-} from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
-import { entries } from '../../../../universal/helpers/utils';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaPagina from '../../../components/Thema/ThemaPagina';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+} from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types.ts';
+import { entries } from '../../../../universal/helpers/utils.ts';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
+import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function ToeristischeVerhuurThema() {
   const {

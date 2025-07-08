@@ -1,19 +1,19 @@
 import { AxiosResponse } from 'axios';
 import { Response, Router } from 'express';
 
-import { decryptEncryptedRouteParamAndValidateSessionID } from './decrypt-route-param';
+import { decryptEncryptedRouteParamAndValidateSessionID } from './decrypt-route-param.ts';
 import {
   ApiErrorResponse,
   ApiPostponeResponse,
   ApiSuccessResponse,
-} from '../../../universal/helpers/api';
-import { getAuth } from '../../auth/auth-helpers';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+} from '../../../universal/helpers/api.ts';
+import { getAuth } from '../../auth/auth-helpers.ts';
+import { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import {
   RequestWithRouteAndQueryParams,
   sendResponse,
   sendUnauthorized,
-} from '../../routing/route-helpers';
+} from '../../routing/route-helpers.ts';
 import { Buffer } from "node:buffer";
 
 export const DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE = 'application/pdf';

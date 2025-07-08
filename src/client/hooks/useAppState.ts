@@ -2,21 +2,21 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { SetterOrUpdater, atom, useRecoilState, useRecoilValue } from 'recoil';
 
-import { streamEndpointQueryParamKeys } from '../../universal/config/app';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
+import { streamEndpointQueryParamKeys } from '../../universal/config/app.ts';
+import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
 import {
   ApiResponse_DEPRECATED,
   apiPristineResult,
-} from '../../universal/helpers/api';
-import { AppState } from '../../universal/types/App.types';
-import { PRISTINE_APPSTATE, createAllErrorState } from '../AppState';
-import { BFFApiUrls } from '../config/api';
-import { transformSourceData } from '../data-transform/appState';
-import { captureMessage } from '../helpers/monitoring';
-import { useDataApi } from './api/useDataApi';
-import { useProfileTypeValue } from './useProfileType';
-import { SSE_CLOSE_MESSAGE, SSE_ERROR_MESSAGE, useSSE } from './useSSE';
-import { entries } from '../../universal/helpers/utils';
+} from '../../universal/helpers/api.ts';
+import { AppState } from '../../universal/types/App.types.ts';
+import { PRISTINE_APPSTATE, createAllErrorState } from '../AppState.ts';
+import { BFFApiUrls } from '../config/api.ts';
+import { transformSourceData } from '../data-transform/appState.tsx';
+import { captureMessage } from '../helpers/monitoring.ts';
+import { useDataApi } from './api/useDataApi.ts';
+import { useProfileTypeValue } from './useProfileType.ts';
+import { SSE_CLOSE_MESSAGE, SSE_ERROR_MESSAGE, useSSE } from './useSSE.ts';
+import { entries } from '../../universal/helpers/utils.ts';
 
 const fallbackServiceRequestOptions = {
   postpone: true,

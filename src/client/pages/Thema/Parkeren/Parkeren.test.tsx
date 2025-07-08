@@ -3,12 +3,12 @@ import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
 
-import { routeConfig, themaTitle } from './Parkeren-thema-config';
-import { ParkerenThema } from './ParkerenThema';
-import { forTesting } from './ParkerenThema';
-import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
-import MockApp from '../../MockApp';
+import { routeConfig, themaTitle } from './Parkeren-thema-config.ts';
+import { ParkerenThema } from './ParkerenThema.tsx';
+import { forTesting } from './ParkerenThema.tsx';
+import { AppState } from '../../../../universal/types/App.types.ts';
+import { appStateAtom } from '../../../hooks/useAppState.ts';
+import MockApp from '../../MockApp.tsx';
 
 const linkButtonTxt = 'Ga naar Mijn Parkeren';
 const EXTERNAL_PARKEREN_URL = 'https://parkeervergunningen.amsterdam.nl/';

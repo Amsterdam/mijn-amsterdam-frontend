@@ -1,5 +1,5 @@
-import { ErfpachtDatalistProps } from './DatalistGeneral';
-import { TableV2 } from '../../../../components/Table/TableV2';
+import { ErfpachtDatalistProps } from './DatalistGeneral.tsx';
+import { TableV2 } from '../../../../components/Table/TableV2.tsx';
 
 export function DataTableBijzondereBepalingen({
   dossier,

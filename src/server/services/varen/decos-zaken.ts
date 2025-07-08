@@ -6,10 +6,10 @@ import type {
   VarenVergunningExploitatieWijzigingVerbouwingType,
   VarenVergunningExploitatieWijzigingVergunningshouderType,
   VarenVergunningExploitatieWijzigingVervangingType,
-} from './config-and-types';
-import { SELECT_FIELDS_TRANSFORM_BASE } from '../decos/decos-field-transformers';
-import { transformFieldValuePairs } from '../decos/decos-service';
-import { DecosZaakTransformer } from '../decos/decos-types';
+} from './config-and-types.ts';
+import { SELECT_FIELDS_TRANSFORM_BASE } from '../decos/decos-field-transformers.ts';
+import { transformFieldValuePairs } from '../decos/decos-service.ts';
+import { DecosZaakTransformer } from '../decos/decos-types.ts';
 
 const vesselName = { text18: 'vesselName' } as const;
 const vesselLengths = {

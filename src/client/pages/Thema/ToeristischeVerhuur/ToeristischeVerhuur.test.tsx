@@ -4,15 +4,15 @@ import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
-import { routeConfig } from './ToeristischeVerhuur-thema-config';
-import { ToeristischeVerhuurThema } from './ToeristischeVerhuurThema';
-import type { VakantieverhuurVergunningFrontend } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
-import type { BBVergunningFrontend } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
-import { jsonCopy } from '../../../../universal/helpers/utils';
-import { AppState } from '../../../../universal/types/App.types';
-import { expectHeaders, getTable } from '../../../helpers/test-utils';
-import { appStateAtom } from '../../../hooks/useAppState';
-import MockApp from '../../MockApp';
+import { routeConfig } from './ToeristischeVerhuur-thema-config.ts';
+import { ToeristischeVerhuurThema } from './ToeristischeVerhuurThema.tsx';
+import type { VakantieverhuurVergunningFrontend } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types.ts';
+import type { BBVergunningFrontend } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types.ts';
+import { jsonCopy } from '../../../../universal/helpers/utils.ts';
+import { AppState } from '../../../../universal/types/App.types.ts';
+import { expectHeaders, getTable } from '../../../helpers/test-utils.ts';
+import { appStateAtom } from '../../../hooks/useAppState.ts';
+import MockApp from '../../MockApp.tsx';
 
 function getVergunningen<
   T = VakantieverhuurVergunningFrontend | BBVergunningFrontend,

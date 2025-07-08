@@ -2,7 +2,7 @@ import {
   DecosZaakBase,
   DecosZaakSource,
   DecosZaakTransformer,
-} from './decos-types';
+} from './decos-types.ts';
 import {
   isWaitingForPaymentConfirmation,
   hasInvalidDecision,
@@ -12,8 +12,8 @@ import {
   getDecosZaakTypeFromSource,
   transformBoolean,
   isExpired,
-} from './decos-helpers';
-import { decosCaseToZaakTransformers } from '../vergunningen/decos-zaken';
+} from './decos-helpers.ts';
+import { decosCaseToZaakTransformers } from '../vergunningen/decos-zaken.ts';
 
 describe('decos/helpers', () => {
   describe('isWaitingForPaymentConfirmation', () => {

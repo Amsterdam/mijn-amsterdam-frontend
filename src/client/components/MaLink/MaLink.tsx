@@ -11,7 +11,7 @@ import classNames from 'classnames';
 import { useLocation, useNavigate } from 'react-router';
 
 import styles from './MaLink.module.scss';
-import { usePageTypeSettingValue } from '../../hooks/useThemaMenuItems';
+import { usePageTypeSettingValue } from '../../hooks/useThemaMenuItems.ts';
 
 type MaClassNameVariant =
   | 'fatNoUnderline'

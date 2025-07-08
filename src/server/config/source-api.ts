@@ -1,4 +1,6 @@
-import https from 'https';
+import { Buffer } from 'node:buffer';
+import https from 'node:https';
+import process from 'node:process';
 
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
@@ -7,17 +9,15 @@ import {
   ONE_HOUR_MS,
   ONE_MINUTE_MS,
   ONE_SECOND_MS,
-} from './app';
-import { featureToggle as featureToggleBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config';
-import { featureToggle as featureToggleErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
-import { featureToggle as featureToggleHLI } from '../../client/pages/Thema/HLI/HLI-thema-config';
-import { featureToggle as featureToggleJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
-import { PUBLIC_API_URLS } from '../../universal/config/url';
-import { getCert } from '../helpers/cert';
-import { getFromEnv } from '../helpers/env';
-import { Buffer } from "node:buffer";
-import process from "node:process";
+} from './app.ts';
+import { featureToggle as featureToggleBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config.ts';
+import { featureToggle as featureToggleErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
+import { featureToggle as featureToggleHLI } from '../../client/pages/Thema/HLI/HLI-thema-config.ts';
+import { featureToggle as featureToggleJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config.ts';
+import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
+import { PUBLIC_API_URLS } from '../../universal/config/url.ts';
+import { getCert } from '../helpers/cert.ts';
+import { getFromEnv } from '../helpers/env.ts';
 
 const RESET_AD_HOC_DEPENDENCY_REQUEST_CACHE_TTL_TIMEOUT_MS = ONE_HOUR_MS;
 

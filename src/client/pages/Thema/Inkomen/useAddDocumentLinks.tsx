@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
-import { WpiIncomeSpecificationTransformed } from '../../../../server/services/wpi/wpi-types';
-import { DocumentLink } from '../../../components/DocumentList/DocumentLink';
+import { WpiIncomeSpecificationTransformed } from '../../../../server/services/wpi/wpi-types.ts';
+import { DocumentLink } from '../../../components/DocumentList/DocumentLink.tsx';
 
 export function useAddDocumentLinkComponents(
   specificaties: WpiIncomeSpecificationTransformed[]

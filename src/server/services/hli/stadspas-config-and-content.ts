@@ -1,13 +1,13 @@
 import { generatePath } from 'react-router';
 
-import { StadspasFrontend } from './stadspas-types';
+import { StadspasFrontend } from './stadspas-types.ts';
 import {
   routeConfig,
   themaId,
   themaTitle,
-} from '../../../client/pages/Thema/HLI/HLI-thema-config';
-import { dateFormat, defaultDateFormat } from '../../../universal/helpers/date';
-import { MyNotification } from '../../../universal/types/App.types';
+} from '../../../client/pages/Thema/HLI/HLI-thema-config.ts';
+import { dateFormat, defaultDateFormat } from '../../../universal/helpers/date.ts';
+import { MyNotification } from '../../../universal/types/App.types.ts';
 import process from "node:process";
 
 // The 31st of July is the default yearly expiry date for stadspassen.

@@ -1,4 +1,4 @@
-import { VarenZakenFrontend } from '../../../../server/services/varen/config-and-types';
+import { VarenZakenFrontend } from '../../../../server/services/varen/config-and-types.ts';
 
 export const CONTENT_EMPTY = '-';
 

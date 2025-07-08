@@ -3,10 +3,10 @@ import sanitizeHtml, { IOptions } from 'sanitize-html';
 import {
   ApiResponse_DEPRECATED,
   type ApiResponse,
-} from '../../../universal/helpers/api';
-import { ONE_HOUR_MS } from '../../config/app';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
+} from '../../../universal/helpers/api.ts';
+import { ONE_HOUR_MS } from '../../config/app.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
 
 const TAGS_ALLOWED = [
   'a',

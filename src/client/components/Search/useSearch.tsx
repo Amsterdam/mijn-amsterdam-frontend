@@ -30,17 +30,17 @@ import styles from './Search.module.scss';
 import {
   ApiResponse_DEPRECATED,
   isError,
-} from '../../../universal/helpers/api';
-import { pick, uniqueArray } from '../../../universal/helpers/utils';
-import { AppState, AppStateKey } from '../../../universal/types/App.types';
-import { BFFApiUrls } from '../../config/api';
-import { addAxiosResponseTransform } from '../../hooks/api/useDataApi';
-import { useSmallScreen } from '../../hooks/media.hook';
-import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
-import { DashboardRoute } from '../../pages/Dashboard/Dashboard-routes';
-import { SearchPageRoute } from '../../pages/Search/Search-routes';
-import { routeConfig as buurtRouteConfig } from '../MyArea/MyArea-thema-config';
+} from '../../../universal/helpers/api.ts';
+import { pick, uniqueArray } from '../../../universal/helpers/utils.ts';
+import { AppState, AppStateKey } from '../../../universal/types/App.types.ts';
+import { BFFApiUrls } from '../../config/api.ts';
+import { addAxiosResponseTransform } from '../../hooks/api/useDataApi.ts';
+import { useSmallScreen } from '../../hooks/media.hook.ts';
+import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState.ts';
+import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
+import { DashboardRoute } from '../../pages/Dashboard/Dashboard-routes.ts';
+import { SearchPageRoute } from '../../pages/Search/Search-routes.ts';
+import { routeConfig as buurtRouteConfig } from '../MyArea/MyArea-thema-config.ts';
 
 export function generateSearchIndexPageEntry(
   item: ApiBaseItem,

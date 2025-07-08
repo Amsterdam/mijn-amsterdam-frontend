@@ -2,10 +2,10 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
-import { routeConfig } from './Bezwaren-thema-config';
-import { BezwarenThema } from './BezwarenThema';
-import { appStateAtom } from '../../../hooks/useAppState';
-import MockApp from '../../MockApp';
+import { routeConfig } from './Bezwaren-thema-config.ts';
+import { BezwarenThema } from './BezwarenThema.tsx';
+import { appStateAtom } from '../../../hooks/useAppState.ts';
+import MockApp from '../../MockApp.tsx';
 
 const testState = {
   BEZWAREN: {

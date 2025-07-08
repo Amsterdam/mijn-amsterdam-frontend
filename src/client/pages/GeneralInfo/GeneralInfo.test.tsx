@@ -2,11 +2,11 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
-import { appStateAtom } from '../../hooks/useAppState';
-import MockApp from '../MockApp';
-import { GeneralInfo } from './GeneralInfo';
-import { GeneralInfoRoute } from './GeneralInfo-routes';
-import type { AppState } from '../../../universal/types/App.types';
+import { appStateAtom } from '../../hooks/useAppState.ts';
+import MockApp from '../MockApp.tsx';
+import { GeneralInfo } from './GeneralInfo.tsx';
+import { GeneralInfoRoute } from './GeneralInfo-routes.ts';
+import type { AppState } from '../../../universal/types/App.types.ts';
 
 const testState = {
   CMS_CONTENT: {

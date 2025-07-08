@@ -5,10 +5,10 @@ import { ChevronLeftIcon } from '@amsterdam/design-system-react-icons';
 import { useLocation, useNavigate } from 'react-router';
 
 import styles from './PageHeadingV2.module.scss';
-import { LinkProps } from '../../../universal/types/App.types';
-import { dashboardMenuItem } from '../../pages/Dashboard/Dashboard-routes';
-import { MaBreadcrumbLink, MaRouterLink } from '../MaLink/MaLink';
-import { PageContentCell } from '../Page/Page';
+import { LinkProps } from '../../../universal/types/App.types.ts';
+import { dashboardMenuItem } from '../../pages/Dashboard/Dashboard-routes.ts';
+import { MaBreadcrumbLink, MaRouterLink } from '../MaLink/MaLink.tsx';
+import { PageContentCell } from '../Page/Page.tsx';
 
 export type PageHeadingProps = {
   children: ReactNode;

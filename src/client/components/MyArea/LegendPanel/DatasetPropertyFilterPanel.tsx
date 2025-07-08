@@ -8,16 +8,16 @@ import {
   DatasetProperty,
   DatasetPropertyName,
   DatasetPropertyValueWithCount,
-} from '../../../../universal/config/myarea-datasets';
-import { sortAlpha } from '../../../../universal/helpers/utils';
-import { getIcon, getIconChildIdFromValue } from '../dataset-icons';
+} from '../../../../universal/config/myarea-datasets.ts';
+import { sortAlpha } from '../../../../universal/helpers/utils.ts';
+import { getIcon, getIconChildIdFromValue } from '../dataset-icons.tsx';
 import {
   DatasetControlCheckbox,
   filterItemCheckboxState,
-} from './DatasetControlCheckbox';
-import { DatasetControlPanelProps } from './DatasetControlPanel';
+} from './DatasetControlCheckbox.tsx';
+import { DatasetControlPanelProps } from './DatasetControlPanel.tsx';
 import styles from './PanelComponent.module.scss';
-import { PanelList, PanelListItem } from './PanelList';
+import { PanelList, PanelListItem } from './PanelList.tsx';
 
 interface DatasetPropertyFilterPanelProps {
   datasetId: DatasetId;

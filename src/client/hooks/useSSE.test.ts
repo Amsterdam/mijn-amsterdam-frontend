@@ -1,9 +1,9 @@
 import { act, renderHook } from '@testing-library/react';
 import { describe, expect, vi, it } from 'vitest';
 
-import * as sseHook from './useSSE';
-import { MAX_CONNECTION_RETRY_COUNT, SSE_ERROR_MESSAGE } from './useSSE';
-import { newEventSourceMock } from '../../testing/EventSourceMock';
+import * as sseHook from './useSSE.ts';
+import { MAX_CONNECTION_RETRY_COUNT, SSE_ERROR_MESSAGE } from './useSSE.ts';
+import { newEventSourceMock } from '../../testing/EventSourceMock.ts';
 
 const sseMockResponse = JSON.stringify({
   FOO: { content: { hello: 'world' } },

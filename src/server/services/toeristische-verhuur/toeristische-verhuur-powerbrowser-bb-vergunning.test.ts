@@ -8,7 +8,7 @@ import {
   fetchBBDocumentsList,
   fetchBBDocument,
   forTesting,
-} from './toeristische-verhuur-powerbrowser-bb-vergunning';
+} from './toeristische-verhuur-powerbrowser-bb-vergunning.ts';
 import {
   BBVergunningFrontend,
   PBDocumentFields,
@@ -16,10 +16,10 @@ import {
   PBZaakRecord,
   PowerBrowserStatusResponse,
   SearchRequestResponse,
-} from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
-import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
-import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
+} from './toeristische-verhuur-powerbrowser-bb-vergunning-types.ts';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types.ts';
+import * as encryptDecrypt from '../../helpers/encrypt-decrypt.ts';
 import { Buffer } from "node:buffer";
 
 describe('B&B Vergunningen service', () => {

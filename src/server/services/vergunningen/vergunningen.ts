@@ -1,16 +1,16 @@
 import createDebugger from 'debug';
 
-import { DecosVergunning, VergunningFrontend } from './config-and-types';
-import { decosZaakTransformers } from './decos-zaken';
-import { getStatusSteps as getStatusStepsDefault } from './vergunningen-status-steps';
-import { routeConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config';
-import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
-import type { StatusLineItem } from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+import { DecosVergunning, VergunningFrontend } from './config-and-types.ts';
+import { decosZaakTransformers } from './decos-zaken.ts';
+import { getStatusSteps as getStatusStepsDefault } from './vergunningen-status-steps.ts';
+import { routeConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
+import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api.ts';
+import type { StatusLineItem } from '../../../universal/types/App.types.ts';
+import { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import {
   fetchDecosZaken,
   transformDecosZaakFrontend,
-} from '../decos/decos-service';
+} from '../decos/decos-service.ts';
 
 const debug = createDebugger('vergunningen');
 

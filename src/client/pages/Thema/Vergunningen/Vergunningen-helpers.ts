@@ -1,9 +1,9 @@
 import type {
   WithDateEnd,
   WithTimeRange,
-} from '../../../../server/services/decos/decos-types';
-import { dateTimeFormatYear } from '../../../../universal/helpers/date';
-import type { ZaakDetail } from '../../../../universal/types/App.types';
+} from '../../../../server/services/decos/decos-types.ts';
+import { dateTimeFormatYear } from '../../../../universal/helpers/date.ts';
+import type { ZaakDetail } from '../../../../universal/types/App.types.ts';
 
 export type VergunningAanvraag = ZaakDetail & {
   processed: boolean;

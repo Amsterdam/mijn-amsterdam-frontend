@@ -1,13 +1,13 @@
 import { Alert, Paragraph } from '@amsterdam/design-system-react';
 
-import { useVergunningenThemaData } from './useVergunningenThemaData.hook';
-import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
-import { MaRouterLink } from '../../../components/MaLink/MaLink';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaPagina from '../../../components/Thema/ThemaPagina';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
-import { routeConfig as routeConfigParkeren } from '../Parkeren/Parkeren-thema-config';
+import { useVergunningenThemaData } from './useVergunningenThemaData.hook.ts';
+import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types.ts';
+import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
+import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
+import { routeConfig as routeConfigParkeren } from '../Parkeren/Parkeren-thema-config.ts';
 
 export function VergunningenThema() {
   const {

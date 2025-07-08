@@ -13,13 +13,13 @@ import { useDebouncedCallback } from 'use-debounce';
 
 import { SearchEntry, displayPath } from './search-config';
 import styles from './Search.module.scss';
-import { useSearchIndex, useSearchResults, useSearchTerm } from './useSearch';
-import { useSmallScreen } from '../../hooks/media.hook';
-import { useAppStateReady } from '../../hooks/useAppState';
-import { useKeyDown } from '../../hooks/useKey';
-import { SearchPageRoute } from '../../pages/Search/Search-routes';
-import { MaButtonLink, MaLink, MaRouterLink } from '../MaLink/MaLink';
-import { Spinner } from '../Spinner/Spinner';
+import { useSearchIndex, useSearchResults, useSearchTerm } from './useSearch.tsx';
+import { useSmallScreen } from '../../hooks/media.hook.ts';
+import { useAppStateReady } from '../../hooks/useAppState.ts';
+import { useKeyDown } from '../../hooks/useKey.ts';
+import { SearchPageRoute } from '../../pages/Search/Search-routes.ts';
+import { MaButtonLink, MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
+import { Spinner } from '../Spinner/Spinner.tsx';
 
 interface ResultSetProps {
   results: SearchEntry[];

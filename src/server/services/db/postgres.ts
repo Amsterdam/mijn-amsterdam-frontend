@@ -1,7 +1,7 @@
 import { PoolConfig, Pool } from 'pg';
 
-import { IS_DEVELOPMENT } from '../../../universal/config/env';
-import { captureException } from '../monitoring';
+import { IS_DEVELOPMENT } from '../../../universal/config/env.ts';
+import { captureException } from '../monitoring.ts';
 import process from "node:process";
 
 // Connection params are taken from env variables.

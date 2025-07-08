@@ -1,5 +1,5 @@
-import { defaultDateFormat, formatMonthAndYear, formatYear } from './date';
-import type { Persoon } from '../../server/services/profile/brp.types';
+import { defaultDateFormat, formatMonthAndYear, formatYear } from './date.ts';
+import type { Persoon } from '../../server/services/profile/brp.types.ts';
 
 export function getFullName(
   persoon: Pick<

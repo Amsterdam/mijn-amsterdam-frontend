@@ -6,63 +6,63 @@ import styles from './Search.module.scss';
 import {
   AfisThemaResponse,
   AfisFactuur,
-} from '../../../server/services/afis/afis-types';
-import { AVGRequestFrontend } from '../../../server/services/avg/types';
-import { BezwaarFrontend } from '../../../server/services/bezwaren/types';
-import { LoodMetingFrontend } from '../../../server/services/bodem/types';
+} from '../../../server/services/afis/afis-types.ts';
+import { AVGRequestFrontend } from '../../../server/services/avg/types.ts';
+import { BezwaarFrontend } from '../../../server/services/bezwaren/types.ts';
+import { LoodMetingFrontend } from '../../../server/services/bodem/types.ts';
 import type {
   ErfpachtDossiersResponse,
   ErfpachtDossierFrontend,
-} from '../../../server/services/erfpacht/erfpacht-types';
-import { HLIresponseData } from '../../../server/services/hli/hli-regelingen-types';
-import type { HorecaVergunningFrontend } from '../../../server/services/horeca/decos-zaken';
-import type { KlachtFrontend } from '../../../server/services/klachten/types';
+} from '../../../server/services/erfpacht/erfpacht-types.ts';
+import { HLIresponseData } from '../../../server/services/hli/hli-regelingen-types.ts';
+import type { HorecaVergunningFrontend } from '../../../server/services/horeca/decos-zaken.ts';
+import type { KlachtFrontend } from '../../../server/services/klachten/types.ts';
 import type {
   Krefia,
   KrefiaDeepLink,
-} from '../../../server/services/krefia/krefia.types';
-import type { ParkeerVergunningFrontend } from '../../../server/services/parkeren/config-and-types';
+} from '../../../server/services/krefia/krefia.types.ts';
+import type { ParkeerVergunningFrontend } from '../../../server/services/parkeren/config-and-types.ts';
 import type {
   BRPData,
   IdentiteitsbewijsFrontend,
-} from '../../../server/services/profile/brp.types';
+} from '../../../server/services/profile/brp.types.ts';
 import {
   LVVRegistratie,
   VakantieverhuurVergunningFrontend,
-} from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
-import { BBVergunningFrontend } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
+} from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types.ts';
+import { BBVergunningFrontend } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types.ts';
 import {
   VarenRegistratieRederType,
   VarenZakenFrontend,
-} from '../../../server/services/varen/config-and-types';
-import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
-import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
-import { ApiSuccessResponse } from '../../../universal/helpers/api';
-import { getFullAddress, getFullName } from '../../../universal/helpers/brp';
+} from '../../../server/services/varen/config-and-types.ts';
+import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types.ts';
+import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types.ts';
+import { ApiSuccessResponse } from '../../../universal/helpers/api.ts';
+import { getFullAddress, getFullName } from '../../../universal/helpers/brp.ts';
 import {
   defaultDateFormat,
   displayDateRange,
-} from '../../../universal/helpers/date';
-import { capitalizeFirstLetter } from '../../../universal/helpers/text';
-import { uniqueArray } from '../../../universal/helpers/utils';
+} from '../../../universal/helpers/date.ts';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
+import { uniqueArray } from '../../../universal/helpers/utils.ts';
 import {
   AppStateKey,
   LinkProps,
   StatusLineItem,
-} from '../../../universal/types/App.types';
-import { featureToggle as featureToggleAVG } from '../../pages/Thema/AVG/AVG-thema-config';
-import { featureToggle as featureToggleBezwaren } from '../../pages/Thema/Bezwaren/Bezwaren-thema-config';
-import { featureToggle as featureToggleBodem } from '../../pages/Thema/Bodem/Bodem-thema-config';
-import { featureToggle as featureToggleHoreca } from '../../pages/Thema/Horeca/Horeca-thema-config';
-import { featureToggle as featureToggleKlachten } from '../../pages/Thema/Klachten/Klachten-thema-config';
-import { featureToggle as featureToggleKrefia } from '../../pages/Thema/Krefia/Krefia-thema-config';
-import { routeConfig as routeConfigProfile } from '../../pages/Thema/Profile/Profile-thema-config';
-import { routeConfig as routeConfigToeristischeVerhuur } from '../../pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
+} from '../../../universal/types/App.types.ts';
+import { featureToggle as featureToggleAVG } from '../../pages/Thema/AVG/AVG-thema-config.ts';
+import { featureToggle as featureToggleBezwaren } from '../../pages/Thema/Bezwaren/Bezwaren-thema-config.ts';
+import { featureToggle as featureToggleBodem } from '../../pages/Thema/Bodem/Bodem-thema-config.ts';
+import { featureToggle as featureToggleHoreca } from '../../pages/Thema/Horeca/Horeca-thema-config.ts';
+import { featureToggle as featureToggleKlachten } from '../../pages/Thema/Klachten/Klachten-thema-config.ts';
+import { featureToggle as featureToggleKrefia } from '../../pages/Thema/Krefia/Krefia-thema-config.ts';
+import { routeConfig as routeConfigProfile } from '../../pages/Thema/Profile/Profile-thema-config.ts';
+import { routeConfig as routeConfigToeristischeVerhuur } from '../../pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
 import {
   featureToggle as featureToggleVaren,
   routeConfig as routeConfigVaren,
   themaTitle as themaTitleVaren,
-} from '../../pages/Thema/Varen/Varen-thema-config';
+} from '../../pages/Thema/Varen/Varen-thema-config.ts';
 
 export interface SearchEntry {
   url: string;

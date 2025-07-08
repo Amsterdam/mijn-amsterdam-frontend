@@ -10,9 +10,9 @@ import styles from './MainFooter.module.scss';
 import type {
   CMSFooter,
   CMSFooterSection,
-} from '../../../server/services/cms/cms-content';
-import type { ApiResponse } from '../../../universal/helpers/api';
-import { BFF_API_BASE_URL } from '../../config/api';
+} from '../../../server/services/cms/cms-content.ts';
+import type { ApiResponse } from '../../../universal/helpers/api.ts';
+import { BFF_API_BASE_URL } from '../../config/api.ts';
 
 function FooterBlock({ title, links }: CMSFooterSection) {
   return (

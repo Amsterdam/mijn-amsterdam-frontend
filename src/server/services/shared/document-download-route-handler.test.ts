@@ -1,10 +1,10 @@
 import { describe, it, expect, vi, Mock } from 'vitest';
 
-import { decryptEncryptedRouteParamAndValidateSessionID } from './decrypt-route-param';
-import { downloadDocumentRouteHandler } from './document-download-route-handler';
-import { RequestMock, ResponseMock } from '../../../testing/utils';
-import { getAuth } from '../../auth/auth-helpers';
-import { sendResponse, sendUnauthorized } from '../../routing/route-helpers';
+import { decryptEncryptedRouteParamAndValidateSessionID } from './decrypt-route-param.ts';
+import { downloadDocumentRouteHandler } from './document-download-route-handler.ts';
+import { RequestMock, ResponseMock } from '../../../testing/utils.ts';
+import { getAuth } from '../../auth/auth-helpers.ts';
+import { sendResponse, sendUnauthorized } from '../../routing/route-helpers.ts';
 import { Buffer } from "node:buffer";
 
 vi.mock('../../auth/auth-helpers', () => ({

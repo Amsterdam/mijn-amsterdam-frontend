@@ -3,10 +3,10 @@ import { generatePath, useParams } from 'react-router';
 import {
   listPageParamKind,
   type ListPageParamKind,
-} from './Burgerzaken-thema-config';
-import { useBurgerZakenData } from './useBurgerZakenData.hook';
-import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+} from './Burgerzaken-thema-config.ts';
+import { useBurgerZakenData } from './useBurgerZakenData.hook.tsx';
+import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function BurgerzakenList() {
   const {

@@ -1,19 +1,19 @@
 import Mockdate from 'mockdate';
 import { describe, it, expect, vi, Mock } from 'vitest';
 
-import { fetchIsKnownInAFIS } from './afis';
+import { fetchIsKnownInAFIS } from './afis.ts';
 import {
   createAfisFacturenNotification,
   fetchAfisNotifications,
-} from './afis-notifications';
-import { AfisFactuur, AfisFactuurStatus } from './afis-types';
-import { themaId } from '../../../client/pages/Thema/Afis/Afis-thema-config';
-import { getAuthProfileAndToken } from '../../../testing/utils';
+} from './afis-notifications.ts';
+import { AfisFactuur, AfisFactuurStatus } from './afis-types.ts';
+import { themaId } from '../../../client/pages/Thema/Afis/Afis-thema-config.ts';
+import { getAuthProfileAndToken } from '../../../testing/utils.ts';
 import {
   apiDependencyError,
   ApiErrorResponse,
   apiSuccessResult,
-} from '../../../universal/helpers/api';
+} from '../../../universal/helpers/api.ts';
 
 vi.mock('./afis', () => ({
   fetchIsKnownInAFIS: vi.fn(),

@@ -2,15 +2,15 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
-import { routeConfig } from './AVG-thema-config';
-import { AVGDetail } from './AVGDetail';
-import { AVGRequestFrontend } from '../../../../server/services/avg/types';
+import { routeConfig } from './AVG-thema-config.ts';
+import { AVGDetail } from './AVGDetail.tsx';
+import { AVGRequestFrontend } from '../../../../server/services/avg/types.ts';
 import {
   AppState,
   StatusLineItem,
-} from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
-import MockApp from '../../MockApp';
+} from '../../../../universal/types/App.types.ts';
+import { appStateAtom } from '../../../hooks/useAppState.ts';
+import MockApp from '../../MockApp.tsx';
 
 const steps: StatusLineItem[] = [
   {

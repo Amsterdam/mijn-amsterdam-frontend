@@ -2,13 +2,13 @@ import {
   LeveringsVorm,
   ProductSoortCode,
   ZorgnedStatusLineItemsConfig,
-} from '../zorgned/zorgned-types';
-import { AOV } from './status-line-items/wmo-aov';
-import { diensten } from './status-line-items/wmo-diensten';
-import { hulpmiddelen } from './status-line-items/wmo-hulpmiddelen';
-import { PGB } from './status-line-items/wmo-pgb';
-import { vergoeding } from './status-line-items/wmo-vergoeding';
-import { WRA } from './status-line-items/wmo-wra';
+} from '../zorgned/zorgned-types.ts';
+import { AOV } from './status-line-items/wmo-aov.ts';
+import { diensten } from './status-line-items/wmo-diensten.ts';
+import { hulpmiddelen } from './status-line-items/wmo-hulpmiddelen.ts';
+import { PGB } from './status-line-items/wmo-pgb.ts';
+import { vergoeding } from './status-line-items/wmo-vergoeding.ts';
+import { WRA } from './status-line-items/wmo-wra.ts';
 
 export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
   {

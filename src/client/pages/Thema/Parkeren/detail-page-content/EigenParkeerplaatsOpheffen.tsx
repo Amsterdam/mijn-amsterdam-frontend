@@ -1,14 +1,14 @@
 import { Link } from '@amsterdam/design-system-react';
 
-import type { EigenParkeerplaatsOpheffen } from '../../../../../server/services/parkeren/config-and-types';
-import { VergunningFrontend } from '../../../../../server/services/vergunningen/config-and-types';
-import { Datalist } from '../../../../components/Datalist/Datalist';
-import { AddressDisplayAndModal } from '../../../../components/LocationModal/LocationModal';
+import type { EigenParkeerplaatsOpheffen } from '../../../../../server/services/parkeren/config-and-types.ts';
+import { VergunningFrontend } from '../../../../../server/services/vergunningen/config-and-types.ts';
+import { Datalist } from '../../../../components/Datalist/Datalist.tsx';
+import { AddressDisplayAndModal } from '../../../../components/LocationModal/LocationModal.tsx';
 import {
   commonTransformers,
   getRows,
   kentekens,
-} from '../../Vergunningen/detail-page-content/fields-config';
+} from '../../Vergunningen/detail-page-content/fields-config.tsx';
 
 export function EigenParkeerplaatsOpheffen({
   vergunning,

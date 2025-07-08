@@ -1,7 +1,7 @@
-import { transformBRPData, transformBRPNotifications } from './brp';
-import { BRPDataFromSource } from './brp.types';
-import { ApiSuccessResponse } from '../../../universal/helpers/api';
-import { getFullAddress } from '../../../universal/helpers/brp';
+import { transformBRPData, transformBRPNotifications } from './brp.ts';
+import { BRPDataFromSource } from './brp.types.ts';
+import { ApiSuccessResponse } from '../../../universal/helpers/api.ts';
+import { getFullAddress } from '../../../universal/helpers/brp.ts';
 
 const BRP = {
   content: {

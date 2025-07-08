@@ -1,11 +1,11 @@
 import { describe, it, expect, vi, type Mock } from 'vitest';
 
-import { DecosVergunning } from './config-and-types';
-import { forTesting } from './vergunningen';
-import { routeConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config';
-import { getAuthProfileAndToken } from '../../../testing/utils';
-import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import type { DecosZaakBase } from '../decos/decos-types';
+import { DecosVergunning } from './config-and-types.ts';
+import { forTesting } from './vergunningen.ts';
+import { routeConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
+import { getAuthProfileAndToken } from '../../../testing/utils.ts';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt.ts';
+import type { DecosZaakBase } from '../decos/decos-types.ts';
 
 const { transformVergunningFrontend } = forTesting;
 

@@ -7,16 +7,16 @@ import {
   VarenRegistratieRederFrontend,
   VarenRegistratieRederType,
   VarenZakenFrontend,
-} from './config-and-types';
-import { decosZaakTransformers } from './decos-zaken';
-import { getStatusSteps } from './varen-status-steps';
-import { isVergunning } from '../../../client/pages/Thema/Varen/helper';
-import { routeConfig } from '../../../client/pages/Thema/Varen/Varen-thema-config';
-import { apiSuccessResult } from '../../../universal/helpers/api';
-import { omit, toDateFormatted } from '../../../universal/helpers/utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { fetchDecosZaken } from '../decos/decos-service';
-import { transformDecosZaakFrontend } from '../decos/decos-service';
+} from './config-and-types.ts';
+import { decosZaakTransformers } from './decos-zaken.ts';
+import { getStatusSteps } from './varen-status-steps.ts';
+import { isVergunning } from '../../../client/pages/Thema/Varen/helper.ts';
+import { routeConfig } from '../../../client/pages/Thema/Varen/Varen-thema-config.ts';
+import { apiSuccessResult } from '../../../universal/helpers/api.ts';
+import { omit, toDateFormatted } from '../../../universal/helpers/utils.ts';
+import { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { fetchDecosZaken } from '../decos/decos-service.ts';
+import { transformDecosZaakFrontend } from '../decos/decos-service.ts';
 
 function transformVarenRederFrontend(
   zaak: VarenRegistratieRederType | null | undefined

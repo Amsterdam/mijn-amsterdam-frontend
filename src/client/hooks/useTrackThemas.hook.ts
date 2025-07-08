@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 
-import { useSessionStorage } from './storage.hook';
-import { useThemaMenuItems } from './useThemaMenuItems';
-import type { ThemaMenuItemTransformed } from '../config/thema-types';
-import { trackEvent } from '../helpers/monitoring';
+import { useSessionStorage } from './storage.hook.ts';
+import { useThemaMenuItems } from './useThemaMenuItems.ts';
+import type { ThemaMenuItemTransformed } from '../config/thema-types.ts';
+import { trackEvent } from '../helpers/monitoring.ts';
 
 type ThemaTitleAndId = Pick<ThemaMenuItemTransformed, 'title' | 'id'>;
 

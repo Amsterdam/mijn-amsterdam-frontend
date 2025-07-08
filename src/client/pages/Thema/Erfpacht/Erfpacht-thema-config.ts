@@ -5,11 +5,11 @@ import {
   ErfpachtDossierFactuurFrontend,
   ErfpachtDossiersResponse,
   ErfpachtDossiersDetail,
-} from '../../../../server/services/erfpacht/erfpacht-types';
-import { IS_PRODUCTION } from '../../../../universal/config/env';
-import { LinkProps } from '../../../../universal/types/App.types';
-import { DisplayProps } from '../../../components/Table/TableV2.types';
-import type { ThemaRoutesConfig } from '../../../config/thema-types';
+} from '../../../../server/services/erfpacht/erfpacht-types.ts';
+import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
+import { LinkProps } from '../../../../universal/types/App.types.ts';
+import { DisplayProps } from '../../../components/Table/TableV2.types.ts';
+import type { ThemaRoutesConfig } from '../../../config/thema-types.ts';
 
 // Themapagina
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_DOSSIERS = 5;

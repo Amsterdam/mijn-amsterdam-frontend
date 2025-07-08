@@ -1,7 +1,7 @@
 import { useParams } from 'react-router';
 
-import { useVergunningDocumentList } from './detail-page-content/useVergunningDocumentsList.hook';
-import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
+import { useVergunningDocumentList } from './detail-page-content/useVergunningDocumentsList.hook.ts';
+import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types.ts';
 
 export function useVergunningenDetailData<T extends VergunningFrontend>(
   vergunningen: T[]

@@ -1,15 +1,15 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { SEARCH_PAGE_DOCUMENT_TITLE } from './Search-routes';
+import { SEARCH_PAGE_DOCUMENT_TITLE } from './Search-routes.ts';
 import {
   PageContentCell,
   PageContentV2,
   PageV2,
-} from '../../components/Page/Page';
-import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
-import { Search } from '../../components/Search/Search';
-import { useAppStateReady } from '../../hooks/useAppState';
-import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
+} from '../../components/Page/Page.tsx';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2.tsx';
+import { Search } from '../../components/Search/Search.tsx';
+import { useAppStateReady } from '../../hooks/useAppState.ts';
+import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle.ts';
 
 export function SearchPage() {
   useHTMLDocumentTitle({

@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest';
 
-import { RVVSloterweg } from './config-and-types';
-import { getStatusSteps } from './vergunningen-status-steps';
-import { StatusLineItem } from '../../../universal/types/App.types';
-import { getDisplayStatus } from '../decos/decos-helpers';
-import type { DecosZaakBase } from '../decos/decos-types';
+import { RVVSloterweg } from './config-and-types.ts';
+import { getStatusSteps } from './vergunningen-status-steps.ts';
+import { StatusLineItem } from '../../../universal/types/App.types.ts';
+import { getDisplayStatus } from '../decos/decos-helpers.ts';
+import type { DecosZaakBase } from '../decos/decos-types.ts';
 
 describe('vergunningen-status-steps', () => {
   describe('getStatusSteps', () => {

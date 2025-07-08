@@ -1,8 +1,8 @@
-import { forTesting } from './generic';
+import { forTesting } from './generic.ts';
 import {
   ZorgnedAanvraagTransformed,
   ZorgnedAanvraagWithRelatedPersonsTransformed,
-} from '../../zorgned/zorgned-types';
+} from '../../zorgned/zorgned-types.ts';
 
 describe('HLI/Status-line-items/Generic', () => {
   describe('getEindeRechtDescription', () => {

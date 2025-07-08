@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 
 import { useLocation, useParams } from 'react-router';
 
-import { trackPageView } from './analytics.hook';
-import type { ThemaRouteConfig } from '../config/thema-types';
+import { trackPageView } from './analytics.hook.ts';
+import type { ThemaRouteConfig } from '../config/thema-types.ts';
 
 export function useHTMLDocumentTitle(
   routeConfig: Pick<ThemaRouteConfig, 'documentTitle' | 'trackingUrl'>

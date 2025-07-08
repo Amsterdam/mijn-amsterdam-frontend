@@ -1,11 +1,11 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { routeConfig } from './HLI-thema-config';
-import { HLIThema } from './HLIThema';
-import { stadspasCreator } from './test-helpers';
-import { createHLIState } from './test-helpers';
-import { componentCreator } from '../../MockApp';
+import { routeConfig } from './HLI-thema-config.ts';
+import { HLIThema } from './HLIThema.tsx';
+import { stadspasCreator } from './test-helpers.ts';
+import { createHLIState } from './test-helpers.ts';
+import { componentCreator } from '../../MockApp.tsx';
 
 const createStadspas = stadspasCreator();
 

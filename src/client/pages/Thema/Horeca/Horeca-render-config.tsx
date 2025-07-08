@@ -3,17 +3,17 @@ import {
   themaId,
   themaTitle,
   featureToggle,
-} from './Horeca-thema-config';
-import { HorecaDetail } from './HorecaDetail';
+} from './Horeca-thema-config.ts';
+import { HorecaDetail } from './HorecaDetail.tsx';
 import { default as HorecaIcon } from './HorecaIcon.svg?react';
-import { HorecaList } from './HorecaList';
-import { HorecaThema } from './HorecaThema';
-import { isLoading } from '../../../../universal/helpers/api';
-import { type AppState } from '../../../../universal/types/App.types';
+import { HorecaList } from './HorecaList.tsx';
+import { HorecaThema } from './HorecaThema.tsx';
+import { isLoading } from '../../../../universal/helpers/api.ts';
+import { type AppState } from '../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 
 export const HorecaRoutes = [
   {

@@ -1,19 +1,19 @@
 import { describe, it, expect, vi, Mock } from 'vitest';
 
-import { forTesting } from './adoptable-trash-containers';
-import { fetchAdoptableTrashContainers } from './adoptable-trash-containers';
-import { getAuthProfileAndToken } from '../../../testing/utils';
+import { forTesting } from './adoptable-trash-containers.ts';
+import { fetchAdoptableTrashContainers } from './adoptable-trash-containers.ts';
+import { getAuthProfileAndToken } from '../../../testing/utils.ts';
 import {
   DEFAULT_LAT,
   DEFAULT_LNG,
-} from '../../../universal/config/myarea-datasets';
+} from '../../../universal/config/myarea-datasets.ts';
 import {
   apiSuccessResult,
   apiErrorResult,
-} from '../../../universal/helpers/api';
-import { fetchMyLocation } from '../bag/my-locations';
-import { fetchDataset } from '../buurt/buurt';
-import { fetchBRP } from '../profile/brp';
+} from '../../../universal/helpers/api.ts';
+import { fetchMyLocation } from '../bag/my-locations.ts';
+import { fetchDataset } from '../buurt/buurt.ts';
+import { fetchBRP } from '../profile/brp.ts';
 
 vi.mock('../profile/brp', () => ({
   fetchBRP: vi.fn(),

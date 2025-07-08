@@ -1,9 +1,9 @@
-import { BESLUIT, EINDE_RECHT, getBetrokkenDescription } from './generic';
+import { BESLUIT, EINDE_RECHT, getBetrokkenDescription } from './generic.ts';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
-} from '../../zorgned/zorgned-types';
-import type { ZorgnedHLIRegeling } from '../hli-regelingen-types';
+} from '../../zorgned/zorgned-types.ts';
+import type { ZorgnedHLIRegeling } from '../hli-regelingen-types.ts';
 
 // Toets voorwaarden voor een afspraak GGD
 export const AV_RTM_DEEL1 = 'AV-RTM1';

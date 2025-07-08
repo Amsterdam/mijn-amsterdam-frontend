@@ -1,5 +1,5 @@
-import { ZaakDetail } from '../../../universal/types/App.types';
-import { SmileFieldValue, SmileSourceResponse } from '../smile/smile-types';
+import { ZaakDetail } from '../../../universal/types/App.types.ts';
+import { SmileFieldValue, SmileSourceResponse } from '../smile/smile-types.ts';
 
 export type KlachtFrontend = {
   inbehandelingSinds: string;

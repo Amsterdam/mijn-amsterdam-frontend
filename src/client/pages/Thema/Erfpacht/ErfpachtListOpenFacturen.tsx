@@ -1,6 +1,6 @@
-import { useErfpachtThemaData } from './useErfpachtThemaData.hook';
-import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { useErfpachtThemaData } from './useErfpachtThemaData.hook.ts';
+import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function ErfpachtListOpenFacturen() {
   const {

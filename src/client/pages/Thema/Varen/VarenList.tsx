@@ -1,10 +1,10 @@
 import { useParams } from 'react-router';
 
-import { useVarenThemaData } from './useVarenThemaData.hook';
-import { ListPageParamKind } from './Varen-thema-config';
-import type { VarenZakenFrontend } from '../../../../server/services/varen/config-and-types';
-import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { useVarenThemaData } from './useVarenThemaData.hook.ts';
+import { ListPageParamKind } from './Varen-thema-config.ts';
+import type { VarenZakenFrontend } from '../../../../server/services/varen/config-and-types.ts';
+import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function VarenList() {
   const { kind = 'lopende-aanvragen', page } = useParams<{

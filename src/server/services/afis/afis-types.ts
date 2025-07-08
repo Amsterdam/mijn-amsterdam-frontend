@@ -1,6 +1,6 @@
 import Decimal from 'decimal.js';
 
-import { LinkProps } from '../../../universal/types/App.types';
+import { LinkProps } from '../../../universal/types/App.types.ts';
 
 type JaOfNee = 'Ja' | 'Nee';
 

@@ -2,7 +2,7 @@ import { ReactPlugin } from '@microsoft/applicationinsights-react-js';
 import { ApplicationInsights } from '@microsoft/applicationinsights-web';
 import { createBrowserHistory } from 'history';
 
-import { IS_DEVELOPMENT } from '../../universal/config/env';
+import { IS_DEVELOPMENT } from '../../universal/config/env.ts';
 
 export type Severity =
   | 'verbose'

@@ -3,17 +3,17 @@ import {
   themaId,
   themaTitle,
   featureToggle,
-} from './Bezwaren-thema-config';
-import { BezwarenDetail } from './BezwarenDetail';
+} from './Bezwaren-thema-config.ts';
+import { BezwarenDetail } from './BezwarenDetail.tsx';
 import { default as BezwarenIcon } from './BezwarenIcon.svg?react';
-import { BezwarenList } from './BezwarenList';
-import { BezwarenThema } from './BezwarenThema';
-import { isLoading } from '../../../../universal/helpers/api';
-import { type AppState } from '../../../../universal/types/App.types';
+import { BezwarenList } from './BezwarenList.tsx';
+import { BezwarenThema } from './BezwarenThema.tsx';
+import { isLoading } from '../../../../universal/helpers/api.ts';
+import { type AppState } from '../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 
 export const BezwarenRoutes = [
   {

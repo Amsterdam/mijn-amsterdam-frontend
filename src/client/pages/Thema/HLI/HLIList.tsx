@@ -1,11 +1,11 @@
 import { useParams } from 'react-router';
 
-import { ListPageParamKind } from './HLI-thema-config';
-import { HistoricItemsMention } from './HLIThema';
-import { useHliThemaData } from './useHliThemaData';
-import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
-import { PageContentCell } from '../../../components/Page/Page';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { ListPageParamKind } from './HLI-thema-config.ts';
+import { HistoricItemsMention } from './HLIThema.tsx';
+import { useHliThemaData } from './useHliThemaData.ts';
+import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function HLIList() {
   const { kind = 'huidige-regelingen' } = useParams<{

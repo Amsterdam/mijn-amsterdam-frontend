@@ -1,11 +1,11 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { useKlachtenThemaData } from './useKlachtenThemaData.hook';
-import { KlachtFrontend } from '../../../../server/services/klachten/types';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaPagina from '../../../components/Thema/ThemaPagina';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { useKlachtenThemaData } from './useKlachtenThemaData.hook.ts';
+import { KlachtFrontend } from '../../../../server/services/klachten/types.ts';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
+import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 const pageContentTop = (
   <PageContentCell spanWide={8}>

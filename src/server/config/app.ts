@@ -1,4 +1,4 @@
-import { BFF_BASE_PATH } from '../routing/bff-routes';
+import { BFF_BASE_PATH } from '../routing/bff-routes.ts';
 import process from "node:process";
 
 export const BFF_API_BASE_URL = process.env.BFF_API_BASE_URL ?? BFF_BASE_PATH;

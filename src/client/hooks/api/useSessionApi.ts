@@ -2,17 +2,17 @@ import { useCallback, useEffect } from 'react';
 
 import { atom, useRecoilState } from 'recoil';
 
-import { AuthProfile } from '../../../server/auth/auth-types';
+import { AuthProfile } from '../../../server/auth/auth-types.ts';
 import {
   ApiErrorResponse,
   ApiSuccessResponse,
   apiSuccessResult,
-} from '../../../universal/helpers/api';
-import { AUTH_API_URL, LOGOUT_URL } from '../../config/api';
-import { clearSessionStorage } from '../storage.hook';
-import { clearDeeplinkEntry } from '../useDeeplink.hook';
-import { useProfileType } from '../useProfileType';
-import { ApiRequestOptions, useDataApi } from './useDataApi';
+} from '../../../universal/helpers/api.ts';
+import { AUTH_API_URL, LOGOUT_URL } from '../../config/api.ts';
+import { clearSessionStorage } from '../storage.hook.ts';
+import { clearDeeplinkEntry } from '../useDeeplink.hook.ts';
+import { useProfileType } from '../useProfileType.ts';
+import { ApiRequestOptions, useDataApi } from './useDataApi.ts';
 
 export const ONE_SECOND_MS = 1000;
 

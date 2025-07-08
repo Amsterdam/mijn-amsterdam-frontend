@@ -1,4 +1,4 @@
-import { IS_ACCEPTANCE } from '../../../../universal/config/env';
+import { IS_ACCEPTANCE } from '../../../../universal/config/env.ts';
 
 export const SVWI_ROUTE_DEFAULT = 'https://mijn.werkeninkomen.amsterdam.nl';
 

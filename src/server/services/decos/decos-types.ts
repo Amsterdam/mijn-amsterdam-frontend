@@ -1,9 +1,9 @@
-import { SomeOtherString } from '../../../universal/helpers/types';
-import { OmitMapped } from '../../../universal/helpers/utils';
+import { SomeOtherString } from '../../../universal/helpers/types.ts';
+import { OmitMapped } from '../../../universal/helpers/utils.ts';
 import {
   GenericDocument,
   ZaakDetail,
-} from '../../../universal/types/App.types';
+} from '../../../universal/types/App.types.ts';
 
 type DecosDocumentBase = {
   text39: string;

@@ -1,20 +1,20 @@
-import { fetchBAG } from './bag';
-import { BAGData } from './bag.types';
+import { fetchBAG } from './bag.ts';
+import { BAGData } from './bag.types.ts';
 import {
   DEFAULT_LAT,
   DEFAULT_LNG,
-} from '../../../universal/config/myarea-datasets';
+} from '../../../universal/config/myarea-datasets.ts';
 import {
   ApiResponse_DEPRECATED,
   apiDependencyError,
   apiErrorResult,
   apiSuccessResult,
-} from '../../../universal/helpers/api';
-import { isMokum } from '../../../universal/helpers/brp';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { fetchBRP } from '../profile/brp';
-import type { Adres } from '../profile/brp.types';
-import { fetchKVK, getKvkAddresses } from '../profile/kvk';
+} from '../../../universal/helpers/api.ts';
+import { isMokum } from '../../../universal/helpers/brp.ts';
+import { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { fetchBRP } from '../profile/brp.ts';
+import type { Adres } from '../profile/brp.types.ts';
+import { fetchKVK, getKvkAddresses } from '../profile/kvk.ts';
 
 async function fetchPrivate(
   authProfileAndToken: AuthProfileAndToken

@@ -1,12 +1,12 @@
 import { render } from '@testing-library/react';
 import { MutableSnapshot } from 'recoil';
 
-import { routeConfig } from './Burgerzaken-thema-config';
-import { BurgerzakenThema } from './BurgerzakenThema';
-import type { IdentiteitsbewijsFrontend } from '../../../../server/services/profile/brp.types';
-import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
-import MockApp from '../../MockApp';
+import { routeConfig } from './Burgerzaken-thema-config.ts';
+import { BurgerzakenThema } from './BurgerzakenThema.tsx';
+import type { IdentiteitsbewijsFrontend } from '../../../../server/services/profile/brp.types.ts';
+import { AppState } from '../../../../universal/types/App.types.ts';
+import { appStateAtom } from '../../../hooks/useAppState.ts';
+import MockApp from '../../MockApp.tsx';
 
 const identiteitsbewijzen: IdentiteitsbewijsFrontend[] = [
   {

@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import { Heading, Table } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
-import { getDisplayProps, getDisplayPropsColWidths } from './helpers';
+import { getDisplayProps, getDisplayPropsColWidths } from './helpers.ts';
 import styles from './TableV2.module.scss';
 import {
   ObjectWithOptionalLinkAttr,
@@ -11,12 +11,12 @@ import {
   WithDetailLinkComponent,
   type ScreenSize,
   type TableV2ColWidths,
-} from './TableV2.types';
-import { capitalizeFirstLetter } from '../../../universal/helpers/text';
-import { entries } from '../../../universal/helpers/utils';
-import { ZaakDetail } from '../../../universal/types/App.types';
-import { useSmallScreen } from '../../hooks/media.hook';
-import { MaRouterLink } from '../MaLink/MaLink';
+} from './TableV2.types.ts';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
+import { entries } from '../../../universal/helpers/utils.ts';
+import { ZaakDetail } from '../../../universal/types/App.types.ts';
+import { useSmallScreen } from '../../hooks/media.hook.ts';
+import { MaRouterLink } from '../MaLink/MaLink.tsx';
 
 /**
  * @deprecated These exports should be removed in the future and replaced with import from the types file.

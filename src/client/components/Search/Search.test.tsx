@@ -5,11 +5,11 @@ import { BrowserRouter } from 'react-router';
 import { RecoilRoot } from 'recoil';
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 
-import { Search } from './Search';
+import { Search } from './Search.tsx';
 import * as remoteConfig from './search-config.json';
-import { bffApi } from '../../../testing/utils';
-import { AppState } from '../../../universal/types/App.types';
-import { appStateAtom, appStateReadyAtom } from '../../hooks/useAppState';
+import { bffApi } from '../../../testing/utils.ts';
+import { AppState } from '../../../universal/types/App.types.ts';
+import { appStateAtom, appStateReadyAtom } from '../../hooks/useAppState.ts';
 
 const appStateMock = {
   VERGUNNINGEN: {

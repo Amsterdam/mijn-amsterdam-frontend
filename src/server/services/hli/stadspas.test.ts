@@ -6,17 +6,17 @@ import {
   unblockStadspas,
   fetchStadspas,
   fetchStadspasDiscountTransactions,
-} from './stadspas';
+} from './stadspas.ts';
 import type {
   StadspasHouderPasSource,
   StadspasHouderSource,
   StadspasPasHouderResponse,
   StadspasDiscountTransactions,
   StadspasDiscountTransactionsResponseSource,
-} from './stadspas-types';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
+} from './stadspas-types.ts';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import * as encryptDecrypt from '../../helpers/encrypt-decrypt.ts';
 import { Buffer } from "node:buffer";
 
 const FAKE_API_KEY = '22222xx22222';

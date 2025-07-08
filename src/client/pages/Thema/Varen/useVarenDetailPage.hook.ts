@@ -1,8 +1,8 @@
 import { useParams } from 'react-router';
 
-import { useVarenThemaData } from './useVarenThemaData.hook';
-import { exploitatieVergunningWijzigenLink, routeConfig, } from './Varen-thema-config';
-import { ButtonLinkProps } from '../../../../universal/types/App.types';
+import { useVarenThemaData } from './useVarenThemaData.hook.ts';
+import { exploitatieVergunningWijzigenLink, routeConfig, } from './Varen-thema-config.ts';
+import { ButtonLinkProps } from '../../../../universal/types/App.types.ts';
 
 export function useVarenDetailPage() {
   const { varenRederRegistratie, varenZaken, breadcrumbs, isLoading, isError } =

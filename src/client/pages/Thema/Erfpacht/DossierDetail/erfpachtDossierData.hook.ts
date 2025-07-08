@@ -1,11 +1,11 @@
 import { useParams } from 'react-router';
 
-import type { ErfpachtDossiersDetail } from '../../../../../server/services/erfpacht/erfpacht-types';
-import { isError, isLoading } from '../../../../../universal/helpers/api';
-import { BFFApiUrls } from '../../../../config/api';
-import { useAppStateBagApi } from '../../../../hooks/useAppState';
-import { getTableConfig, themaId } from '../Erfpacht-thema-config';
-import { useErfpachtThemaData } from '../useErfpachtThemaData.hook';
+import type { ErfpachtDossiersDetail } from '../../../../../server/services/erfpacht/erfpacht-types.ts';
+import { isError, isLoading } from '../../../../../universal/helpers/api.ts';
+import { BFFApiUrls } from '../../../../config/api.ts';
+import { useAppStateBagApi } from '../../../../hooks/useAppState.ts';
+import { getTableConfig, themaId } from '../Erfpacht-thema-config.ts';
+import { useErfpachtThemaData } from '../useErfpachtThemaData.hook.ts';
 
 export function useDossierDetaiLData() {
   const { dossierNummerUrlParam } = useParams<{

@@ -3,17 +3,17 @@ import {
   themaId,
   themaTitle,
   featureToggle,
-} from './Zorg-thema-config';
-import { ZorgDetail } from './ZorgDetail';
+} from './Zorg-thema-config.ts';
+import { ZorgDetail } from './ZorgDetail.tsx';
 import { default as ZorgIcon } from './ZorgIcon.svg?react';
-import { ZorgList } from './ZorgList';
-import { ZorgThema } from './ZorgThema';
-import { isLoading } from '../../../../universal/helpers/api';
-import { type AppState } from '../../../../universal/types/App.types';
+import { ZorgList } from './ZorgList.tsx';
+import { ZorgThema } from './ZorgThema.tsx';
+import { isLoading } from '../../../../universal/helpers/api.ts';
+import { type AppState } from '../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 
 export const ZorgRoutes = [
   {

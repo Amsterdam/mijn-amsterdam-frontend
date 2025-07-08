@@ -2,14 +2,14 @@ import { Heading, Paragraph } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 import { generatePath, useParams } from 'react-router';
 
-import { ErfpachtDatalistProps } from './DatalistGeneral';
+import { ErfpachtDatalistProps } from './DatalistGeneral.tsx';
 import styles from '../ErfpachtDetail.module.scss';
-import { WijzigenLink } from './WijzigenLink';
-import { Datalist } from '../../../../components/Datalist/Datalist';
-import { LinkToListPage } from '../../../../components/LinkToListPage/LinkToListPage';
-import { TableV2 } from '../../../../components/Table/TableV2';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../../config/app';
-import { DisplayPropsFacturen, routeConfig } from '../Erfpacht-thema-config';
+import { WijzigenLink } from './WijzigenLink.tsx';
+import { Datalist } from '../../../../components/Datalist/Datalist.tsx';
+import { LinkToListPage } from '../../../../components/LinkToListPage/LinkToListPage.tsx';
+import { TableV2 } from '../../../../components/Table/TableV2.tsx';
+import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../../config/app.ts';
+import { DisplayPropsFacturen, routeConfig } from '../Erfpacht-thema-config.ts';
 
 type DataTableFacturenProps = ErfpachtDatalistProps & {
   displayProps: DisplayPropsFacturen;

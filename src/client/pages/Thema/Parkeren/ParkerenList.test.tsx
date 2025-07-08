@@ -3,12 +3,12 @@ import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
 
-import { routeConfig } from './Parkeren-thema-config';
-import { ParkerenList } from './ParkerenList';
-import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
-import MockApp from '../../MockApp';
-import { listPageParamKind } from '../Vergunningen/Vergunningen-thema-config';
+import { routeConfig } from './Parkeren-thema-config.ts';
+import { ParkerenList } from './ParkerenList.tsx';
+import { AppState } from '../../../../universal/types/App.types.ts';
+import { appStateAtom } from '../../../hooks/useAppState.ts';
+import MockApp from '../../MockApp.tsx';
+import { listPageParamKind } from '../Vergunningen/Vergunningen-thema-config.ts';
 
 const testState = {
   PARKEREN: {

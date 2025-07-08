@@ -5,7 +5,7 @@ import {
   range,
   isRecentNotification,
   toDateFormatted,
-} from './utils';
+} from './utils.ts';
 describe('Utils.ts', () => {
   it('deepOmitKeys: Should omit keys recursively', () => {
     const testData = {

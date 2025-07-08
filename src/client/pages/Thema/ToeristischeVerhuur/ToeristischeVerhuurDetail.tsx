@@ -1,20 +1,20 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router';
 
-import { THEMA_DETAIL_TITLE_DEFAULT } from './ToeristischeVerhuur-thema-config';
+import { THEMA_DETAIL_TITLE_DEFAULT } from './ToeristischeVerhuur-thema-config.ts';
 import styles from './ToeristischeVerhuurDetail.module.scss';
-import { useToeristischeVerhuurThemaData } from './useToeristischeVerhuur.hook';
-import { ToeristischeVerhuurVergunning } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
-import { getFullAddress, getFullName } from '../../../../universal/helpers/brp';
-import { Datalist, Row, RowSet } from '../../../components/Datalist/Datalist';
-import DocumentListV2 from '../../../components/DocumentList/DocumentListV2';
-import LoadingContent from '../../../components/LoadingContent/LoadingContent';
-import { AddressDisplayAndModal } from '../../../components/LocationModal/LocationModal';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
-import { useAppStateGetter } from '../../../hooks/useAppState';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
-import { useVergunningDocumentList } from '../Vergunningen/detail-page-content/useVergunningDocumentsList.hook';
+import { useToeristischeVerhuurThemaData } from './useToeristischeVerhuur.hook.ts';
+import { ToeristischeVerhuurVergunning } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types.ts';
+import { getFullAddress, getFullName } from '../../../../universal/helpers/brp.ts';
+import { Datalist, Row, RowSet } from '../../../components/Datalist/Datalist.tsx';
+import DocumentListV2 from '../../../components/DocumentList/DocumentListV2.tsx';
+import LoadingContent from '../../../components/LoadingContent/LoadingContent.tsx';
+import { AddressDisplayAndModal } from '../../../components/LocationModal/LocationModal.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
+import { useAppStateGetter } from '../../../hooks/useAppState.ts';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
+import { useVergunningDocumentList } from '../Vergunningen/detail-page-content/useVergunningDocumentsList.hook.ts';
 
 function getMailBody(
   vergunning: ToeristischeVerhuurVergunning,

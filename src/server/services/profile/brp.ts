@@ -11,30 +11,30 @@ import type {
   IdentiteitsbewijsFromSource,
   IdentiteitsbewijsFrontend,
   BRPDataFromSource,
-} from './brp.types';
+} from './brp.types.ts';
 import {
   routeConfig as routeConfigBurgerzaken,
   themaId as themaIdBurgerzaken,
   themaTitle as themaTitleBurgerzaken,
-} from '../../../client/pages/Thema/Burgerzaken/Burgerzaken-thema-config';
+} from '../../../client/pages/Thema/Burgerzaken/Burgerzaken-thema-config.ts';
 import {
   themaIdBRP,
   themaTitle,
   routeConfig as routeConfigBrp,
-} from '../../../client/pages/Thema/Profile/Profile-thema-config';
+} from '../../../client/pages/Thema/Profile/Profile-thema-config.ts';
 import {
   ApiResponse_DEPRECATED,
   ApiSuccessResponse,
   apiDependencyError,
   apiSuccessResult,
-} from '../../../universal/helpers/api';
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import { MyNotification } from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
-import { BffEndpoints } from '../../routing/bff-routes';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
+} from '../../../universal/helpers/api.ts';
+import { defaultDateFormat } from '../../../universal/helpers/date.ts';
+import { MyNotification } from '../../../universal/types/App.types.ts';
+import { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
+import { BffEndpoints } from '../../routing/bff-routes.ts';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
 import process from "node:process";
 
 const DAYS_BEFORE_EXPIRATION = 120;

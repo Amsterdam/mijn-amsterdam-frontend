@@ -3,14 +3,14 @@ import { addDays, differenceInDays, parseISO } from 'date-fns';
 import {
   MINIMUM_DAYS_FOR_WILL_EXPIRE_NOTIFICATION,
   PERCENTAGE_OF_LIFETIME_FOR_WILL_EXPIRE_NOTIFICATION,
-} from './config-and-types';
-import { isDateInPast } from '../../../universal/helpers/date';
+} from './config-and-types.ts';
+import { isDateInPast } from '../../../universal/helpers/date.ts';
 import {
   TouringcarDagontheffing,
   TouringcarJaarontheffing,
   EigenParkeerplaatsOpheffen,
   EigenParkeerplaats,
-} from '../parkeren/config-and-types';
+} from '../parkeren/config-and-types.ts';
 
 export function getCustomTitleForVergunningWithLicensePlates(
   vergunning:

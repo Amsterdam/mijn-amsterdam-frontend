@@ -8,18 +8,18 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
 import styles from './AutoLogoutDialog.module.scss';
-import { formattedTimeFromSeconds } from '../../../universal/helpers/date';
+import { formattedTimeFromSeconds } from '../../../universal/helpers/date.ts';
 import {
   LOGIN_URL_DIGID,
   LOGIN_URL_EHERKENNING,
   LOGOUT_URL,
-} from '../../config/api';
-import { Colors } from '../../config/app';
-import { ONE_SECOND_MS, useSessionValue } from '../../hooks/api/useSessionApi';
-import { CounterProps, useCounter } from '../../hooks/timer.hook';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
-import { MaButtonLink } from '../MaLink/MaLink';
-import { Modal } from '../Modal/Modal';
+} from '../../config/api.ts';
+import { Colors } from '../../config/app.ts';
+import { ONE_SECOND_MS, useSessionValue } from '../../hooks/api/useSessionApi.ts';
+import { CounterProps, useCounter } from '../../hooks/timer.hook.ts';
+import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
+import { MaButtonLink } from '../MaLink/MaLink.tsx';
+import { Modal } from '../Modal/Modal.tsx';
 
 const TITLE = 'Wilt u ingelogd blijven op Mijn Amsterdam?';
 const ONE_MINUTE_SECONDS = 60;

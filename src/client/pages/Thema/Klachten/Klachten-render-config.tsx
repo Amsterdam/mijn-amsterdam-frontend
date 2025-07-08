@@ -3,17 +3,17 @@ import {
   themaId,
   themaTitle,
   featureToggle,
-} from './Klachten-thema-config';
-import { KlachtenDetail } from './KlachtenDetail';
+} from './Klachten-thema-config.ts';
+import { KlachtenDetail } from './KlachtenDetail.tsx';
 import { default as KlachtenIcon } from './KlachtenIcon.svg?react';
-import { KlachtenList } from './KlachtenList';
-import { KlachtenThema } from './KlachtenThema';
-import { isLoading } from '../../../../universal/helpers/api';
-import { type AppState } from '../../../../universal/types/App.types';
+import { KlachtenList } from './KlachtenList.tsx';
+import { KlachtenThema } from './KlachtenThema.tsx';
+import { isLoading } from '../../../../universal/helpers/api.ts';
+import { type AppState } from '../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 
 export const KlachtenRoutes = [
   {

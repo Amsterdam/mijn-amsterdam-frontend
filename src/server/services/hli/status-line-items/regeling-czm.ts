@@ -1,8 +1,8 @@
-import { BESLUIT, EINDE_RECHT } from './generic';
+import { BESLUIT, EINDE_RECHT } from './generic.ts';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
-} from '../../zorgned/zorgned-types';
+} from '../../zorgned/zorgned-types.ts';
 
 export const AV_CZM = 'AV-CZM';
 

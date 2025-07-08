@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest';
 
-import { getThemaTitle, getThemaTitleWithAppState } from './helpers';
-import { themaTitle } from './HLI-thema-config';
-import { AppState } from '../../../../universal/types/App.types';
+import { getThemaTitle, getThemaTitleWithAppState } from './helpers.ts';
+import { themaTitle } from './HLI-thema-config.ts';
+import { AppState } from '../../../../universal/types/App.types.ts';
 
 describe('helpers', () => {
   describe('getThemaTitle', () => {

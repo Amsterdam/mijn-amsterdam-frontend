@@ -4,13 +4,13 @@ import type {
   AfvalFractionData,
   AfvalFractionInformationTransformed,
   AFVALSourceData,
-} from './afval.types';
-import { labels } from './translations';
-import { routeConfig as buurtRouteConfig } from '../../../client/components/MyArea/MyArea-thema-config';
-import type { LinkProps } from '../../../universal/types/App.types';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
-import { sanitizeCmsContent } from '../cms/cms-content';
+} from './afval.types.ts';
+import { labels } from './translations.ts';
+import { routeConfig as buurtRouteConfig } from '../../../client/components/MyArea/MyArea-thema-config.ts';
+import type { LinkProps } from '../../../universal/types/App.types.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
+import { sanitizeCmsContent } from '../cms/cms-content.ts';
 
 function formatKalenderOpmerking(
   fractionData: AfvalFractionData

@@ -1,16 +1,16 @@
-import { ToeristischeVerhuur } from './toeristische-verhuur-config-and-types';
-import { fetchRegistraties } from './toeristische-verhuur-lvv-registratie';
-import { fetchBBVergunningen } from './toeristische-verhuur-powerbrowser-bb-vergunning';
-import { fetchVakantieverhuurVergunningen } from './toeristische-verhuur-vakantieverhuur-vergunning';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import { ToeristischeVerhuur } from './toeristische-verhuur-config-and-types.ts';
+import { fetchRegistraties } from './toeristische-verhuur-lvv-registratie.ts';
+import { fetchBBVergunningen } from './toeristische-verhuur-powerbrowser-bb-vergunning.ts';
+import { fetchVakantieverhuurVergunningen } from './toeristische-verhuur-vakantieverhuur-vergunning.ts';
+import { FeatureToggle } from '../../../universal/config/feature-toggles.ts';
 import {
   ApiSuccessResponse,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
-} from '../../../universal/helpers/api';
-import { dateSort } from '../../../universal/helpers/date';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+} from '../../../universal/helpers/api.ts';
+import { dateSort } from '../../../universal/helpers/date.ts';
+import { AuthProfileAndToken } from '../../auth/auth-types.ts';
 
 export async function fetchToeristischeVerhuur(
   authProfileAndToken: AuthProfileAndToken

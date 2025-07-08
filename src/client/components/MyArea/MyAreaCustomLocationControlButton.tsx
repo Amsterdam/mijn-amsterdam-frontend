@@ -3,8 +3,8 @@ import { useMapInstance } from '@amsterdam/react-maps';
 import { LatLngLiteral } from 'leaflet';
 
 import styles from './Map/Zoom.module.scss';
-import { HOOD_ZOOM } from '../../../universal/config/myarea-datasets';
-import { IconPin } from '../../assets/icons/map';
+import { HOOD_ZOOM } from '../../../universal/config/myarea-datasets.ts';
+import { IconPin } from '../../assets/icons/map/index.tsx';
 
 interface MyAreaCustomLocationControlButtonProps {
   latlng: LatLngLiteral;

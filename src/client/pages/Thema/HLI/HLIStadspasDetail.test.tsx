@@ -2,14 +2,14 @@ import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { generatePath } from 'react-router';
 
-import { routeConfig } from './HLI-thema-config';
-import { HLIStadspasDetail } from './HLIStadspasDetail';
-import { forTesting } from './HLIStadspasDetail';
-import { createHLIState } from './test-helpers';
-import { stadspasCreator } from './test-helpers';
-import { StadspasBudget } from '../../../../server/services/hli/stadspas-types';
-import { bffApi } from '../../../../testing/utils';
-import { componentCreator } from '../../MockApp';
+import { routeConfig } from './HLI-thema-config.ts';
+import { HLIStadspasDetail } from './HLIStadspasDetail.tsx';
+import { forTesting } from './HLIStadspasDetail.tsx';
+import { createHLIState } from './test-helpers.ts';
+import { stadspasCreator } from './test-helpers.ts';
+import { StadspasBudget } from '../../../../server/services/hli/stadspas-types.ts';
+import { bffApi } from '../../../../testing/utils.ts';
+import { componentCreator } from '../../MockApp.tsx';
 
 const createStadspas = stadspasCreator();
 const passNumber = 12345678;

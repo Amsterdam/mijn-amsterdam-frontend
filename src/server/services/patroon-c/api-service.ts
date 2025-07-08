@@ -3,12 +3,12 @@ import { AxiosResponseTransformer } from 'axios';
 import {
   apiSuccessResult,
   type ApiResponse,
-} from '../../../universal/helpers/api';
-import { omit } from '../../../universal/helpers/utils';
-import { MyNotification } from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { DataRequestConfig } from '../../config/source-api';
-import { requestData } from '../../helpers/source-api-request';
+} from '../../../universal/helpers/api.ts';
+import { omit } from '../../../universal/helpers/utils.ts';
+import { MyNotification } from '../../../universal/types/App.types.ts';
+import { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { DataRequestConfig } from '../../config/source-api.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
 
 export interface ApiPatternResponseA {
   tips?: MyNotification[];

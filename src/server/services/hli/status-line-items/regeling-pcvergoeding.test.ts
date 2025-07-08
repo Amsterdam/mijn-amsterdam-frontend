@@ -6,8 +6,8 @@ import {
   AV_UPCTG,
   AV_UPCZIL,
   forTesting,
-} from './regeling-pcvergoeding';
-import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../../zorgned/zorgned-types';
+} from './regeling-pcvergoeding.ts';
+import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../../zorgned/zorgned-types.ts';
 
 describe('pcvergoeding', () => {
   describe('isRegelingVanVerzilvering', () => {

@@ -2,15 +2,15 @@ import {
   fetchAdministratienummer,
   fetchZorgnedAanvragenHLI,
   forTesting,
-} from './hli-zorgned-service';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
-import * as zorgnedService from '../zorgned/zorgned-service';
+} from './hli-zorgned-service.ts';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import * as zorgnedService from '../zorgned/zorgned-service.ts';
 import {
   ZorgnedAanvraagTransformed,
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedPersoonsgegevensNAWResponse,
-} from '../zorgned/zorgned-types';
-import { AV_CZM } from './status-line-items/regeling-czm';
+} from '../zorgned/zorgned-types.ts';
+import { AV_CZM } from './status-line-items/regeling-czm.ts';
 
 describe('hli-zorgned-service', () => {
   const authProfileAndToken = getAuthProfileAndToken();

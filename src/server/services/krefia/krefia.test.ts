@@ -12,11 +12,11 @@ import {
   fetchKrefia,
   fetchKrefiaNotifications,
   fetchAndTransformKrefia,
-} from './krefia';
+} from './krefia.ts';
 import KrefiaData from '../../../../mocks/fixtures/krefia.json';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
-import { omit } from '../../../universal/helpers/utils';
-import { axiosRequest } from '../../helpers/source-api-request';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import { omit } from '../../../universal/helpers/utils.ts';
+import { axiosRequest } from '../../helpers/source-api-request.ts';
 
 describe('Kredietbank & FIBU service', () => {
   const KREFIA_DUMMY_RESPONSE = {

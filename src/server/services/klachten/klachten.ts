@@ -6,26 +6,26 @@ import {
   routeConfig,
   themaId,
   themaTitle,
-} from '../../../client/pages/Thema/Klachten/Klachten-thema-config';
+} from '../../../client/pages/Thema/Klachten/Klachten-thema-config.ts';
 import {
   apiDependencyError,
   apiSuccessResult,
   type ApiResponse,
-} from '../../../universal/helpers/api';
-import { MyNotification } from '../../../universal/types/App.types';
+} from '../../../universal/helpers/api.ts';
+import { MyNotification } from '../../../universal/types/App.types.ts';
 import {
   createSessionBasedCacheKey,
   getApiConfig,
-} from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
-import { smileDateParser } from '../smile/smile-helpers';
-import { AuthProfileAndToken } from './../../auth/auth-types';
+} from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
+import { smileDateParser } from '../smile/smile-helpers.ts';
+import { AuthProfileAndToken } from './../../auth/auth-types.ts';
 import {
   KlachtFrontend,
   KlachtenResponse,
   SmileKlachtenReponse,
-} from './types';
-import { defaultDateFormat } from '../../../universal/helpers/date';
+} from './types.ts';
+import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import process from "node:process";
 
 const DEFAULT_PAGE_SIZE = 250;

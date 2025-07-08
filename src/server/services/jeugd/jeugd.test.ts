@@ -1,9 +1,9 @@
 import { Mock } from 'vitest';
 
-import { fetchLeerlingenvervoer } from './jeugd';
-import { getAuthProfileAndToken } from '../../../testing/utils';
-import { apiErrorResult } from '../../../universal/helpers/api';
-import { fetchAanvragen } from '../zorgned/zorgned-service';
+import { fetchLeerlingenvervoer } from './jeugd.ts';
+import { getAuthProfileAndToken } from '../../../testing/utils.ts';
+import { apiErrorResult } from '../../../universal/helpers/api.ts';
+import { fetchAanvragen } from '../zorgned/zorgned-service.ts';
 
 const REQUEST_ID = '1';
 const AUTH_PROFILE_AND_TOKEN = getAuthProfileAndToken();

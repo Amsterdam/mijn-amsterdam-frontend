@@ -1,8 +1,9 @@
-import { fetchParkeren } from './parkeren';
-import { hasPermitsOrPermitRequests } from './parkeren-egis-service';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
 import { HttpStatusCode } from 'axios';
+
+import { hasPermitsOrPermitRequests } from './parkeren-egis-service.ts';
+import { fetchParkeren } from './parkeren.ts';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import { AuthProfileAndToken } from '../../auth/auth-types.ts';
 
 const mocks = vi.hoisted(() => {
   return {

@@ -3,11 +3,11 @@ import { parseISO } from 'date-fns';
 import {
   GenericDocument,
   ZaakDetail,
-} from '../../../universal/types/App.types';
+} from '../../../universal/types/App.types.ts';
 import {
   BeschikkingsResultaat,
   ProductSoortCode,
-} from '../zorgned/zorgned-types';
+} from '../zorgned/zorgned-types.ts';
 
 export const SINGLE_DOC_TITLE_BESLUIT = 'Brief';
 

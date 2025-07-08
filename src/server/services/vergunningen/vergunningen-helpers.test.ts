@@ -4,8 +4,8 @@ import {
   isExpiryNotificationDue,
   getCustomTitleForVergunningWithLicensePlates,
   getLifetimeTriggerDate,
-} from './vergunningen-helpers';
-import { TouringcarDagontheffing } from '../parkeren/config-and-types';
+} from './vergunningen-helpers.ts';
+import { TouringcarDagontheffing } from '../parkeren/config-and-types.ts';
 
 describe('vergunningen/helpers', () => {
   beforeAll(() => {

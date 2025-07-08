@@ -3,17 +3,17 @@ import {
   routeConfig,
   themaId,
   themaTitle,
-} from './ToeristischeVerhuur-thema-config';
-import { ToeristischeVerhuurDetail } from './ToeristischeVerhuurDetail';
+} from './ToeristischeVerhuur-thema-config.ts';
+import { ToeristischeVerhuurDetail } from './ToeristischeVerhuurDetail.tsx';
 import { default as ToeristischeVerhuurIcon } from './ToeristischeVerhuurIcon.svg?react';
-import { ToeristischeVerhuurList } from './ToeristischeVerhuurList';
-import { ToeristischeVerhuurThema } from './ToeristischeVerhuurThema';
-import { isLoading } from '../../../../universal/helpers/api';
-import { type AppState } from '../../../../universal/types/App.types';
+import { ToeristischeVerhuurList } from './ToeristischeVerhuurList.tsx';
+import { ToeristischeVerhuurThema } from './ToeristischeVerhuurThema.tsx';
+import { isLoading } from '../../../../universal/helpers/api.ts';
+import { type AppState } from '../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 
 export const ToeristischeVerhuurRoutes = [
   {

@@ -1,44 +1,44 @@
-import { fetchAdoptableTrashContainers } from './afval/adoptable-trash-containers';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
+import { fetchAdoptableTrashContainers } from './afval/adoptable-trash-containers.ts';
+import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
 import {
   ApiResponse_DEPRECATED,
   getSettledResult,
-} from '../../universal/helpers/api';
-import { dateSort } from '../../universal/helpers/date';
-import type { MyNotification } from '../../universal/types/App.types';
-import { AuthProfileAndToken } from '../auth/auth-types';
-import { fetchAfisNotifications } from './afis/afis-notifications';
-import { fetchAVGNotifications } from './avg/avg';
-import { fetchBezwarenNotifications } from './bezwaren/bezwaren';
-import { fetchLoodMetingNotifications } from './bodem/loodmetingen';
-import { fetchBrpNotificationsV2 } from './brp/brp-notifications';
-import { sanitizeCmsContent } from './cms/cms-content';
-import { fetchMaintenanceNotificationsDashboard } from './cms/cms-maintenance-notifications';
-import { ServiceResults } from './content-tips/tip-types';
+} from '../../universal/helpers/api.ts';
+import { dateSort } from '../../universal/helpers/date.ts';
+import type { MyNotification } from '../../universal/types/App.types.ts';
+import { AuthProfileAndToken } from '../auth/auth-types.ts';
+import { fetchAfisNotifications } from './afis/afis-notifications.ts';
+import { fetchAVGNotifications } from './avg/avg.ts';
+import { fetchBezwarenNotifications } from './bezwaren/bezwaren.ts';
+import { fetchLoodMetingNotifications } from './bodem/loodmetingen.ts';
+import { fetchBrpNotificationsV2 } from './brp/brp-notifications.ts';
+import { sanitizeCmsContent } from './cms/cms-content.ts';
+import { fetchMaintenanceNotificationsDashboard } from './cms/cms-maintenance-notifications.ts';
+import { ServiceResults } from './content-tips/tip-types.ts';
 import {
   fetchContentTips,
   prefixTipNotification,
-} from './content-tips/tips-service';
-import { fetchHorecaNotifications } from './horeca/horeca';
-import { fetchKlachtenNotifications } from './klachten/klachten';
-import { fetchKrefiaNotifications } from './krefia/krefia';
-import { fetchParkeerVergunningenNotifications } from './parkeren/parkeren-notifications';
+} from './content-tips/tips-service.ts';
+import { fetchHorecaNotifications } from './horeca/horeca.ts';
+import { fetchKlachtenNotifications } from './klachten/klachten.ts';
+import { fetchKrefiaNotifications } from './krefia/krefia.ts';
+import { fetchParkeerVergunningenNotifications } from './parkeren/parkeren-notifications.ts';
 import {
   fetchBelastingNotifications,
   fetchMilieuzoneNotifications,
   fetchOvertredingenNotifications,
   fetchSubsidieNotifications,
-} from './patroon-c';
-import { fetchSVWINotifications } from './patroon-c/svwi';
-import { fetchBrpNotifications } from './profile/brp';
-import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur/toeristische-verhuur-notifications';
-import { fetchVarenNotifications } from './varen/varen-notifications';
-import { fetchVergunningenNotifications } from './vergunningen/vergunningen-notifications';
-import { fetchWiorNotifications } from './wior';
-import { fetchWpiNotifications } from './wpi';
-import { featureToggle } from '../../client/pages/Thema/Profile/Profile-thema-config';
-import { streamEndpointQueryParamKeys } from '../../universal/config/app';
-import { getFromEnv } from '../helpers/env';
+} from './patroon-c/index.ts';
+import { fetchSVWINotifications } from './patroon-c/svwi.ts';
+import { fetchBrpNotifications } from './profile/brp.ts';
+import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur/toeristische-verhuur-notifications.ts';
+import { fetchVarenNotifications } from './varen/varen-notifications.ts';
+import { fetchVergunningenNotifications } from './vergunningen/vergunningen-notifications.ts';
+import { fetchWiorNotifications } from './wior.ts';
+import { fetchWpiNotifications } from './wpi/index.ts';
+import { featureToggle } from '../../client/pages/Thema/Profile/Profile-thema-config.ts';
+import { streamEndpointQueryParamKeys } from '../../universal/config/app.ts';
+import { getFromEnv } from '../helpers/env.ts';
 
 // Every 3rd notification will be a tip if one is available.
 const INSERT_TIP_AT_EVERY_NTH_INDEX = 3;

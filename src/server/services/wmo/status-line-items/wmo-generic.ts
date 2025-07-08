@@ -1,22 +1,22 @@
 import { isAfter, isSameDay, parseISO } from 'date-fns';
 
-import { FeatureToggle } from '../../../../universal/config/feature-toggles';
+import { FeatureToggle } from '../../../../universal/config/feature-toggles.ts';
 import {
   defaultDateFormat,
   isDateInPast,
-} from '../../../../universal/helpers/date';
-import { GenericDocument } from '../../../../universal/types/App.types';
+} from '../../../../universal/helpers/date.ts';
+import { GenericDocument } from '../../../../universal/types/App.types.ts';
 import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemTransformerConfig,
-} from '../../zorgned/zorgned-types';
+} from '../../zorgned/zorgned-types.ts';
 import {
   DOCUMENT_PGB_BESLUIT,
   DOCUMENT_TITLE_BESLUIT_STARTS_WITH,
   DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH,
   DOCUMENT_UPLOAD_LINK_MEER_INFORMATIE,
   MINIMUM_REQUEST_DATE_FOR_DOCUMENTS,
-} from '../wmo-config-and-types';
+} from '../wmo-config-and-types.ts';
 
 export const FAKE_DECISION_DOCUMENT_ID = 'besluit-document-mist';
 

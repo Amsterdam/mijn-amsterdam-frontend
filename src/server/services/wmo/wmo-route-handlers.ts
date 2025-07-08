@@ -1,5 +1,5 @@
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { fetchDocument } from '../zorgned/zorgned-service';
+import { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { fetchDocument } from '../zorgned/zorgned-service.ts';
 
 export async function fetchZorgnedJZDDocument(
   authProfileAndToken: AuthProfileAndToken,

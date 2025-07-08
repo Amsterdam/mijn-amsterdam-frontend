@@ -10,41 +10,41 @@ import {
 } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router';
 
-import { featureToggle, routeConfig, themaId } from './HLI-thema-config';
+import { featureToggle, routeConfig, themaId } from './HLI-thema-config.ts';
 import styles from './HLIStadspasDetail.module.scss';
-import { useBlockStadspas, useStadspassen } from './useStadspassen.hook';
+import { useBlockStadspas, useStadspassen } from './useStadspassen.hook.tsx';
 import {
   StadspasBudget,
   StadspasBudgetTransaction,
   StadspasFrontend,
-} from '../../../../server/services/hli/stadspas-types';
+} from '../../../../server/services/hli/stadspas-types.ts';
 import {
   apiPristineResult,
   isError,
   isLoading,
   type ApiResponse_DEPRECATED,
-} from '../../../../universal/helpers/api';
-import { dateSort } from '../../../../universal/helpers/date';
-import ErrorAlert from '../../../components/Alert/Alert';
-import { Datalist } from '../../../components/Datalist/Datalist';
+} from '../../../../universal/helpers/api.ts';
+import { dateSort } from '../../../../universal/helpers/date.ts';
+import ErrorAlert from '../../../components/Alert/Alert.tsx';
+import { Datalist } from '../../../components/Datalist/Datalist.tsx';
 import LoadingContent, {
   BarConfig,
-} from '../../../components/LoadingContent/LoadingContent';
-import { MaRouterLink } from '../../../components/MaLink/MaLink';
-import { Modal } from '../../../components/Modal/Modal';
+} from '../../../components/LoadingContent/LoadingContent.tsx';
+import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
+import { Modal } from '../../../components/Modal/Modal.tsx';
 import {
   DetailPageV2,
   PageContentCell,
   PageContentV2,
-} from '../../../components/Page/Page';
-import { PageHeadingV2 } from '../../../components/PageHeading/PageHeadingV2';
-import { Spinner } from '../../../components/Spinner/Spinner';
-import { TableV2 } from '../../../components/Table/TableV2';
-import { useDataApi } from '../../../hooks/api/useDataApi';
-import { useSmallScreen } from '../../../hooks/media.hook';
-import { useAppStateGetter } from '../../../hooks/useAppState';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
+} from '../../../components/Page/Page.tsx';
+import { PageHeadingV2 } from '../../../components/PageHeading/PageHeadingV2.tsx';
+import { Spinner } from '../../../components/Spinner/Spinner.tsx';
+import { TableV2 } from '../../../components/Table/TableV2.tsx';
+import { useDataApi } from '../../../hooks/api/useDataApi.ts';
+import { useSmallScreen } from '../../../hooks/media.hook.ts';
+import { useAppStateGetter } from '../../../hooks/useAppState.ts';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
 const loadingContentBarConfigDetails: BarConfig = [
   ['10rem', '2rem', '.5rem'],

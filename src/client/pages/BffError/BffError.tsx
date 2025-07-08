@@ -1,15 +1,15 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { BFF500_PAGE_DOCUMENT_TITLE } from './BffError-routes';
-import { IS_PRODUCTION } from '../../../universal/config/env';
-import { MaRouterLink } from '../../components/MaLink/MaLink';
+import { BFF500_PAGE_DOCUMENT_TITLE } from './BffError-routes.ts';
+import { IS_PRODUCTION } from '../../../universal/config/env.ts';
+import { MaRouterLink } from '../../components/MaLink/MaLink.tsx';
 import {
   PageContentCell,
   PageContentV2,
   TextPageV2,
-} from '../../components/Page/Page';
-import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
-import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
+} from '../../components/Page/Page.tsx';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2.tsx';
+import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle.ts';
 
 export function BFF500Error() {
   useHTMLDocumentTitle({

@@ -5,10 +5,10 @@ import memoizee from 'memoizee';
 import {
   OIDC_TOKEN_AUD_ATTRIBUTE_VALUE,
   TOKEN_ID_ATTRIBUTE,
-} from './auth-config';
-import { AuthProfile } from './auth-types';
-import { DEV_JWK_PRIVATE } from '../config/development';
-import { logger } from '../logging';
+} from './auth-config.ts';
+import { AuthProfile } from './auth-types.ts';
+import { DEV_JWK_PRIVATE } from '../config/development.ts';
+import { logger } from '../logging.ts';
 
 /**
  *

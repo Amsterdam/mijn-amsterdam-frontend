@@ -2,8 +2,8 @@ import { Alert, Link, Paragraph } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
 import styles from './MaintenanceNotifications.module.scss';
-import { parseHTML } from '../../helpers/html-react-parse';
-import { useCmsMaintenanceNotifications } from '../../hooks/api/useCmsMaintenanceNotifications';
+import { parseHTML } from '../../helpers/html-react-parse.tsx';
+import { useCmsMaintenanceNotifications } from '../../hooks/api/useCmsMaintenanceNotifications.ts';
 
 interface MaintenanceNotificationsProps {
   page?: string;

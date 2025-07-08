@@ -2,11 +2,11 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
-import { routeConfig } from './Zorg-thema-config';
-import { ZorgThema } from './ZorgThema';
-import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
-import MockApp from '../../MockApp';
+import { routeConfig } from './Zorg-thema-config.ts';
+import { ZorgThema } from './ZorgThema.tsx';
+import { AppState } from '../../../../universal/types/App.types.ts';
+import { appStateAtom } from '../../../hooks/useAppState.ts';
+import MockApp from '../../MockApp.tsx';
 
 const testState: Pick<AppState, 'WMO'> = {
   WMO: {

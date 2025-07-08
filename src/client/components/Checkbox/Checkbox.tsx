@@ -12,7 +12,7 @@ import {
 import classnames from 'classnames';
 
 import styles from './Checkbox.module.scss';
-import { IconCheckmark, IconIndeterminate } from '../../assets/icons';
+import { IconCheckmark, IconIndeterminate } from '../../assets/icons/index.tsx';
 
 type CheckboxProps = {
   checked?: boolean;

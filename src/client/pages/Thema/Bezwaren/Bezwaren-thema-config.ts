@@ -1,13 +1,13 @@
 import { generatePath } from 'react-router';
 
-import { BezwaarFrontend } from '../../../../server/services/bezwaren/types';
-import { LinkProps } from '../../../../universal/types/App.types';
-import type { DisplayProps } from '../../../components/Table/TableV2.types';
+import { BezwaarFrontend } from '../../../../server/services/bezwaren/types.ts';
+import { LinkProps } from '../../../../universal/types/App.types.ts';
+import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
-} from '../../../config/app';
-import type { ThemaRoutesConfig } from '../../../config/thema-types';
+} from '../../../config/app.ts';
+import type { ThemaRoutesConfig } from '../../../config/thema-types.ts';
 
 export const featureToggle = {
   BezwarenActive: true,

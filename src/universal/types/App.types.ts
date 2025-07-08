@@ -1,8 +1,8 @@
 import { FunctionComponent, ReactNode, SVGProps } from 'react';
 
-import { ServiceID, ServicesType } from '../../server/services/controller';
-import type { ZaakStatus } from '../../server/services/decos/decos-types';
-import { ApiResponse_DEPRECATED } from '../helpers/api';
+import { ServiceID, ServicesType } from '../../server/services/controller.ts';
+import type { ZaakStatus } from '../../server/services/decos/decos-types.ts';
+import { ApiResponse_DEPRECATED } from '../helpers/api.ts';
 
 export type AppStateBase = {
   [key in ServiceID]: ApiResponse_DEPRECATED<

@@ -15,7 +15,7 @@ import parse, {
   domToReact,
 } from 'html-react-parser';
 
-import { MaRouterLink } from '../components/MaLink/MaLink';
+import { MaRouterLink } from '../components/MaLink/MaLink.tsx';
 
 function getNextNonTextNode(
   domNode: Element,

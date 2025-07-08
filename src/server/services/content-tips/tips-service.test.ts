@@ -9,19 +9,19 @@ import {
   vi,
 } from 'vitest';
 
-import { contentTips } from './tips-content';
-import { fetchContentTips, prefixTipNotification } from './tips-service';
+import { contentTips } from './tips-content.ts';
+import { fetchContentTips, prefixTipNotification } from './tips-service.ts';
 import WPI_E from '../../../../mocks/fixtures/wpi-e-aanvragen.json';
 import {
   ApiSuccessResponse,
   apiSuccessResult,
-} from '../../../universal/helpers/api';
+} from '../../../universal/helpers/api.ts';
 import {
   MyNotification,
   type AppState,
-} from '../../../universal/types/App.types';
-import type { BRPData } from '../profile/brp.types';
-import { WpiRequestProcess } from '../wpi/wpi-types';
+} from '../../../universal/types/App.types.ts';
+import type { BRPData } from '../profile/brp.types.ts';
+import { WpiRequestProcess } from '../wpi/wpi-types.ts';
 
 export function brpApiResponse<T>(
   brpData: PartialDeep<T, { recurseIntoArrays: true }>

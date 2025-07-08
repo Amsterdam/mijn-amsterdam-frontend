@@ -5,16 +5,19 @@ import * as jose from 'jose';
 import {
   ActivePermitSourceResponse,
   ClientProductDetailsSourceResponse,
-} from './config-and-types';
-import { featureToggle } from '../../../client/pages/Thema/Parkeren/Parkeren-thema-config';
-import { ApiResponse } from '../../../universal/helpers/api';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { ONE_SECOND_MS } from '../../config/app';
-import { DataRequestConfig } from '../../config/source-api';
-import { getFromEnv } from '../../helpers/env';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { isSuccessStatus, requestData } from '../../helpers/source-api-request';
-import { captureException } from '../monitoring';
+} from './config-and-types.ts';
+import { featureToggle } from '../../../client/pages/Thema/Parkeren/Parkeren-thema-config.ts';
+import { ApiResponse } from '../../../universal/helpers/api.ts';
+import { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { ONE_SECOND_MS } from '../../config/app.ts';
+import { DataRequestConfig } from '../../config/source-api.ts';
+import { getFromEnv } from '../../helpers/env.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import {
+  isSuccessStatus,
+  requestData,
+} from '../../helpers/source-api-request.ts';
+import { captureException } from '../monitoring.ts';
 
 export async function fetchSSOURL(authProfileAndToken: AuthProfileAndToken) {
   const config = getApiConfig('PARKEREN_FRONTOFFICE', {

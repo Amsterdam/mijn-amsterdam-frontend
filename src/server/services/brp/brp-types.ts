@@ -1,4 +1,4 @@
-import type { Adres, Kind, Persoon, Verbintenis } from '../profile/brp.types';
+import type { Adres, Kind, Persoon, Verbintenis } from '../profile/brp.types.ts';
 
 type TyperingSource = {
   code: string;

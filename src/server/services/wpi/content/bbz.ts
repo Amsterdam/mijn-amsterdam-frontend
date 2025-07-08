@@ -1,8 +1,8 @@
-import { defaultDateTimeFormat } from '../../../../universal/helpers/date';
-import { documentDownloadName, productName } from '../helpers';
-import { WpiRequestStatusLabels } from '../wpi-types';
-import { LINK_MEER_INFO } from './tonk';
-import { requestProcess as tozoRequestProcess } from './tozo';
+import { defaultDateTimeFormat } from '../../../../universal/helpers/date.ts';
+import { documentDownloadName, productName } from '../helpers.ts';
+import { WpiRequestStatusLabels } from '../wpi-types.ts';
+import { LINK_MEER_INFO } from './tonk.ts';
+import { requestProcess as tozoRequestProcess } from './tozo.ts';
 
 const aanvraagLabels: WpiRequestStatusLabels = {
   notification: {

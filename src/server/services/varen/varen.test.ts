@@ -4,15 +4,15 @@ import { afterAll, describe, expect, it } from 'vitest';
 import {
   DecosVarenZaakVergunning,
   VarenVergunningExploitatieType,
-} from './config-and-types';
-import { fetchVaren } from './varen';
-import { getAuthProfileAndToken } from '../../../testing/utils';
+} from './config-and-types.ts';
+import { fetchVaren } from './varen.ts';
+import { getAuthProfileAndToken } from '../../../testing/utils.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
-} from '../../../universal/helpers/api';
-import { omit } from '../../../universal/helpers/utils';
-import * as decos from '../decos/decos-service';
+} from '../../../universal/helpers/api.ts';
+import { omit } from '../../../universal/helpers/utils.ts';
+import * as decos from '../decos/decos-service.ts';
 
 const vergunning1 = {
   vesselLength: '2,31',

@@ -4,18 +4,18 @@ import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
-import { routeConfig } from './Varen-thema-config';
-import { VarenThema } from './VarenThema';
+import { routeConfig } from './Varen-thema-config.ts';
+import { VarenThema } from './VarenThema.tsx';
 import {
   VarenZakenFrontend,
   VarenRegistratieRederType,
   VarenVergunningExploitatieType,
-} from '../../../../server/services/varen/config-and-types';
-import { jsonCopy } from '../../../../universal/helpers/utils';
-import { AppState } from '../../../../universal/types/App.types';
-import { expectHeaders, getTable } from '../../../helpers/test-utils';
-import { appStateAtom } from '../../../hooks/useAppState';
-import MockApp from '../../MockApp';
+} from '../../../../server/services/varen/config-and-types.ts';
+import { jsonCopy } from '../../../../universal/helpers/utils.ts';
+import { AppState } from '../../../../universal/types/App.types.ts';
+import { expectHeaders, getTable } from '../../../helpers/test-utils.ts';
+import { appStateAtom } from '../../../hooks/useAppState.ts';
+import MockApp from '../../MockApp.tsx';
 
 type ExploitatieAanvraag = VarenZakenFrontend<VarenVergunningExploitatieType>;
 const exploitatieInProgress = {

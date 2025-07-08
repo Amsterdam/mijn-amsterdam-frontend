@@ -2,39 +2,39 @@ import { isAfter, parseISO } from 'date-fns';
 import { generatePath } from 'react-router';
 import slug from 'slugme';
 
-import { HLIRegelingFrontend, HLIresponseData } from './hli-regelingen-types';
-import { hliStatusLineItemsConfig } from './hli-status-line-items';
-import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
-import { fetchStadspas } from './stadspas';
+import { HLIRegelingFrontend, HLIresponseData } from './hli-regelingen-types.ts';
+import { hliStatusLineItemsConfig } from './hli-status-line-items.ts';
+import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service.ts';
+import { fetchStadspas } from './stadspas.ts';
 import {
   filterCombineRtmData,
   isRTMDeel1,
-} from './status-line-items/regeling-rtm';
+} from './status-line-items/regeling-rtm.ts';
 import {
   featureToggle,
   routeConfig,
-} from '../../../client/pages/Thema/HLI/HLI-thema-config';
+} from '../../../client/pages/Thema/HLI/HLI-thema-config.ts';
 import {
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
-} from '../../../universal/helpers/api';
-import { capitalizeFirstLetter } from '../../../universal/helpers/text';
+} from '../../../universal/helpers/api.ts';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
 import {
   GenericDocument,
   StatusLineItem,
-} from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import { BffEndpoints } from '../../routing/bff-routes';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
-import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types';
+} from '../../../universal/types/App.types.ts';
+import { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt.ts';
+import { BffEndpoints } from '../../routing/bff-routes.ts';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
+import { getStatusLineItems } from '../zorgned/zorgned-status-line-items.ts';
+import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types.ts';
 import {
   filterCombineUpcPcvData,
   isWorkshopNietGevolgd,
-} from './status-line-items/regeling-pcvergoeding';
-import { toDateFormatted } from '../../../universal/helpers/utils';
+} from './status-line-items/regeling-pcvergoeding.ts';
+import { toDateFormatted } from '../../../universal/helpers/utils.ts';
 
 function getDisplayStatus(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,

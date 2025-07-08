@@ -6,21 +6,21 @@ import {
   fetchDocument,
   fetchRelatedPersons,
   forTesting,
-} from './zorgned-service';
+} from './zorgned-service.ts';
 import {
   ZORGNED_GEMEENTE_CODE,
   ZorgnedPerson,
   ZorgnedPersoonsgegevensNAWResponse,
   ZorgnedResponseDataSource,
-} from './zorgned-types';
+} from './zorgned-types.ts';
 import ZORGNED_JZD_AANVRAGEN from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json';
-import { remoteApiHost } from '../../../testing/setup';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
+import { remoteApiHost } from '../../../testing/setup.ts';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 import {
   apiErrorResult,
   ApiSuccessResponse,
-} from '../../../universal/helpers/api';
-import * as request from '../../helpers/source-api-request';
+} from '../../../universal/helpers/api.ts';
+import * as request from '../../helpers/source-api-request.ts';
 import process from "node:process";
 import { Buffer } from "node:buffer";
 

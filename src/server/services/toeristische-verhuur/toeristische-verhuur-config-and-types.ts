@@ -1,17 +1,17 @@
-import { BBVergunningFrontend } from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
+import { BBVergunningFrontend } from './toeristische-verhuur-powerbrowser-bb-vergunning-types.ts';
 import {
   SELECT_FIELDS_TRANSFORM_BASE,
   dateEnd,
   dateStart,
   location,
-} from '../decos/decos-field-transformers';
+} from '../decos/decos-field-transformers.ts';
 import {
   DecosZaakTransformer,
   DecosZaakBase,
   WithLocation,
   WithDateRange,
-} from '../decos/decos-types';
-import { VergunningFrontend } from '../vergunningen/config-and-types';
+} from '../decos/decos-types.ts';
+import { VergunningFrontend } from '../vergunningen/config-and-types.ts';
 
 export const caseTypeToeristischeVerhuur = {
   VakantieverhuurVergunningaanvraag: 'Vakantieverhuur vergunningsaanvraag',

@@ -1,6 +1,6 @@
-import { Buffer } from 'buffer';
-import crypto from 'crypto';
-import process from "node:process";
+import { Buffer } from 'node:buffer';
+import crypto from 'node:crypto';
+import process from 'node:process';
 
 type Base64IvEncryptedValue = string;
 type EncryptedValue = Buffer;
@@ -53,6 +53,6 @@ export function encryptSessionIdWithRouteIdParam(
   sessionID: SessionID,
   routeIdParam: string
 ) {
-  const [encrptedValue] = encrypt(`${sessionID}:${routeIdParam}`);
-  return encrptedValue;
+  const [base64EncryptedValue] = encrypt(`${sessionID}:${routeIdParam}`);
+  return base64EncryptedValue;
 }

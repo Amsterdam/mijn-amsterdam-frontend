@@ -3,17 +3,17 @@ import { Request, Response } from 'express';
 import nock from 'nock';
 import UID from 'uid-safe';
 
-import { bffApiHost, remoteApiHost } from './setup';
+import { bffApiHost, remoteApiHost } from './setup.ts';
 import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
-} from '../server/auth/auth-config';
+} from '../server/auth/auth-config.ts';
 import {
   AuthenticatedRequest,
   AuthProfile,
   AuthProfileAndToken,
-} from '../server/auth/auth-types';
-import { createOIDCStub } from '../server/routing/router-development';
+} from '../server/auth/auth-types.ts';
+import { createOIDCStub } from '../server/routing/router-development.ts';
 
 const defaultReplyHeaders = {
   'access-control-allow-origin': '*',

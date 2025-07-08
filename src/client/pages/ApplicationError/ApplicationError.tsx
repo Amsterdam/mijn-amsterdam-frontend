@@ -16,8 +16,8 @@ import {
   PageContentCell,
   PageContentV2,
   TextPageV2,
-} from '../../components/Page/Page';
-import { useUsabilla } from '../../hooks/useUsabilla';
+} from '../../components/Page/Page.tsx';
+import { useUsabilla } from '../../hooks/useUsabilla.ts';
 
 function ApplicationErrorContent({ error }: { error?: Error }) {
   useEffect(() => {

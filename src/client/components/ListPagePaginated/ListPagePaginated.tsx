@@ -3,14 +3,14 @@ import { ReactNode, useMemo } from 'react';
 import { Paragraph } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router';
 
-import { LinkProps, ZaakDetail } from '../../../universal/types/App.types';
-import { usePageTypeSetting } from '../../hooks/useThemaMenuItems';
-import ErrorAlert from '../Alert/Alert';
-import LoadingContent from '../LoadingContent/LoadingContent';
-import { OverviewPageV2, PageContentCell, PageContentV2 } from '../Page/Page';
-import { PageHeadingV2 } from '../PageHeading/PageHeadingV2';
-import { PaginationV2 } from '../Pagination/PaginationV2';
-import { DisplayProps, TableV2 } from '../Table/TableV2';
+import { LinkProps, ZaakDetail } from '../../../universal/types/App.types.ts';
+import { usePageTypeSetting } from '../../hooks/useThemaMenuItems.ts';
+import ErrorAlert from '../Alert/Alert.tsx';
+import LoadingContent from '../LoadingContent/LoadingContent.tsx';
+import { OverviewPageV2, PageContentCell, PageContentV2 } from '../Page/Page.tsx';
+import { PageHeadingV2 } from '../PageHeading/PageHeadingV2.tsx';
+import { PaginationV2 } from '../Pagination/PaginationV2.tsx';
+import { DisplayProps, TableV2 } from '../Table/TableV2.tsx';
 
 const DEFAULT_PAGE_SIZE = 20;
 

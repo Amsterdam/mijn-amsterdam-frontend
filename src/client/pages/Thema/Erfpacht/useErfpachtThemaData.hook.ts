@@ -5,12 +5,12 @@ import {
   routeConfig,
   themaId,
   themaTitle,
-} from './Erfpacht-thema-config';
-import { ErfpachtDossiersResponse } from '../../../../server/services/erfpacht/erfpacht-types';
-import { isError, isLoading } from '../../../../universal/helpers/api';
-import { addLinkElementToProperty } from '../../../components/Table/TableV2';
-import { useAppStateGetter } from '../../../hooks/useAppState';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
+} from './Erfpacht-thema-config.ts';
+import { ErfpachtDossiersResponse } from '../../../../server/services/erfpacht/erfpacht-types.ts';
+import { isError, isLoading } from '../../../../universal/helpers/api.ts';
+import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
+import { useAppStateGetter } from '../../../hooks/useAppState.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
 export function useErfpachtThemaData() {
   const { ERFPACHT } = useAppStateGetter();

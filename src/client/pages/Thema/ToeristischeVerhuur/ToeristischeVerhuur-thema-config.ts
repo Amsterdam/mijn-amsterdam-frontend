@@ -4,15 +4,15 @@ import { generatePath } from 'react-router';
 import {
   LVVRegistratie,
   ToeristischeVerhuurVergunning,
-} from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
-import { entries } from '../../../../universal/helpers/utils';
-import { DisplayProps } from '../../../components/Table/TableV2.types';
-import type { ThemaRoutesConfig } from '../../../config/thema-types';
+} from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types.ts';
+import { entries } from '../../../../universal/helpers/utils.ts';
+import { DisplayProps } from '../../../components/Table/TableV2.types.ts';
+import type { ThemaRoutesConfig } from '../../../config/thema-types.ts';
 import {
   ListPageParamKind as ListPageParamKindVergunningen,
   listPageParamKind as listPageParamKindVergunningen,
   tableConfig as tableConfigVergunningen,
-} from '../Vergunningen/Vergunningen-thema-config';
+} from '../Vergunningen/Vergunningen-thema-config.ts';
 
 export const featureToggle = {
   toeristischeVerhuurActive: true,

@@ -5,60 +5,60 @@ import {
   ApiResponse_DEPRECATED,
   apiSuccessResult,
   getSettledResult,
-} from '../../universal/helpers/api';
-import { omit } from '../../universal/helpers/utils';
-import { getAuth } from '../auth/auth-helpers';
-import { AuthProfileAndToken } from '../auth/auth-types';
-import { logger } from '../logging';
+} from '../../universal/helpers/api.ts';
+import { omit } from '../../universal/helpers/utils.ts';
+import { getAuth } from '../auth/auth-helpers.ts';
+import { AuthProfileAndToken } from '../auth/auth-types.ts';
+import { logger } from '../logging.ts';
 import {
   queryParams,
   sendMessage,
   type RequestWithQueryParams,
-} from '../routing/route-helpers';
-import { fetchIsKnownInAFIS } from './afis/afis';
-import { fetchAfval, fetchAfvalPunten } from './afval/afval';
-import { fetchAVG } from './avg/avg';
-import { fetchMyLocation } from './bag/my-locations';
-import { fetchBezwaren } from './bezwaren/bezwaren';
-import { fetchLoodmetingen } from './bodem/loodmetingen';
-import { fetchBrpV2 } from './brp/brp';
-import { fetchMijnAmsterdamUitlegPage } from './cms/cms-content';
-import { fetchMaintenanceNotificationsActual } from './cms/cms-maintenance-notifications';
-import { fetchErfpacht } from './erfpacht/erfpacht';
-import { fetchHLI } from './hli/hli';
-import { fetchHorecaVergunningen } from './horeca/horeca';
-import { fetchLeerlingenvervoer } from './jeugd/jeugd';
-import { fetchAllKlachten } from './klachten/klachten';
-import { fetchKrefia } from './krefia/krefia';
-import { captureException } from './monitoring';
-import { fetchParkeren } from './parkeren/parkeren';
+} from '../routing/route-helpers.ts';
+import { fetchIsKnownInAFIS } from './afis/afis.ts';
+import { fetchAfval, fetchAfvalPunten } from './afval/afval.ts';
+import { fetchAVG } from './avg/avg.ts';
+import { fetchMyLocation } from './bag/my-locations.ts';
+import { fetchBezwaren } from './bezwaren/bezwaren.ts';
+import { fetchLoodmetingen } from './bodem/loodmetingen.ts';
+import { fetchBrpV2 } from './brp/brp.ts';
+import { fetchMijnAmsterdamUitlegPage } from './cms/cms-content.ts';
+import { fetchMaintenanceNotificationsActual } from './cms/cms-maintenance-notifications.ts';
+import { fetchErfpacht } from './erfpacht/erfpacht.ts';
+import { fetchHLI } from './hli/hli.ts';
+import { fetchHorecaVergunningen } from './horeca/horeca.ts';
+import { fetchLeerlingenvervoer } from './jeugd/jeugd.ts';
+import { fetchAllKlachten } from './klachten/klachten.ts';
+import { fetchKrefia } from './krefia/krefia.ts';
+import { captureException } from './monitoring.ts';
+import { fetchParkeren } from './parkeren/parkeren.ts';
 import {
   fetchBelasting,
   fetchMilieuzone,
   fetchOvertredingen,
   fetchSubsidie,
-} from './patroon-c';
-import { fetchSVWI } from './patroon-c/svwi';
-import { fetchBRP } from './profile/brp';
-import { fetchKVK } from './profile/kvk';
-import { fetchProfile } from './profile/profile';
-import { fetchContactmomenten } from './salesforce/contactmomenten';
-import { fetchNotificationsWithTipsInserted } from './tips-and-notifications';
-import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-verhuur';
-import { fetchVaren } from './varen/varen';
-import { fetchVergunningen } from './vergunningen/vergunningen';
-import { fetchWmo } from './wmo/wmo';
+} from './patroon-c/index.ts';
+import { fetchSVWI } from './patroon-c/svwi.ts';
+import { fetchBRP } from './profile/brp.ts';
+import { fetchKVK } from './profile/kvk.ts';
+import { fetchProfile } from './profile/profile.ts';
+import { fetchContactmomenten } from './salesforce/contactmomenten.ts';
+import { fetchNotificationsWithTipsInserted } from './tips-and-notifications.ts';
+import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-verhuur.ts';
+import { fetchVaren } from './varen/varen.ts';
+import { fetchVergunningen } from './vergunningen/vergunningen.ts';
+import { fetchWmo } from './wmo/wmo.ts';
 import {
   fetchBbz,
   fetchBijstandsuitkering,
   fetchSpecificaties,
   fetchTonk,
   fetchTozo,
-} from './wpi';
+} from './wpi/index.ts';
 import {
   featureToggle as featureToggleBrp,
   themaIdBRP,
-} from '../../client/pages/Thema/Profile/Profile-thema-config';
+} from '../../client/pages/Thema/Profile/Profile-thema-config.ts';
 
 // Default service call just passing query params as arguments
 function callAuthenticatedService<T>(

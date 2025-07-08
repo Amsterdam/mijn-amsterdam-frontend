@@ -3,16 +3,16 @@ import { useEffect } from 'react';
 import { Paragraph } from '@amsterdam/design-system-react';
 import { Navigate, useLocation } from 'react-router';
 
-import { isPrivateRoute } from '../../App.routes';
+import { isPrivateRoute } from '../../App.routes.tsx';
 import {
   PageContentCell,
   PageContentV2,
   TextPageV2,
-} from '../../components/Page/Page';
-import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
-import { captureMessage } from '../../helpers/monitoring';
-import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
-import { LandingRoute } from '../Landing/Landing-routes';
+} from '../../components/Page/Page.tsx';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2.tsx';
+import { captureMessage } from '../../helpers/monitoring.ts';
+import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle.ts';
+import { LandingRoute } from '../Landing/Landing-routes.ts';
 
 export function NotFound() {
   useHTMLDocumentTitle({

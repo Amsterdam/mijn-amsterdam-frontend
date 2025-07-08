@@ -6,16 +6,16 @@ import {
   storeNotifications,
   listProfiles,
   truncate,
-} from './notifications-model';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { notificationServices } from '../tips-and-notifications';
+} from './notifications-model.ts';
+import { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { notificationServices } from '../tips-and-notifications.ts';
 import {
   BSN,
   CONSUMER_ID,
   NOTIFICATION_LEAN,
   SERVICE_ID,
-} from './config-and-types';
-import { MyNotification } from '../../../universal/types/App.types';
+} from './config-and-types.ts';
+import { MyNotification } from '../../../universal/types/App.types.ts';
 
 /**
  * The Notification service allows batch handling of notifications for previously verified consumers

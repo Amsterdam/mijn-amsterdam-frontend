@@ -1,4 +1,4 @@
-import { ZaakDetail } from '../../../universal/types/App.types';
+import { ZaakDetail } from '../../../universal/types/App.types.ts';
 
 export type ErfpachtErpachterResponseSource = {
   erfpachter: boolean;

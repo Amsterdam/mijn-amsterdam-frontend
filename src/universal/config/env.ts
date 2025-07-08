@@ -1,4 +1,5 @@
-import process from "node:process";
+import process from 'node:process';
+
 type OtapEnvName = 'development' | 'test' | 'acceptance' | 'production';
 type AppModeName = 'development' | 'unittest' | 'production';
 

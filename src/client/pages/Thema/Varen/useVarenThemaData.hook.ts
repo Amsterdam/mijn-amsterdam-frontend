@@ -5,12 +5,12 @@ import {
   themaTitle,
   themaId,
   routeConfig,
-} from './Varen-thema-config';
-import type { VarenZakenFrontend } from '../../../../server/services/varen/config-and-types';
-import { isError, isLoading } from '../../../../universal/helpers/api';
-import { addLinkElementToProperty } from '../../../components/Table/TableV2';
-import { useAppStateGetter } from '../../../hooks/useAppState';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
+} from './Varen-thema-config.ts';
+import type { VarenZakenFrontend } from '../../../../server/services/varen/config-and-types.ts';
+import { isError, isLoading } from '../../../../universal/helpers/api.ts';
+import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
+import { useAppStateGetter } from '../../../hooks/useAppState.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
 export function useVarenThemaData() {
   const { VAREN } = useAppStateGetter();

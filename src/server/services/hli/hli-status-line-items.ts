@@ -1,24 +1,24 @@
-import type { ZorgnedHLIRegeling } from './hli-regelingen-types';
+import type { ZorgnedHLIRegeling } from './hli-regelingen-types.ts';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemsConfig,
-} from '../zorgned/zorgned-types';
-import { DECLARATIE } from './status-line-items/declaratie';
-import { REGELING } from './status-line-items/regeling';
-import { AV_CZM, REGELING_CZM } from './status-line-items/regeling-czm';
+} from '../zorgned/zorgned-types.ts';
+import { DECLARATIE } from './status-line-items/declaratie.ts';
+import { REGELING } from './status-line-items/regeling.ts';
+import { AV_CZM, REGELING_CZM } from './status-line-items/regeling-czm.ts';
 import {
   verzilveringCodes,
   AV_PCVC,
   AV_UPCC,
   PCVERGOEDING,
-} from './status-line-items/regeling-pcvergoeding';
-import { REGELING_PERIODIEK } from './status-line-items/regeling-periodiek';
+} from './status-line-items/regeling-pcvergoeding.ts';
+import { REGELING_PERIODIEK } from './status-line-items/regeling-periodiek.ts';
 import {
   AV_RTM_DEEL1,
   AV_RTM_DEEL2,
   RTM,
-} from './status-line-items/regeling-rtm';
-import { featureToggle } from '../../../client/pages/Thema/HLI/HLI-thema-config';
+} from './status-line-items/regeling-rtm.ts';
+import { featureToggle } from '../../../client/pages/Thema/HLI/HLI-thema-config.ts';
 
 export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<
   ZorgnedHLIRegeling | ZorgnedAanvraagWithRelatedPersonsTransformed

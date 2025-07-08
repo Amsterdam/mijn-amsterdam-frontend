@@ -1,9 +1,9 @@
-import GenericBase, { GenericContent } from './GenericBase';
-import Url from './Url';
-import { capitalizeFirstLetter } from '../../../../../universal/helpers/text';
-import { Unshaped } from '../../../../../universal/types/App.types';
-import { parseHTML } from '../../../../helpers/html-react-parse';
-import { Datalist } from '../../../Datalist/Datalist';
+import GenericBase, { GenericContent } from './GenericBase.tsx';
+import Url from './Url.tsx';
+import { capitalizeFirstLetter } from '../../../../../universal/helpers/text.ts';
+import { Unshaped } from '../../../../../universal/types/App.types.ts';
+import { parseHTML } from '../../../../helpers/html-react-parse.tsx';
+import { Datalist } from '../../../Datalist/Datalist.tsx';
 
 interface MyArePanelContentSportProps {
   panelItem: Unshaped;

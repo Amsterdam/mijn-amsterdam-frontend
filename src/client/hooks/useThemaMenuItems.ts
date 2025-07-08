@@ -3,16 +3,16 @@ import { useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router';
 import { atom, useRecoilState, useRecoilValue } from 'recoil';
 
-import { useAppStateGetter, useAppStateReady } from './useAppState';
-import { useProfileTypeValue } from './useProfileType';
-import { sortAlpha } from '../../universal/helpers/utils';
-import { LinkProps } from '../../universal/types/App.types';
-import { themasByProfileType } from '../config/menuItems';
-import { ThemaMenuItemTransformed } from '../config/thema-types';
+import { useAppStateGetter, useAppStateReady } from './useAppState.ts';
+import { useProfileTypeValue } from './useProfileType.ts';
+import { sortAlpha } from '../../universal/helpers/utils.ts';
+import { LinkProps } from '../../universal/types/App.types.ts';
+import { themasByProfileType } from '../config/menuItems.ts';
+import { ThemaMenuItemTransformed } from '../config/thema-types.ts';
 import {
   themaIdBRP,
   themaIdKVK,
-} from '../pages/Thema/Profile/Profile-thema-config';
+} from '../pages/Thema/Profile/Profile-thema-config.ts';
 
 export interface ThemasState {
   items: ThemaMenuItemTransformed[];

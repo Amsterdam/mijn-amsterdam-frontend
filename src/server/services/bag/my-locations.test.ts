@@ -1,15 +1,15 @@
 import { describe, it, expect, vi, Mock } from 'vitest';
 
-import { fetchBAG } from './bag';
-import { fetchMyLocation, forTesting } from './my-locations';
-import { getAuthProfileAndToken } from '../../../testing/utils';
+import { fetchBAG } from './bag.ts';
+import { fetchMyLocation, forTesting } from './my-locations.ts';
+import { getAuthProfileAndToken } from '../../../testing/utils.ts';
 import {
   apiSuccessResult,
   apiErrorResult,
-} from '../../../universal/helpers/api';
-import { fetchBRP } from '../profile/brp';
-import type { Adres } from '../profile/brp.types';
-import { fetchKVK, getKvkAddresses } from '../profile/kvk';
+} from '../../../universal/helpers/api.ts';
+import { fetchBRP } from '../profile/brp.ts';
+import type { Adres } from '../profile/brp.types.ts';
+import { fetchKVK, getKvkAddresses } from '../profile/kvk.ts';
 
 vi.mock('../profile/brp', () => ({
   fetchBRP: vi.fn(),

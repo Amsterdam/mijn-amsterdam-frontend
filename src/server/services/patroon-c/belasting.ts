@@ -2,17 +2,17 @@ import {
   fetchService,
   fetchTipsAndNotifications,
   type ApiPatternResponseA,
-} from './api-service';
+} from './api-service.ts';
 import {
   BELASTINGEN_ROUTE_DEFAULT,
   themaId,
   themaTitle,
-} from '../../../client/pages/Thema/Belastingen/Belastingen-thema-config';
-import { MyNotification } from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { DataRequestConfig } from '../../config/source-api';
-import { getFromEnv } from '../../helpers/env';
-import { getApiConfig } from '../../helpers/source-api-helpers';
+} from '../../../client/pages/Thema/Belastingen/Belastingen-thema-config.ts';
+import { MyNotification } from '../../../universal/types/App.types.ts';
+import { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { DataRequestConfig } from '../../config/source-api.ts';
+import { getFromEnv } from '../../helpers/env.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
 import process from "node:process";
 
 const translationsJson = process.env.BFF_BELASTINGEN_BSN_TRANSLATIONS

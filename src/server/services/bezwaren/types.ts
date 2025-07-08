@@ -1,7 +1,7 @@
 import {
   GenericDocument,
   ZaakDetail,
-} from '../../../universal/types/App.types';
+} from '../../../universal/types/App.types.ts';
 
 export type kenmerkKey =
   | 'statustekst'

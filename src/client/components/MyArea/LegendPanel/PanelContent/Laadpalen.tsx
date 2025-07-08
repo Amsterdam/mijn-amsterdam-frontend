@@ -1,16 +1,16 @@
 import React from 'react';
 
-import GenericBase from './GenericBase';
+import GenericBase from './GenericBase.tsx';
 import styles from './Laadpalen.module.scss';
-import { laadpaalValueConfig } from '../../../../../universal/config/myarea-datasets';
-import { getFullAddress } from '../../../../../universal/helpers/brp';
-import { Unshaped } from '../../../../../universal/types/App.types';
+import { laadpaalValueConfig } from '../../../../../universal/config/myarea-datasets.ts';
+import { getFullAddress } from '../../../../../universal/helpers/brp.ts';
+import { Unshaped } from '../../../../../universal/types/App.types.ts';
 import {
   IconConnectorTypeCCS,
   IconConnectorTypeChademo,
   IconConnectorTypeMennekes,
-} from '../../../../assets/icons';
-import { Datalist } from '../../../Datalist/Datalist';
+} from '../../../../assets/icons/index.tsx';
+import { Datalist } from '../../../Datalist/Datalist.tsx';
 
 type Props = {
   panelItem: Unshaped;

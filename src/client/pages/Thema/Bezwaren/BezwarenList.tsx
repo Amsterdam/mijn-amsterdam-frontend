@@ -1,9 +1,9 @@
 import { useParams } from 'react-router';
 
-import { ListPageParamKind } from './Bezwaren-thema-config';
-import { useBezwarenThemaData } from './useBezwarenThemaData.hook';
-import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { ListPageParamKind } from './Bezwaren-thema-config.ts';
+import { useBezwarenThemaData } from './useBezwarenThemaData.hook.ts';
+import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function BezwarenList() {
   const { kind = 'lopende-bezwaren' } = useParams<{

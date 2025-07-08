@@ -3,11 +3,11 @@ import { HttpStatusCode } from 'axios';
 import {
   apiErrorResult,
   apiSuccessResult,
-} from '../../../universal/helpers/api';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { decrypt } from '../../helpers/encrypt-decrypt';
-import { logger } from '../../logging';
-import { captureException } from '../monitoring';
+} from '../../../universal/helpers/api.ts';
+import { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { decrypt } from '../../helpers/encrypt-decrypt.ts';
+import { logger } from '../../logging.ts';
+import { captureException } from '../monitoring.ts';
 
 export type SessionIDAndROuteParamIdEncrypted = string;
 

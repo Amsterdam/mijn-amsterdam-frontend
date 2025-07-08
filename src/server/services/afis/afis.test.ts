@@ -1,7 +1,7 @@
 import { describe } from 'vitest';
 
-import { fetchIsKnownInAFIS } from './afis';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
+import { fetchIsKnownInAFIS } from './afis.ts';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 
 const mocks = vi.hoisted(() => {
   const MOCK_VALUE_ENCRYPTED = 'xx-encrypted-xx';

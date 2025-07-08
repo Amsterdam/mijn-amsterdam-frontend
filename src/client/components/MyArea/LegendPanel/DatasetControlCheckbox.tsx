@@ -8,9 +8,9 @@ import {
   DatasetId,
   DatasetPropertyName,
   DatasetPropertyValue,
-} from '../../../../universal/config/myarea-datasets';
-import Checkbox from '../../Checkbox/Checkbox';
-import { filterActiveDatasets } from '../MyArea.hooks';
+} from '../../../../universal/config/myarea-datasets.ts';
+import Checkbox from '../../Checkbox/Checkbox.tsx';
+import { filterActiveDatasets } from '../MyArea.hooks.ts';
 import styles from './PanelComponent.module.scss';
 
 export function datasetCheckboxState(

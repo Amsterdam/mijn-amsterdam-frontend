@@ -3,17 +3,17 @@ import {
   themaId,
   themaTitle,
   featureToggle,
-} from './Varen-thema-config';
-import { VarenDetail } from './VarenDetail';
+} from './Varen-thema-config.ts';
+import { VarenDetail } from './VarenDetail.tsx';
 import { default as VarenIcon } from './VarenIcon.svg?react';
-import { VarenList } from './VarenList';
-import { VarenThema } from './VarenThema';
-import { isLoading } from '../../../../universal/helpers/api';
-import { type AppState } from '../../../../universal/types/App.types';
+import { VarenList } from './VarenList.tsx';
+import { VarenThema } from './VarenThema.tsx';
+import { isLoading } from '../../../../universal/helpers/api.ts';
+import { type AppState } from '../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 
 export const VarenRoutes = [
   {

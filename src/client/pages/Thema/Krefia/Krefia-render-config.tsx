@@ -3,15 +3,15 @@ import {
   themaId,
   themaTitle,
   featureToggle,
-} from './Krefia-thema-config';
+} from './Krefia-thema-config.ts';
 import { default as KrefiaIcon } from './KrefiaIcon.svg?react';
-import { KrefiaThema } from './KrefiaThema';
-import { isLoading } from '../../../../universal/helpers/api';
-import { type AppState } from '../../../../universal/types/App.types';
+import { KrefiaThema } from './KrefiaThema.tsx';
+import { isLoading } from '../../../../universal/helpers/api.ts';
+import { type AppState } from '../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 
 export const KrefiaRoutes = [
   {

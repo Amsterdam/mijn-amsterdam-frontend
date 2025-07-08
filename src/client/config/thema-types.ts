@@ -1,11 +1,11 @@
 import { type Params } from 'react-router';
 
-import { SomeOtherString } from '../../universal/helpers/types';
+import { SomeOtherString } from '../../universal/helpers/types.ts';
 import {
   AppState,
   LinkProps,
   SVGComponent,
-} from '../../universal/types/App.types';
+} from '../../universal/types/App.types.ts';
 
 export type IsThemaVisibleFN = (appState: AppState) => boolean;
 

@@ -1,10 +1,10 @@
-import { forTesting, getStatusLineItems } from './zorgned-status-line-items';
+import { forTesting, getStatusLineItems } from './zorgned-status-line-items.ts';
 import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemsConfig,
   ZorgnedStatusLineItemTransformerConfig,
-} from './zorgned-types';
-import { logger } from '../../logging';
+} from './zorgned-types.ts';
+import { logger } from '../../logging.ts';
 
 function getTransformerConfig() {
   const transformerConfig: ZorgnedStatusLineItemTransformerConfig = {

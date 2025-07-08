@@ -1,15 +1,15 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 
-import type { BZB } from '../../../../../server/services/parkeren/config-and-types';
-import type { VergunningFrontend } from '../../../../../server/services/vergunningen/config-and-types';
-import { MyNotification } from '../../../../../universal/types/App.types';
-import { Datalist } from '../../../../components/Datalist/Datalist';
-import { useAppStateGetter } from '../../../../hooks/useAppState';
+import type { BZB } from '../../../../../server/services/parkeren/config-and-types.ts';
+import type { VergunningFrontend } from '../../../../../server/services/vergunningen/config-and-types.ts';
+import { MyNotification } from '../../../../../universal/types/App.types.ts';
+import { Datalist } from '../../../../components/Datalist/Datalist.tsx';
+import { useAppStateGetter } from '../../../../hooks/useAppState.ts';
 import {
   commonTransformers,
   dateRange,
   getRows,
-} from '../../Vergunningen/detail-page-content/fields-config';
+} from '../../Vergunningen/detail-page-content/fields-config.tsx';
 
 export function ExpirationNotifications({ id }: { id: string }) {
   const appState = useAppStateGetter();

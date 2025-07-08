@@ -3,12 +3,12 @@ import { useParams } from 'react-router';
 import {
   AfisDisclaimer,
   AfisDisclaimerOvergedragenFacturen,
-} from './AfisThema';
-import { useAfisListPageData } from './useAfisThemaData.hook';
-import { AfisFactuurState } from '../../../../server/services/afis/afis-types';
-import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
-import { PageContentCell } from '../../../components/Page/Page';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+} from './AfisThema.tsx';
+import { useAfisListPageData } from './useAfisThemaData.hook.tsx';
+import { AfisFactuurState } from '../../../../server/services/afis/afis-types.ts';
+import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 function AfisListPageBody({ state }: { state: AfisFactuurState }) {
   switch (state) {

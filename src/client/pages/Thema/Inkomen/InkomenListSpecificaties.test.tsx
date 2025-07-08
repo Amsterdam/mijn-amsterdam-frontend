@@ -4,14 +4,14 @@ import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import { describe, expect, it } from 'vitest';
 
-import { listPageParamKind, routeConfig } from './Inkomen-thema-config';
-import { InkomenListSpecificaties } from './InkomenListSpecificaties';
-import { transformIncomSpecificationResponse } from '../../../../server/services/wpi/api-service';
-import { WpiIncomeSpecificationResponseData } from '../../../../server/services/wpi/wpi-types';
-import { dateSort } from '../../../../universal/helpers/date';
-import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
-import MockApp from '../../MockApp';
+import { listPageParamKind, routeConfig } from './Inkomen-thema-config.ts';
+import { InkomenListSpecificaties } from './InkomenListSpecificaties.tsx';
+import { transformIncomSpecificationResponse } from '../../../../server/services/wpi/api-service.ts';
+import { WpiIncomeSpecificationResponseData } from '../../../../server/services/wpi/wpi-types.ts';
+import { dateSort } from '../../../../universal/helpers/date.ts';
+import { AppState } from '../../../../universal/types/App.types.ts';
+import { appStateAtom } from '../../../hooks/useAppState.ts';
+import MockApp from '../../MockApp.tsx';
 
 vi.mock('../../../../server/helpers/encrypt-decrypt', async (requireActual) => {
   return {

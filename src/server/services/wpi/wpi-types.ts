@@ -2,7 +2,7 @@ import {
   LinkProps,
   StatusLineItem,
   ZaakDetail,
-} from '../../../universal/types/App.types';
+} from '../../../universal/types/App.types.ts';
 
 export interface WpiRequestStatusDocument {
   id: string;

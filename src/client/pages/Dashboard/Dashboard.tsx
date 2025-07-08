@@ -3,28 +3,28 @@ import { useEffect } from 'react';
 import { Heading, OrderedList } from '@amsterdam/design-system-react';
 import { useLocation, useNavigate } from 'react-router';
 
-import { DASHBOARD_PAGE_DOCUMENT_TITLE } from './Dashboard-config';
+import { DASHBOARD_PAGE_DOCUMENT_TITLE } from './Dashboard-config.ts';
 import styles from './Dashboard.module.scss';
-import { DashboardHeader } from './DashboardHeader';
-import { WelcomeHeading } from './WelcomHeading';
-import { isLoading } from '../../../universal/helpers/api';
-import LoadingContent from '../../components/LoadingContent/LoadingContent';
-import { MaRouterLink } from '../../components/MaLink/MaLink';
-import { MyAreaDashboard } from '../../components/MyArea/MyAreaDashboard';
-import { MyNotification } from '../../components/MyNotification/MyNotification';
-import { MyThemasPanel } from '../../components/MyThemasPanel/MyThemasPanel';
+import { DashboardHeader } from './DashboardHeader.tsx';
+import { WelcomeHeading } from './WelcomHeading.tsx';
+import { isLoading } from '../../../universal/helpers/api.ts';
+import LoadingContent from '../../components/LoadingContent/LoadingContent.tsx';
+import { MaRouterLink } from '../../components/MaLink/MaLink.tsx';
+import { MyAreaDashboard } from '../../components/MyArea/MyAreaDashboard.tsx';
+import { MyNotification } from '../../components/MyNotification/MyNotification.tsx';
+import { MyThemasPanel } from '../../components/MyThemasPanel/MyThemasPanel.tsx';
 import {
   PageContentCell,
   PageContentV2,
   PageV2,
-} from '../../components/Page/Page';
-import { useSmallScreen } from '../../hooks/media.hook';
-import { useAppStateGetter } from '../../hooks/useAppState';
-import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
-import { useAppStateNotifications } from '../../hooks/useNotifications';
-import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
-import { myNotificationsMenuItem } from '../MyNotifications/MyNotifications-routes';
-import { themaTitle as notificationsThemaTitle } from '../MyNotifications/MyNotifications-config';
+} from '../../components/Page/Page.tsx';
+import { useSmallScreen } from '../../hooks/media.hook.ts';
+import { useAppStateGetter } from '../../hooks/useAppState.ts';
+import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle.ts';
+import { useAppStateNotifications } from '../../hooks/useNotifications.ts';
+import { useThemaMenuItems } from '../../hooks/useThemaMenuItems.ts';
+import { myNotificationsMenuItem } from '../MyNotifications/MyNotifications-routes.ts';
+import { themaTitle as notificationsThemaTitle } from '../MyNotifications/MyNotifications-config.ts';
 
 const MAX_NOTIFICATIONS_VISIBLE = 6;
 

@@ -1,7 +1,7 @@
 import { Alert, Link, Paragraph } from '@amsterdam/design-system-react';
 
 import styles from './ProfilePrivate.module.scss';
-import { AppState } from '../../../../../universal/types/App.types';
+import { AppState } from '../../../../../universal/types/App.types.ts';
 
 type AdresInOnderzoekProps = {
   brpContent: AppState['BRP']['content'];

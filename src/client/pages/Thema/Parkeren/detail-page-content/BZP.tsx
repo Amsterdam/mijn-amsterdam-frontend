@@ -1,11 +1,11 @@
-import type { BZP } from '../../../../../server/services/parkeren/config-and-types';
-import { VergunningFrontend } from '../../../../../server/services/vergunningen/config-and-types';
-import { Datalist } from '../../../../components/Datalist/Datalist';
+import type { BZP } from '../../../../../server/services/parkeren/config-and-types.ts';
+import { VergunningFrontend } from '../../../../../server/services/vergunningen/config-and-types.ts';
+import { Datalist } from '../../../../components/Datalist/Datalist.tsx';
 import {
   getRows,
   dateRange,
   commonTransformers,
-} from '../../Vergunningen/detail-page-content/fields-config';
+} from '../../Vergunningen/detail-page-content/fields-config.tsx';
 
 export function BZP({ vergunning }: { vergunning: VergunningFrontend<BZP> }) {
   const dateRangeTransformer = () => {

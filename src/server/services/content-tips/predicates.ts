@@ -4,13 +4,13 @@ import {
   parseISO,
 } from 'date-fns';
 
-import type { TipsPredicateFN } from './tip-types';
-import { isAmsterdamAddress } from '../buurt/helpers';
-import { HLIRegelingFrontend } from '../hli/hli-regelingen-types';
-import type { IdentiteitsbewijsFrontend, Kind } from '../profile/brp.types';
-import { BBVergunningFrontend } from '../toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
-import { WMOVoorzieningFrontend } from '../wmo/wmo-config-and-types';
-import type { WpiRequestProcess } from '../wpi/wpi-types';
+import type { TipsPredicateFN } from './tip-types.ts';
+import { isAmsterdamAddress } from '../buurt/helpers.ts';
+import { HLIRegelingFrontend } from '../hli/hli-regelingen-types.ts';
+import type { IdentiteitsbewijsFrontend, Kind } from '../profile/brp.types.ts';
+import { BBVergunningFrontend } from '../toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types.ts';
+import { WMOVoorzieningFrontend } from '../wmo/wmo-config-and-types.ts';
+import type { WpiRequestProcess } from '../wpi/wpi-types.ts';
 
 // rule 2
 export const is18OrOlder: TipsPredicateFN = (

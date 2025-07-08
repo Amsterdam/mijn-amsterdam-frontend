@@ -1,10 +1,10 @@
-import { useBurgerZakenDetailData } from './useBurgerZakenDetailData.hook';
-import type { IdentiteitsbewijsFrontend } from '../../../../server/services/profile/brp.types';
-import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
-import { Datalist } from '../../../components/Datalist/Datalist';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { useBurgerZakenDetailData } from './useBurgerZakenDetailData.hook.tsx';
+import type { IdentiteitsbewijsFrontend } from '../../../../server/services/profile/brp.types.ts';
+import { capitalizeFirstLetter } from '../../../../universal/helpers/text.ts';
+import { Datalist } from '../../../components/Datalist/Datalist.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 function getRows(document: IdentiteitsbewijsFrontend) {
   return [

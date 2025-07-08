@@ -3,10 +3,10 @@ import { ReactNode } from 'react';
 import { renderHook } from '@testing-library/react';
 import { MutableSnapshot, RecoilRoot } from 'recoil';
 
-import { appStateAtom, appStateReadyAtom } from './useAppState';
-import { useTrackThemas } from './useTrackThemas.hook';
-import { AppState } from '../../universal/types/App.types';
-import { trackEvent } from '../helpers/monitoring';
+import { appStateAtom, appStateReadyAtom } from './useAppState.ts';
+import { useTrackThemas } from './useTrackThemas.hook.ts';
+import { AppState } from '../../universal/types/App.types.ts';
+import { trackEvent } from '../helpers/monitoring.ts';
 
 vi.mock('../helpers/monitoring', () => ({
   trackEvent: vi.fn(),

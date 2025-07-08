@@ -1,9 +1,8 @@
+import process from 'node:process';
+
 import { RemoteDependencyData } from '@microsoft/applicationinsights-web';
-import {
-  ExceptionData,
-  RequestData,
-} from 'applicationinsights/out/Declarations/Contracts';
-import process from "node:process";
+
+import { ExceptionData, RequestData } from './monitoring-types.ts';
 
 // Example: ["GET /api/users", ...]. This is how a 'name' is represented in telemetry data
 const excludedRequests: string[] = JSON.parse(

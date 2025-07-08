@@ -1,10 +1,10 @@
 import { generatePath } from 'react-router';
 
-import { KlachtFrontend } from '../../../../server/services/klachten/types';
-import { LinkProps } from '../../../../universal/types/App.types';
-import { DisplayProps } from '../../../components/Table/TableV2.types';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND } from '../../../config/app';
-import type { ThemaRoutesConfig } from '../../../config/thema-types';
+import { KlachtFrontend } from '../../../../server/services/klachten/types.ts';
+import { LinkProps } from '../../../../universal/types/App.types.ts';
+import { DisplayProps } from '../../../components/Table/TableV2.types.ts';
+import { MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND } from '../../../config/app.ts';
+import type { ThemaRoutesConfig } from '../../../config/thema-types.ts';
 
 export const featureToggle = {
   klachtenActive: true,

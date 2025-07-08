@@ -5,17 +5,17 @@ import {
   themaId,
   themaTitle,
   routeConfig,
-} from './ToeristischeVerhuur-thema-config';
-import { ToeristischeVerhuurVergunning } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
+} from './ToeristischeVerhuur-thema-config.ts';
+import { ToeristischeVerhuurVergunning } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types.ts';
 import {
   hasFailedDependency,
   isError,
   isLoading,
-} from '../../../../universal/helpers/api';
-import { LinkProps } from '../../../../universal/types/App.types';
-import { addLinkElementToProperty } from '../../../components/Table/TableV2';
-import { useAppStateGetter } from '../../../hooks/useAppState';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
+} from '../../../../universal/helpers/api.ts';
+import { LinkProps } from '../../../../universal/types/App.types.ts';
+import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
+import { useAppStateGetter } from '../../../hooks/useAppState.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
 export const BB_VERGUNNING_DISCLAIMER =
   'Bed & breakfast vergunningen die vóór 14 mei 2021 zijn aangevraagd kunnen niet worden getoond';

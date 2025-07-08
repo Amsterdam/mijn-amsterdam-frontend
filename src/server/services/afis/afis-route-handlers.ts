@@ -1,17 +1,17 @@
 import { Response } from 'express';
 
-import { fetchAfisBusinessPartnerDetails } from './afis-business-partner';
-import { FACTUUR_STATE_KEYS, fetchAfisFacturenByState } from './afis-facturen';
-import { AfisFactuurState } from './afis-types';
-import { getAuth } from '../../auth/auth-helpers';
+import { fetchAfisBusinessPartnerDetails } from './afis-business-partner.ts';
+import { FACTUUR_STATE_KEYS, fetchAfisFacturenByState } from './afis-facturen.ts';
+import { AfisFactuurState } from './afis-types.ts';
+import { getAuth } from '../../auth/auth-helpers.ts';
 import {
   RequestWithQueryParams,
   RequestWithRouteAndQueryParams,
   sendBadRequest,
   sendResponse,
   sendUnauthorized,
-} from '../../routing/route-helpers';
-import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
+} from '../../routing/route-helpers.ts';
+import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param.ts';
 
 export async function handleFetchAfisBusinessPartner(
   req: RequestWithQueryParams<{ id: string }>,

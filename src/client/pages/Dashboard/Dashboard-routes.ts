@@ -1,5 +1,5 @@
-import { Dashboard } from './Dashboard';
-import { themaTitle, themaId } from './Dashboard-config';
+import { Dashboard } from './Dashboard.tsx';
+import { themaTitle, themaId } from './Dashboard-config.ts';
 
 export const DashboardRoute = {
   route: '/',

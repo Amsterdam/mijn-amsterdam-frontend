@@ -1,9 +1,9 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { GenericDocument } from '../../../../../universal/types/App.types';
-import { Datalist } from '../../../../components/Datalist/Datalist';
-import DocumentListV2 from '../../../../components/DocumentList/DocumentListV2';
-import LoadingContent from '../../../../components/LoadingContent/LoadingContent';
+import { GenericDocument } from '../../../../../universal/types/App.types.ts';
+import { Datalist } from '../../../../components/Datalist/Datalist.tsx';
+import DocumentListV2 from '../../../../components/DocumentList/DocumentListV2.tsx';
+import LoadingContent from '../../../../components/LoadingContent/LoadingContent.tsx';
 
 type VergunningDetailDocumentsListProps = {
   documents: GenericDocument[];

@@ -1,8 +1,8 @@
 import { atom, useRecoilState } from 'recoil';
 import useSWRMutation from 'swr/mutation';
 
-import { StadspasFrontend } from '../../../../server/services/hli/stadspas-types';
-import { useAppStateGetter } from '../../../hooks/useAppState';
+import { StadspasFrontend } from '../../../../server/services/hli/stadspas-types.ts';
+import { useAppStateGetter } from '../../../hooks/useAppState.ts';
 
 type StadspasActiefByID = {
   [id: string]: boolean;

@@ -2,11 +2,11 @@ import { ReactNode } from 'react';
 
 import { LinkList } from '@amsterdam/design-system-react';
 
-import { LinkProps } from '../../../universal/types/App.types';
-import ErrorAlert from '../Alert/Alert';
-import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
-import { OverviewPageV2, PageContentCell, PageContentV2 } from '../Page/Page';
-import { PageHeadingV2 } from '../PageHeading/PageHeadingV2';
+import { LinkProps } from '../../../universal/types/App.types.ts';
+import ErrorAlert from '../Alert/Alert.tsx';
+import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent.tsx';
+import { OverviewPageV2, PageContentCell, PageContentV2 } from '../Page/Page.tsx';
+import { PageHeadingV2 } from '../PageHeading/PageHeadingV2.tsx';
 
 const LOADING_BAR_CONFIG_DEFAULT: BarConfig = [
   ['20rem', '4rem', '4rem'],

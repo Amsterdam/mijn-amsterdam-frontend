@@ -3,14 +3,14 @@ import { generatePath } from 'react-router';
 import {
   WpiIncomeSpecificationTransformed,
   WpiRequestProcess,
-} from '../../../../server/services/wpi/wpi-types';
-import { LinkProps } from '../../../../universal/types/App.types';
-import { DisplayProps } from '../../../components/Table/TableV2.types';
+} from '../../../../server/services/wpi/wpi-types.ts';
+import { LinkProps } from '../../../../universal/types/App.types.ts';
+import { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
-} from '../../../config/app';
-import { ThemaRoutesConfig } from '../../../config/thema-types';
+} from '../../../config/app.ts';
+import { ThemaRoutesConfig } from '../../../config/thema-types.ts';
 
 export const themaId = 'INKOMEN' as const;
 export const themaTitle = 'Inkomen';

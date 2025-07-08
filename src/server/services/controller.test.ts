@@ -9,18 +9,18 @@ import {
   vi,
 } from 'vitest';
 
-import { fetchMijnAmsterdamUitlegPage } from './cms/cms-content';
+import { fetchMijnAmsterdamUitlegPage } from './cms/cms-content.ts';
 import {
   addServiceResultHandler,
   forTesting,
   servicesTipsByProfileType,
-} from './controller';
+} from './controller.ts';
 import {
   getReqMockWithOidc,
   RequestMock,
   ResponseMock,
-} from '../../testing/utils';
-import { apiSuccessResult } from '../../universal/helpers/api';
+} from '../../testing/utils.ts';
+import { apiSuccessResult } from '../../universal/helpers/api.ts';
 
 const mocks = vi.hoisted(() => {
   return {

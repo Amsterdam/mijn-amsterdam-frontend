@@ -1,12 +1,12 @@
 import { useParams } from 'react-router';
 
-import { useJeugdThemaData } from './useJeugdThemaData';
-import { LeerlingenvervoerVoorzieningFrontend } from '../../../../server/services/jeugd/jeugd';
-import { Datalist } from '../../../components/Datalist/Datalist';
-import DocumentListV2 from '../../../components/DocumentList/DocumentListV2';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { useJeugdThemaData } from './useJeugdThemaData.ts';
+import { LeerlingenvervoerVoorzieningFrontend } from '../../../../server/services/jeugd/jeugd.ts';
+import { Datalist } from '../../../components/Datalist/Datalist.tsx';
+import DocumentListV2 from '../../../components/DocumentList/DocumentListV2.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 type ContentProps = {
   voorziening: LeerlingenvervoerVoorzieningFrontend;

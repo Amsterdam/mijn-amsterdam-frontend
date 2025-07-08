@@ -11,19 +11,19 @@ import type {
   OverigeFunctionaris,
   Rechtspersoon,
   Vestiging,
-} from '../../../../../server/services/profile/kvk';
-import { getFullAddress } from '../../../../../universal/helpers/brp';
-import { defaultDateFormat } from '../../../../../universal/helpers/date';
+} from '../../../../../server/services/profile/kvk.ts';
+import { getFullAddress } from '../../../../../universal/helpers/brp.ts';
+import { defaultDateFormat } from '../../../../../universal/helpers/date.ts';
 import {
   capitalizeFirstLetter,
   splitCapitals,
-} from '../../../../../universal/helpers/text';
-import { Adres, AppState } from '../../../../../universal/types/App.types';
+} from '../../../../../universal/helpers/text.ts';
+import { Adres, AppState } from '../../../../../universal/types/App.types.ts';
 import {
   ProfileLabels,
   formatProfileSectionData,
-} from '../profileDataFormatter';
-import { PanelConfig, ProfileSectionData } from '../ProfileSectionPanel';
+} from '../profileDataFormatter.ts';
+import { PanelConfig, ProfileSectionData } from '../ProfileSectionPanel.tsx';
 
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading

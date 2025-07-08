@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import FileCache from './file-cache';
+import FileCache from './file-cache.ts';
 
 vi.mock('flat-cache', () => {
   const cache: { [key: string]: unknown } = {};

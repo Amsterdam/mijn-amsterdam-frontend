@@ -4,19 +4,19 @@ import {
   DatasetCategoryId,
   DatasetControl,
   DatasetId,
-} from '../../../../universal/config/myarea-datasets';
-import { getIcon } from '../dataset-icons';
+} from '../../../../universal/config/myarea-datasets.ts';
+import { getIcon } from '../dataset-icons.tsx';
 import {
   useActiveDatasetFilters,
   useDatasetFilterSelection,
-} from '../MyArea.hooks';
-import MyAreaCollapsiblePanel, { CollapsedState } from './CollapsiblePanel';
+} from '../MyArea.hooks.ts';
+import MyAreaCollapsiblePanel, { CollapsedState } from './CollapsiblePanel.tsx';
 import {
   datasetCheckboxState,
   DatasetControlCheckbox,
-} from './DatasetControlCheckbox';
-import { DatasetControlPanelProps } from './DatasetControlPanel';
-import { DatasetPropertyFilterPanel } from './DatasetPropertyFilterPanel';
+} from './DatasetControlCheckbox.tsx';
+import { DatasetControlPanelProps } from './DatasetControlPanel.tsx';
+import { DatasetPropertyFilterPanel } from './DatasetPropertyFilterPanel.tsx';
 
 interface DatasePanelProps {
   categoryId: DatasetCategoryId;

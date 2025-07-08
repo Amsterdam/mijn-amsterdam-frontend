@@ -1,8 +1,8 @@
 import { selectorFamily, useRecoilValue } from 'recoil';
 
-import { appStateAtom } from './useAppState';
-import { useProfileTypeValue } from './useProfileType';
-import { WelcomeNotification } from '../config/staticData';
+import { appStateAtom } from './useAppState.ts';
+import { useProfileTypeValue } from './useProfileType.ts';
+import { WelcomeNotification } from '../config/staticData.tsx';
 
 const appStateNotificationsSelector = selectorFamily({
   key: 'appStateNotifications',

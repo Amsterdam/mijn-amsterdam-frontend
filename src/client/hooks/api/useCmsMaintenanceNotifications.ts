@@ -1,11 +1,11 @@
-import { CMSMaintenanceNotification } from '../../../server/services/cms/cms-maintenance-notifications';
+import { CMSMaintenanceNotification } from '../../../server/services/cms/cms-maintenance-notifications.ts';
 import {
   ApiResponse_DEPRECATED,
   apiPristineResult,
-} from '../../../universal/helpers/api';
-import { BFFApiUrls } from '../../config/api';
-import { useAppStateGetter } from '../useAppState';
-import { useDataApi } from './useDataApi';
+} from '../../../universal/helpers/api.ts';
+import { BFFApiUrls } from '../../config/api.ts';
+import { useAppStateGetter } from '../useAppState.ts';
+import { useDataApi } from './useDataApi.ts';
 
 export function useCmsMaintenanceNotifications(
   page?: string,

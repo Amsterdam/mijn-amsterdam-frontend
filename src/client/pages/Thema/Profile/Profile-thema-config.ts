@@ -1,5 +1,5 @@
-import { IS_AP } from '../../../../universal/config/env';
-import { ThemaRoutesConfig } from '../../../config/thema-types';
+import { IS_AP } from '../../../../universal/config/env.ts';
+import { ThemaRoutesConfig } from '../../../config/thema-types.ts';
 
 export const themaIdKVK = 'KVK' as const;
 export const themaIdBRP = 'BRP' as const;

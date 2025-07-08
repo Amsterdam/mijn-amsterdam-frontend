@@ -1,11 +1,11 @@
 import { useParams } from 'react-router';
 
-import { useKlachtenThemaData } from './useKlachtenThemaData.hook';
-import type { KlachtFrontend } from '../../../../server/services/klachten/types';
-import { Datalist, Row, RowSet } from '../../../components/Datalist/Datalist';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { useKlachtenThemaData } from './useKlachtenThemaData.hook.ts';
+import type { KlachtFrontend } from '../../../../server/services/klachten/types.ts';
+import { Datalist, Row, RowSet } from '../../../components/Datalist/Datalist.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 type KlachtenDetailContentProps = {
   klacht: KlachtFrontend;

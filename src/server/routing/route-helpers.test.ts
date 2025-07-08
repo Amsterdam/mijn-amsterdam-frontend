@@ -10,14 +10,14 @@ import {
   sendMessage,
   sendResponse,
   sendUnauthorized,
-} from './route-helpers';
-import { bffApiHost } from '../../testing/setup';
-import { RequestMock, ResponseMock } from '../../testing/utils';
+} from './route-helpers.ts';
+import { bffApiHost } from '../../testing/setup.ts';
+import { RequestMock, ResponseMock } from '../../testing/utils.ts';
 import {
   ApiResponse_DEPRECATED,
   apiErrorResult,
-} from '../../universal/helpers/api';
-import { oidcConfigDigid, oidcConfigEherkenning } from '../auth/auth-config';
+} from '../../universal/helpers/api.ts';
+import { oidcConfigDigid, oidcConfigEherkenning } from '../auth/auth-config.ts';
 
 describe('route-helpers', () => {
   const digidClientId = oidcConfigDigid.clientID;

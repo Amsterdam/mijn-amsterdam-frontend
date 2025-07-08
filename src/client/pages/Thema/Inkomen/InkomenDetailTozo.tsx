@@ -1,10 +1,10 @@
 import { LinkList, Paragraph } from '@amsterdam/design-system-react';
 
-import { wpiLinks } from './Inkomen-thema-config';
-import { useInkomenDetailData } from './useInkomenDetailData.hook';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { wpiLinks } from './Inkomen-thema-config.ts';
+import { useInkomenDetailData } from './useInkomenDetailData.hook.ts';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function InkomenDetailTozo() {
   const { isLoading, isError, zaak, breadcrumbs, routeConfig } =

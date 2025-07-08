@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { Button, OrderedList } from '@amsterdam/design-system-react';
 
-import { ErfpachtCanon } from '../../../../../server/services/erfpacht/erfpacht-types';
+import { ErfpachtCanon } from '../../../../../server/services/erfpacht/erfpacht-types.ts';
 
 const MAX_CANONS_VISIBLE_INITIALLY = 2;
 

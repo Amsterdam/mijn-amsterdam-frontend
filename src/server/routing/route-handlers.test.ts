@@ -1,11 +1,11 @@
-import { isAuthenticated, requestID } from './route-handlers';
+import { isAuthenticated, requestID } from './route-handlers.ts';
 import {
   getAuthProfileAndToken,
   getReqMockWithOidc,
   RequestMock,
   ResponseMock,
-} from '../../testing/utils';
-import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config';
+} from '../../testing/utils.ts';
+import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config.ts';
 
 describe('routing.route-handlers', () => {
   const resMock = ResponseMock.new();

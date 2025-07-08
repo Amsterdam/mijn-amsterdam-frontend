@@ -1,39 +1,39 @@
 import { Request, Response } from 'express';
 
-import { ExternalConsumerEndpoints } from './bff-routes';
-import { apiKeyVerificationHandler } from './route-handlers';
+import { ExternalConsumerEndpoints } from './bff-routes.ts';
+import { apiKeyVerificationHandler } from './route-handlers.ts';
 import {
   createBFFRouter,
   generateFullApiUrlBFF,
   sendBadRequest,
   sendResponse,
-} from './route-helpers';
-import { IS_PRODUCTION } from '../../universal/config/env';
-import { apiSuccessResult } from '../../universal/helpers/api';
+} from './route-helpers.ts';
+import { IS_PRODUCTION } from '../../universal/config/env.ts';
+import { apiSuccessResult } from '../../universal/helpers/api.ts';
 import {
   RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
   RETURNTO_AMSAPP_STADSPAS_APP_LANDING,
-} from '../auth/auth-config';
-import { getAuth } from '../auth/auth-helpers';
-import { authRoutes } from '../auth/auth-routes';
-import { AuthProfileAndToken } from '../auth/auth-types';
-import { decrypt, encrypt } from '../helpers/encrypt-decrypt';
-import { getFromEnv } from '../helpers/env';
-import { getApiConfig } from '../helpers/source-api-helpers';
-import { requestData } from '../helpers/source-api-request';
-import { fetchAdministratienummer } from '../services/hli/hli-zorgned-service';
-import {
-  blockStadspas,
-  fetchStadspasBudgetTransactions,
-  fetchStadspasDiscountTransactions,
-} from '../services/hli/stadspas';
-import { fetchStadspassenByAdministratienummer } from '../services/hli/stadspas-gpass-service';
+} from '../auth/auth-config.ts';
+import { getAuth } from '../auth/auth-helpers.ts';
+import { authRoutes } from '../auth/auth-routes.ts';
+import { AuthProfileAndToken } from '../auth/auth-types.ts';
+import { decrypt, encrypt } from '../helpers/encrypt-decrypt.ts';
+import { getFromEnv } from '../helpers/env.ts';
+import { getApiConfig } from '../helpers/source-api-helpers.ts';
+import { requestData } from '../helpers/source-api-request.ts';
+import { fetchAdministratienummer } from '../services/hli/hli-zorgned-service.ts';
+import { fetchStadspassenByAdministratienummer } from '../services/hli/stadspas-gpass-service.ts';
 import {
   StadspasAMSAPPFrontend,
   StadspasBudget,
   TransactionKeysEncryptedWithoutSessionID,
-} from '../services/hli/stadspas-types';
-import { captureException, captureMessage } from '../services/monitoring';
+} from '../services/hli/stadspas-types.ts';
+import {
+  blockStadspas,
+  fetchStadspasBudgetTransactions,
+  fetchStadspasDiscountTransactions,
+} from '../services/hli/stadspas.ts';
+import { captureException, captureMessage } from '../services/monitoring.ts';
 
 const AMSAPP_PROTOCOl = 'amsterdam://';
 const AMSAPP_STADSPAS_DEEP_LINK = `${AMSAPP_PROTOCOl}stadspas`;

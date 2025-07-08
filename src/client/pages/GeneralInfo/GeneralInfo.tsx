@@ -1,16 +1,16 @@
-import { GENERAL_INFO_PAGE_DOCUMENT_TITLE } from './GeneralInfo-routes';
-import { isError, isLoading } from '../../../universal/helpers/api';
-import ErrorAlert from '../../components/Alert/Alert';
-import LoadingContent from '../../components/LoadingContent/LoadingContent';
+import { GENERAL_INFO_PAGE_DOCUMENT_TITLE } from './GeneralInfo-routes.ts';
+import { isError, isLoading } from '../../../universal/helpers/api.ts';
+import ErrorAlert from '../../components/Alert/Alert.tsx';
+import LoadingContent from '../../components/LoadingContent/LoadingContent.tsx';
 import {
   PageContentCell,
   PageContentV2,
   TextPageV2,
-} from '../../components/Page/Page';
-import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
-import { parseHTML } from '../../helpers/html-react-parse';
-import { useAppStateGetter } from '../../hooks/useAppState';
-import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
+} from '../../components/Page/Page.tsx';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2.tsx';
+import { parseHTML } from '../../helpers/html-react-parse.tsx';
+import { useAppStateGetter } from '../../hooks/useAppState.ts';
+import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle.ts';
 
 export function GeneralInfo() {
   useHTMLDocumentTitle({

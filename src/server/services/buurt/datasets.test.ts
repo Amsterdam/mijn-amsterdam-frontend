@@ -5,8 +5,8 @@ import {
   fetchMeldingenBuurt,
   transformHardlooproutesResponse,
   transformMeldingenBuurtResponse,
-} from './datasets';
-import { remoteApiHost } from '../../../testing/setup';
+} from './datasets.ts';
+import { remoteApiHost } from '../../../testing/setup.ts';
 
 describe('Custom dataset tranformations', () => {
   it('Should group distance of hardlooproute', () => {

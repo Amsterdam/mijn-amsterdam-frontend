@@ -1,11 +1,11 @@
 import { describe, expect, test } from 'vitest';
 
-import { fetchErfpacht, fetchErfpachtDossiersDetail } from './erfpacht';
+import { fetchErfpacht, fetchErfpachtDossiersDetail } from './erfpacht.ts';
 import ERFPACHT_DOSSIERINFO_DETAILS from '../../../../mocks/fixtures/erfpacht-v2-dossierinfo-bsn.json';
 import ERFPACHT_DOSSIERS from '../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
 import ERFPACHT_ERFPACHTER from '../../../../mocks/fixtures/erfpacht-v2-erfpachter.json';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import { AuthProfileAndToken } from '../../auth/auth-types.ts';
 
 describe('simple-connect/erfpacht', () => {
   const REQUEST_ID = 'test-x-789';

@@ -5,15 +5,15 @@ import {
   FetchConfig,
   fetchBijstandsuitkering,
   fetchRequestProcess,
-} from './api-service';
+} from './api-service.ts';
 import {
   WpiRequestProcess,
   WpiRequestProcessLabels,
   WpiRequestStatusLabels,
-} from './wpi-types';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
-import { ApiErrorResponse } from '../../../universal/helpers/api';
-import { jsonCopy } from '../../../universal/helpers/utils';
+} from './wpi-types.ts';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import { ApiErrorResponse } from '../../../universal/helpers/api.ts';
+import { jsonCopy } from '../../../universal/helpers/utils.ts';
 
 function fakeStepLabels(): WpiRequestStatusLabels {
   return {

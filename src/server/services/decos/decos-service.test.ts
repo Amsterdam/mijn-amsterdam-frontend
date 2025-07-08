@@ -6,7 +6,7 @@ import {
   forTesting,
   fetchDecosTermijnen,
   fetchDecosLinkedField,
-} from './decos-service';
+} from './decos-service.ts';
 import {
   DecosDocumentSource,
   DecosZaakSource,
@@ -14,15 +14,15 @@ import {
   type DecosWorkflowResponse,
   type DecosZaakBase,
   type DecosZaakTransformer,
-} from './decos-types';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
-import { jsonCopy, range } from '../../../universal/helpers/utils';
-import * as sourceApiRequest from '../../helpers/source-api-request';
-import type { WerkzaamhedenEnVervoerOpStraat } from '../vergunningen/config-and-types';
+} from './decos-types.ts';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import { jsonCopy, range } from '../../../universal/helpers/utils.ts';
+import * as sourceApiRequest from '../../helpers/source-api-request.ts';
+import type { WerkzaamhedenEnVervoerOpStraat } from '../vergunningen/config-and-types.ts';
 import {
   decosCaseToZaakTransformers,
   decosZaakTransformers,
-} from '../vergunningen/decos-zaken';
+} from '../vergunningen/decos-zaken.ts';
 import process from "node:process";
 
 vi.mock('../../../server/helpers/encrypt-decrypt', async (requireActual) => {

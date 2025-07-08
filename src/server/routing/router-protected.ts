@@ -1,55 +1,60 @@
 import { HttpStatusCode } from 'axios';
 import { NextFunction, Request, Response } from 'express';
+import net from 'node:net';
 
-import { BffEndpoints } from './bff-routes';
-import { handleCheckProtectedRoute, isAuthenticated } from './route-handlers';
+import { BffEndpoints } from './bff-routes.ts';
+import {
+  handleCheckProtectedRoute,
+  isAuthenticated,
+} from './route-handlers.ts';
 import {
   createBFFRouter,
   sendBadRequest,
   sendResponse,
   sendUnauthorized,
   type RequestWithQueryParams,
-} from './route-helpers';
-import type { streamEndpointQueryParamKeys } from '../../universal/config/app';
-import { IS_PRODUCTION } from '../../universal/config/env';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
-import { getAuth } from '../auth/auth-helpers';
-import { setAdHocDependencyRequestCacheTtlMs } from '../config/source-api';
-import { fetchAfisDocument } from '../services/afis/afis-documents';
+} from './route-helpers.ts';
+import type { streamEndpointQueryParamKeys } from '../../universal/config/app.ts';
+import { IS_DEVELOPMENT, IS_PRODUCTION } from '../../universal/config/env.ts';
+import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
+import { getAuth } from '../auth/auth-helpers.ts';
+import { setAdHocDependencyRequestCacheTtlMs } from '../config/source-api.ts';
+import { fetchAfisDocument } from '../services/afis/afis-documents.ts';
 import {
   handleFetchAfisBusinessPartner,
   handleFetchAfisFacturen,
-} from '../services/afis/afis-route-handlers';
-import { fetchBezwaarDocument } from '../services/bezwaren/bezwaren';
-import { handleFetchBezwaarDetail } from '../services/bezwaren/bezwaren-route-handlers';
-import { fetchLoodMetingDocument } from '../services/bodem/loodmetingen';
+} from '../services/afis/afis-route-handlers.ts';
+import { handleFetchBezwaarDetail } from '../services/bezwaren/bezwaren-route-handlers.ts';
+import { fetchBezwaarDocument } from '../services/bezwaren/bezwaren.ts';
+import { fetchLoodMetingDocument } from '../services/bodem/loodmetingen.ts';
 import {
   NOTIFICATIONS,
   loadServicesAll,
   loadServicesSSE,
-} from '../services/controller';
+} from '../services/controller.ts';
 import {
   fetchDecosDocumentsList,
   fetchZaakByKey,
   fetchZakenByUserIDs,
-} from '../services/decos/decos-route-handlers';
+} from '../services/decos/decos-route-handlers.ts';
 import {
   fetchDecosDocument,
   fetchDecosWorkflows,
-} from '../services/decos/decos-service';
-import { fetchErfpachtDossiersDetail as fetchErfpachtDossiersDetail } from '../services/erfpacht/erfpacht';
+} from '../services/decos/decos-service.ts';
+import { fetchErfpachtDossiersDetail as fetchErfpachtDossiersDetail } from '../services/erfpacht/erfpacht.ts';
 import {
   fetchZorgnedAVDocument,
   handleBlockStadspas,
   handleFetchTransactionsRequest,
   handleUnblockStadspas,
-} from '../services/hli/hli-route-handlers';
-import { fetchZorgnedLLVDocument } from '../services/jeugd/route-handlers';
-import { fetchAantalBewoners } from '../services/profile/brp';
-import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler';
-import { fetchBBDocument } from '../services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning';
-import { fetchZorgnedJZDDocument } from '../services/wmo/wmo-route-handlers';
-import { fetchWpiDocument } from '../services/wpi/api-service';
+} from '../services/hli/hli-route-handlers.ts';
+import { fetchZorgnedLLVDocument } from '../services/jeugd/route-handlers.ts';
+import { fetchAantalBewoners } from '../services/profile/brp.ts';
+import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler.ts';
+import { fetchBBDocument } from '../services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning.ts';
+import { fetchZorgnedJZDDocument } from '../services/wmo/wmo-route-handlers.ts';
+import { fetchWpiDocument } from '../services/wpi/api-service.ts';
+import { logger } from '../logging.ts';
 
 export const router = createBFFRouter({ id: 'router-protected' });
 
@@ -87,7 +92,7 @@ router.get(
     req: RequestWithQueryParams<{
       [key in keyof typeof streamEndpointQueryParamKeys]: string;
     }>,
-    res: Response,
+    _res: Response,
     next: NextFunction
   ) => {
     if (
@@ -111,8 +116,18 @@ router.get(
     return next();
   },
   (req: Request, res: Response) => {
-    // See https://nodejs.org/api/net.html#net_socket_setnodelay_nodelay
-    req.socket.setNoDelay(true);
+    console.log(req.socket instanceof net.Socket);
+    // Deno uses a FakeSocket that does not have this method.
+    if (req.socket.setNoDelay) {
+      // RP TODO: Just here to check if we have a Socket instance outside of our development environment.
+      logger.info("Nagle's algorithm disabled.");
+      req.socket.setNoDelay();
+    } else if (!IS_DEVELOPMENT) {
+      logger.error(
+        "req.socket.setNoDelay is not called since it does not exist. Streaming with Nagle's algorithm is enabled."
+      );
+    }
+
     // Tell the client we respond with an event stream
     res.writeHead(HttpStatusCode.Ok, {
       'Content-type': 'text/event-stream',

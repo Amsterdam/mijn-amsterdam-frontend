@@ -1,15 +1,15 @@
 import { useParams } from 'react-router';
 import useSWR from 'swr';
 
-import { useBezwarenThemaData } from './useBezwarenThemaData.hook';
-import { BezwaarDetail } from '../../../../server/services/bezwaren/bezwaren';
-import { FIFTEEN_MINUTES_MS } from '../../../../universal/config/app';
+import { useBezwarenThemaData } from './useBezwarenThemaData.hook.ts';
+import { BezwaarDetail } from '../../../../server/services/bezwaren/bezwaren.ts';
+import { FIFTEEN_MINUTES_MS } from '../../../../universal/config/app.ts';
 import {
   ApiSuccessResponse,
   hasFailedDependency,
   isError,
-} from '../../../../universal/helpers/api';
-import { uniqueArray } from '../../../../universal/helpers/utils';
+} from '../../../../universal/helpers/api.ts';
+import { uniqueArray } from '../../../../universal/helpers/utils.ts';
 
 export function useBezwarenDetailData() {
   const {

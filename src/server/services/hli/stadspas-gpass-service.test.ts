@@ -2,14 +2,14 @@ import { HttpStatusCode } from 'axios';
 import Mockdate from 'mockdate';
 import { describe, expect } from 'vitest';
 
-import { blockStadspas } from './stadspas';
-import { GPASS_API_TOKEN } from './stadspas-config-and-content';
+import { blockStadspas } from './stadspas.ts';
+import { GPASS_API_TOKEN } from './stadspas-config-and-content.ts';
 import {
   fetchGpassDiscountTransactions,
   fetchStadspassenByAdministratienummer,
   forTesting,
   mutateGpassSetPasIsBlockedState,
-} from './stadspas-gpass-service';
+} from './stadspas-gpass-service.ts';
 import type {
   StadspasAanbiedingSource,
   StadspasDetailBudgetSource,
@@ -17,14 +17,14 @@ import type {
   StadspasDiscountTransactionsResponseSource,
   StadspasHouderSource,
   StadspasTransactiesResponseSource,
-} from './stadspas-types';
+} from './stadspas-types.ts';
 import {
   createPas,
   setupStadspashouderRequests,
   setupPassenRequests,
-} from './stadspas.test';
-import { remoteApi } from '../../../testing/utils';
-import { ApiErrorResponse } from '../../../universal/helpers/api';
+} from './stadspas.test.ts';
+import { remoteApi } from '../../../testing/utils.ts';
+import { ApiErrorResponse } from '../../../universal/helpers/api.ts';
 
 describe('stadspas-gpass-service', () => {
   afterEach(() => {

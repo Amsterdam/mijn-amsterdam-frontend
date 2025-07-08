@@ -4,7 +4,7 @@ import { Button } from '@amsterdam/design-system-react';
 import { useMapInstance } from '@amsterdam/react-maps';
 
 import styles from './Zoom.module.scss';
-import { IconEnlarge, IconMinimise } from '../../../assets/icons';
+import { IconEnlarge, IconMinimise } from '../../../assets/icons/index.tsx';
 
 function Zoom() {
   const mapInstance = useMapInstance();

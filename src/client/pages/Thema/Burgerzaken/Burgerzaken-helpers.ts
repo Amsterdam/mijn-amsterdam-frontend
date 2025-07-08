@@ -1,7 +1,7 @@
 import { generatePath } from 'react-router';
 
-import { routeConfig, themaTitle } from './Burgerzaken-thema-config';
-import { AppState } from '../../../../universal/types/App.types';
+import { routeConfig, themaTitle } from './Burgerzaken-thema-config.ts';
+import { AppState } from '../../../../universal/types/App.types.ts';
 
 export function getThemaTitleBurgerzaken(
   hasIDKaart: boolean,

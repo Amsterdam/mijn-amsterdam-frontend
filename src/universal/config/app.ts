@@ -1,4 +1,4 @@
-import { FeatureToggle } from './feature-toggles';
+import { FeatureToggle } from './feature-toggles.ts';
 
 export const MIJN_AMSTERDAM = 'Mijn Amsterdam';
 /**

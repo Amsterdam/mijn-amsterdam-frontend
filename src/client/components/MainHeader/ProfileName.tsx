@@ -1,8 +1,8 @@
-import { isLoading } from '../../../universal/helpers/api';
-import { getFullName } from '../../../universal/helpers/brp';
-import { useAppStateGetter } from '../../hooks/useAppState';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
-import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
+import { isLoading } from '../../../universal/helpers/api.ts';
+import { getFullName } from '../../../universal/helpers/brp.ts';
+import { useAppStateGetter } from '../../hooks/useAppState.ts';
+import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
+import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent.tsx';
 
 type ProfileNameProps = {
   fallbackName: string;

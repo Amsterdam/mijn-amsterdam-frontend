@@ -3,21 +3,21 @@ import { PassportIcon } from '@amsterdam/design-system-react-icons';
 import {
   getThemaTitleBurgerzakenWithAppState,
   getThemaUrlBurgerzakenWithAppState,
-} from './Burgerzaken-helpers';
+} from './Burgerzaken-helpers.ts';
 import {
   routeConfig,
   themaId,
   featureToggle,
-} from './Burgerzaken-thema-config';
-import { BurgerzakenDetail } from './BurgerzakenDetail';
-import { BurgerzakenList } from './BurgerzakenList';
-import { BurgerzakenThema } from './BurgerzakenThema';
-import { isLoading } from '../../../../universal/helpers/api';
-import { type AppState } from '../../../../universal/types/App.types';
+} from './Burgerzaken-thema-config.ts';
+import { BurgerzakenDetail } from './BurgerzakenDetail.tsx';
+import { BurgerzakenList } from './BurgerzakenList.tsx';
+import { BurgerzakenThema } from './BurgerzakenThema.tsx';
+import { isLoading } from '../../../../universal/helpers/api.ts';
+import { type AppState } from '../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 
 export const BurgerzakenRoutes = [
   {

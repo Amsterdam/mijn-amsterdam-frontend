@@ -1,9 +1,9 @@
 import { useParams } from 'react-router';
 
-import { ListPageParamKind } from './Parkeren-thema-config';
-import { useParkerenData } from './useParkerenData.hook';
-import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { ListPageParamKind } from './Parkeren-thema-config.ts';
+import { useParkerenData } from './useParkerenData.hook.tsx';
+import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function ParkerenList() {
   const { kind = 'lopende-aanvragen' } = useParams<{

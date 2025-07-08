@@ -2,18 +2,18 @@ import {
   LVVRegistratie,
   LVVRegistratieSource,
   ToeristischeVerhuurRegistratieNumberSource,
-} from './toeristische-verhuur-config-and-types';
+} from './toeristische-verhuur-config-and-types.ts';
 import {
   apiDependencyError,
   apiErrorResult,
   apiSuccessResult,
-} from '../../../universal/helpers/api';
-import { getFullAddress } from '../../../universal/helpers/brp';
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
-import { isAmsterdamAddress } from '../buurt/helpers';
+} from '../../../universal/helpers/api.ts';
+import { getFullAddress } from '../../../universal/helpers/brp.ts';
+import { defaultDateFormat } from '../../../universal/helpers/date.ts';
+import { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
+import { isAmsterdamAddress } from '../buurt/helpers.ts';
 
 export async function fetchRegistraties(
   authProfileAndToken: AuthProfileAndToken

@@ -5,8 +5,8 @@ import {
   IN_BEHANDELING,
   isDecisionStatusActive,
   MEER_INFORMATIE,
-} from '../wmo/status-line-items/wmo-generic';
-import { ZorgnedStatusLineItemsConfig } from '../zorgned/zorgned-types';
+} from '../wmo/status-line-items/wmo-generic.ts';
+import { ZorgnedStatusLineItemsConfig } from '../zorgned/zorgned-types.ts';
 
 export const jeugdStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
   {

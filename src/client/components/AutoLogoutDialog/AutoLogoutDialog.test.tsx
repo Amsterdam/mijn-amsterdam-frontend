@@ -7,10 +7,10 @@ import {
 } from '@testing-library/react';
 import { describe, it, expect, vi, Mock } from 'vitest';
 
-import { AutoLogoutDialog } from './AutoLogoutDialog';
-import { useSessionValue } from '../../hooks/api/useSessionApi';
-import { useCounter } from '../../hooks/timer.hook';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { AutoLogoutDialog } from './AutoLogoutDialog.tsx';
+import { useSessionValue } from '../../hooks/api/useSessionApi.ts';
+import { useCounter } from '../../hooks/timer.hook.ts';
+import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
 
 vi.mock('../../hooks/api/useSessionApi', async (importOriginal) => ({
   ...(await importOriginal()),

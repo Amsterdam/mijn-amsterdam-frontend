@@ -3,16 +3,16 @@ import { useLocation } from 'react-router';
 import { RecoilRoot } from 'recoil';
 import { describe, it, expect, vi, Mock } from 'vitest';
 
-import { useAppStateGetter, useAppStateReady } from './useAppState';
-import { useProfileTypeValue } from './useProfileType';
+import { useAppStateGetter, useAppStateReady } from './useAppState.ts';
+import { useProfileTypeValue } from './useProfileType.ts';
 import {
   useThemaBreadcrumbs,
   useThemaMenuItemByThemaID,
   useThemaMenuItems,
   useThemaMenuItemsByThemaID,
-} from './useThemaMenuItems';
-import { themasByProfileType } from '../config/menuItems';
-import type { ThemaMenuItemTransformed } from '../config/thema-types';
+} from './useThemaMenuItems.ts';
+import { themasByProfileType } from '../config/menuItems.ts';
+import type { ThemaMenuItemTransformed } from '../config/thema-types.ts';
 
 vi.mock('./useProfileType', () => ({
   useProfileTypeValue: vi.fn(),

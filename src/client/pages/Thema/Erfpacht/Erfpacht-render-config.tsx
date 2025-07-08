@@ -4,19 +4,19 @@ import {
   routeConfig,
   themaId,
   themaTitle,
-} from './Erfpacht-thema-config';
-import { ErfpachtDetail } from './ErfpachtDetail';
+} from './Erfpacht-thema-config.ts';
+import { ErfpachtDetail } from './ErfpachtDetail.tsx';
 import { default as ErfpachtIcon } from './ErfpachtIcon.svg?react';
-import { ErfpachtList } from './ErfpachtList';
-import { ErfpachtListFacturen } from './ErfpachtListFacturen';
-import { ErfpachtListOpenFacturen } from './ErfpachtListOpenFacturen';
-import { ErfpachtThema } from './ErfpachtThema';
-import { isLoading } from '../../../../universal/helpers/api';
-import { type AppState } from '../../../../universal/types/App.types';
+import { ErfpachtList } from './ErfpachtList.tsx';
+import { ErfpachtListFacturen } from './ErfpachtListFacturen.tsx';
+import { ErfpachtListOpenFacturen } from './ErfpachtListOpenFacturen.tsx';
+import { ErfpachtThema } from './ErfpachtThema.tsx';
+import { isLoading } from '../../../../universal/helpers/api.ts';
+import { type AppState } from '../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 
 export const ErfpachtRoutes = [
   {

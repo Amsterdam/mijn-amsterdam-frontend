@@ -22,7 +22,7 @@ import { useSwipeable } from 'react-swipeable';
 import { atom, useRecoilState } from 'recoil';
 
 import styles from './PanelComponent.module.scss';
-import { useWidescreen } from '../../../hooks/media.hook';
+import { useWidescreen } from '../../../hooks/media.hook.ts';
 
 export enum PanelState {
   Closed = 'CLOSED', // Panel is invisible

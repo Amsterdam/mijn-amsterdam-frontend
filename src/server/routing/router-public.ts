@@ -2,38 +2,38 @@ import { HttpStatusCode } from 'axios';
 import express, { NextFunction, Request, Response } from 'express';
 import proxy from 'express-http-proxy';
 
-import { BffEndpoints } from './bff-routes';
-import { queryParams, type RequestWithQueryParams } from './route-helpers';
-import { ZAAK_STATUS_ROUTE } from '../../client/pages/ZaakStatus/ZaakStatus-config';
-import { OTAP_ENV } from '../../universal/config/env';
+import { BffEndpoints } from './bff-routes.ts';
+import { queryParams, type RequestWithQueryParams } from './route-helpers.ts';
+import { ZAAK_STATUS_ROUTE } from '../../client/pages/ZaakStatus/ZaakStatus-config.ts';
+import { OTAP_ENV } from '../../universal/config/env.ts';
 import {
   DATASETS,
   getDatasetCategoryId,
-} from '../../universal/config/myarea-datasets';
+} from '../../universal/config/myarea-datasets.ts';
 import {
   ApiResponse_DEPRECATED,
   apiSuccessResult,
-} from '../../universal/helpers/api';
+} from '../../universal/helpers/api.ts';
 import {
   getAuth,
   getReturnToUrlZaakStatus,
   getZaakStatusQueryParams,
-} from '../auth/auth-helpers';
-import { authRoutes } from '../auth/auth-routes';
-import { RELEASE_VERSION } from '../config/app';
-import { getFromEnv } from '../helpers/env';
+} from '../auth/auth-helpers.ts';
+import { authRoutes } from '../auth/auth-routes.ts';
+import { RELEASE_VERSION } from '../config/app.ts';
+import { getFromEnv } from '../helpers/env.ts';
 import {
   fetchDataset,
   loadFeatureDetail,
   loadPolylineFeatures,
-} from '../services/buurt/buurt';
-import { getDatasetEndpointConfig } from '../services/buurt/helpers';
-import { loadClusterDatasets } from '../services/buurt/supercluster';
-import { fetchCmsFooter, fetchSearchConfig } from '../services/cms/cms-content';
+} from '../services/buurt/buurt.ts';
+import { getDatasetEndpointConfig } from '../services/buurt/helpers.ts';
+import { loadClusterDatasets } from '../services/buurt/supercluster.ts';
+import { fetchCmsFooter, fetchSearchConfig } from '../services/cms/cms-content.ts';
 import {
   fetchMaintenanceNotificationsActual,
   QueryParamsMaintenanceNotifications,
-} from '../services/cms/cms-maintenance-notifications';
+} from '../services/cms/cms-maintenance-notifications.ts';
 import process from "node:process";
 
 export const router = express.Router();

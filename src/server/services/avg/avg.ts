@@ -1,34 +1,34 @@
 import FormData from 'form-data';
 import { generatePath } from 'react-router';
 
-import { getAvgStatusLineItems } from './avg-status-line-items';
+import { getAvgStatusLineItems } from './avg-status-line-items.ts';
 import {
   AVGRequestFrontend,
   AVGResponse,
   AvgThemesResponse,
   SmileAvgResponse,
   SmileAvgThemesResponse,
-} from './types';
+} from './types.ts';
 import {
   featureToggle,
   routeConfig,
   themaId,
   themaTitle,
-} from '../../../client/pages/Thema/AVG/AVG-thema-config';
+} from '../../../client/pages/Thema/AVG/AVG-thema-config.ts';
 import {
   ApiSuccessResponse,
   apiDependencyError,
   apiSuccessResult,
-} from '../../../universal/helpers/api';
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import { MyNotification } from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+} from '../../../universal/helpers/api.ts';
+import { defaultDateFormat } from '../../../universal/helpers/date.ts';
+import { MyNotification } from '../../../universal/types/App.types.ts';
+import { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import {
   createSessionBasedCacheKey,
   getApiConfig,
-} from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
-import { smileDateParser } from '../smile/smile-helpers';
+} from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
+import { smileDateParser } from '../smile/smile-helpers.ts';
 import process from "node:process";
 
 const DEFAULT_PAGE_SIZE = 25;

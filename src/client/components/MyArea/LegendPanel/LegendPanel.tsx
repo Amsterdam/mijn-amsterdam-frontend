@@ -2,16 +2,16 @@ import { useEffect, useRef } from 'react';
 
 import { useLocation } from 'react-router';
 
-import { useLandScape, useWidescreen } from '../../../hooks/media.hook';
+import { useLandScape, useWidescreen } from '../../../hooks/media.hook.ts';
 import {
   useFetchPanelFeature,
   useLoadingFeature,
   useResetMyAreaState,
-} from '../MyArea.hooks';
-import { DatasetCategoryPanel } from './DatasetCategoryPanel';
-import { PanelComponent, PanelState } from './PanelComponent';
-import MyAreaDetailPanel from './PanelContent/MyAreaDetailPanel';
-import { useLegendPanelCycle } from './panelCycle';
+} from '../MyArea.hooks.ts';
+import { DatasetCategoryPanel } from './DatasetCategoryPanel.tsx';
+import { PanelComponent, PanelState } from './PanelComponent.tsx';
+import MyAreaDetailPanel from './PanelContent/MyAreaDetailPanel.tsx';
+import { useLegendPanelCycle } from './panelCycle.ts';
 
 interface LegendPanelProps {
   availableHeight: number;

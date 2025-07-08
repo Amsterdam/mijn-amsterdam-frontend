@@ -1,10 +1,10 @@
 import { generatePath } from 'react-router';
 
-import type { IdentiteitsbewijsFrontend } from '../../../../server/services/profile/brp.types';
-import { dateSort } from '../../../../universal/helpers/date';
-import { LinkProps } from '../../../../universal/types/App.types';
-import { DisplayProps } from '../../../components/Table/TableV2.types';
-import type { ThemaRoutesConfig } from '../../../config/thema-types';
+import type { IdentiteitsbewijsFrontend } from '../../../../server/services/profile/brp.types.ts';
+import { dateSort } from '../../../../universal/helpers/date.ts';
+import { LinkProps } from '../../../../universal/types/App.types.ts';
+import { DisplayProps } from '../../../components/Table/TableV2.types.ts';
+import type { ThemaRoutesConfig } from '../../../config/thema-types.ts';
 
 const displayProps: DisplayProps<IdentiteitsbewijsFrontend> = {
   props: {

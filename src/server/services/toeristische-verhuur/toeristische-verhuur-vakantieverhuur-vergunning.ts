@@ -1,15 +1,15 @@
 import {
   VakantieverhuurVergunningFrontend,
   decosZaakTransformers,
-} from './toeristische-verhuur-config-and-types';
-import { routeConfig } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
-import { apiSuccessResult } from '../../../universal/helpers/api';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+} from './toeristische-verhuur-config-and-types.ts';
+import { routeConfig } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
+import { apiSuccessResult } from '../../../universal/helpers/api.ts';
+import { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import {
   fetchDecosZaken,
   transformDecosZaakFrontend,
-} from '../decos/decos-service';
-import { getStatusSteps } from '../vergunningen/vergunningen-status-steps';
+} from '../decos/decos-service.ts';
+import { getStatusSteps } from '../vergunningen/vergunningen-status-steps.ts';
 
 export async function fetchVakantieverhuurVergunningen(
   authProfileAndToken: AuthProfileAndToken

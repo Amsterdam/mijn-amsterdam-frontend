@@ -1,7 +1,7 @@
 import { differenceInMonths } from 'date-fns';
 
-import { defaultDateFormat } from './date';
-import { MONTHS_TO_KEEP_NOTIFICATIONS } from '../config/app';
+import { defaultDateFormat } from './date.ts';
+import { MONTHS_TO_KEEP_NOTIFICATIONS } from '../config/app.ts';
 
 // https://github.com/Microsoft/TypeScript/issues/21826#issuecomment-479851685
 export const entries = Object.entries as <T>(

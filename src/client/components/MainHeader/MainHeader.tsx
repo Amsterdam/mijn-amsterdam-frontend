@@ -5,28 +5,28 @@ import { CloseIcon, SearchIcon } from '@amsterdam/design-system-react-icons';
 import classNames from 'classnames';
 import { useLocation, useNavigate } from 'react-router';
 
-import { EnvLabel } from './EnvLabel';
+import { EnvLabel } from './EnvLabel.tsx';
 import styles from './MainHeader.module.scss';
-import { useMainHeaderControl } from './useMainHeaderControl.hook';
-import { LOGOUT_URL } from '../../config/api';
-import { useSmallScreen } from '../../hooks/media.hook';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
-import { DashboardRoute } from '../../pages/Dashboard/Dashboard-routes';
-import { SearchPageRoute } from '../../pages/Search/Search-routes';
+import { useMainHeaderControl } from './useMainHeaderControl.hook.ts';
+import { LOGOUT_URL } from '../../config/api.ts';
+import { useSmallScreen } from '../../hooks/media.hook.ts';
+import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
+import { DashboardRoute } from '../../pages/Dashboard/Dashboard-routes.ts';
+import { SearchPageRoute } from '../../pages/Search/Search-routes.ts';
 import {
   routeConfig as profileRouteConfig,
   themaIdBRP,
   themaIdKVK,
-} from '../../pages/Thema/Profile/Profile-thema-config';
-import { themaTitle } from '../../pages/Thema/Profile/Profile-thema-config';
-import { MainMenu } from '../MainMenu/MainMenu';
-import { MaLink, MaRouterLink } from '../MaLink/MaLink';
-import { Search } from '../Search/Search';
+} from '../../pages/Thema/Profile/Profile-thema-config.ts';
+import { themaTitle } from '../../pages/Thema/Profile/Profile-thema-config.ts';
+import { MainMenu } from '../MainMenu/MainMenu.tsx';
+import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
+import { Search } from '../Search/Search.tsx';
 import {
   useDisplayLiveSearch,
   useSearchActive,
   useSearchOnPage,
-} from '../Search/useSearch';
+} from '../Search/useSearch.tsx';
 
 export const AmsMainMenuClassname = 'ma-main-header';
 

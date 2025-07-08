@@ -1,10 +1,10 @@
-import type { Adres } from './brp.types';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import { apiSuccessResult } from '../../../universal/helpers/api';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
-import { isAmsterdamAddress } from '../buurt/helpers';
+import type { Adres } from './brp.types.ts';
+import { FeatureToggle } from '../../../universal/config/feature-toggles.ts';
+import { apiSuccessResult } from '../../../universal/helpers/api.ts';
+import { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
+import { isAmsterdamAddress } from '../buurt/helpers.ts';
 
 type Rechtsvorm = string;
 

@@ -1,9 +1,9 @@
 import {
   StadspasFrontend,
   StadspasOwner,
-} from '../../../../server/services/hli/stadspas-types';
-import { bffApiHost } from '../../../../testing/setup';
-import { AppState } from '../../../../universal/types/App.types';
+} from '../../../../server/services/hli/stadspas-types.ts';
+import { bffApiHost } from '../../../../testing/setup.ts';
+import { AppState } from '../../../../universal/types/App.types.ts';
 
 export function createHLIState(withData: {
   status?: string;

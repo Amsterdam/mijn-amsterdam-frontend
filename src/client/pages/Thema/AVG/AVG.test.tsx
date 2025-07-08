@@ -2,13 +2,13 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
-import { routeConfig } from './AVG-thema-config';
-import { testState } from './AVGDetail.test';
-import { AVGThema } from './AVGThema';
-import { AVGResponse } from '../../../../server/services/avg/types';
-import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
-import MockApp from '../../MockApp';
+import { routeConfig } from './AVG-thema-config.ts';
+import { testState } from './AVGDetail.test.tsx';
+import { AVGThema } from './AVGThema.tsx';
+import { AVGResponse } from '../../../../server/services/avg/types.ts';
+import { AppState } from '../../../../universal/types/App.types.ts';
+import { appStateAtom } from '../../../hooks/useAppState.ts';
+import MockApp from '../../MockApp.tsx';
 
 function initializeState(testState: AppState) {
   return (snapshot: MutableSnapshot) => snapshot.set(appStateAtom, testState);

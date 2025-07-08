@@ -1,17 +1,17 @@
-import { apiSuccessResult } from '../../../universal/helpers/api';
-import { isDateInPast } from '../../../universal/helpers/date';
+import { apiSuccessResult } from '../../../universal/helpers/api.ts';
+import { isDateInPast } from '../../../universal/helpers/date.ts';
 import {
   fetchAanvragenWithRelatedPersons,
   fetchPersoonsgegevensNAW,
-} from '../zorgned/zorgned-service';
+} from '../zorgned/zorgned-service.ts';
 import {
   ZORGNED_GEMEENTE_CODE,
   ZorgnedAanvraagTransformed,
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedPersoonsgegevensNAWResponse,
   type BSN,
-} from '../zorgned/zorgned-types';
-import { AV_CZM } from './status-line-items/regeling-czm';
+} from '../zorgned/zorgned-types.ts';
+import { AV_CZM } from './status-line-items/regeling-czm.ts';
 
 function transformToAdministratienummer(identificatie: number): string {
   const padLength = 10;

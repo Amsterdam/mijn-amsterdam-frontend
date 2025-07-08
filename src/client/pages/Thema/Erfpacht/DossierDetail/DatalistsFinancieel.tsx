@@ -1,15 +1,15 @@
 import { Heading, Link } from '@amsterdam/design-system-react';
 
-import { DatalistCanons } from './DatalistCanons';
-import { ErfpachtDatalistProps } from './DatalistGeneral';
+import { DatalistCanons } from './DatalistCanons.tsx';
+import { ErfpachtDatalistProps } from './DatalistGeneral.tsx';
 import {
   ErfpachtDossierDetailHuidigePeriode,
   ErfpachtDossierDetailToekomstigePeriode,
-} from '../../../../../server/services/erfpacht/erfpacht-types';
-import { defaultDateFormat } from '../../../../../universal/helpers/date';
-import { Datalist, Row } from '../../../../components/Datalist/Datalist';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../../config/app';
-import { LINKS } from '../Erfpacht-thema-config';
+} from '../../../../../server/services/erfpacht/erfpacht-types.ts';
+import { defaultDateFormat } from '../../../../../universal/helpers/date.ts';
+import { Datalist, Row } from '../../../../components/Datalist/Datalist.tsx';
+import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../../config/app.ts';
+import { LINKS } from '../Erfpacht-thema-config.ts';
 import styles from '../ErfpachtDetail.module.scss';
 
 interface DatalistFinancieelPeriodeProps<T> {

@@ -3,19 +3,19 @@ import { differenceInMonths } from 'date-fns';
 import {
   themaId,
   themaTitle,
-} from '../../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
-import { IS_PRODUCTION } from '../../../../universal/config/env';
+} from '../../../../client/pages/Thema/Inkomen/Inkomen-thema-config.ts';
+import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import {
   dateFormat,
   defaultDateFormat,
-} from '../../../../universal/helpers/date';
-import { MyNotification } from '../../../../universal/types/App.types';
-import { ServiceResults } from '../../content-tips/tip-types';
-import { addApiBasePathToDocumentUrls, documentDownloadName } from '../helpers';
+} from '../../../../universal/helpers/date.ts';
+import { MyNotification } from '../../../../universal/types/App.types.ts';
+import { ServiceResults } from '../../content-tips/tip-types.ts';
+import { addApiBasePathToDocumentUrls, documentDownloadName } from '../helpers.ts';
 import type {
   WpiIncomeSpecification,
   WpiIncomeSpecificationTransformed,
-} from '../wpi-types';
+} from '../wpi-types.ts';
 
 const MONTHS_TO_KEEP_UITKERING_NOTIFICATION = 1;
 const MONTHS_TO_KEEP_JAAROPGAVE_NOTIFICATION = 3;

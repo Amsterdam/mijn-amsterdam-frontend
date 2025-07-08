@@ -1,9 +1,9 @@
 import { useParams } from 'react-router';
 
-import { ListPageParamKind } from './Horeca-thema-config';
-import { useHorecaThemaData } from './useHorecaThemaData.hook';
-import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { ListPageParamKind } from './Horeca-thema-config.ts';
+import { useHorecaThemaData } from './useHorecaThemaData.hook.ts';
+import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function HorecaList() {
   const { kind = 'lopende-aanvragen' } = useParams<{

@@ -3,16 +3,16 @@ import {
   routeConfig,
   themaId,
   themaTitle,
-} from './Afval-thema-config';
+} from './Afval-thema-config.ts';
 import { default as AfvalIcon } from './AfvalIcon.svg?react';
-import { AfvalThemaPagina } from './AfvalThema';
-import { isLoading } from '../../../../universal/helpers/api';
-import { isMokum } from '../../../../universal/helpers/brp';
-import { type AppState } from '../../../../universal/types/App.types';
+import { AfvalThemaPagina } from './AfvalThema.tsx';
+import { isLoading } from '../../../../universal/helpers/api.ts';
+import { isMokum } from '../../../../universal/helpers/brp.ts';
+import { type AppState } from '../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 
 export const AfvalRoutes = [
   {

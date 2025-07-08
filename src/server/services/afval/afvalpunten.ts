@@ -1,10 +1,10 @@
 import { LatLngLiteral } from 'leaflet';
 
-import type { AfvalPuntenData, AfvalCenter } from './afval.types';
-import afvalpunten from './afvalpunten-data.json';
-import { apiSuccessResult } from '../../../universal/helpers/api';
-import { getApproximateDistance } from '../../../universal/helpers/geo';
-import { sortByNumber } from '../../../universal/helpers/utils';
+import type { AfvalPuntenData, AfvalCenter } from './afval.types.ts';
+import afvalpunten from './afvalpunten-data.json' with { type: 'json' };
+import { apiSuccessResult } from '../../../universal/helpers/api.ts';
+import { getApproximateDistance } from '../../../universal/helpers/geo.ts';
+import { sortByNumber } from '../../../universal/helpers/utils.ts';
 
 function addApproximateDistance(
   latlng: LatLngLiteral | null,

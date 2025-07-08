@@ -3,7 +3,7 @@ import { BrowserRouter, MemoryRouter } from 'react-router';
 import { RecoilRoot } from 'recoil';
 import { describe, expect, it, vi } from 'vitest';
 
-import { MainHeader } from './MainHeader';
+import { MainHeader } from './MainHeader.tsx';
 
 vi.mock('../../hooks/media.hook');
 

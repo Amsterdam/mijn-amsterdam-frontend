@@ -10,14 +10,14 @@ import {
   vi,
 } from 'vitest';
 
-import * as dataApiHook from './api/useDataApi';
-import { addParamsToStreamEndpoint, useAppStateRemote } from './useAppState';
-import * as sseHook from './useSSE';
-import { SSE_ERROR_MESSAGE } from './useSSE';
-import { newEventSourceMock } from '../../testing/EventSourceMock';
-import { renderRecoilHook } from '../../testing/render-recoil.hook';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
-import * as appStateModule from '../AppState';
+import * as dataApiHook from './api/useDataApi.ts';
+import { addParamsToStreamEndpoint, useAppStateRemote } from './useAppState.ts';
+import * as sseHook from './useSSE.ts';
+import { SSE_ERROR_MESSAGE } from './useSSE.ts';
+import { newEventSourceMock } from '../../testing/EventSourceMock.ts';
+import { renderRecoilHook } from '../../testing/render-recoil.hook.tsx';
+import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
+import * as appStateModule from '../AppState.ts';
 
 vi.mock('./api/useTipsApi');
 vi.mock('./useProfileType');

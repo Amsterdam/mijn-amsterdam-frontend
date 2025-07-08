@@ -1,4 +1,4 @@
-import { LinkProps } from '../../../universal/types/App.types';
+import { LinkProps } from '../../../universal/types/App.types.ts';
 import {
   DecosZaakBase,
   WithLocation,
@@ -7,7 +7,7 @@ import {
   WithDateRange,
   ZaakStatus,
   DecosZaakFrontend,
-} from '../decos/decos-types';
+} from '../decos/decos-types.ts';
 
 export const NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED = 3;
 export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;

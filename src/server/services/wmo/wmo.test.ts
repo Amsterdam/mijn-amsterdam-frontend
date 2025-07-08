@@ -1,12 +1,12 @@
 import Mockdate from 'mockdate';
 
-import { fetchWmo, forTesting } from './wmo';
+import { fetchWmo, forTesting } from './wmo.ts';
 import ZORGNED_AANVRAGEN_WMO from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
-import { jsonCopy } from '../../../universal/helpers/utils';
-import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types';
-import { getHulpmiddelenDisclaimer } from './status-line-items/wmo-hulpmiddelen';
-import { BffEndpoints } from '../../routing/bff-routes';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import { jsonCopy } from '../../../universal/helpers/utils.ts';
+import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
+import { getHulpmiddelenDisclaimer } from './status-line-items/wmo-hulpmiddelen.ts';
+import { BffEndpoints } from '../../routing/bff-routes.ts';
 
 vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => ({
   ...((await importOriginal()) as object),

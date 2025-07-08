@@ -4,22 +4,22 @@ import slug from 'slugme';
 import {
   VarenZakenFrontend,
   VarenRegistratieRederType,
-} from './config-and-types';
-import { fetchVaren } from './varen';
-import { isVergunning } from '../../../client/pages/Thema/Varen/helper';
+} from './config-and-types.ts';
+import { fetchVaren } from './varen.ts';
+import { isVergunning } from '../../../client/pages/Thema/Varen/helper.ts';
 import {
   routeConfig,
   themaId,
   themaTitle,
-} from '../../../client/pages/Thema/Varen/Varen-thema-config';
+} from '../../../client/pages/Thema/Varen/Varen-thema-config.ts';
 import {
   apiErrorResult,
   ApiResponse,
   apiSuccessResult,
-} from '../../../universal/helpers/api';
-import { isRecentNotification } from '../../../universal/helpers/utils';
-import { MyNotification } from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+} from '../../../universal/helpers/api.ts';
+import { isRecentNotification } from '../../../universal/helpers/utils.ts';
+import { MyNotification } from '../../../universal/types/App.types.ts';
+import { AuthProfileAndToken } from '../../auth/auth-types.ts';
 
 function createVarenRederRegisteredNotification(
   zaak: VarenRegistratieRederType

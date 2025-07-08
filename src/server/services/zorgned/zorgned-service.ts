@@ -14,7 +14,7 @@ import {
   ZorgnedPersoonsgegevensNAWResponse,
   ZorgnedResponseDataSource,
   type BSN,
-} from './zorgned-types';
+} from './zorgned-types.ts';
 import {
   apiErrorResult,
   ApiSuccessResponse,
@@ -22,13 +22,13 @@ import {
   getFailedDependencies,
   getSettledResult,
   type ApiResponse,
-} from '../../../universal/helpers/api';
-import { getFullName } from '../../../universal/helpers/brp';
-import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
-import { hash, sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
-import { GenericDocument } from '../../../universal/types/App.types';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { isSuccessStatus, requestData } from '../../helpers/source-api-request';
+} from '../../../universal/helpers/api.ts';
+import { getFullName } from '../../../universal/helpers/brp.ts';
+import { dateSort, defaultDateFormat } from '../../../universal/helpers/date.ts';
+import { hash, sortAlpha, uniqueArray } from '../../../universal/helpers/utils.ts';
+import { GenericDocument } from '../../../universal/types/App.types.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import { isSuccessStatus, requestData } from '../../helpers/source-api-request.ts';
 import { Buffer } from "node:buffer";
 
 async function fetchZorgnedByBSN<S, T>(

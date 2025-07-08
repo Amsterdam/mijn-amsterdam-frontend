@@ -1,8 +1,8 @@
-import { ErfpachtersList } from './ErfpachtersList';
-import { KadastraleAanduidingList } from './KadastraleAanduidingList';
-import { ErfpachtDossiersDetail } from '../../../../../server/services/erfpacht/erfpacht-types';
-import { Datalist } from '../../../../components/Datalist/Datalist';
-import { AddressDisplayAndModal } from '../../../../components/LocationModal/LocationModal';
+import { ErfpachtersList } from './ErfpachtersList.tsx';
+import { KadastraleAanduidingList } from './KadastraleAanduidingList.tsx';
+import { ErfpachtDossiersDetail } from '../../../../../server/services/erfpacht/erfpacht-types.ts';
+import { Datalist } from '../../../../components/Datalist/Datalist.tsx';
+import { AddressDisplayAndModal } from '../../../../components/LocationModal/LocationModal.tsx';
 
 export interface ErfpachtDatalistProps {
   dossier: ErfpachtDossiersDetail;

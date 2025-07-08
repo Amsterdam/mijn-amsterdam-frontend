@@ -3,7 +3,7 @@ import { describe, it, expect } from 'vitest';
 import {
   formatProfileSectionData,
   ProfileLabels,
-} from './profileDataFormatter';
+} from './profileDataFormatter.ts';
 
 type TestData = {
   name: string;

@@ -2,7 +2,7 @@ import {
   DisplayProps,
   type DisplayPropsBase,
   type TableV2ColWidths,
-} from './TableV2.types';
+} from './TableV2.types.ts';
 
 export function getDisplayProps<T extends DisplayProps<object>>(
   displayProps: T

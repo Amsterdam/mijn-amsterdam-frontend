@@ -3,16 +3,16 @@ import userEvent from '@testing-library/user-event';
 import { MutableSnapshot } from 'recoil';
 import type { PartialDeep } from 'type-fest';
 
-import { MijnGegevensThema } from './ProfilePrivate';
+import { MijnGegevensThema } from './ProfilePrivate.tsx';
 import type {
   BRPData,
   Adres,
-} from '../../../../../server/services/profile/brp.types';
-import { ContactMoment } from '../../../../../server/services/salesforce/contactmomenten.types';
-import { AppState } from '../../../../../universal/types/App.types';
-import { appStateAtom } from '../../../../hooks/useAppState';
-import MockApp from '../../../MockApp';
-import { routeConfig } from '../Profile-thema-config';
+} from '../../../../../server/services/profile/brp.types.ts';
+import { ContactMoment } from '../../../../../server/services/salesforce/contactmomenten.types.ts';
+import { AppState } from '../../../../../universal/types/App.types.ts';
+import { appStateAtom } from '../../../../hooks/useAppState.ts';
+import MockApp from '../../../MockApp.tsx';
+import { routeConfig } from '../Profile-thema-config.ts';
 
 const testState = (
   responseBRP: BRPData | object = {},

@@ -1,18 +1,18 @@
-import { isInkomenThemaActive } from './Inkomen-helpers';
-import { routeConfig, themaId, themaTitle } from './Inkomen-thema-config';
-import { InkomenDetailBbz } from './InkomenDetailBbz';
-import { InkomenDetailTonk } from './InkomenDetailTonk';
-import { InkomenDetailTozo } from './InkomenDetailTozo';
-import { InkomenDetailUitkering } from './InkomenDetailUitkering';
+import { isInkomenThemaActive } from './Inkomen-helpers.ts';
+import { routeConfig, themaId, themaTitle } from './Inkomen-thema-config.ts';
+import { InkomenDetailBbz } from './InkomenDetailBbz.tsx';
+import { InkomenDetailTonk } from './InkomenDetailTonk.tsx';
+import { InkomenDetailTozo } from './InkomenDetailTozo.tsx';
+import { InkomenDetailUitkering } from './InkomenDetailUitkering.tsx';
 import { default as InkomenIcon } from './InkomenIcon.svg?react';
-import { InkomenList } from './InkomenList';
-import { InkomenListSpecificaties } from './InkomenListSpecificaties';
-import { InkomenThema } from './InkomenThema';
-import { FeatureToggle } from '../../../../universal/config/feature-toggles';
+import { InkomenList } from './InkomenList.tsx';
+import { InkomenListSpecificaties } from './InkomenListSpecificaties.tsx';
+import { InkomenThema } from './InkomenThema.tsx';
+import { FeatureToggle } from '../../../../universal/config/feature-toggles.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 
 export const InkomenRoutes = [
   {

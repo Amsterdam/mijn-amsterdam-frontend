@@ -1,12 +1,12 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 
-import { panelConfig } from './ProfileCommercial.transform';
-import { useProfileData } from './useProfileData.hook';
-import { PageContentCell } from '../../../../components/Page/Page';
-import { ParagaphSuppressed } from '../../../../components/ParagraphSuppressed/ParagraphSuppressed';
-import ThemaPagina from '../../../../components/Thema/ThemaPagina';
-import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle';
-import { ProfileSectionPanel } from '../ProfileSectionPanel';
+import { panelConfig } from './ProfileCommercial.transform.tsx';
+import { useProfileData } from './useProfileData.hook.ts';
+import { PageContentCell } from '../../../../components/Page/Page.tsx';
+import { ParagaphSuppressed } from '../../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
+import ThemaPagina from '../../../../components/Thema/ThemaPagina.tsx';
+import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
+import { ProfileSectionPanel } from '../ProfileSectionPanel.tsx';
 
 function ProfileCommercialSectionPanels() {
   const { KVK, profileData, routeConfig } = useProfileData();

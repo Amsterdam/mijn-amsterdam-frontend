@@ -2,12 +2,12 @@ import { HttpStatusCode } from 'axios';
 import type { Request, Response } from 'express';
 import { generatePath, matchPath } from 'react-router';
 
-import { PUBLIC_BFF_ENDPOINTS } from './bff-routes';
+import { PUBLIC_BFF_ENDPOINTS } from './bff-routes.ts';
 import {
   ApiResponse_DEPRECATED,
   apiErrorResult,
-} from '../../universal/helpers/api';
-import { BFF_API_BASE_URL } from '../config/app';
+} from '../../universal/helpers/api.ts';
+import { BFF_API_BASE_URL } from '../config/app.ts';
 import express from 'express';
 
 type BFFRouter = express.Router & { BFF_ID: string };

@@ -6,18 +6,18 @@ import {
   tableConfig,
   themaId,
   themaTitle,
-} from './Inkomen-thema-config';
-import { linkListItems } from './Inkomen-thema-config';
-import { useAddDocumentLinkComponents } from './useAddDocumentLinks';
-import { WpiRequestProcess } from '../../../../server/services/wpi/wpi-types';
-import { isError, isLoading } from '../../../../universal/helpers/api';
+} from './Inkomen-thema-config.ts';
+import { linkListItems } from './Inkomen-thema-config.ts';
+import { useAddDocumentLinkComponents } from './useAddDocumentLinks.tsx';
+import { WpiRequestProcess } from '../../../../server/services/wpi/wpi-types.ts';
+import { isError, isLoading } from '../../../../universal/helpers/api.ts';
 import {
   defaultDateFormat,
   dateSort,
-} from '../../../../universal/helpers/date';
-import { addLinkElementToProperty } from '../../../components/Table/TableV2';
-import { useAppStateGetter } from '../../../hooks/useAppState';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
+} from '../../../../universal/helpers/date.ts';
+import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
+import { useAppStateGetter } from '../../../hooks/useAppState.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
 export function useInkomenThemaData() {
   const { WPI_AANVRAGEN, WPI_SPECIFICATIES, WPI_TOZO, WPI_TONK, WPI_BBZ } =

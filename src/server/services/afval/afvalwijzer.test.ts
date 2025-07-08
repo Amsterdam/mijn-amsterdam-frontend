@@ -1,7 +1,7 @@
 import { LatLngLiteral } from 'leaflet';
 
-import type { AfvalFractionData, AFVALSourceData } from './afval.types';
-import { exportedForTesting, transformAfvalDataResponse } from './afvalwijzer';
+import type { AfvalFractionData, AFVALSourceData } from './afval.types.ts';
+import { exportedForTesting, transformAfvalDataResponse } from './afvalwijzer.ts';
 
 const today = new Date();
 const dateStr = today.toISOString();

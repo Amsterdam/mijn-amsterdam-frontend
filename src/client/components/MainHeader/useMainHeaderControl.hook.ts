@@ -2,9 +2,9 @@ import { useRef, useEffect, useCallback, useState } from 'react';
 
 import { atom, useRecoilState } from 'recoil';
 
-import { useKeyUp } from '../../hooks/useKey';
-import { MAIN_MENU_ID } from '../MainMenu/MainMenu';
-import { useDisplayLiveSearch, useSearchActive } from '../Search/useSearch';
+import { useKeyUp } from '../../hooks/useKey.ts';
+import { MAIN_MENU_ID } from '../MainMenu/MainMenu.tsx';
+import { useDisplayLiveSearch, useSearchActive } from '../Search/useSearch.tsx';
 
 const isMainMenuOpenAtom = atom<boolean>({
   key: 'isMainMenuOpenAtom',

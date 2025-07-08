@@ -1,8 +1,10 @@
+import process from 'node:process';
+
 import { isBefore } from 'date-fns/isBefore';
 import memoizee from 'memoizee';
 import { generatePath } from 'react-router';
 
-import { POWERBROWSER_ZAAK_PRODUCT_ID_BB_VERGUNNING } from './toeristische-verhuur-config-and-types';
+import { POWERBROWSER_ZAAK_PRODUCT_ID_BB_VERGUNNING } from './toeristische-verhuur-config-and-types.ts';
 import {
   BBVergunningFrontend,
   FetchPersoonOrMaatschapIdByUidOptions,
@@ -16,32 +18,34 @@ import {
   PBZaakResultaat,
   PowerBrowserStatusResponse,
   SearchRequestResponse,
-} from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
-import { routeConfig } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
+} from './toeristische-verhuur-powerbrowser-bb-vergunning-types.ts';
+import { routeConfig } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
 import {
   apiErrorResult,
   ApiResponse,
   ApiResponse_DEPRECATED,
   apiSuccessResult,
   getSettledResult,
-} from '../../../universal/helpers/api';
-import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
-import { entries } from '../../../universal/helpers/utils';
-import { StatusLineItem } from '../../../universal/types/App.types';
-import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
-import { ONE_HOUR_MS } from '../../config/app';
-import { DataRequestConfig } from '../../config/source-api';
-import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
+} from '../../../universal/helpers/api.ts';
+import {
+  dateSort,
+  defaultDateFormat,
+} from '../../../universal/helpers/date.ts';
+import { entries } from '../../../universal/helpers/utils.ts';
+import { StatusLineItem } from '../../../universal/types/App.types.ts';
+import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { ONE_HOUR_MS } from '../../config/app.ts';
+import { DataRequestConfig } from '../../config/source-api.ts';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt.ts';
 import {
   createSessionBasedCacheKey,
   getApiConfig,
-} from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
-import { BffEndpoints } from '../../routing/bff-routes';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { isExpired } from '../decos/decos-helpers';
-import { DocumentDownloadData } from '../shared/document-download-route-handler';
-import process from "node:process";
+} from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
+import { BffEndpoints } from '../../routing/bff-routes.ts';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
+import { isExpired } from '../decos/decos-helpers.ts';
+import { DocumentDownloadData } from '../shared/document-download-route-handler.ts';
 
 // See also: https://www.amsterdam.nl/wonen-bouwen-verbouwen/woonruimte-verhuren/oude-regels-bed-breakfast/
 const DATE_NEW_REGIME_BB_RULES = '2019-01-01';

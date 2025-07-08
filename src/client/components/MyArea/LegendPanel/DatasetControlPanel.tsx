@@ -6,15 +6,15 @@ import {
   DatasetId,
   DatasetPropertyName,
   DatasetPropertyValue,
-} from '../../../../universal/config/myarea-datasets';
-import { getIcon } from '../dataset-icons';
-import MyAreaCollapsiblePanel, { CollapsedState } from './CollapsiblePanel';
+} from '../../../../universal/config/myarea-datasets.ts';
+import { getIcon } from '../dataset-icons.tsx';
+import MyAreaCollapsiblePanel, { CollapsedState } from './CollapsiblePanel.tsx';
 import {
   DatasetControlCheckbox,
   categoryCheckboxState,
-} from './DatasetControlCheckbox';
-import { DatasetPanel } from './DatasetPanel';
-import { PanelList, PanelListItem } from './PanelList';
+} from './DatasetControlCheckbox.tsx';
+import { DatasetPanel } from './DatasetPanel.tsx';
+import { PanelList, PanelListItem } from './PanelList.tsx';
 
 export interface DatasetControlPanelProps {
   onControlItemChange: (type: 'category' | 'dataset', ids: string[]) => void;

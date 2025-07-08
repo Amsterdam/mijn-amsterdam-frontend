@@ -3,13 +3,13 @@ import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import slug from 'slugme';
 
-import { routeConfig } from './Horeca-thema-config';
-import { vergunning } from './Horeca.test';
-import { HorecaDetail } from './HorecaDetail';
-import { HorecaVergunningFrontend } from '../../../../server/services/horeca/decos-zaken';
-import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
-import MockApp from '../../MockApp';
+import { routeConfig } from './Horeca-thema-config.ts';
+import { vergunning } from './Horeca.test.tsx';
+import { HorecaDetail } from './HorecaDetail.tsx';
+import { HorecaVergunningFrontend } from '../../../../server/services/horeca/decos-zaken.ts';
+import { AppState } from '../../../../universal/types/App.types.ts';
+import { appStateAtom } from '../../../hooks/useAppState.ts';
+import MockApp from '../../MockApp.tsx';
 
 const vergunning2: HorecaVergunningFrontend = {
   ...structuredClone(vergunning),

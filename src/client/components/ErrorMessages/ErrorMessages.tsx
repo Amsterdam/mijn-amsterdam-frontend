@@ -4,11 +4,11 @@ import { Alert, Button, Link, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
 import styles from './ErrorMessages.module.scss';
-import { ApiError } from '../../../universal/types/App.types';
-import { ALL_ERROR_STATE_KEY } from '../../AppState';
-import { getApiErrors, LOGOUT_URL } from '../../config/api';
-import { useAppStateGetter } from '../../hooks/useAppState';
-import { Modal } from '../Modal/Modal';
+import { ApiError } from '../../../universal/types/App.types.ts';
+import { ALL_ERROR_STATE_KEY } from '../../AppState.ts';
+import { getApiErrors, LOGOUT_URL } from '../../config/api.ts';
+import { useAppStateGetter } from '../../hooks/useAppState.ts';
+import { Modal } from '../Modal/Modal.tsx';
 
 interface ComponentProps {
   className?: string;

@@ -1,12 +1,12 @@
 import { generatePath, type Params } from 'react-router';
 
-import { isVergunning } from './helper';
-import type { VarenZakenFrontend } from '../../../../server/services/varen/config-and-types';
-import { IS_PRODUCTION } from '../../../../universal/config/env';
-import { dateSort } from '../../../../universal/helpers/date';
-import { LinkProps } from '../../../../universal/types/App.types';
-import { DisplayProps } from '../../../components/Table/TableV2.types';
-import type { ThemaRoutesConfig } from '../../../config/thema-types';
+import { isVergunning } from './helper.ts';
+import type { VarenZakenFrontend } from '../../../../server/services/varen/config-and-types.ts';
+import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
+import { dateSort } from '../../../../universal/helpers/date.ts';
+import { LinkProps } from '../../../../universal/types/App.types.ts';
+import { DisplayProps } from '../../../components/Table/TableV2.types.ts';
+import type { ThemaRoutesConfig } from '../../../config/thema-types.ts';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA = 5;
 

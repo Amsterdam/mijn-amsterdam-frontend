@@ -20,8 +20,8 @@ import {
   type WerkzaamhedenEnVervoerOpStraat,
   type WVOSActiviteit,
   type Straatartiesten,
-} from './config-and-types';
-import { IS_PRODUCTION } from '../../../universal/config/env';
+} from './config-and-types.ts';
+import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import {
   SELECT_FIELDS_TRANSFORM_BASE,
   transformDecision,
@@ -33,15 +33,15 @@ import {
   kentekens,
   location,
   MA_DECISION_ZIE_BESLUIT,
-} from '../decos/decos-field-transformers';
+} from '../decos/decos-field-transformers.ts';
 import {
   getCustomTitleForDecosZaakWithLicensePlates,
   getStatusDate,
-} from '../decos/decos-helpers';
+} from '../decos/decos-helpers.ts';
 import {
   DecosZaakTransformer,
   DecosFieldNameSource,
-} from '../decos/decos-types';
+} from '../decos/decos-types.ts';
 
 const TVMRVVObject: DecosZaakTransformer<TVMRVVObject> = {
   isActive: true,

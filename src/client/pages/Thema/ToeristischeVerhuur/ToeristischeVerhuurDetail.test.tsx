@@ -3,14 +3,14 @@ import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import { describe, expect } from 'vitest';
 
-import { routeConfig } from './ToeristischeVerhuur-thema-config';
-import { ToeristischeVerhuurDetail } from './ToeristischeVerhuurDetail';
-import { VakantieverhuurVergunningFrontend } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
-import { BBVergunningFrontend } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
-import { bffApi } from '../../../../testing/utils';
-import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
-import MockApp from '../../MockApp';
+import { routeConfig } from './ToeristischeVerhuur-thema-config.ts';
+import { ToeristischeVerhuurDetail } from './ToeristischeVerhuurDetail.tsx';
+import { VakantieverhuurVergunningFrontend } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types.ts';
+import { BBVergunningFrontend } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types.ts';
+import { bffApi } from '../../../../testing/utils.ts';
+import { AppState } from '../../../../universal/types/App.types.ts';
+import { appStateAtom } from '../../../hooks/useAppState.ts';
+import MockApp from '../../MockApp.tsx';
 
 const vakantieverhuurVergunningen: VakantieverhuurVergunningFrontend[] = [
   {

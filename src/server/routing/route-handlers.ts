@@ -1,15 +1,15 @@
 import { NextFunction, Request, Response } from 'express';
 import uid from 'uid-safe';
 
-import { isProtectedRoute, sendUnauthorized } from './route-helpers';
-import { apiSuccessResult } from '../../universal/helpers/api';
+import { isProtectedRoute, sendUnauthorized } from './route-helpers.ts';
+import { apiSuccessResult } from '../../universal/helpers/api.ts';
 import {
   destroySession,
   getAuth,
   hasSessionCookie,
   isRequestAuthenticated,
-} from '../auth/auth-helpers';
-import { AuthenticatedRequest } from '../auth/auth-types';
+} from '../auth/auth-helpers.ts';
+import { AuthenticatedRequest } from '../auth/auth-types.ts';
 import process from "node:process";
 
 export function handleCheckProtectedRoute(

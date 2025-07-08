@@ -1,7 +1,7 @@
 import { useParams } from 'react-router';
 
-import { routeConfig } from './AVG-thema-config';
-import { useAVGData } from './useAVGData.hook';
+import { routeConfig } from './AVG-thema-config.ts';
+import { useAVGData } from './useAVGData.hook.tsx';
 
 export function useAVGDetailPage() {
   const { id } = useParams<{ id: string }>();

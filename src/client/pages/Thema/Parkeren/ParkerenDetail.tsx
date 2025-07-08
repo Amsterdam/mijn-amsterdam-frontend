@@ -1,19 +1,19 @@
-import { BZB } from './detail-page-content/BZB';
-import { BZP } from './detail-page-content/BZP';
-import { EigenParkeerplaats } from './detail-page-content/EigenParkeerplaats';
-import { EigenParkeerplaatsOpheffen } from './detail-page-content/EigenParkeerplaatsOpheffen';
-import { GPK } from './detail-page-content/GPK';
-import { GPPContent } from './detail-page-content/GPP';
-import { Touringcar } from './detail-page-content/Touringcar';
-import { useParkerenData } from './useParkerenData.hook';
-import { DecosParkeerVergunning } from '../../../../server/services/parkeren/config-and-types';
-import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
-import { Datalist } from '../../../components/Datalist/Datalist';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
-import { VergunningDetailDocumentsList } from '../Vergunningen/detail-page-content/VergunningDetailDocumentsList';
-import { useVergunningenDetailData } from '../Vergunningen/useVergunningenDetailData.hook';
+import { BZB } from './detail-page-content/BZB.tsx';
+import { BZP } from './detail-page-content/BZP.tsx';
+import { EigenParkeerplaats } from './detail-page-content/EigenParkeerplaats.tsx';
+import { EigenParkeerplaatsOpheffen } from './detail-page-content/EigenParkeerplaatsOpheffen.tsx';
+import { GPK } from './detail-page-content/GPK.tsx';
+import { GPPContent } from './detail-page-content/GPP.tsx';
+import { Touringcar } from './detail-page-content/Touringcar.tsx';
+import { useParkerenData } from './useParkerenData.hook.tsx';
+import { DecosParkeerVergunning } from '../../../../server/services/parkeren/config-and-types.ts';
+import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types.ts';
+import { Datalist } from '../../../components/Datalist/Datalist.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
+import { VergunningDetailDocumentsList } from '../Vergunningen/detail-page-content/VergunningDetailDocumentsList.tsx';
+import { useVergunningenDetailData } from '../Vergunningen/useVergunningenDetailData.hook.ts';
 
 interface DetailPageContentProps<V> {
   vergunning: V;

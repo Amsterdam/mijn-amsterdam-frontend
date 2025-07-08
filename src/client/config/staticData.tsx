@@ -1,6 +1,6 @@
-import { MIJN_AMSTERDAM } from '../../universal/config/app';
-import { MyNotification } from '../../universal/types/App.types';
-import { themaId } from '../pages/MyNotifications/MyNotifications-config';
+import { MIJN_AMSTERDAM } from '../../universal/config/app.ts';
+import { MyNotification } from '../../universal/types/App.types.ts';
+import { themaId } from '../pages/MyNotifications/MyNotifications-config.ts';
 
 const year = 2022;
 const day = 20;

@@ -1,19 +1,20 @@
+import process from 'node:process';
+
 import * as appInsights from 'applicationinsights';
-import {
-  ExceptionTelemetry,
-  SeverityLevel,
-  Telemetry,
-  TraceTelemetry,
-} from 'applicationinsights/out/Declarations/Contracts';
 
 import {
   shouldSendRemoteDependencyData,
   shouldSendRequestData,
   shouldSendExceptionData,
-} from './should-send-telemetry';
-import { IS_DEVELOPMENT } from '../../universal/config/env';
-import { logger } from '../logging';
-import process from "node:process";
+} from './should-send-telemetry.ts';
+import { IS_DEVELOPMENT } from '../../universal/config/env.ts';
+import { logger } from '../logging.ts';
+import {
+  ExceptionTelemetry,
+  SeverityLevel,
+  Telemetry,
+  TraceTelemetry,
+} from './monitoring-types.ts';
 if (!IS_DEVELOPMENT && process.env.NODE_ENV !== 'test') {
   appInsights
     .setup(process.env.APPLICATIONINSIGHTS_CONNECTION_STRING)

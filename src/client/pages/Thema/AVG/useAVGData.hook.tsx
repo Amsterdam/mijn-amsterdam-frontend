@@ -4,11 +4,11 @@ import {
   themaTitle,
   themaId,
   routeConfig,
-} from './AVG-thema-config';
-import { isError, isLoading } from '../../../../universal/helpers/api';
-import { addLinkElementToProperty } from '../../../components/Table/TableV2';
-import { useAppStateGetter } from '../../../hooks/useAppState';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
+} from './AVG-thema-config.ts';
+import { isError, isLoading } from '../../../../universal/helpers/api.ts';
+import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
+import { useAppStateGetter } from '../../../hooks/useAppState.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
 export function useAVGData() {
   const { AVG } = useAppStateGetter();

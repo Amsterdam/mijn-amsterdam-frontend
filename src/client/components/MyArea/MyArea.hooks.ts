@@ -13,14 +13,14 @@ import {
   useSetRecoilState,
 } from 'recoil';
 
-import { filterItemCheckboxState } from './LegendPanel/DatasetControlCheckbox';
+import { filterItemCheckboxState } from './LegendPanel/DatasetControlCheckbox.tsx';
 import styles from './MyAreaDatasets.module.scss';
 import { BAGData } from '../../../server/services';
 import type {
   MaPointFeature,
   MaPolylineFeature,
   MaSuperClusterFeature,
-} from '../../../server/services/buurt/datasets';
+} from '../../../server/services/buurt/datasets.ts';
 import {
   ACTIVE_DATASET_IDS_INITIAL,
   DatasetFilterSelection,
@@ -28,13 +28,13 @@ import {
   DatasetPropertyName,
   DatasetPropertyValue,
   HOOD_ZOOM,
-} from '../../../universal/config/myarea-datasets';
-import { LatLngWithAddress } from '../../../universal/helpers/bag';
-import { getFullAddress } from '../../../universal/helpers/brp';
-import { BFFApiUrls } from '../../config/api';
-import { DEFAULT_MAP_OPTIONS } from '../../config/map';
-import { captureMessage } from '../../helpers/monitoring';
-import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
+} from '../../../universal/config/myarea-datasets.ts';
+import { LatLngWithAddress } from '../../../universal/helpers/bag.ts';
+import { getFullAddress } from '../../../universal/helpers/brp.ts';
+import { BFFApiUrls } from '../../config/api.ts';
+import { DEFAULT_MAP_OPTIONS } from '../../config/map.ts';
+import { captureMessage } from '../../helpers/monitoring.ts';
+import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState.ts';
 
 const NO_DATA_ERROR_RESPONSE = {
   errors: [

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import { PageV2 } from './Page';
+import { PageV2 } from './Page.tsx';
 
 it('Renders without crashing', () => {
   render(<PageV2>Hela!</PageV2>);

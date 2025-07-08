@@ -1,11 +1,11 @@
 import { get } from 'stack-trace';
 
-import { jsonCopy } from '../../universal/helpers/utils';
+import { jsonCopy } from '../../universal/helpers/utils.ts';
 import {
   ApiConfig,
   DataRequestConfig,
   SourceApiKey,
-} from '../config/source-api';
+} from '../config/source-api.ts';
 
 // To keep the cache key small, we exclude some generic function names.
 const EXCLUDE_GENERIC_FUNCTION_NAMES_FROM_CACHE_KEY = [

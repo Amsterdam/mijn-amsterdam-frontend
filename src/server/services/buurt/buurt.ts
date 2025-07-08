@@ -1,19 +1,19 @@
-import { IS_TAP } from '../../../universal/config/env';
+import { IS_TAP } from '../../../universal/config/env.ts';
 import {
   DatasetFilterSelection,
   DatasetId,
   DatasetPropertyFilter,
   POLYLINE_GEOMETRY_TYPES,
-} from '../../../universal/config/myarea-datasets';
+} from '../../../universal/config/myarea-datasets.ts';
 import {
   ApiResponse_DEPRECATED,
   apiErrorResult,
   apiSuccessResult,
-} from '../../../universal/helpers/api';
-import { DataRequestConfig } from '../../config/source-api';
-import FileCache from '../../helpers/file-cache';
-import { requestData } from '../../helpers/source-api-request';
-import { captureMessage } from '../monitoring';
+} from '../../../universal/helpers/api.ts';
+import { DataRequestConfig } from '../../config/source-api.ts';
+import FileCache from '../../helpers/file-cache.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
+import { captureMessage } from '../monitoring.ts';
 import {
   ACCEPT_CRS_4326,
   BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
@@ -21,11 +21,11 @@ import {
   DatasetConfig,
   DatasetFeatures,
   DatasetResponse,
-} from './datasets';
+} from './datasets.ts';
 import {
   discoverSingleDsoApiEmbeddedResponse,
   DsoApiResponse,
-} from './dso-helpers';
+} from './dso-helpers.ts';
 import {
   createDynamicFilterConfig,
   datasetApiResult,
@@ -33,7 +33,7 @@ import {
   filterPolylineFeaturesWithinBoundingBox,
   getDatasetEndpointConfig,
   getDynamicDatasetFilters,
-} from './helpers';
+} from './helpers.ts';
 
 const fileCaches: Record<string, FileCache> = {};
 

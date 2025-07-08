@@ -3,17 +3,17 @@ import {
   featureToggle,
   themaId,
   themaTitle,
-} from './AVG-thema-config';
-import { AVGDetail } from './AVGDetail';
+} from './AVG-thema-config.ts';
+import { AVGDetail } from './AVGDetail.tsx';
 import { default as AvgIcon } from './AvgIcon.svg?react';
-import { AVGList } from './AVGList';
-import { AVGThema } from './AVGThema';
-import { isLoading } from '../../../../universal/helpers/api';
-import { type AppState } from '../../../../universal/types/App.types';
+import { AVGList } from './AVGList.tsx';
+import { AVGThema } from './AVGThema.tsx';
+import { isLoading } from '../../../../universal/helpers/api.ts';
+import { type AppState } from '../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 
 export const AvgRoutes = [
   {

@@ -4,12 +4,12 @@ import {
   themaId,
   routeConfig,
   themaTitle,
-} from './Horeca-thema-config';
-import { HorecaVergunningFrontend } from '../../../../server/services/horeca/decos-zaken';
-import { isError, isLoading } from '../../../../universal/helpers/api';
-import { addLinkElementToProperty } from '../../../components/Table/TableV2';
-import { useAppStateGetter } from '../../../hooks/useAppState';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
+} from './Horeca-thema-config.ts';
+import { HorecaVergunningFrontend } from '../../../../server/services/horeca/decos-zaken.ts';
+import { isError, isLoading } from '../../../../universal/helpers/api.ts';
+import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
+import { useAppStateGetter } from '../../../hooks/useAppState.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
 export function useHorecaThemaData() {
   const { HORECA } = useAppStateGetter();

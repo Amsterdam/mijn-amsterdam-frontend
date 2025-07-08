@@ -3,15 +3,15 @@ import { useState } from 'react';
 import { Heading, Paragraph } from '@amsterdam/design-system-react';
 
 import styles from './MyNotification.module.scss';
-import { MIJN_AMSTERDAM } from '../../../universal/config/app';
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import type { MyNotification } from '../../../universal/types/App.types';
-import { parseHTML } from '../../helpers/html-react-parse';
-import { trackEvent } from '../../helpers/monitoring';
-import { isInteralUrl } from '../../helpers/utils';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
-import { DocumentLink } from '../DocumentList/DocumentLink';
-import { MaLink, MaRouterLink } from '../MaLink/MaLink';
+import { MIJN_AMSTERDAM } from '../../../universal/config/app.ts';
+import { defaultDateFormat } from '../../../universal/helpers/date.ts';
+import type { MyNotification } from '../../../universal/types/App.types.ts';
+import { parseHTML } from '../../helpers/html-react-parse.tsx';
+import { trackEvent } from '../../helpers/monitoring.ts';
+import { isInteralUrl } from '../../helpers/utils.ts';
+import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
+import { DocumentLink } from '../DocumentList/DocumentLink.tsx';
+import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
 
 type MyNotificationProps = {
   notification: MyNotification;

@@ -10,38 +10,38 @@ import {
   themaTitle,
   themaId,
   routeConfig,
-} from './Afis-thema-config';
+} from './Afis-thema-config.ts';
 import {
   AfisBusinessPartnerDetailsTransformed,
   AfisThemaResponse,
   AfisFacturenByStateResponse,
   AfisFactuur,
   AfisFactuurState,
-} from '../../../../server/services/afis/afis-types';
+} from '../../../../server/services/afis/afis-types.ts';
 import {
   hasFailedDependency,
   isError,
   isLoading,
-} from '../../../../universal/helpers/api';
-import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
-import { entries } from '../../../../universal/helpers/utils';
-import { LinkProps } from '../../../../universal/types/App.types';
-import { DocumentLink } from '../../../components/DocumentList/DocumentLink';
-import { MaLink } from '../../../components/MaLink/MaLink';
-import { BFFApiUrls } from '../../../config/api';
-import { useSmallScreen } from '../../../hooks/media.hook';
+} from '../../../../universal/helpers/api.ts';
+import { capitalizeFirstLetter } from '../../../../universal/helpers/text.ts';
+import { entries } from '../../../../universal/helpers/utils.ts';
+import { LinkProps } from '../../../../universal/types/App.types.ts';
+import { DocumentLink } from '../../../components/DocumentList/DocumentLink.tsx';
+import { MaLink } from '../../../components/MaLink/MaLink.tsx';
+import { BFFApiUrls } from '../../../config/api.ts';
+import { useSmallScreen } from '../../../hooks/media.hook.ts';
 import {
   useAppStateBagApi,
   useAppStateGetter,
-} from '../../../hooks/useAppState';
+} from '../../../hooks/useAppState.ts';
 import {
   useThemaBreadcrumbs,
   useThemaMenuItemByThemaID,
-} from '../../../hooks/useThemaMenuItems';
+} from '../../../hooks/useThemaMenuItems.ts';
 import {
   BELASTINGEN_ROUTE_DEFAULT,
   themaId as themaIdBelastingen,
-} from '../Belastingen/Belastingen-thema-config';
+} from '../Belastingen/Belastingen-thema-config.ts';
 
 function getInvoiceStatusDescriptionFrontend(factuur: AfisFactuur): ReactNode {
   switch (factuur.status) {

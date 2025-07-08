@@ -2,19 +2,19 @@ import { ReactNode } from 'react';
 
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { featureToggle, listPageParamKind } from './HLI-thema-config';
+import { featureToggle, listPageParamKind } from './HLI-thema-config.ts';
 import styles from './HLIThema.module.scss';
-import { useHliThemaData } from './useHliThemaData';
-import { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
-import { type StadspasResponseFrontend } from '../../../../server/services/hli/stadspas-types';
-import { entries } from '../../../../universal/helpers/utils';
-import { MaRouterLink } from '../../../components/MaLink/MaLink';
-import { PageContentCell } from '../../../components/Page/Page';
-import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed';
-import { DisplayProps } from '../../../components/Table/TableV2.types';
-import ThemaPagina from '../../../components/Thema/ThemaPagina';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { useHliThemaData } from './useHliThemaData.ts';
+import { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types.ts';
+import { type StadspasResponseFrontend } from '../../../../server/services/hli/stadspas-types.ts';
+import { entries } from '../../../../universal/helpers/utils.ts';
+import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
+import { DisplayProps } from '../../../components/Table/TableV2.types.ts';
+import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
+import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function HistoricItemsMention() {
   return (

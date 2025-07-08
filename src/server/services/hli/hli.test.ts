@@ -1,18 +1,18 @@
 import MockDate from 'mockdate';
 import { Mock } from 'vitest';
 
-import { forTesting } from './hli';
-import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
-import { getAuthProfileAndToken } from '../../../testing/utils';
+import { forTesting } from './hli.ts';
+import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service.ts';
+import { getAuthProfileAndToken } from '../../../testing/utils.ts';
 import {
   apiSuccessResult,
   apiErrorResult,
-} from '../../../universal/helpers/api';
+} from '../../../universal/helpers/api.ts';
 import {
   GenericDocument,
   StatusLineItem,
-} from '../../../universal/types/App.types';
-import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types';
+} from '../../../universal/types/App.types.ts';
+import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types.ts';
 
 vi.mock('./hli-zorgned-service', () => ({
   fetchZorgnedAanvragenHLI: vi.fn(),

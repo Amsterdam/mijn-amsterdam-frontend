@@ -1,23 +1,23 @@
-import { VergunningFrontend } from './config-and-types';
-import { fetchVergunningen } from './vergunningen';
+import { VergunningFrontend } from './config-and-types.ts';
+import { fetchVergunningen } from './vergunningen.ts';
 import {
   getLifetimeTriggerDate,
   isExpiryNotificationDue,
-} from './vergunningen-helpers';
+} from './vergunningen-helpers.ts';
 import {
   routeConfig,
   themaId,
   themaTitle,
-} from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config';
+} from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
 import {
   apiDependencyError,
   apiSuccessResult,
-} from '../../../universal/helpers/api';
-import { isRecentNotification } from '../../../universal/helpers/utils';
-import { MyNotification } from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { getStatusDate } from '../decos/decos-helpers';
-import type { DecosZaakBase } from '../decos/decos-types';
+} from '../../../universal/helpers/api.ts';
+import { isRecentNotification } from '../../../universal/helpers/utils.ts';
+import { MyNotification } from '../../../universal/types/App.types.ts';
+import { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { getStatusDate } from '../decos/decos-helpers.ts';
+import type { DecosZaakBase } from '../decos/decos-types.ts';
 
 function getNotificationBase<ID extends string>(
   vergunning: VergunningFrontend,

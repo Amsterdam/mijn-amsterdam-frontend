@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 
-import { useSmallScreen } from './media.hook';
-import { useScript } from './useScript';
-import { IS_AP } from '../../universal/config/env';
-import { captureException } from '../helpers/monitoring';
-import { getElementOnPageAsync } from '../helpers/utils';
+import { useSmallScreen } from './media.hook.ts';
+import { useScript } from './useScript.ts';
+import { IS_AP } from '../../universal/config/env.ts';
+import { captureException } from '../helpers/monitoring.ts';
+import { getElementOnPageAsync } from '../helpers/utils.ts';
 
 const MAX_WAIT_FOR_USABILA_LIVE_MS = 5000; // 5 seconds
 const USABILLA_ID_MOBILE = '9fd5da44aa5b';

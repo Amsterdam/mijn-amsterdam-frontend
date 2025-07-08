@@ -7,22 +7,22 @@ import axios, {
 import createDebugger from 'debug';
 import memoryCache from 'memory-cache';
 
-import { Deferred } from './deferred';
-import { getRequestConfigCacheKey } from './source-api-helpers';
+import { Deferred } from './deferred.ts';
+import { getRequestConfigCacheKey } from './source-api-helpers.ts';
 import {
   ApiErrorResponse,
   ApiSuccessResponse,
   apiErrorResult,
   apiPostponeResult,
   apiSuccessResult,
-} from '../../universal/helpers/api';
-import { AuthProfileAndToken } from '../auth/auth-types';
+} from '../../universal/helpers/api.ts';
+import { AuthProfileAndToken } from '../auth/auth-types.ts';
 import {
   ApiUrlEntries,
   DEFAULT_REQUEST_CONFIG,
   DataRequestConfig,
-} from '../config/source-api';
-import { captureException } from '../services/monitoring';
+} from '../config/source-api.ts';
+import { captureException } from '../services/monitoring.ts';
 import process from "node:process";
 
 const debugRequest = createDebugger('source-api-request:request');

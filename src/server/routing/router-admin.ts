@@ -1,10 +1,10 @@
 import express, { Request, Response } from 'express';
 import basicAuth from 'express-basic-auth';
 
-import { BffEndpoints } from './bff-routes';
-import { DEFAULT_REQUEST_CONFIG } from '../config/source-api';
-import { cacheOverview } from '../helpers/file-cache';
-import { loginStats, loginStatsTable } from '../services/visitors';
+import { BffEndpoints } from './bff-routes.ts';
+import { DEFAULT_REQUEST_CONFIG } from '../config/source-api.ts';
+import { cacheOverview } from '../helpers/file-cache.ts';
+import { loginStats, loginStatsTable } from '../services/visitors.ts';
 import process from "node:process";
 
 export const adminRouter = express.Router();

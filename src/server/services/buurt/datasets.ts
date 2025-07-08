@@ -11,10 +11,10 @@ import {
   transformGenericApiListResponse,
   WFSApiResponse,
   WFSFeatureSource,
-} from './dso-helpers';
-import { featureToggle } from '../../../client/components/MyArea/MyArea-thema-config';
-import { Colors } from '../../../universal/config/colors';
-import { IS_PRODUCTION } from '../../../universal/config/env';
+} from './dso-helpers.ts';
+import { featureToggle } from '../../../client/components/MyArea/MyArea-thema-config.ts';
+import { Colors } from '../../../universal/config/colors.ts';
+import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import {
   DATASETS,
   DatasetCategoryId,
@@ -23,16 +23,16 @@ import {
   DatasetPropertyName,
   DatasetPropertyValue,
   FeatureType,
-} from '../../../universal/config/myarea-datasets';
-import { capitalizeFirstLetter } from '../../../universal/helpers/text';
-import { uniqueArray } from '../../../universal/helpers/utils';
-import { DAYS_IN_YEAR, ONE_SECOND_MS } from '../../config/app';
-import { DataRequestConfig } from '../../config/source-api';
-import FileCache from '../../helpers/file-cache';
+} from '../../../universal/config/myarea-datasets.ts';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
+import { uniqueArray } from '../../../universal/helpers/utils.ts';
+import { DAYS_IN_YEAR, ONE_SECOND_MS } from '../../config/app.ts';
+import { DataRequestConfig } from '../../config/source-api.ts';
+import FileCache from '../../helpers/file-cache.ts';
 import {
   axiosRequest,
   getNextUrlFromLinkHeader,
-} from '../../helpers/source-api-request';
+} from '../../helpers/source-api-request.ts';
 import process from "node:process";
 
 enum zIndexPane {

@@ -2,12 +2,12 @@ import { auth, ConfigParams } from 'express-openid-connect';
 import expressSession from 'express-session';
 import UID from 'uid-safe';
 
-import { BFF_OIDC_BASE_URL, BFF_OIDC_ISSUER_BASE_URL } from './auth-routes';
-import { getSessionStore } from './auth-session-store';
-import { TokenData } from './auth-types';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
-import { ONE_HOUR_MS, ONE_MINUTE_SECONDS } from '../config/app';
-import { getFromEnv } from '../helpers/env';
+import { BFF_OIDC_BASE_URL, BFF_OIDC_ISSUER_BASE_URL } from './auth-routes.ts';
+import { getSessionStore } from './auth-session-store.ts';
+import { TokenData } from './auth-types.ts';
+import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
+import { ONE_HOUR_MS, ONE_MINUTE_SECONDS } from '../config/app.ts';
+import { getFromEnv } from '../helpers/env.ts';
 
 // Amsterdam App return to url config
 export const RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER =

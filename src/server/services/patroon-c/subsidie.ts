@@ -1,4 +1,5 @@
-import { URL, URLSearchParams } from 'url';
+import process from 'node:process';
+import { URL, URLSearchParams } from 'node:url';
 
 import * as jose from 'jose';
 
@@ -6,22 +7,21 @@ import {
   fetchService,
   fetchTipsAndNotifications,
   type ApiPatternResponseA,
-} from './api-service';
+} from './api-service.ts';
 import {
   SUBSIDIES_ROUTE_DEFAULT,
   themaId,
   themaTitle,
-} from '../../../client/pages/Thema/Subsidies/Subsidies-thema-config';
-import { apiSuccessResult } from '../../../universal/helpers/api';
-import { MyNotification } from '../../../universal/types/App.types';
-import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
-import { encrypt } from '../../helpers/encrypt-decrypt';
-import { getFromEnv } from '../../helpers/env';
+} from '../../../client/pages/Thema/Subsidies/Subsidies-thema-config.ts';
+import { apiSuccessResult } from '../../../universal/helpers/api.ts';
+import { MyNotification } from '../../../universal/types/App.types.ts';
+import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { encrypt } from '../../helpers/encrypt-decrypt.ts';
+import { getFromEnv } from '../../helpers/env.ts';
 import {
   createSessionBasedCacheKey,
   getApiConfig,
-} from '../../helpers/source-api-helpers';
-import process from "node:process";
+} from '../../helpers/source-api-helpers.ts';
 
 async function getJWT() {
   const secret = new TextEncoder().encode(process.env.BFF_SISA_CLIENT_SECRET);

@@ -4,12 +4,12 @@ import {
   blockStadspas,
   fetchStadspasBudgetTransactions,
   unblockStadspas,
-} from './stadspas';
-import { StadspasBudget, StadspasFrontend } from './stadspas-types';
-import { getAuth } from '../../auth/auth-helpers';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { sendResponse, sendUnauthorized } from '../../routing/route-helpers';
-import { fetchDocument } from '../zorgned/zorgned-service';
+} from './stadspas.ts';
+import { StadspasBudget, StadspasFrontend } from './stadspas-types.ts';
+import { getAuth } from '../../auth/auth-helpers.ts';
+import { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { sendResponse, sendUnauthorized } from '../../routing/route-helpers.ts';
+import { fetchDocument } from '../zorgned/zorgned-service.ts';
 
 type TransactionKeysEncryptedRequest = Request<{
   transactionsKeyEncrypted: StadspasFrontend['transactionsKeyEncrypted'];

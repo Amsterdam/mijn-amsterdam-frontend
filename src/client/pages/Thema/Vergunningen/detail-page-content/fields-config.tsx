@@ -10,16 +10,16 @@ import type {
   WithDateStart,
   WithDateEnd,
   WithTimeRange,
-} from '../../../../../server/services/decos/decos-types';
-import { VergunningFrontend } from '../../../../../server/services/vergunningen/config-and-types';
-import { dateTimeFormatYear } from '../../../../../universal/helpers/date';
+} from '../../../../../server/services/decos/decos-types.ts';
+import { VergunningFrontend } from '../../../../../server/services/vergunningen/config-and-types.ts';
+import { dateTimeFormatYear } from '../../../../../universal/helpers/date.ts';
 import {
   Row,
   RowSet,
   WrappedRow,
   type DatalistProps,
-} from '../../../../components/Datalist/Datalist';
-import { AddressDisplayAndModal } from '../../../../components/LocationModal/LocationModal';
+} from '../../../../components/Datalist/Datalist.tsx';
+import { AddressDisplayAndModal } from '../../../../components/LocationModal/LocationModal.tsx';
 
 type DataListRowOptions = {
   endDateIncluded?: boolean;

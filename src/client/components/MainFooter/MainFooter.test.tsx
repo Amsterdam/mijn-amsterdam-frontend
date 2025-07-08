@@ -1,8 +1,8 @@
 import { act, render, screen } from '@testing-library/react';
 import { describe, expect } from 'vitest';
 
-import { MainFooter } from './MainFooter';
-import { createFetchResponse } from '../../../testing/utils';
+import { MainFooter } from './MainFooter.tsx';
+import { createFetchResponse } from '../../../testing/utils.ts';
 
 describe('<MainFooter />', () => {
   const fetch_ = globalThis.fetch;

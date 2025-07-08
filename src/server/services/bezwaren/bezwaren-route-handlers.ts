@@ -1,13 +1,13 @@
 import { Response } from 'express';
 
-import { fetchBezwaarDetail } from './bezwaren';
-import { getAuth } from '../../auth/auth-helpers';
+import { fetchBezwaarDetail } from './bezwaren.ts';
+import { getAuth } from '../../auth/auth-helpers.ts';
 import {
   RequestWithQueryParams,
   sendResponse,
   sendUnauthorized,
-} from '../../routing/route-helpers';
-import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
+} from '../../routing/route-helpers.ts';
+import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param.ts';
 
 export async function handleFetchBezwaarDetail(
   req: RequestWithQueryParams<{ id: string }>,

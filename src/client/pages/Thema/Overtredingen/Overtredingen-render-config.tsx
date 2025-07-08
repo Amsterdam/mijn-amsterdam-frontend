@@ -3,11 +3,11 @@ import {
   themaId,
   themaTitle,
   featureToggle,
-} from './Overtredingen-thema-config';
+} from './Overtredingen-thema-config.ts';
 import { default as OvertredingenIcon } from './OvertredingenIcon.svg?react';
-import { isLoading } from '../../../../universal/helpers/api';
-import { type AppState } from '../../../../universal/types/App.types';
-import { type ThemaMenuItem } from '../../../config/thema-types';
+import { isLoading } from '../../../../universal/helpers/api.ts';
+import { type AppState } from '../../../../universal/types/App.types.ts';
+import { type ThemaMenuItem } from '../../../config/thema-types.ts';
 
 export const menuItem: ThemaMenuItem<typeof themaId> = {
   title: themaTitle,

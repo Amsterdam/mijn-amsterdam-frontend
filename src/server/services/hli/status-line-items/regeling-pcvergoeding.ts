@@ -1,12 +1,12 @@
 import { isSameDay, parseISO } from 'date-fns';
 
-import { getBetrokkenDescription } from './generic';
-import { defaultDateFormat } from '../../../../universal/helpers/date';
+import { getBetrokkenDescription } from './generic.ts';
+import { defaultDateFormat } from '../../../../universal/helpers/date.ts';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
-} from '../../zorgned/zorgned-types';
-import { featureToggle } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
+} from '../../zorgned/zorgned-types.ts';
+import { featureToggle } from '../../../../client/pages/Thema/HLI/HLI-thema-config.ts';
 
 export const AV_UPCC = 'AV-UPCC';
 export const AV_UPCZIL = 'AV-UPCZIL';

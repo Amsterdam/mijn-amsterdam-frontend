@@ -1,4 +1,4 @@
-import { getFromEnv } from '../helpers/env';
+import { getFromEnv } from '../helpers/env.ts';
 
 export const AUTH_BASE = '/api/v1/auth';
 export const AUTH_BASE_DIGID = `${AUTH_BASE}/digid`;

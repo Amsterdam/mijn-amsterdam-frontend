@@ -11,8 +11,8 @@ import {
   type GPP,
   type TouringcarDagontheffing,
   type TouringcarJaarontheffing,
-} from './config-and-types';
-import { capitalizeFirstLetter } from '../../../universal/helpers/text';
+} from './config-and-types.ts';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
 import {
   dateEnd,
   dateStart,
@@ -23,14 +23,14 @@ import {
   timeEnd,
   timeStart,
   transformDecision,
-} from '../decos/decos-field-transformers';
+} from '../decos/decos-field-transformers.ts';
 import {
   getCustomTitleForDecosZaakWithLicensePlates,
   isZaakDecisionVerleend,
   transformBoolean,
   transformKenteken,
-} from '../decos/decos-helpers';
-import { DecosZaakTransformer } from '../decos/decos-types';
+} from '../decos/decos-helpers.ts';
+import { DecosZaakTransformer } from '../decos/decos-types.ts';
 
 const GPP: DecosZaakTransformer<GPP> = {
   isActive: true,

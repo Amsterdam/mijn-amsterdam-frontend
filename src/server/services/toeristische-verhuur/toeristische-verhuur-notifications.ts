@@ -1,23 +1,23 @@
 import { subMonths } from 'date-fns';
 import { generatePath } from 'react-router';
 
-import { fetchToeristischeVerhuur } from './toeristische-verhuur';
+import { fetchToeristischeVerhuur } from './toeristische-verhuur.ts';
 import {
   LVVRegistratie,
   ToeristischeVerhuurVergunning,
-} from './toeristische-verhuur-config-and-types';
+} from './toeristische-verhuur-config-and-types.ts';
 import {
   routeConfig,
   themaId,
   themaTitle,
-} from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
-import { apiSuccessResult } from '../../../universal/helpers/api';
-import { dateFormat, isDateInPast } from '../../../universal/helpers/date';
-import { isRecentNotification } from '../../../universal/helpers/utils';
-import { MyNotification } from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../vergunningen/config-and-types';
-import { isExpiryNotificationDue } from '../vergunningen/vergunningen-helpers';
+} from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
+import { apiSuccessResult } from '../../../universal/helpers/api.ts';
+import { dateFormat, isDateInPast } from '../../../universal/helpers/date.ts';
+import { isRecentNotification } from '../../../universal/helpers/utils.ts';
+import { MyNotification } from '../../../universal/types/App.types.ts';
+import { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../vergunningen/config-and-types.ts';
+import { isExpiryNotificationDue } from '../vergunningen/vergunningen-helpers.ts';
 
 export function createToeristischeVerhuurNotification(
   vergunning: ToeristischeVerhuurVergunning,

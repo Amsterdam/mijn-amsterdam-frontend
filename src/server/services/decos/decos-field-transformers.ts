@@ -1,5 +1,5 @@
-import { transformKenteken, translateValue } from './decos-helpers';
-import { DecosFieldTransformerObject, WithKentekens } from './decos-types';
+import { transformKenteken, translateValue } from './decos-helpers.ts';
+import { DecosFieldTransformerObject, WithKentekens } from './decos-types.ts';
 
 export const MA_DECISION_ZIE_BESLUIT = 'Zie besluit';
 export const MA_DECISION_DEFAULT = MA_DECISION_ZIE_BESLUIT;

@@ -1,12 +1,12 @@
 import { generatePath } from 'react-router';
 
-import { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
-import { IS_PRODUCTION } from '../../../../universal/config/env';
-import { dateSort } from '../../../../universal/helpers/date';
-import { LinkProps } from '../../../../universal/types/App.types';
-import { DisplayProps } from '../../../components/Table/TableV2.types';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
-import type { ThemaRoutesConfig } from '../../../config/thema-types';
+import { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types.ts';
+import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
+import { dateSort } from '../../../../universal/helpers/date.ts';
+import { LinkProps } from '../../../../universal/types/App.types.ts';
+import { DisplayProps } from '../../../components/Table/TableV2.types.ts';
+import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
+import type { ThemaRoutesConfig } from '../../../config/thema-types.ts';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 

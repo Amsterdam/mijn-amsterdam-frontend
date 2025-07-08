@@ -1,5 +1,5 @@
-import { TextPartContents } from './zorgned-types';
-import { sanitizeStringTemplate } from '../../helpers/text';
+import { TextPartContents } from './zorgned-types.ts';
+import { sanitizeStringTemplate } from '../../helpers/text.ts';
 
 export function parseLabelContent<T>(
   text: TextPartContents<T>,

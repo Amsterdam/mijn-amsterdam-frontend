@@ -1,18 +1,18 @@
 import { isFuture, isPast, parseISO } from 'date-fns';
 
-import { sanitizeCmsContent } from './cms-content';
+import { sanitizeCmsContent } from './cms-content.ts';
 import {
   themaId,
   themaTitle,
-} from '../../../client/pages/MyNotifications/MyNotifications-config';
+} from '../../../client/pages/MyNotifications/MyNotifications-config.ts';
 import {
   ApiResponse_DEPRECATED,
   apiSuccessResult,
-} from '../../../universal/helpers/api';
-import { LinkProps, MyNotification } from '../../../universal/types/App.types';
-import { ONE_HOUR_MS } from '../../config/app';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
+} from '../../../universal/helpers/api.ts';
+import { LinkProps, MyNotification } from '../../../universal/types/App.types.ts';
+import { ONE_HOUR_MS } from '../../config/app.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
 
 interface Tyd {
   Nam: 'Starttijd' | 'Eindtijd';

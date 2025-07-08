@@ -1,13 +1,13 @@
-import { commonTransformers, getRows } from './fields-config';
+import { commonTransformers, getRows } from './fields-config.tsx';
 import type {
   RVVSloterweg,
   VergunningFrontend,
-} from '../../../../../server/services/vergunningen/config-and-types';
+} from '../../../../../server/services/vergunningen/config-and-types.ts';
 import {
   Datalist,
   RowSet,
   WrappedRow,
-} from '../../../../components/Datalist/Datalist';
+} from '../../../../components/Datalist/Datalist.tsx';
 
 export function RvvSloterweg({
   vergunning,

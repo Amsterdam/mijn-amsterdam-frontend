@@ -4,20 +4,20 @@ import {
   LANDCODE_NEDERLAND,
   LANDCODE_ONBEKEND,
   ADRES_IN_ONDERZOEK_A,
-} from './brp-config';
+} from './brp-config.ts';
 import {
   BrpFrontend,
   PersonenResponseSource,
   type DatumSource,
-} from './brp-types';
-import type { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
-import { ONE_HOUR_MS } from '../../config/app';
-import { getFromEnv } from '../../helpers/env';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
-import { fetchAuthTokenHeader } from '../ms-oauth/oauth-token';
-import type { BRPData, Persoon } from '../profile/brp.types';
-import { type BSN } from '../zorgned/zorgned-types';
+} from './brp-types.ts';
+import type { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { ONE_HOUR_MS } from '../../config/app.ts';
+import { getFromEnv } from '../../helpers/env.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
+import { fetchAuthTokenHeader } from '../ms-oauth/oauth-token.ts';
+import type { BRPData, Persoon } from '../profile/brp.types.ts';
+import { type BSN } from '../zorgned/zorgned-types.ts';
 
 const TOKEN_VALIDITY_PERIOD = 1 * ONE_HOUR_MS;
 const PERCENTAGE_DISTANCE_FROM_EXPIRY = 0.1;

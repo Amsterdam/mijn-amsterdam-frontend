@@ -1,7 +1,7 @@
 import { generatePath, useParams } from 'react-router';
 
-import { ListPageParamKind, routeConfig } from './AVG-thema-config';
-import { useAVGData } from './useAVGData.hook';
+import { ListPageParamKind, routeConfig } from './AVG-thema-config.ts';
+import { useAVGData } from './useAVGData.hook.tsx';
 
 export function useAVGListPageData() {
   const { avgVerzoeken, isLoading, isError, tableConfig, breadcrumbs } =

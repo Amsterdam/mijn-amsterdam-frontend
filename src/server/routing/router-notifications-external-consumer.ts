@@ -1,25 +1,25 @@
 import { HttpStatusCode } from 'axios';
 import { Request, Response } from 'express';
 
-import { ExternalConsumerEndpoints } from './bff-routes';
-import { apiKeyVerificationHandler } from './route-handlers';
-import { createBFFRouter, generateFullApiUrlBFF } from './route-helpers';
-import { IS_PRODUCTION } from '../../universal/config/env';
-import { apiErrorResult, apiSuccessResult } from '../../universal/helpers/api';
-import { RETURNTO_NOTIFICATIES_CONSUMER_ID } from '../auth/auth-config';
-import { getAuth } from '../auth/auth-helpers';
-import { authRoutes } from '../auth/auth-routes';
-import { AuthProfileAndToken } from '../auth/auth-types';
-import { getFromEnv } from '../helpers/env';
-import { getApiConfig } from '../helpers/source-api-helpers';
-import { requestData } from '../helpers/source-api-request';
-import { captureMessage } from '../services/monitoring';
+import { ExternalConsumerEndpoints } from './bff-routes.ts';
+import { apiKeyVerificationHandler } from './route-handlers.ts';
+import { createBFFRouter, generateFullApiUrlBFF } from './route-helpers.ts';
+import { IS_PRODUCTION } from '../../universal/config/env.ts';
+import { apiErrorResult, apiSuccessResult } from '../../universal/helpers/api.ts';
+import { RETURNTO_NOTIFICATIES_CONSUMER_ID } from '../auth/auth-config.ts';
+import { getAuth } from '../auth/auth-helpers.ts';
+import { authRoutes } from '../auth/auth-routes.ts';
+import { AuthProfileAndToken } from '../auth/auth-types.ts';
+import { getFromEnv } from '../helpers/env.ts';
+import { getApiConfig } from '../helpers/source-api-helpers.ts';
+import { requestData } from '../helpers/source-api-request.ts';
+import { captureMessage } from '../services/monitoring.ts';
 import {
   batchDeleteNotifications,
   batchFetchAndStoreNotifications,
   batchFetchNotifications,
   registerConsumer,
-} from '../services/notifications/notifications';
+} from '../services/notifications/notifications.ts';
 
 const AMSAPP_PROTOCOl = 'amsterdam://';
 const AMSAPP_NOTIFICATIONS_DEEP_LINK = `${AMSAPP_PROTOCOl}notifications`;

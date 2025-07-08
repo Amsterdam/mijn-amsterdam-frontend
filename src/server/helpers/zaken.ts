@@ -1,5 +1,5 @@
-import { defaultDateFormat } from '../../universal/helpers/date';
-import { StatusLineItem } from '../../universal/types/App.types';
+import { defaultDateFormat } from '../../universal/helpers/date.ts';
+import { StatusLineItem } from '../../universal/types/App.types.ts';
 
 export function getLatestStatusStep(
   steps: StatusLineItem[]

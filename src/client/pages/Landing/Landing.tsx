@@ -3,19 +3,19 @@ import { useRef, useState } from 'react';
 import { Heading, Link, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
-import { DASHBOARD_PAGE_DOCUMENT_TITLE } from './Landing-routes';
+import { DASHBOARD_PAGE_DOCUMENT_TITLE } from './Landing-routes.ts';
 import styles from './Landing.module.scss';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import { LogoDigiD } from '../../assets/images/LogoDigiD';
-import LogoEherkenning from '../../assets/images/LogoEherkenning';
-import { MaintenanceNotifications } from '../../components/MaintenanceNotifications/MaintenanceNotifications';
+import { FeatureToggle } from '../../../universal/config/feature-toggles.ts';
+import { LogoDigiD } from '../../assets/images/LogoDigiD.tsx';
+import LogoEherkenning from '../../assets/images/LogoEherkenning.tsx';
+import { MaintenanceNotifications } from '../../components/MaintenanceNotifications/MaintenanceNotifications.tsx';
 import {
   PageContentCell,
   PageContentV2,
   TextPageV2,
-} from '../../components/Page/Page';
-import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api';
-import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
+} from '../../components/Page/Page.tsx';
+import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api.ts';
+import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle.ts';
 
 export function LandingPage() {
   useHTMLDocumentTitle({

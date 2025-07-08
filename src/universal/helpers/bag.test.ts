@@ -2,11 +2,11 @@ import {
   extractAddressParts,
   getLatLonByAddress,
   isLocatedInWeesp,
-} from './bag';
+} from './bag.ts';
 import {
   BAGQueryParams,
   BAGSourceData,
-} from '../../server/services/bag/bag.types';
+} from '../../server/services/bag/bag.types.ts';
 
 describe('getLatLonByAddress', () => {
   const weesp: BAGQueryParams = {

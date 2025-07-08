@@ -1,22 +1,22 @@
 import { Grid, Heading, Link, Paragraph } from '@amsterdam/design-system-react';
 
-import { AfisEmandateStub } from './Afis-thema-config';
+import { AfisEmandateStub } from './Afis-thema-config.ts';
 import styles from './AfisBetaalVoorkeuren.module.scss';
 import {
   useAfisBetaalVoorkeurenData,
   useAfisThemaData,
-} from './useAfisThemaData.hook';
-import { AfisBusinessPartnerDetailsTransformed } from '../../../../server/services/afis/afis-types';
-import { FeatureToggle } from '../../../../universal/config/feature-toggles';
-import { entries } from '../../../../universal/helpers/utils';
-import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
-import { Datalist } from '../../../components/Datalist/Datalist';
-import LoadingContent from '../../../components/LoadingContent/LoadingContent';
-import { PageContentCell } from '../../../components/Page/Page';
-import { DisplayProps } from '../../../components/Table/TableV2.types';
-import ThemaPagina from '../../../components/Thema/ThemaPagina';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+} from './useAfisThemaData.hook.tsx';
+import { AfisBusinessPartnerDetailsTransformed } from '../../../../server/services/afis/afis-types.ts';
+import { FeatureToggle } from '../../../../universal/config/feature-toggles.ts';
+import { entries } from '../../../../universal/helpers/utils.ts';
+import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel.tsx';
+import { Datalist } from '../../../components/Datalist/Datalist.tsx';
+import LoadingContent from '../../../components/LoadingContent/LoadingContent.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import { DisplayProps } from '../../../components/Table/TableV2.types.ts';
+import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
+import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 type AfisBusinessPartnerProps = {
   businesspartner: AfisBusinessPartnerDetailsTransformed | null;

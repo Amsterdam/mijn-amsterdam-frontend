@@ -1,6 +1,6 @@
-import { documentDownloadName, productName } from '../helpers';
-import { WpiRequestStatusLabels } from '../wpi-types';
-import { requestProcess as tozoRequestProcess } from './tozo';
+import { documentDownloadName, productName } from '../helpers.ts';
+import { WpiRequestStatusLabels } from '../wpi-types.ts';
+import { requestProcess as tozoRequestProcess } from './tozo.ts';
 
 export const LINK_MEER_INFO =
   '<a rel="external noopener noreferrer" class="ams-link" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a>';

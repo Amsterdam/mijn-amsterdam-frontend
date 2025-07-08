@@ -1,6 +1,6 @@
 import { lazy, Suspense } from 'react';
 
-import { MyAreaProps } from './MyArea';
+import { MyAreaProps } from './MyArea.tsx';
 import styles from './MyAreaLoadingIndicator.module.scss';
 
 export const MyAreaLazy = lazy(() => import('./MyArea'));

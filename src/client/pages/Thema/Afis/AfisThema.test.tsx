@@ -2,16 +2,16 @@ import { render, waitFor } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
-import { AfisThema } from './AfisThema';
-import { routeConfig } from './Afis-thema-config';
+import { AfisThema } from './AfisThema.tsx';
+import { routeConfig } from './Afis-thema-config.ts';
 import {
   AfisBusinessPartnerDetailsTransformed,
   AfisFacturenByStateResponse,
-} from '../../../../server/services/afis/afis-types';
-import { bffApi } from '../../../../testing/utils';
-import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
-import MockApp from '../../MockApp';
+} from '../../../../server/services/afis/afis-types.ts';
+import { bffApi } from '../../../../testing/utils.ts';
+import { AppState } from '../../../../universal/types/App.types.ts';
+import { appStateAtom } from '../../../hooks/useAppState.ts';
+import MockApp from '../../MockApp.tsx';
 
 const businessPartnerIdEncrypted = 'xxx-123-xxx';
 

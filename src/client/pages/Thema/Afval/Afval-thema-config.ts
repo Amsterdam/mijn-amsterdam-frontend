@@ -1,4 +1,4 @@
-import type { ThemaRoutesConfig } from '../../../config/thema-types';
+import type { ThemaRoutesConfig } from '../../../config/thema-types.ts';
 
 export const featureToggle = {
   AfvalActive: true,

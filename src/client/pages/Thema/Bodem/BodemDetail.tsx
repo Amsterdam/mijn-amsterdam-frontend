@@ -1,11 +1,11 @@
-import { useBodemDetailData } from './useBodemDetailData.hook';
-import { LoodMetingFrontend } from '../../../../server/services/bodem/types';
-import { Datalist, Row } from '../../../components/Datalist/Datalist';
-import { DocumentLink } from '../../../components/DocumentList/DocumentLink';
-import { AddressDisplayAndModal } from '../../../components/LocationModal/LocationModal';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { useBodemDetailData } from './useBodemDetailData.hook.tsx';
+import { LoodMetingFrontend } from '../../../../server/services/bodem/types.ts';
+import { Datalist, Row } from '../../../components/Datalist/Datalist.tsx';
+import { DocumentLink } from '../../../components/DocumentList/DocumentLink.tsx';
+import { AddressDisplayAndModal } from '../../../components/LocationModal/LocationModal.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function BodemDetail() {
   const { meting, isLoading, isError, breadcrumbs, title, routeConfig } =

@@ -4,8 +4,8 @@ import { Dialog } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
 import styles from './Modal.module.scss';
-import { getElementOnPageAsync } from '../../helpers/utils';
-import { useKeyUp } from '../../hooks/useKey';
+import { getElementOnPageAsync } from '../../helpers/utils.ts';
+import { useKeyUp } from '../../hooks/useKey.ts';
 
 function FocusTrapInner() {
   const element = document.getElementById('modal-dialog');

@@ -4,12 +4,12 @@ import { Heading } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
 import styles from './GenericBase.module.scss';
-import JsonString from './JsonString';
+import JsonString from './JsonString.tsx';
 import {
   DATASETS,
   getDatasetCategoryId,
-} from '../../../../../universal/config/myarea-datasets';
-import { useSmallScreen } from '../../../../hooks/media.hook';
+} from '../../../../../universal/config/myarea-datasets.ts';
+import { useSmallScreen } from '../../../../hooks/media.hook.ts';
 
 type GenericBaseProps = PropsWithChildren<{
   title?: string;

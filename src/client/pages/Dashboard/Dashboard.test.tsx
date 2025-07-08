@@ -4,14 +4,14 @@ import { generatePath } from 'react-router';
 import { MutableSnapshot, RecoilState } from 'recoil';
 import { describe, it } from 'vitest';
 
-import { AppState } from '../../../universal/types/App.types';
-import { appStateAtom, appStateReadyAtom } from '../../hooks/useAppState';
-import MockApp from '../MockApp';
-import { Dashboard } from './Dashboard';
-import { themaId } from './Dashboard-config';
-import { DashboardRoute } from './Dashboard-routes';
-import { remoteApiHost } from '../../../testing/setup';
-import { toDateFormatted } from '../../../universal/helpers/utils';
+import { AppState } from '../../../universal/types/App.types.ts';
+import { appStateAtom, appStateReadyAtom } from '../../hooks/useAppState.ts';
+import MockApp from '../MockApp.tsx';
+import { Dashboard } from './Dashboard.tsx';
+import { themaId } from './Dashboard-config.ts';
+import { DashboardRoute } from './Dashboard-routes.ts';
+import { remoteApiHost } from '../../../testing/setup.ts';
+import { toDateFormatted } from '../../../universal/helpers/utils.ts';
 
 const testState = {
   BRP: {

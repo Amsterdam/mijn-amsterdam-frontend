@@ -1,15 +1,15 @@
 import { ReactNode, useMemo } from 'react';
 
-import { DATASETS } from '../../../../universal/config/myarea-datasets';
-import { useProfileTypeValue } from '../../../hooks/useProfileType';
+import { DATASETS } from '../../../../universal/config/myarea-datasets.ts';
+import { useProfileTypeValue } from '../../../hooks/useProfileType.ts';
 import {
   useActiveDatasetIds,
   useControlItemChange,
   useFilterControlItemChange,
-} from '../MyArea.hooks';
-import { DatasetControlPanel } from './DatasetControlPanel';
+} from '../MyArea.hooks.ts';
+import { DatasetControlPanel } from './DatasetControlPanel.tsx';
 import styles from './PanelComponent.module.scss';
-import { PanelList, PanelListItem } from './PanelList';
+import { PanelList, PanelListItem } from './PanelList.tsx';
 
 export const CategoryPanel = ({ children }: { children: ReactNode }) => {
   return <PanelList className={styles.CategoryPanel}>{children}</PanelList>;

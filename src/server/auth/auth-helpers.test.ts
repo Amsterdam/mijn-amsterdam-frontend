@@ -10,21 +10,21 @@ import {
   OIDC_SESSION_COOKIE_NAME,
   RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
   RETURNTO_AMSAPP_STADSPAS_APP_LANDING,
-} from './auth-config';
+} from './auth-config.ts';
 import {
   createLogoutHandler,
   getAuthProfile,
   getReturnToUrl,
   hasSessionCookie,
   isSessionCookieName,
-} from './auth-helpers';
-import { MaSession, TokenData } from './auth-types';
+} from './auth-helpers.ts';
+import { MaSession, TokenData } from './auth-types.ts';
 import {
   getAuthProfileAndToken,
   getReqMockWithOidc,
   ResponseMock,
-} from '../../testing/utils';
-import { ONE_MINUTE_SECONDS } from '../config/app';
+} from '../../testing/utils.ts';
+import { ONE_MINUTE_SECONDS } from '../config/app.ts';
 
 describe('auth-helpers', () => {
   test('isSessionCookieName', () => {

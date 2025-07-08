@@ -4,8 +4,8 @@ import useSWRMutation from 'swr/mutation';
 import {
   StadspasFrontend,
   type PasblokkadeByPasnummer,
-} from '../../../../server/services/hli/stadspas-types';
-import { useAppStateGetter } from '../../../hooks/useAppState';
+} from '../../../../server/services/hli/stadspas-types.ts';
+import { useAppStateGetter } from '../../../hooks/useAppState.ts';
 
 export function useStadspassen() {
   const { HLI } = useAppStateGetter();

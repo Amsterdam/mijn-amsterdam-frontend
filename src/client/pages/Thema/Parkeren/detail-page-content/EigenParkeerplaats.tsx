@@ -1,14 +1,14 @@
 import { Link } from '@amsterdam/design-system-react';
 
-import type { EigenParkeerplaats } from '../../../../../server/services/parkeren/config-and-types';
-import type { VergunningFrontend } from '../../../../../server/services/vergunningen/config-and-types';
-import { Datalist, type Row } from '../../../../components/Datalist/Datalist';
-import { AddressDisplayAndModal } from '../../../../components/LocationModal/LocationModal';
+import type { EigenParkeerplaats } from '../../../../../server/services/parkeren/config-and-types.ts';
+import type { VergunningFrontend } from '../../../../../server/services/vergunningen/config-and-types.ts';
+import { Datalist, type Row } from '../../../../components/Datalist/Datalist.tsx';
+import { AddressDisplayAndModal } from '../../../../components/LocationModal/LocationModal.tsx';
 import {
   commonTransformers,
   dateRange,
   getRows,
-} from '../../Vergunningen/detail-page-content/fields-config';
+} from '../../Vergunningen/detail-page-content/fields-config.tsx';
 
 export function EigenParkeerplaats({
   vergunning,

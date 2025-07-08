@@ -2,12 +2,12 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MutableSnapshot } from 'recoil';
 
-import { MijnBedrijfsGegevensThema } from './ProfileCommercial';
-import { KVKData } from '../../../../../server/services/profile/kvk';
-import { AppState } from '../../../../../universal/types/App.types';
-import { appStateAtom } from '../../../../hooks/useAppState';
-import MockApp from '../../../MockApp';
-import { routeConfig } from '../Profile-thema-config';
+import { MijnBedrijfsGegevensThema } from './ProfileCommercial.tsx';
+import { KVKData } from '../../../../../server/services/profile/kvk.ts';
+import { AppState } from '../../../../../universal/types/App.types.ts';
+import { appStateAtom } from '../../../../hooks/useAppState.ts';
+import MockApp from '../../../MockApp.tsx';
+import { routeConfig } from '../Profile-thema-config.ts';
 
 const responseData = {
   eigenaar: {

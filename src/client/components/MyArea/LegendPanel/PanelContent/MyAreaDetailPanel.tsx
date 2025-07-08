@@ -1,20 +1,20 @@
 import {
   DatasetCategoryId,
   getDatasetCategoryId,
-} from '../../../../../universal/config/myarea-datasets';
-import ErrorAlert from '../../../Alert/Alert';
-import LoadingContent from '../../../LoadingContent/LoadingContent';
-import { useLoadingFeature, useSelectedFeature } from '../../MyArea.hooks';
+} from '../../../../../universal/config/myarea-datasets.ts';
+import ErrorAlert from '../../../Alert/Alert.tsx';
+import LoadingContent from '../../../LoadingContent/LoadingContent.tsx';
+import { useLoadingFeature, useSelectedFeature } from '../../MyArea.hooks.ts';
 import styles from '../PanelComponent.module.scss';
-import MyAreaPanelContentAfval from './Afval';
-import MyAreaPanelContentBedrijvenInvesteringsZones from './BedrijvenInvesteringsZones';
-import MyAreaPanelContentBekendmaking from './Bekendmaking';
-import { GenericContent } from './GenericBase';
-import MyAreaPanelContentLaadpalen from './Laadpalen';
-import MyAreaPanelContentMeldingenBuurt from './MeldingenBuurt';
-import MyAreaPanelContentParkeren from './Parkeren';
-import MyAreaPanelContentSport from './Sport';
-import MyAreaPanelContentWIOR from './Wior';
+import MyAreaPanelContentAfval from './Afval.tsx';
+import MyAreaPanelContentBedrijvenInvesteringsZones from './BedrijvenInvesteringsZones.tsx';
+import MyAreaPanelContentBekendmaking from './Bekendmaking.tsx';
+import { GenericContent } from './GenericBase.tsx';
+import MyAreaPanelContentLaadpalen from './Laadpalen.tsx';
+import MyAreaPanelContentMeldingenBuurt from './MeldingenBuurt.tsx';
+import MyAreaPanelContentParkeren from './Parkeren.tsx';
+import MyAreaPanelContentSport from './Sport.tsx';
+import MyAreaPanelContentWIOR from './Wior.tsx';
 
 interface MyAreaPanelContentSwitchProps {
   datasetCategoryId: DatasetCategoryId;

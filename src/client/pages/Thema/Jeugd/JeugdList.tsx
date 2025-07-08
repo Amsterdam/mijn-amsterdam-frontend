@@ -1,9 +1,9 @@
 import { useParams } from 'react-router';
 
-import type { ListPageParamKind } from './Jeugd-thema-config';
-import { useJeugdThemaData } from './useJeugdThemaData';
-import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import type { ListPageParamKind } from './Jeugd-thema-config.ts';
+import { useJeugdThemaData } from './useJeugdThemaData.ts';
+import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function JeugdList() {
   const { kind = 'huidige-voorzieningen' } = useParams<{

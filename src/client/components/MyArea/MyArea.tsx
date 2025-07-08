@@ -3,40 +3,40 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useMapInstance } from '@amsterdam/react-maps';
 import L, { LatLngLiteral, TileLayerOptions } from 'leaflet';
 
-import { HOOD_ZOOM } from '../../../universal/config/myarea-datasets';
+import { HOOD_ZOOM } from '../../../universal/config/myarea-datasets.ts';
 import iconUrlCommercialSecondary from '../../assets/icons/map/homeSecondaryCommercial.svg';
-import { DEFAULT_MAP_OPTIONS } from '../../config/map';
-import { useWidescreen } from '../../hooks/media.hook';
-import { getElementSize } from '../../hooks/useComponentSize';
-import { MaintenanceNotifications } from '../MaintenanceNotifications/MaintenanceNotifications';
-import { LegendPanel } from './LegendPanel/LegendPanel';
+import { DEFAULT_MAP_OPTIONS } from '../../config/map.ts';
+import { useWidescreen } from '../../hooks/media.hook.ts';
+import { getElementSize } from '../../hooks/useComponentSize.ts';
+import { MaintenanceNotifications } from '../MaintenanceNotifications/MaintenanceNotifications.tsx';
+import { LegendPanel } from './LegendPanel/LegendPanel.tsx';
 import {
   PanelState,
   WIDE_PANEL_TIP_WIDTH,
   WIDE_PANEL_WIDTH,
-} from './LegendPanel/PanelComponent';
-import { useLegendPanelCycle } from './LegendPanel/panelCycle';
+} from './LegendPanel/PanelComponent.tsx';
+import { useLegendPanelCycle } from './LegendPanel/panelCycle.ts';
 import BaseLayerToggle, {
   AERIAL_AMSTERDAM_LAYERS,
   BaseLayerType,
   DEFAULT_AMSTERDAM_LAYERS,
-} from './Map/BaseLayerToggle';
-import Map from './Map/Map';
-import ViewerContainer from './Map/ViewerContainer';
-import Zoom from './Map/Zoom';
-import { routeConfig } from './MyArea-thema-config';
+} from './Map/BaseLayerToggle.tsx';
+import Map from './Map/Map.tsx';
+import ViewerContainer from './Map/ViewerContainer.tsx';
+import Zoom from './Map/Zoom.tsx';
+import { routeConfig } from './MyArea-thema-config.ts';
 import {
   MapLocationMarker,
   useMapLocations,
   useSetMapCenterAtLocation,
-} from './MyArea.hooks';
+} from './MyArea.hooks.ts';
 import styles from './MyArea.module.scss';
-import MyAreaCustomLocationControlButton from './MyAreaCustomLocationControlButton';
-import { MyAreaDatasets } from './MyAreaDatasets';
-import HomeControlButton from './MyAreaHomeControlButton';
-import { CustomLatLonMarker, HomeIconMarker } from './MyAreaMarker';
-import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
-import { AmsMainMenuClassname } from '../MainHeader/MainHeader';
+import MyAreaCustomLocationControlButton from './MyAreaCustomLocationControlButton.tsx';
+import { MyAreaDatasets } from './MyAreaDatasets.tsx';
+import HomeControlButton from './MyAreaHomeControlButton.tsx';
+import { CustomLatLonMarker, HomeIconMarker } from './MyAreaMarker.tsx';
+import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle.ts';
+import { AmsMainMenuClassname } from '../MainHeader/MainHeader.tsx';
 
 const baseLayerOptions: TileLayerOptions = {
   subdomains: ['t1', 't2', 't3', 't4'],

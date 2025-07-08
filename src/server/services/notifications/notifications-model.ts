@@ -3,10 +3,10 @@ import {
   CONSUMER_ID,
   NOTIFICATION_LEAN,
   SERVICE_ID,
-} from './config-and-types';
-import { logger } from '../../logging';
-import { IS_DB_ENABLED } from '../db/config';
-import { db } from '../db/db';
+} from './config-and-types.ts';
+import { logger } from '../../logging.ts';
+import { IS_DB_ENABLED } from '../db/config.ts';
+import { db } from '../db/db.ts';
 
 const TABLE_NAME = 'bff_notifications';
 async function setupTables() {

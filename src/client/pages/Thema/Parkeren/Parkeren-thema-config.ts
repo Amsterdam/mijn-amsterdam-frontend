@@ -5,14 +5,14 @@ import {
   IS_DEVELOPMENT,
   IS_PRODUCTION,
   IS_TEST,
-} from '../../../../universal/config/env';
-import { entries } from '../../../../universal/helpers/utils';
-import { LinkProps } from '../../../../universal/types/App.types';
-import type { ThemaRoutesConfig } from '../../../config/thema-types';
+} from '../../../../universal/config/env.ts';
+import { entries } from '../../../../universal/helpers/utils.ts';
+import { LinkProps } from '../../../../universal/types/App.types.ts';
+import type { ThemaRoutesConfig } from '../../../config/thema-types.ts';
 import {
   ListPageParamKind as ListPageParamKindVergunningen,
   tableConfig as tableConfigVergunningen,
-} from '../Vergunningen/Vergunningen-thema-config';
+} from '../Vergunningen/Vergunningen-thema-config.ts';
 
 export const featureToggle = {
   parkerenActive: true,

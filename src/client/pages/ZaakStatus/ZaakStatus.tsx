@@ -3,26 +3,26 @@ import { useEffect, useState } from 'react';
 import { Paragraph } from '@amsterdam/design-system-react';
 import { useLocation, useNavigate } from 'react-router';
 
-import { ZAAK_STATUS_PAGE_DOCUMENT_TITLE } from './ZaakStatus-routes';
+import { ZAAK_STATUS_PAGE_DOCUMENT_TITLE } from './ZaakStatus-routes.ts';
 import styles from './ZaakStatus.module.scss';
-import { isError, isLoading } from '../../../universal/helpers/api';
-import { AppStateBase, LinkProps } from '../../../universal/types/App.types';
-import ErrorAlert from '../../components/Alert/Alert';
-import LoadingContent from '../../components/LoadingContent/LoadingContent';
-import { MaRouterLink } from '../../components/MaLink/MaLink';
+import { isError, isLoading } from '../../../universal/helpers/api.ts';
+import { AppStateBase, LinkProps } from '../../../universal/types/App.types.ts';
+import ErrorAlert from '../../components/Alert/Alert.tsx';
+import LoadingContent from '../../components/LoadingContent/LoadingContent.tsx';
+import { MaRouterLink } from '../../components/MaLink/MaLink.tsx';
 import {
   PageContentCell,
   PageContentV2,
   TextPageV2,
-} from '../../components/Page/Page';
-import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
-import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
-import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
-import { DashboardRoute } from '../Dashboard/Dashboard-routes';
-import * as HORECA from '../Thema/Horeca/Horeca-thema-config';
-import * as PARKEREN from '../Thema/Parkeren/Parkeren-thema-config';
-import * as TOERISTISCHE_VERHUUR from '../Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
-import * as VERGUNNINGEN from '../Thema/Vergunningen/Vergunningen-thema-config';
+} from '../../components/Page/Page.tsx';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2.tsx';
+import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState.ts';
+import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle.ts';
+import { DashboardRoute } from '../Dashboard/Dashboard-routes.ts';
+import * as HORECA from '../Thema/Horeca/Horeca-thema-config.ts';
+import * as PARKEREN from '../Thema/Parkeren/Parkeren-thema-config.ts';
+import * as TOERISTISCHE_VERHUUR from '../Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
+import * as VERGUNNINGEN from '../Thema/Vergunningen/Vergunningen-thema-config.ts';
 
 const ITEM_NOT_FOUND = 'not-found';
 const STATE_ERROR = 'state-error';

@@ -1,18 +1,18 @@
-import { apiSuccessResult } from '../../../universal/helpers/api';
-import { GenericDocument } from '../../../universal/types/App.types';
-import { fetchAanvragen } from '../zorgned/zorgned-service';
-import { ZorgnedAanvraagTransformed, type BSN } from '../zorgned/zorgned-types';
+import { apiSuccessResult } from '../../../universal/helpers/api.ts';
+import { GenericDocument } from '../../../universal/types/App.types.ts';
+import { fetchAanvragen } from '../zorgned/zorgned-service.ts';
+import { ZorgnedAanvraagTransformed, type BSN } from '../zorgned/zorgned-types.ts';
 import {
   FAKE_DECISION_DOCUMENT_ID,
   isAfterWCAGValidDocumentsDate,
   isDocumentDecisionDateActive,
   isEindeGeldigheidVerstreken,
-} from './status-line-items/wmo-generic';
+} from './status-line-items/wmo-generic.ts';
 import {
   DATE_END_NOT_OLDER_THAN,
   ZORGNED_JZD_REGELING_IDENTIFICATIE,
-} from './wmo-config-and-types';
-import { PRODUCTS_WITH_DELIVERY } from './wmo-status-line-items';
+} from './wmo-config-and-types.ts';
+import { PRODUCTS_WITH_DELIVERY } from './wmo-status-line-items.ts';
 
 function isProductWithDelivery(
   wmoProduct: Pick<

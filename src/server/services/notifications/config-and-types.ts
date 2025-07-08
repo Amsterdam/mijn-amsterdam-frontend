@@ -1,6 +1,6 @@
-import { MyNotification } from '../../../universal/types/App.types';
-import { AuthProfile } from '../../auth/auth-types';
-import { notificationServices } from '../tips-and-notifications';
+import { MyNotification } from '../../../universal/types/App.types.ts';
+import { AuthProfile } from '../../auth/auth-types.ts';
+import { notificationServices } from '../tips-and-notifications.ts';
 
 export type BSN = AuthProfile['id'];
 export type CONSUMER_ID = string;

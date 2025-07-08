@@ -2,9 +2,9 @@ import { useCallback, useEffect, useReducer, useState } from 'react';
 
 import axios, { AxiosRequestConfig, AxiosResponseTransformer } from 'axios';
 
-import { apiErrorResult } from '../../../universal/helpers/api';
-import { Action } from '../../../universal/types/App.types';
-import { captureException } from '../../helpers/monitoring';
+import { apiErrorResult } from '../../../universal/helpers/api.ts';
+import { Action } from '../../../universal/types/App.types.ts';
+import { captureException } from '../../helpers/monitoring.ts';
 
 export interface ApiRequestOptions extends AxiosRequestConfig {
   postpone?: boolean;

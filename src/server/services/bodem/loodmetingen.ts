@@ -1,6 +1,6 @@
 import { generatePath } from 'react-router';
 
-import { getBodemStatusSteps } from './loodmeting-status-line-items';
+import { getBodemStatusSteps } from './loodmeting-status-line-items.ts';
 import {
   Lood365Response,
   LoodMetingDocument,
@@ -8,39 +8,39 @@ import {
   LoodMetingRequestsSource,
   LoodMetingStatusLowerCase,
   LoodMetingen,
-} from './types';
+} from './types.ts';
 import {
   routeConfig,
   themaId,
   themaTitle,
-} from '../../../client/pages/Thema/Bodem/Bodem-thema-config';
+} from '../../../client/pages/Thema/Bodem/Bodem-thema-config.ts';
 import {
   apiDependencyError,
   apiSuccessResult,
-} from '../../../universal/helpers/api';
-import { defaultDateFormat } from '../../../universal/helpers/date';
+} from '../../../universal/helpers/api.ts';
+import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import {
   isRecentNotification,
   sortAlpha,
-} from '../../../universal/helpers/utils';
-import { MyNotification } from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { ONE_SECOND_MS } from '../../config/app';
-import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import { getFromEnv } from '../../helpers/env';
+} from '../../../universal/helpers/utils.ts';
+import { MyNotification } from '../../../universal/types/App.types.ts';
+import { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { ONE_SECOND_MS } from '../../config/app.ts';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt.ts';
+import { getFromEnv } from '../../helpers/env.ts';
 import {
   createSessionBasedCacheKey,
   getApiConfig,
-} from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
-import { BffEndpoints } from '../../routing/bff-routes';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { captureException } from '../monitoring';
-import { fetchAuthTokenHeader } from '../ms-oauth/oauth-token';
+} from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
+import { BffEndpoints } from '../../routing/bff-routes.ts';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
+import { captureException } from '../monitoring.ts';
+import { fetchAuthTokenHeader } from '../ms-oauth/oauth-token.ts';
 import {
   DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
   DocumentDownloadData,
-} from '../shared/document-download-route-handler';
+} from '../shared/document-download-route-handler.ts';
 import process from "node:process";
 import { Buffer } from "node:buffer";
 

@@ -8,12 +8,12 @@ import {
   MaPointFeature,
   MaPolylineFeature,
   datasetEndpoints,
-} from './datasets';
-import { forTesting as datasetsForTesting } from './datasets';
+} from './datasets.ts';
+import { forTesting as datasetsForTesting } from './datasets.ts';
 import {
   getDsoApiEmbeddedResponse,
   transformGenericApiListResponse,
-} from './dso-helpers';
+} from './dso-helpers.ts';
 import {
   createDynamicFilterConfig,
   createFeaturePropertiesFromPropertyFilterConfig,
@@ -29,9 +29,9 @@ import {
   isCoordWithingBoundingBox,
   recursiveCoordinateSwap,
   refineFilterSelection,
-} from './helpers';
-import { remoteApiHost } from '../../../testing/setup';
-import { ApiResponse_DEPRECATED } from '../../../universal/helpers/api';
+} from './helpers.ts';
+import { remoteApiHost } from '../../../testing/setup.ts';
+import { ApiResponse_DEPRECATED } from '../../../universal/helpers/api.ts';
 
 const DSO_API_RESULT = {
   _links: {

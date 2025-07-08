@@ -3,19 +3,19 @@ import type {
   DatasetFeatureProperties,
   DatasetFeatures,
   MaFeature,
-} from './datasets';
+} from './datasets.ts';
 import {
   createFeaturePropertiesFromPropertyFilterConfig,
   getFeaturePolylineColor,
   getPropertyFilters,
   LatLngPositions,
   recursiveCoordinateSwap,
-} from './helpers';
+} from './helpers.ts';
 import {
   DatasetId,
   FeatureType,
   POLYLINE_GEOMETRY_TYPES,
-} from '../../../universal/config/myarea-datasets';
+} from '../../../universal/config/myarea-datasets.ts';
 
 const DEFAULT_PAGE_SIZE = 1000;
 

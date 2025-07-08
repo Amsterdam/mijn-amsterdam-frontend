@@ -3,8 +3,8 @@ import { ComponentType } from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router';
 import { MutableSnapshot, RecoilRoot } from 'recoil';
 
-import { AppState } from '../../universal/types/App.types';
-import { appStateAtom } from '../hooks/useAppState';
+import { AppState } from '../../universal/types/App.types.ts';
+import { appStateAtom } from '../hooks/useAppState.ts';
 
 interface MockAppProps {
   routePath: string;

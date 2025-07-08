@@ -2,10 +2,10 @@ import { Icon, UnorderedList } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
 import styles from './MyThemasPanel.module.scss';
-import { ThemaMenuItemTransformed } from '../../config/thema-types';
-import { GeneralInfoRoute } from '../../pages/GeneralInfo/GeneralInfo-routes';
-import LoadingContent from '../LoadingContent/LoadingContent';
-import { MaLink, MaRouterLink } from '../MaLink/MaLink';
+import { ThemaMenuItemTransformed } from '../../config/thema-types.ts';
+import { GeneralInfoRoute } from '../../pages/GeneralInfo/GeneralInfo-routes.ts';
+import LoadingContent from '../LoadingContent/LoadingContent.tsx';
+import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
 
 type ThemaLinkLoaderProps = {
   width: number;

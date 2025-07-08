@@ -4,13 +4,13 @@ import {
   tableConfig,
   themaId,
   themaTitle,
-} from './Parkeren-thema-config';
-import { DecosParkeerVergunning } from '../../../../server/services/parkeren/config-and-types';
-import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
-import { isError, isLoading } from '../../../../universal/helpers/api';
-import { addLinkElementToProperty } from '../../../components/Table/TableV2';
-import { useAppStateGetter } from '../../../hooks/useAppState';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
+} from './Parkeren-thema-config.ts';
+import { DecosParkeerVergunning } from '../../../../server/services/parkeren/config-and-types.ts';
+import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types.ts';
+import { isError, isLoading } from '../../../../universal/helpers/api.ts';
+import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
+import { useAppStateGetter } from '../../../hooks/useAppState.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
 export function useParkerenData() {
   const { PARKEREN } = useAppStateGetter();

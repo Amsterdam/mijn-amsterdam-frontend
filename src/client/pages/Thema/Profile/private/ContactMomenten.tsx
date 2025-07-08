@@ -1,9 +1,9 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { ContactMomentFrontend } from './Contactmomenten.config';
-import { useContactmomenten } from './useContactmomenten.hook';
-import { CollapsiblePanel } from '../../../../components/CollapsiblePanel/CollapsiblePanel';
-import ThemaPaginaTable from '../../../../components/Thema/ThemaPaginaTable';
+import { ContactMomentFrontend } from './Contactmomenten.config.ts';
+import { useContactmomenten } from './useContactmomenten.hook.tsx';
+import { CollapsiblePanel } from '../../../../components/CollapsiblePanel/CollapsiblePanel.tsx';
+import ThemaPaginaTable from '../../../../components/Thema/ThemaPaginaTable.tsx';
 
 export function ContactMomenten() {
   const { contactmomenten, displayProps, title, listPageRoute } =

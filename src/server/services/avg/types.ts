@@ -1,5 +1,5 @@
-import { ZaakDetail } from '../../../universal/types/App.types';
-import { SmileSourceResponse, SmileFieldValue } from '../smile/smile-types';
+import { ZaakDetail } from '../../../universal/types/App.types.ts';
+import { SmileSourceResponse, SmileFieldValue } from '../smile/smile-types.ts';
 
 export type AVGResponse = {
   aantal: number;

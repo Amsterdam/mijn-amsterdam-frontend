@@ -6,8 +6,8 @@ import {
   fetchOvertredingen,
   fetchOvertredingenNotifications,
   getJSONRequestPayload,
-} from './cleopatra';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
+} from './cleopatra.ts';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 
 const mocks = vi.hoisted(() => {
   return {

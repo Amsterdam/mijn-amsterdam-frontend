@@ -1,11 +1,11 @@
 import { render } from '@testing-library/react';
 import { MutableSnapshot } from 'recoil';
 
-import { InkomenThema } from './InkomenThema';
-import { routeConfig } from './Inkomen-thema-config';
-import type { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
-import MockApp from '../../MockApp';
+import { InkomenThema } from './InkomenThema.tsx';
+import { routeConfig } from './Inkomen-thema-config.ts';
+import type { AppState } from '../../../../universal/types/App.types.ts';
+import { appStateAtom } from '../../../hooks/useAppState.ts';
+import MockApp from '../../MockApp.tsx';
 
 const testState = {
   WPI_AANVRAGEN: {

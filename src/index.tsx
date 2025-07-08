@@ -1,9 +1,9 @@
 import { AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js';
 import { createRoot } from 'react-dom/client';
 
-import { AppWrapper } from './client/App';
-import { reactPlugin } from './client/helpers/monitoring';
-import { ApplicationError } from './client/pages/ApplicationError/ApplicationError';
+import { AppWrapper } from './client/App.tsx';
+import { reactPlugin } from './client/helpers/monitoring.ts';
+import { ApplicationError } from './client/pages/ApplicationError/ApplicationError.tsx';
 import './client/styles/main.scss';
 
 if (

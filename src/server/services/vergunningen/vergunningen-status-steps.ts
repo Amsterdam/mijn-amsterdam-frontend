@@ -1,8 +1,8 @@
-import { dateTimeEndFormatted } from '../../../client/pages/Thema/Vergunningen/Vergunningen-helpers';
-import { StatusLineItem } from '../../../universal/types/App.types';
-import { MA_VERLEEND_DECISIONS_COMMOM } from '../decos/decos-field-transformers';
-import { getWorkflowStatusDate } from '../decos/decos-helpers';
-import { DecosZaakBase, WithDateEnd } from '../decos/decos-types';
+import { dateTimeEndFormatted } from '../../../client/pages/Thema/Vergunningen/Vergunningen-helpers.ts';
+import { StatusLineItem } from '../../../universal/types/App.types.ts';
+import { MA_VERLEEND_DECISIONS_COMMOM } from '../decos/decos-field-transformers.ts';
+import { getWorkflowStatusDate } from '../decos/decos-helpers.ts';
+import { DecosZaakBase, WithDateEnd } from '../decos/decos-types.ts';
 
 export function getStatusSteps<DZ extends DecosZaakBase & Partial<WithDateEnd>>(
   zaak: DZ

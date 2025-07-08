@@ -1,34 +1,36 @@
-import jose from 'node-jose';
+import * as jose from 'jose';
 
-import { ApiPatternResponseA, fetchService } from './api-service';
-import * as MILIEUZONE from '../../../client/pages/Thema/Milieuzone/Milieuzone-thema-config';
-import * as OVERTREDINGEN from '../../../client/pages/Thema/Overtredingen/Overtredingen-thema-config';
-import { IS_TAP } from '../../../universal/config/env';
+import { ApiPatternResponseA, fetchService } from './api-service.ts';
+import * as MILIEUZONE from '../../../client/pages/Thema/Milieuzone/Milieuzone-thema-config.ts';
+import * as OVERTREDINGEN from '../../../client/pages/Thema/Overtredingen/Overtredingen-thema-config.ts';
+import { IS_TAP } from '../../../universal/config/env.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
   type ApiResponse,
-} from '../../../universal/helpers/api';
-import { MyNotification } from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { getCert } from '../../helpers/cert';
-import { getFromEnv } from '../../helpers/env';
+} from '../../../universal/helpers/api.ts';
+import { MyNotification } from '../../../universal/types/App.types.ts';
+import { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { getCert } from '../../helpers/cert.ts';
+import { getFromEnv } from '../../helpers/env.ts';
 import {
   createSessionBasedCacheKey,
   getApiConfig,
-} from '../../helpers/source-api-helpers';
-import { logger } from '../../logging';
+} from '../../helpers/source-api-helpers.ts';
+import { logger } from '../../logging.ts';
+
+const ALGORITHM = 'RSA-OAEP-256';
+const KID = 'xxx';
 
 const DEV_KEY = {
   kty: 'RSA',
-  kid: 'xxx',
+  kid: KID,
   x5t: '8zMcftkkR9RYIvhvu4UrfAo0IaM',
   n: 'uTBrbjUH8Ry0A-dt9v0NJon3HPfo-b1ZKrW1eLUUChOUVop1qhlRck_IMx1o3zVETqe_nOmwHp4yC6NQNUfYWnHQfu858Zr-zfDpI1h1cjlgv5pdorJDxTDydNMwvYQIbbeblKWavGWaz7Pq3SK_AwACxIlcoJ09wNPKi2E3zSQBI0RpVQcYs38mtCa4iOT5DEbn7gibBVbtXxOC3NeWvhMXEJVeqAXWA0M2Df1qHGLo1gLund1hDR4rTQf4h62PSpVp8G3Hoo1zGpZlJJJo1RB2JNKqCIZkjs3f80ZhEP9_IIC0CgZdsyqpltf4ygsG_TycxgEuiAy1bVrDSy82xaZleV1hvjHrnlIAHNTfnNebmCMPzahrcExDjSMQbXWHWd00r5cs2E1YAv9iYox-MFflaUN0tto76GhsASnDC_V40mWLaRFEymIfanIgLZFtViW2kCBQJOEUtWrC3weLx_iTQQtvbSPhx-ayQQCpfKU_vShfkxUeqAcf5yoZDae3uqGoo-biCZMFDFo5i74biwvz-AQ5lRtsMRgQCpGDaHjQJ6P7pJeQlhrQhMwxvePGaUW0XcJ0l3C4YuNtLLHFtbxw3DieQRMbAkmpSzideOg9tIesCbAca8EvNipB3PowQ4TpZXPkK9HxsWL681_YRcu-QxCT79hhQJ9FDPbqbes',
   e: 'AQAB',
 };
 
 function getPublicKey() {
-  const keystore = jose.JWK.createKeyStore();
   let certContent;
 
   try {
@@ -39,13 +41,12 @@ function getPublicKey() {
     logger.error(error, 'Error getting public key');
   }
 
-  const pemPubKey = !IS_TAP
-    ? keystore.add(DEV_KEY, 'json')
-    : certContent
-      ? keystore.add(certContent, 'pem')
-      : Promise.resolve(undefined);
-
-  return pemPubKey;
+  if (!IS_TAP) {
+    return jose.importJWK(DEV_KEY, ALGORITHM);
+  } else if (certContent) {
+    return jose.importSPKI(certContent, 'RS256');
+  }
+  return Promise.resolve(undefined);
 }
 
 export function getJSONRequestPayload(
@@ -63,26 +64,24 @@ export function getJSONRequestPayload(
 }
 
 export async function encryptPayload(payload: CleopatraRequestPayloadString) {
-  const key = await getPublicKey();
+  const publicKey = await getPublicKey();
 
-  if (key) {
-    return jose.JWE.createEncrypt(
-      {
-        format: 'flattened',
-        fields: {
-          alg: 'RSA-OAEP-256',
-          enc: 'A256CBC-HS512',
-          typ: 'JWE',
-          kid: key.kid,
-        },
-      },
-      key
-    )
-      .update(payload)
-      .final();
+  if (!publicKey) {
+    return null;
   }
 
-  return null;
+  const encodedPayload = new TextEncoder().encode(payload);
+
+  const jwe = await new jose.FlattenedEncrypt(encodedPayload)
+    .setProtectedHeader({
+      alg: ALGORITHM,
+      enc: 'A256CBC-HS512',
+      typ: 'JWE',
+      kid: KID,
+    })
+    .encrypt(publicKey);
+
+  return jwe;
 }
 
 interface CleopatraMessage {

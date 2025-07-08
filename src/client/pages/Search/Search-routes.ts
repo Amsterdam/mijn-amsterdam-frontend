@@ -1,4 +1,4 @@
-import { SearchPage } from './Search';
+import { SearchPage } from './Search.tsx';
 
 export const SearchPageRoute = { route: '/zoeken', Component: SearchPage };
 export const SearchRoutes = [SearchPageRoute];

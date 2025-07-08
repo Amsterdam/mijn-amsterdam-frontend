@@ -2,14 +2,14 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
-import { appStateAtom } from '../../hooks/useAppState';
-import MockApp from '../MockApp';
-import { MyNotificationsPage } from './MyNotifications';
-import { MyNotificationsRoute } from './MyNotifications-routes';
-import type { AppState } from '../../../universal/types/App.types';
-import { themaId as themaIdDashboard } from '../Dashboard/Dashboard-config';
-import { themaId as themaIdInkomen } from '../Thema/Inkomen/Inkomen-thema-config';
-import { themaIdBRP } from '../Thema/Profile/Profile-thema-config';
+import { appStateAtom } from '../../hooks/useAppState.ts';
+import MockApp from '../MockApp.tsx';
+import { MyNotificationsPage } from './MyNotifications.tsx';
+import { MyNotificationsRoute } from './MyNotifications-routes.ts';
+import type { AppState } from '../../../universal/types/App.types.ts';
+import { themaId as themaIdDashboard } from '../Dashboard/Dashboard-config.ts';
+import { themaId as themaIdInkomen } from '../Thema/Inkomen/Inkomen-thema-config.ts';
+import { themaIdBRP } from '../Thema/Profile/Profile-thema-config.ts';
 
 const testState = {
   NOTIFICATIONS: {

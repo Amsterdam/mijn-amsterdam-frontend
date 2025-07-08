@@ -1,4 +1,5 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
+import process from 'node:process';
 
 import {
   add,
@@ -14,13 +15,12 @@ import {
 } from 'date-fns';
 import { Request, Response } from 'express';
 
-import { IS_DB_ENABLED, tableNameLoginCount } from './db/config';
-import { db } from './db/db';
-import { captureException } from './monitoring';
-import { IS_TAP } from '../../universal/config/env';
-import { defaultDateFormat } from '../../universal/helpers/date';
-import { logger } from '../logging';
-import process from "node:process";
+import { IS_DB_ENABLED, tableNameLoginCount } from './db/config.ts';
+import { db } from './db/db.ts';
+import { captureException } from './monitoring.ts';
+import { IS_TAP } from '../../universal/config/env.ts';
+import { defaultDateFormat } from '../../universal/helpers/date.ts';
+import { logger } from '../logging.ts';
 
 /**
  * This service gives us the ability to count the exact amount of visitors that logged in into Mijn Amsterdam over start - end period.

@@ -9,19 +9,19 @@ import {
 } from '@amsterdam/design-system-react';
 import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 
-import { useVarenThemaData } from './useVarenThemaData.hook';
-import { rederRegistratieLink } from './Varen-thema-config';
+import { useVarenThemaData } from './useVarenThemaData.hook.ts';
+import { rederRegistratieLink } from './Varen-thema-config.ts';
 import styles from './Varen.module.scss';
 import type {
   VarenRegistratieRederFrontend,
   VarenZakenFrontend,
-} from '../../../../server/services/varen/config-and-types';
-import { Datalist, RowSet } from '../../../components/Datalist/Datalist';
-import { MaButtonLink } from '../../../components/MaLink/MaLink';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaPagina from '../../../components/Thema/ThemaPagina';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+} from '../../../../server/services/varen/config-and-types.ts';
+import { Datalist, RowSet } from '../../../components/Datalist/Datalist.tsx';
+import { MaButtonLink } from '../../../components/MaLink/MaLink.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
+import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 const pageContentTop = (
   <PageContentCell spanWide={8}>

@@ -1,6 +1,6 @@
 import L, { LatLngBounds, LatLngBoundsLiteral } from 'leaflet';
 
-import type { MaSuperClusterFeature } from '../../../server/services/buurt/datasets';
+import type { MaSuperClusterFeature } from '../../../server/services/buurt/datasets.ts';
 
 // Code taken from https://github.com/yagoferrer/marker-spider/blob/master/lib/oms.coffee
 const CIRCLE_DIVISION_COUNT = 12;

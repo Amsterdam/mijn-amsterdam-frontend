@@ -1,10 +1,10 @@
 import { describe, expect } from 'vitest';
 
-import { formatKvkProfileData } from './ProfileCommercial.transform';
+import { formatKvkProfileData } from './ProfileCommercial.transform.tsx';
 import type {
   KVKData,
   KVKSourceDataContent,
-} from '../../../../../server/services/profile/kvk';
+} from '../../../../../server/services/profile/kvk.ts';
 
 describe('formatKvkProfileData', () => {
   test('should not format data when no kvkData is provided', () => {

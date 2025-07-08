@@ -1,4 +1,4 @@
-import { LinkProps } from '../../../universal/types/App.types';
+import { LinkProps } from '../../../universal/types/App.types.ts';
 
 export interface StadspasTransactieSource {
   id: number;

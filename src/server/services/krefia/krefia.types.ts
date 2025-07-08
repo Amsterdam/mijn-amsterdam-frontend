@@ -1,5 +1,5 @@
-import type { ApiResponse } from '../../../universal/helpers/api';
-import type { LinkProps } from '../../../universal/types/App.types';
+import type { ApiResponse } from '../../../universal/helpers/api.ts';
+import type { LinkProps } from '../../../universal/types/App.types.ts';
 
 export interface NotificationTrigger {
   datePublished: string;

@@ -3,7 +3,7 @@ import { LatLngLiteral, LatLngTuple } from 'leaflet';
 import {
   BAGQueryParams,
   BAGAdreseerbaarObject,
-} from '../../server/services/bag/bag.types';
+} from '../../server/services/bag/bag.types.ts';
 
 type ExtractUtils = {
   pattern: RegExp;

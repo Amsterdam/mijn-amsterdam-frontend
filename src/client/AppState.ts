@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 
-import { apiPristineResult } from '../universal/helpers/api';
-import { AppState } from '../universal/types/App.types';
+import { apiPristineResult } from '../universal/helpers/api.ts';
+import { AppState } from '../universal/types/App.types.ts';
 
 export const PRISTINE_APPSTATE: AppState = {
   // Generated

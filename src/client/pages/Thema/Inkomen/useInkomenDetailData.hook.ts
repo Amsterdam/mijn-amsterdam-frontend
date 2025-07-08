@@ -1,9 +1,9 @@
 import { useParams } from 'react-router';
 
-import { routeConfig, themaId } from './Inkomen-thema-config';
-import { isError, isLoading } from '../../../../universal/helpers/api';
-import { useAppStateGetter } from '../../../hooks/useAppState';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
+import { routeConfig, themaId } from './Inkomen-thema-config.ts';
+import { isError, isLoading } from '../../../../universal/helpers/api.ts';
+import { useAppStateGetter } from '../../../hooks/useAppState.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
 export function useInkomenDetailData(
   stateKey: 'WPI_TOZO' | 'WPI_BBZ' | 'WPI_AANVRAGEN' | 'WPI_TONK'

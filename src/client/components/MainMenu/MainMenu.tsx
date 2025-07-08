@@ -1,11 +1,11 @@
 import { Heading } from '@amsterdam/design-system-react';
 
-import { categoryMenuItems } from './MainMenu.constants';
+import { categoryMenuItems } from './MainMenu.constants.ts';
 import styles from './MainMenu.module.scss';
-import { useSmallScreen } from '../../hooks/media.hook';
-import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
-import { MainHeaderSecondaryLinks } from '../MainHeader/MainHeader';
-import { MaLink, MaRouterLink } from '../MaLink/MaLink';
+import { useSmallScreen } from '../../hooks/media.hook.ts';
+import { useThemaMenuItems } from '../../hooks/useThemaMenuItems.ts';
+import { MainHeaderSecondaryLinks } from '../MainHeader/MainHeader.tsx';
+import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
 
 export const MAIN_MENU_ID = 'main-menu';
 

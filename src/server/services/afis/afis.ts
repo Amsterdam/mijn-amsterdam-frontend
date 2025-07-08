@@ -1,26 +1,26 @@
-import { fetchAfisFacturenOverview } from './afis-facturen';
-import { getAfisApiConfig } from './afis-helpers';
+import { fetchAfisFacturenOverview } from './afis-facturen.ts';
+import { getAfisApiConfig } from './afis-helpers.ts';
 import {
   AfisBusinessPartnerCommercialResponseSource,
   AfisThemaResponse,
   AfisBusinessPartnerPrivateResponseSource,
-} from './afis-types';
+} from './afis-types.ts';
 import {
   apiSuccessResult,
   getFailedDependencies,
-} from '../../../universal/helpers/api';
-import { omit } from '../../../universal/helpers/utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { ONE_MINUTE_MS } from '../../config/app';
-import { DataRequestConfig } from '../../config/source-api';
-import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import { getFromEnv } from '../../helpers/env';
+} from '../../../universal/helpers/api.ts';
+import { omit } from '../../../universal/helpers/utils.ts';
+import { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { ONE_MINUTE_MS } from '../../config/app.ts';
+import { DataRequestConfig } from '../../config/source-api.ts';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt.ts';
+import { getFromEnv } from '../../helpers/env.ts';
 import {
   getApiConfig,
   createSessionBasedCacheKey,
-} from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
-import { fetchAuthTokenHeader } from '../ms-oauth/oauth-token';
+} from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
+import { fetchAuthTokenHeader } from '../ms-oauth/oauth-token.ts';
 
 export async function fetchAfisTokenHeader() {
   const tokenHeaderResponse = await fetchAuthTokenHeader(

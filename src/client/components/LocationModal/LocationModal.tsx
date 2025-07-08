@@ -9,21 +9,21 @@ import {
   BAGAdreseerbaarObject,
   BAGQueryParams,
   BAGSourceData,
-} from '../../../server/services/bag/bag.types';
-import { LOCATION_ZOOM } from '../../../universal/config/myarea-datasets';
-import { PUBLIC_API_URLS } from '../../../universal/config/url';
+} from '../../../server/services/bag/bag.types.ts';
+import { LOCATION_ZOOM } from '../../../universal/config/myarea-datasets.ts';
+import { PUBLIC_API_URLS } from '../../../universal/config/url.ts';
 import {
   extractAddressParts,
   getLatLngWithAddress,
   getLatLonByAddress,
   isLocatedInWeesp,
   LatLngWithAddress,
-} from '../../../universal/helpers/bag';
-import { BaseLayerType } from '../../components/MyArea/Map/BaseLayerToggle';
-import { MyAreaLoader } from '../../components/MyArea/MyAreaLoader';
-import { useDataApi } from '../../hooks/api/useDataApi';
-import { Modal } from '../Modal/Modal';
-import { MapLocationMarker } from '../MyArea/MyArea.hooks';
+} from '../../../universal/helpers/bag.ts';
+import { BaseLayerType } from '../../components/MyArea/Map/BaseLayerToggle.tsx';
+import { MyAreaLoader } from '../../components/MyArea/MyAreaLoader.tsx';
+import { useDataApi } from '../../hooks/api/useDataApi.ts';
+import { Modal } from '../Modal/Modal.tsx';
+import { MapLocationMarker } from '../MyArea/MyArea.hooks.ts';
 
 function transformBagSearchResultsResponse(
   response: BAGSourceData,

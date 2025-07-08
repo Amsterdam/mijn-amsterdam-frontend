@@ -4,12 +4,12 @@ import {
   tableConfig,
   themaId,
   themaTitle,
-} from './Vergunningen-thema-config';
-import type { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
-import { isError, isLoading } from '../../../../universal/helpers/api';
-import { addLinkElementToProperty } from '../../../components/Table/TableV2';
-import { useAppStateGetter } from '../../../hooks/useAppState';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
+} from './Vergunningen-thema-config.ts';
+import type { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types.ts';
+import { isError, isLoading } from '../../../../universal/helpers/api.ts';
+import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
+import { useAppStateGetter } from '../../../hooks/useAppState.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
 export function useVergunningenThemaData() {
   const { VERGUNNINGEN, PARKEREN } = useAppStateGetter();

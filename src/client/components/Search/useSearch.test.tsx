@@ -17,12 +17,12 @@ import {
   generateSearchIndexPageEntries,
   generateSearchIndexPageEntry,
   useSearchIndex,
-} from './useSearch';
-import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
-import { bffApi } from '../../../testing/utils';
-import { AppState } from '../../../universal/types/App.types';
-import { appStateAtom } from '../../hooks/useAppState';
-import { routeConfig } from '../MyArea/MyArea-thema-config';
+} from './useSearch.tsx';
+import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types.ts';
+import { bffApi } from '../../../testing/utils.ts';
+import { AppState } from '../../../universal/types/App.types.ts';
+import { appStateAtom } from '../../hooks/useAppState.ts';
+import { routeConfig } from '../MyArea/MyArea-thema-config.ts';
 
 export function setupFetchStub(data: any) {
   return function fetchStub(_url: string) {

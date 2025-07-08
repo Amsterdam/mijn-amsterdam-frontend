@@ -4,7 +4,7 @@ import {
 } from '@amsterdam/design-system-react-icons';
 
 import styles from './MyAreaLoadingIndicator.module.scss';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
 
 interface MyAreaLoadingIndicatorProps {
   label: string;

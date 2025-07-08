@@ -1,10 +1,10 @@
 import { generatePath } from 'react-router';
 
-import { LeerlingenvervoerVoorzieningFrontend } from '../../../../server/services/jeugd/jeugd';
-import { IS_PRODUCTION } from '../../../../universal/config/env';
-import { LinkProps } from '../../../../universal/types/App.types';
-import { DisplayProps } from '../../../components/Table/TableV2.types';
-import { ThemaRoutesConfig } from '../../../config/thema-types';
+import { LeerlingenvervoerVoorzieningFrontend } from '../../../../server/services/jeugd/jeugd.ts';
+import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
+import { LinkProps } from '../../../../universal/types/App.types.ts';
+import { DisplayProps } from '../../../components/Table/TableV2.types.ts';
+import { ThemaRoutesConfig } from '../../../config/thema-types.ts';
 
 export const featureToggle = {
   leerlingenvervoerActive: !IS_PRODUCTION,

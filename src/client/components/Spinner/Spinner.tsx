@@ -1,5 +1,5 @@
 import styles from './Spinner.module.scss';
-import { IconSpinner } from '../../assets/icons';
+import { IconSpinner } from '../../assets/icons/index.tsx';
 
 interface SpinnerProps {
   width?: number;

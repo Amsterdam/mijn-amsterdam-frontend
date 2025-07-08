@@ -1,25 +1,25 @@
 import { generatePath } from 'react-router';
 
-import { jeugdStatusLineItemsConfig } from './status-line-items';
-import { routeConfig } from '../../../client/pages/Thema/Jeugd/Jeugd-thema-config';
-import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
-import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
-import { capitalizeFirstLetter } from '../../../universal/helpers/text';
+import { jeugdStatusLineItemsConfig } from './status-line-items.ts';
+import { routeConfig } from '../../../client/pages/Thema/Jeugd/Jeugd-thema-config.ts';
+import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api.ts';
+import { dateSort, defaultDateFormat } from '../../../universal/helpers/date.ts';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
 import {
   GenericDocument,
   ZaakDetail,
-} from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { getLatestStatus, getLatestStatusDate } from '../../helpers/zaken';
-import { BffEndpoints } from '../../routing/bff-routes';
-import { hasDecision } from '../wmo/status-line-items/wmo-generic';
-import { getDocuments } from '../wmo/wmo';
-import { fetchAanvragen } from '../zorgned/zorgned-service';
-import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
+} from '../../../universal/types/App.types.ts';
+import { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { getLatestStatus, getLatestStatusDate } from '../../helpers/zaken.ts';
+import { BffEndpoints } from '../../routing/bff-routes.ts';
+import { hasDecision } from '../wmo/status-line-items/wmo-generic.ts';
+import { getDocuments } from '../wmo/wmo.ts';
+import { fetchAanvragen } from '../zorgned/zorgned-service.ts';
+import { getStatusLineItems } from '../zorgned/zorgned-status-line-items.ts';
 import {
   ProductSoortCode,
   ZorgnedAanvraagTransformed,
-} from '../zorgned/zorgned-types';
+} from '../zorgned/zorgned-types.ts';
 
 export async function fetchLeerlingenvervoer(
   authProfileAndToken: AuthProfileAndToken

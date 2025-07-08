@@ -3,17 +3,17 @@ import {
   themaId,
   themaTitle,
   featureToggle,
-} from './Bodem-thema-config';
+} from './Bodem-thema-config.ts';
 import { default as BodemIcon } from './BodemIcon.svg?react';
-import { BodemList } from './BodemList';
-import { BodemThema } from './BodemThema';
-import { BodemDetail } from './BodemDetail';
-import { isLoading } from '../../../../universal/helpers/api';
-import { type AppState } from '../../../../universal/types/App.types';
+import { BodemList } from './BodemList.tsx';
+import { BodemThema } from './BodemThema.tsx';
+import { BodemDetail } from './BodemDetail.tsx';
+import { isLoading } from '../../../../universal/helpers/api.ts';
+import { type AppState } from '../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 
 export const BodemRoutes = [
   {

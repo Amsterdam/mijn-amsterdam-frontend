@@ -1,10 +1,13 @@
-import { Request, RequestHandler, Response } from 'express';
-import { ConfigParams, requiresAuth } from 'express-openid-connect';
-import { NextFunction } from 'express';
+import process from 'node:process';
 
-import { nocache, verifyAuthenticated } from './route-handlers';
-import { sendUnauthorized } from './route-helpers';
-import { apiSuccessResult } from '../../universal/helpers/api';
+import { Request, RequestHandler, Response } from 'express';
+import { NextFunction } from 'express';
+import expressOpenidConnect from 'express-openid-connect';
+
+import { nocache, verifyAuthenticated } from './route-handlers.ts';
+import { sendUnauthorized } from './route-helpers.ts';
+import { createBFFRouter } from './route-helpers.ts';
+import { apiSuccessResult } from '../../universal/helpers/api.ts';
 import {
   OIDC_SESSION_COOKIE_NAME,
   oidcConfigDigid,
@@ -12,23 +15,21 @@ import {
   openIdAuth,
   RETURNTO_MAMS_LANDING_DIGID,
   RETURNTO_MAMS_LANDING_EHERKENNING,
-} from '../auth/auth-config';
-import { createBFFRouter } from './route-helpers';
+} from '../auth/auth-config.ts';
 import {
   createLogoutHandler,
   getAuth,
   getReturnToUrl,
   hasSessionCookie,
-} from '../auth/auth-helpers';
+} from '../auth/auth-helpers.ts';
 import {
   AUTH_BASE_EHERKENNING,
   AUTH_CALLBACK,
   authRoutes,
-} from '../auth/auth-routes';
-import { AuthenticatedRequest } from '../auth/auth-types';
-import { getFromEnv } from '../helpers/env';
-import { countLoggedInVisit } from '../services/visitors';
-import process from "node:process";
+} from '../auth/auth-routes.ts';
+import { AuthenticatedRequest } from '../auth/auth-types.ts';
+import { getFromEnv } from '../helpers/env.ts';
+import { countLoggedInVisit } from '../services/visitors.ts';
 
 export const oidcRouter = createBFFRouter({ id: 'router-oidc' });
 
@@ -42,7 +43,7 @@ oidcRouter.use(nocache);
 function getOidcConfigByRequest(req: Request) {
   const isEherkenning = req.url.includes(AUTH_BASE_EHERKENNING);
 
-  let oidConfig: ConfigParams = oidcConfigDigid;
+  let oidConfig: expressOpenidConnect.ConfigParams = oidcConfigDigid;
 
   if (isEherkenning) {
     oidConfig = oidcConfigEherkenning;
@@ -166,7 +167,7 @@ oidcRouter.get(authRoutes.AUTH_CHECK, authCheckHandler);
 
 oidcRouter.get(
   authRoutes.AUTH_TOKEN_DATA,
-  requiresAuth(),
+  expressOpenidConnect.requiresAuth(),
   async (req: AuthenticatedRequest, res: Response) => {
     if (hasSessionCookie(req)) {
       const auth = getAuth(req);

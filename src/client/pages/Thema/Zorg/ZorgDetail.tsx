@@ -1,11 +1,11 @@
-import { useZorgDetailData } from './useZorgDetailData.hook';
-import { WMOVoorzieningFrontend } from '../../../../server/services/wmo/wmo-config-and-types';
-import ErrorAlert from '../../../components/Alert/Alert';
-import { Datalist } from '../../../components/Datalist/Datalist';
-import DocumentListV2 from '../../../components/DocumentList/DocumentListV2';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { useZorgDetailData } from './useZorgDetailData.hook.ts';
+import { WMOVoorzieningFrontend } from '../../../../server/services/wmo/wmo-config-and-types.ts';
+import ErrorAlert from '../../../components/Alert/Alert.tsx';
+import { Datalist } from '../../../components/Datalist/Datalist.tsx';
+import DocumentListV2 from '../../../components/DocumentList/DocumentListV2.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 type WMODetailContentProps = {
   voorziening: WMOVoorzieningFrontend;

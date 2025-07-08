@@ -1,11 +1,11 @@
-import fs from 'fs';
 import { createHash } from 'node:crypto';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 
 import { FlatCache, clearCacheById, create } from 'flat-cache';
 
-import { IS_AP } from '../../universal/config/env';
-import { ONE_SECOND_MS } from '../config/app';
+import { IS_AP } from '../../universal/config/env.ts';
+import { ONE_SECOND_MS } from '../config/app.ts';
 
 interface FileCacheProps {
   name: string;
@@ -22,7 +22,7 @@ type KeyData<T = unknown> = {
 const ONE_MINUTE_MS = ONE_SECOND_MS * 60;
 const EXT = 'flat-cache.json';
 
-export const DEFAULT_CACHE_DIR = path.join(__dirname, '../', 'cache');
+export const DEFAULT_CACHE_DIR = path.join(import.meta.dirname, '../', 'cache');
 
 function fileName(name: string, isProd: boolean = IS_AP) {
   const cacheName = isProd ? `prod.${name}` : `dev.${name}`;

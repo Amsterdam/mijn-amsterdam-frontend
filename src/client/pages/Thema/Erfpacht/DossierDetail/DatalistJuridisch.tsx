@@ -1,8 +1,8 @@
 import { Link } from '@amsterdam/design-system-react';
 
-import { ErfpachtDatalistProps } from './DatalistGeneral';
-import { Datalist } from '../../../../components/Datalist/Datalist';
-import { LINKS } from '../Erfpacht-thema-config';
+import { ErfpachtDatalistProps } from './DatalistGeneral.tsx';
+import { Datalist } from '../../../../components/Datalist/Datalist.tsx';
+import { LINKS } from '../Erfpacht-thema-config.ts';
 
 export function DatalistJuridisch({ dossier }: ErfpachtDatalistProps) {
   if (dossier.juridisch) {

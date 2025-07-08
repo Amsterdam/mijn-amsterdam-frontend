@@ -3,10 +3,10 @@ import { ReactNode } from 'react';
 import { LinkList, Grid } from '@amsterdam/design-system-react';
 
 import styles from './ProfileSectionPanel.module.scss';
-import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
-import { Datalist } from '../../../components/Datalist/Datalist';
-import { PageContentCell } from '../../../components/Page/Page';
-import { useSmallScreen } from '../../../hooks/media.hook';
+import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel.tsx';
+import { Datalist } from '../../../components/Datalist/Datalist.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import { useSmallScreen } from '../../../hooks/media.hook.ts';
 
 export interface ActionLink {
   title: string;

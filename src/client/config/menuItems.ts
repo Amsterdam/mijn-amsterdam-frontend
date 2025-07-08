@@ -1,6 +1,6 @@
-import { myThemasMenuItems } from './thema';
-import { ThemaMenuItemTransformed, ThemaMenuItem } from './thema-types';
-import { useAppStateGetter } from '../hooks/useAppState';
+import { myThemasMenuItems } from './thema.ts';
+import { ThemaMenuItemTransformed, ThemaMenuItem } from './thema-types.ts';
+import { useAppStateGetter } from '../hooks/useAppState.ts';
 
 export const themasByProfileType: (
   profileType: ProfileType

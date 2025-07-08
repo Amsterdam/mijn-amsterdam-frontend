@@ -2,7 +2,7 @@ import {
   GenericDocument,
   LinkProps,
   ZaakDetail,
-} from '../../../universal/types/App.types';
+} from '../../../universal/types/App.types.ts';
 
 export type Lood365Response = {
   '@onformdata.context': string;

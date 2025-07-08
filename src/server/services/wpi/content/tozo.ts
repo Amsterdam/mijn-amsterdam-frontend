@@ -1,10 +1,10 @@
 import {
   defaultDateFormat,
   defaultDateTimeFormat,
-} from '../../../../universal/helpers/date';
-import { productName } from '../helpers';
-import { WpiRequestStatusLabels } from '../wpi-types';
-import { LINK_MEER_INFO } from './tonk';
+} from '../../../../universal/helpers/date.ts';
+import { productName } from '../helpers.ts';
+import { WpiRequestStatusLabels } from '../wpi-types.ts';
+import { LINK_MEER_INFO } from './tonk.ts';
 
 const aanvraagLabels: WpiRequestStatusLabels = {
   notification: {

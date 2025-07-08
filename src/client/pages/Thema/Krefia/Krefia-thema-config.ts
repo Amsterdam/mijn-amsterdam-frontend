@@ -1,6 +1,6 @@
-import type { KrefiaDeepLink } from '../../../../server/services/krefia/krefia.types';
-import { DisplayProps } from '../../../components/Table/TableV2.types';
-import type { ThemaRoutesConfig } from '../../../config/thema-types';
+import type { KrefiaDeepLink } from '../../../../server/services/krefia/krefia.types.ts';
+import { DisplayProps } from '../../../components/Table/TableV2.types.ts';
+import type { ThemaRoutesConfig } from '../../../config/thema-types.ts';
 
 export const featureToggle = {
   krefiaActive: true,

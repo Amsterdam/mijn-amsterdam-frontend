@@ -5,4 +5,4 @@ export {
   fetchTonk,
   fetchTozo,
   fetchWpiNotifications,
-} from './api-service';
+} from './api-service.ts';

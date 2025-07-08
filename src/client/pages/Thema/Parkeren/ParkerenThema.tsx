@@ -1,15 +1,15 @@
 import { Alert, Icon, Paragraph } from '@amsterdam/design-system-react';
 import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 
-import { useParkerenData } from './useParkerenData.hook';
-import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
-import { MaButtonLink } from '../../../components/MaLink/MaLink';
-import { PageContentCell } from '../../../components/Page/Page';
-import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed';
-import ThemaPagina from '../../../components/Thema/ThemaPagina';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
-import { useProfileTypeValue } from '../../../hooks/useProfileType';
+import { useParkerenData } from './useParkerenData.hook.tsx';
+import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types.ts';
+import { MaButtonLink } from '../../../components/MaLink/MaLink.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
+import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
+import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
+import { useProfileTypeValue } from '../../../hooks/useProfileType.ts';
 
 export function ParkerenThema() {
   const {

@@ -1,22 +1,22 @@
 import MockDate from 'mockdate';
 import { describe, it, expect, vi, Mock } from 'vitest';
 
-import { VergunningFrontend } from './config-and-types';
-import { fetchVergunningen } from './vergunningen';
+import { VergunningFrontend } from './config-and-types.ts';
+import { fetchVergunningen } from './vergunningen.ts';
 import {
   createNotificationDefault,
   getVergunningNotifications,
   fetchVergunningenNotifications,
-} from './vergunningen-notifications';
+} from './vergunningen-notifications.ts';
 import {
   themaId,
   themaTitle,
-} from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config';
-import { getAuthProfileAndToken } from '../../../testing/utils';
+} from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
+import { getAuthProfileAndToken } from '../../../testing/utils.ts';
 import {
   apiSuccessResult,
   apiErrorResult,
-} from '../../../universal/helpers/api';
+} from '../../../universal/helpers/api.ts';
 
 vi.mock('./vergunningen', () => ({
   fetchVergunningen: vi.fn(),

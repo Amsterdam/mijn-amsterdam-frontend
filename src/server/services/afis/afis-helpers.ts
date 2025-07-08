@@ -1,8 +1,8 @@
-import { fetchAfisTokenHeader } from './afis';
-import { AfisApiFeedResponseSource } from './afis-types';
-import { DataRequestConfig } from '../../config/source-api';
-import { getFromEnv } from '../../helpers/env';
-import { getApiConfig } from '../../helpers/source-api-helpers';
+import { fetchAfisTokenHeader } from './afis.ts';
+import { AfisApiFeedResponseSource } from './afis-types.ts';
+import { DataRequestConfig } from '../../config/source-api.ts';
+import { getFromEnv } from '../../helpers/env.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
 
 export function getFeedEntryProperties<T>(
   response: AfisApiFeedResponseSource<T>

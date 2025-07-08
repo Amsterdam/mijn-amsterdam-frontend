@@ -1,20 +1,20 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 
-import { AdresInOnderzoek } from './AdresInOnderzoek';
-import { ContactMomenten } from './ContactMomenten';
-import { panelConfig } from './ProfilePrivate.transform';
-import { ProfileSectionPanel } from '../ProfileSectionPanel';
-import { useProfileData } from './useProfileData.hook';
-import { useProfileThemaData } from './useProfileThemaData.hook';
-import { VertrokkenOnbekendWaarheen } from './VertrokkenOnbekendWaarheen';
+import { AdresInOnderzoek } from './AdresInOnderzoek.tsx';
+import { ContactMomenten } from './ContactMomenten.tsx';
+import { panelConfig } from './ProfilePrivate.transform.tsx';
+import { ProfileSectionPanel } from '../ProfileSectionPanel.tsx';
+import { useProfileData } from './useProfileData.hook.tsx';
+import { useProfileThemaData } from './useProfileThemaData.hook.tsx';
+import { VertrokkenOnbekendWaarheen } from './VertrokkenOnbekendWaarheen.tsx';
 import {
   hasDutchAndOtherNationalities,
   isMokum,
-} from '../../../../../universal/helpers/brp';
-import { PageContentCell } from '../../../../components/Page/Page';
-import { ParagaphSuppressed } from '../../../../components/ParagraphSuppressed/ParagraphSuppressed';
-import ThemaPagina from '../../../../components/Thema/ThemaPagina';
-import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle';
+} from '../../../../../universal/helpers/brp.ts';
+import { PageContentCell } from '../../../../components/Page/Page.tsx';
+import { ParagaphSuppressed } from '../../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
+import ThemaPagina from '../../../../components/Thema/ThemaPagina.tsx';
+import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
 
 function ProfilePrivateSectionPanels() {
   const { BRP, profileData, routeConfig } = useProfileData();

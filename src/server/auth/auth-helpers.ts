@@ -11,23 +11,23 @@ import {
   RETURNTO_MAMS_LANDING_DIGID,
   RETURNTO_MAMS_LANDING_EHERKENNING,
   RETURNTO_NOTIFICATIES_CONSUMER_ID,
-} from './auth-config';
-import { authRoutes } from './auth-routes';
+} from './auth-config.ts';
+import { authRoutes } from './auth-routes.ts';
 import {
   AuthenticatedRequest,
   AuthProfile,
   AuthProfileAndToken,
   MaSession,
   TokenData,
-} from './auth-types';
-import { ZAAK_STATUS_ROUTE } from '../../client/pages/ZaakStatus/ZaakStatus-config';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
-import { PROFILE_TYPES } from '../../universal/types/App.types';
-import { ONE_SECOND_MS } from '../config/app';
-import { logger } from '../logging';
-import { ExternalConsumerEndpoints } from '../routing/bff-routes';
-import { generateFullApiUrlBFF } from '../routing/route-helpers';
-import { captureException } from '../services/monitoring';
+} from './auth-types.ts';
+import { ZAAK_STATUS_ROUTE } from '../../client/pages/ZaakStatus/ZaakStatus-config.ts';
+import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
+import { PROFILE_TYPES } from '../../universal/types/App.types.ts';
+import { ONE_SECOND_MS } from '../config/app.ts';
+import { logger } from '../logging.ts';
+import { ExternalConsumerEndpoints } from '../routing/bff-routes.ts';
+import { generateFullApiUrlBFF } from '../routing/route-helpers.ts';
+import { captureException } from '../services/monitoring.ts';
 import process from "node:process";
 
 export function getReturnToUrl(

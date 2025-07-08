@@ -1,18 +1,18 @@
 import { LatLngLiteral } from 'leaflet';
 
-import { FitBounds } from './FitBounds';
-import BaseLayer from './Map/BaseLayer';
-import Map from './Map/Map';
+import { FitBounds } from './FitBounds.tsx';
+import BaseLayer from './Map/BaseLayer.tsx';
+import Map from './Map/Map.tsx';
 import styles from './MyAreaDashboard.module.scss';
-import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
-import { CustomLatLonMarker, HomeIconMarker } from './MyAreaMarker';
-import { BAGData } from '../../../server/services/bag/bag.types';
-import { HOOD_ZOOM } from '../../../universal/config/myarea-datasets';
-import { isLoading } from '../../../universal/helpers/api';
-import { getFullAddress } from '../../../universal/helpers/brp';
+import MyAreaLoadingIndicator from './MyAreaLoadingIndicator.tsx';
+import { CustomLatLonMarker, HomeIconMarker } from './MyAreaMarker.tsx';
+import { BAGData } from '../../../server/services/bag/bag.types.ts';
+import { HOOD_ZOOM } from '../../../universal/config/myarea-datasets.ts';
+import { isLoading } from '../../../universal/helpers/api.ts';
+import { getFullAddress } from '../../../universal/helpers/brp.ts';
 import iconUrlCommercialSecondary from '../../assets/icons/map/homeSecondaryCommercial.svg';
-import { DEFAULT_MAP_OPTIONS } from '../../config/map';
-import { useAppStateGetter } from '../../hooks/useAppState';
+import { DEFAULT_MAP_OPTIONS } from '../../config/map.ts';
+import { useAppStateGetter } from '../../hooks/useAppState.ts';
 
 export function MyAreaDashboardMap() {
   const { MY_LOCATION } = useAppStateGetter();

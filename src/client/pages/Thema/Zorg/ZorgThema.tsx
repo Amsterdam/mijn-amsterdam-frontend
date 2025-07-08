@@ -1,12 +1,12 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 
-import { useZorgThemaData } from './useZorgThemaData';
-import { WMOVoorzieningFrontend } from '../../../../server/services/wmo/wmo-config-and-types';
-import { PageContentCell } from '../../../components/Page/Page';
-import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed';
-import ThemaPagina from '../../../components/Thema/ThemaPagina';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { useZorgThemaData } from './useZorgThemaData.ts';
+import { WMOVoorzieningFrontend } from '../../../../server/services/wmo/wmo-config-and-types.ts';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
+import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
+import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export const WMO_HELPDESK_PHONENUMBER = '0800 0643' as const;
 export const WMO_HELPDESK_HREF_TEL_LINK =

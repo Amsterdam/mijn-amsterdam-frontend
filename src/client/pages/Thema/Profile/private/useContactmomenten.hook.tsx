@@ -12,17 +12,17 @@ import {
   contactmomentenDisplayProps,
   ContactMomentFrontend,
   mapperContactmomentToMenuItem,
-} from './Contactmomenten.config';
+} from './Contactmomenten.config.ts';
 import styles from './ProfilePrivate.module.scss';
-import { isLoading, isError } from '../../../../../universal/helpers/api';
-import { MaRouterLink } from '../../../../components/MaLink/MaLink';
-import { ThemaMenuItemTransformed } from '../../../../config/thema-types';
-import { useAppStateGetter } from '../../../../hooks/useAppState';
+import { isLoading, isError } from '../../../../../universal/helpers/api.ts';
+import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
+import { ThemaMenuItemTransformed } from '../../../../config/thema-types.ts';
+import { useAppStateGetter } from '../../../../hooks/useAppState.ts';
 import {
   useThemaBreadcrumbs,
   useThemaMenuItems,
-} from '../../../../hooks/useThemaMenuItems';
-import { routeConfig, themaIdBRP } from '../Profile-thema-config';
+} from '../../../../hooks/useThemaMenuItems.ts';
+import { routeConfig, themaIdBRP } from '../Profile-thema-config.ts';
 
 function getLinkToThemaPage(
   onderwerp: string,

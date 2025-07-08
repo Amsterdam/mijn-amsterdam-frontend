@@ -2,11 +2,11 @@ import { useMemo } from 'react';
 
 import { Link } from '@amsterdam/design-system-react';
 
-import { formatBrpProfileData } from './ProfilePrivate.transform';
-import { useAantalBewonersOpAdres } from './useAantalBewonersOpAdres.hook';
-import { FeatureToggle } from '../../../../../universal/config/feature-toggles';
-import { useAppStateGetter } from '../../../../hooks/useAppState';
-import { routeConfig } from '../Profile-thema-config';
+import { formatBrpProfileData } from './ProfilePrivate.transform.tsx';
+import { useAantalBewonersOpAdres } from './useAantalBewonersOpAdres.hook.ts';
+import { FeatureToggle } from '../../../../../universal/config/feature-toggles.ts';
+import { useAppStateGetter } from '../../../../hooks/useAppState.ts';
+import { routeConfig } from '../Profile-thema-config.ts';
 
 export function useProfileData() {
   const { BRP } = useAppStateGetter();

@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 
-import { FeatureToggle } from '../../../../../universal/config/feature-toggles';
+import { FeatureToggle } from '../../../../../universal/config/feature-toggles.ts';
 import {
   apiPristineResult,
   ApiResponse_DEPRECATED,
-} from '../../../../../universal/helpers/api';
-import { AppState } from '../../../../../universal/types/App.types';
-import { useDataApi } from '../../../../hooks/api/useDataApi';
+} from '../../../../../universal/helpers/api.ts';
+import { AppState } from '../../../../../universal/types/App.types.ts';
+import { useDataApi } from '../../../../hooks/api/useDataApi.ts';
 
 export function useAantalBewonersOpAdres(
   brpContent: AppState['BRP']['content']

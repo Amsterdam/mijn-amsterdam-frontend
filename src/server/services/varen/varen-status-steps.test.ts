@@ -1,8 +1,8 @@
 import MockDate from 'mockdate';
 import { describe, expect, it } from 'vitest';
 
-import { VarenVergunningExploitatieType } from './config-and-types';
-import { getStatusSteps } from './varen-status-steps';
+import { VarenVergunningExploitatieType } from './config-and-types.ts';
+import { getStatusSteps } from './varen-status-steps.ts';
 
 const exploitatieBase = {
   vesselName: 'boatName',

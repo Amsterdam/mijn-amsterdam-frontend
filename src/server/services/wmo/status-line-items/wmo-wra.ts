@@ -10,8 +10,8 @@ import {
   isOpdrachtGegeven,
   isOpdrachtGegevenVisible,
   MEER_INFORMATIE,
-} from './wmo-generic';
-import { ZorgnedStatusLineItemTransformerConfig } from '../../zorgned/zorgned-types';
+} from './wmo-generic.ts';
+import { ZorgnedStatusLineItemTransformerConfig } from '../../zorgned/zorgned-types.ts';
 
 export const WRA: ZorgnedStatusLineItemTransformerConfig[] = [
   AANVRAAG,

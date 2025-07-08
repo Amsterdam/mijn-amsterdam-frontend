@@ -8,14 +8,14 @@ import {
   UnorderedList,
 } from '@amsterdam/design-system-react';
 
-import { AfisFactuurFrontend } from './Afis-thema-config';
-import { useAfisThemaData } from './useAfisThemaData.hook';
-import { entries } from '../../../../universal/helpers/utils';
-import { MaButtonRouterLink } from '../../../components/MaLink/MaLink';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaPagina from '../../../components/Thema/ThemaPagina';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { AfisFactuurFrontend } from './Afis-thema-config.ts';
+import { useAfisThemaData } from './useAfisThemaData.hook.tsx';
+import { entries } from '../../../../universal/helpers/utils.ts';
+import { MaButtonRouterLink } from '../../../components/MaLink/MaLink.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
+import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 function PageContentTop({
   urlNaarBelastingen,

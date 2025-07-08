@@ -1,15 +1,15 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi, Mock } from 'vitest';
 
-import { useVergunningenDetailData } from './useVergunningenDetailData.hook';
-import { useVergunningenThemaData } from './useVergunningenThemaData.hook';
-import { VergunningenDetail, forTesting } from './VergunningenDetail';
+import { useVergunningenDetailData } from './useVergunningenDetailData.hook.ts';
+import { useVergunningenThemaData } from './useVergunningenThemaData.hook.ts';
+import { VergunningenDetail, forTesting } from './VergunningenDetail.tsx';
 import type {
   DecosVergunning,
   VergunningFrontend,
-} from '../../../../server/services/vergunningen/config-and-types';
-import { decosCaseToZaakTransformers } from '../../../../server/services/vergunningen/decos-zaken';
-import { componentCreator } from '../../MockApp';
+} from '../../../../server/services/vergunningen/config-and-types.ts';
+import { decosCaseToZaakTransformers } from '../../../../server/services/vergunningen/decos-zaken.ts';
+import { componentCreator } from '../../MockApp.tsx';
 
 const mocks = vi.hoisted(() => {
   return {

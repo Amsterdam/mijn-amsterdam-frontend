@@ -4,10 +4,10 @@ import {
   fetchAllKlachten,
   fetchKlachtenNotifications,
   transformKlachtenResponse,
-} from './klachten';
+} from './klachten.ts';
 import apiResponse from '../../../../mocks/fixtures/klachten.json';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
-import { ApiConfig } from '../../config/source-api';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import { ApiConfig } from '../../config/source-api.ts';
 
 describe('Klachten', () => {
   const profileAndToken = getAuthProfileAndToken();

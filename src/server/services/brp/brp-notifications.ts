@@ -1,18 +1,18 @@
-import { fetchBrpV2 } from './brp';
-import { ADRES_IN_ONDERZOEK_A } from './brp-config';
+import { fetchBrpV2 } from './brp.ts';
+import { ADRES_IN_ONDERZOEK_A } from './brp-config.ts';
 import {
   themaIdBRP,
   themaTitle,
   routeConfig as routeConfigBrp,
-} from '../../../client/pages/Thema/Profile/Profile-thema-config';
+} from '../../../client/pages/Thema/Profile/Profile-thema-config.ts';
 import {
   apiSuccessResult,
   apiDependencyError,
-} from '../../../universal/helpers/api';
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import type { MyNotification } from '../../../universal/types/App.types';
-import type { AuthProfileAndToken } from '../../auth/auth-types';
-import type { BRPData } from '../profile/brp.types';
+} from '../../../universal/helpers/api.ts';
+import { defaultDateFormat } from '../../../universal/helpers/date.ts';
+import type { MyNotification } from '../../../universal/types/App.types.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import type { BRPData } from '../profile/brp.types.ts';
 
 export function transformBRPNotifications(data: BRPData, compareDate: Date) {
   const adresInOnderzoek = data?.persoon?.adresInOnderzoek;

@@ -1,8 +1,8 @@
 import {
   GenericDocument,
   ZaakDetail,
-} from '../../../universal/types/App.types';
-import { AuthProfile } from '../../auth/auth-types';
+} from '../../../universal/types/App.types.ts';
+import { AuthProfile } from '../../auth/auth-types.ts';
 
 export interface PowerBrowserStatus {
   omschrijving: string | 'Ontvangen';

@@ -1,16 +1,16 @@
-import { getThemaTitleWithAppState } from './helpers';
-import { themaId, routeConfig, featureToggle } from './HLI-thema-config';
-import { HLIDetail } from './HLIDetail';
+import { getThemaTitleWithAppState } from './helpers.ts';
+import { themaId, routeConfig, featureToggle } from './HLI-thema-config.ts';
+import { HLIDetail } from './HLIDetail.tsx';
 import { default as HLIIcon } from './HLIIcon.svg?react';
-import { HLIList } from './HLIList';
-import { HLIStadspasDetail } from './HLIStadspasDetail';
-import { HLIThema } from './HLIThema';
-import { isLoading } from '../../../../universal/helpers/api';
-import type { AppState } from '../../../../universal/types/App.types';
+import { HLIList } from './HLIList.tsx';
+import { HLIStadspasDetail } from './HLIStadspasDetail.tsx';
+import { HLIThema } from './HLIThema.tsx';
+import { isLoading } from '../../../../universal/helpers/api.ts';
+import type { AppState } from '../../../../universal/types/App.types.ts';
 import type {
   ThemaRenderRouteConfig,
   ThemaMenuItem,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 
 export const HLIRoutes = [
   {

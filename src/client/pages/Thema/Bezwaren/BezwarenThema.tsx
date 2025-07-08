@@ -1,12 +1,12 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 
-import { useBezwarenThemaData } from './useBezwarenThemaData.hook';
-import { BezwaarFrontend } from '../../../../server/services/bezwaren/types';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaPagina from '../../../components/Thema/ThemaPagina';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
-import { links } from './Bezwaren-thema-config';
+import { useBezwarenThemaData } from './useBezwarenThemaData.hook.ts';
+import { BezwaarFrontend } from '../../../../server/services/bezwaren/types.ts';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
+import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
+import { links } from './Bezwaren-thema-config.ts';
 
 const pageContentTop = (
   <PageContentCell spanWide={8}>

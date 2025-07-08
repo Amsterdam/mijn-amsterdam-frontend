@@ -3,15 +3,15 @@ import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import { describe, expect, vi } from 'vitest';
 
-import { forTesting, ZaakStatus } from './ZaakStatus';
-import { ZAAK_STATUS_ROUTE } from './ZaakStatus-config';
-import { AppState } from '../../../universal/types/App.types';
-import { appStateAtom, appStateReadyAtom } from '../../hooks/useAppState';
-import MockApp from '../MockApp';
+import { forTesting, ZaakStatus } from './ZaakStatus.tsx';
+import { ZAAK_STATUS_ROUTE } from './ZaakStatus-config.ts';
+import { AppState } from '../../../universal/types/App.types.ts';
+import { appStateAtom, appStateReadyAtom } from '../../hooks/useAppState.ts';
+import MockApp from '../MockApp.tsx';
 import {
   routeConfig as routeConfigVergunningen,
   themaId as themaIdVergunningen,
-} from '../Thema/Vergunningen/Vergunningen-thema-config';
+} from '../Thema/Vergunningen/Vergunningen-thema-config.ts';
 
 const mocks = vi.hoisted(() => {
   return {

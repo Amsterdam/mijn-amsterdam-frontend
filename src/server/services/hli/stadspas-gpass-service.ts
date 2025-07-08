@@ -9,12 +9,12 @@ import {
   isValid,
 } from 'date-fns';
 
-import { fetchAdministratienummer } from './hli-zorgned-service';
+import { fetchAdministratienummer } from './hli-zorgned-service.ts';
 import {
   DEFAULT_EXPIRY_DAY,
   DEFAULT_EXPIRY_MONTH,
   GPASS_API_TOKEN,
-} from './stadspas-config-and-content';
+} from './stadspas-config-and-content.ts';
 import {
   SecurityCode,
   Stadspas,
@@ -32,24 +32,24 @@ import {
   StadspasTransactieSource,
   StadspasTransactiesResponseSource,
   StadspasTransactionQueryParams,
-} from './stadspas-types';
-import { featureToggle } from '../../../client/pages/Thema/HLI/HLI-thema-config';
+} from './stadspas-types.ts';
+import { featureToggle } from '../../../client/pages/Thema/HLI/HLI-thema-config.ts';
 import {
   ApiResponse,
   ApiSuccessResponse,
   apiSuccessResult,
   getSettledResult,
   apiErrorResult,
-} from '../../../universal/helpers/api';
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import { displayAmount } from '../../../universal/helpers/text';
-import { getApiConfig } from '../../helpers/source-api-helpers';
+} from '../../../universal/helpers/api.ts';
+import { defaultDateFormat } from '../../../universal/helpers/date.ts';
+import { displayAmount } from '../../../universal/helpers/text.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
 import {
   deleteCacheEntry,
   isSuccessStatus,
   requestData,
-} from '../../helpers/source-api-request';
-import type { BSN } from '../zorgned/zorgned-types';
+} from '../../helpers/source-api-request.ts';
+import type { BSN } from '../zorgned/zorgned-types.ts';
 
 const NO_PASHOUDER_CONTENT_RESPONSE = apiSuccessResult({
   stadspassen: [],

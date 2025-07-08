@@ -1,6 +1,6 @@
-import { defaultDateFormat } from '../../../../universal/helpers/date';
-import { createProcessNotification, isRequestProcessActual } from '../helpers';
-import { WpiRequestProcess, WpiRequestProcessLabels } from '../wpi-types';
+import { defaultDateFormat } from '../../../../universal/helpers/date.ts';
+import { createProcessNotification, isRequestProcessActual } from '../helpers.ts';
+import { WpiRequestProcess, WpiRequestProcessLabels } from '../wpi-types.ts';
 
 export const WpiExternalUrls = {
   BijstandsUitkeringAanvragenRechtenEnPlichten:

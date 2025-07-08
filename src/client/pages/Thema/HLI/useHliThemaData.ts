@@ -1,4 +1,4 @@
-import { getThemaTitle } from './helpers';
+import { getThemaTitle } from './helpers.ts';
 import {
   kindTegoedLinkListItem,
   linkListItems,
@@ -7,17 +7,17 @@ import {
   routeConfig,
   tableConfig,
   themaId,
-} from './HLI-thema-config';
-import { useStadspassen } from './useStadspassen.hook';
-import type { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
+} from './HLI-thema-config.ts';
+import { useStadspassen } from './useStadspassen.hook.tsx';
+import type { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types.ts';
 import {
   hasFailedDependency,
   isError,
   isLoading,
-} from '../../../../universal/helpers/api';
-import { addLinkElementToProperty } from '../../../components/Table/TableV2';
-import { useAppStateGetter } from '../../../hooks/useAppState';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
+} from '../../../../universal/helpers/api.ts';
+import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
+import { useAppStateGetter } from '../../../hooks/useAppState.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
 export function useHliThemaData() {
   const { HLI } = useAppStateGetter();

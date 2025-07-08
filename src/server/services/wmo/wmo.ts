@@ -1,25 +1,25 @@
 import { generatePath } from 'react-router';
 
-import { getHulpmiddelenDisclaimer } from './status-line-items/wmo-hulpmiddelen';
-import { routeConfig } from '../../../client/pages/Thema/Zorg/Zorg-thema-config';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import { apiSuccessResult } from '../../../universal/helpers/api';
-import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
-import { capitalizeFirstLetter } from '../../../universal/helpers/text';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import { BffEndpoints } from '../../routing/bff-routes';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
-import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types';
+import { getHulpmiddelenDisclaimer } from './status-line-items/wmo-hulpmiddelen.ts';
+import { routeConfig } from '../../../client/pages/Thema/Zorg/Zorg-thema-config.ts';
+import { FeatureToggle } from '../../../universal/config/feature-toggles.ts';
+import { apiSuccessResult } from '../../../universal/helpers/api.ts';
+import { dateSort, defaultDateFormat } from '../../../universal/helpers/date.ts';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
+import { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt.ts';
+import { BffEndpoints } from '../../routing/bff-routes.ts';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
+import { getStatusLineItems } from '../zorgned/zorgned-status-line-items.ts';
+import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
 import {
   hasDecision,
   isAfterWCAGValidDocumentsDate,
-} from './status-line-items/wmo-generic';
-import { WMOVoorzieningFrontend } from './wmo-config-and-types';
-import { wmoStatusLineItemsConfig } from './wmo-status-line-items';
-import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service';
-import { getLatestStatus, getLatestStatusDate } from '../../helpers/zaken';
+} from './status-line-items/wmo-generic.ts';
+import { WMOVoorzieningFrontend } from './wmo-config-and-types.ts';
+import { wmoStatusLineItemsConfig } from './wmo-status-line-items.ts';
+import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service.ts';
+import { getLatestStatus, getLatestStatusDate } from '../../helpers/zaken.ts';
 
 export function getDocuments(
   sessionID: SessionID,

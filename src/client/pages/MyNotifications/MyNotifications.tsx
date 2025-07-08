@@ -3,23 +3,23 @@ import { useMemo } from 'react';
 import { OrderedList } from '@amsterdam/design-system-react';
 import { generatePath, useParams } from 'react-router';
 
-import { MY_NOTIFICATIONS_PAGE_DOCUMENT_TITLE } from './MyNotifications-config';
-import { MyNotificationsRoute } from './MyNotifications-routes';
-import { isError, isLoading } from '../../../universal/helpers/api';
-import ErrorAlert from '../../components/Alert/Alert';
-import LoadingContent from '../../components/LoadingContent/LoadingContent';
-import { MyNotification } from '../../components/MyNotification/MyNotification';
+import { MY_NOTIFICATIONS_PAGE_DOCUMENT_TITLE } from './MyNotifications-config.ts';
+import { MyNotificationsRoute } from './MyNotifications-routes.ts';
+import { isError, isLoading } from '../../../universal/helpers/api.ts';
+import ErrorAlert from '../../components/Alert/Alert.tsx';
+import LoadingContent from '../../components/LoadingContent/LoadingContent.tsx';
+import { MyNotification } from '../../components/MyNotification/MyNotification.tsx';
 import {
   OverviewPageV2,
   PageContentCell,
   PageContentV2,
-} from '../../components/Page/Page';
-import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
-import { PaginationV2 } from '../../components/Pagination/PaginationV2';
-import { useAppStateGetter } from '../../hooks/useAppState';
-import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
-import { useAppStateNotifications } from '../../hooks/useNotifications';
-import { themaTitle } from './MyNotifications-config';
+} from '../../components/Page/Page.tsx';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2.tsx';
+import { PaginationV2 } from '../../components/Pagination/PaginationV2.tsx';
+import { useAppStateGetter } from '../../hooks/useAppState.ts';
+import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle.ts';
+import { useAppStateNotifications } from '../../hooks/useNotifications.ts';
+import { themaTitle } from './MyNotifications-config.ts';
 
 const PAGE_SIZE = 12;
 

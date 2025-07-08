@@ -3,19 +3,19 @@ import userEvent from '@testing-library/user-event';
 import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
-import { routeConfig } from './Erfpacht-thema-config';
-import { ErfpachtDetail } from './ErfpachtDetail';
+import { routeConfig } from './Erfpacht-thema-config.ts';
+import { ErfpachtDetail } from './ErfpachtDetail.tsx';
 import ERFPACHT_DOSSIER_DETAIL from '../../../../../mocks/fixtures/erfpacht-v2-dossierinfo-bsn.json';
 import ERFPACHT_DOSSIERS from '../../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
 import {
   transformDossierResponse,
   transformErfpachtDossierProperties,
-} from '../../../../server/services/erfpacht/erfpacht';
-import { bffApi } from '../../../../testing/utils';
-import { jsonCopy } from '../../../../universal/helpers/utils';
-import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
-import MockApp from '../../MockApp';
+} from '../../../../server/services/erfpacht/erfpacht.ts';
+import { bffApi } from '../../../../testing/utils.ts';
+import { jsonCopy } from '../../../../universal/helpers/utils.ts';
+import { AppState } from '../../../../universal/types/App.types.ts';
+import { appStateAtom } from '../../../hooks/useAppState.ts';
+import MockApp from '../../MockApp.tsx';
 
 describe('<Erfpacht/DossierDetail />', () => {
   const routeEntry = generatePath(routeConfig.detailPage.path, {

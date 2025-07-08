@@ -5,9 +5,9 @@ import {
   getThemaTitleBurgerzaken,
   getThemaTitleBurgerzakenWithAppState,
   getThemaUrlBurgerzakenWithAppState,
-} from './Burgerzaken-helpers';
-import { routeConfig, themaTitle } from './Burgerzaken-thema-config';
-import { AppState } from '../../../../universal/types/App.types';
+} from './Burgerzaken-helpers.ts';
+import { routeConfig, themaTitle } from './Burgerzaken-thema-config.ts';
+import { AppState } from '../../../../universal/types/App.types.ts';
 
 describe('helpers', () => {
   describe('getThemaTitleBurgerzaken', () => {

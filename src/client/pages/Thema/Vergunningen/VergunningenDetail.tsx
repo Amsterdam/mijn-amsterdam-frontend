@@ -1,28 +1,28 @@
-import { AanbiedenDienstenEnStraatartiestenContent } from './detail-page-content/AanbiedenDienstenEnStraatartiesten';
-import { ERVV } from './detail-page-content/ERVV';
-import { EvenementMelding } from './detail-page-content/EvenementMelding';
-import { EvenementVergunning } from './detail-page-content/EvenementVergunning';
-import { Flyeren } from './detail-page-content/Flyeren';
-import { Nachtwerkontheffing } from './detail-page-content/Nachtwerkontheffing';
-import { Omzettingsvergunning } from './detail-page-content/Omzettingsvergunning';
-import { RvvHeleStad } from './detail-page-content/RvvHeleStad';
-import { RvvSloterweg } from './detail-page-content/RvvSloterweg';
-import { TVMRVVObject } from './detail-page-content/TVMRVVObject';
-import { VergunningDetailDocumentsList } from './detail-page-content/VergunningDetailDocumentsList';
-import { VOB } from './detail-page-content/VOB';
-import { Woonvergunningen } from './detail-page-content/Woonvergunningen';
-import { WVOSContent } from './detail-page-content/WVOS';
-import { ZwaarVerkeer } from './detail-page-content/ZwaarVerkeer';
-import { useVergunningenDetailData } from './useVergunningenDetailData.hook';
-import { useVergunningenThemaData } from './useVergunningenThemaData.hook';
+import { AanbiedenDienstenEnStraatartiestenContent } from './detail-page-content/AanbiedenDienstenEnStraatartiesten.tsx';
+import { ERVV } from './detail-page-content/ERVV.tsx';
+import { EvenementMelding } from './detail-page-content/EvenementMelding.tsx';
+import { EvenementVergunning } from './detail-page-content/EvenementVergunning.tsx';
+import { Flyeren } from './detail-page-content/Flyeren.tsx';
+import { Nachtwerkontheffing } from './detail-page-content/Nachtwerkontheffing.tsx';
+import { Omzettingsvergunning } from './detail-page-content/Omzettingsvergunning.tsx';
+import { RvvHeleStad } from './detail-page-content/RvvHeleStad.tsx';
+import { RvvSloterweg } from './detail-page-content/RvvSloterweg.tsx';
+import { TVMRVVObject } from './detail-page-content/TVMRVVObject.tsx';
+import { VergunningDetailDocumentsList } from './detail-page-content/VergunningDetailDocumentsList.tsx';
+import { VOB } from './detail-page-content/VOB.tsx';
+import { Woonvergunningen } from './detail-page-content/Woonvergunningen.tsx';
+import { WVOSContent } from './detail-page-content/WVOS.tsx';
+import { ZwaarVerkeer } from './detail-page-content/ZwaarVerkeer.tsx';
+import { useVergunningenDetailData } from './useVergunningenDetailData.hook.ts';
+import { useVergunningenThemaData } from './useVergunningenThemaData.hook.ts';
 import type {
   DecosVergunning,
   VergunningFrontend,
-} from '../../../../server/services/vergunningen/config-and-types';
-import { Datalist } from '../../../components/Datalist/Datalist';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+} from '../../../../server/services/vergunningen/config-and-types.ts';
+import { Datalist } from '../../../components/Datalist/Datalist.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 interface DetailPageContentProps<V> {
   vergunning: V;

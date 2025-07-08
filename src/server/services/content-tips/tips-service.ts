@@ -1,7 +1,7 @@
-import { ServiceResults, ContentTipSource } from './tip-types';
-import { contentTips } from './tips-content';
-import { MIJN_AMSTERDAM } from '../../../universal/config/app';
-import { MyNotification } from '../../../universal/types/App.types';
+import { ServiceResults, ContentTipSource } from './tip-types.ts';
+import { contentTips } from './tips-content.ts';
+import { MIJN_AMSTERDAM } from '../../../universal/config/app.ts';
+import { MyNotification } from '../../../universal/types/App.types.ts';
 
 export function prefixTipNotification(
   notification: MyNotification
