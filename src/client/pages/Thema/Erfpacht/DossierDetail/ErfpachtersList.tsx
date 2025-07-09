@@ -62,7 +62,6 @@ export function ErfpachtersList({
           style={cssStyle()}
         >
           {erfpachtersList.map((relatie, index) => {
-            //const hasBetalerWijzigenLink = true; //is for tests with the Betaler aanpassen link
             const hasBetalerWijzigenLink =
               (relatie.betaler && relatie.relatieCode !== relatieCode) ||
               (!hasBetaler && relatie.relatieCode === relatieCode);
