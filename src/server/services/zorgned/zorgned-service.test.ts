@@ -2095,29 +2095,40 @@ describe('zorgned-service', () => {
     test('happy', async () => {
       remoteApi.post('/zorgned/aanvragen').reply(200, ZORGNED_RESPONSE_CONTENT);
 
-      remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
-        persoon: {
-          bsn: '9999999999',
-          voorletters: 'E',
-          voorvoegsel: null,
-          geboortenaam: 'Alex',
-          voornamen: 'Flex',
-          geboortedatum: '2010-06-12',
-        },
-      } as ZorgnedPersoonsgegevensNAWResponse);
+      remoteApi
+        .post('/zorgned/persoonsgegevensNAW')
+        .times(2) // Request caching is not enabled in test mode.
+        .reply(200, {
+          persoon: {
+            bsn: '9999999999',
+            voorletters: 'E',
+            voorvoegsel: null,
+            geboortenaam: 'Alex',
+            voornamen: 'Flex',
+            geboortedatum: '2010-06-12',
+          },
+        } as ZorgnedPersoonsgegevensNAWResponse);
 
-      const result = await fetchAanvragenWithRelatedPersons(
-        getAuthProfileAndToken().profile.id,
-        {
-          zorgnedApiConfigKey: 'ZORGNED_AV',
-        }
-      );
+      const result = await fetchAanvragenWithRelatedPersons('9999999999', {
+        zorgnedApiConfigKey: 'ZORGNED_AV',
+      });
 
       expect(result).toStrictEqual({
         content: [
           {
-            betrokkenPersonen: [],
+            betrokkenPersonen: [
+              {
+                bsn: '9999999999',
+                dateOfBirth: '2010-06-12',
+                dateOfBirthFormatted: '12 juni 2010',
+                isAanvrager: true,
+                name: 'Flex',
+                partnernaam: null,
+                partnervoorvoegsel: null,
+              },
+            ],
             betrokkenen: ['9999999999'],
+            bsnAanvrager: '9999999999',
             datumAanvraag: '2023-04-25',
             datumBeginLevering: '2024-03-14',
             datumBesluit: '2023-05-17',
@@ -2137,13 +2148,6 @@ describe('zorgned-service', () => {
             titel: 'woonruimteaanpassing (in behandeling)',
           },
         ],
-        failedDependencies: {
-          relatedPersons: {
-            content: null,
-            message: 'Something went wrong when retrieving related persons.',
-            status: 'ERROR',
-          },
-        },
         status: 'OK',
       });
     });

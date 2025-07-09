@@ -1,6 +1,5 @@
 import { useParams } from 'react-router';
 
-import styles from './HLIThema.module.scss';
 import { useHliThemaData } from './useHliThemaData';
 import type { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
 import { Datalist, Row } from '../../../components/Datalist/Datalist';
@@ -15,14 +14,6 @@ type DetailPageContentProps = {
 
 function DetailPageContent({ hliRegeling }: DetailPageContentProps) {
   const rows: Row[] = [];
-
-  if (hliRegeling?.receiver) {
-    rows.push({
-      label: 'Ontvanger',
-      content: hliRegeling.receiver,
-      classNameContent: styles.Ontvanger,
-    });
-  }
 
   return (
     <PageContentCell>

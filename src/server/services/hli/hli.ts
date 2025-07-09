@@ -140,8 +140,6 @@ async function transformRegelingForFrontend(
     dateEnd: aanvraag.datumEindeGeldigheid,
     decision: aanvraag.resultaat,
     displayStatus,
-    receiver:
-      aanvraag.betrokkenPersonen?.map((person) => person.name).join(', ') ?? '',
     documents: getDocumentsFrontend(sessionID, aanvraag.documenten),
   };
 
