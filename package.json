@@ -15,7 +15,7 @@
     "mock-server:serve": "mocks-server --no-plugins.inquirerCli.enabled",
     "serve-dev": "concurrently \"deno run bff-api:watch\" \"deno run start\" \"deno run mock-server:serve\"",
     "start": "cross-env MA_APP_MODE=development vite",
-    "build": "cross-env MA_APP_MODE=production vite build",
+    "build-frontend": "cross-env MA_APP_MODE=production vite build",
     "serve": "vite preview",
     "test": "cross-env MA_APP_MODE=unittest vitest src/client",
     "bff-api:watch": "cross-env MA_OTAP_ENV=development deno run --allow-all --watch src/bffserver.ts",
