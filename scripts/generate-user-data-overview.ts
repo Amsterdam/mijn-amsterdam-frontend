@@ -38,6 +38,8 @@ console.debug(`[UserDataOverview] trying env file ${ENV_FILE}`);
 const envConfig = dotenv.config({ path: ENV_FILE });
 dotenvExpand.expand(envConfig);
 
+// WARNING: when updating update both the comment and the import lines.
+// @deno-types="https://cdn.sheetjs.com/xlsx-0.20.3/package/types/index.d.ts"
 import * as XLSX from 'https://cdn.sheetjs.com/xlsx-0.20.3/package/xlsx.mjs';
 
 import * as fs from 'node:fs';
