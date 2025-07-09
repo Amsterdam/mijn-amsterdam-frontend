@@ -16,15 +16,6 @@ export const AV_PCVC = 'AV-PCVC';
 export const AV_PCVZIL = 'AV-PCVZIL';
 export const AV_PCVTG = 'AV-PCVTG';
 
-export const AV_UPC_PCV_CODES = [
-  AV_UPCC,
-  AV_UPCZIL,
-  AV_UPCTG,
-  AV_PCVC,
-  AV_PCVZIL,
-  AV_PCVTG,
-];
-
 const avCodes = {
   PC: {
     [AV_PCVZIL]: true,
