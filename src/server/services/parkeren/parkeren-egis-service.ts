@@ -35,7 +35,7 @@ type JWETokenSourceResponse = {
   token: string;
 };
 
-async function fetchJWEToken(
+function fetchJWEToken(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<string>> {
   const idNumberType =
