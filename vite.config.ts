@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 /* eslint-disable */
 import { createHash } from 'node:crypto';
 

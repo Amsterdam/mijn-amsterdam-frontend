@@ -71,7 +71,9 @@ function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
   return isActueel;
 }
 
-function transformTitle(aanvraag: ZorgnedAanvraagTransformed) {
+function transformTitle(
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+) {
   if (aanvraag.productIdentificatie === AV_CZM) {
     return 'Collectieve zorgverzekering';
   }
