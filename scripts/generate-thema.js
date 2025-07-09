@@ -1,9 +1,9 @@
-import fs from 'fs';
+import fs from 'node:fs';
 import path from 'node:path';
+import process from 'node:process';
 import { parseArgs } from 'node:util';
 
 import slug from 'slugme';
-import process from "node:process";
 
 function capitalizeFirstLetter(text) {
   return text.charAt(0).toUpperCase() + text.slice(1);
