@@ -7,11 +7,9 @@ import {
 export function getBetrokkenKinderenDescription(
   regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
 ): string | null {
-  const betrokkenen = regeling.betrokkenPersonen
-    .filter((person) => !!person.name)
-    .filter((persoon) => {
-      return !persoon.isAanvrager && !persoon.isPartner;
-    });
+  const betrokkenen = regeling.betrokkenPersonen.filter((persoon) => {
+    return !!persoon.name && !persoon.isAanvrager && !persoon.isPartner;
+  });
 
   if (!betrokkenen.length) {
     return null;
