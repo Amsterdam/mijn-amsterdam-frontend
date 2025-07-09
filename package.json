@@ -151,8 +151,7 @@
     "vite": "^6.3.5",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^4.3.0",
-    "vitest": "^3.2.3",
-    "xlsx": "file:vendor/xlsx-0.20.2.tgz"
+    "vitest": "^3.2.3"
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "4.44.0"

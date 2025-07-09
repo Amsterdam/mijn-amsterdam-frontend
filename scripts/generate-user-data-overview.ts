@@ -38,23 +38,23 @@ console.debug(`[UserDataOverview] trying env file ${ENV_FILE}`);
 const envConfig = dotenv.config({ path: ENV_FILE });
 dotenvExpand.expand(envConfig);
 
-import * as XLSX from 'xlsx';
+import * as XLSX from 'https://cdn.sheetjs.com/xlsx-0.20.3/package/xlsx.mjs';
 
 import * as fs from 'node:fs';
-import { defaultDateFormat } from '../src/universal/helpers/date';
-import { getFullAddress } from '../src/universal/helpers/brp';
+import { defaultDateFormat } from '../src/universal/helpers/date.ts';
+import { getFullAddress } from '../src/universal/helpers/brp.ts';
 
-import { MyNotification } from '../src/universal/types/App.types';
+import { MyNotification } from '../src/universal/types/App.types.ts';
 import {
   Adres,
   Kind,
   Persoon,
   Verbintenis,
-} from '../src/server/services/profile/brp.types';
+} from '../src/server/services/profile/brp.types.ts';
 import { differenceInYears, parseISO } from 'date-fns';
 
-import { ServiceResults } from '../src/server/services/content-tips/tip-types';
-import { IS_PRODUCTION } from '../src/universal/config/env';
+import { ServiceResults } from '../src/server/services/content-tips/tip-types.ts';
+import { IS_PRODUCTION } from '../src/universal/config/env.ts';
 
 import {
   themaId as themaIdInkomen,
@@ -153,7 +153,7 @@ import {
   themaId as themaIdSubsidies,
   themaTitle as themaTitleSubsidies,
 } from '../src/client/pages/Thema/Subsidies/Subsidies-thema-config.ts';
-import process from "node:process";
+import process from 'node:process';
 
 const { BRP, KVK } = profileThemaTitles;
 
