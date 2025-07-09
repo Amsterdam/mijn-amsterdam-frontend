@@ -1,4 +1,9 @@
-import { BESLUIT, EINDE_RECHT, getBetrokkenDescription } from './generic';
+import {
+  BESLUIT,
+  EINDE_RECHT,
+  getBesluitDescription,
+  isAanvrager,
+} from './generic';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
@@ -9,7 +14,6 @@ import type { ZorgnedHLIRegeling } from '../hli-regelingen-types';
 export const AV_RTM_DEEL1 = 'AV-RTM1';
 // Afhandeling afspraak GGD
 export const AV_RTM_DEEL2 = 'AV-RTM';
-const avRtmRegelingen = [AV_RTM_DEEL1, AV_RTM_DEEL2];
 
 export function isRTMDeel2(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
@@ -128,7 +132,7 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
     },
     // In behandeling (in afwatching van uitslag GGD), alleen voor de aanvrager/ontvanger zónder betrokkenen.
     {
-      status: 'In behandeling',
+      status: 'In behandeling genomen',
       isChecked: true,
       description: getRtmDescriptionDeel1Toegewezen,
       isVisible(aanvraag) {
@@ -151,6 +155,12 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
     // Betrokkkenen krijgen alléén deze stap (RTM Deel 2) te zien.
     {
       ...BESLUIT,
+      description(regeling) {
+        return getBesluitDescription(regeling, {
+          withToegewezenBriefInformatie: false,
+          withAfgewezenBriefInformatie: true,
+        });
+      },
       isVisible: isRTMDeel2,
     },
     // Einde recht - voor RTM Deel 2. Voor de aanvrager.
@@ -160,18 +170,15 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
         return (
           isRTMDeel2(regeling) &&
           !!regeling.datumInBehandeling &&
-          regeling.resultaat === 'toegewezen'
+          regeling.resultaat === 'toegewezen' &&
+          isAanvrager(regeling)
         );
       },
       description(regeling) {
         return `
-        <p>
-          U hoeft de ${regeling.titel} niet elk jaar opnieuw aan te vragen. De gemeente verlengt de regeling stilzwijgend, maar controleert wel elk jaar of u nog in aanmerking komt.
-          U kunt dan ook een brief krijgen met het verzoek om extra informatie te geven.
-        </p>
-        <p>
-          Als er wijzigingen zijn in uw situatie moet u die <a href="${INFO_LINK}">direct doorgeven</a>.
-        </p>`;
+        <p>U hoeft de ${regeling.titel} niet elk jaar opnieuw aan te vragen. De gemeente verlengt de regeling stilzwijgend, maar controleert wel elk jaar of u nog in aanmerking komt.</p>
+        <p>U kunt dan ook een brief krijgen met het verzoek om extra informatie te geven.</p>
+        <p><a href="${INFO_LINK}">Als er wijzigingen zijn in uw situatie moet u die direct doorgeven</a>.</p>`;
       },
     },
     // Einde recht - voor RTM Deel 2. Voor de betrokkenen.
@@ -181,7 +188,8 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
         return (
           isRTMDeel2(regeling) &&
           regeling.resultaat === 'toegewezen' &&
-          regeling.isActueel === false
+          regeling.isActueel === false &&
+          !isAanvrager(regeling)
         );
       },
       description(regeling, today, allAanvragen) {
@@ -189,18 +197,21 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
           typeof EINDE_RECHT.description === 'function'
             ? EINDE_RECHT.description(regeling, today, allAanvragen)
             : EINDE_RECHT.description || '';
+        const hasBetrokkenen = regeling.betrokkenen.length > 1;
+        const isAanvrager_ = isAanvrager(regeling);
         return (
           baseDescription +
-          `<p>
-            Bent u net of binnekort 18 jaar oud? Dan moet u deze regeling voor uzelf aanvragen. <a href="${INFO_LINK}">Lees meer over de voorwaarden</a>.
+          (hasBetrokkenen
+            ? `<p>
+            ${isAanvrager_ ? 'Wordt uw kind 18? Dan moet uw kind deze regeling voor zichzelf aanvragen.' : 'Bent u net of binnenkort 18 jaar oud? Dan moet u deze regeling voor uzelf aanvragen.'} <a href="${INFO_LINK}">Lees meer over de voorwaarden</a>.
           </p>
           `
+            : '')
         );
       },
     },
   ];
 
 export const forTesting = {
-  getBetrokkenDescription,
   isRTMDeel2,
 };

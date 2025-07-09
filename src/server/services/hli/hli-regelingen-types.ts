@@ -19,7 +19,6 @@ export type HLIRegelingFrontend = ZaakDetail & {
   dateStart: string | null;
   documents: GenericDocument[];
   isActual: boolean; // Indicates if this item is designated Current or Previous
-  receiver: string;
   decision: BeschikkingsResultaat;
 };
 

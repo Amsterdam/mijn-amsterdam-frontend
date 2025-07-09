@@ -13,7 +13,6 @@ const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 const displayPropsHuidigeRegelingen: DisplayProps<HLIRegelingFrontend> = {
   props: {
     detailLinkComponent: 'Regeling',
-    receiver: 'Naam ontvanger',
   },
   colWidths: {
     large: ['80%', '20%'],
@@ -82,7 +81,7 @@ export const routeConfig = {
 } as const satisfies ThemaRoutesConfig;
 
 export const listPageTitle = {
-  [listPageParamKind.lopend]: 'Lopende aanvragen',
+  [listPageParamKind.lopend]: 'Aanvragen',
   [listPageParamKind.actual]: 'Huidige regelingen',
   [listPageParamKind.historic]: 'Eerdere en afgewezen regelingen',
 } as const;
@@ -107,7 +106,7 @@ export const tableConfig = {
   [listPageParamKind.lopend]: {
     title: listPageTitle[listPageParamKind.lopend],
     filter: (regeling: HLIRegelingFrontend) =>
-      regeling.displayStatus === 'In behandeling',
+      regeling.displayStatus.startsWith('In behandeling'),
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsHuidigeRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,

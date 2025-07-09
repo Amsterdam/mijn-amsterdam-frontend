@@ -3,7 +3,7 @@ import {
   fetchZorgnedAanvragenHLI,
   forTesting,
 } from './hli-zorgned-service';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
+import { remoteApi } from '../../../testing/utils';
 import * as zorgnedService from '../zorgned/zorgned-service';
 import {
   ZorgnedAanvraagTransformed,
@@ -13,8 +13,6 @@ import {
 import { AV_CZM } from './status-line-items/regeling-czm';
 
 describe('hli-zorgned-service', () => {
-  const authProfileAndToken = getAuthProfileAndToken();
-
   test('transformToAdministratienummer', () => {
     const nr = forTesting.transformToAdministratienummer(1234567);
     expect(nr).toBe('03630001234567');
