@@ -10,9 +10,6 @@ ENV TZ=Europe/Amsterdam
 ENV CI=true
 
 RUN <<EOF
-  # Change source to https as http calls were blocked by Azure firewall
-  sed -i 's|http:|https:|' /etc/apt/sources.list.d/*.sources
-
   apt-get update \
   && apt-get dist-upgrade -y \
   && apt-get autoremove -y \
