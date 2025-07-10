@@ -67,10 +67,6 @@ const AFIS_EMANDATE_RECURRING_DATE_END = '9999-12-31T00:00:00';
 const AFIS_EMANDATE_COMPANY_NAME = 'Gemeente Amsterdam';
 const AFIS_EMANDATE_SIGN_REQUEST_URL_VALIDITY_IN_DAYS = 1;
 
-function transformCreateEMandatesResponse(response: unknown) {
-  return response;
-}
-
 const afisEMandatePostbodyStatic: AfisEMandateSourceStatic = {
   PayType: getFromEnv('BFF_AFIS_EMANDATE_PAYTYPE') ?? '',
   SndType: getFromEnv('BFF_AFIS_EMANDATE_SNDTYPE') ?? '',
@@ -175,7 +171,6 @@ export async function createAfisEMandate(
     formatUrl: ({ url }) => {
       return `${url}/CreateMandate/ZGW_FI_MANDATE_SRV_01/Mandate_createSet`;
     },
-    transformResponse: transformCreateEMandatesResponse,
   });
 
   const response = await requestData<AfisEMandateSource>(config);
@@ -439,23 +434,11 @@ export async function fetchAfisEMandates(
 }
 
 function transformEMandatesRedirectUrlResponse(
-  sessionID: SessionID,
   responseData: POMSignRequestUrlResponseSource
 ): AfisEMandateSignRequestResponse | null {
   if (responseData?.mpid) {
-    const urlQueryParams = new URLSearchParams({
-      payload: encryptPayloadAndSessionID(sessionID, {
-        mpid: responseData.mpid,
-      }),
-    });
-
-    const statusCheckUrl = `${generateFullApiUrlBFF(
-      BffEndpoints.AFIS_EMANDATES_SIGN_REQUEST_STATUS
-    )}?${urlQueryParams}`;
-
-    return { redirectUrl: responseData.paylink, statusCheckUrl };
+    return { redirectUrl: responseData.paylink };
   }
-
   return null;
 }
 
@@ -518,8 +501,7 @@ function createEMandateProviderPayload(
 }
 
 export async function fetchEmandateRedirectUrlFromProvider(
-  eMandateSignRequestPayload: EMandateSignRequestPayload,
-  authProfile: AuthProfile
+  eMandateSignRequestPayload: EMandateSignRequestPayload
 ) {
   const acceptant = EMandateAcceptantenGemeenteAmsterdam.find(
     (acceptant) => acceptant.iban === eMandateSignRequestPayload.acceptantIBAN
@@ -546,8 +528,7 @@ export async function fetchEmandateRedirectUrlFromProvider(
     formatUrl: ({ url }) => {
       return `${url}/v3/paylinks`;
     },
-    transformResponse: (responseData) =>
-      transformEMandatesRedirectUrlResponse(authProfile.sid, responseData),
+    transformResponse: transformEMandatesRedirectUrlResponse,
     data: createEMandateProviderPayload(
       businessPartnerResponse.content,
       acceptant,
@@ -647,5 +628,22 @@ export async function handleEmandateUpdate(
 }
 
 export const forTesting = {
+  addEmandateApiUrls,
+  changeEMandateStatus,
+  createAfisEMandate,
+  createEMandateProviderPayload,
+  fetchAfisEMandates,
+  fetchEmandateRedirectUrlFromProvider,
+  fetchEmandateSignRequestStatus,
+  getEMandateSourceByAcceptant,
+  getSignRequestApiUrl,
+  getSndDebtorId,
+  getStatusChangeApiUrl,
+  getUpdateApiUrl,
+  handleEmandateUpdate,
+  transformEmandateSignRequestStatus,
+  transformEMandateSource,
+  transformEMandatesRedirectUrlResponse,
   transformEMandatesResponse,
+  updateAfisEMandate,
 };
