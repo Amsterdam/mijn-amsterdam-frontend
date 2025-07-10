@@ -5,16 +5,19 @@ import { MutableSnapshot } from 'recoil';
 import { routeConfig } from './Horeca-thema-config';
 import { HorecaThema } from './HorecaThema';
 import { HorecaVergunningFrontend } from '../../../../server/services/horeca/decos-zaken';
+import { bffApiHost } from '../../../../testing/setup';
 import { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
+
+export const DOC_API_PATH =
+  '/api/v1/services/decos/documents?id=oP2F-VKO2Z5y9ZJAIjyKseyH-V1K-2hVGrhNehA38i_gG-24x0rQFAf9avn531EgFKea2ULcC-FPBnW25VGYi01c867Jks1tjYkhfXtHt1Q';
 
 export const vergunning: HorecaVergunningFrontend = {
   id: 'Z-24-2238078',
   key: '5E6F10EA670D4D4FA0E637B453D32DAB',
   title: 'Horeca vergunning exploitatie Horecabedrijf',
 
-  status: 'Ontvangen',
   caseType: 'Horeca vergunning exploitatie Horecabedrijf',
   decision: null,
   identifier: 'Z/24/2238078',
@@ -58,8 +61,8 @@ export const vergunning: HorecaVergunningFrontend = {
     },
   ],
   displayStatus: 'In behandeling',
-  fetchDocumentsUrl:
-    'http://localhost:5000/api/v1/services/decos/documents?id=oP2F-VKO2Z5y9ZJAIjyKseyH-V1K-2hVGrhNehA38i_gG-24x0rQFAf9avn531EgFKea2ULcC-FPBnW25VGYi01c867Jks1tjYkhfXtHt1Q',
+  fetchDocumentsUrl: `${bffApiHost}${DOC_API_PATH}`,
+
   link: {
     to: '/horeca/horeca-vergunning-exploitatie-horecabedrijf/Z-24-2238078',
     title: 'Bekijk hoe het met uw aanvraag staat',

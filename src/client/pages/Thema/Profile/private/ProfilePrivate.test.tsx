@@ -54,15 +54,6 @@ describe('<Profile />', () => {
     );
   }
 
-  beforeAll(() => {
-    (window.matchMedia as unknown) = vi.fn(() => {
-      return {
-        addListener: vi.fn(),
-        removeListener: vi.fn(),
-      };
-    });
-  });
-
   test('Matches the Full Page snapshot', async () => {
     render(
       <Component

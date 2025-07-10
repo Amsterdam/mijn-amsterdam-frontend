@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
-import { beforeAll, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import { routeConfig, themaTitle } from './Parkeren-thema-config';
 import { ParkerenThema } from './ParkerenThema';
@@ -88,10 +88,6 @@ describe('Parkeren', () => {
       />
     );
   }
-
-  beforeAll(() => {
-    window.scrollTo = vi.fn();
-  });
 
   it('should render the component and show the correct title', () => {
     render(<Component />);

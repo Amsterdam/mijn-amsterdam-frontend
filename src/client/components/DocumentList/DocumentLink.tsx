@@ -70,9 +70,7 @@ export function DocumentLink({
           setLoading(false);
 
           if (res.status !== HttpStatusCode.Ok) {
-            throw new Error(
-              `Failed to download document. Error: ${res.statusText}, Code: ${res.status}`
-            );
+            throw new Error(`Failed to download document. Code: ${res.status}`);
           }
 
           return res.blob();
@@ -84,7 +82,6 @@ export function DocumentLink({
               addFileType(`/downloads/${document.download || documentTitle}`);
 
           const fileType = trackingUrl.split('.').pop();
-
           trackDownload(documentTitle, fileType, trackingUrl, profileType);
 
           if (!blob) {

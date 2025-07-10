@@ -4,11 +4,16 @@ import { generatePath } from 'react-router';
 import { routeConfig } from './Parkeren-thema-config';
 import { ParkerenDetail } from './ParkerenDetail';
 import { ParkeerVergunningFrontend } from '../../../../server/services/parkeren/config-and-types';
+import { bffApiHost } from '../../../../testing/setup';
+import { bffApi } from '../../../../testing/utils';
 import { AppState } from '../../../../universal/types/App.types';
 import { componentCreator } from '../../MockApp';
 
 const ID = 'Z-24-2233516';
 const ID_WITH_SLASHES = 'Z/24/2233516';
+
+const DOC_API_PATH =
+  '/api/v1/services/vergunningen/v2/962cCLy-d6nz4-85Cfyb2CaOKclPxVWCXF9L8T1lYamfgI25euHU1vf5OsA-qeyGYVuukIOquMqEFhww68MWxEW5LjLvu6jwplz4Hgs1LyE';
 
 const GPPbaseVergunning: ParkeerVergunningFrontend = {
   caseType: 'GPP',
@@ -19,8 +24,7 @@ const GPPbaseVergunning: ParkeerVergunningFrontend = {
   dateRequestFormatted: '05 juni 2024',
   dateStart: null,
   decision: null,
-  fetchDocumentsUrl:
-    'http://localhost:5000/api/v1/services/vergunningen/v2/962cCLy-d6nz4-85Cfyb2CaOKclPxVWCXF9L8T1lYamfgI25euHU1vf5OsA-qeyGYVuukIOquMqEFhww68MWxEW5LjLvu6jwplz4Hgs1LyE',
+  fetchDocumentsUrl: `${bffApiHost}${DOC_API_PATH}`,
   id: ID,
   key: 'D8DEC5AD3C6F456D954C53DEF791EAA3',
   link: {
@@ -70,6 +74,11 @@ describe('Kenteken tests', () => {
   const nieuwKentekenLabelName = 'Nieuw kenteken';
 
   test('Both old and new kentekens are visible', () => {
+    bffApi.get(DOC_API_PATH).reply(200, {
+      content: [],
+      status: 'OK',
+    });
+
     const vergunningen: ParkeerVergunningFrontend[] = [
       {
         ...GPPbaseVergunning,
@@ -88,6 +97,11 @@ describe('Kenteken tests', () => {
   });
 
   test('kentekenNieuw label is not visible when no kentekenNieuw present', () => {
+    bffApi.get(DOC_API_PATH).reply(200, {
+      content: [],
+      status: 'OK',
+    });
+
     const vergunningen: ParkeerVergunningFrontend[] = [
       {
         ...GPPbaseVergunning,

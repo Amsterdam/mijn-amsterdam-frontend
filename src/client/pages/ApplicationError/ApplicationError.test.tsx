@@ -26,10 +26,7 @@ describe('ApplicationError', () => {
   });
 
   it('Render without crashing when location is not home', () => {
-    const location = new URL('https://mijn.amsterdam.nl/klachten/1');
-
-    delete (window as any).location;
-    window.location = location as unknown as Location;
+    window.location.href = 'xxx';
 
     const error = new Error('There is a different error');
 
