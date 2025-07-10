@@ -140,8 +140,8 @@ ENV MA_BUILD_ID=$MA_BUILD_ID
 ARG MA_GIT_SHA=-1
 ENV MA_GIT_SHA=$MA_GIT_SHA
 
-# Tell node to use the OpenSSL (OS installed) Certificates
-ENV NODE_OPTIONS=--use-openssl-ca
+# Tell Deno where to find OpenSSL (OS installed) Certificates
+ENV DENO_TLS_CA_STORE=/usr/local/share/ca-certificates
 
 # Copy certificate
 COPY ca/* /usr/local/share/ca-certificates/extras/
