@@ -21,7 +21,6 @@ import { featureToggle } from '../../../client/pages/Thema/Afis/Afis-thema-confi
 import {
   apiErrorResult,
   ApiResponse_DEPRECATED,
-  ApiSuccessResponse,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
@@ -177,7 +176,7 @@ async function fetchEmail(addressId: AfisBusinessPartnerAddress['id']) {
 /** Fetches the business partner details, phonenumber and emailaddress from the AFIS source API and combines then into a single response */
 export async function fetchAfisBusinessPartnerDetails(
   payload: BusinessPartnerIdPayload
-): Promise<ApiSuccessResponse<AfisBusinessPartnerDetailsTransformed>> {
+): Promise<ApiResponse<AfisBusinessPartnerDetailsTransformed>> {
   const businessPartnerId: BusinessPartnerId = payload.businessPartnerId;
   const fullNameRequest = fetchBusinessPartnerFullName(businessPartnerId);
   const addressRequest = fetchBusinessPartnerAddress(businessPartnerId);
@@ -189,6 +188,16 @@ export async function fetchAfisBusinessPartnerDetails(
 
   const fullNameResponse = getSettledResult(fullNameResult);
   const addressResponse = getSettledResult(addressResult);
+
+  if (
+    fullNameResponse.status === 'ERROR' ||
+    addressResponse.status === 'ERROR'
+  ) {
+    return apiErrorResult(
+      `Could not get full name or address for business partner ${businessPartnerId}`,
+      null
+    );
+  }
 
   let phoneResponse: ApiResponse_DEPRECATED<AfisBusinessPartnerPhone | null>;
   let emailResponse: ApiResponse_DEPRECATED<AfisBusinessPartnerEmail | null>;
@@ -227,6 +236,7 @@ export async function fetchAfisBusinessPartnerDetails(
       email: emailResponse,
       phone: phoneResponse,
       fullName: fullNameResponse,
+      address: addressResponse,
     })
   );
 }
@@ -235,14 +245,14 @@ export async function createBusinessPartnerBankAccount(
   payload: AfisBusinessPartnerBankPayload
 ) {
   if (!ibantools.isValidIBAN(payload.iban)) {
-    throw new Error('Invalid IBAN');
+    throw new Error('Create bank account: Invalid IBAN');
   }
 
   const iban = ibantools.extractIBAN(payload.iban);
 
   // It's unlikely this will happen because of the IBAN validation above.
   if (!iban.accountNumber) {
-    throw new Error('Invalid IBAN Account Number');
+    throw new Error('Create bank account: Invalid IBAN Account Number');
   }
 
   const createBankAccountPayload: AfisBusinessPartnerBankAccount = {
