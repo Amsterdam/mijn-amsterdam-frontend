@@ -64,7 +64,7 @@ describe('simple-connect/belasting', () => {
             datum: '2022-05-30T09:00:34Z',
             titel: 'Automatische incasso',
             omschrijving:
-              'Betaal gemakkelijk de gecombineerde belastingaanslag. Regel vandaag nog uw automatische incasso, dan hebt u er straks geen omkijken meer naar.',
+              'Betaal gemakkelijk de gecombineerde belastingaanslag. Regel vandaag nog uw automatische incasso, dan heeft u er straks geen omkijken meer naar.',
             url: 'https://belastingbalie-acc.amsterdam.nl/subject.gegevens.php',
             url_naam: 'Vraag direct aan',
             informatie:
@@ -106,7 +106,7 @@ describe('simple-connect/belasting', () => {
           {
             datePublished: '2022-05-30T09:00:34Z',
             description:
-              'Betaal gemakkelijk de gecombineerde belastingaanslag. Regel vandaag nog uw automatische incasso, dan hebt u er straks geen omkijken meer naar.',
+              'Betaal gemakkelijk de gecombineerde belastingaanslag. Regel vandaag nog uw automatische incasso, dan heeft u er straks geen omkijken meer naar.',
             id: 'belasting-5',
             isTip: true,
             link: {
