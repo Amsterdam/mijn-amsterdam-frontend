@@ -1,8 +1,12 @@
 import { useCallback, useEffect, useReducer, useState } from 'react';
 
 import axios, { AxiosRequestConfig, AxiosResponseTransformer } from 'axios';
+import useSWR, { type SWRResponse } from 'swr';
 
-import { apiErrorResult } from '../../../universal/helpers/api';
+import {
+  apiErrorResult,
+  type ApiResponse,
+} from '../../../universal/helpers/api';
 import { Action } from '../../../universal/types/App.types';
 import { captureException } from '../../helpers/monitoring';
 
@@ -215,4 +219,133 @@ export function addAxiosResponseTransform(
         : []),
     ...(Array.isArray(transformer) ? transformer : [transformer]),
   ];
+}
+
+//// V2 ////
+
+export type ApiStateV2<T> = {
+  isLoading: boolean;
+  isError: boolean;
+  data: T | null;
+  fetch: () => void;
+  mutate: SWRResponse['mutate'];
+};
+
+type UseDataApiOptions<T> = Readonly<{
+  postpone?: boolean;
+  fetcher(url: string): Promise<T>;
+}>;
+
+const DEFAULT_DATA_API_OPTIONS: Required<UseDataApiOptions<any>> = {
+  postpone: false,
+  fetcher: sendGetRequest,
+};
+
+export function useDataApiV2<T extends any>(
+  url?: string,
+  options: UseDataApiOptions<T> = DEFAULT_DATA_API_OPTIONS
+): ApiStateV2<T> {
+  const optionsWithDefaults: Required<UseDataApiOptions<T>> = {
+    ...DEFAULT_DATA_API_OPTIONS,
+    ...options,
+  };
+
+  const [shouldFetch, setShouldFetch] = useState(
+    optionsWithDefaults.postpone !== true
+  );
+
+  const swr = useSWR<T>(shouldFetch ? url : null, optionsWithDefaults.fetcher, {
+    dedupingInterval: 0, // Disable deduping to allow immediate re-fetching
+    revalidateOnFocus: false, // Disable revalidation on focus
+    revalidateOnReconnect: false, // Disable revalidation on reconnect
+    keepPreviousData: true, // Keep previous data while fetching new data
+    shouldRetryOnError: false, // Disable retrying on error
+    onSuccess: () => {
+      // Sets shouldFetch to false after a successful fetch
+      // This prevents immediate re-fetching if the url changes in the meantime.
+      if (optionsWithDefaults.postpone) {
+        setShouldFetch(false);
+      }
+    },
+    onError: (error) => {
+      captureException(error, {
+        properties: {
+          url,
+          postpone: optionsWithDefaults.postpone,
+        },
+      });
+    },
+  });
+
+  // If the hook should fetch data as soons as it's mounted, we consider it as loading.
+  const shouldFetchImmediately = !optionsWithDefaults.postpone && !swr.data;
+
+  return {
+    data: swr.data ?? null,
+    isLoading: swr.isLoading || shouldFetchImmediately || swr.isValidating,
+    isError: !!swr.error,
+    mutate: swr.mutate,
+    fetch: () => {
+      setShouldFetch(true);
+
+      // Trigger a re-fetch for all subsequent calls.
+      if (shouldFetch) {
+        swr.mutate();
+      }
+    },
+  };
+}
+
+export async function sendGetRequest<T extends any>(url: string): Promise<T> {
+  return fetch(url, { credentials: 'include' }).then(
+    async (response: Response) => {
+      const responseJson = (await response.json()) as ApiResponse<T>;
+      if (responseJson.status !== 'OK' || !response.ok) {
+        throw new Error(
+          responseJson.status === 'ERROR'
+            ? responseJson.message
+            : `Get request to ${url} failed with status ${response.status}.`
+        );
+      }
+
+      return responseJson.content;
+    }
+  );
+}
+
+export async function sendFormPostRequest<
+  T extends any,
+  F extends Record<string, string>,
+>(url: string, payload: F): Promise<T> {
+  return fetch(url, {
+    method: 'POST',
+    body: new URLSearchParams(payload),
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    credentials: 'include',
+  }).then(async (response: Response) => {
+    const responseJson = (await response.json()) as ApiResponse<T>;
+    if (responseJson.status !== 'OK' || !response.ok) {
+      throw new Error(
+        responseJson.status === 'ERROR'
+          ? responseJson.message
+          : `Post request to ${url} failed with status ${response.status}.`
+      );
+    }
+
+    return responseJson.content;
+  });
+}
+
+export function swrPostRequest<R extends any, F extends Record<string, string>>(
+  fn: typeof sendFormPostRequest<R, F>
+) {
+  return async (url: string, { arg }: { arg: F }) => {
+    return fn(url, arg);
+  };
+}
+
+export function swrPostRequestDefault() {
+  return swrPostRequest(sendFormPostRequest);
 }

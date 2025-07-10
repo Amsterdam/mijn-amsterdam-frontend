@@ -1,4 +1,3 @@
-import { AfisThema } from './AfisThema';
 import {
   routeConfig,
   themaId,
@@ -6,8 +5,10 @@ import {
   featureToggle,
 } from './Afis-thema-config';
 import { AfisBetaalVoorkeuren } from './AfisBetaalVoorkeuren';
-import { AfisList } from './AfisList';
+import { AfisEMandateDetail } from './AfisEMandateDetail';
 import { default as AfisIcon } from './AfisIcon.svg?react';
+import { AfisList } from './AfisList';
+import { AfisThema } from './AfisThema';
 import { isLoading } from '../../../../universal/helpers/api';
 import { type AppState } from '../../../../universal/types/App.types';
 import {
@@ -22,8 +23,13 @@ export const AfisRoutes = [
     isActive: featureToggle.AfisActive,
   },
   {
-    route: routeConfig.detailPage.path,
+    route: routeConfig.betaalVoorkeuren.path,
     Component: AfisBetaalVoorkeuren,
+    isActive: featureToggle.AfisActive,
+  },
+  {
+    route: routeConfig.detailPageEMandate.path,
+    Component: AfisEMandateDetail,
     isActive: featureToggle.AfisActive,
   },
   {

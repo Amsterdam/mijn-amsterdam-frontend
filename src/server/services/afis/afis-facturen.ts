@@ -4,8 +4,10 @@ import Decimal from 'decimal.js';
 import { firstBy } from 'thenby';
 
 import { getAfisApiConfig, getFeedEntryProperties } from './afis-helpers';
-import { routeConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import {
+  featureToggle,
+  routeConfig,
+} from '../../../client/pages/Thema/Afis/Afis-thema-config';
 import {
   apiErrorResult,
   ApiResponse_DEPRECATED,
@@ -205,7 +207,7 @@ function transformFactuur(
 
   if (
     isFactuurCreatedInAFIS(accountingDocumentId) ||
-    FeatureToggle.afisMigratedFacturenDownloadActive
+    featureToggle.afisMigratedFacturenDownloadActive
   ) {
     factuurDocumentIdEncrypted = encryptSessionIdWithRouteIdParam(
       sessionID,
@@ -289,7 +291,7 @@ function transformFacturen(
   const count = responseData?.feed?.count ?? feedProperties.length;
   const facturenTransformed = feedProperties
     .filter((invoiceProperties) => {
-      return FeatureToggle.afisFilterOutUndownloadableFacturenActive
+      return featureToggle.afisFilterOutUndownloadableFacturenActive
         ? isDownloadAvailable(invoiceProperties.PostingDate)
         : true;
     })
