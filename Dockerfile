@@ -157,7 +157,6 @@ RUN chmod u+x /usr/local/bin/docker-entrypoint-bff.sh
 COPY --from=build-deps /build-space/node_modules /app/node_modules
 COPY --from=build-deps /build-space/package.json /app/package.json
 COPY src/ /app/src/
-COPY .env.local /app/.env.local
 
 # Run the app
 RUN sh /usr/local/bin/docker-entrypoint-bff.sh
