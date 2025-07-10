@@ -27,22 +27,8 @@ export function getBetrokkenKinderenDescription(
 }
 
 export function getBesluitDescription(
-  regeling: ZorgnedAanvraagWithRelatedPersonsTransformed,
-  options: {
-    withToegewezenBriefInformatie: boolean;
-    withAfgewezenBriefInformatie: boolean;
-  } = {
-    withToegewezenBriefInformatie: true,
-    withAfgewezenBriefInformatie: true,
-  }
+  regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
 ): string {
-  const toegewezenBriefInformatie = options?.withToegewezenBriefInformatie
-    ? '<p>In de brief vindt u meer informatie hierover.</p>'
-    : '';
-  const afgewezenBriefInformatie = options?.withAfgewezenBriefInformatie
-    ? '<p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>'
-    : '';
-
   return `<p>
     ${
       regeling.resultaat === 'toegewezen'
@@ -50,7 +36,7 @@ export function getBesluitDescription(
         : `U krijgt geen ${regeling.titel}.`
     }
     </p>
-    ${regeling.resultaat === 'toegewezen' ? toegewezenBriefInformatie : afgewezenBriefInformatie}
+    <p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>
   `;
 }
 
