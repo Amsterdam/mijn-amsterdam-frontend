@@ -9,17 +9,20 @@ FROM denoland/deno:debian-2.4.1 AS updated-local
 ENV TZ=Europe/Amsterdam
 ENV CI=true
 
-# Change source to https as http calls were blocked by Azure firewall
-# RUN sed -i 's|http:|https:|' /etc/apt/sources.list.d/*.sources
-COPY src/server/ /app/server/
+RUN <<EOF
+  # Change source to https as http calls were blocked by Azure firewall
+  sed -i 's|http:|https:|' /etc/apt/sources.list.d/*.sources
 
-RUN apt-get update \
+  apt-get update \
   && apt-get dist-upgrade -y \
   && apt-get autoremove -y \
   && apt-get install -y --no-install-recommends \
   nano
 
-RUN apt-get install -y ca-certificates
+  apt-get install -y ca-certificates
+EOF
+
+COPY src/server/ /app/server/
 
 ########################################################################################################################
 ########################################################################################################################
