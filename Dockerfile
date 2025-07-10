@@ -4,19 +4,22 @@
 ########################################################################################################################
 ########################################################################################################################
 
-FROM node:24.2.0 AS updated-local
+FROM denoland/deno:debian-2.4.1 AS updated-local
 
 ENV TZ=Europe/Amsterdam
 ENV CI=true
 
 # Change source to https as http calls were blocked by Azure firewall
-RUN sed -i 's|http:|https:|' /etc/apt/sources.list.d/*.sources
+# RUN sed -i 's|http:|https:|' /etc/apt/sources.list.d/*.sources
+COPY src/server/ /app/server/
 
 RUN apt-get update \
   && apt-get dist-upgrade -y \
   && apt-get autoremove -y \
   && apt-get install -y --no-install-recommends \
   nano
+
+RUN apt-get install -y ca-certificates
 
 ########################################################################################################################
 ########################################################################################################################
@@ -25,31 +28,26 @@ RUN apt-get update \
 ########################################################################################################################
 FROM updated-local AS build-deps
 
-# PNPM Setup
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
-
 WORKDIR /build-space
 
 # Copy packages + Install
-COPY pnpm-lock.yaml /build-space/
 COPY package.json /build-space/
+COPY deno.json  /build-space/
+COPY deno.lock /build-space/
 COPY vite.config.ts /build-space/
 COPY .env.local.template /build-space/
 COPY vendor /build-space/vendor
 COPY mocks/fixtures /build-space/mocks/fixtures
 
-# Install the dependencies
-RUN pnpm install --frozen-lockfile --prefer-offline --reporter=append-only
-
 # Typescript configs
 COPY tsconfig.json /build-space/
-COPY tsconfig.bff.json /build-space/
 
 # Copy source files
 COPY src /build-space/src
 COPY index.html /build-space/
+
+# Install the dependencies
+RUN deno install
 
 ########################################################################################################################
 ########################################################################################################################
@@ -89,14 +87,7 @@ ENV REACT_APP_MONITORING_CONNECTION_STRING=$REACT_APP_MONITORING_CONNECTION_STRI
 
 COPY public /build-space/public
 
-# Build FE
-RUN pnpm build
-
-# Build BFF
-FROM build-deps AS build-app-bff
-
-RUN pnpm bff-api:build
-
+RUN deno run build-frontend
 
 ########################################################################################################################
 ########################################################################################################################
@@ -163,15 +154,14 @@ RUN chmod -R 644 /usr/local/share/ca-certificates/extras/ \
 COPY scripts/docker-entrypoint-bff.sh /usr/local/bin/
 RUN chmod u+x /usr/local/bin/docker-entrypoint-bff.sh
 
-# Copy the built application files to the current image
-COPY --from=build-app-bff /build-space/build-bff /app/build-bff
-COPY --from=build-app-bff /build-space/node_modules /app/node_modules
-COPY --from=build-app-bff /build-space/package.json /app/package.json
-COPY --from=build-app-bff /build-space/vendor /app/vendor
-COPY src/server/views /app/build-bff/server/views
+COPY --from=build-deps /build-space/node_modules /app/node_modules
+COPY --from=build-deps /build-space/package.json /app/package.json
+COPY src/ /app/src/
+COPY .env.local /app/.env.local
 
 # Run the app
-CMD /usr/local/bin/docker-entrypoint-bff.sh
+RUN sh /usr/local/bin/docker-entrypoint-bff.sh
+CMD ["deno", "run", "--allow-all", "/app/src/server/app.ts"]
 
 FROM deploy-bff AS deploy-bff-az
 

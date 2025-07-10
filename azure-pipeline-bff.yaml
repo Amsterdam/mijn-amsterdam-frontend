@@ -10,7 +10,6 @@ trigger:
       - azure-pipeline-bff.yaml
       - src/server
       - src/universal
-      - src/bffserver.ts
       - Dockerfile
       - package.json
       - package-lock.json
@@ -21,7 +20,6 @@ pr:
     include:
       - src/server
       - src/universal
-      - src/bffserver.ts
       - Dockerfile
       - package.json
       - package-lock.json

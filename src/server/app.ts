@@ -188,7 +188,7 @@ async function startServerBFF() {
 }
 
 const entryPoint = process.argv[1];
-if (entryPoint.endsWith('bffserver.ts') || entryPoint.endsWith('app.js')) {
+if (entryPoint.endsWith('app.ts')) {
   startServerBFF();
 }
 
