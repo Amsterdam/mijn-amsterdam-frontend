@@ -17,7 +17,8 @@ const pageContentTop = (
       staan.
     </Paragraph>
     <Paragraph className="ams-mb-m">
-      Hebt u schuldhulp aangevraagd? Dan wordt daarover contact met u opgenomen.
+      Heeft u schuldhulp aangevraagd? Dan wordt daarover contact met u
+      opgenomen.
     </Paragraph>
     <LinkList>
       <LinkList.Link rel="noreferrer" href={wpiLinks.BBZ}>

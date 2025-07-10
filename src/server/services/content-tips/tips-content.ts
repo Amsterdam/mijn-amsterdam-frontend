@@ -133,7 +133,7 @@ export const contentTips: ContentTipSource[] = [
     themaID: themaIdInkomen,
     profileTypes: ['private', 'commercial'],
     description:
-      'Is uw inkomen te laag om alle rekeningen te betalen of hebt u schulden? Meld u aan voor gratis hulp',
+      'Is uw inkomen te laag om alle rekeningen te betalen of heeft u schulden? Meld u aan voor gratis hulp',
     predicates: [
       or([hasValidRecentStadspasRequest, hasTozo, hasBijstandsuitkering]),
     ],
@@ -155,7 +155,7 @@ export const contentTips: ContentTipSource[] = [
     themaID: themaIdBRP,
     profileTypes: ['private'],
     description:
-      'U heeft een geldige ID-kaart of geldig paspoort nodig om te stemmen. Hebt u een Stadspas met groene stip? Dan kunt u gratis een nieuwe ID-kaart krijgen.',
+      'U heeft een geldige ID-kaart of geldig paspoort nodig om te stemmen. Heeft u een Stadspas met groene stip? Dan kunt u gratis een nieuwe ID-kaart krijgen.',
     predicates: [
       not(hasValidIdForVoting),
       is18OrOlder,
@@ -290,7 +290,7 @@ export const contentTips: ContentTipSource[] = [
     themaID: themaIdToeristischeVerhuur,
     profileTypes: ['private'],
     description:
-      'Hebt u uw B&B voor 1 januari 2019 aangevraagd? Dan mag u tot 1 juli 2026 verhuren volgens deze regels.',
+      'Heeft u uw B&B voor 1 januari 2019 aangevraagd? Dan mag u tot 1 juli 2026 verhuren volgens deze regels.',
     predicates: [hasBnBTransitionRight],
     reason:
       'U ziet deze tip omdat u een B&B vergunning aangevraagd heeft voor 2019',
@@ -329,7 +329,7 @@ export const contentTips: ContentTipSource[] = [
     themaID: themaIdInkomen,
     profileTypes: ['private'],
     description:
-      'Hebt u moeite om sportactiviteiten voor uw kind te betalen? Regel de vergoeding via Stichting SINA (Samen is niet alleen).',
+      'Heeft u moeite om sportactiviteiten voor uw kind te betalen? Regel de vergoeding via Stichting SINA (Samen is niet alleen).',
     predicates: [not(hasStadspasGroeneStip), isReceivingSubsidy],
     reason: 'u heeft een bijstand, TOZO of TONK en geen Stadspas Groene Stip',
     link: {
