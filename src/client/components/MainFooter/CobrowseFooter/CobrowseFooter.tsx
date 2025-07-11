@@ -69,10 +69,13 @@ export function CobrowseFooter() {
   // Setting the id to startCobrowseButton8 (script add eventHandler) is not stable in an SPA
   // The external script also listens for the Shift+6 keydown event to display the modal
   const shift6keysDown = new KeyboardEvent('keydown', {
-    key: '^',
+    key: '6',
     code: 'Digit6',
     shiftKey: true,
+    keyCode: 54,
+    which: 54,
     bubbles: true,
+    cancelable: true,
   });
   return (
     showCobrowseFooter && (
