@@ -12,7 +12,7 @@
   }
 
   /* Stop Cobrowse Button */
-  .stop-cobrowse-button {
+  &.stop-cobrowse-button {
     font-size: 18px;
     padding: 5px 16px;
     color: white;
@@ -27,7 +27,7 @@
     min-width: 147px;
   }
 
-  .stop-cobrowse-button:hover {
+  &.stop-cobrowse-button:hover {
     background-color: #102e62;
   }
 
