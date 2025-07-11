@@ -10,12 +10,22 @@ const MAX_WAIT_FOR_USABILA_LIVE_MS = 5000; // 5 seconds
 const USABILLA_ID_MOBILE = '9fd5da44aa5b';
 const USABILLA_ID_DESKTOP = 'e8b4abda34ab';
 
+declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    usabilla_live?: any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    lightningjs?: any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    Piwik?: any;
+  }
+}
 export function waitForUsabillaLiveInWindow() {
-  let polling: any = null;
+  let polling: NodeJS.Timeout | undefined = undefined;
   let timeoutReached = false;
   return new Promise(function (resolve, reject) {
     (function waitForFoo() {
-      if ((window as any).usabilla_live) {
+      if (window.usabilla_live) {
         return resolve(true);
       }
       const timeoutMs = 20;
@@ -41,23 +51,21 @@ export function useUsabilla(profileType?: ProfileType) {
   });
   useEffect(() => {
     if (isUsabillaLoaded) {
-      const lightningjs = (window as any).lightningjs;
+      const lightningjs = window.lightningjs;
       if (lightningjs) {
         const usabillaID = isPhoneScreen
           ? USABILLA_ID_MOBILE
           : USABILLA_ID_DESKTOP;
-        (window as any).usabilla_live = lightningjs.require(
+        window.usabilla_live = lightningjs.require(
           'usabilla_live',
           `https://w.usabilla.com/${usabillaID}.js`
         );
       }
       waitForUsabillaLiveInWindow()
         .then(() => {
-          const MatomoVisitorId = (
-            window as any
-          ).Piwik?.getTracker().getVisitorId();
+          const MatomoVisitorId = window.Piwik?.getTracker().getVisitorId();
 
-          (window as any).usabilla_live('data', {
+          window.usabilla_live('data', {
             custom: {
               MatomoVisitorId,
               profileType: profileType ?? 'unknown',
@@ -76,7 +84,7 @@ export function useUsabilla(profileType?: ProfileType) {
         // The usabilla script uses a relative href to the image.
         // Because of csp we do not allow the iframe to set the base href to their domain
         // The absolute url to a local replacement image is injected
-        iframe?.contentDocument
+        (iframe as HTMLObjectElement)?.contentDocument
           ?.querySelector?.('img')
           ?.setAttribute(
             'src',

@@ -6,7 +6,32 @@ import { IS_AP } from '../../../../universal/config/env';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 import { useScript } from '../../../hooks/useScript';
 
-const MAX_WAIT_FOR_COBROWSE_LIVE_MS = 1500;
+const MAX_WAIT_FOR_COBROWSE_LIVE_MS = 5000;
+declare global {
+  interface Window {
+    CobrowseIO?: unknown;
+  }
+}
+function waitForCobrowseLiveInWindow(window: Window & typeof globalThis) {
+  let polling: NodeJS.Timeout | undefined = undefined;
+  let timeoutReached = false;
+  return new Promise(function (resolve, reject) {
+    (function waitForFoo() {
+      if (window.CobrowseIO) {
+        return resolve(true);
+      }
+      const timeoutMs = 50;
+      if (!timeoutReached) {
+        polling = setTimeout(waitForFoo, timeoutMs);
+      }
+    })();
+    setTimeout(() => {
+      window.clearTimeout(polling);
+      timeoutReached = true;
+      reject();
+    }, MAX_WAIT_FOR_COBROWSE_LIVE_MS);
+  });
+}
 
 export function CobrowseFooter() {
   if (!FeatureToggle.cobrowseIsActive) {
@@ -20,13 +45,11 @@ export function CobrowseFooter() {
     async: true,
     isEnabled: !IS_AP,
   });
-  const [showCobrowseFooter, setShowCobrowseFooter] = useState(true);
+  const [showCobrowseFooter, setShowCobrowseFooter] = useState(false);
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (!(window as any).CobrowseIO) {
-        setShowCobrowseFooter(false);
-      }
-    }, MAX_WAIT_FOR_COBROWSE_LIVE_MS);
+    waitForCobrowseLiveInWindow(window).then(() => {
+      setShowCobrowseFooter(true);
+    });
 
     const head = document.head;
     const link = document.createElement('link');
@@ -39,7 +62,6 @@ export function CobrowseFooter() {
 
     return () => {
       head.removeChild(link);
-      clearTimeout(timeout);
     };
   }, [isCobrowseLoaded]);
 
