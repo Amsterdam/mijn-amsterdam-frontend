@@ -13,6 +13,7 @@ export function CobrowseFooter() {
     return;
   }
 
+  // Load the external script when it is not loaded from the tagmanager
   const [isCobrowseLoaded] = useScript({
     src: 'https://omnichanneliv--gat2.sandbox.my.site.com/staticvforcesite/resource/Cobrowse/cobrowseAppNL.bundle.js?v=002',
     defer: false,
@@ -42,11 +43,21 @@ export function CobrowseFooter() {
     };
   }, [isCobrowseLoaded]);
 
+  // MIJN-11933
+  // Setting the id to startCobrowseButton8 (script add eventHandler) is not stable in an SPA
+  // The external script also listens for the Shift+6 keydown event to display the modal
+  const shift6keysDown = new KeyboardEvent('keydown', {
+    key: '^',
+    code: 'Digit6',
+    shiftKey: true,
+    bubbles: true,
+  });
   return (
     showCobrowseFooter && (
       <PageFooter.MenuLink
         key="footer-cobrowse"
         id="startCobrowseButton"
+        onClick={() => document.dispatchEvent(shift6keysDown)}
         href="#"
       >
         Hulp via schermdelen
