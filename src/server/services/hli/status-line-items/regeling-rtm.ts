@@ -1,9 +1,4 @@
-import {
-  BESLUIT,
-  EINDE_RECHT,
-  getBesluitDescription,
-  isAanvrager,
-} from './generic';
+import { BESLUIT, EINDE_RECHT, isAanvrager } from './generic';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
@@ -155,12 +150,6 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
     // Betrokkkenen krijgen alléén deze stap (RTM Deel 2) te zien.
     {
       ...BESLUIT,
-      description(regeling) {
-        return getBesluitDescription(regeling, {
-          withToegewezenBriefInformatie: false,
-          withAfgewezenBriefInformatie: true,
-        });
-      },
       isVisible: isRTMDeel2,
     },
     // Einde recht - voor RTM Deel 2. Voor de aanvrager.

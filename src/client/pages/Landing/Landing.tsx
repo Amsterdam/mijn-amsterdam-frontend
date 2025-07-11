@@ -73,7 +73,7 @@ export function LandingPage() {
             </a>
           </Paragraph>
           <Paragraph className="ams-mb-l">
-            Hebt u nog geen DigiD? Regel dit dan eerst.
+            Heeft u nog geen DigiD? Regel dit dan eerst.
             <br />
             Ga naar{' '}
             <Link

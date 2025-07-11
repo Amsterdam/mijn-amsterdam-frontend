@@ -94,7 +94,7 @@ export function ApplicationError({
                 Contact
               </Heading>
               <Paragraph color="inverse" className="ams-mb-m">
-                Hebt u een vraag en kunt u het antwoord niet vinden op deze
+                Heeft u een vraag en kunt u het antwoord niet vinden op deze
                 website? Neem dan contact met ons op.
               </Paragraph>
               <LinkList>
