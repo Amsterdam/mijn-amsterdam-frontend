@@ -988,8 +988,8 @@ function sheetThemaContent(resultsByUser: ResultsByUser): SheetData {
       );
     },
     KREFIA: (serviceResults: ServiceResults) => {
-      const deeplinks = serviceResults.KREFIA?.content.deepLinks;
-      return !!deeplinks.length ? deeplinks.length : '';
+      const deeplinks = serviceResults.KREFIA?.content?.deepLinks;
+      return !!deeplinks?.length ? deeplinks.length : '';
     },
     Klachten: (serviceResults: ServiceResults) => {
       return serviceResults.KLACHTEN.content?.aantal || '';
@@ -1012,7 +1012,12 @@ function sheetThemaContent(resultsByUser: ResultsByUser): SheetData {
       };
 
       const resVal = Object.keys(themaContentGetters).reduce((acc, thema) => {
-        acc[thema] = themaContentGetters[thema](serviceResults);
+        try {
+          acc[thema] = themaContentGetters[thema](serviceResults);
+        } catch (err) {
+          console.error(err);
+          acc[thema] = '';
+        }
         return acc;
       }, base);
 
