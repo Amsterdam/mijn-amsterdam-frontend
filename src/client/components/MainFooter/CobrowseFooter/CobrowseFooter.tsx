@@ -1,0 +1,56 @@
+import { useEffect, useState } from 'react';
+
+import { PageFooter } from '@amsterdam/design-system-react';
+
+import { IS_AP } from '../../../../universal/config/env';
+import { FeatureToggle } from '../../../../universal/config/feature-toggles';
+import { useScript } from '../../../hooks/useScript';
+
+const MAX_WAIT_FOR_COBROWSE_LIVE_MS = 1500;
+
+export function CobrowseFooter() {
+  if (!FeatureToggle.cobrowseIsActive) {
+    return;
+  }
+
+  const [isCobrowseLoaded] = useScript({
+    src: 'https://omnichanneliv--gat2.sandbox.my.site.com/staticvforcesite/resource/Cobrowse/cobrowseAppNL.bundle.js?v=002',
+    defer: false,
+    async: true,
+    isEnabled: !IS_AP,
+  });
+  const [showCobrowseFooter, setShowCobrowseFooter] = useState(true);
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (!(window as any).CobrowseIO) {
+        setShowCobrowseFooter(false);
+      }
+    }, MAX_WAIT_FOR_COBROWSE_LIVE_MS);
+
+    const head = document.head;
+    const link = document.createElement('link');
+
+    link.type = 'text/css';
+    link.rel = 'stylesheet';
+    link.href = '/css/cobrowse.css';
+
+    head.appendChild(link);
+
+    return () => {
+      head.removeChild(link);
+      clearTimeout(timeout);
+    };
+  }, [isCobrowseLoaded]);
+
+  return (
+    showCobrowseFooter && (
+      <PageFooter.MenuLink
+        key="footer-cobrowse"
+        id="startCobrowseButton"
+        href="#"
+      >
+        Hulp via schermdelen
+      </PageFooter.MenuLink>
+    )
+  );
+}
