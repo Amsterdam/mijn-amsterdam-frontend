@@ -25,7 +25,7 @@ import {
 } from '../../../universal/helpers/api';
 import { getFullName } from '../../../universal/helpers/brp';
 import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
-import { hash, sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
+import { sortByNumber, uniqueArray } from '../../../universal/helpers/utils';
 import { GenericDocument } from '../../../universal/types/App.types';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { isSuccessStatus, requestData } from '../../helpers/source-api-request';
@@ -153,13 +153,8 @@ export function transformZorgnedAanvragen(
 
     for (const beschiktProduct of beschikteProducten) {
       if (beschiktProduct) {
-        // NOTE: Using index here because at least test data has duplicate entries with these exact properties.
-        const idGenerated = hash(
-          `${beschiktProduct.toegewezenProduct?.datumIngangGeldigheid ?? datumBesluit}-${aanvraagSource.identificatie}`
-        );
-
         const aanvraagTransformed = transformZorgnedAanvraag(
-          idGenerated,
+          aanvraagSource.identificatie,
           datumAanvraag,
           datumBesluit,
           beschiktProduct,
@@ -173,7 +168,7 @@ export function transformZorgnedAanvragen(
     }
   }
 
-  return aanvragenTransformed.sort(sortAlpha('id', 'desc'));
+  return aanvragenTransformed.sort(sortByNumber('id', 'desc'));
 }
 
 export async function fetchAanvragen(

@@ -10,6 +10,8 @@ export const AV_RTM_DEEL1 = 'AV-RTM1';
 // Afhandeling afspraak GGD
 export const AV_RTM_DEEL2 = 'AV-RTM';
 
+export const RTM_STATUS_IN_BEHANDELING = 'In behandeling genomen';
+
 export function isRTMDeel2(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
@@ -127,7 +129,7 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
     },
     // In behandeling (in afwatching van uitslag GGD), alleen voor de aanvrager/ontvanger zónder betrokkenen.
     {
-      status: 'In behandeling genomen',
+      status: RTM_STATUS_IN_BEHANDELING,
       isChecked: true,
       description: getRtmDescriptionDeel1Toegewezen,
       isVisible(aanvraag) {
