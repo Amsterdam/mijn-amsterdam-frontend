@@ -202,14 +202,19 @@ export async function fetchAndMergeRelatedPersons(
   );
 
   const personsByUserId = relatedPersonsResponse.content?.reduce(
-    (acc, person) => {
+    (acc, person_) => {
+      const person = { ...person_ };
+
       if (person.name === partnernaam) {
         person.isPartner = true;
       }
+
       if (person.bsn === bsnAanvrager) {
         person.isAanvrager = true;
       }
+
       acc[person.bsn] = person;
+
       return acc;
     },
     {} as Record<ZorgnedPerson['bsn'], ZorgnedPerson>
