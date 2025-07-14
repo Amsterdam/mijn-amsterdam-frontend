@@ -39,9 +39,9 @@ export function DetailPageV2({ children, className, id }: PageProps) {
   );
 }
 
-export function PageContentV2({ children, className, id }: PageProps) {
+export function PageContentV2({ children, className, id, style }: PageProps) {
   return (
-    <Grid id={id} className={className}>
+    <Grid id={id} className={className} style={style}>
       {children}
     </Grid>
   );
