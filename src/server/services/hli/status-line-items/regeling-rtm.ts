@@ -162,8 +162,7 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
         return (
           isRTMDeel2(regeling) &&
           !!regeling.datumInBehandeling &&
-          regeling.resultaat === 'toegewezen' &&
-          isAanvrager(regeling)
+          regeling.resultaat === 'toegewezen'
         );
       },
       description(regeling) {
@@ -181,7 +180,7 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
           isRTMDeel2(regeling) &&
           regeling.resultaat === 'toegewezen' &&
           regeling.isActueel === false &&
-          !isAanvrager(regeling)
+          !regeling.datumInBehandeling
         );
       },
       description(regeling, today, allAanvragen) {
