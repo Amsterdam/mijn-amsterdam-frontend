@@ -1,5 +1,31 @@
-/* Button Style */
+/* Sharing Banner */
+.sharing-banner:has(> .cobrowse-wrapper) {
+  background-color: white;
+  min-height: 48px;
+  position: fixed;
+  width: 100%;
+  z-index: 99999999998;
+  display: none;
+  top: 0;
+  right: 0;
+}
+
+/* Cobrowe frame */
+#cobrowse-frame {
+  position: fixed;
+  top: 48px;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 48px);
+  border: 5px solid #004699;
+  z-index: 99999999999;
+  pointer-events: none;
+}
+
 .cobrowse-wrapper {
+  font-family: 'Amsterdam Sans', Arial, sans-serif;
+
+  /* Button Style */
   button {
     font-family: 'Amsterdam Sans', Arial, sans-serif;
     padding: 12px 24px;
@@ -29,19 +55,6 @@
 
   &.stop-cobrowse-button:hover {
     background-color: #102e62;
-  }
-
-  /* Frame Styles */
-  #cobrowse-frame {
-    position: fixed;
-    top: 48px;
-    left: 0;
-    width: calc(100vw - 10px);
-    height: calc(100vh - 58px);
-    border: 5px solid #004699;
-    border-right: 10px solid #004699;
-    z-index: 99999999999;
-    pointer-events: none;
   }
 
   /* Modal Styles */
@@ -133,24 +146,6 @@
     font-size: 24px;
     font-weight: 600;
     margin-top: 8px;
-  }
-
-  /* Cobrowse Wrapper Style */
-  .cobrowse-wrapper {
-    font-family: 'Amsterdam Sans', Arial, sans-serif;
-  }
-
-  /* Sharing Banner */
-  .sharing-banner {
-    background-color: white;
-    min-height: 48px;
-    position: fixed;
-    width: 100%;
-    z-index: 99999999998;
-    display: none;
-    top: 0;
-    left: 0;
-    right: 0;
   }
 
   /*  small screens */
