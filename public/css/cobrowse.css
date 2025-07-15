@@ -25,7 +25,6 @@
 .cobrowse-wrapper {
   font-family: 'Amsterdam Sans', Arial, sans-serif;
 
-  /* Button Style */
   button {
     font-family: 'Amsterdam Sans', Arial, sans-serif;
     padding: 12px 24px;
@@ -147,7 +146,7 @@
     font-weight: 600;
     margin-top: 8px;
   }
-
+  
   /*  small screens */
   @media (max-width: 600px) {
     .modal-body-container {
