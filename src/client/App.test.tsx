@@ -4,6 +4,7 @@ import { vi, describe, it, expect } from 'vitest';
 import { App } from './App';
 import { bffApi } from '../testing/utils';
 import { MIJN_AMSTERDAM } from '../universal/config/app';
+import { mockFooterRequest } from './components/MainFooter/MainFooter.test';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -26,7 +27,8 @@ describe('App', () => {
   bffApi
     .get('/services/cms/maintenance-notifications?page=landingspagina')
     .reply(200);
-  bffApi.get('/services/all').reply(200);
+
+  mockFooterRequest();
 
   it('Renders pristine App', () => {
     mocks.useSessionApi.mockReturnValue({

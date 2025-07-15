@@ -125,9 +125,7 @@ describe('<Dashboard />', () => {
   });
 
   it('Renders dashboard correctly', async () => {
-    act(() => {
-      render(<Component />);
-    });
+    await act(() => render(<Component />));
     expect(screen.getByRole('heading', { name: 'Goedemorgen' }));
     expect(screen.getByRole('heading', { name: `Mijn thema's` }));
     expect(
@@ -143,8 +141,8 @@ describe('<Dashboard />', () => {
         notification.title,
         toDateFormatted(notification.datePublished),
       ]) || []
-    )('Notification %s with date %s exists', (title, datePublished) => {
-      render(<Component />);
+    )('Notification %s with date %s exists', async (title, datePublished) => {
+      await act(() => render(<Component />));
       expect(screen.getByRole('heading', { name: title })).toBeInTheDocument();
       expect(screen.getByText(datePublished)).toBeInTheDocument();
     });
