@@ -81,9 +81,10 @@ function getRtmDescriptionDeel1Toegewezen(
 ) {
   let description = `<p>Voordat u de ${aanvraag.titel} krijgt, moet u een afspraak maken voor een medische keuring bij de GGD. In de brief staat hoe u dat doet.</p>`;
 
-  const hasBetrokkenen = aanvraag.betrokkenen.length > 1;
+  // Betrokkenen always has the aanvrager listed as well.
+  const isAanvraagVoorMeerdereBetrokkenen = aanvraag.betrokkenen.length > 1;
 
-  if (hasBetrokkenen) {
+  if (isAanvraagVoorMeerdereBetrokkenen) {
     description += `<p><strong>Vraagt u de ${aanvraag.titel} (ook) voor andere gezinsleden aan?</strong><br/>De uitslag van de aanvraag is op Mijn Amsterdam te vinden met de DigiD login gegevens van uw gezinsleden.</p>
     <p>Nog geen DigiD login gegevens? <a rel="noopener noreferrer" href="https://www.digid.nl/aanvragen-en-activeren/digid-aanvragen">Ga naar DigiD aanvragen.</a></p>
     `;
@@ -188,11 +189,13 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
           typeof EINDE_RECHT.description === 'function'
             ? EINDE_RECHT.description(regeling, today, allAanvragen)
             : EINDE_RECHT.description || '';
-        const hasBetrokkenen = regeling.betrokkenen.length > 1;
+        // Betrokkenen always has the aanvrager listed as well.
+        const isAanvraagVoorMeerdereBetrokkenen =
+          regeling.betrokkenen.length > 1;
         const isAanvrager_ = isAanvrager(regeling);
         return (
           baseDescription +
-          (hasBetrokkenen
+          (isAanvraagVoorMeerdereBetrokkenen
             ? `<p>
             ${isAanvrager_ ? 'Wordt uw kind 18? Dan moet uw kind deze regeling voor zichzelf aanvragen.' : 'Bent u net of binnenkort 18 jaar oud? Dan moet u deze regeling voor uzelf aanvragen.'} <a href="${INFO_LINK}">Lees meer over de voorwaarden</a>.
           </p>
