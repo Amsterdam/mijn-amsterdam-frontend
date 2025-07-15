@@ -10,6 +10,8 @@ export const AV_RTM_DEEL1 = 'AV-RTM1';
 // Afhandeling afspraak GGD
 export const AV_RTM_DEEL2 = 'AV-RTM';
 
+export const RTM_STATUS_IN_BEHANDELING = 'In behandeling genomen';
+
 export function isRTMDeel2(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
@@ -79,13 +81,15 @@ function getRtmDescriptionDeel1Toegewezen(
 ) {
   let description = `<p>Voordat u de ${aanvraag.titel} krijgt, moet u een afspraak maken voor een medische keuring bij de GGD. In de brief staat hoe u dat doet.</p>`;
 
-  const hasBetrokkenen = !!aanvraag.betrokkenen.length;
+  // Betrokkenen always has the aanvrager listed as well.
+  const isAanvraagVoorMeerdereBetrokkenen = aanvraag.betrokkenen.length > 1;
 
-  if (hasBetrokkenen) {
-    description += `
-    <p><strong>Vraagt u de ${aanvraag.titel} (ook) voor andere gezinsleden aan?</strong><br/>De uitslag van de aanvraag is op Mijn Amsterdam te vinden met de DigiD login gegevens van uw gezinsleden.</p>
+  if (isAanvraagVoorMeerdereBetrokkenen) {
+    description += `<p><strong>Vraagt u de ${aanvraag.titel} (ook) voor andere gezinsleden aan?</strong><br/>De uitslag van de aanvraag is op Mijn Amsterdam te vinden met de DigiD login gegevens van uw gezinsleden.</p>
     <p>Nog geen DigiD login gegevens? <a rel="noopener noreferrer" href="https://www.digid.nl/aanvragen-en-activeren/digid-aanvragen">Ga naar DigiD aanvragen.</a></p>
     `;
+
+    description += `<p><strong>Gedeeltelijke afwijzing voor u of uw gezinsleden?</strong><br/>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`;
   }
 
   return description;
@@ -127,7 +131,7 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
     },
     // In behandeling (in afwatching van uitslag GGD), alleen voor de aanvrager/ontvanger zónder betrokkenen.
     {
-      status: 'In behandeling genomen',
+      status: RTM_STATUS_IN_BEHANDELING,
       isChecked: true,
       description: getRtmDescriptionDeel1Toegewezen,
       isVisible(aanvraag) {
@@ -159,8 +163,7 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
         return (
           isRTMDeel2(regeling) &&
           !!regeling.datumInBehandeling &&
-          regeling.resultaat === 'toegewezen' &&
-          isAanvrager(regeling)
+          regeling.resultaat === 'toegewezen'
         );
       },
       description(regeling) {
@@ -178,7 +181,7 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
           isRTMDeel2(regeling) &&
           regeling.resultaat === 'toegewezen' &&
           regeling.isActueel === false &&
-          !isAanvrager(regeling)
+          !regeling.datumInBehandeling
         );
       },
       description(regeling, today, allAanvragen) {
@@ -186,11 +189,13 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
           typeof EINDE_RECHT.description === 'function'
             ? EINDE_RECHT.description(regeling, today, allAanvragen)
             : EINDE_RECHT.description || '';
-        const hasBetrokkenen = regeling.betrokkenen.length > 1;
+        // Betrokkenen always has the aanvrager listed as well.
+        const isAanvraagVoorMeerdereBetrokkenen =
+          regeling.betrokkenen.length > 1;
         const isAanvrager_ = isAanvrager(regeling);
         return (
           baseDescription +
-          (hasBetrokkenen
+          (isAanvraagVoorMeerdereBetrokkenen
             ? `<p>
             ${isAanvrager_ ? 'Wordt uw kind 18? Dan moet uw kind deze regeling voor zichzelf aanvragen.' : 'Bent u net of binnenkort 18 jaar oud? Dan moet u deze regeling voor uzelf aanvragen.'} <a href="${INFO_LINK}">Lees meer over de voorwaarden</a>.
           </p>
