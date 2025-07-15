@@ -103,4 +103,7 @@ export const FeatureToggle = {
 
   // AmsApp notificaties
   amsNotificationsIsActive: !IS_PRODUCTION,
+
+  // Cobrowse widget
+  cobrowseIsActive: !IS_PRODUCTION,
 } as const;
