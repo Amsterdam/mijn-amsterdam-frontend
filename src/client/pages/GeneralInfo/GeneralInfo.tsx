@@ -13,24 +13,40 @@ import {
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 
-const mijnGegevensListItems = [
-  'Uw inschrijving bij de gemeente',
-  'Uw contactmomenten met de gemeente',
-];
+type SectionData = { title: string; listItems: InfoPageListItems };
+type InfoPageListItems = Array<{ text: string; nested: string[] }>;
 
-function Section({
-  title,
-  listItems,
-}: {
-  title: string;
-  listItems: ReactNode;
-}) {
+const mijnGegevens: SectionData = {
+  title: 'Mijn Gegevens',
+  listItems: [
+    { text: 'Uw inschrijving bij de gemeente', nested: [] },
+    {
+      text: 'Uw contactmomenten met de gemeente',
+      nested: ['item one', 'item two'],
+    },
+  ],
+};
+
+function Section(props: SectionData) {
+  const { title, listItems } = props;
+  const listItemComponents = listItems.map((item, i) => {
+    return (
+      <UnorderedList.Item key={i}>
+        {item.text}
+        {item.nested.length
+          ? item.nested.map((nestedItem, j) => (
+              <UnorderedList.Item key={j}>{nestedItem}</UnorderedList.Item>
+            ))
+          : ''}
+      </UnorderedList.Item>
+    );
+  });
   return (
     <>
       <Heading level={4} size="level-4" className="ams-mb-s">
         {title}
       </Heading>
-      <UnorderedList className="ams-mb-xl">{listItems}</UnorderedList>
+      <UnorderedList className="ams-mb-xl">{listItemComponents}</UnorderedList>
     </>
   );
 }
@@ -60,19 +76,7 @@ export function GeneralInfo() {
           <Paragraph className="ams-mb-xl">
             Op dit moment kunnen de volgende gegevens getoond worden:
           </Paragraph>
-          <Section
-            title="Mijn gegevens"
-            listItems={
-              <>
-                <UnorderedList.Item>
-                  Uw inschrijving bij de gemeente
-                </UnorderedList.Item>
-                <UnorderedList.Item>
-                  Uw contactmomenten met de gemeente
-                </UnorderedList.Item>
-              </>
-            }
-          />
+          <Section props={mijnGegevens} />
         </PageContentCell>
       </PageContentV2>
     </TextPageV2>
