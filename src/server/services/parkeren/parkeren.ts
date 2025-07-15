@@ -14,15 +14,22 @@ import { getFromEnv } from '../../helpers/env';
 import { fetchBRP } from '../profile/brp';
 
 export async function fetchParkeren(authProfileAndToken: AuthProfileAndToken) {
-  const brpData = await fetchBRP(authProfileAndToken);
-  const livesOutsideAmsterdam = !isMokum(brpData?.content);
   const isProfileTypePrivate =
     authProfileAndToken.profile.profileType === 'private';
 
-  const shouldCheckForPermitsOrPermitRequests =
-    isProfileTypePrivate &&
-    livesOutsideAmsterdam &&
-    featureToggle.parkerenCheckForProductAndPermitsActive;
+  let shouldCheckForPermitsOrPermitRequests;
+
+  if (isProfileTypePrivate) {
+    const brpData = await fetchBRP(authProfileAndToken);
+    const livesOutsideAmsterdam = !isMokum(brpData?.content);
+    shouldCheckForPermitsOrPermitRequests = livesOutsideAmsterdam;
+  } else {
+    shouldCheckForPermitsOrPermitRequests = true;
+  }
+
+  shouldCheckForPermitsOrPermitRequests =
+    featureToggle.parkerenCheckForProductAndPermitsActive &&
+    shouldCheckForPermitsOrPermitRequests;
 
   let isKnown = true;
 
