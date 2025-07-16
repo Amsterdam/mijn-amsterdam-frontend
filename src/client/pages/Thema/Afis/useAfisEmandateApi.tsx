@@ -349,7 +349,7 @@ export function useEmandateStatusPendingStorage(
     let updatedIbans: string[] = [...ibansPendingActivation];
 
     eMandates.forEach((eMandate) => {
-      if (eMandate?.status === '0' && iban && !updatedIbans.includes(iban)) {
+      if (eMandate?.status !== '1' && iban && !updatedIbans.includes(iban)) {
         updatedIbans.push(iban);
       }
       if (

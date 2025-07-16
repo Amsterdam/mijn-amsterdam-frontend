@@ -20,7 +20,7 @@ module.exports = [
             const queryIban = new URL(req.query.returnUrl).searchParams.get(
               'iban'
             );
-            const acceptantIBAN = queryIban || 'NL91ABNA0417164300';
+            const creditorIBAN = queryIban || 'NL91ABNA0417164300';
 
             const htmlResponse = `
                 <h1>POM E-mandaat scherm</h1>
@@ -51,7 +51,7 @@ module.exports = [
                   account_owner: 'John Doe',
                   event_date: '2024-01-05',
                   event_time: '11:27',
-                  variable1: `${acceptantIBAN}`,
+                  variable1: `${creditorIBAN}`,
                 },
                 headers: {
                   'Content-Type': 'application/json',
