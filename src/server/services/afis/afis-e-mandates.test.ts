@@ -3,9 +3,9 @@ import nock from 'nock';
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 
 import * as emandates from './afis-e-mandates';
-import { EMandateAcceptantenGemeenteAmsterdam } from './afis-e-mandates-config';
+import { EMandateCreditorsGemeenteAmsterdam } from './afis-e-mandates-config';
 import type {
-  AfisEMandateAcceptant,
+  AfisEMandateCreditor,
   AfisEMandateFrontend,
   AfisEMandateSource,
 } from './afis-types';
@@ -20,13 +20,13 @@ const authProfile: AuthProfile = {
   id: 'mockId',
 };
 
-const acceptant = EMandateAcceptantenGemeenteAmsterdam[0];
+const creditor = EMandateCreditorsGemeenteAmsterdam[0];
 const validSenderIBAN = 'NL35BOOG9343513650';
-const validAcceptantIBAN = acceptant.iban;
+const validCreditorIBAN = creditor.iban;
 const businessPartnerId = '123';
 
 const validPayload = {
-  acceptantIBAN: acceptant?.iban || 'not-valid',
+  creditorIBAN: creditor?.iban || 'not-valid',
   businessPartnerId,
   senderIBAN: validSenderIBAN,
   senderBIC: 'BANKNL2A',
@@ -36,8 +36,8 @@ const validPayload = {
 
 const validEMandateFrontend: AfisEMandateFrontend = {
   id: 'mockId',
-  acceptant: 'Test Acceptant',
-  acceptantIBAN: validAcceptantIBAN,
+  creditor: 'Test Creditor',
+  creditorIBAN: validCreditorIBAN,
   status: '1',
   displayStatus: 'Active',
   senderIBAN: validSenderIBAN,
@@ -52,10 +52,10 @@ const validEMandateFrontend: AfisEMandateFrontend = {
   },
 };
 
-// Update test data for AfisEMandateAcceptant
-const validAcceptant: AfisEMandateAcceptant = {
+// Update test data for AfisEMandateCreditor
+const validCreditor: AfisEMandateCreditor = {
   refId: '123',
-  iban: validAcceptantIBAN,
+  iban: validCreditorIBAN,
   name: 'Test',
   subId: 'sub123',
 };
@@ -142,13 +142,13 @@ describe('afis-e-mandates service (with nock)', () => {
   });
 
   describe('createAfisEMandate - Error Scenarios', () => {
-    it('throws an error if acceptant IBAN is invalid', async () => {
+    it('throws an error if creditor IBAN is invalid', async () => {
       await expect(
         emandates.createEMandate({
           ...validPayload,
-          acceptantIBAN: 'invalid',
+          creditorIBAN: 'invalid',
         })
-      ).rejects.toThrow(/Invalid acceptant IBAN/);
+      ).rejects.toThrow(/Invalid creditor IBAN/);
     });
 
     it('throws an error if fetching business partner details fails', async () => {
@@ -253,7 +253,7 @@ describe('afis-e-mandates service (with nock)', () => {
               content: {
                 properties: {
                   IMandateId: '1',
-                  SndDebtorId: acceptant.refId,
+                  SndDebtorId: creditor.refId,
                   LifetimeFrom: '2024-01-01T00:00:00',
                   LifetimeTo: '9999-12-31T00:00:00',
                   SndIban: validSenderIBAN,
@@ -272,7 +272,7 @@ describe('afis-e-mandates service (with nock)', () => {
       );
       expect(result.status).toBe('OK');
       expect(result.content?.length).toBe(
-        EMandateAcceptantenGemeenteAmsterdam.length
+        EMandateCreditorsGemeenteAmsterdam.length
       );
 
       expect(result.content?.[0].status).toBe('1');
@@ -286,21 +286,21 @@ describe('afis-e-mandates service (with nock)', () => {
   });
 
   describe('fetchEmandateRedirectUrlFromProvider', () => {
-    it('returns error if acceptant not found', async () => {
+    it('returns error if creditor not found', async () => {
       const result = await emandates.fetchEmandateRedirectUrlFromProvider({
         ...validPayload,
-        acceptantIBAN: 'notfound',
+        creditorIBAN: 'notfound',
       });
       expect(result.status).toBe('ERROR');
     });
 
     it('returns error if fetching business partner details fails', async () => {
-      // Acceptant exists, but business partner fetch fails
+      // Creditor exists, but business partner fetch fails
       remoteApi.get(/A_BusinessPartner/).reply(500);
 
       const result = await emandates.fetchEmandateRedirectUrlFromProvider({
         ...validPayload,
-        acceptantIBAN: validAcceptantIBAN,
+        creditorIBAN: validCreditorIBAN,
       });
       expect(result.status).toBe('ERROR');
       expect(result.status === 'ERROR' && result.message).toBe(
@@ -315,7 +315,7 @@ describe('afis-e-mandates service (with nock)', () => {
 
       const result = await emandates.fetchEmandateRedirectUrlFromProvider({
         ...validPayload,
-        acceptantIBAN: validAcceptantIBAN,
+        creditorIBAN: validCreditorIBAN,
       });
       expect(result.status).toBe('ERROR');
       expect(result.status === 'ERROR' && result.message).toBe(
@@ -330,7 +330,7 @@ describe('afis-e-mandates service (with nock)', () => {
 
       const result = await emandates.fetchEmandateRedirectUrlFromProvider({
         ...validPayload,
-        acceptantIBAN: validAcceptantIBAN,
+        creditorIBAN: validCreditorIBAN,
       });
       expect(result.status).toBe('OK');
       expect(result.content).toBeNull();
@@ -346,7 +346,7 @@ describe('afis-e-mandates service (with nock)', () => {
 
       const result = await emandates.fetchEmandateRedirectUrlFromProvider({
         ...validPayload,
-        acceptantIBAN: validAcceptantIBAN,
+        creditorIBAN: validCreditorIBAN,
       });
       expect(result.status).toBe('OK');
       expect(result.content).toHaveProperty(
@@ -431,20 +431,20 @@ describe('afis-e-mandates service (with nock)', () => {
       });
     });
 
-    it('getEMandateSourceByAcceptant finds the correct source', () => {
+    it('getEMandateSourceByCreditor finds the correct source', () => {
       const sourceMandates = [validSourceMandate];
-      const result = emandates.forTesting.getEMandateSourceByAcceptant(
+      const result = emandates.forTesting.getEMandateSourceByCreditor(
         sourceMandates,
-        validAcceptant
+        validCreditor
       );
       expect(result).toBe(validSourceMandate);
     });
 
-    it('getEMandateSourceByAcceptant does not find the correct source', () => {
+    it('getEMandateSourceByCreditor does not find the correct source', () => {
       const sourceMandates = [validSourceMandate];
-      const result = emandates.forTesting.getEMandateSourceByAcceptant(
+      const result = emandates.forTesting.getEMandateSourceByCreditor(
         sourceMandates,
-        { ...validAcceptant, refId: 'x' }
+        { ...validCreditor, refId: 'x' }
       );
       expect(result).toBe(undefined);
     });
@@ -453,7 +453,7 @@ describe('afis-e-mandates service (with nock)', () => {
       const url = emandates.forTesting.getSignRequestApiUrl(
         authProfile.sid,
         '123',
-        validAcceptant
+        validCreditor
       );
       expect(
         url.startsWith(
@@ -469,7 +469,7 @@ describe('afis-e-mandates service (with nock)', () => {
       ).toStrictEqual({
         content: {
           payload: {
-            acceptantIBAN: 'NL21RABO0110055004',
+            creditorIBAN: 'NL21RABO0110055004',
             businessPartnerId: '123',
             eMandateSignDate: '2025-07-10T12:38:39.542Z',
           },
@@ -480,7 +480,7 @@ describe('afis-e-mandates service (with nock)', () => {
     });
 
     it('getSndDebtorId returns refId', () => {
-      const refId = emandates.forTesting.getSndDebtorId(validAcceptant);
+      const refId = emandates.forTesting.getSndDebtorId(validCreditor);
       expect(refId).toBe('123');
     });
 
@@ -568,9 +568,9 @@ describe('afis-e-mandates service (with nock)', () => {
         } as AfisEMandateSource
       );
       expect(result).toStrictEqual({
-        acceptant: 'Test',
-        acceptantDescription: undefined,
-        acceptantIBAN: 'NL35BOOG9343513650',
+        creditor: 'Test',
+        creditorDescription: undefined,
+        creditorIBAN: 'NL35BOOG9343513650',
         dateValidFrom: '2024-01-01T00:00:00',
         dateValidFromFormatted: '01 januari 2024',
         dateValidTo: '9999-12-31T00:00:00',

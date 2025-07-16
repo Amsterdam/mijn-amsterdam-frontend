@@ -329,9 +329,9 @@ export type AfisEMandateUpdatePayload = Partial<AfisEMandateSource>;
 
 export type AfisEMandateFrontend = {
   id: string;
-  acceptant: string;
-  acceptantIBAN: string;
-  acceptantDescription?: string;
+  creditor: string;
+  creditorIBAN: string;
+  creditorDescription?: string;
   status: '1' | '0';
   displayStatus: string;
 
@@ -353,7 +353,7 @@ export type AfisEMandateFrontend = {
   link: LinkProps;
 };
 
-export type AfisEMandateAcceptant = {
+export type AfisEMandateCreditor = {
   iban: string;
   name: string;
   subId: string;
@@ -377,20 +377,20 @@ export type POMEMandateSignRequestPayload = {
   event_date: string;
   event_time: string;
 
-  variable1: string; // Optional, used for acceptant (Gemeente Amsterdam) IBAN
+  variable1: string; // Optional, used for creditor (Gemeente Amsterdam) IBAN
 };
 
 export type POMEMandateSignRequestPayloadTransformed = {
   debtornumber: string;
   debtorIBAN: string;
   debtorBIC: string;
-  acceptantIBAN: string;
+  creditorIBAN: string;
   debtorAccountOwner: string;
   eMandateSignDate: string;
 };
 
 export type EMandateSignRequestPayload = {
-  acceptantIBAN: AfisEMandateAcceptant['iban'];
+  creditorIBAN: AfisEMandateCreditor['iban'];
   businessPartnerId: BusinessPartnerId;
   eMandateSignDate: string;
 };

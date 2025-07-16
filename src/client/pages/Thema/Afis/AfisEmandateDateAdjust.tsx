@@ -65,7 +65,7 @@ function DateAdjustModal({
     >
       <>
         <Paragraph className="ams-mb-s">
-          Nieuwe einddatum E-mandaat {eMandate.acceptant}
+          Nieuwe einddatum E-mandaat {eMandate.creditor}
         </Paragraph>
         <form id="date-adjust-form" onSubmit={onSubmit}>
           <DateInput
