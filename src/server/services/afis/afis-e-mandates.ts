@@ -328,7 +328,7 @@ function transformEMandateSource(
   const id = slug(creditor.name);
   const eMandate: AfisEMandateFrontend = {
     id,
-    creditor: creditor.name,
+    creditorName: creditor.name,
     creditorIBAN: creditor.iban,
     creditorDescription: creditor.description,
     senderIBAN: (isActive ? afisEMandateSource?.SndIban : null) ?? null,
