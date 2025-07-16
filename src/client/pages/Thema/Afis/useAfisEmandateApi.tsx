@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 
 import { Paragraph } from '@amsterdam/design-system-react';
-import { useParams } from 'react-router';
+import isEqual from 'lodash.isequal';
+import { useNavigate, useParams } from 'react-router';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 
@@ -138,30 +139,41 @@ export function useAfisEMandatesData() {
 
   const statusNotificationStorage = useEmandateStatusPendingStorage(eMandates);
 
+  const eMandates_ = eMandates.map((eMandate) => {
+    return {
+      ...eMandate,
+      displayStatus: statusNotificationStorage.isPendingActivation(
+        eMandate.acceptantIBAN
+      )
+        ? 'Wachten op activatie'
+        : eMandate.displayStatus,
+    };
+  });
+
   const title = 'E-Mandaat';
   const breadcrumbs = [
     ...useThemaBreadcrumbs(themaId),
     { to: routeConfig.betaalVoorkeuren.path, title: betaalVoorkeurenTitle },
   ];
   const { id } = useParams<{ id: AfisEMandateFrontend['id'] }>();
-  const eMandate = eMandates.find((mandate) => mandate.id === id);
+  const eMandate = eMandates_.find((mandate) => mandate.id === id);
 
   return {
-    title,
-    eMandate,
     breadcrumbs,
+    eMandate,
+    eMandates: eMandates_,
+    eMandateTableConfig,
     hasEMandatesError: !!error,
     isLoadingEMandates: isLoading || !eMandatesApiResponse,
-    eMandateTableConfig,
-    eMandates,
-    refetchEMandates: mutate,
     mutate,
+    refetchEMandates: mutate,
     statusNotification: statusNotificationStorage,
+    title,
   };
 }
 
 export function useEmandateApis(eMandate: AfisEMandateFrontend) {
-  const { mutate } = useAfisEMandatesData();
+  const { mutate, statusNotification } = useAfisEMandatesData();
 
   const redirectUrlApi = useDataApiV2<AfisEMandateSignRequestResponse>(
     eMandate.signRequestUrl,
@@ -262,6 +274,7 @@ export function useEmandateApis(eMandate: AfisEMandateFrontend) {
     hideError: () => {
       setShowError(false);
     },
+    statusNotification,
   };
 }
 
@@ -290,21 +303,30 @@ export function useAfisBetaalVoorkeurenData(
 }
 
 function useIsPendingNotification() {
-  const [ibansPendingActivation, setIsPendingActivation] = useSessionStorage(
+  const [ibansPendingActivation_, setIsPendingActivation_] = useSessionStorage(
     'afis-emandate-pending-activation',
     ''
   );
+  const [ibansPendingActivation, setIsPendingActivation] = useState<string[]>(
+    ibansPendingActivation_.split(',').filter(Boolean)
+  );
 
-  const ibansPendingActivation_ = ibansPendingActivation
-    .split(',')
-    .filter(Boolean);
+  const ibansPendingActivationCurrent = ibansPendingActivation.join(',');
+
+  useEffect(() => {
+    if (ibansPendingActivation_ !== ibansPendingActivationCurrent) {
+      setIsPendingActivation_(ibansPendingActivationCurrent);
+    }
+  }, [ibansPendingActivationCurrent, ibansPendingActivation_]);
 
   return {
-    ibansPendingActivation: ibansPendingActivation_,
+    ibansPendingActivation,
     isPendingActivation: (iban: string) =>
-      ibansPendingActivation_.includes(iban),
-    setIsPendingActivation: (ibans: string[]) => {
-      setIsPendingActivation(ibans.join(','));
+      ibansPendingActivation.includes(iban),
+    setIsPendingActivation,
+    removePendingActivation: (iban: string) => {
+      const updatedIbans = ibansPendingActivation.filter((i) => i !== iban);
+      setIsPendingActivation(updatedIbans);
     },
   };
 }
@@ -317,6 +339,7 @@ export function useEmandateStatusPendingStorage(
 
   const pendingStorage = useIsPendingNotification();
   const { ibansPendingActivation, setIsPendingActivation } = pendingStorage;
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!eMandates || eMandates.length === 0) {
@@ -338,8 +361,16 @@ export function useEmandateStatusPendingStorage(
       }
     });
 
-    if (ibansPendingActivation !== updatedIbans) {
+    if (!isEqual(updatedIbans, ibansPendingActivation)) {
       setIsPendingActivation(updatedIbans);
+    }
+
+    // Make sure the iban query parameter is removed after processing.
+    // Beware that any other query param will also be removed.
+    if (iban) {
+      navigate(window.location.pathname, {
+        replace: true,
+      });
     }
   }, [iban, eMandates]);
 
