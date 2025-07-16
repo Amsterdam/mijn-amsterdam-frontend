@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { useEffect } from 'react';
 
 import {
   Heading,
@@ -13,34 +13,35 @@ import {
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 
-type SectionData = { title: string; listItems: InfoPageListItems };
-type InfoPageListItems = Array<{ text: string; nested: string[] }>;
-
-const mijnGegevens: SectionData = {
-  title: 'Mijn Gegevens',
-  listItems: [
-    { text: 'Uw inschrijving bij de gemeente', nested: [] },
-    {
-      text: 'Uw contactmomenten met de gemeente',
-      nested: ['item one', 'item two'],
-    },
-  ],
+export type SectionProps = {
+  title: string;
+  listItems: ListItems;
 };
+type ListItems = Array<{ text: string; nested?: string[] }>;
 
-function Section(props: SectionData) {
-  const { title, listItems } = props;
-  const listItemComponents = listItems.map((item, i) => {
-    return (
-      <UnorderedList.Item key={i}>
-        {item.text}
-        {item.nested.length
-          ? item.nested.map((nestedItem, j) => (
-              <UnorderedList.Item key={j}>{nestedItem}</UnorderedList.Item>
-            ))
-          : ''}
-      </UnorderedList.Item>
-    );
-  });
+const sections: SectionProps[] = [];
+
+export function register(props: SectionProps) {
+  sections.push(props);
+}
+
+function Section({ title, listItems }: SectionProps) {
+  const listItemComponents = listItems.map((item, i) => (
+    <UnorderedList.Item key={i}>
+      {item.text}
+      {item.nested && item.nested.length ? (
+        <UnorderedList>
+          {item.nested.map((nestedItem, j) => (
+            <UnorderedList.Item key={j}>{nestedItem}</UnorderedList.Item>
+          ))}
+        </UnorderedList>
+      ) : (
+        ''
+      )}
+    </UnorderedList.Item>
+  ));
+
+  useEffect(() => {}, sections);
   return (
     <>
       <Heading level={4} size="level-4" className="ams-mb-s">
@@ -76,140 +77,15 @@ export function GeneralInfo() {
           <Paragraph className="ams-mb-xl">
             Op dit moment kunnen de volgende gegevens getoond worden:
           </Paragraph>
-          <Section props={mijnGegevens} />
+          {sections.map((section) => (
+            <Section
+              key={section.title}
+              title={section.title}
+              listItems={section.listItems}
+            />
+          ))}
         </PageContentCell>
       </PageContentV2>
     </TextPageV2>
   );
 }
-
-/*
-Paspoort en ID-kaart
-
-    Gegevens van uw paspoort of ID-kaart
-
-Mijn buurt
-
-    Overzicht van gemeentelijke informatie rond uw woning
-
-Afval
-
-    Informatie over afval laten ophalen en wegbrengen in uw buurt
-
-Belastingen
-
-    Belastingaanslagen betalen
-    Automatische incasso regelen
-    Bezwaar indienen
-    Kwijtschelding aanvragen
-    Betalingsregeling aanvragen
-    Aangifte doen
-
-Persoonsgegevens AVG
-
-    Uw inzage of wijziging persoonsgegevens AVG
-
-Bezwaren
-
-    Bezwaren tegen een besluit van de gemeente Amsterdam
-
-Klachten
-
-    Uw ingediende klachten
-
-Erfpacht
-
-    Overzicht van uw erfpachtgegevens
-
-Facturen en betalen
-
-    Overzicht van facturen
-    Betalen van facturen
-
-Inkomen
-
-    Uw aanvraag voor een bijstandsuitkering of bijstand voor zelfstandigen (Bbz)
-    De uitkeringsspecificaties en jaaropgaven van uw bijstandsuitkering of bijstand voor zelfstandigen (Bbz)
-    Uw aanvraag voor de Tijdelijke overbruggingsregeling zelfstandig ondernemers (Tozo 1, 2, 3 en 4)
-    Uw aanvraag voor de Tijdelijke Ondersteuning Noodzakelijke Kosten (TONK)
-    Uw aanvraag voor de Inkomensvoorziening oudere en gedeeltelijk arbeidsongeschikte gewezen zelfstandigen (IOAZ)
-
-Regelingen bij laag inkomen
-
-    Collectieve zorgverzekering
-    Declaratie Kindtegoed
-    Kindtegoed Voorschool
-    Gratis laptop of tablet middelbare school
-    Gratis laptop of tablet basisschool
-    Individuele inkomenstoeslag
-    Gratis openbaar vervoer voor AOW'ers
-    Tegemoetkoming aanvullend openbaar vervoer voor ouderen
-    Tegemoetkoming openbaar vervoer voor mantelzorgers
-
-Stadspas
-
-    Status aanvraag Stadspas van u of uw gezin
-    Het saldo Kindtegoed en/of andere tegoeden en de bestedingen
-    Stadspasnummer
-    Stadspas blokkeren
-
-Zorg en ondersteuning
-
-    Uw Wmo-regelingen (Wmo: wet maatschappelijke ondersteuning)
-
-Subsidies
-
-    Uw aanvraag voor een subsidie
-
-Kredietbank & FIBU
-
-    Informatie over ondersteuning door Kredietbank en Budgetbeheer (FIBU)
-
-Toeristische verhuur
-
-    Uw aanvraag voor een vergunning vakantieverhuur of bed & breakfast
-    Uw landelijk registratienummer toeristische verhuur
-    Link naar het landelijk portaal om vakantieverhuur door te geven en het aantal nachten verhuur in te zien
-
-Parkeren
-
-    Het inzien, aanvragen of wijzigen van een bewonersvergunning
-
-Milieuzone
-
-    Inzien van uw ontheffingen in de milieuzone
-
-Overtredingen voertuigen
-
-    Inzien van uw overtredingen in de milieuzone
-
-Vergunningen en ontheffingen
-
-    Uw aanvraag voor een ontheffing of vergunning voor de volgende activiteiten:
-        Ergens rijden of stilstaan waar dat normaal niet mag (RVV en e-RVV)
-        Straat tijdelijk afsluiten of afzetten (TVM)
-        Object neerzetten op parkeervak, straat of stoep (Objectvergunning)
-        Parkeervakken reserveren (TVM)
-        Tijdelijk toegang krijgen tot gebied dat is afgesloten met paaltjes (RVV)
-        Werkzaamheden uitvoeren op tijden dat het normaal niet mag (Nachtwerkontheffing)
-        Filmen (Filmmelding)
-        Fietsen en/of fietsenrekken verwijderen
-    Uw aanvraag of kentekenwijziging voor een RVV-ontheffing Sloterweg
-    Uw aanvraag voor een gehandicaptenparkeerkaart (GPK) of een vaste gehandicaptenparkeerplaats (GPP)
-    Uw aanvraag voor een ontheffing touringcar
-    Uw aanvraag voor een ontheffing zwaar verkeer
-    Uw aanvraag voor een ontheffing blauwe zone
-    Uw evenementvergunning of evenementmelding
-    Uw aanvraag voor een splitsingsvergunning
-    Uw aanvraag voor kamerverhuur (omzettingsvergunning)
-    Uw aanvraag vergunning straatartiest, draaiorgel of het aanbieden van diensten op straat
-    Uw aanvraag ontheffing verspreiden reclamemateriaal (sampling)
-    Uw aanvraag voor een vergunning voor onttrekken, samenvoegen en vormen van woonruimte
-    Uw aanvraag voor een ligplaatsvergunning
-    Uw aanvraag voor een eigen parkeerplaats voor huisartsen, verloskundigen en consuls
-    Uw aanvraag voor een vergunning exploitatie horecabedrijf
-
-Bodem
-
-    Uw aanvraag voor 'lood in de bodem-check'
-*/
