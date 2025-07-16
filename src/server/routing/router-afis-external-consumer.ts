@@ -9,12 +9,11 @@ import {
   sendInternalServerError,
 } from './route-helpers';
 import { type ApiResponse } from '../../universal/helpers/api';
-import { createEMandate } from '../services/afis/afis-e-mandates';
+import { createOrUpdateEMandateFromStatusNotificationPayload } from '../services/afis/afis-e-mandates';
 import type {
   EMandateSignRequestPayload,
   EMandateSignRequestNotificationPayload,
   POMEMandateSignRequestPayload,
-  AfisEMandateSource,
 } from '../services/afis/afis-types';
 import { captureException } from '../services/monitoring';
 
@@ -27,7 +26,7 @@ const eMandateSignRequestStatusNotificationPayload = z.object({
   senderIBAN: z.string(),
   senderBIC: z.string(),
   senderName: z.string(),
-  eMandateSignDate: z.string(),
+  eMandateSignDate: z.iso.date(),
   creditorIBAN: z.string(),
 });
 
@@ -65,11 +64,14 @@ async function handleAfisEMandateSignRequestStatusNotification(
     );
   }
 
-  let createEmandateResponse: ApiResponse<AfisEMandateSource> | null = null;
+  let createEmandateResponse: ApiResponse<unknown> | null = null;
 
   // TODO: Figure out if we can actually create the eMandate from this event.
   try {
-    createEmandateResponse = await createEMandate(eMandatePayload);
+    createEmandateResponse =
+      await createOrUpdateEMandateFromStatusNotificationPayload(
+        eMandatePayload
+      );
   } catch (error) {
     // If the eMandate creation fails, we should log the error and return an error response.
     // This is important for observability and debugging.
