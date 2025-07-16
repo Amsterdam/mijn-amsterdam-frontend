@@ -136,7 +136,10 @@ describe('afis-e-mandates service (with nock)', () => {
 
       remoteApi.post(/CreateMandate/).reply(200);
 
-      const result = await emandates.createEMandate(validPayload);
+      const result =
+        await emandates.createOrUpdateEMandateFromStatusNotificationPayload(
+          validPayload
+        );
       expect(result.status).toBe('OK');
     });
   });
@@ -144,7 +147,7 @@ describe('afis-e-mandates service (with nock)', () => {
   describe('createAfisEMandate - Error Scenarios', () => {
     it('throws an error if creditor IBAN is invalid', async () => {
       await expect(
-        emandates.createEMandate({
+        emandates.createOrUpdateEMandateFromStatusNotificationPayload({
           ...validPayload,
           creditorIBAN: 'invalid',
         })
@@ -155,9 +158,11 @@ describe('afis-e-mandates service (with nock)', () => {
       remoteApi.get(/A_BusinessPartnerAddress/).reply(500);
       remoteApi.get(/A_BusinessPartner/).reply(500);
 
-      await expect(emandates.createEMandate(validPayload)).rejects.toThrow(
-        /Error fetching business partner details/
-      );
+      await expect(
+        emandates.createOrUpdateEMandateFromStatusNotificationPayload(
+          validPayload
+        )
+      ).rejects.toThrow(/Error fetching business partner details/);
     });
 
     it('throws an error if checking bank account existence fails', async () => {
@@ -177,9 +182,11 @@ describe('afis-e-mandates service (with nock)', () => {
         .get(/A_BusinessPartnerBank/)
         .reply(500, { status: 'ERROR', message: 'fail' });
 
-      await expect(emandates.createEMandate(validPayload)).rejects.toThrow(
-        /Error checking if bank account exists/
-      );
+      await expect(
+        emandates.createOrUpdateEMandateFromStatusNotificationPayload(
+          validPayload
+        )
+      ).rejects.toThrow(/Error checking if bank account exists/);
     });
 
     it('throws an error if creating bank account fails', async () => {
@@ -201,9 +208,11 @@ describe('afis-e-mandates service (with nock)', () => {
 
       remoteApi.post(/CreateBankAccount/).reply(500);
 
-      await expect(emandates.createEMandate(validPayload)).rejects.toThrow(
-        /Error creating bank account/
-      );
+      await expect(
+        emandates.createOrUpdateEMandateFromStatusNotificationPayload(
+          validPayload
+        )
+      ).rejects.toThrow(/Error creating bank account/);
     });
 
     it('throws an error if creating e-mandate fails', async () => {
@@ -238,9 +247,11 @@ describe('afis-e-mandates service (with nock)', () => {
         .post(/CreateMandate/)
         .reply(500, { status: 'ERROR', message: 'fail' });
 
-      await expect(emandates.createEMandate(validPayload)).rejects.toThrow(
-        /Error creating e-mandate/
-      );
+      await expect(
+        emandates.createOrUpdateEMandateFromStatusNotificationPayload(
+          validPayload
+        )
+      ).rejects.toThrow(/Error creating e-mandate/);
     });
   });
 

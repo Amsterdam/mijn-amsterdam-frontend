@@ -75,7 +75,7 @@ const afisEMandatePostbodyStatic: AfisEMandateSourceStatic = {
   Status: getFromEnv('BFF_AFIS_EMANDATE_STATUS') ?? '',
 };
 
-export async function createEMandate(
+export async function createOrUpdateEMandateFromStatusNotificationPayload(
   payload: EMandateSignRequestPayload & EMandateSignRequestNotificationPayload
 ) {
   const creditor = EMandateCreditorsGemeenteAmsterdam.find(
@@ -164,15 +164,14 @@ export async function createEMandate(
     SndDebtorId: creditor.refId,
   };
 
-  const config = await getAfisApiConfig({
-    method: 'POST',
-    data: payloadFinal,
-    formatUrl: ({ url }) => {
-      return `${url}/CreateMandate/ZGW_FI_MANDATE_SRV_01/Mandate_createSet`;
-    },
-  });
+  const eMandateExistsResponse = await fetchAndCheckEmandateExists(
+    payload.businessPartnerId,
+    creditor.refId
+  );
 
-  const response = await requestData<AfisEMandateSource>(config);
+  const response = await (eMandateExistsResponse.content === true
+    ? updateAfisEMandate(payloadFinal)
+    : createAfisEMandate(payloadFinal));
 
   if (response.status !== 'OK') {
     throw new Error(
@@ -181,6 +180,18 @@ export async function createEMandate(
   }
 
   return response;
+}
+
+async function createAfisEMandate(payload: AfisEMandateCreatePayload) {
+  const config = await getAfisApiConfig({
+    method: 'POST',
+    data: payload,
+    formatUrl: ({ url }) => {
+      return `${url}/CreateMandate/ZGW_FI_MANDATE_SRV_01/Mandate_createSet`;
+    },
+  });
+
+  return requestData<AfisEMandateSource>(config);
 }
 
 async function updateAfisEMandate(
@@ -403,6 +414,33 @@ function transformEMandatesResponse(
   );
 }
 
+export async function fetchAndCheckEmandateExists(
+  businessPartnerId: BusinessPartnerId,
+  creditorRefID: AfisEMandateCreditor['refId']
+): Promise<ApiResponse<boolean>> {
+  const config = await getAfisApiConfig({
+    formatUrl: ({ url }) => {
+      return `${url}/Mandate/ZGW_FI_MANDATE_SRV_01/Mandate_readSet?$filter=SndId eq '${businessPartnerId}'`;
+    },
+    transformResponse: (responseData) => {
+      const sourceMandates =
+        getFeedEntryProperties<AfisEMandateSource>(responseData);
+      return sourceMandates.some(
+        (mandate) => mandate.SndDebtorId === creditorRefID
+      );
+    },
+
+    /**
+     * We do not want to cache this request, because the e-mandates are updated without direct
+     * user interaction.
+     * If we would cache this request, the user would __not__ see the latest e-mandates.
+     */
+    enableCache: false,
+  });
+
+  return requestData<boolean>(config);
+}
+
 export async function fetchEMandates(
   payload: BusinessPartnerIdPayload,
   authProfile: AuthProfile
@@ -611,7 +649,7 @@ export async function handleEmandateLifeTimeUpdate(
 export const forTesting = {
   addEmandateApiUrls,
   changeEMandateStatus,
-  createEMandate,
+  createEMandate: createOrUpdateEMandateFromStatusNotificationPayload,
   createEMandateSignRequestPayload,
   fetchEMandates,
   fetchEmandateSignRequestRedirectUrlFromPaymentProvider,
