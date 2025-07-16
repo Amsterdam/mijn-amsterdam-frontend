@@ -17,7 +17,7 @@ import { setAdHocDependencyRequestCacheTtlMs } from '../config/source-api';
 import { fetchAfisBusinessPartnerDetails } from '../services/afis/afis-business-partner';
 import { fetchAfisDocument } from '../services/afis/afis-documents';
 import {
-  fetchAfisEMandates,
+  fetchEMandates,
   changeEMandateStatus,
   fetchEmandateRedirectUrlFromProvider,
   fetchEmandateSignRequestStatus,
@@ -259,14 +259,14 @@ attachDocumentDownloadRoute(
 
 {
   type QueryPayload = BusinessPartnerIdPayload;
-  type ServiceReturnType = ReturnType<typeof fetchAfisEMandates>;
+  type ServiceReturnType = ReturnType<typeof fetchEMandates>;
 
   router.get(
     BffEndpoints.AFIS_EMANDATES,
     handleAfisRequestWithEncryptedPayloadQueryParam<
       QueryPayload,
       ServiceReturnType
-    >(fetchAfisEMandates)
+    >(fetchEMandates)
   );
 }
 
