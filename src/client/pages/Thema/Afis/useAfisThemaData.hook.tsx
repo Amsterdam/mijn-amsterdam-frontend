@@ -1,14 +1,7 @@
 import { ReactNode, useEffect, useMemo } from 'react';
 
-import { Paragraph } from '@amsterdam/design-system-react';
-import { useParams } from 'react-router';
-import useSWR from 'swr';
-import useSWRMutation from 'swr/mutation';
-
 import {
   AfisFacturenByStateFrontend,
-  businessPartnerDetailsLabels,
-  eMandateTableConfig,
   facturenTableConfig,
   listPageTitle,
   linkListItems,
@@ -17,15 +10,11 @@ import {
   routeConfig,
 } from './Afis-thema-config';
 import {
-  AfisBusinessPartnerDetailsTransformed,
   AfisThemaResponse,
   AfisFacturenByStateResponse,
   AfisFactuur,
   AfisFactuurState,
-  type AfisEMandateFrontend,
-  type AfisEMandateUpdatePayloadFrontend,
 } from '../../../../server/services/afis/afis-types';
-import { FIFTEEN_MINUTES_MS } from '../../../../universal/config/app';
 import {
   hasFailedDependency,
   isError,
@@ -35,13 +24,8 @@ import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
 import { entries } from '../../../../universal/helpers/utils';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { DocumentLink } from '../../../components/DocumentList/DocumentLink';
-import { MaLink, MaRouterLink } from '../../../components/MaLink/MaLink';
-import type { BFFApiUrls } from '../../../config/api';
+import { MaLink } from '../../../components/MaLink/MaLink';
 import { generateBffApiUrlWithEncryptedPayloadQuery } from '../../../helpers/api';
-import {
-  sendGetRequest,
-  swrPostRequestDefault,
-} from '../../../hooks/api/useDataApi';
 import { useSmallScreen } from '../../../hooks/media.hook';
 import {
   useAppStateBagApi,
@@ -239,152 +223,5 @@ export function useAfisThemaData() {
       afgehandeld: hasFailedDependency(AFIS, 'afgehandeld'),
       overgedragen: hasFailedDependency(AFIS, 'overgedragen'),
     },
-  };
-}
-
-function generateApiUrl(
-  businessPartnerIdEncrypted: string | null,
-  route: keyof typeof BFFApiUrls
-) {
-  return businessPartnerIdEncrypted
-    ? generateBffApiUrlWithEncryptedPayloadQuery(
-        route,
-        businessPartnerIdEncrypted
-      )
-    : null;
-}
-
-export function useAfisEMandateSWR(businessPartnerIdEncrypted: string | null) {
-  return useSWR<AfisEMandateFrontend[]>(
-    generateApiUrl(businessPartnerIdEncrypted, 'AFIS_EMANDATES'),
-    sendGetRequest,
-    { dedupingInterval: FIFTEEN_MINUTES_MS }
-  );
-}
-
-export function optimisticEmandatesUpdate(
-  eMandate: AfisEMandateFrontend,
-  payload: Record<string, string>
-) {
-  return (eMandates: AfisEMandateFrontend[] | undefined) => {
-    if (!eMandates) {
-      return eMandates;
-    }
-    return eMandates.map((mandate) => {
-      if (mandate.id === eMandate?.id) {
-        return {
-          ...mandate,
-          ...payload,
-        };
-      }
-      return mandate;
-    });
-  };
-}
-
-export function useAfisEmandateUpdate(
-  businessPartnerIdEncrypted: string | null,
-  eMandate: AfisEMandateFrontend | null
-) {
-  const { mutate, isLoading, isValidating } = useAfisEMandateSWR(
-    businessPartnerIdEncrypted
-  );
-  const { trigger, isMutating, ...rest } =
-    useSWRMutation<AfisEMandateUpdatePayloadFrontend>(
-      eMandate?.updateUrl,
-      swrPostRequestDefault(),
-      {
-        onSuccess(eMandateUpdatePayload) {
-          if (eMandate && eMandateUpdatePayload) {
-            mutate(optimisticEmandatesUpdate(eMandate, eMandateUpdatePayload), {
-              revalidate: false,
-            });
-          }
-        },
-      }
-    );
-
-  return {
-    update: async (dateValidTo: string) => {
-      trigger({ dateValidTo });
-    },
-    isMutating: isMutating || isLoading || isValidating,
-    ...rest,
-  };
-}
-
-export function useAfisEMandatesData() {
-  const isSmallScreen = useSmallScreen();
-
-  const { businessPartnerIdEncrypted } = useAfisThemaData();
-  const { title: betaalVoorkeurenTitle } = useAfisBetaalVoorkeurenData(
-    businessPartnerIdEncrypted
-  );
-
-  const {
-    data: eMandatesApiResponse,
-    isLoading,
-    error,
-    mutate,
-  } = useAfisEMandateSWR(businessPartnerIdEncrypted);
-
-  const eMandates = (eMandatesApiResponse ?? []).map((eMandate) => {
-    return {
-      ...eMandate,
-      detailLinkComponent: (
-        <>
-          <MaRouterLink maVariant="fatNoUnderline" href={eMandate.link.to}>
-            {eMandate.link.title}
-          </MaRouterLink>
-          {!isSmallScreen && eMandate.acceptantDescription && (
-            <Paragraph size="small">{eMandate.acceptantDescription}</Paragraph>
-          )}
-        </>
-      ),
-    };
-  });
-
-  const title = 'E-Mandaat';
-  const breadcrumbs = [
-    ...useThemaBreadcrumbs(themaId),
-    { to: routeConfig.betaalVoorkeuren.path, title: betaalVoorkeurenTitle },
-  ];
-  const { id } = useParams<{ id: AfisEMandateFrontend['id'] }>();
-  const eMandate = eMandates.find((mandate) => mandate.id === id);
-
-  return {
-    title,
-    eMandate,
-    breadcrumbs,
-    hasEMandatesError: !!error,
-    isLoadingEMandates: isLoading || !eMandatesApiResponse,
-    eMandateTableConfig,
-    eMandates,
-    refetchEMandates: mutate,
-    mutate,
-  };
-}
-
-export function useAfisBetaalVoorkeurenData(
-  businessPartnerIdEncrypted:
-    | AfisThemaResponse['businessPartnerIdEncrypted']
-    | undefined
-) {
-  const {
-    data: businesspartnerDetails,
-    isLoading: isLoadingBusinessPartnerDetails,
-    error: hasBusinessPartnerDetailsError,
-  } = useSWR<AfisBusinessPartnerDetailsTransformed>(
-    generateApiUrl(businessPartnerIdEncrypted ?? null, 'AFIS_BUSINESSPARTNER'),
-    sendGetRequest,
-    { dedupingInterval: FIFTEEN_MINUTES_MS }
-  );
-
-  return {
-    title: 'Betaalvoorkeuren',
-    businesspartnerDetails: businesspartnerDetails ?? null,
-    businessPartnerDetailsLabels,
-    isLoadingBusinessPartnerDetails,
-    hasBusinessPartnerDetailsError,
   };
 }

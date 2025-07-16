@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { Alert, Paragraph } from '@amsterdam/design-system-react';
 import { useNavigate } from 'react-router';
@@ -6,130 +6,13 @@ import { useNavigate } from 'react-router';
 import { routeConfig } from './Afis-thema-config';
 import { AfisEMandateActionUrls } from './AfisEmandateActionButtons';
 import { DateAdjust } from './AfisEmandateDateAdjust';
-import {
-  optimisticEmandatesUpdate,
-  useAfisEMandatesData,
-  useAfisEmandateUpdate,
-  useAfisThemaData,
-} from './useAfisThemaData.hook';
-import type {
-  AfisEMandateFrontend,
-  AfisEMandateSignRequestResponse,
-  AfisEMandateStatusChangeResponse,
-} from '../../../../server/services/afis/afis-types';
-import { entries } from '../../../../universal/helpers/utils';
+import { useAfisEMandatesData, useEmandateApis } from './useAfisEmandateApi';
+import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
-import { useDataApiV2, sendGetRequest } from '../../../hooks/api/useDataApi';
-import { useSessionStorage } from '../../../hooks/storage.hook';
 import { useInterval } from '../../../hooks/timer.hook';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
-
-function useEmandateApis(eMandate: AfisEMandateFrontend) {
-  const { mutate } = useAfisEMandatesData();
-
-  const redirectUrlApi = useDataApiV2<AfisEMandateSignRequestResponse>(
-    eMandate.signRequestUrl,
-    {
-      postpone: true,
-      fetcher: (url: string) => {
-        return sendGetRequest<AfisEMandateSignRequestResponse>(url).then(
-          (content) => {
-            window.location.href = content.redirectUrl;
-            return content;
-          }
-        );
-      },
-    }
-  );
-  const statusChangeApi = useDataApiV2<AfisEMandateStatusChangeResponse>(
-    eMandate.statusChangeUrl,
-    {
-      postpone: true,
-      fetcher: (url) => {
-        return sendGetRequest<AfisEMandateStatusChangeResponse>(url).then(
-          (eMandateUpdatePayload) => {
-            if (eMandate && eMandateUpdatePayload) {
-              mutate(
-                optimisticEmandatesUpdate(eMandate, eMandateUpdatePayload),
-                {
-                  revalidate: false,
-                }
-              );
-            }
-            return eMandateUpdatePayload;
-          }
-        );
-      },
-    }
-  );
-
-  const { businessPartnerIdEncrypted } = useAfisThemaData();
-
-  const eMandateUpdateApi = useAfisEmandateUpdate(
-    businessPartnerIdEncrypted,
-    eMandate
-  );
-
-  type ApiName = 'redirectUrlApi' | 'statusChangeApi' | 'updateApi';
-
-  const [showError, setShowError] = useState(false);
-  const [lastActiveApi, setLastActiveApi] = useState<ApiName | null>(null);
-
-  useEffect(() => {
-    entries({
-      redirectUrlApi: redirectUrlApi.isLoading,
-      statusChangeApi: statusChangeApi.isLoading,
-      updateApi: eMandateUpdateApi.isMutating,
-    }).forEach(([apiName, isLoading]) => {
-      if (isLoading) {
-        setLastActiveApi(apiName);
-      }
-    });
-  }, [
-    redirectUrlApi.isLoading,
-    statusChangeApi.isLoading,
-    eMandateUpdateApi.isMutating,
-  ]);
-
-  const isErrorVisible =
-    showError &&
-    !redirectUrlApi.isLoading &&
-    !statusChangeApi.isLoading &&
-    !eMandateUpdateApi.isMutating &&
-    (redirectUrlApi.isError ||
-      statusChangeApi.isError ||
-      !!eMandateUpdateApi.error);
-
-  useEffect(() => {
-    entries({
-      redirectUrlApi: redirectUrlApi.isError,
-      statusChangeApi: statusChangeApi.isError,
-      updateApi: !!eMandateUpdateApi.error,
-    }).forEach(([apiName, isError]) => {
-      if (apiName === lastActiveApi && isError) {
-        setShowError(true);
-      }
-    });
-  }, [
-    redirectUrlApi.isError,
-    statusChangeApi.isError,
-    !!eMandateUpdateApi.error,
-    lastActiveApi,
-  ]);
-
-  return {
-    redirectUrlApi,
-    statusChangeApi,
-    eMandateUpdateApi,
-    isErrorVisible,
-    lastActiveApi,
-    hideError: () => {
-      setShowError(false);
-    },
-  };
-}
 
 type EMandateProps = {
   eMandate: AfisEMandateFrontend;
@@ -266,7 +149,7 @@ function EmandatePoller({
 
   useEffect(() => {
     return () => {
-      if (isPendingActivation) {
+      if (isPendingActivation && window.location.search.includes('iban=')) {
         // Removes the query argument that initiated the polling
         navigate(window.location.pathname, {
           replace: true,
@@ -290,41 +173,8 @@ export function AfisEMandateDetail() {
     hasEMandatesError,
     isLoadingEMandates,
     refetchEMandates,
+    statusNotification: { isPendingActivation },
   } = useAfisEMandatesData();
-
-  const queryParams = new URLSearchParams(window.location.search);
-  const iban = queryParams.get('iban');
-
-  const [ibansPendingActivation, setIsPendingActivation] = useSessionStorage(
-    'afis-emandate-pending-activation',
-    ''
-  );
-
-  useEffect(() => {
-    let updatedIbans: string = ibansPendingActivation || '';
-    if (eMandate?.status === '0' && iban && !updatedIbans.includes(iban)) {
-      updatedIbans = [...updatedIbans.split(','), iban]
-        .filter(Boolean)
-        .join(',');
-    }
-    if (
-      eMandate?.status === '1' &&
-      eMandate?.acceptantIBAN &&
-      updatedIbans.includes(eMandate?.acceptantIBAN)
-    ) {
-      updatedIbans = updatedIbans
-        .split(',')
-        .filter((i) => i !== eMandate.acceptantIBAN)
-        .join(',');
-    }
-    if (ibansPendingActivation !== updatedIbans) {
-      setIsPendingActivation(updatedIbans);
-    }
-  }, [iban, eMandate?.status, eMandate?.acceptantIBAN]);
-
-  const isPendingActivation = ibansPendingActivation?.includes(
-    eMandate?.acceptantIBAN
-  );
 
   return (
     <ThemaDetailPagina
@@ -337,10 +187,10 @@ export function AfisEMandateDetail() {
           <>
             <EmandatePoller
               fetch={refetchEMandates}
-              isPendingActivation={isPendingActivation}
+              isPendingActivation={isPendingActivation(eMandate.acceptantIBAN)}
             />
             <EMandate
-              isPendingActivation={isPendingActivation}
+              isPendingActivation={isPendingActivation(eMandate.acceptantIBAN)}
               eMandate={eMandate}
             />
           </>
