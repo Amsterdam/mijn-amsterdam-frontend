@@ -1,7 +1,4 @@
-import { useEffect } from 'react';
-
 import { Alert, Paragraph } from '@amsterdam/design-system-react';
-import { useNavigate } from 'react-router';
 
 import { routeConfig } from './Afis-thema-config';
 import { AfisEMandateActionUrls } from './AfisEmandateActionButtons';
@@ -16,10 +13,9 @@ import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 type EMandateProps = {
   eMandate: AfisEMandateFrontend;
-  isPendingActivation: boolean;
 };
 
-function EMandate({ eMandate, isPendingActivation }: EMandateProps) {
+function EMandate({ eMandate }: EMandateProps) {
   const {
     redirectUrlApi,
     statusChangeApi,
@@ -27,6 +23,7 @@ function EMandate({ eMandate, isPendingActivation }: EMandateProps) {
     isErrorVisible,
     hideError,
     lastActiveApi,
+    statusNotification: { removePendingActivation, isPendingActivation },
   } = useEmandateApis(eMandate);
 
   return (
@@ -84,7 +81,7 @@ function EMandate({ eMandate, isPendingActivation }: EMandateProps) {
               {
                 label: 'Status',
                 content: eMandate.displayStatus,
-                isVisible: !isPendingActivation,
+                isVisible: !isPendingActivation(eMandate.acceptantIBAN),
               },
               {
                 label: 'Einddatum',
@@ -116,10 +113,18 @@ function EMandate({ eMandate, isPendingActivation }: EMandateProps) {
             : []),
         ]}
       />
-      {isPendingActivation ? (
-        <Alert headingLevel={4} heading="Status">
+      {isPendingActivation(eMandate.acceptantIBAN) ? (
+        <Alert
+          headingLevel={4}
+          heading="Status"
+          closeable
+          onClose={() => {
+            removePendingActivation(eMandate.acceptantIBAN);
+          }}
+        >
           <Paragraph>
-            Wachten op bevestiging van het E-Mandaat voor {eMandate.acceptant}.
+            Wachten op bevestiging van het E-Mandaat voor {eMandate.acceptant}
+            .{' '}
           </Paragraph>
         </Alert>
       ) : (
@@ -133,35 +138,13 @@ function EMandate({ eMandate, isPendingActivation }: EMandateProps) {
   );
 }
 
-function EmandateFetchInterval({ fetch }: { fetch: () => void }) {
+// This component is used to refetch the eMandate data at a regular interval,
+const POLLING_INTERVAL_MS = 4000; // 4 seconds
+
+export function EmandateRefetchInterval({ fetch }: { fetch: () => void }) {
   useInterval(fetch, POLLING_INTERVAL_MS);
   return null;
 }
-
-function EmandatePoller({
-  fetch,
-  isPendingActivation,
-}: {
-  fetch: () => void;
-  isPendingActivation: boolean;
-}) {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    return () => {
-      if (isPendingActivation && window.location.search.includes('iban=')) {
-        // Removes the query argument that initiated the polling
-        navigate(window.location.pathname, {
-          replace: true,
-        });
-      }
-    };
-  }, [isPendingActivation]);
-
-  return isPendingActivation ? <EmandateFetchInterval fetch={fetch} /> : null;
-}
-
-const POLLING_INTERVAL_MS = 4000;
 
 export function AfisEMandateDetail() {
   useHTMLDocumentTitle(routeConfig.detailPageEMandate);
@@ -185,14 +168,10 @@ export function AfisEMandateDetail() {
       pageContentMain={
         !!eMandate && (
           <>
-            <EmandatePoller
-              fetch={refetchEMandates}
-              isPendingActivation={isPendingActivation(eMandate.acceptantIBAN)}
-            />
-            <EMandate
-              isPendingActivation={isPendingActivation(eMandate.acceptantIBAN)}
-              eMandate={eMandate}
-            />
+            {isPendingActivation(eMandate.acceptantIBAN) && (
+              <EmandateRefetchInterval fetch={refetchEMandates} />
+            )}
+            <EMandate eMandate={eMandate} />
           </>
         )
       }
