@@ -2,21 +2,21 @@ import { HttpStatusCode } from 'axios';
 import { Request, Response } from 'express';
 import * as z from 'zod/v4';
 
-import { createEMandate } from './afis-e-mandates';
+import { ExternalConsumerEndpoints } from './bff-routes';
+import {
+  createBFFRouter,
+  sendBadRequest,
+  sendInternalServerError,
+} from './route-helpers';
+import { type ApiResponse } from '../../universal/helpers/api';
+import { createEMandate } from '../services/afis/afis-e-mandates';
 import type {
   EMandateSignRequestPayload,
   EMandateSignRequestNotificationPayload,
   POMEMandateSignRequestPayload,
   AfisEMandateSource,
-} from './afis-types';
-import { type ApiResponse } from '../../../universal/helpers/api';
-import { ExternalConsumerEndpoints } from '../../routing/bff-routes';
-import {
-  createBFFRouter,
-  sendBadRequest,
-  sendInternalServerError,
-} from '../../routing/route-helpers';
-import { captureException } from '../monitoring';
+} from '../services/afis/afis-types';
+import { captureException } from '../services/monitoring';
 
 const routerPrivateNetwork = createBFFRouter({
   id: 'afis-external-consumer-private-network',
