@@ -46,7 +46,7 @@ import { router as protectedRouter } from './routing/router-protected';
 import { legacyRouter, router as publicRouter } from './routing/router-public';
 import { stadspasExternalConsumerRouter } from './routing/router-stadspas-external-consumer';
 import { captureException } from './services/monitoring';
-import { afisExternalConsumerRouter } from './services/afis/afis-router-external-consumer';
+import { afisExternalConsumerRouter } from './routing/afis-router-external-consumer';
 
 import { getFromEnv } from './helpers/env';
 import { notificationsExternalConsumerRouter } from './routing/router-notifications-external-consumer';
