@@ -318,7 +318,7 @@ export type AfisEMandateSourceStatic = {
 };
 
 type EMandateSenderSource = {
-  // Sender
+  // Sender/Debtor (The one who signs the e-mandate)
   SndId: BusinessPartnerId;
   SndPostal: string;
   SndCountry: string; // Country code
@@ -329,11 +329,13 @@ type EMandateSenderSource = {
   SndCity: string;
   SndName1: string; // Firstname
   SndName2: string; // Lastname
-  SndDebtorId: string; // Acceptant reference ID (RefId)
+
+  // Creditor reference ID (RefId)
+  SndDebtorId: string; // Creditor reference ID (RefId)
 };
 
 export type EMandateReceiverSource = {
-  // Receiver
+  // Receiver/Creditor/Incassant (The one who uses the e-mandate to collect payments)
   RecName1: string;
   RecPostal: string;
   RecStreet: string;
