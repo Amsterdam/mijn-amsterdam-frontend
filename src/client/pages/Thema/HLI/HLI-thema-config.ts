@@ -118,7 +118,7 @@ export const tableConfig = {
   [listPageParamKind.actual]: {
     title: listPageTitle[listPageParamKind.actual],
     filter: (regeling: HLIRegelingFrontend) =>
-      regeling.isActual && regeling.displayStatus !== 'In behandeling',
+      regeling.isActual && !regeling.displayStatus.startsWith('In behandeling'),
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsHuidigeRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
