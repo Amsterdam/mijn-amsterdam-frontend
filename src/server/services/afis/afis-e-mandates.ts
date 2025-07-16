@@ -11,7 +11,7 @@ import {
   fetchCheckIfIBANexists,
 } from './afis-business-partner';
 import {
-  EMandateAcceptantenGemeenteAmsterdam,
+  EMandateCreditorsGemeenteAmsterdam,
   eMandateReceiver,
 } from './afis-e-mandates-config';
 import {
@@ -32,7 +32,7 @@ import {
   AfisEMandateFrontend,
   AfisEMandateSignRequestResponse,
   AfisEMandateSource,
-  AfisEMandateAcceptant,
+  AfisEMandateCreditor,
   EMandateSignRequestPayload,
   EMandateStatusChangePayload,
   EMandateSignRequestStatusPayload,
@@ -79,12 +79,12 @@ const afisEMandatePostbodyStatic: AfisEMandateSourceStatic = {
 export async function createEMandate(
   payload: EMandateSignRequestPayload & EMandateSignRequestNotificationPayload
 ) {
-  const acceptant = EMandateAcceptantenGemeenteAmsterdam.find(
-    (acceptant) => acceptant.iban === payload.acceptantIBAN
+  const creditor = EMandateCreditorsGemeenteAmsterdam.find(
+    (creditor) => creditor.iban === payload.creditorIBAN
   );
 
-  if (!acceptant) {
-    throw new Error(`Invalid acceptant IBAN: ${payload.acceptantIBAN}.`);
+  if (!creditor) {
+    throw new Error(`Invalid creditor IBAN: ${payload.creditorIBAN}.`);
   }
 
   const businessPartnerResponse = await fetchAfisBusinessPartnerDetails({
@@ -162,7 +162,7 @@ export async function createEMandate(
     SignCity: eMandateReceiver.RecCity, // TODO: Hoe komen we aan dit gegeven, altijd Amsterdam?
     LifetimeFrom: new Date().toISOString(),
     LifetimeTo: lifetimeTo,
-    SndDebtorId: getSndDebtorId(acceptant),
+    SndDebtorId: getSndDebtorId(creditor),
   };
 
   const config = await getAfisApiConfig({
@@ -253,10 +253,10 @@ function getStatusChangeApiUrl(
 function getSignRequestApiUrl(
   sessionID: SessionID,
   businessPartnerId: BusinessPartnerId,
-  acceptant: AfisEMandateAcceptant
+  creditor: AfisEMandateCreditor
 ) {
   const signRequestPayload: EMandateSignRequestPayload = {
-    acceptantIBAN: acceptant.iban,
+    creditorIBAN: creditor.iban,
     businessPartnerId: businessPartnerId,
     eMandateSignDate: new Date().toISOString(),
   };
@@ -292,7 +292,7 @@ function addEmandateApiUrls(
   sessionID: SessionID,
   businessPartnerId: BusinessPartnerId,
   eMandate: AfisEMandateFrontend,
-  acceptant: AfisEMandateAcceptant,
+  creditor: AfisEMandateCreditor,
   afisEMandateSource?: AfisEMandateSource
 ) {
   if (afisEMandateSource?.IMandateId) {
@@ -306,14 +306,14 @@ function addEmandateApiUrls(
   eMandate.signRequestUrl = getSignRequestApiUrl(
     sessionID,
     businessPartnerId,
-    acceptant
+    creditor
   );
 }
 
 function transformEMandateSource(
   sessionID: SessionID,
   businessPartnerId: BusinessPartnerId,
-  acceptant: AfisEMandateAcceptant,
+  creditor: AfisEMandateCreditor,
   afisEMandateSource?: AfisEMandateSource
 ): Readonly<AfisEMandateFrontend> {
   const dateValidFrom = afisEMandateSource?.LifetimeFrom || null;
@@ -325,12 +325,12 @@ function transformEMandateSource(
   const dateValidToFormatted = getEmandateValidityDateFormatted(dateValidTo);
 
   const isActive = isEmandateActive(dateValidTo);
-  const id = slug(acceptant.name);
+  const id = slug(creditor.name);
   const eMandate: AfisEMandateFrontend = {
     id,
-    acceptant: acceptant.name,
-    acceptantIBAN: acceptant.iban,
-    acceptantDescription: acceptant.description,
+    creditor: creditor.name,
+    creditorIBAN: creditor.iban,
+    creditorDescription: creditor.description,
     senderIBAN: (isActive ? afisEMandateSource?.SndIban : null) ?? null,
     senderName: isActive
       ? [afisEMandateSource?.SndName1, afisEMandateSource?.SndName2]
@@ -348,7 +348,7 @@ function transformEMandateSource(
     ),
     link: {
       to: `/facturen-en-betalen/betaalvoorkeuren/emandate/${id}`,
-      title: acceptant.name,
+      title: creditor.name,
     },
   };
 
@@ -356,24 +356,24 @@ function transformEMandateSource(
     sessionID,
     businessPartnerId,
     eMandate,
-    acceptant,
+    creditor,
     afisEMandateSource
   );
 
   return eMandate;
 }
 
-function getSndDebtorId(acceptant: AfisEMandateAcceptant) {
-  return acceptant.refId;
+function getSndDebtorId(creditor: AfisEMandateCreditor) {
+  return creditor.refId;
 }
 
-function getEMandateSourceByAcceptant(
+function getEMandateSourceByCreditor(
   sourceMandates: AfisEMandateSource[],
-  acceptant: AfisEMandateAcceptant
+  creditor: AfisEMandateCreditor
 ): AfisEMandateSource | undefined {
   return sourceMandates.find((eMandateSource) => {
-    // TODO: Find out / Confirm if the debtorId is the acceptant id?!??!?!?
-    return eMandateSource.SndDebtorId === getSndDebtorId(acceptant);
+    // TODO: Find out / Confirm if the debtorId is the creditor id?!??!?!?
+    return eMandateSource.SndDebtorId === getSndDebtorId(creditor);
   });
 }
 
@@ -387,16 +387,16 @@ function transformEMandatesResponse(
   }
   const sourceMandates = getFeedEntryProperties(responseData);
 
-  return EMandateAcceptantenGemeenteAmsterdam.map((acceptant) => {
-    const afisEMandateSource = getEMandateSourceByAcceptant(
+  return EMandateCreditorsGemeenteAmsterdam.map((creditor) => {
+    const afisEMandateSource = getEMandateSourceByCreditor(
       sourceMandates,
-      acceptant
+      creditor
     );
 
     const eMandate = transformEMandateSource(
       sessionID,
       businessPartnerId,
-      acceptant,
+      creditor,
       afisEMandateSource
     );
 
@@ -404,7 +404,7 @@ function transformEMandatesResponse(
   }).sort(
     firstBy(function sortByStatus(eMandate: AfisEMandateFrontend) {
       return eMandate.status === EMANDATE_STATUS.ON ? -1 : 1;
-    }).thenBy('acceptant')
+    }).thenBy('creditor')
   );
 }
 
@@ -444,26 +444,26 @@ function transformEMandatesRedirectUrlResponse(
 
 function createEMandateProviderPayload(
   businessPartner: AfisBusinessPartnerDetailsTransformed,
-  acceptant: AfisEMandateAcceptant,
+  creditor: AfisEMandateCreditor,
   signRequestPayload: EMandateSignRequestPayload
 ): POMSignRequestUrlPayload {
   const returnUrl = generateFullApiUrlBFF(
     routeConfig.detailPageEMandate.path,
-    [{ iban: acceptant.iban }, { id: slug(acceptant.name) }],
+    [{ iban: creditor.iban }, { id: slug(creditor.name) }],
     getFromEnv('MA_FRONTEND_URL')
   );
 
   const today = new Date();
   const isoDateString = today.toISOString();
   const invoiceDate = isoDateFormat(today);
-  const invoiceNumber = `EMandaat-${acceptant.refId}-${invoiceDate}`;
+  const invoiceNumber = `EMandaat-${creditor.refId}-${invoiceDate}`;
 
   // TODO: Moet dit met een gegeven uit AFIS te koppelen zijn?
-  const paymentReference = `${acceptant.refId}-${businessPartner.businessPartnerId}`;
+  const paymentReference = `${creditor.refId}-${businessPartner.businessPartnerId}`;
   const idBatch = `batch-${paymentReference}`;
 
   // TODO: Generate encrypted number
-  const idRequestClient = `${acceptant.refId}-${businessPartner.businessPartnerId}-${isoDateString}`;
+  const idRequestClient = `${creditor.refId}-${businessPartner.businessPartnerId}-${isoDateString}`;
 
   // Paylinks are valid for 1 day
   const dueDate = add(today, {
@@ -472,7 +472,7 @@ function createEMandateProviderPayload(
     .toISOString()
     .split('T')[0];
 
-  const concerning = `Automatische incasso ${acceptant.name}`;
+  const concerning = `Automatische incasso ${creditor.name}`;
 
   return {
     first_name: businessPartner.firstName || 'Naam',
@@ -483,7 +483,7 @@ function createEMandateProviderPayload(
     batch_name: idBatch,
     request_id: idRequestClient,
     company_name: AFIS_EMANDATE_COMPANY_NAME,
-    variable1: signRequestPayload.acceptantIBAN,
+    variable1: signRequestPayload.creditorIBAN,
     due_date: dueDate,
     return_url: returnUrl,
     cid: null,
@@ -503,13 +503,13 @@ function createEMandateProviderPayload(
 export async function fetchEmandateRedirectUrlFromProvider(
   eMandateSignRequestPayload: EMandateSignRequestPayload
 ) {
-  const acceptant = EMandateAcceptantenGemeenteAmsterdam.find(
-    (acceptant) => acceptant.iban === eMandateSignRequestPayload.acceptantIBAN
+  const creditor = EMandateCreditorsGemeenteAmsterdam.find(
+    (creditor) => creditor.iban === eMandateSignRequestPayload.creditorIBAN
   );
 
-  if (!acceptant) {
+  if (!creditor) {
     return apiErrorResult(
-      'Acceptant not found',
+      'Creditor not found',
       null,
       HttpStatusCode.BadRequest
     );
@@ -531,7 +531,7 @@ export async function fetchEmandateRedirectUrlFromProvider(
     transformResponse: transformEMandatesRedirectUrlResponse,
     data: createEMandateProviderPayload(
       businessPartnerResponse.content,
-      acceptant,
+      creditor,
       eMandateSignRequestPayload
     ),
   });
@@ -635,7 +635,7 @@ export const forTesting = {
   fetchAfisEMandates: fetchEMandates,
   fetchEmandateRedirectUrlFromProvider,
   fetchEmandateSignRequestStatus,
-  getEMandateSourceByAcceptant,
+  getEMandateSourceByCreditor,
   getSignRequestApiUrl,
   getSndDebtorId,
   getStatusChangeApiUrl,

@@ -28,7 +28,7 @@ const eMandateSignRequestStatusNotificationPayload = z.object({
   senderBIC: z.string(),
   senderName: z.string(),
   eMandateSignDate: z.string(),
-  acceptantIBAN: z.string(),
+  creditorIBAN: z.string(),
 });
 
 /**
@@ -54,9 +54,10 @@ async function handleAfisEMandateSignRequestStatusNotification(
       eMandateSignDate: notificationPayload
         ? `${notificationPayload?.event_date}T${notificationPayload?.event_time}:00Z`
         : null, // ISO 8601 format
-      acceptantIBAN: notificationPayload?.variable1,
+      creditorIBAN: notificationPayload?.variable1,
     });
   } catch (error) {
+    // Sends the validation error to the monitoring service.
     captureException(error);
     return sendBadRequest(
       res,

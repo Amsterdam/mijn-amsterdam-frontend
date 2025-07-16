@@ -129,8 +129,8 @@ export function useAfisEMandatesData() {
           <MaRouterLink maVariant="fatNoUnderline" href={eMandate.link.to}>
             {eMandate.link.title}
           </MaRouterLink>
-          {!isSmallScreen && eMandate.acceptantDescription && (
-            <Paragraph size="small">{eMandate.acceptantDescription}</Paragraph>
+          {!isSmallScreen && eMandate.creditorDescription && (
+            <Paragraph size="small">{eMandate.creditorDescription}</Paragraph>
           )}
         </>
       ),
@@ -143,7 +143,7 @@ export function useAfisEMandatesData() {
     return {
       ...eMandate,
       displayStatus: statusNotificationStorage.isPendingActivation(
-        eMandate.acceptantIBAN
+        eMandate.creditorIBAN
       )
         ? 'Wachten op activatie'
         : eMandate.displayStatus,
@@ -354,10 +354,10 @@ export function useEmandateStatusPendingStorage(
       }
       if (
         eMandate?.status === '1' &&
-        eMandate?.acceptantIBAN &&
-        updatedIbans.includes(eMandate?.acceptantIBAN)
+        eMandate?.creditorIBAN &&
+        updatedIbans.includes(eMandate?.creditorIBAN)
       ) {
-        updatedIbans = updatedIbans.filter((i) => i !== eMandate.acceptantIBAN);
+        updatedIbans = updatedIbans.filter((i) => i !== eMandate.creditorIBAN);
       }
     });
 
