@@ -29,7 +29,6 @@ export function InkomenListSpecificaties() {
     minDate,
     minDateFilterActive,
     noContentMessage,
-    params,
     resetSearch,
     selectCategoryFilter,
     selectedCategory,

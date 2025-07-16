@@ -56,7 +56,7 @@ export function ParkerenThema() {
   const pageContentBottom = hasActualGPK && (
     <PageContentCell startWide={3} spanWide={7}>
       <ParagaphSuppressed>
-        Hebt u naast een Europese gehandicaptenparkeerkaart (GPK) ook een vaste
+        Heeft u naast een Europese gehandicaptenparkeerkaart (GPK) ook een vaste
         parkeerplaats voor gehandicapten (GPP) aangevraagd? Dan ziet u hier in
         Mijn Amsterdam alleen de aanvraag voor een GPK staan. Zodra de GPK is
         gegeven, ziet u ook uw aanvraag voor uw GPP in Mijn Amsterdam.

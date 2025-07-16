@@ -1,10 +1,9 @@
-import '@testing-library/jest-dom';
-import * as matchers from '@testing-library/jest-dom/matchers';
+import '@testing-library/jest-dom/vitest';
 import { cleanup } from '@testing-library/react';
 import dotenv from 'dotenv';
 import dotenvExpand from 'dotenv-expand';
 import nock from 'nock';
-import { afterAll, afterEach, expect, vi } from 'vitest';
+import { afterAll, afterEach, vi } from 'vitest';
 
 const ENV_FILE = '.env.local.template';
 const envConfig = dotenv.config({ path: ENV_FILE });
@@ -52,27 +51,7 @@ vi.mock('../universal/config/feature-toggles.ts', async (importOriginal) => {
   };
 });
 
-global.matchMedia =
-  global.matchMedia ||
-  function () {
-    return {
-      matches: false,
-      addEventListener: function () {},
-      removeEventListener: function () {},
-    };
-  };
-
-(() => {
-  if (global.window) {
-    (global.window as typeof global.window).scrollTo = vi.fn();
-    (global.window as typeof global.window).scrollBy = vi.fn();
-  }
-})();
-
 nock.disableNetConnect();
-
-// extends Vitest's expect method with methods from react-testing-library
-expect.extend(matchers);
 
 // runs a cleanup after each test case (e.g. clearing jsdom)
 afterEach(() => {

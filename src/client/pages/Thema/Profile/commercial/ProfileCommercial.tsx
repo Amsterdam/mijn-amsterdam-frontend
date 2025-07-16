@@ -87,7 +87,7 @@ function ProfileCommercialSectionPanels() {
         )}
       <PageContentCell spanWide={8}>
         <ParagaphSuppressed className="ams-mb-m">
-          Hebt u de afgelopen 14 dagen uw KvK-gegevens gewijzigd? Dan kan het
+          Heeft u de afgelopen 14 dagen uw KvK-gegevens gewijzigd? Dan kan het
           zijn dat u die wijziging nog niet ziet in Mijn Amsterdam.
         </ParagaphSuppressed>
         <ParagaphSuppressed>
