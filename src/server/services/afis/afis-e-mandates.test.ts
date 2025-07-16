@@ -13,9 +13,6 @@ import { remoteApi } from '../../../testing/utils';
 import type { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
 import { decryptPayloadAndValidateSessionID } from '../shared/decrypt-route-param';
 
-const AFIS_BASE_URL =
-  process.env.BFF_AFIS_API_URL || 'https://afis.example.com';
-
 const authProfile: AuthProfile = {
   sid: 'sid',
   authMethod: 'digid', // Corrected to match the expected literal type
@@ -290,10 +287,10 @@ describe('afis-e-mandates service (with nock)', () => {
 
   describe('fetchEmandateRedirectUrlFromProvider', () => {
     it('returns error if acceptant not found', async () => {
-      const result = await emandates.fetchEmandateRedirectUrlFromProvider(
-        { ...validPayload, acceptantIBAN: 'notfound' },
-        authProfile
-      );
+      const result = await emandates.fetchEmandateRedirectUrlFromProvider({
+        ...validPayload,
+        acceptantIBAN: 'notfound',
+      });
       expect(result.status).toBe('ERROR');
     });
 
