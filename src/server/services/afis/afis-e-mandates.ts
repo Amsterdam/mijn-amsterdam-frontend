@@ -76,7 +76,7 @@ const afisEMandatePostbodyStatic: AfisEMandateSourceStatic = {
   Status: getFromEnv('BFF_AFIS_EMANDATE_STATUS') ?? '',
 };
 
-export async function createAfisEMandate(
+export async function createEMandate(
   payload: EMandateSignRequestPayload & EMandateSignRequestNotificationPayload
 ) {
   const acceptant = EMandateAcceptantenGemeenteAmsterdam.find(
@@ -408,7 +408,7 @@ function transformEMandatesResponse(
   );
 }
 
-export async function fetchAfisEMandates(
+export async function fetchEMandates(
   payload: BusinessPartnerIdPayload,
   authProfile: AuthProfile
 ): Promise<ApiResponse<AfisEMandateFrontend[] | null>> {
@@ -425,7 +425,7 @@ export async function fetchAfisEMandates(
     /**
      * We do not want to cache this request, because the e-mandates are updated without direct
      * user interaction.
-     * If we would cache this request, the user would not see the latest e-mandates.
+     * If we would cache this request, the user would __not__ see the latest e-mandates.
      */
     enableCache: false,
   });
@@ -630,9 +630,9 @@ export async function handleEmandateUpdate(
 export const forTesting = {
   addEmandateApiUrls,
   changeEMandateStatus,
-  createAfisEMandate,
+  createAfisEMandate: createEMandate,
   createEMandateProviderPayload,
-  fetchAfisEMandates,
+  fetchAfisEMandates: fetchEMandates,
   fetchEmandateRedirectUrlFromProvider,
   fetchEmandateSignRequestStatus,
   getEMandateSourceByAcceptant,
