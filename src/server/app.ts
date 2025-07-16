@@ -23,7 +23,7 @@ if (IS_DEVELOPMENT) {
 }
 
 if (process.env.DEBUG_RESPONSE_DATA) {
-    process.env.DEBUG = `source-api-request:request,${process.env.DEBUG ?? ''}`;
+  process.env.DEBUG = `source-api-request:request,${process.env.DEBUG ?? ''}`;
 }
 
 // Note: Keep this line after loading in env files or LOG_LEVEL will be undefined.
@@ -46,7 +46,7 @@ import { router as protectedRouter } from './routing/router-protected';
 import { legacyRouter, router as publicRouter } from './routing/router-public';
 import { stadspasExternalConsumerRouter } from './routing/router-stadspas-external-consumer';
 import { captureException } from './services/monitoring';
-import { afisExternalConsumerRouter } from './services/afis/afis-router-external-consumer';
+import { afisExternalConsumerRouter } from './routing/afis-router-external-consumer';
 
 import { getFromEnv } from './helpers/env';
 import { notificationsExternalConsumerRouter } from './routing/router-notifications-external-consumer';
