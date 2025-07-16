@@ -287,10 +287,11 @@ describe('afis-e-mandates service (with nock)', () => {
 
   describe('fetchEmandateRedirectUrlFromProvider', () => {
     it('returns error if creditor not found', async () => {
-      const result = await emandates.fetchEmandateRedirectUrlFromProvider({
-        ...validPayload,
-        creditorIBAN: 'notfound',
-      });
+      const result =
+        await emandates.fetchEmandateSignRequestRedirectUrlFromPaymentProvider({
+          ...validPayload,
+          creditorIBAN: 'notfound',
+        });
       expect(result.status).toBe('ERROR');
     });
 
@@ -298,10 +299,11 @@ describe('afis-e-mandates service (with nock)', () => {
       // Creditor exists, but business partner fetch fails
       remoteApi.get(/A_BusinessPartner/).reply(500);
 
-      const result = await emandates.fetchEmandateRedirectUrlFromProvider({
-        ...validPayload,
-        creditorIBAN: validCreditorIBAN,
-      });
+      const result =
+        await emandates.fetchEmandateSignRequestRedirectUrlFromPaymentProvider({
+          ...validPayload,
+          creditorIBAN: validCreditorIBAN,
+        });
       expect(result.status).toBe('ERROR');
       expect(result.status === 'ERROR' && result.message).toBe(
         'Could not get full name or address for business partner 123'
@@ -313,10 +315,11 @@ describe('afis-e-mandates service (with nock)', () => {
       remoteApi.get(/A_BusinessPartnerAddress/).reply(200);
       remoteApi.post(/paylinks/).reply(500);
 
-      const result = await emandates.fetchEmandateRedirectUrlFromProvider({
-        ...validPayload,
-        creditorIBAN: validCreditorIBAN,
-      });
+      const result =
+        await emandates.fetchEmandateSignRequestRedirectUrlFromPaymentProvider({
+          ...validPayload,
+          creditorIBAN: validCreditorIBAN,
+        });
       expect(result.status).toBe('ERROR');
       expect(result.status === 'ERROR' && result.message).toBe(
         'Request failed with status code 500'
@@ -328,10 +331,11 @@ describe('afis-e-mandates service (with nock)', () => {
       remoteApi.get(/A_BusinessPartnerAddress/).reply(200);
       remoteApi.post(/paylinks/).reply(200);
 
-      const result = await emandates.fetchEmandateRedirectUrlFromProvider({
-        ...validPayload,
-        creditorIBAN: validCreditorIBAN,
-      });
+      const result =
+        await emandates.fetchEmandateSignRequestRedirectUrlFromPaymentProvider({
+          ...validPayload,
+          creditorIBAN: validCreditorIBAN,
+        });
       expect(result.status).toBe('OK');
       expect(result.content).toBeNull();
     });
@@ -344,10 +348,11 @@ describe('afis-e-mandates service (with nock)', () => {
         .post(/paylinks/)
         .reply(200, { mpid: 'mpid123', paylink: 'https://pay.example.com' });
 
-      const result = await emandates.fetchEmandateRedirectUrlFromProvider({
-        ...validPayload,
-        creditorIBAN: validCreditorIBAN,
-      });
+      const result =
+        await emandates.fetchEmandateSignRequestRedirectUrlFromPaymentProvider({
+          ...validPayload,
+          creditorIBAN: validCreditorIBAN,
+        });
       expect(result.status).toBe('OK');
       expect(result.content).toHaveProperty(
         'redirectUrl',
@@ -393,7 +398,7 @@ describe('afis-e-mandates service (with nock)', () => {
     });
 
     it('createEMandateProviderPayload generates payload', () => {
-      const payload = emandates.forTesting.createEMandateProviderPayload(
+      const payload = emandates.forTesting.createEMandateSignRequestPayload(
         { firstName: 'John', lastName: 'Doe', businessPartnerId: '123' },
         {
           iban: validSenderIBAN,

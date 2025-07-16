@@ -1,5 +1,5 @@
 import { HttpStatusCode } from 'axios';
-import { add, isSameDay, parseISO, subDays } from 'date-fns';
+import { add, isAfter, isSameDay, parseISO, subDays } from 'date-fns';
 import { Request } from 'express';
 import slug from 'slugme';
 import { firstBy } from 'thenby';
@@ -35,7 +35,6 @@ import {
   AfisEMandateCreditor,
   EMandateSignRequestPayload,
   EMandateStatusChangePayload,
-  EMandateSignRequestStatusPayload,
   BusinessPartnerIdPayload,
   POMSignRequestUrlResponseSource,
   POMSignRequestStatusResponseSource,
@@ -139,10 +138,10 @@ export async function createEMandate(
     // Fixed values needed for API (black box)
     ...afisEMandatePostbodyStatic,
 
-    // Gegevens van de incassant van het EMandaat (De gemeente Amsterdam)
+    // Gegevens van de crediteur van het EMandaat (De gemeente Amsterdam)
     ...eMandateReceiver,
 
-    // Gegevens van de afgever van het EMandaat
+    // Gegevens van de debiteur/afgever van het EMandaat
     SndId: payload.businessPartnerId,
 
     // Gegevens geleverd door Debtor bank via EMandaat request
@@ -162,7 +161,7 @@ export async function createEMandate(
     SignCity: eMandateReceiver.RecCity, // TODO: Hoe komen we aan dit gegeven, altijd Amsterdam?
     LifetimeFrom: new Date().toISOString(),
     LifetimeTo: lifetimeTo,
-    SndDebtorId: getSndDebtorId(creditor),
+    SndDebtorId: creditor.refId,
   };
 
   const config = await getAfisApiConfig({
@@ -300,7 +299,7 @@ function addEmandateApiUrls(
       sessionID,
       afisEMandateSource
     );
-    eMandate.updateUrl = getUpdateApiUrl(sessionID, afisEMandateSource);
+    eMandate.lifetimeUpdateUrl = getUpdateApiUrl(sessionID, afisEMandateSource);
   }
 
   eMandate.signRequestUrl = getSignRequestApiUrl(
@@ -363,17 +362,13 @@ function transformEMandateSource(
   return eMandate;
 }
 
-function getSndDebtorId(creditor: AfisEMandateCreditor) {
-  return creditor.refId;
-}
-
 function getEMandateSourceByCreditor(
   sourceMandates: AfisEMandateSource[],
   creditor: AfisEMandateCreditor
 ): AfisEMandateSource | undefined {
   return sourceMandates.find((eMandateSource) => {
     // TODO: Find out / Confirm if the debtorId is the creditor id?!??!?!?
-    return eMandateSource.SndDebtorId === getSndDebtorId(creditor);
+    return eMandateSource.SndDebtorId === creditor.refId;
   });
 }
 
@@ -404,7 +399,7 @@ function transformEMandatesResponse(
   }).sort(
     firstBy(function sortByStatus(eMandate: AfisEMandateFrontend) {
       return eMandate.status === EMANDATE_STATUS.ON ? -1 : 1;
-    }).thenBy('creditor')
+    }).thenBy('creditorName')
   );
 }
 
@@ -442,7 +437,7 @@ function transformEMandatesRedirectUrlResponse(
   return null;
 }
 
-function createEMandateProviderPayload(
+function createEMandateSignRequestPayload(
   businessPartner: AfisBusinessPartnerDetailsTransformed,
   creditor: AfisEMandateCreditor,
   signRequestPayload: EMandateSignRequestPayload
@@ -500,7 +495,7 @@ function createEMandateProviderPayload(
   };
 }
 
-export async function fetchEmandateRedirectUrlFromProvider(
+export async function fetchEmandateSignRequestRedirectUrlFromPaymentProvider(
   eMandateSignRequestPayload: EMandateSignRequestPayload
 ) {
   const creditor = EMandateCreditorsGemeenteAmsterdam.find(
@@ -529,7 +524,7 @@ export async function fetchEmandateRedirectUrlFromProvider(
       return `${url}/v3/paylinks`;
     },
     transformResponse: transformEMandatesRedirectUrlResponse,
-    data: createEMandateProviderPayload(
+    data: createEMandateSignRequestPayload(
       businessPartnerResponse.content,
       creditor,
       eMandateSignRequestPayload
@@ -551,32 +546,15 @@ function transformEmandateSignRequestStatus(
   };
 }
 
-export async function fetchEmandateSignRequestStatus(
-  eMandateSignRequestStatusPayload: EMandateSignRequestStatusPayload
-) {
-  const config = await getApiConfig('POM', {
-    method: 'GET',
-    formatUrl: ({ url }) => {
-      return `${url}/v3/paylinks/${eMandateSignRequestStatusPayload.mpid}`;
-    },
-    transformResponse: transformEmandateSignRequestStatus,
-  });
-
-  const eMandateSignRequestStatusResponse =
-    await requestData<AfisEMandateSignRequestResponse | null>(config);
-
-  return eMandateSignRequestStatusResponse;
-}
-
 export async function changeEMandateStatus(
   eMandateStatusChangePayload: EMandateStatusChangePayload
 ) {
   function transformResponse() {
     const dateValidTo = eMandateStatusChangePayload?.LifetimeTo || null;
     const dateValidToFormatted = getEmandateValidityDateFormatted(dateValidTo);
-    const dateValidFromFormatted = getEmandateValidityDateFormatted(
-      eMandateStatusChangePayload?.LifetimeFrom || null
-    );
+    const dateValidFrom = eMandateStatusChangePayload?.LifetimeFrom || null;
+    const dateValidFromFormatted =
+      getEmandateValidityDateFormatted(dateValidFrom);
     return {
       dateValidTo,
       dateValidToFormatted,
@@ -590,16 +568,19 @@ export async function changeEMandateStatus(
   return updateAfisEMandate(eMandateStatusChangePayload, transformResponse);
 }
 
-const eMandateUploadPayload = z.object({
-  LifetimeTo: z.iso.date(),
-  IMandateId: z.string(),
-});
-
-export async function handleEmandateUpdate(
+export async function handleEmandateLifeTimeUpdate(
   eMandateStatusChangePayload: EMandateUpdatePayload,
   _authProfile: AuthProfile,
   req: Request
 ) {
+  const eMandateUploadPayload = z.object({
+    LifetimeTo: z.iso.date().refine((isoDate) => {
+      // The date must not be in the past.
+      return isAfter(parseISO(isoDate), new Date());
+    }),
+    IMandateId: z.string(),
+  });
+
   let payload: AfisEMandateUpdatePayload;
 
   try {
@@ -630,17 +611,15 @@ export async function handleEmandateUpdate(
 export const forTesting = {
   addEmandateApiUrls,
   changeEMandateStatus,
-  createAfisEMandate: createEMandate,
-  createEMandateProviderPayload,
-  fetchAfisEMandates: fetchEMandates,
-  fetchEmandateRedirectUrlFromProvider,
-  fetchEmandateSignRequestStatus,
+  createEMandate,
+  createEMandateSignRequestPayload,
+  fetchEMandates,
+  fetchEmandateSignRequestRedirectUrlFromPaymentProvider,
   getEMandateSourceByCreditor,
   getSignRequestApiUrl,
-  getSndDebtorId,
   getStatusChangeApiUrl,
   getUpdateApiUrl,
-  handleEmandateUpdate,
+  handleEmandateLifeTimeUpdate,
   transformEmandateSignRequestStatus,
   transformEMandateSource,
   transformEMandatesRedirectUrlResponse,

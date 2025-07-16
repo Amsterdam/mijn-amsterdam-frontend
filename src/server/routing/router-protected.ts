@@ -21,9 +21,8 @@ import { fetchAfisDocument } from '../services/afis/afis-documents';
 import {
   fetchEMandates,
   changeEMandateStatus,
-  fetchEmandateRedirectUrlFromProvider,
-  fetchEmandateSignRequestStatus,
-  handleEmandateUpdate,
+  fetchEmandateSignRequestRedirectUrlFromPaymentProvider,
+  handleEmandateLifeTimeUpdate,
 } from '../services/afis/afis-e-mandates';
 import {
   handleAfisRequestWithEncryptedPayloadQueryParam,
@@ -34,7 +33,6 @@ import type {
   BusinessPartnerIdPayload,
   EMandateStatusChangePayload,
   EMandateSignRequestPayload,
-  EMandateSignRequestStatusPayload,
   EMandateUpdatePayload,
 } from '../services/afis/afis-types';
 import { fetchBezwaarDocument } from '../services/bezwaren/bezwaren';
@@ -260,9 +258,14 @@ attachDocumentDownloadRoute(
   fetchZorgnedAVDocument
 );
 
+////////////////////////////////////////////////////////////
 // AFIS facturen en betalen
+////////////////////////////////////////////////////////////
 
 {
+  /**
+   * Fetches the business partner details for a given business partner ID.
+   */
   type QueryPayload = BusinessPartnerIdPayload;
   type ServiceReturnType = ReturnType<typeof fetchAfisBusinessPartnerDetails>;
 
@@ -276,74 +279,9 @@ attachDocumentDownloadRoute(
 }
 
 {
-  type QueryPayload = BusinessPartnerIdPayload;
-  type ServiceReturnType = ReturnType<typeof fetchEMandates>;
-
-  router.get(
-    BffEndpoints.AFIS_EMANDATES,
-    handleAfisRequestWithEncryptedPayloadQueryParam<
-      QueryPayload,
-      ServiceReturnType
-    >(fetchEMandates)
-  );
-}
-
-{
-  type QueryPayload = EMandateStatusChangePayload;
-  type ServiceReturnType = ReturnType<typeof changeEMandateStatus>;
-
-  router.get(
-    BffEndpoints.AFIS_EMANDATES_STATUS_CHANGE,
-    handleAfisRequestWithEncryptedPayloadQueryParam<
-      QueryPayload,
-      ServiceReturnType
-    >(changeEMandateStatus)
-  );
-}
-
-{
-  type QueryPayload = EMandateUpdatePayload;
-  type ServiceReturnType = ReturnType<typeof handleEmandateUpdate>;
-
-  router.post(
-    BffEndpoints.AFIS_EMANDATES_UPDATE,
-    express.urlencoded({ extended: true }),
-    handleAfisRequestWithEncryptedPayloadQueryParam<
-      QueryPayload,
-      ServiceReturnType
-    >(handleEmandateUpdate)
-  );
-}
-
-{
-  type QueryPayload = EMandateSignRequestPayload;
-  type ServiceReturnType = ReturnType<
-    typeof fetchEmandateRedirectUrlFromProvider
-  >;
-
-  router.get(
-    BffEndpoints.AFIS_EMANDATES_SIGN_REQUEST_URL,
-    handleAfisRequestWithEncryptedPayloadQueryParam<
-      QueryPayload,
-      ServiceReturnType
-    >(fetchEmandateRedirectUrlFromProvider)
-  );
-}
-
-{
-  type QueryPayload = EMandateSignRequestStatusPayload;
-  type ServiceReturnType = ReturnType<typeof fetchEmandateSignRequestStatus>;
-
-  router.get(
-    BffEndpoints.AFIS_EMANDATES_SIGN_REQUEST_STATUS,
-    handleAfisRequestWithEncryptedPayloadQueryParam<
-      QueryPayload,
-      ServiceReturnType
-    >(fetchEmandateSignRequestStatus)
-  );
-}
-
-{
+  /**
+   * Fetches Afis Facturen for a given business partner ID.
+   */
   type QueryPayload = BusinessPartnerIdPayload;
   type ServiceReturnType = ReturnType<typeof handleFetchAfisFacturen>;
 
@@ -357,6 +295,80 @@ attachDocumentDownloadRoute(
   );
 }
 
+{
+  /**
+   * Fetches the E-mandates for a given business partner ID.
+   */
+  type QueryPayload = BusinessPartnerIdPayload;
+  type ServiceReturnType = ReturnType<typeof fetchEMandates>;
+
+  router.get(
+    BffEndpoints.AFIS_EMANDATES,
+    handleAfisRequestWithEncryptedPayloadQueryParam<
+      QueryPayload,
+      ServiceReturnType
+    >(fetchEMandates)
+  );
+}
+
+{
+  /**
+   * Used for the "Stopzetten" action.
+   * Change the status of an E-mandate.
+   * The status can be only be changed to OFF.
+   */
+  type QueryPayload = EMandateStatusChangePayload;
+  type ServiceReturnType = ReturnType<typeof changeEMandateStatus>;
+
+  router.get(
+    BffEndpoints.AFIS_EMANDATES_STATUS_CHANGE,
+    handleAfisRequestWithEncryptedPayloadQueryParam<
+      QueryPayload,
+      ServiceReturnType
+    >(changeEMandateStatus)
+  );
+}
+
+{
+  /**
+   * Used for the "Einddatum aanpassen" action.
+   * Updates the end date of an E-mandate.
+   */
+  type QueryPayload = EMandateUpdatePayload;
+  type ServiceReturnType = ReturnType<typeof handleEmandateLifeTimeUpdate>;
+
+  router.post(
+    BffEndpoints.AFIS_EMANDATES_UPDATE,
+    express.urlencoded({ extended: true }),
+    handleAfisRequestWithEncryptedPayloadQueryParam<
+      QueryPayload,
+      ServiceReturnType
+    >(handleEmandateLifeTimeUpdate)
+  );
+}
+
+{
+  /**
+   * Fetches the E-mandate sign request redirect URL from the payment provider.
+   * This is used to initiate the E-mandate sign request flow.
+   */
+  type QueryPayload = EMandateSignRequestPayload;
+  type ServiceReturnType = ReturnType<
+    typeof fetchEmandateSignRequestRedirectUrlFromPaymentProvider
+  >;
+
+  router.get(
+    BffEndpoints.AFIS_EMANDATES_SIGN_REQUEST_URL,
+    handleAfisRequestWithEncryptedPayloadQueryParam<
+      QueryPayload,
+      ServiceReturnType
+    >(fetchEmandateSignRequestRedirectUrlFromPaymentProvider)
+  );
+}
+
+/**
+ * Fetches the Afis facturen PDF document download data.
+ */
 attachDocumentDownloadRoute(
   router,
   BffEndpoints.AFIS_DOCUMENT_DOWNLOAD,
