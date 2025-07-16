@@ -61,10 +61,10 @@ function EMandate({ eMandate }: EMandateProps) {
                 label: 'Afdeling gemeente',
                 content: (
                   <>
-                    <div className="ams-mb-s">{eMandate.acceptant}</div>
-                    {eMandate.acceptantDescription && (
+                    <div className="ams-mb-s">{eMandate.creditor}</div>
+                    {eMandate.creditorDescription && (
                       <Paragraph size="small">
-                        {eMandate.acceptantDescription}
+                        {eMandate.creditorDescription}
                       </Paragraph>
                     )}
                   </>
@@ -72,7 +72,7 @@ function EMandate({ eMandate }: EMandateProps) {
               },
               {
                 label: 'IBAN gemeente',
-                content: eMandate.acceptantIBAN,
+                content: eMandate.creditorIBAN,
               },
             ],
           },
@@ -81,7 +81,7 @@ function EMandate({ eMandate }: EMandateProps) {
               {
                 label: 'Status',
                 content: eMandate.displayStatus,
-                isVisible: !isPendingActivation(eMandate.acceptantIBAN),
+                isVisible: !isPendingActivation(eMandate.creditorIBAN),
               },
               {
                 label: 'Einddatum',
@@ -113,17 +113,17 @@ function EMandate({ eMandate }: EMandateProps) {
             : []),
         ]}
       />
-      {isPendingActivation(eMandate.acceptantIBAN) ? (
+      {isPendingActivation(eMandate.creditorIBAN) ? (
         <Alert
           headingLevel={4}
           heading="Status"
           closeable
           onClose={() => {
-            removePendingActivation(eMandate.acceptantIBAN);
+            removePendingActivation(eMandate.creditorIBAN);
           }}
         >
           <Paragraph>
-            Wachten op bevestiging van het E-Mandaat voor {eMandate.acceptant}
+            Wachten op bevestiging van het E-Mandaat voor {eMandate.creditor}
             .{' '}
           </Paragraph>
         </Alert>
@@ -168,7 +168,7 @@ export function AfisEMandateDetail() {
       pageContentMain={
         !!eMandate && (
           <>
-            {isPendingActivation(eMandate.acceptantIBAN) && (
+            {isPendingActivation(eMandate.creditorIBAN) && (
               <EmandateRefetchInterval fetch={refetchEMandates} />
             )}
             <EMandate eMandate={eMandate} />

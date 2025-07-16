@@ -1,6 +1,6 @@
-import { AfisEMandateAcceptant, EMandateReceiverSource } from './afis-types';
+import { AfisEMandateCreditor, EMandateReceiverSource } from './afis-types';
 
-// TODO: Uitvinden of de receiver mogelijk per Acceptant kan verschillen
+// TODO: Uitvinden of de receiver mogelijk per Creditor kan verschillen
 export const eMandateReceiver: EMandateReceiverSource = {
   RecName1: 'Gemeente Amsterdam',
   RecPostal: '1011 PN',
@@ -11,7 +11,7 @@ export const eMandateReceiver: EMandateReceiverSource = {
 };
 
 // Public data, see also: https://www.amsterdam.nl/veelgevraagd/facturen-van-de-gemeente-controleren-gegevens-wijzigen-automatische-incasso-regelen-38caa#m4bgm6izgl3skf8ue1p
-export const EMandateAcceptantenGemeenteAmsterdam: AfisEMandateAcceptant[] = [
+export const EMandateCreditorsGemeenteAmsterdam: AfisEMandateCreditor[] = [
   {
     name: 'Afval',
     iban: 'NL21RABO0110055004',
