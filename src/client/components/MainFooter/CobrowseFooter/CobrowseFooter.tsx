@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 
 import { PageFooter } from '@amsterdam/design-system-react';
 
-import { IS_AP } from '../../../../universal/config/env';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 import { useScript } from '../../../hooks/useScript';
 
@@ -34,7 +33,7 @@ function waitForCobrowseLiveInWindow(window: Window & typeof globalThis) {
 }
 
 export function CobrowseFooter() {
-  if (!FeatureToggle.cobrowseIsActive) {
+  if (MA_APP_MODE === 'unittest' || !FeatureToggle.cobrowseIsActive) {
     return;
   }
 
@@ -43,7 +42,7 @@ export function CobrowseFooter() {
     src: 'https://omnichanneliv--gat2.sandbox.my.site.com/staticvforcesite/resource/Cobrowse/cobrowseAppNL.bundle.js?v=002',
     defer: false,
     async: true,
-    isEnabled: !IS_AP,
+    isEnabled: true,
   });
   const [showCobrowseFooter, setShowCobrowseFooter] = useState(false);
   useEffect(() => {
