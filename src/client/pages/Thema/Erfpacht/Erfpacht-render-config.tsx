@@ -17,6 +17,7 @@ import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
 } from '../../../config/thema-types';
+import { themaRegistrationEventChannel } from '../../../hooks/useThemaRegistration';
 
 export const ErfpachtRoutes = [
   {
@@ -77,3 +78,8 @@ export const menuItemZakelijk: ThemaMenuItem<typeof themaId> = {
   isActive: menuItem.isActive,
   IconSVG: ErfpachtIcon,
 };
+
+themaRegistrationEventChannel.emit('register', {
+  id: themaId,
+  routes: ErfpachtRoutes,
+});

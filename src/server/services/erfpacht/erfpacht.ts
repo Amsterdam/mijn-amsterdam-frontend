@@ -12,6 +12,7 @@ import {
   type ErfpachtDossiersResponseSource,
 } from './erfpacht-types';
 import { routeConfig } from '../../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
+import type { ApiResponse } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { jsonCopy, sortAlpha } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
@@ -147,7 +148,11 @@ export function transformDossierResponse(
   return responseData;
 }
 
-export async function fetchErfpacht(authProfileAndToken: AuthProfileAndToken) {
+export async function fetchErfpacht(
+  authProfileAndToken: AuthProfileAndToken
+): Promise<
+  ApiResponse<ErfpachtErpachterResponse | ErfpachtDossiersResponse | null>
+> {
   const config = getApiConfig('ERFPACHT');
 
   const erfpachterResponse = await requestData<ErfpachtErpachterResponse>(

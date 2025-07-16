@@ -2,6 +2,7 @@ import { Routes, Route, matchPath } from 'react-router';
 
 import { MyAreaRoutes } from './components/MyArea/MyArea-routes';
 import type { ThemaRenderRouteConfig } from './config/thema-types';
+import { useThemaRegistration } from './hooks/useThemaRegistration';
 import { BffErrorRoutes } from './pages/BffError/BffError-routes';
 import { DashboardRoutes } from './pages/Dashboard/Dashboard-routes';
 import { GeneralInfoRoutes } from './pages/GeneralInfo/GeneralInfo-routes';
@@ -93,7 +94,9 @@ function ApplicationRoutes({ routes }: { routes: ApplicationRouteConfig[] }) {
 }
 
 export function PrivateRoutes() {
-  return <ApplicationRoutes routes={privateRoutes} />;
+  const { routes } = useThemaRegistration();
+
+  return <ApplicationRoutes routes={routes} />;
 }
 
 export function PublicRoutes() {
