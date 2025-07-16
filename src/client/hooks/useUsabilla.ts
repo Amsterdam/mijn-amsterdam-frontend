@@ -47,7 +47,7 @@ export function useUsabilla(profileType?: ProfileType) {
     src: '/js/usabilla-2021-10-05.js',
     defer: false,
     async: true,
-    isEnabled: IS_AP,
+    isEnabled: IS_AP && MA_APP_MODE !== 'unittest',
   });
   useEffect(() => {
     if (isUsabillaLoaded) {
