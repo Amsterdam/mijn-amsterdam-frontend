@@ -61,7 +61,7 @@ function EMandate({ eMandate }: EMandateProps) {
                 label: 'Afdeling gemeente',
                 content: (
                   <>
-                    <div className="ams-mb-s">{eMandate.creditor}</div>
+                    <div className="ams-mb-s">{eMandate.creditorName}</div>
                     {eMandate.creditorDescription && (
                       <Paragraph size="small">
                         {eMandate.creditorDescription}
@@ -123,8 +123,8 @@ function EMandate({ eMandate }: EMandateProps) {
           }}
         >
           <Paragraph>
-            Wachten op bevestiging van het E-Mandaat voor {eMandate.creditor}
-            .{' '}
+            Wachten op bevestiging van het E-Mandaat voor{' '}
+            {eMandate.creditorName}.{' '}
           </Paragraph>
         </Alert>
       ) : (
