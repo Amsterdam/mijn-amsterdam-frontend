@@ -2,6 +2,7 @@ import { Grid, Heading, Link, Paragraph } from '@amsterdam/design-system-react';
 
 import { featureToggle } from './Afis-thema-config';
 import styles from './AfisBetaalVoorkeuren.module.scss';
+import { EmandateRefetchInterval } from './AfisEMandateDetail';
 import {
   useAfisBetaalVoorkeurenData,
   useAfisEMandatesData,
@@ -102,6 +103,8 @@ export function AfisBetaalVoorkeuren() {
     eMandateTableConfig,
     hasEMandatesError,
     isLoadingEMandates,
+    statusNotification: { ibansPendingActivation },
+    refetchEMandates,
   } = useAfisEMandatesData();
 
   const isLoadingAllAPis =
@@ -173,6 +176,9 @@ export function AfisBetaalVoorkeuren() {
         isLoading={!!(isLoadingBusinessPartnerDetails || isThemaPaginaLoading)}
         startCollapsed={featureToggle.afisEMandatesActive}
       />
+      {!!ibansPendingActivation.length && (
+        <EmandateRefetchInterval fetch={refetchEMandates} />
+      )}
       {eMandatesTable}
     </>
   );
