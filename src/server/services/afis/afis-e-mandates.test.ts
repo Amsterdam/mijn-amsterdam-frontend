@@ -36,7 +36,7 @@ const validPayload = {
 
 const validEMandateFrontend: AfisEMandateFrontend = {
   id: 'mockId',
-  creditor: 'Test Creditor',
+  creditorName: 'Test Creditor',
   creditorIBAN: validCreditorIBAN,
   status: '1',
   displayStatus: 'Active',
