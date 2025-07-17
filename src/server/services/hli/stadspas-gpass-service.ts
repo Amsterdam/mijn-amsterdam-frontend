@@ -372,10 +372,9 @@ export async function fetchGpassBudgetTransactions(
     params: queryParams,
   });
 
-  const response =
-    await requestData<StadspasDiscountTransactionsResponseSource>(
-      dataRequestConfig
-    );
+  type Response = StadspasTransactiesResponseSource;
+
+  const response = await requestData<Response>(dataRequestConfig);
   if (response.status !== 'OK') {
     return response;
   }
@@ -387,10 +386,7 @@ export async function fetchGpassBudgetTransactions(
   let missingItems = numberOfItems - offset > MAX_ITEM_AMOUNT_PER_REQUEST;
 
   while (missingItems) {
-    const response =
-      requestData<StadspasDiscountTransactionsResponseSource>(
-        dataRequestConfig
-      );
+    const response = requestData<Response>(dataRequestConfig);
     responses.push(response);
 
     offset += MAX_ITEM_AMOUNT_PER_REQUEST;
@@ -411,7 +407,7 @@ export async function fetchGpassBudgetTransactions(
   }
 
   const finalRespones = okResponses.flatMap((res) =>
-    transformGpassAanbiedingenResponse(res.content)
+    transformGpassTransactionsResponse(res.content)
   );
   return apiSuccessResult(finalRespones);
 }
