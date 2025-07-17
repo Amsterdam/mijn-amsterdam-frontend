@@ -296,7 +296,7 @@ describe('stadspas services', () => {
     test('stadspas transacties Happy!', async () => {
       remoteApi
         .get(
-          '/stadspas/rest/transacties/v1/budget?pasnummer=123123123&sub_transactions=true&date_from=2024-06-30&date_until=2025-01-01'
+          '/stadspas/rest/transacties/v1/budget?pasnummer=123123123&sub_transactions=true&date_from=2024-06-30&date_until=2025-01-01&limit=20&offset=0'
         )
         .matchHeader(
           'authorization',

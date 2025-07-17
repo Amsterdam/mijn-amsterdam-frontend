@@ -1,13 +1,5 @@
 import { HttpStatusCode } from 'axios';
-import {
-  differenceInMonths,
-  isAfter,
-  isBefore,
-  isSameDay,
-  parseISO,
-  subMonths,
-  isValid,
-} from 'date-fns';
+import { isAfter, isBefore, isSameDay, parseISO, isValid } from 'date-fns';
 
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import {
@@ -260,7 +252,7 @@ function getNextYearsDefaultExpiryDate(): Date {
   return getDefaultExpiryDate(1);
 }
 
-function getPreviousYearsDefaultExpiryDate(): Date {
+export function getPreviousYearsDefaultExpiryDate(): Date {
   return getDefaultExpiryDate(-1);
 }
 
@@ -358,38 +350,70 @@ function transformGpassTransactionsResponse(
   return [];
 }
 
-const MONTHS_BACK_IN_PREVIOUS_YEAR = 6;
-
+const MAX_ITEM_AMOUNT_PER_REQUEST = 20;
+/** Fetch budget transactions from gpass
+ *
+ *  queryParams:
+ *    pasnummer:        which pasnummer would you like to query for?
+ *    sub_transactions: Include transactions from linked passes.
+ *    date_from:        self explanatory.
+ *    date_until:       self explanatory.
+ *    limit:            How many budget transactions from gpass? Max and default is 20.
+ *    offset:           Request n items further plus the limit.
+ *                        e.q. 0 will yield items 1 to 20. 1 from 2 to 21 and so on...
+ */
 export async function fetchGpassBudgetTransactions(
   administratienummer: string,
-  pasnummer: Stadspas['passNumber'],
-  budgetCode?: StadspasBudget['code']
+  queryParams: StadspasTransactionQueryParams
 ) {
-  const prev = getPreviousYearsDefaultExpiryDate();
-  const monthsAgo = differenceInMonths(new Date(), prev);
-  const from = subMonths(
-    prev,
-    Math.max(0, MONTHS_BACK_IN_PREVIOUS_YEAR - monthsAgo)
-  );
-  const requestParams: StadspasTransactionQueryParams = {
-    pasnummer,
-    sub_transactions: true, // Includes transactions from linked passes.
-    date_from: from.toISOString().split('T')[0], // Format to YYYY-MM-DD
-    date_until: new Date().toISOString().split('T')[0], // Format to YYYY-MM-DD
-  };
-
-  if (budgetCode) {
-    requestParams.budgetcode = budgetCode;
-  }
-
   const dataRequestConfig = getApiConfig('GPASS', {
     formatUrl: ({ url }) => `${url}/rest/transacties/v1/budget`,
-    transformResponse: transformGpassTransactionsResponse,
     headers: getHeaders(administratienummer),
-    params: requestParams,
+    params: queryParams,
   });
 
-  return requestData<StadspasBudgetTransaction[]>(dataRequestConfig);
+  const response =
+    await requestData<StadspasDiscountTransactionsResponseSource>(
+      dataRequestConfig
+    );
+  if (response.status !== 'OK') {
+    return response;
+  }
+
+  const numberOfItems = response.content.number_of_items;
+
+  const responses = [];
+  let offset = queryParams.offset || 0;
+  let missingItems = numberOfItems - offset > MAX_ITEM_AMOUNT_PER_REQUEST;
+
+  while (missingItems) {
+    const response =
+      requestData<StadspasDiscountTransactionsResponseSource>(
+        dataRequestConfig
+      );
+    responses.push(response);
+
+    offset += MAX_ITEM_AMOUNT_PER_REQUEST;
+    missingItems = numberOfItems - offset > MAX_ITEM_AMOUNT_PER_REQUEST;
+  }
+  const resolvedResponses = await Promise.all(responses);
+
+  const okResponses = [response];
+  // RP TODO: What to do with these?
+  const errorRespones = [];
+
+  for (const res of resolvedResponses) {
+    if (res.status === 'OK') {
+      okResponses.push(res);
+    } else {
+      errorRespones.push(res);
+    }
+  }
+
+  const finalRespones = okResponses.flatMap((res) =>
+    transformGpassAanbiedingenResponse(res.content)
+  );
+  return apiSuccessResult(finalRespones);
 }
 
 function transformGpassAanbiedingenResponse(

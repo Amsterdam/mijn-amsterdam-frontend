@@ -7,6 +7,7 @@ import {
   fetchGpassDiscountTransactions,
   fetchStadspassen,
   getCurrentPasYearExpiryDate,
+  getPreviousYearsDefaultExpiryDate,
   mutateGpassSetPasIsBlockedState,
 } from './stadspas-gpass-service';
 import {
@@ -31,6 +32,7 @@ import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureException } from '../monitoring';
+import { differenceInMonths, subMonths } from 'date-fns';
 
 export async function fetchStadspas(
   authProfileAndToken: AuthProfileAndToken
@@ -172,12 +174,27 @@ export async function fetchStadspasDiscountTransactions(
 
 export async function fetchStadspasBudgetTransactions(
   transactionsKeyEncrypted: StadspasFrontend['transactionsKeyEncrypted'],
-  budgetCode?: StadspasBudget['code'],
+  budgetcode?: StadspasBudget['code'],
   verifySessionId?: AuthProfileAndToken['profile']['sid']
 ) {
+  const prev = getPreviousYearsDefaultExpiryDate();
+  const monthsAgo = differenceInMonths(new Date(), prev);
+  const MONTHS_BACK_IN_PREVIOUS_YEAR = 6;
+  const from = subMonths(
+    prev,
+    Math.max(0, MONTHS_BACK_IN_PREVIOUS_YEAR - monthsAgo)
+  );
   return stadspasDecryptAndFetch(
     (administratienummer, pasnummer) =>
-      fetchGpassBudgetTransactions(administratienummer, pasnummer, budgetCode),
+      fetchGpassBudgetTransactions(administratienummer, {
+        pasnummer,
+        budgetcode,
+        sub_transactions: true,
+        date_from: from.toISOString().split('T')[0],
+        date_until: new Date().toISOString().split('T')[0],
+        limit: 20,
+        offset: 0,
+      }),
     transactionsKeyEncrypted,
     verifySessionId
   );
