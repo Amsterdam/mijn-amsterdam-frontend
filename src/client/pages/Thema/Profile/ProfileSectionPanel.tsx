@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import { LinkList, Grid } from '@amsterdam/design-system-react';
 
 import styles from './ProfileSectionPanel.module.scss';
+import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
@@ -57,7 +58,7 @@ function getRows(sectionData: ProfileSectionData) {
       content: value,
       isVisible: !!value,
       classNameLabel: styles.Label,
-      classNameContent: styles.Content,
+      classNameContent: `${styles.Content} ${FeatureToggle.cobrowseIsActive ? 'cobrowse-redacted' : ''}`,
     };
   });
 }

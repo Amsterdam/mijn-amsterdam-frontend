@@ -1,5 +1,13 @@
 import { HttpStatusCode } from 'axios';
-import { isAfter, isBefore, isSameDay, parseISO } from 'date-fns';
+import {
+  differenceInMonths,
+  isAfter,
+  isBefore,
+  isSameDay,
+  parseISO,
+  subMonths,
+  isValid,
+} from 'date-fns';
 
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import {
@@ -201,8 +209,8 @@ export async function fetchStadspassenByAdministratienummer(
   const pasRequests = [];
 
   for (const pashouder of allPashouders) {
-    for (const pas of (pashouder.passen ?? [])) {
-      if (hasValidExpiryDate(pas.expiry_date) && !pas.vervangen) {
+    for (const pas of pashouder.passen ?? []) {
+      if (isVisiblePass(pas.actief, pas.expiry_date) && !pas.vervangen) {
         const request = fetchStadspasSource(
           pas.pasnummer,
           administratienummer
@@ -274,48 +282,27 @@ function parseExpiryDate(expiryDate: string): Date {
   return parsedDate;
 }
 
-function expiresInCurrentPasYear(expiryDate: string): boolean {
+function isVisiblePass(isPasActief: boolean, expiryDate: string): boolean {
+  const thisYearsExpiryDate = getThisYearsDefaultExpiryDate();
   const previousYearsExpiryDate = getPreviousYearsDefaultExpiryDate();
-  const expiry = parseExpiryDate(`${expiryDate}`);
-
-  return (
-    isAfter(expiry, previousYearsExpiryDate) &&
-    isBefore(expiry, getThisYearsDefaultExpiryDate())
-  );
-}
-
-function expiresInNextPasYear(expiryDate: string): boolean {
-  const thisYearsExpiryDate = getThisYearsDefaultExpiryDate();
   const expiry = parseExpiryDate(expiryDate);
-
-  return (
-    (isSameDay(expiry, thisYearsExpiryDate) ||
-      isAfter(expiry, thisYearsExpiryDate)) &&
-    isBefore(expiry, getNextYearsDefaultExpiryDate())
-  );
-}
-
-function hasValidExpiryDate(expiryDate: string): boolean {
-  const now = new Date();
-  const thisYearsExpiryDate = getThisYearsDefaultExpiryDate();
-  const expiry = parseExpiryDate(expiryDate);
-
-  if (isSameDay(expiry, thisYearsExpiryDate)) {
-    return true;
-  }
-
-  if (isBefore(expiry, thisYearsExpiryDate)) {
-    return expiresInCurrentPasYear(expiryDate);
-  }
 
   if (
-    isAfter(now, thisYearsExpiryDate) ||
-    isSameDay(now, thisYearsExpiryDate)
+    // Do not show passes with an invalid expiry date.
+    !isValid(expiry) ||
+    // Do not show old passes.
+    isBefore(expiry, previousYearsExpiryDate) ||
+    isSameDay(expiry, previousYearsExpiryDate)
   ) {
-    return expiresInNextPasYear(expiryDate);
+    return false;
   }
 
-  return false;
+  if (isAfter(expiry, thisYearsExpiryDate)) {
+    // If the pass expires in a future year, we only show it if the pas is active.
+    return isPasActief;
+  }
+
+  return true;
 }
 
 export async function fetchStadspassen(bsn: BSN) {
@@ -371,14 +358,24 @@ function transformGpassTransactionsResponse(
   return [];
 }
 
+const MONTHS_BACK_IN_PREVIOUS_YEAR = 6;
+
 export async function fetchGpassBudgetTransactions(
   administratienummer: string,
   pasnummer: Stadspas['passNumber'],
   budgetCode?: StadspasBudget['code']
 ) {
+  const prev = getPreviousYearsDefaultExpiryDate();
+  const monthsAgo = differenceInMonths(new Date(), prev);
+  const from = subMonths(
+    prev,
+    Math.max(0, MONTHS_BACK_IN_PREVIOUS_YEAR - monthsAgo)
+  );
   const requestParams: StadspasTransactionQueryParams = {
     pasnummer,
-    sub_transactions: true,
+    sub_transactions: true, // Includes transactions from linked passes.
+    date_from: from.toISOString().split('T')[0], // Format to YYYY-MM-DD
+    date_until: new Date().toISOString().split('T')[0], // Format to YYYY-MM-DD
   };
 
   if (budgetCode) {
@@ -521,8 +518,6 @@ export async function mutateGpassSetPasIsBlockedState(
 }
 
 export const forTesting = {
-  expiresInCurrentPasYear,
-  expiresInNextPasYear,
   getCurrentPasYearExpiryDate,
   getDefaultExpiryDate,
   getHeaders,
@@ -530,7 +525,7 @@ export const forTesting = {
   getOwner,
   getPreviousYearsDefaultExpiryDate,
   getThisYearsDefaultExpiryDate,
-  hasValidExpiryDate,
+  isVisiblePass,
   transformBudget,
   transformGpassAanbiedingenResponse,
   transformGpassTransactionsResponse,

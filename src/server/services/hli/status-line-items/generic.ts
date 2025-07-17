@@ -4,27 +4,12 @@ import {
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types';
 
-function getNamenBetrokkenen(
-  regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
-) {
-  const names = regeling.betrokkenPersonen
-    .map((person) => person.name)
-    .filter(Boolean);
-
-  if (names.length <= 1) {
-    return names.join('');
-  }
-
-  const lastName = names.pop();
-  return `${names.join(', ')} en ${lastName}`;
-}
-
-export function getBetrokkenDescription(
+export function getBetrokkenKinderenDescription(
   regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
 ): string | null {
-  const betrokkenen = regeling.betrokkenPersonen.filter(
-    (person) => !!person.name
-  );
+  const betrokkenen = regeling.betrokkenPersonen.filter((persoon) => {
+    return !!persoon.name && !persoon.isAanvrager && !persoon.isPartner;
+  });
 
   if (!betrokkenen.length) {
     return null;
@@ -44,19 +29,14 @@ export function getBetrokkenDescription(
 export function getBesluitDescription(
   regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
 ): string {
-  const hasNamenBetrokkenen = regeling.betrokkenPersonen.some(
-    (person) => !!person.name
-  );
   return `<p>
     ${
       regeling.resultaat === 'toegewezen'
-        ? `U krijgt ${regeling.titel} per ${regeling.datumIngangGeldigheid ? defaultDateFormat(regeling.datumIngangGeldigheid) : ''}${hasNamenBetrokkenen ? ` voor ${getNamenBetrokkenen(regeling)}` : ''}.`
-        : `U krijgt geen ${regeling.titel}${hasNamenBetrokkenen ? ` voor ${getNamenBetrokkenen(regeling)}` : ''}.`
+        ? `U krijgt ${regeling.titel} per ${regeling.datumIngangGeldigheid ? defaultDateFormat(regeling.datumIngangGeldigheid) : ''}.`
+        : `U krijgt geen ${regeling.titel}.`
     }
     </p>
-    <p>
-      ${regeling.resultaat === 'toegewezen' ? 'In de brief vindt u meer informatie hierover.' : 'In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.'}
-    </p>
+    <p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>
   `;
 }
 
@@ -67,7 +47,7 @@ export const BESLUIT: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWith
     isChecked: () => true,
     isActive: (regeling) =>
       regeling.isActueel === true || regeling.resultaat === 'afgewezen',
-    description: getBesluitDescription,
+    description: (regeling) => getBesluitDescription(regeling),
   };
 
 function getEindeRechtDescription(
@@ -105,6 +85,16 @@ export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraag
       </p>
     `,
   };
+
+export function isAanvrager(
+  regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
+): boolean {
+  const isAanvrager = regeling.betrokkenPersonen.some(
+    (betrokkene) =>
+      betrokkene.isAanvrager && betrokkene.bsn === regeling.bsnAanvrager
+  );
+  return isAanvrager;
+}
 
 export const forTesting = {
   getEindeRechtDescription,

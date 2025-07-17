@@ -27,6 +27,7 @@ export function InkomenThema() {
     isLoadingWpiSpecificaties,
     linkListItems,
     specificaties,
+    jaaropgaven,
     routeConfig,
   } = useInkomenThemaData();
   useHTMLDocumentTitle(routeConfig.themaPage);
@@ -53,7 +54,7 @@ export function InkomenThema() {
           key={kind}
           title={title}
           listPageRoute={listPageRoute}
-          zaken={specificaties}
+          zaken={kind === 'jaaropgaven' ? jaaropgaven : specificaties}
           displayProps={displayProps}
           maxItems={maxItems}
         />

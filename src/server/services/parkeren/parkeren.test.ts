@@ -1,9 +1,29 @@
 import { fetchParkeren } from './parkeren';
+import { hasPermitsOrPermitRequests } from './parkeren-egis-service';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import { HttpStatusCode } from 'axios';
 
-const REQUEST_ID = '123';
-const STATUS_OK_200 = 200;
+const mocks = vi.hoisted(() => {
+  return {
+    JWETokenCreationActive: false,
+  };
+});
+
+vi.mock(
+  '../../../client/pages/Thema/Parkeren/Parkeren-thema-config.ts',
+  async (importOriginal) => {
+    return {
+      ...(await importOriginal()),
+      featureToggle: {
+        parkerenActive: true,
+        parkerenCheckForProductAndPermitsActive: true,
+        parkerenJWETokenCreationActive: mocks.JWETokenCreationActive,
+      },
+    };
+  }
+);
+
 const SUCCESS_URL = 'https://parkeren.nl/sso-login';
 
 const BASE_ROUTE = '/parkeren';
@@ -11,7 +31,7 @@ const PRIVATE_CLIENT_PRODUCT_DETAIL_ROUTE = `${BASE_ROUTE}/v1/private/client_pro
 const PRIVATE_ACTIVE_PERMIT_REQUEST_ROUTE = `${BASE_ROUTE}/v1/private/active_permit_request`;
 const JWE_CREATE_ROUTE = `${BASE_ROUTE}/v1/jwe/create`;
 
-const setupMocks = (
+const setupSuccessMocks = (
   authmethod: AuthProfileAndToken['profile']['authMethod'],
   mockDataClientProductDetails: { data: unknown[] },
   mockDataActivePermitRequest: { data: unknown[] },
@@ -20,23 +40,23 @@ const setupMocks = (
   // Not the same as profile type in AuthProfileAndToken.
   const profileType = authmethod === 'digid' ? 'private' : 'eherkenning';
 
-  remoteApi.get('/brp/brp').reply(STATUS_OK_200, brpData!); // brpData is a default argument.
+  remoteApi.get('/brp/brp').reply(HttpStatusCode.Ok, brpData!); // brpData is a default argument.
 
   remoteApi
     .get(`${BASE_ROUTE}/sso/get_authentication_url?service=${authmethod}`)
     .reply(200, { url: SUCCESS_URL });
 
-  remoteApi.post(JWE_CREATE_ROUTE).reply(STATUS_OK_200, {
+  remoteApi.post(JWE_CREATE_ROUTE).reply(HttpStatusCode.Ok, {
     token: 'xxxtokenxxx',
   });
 
   remoteApi
     .post(`${BASE_ROUTE}/v1/${profileType}/client_product_details`)
-    .reply(STATUS_OK_200, mockDataClientProductDetails);
+    .reply(HttpStatusCode.Ok, mockDataClientProductDetails);
 
   remoteApi
     .post(`${BASE_ROUTE}/v1/${profileType}/active_permit_request`)
-    .reply(STATUS_OK_200, mockDataActivePermitRequest);
+    .reply(HttpStatusCode.Ok, mockDataActivePermitRequest);
 };
 
 describe('fetchParkeren', () => {
@@ -46,7 +66,7 @@ describe('fetchParkeren', () => {
 
   describe('Returns SSO URL', () => {
     test('With digid', async () => {
-      setupMocks('digid', { data: [] }, { data: [] });
+      setupSuccessMocks('digid', { data: [] }, { data: [] });
       const authProfileAndToken = getAuthProfileAndToken('private');
 
       const response = await fetchParkeren(authProfileAndToken);
@@ -54,7 +74,7 @@ describe('fetchParkeren', () => {
     });
 
     test('With eherkenning', async () => {
-      setupMocks('eherkenning', { data: [] }, { data: [] });
+      setupSuccessMocks('eherkenning', { data: [] }, { data: [] });
       const authProfileAndToken = getAuthProfileAndToken('commercial');
 
       const response = await fetchParkeren(authProfileAndToken);
@@ -65,15 +85,15 @@ describe('fetchParkeren', () => {
       remoteApi
         .get(`${BASE_ROUTE}/sso/get_authentication_url?service=digid`)
         .reply(400);
-      remoteApi.post(JWE_CREATE_ROUTE).reply(STATUS_OK_200, {
+      remoteApi.post(JWE_CREATE_ROUTE).reply(HttpStatusCode.Ok, {
         token: 'xxxtokenxxx',
       });
       remoteApi
         .post(PRIVATE_CLIENT_PRODUCT_DETAIL_ROUTE)
-        .reply(STATUS_OK_200, MOCK_CLIENT_PRODUCT_DETAILS);
+        .reply(HttpStatusCode.Ok, MOCK_CLIENT_PRODUCT_DETAILS);
       remoteApi
         .post(PRIVATE_ACTIVE_PERMIT_REQUEST_ROUTE)
-        .reply(STATUS_OK_200, MOCK_CLIENT_PRODUCT_DETAILS);
+        .reply(HttpStatusCode.Ok, MOCK_CLIENT_PRODUCT_DETAILS);
 
       const authProfileAndToken = getAuthProfileAndToken('private');
       const response = await fetchParkeren(authProfileAndToken);
@@ -83,7 +103,7 @@ describe('fetchParkeren', () => {
 
   describe('IsKnown is true when...', () => {
     test('Parkeren has data in product details endpoint', async () => {
-      setupMocks(
+      setupSuccessMocks(
         'digid',
         { data: [MOCK_CLIENT_PRODUCT_DETAILS] },
         { data: [] }
@@ -95,7 +115,7 @@ describe('fetchParkeren', () => {
     });
 
     test('Parkeren has data in parking permits endpoint', async () => {
-      setupMocks(
+      setupSuccessMocks(
         'digid',
         { data: [] },
         { data: [MOCK_PARKING_PERMIT_REQUEST] }
@@ -106,15 +126,21 @@ describe('fetchParkeren', () => {
       expect(response.content.isKnown).toBe(true);
     });
 
-    test('JWEtoken endpoint returns an error', async () => {
+    test('Parkeren has data in product details endpoint', async () => {
       const authProfileAndToken = getAuthProfileAndToken('private');
       remoteApi.post(JWE_CREATE_ROUTE).reply(400);
       remoteApi
         .post(PRIVATE_CLIENT_PRODUCT_DETAIL_ROUTE)
         .reply(200, [MOCK_CLIENT_PRODUCT_DETAILS]);
-      remoteApi
-        .post(PRIVATE_ACTIVE_PERMIT_REQUEST_ROUTE)
-        .reply(200, [MOCK_PARKING_PERMIT_REQUEST]);
+      remoteApi.post(PRIVATE_ACTIVE_PERMIT_REQUEST_ROUTE).reply(404);
+
+      const response = await fetchParkeren(authProfileAndToken);
+      expect(response.content.isKnown).toBe(true);
+    });
+
+    test('JWEtoken endpoint returns an error', async () => {
+      const authProfileAndToken = getAuthProfileAndToken('private');
+      remoteApi.post(JWE_CREATE_ROUTE).reply(400);
 
       const response = await fetchParkeren(authProfileAndToken);
       expect(response.content.isKnown).toBe(true);
@@ -124,7 +150,7 @@ describe('fetchParkeren', () => {
       const authProfileAndToken = getAuthProfileAndToken('private');
       remoteApi
         .post(JWE_CREATE_ROUTE)
-        .reply(STATUS_OK_200, { token: 'xxx1234xxx' });
+        .reply(HttpStatusCode.Ok, { token: 'xxx1234xxx' });
       remoteApi.post(PRIVATE_CLIENT_PRODUCT_DETAIL_ROUTE).reply(400);
       remoteApi.post(PRIVATE_ACTIVE_PERMIT_REQUEST_ROUTE).reply(400);
 
@@ -132,29 +158,66 @@ describe('fetchParkeren', () => {
       expect(response.content.isKnown).toBe(true);
     });
 
-    test('Liven in Amsterdam with digid login', async () => {
-      setupMocks('digid', { data: [] }, { data: [] });
+    test('Living in Amsterdam with digid login', async () => {
       const authProfileAndToken = getAuthProfileAndToken('private');
-
       const response = await fetchParkeren(authProfileAndToken);
+
       expect(response.content.isKnown).toBe(true);
     });
 
     test('From eherkenning user', async () => {
-      setupMocks('eherkenning', { data: [] }, { data: [] });
-      const authProfileAndToken = getAuthProfileAndToken('private');
+      const authProfileAndToken = getAuthProfileAndToken('commercial');
 
       const response = await fetchParkeren(authProfileAndToken);
       expect(response.content.isKnown).toBe(true);
     });
   });
 
-  test('Is Known is false when person does not live in Amsterdam and is logged in with Digid', async () => {
-    setupMocks('digid', { data: [] }, { data: [] }, BRP_DATA.mokumFalse);
-    const authProfileAndToken = getAuthProfileAndToken('private');
+  describe('isKnown is false when...', () => {
+    test('User not found in both APIs', async () => {
+      const authProfileAndToken = getAuthProfileAndToken('private');
+      remoteApi
+        .post(JWE_CREATE_ROUTE)
+        .reply(HttpStatusCode.Ok, { token: 'xxx1234xxx' });
+      remoteApi.post(PRIVATE_CLIENT_PRODUCT_DETAIL_ROUTE).reply(404);
+      remoteApi.post(PRIVATE_ACTIVE_PERMIT_REQUEST_ROUTE).reply(404);
 
-    const response = await fetchParkeren(authProfileAndToken);
-    expect(response.content.isKnown).toBe(false);
+      const response = await fetchParkeren(authProfileAndToken);
+      expect(response.content.isKnown).toBe(false);
+    });
+
+    test('When person does not live in Amsterdam, is logged in with Digid and gets no data', async () => {
+      setupSuccessMocks(
+        'digid',
+        { data: [] },
+        { data: [] },
+        BRP_DATA.mokumFalse
+      );
+      const authProfileAndToken = getAuthProfileAndToken('private');
+
+      const response = await fetchParkeren(authProfileAndToken);
+      expect(response.content.isKnown).toBe(false);
+    });
+  });
+});
+
+describe('hasPermitsOrPermitRequests', () => {
+  const authProfileAndToken = getAuthProfileAndToken('private');
+
+  afterEach(() => {
+    mocks.JWETokenCreationActive = true;
+  });
+
+  test('Doing a request with a created JWE token', async () => {
+    mocks.JWETokenCreationActive = true;
+    const response = await hasPermitsOrPermitRequests(authProfileAndToken);
+    expect(response).toBe(true);
+  });
+
+  test('Doing a request while fetching a JWT', async () => {
+    mocks.JWETokenCreationActive = false;
+    const response = await hasPermitsOrPermitRequests(authProfileAndToken);
+    expect(response).toBe(true);
   });
 });
 

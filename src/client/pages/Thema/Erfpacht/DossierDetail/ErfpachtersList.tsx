@@ -74,7 +74,7 @@ export function ErfpachtersList({
                     : undefined
                 }
               >
-                {relatie.relatieNaam}{' '}
+                {relatie.relatieNaam} &nbsp;&nbsp;
                 {hasBetalerWijzigenLink ? (
                   <WijzigenLink
                     relatieCode={relatieCode}

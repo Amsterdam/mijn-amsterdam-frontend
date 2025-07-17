@@ -195,8 +195,10 @@ export interface StadspasAMSAPPFrontend extends Stadspas {
 
 export interface StadspasTransactionQueryParams {
   pasnummer: Stadspas['passNumber'];
-  sub_transactions: true;
+  sub_transactions?: true;
   budgetcode?: string;
+  date_from?: string;
+  date_until?: string;
 }
 
 export interface StadspasBudgetTransaction {

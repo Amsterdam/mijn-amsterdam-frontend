@@ -150,6 +150,7 @@ export interface ZorgnedAanvraagTransformed {
 export interface ZorgnedAanvraagWithRelatedPersonsTransformed
   extends ZorgnedAanvraagTransformed {
   betrokkenPersonen: ZorgnedPerson[];
+  bsnAanvrager: BSN;
 }
 
 export interface ZorgnedDocumentResponseSource {
@@ -214,6 +215,7 @@ export interface ZorgnedPerson {
   dateOfBirth: string | null;
   dateOfBirthFormatted: string | null;
   isPartner?: true;
+  isAanvrager?: true;
   partnernaam: string | null;
   partnervoorvoegsel: string | null;
 }

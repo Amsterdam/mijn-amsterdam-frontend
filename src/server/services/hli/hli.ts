@@ -9,6 +9,7 @@ import { fetchStadspas } from './stadspas';
 import {
   filterCombineRtmData,
   isRTMDeel1,
+  RTM_STATUS_IN_BEHANDELING,
 } from './status-line-items/regeling-rtm';
 import {
   featureToggle,
@@ -49,7 +50,7 @@ function getDisplayStatus(
       return 'Afgewezen';
 
     case isRTMDeel1(aanvraag) && aanvraag.resultaat === 'toegewezen':
-      return 'In behandeling';
+      return RTM_STATUS_IN_BEHANDELING;
 
     case (aanvraag.isActueel || !hasEindeRecht) &&
       aanvraag.resultaat === 'toegewezen':
@@ -140,8 +141,6 @@ async function transformRegelingForFrontend(
     dateEnd: aanvraag.datumEindeGeldigheid,
     decision: aanvraag.resultaat,
     displayStatus,
-    receiver:
-      aanvraag.betrokkenPersonen?.map((person) => person.name).join(', ') ?? '',
     documents: getDocumentsFrontend(sessionID, aanvraag.documenten),
   };
 

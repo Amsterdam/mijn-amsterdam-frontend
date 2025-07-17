@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
-import { beforeAll, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import { routeConfig } from './Parkeren-thema-config';
 import { ParkerenList } from './ParkerenList';
@@ -72,10 +72,6 @@ function initializeState(snapshot: MutableSnapshot) {
 }
 
 describe('ParkerenList', () => {
-  beforeAll(() => {
-    window.scrollTo = vi.fn();
-  });
-
   const routeEntry = generatePath(routeConfig.listPage.path, {
     kind: listPageParamKind.inProgress,
     page: null,

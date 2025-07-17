@@ -17,7 +17,15 @@ export function getPool() {
   if (pool) {
     return pool;
   }
+
   pool = new Pool(pgDbConfig);
+
+  pool.on('error', (err) => {
+    captureException(err);
+    // See also: https://node-postgres.com/features/pooling#checkout-use-and-return
+    process.exit(-1); // Exit the process on pool error. It's unlikely we can recover. Let the process manager restart the app in a clean state.
+  });
+
   return pool;
 }
 
@@ -27,9 +35,11 @@ export function getPool() {
 
 export async function query(queryString: string, values?: unknown[]) {
   let result = null;
+
+  const cpool = getPool();
+
   try {
-    const pool = getPool();
-    result = await pool.query(queryString, values);
+    result = await cpool.query(queryString, values);
   } catch (error) {
     captureException(error);
   }

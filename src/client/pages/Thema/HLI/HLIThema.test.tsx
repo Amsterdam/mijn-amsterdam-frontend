@@ -1,10 +1,15 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { routeConfig } from './HLI-thema-config';
+import {
+  listPageParamKind,
+  routeConfig,
+  tableConfig,
+} from './HLI-thema-config';
 import { HLIThema } from './HLIThema';
 import { stadspasCreator } from './test-helpers';
 import { createHLIState } from './test-helpers';
+import type { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
 import { componentCreator } from '../../MockApp';
 
 const createStadspas = stadspasCreator();
@@ -84,5 +89,30 @@ describe('<HLI />', () => {
     const passes = screen.getAllByRole('row', { name: /Stadspas van/ });
 
     expect(passes.length).toBe(stadspas.length);
+  });
+
+  test('Filter regelingen for Aanvragen table', () => {
+    const regelingen = [
+      {
+        displayStatus: 'toegewezen',
+      },
+      {
+        displayStatus: 'In behandeling',
+      },
+      {
+        displayStatus: 'In behandeling genomen',
+      },
+      {
+        displayStatus:
+          'In behandeling genomen in een ander tijdperk, het waren de 60s',
+      },
+      {
+        displayStatus: 'Buiten behandeling',
+      },
+    ] as HLIRegelingFrontend[];
+
+    expect(
+      regelingen.filter(tableConfig[listPageParamKind.lopend].filter)
+    ).toEqual([regelingen[1], regelingen[2], regelingen[3]]);
   });
 });

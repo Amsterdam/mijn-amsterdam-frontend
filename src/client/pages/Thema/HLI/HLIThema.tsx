@@ -71,13 +71,7 @@ function Stadspassen({
 
       {!!stadspassen?.length && dateExpiryFormatted && (
         <Paragraph size="small">
-          {stadspassen.length > 1 ? (
-            <>
-              Voor alle stadspassen geldt de einddatum van {dateExpiryFormatted}
-            </>
-          ) : (
-            <>De stadspas heeft een einddatum van {dateExpiryFormatted}</>
-          )}
+          Het huidige stadspasjaar eindigt op {dateExpiryFormatted}.
         </Paragraph>
       )}
     </PageContentCell>
@@ -99,8 +93,8 @@ export function HLIThema() {
   } = useHliThemaData();
   useHTMLDocumentTitle(routeConfig.themaPage);
 
-  const hasLopendeAanvragen = regelingen.some(
-    (regeling) => regeling.displayStatus === 'In behandeling'
+  const hasAanvragen = regelingen.some(
+    tableConfig[listPageParamKind.lopend].filter
   );
 
   const pageContentTop = (
@@ -115,7 +109,7 @@ export function HLIThema() {
   const regelingenTables = featureToggle.hliThemaRegelingenActive
     ? entries(tableConfig)
         .filter(([kind]) => {
-          return kind === listPageParamKind.lopend ? hasLopendeAanvragen : true;
+          return kind === listPageParamKind.lopend ? hasAanvragen : true;
         })
         .map(
           ([
