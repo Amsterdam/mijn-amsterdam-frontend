@@ -365,7 +365,7 @@ const MAX_ITEM_AMOUNT_PER_REQUEST = 20;
 export async function fetchGpassBudgetTransactions(
   administratienummer: string,
   queryParams: StadspasTransactionQueryParams
-) {
+): Promise<ApiResponse<StadspasBudgetTransaction[]>> {
   const dataRequestConfig = getApiConfig('GPASS', {
     formatUrl: ({ url }) => `${url}/rest/transacties/v1/budget`,
     headers: getHeaders(administratienummer),
@@ -379,31 +379,32 @@ export async function fetchGpassBudgetTransactions(
     return response;
   }
 
-  const numberOfItems = response.content.number_of_items;
+  const totalItems = response.content.total_items;
 
   const responses = [];
   let offset = queryParams.offset || 0;
-  let missingItems = numberOfItems - offset > MAX_ITEM_AMOUNT_PER_REQUEST;
+  let missingItems = totalItems - offset > MAX_ITEM_AMOUNT_PER_REQUEST;
 
   while (missingItems) {
     const response = requestData<Response>(dataRequestConfig);
     responses.push(response);
 
     offset += MAX_ITEM_AMOUNT_PER_REQUEST;
-    missingItems = numberOfItems - offset > MAX_ITEM_AMOUNT_PER_REQUEST;
+    missingItems = totalItems - offset > MAX_ITEM_AMOUNT_PER_REQUEST;
   }
   const resolvedResponses = await Promise.all(responses);
 
   const okResponses = [response];
-  // RP TODO: What to do with these?
-  const errorRespones = [];
 
   for (const res of resolvedResponses) {
-    if (res.status === 'OK') {
-      okResponses.push(res);
-    } else {
-      errorRespones.push(res);
+    if (res.status !== 'OK') {
+      return apiErrorResult(
+        'One of the requests failed. Try again.',
+        null,
+        HttpStatusCode.InternalServerError
+      );
     }
+    okResponses.push(res);
   }
 
   const finalRespones = okResponses.flatMap((res) =>
