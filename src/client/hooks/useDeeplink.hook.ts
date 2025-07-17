@@ -4,6 +4,7 @@ import { useLocation } from 'react-router';
 
 import { removeLocalStorageKey, useLocalStorage } from './storage.hook';
 import { isPrivateRoute } from '../App.routes';
+import { BffErrorRoutes } from '../pages/BffError/BffError-routes';
 import { dashboardMenuItem } from '../pages/Dashboard/Dashboard-routes';
 
 export const ROUTE_ENTRY_KEY = 'RouteEntry';
@@ -13,9 +14,13 @@ export function useSetDeeplinkEntry(excludeQueryParams: string[] = []) {
   const [routeEntry, setRouteEntry] = useLocalStorage(ROUTE_ENTRY_KEY, '');
 
   useEffect(() => {
+    const doNotSetDeeplinkForPaths = [
+      '/',
+      ...BffErrorRoutes.map(({ route }) => route),
+    ];
     if (
       (!routeEntry || routeEntry === '/') &&
-      location.pathname !== '/' &&
+      !doNotSetDeeplinkForPaths.includes(location.pathname) &&
       isPrivateRoute(location.pathname)
     ) {
       let search = location.search;
