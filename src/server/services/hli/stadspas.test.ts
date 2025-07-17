@@ -13,8 +13,12 @@ import type {
   StadspasPasHouderResponse,
   StadspasDiscountTransactions,
   StadspasDiscountTransactionsResponseSource,
+  StadspasTransactiesResponseSource,
+  StadspasTransactieSource,
+  StadspasBudgetTransaction,
 } from './stadspas-types';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
+import { ApiResponse } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
 
@@ -293,39 +297,53 @@ describe('stadspas services', () => {
   });
 
   describe('Fetching transactions', () => {
-    test('stadspas transacties Happy!', async () => {
+    function fetchWithSourceResponse(
+      transactions: Partial<StadspasTransactieSource>[],
+      times = 1
+    ): Promise<ApiResponse<StadspasBudgetTransaction[]>> {
+      const response: StadspasTransactiesResponseSource = {
+        number_of_items: transactions.length,
+        total_items: transactions.length,
+        transacties: transactions as StadspasTransactieSource[],
+      };
       remoteApi
         .get(
           '/stadspas/rest/transacties/v1/budget?pasnummer=123123123&sub_transactions=true&date_from=2024-06-30&date_until=2025-01-01&limit=20&offset=0'
         )
+        .times(times)
         .matchHeader(
           'authorization',
           `AppBearer ${FAKE_API_KEY},0363000123-123`
         )
-        .reply(200, {
-          transacties: [
-            {
-              id: 'transactie-id',
-              budget: {
-                aanbieder: { naam: 'transactie naam' },
-                naam: 'budgetje',
-                code: '001',
-              },
-              bedrag: 34.5,
-              transactiedatum: '2024-04-25',
-            },
-          ],
-        });
+        .reply(200, response);
 
       const [transactionsKeyEncrypted] = encryptDecrypt.encrypt(
         `my-unique-session-id:0363000123-123:123123123`
       );
 
-      const response = await fetchStadspasBudgetTransactions(
+      return fetchStadspasBudgetTransactions(
         transactionsKeyEncrypted,
         undefined,
         'my-unique-session-id'
       );
+    }
+    function createTransaction({ id }: { id: number }) {
+      return {
+        id,
+        budget: {
+          aanbieder: { id: 10, naam: 'transactie naam' },
+          naam: 'budgetje',
+          code: '001',
+          id: 100,
+        },
+        bedrag: 34.5,
+        transactiedatum: '2024-04-25',
+      };
+    }
+    test('stadspas transacties Happy!', async () => {
+      const response = await fetchWithSourceResponse([
+        createTransaction({ id: 1 }),
+      ]);
 
       expect(response).toStrictEqual({
         content: [
@@ -336,12 +354,24 @@ describe('stadspas services', () => {
             budgetCode: '001',
             datePublished: '2024-04-25',
             datePublishedFormatted: '25 april 2024',
-            id: 'transactie-id',
+            id: '1',
             title: 'transactie naam',
           },
         ],
         status: 'OK',
       });
+    });
+
+    test('Fetching paginated transactions', async () => {
+      const TIMES = 2;
+      const TRIGGER_PAGINATION_AMOUNT = 21;
+      const response = await fetchWithSourceResponse(
+        new Array(TRIGGER_PAGINATION_AMOUNT)
+          .fill(0)
+          .map((_, i) => createTransaction({ id: i })),
+        TIMES
+      );
+      expect(response.content?.length).toBe(TRIGGER_PAGINATION_AMOUNT * 2);
     });
 
     test('stadspas transacties unmatched session id', async () => {
