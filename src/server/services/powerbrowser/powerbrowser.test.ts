@@ -16,7 +16,7 @@ import type {
   PowerBrowserStatusResponse,
   SearchRequestResponse,
 } from './powerbrowser-types';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
+import { remoteApi } from '../../../testing/utils';
 import type { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
 import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
 import { BBVergunningFrontend } from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types';
@@ -359,6 +359,10 @@ describe('B&B Vergunningen service', () => {
 
   describe('fetchZaakIds', () => {
     test('should fetch zaak IDs successfully', async () => {
+      remoteApi.post('/powerbrowser/SearchRequest').reply(200, {
+        records: [{ id: 'test-person-id' }],
+      });
+
       remoteApi.post('/powerbrowser/Link/PERSONEN/GFO_ZAKEN/Table').reply(200, {
         records: [
           {
@@ -382,16 +386,11 @@ describe('B&B Vergunningen service', () => {
         ],
       });
 
-      const result = await forTesting.fetchZaakIds({
-        personOrMaatschapId: 'test-person-id',
-        tableName: 'PERSONEN',
-        filter(zaak) {
-          return zaak.fields.some(
-            (field) =>
-              field.fieldName === 'FMT_CAPTION' &&
-              field.text?.includes('Bed en breakfast')
-          );
-        },
+      const result = await forTesting.fetchZaakIds(authProfile, {
+        filter: (field) =>
+          field.fieldName === 'FMT_CAPTION' &&
+          !!field.text &&
+          field.text?.includes('Bed en breakfast'),
       });
       expect(result.status).toBe('OK');
       expect(result.content).toEqual(['test-zaak-id']);
@@ -402,16 +401,11 @@ describe('B&B Vergunningen service', () => {
         .post('/powerbrowser/Link/PERSONEN/GFO_ZAKEN/Table')
         .reply(500, 'some-error');
 
-      const result = await forTesting.fetchZaakIds({
-        personOrMaatschapId: 'test-person-id',
-        tableName: 'PERSONEN',
-        filter(zaak) {
-          return zaak.fields.some(
-            (field) =>
-              field.fieldName === 'FMT_CAPTION' &&
-              field.text?.includes('Bed en breakfast')
-          );
-        },
+      const result = await forTesting.fetchZaakIds(authProfile, {
+        filter: (field) =>
+          field.fieldName === 'FMT_CAPTION' &&
+          !!field.text &&
+          field.text?.includes('Bed en breakfast'),
       });
       expect(result.status).toBe('ERROR');
     });
@@ -877,10 +871,7 @@ describe('B&B Vergunningen service', () => {
         },
       ]);
 
-      const result = await forTesting.fetchZakenByIds(
-        getAuthProfileAndToken().profile,
-        ['test-zaak-id']
-      );
+      const result = await forTesting.fetchZakenByIds(['test-zaak-id']);
       expect(result.status).toBe('OK');
       expect(result.content).toHaveLength(1);
     });
@@ -890,10 +881,7 @@ describe('B&B Vergunningen service', () => {
         .get('/powerbrowser/record/GFO_ZAKEN/test-zaak-id')
         .reply(500, 'some-error');
 
-      const result = await forTesting.fetchZakenByIds(
-        getAuthProfileAndToken().profile,
-        ['test-zaak-id']
-      );
+      const result = await forTesting.fetchZakenByIds(['test-zaak-id']);
       expect(result.status).toBe('ERROR');
     });
   });
