@@ -124,6 +124,8 @@ export type PowerBrowserZaakBase = {
   // TODO: Probably move to zaakFrontend or somewhere else
   isExpired: boolean;
   location: string | null;
+
+  statusDates?: ZaakStatusDate[];
 };
 
 type CaseTypeLiteral<T extends PowerBrowserZaakBase> =
@@ -151,3 +153,7 @@ export type PowerBrowserZaakFrontend<
 
   heeftOvergangsRecht: boolean;
 } & ZaakDetail;
+export type ZaakStatusDate = {
+  status: string;
+  datePublished: string | null;
+};
