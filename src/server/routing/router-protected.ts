@@ -224,10 +224,10 @@ router.get(
   }
 );
 
-// Toeristische verhuur
+// Toeristische verhuur Bed and Breakfast
 attachDocumentDownloadRoute(
   router,
-  BffEndpoints.TOERISTISCHE_VERHUUR_BB_DOCUMENT_DOWNLOAD,
+  BffEndpoints.POWERBROWSER_DOCUMENT_DOWNLOAD,
   fetchBBDocument
 );
 

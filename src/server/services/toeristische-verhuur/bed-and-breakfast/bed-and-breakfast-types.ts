@@ -45,3 +45,38 @@ export type BBVergunningFrontend = ZaakDetail &
     displayStatus: BBVergunningZaakStatus | BBVergunningZaakResult;
     title: 'Vergunning bed & breakfast';
   };
+
+export const documentNamesMA = {
+  TOEKENNING: 'Besluit toekenning',
+  VERLENGING: 'Besluit verlenging beslistermijn',
+  WEIGERING: 'Besluit weigering',
+  BUITEN_BEHANDELING: 'Besluit Buiten behandeling',
+  INTREKKING: 'Besluit intrekking',
+  MEER_INFORMATIE: 'Verzoek aanvullende gegevens',
+  SAMENVATTING: 'Samenvatting aanvraagformulier',
+} as const;
+
+export const documentNamenMA_PB = {
+  [documentNamesMA.TOEKENNING]: [
+    'BB Besluit vergunning bed and breakfast',
+    'BB Besluit van rechtswege',
+  ],
+  [documentNamesMA.VERLENGING]: ['BB Besluit verlenging beslistermijn'],
+  [documentNamesMA.BUITEN_BEHANDELING]: [
+    'BB Besluit buiten behandeling stellen',
+    'BB buiten behandeling stellen',
+  ],
+  [documentNamesMA.WEIGERING]: [
+    'Besluit weigering',
+    'BB Besluit weigeren vergunning',
+    'BB Besluit weigeren vergunning quotum',
+    'Besluit B&B weigering zonder overgangsrecht',
+  ],
+  [documentNamesMA.INTREKKING]: [
+    'Intrekken vergunning',
+    'BB Intrekkingsbesluit nav niet voldoen aan voorwaarden',
+    'BB Intrekkingsbesluit op eigen verzoek',
+  ],
+  [documentNamesMA.MEER_INFORMATIE]: ['BB Verzoek aanvullende gegevens'],
+  [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
+} as const;
