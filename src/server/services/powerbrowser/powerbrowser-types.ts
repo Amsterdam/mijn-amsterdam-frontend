@@ -12,9 +12,7 @@ export interface PowerBrowserStatus {
 export type PowerBrowserStatusResponse = PowerBrowserStatus[];
 
 export type FetchZaakIdsOptions = {
-  personOrMaatschapId: string;
-  tableName: 'PERSONEN' | 'MAATSCHAP';
-  filter: (zaak: PBRecord<'GFO_ZAKEN'>) => boolean;
+  filter: (fields: PBRecord<'GFO_ZAKEN'>['fields'][0]) => boolean;
 };
 
 export type FetchPersoonOrMaatschapIdByUidOptions = {

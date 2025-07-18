@@ -5,7 +5,6 @@ import { generatePath } from 'react-router';
 import {
   PowerBrowserZaakBase,
   FetchPersoonOrMaatschapIdByUidOptions,
-  FetchZaakIdsOptions,
   fieldMap,
   PBDocumentFields,
   PBRecordField,
@@ -17,6 +16,7 @@ import {
   PowerBrowserZaakTransformer,
   SearchRequestResponse,
   PowerBrowserZaakFrontend,
+  FetchZaakIdsOptions,
 } from './powerbrowser-types';
 import {
   apiErrorResult,
@@ -93,6 +93,30 @@ async function fetchPowerBrowserData<T>(
   return response;
 }
 
+function getPersoonOrMaatschapOptions(
+  authProfile: Pick<AuthProfile, 'id' | 'profileType'>
+): FetchPersoonOrMaatschapIdByUidOptions | null {
+  // Set-up the options for the PowerBrowser API request based on the profile type.
+  const optionsByProfileType: Record<
+    ProfileType,
+    FetchPersoonOrMaatschapIdByUidOptions | null
+  > = {
+    commercial: {
+      tableName: 'MAATSCHAP',
+      fieldName: 'KVKNUMMER',
+      profileID: authProfile.id,
+    },
+    private: {
+      tableName: 'PERSONEN',
+      fieldName: 'BURGERSERVICENUMMER',
+      profileID: authProfile.id,
+    },
+    'private-attributes': null,
+  };
+
+  return optionsByProfileType[authProfile.profileType];
+}
+
 async function fetchPersoonOrMaatschapIdByUid(
   options: FetchPersoonOrMaatschapIdByUidOptions
 ): Promise<ApiResponse<string | null>> {
@@ -122,24 +146,45 @@ async function fetchPersoonOrMaatschapIdByUid(
       pageNumber: 0,
     },
   };
-  return fetchPowerBrowserData<string | null>(requestConfig);
+  const response = await fetchPowerBrowserData<string | null>(requestConfig);
+  if (response.status === 'ERROR') {
+    return apiErrorResult(
+      response.message || 'Could not get personID for BBVergunning',
+      null
+    );
+  }
+  return response;
 }
 
-async function fetchZaakIds(
+async function fetchZakenIdsForProfile(
+  authProfile: Pick<AuthProfile, 'id' | 'profileType'>,
   options: FetchZaakIdsOptions
 ): Promise<ApiResponse<string[]>> {
+  const tableOptions = getPersoonOrMaatschapOptions(authProfile);
+  if (!tableOptions) {
+    return apiErrorResult('Profile type not supported', null);
+  }
+  const persoonIdResponse = await fetchPersoonOrMaatschapIdByUid(tableOptions);
+
+  if (persoonIdResponse.status === 'ERROR') {
+    return persoonIdResponse;
+  }
+  if (persoonIdResponse.status !== 'OK' || !persoonIdResponse.content) {
+    return apiSuccessResult([]);
+  }
+
   const requestConfig: DataRequestConfig = {
     formatUrl({ url }) {
-      return `${url}/Link/${options.tableName}/GFO_ZAKEN/Table`;
+      return `${url}/Link/${tableOptions.tableName}/GFO_ZAKEN/Table`;
     },
     transformResponse(responseData: SearchRequestResponse<'GFO_ZAKEN'>) {
       return (
         responseData.records
-          ?.filter(options.filter)
+          ?.filter((pbRecord) => pbRecord.fields.some(options.filter))
           .map((record) => record.id) ?? []
       );
     },
-    data: [options.personOrMaatschapId],
+    data: [persoonIdResponse.content],
   };
 
   return fetchPowerBrowserData<string[]>(requestConfig);
@@ -164,7 +209,7 @@ function getZaakStatus(
 ):
   | PowerBrowserZaakFrontend['displayStatus']
   | PowerBrowserZaakFrontend['decision'] {
-  const lastStepStatus = zaak.steps.findLast((step) => step.isActive)
+  const lastStepStatus = zaak.steps?.findLast((step) => step.isActive)
     ?.status as PowerBrowserZaakFrontend['displayStatus'];
 
   if (lastStepStatus !== 'Verlopen' && zaak.decision) {
@@ -385,18 +430,20 @@ async function fetchAndMergeZaakStatussen(
     return fetchZaakStatussen(zaak);
   });
   const statussenResults = await Promise.allSettled(statussenRequests);
-  const zakenWithstatussen: PowerBrowserZaakFrontend[] = [];
 
+  const zakenWithstatussen = [];
   for (let i = 0; i < zaken.length; i++) {
-    const zaak: PowerBrowserZaakFrontend = { ...zaken[i] };
     const statussenResponse = getSettledResult(statussenResults[i]);
 
-    zaak.steps =
-      statussenResponse.status === 'OK' && statussenResponse.content !== null
-        ? statussenResponse.content
-        : zaak.steps;
+    const zaak = {
+      ...zaken[i],
+      steps:
+        statussenResponse.status === 'OK' && statussenResponse.content !== null
+          ? statussenResponse.content
+          : [],
 
-    zaak.displayStatus = getZaakStatus(zaak) ?? 'Onbekend';
+      displayStatus: getZaakStatus(zaken[i]) ?? 'Onbekend',
+    };
 
     zakenWithstatussen.push(zaak);
   }
@@ -479,10 +526,10 @@ function transformZaak(zaak: PBZaakRecord): PowerBrowserZaakFrontend {
   };
 }
 
-async function fetchZakenByIds(
-  authProfile: AuthProfile,
-  zaakIds: string[]
-): Promise<ApiResponse_DEPRECATED<PowerBrowserZaakBase[] | null>> {
+async function fetchZakenByIds(zaakIds: string[]) {
+  if (zaakIds.length === 0) {
+    return apiSuccessResult([]);
+  }
   const requestConfig: DataRequestConfig = {
     method: 'get',
     formatUrl({ url }) {
@@ -493,26 +540,7 @@ async function fetchZakenByIds(
     },
   };
 
-  const zakenResponse =
-    await fetchPowerBrowserData<PowerBrowserZaakBase[]>(requestConfig);
-
-  if (zakenResponse.status === 'OK') {
-    const zakenWithAddress = await fetchAndMergeAdressen(zakenResponse.content);
-
-    const zakenWithDocuments = await fetchAndMergeDocuments(
-      authProfile,
-      zakenWithAddress
-    );
-
-    // Merge zaak statussen as last, some status steps need documents to be fetched first.
-    // TODO:
-    // const zakenWithStatus =
-    //   await fetchAndMergeZaakStatussen(zakenWithDocuments);
-
-    return apiSuccessResult(zakenWithDocuments);
-  }
-
-  return zakenResponse;
+  return fetchPowerBrowserData<PowerBrowserZaakBase[]>(requestConfig);
 }
 
 export async function fetchZaken<T extends PowerBrowserZaakBase>(
@@ -521,67 +549,33 @@ export async function fetchZaken<T extends PowerBrowserZaakBase>(
 ): Promise<ApiResponse_DEPRECATED<PowerBrowserZaakBase[] | null>> {
   const zaakTransformer = zaakTransformers[0]; // TODO: Implement for multiple
 
-  // Set-up the options for the PowerBrowser API request based on the profile type.
-  const optionsByProfileType: Record<
-    ProfileType,
-    FetchPersoonOrMaatschapIdByUidOptions | null
-  > = {
-    commercial: {
-      tableName: 'MAATSCHAP',
-      fieldName: 'KVKNUMMER',
-      profileID: authProfile.id,
-    },
-    private: {
-      tableName: 'PERSONEN',
-      fieldName: 'BURGERSERVICENUMMER',
-      profileID: authProfile.id,
-    },
-    'private-attributes': null,
-  };
-
-  const options = optionsByProfileType[authProfile.profileType];
-
-  if (!options) {
-    return apiErrorResult('Profile type not supported', null);
+  const zakenIdsResponse = await fetchZakenIdsForProfile(authProfile, {
+    filter: (pbRecordField) =>
+      pbRecordField.fieldName === 'FMT_CAPTION' &&
+      !!pbRecordField.text &&
+      pbRecordField.text?.includes(zaakTransformer.caseType),
+  });
+  if (zakenIdsResponse.status !== 'OK') {
+    return zakenIdsResponse;
   }
 
-  const persoonIdResponse = await fetchPersoonOrMaatschapIdByUid(options);
-
-  if (persoonIdResponse.status === 'OK' && persoonIdResponse.content) {
-    const zakenIdsResponse = await fetchZaakIds({
-      personOrMaatschapId: persoonIdResponse.content,
-      tableName: options.tableName,
-      filter(pbRecord) {
-        return pbRecord.fields.some((field) => {
-          return (
-            field.fieldName === 'FMT_CAPTION' &&
-            field.text?.includes(zaakTransformer.caseType)
-          );
-        });
-      },
-    });
-
-    if (zakenIdsResponse.status !== 'OK') {
-      return zakenIdsResponse;
-    }
-
-    if (zakenIdsResponse.content.length) {
-      const zakenResponse = await fetchZakenByIds(
-        authProfile,
-        zakenIdsResponse.content
-      );
-      return zakenResponse;
-    }
+  const zakenResponse = await fetchZakenByIds(zakenIdsResponse.content);
+  if (zakenResponse.status !== 'OK') {
+    return zakenResponse;
   }
 
-  if (persoonIdResponse.status === 'ERROR') {
-    return apiErrorResult(
-      persoonIdResponse.message || 'Could not get personID for BBVergunning',
-      null
-    );
-  }
+  const zakenWithAddress = await fetchAndMergeAdressen(zakenResponse.content);
 
-  return apiSuccessResult([]);
+  const zakenWithDocuments = await fetchAndMergeDocuments(
+    authProfile,
+    zakenWithAddress
+  );
+
+  // Merge zaak statussen as last, some status steps need documents to be fetched first.
+  // TODO: Fetch status but transform it in the caller
+  const zakenWithStatus = zakenWithDocuments; // await fetchAndMergeZaakStatussen(zakenWithDocuments);
+
+  return apiSuccessResult(zakenWithStatus);
 }
 
 const documentNamesMA = {
@@ -744,7 +738,7 @@ export const forTesting = {
   fetchPowerBrowserData,
   fetchPowerBrowserToken_,
   fetchZaakAdres,
-  fetchZaakIds,
+  fetchZaakIds: fetchZakenIdsForProfile,
   fetchZaakStatussen,
   fetchZakenByIds,
   getFieldValue,
