@@ -1,6 +1,6 @@
+import { fetchBedAndBreakfast } from './bed-and-breakfast/bed-and-breakfast';
 import { ToeristischeVerhuur } from './toeristische-verhuur-config-and-types';
 import { fetchRegistraties } from './toeristische-verhuur-lvv-registratie';
-import { fetchBBVergunningen } from './toeristische-verhuur-powerbrowser-bb-vergunning';
 import { fetchVakantieverhuurVergunningen } from './toeristische-verhuur-vakantieverhuur-vergunning';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
@@ -28,7 +28,7 @@ export async function fetchToeristischeVerhuur(
       ? Promise.resolve(apiSuccessResult([]))
       : fetchRegistraties(authProfileAndToken);
 
-  const bbVergunningenRequest = fetchBBVergunningen(
+  const bbVergunningenRequest = fetchBedAndBreakfast(
     authProfileAndToken.profile
   );
 

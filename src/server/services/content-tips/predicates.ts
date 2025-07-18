@@ -8,7 +8,7 @@ import type { TipsPredicateFN } from './tip-types';
 import { isAmsterdamAddress } from '../buurt/helpers';
 import { HLIRegelingFrontend } from '../hli/hli-regelingen-types';
 import type { IdentiteitsbewijsFrontend, Kind } from '../profile/brp.types';
-import { BBVergunningFrontend } from '../toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
+import { BBVergunningFrontend } from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types';
 import { WMOVoorzieningFrontend } from '../wmo/wmo-config-and-types';
 import type { WpiRequestProcess } from '../wpi/wpi-types';
 

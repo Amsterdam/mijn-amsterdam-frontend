@@ -66,40 +66,6 @@ export type PBAdresLinkFields = PBRecordField<'FMT_CAPTION'>;
 
 export type PBAdresLinkRecord = PBRecord<'ADRESSEN', PBAdresLinkFields[]>;
 
-export type BBVergunningZaakStatus =
-  | 'Ontvangen'
-  | 'In behandeling'
-  | 'Afgehandeld'
-  | 'Verlopen'
-  | null;
-export type BBVergunningZaakResult =
-  | 'Verleend'
-  | 'Niet verleend'
-  | 'Ingetrokken'
-  | string
-  | null;
-
-export type BBVergunningFrontend = ZaakDetail & {
-  location: string | null;
-  dateDecision: string | null;
-  dateDecisionFormatted: string | null;
-  dateEnd: string | null;
-  dateEndFormatted: string | null;
-  dateRequest: string | null;
-  dateRequestFormatted: string | null;
-  dateStart: string;
-  dateStartFormatted: string | null;
-  decision: BBVergunningZaakResult;
-  isVerleend: boolean;
-  documents: GenericDocument[];
-  heeftOvergangsRecht: boolean;
-  identifier: string;
-  processed: boolean;
-  isExpired: boolean;
-  displayStatus: BBVergunningZaakStatus | BBVergunningZaakResult;
-  title: 'Vergunning bed & breakfast';
-};
-
 export const fieldMap: Record<PBZaakFields['fieldName'], string> = {
   ZAAK_IDENTIFICATIE: 'zaaknummer',
   EINDDATUM: 'dateDecision',
@@ -137,3 +103,53 @@ export type PBZaakCompacted = {
   result: PBZaakResultaat | null;
   status: PBZaakStatus | null;
 };
+
+export type PowerBrowserZaakBase = {
+  id: string;
+  caseType: string;
+  identifier: string;
+  title: string;
+
+  dateDecision: string | null;
+
+  dateEnd: string | null;
+
+  dateRequest: string | null;
+
+  dateStart: string;
+
+  decision: string | null;
+  isVerleend: boolean;
+  documents: GenericDocument[];
+  processed: boolean;
+
+  // TODO: Probably move to zaakFrontend or somewhere else
+  isExpired: boolean;
+  location: string | null;
+};
+
+type CaseTypeLiteral<T extends PowerBrowserZaakBase> =
+  unknown extends T['caseType']
+    ? PowerBrowserZaakBase extends T // Allow unextended baseCase for easier internal function typing
+      ? unknown
+      : never
+    : T['caseType'];
+export type PowerBrowserZaakTransformer<
+  T extends PowerBrowserZaakBase = PowerBrowserZaakBase,
+> = {
+  caseType: CaseTypeLiteral<T>;
+};
+
+export type PowerBrowserZaakFrontend<
+  T extends PowerBrowserZaakBase = PowerBrowserZaakBase,
+> = T & {
+  dateRequestFormatted: string | null;
+  dateDecisionFormatted?: string | null;
+  dateStartFormatted?: string | null;
+  dateEndFormatted?: string | null;
+  isExpired: boolean;
+  // Url to fetch documents for a specific Zaak.
+  fetchDocumentsUrl?: string;
+
+  heeftOvergangsRecht: boolean;
+} & ZaakDetail;
