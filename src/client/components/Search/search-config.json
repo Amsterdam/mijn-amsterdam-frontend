@@ -120,32 +120,7 @@
       ],
       "profileTypes": ["private"]
     },
-    {
-      "url": "/stadspas",
-      "displayTitle": "Stadspas",
-      "description": "Informatie over uw eigen Stadspas.",
-      "keywords": [
-        "Stadspas",
-        "Groene stip",
-        "Blauwe ruit",
-        "Gratis pas",
-        "Saldo checken",
-        "stadspasnummer",
-        "pasnummer",
-        "pas nummer",
-        "einddatum stadspas",
-        "Geld ",
-        "Afschrijvingen",
-        "Gratis pas",
-        "Pas",
-        "Transacties",
-        "Hoeveel heb ik uitgegeven?",
-        "Tegoed",
-        "Bonus",
-        "Kind"
-      ],
-      "profileTypes": ["private"]
-    },
+
     {
       "url": "/inkomen",
       "displayTitle": "Inkomen",
@@ -172,7 +147,7 @@
       "url": "/inkomen/lijst/specificaties/uitkering",
       "displayTitle": "Uikeringsspecificaties",
       "description": "Informatie over uw uitkering en de ondersteuning die u krijgt omdat u weinig geld hebt.",
-      "keywords": ["Uikeringsspecificaties", "Specificaties", "Uitkering"],
+      "keywords": ["Uitkeringsspecificaties", "Specificaties", "Uitkering"],
       "profileTypes": ["private"]
     },
     {

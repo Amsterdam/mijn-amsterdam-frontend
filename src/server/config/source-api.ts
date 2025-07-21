@@ -316,6 +316,7 @@ const ApiConfig_ = {
     url: `${getFromEnv('BFF_SISA_API_ENDPOINT')}`,
     postponeFetch: !FeatureToggle.subsidieActive,
   },
+
   SEARCH_CONFIG: {
     url: 'https://raw.githubusercontent.com/Amsterdam/mijn-amsterdam-frontend/main/src/client/components/Search/search-config.json',
     httpsAgent: new https.Agent({
