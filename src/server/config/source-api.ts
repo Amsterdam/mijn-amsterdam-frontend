@@ -317,9 +317,8 @@ const ApiConfig_ = {
     postponeFetch: !FeatureToggle.subsidieActive,
   },
 
-  _CONFIG: {
-    SEARCHurl:
-      'https://raw.githubusercontent.com/Amsterdam/mijn-amsterdam-frontend/MIJN-11939-usabilla-zoeken-op-stadspas-gaat-mis-search-acc-prod-meldingen/src/client/components/Search/search-config.json',
+  SEARCH_CONFIG: {
+    url: 'https://raw.githubusercontent.com/Amsterdam/mijn-amsterdam-frontend/MIJN-11939-usabilla-zoeken-op-stadspas-gaat-mis-search-acc-prod-meldingen/src/client/components/Search/search-config.json',
     httpsAgent: new https.Agent({
       rejectUnauthorized: false, // NOTE: Risk is assessed and tolerable for now because this concerns a request to a trusted source (GH), no sensitive data is involved and no JS code is evaluated.
     }),
