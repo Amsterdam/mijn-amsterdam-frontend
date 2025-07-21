@@ -79,7 +79,7 @@ export function ApplicationError({
             <PageContentCell startWide={1} spanWide={12}>
               <PageHeader
                 brandName="Mijn Amsterdam"
-                logoLink="https://www.amsterdam.nl"
+                logoLink="https://mijn.amsterdam.nl"
               />
             </PageContentCell>
             <ApplicationErrorContent error={error} />

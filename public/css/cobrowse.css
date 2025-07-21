@@ -85,6 +85,10 @@
 
   .modal-body-container {
     padding: 36px 56px;
+
+    #codeContainer {
+      display: none;
+    }
   }
 
   .modal-heading {
@@ -146,7 +150,7 @@
     font-weight: 600;
     margin-top: 8px;
   }
-  
+
   /*  small screens */
   @media (max-width: 600px) {
     .modal-body-container {
