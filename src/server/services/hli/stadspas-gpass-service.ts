@@ -366,6 +366,9 @@ export async function fetchGpassBudgetTransactions(
   administratienummer: string,
   queryParams: StadspasTransactionQueryParams
 ): Promise<ApiResponse<StadspasBudgetTransaction[]>> {
+  const DEFAULT_LIMIT = 20;
+  const limit = queryParams.limit || DEFAULT_LIMIT;
+
   const dataRequestConfig = getApiConfig('GPASS', {
     formatUrl: ({ url }) => `${url}/rest/transacties/v1/budget`,
     headers: getHeaders(administratienummer),
@@ -380,22 +383,23 @@ export async function fetchGpassBudgetTransactions(
   }
 
   const totalItems = response.content.total_items;
+  if (!(totalItems >= 0)) {
+    return apiErrorResult(
+      `Total items has non-sensical data. total_items = ${totalItems}`,
+      null,
+      HttpStatusCode.InternalServerError
+    );
+  }
 
   const responses = [];
-  let offset = queryParams.offset || 0;
-  let missingItems = totalItems - offset > MAX_ITEM_AMOUNT_PER_REQUEST;
-
-  while (missingItems) {
+  const remainingPages = Math.ceil(totalItems / limit);
+  for (let pageNumber = 2; pageNumber <= remainingPages; pageNumber++) {
     const response = requestData<Response>(dataRequestConfig);
     responses.push(response);
-
-    offset += MAX_ITEM_AMOUNT_PER_REQUEST;
-    missingItems = totalItems - offset > MAX_ITEM_AMOUNT_PER_REQUEST;
   }
   const resolvedResponses = await Promise.all(responses);
 
   const okResponses = [response];
-
   for (const res of resolvedResponses) {
     if (res.status !== 'OK') {
       return apiErrorResult(
