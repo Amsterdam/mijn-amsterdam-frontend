@@ -384,7 +384,7 @@ export async function fetchGpassBudgetTransactions(
   }
 
   const totalItems = response.content.total_items;
-  if (!(totalItems >= 0)) {
+  if (!(totalItems || totalItems >= 0)) {
     return apiErrorResult(
       `Total items has non-sensical data. total_items = ${totalItems}`,
       null,
@@ -395,9 +395,9 @@ export async function fetchGpassBudgetTransactions(
   const responses = [];
   const remainingPages = Math.ceil((totalItems - queryParams.offset) / limit);
   for (let pageNumber = 2; pageNumber <= remainingPages; pageNumber++) {
+    queryParams.offset += limit;
     const response = requestData<Response>(dataRequestConfig);
     responses.push(response);
-    queryParams.offset += limit;
   }
   const resolvedResponses = await Promise.all(responses);
 

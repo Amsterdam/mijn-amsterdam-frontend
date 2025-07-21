@@ -297,36 +297,14 @@ describe('stadspas services', () => {
   });
 
   describe('Fetching transactions', () => {
-    function fetchWithSourceResponse(
-      transactions: Partial<StadspasTransactieSource>[],
-      times = 1
-    ): Promise<ApiResponse<StadspasBudgetTransaction[]>> {
-      const response: StadspasTransactiesResponseSource = {
-        number_of_items: transactions.length,
-        total_items: transactions.length,
-        transacties: transactions as StadspasTransactieSource[],
-      };
-      remoteApi
-        .get(
-          '/stadspas/rest/transacties/v1/budget?pasnummer=123123123&sub_transactions=true&date_from=2024-06-30&date_until=2025-01-01&limit=20&offset=0'
-        )
-        .times(times)
-        .matchHeader(
-          'authorization',
-          `AppBearer ${FAKE_API_KEY},0363000123-123`
-        )
-        .reply(200, response);
+    const [transactionsKeyEncrypted] = encryptDecrypt.encrypt(
+      `my-unique-session-id:0363000123-123:123123123`
+    );
 
-      const [transactionsKeyEncrypted] = encryptDecrypt.encrypt(
-        `my-unique-session-id:0363000123-123:123123123`
-      );
-
-      return fetchStadspasBudgetTransactions(
-        transactionsKeyEncrypted,
-        undefined,
-        'my-unique-session-id'
-      );
+    function transactionsUrl({ offset }: { offset: number }): string {
+      return `/stadspas/rest/transacties/v1/budget?pasnummer=123123123&sub_transactions=true&date_from=2024-06-30&date_until=2025-01-01&limit=20&offset=${offset}`;
     }
+
     function createTransaction({ id }: { id: number }) {
       return {
         id,
@@ -340,10 +318,27 @@ describe('stadspas services', () => {
         transactiedatum: '2024-04-25',
       };
     }
+
     test('stadspas transacties Happy!', async () => {
-      const response = await fetchWithSourceResponse([
-        createTransaction({ id: 1 }),
-      ]);
+      const transactions = [createTransaction({ id: 1 })];
+      const replyResponse: StadspasTransactiesResponseSource = {
+        number_of_items: transactions.length,
+        total_items: transactions.length,
+        transacties: transactions as StadspasTransactieSource[],
+      };
+      remoteApi
+        .get(transactionsUrl({ offset: 0 }))
+        .matchHeader(
+          'authorization',
+          `AppBearer ${FAKE_API_KEY},0363000123-123`
+        )
+        .reply(200, replyResponse);
+
+      const response = await fetchStadspasBudgetTransactions(
+        transactionsKeyEncrypted,
+        undefined,
+        'my-unique-session-id'
+      );
 
       expect(response).toStrictEqual({
         content: [
@@ -363,15 +358,38 @@ describe('stadspas services', () => {
     });
 
     test('Fetching paginated transactions', async () => {
-      const TIMES = 2;
-      const TRIGGER_PAGINATION_AMOUNT = 21;
-      const response = await fetchWithSourceResponse(
-        new Array(TRIGGER_PAGINATION_AMOUNT)
-          .fill(0)
-          .map((_, i) => createTransaction({ id: i })),
-        TIMES
+      const transactions = new Array(20)
+        .fill(0)
+        .map((_, i) => createTransaction({ id: i }));
+      remoteApi
+        .get(transactionsUrl({ offset: 0 }))
+        .matchHeader(
+          'authorization',
+          `AppBearer ${FAKE_API_KEY},0363000123-123`
+        )
+        .reply(200, {
+          number_of_items: 20,
+          total_items: 21,
+          transacties: transactions as StadspasTransactieSource[],
+        });
+      remoteApi
+        .get(transactionsUrl({ offset: 20 }))
+        .matchHeader(
+          'authorization',
+          `AppBearer ${FAKE_API_KEY},0363000123-123`
+        )
+        .reply(200, {
+          number_of_items: 1,
+          total_items: 21,
+          transacties: [createTransaction({ id: 21 })],
+        });
+
+      const response = await fetchStadspasBudgetTransactions(
+        transactionsKeyEncrypted,
+        undefined,
+        'my-unique-session-id'
       );
-      expect(response.content?.length).toBe(TRIGGER_PAGINATION_AMOUNT * 2);
+      expect(response.content?.length).toBe(21);
     });
 
     test('stadspas transacties unmatched session id', async () => {
