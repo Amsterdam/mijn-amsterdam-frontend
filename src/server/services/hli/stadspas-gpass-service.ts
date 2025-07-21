@@ -350,7 +350,6 @@ function transformGpassTransactionsResponse(
   return [];
 }
 
-const MAX_ITEM_AMOUNT_PER_REQUEST = 20;
 /** Fetch budget transactions from gpass
  *
  *  queryParams:
