@@ -367,6 +367,8 @@ export async function fetchGpassBudgetTransactions(
 ): Promise<ApiResponse<StadspasBudgetTransaction[]>> {
   const DEFAULT_LIMIT = 20;
   const limit = queryParams.limit || DEFAULT_LIMIT;
+  const DEFAULT_OFFSET = 0;
+  queryParams.offset = DEFAULT_OFFSET;
 
   const dataRequestConfig = getApiConfig('GPASS', {
     formatUrl: ({ url }) => `${url}/rest/transacties/v1/budget`,
@@ -391,10 +393,11 @@ export async function fetchGpassBudgetTransactions(
   }
 
   const responses = [];
-  const remainingPages = Math.ceil(totalItems / limit);
+  const remainingPages = Math.ceil((totalItems - queryParams.offset) / limit);
   for (let pageNumber = 2; pageNumber <= remainingPages; pageNumber++) {
     const response = requestData<Response>(dataRequestConfig);
     responses.push(response);
+    queryParams.offset += limit;
   }
   const resolvedResponses = await Promise.all(responses);
 
