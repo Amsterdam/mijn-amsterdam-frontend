@@ -42,6 +42,7 @@ import {
   requestData,
 } from '../../helpers/source-api-request';
 import type { BSN } from '../zorgned/zorgned-types';
+import { DataRequestConfig } from '../../config/source-api';
 
 const NO_PASHOUDER_CONTENT_RESPONSE = apiSuccessResult({
   stadspassen: [],
@@ -368,17 +369,25 @@ export async function fetchGpassBudgetTransactions(
   const DEFAULT_LIMIT = 20;
   const limit = queryParams.limit || DEFAULT_LIMIT;
   const DEFAULT_OFFSET = 0;
-  queryParams.offset = DEFAULT_OFFSET;
+  let offset = queryParams.offset || DEFAULT_OFFSET;
 
-  const dataRequestConfig = getApiConfig('GPASS', {
-    formatUrl: ({ url }) => `${url}/rest/transacties/v1/budget`,
-    headers: getHeaders(administratienummer),
-    params: queryParams,
-  });
+  function getDataRequestConfig(
+    queryParams: StadspasTransactionQueryParams,
+    newOffset: StadspasTransactionQueryParams['offset']
+  ): DataRequestConfig {
+    const conf = getApiConfig('GPASS', {
+      formatUrl: ({ url }) => `${url}/rest/transacties/v1/budget`,
+      headers: getHeaders(administratienummer),
+      params: queryParams,
+    });
+    conf.params.offset = newOffset;
+    return conf;
+  }
 
   type Response = StadspasTransactiesResponseSource;
 
-  const response = await requestData<Response>(dataRequestConfig);
+  const config = getDataRequestConfig(queryParams, offset);
+  const response = await requestData<Response>(config);
   if (response.status !== 'OK') {
     return response;
   }
@@ -393,10 +402,11 @@ export async function fetchGpassBudgetTransactions(
   }
 
   const responses = [];
-  const remainingPages = Math.ceil((totalItems - queryParams.offset) / limit);
+  const remainingPages = Math.ceil((totalItems - offset) / limit);
   for (let pageNumber = 2; pageNumber <= remainingPages; pageNumber++) {
-    queryParams.offset += limit;
-    const response = requestData<Response>(dataRequestConfig);
+    offset += limit;
+    const config = getDataRequestConfig(queryParams, offset);
+    const response = requestData<Response>(config);
     responses.push(response);
   }
   const resolvedResponses = await Promise.all(responses);

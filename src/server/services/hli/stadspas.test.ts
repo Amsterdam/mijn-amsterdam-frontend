@@ -15,10 +15,8 @@ import type {
   StadspasDiscountTransactionsResponseSource,
   StadspasTransactiesResponseSource,
   StadspasTransactieSource,
-  StadspasBudgetTransaction,
 } from './stadspas-types';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
-import { ApiResponse } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
 
@@ -358,6 +356,8 @@ describe('stadspas services', () => {
     });
 
     test('Fetching paginated transactions', async () => {
+      const TOTAL_ITEMS = 41;
+      const PAGE_ITEM_AMOUNT = 20;
       const transactions = new Array(20)
         .fill(0)
         .map((_, i) => createTransaction({ id: i }));
@@ -368,20 +368,34 @@ describe('stadspas services', () => {
           `AppBearer ${FAKE_API_KEY},0363000123-123`
         )
         .reply(200, {
-          number_of_items: 20,
-          total_items: 21,
+          number_of_items: transactions.length,
+          total_items: TOTAL_ITEMS,
           transacties: transactions as StadspasTransactieSource[],
         });
       remoteApi
-        .get(transactionsUrl({ offset: 20 }))
+        .get(transactionsUrl({ offset: PAGE_ITEM_AMOUNT }))
+        .matchHeader(
+          'authorization',
+          `AppBearer ${FAKE_API_KEY},0363000123-123`
+        )
+        .reply(200, {
+          number_of_items: transactions.length,
+          total_items: TOTAL_ITEMS,
+          transacties: transactions.map((transaction) => ({
+            ...transaction,
+            id: transaction.id + 20,
+          })),
+        });
+      remoteApi
+        .get(transactionsUrl({ offset: PAGE_ITEM_AMOUNT * 2 }))
         .matchHeader(
           'authorization',
           `AppBearer ${FAKE_API_KEY},0363000123-123`
         )
         .reply(200, {
           number_of_items: 1,
-          total_items: 21,
-          transacties: [createTransaction({ id: 21 })],
+          total_items: TOTAL_ITEMS,
+          transacties: [createTransaction({ id: 40 })],
         });
 
       const response = await fetchStadspasBudgetTransactions(
@@ -389,7 +403,9 @@ describe('stadspas services', () => {
         undefined,
         'my-unique-session-id'
       );
-      expect(response.content?.length).toBe(21);
+      expect(
+        response.content?.map((transaction) => transaction.id)
+      ).toStrictEqual(new Array(41).fill(0).map((_, i) => i.toString()));
     });
 
     test('stadspas transacties unmatched session id', async () => {
