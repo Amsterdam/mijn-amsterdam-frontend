@@ -35,6 +35,7 @@ import {
 } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { displayAmount } from '../../../universal/helpers/text';
+import { DataRequestConfig } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import {
   deleteCacheEntry,
@@ -42,7 +43,6 @@ import {
   requestData,
 } from '../../helpers/source-api-request';
 import type { BSN } from '../zorgned/zorgned-types';
-import { DataRequestConfig } from '../../config/source-api';
 
 const NO_PASHOUDER_CONTENT_RESPONSE = apiSuccessResult({
   stadspassen: [],
@@ -372,28 +372,25 @@ export async function fetchGpassBudgetTransactions(
   let offset = queryParams.offset || DEFAULT_OFFSET;
 
   function getDataRequestConfig(
-    queryParams: StadspasTransactionQueryParams,
-    newOffset: StadspasTransactionQueryParams['offset']
+    offset: StadspasTransactionQueryParams['offset']
   ): DataRequestConfig {
-    const conf = getApiConfig('GPASS', {
+    return getApiConfig('GPASS', {
       formatUrl: ({ url }) => `${url}/rest/transacties/v1/budget`,
       headers: getHeaders(administratienummer),
-      params: queryParams,
+      params: { ...queryParams, offset },
     });
-    conf.params.offset = newOffset;
-    return conf;
   }
 
   type Response = StadspasTransactiesResponseSource;
 
-  const config = getDataRequestConfig(queryParams, offset);
+  const config = getDataRequestConfig(offset);
   const response = await requestData<Response>(config);
   if (response.status !== 'OK') {
     return response;
   }
 
   const totalItems = response.content.total_items;
-  if (!(totalItems || totalItems >= 0)) {
+  if (!(totalItems && totalItems >= 0)) {
     return apiErrorResult(
       `Total items has non-sensical data. total_items = ${totalItems}`,
       null,
@@ -405,7 +402,7 @@ export async function fetchGpassBudgetTransactions(
   const remainingPages = Math.ceil((totalItems - offset) / limit);
   for (let pageNumber = 2; pageNumber <= remainingPages; pageNumber++) {
     offset += limit;
-    const config = getDataRequestConfig(queryParams, offset);
+    const config = getDataRequestConfig(offset);
     const response = requestData<Response>(config);
     responses.push(response);
   }
