@@ -1,11 +1,10 @@
+import { themaIdBRP, themaTitle } from './Profile-thema-config';
 import * as generalInfo from '../../GeneralInfo/GeneralInfo';
 
-const profileSectionProps: generalInfo.SectionProps = {
-  title: 'Mijn Gegevens',
+export const profileSectionProps: generalInfo.SectionProps = {
+  title: themaTitle[themaIdBRP],
   listItems: [
     { text: 'Uw inschrijving bij de gemeente' },
     { text: 'Uw contactmomenten met de gemeente' },
   ],
 };
-
-generalInfo.register(profileSectionProps);
