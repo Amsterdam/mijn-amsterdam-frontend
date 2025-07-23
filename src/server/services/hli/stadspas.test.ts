@@ -358,7 +358,7 @@ describe('stadspas services', () => {
     test('Fetching paginated transactions', async () => {
       const TOTAL_ITEMS = 41;
       const PAGE_ITEM_AMOUNT = 20;
-      const transactions = new Array(20)
+      const transactions = new Array(PAGE_ITEM_AMOUNT)
         .fill(0)
         .map((_, i) => createTransaction({ id: i }));
       remoteApi
@@ -383,7 +383,7 @@ describe('stadspas services', () => {
           total_items: TOTAL_ITEMS,
           transacties: transactions.map((transaction) => ({
             ...transaction,
-            id: transaction.id + 20,
+            id: transaction.id + PAGE_ITEM_AMOUNT,
           })),
         });
       remoteApi
@@ -395,7 +395,7 @@ describe('stadspas services', () => {
         .reply(200, {
           number_of_items: 1,
           total_items: TOTAL_ITEMS,
-          transacties: [createTransaction({ id: 40 })],
+          transacties: [createTransaction({ id: PAGE_ITEM_AMOUNT * 2 })],
         });
 
       const response = await fetchStadspasBudgetTransactions(
@@ -405,7 +405,9 @@ describe('stadspas services', () => {
       );
       expect(
         response.content?.map((transaction) => transaction.id)
-      ).toStrictEqual(new Array(41).fill(0).map((_, i) => i.toString()));
+      ).toStrictEqual(
+        new Array(TOTAL_ITEMS).fill(0).map((_, i) => i.toString())
+      );
     });
 
     test('stadspas transacties unmatched session id', async () => {
