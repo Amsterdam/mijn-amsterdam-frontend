@@ -1,0 +1,9 @@
+import { themaTitle } from './AVG-thema-config';
+import * as generalInfo from '../../GeneralInfo/GeneralInfo';
+
+export const AVGsectionProps: generalInfo.SectionProps = {
+  title: themaTitle,
+  listItems: [
+    { text: 'Informatie over afval laten ophalen en wegbrengen in uw buurt' },
+  ],
+};

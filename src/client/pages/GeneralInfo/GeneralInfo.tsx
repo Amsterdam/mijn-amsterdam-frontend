@@ -6,12 +6,18 @@ import {
   UnorderedList,
 } from '@amsterdam/design-system-react';
 
+import { myAreaSectionProps } from '../../components/MyArea/InfoSection';
 import {
   PageContentCell,
   PageContentV2,
   TextPageV2,
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
+import { afvalSectionProps } from '../Thema/Afval/InfoSection';
+import { AVGsectionProps } from '../Thema/AVG/InfoSection';
+import { belastingenSectionProps } from '../Thema/Belastingen/InfoSection';
+import { burgerzakenSectionProps } from '../Thema/Burgerzaken/InfoSection';
+import { profileSectionProps } from '../Thema/Profile/InfoSection';
 
 export type SectionProps = {
   title: string;
@@ -19,11 +25,14 @@ export type SectionProps = {
 };
 type ListItems = Array<{ text: string; nested?: string[] }>;
 
-const sections: SectionProps[] = [];
-
-export function register(props: SectionProps) {
-  sections.push(props);
-}
+const sections: SectionProps[] = [
+  profileSectionProps,
+  burgerzakenSectionProps,
+  myAreaSectionProps,
+  afvalSectionProps,
+  belastingenSectionProps,
+  AVGsectionProps,
+];
 
 function Section({ title, listItems }: SectionProps) {
   const listItemComponents = listItems.map((item, i) => (
