@@ -13,6 +13,8 @@ import type {
   StadspasPasHouderResponse,
   StadspasDiscountTransactions,
   StadspasDiscountTransactionsResponseSource,
+  StadspasTransactiesResponseSource,
+  StadspasTransactieSource,
 } from './stadspas-types';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
@@ -293,33 +295,46 @@ describe('stadspas services', () => {
   });
 
   describe('Fetching transactions', () => {
+    const [transactionsKeyEncrypted] = encryptDecrypt.encrypt(
+      `my-unique-session-id:0363000123-123:123123123`
+    );
+
+    function transactionsUrl({ offset }: { offset: number }): string {
+      return `/stadspas/rest/transacties/v1/budget?pasnummer=123123123&sub_transactions=true&date_from=2024-06-30&date_until=2025-01-01&limit=20&offset=${offset}`;
+    }
+
+    function createTransaction({
+      id,
+    }: {
+      id: number;
+    }): StadspasTransactieSource {
+      return {
+        id,
+        budget: {
+          aanbieder: { id: 10, naam: 'transactie naam' },
+          naam: 'budgetje',
+          code: '001',
+          id: 100,
+        },
+        bedrag: 34.5,
+        transactiedatum: '2024-04-25',
+      } as StadspasTransactieSource;
+    }
+
     test('stadspas transacties Happy!', async () => {
+      const transactions = [createTransaction({ id: 1 })];
+      const replyResponse: StadspasTransactiesResponseSource = {
+        number_of_items: transactions.length,
+        total_items: transactions.length,
+        transacties: transactions as StadspasTransactieSource[],
+      };
       remoteApi
-        .get(
-          '/stadspas/rest/transacties/v1/budget?pasnummer=123123123&sub_transactions=true&date_from=2024-06-30&date_until=2025-01-01'
-        )
+        .get(transactionsUrl({ offset: 0 }))
         .matchHeader(
           'authorization',
           `AppBearer ${FAKE_API_KEY},0363000123-123`
         )
-        .reply(200, {
-          transacties: [
-            {
-              id: 'transactie-id',
-              budget: {
-                aanbieder: { naam: 'transactie naam' },
-                naam: 'budgetje',
-                code: '001',
-              },
-              bedrag: 34.5,
-              transactiedatum: '2024-04-25',
-            },
-          ],
-        });
-
-      const [transactionsKeyEncrypted] = encryptDecrypt.encrypt(
-        `my-unique-session-id:0363000123-123:123123123`
-      );
+        .reply(200, replyResponse);
 
       const response = await fetchStadspasBudgetTransactions(
         transactionsKeyEncrypted,
@@ -336,12 +351,72 @@ describe('stadspas services', () => {
             budgetCode: '001',
             datePublished: '2024-04-25',
             datePublishedFormatted: '25 april 2024',
-            id: 'transactie-id',
+            id: '1',
             title: 'transactie naam',
           },
         ],
         status: 'OK',
       });
+    });
+
+    test('Fetching paginated transactions', async () => {
+      const TOTAL_ITEMS = 41;
+      const PAGE_ITEM_AMOUNT = 20;
+
+      let id = 0;
+      function createTransactions(amount: number): StadspasTransactieSource[] {
+        return new Array(amount).fill(0).map((_) => {
+          id++;
+          return createTransaction({ id });
+        });
+      }
+
+      remoteApi
+        .get(transactionsUrl({ offset: 0 }))
+        .matchHeader(
+          'authorization',
+          `AppBearer ${FAKE_API_KEY},0363000123-123`
+        )
+        .reply(200, {
+          number_of_items: createTransactions.length,
+          total_items: TOTAL_ITEMS,
+          transacties: createTransactions(PAGE_ITEM_AMOUNT),
+        });
+
+      remoteApi
+        .get(transactionsUrl({ offset: PAGE_ITEM_AMOUNT }))
+        .matchHeader(
+          'authorization',
+          `AppBearer ${FAKE_API_KEY},0363000123-123`
+        )
+        .reply(200, {
+          number_of_items: createTransactions.length,
+          total_items: TOTAL_ITEMS,
+          transacties: createTransactions(PAGE_ITEM_AMOUNT),
+        });
+
+      remoteApi
+        .get(transactionsUrl({ offset: PAGE_ITEM_AMOUNT * 2 }))
+        .matchHeader(
+          'authorization',
+          `AppBearer ${FAKE_API_KEY},0363000123-123`
+        )
+        .reply(200, {
+          number_of_items: 1,
+          total_items: TOTAL_ITEMS,
+          transacties: createTransactions(1),
+        });
+
+      const response = await fetchStadspasBudgetTransactions(
+        transactionsKeyEncrypted,
+        undefined,
+        'my-unique-session-id'
+      );
+      expect(
+        response.content?.map((transaction) => transaction.id)
+      ).toStrictEqual(
+        new Array(TOTAL_ITEMS).fill(0).map((_, i) => (i + 1).toString())
+      );
     });
 
     test('stadspas transacties unmatched session id', async () => {

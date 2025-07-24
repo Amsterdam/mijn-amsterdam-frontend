@@ -1,13 +1,5 @@
 import { HttpStatusCode } from 'axios';
-import {
-  differenceInMonths,
-  isAfter,
-  isBefore,
-  isSameDay,
-  parseISO,
-  subMonths,
-  isValid,
-} from 'date-fns';
+import { isAfter, isBefore, isSameDay, parseISO, isValid } from 'date-fns';
 
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import {
@@ -43,6 +35,7 @@ import {
 } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { displayAmount } from '../../../universal/helpers/text';
+import { DataRequestConfig } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import {
   deleteCacheEntry,
@@ -260,7 +253,7 @@ function getNextYearsDefaultExpiryDate(): Date {
   return getDefaultExpiryDate(1);
 }
 
-function getPreviousYearsDefaultExpiryDate(): Date {
+export function getPreviousYearsDefaultExpiryDate(): Date {
   return getDefaultExpiryDate(-1);
 }
 
@@ -358,38 +351,79 @@ function transformGpassTransactionsResponse(
   return [];
 }
 
-const MONTHS_BACK_IN_PREVIOUS_YEAR = 6;
-
+/** Fetch budget transactions from gpass
+ *
+ *  queryParams:
+ *    pasnummer:        which pasnummer would you like to query for?
+ *    sub_transactions: Include transactions from linked passes.
+ *    date_from:        self explanatory.
+ *    date_until:       self explanatory.
+ *    limit:            How many budget transactions from gpass? Max and default is 20.
+ *    offset:           Request n items further plus the limit.
+ *                        e.q. 0 will yield items 1 to 20. 1 from 2 to 21 and so on...
+ */
 export async function fetchGpassBudgetTransactions(
   administratienummer: string,
-  pasnummer: Stadspas['passNumber'],
-  budgetCode?: StadspasBudget['code']
-) {
-  const prev = getPreviousYearsDefaultExpiryDate();
-  const monthsAgo = differenceInMonths(new Date(), prev);
-  const from = subMonths(
-    prev,
-    Math.max(0, MONTHS_BACK_IN_PREVIOUS_YEAR - monthsAgo)
-  );
-  const requestParams: StadspasTransactionQueryParams = {
-    pasnummer,
-    sub_transactions: true, // Includes transactions from linked passes.
-    date_from: from.toISOString().split('T')[0], // Format to YYYY-MM-DD
-    date_until: new Date().toISOString().split('T')[0], // Format to YYYY-MM-DD
-  };
+  queryParams: StadspasTransactionQueryParams
+): Promise<ApiResponse<StadspasBudgetTransaction[]>> {
+  const DEFAULT_LIMIT = 20;
+  const limit = queryParams.limit || DEFAULT_LIMIT;
+  const DEFAULT_OFFSET = 0;
+  let offset = queryParams.offset || DEFAULT_OFFSET;
 
-  if (budgetCode) {
-    requestParams.budgetcode = budgetCode;
+  function getDataRequestConfig(
+    offset: StadspasTransactionQueryParams['offset']
+  ): DataRequestConfig {
+    return getApiConfig('GPASS', {
+      formatUrl: ({ url }) => `${url}/rest/transacties/v1/budget`,
+      headers: getHeaders(administratienummer),
+      params: { ...queryParams, offset },
+    });
   }
 
-  const dataRequestConfig = getApiConfig('GPASS', {
-    formatUrl: ({ url }) => `${url}/rest/transacties/v1/budget`,
-    transformResponse: transformGpassTransactionsResponse,
-    headers: getHeaders(administratienummer),
-    params: requestParams,
-  });
+  type Response = StadspasTransactiesResponseSource;
 
-  return requestData<StadspasBudgetTransaction[]>(dataRequestConfig);
+  const config = getDataRequestConfig(offset);
+  const response = await requestData<Response>(config);
+  if (response.status !== 'OK') {
+    return response;
+  }
+
+  const totalItems = response.content.total_items;
+  if (totalItems === null || totalItems === undefined || totalItems < 0) {
+    return apiErrorResult(
+      `Total items has non-sensical data. total_items = ${totalItems}`,
+      null,
+      HttpStatusCode.InternalServerError
+    );
+  }
+
+  const responses = [];
+  const remainingPages = Math.ceil((totalItems - offset) / limit);
+  for (let pageNumber = 2; pageNumber <= remainingPages; pageNumber++) {
+    offset += limit;
+    const config = getDataRequestConfig(offset);
+    const response = requestData<Response>(config);
+    responses.push(response);
+  }
+  const resolvedResponses = await Promise.all(responses);
+
+  const okResponses = [response];
+  for (const res of resolvedResponses) {
+    if (res.status !== 'OK') {
+      return apiErrorResult(
+        'One of the requests failed. Try again.',
+        null,
+        HttpStatusCode.InternalServerError
+      );
+    }
+    okResponses.push(res);
+  }
+
+  const finalRespones = okResponses.flatMap((res) =>
+    transformGpassTransactionsResponse(res.content)
+  );
+  return apiSuccessResult(finalRespones);
 }
 
 function transformGpassAanbiedingenResponse(
