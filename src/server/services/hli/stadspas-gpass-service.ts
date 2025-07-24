@@ -390,7 +390,7 @@ export async function fetchGpassBudgetTransactions(
   }
 
   const totalItems = response.content.total_items;
-  if (!(totalItems && totalItems >= 0)) {
+  if (totalItems === null || totalItems === undefined || totalItems < 0) {
     return apiErrorResult(
       `Total items has non-sensical data. total_items = ${totalItems}`,
       null,
