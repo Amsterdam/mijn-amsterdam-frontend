@@ -5,7 +5,7 @@ export const bodemsectionProps: generalInfo.SectionProps = {
   title: themaTitle,
   listItems: [
     {
-      text: "Uw aanvraag voor 'lood in de bodem-check",
+      text: "Uw aanvraag voor 'lood in de bodem-check'",
     },
   ],
 };
