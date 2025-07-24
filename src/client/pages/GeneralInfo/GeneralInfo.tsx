@@ -13,11 +13,29 @@ import {
   TextPageV2,
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
+import { afisSectionProps } from '../Thema/Afis/InfoSection';
 import { afvalSectionProps } from '../Thema/Afval/InfoSection';
 import { AVGsectionProps } from '../Thema/AVG/InfoSection';
 import { belastingenSectionProps } from '../Thema/Belastingen/InfoSection';
+import { bezwarenSectionProps } from '../Thema/Bezwaren/InfoSection';
+import { bodemsectionProps } from '../Thema/Bodem/InfoSection';
 import { burgerzakenSectionProps } from '../Thema/Burgerzaken/InfoSection';
+import { erfpachtSectionProps } from '../Thema/Erfpacht/InfoSection';
+import {
+  HLISectionProps,
+  stadspasSectionProps,
+} from '../Thema/HLI/InfoSection';
+import { inkomenSectionProps } from '../Thema/Inkomen/InfoSection';
+import { klachtenSectionProps } from '../Thema/Klachten/InfoSection';
+import { krefiaSectionProps } from '../Thema/Krefia/InfoSection';
+import { milieuzonesectionProps } from '../Thema/Milieuzone/InfoSection';
+import { overtredingensectionProps } from '../Thema/Overtredingen/InfoSection';
+import { parkerensectionProps } from '../Thema/Parkeren/InfoSection';
 import { profileSectionProps } from '../Thema/Profile/InfoSection';
+import { subsidiesSectionProps } from '../Thema/Subsidies/InfoSection';
+import { toeristischeverhuurSectionProps } from '../Thema/ToeristischeVerhuur/InfoSection';
+import { vergunningensectionProps } from '../Thema/Vergunningen/InfoSection';
+import { zorgSectionProps } from '../Thema/Zorg/InfoSection';
 
 export type SectionProps = {
   title: string;
@@ -32,6 +50,22 @@ const sections: SectionProps[] = [
   afvalSectionProps,
   belastingenSectionProps,
   AVGsectionProps,
+  bezwarenSectionProps,
+  klachtenSectionProps,
+  erfpachtSectionProps,
+  afisSectionProps,
+  inkomenSectionProps,
+  HLISectionProps,
+  stadspasSectionProps,
+  zorgSectionProps,
+  subsidiesSectionProps,
+  krefiaSectionProps,
+  toeristischeverhuurSectionProps,
+  parkerensectionProps,
+  milieuzonesectionProps,
+  overtredingensectionProps,
+  vergunningensectionProps,
+  bodemsectionProps,
 ];
 
 function Section({ title, listItems }: SectionProps) {
@@ -93,6 +127,20 @@ export function GeneralInfo() {
               listItems={section.listItems}
             />
           ))}
+          <Heading level={4} size="level-4" className="ams-mb-s">
+            Vragen over Mijn Amsterdam
+          </Heading>
+          <Paragraph className="ams-mb-m">
+            Kijk bij de{' '}
+            <a
+              href="https://www.amsterdam.nl/contact/mijn-amsterdam/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Mijn Amsterdam - Veelgestelde vragen
+            </a>
+            .
+          </Paragraph>
         </PageContentCell>
       </PageContentV2>
     </TextPageV2>
