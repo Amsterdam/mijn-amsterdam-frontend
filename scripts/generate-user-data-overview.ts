@@ -988,8 +988,7 @@ function sheetThemaContent(resultsByUser: ResultsByUser): SheetData {
       );
     },
     KREFIA: (serviceResults: ServiceResults) => {
-      const deeplinks = serviceResults.KREFIA?.content.deepLinks;
-      return !!deeplinks.length ? deeplinks.length : '';
+      return serviceResults.KREFIA?.content?.deepLinks?.length || '';
     },
     Klachten: (serviceResults: ServiceResults) => {
       return serviceResults.KLACHTEN.content?.aantal || '';
