@@ -33,7 +33,7 @@ export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<
     isDisabled: !featureToggle.hliRegelingEnabledRTM,
   },
   {
-    productIdentificatie: ['AV-GOV', 'AV-OVM', 'AV-RTM'],
+    productIdentificatie: ['AV-GOV', 'AV-OVM'],
     lineItemTransformers: REGELING,
   },
   {
