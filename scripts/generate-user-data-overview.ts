@@ -1011,12 +1011,7 @@ function sheetThemaContent(resultsByUser: ResultsByUser): SheetData {
       };
 
       const resVal = Object.keys(themaContentGetters).reduce((acc, thema) => {
-        try {
-          acc[thema] = themaContentGetters[thema](serviceResults);
-        } catch (err) {
-          console.error(err);
-          acc[thema] = '';
-        }
+        acc[thema] = themaContentGetters[thema](serviceResults);
         return acc;
       }, base);
 
