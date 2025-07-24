@@ -7,6 +7,7 @@ export const vergunningensectionProps: generalInfo.SectionProps = {
     {
       text: 'Uw aanvraag voor een ontheffing of vergunning voor de volgende activiteiten:',
       nested: [
+        'Ergens rijden of stilstaan waar dat normaal niet mag (RVV en e-RVV)',
         'Straat tijdelijk afsluiten of afzetten (TVM)',
         'Object neerzetten op parkeervak, straat of stoep (Objectvergunning)',
         'Parkeervakken reserveren (TVM)',
