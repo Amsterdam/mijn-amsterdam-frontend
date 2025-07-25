@@ -7,7 +7,7 @@ export const themaIdBRP = 'BRP' as const;
 export const featureToggle = {
   [themaIdBRP]: {
     themaActive: true,
-    benkBrpServiceActive: false,
+    benkBrpServiceActive: !IS_AP,
   },
   [themaIdKVK]: {
     themaActive: true,
