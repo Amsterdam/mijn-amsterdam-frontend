@@ -11,6 +11,7 @@ import { Deferred } from './deferred';
 import { getRequestConfigCacheKey } from './source-api-helpers';
 import {
   ApiErrorResponse,
+  ApiPostponeResponse,
   ApiSuccessResponse,
   apiErrorResult,
   apiPostponeResult,
@@ -74,6 +75,16 @@ export interface RequestConfig<Source, Transformed> {
   format: (data: Source) => Transformed;
 }
 
+// Type overloads
+export async function requestData<T>(
+  passConfig: DataRequestConfig & { postponeFetch: true },
+  authProfileAndToken?: AuthProfileAndToken
+): Promise<ApiPostponeResponse<null>>;
+export async function requestData<T>(
+  passConfig: DataRequestConfig,
+  authProfileAndToken?: AuthProfileAndToken
+): Promise<ApiErrorResponse<null> | ApiSuccessResponse<T>>;
+// Implementation
 export async function requestData<T>(
   passConfig: DataRequestConfig,
   authProfileAndToken?: AuthProfileAndToken

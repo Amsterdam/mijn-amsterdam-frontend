@@ -41,10 +41,8 @@ import type {
 } from './decos-types';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import {
-  ApiErrorResponse,
   apiErrorResult,
   ApiResponse,
-  ApiSuccessResponse,
   apiSuccessResult,
   getSettledResult,
 } from '../../../universal/helpers/api';
@@ -187,6 +185,7 @@ async function fetchUserKeys(authProfileAndToken: AuthProfileAndToken) {
 }
 
 async function transformDecosZaakResponse<
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   T extends DecosZaakTransformer<any>,
   DZ extends DecosZaakBase = NestedType<T>,
 >(
@@ -369,6 +368,7 @@ export function transformFieldValuePairs<T extends DecosZaakBase>(
 }
 
 async function transformDecosZakenResponse<
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   T extends DecosZaakTransformer<any>,
   DZ extends DecosZaakBase = NestedType<T>,
 >(decosZaakTransformers: T[], decosZakenSource: DecosZaakSource[]) {
@@ -586,12 +586,13 @@ export async function fetchDecosZakenFromSource(
 }
 
 export async function fetchDecosZaken<
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   T extends DecosZaakTransformer<any>,
   DZ extends DecosZaakBase = NestedType<T>,
 >(
   authProfileAndToken: AuthProfileAndToken,
   zaakTypeTransformers: T[]
-): Promise<ApiSuccessResponse<DZ[]> | ApiErrorResponse<null>> {
+): Promise<ApiResponse<DZ[]>> {
   const zakenSourceResponse = await fetchDecosZakenFromSource(
     authProfileAndToken,
     zaakTypeTransformers

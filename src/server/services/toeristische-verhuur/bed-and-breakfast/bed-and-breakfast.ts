@@ -1,15 +1,12 @@
+import { powerBrowserZaakTransformers } from './bed-and-breakfast-pb-zaken';
 import { BBVergunningFrontend } from './bed-and-breakfast-types';
-import { powerBrowserZaakTransformers } from './powerbrowser-zaken';
-import {
-  ApiResponse_DEPRECATED,
-  apiSuccessResult,
-} from '../../../../universal/helpers/api';
+import { ApiResponse } from '../../../../universal/helpers/api';
 import { AuthProfile } from '../../../auth/auth-types';
 import { fetchZaken } from '../../powerbrowser/powerbrowser-service';
 
 export async function fetchBedAndBreakfast(
   authProfile: AuthProfile
-): Promise<ApiResponse_DEPRECATED<BBVergunningFrontend[] | null>> {
+): Promise<ApiResponse<BBVergunningFrontend[] | null>> {
   const response = await fetchZaken(authProfile, powerBrowserZaakTransformers);
-  return apiSuccessResult([]);
+  return response;
 }

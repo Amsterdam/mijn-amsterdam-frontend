@@ -13,8 +13,8 @@ import type {
 import { remoteApi } from '../../../testing/utils';
 import type { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
 import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
+import { powerBrowserZaakTransformers } from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-pb-zaken';
 import { BBVergunningFrontend } from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types';
-import { powerBrowserZaakTransformers } from '../toeristische-verhuur/bed-and-breakfast/powerbrowser-zaken';
 
 describe('Powerbrowser service', () => {
   const authProfile: AuthProfile = {
@@ -351,56 +351,16 @@ describe('Powerbrowser service', () => {
     });
   });
 
-  describe('fetchZakenIds', () => {
-    test('should fetch zaak IDs successfully', async () => {
-      remoteApi.post('/powerbrowser/SearchRequest').reply(200, {
-        records: [{ id: 'test-person-id' }],
-      });
-
-      remoteApi.post('/powerbrowser/Link/PERSONEN/GFO_ZAKEN/Table').reply(200, {
-        records: [
-          {
-            id: 'test-zaak-id',
-            fields: [
-              {
-                fieldName: 'FMT_CAPTION',
-                text: 'Z/123/123 aanvraag Bed en breakfast behandelen',
-              },
-            ],
-          },
-          {
-            id: 'test-zaak-id-2',
-            fields: [
-              {
-                fieldName: 'FMT_CAPTION',
-                text: 'Een ander type zaak',
-              },
-            ],
-          },
-        ],
-      });
-
-      const result = await forTesting.fetchZakenIds(authProfile, {
-        filter: (field) =>
-          field.fieldName === 'FMT_CAPTION' &&
-          !!field.text &&
-          field.text?.includes('Bed en breakfast'),
-      });
-      expect(result.status).toBe('OK');
-      expect(result.content).toEqual(['test-zaak-id']);
-    });
-
+  describe('fetchPBZaken', () => {
     test('should return an error if fetch fails', async () => {
       remoteApi
         .post('/powerbrowser/Link/PERSONEN/GFO_ZAKEN/Table')
         .reply(500, 'some-error');
 
-      const result = await forTesting.fetchZakenIds(authProfile, {
-        filter: (field) =>
-          field.fieldName === 'FMT_CAPTION' &&
-          !!field.text &&
-          field.text?.includes('Bed en breakfast'),
-      });
+      const result = await forTesting.fetchPBZaken(
+        authProfile,
+        powerBrowserZaakTransformers
+      );
       expect(result.status).toBe('ERROR');
     });
   });
@@ -600,7 +560,7 @@ describe('Powerbrowser service', () => {
     });
   });
 
-  describe('transformZaak', () => {
+  describe('transformZaakRaw', () => {
     beforeEach(() => {
       Mockdate.set('2023-01-01');
     });
@@ -643,32 +603,23 @@ describe('Powerbrowser service', () => {
         ],
       };
 
-      const result = forTesting.transformZaak(zaak);
+      const result = forTesting.transformZaakRaw(
+        powerBrowserZaakTransformers[0],
+        zaak
+      );
       expect(result).toEqual({
-        caseType: 'Vergunning bed & breakfast',
+        caseType: 'Bed en breakfast',
         dateDecision: '2024-10-17T22:00:00.0000000Z',
-        dateDecisionFormatted: '18 oktober 2024',
         dateEnd: '2024-12-30T23:00:00.0000000Z',
-        dateEndFormatted: '31 december 2024',
         dateRequest: '2024-09-30T22:00:00.0000000Z',
-        dateRequestFormatted: '01 oktober 2024',
         dateStart: '2024-10-17T22:00:00.0000000Z',
-        dateStartFormatted: '18 oktober 2024',
         decision: 'Verleend',
         isVerleend: true,
-        displayStatus: 'Ontvangen',
         documents: [],
-        heeftOvergangsRecht: false,
         id: '126088685',
         identifier: 'Z2024-WK000245',
-        link: {
-          title: 'Vergunning bed & breakfast',
-          to: '/toeristische-verhuur/vergunning/bed-and-breakfast/126088685',
-        },
-        location: null,
         processed: true,
         isExpired: false,
-        steps: [],
         title: 'Vergunning bed & breakfast',
       });
     });
