@@ -20,6 +20,7 @@ import {
   batchFetchNotifications,
   registerConsumer,
 } from '../services/notifications/notifications';
+import { deleteConsumer } from '../services/notifications/notifications-model';
 
 const AMSAPP_PROTOCOl = 'amsterdam://';
 const AMSAPP_NOTIFICATIONS_DEEP_LINK = `${AMSAPP_PROTOCOl}notifications`;
@@ -32,10 +33,10 @@ export const routerPublic = createBFFRouter({
 
 routerPublic.get(
   ExternalConsumerEndpoints.public.NOTIFICATIONS_LOGIN,
-  async (req: Request<{ consumer_id: string }>, res: Response) => {
+  async (req: Request<{ consumerId: string }>, res: Response) => {
     return res.redirect(
       authRoutes.AUTH_LOGIN_DIGID +
-        `?returnTo=${RETURNTO_NOTIFICATIES_CONSUMER_ID}&consumer-id=${req.params.consumer_id}`
+        `?returnTo=${RETURNTO_NOTIFICATIES_CONSUMER_ID}&consumerId=${req.params.consumerId}`
     );
   }
 );
@@ -43,6 +44,11 @@ routerPublic.get(
 routerPublic.get(
   ExternalConsumerEndpoints.public.NOTIFICATIONS_CONSUMER,
   sendConsumerIdResponse
+);
+
+routerPublic.delete(
+  ExternalConsumerEndpoints.public.NOTIFICATIONS_CONSUMER,
+  sendUnregisterConsumerResponse
 );
 
 // PRIVATE NETWORK ROUTER
@@ -80,7 +86,7 @@ const apiResponseErrors: Record<string, ApiError> = {
   DIGID_AUTH: { code: '001', message: 'Niet ingelogd met Digid' },
   AMSAPP_DELIVERY_FAILED: {
     code: '002',
-    message: 'Verzenden van consumer_id naar de Amsterdam app niet gelukt',
+    message: 'Verzenden van consumerId naar de Amsterdam app niet gelukt',
   },
   UNKNOWN: {
     code: '000',
@@ -125,8 +131,33 @@ const getRenderPropsForApiError = (
   promptOpenApp: apiResponseError.code === apiResponseErrors.DIGID_AUTH.code,
 });
 
+async function sendUnregisterConsumerResponse(
+  req: Request<{ consumerId: string }>,
+  res: Response
+) {
+  try {
+    await deleteConsumer(req.params.consumerId);
+  } catch (error) {
+    const apiResponseError = apiResponseErrors.UNKNOWN;
+    captureMessage(
+      `AMSAPP Notificaties unregisterConsumer: ${apiResponseError.message} ${error}`
+    );
+    return res
+      .status(HttpStatusCode.InternalServerError)
+      .send(
+        apiErrorResult(
+          apiResponseError.message,
+          null,
+          HttpStatusCode.InternalServerError
+        )
+      );
+  }
+
+  return res.send(apiSuccessResult('success'));
+}
+
 async function sendConsumerIdResponse(
-  req: Request<{ consumer_id: string }>,
+  req: Request<{ consumerId: string }>,
   res: Response
 ) {
   const authProfileAndToken: AuthProfileAndToken | null = getAuth(req);
@@ -137,25 +168,25 @@ async function sendConsumerIdResponse(
     );
     return res.render(
       'amsapp-open-app',
-      getRenderPropsForApiError(req.params.consumer_id, apiResponseError)
+      getRenderPropsForApiError(req.params.consumerId, apiResponseError)
     );
   }
 
-  if (!req.params.consumer_id) {
+  if (!req.params.consumerId) {
     const apiResponseError = apiResponseErrors.ERROR_PARAM_CONSUMER_ID;
     captureMessage(
       `AMSAPP Notificaties sendConsumerIdResponse: ${apiResponseError.message}`
     );
     return res.render(
       'amsapp-open-app',
-      getRenderPropsForApiError(req.params.consumer_id, apiResponseError)
+      getRenderPropsForApiError(req.params.consumerId, apiResponseError)
     );
   }
 
   try {
     await registerConsumer(
       authProfileAndToken?.profile.id,
-      req.params.consumer_id,
+      req.params.consumerId,
       ['belasting']
     );
   } catch (error) {
@@ -165,13 +196,13 @@ async function sendConsumerIdResponse(
     );
     return res.render(
       'amsapp-open-app',
-      getRenderPropsForApiError(req.params.consumer_id, apiResponseError)
+      getRenderPropsForApiError(req.params.consumerId, apiResponseError)
     );
   }
 
   const requestConfig = getApiConfig('AMSAPP', {
     data: {
-      consumer_id: req.params.consumer_id,
+      consumerId: req.params.consumerId,
     },
   });
   const deliveryResponse = await requestData<{ detail: 'Success' }>(
@@ -188,7 +219,7 @@ async function sendConsumerIdResponse(
     );
     return res.render(
       'amsapp-open-app',
-      getRenderPropsForApiError(req.params.consumer_id, apiResponseError)
+      getRenderPropsForApiError(req.params.consumerId, apiResponseError)
     );
   }
 
@@ -196,7 +227,7 @@ async function sendConsumerIdResponse(
     ...baseRenderProps,
     appHref: `${AMSAPP_NOTIFICATIONS_DEEP_LINK}/gelukt`,
     promptOpenApp: true,
-    identifier: !IS_PRODUCTION ? req.params.consumer_id : '',
+    identifier: !IS_PRODUCTION ? req.params.consumerId : '',
   };
   return res.render('amsapp-open-app', renderProps);
 }

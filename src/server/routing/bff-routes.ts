@@ -83,8 +83,8 @@ export const ExternalConsumerEndpoints = {
     STADSPAS_AMSAPP_LOGIN: `${AMSAPP_BASE}/stadspas/login/:token`,
     STADSPAS_ADMINISTRATIENUMMER: `${AMSAPP_BASE}/stadspas/administratienummer/:token`,
     STADSPAS_APP_LANDING: `${AMSAPP_BASE}/stadspas/app-landing`,
-    NOTIFICATIONS_LOGIN: `${AMSAPP_BASE}/notifications/login/:consumer_id`,
-    NOTIFICATIONS_CONSUMER: `${AMSAPP_BASE}/notifications/consumer/:consumer_id`,
+    NOTIFICATIONS_LOGIN: `${AMSAPP_BASE}/notifications/login/:consumerId`,
+    NOTIFICATIONS_CONSUMER: `${AMSAPP_BASE}/notifications/consumer/:consumerId`,
   },
   // Privately accessible
   private: {

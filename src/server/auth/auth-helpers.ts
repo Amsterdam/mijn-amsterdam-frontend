@@ -54,7 +54,7 @@ export function getReturnToUrl(
       return generateFullApiUrlBFF(
         ExternalConsumerEndpoints.public.NOTIFICATIONS_CONSUMER,
         {
-          consumer_id: queryParams['consumer-id'] as string,
+          consumerId: queryParams.consumerId as string,
         }
       );
     case ZAAK_STATUS_ROUTE:
