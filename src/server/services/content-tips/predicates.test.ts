@@ -5,6 +5,7 @@ import {
   hasBnBVergunning,
   hasBudget,
   hasDutchNationality,
+  hasKidsBetweenAges,
   hasOldestKidBornFrom2016,
   hasStadspasGroeneStip,
   hasToeristicheVerhuurVergunningen,
@@ -207,6 +208,37 @@ describe('predicates', () => {
           expect(
             hasOldestKidBornFrom2016(getMockAppState(birthdate1, birthdate2))
           ).toBe(expected);
+        }
+      );
+    });
+
+    describe('hasKidsBetweenAges', () => {
+      const createMockAppState = (childBirthdates: string[]) => {
+        return {
+          BRP: brpApiResponse<BRPData>({
+            kinderen: childBirthdates.map((birthdate) => ({
+              geboortedatum: birthdate,
+            })),
+          }),
+        } as AppState;
+      };
+
+      const hasKidsBetweenAges1And10 = hasKidsBetweenAges({ from: 1, to: 10 });
+
+      test.each([
+        [true, ['2012-07-25']], // Exactly ten years old.
+        [true, ['2011-07-26']], // Still ten years old but one day removed from eleven.
+        [true, ['2016-07-25']], // Somewhere in between: Six years old.
+        [true, ['2021-07-25']], // Exactly one year old.
+        [false, ['2011-07-25']], // Exactly eleven years old.
+        [false, ['2021-07-26']], // Zero years old but one day away from one year old.
+        [true, ['1980-07-25', '2016-07-25', '1980-07-25']], // One child with the correct age.
+      ])(
+        'should return %s for kids with birthdays at %s',
+        (expected, birthdates) => {
+          expect(hasKidsBetweenAges1And10(createMockAppState(birthdates))).toBe(
+            expected
+          );
         }
       );
     });
