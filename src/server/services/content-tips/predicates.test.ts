@@ -14,6 +14,7 @@ import {
   hasValidIdForVoting,
   hasValidRecentStadspasRequest,
   is18OrOlder,
+  isBetweenAges,
   isLivingInAmsterdamLessThanNumberOfDays,
   isMarriedOrLivingTogether,
   isReceivingSubsidy,
@@ -241,6 +242,29 @@ describe('predicates', () => {
           );
         }
       );
+    });
+
+    describe('isBetween17and18', () => {
+      const getMockAppState = (geboortedatum: string) => {
+        return {
+          BRP: brpApiResponse<BRPData>({
+            persoon: { geboortedatum },
+          }),
+        } as AppState;
+      };
+
+      const isBetween17and18 = isBetweenAges({ from: 1, to: 10 });
+
+      test.each([
+        [true, '2012-07-25'], // Exactly ten years old.
+        [true, '2011-07-26'], // Still ten years old but one day removed from eleven.
+        [true, '2016-07-25'], // Somewhere in between: Six years old.
+        [true, '2021-07-25'], // Exactly one year old.
+        [false, '2011-07-25'], // Exactly eleven years old.
+        [false, '2021-07-26'], // Zero years old but one day away from one year old.
+      ])('should return %s for birthday %s', (expected, birthdate) => {
+        expect(isBetween17and18(getMockAppState(birthdate))).toBe(expected);
+      });
     });
 
     describe('isMarriedOrLivingTogether', () => {
