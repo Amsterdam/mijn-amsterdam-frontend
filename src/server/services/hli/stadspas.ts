@@ -1,4 +1,5 @@
 import { HttpStatusCode } from 'axios';
+import { differenceInMonths, subMonths } from 'date-fns';
 import { generatePath } from 'react-router';
 
 import { getBudgetNotifications } from './stadspas-config-and-content';
@@ -32,7 +33,6 @@ import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureException } from '../monitoring';
-import { differenceInMonths, subMonths } from 'date-fns';
 
 export async function fetchStadspas(
   authProfileAndToken: AuthProfileAndToken
