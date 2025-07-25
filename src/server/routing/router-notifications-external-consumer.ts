@@ -18,9 +18,10 @@ import {
   batchDeleteNotifications,
   batchFetchAndStoreNotifications,
   batchFetchNotifications,
+  getConsumerStatus,
   registerConsumer,
+  unregisterConsumer,
 } from '../services/notifications/notifications';
-import { deleteConsumer } from '../services/notifications/notifications-model';
 
 const AMSAPP_PROTOCOl = 'amsterdam://';
 const AMSAPP_NOTIFICATIONS_DEEP_LINK = `${AMSAPP_PROTOCOl}notifications`;
@@ -42,8 +43,13 @@ routerPublic.get(
 );
 
 routerPublic.get(
-  ExternalConsumerEndpoints.public.NOTIFICATIONS_CONSUMER,
+  ExternalConsumerEndpoints.public.NOTIFICATIONS_CONSUMER_APP,
   sendConsumerIdResponse
+);
+
+routerPublic.get(
+  ExternalConsumerEndpoints.public.NOTIFICATIONS_CONSUMER,
+  sendConsumerIdStatusResponse
 );
 
 routerPublic.delete(
@@ -135,25 +141,22 @@ async function sendUnregisterConsumerResponse(
   req: Request<{ consumerId: string }>,
   res: Response
 ) {
-  try {
-    await deleteConsumer(req.params.consumerId);
-  } catch (error) {
-    const apiResponseError = apiResponseErrors.UNKNOWN;
-    captureMessage(
-      `AMSAPP Notificaties unregisterConsumer: ${apiResponseError.message} ${error}`
-    );
-    return res
-      .status(HttpStatusCode.InternalServerError)
-      .send(
-        apiErrorResult(
-          apiResponseError.message,
-          null,
-          HttpStatusCode.InternalServerError
-        )
-      );
+  const isUnregistered = await unregisterConsumer(req.params.consumerId);
+  if (isUnregistered) {
+    return res.send(apiSuccessResult('Consumer deleted'));
   }
+  return res.send(apiErrorResult('Not Found', null, HttpStatusCode.NotFound));
+}
 
-  return res.send(apiSuccessResult('success'));
+async function sendConsumerIdStatusResponse(
+  req: Request<{ consumerId: string }>,
+  res: Response
+) {
+  const status = await getConsumerStatus(req.params.consumerId);
+  if (!status.isRegistered) {
+    return res.send(apiErrorResult('Not Found', null, HttpStatusCode.NotFound));
+  }
+  return res.send(apiSuccessResult(status));
 }
 
 async function sendConsumerIdResponse(
@@ -163,17 +166,6 @@ async function sendConsumerIdResponse(
   const authProfileAndToken: AuthProfileAndToken | null = getAuth(req);
   if (!authProfileAndToken) {
     const apiResponseError = apiResponseErrors.DIGID_AUTH;
-    captureMessage(
-      `AMSAPP Notificaties sendConsumerIdResponse: ${apiResponseError.message}`
-    );
-    return res.render(
-      'amsapp-open-app',
-      getRenderPropsForApiError(req.params.consumerId, apiResponseError)
-    );
-  }
-
-  if (!req.params.consumerId) {
-    const apiResponseError = apiResponseErrors.ERROR_PARAM_CONSUMER_ID;
     captureMessage(
       `AMSAPP Notificaties sendConsumerIdResponse: ${apiResponseError.message}`
     );

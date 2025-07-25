@@ -7,6 +7,7 @@ import {
   listProfiles,
   truncate,
   deleteConsumer,
+  getProfileByConsumer,
 } from './notifications-model';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { notificationServices } from '../tips-and-notifications';
@@ -31,7 +32,15 @@ export async function registerConsumer(
 }
 
 export async function unregisterConsumer(consumerId: CONSUMER_ID) {
-  return deleteConsumer(consumerId);
+  const numDeleted = await deleteConsumer(consumerId);
+  return numDeleted > 0;
+}
+
+export async function getConsumerStatus(consumerId: CONSUMER_ID) {
+  const profile = await getProfileByConsumer(consumerId);
+  return {
+    isRegistered: profile != null,
+  };
 }
 
 export async function batchDeleteNotifications() {

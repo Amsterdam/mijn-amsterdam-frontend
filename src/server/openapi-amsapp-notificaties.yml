@@ -18,7 +18,7 @@ servers:
 paths:
   /api/v1/services/amsapp/notifications/login/{consumerId}:
     get:
-      description: Redirects to Digid login, initiates as OIDC session on callback.
+      description: Redirects to an identity provider, initiates as OIDC session on callback.
       parameters:
         - name: consumerId
           in: path
@@ -27,16 +27,16 @@ paths:
             type: string
       responses:
         '302':
-          description: Found. Valid redirect to Digid login
+          description: Found. Valid redirect to identity provider login
         '404':
           description: Not Found. (Missing path parameter)
           content:
             'application/json':
               schema:
                 $ref: '#/components/schemas/ErrorNotFound'
-  /api/v1/services/amsapp/notifications/consumer/{consumerId}:
+  /api/v1/services/amsapp/notifications/consumer/{consumerId}/app:
     get:
-      description: Retrieves consumerId based on BSN found in OIDC session.
+      description: Registers the consumer based on the identity provider's response and communicates the consumerId to the app server
       parameters:
         - name: consumerId
           in: path
@@ -46,9 +46,9 @@ paths:
       responses:
         '200':
           description: |
-            Always returns html page with link that opens the Amsterdam App automatically with Javascript.\
-            If the consumerId is retrieved succesfully, no query parameters are passed to the app link.\
-            If an error occurred an ApiErrorNotificatieConsumerId will be passed as query parameters to the app link.
+            Always returns an html page. The page contains a link that will open the Amsterdam App.\
+            If the consumer has been registrered succesfully, the app link will not contain query parameters.\
+            If an error occurred, an ApiErrorNotificatieConsumerId will be passed as query parameter to the app link.
           content:
             'text/html':
               schema:
@@ -61,6 +61,61 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/ErrorNotFound'
+  /api/v1/services/amsapp/notifications/consumer/{consumerId}:
+    get:
+      description: Get consumer exists
+      parameters:
+        - name: consumerId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Current registration status of consumer
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isRegistered:
+                    type: boolean
+        '404':
+          description: Consumer not found
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorNotFound'
+        '500':
+          description: |
+            Returns Application error, any error in code or from failed requests.
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+    delete:
+      parameters:
+        - in: path
+          name: consumerId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Consumer deleted
+        '404':
+          description: Consumer not found
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorNotFound'
+        '500':
+          description: |
+            Returns Application error, any error in code or from failed requests.
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
   /private/api/v1/services/amsapp/notifications:
     get:
       security:
@@ -163,8 +218,7 @@ components:
       type: object
       description: |
         * 001: Niet ingelogd met Digid
-        * 002: Parameter consumer_id ontbreekt
-        * 003: Verzenden van consumer_id naar de Amsterdam app niet gelukt
+        * 002: Verzenden van consumerId naar de Amsterdam app niet gelukt
         * 000: Onbekende error
       properties:
         message:
@@ -175,7 +229,6 @@ components:
             - '000'
             - '001'
             - '002'
-            - '003'
     ConsumerNotificationsResponse:
       type: object
       properties:

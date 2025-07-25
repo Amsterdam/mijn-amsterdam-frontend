@@ -58,12 +58,18 @@ RETURNING profile_id, consumer_ids
   updateNotifications: `UPDATE ${TABLE_NAME} SET content = $2 WHERE profile_id = $1`,
   getProfiles: `SELECT * FROM ${TABLE_NAME}`,
   getProfileIds: `SELECT profile_id, consumer_ids, service_ids FROM ${TABLE_NAME}`,
+  getProfileByConsumer: `SELECT profile_id FROM ${TABLE_NAME} WHERE $1 = ANY(consumer_ids)`,
   truncate: `TRUNCATE TABLE ${TABLE_NAME}`,
 };
 
 export async function truncate() {
   const { query } = await db();
   return query(queries.truncate);
+}
+
+export async function getProfileByConsumer(consumer_id: CONSUMER_ID) {
+  const { queryGET } = await db();
+  return queryGET(queries.getProfileByConsumer, [consumer_id]);
 }
 
 export async function upsertConsumer(
@@ -87,6 +93,7 @@ export async function deleteConsumer(consumer_id: CONSUMER_ID) {
       await query(queries.deleteProfileIfConsumerIdsIsEmpty, [profile_id]);
     }
   }
+  return rows.length;
 }
 
 export async function storeNotifications(

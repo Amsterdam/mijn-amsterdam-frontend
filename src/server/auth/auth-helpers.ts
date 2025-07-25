@@ -52,7 +52,7 @@ export function getReturnToUrl(
       );
     case RETURNTO_NOTIFICATIES_CONSUMER_ID:
       return generateFullApiUrlBFF(
-        ExternalConsumerEndpoints.public.NOTIFICATIONS_CONSUMER,
+        ExternalConsumerEndpoints.public.NOTIFICATIONS_CONSUMER_APP,
         {
           consumerId: queryParams.consumerId as string,
         }
