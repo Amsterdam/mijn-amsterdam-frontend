@@ -1,8 +1,12 @@
+import { SELECT_FIELDS_TRANSFORM_BASE } from './powerbrowser-field-transformers';
 import {
   GenericDocument,
   ZaakDetail,
 } from '../../../universal/types/App.types';
 import { AuthProfile } from '../../auth/auth-types';
+
+export type NestedType<T> =
+  T extends PowerBrowserZaakTransformer<infer R> ? R : never;
 
 export interface PowerBrowserStatus {
   omschrijving: string | 'Ontvangen';
@@ -10,10 +14,6 @@ export interface PowerBrowserStatus {
 }
 
 export type PowerBrowserStatusResponse = PowerBrowserStatus[];
-
-export type FetchZaakIdsOptions = {
-  filter: (fields: PBRecord<'GFO_ZAKEN'>['fields'][0]) => boolean;
-};
 
 export type FetchPersoonOrMaatschapIdByUidOptions = {
   profileID: AuthProfile['id'];
@@ -103,29 +103,23 @@ export type PBZaakCompacted = {
 };
 
 export type PowerBrowserZaakBase = {
-  id: string;
   caseType: string;
+  id: string;
   identifier: string;
   title: string;
 
-  dateDecision: string | null;
-
-  dateEnd: string | null;
-
   dateRequest: string | null;
-
+  dateDecision: string | null;
   dateStart: string;
+  dateEnd: string | null;
 
   decision: string | null;
   isVerleend: boolean;
   documents: GenericDocument[];
-  processed: boolean;
-
-  // TODO: Probably move to zaakFrontend or somewhere else
-  isExpired: boolean;
-  location: string | null;
-
   statusDates?: ZaakStatusDate[];
+
+  processed: boolean;
+  isExpired: boolean;
 };
 
 type CaseTypeLiteral<T extends PowerBrowserZaakBase> =
@@ -134,11 +128,15 @@ type CaseTypeLiteral<T extends PowerBrowserZaakBase> =
       ? unknown
       : never
     : T['caseType'];
-export type PowerBrowserZaakTransformer<
-  T extends PowerBrowserZaakBase = PowerBrowserZaakBase,
-> = {
-  caseType: CaseTypeLiteral<T>;
-};
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type PowerBrowserZaakTransformer<T extends PowerBrowserZaakBase = any> =
+  {
+    caseType: CaseTypeLiteral<T>;
+    title: string;
+    fetchZaakIdFilter: (field: PBRecord<'GFO_ZAKEN'>['fields'][0]) => boolean;
+    transformFields: typeof SELECT_FIELDS_TRANSFORM_BASE &
+      Record<string, string>;
+  };
 
 export type PowerBrowserZaakFrontend<
   T extends PowerBrowserZaakBase = PowerBrowserZaakBase,
@@ -153,6 +151,7 @@ export type PowerBrowserZaakFrontend<
 
   heeftOvergangsRecht: boolean;
 } & ZaakDetail;
+
 export type ZaakStatusDate = {
   status: string;
   datePublished: string | null;
