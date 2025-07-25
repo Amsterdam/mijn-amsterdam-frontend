@@ -3,8 +3,6 @@ import {
   hasBnBTransitionRight,
   hasBnBVergunning,
   hasDutchNationality,
-  hasKidsBetweenAges2And18,
-  hasKidsBetweenAges4And12,
   hasOldestKidBornFrom2016,
   hasStadspasGroeneStip,
   hasToeristicheVerhuurVergunningen,
@@ -14,8 +12,6 @@ import {
   hasValidRecentStadspasRequest,
   hasVerhuurRegistrations,
   is18OrOlder,
-  isBetween4and12,
-  isBetween17and18,
   isLivingInAmsterdamLessThanNumberOfDays,
   isMarriedOrLivingTogether,
   isMokum,
@@ -24,8 +20,8 @@ import {
   or,
   previouslyLivingInAmsterdam,
   hasBudget,
-  isBetween17and19,
-  hasKidsBetweenAges17And19,
+  hasKidsBetweenAges,
+  isBetweenAges,
 } from './predicates';
 import { ContentTipSource } from './tip-types';
 import { themaId as themaIdAfval } from '../../../client/pages/Thema/Afval/Afval-thema-config';
@@ -113,7 +109,10 @@ export const contentTips: ContentTipSource[] = [
     profileTypes: ['private'],
     description:
       'Met de Stadspas krijgt u maximaal € 300 korting op een sportabonnement voor uw kind.',
-    predicates: [hasValidRecentStadspasRequest, hasKidsBetweenAges2And18],
+    predicates: [
+      hasValidRecentStadspasRequest,
+      hasKidsBetweenAges({ from: 2, to: 17 }),
+    ],
 
     reason:
       'U ziet deze tip omdat u een Stadspas hebt en u een kind tussen de 2 en 18 hebt.',
@@ -249,7 +248,7 @@ export const contentTips: ContentTipSource[] = [
     profileTypes: ['private'],
     description:
       'Met Ping Ping weet je precies wat je moet regelen als je 18 wordt, gaat werken, gaat studeren of op jezelf gaat wonen.',
-    predicates: [isBetween17and18],
+    predicates: [isBetweenAges({ from: 17, to: 18 })],
     reason:
       'Je ziet deze tip omdat je net 18 bent geworden of binnenkort 18 wordt',
     link: {
@@ -345,7 +344,7 @@ export const contentTips: ContentTipSource[] = [
     active: true,
     datePublished: '2023-07-28',
     title: 'Tip: Gratis openbaar vervoer voor kinderen',
-    predicates: [hasKidsBetweenAges4And12, isMokum],
+    predicates: [hasKidsBetweenAges({ from: 4, to: 11 }), isMokum],
     profileTypes: ['private'],
     isNotification: true,
     themaID: themaIdInkomen,
@@ -371,7 +370,7 @@ export const contentTips: ContentTipSource[] = [
     profileTypes: ['private'],
     description:
       'Amsterdamse kinderen van 4 tot en met 11 jaar kunnen van 20 juli 2024 tot en met 4 januari 2025 gratis reizen met het openbaar vervoer van GVB in Amsterdam. U kunt het gratis reizen voor uw kind vanaf 1 juli 2024 aanvragen.',
-    predicates: [hasKidsBetweenAges4And12, isMokum],
+    predicates: [hasKidsBetweenAges({ from: 4, to: 11 }), isMokum],
     reason:
       'U ziet deze tip omdat u kinderen heeft in de leeftijd van 4 tot en met 11 en in Amsterdam woont.',
     link: {
@@ -391,7 +390,7 @@ export const contentTips: ContentTipSource[] = [
     profileTypes: ['private'],
     description:
       'Je kunt van 20 juli 2024 tot en met 4 januari 2025 gratis reizen met het openbaar vervoer van GVB in Amsterdam. Hiervoor heb je een ov-chipkaart nodig. Gratis reizen kun je vanaf 1 juli 2024 aanvragen.',
-    predicates: [isBetween4and12, isMokum],
+    predicates: [isBetweenAges({ from: 4, to: 11 }), isMokum],
     reason:
       'Je ziet deze tip omdat je de leeftijd heb tussen de 4 en 12 jaar en woonachtig bent in Amsterdam',
     link: {
@@ -432,7 +431,7 @@ export const contentTips: ContentTipSource[] = [
     profileTypes: ['private'],
     description:
       'Wanneer je kind 18 wordt, verandert er veel in zijn of haar leven. Er komt wat organisatie bij kijken.',
-    predicates: [hasKidsBetweenAges17And19],
+    predicates: [hasKidsBetweenAges({ from: 17, to: 18 })],
     reason:
       'U ziet deze tip omdat u een kind heeft dat 18 jaar is of binnenkort 18 jaar wordt.',
     link: {
@@ -452,7 +451,7 @@ export const contentTips: ContentTipSource[] = [
     profileTypes: ['private'],
     description:
       'Er verandert veel als je 18 wordt. Je moet een aantal dingen regelen.',
-    predicates: [isBetween17and19],
+    predicates: [isBetweenAges({ from: 17, to: 18 })],
     reason:
       'Je ziet deze tip omdat je 18 jaar bent of binnenkort 18 jaar wordt.',
     link: {

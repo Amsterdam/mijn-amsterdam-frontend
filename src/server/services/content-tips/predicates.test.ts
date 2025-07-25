@@ -5,7 +5,6 @@ import {
   hasBnBVergunning,
   hasBudget,
   hasDutchNationality,
-  hasKidsBetweenAges2And18,
   hasOldestKidBornFrom2016,
   hasStadspasGroeneStip,
   hasToeristicheVerhuurVergunningen,
@@ -14,7 +13,6 @@ import {
   hasValidIdForVoting,
   hasValidRecentStadspasRequest,
   is18OrOlder,
-  isBetween17and18,
   isLivingInAmsterdamLessThanNumberOfDays,
   isMarriedOrLivingTogether,
   isReceivingSubsidy,
@@ -183,36 +181,6 @@ describe('predicates', () => {
       );
     });
 
-    describe('hasKidsBetweenAges2And18', () => {
-      const getMockAppState = (
-        geboortedatumKind1: string,
-        geboortedatumKind2: string
-      ) => {
-        return {
-          BRP: brpApiResponse<BRPData>({
-            kinderen: [
-              { geboortedatum: geboortedatumKind1 },
-              { geboortedatum: geboortedatumKind2 },
-            ],
-          }),
-        } as AppState;
-      };
-
-      it.each([
-        [true, '2019-01-04', '2015-05-05'],
-        [true, '2020-07-24', '2021-12-25'],
-        [false, '1990-03-20', '2000-10-29'],
-        [false, '2020-07-26', '2003-07-24'],
-      ])(
-        'should return %s for kids with birthdays at %s and %s',
-        (expected, birthdate1, birthdate2) => {
-          expect(
-            hasKidsBetweenAges2And18(getMockAppState(birthdate1, birthdate2))
-          ).toBe(expected);
-        }
-      );
-    });
-
     describe('hasOldestKidBornFrom2016', () => {
       const getMockAppState = (
         geboortedatumKind1: string,
@@ -290,26 +258,6 @@ describe('predicates', () => {
         expect(hasDutchNationality(getMockAppState(nationality))).toBe(
           expected
         );
-      });
-    });
-
-    describe('isBetween17and18', () => {
-      const getMockAppState = (geboortedatum: string) => {
-        return {
-          BRP: brpApiResponse<BRPData>({
-            persoon: { geboortedatum },
-          }),
-        } as AppState;
-      };
-
-      it.each([
-        [true, '2005-07-24'],
-        [true, '2003-07-26'],
-        [false, '2003-07-24'],
-        [false, '2005-07-26'],
-        [false, '2000-03-29'],
-      ])('should return %s for birthday %s', (expected, birthdate) => {
-        expect(isBetween17and18(getMockAppState(birthdate))).toBe(expected);
       });
     });
   });
