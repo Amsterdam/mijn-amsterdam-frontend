@@ -82,15 +82,8 @@ export function ProfileSectionPanel({
   const isPhoneScreen = useSmallScreen();
   return (
     <PageContentCell>
-      <CollapsiblePanel
-        title={title ?? ''}
-        startCollapsed={startCollapsed}
-        containsSubTitle={!!subTitle}
-      >
-        {subTitle && (
-          <Paragraph className={styles.Subtitle}>{subTitle}</Paragraph>
-        )}
-        <p></p> {/* Empty paragraph to maintain spacing */}
+      <CollapsiblePanel title={title ?? ''} startCollapsed={startCollapsed}>
+        {subTitle && <Paragraph className="ams-mb-m">{subTitle}</Paragraph>}
         <Grid className={styles.ProfileSectionPanelGrid}>
           <Grid.Cell start={1} span={{ narrow: 4, medium: 5, wide: 7 }}>
             {sections.map((sectionData, index) => (

@@ -41,14 +41,12 @@ type CollapsiblePanelProps = Omit<
   children: ReactNode;
   title: CollapsiblePanelHeadingProps['title'];
   startCollapsed?: boolean;
-  containsSubTitle?: boolean;
 };
 
 export function CollapsiblePanel({
   title,
   children,
   startCollapsed = true,
-  containsSubTitle = false,
 }: CollapsiblePanelProps) {
   const [isCollapsed, toggleCollapsed] = useState<boolean>(startCollapsed);
   return (
@@ -59,15 +57,7 @@ export function CollapsiblePanel({
         isCollapsed={isCollapsed}
       />
       {!isCollapsed && (
-        <div
-          className={
-            containsSubTitle
-              ? styles.CollapsiblePanelWithSubtitle
-              : styles.CollapsiblePanel
-          }
-        >
-          {children}
-        </div>
+        <div className={styles.CollapsiblePanel}>{children}</div>
       )}
     </>
   );
