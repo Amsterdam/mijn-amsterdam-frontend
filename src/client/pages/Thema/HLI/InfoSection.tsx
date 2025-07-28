@@ -1,8 +1,8 @@
-import { themaTitle } from './HLI-thema-config';
 import * as generalInfo from '../../GeneralInfo/GeneralInfo';
 
+// RP TODO: getThemaTitle voor de titels, bij het dynamisch maken.
 export const HLISectionProps: generalInfo.SectionProps = {
-  title: themaTitle,
+  title: 'Regelingen bij laag inkomen',
   listItems: [
     {
       text: 'Collectieve zorgverzekering',
@@ -26,7 +26,7 @@ export const HLISectionProps: generalInfo.SectionProps = {
   ],
 };
 export const stadspasSectionProps: generalInfo.SectionProps = {
-  title: themaTitle,
+  title: 'Stadspas',
   listItems: [
     {
       text: 'Status aanvraag Stadspas van u of uw gezin',
