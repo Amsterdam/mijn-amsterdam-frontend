@@ -387,6 +387,19 @@ export const panelConfig: PanelConfig<BRPPanelKey, AppState['BRP']> = {
 
     return {
       title: 'Adres',
+      subTitle: (
+        <>
+          Uw huis verduurzamen? De gemeente biedt subsidies of gratis hulp.
+          Bekijk{' '}
+          <Link
+            rel="noopener noreferrer"
+            href="https://duurzaamwonen.amsterdam/"
+          >
+            duurzaamwonen.amsterdam
+          </Link>{' '}
+          voor meer informatie.
+        </>
+      ),
       actionLinks,
     };
   },
