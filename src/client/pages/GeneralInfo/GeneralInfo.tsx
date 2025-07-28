@@ -1,11 +1,10 @@
-import { useEffect } from 'react';
-
 import {
   Heading,
   Paragraph,
   UnorderedList,
 } from '@amsterdam/design-system-react';
 
+import { MaRouterLink } from '../../components/MaLink/MaLink';
 import { myAreaSectionProps } from '../../components/MyArea/InfoSection';
 import {
   PageContentCell,
@@ -13,6 +12,7 @@ import {
   TextPageV2,
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
+import { useThemaMenuItemsByThemaID } from '../../hooks/useThemaMenuItems';
 import { afisSectionProps } from '../Thema/Afis/InfoSection';
 import { afvalSectionProps } from '../Thema/Afval/InfoSection';
 import { AVGsectionProps } from '../Thema/AVG/InfoSection';
@@ -38,7 +38,9 @@ import { vergunningensectionProps } from '../Thema/Vergunningen/InfoSection';
 import { zorgSectionProps } from '../Thema/Zorg/InfoSection';
 
 export type SectionProps = {
+  id: string;
   title: string;
+  to?: string; // Use this instead of the themaMenuItem 'to URL' and force link to be clickable.
   listItems: ListItems;
 };
 type ListItems = Array<{ text: string; nested?: string[] }>;
@@ -68,7 +70,9 @@ const sections: SectionProps[] = [
   bodemsectionProps,
 ];
 
-function Section({ title, listItems }: SectionProps) {
+function Section({ id, title, listItems, to }: SectionProps) {
+  const themaMenuItems = useThemaMenuItemsByThemaID();
+
   const listItemComponents = listItems.map((item, i) => (
     <UnorderedList.Item key={i}>
       {item.text}
@@ -84,11 +88,29 @@ function Section({ title, listItems }: SectionProps) {
     </UnorderedList.Item>
   ));
 
-  useEffect(() => {}, sections);
+  const themaMenuItem = themaMenuItems[id];
+
+  let titleComponent;
+  if (to) {
+    titleComponent = (
+      <MaRouterLink maVariant="fatNoUnderline" href={to}>
+        {title}
+      </MaRouterLink>
+    );
+  } else if (themaMenuItem) {
+    titleComponent = (
+      <MaRouterLink maVariant="fatNoUnderline" href={themaMenuItem.to}>
+        {title}
+      </MaRouterLink>
+    );
+  } else {
+    titleComponent = title;
+  }
+
   return (
     <>
       <Heading level={4} size="level-4" className="ams-mb-s">
-        {title}
+        {titleComponent}
       </Heading>
       <UnorderedList className="ams-mb-xl">{listItemComponents}</UnorderedList>
     </>
@@ -120,10 +142,12 @@ export function GeneralInfo() {
           <Paragraph className="ams-mb-xl">
             Op dit moment kunnen de volgende gegevens getoond worden:
           </Paragraph>
-          {sections.map((section) => (
+          {sections.map((section, i) => (
             <Section
-              key={section.title}
+              key={i}
+              id={section.id}
               title={section.title}
+              to={section.to}
               listItems={section.listItems}
             />
           ))}

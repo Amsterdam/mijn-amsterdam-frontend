@@ -1,7 +1,9 @@
+import { themaId } from './HLI-thema-config';
 import * as generalInfo from '../../GeneralInfo/GeneralInfo';
 
 // RP TODO: getThemaTitle voor de titels, bij het dynamisch maken.
 export const HLISectionProps: generalInfo.SectionProps = {
+  id: themaId,
   title: 'Regelingen bij laag inkomen',
   listItems: [
     {
@@ -26,6 +28,7 @@ export const HLISectionProps: generalInfo.SectionProps = {
   ],
 };
 export const stadspasSectionProps: generalInfo.SectionProps = {
+  id: themaId,
   title: 'Stadspas',
   listItems: [
     {
