@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { LinkList, Grid } from '@amsterdam/design-system-react';
+import { LinkList, Grid, Paragraph } from '@amsterdam/design-system-react';
 
 import styles from './ProfileSectionPanel.module.scss';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles';
@@ -68,11 +68,13 @@ type ProfilePanelProps = {
   sectionData: ProfileSectionData | ProfileSectionData[];
   startCollapsed?: boolean;
   title?: string;
+  subTitle?: string;
 };
 
 export function ProfileSectionPanel({
   sectionData,
   title,
+  subTitle,
   actionLinks,
   startCollapsed = true,
 }: ProfilePanelProps) {
@@ -80,7 +82,15 @@ export function ProfileSectionPanel({
   const isPhoneScreen = useSmallScreen();
   return (
     <PageContentCell>
-      <CollapsiblePanel title={title ?? ''} startCollapsed={startCollapsed}>
+      <CollapsiblePanel
+        title={title ?? ''}
+        startCollapsed={startCollapsed}
+        containsSubTitle={!!subTitle}
+      >
+        {subTitle && (
+          <Paragraph className={styles.Subtitle}>{subTitle}</Paragraph>
+        )}
+        <p></p> {/* Empty paragraph to maintain spacing */}
         <Grid className={styles.ProfileSectionPanelGrid}>
           <Grid.Cell start={1} span={{ narrow: 4, medium: 5, wide: 7 }}>
             {sections.map((sectionData, index) => (
