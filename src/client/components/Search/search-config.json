@@ -14,7 +14,8 @@
         "Melding",
         "Aanvragen",
         "Themas"
-      ]
+      ],
+      "profileTypes": ["private", "commercial"]
     },
     {
       "url": "/uitleg",
@@ -26,19 +27,22 @@
         "About",
         "Over",
         "Inhoud"
-      ]
+      ],
+      "profileTypes": ["private", "commercial"]
     },
     {
       "url": "/klachten",
       "displayTitle": "Ingediende klachten",
       "description": "Hier ziet u een overzicht van uw ingediende klachten.",
-      "keywords": ["Klachten", "Klacht indienen"]
+      "keywords": ["Klachten", "Klacht indienen"],
+      "profileTypes": ["private"]
     },
     {
       "url": "/avg",
       "displayTitle": "Ingediende AVG verzoeken",
       "description": "Hier ziet u een overzicht van uw ingediende AVG verzoeken.",
-      "keywords": ["AVG", "AVG verzoek indienen"]
+      "keywords": ["AVG", "AVG verzoek indienen"],
+      "profileTypes": ["private"]
     },
     {
       "url": "/paspoort-en-id-kaart",
@@ -83,6 +87,25 @@
         "Aanvraag",
         "Zorgaanvraag",
         "Taxi"
+      ],
+      "profileTypes": ["private"]
+    },
+    {
+      "url": "/jeugd",
+      "displayTitle": "Onderwijs en Jeugd",
+      "description": "Uw voorzieningen Leerlingenvervoer.",
+      "keywords": [
+        "Openbaar vervoer vergoeding",
+        "Aangepast individueel vervoer",
+        "Aangepast groepsvervoer",
+        "Fietsvergoeding",
+        "Eigen vervoer",
+        "Openbaar vervoer abonnement",
+        "Leerlingen vervoer",
+        "Naar school",
+        "Onderwijs",
+        "Vervoer",
+        "Vergoeding"
       ],
       "profileTypes": ["private"]
     },
@@ -174,7 +197,8 @@
         "Status",
         "Betalen",
         "Overzicht"
-      ]
+      ],
+      "profileTypes": ["private", "commercial"]
     },
     {
       "url": "/persoonlijke-gegevens",
@@ -248,7 +272,8 @@
         "kaart",
         "map",
         "Omgeving"
-      ]
+      ],
+      "profileTypes": ["private", "commercial"]
     },
     {
       "url": "/afval",
@@ -269,33 +294,23 @@
         "Verf",
         "Puin storten",
         "Dichtbij afval"
-      ]
+      ],
+      "profileTypes": ["private"]
     },
-    {
-      "url": "/toegankelijkheidsverklaring",
-      "displayTitle": "Toegankelijkheid",
-      "description": "Hieronder vind u een overzicht van uw aanvragen voor toeristische verhuur.",
-      "keywords": [
-        "Toegankelijkheidsverklaring",
-        "A11Y",
-        "WCAG",
-        "Blind",
-        "Slechtziend",
-        "Beperking",
-        "Accessibility"
-      ]
-    },
+
     {
       "url": "/vergunningen",
       "displayTitle": "Vergunningen en ontheffingen",
       "description": "Een overzicht van uw aanvragen voor vergunningen en ontheffingen bij gemeente Amsterdam.",
-      "keywords": ["Vergunningen", "Ontheffingen", "Aanvragen"]
+      "keywords": ["Vergunningen", "Ontheffingen", "Aanvragen"],
+      "profileTypes": ["private", "commercial"]
     },
     {
       "url": "/horeca",
       "displayTitle": "Horeca",
       "description": "Hier ziet u een overzicht van uw aanvragen voor Horeca vergunningen en ontheffingen.",
-      "keywords": ["Vergunningen", "Aanvragen", "Ontheffingen", "Horeca"]
+      "keywords": ["Vergunningen", "Aanvragen", "Ontheffingen", "Horeca"],
+      "profileTypes": ["private", "commercial"]
     },
     {
       "url": "/passagiers-en-beroepsvaart",
@@ -329,7 +344,8 @@
         "private",
         "commercial",
         "vergunningen"
-      ]
+      ],
+      "profileTypes": ["private", "commercial"]
     },
     {
       "url": "/toeristische-verhuur",
@@ -373,25 +389,29 @@
         "iDeal betalen",
         "Boete",
         "Aanslagen"
-      ]
+      ],
+      "profileTypes": ["private"]
     },
     {
       "url": "https://mijnsubsidies.amsterdam.nl/loket/",
       "displayTitle": "Subsidies",
       "description": "Een overzicht van uw subsidies.",
-      "keywords": ["Subsidie", "Subsidies"]
+      "keywords": ["Subsidie", "Subsidies"],
+      "profileTypes": ["private", "commercial"]
     },
     {
       "url": "/erfpacht",
       "displayTitle": "Erfpacht",
       "description": "Een overzicht van uw erfpachtrechten.",
-      "keywords": ["Erfpacht", "Canon", "Afkopen", "Betalen", "Facturen"]
+      "keywords": ["Erfpacht", "Canon", "Afkopen", "Betalen", "Facturen"],
+      "profileTypes": ["private", "commercial"]
     },
     {
       "url": "https://ontheffingen.amsterdam.nl/publiek/aanvragen",
       "displayTitle": "Milieuzone",
       "description": "Een overzicht van milieuzone.",
-      "keywords": ["Milieuzone", "Ontheffing"]
+      "keywords": ["Milieuzone", "Ontheffing"],
+      "profileTypes": ["private", "commercial"]
     },
     {
       "url": "/kredietbank-fibu",
