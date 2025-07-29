@@ -419,6 +419,32 @@ describe('stadspas services', () => {
       );
     });
 
+    test('zero transactions in source response', async () => {
+      const replyResponse: StadspasTransactiesResponseSource = {
+        number_of_items: 0,
+        total_items: undefined,
+        transacties: [],
+      };
+      remoteApi
+        .get(transactionsUrl({ offset: 0 }))
+        .matchHeader(
+          'authorization',
+          `AppBearer ${FAKE_API_KEY},0363000123-123`
+        )
+        .reply(200, replyResponse);
+
+      const response = await fetchStadspasBudgetTransactions(
+        transactionsKeyEncrypted,
+        undefined,
+        'my-unique-session-id'
+      );
+
+      expect(response).toStrictEqual({
+        content: [],
+        status: 'OK',
+      });
+    });
+
     test('stadspas transacties unmatched session id', async () => {
       const [transactionsKeyEncrypted] = encryptDecrypt.encrypt(
         `another-session-id:0363000123-123:123123123`

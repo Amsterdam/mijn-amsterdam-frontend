@@ -25,7 +25,7 @@ export interface StadspasTransactieSource {
 
 export interface StadspasTransactiesResponseSource {
   number_of_items: number;
-  total_items: number;
+  total_items?: number;
   transacties: StadspasTransactieSource[];
 }
 

@@ -389,14 +389,7 @@ export async function fetchGpassBudgetTransactions(
     return response;
   }
 
-  const totalItems = response.content.total_items;
-  if (totalItems === null || totalItems === undefined || totalItems < 0) {
-    return apiErrorResult(
-      `Total items has non-sensical data. total_items = ${totalItems}`,
-      null,
-      HttpStatusCode.InternalServerError
-    );
-  }
+  const totalItems = response.content.total_items ?? 0;
 
   const responses = [];
   const remainingPages = Math.ceil((totalItems - offset) / limit);
