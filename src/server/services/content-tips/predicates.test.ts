@@ -244,7 +244,7 @@ describe('predicates', () => {
       );
     });
 
-    describe('isBetween17and18', () => {
+    describe('isBetweenAges', () => {
       const getMockAppState = (geboortedatum: string) => {
         return {
           BRP: brpApiResponse<BRPData>({
