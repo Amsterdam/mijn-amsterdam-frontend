@@ -253,7 +253,7 @@ describe('predicates', () => {
         } as AppState;
       };
 
-      const isBetween17and18 = isBetweenAges({ from: 1, to: 10 });
+      const isBetween1and10 = isBetweenAges({ from: 1, to: 10 });
 
       test.each([
         [true, '2012-07-25'], // Exactly ten years old.
@@ -263,7 +263,7 @@ describe('predicates', () => {
         [false, '2011-07-25'], // Exactly eleven years old.
         [false, '2021-07-26'], // Zero years old but one day away from one year old.
       ])('should return %s for birthday %s', (expected, birthdate) => {
-        expect(isBetween17and18(getMockAppState(birthdate))).toBe(expected);
+        expect(isBetween1and10(getMockAppState(birthdate))).toBe(expected);
       });
     });
 
