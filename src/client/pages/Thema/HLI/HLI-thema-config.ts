@@ -54,6 +54,8 @@ export const featureToggle = {
 
 export const themaId = 'HLI' as const;
 export const themaTitle = 'Stadspas en regelingen bij laag inkomen' as const;
+export const regelingenTitle = 'Regelingen bij laag inkomen' as const;
+export const stadspasTitle = 'Stadspas' as const;
 
 export const routeConfig = {
   detailPage: {
