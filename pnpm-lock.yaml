@@ -198,8 +198,8 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       express-openid-connect:
-        specifier: ^2.18.1
-        version: 2.18.1(express@4.21.2)
+        specifier: ^2.19.2
+        version: 2.19.2(express@4.21.2)
       express-session:
         specifier: ^1.18.1
         version: 1.18.1
@@ -2716,8 +2716,8 @@ packages:
     resolution: {integrity: sha512-4aRQRqDQU7qNPV5av0/hLcyc0guB9UP71nCYrQEYml7YphTo8tmWf3nDZWdTJMMjFikyz9xKXaURor7Chygdwg==}
     engines: {node: '>=6.0.0'}
 
-  express-openid-connect@2.18.1:
-    resolution: {integrity: sha512-trHqgwXxWF0n/XrDsRzsvQtnBNbU03iCNXbKR/sHwBqXlvCgup341bW7B8t6nr3L/CMoDpK+9gsTnx3qLCqdjQ==}
+  express-openid-connect@2.19.2:
+    resolution: {integrity: sha512-hRRRBS+mH9hrhVcbg7+APe+dIsYB4BDLILv7QfTmM1jSDyaU9NYpTxqWourAnlud/E4Gf4Q0qCVmSJguh4BTaA==}
     engines: {node: ^10.19.0 || >=12.0.0 < 13 || >=13.7.0 < 14 || >= 14.2.0}
     peerDependencies:
       express: '>= 4.17.0'
@@ -3821,6 +3821,10 @@ packages:
 
   on-headers@1.0.2:
     resolution: {integrity: sha512-pZAE+FJLoyITytdqK0U5s+FIpjN0JP3OzFi/u8Rx+EV5/W+JTWGXG8xFzevE7AjBfDqHv/8vL8qQsIhHnqRkrA==}
+    engines: {node: '>= 0.8'}
+
+  on-headers@1.1.0:
+    resolution: {integrity: sha512-737ZY3yNnXy37FHkQxPzt4UZ2UWPWiCZWLvFZ4fu5cueciegX0zGPnrlY6bwRg4FdQOe9YU8MkmJwGhoMybl8A==}
     engines: {node: '>= 0.8'}
 
   once@1.4.0:
@@ -7852,7 +7856,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  express-openid-connect@2.18.1(express@4.21.2):
+  express-openid-connect@2.19.2(express@4.21.2):
     dependencies:
       base64url: 3.0.1
       clone: 2.1.2
@@ -7863,7 +7867,7 @@ snapshots:
       http-errors: 1.8.1
       joi: 17.13.3
       jose: 2.0.7
-      on-headers: 1.0.2
+      on-headers: 1.1.0
       openid-client: 4.9.1
       url-join: 4.0.1
     transitivePeerDependencies:
@@ -9095,6 +9099,8 @@ snapshots:
       ee-first: 1.1.1
 
   on-headers@1.0.2: {}
+
+  on-headers@1.1.0: {}
 
   once@1.4.0:
     dependencies:
