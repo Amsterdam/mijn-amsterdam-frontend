@@ -83,7 +83,7 @@ app.use(requestID);
 ///// [ACCEPTANCE - PRODUCTION]
 ///// Public routes Voor Acceptance - Development
 ////////////////////////////////////////////////////////////////////////
-if (IS_AP && !IS_OT) {
+if (true) {
   logger.info('Using AUTH OIDC Router');
   app.use(oidcRouter);
 }
@@ -99,7 +99,7 @@ app.use(BFF_BASE_PATH, publicRouter);
 ///// [DEVELOPMENT - TEST]
 ///// Development routing for mock data
 ////////////////////////////////////////////////////////////////////////
-if (IS_OT && !IS_AP) {
+if (false) {
   logger.info('Using AUTH Development Router');
   app.use(authRouterDevelopment);
 }

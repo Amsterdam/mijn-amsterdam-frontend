@@ -22,8 +22,8 @@ import { bodemsectionProps } from '../Thema/Bodem/InfoSection';
 import { burgerzakenSectionProps } from '../Thema/Burgerzaken/InfoSection';
 import { erfpachtSectionProps } from '../Thema/Erfpacht/InfoSection';
 import {
-  HLISectionProps,
-  stadspasSectionProps,
+  HLIRegelingenSectionProps,
+  HLIstadspasSectionProps,
 } from '../Thema/HLI/InfoSection';
 import { inkomenSectionProps } from '../Thema/Inkomen/InfoSection';
 import { klachtenSectionProps } from '../Thema/Klachten/InfoSection';
@@ -57,8 +57,8 @@ const sections: SectionProps[] = [
   erfpachtSectionProps,
   afisSectionProps,
   inkomenSectionProps,
-  HLISectionProps,
-  stadspasSectionProps,
+  HLIRegelingenSectionProps,
+  HLIstadspasSectionProps,
   zorgSectionProps,
   subsidiesSectionProps,
   krefiaSectionProps,
