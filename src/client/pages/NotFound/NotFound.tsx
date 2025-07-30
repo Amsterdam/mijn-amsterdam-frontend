@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
 import { Paragraph } from '@amsterdam/design-system-react';
+import { Link } from '@amsterdam/design-system-react';
 import { Navigate, useLocation } from 'react-router';
 
 import { isPrivateRoute } from '../../App.routes';
@@ -16,13 +17,13 @@ import { LandingRoute } from '../Landing/Landing-routes';
 
 export function NotFound() {
   useHTMLDocumentTitle({
-    documentTitle: '404 - Pagina niet gevonden | Mijn Amsterdam',
+    documentTitle: 'Pagina niet gevonden | Mijn Amsterdam',
   });
 
   const location = useLocation();
 
   useEffect(() => {
-    captureMessage('404  Not Found', {
+    captureMessage('404 Not Found', {
       properties: {
         url: location.pathname,
       },
@@ -32,10 +33,15 @@ export function NotFound() {
   return (
     <TextPageV2>
       <PageContentV2 id="skip-to-id-AppContent">
-        <PageHeadingV2>404 - Pagina niet gevonden</PageHeadingV2>
+        <PageHeadingV2> Pagina niet gevonden</PageHeadingV2>
         <PageContentCell>
+          <Paragraph className="ams-paragraph">
+            {' '}
+            Sorry, deze pagina bestaat niet (meer).
+          </Paragraph>
           <Paragraph className="ams-mb-xl">
-            Helaas, de pagina waar u naar op zoek was bestaat niet (meer).
+            Gebruik de <Link href="/zoeken">zoekfunctie</Link> of ga naar onze{' '}
+            <Link href="/">homepagina</Link>.
           </Paragraph>
         </PageContentCell>
       </PageContentV2>
