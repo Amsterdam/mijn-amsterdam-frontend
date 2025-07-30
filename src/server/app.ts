@@ -23,7 +23,7 @@ if (IS_DEVELOPMENT) {
 }
 
 if (process.env.DEBUG_RESPONSE_DATA) {
-    process.env.DEBUG = `source-api-request:request,${process.env.DEBUG ?? ''}`;
+  process.env.DEBUG = `source-api-request:request,${process.env.DEBUG ?? ''}`;
 }
 
 // Note: Keep this line after loading in env files or LOG_LEVEL will be undefined.
@@ -83,7 +83,7 @@ app.use(requestID);
 ///// [ACCEPTANCE - PRODUCTION]
 ///// Public routes Voor Acceptance - Development
 ////////////////////////////////////////////////////////////////////////
-if (true) {
+if (IS_AP && !IS_OT) {
   logger.info('Using AUTH OIDC Router');
   app.use(oidcRouter);
 }
@@ -99,7 +99,7 @@ app.use(BFF_BASE_PATH, publicRouter);
 ///// [DEVELOPMENT - TEST]
 ///// Development routing for mock data
 ////////////////////////////////////////////////////////////////////////
-if (false) {
+if (IS_OT && !IS_AP) {
   logger.info('Using AUTH Development Router');
   app.use(authRouterDevelopment);
 }
