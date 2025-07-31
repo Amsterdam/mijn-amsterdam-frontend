@@ -1,5 +1,10 @@
 import { KeyboardEvent, MouseEvent } from 'react';
 
+import { FeatureToggle } from '../../universal/config/feature-toggles';
+import { themaId as inkomenThemaId } from '../pages/Thema/Inkomen/Inkomen-thema-config';
+import { themaId as zorgThemaId } from '../pages/Thema/Svwi/Svwi-thema-config';
+import { themaId as svwiThemaId } from '../pages/Thema/Zorg/Zorg-thema-config';
+
 // Repeating conditions for accessible keyboard event
 // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 export function withKeyPress<T>(fn: Function, keyName: string = 'enter') {
@@ -48,3 +53,9 @@ export function getElementOnPageAsync(
     checkIfElementIsInDOM(); // Initial check
   });
 }
+
+export const getRedactedClass = (themaId: string) =>
+  FeatureToggle.cobrowseIsActive &&
+  ([inkomenThemaId, zorgThemaId, svwiThemaId] as string[]).includes(themaId)
+    ? 'cobrowse-redacted'
+    : '';
