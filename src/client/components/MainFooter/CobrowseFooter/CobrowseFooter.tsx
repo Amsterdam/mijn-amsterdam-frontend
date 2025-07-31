@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 
 import { PageFooter } from '@amsterdam/design-system-react';
 
+import { IS_AP } from '../../../../universal/config/env';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 import { useScript } from '../../../hooks/useScript';
-import { IS_AP } from '../../../../universal/config/env';
 
 const MAX_WAIT_FOR_COBROWSE_LIVE_MS = 5000;
 declare global {
@@ -40,7 +40,7 @@ export function CobrowseFooter() {
 
   // Load the external script when it is not loaded from the tagmanager
   const [isCobrowseLoaded] = useScript({
-    src: 'https://omnichanneliv--gat2.sandbox.my.site.com/staticvforcesite/resource/Cobrowse/cobrowseAppNL.bundle.js?v=002',
+    src: 'https://omnichanneliv--gat2.sandbox.my.site.com/staticvforcesite/resource/CobrowseV2/cobrowseAppNL.bundle.js',
     defer: false,
     async: true,
     isEnabled: !IS_AP, // On AP this is loaded externally
