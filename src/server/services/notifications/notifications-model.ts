@@ -48,15 +48,28 @@ SET \
   service_ids = EXCLUDED.service_ids, \
   date_updated = EXCLUDED.date_updated; \
 `,
+  deleteProfileIfConsumerIdsIsEmpty: `DELETE FROM ${TABLE_NAME} WHERE consumer_ids = '{}' AND profile_id = $1`,
+  deleteConsumer: `\
+UPDATE ${TABLE_NAME}
+SET consumer_ids = array_remove(consumer_ids, $1)
+WHERE $1 = ANY (consumer_ids)
+RETURNING profile_id, consumer_ids
+    `,
   updateNotifications: `UPDATE ${TABLE_NAME} SET content = $2 WHERE profile_id = $1`,
   getProfiles: `SELECT * FROM ${TABLE_NAME}`,
   getProfileIds: `SELECT profile_id, consumer_ids, service_ids FROM ${TABLE_NAME}`,
+  getProfileByConsumer: `SELECT profile_id FROM ${TABLE_NAME} WHERE $1 = ANY(consumer_ids)`,
   truncate: `TRUNCATE TABLE ${TABLE_NAME}`,
 };
 
 export async function truncate() {
   const { query } = await db();
   return query(queries.truncate);
+}
+
+export async function getProfileByConsumer(consumer_id: CONSUMER_ID) {
+  const { queryGET } = await db();
+  return queryGET(queries.getProfileByConsumer, [consumer_id]);
 }
 
 export async function upsertConsumer(
@@ -66,6 +79,21 @@ export async function upsertConsumer(
 ) {
   const { query } = await db();
   return query(queries.upsertConsumer, [profile_id, consumer_id, service_ids]);
+}
+
+// This should work in one query with a CTE, but it does not delete the row.
+export async function deleteConsumer(consumer_id: CONSUMER_ID) {
+  const { query, queryALL } = await db();
+  const rows = (await queryALL(queries.deleteConsumer, [consumer_id])) as {
+    profile_id: string;
+    consumer_ids: string[];
+  }[];
+  for (const { profile_id, consumer_ids } of rows) {
+    if (consumer_ids.length === 0) {
+      await query(queries.deleteProfileIfConsumerIdsIsEmpty, [profile_id]);
+    }
+  }
+  return rows.length;
 }
 
 export async function storeNotifications(

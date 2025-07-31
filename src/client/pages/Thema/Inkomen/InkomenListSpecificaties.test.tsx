@@ -13,6 +13,16 @@ import { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
+vi.mock('../../../components/DateInput/DateInput', async (importOriginal) => {
+  const original = (await importOriginal()) as object;
+  return {
+    ...original,
+    isNativeDatePickerInputSupported() {
+      return true;
+    },
+  };
+});
+
 vi.mock('../../../../server/helpers/encrypt-decrypt', async (requireActual) => {
   return {
     ...((await requireActual()) as object),

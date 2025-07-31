@@ -372,6 +372,7 @@
       "fields": {
         "title": "Afgehandeld",
         "text45": "GPP",
+        "text14": "456-NEW-kenteken",
         "dfunction": "Verleend",
         "mark": "Z/21/1858540",
         "processed": true,
@@ -687,6 +688,8 @@
         "title": "Ontvangen",
         "text45": "GPP",
         "text8": "Ravenstein",
+        "text7": "123a-OUD-kenteken",
+        "text14": "123b-NIEUW-kenteken",
         "mark": "Z/24/2233516",
         "processed": false,
         "document_date": "2024-06-05T00:00:00"

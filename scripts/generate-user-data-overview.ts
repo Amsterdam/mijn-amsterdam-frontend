@@ -1,3 +1,34 @@
+/**
+ * Script to fetch, transform and save testdata for every account -
+ * in the MA_TEST_ACCOUNTS environment variable to a excel file.
+ * This is used for quickly looking up what user has, which thema's/data -
+ * without needing to separately login to every account.
+ *
+ * When debugging locally
+ * ======================
+ *
+ * Make sure MA_TEST_ACCOUNTS is filled with testaccounts like so:
+ *   {account_name}={bsn},{account_name}={bsn},...
+ * Put that in your .env.local file
+ *
+ * Also fill BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL with
+ * `https://{azure_default_domain}/api/v1` where azure_default_domain is found -
+ * on our test environment Appservice in Azure Portal.
+ *
+ * How to use
+ * ==========
+ * pnpx tsx generate-user-data-overview.ts
+ * add --from-disk or -d to use cached data. To refresh the cache remove this flag.
+ *
+ * Tips
+ * =========
+ * - The script can be run from disk see `FROM_DISK` in this file.
+ * - Use a tool like watchexec for rerunning the script when debugging
+ * ```sh
+ * watchexec -c -e ts pnpx tsx ./scripts/generate-user-data-overview.ts
+ * ```
+ */
+
 /* eslint-disable */
 import dotenv from 'dotenv';
 import dotenvExpand from 'dotenv-expand';
@@ -10,7 +41,7 @@ dotenvExpand.expand(envConfig);
 import * as XLSX from 'xlsx';
 
 import * as fs from 'node:fs';
-import { dateFormat, defaultDateFormat } from '../src/universal/helpers/date';
+import { defaultDateFormat } from '../src/universal/helpers/date';
 import { getFullAddress } from '../src/universal/helpers/brp';
 
 import { MyNotification } from '../src/universal/types/App.types';
@@ -124,9 +155,13 @@ import {
 } from '../src/client/pages/Thema/Subsidies/Subsidies-thema-config.ts';
 
 const { BRP, KVK } = profileThemaTitles;
+
+/** Extra hardcoded additions are to display certain services like they're their own thema.
+ */
 const themas = [
   { id: themaIdBRP, title: BRP },
   { id: themaIdKVK, title: KVK },
+  { id: 'KLANT_CONTACT', title: 'Contactmomenten' },
   { id: themaIdInkomen, title: themaTitleInkomen },
   { id: themaIdZorg, title: themaTitleZorg },
   { id: themaIdAfval, title: themaTitleAfval },
@@ -159,23 +194,39 @@ if (IS_PRODUCTION) {
 if (!process.env.MA_TEST_ACCOUNTS) {
   throw new Error('MA_TEST_ACCOUNTS env var is empty.');
 }
-let testAccounts: any = process.env.MA_TEST_ACCOUNTS.split(',');
 
-const themaToTitle = themas.reduce((acc, { id, title }) => {
-  acc[id] = title;
-  return acc;
-}, {});
-const themasAvailable = themas.map((menuItem) => menuItem.id);
-const testAccountEntries = getTestAccountEntries();
+const themaIDtoTitle: Record<string, string> = themas.reduce(
+  (acc, { id, title }) => {
+    acc[id] = title;
+    return acc;
+  },
+  {}
+);
+
+const themaIDs = themas.map((menuItem) => menuItem.id);
+const testAccountEntries: any = process.env.MA_TEST_ACCOUNTS.split(',').map(
+  (accountData: any) => {
+    const keyVal = accountData.split('=');
+    return [keyVal[0], keyVal[1]];
+  }
+);
+const testAccountNames = testAccountEntries.map(([username]) => username);
 
 XLSX.set_fs(fs);
 // If true then get data extracted out of services from disk.
 // This greatly speeds up this script and is therefore nice for debugging.
-const FROM_DISK: boolean = false;
+const firstArg = process.argv[2];
+const FROM_DISK: boolean = firstArg === '--from-disk' || firstArg === '-d';
 
 // Describes where we should save the transformed data from our services.
 const TARGET_DIRECTORY: string = '.';
+if (!TARGET_DIRECTORY) {
+  throw new Error(
+    `(TARGET_DIRECTORY = '${TARGET_DIRECTORY}') may not be empty`
+  );
+}
 
+const CACHE_PATH = `${TARGET_DIRECTORY}/user-data.json`;
 const BASE_URL = process.env.BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL;
 
 // Configuartion for row/columns.
@@ -184,21 +235,10 @@ const WCH_DEFAULT = 25;
 
 generateOverview();
 
-function getTestAccountEntries() {
-  testAccounts = testAccounts.map((accountData: any) => {
-    const keyVal = accountData.split('=');
-    return [keyVal[0], keyVal[1]];
-  });
-  return testAccounts;
-}
-
 async function generateOverview() {
   return getServiceResults().then((resultsByUser) => {
-    if (!FROM_DISK) {
-      fs.writeFileSync(
-        TARGET_DIRECTORY + '/user-data.json',
-        JSON.stringify(resultsByUser)
-      );
+    if (!fs.existsSync(CACHE_PATH) || !FROM_DISK) {
+      fs.writeFileSync(CACHE_PATH, JSON.stringify(resultsByUser));
     }
 
     const fileName = `${TARGET_DIRECTORY}/userdata-overview.xlsx`;
@@ -213,6 +253,7 @@ async function generateOverview() {
       sheetThemas(resultsByUser),
       sheetNotifications(resultsByUser),
       sheetThemaContent(resultsByUser),
+      sheetZaken(resultsByUser),
     ]);
 
     XLSX.writeFile(workbook, fileName, { compression: true });
@@ -221,15 +262,77 @@ async function generateOverview() {
   });
 }
 
-async function getServiceResults(): Promise<Record<string, ServiceResults>> {
-  if (FROM_DISK) {
-    const data = JSON.parse(
-      fs.readFileSync(TARGET_DIRECTORY + '/user-data.json', 'utf8').toString()
-    );
+type ResultsByUser = Record<string, ServiceResults>;
+
+interface SheetData {
+  title: string;
+  rows: any[];
+  columnHeaders?: string[];
+  colInfo?: XLSX.ColInfo[];
+  rowInfo?: XLSX.RowInfo[];
+}
+
+function sheetZaken(resultsByUser: ResultsByUser): SheetData {
+  const results = Object.entries(resultsByUser);
+
+  const decosZaakServices = [
+    'VERGUNNINGEN',
+    'HORECA',
+    'TOERISTISCHE_VERHUUR',
+    'PARKEREN',
+  ];
+
+  const rows = results.map(([username, data]) => {
+    let zaken: any = [];
+    for (const serviceName of decosZaakServices) {
+      const cont = data[serviceName].content;
+      const unpacked = unpackZaken(cont);
+      for (const zaak of unpacked) {
+        zaken.push({ ...zaak, serviceName });
+      }
+    }
+    return zaken.map((zaak: any) => ({
+      Zaaknummer: zaak.identifier,
+      Thema: themaIDtoTitle[zaak.serviceName],
+      Username: username,
+    }));
+  });
+
+  const firstRow = rows[0];
+
+  return {
+    title: 'Zaken',
+    rows: rows.flat(),
+    colInfo:
+      firstRow &&
+      Object.values(firstRow).map(() => ({
+        wch: 30,
+      })),
+    rowInfo: rows.map(() => ({ hpx: HPX_DEFAULT })),
+  };
+}
+
+function unpackZaken(content: object): object[] {
+  if (Array.isArray(content) && content.some((v) => !!v.identifier)) {
+    return content;
+  }
+  const arrays = Object.values(content).filter((v) => Array.isArray(v));
+  if (arrays) {
+    return arrays.flat();
+  }
+  if (!(typeof content !== 'object')) {
+    return [];
+  }
+  return unpackZaken(Object.values(content));
+}
+
+async function getServiceResults(): Promise<ResultsByUser> {
+  if (fs.existsSync(CACHE_PATH) && FROM_DISK) {
+    const data = JSON.parse(fs.readFileSync(CACHE_PATH, 'utf8').toString());
     return data;
   }
 
-  const allResults: Record<string, ServiceResults> = {};
+  const allResults: ResultsByUser = {};
 
   for (const [username, userId] of testAccountEntries) {
     const loginURL = `${BASE_URL}/auth/digid/login/${username}?redirectUrl=noredirect`;
@@ -312,100 +415,7 @@ function woonplaatsNaamBuitenAmsterdam(adres: Adres) {
     : `(${woonplaatsNaam})`;
 }
 
-function getThemaRows(resultsByUser: Record<string, ServiceResults>) {
-  const rows = Object.entries(resultsByUser)
-    .map(([_username, serviceResults]) => {
-      const userThemas = getAvailableUserThemas(serviceResults);
-      return userThemas;
-    })
-    .filter((userThemas) => !!Object.keys(userThemas).length);
-  return getRows(themasAvailable, rows, false);
-}
-
-function getAvailableUserThemas(serviceResults: ServiceResults) {
-  const availableThemas = Object.entries(serviceResults)
-    .filter(([, sResult]) => {
-      if (sResult.status === 'ERROR' || sResult.status === 'POSTPONE') {
-        return false;
-      }
-      return isThemaAvailableForUser(sResult.content);
-    })
-    .map(([themaName]) => themaName);
-
-  for (const themaID of availableThemas) {
-    availableThemas[themaID] = themaToTitle[themaID];
-  }
-
-  return availableThemas;
-}
-
-type PartialContentObject = {
-  isKnown?: boolean;
-} & object;
-
-function isThemaAvailableForUser(
-  content: any[] | PartialContentObject
-): boolean {
-  if (!content) {
-    return false;
-  }
-  if (Array.isArray(content)) {
-    return content.length > 0;
-  }
-  if (content.isKnown) {
-    return true;
-  }
-  const entries = Object.entries(content);
-  for (const [, val] of entries) {
-    if (
-      val &&
-      ((Array.isArray(val) && val.length > 0) || Object.keys(val).length)
-    ) {
-      return true;
-    }
-  }
-  return false;
-}
-
-function getNotificationRows(resultsByUser: Record<string, ServiceResults>) {
-  const rows = Object.entries(resultsByUser).flatMap(
-    ([Username, serviceResults]) => {
-      return serviceResults.NOTIFICATIONS.content.map(
-        (notification: MyNotification) => {
-          return {
-            Username: Username,
-            Thema: themaToTitle[notification.themaID],
-            Titel: notification.title,
-            Datum: defaultDateFormat(notification.datePublished),
-          };
-        }
-      );
-    }
-  );
-  return rows;
-}
-
-function getServiceErrors(
-  resultsByUser: Record<string, ServiceResults>,
-  serviceKeys: string[]
-) {
-  const serviceStatusResults = Object.entries(resultsByUser).map(
-    ([_user, results]) => {
-      return Object.fromEntries(
-        Object.entries(results).map(([appStateKey, response]) => {
-          return [
-            appStateKey,
-            `${response.status}${response.status === 'ERROR' ? ` - ${response.message}` : ''}`,
-          ];
-        })
-      );
-    }
-  );
-  const rows = getRows(serviceKeys, serviceStatusResults, true);
-  return rows;
-}
-
-function getAllServiceNames(resultsByUser: Record<string, ServiceResults>) {
+function getAllServiceNames(resultsByUser: ResultsByUser) {
   const entries = Object.entries(resultsByUser);
   const serviceNames = entries
     .map(([_, serviceResults]) => serviceResults)
@@ -421,41 +431,6 @@ function addAvailableThemas(
     serviceLabelAcc[serviceName] = serviceName;
   });
   return serviceLabelAcc;
-}
-
-function getRows(
-  labels: string[],
-  results: Array<Record<string, string | number | Function>>,
-  addRowLabel: boolean = true
-) {
-  const rowsMap: any = {};
-
-  for (const label of labels) {
-    rowsMap[label] = {};
-    if (addRowLabel) {
-      rowsMap[label]['0'] = label;
-    }
-  }
-
-  results.forEach((user, index) => {
-    for (const [label, value] of Object.entries(user)) {
-      if (!rowsMap[label]) {
-        // console.warn(`[WARN]: No rowsMap with label: ${label}`);
-      } else {
-        rowsMap[label][index + 1] = value;
-      }
-    }
-  });
-
-  return Object.values(rowsMap);
-}
-
-interface SheetData {
-  title: string;
-  rows: any[];
-  columnHeaders?: string[];
-  colInfo?: XLSX.ColInfo[];
-  rowInfo?: XLSX.RowInfo[];
 }
 
 function addSheets(workbook: XLSX.WorkBook, sheets: SheetData[]) {
@@ -489,7 +464,7 @@ function createInfoArray(elementAmount: number, info: object): object[] {
   return items;
 }
 
-function sheetBrpBase(resultsByUser: Record<string, ServiceResults>) {
+function sheetBrpBase(resultsByUser: ResultsByUser): SheetData {
   const rows = Object.entries(resultsByUser).map(
     ([Username, serviceResults]) => {
       return {
@@ -551,7 +526,43 @@ type BrpSheetLayout = {
 const brpSheetLayout: BrpSheetLayout[] = [
   {
     label: 'BSN',
-    extractContentValue: (brpContent: any) => brpContent.persoon.bsn,
+    wch: WCH_DEFAULT / 2,
+    extractContentValue: (brpContent: any) => brpContent?.persoon.bsn,
+  },
+  {
+    label: 'Adres',
+    extractContentValue: (brpContent: any) => brpContent?.adres,
+    wch: WCH_DEFAULT,
+    transform: (value: Adres) => {
+      return getFullAddress(value);
+    },
+  },
+  {
+    label: 'In onderzoek',
+    extractContentValue: (brpContent: any) =>
+      brpContent?.persoon.adresInOnderzoek,
+    wch: WCH_DEFAULT / 2,
+    transform: (inOnderzoek: any) => {
+      return inOnderzoek ? 'In onderzoek' : '';
+    },
+  },
+  {
+    label: 'VOW',
+    extractContentValue: (brpContent: any) =>
+      brpContent?.persoon?.vertrokkenOnbekendWaarheen,
+    wch: WCH_DEFAULT / 3,
+    transform: (vertrokkenOnbekendWaarheen: any) => {
+      return vertrokkenOnbekendWaarheen ? 'VOW' : '';
+    },
+  },
+  {
+    label: 'Geheim',
+    extractContentValue: (brpContent: any) =>
+      brpContent?.persoon.indicatieGeheim,
+    wch: WCH_DEFAULT / 2,
+    transform: (indicatieGeheim: boolean) => {
+      return indicatieGeheim ? 'Geheim' : '';
+    },
   },
   {
     label: 'Voornamen',
@@ -613,45 +624,28 @@ const brpSheetLayout: BrpSheetLayout[] = [
     },
   },
   {
-    label: 'Geslacht (Nationaliteit)',
+    label: 'Geslacht',
     extractContentValue: (brpContent: any) => brpContent.persoon,
     transform: (persoon: Persoon) => {
-      if (!persoon) {
+      if (!persoon.omschrijvingGeslachtsaanduiding) {
+        return 'onbekend';
+      }
+      return persoon.omschrijvingGeslachtsaanduiding;
+    },
+  },
+  {
+    label: 'Nationaliteit',
+    extractContentValue: (brpContent: any) => brpContent.persoon,
+    transform: (persoon: Persoon) => {
+      if (!persoon.nationaliteiten) {
         return 'onbekend';
       }
       const nationaleiten = persoon.nationaliteiten
         ?.map(({ omschrijving }) => omschrijving)
         .join(', ');
-      return `${persoon.omschrijvingGeslachtsaanduiding} ${
-        nationaleiten !== 'Nederlandse' && nationaleiten
-          ? `(${nationaleiten})`
-          : ''
-      }`;
-    },
-  },
-  {
-    label: 'Adres (In onderzoek / VOW / Geheim)',
-    extractContentValue: (brpContent: any) => brpContent.adres,
-    wch: WCH_DEFAULT * 2,
-    transform: (value: Adres, serviceResults: ServiceResults) => {
-      return (
-        getFullAddress(value) +
-        `${
-          serviceResults.BRP.content?.persoon?.adresInOnderzoek
-            ? ' (In onderzoek)'
-            : ''
-        }` +
-        `${
-          serviceResults.BRP.content?.persoon?.vertrokkenOnbekendWaarheen
-            ? ' (VOW)'
-            : ''
-        }` +
-        `${
-          serviceResults.BRP.content?.persoon?.indicatieGeheim
-            ? ' (Geheim)'
-            : ''
-        }`
-      );
+      return nationaleiten !== 'Nederlandse' && nationaleiten
+        ? `${nationaleiten}`
+        : '';
     },
   },
   {
@@ -738,34 +732,141 @@ const brpSheetLayout: BrpSheetLayout[] = [
   return p;
 });
 
-function sheetThemas(resultsByUser: Record<string, ServiceResults>) {
+function sheetThemas(resultsByUser: ResultsByUser): SheetData {
   const rowInfo = createInfoArray(testAccountEntries.length, {
     hpx: HPX_DEFAULT,
   });
+
+  // A undefined field equals means an unavailable thema.
+  const availableThemaMaps: Record<string, string | undefined>[] =
+    Object.entries(resultsByUser)
+      .map(([_username, serviceResults]) => {
+        const userThemas = getAvailableUserThemas(serviceResults);
+        return userThemas;
+      })
+      .filter((userThemas) => !!Object.keys(userThemas).length);
+
+  const rowsMap: any = {};
+
+  for (const themaID of themaIDs) {
+    rowsMap[themaID] = {};
+    rowsMap[themaID]['0'] = themaIDtoTitle[themaID];
+  }
+
+  availableThemaMaps.forEach((availableThemaMap, index) => {
+    for (const [label, value] of Object.entries(availableThemaMap)) {
+      if (rowsMap[label]) {
+        rowsMap[label][index + 1] = value;
+      } else {
+        // console.warn(`[WARN]: No rowsMap with label: ${label}`);
+      }
+    }
+  });
+
+  const columnHeaders = ['Themas', ...testAccountNames];
   return {
     title: 'Themas',
-    rows: getThemaRows(resultsByUser),
-    columnHeaders: getUsernameColumnHeaders(),
+    rows: Object.values(rowsMap),
+    columnHeaders,
     colInfo: [
       { wch: WCH_DEFAULT },
-      ...Object.keys(testAccounts).map(() => ({ wch: WCH_DEFAULT })),
+      ...createInfoArray(columnHeaders.length, { wch: WCH_DEFAULT }),
     ],
     rowInfo,
   };
 }
 
+function getAvailableUserThemas(serviceResults: ServiceResults) {
+  const availableThemas = Object.entries(serviceResults)
+    .filter(([, sResult]) => {
+      if (
+        sResult.status === 'ERROR' ||
+        sResult.status === 'POSTPONE' ||
+        !sResult.content ||
+        (Array.isArray(sResult.content) && sResult.content.length <= 0)
+      ) {
+        return false;
+      }
+      if (sResult.content.isKnown) {
+        return true;
+      }
+      const entries = Object.entries(sResult.content);
+      for (const [, val] of entries) {
+        if (
+          val &&
+          ((Array.isArray(val) && val.length > 0) || Object.keys(val).length)
+        ) {
+          return true;
+        }
+      }
+      return false;
+    })
+    .map(([themaName]) => themaName);
+
+  const aThemas = {};
+
+  // Add manually since, BRP is already checked above for thema 'Mijn gegevens'
+  if (serviceResults.BRP.content?.identiteitsbewijzen?.length) {
+    aThemas[themaIdBurgerzaken] = themaTitleBurgerzaken;
+  }
+
+  for (let themaID of availableThemas) {
+    // Prevent setting a key to undefined if already set.
+    if (aThemas[themaID]) {
+      continue;
+    } else if (themaID.startsWith('WPI')) {
+      themaID = 'INKOMEN';
+    } else if (themaID === 'WMO') {
+      themaID = 'ZORG';
+    }
+    aThemas[themaID] = themaIDtoTitle[themaID];
+  }
+
+  return aThemas;
+}
+
 function sheetServiceErrors(
-  resultsByUser: Record<string, ServiceResults>,
+  resultsByUser: ResultsByUser,
   serviceKeys: string[]
-) {
+): SheetData {
   const rowInfo = createInfoArray(testAccountEntries.length, {
     hpx: HPX_DEFAULT,
   });
 
+  const serviceStatusResults = Object.entries(resultsByUser).map(
+    ([_user, results]) => {
+      return Object.fromEntries(
+        Object.entries(results).map(([appStateKey, response]) => {
+          return [
+            appStateKey,
+            `${response.status}${response.status === 'ERROR' ? ` - ${response.message}` : ''}`,
+          ];
+        })
+      );
+    }
+  );
+
+  const rowsMap: any = {};
+
+  for (const label of serviceKeys) {
+    rowsMap[label] = {};
+    rowsMap[label]['0'] = label;
+  }
+
+  serviceStatusResults.forEach((res, index) => {
+    for (const [label, value] of Object.entries(res)) {
+      if (!rowsMap[label]) {
+        // console.warn(`[WARN]: No rowsMap with label: ${label}`);
+      } else {
+        rowsMap[label][index + 1] = value;
+      }
+    }
+  });
+
   return {
     title: 'Service Errors',
-    rows: getServiceErrors(resultsByUser, serviceKeys),
-    columnHeaders: getUsernameColumnHeaders(),
+    rows: Object.values(rowsMap),
+    columnHeaders: ['', ...testAccountEntries.map(([username]) => username)],
     colInfo: [
       { wch: WCH_DEFAULT },
       ...createInfoArray(testAccountEntries.length, { wch: WCH_DEFAULT }),
@@ -774,10 +875,44 @@ function sheetServiceErrors(
   };
 }
 
-function sheetNotifications(resultsByUser: Record<string, ServiceResults>) {
-  const rows = getNotificationRows(resultsByUser);
+function sheetNotifications(resultsByUser: ResultsByUser): SheetData {
+  const rowShape = {
+    Username: (data: any) => data.username,
+    Thema: (data: any) => themaIDtoTitle[data.themaID],
+    Titel: (data: any) => data.title,
+    Datum: (data: any) => defaultDateFormat(data.datePublished),
+    Description: (data: any) => data.description,
+  };
+
+  const rows = Object.entries(resultsByUser).flatMap(
+    ([Username, serviceResults]) => {
+      return serviceResults.NOTIFICATIONS.content.map(
+        (notification: MyNotification) => {
+          const data = { ...notification, username: Username };
+          const row = {};
+          for (const [k, fn] of Object.entries(rowShape)) {
+            row[k] = fn(data);
+          }
+          return row;
+        }
+      );
+    }
+  );
+
   const rowInfo = rows.map(() => ({ hpx: HPX_DEFAULT }));
-  const columnWidths = [WCH_DEFAULT, WCH_DEFAULT, WCH_DEFAULT * 3, WCH_DEFAULT];
+  const columnWidths = [
+    WCH_DEFAULT,
+    WCH_DEFAULT,
+    WCH_DEFAULT * 3,
+    WCH_DEFAULT,
+    WCH_DEFAULT,
+  ];
+  if (columnWidths.length !== Object.keys(rowShape).length) {
+    throw new Error(
+      'Should have the same size, align columnWidths appropriately'
+    );
+  }
+
   return {
     title: 'Actueel',
     rows,
@@ -788,7 +923,7 @@ function sheetNotifications(resultsByUser: Record<string, ServiceResults>) {
   };
 }
 
-function sheetThemaContent(resultsByUser: Record<string, ServiceResults>) {
+function sheetThemaContent(resultsByUser: ResultsByUser): SheetData {
   function count(themaId: string) {
     return (serviceResults: ServiceResults) =>
       serviceResults[themaId]?.content?.length || '';
@@ -818,19 +953,18 @@ function sheetThemaContent(resultsByUser: Record<string, ServiceResults>) {
     Tonk: count('WPI_TONK'),
     BBZ: count('WPI_BBZ'),
     'Stadspassen (Gpass)': (serviceResults: ServiceResults) => {
-      if (!serviceResults.HLI.content?.stadspas) {
+      if (!serviceResults.HLI.content?.stadspas?.length) {
         return '';
       }
       return serviceResults.HLI.content.stadspas?.length;
     },
     Stadspasregelingen: (serviceResults: ServiceResults) => {
-      if (!serviceResults.HLI.content?.regelingen) {
+      if (!serviceResults.HLI.content?.regelingen?.length) {
         return '';
       }
       return serviceResults.HLI.content.regelingen?.length;
     },
     'Zorg en ondersteuning': count('WMO'),
-    Vergunningen: count('VERGUNNINGEN'),
     KVK: (serviceResults: ServiceResults) => {
       return serviceResults.KVK?.content ? 'Ja' : '';
     },
@@ -853,7 +987,9 @@ function sheetThemaContent(resultsByUser: Record<string, ServiceResults>) {
         serviceResults.TOERISTISCHE_VERHUUR.content?.bbVergunningen.length || ''
       );
     },
-    // KREFIA: (serviceResults: ServiceResults) => { return},
+    KREFIA: (serviceResults: ServiceResults) => {
+      return serviceResults.KREFIA?.content?.deepLinks?.length || '';
+    },
     Klachten: (serviceResults: ServiceResults) => {
       return serviceResults.KLACHTEN.content?.aantal || '';
     },
@@ -864,6 +1000,8 @@ function sheetThemaContent(resultsByUser: Record<string, ServiceResults>) {
     'Bodem (Loodmeting)': (serviceResults: ServiceResults) => {
       return serviceResults.BODEM.content?.metingen?.length || '';
     },
+    // The different types of vergunningen are added dynamicaly later.
+    Vergunningen: count('VERGUNNINGEN'),
   };
 
   const results = Object.entries(resultsByUser).map(
@@ -871,10 +1009,23 @@ function sheetThemaContent(resultsByUser: Record<string, ServiceResults>) {
       const base: Record<string, string | number> = {
         Username,
       };
-      return Object.keys(themaContentGetters).reduce((acc, thema) => {
+
+      const resVal = Object.keys(themaContentGetters).reduce((acc, thema) => {
         acc[thema] = themaContentGetters[thema](serviceResults);
         return acc;
       }, base);
+
+      // Add the count of all the different kinds of verguninngen.
+      for (const vergunning of serviceResults.VERGUNNINGEN.content) {
+        const id = vergunning.caseType;
+        if (!resVal[id]) {
+          resVal[id] = 1;
+        } else {
+          (resVal[id] as number)++;
+        }
+      }
+
+      return resVal;
     }
   );
 
@@ -882,15 +1033,10 @@ function sheetThemaContent(resultsByUser: Record<string, ServiceResults>) {
   return {
     title: 'Content',
     rows: results,
-    colInfo: results[0]
-      ? Object.keys(results[0]).map((_x, index) => ({
-          wch: 15,
-        }))
-      : undefined,
+    // Do it for 50 columns assuming this will be way more then we even need.
+    colInfo: Array(50).fill({
+      wch: 15,
+    }),
     rowInfo,
   };
-}
-
-function getUsernameColumnHeaders() {
-  return testAccountEntries.map(([username]) => username);
 }

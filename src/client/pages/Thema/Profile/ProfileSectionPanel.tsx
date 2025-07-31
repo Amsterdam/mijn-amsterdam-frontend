@@ -1,8 +1,9 @@
 import { ReactNode } from 'react';
 
-import { LinkList, Grid } from '@amsterdam/design-system-react';
+import { LinkList, Grid, Paragraph } from '@amsterdam/design-system-react';
 
 import styles from './ProfileSectionPanel.module.scss';
+import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
@@ -57,7 +58,7 @@ function getRows(sectionData: ProfileSectionData) {
       content: value,
       isVisible: !!value,
       classNameLabel: styles.Label,
-      classNameContent: styles.Content,
+      classNameContent: `${styles.Content} ${FeatureToggle.cobrowseIsActive ? 'cobrowse-redacted' : ''}`,
     };
   });
 }
@@ -67,11 +68,13 @@ type ProfilePanelProps = {
   sectionData: ProfileSectionData | ProfileSectionData[];
   startCollapsed?: boolean;
   title?: string;
+  subTitle?: string;
 };
 
 export function ProfileSectionPanel({
   sectionData,
   title,
+  subTitle,
   actionLinks,
   startCollapsed = true,
 }: ProfilePanelProps) {
@@ -80,6 +83,7 @@ export function ProfileSectionPanel({
   return (
     <PageContentCell>
       <CollapsiblePanel title={title ?? ''} startCollapsed={startCollapsed}>
+        {subTitle && <Paragraph className="ams-mb-m">{subTitle}</Paragraph>}
         <Grid className={styles.ProfileSectionPanelGrid}>
           <Grid.Cell start={1} span={{ narrow: 4, medium: 5, wide: 7 }}>
             {sections.map((sectionData, index) => (

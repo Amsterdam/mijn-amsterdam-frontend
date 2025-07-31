@@ -6,6 +6,7 @@ import {
 } from '@amsterdam/design-system-react';
 import useSWR from 'swr';
 
+import { CobrowseFooter } from './CobrowseFooter/CobrowseFooter';
 import styles from './MainFooter.module.scss';
 import type {
   CMSFooter,
@@ -69,6 +70,7 @@ export function MainFooter() {
             </PageFooter.MenuLink>
           );
         })}
+        <CobrowseFooter />
       </PageFooter.Menu>
     </PageFooter>
   );

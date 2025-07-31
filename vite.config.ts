@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 /* eslint-disable */
 import { createHash } from 'node:crypto';
 
@@ -29,7 +30,16 @@ export default defineConfig({
   },
   test: {
     globals: true,
-    environment: 'jsdom', // NOTE: overridden with 'node' when testing bff application
+    environment: 'happy-dom', // NOTE: overridden with 'node' when testing bff application
+    environmentOptions: {
+      happyDOM: {
+        settings: {
+          fetch: {
+            disableSameOriginPolicy: true, // Allows cross-origin requests in tests
+          },
+        },
+      },
+    },
     setupFiles: './src/testing/setup.ts',
     css: false,
   },

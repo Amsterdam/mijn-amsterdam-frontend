@@ -1,5 +1,5 @@
 import { HttpStatusCode } from 'axios';
-import { isAfter, isBefore, isSameDay, parseISO } from 'date-fns';
+import { isAfter, isBefore, isSameDay, parseISO, isValid } from 'date-fns';
 
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import {
@@ -35,6 +35,7 @@ import {
 } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { displayAmount } from '../../../universal/helpers/text';
+import { DataRequestConfig } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import {
   deleteCacheEntry,
@@ -201,8 +202,8 @@ export async function fetchStadspassenByAdministratienummer(
   const pasRequests = [];
 
   for (const pashouder of allPashouders) {
-    for (const pas of (pashouder.passen ?? [])) {
-      if (hasValidExpiryDate(pas.expiry_date) && !pas.vervangen) {
+    for (const pas of pashouder.passen ?? []) {
+      if (isVisiblePass(pas.actief, pas.expiry_date) && !pas.vervangen) {
         const request = fetchStadspasSource(
           pas.pasnummer,
           administratienummer
@@ -252,7 +253,7 @@ function getNextYearsDefaultExpiryDate(): Date {
   return getDefaultExpiryDate(1);
 }
 
-function getPreviousYearsDefaultExpiryDate(): Date {
+export function getPreviousYearsDefaultExpiryDate(): Date {
   return getDefaultExpiryDate(-1);
 }
 
@@ -274,48 +275,27 @@ function parseExpiryDate(expiryDate: string): Date {
   return parsedDate;
 }
 
-function expiresInCurrentPasYear(expiryDate: string): boolean {
+function isVisiblePass(isPasActief: boolean, expiryDate: string): boolean {
+  const thisYearsExpiryDate = getThisYearsDefaultExpiryDate();
   const previousYearsExpiryDate = getPreviousYearsDefaultExpiryDate();
-  const expiry = parseExpiryDate(`${expiryDate}`);
-
-  return (
-    isAfter(expiry, previousYearsExpiryDate) &&
-    isBefore(expiry, getThisYearsDefaultExpiryDate())
-  );
-}
-
-function expiresInNextPasYear(expiryDate: string): boolean {
-  const thisYearsExpiryDate = getThisYearsDefaultExpiryDate();
   const expiry = parseExpiryDate(expiryDate);
-
-  return (
-    (isSameDay(expiry, thisYearsExpiryDate) ||
-      isAfter(expiry, thisYearsExpiryDate)) &&
-    isBefore(expiry, getNextYearsDefaultExpiryDate())
-  );
-}
-
-function hasValidExpiryDate(expiryDate: string): boolean {
-  const now = new Date();
-  const thisYearsExpiryDate = getThisYearsDefaultExpiryDate();
-  const expiry = parseExpiryDate(expiryDate);
-
-  if (isSameDay(expiry, thisYearsExpiryDate)) {
-    return true;
-  }
-
-  if (isBefore(expiry, thisYearsExpiryDate)) {
-    return expiresInCurrentPasYear(expiryDate);
-  }
 
   if (
-    isAfter(now, thisYearsExpiryDate) ||
-    isSameDay(now, thisYearsExpiryDate)
+    // Do not show passes with an invalid expiry date.
+    !isValid(expiry) ||
+    // Do not show old passes.
+    isBefore(expiry, previousYearsExpiryDate) ||
+    isSameDay(expiry, previousYearsExpiryDate)
   ) {
-    return expiresInNextPasYear(expiryDate);
+    return false;
   }
 
-  return false;
+  if (isAfter(expiry, thisYearsExpiryDate)) {
+    // If the pass expires in a future year, we only show it if the pas is active.
+    return isPasActief;
+  }
+
+  return true;
 }
 
 export async function fetchStadspassen(bsn: BSN) {
@@ -371,28 +351,72 @@ function transformGpassTransactionsResponse(
   return [];
 }
 
+/** Fetch budget transactions from gpass
+ *
+ *  queryParams:
+ *    pasnummer:        which pasnummer would you like to query for?
+ *    sub_transactions: Include transactions from linked passes.
+ *    date_from:        self explanatory.
+ *    date_until:       self explanatory.
+ *    limit:            How many budget transactions from gpass? Max and default is 20.
+ *    offset:           Request n items further plus the limit.
+ *                        e.q. 0 will yield items 1 to 20. 1 from 2 to 21 and so on...
+ */
 export async function fetchGpassBudgetTransactions(
   administratienummer: string,
-  pasnummer: Stadspas['passNumber'],
-  budgetCode?: StadspasBudget['code']
-) {
-  const requestParams: StadspasTransactionQueryParams = {
-    pasnummer,
-    sub_transactions: true,
-  };
+  queryParams: StadspasTransactionQueryParams
+): Promise<ApiResponse<StadspasBudgetTransaction[]>> {
+  const DEFAULT_LIMIT = 20;
+  const limit = queryParams.limit || DEFAULT_LIMIT;
+  const DEFAULT_OFFSET = 0;
+  let offset = queryParams.offset || DEFAULT_OFFSET;
 
-  if (budgetCode) {
-    requestParams.budgetcode = budgetCode;
+  function getDataRequestConfig(
+    offset: StadspasTransactionQueryParams['offset']
+  ): DataRequestConfig {
+    return getApiConfig('GPASS', {
+      formatUrl: ({ url }) => `${url}/rest/transacties/v1/budget`,
+      headers: getHeaders(administratienummer),
+      params: { ...queryParams, offset },
+    });
   }
 
-  const dataRequestConfig = getApiConfig('GPASS', {
-    formatUrl: ({ url }) => `${url}/rest/transacties/v1/budget`,
-    transformResponse: transformGpassTransactionsResponse,
-    headers: getHeaders(administratienummer),
-    params: requestParams,
-  });
+  type Response = StadspasTransactiesResponseSource;
 
-  return requestData<StadspasBudgetTransaction[]>(dataRequestConfig);
+  const config = getDataRequestConfig(offset);
+  const response = await requestData<Response>(config);
+  if (response.status !== 'OK') {
+    return response;
+  }
+
+  const totalItems = response.content.total_items ?? 0;
+
+  const responses = [];
+  const remainingPages = Math.ceil((totalItems - offset) / limit);
+  for (let pageNumber = 2; pageNumber <= remainingPages; pageNumber++) {
+    offset += limit;
+    const config = getDataRequestConfig(offset);
+    const response = requestData<Response>(config);
+    responses.push(response);
+  }
+  const resolvedResponses = await Promise.all(responses);
+
+  const okResponses = [response];
+  for (const res of resolvedResponses) {
+    if (res.status !== 'OK') {
+      return apiErrorResult(
+        'One of the requests failed. Try again.',
+        null,
+        HttpStatusCode.InternalServerError
+      );
+    }
+    okResponses.push(res);
+  }
+
+  const finalRespones = okResponses.flatMap((res) =>
+    transformGpassTransactionsResponse(res.content)
+  );
+  return apiSuccessResult(finalRespones);
 }
 
 function transformGpassAanbiedingenResponse(
@@ -521,8 +545,6 @@ export async function mutateGpassSetPasIsBlockedState(
 }
 
 export const forTesting = {
-  expiresInCurrentPasYear,
-  expiresInNextPasYear,
   getCurrentPasYearExpiryDate,
   getDefaultExpiryDate,
   getHeaders,
@@ -530,7 +552,7 @@ export const forTesting = {
   getOwner,
   getPreviousYearsDefaultExpiryDate,
   getThisYearsDefaultExpiryDate,
-  hasValidExpiryDate,
+  isVisiblePass,
   transformBudget,
   transformGpassAanbiedingenResponse,
   transformGpassTransactionsResponse,

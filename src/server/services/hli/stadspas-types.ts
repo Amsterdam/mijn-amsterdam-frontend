@@ -25,7 +25,7 @@ export interface StadspasTransactieSource {
 
 export interface StadspasTransactiesResponseSource {
   number_of_items: number;
-  total_items: number;
+  total_items?: number;
   transacties: StadspasTransactieSource[];
 }
 
@@ -195,8 +195,13 @@ export interface StadspasAMSAPPFrontend extends Stadspas {
 
 export interface StadspasTransactionQueryParams {
   pasnummer: Stadspas['passNumber'];
-  sub_transactions: true;
+  pashouder_id?: string;
+  sub_transactions?: true;
   budgetcode?: string;
+  date_from?: string;
+  date_until?: string;
+  limit?: number;
+  offset?: number;
 }
 
 export interface StadspasBudgetTransaction {
