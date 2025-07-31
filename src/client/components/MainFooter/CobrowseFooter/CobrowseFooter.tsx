@@ -4,6 +4,7 @@ import { PageFooter } from '@amsterdam/design-system-react';
 
 import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 import { useScript } from '../../../hooks/useScript';
+import { IS_AP } from '../../../../universal/config/env';
 
 const MAX_WAIT_FOR_COBROWSE_LIVE_MS = 5000;
 declare global {
@@ -42,7 +43,7 @@ export function CobrowseFooter() {
     src: 'https://omnichanneliv--gat2.sandbox.my.site.com/staticvforcesite/resource/Cobrowse/cobrowseAppNL.bundle.js?v=002',
     defer: false,
     async: true,
-    isEnabled: true,
+    isEnabled: !IS_AP, // On AP this is loaded externally
   });
   const [showCobrowseFooter, setShowCobrowseFooter] = useState(false);
   useEffect(() => {
