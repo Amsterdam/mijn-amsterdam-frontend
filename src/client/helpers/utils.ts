@@ -54,8 +54,11 @@ export function getElementOnPageAsync(
   });
 }
 
+export const REDACTED_CLASS = FeatureToggle.cobrowseIsActive
+  ? 'cobrowse-redacted'
+  : '';
 export const getRedactedClass = (themaId: string) =>
   FeatureToggle.cobrowseIsActive &&
   ([inkomenThemaId, zorgThemaId, svwiThemaId] as string[]).includes(themaId)
-    ? 'cobrowse-redacted'
+    ? REDACTED_CLASS
     : '';
