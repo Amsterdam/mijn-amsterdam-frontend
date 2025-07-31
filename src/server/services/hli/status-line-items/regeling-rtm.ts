@@ -35,9 +35,16 @@ export function filterCombineRtmData(
 ): ZorgnedHLIRegeling[] {
   const aanvragenDeel1Combined: ZorgnedAanvraagWithRelatedPersonsTransformed[] =
     [];
+  const beschiktProductIDs: ZorgnedAanvraagWithRelatedPersonsTransformed['beschiktProductIdentificatie'][] =
+    [];
 
   const aanvragenUpdated: ZorgnedHLIRegeling[] = aanvragen.map(
     (aanvraag, index, allAanvragen) => {
+      if (beschiktProductIDs.includes(aanvraag.beschiktProductIdentificatie)) {
+        return aanvraag;
+      }
+      beschiktProductIDs.push(aanvraag.beschiktProductIdentificatie);
+
       if (isRTMDeel2(aanvraag)) {
         // Given the aanvragen are sorted by datumIngangGeldigheid/DESC we look for the first
         // deel1 aanvraag that is not already in the $aanvragenDeel1Combined list.
