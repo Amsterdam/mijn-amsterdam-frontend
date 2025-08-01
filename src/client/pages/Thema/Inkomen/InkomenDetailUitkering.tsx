@@ -23,12 +23,13 @@ const pageContentTop = (
 );
 
 export function InkomenDetailUitkering() {
-  const { isLoading, isError, zaak, breadcrumbs, routeConfig } =
+  const { isLoading, isError, zaak, breadcrumbs, routeConfig, themaId } =
     useInkomenDetailData('WPI_AANVRAGEN');
   useHTMLDocumentTitle(routeConfig.detailPageUitkering);
 
   return (
     <ThemaDetailPagina
+      themaId={themaId}
       title={zaak?.title || 'Aanvraag bijstandsuitkering'}
       zaak={zaak}
       isError={isError}

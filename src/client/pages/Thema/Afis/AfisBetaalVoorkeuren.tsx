@@ -79,6 +79,7 @@ export function AfisBetaalVoorkeuren() {
     linkListItems,
     breadcrumbs,
     routeConfig,
+    themaId,
   } = useAfisThemaData();
 
   const {
@@ -219,6 +220,7 @@ export function AfisBetaalVoorkeuren() {
 
   return (
     <ThemaPagina
+      id={themaId}
       title={title}
       isError={
         isThemaPaginaError ||

@@ -53,6 +53,7 @@ export function useHliThemaData() {
     stadspassen,
     dateExpiryFormatted: HLI.content?.stadspas?.dateExpiryFormatted ?? null,
     regelingen,
+    themaId,
     title,
     hasKindtegoed,
     isLoading: isLoading(HLI),

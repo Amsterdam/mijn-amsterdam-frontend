@@ -3,6 +3,7 @@ import classNames from 'classnames';
 
 import styles from './MyThemasPanel.module.scss';
 import { ThemaMenuItemTransformed } from '../../config/thema-types';
+import { getRedactedClass } from '../../helpers/utils';
 import { GeneralInfoRoute } from '../../pages/GeneralInfo/GeneralInfo-routes';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink';
@@ -46,7 +47,7 @@ export function MyThemasPanel({
           return (
             <UnorderedList.Item key={id}>
               <LinkComponent maVariant="fatNoUnderline" href={to}>
-                <span className={styles.ThemaLink}>
+                <span className={`styles.ThemaLink ${getRedactedClass(id)}`}>
                   {IconSVG && (
                     <Icon
                       svg={IconSVG}

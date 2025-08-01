@@ -18,6 +18,7 @@ const pageContentTop = (
 
 export function InkomenThema() {
   const {
+    id,
     title,
     tableConfig,
     zaken,
@@ -64,6 +65,7 @@ export function InkomenThema() {
 
   return (
     <ThemaPagina
+      id={id}
       title={title}
       isError={isErrorWpi || isErrorWpiSpecificaties}
       isLoading={isLoadingWpi || isLoadingWpiSpecificaties}

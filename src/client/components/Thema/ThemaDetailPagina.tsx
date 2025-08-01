@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 
 import { LinkProps, ZaakDetail } from '../../../universal/types/App.types';
+import { getRedactedClass } from '../../helpers/utils';
 import ErrorAlert from '../Alert/Alert';
 import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
 import { DetailPageV2, PageContentCell, PageContentV2 } from '../Page/Page';
@@ -16,6 +17,7 @@ const LOADING_BAR_CONFIG_DEFAULT: BarConfig = [
 const ERROR_ALERT_DEFAULT = 'We kunnen op dit moment geen gegevens tonen.';
 
 interface ThemaDetailPaginaProps<T> {
+  themaId?: string;
   zaak?: T | null;
   breadcrumbs?: LinkProps[];
   errorAlertContent?: ReactNode;
@@ -32,6 +34,7 @@ interface ThemaDetailPaginaProps<T> {
 }
 
 export default function ThemaDetailPagina<T extends Partial<ZaakDetail>>({
+  themaId,
   zaak,
   title = 'Detailpagina',
   breadcrumbs,
@@ -54,7 +57,7 @@ export default function ThemaDetailPagina<T extends Partial<ZaakDetail>>({
 
   return (
     <DetailPageV2>
-      <PageContentV2>
+      <PageContentV2 className={themaId && getRedactedClass(themaId)}>
         <PageHeadingV2 breadcrumbs={breadcrumbs}>{title}</PageHeadingV2>
 
         {!isLoading && (isError || !zaak) && (

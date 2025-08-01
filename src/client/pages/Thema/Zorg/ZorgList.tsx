@@ -20,6 +20,7 @@ export function ZorgList() {
     listPageParamKind,
     breadcrumbs,
     routeConfig,
+    id,
   } = useZorgThemaData();
   useHTMLDocumentTitle(routeConfig.listPage);
 
@@ -27,6 +28,7 @@ export function ZorgList() {
 
   return (
     <ListPagePaginated
+      themaId={id}
       items={voorzieningen.filter(filter)}
       title={title}
       appRoute={listPageRoute}

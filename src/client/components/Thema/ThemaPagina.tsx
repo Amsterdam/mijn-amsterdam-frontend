@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import { LinkList } from '@amsterdam/design-system-react';
 
 import { LinkProps } from '../../../universal/types/App.types';
+import { getRedactedClass } from '../../helpers/utils';
 import ErrorAlert from '../Alert/Alert';
 import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
 import { OverviewPageV2, PageContentCell, PageContentV2 } from '../Page/Page';
@@ -20,6 +21,7 @@ const LOADING_BAR_CONFIG_DEFAULT: BarConfig = [
 const ERROR_ALERT_DEFAULT = 'We kunnen op dit moment niet alle gegevens tonen.';
 
 interface ThemaPaginaProps {
+  id?: string;
   title: string;
   breadcrumbs?: LinkProps[];
   pageContentTop: ReactNode;
@@ -35,6 +37,7 @@ interface ThemaPaginaProps {
 }
 
 export default function ThemaPagina({
+  id,
   title,
   breadcrumbs,
   pageContentTop,
@@ -51,7 +54,7 @@ export default function ThemaPagina({
   const showError = (!isError && isPartialError) || isError;
   return (
     <OverviewPageV2>
-      <PageContentV2>
+      <PageContentV2 className={id && getRedactedClass(id)}>
         <PageHeadingV2 breadcrumbs={breadcrumbs}>{title}</PageHeadingV2>
         {pageContentTop}
         {!!linkListItems.length && (

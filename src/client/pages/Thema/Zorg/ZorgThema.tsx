@@ -31,6 +31,7 @@ export function ZorgThema() {
     isError,
     isLoading,
     voorzieningen,
+    id,
     title,
     tableConfig,
     linkListItems,
@@ -78,6 +79,7 @@ export function ZorgThema() {
   return (
     <>
       <ThemaPagina
+        id={id}
         title={title}
         pageContentTop={pageContentTop}
         linkListItems={linkListItems}

@@ -29,6 +29,7 @@ export function useBezwarenThemaData() {
     linkListItems: LinkListItems,
     routeConfig,
     tableConfig,
+    themaId,
     themaTitle: themaTitle,
     breadcrumbs,
   };

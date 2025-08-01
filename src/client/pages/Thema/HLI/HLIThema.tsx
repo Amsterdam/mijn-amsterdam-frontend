@@ -83,6 +83,7 @@ export function HLIThema() {
     isError,
     isLoading,
     regelingen,
+    themaId,
     title,
     tableConfig,
     dependencyError,
@@ -133,6 +134,7 @@ export function HLIThema() {
   return (
     <>
       <ThemaPagina
+        id={themaId}
         title={title}
         pageContentTop={pageContentTop}
         linkListItems={linkListItems}
