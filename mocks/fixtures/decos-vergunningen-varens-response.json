@@ -1,5 +1,5 @@
 {
-  "count": 2,
+  "count": 3,
   "content": [
     {
       "key": "51968C2072AA4323AC5336A59B469A51",
@@ -27,6 +27,23 @@
         "subject2": "Vergunning naam boot 2",
         "text10": "Groot",
         "text11": "Z/25/0000002",
+        "text15": "1",
+        "text21": "26,50",
+        "text22": "4,35",
+        "text36": "12345678",
+        "date13": "2024-11-08T00:00:00",
+        "date14": "2025-11-03T00:00:00"
+      }
+    },
+    {
+      "key": "51968C2072AA4323AC5336A59B469A53",
+      "fields": {
+        "date6": "2024-11-04T00:00:00",
+        "itemtype_key": "VAREN",
+        "mark": "Z/25/0000003-10001",
+        "subject2": "Vergunning naam boot 3",
+        "text10": "Groot",
+        "text11": "Z/25/0000003",
         "text15": "1",
         "text21": "26,50",
         "text22": "4,35",

@@ -1,7 +1,10 @@
 import { useParams } from 'react-router';
 
 import { useVarenThemaData } from './useVarenThemaData.hook';
-import { exploitatieVergunningWijzigenLink, routeConfig, } from './Varen-thema-config';
+import {
+  exploitatieVergunningWijzigenLink,
+  routeConfig,
+} from './Varen-thema-config';
 import { ButtonLinkProps } from '../../../../universal/types/App.types';
 
 export function useVarenDetailPage() {
@@ -17,6 +20,7 @@ export function useVarenDetailPage() {
     varenZaken.find(
       (otherZaak) =>
         otherZaak.id !== zaak?.id &&
+        otherZaak.vergunning != null &&
         otherZaak.vergunning?.identifier === zaak?.vergunning?.identifier &&
         otherZaak.processed === false
     ) || null;
