@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 
 import { Paragraph } from '@amsterdam/design-system-react';
-import { Link } from '@amsterdam/design-system-react';
 import { Navigate, useLocation } from 'react-router';
 
 import { isPrivateRoute } from '../../App.routes';
+import { MaRouterLink } from '../../components/MaLink/MaLink';
 import {
   PageContentCell,
   PageContentV2,
@@ -14,6 +14,8 @@ import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { captureMessage } from '../../helpers/monitoring';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 import { LandingRoute } from '../Landing/Landing-routes';
+import { SearchPageRoute } from '../Search/Search-routes';
+import { BffEndpoints } from '../../../server/routing/bff-routes';
 
 export function NotFound() {
   useHTMLDocumentTitle({
@@ -40,8 +42,12 @@ export function NotFound() {
             Sorry, deze pagina bestaat niet (meer).
           </Paragraph>
           <Paragraph className="ams-mb-xl">
-            Gebruik de <Link href="/zoeken">zoekfunctie</Link> of ga naar onze{' '}
-            <Link href="/">homepagina</Link>.
+            Gebruik de{' '}
+            <MaRouterLink href={SearchPageRoute.route}>
+              zoekfunctie{' '}
+            </MaRouterLink>
+            of ga naar onze{' '}
+            <MaRouterLink href={BffEndpoints.ROOT}>homepagina</MaRouterLink>.
           </Paragraph>
         </PageContentCell>
       </PageContentV2>
