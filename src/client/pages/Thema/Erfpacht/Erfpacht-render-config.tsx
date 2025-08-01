@@ -11,6 +11,7 @@ import { ErfpachtList } from './ErfpachtList';
 import { ErfpachtListFacturen } from './ErfpachtListFacturen';
 import { ErfpachtListOpenFacturen } from './ErfpachtListOpenFacturen';
 import { ErfpachtThema } from './ErfpachtThema';
+import { default as WoningIcon } from './WoningIcon.svg?react';
 import { isLoading } from '../../../../universal/helpers/api';
 import { type AppState } from '../../../../universal/types/App.types';
 import {
@@ -61,7 +62,7 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
         !!content?.isKnown)
     );
   },
-  IconSVG: ErfpachtIcon,
+  IconSVG: featureToggle.vveIsActive ? WoningIcon : ErfpachtIcon,
 };
 
 export const menuItemZakelijk: ThemaMenuItem<typeof themaId> = {
@@ -75,5 +76,5 @@ export const menuItemZakelijk: ThemaMenuItem<typeof themaId> = {
   },
   profileTypes: ['commercial'],
   isActive: menuItem.isActive,
-  IconSVG: ErfpachtIcon,
+  IconSVG: featureToggle.vveIsActive ? WoningIcon : ErfpachtIcon,
 };

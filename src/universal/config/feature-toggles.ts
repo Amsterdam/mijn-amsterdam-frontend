@@ -106,4 +106,7 @@ export const FeatureToggle = {
 
   // Cobrowse widget
   cobrowseIsActive: IS_TEST || IS_ACCEPTANCE,
+
+  // Mijn Woning met vve zaak informatie
+  vveIsActive: IS_TEST || IS_OT,
 } as const;
