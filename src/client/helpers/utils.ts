@@ -1,6 +1,9 @@
 import { KeyboardEvent, MouseEvent } from 'react';
 
 import { FeatureToggle } from '../../universal/config/feature-toggles';
+import { themaId as afisThemaId } from '../pages/Thema/Afis/Afis-thema-config';
+import { themaId as bezwarenThemaId } from '../pages/Thema/Bezwaren/Bezwaren-thema-config';
+import { themaId as hliThemaId } from '../pages/Thema/HLI/HLI-thema-config';
 import { themaId as inkomenThemaId } from '../pages/Thema/Inkomen/Inkomen-thema-config';
 import { themaId as zorgThemaId } from '../pages/Thema/Svwi/Svwi-thema-config';
 import { themaId as svwiThemaId } from '../pages/Thema/Zorg/Zorg-thema-config';
@@ -59,6 +62,15 @@ export const REDACTED_CLASS = FeatureToggle.cobrowseIsActive
   : '';
 export const getRedactedClass = (themaId: string) =>
   FeatureToggle.cobrowseIsActive &&
-  ([inkomenThemaId, zorgThemaId, svwiThemaId] as string[]).includes(themaId)
+  (
+    [
+      afisThemaId,
+      bezwarenThemaId,
+      hliThemaId,
+      inkomenThemaId,
+      zorgThemaId,
+      svwiThemaId,
+    ] as string[]
+  ).includes(themaId)
     ? REDACTED_CLASS
     : '';

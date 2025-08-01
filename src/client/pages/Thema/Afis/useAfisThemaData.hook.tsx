@@ -170,6 +170,7 @@ export function useAfisListPageData(state: AfisFactuurState) {
   const breadcrumbs = useThemaBreadcrumbs(themaId);
 
   return {
+    themaId: themaId,
     facturenListResponse:
       (state === 'open'
         ? facturenByStateFromMainState?.open
@@ -204,6 +205,7 @@ export function useAfisThemaData() {
   const breadcrumbs = useThemaBreadcrumbs(themaId);
 
   return {
+    themaId: themaId,
     title: themaTitle,
     belastingenLinkListItem,
     businessPartnerIdEncrypted,

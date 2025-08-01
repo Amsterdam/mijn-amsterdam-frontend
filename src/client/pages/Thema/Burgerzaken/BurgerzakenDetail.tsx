@@ -4,6 +4,7 @@ import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
+import { REDACTED_CLASS } from '../../../helpers/utils';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 function getRows(document: IdentiteitsbewijsFrontend) {
@@ -11,6 +12,7 @@ function getRows(document: IdentiteitsbewijsFrontend) {
     {
       label: 'Documentnummer',
       content: document.documentNummer,
+      classNames: REDACTED_CLASS,
     },
     {
       label: 'Datum uitgifte',
