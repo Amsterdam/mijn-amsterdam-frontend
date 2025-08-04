@@ -14,6 +14,7 @@ import {
   ApiResponse_DEPRECATED,
   apiSuccessResult,
 } from '../../universal/helpers/api';
+import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config';
 import {
   getAuth,
   getReturnToUrlZaakStatus,
@@ -200,9 +201,25 @@ router.get(
 
 router.all(
   BffEndpoints.TELEMETRY_PROXY,
+  // We exclude this long running endpoint from updating the rolling OIDC_SESSION_COOKIE_NAME cookie,
+  // because this can cause a race condition, setting the cookie after the logout clears it.
+  (_req, res, next) => {
+    const setCookie = res.getHeader('set-cookie');
+    if (!setCookie || typeof setCookie === 'number') {
+      return next();
+    }
+
+    // set-cookie can be a string for a single value and an array of strings for multiple values
+    const originalCookies = Array.isArray(setCookie) ? setCookie : [setCookie];
+    const cookies = originalCookies.filter(
+      (c) => !c.startsWith(`${OIDC_SESSION_COOKIE_NAME}=`)
+    );
+    res.setHeader('set-cookie', cookies);
+    next();
+  },
   proxy('https://westeurope-5.in.applicationinsights.azure.com', {
     memoizeHost: true,
-    proxyReqPathResolver: function (req) {
+    proxyReqPathResolver: function (_req) {
       return '/v2/track';
     },
   })
