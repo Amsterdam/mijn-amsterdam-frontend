@@ -41,6 +41,15 @@ export function filterCombineRtmData(
     const aanvraag = aanvragen[i];
 
     if (isRTMDeel2(aanvraag)) {
+      const previousRTMPPart2 = aanvragenUpdated.find(
+        (prevAanvraag) =>
+          prevAanvraag.beschiktProductIdentificatie ===
+          aanvraag.beschiktProductIdentificatie
+      );
+      if (previousRTMPPart2) {
+        previousRTMPPart2.documenten.push(...aanvraag.documenten);
+        continue;
+      }
       // Given the aanvragen are sorted by datumIngangGeldigheid/DESC we look for the first
       // deel1 aanvraag that is not already in the $aanvragenDeel1Combined list.
       // This is ___MOST_LIKELY___ the deel1 aanvraag that is related to the current deel2 aanvraag.
