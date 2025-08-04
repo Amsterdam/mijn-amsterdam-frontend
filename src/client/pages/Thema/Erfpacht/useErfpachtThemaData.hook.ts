@@ -32,6 +32,7 @@ export function useErfpachtThemaData() {
   const tableConfig = getTableConfig({ erfpachtData });
 
   return {
+    id: themaId,
     title: themaTitle,
     erfpachtData,
     relatieCode: erfpachtData?.relatieCode,

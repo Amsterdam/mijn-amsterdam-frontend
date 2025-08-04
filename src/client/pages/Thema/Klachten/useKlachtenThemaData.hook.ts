@@ -29,7 +29,8 @@ export function useKlachtenThemaData() {
     isError: isError(KLACHTEN),
     linkListItems: LinkListItems,
     tableConfig: klachtenTableConfig,
-    themaTitle: themaTitle,
+    themaId,
+    themaTitle,
     breadcrumbs,
     routeConfig,
   };

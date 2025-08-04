@@ -16,6 +16,7 @@ export function useBodemData() {
   const breadcrumbs = useThemaBreadcrumbs(themaId);
 
   return {
+    id: themaId,
     title: themaTitle,
     tableConfig,
     isLoading: isLoading(BODEM),

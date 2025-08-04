@@ -21,7 +21,7 @@ const LOADING_BAR_CONFIG_DEFAULT: BarConfig = [
 const ERROR_ALERT_DEFAULT = 'We kunnen op dit moment niet alle gegevens tonen.';
 
 interface ThemaPaginaProps {
-  id?: string;
+  id: string;
   title: string;
   breadcrumbs?: LinkProps[];
   pageContentTop: ReactNode;
