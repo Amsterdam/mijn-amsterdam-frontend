@@ -35,39 +35,37 @@ export function filterCombineRtmData(
 ): ZorgnedHLIRegeling[] {
   const aanvragenDeel1Combined: ZorgnedAanvraagWithRelatedPersonsTransformed[] =
     [];
+  const aanvragenUpdated: ZorgnedHLIRegeling[] = [];
 
-  const aanvragenUpdated: ZorgnedHLIRegeling[] = aanvragen.map(
-    (aanvraag, index, allAanvragen) => {
-      if (isRTMDeel2(aanvraag)) {
-        // Given the aanvragen are sorted by datumIngangGeldigheid/DESC we look for the first
-        // deel1 aanvraag that is not already in the $aanvragenDeel1Combined list.
-        // This is ___MOST_LIKELY___ the deel1 aanvraag that is related to the current deel2 aanvraag.
-        const precedingAanvragen = allAanvragen.slice(
-          index + 1,
-          allAanvragen.length
-        );
-        const regelingDeel1 = precedingAanvragen.find(
-          (aanvraag) =>
-            isRTMDeel1(aanvraag) &&
-            aanvraag.resultaat === 'toegewezen' &&
-            !aanvragenDeel1Combined.includes(aanvraag)
-        );
+  for (let i = 0; i < aanvragen.length; i++) {
+    const aanvraag = aanvragen[i];
 
-        if (regelingDeel1) {
-          aanvragenDeel1Combined.push(regelingDeel1);
-          return {
-            ...aanvraag,
-            datumInBehandeling: regelingDeel1?.datumBesluit,
-            datumAanvraag:
-              regelingDeel1?.datumAanvraag ?? aanvraag.datumAanvraag,
-            betrokkenen: [...regelingDeel1.betrokkenen], // TODO: Will the RTM deel2 have betrokkenen?
-            documenten: [...aanvraag.documenten, ...regelingDeel1.documenten],
-          };
-        }
+    if (isRTMDeel2(aanvraag)) {
+      // Given the aanvragen are sorted by datumIngangGeldigheid/DESC we look for the first
+      // deel1 aanvraag that is not already in the $aanvragenDeel1Combined list.
+      // This is ___MOST_LIKELY___ the deel1 aanvraag that is related to the current deel2 aanvraag.
+      const precedingAanvragen = aanvragen.slice(i + 1, aanvragen.length);
+      const regelingDeel1 = precedingAanvragen.find(
+        (aanvraag) =>
+          isRTMDeel1(aanvraag) &&
+          aanvraag.resultaat === 'toegewezen' &&
+          !aanvragenDeel1Combined.includes(aanvraag)
+      );
+
+      if (regelingDeel1) {
+        aanvragenDeel1Combined.push(regelingDeel1);
+        aanvragenUpdated.push({
+          ...aanvraag,
+          datumInBehandeling: regelingDeel1?.datumBesluit,
+          datumAanvraag: regelingDeel1?.datumAanvraag ?? aanvraag.datumAanvraag,
+          betrokkenen: [...regelingDeel1.betrokkenen], // TODO: Will the RTM deel2 have betrokkenen?
+          documenten: [...aanvraag.documenten, ...regelingDeel1.documenten],
+        });
+        continue;
       }
-      return aanvraag;
     }
-  );
+    aanvragenUpdated.push(aanvraag);
+  }
 
   const aanvragenWithoutRedundantDeel1 = aanvragenUpdated.filter(
     (aanvraag) => !aanvragenDeel1Combined.includes(aanvraag)
