@@ -11,6 +11,7 @@ export function ToeristischeVerhuurList() {
   }>();
   const {
     vergunningen,
+    id: themaId,
     tableConfigVergunningen,
     isLoading,
     isError,
@@ -25,6 +26,7 @@ export function ToeristischeVerhuurList() {
   return (
     <ListPagePaginated
       items={vergunningen.filter(filter).sort(sort)}
+      themaId={themaId}
       title={title}
       appRoute={listPageRoute}
       breadcrumbs={breadcrumbs}

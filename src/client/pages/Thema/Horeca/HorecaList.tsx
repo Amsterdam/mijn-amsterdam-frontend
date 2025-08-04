@@ -11,6 +11,7 @@ export function HorecaList() {
   }>();
   const {
     vergunningen,
+    themaId,
     tableConfig,
     isLoading,
     isError,
@@ -23,6 +24,7 @@ export function HorecaList() {
   return (
     <ListPagePaginated
       items={vergunningen.filter(listPageTableConfig.filter)}
+      themaId={themaId}
       title={listPageTableConfig.title}
       appRoute={listPageTableConfig.listPageRoute}
       breadcrumbs={breadcrumbs}

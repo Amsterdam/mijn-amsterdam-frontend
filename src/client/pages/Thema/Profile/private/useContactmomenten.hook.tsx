@@ -86,6 +86,7 @@ export function useContactmomenten() {
 
   return {
     contactmomenten,
+    themaId: themaIdBRP,
     displayProps: contactmomentenDisplayProps,
     isError: isError(KLANT_CONTACT),
     isLoading: isLoading(KLANT_CONTACT),

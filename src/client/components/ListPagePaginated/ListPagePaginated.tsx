@@ -29,7 +29,7 @@ interface ListPagePaginatedProps<T> {
   pageSize?: number;
   tableClassName?: string;
   title: string;
-  themaId?: string;
+  themaId: string;
   totalCount?: number;
 }
 

@@ -9,6 +9,7 @@ export function BodemList() {
     isError,
     filter,
     sort,
+    themaId,
     title,
     displayProps,
     breadcrumbs,
@@ -20,6 +21,7 @@ export function BodemList() {
   return (
     <ListPagePaginated
       items={items.filter(filter).sort(sort)}
+      themaId={themaId}
       title={title}
       appRoute={listPageRoute}
       breadcrumbs={breadcrumbs}
