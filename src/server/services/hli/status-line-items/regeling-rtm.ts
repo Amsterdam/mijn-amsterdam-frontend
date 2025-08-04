@@ -1,4 +1,7 @@
+import { isAfter } from 'date-fns';
+
 import { BESLUIT, EINDE_RECHT, isAanvrager } from './generic';
+import { defaultDateFormat } from '../../../../universal/helpers/date';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
@@ -174,6 +177,13 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
         );
       },
       description(regeling) {
+        if (
+          !!regeling.datumEindeGeldigheid &&
+          isAfter(new Date(), regeling.datumEindeGeldigheid)
+        ) {
+          return `
+        <p>Uw recht op ${regeling.titel} is beëindigd per ${defaultDateFormat(regeling.datumEindeGeldigheid)}.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`;
+        }
         return `
         <p>U hoeft de ${regeling.titel} niet elk jaar opnieuw aan te vragen. De gemeente verlengt de regeling stilzwijgend, maar controleert wel elk jaar of u nog in aanmerking komt.</p>
         <p>U kunt dan ook een brief krijgen met het verzoek om extra informatie te geven.</p>
