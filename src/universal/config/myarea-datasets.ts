@@ -416,15 +416,15 @@ export function getDatasetCategoryId(datasetId: DatasetId) {
 // TODO: add all dataset id's we want to load initially
 export const ACTIVE_DATASET_IDS_INITIAL = [
   'afvalcontainers',
-  'sportaanbieder',
-  'zwembad',
-  'sporthal',
-  'gymzaal',
-  'sportzaal',
-  'openbaresportplek',
-  'hardlooproute',
-  'sportpark',
-  'sportveld',
+  // 'sportaanbieder',
+  // 'zwembad',
+  // 'sporthal',
+  // 'gymzaal',
+  // 'sportzaal',
+  // 'openbaresportplek',
+  // 'hardlooproute',
+  // 'sportpark',
+  // 'sportveld',
 ];
 
 export const POLYLINE_GEOMETRY_TYPES: FeatureType[] = [
