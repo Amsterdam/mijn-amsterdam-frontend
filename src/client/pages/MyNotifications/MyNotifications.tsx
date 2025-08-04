@@ -4,6 +4,7 @@ import { OrderedList } from '@amsterdam/design-system-react';
 import { generatePath, useParams } from 'react-router';
 
 import { MY_NOTIFICATIONS_PAGE_DOCUMENT_TITLE } from './MyNotifications-config';
+import { themaTitle } from './MyNotifications-config';
 import { MyNotificationsRoute } from './MyNotifications-routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import ErrorAlert from '../../components/Alert/Alert';
@@ -16,10 +17,10 @@ import {
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { PaginationV2 } from '../../components/Pagination/PaginationV2';
+import { getRedactedClass } from '../../helpers/utils';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
-import { themaTitle } from './MyNotifications-config';
 
 const PAGE_SIZE = 12;
 
@@ -76,7 +77,7 @@ export function MyNotificationsPage() {
                 return (
                   <OrderedList.Item
                     key={`${notification.themaID}-${notification.id}-${index}`}
-                    className="ams-mb-m"
+                    className={`ams-mb-m ${getRedactedClass(notification.themaID)}`}
                   >
                     <MyNotification
                       notification={notification}

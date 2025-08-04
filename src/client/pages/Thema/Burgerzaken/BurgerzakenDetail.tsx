@@ -12,7 +12,7 @@ function getRows(document: IdentiteitsbewijsFrontend) {
     {
       label: 'Documentnummer',
       content: document.documentNummer,
-      classNames: REDACTED_CLASS,
+      classNameContent: REDACTED_CLASS,
     },
     {
       label: 'Datum uitgifte',

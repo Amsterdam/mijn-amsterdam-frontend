@@ -82,7 +82,7 @@ export function Dashboard() {
                 return (
                   <OrderedList.Item
                     key={`${notification.themaID}-${notification.id}-${index}`}
-                    className={`ams-mb-m ${getRedactedClass(notification.themaID)}}`}
+                    className={`ams-mb-m ${getRedactedClass(notification.themaID)}`}
                   >
                     <MyNotification
                       notification={notification}
