@@ -17,7 +17,7 @@ const LOADING_BAR_CONFIG_DEFAULT: BarConfig = [
 const ERROR_ALERT_DEFAULT = 'We kunnen op dit moment geen gegevens tonen.';
 
 interface ThemaDetailPaginaProps<T> {
-  themaId?: string;
+  themaId: string;
   zaak?: T | null;
   breadcrumbs?: LinkProps[];
   errorAlertContent?: ReactNode;

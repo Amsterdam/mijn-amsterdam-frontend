@@ -40,12 +40,13 @@ function BurgerzakenIdentiteitsbewijsContent({
 }
 
 export function BurgerzakenDetail() {
-  const { document, isLoading, isError, breadcrumbs, routeConfig } =
+  const { document, isLoading, isError, themaId, breadcrumbs, routeConfig } =
     useBurgerZakenDetailData();
   useHTMLDocumentTitle(routeConfig.detailPage);
 
   return (
     <ThemaDetailPagina
+      themaId={themaId}
       title={capitalizeFirstLetter(
         document?.documentType || 'Identiteitsbewijs'
       )}
