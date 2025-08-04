@@ -1,3 +1,5 @@
+import { promisify } from 'util';
+
 import type { Request, Response } from 'express';
 import * as jose from 'jose';
 import { ParsedQs } from 'qs';
@@ -165,7 +167,11 @@ export function decodeToken<T extends Record<string, string>>(
   return jose.decodeJwt(jwtToken) as unknown as T;
 }
 
-export function destroySession(req: AuthenticatedRequest, res: Response) {
+export async function destroySession(req: AuthenticatedRequest, res: Response) {
+  // req.session does not exist locally
+  if (req.session?.destroy) {
+    await promisify(req.session.destroy.bind(req.session))();
+  }
   req[OIDC_SESSION_COOKIE_NAME] = undefined;
   res.clearCookie(OIDC_SESSION_COOKIE_NAME, {
     path: '/',
@@ -188,7 +194,7 @@ export function createLogoutHandler(
       auth?.token &&
       req.oidc.accessToken?.isExpired?.() === false
     ) {
-      return res.oidc.logout({
+      await res.oidc.logout({
         returnTo,
         logoutParams: {
           id_token_hint: !FeatureToggle.oidcLogoutHintActive
@@ -199,10 +205,12 @@ export function createLogoutHandler(
             : null,
         },
       });
+      await destroySession(req, res);
+      return;
     }
 
     if (hasSessionCookie(req)) {
-      destroySession(req, res);
+      await destroySession(req, res);
     }
 
     return res.redirect(returnTo);

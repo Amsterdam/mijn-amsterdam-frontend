@@ -16,6 +16,7 @@ import {
 } from '../../universal/helpers/api';
 import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config';
 import {
+  destroySession,
   getAuth,
   getReturnToUrlZaakStatus,
   getZaakStatusQueryParams,
@@ -199,12 +200,37 @@ router.get(
   }
 );
 
+// DO NOT MERGE!!
+function delay(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+router.get(
+  [BffEndpoints.ROOT, 'long/:ms'],
+  async (req: Request, res: Response) => {
+    const ms = parseInt(req.params.ms, 10);
+
+    if (isNaN(ms) || ms < 0) {
+      return res.status(HttpStatusCode.BadRequest).send('Invalid delay time');
+    }
+
+    await delay(ms);
+    res.send(`Waited ${ms}ms`);
+  }
+);
+router.get(
+  [BffEndpoints.ROOT, 'cookie/clear'],
+  async (req: Request, res: Response) => {
+    await destroySession(req, res);
+  }
+);
+
 router.all(
   BffEndpoints.TELEMETRY_PROXY,
   // We exclude this long running endpoint from updating the rolling OIDC_SESSION_COOKIE_NAME cookie,
   // because this can cause a race condition, setting the cookie after the logout clears it.
   (_req, res, next) => {
     const setCookie = res.getHeader('set-cookie');
+    console.log(setCookie); // DO NOT MERGE
     if (!setCookie || typeof setCookie === 'number') {
       return next();
     }
