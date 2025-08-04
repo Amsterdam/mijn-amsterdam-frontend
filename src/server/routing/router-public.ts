@@ -204,25 +204,20 @@ router.get(
 function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
-router.get(
-  [BffEndpoints.ROOT, 'long/:ms'],
-  async (req: Request, res: Response) => {
-    const ms = parseInt(req.params.ms, 10);
+router.get('/long/:ms', async (req: Request, res: Response) => {
+  const ms = parseInt(req.params.ms, 10);
 
-    if (isNaN(ms) || ms < 0) {
-      return res.status(HttpStatusCode.BadRequest).send('Invalid delay time');
-    }
+  if (isNaN(ms) || ms < 0) {
+    return res.status(HttpStatusCode.BadRequest).send('Invalid delay time');
+  }
 
-    await delay(ms);
-    res.send(`Waited ${ms}ms`);
-  }
-);
-router.get(
-  [BffEndpoints.ROOT, 'cookie/clear'],
-  async (req: Request, res: Response) => {
-    await destroySession(req, res);
-  }
-);
+  await delay(ms);
+  res.send(`Waited ${ms}ms`);
+});
+router.get('/cookie/clear', async (req: Request, res: Response) => {
+  await destroySession(req, res);
+  res.status(HttpStatusCode.Ok).send();
+});
 
 router.all(
   BffEndpoints.TELEMETRY_PROXY,
