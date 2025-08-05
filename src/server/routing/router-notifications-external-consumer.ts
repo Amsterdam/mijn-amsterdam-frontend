@@ -6,7 +6,10 @@ import { apiKeyVerificationHandler } from './route-handlers';
 import { createBFFRouter, generateFullApiUrlBFF } from './route-helpers';
 import { IS_PRODUCTION } from '../../universal/config/env';
 import { apiErrorResult, apiSuccessResult } from '../../universal/helpers/api';
-import { RETURNTO_NOTIFICATIES_CONSUMER_ID } from '../auth/auth-config';
+import {
+  RETURNTO_AMSAPP_NOTIFICATIES_APP_LANDING,
+  RETURNTO_NOTIFICATIES_CONSUMER_ID,
+} from '../auth/auth-config';
 import { getAuth } from '../auth/auth-helpers';
 import { authRoutes } from '../auth/auth-routes';
 import { AuthProfileAndToken } from '../auth/auth-types';
@@ -121,7 +124,7 @@ const logoutUrl = `${generateFullApiUrlBFF(
   authRoutes.AUTH_LOGOUT_DIGID,
   {},
   getFromEnv('BFF_OIDC_BASE_URL')
-)}?returnTo=${AMSAPP_NOTIFICATIONS_DEEP_LINK}`;
+)}?returnTo=${RETURNTO_AMSAPP_NOTIFICATIES_APP_LANDING}`;
 
 const baseRenderProps = {
   nonce,
