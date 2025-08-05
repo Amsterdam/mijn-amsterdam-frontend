@@ -40,9 +40,7 @@ export function filterCombineRtmData(
     [];
   const aanvragenUpdated: ZorgnedHLIRegeling[] = [];
 
-  for (let i = 0; i < aanvragen.length; i++) {
-    const aanvraag = aanvragen[i];
-
+  aanvragen.forEach((aanvraag, i) => {
     if (isRTMDeel2(aanvraag)) {
       const previousRTMPPart2 = aanvragenUpdated.find(
         (prevAanvraag) =>
@@ -51,7 +49,7 @@ export function filterCombineRtmData(
       );
       if (previousRTMPPart2) {
         previousRTMPPart2.documenten.push(...aanvraag.documenten);
-        continue;
+        return;
       }
       // Given the aanvragen are sorted by datumIngangGeldigheid/DESC we look for the first
       // deel1 aanvraag that is not already in the $aanvragenDeel1Combined list.
@@ -73,11 +71,11 @@ export function filterCombineRtmData(
           betrokkenen: [...regelingDeel1.betrokkenen], // TODO: Will the RTM deel2 have betrokkenen?
           documenten: [...aanvraag.documenten, ...regelingDeel1.documenten],
         });
-        continue;
+        return;
       }
     }
     aanvragenUpdated.push(aanvraag);
-  }
+  });
 
   const aanvragenWithoutRedundantDeel1 = aanvragenUpdated.filter(
     (aanvraag) => !aanvragenDeel1Combined.includes(aanvraag)
