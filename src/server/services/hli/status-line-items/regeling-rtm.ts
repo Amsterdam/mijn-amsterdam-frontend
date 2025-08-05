@@ -33,56 +33,55 @@ export function isRTMDeel1(
   );
 }
 
-// Aanvragen can contain duplicate RTMDeel2. We combine these documents in the first RMTDeel2
-function dedupRtmDeel2(
+/** Aanvragen can contain duplicate RTMDeel2. We combine the documents and drop the dupe. */
+function dedupCombineRTMDeel2(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ) {
-  const deduppedAanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[] = [];
+  const dedupedAanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[] = [];
 
-  const seen: Record<string, ZorgnedHLIRegeling> = {};
+  const seenAanvragen: Record<string, ZorgnedHLIRegeling> = {};
   for (const aanvraag of aanvragen) {
     if (!isRTMDeel2(aanvraag)) {
-      deduppedAanvragen.push(aanvraag);
+      dedupedAanvragen.push(aanvraag);
       continue;
     }
-    const pbId = aanvraag.beschiktProductIdentificatie;
-    if (seen[pbId]) {
-      seen[pbId].documenten.push(...aanvraag.documenten);
+    const id = aanvraag.beschiktProductIdentificatie;
+    if (seenAanvragen[id]) {
+      seenAanvragen[id].documenten.push(...aanvraag.documenten);
       continue;
     }
-    seen[pbId] = aanvraag;
-    deduppedAanvragen.push(aanvraag);
+    seenAanvragen[id] = aanvraag;
+    dedupedAanvragen.push(aanvraag);
   }
-  return deduppedAanvragen;
+  return dedupedAanvragen;
 }
 
 export function filterCombineRtmData(
   _aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ): ZorgnedHLIRegeling[] {
-  const aanvragen = dedupRtmDeel2([..._aanvragen]);
+  const aanvragen = dedupCombineRTMDeel2([..._aanvragen]);
 
   // The aanvragen are sorted by datumIngangGeldigheid/DESC
   // The first unseen deel1 aanvraag after a deel2 aanvraag is ___MOST_LIKELY___ related to that deel2 aanvraag.
-
-  const seenDeel2: ZorgnedAanvraagWithRelatedPersonsTransformed[] = [];
-  const combined: ZorgnedHLIRegeling[] = [];
+  const deel2Aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[] = [];
+  const combinedAanvragen: ZorgnedHLIRegeling[] = [];
   for (const aanvraag of aanvragen) {
     if (isRTMDeel2(aanvraag)) {
-      seenDeel2.push(aanvraag);
+      deel2Aanvragen.push(aanvraag);
       continue;
     }
     if (isRTMDeel1(aanvraag)) {
       const deel1 = aanvraag;
       if (deel1.resultaat !== 'toegewezen') {
-        combined.push(deel1);
+        combinedAanvragen.push(deel1);
         continue;
       }
-      const deel2 = seenDeel2.pop();
+      const deel2 = deel2Aanvragen.pop();
       if (!deel2) {
-        combined.push(deel1);
+        combinedAanvragen.push(deel1);
         continue;
       }
-      combined.push({
+      combinedAanvragen.push({
         ...deel2,
         datumInBehandeling: deel1?.datumBesluit,
         datumAanvraag: deel1?.datumAanvraag ?? deel2.datumAanvraag,
@@ -91,10 +90,10 @@ export function filterCombineRtmData(
       });
       continue;
     }
-    combined.push(aanvraag);
+    combinedAanvragen.push(aanvraag);
   }
 
-  return [...combined, ...seenDeel2];
+  return [...combinedAanvragen, ...deel2Aanvragen];
 }
 
 function getRtmDescriptionDeel1Toegewezen(
