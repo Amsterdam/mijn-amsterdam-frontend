@@ -43,6 +43,11 @@ routerPublic.get(
 );
 
 routerPublic.get(
+  ExternalConsumerEndpoints.public.NOTIFICATIONS_APP,
+  sendAppLandingResponse
+);
+
+routerPublic.get(
   ExternalConsumerEndpoints.public.NOTIFICATIONS_CONSUMER_APP,
   sendConsumerIdResponse
 );
@@ -157,6 +162,14 @@ async function sendConsumerIdStatusResponse(
     return res.send(apiErrorResult('Not Found', null, HttpStatusCode.NotFound));
   }
   return res.send(apiSuccessResult(status));
+}
+
+function sendAppLandingResponse(_req: Request, res: Response) {
+  const renderProps: RenderProps = {
+    ...baseRenderProps,
+    promptOpenApp: true,
+  };
+  return res.render('amsapp-open-app', renderProps);
 }
 
 async function sendConsumerIdResponse(
