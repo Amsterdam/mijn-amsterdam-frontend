@@ -5,11 +5,12 @@ import {
 } from 'date-fns';
 
 import type { TipsPredicateFN } from './tip-types';
+import type { AppStateBase } from '../../../universal/types/App.types';
 import { isAmsterdamAddress } from '../buurt/helpers';
-import { HLIRegelingFrontend } from '../hli/hli-regelingen-types';
+import type { HLIRegelingFrontend } from '../hli/hli-regelingen-types';
 import type { IdentiteitsbewijsFrontend, Kind } from '../profile/brp.types';
-import { BBVergunningFrontend } from '../toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
-import { WMOVoorzieningFrontend } from '../wmo/wmo-config-and-types';
+import type { BBVergunningFrontend } from '../toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
+import type { WMOVoorzieningFrontend } from '../wmo/wmo-config-and-types';
 import type { WpiRequestProcess } from '../wpi/wpi-types';
 
 // rule 2
@@ -140,62 +141,54 @@ export const hasAOV: TipsPredicateFN = (appState) => {
   );
 };
 
-export const hasKidsBetweenAges = (
-  kinderen: Kind[] | undefined,
-  ageFrom: number,
-  ageTo: number,
-  today: Date = new Date()
-) => {
-  return !!kinderen?.some(
-    (kind: Kind) =>
-      kind.geboortedatum &&
-      !kind.overlijdensdatum &&
-      differenceInYears(today, new Date(kind.geboortedatum)) >= ageFrom &&
-      differenceInYears(today, new Date(kind.geboortedatum)) <= ageTo
-  );
-};
+/** This is inclusive e.q. {from: 18, to: 19} will be true for someone of 19.9 years old */
+export function hasKidsBetweenAges({
+  from,
+  to,
+}: {
+  from: number;
+  to: number;
+}): TipsPredicateFN {
+  function hasKidsBetweenAgesFromTo(
+    appState: Partial<AppStateBase>,
+    today: Date = new Date()
+  ): boolean {
+    return !!appState.BRP?.content?.kinderen?.some(
+      (kind: Kind) =>
+        kind.geboortedatum &&
+        !kind.overlijdensdatum &&
+        differenceInYears(today, new Date(kind.geboortedatum)) >= from &&
+        differenceInYears(today, new Date(kind.geboortedatum)) <= to
+    );
+  }
+  return hasKidsBetweenAgesFromTo;
+}
 
-export const hasKidsBetweenAges17And19: TipsPredicateFN = (
-  appState,
-  today: Date = new Date()
-) => {
-  const AGE_FROM = 17;
-  const AGE_TO = 18;
-  return hasKidsBetweenAges(
-    appState.BRP?.content?.kinderen,
-    AGE_FROM,
-    AGE_TO,
-    today
-  );
-};
+/** This is inclusive e.q. {from: 18, to: 19} will be true for someone of 19.9 years old */
+export function isBetweenAges({
+  from,
+  to,
+}: {
+  from: number;
+  to: number;
+}): TipsPredicateFN {
+  function isBetweenAgesFromTo(
+    appState: Partial<AppStateBase>,
+    today: Date = new Date()
+  ): boolean {
+    const geboortedatum = appState.BRP?.content?.persoon?.geboortedatum;
 
-export const hasKidsBetweenAges2And18: TipsPredicateFN = (
-  appState,
-  today: Date = new Date()
-) => {
-  const AGE_FROM = 2;
-  const AGE_TO = 17;
-  return hasKidsBetweenAges(
-    appState.BRP?.content?.kinderen,
-    AGE_FROM,
-    AGE_TO,
-    today
-  );
-};
+    if (!geboortedatum) {
+      return false;
+    }
 
-export const hasKidsBetweenAges4And12: TipsPredicateFN = (
-  appState,
-  today: Date = new Date()
-) => {
-  const AGE_FROM = 4;
-  const AGE_TO = 11;
-  return hasKidsBetweenAges(
-    appState.BRP?.content?.kinderen,
-    AGE_FROM,
-    AGE_TO,
-    today
-  );
-};
+    return (
+      differenceInYears(today, new Date(geboortedatum)) >= from &&
+      differenceInYears(today, new Date(geboortedatum)) <= to
+    );
+  }
+  return isBetweenAgesFromTo;
+}
 
 export const hasOldestKidBornFrom2016: TipsPredicateFN = (appState) => {
   const yearFrom = 2016;
@@ -219,61 +212,6 @@ export const hasOldestKidBornFrom2016: TipsPredicateFN = (appState) => {
 export const hasDutchNationality: TipsPredicateFN = (appState) => {
   return !!appState.BRP?.content?.persoon?.nationaliteiten.some(
     (n: { omschrijving: string }) => n.omschrijving === 'Nederlandse'
-  );
-};
-
-export const isBetween17and19: TipsPredicateFN = (
-  appState,
-  today: Date = new Date()
-) => {
-  const geboortedatum = appState.BRP?.content?.persoon?.geboortedatum;
-
-  if (!geboortedatum) {
-    return false;
-  }
-
-  const ageFrom = 17;
-  const ageTo = 18;
-  return (
-    differenceInYears(today, new Date(geboortedatum)) >= ageFrom &&
-    differenceInYears(today, new Date(geboortedatum)) <= ageTo
-  );
-};
-
-// is deze hieronder niet overbodig en wordt daar niet hetzelfde mee bedoelt als "isBetween17and19"? > MIJN-11812
-export const isBetween17and18: TipsPredicateFN = (
-  appState,
-  today: Date = new Date()
-) => {
-  const geboortedatum = appState.BRP?.content?.persoon?.geboortedatum;
-
-  if (!geboortedatum) {
-    return false;
-  }
-
-  const ageFrom = 17;
-  const ageTo = 18;
-  return (
-    differenceInYears(today, new Date(geboortedatum)) >= ageFrom &&
-    differenceInYears(today, new Date(geboortedatum)) <= ageTo
-  );
-};
-
-export const isBetween4and12: TipsPredicateFN = (
-  appState,
-  today: Date = new Date()
-) => {
-  const geboortedatum = appState.BRP?.content?.persoon?.geboortedatum;
-
-  if (!geboortedatum) {
-    return false;
-  }
-
-  const ageFrom = 4;
-  const ageTo = 11;
-  return (
-    differenceInYears(today, new Date(geboortedatum)) >= ageFrom &&
-    differenceInYears(today, new Date(geboortedatum)) <= ageTo
   );
 };
 
