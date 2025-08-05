@@ -61,6 +61,9 @@ export function filterCombineRtmData(
 ): ZorgnedHLIRegeling[] {
   const aanvragen = dedupRtmDeel2([..._aanvragen]);
 
+  // The aanvragen are sorted by datumIngangGeldigheid/DESC
+  // The first unseen deel1 aanvraag after a deel2 aanvraag is ___MOST_LIKELY___ related to that deel2 aanvraag.
+
   const seenDeel2: ZorgnedAanvraagWithRelatedPersonsTransformed[] = [];
   const combined: ZorgnedHLIRegeling[] = [];
   for (const aanvraag of aanvragen) {
