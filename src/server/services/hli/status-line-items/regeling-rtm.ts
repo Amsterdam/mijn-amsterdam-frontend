@@ -93,7 +93,8 @@ export function filterCombineRtmData(
     combinedAanvragen.push(aanvraag);
   }
 
-  return [...combinedAanvragen, ...deel2Aanvragen];
+  combinedAanvragen.push(...deel2Aanvragen);
+  return combinedAanvragen;
 }
 
 function getRtmDescriptionDeel1Toegewezen(
