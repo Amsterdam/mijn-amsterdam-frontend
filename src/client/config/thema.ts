@@ -16,6 +16,7 @@ import { menuItem as menuItemHoreca } from '../pages/Thema/Horeca/Horeca-render-
 import { menuItem as menuItemInkomen } from '../pages/Thema/Inkomen/Inkomen-render-config';
 import { menuItem as menuItemJeugd } from '../pages/Thema/Jeugd/Jeugd-render-config';
 import { menuItem as menuItemKlachten } from '../pages/Thema/Klachten/Klachten-render-config';
+import { menuItem as menuItemKrefia } from '../pages/Thema/Krefia/Krefia-render-config';
 import { menuItem as menuItemMilieuzone } from '../pages/Thema/Milieuzone/Milieuzone-render-config';
 import { menuItem as menuItemOvertredingen } from '../pages/Thema/Overtredingen/Overtredingen-render-config';
 import { menuItem as menuItemParkeren } from '../pages/Thema/Parkeren/Parkeren-render-config';
@@ -56,4 +57,5 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   menuItemSubsidies,
   menuItemOvertredingen,
   menuItemMilieuzone,
+  menuItemKrefia,
 ];
