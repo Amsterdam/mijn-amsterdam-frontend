@@ -110,28 +110,28 @@ describe('filterCombineRtmData', () => {
         datumToewijzing: null,
         documenten: [
           {
-            datePublished: '2025-07-15T15:18:55.68',
             id: 'B3405442',
             title: 'AV-RTM afwijzing',
             url: '',
+            datePublished: '2025-07-15T15:18:55.68',
           },
           {
-            datePublished: '2025-05-20T10:47:13.323',
             id: 'E1082460',
             title: 'aanvraagformulier HLI',
             url: '',
+            datePublished: '2025-05-20T10:47:13.323',
           },
           {
-            datePublished: '2025-07-15T15:11:36.503',
             id: 'B3405439',
             title: 'AV-RTM Info aan klant GGD',
             url: '',
+            datePublished: '2025-07-15T15:11:36.503',
           },
           {
-            datePublished: '2025-05-20T10:47:13.323',
             id: 'E1082460',
             title: 'aanvraagformulier HLI',
             url: '',
+            datePublished: '2025-05-20T10:47:13.323',
           },
         ],
         id: '3166814',
@@ -416,15 +416,15 @@ describe('filterCombineRtmData', () => {
         datumToewijzing: null,
         documenten: [
           {
-            datePublished: '2025-07-15T16:38:00.03',
-            id: 'B3405448',
-            title: 'AV-RTM Info aan klant GGD',
-            url: '',
-          },
-          {
             datePublished: '2025-07-15T16:44:15.747',
             id: 'B3405450',
             title: 'Beschikking toekenning Reg Tegemoetk Meerkosten',
+            url: '',
+          },
+          {
+            datePublished: '2025-07-15T16:38:00.03',
+            id: 'B3405448',
+            title: 'AV-RTM Info aan klant GGD',
             url: '',
           },
         ],

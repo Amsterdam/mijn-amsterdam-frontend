@@ -33,60 +33,68 @@ export function isRTMDeel1(
   );
 }
 
-export function filterCombineRtmData(
+// Aanvragen can contain duplicate RTMDeel2. We combine these documents in the first RMTDeel2
+function dedupRtmDeel2(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
-): ZorgnedHLIRegeling[] {
-  const previouslyMergedPartOneAanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[] =
-    [];
-  const mergedAanvragen: ZorgnedHLIRegeling[] = [];
+) {
+  const deduppedAanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[] = [];
 
-  // We need to keep these ID's for when a duplicate is found; we can merge unique data and throw the rest.
-  const productIDtoAanvraag: Record<string, ZorgnedHLIRegeling> = {};
-
-  aanvragen.forEach((aanvraag, i) => {
-    if (isRTMDeel2(aanvraag)) {
-      const id = aanvraag.beschiktProductIdentificatie;
-
-      const previouslyFoundAanvraag = productIDtoAanvraag[id];
-      if (previouslyFoundAanvraag) {
-        previouslyFoundAanvraag.documenten.push(...aanvraag.documenten);
-        return;
-      }
-      productIDtoAanvraag[id] = aanvraag;
-
-      // Given the aanvragen are sorted by datumIngangGeldigheid/DESC we look for the first
-      // deel1 aanvraag that is not already in the $aanvragenDeel1Combined list.
-      // This is ___MOST_LIKELY___ the deel1 aanvraag that is related to the current deel2 aanvraag.
-      const precedingAanvragen = aanvragen.slice(i + 1, aanvragen.length);
-      const regelingDeel1 = precedingAanvragen.find(
-        (aanvraag) =>
-          isRTMDeel1(aanvraag) &&
-          aanvraag.resultaat === 'toegewezen' &&
-          !previouslyMergedPartOneAanvragen.includes(aanvraag)
-      );
-
-      if (regelingDeel1) {
-        previouslyMergedPartOneAanvragen.push(regelingDeel1);
-        mergedAanvragen.push(
-          Object.assign(aanvraag, {
-            datumInBehandeling: regelingDeel1?.datumBesluit,
-            datumAanvraag:
-              regelingDeel1?.datumAanvraag ?? aanvraag.datumAanvraag,
-            betrokkenen: [...regelingDeel1.betrokkenen], // TODO: Will the RTM deel2 have betrokkenen?
-            documenten: [...aanvraag.documenten, ...regelingDeel1.documenten],
-          })
-        );
-        return;
-      }
+  const seen: Record<string, ZorgnedHLIRegeling> = {};
+  for (const aanvraag of aanvragen) {
+    if (!isRTMDeel2(aanvraag)) {
+      deduppedAanvragen.push(aanvraag);
+      continue;
     }
-    mergedAanvragen.push(aanvraag);
-  });
+    const pbId = aanvraag.beschiktProductIdentificatie;
+    if (seen[pbId]) {
+      seen[pbId].documenten.push(...aanvraag.documenten);
+      continue;
+    }
+    seen[pbId] = aanvraag;
+    deduppedAanvragen.push(aanvraag);
+  }
+  return deduppedAanvragen;
+}
 
-  const aanvragenWithoutMergedPartOne = mergedAanvragen.filter(
-    (aanvraag) => !previouslyMergedPartOneAanvragen.includes(aanvraag)
-  );
+export function filterCombineRtmData(
+  _aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
+): ZorgnedHLIRegeling[] {
+  const aanvragen = dedupRtmDeel2([..._aanvragen]);
 
-  return aanvragenWithoutMergedPartOne;
+  // The aanvragen are sorted by datumIngangGeldigheid/DESC
+  // The first unseen deel1 aanvraag after a deel2 aanvraag is ___MOST_LIKELY___ related to that deel2 aanvraag.
+
+  const seenDeel2: ZorgnedAanvraagWithRelatedPersonsTransformed[] = [];
+  const combined: ZorgnedHLIRegeling[] = [];
+  for (const aanvraag of aanvragen) {
+    if (isRTMDeel2(aanvraag)) {
+      seenDeel2.push(aanvraag);
+      continue;
+    }
+    if (isRTMDeel1(aanvraag)) {
+      const deel1 = aanvraag;
+      if (deel1.resultaat !== 'toegewezen') {
+        combined.push(deel1);
+        continue;
+      }
+      const deel2 = seenDeel2.pop();
+      if (!deel2) {
+        combined.push(deel1);
+        continue;
+      }
+      combined.push({
+        ...deel2,
+        datumInBehandeling: deel1?.datumBesluit,
+        datumAanvraag: deel1?.datumAanvraag ?? deel2.datumAanvraag,
+        betrokkenen: [...deel1.betrokkenen], // TODO: Will the RTM deel2 have betrokkenen?
+        documenten: [...deel2.documenten, ...deel1.documenten],
+      });
+      continue;
+    }
+    combined.push(aanvraag);
+  }
+
+  return [...combined, ...seenDeel2];
 }
 
 function getRtmDescriptionDeel1Toegewezen(
