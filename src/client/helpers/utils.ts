@@ -60,7 +60,7 @@ export function getElementOnPageAsync(
 export const REDACTED_CLASS = FeatureToggle.cobrowseIsActive
   ? 'cobrowse-redacted'
   : '';
-export const getRedactedClass = (themaId: string) =>
+export const isRedactedClass = (themaId: string) =>
   FeatureToggle.cobrowseIsActive &&
   (
     [
@@ -71,6 +71,6 @@ export const getRedactedClass = (themaId: string) =>
       zorgThemaId,
       svwiThemaId,
     ] as string[]
-  ).includes(themaId)
-    ? REDACTED_CLASS
-    : '';
+  ).includes(themaId);
+export const getRedactedClass = (themaId: string | null) =>
+  themaId && isRedactedClass(themaId) ? REDACTED_CLASS : '';

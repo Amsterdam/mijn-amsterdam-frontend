@@ -17,6 +17,7 @@ import styles from './ProfilePrivate.module.scss';
 import { isLoading, isError } from '../../../../../universal/helpers/api';
 import { MaRouterLink } from '../../../../components/MaLink/MaLink';
 import { ThemaMenuItemTransformed } from '../../../../config/thema-types';
+import { getRedactedClass } from '../../../../helpers/utils';
 import { useAppStateGetter } from '../../../../hooks/useAppState';
 import {
   useThemaBreadcrumbs,
@@ -24,17 +25,24 @@ import {
 } from '../../../../hooks/useThemaMenuItems';
 import { routeConfig, themaIdBRP } from '../Profile-thema-config';
 
-function getLinkToThemaPage(
+function getMenuItem(
   onderwerp: string,
   myThemasMenuItems: ThemaMenuItemTransformed[]
 ) {
-  const menuItem = myThemasMenuItems.find(
+  return myThemasMenuItems.find(
     (item) =>
       item.id ===
       mapperContactmomentToMenuItem[
         onderwerp as keyof typeof mapperContactmomentToMenuItem
       ]
   );
+}
+
+function getLinkToThemaPage(
+  onderwerp: string,
+  myThemasMenuItems: ThemaMenuItemTransformed[]
+) {
+  const menuItem = getMenuItem(onderwerp, myThemasMenuItems);
 
   if (!menuItem) {
     return onderwerp;
@@ -76,6 +84,9 @@ export function useContactmomenten() {
     KLANT_CONTACT.content?.map((contactMomentItem) => {
       return {
         ...contactMomentItem,
+        className: getRedactedClass(
+          getMenuItem(contactMomentItem.subject, myThemasMenuItems)?.id || null
+        ),
         themaKanaalIcon: addIcon(contactMomentItem.themaKanaal),
         subjectLink: getLinkToThemaPage(
           contactMomentItem.subject,
