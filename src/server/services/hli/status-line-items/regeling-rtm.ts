@@ -173,11 +173,7 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
     {
       ...EINDE_RECHT,
       isVisible(regeling) {
-        return (
-          isRTMDeel2(regeling) &&
-          !!regeling.datumInBehandeling &&
-          regeling.resultaat === 'toegewezen'
-        );
+        return isToegewezenEindeRecht(regeling);
       },
       description(regeling) {
         if (
@@ -197,8 +193,10 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
     {
       ...EINDE_RECHT,
       isVisible(regeling) {
+        return !isToegewezenEindeRecht(regeling);
+      },
+      isActive(regeling) {
         return (
-          isRTMDeel2(regeling) &&
           regeling.resultaat === 'toegewezen' &&
           regeling.isActueel === false &&
           !regeling.datumInBehandeling
@@ -225,6 +223,14 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
       },
     },
   ];
+
+function isToegewezenEindeRecht(regeling: ZorgnedHLIRegeling): boolean {
+  return (
+    isRTMDeel2(regeling) &&
+    !!regeling.datumInBehandeling &&
+    regeling.resultaat === 'toegewezen'
+  );
+}
 
 export const forTesting = {
   isRTMDeel2,
