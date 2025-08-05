@@ -37,6 +37,7 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
   title: themaTitle,
   id: themaId,
   to: routeConfig.themaPage.path,
+  isRedacted: true,
   profileTypes: ['private', 'commercial'],
   isActive(appState: AppState) {
     return (

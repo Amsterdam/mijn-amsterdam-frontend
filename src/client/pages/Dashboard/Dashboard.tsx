@@ -18,7 +18,6 @@ import {
   PageContentV2,
   PageV2,
 } from '../../components/Page/Page';
-import { getRedactedClass } from '../../helpers/utils';
 import { useSmallScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
@@ -82,7 +81,7 @@ export function Dashboard() {
                 return (
                   <OrderedList.Item
                     key={`${notification.themaID}-${notification.id}-${index}`}
-                    className={`ams-mb-m ${getRedactedClass(notification.themaID)}`}
+                    className={`ams-mb-m ${notification.className}`}
                   >
                     <MyNotification
                       notification={notification}

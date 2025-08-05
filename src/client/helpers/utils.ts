@@ -1,12 +1,7 @@
 import { KeyboardEvent, MouseEvent } from 'react';
 
 import { FeatureToggle } from '../../universal/config/feature-toggles';
-import { themaId as afisThemaId } from '../pages/Thema/Afis/Afis-thema-config';
-import { themaId as bezwarenThemaId } from '../pages/Thema/Bezwaren/Bezwaren-thema-config';
-import { themaId as hliThemaId } from '../pages/Thema/HLI/HLI-thema-config';
-import { themaId as inkomenThemaId } from '../pages/Thema/Inkomen/Inkomen-thema-config';
-import { themaId as zorgThemaId } from '../pages/Thema/Svwi/Svwi-thema-config';
-import { themaId as svwiThemaId } from '../pages/Thema/Zorg/Zorg-thema-config';
+import { myThemasMenuItems } from '../config/thema';
 
 // Repeating conditions for accessible keyboard event
 // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
@@ -61,16 +56,8 @@ export const REDACTED_CLASS = FeatureToggle.cobrowseIsActive
   ? 'cobrowse-redacted'
   : '';
 export const isRedactedClass = (themaId: string) =>
-  FeatureToggle.cobrowseIsActive &&
-  (
-    [
-      afisThemaId,
-      bezwarenThemaId,
-      hliThemaId,
-      inkomenThemaId,
-      zorgThemaId,
-      svwiThemaId,
-    ] as string[]
-  ).includes(themaId);
+  (FeatureToggle.cobrowseIsActive &&
+    myThemasMenuItems.find((item) => item.id === themaId)?.isRedacted) ||
+  false;
 export const getRedactedClass = (themaId: string | null) =>
   themaId && isRedactedClass(themaId) ? REDACTED_CLASS : '';

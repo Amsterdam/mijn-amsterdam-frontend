@@ -17,7 +17,6 @@ import {
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { PaginationV2 } from '../../components/Pagination/PaginationV2';
-import { getRedactedClass } from '../../helpers/utils';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
@@ -77,7 +76,7 @@ export function MyNotificationsPage() {
                 return (
                   <OrderedList.Item
                     key={`${notification.themaID}-${notification.id}-${index}`}
-                    className={`ams-mb-m ${getRedactedClass(notification.themaID)}`}
+                    className={`ams-mb-m ${notification.className}`}
                   >
                     <MyNotification
                       notification={notification}

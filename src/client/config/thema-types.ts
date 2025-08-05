@@ -15,6 +15,7 @@ export interface ThemaMenuItem<ID extends string = string>
   profileTypes: ProfileType[];
   isAlwaysVisible?: boolean;
   hasAppStateValue?: boolean;
+  isRedacted?: boolean;
   title:
     | LinkProps['title']
     | ((appState: AppState, profileType?: ProfileType) => string);
