@@ -110,7 +110,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
           </article>
         </li>
         <li
-          class="ams-ordered-list__item ams-mb-m "
+          class="ams-ordered-list__item ams-mb-m cobrowse-redacted"
         >
           <article>
             <header

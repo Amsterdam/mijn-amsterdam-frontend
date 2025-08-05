@@ -23,7 +23,7 @@ export function useAppStateNotifications(top?: number) {
     appStateNotificationsSelector(profileType)
   ).map((n) => ({
     ...n,
-    className: getRedactedClass(n.themaID),
+    className: getRedactedClass(n.themaID, 'content'),
   }));
 
   return {

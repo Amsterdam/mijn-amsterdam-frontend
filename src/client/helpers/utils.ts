@@ -2,6 +2,7 @@ import { KeyboardEvent, MouseEvent } from 'react';
 
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { myThemasMenuItems } from '../config/thema';
+import { ThemaMenuItem } from '../config/thema-types';
 
 // Repeating conditions for accessible keyboard event
 // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
@@ -55,9 +56,25 @@ export function getElementOnPageAsync(
 export const REDACTED_CLASS = FeatureToggle.cobrowseIsActive
   ? 'cobrowse-redacted'
   : '';
-export const isRedactedClass = (themaId: string) =>
-  (FeatureToggle.cobrowseIsActive &&
-    myThemasMenuItems.find((item) => item.id === themaId)?.isRedacted) ||
-  false;
-export const getRedactedClass = (themaId: string | null) =>
-  themaId && isRedactedClass(themaId) ? REDACTED_CLASS : '';
+export const isRedactedClass = (
+  themaId: string,
+  scope: Required<ThemaMenuItem>['redactedScope']
+) => {
+  if (!FeatureToggle.cobrowseIsActive) {
+    return false;
+  }
+  const redactedScope = myThemasMenuItems.find(
+    (item) => item.id === themaId
+  )?.redactedScope;
+  if (redactedScope === 'full') {
+    return true;
+  }
+  if (redactedScope === 'content' && scope === 'content') {
+    return true;
+  }
+  return false;
+};
+export const getRedactedClass = (
+  themaId: string | null,
+  scope: Required<ThemaMenuItem>['redactedScope'] = 'full'
+) => (themaId && isRedactedClass(themaId, scope) ? REDACTED_CLASS : '');

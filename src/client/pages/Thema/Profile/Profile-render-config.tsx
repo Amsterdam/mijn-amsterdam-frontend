@@ -37,6 +37,7 @@ export const menuItems: [
     id: themaIdBRP,
     to: routeConfig.themaPageBRP.path,
     profileTypes: ['private'],
+    redactedScope: 'content',
     isActive(appState: AppState) {
       return (
         (!isLoading(appState.BRP) && !!appState.BRP.content?.persoon) ||
@@ -50,6 +51,7 @@ export const menuItems: [
     title: themaTitle.KVK,
     id: themaIdKVK,
     to: routeConfig.themaPageKVK.path,
+    redactedScope: 'content',
     profileTypes: ['commercial', 'private'],
     isActive(appState: AppState) {
       return !isLoading(appState.KVK) && !!appState.KVK.content;

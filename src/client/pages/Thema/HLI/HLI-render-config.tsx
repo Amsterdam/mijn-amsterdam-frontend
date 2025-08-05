@@ -42,7 +42,7 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
   id: themaId,
   to: routeConfig.themaPage.path,
   profileTypes: ['private'],
-  isRedacted: true,
+  redactedScope: 'full',
   isActive(appState: AppState) {
     const hasStadspas =
       !!appState.HLI?.content?.stadspas?.stadspassen?.length &&
