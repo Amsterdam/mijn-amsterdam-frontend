@@ -1,7 +1,7 @@
 import { filterCombineRtmData } from './regeling-rtm';
 
 describe('filterCombineRtmData', () => {
-  test('Gerrit04 - Besluit afgewezen', () => {
+  test('Merged part one and two into Besluit afgewezen', () => {
     const result = filterCombineRtmData([
       {
         id: '3166814',
@@ -146,7 +146,7 @@ describe('filterCombineRtmData', () => {
     ]);
   });
 
-  test('Wesley01 - Besluit toegewezen', () => {
+  test('Merged part one and two into: Besluit toegewezen', () => {
     const result = filterCombineRtmData([
       {
         id: '3162696',
@@ -277,7 +277,7 @@ describe('filterCombineRtmData', () => {
     ]);
   });
 
-  test('Gerard22 - One Einde recht, double voorziening is filtered out', () => {
+  test('One Einde recht, double voorzieningingen are merged and duplicate dropped', () => {
     const result = filterCombineRtmData([
       {
         id: '3166824',
