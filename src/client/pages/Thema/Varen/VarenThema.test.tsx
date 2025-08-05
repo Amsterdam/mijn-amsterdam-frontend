@@ -107,10 +107,10 @@ const rederRegistratie = {
   caseType: 'Varen registratie reder',
   company: 'Balonnenfabriek',
   bsnkvk: '012345678',
-  address: 'Amstel 1, 1011 PN Amsterdam',
+  address: 'Amstel 1',
+  postalCode: '1011PN',
+  city: 'Amsterdam',
   correspondenceAddress: 'Correspondence 1, 1011 PN Amsterdam',
-  postalCode: null,
-  city: null,
   phone: '0612345678',
   email: 'myemailadres@example.com',
   dateRequest: '2023-11-06T00:00:00',
@@ -254,7 +254,26 @@ describe('<Varen />', () => {
 
     const adres = screen.getByText('Adres');
     expect(adres.nextElementSibling).toHaveTextContent(
-      'Amstel 1, 1011 PN Amsterdam'
+      'Amstel 1, 1011PN, Amsterdam'
+    );
+  });
+
+  it('Shows the reder data without a correspondence address and without a postal and city', () => {
+    const screen = render(
+      <Component
+        state={getTestState([], {
+          ...rederRegistratie,
+          correspondenceAddress: null,
+          postalCode: null,
+          city: null,
+          address: 'Amstel 1, 1011PN Amsterdam',
+        })}
+      />
+    );
+
+    const adres = screen.getByText('Adres');
+    expect(adres.nextElementSibling).toHaveTextContent(
+      'Amstel 1, 1011PN Amsterdam'
     );
   });
 

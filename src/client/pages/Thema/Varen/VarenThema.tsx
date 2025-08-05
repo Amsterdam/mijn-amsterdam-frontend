@@ -58,7 +58,6 @@ type VarenPageContentRederRegistratieProps = {
 export function VarenPageContentRederRegistratie({
   registratie,
 }: VarenPageContentRederRegistratieProps) {
-  const registratieAddress = `${registratie.address}${registratie.postalCode ? `, ${registratie.postalCode}` : ''}${registratie.city ? ` ${registratie.city}` : ''}`;
   const rows: RowSet[] = [
     {
       rows: [
@@ -84,7 +83,9 @@ export function VarenPageContentRederRegistratie({
             : 'Adres',
           content:
             registratie.correspondenceAddress ||
-            registratieAddress ||
+            [registratie.address, registratie.postalCode, registratie.city]
+              .filter((x) => !!x)
+              .join(', ') ||
             CONTENT_EMPTY,
         },
         {
