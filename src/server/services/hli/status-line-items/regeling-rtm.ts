@@ -61,38 +61,37 @@ export function filterCombineRtmData(
 ): ZorgnedHLIRegeling[] {
   const aanvragen = dedupRtmDeel2([..._aanvragen]);
 
-  const stack: ZorgnedAanvraagWithRelatedPersonsTransformed[] = [];
-  const output: ZorgnedHLIRegeling[] = [];
+  const seenDeel2: ZorgnedAanvraagWithRelatedPersonsTransformed[] = [];
+  const combined: ZorgnedHLIRegeling[] = [];
   for (const aanvraag of aanvragen) {
     if (isRTMDeel2(aanvraag)) {
-      stack.push(aanvraag);
+      seenDeel2.push(aanvraag);
       continue;
     }
     if (isRTMDeel1(aanvraag)) {
-      const aanvraagDeel1 = aanvraag;
-      if (aanvraagDeel1.resultaat !== 'toegewezen') {
-        output.push(aanvraagDeel1);
+      const deel1 = aanvraag;
+      if (deel1.resultaat !== 'toegewezen') {
+        combined.push(deel1);
         continue;
       }
-      const aanvraagDeel2 = stack.pop();
-      if (!aanvraagDeel2) {
-        output.push(aanvraagDeel1);
+      const deel2 = seenDeel2.pop();
+      if (!deel2) {
+        combined.push(deel1);
         continue;
       }
-      output.push({
-        ...aanvraagDeel2,
-        datumInBehandeling: aanvraagDeel1?.datumBesluit,
-        datumAanvraag:
-          aanvraagDeel1?.datumAanvraag ?? aanvraagDeel2.datumAanvraag,
-        betrokkenen: [...aanvraagDeel1.betrokkenen], // TODO: Will the RTM deel2 have betrokkenen?
-        documenten: [...aanvraagDeel2.documenten, ...aanvraagDeel1.documenten],
+      combined.push({
+        ...deel2,
+        datumInBehandeling: deel1?.datumBesluit,
+        datumAanvraag: deel1?.datumAanvraag ?? deel2.datumAanvraag,
+        betrokkenen: [...deel1.betrokkenen], // TODO: Will the RTM deel2 have betrokkenen?
+        documenten: [...deel2.documenten, ...deel1.documenten],
       });
       continue;
     }
-    output.push(aanvraag);
+    combined.push(aanvraag);
   }
 
-  return [...output, ...stack];
+  return [...combined, ...seenDeel2];
 }
 
 function getRtmDescriptionDeel1Toegewezen(
