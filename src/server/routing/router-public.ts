@@ -221,10 +221,13 @@ router.get('/long/:ms', async (req: Request, res: Response) => {
 router.get('/cookie/clear', async (req: Request, res: Response) => {
   const { queryGET } = await db();
   const ses = await queryGET(
-    `SELECT * FROM ${OIDC_SESSIONS_TABLE_NAME} LIMIT 1`
+    `SELECT * FROM ${OIDC_SESSIONS_TABLE_NAME} WHERE sid=${req.session.id} LIMIT 1`
   );
   await destroySession(req, res);
-  res.status(HttpStatusCode.Ok).send(ses);
+  const ses2 = await queryGET(
+    `SELECT * FROM ${OIDC_SESSIONS_TABLE_NAME} WHERE sid=${req.session.id} LIMIT 1`
+  );
+  res.status(HttpStatusCode.Ok).send({ sid: req.session.id, ses, ses2 });
 });
 
 export function stripCookieFromResponse(cookieName: string) {
