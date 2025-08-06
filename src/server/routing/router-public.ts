@@ -226,15 +226,57 @@ router.get('/cookie/clear', async (req: Request, res: Response) => {
   await destroySession(req, res);
   res.status(HttpStatusCode.Ok).send(ses);
 });
+
+export function stripCookieFromResponse(cookieName: string) {
+  return (_req: Request, res: Response, next: NextFunction) => {
+    const originalSetHeader = res.setHeader.bind(res);
+
+    res.setHeader = (
+      name: string,
+      value: number | string | readonly string[]
+    ) => {
+      if (name.toLowerCase() !== 'set-cookie') {
+        return originalSetHeader(name, value);
+      }
+      originalSetHeader(
+        'x-debug-strip-set-cookie',
+        JSON.stringify(value ?? {})
+      );
+      if (Array.isArray(value)) {
+        const filtered = value.filter(
+          (cookie: string) => !cookie.startsWith(`${cookieName}=`)
+        );
+        return originalSetHeader(name, filtered);
+      } else if (typeof value === 'string') {
+        if (value.startsWith(`${cookieName}=`)) {
+          return res;
+        }
+      }
+      return originalSetHeader(name, value);
+    };
+
+    next();
+  };
+}
+
 router.all(
   BffEndpoints.TELEMETRY_PROXY,
   // We exclude this long running endpoint from updating the rolling OIDC_SESSION_COOKIE_NAME cookie,
   // because this can cause a race condition, setting the cookie after the logout clears it.
   (_req, res, next) => {
     const setCookie = res.getHeader('Set-Cookie');
+
     res.setHeader(
       'x-debug-cookie-middle-header-names',
       JSON.stringify(res.getHeaderNames() ?? [])
+    );
+    res.setHeader(
+      'x-debug-cookie-middle-req-headers',
+      JSON.stringify(_req.headers ?? {})
+    );
+    res.setHeader(
+      'x-debug-cookie-middle-req-headers',
+      JSON.stringify(_req.headers ?? {})
     );
     res.setHeader(
       'x-debug-cookie-middle-headers',
@@ -258,6 +300,7 @@ router.all(
     res.setHeader('x-debug-cookie-middle3', JSON.stringify(cookies ?? {}));
     next();
   },
+  stripCookieFromResponse(OIDC_SESSION_COOKIE_NAME),
   proxy('https://westeurope-5.in.applicationinsights.azure.com', {
     memoizeHost: true,
     proxyReqPathResolver(_req) {
@@ -266,27 +309,7 @@ router.all(
     // We exclude this long running endpoint from updating the rolling OIDC_SESSION_COOKIE_NAME cookie,
     // because this can cause a race condition, setting the cookie after the logout clears it.
     userResHeaderDecorator: UserResHeaderDecorator,
-  }),
-  (_req, res, next) => {
-    const setCookie = res.getHeader('Set-Cookie');
-    res.setHeader('x-debug-cookie-after', JSON.stringify(setCookie ?? {}));
-    if (!setCookie || typeof setCookie === 'number') {
-      return next();
-    }
-
-    // Set-Cookie can be a string for a single value and an array of strings for multiple values
-    const originalCookies = Array.isArray(setCookie) ? setCookie : [setCookie];
-    const cookies = originalCookies.filter(
-      (c) => !c.startsWith(`${OIDC_SESSION_COOKIE_NAME}=`)
-    );
-    res.setHeader('Set-Cookie', cookies);
-    res.setHeader(
-      'x-debug-cookie-after2',
-      JSON.stringify(originalCookies ?? {})
-    );
-    res.setHeader('x-debug-cookie-after3', JSON.stringify(cookies ?? {}));
-    next();
-  }
+  })
 );
 
 type UserResHeaderDecoratorType = NonNullable<
@@ -300,7 +323,8 @@ function UserResHeaderDecorator(
   if (!setCookie || typeof setCookie === 'number') {
     return {
       ...headers,
-      'x-debug-cookie': JSON.stringify(setCookie),
+      'x-debug-cookie-headers': JSON.stringify(headers ?? {}),
+      'x-debug-cookie': setCookie ?? 'empty',
       'x-debug-cookie-type': typeof setCookie,
     };
   }
