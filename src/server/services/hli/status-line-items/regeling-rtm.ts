@@ -57,15 +57,15 @@ function dedupCombineRTMDeel2(
 }
 
 export function filterCombineRtmData(
-  _aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ): ZorgnedHLIRegeling[] {
-  const aanvragen = dedupCombineRTMDeel2([..._aanvragen]);
+  const dedupedAanvragen = dedupCombineRTMDeel2(aanvragen);
 
   // The aanvragen are sorted by datumIngangGeldigheid/DESC
   // The first unseen deel1 aanvraag after a deel2 aanvraag is ___MOST_LIKELY___ related to that deel2 aanvraag.
   const deel2Aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[] = [];
   const combinedAanvragen: ZorgnedHLIRegeling[] = [];
-  for (const aanvraag of aanvragen) {
+  for (const aanvraag of dedupedAanvragen) {
     if (isRTMDeel2(aanvraag)) {
       deel2Aanvragen.push(aanvraag);
       continue;
