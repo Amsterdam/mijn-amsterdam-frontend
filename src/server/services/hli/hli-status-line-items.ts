@@ -41,7 +41,7 @@ export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<
     lineItemTransformers: DECLARATIE,
   },
   {
-    productIdentificatie: ['AV-IIT', 'AV-KVS', 'AV-SPM', 'AV-TAOV'],
+    productIdentificatie: ['AV-IIT', 'AV-KVS', 'AV-SPM', 'AV-TAOV', 'AV-RKV'],
     lineItemTransformers: REGELING_PERIODIEK,
   },
   {
