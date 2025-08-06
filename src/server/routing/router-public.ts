@@ -232,7 +232,15 @@ router.all(
   // because this can cause a race condition, setting the cookie after the logout clears it.
   (_req, res, next) => {
     const setCookie = res.getHeader('Set-Cookie');
-    res.setHeader('x-debug-cookie-middle', JSON.stringify(setCookie));
+    res.setHeader(
+      'x-debug-cookie-middle-header-names',
+      JSON.stringify(res.getHeaderNames() ?? [])
+    );
+    res.setHeader(
+      'x-debug-cookie-middle-headers',
+      JSON.stringify(res.getHeaders() ?? {})
+    );
+    res.setHeader('x-debug-cookie-middle', JSON.stringify(setCookie ?? {}));
     if (!setCookie || typeof setCookie === 'number') {
       return next();
     }
@@ -243,8 +251,11 @@ router.all(
       (c) => !c.startsWith(`${OIDC_SESSION_COOKIE_NAME}=`)
     );
     res.setHeader('Set-Cookie', cookies);
-    res.setHeader('x-debug-cookie-middle2', JSON.stringify(originalCookies));
-    res.setHeader('x-debug-cookie-middle3', JSON.stringify(cookies));
+    res.setHeader(
+      'x-debug-cookie-middle2',
+      JSON.stringify(originalCookies ?? {})
+    );
+    res.setHeader('x-debug-cookie-middle3', JSON.stringify(cookies ?? {}));
     next();
   },
   proxy('https://westeurope-5.in.applicationinsights.azure.com', {
@@ -258,7 +269,7 @@ router.all(
   }),
   (_req, res, next) => {
     const setCookie = res.getHeader('Set-Cookie');
-    res.setHeader('x-debug-cookie-after', JSON.stringify(setCookie));
+    res.setHeader('x-debug-cookie-after', JSON.stringify(setCookie ?? {}));
     if (!setCookie || typeof setCookie === 'number') {
       return next();
     }
@@ -269,8 +280,11 @@ router.all(
       (c) => !c.startsWith(`${OIDC_SESSION_COOKIE_NAME}=`)
     );
     res.setHeader('Set-Cookie', cookies);
-    res.setHeader('x-debug-cookie-after2', JSON.stringify(originalCookies));
-    res.setHeader('x-debug-cookie-after3', JSON.stringify(cookies));
+    res.setHeader(
+      'x-debug-cookie-after2',
+      JSON.stringify(originalCookies ?? {})
+    );
+    res.setHeader('x-debug-cookie-after3', JSON.stringify(cookies ?? {}));
     next();
   }
 );
