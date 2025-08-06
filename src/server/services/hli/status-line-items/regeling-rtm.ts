@@ -78,6 +78,7 @@ export function filterCombineRtmData(
       }
       const deel2 = deel2Aanvragen.pop();
       if (!deel2) {
+        // This deel1 does not belong to any deel2.
         combinedAanvragen.push(deel1);
         continue;
       }
