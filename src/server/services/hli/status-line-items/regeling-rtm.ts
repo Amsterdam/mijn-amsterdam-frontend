@@ -131,6 +131,9 @@ const isEindeRechtForBetrokkenenActive = (regeling: ZorgnedHLIRegeling) =>
   regeling.isActueel === false &&
   !regeling.datumInBehandeling;
 
+const isToegewezenEindeRecht = (regeling: ZorgnedHLIRegeling) =>
+  !!regeling.datumInBehandeling && regeling.resultaat === 'toegewezen';
+
 export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
   [
     // Besluit - afgewezen - voor RTM Deel 1. Betrokkenen krijgen deze stap nooit te zien.
@@ -240,10 +243,6 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
       },
     },
   ];
-
-function isToegewezenEindeRecht(regeling: ZorgnedHLIRegeling): boolean {
-  return !!regeling.datumInBehandeling && regeling.resultaat === 'toegewezen';
-}
 
 export const forTesting = {
   isRTMDeel2,
