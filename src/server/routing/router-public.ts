@@ -1,6 +1,6 @@
 import { HttpStatusCode } from 'axios';
 import express, { NextFunction, Request, Response } from 'express';
-import proxy from 'express-http-proxy';
+import proxy, { ProxyOptions } from 'express-http-proxy';
 
 import { BffEndpoints } from './bff-routes';
 import { queryParams, type RequestWithQueryParams } from './route-helpers';
@@ -218,33 +218,42 @@ router.get('/cookie/clear', async (req: Request, res: Response) => {
   await destroySession(req, res);
   res.status(HttpStatusCode.Ok).send();
 });
-
 router.all(
   BffEndpoints.TELEMETRY_PROXY,
-  // We exclude this long running endpoint from updating the rolling OIDC_SESSION_COOKIE_NAME cookie,
-  // because this can cause a race condition, setting the cookie after the logout clears it.
-  (_req, res, next) => {
-    const setCookie = res.getHeader('set-cookie');
-    console.log(setCookie); // DO NOT MERGE
-    if (!setCookie || typeof setCookie === 'number') {
-      return next();
-    }
-
-    // set-cookie can be a string for a single value and an array of strings for multiple values
-    const originalCookies = Array.isArray(setCookie) ? setCookie : [setCookie];
-    const cookies = originalCookies.filter(
-      (c) => !c.startsWith(`${OIDC_SESSION_COOKIE_NAME}=`)
-    );
-    res.setHeader('set-cookie', cookies);
-    next();
-  },
   proxy('https://westeurope-5.in.applicationinsights.azure.com', {
     memoizeHost: true,
-    proxyReqPathResolver: function (_req) {
+    proxyReqPathResolver(_req) {
       return '/v2/track';
     },
+    // We exclude this long running endpoint from updating the rolling OIDC_SESSION_COOKIE_NAME cookie,
+    // because this can cause a race condition, setting the cookie after the logout clears it.
+    userResHeaderDecorator: UserResHeaderDecorator,
   })
 );
+
+type UserResHeaderDecoratorType = NonNullable<
+  ProxyOptions['userResHeaderDecorator']
+>;
+function UserResHeaderDecorator(
+  ...args: Parameters<UserResHeaderDecoratorType>
+): ReturnType<UserResHeaderDecoratorType> {
+  const [headers] = args;
+  const setCookie = headers['set-cookie'];
+  if (!setCookie || typeof setCookie === 'number') {
+    return headers;
+  }
+
+  const originalCookies = Array.isArray(setCookie) ? setCookie : [setCookie];
+  const filteredCookies = originalCookies.filter(
+    (c) => !c.startsWith(`${OIDC_SESSION_COOKIE_NAME}=`)
+  );
+
+  return {
+    ...headers,
+    'set-cookie': filteredCookies,
+    'x-debug-cookie': JSON.stringify(originalCookies),
+  };
+}
 
 export const legacyRouter = express.Router();
 
