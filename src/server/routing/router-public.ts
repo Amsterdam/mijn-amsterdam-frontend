@@ -14,7 +14,10 @@ import {
   ApiResponse_DEPRECATED,
   apiSuccessResult,
 } from '../../universal/helpers/api';
-import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config';
+import {
+  OIDC_SESSION_COOKIE_NAME,
+  OIDC_SESSIONS_TABLE_NAME,
+} from '../auth/auth-config';
 import {
   destroySession,
   getAuth,
@@ -36,6 +39,7 @@ import {
   fetchMaintenanceNotificationsActual,
   QueryParamsMaintenanceNotifications,
 } from '../services/cms/cms-maintenance-notifications';
+import { db } from '../services/db/db';
 
 export const router = express.Router();
 
@@ -215,8 +219,12 @@ router.get('/long/:ms', async (req: Request, res: Response) => {
   res.send(`Waited ${ms}ms`);
 });
 router.get('/cookie/clear', async (req: Request, res: Response) => {
+  const { queryGET } = await db();
+  const ses = await queryGET(
+    `SELECT * FROM ${OIDC_SESSIONS_TABLE_NAME} LIMIT 1`
+  );
   await destroySession(req, res);
-  res.status(HttpStatusCode.Ok).send();
+  res.status(HttpStatusCode.Ok).send(ses);
 });
 router.all(
   BffEndpoints.TELEMETRY_PROXY,
@@ -240,18 +248,22 @@ function UserResHeaderDecorator(
   const [headers] = args;
   const setCookie = headers['set-cookie'];
   if (!setCookie || typeof setCookie === 'number') {
-    return headers;
+    return {
+      ...headers,
+      'x-debug-cookie': JSON.stringify(setCookie),
+      'x-debug-cookie-type': typeof setCookie,
+    };
   }
 
-  const originalCookies = Array.isArray(setCookie) ? setCookie : [setCookie];
-  const filteredCookies = originalCookies.filter(
+  const originalSetCookie = Array.isArray(setCookie) ? setCookie : [setCookie];
+  const filteredSetCookie = originalSetCookie.filter(
     (c) => !c.startsWith(`${OIDC_SESSION_COOKIE_NAME}=`)
   );
 
   return {
     ...headers,
-    'set-cookie': filteredCookies,
-    'x-debug-cookie': JSON.stringify(originalCookies),
+    'set-cookie': filteredSetCookie,
+    'x-debug-cookie': JSON.stringify(originalSetCookie),
   };
 }
 
