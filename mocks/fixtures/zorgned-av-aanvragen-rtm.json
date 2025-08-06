@@ -215,6 +215,276 @@
             "bestandsnaam": "BR3400289.pdf"
           }
         ]
+      },
+      {
+        "identificatie": "3166821",
+        "procesIdentificatie": "3166821",
+        "casusIdentificatie": "1733900",
+        "regeling": {
+          "identificatie": "Armoedevrz",
+          "omschrijving": "Armoedevoorzieningen"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2025-07-15"
+        },
+        "datumAanmelding": "2025-07-15",
+        "datumAanvraag": "2025-07-15",
+        "procesAanvraag": {
+          "identificatie": "3166821",
+          "omschrijving": "Aanvraag RTM fase 1",
+          "datumStart": "2025-07-15",
+          "datumAfsluiten": "2025-07-15",
+          "redenAfsluiten": {
+            "identificatie": "13",
+            "omschrijving": "Toegekend"
+          }
+        },
+        "beschikking": {
+          "beschikkingNummer": 301147553,
+          "datumAfgifte": "2025-07-15",
+          "beschikteProducten": [
+            {
+              "identificatie": "1520303",
+              "product": {
+                "identificatie": "AV-RTM1",
+                "productsoortCode": "AV-ALG",
+                "omschrijving": "Regeling Tegemoetkoming Meerkosten"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2025-07-15",
+                "datumEindeGeldigheid": "2026-07-15",
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "toewijzingen": [],
+                "betrokkenen": ["123459862"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B3405448",
+            "procesIdentificatie": "3166821",
+            "casusIdentificatie": "1733900",
+            "omschrijving": "AV-RTM Info aan klant GGD",
+            "datumDefinitief": "2025-07-15T16:38:00.03",
+            "bestandsnaam": "BR3405448.pdf"
+          }
+        ]
+      },
+      {
+        "identificatie": "3166823",
+        "procesIdentificatie": "3166823",
+        "casusIdentificatie": "1733900",
+        "regeling": {
+          "identificatie": "Armoedevrz",
+          "omschrijving": "Armoedevoorzieningen"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2025-07-15"
+        },
+        "datumAanmelding": "2025-07-15",
+        "datumAanvraag": "2025-07-15",
+        "procesAanvraag": {
+          "identificatie": "3166823",
+          "omschrijving": "Aanvraag RTM fase 2",
+          "datumStart": "2025-07-15",
+          "datumAfsluiten": "2025-07-15",
+          "redenAfsluiten": {
+            "identificatie": "13",
+            "omschrijving": "Toegekend"
+          }
+        },
+        "beschikking": {
+          "beschikkingNummer": 301147554,
+          "datumAfgifte": "2025-07-15",
+          "beschikteProducten": [
+            {
+              "identificatie": "1520304",
+              "product": {
+                "identificatie": "AV-RTM",
+                "productsoortCode": "AV-D-RTM",
+                "omschrijving": "Regeling Tegemoetkoming Meerkosten"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2025-02-01",
+                "datumEindeGeldigheid": "2025-06-30",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "4",
+                    "omschrijving": "Per maand"
+                  },
+                  "omschrijving": "1 stuks (output) per maand"
+                },
+                "toewijzingen": [],
+                "betrokkenen": ["123459862"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B3405450",
+            "procesIdentificatie": "3166823",
+            "casusIdentificatie": "1733900",
+            "omschrijving": "AV-RTM Toekenning",
+            "omschrijvingclientportaal": "Beschikking toekenning Reg Tegemoetk Meerkosten",
+            "datumDefinitief": "2025-07-15T16:44:15.747",
+            "bestandsnaam": "BR3405450.pdf"
+          }
+        ]
+      },
+      {
+        "identificatie": "3166824",
+        "procesIdentificatie": "3166824",
+        "casusIdentificatie": "1733900",
+        "regeling": {
+          "identificatie": "Armoedevrz",
+          "omschrijving": "Armoedevoorzieningen"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2025-07-15"
+        },
+        "datumAanmelding": "2025-07-15",
+        "datumAanvraag": "2025-07-15",
+        "beschikking": {
+          "beschikkingNummer": 301147555,
+          "datumAfgifte": "2025-07-15",
+          "beschikteProducten": [
+            {
+              "identificatie": "1520304",
+              "product": {
+                "identificatie": "AV-RTM",
+                "productsoortCode": "AV-D-RTM",
+                "omschrijving": "Regeling Tegemoetkoming Meerkosten"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2025-02-01",
+                "datumEindeGeldigheid": "2025-06-30",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "4",
+                    "omschrijving": "Per maand"
+                  },
+                  "omschrijving": "1 stuks (output) per maand"
+                },
+                "toewijzingen": [],
+                "betrokkenen": ["123459862"]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "identificatie": "3162670",
+        "procesIdentificatie": "3162670",
+        "casusIdentificatie": "1729966",
+        "regeling": {
+          "identificatie": "Armoedevrz",
+          "omschrijving": "Armoedevoorzieningen"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2025-05-28"
+        },
+        "datumAanmelding": "2025-05-28",
+        "datumAanvraag": "2025-05-28",
+        "procesMelding": {
+          "identificatie": "3162669",
+          "omschrijving": "RTM GGD advies  uitzetten",
+          "datumStart": "2025-05-28",
+          "datumAfsluiten": "2025-05-28",
+          "redenAfsluiten": {
+            "identificatie": "7",
+            "omschrijving": "Gereed"
+          }
+        },
+        "procesAanvraag": {
+          "identificatie": "3162670",
+          "omschrijving": "Aanvraag RTM fase 2",
+          "datumStart": "2025-05-28"
+        },
+        "beschikking": {
+          "beschikkingNummer": 301144207,
+          "datumAfgifte": "2025-05-28",
+          "beschikteProducten": [
+            {
+              "identificatie": "1516885",
+              "product": {
+                "identificatie": "AV-RTM",
+                "productsoortCode": "AV-D-RTM",
+                "omschrijving": "Regeling Tegemoetkoming Meerkosten"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2025-05-01",
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "4",
+                    "omschrijving": "Per maand"
+                  },
+                  "omschrijving": "1 stuks (output) per maand"
+                },
+                "toewijzingen": [],
+                "betrokkenen": ["999994311"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B3400279",
+            "procesIdentificatie": "3162670",
+            "casusIdentificatie": "1729966",
+            "omschrijving": "AV-RTM Toekenning",
+            "omschrijvingclientportaal": "Beschikking toekenning Reg Tegemoetk Meerkosten",
+            "datumDefinitief": "2025-05-28T12:22:07.253",
+            "bestandsnaam": "BR3400279.pdf"
+          },
+          {
+            "documentidentificatie": "B3400278",
+            "procesIdentificatie": "3162669",
+            "casusIdentificatie": "1729966",
+            "omschrijving": "AV-RTM Adviesaanvraag GGD",
+            "datumDefinitief": "2025-06-18T10:55:07.987",
+            "bestandsnaam": "BR3400278.pdf"
+          }
+        ]
       }
     ]
   }
