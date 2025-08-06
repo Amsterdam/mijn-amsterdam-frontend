@@ -120,6 +120,17 @@ function getRtmDescriptionDeel1Toegewezen(
 const INFO_LINK =
   'https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/extra-geld-als-u-chronisch-ziek-of/';
 
+const getNotEveryYearDescription = (regeling: ZorgnedHLIRegeling) => `
+<p>U hoeft de ${regeling.titel} niet elk jaar opnieuw aan te vragen. De gemeente verlengt de regeling stilzwijgend, maar controleert wel elk jaar of u nog in aanmerking komt.</p>
+<p>U kunt dan ook een brief krijgen met het verzoek om extra informatie te geven.</p>
+<p><a href="${INFO_LINK}">Als er wijzigingen zijn in uw situatie moet u die direct doorgeven</a>.</p>`;
+
+const isEindeRechtForBetrokkenenActive = (regeling: ZorgnedHLIRegeling) =>
+  isRTMDeel2(regeling) &&
+  regeling.resultaat === 'toegewezen' &&
+  regeling.isActueel === false &&
+  !regeling.datumInBehandeling;
+
 export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
   [
     // Besluit - afgewezen - voor RTM Deel 1. Betrokkenen krijgen deze stap nooit te zien.
@@ -192,10 +203,7 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
           return `
         <p>Uw recht op ${regeling.titel} is beëindigd per ${defaultDateFormat(regeling.datumEindeGeldigheid)}.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`;
         }
-        return `
-        <p>U hoeft de ${regeling.titel} niet elk jaar opnieuw aan te vragen. De gemeente verlengt de regeling stilzwijgend, maar controleert wel elk jaar of u nog in aanmerking komt.</p>
-        <p>U kunt dan ook een brief krijgen met het verzoek om extra informatie te geven.</p>
-        <p><a href="${INFO_LINK}">Als er wijzigingen zijn in uw situatie moet u die direct doorgeven</a>.</p>`;
+        return getNotEveryYearDescription(regeling);
       },
     },
     // Einde recht - voor RTM Deel 2. Voor de betrokkenen.
@@ -205,12 +213,7 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
         return isRTMDeel2(regeling) && !isToegewezenEindeRecht(regeling);
       },
       isActive(regeling) {
-        return (
-          isRTMDeel2(regeling) &&
-          regeling.resultaat === 'toegewezen' &&
-          regeling.isActueel === false &&
-          !regeling.datumInBehandeling
-        );
+        return isEindeRechtForBetrokkenenActive(regeling);
       },
       description(regeling, today, allAanvragen) {
         const baseDescription =
@@ -221,14 +224,18 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
         const isAanvraagVoorMeerdereBetrokkenen =
           regeling.betrokkenen.length > 1;
         const isAanvrager_ = isAanvrager(regeling);
+        if (!isEindeRechtForBetrokkenenActive(regeling)) {
+          return getNotEveryYearDescription(regeling);
+        }
+        if (!isAanvraagVoorMeerdereBetrokkenen) {
+          return baseDescription;
+        }
         return (
           baseDescription +
-          (isAanvraagVoorMeerdereBetrokkenen
-            ? `<p>
+          `<p>
             ${isAanvrager_ ? 'Wordt uw kind 18? Dan moet uw kind deze regeling voor zichzelf aanvragen.' : 'Bent u net of binnenkort 18 jaar oud? Dan moet u deze regeling voor uzelf aanvragen.'} <a href="${INFO_LINK}">Lees meer over de voorwaarden</a>.
           </p>
           `
-            : '')
         );
       },
     },
