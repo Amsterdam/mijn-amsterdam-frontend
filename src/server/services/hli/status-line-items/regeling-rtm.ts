@@ -40,7 +40,7 @@ function dedupCombineRTMDeel2(
   const dedupedAanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[] = [];
 
   const seenAanvragen: Record<string, ZorgnedHLIRegeling> = {};
-  for (const aanvraag of aanvragen) {
+  for (const aanvraag of structuredClone(aanvragen)) {
     if (!isRTMDeel2(aanvraag)) {
       dedupedAanvragen.push(aanvraag);
       continue;
