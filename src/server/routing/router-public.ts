@@ -228,6 +228,25 @@ router.get('/cookie/clear', async (req: Request, res: Response) => {
 });
 router.all(
   BffEndpoints.TELEMETRY_PROXY,
+  // We exclude this long running endpoint from updating the rolling OIDC_SESSION_COOKIE_NAME cookie,
+  // because this can cause a race condition, setting the cookie after the logout clears it.
+  (_req, res, next) => {
+    const setCookie = res.getHeader('set-cookie');
+    res.setHeader('x-debug-cookie-middle', JSON.stringify(setCookie));
+    if (!setCookie || typeof setCookie === 'number') {
+      return next();
+    }
+
+    // set-cookie can be a string for a single value and an array of strings for multiple values
+    const originalCookies = Array.isArray(setCookie) ? setCookie : [setCookie];
+    const cookies = originalCookies.filter(
+      (c) => !c.startsWith(`${OIDC_SESSION_COOKIE_NAME}=`)
+    );
+    res.setHeader('set-cookie', cookies);
+    res.setHeader('x-debug-cookie-middle2', JSON.stringify(originalCookies));
+    res.setHeader('x-debug-cookie-middle3', JSON.stringify(cookies));
+    next();
+  },
   proxy('https://westeurope-5.in.applicationinsights.azure.com', {
     memoizeHost: true,
     proxyReqPathResolver(_req) {
@@ -236,7 +255,24 @@ router.all(
     // We exclude this long running endpoint from updating the rolling OIDC_SESSION_COOKIE_NAME cookie,
     // because this can cause a race condition, setting the cookie after the logout clears it.
     userResHeaderDecorator: UserResHeaderDecorator,
-  })
+  }),
+  (_req, res, next) => {
+    const setCookie = res.getHeader('set-cookie');
+    res.setHeader('x-debug-cookie-after', JSON.stringify(setCookie));
+    if (!setCookie || typeof setCookie === 'number') {
+      return next();
+    }
+
+    // set-cookie can be a string for a single value and an array of strings for multiple values
+    const originalCookies = Array.isArray(setCookie) ? setCookie : [setCookie];
+    const cookies = originalCookies.filter(
+      (c) => !c.startsWith(`${OIDC_SESSION_COOKIE_NAME}=`)
+    );
+    res.setHeader('set-cookie', cookies);
+    res.setHeader('x-debug-cookie-after2', JSON.stringify(originalCookies));
+    res.setHeader('x-debug-cookie-after3', JSON.stringify(cookies));
+    next();
+  }
 );
 
 type UserResHeaderDecoratorType = NonNullable<
