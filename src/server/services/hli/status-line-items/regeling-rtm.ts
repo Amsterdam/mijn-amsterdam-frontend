@@ -215,9 +215,8 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
       isVisible(regeling) {
         return isRTMDeel2(regeling) && !isToegewezenEindeRecht(regeling);
       },
-      isActive(regeling) {
-        return isEindeRechtForBetrokkenenActive(regeling);
-      },
+      isChecked: isEindeRechtForBetrokkenenActive,
+      isActive: isEindeRechtForBetrokkenenActive,
       description(regeling, today, allAanvragen) {
         const baseDescription =
           typeof EINDE_RECHT.description === 'function'
