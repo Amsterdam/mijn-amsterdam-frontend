@@ -231,18 +231,18 @@ router.all(
   // We exclude this long running endpoint from updating the rolling OIDC_SESSION_COOKIE_NAME cookie,
   // because this can cause a race condition, setting the cookie after the logout clears it.
   (_req, res, next) => {
-    const setCookie = res.getHeader('set-cookie');
+    const setCookie = res.getHeader('Set-Cookie');
     res.setHeader('x-debug-cookie-middle', JSON.stringify(setCookie));
     if (!setCookie || typeof setCookie === 'number') {
       return next();
     }
 
-    // set-cookie can be a string for a single value and an array of strings for multiple values
+    // Set-Cookie can be a string for a single value and an array of strings for multiple values
     const originalCookies = Array.isArray(setCookie) ? setCookie : [setCookie];
     const cookies = originalCookies.filter(
       (c) => !c.startsWith(`${OIDC_SESSION_COOKIE_NAME}=`)
     );
-    res.setHeader('set-cookie', cookies);
+    res.setHeader('Set-Cookie', cookies);
     res.setHeader('x-debug-cookie-middle2', JSON.stringify(originalCookies));
     res.setHeader('x-debug-cookie-middle3', JSON.stringify(cookies));
     next();
@@ -257,18 +257,18 @@ router.all(
     userResHeaderDecorator: UserResHeaderDecorator,
   }),
   (_req, res, next) => {
-    const setCookie = res.getHeader('set-cookie');
+    const setCookie = res.getHeader('Set-Cookie');
     res.setHeader('x-debug-cookie-after', JSON.stringify(setCookie));
     if (!setCookie || typeof setCookie === 'number') {
       return next();
     }
 
-    // set-cookie can be a string for a single value and an array of strings for multiple values
+    // Set-Cookie can be a string for a single value and an array of strings for multiple values
     const originalCookies = Array.isArray(setCookie) ? setCookie : [setCookie];
     const cookies = originalCookies.filter(
       (c) => !c.startsWith(`${OIDC_SESSION_COOKIE_NAME}=`)
     );
-    res.setHeader('set-cookie', cookies);
+    res.setHeader('Set-Cookie', cookies);
     res.setHeader('x-debug-cookie-after2', JSON.stringify(originalCookies));
     res.setHeader('x-debug-cookie-after3', JSON.stringify(cookies));
     next();
@@ -282,7 +282,7 @@ function UserResHeaderDecorator(
   ...args: Parameters<UserResHeaderDecoratorType>
 ): ReturnType<UserResHeaderDecoratorType> {
   const [headers] = args;
-  const setCookie = headers['set-cookie'];
+  const setCookie = headers['Set-Cookie'];
   if (!setCookie || typeof setCookie === 'number') {
     return {
       ...headers,
@@ -298,7 +298,7 @@ function UserResHeaderDecorator(
 
   return {
     ...headers,
-    'set-cookie': filteredSetCookie,
+    'Set-Cookie': filteredSetCookie,
     'x-debug-cookie': JSON.stringify(originalSetCookie),
   };
 }
