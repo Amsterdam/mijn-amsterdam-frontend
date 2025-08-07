@@ -53,10 +53,8 @@ export function getElementOnPageAsync(
   });
 }
 
-export const REDACTED_CLASS = FeatureToggle.cobrowseIsActive
-  ? 'cobrowse-redacted'
-  : '';
-export const isRedactedClass = (
+const REDACTED_CLASS = 'cobrowse-redacted';
+export const hasRedactedClass = (
   themaId: string,
   scope: Required<ThemaMenuItem>['redactedScope']
 ) => {
@@ -66,15 +64,20 @@ export const isRedactedClass = (
   const redactedScope = myThemasMenuItems.find(
     (item) => item.id === themaId
   )?.redactedScope;
-  if (redactedScope === 'full') {
-    return true;
-  }
-  if (redactedScope === 'content' && scope === 'content') {
-    return true;
-  }
-  return false;
+  return (
+    redactedScope === 'full' ||
+    (redactedScope === 'content' && scope === 'content')
+  );
 };
-export const getRedactedClass = (
-  themaId: string | null,
+export function getRedactedClass(
+  themaId?: string | null,
   scope: Required<ThemaMenuItem>['redactedScope'] = 'full'
-) => (themaId && isRedactedClass(themaId, scope) ? REDACTED_CLASS : '');
+) {
+  if (
+    !FeatureToggle.cobrowseIsActive ||
+    (themaId && !hasRedactedClass(themaId, scope))
+  ) {
+    return '';
+  }
+  return REDACTED_CLASS;
+}

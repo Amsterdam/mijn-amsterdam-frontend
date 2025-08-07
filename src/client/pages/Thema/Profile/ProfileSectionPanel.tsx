@@ -2,11 +2,12 @@ import { ReactNode } from 'react';
 
 import { LinkList, Grid, Paragraph } from '@amsterdam/design-system-react';
 
+import { themaIdBRP } from './Profile-thema-config';
 import styles from './ProfileSectionPanel.module.scss';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
-import { REDACTED_CLASS } from '../../../helpers/utils';
+import { getRedactedClass } from '../../../helpers/utils';
 import { useSmallScreen } from '../../../hooks/media.hook';
 
 export interface ActionLink {
@@ -58,7 +59,7 @@ function getRows(sectionData: ProfileSectionData) {
       content: value,
       isVisible: !!value,
       classNameLabel: styles.Label,
-      classNameContent: `${styles.Content} ${REDACTED_CLASS}`,
+      classNameContent: `${styles.Content} ${getRedactedClass(themaIdBRP, 'content')}`,
     };
   });
 }

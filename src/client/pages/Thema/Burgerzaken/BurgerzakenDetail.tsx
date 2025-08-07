@@ -4,7 +4,7 @@ import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
-import { REDACTED_CLASS } from '../../../helpers/utils';
+import { getRedactedClass } from '../../../helpers/utils';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 function getRows(document: IdentiteitsbewijsFrontend) {
@@ -12,7 +12,6 @@ function getRows(document: IdentiteitsbewijsFrontend) {
     {
       label: 'Documentnummer',
       content: document.documentNummer,
-      classNameContent: REDACTED_CLASS,
     },
     {
       label: 'Datum uitgifte',
@@ -27,10 +26,16 @@ function getRows(document: IdentiteitsbewijsFrontend) {
 
 function BurgerzakenIdentiteitsbewijsContent({
   document,
+  themaId,
 }: {
   document: IdentiteitsbewijsFrontend;
+  themaId: string;
 }) {
   const rows = getRows(document);
+  rows.map((r) => ({
+    ...r,
+    classNameContent: getRedactedClass(themaId, 'content'),
+  }));
 
   return (
     <PageContentCell>
@@ -56,7 +61,10 @@ export function BurgerzakenDetail() {
       breadcrumbs={breadcrumbs}
       pageContentMain={
         !!document && (
-          <BurgerzakenIdentiteitsbewijsContent document={document} />
+          <BurgerzakenIdentiteitsbewijsContent
+            document={document}
+            themaId={themaId}
+          />
         )
       }
     />
