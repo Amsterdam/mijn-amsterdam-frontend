@@ -108,7 +108,7 @@
         "PGB",
         "Persoonsgebonden Budget",
         "Logeeropvang",
-        "Douche-/toiletstoel",
+        "Douche toiletstoel",
         "Toiletstoel",
         "Douchestoel",
         "Trapliften",
@@ -494,8 +494,7 @@
         "Verhuur plannen",
         "Cancel verhuur",
         "Afmelden",
-        "Landelijk registratienummer",
-        "bed & breakfast"
+        "Landelijk registratienummer"
       ],
       "profileTypes": ["private", "commercial"]
     },
