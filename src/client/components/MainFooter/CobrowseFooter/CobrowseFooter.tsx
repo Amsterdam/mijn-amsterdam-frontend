@@ -9,7 +9,7 @@ import { useScript } from '../../../hooks/useScript';
 const MAX_WAIT_FOR_COBROWSE_LIVE_MS = 5000;
 declare global {
   interface Window {
-    CobrowseIO?: unknown;
+    CobrowseWidget?: unknown;
   }
 }
 function waitForCobrowseLiveInWindow(window: Window & typeof globalThis) {
@@ -17,7 +17,7 @@ function waitForCobrowseLiveInWindow(window: Window & typeof globalThis) {
   let timeoutReached = false;
   return new Promise(function (resolve, reject) {
     (function waitForFoo() {
-      if (window.CobrowseIO) {
+      if (window.CobrowseWidget) {
         return resolve(true);
       }
       const timeoutMs = 50;
@@ -40,7 +40,7 @@ export function CobrowseFooter() {
 
   // Load the external script when it is not loaded from the tagmanager
   const [isCobrowseLoaded] = useScript({
-    src: 'https://omnichanneliv--gat2.sandbox.my.site.com/staticvforcesite/resource/CobrowseV2/cobrowseAppNL.bundle.js',
+    src: 'https://omnichanneliv--gat2.sandbox.my.site.com/staticvforcesite/resource/CobrowseV3/cobrowseAppNL.bundle.js',
     defer: false,
     async: true,
     isEnabled: !IS_AP, // On AP this is loaded externally
