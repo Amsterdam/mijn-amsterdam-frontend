@@ -210,10 +210,6 @@ function stripSetCookieFromResponse(cookieName: string) {
       if (name.toLowerCase() !== 'set-cookie') {
         return originalSetHeader(name, value);
       }
-      originalSetHeader(
-        'x-debug-strip-set-cookie',
-        JSON.stringify(value ?? {})
-      );
       if (Array.isArray(value)) {
         const filtered = value.filter(
           (cookie: string) => !cookie.startsWith(`${cookieName}=`)
