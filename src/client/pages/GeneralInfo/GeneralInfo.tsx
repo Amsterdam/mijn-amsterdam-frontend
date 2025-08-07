@@ -90,22 +90,14 @@ function Section({ id, title, listItems, to }: SectionProps) {
 
   const themaMenuItem = themaMenuItems[id];
 
-  let titleComponent;
-  if (to) {
-    titleComponent = (
-      <MaRouterLink maVariant="fatNoUnderline" href={to}>
-        {title}
-      </MaRouterLink>
-    );
-  } else if (themaMenuItem) {
-    titleComponent = (
-      <MaRouterLink maVariant="fatNoUnderline" href={themaMenuItem.to}>
-        {title}
-      </MaRouterLink>
-    );
-  } else {
-    titleComponent = title;
-  }
+  const href = to || (themaMenuItem && themaMenuItem.to);
+  const titleComponent = href ? (
+    <MaRouterLink maVariant="fatNoUnderline" href={href}>
+      {title}
+    </MaRouterLink>
+  ) : (
+    title
+  );
 
   return (
     <>
