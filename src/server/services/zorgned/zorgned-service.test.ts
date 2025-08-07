@@ -97,6 +97,7 @@ describe('zorgned-service', () => {
     ).toMatchInlineSnapshot(`
       [
         {
+          "beschiktProductIdentificatie": "1215588",
           "betrokkenen": [
             "123123123",
           ],
@@ -119,6 +120,7 @@ describe('zorgned-service', () => {
           "titel": "reparatie-/verwijderopdracht   trapliften",
         },
         {
+          "beschiktProductIdentificatie": "1200567",
           "betrokkenen": [
             "123123123123",
           ],
@@ -160,6 +162,7 @@ describe('zorgned-service', () => {
           "titel": "hulp bij het huishouden bijzondere schoonmaak",
         },
         {
+          "beschiktProductIdentificatie": "1194396",
           "betrokkenen": [
             "123123123123",
           ],
@@ -362,6 +365,7 @@ describe('zorgned-service', () => {
               datumAfgifte: '2023-05-17',
               beschikteProducten: [
                 {
+                  identificatie: '1',
                   product: {
                     identificatie: 'WRA',
                     productCode: null,
@@ -424,6 +428,7 @@ describe('zorgned-service', () => {
       expect(result).toStrictEqual({
         content: [
           {
+            beschiktProductIdentificatie: '1',
             betrokkenPersonen: [
               {
                 bsn: '9999999999',
