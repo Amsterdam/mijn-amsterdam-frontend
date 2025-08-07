@@ -47,23 +47,32 @@ export function CobrowseFooter() {
   });
   const [showCobrowseFooter, setShowCobrowseFooter] = useState(false);
   useEffect(() => {
-    waitForCobrowseLiveInWindow(window).then(() => {
-      setShowCobrowseFooter(true);
-    });
+    waitForCobrowseLiveInWindow(window)
+      .then(() => {
+        setShowCobrowseFooter(true);
+      })
+      .catch((e) => {
+        // ignore reject
+      });
+  }, [isCobrowseLoaded]);
 
+  useEffect(() => {
+    if (!showCobrowseFooter) {
+      return;
+    }
     const head = document.head;
     const link = document.createElement('link');
 
     link.type = 'text/css';
     link.rel = 'stylesheet';
-    link.href = '/css/cobrowse.css';
+    link.href = '/css/cobrowse-widget.css';
 
     head.appendChild(link);
 
     return () => {
       head.removeChild(link);
     };
-  }, [isCobrowseLoaded]);
+  }, [showCobrowseFooter]);
 
   // MIJN-11933
   // Setting the id to startCobrowseButton8 (script add eventHandler) is not stable in an SPA
