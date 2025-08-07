@@ -1,4 +1,7 @@
+import { isAfter } from 'date-fns';
+
 import { BESLUIT, EINDE_RECHT, isAanvrager } from './generic';
+import { defaultDateFormat } from '../../../../universal/helpers/date';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
@@ -30,50 +33,69 @@ export function isRTMDeel1(
   );
 }
 
+/** Aanvragen can contain duplicate RTMDeel2. We combine the documents and drop the dupe. */
+function dedupCombineRTMDeel2(
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
+) {
+  const dedupedAanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[] = [];
+  const seenAanvragen: Record<string, ZorgnedHLIRegeling> = {};
+
+  for (const aanvraag of structuredClone(aanvragen)) {
+    if (!isRTMDeel2(aanvraag)) {
+      dedupedAanvragen.push(aanvraag);
+      continue;
+    }
+    const id = aanvraag.beschiktProductIdentificatie;
+    if (seenAanvragen[id]) {
+      seenAanvragen[id].documenten.push(...aanvraag.documenten);
+      continue;
+    }
+    seenAanvragen[id] = aanvraag;
+    dedupedAanvragen.push(aanvraag);
+  }
+  return dedupedAanvragen;
+}
+
 export function filterCombineRtmData(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ): ZorgnedHLIRegeling[] {
-  const aanvragenDeel1Combined: ZorgnedAanvraagWithRelatedPersonsTransformed[] =
-    [];
+  const dedupedAanvragen = dedupCombineRTMDeel2(aanvragen);
 
-  const aanvragenUpdated: ZorgnedHLIRegeling[] = aanvragen.map(
-    (aanvraag, index, allAanvragen) => {
-      if (isRTMDeel2(aanvraag)) {
-        // Given the aanvragen are sorted by datumIngangGeldigheid/DESC we look for the first
-        // deel1 aanvraag that is not already in the $aanvragenDeel1Combined list.
-        // This is ___MOST_LIKELY___ the deel1 aanvraag that is related to the current deel2 aanvraag.
-        const precedingAanvragen = allAanvragen.slice(
-          index + 1,
-          allAanvragen.length
-        );
-        const regelingDeel1 = precedingAanvragen.find(
-          (aanvraag) =>
-            isRTMDeel1(aanvraag) &&
-            aanvraag.resultaat === 'toegewezen' &&
-            !aanvragenDeel1Combined.includes(aanvraag)
-        );
-
-        if (regelingDeel1) {
-          aanvragenDeel1Combined.push(regelingDeel1);
-          return {
-            ...aanvraag,
-            datumInBehandeling: regelingDeel1?.datumBesluit,
-            datumAanvraag:
-              regelingDeel1?.datumAanvraag ?? aanvraag.datumAanvraag,
-            betrokkenen: [...regelingDeel1.betrokkenen], // TODO: Will the RTM deel2 have betrokkenen?
-            documenten: [...aanvraag.documenten, ...regelingDeel1.documenten],
-          };
-        }
-      }
-      return aanvraag;
+  // The aanvragen are sorted by datumIngangGeldigheid/DESC
+  // The first unseen deel1 aanvraag after a deel2 aanvraag is ___MOST_LIKELY___ related to that deel2 aanvraag.
+  const deel2Aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[] = [];
+  const combinedAanvragen: ZorgnedHLIRegeling[] = [];
+  for (const aanvraag of dedupedAanvragen) {
+    if (isRTMDeel2(aanvraag)) {
+      deel2Aanvragen.push(aanvraag);
+      continue;
     }
-  );
+    if (isRTMDeel1(aanvraag)) {
+      const deel1 = aanvraag;
+      if (deel1.resultaat !== 'toegewezen') {
+        combinedAanvragen.push(deel1);
+        continue;
+      }
+      const deel2 = deel2Aanvragen.pop();
+      if (!deel2) {
+        // This deel1 does not belong to any deel2.
+        combinedAanvragen.push(deel1);
+        continue;
+      }
+      combinedAanvragen.push({
+        ...deel2,
+        datumInBehandeling: deel1?.datumBesluit,
+        datumAanvraag: deel1?.datumAanvraag ?? deel2.datumAanvraag,
+        betrokkenen: [...deel1.betrokkenen], // TODO: Will the RTM deel2 have betrokkenen?
+        documenten: [...deel2.documenten, ...deel1.documenten],
+      });
+      continue;
+    }
+    combinedAanvragen.push(aanvraag);
+  }
 
-  const aanvragenWithoutRedundantDeel1 = aanvragenUpdated.filter(
-    (aanvraag) => !aanvragenDeel1Combined.includes(aanvraag)
-  );
-
-  return aanvragenWithoutRedundantDeel1;
+  combinedAanvragen.push(...deel2Aanvragen);
+  return combinedAanvragen;
 }
 
 function getRtmDescriptionDeel1Toegewezen(
@@ -97,6 +119,20 @@ function getRtmDescriptionDeel1Toegewezen(
 
 const INFO_LINK =
   'https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/extra-geld-als-u-chronisch-ziek-of/';
+
+const getNotEveryYearDescription = (regeling: ZorgnedHLIRegeling) => `
+<p>U hoeft de ${regeling.titel} niet elk jaar opnieuw aan te vragen. De gemeente verlengt de regeling stilzwijgend, maar controleert wel elk jaar of u nog in aanmerking komt.</p>
+<p>U kunt dan ook een brief krijgen met het verzoek om extra informatie te geven.</p>
+<p><a href="${INFO_LINK}">Als er wijzigingen zijn in uw situatie moet u die direct doorgeven</a>.</p>`;
+
+const isEindeRechtForBetrokkenenActive = (regeling: ZorgnedHLIRegeling) =>
+  isRTMDeel2(regeling) &&
+  regeling.resultaat === 'toegewezen' &&
+  regeling.isActueel === false &&
+  !regeling.datumInBehandeling;
+
+const isToegewezenEindeRecht = (regeling: ZorgnedHLIRegeling) =>
+  !!regeling.datumInBehandeling && regeling.resultaat === 'toegewezen';
 
 export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
   [
@@ -160,30 +196,27 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
     {
       ...EINDE_RECHT,
       isVisible(regeling) {
-        return (
-          isRTMDeel2(regeling) &&
-          !!regeling.datumInBehandeling &&
-          regeling.resultaat === 'toegewezen'
-        );
+        return isRTMDeel2(regeling) && isToegewezenEindeRecht(regeling);
       },
       description(regeling) {
-        return `
-        <p>U hoeft de ${regeling.titel} niet elk jaar opnieuw aan te vragen. De gemeente verlengt de regeling stilzwijgend, maar controleert wel elk jaar of u nog in aanmerking komt.</p>
-        <p>U kunt dan ook een brief krijgen met het verzoek om extra informatie te geven.</p>
-        <p><a href="${INFO_LINK}">Als er wijzigingen zijn in uw situatie moet u die direct doorgeven</a>.</p>`;
+        if (
+          !!regeling.datumEindeGeldigheid &&
+          isAfter(new Date(), regeling.datumEindeGeldigheid)
+        ) {
+          return `
+        <p>Uw recht op ${regeling.titel} is beëindigd per ${defaultDateFormat(regeling.datumEindeGeldigheid)}.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`;
+        }
+        return getNotEveryYearDescription(regeling);
       },
     },
     // Einde recht - voor RTM Deel 2. Voor de betrokkenen.
     {
       ...EINDE_RECHT,
       isVisible(regeling) {
-        return (
-          isRTMDeel2(regeling) &&
-          regeling.resultaat === 'toegewezen' &&
-          regeling.isActueel === false &&
-          !regeling.datumInBehandeling
-        );
+        return isRTMDeel2(regeling) && !isToegewezenEindeRecht(regeling);
       },
+      isChecked: isEindeRechtForBetrokkenenActive,
+      isActive: isEindeRechtForBetrokkenenActive,
       description(regeling, today, allAanvragen) {
         const baseDescription =
           typeof EINDE_RECHT.description === 'function'
@@ -193,14 +226,18 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
         const isAanvraagVoorMeerdereBetrokkenen =
           regeling.betrokkenen.length > 1;
         const isAanvrager_ = isAanvrager(regeling);
+        if (!isEindeRechtForBetrokkenenActive(regeling)) {
+          return getNotEveryYearDescription(regeling);
+        }
+        if (!isAanvraagVoorMeerdereBetrokkenen) {
+          return baseDescription;
+        }
         return (
           baseDescription +
-          (isAanvraagVoorMeerdereBetrokkenen
-            ? `<p>
+          `<p>
             ${isAanvrager_ ? 'Wordt uw kind 18? Dan moet uw kind deze regeling voor zichzelf aanvragen.' : 'Bent u net of binnenkort 18 jaar oud? Dan moet u deze regeling voor uzelf aanvragen.'} <a href="${INFO_LINK}">Lees meer over de voorwaarden</a>.
           </p>
           `
-            : '')
         );
       },
     },

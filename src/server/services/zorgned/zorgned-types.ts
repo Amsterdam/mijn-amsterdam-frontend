@@ -86,6 +86,7 @@ export interface ToegewezenProduct {
 }
 
 export interface BeschiktProduct {
+  identificatie: string;
   product: {
     omschrijving: string;
     productsoortCode: ProductSoortCode;
@@ -143,6 +144,7 @@ export interface ZorgnedAanvraagTransformed {
   leveringsVorm: LeveringsVorm;
   productsoortCode: ProductSoortCode;
   productIdentificatie?: ProductIdentificatie;
+  beschiktProductIdentificatie: BeschiktProduct['identificatie'];
   resultaat: BeschikkingsResultaat;
   titel: string;
 }
