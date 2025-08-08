@@ -7,7 +7,7 @@ import styles from './ProfileSectionPanel.module.scss';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
-import { getRedactedClass } from '../../../helpers/utils';
+import { getRedactedClass } from '../../../helpers/cobrowse';
 import { useSmallScreen } from '../../../hooks/media.hook';
 
 export interface ActionLink {

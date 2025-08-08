@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import { LinkList } from '@amsterdam/design-system-react';
 
 import { LinkProps } from '../../../universal/types/App.types';
-import { getRedactedClass } from '../../helpers/utils';
+import { getRedactedClass } from '../../helpers/cobrowse';
 import ErrorAlert from '../Alert/Alert';
 import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
 import { OverviewPageV2, PageContentCell, PageContentV2 } from '../Page/Page';

@@ -2,7 +2,7 @@ import { Heading } from '@amsterdam/design-system-react';
 
 import { categoryMenuItems } from './MainMenu.constants';
 import styles from './MainMenu.module.scss';
-import { getRedactedClass } from '../../helpers/utils';
+import { getRedactedClass } from '../../helpers/cobrowse';
 import { useSmallScreen } from '../../hooks/media.hook';
 import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
 import { MainHeaderSecondaryLinks } from '../MainHeader/MainHeader';

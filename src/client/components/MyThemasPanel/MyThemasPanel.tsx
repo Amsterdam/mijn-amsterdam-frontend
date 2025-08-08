@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import styles from './MyThemasPanel.module.scss';
 import { ThemaMenuItemTransformed } from '../../config/thema-types';
-import { getRedactedClass } from '../../helpers/utils';
+import { getRedactedClass } from '../../helpers/cobrowse';
 import { GeneralInfoRoute } from '../../pages/GeneralInfo/GeneralInfo-routes';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink';

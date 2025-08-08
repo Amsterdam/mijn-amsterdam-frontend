@@ -3,7 +3,7 @@ import { selectorFamily, useRecoilValue } from 'recoil';
 import { appStateAtom } from './useAppState';
 import { useProfileTypeValue } from './useProfileType';
 import { WelcomeNotification } from '../config/staticData';
-import { getRedactedClass } from '../helpers/utils';
+import { getRedactedClass } from '../helpers/cobrowse';
 
 const appStateNotificationsSelector = selectorFamily({
   key: 'appStateNotifications',

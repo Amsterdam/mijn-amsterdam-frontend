@@ -4,7 +4,7 @@ import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
-import { getRedactedClass } from '../../../helpers/utils';
+import { getRedactedClass } from '../../../helpers/cobrowse';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 function getRows(document: IdentiteitsbewijsFrontend) {
