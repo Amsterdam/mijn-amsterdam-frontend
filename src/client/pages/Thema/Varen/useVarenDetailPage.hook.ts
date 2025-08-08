@@ -26,6 +26,7 @@ export function useVarenDetailPage() {
     varenZaken.find(
       (otherZaak) =>
         otherZaak.id !== zaak?.id &&
+        otherZaak.vergunning != null &&
         otherZaak.vergunning?.identifier === zaak?.vergunning?.identifier &&
         otherZaak.processed === false
     ) || null;

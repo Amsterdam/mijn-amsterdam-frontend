@@ -9,6 +9,7 @@ import {
 } from '@amsterdam/design-system-react';
 import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 
+import { CONTENT_EMPTY } from './helper';
 import { useVarenThemaData } from './useVarenThemaData.hook';
 import { rederRegistratieLink } from './Varen-thema-config';
 import styles from './Varen.module.scss';
@@ -62,33 +63,38 @@ export function VarenPageContentRederRegistratie({
       rows: [
         {
           label: 'Naam aanvrager',
-          content: registratie.company,
+          content: registratie.company || CONTENT_EMPTY,
         },
         {
           label: 'Telefoonnummer',
-          content: registratie.phone,
+          content: registratie.phone || CONTENT_EMPTY,
         },
         {
           label: 'KvK nummer',
-          content: registratie.bsnkvk,
+          content: registratie.bsnkvk || CONTENT_EMPTY,
         },
       ],
     },
     {
       rows: [
         {
-          label: 'Adres',
+          label: registratie.correspondenceAddress
+            ? 'Correspondentieadres'
+            : 'Adres',
           content:
             registratie.correspondenceAddress ||
-            `${registratie.address}${registratie.postalCode ? `, ${registratie.postalCode}` : ''}${registratie.city ? ` ${registratie.city}` : ''}`,
+            [registratie.address, registratie.postalCode, registratie.city]
+              .filter((x) => !!x)
+              .join(', ') ||
+            CONTENT_EMPTY,
         },
         {
           label: 'E-mailadres',
-          content: registratie.email,
+          content: registratie.email || CONTENT_EMPTY,
         },
         {
           label: 'Datum registratie',
-          content: registratie.dateRequestFormatted,
+          content: registratie.dateRequestFormatted || CONTENT_EMPTY,
         },
       ],
     },
