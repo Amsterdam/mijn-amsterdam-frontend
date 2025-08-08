@@ -97,6 +97,7 @@ export function useToeristischeVerhuurThemaData() {
   return {
     vergunningen,
     lvvRegistraties,
+    id: themaId,
     title: themaTitle,
     isLoading: isLoading(TOERISTISCHE_VERHUUR),
     isError: isError(TOERISTISCHE_VERHUUR, false),

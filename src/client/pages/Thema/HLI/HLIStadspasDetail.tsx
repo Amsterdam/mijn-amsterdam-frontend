@@ -40,6 +40,7 @@ import {
 import { PageHeadingV2 } from '../../../components/PageHeading/PageHeadingV2';
 import { Spinner } from '../../../components/Spinner/Spinner';
 import { TableV2 } from '../../../components/Table/TableV2';
+import { getRedactedClass } from '../../../helpers/cobrowse';
 import { useDataApi } from '../../../hooks/api/useDataApi';
 import { useSmallScreen } from '../../../hooks/media.hook';
 import { useAppStateGetter } from '../../../hooks/useAppState';
@@ -149,7 +150,7 @@ export function HLIStadspasDetail() {
 
   return (
     <DetailPageV2>
-      <PageContentV2>
+      <PageContentV2 className={getRedactedClass(themaId)}>
         <PageHeadingV2 breadcrumbs={breadcrumbs}>
           Overzicht Stadspas{' '}
           {stadspas?.owner && ` van ${stadspas?.owner.firstname}`}

@@ -37,8 +37,14 @@ function ExploitatieHorecaBedrijf({
 }
 
 export function HorecaDetail() {
-  const { vergunningen, isLoading, isError, breadcrumbs, routeConfig } =
-    useHorecaThemaData();
+  const {
+    vergunningen,
+    themaId,
+    isLoading,
+    isError,
+    breadcrumbs,
+    routeConfig,
+  } = useHorecaThemaData();
   const {
     vergunning,
     title = 'Horecavergunning',
@@ -50,6 +56,7 @@ export function HorecaDetail() {
 
   return (
     <ThemaDetailPagina
+      themaId={themaId}
       title={title}
       zaak={vergunning}
       isError={isError}

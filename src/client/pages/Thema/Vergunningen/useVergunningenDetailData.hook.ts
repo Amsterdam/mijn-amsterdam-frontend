@@ -1,6 +1,7 @@
 import { useParams } from 'react-router';
 
 import { useVergunningDocumentList } from './detail-page-content/useVergunningDocumentsList.hook';
+import { themaId } from './Vergunningen-thema-config';
 import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
 
 export function useVergunningenDetailData<T extends VergunningFrontend>(
@@ -19,6 +20,7 @@ export function useVergunningenDetailData<T extends VergunningFrontend>(
   }
 
   return {
+    themaId,
     vergunning,
     isErrorDocuments: isError,
     isLoadingDocuments: isLoading,

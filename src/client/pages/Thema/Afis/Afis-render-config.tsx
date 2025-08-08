@@ -1,4 +1,3 @@
-import { AfisThema } from './AfisThema';
 import {
   routeConfig,
   themaId,
@@ -6,8 +5,9 @@ import {
   featureToggle,
 } from './Afis-thema-config';
 import { AfisBetaalVoorkeuren } from './AfisBetaalVoorkeuren';
-import { AfisList } from './AfisList';
 import { default as AfisIcon } from './AfisIcon.svg?react';
+import { AfisList } from './AfisList';
+import { AfisThema } from './AfisThema';
 import { isLoading } from '../../../../universal/helpers/api';
 import { type AppState } from '../../../../universal/types/App.types';
 import {
@@ -37,6 +37,7 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
   title: themaTitle,
   id: themaId,
   to: routeConfig.themaPage.path,
+  redactedScope: 'full',
   profileTypes: ['private', 'commercial'],
   isActive(appState: AppState) {
     return (

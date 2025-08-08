@@ -7,6 +7,7 @@ export function ContactmomentenListPage() {
     contactmomenten,
     isLoading,
     isError,
+    themaId,
     title,
     breadcrumbs,
     listPageRoute,
@@ -15,6 +16,7 @@ export function ContactmomentenListPage() {
   return (
     <ListPagePaginated
       items={contactmomenten}
+      themaId={themaId}
       title={`Alle ${title.toLowerCase()}`}
       appRoute={listPageRoute}
       breadcrumbs={breadcrumbs}
