@@ -16,6 +16,7 @@ function Caret() {
 
 export function InkomenListSpecificaties() {
   const {
+    themaId,
     categoryFilterActive,
     categoryFilterOptions,
     hasCategoryFilters,
@@ -163,6 +164,7 @@ export function InkomenListSpecificaties() {
 
   return (
     <ListPagePaginated
+      themaId={themaId}
       title={title}
       isError={isError}
       isLoading={isLoading}

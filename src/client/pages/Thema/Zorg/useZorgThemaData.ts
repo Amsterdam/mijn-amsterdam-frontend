@@ -22,11 +22,11 @@ export function useZorgThemaData() {
     true
   );
   const breadcrumbs = useThemaBreadcrumbs(themaId);
-  const title = themaTitle;
 
   return {
+    id: themaId,
+    title: themaTitle,
     voorzieningen,
-    title,
     isLoading: isLoading(WMO),
     isError: isError(WMO),
     tableConfig,

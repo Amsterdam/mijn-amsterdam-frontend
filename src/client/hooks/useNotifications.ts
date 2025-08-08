@@ -3,6 +3,7 @@ import { selectorFamily, useRecoilValue } from 'recoil';
 import { appStateAtom } from './useAppState';
 import { useProfileTypeValue } from './useProfileType';
 import { WelcomeNotification } from '../config/staticData';
+import { getRedactedClass } from '../helpers/cobrowse';
 
 const appStateNotificationsSelector = selectorFamily({
   key: 'appStateNotifications',
@@ -20,7 +21,12 @@ export function useAppStateNotifications(top?: number) {
   const profileType = useProfileTypeValue();
   const notifications = useRecoilValue(
     appStateNotificationsSelector(profileType)
-  );
+  ).map((n) => ({
+    ...n,
+    className: n.isTip
+      ? getRedactedClass(null, 'content') // Tips can contain information from multiple thema's. Redact by default
+      : getRedactedClass(n.themaID, 'content'),
+  }));
 
   return {
     notifications: top ? notifications.slice(0, top) : notifications,

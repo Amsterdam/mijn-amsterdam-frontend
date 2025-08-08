@@ -12,7 +12,8 @@ const zakenKeysStatusInBehandeling = ZAKEN.content
   .map((zaak) => zaak.key);
 
 const getVarensBelongingToZaak = (zaak) =>
-  VARENS.content?.find((v) => v.fields.mark === zaak?.fields?.varens) || null;
+  VARENS.content?.filter((v) => zaak?.fields?.varens.includes(v.fields.mark)) ||
+  null;
 
 function getZaakByKey(key) {
   return ZAKEN.content.find((zaak) => zaak.key === key);
@@ -169,9 +170,9 @@ module.exports = [
         options: {
           middleware: (req, res, next, core) => {
             const zaak = getZaakByKey(req.params.key);
-            const vergunning = getVarensBelongingToZaak(zaak);
-            if (vergunning) {
-              return res.send({ content: [vergunning] });
+            const vergunningen = getVarensBelongingToZaak(zaak);
+            if (vergunningen) {
+              return res.send({ content: vergunningen });
             }
             return res.send({ content: [] });
           },

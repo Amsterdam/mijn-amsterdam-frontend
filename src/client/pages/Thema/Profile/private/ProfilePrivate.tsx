@@ -91,6 +91,7 @@ function ProfilePrivateSectionPanels() {
 
 export function MijnGegevensThema() {
   const {
+    id,
     title,
     brpContent,
     isLoadingBrp,
@@ -141,6 +142,7 @@ export function MijnGegevensThema() {
 
   return (
     <ThemaPagina
+      id={id}
       title={title}
       isError={isThemaPaginaError}
       isPartialError={isErrorBrp || isErrorContactmomenten}

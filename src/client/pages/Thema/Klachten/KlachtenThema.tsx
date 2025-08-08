@@ -18,6 +18,7 @@ const pageContentTop = (
 
 export function KlachtenThema() {
   const {
+    themaId,
     themaTitle,
     tableConfig,
     klachten,
@@ -30,6 +31,7 @@ export function KlachtenThema() {
 
   return (
     <ThemaPagina
+      id={themaId}
       title={themaTitle}
       isError={isError}
       isLoading={isLoading}

@@ -16,6 +16,7 @@ export function VergunningenThema() {
     isError,
     tableConfig,
     linkListItems,
+    id,
     title,
     routeConfig,
     hasParkeervergunningen,
@@ -60,6 +61,7 @@ export function VergunningenThema() {
 
   return (
     <ThemaPagina
+      id={id}
       title={title}
       pageContentTop={pageContentTop}
       linkListItems={linkListItems}

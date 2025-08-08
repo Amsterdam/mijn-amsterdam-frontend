@@ -25,11 +25,19 @@ function AVGDetailContent({ verzoek }: { verzoek: AVGRequestFrontend }) {
 }
 
 export function AVGDetail() {
-  const { verzoek, isLoading, isError, breadcrumbs, title, routeConfig } =
-    useAVGDetailPage();
+  const {
+    verzoek,
+    isLoading,
+    isError,
+    breadcrumbs,
+    themaId,
+    title,
+    routeConfig,
+  } = useAVGDetailPage();
   useHTMLDocumentTitle(routeConfig.detailPage);
   return (
     <ThemaDetailPagina
+      themaId={themaId}
       title={title}
       zaak={verzoek}
       isError={isError}

@@ -142,7 +142,8 @@ describe('Notifications', () => {
             themaTitle: 'Passagiers- en beroepsvaart',
             id: 'varen-Z-25-0000001-inbehandeling-notification',
             title: 'Aanvraag Varen vergunning exploitatie in behandeling',
-            description: 'Wij hebben uw aanvraag in behandeling genomen.',
+            description:
+              'Wij hebben uw aanvraag Varen vergunning exploitatie voor vaartuig boatName in behandeling genomen.',
             datePublished: zaakInProgress.dateRequest,
             link: {
               title: 'Bekijk details',
@@ -156,7 +157,7 @@ describe('Notifications', () => {
             title:
               'Meer informatie nodig omtrent uw Varen vergunning exploitatie aanvraag',
             description:
-              'Er is meer informatie nodig om de aanvraag verder te kunnen verwerken.',
+              'Wij hebben meer informatie nodig om uw aanvraag Varen vergunning exploitatie voor vaartuig boatName verder te kunnen verwerken.',
             datePublished: zaakMeerInformatieTermijn.dateStart,
             link: {
               title: 'Bekijk details',
@@ -168,7 +169,8 @@ describe('Notifications', () => {
             themaTitle: 'Passagiers- en beroepsvaart',
             id: 'varen-Z-25-0000001-afgehandeld-notification',
             title: 'Aanvraag Varen vergunning exploitatie afgehandeld',
-            description: 'Wij hebben uw aanvraag afgehandeld.',
+            description:
+              'Wij hebben uw aanvraag Varen vergunning exploitatie voor vaartuig boatName afgehandeld.',
             datePublished: zaakDecision.dateDecision,
             link: {
               title: 'Bekijk details',

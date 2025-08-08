@@ -4,6 +4,7 @@ import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
+import { getRedactedClass } from '../../../helpers/cobrowse';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 function getRows(document: IdentiteitsbewijsFrontend) {
@@ -25,10 +26,16 @@ function getRows(document: IdentiteitsbewijsFrontend) {
 
 function BurgerzakenIdentiteitsbewijsContent({
   document,
+  themaId,
 }: {
   document: IdentiteitsbewijsFrontend;
+  themaId: string;
 }) {
   const rows = getRows(document);
+  rows.map((r) => ({
+    ...r,
+    classNameContent: getRedactedClass(themaId, 'content'),
+  }));
 
   return (
     <PageContentCell>
@@ -38,12 +45,13 @@ function BurgerzakenIdentiteitsbewijsContent({
 }
 
 export function BurgerzakenDetail() {
-  const { document, isLoading, isError, breadcrumbs, routeConfig } =
+  const { document, isLoading, isError, themaId, breadcrumbs, routeConfig } =
     useBurgerZakenDetailData();
   useHTMLDocumentTitle(routeConfig.detailPage);
 
   return (
     <ThemaDetailPagina
+      themaId={themaId}
       title={capitalizeFirstLetter(
         document?.documentType || 'Identiteitsbewijs'
       )}
@@ -53,7 +61,10 @@ export function BurgerzakenDetail() {
       breadcrumbs={breadcrumbs}
       pageContentMain={
         !!document && (
-          <BurgerzakenIdentiteitsbewijsContent document={document} />
+          <BurgerzakenIdentiteitsbewijsContent
+            document={document}
+            themaId={themaId}
+          />
         )
       }
     />

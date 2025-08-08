@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react';
 
 import { PageFooter } from '@amsterdam/design-system-react';
 
+import { IS_AP } from '../../../../universal/config/env';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 import { useScript } from '../../../hooks/useScript';
 
 const MAX_WAIT_FOR_COBROWSE_LIVE_MS = 5000;
 declare global {
   interface Window {
-    CobrowseIO?: unknown;
+    CobrowseWidget?: unknown;
   }
 }
 function waitForCobrowseLiveInWindow(window: Window & typeof globalThis) {
@@ -16,7 +17,7 @@ function waitForCobrowseLiveInWindow(window: Window & typeof globalThis) {
   let timeoutReached = false;
   return new Promise(function (resolve, reject) {
     (function waitForFoo() {
-      if (window.CobrowseIO) {
+      if (window.CobrowseWidget) {
         return resolve(true);
       }
       const timeoutMs = 50;
@@ -39,30 +40,39 @@ export function CobrowseFooter() {
 
   // Load the external script when it is not loaded from the tagmanager
   const [isCobrowseLoaded] = useScript({
-    src: 'https://omnichanneliv--gat2.sandbox.my.site.com/staticvforcesite/resource/Cobrowse/cobrowseAppNL.bundle.js?v=002',
+    src: 'https://omnichanneliv--gat2.sandbox.my.site.com/staticvforcesite/resource/CobrowseV3/cobrowseAppNL.bundle.js',
     defer: false,
     async: true,
-    isEnabled: true,
+    isEnabled: !IS_AP, // On AP this is loaded externally
   });
   const [showCobrowseFooter, setShowCobrowseFooter] = useState(false);
   useEffect(() => {
-    waitForCobrowseLiveInWindow(window).then(() => {
-      setShowCobrowseFooter(true);
-    });
+    waitForCobrowseLiveInWindow(window)
+      .then(() => {
+        setShowCobrowseFooter(true);
+      })
+      .catch((e) => {
+        // ignore reject
+      });
+  }, [isCobrowseLoaded]);
 
+  useEffect(() => {
+    if (!showCobrowseFooter) {
+      return;
+    }
     const head = document.head;
     const link = document.createElement('link');
 
     link.type = 'text/css';
     link.rel = 'stylesheet';
-    link.href = '/css/cobrowse.css';
+    link.href = '/css/cobrowse-widget.css';
 
     head.appendChild(link);
 
     return () => {
       head.removeChild(link);
     };
-  }, [isCobrowseLoaded]);
+  }, [showCobrowseFooter]);
 
   // MIJN-11933
   // Setting the id to startCobrowseButton8 (script add eventHandler) is not stable in an SPA

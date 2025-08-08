@@ -17,6 +17,7 @@ import styles from './ProfilePrivate.module.scss';
 import { isLoading, isError } from '../../../../../universal/helpers/api';
 import { MaRouterLink } from '../../../../components/MaLink/MaLink';
 import { ThemaMenuItemTransformed } from '../../../../config/thema-types';
+import { getRedactedClass } from '../../../../helpers/cobrowse';
 import { useAppStateGetter } from '../../../../hooks/useAppState';
 import {
   useThemaBreadcrumbs,
@@ -24,17 +25,24 @@ import {
 } from '../../../../hooks/useThemaMenuItems';
 import { routeConfig, themaIdBRP } from '../Profile-thema-config';
 
-function getLinkToThemaPage(
+function getMenuItem(
   onderwerp: string,
   myThemasMenuItems: ThemaMenuItemTransformed[]
 ) {
-  const menuItem = myThemasMenuItems.find(
+  return myThemasMenuItems.find(
     (item) =>
       item.id ===
       mapperContactmomentToMenuItem[
         onderwerp as keyof typeof mapperContactmomentToMenuItem
       ]
   );
+}
+
+function getLinkToThemaPage(
+  onderwerp: string,
+  myThemasMenuItems: ThemaMenuItemTransformed[]
+) {
+  const menuItem = getMenuItem(onderwerp, myThemasMenuItems);
 
   if (!menuItem) {
     return onderwerp;
@@ -73,9 +81,13 @@ export function useContactmomenten() {
   const routeParams = useParams();
 
   const contactmomenten: ContactMomentFrontend[] =
-    KLANT_CONTACT.content?.map((contactMomentItem) => {
+    KLANT_CONTACT?.content?.map((contactMomentItem) => {
+      const menuItemId =
+        getMenuItem(contactMomentItem.subject, myThemasMenuItems)?.id ||
+        contactMomentItem.subject;
       return {
         ...contactMomentItem,
+        className: getRedactedClass(menuItemId),
         themaKanaalIcon: addIcon(contactMomentItem.themaKanaal),
         subjectLink: getLinkToThemaPage(
           contactMomentItem.subject,
@@ -86,6 +98,7 @@ export function useContactmomenten() {
 
   return {
     contactmomenten,
+    themaId: themaIdBRP,
     displayProps: contactmomentenDisplayProps,
     isError: isError(KLANT_CONTACT),
     isLoading: isLoading(KLANT_CONTACT),
