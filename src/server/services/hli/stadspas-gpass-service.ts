@@ -1,12 +1,8 @@
 import { HttpStatusCode } from 'axios';
-import { isAfter, isBefore, isSameDay, parseISO, isValid } from 'date-fns';
+import { isAfter, isBefore, parseISO, isValid } from 'date-fns';
 
 import { fetchAdministratienummer } from './hli-zorgned-service';
-import {
-  DEFAULT_EXPIRY_DAY,
-  DEFAULT_EXPIRY_MONTH,
-  GPASS_API_TOKEN,
-} from './stadspas-config-and-content';
+import { GPASS_API_TOKEN } from './stadspas-config-and-content';
 import {
   SecurityCode,
   Stadspas,
@@ -238,64 +234,54 @@ export async function fetchStadspassenByAdministratienummer(
   return apiSuccessResult({ stadspassen, administratienummer });
 }
 
-function getDefaultExpiryDate(addYear: number = 0): Date {
-  const thisYearsExpiryDate = new Date(
-    `${new Date().getFullYear() + addYear}-${DEFAULT_EXPIRY_MONTH}-${DEFAULT_EXPIRY_DAY}`
-  );
-  return thisYearsExpiryDate;
-}
+const INSIDE = 0;
+const AFTER = 1;
+const BEFORE = -1;
 
-function getThisYearsDefaultExpiryDate(): Date {
-  return getDefaultExpiryDate();
-}
+/** Determine if the stadspas is in the active pass year.
+ *
+ * Returns if we are before, after or inside the active pass year.
+ */
+function getWhereInActivePassYear(
+  cardExpiryDate: Date
+): typeof INSIDE | typeof AFTER | typeof BEFORE {
+  const [dateStart, dateEnd] = getActivePasJaarDateRange(new Date());
 
-function getNextYearsDefaultExpiryDate(): Date {
-  return getDefaultExpiryDate(1);
-}
-
-export function getPreviousYearsDefaultExpiryDate(): Date {
-  return getDefaultExpiryDate(-1);
-}
-
-export function getCurrentPasYearExpiryDate(): Date {
-  const now = new Date();
-  const thisYearsExpiryDate = getThisYearsDefaultExpiryDate();
-  const nextYearsExpiryDate = getNextYearsDefaultExpiryDate();
-  if (
-    isAfter(now, thisYearsExpiryDate) ||
-    isSameDay(now, thisYearsExpiryDate)
-  ) {
-    return nextYearsExpiryDate;
+  if (isBefore(cardExpiryDate, dateStart)) {
+    return BEFORE;
   }
-  return thisYearsExpiryDate;
+  if (isAfter(cardExpiryDate, dateEnd)) {
+    return AFTER;
+  }
+  return INSIDE;
 }
 
-function parseExpiryDate(expiryDate: string): Date {
-  const parsedDate = parseISO(`${expiryDate.split('T')[0]}T00:00.000Z`);
-  return parsedDate;
+export function getActivePasJaarDateRange(now: Date): [string, string] {
+  const currentYear = now.getFullYear();
+
+  // The first of August is the default yearly activation date for stadspassen.
+  // This date is chosen to activate all new passes that are given out by Amsterdam.
+  const startMonthDay = '08-01';
+  // The 31st of July is the default yearly expiry date for stadspassen.
+  const endMonthDay = '07-31';
+  const addYear = new Date(`${currentYear}-${startMonthDay}`) <= now ? 1 : 0;
+
+  const dateStart = `${currentYear - 1 + addYear}-${startMonthDay}`;
+  const dateEnd = `${currentYear + addYear}-${endMonthDay}`;
+  return [dateStart, dateEnd];
 }
 
 function isVisiblePass(isPasActief: boolean, expiryDate: string): boolean {
-  const thisYearsExpiryDate = getThisYearsDefaultExpiryDate();
-  const previousYearsExpiryDate = getPreviousYearsDefaultExpiryDate();
-  const expiry = parseExpiryDate(expiryDate);
-
-  if (
-    // Do not show passes with an invalid expiry date.
-    !isValid(expiry) ||
-    // Do not show old passes.
-    isBefore(expiry, previousYearsExpiryDate) ||
-    isSameDay(expiry, previousYearsExpiryDate)
-  ) {
+  const cardExpiryDate = parseISO(`${expiryDate.split('T')[0]}T00:00.000Z`);
+  if (!isValid(cardExpiryDate)) {
     return false;
   }
 
-  if (isAfter(expiry, thisYearsExpiryDate)) {
-    // If the pass expires in a future year, we only show it if the pas is active.
+  const pointInTime = getWhereInActivePassYear(cardExpiryDate);
+  if (pointInTime === AFTER) {
     return isPasActief;
   }
-
-  return true;
+  return pointInTime === INSIDE;
 }
 
 export async function fetchStadspassen(bsn: BSN) {
@@ -545,13 +531,8 @@ export async function mutateGpassSetPasIsBlockedState(
 }
 
 export const forTesting = {
-  getCurrentPasYearExpiryDate,
-  getDefaultExpiryDate,
   getHeaders,
-  getNextYearsDefaultExpiryDate,
   getOwner,
-  getPreviousYearsDefaultExpiryDate,
-  getThisYearsDefaultExpiryDate,
   isVisiblePass,
   transformBudget,
   transformGpassAanbiedingenResponse,
