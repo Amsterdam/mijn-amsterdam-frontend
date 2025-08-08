@@ -510,6 +510,56 @@
         }
       },
       {
+        "identificatie": "3167338",
+        "procesIdentificatie": "3167338",
+        "casusIdentificatie": "1734393",
+        "regeling": {
+          "identificatie": "Armoedevrz",
+          "omschrijving": "Armoedevoorzieningen"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2025-07-23"
+        },
+        "datumAanmelding": "2025-07-23",
+        "datumAanvraag": "2025-07-23",
+        "beschikking": {
+          "beschikkingNummer": 301148052,
+          "datumAfgifte": "2025-07-23",
+          "beschikteProducten": [
+            {
+              "identificatie": "1520795",
+              "product": {
+                "identificatie": "AV-RKV",
+                "productsoortCode": "AV-ALG",
+                "omschrijving": "Reiskostenvergoeding"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2024-08-01",
+                "datumEindeGeldigheid": "2025-07-31",
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "toewijzingen": [],
+                "betrokkenen": ["123123"]
+              }
+            }
+          ]
+        }
+      },
+
+      {
         "identificatie": "2701485",
         "regeling": {
           "identificatie": "Armoedevrz",

@@ -49,6 +49,7 @@ export const featureToggle = {
   hliThemaRegelingenActive: true,
   hliRegelingEnabledCZM: true,
   hliRegelingEnabledRTM: !IS_PRODUCTION,
+  hliRegelingEnabledRKV: !IS_PRODUCTION,
   hli2025PCTegoedCodesEnabled: !IS_PRODUCTION,
 } as const;
 
