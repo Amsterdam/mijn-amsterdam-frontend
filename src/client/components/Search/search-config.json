@@ -14,7 +14,8 @@
         "Melding",
         "Aanvragen",
         "Themas"
-      ]
+      ],
+      "profileTypes": ["private", "commercial"]
     },
     {
       "url": "/uitleg",
@@ -26,19 +27,27 @@
         "About",
         "Over",
         "Inhoud"
-      ]
+      ],
+      "profileTypes": ["private", "commercial"]
     },
     {
       "url": "/klachten",
       "displayTitle": "Ingediende klachten",
       "description": "Hier ziet u een overzicht van uw ingediende klachten.",
-      "keywords": ["Klachten", "Klacht indienen"]
+      "keywords": ["Klachten", "Klacht indienen", "Klacht"],
+      "profileTypes": ["private"]
     },
     {
       "url": "/avg",
       "displayTitle": "Ingediende AVG verzoeken",
       "description": "Hier ziet u een overzicht van uw ingediende AVG verzoeken.",
-      "keywords": ["AVG", "AVG verzoek indienen"]
+      "keywords": [
+        "AVG",
+        "AVG verzoek indienen",
+        "Algemene Verordening Gegevensbescherming",
+        "Europese privacywetgeving"
+      ],
+      "profileTypes": ["private"]
     },
     {
       "url": "/paspoort-en-id-kaart",
@@ -82,7 +91,54 @@
         "Recht op zorg",
         "Aanvraag",
         "Zorgaanvraag",
-        "Taxi"
+        "Taxi",
+        "Woningaanpassing",
+        "Woonruimteaanpassing",
+        "Dagbesteding",
+        "Hulp bij het huishouden",
+        "Aanvullende individuele ondersteuning",
+        "Electrische rolstoel",
+        "Rolstoelfiets",
+        "Scootmobiel",
+        "Autozitje",
+        "Driewielfiets",
+        "Buggy",
+        "Adviesconsult",
+        "Dagbesteding",
+        "PGB",
+        "Persoonsgebonden Budget",
+        "Logeeropvang",
+        "Douche toiletstoel",
+        "Toiletstoel",
+        "Douchestoel",
+        "Trapliften",
+        "Oplaadpunten",
+        "Natte cel en toilet",
+        "Aanvullend Openbaar Vervoer",
+        "AOV",
+        "Ambulante ondersteuning",
+        "Beschermd wonen",
+        "bijzondere schoonmaak",
+        "Adviesconsult"
+      ],
+      "profileTypes": ["private"]
+    },
+    {
+      "url": "/jeugd",
+      "displayTitle": "Onderwijs en Jeugd",
+      "description": "Uw voorzieningen Leerlingenvervoer.",
+      "keywords": [
+        "Openbaar vervoer vergoeding",
+        "Aangepast individueel vervoer",
+        "Aangepast groepsvervoer",
+        "Fietsvergoeding",
+        "Eigen vervoer",
+        "Openbaar vervoer abonnement",
+        "Leerlingen vervoer",
+        "Naar school",
+        "Onderwijs",
+        "Vervoer",
+        "Vergoeding"
       ],
       "profileTypes": ["private"]
     },
@@ -97,6 +153,8 @@
         "Gratis pas",
         "Saldo checken",
         "stadspasnummer",
+        "blokkeren",
+        "stadspas blokkeren",
         "pasnummer",
         "pas nummer",
         "einddatum stadspas",
@@ -116,7 +174,25 @@
         "inkomen",
         "regeling",
         "pakjekans",
-        "laag inkomen"
+        "laag inkomen",
+        "Regeling Tegemoetkoming Meerkosten",
+        "Chronisch ziek",
+        "Gehandicapt",
+        "Gratis laptop",
+        "Gratis tablet",
+        "Laptop",
+        "Tablet",
+        "Individuele inkomenstoeslag",
+        "Inkomenstoeslag",
+        "Collectieve zorgverzekering",
+        "Zorgverzekering",
+        "Kindtegoed Voorschool",
+        "Kindtegoed",
+        "Openbaar Vervoer voor Mantelzorgers",
+        "Reiskostenvergoeding",
+        "Declaratie Kindtegoed",
+        "Openbaar Vervoer voor ouderen",
+        "Reiskostenvergoeding"
       ],
       "profileTypes": ["private"]
     },
@@ -174,7 +250,8 @@
         "Status",
         "Betalen",
         "Overzicht"
-      ]
+      ],
+      "profileTypes": ["private", "commercial"]
     },
     {
       "url": "/persoonlijke-gegevens",
@@ -202,7 +279,14 @@
         "aantal bewoners",
         "ingeschreven",
         "adres",
-        "naam"
+        "naam",
+        "Verduurzamen",
+        "Verhuizing doorgeven",
+        "Correctie doorgeven",
+        "Contactmomenten",
+        "Chat",
+        "Contactformulier",
+        "Telefoon"
       ],
       "profileTypes": ["private"]
     },
@@ -247,8 +331,13 @@
         "adres",
         "kaart",
         "map",
-        "Omgeving"
-      ]
+        "Omgeving",
+        "Sport",
+        "Meldingen",
+        "Melding Openbare Ruimte",
+        "Afvalcontainers in mijn buurt"
+      ],
+      "profileTypes": ["private", "commercial"]
     },
     {
       "url": "/afval",
@@ -265,37 +354,74 @@
         "Milieustraat",
         "Afvalstraat",
         "Afval wegbrngen",
-        "Afval Inlveren",
+        "Afval Inleveren",
         "Verf",
         "Puin storten",
-        "Dichtbij afval"
-      ]
+        "Dichtbij afval",
+        "Etensresten",
+        "Groente",
+        "Fruit",
+        "Tuinafval",
+        "Restafval",
+        "Grof afval",
+        "Glas",
+        "Textiel",
+        "Papier",
+        "Karton",
+        "Recyclepunt",
+        "Afvalregels",
+        "Hergebruik",
+        "Container"
+      ],
+      "profileTypes": ["private", "commercial"]
     },
-    {
-      "url": "/toegankelijkheidsverklaring",
-      "displayTitle": "Toegankelijkheid",
-      "description": "Hieronder vind u een overzicht van uw aanvragen voor toeristische verhuur.",
-      "keywords": [
-        "Toegankelijkheidsverklaring",
-        "A11Y",
-        "WCAG",
-        "Blind",
-        "Slechtziend",
-        "Beperking",
-        "Accessibility"
-      ]
-    },
+
     {
       "url": "/vergunningen",
       "displayTitle": "Vergunningen en ontheffingen",
       "description": "Een overzicht van uw aanvragen voor vergunningen en ontheffingen bij gemeente Amsterdam.",
-      "keywords": ["Vergunningen", "Ontheffingen", "Aanvragen"]
+      "keywords": [
+        "Vergunningen",
+        "Ontheffingen",
+        "Aanvragen",
+        "Verspreiden reclamemateriaal",
+        "Werkzaamheden en vervoer op straat",
+        "Evenement",
+        "Ligplaatsvergunning",
+        "Flyeren-Sampling",
+        "Nachtwerkontheffing",
+        "Omzettingsvergunning",
+        "Tijdelijke verkeersmaatregel",
+        "TVM",
+        "Ligplaats woonboot",
+        "VOB",
+        "RVV ontheffing Sloterweg",
+        "RVV Hele stad",
+        "Straatartiesten",
+        "Touringcar",
+        "Zwaar verkeer",
+        "Flyeren-Sampling",
+        "Parkeerontheffing blauwe zone",
+        "Parkeerontheffing",
+        "Blauwe zonze",
+        "RVV-TVM",
+        "TVM-RVV-Object",
+        "Zwaar verkeer"
+      ],
+      "profileTypes": ["private", "commercial"]
     },
     {
       "url": "/horeca",
       "displayTitle": "Horeca",
       "description": "Hier ziet u een overzicht van uw aanvragen voor Horeca vergunningen en ontheffingen.",
-      "keywords": ["Vergunningen", "Aanvragen", "Ontheffingen", "Horeca"]
+      "keywords": [
+        "Vergunningen",
+        "Aanvragen",
+        "Ontheffingen",
+        "Horeca",
+        "exploitatie Horecabedrijf"
+      ],
+      "profileTypes": ["private", "commercial"]
     },
     {
       "url": "/passagiers-en-beroepsvaart",
@@ -328,8 +454,20 @@
         "Parkeren",
         "private",
         "commercial",
-        "vergunningen"
-      ]
+        "vergunningen",
+        "bezoekersvergunning",
+        "Bezoekersparkeervergunning",
+        "bewonersvergunning",
+        "Bewonersparkeervergunning",
+        "Europese gehandicaptenparkeerkaart",
+        "GPK",
+        "Vaste parkeerplaats voor gehandicapten",
+        "GPP",
+        "Touringcar dagontheffing",
+        "Touringcar jaarontheffing",
+        "Eigen parkeerplaats"
+      ],
+      "profileTypes": ["private", "commercial"]
     },
     {
       "url": "/toeristische-verhuur",
@@ -372,26 +510,59 @@
         "Gemeente belasting",
         "iDeal betalen",
         "Boete",
-        "Aanslagen"
-      ]
+        "Aanslagen",
+        "Aanslag",
+        "Taxatieverslag",
+        "Bezwaar indienen",
+        "Kwijtschelding",
+        "Betalingsregeling",
+        "openstaande vorderingen"
+      ],
+      "profileTypes": ["private"]
     },
     {
       "url": "https://mijnsubsidies.amsterdam.nl/loket/",
       "displayTitle": "Subsidies",
       "description": "Een overzicht van uw subsidies.",
-      "keywords": ["Subsidie", "Subsidies"]
+      "keywords": [
+        "Subsidie",
+        "Subsidies",
+        "Subsidieaanvraag",
+        "Subsidie aanvraag"
+      ],
+      "profileTypes": ["private", "commercial"]
     },
     {
       "url": "/erfpacht",
       "displayTitle": "Erfpacht",
       "description": "Een overzicht van uw erfpachtrechten.",
-      "keywords": ["Erfpacht", "Canon", "Afkopen", "Betalen", "Facturen"]
+      "keywords": [
+        "Erfpacht",
+        "Canon",
+        "Afkopen",
+        "Betalen",
+        "Facturen",
+        "Erfpachtrechten",
+        "Erfpachtdossier",
+        "Dossier",
+        "Erfpachter",
+        "indexering "
+      ],
+      "profileTypes": ["private", "commercial"]
     },
     {
       "url": "https://ontheffingen.amsterdam.nl/publiek/aanvragen",
       "displayTitle": "Milieuzone",
       "description": "Een overzicht van milieuzone.",
-      "keywords": ["Milieuzone", "Ontheffing"]
+      "keywords": [
+        "Milieuzone",
+        "Ontheffing",
+        "Overtreding",
+        "Hardheidsclausule",
+        "uitstootvrije  zone",
+        "ontheffingsaanvraag"
+      ],
+      "profileTypes": ["private", "commercial"]
     },
     {
       "url": "/kredietbank-fibu",
@@ -412,6 +583,56 @@
       ],
       "profileTypes": ["private"]
     },
+    {
+      "url": "/bodem",
+      "displayTitle": "Bodem - loodmetingen",
+      "description": "Bodem - loodmetingen",
+      "keywords": [
+        "Bodem",
+        "meting",
+        "lood",
+        "loodmeting",
+        "bodem-check",
+        "loodcheck",
+        "loodonderzoek"
+      ],
+      "profileTypes": ["private", "commercial"]
+    },
+    {
+      "url": "/bezwaren",
+      "displayTitle": "Bezwaren",
+      "description": "Ingediende bezwaren",
+      "keywords": ["Bezwaren", "ingediend", "bezwaar", "bezwaarformulier"],
+      "profileTypes": ["private", "commercial"]
+    },
+    {
+      "url": "/avg",
+      "displayTitle": "AVG Verzoeken",
+      "description": "AVG Verzoeken",
+      "keywords": ["AVG", "verzoek", "persoonsgegevens", "gegevensbescherming"],
+      "profileTypes": ["private"]
+    },
+    {
+      "url": "/facturen-en-betalen",
+      "displayTitle": "Facturen en betalen",
+      "description": "Overzicht van uw facturen, betalingen en automatische incasso's.",
+      "keywords": [
+        "factuur",
+        "incasso",
+        "betalen",
+        "sepa",
+        "ideal",
+        "automatische incasso",
+        "openstaande facturen",
+        "facturen",
+        "betaalde facturen",
+        "facturen belastingen",
+        "gesloten facturen",
+        "andere facturen"
+      ],
+      "profileTypes": ["private", "commercial"]
+    },
+
     {
       "url": "/buurt?datasetIds=[%22afvalcontainers%22]",
       "displayTitle": "Afvalcontainers bij mij in de buurt",
@@ -600,49 +821,9 @@
       "description": "Sporten met Stadspas",
       "keywords": ["Stadspas", "sporten", "pas", "sport"],
       "profileTypes": ["private", "commercial"]
-    },
-    {
-      "url": "/bodem",
-      "displayTitle": "Bodem - loodmetingen",
-      "description": "Bodem - loodmetingen",
-      "keywords": ["Bodem", "meting", "lood", "loodmeting"],
-      "profileTypes": ["private", "commercial"]
-    },
-    {
-      "url": "/bezwaren",
-      "displayTitle": "Bezwaren",
-      "description": "Ingediende bezwaren",
-      "keywords": ["Bezwaren", "ingediend", "bezwaar"],
-      "profileTypes": ["private", "commercial"]
-    },
-    {
-      "url": "/avg",
-      "displayTitle": "AVG Verzoeken",
-      "description": "AVG Verzoeken",
-      "keywords": ["AVG", "verzoek"],
-      "profileTypes": ["private"]
-    },
-    {
-      "url": "/facturen-en-betalen",
-      "displayTitle": "Facturen en betalen",
-      "description": "Overzicht van uw facturen, betalingen en automatische incasso's.",
-      "keywords": [
-        "factuur",
-        "incasso",
-        "betalen",
-        "sepa",
-        "ideal",
-        "automatische incasso",
-        "openstaande facturen",
-        "facturen",
-        "betaalde facturen",
-        "facturen belastingen",
-        "gesloten facturen",
-        "andere facturen"
-      ],
-      "profileTypes": ["private", "commercial"]
     }
   ],
+
   "apiSearchConfigs": {
     "WPI_AANVRAGEN": {
       "keywordsGeneratedFromProps": ["title", "decision", "about"]
