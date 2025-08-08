@@ -81,12 +81,13 @@ export function useContactmomenten() {
   const routeParams = useParams();
 
   const contactmomenten: ContactMomentFrontend[] =
-    KLANT_CONTACT.content?.map((contactMomentItem) => {
+    KLANT_CONTACT?.content?.map((contactMomentItem) => {
+      const menuItemId =
+        getMenuItem(contactMomentItem.subject, myThemasMenuItems)?.id ||
+        contactMomentItem.subject;
       return {
         ...contactMomentItem,
-        className: getRedactedClass(
-          getMenuItem(contactMomentItem.subject, myThemasMenuItems)?.id || null
-        ),
+        className: getRedactedClass(menuItemId),
         themaKanaalIcon: addIcon(contactMomentItem.themaKanaal),
         subjectLink: getLinkToThemaPage(
           contactMomentItem.subject,

@@ -46,8 +46,12 @@ export function MyThemasPanel({
           const LinkComponent = to.startsWith('http') ? MaLink : MaRouterLink;
           return (
             <UnorderedList.Item key={id}>
-              <LinkComponent maVariant="fatNoUnderline" href={to}>
-                <span className={`${styles.ThemaLink} ${getRedactedClass(id)}`}>
+              <LinkComponent
+                maVariant="fatNoUnderline"
+                href={to}
+                className={getRedactedClass(id)}
+              >
+                <span className={styles.ThemaLink}>
                   {IconSVG && (
                     <Icon
                       svg={IconSVG}
