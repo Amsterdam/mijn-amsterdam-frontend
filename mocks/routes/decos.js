@@ -172,7 +172,7 @@ module.exports = [
             const zaak = getZaakByKey(req.params.key);
             const vergunningen = getVarensBelongingToZaak(zaak);
             if (vergunningen) {
-              return res.send({ content: [...vergunningen] });
+              return res.send({ content: vergunningen });
             }
             return res.send({ content: [] });
           },
