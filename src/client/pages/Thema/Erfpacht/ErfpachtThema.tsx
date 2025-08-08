@@ -16,6 +16,7 @@ import { useAfisThemaData } from '../Afis/useAfisThemaData.hook';
 
 export function ErfpachtThema() {
   const {
+    id,
     title,
     isError,
     isLoading,
@@ -66,6 +67,7 @@ export function ErfpachtThema() {
 
   return (
     <ThemaPagina
+      id={id}
       title={title}
       isLoading={isLoading}
       isError={isError}

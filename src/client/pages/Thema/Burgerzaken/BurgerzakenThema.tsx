@@ -21,6 +21,7 @@ export function BurgerzakenThema() {
     isLoading,
     isError,
     linkListItems,
+    id,
     title,
     routeConfig,
   } = useBurgerZakenData();
@@ -42,6 +43,7 @@ export function BurgerzakenThema() {
 
   return (
     <ThemaPagina
+      id={id}
       title={title}
       isError={isError}
       isPartialError={false}

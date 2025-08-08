@@ -119,6 +119,7 @@ export function VarenThema() {
     isError,
     linkListItems,
     buttonItems,
+    id,
     title,
     routeConfig,
   } = useVarenThemaData();
@@ -169,6 +170,7 @@ export function VarenThema() {
 
   return (
     <ThemaPagina
+      id={id}
       title={title}
       isLoading={isLoading}
       isError={isError}

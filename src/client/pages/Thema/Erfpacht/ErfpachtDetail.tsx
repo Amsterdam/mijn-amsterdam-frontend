@@ -17,6 +17,7 @@ export function ErfpachtDetail() {
     isLoadingThemaData,
     relatieCode,
     breadcrumbs,
+    themaId,
     title,
     routeConfig,
   } = useDossierDetailData();
@@ -24,6 +25,7 @@ export function ErfpachtDetail() {
 
   return (
     <ThemaDetailPagina
+      themaId={themaId}
       title={title}
       zaak={dossier}
       isError={isError || isErrorThemaData}

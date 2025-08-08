@@ -11,6 +11,7 @@ import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 export function BurgerzakenList() {
   const {
     documents,
+    id: themaId,
     isLoading,
     isError,
     tableConfig,
@@ -26,6 +27,7 @@ export function BurgerzakenList() {
   return (
     <ListPagePaginated
       items={documents.sort(sort)}
+      themaId={themaId}
       title={title}
       appRoute={generatePath(listPageRoute, { kind, page: null })}
       breadcrumbs={breadcrumbs}

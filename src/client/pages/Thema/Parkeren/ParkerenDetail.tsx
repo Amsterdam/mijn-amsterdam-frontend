@@ -63,6 +63,7 @@ export function ParkerenDetail() {
     useParkerenData();
   const {
     vergunning,
+    themaId,
     title = 'Parkeervergunning of ontheffing',
     documents,
     isLoadingDocuments,
@@ -72,6 +73,7 @@ export function ParkerenDetail() {
 
   return (
     <ThemaDetailPagina
+      themaId={themaId}
       title={title}
       zaak={vergunning}
       isError={isError}

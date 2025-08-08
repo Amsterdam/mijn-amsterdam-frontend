@@ -4,6 +4,7 @@ import { Paragraph } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router';
 
 import { LinkProps, ZaakDetail } from '../../../universal/types/App.types';
+import { getRedactedClass } from '../../helpers/cobrowse';
 import { usePageTypeSetting } from '../../hooks/useThemaMenuItems';
 import ErrorAlert from '../Alert/Alert';
 import LoadingContent from '../LoadingContent/LoadingContent';
@@ -28,6 +29,7 @@ interface ListPagePaginatedProps<T> {
   pageSize?: number;
   tableClassName?: string;
   title: string;
+  themaId: string;
   totalCount?: number;
 }
 
@@ -46,6 +48,7 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
   totalCount,
   tableClassName,
   title,
+  themaId,
 }: ListPagePaginatedProps<T>) {
   usePageTypeSetting('listpage');
 
@@ -71,7 +74,7 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
 
   return (
     <OverviewPageV2>
-      <PageContentV2>
+      <PageContentV2 className={getRedactedClass(themaId)}>
         <PageHeadingV2 breadcrumbs={breadcrumbs}>{title}</PageHeadingV2>
         {isError && (
           <PageContentCell>

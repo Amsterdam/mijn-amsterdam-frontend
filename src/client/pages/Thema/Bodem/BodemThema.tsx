@@ -14,6 +14,7 @@ export function BodemThema() {
     isLoading,
     isError,
     linkListItems,
+    id,
     title,
     routeConfig,
   } = useBodemData();
@@ -39,6 +40,7 @@ export function BodemThema() {
   );
   return (
     <ThemaPagina
+      id={id}
       title={title}
       isLoading={isLoading}
       isError={isError}

@@ -8,8 +8,14 @@ import {
 import { ButtonLinkProps } from '../../../../universal/types/App.types';
 
 export function useVarenDetailPage() {
-  const { varenRederRegistratie, varenZaken, breadcrumbs, isLoading, isError } =
-    useVarenThemaData();
+  const {
+    varenRederRegistratie,
+    varenZaken,
+    id: themaId,
+    breadcrumbs,
+    isLoading,
+    isError,
+  } = useVarenThemaData();
 
   const { id } = useParams<{ id: string }>();
 
@@ -31,6 +37,7 @@ export function useVarenDetailPage() {
 
   return {
     zaak,
+    themaId,
     linkedWijzigingZaak,
     hasRegistratieReder,
     buttonItems,

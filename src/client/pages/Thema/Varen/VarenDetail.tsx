@@ -11,6 +11,7 @@ import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 export function VarenDetail() {
   const {
     zaak,
+    themaId,
     linkedWijzigingZaak,
     hasRegistratieReder,
     buttonItems,
@@ -49,6 +50,7 @@ export function VarenDetail() {
 
   return (
     <ThemaDetailPagina
+      themaId={themaId}
       statusLabel="Status van uw aanvraag"
       title={zaak?.title ?? 'Varen vergunning'}
       zaak={zaak}

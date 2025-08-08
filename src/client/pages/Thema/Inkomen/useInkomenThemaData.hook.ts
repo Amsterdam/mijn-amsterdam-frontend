@@ -92,6 +92,7 @@ export function useInkomenThemaData() {
     zaken,
     specificaties,
     jaaropgaven,
+    id: themaId,
     title: themaTitle,
     linkListItems,
     isLoadingWpi,
