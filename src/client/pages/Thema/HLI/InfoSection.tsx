@@ -1,0 +1,46 @@
+import { regelingenTitle, stadspasTitle, themaId } from './HLI-thema-config';
+import * as generalInfo from '../../GeneralInfo/GeneralInfo';
+
+export const HLIRegelingenSectionProps: generalInfo.SectionProps = {
+  id: themaId,
+  title: regelingenTitle,
+  listItems: [
+    {
+      text: 'Collectieve zorgverzekering',
+    },
+    {
+      text: 'Declaratie Kindtegoed',
+    },
+    {
+      text: 'Kindtegoed Voorschool',
+    },
+    {
+      text: 'Gratis laptop of tablet middelbare school',
+    },
+    {
+      text: 'Gratis laptop of tablet basisschool',
+    },
+    { text: 'Individuele inkomenstoeslag' },
+    { text: "Gratis openbaar vervoer voor AOW'ers" },
+    { text: 'Tegemoetkoming aanvullend openbaar vervoer voor ouderen' },
+    { text: 'Tegemoetkoming openbaar vervoer voor mantelzorgers' },
+  ],
+};
+export const HLIstadspasSectionProps: generalInfo.SectionProps = {
+  id: themaId,
+  title: stadspasTitle,
+  listItems: [
+    {
+      text: 'Status aanvraag Stadspas van u of uw gezin',
+    },
+    {
+      text: 'Het saldo Kindtegoed en/of andere tegoeden en de bestedingen',
+    },
+    {
+      text: 'Stadspasnummer',
+    },
+    {
+      text: 'Stadspas blokkeren',
+    },
+  ],
+};

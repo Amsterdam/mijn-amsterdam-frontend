@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 
 import { getThemaTitle, getThemaTitleWithAppState } from './helpers';
-import { themaTitle } from './HLI-thema-config';
+import { regelingenTitle, themaTitle } from './HLI-thema-config';
 import { AppState } from '../../../../universal/types/App.types';
 
 describe('helpers', () => {
@@ -18,7 +18,7 @@ describe('helpers', () => {
 
     it('should return Regelingen when only hasRegelingen is true', () => {
       const result = getThemaTitle(false, true);
-      expect(result).toBe('Regelingen bij laag inkomen');
+      expect(result).toBe(regelingenTitle);
     });
 
     it('should return default (HLI) when both hasStadspas and hasRegelingen are false', () => {
@@ -64,7 +64,7 @@ describe('helpers', () => {
         },
       } as unknown as AppState;
       const result = getThemaTitleWithAppState(appState);
-      expect(result).toBe('Regelingen bij laag inkomen');
+      expect(result).toBe(regelingenTitle);
     });
 
     it('should return Default (HLI) when appState has neither Regelingen and Stadspas', () => {
