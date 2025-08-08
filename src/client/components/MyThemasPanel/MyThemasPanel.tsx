@@ -47,7 +47,7 @@ export function MyThemasPanel({
           return (
             <UnorderedList.Item key={id}>
               <LinkComponent maVariant="fatNoUnderline" href={to}>
-                <span className={`styles.ThemaLink ${getRedactedClass(id)}`}>
+                <span className={`${styles.ThemaLink} ${getRedactedClass(id)}`}>
                   {IconSVG && (
                     <Icon
                       svg={IconSVG}
