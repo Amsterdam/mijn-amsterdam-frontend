@@ -258,7 +258,7 @@ describe('<Varen />', () => {
     );
   });
 
-  it('Shows the reder data without a correspondence address and without a postal and city', () => {
+  it('Parses postalCode and city from the reder address when the city and postalCode fields are empty', () => {
     const screen = render(
       <Component
         state={getTestState([], {
