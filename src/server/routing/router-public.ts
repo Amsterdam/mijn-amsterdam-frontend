@@ -14,6 +14,7 @@ import {
   ApiResponse_DEPRECATED,
   apiSuccessResult,
 } from '../../universal/helpers/api';
+import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config';
 import {
   getAuth,
   getReturnToUrlZaakStatus,
@@ -198,11 +199,42 @@ router.get(
   }
 );
 
+function stripSetCookieFromResponse(cookieName: string) {
+  return (_req: Request, res: Response, next: NextFunction) => {
+    const originalSetHeader = res.setHeader.bind(res);
+
+    res.setHeader = (
+      name: string,
+      value: number | string | readonly string[]
+    ) => {
+      if (name.toLowerCase() !== 'set-cookie') {
+        return originalSetHeader(name, value);
+      }
+      if (Array.isArray(value)) {
+        const filtered = value.filter(
+          (cookie: string) => !cookie.startsWith(`${cookieName}=`)
+        );
+        return originalSetHeader(name, filtered);
+      } else if (typeof value === 'string') {
+        if (value.startsWith(`${cookieName}=`)) {
+          return res;
+        }
+      }
+      return originalSetHeader(name, value);
+    };
+
+    next();
+  };
+}
+
 router.all(
   BffEndpoints.TELEMETRY_PROXY,
+  // We exclude this long running endpoint from updating the rolling OIDC_SESSION_COOKIE_NAME cookie,
+  // because this can cause a race condition, setting the cookie after the logout clears it.
+  stripSetCookieFromResponse(OIDC_SESSION_COOKIE_NAME),
   proxy('https://westeurope-5.in.applicationinsights.azure.com', {
     memoizeHost: true,
-    proxyReqPathResolver: function (req) {
+    proxyReqPathResolver(_req) {
       return '/v2/track';
     },
   })

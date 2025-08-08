@@ -41,6 +41,11 @@ export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<
     lineItemTransformers: DECLARATIE,
   },
   {
+    productIdentificatie: ['AV-RKV'],
+    lineItemTransformers: REGELING_PERIODIEK,
+    isDisabled: !featureToggle.hliRegelingEnabledRKV,
+  },
+  {
     productIdentificatie: ['AV-IIT', 'AV-KVS', 'AV-SPM', 'AV-TAOV'],
     lineItemTransformers: REGELING_PERIODIEK,
   },
