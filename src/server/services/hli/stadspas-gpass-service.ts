@@ -270,32 +270,46 @@ export function getCurrentPasYearExpiryDate(): Date {
   return thisYearsExpiryDate;
 }
 
-function parseExpiryDate(expiryDate: string): Date {
-  const parsedDate = parseISO(`${expiryDate.split('T')[0]}T00:00.000Z`);
-  return parsedDate;
-}
-
 function isVisiblePass(isPasActief: boolean, expiryDate: string): boolean {
   const thisYearsExpiryDate = getThisYearsDefaultExpiryDate();
-  const previousYearsExpiryDate = getPreviousYearsDefaultExpiryDate();
-  const expiry = parseExpiryDate(expiryDate);
 
-  if (
-    // Do not show passes with an invalid expiry date.
-    !isValid(expiry) ||
-    // Do not show old passes.
-    isBefore(expiry, previousYearsExpiryDate) ||
-    isSameDay(expiry, previousYearsExpiryDate)
-  ) {
+  const cardExpiryDate = parseISO(`${expiryDate.split('T')[0]}T00:00.000Z`);
+  if (!isValid(cardExpiryDate)) {
     return false;
   }
 
-  if (isAfter(expiry, thisYearsExpiryDate)) {
-    // If the pass expires in a future year, we only show it if the pas is active.
+  if (isAfter(cardExpiryDate, thisYearsExpiryDate)) {
+    // HLI can make passes in advance before the new stadspas year.
     return isPasActief;
   }
 
-  return true;
+  return isInActivePassYear(cardExpiryDate);
+}
+
+/** Determine if the stadspas is in the active pass year.
+ *
+ *  We return a number
+ *   0 meaning in this pass year.
+ *  -1 meaning before this pass year (expired) and
+ *   1 meaning after this pass year.
+ */
+function isInActivePassYear(cardExpiryDate: Date): boolean {
+  const startCurrPasYear = '08-01';
+  const endCurrPasYear = '07-31';
+
+  const now = new Date();
+
+  const nowFullYear = now.getFullYear();
+  if (isAfter(now, `${nowFullYear}-${endCurrPasYear}`)) {
+    return (
+      isAfter(cardExpiryDate, `${nowFullYear}-${endCurrPasYear}`) &&
+      isBefore(cardExpiryDate, `${nowFullYear + 1}-${startCurrPasYear}`)
+    );
+  }
+  return (
+    isAfter(cardExpiryDate, `${nowFullYear - 1}-${endCurrPasYear}`) &&
+    isBefore(cardExpiryDate, `${nowFullYear}-${startCurrPasYear}`)
+  );
 }
 
 export async function fetchStadspassen(bsn: BSN) {
