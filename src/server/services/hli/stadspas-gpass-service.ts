@@ -240,7 +240,7 @@ const BEFORE = -1;
 
 /** Determine if the stadspas is in the active pass year.
  *
- * Returns if we are before, past or inside the active pass year.
+ * Returns if we are before, after or inside the active pass year.
  */
 function getWhereInActivePassYear(
   cardExpiryDate: Date
