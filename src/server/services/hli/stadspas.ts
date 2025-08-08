@@ -1,5 +1,10 @@
 import { HttpStatusCode } from 'axios';
-import { differenceInMonths, subMonths } from 'date-fns';
+import {
+  differenceInDays,
+  differenceInMonths,
+  subDays,
+  subMonths,
+} from 'date-fns';
 import { generatePath } from 'react-router';
 
 import { getBudgetNotifications } from './stadspas-config-and-content';
@@ -177,13 +182,18 @@ export async function fetchStadspasBudgetTransactions(
   budgetcode?: StadspasBudget['code'],
   verifySessionId?: AuthProfileAndToken['profile']['sid']
 ) {
-  // RP TODO: Either put this back in a const or fix this.
-  // const [dateStart, dateEnd] = getActivePasJaarDateRange(new Date());
-  const prev = `${new Date().getFullYear() - 1}-07-31`;
-  const monthsAgo = differenceInMonths(new Date(), prev);
+  const [dateStart, dateEnd] = getActivePasJaarDateRange(new Date());
+  const DAYS_FROM_EXPIRY_DATE = differenceInDays(
+    // We want to know how close these days are to eachother without taking years into account.
+    new Date(dateStart).setFullYear(1),
+    new Date(dateEnd).setFullYear(1)
+  );
+  const lastExpiryDate = subDays(dateStart, DAYS_FROM_EXPIRY_DATE);
+
+  const monthsAgo = differenceInMonths(new Date(), lastExpiryDate);
   const MONTHS_BACK_IN_PREVIOUS_YEAR = 6;
-  const from = subMonths(
-    prev,
+  const dateFrom = subMonths(
+    lastExpiryDate,
     Math.max(0, MONTHS_BACK_IN_PREVIOUS_YEAR - monthsAgo)
   );
   return stadspasDecryptAndFetch(
@@ -192,7 +202,7 @@ export async function fetchStadspasBudgetTransactions(
         pasnummer,
         budgetcode,
         sub_transactions: true,
-        date_from: from.toISOString().split('T')[0],
+        date_from: dateFrom.toISOString().split('T')[0],
         date_until: new Date().toISOString().split('T')[0],
         limit: 20,
         offset: 0,
