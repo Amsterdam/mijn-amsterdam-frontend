@@ -808,42 +808,6 @@ describe('stadspas-gpass-service', () => {
   });
 
   describe('filtering', () => {
-    test('getDefaultExpiryDate', () => {
-      expect(forTesting.getDefaultExpiryDate().toISOString()).toBe(
-        '2025-07-31T00:00:00.000Z'
-      );
-      expect(forTesting.getDefaultExpiryDate(-5).toISOString()).toBe(
-        '2020-07-31T00:00:00.000Z'
-      );
-      expect(forTesting.getDefaultExpiryDate(5).toISOString()).toBe(
-        '2030-07-31T00:00:00.000Z'
-      );
-    });
-
-    test('getThisYearsDefaultExpiryDate', () => {
-      expect(forTesting.getThisYearsDefaultExpiryDate().toISOString()).toBe(
-        '2025-07-31T00:00:00.000Z'
-      );
-    });
-
-    test('getNextYearsDefaultExpiryDate', () => {
-      expect(forTesting.getNextYearsDefaultExpiryDate().toISOString()).toBe(
-        '2026-07-31T00:00:00.000Z'
-      );
-    });
-
-    test('getPreviousYearsDefaultExpiryDate', () => {
-      expect(forTesting.getPreviousYearsDefaultExpiryDate().toISOString()).toBe(
-        '2024-07-31T00:00:00.000Z'
-      );
-    });
-
-    test('getCurrentPasYearExpiryDate', () => {
-      expect(forTesting.getCurrentPasYearExpiryDate().toISOString()).toBe(
-        '2025-07-31T00:00:00.000Z'
-      );
-    });
-
     test.each([
       // In the current pasjaar.
       [true, '2025-07-31', true],

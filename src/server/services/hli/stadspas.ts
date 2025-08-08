@@ -7,8 +7,7 @@ import {
   fetchGpassBudgetTransactions,
   fetchGpassDiscountTransactions,
   fetchStadspassen,
-  getCurrentPasYearExpiryDate,
-  getPreviousYearsDefaultExpiryDate,
+  getActivePasJaarDateRange,
   mutateGpassSetPasIsBlockedState,
 } from './stadspas-gpass-service';
 import {
@@ -89,9 +88,10 @@ export async function fetchStadspas(
       return stadspasFrontend;
     });
 
+  const [, dateEnd] = getActivePasJaarDateRange(new Date());
   return apiSuccessResult({
     stadspassen,
-    dateExpiryFormatted: defaultDateFormat(getCurrentPasYearExpiryDate()),
+    dateExpiryFormatted: defaultDateFormat(dateEnd),
   });
 }
 
@@ -177,7 +177,9 @@ export async function fetchStadspasBudgetTransactions(
   budgetcode?: StadspasBudget['code'],
   verifySessionId?: AuthProfileAndToken['profile']['sid']
 ) {
-  const prev = getPreviousYearsDefaultExpiryDate();
+  // RP TODO: Either put this back in a const or fix this.
+  // const [dateStart, dateEnd] = getActivePasJaarDateRange(new Date());
+  const prev = `${new Date().getFullYear() - 1}-07-31`;
   const monthsAgo = differenceInMonths(new Date(), prev);
   const MONTHS_BACK_IN_PREVIOUS_YEAR = 6;
   const from = subMonths(
