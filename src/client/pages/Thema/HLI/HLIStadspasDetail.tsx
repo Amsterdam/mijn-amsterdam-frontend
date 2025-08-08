@@ -150,7 +150,7 @@ export function HLIStadspasDetail() {
 
   return (
     <DetailPageV2>
-      <PageContentV2 className={themaId && getRedactedClass(themaId)}>
+      <PageContentV2 className={getRedactedClass(themaId)}>
         <PageHeadingV2 breadcrumbs={breadcrumbs}>
           Overzicht Stadspas{' '}
           {stadspas?.owner && ` van ${stadspas?.owner.firstname}`}

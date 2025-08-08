@@ -74,7 +74,7 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
 
   return (
     <OverviewPageV2>
-      <PageContentV2 className={themaId && getRedactedClass(themaId)}>
+      <PageContentV2 className={getRedactedClass(themaId)}>
         <PageHeadingV2 breadcrumbs={breadcrumbs}>{title}</PageHeadingV2>
         {isError && (
           <PageContentCell>

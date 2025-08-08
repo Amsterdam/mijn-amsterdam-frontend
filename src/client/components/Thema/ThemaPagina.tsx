@@ -54,7 +54,7 @@ export default function ThemaPagina({
   const showError = (!isError && isPartialError) || isError;
   return (
     <OverviewPageV2>
-      <PageContentV2 className={id && getRedactedClass(id)}>
+      <PageContentV2 className={getRedactedClass(id)}>
         <PageHeadingV2 breadcrumbs={breadcrumbs}>{title}</PageHeadingV2>
         {pageContentTop}
         {!!linkListItems.length && (
