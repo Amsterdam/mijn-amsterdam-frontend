@@ -838,6 +838,7 @@ describe('stadspas-gpass-service', () => {
     test('Moving into the new pasyear', () => {
       Mockdate.set('2025-08-01');
       expect(forTesting.isVisiblePass(false, '2025-07-31')).toBe(false);
+      expect(forTesting.isVisiblePass(true, '2025-07-31')).toBe(false);
     });
   });
 });
