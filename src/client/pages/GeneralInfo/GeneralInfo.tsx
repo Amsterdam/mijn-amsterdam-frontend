@@ -43,7 +43,7 @@ export type SectionProps = {
   to?: string; // Use this instead of the themaMenuItem 'to URL' and force link to be clickable.
   listItems: ListItems;
 };
-type ListItems = Array<{ text: string; nested?: string[] }>;
+type ListItems = Array<{ text: string; listItems?: string[] }>;
 
 const sections: SectionProps[] = [
   profileSectionProps,
