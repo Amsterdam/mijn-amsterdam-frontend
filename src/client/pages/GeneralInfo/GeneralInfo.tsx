@@ -76,14 +76,12 @@ function Section({ id, title, listItems, to }: SectionProps) {
   const listItemComponents = listItems.map((item, i) => (
     <UnorderedList.Item key={i}>
       {item.text}
-      {item.nested && item.nested.length ? (
+      {!!item.listItems?.length && (
         <UnorderedList>
           {item.nested.map((nestedItem, j) => (
             <UnorderedList.Item key={j}>{nestedItem}</UnorderedList.Item>
           ))}
         </UnorderedList>
-      ) : (
-        ''
       )}
     </UnorderedList.Item>
   ));
