@@ -808,64 +808,37 @@ describe('stadspas-gpass-service', () => {
   });
 
   describe('filtering', () => {
-    test('getDefaultExpiryDate', () => {
-      expect(forTesting.getDefaultExpiryDate().toISOString()).toBe(
-        '2025-07-31T00:00:00.000Z'
-      );
-      expect(forTesting.getDefaultExpiryDate(-5).toISOString()).toBe(
-        '2020-07-31T00:00:00.000Z'
-      );
-      expect(forTesting.getDefaultExpiryDate(5).toISOString()).toBe(
-        '2030-07-31T00:00:00.000Z'
-      );
-    });
-
-    test('getThisYearsDefaultExpiryDate', () => {
-      expect(forTesting.getThisYearsDefaultExpiryDate().toISOString()).toBe(
-        '2025-07-31T00:00:00.000Z'
-      );
-    });
-
-    test('getNextYearsDefaultExpiryDate', () => {
-      expect(forTesting.getNextYearsDefaultExpiryDate().toISOString()).toBe(
-        '2026-07-31T00:00:00.000Z'
-      );
-    });
-
-    test('getPreviousYearsDefaultExpiryDate', () => {
-      expect(forTesting.getPreviousYearsDefaultExpiryDate().toISOString()).toBe(
-        '2024-07-31T00:00:00.000Z'
-      );
-    });
-
-    test('getCurrentPasYearExpiryDate', () => {
-      expect(forTesting.getCurrentPasYearExpiryDate().toISOString()).toBe(
-        '2025-07-31T00:00:00.000Z'
-      );
-    });
-
     test.each([
-      [true, '2024-08-01', true],
-      [false, '2024-08-01', true],
-      [true, '2024-07-31', false],
-      [false, '2024-07-31', false],
+      // In the current pasjaar.
       [true, '2025-07-31', true],
       [false, '2025-07-31', true],
-      [true, '2025-01-01', true],
+      // Show future passes but not inactive future ones.
+      [true, '2026-07-31', true],
+      [false, '2026-07-31', false],
+      // Blocked passes in the current pasjaar.
+      [false, '2024-08-01', true],
       [false, '2025-01-01', true],
-      [true, '2024-01-01', false],
-      [false, '2024-01-01', false],
-      [true, '2024-12-10', true],
       [false, '2024-12-10', true],
+      // Blocked somewhere in the last pasjaar.
+      [false, '2024-01-01', false],
+      // Expired last pasjaar.
+      [true, '2024-07-31', false],
+      [false, '2024-07-31', false],
+      // Do not show passes with an invalid date.
       [true, 'invalid-date', false],
       [false, 'invalid-date', false],
-      [true, '2026-08-01', true],
-      [false, '2026-08-01', false],
     ])(
       'Shoud pass be visible if pas.actief = %s and epiry date %s ?',
       (isActief, expiryDate, isValid) => {
+        Mockdate.set('2025-01-01');
         expect(forTesting.isVisiblePass(isActief, expiryDate)).toBe(isValid);
       }
     );
+
+    test('Moving into the new pasyear', () => {
+      Mockdate.set('2025-08-01');
+      expect(forTesting.isVisiblePass(false, '2025-07-31')).toBe(false);
+      expect(forTesting.isVisiblePass(true, '2025-07-31')).toBe(false);
+    });
   });
 });
