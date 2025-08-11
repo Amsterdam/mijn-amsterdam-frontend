@@ -264,12 +264,14 @@ export function getActivePasJaarDateRange(now: Date): [string, string] {
   const startMonthDay = '08-01';
   // The 31st of July is the default yearly expiry date for stadspassen.
   const endMonthDay = '07-31';
-  const passStartYear = new Date(`${currentYear}-${startMonthDay}`) <= now ? currentYear  :  currentYear - 1;
+
+  const passStartYear =
+    new Date(`${currentYear}-${startMonthDay}`) <= now
+      ? currentYear
+      : currentYear - 1;
+
   const dateStart = `${passStartYear}-${startMonthDay}`;
   const dateEnd = `${passStartYear + 1}-${endMonthDay}`;
-
-  const dateStart = `${currentYear - 1 + addYear}-${startMonthDay}`;
-  const dateEnd = `${currentYear + addYear}-${endMonthDay}`;
   return [dateStart, dateEnd];
 }
 
