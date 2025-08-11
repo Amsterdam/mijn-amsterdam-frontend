@@ -74,7 +74,6 @@ export const laadpaalValueConfig: Record<string, string> = {
 };
 
 export const DATASETS: DatasetCategories = {
-  //Why is laadpalen inactive?
   laadpalen: {
     isDisabled: !featureToggle.laadpalenActive,
     title: 'Laadpalen',
@@ -191,7 +190,7 @@ export const DATASETS: DatasetCategories = {
     title: 'Evenementen',
     datasets: { evenementen: { title: 'Evenementen' } },
   },
-  // Sport: you dont see this working on localhost
+
   sport: {
     isDisabled: !featureToggle.sportDatasetsActive,
     title: 'Sport',
