@@ -4,7 +4,7 @@ import {
   UnorderedList,
 } from '@amsterdam/design-system-react';
 
-import { MaRouterLink } from '../../components/MaLink/MaLink';
+import { MaLink, MaRouterLink } from '../../components/MaLink/MaLink';
 import { myAreaSectionProps } from '../../components/MyArea/InfoSection';
 import {
   PageContentCell,
@@ -91,12 +91,13 @@ function Section({ id, title, listItems, to }: SectionProps) {
   const themaMenuItem = themaMenuItems[id];
 
   const href = to || (themaMenuItem && themaMenuItem.to);
-  const titleComponent = href ? (
-    <MaRouterLink maVariant="fatNoUnderline" href={href}>
-      {title}
-    </MaRouterLink>
-  ) : (
+  const LinkComponent = getLinkComponent(href);
+  const titleComponent = !LinkComponent ? (
     title
+  ) : (
+    <LinkComponent maVariant="fatNoUnderline" href={href}>
+      {title}
+    </LinkComponent>
   );
 
   return (
@@ -107,6 +108,16 @@ function Section({ id, title, listItems, to }: SectionProps) {
       <UnorderedList className="ams-mb-xl">{listItemComponents}</UnorderedList>
     </>
   );
+}
+
+function getLinkComponent(href: string) {
+  if (!href) {
+    return null;
+  }
+  if (href.startsWith('http')) {
+    return MaLink;
+  }
+  return MaRouterLink;
 }
 
 export function GeneralInfo() {
