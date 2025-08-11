@@ -1,6 +1,7 @@
 import { Paragraph, Link, Heading } from '@amsterdam/design-system-react';
 
 import { useErfpachtThemaData } from './useErfpachtThemaData.hook';
+import { useWonenThemaData } from './useVvEThemaData.hook';
 import {
   ErfpachtDossierFrontend,
   ErfpachtDossierFactuurFrontend,
@@ -27,7 +28,9 @@ export function ErfpachtThema() {
     listPageParamKind,
   } = useErfpachtThemaData();
 
+  const wonenData = useWonenThemaData();
   const afisData = useAfisThemaData();
+
   const hasOpenstaandeErfpachtFacturen =
     !!afisData.facturenByState?.open?.facturen.filter((factuur) =>
       factuur.afzender.toLowerCase().includes('erfpacht')
@@ -94,6 +97,11 @@ export function ErfpachtThema() {
 
           <PageContentCell spanWide={8}>
             <MissingFacturenDescription />
+            <>
+              <Heading size="level-3" level={3}>
+                {wonenData?.wonenData?.name}
+              </Heading>
+            </>
           </PageContentCell>
         </>
       }

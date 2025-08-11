@@ -7,7 +7,7 @@ import { useAppStateBagApi } from '../../../../hooks/useAppState';
 import { getTableConfig, themaId } from '../Erfpacht-thema-config';
 import { useErfpachtThemaData } from '../useErfpachtThemaData.hook';
 
-export function useDossierDetaiLData() {
+export function useDossierDetailData() {
   const { dossierNummerUrlParam } = useParams<{
     dossierNummerUrlParam: string;
   }>();

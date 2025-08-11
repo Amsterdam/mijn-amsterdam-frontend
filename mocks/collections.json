@@ -73,6 +73,7 @@
       "post-powerbrowser-token:standard",
       "get-powerbrowser-zaken:standard",
       "get-salesforce:standard",
+      "get-wonen-vve-details:standard",
       "post-powerbrowser-personen-zaken:standard",
       "post-zorgned-persoonsgegevens:standard",
       "post-zorgned-aanvragen:standard",
