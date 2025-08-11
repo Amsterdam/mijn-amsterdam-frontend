@@ -1,5 +1,5 @@
 import { HttpStatusCode } from 'axios';
-import { isAfter, isBefore, parseISO, isValid } from 'date-fns';
+import * as date from 'date-fns';
 
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import { GPASS_API_TOKEN } from './stadspas-config-and-content';
@@ -39,6 +39,13 @@ import {
   requestData,
 } from '../../helpers/source-api-request';
 import type { BSN } from '../zorgned/zorgned-types';
+
+// The first of August is the default yearly activation date for stadspassen.
+// This date is chosen to activate all new passes that are given out by Amsterdam.
+// MD = Month day in YYYY-M-D
+const PASSYEAR_MD_START = '08-01';
+// The 31st of July is the default yearly expiry date for stadspassen.
+const PASSYEAR_MD_END = '07-31';
 
 const NO_PASHOUDER_CONTENT_RESPONSE = apiSuccessResult({
   stadspassen: [],
@@ -245,39 +252,35 @@ const BEFORE = -1;
 function getWhereInActivePassYear(
   cardExpiryDate: Date
 ): typeof INSIDE | typeof AFTER | typeof BEFORE {
-  const [dateStart, dateEnd] = getActivePasJaarDateRange(new Date());
+  const [dateStart, dateEnd] = getActivePassYearDateRange(new Date());
 
-  if (isBefore(cardExpiryDate, dateStart)) {
+  if (date.isBefore(cardExpiryDate, dateStart)) {
     return BEFORE;
   }
-  if (isAfter(cardExpiryDate, dateEnd)) {
+  if (date.isAfter(cardExpiryDate, dateEnd)) {
     return AFTER;
   }
   return INSIDE;
 }
 
-export function getActivePasJaarDateRange(now: Date): [string, string] {
+export function getActivePassYearDateRange(now: Date): [string, string] {
   const currentYear = now.getFullYear();
 
-  // The first of August is the default yearly activation date for stadspassen.
-  // This date is chosen to activate all new passes that are given out by Amsterdam.
-  const startMonthDay = '08-01';
-  // The 31st of July is the default yearly expiry date for stadspassen.
-  const endMonthDay = '07-31';
-
   const passStartYear =
-    new Date(`${currentYear}-${startMonthDay}`) <= now
+    new Date(`${currentYear}-${PASSYEAR_MD_START}`) <= now
       ? currentYear
       : currentYear - 1;
 
-  const dateStart = `${passStartYear}-${startMonthDay}`;
-  const dateEnd = `${passStartYear + 1}-${endMonthDay}`;
+  const dateStart = `${passStartYear}-${PASSYEAR_MD_START}`;
+  const dateEnd = `${passStartYear + 1}-${PASSYEAR_MD_END}`;
   return [dateStart, dateEnd];
 }
 
 function isVisiblePass(isPasActief: boolean, expiryDate: string): boolean {
-  const cardExpiryDate = parseISO(`${expiryDate.split('T')[0]}T00:00.000Z`);
-  if (!isValid(cardExpiryDate)) {
+  const cardExpiryDate = date.parseISO(
+    `${expiryDate.split('T')[0]}T00:00.000Z`
+  );
+  if (!date.isValid(cardExpiryDate)) {
     return false;
   }
 

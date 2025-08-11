@@ -1,10 +1,5 @@
 import { HttpStatusCode } from 'axios';
-import {
-  differenceInDays,
-  differenceInMonths,
-  subDays,
-  subMonths,
-} from 'date-fns';
+import { differenceInMonths, subMonths } from 'date-fns';
 import { generatePath } from 'react-router';
 
 import { getBudgetNotifications } from './stadspas-config-and-content';
@@ -12,7 +7,7 @@ import {
   fetchGpassBudgetTransactions,
   fetchGpassDiscountTransactions,
   fetchStadspassen,
-  getActivePasJaarDateRange,
+  getActivePassYearDateRange,
   mutateGpassSetPasIsBlockedState,
 } from './stadspas-gpass-service';
 import {
@@ -93,7 +88,7 @@ export async function fetchStadspas(
       return stadspasFrontend;
     });
 
-  const [, dateEnd] = getActivePasJaarDateRange(new Date());
+  const [, dateEnd] = getActivePassYearDateRange(new Date());
   return apiSuccessResult({
     stadspassen,
     dateExpiryFormatted: defaultDateFormat(dateEnd),
@@ -184,7 +179,7 @@ export async function fetchStadspasBudgetTransactions(
 ) {
   const now = new Date();
   now.setFullYear(new Date().getFullYear() - 1);
-  const [, previousExpiryDate] = getActivePasJaarDateRange(now);
+  const [, previousExpiryDate] = getActivePassYearDateRange(now);
 
   const monthsAgo = differenceInMonths(new Date(), previousExpiryDate);
   const MONTHS_BACK_IN_PREVIOUS_YEAR = 6;
