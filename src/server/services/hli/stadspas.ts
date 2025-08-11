@@ -182,18 +182,14 @@ export async function fetchStadspasBudgetTransactions(
   budgetcode?: StadspasBudget['code'],
   verifySessionId?: AuthProfileAndToken['profile']['sid']
 ) {
-  const [dateStart, dateEnd] = getActivePasJaarDateRange(new Date());
-  const DAYS_FROM_EXPIRY_DATE = differenceInDays(
-    // We want to know how close these days are to eachother without taking years into account.
-    new Date(dateStart).setFullYear(1),
-    new Date(dateEnd).setFullYear(1)
-  );
-  const lastExpiryDate = subDays(dateStart, DAYS_FROM_EXPIRY_DATE);
+  const now = new Date();
+  now.setFullYear(new Date().getFullYear() - 1);
+  const [, previousExpiryDate] = getActivePasJaarDateRange(now);
 
-  const monthsAgo = differenceInMonths(new Date(), lastExpiryDate);
+  const monthsAgo = differenceInMonths(new Date(), previousExpiryDate);
   const MONTHS_BACK_IN_PREVIOUS_YEAR = 6;
   const dateFrom = subMonths(
-    lastExpiryDate,
+    previousExpiryDate,
     Math.max(0, MONTHS_BACK_IN_PREVIOUS_YEAR - monthsAgo)
   );
   return stadspasDecryptAndFetch(
