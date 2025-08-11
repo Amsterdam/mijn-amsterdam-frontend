@@ -78,7 +78,7 @@ function Section({ id, title, listItems, to }: SectionProps) {
       {item.text}
       {!!item.listItems?.length && (
         <UnorderedList>
-          {item.nested.map((nestedItem, j) => (
+          {item.listItems.map((nestedItem, j) => (
             <UnorderedList.Item key={j}>{nestedItem}</UnorderedList.Item>
           ))}
         </UnorderedList>
