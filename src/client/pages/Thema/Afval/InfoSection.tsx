@@ -1,7 +1,7 @@
 import { themaId, themaTitle } from './Afval-thema-config';
-import * as generalInfo from '../../GeneralInfo/GeneralInfo';
+import { SectionProps } from '../../GeneralInfo/GeneralInfo';
 
-export const afvalSectionProps: generalInfo.SectionProps = {
+export const afvalSectionProps: SectionProps = {
   id: themaId,
   title: themaTitle,
   listItems: [

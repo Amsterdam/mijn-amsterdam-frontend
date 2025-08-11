@@ -1,7 +1,7 @@
 import { themaIdBRP, themaTitle } from './Profile-thema-config';
-import * as generalInfo from '../../GeneralInfo/GeneralInfo';
+import { SectionProps } from '../../GeneralInfo/GeneralInfo';
 
-export const profileSectionProps: generalInfo.SectionProps = {
+export const profileSectionProps: SectionProps = {
   id: themaIdBRP,
   title: themaTitle[themaIdBRP],
   listItems: [

@@ -1,7 +1,7 @@
 import { themaId, themaTitle } from './Zorg-thema-config';
-import * as generalInfo from '../../GeneralInfo/GeneralInfo';
+import { SectionProps } from '../../GeneralInfo/GeneralInfo';
 
-export const zorgSectionProps: generalInfo.SectionProps = {
+export const zorgSectionProps: SectionProps = {
   id: themaId,
   title: themaTitle,
   listItems: [

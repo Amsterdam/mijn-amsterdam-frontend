@@ -1,7 +1,7 @@
 import { routeConfig, themaId, themaTitle } from './MyArea-thema-config';
-import * as generalInfo from '../../pages/GeneralInfo/GeneralInfo';
+import { SectionProps } from '../../pages/GeneralInfo/GeneralInfo';
 
-export const myAreaSectionProps: generalInfo.SectionProps = {
+export const myAreaSectionProps: SectionProps = {
   id: themaId,
   title: themaTitle,
   to: routeConfig.themaPage.path,

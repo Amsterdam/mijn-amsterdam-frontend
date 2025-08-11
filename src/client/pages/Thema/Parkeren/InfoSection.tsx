@@ -1,7 +1,7 @@
 import { themaId, themaTitle } from './Parkeren-thema-config';
-import * as generalInfo from '../../GeneralInfo/GeneralInfo';
+import { SectionProps } from '../../GeneralInfo/GeneralInfo';
 
-export const parkerensectionProps: generalInfo.SectionProps = {
+export const parkerensectionProps: SectionProps = {
   id: themaId,
   title: themaTitle,
   listItems: [

@@ -1,7 +1,7 @@
 import { themaId, themaTitle } from './Erfpacht-thema-config';
-import * as generalInfo from '../../GeneralInfo/GeneralInfo';
+import { SectionProps } from '../../GeneralInfo/GeneralInfo';
 
-export const erfpachtSectionProps: generalInfo.SectionProps = {
+export const erfpachtSectionProps: SectionProps = {
   id: themaId,
   title: themaTitle,
   listItems: [{ text: 'Overzicht van uw erfpachtgegevens' }],

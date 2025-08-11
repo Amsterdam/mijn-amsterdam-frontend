@@ -1,7 +1,7 @@
 import { regelingenTitle, stadspasTitle, themaId } from './HLI-thema-config';
-import * as generalInfo from '../../GeneralInfo/GeneralInfo';
+import { SectionProps } from '../../GeneralInfo/GeneralInfo';
 
-export const HLIRegelingenSectionProps: generalInfo.SectionProps = {
+export const HLIRegelingenSectionProps: SectionProps = {
   id: themaId,
   title: regelingenTitle,
   listItems: [
@@ -26,7 +26,7 @@ export const HLIRegelingenSectionProps: generalInfo.SectionProps = {
     { text: 'Tegemoetkoming openbaar vervoer voor mantelzorgers' },
   ],
 };
-export const HLIstadspasSectionProps: generalInfo.SectionProps = {
+export const HLIstadspasSectionProps: SectionProps = {
   id: themaId,
   title: stadspasTitle,
   listItems: [

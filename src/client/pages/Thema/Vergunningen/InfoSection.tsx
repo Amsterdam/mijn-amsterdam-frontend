@@ -1,7 +1,7 @@
 import { themaId, themaTitle } from './Vergunningen-thema-config';
-import * as generalInfo from '../../GeneralInfo/GeneralInfo';
+import { SectionProps } from '../../GeneralInfo/GeneralInfo';
 
-export const vergunningensectionProps: generalInfo.SectionProps = {
+export const vergunningensectionProps: SectionProps = {
   id: themaId,
   title: themaTitle,
   listItems: [

@@ -1,7 +1,7 @@
 import { themaId, themaTitle } from './Bodem-thema-config';
-import * as generalInfo from '../../GeneralInfo/GeneralInfo';
+import { SectionProps } from '../../GeneralInfo/GeneralInfo';
 
-export const bodemsectionProps: generalInfo.SectionProps = {
+export const bodemsectionProps: SectionProps = {
   id: themaId,
   title: themaTitle,
   listItems: [

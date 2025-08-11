@@ -1,7 +1,7 @@
 import { themaId, themaTitle } from './Belastingen-thema-config';
-import * as generalInfo from '../../GeneralInfo/GeneralInfo';
+import { SectionProps } from '../../GeneralInfo/GeneralInfo';
 
-export const belastingenSectionProps: generalInfo.SectionProps = {
+export const belastingenSectionProps: SectionProps = {
   id: themaId,
   title: themaTitle,
   listItems: [

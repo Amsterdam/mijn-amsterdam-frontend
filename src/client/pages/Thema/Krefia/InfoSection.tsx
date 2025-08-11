@@ -1,7 +1,7 @@
 import { themaId, themaTitle } from './Krefia-thema-config';
-import * as generalInfo from '../../GeneralInfo/GeneralInfo';
+import { SectionProps } from '../../GeneralInfo/GeneralInfo';
 
-export const krefiaSectionProps: generalInfo.SectionProps = {
+export const krefiaSectionProps: SectionProps = {
   id: themaId,
   title: themaTitle,
   listItems: [

@@ -1,7 +1,7 @@
 import { themaId, themaTitle } from './AVG-thema-config';
-import * as generalInfo from '../../GeneralInfo/GeneralInfo';
+import { SectionProps } from '../../GeneralInfo/GeneralInfo';
 
-export const AVGsectionProps: generalInfo.SectionProps = {
+export const AVGsectionProps: SectionProps = {
   id: themaId,
   title: themaTitle,
   listItems: [{ text: 'Uw inzage of wijziging persoonsgegevens AVG' }],
