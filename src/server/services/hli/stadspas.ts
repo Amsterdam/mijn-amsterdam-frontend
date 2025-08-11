@@ -1,5 +1,5 @@
 import { HttpStatusCode } from 'axios';
-import { differenceInMonths, subMonths } from 'date-fns';
+import * as date from 'date-fns';
 import { generatePath } from 'react-router';
 
 import { getBudgetNotifications } from './stadspas-config-and-content';
@@ -177,16 +177,13 @@ export async function fetchStadspasBudgetTransactions(
   budgetcode?: StadspasBudget['code'],
   verifySessionId?: AuthProfileAndToken['profile']['sid']
 ) {
-  const now = new Date();
-  now.setFullYear(new Date().getFullYear() - 1);
-  const [, previousExpiryDate] = getActivePassYearDateRange(now);
+  const lastYear = date.subYears(new Date(), 1);
+  const [, previousExpiryDate] = getActivePassYearDateRange(lastYear);
 
-  const monthsAgo = differenceInMonths(new Date(), previousExpiryDate);
-  const MONTHS_BACK_IN_PREVIOUS_YEAR = 6;
-  const dateFrom = subMonths(
-    previousExpiryDate,
-    Math.max(0, MONTHS_BACK_IN_PREVIOUS_YEAR - monthsAgo)
-  );
+  const HALF_YEAR = 6;
+  const halfAYearAgo = date.subMonths(new Date(), HALF_YEAR);
+
+  const dateFrom = date.min([new Date(previousExpiryDate), halfAYearAgo]);
   return stadspasDecryptAndFetch(
     (administratienummer, pasnummer) =>
       fetchGpassBudgetTransactions(administratienummer, {
