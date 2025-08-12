@@ -18,6 +18,7 @@
     "build": "cross-env MA_APP_MODE=production vite build",
     "serve": "vite preview",
     "test": "cross-env MA_APP_MODE=unittest vitest src/client",
+    "test:dirs": "cross-env MA_APP_MODE=unittest vitest",
     "bff-api:watch": "nodemon -e ts -w ./src/server -w ./src/universal -w ./.env.local -x pnpm run bff-api:serve-dev",
     "bff-api:test": "cross-env MA_APP_MODE=unittest vitest --environment=node src/server src/universal",
     "bff-api:test:dirs": "cross-env MA_APP_MODE=unittest vitest --environment=node",
