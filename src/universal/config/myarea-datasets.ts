@@ -66,66 +66,7 @@ if (month !== DECEMBER && month !== JANUARY) {
   excludeFractieOmschrijving.push('Kerstboom');
 }
 
-export const laadpaalValueConfig: Record<string, string> = {
-  snellader: 'Snellader',
-  IEC_62196_T2_COMBO: 'CCS',
-  IEC_62196_T2: 'Type 2 (Mennekes)',
-  CHADEMO: 'Chademo',
-};
-
 export const DATASETS: DatasetCategories = {
-  laadpalen: {
-    isDisabled: !featureToggle.laadpalenActive,
-    title: 'Laadpalen',
-    datasets: {
-      laadpalen: {
-        title: 'Laadpalen',
-        filters: {
-          snellader: {
-            title: laadpaalValueConfig.snellader,
-            valueConfig: {
-              True: { title: 'Ja' },
-              False: { title: 'Nee' },
-            },
-          },
-          CHADEMO: {
-            title: laadpaalValueConfig.CHADEMO,
-            valueConfig: {
-              True: { title: 'Ja' },
-              False: { title: 'Nee' },
-            },
-          },
-          IEC_62196_T2_COMBO: {
-            title: laadpaalValueConfig.IEC_62196_T2_COMBO,
-            valueConfig: {
-              True: { title: 'Ja' },
-              False: { title: 'Nee' },
-            },
-          },
-          IEC_62196_T2: {
-            title: laadpaalValueConfig.IEC_62196_T2,
-            valueConfig: {
-              True: { title: 'Ja' },
-              False: { title: 'Nee' },
-            },
-          },
-          maxWattage: {
-            title: 'Maximum wattage',
-            valueConfig: {
-              W1: { title: '0-5 watt' },
-              W2: { title: '50-100 watt' },
-              W3: { title: '100-300 watt' },
-              W4: { title: '300+ watt' },
-              W5: { title: 'Overige' },
-            },
-          },
-          provider: {
-            title: 'Provider',
-          },
-        },
-      },
-    },
-  },
   afvalcontainers: {
     title: 'Afvalcontainers',
     datasets: {

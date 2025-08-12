@@ -7,7 +7,6 @@ export const featureToggle = {
   meldingenBuurtActive: true,
   wiorDatasetActive: true,
   wiorMeldingen: true,
-  laadpalenActive: false,
   bekendmakingenDatasetActive: false,
   evenementenDatasetActive: false,
   sportDatasetsActive: true,

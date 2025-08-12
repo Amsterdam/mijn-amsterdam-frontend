@@ -25,7 +25,6 @@ import {
   FeatureType,
 } from '../../../universal/config/myarea-datasets';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
-import { uniqueArray } from '../../../universal/helpers/utils';
 import { DAYS_IN_YEAR, ONE_SECOND_MS } from '../../config/app';
 import { DataRequestConfig } from '../../config/source-api';
 import FileCache from '../../helpers/file-cache';
@@ -421,34 +420,6 @@ export const datasetEndpoints: Record<
       cancelTimeout: 30000,
     },
   },
-  laadpalen: {
-    listUrl:
-      'https://map.data.amsterdam.nl/maps/oplaadpunten?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=ms:normaal_beschikbaar&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326',
-    // transformList: transformLaadpalenListReponse, // Transforming the data is done in fetchAndTransformLaadpalen
-    transformDetail: transformLaadpalenDetailResponse,
-    idKeyList: 'id',
-    featureType: 'Point',
-    cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
-    geometryKey: 'geometry',
-    triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
-    dsoApiAdditionalStaticFieldNames: [
-      'connector_type',
-      'charging_cap_max',
-      'url',
-      'name',
-      'street',
-      'housenumber',
-      'housenumberext',
-      'postalcode',
-      'city',
-      'provider',
-    ],
-    requestConfig: {
-      request: fetchAndTransformLaadpalen,
-      cancelTimeout: 30000,
-    },
-    disabled: !featureToggle.laadpalenActive,
-  },
 };
 
 // This function retrieves a maximum of 5 `pages` with data from the meldingen api.
@@ -571,108 +542,6 @@ function transformMeldingDetailResponse(
 
   return item.properties;
 }
-
-export async function fetchAndTransformLaadpalen<T>(
-  requestConfig: DataRequestConfig
-): Promise<AxiosResponse<T>> {
-  const urls = [
-    requestConfig.url, // zie datasetEndpoints.laadpalen.listUrl
-    'https://map.data.amsterdam.nl/maps/oplaadpunten?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=ms:snel_beschikbaar&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326',
-  ];
-
-  const datasetId = 'laadpalen';
-  const datasetConfig = datasetEndpoints.laadpalen;
-
-  const requests = urls.map((url) => {
-    return axiosRequest.request<WFSApiResponse>({
-      ...requestConfig,
-      url,
-    });
-  });
-
-  const responses = await Promise.all(requests);
-
-  // Merge the features we got from the 2 responses.
-  const features = responses
-    .map((response, index) => {
-      if ('features' in response.data) {
-        return response.data.features.map((feature) => {
-          // The second (index==1) dataset contains chargers of type `snellader`. Here we add a property that distinguishes it from the features of the first dataset _before_ the responses are merged.
-          Object.assign(feature.properties, { snellader: index === 1 });
-          return feature;
-        });
-      }
-      return response.data;
-    })
-    .flat() as WFSFeatureSource<LaadPaalProps>[];
-
-  // Transform all the features at once and assign back the result to the first Axios response.
-  (responses[0].data as unknown as DatasetFeatures) =
-    transformGenericApiListResponse(datasetId, datasetConfig, {
-      features: transformLaadpalenFeatures(features),
-    });
-
-  return <AxiosResponse<T>>responses[0];
-}
-
-type LaadPaalProps = {
-  connector_type: string;
-  charging_cap_max: string;
-  id: string;
-  maxWattage: string;
-  [key: string]: unknown;
-};
-
-function transformLaadpalenFeatures(
-  featuresSource: WFSFeatureSource<LaadPaalProps>[]
-) {
-  let features = featuresSource;
-
-  const wattRanges = [
-    /* eslint-disable no-magic-numbers */
-    { label: 'W1', range: [0, 50] },
-    { label: 'W2', range: [50, 100] },
-    { label: 'W3', range: [100, 300] },
-    { label: 'W4', range: [300, Infinity] },
-    /* eslint-enable no-magic-numbers */
-  ];
-
-  const connectorTypes = uniqueArray(
-    features.flatMap((feature) => feature.properties.connector_type.split(';'))
-  );
-
-  features = features.map((feature) => {
-    // Determine the maximum wattage
-    const watt = parseInt(feature.properties.charging_cap_max, 10);
-    const wattRange = wattRanges.find((wattRange) => {
-      return watt >= wattRange.range[0] && watt < wattRange.range[1];
-    })?.label;
-    // Assign a misc range
-    feature.properties.maxWattage = wattRange ?? 'W5';
-
-    // Add the connector type as feature property, so we can filter it
-    for (const connectorType of connectorTypes) {
-      feature.properties[connectorType] =
-        feature.properties.connector_type.includes(connectorType);
-    }
-
-    return feature;
-  });
-
-  return features;
-}
-
-function transformLaadpalenDetailResponse(
-  _responseData: WFSApiResponse | DsoApiResponse,
-  { id, datasetCache }: TransformDetailProps
-) {
-  const item = datasetCache
-    ?.getKey<DatasetFeatures>('features')
-    ?.find((item) => item.properties.id === id);
-
-  return item?.properties ?? null;
-}
-
 function createCustomFractieOmschrijving(
   featureProps: WFSFeatureSource['properties']
 ) {
