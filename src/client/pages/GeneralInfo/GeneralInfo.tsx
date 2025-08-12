@@ -43,7 +43,7 @@ export type SectionProps = {
   to?: string; // Use this instead of the themaMenuItem 'to URL' and force link to be clickable.
   listItems: ListItems;
 };
-type ListItems = Array<{ text: string; listItems?: string[] }>;
+type ListItems = Array<{ text: string; listItems?: string[] } | string>;
 
 const sections: SectionProps[] = [
   profileSectionProps,
@@ -73,29 +73,34 @@ const sections: SectionProps[] = [
 function Section({ id, title, listItems, to }: SectionProps) {
   const themaMenuItems = useThemaMenuItemsByThemaID();
 
-  const listItemComponents = listItems.map((item, i) => (
-    <UnorderedList.Item key={i}>
-      {item.text}
-      {!!item.listItems?.length && (
-        <UnorderedList>
-          {item.listItems.map((nestedItem, j) => (
-            <UnorderedList.Item key={j}>{nestedItem}</UnorderedList.Item>
-          ))}
-        </UnorderedList>
-      )}
-    </UnorderedList.Item>
-  ));
+  const listItemComponents = listItems.map((item, i) => {
+    if (typeof item === 'string') {
+      return <UnorderedList.Item key={i}>{item}</UnorderedList.Item>;
+    }
+    return (
+      <UnorderedList.Item key={i}>
+        {item.text}
+        {!!item.listItems?.length && (
+          <UnorderedList>
+            {item.listItems.map((nestedItem, j) => (
+              <UnorderedList.Item key={j}>{nestedItem}</UnorderedList.Item>
+            ))}
+          </UnorderedList>
+        )}
+      </UnorderedList.Item>
+    );
+  });
 
   const themaMenuItem = themaMenuItems[id];
 
   const href = to || (themaMenuItem && themaMenuItem.to);
   const LinkComponent = getLinkComponent(href);
-  const titleComponent = !LinkComponent ? (
-    title
-  ) : (
+  const titleComponent = LinkComponent ? (
     <LinkComponent maVariant="fatNoUnderline" href={href}>
       {title}
     </LinkComponent>
+  ) : (
+    title
   );
 
   return (
@@ -113,6 +118,7 @@ function getLinkComponent(href: string) {
     return null;
   }
   if (href.startsWith('http')) {
+    // Prevent external URLS from being fully concatenated in the path as would happen with MaRouterLink.
     return MaLink;
   }
   return MaRouterLink;

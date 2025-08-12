@@ -4,5 +4,5 @@ import { SectionProps } from '../../GeneralInfo/GeneralInfo';
 export const AVGsectionProps: SectionProps = {
   id: themaId,
   title: themaTitle,
-  listItems: [{ text: 'Uw inzage of wijziging persoonsgegevens AVG' }],
+  listItems: ['Uw inzage of wijziging persoonsgegevens AVG'],
 };

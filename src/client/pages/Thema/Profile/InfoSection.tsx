@@ -5,7 +5,7 @@ export const profileSectionProps: SectionProps = {
   id: themaIdBRP,
   title: themaTitle[themaIdBRP],
   listItems: [
-    { text: 'Uw inschrijving bij de gemeente' },
-    { text: 'Uw contactmomenten met de gemeente' },
+    'Uw inschrijving bij de gemeente',
+    'Uw contactmomenten met de gemeente',
   ],
 };

@@ -7,7 +7,7 @@ export const vergunningensectionProps: SectionProps = {
   listItems: [
     {
       text: 'Uw aanvraag voor een ontheffing of vergunning voor de volgende activiteiten:',
-      nested: [
+      listItems: [
         'Ergens rijden of stilstaan waar dat normaal niet mag (RVV en e-RVV)',
         'Straat tijdelijk afsluiten of afzetten (TVM)',
         'Object neerzetten op parkeervak, straat of stoep (Objectvergunning)',
@@ -18,29 +18,19 @@ export const vergunningensectionProps: SectionProps = {
         'Fietsen en/of fietsenrekken verwijderen',
       ],
     },
-    {
-      text: 'Uw aanvraag of kentekenwijziging voor een RVV-ontheffing Sloterweg',
-    },
-    {
-      text: 'Uw aanvraag voor een gehandicaptenparkeerkaart (GPK) of een vaste gehandicaptenparkeerplaats (GPP)',
-    },
-    { text: 'Uw aanvraag voor een ontheffing touringcar' },
-    { text: 'Uw aanvraag voor een ontheffing zwaar verkeer' },
-    { text: 'Uw aanvraag voor een ontheffing blauwe zone' },
-    { text: 'Uw evenementvergunning of evenementmelding' },
-    { text: 'Uw aanvraag voor een splitsingsvergunning' },
-    { text: 'Uw aanvraag voor kamerverhuur (omzettingsvergunning)' },
-    {
-      text: 'Uw aanvraag vergunning straatartiest, draaiorgel of het aanbieden van diensten op straat',
-    },
-    { text: 'Uw aanvraag ontheffing verspreiden reclamemateriaal (sampling)' },
-    {
-      text: 'Uw aanvraag voor een vergunning voor onttrekken, samenvoegen en vormen van woonruimte',
-    },
-    { text: 'Uw aanvraag voor een ligplaatsvergunning' },
-    {
-      text: 'Uw aanvraag voor een eigen parkeerplaats voor huisartsen, verloskundigen en consuls',
-    },
-    { text: 'Uw aanvraag voor een vergunning exploitatie horecabedrijf' },
+    'Uw aanvraag of kentekenwijziging voor een RVV-ontheffing Sloterweg',
+    'Uw aanvraag voor een gehandicaptenparkeerkaart (GPK) of een vaste gehandicaptenparkeerplaats (GPP)',
+    'Uw aanvraag voor een ontheffing touringcar',
+    'Uw aanvraag voor een ontheffing zwaar verkeer',
+    'Uw aanvraag voor een ontheffing blauwe zone',
+    'Uw evenementvergunning of evenementmelding',
+    'Uw aanvraag voor een splitsingsvergunning',
+    'Uw aanvraag voor kamerverhuur (omzettingsvergunning)',
+    'Uw aanvraag vergunning straatartiest, draaiorgel of het aanbieden van diensten op straat',
+    'Uw aanvraag ontheffing verspreiden reclamemateriaal (sampling)',
+    'Uw aanvraag voor een vergunning voor onttrekken, samenvoegen en vormen van woonruimte',
+    'Uw aanvraag voor een ligplaatsvergunning',
+    'Uw aanvraag voor een eigen parkeerplaats voor huisartsen, verloskundigen en consuls',
+    'Uw aanvraag voor een vergunning exploitatie horecabedrijf',
   ],
 };

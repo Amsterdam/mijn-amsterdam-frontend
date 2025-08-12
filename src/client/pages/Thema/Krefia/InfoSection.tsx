@@ -5,8 +5,6 @@ export const krefiaSectionProps: SectionProps = {
   id: themaId,
   title: themaTitle,
   listItems: [
-    {
-      text: 'Informatie over ondersteuning door Kredietbank en Budgetbeheer (FIBU)',
-    },
+    'Informatie over ondersteuning door Kredietbank en Budgetbeheer (FIBU)',
   ],
 };

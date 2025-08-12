@@ -4,5 +4,5 @@ import { SectionProps } from '../../GeneralInfo/GeneralInfo';
 export const klachtenSectionProps: SectionProps = {
   id: themaId,
   title: themaTitle,
-  listItems: [{ text: 'Uw ingediende klachten' }],
+  listItems: ['Uw ingediende klachten'],
 };

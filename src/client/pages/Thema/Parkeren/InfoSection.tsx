@@ -4,7 +4,5 @@ import { SectionProps } from '../../GeneralInfo/GeneralInfo';
 export const parkerensectionProps: SectionProps = {
   id: themaId,
   title: themaTitle,
-  listItems: [
-    { text: 'Het inzien, aanvragen of wijzigen van een bewonersvergunning' },
-  ],
+  listItems: ['Het inzien, aanvragen of wijzigen van een bewonersvergunning'],
 };

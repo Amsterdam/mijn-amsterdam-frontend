@@ -4,5 +4,5 @@ import { SectionProps } from '../../GeneralInfo/GeneralInfo';
 export const erfpachtSectionProps: SectionProps = {
   id: themaId,
   title: themaTitle,
-  listItems: [{ text: 'Overzicht van uw erfpachtgegevens' }],
+  listItems: ['Overzicht van uw erfpachtgegevens'],
 };

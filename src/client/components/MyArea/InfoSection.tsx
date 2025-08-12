@@ -5,7 +5,5 @@ export const myAreaSectionProps: SectionProps = {
   id: themaId,
   title: themaTitle,
   to: routeConfig.themaPage.path,
-  listItems: [
-    { text: 'Overzicht van gemeentelijke informatie rond uw woning' },
-  ],
+  listItems: ['Overzicht van gemeentelijke informatie rond uw woning'],
 };

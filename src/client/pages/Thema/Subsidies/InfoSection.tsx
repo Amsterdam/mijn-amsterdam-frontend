@@ -4,5 +4,5 @@ import { SectionProps } from '../../GeneralInfo/GeneralInfo';
 export const subsidiesSectionProps: SectionProps = {
   id: themaId,
   title: themaTitle,
-  listItems: [{ text: 'Uw aanvraag voor een subsidie' }],
+  listItems: ['Uw aanvraag voor een subsidie'],
 };

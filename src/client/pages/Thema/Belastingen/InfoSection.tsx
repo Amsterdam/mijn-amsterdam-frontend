@@ -5,11 +5,11 @@ export const belastingenSectionProps: SectionProps = {
   id: themaId,
   title: themaTitle,
   listItems: [
-    { text: 'Belastingaanslagen betalen' },
-    { text: 'Automatische incasso regelen' },
-    { text: 'Bezwaar indienen' },
-    { text: 'Kwijtschelding aanvragen' },
-    { text: 'Betalingsregeling aanvragen' },
-    { text: 'Aangifte doen' },
+    'Belastingaanslagen betalen',
+    'Automatische incasso regelen',
+    'Bezwaar indienen',
+    'Kwijtschelding aanvragen',
+    'Betalingsregeling aanvragen',
+    'Aangifte doen',
   ],
 };

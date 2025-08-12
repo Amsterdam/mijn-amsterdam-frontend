@@ -4,5 +4,5 @@ import { SectionProps } from '../../GeneralInfo/GeneralInfo';
 export const bezwarenSectionProps: SectionProps = {
   id: themaId,
   title: themaTitle,
-  listItems: [{ text: 'Bezwaren tegen een besluit van de gemeente Amsterdam' }],
+  listItems: ['Bezwaren tegen een besluit van de gemeente Amsterdam'],
 };

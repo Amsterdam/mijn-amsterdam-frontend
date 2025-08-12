@@ -4,9 +4,5 @@ import { SectionProps } from '../../GeneralInfo/GeneralInfo';
 export const bodemsectionProps: SectionProps = {
   id: themaId,
   title: themaTitle,
-  listItems: [
-    {
-      text: "Uw aanvraag voor 'lood in de bodem-check'",
-    },
-  ],
+  listItems: ["Uw aanvraag voor 'lood in de bodem-check'"],
 };

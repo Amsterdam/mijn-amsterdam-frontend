@@ -4,5 +4,5 @@ import { SectionProps } from '../../GeneralInfo/GeneralInfo';
 export const burgerzakenSectionProps: SectionProps = {
   id: themaId,
   title: themaTitle,
-  listItems: [{ text: 'Gegevens van uw paspoort of ID-kaart' }],
+  listItems: ['Gegevens van uw paspoort of ID-kaart'],
 };
