@@ -26,6 +26,7 @@ import {
   HLIstadspasSectionProps,
 } from '../Thema/HLI/InfoSection';
 import { inkomenSectionProps } from '../Thema/Inkomen/InfoSection';
+import { JeugdSectionProps as jeugdSectionProps } from '../Thema/Jeugd/InfoSection';
 import { klachtenSectionProps } from '../Thema/Klachten/InfoSection';
 import { krefiaSectionProps } from '../Thema/Krefia/InfoSection';
 import { milieuzonesectionProps } from '../Thema/Milieuzone/InfoSection';
@@ -60,6 +61,7 @@ const sections: SectionProps[] = [
   HLIRegelingenSectionProps,
   HLIstadspasSectionProps,
   zorgSectionProps,
+  jeugdSectionProps,
   subsidiesSectionProps,
   krefiaSectionProps,
   toeristischeverhuurSectionProps,
@@ -163,8 +165,7 @@ export function GeneralInfo() {
             Kijk bij de{' '}
             <a
               href="https://www.amsterdam.nl/contact/mijn-amsterdam/"
-              target="_blank"
-              rel="noopener noreferrer"
+              rel="external"
             >
               Mijn Amsterdam - Veelgestelde vragen
             </a>
