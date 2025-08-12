@@ -29,12 +29,13 @@ const pageContentTop = (
 );
 
 export function InkomenDetailBbz() {
-  const { isLoading, isError, zaak, breadcrumbs, routeConfig } =
+  const { isLoading, isError, zaak, breadcrumbs, routeConfig, themaId } =
     useInkomenDetailData('WPI_BBZ');
   useHTMLDocumentTitle(routeConfig.detailPageBbz);
 
   return (
     <ThemaDetailPagina
+      themaId={themaId}
       title={zaak?.title || 'Bbz aanvraag'}
       zaak={zaak}
       isError={isError}

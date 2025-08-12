@@ -13,6 +13,7 @@ import { useProfileTypeValue } from '../../../hooks/useProfileType';
 
 export function ParkerenThema() {
   const {
+    id,
     title,
     tableConfig,
     vergunningen,
@@ -66,6 +67,7 @@ export function ParkerenThema() {
 
   return (
     <ThemaPagina
+      id={id}
       title={title}
       isError={isError}
       isLoading={isLoading}

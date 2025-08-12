@@ -23,6 +23,7 @@ export function useAVGData() {
   const breadcrumbs = useThemaBreadcrumbs(themaId);
 
   return {
+    id: themaId,
     title: themaTitle,
     tableConfig,
     isLoading: isLoading(AVG),

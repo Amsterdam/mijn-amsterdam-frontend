@@ -23,6 +23,7 @@ export function useParkerenData() {
   const breadcrumbs = useThemaBreadcrumbs(themaId);
 
   return {
+    id: themaId,
     title: themaTitle,
     tableConfig,
     vergunningen,

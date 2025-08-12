@@ -44,7 +44,7 @@ function KlachtenDetailContent({ klacht }: KlachtenDetailContentProps) {
 }
 
 export function KlachtenDetail() {
-  const { klachten, isLoading, isError, breadcrumbs, routeConfig } =
+  const { klachten, themaId, isLoading, isError, breadcrumbs, routeConfig } =
     useKlachtenThemaData();
   useHTMLDocumentTitle(routeConfig.detailPage);
   const { id } = useParams<{ id: string }>();
@@ -52,6 +52,7 @@ export function KlachtenDetail() {
 
   return (
     <ThemaDetailPagina
+      themaId={themaId}
       title={klacht?.onderwerp || 'Klacht'}
       zaak={klacht}
       isError={isError}

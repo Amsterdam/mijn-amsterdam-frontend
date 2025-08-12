@@ -4,8 +4,14 @@ import { ListPageParamKind, routeConfig } from './AVG-thema-config';
 import { useAVGData } from './useAVGData.hook';
 
 export function useAVGListPageData() {
-  const { avgVerzoeken, isLoading, isError, tableConfig, breadcrumbs } =
-    useAVGData();
+  const {
+    avgVerzoeken,
+    id: themaId,
+    isLoading,
+    isError,
+    tableConfig,
+    breadcrumbs,
+  } = useAVGData();
   const params = useParams<{
     kind: ListPageParamKind;
   }>();
@@ -17,6 +23,7 @@ export function useAVGListPageData() {
     avgVerzoeken,
     filter,
     sort,
+    themaId,
     title,
     displayProps,
     isLoading,

@@ -107,6 +107,7 @@ export function AfisThema() {
     linkListItems,
     belastingenLinkListItem,
     title,
+    themaId,
   } = useAfisThemaData();
   useHTMLDocumentTitle(routeConfig.themaPage);
 
@@ -167,6 +168,7 @@ export function AfisThema() {
 
   return (
     <ThemaPagina
+      id={themaId}
       title={title}
       isError={isThemaPaginaError}
       isPartialError={isPartialError}

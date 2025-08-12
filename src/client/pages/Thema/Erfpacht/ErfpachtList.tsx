@@ -5,6 +5,7 @@ import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function ErfpachtList() {
   const {
+    id: themaId,
     isLoading,
     isError,
     dossiers,
@@ -20,6 +21,7 @@ export function ErfpachtList() {
   return (
     <ListPagePaginated
       items={dossiers}
+      themaId={themaId}
       title={tableConfigDossiers?.title ?? 'Erfpachtrechten'}
       appRoute={tableConfigDossiers?.listPageRoute ?? ''}
       breadcrumbs={breadcrumbs}

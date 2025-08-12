@@ -22,6 +22,7 @@ export function useVergunningenThemaData() {
   const breadcrumbs = useThemaBreadcrumbs(themaId);
 
   return {
+    id: themaId,
     title: themaTitle,
     vergunningen,
     isLoading: isLoading(VERGUNNINGEN),

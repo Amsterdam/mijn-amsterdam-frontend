@@ -44,6 +44,7 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
   title: themaTitle,
   id: themaId,
   to: routeConfig.themaPage.path,
+  redactedScope: 'full',
   profileTypes: ['private'],
   isActive: isInkomenThemaActive,
   IconSVG: InkomenIcon,

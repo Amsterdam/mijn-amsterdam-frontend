@@ -4,6 +4,7 @@ import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function ErfpachtListOpenFacturen() {
   const {
+    id: themaId,
     tableConfig,
     isLoading,
     isError,
@@ -20,6 +21,7 @@ export function ErfpachtListOpenFacturen() {
   return (
     <ListPagePaginated
       items={openFacturen}
+      themaId={themaId}
       title={tableConfigFacturen?.title ?? 'Openstaande facturen'}
       appRoute={tableConfigFacturen?.listPageRoute ?? ''}
       breadcrumbs={breadcrumbs}

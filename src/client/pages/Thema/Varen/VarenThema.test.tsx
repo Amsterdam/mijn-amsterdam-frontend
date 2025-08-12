@@ -107,10 +107,10 @@ const rederRegistratie = {
   caseType: 'Varen registratie reder',
   company: 'Balonnenfabriek',
   bsnkvk: '012345678',
-  address: 'Amstel 1, 1011 PN Amsterdam',
+  address: 'Amstel 1',
+  postalCode: '1011PN',
+  city: 'Amsterdam',
   correspondenceAddress: 'Correspondence 1, 1011 PN Amsterdam',
-  postalCode: null,
-  city: null,
   phone: '0612345678',
   email: 'myemailadres@example.com',
   dateRequest: '2023-11-06T00:00:00',
@@ -225,7 +225,7 @@ describe('<Varen />', () => {
       expect(bsnKvk).toBeInTheDocument();
       expect(bsnKvk.nextElementSibling).toHaveTextContent('012345678');
 
-      const adres = screen.getByText('Adres');
+      const adres = screen.getByText('Correspondentieadres');
       expect(adres.nextElementSibling).toHaveTextContent(
         'Correspondence 1, 1011 PN Amsterdam'
       );
@@ -254,7 +254,26 @@ describe('<Varen />', () => {
 
     const adres = screen.getByText('Adres');
     expect(adres.nextElementSibling).toHaveTextContent(
-      'Amstel 1, 1011 PN Amsterdam'
+      'Amstel 1, 1011PN, Amsterdam'
+    );
+  });
+
+  it('Parses postalCode and city from the reder address when the city and postalCode fields are empty', () => {
+    const screen = render(
+      <Component
+        state={getTestState([], {
+          ...rederRegistratie,
+          correspondenceAddress: null,
+          postalCode: null,
+          city: null,
+          address: 'Amstel 1, 1011PN Amsterdam',
+        })}
+      />
+    );
+
+    const adres = screen.getByText('Adres');
+    expect(adres.nextElementSibling).toHaveTextContent(
+      'Amstel 1, 1011PN Amsterdam'
     );
   });
 

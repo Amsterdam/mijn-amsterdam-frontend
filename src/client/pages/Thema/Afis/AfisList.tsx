@@ -32,6 +32,7 @@ export function AfisList() {
     isThemaPaginaLoading,
     routeConfig,
     breadcrumbs,
+    themaId,
   } = useAfisListPageData(state);
   useHTMLDocumentTitle(routeConfig.listPage);
 
@@ -40,6 +41,7 @@ export function AfisList() {
 
   return (
     <ListPagePaginated
+      themaId={themaId}
       items={facturen}
       pageContentTop={
         <PageContentCell>

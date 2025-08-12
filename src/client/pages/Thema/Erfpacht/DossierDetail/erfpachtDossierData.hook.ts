@@ -4,7 +4,7 @@ import type { ErfpachtDossiersDetail } from '../../../../../server/services/erfp
 import { isError, isLoading } from '../../../../../universal/helpers/api';
 import { BFFApiUrls } from '../../../../config/api';
 import { useAppStateBagApi } from '../../../../hooks/useAppState';
-import { getTableConfig, themaId } from '../Erfpacht-thema-config';
+import { getTableConfig } from '../Erfpacht-thema-config';
 import { useErfpachtThemaData } from '../useErfpachtThemaData.hook';
 
 export function useDossierDetaiLData() {
@@ -20,6 +20,7 @@ export function useDossierDetaiLData() {
     erfpachtData,
     breadcrumbs,
     routeConfig,
+    id: themaId,
   } = useErfpachtThemaData();
 
   const EVER_CHANING_FALLBACK_KEY = `erfpacht-dossier-${new Date().getTime()}`;
@@ -35,6 +36,7 @@ export function useDossierDetaiLData() {
     : null;
 
   return {
+    themaId,
     title: dossier?.title ?? 'Erfpachtdossier',
     dossier,
     isLoading: isLoading(dossierApiResponse),

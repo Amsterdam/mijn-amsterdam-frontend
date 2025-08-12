@@ -11,6 +11,7 @@ export function JeugdList() {
   }>();
   const {
     voorzieningen,
+    id: themaId,
     tableConfig,
     isLoading,
     isError,
@@ -23,6 +24,7 @@ export function JeugdList() {
   return (
     <ListPagePaginated
       items={voorzieningen.filter(listPageTableConfig.filter)}
+      themaId={themaId}
       title={listPageTableConfig.title}
       appRoute={listPageTableConfig.listPageRoute}
       breadcrumbs={breadcrumbs}
