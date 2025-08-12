@@ -55,7 +55,10 @@ function transformVarenZakenFrontend(
 
   const createZaakVergunning = (vergunning: DecosVarenZaakVergunning) => ({
     ...zaakFrontend,
-    vergunning,
+    vergunning: {
+      ...vergunning,
+      vesselName: vergunning.vesselName || zaak.vesselName,
+    },
     vesselName: vergunning.vesselName || zaak.vesselName, // The vesselName from the vergunning is leading
   });
 

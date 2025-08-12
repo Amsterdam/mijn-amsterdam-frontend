@@ -22,6 +22,7 @@ export function useBurgerZakenData() {
   const breadcrumbs = useThemaBreadcrumbs(themaId);
 
   return {
+    id: themaId,
     title: themaTitle,
     tableConfig,
     linkListItems,

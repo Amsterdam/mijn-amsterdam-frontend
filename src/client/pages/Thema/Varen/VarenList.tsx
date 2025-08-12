@@ -13,6 +13,7 @@ export function VarenList() {
   }>();
   const {
     varenZaken,
+    id: themaId,
     tableConfig,
     isLoading,
     isError,
@@ -28,6 +29,7 @@ export function VarenList() {
   return (
     <ListPagePaginated<VarenZakenFrontend>
       items={zaken}
+      themaId={themaId}
       title={title}
       isLoading={isLoading}
       isError={isError}

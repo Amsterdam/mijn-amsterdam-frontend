@@ -130,8 +130,12 @@ export function TableV2<T extends object = ZaakDetail>({
             const key = String(
               ('id' in item ? item.id : `item-${index}`) ?? `tr-${index}`
             );
+            const className =
+              'className' in item && item.className
+                ? (item.className as string)
+                : '';
             return (
-              <Table.Row key={key}>
+              <Table.Row key={key} className={className}>
                 {displayPropEntries.map(([key]) => {
                   return (
                     <Table.Cell key={`td-${key}`}>

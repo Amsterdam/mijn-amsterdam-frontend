@@ -18,6 +18,7 @@ const pageContentTop = (
 
 export function HorecaThema() {
   const {
+    themaId,
     themaTitle,
     tableConfig,
     vergunningen,
@@ -45,6 +46,7 @@ export function HorecaThema() {
 
   return (
     <ThemaPagina
+      id={themaId}
       title={themaTitle}
       isError={isError}
       isLoading={isLoading}

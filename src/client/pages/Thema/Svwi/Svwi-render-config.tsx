@@ -15,6 +15,7 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
   to: (appState: AppState) => {
     return appState.SVWI?.content?.url || SVWI_ROUTE_DEFAULT;
   },
+  redactedScope: 'full',
   profileTypes: ['private', 'commercial'],
   isActive(appState: AppState) {
     return (

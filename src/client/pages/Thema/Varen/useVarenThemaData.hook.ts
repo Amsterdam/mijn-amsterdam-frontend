@@ -36,6 +36,7 @@ export function useVarenThemaData() {
     linkListItems: [varenMeerInformatieLink, varenLegesTableLink],
     buttonItems: [],
     breadcrumbs,
+    id: themaId,
     title: themaTitle,
     routeConfig,
   };

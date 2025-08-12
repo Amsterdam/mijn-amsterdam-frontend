@@ -1,12 +1,12 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 
+import { links } from './Bezwaren-thema-config';
 import { useBezwarenThemaData } from './useBezwarenThemaData.hook';
 import { BezwaarFrontend } from '../../../../server/services/bezwaren/types';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
-import { links } from './Bezwaren-thema-config';
 
 const pageContentTop = (
   <PageContentCell spanWide={8}>
@@ -21,6 +21,7 @@ const pageContentTop = (
 
 export function BezwarenThema() {
   const {
+    themaId,
     themaTitle,
     tableConfig,
     bezwaren,
@@ -53,6 +54,7 @@ export function BezwarenThema() {
   return (
     <ThemaPagina
       title={themaTitle}
+      id={themaId}
       isError={isError}
       isLoading={isLoading}
       pageContentTop={pageContentTop}

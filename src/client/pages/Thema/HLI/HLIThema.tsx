@@ -83,6 +83,7 @@ export function HLIThema() {
     isError,
     isLoading,
     regelingen,
+    themaId,
     title,
     tableConfig,
     dependencyError,
@@ -100,8 +101,8 @@ export function HLIThema() {
   const pageContentTop = (
     <PageContentCell spanWide={8}>
       <Paragraph>
-        Hieronder ziet u al uw regelingen. Indien u of uw kinderen in bezit zijn
-        van een Stadspas ziet u ook de stadspasgegevens.
+        Hieronder ziet u al uw regelingen. Als u een Stadspas heeft aangevraagd,
+        komt deze vanzelf op deze pagina te staan.
       </Paragraph>
     </PageContentCell>
   );
@@ -133,6 +134,7 @@ export function HLIThema() {
   return (
     <>
       <ThemaPagina
+        id={themaId}
         title={title}
         pageContentTop={pageContentTop}
         linkListItems={linkListItems}

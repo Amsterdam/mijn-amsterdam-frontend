@@ -128,8 +128,14 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
 }
 
 export function ToeristischeVerhuurDetail() {
-  const { vergunningen, isError, isLoading, breadcrumbs, routeConfig } =
-    useToeristischeVerhuurThemaData();
+  const {
+    vergunningen,
+    id: themaId,
+    isError,
+    isLoading,
+    breadcrumbs,
+    routeConfig,
+  } = useToeristischeVerhuurThemaData();
   useHTMLDocumentTitle(routeConfig.detailPage);
 
   const { id } = useParams<{ id: string }>();
@@ -153,6 +159,7 @@ export function ToeristischeVerhuurDetail() {
 
   return (
     <ThemaDetailPagina
+      themaId={themaId}
       title={vergunning?.title ?? THEMA_DETAIL_TITLE_DEFAULT}
       zaak={vergunning}
       isError={isError}

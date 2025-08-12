@@ -115,10 +115,11 @@ const pageContentTop = (
 );
 
 export function MijnBedrijfsGegevensThema() {
-  const { isLoading, isError, linkListItems, title } = useProfileData();
+  const { isLoading, isError, linkListItems, id, title } = useProfileData();
 
   return (
     <ThemaPagina
+      id={id}
       title={title}
       isError={isError}
       isLoading={!isLoading && isError}

@@ -10,6 +10,7 @@ import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function KrefiaThema() {
   const {
+    id,
     title,
     deepLinks,
     hasFIBU,
@@ -61,6 +62,7 @@ export function KrefiaThema() {
 
   return (
     <ThemaPagina
+      id={id}
       title={title}
       isError={isError}
       isLoading={isLoading}

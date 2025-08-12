@@ -7,6 +7,12 @@
       "kanaal": "Telefoon"
     },
     {
+      "plaatsgevondenOp": "2025-05-05 13:14:49",
+      "onderwerp": "Werk en Inkomen",
+      "nummer": "00154529",
+      "kanaal": "Contactformulier"
+    },
+    {
       "plaatsgevondenOp": "2024-05-29 08:02:38",
       "onderwerp": "Meldingen",
       "nummer": "00002032",
@@ -34,12 +40,6 @@
       "plaatsgevondenOp": "2024-11-05 13:13:59",
       "onderwerp": "Parkeren",
       "nummer": "00154524",
-      "kanaal": "Contactformulier"
-    },
-    {
-      "plaatsgevondenOp": "2024-11-05 13:14:49",
-      "onderwerp": "Werk en Inkomen",
-      "nummer": "00154529",
       "kanaal": "Contactformulier"
     }
   ],

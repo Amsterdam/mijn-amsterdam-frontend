@@ -5,6 +5,7 @@ import { ParsedQs } from 'qs';
 import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_TOKEN_ID_ATTRIBUTE,
+  RETURNTO_AMSAPP_NOTIFICATIES_APP_LANDING,
   RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
   RETURNTO_AMSAPP_STADSPAS_APP_LANDING,
   RETURNTO_MAMS_FRONTEND_ROUTE,
@@ -49,6 +50,10 @@ export function getReturnToUrl(
     case RETURNTO_AMSAPP_STADSPAS_APP_LANDING:
       return generateFullApiUrlBFF(
         ExternalConsumerEndpoints.public.STADSPAS_APP_LANDING
+      );
+    case RETURNTO_AMSAPP_NOTIFICATIES_APP_LANDING:
+      return generateFullApiUrlBFF(
+        ExternalConsumerEndpoints.public.NOTIFICATIONS_APP
       );
     case RETURNTO_NOTIFICATIES_CONSUMER_ID:
       return generateFullApiUrlBFF(

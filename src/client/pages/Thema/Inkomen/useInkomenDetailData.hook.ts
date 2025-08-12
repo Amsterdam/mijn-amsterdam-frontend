@@ -16,6 +16,7 @@ export function useInkomenDetailData(
   const zaak = zaken.find((item) => item.id === id);
 
   return {
+    themaId,
     zaak,
     zaken,
     isLoading: isLoading(STATE),

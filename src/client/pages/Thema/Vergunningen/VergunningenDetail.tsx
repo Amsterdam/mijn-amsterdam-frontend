@@ -90,8 +90,14 @@ function DetailPageContent<T extends DecosVergunning>({
 }
 
 export function VergunningenDetail() {
-  const { vergunningen, isLoading, isError, breadcrumbs, routeConfig } =
-    useVergunningenThemaData();
+  const {
+    vergunningen,
+    id: themaId,
+    isLoading,
+    isError,
+    breadcrumbs,
+    routeConfig,
+  } = useVergunningenThemaData();
   const {
     vergunning,
     title = 'Vergunning',
@@ -103,6 +109,7 @@ export function VergunningenDetail() {
 
   return (
     <ThemaDetailPagina
+      themaId={themaId}
       title={title}
       zaak={vergunning}
       isError={isError}
