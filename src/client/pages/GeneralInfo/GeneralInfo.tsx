@@ -128,9 +128,7 @@ export function GeneralInfo() {
   return (
     <TextPageV2>
       <PageContentV2 span={8}>
-        <PageContentCell>
-          <PageHeadingV2>Dit ziet u in Mijn Amsterdam</PageHeadingV2>
-        </PageContentCell>
+        <PageHeadingV2>Dit ziet u in Mijn Amsterdam</PageHeadingV2>
         <PageContentCell>
           <Paragraph className="ams-mb-m">
             Welkom op Mijn Amsterdam: dit is uw persoonlijke online portaal bij
