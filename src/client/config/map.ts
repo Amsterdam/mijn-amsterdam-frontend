@@ -1,5 +1,5 @@
 import L, { LatLng, LatLngLiteral, MapOptions } from 'leaflet';
-import proj4, { type InterfaceCoordinates } from 'proj4';
+import proj4, { InterfaceCoordinates } from 'proj4';
 
 import {
   DEFAULT_LAT,
@@ -16,13 +16,13 @@ export function getCrsRd(
   maxZoom = MAX_ZOOM,
   zeroScale = ZERO_SCALE,
   scales: number[] = []
-): L.CRS {
+) {
   for (let i = 0; i <= maxZoom; i++) {
     // eslint-disable-next-line no-magic-numbers
     scales.push(1 / (zeroScale * 0.5 ** i));
   }
 
-  const crs: L.CRS = {
+  return {
     ...L.CRS.Simple,
     ...{
       code: 'EPSG:28992',
@@ -57,8 +57,6 @@ export function getCrsRd(
       zoom: (scale: number) => Math.log(1 / scale / zeroScale) / Math.log(0.5),
     },
   };
-
-  return crs;
 }
 
 export const DEFAULT_MAP_OPTIONS = {
