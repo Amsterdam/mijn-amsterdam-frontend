@@ -23,7 +23,7 @@ if (IS_DEVELOPMENT) {
 }
 
 if (process.env.DEBUG_RESPONSE_DATA) {
-  process.env.DEBUG = `source-api-request:request,${process.env.DEBUG ?? ''}`;
+    process.env.DEBUG = `source-api-request:request,${process.env.DEBUG ?? ''}`;
 }
 
 // Note: Keep this line after loading in env files or LOG_LEVEL will be undefined.
@@ -58,7 +58,6 @@ app.set('trust proxy', true);
 // Security, disable express header.
 app.disable('x-powered-by');
 
-// eslint-disable-next-line no-magic-numbers
 const viewDir = __dirname.split('/').slice(-2, -1);
 
 // Set-up view engine voor SSR
@@ -67,7 +66,7 @@ app.set('views', `./${viewDir}/server/views`);
 
 app.use(
   cors({
-    origin: getFromEnv('MA_FRONTEND_URL'),
+    origin: process.env.MA_FRONTEND_URL,
     credentials: true,
   })
 );
