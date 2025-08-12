@@ -186,57 +186,6 @@ function assignTransformerByFilter<
   return result;
 }
 
-async function fetchPBZaken<T extends PowerBrowserZaakTransformer>(
-  authProfile: Pick<AuthProfile, 'id' | 'profileType'>,
-  zaakTransformers: T[]
-): Promise<ApiResponse<[PBZaakRecord, T][]>> {
-  const tableOptions = getPersoonOrMaatschapOptions(authProfile);
-  if (!tableOptions) {
-    return apiErrorResult('Profile type not supported', null);
-  }
-
-  const persoonIdResponse = await fetchPersoonOrMaatschapIdByUid(tableOptions);
-  if (persoonIdResponse.status !== 'OK') {
-    return persoonIdResponse;
-  }
-  if (!persoonIdResponse.content) {
-    return apiSuccessResult([]);
-  }
-
-  const zakenIdsToZakentransformerResponse =
-    await fetchPowerBrowserData<zaakIdToZaakTransformer>({
-      formatUrl({ url }) {
-        return `${url}/Link/${tableOptions.tableName}/GFO_ZAKEN/Table`;
-      },
-      transformResponse(responseData: SearchRequestResponse<'GFO_ZAKEN'>) {
-        return assignTransformerByFilter(
-          responseData.records || [],
-          zaakTransformers.map((t) => ({
-            zaakTransformer: t,
-            filter: t.fetchZaakIdFilter,
-          }))
-        );
-      },
-      data: [persoonIdResponse.content],
-    });
-  if (zakenIdsToZakentransformerResponse.status !== 'OK') {
-    return zakenIdsToZakentransformerResponse;
-  }
-  const zakenIdToZakentransformer = zakenIdsToZakentransformerResponse.content;
-  const zakenIds = Object.keys(zakenIdToZakentransformer);
-
-  const zakenResponse = await fetchZakenByIds(zakenIds);
-  if (zakenResponse.status !== 'OK') {
-    return zakenResponse;
-  }
-
-  return apiSuccessResult(
-    zakenResponse.content.map(
-      (zaak) => [zaak, zakenIdToZakentransformer[zaak.id]] as [PBZaakRecord, T]
-    )
-  );
-}
-
 function getFieldValue(
   pbFieldName: PBRecordField['fieldName'],
   pbZaakFields: PBRecordField[]
@@ -494,97 +443,6 @@ async function fetchZakenAdres(
     );
 }
 
-function transformZaakRaw<
-  T extends PowerBrowserZaakTransformer,
-  PB extends NestedType<T>,
->(zaakTransformer: T, zaakRaw: PBZaakRecord): PB {
-  const { result, zaaknummer, dateReceived, dateDecision, dateEnd, ...pbZaak } =
-    Object.fromEntries(
-      entries(zaakTransformer.transformFields).map(
-        ([pbFieldName, desiredName]) => {
-          return [desiredName, getFieldValue(pbFieldName, zaakRaw.fields)];
-        }
-      )
-    );
-
-  const decision = getZaakResultaat(result as PBZaakResultaat);
-  const isVerleend = decision === 'Verleend';
-
-  const zaak = {
-    id: zaakRaw.id,
-    identifier: zaaknummer ?? zaakRaw.id,
-    caseType: zaakTransformer.caseType,
-    title: zaakTransformer.title,
-
-    dateRequest: dateReceived,
-    dateDecision: dateDecision,
-
-    // The permit is valid from the date we have a decision.
-    dateStart: isVerleend && dateDecision ? dateDecision : '',
-    dateEnd: isVerleend && dateEnd ? dateEnd : '',
-
-    decision,
-    isVerleend,
-    documents: [] as GenericDocument[],
-
-    processed: !!decision,
-    isExpired: isExpired(pbZaak.dateEnd, new Date()),
-
-    ...pbZaak,
-  };
-
-  return zaak as PB;
-}
-
-async function fetchZakenByIds(zaakIds: string[]) {
-  if (zaakIds.length === 0) {
-    return apiSuccessResult([]);
-  }
-  const requestConfig: DataRequestConfig = {
-    method: 'get',
-    formatUrl({ url }) {
-      return `${url}/record/GFO_ZAKEN/${zaakIds.join(',')}`;
-    },
-    transformResponse(responseData: PBZaakRecord[]) {
-      return responseData ?? [];
-    },
-  };
-
-  return fetchPowerBrowserData<PBZaakRecord[]>(requestConfig);
-}
-
-export async function fetchZaken<T extends PowerBrowserZaakTransformer>(
-  authProfile: AuthProfile,
-  zaakTransformers: T[]
-): Promise<ApiResponse<NestedType<T>[]>> {
-  const zakenResponse = await fetchPBZaken(authProfile, zaakTransformers);
-  if (zakenResponse.status !== 'OK') {
-    return zakenResponse;
-  }
-
-  const zaken = zakenResponse.content.map(([zaak, zaakTransformer]) =>
-    transformZaakRaw(zaakTransformer, zaak)
-  );
-
-  const [adresResults, documentsResults, statussesResults] = await Promise.all([
-    fetchZakenAdres(zaken),
-    fetchZakenDocuments(authProfile, zaken),
-    fetchZakenStatusDates(zaken),
-  ]);
-
-  return apiSuccessResult(
-    zaken.map(
-      (zaak, i) =>
-        ({
-          ...zaak,
-          location: adresResults[i],
-          documents: documentsResults[i],
-          steps: statussesResults[i],
-        }) as NestedType<T>
-    )
-  );
-}
-
 function transformPowerbrowserLinksResponse(
   sessionID: SessionID,
   responseData: SearchRequestResponse<'DOCLINK', PBDocumentFields[]>
@@ -699,6 +557,148 @@ export async function fetchDocument(
     await fetchPowerBrowserData<DocumentDownloadData>(dataRequestConfig);
 
   return response;
+}
+
+function transformZaakRaw<
+  T extends PowerBrowserZaakTransformer,
+  PB extends NestedType<T>,
+>(zaakTransformer: T, zaakRaw: PBZaakRecord): PB {
+  const { result, zaaknummer, dateReceived, dateDecision, dateEnd, ...pbZaak } =
+    Object.fromEntries(
+      entries(zaakTransformer.transformFields).map(
+        ([pbFieldName, desiredName]) => {
+          return [desiredName, getFieldValue(pbFieldName, zaakRaw.fields)];
+        }
+      )
+    );
+
+  const decision = getZaakResultaat(result as PBZaakResultaat);
+  const isVerleend = decision === 'Verleend';
+
+  const zaak = {
+    id: zaakRaw.id,
+    identifier: zaaknummer ?? zaakRaw.id,
+    caseType: zaakTransformer.caseType,
+    title: zaakTransformer.title,
+
+    dateRequest: dateReceived,
+    dateDecision: dateDecision,
+
+    // The permit is valid from the date we have a decision.
+    dateStart: isVerleend && dateDecision ? dateDecision : '',
+    dateEnd: isVerleend && dateEnd ? dateEnd : '',
+
+    decision,
+    isVerleend,
+    documents: [] as GenericDocument[],
+
+    processed: !!decision,
+    isExpired: isExpired(pbZaak.dateEnd, new Date()),
+
+    ...pbZaak,
+  };
+
+  return zaak as PB;
+}
+
+async function fetchZakenByIds(zaakIds: string[]) {
+  if (zaakIds.length === 0) {
+    return apiSuccessResult([]);
+  }
+  const requestConfig: DataRequestConfig = {
+    method: 'get',
+    formatUrl({ url }) {
+      return `${url}/record/GFO_ZAKEN/${zaakIds.join(',')}`;
+    },
+    transformResponse(responseData: PBZaakRecord[]) {
+      return responseData ?? [];
+    },
+  };
+
+  return fetchPowerBrowserData<PBZaakRecord[]>(requestConfig);
+}
+
+async function fetchPBZaken<T extends PowerBrowserZaakTransformer>(
+  authProfile: Pick<AuthProfile, 'id' | 'profileType'>,
+  zaakTransformers: T[]
+): Promise<ApiResponse<[PBZaakRecord, T][]>> {
+  const tableOptions = getPersoonOrMaatschapOptions(authProfile);
+  if (!tableOptions) {
+    return apiErrorResult('Profile type not supported', null);
+  }
+
+  const persoonIdResponse = await fetchPersoonOrMaatschapIdByUid(tableOptions);
+  if (persoonIdResponse.status !== 'OK') {
+    return persoonIdResponse;
+  }
+  if (!persoonIdResponse.content) {
+    return apiSuccessResult([]);
+  }
+
+  const zakenIdsToZakentransformerResponse =
+    await fetchPowerBrowserData<zaakIdToZaakTransformer>({
+      formatUrl({ url }) {
+        return `${url}/Link/${tableOptions.tableName}/GFO_ZAKEN/Table`;
+      },
+      transformResponse(responseData: SearchRequestResponse<'GFO_ZAKEN'>) {
+        return assignTransformerByFilter(
+          responseData.records || [],
+          zaakTransformers.map((t) => ({
+            zaakTransformer: t,
+            filter: t.fetchZaakIdFilter,
+          }))
+        );
+      },
+      data: [persoonIdResponse.content],
+    });
+  if (zakenIdsToZakentransformerResponse.status !== 'OK') {
+    return zakenIdsToZakentransformerResponse;
+  }
+  const zakenIdToZakentransformer = zakenIdsToZakentransformerResponse.content;
+  const zakenIds = Object.keys(zakenIdToZakentransformer);
+
+  const zakenResponse = await fetchZakenByIds(zakenIds);
+  if (zakenResponse.status !== 'OK') {
+    return zakenResponse;
+  }
+
+  return apiSuccessResult(
+    zakenResponse.content.map(
+      (zaak) => [zaak, zakenIdToZakentransformer[zaak.id]] as [PBZaakRecord, T]
+    )
+  );
+}
+
+export async function fetchZaken<T extends PowerBrowserZaakTransformer>(
+  authProfile: AuthProfile,
+  zaakTransformers: T[]
+): Promise<ApiResponse<NestedType<T>[]>> {
+  const zakenResponse = await fetchPBZaken(authProfile, zaakTransformers);
+  if (zakenResponse.status !== 'OK') {
+    return zakenResponse;
+  }
+
+  const zaken = zakenResponse.content.map(([zaak, zaakTransformer]) =>
+    transformZaakRaw(zaakTransformer, zaak)
+  );
+
+  const [adresResults, documentsResults, statussesResults] = await Promise.all([
+    fetchZakenAdres(zaken),
+    fetchZakenDocuments(authProfile, zaken),
+    fetchZakenStatusDates(zaken),
+  ]);
+
+  return apiSuccessResult(
+    zaken.map(
+      (zaak, i) =>
+        ({
+          ...zaak,
+          location: adresResults[i],
+          documents: documentsResults[i],
+          steps: statussesResults[i],
+        }) as NestedType<T>
+    )
+  );
 }
 
 export const forTesting = {
