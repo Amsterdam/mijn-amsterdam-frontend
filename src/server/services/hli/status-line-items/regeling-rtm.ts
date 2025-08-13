@@ -103,14 +103,14 @@ function dedupDocuments(
 ): ZorgnedHLIRegeling['documenten'] {
   const seen = new Set();
 
-  const deduped = docs.filter((d) => {
+  const deduped = docs.filter((doc) => {
     // datePublished includes miliseconds and it would be most unlikely -
     // for two different documents to be made at such an exact time.
-    const id = d.title + d.datePublished;
+    const id = doc.title + doc.datePublished;
 
-    const duplicate = seen.has(id);
+    const hasDuplicate = seen.has(id);
     seen.add(id);
-    return !duplicate;
+    return !hasDuplicate;
   });
 
   return deduped;
