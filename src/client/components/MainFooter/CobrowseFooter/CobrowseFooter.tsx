@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 
 import { PageFooter } from '@amsterdam/design-system-react';
 
-import { IS_AP } from '../../../../universal/config/env';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 import { useScript } from '../../../hooks/useScript';
 
@@ -40,10 +39,10 @@ export function CobrowseFooter() {
 
   // Load the external script when it is not loaded from the tagmanager
   const [isCobrowseLoaded] = useScript({
-    src: 'https://omnichanneliv--gat2.sandbox.my.site.com/staticvforcesite/resource/CobrowseV3/cobrowseAppNL.bundle.js',
-    defer: false,
-    async: true,
-    isEnabled: !IS_AP, // On AP this is loaded externally
+    src: '/js/cobrowse-widget-2025-08-12.bundle.js',
+    defer: true,
+    async: false,
+    isEnabled: true,
   });
   const [showCobrowseFooter, setShowCobrowseFooter] = useState(false);
   useEffect(() => {
@@ -55,7 +54,6 @@ export function CobrowseFooter() {
         // ignore reject
       });
   }, [isCobrowseLoaded]);
-
   useEffect(() => {
     if (!showCobrowseFooter) {
       return;
@@ -65,7 +63,7 @@ export function CobrowseFooter() {
 
     link.type = 'text/css';
     link.rel = 'stylesheet';
-    link.href = '/css/cobrowse-widget.css';
+    link.href = '/css/cobrowse-widget-2025-08-11.css';
 
     head.appendChild(link);
 

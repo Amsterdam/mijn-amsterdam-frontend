@@ -1,4 +1,4 @@
-import { IS_ACCEPTANCE, IS_OT, IS_PRODUCTION, IS_TEST } from './env';
+import { IS_OT, IS_PRODUCTION } from './env';
 
 /**
  * @deprecated
@@ -105,5 +105,5 @@ export const FeatureToggle = {
   amsNotificationsIsActive: !IS_PRODUCTION,
 
   // Cobrowse widget
-  cobrowseIsActive: IS_TEST || IS_ACCEPTANCE,
+  cobrowseIsActive: !IS_PRODUCTION,
 } as const;
