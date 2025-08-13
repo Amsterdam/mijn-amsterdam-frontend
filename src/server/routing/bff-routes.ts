@@ -7,12 +7,12 @@ export const BffEndpoints = {
   SERVICES_ALL: '/services/all',
   SERVICES_TIPS: '/services/tips',
   SERVICES_STREAM: '/services/stream',
-  MAP_DATASETS: '/map/datasets/:datasetId?/:id?',
+  MAP_DATASETS: '/map/datasets{/:datasetId{/:id}}',
   SEARCH_CONFIG: '/services/search-config',
   CMS_FOOTER: '/services/cms/footer',
   CMS_MAINTENANCE_NOTIFICATIONS: '/services/cms/maintenance-notifications',
   CACHE_OVERVIEW: '/admin/cache',
-  LOGIN_STATS: '/admin/visitors/:authMethod?',
+  LOGIN_STATS: '/admin/visitors{/:authMethod}',
   LOGIN_RAW: '/admin/visitors/table',
   STATUS_HEALTH: '/status/health',
   TEST_ACCOUNTS_OVERVIEW: '/admin/user-data-overview',
@@ -21,13 +21,12 @@ export const BffEndpoints = {
 
   // AFIS
   AFIS_BUSINESSPARTNER: '/services/afis/businesspartner',
-  AFIS_FACTUREN:
-    '/services/afis/facturen/:state(open|afgehandeld|overgedragen)',
+  AFIS_FACTUREN: '/services/afis/facturen/:state',
   AFIS_DOCUMENT_DOWNLOAD: '/services/afis/facturen/document',
 
   // Stadspas
   STADSPAS_TRANSACTIONS:
-    '/services/stadspas/transactions/:transactionsKeyEncrypted?',
+    '/services/stadspas/transactions/:transactionsKeyEncrypted',
   STADSPAS_BLOCK_PASS: '/services/stadspas/block/:transactionsKeyEncrypted',
   STADSPAS_UNBLOCK_PASS: '/services/stadspas/unblock/:transactionsKeyEncrypted',
 
@@ -62,8 +61,7 @@ export const BffEndpoints = {
   BEZWAREN_DETAIL: '/services/bezwaren',
 
   // ErfpachtV2
-  ERFPACHT_DOSSIER_DETAILS:
-    '/services/erfpacht/dossier/:dossierNummerUrlParam?',
+  ERFPACHT_DOSSIER_DETAILS: '/services/erfpacht/dossier/:dossierNummerUrlParam',
 
   // Toeristische verhuur / Bed & Breakfast
   TOERISTISCHE_VERHUUR_BB_DOCUMENT_DOWNLOAD:
@@ -110,7 +108,7 @@ export const PUBLIC_BFF_ENDPOINTS = [
 ] as const;
 
 export const DevelopmentRoutes = {
-  DEV_LOGIN: '/api/v1/auth/:authMethod/login/:user?',
+  DEV_LOGIN: '/api/v1/auth/:authMethod/login{/:user}',
 } as const;
 
 export const PREDEFINED_REDIRECT_URLS = [
