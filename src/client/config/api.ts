@@ -3,6 +3,7 @@ import {
   FailedDependencies,
 } from '../../universal/helpers/api';
 import { ApiError, AppState } from '../../universal/types/App.types';
+import { regelingenTitle } from '../pages/Thema/HLI/HLI-thema-config';
 
 export const BFF_API_BASE_URL = import.meta.env.REACT_APP_BFF_API_URL;
 export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;
@@ -60,7 +61,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
 
   CMS_CONTENT: 'Uitleg Mijn Amsterdam',
   ERFPACHT: 'Erfpacht',
-  HLI_regelingen: 'Regelingen bij laag inkomen',
+  HLI_regelingen: regelingenTitle,
   HLI_stadspas: 'Stadspas, saldo en transacties',
   HORECA: 'Horeca vergunningen',
   KLACHTEN: 'Ingediende klachten',
