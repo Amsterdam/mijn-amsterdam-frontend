@@ -4,5 +4,5 @@ import { SectionProps } from '../../GeneralInfo/GeneralInfo';
 export const overtredingensectionProps: SectionProps = {
   id: themaId,
   title: themaTitle,
-  listItems: [{ text: 'Inzien van uw overtredingen in de milieuzone' }],
+  listItems: ['Inzien van uw overtredingen in de milieuzone'],
 };
