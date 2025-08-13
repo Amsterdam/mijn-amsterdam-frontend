@@ -112,3 +112,11 @@ export function createSessionBasedCacheKey(
 ) {
   return `${identifier ? `${identifier}-` : ''}${sessionID}`;
 }
+
+export function getHostNameFromUrl(url?: string): string | null {
+  if (!url) {
+    return null;
+  }
+
+  return new URL(url).hostname;
+}
