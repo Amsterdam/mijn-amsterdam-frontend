@@ -5,12 +5,8 @@ export const toeristischeverhuurSectionProps: SectionProps = {
   id: themaId,
   title: themaTitle,
   listItems: [
-    {
-      text: 'Uw aanvraag voor een vergunning vakantieverhuur of bed & breakfast',
-    },
-    { text: 'Uw landelijk registratienummer toeristische verhuur' },
-    {
-      text: 'Link naar het landelijk portaal om vakantieverhuur door te geven en het aantal nachten verhuur in te zien',
-    },
+    'Uw aanvraag voor een vergunning vakantieverhuur of bed & breakfast',
+    'Uw landelijk registratienummer toeristische verhuur',
+    'Link naar het landelijk portaal om vakantieverhuur door te geven en het aantal nachten verhuur in te zien',
   ],
 };
