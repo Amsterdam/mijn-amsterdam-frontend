@@ -1,4 +1,4 @@
-import { LoggerOptions, pino } from 'pino';
+import pino, { LoggerOptions } from 'pino';
 
 import { IS_DEVELOPMENT } from '../universal/config/env';
 
