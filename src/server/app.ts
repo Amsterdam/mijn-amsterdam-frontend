@@ -58,6 +58,7 @@ app.set('trust proxy', true);
 // Security, disable express header.
 app.disable('x-powered-by');
 
+// eslint-disable-next-line no-magic-numbers
 const viewDir = __dirname.split('/').slice(-2, -1);
 
 // Set-up view engine voor SSR
@@ -66,7 +67,7 @@ app.set('views', `./${viewDir}/server/views`);
 
 app.use(
   cors({
-    origin: process.env.MA_FRONTEND_URL,
+    origin: getFromEnv('MA_FRONTEND_URL'),
     credentials: true,
   })
 );
