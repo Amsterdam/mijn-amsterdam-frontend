@@ -87,7 +87,7 @@ export function filterCombineRtmData(
         datumInBehandeling: deel1?.datumBesluit,
         datumAanvraag: deel1?.datumAanvraag ?? deel2.datumAanvraag,
         betrokkenen: [...deel1.betrokkenen], // TODO: Will the RTM deel2 have betrokkenen?
-        documenten: [...deel2.documenten, ...deel1.documenten],
+        documenten: dedupDocuments([...deel2.documenten, ...deel1.documenten]),
       });
       continue;
     }
@@ -96,6 +96,24 @@ export function filterCombineRtmData(
 
   combinedAanvragen.push(...deel2Aanvragen);
   return combinedAanvragen;
+}
+
+function dedupDocuments(
+  docs: ZorgnedHLIRegeling['documenten']
+): ZorgnedHLIRegeling['documenten'] {
+  const seen = new Set();
+
+  const deduped = docs.filter((doc) => {
+    // datePublished includes miliseconds and it would be most unlikely -
+    // for two different documents to be made at such an exact time.
+    const id = doc.title + doc.datePublished;
+
+    const hasDuplicate = seen.has(id);
+    seen.add(id);
+    return !hasDuplicate;
+  });
+
+  return deduped;
 }
 
 function getRtmDescriptionDeel1Toegewezen(
