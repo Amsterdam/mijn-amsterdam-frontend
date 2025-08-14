@@ -132,7 +132,7 @@ export function AfisBetaalVoorkeuren() {
         </Link>
         .
       </Paragraph>
-      {!FeatureToggle.afisEmandatesActive && (
+      {!FeatureToggle.afisEMandatesActive && (
         <>
           <Heading level={3} size="level-5">
             Via automatische incasso betalen
