@@ -1,5 +1,7 @@
 import { HttpStatusCode } from 'axios';
 import type { Request, Response } from 'express';
+import express from 'express';
+import type { ParamsDictionary } from 'express-serve-static-core';
 import { generatePath, matchPath } from 'react-router';
 
 import { PUBLIC_BFF_ENDPOINTS } from './bff-routes';
@@ -8,7 +10,6 @@ import {
   apiErrorResult,
 } from '../../universal/helpers/api';
 import { BFF_API_BASE_URL } from '../config/app';
-import express from 'express';
 
 type BFFRouter = express.Router & { BFF_ID: string };
 
@@ -27,8 +28,8 @@ export type RequestWithQueryParams<T extends Record<string, string>> = Request<
 >;
 
 export type RequestWithRouteAndQueryParams<
-  T extends Record<string, string> = Record<string, string>,
-  T2 extends Record<string, string> = Record<string, string>,
+  T extends ParamsDictionary = Record<string, string>,
+  T2 extends qs.ParsedQs = Record<string, string>,
 > = Request<T, {}, {}, T2>;
 /* eslint-enable @typescript-eslint/no-empty-object-type */
 

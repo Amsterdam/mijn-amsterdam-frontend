@@ -10,6 +10,13 @@ import { logger } from '../../logging';
 import { captureException } from '../monitoring';
 
 export type SessionIDAndROuteParamIdEncrypted = string;
+export type EncryptedPayloadAndSessionID = string;
+
+export type DecryptedPayloadAndSessionID<
+  T extends Record<string, unknown> = Record<string, unknown>,
+> = {
+  sessionID: string;
+} & T;
 
 /** Decrypt an encrypted 'sessionid:id' and validate it.
  */
@@ -64,7 +71,7 @@ export function decryptPayloadAndValidateSessionID<
   try {
     payload = JSON.parse(decrypt(payloadEncrypted));
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     captureException(error);
     return apiErrorResult(
       'Bad request: failed to process encrypted param',
@@ -78,13 +85,11 @@ export function decryptPayloadAndValidateSessionID<
     !payload.sessionID ||
     authProfileAndToken.profile.sid !== payload.sessionID
   ) {
-    if (IS_DEBUG) {
-      console.debug('Incomplete session validation');
-    }
+    logger.debug('Incomplete session validation');
     return apiErrorResult(
       'Not authorized: incomplete session validation or missing payload',
       null,
-      HTTP_STATUS_CODES.UNAUTHORIZED
+      HttpStatusCode.Unauthorized
     );
   }
 

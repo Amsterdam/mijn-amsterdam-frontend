@@ -15,11 +15,26 @@ import { IS_PRODUCTION } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { getAuth } from '../auth/auth-helpers';
 import { setAdHocDependencyRequestCacheTtlMs } from '../config/source-api';
+import { getFromEnv } from '../helpers/env';
+import { fetchAfisBusinessPartnerDetails } from '../services/afis/afis-business-partner';
 import { fetchAfisDocument } from '../services/afis/afis-documents';
 import {
-  handleFetchAfisBusinessPartner,
+  fetchAfisEMandates,
+  changeEMandateStatus,
+  fetchEmandateRedirectUrlFromProvider,
+  fetchEmandateSignRequestStatus,
+} from '../services/afis/afis-e-mandates';
+import {
+  handleAfisRequestWithEncryptedPayloadQueryParam,
   handleFetchAfisFacturen,
+  type AfisFacturenRouteParams,
 } from '../services/afis/afis-route-handlers';
+import type {
+  BusinessPartnerIdPayload,
+  EMandateStatusChangePayload,
+  EMandateSignRequestPayload,
+  EMandateSignRequestStatusPayload,
+} from '../services/afis/afis-types';
 import { fetchBezwaarDocument } from '../services/bezwaren/bezwaren';
 import { handleFetchBezwaarDetail } from '../services/bezwaren/bezwaren-route-handlers';
 import { fetchLoodMetingDocument } from '../services/bodem/loodmetingen';

@@ -43,7 +43,6 @@ export interface AfisFacturenRouteParams extends ParamsDictionary {
  *    for example `$top=4` will get you four invoices out of potentially 200.
  */
 export async function handleFetchAfisFacturen(
-  requestID: RequestID,
   payload: BusinessPartnerIdPayload,
   authProfile: AuthProfile,
   req: RequestWithEncryptedPayloadParam<
@@ -57,7 +56,7 @@ export async function handleFetchAfisFacturen(
     top = undefined;
   }
 
-  return fetchAfisFacturenByState(requestID, authProfile.sid, {
+  return fetchAfisFacturenByState(authProfile.sid, {
     state: req.params.state,
     businessPartnerID: payload.businessPartnerId,
     top,
@@ -70,7 +69,6 @@ export function handleAfisRequestWithEncryptedPayloadQueryParam<
   RouteParams extends ParamsDictionary = ParamsDictionary,
 >(
   serviceMethod: (
-    requestID: RequestID,
     payload: QueryPayload,
     authProfile: AuthProfile,
     request: RequestWithEncryptedPayloadParam<RouteParams>
@@ -104,7 +102,6 @@ export function handleAfisRequestWithEncryptedPayloadQueryParam<
 
     // Call the service method with the decrypted payload.
     const statusChangeResponse = await serviceMethod(
-      res.locals.requestID,
       payloadDecrypted,
       authProfileAndToken.profile,
       req
