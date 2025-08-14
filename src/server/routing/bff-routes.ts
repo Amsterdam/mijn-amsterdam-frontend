@@ -25,6 +25,9 @@ export const BffEndpoints = {
 
   // AFIS
   AFIS_BUSINESSPARTNER: '/services/afis/businesspartner',
+  AFIS_EMANDATES: '/services/afis/e-mandates',
+  AFIS_EMANDATES_STATUS_CHANGE: '/services/afis/e-mandates/change-status',
+  AFIS_EMANDATES_SIGN_REQUEST_URL: '/services/afis/e-mandates/sign-request-url',
   AFIS_FACTUREN: '/services/afis/facturen/:state',
   AFIS_DOCUMENT_DOWNLOAD: '/services/afis/facturen/document',
 

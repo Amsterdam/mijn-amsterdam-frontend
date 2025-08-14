@@ -377,7 +377,7 @@ export type BusinessPartnerIdPayload = {
 };
 
 export type EMandateSignRequestStatusPayload = {
-  foo: string;
+  mpid: string;
 };
 
 export type EMandateStatusChangePayload = {
@@ -387,6 +387,33 @@ export type EMandateStatusChangePayload = {
 
 export type AfisEMandateSignRequestResponse = {
   redirectUrl: string;
+  statusCheckUrl: string;
+};
+
+// POM payment api status codes
+export const signRequestStatusCodes = {
+  101: 'NoResponse', // No reaction to the message
+  500: 'VisitedWebsite', // Customer has clicked on the link
+  700: 'PaymentStarted', // Payment started, but not yet finished
+  701: 'PaymentCanceled', // Payment cancelled by the customer
+  702: 'PaymentFailed', // Payment failed. E.g. insufficient funds
+  703: 'PaymentInvalid', // Payment started, but status not yet known
+  704: 'PaymentExpired', // Payment started, but not completed on time
+  900: 'Paid', // Full amount has been paid
+  998: 'Chargeback', // Payment was reversed by customer
+} as const;
+
+export type POMSignRequestStatusCode = keyof typeof signRequestStatusCodes;
+export type POMSignRequestUrlResponseSource = { paylink: string; mpid: string };
+export type POMSignRequestStatusResponseSource = {
+  mpid: number;
+  status_code: POMSignRequestStatusCode;
+  status_date: string; // e.g 2015-03-01T12:23:44
+};
+
+export type AfisEMandateSignRequestStatusResponse = {
+  status: string;
+  code: POMSignRequestStatusCode;
 };
 
 export type XmlNullable<T extends Record<string, unknown>> = {

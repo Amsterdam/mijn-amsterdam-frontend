@@ -282,6 +282,19 @@ attachDocumentDownloadRoute(
 }
 
 {
+  type QueryPayload = EMandateSignRequestStatusPayload;
+  type ServiceReturnType = ReturnType<typeof fetchEmandateSignRequestStatus>;
+
+  router.get(
+    BffEndpoints.AFIS_EMANDATES_SIGN_REQUEST_STATUS,
+    handleAfisRequestWithEncryptedPayloadQueryParam<
+      QueryPayload,
+      ServiceReturnType
+    >(fetchEmandateSignRequestStatus)
+  );
+}
+
+{
   type QueryPayload = BusinessPartnerIdPayload;
   type ServiceReturnType = ReturnType<typeof handleFetchAfisFacturen>;
 
