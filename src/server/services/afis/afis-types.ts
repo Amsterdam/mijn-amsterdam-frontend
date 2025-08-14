@@ -405,6 +405,34 @@ export type AfisEMandateAcceptant = {
   refId: string;
 };
 
+export type POMEMandateSignRequestPayloadFromXML = {
+  id_client: number;
+  debtornumber: number;
+  cid: number;
+  mpid: number;
+  payment_reference: number;
+  id_request_client: string;
+  event_type: string;
+  amount_total: number;
+  id_bank: string;
+  iban: string;
+  bic: string;
+  account_owner: string;
+  event_date: string;
+  event_time: string;
+
+  variable2: string; // Optional, used for acceptant (Gemeente Amsterdam) IBAN
+};
+
+export type POMEMandateSignRequestPayloadTransformed = {
+  debtornumber: string;
+  debtorIBAN: string;
+  debtorBIC: string;
+  acceptantIBAN: string;
+  debtorAccountOwner: string;
+  eMandateSignDate: string;
+};
+
 export type EMandateSignRequestPayload = {
   acceptantIBAN: AfisEMandateAcceptant['iban'];
   businessPartnerId: BusinessPartnerId;

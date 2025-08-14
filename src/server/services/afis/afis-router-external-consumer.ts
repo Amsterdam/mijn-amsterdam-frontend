@@ -1,10 +1,13 @@
 import { HttpStatusCode } from 'axios';
 import express, { Request, Response } from 'express';
+import { XMLParser } from 'fast-xml-parser';
 
 import { createAfisEMandate } from './afis-e-mandates';
-import {
-  EMandateSignRequestNotificationPayload,
+import type {
   EMandateSignRequestPayload,
+  EMandateSignRequestNotificationPayload,
+  POMEMandateSignRequestPayloadTransformed,
+  POMEMandateSignRequestPayloadFromXML,
 } from './afis-types';
 import { ExternalConsumerEndpoints } from '../../routing/bff-routes';
 import { createBFFRouter } from '../../routing/route-helpers';
@@ -14,7 +17,9 @@ const routerPrivateNetwork = createBFFRouter({
   id: 'afis-external-consumer-private-network',
 });
 
-function validateAndExtractPayload(xmlPayload: string) {
+function validateAndExtractPayload(
+  xmlPayload: Buffer
+): POMEMandateSignRequestPayloadTransformed {
   /**
 <?xml version="1.0"?>
 <response>
@@ -32,55 +37,70 @@ function validateAndExtractPayload(xmlPayload: string) {
   <account_owner>John Doe</account_owner>
   <event_date>2024-01-05</event_date>
   <event_time>11:27</event_time>
+  <variable2>NL21RABO0110055004</variable2> // Acceptant IBAN (Gemeente Amsterdam Afval) --> UNKNOWN, find out how to get this.
 </response>
    */
+  const parser = new XMLParser();
+  const { response } = parser.parse(xmlPayload);
+  const payload = response as POMEMandateSignRequestPayloadFromXML;
+
   return {
-    debtornumber: 'xmlPayload.debtornumber',
-    debtorIban: 'xmlPayload.iban',
-    debtorBic: 'xmlPayload.bic',
-    debtorAccountOwner: 'xmlPayload.bic',
-    eMandateSignDate: 'xmlPayload.event_date',
+    debtornumber: payload.debtornumber.toString(),
+    debtorIBAN: payload.iban,
+    debtorBIC: payload.bic,
+    debtorAccountOwner: payload.account_owner,
+    eMandateSignDate: `${payload.event_date}T${payload.event_time}:00Z`, // ISO 8601 format
+    acceptantIBAN: payload.variable2,
   };
+}
+
+async function handleAfisEMandateSignRequestStatusNotify(
+  req: Request,
+  res: Response
+) {
+  const notificationPayload = validateAndExtractPayload(req.body);
+
+  const signRequestPayload: EMandateSignRequestPayload &
+    EMandateSignRequestNotificationPayload = {
+    acceptantIBAN: notificationPayload.acceptantIBAN, // TODO: Figure out where to get this from. Maybe in a value from the eventPayload? From a <variable2/> tag?
+    businessPartnerId: notificationPayload.debtornumber,
+    eMandateSignDate: notificationPayload.eMandateSignDate,
+    senderIBAN: notificationPayload.debtorIBAN,
+    senderBIC: notificationPayload.debtorBIC,
+    senderName: notificationPayload.debtorAccountOwner,
+  };
+
+  // TODO: Figure out if we can actually create the eMandate from this event.
+  const createEmandateResponse = await createAfisEMandate(signRequestPayload);
+
+  const isOK = createEmandateResponse.status === 'OK';
+
+  res.status(isOK ? HttpStatusCode.Ok : HttpStatusCode.InternalServerError);
+
+  if (!isOK && createEmandateResponse.status === 'ERROR') {
+    // TODO: Add this message to observability. We need to know be notified when this happens.
+    // Maybe send an email to FB?
+    captureMessage(
+      `Error in sign request status notify endpoint: ${createEmandateResponse.message}`
+    );
+  }
+
+  // TODO: Maybe POM needs a specific request status text?
+  return res.send(isOK ? 'OK' : 'ERROR');
 }
 
 // TODO: this endpoint should be made available to the EnableU network. Find out if this is possible and how to do it.
 routerPrivateNetwork.post(
   ExternalConsumerEndpoints.private.AFIS_EMANDATE_SIGN_REQUEST_STATUS_NOTIFY,
   express.raw({ type: 'text/xml' }),
-  async (req: Request, res: Response) => {
-    const requestBody = req.body.toString('utf-8');
-    const eventPayload = validateAndExtractPayload(requestBody);
-
-    const signRequestPayload: EMandateSignRequestPayload &
-      EMandateSignRequestNotificationPayload = {
-      acceptantIBAN: '', // TODO: Figure out where to get this from. Maybe in a value from the eventPayload? From a <variable2/> tag?
-      businessPartnerId: eventPayload.debtornumber,
-      eMandateSignDate: eventPayload.eMandateSignDate,
-      senderIBAN: eventPayload.debtorIban,
-      senderBIC: eventPayload.debtorBic,
-      senderName: eventPayload.debtorAccountOwner,
-    };
-
-    // TODO: Figure out if we can actually create the eMandate from this event.
-    const createEmandateResponse = await createAfisEMandate(signRequestPayload);
-
-    const isOK = createEmandateResponse.status === 'OK';
-
-    res.status(isOK ? HttpStatusCode.Ok : HttpStatusCode.InternalServerError);
-
-    if (!isOK && createEmandateResponse.status === 'ERROR') {
-      // TODO: Add this message to observability. We need to know be notified when this happens.
-      // Maybe send an email to FB?
-      captureMessage(
-        `Error in sign request status notify endpoint: ${createEmandateResponse.message}`
-      );
-    }
-
-    // TODO: Maybe POM needs a specific request status text?
-    return res.send(isOK ? 'OK' : 'ERROR');
-  }
+  handleAfisEMandateSignRequestStatusNotify
 );
 
 export const afisExternalConsumerRouter = {
   private: routerPrivateNetwork,
+};
+
+export const forTesting = {
+  validateAndExtractPayload,
+  handleAfisEMandateSignRequestStatusNotify,
 };
