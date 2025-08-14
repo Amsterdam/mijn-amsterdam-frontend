@@ -30,6 +30,7 @@ import { entries } from '../../../../universal/helpers/utils';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { DocumentLink } from '../../../components/DocumentList/DocumentLink';
 import { MaLink } from '../../../components/MaLink/MaLink';
+import { addLinkElementToProperty } from '../../../components/Table/TableV2';
 import { generateBffApiUrlWithEncryptedPayloadQuery } from '../../../helpers/api';
 import { useSmallScreen } from '../../../hooks/media.hook';
 import {
@@ -277,7 +278,11 @@ export function useAfisBetaalVoorkeurenData(
     }
   }, [businessPartnerIdEncrypted, fetchEMandates, isEMandatesApiDataCached]);
 
-  const eMandates = (eMandatesApiResponse.content ?? []).map((eMandate) => {
+  const eMandates = addLinkElementToProperty(
+    eMandatesApiResponse.content ?? [],
+    'acceptant',
+    true
+  ).map((eMandate) => {
     return {
       ...eMandate,
       action: <AfisEMandateActionUrls eMandate={eMandate} />,

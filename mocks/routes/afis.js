@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 const httpConstants = require('http2').constants;
 
+const eMandates = require('../fixtures/afis/e-mandates.json');
 const settings = require('../settings');
 
 const BASE = '/afis';
