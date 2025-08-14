@@ -28,6 +28,10 @@ export const BffEndpoints = {
   AFIS_EMANDATES_SIGN_REQUEST_URL: '/services/afis/e-mandates/sign-request-url',
   AFIS_EMANDATES_SIGN_REQUEST_STATUS:
     '/services/afis/e-mandates/sign-request-status',
+  AFIS_EMANDATES_SIGN_REQUEST_STATUS_NOTIFICATION:
+    '/services/afis/e-mandates/sign-request-notification',
+  AFIS_EMANDATES_SIGN_REQUEST_RETURNTO:
+    '/services/afis/e-mandates/sign-request-callback',
   AFIS_FACTUREN:
     '/services/afis/facturen/:state',
   AFIS_DOCUMENT_DOWNLOAD: '/services/afis/facturen/document',
