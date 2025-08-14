@@ -11,12 +11,14 @@ import {
   themaId,
   routeConfig,
 } from './Afis-thema-config';
+import { AfisEMandateActionUrls } from './AfisEmandateActionButtons';
 import {
   AfisBusinessPartnerDetailsTransformed,
   AfisThemaResponse,
   AfisFacturenByStateResponse,
   AfisFactuur,
   AfisFactuurState,
+  type AfisEMandateFrontend,
 } from '../../../../server/services/afis/afis-types';
 import {
   hasFailedDependency,
@@ -28,7 +30,7 @@ import { entries } from '../../../../universal/helpers/utils';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { DocumentLink } from '../../../components/DocumentList/DocumentLink';
 import { MaLink } from '../../../components/MaLink/MaLink';
-import { BFFApiUrls } from '../../../config/api';
+import { generateBffApiUrlWithEncryptedPayloadQuery } from '../../../helpers/api';
 import { useSmallScreen } from '../../../hooks/media.hook';
 import {
   useAppStateBagApi,
@@ -245,7 +247,7 @@ export function useAfisBetaalVoorkeurenData(
 
   const [eMandatesApiResponse, fetchEMandates, isEMandatesApiDataCached] =
     useAppStateBagApi<AfisEMandateFrontend[] | null>({
-      bagThema: BagThemas.AFIS,
+      bagThema: `${themaId}_BAG`,
       key: `afis-emandates`,
     });
 
