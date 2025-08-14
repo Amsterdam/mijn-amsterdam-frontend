@@ -1,4 +1,4 @@
-import { URL, URLSearchParams } from 'url';
+import { URL, URLSearchParams } from 'node:url';
 
 import * as jose from 'jose';
 

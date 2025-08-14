@@ -1,4 +1,4 @@
-import https from 'https';
+import https from 'node:https';
 
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
