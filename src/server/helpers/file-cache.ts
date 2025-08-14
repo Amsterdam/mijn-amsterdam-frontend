@@ -1,6 +1,6 @@
-import fs from 'fs';
 import { createHash } from 'node:crypto';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 
 import { FlatCache, clearCacheById, create } from 'flat-cache';
 

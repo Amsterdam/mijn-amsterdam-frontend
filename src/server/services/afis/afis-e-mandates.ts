@@ -3,6 +3,7 @@ import { add, isSameDay, parseISO, subDays } from 'date-fns';
 import { Request } from 'express';
 import slug from 'slugme';
 import { firstBy } from 'thenby';
+import * as z from 'zod/v4';
 
 import {
   createBusinessPartnerBankAccount,
@@ -36,11 +37,15 @@ import {
   EMandateSignRequestNotificationPayload,
   AfisBusinessPartnerBankPayload,
   type POMSignRequestUrlPayload,
-  type AfisEMandateUpdatePayloadFrontend,
   type EMandateUpdatePayload,
 } from './afis-types';
 import { routeConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config';
-import { apiErrorResult, ApiResponse } from '../../../universal/helpers/api';
+import { IS_AP } from '../../../universal/config/env';
+import {
+  apiErrorResult,
+  ApiResponse,
+  apiSuccessResult,
+} from '../../../universal/helpers/api';
 import {
   defaultDateFormat,
   isoDateFormat,
@@ -52,6 +57,7 @@ import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
+import { captureException } from '../monitoring';
 const AFIS_EMANDATE_RECURRING_DATE_END = '9999-12-31T00:00:00';
 const AFIS_EMANDATE_COMPANY_NAME = 'Gemeente Amsterdam';
 const AFIS_EMANDATE_SIGN_REQUEST_URL_VALIDITY_IN_DAYS = 1;
@@ -282,6 +288,21 @@ function getSignRequestApiUrl(
   return url;
 }
 
+function getUpdateApiUrl(
+  sessionID: SessionID,
+  afisEMandateSource: AfisEMandateSource
+) {
+  const url = generateFullApiUrlBFF(BffEndpoints.AFIS_EMANDATES_UPDATE, [
+    {
+      payload: encryptPayloadAndSessionID(sessionID, {
+        IMandateId: afisEMandateSource.IMandateId.toString(),
+      }),
+    },
+  ]);
+
+  return url;
+}
+
 function addEmandateApiUrls(
   sessionID: SessionID,
   businessPartnerId: BusinessPartnerId,
@@ -294,6 +315,7 @@ function addEmandateApiUrls(
       sessionID,
       afisEMandateSource
     );
+    eMandate.updateUrl = getUpdateApiUrl(sessionID, afisEMandateSource);
   }
 
   eMandate.signRequestUrl = getSignRequestApiUrl(
@@ -584,13 +606,43 @@ export async function changeEMandateStatus(
   return updateAfisEMandate(eMandateStatusChangePayload);
 }
 
+const X = z.object({
+  LifetimeTo: z.iso.date(),
+  IMandateId: z.string(),
+});
+
 export async function handleEmandateUpdate(
   eMandateStatusChangePayload: EMandateUpdatePayload,
-  authProfile: AuthProfile,
+  _authProfile: AuthProfile,
   req: Request
 ) {
-  const payload: AfisEMandateUpdatePayloadFrontend = req.body;
-  return updateAfisEMandate(eMandateStatusChangePayload);
+  let payload: AfisEMandateUpdatePayload;
+
+  try {
+    payload = X.parse({
+      LifetimeTo: req.body.dateValidTo,
+      ...eMandateStatusChangePayload,
+    });
+  } catch (error: unknown) {
+    captureException(error);
+    return apiErrorResult(
+      !IS_AP
+        ? z.prettifyError(error as z.ZodError)
+        : 'Invalid request, failed to parse request body.',
+      null,
+      HttpStatusCode.BadRequest
+    );
+  }
+  return updateAfisEMandate(payload).then((response) => {
+    return response.status === 'OK'
+      ? apiSuccessResult({
+          dateValidTo: payload.LifetimeTo ?? null,
+          dateValidToFormatted: payload.LifetimeTo
+            ? defaultDateFormat(payload.LifetimeTo)
+            : null,
+        })
+      : response;
+  });
 }
 
 export const forTesting = {

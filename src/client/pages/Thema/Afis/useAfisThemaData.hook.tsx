@@ -40,6 +40,10 @@ import { DocumentLink } from '../../../components/DocumentList/DocumentLink';
 import { MaLink, MaRouterLink } from '../../../components/MaLink/MaLink';
 import type { BFFApiUrls } from '../../../config/api';
 import { generateBffApiUrlWithEncryptedPayloadQuery } from '../../../helpers/api';
+import {
+  sendGetRequest,
+  swrPostRequestDefault,
+} from '../../../hooks/api/useDataApi';
 import { useSmallScreen } from '../../../hooks/media.hook';
 import {
   useAppStateBagApi,
@@ -240,12 +244,6 @@ export function useAfisThemaData() {
   };
 }
 
-function fetchAfisApi(url: string) {
-  return fetch(url, { credentials: 'include' }).then((response) =>
-    response.json()
-  );
-}
-
 function generateApiUrl(
   businessPartnerIdEncrypted: string | null,
   route: keyof typeof BFFApiUrls
@@ -259,44 +257,52 @@ function generateApiUrl(
 }
 
 export function useAfisEMandateSWR(businessPartnerIdEncrypted: string | null) {
-  return useSWR<ApiSuccessResponse<AfisEMandateFrontend[]>>(
+  return useSWR<AfisEMandateFrontend[]>(
     generateApiUrl(businessPartnerIdEncrypted, 'AFIS_EMANDATES'),
-    fetchAfisApi,
+    sendGetRequest,
     { dedupingInterval: FIFTEEN_MINUTES_MS }
   );
 }
 
 export function useAfisEmandateUpdate(
-  businessPartnerIdEncrypted: string | null
+  businessPartnerIdEncrypted: string | null,
+  eMandate: AfisEMandateFrontend | null
 ) {
-  async function sendRequest(
-    url: string,
-    { arg: eMandateUpdatePayload }: { arg: { dateValidTo: string } }
-  ) {
-    return fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(eMandateUpdatePayload),
-      credentials: 'include',
-    }).then((res) => res.json());
-  }
-
-  const { trigger, isMutating } = useSWRMutation(
-    generateApiUrl(businessPartnerIdEncrypted, 'AFIS_EMANDATES_UPDATE'),
-    sendRequest /* options */
+  const { mutate, isLoading, isValidating } = useAfisEMandateSWR(
+    businessPartnerIdEncrypted
+  );
+  const { trigger, isMutating, ...rest } = useSWRMutation(
+    eMandate?.updateUrl,
+    swrPostRequestDefault(),
+    {
+      onSuccess(eMandateUpdatePayload) {
+        mutate(
+          (eMandates) => {
+            if (!eMandates) {
+              return eMandates;
+            }
+            return eMandates.map((mandate) => {
+              if (mandate.id === eMandate?.id) {
+                return {
+                  ...mandate,
+                  ...eMandateUpdatePayload,
+                };
+              }
+              return mandate;
+            });
+          },
+          { revalidate: false }
+        );
+      },
+    }
   );
 
   return {
     update: async (dateValidTo: string) => {
-      try {
-        const result = await trigger({ dateValidTo } /* options */);
-        return result;
-      } catch (e) {
-        // error handling
-        alert('errro!' + e);
-      }
-      return;
+      trigger({ dateValidTo });
     },
-    isMutating,
+    isMutating: isMutating || isLoading || isValidating,
+    ...rest,
   };
 }
 
@@ -315,7 +321,7 @@ export function useAfisEMandatesData() {
     mutate: refetchEMandates,
   } = useAfisEMandateSWR(businessPartnerIdEncrypted);
 
-  const eMandates = (eMandatesApiResponse?.content ?? []).map((eMandate) => {
+  const eMandates = (eMandatesApiResponse ?? []).map((eMandate) => {
     return {
       ...eMandate,
       action: <AfisEMandateActionUrls eMandate={eMandate} />,
@@ -363,7 +369,7 @@ export function useAfisBetaalVoorkeurenData(
     error: hasBusinessPartnerDetailsError,
   } = useSWR<ApiSuccessResponse<AfisBusinessPartnerDetailsTransformed>>(
     generateApiUrl(businessPartnerIdEncrypted ?? null, 'AFIS_BUSINESSPARTNER'),
-    fetchAfisApi,
+    sendGetRequest,
     { dedupingInterval: FIFTEEN_MINUTES_MS }
   );
 
