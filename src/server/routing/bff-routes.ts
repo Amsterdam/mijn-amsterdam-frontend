@@ -29,8 +29,7 @@ export const BffEndpoints = {
   AFIS_EMANDATES_UPDATE: '/services/afis/e-mandates/update',
   AFIS_EMANDATES_SIGN_REQUEST_STATUS_NOTIFICATION:
     '/services/afis/e-mandates/sign-request-notification',
-  AFIS_FACTUREN:
-    '/services/afis/facturen/:state',
+  AFIS_FACTUREN: '/services/afis/facturen/:state',
   AFIS_DOCUMENT_DOWNLOAD: '/services/afis/facturen/document',
 
   // Stadspas
@@ -105,7 +104,7 @@ export const ExternalConsumerEndpoints = {
     NOTIFICATIONS_JOB: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/job/notifications`,
 
     // Afis E-Mandates
-    // This endppoint is reached over the private network from the EnableU network.
+    // This endpoint is reached over the private network from the EnableU network.
     AFIS_EMANDATE_SIGN_REQUEST_STATUS_NOTIFY: `${BFF_BASE_PATH_PRIVATE}/services/afis/e-mandates/sign-request-status-notify`,
   },
 } as const;
