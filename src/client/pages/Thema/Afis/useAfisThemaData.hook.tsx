@@ -2,8 +2,6 @@ import { ReactNode, useEffect, useMemo } from 'react';
 
 import {
   AfisFacturenByStateFrontend,
-  businessPartnerDetailsLabels,
-  eMandateTableConfig,
   facturenTableConfig,
   listPageTitle,
   linkListItems,
@@ -12,7 +10,6 @@ import {
   routeConfig,
 } from './Afis-thema-config';
 import {
-  AfisBusinessPartnerDetailsTransformed,
   AfisThemaResponse,
   AfisFacturenByStateResponse,
   AfisFactuur,
@@ -28,7 +25,7 @@ import { entries } from '../../../../universal/helpers/utils';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { DocumentLink } from '../../../components/DocumentList/DocumentLink';
 import { MaLink } from '../../../components/MaLink/MaLink';
-import { BFFApiUrls } from '../../../config/api';
+import { generateBffApiUrlWithEncryptedPayloadQuery } from '../../../helpers/api';
 import { useSmallScreen } from '../../../hooks/media.hook';
 import {
   useAppStateBagApi,
@@ -138,7 +135,11 @@ function useAfisFacturenApi(
       state !== 'open'
     ) {
       fetchFacturen({
-        url: `${BFFApiUrls.AFIS_FACTUREN}/${state}?id=${businessPartnerIdEncrypted}`,
+        url: generateBffApiUrlWithEncryptedPayloadQuery(
+          'AFIS_FACTUREN',
+          businessPartnerIdEncrypted,
+          { state }
+        ),
       });
     }
   }, [businessPartnerIdEncrypted, fetchFacturen, isApiDataCached, state]);
@@ -222,61 +223,5 @@ export function useAfisThemaData() {
       afgehandeld: hasFailedDependency(AFIS, 'afgehandeld'),
       overgedragen: hasFailedDependency(AFIS, 'overgedragen'),
     },
-  };
-}
-
-export function useAfisBetaalVoorkeurenData(
-  businessPartnerIdEncrypted:
-    | AfisThemaResponse['businessPartnerIdEncrypted']
-    | undefined
-) {
-  const [
-    businesspartnerDetailsApiResponse,
-    fetchBusinessPartnerDetails,
-    isApiDataCached,
-  ] = useAppStateBagApi<AfisBusinessPartnerDetailsTransformed | null>({
-    bagThema: `${themaId}_BAG`,
-    key: `afis-betaalvoorkeuren`,
-  });
-
-  useEffect(() => {
-    if (businessPartnerIdEncrypted && !isApiDataCached) {
-      fetchBusinessPartnerDetails({
-        url: `${BFFApiUrls.AFIS_BUSINESSPARTNER}?id=${businessPartnerIdEncrypted}`,
-      });
-    }
-  }, [
-    businessPartnerIdEncrypted,
-    fetchBusinessPartnerDetails,
-    isApiDataCached,
-  ]);
-
-  return {
-    title: 'Betaalvoorkeuren',
-    businesspartnerDetails: businesspartnerDetailsApiResponse.content,
-    businessPartnerDetailsLabels,
-    isLoadingBusinessPartnerDetails: isLoading(
-      businesspartnerDetailsApiResponse
-    ),
-    hasBusinessPartnerDetailsError: isError(
-      businesspartnerDetailsApiResponse,
-      false
-    ),
-    hasEmandatesError: false,
-    hasFailedEmailDependency: hasFailedDependency(
-      businesspartnerDetailsApiResponse,
-      'email'
-    ),
-    hasFailedPhoneDependency: hasFailedDependency(
-      businesspartnerDetailsApiResponse,
-      'phone'
-    ),
-    hasFailedFullNameDependency: hasFailedDependency(
-      businesspartnerDetailsApiResponse,
-      'fullName'
-    ),
-    eMandateTableConfig,
-    eMandates: [],
-    isLoadingEmandates: false,
   };
 }
