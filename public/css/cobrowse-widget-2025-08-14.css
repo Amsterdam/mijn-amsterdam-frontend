@@ -1,5 +1,5 @@
 /* Sharing Banner */
-.sharing-banner:has(> .cobrowse-wrapper) {
+.cobrowse-sharing-banner {
   background-color: white;
   min-height: 48px;
   position: fixed;

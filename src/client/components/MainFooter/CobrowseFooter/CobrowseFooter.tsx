@@ -39,7 +39,7 @@ export function CobrowseFooter() {
 
   // Load the external script when it is not loaded from the tagmanager
   const [isCobrowseLoaded] = useScript({
-    src: '/js/cobrowse-widget-2025-08-12.bundle.js',
+    src: '/js/cobrowse-widget-2025-08-15.bundle.js',
     defer: true,
     async: false,
     isEnabled: true,
@@ -63,7 +63,7 @@ export function CobrowseFooter() {
 
     link.type = 'text/css';
     link.rel = 'stylesheet';
-    link.href = '/css/cobrowse-widget-2025-08-11.css';
+    link.href = '/css/cobrowse-widget-2025-08-14.css';
 
     head.appendChild(link);
 
