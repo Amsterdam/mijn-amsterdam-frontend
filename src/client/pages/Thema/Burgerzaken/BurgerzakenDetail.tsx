@@ -1,13 +1,13 @@
 import { useBurgerZakenDetailData } from './useBurgerZakenDetailData.hook';
 import type { IdentiteitsbewijsFrontend } from '../../../../server/services/profile/brp.types';
 import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
-import { Datalist } from '../../../components/Datalist/Datalist';
+import { Datalist, Row } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
 import { getRedactedClass } from '../../../helpers/cobrowse';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
-function getRows(document: IdentiteitsbewijsFrontend) {
+function getRows(document: IdentiteitsbewijsFrontend): Row[] {
   return [
     {
       label: 'Documentnummer',
@@ -31,9 +31,10 @@ function BurgerzakenIdentiteitsbewijsContent({
   document: IdentiteitsbewijsFrontend;
   themaId: string;
 }) {
+  const redactedClass = getRedactedClass(themaId, 'content');
   const rows = getRows(document).map((r) => ({
     ...r,
-    classNameContent: getRedactedClass(themaId, 'content'),
+    classNameContent: `${r.classNameContent ?? ''} ${redactedClass}`,
   }));
 
   return (
