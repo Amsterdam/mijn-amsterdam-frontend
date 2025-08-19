@@ -42,6 +42,7 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
     return getThemaTitleBurgerzakenWithAppState(appState);
   },
   id: themaId,
+  redactedScope: 'content',
   to: (appState) => getThemaUrlBurgerzakenWithAppState(appState),
   profileTypes: ['private'],
   isActive(appState: AppState) {
