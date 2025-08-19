@@ -11,6 +11,7 @@ import { ErfpachtList } from './ErfpachtList';
 import { ErfpachtListFacturen } from './ErfpachtListFacturen';
 import { ErfpachtListOpenFacturen } from './ErfpachtListOpenFacturen';
 import { ErfpachtThema } from './ErfpachtThema';
+import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { isLoading } from '../../../../universal/helpers/api';
 import { type AppState } from '../../../../universal/types/App.types';
 import {
@@ -63,6 +64,14 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
   },
   IconSVG: ErfpachtIcon,
 };
+
+export function getFooterItem(relatieCode: string) {
+  const baseUrl = `https://canonmatiging${IS_PRODUCTION ? '' : '-acc'}.amsterdam.nl`;
+  return {
+    url: `${baseUrl}/?relatiecode=${relatieCode}`,
+    label: 'Mogelijke terugbetaling bij verhuur',
+  };
+}
 
 export const menuItemZakelijk: ThemaMenuItem<typeof themaId> = {
   title: themaTitle,

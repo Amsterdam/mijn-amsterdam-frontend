@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import {
   Grid,
   Heading,
@@ -14,6 +16,7 @@ import type {
 } from '../../../server/services/cms/cms-content';
 import type { ApiResponse } from '../../../universal/helpers/api';
 import { BFF_API_BASE_URL } from '../../config/api';
+import { getFooterItem } from '../../pages/Thema/Erfpacht/Erfpacht-render-config';
 
 function FooterBlock({ title, links }: CMSFooterSection) {
   return (
@@ -34,7 +37,7 @@ function FooterBlock({ title, links }: CMSFooterSection) {
   );
 }
 
-export function MainFooter() {
+export function MainFooter({ relatieCode }: { relatieCode?: string }) {
   const { data: footer } = useSWR<ApiResponse<CMSFooter>>(
     `${BFF_API_BASE_URL}/services/cms/footer`,
     async (url) => {
@@ -51,6 +54,12 @@ export function MainFooter() {
       revalidateOnReconnect: false,
     }
   );
+
+  useEffect(() => {
+    if (relatieCode) {
+      footer?.content?.sections[0].links.push(getFooterItem(relatieCode));
+    }
+  }, [footer]);
 
   return (
     <PageFooter className={styles.MainFooter}>
