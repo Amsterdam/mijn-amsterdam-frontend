@@ -59,7 +59,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
         class="ams-ordered-list ams-ordered-list--no-markers"
       >
         <li
-          class="ams-ordered-list__item ams-mb-m "
+          class="ams-ordered-list__item ams-mb-m cobrowse-redacted"
         >
           <article>
             <header
@@ -213,6 +213,57 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
         </li>
         <li
           class="ams-ordered-list__item ams-mb-m "
+        >
+          <article>
+            <header
+              class="ams-mb-s"
+            >
+              <h4
+                class="ams-heading ams-heading--4"
+              >
+                Notification
+              </h4>
+              <div
+                class="_MetaInfoSecondary_577c09"
+              >
+                <em
+                  class="_ThemaIndication_577c09"
+                >
+                  Parkeren
+                </em>
+                 
+                <time
+                  class="_Datum_577c09"
+                  datetime="2020-07-24"
+                >
+                  24 juli 2020
+                </time>
+              </div>
+            </header>
+            <div
+              class="_Body_577c09"
+            >
+              <p
+                class="ams-paragraph ams-mb-s"
+              >
+                Notificatie3
+              </p>
+              <p
+                class="ams-paragraph"
+              >
+                <a
+                  aria-label="Meer informatie over de melding: Notification"
+                  class="ams-link _MaLink_10c0a4"
+                  href="/item-4"
+                >
+                  Linkje!
+                </a>
+              </p>
+            </div>
+          </article>
+        </li>
+        <li
+          class="ams-ordered-list__item ams-mb-m cobrowse-redacted"
         >
           <article>
             <header

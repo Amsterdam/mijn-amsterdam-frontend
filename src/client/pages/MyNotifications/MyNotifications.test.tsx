@@ -9,6 +9,7 @@ import { MyNotificationsRoute } from './MyNotifications-routes';
 import type { AppState } from '../../../universal/types/App.types';
 import { themaId as themaIdDashboard } from '../Dashboard/Dashboard-config';
 import { themaId as themaIdInkomen } from '../Thema/Inkomen/Inkomen-thema-config';
+import { themaId as themaIdParkeren } from '../Thema/Parkeren/Parkeren-thema-config';
 import { themaIdBRP } from '../Thema/Profile/Profile-thema-config';
 
 const testState = {
@@ -49,6 +50,18 @@ const testState = {
         isAlert: true,
         link: {
           to: '/item-3',
+          title: 'Linkje!',
+        },
+      },
+      {
+        id: 'Not4',
+        title: 'Notification',
+        description: 'Notificatie4',
+        datePublished: '2020-07-24',
+        themaID: themaIdParkeren,
+        themaTitle: 'Parkeren',
+        link: {
+          to: '/item-4',
           title: 'Linkje!',
         },
       },
