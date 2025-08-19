@@ -47,7 +47,12 @@ function getDebugResponseData(conf: AxiosRequestConfig) {
       },
       'start:debug response data'
     );
-    debugRequest(responseDataParsed, 'end:debug response data');
+    try {
+      JSON.stringify(responseDataParsed);
+      debugRequest('%j\nend:debug response data', responseDataParsed);
+    } catch {
+      debugRequest(responseDataParsed, 'end:debug response data');
+    }
     return responseDataParsed;
   };
 }
