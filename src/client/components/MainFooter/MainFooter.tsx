@@ -12,10 +12,37 @@ import type {
   CMSFooter,
   CMSFooterSection,
 } from '../../../server/services/cms/cms-content';
-import type { ApiResponse } from '../../../universal/helpers/api';
+import { IS_PRODUCTION } from '../../../universal/config/env';
+import { ApiResponse } from '../../../universal/helpers/api';
 import { BFF_API_BASE_URL } from '../../config/api';
+import { useErfpachtThemaData } from '../../pages/Thema/Erfpacht/useErfpachtThemaData.hook';
 
-function FooterBlock({ title, links }: CMSFooterSection) {
+//voor Canon > maatwerk MA
+
+function getCanonMatigingLink(relatiecode: string) {
+  const baseUrl = `https://canonmatiging${IS_PRODUCTION ? '' : '-acc'}.amsterdam.nl`;
+  return `${baseUrl}/?relatiecode=${relatiecode}`;
+}
+
+function getCanonFooterLink() {
+  const { relatieCode } = useErfpachtThemaData();
+
+  if (!relatieCode) {
+    return null;
+  }
+  return {
+    url: getCanonMatigingLink(relatieCode),
+    label: 'Mogelijke terugbetaling bij verhuur',
+  };
+}
+// Einde Canon
+
+function FooterBlock({
+  title,
+  links,
+  isFirstColumn,
+}: CMSFooterSection & { isFirstColumn?: boolean }) {
+  const canonFooterLink = isFirstColumn ? getCanonFooterLink() : null;
   return (
     <Grid.Cell key={title} span={4}>
       <Heading color="inverse" level={4} className="ams-mb-s">
@@ -24,10 +51,21 @@ function FooterBlock({ title, links }: CMSFooterSection) {
       {!!links.length && (
         <LinkList>
           {links.map((link) => (
-            <LinkList.Link key={link.url} color="inverse" href={link.url}>
-              {link.label}
-            </LinkList.Link>
+            <>
+              <LinkList.Link key={link.url} color="inverse" href={link.url}>
+                {link.label}
+              </LinkList.Link>
+            </>
           ))}
+          {canonFooterLink && (
+            <LinkList.Link
+              key={canonFooterLink.url}
+              color="inverse"
+              href={canonFooterLink.url}
+            >
+              {canonFooterLink.label}
+            </LinkList.Link>
+          )}
         </LinkList>
       )}
     </Grid.Cell>
@@ -56,8 +94,12 @@ export function MainFooter() {
     <PageFooter className={styles.MainFooter}>
       <PageFooter.Spotlight>
         <Grid gapVertical="large" paddingVertical="large">
-          {footer?.content?.sections.map((footerItem) => (
-            <FooterBlock key={footerItem.title} {...footerItem} />
+          {footer?.content?.sections.map((footerItem, index) => (
+            <FooterBlock
+              key={footerItem.title}
+              {...footerItem}
+              isFirstColumn={index === 0}
+            />
           ))}
         </Grid>
       </PageFooter.Spotlight>
@@ -70,6 +112,7 @@ export function MainFooter() {
             </PageFooter.MenuLink>
           );
         })}
+
         <CobrowseFooter />
       </PageFooter.Menu>
     </PageFooter>
