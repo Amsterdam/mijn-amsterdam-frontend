@@ -27,12 +27,12 @@ export function useVarenDetailPage() {
       (otherZaak) =>
         otherZaak.id !== zaak?.id &&
         otherZaak.vergunning != null &&
-        otherZaak.vergunning?.identifier === zaak?.vergunning?.identifier &&
+        otherZaak.vergunning?.id === zaak?.vergunning?.id &&
         otherZaak.processed === false
     ) || null;
 
-  const buttonItems: ButtonLinkProps[] = zaak
-    ? [exploitatieVergunningWijzigenLink(zaak.key)]
+  const buttonItems: ButtonLinkProps[] = zaak?.vergunning?.id
+    ? [exploitatieVergunningWijzigenLink(zaak.vergunning.id)]
     : [];
 
   return {
