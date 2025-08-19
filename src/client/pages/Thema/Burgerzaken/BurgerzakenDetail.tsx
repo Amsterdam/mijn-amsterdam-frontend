@@ -31,8 +31,7 @@ function BurgerzakenIdentiteitsbewijsContent({
   document: IdentiteitsbewijsFrontend;
   themaId: string;
 }) {
-  const rows = getRows(document);
-  rows.map((r) => ({
+  const rows = getRows(document).map((r) => ({
     ...r,
     classNameContent: getRedactedClass(themaId, 'content'),
   }));
