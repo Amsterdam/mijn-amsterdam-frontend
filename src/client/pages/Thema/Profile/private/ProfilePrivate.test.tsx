@@ -20,7 +20,7 @@ const testState = (
 ) => ({
   BRP: { status: 'OK', content: responseBRP },
   KVK: { status: 'OK', content: null },
-  KLANT_CONTACT: { status: 'OK', content: responseSF },
+  CONTACT_MOMENTEN: { status: 'OK', content: responseSF },
 });
 
 function initializeState(testState: unknown) {

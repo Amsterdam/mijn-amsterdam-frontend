@@ -32,7 +32,7 @@ import {
 } from '../pages/Thema/Vergunningen/Vergunningen-thema-config';
 
 const testState = {
-  KLANT_CONTACT: {
+  CONTACT_MOMENTEN: {
     status: 'OK',
     content: [
       {
@@ -248,13 +248,13 @@ describe('Cobrowse redacted components', () => {
 
         const contactmomentAfis = screen
           .getByRole('link', {
-            name: testState.KLANT_CONTACT.content?.[0].themaKanaal ?? '',
+            name: testState.CONTACT_MOMENTEN.content?.[0].themaKanaal ?? '',
           })
           .closest('tr');
         expect(contactmomentAfis).toHaveClass('cobrowse-redacted');
 
         const contactmomentVergunning = screen
-          .getByText(testState.KLANT_CONTACT.content?.[1].subject ?? '')
+          .getByText(testState.CONTACT_MOMENTEN.content?.[1].subject ?? '')
           .closest('tr');
         expect(contactmomentVergunning).not.toHaveClass('cobrowse-redacted');
       });
@@ -265,13 +265,13 @@ describe('Cobrowse redacted components', () => {
       );
       const contactmomentAfis = screen
         .getByRole('link', {
-          name: testState.KLANT_CONTACT.content?.[0].themaKanaal ?? '',
+          name: testState.CONTACT_MOMENTEN.content?.[0].themaKanaal ?? '',
         })
         .closest('tr');
       expect(contactmomentAfis).toHaveClass('cobrowse-redacted');
 
       const contactmomentVergunning = screen
-        .getByText(testState.KLANT_CONTACT.content?.[1].subject ?? '')
+        .getByText(testState.CONTACT_MOMENTEN.content?.[1].subject ?? '')
         .closest('tr');
       expect(contactmomentVergunning).not.toHaveClass('cobrowse-redacted');
     });

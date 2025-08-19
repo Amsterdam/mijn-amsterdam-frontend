@@ -41,8 +41,8 @@ export const menuItems: [
     isActive(appState: AppState) {
       return (
         (!isLoading(appState.BRP) && !!appState.BRP.content?.persoon) ||
-        (!isLoading(appState.KLANT_CONTACT) &&
-          !!appState.KLANT_CONTACT.content?.length)
+        (!isLoading(appState.CONTACT_MOMENTEN) &&
+          !!appState.CONTACT_MOMENTEN.content?.length)
       );
     },
     IconSVG: ProfilePrivateIcon,

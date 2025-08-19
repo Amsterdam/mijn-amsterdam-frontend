@@ -75,13 +75,13 @@ function addIcon(type: string) {
 }
 
 export function useContactmomenten() {
-  const { KLANT_CONTACT } = useAppStateGetter();
+  const { CONTACT_MOMENTEN } = useAppStateGetter();
   const { items: myThemasMenuItems } = useThemaMenuItems();
   const breadcrumbs = useThemaBreadcrumbs(themaIdBRP);
   const routeParams = useParams();
 
   const contactmomenten: ContactMomentFrontend[] =
-    KLANT_CONTACT?.content?.map((contactMomentItem) => {
+    CONTACT_MOMENTEN?.content?.map((contactMomentItem) => {
       const menuItemId =
         getMenuItem(contactMomentItem.subject, myThemasMenuItems)?.id ||
         contactMomentItem.subject;
@@ -100,8 +100,8 @@ export function useContactmomenten() {
     contactmomenten,
     themaId: themaIdBRP,
     displayProps: contactmomentenDisplayProps,
-    isError: isError(KLANT_CONTACT),
-    isLoading: isLoading(KLANT_CONTACT),
+    isError: isError(CONTACT_MOMENTEN),
+    isLoading: isLoading(CONTACT_MOMENTEN),
     title: 'Contactmomenten',
     breadcrumbs,
     routeParams,

@@ -65,7 +65,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   HLI_stadspas: 'Stadspas, saldo en transacties',
   HORECA: 'Horeca vergunningen',
   KLACHTEN: 'Ingediende klachten',
-  KLANT_CONTACT: 'Contactmomenten',
+  CONTACT_MOMENTEN: 'Contactmomenten',
   KREFIA: 'Kredietbank & FIBU',
 
   MILIEUZONE: 'Milieuzone',
