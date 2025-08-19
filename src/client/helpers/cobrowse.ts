@@ -4,12 +4,16 @@ import { ThemaMenuItem } from '../config/thema-types';
 import { themaId as themaIdNotificaties } from '../pages/MyNotifications/MyNotifications-config';
 
 const REDACTED_CLASS = 'cobrowse-redacted';
-const otherAllowedItems = ['Algemeen', 'Meldingen', themaIdNotificaties].map(
-  (i) => ({
-    id: i,
-    redactedScope: 'content',
-  })
-) as ThemaMenuItem[];
+
+const otherContentRedactedItems = [
+  'Algemeen',
+  'Meldingen',
+  themaIdNotificaties,
+].map((i) => ({
+  id: i,
+  redactedScope: 'content',
+}));
+
 const hasRedactedClass = (
   themaId: string,
   scope: Required<ThemaMenuItem>['redactedScope']
@@ -17,7 +21,7 @@ const hasRedactedClass = (
   if (!FeatureToggle.cobrowseIsActive) {
     return false;
   }
-  const items = [...otherAllowedItems, ...myThemasMenuItems];
+  const items = [...otherContentRedactedItems, ...myThemasMenuItems];
   const themaMenuItem = items.find(
     (item) => item.id.toUpperCase() === themaId.toUpperCase()
   );
