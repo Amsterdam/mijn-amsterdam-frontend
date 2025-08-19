@@ -82,9 +82,10 @@ export function useContactmomenten() {
 
   const contactmomenten: ContactMomentFrontend[] =
     KLANT_CONTACT?.content?.map((contactMomentItem) => {
-      const menuItemId =
-        getMenuItem(contactMomentItem.subject, myThemasMenuItems)?.id ||
-        contactMomentItem.subject;
+      const menuItemId = // getMenuItem can not be used because it is dependend on the user having the thema at the current moment
+        mapperContactmomentToMenuItem[
+          contactMomentItem.subject as keyof typeof mapperContactmomentToMenuItem
+        ] || contactMomentItem.subject;
       return {
         ...contactMomentItem,
         className: getRedactedClass(menuItemId),
