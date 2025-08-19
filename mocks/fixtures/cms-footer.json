@@ -29,12 +29,6 @@
                       "label": "Adressen en openingstijden",
                       "url": "https://www.amsterdam.nl/contact/adressen-openingstijden-stadsloketten/"
                     }
-                  },
-                  "externMA": {
-                    "link": {
-                      "label": "Mogelijke terugbetaling bij verhuur",
-                      "url": "https://canonmatiging-acc.amsterdam.nl/?relatiecode=123-abc"
-                    }
                   }
                 }
               ]
