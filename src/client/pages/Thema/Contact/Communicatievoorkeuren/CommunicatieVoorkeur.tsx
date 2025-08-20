@@ -71,6 +71,11 @@ function CommunicatievoorkeurInstellen({
           value_: <MediumValue voorkeur={voorkeur} medium={medium} />,
           isActive_: (
             <Checkbox
+              title={
+                medium.isActive
+                  ? 'Klik om uit te schakelen'
+                  : 'Klik om in te schakelen'
+              }
               onChange={(x) => {
                 setVoorkeurenBE((voorkeuren) => {
                   return [...voorkeuren].map((v) => {

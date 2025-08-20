@@ -132,7 +132,6 @@ export function EmailInput({ medium, voorkeur, onSubmit }: EmailInputProps) {
       </Paragraph>
       <form onSubmit={submitForm} name="email-adjust-form">
         <Field invalid={isInvalid} className="ams-mb-m">
-          {/* <Label htmlFor="input3">Vul uw e-mailadres in</Label> */}
           <Paragraph id="description2" size="small">
             Zorg ervoor dat u een geldig e-mailadres invult. U ontvangt een code
             op dit e-mailadres. De code moet u straks invullen.
@@ -171,17 +170,10 @@ type EmailValueProps = {
 export function EmailValue({ medium, onClick }: EmailValueProps) {
   return (
     <>
-      {medium.value && (
-        <>
-          {medium.value}
-          {medium.value ? ' ' : ''}
-        </>
-      )}
-      {medium.isActive && (
-        <MaButtonInline onClick={onClick}>
-          {medium.isActive && medium.value ? 'Wijzigen' : 'Instellen'}
-        </MaButtonInline>
-      )}
+      {medium.value ? medium.value : <em>nog niet opgegeven</em>}{' '}
+      <MaButtonInline onClick={onClick}>
+        {medium.isActive && medium.value ? 'Wijzigen' : 'Instellen'}
+      </MaButtonInline>
     </>
   );
 }
