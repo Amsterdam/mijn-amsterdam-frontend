@@ -11,4 +11,5 @@ export const inkomenSectionProps: SectionProps = {
     'Uw aanvraag voor de Tijdelijke Ondersteuning Noodzakelijke Kosten (TONK)',
     'Uw aanvraag voor de Inkomensvoorziening oudere en gedeeltelijk arbeidsongeschikte gewezen zelfstandigen (IOAZ)',
   ],
+  active: true,
 };

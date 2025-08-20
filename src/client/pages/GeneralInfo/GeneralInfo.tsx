@@ -43,6 +43,7 @@ export type SectionProps = {
   title: string;
   to?: string; // Use this instead of the themaMenuItem 'to URL' and force link to be clickable.
   listItems: ListItems;
+  active: boolean;
 };
 type ListItems = Array<{ text: string; listItems?: string[] } | string>;
 
@@ -149,15 +150,18 @@ export function GeneralInfo() {
           <Paragraph className="ams-mb-xl">
             Op dit moment kunnen de volgende gegevens getoond worden:
           </Paragraph>
-          {sections.map((section, i) => (
-            <Section
-              key={i}
-              id={section.id}
-              title={section.title}
-              to={section.to}
-              listItems={section.listItems}
-            />
-          ))}
+          {sections
+            .filter((section) => section.active)
+            .map((section, i) => (
+              <Section
+                key={i}
+                id={section.id}
+                title={section.title}
+                to={section.to}
+                listItems={section.listItems}
+                active={section.active}
+              />
+            ))}
           <Heading level={4} size="level-4" className="ams-mb-s">
             Vragen over Mijn Amsterdam
           </Heading>
