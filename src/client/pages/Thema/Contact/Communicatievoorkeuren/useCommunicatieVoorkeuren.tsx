@@ -26,7 +26,11 @@ const voorkeurenBE: Communicatievoorkeur[] = [
         description:
           'U krijgt een sms bericht over de voortgang van uw aanvraag voor voorzieningen.',
       },
-      { name: 'brieven per post', isActive: false, value: null },
+      {
+        name: 'brieven per post',
+        isActive: false,
+        value: 'Het Amstelplein 32-H',
+      },
     ],
     isActive: true,
     link: {

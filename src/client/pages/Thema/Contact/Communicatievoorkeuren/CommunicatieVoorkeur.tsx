@@ -23,6 +23,8 @@ import { TableV2 } from '../../../../components/Table/TableV2';
 import ThemaDetailPagina from '../../../../components/Thema/ThemaDetailPagina';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle';
 import { routeConfig } from '../Contact-thema-config';
+import { AdresValue } from './AdresVoorkeur';
+import { SMSValue } from './SMSVoorkeur';
 
 type MediumValueProps = {
   medium: CommunicatieMedium;
@@ -50,10 +52,10 @@ function MediumValue({ medium, voorkeur }: MediumValueProps) {
     // Add more cases for other communication mediums
     case 'brieven per post':
       // return <PostalMailSettingModal medium={medium} />;
-      return '<PostalMailSettingModal medium={medium} />';
+      return <AdresValue medium={medium} onClick={() => {}} />;
     case 'sms':
       // return <SmsSettingModal medium={medium} />;
-      return '<SmsSettingModal medium={medium} />';
+      return <SMSValue medium={medium} onClick={() => {}} />;
     default:
       return null;
   }
