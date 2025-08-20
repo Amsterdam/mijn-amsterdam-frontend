@@ -1,5 +1,6 @@
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { isDateInPast } from '../../../universal/helpers/date';
+import { GenericDocument } from '../../../universal/types/App.types';
 import {
   fetchAanvragenWithRelatedPersons,
   fetchPersoonsgegevensNAW,
@@ -86,6 +87,7 @@ export async function fetchZorgnedAanvragenHLI(bsn: BSN) {
   });
 
   if (aanvragenResponse.status === 'OK') {
+    const dedupeDocuments = createDocumentDeduper();
     const aanvragenTransformed: ZorgnedAanvraagWithRelatedPersonsTransformed[] =
       aanvragenResponse.content.map((aanvraagTransformed) => {
         // Override isActueel for front-end.
@@ -93,6 +95,7 @@ export async function fetchZorgnedAanvragenHLI(bsn: BSN) {
           ...aanvraagTransformed,
           titel: transformTitle(aanvraagTransformed),
           isActueel: isActueel(aanvraagTransformed),
+          documenten: dedupeDocuments(aanvraagTransformed),
         };
       });
 
@@ -100,6 +103,24 @@ export async function fetchZorgnedAanvragenHLI(bsn: BSN) {
   }
 
   return aanvragenResponse;
+}
+
+function createDocumentDeduper(): (
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+) => GenericDocument[] {
+  const seenDocumentIds: Set<string> = new Set();
+
+  function dedupeDocuments(
+    aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+  ) {
+    return aanvraag.documenten.filter((doc) => {
+      const id = doc.title + doc.datePublished;
+      const isDuplicate = seenDocumentIds.has(id);
+      seenDocumentIds.add(id);
+      return !isDuplicate;
+    });
+  }
+  return dedupeDocuments;
 }
 
 export const forTesting = {

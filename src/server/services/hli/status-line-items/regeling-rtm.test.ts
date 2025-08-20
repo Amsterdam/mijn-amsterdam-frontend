@@ -1,7 +1,7 @@
 import { filterCombineRtmData } from './regeling-rtm';
 
 describe('filterCombineRtmData', () => {
-  test('Merged part one and two into Besluit afgewezen and dedupes documents', () => {
+  test('Merged part one and two into Besluit afgewezen', () => {
     const result = filterCombineRtmData([
       {
         id: '3166814',
@@ -55,12 +55,6 @@ describe('filterCombineRtmData', () => {
             title: 'AV-RTM Info aan klant GGD',
             url: '',
             datePublished: '2025-07-15T15:11:36.503',
-          },
-          {
-            id: 'E1082460',
-            title: 'aanvraagformulier HLI',
-            url: '',
-            datePublished: '2025-05-20T10:47:13.323',
           },
         ],
         isActueel: true,
@@ -431,107 +425,6 @@ describe('filterCombineRtmData', () => {
         resultaat: 'toegewezen',
         titel: 'Regeling Tegemoetkoming Meerkosten',
       },
-    ]);
-  });
-
-  test('Dedupe documents that are spread across aanvragen', () => {
-    const result = filterCombineRtmData([
-      {
-        id: '3169471',
-        datumAanvraag: '2025-08-07',
-        datumBeginLevering: null,
-        datumBesluit: '2025-08-07',
-        datumEindeGeldigheid: '2025-08-10',
-        datumEindeLevering: null,
-        datumIngangGeldigheid: '2025-01-01',
-        datumOpdrachtLevering: null,
-        datumToewijzing: null,
-        documenten: [
-          {
-            id: 'B3408127',
-            title: 'Beschikking beÃ«indiging RTM',
-            url: '',
-            datePublished: '2025-08-07T14:14:54.937',
-          },
-          {
-            id: 'E1082905',
-            title: 'advies GGD',
-            url: '',
-            datePublished: '2025-08-06T15:12:43',
-          },
-        ],
-        isActueel: false,
-        leverancier: '',
-        leveringsVorm: '',
-        productsoortCode: 'AV-D-RTM',
-        productIdentificatie: 'AV-RTM',
-        beschiktProductIdentificatie: '1522656',
-        resultaat: 'toegewezen',
-        titel: 'Regeling Tegemoetkoming Meerkosten',
-        betrokkenen: ['912345664'],
-        betrokkenPersonen: [
-          {
-            bsn: '912345664',
-            name: '912345664 - Flex',
-            dateOfBirth: '2023-06-12',
-            dateOfBirthFormatted: '12 juni 2023',
-            partnernaam: 'partner-2 - Flex',
-            partnervoorvoegsel: null,
-          },
-        ],
-        bsnAanvrager: '000009945',
-      },
-      {
-        id: '3169246',
-        datumAanvraag: '2025-08-06',
-        datumBeginLevering: null,
-        datumBesluit: '2025-08-07',
-        datumEindeGeldigheid: '2025-08-10',
-        datumEindeLevering: null,
-        datumIngangGeldigheid: '2025-01-01',
-        datumOpdrachtLevering: null,
-        datumToewijzing: null,
-        documenten: [
-          {
-            id: 'B3408126',
-            title: 'Beschikking toekenning Reg Tegemoetk Meerkosten',
-            url: '',
-            datePublished: '2025-08-07T14:13:15.95',
-          },
-          {
-            id: 'E1082905',
-            title: 'advies GGD',
-            url: '',
-            datePublished: '2025-08-06T15:12:43',
-          },
-        ],
-        isActueel: false,
-        leverancier: '',
-        leveringsVorm: '',
-        productsoortCode: 'AV-D-RTM',
-        productIdentificatie: 'AV-RTM',
-        beschiktProductIdentificatie: '1522656',
-        resultaat: 'toegewezen',
-        titel: 'Regeling Tegemoetkoming Meerkosten',
-        betrokkenen: ['912345664'],
-        betrokkenPersonen: [
-          {
-            bsn: '912345664',
-            name: '912345664 - Flex',
-            dateOfBirth: '2023-06-12',
-            dateOfBirthFormatted: '12 juni 2023',
-            partnernaam: 'partner-2 - Flex',
-            partnervoorvoegsel: null,
-          },
-        ],
-        bsnAanvrager: '000009945',
-      },
-    ]);
-    expect(result.length).toBe(1);
-    expect(result[0].documenten.map((doc) => doc.title)).toStrictEqual([
-      'Beschikking beÃ«indiging RTM',
-      'advies GGD',
-      'Beschikking toekenning Reg Tegemoetk Meerkosten',
     ]);
   });
 });
