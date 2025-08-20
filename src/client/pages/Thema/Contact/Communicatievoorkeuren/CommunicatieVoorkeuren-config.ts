@@ -35,6 +35,6 @@ export const communicatievoorkeurInstellenDisplayProps: DisplayProps<Communicati
     props: {
       isActive_: 'Actief',
       name: 'Instelling',
-      value_: 'Waarde',
+      value_: 'Naar',
     },
   };
