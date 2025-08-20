@@ -1,13 +1,16 @@
-import { Icon, Paragraph } from '@amsterdam/design-system-react';
-import { CheckmarkIcon } from '@amsterdam/design-system-react-icons';
+import { Checkbox, Paragraph } from '@amsterdam/design-system-react';
 import { generatePath, useNavigate } from 'react-router';
+import { useSetRecoilState } from 'recoil';
 
 import {
   communicatievoorkeurInstellenDisplayProps,
   type CommunicatievoorkeurFrontend,
 } from './CommunicatieVoorkeuren-config';
 import { EmailValue } from './EmailVoorkeur';
-import { useCommunicatieVoorkeurDetail } from './useCommunicatieVoorkeuren';
+import {
+  useCommunicatieVoorkeurDetail,
+  voorkeurenAtom,
+} from './useCommunicatieVoorkeuren';
 import type {
   CommunicatieMedium,
   Communicatievoorkeur,
@@ -59,13 +62,40 @@ function CommunicatievoorkeurInstellen({
 }: {
   voorkeur: Communicatievoorkeur;
 }) {
+  const setVoorkeurenBE = useSetRecoilState(voorkeurenAtom);
   const voorkeur_: CommunicatievoorkeurFrontend | null = voorkeur
     ? {
         ...voorkeur,
         medium_: voorkeur?.medium.map((medium) => ({
           ...medium,
           value_: <MediumValue voorkeur={voorkeur} medium={medium} />,
-          isActive_: medium.isActive ? <Icon svg={CheckmarkIcon} /> : 'Nee',
+          isActive_: (
+            <Checkbox
+              onChange={(x) => {
+                setVoorkeurenBE((voorkeuren) => {
+                  return [...voorkeuren].map((v) => {
+                    if (v.id === voorkeur.id) {
+                      return {
+                        ...v,
+                        medium: v.medium.map((m) => {
+                          if (m.name === medium.name) {
+                            const isActive = !m.isActive;
+                            return {
+                              ...m,
+                              isActive,
+                            };
+                          }
+                          return m;
+                        }),
+                      };
+                    }
+                    return v;
+                  });
+                });
+              }}
+              checked={medium.isActive}
+            />
+          ),
         })),
       }
     : null;

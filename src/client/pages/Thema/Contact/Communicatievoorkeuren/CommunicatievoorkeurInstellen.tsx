@@ -34,7 +34,7 @@ function MediumInstellen({ medium, voorkeur }: MediumInstellenProps) {
 
   const medium_: CommunicatieMedium = {
     ...medium,
-    value: emailLocal,
+    value: emailLocal || medium.value,
   };
 
   function navigateToVoorkeur() {
@@ -114,7 +114,7 @@ export function CommunicatievoorkeurInstellen() {
 
   return (
     <ThemaDetailPagina
-      title={medium?.name ? `Instellen ${medium?.name}` : title}
+      title={title}
       themaId={themaId}
       isLoading={isLoading}
       isError={isError}
