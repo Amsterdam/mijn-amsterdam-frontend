@@ -5,6 +5,12 @@ import dotenvExpand from 'dotenv-expand';
 import nock from 'nock';
 import { afterAll, afterEach, vi } from 'vitest';
 
+export const bffApiHost = 'http://bff-api-host';
+export const frontentHost = 'http://frontend-host';
+export const remoteApiHost = 'http://remote-api-host';
+
+process.env.BFF_MOCK_API_BASE_URL = remoteApiHost;
+
 const ENV_FILE = '.env.local.template';
 const envConfig = dotenv.config({ path: ENV_FILE });
 dotenvExpand.expand(envConfig);
@@ -65,10 +71,6 @@ afterAll(() => {
   nock.restore();
   nock.enableNetConnect();
 });
-
-export const bffApiHost = 'http://bff-api-host';
-export const frontentHost = 'http://frontend-host';
-export const remoteApiHost = 'http://remote-api-host';
 
 // Prevent logging in tests.
 process.env.LOG_LEVEL = '';

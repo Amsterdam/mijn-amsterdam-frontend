@@ -21,6 +21,12 @@ export const BffEndpoints = {
 
   // AFIS
   AFIS_BUSINESSPARTNER: '/services/afis/businesspartner',
+  AFIS_EMANDATES: '/services/afis/e-mandates',
+  AFIS_EMANDATES_STATUS_CHANGE: '/services/afis/e-mandates/change-status',
+  AFIS_EMANDATES_SIGN_REQUEST_URL: '/services/afis/e-mandates/sign-request-url',
+  AFIS_EMANDATES_UPDATE: '/services/afis/e-mandates/update',
+  AFIS_EMANDATES_SIGN_REQUEST_STATUS_NOTIFICATION:
+    '/services/afis/e-mandates/sign-request-notification',
   AFIS_FACTUREN: '/services/afis/facturen/:state',
   AFIS_DOCUMENT_DOWNLOAD: '/services/afis/facturen/document',
 
@@ -76,7 +82,7 @@ export const BffEndpoints = {
 const AMSAPP_BASE = '/services/amsapp';
 
 export const ExternalConsumerEndpoints = {
-  // Publicly accessible
+  // Publicly accessible over the internet
   public: {
     STADSPAS_AMSAPP_LOGIN: `${AMSAPP_BASE}/stadspas/login/:token`,
     STADSPAS_ADMINISTRATIENUMMER: `${AMSAPP_BASE}/stadspas/administratienummer/:token`,
@@ -86,7 +92,7 @@ export const ExternalConsumerEndpoints = {
     NOTIFICATIONS_CONSUMER_APP: `${AMSAPP_BASE}/notifications/consumer/:consumerId/app`,
     NOTIFICATIONS_CONSUMER: `${AMSAPP_BASE}/notifications/consumer/:consumerId`,
   },
-  // Privately accessible
+  // Privately accessible over private network
   private: {
     STADSPAS_PASSEN: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/stadspas/passen/:administratienummerEncrypted`,
     STADSPAS_DISCOUNT_TRANSACTIONS: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/stadspas/aanbiedingen/transactions/:transactionsKeyEncrypted`,
@@ -94,6 +100,10 @@ export const ExternalConsumerEndpoints = {
     STADSPAS_BLOCK_PAS: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/stadspas/block/:transactionsKeyEncrypted`,
     NOTIFICATIONS: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/notifications`,
     NOTIFICATIONS_JOB: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/job/notifications`,
+
+    // Afis E-Mandates
+    // This endpoint is reached over the private network from the EnableU network.
+    AFIS_EMANDATE_SIGN_REQUEST_STATUS_NOTIFY: `${BFF_BASE_PATH_PRIVATE}/services/afis/e-mandates/sign-request-status-notify`,
   },
 } as const;
 
