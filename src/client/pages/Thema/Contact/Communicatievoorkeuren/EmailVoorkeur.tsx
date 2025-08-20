@@ -10,6 +10,7 @@ import {
 } from '@amsterdam/design-system-react';
 import OtpInput from 'react-otp-input';
 
+import { VERIFICATION_CODE_LENGTH } from './CommunicatieVoorkeuren-config';
 import styles from './EmailVoorkeur.module.scss';
 import type {
   CommunicatieMedium,
@@ -19,7 +20,7 @@ import { MaButtonInline } from '../../../../components/MaLink/MaLink';
 import { Spinner } from '../../../../components/Spinner/Spinner';
 
 function validateCodeFormat(code: string) {
-  return code.split('').filter(Boolean).length === 4;
+  return code.split('').filter(Boolean).length === VERIFICATION_CODE_LENGTH;
 }
 
 type EmailOTPProps = {
@@ -41,6 +42,7 @@ export function EmailOTP({ medium, onSubmit }: EmailOTPProps) {
       const isValid = validateCodeFormat(otp);
       if (isValid) {
         setIsSubmitting(true);
+        // TODO: Make api call
         setTimeout(() => {
           setIsSubmitting(false);
           onSubmit({ otp });
@@ -63,23 +65,23 @@ export function EmailOTP({ medium, onSubmit }: EmailOTPProps) {
       <Field invalid={isInvalid} className="ams-mb-m">
         <Label htmlFor="input3">Vul de code in</Label>
         <Paragraph id="description2" size="small">
-          Wij hebben een code met 4 cijfers gestuurd naar{' '}
-          <strong>{medium.value}</strong>. Vul deze code hieronder in.
+          Wij hebben een code met {VERIFICATION_CODE_LENGTH} cijfers gestuurd
+          naar <strong>{medium.value}</strong>. Vul deze code hieronder in.
         </Paragraph>
         {isInvalid && (
           <ErrorMessage id="error">De code is niet correct.</ErrorMessage>
         )}
         <OtpInput
           value={otp}
-          onChange={(x) => {
-            setOtp(x);
+          onChange={(otp) => {
+            setOtp(otp);
             setIsInvalid(false);
-            const isValid = validateCodeFormat(x);
+            const isValid = validateCodeFormat(otp);
             if (isValid) {
-              submit(x);
+              submit(otp);
             }
           }}
-          numInputs={4}
+          numInputs={VERIFICATION_CODE_LENGTH}
           containerStyle={styles.OTPContainer}
           renderSeparator={<span>-</span>}
           skipDefaultStyles
@@ -126,9 +128,9 @@ export function EmailInput({ medium, voorkeur, onSubmit }: EmailInputProps) {
   return (
     <>
       <Paragraph className="ams-mb-m">
-        Hier kunt u uw e-mailadres doorgeven. U krijgt dan E-mails van{' '}
+        Hier kunt u uw e-mailadres doorgeven. U krijgt dan e-mails van{' '}
         {voorkeur.stakeholder} over{' '}
-        {medium.description ?? 'producten en diensten'}. - {medium.value} -
+        {medium.description ?? 'producten en diensten'}.
       </Paragraph>
       <form onSubmit={submitForm} name="email-adjust-form">
         <Field invalid={isInvalid} className="ams-mb-m">

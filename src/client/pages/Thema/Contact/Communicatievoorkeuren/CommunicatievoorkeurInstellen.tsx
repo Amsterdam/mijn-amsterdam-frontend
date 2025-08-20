@@ -1,3 +1,4 @@
+import { Paragraph } from '@amsterdam/design-system-react';
 import { generatePath, useNavigate, useParams } from 'react-router';
 import { useSetRecoilState } from 'recoil';
 
@@ -10,7 +11,7 @@ import { MaRouterLink } from '../../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../../components/Page/Page';
 import ThemaDetailPagina from '../../../../components/Thema/ThemaDetailPagina';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle';
-import { routeConfig } from '../Contact-thema-config';
+import { routeConfig, themaTitle } from '../Contact-thema-config';
 import {
   useCommunicatieVoorkeurInstellen,
   voorkeurenAtom,
@@ -45,9 +46,9 @@ function MediumInstellen({ medium, voorkeur }: MediumInstellenProps) {
     );
   }
 
-  function navigateToStep(path: string, step: '1' | '2') {
+  function navigateToStep(step: '1' | '2') {
     navigate(
-      generatePath(path, {
+      generatePath(routeConfig.detailPageCommunicatievoorkeurInstellen.path, {
         medium: medium.name,
         id: voorkeur.id,
         step,
@@ -59,6 +60,13 @@ function MediumInstellen({ medium, voorkeur }: MediumInstellenProps) {
     <>
       {medium?.name === 'e-mail' && (
         <>
+          {step !== '1' && step !== '2' && (
+            <Paragraph>
+              <MaRouterLink href={routeConfig.themaPage.path}>
+                Ga terug naar {themaTitle}
+              </MaRouterLink>
+            </Paragraph>
+          )}
           {step === '1' && (
             <EmailInput
               onSubmit={(event) => {
@@ -67,10 +75,7 @@ function MediumInstellen({ medium, voorkeur }: MediumInstellenProps) {
                   'email'
                 ) as string;
                 setEmailLocal(email);
-                navigateToStep(
-                  routeConfig.detailPageCommunicatievoorkeurInstellen.path,
-                  '2'
-                );
+                navigateToStep('2');
               }}
               medium={medium_}
               voorkeur={voorkeur}
@@ -125,10 +130,8 @@ export function CommunicatievoorkeurInstellen() {
           {medium && voorkeur ? (
             <MediumInstellen voorkeur={voorkeur} medium={medium} />
           ) : (
-            <MaRouterLink
-              href={routeConfig.listPageCommunicatievoorkeuren.path}
-            >
-              Niet in te stellen
+            <MaRouterLink href={routeConfig.themaPage.path}>
+              Niets in te stellen. Ga terug naar {themaTitle}
             </MaRouterLink>
           )}
         </PageContentCell>

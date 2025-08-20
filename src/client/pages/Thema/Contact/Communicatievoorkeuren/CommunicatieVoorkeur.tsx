@@ -1,8 +1,9 @@
-import { Checkbox, Paragraph } from '@amsterdam/design-system-react';
+import { Alert, Paragraph, Switch } from '@amsterdam/design-system-react';
 import { generatePath, useNavigate } from 'react-router';
 import { useSetRecoilState } from 'recoil';
 
 import {
+  communicatieVoorkeurenTitle,
   communicatievoorkeurInstellenDisplayProps,
   type CommunicatievoorkeurFrontend,
 } from './CommunicatieVoorkeuren-config';
@@ -16,6 +17,7 @@ import type {
   Communicatievoorkeur,
 } from '../../../../../server/services/contact/contact.types';
 import { Datalist } from '../../../../components/Datalist/Datalist';
+import { MaRouterLink } from '../../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../../components/Page/Page';
 import { TableV2 } from '../../../../components/Table/TableV2';
 import ThemaDetailPagina from '../../../../components/Thema/ThemaDetailPagina';
@@ -62,6 +64,7 @@ function CommunicatievoorkeurInstellen({
 }: {
   voorkeur: Communicatievoorkeur;
 }) {
+  const navigate = useNavigate();
   const setVoorkeurenBE = useSetRecoilState(voorkeurenAtom);
   const voorkeur_: CommunicatievoorkeurFrontend | null = voorkeur
     ? {
@@ -70,13 +73,14 @@ function CommunicatievoorkeurInstellen({
           ...medium,
           value_: <MediumValue voorkeur={voorkeur} medium={medium} />,
           isActive_: (
-            <Checkbox
+            <Switch
               title={
                 medium.isActive
                   ? 'Klik om uit te schakelen'
                   : 'Klik om in te schakelen'
               }
               onChange={(x) => {
+                // Update backend
                 setVoorkeurenBE((voorkeuren) => {
                   return [...voorkeuren].map((v) => {
                     if (v.id === voorkeur.id) {
@@ -97,6 +101,19 @@ function CommunicatievoorkeurInstellen({
                     return v;
                   });
                 });
+                if (!medium.isActive && !medium.value) {
+                  // If the medium is not active, we need to navigate to the detail page
+                  navigate(
+                    generatePath(
+                      routeConfig.detailPageCommunicatievoorkeurInstellen.path,
+                      {
+                        id: voorkeur.id,
+                        medium: medium.name,
+                        step: '1',
+                      }
+                    )
+                  );
+                }
               }}
               checked={medium.isActive}
             />
@@ -105,13 +122,46 @@ function CommunicatievoorkeurInstellen({
       }
     : null;
 
-  return voorkeur_ ? (
-    <TableV2
-      items={voorkeur_.medium_}
-      displayProps={communicatievoorkeurInstellenDisplayProps}
-    />
-  ) : (
-    <Paragraph>Geen communicatievoorkeuren in te stellen.</Paragraph>
+  return (
+    <>
+      {voorkeur_ ? (
+        <>
+          <TableV2
+            items={voorkeur_.medium_}
+            className="ams-mb-m"
+            displayProps={communicatievoorkeurInstellenDisplayProps}
+          />
+          {!voorkeur.medium.some((m) => m.isActive) && (
+            <Alert
+              className="ams-mb-m"
+              heading="Geen voorkeuren doorgegeven."
+              severity="warning"
+              headingLevel={4}
+            >
+              <Paragraph>
+                Er zijn op dit moment geen voorkeuren actief voor dit
+                onderwerp.{' '}
+              </Paragraph>
+              <Paragraph>
+                Dit betekent dat wij u geen brieven, e-mails of sms-berichten
+                sturen over dit onderwerp.
+              </Paragraph>
+              <Paragraph>
+                U kunt uw voorkeuren instellen door op de{' '}
+                <strong>Actief</strong> knop te klikken.
+              </Paragraph>
+            </Alert>
+          )}
+        </>
+      ) : (
+        <Paragraph>Geen communicatievoorkeuren in te stellen.</Paragraph>
+      )}
+      <Paragraph>
+        <MaRouterLink href={routeConfig.themaPage.path}>
+          Terug naar {communicatieVoorkeurenTitle}
+        </MaRouterLink>
+      </Paragraph>
+    </>
   );
 }
 
@@ -149,8 +199,12 @@ export function CommunicatievoorkeurDetail() {
       breadcrumbs={breadcrumbs}
       pageContentMain={
         <PageContentCell>
-          <Datalist rows={rows} />
-          {!!voorkeur && <CommunicatievoorkeurInstellen voorkeur={voorkeur} />}
+          {!!voorkeur && (
+            <>
+              <Datalist rows={rows} />
+              <CommunicatievoorkeurInstellen voorkeur={voorkeur} />
+            </>
+          )}
         </PageContentCell>
       }
     />

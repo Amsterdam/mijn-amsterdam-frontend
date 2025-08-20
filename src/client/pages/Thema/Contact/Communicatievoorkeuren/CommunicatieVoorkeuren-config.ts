@@ -6,6 +6,8 @@ import type {
 } from '../../../../../server/services/contact/contact.types';
 import type { DisplayProps } from '../../../../components/Table/TableV2.types';
 
+export const VERIFICATION_CODE_LENGTH = 5;
+
 export const communicatieVoorkeurenTitle = 'Alle communicatievoorkeuren';
 export const communicatieVoorkeurDetailTitle = 'Voorkeur';
 export const communicatieVoorkeurInstellenTitle = 'Instellen';
