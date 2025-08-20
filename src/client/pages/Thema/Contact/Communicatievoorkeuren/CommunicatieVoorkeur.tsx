@@ -1,33 +1,82 @@
-import { Icon } from '@amsterdam/design-system-react';
+import { Icon, Paragraph } from '@amsterdam/design-system-react';
 import { CheckmarkIcon } from '@amsterdam/design-system-react-icons';
+import { generatePath, useNavigate } from 'react-router';
 
-import type { CommunicatievoorkeurFrontend } from './CommunicatieVoorkeuren-config';
+import {
+  communicatievoorkeurInstellenDisplayProps,
+  type CommunicatievoorkeurFrontend,
+} from './CommunicatieVoorkeuren-config';
+import { EmailValue } from './EmailVoorkeur';
 import { useCommunicatieVoorkeurDetail } from './useCommunicatieVoorkeuren';
-import { getFullAddress } from '../../../../../universal/helpers/brp';
+import type {
+  CommunicatieMedium,
+  Communicatievoorkeur,
+} from '../../../../../server/services/contact/contact.types';
 import { Datalist } from '../../../../components/Datalist/Datalist';
-import { MaButtonInline } from '../../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../../components/Page/Page';
 import { TableV2 } from '../../../../components/Table/TableV2';
 import ThemaDetailPagina from '../../../../components/Thema/ThemaDetailPagina';
-import { useAppStateGetter } from '../../../../hooks/useAppState';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle';
+import { routeConfig } from '../Contact-thema-config';
+
+type MediumValueProps = {
+  medium: CommunicatieMedium;
+  voorkeur: Communicatievoorkeur;
+};
+
+function MediumValue({ medium, voorkeur }: MediumValueProps) {
+  const navigate = useNavigate();
+
+  switch (medium.name) {
+    case 'e-mail':
+      return (
+        <EmailValue
+          onClick={() =>
+            navigate(
+              generatePath(
+                routeConfig.detailPageCommunicatievoorkeurInstellen.path,
+                { medium: medium.name, id: voorkeur.id, step: '1' }
+              )
+            )
+          }
+          medium={medium}
+        />
+      );
+    // Add more cases for other communication mediums
+    case 'brieven per post':
+      // return <PostalMailSettingModal medium={medium} />;
+      return '<PostalMailSettingModal medium={medium} />';
+    case 'sms':
+      // return <SmsSettingModal medium={medium} />;
+      return '<SmsSettingModal medium={medium} />';
+    default:
+      return null;
+  }
+}
 
 function CommunicatievoorkeurInstellen({
   voorkeur,
 }: {
-  voorkeur: CommunicatievoorkeurFrontend;
+  voorkeur: Communicatievoorkeur;
 }) {
-  return (
+  const voorkeur_: CommunicatievoorkeurFrontend | null = voorkeur
+    ? {
+        ...voorkeur,
+        medium_: voorkeur?.medium.map((medium) => ({
+          ...medium,
+          value_: <MediumValue voorkeur={voorkeur} medium={medium} />,
+          isActive_: medium.isActive ? <Icon svg={CheckmarkIcon} /> : 'Nee',
+        })),
+      }
+    : null;
+
+  return voorkeur_ ? (
     <TableV2
-      items={voorkeur.medium_}
-      displayProps={{
-        props: {
-          isActive_: 'Actief',
-          name: 'Voorkeur',
-          value_: 'Instelling',
-        },
-      }}
+      items={voorkeur_.medium_}
+      displayProps={communicatievoorkeurInstellenDisplayProps}
     />
+  ) : (
+    <Paragraph>Geen communicatievoorkeuren in te stellen.</Paragraph>
   );
 }
 
@@ -44,68 +93,29 @@ export function CommunicatievoorkeurDetail() {
 
   useHTMLDocumentTitle(routeConfig.detailPageCommunicatievoorkeur);
 
-  const { BRP } = useAppStateGetter();
-
   const rows = [
-    {
-      label: 'Afdeling gemeente',
-      content: voorkeur?.stakeholder,
-    },
+    // {
+    //   label: 'Afdeling gemeente',
+    //   content: voorkeur?.stakeholder,
+    // },
     {
       label: 'Onderwerp',
       content: voorkeur?.title,
     },
   ];
 
-  const voorkeur_: CommunicatievoorkeurFrontend | null = voorkeur
-    ? {
-        ...voorkeur,
-        medium_: voorkeur?.medium.map((item) => ({
-          ...item,
-          value_: item.value ? (
-            <span>
-              {item.value}&nbsp;&nbsp;
-              <MaButtonInline onClick={() => {}}>Wijzigen</MaButtonInline>
-            </span>
-          ) : (
-            <span>
-              {item.name === 'brieven per post' && item.isActive ? (
-                <>
-                  {BRP.content?.adres
-                    ? getFullAddress(BRP.content?.adres)
-                    : 'Mijn adres'}
-                  &nbsp;&nbsp;
-                </>
-              ) : (
-                ''
-              )}
-
-              <MaButtonInline onClick={() => {}}>
-                {item.name === 'brieven per post' && item.isActive
-                  ? 'Wijzigen'
-                  : 'Instellen'}
-              </MaButtonInline>
-            </span>
-          ),
-          isActive_: item.isActive ? <Icon svg={CheckmarkIcon} /> : 'Nee',
-        })),
-      }
-    : null;
-
   return (
-    <ThemaDetailPagina<CommunicatievoorkeurFrontend>
+    <ThemaDetailPagina<Communicatievoorkeur>
       title={title}
       themaId={themaId}
-      zaak={voorkeur_}
+      zaak={voorkeur}
       isError={isError}
       isLoading={isLoading}
       breadcrumbs={breadcrumbs}
       pageContentMain={
         <PageContentCell>
           <Datalist rows={rows} />
-          {!!voorkeur_ && (
-            <CommunicatievoorkeurInstellen voorkeur={voorkeur_} />
-          )}
+          {!!voorkeur && <CommunicatievoorkeurInstellen voorkeur={voorkeur} />}
         </PageContentCell>
       }
     />

@@ -35,4 +35,10 @@ export const routeConfig = {
     },
     documentTitle: `Communicatievoorkeur | ${themaTitle}`,
   },
+  detailPageCommunicatievoorkeurInstellen: {
+    get path(): string {
+      return `/${routeConfig.detailPageCommunicatievoorkeur.path}/instellen/:medium/:step`;
+    },
+    documentTitle: `Communicatievoorkeur instellen | ${themaTitle}`,
+  },
 } as const satisfies ThemaRoutesConfig;

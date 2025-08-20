@@ -6,8 +6,9 @@ import type {
 } from '../../../../../server/services/contact/contact.types';
 import type { DisplayProps } from '../../../../components/Table/TableV2.types';
 
-export const communicatieVoorkeurenTitle = 'Communicatievoorkeuren';
-export const communicatieVoorkeurDetailTitle = 'Stel voorkeur in';
+export const communicatieVoorkeurenTitle = 'Alle communicatievoorkeuren';
+export const communicatieVoorkeurDetailTitle = 'Voorkeur';
+export const communicatieVoorkeurInstellenTitle = 'Stel voorkeur in';
 
 type CommunicatieMediumFrontend = CommunicatieMedium & {
   isActive_: ReactNode;
