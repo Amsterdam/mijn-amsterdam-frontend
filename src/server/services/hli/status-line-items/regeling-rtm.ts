@@ -39,14 +39,14 @@ function dedupCombineRTMDeel2(
 ) {
   const dedupedAanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[] = [];
 
-  const seenDocumentsIDs = new Set();
+  const seenDocumentIDs = new Set();
   const seenAanvragen: Record<string, ZorgnedHLIRegeling> = {};
 
   for (const aanvraag of structuredClone(aanvragen)) {
     aanvraag.documenten = aanvraag.documenten.filter((doc) => {
       const id = doc.title + doc.datePublished;
-      const isDuplicate = seenDocumentsIDs.has(id);
-      seenDocumentsIDs.add(id);
+      const isDuplicate = seenDocumentIDs.has(id);
+      seenDocumentIDs.add(id);
       return !isDuplicate;
     });
 
