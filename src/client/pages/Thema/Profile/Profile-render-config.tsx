@@ -1,7 +1,6 @@
 import { BuildingsIcon } from '@amsterdam/design-system-react-icons';
 
 import { MijnBedrijfsGegevensThema } from './commercial/ProfileCommercial';
-import { ContactmomentenListPage } from './private/ContactmomentenListPage';
 import { MijnGegevensThema } from './private/ProfilePrivate';
 import {
   routeConfig,
@@ -14,6 +13,8 @@ import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 import { isLoading } from '../../../../universal/helpers/api';
 import { AppState } from '../../../../universal/types/App.types';
 import { ThemaMenuItem } from '../../../config/thema-types';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
+import { ContactmomentenListPage } from '../Contact/Contactmomenten/ContactmomentenListPage';
 
 export const ProfileRoutes = [
   { route: routeConfig.themaPageBRP.path, Component: MijnGegevensThema },
@@ -23,7 +24,15 @@ export const ProfileRoutes = [
   },
   {
     route: routeConfig.listPageContactmomenten.path,
-    Component: ContactmomentenListPage,
+    Component: () => {
+      const breadcrumbs = useThemaBreadcrumbs(themaIdBRP);
+      return (
+        <ContactmomentenListPage
+          themaId={themaIdBRP}
+          breadcrumbs={breadcrumbs}
+        />
+      );
+    },
     isActive: FeatureToggle.contactmomentenActive,
   },
 ];

@@ -1,5 +1,3 @@
-// import { linkListItems, tableConfig } from './config';
-
 import { Icon, Link } from '@amsterdam/design-system-react';
 import {
   ChatBubbleIcon,
@@ -8,22 +6,20 @@ import {
 } from '@amsterdam/design-system-react-icons';
 import { generatePath, useParams } from 'react-router';
 
+import { routeConfig } from '../Contact-thema-config';
 import {
   contactmomentenDisplayProps,
-  ContactMomentFrontend,
-  mapperContactmomentToMenuItem,
-} from './Contactmomenten.config';
-import styles from './ProfilePrivate.module.scss';
-import { isLoading, isError } from '../../../../../universal/helpers/api';
+  contactMomentenTitle,
+  type ContactMomentFrontend,
+} from './Contactmomenten-config';
+import { mapperContactmomentToMenuItem } from './Contactmomenten-config';
+import styles from './Contactmomenten.module.scss';
+import { isError, isLoading } from '../../../../../universal/helpers/api';
 import { MaRouterLink } from '../../../../components/MaLink/MaLink';
-import { ThemaMenuItemTransformed } from '../../../../config/thema-types';
+import type { ThemaMenuItemTransformed } from '../../../../config/thema-types';
 import { getRedactedClass } from '../../../../helpers/cobrowse';
 import { useAppStateGetter } from '../../../../hooks/useAppState';
-import {
-  useThemaBreadcrumbs,
-  useThemaMenuItems,
-} from '../../../../hooks/useThemaMenuItems';
-import { routeConfig, themaIdBRP } from '../Profile-thema-config';
+import { useThemaMenuItems } from '../../../../hooks/useThemaMenuItems';
 
 function getMenuItem(
   onderwerp: string,
@@ -77,7 +73,6 @@ function addIcon(type: string) {
 export function useContactmomenten() {
   const { CONTACT_MOMENTEN } = useAppStateGetter();
   const { items: myThemasMenuItems } = useThemaMenuItems();
-  const breadcrumbs = useThemaBreadcrumbs(themaIdBRP);
   const routeParams = useParams();
 
   const contactmomenten: ContactMomentFrontend[] =
@@ -98,12 +93,10 @@ export function useContactmomenten() {
 
   return {
     contactmomenten,
-    themaId: themaIdBRP,
     displayProps: contactmomentenDisplayProps,
     isError: isError(CONTACT_MOMENTEN),
     isLoading: isLoading(CONTACT_MOMENTEN),
-    title: 'Contactmomenten',
-    breadcrumbs,
+    title: contactMomentenTitle,
     routeParams,
     listPageRoute: generatePath(routeConfig.listPageContactmomenten.path, {
       page: null,

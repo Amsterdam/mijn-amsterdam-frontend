@@ -1,7 +1,6 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 
 import { AdresInOnderzoek } from './AdresInOnderzoek';
-import { ContactMomenten } from './ContactMomenten';
 import { panelConfig } from './ProfilePrivate.transform';
 import { ProfileSectionPanel } from '../ProfileSectionPanel';
 import { useProfileData } from './useProfileData.hook';
@@ -15,6 +14,7 @@ import { PageContentCell } from '../../../../components/Page/Page';
 import { ParagaphSuppressed } from '../../../../components/ParagraphSuppressed/ParagraphSuppressed';
 import ThemaPagina from '../../../../components/Thema/ThemaPagina';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle';
+import { ContactMomentenCollapsiblePanel } from '../../Contact/Contactmomenten/ContactMomenten';
 
 function ProfilePrivateSectionPanels() {
   const { BRP, profileData, routeConfig } = useProfileData();
@@ -100,6 +100,7 @@ export function MijnGegevensThema() {
     isErrorContactmomenten,
     linkListItems,
     hasContactMomenten,
+    routeConfig,
   } = useProfileThemaData();
 
   const pageContentErrorAlert = (
@@ -164,7 +165,10 @@ export function MijnGegevensThema() {
           )}
           {hasContactMomenten && (
             <PageContentCell>
-              <ContactMomenten />
+              <ContactMomentenCollapsiblePanel
+                listPageRoute={routeConfig.listPageContactmomenten.path}
+                showTitle={false}
+              />
             </PageContentCell>
           )}
           <ProfilePrivateSectionPanels />
