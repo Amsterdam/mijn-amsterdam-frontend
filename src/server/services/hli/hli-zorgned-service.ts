@@ -95,7 +95,7 @@ export async function fetchZorgnedAanvragenHLI(bsn: BSN) {
           ...aanvraagTransformed,
           titel: transformTitle(aanvraagTransformed),
           isActueel: isActueel(aanvraagTransformed),
-          documenten: dedupeDocuments(aanvraagTransformed),
+          documenten: dedupeDocuments(aanvraagTransformed.documenten),
         };
       });
 
@@ -106,14 +106,12 @@ export async function fetchZorgnedAanvragenHLI(bsn: BSN) {
 }
 
 function createDocumentDeduper(): (
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+  documents: GenericDocument[]
 ) => GenericDocument[] {
   const seenDocumentIds: Set<string> = new Set();
 
-  function dedupeDocuments(
-    aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-  ) {
-    return aanvraag.documenten.filter((doc) => {
+  function dedupeDocuments(documents: GenericDocument[]) {
+    return documents.filter((doc) => {
       const id = doc.title + doc.datePublished;
       const isDuplicate = seenDocumentIds.has(id);
       seenDocumentIds.add(id);
