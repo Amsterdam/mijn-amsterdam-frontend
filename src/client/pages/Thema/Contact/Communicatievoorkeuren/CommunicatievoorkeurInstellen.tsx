@@ -87,7 +87,7 @@ function MediumInstellen({ medium, voorkeur }: MediumInstellenProps) {
                         ...v,
                         medium: v.medium.map((m) => {
                           if (m.name === medium.name) {
-                            return { ...m, value: emailLocal };
+                            return { ...m, value: emailLocal, isActive: true };
                           }
                           return m;
                         }),
