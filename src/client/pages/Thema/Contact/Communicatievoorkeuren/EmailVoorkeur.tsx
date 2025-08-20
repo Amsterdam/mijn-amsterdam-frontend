@@ -67,7 +67,7 @@ export function EmailOTP({ medium, onSubmit }: EmailOTPProps) {
           <strong>{medium.value}</strong>. Vul deze code hieronder in.
         </Paragraph>
         {isInvalid && (
-          <ErrorMessage id="error">De code heeft 4 cijfers nodig.</ErrorMessage>
+          <ErrorMessage id="error">De code is niet correct.</ErrorMessage>
         )}
         <OtpInput
           value={otp}
@@ -112,7 +112,7 @@ type EmailInputProps = {
 };
 
 export function EmailInput({ medium, voorkeur, onSubmit }: EmailInputProps) {
-  const [email, setEmail] = useState(medium.value);
+  const [email, setEmail] = useState<string>(medium.value || '');
   const [isInvalid, setIsInvalid] = useState(false);
   // Onsubmit, send to backend and setStep to 2 OTP validation
   const submitForm: React.FormEventHandler<HTMLFormElement> = (event) => {
@@ -128,14 +128,14 @@ export function EmailInput({ medium, voorkeur, onSubmit }: EmailInputProps) {
       <Paragraph className="ams-mb-m">
         Hier kunt u uw e-mailadres doorgeven. U krijgt dan E-mails van{' '}
         {voorkeur.stakeholder} over{' '}
-        {medium.description ?? 'producten en diensten'}.
+        {medium.description ?? 'producten en diensten'}. - {medium.value} -
       </Paragraph>
       <form onSubmit={submitForm} name="email-adjust-form">
         <Field invalid={isInvalid} className="ams-mb-m">
           {/* <Label htmlFor="input3">Vul uw e-mailadres in</Label> */}
           <Paragraph id="description2" size="small">
-            Zorg ervoor dat u een geldig e-mailadres invult. U ontvangt een
-            verificatiecode op dit e-mailadres.
+            Zorg ervoor dat u een geldig e-mailadres invult. U ontvangt een code
+            op dit e-mailadres. De code moet u straks invullen.
           </Paragraph>
           {isInvalid && (
             <ErrorMessage id="error2">
@@ -147,7 +147,7 @@ export function EmailInput({ medium, voorkeur, onSubmit }: EmailInputProps) {
             aria-required
             id="input3"
             invalid={isInvalid}
-            value={email ?? ''}
+            value={email}
             placeholder="naam@domein.nl"
             onChange={(e) => {
               setEmail(e.target.value);
@@ -171,11 +171,17 @@ type EmailValueProps = {
 export function EmailValue({ medium, onClick }: EmailValueProps) {
   return (
     <>
-      {medium.value}
-      {medium.value ? ' ' : ''}
-      <MaButtonInline onClick={onClick}>
-        {medium.isActive && medium.value ? 'Wijzigen' : 'Instellen'}
-      </MaButtonInline>
+      {medium.value && (
+        <>
+          {medium.value}
+          {medium.value ? ' ' : ''}
+        </>
+      )}
+      {medium.isActive && (
+        <MaButtonInline onClick={onClick}>
+          {medium.isActive && medium.value ? 'Wijzigen' : 'Instellen'}
+        </MaButtonInline>
+      )}
     </>
   );
 }

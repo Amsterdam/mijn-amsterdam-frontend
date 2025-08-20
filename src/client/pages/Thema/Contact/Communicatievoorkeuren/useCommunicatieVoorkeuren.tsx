@@ -9,7 +9,6 @@ import {
   communicatieVoorkeurDetailTitle,
   communicatievoorkeurenDisplayProps,
   communicatieVoorkeurenTitle,
-  communicatieVoorkeurInstellenTitle,
 } from './CommunicatieVoorkeuren-config';
 
 const voorkeurenBE: Communicatievoorkeur[] = [
@@ -142,6 +141,8 @@ export function useCommunicatieVoorkeurInstellen() {
   const { voorkeur, breadcrumbs, themaId, isError, isLoading } =
     useCommunicatieVoorkeurDetail();
   const params = useParams<{ medium: string }>();
+  const medium =
+    voorkeur?.medium.find((medium) => medium.name === params.medium) ?? null;
   const breadcrumbs_ = [
     ...breadcrumbs,
     {
@@ -153,11 +154,10 @@ export function useCommunicatieVoorkeurInstellen() {
   ];
 
   return {
-    title: communicatieVoorkeurInstellenTitle,
+    title: `${medium?.value ? 'Wijzigen' : 'Activeren'} ${medium?.name}`,
     themaId,
     voorkeur,
-    medium:
-      voorkeur?.medium.find((medium) => medium.name === params.medium) ?? null,
+    medium,
     isError,
     isLoading,
     breadcrumbs: breadcrumbs_,

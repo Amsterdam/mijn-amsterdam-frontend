@@ -8,7 +8,7 @@ import type { DisplayProps } from '../../../../components/Table/TableV2.types';
 
 export const communicatieVoorkeurenTitle = 'Alle communicatievoorkeuren';
 export const communicatieVoorkeurDetailTitle = 'Voorkeur';
-export const communicatieVoorkeurInstellenTitle = 'Stel voorkeur in';
+export const communicatieVoorkeurInstellenTitle = 'Instellen';
 
 type CommunicatieMediumFrontend = CommunicatieMedium & {
   isActive_: ReactNode;
@@ -32,7 +32,7 @@ export const communicatievoorkeurInstellenDisplayProps: DisplayProps<Communicati
   {
     props: {
       isActive_: 'Actief',
-      name: 'Voorkeur',
-      value_: 'Instelling',
+      name: 'Instelling',
+      value_: 'Waarde',
     },
   };
