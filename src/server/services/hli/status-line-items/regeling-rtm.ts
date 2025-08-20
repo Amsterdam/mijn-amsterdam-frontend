@@ -38,9 +38,18 @@ function dedupCombineRTMDeel2(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ) {
   const dedupedAanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[] = [];
+
+  const seenDocumentsIDs = new Set();
   const seenAanvragen: Record<string, ZorgnedHLIRegeling> = {};
 
   for (const aanvraag of structuredClone(aanvragen)) {
+    aanvraag.documenten = aanvraag.documenten.filter((doc) => {
+      const id = doc.title + doc.datePublished;
+      const isDuplicate = seenDocumentsIDs.has(id);
+      seenDocumentsIDs.add(id);
+      return !isDuplicate;
+    });
+
     if (!isRTMDeel2(aanvraag)) {
       dedupedAanvragen.push(aanvraag);
       continue;
@@ -87,7 +96,7 @@ export function filterCombineRtmData(
         datumInBehandeling: deel1?.datumBesluit,
         datumAanvraag: deel1?.datumAanvraag ?? deel2.datumAanvraag,
         betrokkenen: [...deel1.betrokkenen], // TODO: Will the RTM deel2 have betrokkenen?
-        documenten: dedupDocuments([...deel2.documenten, ...deel1.documenten]),
+        documenten: [...deel2.documenten, ...deel1.documenten],
       });
       continue;
     }
@@ -96,24 +105,6 @@ export function filterCombineRtmData(
 
   combinedAanvragen.push(...deel2Aanvragen);
   return combinedAanvragen;
-}
-
-function dedupDocuments(
-  docs: ZorgnedHLIRegeling['documenten']
-): ZorgnedHLIRegeling['documenten'] {
-  const seen = new Set();
-
-  const deduped = docs.filter((doc) => {
-    // datePublished includes miliseconds and it would be most unlikely -
-    // for two different documents to be made at such an exact time.
-    const id = doc.title + doc.datePublished;
-
-    const hasDuplicate = seen.has(id);
-    seen.add(id);
-    return !hasDuplicate;
-  });
-
-  return deduped;
 }
 
 function getRtmDescriptionDeel1Toegewezen(
