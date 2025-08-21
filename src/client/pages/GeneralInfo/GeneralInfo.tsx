@@ -4,6 +4,7 @@ import {
   UnorderedList,
 } from '@amsterdam/design-system-react';
 
+import { sortAlpha } from '../../../universal/helpers/utils';
 import { MaLink, MaRouterLink } from '../../components/MaLink/MaLink';
 import { myAreaSectionProps } from '../../components/MyArea/InfoSection';
 import {
@@ -13,7 +14,10 @@ import {
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { getRedactedClass } from '../../helpers/cobrowse';
-import { useThemaMenuItemsByThemaID } from '../../hooks/useThemaMenuItems';
+import {
+  alwaysFirstThemasIds,
+  useThemaMenuItemsByThemaID,
+} from '../../hooks/useThemaMenuItems';
 import { afisSectionProps } from '../Thema/Afis/InfoSection';
 import { afvalSectionProps } from '../Thema/Afval/InfoSection';
 import { AVGsectionProps } from '../Thema/AVG/InfoSection';
@@ -153,6 +157,15 @@ export function GeneralInfo() {
           </Paragraph>
           {sections
             .filter((section) => section.active)
+            .toSorted((a, b) => {
+              if (
+                alwaysFirstThemasIds.includes(a.id) ||
+                alwaysFirstThemasIds.includes(b.id)
+              ) {
+                return 1;
+              }
+              return sortAlpha('title')(a, b);
+            })
             .map((section, i) => (
               <Section
                 key={i}

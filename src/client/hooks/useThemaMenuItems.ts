@@ -19,18 +19,22 @@ export interface ThemasState {
   isLoading: boolean;
 }
 
+// RP TODO: Extract into function and also use at GeneralInfo.tsx
+export const alwaysFirstThemasIds = [themaIdKVK, themaIdBRP] as string[];
+
 export function useThemaMenuItems(): ThemasState {
   const profileType = useProfileTypeValue();
   const appState = useAppStateGetter();
   const isAppStateReady = useAppStateReady();
-  const allThemaItems = themasByProfileType(profileType).sort(
-    sortAlpha('title')
-  );
-  const alwaysFirstThemasIds = [themaIdKVK, themaIdBRP] as string[];
-  const themaItems = [
-    ...allThemaItems.filter(({ id }) => alwaysFirstThemasIds.includes(id)),
-    ...allThemaItems.filter(({ id }) => !alwaysFirstThemasIds.includes(id)),
-  ];
+  const themaItems = themasByProfileType(profileType).toSorted((a, b) => {
+    if (
+      alwaysFirstThemasIds.includes(a.id) ||
+      alwaysFirstThemasIds.includes(b.id)
+    ) {
+      return 1;
+    }
+    return sortAlpha('title')(a, b);
+  });
 
   const items = useMemo(() => {
     return themaItems.filter((item) => {
