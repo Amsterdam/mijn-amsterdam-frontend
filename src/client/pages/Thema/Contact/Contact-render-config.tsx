@@ -1,4 +1,4 @@
-import { CommunicatievoorkeurDetail } from './Communicatievoorkeuren/CommunicatieVoorkeur';
+import { CommunicatievoorkeurDetail } from './Communicatievoorkeuren/CommunicatieVoorkeurDetail';
 import { CommunicatievoorkeurInstellen } from './Communicatievoorkeuren/CommunicatievoorkeurInstellen';
 import { routeConfig, themaId, themaTitle } from './Contact-thema-config';
 import { default as InkomenIcon } from './ContactIcon.svg?react';
