@@ -73,7 +73,7 @@ const sections: SectionProps[] = [
   bodemsectionProps,
 ];
 
-function Section({ id, title, listItems, to }: SectionProps) {
+function Section({ id, title, listItems, to }: Omit<SectionProps, 'active'>) {
   const themaMenuItems = useThemaMenuItemsByThemaID();
 
   const listItemComponents = listItems.map((item, i) => {
@@ -159,7 +159,6 @@ export function GeneralInfo() {
                 title={section.title}
                 to={section.to}
                 listItems={section.listItems}
-                active={section.active}
               />
             ))}
           <Heading level={4} size="level-4" className="ams-mb-s">
