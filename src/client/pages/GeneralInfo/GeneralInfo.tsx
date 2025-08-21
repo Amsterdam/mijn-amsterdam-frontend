@@ -12,6 +12,7 @@ import {
   TextPageV2,
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
+import { getRedactedClass } from '../../helpers/cobrowse';
 import { useThemaMenuItemsByThemaID } from '../../hooks/useThemaMenuItems';
 import { afisSectionProps } from '../Thema/Afis/InfoSection';
 import { afvalSectionProps } from '../Thema/Afval/InfoSection';
@@ -107,12 +108,12 @@ function Section({ id, title, listItems, to }: Omit<SectionProps, 'active'>) {
   );
 
   return (
-    <>
+    <div className={getRedactedClass(id)}>
       <Heading level={4} size="level-4" className="ams-mb-s">
         {titleComponent}
       </Heading>
       <UnorderedList className="ams-mb-xl">{listItemComponents}</UnorderedList>
-    </>
+    </div>
   );
 }
 
