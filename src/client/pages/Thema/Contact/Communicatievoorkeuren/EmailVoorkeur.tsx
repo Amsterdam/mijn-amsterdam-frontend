@@ -196,8 +196,6 @@ export function EmailForm({
 
     const isEmailToVerify = emailToVerify && emailToVerify !== emailValue;
 
-    console.log('fs', formData, emailToVerify, emailExisting, isEmailToVerify);
-
     if (
       (isEmailToVerify && !emailToVerify.includes('@')) ||
       (!emailExisting && !emailToVerify)
@@ -206,7 +204,6 @@ export function EmailForm({
       return;
     }
 
-    console.log('submit!');
     onSubmit({ email: emailToVerify, isVerified: !isEmailToVerify });
   };
 
@@ -229,7 +226,6 @@ export function EmailForm({
               value={emailValue}
               emails={emails}
               onChange={(email) => {
-                console.log('on change', email);
                 if (email) {
                   onSubmit({ email, isVerified: true });
                 }
