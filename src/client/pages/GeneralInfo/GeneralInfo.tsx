@@ -4,7 +4,6 @@ import {
   UnorderedList,
 } from '@amsterdam/design-system-react';
 
-import { sortAlpha } from '../../../universal/helpers/utils';
 import { MaLink, MaRouterLink } from '../../components/MaLink/MaLink';
 import { myAreaSectionProps } from '../../components/MyArea/InfoSection';
 import {
@@ -15,7 +14,7 @@ import {
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { getRedactedClass } from '../../helpers/cobrowse';
 import {
-  alwaysFirstThemasIds,
+  sortThemas,
   useThemaMenuItemsByThemaID,
 } from '../../hooks/useThemaMenuItems';
 import { afisSectionProps } from '../Thema/Afis/InfoSection';
@@ -133,6 +132,18 @@ function getLinkComponent(href: string) {
 }
 
 export function GeneralInfo() {
+  const sectionComponents = sections
+    .filter((section) => section.active)
+    .toSorted(sortThemas)
+    .map((section, i) => (
+      <Section
+        key={i}
+        id={section.id}
+        title={section.title}
+        to={section.to}
+        listItems={section.listItems}
+      />
+    ));
   return (
     <TextPageV2>
       <PageContentV2 span={8}>
@@ -155,23 +166,7 @@ export function GeneralInfo() {
           <Paragraph className="ams-mb-xl">
             Op dit moment kunnen de volgende gegevens getoond worden:
           </Paragraph>
-          {sections
-            .filter((section) => section.active)
-            .toSorted((a, b) => {
-              if (alwaysFirstThemasIds.includes(b.id)) {
-                return 1;
-              }
-              return sortAlpha('title')(a, b);
-            })
-            .map((section, i) => (
-              <Section
-                key={i}
-                id={section.id}
-                title={section.title}
-                to={section.to}
-                listItems={section.listItems}
-              />
-            ))}
+          {sectionComponents}
           <Heading level={4} size="level-4" className="ams-mb-s">
             Vragen over Mijn Amsterdam
           </Heading>

@@ -19,19 +19,21 @@ export interface ThemasState {
   isLoading: boolean;
 }
 
-// RP TODO: Extract into function and also use at GeneralInfo.tsx
-export const alwaysFirstThemasIds = [themaIdKVK, themaIdBRP] as string[];
+type withIDTitle = { id: string; title: string };
+
+export function sortThemas<T extends withIDTitle>(a: T, b: T): 0 | 1 | -1 {
+  const alwaysFirstThemasIds = [themaIdKVK, themaIdBRP] as string[];
+  if (alwaysFirstThemasIds.includes(b.id)) {
+    return 1;
+  }
+  return sortAlpha('title')(a, b);
+}
 
 export function useThemaMenuItems(): ThemasState {
   const profileType = useProfileTypeValue();
   const appState = useAppStateGetter();
   const isAppStateReady = useAppStateReady();
-  const themaItems = themasByProfileType(profileType).toSorted((a, b) => {
-    if (alwaysFirstThemasIds.includes(b.id)) {
-      return 1;
-    }
-    return sortAlpha('title')(a, b);
-  });
+  const themaItems = themasByProfileType(profileType).toSorted(sortThemas);
 
   const items = useMemo(() => {
     return themaItems.filter((item) => {
