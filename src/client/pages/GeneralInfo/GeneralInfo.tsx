@@ -14,7 +14,7 @@ import {
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { getRedactedClass } from '../../helpers/cobrowse';
 import {
-  sortThemas,
+  compareThemas,
   useThemaMenuItemsByThemaID,
 } from '../../hooks/useThemaMenuItems';
 import { afisSectionProps } from '../Thema/Afis/InfoSection';
@@ -134,7 +134,7 @@ function getLinkComponent(href: string) {
 export function GeneralInfo() {
   const sectionComponents = sections
     .filter((section) => section.active)
-    .toSorted(sortThemas)
+    .toSorted(compareThemas)
     .map((section, i) => (
       <Section
         key={i}
