@@ -8,7 +8,7 @@ import {
 import { DecosParkeerVergunning } from '../../../../server/services/parkeren/config-and-types';
 import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
-import { addLinkElementToProperty } from '../../../components/Table/TableV2';
+import { addMaRouterLinkToProperty } from '../../../components/Table/TableV2';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 
@@ -16,7 +16,7 @@ export function useParkerenData() {
   const { PARKEREN } = useAppStateGetter();
   const hasMijnParkerenVergunningen = !!PARKEREN.content?.isKnown;
 
-  const vergunningen = addLinkElementToProperty<
+  const vergunningen = addMaRouterLinkToProperty<
     VergunningFrontend<DecosParkeerVergunning>
   >(PARKEREN.content?.vergunningen ?? [], 'identifier', true);
 

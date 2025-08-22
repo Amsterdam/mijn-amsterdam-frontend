@@ -9,14 +9,14 @@ import {
 } from './Zorg-thema-config';
 import { WMOVoorzieningFrontend } from '../../../../server/services/wmo/wmo-config-and-types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
-import { addLinkElementToProperty } from '../../../components/Table/TableV2';
+import { addMaRouterLinkToProperty } from '../../../components/Table/TableV2';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 
 export function useZorgThemaData() {
   const { WMO } = useAppStateGetter();
 
-  const voorzieningen = addLinkElementToProperty<WMOVoorzieningFrontend>(
+  const voorzieningen = addMaRouterLinkToProperty<WMOVoorzieningFrontend>(
     WMO.content ?? [],
     'title',
     true

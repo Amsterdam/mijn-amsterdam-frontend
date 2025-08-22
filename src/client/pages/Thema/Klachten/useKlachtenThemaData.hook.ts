@@ -7,14 +7,14 @@ import {
 } from './Klachten-thema-config';
 import type { KlachtFrontend } from '../../../../server/services/klachten/types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
-import { addLinkElementToProperty } from '../../../components/Table/TableV2';
+import { addMaRouterLinkToProperty } from '../../../components/Table/TableV2';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 
 export function useKlachtenThemaData() {
   const { KLACHTEN } = useAppStateGetter();
 
-  const klachten = addLinkElementToProperty<KlachtFrontend>(
+  const klachten = addMaRouterLinkToProperty<KlachtFrontend>(
     KLACHTEN.content ?? [],
     'id',
     true,

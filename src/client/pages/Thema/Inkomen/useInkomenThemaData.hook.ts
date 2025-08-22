@@ -15,7 +15,7 @@ import {
   defaultDateFormat,
   dateSort,
 } from '../../../../universal/helpers/date';
-import { addLinkElementToProperty } from '../../../components/Table/TableV2';
+import { addMaRouterLinkToProperty } from '../../../components/Table/TableV2';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 
@@ -70,7 +70,7 @@ export function useInkomenThemaData() {
       })
       .sort(dateSort('datePublished', 'desc'));
 
-    return addLinkElementToProperty<WpiRequestProcess>(zaken, 'title', true);
+    return addMaRouterLinkToProperty<WpiRequestProcess>(zaken, 'title', true);
   }, [aanvragen, tozo, tonk, bbz]);
 
   const isLoadingWpi =

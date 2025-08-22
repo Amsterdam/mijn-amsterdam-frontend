@@ -16,50 +16,60 @@ import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { entries } from '../../../universal/helpers/utils';
 import { ZaakDetail } from '../../../universal/types/App.types';
 import { useSmallScreen } from '../../hooks/media.hook';
-import { MaRouterLink } from '../MaLink/MaLink';
+import { MaRouterLink, MaLink } from '../MaLink/MaLink';
+
+export const addMaRouterLinkToProperty =
+  createLinkElementToPropertyAdder(MaRouterLink);
+
+export const addMaLinkToProperty = createLinkElementToPropertyAdder(MaLink);
 
 /**
  * @deprecated These exports should be removed in the future and replaced with import from the types file.
  */
 export type { DisplayProps, WithDetailLinkComponent } from './TableV2.types';
 
-export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
-  items: T[],
-  propertyName: keyof T | keyof T['link'] = 'title',
-  addDetailLinkComponentAttr = false,
-  linkTitle?: (item: T) => string,
-  linkName: string = 'link'
-): WithDetailLinkComponent<T>[] {
-  return items.map((item) => {
-    if (!item[linkName]?.to) {
-      return item;
-    }
+function createLinkElementToPropertyAdder(
+  LinkComponent: typeof MaRouterLink | typeof MaLink = MaRouterLink
+) {
+  function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
+    items: T[],
+    propertyName: keyof T | keyof T['link'] = 'title',
+    addDetailLinkComponentAttr = false,
+    linkTitle?: (item: T) => string,
+    linkName: string = 'link'
+  ): WithDetailLinkComponent<T>[] {
+    return items.map((item) => {
+      if (!item[linkName]?.to) {
+        return item;
+      }
 
-    let label: string =
-      item[propertyName as keyof T] ?? item?.[linkName]?.[propertyName];
-    let linkPropertyName = propertyName;
+      let label: string =
+        item[propertyName as keyof T] ?? item?.[linkName]?.[propertyName];
+      let linkPropertyName = propertyName;
 
-    if (typeof label !== 'string') {
-      label = 'Onbekend item';
-    }
+      if (typeof label !== 'string') {
+        label = 'Onbekend item';
+      }
 
-    if (addDetailLinkComponentAttr) {
-      linkPropertyName = 'detailLinkComponent';
-    }
+      if (addDetailLinkComponentAttr) {
+        linkPropertyName = 'detailLinkComponent';
+      }
 
-    return {
-      ...item,
-      [linkPropertyName]: (
-        <MaRouterLink
-          maVariant="fatNoUnderline"
-          title={linkTitle ? linkTitle(item) : `Bekijk meer over ${label}`}
-          href={item[linkName].to}
-        >
-          {capitalizeFirstLetter(label)}
-        </MaRouterLink>
-      ),
-    };
-  });
+      return {
+        ...item,
+        [linkPropertyName]: (
+          <LinkComponent
+            maVariant="fatNoUnderline"
+            title={linkTitle ? linkTitle(item) : `Bekijk meer over ${label}`}
+            href={item[linkName].to}
+          >
+            {capitalizeFirstLetter(label)}
+          </LinkComponent>
+        ),
+      };
+    });
+  }
+  return addLinkElementToProperty;
 }
 
 function getColWidth(

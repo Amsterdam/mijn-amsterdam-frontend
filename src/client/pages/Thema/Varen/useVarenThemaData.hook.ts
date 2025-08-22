@@ -8,7 +8,7 @@ import {
 } from './Varen-thema-config';
 import type { VarenZakenFrontend } from '../../../../server/services/varen/config-and-types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
-import { addLinkElementToProperty } from '../../../components/Table/TableV2';
+import { addMaRouterLinkToProperty } from '../../../components/Table/TableV2';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 
@@ -19,7 +19,7 @@ export function useVarenThemaData() {
 
   const zaken = VAREN.content?.zaken ?? [];
 
-  const varenZaken = addLinkElementToProperty<VarenZakenFrontend>(
+  const varenZaken = addMaRouterLinkToProperty<VarenZakenFrontend>(
     zaken,
     'vesselName',
     true
