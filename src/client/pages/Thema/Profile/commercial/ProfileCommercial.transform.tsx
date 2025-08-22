@@ -18,7 +18,7 @@ import {
   capitalizeFirstLetter,
   splitCapitals,
 } from '../../../../../universal/helpers/text';
-import { Adres, AppState } from '../../../../../universal/types/App.types';
+import { AppState } from '../../../../../universal/types/App.types';
 import {
   ProfileLabels,
   formatProfileSectionData,

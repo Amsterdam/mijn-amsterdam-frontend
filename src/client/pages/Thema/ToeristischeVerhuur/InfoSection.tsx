@@ -1,4 +1,8 @@
-import { themaId, themaTitle } from './ToeristischeVerhuur-thema-config';
+import {
+  featureToggle,
+  themaId,
+  themaTitle,
+} from './ToeristischeVerhuur-thema-config';
 import { SectionProps } from '../../GeneralInfo/GeneralInfo';
 
 export const toeristischeverhuurSectionProps: SectionProps = {
@@ -9,4 +13,5 @@ export const toeristischeverhuurSectionProps: SectionProps = {
     'Uw landelijk registratienummer toeristische verhuur',
     'Link naar het landelijk portaal om vakantieverhuur door te geven en het aantal nachten verhuur in te zien',
   ],
+  active: featureToggle.toeristischeVerhuurActive,
 };

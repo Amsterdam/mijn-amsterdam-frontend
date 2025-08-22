@@ -1,4 +1,9 @@
-import { regelingenTitle, stadspasTitle, themaId } from './HLI-thema-config';
+import {
+  featureToggle,
+  regelingenTitle,
+  stadspasTitle,
+  themaId,
+} from './HLI-thema-config';
 import { SectionProps } from '../../GeneralInfo/GeneralInfo';
 
 export const HLIRegelingenSectionProps: SectionProps = {
@@ -16,6 +21,7 @@ export const HLIRegelingenSectionProps: SectionProps = {
     'Tegemoetkoming aanvullend openbaar vervoer voor ouderen',
     'Tegemoetkoming openbaar vervoer voor mantelzorgers',
   ],
+  active: featureToggle.hliThemaRegelingenActive,
 };
 export const HLIstadspasSectionProps: SectionProps = {
   id: themaId,
@@ -26,4 +32,5 @@ export const HLIstadspasSectionProps: SectionProps = {
     'Stadspasnummer',
     'Stadspas blokkeren',
   ],
+  active: featureToggle.hliStadspasActive,
 };
