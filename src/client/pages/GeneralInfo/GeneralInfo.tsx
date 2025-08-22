@@ -111,12 +111,12 @@ function Section({ id, title, listItems, to }: Omit<SectionProps, 'active'>) {
   );
 
   return (
-    <div className={getRedactedClass(id)}>
+    <>
       <Heading level={4} size="level-4" className="ams-mb-s">
         {titleComponent}
       </Heading>
       <UnorderedList className="ams-mb-xl">{listItemComponents}</UnorderedList>
-    </div>
+    </>
   );
 }
 
@@ -166,7 +166,7 @@ export function GeneralInfo() {
           <Paragraph className="ams-mb-xl">
             Op dit moment kunnen de volgende gegevens getoond worden:
           </Paragraph>
-          {sectionComponents}
+          <div className={getRedactedClass()}>{sectionComponents}</div>
           <Heading level={4} size="level-4" className="ams-mb-s">
             Vragen over Mijn Amsterdam
           </Heading>
