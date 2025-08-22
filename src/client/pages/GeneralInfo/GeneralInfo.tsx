@@ -158,10 +158,7 @@ export function GeneralInfo() {
           {sections
             .filter((section) => section.active)
             .toSorted((a, b) => {
-              if (
-                alwaysFirstThemasIds.includes(a.id) ||
-                alwaysFirstThemasIds.includes(b.id)
-              ) {
+              if (alwaysFirstThemasIds.includes(b.id)) {
                 return 1;
               }
               return sortAlpha('title')(a, b);

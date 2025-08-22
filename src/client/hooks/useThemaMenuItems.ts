@@ -27,10 +27,7 @@ export function useThemaMenuItems(): ThemasState {
   const appState = useAppStateGetter();
   const isAppStateReady = useAppStateReady();
   const themaItems = themasByProfileType(profileType).toSorted((a, b) => {
-    if (
-      alwaysFirstThemasIds.includes(a.id) ||
-      alwaysFirstThemasIds.includes(b.id)
-    ) {
+    if (alwaysFirstThemasIds.includes(b.id)) {
       return 1;
     }
     return sortAlpha('title')(a, b);
