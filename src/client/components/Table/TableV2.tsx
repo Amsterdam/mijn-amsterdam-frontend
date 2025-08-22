@@ -29,7 +29,7 @@ export const addMaLinkToProperty = createLinkElementToPropertyAdder(MaLink);
 export type { DisplayProps, WithDetailLinkComponent } from './TableV2.types';
 
 function createLinkElementToPropertyAdder(
-  LinkComponent: typeof MaRouterLink | typeof MaLink = MaRouterLink
+  LinkComponent: typeof MaRouterLink | typeof MaLink
 ) {
   function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
     items: T[],
