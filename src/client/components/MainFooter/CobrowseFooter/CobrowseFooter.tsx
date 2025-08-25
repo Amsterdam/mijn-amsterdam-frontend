@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { PageFooter } from '@amsterdam/design-system-react';
 
 import { FeatureToggle } from '../../../../universal/config/feature-toggles';
+import { BFF_API_BASE_URL } from '../../../config/api';
 import { useScript } from '../../../hooks/useScript';
 
 const MAX_WAIT_FOR_COBROWSE_LIVE_MS = 5000;
@@ -36,13 +37,19 @@ export function CobrowseFooter() {
   if (MA_APP_MODE === 'unittest' || !FeatureToggle.cobrowseIsActive) {
     return;
   }
-
+  const licenseKey = import.meta.env.REACT_APP_COBROWSE_LICENSE_KEY;
+  if (!licenseKey) {
+    return;
+  }
   // Load the external script when it is not loaded from the tagmanager
   const [isCobrowseLoaded] = useScript({
-    src: '/js/cobrowse-widget-2025-08-15.bundle.js',
+    src: `${BFF_API_BASE_URL}/services/screenshare`,
     defer: true,
     async: false,
     isEnabled: true,
+    dataset: {
+      licenseKey,
+    },
   });
   const [showCobrowseFooter, setShowCobrowseFooter] = useState(false);
   useEffect(() => {
