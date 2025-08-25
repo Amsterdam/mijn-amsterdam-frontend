@@ -36,13 +36,19 @@ export function CobrowseFooter() {
   if (MA_APP_MODE === 'unittest' || !FeatureToggle.cobrowseIsActive) {
     return;
   }
-
+  const licenseKey = import.meta.env.REACT_APP_COBROWSE_LICENSE_KEY;
+  if (!licenseKey) {
+    return;
+  }
   // Load the external script when it is not loaded from the tagmanager
   const [isCobrowseLoaded] = useScript({
     src: '/js/cobrowse-widget-2025-08-15.bundle.js',
     defer: true,
     async: false,
     isEnabled: true,
+    dataset: {
+      licenseKey,
+    },
   });
   const [showCobrowseFooter, setShowCobrowseFooter] = useState(false);
   useEffect(() => {
