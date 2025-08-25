@@ -1,5 +1,6 @@
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { isDateInPast } from '../../../universal/helpers/date';
+import { GenericDocument } from '../../../universal/types/App.types';
 import {
   fetchAanvragenWithRelatedPersons,
   fetchPersoonsgegevensNAW,
@@ -93,6 +94,7 @@ export async function fetchZorgnedAanvragenHLI(bsn: BSN) {
           ...aanvraagTransformed,
           titel: transformTitle(aanvraagTransformed),
           isActueel: isActueel(aanvraagTransformed),
+          documenten: aanvraagTransformed.documenten,
         };
       });
 

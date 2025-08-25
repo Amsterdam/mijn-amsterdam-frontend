@@ -20,6 +20,10 @@ import {
   getFailedDependencies,
   getSettledResult,
 } from '../../../universal/helpers/api';
+import {
+  createDocumentDeduper,
+  dedupeDocumentsInDataSets,
+} from '../../../universal/helpers/document';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import {
   GenericDocument,
@@ -181,7 +185,7 @@ async function transformRegelingenForFrontend(
     regelingenFrontend.push(regelingForFrontend);
   }
 
-  return regelingenFrontend;
+  return dedupeDocumentsInDataSets(regelingenFrontend, 'documents');
 }
 
 async function fetchRegelingen(authProfileAndToken: AuthProfileAndToken) {
