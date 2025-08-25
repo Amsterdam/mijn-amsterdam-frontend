@@ -1,3 +1,5 @@
+import path from 'path';
+
 import { HttpStatusCode } from 'axios';
 import express, { NextFunction, Request, Response } from 'express';
 import proxy from 'express-http-proxy';
@@ -6,6 +8,7 @@ import { BffEndpoints } from './bff-routes';
 import { queryParams, type RequestWithQueryParams } from './route-helpers';
 import { ZAAK_STATUS_ROUTE } from '../../client/pages/ZaakStatus/ZaakStatus-config';
 import { OTAP_ENV } from '../../universal/config/env';
+import { FeatureToggle } from '../../universal/config/feature-toggles';
 import {
   DATASETS,
   getDatasetCategoryId,
@@ -152,6 +155,16 @@ router.get(
   }
 );
 
+router.get(BffEndpoints.SCREEN_SHARE, async (_, res) => {
+  if (!FeatureToggle.cobrowseIsActive) {
+    return res.status(HttpStatusCode.Forbidden).send();
+  }
+  res.sendFile('/cobrowse-widget.js', {
+    root: path.join(__dirname, '../services/screenshare/static'),
+    lastModified: true,
+  });
+});
+
 // /**
 //  * Zaak status endpoint redirects to zaakstatus if authenticated, else redirect to login
 //  */
@@ -226,7 +239,6 @@ function stripSetCookieFromResponse(cookieName: string) {
     next();
   };
 }
-
 router.all(
   BffEndpoints.TELEMETRY_PROXY,
   // We exclude this long running endpoint from updating the rolling OIDC_SESSION_COOKIE_NAME cookie,
