@@ -6,14 +6,14 @@ import {
   routeConfig,
 } from './AVG-thema-config';
 import { isError, isLoading } from '../../../../universal/helpers/api';
-import { addLinkElementToProperty } from '../../../components/Table/TableV2';
+import { addMaRouterLinkToProperty } from '../../../components/Table/TableV2';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 
 export function useAVGData() {
   const { AVG } = useAppStateGetter();
 
-  const avgVerzoeken = addLinkElementToProperty(
+  const avgVerzoeken = addMaRouterLinkToProperty(
     AVG.content?.verzoeken ?? [],
     'id',
     true,

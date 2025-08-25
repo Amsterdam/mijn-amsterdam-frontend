@@ -8,7 +8,7 @@ import {
 } from './Erfpacht-thema-config';
 import { ErfpachtDossiersResponse } from '../../../../server/services/erfpacht/erfpacht-types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
-import { addLinkElementToProperty } from '../../../components/Table/TableV2';
+import { addMaRouterLinkToProperty } from '../../../components/Table/TableV2';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 
@@ -19,7 +19,7 @@ export function useErfpachtThemaData() {
   // Dossiers
   const dossiersBase = erfpachtData?.dossiers ?? null;
 
-  const dossiers = addLinkElementToProperty(
+  const dossiers = addMaRouterLinkToProperty(
     dossiersBase?.dossiers ?? [],
     'voorkeursadres'
   );

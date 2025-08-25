@@ -4,9 +4,10 @@ import {
   themaId,
   themaTitle,
 } from './Krefia-thema-config';
+import { KrefiaDeepLink } from '../../../../server/services/krefia/krefia.types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { LinkProps } from '../../../../universal/types/App.types';
-import { MaLink } from '../../../components/MaLink/MaLink';
+import { addMaLinkToProperty } from '../../../components/Table/TableV2';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 
 const kredietBankLink: LinkProps = {
@@ -24,20 +25,11 @@ export function useKrefiaThemaData() {
   const linkListItems: LinkProps[] = [];
   const deepLinks_ = KREFIA.content?.deepLinks ?? [];
 
-  const deepLinks = deepLinks_.map((link) => {
-    return {
-      ...link,
-      detailLinkComponent: (
-        <MaLink
-          maVariant="fatNoDefaultUnderline"
-          href={link.link.to}
-          rel="noopener noreferrer"
-        >
-          {link.link.title}
-        </MaLink>
-      ),
-    };
-  });
+  const deepLinks = addMaLinkToProperty<KrefiaDeepLink>(
+    deepLinks_,
+    'title',
+    true
+  );
 
   const hasKredietbank = !!deepLinks?.find(
     ({ type }) => type === 'schuldhulp' || type === 'lening'

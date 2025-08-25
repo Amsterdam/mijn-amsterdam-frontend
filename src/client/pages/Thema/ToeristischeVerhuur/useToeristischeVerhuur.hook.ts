@@ -13,7 +13,7 @@ import {
   isLoading,
 } from '../../../../universal/helpers/api';
 import { LinkProps } from '../../../../universal/types/App.types';
-import { addLinkElementToProperty } from '../../../components/Table/TableV2';
+import { addMaRouterLinkToProperty } from '../../../components/Table/TableV2';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 
@@ -39,7 +39,7 @@ export function useToeristischeVerhuurThemaData() {
       (vergunning) => vergunning.isVerleend
     );
 
-  const vergunningen = addLinkElementToProperty<ToeristischeVerhuurVergunning>(
+  const vergunningen = addMaRouterLinkToProperty<ToeristischeVerhuurVergunning>(
     [
       ...(TOERISTISCHE_VERHUUR.content?.vakantieverhuurVergunningen ?? []),
       ...(TOERISTISCHE_VERHUUR.content?.bbVergunningen ?? []),

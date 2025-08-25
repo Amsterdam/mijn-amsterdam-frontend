@@ -7,13 +7,13 @@ import {
 } from './Vergunningen-thema-config';
 import type { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
-import { addLinkElementToProperty } from '../../../components/Table/TableV2';
+import { addMaRouterLinkToProperty } from '../../../components/Table/TableV2';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 
 export function useVergunningenThemaData() {
   const { VERGUNNINGEN, PARKEREN } = useAppStateGetter();
-  const vergunningen = addLinkElementToProperty<VergunningFrontend>(
+  const vergunningen = addMaRouterLinkToProperty<VergunningFrontend>(
     VERGUNNINGEN.content ?? [],
     'identifier',
     true
