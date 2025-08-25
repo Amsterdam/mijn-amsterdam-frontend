@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import {
   Grid,
   Heading,
@@ -12,37 +14,11 @@ import type {
   CMSFooter,
   CMSFooterSection,
 } from '../../../server/services/cms/cms-content';
-import { IS_PRODUCTION } from '../../../universal/config/env';
-import { ApiResponse } from '../../../universal/helpers/api';
+import type { ApiResponse } from '../../../universal/helpers/api';
 import { BFF_API_BASE_URL } from '../../config/api';
-import { useErfpachtThemaData } from '../../pages/Thema/Erfpacht/useErfpachtThemaData.hook';
+import { getFooterItem } from '../../pages/Thema/Erfpacht/Erfpacht-render-config';
 
-//voor Canon > maatwerk MA
-
-function getCanonMatigingLink(relatiecode: string) {
-  const baseUrl = `https://canonmatiging${IS_PRODUCTION ? '' : '-acc'}.amsterdam.nl`;
-  return `${baseUrl}/?relatiecode=${relatiecode}`;
-}
-
-function getCanonFooterLink() {
-  const { relatieCode } = useErfpachtThemaData();
-
-  if (!relatieCode) {
-    return null;
-  }
-  return {
-    url: getCanonMatigingLink(relatieCode),
-    label: 'Mogelijke terugbetaling bij verhuur',
-  };
-}
-// Einde Canon
-
-function FooterBlock({
-  title,
-  links,
-  isFirstColumn,
-}: CMSFooterSection & { isFirstColumn?: boolean }) {
-  const canonFooterLink = isFirstColumn ? getCanonFooterLink() : null;
+function FooterBlock({ title, links }: CMSFooterSection) {
   return (
     <Grid.Cell key={title} span={4}>
       <Heading color="inverse" level={4} className="ams-mb-s">
@@ -51,28 +27,17 @@ function FooterBlock({
       {!!links.length && (
         <LinkList>
           {links.map((link) => (
-            <>
-              <LinkList.Link key={link.url} color="inverse" href={link.url}>
-                {link.label}
-              </LinkList.Link>
-            </>
-          ))}
-          {canonFooterLink && (
-            <LinkList.Link
-              key={canonFooterLink.url}
-              color="inverse"
-              href={canonFooterLink.url}
-            >
-              {canonFooterLink.label}
+            <LinkList.Link key={link.url} color="inverse" href={link.url}>
+              {link.label}
             </LinkList.Link>
-          )}
+          ))}
         </LinkList>
       )}
     </Grid.Cell>
   );
 }
 
-export function MainFooter() {
+export function MainFooter({ relatieCode }: { relatieCode?: string }) {
   const { data: footer } = useSWR<ApiResponse<CMSFooter>>(
     `${BFF_API_BASE_URL}/services/cms/footer`,
     async (url) => {
@@ -90,16 +55,19 @@ export function MainFooter() {
     }
   );
 
+  useEffect(() => {
+    if (relatieCode) {
+      const footerItem = getFooterItem(relatieCode);
+      footer?.content?.sections[0].links.push(footerItem);
+    }
+  }, [footer, relatieCode]);
+
   return (
     <PageFooter className={styles.MainFooter}>
       <PageFooter.Spotlight>
         <Grid gapVertical="large" paddingVertical="large">
-          {footer?.content?.sections.map((footerItem, index) => (
-            <FooterBlock
-              key={footerItem.title}
-              {...footerItem}
-              isFirstColumn={index === 0}
-            />
+          {footer?.content?.sections.map((footerItem) => (
+            <FooterBlock key={footerItem.title} {...footerItem} />
           ))}
         </Grid>
       </PageFooter.Spotlight>
@@ -112,7 +80,6 @@ export function MainFooter() {
             </PageFooter.MenuLink>
           );
         })}
-
         <CobrowseFooter />
       </PageFooter.Menu>
     </PageFooter>
