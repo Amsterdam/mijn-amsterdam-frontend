@@ -10,6 +10,7 @@ import {
   PersonenResponseSource,
   type DatumSource,
 } from './brp-types';
+import { IS_PRODUCTION } from '../../../universal/config/env';
 import type { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_HOUR_MS } from '../../config/app';
 import { getFromEnv } from '../../helpers/env';
@@ -195,6 +196,22 @@ function transformBenkBrpResponse(
   return responseContent;
 }
 
+function translateBSN(bsn: BSN): BSN {
+  const translations = getFromEnv('BFF_BENK_BSN_TRANSLATIONS', false);
+  // IS_PRODUCTION is explicitly set to exclude this code from being used in this environment.
+  if (!translations || IS_PRODUCTION) {
+    return bsn;
+  }
+
+  const translationsMap = new Map(
+    translations.split(',').map((pair) => pair.split('=')) as Iterable<
+      [string, string]
+    >
+  );
+
+  return translationsMap.get(bsn) ?? bsn;
+}
+
 export async function fetchBrpByBsn(sessionID: AuthProfile['sid'], bsn: BSN[]) {
   const response = await fetchBenkBrpTokenHeader();
   if (response.status !== 'OK') {
@@ -211,7 +228,7 @@ export async function fetchBrpByBsn(sessionID: AuthProfile['sid'], bsn: BSN[]) {
     data: {
       type: 'RaadpleegMetBurgerservicenummer',
       gemeenteVanInschrijving: GEMEENTE_CODE_AMSTERDAM,
-      burgerservicenummer: bsn,
+      burgerservicenummer: bsn.map((bsn) => translateBSN(bsn)),
     },
     transformResponse: transformBenkBrpResponse,
   });
@@ -224,3 +241,10 @@ export async function fetchBrpV2(authProfileAndToken: AuthProfileAndToken) {
     authProfileAndToken.profile.id,
   ]);
 }
+
+export const forTesting = {
+  fetchBenkBrpTokenHeader,
+  getDatum,
+  transformBenkBrpResponse,
+  translateBSN,
+};

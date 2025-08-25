@@ -16,6 +16,7 @@ import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { PUBLIC_API_URLS } from '../../universal/config/url';
 import { getCert } from '../helpers/cert';
 import { getFromEnv } from '../helpers/env';
+import { getHostNameFromUrl } from '../helpers/source-api-helpers';
 
 const RESET_AD_HOC_DEPENDENCY_REQUEST_CACHE_TTL_TIMEOUT_MS = ONE_HOUR_MS;
 
@@ -287,7 +288,7 @@ const ApiConfig_ = {
   PARKEREN: {
     url: `${getFromEnv('BFF_PARKEREN_API_BASE_URL')}`,
     headers: {
-      host: new URL(getFromEnv('BFF_PARKEREN_API_BASE_URL') ?? '').hostname,
+      host: getHostNameFromUrl(getFromEnv('BFF_PARKEREN_API_BASE_URL')),
       'X-AUTH-TOKEN': getFromEnv('BFF_PARKEREN_API_TOKEN'),
     },
   },
@@ -295,8 +296,9 @@ const ApiConfig_ = {
   PARKEREN_FRONTOFFICE: {
     url: `${getFromEnv('BFF_PARKEREN_FRONTOFFICE_API_BASE_URL')}`,
     headers: {
-      host: new URL(getFromEnv('BFF_PARKEREN_FRONTOFFICE_API_BASE_URL') ?? '')
-        .hostname,
+      host: getHostNameFromUrl(
+        getFromEnv('BFF_PARKEREN_FRONTOFFICE_API_BASE_URL')
+      ),
     },
   },
   TOERISTISCHE_VERHUUR_REGISTRATIES: {
