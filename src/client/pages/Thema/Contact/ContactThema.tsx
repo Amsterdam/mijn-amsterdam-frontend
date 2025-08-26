@@ -13,7 +13,7 @@ export function ContactThemaPagina() {
   useHTMLDocumentTitle(routeConfig.themaPage);
 
   const pageContentTop = (
-    <PageContentCell spanWide={8}>
+    <PageContentCell>
       <Paragraph className="ams-mb-m">Hallo.</Paragraph>
     </PageContentCell>
   );
@@ -26,7 +26,7 @@ export function ContactThemaPagina() {
       linkListItems={linkListItems}
       pageContentMain={
         <>
-          <PageContentCell>
+          <PageContentCell spanWide={8}>
             <CommunicatieVoorkeuren />
           </PageContentCell>
           <PageContentCell>

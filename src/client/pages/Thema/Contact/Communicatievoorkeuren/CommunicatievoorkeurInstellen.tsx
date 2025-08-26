@@ -1,13 +1,26 @@
-import { Paragraph } from '@amsterdam/design-system-react';
+import { useState } from 'react';
+
+import {
+  Field,
+  Label,
+  Paragraph,
+  Switch,
+  UnorderedList,
+} from '@amsterdam/design-system-react';
 import { generatePath, useNavigate, useParams } from 'react-router';
 import { useSetRecoilState } from 'recoil';
 
+import { VoorkeurByTypeLabels } from './CommunicatieVoorkeuren-config';
+import styles from './CommunicatieVoorkeuren.module.scss';
 import { EmailForm, EmailOTP } from './EmailVoorkeur';
 import type {
-  CommunicatieMedium,
+  CommunicatieMediumSetting,
   Communicatievoorkeur,
 } from '../../../../../server/services/contact/contact.types';
-import { MaRouterLink } from '../../../../components/MaLink/MaLink';
+import {
+  MaButtonInline,
+  MaRouterLink,
+} from '../../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../../components/Page/Page';
 import ThemaDetailPagina from '../../../../components/Thema/ThemaDetailPagina';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle';
@@ -19,59 +32,63 @@ import {
 import { useSessionStorage } from '../../../../hooks/storage.hook';
 
 type MediumInstellenProps = {
-  medium: CommunicatieMedium;
-  voorkeur: Communicatievoorkeur;
-  emails: string[];
-  phoneNumbers: string[];
+  medium: CommunicatieMediumSetting;
+  voorkeur: Communicatievoorkeur | null;
+  defaultValue: string | null;
 };
 
 function MediumInstellen({
   medium,
   voorkeur,
-  emails,
-  phoneNumbers,
+  defaultValue,
 }: MediumInstellenProps) {
   const navigate = useNavigate();
   // TODO: Deze naar een hook verplaatsen en koppelen aan backend?
   const [emailLocal, setEmailLocal] = useSessionStorage(
-    `voorkeur-${voorkeur.id}-${medium.name}`,
+    `voorkeur-${voorkeur?.id || ''}-${medium.type}`,
     medium.value ?? ''
   );
+
+  const [emailFormActive, setEmailFormActive] = useState(false);
+
+  console.log('MediumInstellen', defaultValue);
+
   const setVoorkeurenBE = useSetRecoilState(voorkeurenAtom);
   const { step = '1' } = useParams<{ step: string }>();
 
-  const medium_: CommunicatieMedium = {
+  const medium_: CommunicatieMediumSetting = {
     ...medium,
-    value: emailLocal || medium.value,
+    value: emailLocal || medium.value || defaultValue,
   };
 
-  function navigateToVoorkeur() {
-    navigate(
-      generatePath(routeConfig.detailPageCommunicatievoorkeur.path, {
-        id: voorkeur.id,
-      })
-    );
+  const emailValue = medium.value || defaultValue;
+
+  function navigateToThemaPage() {
+    navigate(routeConfig.themaPage.path);
   }
 
   function navigateToStep(step: '1' | '2') {
+    if (!voorkeur) {
+      return;
+    }
     navigate(
       generatePath(routeConfig.detailPageCommunicatievoorkeurInstellen.path, {
-        medium: medium.name,
+        medium: medium_.type,
         id: voorkeur.id,
         step,
       })
     );
   }
 
-  function updateEmailValue(email: string) {
+  function updateEmailValue(email: string | null) {
     setVoorkeurenBE((voorkeuren) => {
-      return [...voorkeuren].map((v) => {
-        if (v.id === voorkeur.id) {
+      return voorkeuren.map((v) => {
+        if (v.id === voorkeur?.id) {
           return {
             ...v,
-            medium: v.medium.map((m) => {
-              if (m.name === medium.name) {
-                return { ...m, value: email, isActive: true };
+            settings: v.settings.map((m) => {
+              if (m.type === medium_.type) {
+                return { ...m, value: email };
               }
               return m;
             }),
@@ -84,31 +101,80 @@ function MediumInstellen({
 
   return (
     <>
-      {medium?.name === 'e-mail' && (
+      {medium?.type === 'email' && (
         <>
-          {step !== '1' && step !== '2' && (
-            <Paragraph>
-              <MaRouterLink href={routeConfig.themaPage.path}>
-                Ga terug naar {themaTitle}
-              </MaRouterLink>
-            </Paragraph>
-          )}
           {step === '1' && (
             <>
-              <EmailForm
-                emails={emails}
-                onSubmit={({ email, isVerified }) => {
-                  if (!isVerified) {
-                    setEmailLocal(email);
-                    navigateToStep('2');
-                  } else {
-                    updateEmailValue(email);
-                    navigateToVoorkeur();
-                  }
-                }}
-                medium={medium_}
-                voorkeur={voorkeur}
-              />
+              {!!voorkeur && (
+                <>
+                  <Paragraph className="ams-mb-m">
+                    Hier kunt u uw e-mailadres doorgeven. U krijgt dan e-mails
+                    van {voorkeur.stakeholder} over de volgende onderwerpen:
+                  </Paragraph>
+                  <UnorderedList className="ams-mb-m">
+                    <UnorderedList.Item>
+                      {voorkeur.description}
+                    </UnorderedList.Item>
+                  </UnorderedList>
+                  {(!!defaultValue || medium.value) && (
+                    <Field className="ams-mb-m">
+                      <Label>
+                        Wilt u deze informatie per{' '}
+                        {VoorkeurByTypeLabels[medium_.type]} ontvangen?
+                      </Label>
+                      <span className={styles.Switch}>
+                        <Switch
+                          title={
+                            medium.value
+                              ? 'Klik om uit te schakelen'
+                              : 'Klik om in te schakelen'
+                          }
+                          onChange={(event) => {
+                            if (medium.value || defaultValue) {
+                              updateEmailValue(
+                                medium.value ? null : defaultValue
+                              );
+                            }
+                            if (!event.target.checked) {
+                              setEmailFormActive(false);
+                            }
+                          }}
+                          checked={!!medium.value}
+                        />{' '}
+                        &nbsp;
+                        {medium.value ? (
+                          <>
+                            Ja, naar {emailValue}{' '}
+                            {!emailFormActive && (
+                              <MaButtonInline
+                                onClick={() => setEmailFormActive(true)}
+                              >
+                                Wijzigen
+                              </MaButtonInline>
+                            )}
+                          </>
+                        ) : (
+                          <>Nee</>
+                        )}
+                      </span>
+                    </Field>
+                  )}
+                </>
+              )}
+              {(!defaultValue || emailFormActive) && (
+                <EmailForm
+                  onSubmit={({ email, isVerified }) => {
+                    if (!isVerified) {
+                      setEmailLocal(email);
+                      navigateToStep('2');
+                    } else {
+                      updateEmailValue(email);
+                      navigateToThemaPage();
+                    }
+                  }}
+                  medium={medium_}
+                />
+              )}
             </>
           )}
           {step === '2' && (
@@ -117,7 +183,7 @@ function MediumInstellen({
               onSubmit={({ otp }) => {
                 updateEmailValue(emailLocal);
                 setEmailLocal('');
-                navigateToVoorkeur();
+                navigateToThemaPage();
               }}
             />
           )}
@@ -136,9 +202,9 @@ export function CommunicatievoorkeurInstellen() {
     title,
     themaId,
     breadcrumbs,
-    emails,
-    phoneNumbers,
+    defaultValue,
   } = useCommunicatieVoorkeurInstellen();
+
   useHTMLDocumentTitle(routeConfig.detailPageCommunicatievoorkeurInstellen);
 
   return (
@@ -151,17 +217,19 @@ export function CommunicatievoorkeurInstellen() {
       breadcrumbs={breadcrumbs}
       pageContentMain={
         <PageContentCell spanWide={8}>
-          {medium && voorkeur ? (
+          {medium ? (
             <MediumInstellen
               voorkeur={voorkeur}
               medium={medium}
-              emails={emails}
-              phoneNumbers={phoneNumbers}
+              defaultValue={defaultValue}
             />
           ) : (
-            <MaRouterLink href={routeConfig.themaPage.path}>
-              Niets in te stellen. Ga terug naar {themaTitle}
-            </MaRouterLink>
+            <Paragraph>
+              Niets in te stellen.{' '}
+              <MaRouterLink href={routeConfig.themaPage.path}>
+                Ga terug naar {themaTitle}
+              </MaRouterLink>
+            </Paragraph>
           )}
         </PageContentCell>
       }

@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 
 import type {
   Communicatievoorkeur,
-  CommunicatieMedium,
+  CommunicatieMediumSetting,
 } from '../../../../../server/services/contact/contact.types';
 import type { DisplayProps } from '../../../../components/Table/TableV2.types';
 
@@ -12,7 +12,7 @@ export const communicatieVoorkeurenTitle = 'Alle communicatievoorkeuren';
 export const communicatieVoorkeurDetailTitle = 'Voorkeur';
 export const communicatieVoorkeurInstellenTitle = 'Instellen';
 
-type CommunicatieMediumFrontend = CommunicatieMedium & {
+type CommunicatieMediumFrontend = CommunicatieMediumSetting & {
   isActive_: ReactNode;
   value_: ReactNode;
 };
@@ -26,7 +26,7 @@ export const communicatievoorkeurenDisplayProps: DisplayProps<Communicatievoorke
     props: {
       stakeholder: 'Afdeling gemeente',
       detailLinkComponent: 'Onderwerp',
-      medium: 'Uw voorkeur',
+      settings: 'Uw voorkeur',
     },
   };
 
@@ -38,3 +38,15 @@ export const communicatievoorkeurInstellenDisplayProps: DisplayProps<Communicati
       value_: 'Naar',
     },
   };
+
+export const VoorkeurByTypeLabels = {
+  email: 'E-mail',
+  phone: 'SMS',
+  postadres: 'Papier',
+};
+
+export const MediumByTypeLabels = {
+  email: 'E-mailadres',
+  phone: 'Telefoonnummer',
+  postadres: 'Postadres',
+};

@@ -11,7 +11,7 @@ export function SMSValue({ medium, onClick }: SMSValueProps) {
     <>
       {medium.value ? medium.value : <em>nog niet opgegeven</em>}{' '}
       <MaButtonInline onClick={onClick}>
-        {medium.isActive && medium.value ? 'Wijzigen' : 'Instellen'}
+        {medium.value ? 'Wijzigen' : 'Instellen'}
       </MaButtonInline>
     </>
   );

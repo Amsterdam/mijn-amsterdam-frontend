@@ -1,4 +1,3 @@
-import { CommunicatievoorkeurDetail } from './Communicatievoorkeuren/CommunicatieVoorkeurDetail';
 import { CommunicatievoorkeurInstellen } from './Communicatievoorkeuren/CommunicatievoorkeurInstellen';
 import { routeConfig, themaId, themaTitle } from './Contact-thema-config';
 import { default as InkomenIcon } from './ContactIcon.svg?react';
@@ -24,11 +23,11 @@ export const ContactRoutes = [
     },
   },
   {
-    route: routeConfig.detailPageCommunicatievoorkeur.path,
-    Component: CommunicatievoorkeurDetail,
+    route: routeConfig.detailPageCommunicatievoorkeurInstellen.path,
+    Component: CommunicatievoorkeurInstellen,
   },
   {
-    route: routeConfig.detailPageCommunicatievoorkeurInstellen.path,
+    route: routeConfig.detailPageCommunicatieMediumInstellen.path,
     Component: CommunicatievoorkeurInstellen,
   },
 ];
