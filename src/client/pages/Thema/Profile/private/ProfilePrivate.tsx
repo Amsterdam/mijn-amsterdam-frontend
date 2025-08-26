@@ -157,8 +157,8 @@ export function MijnGegevensThema() {
   const hasEmail = !!email;
   const [isChecked, setIsChecked] = useState(hasEmail);
 
-  function updateEmailValue() {
-    setEmail(email_);
+  function updateEmailValue(email: string) {
+    setEmail(email);
   }
 
   return (
