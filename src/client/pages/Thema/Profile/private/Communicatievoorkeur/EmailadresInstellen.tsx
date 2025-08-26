@@ -39,8 +39,8 @@ export function EmailadresInstellen({
       {step === '2' && (
         <EmailOTP
           email={emailLocal}
-          onSubmit={({ otp }) => {
-            updateEmailValue(emailLocal);
+          onValidated={({ otp, email }) => {
+            updateEmailValue(email);
             setEmailLocal('');
             setStep('3');
           }}
