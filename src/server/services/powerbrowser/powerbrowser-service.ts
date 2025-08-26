@@ -1,5 +1,6 @@
 import memoizee from 'memoizee';
 import { generatePath } from 'react-router';
+import slug from 'slugme';
 
 import {
   PowerBrowserZaakBase,
@@ -25,7 +26,11 @@ import {
   getSettledResult,
 } from '../../../universal/helpers/api';
 import { dateSort } from '../../../universal/helpers/date';
-import { entries } from '../../../universal/helpers/utils';
+import {
+  entries,
+  omit,
+  toDateFormatted,
+} from '../../../universal/helpers/utils';
 import {
   GenericDocument,
   StatusLineItem,
@@ -43,13 +48,7 @@ import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { isExpired } from '../decos/decos-helpers';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
-import {
-  documentNamesMA,
-  documentNamenMA_PB,
-} from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types';
-
-// See also: https://www.amsterdam.nl/wonen-bouwen-verbouwen/woonruimte-verhuren/oude-regels-bed-breakfast/
-const DATE_NEW_REGIME_BB_RULES = '2019-01-01';
+import { documentNamenMA_PB } from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types';
 
 const TOKEN_VALIDITY_PERIOD = 24 * ONE_HOUR_MS;
 const PERCENTAGE_DISTANCE_FROM_EXPIRY = 0.1;
@@ -200,19 +199,18 @@ function getFieldValue(
   }
 }
 
-function getZaakStatus(
-  zaak: PowerBrowserZaakFrontend
-):
-  | PowerBrowserZaakFrontend['displayStatus']
-  | PowerBrowserZaakFrontend['decision'] {
-  const lastStepStatus = zaak.steps?.findLast((step) => step.isActive)
+function getDisplayStatus(
+  zaak: PowerBrowserZaakBase,
+  steps: StatusLineItem[]
+): PowerBrowserZaakFrontend['displayStatus'] {
+  const lastActiveStep = steps.findLast((step) => step.isActive)
     ?.status as PowerBrowserZaakFrontend['displayStatus'];
 
-  if (lastStepStatus !== 'Verlopen' && zaak.decision) {
+  if (lastActiveStep !== 'Verlopen' && zaak.decision) {
     return zaak.decision;
   }
 
-  return lastStepStatus ?? 'Ontvangen';
+  return lastActiveStep ?? 'Ontvangen';
 }
 
 function getZaakResultaat(resultaat: PBZaakResultaat | null) {
@@ -246,93 +244,6 @@ function getZaakResultaat(resultaat: PBZaakResultaat | null) {
   }
 
   return resultaatTransformed;
-}
-
-function transformZaakStatusResponse(
-  zaak: PowerBrowserZaakBase,
-  statusResponse: PowerBrowserStatusResponse
-): StatusLineItem[] {
-  function getStatusDate(status: string[]) {
-    const datum =
-      statusResponse?.find(({ omschrijving }) => status.includes(omschrijving))
-        ?.datum ?? null;
-    return datum || null;
-  }
-
-  const datumInBehandeling = getStatusDate(['In behandeling']) ?? '';
-  const dateDecision: string =
-    getStatusDate(['Afgehandeld', 'Gereed']) ?? zaak.dateDecision ?? '';
-
-  const datumMeerInformatieDocument = zaak.documents.find((document) => {
-    return document.title === documentNamesMA.MEER_INFORMATIE;
-  });
-  const datumMeerInformatie = datumMeerInformatieDocument?.datePublished ?? '';
-
-  // Ontvangen step is added in the transformZaak function to ensure we always have a status step.
-  const statusOntvangen: StatusLineItem = {
-    id: 'step-1',
-    status: 'Ontvangen',
-    datePublished: zaak.dateRequest ?? '',
-    isActive: true,
-    isChecked: true,
-  };
-
-  const isVerlopen = zaak.isExpired;
-  const hasInBehandeling = !!datumInBehandeling;
-  const hasDecision = !!zaak.decision && !!dateDecision;
-  const hasMeerInformatieNodig = !!datumMeerInformatie;
-  const isMeerInformatieStepActive =
-    hasMeerInformatieNodig && !hasDecision && !hasInBehandeling;
-
-  const statussen = [
-    {
-      ...statusOntvangen,
-      isActive: !datumInBehandeling && !hasDecision && !datumMeerInformatie,
-    },
-  ];
-
-  if (datumMeerInformatie) {
-    const statusMeerInformatie: StatusLineItem = {
-      id: 'step-meer-info',
-      status: 'Meer informatie nodig',
-      datePublished: datumMeerInformatie,
-      isActive: isMeerInformatieStepActive,
-      isChecked: hasDecision || hasMeerInformatieNodig,
-      description: `<p>Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.</p><p>Bekijk de <a href="${datumMeerInformatieDocument?.url}">brief</a> voor meer details.</p>`,
-    };
-    statussen.push(statusMeerInformatie);
-  }
-
-  const statusInBehandeling: StatusLineItem = {
-    id: 'step-2',
-    status: 'In behandeling',
-    datePublished: datumInBehandeling,
-    isActive: !hasDecision && hasInBehandeling,
-    isChecked: hasDecision || hasInBehandeling,
-  };
-
-  const statusAfgehandeld: StatusLineItem = {
-    id: 'step-3',
-    status: 'Afgehandeld',
-    datePublished: dateDecision,
-    isActive: !isVerlopen && hasDecision,
-    isChecked: hasDecision,
-  };
-
-  statussen.push(statusInBehandeling, statusAfgehandeld);
-
-  if (isVerlopen) {
-    const statusVerlopen: StatusLineItem = {
-      id: 'step-5',
-      status: 'Verlopen',
-      datePublished: zaak.dateEnd ?? '',
-      isActive: true,
-      isChecked: true,
-    };
-    statussen.push(statusVerlopen);
-  }
-
-  return statussen;
 }
 
 async function fetchZaakAdres(
@@ -426,8 +337,6 @@ async function fetchZakenStatusDates(
     .map(({ status, content }) =>
       status === 'OK' && content !== null ? content : []
     );
-  // TODO: Create displayStatus in caller transform:
-  // map: displayStatus: getZaakStatus(zaken[i]) ?? 'Onbekend',
 }
 
 async function fetchZakenAdres(
@@ -654,6 +563,7 @@ async function fetchPBZaken<T extends PowerBrowserZaakTransformer>(
   if (zakenIdsToZakentransformerResponse.status !== 'OK') {
     return zakenIdsToZakentransformerResponse;
   }
+
   const zakenIdToZakentransformer = zakenIdsToZakentransformerResponse.content;
   const zakenIds = Object.keys(zakenIdToZakentransformer);
 
@@ -695,10 +605,42 @@ export async function fetchZaken<T extends PowerBrowserZaakTransformer>(
           ...zaak,
           location: adresResults[i],
           documents: documentsResults[i],
-          steps: statussesResults[i],
+          statusDates: statussesResults[i],
         }) as NestedType<T>
     )
   );
+}
+
+export type PBZaakFrontendTransformOptions<T> = {
+  detailPageRoute: string;
+  includeFetchDocumentsUrl?: boolean;
+  getStepsFN?: (zaak: T) => StatusLineItem[];
+};
+
+export function transformPBZaakFrontend<T extends PowerBrowserZaakBase>(
+  sessionID: SessionID, // TODO: for documents encrypt later
+  zaak: T,
+  options: PBZaakFrontendTransformOptions<T>
+): PowerBrowserZaakFrontend<T> {
+  const steps = options.getStepsFN?.(zaak) ?? [];
+  const zaakFrontend = {
+    ...omit(zaak, ['statusDates']),
+    dateRequestFormatted: toDateFormatted(zaak.dateRequest) || '-',
+    dateDecisionFormatted: toDateFormatted(zaak.dateDecision) || '-',
+    dateStartFormatted: toDateFormatted(zaak.dateStart) || '-',
+    dateEndFormatted: toDateFormatted(zaak.dateEnd) || '-',
+
+    steps: options.getStepsFN?.(zaak) ?? [],
+    displayStatus: getDisplayStatus(zaak, steps),
+    link: {
+      to: generatePath(options.detailPageRoute, {
+        caseType: slug(zaak.caseType, { lower: true }),
+        id: zaak.id,
+      }),
+      title: `Bekijk hoe het met uw aanvraag staat`,
+    },
+  };
+  return zaakFrontend;
 }
 
 export const forTesting = {
@@ -715,8 +657,7 @@ export const forTesting = {
   fetchZakenDocuments,
   getFieldValue,
   getZaakResultaat,
-  getZaakStatus,
+  getZaakStatus: getDisplayStatus,
   transformPowerbrowserLinksResponse,
   transformZaakRaw,
-  transformZaakStatusResponse,
 };

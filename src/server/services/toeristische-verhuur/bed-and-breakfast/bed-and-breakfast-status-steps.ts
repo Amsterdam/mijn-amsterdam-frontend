@@ -1,10 +1,10 @@
 import {
-  BBVergunningFrontend,
+  BedAndBreakfastType,
   documentNamesMA,
 } from './bed-and-breakfast-types';
 import { StatusLineItem } from '../../../../universal/types/App.types';
 
-export function getStatusSteps<T extends BBVergunningFrontend>(
+export function getStatusSteps<T extends BedAndBreakfastType>(
   zaak: T
 ): StatusLineItem[] {
   const getStatusDate = (status: string) =>

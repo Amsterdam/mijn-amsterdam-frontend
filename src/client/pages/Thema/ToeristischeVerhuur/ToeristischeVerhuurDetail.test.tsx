@@ -5,8 +5,8 @@ import { describe, expect } from 'vitest';
 
 import { routeConfig } from './ToeristischeVerhuur-thema-config';
 import { ToeristischeVerhuurDetail } from './ToeristischeVerhuurDetail';
-import { VakantieverhuurVergunningFrontend } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
 import { BBVergunningFrontend } from '../../../../server/services/toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types';
+import { VakantieverhuurVergunningFrontend } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
 import { bffApi } from '../../../../testing/utils';
 import { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
@@ -27,6 +27,7 @@ const vakantieverhuurVergunningen: VakantieverhuurVergunningFrontend[] = [
     dateEndFormatted: '22 augustus 2023',
     decision: 'Verleend',
     identifier: 'Z/123/000007',
+    isVerleend: true,
     steps: [
       {
         id: 'step-1',
