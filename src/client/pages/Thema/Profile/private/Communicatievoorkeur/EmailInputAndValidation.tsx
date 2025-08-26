@@ -22,18 +22,16 @@ function validateCodeFormat(code: string) {
 
 type EmailOTPProps = {
   email: string;
-  onSubmit: (formData: { otp: string }) => void;
+  onValidated: (formData: { otp: string; email: string }) => void;
 };
 
-export function EmailOTP({ email, onSubmit }: EmailOTPProps) {
+export function EmailOTP({ email, onValidated }: EmailOTPProps) {
   const [otp, setOtp] = useState('');
   const [isInvalid, setIsInvalid] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // const handlePaste: React.ClipboardEventHandler = (event) => {
-  //   // NOTE: This method has been added in 2022 and is supported by most browsers. See also: https://caniuse.com/?search=requestSubmit
-  //   formRef.current?.requestSubmit();
-  // };
+  const hasApiError = false;
+
   const submit = useCallback(
     (otp: string) => {
       const isValid = validateCodeFormat(otp);
@@ -42,7 +40,7 @@ export function EmailOTP({ email, onSubmit }: EmailOTPProps) {
         // TODO: Make api call
         setTimeout(() => {
           setIsSubmitting(false);
-          onSubmit({ otp });
+          onValidated({ otp, email });
         }, 1000);
       } else {
         setIsInvalid(true);
@@ -67,6 +65,11 @@ export function EmailOTP({ email, onSubmit }: EmailOTPProps) {
         </Paragraph>
         {isInvalid && (
           <ErrorMessage id="error">De code is niet correct.</ErrorMessage>
+        )}
+        {hasApiError && (
+          <ErrorMessage id="error">
+            Er is een fout opgetreden bij het checken van de code.
+          </ErrorMessage>
         )}
         <OtpInput
           value={otp}
