@@ -1,4 +1,4 @@
-import { themaIdBRP, themaTitle } from './Profile-thema-config';
+import { featureToggle, themaIdBRP, themaTitle } from './Profile-thema-config';
 import { SectionProps } from '../../GeneralInfo/GeneralInfo';
 
 export const profileSectionProps: SectionProps = {
@@ -8,4 +8,5 @@ export const profileSectionProps: SectionProps = {
     'Uw inschrijving bij de gemeente',
     'Uw contactmomenten met de gemeente',
   ],
+  active: featureToggle[themaIdBRP].themaActive,
 };

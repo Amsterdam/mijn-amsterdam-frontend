@@ -1,4 +1,4 @@
-import { themaTitle, themaId } from './Jeugd-thema-config';
+import { featureToggle, themaTitle, themaId } from './Jeugd-thema-config';
 import { SectionProps } from '../../GeneralInfo/GeneralInfo';
 
 export const JeugdSectionProps: SectionProps = {
@@ -12,4 +12,5 @@ export const JeugdSectionProps: SectionProps = {
     'Aangepast individueel vervoer',
     'Aangepast groepsvervoer',
   ],
+  active: featureToggle.leerlingenvervoerActive,
 };
