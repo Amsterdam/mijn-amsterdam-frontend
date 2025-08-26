@@ -12,6 +12,8 @@ export function useProfileThemaData() {
     contactmomenten,
   } = useContactmomenten();
 
+  const { WMO } = useAppStateGetter();
+
   return {
     id: themaId,
     title: themaTitle.BRP,
@@ -21,6 +23,7 @@ export function useProfileThemaData() {
     isLoadingBrp: isLoading(BRP),
     isLoadingContactmomenten,
     hasContactMomenten: !!contactmomenten?.length,
+    hasZorgned: !!WMO.content?.length,
     linkListItems: [],
   };
 }

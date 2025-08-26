@@ -1,17 +1,10 @@
-import { useState } from 'react';
-
-import {
-  Checkbox,
-  Field,
-  Link,
-  Paragraph,
-} from '@amsterdam/design-system-react';
+import { Link, Paragraph } from '@amsterdam/design-system-react';
 
 import { AdresInOnderzoek } from './AdresInOnderzoek';
 import { ContactMomenten } from './ContactMomenten';
 import { panelConfig } from './ProfilePrivate.transform';
 import { ProfileSectionPanel } from '../ProfileSectionPanel';
-import { EmailadresInstellen } from './Communicatievoorkeur/EmailAdresInstellen';
+import { Communicatievoorkeur } from './Communicatievoorkeur/Communicatievoorkeur';
 import { useProfileData } from './useProfileData.hook';
 import { useProfileThemaData } from './useProfileThemaData.hook';
 import { VertrokkenOnbekendWaarheen } from './VertrokkenOnbekendWaarheen';
@@ -19,8 +12,6 @@ import {
   hasDutchAndOtherNationalities,
   isMokum,
 } from '../../../../../universal/helpers/brp';
-import { CollapsiblePanel } from '../../../../components/CollapsiblePanel/CollapsiblePanel';
-import { MaButtonInline } from '../../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../../components/Page/Page';
 import { ParagaphSuppressed } from '../../../../components/ParagraphSuppressed/ParagraphSuppressed';
 import ThemaPagina from '../../../../components/Thema/ThemaPagina';
@@ -110,6 +101,7 @@ export function MijnGegevensThema() {
     isErrorContactmomenten,
     linkListItems,
     hasContactMomenten,
+    hasZorgned,
   } = useProfileThemaData();
 
   const pageContentErrorAlert = (
@@ -150,17 +142,6 @@ export function MijnGegevensThema() {
     </PageContentCell>
   );
 
-  // const email_ = 't.van.oostrom@amsterdam.nl';
-  const email_ = '';
-  const [email, setEmail] = useState(email_);
-  const hasZorgned = true;
-  const hasEmail = !!email;
-  const [isChecked, setIsChecked] = useState(hasEmail);
-
-  function updateEmailValue(email: string) {
-    setEmail(email);
-  }
-
   return (
     <ThemaPagina
       id={id}
@@ -185,45 +166,7 @@ export function MijnGegevensThema() {
           )}
           {hasZorgned && (
             <PageContentCell>
-              <CollapsiblePanel
-                title="Communicatievoorkeur"
-                startCollapsed={true}
-              >
-                <>
-                  <Paragraph className="ams-mb-m">
-                    Wilt u uw post van de gemeente over uw{' '}
-                    <strong>WMO voorzieningen</strong> digitaal ontvangen? U
-                    ontvangt uw post <strong>ook</strong> in papieren vorm.
-                  </Paragraph>
-                  <Field style={{ flexDirection: 'row' }}>
-                    <Checkbox
-                      id="email"
-                      checked={isChecked}
-                      onChange={() => setIsChecked(!isChecked)}
-                    >
-                      Ja, ik wil mijn post digitaal ontvangen
-                    </Checkbox>
-                  </Field>
-                  {isChecked && !hasEmail && (
-                    <EmailadresInstellen
-                      email={email}
-                      updateEmailValue={updateEmailValue}
-                    />
-                  )}
-                  {hasEmail && (
-                    <Paragraph className="ams-mb-m">
-                      Uw e-mailadres is: <strong>{email}</strong>{' '}
-                      <MaButtonInline
-                        onClick={() => {
-                          setEmail('');
-                        }}
-                      >
-                        Wijzigen
-                      </MaButtonInline>
-                    </Paragraph>
-                  )}
-                </>
-              </CollapsiblePanel>
+              <Communicatievoorkeur />
             </PageContentCell>
           )}
           {hasContactMomenten && (
