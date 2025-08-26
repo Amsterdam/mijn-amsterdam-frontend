@@ -20,7 +20,7 @@ import {
   isMokum,
 } from '../../../../../universal/helpers/brp';
 import { CollapsiblePanel } from '../../../../components/CollapsiblePanel/CollapsiblePanel';
-import { MaLink } from '../../../../components/MaLink/MaLink';
+import { MaButtonInline } from '../../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../../components/Page/Page';
 import { ParagaphSuppressed } from '../../../../components/ParagraphSuppressed/ParagraphSuppressed';
 import ThemaPagina from '../../../../components/Thema/ThemaPagina';
@@ -213,7 +213,13 @@ export function MijnGegevensThema() {
                   {hasEmail && (
                     <Paragraph className="ams-mb-m">
                       Uw e-mailadres is: <strong>{email}</strong>{' '}
-                      <MaLink>Wijzigen</MaLink>
+                      <MaButtonInline
+                        onClick={() => {
+                          setEmail('');
+                        }}
+                      >
+                        Wijzigen
+                      </MaButtonInline>
                     </Paragraph>
                   )}
                 </>
