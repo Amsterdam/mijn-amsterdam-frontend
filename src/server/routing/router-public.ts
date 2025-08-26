@@ -164,10 +164,19 @@ router.get(BffEndpoints.SCREEN_SHARE, async (_, res) => {
   if (!FeatureToggle.cobrowseIsActive && !overwriteFeatureToggle) {
     return res.status(HttpStatusCode.NoContent).send();
   }
-  res.sendFile('/cobrowse-widget.js', {
-    root: path.join(__dirname, '../services/screenshare/static'),
-    lastModified: true,
-  });
+
+  res.sendFile(
+    '/cobrowse-widget.js',
+    {
+      root: path.join(__dirname, '../static/screenshare/'),
+      lastModified: true,
+    },
+    (_error) => {
+      if (_error && !res.headersSent) {
+        res.status(HttpStatusCode.NoContent).send();
+      }
+    }
+  );
 });
 
 // /**
