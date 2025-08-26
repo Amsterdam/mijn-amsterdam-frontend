@@ -156,8 +156,13 @@ router.get(
 );
 
 router.get(BffEndpoints.SCREEN_SHARE, async (_, res) => {
-  if (!FeatureToggle.cobrowseIsActive) {
-    return res.status(HttpStatusCode.Forbidden).send();
+  // MIJN-12057: Temporary allow overwriting feature toggle with env var
+  const overwriteFeatureToggle =
+    String(
+      getFromEnv('BFF_COBROWSE_OVERWRITE_FEATURE_TOGGLE', false)
+    ).toLowerCase() === 'true';
+  if (!FeatureToggle.cobrowseIsActive && !overwriteFeatureToggle) {
+    return res.status(HttpStatusCode.NoContent).send();
   }
   res.sendFile('/cobrowse-widget.js', {
     root: path.join(__dirname, '../services/screenshare/static'),
