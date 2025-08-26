@@ -19,18 +19,35 @@ export interface ThemasState {
   isLoading: boolean;
 }
 
+type withIDTitle = { id: string; title: string };
+const sortAlphaOnTitle = sortAlpha('title');
+
+export function compareThemas<T extends withIDTitle>(a: T, b: T): 0 | 1 | -1 {
+  // These will be placed on top in the order they are put here.
+  const themaIDsOnTop = [themaIdBRP, themaIdKVK] as string[];
+
+  const aHasPrecedence = themaIDsOnTop.includes(a.id);
+  const bHasPrecedence = themaIDsOnTop.includes(b.id);
+
+  if (aHasPrecedence && bHasPrecedence) {
+    const ia = themaIDsOnTop.indexOf(a.id);
+    const ib = themaIDsOnTop.indexOf(b.id);
+    return ia < ib ? -1 : 1;
+  }
+  if (aHasPrecedence) {
+    return -1;
+  }
+  if (bHasPrecedence) {
+    return 1;
+  }
+  return sortAlphaOnTitle(a, b);
+}
+
 export function useThemaMenuItems(): ThemasState {
   const profileType = useProfileTypeValue();
   const appState = useAppStateGetter();
   const isAppStateReady = useAppStateReady();
-  const allThemaItems = themasByProfileType(profileType).sort(
-    sortAlpha('title')
-  );
-  const alwaysFirstThemasIds = [themaIdKVK, themaIdBRP] as string[];
-  const themaItems = [
-    ...allThemaItems.filter(({ id }) => alwaysFirstThemasIds.includes(id)),
-    ...allThemaItems.filter(({ id }) => !alwaysFirstThemasIds.includes(id)),
-  ];
+  const themaItems = themasByProfileType(profileType).toSorted(compareThemas);
 
   const items = useMemo(() => {
     return themaItems.filter((item) => {

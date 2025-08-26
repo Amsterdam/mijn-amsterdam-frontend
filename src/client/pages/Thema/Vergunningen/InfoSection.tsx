@@ -1,4 +1,8 @@
-import { themaId, themaTitle } from './Vergunningen-thema-config';
+import {
+  featureToggle,
+  themaId,
+  themaTitle,
+} from './Vergunningen-thema-config';
 import { SectionProps } from '../../GeneralInfo/GeneralInfo';
 
 export const vergunningensectionProps: SectionProps = {
@@ -33,4 +37,5 @@ export const vergunningensectionProps: SectionProps = {
     'Uw aanvraag voor een eigen parkeerplaats voor huisartsen, verloskundigen en consuls',
     'Uw aanvraag voor een vergunning exploitatie horecabedrijf',
   ],
+  active: featureToggle.vergunningenActive,
 };

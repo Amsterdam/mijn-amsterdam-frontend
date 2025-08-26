@@ -33,6 +33,7 @@ export const JeugdRoutes = [
 export const menuItem: ThemaMenuItem<typeof themaId> = {
   title: themaTitle,
   id: themaId,
+  redactedScope: 'full',
   profileTypes: ['private'],
   isActive(appState: AppState) {
     return (
