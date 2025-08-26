@@ -4,9 +4,9 @@ import {
   Button,
   ErrorMessage,
   Field,
+  Heading,
   Label,
   Paragraph,
-  Select,
   TextInput,
 } from '@amsterdam/design-system-react';
 import OtpInput from 'react-otp-input';
@@ -15,9 +15,9 @@ import { VERIFICATION_CODE_LENGTH } from './CommunicatieVoorkeuren-config';
 import styles from './EmailVoorkeur.module.scss';
 import type {
   CommunicatieMedium,
-  Communicatievoorkeur,
+  CommunicatieMediumSetting,
 } from '../../../../../server/services/contact/contact.types';
-import { MaButtonInline } from '../../../../components/MaLink/MaLink';
+import { MaRouterLink } from '../../../../components/MaLink/MaLink';
 import { Spinner } from '../../../../components/Spinner/Spinner';
 
 function validateCodeFormat(code: string) {
@@ -25,7 +25,7 @@ function validateCodeFormat(code: string) {
 }
 
 type EmailOTPProps = {
-  medium: CommunicatieMedium;
+  medium: CommunicatieMediumSetting;
   onSubmit: (formData: { otp: string }) => void;
 };
 
@@ -114,11 +114,7 @@ type EmailInputProps = {
   onChange: ChangeEventHandler<HTMLInputElement>;
 };
 
-export function EmailInput({
-  value,
-  onChange,
-  isInvalid = false,
-}: EmailInputProps) {
+function EmailInput({ value, onChange, isInvalid = false }: EmailInputProps) {
   return (
     <Field invalid={isInvalid} className="ams-mb-m">
       <Paragraph id="description2" size="small">
@@ -135,7 +131,7 @@ export function EmailInput({
         aria-required
         id="input3"
         invalid={isInvalid}
-        size={30}
+        size={26}
         value={value}
         placeholder="naam@domein.nl"
         onChange={onChange}
@@ -146,42 +142,12 @@ export function EmailInput({
   );
 }
 
-type EmailSelectProps = {
-  emails: string[];
-  value: string;
-  onChange: (email: string) => void;
-};
-
-export function EmailSelect({ emails, value, onChange }: EmailSelectProps) {
-  return (
-    <Select
-      name="emailExisting"
-      onChange={(e) => onChange(e.target.value)}
-      defaultValue={value || ''}
-    >
-      <Select.Option value="">Kies een bestaand e-mailadres</Select.Option>
-      {emails.map((email) => (
-        <Select.Option key={email} value={email}>
-          {email}
-        </Select.Option>
-      ))}
-    </Select>
-  );
-}
-
 type EmailFormProps = {
-  medium: CommunicatieMedium;
-  voorkeur: Communicatievoorkeur;
+  medium: CommunicatieMediumSetting;
   onSubmit: (formData: { email: string; isVerified: boolean }) => void;
-  emails: string[];
 };
 
-export function EmailForm({
-  medium,
-  voorkeur,
-  onSubmit,
-  emails,
-}: EmailFormProps) {
+export function EmailForm({ medium, onSubmit }: EmailFormProps) {
   const emailValue = medium.value || '';
   const [emailToVerify, setEmailToVerify] = useState<string>('');
   const [isInvalid, setIsInvalid] = useState(false);
@@ -207,34 +173,13 @@ export function EmailForm({
     onSubmit({ email: emailToVerify, isVerified: !isEmailToVerify });
   };
 
-  const hasMultipleEmails =
-    (!!emails.length && emails.length > 1) ||
-    (emails.length === 1 && emails[0] !== emailValue);
-
   return (
     <>
-      <Paragraph className="ams-mb-m">
-        Hier kunt u uw e-mailadres doorgeven. U krijgt dan e-mails van{' '}
-        {voorkeur.stakeholder} over{' '}
-        {medium.description ?? 'producten en diensten'}.
-      </Paragraph>
+      <Heading size="level-4" level={3}>
+        Een{medium.value ? ' ander ' : ''} e-mailadres doorgeven
+      </Heading>
       <form onSubmit={submitForm} name="email-adjust-form">
-        {hasMultipleEmails && (
-          <Field className="ams-mb-m">
-            <Label>Kies een bestaand e-mailadres</Label>
-            <EmailSelect
-              value={emailValue}
-              emails={emails}
-              onChange={(email) => {
-                if (email) {
-                  onSubmit({ email, isVerified: true });
-                }
-              }}
-            />
-          </Field>
-        )}
         <Field>
-          {hasMultipleEmails && <Label>Of kies een nieuw e-mailadres</Label>}
           <EmailInput
             value={emailToVerify}
             isInvalid={isInvalid}
@@ -252,16 +197,16 @@ export function EmailForm({
 
 type EmailValueProps = {
   medium: CommunicatieMedium;
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  path: string;
 };
 
-export function EmailValue({ medium, onClick }: EmailValueProps) {
+export function EmailValue({ medium, path }: EmailValueProps) {
   return (
     <>
       {medium.value ? medium.value : <em>nog niet opgegeven</em>}{' '}
-      <MaButtonInline onClick={onClick}>
-        {medium.isActive && medium.value ? 'Wijzigen' : 'Instellen'}
-      </MaButtonInline>
+      <MaRouterLink href={path}>
+        {medium.value ? 'Wijzigen' : 'Instellen'}
+      </MaRouterLink>
     </>
   );
 }

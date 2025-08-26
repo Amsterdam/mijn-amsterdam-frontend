@@ -23,15 +23,15 @@ export const routeConfig = {
     },
     documentTitle: `Alle contactmomenten | ${themaTitle}`,
   },
-  detailPageCommunicatievoorkeur: {
-    get path(): string {
-      return `/${routeConfig.themaPage.path}/communicatievoorkeur/:id`;
-    },
-    documentTitle: `Communicatievoorkeur | ${themaTitle}`,
-  },
   detailPageCommunicatievoorkeurInstellen: {
     get path(): string {
-      return `/${routeConfig.detailPageCommunicatievoorkeur.path}/instellen/:medium/:step`;
+      return `/${routeConfig.themaPage.path}/instellen/:id/:medium/:step`;
+    },
+    documentTitle: `Communicatievoorkeur instellen | ${themaTitle}`,
+  },
+  detailPageCommunicatieMediumInstellen: {
+    get path(): string {
+      return `/${routeConfig.themaPage.path}/instellen/:medium/:step`;
     },
     documentTitle: `Communicatievoorkeur instellen | ${themaTitle}`,
   },

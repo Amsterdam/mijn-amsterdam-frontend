@@ -1,8 +1,10 @@
-import { generatePath, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import { atom, useRecoilValue } from 'recoil';
 
-import type { Communicatievoorkeur } from '../../../../../server/services/contact/contact.types';
-import { addLinkElementToProperty } from '../../../../components/Table/TableV2';
+import type {
+  CommunicatieMedium,
+  Communicatievoorkeur,
+} from '../../../../../server/services/contact/contact.types';
 import { useThemaBreadcrumbs } from '../../../../hooks/useThemaMenuItems';
 import { featureToggle, routeConfig, themaId } from '../Contact-thema-config';
 import {
@@ -12,69 +14,47 @@ import {
 } from './CommunicatieVoorkeuren-config';
 import { uniqueArray } from '../../../../../universal/helpers/utils';
 
+const MEDIUM_TYPES = {
+  EMAIL: 'email',
+  PHONE: 'phone',
+  POSTADRES: 'postadres',
+} as const;
+
+type MediumType = (typeof MEDIUM_TYPES)[keyof typeof MEDIUM_TYPES];
+
+const mediumTypes = Object.values(MEDIUM_TYPES);
+
 const voorkeurenBE: Communicatievoorkeur[] = [
   {
     id: '1',
     stakeholder: 'Zorg en ondersteuning (WMO)',
-    title: 'Informatie over uw aanvragen en voorzieningen',
-    description: '',
-    medium: [
-      { name: 'e-mail', isActive: true, value: null },
+    description: 'Informatie over uw aanvragen en voorzieningen',
+    settings: [
+      { type: MEDIUM_TYPES.EMAIL, value: 'some@post.com' },
       {
-        name: 'sms',
-        isActive: false,
-        value: null,
-        description:
-          'U krijgt een sms bericht over de voortgang van uw aanvraag voor voorzieningen.',
-      },
-      {
-        name: 'brieven per post',
-        isActive: false,
+        type: MEDIUM_TYPES.POSTADRES,
         value: 'Het Amstelplein 32-H',
       },
     ],
-    isActive: true,
-    link: {
-      title: `Stel communicatievoorkeur in`,
-      to: generatePath(routeConfig.detailPageCommunicatievoorkeur.path, {
-        id: '1',
-      }),
-    },
   },
   {
     id: '2',
     stakeholder: 'Erfpacht',
-    title: 'Factuurspecificaties',
-    description: 'Omschrijving 2',
-    medium: [
-      { name: 'e-mail', isActive: true, value: null },
-      { name: 'sms', isActive: false, value: null },
-      { name: 'brieven per post', isActive: true, value: null },
+    description: 'Factuurspecificaties',
+    settings: [
+      { type: MEDIUM_TYPES.EMAIL, value: null },
+      { type: MEDIUM_TYPES.POSTADRES, value: null },
+      { type: MEDIUM_TYPES.PHONE, value: '0612345678' },
     ],
-    isActive: true,
-    link: {
-      title: `Stel communicatievoorkeur in`,
-      to: generatePath(routeConfig.detailPageCommunicatievoorkeur.path, {
-        id: '2',
-      }),
-    },
   },
   {
     id: '3',
     stakeholder: 'Erfpacht',
-    title: 'Informatie over uw Erfpacht dossiers',
-    description: 'Omschrijving 2',
-    medium: [
-      { name: 'e-mail', isActive: false, value: null },
-      { name: 'sms', isActive: true, value: '0612345678' },
+    description: 'Informatie over uw Erfpacht dossiers',
+    settings: [
+      { type: MEDIUM_TYPES.EMAIL, value: null },
+      { type: MEDIUM_TYPES.POSTADRES, value: null },
     ],
-    isActive: true,
-    link: {
-      title: `Stel communicatievoorkeur in`,
-      to: generatePath(routeConfig.detailPageCommunicatievoorkeur.path, {
-        id: '3',
-      }),
-    },
   },
 ];
 
@@ -84,28 +64,44 @@ export const voorkeurenAtom = atom<Communicatievoorkeur[]>({
 });
 
 export function useCommunicatievoorkeuren() {
-  const voorkeurenBE = useRecoilValue(voorkeurenAtom);
-  const voorkeuren_ = voorkeurenBE.map((voorkeur) => {
-    return {
-      ...voorkeur,
-      medium: voorkeur.medium
-        .filter((mediumItem) => mediumItem.isActive)
-        .map((medium) => medium.name)
-        .join(', '),
-    };
-  });
-
-  const voorkeuren = addLinkElementToProperty(
-    voorkeuren_ ?? [],
-    'title',
-    true,
-    (voorkeur) =>
-      `Stel uw voorkeur voor communicatie over ${voorkeur.stakeholder} ${voorkeur.title} in`
+  const voorkeuren = useRecoilValue(voorkeurenAtom);
+  const mediumsByType = voorkeuren.reduce(
+    (acc, voorkeur) => {
+      voorkeur.settings.forEach((medium) => {
+        if (!acc[medium.type]) {
+          acc[medium.type] = [];
+        }
+        if (medium.value) {
+          acc[medium.type].push(medium);
+        }
+      });
+      return acc;
+    },
+    {} as Record<MediumType, CommunicatieMedium[]>
   );
 
+  console.log('mediumsByType', mediumsByType);
+
+  const defaultMediumsByType = mediumTypes.reduce(
+    (acc, type) => {
+      const mediums = mediumsByType[type] || [];
+      acc[type] =
+        uniqueArray(mediums.map((m) => m.value)).length === 1
+          ? mediums[0]
+          : { type, value: null };
+      return acc;
+    },
+    {} as Record<MediumType, CommunicatieMedium>
+  );
+
+  const mediums: CommunicatieMedium[] = Object.values(defaultMediumsByType);
+
   return {
+    defaultMediumsByType,
+    mediumsByType,
     themaId,
     voorkeuren,
+    mediums,
     featureToggle,
     displayProps: communicatievoorkeurenDisplayProps,
     title: communicatieVoorkeurenTitle,
@@ -116,7 +112,8 @@ export function useCommunicatievoorkeuren() {
 }
 
 export function useCommunicatieVoorkeurDetail() {
-  const { themaId, isError, isLoading } = useCommunicatievoorkeuren();
+  const { themaId, isError, isLoading, defaultMediumsByType } =
+    useCommunicatievoorkeuren();
   const voorkeurenBE = useRecoilValue(voorkeurenAtom);
   const params = useParams<{ id: string }>();
   const voorkeur =
@@ -132,49 +129,34 @@ export function useCommunicatieVoorkeurDetail() {
     isLoading,
     breadcrumbs,
     routeConfig,
+    defaultMediumsByType,
   };
 }
 
 export function useCommunicatieVoorkeurInstellen() {
-  const { voorkeur, breadcrumbs, themaId, isError, isLoading } =
-    useCommunicatieVoorkeurDetail();
+  const {
+    voorkeur,
+    breadcrumbs,
+    themaId,
+    isError,
+    isLoading,
+    defaultMediumsByType,
+  } = useCommunicatieVoorkeurDetail();
   const voorkeurenBE = useRecoilValue(voorkeurenAtom);
-  const params = useParams<{ medium: string }>();
+  const params = useParams<{ medium: MediumType }>();
   const medium =
-    voorkeur?.medium.find((medium) => medium.name === params.medium) ?? null;
-  const breadcrumbs_ = [
-    ...breadcrumbs,
-    {
-      title: `${communicatieVoorkeurDetailTitle} ${voorkeur?.stakeholder}`,
-      to: generatePath(routeConfig.detailPageCommunicatievoorkeur.path, {
-        id: voorkeur?.id,
-      }),
-    },
-  ];
-
-  function getMediumValues(mediumName: string): string[] {
-    const items = voorkeurenBE.flatMap((voorkeur) =>
-      voorkeur?.medium
-        .filter((medium) => medium.name === mediumName)
-        .map((medium) => medium.value)
-        .filter((x) => x !== null)
-    );
-    return uniqueArray(items);
-  }
-
-  const emails: string[] = getMediumValues('e-mail');
-  const phoneNumbers: string[] = getMediumValues('sms');
+    voorkeur?.settings.find((medium) => medium.type === params.medium) ?? null;
 
   return {
-    title: `Instellen ${medium?.name}`,
+    title: `Instellen ${medium?.type}`,
     themaId,
     voorkeur,
     medium,
     isError,
     isLoading,
-    breadcrumbs: breadcrumbs_,
+    breadcrumbs,
     routeConfig,
-    emails,
-    phoneNumbers,
+    defaultMediumsByType,
+    defaultValue: medium ? defaultMediumsByType[medium.type].value : null,
   };
 }
