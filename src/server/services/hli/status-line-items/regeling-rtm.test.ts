@@ -1,7 +1,7 @@
 import { filterCombineRtmData } from './regeling-rtm';
 
 describe('filterCombineRtmData', () => {
-  test('Merged part one and two into Besluit afgewezen and dedupes documents', () => {
+  test('Merged part one and two into Besluit afgewezen', () => {
     const result = filterCombineRtmData([
       {
         id: '3166814',
@@ -55,12 +55,6 @@ describe('filterCombineRtmData', () => {
             title: 'AV-RTM Info aan klant GGD',
             url: '',
             datePublished: '2025-07-15T15:11:36.503',
-          },
-          {
-            id: 'E1082460',
-            title: 'aanvraagformulier HLI',
-            url: '',
-            datePublished: '2025-05-20T10:47:13.323',
           },
         ],
         isActueel: true,

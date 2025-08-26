@@ -6,4 +6,5 @@ export const myAreaSectionProps: SectionProps = {
   title: themaTitle,
   to: routeConfig.themaPage.path,
   listItems: ['Overzicht van gemeentelijke informatie rond uw woning'],
+  active: true,
 };
