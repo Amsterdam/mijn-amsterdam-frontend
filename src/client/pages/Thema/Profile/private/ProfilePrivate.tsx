@@ -11,6 +11,7 @@ import { AdresInOnderzoek } from './AdresInOnderzoek';
 import { ContactMomenten } from './ContactMomenten';
 import { panelConfig } from './ProfilePrivate.transform';
 import { ProfileSectionPanel } from '../ProfileSectionPanel';
+import { EmailadresInstellen } from './Communicatievoorkeur/EmailAdresInstellen';
 import { useProfileData } from './useProfileData.hook';
 import { useProfileThemaData } from './useProfileThemaData.hook';
 import { VertrokkenOnbekendWaarheen } from './VertrokkenOnbekendWaarheen';
@@ -149,11 +150,16 @@ export function MijnGegevensThema() {
     </PageContentCell>
   );
 
-  // const email = 't.van.oostrom@amsterdam.nl';
-  const email = '';
+  // const email_ = 't.van.oostrom@amsterdam.nl';
+  const email_ = '';
+  const [email, setEmail] = useState(email_);
   const hasZorgned = true;
   const hasEmail = !!email;
   const [isChecked, setIsChecked] = useState(hasEmail);
+
+  function updateEmailValue() {
+    setEmail(email_);
+  }
 
   return (
     <ThemaPagina
@@ -198,7 +204,12 @@ export function MijnGegevensThema() {
                       Ja, ik wil mijn post digitaal ontvangen
                     </Checkbox>
                   </Field>
-                  {isChecked && !hasEmail && <span>hoi</span>}
+                  {isChecked && !hasEmail && (
+                    <EmailadresInstellen
+                      email={email}
+                      updateEmailValue={updateEmailValue}
+                    />
+                  )}
                   {hasEmail && (
                     <Paragraph className="ams-mb-m">
                       Uw e-mailadres is: <strong>{email}</strong>{' '}
