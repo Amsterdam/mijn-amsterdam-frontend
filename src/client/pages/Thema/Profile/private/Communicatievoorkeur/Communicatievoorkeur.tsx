@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { Checkbox, Field, Paragraph } from '@amsterdam/design-system-react';
 
-import { EmailadresInstellen } from './EmailAdresInstellen';
+import { EmailadresInstellen } from './EmailadresInstellen';
 import { CollapsiblePanel } from '../../../../../components/CollapsiblePanel/CollapsiblePanel';
 import { MaButtonInline } from '../../../../../components/MaLink/MaLink';
 
