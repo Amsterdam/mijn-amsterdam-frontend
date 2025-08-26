@@ -6,6 +6,7 @@ import { describe, it, expect, vi, Mock } from 'vitest';
 import { useAppStateGetter, useAppStateReady } from './useAppState';
 import { useProfileTypeValue } from './useProfileType';
 import {
+  compareThemas,
   useThemaBreadcrumbs,
   useThemaMenuItemByThemaID,
   useThemaMenuItems,
@@ -31,6 +32,30 @@ vi.mock('react-router', async (importOriginal) => ({
   ...(await importOriginal()),
   useLocation: vi.fn(),
 }));
+
+describe('compareThemas', () => {
+  test('Sorts alphabeticaly and puts certain themaIDs on top', () => {
+    const themas = [
+      { id: '5', title: 'E' },
+      { id: '4', title: 'D' },
+      { id: '3', title: 'C' },
+      { id: '2', title: 'B' },
+      { id: 'KVK', title: 'Mijn onderneming' },
+      { id: '1', title: 'A' },
+      { id: 'BRP', title: 'Mijn gegevens' },
+    ] as ThemaMenuItemTransformed[];
+    themas.sort(compareThemas);
+    expect(themas.map((thema) => thema.id)).toStrictEqual([
+      'BRP',
+      'KVK',
+      '1',
+      '2',
+      '3',
+      '4',
+      '5',
+    ]);
+  });
+});
 
 describe('useThemaMenuItems', () => {
   it('should return filtered and sorted thema items based on profile type', () => {
