@@ -1,4 +1,5 @@
 import { SELECT_FIELDS_TRANSFORM_BASE } from './powerbrowser-field-transformers';
+import { OmitMapped } from '../../../universal/helpers/utils';
 import {
   GenericDocument,
   ZaakDetail,
@@ -94,12 +95,14 @@ export type PBZaakResultaat =
 
 export type PBZaakCompacted = {
   zaaknummer: string | null;
+  displayStatus: string;
   dateStart: string | null;
   dateReceived: string | null;
   dateDecision: string | null;
   dateEnd: string | null;
   result: PBZaakResultaat | null;
   status: PBZaakStatus | null;
+  steps: [];
 };
 
 export type PowerBrowserZaakBase = {
@@ -140,16 +143,14 @@ export type PowerBrowserZaakTransformer<T extends PowerBrowserZaakBase = any> =
 
 export type PowerBrowserZaakFrontend<
   T extends PowerBrowserZaakBase = PowerBrowserZaakBase,
-> = T & {
+> = OmitMapped<T, 'statusDates'> & {
   dateRequestFormatted: string | null;
   dateDecisionFormatted?: string | null;
   dateStartFormatted?: string | null;
   dateEndFormatted?: string | null;
-  isExpired: boolean;
+  // isExpired: boolean;
   // Url to fetch documents for a specific Zaak.
-  fetchDocumentsUrl?: string;
-
-  heeftOvergangsRecht: boolean;
+  // fetchDocumentsUrl?: string;
 } & ZaakDetail;
 
 export type ZaakStatusDate = {

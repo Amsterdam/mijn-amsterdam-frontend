@@ -1,4 +1,5 @@
 import {
+  PBZaakCompacted,
   PowerBrowserZaakBase,
   PowerBrowserZaakFrontend,
 } from '../../powerbrowser/powerbrowser-types';
@@ -23,31 +24,11 @@ export type BBVergunningZaakResult =
   | string
   | null;
 
-export type BedAndBreakfastType = PowerBrowserZaakBase & {
-  caseType: GetCaseType<'BedAndBreakfast'>;
-};
-
-// export type BBVergunningFrontend = ZaakDetail &
-// PowerBrowserZaakBase & {
-//   location: string | null;
-//   dateDecision: string | null;
-//   dateDecisionFormatted: string | null;
-//   dateEnd: string | null;
-//   dateEndFormatted: string | null;
-//   dateRequest: string | null;
-//   dateRequestFormatted: string | null;
-//   dateStart: string;
-//   dateStartFormatted: string | null;
-//   decision: BBVergunningZaakResult;
-//   isVerleend: boolean;
-//   documents: GenericDocument[];
-//   heeftOvergangsRecht: boolean;
-//   identifier: string;
-//   processed: boolean;
-//   isExpired: boolean;
-//   displayStatus: BBVergunningZaakStatus | BBVergunningZaakResult;
-//   title: 'Vergunning bed & breakfast';
-// };
+export type BedAndBreakfastType = PowerBrowserZaakBase &
+  PBZaakCompacted & {
+    caseType: GetCaseType<'BedAndBreakfast'>;
+    heeftOvergangsRecht: boolean;
+  };
 
 export type BBVergunningFrontend =
   PowerBrowserZaakFrontend<BedAndBreakfastType>;
