@@ -12,7 +12,11 @@ import {
   TextPageV2,
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
-import { useThemaMenuItemsByThemaID } from '../../hooks/useThemaMenuItems';
+import { getRedactedClass } from '../../helpers/cobrowse';
+import {
+  compareThemas,
+  useThemaMenuItemsByThemaID,
+} from '../../hooks/useThemaMenuItems';
 import { afisSectionProps } from '../Thema/Afis/InfoSection';
 import { afvalSectionProps } from '../Thema/Afval/InfoSection';
 import { AVGsectionProps } from '../Thema/AVG/InfoSection';
@@ -43,6 +47,7 @@ export type SectionProps = {
   title: string;
   to?: string; // Use this instead of the themaMenuItem 'to URL' and force link to be clickable.
   listItems: ListItems;
+  active: boolean;
 };
 type ListItems = Array<{ text: string; listItems?: string[] } | string>;
 
@@ -72,7 +77,7 @@ const sections: SectionProps[] = [
   bodemsectionProps,
 ];
 
-function Section({ id, title, listItems, to }: SectionProps) {
+function Section({ id, title, listItems, to }: Omit<SectionProps, 'active'>) {
   const themaMenuItems = useThemaMenuItemsByThemaID();
 
   const listItemComponents = listItems.map((item, i) => {
@@ -127,6 +132,18 @@ function getLinkComponent(href: string) {
 }
 
 export function GeneralInfo() {
+  const sectionComponents = sections
+    .filter((section) => section.active)
+    .toSorted(compareThemas)
+    .map((section, i) => (
+      <Section
+        key={i}
+        id={section.id}
+        title={section.title}
+        to={section.to}
+        listItems={section.listItems}
+      />
+    ));
   return (
     <TextPageV2>
       <PageContentV2 span={8}>
@@ -149,15 +166,7 @@ export function GeneralInfo() {
           <Paragraph className="ams-mb-xl">
             Op dit moment kunnen de volgende gegevens getoond worden:
           </Paragraph>
-          {sections.map((section, i) => (
-            <Section
-              key={i}
-              id={section.id}
-              title={section.title}
-              to={section.to}
-              listItems={section.listItems}
-            />
-          ))}
+          <div className={getRedactedClass()}>{sectionComponents}</div>
           <Heading level={4} size="level-4" className="ams-mb-s">
             Vragen over Mijn Amsterdam
           </Heading>

@@ -1,4 +1,4 @@
-import { themaId, themaTitle } from './Belastingen-thema-config';
+import { featureToggle, themaId, themaTitle } from './Belastingen-thema-config';
 import { SectionProps } from '../../GeneralInfo/GeneralInfo';
 
 export const belastingenSectionProps: SectionProps = {
@@ -12,4 +12,5 @@ export const belastingenSectionProps: SectionProps = {
     'Betalingsregeling aanvragen',
     'Aangifte doen',
   ],
+  active: featureToggle.belastingenActive,
 };
