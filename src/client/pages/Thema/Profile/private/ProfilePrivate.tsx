@@ -1,4 +1,11 @@
-import { Link, Paragraph } from '@amsterdam/design-system-react';
+import { useState } from 'react';
+
+import {
+  Checkbox,
+  Field,
+  Link,
+  Paragraph,
+} from '@amsterdam/design-system-react';
 
 import { AdresInOnderzoek } from './AdresInOnderzoek';
 import { ContactMomenten } from './ContactMomenten';
@@ -11,6 +18,8 @@ import {
   hasDutchAndOtherNationalities,
   isMokum,
 } from '../../../../../universal/helpers/brp';
+import { CollapsiblePanel } from '../../../../components/CollapsiblePanel/CollapsiblePanel';
+import { MaLink } from '../../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../../components/Page/Page';
 import { ParagaphSuppressed } from '../../../../components/ParagraphSuppressed/ParagraphSuppressed';
 import ThemaPagina from '../../../../components/Thema/ThemaPagina';
@@ -140,6 +149,12 @@ export function MijnGegevensThema() {
     </PageContentCell>
   );
 
+  // const email = 't.van.oostrom@amsterdam.nl';
+  const email = '';
+  const hasZorgned = true;
+  const hasEmail = !!email;
+  const [isChecked, setIsChecked] = useState(hasEmail);
+
   return (
     <ThemaPagina
       id={id}
@@ -160,6 +175,38 @@ export function MijnGegevensThema() {
           {brpContent?.persoon?.adresInOnderzoek && (
             <PageContentCell>
               <AdresInOnderzoek brpContent={brpContent} />
+            </PageContentCell>
+          )}
+          {hasZorgned && (
+            <PageContentCell>
+              <CollapsiblePanel
+                title="Communicatievoorkeur"
+                startCollapsed={true}
+              >
+                <>
+                  <Paragraph className="ams-mb-m">
+                    Wilt u uw post van de gemeente over uw{' '}
+                    <strong>WMO voorzieningen</strong> digitaal ontvangen? U
+                    ontvangt uw post <strong>ook</strong> in papieren vorm.
+                  </Paragraph>
+                  <Field style={{ flexDirection: 'row' }}>
+                    <Checkbox
+                      id="email"
+                      checked={isChecked}
+                      onChange={() => setIsChecked(!isChecked)}
+                    >
+                      Ja, ik wil mijn post digitaal ontvangen
+                    </Checkbox>
+                  </Field>
+                  {isChecked && !hasEmail && <span>hoi</span>}
+                  {hasEmail && (
+                    <Paragraph className="ams-mb-m">
+                      Uw e-mailadres is: <strong>{email}</strong>{' '}
+                      <MaLink>Wijzigen</MaLink>
+                    </Paragraph>
+                  )}
+                </>
+              </CollapsiblePanel>
             </PageContentCell>
           )}
           {hasContactMomenten && (
