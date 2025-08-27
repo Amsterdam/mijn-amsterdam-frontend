@@ -19,14 +19,6 @@ async function handleResponse<T>(response: Response): ApiFetchResponse<T> {
   return responseJson;
 }
 
-export async function sendGetRequest<T extends any>(
-  url: string
-): Promise<ApiResponse<T>> {
-  return fetch(url, { credentials: 'include' }).then((response: Response) =>
-    handleResponse<T>(response)
-  );
-}
-
 export async function sendFormPostRequest<
   T extends any,
   F extends Record<string, string>,
@@ -65,7 +57,7 @@ type ApiGetState<T> = {
 };
 
 type ApiFetch = {
-  fetch(): Promise<void>;
+  fetch(url?: string): Promise<void>;
 };
 
 const initialState: ApiGetState<null> = {
@@ -77,17 +69,37 @@ const initialState: ApiGetState<null> = {
   dirty: false,
 };
 
-export function createGetApiHook<T>(url: string) {
+export async function sendGetRequest<T extends any>(
+  url: string
+): Promise<ApiResponse<T>> {
+  return fetch(url, { credentials: 'include' }).then((response: Response) =>
+    handleResponse<T>(response)
+  );
+}
+
+type ApiGetOptions = {
+  defaultUrl?: string;
+  sendRequest?: <T>(url: string) => Promise<ApiResponse<T>>;
+};
+
+export function createGetApiHook<T>(options?: ApiGetOptions) {
+  const { defaultUrl, sendRequest = sendGetRequest } = options || {};
+
   return create<ApiGetState<ApiResponse<T>> & ApiFetch>((set, get) => ({
     ...initialState,
 
-    async fetch(): Promise<void> {
+    async fetch(url?: string): Promise<void> {
+      if (!url && !defaultUrl) {
+        throw new Error('No URL provided');
+      }
+
       set({ ...initialState, loading: true });
 
-      const response = await sendGetRequest<T>(url);
+      const response = await sendRequest<T>(
+        url ? url : defaultUrl ? defaultUrl : ''
+      );
 
       if (response.status === 'ERROR') {
-        console.error('Error in data fetch:', response);
         set({
           ...initialState,
           error: true,

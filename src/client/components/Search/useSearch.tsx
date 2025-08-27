@@ -4,7 +4,6 @@ import {
   ExternalLinkIcon,
   LocationIcon,
 } from '@amsterdam/design-system-react-icons';
-import axios from 'axios';
 import Fuse from 'fuse.js';
 import { matchPath, useLocation } from 'react-router';
 import { create } from 'zustand';
@@ -18,11 +17,15 @@ import {
   type RemoteApiSearchConfigs,
 } from './search-config';
 import styles from './Search.module.scss';
-import { isError } from '../../../universal/helpers/api';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+  isError,
+  type ApiResponse,
+} from '../../../universal/helpers/api';
 import { pick, uniqueArray } from '../../../universal/helpers/utils';
 import { AppState } from '../../../universal/types/App.types';
 import { BFFApiUrls } from '../../config/api';
-import { addAxiosResponseTransform } from '../../hooks/api/useDataApi';
 import { createGetApiHook } from '../../hooks/api/useDataApi-v2';
 import { useSmallScreen } from '../../hooks/media.hook';
 import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
@@ -151,14 +154,14 @@ interface AmsterdamSearchResult {
   url: string;
 }
 
-interface ResponseData {
+interface AmsterdamNLResponseData {
   records: {
     page: AmsterdamSearchResult[];
   };
 }
 
 function transformSearchAmsterdamNLresponse(
-  responseData: ResponseData
+  responseData: AmsterdamNLResponseData
 ): SearchEntry[] {
   if (Array.isArray(responseData?.records?.page)) {
     return responseData.records.page.map((page: AmsterdamSearchResult) => {
@@ -183,22 +186,49 @@ function transformSearchAmsterdamNLresponse(
 
 const RESULTS_PER_PAGE = 10;
 
-export async function searchAmsterdamNL(
-  keywords: string,
-  resultCountPerPage: number = RESULTS_PER_PAGE,
-  isExtendedAmsterdamSearch: boolean = false
+export async function sendGetRequest<T = SearchEntry[]>(
+  url: string
+): Promise<ApiResponse<T>> {
+  return fetch(url, { credentials: 'include' }).then(
+    async (response: Response) => {
+      return (
+        !response.ok
+          ? apiErrorResult('Network response was not ok', null)
+          : apiSuccessResult(
+              transformSearchAmsterdamNLresponse(await response.json())
+            )
+      ) as ApiResponse<T>;
+    }
+  );
+}
+
+const useSearchAmsterdamApi = createGetApiHook<SearchEntry[]>({
+  sendRequest: sendGetRequest,
+});
+
+function useAmsterdamNLSearchEntries(
+  term: string,
+  setResults: SearchTermStore['setResults'],
+  isExtendedAmsterdamSearch: boolean
 ) {
+  const api = useSearchAmsterdamApi();
+  const searchEntries = api.data?.content ?? null;
+
   const url = isExtendedAmsterdamSearch
-    ? `https://api.swiftype.com/api/v1/public/engines/search.json?engine_key=zw32MDuzZjzNC8VutizD&page=1&per_page=${resultCountPerPage}&q=${keywords}&spelling=retry`
-    : `https://api.swiftype.com/api/v1/public/engines/suggest.json?q=${keywords}&engine_key=zw32MDuzZjzNC8VutizD&per_page=${resultCountPerPage}`;
+    ? `https://api.swiftype.com/api/v1/public/engines/search.json?engine_key=zw32MDuzZjzNC8VutizD&page=1&per_page=${RESULTS_PER_PAGE}&q=${term}&spelling=retry`
+    : `https://api.swiftype.com/api/v1/public/engines/suggest.json?q=${term}&engine_key=zw32MDuzZjzNC8VutizD&per_page=${RESULTS_PER_PAGE}`;
 
-  const response = await axios.get<SearchEntry[]>(url, {
-    transformResponse: addAxiosResponseTransform(
-      transformSearchAmsterdamNLresponse
-    ),
-  });
+  useEffect(() => {
+    if (term) {
+      api.fetch(url);
+    }
+  }, [term]);
 
-  return response.data;
+  useEffect(() => {
+    if (searchEntries) {
+      setResults({ am: searchEntries });
+    }
+  }, [searchEntries]);
 }
 
 type SearchTermStore = {
@@ -235,7 +265,7 @@ export const useSearchStore = create<SearchTermStore>((set) => ({
 const useSearchConfigRemoteApi = createGetApiHook<{
   staticSearchEntries: SearchEntry[];
   apiSearchConfigs: RemoteApiSearchConfigs;
-}>(BFFApiUrls.SEARCH_CONFIGURATION);
+}>({ defaultUrl: BFFApiUrls.SEARCH_CONFIGURATION });
 
 export function useSearchConfigJSON() {
   const profileType = useProfileTypeValue();
@@ -303,13 +333,14 @@ export function useDynamicSearchEntries(
   return searchEntries;
 }
 
-export function useSearchIndex() {
+export function useSearchIndex(extendedAMResults: boolean) {
   const isAppStateReady = useAppStateReady();
   const [api, staticSearchEntries, remoteApiSearchConfigs] =
     useSearchConfigJSON();
   const dynamicSearchEntries = useDynamicSearchEntries(remoteApiSearchConfigs); // SearchEntry voor dynamische items (API resultaten)
   const { setFuseInstance, fuseInstance, term, setTerm, setResults, results } =
     useSearchStore();
+  useAmsterdamNLSearchEntries(term, setResults, extendedAMResults);
 
   useEffect(() => {
     if (!api.loading && !api.dirty) {
@@ -338,7 +369,6 @@ export function useSearchIndex() {
 
   useEffect(() => {
     if (fuseInstance && !!term) {
-      console.log('fuseInstance', term);
       const rawResults = fuseInstance.search(term).map((result) => result.item);
       setResults({ ma: rawResults });
     }
@@ -348,9 +378,7 @@ export function useSearchIndex() {
     term,
     setTerm,
     resultsMA: results.ma,
-    getResultsAM: () => {
-      return [];
-    },
+    resultsAM: results.am,
   };
 }
 
