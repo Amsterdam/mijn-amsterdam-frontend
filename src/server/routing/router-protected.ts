@@ -24,6 +24,10 @@ import { fetchBezwaarDocument } from '../services/bezwaren/bezwaren';
 import { handleFetchBezwaarDetail } from '../services/bezwaren/bezwaren-route-handlers';
 import { fetchLoodMetingDocument } from '../services/bodem/loodmetingen';
 import {
+  handleCreateVerificationRequest,
+  handleVerifyVerificationRequest,
+} from '../services/contact/contact-route-handlers';
+import {
   NOTIFICATIONS,
   loadServicesAll,
   loadServicesSSE,
@@ -250,4 +254,16 @@ attachDocumentDownloadRoute(
   router,
   BffEndpoints.AFIS_DOCUMENT_DOWNLOAD,
   fetchAfisDocument
+);
+
+// VERIFY - NOTIFY
+
+router.post(
+  BffEndpoints.VERIFY_VERIFICATION_REQUEST_CREATE,
+  handleCreateVerificationRequest
+);
+
+router.post(
+  BffEndpoints.VERIFY_VERIFICATION_REQUEST_VERIFY,
+  handleVerifyVerificationRequest
 );

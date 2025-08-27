@@ -347,6 +347,10 @@ const ApiConfig_ = {
       'Content-Type': 'application/json',
     },
   },
+  VERIFY: {
+    url: `${getFromEnv('BFF_VERIFY_API_URL')}`,
+    method: 'POST',
+  },
 } as const;
 
 export const ApiConfig: Record<SourceApiKey, DataRequestConfig> = ApiConfig_;

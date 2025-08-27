@@ -73,6 +73,10 @@ export const BffEndpoints = {
 
   // Bodem / loodmetingen
   LOODMETING_DOCUMENT_DOWNLOAD: '/services/lood/document/:id',
+
+  // NOTIFY / VERIFY
+  VERIFY_VERIFICATION_REQUEST_CREATE: '/services/verification-request/create',
+  VERIFY_VERIFICATION_REQUEST_VERIFY: '/services/verification-request/verify',
 } as const;
 
 const AMSAPP_BASE = '/services/amsapp';
