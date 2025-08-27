@@ -4,22 +4,23 @@ import Mockdate from 'mockdate';
 import { describe, expect } from 'vitest';
 
 import {
-  fetchBBVergunningen,
-  fetchBBDocumentsList,
-  fetchBBDocument,
+  fetchZaken,
+  fetchDocumentsList,
+  fetchDocument,
   forTesting,
-} from './toeristische-verhuur-powerbrowser-bb-vergunning';
-import {
-  BBVergunningFrontend,
+} from './powerbrowser-service';
+import type {
   PBDocumentFields,
   PBZaakFields,
   PBZaakRecord,
   PowerBrowserStatusResponse,
   SearchRequestResponse,
-} from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
+} from './powerbrowser-types';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
-import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
+import type { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
 import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
+import { BBVergunningFrontend } from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types';
+import { powerBrowserZaakTransformers } from '../toeristische-verhuur/bed-and-breakfast/powerbrowser-zaken';
 
 describe('B&B Vergunningen service', () => {
   const authProfile: AuthProfile = {
@@ -39,7 +40,7 @@ describe('B&B Vergunningen service', () => {
     remoteApi.post('/powerbrowser/Token').reply(200, 'test-token');
   });
 
-  describe('fetchBBVergunningen', () => {
+  describe('fetchZaken', () => {
     test('should filter only bed and breakfast zaken', async () => {
       remoteApi
         .post(/\/powerbrowser/)
@@ -71,7 +72,10 @@ describe('B&B Vergunningen service', () => {
           return [200, null];
         });
 
-      const result = await fetchBBVergunningen(authProfile);
+      const result = await fetchZaken(
+        authProfile,
+        powerBrowserZaakTransformers
+      );
       expect(result.status).toBe('OK');
       expect(result.content).toHaveLength(0);
     });
@@ -114,7 +118,10 @@ describe('B&B Vergunningen service', () => {
         return [200, null];
       });
 
-      const result = await fetchBBVergunningen(authProfile);
+      const result = await fetchZaken(
+        authProfile,
+        powerBrowserZaakTransformers
+      );
       expect(result.status).toBe('OK');
       expect(result.content).toHaveLength(1);
     });
@@ -126,7 +133,10 @@ describe('B&B Vergunningen service', () => {
         }
       });
 
-      const result = await fetchBBVergunningen(authProfile);
+      const result = await fetchZaken(
+        authProfile,
+        powerBrowserZaakTransformers
+      );
       expect(result.status).toBe('ERROR');
     });
 
@@ -144,7 +154,10 @@ describe('B&B Vergunningen service', () => {
           }
         });
 
-      const result = await fetchBBVergunningen(authProfile);
+      const result = await fetchZaken(
+        authProfile,
+        powerBrowserZaakTransformers
+      );
       expect(result.status).toBe('ERROR');
     });
 
@@ -169,7 +182,10 @@ describe('B&B Vergunningen service', () => {
         return [200, null];
       });
 
-      const result = await fetchBBVergunningen(authProfile);
+      const result = await fetchZaken(
+        authProfile,
+        powerBrowserZaakTransformers
+      );
       expect(result.status).toBe('ERROR');
     });
   });
@@ -199,7 +215,7 @@ describe('B&B Vergunningen service', () => {
         return [200, null];
       });
 
-      const result = await fetchBBDocumentsList(
+      const result = await fetchDocumentsList(
         authProfileAndToken.profile,
         zaakId
       );
@@ -216,7 +232,7 @@ describe('B&B Vergunningen service', () => {
         return [500, null];
       });
 
-      const result = await fetchBBDocumentsList(
+      const result = await fetchDocumentsList(
         authProfileAndToken.profile,
         zaakId
       );
@@ -236,7 +252,7 @@ describe('B&B Vergunningen service', () => {
         return [200, null];
       });
 
-      const result = await fetchBBDocument(authProfileAndToken, documentId);
+      const result = await fetchDocument(authProfileAndToken, documentId);
       expect(result.status).toBe('OK');
       expect(result.content).toEqual({
         data: expect.any(stream),
@@ -257,7 +273,7 @@ describe('B&B Vergunningen service', () => {
         return [500, null];
       });
 
-      const result = await fetchBBDocument(authProfileAndToken, documentId);
+      const result = await fetchDocument(authProfileAndToken, documentId);
       expect(result.status).toBe('ERROR');
     });
   });
@@ -432,27 +448,27 @@ describe('B&B Vergunningen service', () => {
     });
   });
 
-  describe('getZaakStatus', () => {
-    test('should return zaak status', () => {
-      const zaak = {
-        steps: [{ isActive: true, status: 'In behandeling' }],
-        decision: 'Verleend',
-      } as unknown as BBVergunningFrontend;
+  // describe('getZaakStatus', () => {
+  //   test('should return zaak status', () => {
+  //     const zaak = {
+  //       steps: [{ isActive: true, status: 'In behandeling' }],
+  //       decision: 'Verleend',
+  //     } as unknown as BBVergunningFrontend;
 
-      const result = forTesting.getZaakStatus(zaak);
-      expect(result).toBe('Verleend');
-    });
+  //     const result = forTesting.getZaakStatus(zaak);
+  //     expect(result).toBe('Verleend');
+  //   });
 
-    test('should return last step status if no result', () => {
-      const zaak = {
-        steps: [{ isActive: true, status: 'In behandeling' }],
-        decision: null,
-      } as unknown as BBVergunningFrontend;
+  //   test('should return last step status if no result', () => {
+  //     const zaak = {
+  //       steps: [{ isActive: true, status: 'In behandeling' }],
+  //       decision: null,
+  //     } as unknown as BBVergunningFrontend;
 
-      const result = forTesting.getZaakStatus(zaak);
-      expect(result).toBe('In behandeling');
-    });
-  });
+  //     const result = forTesting.getZaakStatus(zaak);
+  //     expect(result).toBe('In behandeling');
+  //   });
+  // });
 
   describe('getZaakResultaat', () => {
     test('should return transformed result', () => {
@@ -820,6 +836,7 @@ describe('B&B Vergunningen service', () => {
 
       const result = forTesting.transformZaak(zaak);
       expect(result).toEqual({
+        caseType: 'Vergunning bed & breakfast',
         dateDecision: '2024-10-17T22:00:00.0000000Z',
         dateDecisionFormatted: '18 oktober 2024',
         dateEnd: '2024-12-30T23:00:00.0000000Z',

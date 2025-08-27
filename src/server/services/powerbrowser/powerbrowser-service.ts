@@ -2,9 +2,8 @@ import { isBefore } from 'date-fns/isBefore';
 import memoizee from 'memoizee';
 import { generatePath } from 'react-router';
 
-import { POWERBROWSER_ZAAK_PRODUCT_ID_BB_VERGUNNING } from './toeristische-verhuur-config-and-types';
 import {
-  BBVergunningFrontend,
+  PowerBrowserZaakBase,
   FetchPersoonOrMaatschapIdByUidOptions,
   FetchZaakIdsOptions,
   fieldMap,
@@ -15,9 +14,10 @@ import {
   PBZaakRecord,
   PBZaakResultaat,
   PowerBrowserStatusResponse,
+  PowerBrowserZaakTransformer,
   SearchRequestResponse,
-} from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
-import { routeConfig } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
+  PowerBrowserZaakFrontend,
+} from './powerbrowser-types';
 import {
   apiErrorResult,
   ApiResponse,
@@ -25,8 +25,8 @@ import {
   apiSuccessResult,
   getSettledResult,
 } from '../../../universal/helpers/api';
-import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
-import { entries } from '../../../universal/helpers/utils';
+import { dateSort } from '../../../universal/helpers/date';
+import { entries, toDateFormatted } from '../../../universal/helpers/utils';
 import { StatusLineItem } from '../../../universal/types/App.types';
 import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_HOUR_MS } from '../../config/app';
@@ -160,10 +160,12 @@ function getFieldValue(
 }
 
 function getZaakStatus(
-  zaak: BBVergunningFrontend
-): BBVergunningFrontend['displayStatus'] | BBVergunningFrontend['decision'] {
+  zaak: PowerBrowserZaakFrontend
+):
+  | PowerBrowserZaakFrontend['displayStatus']
+  | PowerBrowserZaakFrontend['decision'] {
   const lastStepStatus = zaak.steps.findLast((step) => step.isActive)
-    ?.status as BBVergunningFrontend['displayStatus'];
+    ?.status as PowerBrowserZaakFrontend['displayStatus'];
 
   if (lastStepStatus !== 'Verlopen' && zaak.decision) {
     return zaak.decision;
@@ -177,7 +179,7 @@ function getZaakResultaat(resultaat: PBZaakResultaat | null) {
     return null;
   }
 
-  const resultaatTransformed: BBVergunningFrontend['decision'] = resultaat;
+  const resultaatTransformed: PowerBrowserZaakBase['decision'] = resultaat;
 
   const resultatenVerleend = [
     'Verleend met overgangsrecht',
@@ -206,7 +208,7 @@ function getZaakResultaat(resultaat: PBZaakResultaat | null) {
 }
 
 function transformZaakStatusResponse(
-  zaak: BBVergunningFrontend,
+  zaak: PowerBrowserZaakBase,
   statusResponse: PowerBrowserStatusResponse
 ): StatusLineItem[] {
   function getStatusDate(status: string[]) {
@@ -326,7 +328,7 @@ async function fetchZaakAdres(
 }
 
 async function fetchZaakStatussen(
-  zaak: BBVergunningFrontend
+  zaak: PowerBrowserZaakBase
 ): Promise<ApiResponse_DEPRECATED<StatusLineItem[] | null>> {
   const statusResponse = await fetchPowerBrowserData<StatusLineItem[]>({
     formatUrl({ url }) {
@@ -354,16 +356,16 @@ async function fetchZaakStatussen(
 
 async function fetchAndMergeDocuments(
   authProfile: AuthProfile,
-  zaken: BBVergunningFrontend[]
-): Promise<BBVergunningFrontend[]> {
+  zaken: PowerBrowserZaakBase[]
+): Promise<PowerBrowserZaakBase[]> {
   const documentRequests = zaken.map((zaak) => {
-    return fetchBBDocumentsList(authProfile, zaak.id);
+    return fetchDocumentsList(authProfile, zaak.id);
   });
   const documentResults = await Promise.allSettled(documentRequests);
-  const zakenWithdocuments: BBVergunningFrontend[] = [];
+  const zakenWithdocuments: PowerBrowserZaakBase[] = [];
 
   for (let i = 0; i < zaken.length; i++) {
-    const zaak: BBVergunningFrontend = { ...zaken[i] };
+    const zaak: PowerBrowserZaakBase = { ...zaken[i] };
     const documentResponse = getSettledResult(documentResults[i]);
 
     zaak.documents =
@@ -377,16 +379,16 @@ async function fetchAndMergeDocuments(
 }
 
 async function fetchAndMergeZaakStatussen(
-  zaken: BBVergunningFrontend[]
-): Promise<BBVergunningFrontend[]> {
+  zaken: PowerBrowserZaakFrontend[]
+): Promise<PowerBrowserZaakFrontend[]> {
   const statussenRequests = zaken.map((zaak) => {
     return fetchZaakStatussen(zaak);
   });
   const statussenResults = await Promise.allSettled(statussenRequests);
-  const zakenWithstatussen: BBVergunningFrontend[] = [];
+  const zakenWithstatussen: PowerBrowserZaakFrontend[] = [];
 
   for (let i = 0; i < zaken.length; i++) {
-    const zaak: BBVergunningFrontend = { ...zaken[i] };
+    const zaak: PowerBrowserZaakFrontend = { ...zaken[i] };
     const statussenResponse = getSettledResult(statussenResults[i]);
 
     zaak.steps =
@@ -402,13 +404,13 @@ async function fetchAndMergeZaakStatussen(
 }
 
 async function fetchAndMergeAdressen(
-  zaken: BBVergunningFrontend[]
-): Promise<BBVergunningFrontend[]> {
+  zaken: PowerBrowserZaakBase[]
+): Promise<PowerBrowserZaakBase[]> {
   const addressRequests = zaken.map((zaak) => {
     return fetchZaakAdres(zaak.id);
   });
   const addressResults = await Promise.allSettled(addressRequests);
-  const zakenWithAddress: BBVergunningFrontend[] = [];
+  const zakenWithAddress: PowerBrowserZaakBase[] = [];
 
   for (let i = 0; i < zaken.length; i++) {
     const addressResponse = getSettledResult(addressResults[i]);
@@ -417,7 +419,7 @@ async function fetchAndMergeAdressen(
         ? addressResponse.content
         : '';
 
-    const zaak: BBVergunningFrontend = { ...zaken[i], location };
+    const zaak: PowerBrowserZaakBase = { ...zaken[i], location };
 
     zakenWithAddress.push(zaak);
   }
@@ -425,7 +427,7 @@ async function fetchAndMergeAdressen(
   return zakenWithAddress;
 }
 
-function transformZaak(zaak: PBZaakRecord): BBVergunningFrontend {
+function transformZaak(zaak: PBZaakRecord): PowerBrowserZaakFrontend {
   const pbZaak = Object.fromEntries(
     entries(fieldMap).map(([pbFieldName, desiredName]) => {
       return [desiredName, getFieldValue(pbFieldName, zaak.fields)];
@@ -441,38 +443,30 @@ function transformZaak(zaak: PBZaakRecord): BBVergunningFrontend {
   const dateEnd = isVerleend && pbZaak.dateEnd ? pbZaak.dateEnd : '';
   const id = zaak.id;
 
-  const isZaakExpired = isExpired(pbZaak.dateEnd, new Date());
-
   return {
+    caseType: title, // TODO: Move to caller transform
     dateRequest: pbZaak.dateReceived,
-    dateRequestFormatted: pbZaak.dateReceived
-      ? defaultDateFormat(pbZaak.dateReceived)
-      : pbZaak.dateReceived,
+    dateRequestFormatted: toDateFormatted(pbZaak.dateReceived),
     dateDecision: pbZaak.dateDecision,
-    dateDecisionFormatted: pbZaak.dateDecision
-      ? defaultDateFormat(pbZaak.dateDecision)
-      : '-',
+    dateDecisionFormatted: toDateFormatted(pbZaak.dateDecision) ?? '-',
     dateStart,
-    dateStartFormatted: dateStart ? defaultDateFormat(dateStart) : '-',
+    dateStartFormatted: toDateFormatted(dateStart) ?? '-',
     dateEnd,
-    dateEndFormatted: dateEnd ? defaultDateFormat(dateEnd) : '-',
+    dateEndFormatted: toDateFormatted(dateEnd) ?? '-',
     decision,
     isVerleend,
     id,
     identifier: pbZaak.zaaknummer ?? zaak.id,
     link: {
-      to: generatePath(routeConfig.detailPage.path, {
-        id,
-        caseType: 'bed-and-breakfast',
-      }),
+      to: '/toeristische-verhuur/vergunning/bed-and-breakfast/126088685', // TODO: Move to caller transform
       title,
     },
     title,
     processed: !!decision,
-    isExpired: isZaakExpired,
+    isExpired: isExpired(pbZaak.dateEnd, new Date()),
 
     // Added after initial transform
-    location: null,
+    location: null, // TODO: Move to caller transform
     displayStatus: 'Ontvangen',
     documents: [],
     steps: [],
@@ -488,7 +482,7 @@ function transformZaak(zaak: PBZaakRecord): BBVergunningFrontend {
 async function fetchZakenByIds(
   authProfile: AuthProfile,
   zaakIds: string[]
-): Promise<ApiResponse_DEPRECATED<BBVergunningFrontend[] | null>> {
+): Promise<ApiResponse_DEPRECATED<PowerBrowserZaakBase[] | null>> {
   const requestConfig: DataRequestConfig = {
     method: 'get',
     formatUrl({ url }) {
@@ -500,7 +494,7 @@ async function fetchZakenByIds(
   };
 
   const zakenResponse =
-    await fetchPowerBrowserData<BBVergunningFrontend[]>(requestConfig);
+    await fetchPowerBrowserData<PowerBrowserZaakBase[]>(requestConfig);
 
   if (zakenResponse.status === 'OK') {
     const zakenWithAddress = await fetchAndMergeAdressen(zakenResponse.content);
@@ -511,18 +505,22 @@ async function fetchZakenByIds(
     );
 
     // Merge zaak statussen as last, some status steps need documents to be fetched first.
-    const zakenWithStatus =
-      await fetchAndMergeZaakStatussen(zakenWithDocuments);
+    // TODO:
+    // const zakenWithStatus =
+    //   await fetchAndMergeZaakStatussen(zakenWithDocuments);
 
-    return apiSuccessResult(zakenWithStatus);
+    return apiSuccessResult(zakenWithDocuments);
   }
 
   return zakenResponse;
 }
 
-export async function fetchBBVergunningen(
-  authProfile: AuthProfile
-): Promise<ApiResponse_DEPRECATED<BBVergunningFrontend[] | null>> {
+export async function fetchZaken<T extends PowerBrowserZaakBase>(
+  authProfile: AuthProfile,
+  zaakTransformers: PowerBrowserZaakTransformer<T>[]
+): Promise<ApiResponse_DEPRECATED<PowerBrowserZaakBase[] | null>> {
+  const zaakTransformer = zaakTransformers[0]; // TODO: Implement for multiple
+
   // Set-up the options for the PowerBrowser API request based on the profile type.
   const optionsByProfileType: Record<
     ProfileType,
@@ -557,7 +555,7 @@ export async function fetchBBVergunningen(
         return pbRecord.fields.some((field) => {
           return (
             field.fieldName === 'FMT_CAPTION' &&
-            field.text?.includes(POWERBROWSER_ZAAK_PRODUCT_ID_BB_VERGUNNING)
+            field.text?.includes(zaakTransformer.caseType)
           );
         });
       },
@@ -624,7 +622,7 @@ const documentNamenMA_PB = {
 function transformPowerbrowserLinksResponse(
   sessionID: SessionID,
   responseData: SearchRequestResponse<'DOCLINK', PBDocumentFields[]>
-): BBVergunningFrontend['documents'] {
+): PowerBrowserZaakBase['documents'] {
   type PBDocument = {
     [K in PBDocumentFields['fieldName']]: string;
   };
@@ -672,10 +670,10 @@ function transformPowerbrowserLinksResponse(
     .sort(dateSort('datePublished', 'desc'));
 }
 
-export async function fetchBBDocumentsList(
+export async function fetchDocumentsList(
   authProfile: AuthProfile,
-  zaakId: BBVergunningFrontend['id']
-): Promise<ApiResponse_DEPRECATED<BBVergunningFrontend['documents'] | null>> {
+  zaakId: PowerBrowserZaakBase['id']
+): Promise<ApiResponse_DEPRECATED<PowerBrowserZaakBase['documents'] | null>> {
   const dataRequestConfig: DataRequestConfig = {
     method: 'post',
     formatUrl({ url }) {
@@ -705,7 +703,7 @@ export async function fetchBBDocumentsList(
   return fetchPowerBrowserData(dataRequestConfig);
 }
 
-export async function fetchBBDocument(
+export async function fetchDocument(
   _authProfileAndToken: AuthProfileAndToken,
   documentId: string
 ): Promise<ApiResponse<DocumentDownloadData>> {

@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur';
 import { VakantieverhuurVergunningFrontend } from './toeristische-verhuur-config-and-types';
 import { createToeristischeVerhuurNotification } from './toeristische-verhuur-notifications';
-import { BBVergunningFrontend } from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
+import { BBVergunningFrontend } from './bed-and-breakfast/bed-and-breakfast-types';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 
 const REGISTRATIES_DUMMY_RESPONSE_NUMBERS = [

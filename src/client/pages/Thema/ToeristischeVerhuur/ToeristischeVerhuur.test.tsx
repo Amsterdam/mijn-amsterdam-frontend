@@ -7,7 +7,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { routeConfig } from './ToeristischeVerhuur-thema-config';
 import { ToeristischeVerhuurThema } from './ToeristischeVerhuurThema';
 import type { VakantieverhuurVergunningFrontend } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
-import type { BBVergunningFrontend } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
+import type { BBVergunningFrontend } from '../../../../server/services/toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types';
 import { jsonCopy } from '../../../../universal/helpers/utils';
 import { AppState } from '../../../../universal/types/App.types';
 import { expectHeaders, getTable } from '../../../helpers/test-utils';

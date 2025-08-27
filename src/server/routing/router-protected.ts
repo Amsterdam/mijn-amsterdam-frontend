@@ -45,9 +45,9 @@ import {
   handleUnblockStadspas,
 } from '../services/hli/hli-route-handlers';
 import { fetchZorgnedLLVDocument } from '../services/jeugd/route-handlers';
+import { fetchDocument as fetchBBDocument } from '../services/powerbrowser/powerbrowser-service';
 import { fetchAantalBewoners } from '../services/profile/brp';
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler';
-import { fetchBBDocument } from '../services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning';
 import { fetchZorgnedJZDDocument } from '../services/wmo/wmo-route-handlers';
 import { fetchWpiDocument } from '../services/wpi/api-service';
 
