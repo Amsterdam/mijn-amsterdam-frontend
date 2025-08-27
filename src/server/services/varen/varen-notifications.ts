@@ -13,8 +13,7 @@ import {
   themaTitle,
 } from '../../../client/pages/Thema/Varen/Varen-thema-config';
 import {
-  apiErrorResult,
-  ApiResponse,
+  apiDependencyError,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { isRecentNotification } from '../../../universal/helpers/utils';
@@ -101,27 +100,24 @@ function createVarenNotification(
 
 export async function fetchVarenNotifications(
   authProfileAndToken: AuthProfileAndToken
-): Promise<ApiResponse<{ notifications: MyNotification[] }>> {
-  const varenResponse = await fetchVaren(authProfileAndToken);
+) {
+  const VAREN = await fetchVaren(authProfileAndToken);
 
-  if (varenResponse.status === 'ERROR') {
-    return apiErrorResult(
-      'Error fetching Varen zaken data',
-      null,
-      varenResponse.code
-    );
+  if (VAREN.status !== 'OK') {
+    return apiDependencyError({ VAREN });
   }
   const notifications = [];
 
-  const rederRegistration = varenResponse.content.reder;
+  const rederRegistration = VAREN.content.reder;
   if (rederRegistration) {
     notifications.push(
       createVarenRederRegisteredNotification(rederRegistration)
     );
   }
 
-  const zaken = varenResponse.content.zaken;
-  notifications.push(...zaken.map(createVarenNotification).filter((n) => !!n));
+  notifications.push(
+    ...VAREN.content.zaken.map(createVarenNotification).filter((n) => !!n)
+  );
 
   const recentNotifications = notifications.filter(
     (notification) =>
