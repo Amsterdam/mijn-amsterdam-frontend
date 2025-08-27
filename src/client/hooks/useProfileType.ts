@@ -24,14 +24,14 @@ type ProfileTypeStore = {
   setProfileType: (profileType: ProfileType) => void;
 };
 
-const useProfileTypeStore = create<ProfileTypeStore>((set) => ({
+export const useProfileTypeStore = create<ProfileTypeStore>((set) => ({
   profileType: initialProfileType,
   setProfileType: (profileType: ProfileType) => set({ profileType }),
 }));
 
 export function useProfileType() {
-  const state = useProfileTypeStore();
-  const { profileType: stateValue, setProfileType: setState } = state;
+  const store = useProfileTypeStore();
+  const { profileType: stateValue, setProfileType: setState } = store;
 
   const [profileType, setSessionState] = useSessionStorage(
     PROFILE_TYPE_STORAGE_KEY,
@@ -49,9 +49,9 @@ export function useProfileType() {
     setSessionState(stateValue);
   }, [stateValue, setSessionState]);
 
-  return state;
+  return store;
 }
 
 export function useProfileTypeValue(): ProfileType {
-  return useProfileTypeStore().profileType;
+  return useProfileTypeStore((state) => state.profileType);
 }
