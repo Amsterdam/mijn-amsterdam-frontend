@@ -24,8 +24,8 @@ import { MaLink, MaRouterLink } from '../MaLink/MaLink';
 import { Search } from '../Search/Search';
 import {
   useDisplayLiveSearch,
-  useSearchActive,
   useSearchOnPage,
+  useSearchStore,
 } from '../Search/useSearch';
 
 export const AmsMainMenuClassname = 'ma-main-header';
@@ -90,7 +90,7 @@ export function MainHeaderSecondaryLinks({
 }
 
 function MainHeaderLinks() {
-  const [isSearchActive, setSearchActive] = useSearchActive();
+  const { isSearchActive, setSearchActive } = useSearchStore();
   const isDisplayLiveSearch = useDisplayLiveSearch();
   const isPhoneScreen = useSmallScreen();
   const label = isSearchActive ? 'Zoeken sluiten' : 'Zoeken';

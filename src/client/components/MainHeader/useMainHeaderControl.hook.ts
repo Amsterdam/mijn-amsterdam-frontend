@@ -4,7 +4,7 @@ import { create } from 'zustand';
 
 import { useKeyUp } from '../../hooks/useKey';
 import { MAIN_MENU_ID } from '../MainMenu/MainMenu';
-import { useDisplayLiveSearch, useSearchActive } from '../Search/useSearch';
+import { useDisplayLiveSearch, useSearchStore } from '../Search/useSearch';
 
 type MainMenuStore = {
   isMainMenuOpen: boolean;
@@ -28,8 +28,9 @@ function getMainMenuControlButtonNode(parent: HTMLDivElement | null) {
 }
 
 export function useMainHeaderControl() {
-  const [isSearchActive, setSearchActive] = useSearchActive();
+  const { isSearchActive, setSearchActive } = useSearchStore();
   const { isMainMenuOpen, toggleMainMenu } = useMainMenuOpen();
+
   const [headerHeight, setHeaderHeight] = useState(0);
   const isDisplayLiveSearch = useDisplayLiveSearch();
 
