@@ -9,9 +9,9 @@ import { matchPath, useLocation } from 'react-router';
 import { create } from 'zustand';
 
 import {
-  ApiBaseItem,
-  ApiSearchConfig,
-  SearchEntry,
+  type ApiBaseItem,
+  type ApiSearchConfig,
+  type SearchEntry,
   apiSearchConfigs,
   displayPath,
   type RemoteApiSearchConfigs,
