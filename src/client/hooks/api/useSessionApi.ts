@@ -70,7 +70,7 @@ export function useSessionApi(): SessionState {
   const { data, isLoading, isDirty, isPristine } = sessionResponse;
   const sessionData = data?.content;
   const [session, setSession] = useSessionAtom();
-  const [, setProfileType] = useProfileType();
+  const { setProfileType } = useProfileType();
 
   useEffect(() => {
     if (sessionData?.profileType) {
