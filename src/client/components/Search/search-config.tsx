@@ -75,6 +75,11 @@ export interface SearchEntry {
   trailingIcon?: ReactNode;
 }
 
+export type RemoteApiSearchConfigs = Record<
+  AppStateKey,
+  Partial<Omit<ApiSearchConfig, 'getApiBaseItems' | 'generateKeywords'>>
+>;
+
 export interface ApiSearchConfig {
   stateKey: AppStateKey;
   // Extract searchable items from the api response
