@@ -1,40 +1,29 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 
 import {
   ExternalLinkIcon,
   LocationIcon,
 } from '@amsterdam/design-system-react-icons';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import Fuse from 'fuse.js';
 import { matchPath, useLocation } from 'react-router';
-import {
-  Loadable,
-  atom,
-  selector,
-  selectorFamily,
-  useRecoilState,
-  useRecoilValue,
-  useRecoilValueLoadable,
-  useSetRecoilState,
-} from 'recoil';
+import { create } from 'zustand';
 
 import {
   ApiBaseItem,
   ApiSearchConfig,
-  SearchConfigRemote,
   SearchEntry,
   apiSearchConfigs,
   displayPath,
+  type RemoteApiSearchConfigs,
 } from './search-config';
 import styles from './Search.module.scss';
-import {
-  ApiResponse_DEPRECATED,
-  isError,
-} from '../../../universal/helpers/api';
+import { isError } from '../../../universal/helpers/api';
 import { pick, uniqueArray } from '../../../universal/helpers/utils';
-import { AppState, AppStateKey } from '../../../universal/types/App.types';
+import { AppState } from '../../../universal/types/App.types';
 import { BFFApiUrls } from '../../config/api';
 import { addAxiosResponseTransform } from '../../hooks/api/useDataApi';
+import { createGetApiHook } from '../../hooks/api/useDataApi-v2';
 import { useSmallScreen } from '../../hooks/media.hook';
 import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
@@ -95,11 +84,8 @@ export function generateSearchIndexPageEntry(
 }
 
 export function combineApiSearchConfigs(
-  localConfigs: Array<ApiSearchConfig>,
-  remoteConfigs: Record<
-    AppStateKey,
-    Partial<Omit<ApiSearchConfig, 'getApiBaseItems' | 'generateKeywords'>>
-  >
+  localConfigs: ApiSearchConfig[],
+  remoteConfigs: RemoteApiSearchConfigs
 ) {
   return localConfigs.map((apiConfig) => {
     const remoteConfig = remoteConfigs[apiConfig.stateKey];
@@ -195,11 +181,11 @@ function transformSearchAmsterdamNLresponse(
   return [];
 }
 
-const RESULT_COUNT_PER_PAGE = 5;
+const RESULTS_PER_PAGE = 10;
 
 export async function searchAmsterdamNL(
   keywords: string,
-  resultCountPerPage: number = RESULT_COUNT_PER_PAGE,
+  resultCountPerPage: number = RESULTS_PER_PAGE,
   isExtendedAmsterdamSearch: boolean = false
 ) {
   const url = isExtendedAmsterdamSearch
@@ -215,176 +201,153 @@ export async function searchAmsterdamNL(
   return response.data;
 }
 
-const options = {
+type SearchTermStore = {
+  term: string;
+  setTerm: (term: string) => void;
+  fuseInstance: Fuse<SearchEntry> | null;
+  setFuseInstance: (fuseInstance: Fuse<SearchEntry>) => void;
+  isSearchActive: boolean;
+  setSearchActive: (active: boolean) => void;
+  results: {
+    // Mijn Amsterdam
+    ma: SearchEntry[];
+    // Amsterdam.nl
+    am: SearchEntry[];
+  };
+};
+
+export const useSearchStore = create<SearchTermStore>((set) => ({
+  term: '',
+  setTerm: (term: string) => set({ term }),
+  fuseInstance: null,
+  setFuseInstance: (fuseInstance: Fuse<SearchEntry>) => set({ fuseInstance }),
+  isSearchActive: false,
+  setSearchActive: (active: boolean) => set({ isSearchActive: active }),
+  results: {
+    ma: [],
+    am: [],
+  },
+  setResults: (results: { ma: SearchEntry[]; am: SearchEntry[] }) =>
+    set((state) => ({ results: { ...state.results, ...results } })),
+}));
+
+const useSearchConfigRemoteApi = createGetApiHook<{
+  staticSearchEntries: SearchEntry[];
+  apiSearchConfigs: RemoteApiSearchConfigs;
+}>(BFFApiUrls.SEARCH_CONFIGURATION);
+
+export function useSearchConfigJSON() {
+  const profileType = useProfileTypeValue();
+  const api = useSearchConfigRemoteApi();
+  const staticSearchEntries =
+    api.data?.content?.staticSearchEntries.filter((indexEntry) => {
+      const isEnabled = 'isEnabled' in indexEntry ? indexEntry.isEnabled : true;
+      return (
+        isEnabled &&
+        (!indexEntry.profileTypes ||
+          indexEntry.profileTypes.includes(profileType))
+      );
+    }) ?? [];
+
+  return [
+    api,
+    staticSearchEntries,
+    api.data?.content?.apiSearchConfigs ?? null,
+  ] as const;
+}
+
+const fuseOptions = {
   threshold: 0.4,
   minMatchCharLength: 2,
   keys: ['description', 'url', { name: 'keywords', weight: 0.2 }],
 };
 
-export function useStaticSearchEntries() {
-  const remoteSearchConfig = useRecoilValueLoadable(searchConfigRemote);
-  const profileType = useProfileTypeValue();
-
-  return useMemo(() => {
-    if (
-      remoteSearchConfig.state === 'hasValue' &&
-      remoteSearchConfig.contents?.staticSearchEntries
-    ) {
-      const staticEntries: SearchEntry[] =
-        remoteSearchConfig.contents.staticSearchEntries;
-
-      return staticEntries.filter((indexEntry) => {
-        const isEnabled =
-          'isEnabled' in indexEntry ? indexEntry.isEnabled : true;
-        return (
-          isEnabled &&
-          (!indexEntry.profileTypes ||
-            indexEntry.profileTypes.includes(profileType))
-        );
-      });
+function createFuseInstanceFromSearchEntries(
+  staticSearchEntries: SearchEntry[],
+  dynamicSearchEntries: SearchEntry[]
+) {
+  const entries = [...staticSearchEntries, ...dynamicSearchEntries].map(
+    (searchEntry) => {
+      if (searchEntry.url.startsWith(buurtRouteConfig.themaPage.path)) {
+        return Object.assign({}, searchEntry, {
+          trailingIcon: (
+            <LocationIcon
+              width="14"
+              height="14"
+              className={styles.ExternalUrl}
+            />
+          ),
+        });
+      }
+      return searchEntry;
     }
-    return null;
-  }, [profileType, remoteSearchConfig]);
+  );
+  return new Fuse(entries, fuseOptions);
 }
 
-function useDynamicSearchEntries() {
-  const isAppStateReady = useAppStateReady();
-  const remoteSearchConfig = useRecoilValueLoadable(searchConfigRemote);
+export function useDynamicSearchEntries(
+  remoteApiSearchConfigs: RemoteApiSearchConfigs | null
+) {
   const appState = useAppStateGetter();
   const profileType = useProfileTypeValue();
 
-  // Because the results of this hook could be used as deps in other hooks we need to make the results stable using useMemo.
-  return useMemo(() => {
-    let searchEntries = null;
-    if (
-      isAppStateReady &&
-      remoteSearchConfig.state === 'hasValue' &&
-      remoteSearchConfig.contents?.apiSearchConfigs
-    ) {
-      searchEntries = generateSearchIndexPageEntries(
+  const searchEntries = remoteApiSearchConfigs
+    ? generateSearchIndexPageEntries(
         profileType,
         appState,
-        combineApiSearchConfigs(
-          apiSearchConfigs,
-          remoteSearchConfig.contents.apiSearchConfigs
-        )
-      );
-    }
-    return searchEntries;
-  }, [isAppStateReady, appState, profileType, remoteSearchConfig]);
-}
+        combineApiSearchConfigs(apiSearchConfigs, remoteApiSearchConfigs)
+      )
+    : [];
 
-let fuseInstance: any;
+  return searchEntries;
+}
 
 export function useSearchIndex() {
-  const staticSearchEntries = useStaticSearchEntries();
-  const dynamicSearchEntries = useDynamicSearchEntries();
-  const setfuseInstanceReady = useSetRecoilState(fuseInstanceReady);
+  const isAppStateReady = useAppStateReady();
+  const [api, staticSearchEntries, remoteApiSearchConfigs] =
+    useSearchConfigJSON();
+  const dynamicSearchEntries = useDynamicSearchEntries(remoteApiSearchConfigs); // SearchEntry voor dynamische items (API resultaten)
+  const { setFuseInstance, fuseInstance, term, setTerm } = useSearchStore();
 
   useEffect(() => {
-    if (!!staticSearchEntries && !!dynamicSearchEntries && !fuseInstance) {
-      const entries = [
-        ...(staticSearchEntries || []),
-        ...(dynamicSearchEntries || []),
-      ].map((searchEntry) => {
-        if (searchEntry.url.startsWith(buurtRouteConfig.themaPage.path)) {
-          return Object.assign({}, searchEntry, {
-            trailingIcon: (
-              <LocationIcon
-                width="14"
-                height="14"
-                className={styles.ExternalUrl}
-              />
-            ),
-          });
-        }
-        return searchEntry;
-      });
-      fuseInstance = new Fuse(entries, options);
-      setfuseInstanceReady(true);
+    if (!api.loading && !api.dirty) {
+      api.fetch();
     }
-  }, [dynamicSearchEntries, staticSearchEntries]);
-}
-
-export const searchTermAtom = atom<string>({
-  key: 'searchTerm',
-  default: '',
-});
-
-export function useSearchTerm() {
-  return useRecoilState(searchTermAtom);
-}
-
-const RESULTS_PER_PAGE = 10;
-
-const amsterdamNLQuery = selectorFamily({
-  key: 'amsterdamNLQuery',
-  get:
-    (useExtendedAmsterdamSearch: boolean) =>
-    async ({ get }) => {
-      const term = get(searchTermAtom);
-      const response = await (term
-        ? searchAmsterdamNL(term, RESULTS_PER_PAGE, useExtendedAmsterdamSearch)
-        : null);
-      return response;
-    },
-});
-
-export const fuseInstanceReady = atom<boolean>({
-  key: 'fuseInstanceReady',
-  default: false,
-});
-
-export const searchConfigRemote = selector<SearchConfigRemote | null>({
-  key: 'SearchConfigRemote',
-  get: async ({ get }) => {
-    // Subscribe to updates from fuseInstanceReady to re-evaluate selector to reload the SEARCH_CONFIG
-    get(fuseInstanceReady);
-    const response: AxiosResponse<ApiResponse_DEPRECATED<SearchConfigRemote>> =
-      await axios.get(BFFApiUrls.SEARCH_CONFIGURATION, {
-        responseType: 'json',
-        withCredentials: true,
-      });
-
-    return response.data.content;
-  },
-});
-
-const mijnQuery = selector({
-  key: 'mijnQuery',
-  get: ({ get }) => {
-    const term = get(searchTermAtom);
-    get(fuseInstanceReady);
-    if (fuseInstance && !!term) {
-      const rawResults = fuseInstance.search(term);
-      return rawResults.map((result: any) => result.item);
+    if (
+      isAppStateReady &&
+      staticSearchEntries.length &&
+      dynamicSearchEntries.length &&
+      !fuseInstance
+    ) {
+      console.log(dynamicSearchEntries);
+      const fuseInstance = createFuseInstanceFromSearchEntries(
+        staticSearchEntries,
+        dynamicSearchEntries
+      );
+      setFuseInstance(fuseInstance);
     }
+  }, [
+    dynamicSearchEntries,
+    staticSearchEntries,
+    api.loading,
+    api.dirty,
+    fuseInstance,
+    isAppStateReady,
+  ]);
 
-    return [];
-  },
-});
-
-export interface SearchResults {
-  ma?: SearchEntry[];
-  am?: Loadable<SearchEntry[] | null>;
-}
-
-export function useSearchResults(
-  useExtendedAmsterdamSearch: boolean = false
-): SearchResults {
   return {
-    ma: useRecoilValue(mijnQuery),
-    am: useRecoilValueLoadable(amsterdamNLQuery(useExtendedAmsterdamSearch)),
+    term,
+    setTerm,
+    getResultsMA: () => {
+      if (fuseInstance && !!term) {
+        const rawResults = fuseInstance.search(term);
+        return rawResults.map((result) => result.item);
+      }
+    },
+    getResultsAM: () => {
+      return [];
+    },
   };
-}
-
-const isSearchActiveAtom = atom<boolean>({
-  key: 'searchActive',
-  default: false,
-});
-
-export function useSearchActive() {
-  return useRecoilState(isSearchActiveAtom);
 }
 
 export function useDisplayLiveSearch() {
@@ -407,10 +370,10 @@ export function useDisplayLiveSearch() {
 
 export function useSearchOnPage(): {
   isSearchActive: boolean;
-  setSearchActive: React.Dispatch<React.SetStateAction<boolean>>;
+  setSearchActive: SearchTermStore['setSearchActive'];
   isDisplayLiveSearch: boolean;
 } {
-  const [isSearchActive, setSearchActive] = useSearchActive();
+  const { isSearchActive, setSearchActive } = useSearchStore();
   const isDisplayLiveSearch = useDisplayLiveSearch();
 
   useEffect(() => {
