@@ -1,15 +1,18 @@
 import { fetchBedAndBreakfast } from './bed-and-breakfast';
 import { getAuthProfileAndToken, remoteApi } from '../../../../testing/utils';
 
-vi.mock('../../../../server/helpers/encrypt-decrypt', async (requireActual) => {
-  return {
-    ...((await requireActual()) as object),
-    encryptSessionIdWithRouteIdParam: () => {
-      return 'test-encrypted-id';
-    },
-    decrypt: () => 'session-id:e6ed38c3-a44a-4c16-97c1-89d7ebfca095',
-  };
-});
+vi.mock(
+  '../../../../server/helpers/encrypt-decrypt',
+  async (requireActual: () => object | PromiseLike<object>) => {
+    return {
+      ...((await requireActual()) as object),
+      encryptSessionIdWithRouteIdParam: () => {
+        return 'test-encrypted-id';
+      },
+      decrypt: () => 'session-id:e6ed38c3-a44a-4c16-97c1-89d7ebfca095',
+    };
+  }
+);
 
 const PowerBrowserRequests = [
   {
@@ -306,6 +309,7 @@ describe('fetchBB regressie test', () => {
         'https://acc_gemeenteamsterdam_vth.moverheid.nl/api/',
         '/powerbrowser/'
       );
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (remoteApi as any)[method](url).reply(200, r.res);
     }
     const authProfileAndToken = getAuthProfileAndToken();

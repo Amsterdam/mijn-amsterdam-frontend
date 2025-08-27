@@ -21,14 +21,9 @@ import {
 // See also: https://www.amsterdam.nl/wonen-bouwen-verbouwen/woonruimte-verhuren/oude-regels-bed-breakfast/
 const DATE_NEW_REGIME_BB_RULES = '2019-01-01';
 
-function transformBBFrontend(
-  authProfile: AuthProfile,
-  zaak: BedAndBreakfastType
-): BBVergunningFrontend {
-  // TODO: Create displayStatus in caller transform:
-  // map: displayStatus: getZaakStatus(zaken[i]) ?? 'Onbekend',
+function transformBBFrontend(zaak: BedAndBreakfastType): BBVergunningFrontend {
   const appRoute = routeConfig.detailPage.path;
-  const zaakTransformed = transformPBZaakFrontend(authProfile.sid, zaak, {
+  const zaakTransformed = transformPBZaakFrontend(zaak, {
     detailPageRoute: appRoute,
     includeFetchDocumentsUrl: false,
     getStepsFN: getStatusSteps,
@@ -59,7 +54,5 @@ export async function fetchBedAndBreakfast(
     return response;
   }
   const zaken = response.content;
-  return apiSuccessResult(
-    zaken.map(transformBBFrontend.bind(null, authProfile))
-  );
+  return apiSuccessResult(zaken.map(transformBBFrontend));
 }
