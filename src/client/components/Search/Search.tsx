@@ -130,8 +130,7 @@ export function Search({
   const [isResultsVisible, setResultsVisible] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
 
-  const { term, setTerm: setTerm_, getResultsMA } = useSearchIndex();
-  const resultsMA = getResultsMA();
+  const { term, setTerm: setTerm_, resultsMA } = useSearchIndex();
 
   const setTerm = useCallback(
     (term: string) => {
