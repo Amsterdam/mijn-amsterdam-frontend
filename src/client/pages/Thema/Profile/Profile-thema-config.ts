@@ -38,7 +38,7 @@ export const profileLinks = {
   CHANGE_PERSONAL_DATA:
     'https://www.amsterdam.nl/burgerzaken/fouten-gegevens-laten-aanpassen/',
   CHANGE_RESIDENT_COUNT:
-    'https://www.amsterdam.nl/veelgevraagd/onjuiste-inschrijving-melden-ef918',
+    'https://www.amsterdam.nl/burgerzaken/verhuizen-inschrijving-briefadres/onjuiste-inschrijving-adres-melden/',
   REPORT_RELOCATION:
     'https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/',
 };
