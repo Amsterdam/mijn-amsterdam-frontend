@@ -149,9 +149,6 @@ export type PowerBrowserZaakFrontend<
   dateDecisionFormatted?: string | null;
   dateStartFormatted?: string | null;
   dateEndFormatted?: string | null;
-  // isExpired: boolean;
-  // Url to fetch documents for a specific Zaak.
-  // fetchDocumentsUrl?: string;
 } & ZaakDetail;
 
 export type ZaakStatusDate = {

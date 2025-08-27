@@ -11,7 +11,6 @@ import { Deferred } from './deferred';
 import { getRequestConfigCacheKey } from './source-api-helpers';
 import {
   ApiErrorResponse,
-  ApiPostponeResponse,
   ApiSuccessResponse,
   apiErrorResult,
   apiPostponeResult,
@@ -40,6 +39,7 @@ export function isSuccessStatus(statusCode: number): boolean {
 }
 
 function getDebugResponseData(conf: AxiosRequestConfig) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (responseDataParsed: any) => {
     debugRequest(
       {
@@ -58,6 +58,7 @@ const debugResponseDataTerms =
 
 debugRequest(debugResponseDataTerms, 'debug response data terms');
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const cache = new memoryCache.Cache<string, any>();
 
 export function deleteCacheEntry(cacheKey: string) {
@@ -75,16 +76,6 @@ export interface RequestConfig<Source, Transformed> {
   format: (data: Source) => Transformed;
 }
 
-// Type overloads
-export async function requestData<T>(
-  passConfig: DataRequestConfig & { postponeFetch: true },
-  authProfileAndToken?: AuthProfileAndToken
-): Promise<ApiPostponeResponse<null>>;
-export async function requestData<T>(
-  passConfig: DataRequestConfig,
-  authProfileAndToken?: AuthProfileAndToken
-): Promise<ApiErrorResponse<null> | ApiSuccessResponse<T>>;
-// Implementation
 export async function requestData<T>(
   passConfig: DataRequestConfig,
   authProfileAndToken?: AuthProfileAndToken
@@ -218,6 +209,7 @@ export async function requestData<T>(
     }
 
     return responseData;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     const errorMessage = 'message' in error ? error.message : error.toString();
 

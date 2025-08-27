@@ -17,11 +17,8 @@ import {
   NestedType,
 } from './powerbrowser-types';
 import {
-  ApiErrorResponse,
   apiErrorResult,
   ApiResponse,
-  ApiResponse_DEPRECATED,
-  ApiSuccessResponse,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { dateSort } from '../../../universal/helpers/date';
@@ -73,7 +70,7 @@ function fetchPowerBrowserToken_(): Promise<ApiResponse<PowerBrowserToken>> {
 /** Fetch any data from Powerbrowser by extending a default `dataRequestConfig`. */
 async function fetchPowerBrowserData<T>(
   dataRequestConfigSpecific: DataRequestConfig
-): Promise<ApiErrorResponse<null> | ApiSuccessResponse<T>> {
+): Promise<ApiResponse<T>> {
   const tokenResponse = await fetchPowerBrowserToken();
   const dataRequestConfigBase = getApiConfig(
     'POWERBROWSER',
@@ -246,7 +243,7 @@ function getZaakResultaat(resultaat: PBZaakResultaat | null) {
 
 async function fetchZaakAdres(
   zaakId: PBZaakRecord['id']
-): Promise<ApiResponse_DEPRECATED<string | null>> {
+): Promise<ApiResponse<string | null>> {
   const addressResponse = await fetchPowerBrowserData<string>({
     method: 'post',
     formatUrl({ url }) {
@@ -279,7 +276,7 @@ async function fetchZaakAdres(
 
 async function fetchZaakStatusDates(
   zaak: Pick<PowerBrowserZaakBase, 'id'>
-): Promise<ApiResponse_DEPRECATED<ZaakStatusDate[] | null>> {
+): Promise<ApiResponse<ZaakStatusDate[] | null>> {
   const statusResponse = await fetchPowerBrowserData<StatusLineItem[]>({
     formatUrl({ url }) {
       return `${url}/Report/RunSavedReport`;
@@ -399,7 +396,7 @@ async function fetchDocumentsList(
   authProfile: AuthProfile,
   documentNamenMA_PB: PowerBrowserZaakTransformer['transformDoclinks'],
   zaakId: PowerBrowserZaakBase['id']
-): Promise<ApiResponse_DEPRECATED<PowerBrowserZaakBase['documents'] | null>> {
+): Promise<ApiResponse<PowerBrowserZaakBase['documents']>> {
   const dataRequestConfig: DataRequestConfig = {
     method: 'post',
     formatUrl({ url }) {
