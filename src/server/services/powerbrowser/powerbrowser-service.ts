@@ -21,7 +21,7 @@ import {
   ApiResponse,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
-import { dateSort } from '../../../universal/helpers/date';
+import { dateSort, isDateInPast } from '../../../universal/helpers/date';
 import {
   entries,
   omit,
@@ -42,7 +42,6 @@ import {
 import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { isExpired } from '../decos/decos-helpers';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 
 const TOKEN_VALIDITY_PERIOD = 24 * ONE_HOUR_MS;
@@ -192,6 +191,14 @@ function getFieldValue(
     default:
       return pbField?.fieldValue ?? null;
   }
+}
+
+export function isExpired(dateExpiry: string | null, dateNow?: Date) {
+  if (!dateExpiry) {
+    return false;
+  }
+
+  return isDateInPast(dateExpiry, dateNow || new Date());
 }
 
 function getDisplayStatus(
