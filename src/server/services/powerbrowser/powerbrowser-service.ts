@@ -582,7 +582,6 @@ export async function fetchZaken<T extends PowerBrowserZaakTransformer>(
   zaakTransformers: T[]
 ): Promise<ApiResponse<NestedType<T>[]>> {
   const zakenResponse = await fetchPBZaken(authProfile, zaakTransformers);
-  console.error(zakenResponse);
   if (zakenResponse.status !== 'OK') {
     return zakenResponse;
   }
