@@ -214,6 +214,7 @@ type SearchTermStore = {
     // Amsterdam.nl
     am: SearchEntry[];
   };
+  setResults: (results: { ma?: SearchEntry[]; am?: SearchEntry[] }) => void;
 };
 
 export const useSearchStore = create<SearchTermStore>((set) => ({
@@ -227,7 +228,7 @@ export const useSearchStore = create<SearchTermStore>((set) => ({
     ma: [],
     am: [],
   },
-  setResults: (results: { ma: SearchEntry[]; am: SearchEntry[] }) =>
+  setResults: (results: { ma?: SearchEntry[]; am?: SearchEntry[] }) =>
     set((state) => ({ results: { ...state.results, ...results } })),
 }));
 
@@ -307,7 +308,8 @@ export function useSearchIndex() {
   const [api, staticSearchEntries, remoteApiSearchConfigs] =
     useSearchConfigJSON();
   const dynamicSearchEntries = useDynamicSearchEntries(remoteApiSearchConfigs); // SearchEntry voor dynamische items (API resultaten)
-  const { setFuseInstance, fuseInstance, term, setTerm } = useSearchStore();
+  const { setFuseInstance, fuseInstance, term, setTerm, setResults, results } =
+    useSearchStore();
 
   useEffect(() => {
     if (!api.loading && !api.dirty) {
@@ -319,7 +321,6 @@ export function useSearchIndex() {
       dynamicSearchEntries.length &&
       !fuseInstance
     ) {
-      console.log(dynamicSearchEntries);
       const fuseInstance = createFuseInstanceFromSearchEntries(
         staticSearchEntries,
         dynamicSearchEntries
@@ -335,15 +336,18 @@ export function useSearchIndex() {
     isAppStateReady,
   ]);
 
+  useEffect(() => {
+    if (fuseInstance && !!term) {
+      console.log('fuseInstance', term);
+      const rawResults = fuseInstance.search(term).map((result) => result.item);
+      setResults({ ma: rawResults });
+    }
+  }, [term]);
+
   return {
     term,
     setTerm,
-    getResultsMA: () => {
-      if (fuseInstance && !!term) {
-        const rawResults = fuseInstance.search(term);
-        return rawResults.map((result) => result.item);
-      }
-    },
+    resultsMA: results.ma,
     getResultsAM: () => {
       return [];
     },
