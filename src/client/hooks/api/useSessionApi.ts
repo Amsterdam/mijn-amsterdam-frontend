@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react';
 
-import { atom, useRecoilState } from 'recoil';
+import { create } from 'zustand/react';
 
 import { AuthProfile } from '../../../server/auth/auth-types';
 import {
@@ -51,10 +51,15 @@ type SessionResponseData =
   | ApiSuccessResponse<SessionData>
   | ApiErrorResponse<SessionData>;
 
-export const sessionAtom = atom<SessionState>({
-  key: 'sessionState',
-  default: INITIAL_SESSION_STATE,
-});
+type SessionStateStore = {
+  session: SessionState;
+  setSession: (session: SessionState) => void;
+};
+
+export const useSessionStateStore = create<SessionStateStore>((set) => ({
+  session: INITIAL_SESSION_STATE,
+  setSession: (session: SessionState) => set({ session }),
+}));
 
 const requestOptions: ApiRequestOptions = {
   monitoringEnabled: false, // Disable Monitoring for auth check responses
@@ -69,7 +74,7 @@ export function useSessionApi(): SessionState {
 
   const { data, isLoading, isDirty, isPristine } = sessionResponse;
   const sessionData = data?.content;
-  const [session, setSession] = useSessionAtom();
+  const { session, setSession } = useSessionStateStore();
   const { setProfileType } = useProfileType();
 
   useEffect(() => {
@@ -116,14 +121,14 @@ export function useSessionApi(): SessionState {
 
   useEffect(() => {
     if (sessionData) {
-      setSession(() => ({
+      setSession({
         ...sessionData,
         isLoading,
         isDirty,
         isPristine,
         refetch: checkAuthentication,
         logout: () => logoutSession(),
-      }));
+      });
     }
   }, [
     isAuthenticated,
@@ -139,10 +144,6 @@ export function useSessionApi(): SessionState {
   return session;
 }
 
-export function useSessionAtom() {
-  return useRecoilState(sessionAtom);
-}
-
 export function useSessionValue() {
-  return useRecoilState(sessionAtom)[0];
+  return useSessionStateStore((state) => state.session);
 }
