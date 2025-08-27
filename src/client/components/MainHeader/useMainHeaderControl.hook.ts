@@ -1,19 +1,25 @@
 import { useRef, useEffect, useCallback, useState } from 'react';
 
-import { atom, useRecoilState } from 'recoil';
+import { create } from 'zustand';
 
 import { useKeyUp } from '../../hooks/useKey';
 import { MAIN_MENU_ID } from '../MainMenu/MainMenu';
 import { useDisplayLiveSearch, useSearchActive } from '../Search/useSearch';
 
-const isMainMenuOpenAtom = atom<boolean>({
-  key: 'isMainMenuOpenAtom',
-  default: false,
-});
+type MainMenuStore = {
+  isMainMenuOpen: boolean;
+  open: () => void;
+  close: () => void;
+  toggleMainMenu: () => void;
+};
 
-export function useMainMenuOpen() {
-  return useRecoilState(isMainMenuOpenAtom);
-}
+export const useMainMenuOpen = create<MainMenuStore>((set) => ({
+  isMainMenuOpen: false,
+  open: () => set({ isMainMenuOpen: true }),
+  close: () => set({ isMainMenuOpen: false }),
+  toggleMainMenu: () =>
+    set((state) => ({ isMainMenuOpen: !state.isMainMenuOpen })),
+}));
 
 function getMainMenuControlButtonNode(parent: HTMLDivElement | null) {
   return parent?.querySelector(
@@ -23,7 +29,7 @@ function getMainMenuControlButtonNode(parent: HTMLDivElement | null) {
 
 export function useMainHeaderControl() {
   const [isSearchActive, setSearchActive] = useSearchActive();
-  const [isMainMenuOpen, setMainMenuOpen] = useMainMenuOpen();
+  const { isMainMenuOpen, toggleMainMenu } = useMainMenuOpen();
   const [headerHeight, setHeaderHeight] = useState(0);
   const isDisplayLiveSearch = useDisplayLiveSearch();
 
@@ -35,7 +41,7 @@ export function useMainHeaderControl() {
       if (isSearchActive && !isMainMenuOpen) {
         setSearchActive(false);
       }
-      setMainMenuOpen(!isMainMenuOpen);
+      toggleMainMenu();
     }
 
     const el = getMainMenuControlButtonNode(ref.current);
