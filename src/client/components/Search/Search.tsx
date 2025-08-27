@@ -18,7 +18,7 @@ import { useSmallScreen } from '../../hooks/media.hook';
 import { useAppStateReady } from '../../hooks/useAppState';
 import { useKeyDown } from '../../hooks/useKey';
 import { SearchPageRoute } from '../../pages/Search/Search-routes';
-import { MaLink, MaRouterLink } from '../MaLink/MaLink';
+import { MaButtonLink, MaLink, MaRouterLink } from '../MaLink/MaLink';
 import { Spinner } from '../Spinner/Spinner';
 
 interface ResultSetProps {
@@ -86,12 +86,7 @@ export function ResultSet({
                   : typeof result.displayTitle === 'string'
                     ? displayPath(term, [result.displayTitle])
                     : result.displayTitle}
-                {extendedResults && (
-                  <Paragraph>
-                    <span>{result.url}</span>
-                    {result.description}
-                  </Paragraph>
-                )}
+                {extendedResults && <Paragraph>{result.description}</Paragraph>}
               </LinkComponent>
             </UnorderedList.Item>
           );
@@ -130,7 +125,12 @@ export function Search({
   const [isResultsVisible, setResultsVisible] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
 
-  const { term, setTerm: setTerm_, resultsMA } = useSearchIndex();
+  const {
+    term,
+    setTerm: setTerm_,
+    resultsMA,
+    resultsAM,
+  } = useSearchIndex(extendedAMResults);
 
   const setTerm = useCallback(
     (term: string) => {
@@ -304,23 +304,14 @@ export function Search({
               onClickResult={() => onFinish('Resultaat geklikt')}
             />
 
-            {/* <ResultSet
-              term={term}
-              isLoading={results?.am?.state === 'loading' || isTyping}
+            <ResultSet
               title="Overige informatie op Amsterdam.nl"
+              term={term}
+              isLoading={isTyping}
+              results={resultsAM.slice(0, maxResultCountDisplay / 2)}
+              totalResultsCount={resultsAM.length}
               noResultsMessage="Niets gevonden op Amsterdam.nl"
               extendedResults={extendedAMResults}
-              results={
-                results.am?.state === 'hasValue' && results.am.contents !== null
-                  ? results.am.contents.slice(0, maxResultCountDisplay / 2)
-                  : []
-              }
-              totalResultsCount={
-                results?.am?.state === 'hasValue' &&
-                results.am.contents !== null
-                  ? results.am.contents.length
-                  : 0
-              }
             />
 
             {extendedAMResults && (
@@ -332,7 +323,7 @@ export function Search({
                   Zoek verder op Amsterdam.nl
                 </MaButtonLink>
               </Paragraph>
-            )} */}
+            )}
           </div>
         )}
       </div>
