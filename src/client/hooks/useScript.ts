@@ -8,6 +8,7 @@ interface UseScriptProps {
   defer: boolean;
   async: boolean;
   isEnabled: boolean;
+  dataset?: Record<string, string>;
   onLoadCallback?: () => void;
 }
 
@@ -16,6 +17,7 @@ export function useScript({
   defer = false,
   async = true,
   isEnabled = false,
+  dataset,
   onLoadCallback,
 }: UseScriptProps) {
   // Keeping track of script loaded and error state
@@ -44,6 +46,12 @@ export function useScript({
       script.src = src;
       script.async = async;
       script.defer = defer;
+
+      if (dataset) {
+        for (const [name, value] of Object.entries(dataset)) {
+          script.dataset[name] = value;
+        }
+      }
 
       // Script event listener callbacks for load and error
       const onScriptLoad = () => {
