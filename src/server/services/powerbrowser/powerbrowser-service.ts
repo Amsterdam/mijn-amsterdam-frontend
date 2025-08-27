@@ -23,7 +23,6 @@ import {
   ApiResponse_DEPRECATED,
   ApiSuccessResponse,
   apiSuccessResult,
-  getSettledResult,
 } from '../../../universal/helpers/api';
 import { dateSort } from '../../../universal/helpers/date';
 import {
@@ -48,7 +47,6 @@ import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { isExpired } from '../decos/decos-helpers';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
-import { documentNamenMA_PB } from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types';
 
 const TOKEN_VALIDITY_PERIOD = 24 * ONE_HOUR_MS;
 const PERCENTAGE_DISTANCE_FROM_EXPIRY = 0.1;
@@ -286,7 +284,6 @@ async function fetchZaakStatusDates(
     formatUrl({ url }) {
       return `${url}/Report/RunSavedReport`;
     },
-    // TODO: Move the transform to statusSteps to caller transform
     transformResponse(responseData: PowerBrowserStatusResponse) {
       return responseData.map(({ omschrijving, datum }) => ({
         status: omschrijving,
@@ -310,50 +307,45 @@ async function fetchZaakStatusDates(
   return statusResponse;
 }
 
-async function fetchZakenDocuments(
+async function fetchSettledZaakDocuments(
   authProfile: AuthProfile,
-  zaken: Pick<PowerBrowserZaakBase, 'id'>[]
-): Promise<GenericDocument[][]> {
-  const documentResults = await Promise.allSettled(
-    zaken.map((zaak) => fetchDocumentsList(authProfile, zaak.id))
+  documentNamenMA_PB: PowerBrowserZaakTransformer['transformDoclinks'],
+  zaak: Pick<PowerBrowserZaakBase, 'id'>
+): Promise<GenericDocument[]> {
+  const { status, content } = await fetchDocumentsList(
+    authProfile,
+    documentNamenMA_PB,
+    zaak.id
   );
-
-  return documentResults
-    .map(getSettledResult)
-    .map(({ status, content }) =>
-      status === 'OK' && content !== null ? content : []
-    );
+  if (status === 'OK' && content !== null) {
+    return content;
+  }
+  return [];
 }
 
-async function fetchZakenStatusDates(
-  zaken: Pick<PowerBrowserZaakBase, 'id'>[]
-): Promise<ZaakStatusDate[][]> {
-  const statussenRequests = await Promise.allSettled(
-    zaken.map((zaak) => fetchZaakStatusDates(zaak))
-  );
-
-  return statussenRequests
-    .map(getSettledResult)
-    .map(({ status, content }) =>
-      status === 'OK' && content !== null ? content : []
-    );
+async function fetchSettledZaakStatusDates(
+  zaak: Pick<PowerBrowserZaakBase, 'id'>
+): Promise<ZaakStatusDate[]> {
+  const { status, content } = await fetchZaakStatusDates(zaak);
+  if (status === 'OK' && content !== null) {
+    return content;
+  }
+  return [];
 }
 
-async function fetchZakenAdres(
-  zaken: Pick<PowerBrowserZaakBase, 'id'>[]
-): Promise<string[]> {
-  const addressResults = await Promise.allSettled(
-    zaken.map((zaak) => fetchZaakAdres(zaak.id))
-  );
-  return addressResults
-    .map(getSettledResult)
-    .map(({ status, content }) =>
-      status === 'OK' && content !== null ? content : ''
-    );
+async function fetchSettledZaakAdres(
+  zaak: Pick<PowerBrowserZaakBase, 'id'>
+): Promise<string> {
+  const { status, content } = await fetchZaakAdres(zaak.id);
+  if (status === 'OK' && content !== null) {
+    return content;
+  }
+  return '';
 }
 
-function transformPowerbrowserLinksResponse(
+function transformPowerbrowserDocLinksResponse(
   sessionID: SessionID,
+  documentNamenMA_PB: PowerBrowserZaakTransformer['transformDoclinks'],
   responseData: SearchRequestResponse<'DOCLINK', PBDocumentFields[]>
 ): PowerBrowserZaakBase['documents'] {
   type PBDocument = {
@@ -391,9 +383,10 @@ function transformPowerbrowserLinksResponse(
       return {
         id: docIdEncrypted,
         title,
-        url: `${generateFullApiUrlBFF(
-          BffEndpoints.POWERBROWSER_DOCUMENT_DOWNLOAD
-        )}?id=${docIdEncrypted}`,
+        url: generateFullApiUrlBFF(
+          BffEndpoints.POWERBROWSER_DOCUMENT_DOWNLOAD,
+          [{ id: docIdEncrypted }]
+        ),
         download: title,
         datePublished: document.CREATEDATE,
       };
@@ -404,6 +397,7 @@ function transformPowerbrowserLinksResponse(
 
 async function fetchDocumentsList(
   authProfile: AuthProfile,
+  documentNamenMA_PB: PowerBrowserZaakTransformer['transformDoclinks'],
   zaakId: PowerBrowserZaakBase['id']
 ): Promise<ApiResponse_DEPRECATED<PowerBrowserZaakBase['documents'] | null>> {
   const dataRequestConfig: DataRequestConfig = {
@@ -427,7 +421,11 @@ async function fetchDocumentsList(
       },
     },
     transformResponse(responseData) {
-      return transformPowerbrowserLinksResponse(authProfile.sid, responseData);
+      return transformPowerbrowserDocLinksResponse(
+        authProfile.sid,
+        documentNamenMA_PB,
+        responseData
+      );
     },
     cacheKey_UNSAFE: createSessionBasedCacheKey(authProfile.sid, zaakId),
   };
@@ -588,27 +586,28 @@ export async function fetchZaken<T extends PowerBrowserZaakTransformer>(
     return zakenResponse;
   }
 
-  const zaken = zakenResponse.content.map(([zaak, zaakTransformer]) =>
-    transformZaakRaw(zaakTransformer, zaak)
+  const zakenPromise = zakenResponse.content.map(
+    async ([zaakRaw, zaakTransformer]) => {
+      const zaak = transformZaakRaw(zaakTransformer, zaakRaw);
+      const [location, documents, statusDates] = await Promise.all([
+        fetchSettledZaakAdres(zaak),
+        fetchSettledZaakDocuments(
+          authProfile,
+          zaakTransformer.transformDoclinks,
+          zaak
+        ),
+        fetchSettledZaakStatusDates(zaak),
+      ]);
+      return {
+        ...zaak,
+        location,
+        documents,
+        statusDates,
+      };
+    }
   );
-
-  const [adresResults, documentsResults, statussesResults] = await Promise.all([
-    fetchZakenAdres(zaken),
-    fetchZakenDocuments(authProfile, zaken),
-    fetchZakenStatusDates(zaken),
-  ]);
-
-  return apiSuccessResult(
-    zaken.map(
-      (zaak, i) =>
-        ({
-          ...zaak,
-          location: adresResults[i],
-          documents: documentsResults[i],
-          statusDates: statussesResults[i],
-        }) as NestedType<T>
-    )
-  );
+  const zaken = await Promise.all(zakenPromise);
+  return apiSuccessResult(zaken);
 }
 
 export type PBZaakFrontendTransformOptions<T> = {
@@ -618,7 +617,6 @@ export type PBZaakFrontendTransformOptions<T> = {
 };
 
 export function transformPBZaakFrontend<T extends PowerBrowserZaakBase>(
-  sessionID: SessionID, // TODO: for documents encrypt later
   zaak: T,
   options: PBZaakFrontendTransformOptions<T>
 ): PowerBrowserZaakFrontend<T> {
@@ -647,17 +645,17 @@ export const forTesting = {
   fetchPowerBrowserToken_,
   fetchPowerBrowserData,
   fetchPersoonOrMaatschapIdByUid,
-  fetchZakenAdres,
+  fetchSettledZaakAdres,
   fetchZaakAdres,
-  fetchZakenStatusDates,
+  fetchSettledZaakStatusDates,
   fetchZaakStatusDates,
   fetchPBZaken,
   fetchZakenByIds,
   fetchDocumentsList,
-  fetchZakenDocuments,
+  fetchSettledZaakDocuments,
   getFieldValue,
   getZaakResultaat,
-  getZaakStatus: getDisplayStatus,
-  transformPowerbrowserLinksResponse,
+  getDisplayStatus,
+  transformPowerbrowserDocLinksResponse,
   transformZaakRaw,
 };
