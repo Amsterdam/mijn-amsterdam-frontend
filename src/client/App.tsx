@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { Paragraph, Page, SkipLink } from '@amsterdam/design-system-react';
 import { PiwikProvider, usePiwik } from '@amsterdam/piwik-tracker-react';
 import { BrowserRouter, useLocation, useNavigate } from 'react-router';
-import { RecoilRoot } from 'recoil';
 
 import styles from './App.module.scss';
 import { PrivateRoutes, PublicRoutes } from './App.routes';
@@ -134,11 +133,9 @@ export function App() {
   enableLinkTracking();
 
   return (
-    <RecoilRoot>
-      <BrowserRouter>
-        <AppLanding />
-      </BrowserRouter>
-    </RecoilRoot>
+    <BrowserRouter>
+      <AppLanding />
+    </BrowserRouter>
   );
 }
 
