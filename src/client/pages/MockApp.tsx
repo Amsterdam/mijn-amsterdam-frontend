@@ -1,36 +1,45 @@
-import { ComponentType } from 'react';
+import { ComponentType, useEffect } from 'react';
 
 import { MemoryRouter, Route, Routes } from 'react-router';
-import { MutableSnapshot, RecoilRoot } from 'recoil';
 
 import { AppState } from '../../universal/types/App.types';
-import { appStateAtom } from '../hooks/useAppState';
+import { useAppStateStore } from '../hooks/useAppState';
 
 interface MockAppProps {
   routePath: string;
   routeEntry: string;
-  initializeState?: (mutableSnapshot: MutableSnapshot) => void;
+  state?: Partial<AppState>;
   component: ComponentType;
 }
 
 export default function MockApp({
   routePath,
   routeEntry,
-  initializeState,
+  state,
   component,
 }: MockAppProps) {
   if (!component) {
     throw new Error('No component provided');
   }
   const Component = component as ComponentType;
+
+  if (state) {
+    const { setAppState, setIsAppStateReady } = useAppStateStore();
+
+    useEffect(() => {
+      setAppState(state, true);
+      return () => {
+        setAppState({}, false);
+      };
+    }, [setAppState, setIsAppStateReady, state]);
+  }
+
   return (
-    <RecoilRoot initializeState={initializeState}>
-      <MemoryRouter initialEntries={[routeEntry]}>
-        <Routes>
-          <Route path={routePath} element={<Component />} />
-        </Routes>
-      </MemoryRouter>
-    </RecoilRoot>
+    <MemoryRouter initialEntries={[routeEntry]}>
+      <Routes>
+        <Route path={routePath} element={<Component />} />
+      </Routes>
+    </MemoryRouter>
   );
 }
 
@@ -39,18 +48,14 @@ export function componentCreator(conf: {
   routeEntry: string;
   routePath: string;
 }) {
-  function createComponent(state: AppState | Record<string, never>) {
-    function initializeState(snapshot: MutableSnapshot) {
-      snapshot.set(appStateAtom, state as AppState);
-    }
-
+  function createComponent(state: Partial<AppState> | Record<string, never>) {
     function Component() {
       return (
         <MockApp
           routeEntry={conf.routeEntry}
           routePath={conf.routePath}
           component={conf.component}
-          initializeState={initializeState}
+          state={state}
         />
       );
     }

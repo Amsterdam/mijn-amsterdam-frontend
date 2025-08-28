@@ -19,7 +19,7 @@ import {
 import { animated, AnimatedValue, useSpring } from '@react-spring/web';
 import classnames from 'classnames';
 import { useSwipeable } from 'react-swipeable';
-import { atom, useRecoilState } from 'recoil';
+import { create } from 'zustand/react';
 
 import styles from './PanelComponent.module.scss';
 import { useWidescreen } from '../../../hooks/media.hook';
@@ -64,29 +64,31 @@ const NARROW_PANEL_SPRING_CONFIG = { mass: 0.3, tension: 400 };
 // A large height for a narrow screen device so we'l have enough max height
 const PHONE_FIXED_AVAILABLE_HEIGHT = 1000;
 
-const panelStateAtom = atom<Record<string, PanelState>>({
-  key: 'myAreaPanelState',
-  default: {},
-});
+type PanelStateStore = {
+  stateStore: Record<string, PanelState>;
+  setStateStore: (store: Record<string, PanelState>) => void;
+};
 
-export function usePanelState() {
-  return useRecoilState(panelStateAtom);
-}
+const usePanelStateStore = create<PanelStateStore>((set) => ({
+  stateStore: {},
+  setStateStore: (store) => set({ stateStore: { ...store } }),
+}));
 
 export function usePanelStateCycle(
   id: string,
   states: PanelState[],
   initialPanelState?: PanelState
 ) {
-  const [stateStore, setStateStore] = usePanelState();
+  const { stateStore, setStateStore } = usePanelStateStore();
   const initialState = initialPanelState || states[0];
   const state = stateStore[id] || initialState;
 
   const setState = useCallback(
     (state: PanelState) => {
-      setStateStore((store) => ({ ...store, [id]: state }));
+      console.log('setState', { [id]: state });
+      setStateStore({ [id]: state });
     },
-    [setStateStore, id]
+    [setStateStore, id, state]
   );
 
   const nextPanelState = useCallback(

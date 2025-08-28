@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { SetterOrUpdater, atom, useRecoilState, useRecoilValue } from 'recoil';
+import { create } from 'zustand/react';
 
 import { streamEndpointQueryParamKeys } from '../../universal/config/app';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
@@ -16,39 +16,43 @@ import { captureMessage } from '../helpers/monitoring';
 import { useDataApi } from './api/useDataApi';
 import { useProfileTypeValue } from './useProfileType';
 import { SSE_CLOSE_MESSAGE, SSE_ERROR_MESSAGE, useSSE } from './useSSE';
-import { entries } from '../../universal/helpers/utils';
 
 const fallbackServiceRequestOptions = {
   postpone: true,
 };
 
-export const appStateAtom = atom<AppState>({
-  key: 'appState',
-  default: PRISTINE_APPSTATE as AppState,
-});
+type AppStateStore = {
+  appState: AppState;
+  setAppState: (appState: Partial<AppState>, isReady?: boolean) => void;
+  isReady: boolean;
+  setIsAppStateReady: (isReady: boolean) => void;
+};
 
-export const appStateReadyAtom = atom<boolean>({
-  key: 'appStateReady',
-  default: false,
-});
+export const useAppStateStore = create<AppStateStore>((set) => ({
+  appState: PRISTINE_APPSTATE,
+  isReady: false,
+  setAppState: (appState, isReady) =>
+    set((state) => ({
+      appState: { ...state.appState, ...appState },
+      isReady: isReady ?? state.isReady,
+    })),
+  setIsAppStateReady: (isReady) => set({ isReady }),
+}));
 
 interface useAppStateFallbackServiceProps {
   profileType: ProfileType;
   isEnabled: boolean;
-  setAppState: SetterOrUpdater<AppState>;
 }
 
 export function useAppStateFallbackService({
   profileType,
   isEnabled,
-  setAppState,
 }: useAppStateFallbackServiceProps) {
+  const { appState, setAppState } = useAppStateStore();
   const [api, fetchFallbackService] = useDataApi<AppState | null>(
     fallbackServiceRequestOptions,
     null
   );
-  const setIsAppStateReady = useSetAppStateReady();
-
   const appStateError = useCallback(
     (message: string) => {
       captureMessage('Could not load any data sources.', {
@@ -57,7 +61,7 @@ export function useAppStateFallbackService({
         },
         severity: 'critical',
       });
-      setAppState((appState) => createAllErrorState(appState, message));
+      setAppState(createAllErrorState(appState, message));
     },
     [setAppState]
   );
@@ -80,17 +84,14 @@ export function useAppStateFallbackService({
       return;
     }
     if (api.data !== null && !api.isLoading && !api.isError) {
-      setAppState((appState) => {
-        return Object.assign({}, appState, transformSourceData(api.data));
-      });
-      setIsAppStateReady(true);
+      setAppState(transformSourceData(api.data), true);
     } else if (api.isError) {
       // If everything fails, this is the final state update.
       const errorMessage =
         'Services.all endpoint could not be reached or returns an error.';
       appStateError(errorMessage);
     }
-  }, [api, appStateError, setAppState, isEnabled, setIsAppStateReady]);
+  }, [api, appStateError, setAppState, isEnabled]);
 }
 
 export function addParamsToStreamEndpoint(
@@ -134,8 +135,7 @@ export function useAppStateRemote() {
   );
 
   const profileType = useProfileTypeValue();
-  const [appState, setAppState] = useRecoilState(appStateAtom);
-  const setIsAppStateReady = useSetAppStateReady();
+  const { appState, setAppState, setIsAppStateReady } = useAppStateStore();
 
   // First retrieve all the services specified in the BFF, after that Only retrieve incremental updates
   const useIncremental = useRef(false);
@@ -148,13 +148,7 @@ export function useAppStateRemote() {
   const onEvent = useCallback((messageData: string | object) => {
     if (typeof messageData === 'object') {
       const transformedMessageData = transformSourceData(messageData);
-      setAppState((appState) => {
-        const appStateUpdated = {
-          ...appState,
-          ...transformedMessageData,
-        };
-        return appStateUpdated;
-      });
+      setAppState(transformedMessageData);
     } else if (messageData === SSE_ERROR_MESSAGE) {
       setFallbackServiceEnabled(true);
     } else if (messageData === SSE_CLOSE_MESSAGE) {
@@ -175,26 +169,17 @@ export function useAppStateRemote() {
   useAppStateFallbackService({
     profileType,
     isEnabled: hasEventSourceSupport ? isFallbackServiceEnabled : true,
-    setAppState,
   });
 
   return appState;
 }
 
 export function useAppStateGetter() {
-  return useRecoilValue(appStateAtom);
-}
-
-export function useAppStateSetter() {
-  return useRecoilState(appStateAtom)[1];
-}
-
-function useSetAppStateReady() {
-  return useRecoilState(appStateReadyAtom)[1];
+  return useAppStateStore((state) => state.appState);
 }
 
 export function useAppStateReady() {
-  return useRecoilValue(appStateReadyAtom);
+  return useAppStateStore((state) => state.isReady);
 }
 
 export interface AppStateBagApiParams {
@@ -210,7 +195,7 @@ export function useAppStateBagApi<T>({
   bagThema,
   key,
 }: AppStateBagApiParams) {
-  const [appState, setAppState] = useRecoilState(appStateAtom);
+  const { appState, setAppState } = useAppStateStore();
   const isApiDataCached =
     appState[bagThema] !== null &&
     typeof appState[bagThema] === 'object' &&
@@ -260,33 +245,4 @@ export function useAppStateBagApi<T>({
     fetch,
     isApiDataCached,
   ] as const;
-}
-
-export function useGetAppStateBagDataByKey<T>({
-  bagThema,
-  key,
-}: Omit<AppStateBagApiParams, 'url'>): ApiResponse_DEPRECATED<T | null> | null {
-  const appState = useRecoilValue(appStateAtom);
-  return appState?.[bagThema]?.[key] ?? null;
-}
-
-export function useRemoveAppStateBagData() {
-  const [appState, setAppState] = useRecoilState(appStateAtom);
-  return useCallback(
-    ({ bagThema, key: keyExpected }: Omit<AppStateBagApiParams, 'url'>) => {
-      const local = appState[bagThema];
-      if (local) {
-        setAppState(
-          Object.assign({}, appState, {
-            [bagThema]: Object.fromEntries(
-              entries(local).filter(([key]) => {
-                return keyExpected !== key;
-              })
-            ),
-          })
-        );
-      }
-    },
-    [appState]
-  );
 }

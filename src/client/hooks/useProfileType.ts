@@ -38,7 +38,7 @@ export function useProfileType() {
     stateValue
   );
 
-  // If we encounter a profileType stored in the SessionStorage, transfer it to the recoil state on first load.
+  // If we encounter a profileType stored in the SessionStorage, transfer it to the zustand on first load.
   useEffect(() => {
     if (profileType !== stateValue && profileType !== null) {
       setState(profileType);
