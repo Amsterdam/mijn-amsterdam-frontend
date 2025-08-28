@@ -273,7 +273,7 @@ describe('Regressietest fetchBedAndBreakfast personen', () => {
   });
 });
 
-describe.only('fetchBB fetchBedAndBreakfast maatschap', () => {
+describe('fetchBB fetchBedAndBreakfast maatschap', () => {
   const PowerBrowserMaatschapRequests = [
     {
       req: {
