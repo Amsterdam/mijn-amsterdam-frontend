@@ -38,6 +38,7 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
   id: themaId,
   to: routeConfig.themaPage.path,
   profileTypes: ['commercial'],
+  redactedScope: 'none',
   isActive(appState: AppState) {
     return (
       !isLoading(appState.VAREN) &&
