@@ -16,6 +16,7 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
     return appState.SUBSIDIES?.content?.url || SUBSIDIES_ROUTE_DEFAULT;
   },
   profileTypes: ['private', 'commercial'],
+  redactedScope: 'none',
   isActive(appState: AppState) {
     return (
       featureToggle.subsidiesActive &&

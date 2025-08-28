@@ -46,6 +46,7 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
       : urlExternal;
   },
   profileTypes: ['private', 'commercial'],
+  redactedScope: 'none',
   isActive(appState: AppState) {
     const hasDecosParkeerVergunningen =
       !!appState.PARKEREN?.content?.vergunningen?.length;

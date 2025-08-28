@@ -15,7 +15,8 @@ export interface ThemaMenuItem<ID extends string = string>
   profileTypes: ProfileType[];
   isAlwaysVisible?: boolean;
   hasAppStateValue?: boolean;
-  redactedScope?: 'full' | 'content' | 'none';
+  /** Scope 'content' automatically hides all thema content outside the thema. Content inside the thema should be manually redacted. Add the redacted class to the tag using getRedactedClass('themaId', 'content')  */
+  redactedScope: 'full' | 'content' | 'none';
   title:
     | LinkProps['title']
     | ((appState: AppState, profileType?: ProfileType) => string);
