@@ -1,3 +1,4 @@
+import createDebugger from 'debug';
 import { Request, Response } from 'express';
 
 import {
@@ -11,10 +12,17 @@ import {
   sendUnauthorized,
 } from '../../routing/route-helpers';
 
+const debugVerifyRouteRequestData = createDebugger(
+  'verify-api:route-request-data'
+);
+
 export async function handleCreateVerificationRequest(
   req: Request,
   res: Response
 ) {
+  debugVerifyRouteRequestData(req.body);
+
+  // return res.send(apiSuccessResult({ ok: true }));
   const authProfileAndToken = getAuth(req);
 
   if (!authProfileAndToken) {
@@ -38,6 +46,8 @@ export async function handleVerifyVerificationRequest(
   req: Request,
   res: Response
 ) {
+  debugVerifyRouteRequestData(req.body);
+
   const authProfileAndToken = getAuth(req);
 
   if (!authProfileAndToken) {

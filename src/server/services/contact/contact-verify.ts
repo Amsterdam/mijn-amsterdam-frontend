@@ -1,3 +1,5 @@
+import createDebugger from 'debug';
+
 import type {
   CreateVerificationRequestPayload,
   VerifyVerificationRequestPayload,
@@ -8,9 +10,19 @@ import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 
+const debugVerifyApiRequestData = createDebugger('verify-api:request-data');
+const debugVerifyApiResponseData = createDebugger('verify-api:response-data');
+
 type CreateVerificationRequestProps = {
   email: string;
 };
+
+// In development
+const VERIFY_REFERENCE_STATIC = 'Mijn Amsterdam';
+
+function getUniqueReference(email: string) {
+  return `${email}-${VERIFY_REFERENCE_STATIC}`;
+}
 
 export function createVerificationRequest(
   authProfileAndToken: AuthProfileAndToken,
@@ -18,13 +30,19 @@ export function createVerificationRequest(
 ) {
   const data: CreateVerificationRequestPayload = {
     email,
-    reference: authProfileAndToken.profile.sid,
+    reference: getUniqueReference(email),
     templateId: `${getFromEnv('BFF_VERIFY_EMAIL_TEMPLATE_ID')}`,
     apiKey: `${getFromEnv('BFF_VERIFY_API_KEY')}`,
   };
 
+  debugVerifyApiRequestData({ data });
+
   const apiConfig = getApiConfig('VERIFY', {
     data,
+    transformResponse: (response) => {
+      debugVerifyApiResponseData(response);
+      return response;
+    },
   });
 
   return requestData<CreateVerificationRequestPayload>(apiConfig);
@@ -41,13 +59,19 @@ export function verifyVerificationRequest(
 ) {
   const data: VerifyVerificationRequestPayload = {
     email,
-    reference: authProfileAndToken.profile.sid,
+    reference: getUniqueReference(email),
     code,
   };
+
+  debugVerifyApiRequestData({ data });
 
   const apiConfig = getApiConfig('VERIFY', {
     formatUrl({ url }) {
       return `${url}/verify`;
+    },
+    transformResponse: (response) => {
+      debugVerifyApiResponseData({ response });
+      return response;
     },
     data,
   });
