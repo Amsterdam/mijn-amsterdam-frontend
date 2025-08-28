@@ -245,9 +245,9 @@ attachDocumentDownloadRoute(
 
 // AFIS facturen en betalen
 router.get(BffEndpoints.AFIS_BUSINESSPARTNER, handleFetchAfisBusinessPartner);
-router.get(BffEndpoints.AFIS_FACTUREN, handleFetchAfisFacturen);
 attachDocumentDownloadRoute(
   router,
   BffEndpoints.AFIS_DOCUMENT_DOWNLOAD,
   fetchAfisDocument
 );
+router.get(BffEndpoints.AFIS_FACTUREN, handleFetchAfisFacturen);
