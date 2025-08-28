@@ -21,7 +21,7 @@ export function LegendPanel({ availableHeight }: LegendPanelProps) {
   const isWideScreen = useWidescreen();
   const isNarrowScreen = !isWideScreen;
   const isLandscape = useLandScape();
-  const [loadingFeature, setLoadingFeature] = useLoadingFeature();
+  const { loadingFeature, setLoadingFeature } = useLoadingFeature();
   const prevFilterPanelState = useRef<PanelState | null>(null);
   const resetMyAreaState = useResetMyAreaState();
   const location = useLocation();
