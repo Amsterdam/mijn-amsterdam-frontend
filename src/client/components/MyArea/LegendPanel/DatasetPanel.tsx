@@ -35,8 +35,8 @@ export function DatasetPanel({
   onControlItemChange,
   activeDatasetIds,
 }: DatasePanelProps) {
-  const [activeFilters] = useActiveDatasetFilters();
-  const [filterSelection] = useDatasetFilterSelection();
+  const { activeDatasetFilters } = useActiveDatasetFilters();
+  const { filterSelection } = useDatasetFilterSelection();
   const { isChecked, isIndeterminate } = datasetCheckboxState(
     datasetId,
     activeDatasetIds
@@ -62,7 +62,7 @@ export function DatasetPanel({
   );
 
   const initialState =
-    datasetId in activeFilters
+    datasetId in activeDatasetFilters
       ? CollapsedState.Expanded
       : CollapsedState.Collapsed;
 
@@ -91,7 +91,7 @@ export function DatasetPanel({
                 property={property}
                 values={values}
                 valuesRefined={filterSelectionValuesRefined}
-                activeFilters={activeFilters}
+                activeFilters={activeDatasetFilters}
                 onFilterControlItemChange={onFilterControlItemChange}
               />
             );
