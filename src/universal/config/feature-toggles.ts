@@ -105,5 +105,5 @@ export const FeatureToggle = {
   amsNotificationsIsActive: !IS_PRODUCTION,
 
   // Cobrowse widget
-  cobrowseIsActive: !IS_PRODUCTION,
+  cobrowseIsActive: true,
 } as const;
