@@ -102,13 +102,9 @@ module.exports = [
         type: 'middleware',
         options: {
           middleware(req, res, _next) {
-            if (req.body.email) {
-              ZORGNED_AV_PERSOONSGEGEVENSNAW_RESPONSE.persoon.email =
-                req.body.email;
-            }
-            return res
-              .status(HttpStatusCode.Ok)
-              .send({ id: req.body.clientData.id });
+            ZORGNED_AV_PERSOONSGEGEVENSNAW_RESPONSE.persoon.email =
+              req.body.email || null;
+            return res.status(HttpStatusCode.Ok).send({ ok: true });
           },
         },
       },

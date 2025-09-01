@@ -1,6 +1,7 @@
 {
   "persoon": {
     "bsn": "123123",
+    "email": null,
     "clientidentificatie": 111111,
     "geslachtsaanduiding": {
       "code": "M",

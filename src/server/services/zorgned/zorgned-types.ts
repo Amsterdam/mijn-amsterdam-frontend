@@ -166,6 +166,7 @@ export interface ZorgnedDocumentResponseSource {
 export interface ZorgnedPersoonsgegevensNAWResponse {
   persoon?: {
     bsn: string;
+    email: string | null;
     clientidentificatie: number | null;
     geboortenaam: string;
     roepnaam: string | null;

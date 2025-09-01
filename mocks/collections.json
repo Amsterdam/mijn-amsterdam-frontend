@@ -76,7 +76,8 @@
       "post-powerbrowser-personen-zaken:standard",
       "post-zorgned-persoonsgegevens:standard",
       "post-zorgned-aanvragen:standard",
-      "post-zorgned-document:standard"
+      "post-zorgned-document:standard",
+      "post-zorgned-client-data:standard"
     ]
   },
   {

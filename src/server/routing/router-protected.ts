@@ -25,6 +25,8 @@ import { handleFetchBezwaarDetail } from '../services/bezwaren/bezwaren-route-ha
 import { fetchLoodMetingDocument } from '../services/bodem/loodmetingen';
 import {
   handleCreateVerificationRequest,
+  handleGetEmail,
+  handleUpdateEmail,
   handleVerifyVerificationRequest,
 } from '../services/contact/contact-route-handlers';
 import {
@@ -267,3 +269,6 @@ router.post(
   BffEndpoints.VERIFY_VERIFICATION_REQUEST_VERIFY,
   handleVerifyVerificationRequest
 );
+
+router.get(BffEndpoints.CONTACT_ALL, handleGetEmail);
+router.post(BffEndpoints.CONTACT_UPDATE, handleUpdateEmail);

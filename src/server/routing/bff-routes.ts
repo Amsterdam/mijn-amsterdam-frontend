@@ -77,6 +77,9 @@ export const BffEndpoints = {
   // NOTIFY / VERIFY
   VERIFY_VERIFICATION_REQUEST_CREATE: '/services/verification-request/create',
   VERIFY_VERIFICATION_REQUEST_VERIFY: '/services/verification-request/verify',
+
+  CONTACT_ALL: '/services/contact',
+  CONTACT_UPDATE: '/services/contact/update',
 } as const;
 
 const AMSAPP_BASE = '/services/amsapp';
