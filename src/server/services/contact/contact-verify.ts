@@ -17,7 +17,6 @@ type CreateVerificationRequestProps = {
   email: string;
 };
 
-// In development
 const VERIFY_REFERENCE_STATIC = 'Mijn Amsterdam';
 
 function getUniqueReference(email: string) {
