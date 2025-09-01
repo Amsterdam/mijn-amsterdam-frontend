@@ -71,17 +71,15 @@ async function fetchPowerBrowserData<T>(
   dataRequestConfigSpecific: DataRequestConfig
 ): Promise<ApiResponse<T>> {
   const tokenResponse = await fetchPowerBrowserToken();
-  const dataRequestConfigBase = getApiConfig(
+  const dataRequestConfig = getApiConfig(
     'POWERBROWSER',
-    dataRequestConfigSpecific
+    { 
+      ...dataRequestConfigSpecific,
+      headers: {
+        Authorization: `Bearer ${tokenResponse.content}`,
+      },
+    }
   );
-  const dataRequestConfig = {
-    ...dataRequestConfigBase,
-    headers: {
-      Authorization: `Bearer ${tokenResponse.content}`,
-      ...dataRequestConfigBase.headers,
-    },
-  };
 
   const response = await requestData<T>(dataRequestConfig);
 
