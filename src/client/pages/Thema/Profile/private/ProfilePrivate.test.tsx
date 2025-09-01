@@ -54,7 +54,7 @@ describe('<Profile />', () => {
     );
   }
 
-  test('Matches the Full Page snapshot', async () => {
+  test('Lives in Mokum + verbintenis: displays all data', async () => {
     render(
       <Component
         state={{
@@ -111,12 +111,42 @@ describe('<Profile />', () => {
     expect(
       screen.getByText('Onjuiste inschrijving melden')
     ).toBeInTheDocument();
+    expect(screen.queryByText('Adres in onderzoek')).not.toBeInTheDocument();
     expect(
-      await screen.queryByText('Adres in onderzoek')
+      screen.queryByText('Vertrokken Onbekend Waarheen')
     ).not.toBeInTheDocument();
-    expect(
-      await screen.queryByText('Vertrokken Onbekend Waarheen')
-    ).not.toBeInTheDocument();
+  });
+
+  test('Lives in Mokum and has no verbintenis: display all data', async () => {
+    render(
+      <Component
+        state={{
+          persoon: { mokum: true },
+          adres: {
+            straatnaam: 'Prachtige Straat',
+            huisnummer: '13',
+            landnaam: 'Nederland',
+            _adresSleutel: 'x',
+          },
+          verbintenis: undefined,
+          ouders: [{ voornamen: 'Hendrik' }, { voornamen: 'Marie' }],
+          kinderen: [{ voornamen: 'Dirkje' }],
+        }}
+      />
+    );
+
+    screen.getByText('Prachtige Straat 13');
+
+    const button = screen.getByTitle('Toon inhoud over Ouders');
+    await userEvent.click(button);
+
+    screen.getByText('Hendrik');
+    screen.getByText('Marie');
+
+    const button2 = screen.getByTitle('Toon inhoud over Kinderen');
+    await userEvent.click(button2);
+
+    screen.getByText('Dirkje');
   });
 
   test('Matches the Full Page snapshot Non-Mokum', async () => {
@@ -125,6 +155,7 @@ describe('<Profile />', () => {
         state={{
           persoon: { mokum: false },
           adres: { landnaam: 'Nederland', _adresSleutel: 'x' },
+          ouders: [{ voornamen: 'Hendrik' }, { voornamen: 'Marie' }],
         }}
       />
     );
@@ -141,6 +172,7 @@ describe('<Profile />', () => {
         expect(await screen.findByText(heading)).not.toBeInTheDocument();
       });
 
+    expect(screen.queryByText('Ouders')).not.toBeInTheDocument();
     expect(
       screen.getByText('Verhuizing naar Amsterdam doorgeven')
     ).toBeInTheDocument();
