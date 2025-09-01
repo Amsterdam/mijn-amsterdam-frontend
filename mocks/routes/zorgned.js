@@ -92,4 +92,26 @@ module.exports = [
       },
     ],
   },
+  {
+    id: 'post-zorgned-client-data',
+    url: `${settings.MOCK_BASE_PATH}/zorgned/client-data`,
+    method: 'POST',
+    variants: [
+      {
+        id: 'standard',
+        type: 'middleware',
+        options: {
+          middleware(req, res, _next) {
+            if (req.body.email) {
+              ZORGNED_AV_PERSOONSGEGEVENSNAW_RESPONSE.persoon.email =
+                req.body.email;
+            }
+            return res
+              .status(HttpStatusCode.Ok)
+              .send({ id: req.body.clientData.id });
+          },
+        },
+      },
+    ],
+  },
 ];
