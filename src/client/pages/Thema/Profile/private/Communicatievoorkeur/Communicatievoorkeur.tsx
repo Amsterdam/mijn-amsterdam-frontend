@@ -7,14 +7,14 @@ import { CollapsiblePanel } from '../../../../../components/CollapsiblePanel/Col
 import { MaButtonInline } from '../../../../../components/MaLink/MaLink';
 
 export function Communicatievoorkeur() {
-  // Get from API
+  // Get from Zorgned API
   const email_ = '';
   const [email, setEmail] = useState(email_);
   const hasEmail = !!email;
   const [isChecked, setIsChecked] = useState(hasEmail);
 
   function updateEmailValue(email: string) {
-    // Send to API
+    // Send to State via Zorgned API
     setEmail(email);
   }
 
