@@ -26,7 +26,6 @@ import { useProfileTypeValue } from './hooks/useProfileType';
 import { useScrollToTop } from './hooks/useScrollToTop';
 import { useTrackThemas } from './hooks/useTrackThemas.hook';
 import { useUsabilla } from './hooks/useUsabilla';
-import { useErfpachtThemaData } from './pages/Thema/Erfpacht/useErfpachtThemaData.hook';
 
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);
@@ -69,7 +68,6 @@ function AppAuthenticated() {
   useAppStateRemote();
   useTrackThemas();
 
-  const { relatieCode } = useErfpachtThemaData();
   const navigate = useNavigate();
   const location = useLocation();
   const profileType = useProfileTypeValue();
@@ -97,7 +95,7 @@ function AppAuthenticated() {
         </Page>
       </main>
       {/** Remove the footer on the Map view for better UX */}
-      {!isBuurt && <MainFooter relatieCode={relatieCode} />}
+      {!isBuurt && <MainFooter />}
     </>
   );
 }
