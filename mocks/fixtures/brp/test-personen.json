@@ -79,7 +79,45 @@
         "adresregel1": "J.C.Schröderstraat 1",
         "adresregel2": "1068 JT  AMSTERDAM"
       },
-      "kinderen": [],
+      "kinderen": [
+        {
+          "burgerservicenummer": "999980536",
+          "naam": {
+            "voornamen": "Theodora",
+            "voorletters": "T."
+          },
+          "geboorte": {
+            "land": {
+              "code": "6030",
+              "omschrijving": "Nederland"
+            },
+            "plaats": {
+              "code": "0225",
+              "omschrijving": "Druten"
+            },
+            "datum": {
+              "type": "Datum",
+              "datum": "2001-08-25",
+              "langFormaat": "25 augustus 2001"
+            }
+          },
+          "overlijden": {
+            "land": {
+              "code": "6030",
+              "omschrijving": "Nederland"
+            },
+            "plaats": {
+              "code": "0225",
+              "omschrijving": "Druten"
+            },
+            "datum": {
+              "type": "Datum",
+              "datum": "2021-10-14",
+              "langFormaat": "14 oktober 2021"
+            }
+          }
+        }
+      ],
       "ouders": [
         {
           "burgerservicenummer": "999990536",
@@ -102,6 +140,21 @@
               "type": "Datum",
               "datum": "1971-08-25",
               "langFormaat": "25 augustus 1971"
+            }
+          },
+          "overlijden": {
+            "land": {
+              "code": "6030",
+              "omschrijving": "Nederland"
+            },
+            "plaats": {
+              "code": "0225",
+              "omschrijving": "Druten"
+            },
+            "datum": {
+              "type": "Datum",
+              "datum": "2021-10-14",
+              "langFormaat": "14 oktober 2021"
             }
           }
         },
