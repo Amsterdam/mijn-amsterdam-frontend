@@ -35,6 +35,7 @@ import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_HOUR_MS } from '../../config/app';
 import { DataRequestConfig } from '../../config/source-api';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
+import { getFromEnv } from '../../helpers/env';
 import {
   createSessionBasedCacheKey,
   getApiConfig,
@@ -71,15 +72,12 @@ async function fetchPowerBrowserData<T>(
   dataRequestConfigSpecific: DataRequestConfig
 ): Promise<ApiResponse<T>> {
   const tokenResponse = await fetchPowerBrowserToken();
-  const dataRequestConfig = getApiConfig(
-    'POWERBROWSER',
-    { 
-      ...dataRequestConfigSpecific,
-      headers: {
-        Authorization: `Bearer ${tokenResponse.content}`,
-      },
-    }
-  );
+  const dataRequestConfig = getApiConfig('POWERBROWSER', {
+    ...dataRequestConfigSpecific,
+    headers: {
+      Authorization: `Bearer ${tokenResponse.content}`,
+    },
+  });
 
   const response = await requestData<T>(dataRequestConfig);
 
