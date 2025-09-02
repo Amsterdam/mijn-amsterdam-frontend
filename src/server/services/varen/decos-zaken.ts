@@ -30,7 +30,7 @@ const SELECT_FIELDS_TRANSFORM = {
   text96: 'linkDataRequest' as const,
 };
 
-export const VarenRegistratieReder: DecosZaakTransformer<VarenRegistratieRederType> =
+export const ZaakRegistratieReder: DecosZaakTransformer<VarenRegistratieRederType> =
   {
     isActive: true,
     caseType: 'Varen registratie reder',
@@ -49,7 +49,7 @@ export const VarenRegistratieReder: DecosZaakTransformer<VarenRegistratieRederTy
     },
   };
 
-const VarenBaseExploitatieVergunning = {
+const ZaakVergunningExploitatieBase = {
   isActive: true,
   fetchTermijnenFor: [fetchMeerInformatieTermijn],
   fetchLinkedItem: ['varens'],
@@ -92,68 +92,68 @@ const VarenBaseExploitatieVergunning = {
   'caseType' | 'title'
 >;
 
-export const VarenVergunningExploitatie: DecosZaakTransformer<VarenVergunningExploitatieType> =
+export const ZaakVergunningExploitatie: DecosZaakTransformer<VarenVergunningExploitatieType> =
   {
     caseType: 'Varen vergunning exploitatie',
     title: 'Varen vergunning exploitatie',
-    ...VarenBaseExploitatieVergunning,
+    ...ZaakVergunningExploitatieBase,
   };
 
-export const VarenVergunningExploitatieWijzigenVaartuignaam: DecosZaakTransformer<VarenVergunningExploitatieWijzigingVaartuigNaamType> =
+export const ZaakVergunningExploitatieWijzigenVaartuignaam: DecosZaakTransformer<VarenVergunningExploitatieWijzigingVaartuigNaamType> =
   {
     caseType: 'Varen vergunning exploitatie Wijziging vaartuignaam',
     title: 'Wijzigen: Vaartuig een andere naam geven',
-    ...VarenBaseExploitatieVergunning,
+    ...ZaakVergunningExploitatieBase,
     transformFields: {
-      ...VarenBaseExploitatieVergunning.transformFields,
+      ...ZaakVergunningExploitatieBase.transformFields,
       text33: 'vesselName',
       text18: 'vesselNameNew',
     },
   };
 
-export const VarenVergunningExploitatieWijzigingVergunningshouder: DecosZaakTransformer<VarenVergunningExploitatieWijzigingVergunningshouderType> =
+export const ZaakVergunningExploitatieWijzigingVergunningshouder: DecosZaakTransformer<VarenVergunningExploitatieWijzigingVergunningshouderType> =
   {
     caseType: 'Varen vergunning exploitatie Wijziging vergunninghouder',
     title: 'Wijzigen: Vergunning op naam van een andere onderneming zetten',
-    ...VarenBaseExploitatieVergunning,
+    ...ZaakVergunningExploitatieBase,
     transformFields: {
-      ...VarenBaseExploitatieVergunning.transformFields,
+      ...ZaakVergunningExploitatieBase.transformFields,
       text33: 'statutoryName',
       text34: 'businessAddress',
       text35: 'correspondenceAddress',
     },
   };
 
-export const VarenVergunningExploitatieWijzigenVerbouwing: DecosZaakTransformer<VarenVergunningExploitatieWijzigingVerbouwingType> =
+export const ZaakVergunningExploitatieWijzigenVerbouwing: DecosZaakTransformer<VarenVergunningExploitatieWijzigingVerbouwingType> =
   {
     caseType: 'Varen vergunning exploitatie Wijziging verbouwing',
     title: 'Wijzigen: Vaartuig vervangen door een te (ver)bouwen vaartuig',
-    ...VarenBaseExploitatieVergunning,
+    ...ZaakVergunningExploitatieBase,
   };
 
-export const VarenVergunningExploitatieWijzigingVervanging: DecosZaakTransformer<VarenVergunningExploitatieWijzigingVervangingType> =
+export const ZaakVergunningExploitatieWijzigingVervanging: DecosZaakTransformer<VarenVergunningExploitatieWijzigingVervangingType> =
   {
     caseType: 'Varen vergunning exploitatie Wijziging vervanging',
     title: 'Wijzigen: Vaartuig vervangen door een bestaand vaartuig',
-    ...VarenBaseExploitatieVergunning,
+    ...ZaakVergunningExploitatieBase,
     transformFields: {
-      ...VarenBaseExploitatieVergunning.transformFields,
+      ...ZaakVergunningExploitatieBase.transformFields,
       text33: 'vesselName',
       text18: 'vesselNameNew',
     },
   };
 
 export const decosCaseToZaakTransformers = {
-  [VarenRegistratieReder.caseType]: VarenRegistratieReder,
-  [VarenVergunningExploitatie.caseType]: VarenVergunningExploitatie,
-  [VarenVergunningExploitatieWijzigenVaartuignaam.caseType]:
-    VarenVergunningExploitatieWijzigenVaartuignaam,
-  [VarenVergunningExploitatieWijzigenVerbouwing.caseType]:
-    VarenVergunningExploitatieWijzigenVerbouwing,
-  [VarenVergunningExploitatieWijzigingVergunningshouder.caseType]:
-    VarenVergunningExploitatieWijzigingVergunningshouder,
-  [VarenVergunningExploitatieWijzigingVervanging.caseType]:
-    VarenVergunningExploitatieWijzigingVervanging,
+  [ZaakRegistratieReder.caseType]: ZaakRegistratieReder,
+  [ZaakVergunningExploitatie.caseType]: ZaakVergunningExploitatie,
+  [ZaakVergunningExploitatieWijzigenVaartuignaam.caseType]:
+    ZaakVergunningExploitatieWijzigenVaartuignaam,
+  [ZaakVergunningExploitatieWijzigenVerbouwing.caseType]:
+    ZaakVergunningExploitatieWijzigenVerbouwing,
+  [ZaakVergunningExploitatieWijzigingVergunningshouder.caseType]:
+    ZaakVergunningExploitatieWijzigingVergunningshouder,
+  [ZaakVergunningExploitatieWijzigingVervanging.caseType]:
+    ZaakVergunningExploitatieWijzigingVervanging,
 } as const;
 
 export const decosZaakTransformers = Object.values(decosCaseToZaakTransformers);
