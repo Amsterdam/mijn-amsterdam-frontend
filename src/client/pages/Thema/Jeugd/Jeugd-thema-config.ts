@@ -6,7 +6,7 @@ import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { ThemaRoutesConfig } from '../../../config/thema-types';
 
 export const featureToggle = {
-  leerlingenvervoerActive: false,
+  leerlingenvervoerActive: true,
 };
 
 export const themaTitle = 'Onderwijs en Jeugd';
