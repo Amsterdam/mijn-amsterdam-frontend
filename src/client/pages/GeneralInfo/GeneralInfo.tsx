@@ -39,6 +39,7 @@ import { parkerensectionProps } from '../Thema/Parkeren/InfoSection';
 import { profileSectionProps } from '../Thema/Profile/InfoSection';
 import { subsidiesSectionProps } from '../Thema/Subsidies/InfoSection';
 import { toeristischeverhuurSectionProps } from '../Thema/ToeristischeVerhuur/InfoSection';
+import { varensectionProps } from '../Thema/Varen/infoSection';
 import { vergunningensectionProps } from '../Thema/Vergunningen/InfoSection';
 import { zorgSectionProps } from '../Thema/Zorg/InfoSection';
 
@@ -75,6 +76,7 @@ const sections: SectionProps[] = [
   overtredingensectionProps,
   vergunningensectionProps,
   bodemsectionProps,
+  varensectionProps,
 ];
 
 function Section({ id, title, listItems, to }: Omit<SectionProps, 'active'>) {
