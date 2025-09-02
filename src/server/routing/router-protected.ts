@@ -261,6 +261,14 @@ attachDocumentDownloadRoute(
 ////////////////////////////////////////////////////////////
 // AFIS facturen en betalen
 ////////////////////////////////////////////////////////////
+/**
+ * Fetches the Afis facturen PDF document download data.
+ */
+attachDocumentDownloadRoute(
+  router,
+  BffEndpoints.AFIS_DOCUMENT_DOWNLOAD,
+  fetchAfisDocument
+);
 
 {
   /**
@@ -365,13 +373,3 @@ attachDocumentDownloadRoute(
     >(fetchEmandateSignRequestRedirectUrlFromPaymentProvider)
   );
 }
-
-/**
- * Fetches the Afis facturen PDF document download data.
- */
-attachDocumentDownloadRoute(
-  router,
-  BffEndpoints.AFIS_DOCUMENT_DOWNLOAD,
-  fetchAfisDocument
-);
-router.get(BffEndpoints.AFIS_FACTUREN, handleFetchAfisFacturen);
