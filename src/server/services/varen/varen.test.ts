@@ -3,7 +3,7 @@ import { afterAll, describe, expect, it } from 'vitest';
 
 import {
   DecosVarenZaakVergunning,
-  VarenVergunningExploitatieType,
+  ZaakVergunningExploitatieType,
 } from './config-and-types';
 import { fetchVaren } from './varen';
 import { getAuthProfileAndToken } from '../../../testing/utils';
@@ -53,8 +53,8 @@ const zakenContent = [
     dateRequest: '2025-01-01T00:00:00',
     dateDecision: '2025-01-03T00:00:00',
     vergunningen: [vergunning1, vergunning2],
-  } satisfies Partial<VarenVergunningExploitatieType>,
-] as unknown as VarenVergunningExploitatieType[];
+  } satisfies Partial<ZaakVergunningExploitatieType>,
+] as unknown as ZaakVergunningExploitatieType[];
 
 describe('Varen service', () => {
   const authProfileAndToken = getAuthProfileAndToken();

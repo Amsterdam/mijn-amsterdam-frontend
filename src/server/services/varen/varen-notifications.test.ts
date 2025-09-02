@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 
 import {
   VarenRegistratieRederType,
-  VarenVergunningExploitatieType,
+  ZaakVergunningExploitatieType,
 } from './config-and-types';
 import { fetchVarenNotifications } from './varen-notifications';
 import { getAuthProfileAndToken } from '../../../testing/utils';
@@ -26,9 +26,9 @@ const exploitatieBase_ = {
   dateRequest: '2025-01-01T00:00:00',
   statusDates: [],
   termijnDates: [],
-} satisfies Partial<VarenVergunningExploitatieType>;
+} satisfies Partial<ZaakVergunningExploitatieType>;
 const exploitatieBase =
-  exploitatieBase_ as unknown as VarenVergunningExploitatieType;
+  exploitatieBase_ as unknown as ZaakVergunningExploitatieType;
 
 describe('Notifications', () => {
   const authProfileAndToken = getAuthProfileAndToken();
@@ -110,7 +110,7 @@ describe('Notifications', () => {
   it('should show a notification for every zaak', async () => {
     const zaakInProgress = {
       ...exploitatieBase,
-    } as unknown as VarenVergunningExploitatieType;
+    } as unknown as ZaakVergunningExploitatieType;
 
     const zaakMeerInformatieTermijn = {
       status: 'Meer informatie nodig',
@@ -120,13 +120,13 @@ describe('Notifications', () => {
     const zaakMeerInformatie = {
       ...exploitatieBase,
       termijnDates: [zaakMeerInformatieTermijn],
-    } as unknown as VarenVergunningExploitatieType;
+    } as unknown as ZaakVergunningExploitatieType;
 
     const zaakDecision = {
       ...exploitatieBase,
       processed: true,
       dateDecision: '2025-01-20T00:00:00',
-    } as unknown as VarenVergunningExploitatieType;
+    } as unknown as ZaakVergunningExploitatieType;
 
     vi.spyOn(decos, 'fetchDecosZaken').mockResolvedValueOnce(
       apiSuccessResult([zaakInProgress, zaakMeerInformatie, zaakDecision])

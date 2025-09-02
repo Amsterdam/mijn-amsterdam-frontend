@@ -8,7 +8,7 @@ import { routeConfig } from './Varen-thema-config';
 import { VarenList } from './VarenList';
 import {
   VarenZakenFrontend,
-  VarenVergunningExploitatieType,
+  ZaakVergunningExploitatieType,
 } from '../../../../server/services/varen/config-and-types';
 import { jsonCopy } from '../../../../universal/helpers/utils';
 import { AppState } from '../../../../universal/types/App.types';
@@ -16,7 +16,7 @@ import { expectHeaders } from '../../../helpers/test-utils';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
-type ExploitatieAanvraag = VarenZakenFrontend<VarenVergunningExploitatieType>;
+type ExploitatieAanvraag = VarenZakenFrontend<ZaakVergunningExploitatieType>;
 const exploitatieDecision: ExploitatieAanvraag = {
   id: 'Z-24-0000001',
   identifier: 'Z/24/0000001',
