@@ -110,7 +110,12 @@ function determinePageContentTop(
     );
   }
   return (
-    <Paragraph>Hieronder ziet u een overzicht van uw vergunningen.</Paragraph>
+    <PageContentCell spanWide={8}>
+      <Paragraph>
+        {' '}
+        Hieronder ziet u een overzicht van uw vergunningen.
+      </Paragraph>
+    </PageContentCell>
   );
 }
 
