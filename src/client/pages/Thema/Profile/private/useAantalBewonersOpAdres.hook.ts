@@ -1,25 +1,15 @@
 import { useEffect } from 'react';
 
 import { FeatureToggle } from '../../../../../universal/config/feature-toggles';
-import {
-  apiPristineResult,
-  ApiResponse_DEPRECATED,
-} from '../../../../../universal/helpers/api';
 import { AppState } from '../../../../../universal/types/App.types';
-import { useDataApi } from '../../../../hooks/api/useDataApi';
+import { createGetApiHook } from '../../../../hooks/api/useDataApi-v2';
+
+const useResidentsCountApi = createGetApiHook<{ residentCount: number }>();
 
 export function useAantalBewonersOpAdres(
   brpContent: AppState['BRP']['content']
 ) {
-  const [{ data: residentData }, fetchResidentCount] = useDataApi<
-    ApiResponse_DEPRECATED<{ residentCount: number }>
-  >(
-    {
-      url: brpContent?.fetchUrlAantalBewoners ?? '',
-      postpone: true,
-    },
-    apiPristineResult({ residentCount: -1 })
-  );
+  const { data, fetch } = useResidentsCountApi();
 
   // Fetch the resident count data
   useEffect(() => {
@@ -29,13 +19,11 @@ export function useAantalBewonersOpAdres(
       brpContent?.adres?.landnaam === 'Nederland' &&
       brpContent?.fetchUrlAantalBewoners
     ) {
-      fetchResidentCount({
-        url: brpContent?.fetchUrlAantalBewoners ?? '',
-      });
+      fetch(brpContent.fetchUrlAantalBewoners);
     }
-  }, [brpContent, fetchResidentCount]);
+  }, [brpContent, fetch]);
 
-  const residentCount = residentData?.content?.residentCount;
+  const residentCount = data?.content?.residentCount;
 
   return residentCount;
 }
