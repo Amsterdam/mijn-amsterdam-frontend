@@ -59,7 +59,7 @@ type ApiGetState<T> = {
   isLoading: boolean;
   success: boolean;
   isDirty: boolean;
-  error: boolean;
+  isError: boolean;
   data: T | null;
   errorData: string | null;
 };
@@ -71,7 +71,7 @@ type ApiFetch = {
 const initialState: ApiGetState<null> = {
   isLoading: false,
   success: false,
-  error: false,
+  isError: false,
   data: null,
   errorData: null,
   isDirty: false,
@@ -116,7 +116,7 @@ export function createGetApiHook<T>(options?: ApiGetOptions) {
       if (response.status === 'ERROR') {
         set({
           ...initialState,
-          error: true,
+          isError: true,
           errorData: response.message,
           isDirty: true,
         });
