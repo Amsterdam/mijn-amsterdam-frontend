@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 
 import { useMapInstance } from '@amsterdam/react-maps';
-import axios, { CancelTokenSource } from 'axios';
 import { LatLngBoundsLiteral, LatLngLiteral, LeafletEvent } from 'leaflet';
 import { useLocation } from 'react-router';
 import { create } from 'zustand/react';
@@ -27,7 +26,11 @@ import { getFullAddress } from '../../../universal/helpers/brp';
 import { BFFApiUrls } from '../../config/api';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { captureMessage } from '../../helpers/monitoring';
-import { sendGetRequest } from '../../hooks/api/useDataApi-v2';
+import {
+  isAborted,
+  sendGetRequest,
+  sendJSONPostRequest,
+} from '../../hooks/api/useDataApi-v2';
 import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
 
 const NO_DATA_ERROR_RESPONSE = {
@@ -175,7 +178,7 @@ export function useFetchPanelFeature() {
         }
       })
       .catch((error) => {
-        if (!axios.isCancel(error)) {
+        if (!isAborted(error)) {
           setLoadingFeature({ isError: true });
         }
       });
@@ -240,7 +243,7 @@ type DatasetResponseContent = {
 };
 
 export function useFetchFeatures() {
-  const abortSignal = useRef<CancelTokenSource>();
+  const abortSignal = useRef<AbortController>();
   const map = useMapInstance();
   return useCallback(
     async (
@@ -248,8 +251,8 @@ export function useFetchFeatures() {
       filters: DatasetFilterSelection | null
     ): Promise<DatasetResponseContent | null> => {
       // Cancel all previous requests, the latest request will represent latest state
-      abortSignal.current?.cancel();
-      const tokenSource = axios.CancelToken.source();
+      abortSignal.current?.abort();
+      const tokenSource = new AbortController();
       abortSignal.current = tokenSource;
 
       const mapBounds = map.getBounds();
@@ -260,22 +263,24 @@ export function useFetchFeatures() {
         mapBounds.getNorth(),
       ];
       const zoom = map.getZoom();
+      const payload = {
+        datasetIds,
+        filters,
+        bbox,
+        zoom,
+      } as const;
+
       try {
-        const response = await axios({
-          url: BFFApiUrls.MAP_DATASETS,
-          data: {
-            datasetIds,
-            filters,
-            bbox,
-            zoom,
-          },
-          method: 'POST',
-          cancelToken: tokenSource.token,
-          withCredentials: true,
-        });
-        return response.data.content;
+        const response = await sendJSONPostRequest<DatasetResponseContent>(
+          BFFApiUrls.MAP_DATASETS,
+          payload,
+          {
+            signal: tokenSource.signal,
+          }
+        );
+        return response.content;
       } catch (error) {
-        if (!axios.isCancel(error)) {
+        if (!isAborted(error)) {
           return NO_DATA_ERROR_RESPONSE;
         }
       }
