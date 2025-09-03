@@ -5,9 +5,7 @@ import {
   MouseEvent,
   PropsWithChildren,
   ReactNode,
-  useCallback,
   useEffect,
-  useMemo,
   useRef,
 } from 'react';
 
@@ -19,35 +17,16 @@ import {
 import { animated, AnimatedValue, useSpring } from '@react-spring/web';
 import classnames from 'classnames';
 import { useSwipeable } from 'react-swipeable';
-import { create } from 'zustand/react';
 
 import styles from './PanelComponent.module.scss';
+import {
+  getPanelSize,
+  PanelState,
+  type usePanelStateCycle,
+} from './panelCycle';
 import { useWidescreen } from '../../../hooks/media.hook';
 
-export enum PanelState {
-  Closed = 'CLOSED', // Panel is invisible
-  Tip = 'TIP', // Only panel toggle button visible on screen
-  Preview = 'PREVIEW', // Part of the panel is available
-  Open = 'OPEN', // Panel is fully open at $availableHeight
-}
-
-function px(size: number) {
-  return size + 'px';
-}
-
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
-
-const UNIT_SIZE = 4;
-const TIP_WIDTH = 0;
-const PREVIEW_WIDTH = 60;
-const FULL_WIDTH = 160;
-const NARROW_TIP_HEIGHT = 15;
-
-export const WIDE_PANEL_TIP_WIDTH = px(TIP_WIDTH * UNIT_SIZE);
-export const WIDE_PANEL_PREVIEW_WIDTH = px(PREVIEW_WIDTH * UNIT_SIZE);
-export const WIDE_PANEL_WIDTH = px(FULL_WIDTH * UNIT_SIZE);
-export const NARROW_PANEL_PREVIEW_HEIGHT = px(60 * UNIT_SIZE);
-export const NARROW_PANEL_TIP_HEIGHT = px(NARROW_TIP_HEIGHT * UNIT_SIZE);
 
 const NARROW_PANEL_SWIPE_CONFIG = {
   delta: 40, // min distance(px) before a swipe starts
@@ -60,141 +39,6 @@ const NARROW_PANEL_SWIPE_CONFIG = {
 // Spring animation props
 const WIDE_PANEL_SPRING_CONFIG = { mass: 0.3, tension: 400 };
 const NARROW_PANEL_SPRING_CONFIG = { mass: 0.3, tension: 400 };
-
-// A large height for a narrow screen device so we'l have enough max height
-const PHONE_FIXED_AVAILABLE_HEIGHT = 1000;
-
-type PanelStateStore = {
-  stateStore: Record<string, PanelState>;
-  setStateStore: (store: Record<string, PanelState>) => void;
-};
-
-const usePanelStateStore = create<PanelStateStore>((set) => ({
-  stateStore: {},
-  setStateStore: (store) => set({ stateStore: { ...store } }),
-}));
-
-export function usePanelStateCycle(
-  id: string,
-  states: PanelState[],
-  initialPanelState?: PanelState
-) {
-  const { stateStore, setStateStore } = usePanelStateStore();
-  const initialState = initialPanelState || states[0];
-  const state = stateStore[id] || initialState;
-
-  const setState = useCallback(
-    (state: PanelState) => {
-      console.log('setState', { [id]: state });
-      setStateStore({ [id]: state });
-    },
-    [setStateStore, id, state]
-  );
-
-  const nextPanelState = useCallback(
-    (currentState: PanelState): PanelState => {
-      const currentStateIndex = states.indexOf(currentState);
-      const nextState =
-        states.length - 1 === currentStateIndex
-          ? states[0]
-          : states[currentStateIndex + 1];
-      return nextState;
-    },
-    [states]
-  );
-
-  const nextState = useCallback(
-    (event?: any) => {
-      if (state !== states[states.length - 1]) {
-        const nextState = nextPanelState(state);
-        setState(nextState);
-      }
-    },
-    [states, state, setState, nextPanelState]
-  );
-
-  const prevState = useCallback(
-    (event?: any) => {
-      const index = states.indexOf(state);
-      if (index !== 0) {
-        setState(states[index - 1]);
-      }
-    },
-    [states, state, setState]
-  );
-
-  const cycleNext = useCallback(
-    (event?: any) => {
-      const nextState = nextPanelState(state);
-      setState(nextState);
-    },
-    [state, setState, nextPanelState]
-  );
-
-  const setInitialState = useCallback(
-    () => setState(initialState),
-    [initialState, setState]
-  );
-
-  return useMemo(
-    () => ({
-      states,
-      next: nextState,
-      prev: prevState,
-      cycle: cycleNext,
-      set: setState,
-      initial: setInitialState,
-      initialState,
-      state,
-      reset: () => setState(initialState),
-    }),
-    [
-      states,
-      nextState,
-      prevState,
-      cycleNext,
-      setState,
-      setInitialState,
-      state,
-      initialState,
-    ]
-  );
-}
-
-function getPanelSize(
-  state: PanelState,
-  isNarrowScreen: boolean,
-  availableHeight?: number
-) {
-  let size = '0px';
-  let narrowPanelPreviewHeight = NARROW_PANEL_PREVIEW_HEIGHT;
-
-  if (
-    availableHeight &&
-    availableHeight < parseInt(NARROW_PANEL_PREVIEW_HEIGHT, 10)
-  ) {
-    narrowPanelPreviewHeight = px(availableHeight);
-  }
-  switch (state) {
-    case PanelState.Tip:
-      size = isNarrowScreen ? NARROW_PANEL_TIP_HEIGHT : WIDE_PANEL_TIP_WIDTH;
-      break;
-    case PanelState.Preview:
-      size = isNarrowScreen
-        ? narrowPanelPreviewHeight
-        : WIDE_PANEL_PREVIEW_WIDTH;
-      break;
-    case PanelState.Open:
-      size = isNarrowScreen
-        ? px(availableHeight || PHONE_FIXED_AVAILABLE_HEIGHT)
-        : WIDE_PANEL_WIDTH;
-      break;
-    case PanelState.Closed:
-      size = '0px';
-      break;
-  }
-  return size;
-}
 
 type PanelWideAnimatedProps = PropsWithChildren<{
   width: string;
