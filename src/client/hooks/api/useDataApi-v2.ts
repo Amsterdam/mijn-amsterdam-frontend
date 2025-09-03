@@ -56,12 +56,11 @@ export async function sendJSONPostRequest<T extends any>(
 }
 
 type ApiGetState<T> = {
-  isLoading: boolean;
-  success: boolean;
-  isDirty: boolean;
-  isError: boolean;
   data: T | null;
   errorData: string | null;
+  isDirty: boolean;
+  isError: boolean;
+  isLoading: boolean;
 };
 
 type ApiFetch = {
@@ -70,7 +69,6 @@ type ApiFetch = {
 
 const initialState: ApiGetState<null> = {
   isLoading: false,
-  success: false,
   isError: false,
   data: null,
   errorData: null,
@@ -102,24 +100,25 @@ export function createGetApiHook<T>(options?: ApiGetOptions) {
     ...initialState,
 
     async fetch(url?: URL | string, init_?: RequestInit): Promise<void> {
-      if (!url && !defaultUrl) {
+      const url_ = url || defaultUrl;
+      if (!url_) {
         throw new Error('No URL provided');
       }
 
       set({ isLoading: true });
 
       const response = await sendRequest<T>(
-        url ? url : defaultUrl ? defaultUrl : '',
+        url_,
         init_ ?? init // TODO: Should we merge these inits?
       );
 
       if (response.status === 'ERROR') {
         set({
+          data: null,
           errorData: response.message,
           isDirty: true,
           isError: true,
           isLoading: false,
-          success: false,
         });
       } else {
         set({
@@ -128,7 +127,6 @@ export function createGetApiHook<T>(options?: ApiGetOptions) {
           isDirty: true,
           isError: false,
           isLoading: false,
-          success: true,
         });
       }
     },
