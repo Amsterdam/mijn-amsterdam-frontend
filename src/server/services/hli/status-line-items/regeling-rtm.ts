@@ -2,6 +2,7 @@ import { isAfter } from 'date-fns';
 
 import { BESLUIT, EINDE_RECHT, isAanvrager } from './generic';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
+import { sortByNumber } from '../../../../universal/helpers/utils';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
@@ -58,15 +59,29 @@ function dedupCombineRTMDeel2(
 
 export function filterCombineRtmData(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
-): ZorgnedHLIRegeling[] {
+): [ZorgnedAanvraagWithRelatedPersonsTransformed[], ZorgnedHLIRegeling[]] {
+  const rtmAanvragen = [];
+  const remainder = [];
+
+  for (const aanvraag of aanvragen) {
+    if (isRTMDeel1(aanvraag) || isRTMDeel2(aanvraag)) {
+      rtmAanvragen.push(aanvraag);
+    } else {
+      remainder.push(aanvraag);
+    }
+  }
+
   // Prevent aanvragen from other 'betrokkenen' sets from being mixed up with eachother.
-  const aanvragenPerBetrokkenen = mapAanvragenPerBetrokkenen(aanvragen);
-  return Object.values(aanvragenPerBetrokkenen).flatMap(combineRTMData);
+  const aanvragenPerBetrokkenen = mapAanvragenPerBetrokkenen(rtmAanvragen);
+  return [
+    remainder,
+    Object.values(aanvragenPerBetrokkenen).flatMap(combineRTMData),
+  ];
 }
 
 /** Combine related aanvragen into one aanvraag all the way untill the aanvraag that cancels (Einde recht) it.
  *
- * The aanvragen are sorted descending by datumIngangGeldigheid.
+ *  This requires a list of aanvragen for one person.
  *
  * ## Scenarios
  *
@@ -84,41 +99,36 @@ export function filterCombineRtmData(
 function combineRTMData(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ): ZorgnedHLIRegeling[] {
-  const dedupedAanvragen = dedupCombineRTMDeel2(aanvragen);
+  aanvragen = aanvragen
+    // Sort asc so we always end with an 'Einde recht'
+    .toSorted(sortByNumber('id', 'asc'));
+  aanvragen = dedupCombineRTMDeel2(aanvragen);
 
-  const deel2Aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[] = [];
-  const combinedAanvragen: ZorgnedHLIRegeling[] = [];
-
-  for (const aanvraag of dedupedAanvragen) {
-    if (isRTMDeel2(aanvraag)) {
-      deel2Aanvragen.push(aanvraag);
-      continue;
-    }
-    if (isRTMDeel1(aanvraag)) {
-      const deel1 = aanvraag;
-      if (deel1.resultaat !== 'toegewezen') {
-        combinedAanvragen.push(deel1);
-        continue;
+  const initialAccumulator: ZorgnedHLIRegeling[] = [];
+  const combinedAanvragen = aanvragen.reduce((acc, aanvraag) => {
+    const prev = acc.at(-1);
+    if (!prev) {
+      if (isRTMDeel1(aanvraag)) {
+        return [aanvraag];
       }
-      const deel2 = deel2Aanvragen.pop();
-      if (!deel2) {
-        // This deel1 does not belong to any deel2.
-        combinedAanvragen.push(deel1);
-        continue;
-      }
-      combinedAanvragen.push({
-        ...deel2,
-        datumInBehandeling: deel1?.datumBesluit,
-        datumAanvraag: deel1?.datumAanvraag ?? deel2.datumAanvraag,
-        betrokkenen: [...deel1.betrokkenen], // TODO: Will the RTM deel2 have betrokkenen?
-        documenten: [...deel2.documenten, ...deel1.documenten],
-      });
-      continue;
+      return acc;
     }
-    combinedAanvragen.push(aanvraag);
-  }
 
-  combinedAanvragen.push(...deel2Aanvragen);
+    if (isRTMDeel2(prev) && prev.isActueel === false) {
+      return [...acc, aanvraag];
+    }
+
+    return [
+      ...acc.slice(0, -1),
+      {
+        ...aanvraag,
+        datumInBehandeling: prev.datumBesluit,
+        datumAanvraag: prev.datumAanvraag ?? aanvraag.datumAanvraag,
+        documenten: [...aanvraag.documenten, ...prev.documenten],
+      },
+    ];
+  }, initialAccumulator);
+
   return combinedAanvragen;
 }
 
