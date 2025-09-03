@@ -29,18 +29,20 @@ export function isCollapsed(state: CollapsedState) {
 
 interface MyAreaCollapsiblePanelHeadingProps {
   onClick?: (event: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  title: ReactNode;
+  title: string;
+  heading: ReactNode;
   state?: CollapsedState;
 }
 
 export function MyAreaCollapsiblePanelHeading({
   onClick,
   title,
+  heading,
   state = CollapsedState.Collapsed,
 }: MyAreaCollapsiblePanelHeadingProps) {
   return (
     <>
-      {title}
+      {heading}
       {onClick && (
         <Button
           className={styles.CollapsibleButton}
@@ -60,13 +62,15 @@ export function MyAreaCollapsiblePanelHeading({
 }
 
 type MyAreaCollapsiblePanelProps = PropsWithChildren<{
-  title: ReactNode;
+  title: string;
+  heading: ReactNode;
   initialState?: CollapsedState;
 }>;
 
 export default function MyAreaCollapsiblePanel({
   children,
   title,
+  heading,
   initialState = CollapsedState.Collapsed,
 }: MyAreaCollapsiblePanelProps) {
   const [collapsedState, setCollapsedState] = useState(initialState);
@@ -75,6 +79,7 @@ export default function MyAreaCollapsiblePanel({
     <>
       <MyAreaCollapsiblePanelHeading
         title={title}
+        heading={heading}
         onClick={
           hasChildren
             ? (event) => {

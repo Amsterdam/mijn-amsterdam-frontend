@@ -6,7 +6,7 @@ import {
 } from '@amsterdam/design-system-react-icons';
 import Fuse from 'fuse.js';
 import { matchPath, useLocation } from 'react-router';
-import { create } from 'zustand';
+import { create } from 'zustand/react';
 
 import {
   type ApiBaseItem,
