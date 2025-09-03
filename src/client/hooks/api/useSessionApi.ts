@@ -1,18 +1,11 @@
-import { useCallback, useEffect } from 'react';
-
-import { create } from 'zustand/react';
+import { useEffect } from 'react';
 
 import { AuthProfile } from '../../../server/auth/auth-types';
-import {
-  ApiErrorResponse,
-  ApiSuccessResponse,
-  apiSuccessResult,
-} from '../../../universal/helpers/api';
 import { AUTH_API_URL, LOGOUT_URL } from '../../config/api';
 import { clearSessionStorage } from '../storage.hook';
 import { clearDeeplinkEntry } from '../useDeeplink.hook';
 import { useProfileType } from '../useProfileType';
-import { ApiRequestOptions, useDataApi } from './useDataApi';
+import { createGetApiHook } from './useDataApi-v2';
 
 export const ONE_SECOND_MS = 1000;
 
@@ -47,35 +40,20 @@ export const INITIAL_SESSION_STATE: SessionState = {
   logout: () => void 0,
 };
 
-type SessionResponseData =
-  | ApiSuccessResponse<SessionData>
-  | ApiErrorResponse<SessionData>;
+const useSessionApiFetcher = createGetApiHook<SessionData>({
+  defaultUrl: AUTH_API_URL,
+});
 
-type SessionStateStore = {
-  session: SessionState;
-  setSession: (session: SessionState) => void;
-};
-
-export const useSessionStateStore = create<SessionStateStore>((set) => ({
-  session: INITIAL_SESSION_STATE,
-  setSession: (session: SessionState) => set({ session }),
-}));
-
-const requestOptions: ApiRequestOptions = {
-  monitoringEnabled: false, // Disable Monitoring for auth check responses
-  url: AUTH_API_URL,
-};
-
-export function useSessionApi(): SessionState {
-  const [sessionResponse, fetch] = useDataApi<SessionResponseData | null>(
-    requestOptions,
-    apiSuccessResult(INITIAL_SESSION_CONTENT)
-  );
-
-  const { data, isLoading, isDirty, isPristine } = sessionResponse;
-  const sessionData = data?.content;
-  const { session, setSession } = useSessionStateStore();
+export function useSessionApi() {
+  const sessionApi = useSessionApiFetcher();
+  const { data, fetch } = sessionApi;
+  const sessionData = data?.content ?? null;
   const { setProfileType } = useProfileType();
+
+  useEffect(() => {
+    // Fetch initial
+    sessionApi.fetch();
+  }, []);
 
   useEffect(() => {
     if (sessionData?.profileType) {
@@ -83,26 +61,11 @@ export function useSessionApi(): SessionState {
     }
   }, [setProfileType, sessionData?.profileType]);
 
-  const logoutSession = useCallback(() => {
-    clearSessionStorage();
-    clearDeeplinkEntry();
-    window.location.href = `${LOGOUT_URL}?authMethod=${sessionData?.authMethod}`;
-  }, [sessionData?.authMethod]);
-
-  const isAuthenticated = sessionData?.isAuthenticated;
-
-  const checkAuthentication = useCallback(() => {
-    fetch({
-      url: AUTH_API_URL,
-      postpone: false,
-    });
-  }, [fetch]);
-
   useEffect(() => {
     const checkAway = () => {
       if (document.body.classList.contains('is-away')) {
         document.body.classList.remove('is-away');
-        checkAuthentication();
+        fetch();
       }
     };
 
@@ -119,31 +82,16 @@ export function useSessionApi(): SessionState {
     };
   }, []);
 
-  useEffect(() => {
-    if (sessionData) {
-      setSession({
-        ...sessionData,
-        isLoading,
-        isDirty,
-        isPristine,
-        refetch: checkAuthentication,
-        logout: () => logoutSession(),
-      });
-    }
-  }, [
-    isAuthenticated,
-    isLoading,
-    isDirty,
-    isPristine,
-    fetch,
-    setSession,
-    logoutSession,
-    checkAuthentication,
-  ]);
-
-  return session;
+  return {
+    ...sessionApi,
+    ...sessionData,
+  };
 }
 
-export function useSessionValue() {
-  return useSessionStateStore((state) => state.session);
+export function useLogout() {
+  return () => {
+    clearSessionStorage();
+    clearDeeplinkEntry();
+    window.location.href = LOGOUT_URL;
+  };
 }
