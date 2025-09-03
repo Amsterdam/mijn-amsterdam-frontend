@@ -16,6 +16,7 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
     return appState.BELASTINGEN?.content?.url || BELASTINGEN_ROUTE_DEFAULT;
   },
   profileTypes: ['private', 'commercial'],
+  redactedScope: 'none',
   isActive(appState: AppState) {
     return (
       featureToggle.belastingenActive &&

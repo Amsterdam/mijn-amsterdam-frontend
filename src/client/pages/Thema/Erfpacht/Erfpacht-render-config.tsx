@@ -51,6 +51,7 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
   id: themaId,
   to: routeConfig.themaPage.path,
   profileTypes: ['private'],
+  redactedScope: 'none',
   isActive(appState: AppState) {
     const content = appState.ERFPACHT?.content;
     return (
@@ -74,6 +75,7 @@ export const menuItemZakelijk: ThemaMenuItem<typeof themaId> = {
       : ERFPACHT_ZAKELIJK_ROUTE_DEFAULT;
   },
   profileTypes: ['commercial'],
+  redactedScope: 'none',
   isActive: menuItem.isActive,
   IconSVG: ErfpachtIcon,
 };
