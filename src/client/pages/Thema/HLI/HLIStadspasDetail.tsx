@@ -18,12 +18,7 @@ import {
   StadspasBudgetTransaction,
   StadspasFrontend,
 } from '../../../../server/services/hli/stadspas-types';
-import {
-  apiPristineResult,
-  isError,
-  isLoading,
-  type ApiResponse_DEPRECATED,
-} from '../../../../universal/helpers/api';
+import { isError, isLoading } from '../../../../universal/helpers/api';
 import { dateSort } from '../../../../universal/helpers/date';
 import ErrorAlert from '../../../components/Alert/Alert';
 import { Datalist } from '../../../components/Datalist/Datalist';
@@ -41,7 +36,7 @@ import { PageHeadingV2 } from '../../../components/PageHeading/PageHeadingV2';
 import { Spinner } from '../../../components/Spinner/Spinner';
 import { TableV2 } from '../../../components/Table/TableV2';
 import { getRedactedClass } from '../../../helpers/cobrowse';
-import { useDataApi } from '../../../hooks/api/useDataApi';
+import { createGetApiHook } from '../../../hooks/api/useDataApi-v2';
 import { useSmallScreen } from '../../../hooks/media.hook';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
@@ -86,6 +81,8 @@ const PHONENUMBERS = {
   WerkEnInkomen: '020 252 6000',
 } as const;
 
+const useFetchTransactionsApi = createGetApiHook<StadspasBudgetTransaction[]>();
+
 export function HLIStadspasDetail() {
   const isPhoneScreen = useSmallScreen();
   const appState = useAppStateGetter();
@@ -118,30 +115,21 @@ export function HLIStadspasDetail() {
     content: `${stadspas?.balanceFormatted} (Dit is het bedrag dat u nog kunt uitgeven)`,
   };
 
-  const requestOptions = {
-    method: 'get',
-    url: stadspas?.urlTransactions,
-    postpone: true,
-  };
-
-  const [transactionsApi, fetchTransactions] = useDataApi<
-    ApiResponse_DEPRECATED<StadspasBudgetTransaction[]>
-  >(requestOptions, apiPristineResult([]));
-
+  const transactionsApi = useFetchTransactionsApi();
   const isLoadingTransacties = transactionsApi.isLoading;
 
   useEffect(() => {
     if (stadspas?.urlTransactions) {
-      fetchTransactions({ ...requestOptions, postpone: false });
+      transactionsApi.fetch(stadspas.urlTransactions);
     }
-  }, [fetchTransactions, stadspas?.urlTransactions]);
+  }, [stadspas?.urlTransactions]);
 
   const transactions =
-    stadspas?.budgets && transactionsApi.data.content
+    stadspas?.budgets && transactionsApi.data?.content
       ? transactionsApi.data.content
       : [];
 
-  const hasTransactions = !!transactionsApi.data.content?.length;
+  const hasTransactions = !!transactionsApi.data?.content?.length;
 
   const showMultiBudgetTransactions =
     !!stadspas?.budgets.length && stadspas.budgets.length > 1 && !isPhoneScreen;
