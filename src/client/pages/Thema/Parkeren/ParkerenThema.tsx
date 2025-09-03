@@ -83,9 +83,16 @@ function determinePageContentTop(
   hasMijnParkerenVergunningen: boolean,
   parkerenUrlSSO: string
 ) {
-  if (hasMijnParkerenVergunningen) {
+  if (!hasMijnParkerenVergunningen)
+    return (
+      <PageContentCell spanWide={8}>
+        <Paragraph>
+          Hieronder ziet u een overzicht van uw vergunningen.
+        </Paragraph>
+      </PageContentCell>
+    );
+  {
     const profileType = useProfileTypeValue();
-
     const profileTypeLabel =
       profileType === 'commercial' ? 'bedrijven' : 'bewoners';
 
@@ -109,15 +116,6 @@ function determinePageContentTop(
       </PageContentCell>
     );
   }
-
-  return (
-    <PageContentCell spanWide={8}>
-      <Paragraph>
-        {' '}
-        Hieronder ziet u een overzicht van uw vergunningen.
-      </Paragraph>
-    </PageContentCell>
-  );
 }
 
 export const forTesting = { determinePageContentTop };
