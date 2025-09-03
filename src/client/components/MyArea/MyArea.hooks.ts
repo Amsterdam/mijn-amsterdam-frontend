@@ -27,6 +27,7 @@ import { getFullAddress } from '../../../universal/helpers/brp';
 import { BFFApiUrls } from '../../config/api';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { captureMessage } from '../../helpers/monitoring';
+import { sendGetRequest } from '../../hooks/api/useDataApi-v2';
 import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
 
 const NO_DATA_ERROR_RESPONSE = {
@@ -158,17 +159,20 @@ export function useFetchPanelFeature() {
       return;
     }
 
-    const source = axios.CancelToken.source();
+    const source = new AbortController();
     const { datasetId, id } = loadingFeature;
 
-    axios({
-      url: `${BFFApiUrls.MAP_DATASETS}/${datasetId}/${id}`,
-      cancelToken: source.token,
-      withCredentials: true,
-    })
-      .then(({ data: { content: feature } }) => {
-        // Add datasetid to the feature data, used for referencing to other states.
-        setSelectedFeature({ ...feature, id: String(feature.id), datasetId });
+    sendGetRequest<SelectedFeature>(
+      `${BFFApiUrls.MAP_DATASETS}/${datasetId}/${id}`,
+      {
+        signal: source.signal,
+      }
+    )
+      .then(({ content: feature }) => {
+        if (feature) {
+          // Add datasetid to the feature data, used for referencing to other states.
+          setSelectedFeature({ ...feature, id: String(feature.id), datasetId });
+        }
       })
       .catch((error) => {
         if (!axios.isCancel(error)) {
@@ -177,7 +181,7 @@ export function useFetchPanelFeature() {
       });
 
     return () => {
-      source.cancel();
+      source.abort();
     };
   }, [loadingFeature, setSelectedFeature, setLoadingFeature]);
 }
