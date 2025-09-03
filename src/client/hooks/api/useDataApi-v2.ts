@@ -22,7 +22,7 @@ async function handleResponse<T>(response: Response): ApiFetchResponse<T> {
 export async function sendFormPostRequest<
   T extends any,
   F extends Record<string, string>,
->(url: string, payload: F): ApiFetchResponse<T> {
+>(url: string, payload: F, options?: RequestInit): ApiFetchResponse<T> {
   return fetch(url, {
     method: 'POST',
     body: new URLSearchParams(payload),
@@ -30,13 +30,14 @@ export async function sendFormPostRequest<
       'Content-Type': 'application/x-www-form-urlencoded',
     },
     credentials: 'include',
+    ...options,
   }).then((response: Response) => handleResponse<T>(response));
 }
 
 export async function sendJSONPostRequest<
   T extends any,
   F extends Record<string, string>,
->(url: string, payload: F): ApiFetchResponse<T> {
+>(url: string, payload: F, options?: RequestInit): ApiFetchResponse<T> {
   return fetch(url, {
     method: 'POST',
     body: JSON.stringify(payload),
@@ -44,6 +45,7 @@ export async function sendJSONPostRequest<
       'Content-Type': 'application/json',
     },
     credentials: 'include',
+    ...options,
   }).then((response: Response) => handleResponse<T>(response));
 }
 
@@ -70,10 +72,11 @@ const initialState: ApiGetState<null> = {
 };
 
 export async function sendGetRequest<T extends any>(
-  url: string
+  url: string,
+  options?: RequestInit
 ): Promise<ApiResponse<T>> {
-  return fetch(url, { credentials: 'include' }).then((response: Response) =>
-    handleResponse<T>(response)
+  return fetch(url, { credentials: 'include', ...options }).then(
+    (response: Response) => handleResponse<T>(response)
   );
 }
 
@@ -112,3 +115,15 @@ export function createGetApiHook<T>(options?: ApiGetOptions) {
     },
   }));
 }
+
+export const HttpStatusCode = {
+  Ok: 200,
+  Created: 201,
+  Accepted: 202,
+  NoContent: 204,
+  BadRequest: 400,
+  Unauthorized: 401,
+  Forbidden: 403,
+  NotFound: 404,
+  InternalServerError: 500,
+};
