@@ -1,11 +1,14 @@
+import { useEffect } from 'react';
+
 import { useParams } from 'react-router';
 
 import type { ErfpachtDossiersDetail } from '../../../../../server/services/erfpacht/erfpacht-types';
-import { isError, isLoading } from '../../../../../universal/helpers/api';
 import { BFFApiUrls } from '../../../../config/api';
-import { useAppStateBagApi } from '../../../../hooks/useAppState';
+import { createGetApiHook } from '../../../../hooks/api/useDataApi-v2';
 import { getTableConfig } from '../Erfpacht-thema-config';
 import { useErfpachtThemaData } from '../useErfpachtThemaData.hook';
+
+const useErfpachtDossierApi = createGetApiHook<ErfpachtDossiersDetail>();
 
 export function useDossierDetaiLData() {
   const { dossierNummerUrlParam } = useParams<{
@@ -23,24 +26,24 @@ export function useDossierDetaiLData() {
     id: themaId,
   } = useErfpachtThemaData();
 
-  const EVER_CHANING_FALLBACK_KEY = `erfpacht-dossier-${new Date().getTime()}`;
-
-  const [dossierApiResponse] = useAppStateBagApi<ErfpachtDossiersDetail>({
-    url: `${BFFApiUrls.ERFPACHT_DOSSIER_DETAILS}/${dossierNummerUrlParam}`,
-    bagThema: `${themaId}_BAG`,
-    key: dossierNummerUrlParam ?? EVER_CHANING_FALLBACK_KEY,
-  });
-  const dossier = dossierApiResponse.content;
+  const { data, isLoading, isError, isDirty, fetch } = useErfpachtDossierApi();
+  const dossier = data?.content;
   const tableConfig = dossier
     ? getTableConfig({ erfpachtData, dossier })
     : null;
+
+  useEffect(() => {
+    if (!isDirty) {
+      fetch(`${BFFApiUrls.ERFPACHT_DOSSIER_DETAILS}/${dossierNummerUrlParam}`);
+    }
+  }, [isDirty, fetch]);
 
   return {
     themaId,
     title: dossier?.title ?? 'Erfpachtdossier',
     dossier,
-    isLoading: isLoading(dossierApiResponse),
-    isError: isError(dossierApiResponse),
+    isLoading,
+    isError,
     isLoadingThemaData,
     isErrorThemaData,
     relatieCode,
