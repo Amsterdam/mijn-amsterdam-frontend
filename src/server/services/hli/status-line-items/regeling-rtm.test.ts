@@ -35,7 +35,7 @@ describe('filterCombineRtmData', () => {
         beschiktProductIdentificatie: '329903',
         resultaat: 'afgewezen',
         titel: 'Regeling Tegemoetkoming Meerkosten',
-        betrokkenen: [],
+        betrokkenen: ['999994542', '999991000'],
         betrokkenPersonen: [],
         bsnAanvrager: '000009945',
       },

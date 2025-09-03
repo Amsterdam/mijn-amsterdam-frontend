@@ -59,6 +59,13 @@ function dedupCombineRTMDeel2(
 export function filterCombineRtmData(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ): ZorgnedHLIRegeling[] {
+  const aanvragenPerBetrokkenen = mapAanvragenPerBetrokkenen(aanvragen);
+  return Object.values(aanvragenPerBetrokkenen).flatMap(combineRTMData);
+}
+
+function combineRTMData(
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
+): ZorgnedHLIRegeling[] {
   const dedupedAanvragen = dedupCombineRTMDeel2(aanvragen);
 
   // The aanvragen are sorted by datumIngangGeldigheid/DESC
@@ -96,6 +103,36 @@ export function filterCombineRtmData(
 
   combinedAanvragen.push(...deel2Aanvragen);
   return combinedAanvragen;
+}
+
+function mapAanvragenPerBetrokkenen(
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
+): Record<string, ZorgnedAanvraagWithRelatedPersonsTransformed[]> {
+  const aanvragenMap: Record<
+    string,
+    ZorgnedAanvraagWithRelatedPersonsTransformed[]
+  > = {};
+
+  for (const aanvraag of aanvragen) {
+    if (!aanvraag.betrokkenen) {
+      aanvraag.betrokkenen = ['0'];
+    }
+    // Sort because I don't know if betrokkenen are always in the same order across different aanvragen.
+    const sortedBetrokkenen = aanvraag.betrokkenen.toSorted((a, b) =>
+      a <= b ? -1 : 1
+    );
+
+    const id = sortedBetrokkenen.join('');
+
+    const aanvraagInMap = aanvragenMap[id];
+    if (aanvraagInMap) {
+      aanvragenMap[id].push(aanvraag);
+    } else {
+      aanvragenMap[id] = [aanvraag];
+    }
+  }
+
+  return aanvragenMap;
 }
 
 function getRtmDescriptionDeel1Toegewezen(

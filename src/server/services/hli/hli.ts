@@ -20,10 +20,7 @@ import {
   getFailedDependencies,
   getSettledResult,
 } from '../../../universal/helpers/api';
-import {
-  createDocumentDeduper,
-  dedupeDocumentsInDataSets,
-} from '../../../universal/helpers/document';
+import { dedupeDocumentsInDataSets } from '../../../universal/helpers/document';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import {
   GenericDocument,
