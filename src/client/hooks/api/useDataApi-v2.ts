@@ -2,6 +2,7 @@ import { create } from 'zustand/react';
 
 import {
   apiErrorResult,
+  apiSuccessResult,
   type ApiResponse,
 } from '../../../universal/helpers/api';
 
@@ -16,7 +17,10 @@ async function handleResponse<T>(response: Response): ApiFetchResponse<T> {
     );
   }
 
-  return responseJson;
+  if ('status' in responseJson && 'content' in responseJson) {
+    return responseJson;
+  }
+  return apiSuccessResult<T>(responseJson);
 }
 
 export async function sendFormPostRequest<T extends any>(
@@ -52,29 +56,29 @@ export async function sendJSONPostRequest<T extends any>(
 }
 
 type ApiGetState<T> = {
-  loading: boolean;
+  isLoading: boolean;
   success: boolean;
-  dirty: boolean;
+  isDirty: boolean;
   error: boolean;
   data: T | null;
   errorData: string | null;
 };
 
 type ApiFetch = {
-  fetch(url?: string): Promise<void>;
+  fetch(url?: URL | string, init_?: RequestInit): Promise<void>;
 };
 
 const initialState: ApiGetState<null> = {
-  loading: false,
+  isLoading: false,
   success: false,
   error: false,
   data: null,
   errorData: null,
-  dirty: false,
+  isDirty: false,
 };
 
 export async function sendGetRequest<T extends any>(
-  url: string,
+  url: URL | string,
   options?: RequestInit
 ): Promise<ApiResponse<T>> {
   return fetch(url, { credentials: 'include', ...options }).then(
@@ -83,25 +87,30 @@ export async function sendGetRequest<T extends any>(
 }
 
 type ApiGetOptions = {
-  defaultUrl?: string;
-  sendRequest?: <T>(url: string) => Promise<ApiResponse<T>>;
+  defaultUrl?: URL | string;
+  init?: RequestInit;
+  sendRequest?: <T>(
+    url: URL | string,
+    init?: RequestInit
+  ) => Promise<ApiResponse<T>>;
 };
 
 export function createGetApiHook<T>(options?: ApiGetOptions) {
-  const { defaultUrl, sendRequest = sendGetRequest } = options || {};
+  const { defaultUrl, sendRequest = sendGetRequest, init } = options || {};
 
   return create<ApiGetState<ApiResponse<T>> & ApiFetch>((set, get) => ({
     ...initialState,
 
-    async fetch(url?: string): Promise<void> {
+    async fetch(url?: URL | string, init_?: RequestInit): Promise<void> {
       if (!url && !defaultUrl) {
         throw new Error('No URL provided');
       }
 
-      set({ ...initialState, loading: true });
+      set({ ...initialState, isLoading: true });
 
       const response = await sendRequest<T>(
-        url ? url : defaultUrl ? defaultUrl : ''
+        url ? url : defaultUrl ? defaultUrl : '',
+        init_ ?? init // TODO: Should we merge these inits?
       );
 
       if (response.status === 'ERROR') {
@@ -109,11 +118,11 @@ export function createGetApiHook<T>(options?: ApiGetOptions) {
           ...initialState,
           error: true,
           errorData: response.message,
-          dirty: true,
+          isDirty: true,
         });
       }
 
-      set({ ...initialState, success: true, data: response, dirty: true });
+      set({ ...initialState, success: true, data: response, isDirty: true });
     },
   }));
 }
