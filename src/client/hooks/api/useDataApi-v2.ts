@@ -106,7 +106,7 @@ export function createGetApiHook<T>(options?: ApiGetOptions) {
         throw new Error('No URL provided');
       }
 
-      set({ ...initialState, isLoading: true });
+      set({ isLoading: true });
 
       const response = await sendRequest<T>(
         url ? url : defaultUrl ? defaultUrl : '',
@@ -115,14 +115,22 @@ export function createGetApiHook<T>(options?: ApiGetOptions) {
 
       if (response.status === 'ERROR') {
         set({
-          ...initialState,
-          isError: true,
           errorData: response.message,
           isDirty: true,
+          isError: true,
+          isLoading: false,
+          success: false,
+        });
+      } else {
+        set({
+          data: response,
+          errorData: null,
+          isDirty: true,
+          isError: false,
+          isLoading: false,
+          success: true,
         });
       }
-
-      set({ ...initialState, success: true, data: response, isDirty: true });
     },
   }));
 }
