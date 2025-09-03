@@ -14,12 +14,9 @@ import { BFFApiUrls } from '../config/api';
 import { transformSourceData } from '../data-transform/appState';
 import { captureMessage } from '../helpers/monitoring';
 import { useDataApi } from './api/useDataApi';
+import { createGetApiHook } from './api/useDataApi-v2';
 import { useProfileTypeValue } from './useProfileType';
 import { SSE_CLOSE_MESSAGE, SSE_ERROR_MESSAGE, useSSE } from './useSSE';
-
-const fallbackServiceRequestOptions = {
-  postpone: true,
-};
 
 type AppStateStore = {
   appState: AppState;
@@ -44,15 +41,16 @@ interface useAppStateFallbackServiceProps {
   isEnabled: boolean;
 }
 
+const useAppStateFallbackApi = createGetApiHook<AppState>({
+  defaultUrl: BFFApiUrls.SERVICES_SAURON,
+});
+
 export function useAppStateFallbackService({
   profileType,
   isEnabled,
 }: useAppStateFallbackServiceProps) {
   const { appState, setAppState } = useAppStateStore();
-  const [api, fetchFallbackService] = useDataApi<AppState | null>(
-    fallbackServiceRequestOptions,
-    null
-  );
+  const api = useAppStateFallbackApi();
   const appStateError = useCallback(
     (message: string) => {
       captureMessage('Could not load any data sources.', {
@@ -71,12 +69,8 @@ export function useAppStateFallbackService({
     if (!isEnabled) {
       return;
     }
-    fetchFallbackService({
-      ...fallbackServiceRequestOptions,
-      url: BFFApiUrls.SERVICES_SAURON,
-      postpone: false,
-    });
-  }, [fetchFallbackService, isEnabled, profileType]);
+    api.fetch();
+  }, [api.fetch, isEnabled, profileType]);
 
   // Update the appState with data fetched by the Fallback service endpoint
   useEffect(() => {
@@ -84,7 +78,7 @@ export function useAppStateFallbackService({
       return;
     }
     if (api.data !== null && !api.isLoading && !api.isError) {
-      setAppState(transformSourceData(api.data), true);
+      setAppState(transformSourceData(api.data.content), true);
     } else if (api.isError) {
       // If everything fails, this is the final state update.
       const errorMessage =
