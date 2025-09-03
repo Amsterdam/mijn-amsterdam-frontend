@@ -10,11 +10,9 @@ import {
   useActiveDatasetFilters,
   useDatasetFilterSelection,
 } from '../MyArea.hooks';
+import { datasetCheckboxState } from './checkbox-helpers';
 import MyAreaCollapsiblePanel, { CollapsedState } from './CollapsiblePanel';
-import {
-  datasetCheckboxState,
-  DatasetControlCheckbox,
-} from './DatasetControlCheckbox';
+import { DatasetControlCheckbox } from './DatasetControlCheckbox';
 import { DatasetControlPanelProps } from './DatasetControlPanel';
 import { DatasetPropertyFilterPanel } from './DatasetPropertyFilterPanel';
 
@@ -71,7 +69,8 @@ export function DatasetPanel({
       {(!hasFilters || !isChecked) && datasetControl}
       {isChecked && hasFilters && (
         <MyAreaCollapsiblePanel
-          title={datasetControl}
+          title={dataset.title}
+          heading={datasetControl}
           initialState={initialState}
         >
           {Object.entries(dataset.filters!).map(([propertyName, property]) => {

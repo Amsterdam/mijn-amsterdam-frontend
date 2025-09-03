@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 
 import { useLocation } from 'react-router';
-import { create } from 'zustand';
+import { create } from 'zustand/react';
 
 import { useAppStateGetter, useAppStateReady } from './useAppState';
 import { useProfileTypeValue } from './useProfileType';

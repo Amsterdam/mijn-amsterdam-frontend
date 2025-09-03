@@ -9,9 +9,9 @@ import {
   useResetMyAreaState,
 } from '../MyArea.hooks';
 import { DatasetCategoryPanel } from './DatasetCategoryPanel';
-import { PanelComponent, PanelState } from './PanelComponent';
+import { PanelComponent } from './PanelComponent';
 import MyAreaDetailPanel from './PanelContent/MyAreaDetailPanel';
-import { useLegendPanelCycle } from './panelCycle';
+import { PanelState, useLegendPanelCycle } from './panelCycle';
 
 interface LegendPanelProps {
   availableHeight: number;
@@ -74,6 +74,7 @@ export function LegendPanel({ availableHeight }: LegendPanelProps) {
   useEffect(() => {
     if (detailState !== PanelState.Closed && !prevFilterPanelState.current) {
       prevFilterPanelState.current = filterState;
+
       setFilterPanelState(PanelState.Tip);
     } else if (
       detailState === PanelState.Closed &&

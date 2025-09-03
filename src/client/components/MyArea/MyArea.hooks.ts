@@ -6,7 +6,7 @@ import { LatLngBoundsLiteral, LatLngLiteral, LeafletEvent } from 'leaflet';
 import { useLocation } from 'react-router';
 import { create } from 'zustand/react';
 
-import { filterItemCheckboxState } from './LegendPanel/DatasetControlCheckbox';
+import { filterItemCheckboxState } from './LegendPanel/checkbox-helpers';
 import styles from './MyAreaDatasets.module.scss';
 import type { BAGData } from '../../../server/services/bag/bag.types';
 import type {

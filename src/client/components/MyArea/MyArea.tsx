@@ -12,10 +12,10 @@ import { MaintenanceNotifications } from '../MaintenanceNotifications/Maintenanc
 import { LegendPanel } from './LegendPanel/LegendPanel';
 import {
   PanelState,
+  useLegendPanelCycle,
   WIDE_PANEL_TIP_WIDTH,
   WIDE_PANEL_WIDTH,
-} from './LegendPanel/PanelComponent';
-import { useLegendPanelCycle } from './LegendPanel/panelCycle';
+} from './LegendPanel/panelCycle';
 import BaseLayerToggle, {
   AERIAL_AMSTERDAM_LAYERS,
   BaseLayerType,
