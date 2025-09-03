@@ -157,9 +157,6 @@ function transformBenkBrpResponse(
           (ouder) => typeof ouder !== 'undefined' && !!ouder.naam.voornamen
         )
         .map((ouder) => ({
-          overlijdensdatum: getDatum(ouder.overlijden?.datum),
-          overlijdensdatumFormatted:
-            ouder.overlijden?.datum?.langFormaat ?? null,
           geboortedatum: getDatum(ouder.geboorte?.datum),
           geboortedatumFormatted: ouder.geboorte?.datum?.langFormaat ?? null,
           opgemaakteNaam: ouder.naam?.volledigeNaam ?? null,
