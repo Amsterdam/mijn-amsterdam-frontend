@@ -46,7 +46,7 @@ import { zorgSectionProps } from '../Thema/Zorg/InfoSection';
 export type SectionProps = {
   id: string;
   title: string;
-  to?: string; // Use this instead of the themaMenuItem 'to URL' and force link to be clickable.
+  href?: string; // Use this instead of the themaMenuItem 'to URL' and force link to be clickable.
   listItems: ListItems;
   active: boolean;
 };
@@ -79,9 +79,11 @@ const sections: SectionProps[] = [
   varensectionProps,
 ];
 
-function Section({ id, title, listItems, to }: Omit<SectionProps, 'active'>) {
-  const themaMenuItems = useThemaMenuItemsByThemaID();
-
+function Section({
+  title,
+  listItems,
+  href,
+}: Omit<SectionProps, 'active' | 'id'>) {
   const listItemComponents = listItems.map((item, i) => {
     if (typeof item === 'string') {
       return <UnorderedList.Item key={i}>{item}</UnorderedList.Item>;
@@ -100,10 +102,7 @@ function Section({ id, title, listItems, to }: Omit<SectionProps, 'active'>) {
     );
   });
 
-  const themaMenuItem = themaMenuItems[id];
-
-  const href = to || (themaMenuItem && themaMenuItem.to);
-  const LinkComponent = getLinkComponent(href);
+  const LinkComponent = href && getLinkComponent(href);
   const titleComponent = LinkComponent ? (
     <LinkComponent maVariant="fatNoUnderline" href={href}>
       {title}
@@ -134,18 +133,23 @@ function getLinkComponent(href: string) {
 }
 
 export function GeneralInfo() {
+  const themaMenuItems = useThemaMenuItemsByThemaID();
   const sectionComponents = sections
-    .filter((section) => section.active)
+    .filter((section) => section.active && section.id in themaMenuItems)
     .toSorted(compareThemas)
-    .map((section, i) => (
-      <Section
-        key={i}
-        id={section.id}
-        title={section.title}
-        to={section.to}
-        listItems={section.listItems}
-      />
-    ));
+    .map((section, i) => {
+      const themaMenuItem = themaMenuItems[section.id];
+      section.href = section.href || (themaMenuItem && themaMenuItem.to);
+
+      return (
+        <Section
+          key={i}
+          title={section.title}
+          href={section.href}
+          listItems={section.listItems}
+        />
+      );
+    });
   return (
     <TextPageV2>
       <PageContentV2 span={8}>
