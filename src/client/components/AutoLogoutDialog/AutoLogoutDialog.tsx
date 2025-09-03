@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
 
-import { ActionGroup, Button, Paragraph } from '@amsterdam/design-system-react';
+import { ActionGroup, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { differenceInMilliseconds } from 'date-fns';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
@@ -15,7 +15,7 @@ import {
   LOGOUT_URL,
 } from '../../config/api';
 import { Colors } from '../../config/app';
-import { ONE_SECOND_MS, useSessionValue } from '../../hooks/api/useSessionApi';
+import { ONE_SECOND_MS, useLogout } from '../../hooks/api/useSessionApi';
 import { CounterProps, useCounter } from '../../hooks/timer.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { MaButtonLink } from '../MaLink/MaLink';
@@ -28,7 +28,6 @@ export interface AutoLogoutDialogProps {
   children?: ReactNode;
   expiresAtMilliseconds: number;
   lastChanceBeforeAutoLogoutSeconds?: number;
-  asynRefreshEnabled?: boolean;
 }
 
 export interface CountDownTimerComponentProps {
@@ -94,12 +93,11 @@ function getOpensDialogInMilliseconds(
 }
 
 export function AutoLogoutDialog({
-  asynRefreshEnabled = false,
   expiresAtMilliseconds,
   lastChanceBeforeAutoLogoutSeconds = 2 * ONE_MINUTE_SECONDS, // 120 seconds
 }: AutoLogoutDialogProps) {
-  const session = useSessionValue();
   const profileType = useProfileTypeValue();
+  const logout = useLogout();
 
   // Will open the dialog if secondsBeforeAutoLogoutDialogOpens is reached.
   const millisecondsBeforeAutoLogoutDialogOpens = getOpensDialogInMilliseconds(
@@ -166,7 +164,7 @@ export function AutoLogoutDialog({
 
   function showLoginScreen() {
     setContinueButtonVisibility(false);
-    session.logout();
+    logout();
   }
 
   // On every tick the document title is changed trying to catch the users attention.
@@ -205,27 +203,13 @@ export function AutoLogoutDialog({
         <ActionGroup>
           {continueButtonIsVisible && (
             <>
-              {asynRefreshEnabled ? (
-                <Button
-                  variant="primary"
-                  className="continue-button"
-                  disabled={session.isLoading}
-                  onClick={() => {
-                    session.refetch();
-                    return false;
-                  }}
-                >
-                  Doorgaan
-                </Button>
-              ) : (
-                <MaButtonLink
-                  variant="primary"
-                  className="continue-button"
-                  href={continueLink}
-                >
-                  Doorgaan
-                </MaButtonLink>
-              )}
+              <MaButtonLink
+                variant="primary"
+                className="continue-button"
+                href={continueLink}
+              >
+                Doorgaan
+              </MaButtonLink>
             </>
           )}
           <MaButtonLink

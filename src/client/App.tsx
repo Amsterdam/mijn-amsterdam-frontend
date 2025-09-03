@@ -101,12 +101,12 @@ function AppAuthenticated() {
 
 function AppLanding() {
   const session = useSessionApi();
-  const { isPristine, isAuthenticated } = session;
+  const { isDirty, isAuthenticated } = session;
 
   useScrollToTop();
 
   // If session was previously authenticated we don't want to show the loader again
-  if (isPristine) {
+  if (!isDirty) {
     return (
       <Paragraph className={styles.PreLoader}>
         Welkom op Mijn Amsterdam
