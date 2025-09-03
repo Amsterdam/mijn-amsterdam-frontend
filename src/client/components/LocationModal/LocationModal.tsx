@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
 
 import { Button, Paragraph } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
@@ -11,7 +11,6 @@ import {
   BAGSourceData,
 } from '../../../server/services/bag/bag.types';
 import { LOCATION_ZOOM } from '../../../universal/config/myarea-datasets';
-import { PUBLIC_API_URLS } from '../../../universal/config/url';
 import {
   extractAddressParts,
   getLatLngWithAddress,
@@ -21,15 +20,18 @@ import {
 } from '../../../universal/helpers/bag';
 import { BaseLayerType } from '../../components/MyArea/Map/BaseLayerToggle';
 import { MyAreaLoader } from '../../components/MyArea/MyAreaLoader';
-import { useDataApi } from '../../hooks/api/useDataApi';
+import { createGetApiHook } from '../../hooks/api/useDataApi-v2';
 import { Modal } from '../Modal/Modal';
 import { MapLocationMarker } from '../MyArea/MyArea.hooks';
+
+export const BAG_ADRESSEERBARE_OBJECTEN_URL =
+  'https://api.data.amsterdam.nl/v1/benkagg/adresseerbareobjecten/';
 
 function transformBagSearchResultsResponse(
   response: BAGSourceData,
   querySearchAddress: BAGQueryParams,
   isWeesp: boolean
-): LatLngWithAddress[] | null {
+): LatLngWithAddress[] {
   const adresseerbareObjecten = response?._embedded.adresseerbareobjecten ?? [];
 
   // Try to get exact match
@@ -51,7 +53,7 @@ function transformBagSearchResultsResponse(
   }
 
   // No results
-  return null;
+  return [];
 }
 
 export interface LocationModalProps {
@@ -66,6 +68,14 @@ export interface LocationModalProps {
   children?: ReactNode;
 }
 
+const useBagApi = createGetApiHook<BAGSourceData>({
+  init: {
+    headers: {
+      'X-Api-Key': import.meta.env.REACT_APP_DATA_AMSTERDAM_API_KEY,
+    },
+  },
+});
+
 export function LocationModal({
   // Addres
   address = null,
@@ -76,48 +86,23 @@ export function LocationModal({
 }: LocationModalProps) {
   const [isLocationModalOpen, setLocationModalOpen] = useState(false);
   const hasLocationData = !!(address || latlng);
-  const [bagApi, fetchBag] = useDataApi<LatLngWithAddress[] | null>(
-    {
-      url: '',
-      postpone: true,
-      headers: {
-        'X-Api-Key': import.meta.env.REACT_APP_DATA_AMSTERDAM_API_KEY,
-      },
-    },
-    null
+  const bagApi = useBagApi();
+  const querySearchAddress = useMemo(
+    () => (address ? extractAddressParts(address) : null),
+    [address]
   );
 
-  useEffect(() => {
-    if (bagApi.isDirty || address === null) {
-      return;
-    }
-    if (isLocationModalOpen) {
-      const querySearchAddress = extractAddressParts(address);
-      const { openbareruimteNaam, huisnummer, postcode } = querySearchAddress;
+  const isWeesp = address ? isLocatedInWeesp(address) : false;
 
-      if (!(huisnummer && (openbareruimteNaam || postcode))) {
-        return;
-      }
-
-      const isWeesp = isLocatedInWeesp(address);
-      // Updates bagApi state
-      fetchBag({
-        url: PUBLIC_API_URLS.BAG_ADRESSEERBARE_OBJECTEN,
-        params: querySearchAddress,
-        transformResponse(responseData: BAGSourceData) {
-          const latlngResults = transformBagSearchResultsResponse(
-            responseData,
-            querySearchAddress,
-            isWeesp
-          );
-
-          return latlngResults;
-        },
-      });
-    }
-  }, [isLocationModalOpen, address, fetchBag, bagApi.isDirty]);
-
-  const latlngFromBagSearch = bagApi.data?.[0];
+  const latlngResults =
+    bagApi.data?.content && querySearchAddress
+      ? transformBagSearchResultsResponse(
+          bagApi.data.content,
+          querySearchAddress,
+          isWeesp
+        )
+      : [];
+  const latlngFromBagSearch = latlngResults[0];
   const latlngFound = latlng ?? latlngFromBagSearch;
 
   const centerMarker: MapLocationMarker | null = latlngFound
@@ -128,6 +113,25 @@ export function LocationModal({
     : null;
 
   const hasLocationDataAndCenterMarker = hasLocationData && centerMarker;
+
+  useEffect(() => {
+    if (bagApi.isDirty || querySearchAddress === null) {
+      return;
+    }
+    if (isLocationModalOpen) {
+      const { openbareruimteNaam, huisnummer, postcode } = querySearchAddress;
+
+      if (!(huisnummer && (openbareruimteNaam || postcode))) {
+        return;
+      }
+
+      const bagApiUrl = new URL(BAG_ADRESSEERBARE_OBJECTEN_URL);
+      const params = new URLSearchParams(querySearchAddress);
+      bagApiUrl.search = params.toString();
+
+      bagApi.fetch(bagApiUrl);
+    }
+  }, [isLocationModalOpen, querySearchAddress, bagApi.isDirty]);
 
   return (
     hasLocationData && (
