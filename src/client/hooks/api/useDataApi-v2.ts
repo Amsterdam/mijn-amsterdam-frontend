@@ -19,10 +19,11 @@ async function handleResponse<T>(response: Response): ApiFetchResponse<T> {
   return responseJson;
 }
 
-export async function sendFormPostRequest<
-  T extends any,
-  F extends Record<string, string>,
->(url: string, payload: F, options?: RequestInit): ApiFetchResponse<T> {
+export async function sendFormPostRequest<T extends any>(
+  url: string,
+  payload: Record<string, string>,
+  options?: RequestInit
+): ApiFetchResponse<T> {
   return fetch(url, {
     method: 'POST',
     body: new URLSearchParams(payload),
@@ -34,10 +35,11 @@ export async function sendFormPostRequest<
   }).then((response: Response) => handleResponse<T>(response));
 }
 
-export async function sendJSONPostRequest<
-  T extends any,
-  F extends Record<string, string>,
->(url: string, payload: F, options?: RequestInit): ApiFetchResponse<T> {
+export async function sendJSONPostRequest<T extends any>(
+  url: string,
+  payload: Record<string, unknown>,
+  options?: RequestInit
+): ApiFetchResponse<T> {
   return fetch(url, {
     method: 'POST',
     body: JSON.stringify(payload),
@@ -127,3 +129,7 @@ export const HttpStatusCode = {
   NotFound: 404,
   InternalServerError: 500,
 };
+
+export function isAborted(error: unknown): boolean {
+  return !!error?.toString().includes('AbortError: The operation was aborted.');
+}
