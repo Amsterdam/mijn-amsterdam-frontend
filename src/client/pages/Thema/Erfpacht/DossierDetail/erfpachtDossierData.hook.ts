@@ -27,15 +27,13 @@ export function useDossierDetaiLData() {
   } = useErfpachtThemaData();
 
   const { data, isLoading, isError, isDirty, fetch } = useErfpachtDossierApi();
-  const dossier = data?.content;
+  const dossier = data?.content ?? null;
   const tableConfig = dossier
     ? getTableConfig({ erfpachtData, dossier })
     : null;
 
   useEffect(() => {
-    if (!isDirty) {
-      fetch(`${BFFApiUrls.ERFPACHT_DOSSIER_DETAILS}/${dossierNummerUrlParam}`);
-    }
+    fetch(`${BFFApiUrls.ERFPACHT_DOSSIER_DETAILS}/${dossierNummerUrlParam}`);
   }, [isDirty, fetch]);
 
   return {
