@@ -1,8 +1,85 @@
 import { filterCombineRtmData } from './regeling-rtm';
 
 describe('filterCombineRtmData', () => {
+  test('Just aanvraag fase 1 and seperates rtm from other aanvragen', () => {
+    const [remainder, rtmAanvragen] = filterCombineRtmData([
+      {
+        id: '3162110',
+        datumAanvraag: '2025-05-20',
+        datumBeginLevering: null,
+        datumBesluit: '2025-05-21',
+        datumEindeGeldigheid: '2026-04-30',
+        datumEindeLevering: null,
+        datumIngangGeldigheid: '2025-05-01',
+        datumOpdrachtLevering: null,
+        datumToewijzing: null,
+        documenten: [
+          {
+            id: 'B3405439',
+            title: 'AV-RTM Info aan klant GGD',
+            url: '',
+            datePublished: '2025-07-15T15:11:36.503',
+          },
+        ],
+        isActueel: true,
+        leverancier: '',
+        leveringsVorm: '',
+        productsoortCode: 'AV-ALG',
+        productIdentificatie: 'AV-RTM1',
+        beschiktProductIdentificatie: '1516367',
+        resultaat: 'toegewezen',
+        titel: 'Regeling Tegemoetkoming Meerkosten',
+        betrokkenen: ['999994542', '999991000'],
+        betrokkenPersonen: [
+          {
+            bsn: '999994542',
+            name: '999994542 - Flex',
+            dateOfBirth: '2023-06-12',
+            dateOfBirthFormatted: '12 juni 2023',
+            partnernaam: 'partner-2 - Flex',
+            partnervoorvoegsel: null,
+          },
+          {
+            bsn: '999991000',
+            name: '999991000 - Flex',
+            dateOfBirth: '2023-06-12',
+            dateOfBirthFormatted: '12 juni 2023',
+            partnernaam: 'partner-2 - Flex',
+            partnervoorvoegsel: null,
+          },
+        ],
+        bsnAanvrager: '000009945',
+      },
+      {
+        id: '3166814',
+        datumAanvraag: '2025-05-20',
+        datumBeginLevering: null,
+        datumBesluit: '2025-07-15',
+        datumEindeGeldigheid: null,
+        datumEindeLevering: null,
+        datumIngangGeldigheid: null,
+        datumOpdrachtLevering: null,
+        datumToewijzing: null,
+        documenten: [],
+        isActueel: true,
+        leverancier: '',
+        leveringsVorm: '',
+        productsoortCode: 'AV-UNKNOWN',
+        productIdentificatie: 'AV-UNKNOWN',
+        beschiktProductIdentificatie: '111111',
+        resultaat: 'toegewezen',
+        titel: 'UNKNOWN',
+        betrokkenen: [],
+        betrokkenPersonen: [],
+        bsnAanvrager: '111111111',
+      },
+    ]);
+    expect(rtmAanvragen[0].productIdentificatie).toBe('AV-RTM1');
+    expect(remainder[0].productIdentificatie).toBe('AV-UNKNOWN');
+  });
+
   test('Merged part one and two into Besluit afgewezen', () => {
-    const result = filterCombineRtmData([
+    const [, result] = filterCombineRtmData([
       {
         id: '3166814',
         datumAanvraag: '2025-05-20',
@@ -135,7 +212,7 @@ describe('filterCombineRtmData', () => {
   });
 
   test('Merged part one and two into: Besluit toegewezen', () => {
-    const result = filterCombineRtmData([
+    const [, result] = filterCombineRtmData([
       {
         id: '3162696',
         datumAanvraag: '2025-05-28',
@@ -266,7 +343,7 @@ describe('filterCombineRtmData', () => {
   });
 
   test('One Einde recht, double voorzieningingen are merged and duplicate dropped', () => {
-    const result = filterCombineRtmData([
+    const [, result] = filterCombineRtmData([
       {
         id: '3166824',
         datumAanvraag: '2025-07-15',
@@ -416,7 +493,7 @@ describe('filterCombineRtmData', () => {
             url: '',
           },
         ],
-        id: '3166824',
+        id: '3166823',
         isActueel: false,
         leverancier: '',
         leveringsVorm: '',

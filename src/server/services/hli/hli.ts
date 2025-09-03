@@ -158,7 +158,7 @@ async function transformRegelingenForFrontend(
   let aanvragenWithDocumentsCombined = filterCombineUpcPcvData(aanvragen);
   aanvragenWithDocumentsCombined = filterCombineRtmData(
     aanvragenWithDocumentsCombined
-  );
+  ).flat();
 
   for (const aanvraag of aanvragenWithDocumentsCombined) {
     const statusLineItems = getStatusLineItems(
