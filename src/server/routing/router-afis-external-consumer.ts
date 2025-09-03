@@ -26,7 +26,7 @@ const eMandateSignRequestStatusNotificationPayload = z.object({
   senderIBAN: z.string(),
   senderBIC: z.string(),
   senderName: z.string(),
-  eMandateSignDate: z.iso.date(),
+  eMandateSignDate: z.iso.datetime(),
   creditorIBAN: z.string(),
 });
 
