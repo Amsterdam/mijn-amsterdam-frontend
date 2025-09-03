@@ -9,6 +9,12 @@ import svgr from 'vite-plugin-svgr';
 export default defineConfig({
   server: {
     port: process.env.port ? parseInt(process.env.port, 10) : 3000,
+    // proxy: {
+    //   '/api/v1': {
+    //     target: 'http://localhost:5000',
+    //     changeOrigin: true,
+    //   },
+    // },
   },
   // https://github.com/vitejs/vite/issues/1973#issuecomment-787571499
   // Using the define option over import.meta because the Node part our universal app cannot handle import.meta yet.
@@ -28,6 +34,7 @@ export default defineConfig({
     sourcemap: true,
     target: 'es2015',
   },
+
   test: {
     globals: true,
     environment: 'happy-dom', // NOTE: overridden with 'node' when testing bff application

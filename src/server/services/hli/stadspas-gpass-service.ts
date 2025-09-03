@@ -129,25 +129,25 @@ export async function fetchStadspasSource(
   administratienummer: string,
   enableCache: boolean = true
 ): Promise<ApiResponse<StadspasDetailSource>> {
-  const dataRequestConfig = getApiConfig('GPASS', {
-    formatUrl: ({ url }) => `${url}/rest/sales/v1/pas/${passNumber}`,
-    headers: getHeaders(administratienummer),
-    enableCache,
-    params: {
-      include_balance: true,
+  const dataRequestConfig = getApiConfig(
+    'GPASS',
+    {
+      formatUrl: ({ url }) => `${url}/rest/sales/v1/pas/${passNumber}`,
+      headers: getHeaders(administratienummer),
+      enableCache,
+      params: {
+        include_balance: true,
+      },
+      cacheKey_UNSAFE: createStadspasSourceCacheKey(
+        passNumber,
+        administratienummer
+      ),
     },
-  });
-  return requestData<StadspasDetailSource>({
-    ...dataRequestConfig,
-    // Warning! Setting cacheKey_UNSAFE like this bypasses the transformation by getApiConfigBasedCacheKey in getApiConfig.
-    // Only do this if you are absolutely sure you this cacheKey is unique to the user.
-    // In this case, the passNumber and administratienummer are unique to the user.
-    // NOTE: will not be used if enableCache is false.
-    cacheKey_UNSAFE: createStadspasSourceCacheKey(
-      passNumber,
-      administratienummer
-    ),
-  });
+    {
+      useApiConfigBasedCallstackCacheKeyTransform: false,
+    }
+  );
+  return requestData<StadspasDetailSource>(dataRequestConfig);
 }
 
 function releaseStadspasSourceCache(

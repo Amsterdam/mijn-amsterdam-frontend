@@ -1,5 +1,7 @@
 import { HttpStatusCode } from 'axios';
 import type { Request, Response } from 'express';
+import express from 'express';
+import type { ParamsDictionary } from 'express-serve-static-core';
 import { generatePath, matchPath } from 'react-router';
 
 import { PUBLIC_BFF_ENDPOINTS } from './bff-routes';
@@ -8,7 +10,6 @@ import {
   apiErrorResult,
 } from '../../universal/helpers/api';
 import { BFF_API_BASE_URL } from '../config/app';
-import express from 'express';
 
 type BFFRouter = express.Router & { BFF_ID: string };
 
@@ -27,8 +28,8 @@ export type RequestWithQueryParams<T extends Record<string, string>> = Request<
 >;
 
 export type RequestWithRouteAndQueryParams<
-  T extends Record<string, string> = Record<string, string>,
-  T2 extends Record<string, string> = Record<string, string>,
+  T extends ParamsDictionary = Record<string, string>,
+  T2 extends qs.ParsedQs = Record<string, string>,
 > = Request<T, {}, {}, T2>;
 /* eslint-enable @typescript-eslint/no-empty-object-type */
 
@@ -73,7 +74,7 @@ export function generateFullApiUrlBFF(
 /** Sets the right statuscode and sends a response. */
 export function sendResponse(
   res: Response,
-  apiResponse: ApiResponse_DEPRECATED<any>
+  apiResponse: ApiResponse_DEPRECATED<unknown>
 ) {
   if (apiResponse.status === 'ERROR') {
     res.status(
@@ -86,28 +87,32 @@ export function sendResponse(
   return res.send(apiResponse);
 }
 
-export function sendBadRequest(
-  res: Response,
-  reason: string,
-  content: object | string | null = null
-) {
-  return res
-    .status(HttpStatusCode.BadRequest)
-    .send(
-      apiErrorResult(
-        `Bad request: ${reason}`,
-        content,
-        HttpStatusCode.BadRequest
-      )
-    );
+export function sendBadRequest(res: Response, reason: string) {
+  return sendResponse(
+    res,
+    apiErrorResult(`Bad request: ${reason}`, null, HttpStatusCode.BadRequest)
+  );
+}
+
+export function sendInternalServerError(res: Response, reason: string) {
+  return sendResponse(
+    res,
+    apiErrorResult(
+      `Internal server error: ${reason}`,
+      null,
+      HttpStatusCode.InternalServerError
+    )
+  );
 }
 
 export function sendUnauthorized(
   res: Response,
   message: string = 'Unauthorized'
 ) {
-  res.status(HttpStatusCode.Unauthorized);
-  return res.send(apiErrorResult(message, null, HttpStatusCode.Unauthorized));
+  return sendResponse(
+    res,
+    apiErrorResult(message, null, HttpStatusCode.Unauthorized)
+  );
 }
 
 export function send404(res: Response) {
@@ -120,7 +125,7 @@ export function sendMessage(
   res: Response,
   id: string,
   event: string = 'message',
-  data?: any
+  data?: object | string | number | null
 ) {
   const doStringify = typeof data !== 'string';
   const payload = doStringify ? JSON.stringify(data) : data;
