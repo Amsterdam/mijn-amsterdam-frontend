@@ -1,28 +1,29 @@
-import { CMSMaintenanceNotification } from '../../../server/services/cms/cms-maintenance-notifications';
-import {
-  ApiResponse_DEPRECATED,
-  apiPristineResult,
-} from '../../../universal/helpers/api';
+import { useEffect } from 'react';
+
 import { BFFApiUrls } from '../../config/api';
 import { useAppStateGetter } from '../useAppState';
-import { useDataApi } from './useDataApi';
+import { createGetApiHook } from './useDataApi-v2';
+import type { CMSMaintenanceNotification } from '../../../server/services/cms/cms-maintenance-notifications';
+
+const useCmsMaintenanceNotificationsApi =
+  createGetApiHook<CMSMaintenanceNotification[]>();
 
 export function useCmsMaintenanceNotifications(
   page?: string,
   fromApiDirectly: boolean = false
 ) {
   const { CMS_MAINTENANCE_NOTIFICATIONS } = useAppStateGetter();
-  const [api] = useDataApi<
-    ApiResponse_DEPRECATED<CMSMaintenanceNotification[]>
-  >(
-    {
-      url:
-        BFFApiUrls.SERVICES_CMS_MAINTENANCE_NOTIFICATIONS_URL +
-        (page ? `?page=${page}` : ''),
-      postpone: !fromApiDirectly,
-    },
-    apiPristineResult([])
-  );
+  const api = useCmsMaintenanceNotificationsApi();
+
+  useEffect(() => {
+    if (fromApiDirectly) {
+      const url = new URL(
+        BFFApiUrls.SERVICES_CMS_MAINTENANCE_NOTIFICATIONS_URL
+      );
+      url.searchParams.append('page', page || '');
+      api.fetch(url);
+    }
+  }, [fromApiDirectly, page]);
 
   const notifications = fromApiDirectly
     ? api.data?.content
