@@ -59,19 +59,36 @@ function dedupCombineRTMDeel2(
 export function filterCombineRtmData(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ): ZorgnedHLIRegeling[] {
+  // Prevent aanvragen from other 'betrokkenen' sets from being mixed up with eachother.
   const aanvragenPerBetrokkenen = mapAanvragenPerBetrokkenen(aanvragen);
   return Object.values(aanvragenPerBetrokkenen).flatMap(combineRTMData);
 }
 
+/** Combine related aanvragen into one aanvraag all the way untill the aanvraag that cancels (Einde recht) it.
+ *
+ * The aanvragen are sorted descending by datumIngangGeldigheid.
+ *
+ * ## Scenarios
+ *
+ *  2m - 1h - 2h - 1h - 2h.x   1 - 2 - 1h - 2h - 1h - 2h.x    1 - 2.x    1 - 2 - 1h - 2h - 1h - 2h.x
+ * |________________________| |___________________________|  |_______|  |___________________________|
+ *
+ * 1 = RTM1
+ * 1h = Aanvraag Aanpassing (herkeuring)
+ * 2 = RTM
+ * 2h = RTM Aanpassing (obv herkeuring)
+ * 2m = RTM migratie (hier zit nooit een fase 1 voor)
+ * 2x = RTM + datum einde geldigheid verstreken
+ * 2h.x = RTM Aanpassing (herkeurd) + datum einde geldigheid verstreken
+ */
 function combineRTMData(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ): ZorgnedHLIRegeling[] {
   const dedupedAanvragen = dedupCombineRTMDeel2(aanvragen);
 
-  // The aanvragen are sorted by datumIngangGeldigheid/DESC
-  // The first unseen deel1 aanvraag after a deel2 aanvraag is ___MOST_LIKELY___ related to that deel2 aanvraag.
   const deel2Aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[] = [];
   const combinedAanvragen: ZorgnedHLIRegeling[] = [];
+
   for (const aanvraag of dedupedAanvragen) {
     if (isRTMDeel2(aanvraag)) {
       deel2Aanvragen.push(aanvraag);
