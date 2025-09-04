@@ -16,6 +16,7 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
     return appState.OVERTREDINGEN?.content?.url ?? OVERTREDINGEN_ROUTE_DEFAULT;
   },
   profileTypes: ['private', 'commercial'],
+  redactedScope: 'none',
   isActive(appState: AppState) {
     return (
       featureToggle.overtredingenActive &&

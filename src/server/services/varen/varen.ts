@@ -88,23 +88,22 @@ export async function fetchVaren(authProfileAndToken: AuthProfileAndToken) {
     decosZaakTransformers
   );
 
-  if (response.status === 'OK') {
-    const decosZaken = response.content;
-    const reder = decosZaken.find(
-      (zaak) => zaak.caseType === 'Varen registratie reder'
-    );
-    const rederFrontend = transformVarenRederFrontend(reder);
-
-    const zakenFrontend = decosZaken
-      .filter((zaak) => zaak.caseType !== 'Varen registratie reder')
-      .flatMap((zaak) =>
-        transformVarenZakenFrontend(authProfileAndToken, zaak)
-      );
-    return apiSuccessResult({
-      reder: rederFrontend,
-      zaken: zakenFrontend,
-    });
+  if (response.status !== 'OK') {
+    return response;
   }
 
-  return response;
+  const decosZaken = response.content;
+  const reder = decosZaken.find(
+    (zaak) => zaak.caseType === 'Varen registratie reder'
+  );
+  const rederFrontend = transformVarenRederFrontend(reder);
+
+  const zakenFrontend = decosZaken
+    .filter((zaak) => zaak.caseType !== 'Varen registratie reder')
+    .flatMap((zaak) => transformVarenZakenFrontend(authProfileAndToken, zaak));
+
+  return apiSuccessResult({
+    reder: rederFrontend,
+    zaken: zakenFrontend,
+  });
 }

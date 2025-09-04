@@ -26,11 +26,11 @@ import type {
   BRPData,
   IdentiteitsbewijsFrontend,
 } from '../../../server/services/profile/brp.types';
+import { BBVergunningFrontend } from '../../../server/services/toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types';
 import {
   LVVRegistratie,
   VakantieverhuurVergunningFrontend,
 } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
-import { BBVergunningFrontend } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import {
   VarenRegistratieRederType,
   VarenZakenFrontend,

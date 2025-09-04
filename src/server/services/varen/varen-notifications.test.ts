@@ -43,8 +43,8 @@ describe('Notifications', () => {
     const response = await fetchVarenNotifications(authProfileAndToken);
     const errorResponse = {
       content: null,
-      message: 'Error fetching Varen zaken data',
-      status: 'ERROR',
+      message: '[VAREN] Error',
+      status: 'DEPENDENCY_ERROR',
     };
     expect(response).toStrictEqual(errorResponse);
   });

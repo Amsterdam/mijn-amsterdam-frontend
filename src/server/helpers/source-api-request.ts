@@ -39,6 +39,7 @@ export function isSuccessStatus(statusCode: number): boolean {
 }
 
 function getDebugResponseData(conf: AxiosRequestConfig) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (responseDataParsed: any) => {
     debugRequest(
       {
@@ -57,6 +58,7 @@ const debugResponseDataTerms =
 
 debugRequest(debugResponseDataTerms, 'debug response data terms');
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const cache = new memoryCache.Cache<string, any>();
 
 export function deleteCacheEntry(cacheKey: string) {
@@ -207,6 +209,7 @@ export async function requestData<T>(
     }
 
     return responseData;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     const errorMessage = 'message' in error ? error.message : error.toString();
 
