@@ -45,6 +45,7 @@ import {
 
 const TVMRVVObject: DecosZaakTransformer<TVMRVVObject> = {
   isActive: true,
+  itemType: 'folders',
   caseType: caseTypeVergunningen.TVMRVVObject,
   title: 'Tijdelijke verkeersmaatregel (TVM-RVV-Object)',
   requirePayment: true,
@@ -82,6 +83,7 @@ const TVMRVVObject: DecosZaakTransformer<TVMRVVObject> = {
 
 const EvenementMelding: DecosZaakTransformer<EvenementMelding> = {
   isActive: true,
+  itemType: 'folders',
   caseType: caseTypeVergunningen.EvenementMelding,
   title: 'Evenement melding',
   transformFields: {
@@ -105,6 +107,7 @@ const EvenementMelding: DecosZaakTransformer<EvenementMelding> = {
 
 const EvenementVergunning: DecosZaakTransformer<EvenementVergunning> = {
   isActive: true,
+  itemType: 'folders',
   caseType: caseTypeVergunningen.EvenementVergunning,
   title: caseTypeVergunningen.EvenementVergunning,
   fetchWorkflowStatusDatesFor: [
@@ -130,6 +133,7 @@ const EvenementVergunning: DecosZaakTransformer<EvenementVergunning> = {
 
 const Omzettingsvergunning: DecosZaakTransformer<Omzettingsvergunning> = {
   isActive: true,
+  itemType: 'folders',
   caseType: caseTypeVergunningen.Omzettingsvergunning,
   title: 'Vergunning voor kamerverhuur (omzettingsvergunning)',
   fetchWorkflowStatusDatesFor: [
@@ -150,6 +154,7 @@ const Omzettingsvergunning: DecosZaakTransformer<Omzettingsvergunning> = {
 
 const ERVV_TVM: DecosZaakTransformer<ERVV> = {
   isActive: true,
+  itemType: 'folders',
   caseType: caseTypeVergunningen.ERVV,
   title: 'e-RVV (Gratis verkeersontheffing voor elektrisch goederenvervoer)',
   transformFields: {
@@ -175,6 +180,7 @@ const ERVV_TVM: DecosZaakTransformer<ERVV> = {
 
 const Flyeren: DecosZaakTransformer<Flyeren> = {
   isActive: true,
+  itemType: 'folders',
   caseType: caseTypeVergunningen.Flyeren,
   title: 'Verspreiden reclamemateriaal (sampling)',
   requirePayment: true,
@@ -196,6 +202,7 @@ const Flyeren: DecosZaakTransformer<Flyeren> = {
 
 const AanbiedenDiensten: DecosZaakTransformer<AanbiedenDiensten> = {
   isActive: true,
+  itemType: 'folders',
   caseType: caseTypeVergunningen.AanbiedenDiensten,
   title: caseTypeVergunningen.AanbiedenDiensten,
   fetchWorkflowStatusDatesFor: [
@@ -216,6 +223,7 @@ const AanbiedenDiensten: DecosZaakTransformer<AanbiedenDiensten> = {
 
 const Straatartiesten: DecosZaakTransformer<Straatartiesten> = {
   isActive: true,
+  itemType: 'folders',
   caseType: caseTypeVergunningen.Straatartiesten,
   title: caseTypeVergunningen.Straatartiesten,
   fetchWorkflowStatusDatesFor: [
@@ -236,6 +244,7 @@ const Straatartiesten: DecosZaakTransformer<Straatartiesten> = {
 
 const NachtwerkOntheffing: DecosZaakTransformer<Nachtwerkontheffing> = {
   isActive: true,
+  itemType: 'folders',
   caseType: caseTypeVergunningen.NachtwerkOntheffing,
   title: 'Geluidsontheffing werken in de openbare ruimte (nachtwerkontheffing)',
   fetchWorkflowStatusDatesFor: [
@@ -260,6 +269,7 @@ const NachtwerkOntheffing: DecosZaakTransformer<Nachtwerkontheffing> = {
 
 const ZwaarVerkeer: DecosZaakTransformer<ZwaarVerkeer> = {
   isActive: true,
+  itemType: 'folders',
   caseType: caseTypeVergunningen.ZwaarVerkeer,
   title: 'Ontheffing zwaar verkeer',
   transformFields: {
@@ -324,6 +334,7 @@ const ZwaarVerkeer: DecosZaakTransformer<ZwaarVerkeer> = {
 
 const Samenvoegingsvergunning: DecosZaakTransformer<Samenvoegingsvergunning> = {
   isActive: true,
+  itemType: 'folders',
   caseType: caseTypeVergunningen.Samenvoegingsvergunning,
   title: 'Vergunning voor samenvoegen van woonruimten',
   fetchWorkflowStatusDatesFor: [
@@ -340,6 +351,7 @@ const Samenvoegingsvergunning: DecosZaakTransformer<Samenvoegingsvergunning> = {
 
 const Onttrekkingsvergunning: DecosZaakTransformer<Onttrekkingsvergunning> = {
   isActive: true,
+  itemType: 'folders',
   caseType: caseTypeVergunningen.Onttrekkingsvergunning,
   title: caseTypeVergunningen.Onttrekkingsvergunning,
   fetchWorkflowStatusDatesFor: [],
@@ -352,6 +364,7 @@ const Onttrekkingsvergunning: DecosZaakTransformer<Onttrekkingsvergunning> = {
 const OnttrekkingsvergunningSloop: DecosZaakTransformer<OnttrekkingsvergunningSloop> =
   {
     isActive: true,
+    itemType: 'folders',
     caseType: caseTypeVergunningen.OnttrekkingsvergunningSloop,
     title: caseTypeVergunningen.OnttrekkingsvergunningSloop,
     fetchWorkflowStatusDatesFor: [
@@ -372,6 +385,7 @@ const OnttrekkingsvergunningSloop: DecosZaakTransformer<OnttrekkingsvergunningSl
 
 const VormenVanWoonruimte: DecosZaakTransformer<VormenVanWoonruimte> = {
   isActive: true,
+  itemType: 'folders',
   caseType: caseTypeVergunningen.VormenVanWoonruimte,
   title: 'Vergunning voor woningvorming',
   fetchWorkflowStatusDatesFor: [
@@ -388,6 +402,7 @@ const VormenVanWoonruimte: DecosZaakTransformer<VormenVanWoonruimte> = {
 
 const Splitsingsvergunning: DecosZaakTransformer<Splitsingsvergunning> = {
   isActive: true,
+  itemType: 'folders',
   caseType: caseTypeVergunningen.Splitsingsvergunning,
   title: caseTypeVergunningen.Splitsingsvergunning,
   fetchWorkflowStatusDatesFor: [
@@ -407,6 +422,7 @@ const Splitsingsvergunning: DecosZaakTransformer<Splitsingsvergunning> = {
 
 const VOBvergunning: DecosZaakTransformer<Ligplaatsvergunning> = {
   isActive: true,
+  itemType: 'folders',
   caseType: caseTypeVergunningen.VOB,
   title: 'Ligplaatsvergunning',
   fetchWorkflowStatusDatesFor: [
@@ -427,6 +443,7 @@ const VOBvergunning: DecosZaakTransformer<Ligplaatsvergunning> = {
 
 const RVVHeleStad: DecosZaakTransformer<RVVHeleStad> = {
   isActive: !IS_PRODUCTION,
+  itemType: 'folders',
   caseType: caseTypeVergunningen.RVVHeleStad,
   title: 'RVV-verkeersontheffing',
   fetchWorkflowStatusDatesFor: [
@@ -450,6 +467,7 @@ const RVVHeleStad: DecosZaakTransformer<RVVHeleStad> = {
 
 const RVVSloterweg: DecosZaakTransformer<RVVSloterweg> = {
   isActive: true,
+  itemType: 'folders',
   caseType: caseTypeVergunningen.RVVSloterweg,
   title: 'RVV ontheffing Sloterweg',
   fetchWorkflowStatusDatesFor: [
@@ -501,6 +519,7 @@ const RVVSloterweg: DecosZaakTransformer<RVVSloterweg> = {
 const WerkEnVervoerOpStraat: DecosZaakTransformer<WerkzaamhedenEnVervoerOpStraat> =
   {
     isActive: true,
+    itemType: 'folders',
     caseType: caseTypeVergunningen.WVOS,
     title: 'Werkzaamheden en vervoer op straat',
     fetchWorkflowStatusDatesFor: [

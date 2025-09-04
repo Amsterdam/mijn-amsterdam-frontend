@@ -13,6 +13,7 @@ export type DecosZaakVarensFieldsSource = {
 
 export const caseTypeVaren = {
   ZaakRederRegistratie: 'Varen registratie reder',
+  VarenVergunningExploitatie: null,
   ZaakVergunningExploitatie: 'Varen vergunning exploitatie',
   ZaakVergunningExploitatieWijzigingVergunningshouder:
     'Varen vergunning exploitatie Wijziging vergunninghouder',
@@ -50,6 +51,11 @@ export type DecosVarenZaakVergunning = {
   vesselWidth: string | null; // 0.01 meters
   vesselLength: string | null; // 0.01 meters
 };
+export type VarenVergunningExploitatieType = DecosVarenZaakBase & {
+  caseType: 'Varen vergunning exploitatie';
+  title: 'Varen vergunning exploitatie';
+};
+
 export type DecosVarenZaakBase = DecosZaakBase &
   DecosVarenZaakVergunning & {
     linkDataRequest: string | null;

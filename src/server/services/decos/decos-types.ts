@@ -135,6 +135,7 @@ export type AddressBookEntry = {
 
 export type DecosFieldTransformer<T extends DecosZaakBase> = {
   name: keyof T;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   transform?: (input: any) => DecosFieldValue;
 };
 
@@ -143,8 +144,10 @@ type CaseTypeLiteral<T extends DecosZaakBase> = unknown extends T['caseType']
     ? unknown
     : never
   : T['caseType'];
-
-export type DecosZaakTransformer<T extends DecosZaakBase = DecosZaakBase> = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type DecosZaakTransformer<T extends DecosZaakBase = any> = {
+  // the itemType: e.g. folders, containers, vergunningen etc
+  itemType: string;
   // The caseType (zaaktype) of the sourceData.
   caseType: CaseTypeLiteral<T>;
   // Title of the DecosZaakBase, mostly a slightly different variant of the $caseType

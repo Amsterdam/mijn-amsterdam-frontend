@@ -1,6 +1,7 @@
 import type {
   DecosZaakVarensFieldsSource,
   VarenRegistratieRederType,
+  VarenVergunningExploitatieType,
   ZaakVergunningExploitatieType,
   ZaakVergunningExploitatieWijzigingVaartuigNaamType,
   ZaakVergunningExploitatieWijzigingVerbouwingType,
@@ -30,9 +31,21 @@ const SELECT_FIELDS_TRANSFORM = {
   text96: 'linkDataRequest' as const,
 };
 
+export const VarenVergunningExploitatie: DecosZaakTransformer<VarenVergunningExploitatieType> =
+  {
+    isActive: true,
+    itemType: 'varens',
+    caseType: 'Varen vergunning exploitatie',
+    title: 'Varen vergunning exploitatie',
+    transformFields: {
+      ...SELECT_FIELDS_TRANSFORM,
+    },
+  };
+
 export const ZaakRegistratieReder: DecosZaakTransformer<VarenRegistratieRederType> =
   {
     isActive: true,
+    itemType: 'folders',
     caseType: 'Varen registratie reder',
     title: 'Varen registratie reder',
     fetchTermijnenFor: [fetchMeerInformatieTermijn],
@@ -50,6 +63,7 @@ export const ZaakRegistratieReder: DecosZaakTransformer<VarenRegistratieRederTyp
   };
 
 const ZaakVergunningExploitatieBase = {
+  itemType: 'folders',
   isActive: true,
   fetchTermijnenFor: [fetchMeerInformatieTermijn],
   fetchLinkedItem: ['varens'],
@@ -143,17 +157,14 @@ export const ZaakVergunningExploitatieWijzigingVervanging: DecosZaakTransformer<
     },
   };
 
-export const decosCaseToZaakTransformers = {
-  [ZaakRegistratieReder.caseType]: ZaakRegistratieReder,
-  [ZaakVergunningExploitatie.caseType]: ZaakVergunningExploitatie,
-  [ZaakVergunningExploitatieWijzigenVaartuignaam.caseType]:
-    ZaakVergunningExploitatieWijzigenVaartuignaam,
-  [ZaakVergunningExploitatieWijzigenVerbouwing.caseType]:
-    ZaakVergunningExploitatieWijzigenVerbouwing,
-  [ZaakVergunningExploitatieWijzigingVergunningshouder.caseType]:
-    ZaakVergunningExploitatieWijzigingVergunningshouder,
-  [ZaakVergunningExploitatieWijzigingVervanging.caseType]:
-    ZaakVergunningExploitatieWijzigingVervanging,
-} as const;
+const decosCaseToZaakTransformers = [
+  ZaakRegistratieReder,
+  VarenVergunningExploitatie,
+  ZaakVergunningExploitatie,
+  ZaakVergunningExploitatieWijzigenVaartuignaam,
+  ZaakVergunningExploitatieWijzigenVerbouwing,
+  ZaakVergunningExploitatieWijzigingVergunningshouder,
+  ZaakVergunningExploitatieWijzigingVervanging,
+];
 
-export const decosZaakTransformers = Object.values(decosCaseToZaakTransformers);
+export const decosZaakTransformers = decosCaseToZaakTransformers;
