@@ -114,6 +114,7 @@ function combineRTMData(
       return acc;
     }
 
+    // Aanvraag is a 'Einde recht'.
     if (isRTMDeel2(prev) && prev.isActueel === false) {
       return [...acc, aanvraag];
     }
