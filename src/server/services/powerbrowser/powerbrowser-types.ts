@@ -1,8 +1,13 @@
+import { SELECT_FIELDS_TRANSFORM_BASE } from './powerbrowser-field-transformers';
+import { OmitMapped } from '../../../universal/helpers/utils';
 import {
   GenericDocument,
   ZaakDetail,
 } from '../../../universal/types/App.types';
 import { AuthProfile } from '../../auth/auth-types';
+
+export type NestedType<T> =
+  T extends PowerBrowserZaakTransformer<infer R> ? R : never;
 
 export interface PowerBrowserStatus {
   omschrijving: string | 'Ontvangen';
@@ -10,12 +15,6 @@ export interface PowerBrowserStatus {
 }
 
 export type PowerBrowserStatusResponse = PowerBrowserStatus[];
-
-export type FetchZaakIdsOptions = {
-  personOrMaatschapId: string;
-  tableName: 'PERSONEN' | 'MAATSCHAP';
-  filter: (zaak: PBRecord<'GFO_ZAKEN'>) => boolean;
-};
 
 export type FetchPersoonOrMaatschapIdByUidOptions = {
   profileID: AuthProfile['id'];
@@ -66,40 +65,6 @@ export type PBAdresLinkFields = PBRecordField<'FMT_CAPTION'>;
 
 export type PBAdresLinkRecord = PBRecord<'ADRESSEN', PBAdresLinkFields[]>;
 
-export type BBVergunningZaakStatus =
-  | 'Ontvangen'
-  | 'In behandeling'
-  | 'Afgehandeld'
-  | 'Verlopen'
-  | null;
-export type BBVergunningZaakResult =
-  | 'Verleend'
-  | 'Niet verleend'
-  | 'Ingetrokken'
-  | string
-  | null;
-
-export type BBVergunningFrontend = ZaakDetail & {
-  location: string | null;
-  dateDecision: string | null;
-  dateDecisionFormatted: string | null;
-  dateEnd: string | null;
-  dateEndFormatted: string | null;
-  dateRequest: string | null;
-  dateRequestFormatted: string | null;
-  dateStart: string;
-  dateStartFormatted: string | null;
-  decision: BBVergunningZaakResult;
-  isVerleend: boolean;
-  documents: GenericDocument[];
-  heeftOvergangsRecht: boolean;
-  identifier: string;
-  processed: boolean;
-  isExpired: boolean;
-  displayStatus: BBVergunningZaakStatus | BBVergunningZaakResult;
-  title: 'Vergunning bed & breakfast';
-};
-
 export const fieldMap: Record<PBZaakFields['fieldName'], string> = {
   ZAAK_IDENTIFICATIE: 'zaaknummer',
   EINDDATUM: 'dateDecision',
@@ -130,10 +95,63 @@ export type PBZaakResultaat =
 
 export type PBZaakCompacted = {
   zaaknummer: string | null;
+  displayStatus: string;
   dateStart: string | null;
   dateReceived: string | null;
   dateDecision: string | null;
   dateEnd: string | null;
   result: PBZaakResultaat | null;
   status: PBZaakStatus | null;
+  steps: [];
+};
+
+export type PowerBrowserZaakBase = {
+  caseType: string;
+  id: string;
+  identifier: string;
+  title: string;
+
+  dateRequest: string | null;
+  dateDecision: string | null;
+  dateStart: string;
+  dateEnd: string | null;
+
+  decision: string | null;
+  isVerleend: boolean;
+  documents: GenericDocument[];
+  statusDates?: ZaakStatusDate[];
+
+  processed: boolean;
+  isExpired: boolean;
+};
+
+type CaseTypeLiteral<T extends PowerBrowserZaakBase> =
+  unknown extends T['caseType']
+    ? PowerBrowserZaakBase extends T // Allow unextended baseCase for easier internal function typing
+      ? unknown
+      : never
+    : T['caseType'];
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type PowerBrowserZaakTransformer<T extends PowerBrowserZaakBase = any> =
+  {
+    caseType: CaseTypeLiteral<T>;
+    title: string;
+    fetchZaakIdFilter: (field: PBRecord<'GFO_ZAKEN'>['fields'][0]) => boolean;
+    transformFields: typeof SELECT_FIELDS_TRANSFORM_BASE &
+      Record<string, string>;
+    transformDoclinks: Record<string, Readonly<string[]>>;
+  };
+
+export type PowerBrowserZaakFrontend<
+  T extends PowerBrowserZaakBase = PowerBrowserZaakBase,
+> = OmitMapped<T, 'statusDates'> & {
+  dateRequestFormatted: string | null;
+  dateDecisionFormatted?: string | null;
+  dateStartFormatted?: string | null;
+  dateEndFormatted?: string | null;
+} & ZaakDetail;
+
+export type ZaakStatusDate = {
+  status: string;
+  datePublished: string | null;
 };

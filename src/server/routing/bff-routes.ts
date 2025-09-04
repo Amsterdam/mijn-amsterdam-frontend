@@ -1,3 +1,5 @@
+import { hash } from '../../universal/helpers/utils';
+
 export const BFF_BASE_PATH = '/api/v1';
 export const BFF_BASE_PATH_PRIVATE = '/private/api/v1';
 
@@ -65,11 +67,8 @@ export const BffEndpoints = {
   // ErfpachtV2
   ERFPACHT_DOSSIER_DETAILS: '/services/erfpacht/dossier/:dossierNummerUrlParam',
 
-  // Toeristische verhuur / Bed & Breakfast
-  TOERISTISCHE_VERHUUR_BB_DOCUMENT_DOWNLOAD:
-    '/services/toeristische-verhuur/bed-and-breakfast/document',
-  TOERISTISCHE_VERHUUR_BB_DOCUMENT_LIST:
-    '/services/toeristische-verhuur/bed-and-breakfast/documents/list',
+  // Powerbrowser (ToeristischeVerhuur->Bed&Breakfast)
+  POWERBROWSER_DOCUMENT_DOWNLOAD: `/services/${hash('powerbrowser')}/documents/download`,
 
   // Bodem / loodmetingen
   LOODMETING_DOCUMENT_DOWNLOAD: '/services/lood/document/:id',
