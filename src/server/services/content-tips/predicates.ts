@@ -9,7 +9,7 @@ import type { AppStateBase } from '../../../universal/types/App.types';
 import { isAmsterdamAddress } from '../buurt/helpers';
 import type { HLIRegelingFrontend } from '../hli/hli-regelingen-types';
 import type { IdentiteitsbewijsFrontend, Kind } from '../profile/brp.types';
-import type { BBVergunningFrontend } from '../toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
+import type { BBVergunningFrontend } from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types';
 import type { WMOVoorzieningFrontend } from '../wmo/wmo-config-and-types';
 import type { WpiRequestProcess } from '../wpi/wpi-types';
 

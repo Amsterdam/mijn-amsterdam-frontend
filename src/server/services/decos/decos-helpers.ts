@@ -190,13 +190,13 @@ export function getDisplayStatus<DZ extends DecosZaakBase>(
   zaak: DZ,
   steps: StatusLineItem[]
 ) {
-  const status = steps.find((step) => step.isActive)?.status;
+  const lastActiveStep = steps.findLast((step) => step.isActive)?.status;
 
-  if (status === 'Afgehandeld' && zaak.decision) {
+  if (lastActiveStep === 'Afgehandeld' && zaak.decision) {
     return zaak.decision;
   }
 
-  return status ?? 'Onbekend';
+  return lastActiveStep ?? 'Onbekend';
 }
 
 export function isZaakDecisionVerleend<DZ extends DecosZaakBase>(
