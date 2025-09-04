@@ -14,6 +14,22 @@ import type {
 } from '../../../server/services/cms/cms-content';
 import type { ApiResponse } from '../../../universal/helpers/api';
 import { BFF_API_BASE_URL } from '../../config/api';
+import { useCanonmatigingFooterLink } from '../../pages/Thema/Erfpacht/Erfpacht-render-config';
+
+function useCustomFooterSections(
+  sections: CMSFooterSection[],
+  sectionFinder: (section: CMSFooterSection, index: number) => boolean,
+  customLinks: CMSFooterSection['links']
+) {
+  return sections.map((section, index) => {
+    return {
+      ...section,
+      links: sectionFinder(section, index)
+        ? [...section.links, ...customLinks]
+        : section.links,
+    };
+  });
+}
 
 function FooterBlock({ title, links }: CMSFooterSection) {
   return (
@@ -52,11 +68,21 @@ export function MainFooter() {
     }
   );
 
+  const canonmatigingLink = useCanonmatigingFooterLink();
+
+  const customLinks = canonmatigingLink ? [canonmatigingLink] : [];
+
+  const customSections = useCustomFooterSections(
+    footer?.content?.sections || [],
+    (_section, index) => index === 0,
+    customLinks
+  );
+
   return (
     <PageFooter className={styles.MainFooter}>
       <PageFooter.Spotlight>
         <Grid gapVertical="large" paddingVertical="large">
-          {footer?.content?.sections.map((footerItem) => (
+          {customSections.map((footerItem) => (
             <FooterBlock key={footerItem.title} {...footerItem} />
           ))}
         </Grid>

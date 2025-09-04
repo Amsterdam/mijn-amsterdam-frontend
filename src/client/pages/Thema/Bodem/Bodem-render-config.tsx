@@ -4,10 +4,10 @@ import {
   themaTitle,
   featureToggle,
 } from './Bodem-thema-config';
+import { BodemDetail } from './BodemDetail';
 import { default as BodemIcon } from './BodemIcon.svg?react';
 import { BodemList } from './BodemList';
 import { BodemThema } from './BodemThema';
-import { BodemDetail } from './BodemDetail';
 import { isLoading } from '../../../../universal/helpers/api';
 import { type AppState } from '../../../../universal/types/App.types';
 import {
@@ -38,6 +38,7 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
   id: themaId,
   to: routeConfig.themaPage.path,
   profileTypes: ['private', 'commercial'],
+  redactedScope: 'none',
   isActive(appState: AppState) {
     return (
       featureToggle.BodemActive &&
