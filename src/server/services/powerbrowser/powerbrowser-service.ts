@@ -135,6 +135,12 @@ async function fetchPersoonOrMaatschapIdByUid(
             operator: 0,
             dataType: 0,
           },
+          {
+            fieldName: 'AUTHENTIEK',
+            fieldValue: 'J',
+            operator: 0,
+            dataType: 0,
+          },
         ],
         limit: 1,
       },
