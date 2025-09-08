@@ -1,5 +1,4 @@
 import { generatePath } from 'react-router';
-
 import { LoodMetingFrontend } from '../../../../server/services/bodem/types';
 import { dateSort } from '../../../../universal/helpers/date';
 import { LinkProps } from '../../../../universal/types/App.types';
@@ -10,19 +9,34 @@ import {
 } from '../../../config/app';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
+// -----------------------------
+// Pagina-soorten
+// -----------------------------
 const listPageParamKind = {
   inProgress: 'lopende-aanvragen',
   completed: 'afgehandelde-aanvragen',
 } as const;
 
+// -----------------------------
+// Feature toggle blijft zoals het was
+// -----------------------------
 export const featureToggle = {
   BodemActive: true,
 };
 
+// -----------------------------
+// Thema-gegevens
+// Alles wat data is en backend-safe staat hier
+// profileTypes verplaatst naar thema config 
+// -----------------------------
 export const themaId = 'BODEM' as const;
 export const themaTitle = 'Bodem';
-export const themaTitleDetail = 'Lood in bodem-check';
+export const themaTitleDetail = 'Lood in bodem-check'
+export const profileTypes: ProfileType[] = ['private', 'commercial'] as const; // nu centrale plek
 
+// -----------------------------
+// Routes
+// -----------------------------
 export const routeConfig = {
   detailPage: {
     path: '/bodem/lood-meting/:id',
@@ -40,9 +54,15 @@ export const routeConfig = {
   },
 } as const satisfies ThemaRoutesConfig;
 
+// -----------------------------
+// Types voor list page params
+// -----------------------------
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
+// -----------------------------
+// Tabellenconfig
+// -----------------------------
 const displayPropsLopend: DisplayProps<LoodMetingFrontend> = {
   props: {
     detailLinkComponent: 'Adres',
@@ -92,6 +112,9 @@ export const tableConfig = {
   },
 } as const;
 
+// -----------------------------
+// Links
+// -----------------------------
 export const linkListItems: LinkProps[] = [
   {
     title: 'Meer informatie over lood in de bodem.',

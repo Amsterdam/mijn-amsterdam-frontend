@@ -3,6 +3,7 @@ import {
   themaId,
   themaTitle,
   featureToggle,
+  profileTypes, // readonly array uit thema-config
 } from './Bodem-thema-config';
 import { BodemDetail } from './BodemDetail';
 import { default as BodemIcon } from './BodemIcon.svg?react';
@@ -15,6 +16,9 @@ import {
   type ThemaRenderRouteConfig,
 } from '../../../config/thema-types';
 
+// -----------------------------
+// Routes (frontend-specifiek, React componenten)
+// -----------------------------
 export const BodemRoutes = [
   {
     route: routeConfig.detailPage.path,
@@ -33,11 +37,17 @@ export const BodemRoutes = [
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
+// -----------------------------
+// Menu-item configuratie
+// profileTypes komt nu uit thema-config
+// Ik hebvan readonly array een gewone array gemaakt met [...]
+// IconSVG blijft frontend-specifiek
+// -----------------------------
 export const menuItem: ThemaMenuItem<typeof themaId> = {
   title: themaTitle,
   id: themaId,
   to: routeConfig.themaPage.path,
-  profileTypes: ['private', 'commercial'],
+  profileTypes: profileTypes, // fix: readonly -> mutable
   redactedScope: 'none',
   isActive(appState: AppState) {
     return (
