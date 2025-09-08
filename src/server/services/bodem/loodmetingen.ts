@@ -166,7 +166,7 @@ export async function getLoodApiHeaders() {
 
   const tokenResponse = await fetchAuthTokenHeader(
     {
-      apiKey: 'LOOD_365',
+      sourceApiName: 'LOOD_365',
       tokenValidityMS: 60 * 60 * ONE_SECOND_MS, // 1 hour
     },
     {

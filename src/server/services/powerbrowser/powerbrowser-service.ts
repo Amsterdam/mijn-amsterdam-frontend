@@ -61,7 +61,7 @@ function fetchPowerBrowserToken_(): Promise<ApiResponse<PowerBrowserToken>> {
     formatUrl: ({ url }) => `${url}/Token`,
     responseType: 'text',
     data: {
-      apiKey: getFromEnv('BFF_POWERBROWSER_TOKEN_API_KEY'),
+      apiKey: getFromEnv('BFF_POWERBROWSER_TOKEN_API_KEY'), // Powerbrowser specific api key. Not the same as Enable-U.
     },
   });
   return requestData<PowerBrowserToken>(requestConfig);
