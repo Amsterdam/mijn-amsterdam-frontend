@@ -4,16 +4,11 @@ import { create } from 'zustand/react';
 
 import { streamEndpointQueryParamKeys } from '../../universal/config/app';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
-import {
-  ApiResponse_DEPRECATED,
-  apiPristineResult,
-} from '../../universal/helpers/api';
 import { AppState } from '../../universal/types/App.types';
 import { PRISTINE_APPSTATE, createAllErrorState } from '../AppState';
 import { BFFApiUrls } from '../config/api';
 import { transformSourceData } from '../data-transform/appState';
 import { captureMessage } from '../helpers/monitoring';
-import { useDataApi } from './api/useDataApi';
 import { createGetApiHook } from './api/useDataApi-v2';
 import { useProfileTypeValue } from './useProfileType';
 import { SSE_CLOSE_MESSAGE, SSE_ERROR_MESSAGE, useSSE } from './useSSE';
@@ -174,69 +169,4 @@ export function useAppStateGetter() {
 
 export function useAppStateReady() {
   return useAppStateStore((state) => state.isReady);
-}
-
-export interface AppStateBagApiParams {
-  url?: string;
-  bagThema: string;
-  key: string;
-}
-
-// Use this hook for loading additional data that needs to be persisted in the state. For example additional data loaded if a user navigates to a detailpage
-// that requires fetching data that wasn't retrieved initially.
-export function useAppStateBagApi<T>({
-  url,
-  bagThema,
-  key,
-}: AppStateBagApiParams) {
-  const { appState, setAppState } = useAppStateStore();
-  const isApiDataCached =
-    appState[bagThema] !== null &&
-    typeof appState[bagThema] === 'object' &&
-    typeof appState[bagThema] !== 'undefined' &&
-    key in appState[bagThema]!;
-
-  const [api, fetch] = useDataApi<ApiResponse_DEPRECATED<T | null>>(
-    {
-      url,
-      postpone: isApiDataCached || !url,
-    },
-    apiPristineResult(null)
-  );
-
-  useEffect(() => {
-    // Initial automatic fetch
-    if (url && !isApiDataCached && !api.isDirty && !api.isLoading) {
-      fetch({
-        url,
-        postpone: false,
-      });
-    }
-
-    if (!isApiDataCached && api.isDirty && !api.isLoading) {
-      setAppState((state) => {
-        let localState = state[bagThema];
-        if (!localState) {
-          localState = {};
-        }
-
-        localState = {
-          ...localState,
-          [key]: api.data as ApiResponse_DEPRECATED<T | null>,
-        };
-
-        return {
-          ...state,
-          [bagThema]: localState,
-        };
-      });
-    }
-  }, [isApiDataCached, api, key, url]);
-
-  return [
-    (appState?.[bagThema]?.[key] as ApiResponse_DEPRECATED<T | null>) ||
-      api.data, // Return the response data from remote system or the pristine data provided to useApiData.
-    fetch,
-    isApiDataCached,
-  ] as const;
 }
