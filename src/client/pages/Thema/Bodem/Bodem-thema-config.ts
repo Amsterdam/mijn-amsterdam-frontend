@@ -18,21 +18,19 @@ const listPageParamKind = {
 } as const;
 
 // -----------------------------
-// Feature toggle blijft zoals het was
+// Feature toggle
 // -----------------------------
 export const featureToggle = {
   BodemActive: true,
 };
 
 // -----------------------------
-// Thema-gegevens
-// Alles wat data is en backend-safe staat hier
-// profileTypes verplaatst naar thema config 
+// Thema-gegevens (backend-safe)
 // -----------------------------
 export const themaId = 'BODEM' as const;
 export const themaTitle = 'Bodem';
-export const themaTitleDetail = 'Lood in bodem-check'
-export const profileTypes: ProfileType[] = ['private', 'commercial'] as const; // nu centrale plek
+export const themaTitleDetail = 'Lood in bodem-check';
+export const profileTypes: ProfileType[] = ['private', 'commercial'] as const;
 
 // -----------------------------
 // Routes
