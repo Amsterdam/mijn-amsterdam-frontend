@@ -33,6 +33,7 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_SECOND_MS } from '../../config/app';
 import { DataRequestConfig } from '../../config/source-api';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
+import { getFromEnv } from '../../helpers/env';
 import {
   createSessionBasedCacheKey,
   getApiConfig,
@@ -79,7 +80,7 @@ async function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
 
   const header = {
     'Content-Type': 'application/json',
-    apikey: process.env.BFF_BEZWAREN_APIKEY ?? '',
+    apikey: getFromEnv('BFF_ENABLEU_API_KEY'),
     Authorization: `Bearer ${jwt}`,
   };
 
