@@ -1,12 +1,12 @@
 import qs from 'qs';
 
 import type { ApiResponse } from '../../../universal/helpers/api';
-import type { DataRequestConfig, SourceApiKey } from '../../config/source-api';
+import type { DataRequestConfig, SourceApiName } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 
 type TokenRequestConfigOptions = {
-  apiKey: SourceApiKey;
+  sourceApiName: SourceApiName;
   tokenValidityMS: number;
   url?: string;
 };
@@ -48,7 +48,7 @@ export async function fetchAuthTokenHeader(
   }
   const additionalConfig: DataRequestConfig = {
     data: qs.stringify(payload),
-    cacheKey_UNSAFE: `${requestConfigOptions.apiKey}-oauth-access-token`, // Every request to the service (identified by serviceID) will use the same access_token so we cache it with a static key.
+    cacheKey_UNSAFE: `${requestConfigOptions.sourceApiName}-oauth-access-token`, // Every request to the service (identified by serviceID) will use the same access_token so we cache it with a static key.
     cacheTimeout: requestConfigOptions.tokenValidityMS,
     transformResponse: (response: TokenResponseSource | null) => {
       if (response?.access_token) {
@@ -56,7 +56,9 @@ export async function fetchAuthTokenHeader(
           Authorization: `${response.token_type} ${response.access_token}`,
         };
       }
-      throw new Error(`${requestConfigOptions.apiKey}: Invalid token response`);
+      throw new Error(
+        `${requestConfigOptions.sourceApiName}: Invalid token response`
+      );
     },
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',

@@ -349,11 +349,11 @@ const ApiConfig_ = {
   },
 } as const;
 
-export const ApiConfig: Record<SourceApiKey, DataRequestConfig> = ApiConfig_;
+export const ApiConfig: Record<SourceApiName, DataRequestConfig> = ApiConfig_;
 
-export type SourceApiKey = keyof typeof ApiConfig_;
+export type SourceApiName = keyof typeof ApiConfig_;
 
 type ApiUrlObject = string | Partial<Record<ProfileType, string>>;
-type ApiUrlEntry = [apiKey: SourceApiKey, apiUrl: ApiUrlObject];
+type ApiUrlEntry = [apiKey: SourceApiName, apiUrl: ApiUrlObject];
 
 export type ApiUrlEntries = ApiUrlEntry[];

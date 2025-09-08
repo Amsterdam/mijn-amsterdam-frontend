@@ -47,7 +47,7 @@ describe('brp.ts', () => {
 
       expect(fetchAuthTokenHeader).toHaveBeenCalledWith(
         {
-          apiKey: 'BRP',
+          sourceApiName: 'BRP',
           tokenValidityMS: expect.any(Number),
         },
         {

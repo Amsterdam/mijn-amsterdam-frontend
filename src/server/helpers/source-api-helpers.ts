@@ -4,7 +4,7 @@ import { jsonCopy } from '../../universal/helpers/utils';
 import {
   ApiConfig,
   DataRequestConfig,
-  SourceApiKey,
+  SourceApiName,
 } from '../config/source-api';
 
 // To keep the cache key small, we exclude some generic function names.
@@ -20,7 +20,7 @@ const EXCLUDE_GENERIC_FUNCTION_NAMES_FROM_CACHE_KEY = [
 const SLICE_FUNCTION_NAMES = 3;
 
 function getApiConfigBasedCacheKey(
-  name: SourceApiKey,
+  name: SourceApiName,
   cacheKey_UNSAFE?: string
 ): string | null {
   if (!cacheKey_UNSAFE) {
@@ -46,7 +46,7 @@ function getApiConfigBasedCacheKey(
 }
 
 export function getApiConfig(
-  name: SourceApiKey,
+  name: SourceApiName,
   config: DataRequestConfig = {}
 ): Readonly<DataRequestConfig> {
   const apiConfig = ApiConfig[name];
