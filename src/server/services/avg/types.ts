@@ -1,4 +1,4 @@
-import { ZaakDetail } from '../../../universal/types/App.types';
+import { ZaakAanvraagDetail } from '../../../universal/types/App.types';
 import { SmileSourceResponse, SmileFieldValue } from '../smile/smile-types';
 
 export type AVGResponse = {
@@ -6,7 +6,7 @@ export type AVGResponse = {
   verzoeken: AVGRequestFrontend[];
 };
 
-export interface AVGRequestFrontend extends ZaakDetail {
+export interface AVGRequestFrontend extends ZaakAanvraagDetail {
   registratieDatum: string;
   type: string;
   toelichting: string;

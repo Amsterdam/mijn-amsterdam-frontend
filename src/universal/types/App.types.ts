@@ -89,7 +89,7 @@ export interface StatusLineItem<T extends ZaakStatus = string> {
   actionButtonItems?: LinkProps[];
 }
 
-export interface ZaakDetail<T extends ZaakStatus = string> {
+export interface ZaakAanvraagDetail<T extends ZaakStatus = string> {
   id: string;
   title: string;
   steps: StatusLineItem<T>[];
@@ -98,7 +98,7 @@ export interface ZaakDetail<T extends ZaakStatus = string> {
   displayStatus: string;
 }
 
-export type StatusLine = ZaakDetail;
+export type StatusLine = ZaakAanvraagDetail;
 
 export interface ApiError {
   name: string;

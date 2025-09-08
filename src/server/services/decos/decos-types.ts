@@ -2,7 +2,7 @@ import { SomeOtherString } from '../../../universal/helpers/types';
 import { OmitMapped } from '../../../universal/helpers/utils';
 import {
   GenericDocument,
-  ZaakDetail,
+  ZaakAanvraagDetail,
 } from '../../../universal/types/App.types';
 
 type DecosDocumentBase = {
@@ -273,4 +273,4 @@ export type DecosZaakFrontend<T extends DecosZaakBase = DecosZaakBase> =
     fetchDocumentsUrl?: string;
     // Url to fetch the raw data for a specific Zaak.
     fetchSourceRaw?: string;
-  } & ZaakDetail;
+  } & ZaakAanvraagDetail;

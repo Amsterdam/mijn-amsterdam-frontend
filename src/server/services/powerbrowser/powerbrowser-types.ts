@@ -2,7 +2,7 @@ import { SELECT_FIELDS_TRANSFORM_BASE } from './powerbrowser-field-transformers'
 import { OmitMapped } from '../../../universal/helpers/utils';
 import {
   GenericDocument,
-  ZaakDetail,
+  ZaakAanvraagDetail,
 } from '../../../universal/types/App.types';
 import { AuthProfile } from '../../auth/auth-types';
 
@@ -64,6 +64,40 @@ export type PBDocumentRecord = PBRecord<'DOCLINK', PBDocumentFields[]>;
 export type PBAdresLinkFields = PBRecordField<'FMT_CAPTION'>;
 
 export type PBAdresLinkRecord = PBRecord<'ADRESSEN', PBAdresLinkFields[]>;
+
+export type BBVergunningZaakStatus =
+  | 'Ontvangen'
+  | 'In behandeling'
+  | 'Afgehandeld'
+  | 'Verlopen'
+  | null;
+export type BBVergunningZaakResult =
+  | 'Verleend'
+  | 'Niet verleend'
+  | 'Ingetrokken'
+  | string
+  | null;
+
+export type BBVergunningFrontend = ZaakAanvraagDetail & {
+  location: string | null;
+  dateDecision: string | null;
+  dateDecisionFormatted: string | null;
+  dateEnd: string | null;
+  dateEndFormatted: string | null;
+  dateRequest: string | null;
+  dateRequestFormatted: string | null;
+  dateStart: string;
+  dateStartFormatted: string | null;
+  decision: BBVergunningZaakResult;
+  isVerleend: boolean;
+  documents: GenericDocument[];
+  heeftOvergangsRecht: boolean;
+  identifier: string;
+  processed: boolean;
+  isExpired: boolean;
+  displayStatus: BBVergunningZaakStatus | BBVergunningZaakResult;
+  title: 'Vergunning bed & breakfast';
+};
 
 export const fieldMap: Record<PBZaakFields['fieldName'], string> = {
   ZAAK_IDENTIFICATIE: 'zaaknummer',
