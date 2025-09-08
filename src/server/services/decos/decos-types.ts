@@ -191,7 +191,8 @@ export type DecosZaakTransformer<T extends DecosZaakBase = any> = {
 export type ZakenFilter = (zaak: DecosZaakBase) => boolean;
 
 export type DecosZaakBase = {
-  caseType: string;
+  itemType: string;
+  caseType: string | null;
   dateDecision: string | null;
   dateRequest: string;
 

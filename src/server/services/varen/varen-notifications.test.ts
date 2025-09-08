@@ -57,9 +57,12 @@ describe('Notifications', () => {
       dateRequest: '2024-09-01T00:00:00',
     };
 
-    vi.spyOn(decos, 'fetchDecosZaken').mockResolvedValueOnce(
-      apiSuccessResult([zaakRecent, zaakOlderThen3Months])
-    );
+    vi.spyOn(decos, 'fetchDecosZaken')
+      .mockResolvedValueOnce(apiSuccessResult([]))
+      .mockResolvedValueOnce(
+        apiSuccessResult([zaakRecent, zaakOlderThen3Months])
+      )
+      .mockResolvedValueOnce(apiSuccessResult([]));
 
     const { content } = await fetchVarenNotifications(authProfileAndToken);
 
@@ -74,16 +77,13 @@ describe('Notifications', () => {
       id: 'Z-25-0000001',
       caseType: 'Varen registratie reder',
       dateRequest: '2025-01-01T00:00:00',
-      termijnDates: [],
-      statusDates: [],
     } satisfies Partial<VarenRegistratieRederType>;
     const rederRegistratie =
       rederRegistratie_ as unknown as VarenRegistratieRederType;
 
-    vi.spyOn(decos, 'fetchDecosZaken').mockResolvedValueOnce(
-      apiSuccessResult([rederRegistratie])
-    );
-
+    vi.spyOn(decos, 'fetchDecosZaken')
+      .mockResolvedValueOnce(apiSuccessResult([rederRegistratie]))
+      .mockResolvedValue(apiSuccessResult([]));
     const response = await fetchVarenNotifications(authProfileAndToken);
     const successResponse = {
       status: 'OK',
@@ -128,9 +128,12 @@ describe('Notifications', () => {
       dateDecision: '2025-01-20T00:00:00',
     } as unknown as ZaakVergunningExploitatieType;
 
-    vi.spyOn(decos, 'fetchDecosZaken').mockResolvedValueOnce(
-      apiSuccessResult([zaakInProgress, zaakMeerInformatie, zaakDecision])
-    );
+    vi.spyOn(decos, 'fetchDecosZaken')
+      .mockResolvedValueOnce(apiSuccessResult([]))
+      .mockResolvedValueOnce(
+        apiSuccessResult([zaakInProgress, zaakMeerInformatie, zaakDecision])
+      )
+      .mockResolvedValueOnce(apiSuccessResult([]));
 
     const response = await fetchVarenNotifications(authProfileAndToken);
     const successResponse = {

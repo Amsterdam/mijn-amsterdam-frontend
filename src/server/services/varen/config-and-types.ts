@@ -51,10 +51,6 @@ export type DecosVarenZaakVergunning = {
   vesselWidth: string | null; // 0.01 meters
   vesselLength: string | null; // 0.01 meters
 };
-export type VarenVergunningExploitatieType = DecosVarenZaakBase & {
-  caseType: 'Varen vergunning exploitatie';
-  title: 'Varen vergunning exploitatie';
-};
 
 export type DecosVarenZaakBase = DecosZaakBase &
   DecosVarenZaakVergunning & {
@@ -63,18 +59,28 @@ export type DecosVarenZaakBase = DecosZaakBase &
     vergunningen: DecosVarenZaakVergunning[];
   };
 
+export type VarenVergunningExploitatieType = DecosVarenZaakBase & {
+  itemType: 'varens';
+  caseType: null;
+  title: 'Varen vergunning exploitatie';
+  // dateEnd: string | null;
+};
+
 export type ZaakVergunningExploitatieType = DecosVarenZaakBase & {
+  itemType: 'folders';
   caseType: GetCaseType<'ZaakVergunningExploitatie'>;
 };
 
 export type ZaakVergunningExploitatieWijzigingVaartuigNaamType =
   DecosVarenZaakBase & {
+    itemType: 'folders';
     caseType: GetCaseType<'ZaakVergunningExploitatieWijzigingVaartuignaam'>;
     vesselNameNew: string | null;
   };
 
 export type ZaakVergunningExploitatieWijzigingVergunningshouderType =
   DecosVarenZaakBase & {
+    itemType: 'folders';
     caseType: GetCaseType<'ZaakVergunningExploitatieWijzigingVergunningshouder'>;
     statutoryName: string | null;
     businessAddress: string | null;
@@ -83,16 +89,19 @@ export type ZaakVergunningExploitatieWijzigingVergunningshouderType =
 
 export type ZaakVergunningExploitatieWijzigingVerbouwingType =
   DecosVarenZaakBase & {
+    itemType: 'folders';
     caseType: GetCaseType<'ZaakVergunningExploitatieWijzigingVerbouwing'>;
   };
 
 export type ZaakVergunningExploitatieWijzigingVervangingType =
   DecosVarenZaakBase & {
+    itemType: 'folders';
     caseType: GetCaseType<'ZaakVergunningExploitatieWijzigingVervanging'>;
     vesselNameNew: string | null;
   };
 
 export type VarenRegistratieRederType = DecosZaakBase & {
+  itemType: 'folders';
   linkDataRequest: string | null;
   caseType: GetCaseType<'ZaakRederRegistratie'>;
   title: 'Varen registratie reder';

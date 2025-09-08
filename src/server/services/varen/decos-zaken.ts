@@ -8,7 +8,11 @@ import type {
   ZaakVergunningExploitatieWijzigingVergunningshouderType,
   ZaakVergunningExploitatieWijzigingVervangingType,
 } from './config-and-types';
-import { SELECT_FIELDS_TRANSFORM_BASE } from '../decos/decos-field-transformers';
+import {
+  dateEnd,
+  dateStart,
+  SELECT_FIELDS_TRANSFORM_BASE,
+} from '../decos/decos-field-transformers';
 import { transformFieldValuePairs } from '../decos/decos-service';
 import { DecosZaakTransformer } from '../decos/decos-types';
 
@@ -35,11 +39,18 @@ export const VarenVergunningExploitatie: DecosZaakTransformer<VarenVergunningExp
   {
     isActive: true,
     itemType: 'varens',
-    caseType: 'Varen vergunning exploitatie',
+    caseType: null,
     title: 'Varen vergunning exploitatie',
     transformFields: {
-      ...SELECT_FIELDS_TRANSFORM,
+      mark: 'identifier',
+      ...vesselSegment,
+      ...vesselEniNumber,
+      ...vesselLengths,
+      subject2: 'vesselName' as const,
+      date6: dateStart,
+      date7: dateEnd,
     },
+    isVerleend: (_zaak) => true,
   };
 
 export const ZaakRegistratieReder: DecosZaakTransformer<VarenRegistratieRederType> =
@@ -157,14 +168,12 @@ export const ZaakVergunningExploitatieWijzigingVervanging: DecosZaakTransformer<
     },
   };
 
-const decosCaseToZaakTransformers = [
-  ZaakRegistratieReder,
-  VarenVergunningExploitatie,
+export const decosRederZaakTransformers = [ZaakRegistratieReder];
+export const decosVergunningTransformers = [VarenVergunningExploitatie];
+export const decosZaakTransformers = [
   ZaakVergunningExploitatie,
   ZaakVergunningExploitatieWijzigenVaartuignaam,
   ZaakVergunningExploitatieWijzigenVerbouwing,
   ZaakVergunningExploitatieWijzigingVergunningshouder,
   ZaakVergunningExploitatieWijzigingVervanging,
 ];
-
-export const decosZaakTransformers = decosCaseToZaakTransformers;

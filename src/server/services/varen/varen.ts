@@ -8,15 +8,23 @@ import {
   VarenRegistratieRederType,
   VarenZakenFrontend,
 } from './config-and-types';
-import { decosZaakTransformers } from './decos-zaken';
+import {
+  decosRederZaakTransformers,
+  decosVergunningTransformers,
+  decosZaakTransformers,
+} from './decos-zaken';
 import { getStatusSteps } from './varen-status-steps';
 import { isVergunning } from '../../../client/pages/Thema/Varen/helper';
 import { routeConfig } from '../../../client/pages/Thema/Varen/Varen-thema-config';
-import { apiSuccessResult } from '../../../universal/helpers/api';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+} from '../../../universal/helpers/api';
 import { omit, toDateFormatted } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { fetchDecosZaken } from '../decos/decos-service';
 import { transformDecosZaakFrontend } from '../decos/decos-service';
+import { DecosZaakTransformer } from '../decos/decos-types';
 
 function transformVarenRederFrontend(
   zaak: VarenRegistratieRederType | null | undefined
@@ -83,27 +91,49 @@ function transformVarenZakenFrontend(
 }
 
 export async function fetchVaren(authProfileAndToken: AuthProfileAndToken) {
-  const response = await fetchDecosZaken(
-    authProfileAndToken,
-    decosZaakTransformers
-  );
+  const _fetchDecosZaken = (transformers: DecosZaakTransformer[]) =>
+    fetchDecosZaken(authProfileAndToken, transformers);
 
-  if (response.status !== 'OK') {
-    return response;
+  const [reder, zaken, vergunningen] = await Promise.all([
+    _fetchDecosZaken(decosRederZaakTransformers).then((r) => {
+      if (r.status === 'OK') {
+        return apiSuccessResult(transformVarenRederFrontend(r.content[0]));
+      }
+      return r;
+    }),
+    _fetchDecosZaken(decosZaakTransformers).then((r) => {
+      if (r.status === 'OK') {
+        return apiSuccessResult(
+          r.content.flatMap((z) =>
+            transformVarenZakenFrontend(authProfileAndToken, z)
+          )
+        );
+      }
+      return r;
+    }),
+    _fetchDecosZaken(decosVergunningTransformers).then((r) => {
+      if (r.status === 'OK') {
+        return apiSuccessResult(
+          r.content.flatMap((z) =>
+            transformVarenZakenFrontend(authProfileAndToken, z)
+          )
+        );
+      }
+      return apiSuccessResult([]);
+    }),
+  ]);
+
+  if (
+    reder.status !== 'OK' ||
+    zaken.status !== 'OK' ||
+    vergunningen.status !== 'OK'
+  ) {
+    return apiErrorResult('Failed dependencies', null);
   }
 
-  const decosZaken = response.content;
-  const reder = decosZaken.find(
-    (zaak) => zaak.caseType === 'Varen registratie reder'
-  );
-  const rederFrontend = transformVarenRederFrontend(reder);
-
-  const zakenFrontend = decosZaken
-    .filter((zaak) => zaak.caseType !== 'Varen registratie reder')
-    .flatMap((zaak) => transformVarenZakenFrontend(authProfileAndToken, zaak));
-
   return apiSuccessResult({
-    reder: rederFrontend,
-    zaken: zakenFrontend,
+    reder: reder.content,
+    zaken: zaken.content,
+    vergunningen: vergunningen.content,
   });
 }

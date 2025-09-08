@@ -237,6 +237,7 @@ async function transformDecosZaakResponse<
   // For example, if we selected only the sourcefield `mark` we'd have a decosZaak with a value for `identifier`..
   let decosZaak: DZ = {
     id: transformedFields.identifier.replaceAll('/', '-'),
+    itemType: decosZaakTransformer.itemType,
     key: decosZaakSource.key,
     title: decosZaakTransformer.title,
     statusDates: [], // Serves as placeholder, values for this property will be added async below.
@@ -451,6 +452,7 @@ async function fetchZakenByUserKey(
       select: fields,
       filter: caseTypeQuery,
     });
+
     const apiConfig = getApiConfig('DECOS_API', {
       formatUrl: (config) => {
         return `${config.url}/items/${userKey}/${itemType}`;
@@ -460,7 +462,7 @@ async function fetchZakenByUserKey(
         if (!Array.isArray(responseData?.content)) {
           return [];
         }
-        return responseData.content;
+        return responseData.content.map((c) => ({ ...c, itemType }));
       },
     });
 
@@ -950,7 +952,7 @@ export function transformDecosZaakFrontend<T extends DecosZaakBase>(
     displayStatus: getDisplayStatus(zaak, steps),
     link: {
       to: generatePath(options.detailPageRoute, {
-        caseType: slug(zaak.caseType, { lower: true }),
+        caseType: slug(zaak.caseType || zaak.itemType, { lower: true }),
         id: zaak.id,
       }),
       title: `Bekijk hoe het met uw aanvraag staat`,

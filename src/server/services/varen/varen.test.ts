@@ -3,7 +3,7 @@ import { afterAll, describe, expect, it } from 'vitest';
 
 import {
   DecosVarenZaakVergunning,
-  ZaakVergunningExploitatieType,
+  VarenVergunningExploitatieType,
 } from './config-and-types';
 import { fetchVaren } from './varen';
 import { getAuthProfileAndToken } from '../../../testing/utils';
@@ -53,8 +53,8 @@ const zakenContent = [
     dateRequest: '2025-01-01T00:00:00',
     dateDecision: '2025-01-03T00:00:00',
     vergunningen: [vergunning1, vergunning2],
-  } satisfies Partial<ZaakVergunningExploitatieType>,
-] as unknown as ZaakVergunningExploitatieType[];
+  } satisfies Partial<VarenVergunningExploitatieType>,
+] as unknown as VarenVergunningExploitatieType[];
 
 describe('Varen service', () => {
   const authProfileAndToken = getAuthProfileAndToken();
@@ -67,7 +67,7 @@ describe('Varen service', () => {
 
   describe('fetchVaren', () => {
     it('should respond with a success response on empty zaken list', async () => {
-      vi.spyOn(decos, 'fetchDecosZaken').mockResolvedValueOnce(
+      vi.spyOn(decos, 'fetchDecosZaken').mockResolvedValue(
         apiSuccessResult([])
       );
 
@@ -77,27 +77,28 @@ describe('Varen service', () => {
         content: {
           reder: null,
           zaken: [],
+          vergunningen: [],
         },
       };
       expect(response).toStrictEqual(successResponse);
     });
 
     it('should respond with an error response if decos fetchDecosZaken returns an error', async () => {
-      vi.spyOn(decos, 'fetchDecosZaken').mockResolvedValueOnce(
+      vi.spyOn(decos, 'fetchDecosZaken').mockResolvedValue(
         apiErrorResult('Error', null)
       );
 
       const response = await fetchVaren(authProfileAndToken);
       const errorResponse = {
         content: null,
-        message: 'Error',
+        message: 'Failed dependencies',
         status: 'ERROR',
       };
       expect(response).toStrictEqual(errorResponse);
     });
 
     it('should return a list of VarenFrontend zaken', async () => {
-      vi.spyOn(decos, 'fetchDecosZaken').mockResolvedValueOnce(
+      vi.spyOn(decos, 'fetchDecosZaken').mockResolvedValue(
         apiSuccessResult(zakenContent)
       );
 
@@ -167,7 +168,7 @@ describe('Varen service', () => {
         },
       ];
 
-      vi.spyOn(decos, 'fetchDecosZaken').mockResolvedValueOnce(
+      vi.spyOn(decos, 'fetchDecosZaken').mockResolvedValue(
         apiSuccessResult(zakenContentWithoutVergunning)
       );
 
