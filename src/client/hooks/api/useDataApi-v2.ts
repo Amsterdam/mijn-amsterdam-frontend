@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { create, type UseBoundStore } from 'zustand/react';
 import type { StoreApi } from 'zustand/vanilla';
@@ -216,7 +216,7 @@ export function useItemStoreWithFetch<X>(
   const { data, isLoading, isError, fetch } = api;
   const item = itemStore.getItem(x);
   const itemRemote = data?.content ?? null;
-  const hasRemoteDossier = itemStore.hasItem(x);
+  const hasRemoteDossier = !api.isLoading && itemStore.hasItem(x);
 
   useEffect(() => {
     if (itemRemote && x && !hasRemoteDossier && itemRemote[key] === x) {
@@ -224,15 +224,20 @@ export function useItemStoreWithFetch<X>(
     }
   }, [x, key, itemRemote, hasRemoteDossier]);
 
+  const fetchItem = useCallback(
+    (url: string | URL, forceRefetch: boolean = false) => {
+      if (forceRefetch || !hasRemoteDossier) {
+        fetch(url);
+      }
+    },
+    [fetch, x, hasRemoteDossier]
+  );
+
   return {
     item,
     items: itemStore.items,
     isLoading,
     isError,
-    fetch: (url: string | URL) => {
-      if (x && !hasRemoteDossier) {
-        fetch(url);
-      }
-    },
+    fetch: fetchItem,
   };
 }
