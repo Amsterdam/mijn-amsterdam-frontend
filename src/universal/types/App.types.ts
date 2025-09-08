@@ -11,7 +11,6 @@ export type AppStateBase = {
 };
 
 export type AppState = AppStateBase;
-
 export type AppStateKey = keyof AppState;
 
 // Generic object interface
