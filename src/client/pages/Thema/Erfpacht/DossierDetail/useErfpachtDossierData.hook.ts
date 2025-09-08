@@ -10,7 +10,7 @@ import { getTableConfig } from '../Erfpacht-thema-config';
 import { useErfpachtThemaData } from '../useErfpachtThemaData.hook';
 
 const useErfpachtDossierApi = createGetApiHook<ErfpachtDossiersDetail>();
-const useDossierByIdStore = createItemStoreHook<ErfpachtDossiersDetail>(
+const useDossierByUrlParamStore = createItemStoreHook<ErfpachtDossiersDetail>(
   'dossierNummerUrlParam'
 );
 
@@ -36,7 +36,7 @@ export function useDossierData() {
     isError,
   } = useItemStoreWithFetch<ErfpachtDossiersDetail>(
     useErfpachtDossierApi,
-    useDossierByIdStore,
+    useDossierByUrlParamStore,
     'dossierNummerUrlParam',
     dossierNummerUrlParam
   );
