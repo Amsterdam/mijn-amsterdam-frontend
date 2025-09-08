@@ -36,10 +36,7 @@ import {
   useItemStoreWithFetch,
 } from '../../../hooks/api/useItemStore';
 import { useSmallScreen } from '../../../hooks/media.hook';
-import {
-  useAppStateBagApi,
-  useAppStateGetter,
-} from '../../../hooks/useAppState';
+import { useAppStateGetter } from '../../../hooks/useAppState';
 import {
   useThemaBreadcrumbs,
   useThemaMenuItemByThemaID,
@@ -237,56 +234,42 @@ export function useAfisThemaData() {
   };
 }
 
+const useAfisBusinesspartnerApi =
+  createGetApiHook<AfisBusinessPartnerDetailsTransformed>();
+
 export function useAfisBetaalVoorkeurenData(
   businessPartnerIdEncrypted:
     | AfisThemaResponse['businessPartnerIdEncrypted']
     | undefined
 ) {
-  const [
-    businesspartnerDetailsApiResponse,
-    fetchBusinessPartnerDetails,
-    isApiDataCached,
-  ] = useAppStateBagApi<AfisBusinessPartnerDetailsTransformed | null>({
-    bagThema: `${themaId}_BAG`,
-    key: `afis-betaalvoorkeuren`,
-  });
+  const api = useAfisBusinesspartnerApi();
 
   useEffect(() => {
-    if (businessPartnerIdEncrypted && !isApiDataCached) {
-      fetchBusinessPartnerDetails({
-        url: `${BFFApiUrls.AFIS_BUSINESSPARTNER}?id=${businessPartnerIdEncrypted}`,
-      });
+    if (businessPartnerIdEncrypted && !api.isDirty && !api.isLoading) {
+      api.fetch(
+        `${BFFApiUrls.AFIS_BUSINESSPARTNER}?id=${businessPartnerIdEncrypted}`
+      );
     }
-  }, [
-    businessPartnerIdEncrypted,
-    fetchBusinessPartnerDetails,
-    isApiDataCached,
-  ]);
+  }, [businessPartnerIdEncrypted, api.fetch]);
+
+  const businesspartnerDetailsApiResponse = api.data;
 
   return {
     title: 'Betaalvoorkeuren',
-    businesspartnerDetails: businesspartnerDetailsApiResponse.content,
+    businesspartnerDetails: businesspartnerDetailsApiResponse?.content,
     businessPartnerDetailsLabels,
-    isLoadingBusinessPartnerDetails: isLoading(
-      businesspartnerDetailsApiResponse
-    ),
-    hasBusinessPartnerDetailsError: isError(
-      businesspartnerDetailsApiResponse,
-      false
-    ),
+    isLoadingBusinessPartnerDetails: api.isLoading,
+    hasBusinessPartnerDetailsError: api.isError,
     hasEmandatesError: false,
-    hasFailedEmailDependency: hasFailedDependency(
-      businesspartnerDetailsApiResponse,
-      'email'
-    ),
-    hasFailedPhoneDependency: hasFailedDependency(
-      businesspartnerDetailsApiResponse,
-      'phone'
-    ),
-    hasFailedFullNameDependency: hasFailedDependency(
-      businesspartnerDetailsApiResponse,
-      'fullName'
-    ),
+    hasFailedEmailDependency: businesspartnerDetailsApiResponse
+      ? hasFailedDependency(businesspartnerDetailsApiResponse, 'email')
+      : false,
+    hasFailedPhoneDependency: businesspartnerDetailsApiResponse
+      ? hasFailedDependency(businesspartnerDetailsApiResponse, 'phone')
+      : false,
+    hasFailedFullNameDependency: businesspartnerDetailsApiResponse
+      ? hasFailedDependency(businesspartnerDetailsApiResponse, 'fullName')
+      : false,
     eMandateTableConfig,
     eMandates: [],
     isLoadingEmandates: false,
