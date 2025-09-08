@@ -112,9 +112,10 @@ function getPersoonOrMaatschapOptions(
   return optionsByProfileType[authProfile.profileType];
 }
 
-async function fetchPersoonOrMaatschapIdByUid(
+// Returns all PERSONEN or MAATSCHAP records attached to the provided profileID (bsn or kvknummer)
+async function fetchPersonenOrMaatschappenIdsByProfileID(
   options: FetchPersoonOrMaatschapIdByUidOptions
-): Promise<ApiResponse<string>> {
+): Promise<ApiResponse<string[]>> {
   const requestConfig: DataRequestConfig = {
     formatUrl({ url }) {
       return `${url}/SearchRequest`;
@@ -122,32 +123,22 @@ async function fetchPersoonOrMaatschapIdByUid(
     transformResponse(
       responseData: SearchRequestResponse<typeof options.tableName>
     ) {
-      return responseData.records?.[0]?.id ?? null;
+      return responseData.records?.map((record) => record.id) ?? [];
     },
     data: {
       query: {
         tableName: options.tableName,
-        fieldNames: ['ID', options.fieldName],
         conditions: [
           {
             fieldName: options.fieldName,
             fieldValue: options.profileID,
-            operator: 0,
-            dataType: 0,
-          },
-          {
-            fieldName: 'AUTHENTIEK',
-            fieldValue: 'J',
-            operator: 0,
-            dataType: 0,
           },
         ],
-        limit: 1,
+        limit: 100, // This is assumed a safe limit for the search. We don't expect the system to actually have this much PERSONEN records related to the profileID.
       },
-      pageNumber: 0,
     },
   };
-  const response = await fetchPowerBrowserData<string>(requestConfig);
+  const response = await fetchPowerBrowserData<string[]>(requestConfig);
   if (response.status === 'ERROR') {
     return apiErrorResult(
       response.message || 'Could not get personID for BBVergunning',
@@ -540,11 +531,12 @@ async function fetchPBZaken<T extends PowerBrowserZaakTransformer>(
     return apiErrorResult('Profile type not supported', null);
   }
 
-  const persoonIdResponse = await fetchPersoonOrMaatschapIdByUid(tableOptions);
-  if (persoonIdResponse.status !== 'OK') {
-    return persoonIdResponse;
+  const idsResponse =
+    await fetchPersonenOrMaatschappenIdsByProfileID(tableOptions);
+  if (idsResponse.status !== 'OK') {
+    return idsResponse;
   }
-  if (!persoonIdResponse.content) {
+  if (!idsResponse.content?.length) {
     return apiSuccessResult([]);
   }
 
@@ -562,7 +554,7 @@ async function fetchPBZaken<T extends PowerBrowserZaakTransformer>(
           }))
         );
       },
-      data: [persoonIdResponse.content],
+      data: idsResponse.content,
     });
   if (zakenIdsToZakentransformerResponse.status !== 'OK') {
     return zakenIdsToZakentransformerResponse;
@@ -650,7 +642,7 @@ export function transformPBZaakFrontend<T extends PowerBrowserZaakBase>(
 export const forTesting = {
   fetchPowerBrowserToken_,
   fetchPowerBrowserData,
-  fetchPersoonOrMaatschapIdByUid,
+  fetchPersonenOrMaatschappenIdsByProfileID,
   fetchSettledZaakAdres,
   fetchZaakAdres,
   fetchSettledZaakStatusDates,
