@@ -33,7 +33,7 @@ export const themaTitleDetail = 'Lood in bodem-check';
 export const profileTypes: ProfileType[] = ['private', 'commercial'] as const;
 
 // -----------------------------
-// Routes
+// Routes (backend/data)
 // -----------------------------
 export const routeConfig = {
   detailPage: {
@@ -59,7 +59,7 @@ export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 // -----------------------------
-// Tabellenconfig
+// Tabellenconfig (backend/data)
 // -----------------------------
 const displayPropsLopend: DisplayProps<LoodMetingFrontend> = {
   props: {
@@ -111,7 +111,7 @@ export const tableConfig = {
 } as const;
 
 // -----------------------------
-// Links
+// Links (backend/data)
 // -----------------------------
 export const linkListItems: LinkProps[] = [
   {

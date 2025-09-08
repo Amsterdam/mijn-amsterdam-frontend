@@ -17,7 +17,7 @@ import {
 } from '../../../config/thema-types';
 
 // -----------------------------
-// Routes (frontend-specifiek, React componenten)
+// Routes (frontend React-components)
 // -----------------------------
 export const BodemRoutes = [
   {
