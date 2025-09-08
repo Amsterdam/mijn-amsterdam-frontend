@@ -2,7 +2,7 @@ import { DataTableBijzondereBepalingen } from './DossierDetail/DatalistBijzonder
 import { DatalistGeneral } from './DossierDetail/DatalistGeneral';
 import { DatalistJuridisch } from './DossierDetail/DatalistJuridisch';
 import { DatalistsFinancieel } from './DossierDetail/DatalistsFinancieel';
-import { useDossierDetaiLData as useDossierDetailData } from './DossierDetail/erfpachtDossierData.hook';
+import { useDossierData as useDossierDetailData } from './DossierDetail/useErfpachtDossierData.hook';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';

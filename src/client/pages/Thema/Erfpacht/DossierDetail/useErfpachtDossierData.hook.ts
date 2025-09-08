@@ -1,16 +1,20 @@
-import { useEffect } from 'react';
-
 import { useParams } from 'react-router';
 
 import type { ErfpachtDossiersDetail } from '../../../../../server/services/erfpacht/erfpacht-types';
-import { BFFApiUrls } from '../../../../config/api';
-import { createGetApiHook } from '../../../../hooks/api/useDataApi-v2';
+import {
+  createGetApiHook,
+  createItemStoreHook,
+  useItemStoreWithFetch,
+} from '../../../../hooks/api/useDataApi-v2';
 import { getTableConfig } from '../Erfpacht-thema-config';
 import { useErfpachtThemaData } from '../useErfpachtThemaData.hook';
 
 const useErfpachtDossierApi = createGetApiHook<ErfpachtDossiersDetail>();
+const useDossierByIdStore = createItemStoreHook<ErfpachtDossiersDetail>(
+  'dossierNummerUrlParam'
+);
 
-export function useDossierDetaiLData() {
+export function useDossierData() {
   const { dossierNummerUrlParam } = useParams<{
     dossierNummerUrlParam: string;
   }>();
@@ -26,15 +30,20 @@ export function useDossierDetaiLData() {
     id: themaId,
   } = useErfpachtThemaData();
 
-  const { data, isLoading, isError, isDirty, fetch } = useErfpachtDossierApi();
-  const dossier = data?.content ?? null;
+  const {
+    item: dossier,
+    isLoading,
+    isError,
+  } = useItemStoreWithFetch<ErfpachtDossiersDetail>(
+    useErfpachtDossierApi,
+    useDossierByIdStore,
+    'dossierNummerUrlParam',
+    dossierNummerUrlParam
+  );
+
   const tableConfig = dossier
     ? getTableConfig({ erfpachtData, dossier })
     : null;
-
-  useEffect(() => {
-    fetch(`${BFFApiUrls.ERFPACHT_DOSSIER_DETAILS}/${dossierNummerUrlParam}`);
-  }, [isDirty, fetch]);
 
   return {
     themaId,
