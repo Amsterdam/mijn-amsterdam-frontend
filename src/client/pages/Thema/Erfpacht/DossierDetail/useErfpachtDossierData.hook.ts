@@ -4,11 +4,11 @@ import { useParams } from 'react-router';
 
 import type { ErfpachtDossiersDetail } from '../../../../../server/services/erfpacht/erfpacht-types';
 import { BFFApiUrls } from '../../../../config/api';
+import { createGetApiHook } from '../../../../hooks/api/useDataApi-v2';
 import {
-  createGetApiHook,
   createItemStoreHook,
   useItemStoreWithFetch,
-} from '../../../../hooks/api/useDataApi-v2';
+} from '../../../../hooks/api/useItemStore';
 import { getTableConfig } from '../Erfpacht-thema-config';
 import { useErfpachtThemaData } from '../useErfpachtThemaData.hook';
 
