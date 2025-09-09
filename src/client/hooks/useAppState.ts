@@ -61,11 +61,10 @@ export function useAppStateFallbackService({
 
   // If no EvenSource support or EventSource fails, the Fallback service endpoint is used for fetching all the data.
   useEffect(() => {
-    if (!isEnabled) {
-      return;
+    if (isEnabled && api.isPristine) {
+      api.fetch();
     }
-    api.fetch();
-  }, [api.fetch, isEnabled, profileType]);
+  }, [api.fetch, api.isPristine, isEnabled, profileType]);
 
   // Update the appState with data fetched by the Fallback service endpoint
   useEffect(() => {

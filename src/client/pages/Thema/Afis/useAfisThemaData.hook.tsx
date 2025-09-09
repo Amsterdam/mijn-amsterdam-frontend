@@ -149,7 +149,7 @@ function useAfisFacturenApi(
         `${BFFApiUrls.AFIS_FACTUREN}/${state}?id=${businessPartnerIdEncrypted}`
       );
     }
-  }, [fetch, state, businessPartnerIdEncrypted]);
+  }, [fetch, state, businessPartnerIdEncrypted, isLoading]);
 
   const facturenByStateApiUpdated = useTransformFacturen(
     facturenResponse
