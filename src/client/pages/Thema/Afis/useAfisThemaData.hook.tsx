@@ -33,7 +33,7 @@ import { BFFApiUrls } from '../../../config/api';
 import { createApiHook } from '../../../hooks/api/useDataApi-v2';
 import {
   createItemStoreHook,
-  useItemStoreWithFetch,
+  useApiStoreByKey,
 } from '../../../hooks/api/useItemStore';
 import { useSmallScreen } from '../../../hooks/media.hook';
 import { useAppStateGetter } from '../../../hooks/useAppState';
@@ -136,7 +136,7 @@ function useAfisFacturenApi(
     isLoading,
     isError,
     fetch,
-  } = useItemStoreWithFetch<AfisFacturenResponse>(
+  } = useApiStoreByKey<AfisFacturenResponse>(
     useAfisFacturenFetchApi,
     useAfisFacturenByStateStore,
     'state',

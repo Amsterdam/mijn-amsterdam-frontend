@@ -7,7 +7,7 @@ import { BFFApiUrls } from '../../../../config/api';
 import { createApiHook } from '../../../../hooks/api/useDataApi-v2';
 import {
   createItemStoreHook,
-  useItemStoreWithFetch,
+  useApiStoreByKey,
 } from '../../../../hooks/api/useItemStore';
 import { getTableConfig } from '../Erfpacht-thema-config';
 import { useErfpachtThemaData } from '../useErfpachtThemaData.hook';
@@ -38,7 +38,7 @@ export function useDossierData() {
     isLoading,
     isError,
     fetch,
-  } = useItemStoreWithFetch<ErfpachtDossiersDetail>(
+  } = useApiStoreByKey<ErfpachtDossiersDetail>(
     useErfpachtDossierApi,
     useDossierByUrlParamStore,
     'dossierNummerUrlParam',
