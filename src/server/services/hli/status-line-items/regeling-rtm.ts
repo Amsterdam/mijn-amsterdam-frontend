@@ -85,10 +85,14 @@ export function filterCombineRtmData(
  *
  * ## Scenarios
  *
- *  2m - 1h - 2h - 1h - 2h.x   1 - 2 - 1h - 2h - 1h - 2h.x    1 - 2.x    1 - 2 - 1h - 2h - 1h - 2h.x
- * |________________________| |___________________________|  |_______|  |___________________________|
+ *  2m - 1h - 2h - 1h - 2h.x   1t - 2 - 1h - 2h - 1h - 2h.x    1t - 2.x    1t - 2 - 1h - 2h - 1h - 2h.x
+ * |________________________| |____________________________|  |________|  |___________________________|
  *
- * 1 = RTM1
+ *  1a
+ * |__|
+ *
+ * 1t = RTM1 toegewezen
+ * 1a = RTM1 afgewezen
  * 1h = Aanvraag Aanpassing (herkeuring)
  * 2 = RTM
  * 2h = RTM Aanpassing (obv herkeuring)
@@ -100,7 +104,8 @@ function combineRTMData(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ): ZorgnedHLIRegeling[] {
   aanvragen = aanvragen
-    // Sort asc so we always end with an 'Einde recht'
+    // Sort asc so we always end with an 'Einde recht'.
+    // This keeps it in the same order as how we describe the scenarios, so you don't need to think in reverse.
     .toSorted(sortByNumber('id', 'asc'));
   aanvragen = dedupCombineRTMDeel2(aanvragen);
 
