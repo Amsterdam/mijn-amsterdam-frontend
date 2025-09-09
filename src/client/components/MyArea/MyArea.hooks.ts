@@ -426,30 +426,6 @@ export function useFilterControlItemChange() {
   );
 }
 
-const doVoid = () => void 0;
-
-export function useResetMyAreaState() {
-  const resetActiveDatasetIdsAtom = doVoid;
-  const resetActiveDatasetFiltersAtom = doVoid;
-  const resetDatasetFilterSelectionAtom = doVoid;
-  const resetLoadingFeatureAtom = doVoid;
-  const resetSelectedFeatureAtom = doVoid;
-
-  return useCallback(() => {
-    resetActiveDatasetIdsAtom();
-    resetActiveDatasetFiltersAtom();
-    resetDatasetFilterSelectionAtom();
-    resetLoadingFeatureAtom();
-    resetSelectedFeatureAtom();
-  }, [
-    resetActiveDatasetIdsAtom,
-    resetActiveDatasetFiltersAtom,
-    resetDatasetFilterSelectionAtom,
-    resetLoadingFeatureAtom,
-    resetSelectedFeatureAtom,
-  ]);
-}
-
 export interface QueryConfig {
   datasetIds?: DatasetId[];
   filters?: DatasetFilterSelection;

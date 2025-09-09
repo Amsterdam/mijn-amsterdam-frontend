@@ -3,11 +3,7 @@ import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router';
 
 import { useLandScape, useWidescreen } from '../../../hooks/media.hook';
-import {
-  useFetchPanelFeature,
-  useLoadingFeature,
-  useResetMyAreaState,
-} from '../MyArea.hooks';
+import { useFetchPanelFeature, useLoadingFeature } from '../MyArea.hooks';
 import { DatasetCategoryPanel } from './DatasetCategoryPanel';
 import { PanelComponent } from './PanelComponent';
 import MyAreaDetailPanel from './PanelContent/MyAreaDetailPanel';
@@ -23,7 +19,6 @@ export function LegendPanel({ availableHeight }: LegendPanelProps) {
   const isLandscape = useLandScape();
   const { loadingFeature, setLoadingFeature } = useLoadingFeature();
   const prevFilterPanelState = useRef<PanelState | null>(null);
-  const resetMyAreaState = useResetMyAreaState();
   const location = useLocation();
 
   useFetchPanelFeature();
@@ -48,9 +43,8 @@ export function LegendPanel({ availableHeight }: LegendPanelProps) {
     return () => {
       detailPanelCycle.reset();
       filterPanelCycle.reset();
-      resetMyAreaState();
     };
-  }, [resetMyAreaState]);
+  }, []);
 
   // Set panel state without explicit panel interaction. Effect reacts to loading detailed features.
   useEffect(() => {
