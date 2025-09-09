@@ -16,30 +16,6 @@ export type SessionData = {
   expiresAtMilliseconds: number; // In milliseconds
 };
 
-const INITIAL_SESSION_CONTENT: SessionData = {
-  isAuthenticated: false,
-  profileType: null,
-  authMethod: null,
-  expiresAtMilliseconds: 0,
-};
-
-export interface SessionState extends SessionData {
-  refetch: () => void;
-  logout: () => void;
-  isPristine: boolean;
-  isDirty: boolean;
-  isLoading: boolean;
-}
-
-export const INITIAL_SESSION_STATE: SessionState = {
-  ...INITIAL_SESSION_CONTENT,
-  isLoading: true,
-  isPristine: true,
-  isDirty: false,
-  refetch: () => void 0,
-  logout: () => void 0,
-};
-
 const useSessionApiFetcher = createApiHook<SessionData>({
   defaultUrl: AUTH_API_URL,
 });
