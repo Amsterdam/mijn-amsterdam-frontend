@@ -30,6 +30,7 @@ export function useBezwarenDetailData() {
   const {
     item: bezwaarDetail,
     meta: bezwaarDetailMeta,
+    items,
     isLoading,
     isError,
     fetch,

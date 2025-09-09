@@ -9,7 +9,7 @@ const useCmsMaintenanceNotificationsApi =
   createApiHook<CMSMaintenanceNotification[]>();
 
 export function useCmsMaintenanceNotifications(
-  page?: string,
+  page: string,
   fromApiDirectly: boolean = false
 ) {
   const { CMS_MAINTENANCE_NOTIFICATIONS } = useAppStateGetter();
@@ -23,7 +23,7 @@ export function useCmsMaintenanceNotifications(
       url.searchParams.append('page', page || '');
       api.fetch(url);
     }
-  }, [fromApiDirectly, page]);
+  }, [fromApiDirectly, page, api.fetch]);
 
   const notifications = fromApiDirectly
     ? api.data?.content

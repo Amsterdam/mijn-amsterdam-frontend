@@ -268,15 +268,15 @@ function determineUwUitgavenDescription(
 function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showError, setShowError] = useState(false);
-  const { error, isMutating, trigger: blockStadspas } = useBlockStadspas();
+  const { isError, isLoading, fetch } = useBlockStadspas();
 
   useEffect(() => {
-    if (error && !isMutating && !showError) {
+    if (isError && !isLoading && !showError) {
       setShowError(true);
     }
-  }, [error, showError, isMutating]);
+  }, [isError, showError, isLoading]);
 
-  if (!stadspas.actief && !isMutating) {
+  if (!stadspas.actief && !isLoading) {
     return <PassBlockedAlert />;
   }
 
@@ -297,7 +297,7 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
           </Paragraph>
         </Alert>
       )}
-      {isMutating ? (
+      {isLoading ? (
         <Alert severity="warning" heading="Blokkeren" headingLevel={4}>
           <Paragraph>
             <Spinner /> <span>Bezig met het blokkeren van de pas...</span>
@@ -332,7 +332,7 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
                 setShowError(false);
                 setIsModalOpen(false);
                 if (stadspas.blockPassURL) {
-                  blockStadspas(stadspas.blockPassURL);
+                  fetch(stadspas.blockPassURL);
                 }
               }}
             >
@@ -407,13 +407,13 @@ function PassBlockedAlert() {
 function UnblockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showError, setShowError] = useState(false);
-  const { error, isMutating, trigger: deblokkeerStadspas } = useBlockStadspas();
+  const { isError, isLoading, fetch } = useBlockStadspas();
 
   useEffect(() => {
-    if (error && !isMutating && !showError) {
+    if (isError && !isLoading && !showError) {
       setShowError(true);
     }
-  }, [error, showError, isMutating]);
+  }, [isError, showError, isLoading]);
 
   if (stadspas.actief) {
     return;
@@ -431,7 +431,7 @@ function UnblockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
           <Paragraph>Probeer het nog eens.</Paragraph>
         </Alert>
       )}
-      {isMutating ? (
+      {isLoading ? (
         <Alert heading="Deblokkeren" headingLevel={4} severity="warning">
           <Paragraph>
             <Spinner /> <span>Bezig met deblokkeren...</span>
@@ -466,7 +466,7 @@ function UnblockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
                 setShowError(false);
                 setIsModalOpen(false);
                 if (stadspas.unblockPassURL) {
-                  deblokkeerStadspas(stadspas.unblockPassURL);
+                  fetch(stadspas.unblockPassURL);
                 }
               }}
             >

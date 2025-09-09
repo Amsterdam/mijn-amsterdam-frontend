@@ -9,7 +9,7 @@ export function useVergunningDocumentList(url?: string) {
   const api = useVergunningenDocumentsApi();
 
   useEffect(() => {
-    if (!api.isLoading) {
+    if (!api.isLoading && !api.isError && url) {
       api.fetch(url);
     }
   }, [api.fetch, api.isLoading, url]);

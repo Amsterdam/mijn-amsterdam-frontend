@@ -119,6 +119,7 @@ export function useApiStoreByKey<X>(
     item,
     meta,
     items: itemStore.items,
+    store: itemStore,
     isLoading,
     isError,
     fetch: fetchItem,
