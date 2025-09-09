@@ -1,17 +1,25 @@
-import useSWR from 'swr';
-import useSWRMutation from 'swr/mutation';
-
 import {
   StadspasFrontend,
   type PasblokkadeByPasnummer,
 } from '../../../../server/services/hli/stadspas-types';
+import { createApiHook } from '../../../hooks/api/useDataApi-v2';
+import {
+  createItemStoreHook,
+  useApiStoreByKey,
+} from '../../../hooks/api/useItemStore';
 import { useAppStateGetter } from '../../../hooks/useAppState';
+
+const useBlockStadspasApi = createApiHook<PasblokkadeByPasnummer>();
+const useBlockStadspasStore =
+  createItemStoreHook<PasblokkadeByPasnummer>('passNumber');
 
 export function useStadspassen() {
   const { HLI } = useAppStateGetter();
-  const { data: passBlokkadeByPasnummer } = useBlockStadspas();
+  const { getItem } = useBlockStadspasStore();
   const stadspassen = (HLI.content?.stadspas?.stadspassen || []).map((pas) => {
-    const isGeblokkeerd = passBlokkadeByPasnummer?.[pas.passNumber];
+    const pasBlokkade = getItem(pas.passNumber);
+    const isGeblokkeerd =
+      pasBlokkade !== null ? !pasBlokkade.actief : undefined;
     const stadspas: StadspasFrontend = {
       ...pas,
       actief:
@@ -24,42 +32,13 @@ export function useStadspassen() {
   return stadspassen;
 }
 
-type BlokkeerURL = string;
-
 export function useBlockStadspas() {
-  const { data } = useSWR<PasblokkadeByPasnummer>('pasblokkades');
-  const mutation = useSWRMutation<
-    PasblokkadeByPasnummer,
-    Error,
-    'pasblokkades',
-    BlokkeerURL
-  >(
-    'pasblokkades',
-    async (_key, { arg: url }) => {
-      const response = await fetch(url, {
-        credentials: 'include',
-      }).then((response) => response.json());
-
-      if (response.status !== 'OK') {
-        throw new Error(response.message);
-      }
-
-      return response.content;
-    },
-    {
-      revalidate: false,
-      populateCache: (responseContent, pasBlokkadeByPasnummer) => {
-        const newState = {
-          ...pasBlokkadeByPasnummer,
-          ...responseContent,
-        };
-        return newState;
-      },
-    }
+  const store = useApiStoreByKey<PasblokkadeByPasnummer>(
+    useBlockStadspasApi,
+    useBlockStadspasStore,
+    'passNumber',
+    null
   );
 
-  return {
-    ...mutation,
-    data,
-  };
+  return store;
 }
