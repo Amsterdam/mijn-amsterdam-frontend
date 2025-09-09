@@ -13,11 +13,13 @@ import type { ThemaRoutesConfig } from '../../../config/thema-types';
 type ThemaConfig = {
   id: string;
   title: string;
+  titleDetail: string;
 };
 
 export const themaConfig: ThemaConfig = {
   id: 'BODEM',
   title: 'Bodem',
+  titleDetail: 'Lood in bodem-check',
 };
 
 const listPageParamKind = {
@@ -28,10 +30,10 @@ const listPageParamKind = {
 export const featureToggle = {
   BodemActive: true,
 };
-
+//seBodemDetailData.hook.tsx heeft nog themaId maar lijkt ongebruikt
 export const themaId = 'BODEM' as const;
-export const themaTitle = 'Bodem';
-export const themaTitleDetail = 'Lood in bodem-check';
+//export const themaTitle = 'Bodem';
+//export const themaTitleDetail = 'Lood in bodem-check';
 
 export const routeConfig = {
   detailPage: {
@@ -42,7 +44,7 @@ export const routeConfig = {
   listPage: {
     path: '/bodem/lijst/lood-meting/:kind/:page?',
     documentTitle: (params) =>
-      `${params?.kind === listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaTitle}`,
+      `${params?.kind === listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaConfig.title}`,
   },
   themaPage: {
     path: '/bodem',

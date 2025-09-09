@@ -1,6 +1,6 @@
 import { useParams } from 'react-router';
 
-import { routeConfig, themaTitleDetail } from './Bodem-thema-config';
+import { routeConfig, themaConfig } from './Bodem-thema-config';
 import { useBodemData } from './useBodemData.hook';
 
 export function useBodemDetailData() {
@@ -11,7 +11,7 @@ export function useBodemDetailData() {
 
   return {
     themaId,
-    title: themaTitleDetail,
+    title: themaConfig.titleDetail,
     meting,
     isLoading,
     isError,
