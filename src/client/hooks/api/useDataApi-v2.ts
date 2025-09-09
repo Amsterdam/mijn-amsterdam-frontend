@@ -56,11 +56,28 @@ export async function sendJSONPostRequest<T extends any>(
 }
 
 export type ApiGetState<T> = {
+  /**
+   * The data returned from the API
+   */
   data: T | null;
+  /** The error message when the request failed
+   */
   errorData: string | null;
+  /**
+   * Whether the data has been fetched at least once
+   */
   isDirty: boolean;
+  /**
+   * Whether the request returned an error
+   */
   isError: boolean;
+  /**
+   * Whether the data is currently being fetched
+   */
   isLoading: boolean;
+  /**
+   * Whether the data has not been fetched yet and is not loading.
+   */
   isPristine: boolean;
 };
 
