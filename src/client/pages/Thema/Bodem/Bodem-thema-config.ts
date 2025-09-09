@@ -31,7 +31,7 @@ export const featureToggle = {
   BodemActive: true,
 };
 //seBodemDetailData.hook.tsx heeft nog themaId maar lijkt ongebruikt
-export const themaId = 'BODEM' as const;
+//export const themaId = 'BODEM' as const;
 //export const themaTitle = 'Bodem';
 //export const themaTitleDetail = 'Lood in bodem-check';
 
