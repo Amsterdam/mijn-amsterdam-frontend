@@ -10,6 +10,16 @@ import {
 } from '../../../config/app';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
+type ThemaConfig = {
+  id: string;
+  title: string;
+};
+
+export const themaConfig: ThemaConfig = {
+  id: 'BODEM',
+  title: 'Bodem',
+};
+
 const listPageParamKind = {
   inProgress: 'lopende-aanvragen',
   completed: 'afgehandelde-aanvragen',
@@ -27,7 +37,7 @@ export const routeConfig = {
   detailPage: {
     path: '/bodem/lood-meting/:id',
     trackingUrl: '/bodem/lood-meting',
-    documentTitle: `Lood in de bodem-check | ${themaTitle}`,
+    documentTitle: `Lood in de bodem-check | ${themaConfig.title}`,
   },
   listPage: {
     path: '/bodem/lijst/lood-meting/:kind/:page?',
@@ -36,7 +46,7 @@ export const routeConfig = {
   },
   themaPage: {
     path: '/bodem',
-    documentTitle: `${themaTitle} | overzicht`,
+    documentTitle: `${themaConfig.title} | overzicht`,
   },
 } as const satisfies ThemaRoutesConfig;
 

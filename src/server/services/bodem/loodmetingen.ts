@@ -11,8 +11,7 @@ import {
 } from './types';
 import {
   routeConfig,
-  themaId,
-  themaTitle,
+  themaConfig,
 } from '../../../client/pages/Thema/Bodem/Bodem-thema-config';
 import {
   apiDependencyError,
@@ -256,8 +255,8 @@ function createLoodNotification(meting: LoodMetingFrontend): MyNotification {
     MyNotification,
     'title' | 'description' | 'datePublished'
   > = {
-    themaID: themaId,
-    themaTitle: themaTitle,
+    themaID: themaConfig.id,
+    themaTitle: themaConfig.title,
     id: meting.kenmerk,
     link: {
       to: meting.link.to,
