@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 
 import { FeatureToggle } from '../../../../../universal/config/feature-toggles';
 import { AppState } from '../../../../../universal/types/App.types';
-import { createGetApiHook } from '../../../../hooks/api/useDataApi-v2';
+import { createApiHook } from '../../../../hooks/api/useDataApi-v2';
 
-const useResidentsCountApi = createGetApiHook<{ residentCount: number }>();
+const useResidentsCountApi = createApiHook<{ residentCount: number }>();
 
 export function useAantalBewonersOpAdres(
   brpContent: AppState['BRP']['content']

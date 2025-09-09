@@ -30,7 +30,7 @@ import { LinkProps } from '../../../../universal/types/App.types';
 import { DocumentLink } from '../../../components/DocumentList/DocumentLink';
 import { MaLink } from '../../../components/MaLink/MaLink';
 import { BFFApiUrls } from '../../../config/api';
-import { createGetApiHook } from '../../../hooks/api/useDataApi-v2';
+import { createApiHook } from '../../../hooks/api/useDataApi-v2';
 import {
   createItemStoreHook,
   useItemStoreWithFetch,
@@ -117,7 +117,7 @@ function useTransformFacturen(
   return facturenByStateTransformed;
 }
 
-const useAfisFacturenFetchApi = createGetApiHook<AfisFacturenResponse>();
+const useAfisFacturenFetchApi = createApiHook<AfisFacturenResponse>();
 const useAfisFacturenByStateStore =
   createItemStoreHook<AfisFacturenResponse>('state');
 
@@ -235,7 +235,7 @@ export function useAfisThemaData() {
 }
 
 const useAfisBusinesspartnerApi =
-  createGetApiHook<AfisBusinessPartnerDetailsTransformed>();
+  createApiHook<AfisBusinessPartnerDetailsTransformed>();
 
 export function useAfisBetaalVoorkeurenData(
   businessPartnerIdEncrypted:
