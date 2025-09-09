@@ -98,6 +98,13 @@ export interface ZaakAanvraagDetail<T extends ZaakStatus = string> {
   displayStatus: string;
 }
 
+export interface ZaakDetail {
+  id: string;
+  title: string;
+  link: LinkProps;
+  about?: string;
+}
+
 export type StatusLine = ZaakAanvraagDetail;
 
 export interface ApiError {

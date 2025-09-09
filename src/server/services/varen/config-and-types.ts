@@ -1,4 +1,5 @@
 import { OmitMapped } from '../../../universal/helpers/utils';
+import { ZaakDetail } from '../../../universal/types/App.types';
 import { DecosZaakBase, DecosZaakFrontend } from '../decos/decos-types';
 
 export type DecosZaakVarensFieldsSource = {
@@ -59,12 +60,13 @@ export type DecosVarenZaakBase = DecosZaakBase &
     vergunningen: DecosVarenZaakVergunning[];
   };
 
-export type VarenVergunningExploitatieType = DecosVarenZaakBase & {
-  itemType: 'varens';
-  caseType: null;
-  title: 'Varen vergunning exploitatie';
-  // dateEnd: string | null;
-};
+export type VarenVergunningExploitatieType = DecosZaakBase &
+  DecosVarenZaakVergunning & {
+    itemType: 'varens';
+    caseType: null;
+    title: 'Varen vergunning exploitatie';
+    dateEnd: string | null;
+  };
 
 export type ZaakVergunningExploitatieType = DecosVarenZaakBase & {
   itemType: 'folders';
@@ -119,6 +121,16 @@ export type VarenRegistratieRederType = DecosZaakBase & {
 export type VarenRegistratieRederFrontend = VarenRegistratieRederType & {
   dateRequestFormatted: string;
 };
+
+export type VarenVergunningFrontend = OmitMapped<
+  ZaakVergunningExploitatieType,
+  'statusDates' | 'termijnDates'
+> & {
+  dateStartFormatted: string | null;
+  dateEndFormatted: string | null;
+  isExpired?: boolean;
+  hasActiveZaak: boolean;
+} & ZaakDetail;
 
 export type Varen =
   | ZaakVergunningExploitatieType

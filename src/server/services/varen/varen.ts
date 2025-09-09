@@ -6,7 +6,9 @@ import {
   Varen,
   VarenRegistratieRederFrontend,
   VarenRegistratieRederType,
+  VarenVergunningFrontend,
   VarenZakenFrontend,
+  ZaakVergunningExploitatieType,
 } from './config-and-types';
 import {
   decosRederZaakTransformers,
@@ -90,6 +92,25 @@ function transformVarenZakenFrontend(
   return zakenFrontend;
 }
 
+function transformVarenVergunningFrontend(
+  vergunning: ZaakVergunningExploitatieType
+): VarenVergunningFrontend {
+  const appRoute = routeConfig.detailPage.path;
+  return {
+    ...omit(vergunning, ['statusDates', 'termijnDates']),
+    dateStartFormatted: toDateFormatted(vergunning.dateStart),
+    dateEndFormatted: toDateFormatted(vergunning.dateEnd),
+    hasActiveZaak: false,
+    link: {
+      to: generatePath(appRoute, {
+        caseType: slug(vergunning.itemType, { lower: true }),
+        id: vergunning.id,
+      }),
+      title: `Bekijk hoe het met uw aanvraag staat`,
+    },
+  };
+}
+
 export async function fetchVaren(authProfileAndToken: AuthProfileAndToken) {
   const _fetchDecosZaken = (transformers: DecosZaakTransformer[]) =>
     fetchDecosZaken(authProfileAndToken, transformers);
@@ -114,9 +135,7 @@ export async function fetchVaren(authProfileAndToken: AuthProfileAndToken) {
     _fetchDecosZaken(decosVergunningTransformers).then((r) => {
       if (r.status === 'OK') {
         return apiSuccessResult(
-          r.content.flatMap((z) =>
-            transformVarenZakenFrontend(authProfileAndToken, z)
-          )
+          r.content.flatMap(transformVarenVergunningFrontend)
         );
       }
       return apiSuccessResult([]);
@@ -131,9 +150,17 @@ export async function fetchVaren(authProfileAndToken: AuthProfileAndToken) {
     return apiErrorResult('Failed dependencies', null);
   }
 
+  const vergunningWithLinkedActiveZaak = vergunningen.content.map((v) => ({
+    ...v,
+    linkedActiveZaak:
+      zaken.content.find(
+        (z) => z.vergunning?.id === v.id && z.processed === false
+      ) || null,
+  }));
+
   return apiSuccessResult({
     reder: reder.content,
     zaken: zaken.content,
-    vergunningen: vergunningen.content,
+    vergunningen: vergunningWithLinkedActiveZaak,
   });
 }
