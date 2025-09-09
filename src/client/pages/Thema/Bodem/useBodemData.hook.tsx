@@ -1,9 +1,4 @@
-import {
-  linkListItems,
-  routeConfig,
-  tableConfig,
-  themaConfig,
-} from './Bodem-thema-config';
+import { routeConfig, tableConfig, themaConfig } from './Bodem-thema-config';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
 import { useAppStateGetter } from '../../../hooks/useAppState';
@@ -21,7 +16,7 @@ export function useBodemData() {
     isLoading: isLoading(BODEM),
     isError: isError(BODEM),
     items,
-    linkListItems,
+    linkListItems: themaConfig.linkListItems,
     breadcrumbs,
     listPageRoute: routeConfig.listPage.path,
     routeConfig,

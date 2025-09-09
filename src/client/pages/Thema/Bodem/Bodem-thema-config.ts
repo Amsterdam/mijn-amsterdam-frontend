@@ -14,12 +14,19 @@ type ThemaConfig = {
   id: string;
   title: string;
   titleDetail: string;
+  linkListItems: LinkProps[];
 };
 
 export const themaConfig: ThemaConfig = {
   id: 'BODEM',
   title: 'Bodem',
   titleDetail: 'Lood in bodem-check',
+  linkListItems: [
+    {
+      to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/bodem/loodcheck-tuin-aanvragen',
+      title: 'Meer informatie over lood in de bodem.',
+    },
+  ],
 };
 
 const listPageParamKind = {
@@ -104,9 +111,9 @@ export const tableConfig = {
   },
 } as const;
 
-export const linkListItems: LinkProps[] = [
-  {
-    title: 'Meer informatie over lood in de bodem.',
-    to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/bodem/loodcheck-tuin-aanvragen',
-  },
-] as const;
+// export const linkListItems: LinkProps[] = [
+//   {
+//     title: 'Meer informatie over lood in de bodem.',
+//     to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/bodem/loodcheck-tuin-aanvragen',
+//   },
+// ] as const;
