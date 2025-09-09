@@ -1,15 +1,18 @@
+import { useEffect } from 'react';
+
 import { useParams } from 'react-router';
-import useSWR from 'swr';
 
 import { useBezwarenThemaData } from './useBezwarenThemaData.hook';
 import { BezwaarDetail } from '../../../../server/services/bezwaren/bezwaren';
-import { FIFTEEN_MINUTES_MS } from '../../../../universal/config/app';
-import {
-  ApiSuccessResponse,
-  hasFailedDependency,
-  isError,
-} from '../../../../universal/helpers/api';
 import { uniqueArray } from '../../../../universal/helpers/utils';
+import { createApiHook } from '../../../hooks/api/useDataApi-v2';
+import {
+  createItemStoreHook,
+  useApiStoreByKey,
+} from '../../../hooks/api/useItemStore';
+
+const useBezwarenDetailApi = createApiHook<BezwaarDetail>();
+const useBezwarenItemStore = createItemStoreHook<BezwaarDetail>('zaakId');
 
 export function useBezwarenDetailData() {
   const {
@@ -25,20 +28,24 @@ export function useBezwarenDetailData() {
   const bezwaar = bezwaren.find((b) => b.uuid === uuid) ?? null;
 
   const {
-    data: bezwaarDetailResponse,
+    item: bezwaarDetail,
+    meta: bezwaarDetailMeta,
     isLoading,
-    error,
-  } = useSWR<ApiSuccessResponse<BezwaarDetail>>(
-    bezwaar?.fetchUrl,
-    (url: string) =>
-      fetch(url, { credentials: 'include' }).then((response) =>
-        response.json()
-      ),
-
-    { dedupingInterval: FIFTEEN_MINUTES_MS }
+    isError,
+    fetch,
+  } = useApiStoreByKey<BezwaarDetail>(
+    useBezwarenDetailApi,
+    useBezwarenItemStore,
+    'zaakId',
+    uuid ?? null
   );
 
-  const bezwaarDetail = bezwaarDetailResponse?.content;
+  useEffect(() => {
+    if (bezwaar?.fetchUrl) {
+      fetch(bezwaar.fetchUrl);
+    }
+  }, [fetch, bezwaar?.fetchUrl]);
+
   const documents = bezwaarDetail?.documents ?? [];
   const statussen = bezwaarDetail?.statussen ?? [];
 
@@ -59,12 +66,11 @@ export function useBezwarenDetailData() {
     isLoadingThemaData,
     isErrorThemaData,
     isError:
-      !!error ||
-      (bezwaarDetailResponse ? isError(bezwaarDetailResponse) : false),
-    dependencyErrors: bezwaarDetailResponse
+      isError || isErrorThemaData || !!bezwaarDetailMeta?.failedDependencies,
+    dependencyErrors: bezwaarDetailMeta
       ? {
-          Documenten: hasFailedDependency(bezwaarDetailResponse, 'documents'),
-          Statussen: hasFailedDependency(bezwaarDetailResponse, 'statussen'),
+          Documenten: 'documents' in bezwaarDetailMeta.failedDependencies,
+          Statussen: 'statussen' in bezwaarDetailMeta.failedDependencies,
         }
       : null,
     breadcrumbs,

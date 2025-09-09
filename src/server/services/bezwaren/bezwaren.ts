@@ -459,6 +459,7 @@ export async function fetchBezwarenNotifications(
 }
 
 export type BezwaarDetail = {
+  zaakId: BezwaarFrontend['uuid'];
   statussen: StatusLineItem[] | null;
   documents: BezwaarDocument[] | null;
 };
@@ -489,6 +490,7 @@ export async function fetchBezwaarDetail(
 
   return apiSuccessResult(
     {
+      zaakId,
       statussen: statussen.content,
       documents: documents.content,
     },
