@@ -46,7 +46,7 @@ function dedupCombineRTMDeel2(
       dedupedAanvragen.push(aanvraag);
       continue;
     }
-    const id = aanvraag.beschiktProductIdentificatie;
+    const id = `${aanvraag.procesAanvraagOmschrijving}-${aanvraag.beschiktProductIdentificatie}`;
     if (seenAanvragen[id]) {
       seenAanvragen[id].documenten.push(...aanvraag.documenten);
       continue;
@@ -128,7 +128,6 @@ function combineRTMData(
       ...acc.slice(0, -1),
       {
         ...aanvraag,
-        datumInBehandeling: prev.datumBesluit,
         datumAanvraag: prev.datumAanvraag ?? aanvraag.datumAanvraag,
         documenten: [...aanvraag.documenten, ...prev.documenten],
       },
