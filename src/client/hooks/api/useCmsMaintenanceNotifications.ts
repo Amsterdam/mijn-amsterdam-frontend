@@ -2,11 +2,11 @@ import { useEffect } from 'react';
 
 import { BFFApiUrls } from '../../config/api';
 import { useAppStateGetter } from '../useAppState';
-import { createGetApiHook } from './useDataApi-v2';
+import { createApiHook } from './useDataApi-v2';
 import type { CMSMaintenanceNotification } from '../../../server/services/cms/cms-maintenance-notifications';
 
 const useCmsMaintenanceNotificationsApi =
-  createGetApiHook<CMSMaintenanceNotification[]>();
+  createApiHook<CMSMaintenanceNotification[]>();
 
 export function useCmsMaintenanceNotifications(
   page?: string,

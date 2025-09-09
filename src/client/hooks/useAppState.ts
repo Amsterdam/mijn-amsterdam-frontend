@@ -9,7 +9,7 @@ import { PRISTINE_APPSTATE, createAllErrorState } from '../AppState';
 import { BFFApiUrls } from '../config/api';
 import { transformSourceData } from '../data-transform/appState';
 import { captureMessage } from '../helpers/monitoring';
-import { createGetApiHook } from './api/useDataApi-v2';
+import { createApiHook } from './api/useDataApi-v2';
 import { useProfileTypeValue } from './useProfileType';
 import { SSE_CLOSE_MESSAGE, SSE_ERROR_MESSAGE, useSSE } from './useSSE';
 
@@ -36,7 +36,7 @@ interface useAppStateFallbackServiceProps {
   isEnabled: boolean;
 }
 
-const useAppStateFallbackApi = createGetApiHook<AppState>({
+const useAppStateFallbackApi = createApiHook<AppState>({
   defaultUrl: BFFApiUrls.SERVICES_SAURON,
 });
 
