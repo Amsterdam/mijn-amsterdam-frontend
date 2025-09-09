@@ -4,7 +4,7 @@ import { useParams } from 'react-router';
 
 import type { ErfpachtDossiersDetail } from '../../../../../server/services/erfpacht/erfpacht-types';
 import { BFFApiUrls } from '../../../../config/api';
-import { createGetApiHook } from '../../../../hooks/api/useDataApi-v2';
+import { createApiHook } from '../../../../hooks/api/useDataApi-v2';
 import {
   createItemStoreHook,
   useItemStoreWithFetch,
@@ -12,7 +12,7 @@ import {
 import { getTableConfig } from '../Erfpacht-thema-config';
 import { useErfpachtThemaData } from '../useErfpachtThemaData.hook';
 
-const useErfpachtDossierApi = createGetApiHook<ErfpachtDossiersDetail>();
+const useErfpachtDossierApi = createApiHook<ErfpachtDossiersDetail>();
 const useDossierByUrlParamStore = createItemStoreHook<ErfpachtDossiersDetail>(
   'dossierNummerUrlParam'
 );

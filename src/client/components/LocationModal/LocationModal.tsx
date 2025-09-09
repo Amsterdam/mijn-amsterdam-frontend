@@ -20,7 +20,7 @@ import {
 } from '../../../universal/helpers/bag';
 import { BaseLayerType } from '../../components/MyArea/Map/BaseLayerToggle';
 import { MyAreaLoader } from '../../components/MyArea/MyAreaLoader';
-import { createGetApiHook } from '../../hooks/api/useDataApi-v2';
+import { createApiHook } from '../../hooks/api/useDataApi-v2';
 import { Modal } from '../Modal/Modal';
 import { MapLocationMarker } from '../MyArea/MyArea.hooks';
 
@@ -68,7 +68,7 @@ export interface LocationModalProps {
   children?: ReactNode;
 }
 
-const useBagApi = createGetApiHook<BAGSourceData>({
+const useBagApi = createApiHook<BAGSourceData>({
   init: {
     headers: {
       'X-Api-Key': import.meta.env.REACT_APP_DATA_AMSTERDAM_API_KEY,

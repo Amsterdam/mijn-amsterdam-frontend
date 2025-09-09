@@ -21,12 +21,11 @@ import {
   apiErrorResult,
   apiSuccessResult,
   isError,
-  type ApiResponse,
 } from '../../../universal/helpers/api';
 import { pick, uniqueArray } from '../../../universal/helpers/utils';
 import { AppState } from '../../../universal/types/App.types';
 import { BFFApiUrls } from '../../config/api';
-import { createGetApiHook } from '../../hooks/api/useDataApi-v2';
+import { createApiHook } from '../../hooks/api/useDataApi-v2';
 import { useSmallScreen } from '../../hooks/media.hook';
 import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
@@ -183,23 +182,19 @@ function transformSearchAmsterdamNLresponse(
 
 const RESULTS_PER_PAGE = 10;
 
-export async function sendGetRequest<T = SearchEntry[]>(
-  url: string
-): Promise<ApiResponse<T>> {
+export async function sendGetRequest(url: string | URL) {
   return fetch(url, { credentials: 'include' }).then(
     async (response: Response) => {
-      return (
-        !response.ok
-          ? apiErrorResult('Network response was not ok', null)
-          : apiSuccessResult(
-              transformSearchAmsterdamNLresponse(await response.json())
-            )
-      ) as ApiResponse<T>;
+      return !response.ok
+        ? apiErrorResult('Network response was not ok', null)
+        : apiSuccessResult(
+            transformSearchAmsterdamNLresponse(await response.json())
+          );
     }
   );
 }
 
-const useSearchAmsterdamApi = createGetApiHook<SearchEntry[]>({
+const useSearchAmsterdamApi = createApiHook<SearchEntry[]>({
   sendRequest: sendGetRequest,
 });
 
@@ -259,7 +254,7 @@ export const useSearchStore = create<SearchTermStore>((set) => ({
     set((state) => ({ results: { ...state.results, ...results } })),
 }));
 
-const useSearchConfigRemoteApi = createGetApiHook<{
+const useSearchConfigRemoteApi = createApiHook<{
   staticSearchEntries: SearchEntry[];
   apiSearchConfigs: RemoteApiSearchConfigs;
 }>({ defaultUrl: BFFApiUrls.SEARCH_CONFIGURATION });

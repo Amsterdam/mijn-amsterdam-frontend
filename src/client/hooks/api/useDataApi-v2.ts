@@ -93,7 +93,7 @@ type ApiGetOptions<T> = {
   ) => Promise<ApiResponse<T>>;
 };
 
-export function createGetApiHook<T>(options?: ApiGetOptions<T>) {
+export function createApiHook<T>(options?: ApiGetOptions<T>) {
   const { defaultUrl, sendRequest = sendGetRequest, init } = options || {};
 
   return create<ApiGetState<ApiResponse<T>> & ApiFetch>((set, get) => ({

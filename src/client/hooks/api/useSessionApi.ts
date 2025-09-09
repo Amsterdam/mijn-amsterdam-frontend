@@ -5,7 +5,7 @@ import { AUTH_API_URL, LOGOUT_URL } from '../../config/api';
 import { clearSessionStorage } from '../storage.hook';
 import { clearDeeplinkEntry } from '../useDeeplink.hook';
 import { useProfileType } from '../useProfileType';
-import { createGetApiHook } from './useDataApi-v2';
+import { createApiHook } from './useDataApi-v2';
 
 export const ONE_SECOND_MS = 1000;
 
@@ -40,7 +40,7 @@ export const INITIAL_SESSION_STATE: SessionState = {
   logout: () => void 0,
 };
 
-const useSessionApiFetcher = createGetApiHook<SessionData>({
+const useSessionApiFetcher = createApiHook<SessionData>({
   defaultUrl: AUTH_API_URL,
 });
 

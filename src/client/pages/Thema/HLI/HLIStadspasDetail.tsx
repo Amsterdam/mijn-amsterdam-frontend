@@ -36,7 +36,7 @@ import { PageHeadingV2 } from '../../../components/PageHeading/PageHeadingV2';
 import { Spinner } from '../../../components/Spinner/Spinner';
 import { TableV2 } from '../../../components/Table/TableV2';
 import { getRedactedClass } from '../../../helpers/cobrowse';
-import { createGetApiHook } from '../../../hooks/api/useDataApi-v2';
+import { createApiHook } from '../../../hooks/api/useDataApi-v2';
 import { useSmallScreen } from '../../../hooks/media.hook';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
@@ -81,7 +81,7 @@ const PHONENUMBERS = {
   WerkEnInkomen: '020 252 6000',
 } as const;
 
-const useFetchTransactionsApi = createGetApiHook<StadspasBudgetTransaction[]>();
+const useFetchTransactionsApi = createApiHook<StadspasBudgetTransaction[]>();
 
 export function HLIStadspasDetail() {
   const isPhoneScreen = useSmallScreen();
