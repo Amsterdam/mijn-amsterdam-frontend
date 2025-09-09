@@ -4,6 +4,7 @@ import {
   BeschiktProduct,
   LeveringsVorm,
   ZORGNED_GEMEENTE_CODE,
+  ZorgnedAanvraagSource,
   ZorgnedAanvraagTransformed,
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedAanvragenServiceOptions,
@@ -78,11 +79,8 @@ function transformDocumenten(documenten: ZorgnedDocument[]) {
 }
 
 function transformZorgnedAanvraag(
-  id: string,
-  datumAanvraag: string,
-  datumBesluit: string,
-  beschiktProduct: BeschiktProduct,
-  documenten: ZorgnedDocument[]
+  aanvraag: ZorgnedAanvraagSource,
+  beschiktProduct: BeschiktProduct
 ): ZorgnedAanvraagTransformed {
   const toegewezenProduct = beschiktProduct.toegewezenProduct;
   const toewijzingen = toegewezenProduct?.toewijzingen ?? [];
@@ -104,16 +102,17 @@ function transformZorgnedAanvraag(
   }
 
   const aanvraagTransformed: ZorgnedAanvraagTransformed = {
-    id,
-    datumAanvraag: datumAanvraag,
+    id: aanvraag.identificatie,
+    datumAanvraag: aanvraag.datumAanvraag,
     datumBeginLevering: levering?.begindatum ?? null,
-    datumBesluit: datumBesluit,
+    datumBesluit: aanvraag.beschikking.datumAfgifte ?? '', // See bug: MIJN-11809
     datumEindeGeldigheid: toegewezenProduct?.datumEindeGeldigheid ?? null,
     datumEindeLevering: levering?.einddatum ?? null,
     datumIngangGeldigheid: toegewezenProduct?.datumIngangGeldigheid ?? null,
     datumOpdrachtLevering: toewijzing?.datumOpdracht ?? null,
     datumToewijzing: toewijzing?.toewijzingsDatumTijd ?? null,
-    documenten: transformDocumenten(documenten),
+    procesAanvraagOmschrijving: aanvraag.procesAanvraag?.omschrijving ?? null,
+    documenten: transformDocumenten(aanvraag.documenten ?? []),
     isActueel: toegewezenProduct?.actueel ?? false,
     leverancier: toegewezenProduct?.leverancier?.omschrijving ?? '',
     leveringsVorm,
@@ -142,24 +141,17 @@ export function transformZorgnedAanvragen(
       continue;
     }
 
-    const datumBesluit = beschikking.datumAfgifte ?? ''; // See bug: MIJN-11809
-    const datumAanvraag = aanvraagSource.datumAanvraag;
     const beschikteProducten = beschikking.beschikteProducten;
 
     if (!beschikteProducten) {
       continue;
     }
 
-    const documenten: ZorgnedDocument[] = aanvraagSource.documenten ?? [];
-
     for (const beschiktProduct of beschikteProducten) {
       if (beschiktProduct) {
         const aanvraagTransformed = transformZorgnedAanvraag(
-          aanvraagSource.identificatie,
-          datumAanvraag,
-          datumBesluit,
-          beschiktProduct,
-          documenten
+          aanvraagSource,
+          beschiktProduct
         );
 
         if (aanvraagTransformed) {

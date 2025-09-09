@@ -1,6 +1,28 @@
 import { filterCombineRtmData } from './regeling-rtm';
 import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../../zorgned/zorgned-types';
 
+/** The ID determines the sorting order.
+ *  Thats why programmaticly adding an id makes predefined aanvragen more reusable.
+ */
+function attachIDToAanvragen(
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
+): ZorgnedAanvraagWithRelatedPersonsTransformed[] {
+  return aanvragen.map((aanvraag, i) => ({
+    ...aanvraag,
+    id: (i + 1).toString(),
+  }));
+}
+
+function getLastID(
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
+): string {
+  const last = aanvragen.at(-1)?.id;
+  if (!last) {
+    throw Error('No id found in the last aanvraag.');
+  }
+  return last;
+}
+
 const base = {
   bsnAanvrager: '000009945',
   betrokkenen: ['999994542', '999991000'],
@@ -25,7 +47,7 @@ const base = {
 };
 
 const RTM_1_AANVRAAG: ZorgnedAanvraagWithRelatedPersonsTransformed = {
-  id: '3162110',
+  id: '1',
   datumAanvraag: '2025-01-01',
   datumBeginLevering: null,
   datumBesluit: '2025-02-01',
@@ -34,6 +56,7 @@ const RTM_1_AANVRAAG: ZorgnedAanvraagWithRelatedPersonsTransformed = {
   datumIngangGeldigheid: '2025-05-01',
   datumOpdrachtLevering: null,
   datumToewijzing: null,
+  procesAanvraagOmschrijving: 'Aanvraag RTM fase 1',
   documenten: [
     {
       id: 'B3405439',
@@ -56,7 +79,7 @@ const RTM_1_AANVRAAG: ZorgnedAanvraagWithRelatedPersonsTransformed = {
 };
 
 const RTM_2_TOEGEWEZEN: ZorgnedAanvraagWithRelatedPersonsTransformed = {
-  id: '3162696',
+  id: '2',
   datumAanvraag: '2025-05-28',
   datumBeginLevering: null,
   datumBesluit: '2025-05-28',
@@ -65,6 +88,7 @@ const RTM_2_TOEGEWEZEN: ZorgnedAanvraagWithRelatedPersonsTransformed = {
   datumIngangGeldigheid: '2025-05-01',
   datumOpdrachtLevering: null,
   datumToewijzing: null,
+  procesAanvraagOmschrijving: 'Aanvraag RTM fase 2',
   documenten: [
     {
       id: 'B3400309',
@@ -87,7 +111,7 @@ const RTM_2_TOEGEWEZEN: ZorgnedAanvraagWithRelatedPersonsTransformed = {
 };
 
 const RTM_2_EINDE_RECHT: ZorgnedAanvraagWithRelatedPersonsTransformed = {
-  id: '3166814',
+  id: '3',
   datumAanvraag: '2025-05-20',
   datumBeginLevering: null,
   datumBesluit: '2025-07-15',
@@ -96,6 +120,8 @@ const RTM_2_EINDE_RECHT: ZorgnedAanvraagWithRelatedPersonsTransformed = {
   datumIngangGeldigheid: null,
   datumOpdrachtLevering: null,
   datumToewijzing: null,
+  // RP TODO: Characters look incorrect, is this because of our azure logging or send this way?
+  procesAanvraagOmschrijving: 'BeÃ«indigen RTM',
   documenten: [
     {
       id: 'B3405442',
@@ -124,7 +150,7 @@ const RTM_2_EINDE_RECHT: ZorgnedAanvraagWithRelatedPersonsTransformed = {
 };
 
 const RTM_WIJZIGINGS_AANVRAAG: ZorgnedAanvraagWithRelatedPersonsTransformed = {
-  id: '3170110',
+  id: '4',
   datumAanvraag: '2025-08-18',
   datumBeginLevering: null,
   datumBesluit: '2025-08-18',
@@ -133,6 +159,7 @@ const RTM_WIJZIGINGS_AANVRAAG: ZorgnedAanvraagWithRelatedPersonsTransformed = {
   datumIngangGeldigheid: '2025-08-18',
   datumOpdrachtLevering: null,
   datumToewijzing: null,
+  procesAanvraagOmschrijving: 'Aanvraag RTM fase 1',
   documenten: [
     {
       id: 'B3408760',
@@ -162,7 +189,7 @@ const RTM_WIJZIGINGS_AANVRAAG: ZorgnedAanvraagWithRelatedPersonsTransformed = {
 
 const RTM_WIJZIGINGS_TOEKENNING: ZorgnedAanvraagWithRelatedPersonsTransformed =
   {
-    id: '3170113',
+    id: '5',
     datumAanvraag: '2025-08-30',
     datumBeginLevering: null,
     datumBesluit: '2025-08-31',
@@ -171,6 +198,7 @@ const RTM_WIJZIGINGS_TOEKENNING: ZorgnedAanvraagWithRelatedPersonsTransformed =
     datumIngangGeldigheid: '2025-05-01',
     datumOpdrachtLevering: null,
     datumToewijzing: null,
+    procesAanvraagOmschrijving: 'RTM Herkeuring',
     documenten: [
       {
         id: 'B3408757',
@@ -196,7 +224,7 @@ const RTM_WIJZIGINGS_TOEKENNING: ZorgnedAanvraagWithRelatedPersonsTransformed =
 //   {};
 
 const UNKNOWN: ZorgnedAanvraagWithRelatedPersonsTransformed = {
-  id: '1111111',
+  id: '9999999',
   datumAanvraag: '2025-01-01',
   datumBeginLevering: null,
   datumBesluit: '2025-02-01',
@@ -205,6 +233,7 @@ const UNKNOWN: ZorgnedAanvraagWithRelatedPersonsTransformed = {
   datumIngangGeldigheid: null,
   datumOpdrachtLevering: null,
   datumToewijzing: null,
+  procesAanvraagOmschrijving: null,
   documenten: [],
   isActueel: true,
   leverancier: '',
@@ -220,208 +249,106 @@ const UNKNOWN: ZorgnedAanvraagWithRelatedPersonsTransformed = {
 };
 
 describe('filterCombineRtmData', () => {
-  test('Just aanvraag fase 1 and seperates rtm from other aanvragen', () => {
-    const [remainder, rtmAanvragen] = filterCombineRtmData([
-      UNKNOWN,
-      RTM_1_AANVRAAG,
-    ]);
+  test('Seperates from other zorgned type aanvragen', () => {
+    const aanvragen = attachIDToAanvragen([RTM_1_AANVRAAG, UNKNOWN]);
+    const [remainder, rtmAanvragen] = filterCombineRtmData(aanvragen);
     expect(rtmAanvragen[0].productIdentificatie).toBe('AV-RTM1');
     expect(remainder[0].productIdentificatie).toBe('AV-UNKNOWN');
   });
 
-  test('Merged part one and two into Besluit afgewezen', () => {
-    const [, result] = filterCombineRtmData([
-      RTM_2_EINDE_RECHT,
-      RTM_1_AANVRAAG,
-    ]);
+  test('Combines: Aanvraag -> Toegewezen', () => {
+    const aanvragen = attachIDToAanvragen([RTM_1_AANVRAAG, RTM_2_TOEGEWEZEN]);
+    const [, result] = filterCombineRtmData(aanvragen);
     expect(result).toStrictEqual([
       {
-        beschiktProductIdentificatie:
-          RTM_2_EINDE_RECHT.beschiktProductIdentificatie,
-        betrokkenPersonen: RTM_2_EINDE_RECHT.betrokkenPersonen,
+        ...RTM_2_TOEGEWEZEN,
+        betrokkenPersonen: base.betrokkenPersonen,
         betrokkenen: base.betrokkenen,
-        bsnAanvrager: RTM_2_EINDE_RECHT.bsnAanvrager,
         datumAanvraag: RTM_1_AANVRAAG.datumAanvraag,
-        datumBeginLevering: RTM_2_EINDE_RECHT.datumBeginLevering,
-        datumBesluit: RTM_2_EINDE_RECHT.datumBesluit,
-        datumEindeGeldigheid: RTM_2_EINDE_RECHT.datumEindeGeldigheid,
-        datumEindeLevering: RTM_2_EINDE_RECHT.datumEindeLevering,
-        datumInBehandeling: RTM_1_AANVRAAG.datumBesluit,
-        datumIngangGeldigheid: RTM_2_EINDE_RECHT.datumIngangGeldigheid,
-        datumOpdrachtLevering: RTM_2_EINDE_RECHT.datumOpdrachtLevering,
-        datumToewijzing: RTM_2_EINDE_RECHT.datumToewijzing,
+        documenten: [
+          ...RTM_2_TOEGEWEZEN.documenten,
+          ...RTM_1_AANVRAAG.documenten,
+        ],
+        id: getLastID(aanvragen),
+      },
+    ]);
+  });
+
+  test('Combines: Aanvraag -> Einde Recht', () => {
+    const aanvragen = attachIDToAanvragen([RTM_1_AANVRAAG, RTM_2_EINDE_RECHT]);
+    const [, result] = filterCombineRtmData(aanvragen);
+    expect(result).toStrictEqual([
+      {
+        ...RTM_2_EINDE_RECHT,
+        betrokkenen: base.betrokkenen,
+        datumAanvraag: RTM_1_AANVRAAG.datumAanvraag,
         documenten: [
           ...RTM_2_EINDE_RECHT.documenten,
           ...RTM_1_AANVRAAG.documenten,
         ],
-        id: RTM_2_EINDE_RECHT.id,
-        isActueel: RTM_2_EINDE_RECHT.isActueel,
-        leverancier: RTM_2_EINDE_RECHT.leverancier,
-        leveringsVorm: RTM_2_EINDE_RECHT.leveringsVorm,
-        productIdentificatie: RTM_2_EINDE_RECHT.productIdentificatie,
-        productsoortCode: RTM_2_EINDE_RECHT.productsoortCode,
-        resultaat: RTM_2_EINDE_RECHT.resultaat,
+        id: getLastID(aanvragen),
         titel: RTM_1_AANVRAAG.titel,
       },
     ]);
   });
 
-  test('Merged part one and two into: Besluit toegewezen', () => {
-    const [, result] = filterCombineRtmData([RTM_2_TOEGEWEZEN, RTM_1_AANVRAAG]);
-    expect(result).toStrictEqual([
-      {
-        beschiktProductIdentificatie:
-          RTM_2_TOEGEWEZEN.beschiktProductIdentificatie,
-        betrokkenPersonen: base.betrokkenPersonen,
-        betrokkenen: base.betrokkenen,
-        bsnAanvrager: RTM_2_TOEGEWEZEN.bsnAanvrager,
-        datumAanvraag: RTM_1_AANVRAAG.datumAanvraag,
-        datumBeginLevering: RTM_2_TOEGEWEZEN.datumBeginLevering,
-        datumBesluit: RTM_2_TOEGEWEZEN.datumBesluit,
-        datumEindeGeldigheid: RTM_2_TOEGEWEZEN.datumEindeGeldigheid,
-        datumEindeLevering: RTM_2_TOEGEWEZEN.datumEindeLevering,
-        datumInBehandeling: RTM_1_AANVRAAG.datumBesluit,
-        datumIngangGeldigheid: RTM_2_TOEGEWEZEN.datumIngangGeldigheid,
-        datumOpdrachtLevering: RTM_2_TOEGEWEZEN.datumOpdrachtLevering,
-        datumToewijzing: RTM_2_TOEGEWEZEN.datumToewijzing,
-        documenten: [
-          ...RTM_2_TOEGEWEZEN.documenten,
-          ...RTM_1_AANVRAAG.documenten,
-        ],
-        id: RTM_2_TOEGEWEZEN.id,
-        isActueel: RTM_2_TOEGEWEZEN.isActueel,
-        leverancier: RTM_2_TOEGEWEZEN.leverancier,
-        leveringsVorm: RTM_2_TOEGEWEZEN.leveringsVorm,
-        productIdentificatie: RTM_2_TOEGEWEZEN.productIdentificatie,
-        productsoortCode: RTM_2_TOEGEWEZEN.productsoortCode,
-        resultaat: RTM_2_TOEGEWEZEN.resultaat,
-        titel: RTM_2_TOEGEWEZEN.titel,
-      },
-    ]);
-  });
-
-  test('One Einde recht, double voorzieningingen are merged and duplicate dropped', () => {
+  test('Combines: Aanvraag -> Toegewezen -> Duplicate of the previous one', () => {
     const differences: Partial<ZorgnedAanvraagWithRelatedPersonsTransformed> = {
       resultaat: 'toegewezen',
       datumIngangGeldigheid: '2025-02-01',
       datumEindeGeldigheid: '2025-06-30',
       documenten: [],
     };
-    const [, result] = filterCombineRtmData([
+    const aanvragen = attachIDToAanvragen([
+      RTM_1_AANVRAAG,
+      RTM_2_TOEGEWEZEN,
       {
+        // The 'duplicate'.
         ...RTM_2_EINDE_RECHT,
         ...differences,
       },
-      RTM_2_TOEGEWEZEN,
-      RTM_1_AANVRAAG,
     ]);
+    const [, result] = filterCombineRtmData(aanvragen);
     expect(result).toStrictEqual([
       {
-        beschiktProductIdentificatie:
-          RTM_2_EINDE_RECHT.beschiktProductIdentificatie,
-        betrokkenPersonen: RTM_2_EINDE_RECHT.betrokkenPersonen,
+        ...RTM_2_EINDE_RECHT,
         betrokkenen: base.betrokkenen,
-        bsnAanvrager: RTM_2_EINDE_RECHT.bsnAanvrager,
         datumAanvraag: RTM_1_AANVRAAG.datumAanvraag,
-        datumBeginLevering: RTM_2_EINDE_RECHT.datumBeginLevering,
-        datumBesluit: RTM_2_EINDE_RECHT.datumBesluit,
         datumEindeGeldigheid: differences.datumEindeGeldigheid,
-        datumEindeLevering: RTM_2_EINDE_RECHT.datumEindeLevering,
-        datumInBehandeling: RTM_2_TOEGEWEZEN.datumBesluit,
         datumIngangGeldigheid: differences.datumIngangGeldigheid,
-        datumOpdrachtLevering: RTM_2_EINDE_RECHT.datumOpdrachtLevering,
-        datumToewijzing: RTM_2_EINDE_RECHT.datumToewijzing,
         documenten: [
           ...RTM_2_TOEGEWEZEN.documenten,
           ...RTM_1_AANVRAAG.documenten,
         ],
-        id: RTM_2_EINDE_RECHT.id,
-        isActueel: RTM_2_EINDE_RECHT.isActueel,
-        leverancier: RTM_2_EINDE_RECHT.leverancier,
-        leveringsVorm: RTM_2_EINDE_RECHT.leveringsVorm,
-        productIdentificatie: RTM_2_EINDE_RECHT.productIdentificatie,
-        productsoortCode: RTM_2_EINDE_RECHT.productsoortCode,
+        id: getLastID(aanvragen),
         resultaat: RTM_2_TOEGEWEZEN.resultaat,
-        titel: RTM_2_EINDE_RECHT.titel,
       },
     ]);
   });
 
-  // test('Combines: Aanvraag -> Toegewezen -> Wijzigings aanvraag -> Wijziging toegewezen', () => {
-  //   const [, result] = filterCombineRtmData([
-  //     RTM_WIJZIGINGS_TOEKENNING,
-  //     RTM_WIJZIGINGS_AANVRAAG,
-  //     RTM_2_TOEGEWEZEN,
-  //     RTM_1_AANVRAAG,
-  //   ]);
-  //   expect(result).toStrictEqual([
-  //     {
-  //       beschiktProductIdentificatie: '1523491',
-  //       betrokkenPersonen: base.betrokkenPersonen,
-  //       betrokkenen: ['129095205'],
-  //       bsnAanvrager: '000009945',
-  //       datumAanvraag: RTM_1_AANVRAAG.datumAanvraag,
-  //       datumBeginLevering: null,
-  //       datumBesluit: '2025-08-18',
-  //       datumEindeGeldigheid: '2026-08-18',
-  //       datumEindeLevering: null,
-  //       datumInBehandeling: '2025-02-01',
-  //       datumIngangGeldigheid: '2025-08-18',
-  //       datumOpdrachtLevering: null,
-  //       datumToewijzing: null,
-  //       documenten: [
-  //         {
-  //           datePublished: '2025-08-18T15:17:08.773',
-  //           id: 'B3408760',
-  //           title: 'AV-RTM Info aan klant GGD',
-  //           url: '',
-  //         },
-  //         {
-  //           datePublished: '2025-08-18T14:09:48.83',
-  //           id: 'B3408752',
-  //           title: 'AV-RTM Info aan klant GGD',
-  //           url: '',
-  //         },
-  //         {
-  //           datePublished: '2025-08-18T14:11:57',
-  //           id: 'E1082971',
-  //           title: 'advies GGD',
-  //           url: '',
-  //         },
-  //         {
-  //           datePublished: '2025-05-28T14:36:05.743',
-  //           id: 'B3400309',
-  //           title: 'Beschikking toekenning Reg Tegemoetk Meerkosten',
-  //           url: '',
-  //         },
-  //         {
-  //           datePublished: '2025-05-28T14:31:15',
-  //           id: 'E1082518',
-  //           title: 'advies GGD',
-  //           url: '',
-  //         },
-  //         {
-  //           datePublished: '2025-08-18T14:57:41.793',
-  //           id: 'B3408757',
-  //           title: 'Beschikking wijziging RTM',
-  //           url: '',
-  //         },
-  //         {
-  //           datePublished: '2025-07-15T15:31:56.833',
-  //           id: 'B3405439',
-  //           title: 'AV-RTM Info aan klant GGD',
-  //           url: '',
-  //         },
-  //       ],
-  //       id: '3170110',
-  //       isActueel: true,
-  //       leverancier: '',
-  //       leveringsVorm: '',
-  //       productIdentificatie: 'AV-RTM',
-  //       productsoortCode: 'AV-ALG',
-  //       resultaat: 'toegewezen',
-  //       titel: 'Regeling Tegemoetkoming Meerkosten',
-  //     },
-  //   ]);
-  // });
+  test('Combines: Aanvraag -> Toegewezen -> Wijzigings aanvraag -> Wijziging toegewezen', () => {
+    const aanvragen = attachIDToAanvragen([
+      RTM_1_AANVRAAG,
+      RTM_2_TOEGEWEZEN,
+      RTM_WIJZIGINGS_AANVRAAG,
+      RTM_WIJZIGINGS_TOEKENNING,
+    ]);
+    const [, result] = filterCombineRtmData(aanvragen);
+    expect(result).toStrictEqual([
+      {
+        ...RTM_WIJZIGINGS_TOEKENNING,
+        betrokkenPersonen: base.betrokkenPersonen,
+        betrokkenen: base.betrokkenen,
+        bsnAanvrager: base.bsnAanvrager,
+        datumAanvraag: RTM_1_AANVRAAG.datumAanvraag,
+        documenten: [
+          ...RTM_WIJZIGINGS_TOEKENNING.documenten,
+          ...RTM_WIJZIGINGS_AANVRAAG.documenten,
+          ...RTM_2_TOEGEWEZEN.documenten,
+          ...RTM_1_AANVRAAG.documenten,
+        ],
+        id: getLastID(aanvragen),
+      },
+    ]);
+  });
 });
