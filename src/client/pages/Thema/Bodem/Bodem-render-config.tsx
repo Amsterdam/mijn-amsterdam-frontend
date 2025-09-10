@@ -1,4 +1,4 @@
-import { routeConfig, featureToggle, themaConfig } from './Bodem-thema-config';
+import { routeConfig, themaConfig } from './Bodem-thema-config';
 import { BodemDetail } from './BodemDetail';
 import { default as BodemIcon } from './BodemIcon.svg?react';
 import { BodemList } from './BodemList';
@@ -36,7 +36,7 @@ export const menuItem: ThemaMenuItem = {
   redactedScope: 'none',
   isActive(appState: AppState) {
     return (
-      featureToggle.BodemActive &&
+      themaConfig.featureToggle &&
       !isLoading(appState.BODEM) &&
       !!appState.BODEM.content?.length
     );

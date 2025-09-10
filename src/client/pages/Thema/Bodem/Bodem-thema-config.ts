@@ -40,9 +40,9 @@ export const themaConfig: ThemaConfig = {
 //   completed: 'afgehandelde-aanvragen',
 // } as const;
 
-export const featureToggle = {
-  BodemActive: true,
-};
+// export const featureToggle = {
+//   BodemActive: true,
+// };
 
 //export const themaId = 'BODEM' as const;
 //export const themaTitle = 'Bodem';
