@@ -51,7 +51,7 @@ export function useSessionApi() {
   const { setProfileType } = useProfileType();
 
   useEffect(() => {
-    if (!sessionApi.isDirty) {
+    if (sessionApi.isPristine) {
       // Fetch initial
       sessionApi.fetch();
     }
@@ -85,8 +85,9 @@ export function useSessionApi() {
   }, []);
 
   return {
-    isDirty: sessionApi.isDirty,
+    isPristine: sessionApi.isPristine,
     isAuthenticated: sessionData?.isAuthenticated ?? false,
+    expiresAtMilliseconds: sessionData?.expiresAtMilliseconds ?? 0,
   };
 }
 
