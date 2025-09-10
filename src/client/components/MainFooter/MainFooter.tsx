@@ -75,7 +75,7 @@ export function MainFooter() {
       </PageFooter.Spotlight>
 
       <PageFooter.Menu>
-        {footer?.content?.bottomLinks.map((link) => {
+        {data?.content?.bottomLinks.map((link) => {
           return (
             <PageFooter.MenuLink key={link.label} href={link.url}>
               {link.label}
