@@ -80,7 +80,14 @@ export function useAppStateFallbackService({
       appStateError(errorMessage);
       setIsAppStateReady(true);
     }
-  }, [api, appStateError, setAppState, isEnabled, api.isPristine]);
+  }, [
+    api.data,
+    setIsAppStateReady,
+    appStateError,
+    setAppState,
+    isEnabled,
+    api.isPristine,
+  ]);
 }
 
 export function addParamsToStreamEndpoint(
