@@ -245,7 +245,7 @@ export function useAfisBetaalVoorkeurenData(
   const api = useAfisBusinesspartnerApi();
 
   useEffect(() => {
-    if (businessPartnerIdEncrypted && !api.isDirty && !api.isLoading) {
+    if (businessPartnerIdEncrypted && api.isPristine) {
       api.fetch(
         `${BFFApiUrls.AFIS_BUSINESSPARTNER}?id=${businessPartnerIdEncrypted}`
       );
