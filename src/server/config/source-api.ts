@@ -8,7 +8,7 @@ import {
   ONE_MINUTE_MS,
   ONE_SECOND_MS,
 } from './app';
-import { featureToggle as featureToggleBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config';
+import { themaConfig } from '../../client/pages/Thema/Bodem/Bodem-thema-config';
 import { featureToggle as featureToggleErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
 import { featureToggle as featureToggleHLI } from '../../client/pages/Thema/HLI/HLI-thema-config';
 import { featureToggle as featureToggleJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config';
@@ -332,7 +332,7 @@ const ApiConfig_ = {
   LOOD_365: {
     url: `${getFromEnv('BFF_LOOD_API_URL')}`,
     method: 'POST',
-    postponeFetch: !featureToggleBodem.BodemActive,
+    postponeFetch: !themaConfig.featureToggle,
   },
   MS_OAUTH: {
     url: `${getFromEnv('BFF_MS_OAUTH_ENDPOINT')}:tenant/oauth2/v2.0/token`,

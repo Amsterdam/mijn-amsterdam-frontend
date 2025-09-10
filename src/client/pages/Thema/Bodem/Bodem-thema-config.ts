@@ -2,25 +2,13 @@ import { generatePath } from 'react-router';
 
 import { LoodMetingFrontend } from '../../../../server/services/bodem/types';
 import { dateSort } from '../../../../universal/helpers/date';
-import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
 } from '../../../config/app';
+import { ThemaConfig } from '../../../config/thema-types';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
-
-type ThemaConfig = {
-  id: string;
-  title: string;
-  titleDetail: string;
-  linkListItems: LinkProps[]; ///andere naam linksThemaPage??
-  listPageParamKind: {
-    //andere naam colomsThemaPage
-    inProgress: string;
-    completed: string;
-  };
-};
 
 export const themaConfig: ThemaConfig = {
   id: 'BODEM',
@@ -36,6 +24,15 @@ export const themaConfig: ThemaConfig = {
     inProgress: 'lopende-aanvragen',
     completed: 'afgehandelde-aanvragen',
   },
+  featureToggle: true,
+  uitlegPageSections: {
+    SectionProps: {
+      id: 'BODEM',
+      title: 'Bodem',
+      listItems: ["Uw aanvraag voor 'lood in de bodem-check'"],
+      active: true,
+    },
+  },
 };
 
 // const listPageParamKind = {
@@ -46,7 +43,7 @@ export const themaConfig: ThemaConfig = {
 export const featureToggle = {
   BodemActive: true,
 };
-//seBodemDetailData.hook.tsx heeft nog themaId maar lijkt ongebruikt
+
 //export const themaId = 'BODEM' as const;
 //export const themaTitle = 'Bodem';
 //export const themaTitleDetail = 'Lood in bodem-check';

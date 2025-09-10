@@ -8,6 +8,28 @@ import {
 } from '../../universal/types/App.types';
 
 export type IsThemaVisibleFN = (appState: AppState) => boolean;
+export type ThemaConfig = {
+  id: string;
+  title: string;
+  titleDetail: string;
+  linkListItems: LinkProps[]; ///andere naam linksThemaPage??
+  listPageParamKind: {
+    //andere naam colomsThemaPage
+    inProgress: string;
+    completed: string;
+  };
+  featureToggle: boolean;
+  ////uitlegPagina
+  uitlegPageSections: {
+    SectionProps: {
+      id: string;
+      title: string;
+      listItems: string[] | string;
+      to?: string;
+      active: boolean;
+    };
+  };
+};
 
 export interface ThemaMenuItem<ID extends string = string>
   extends Omit<LinkProps, 'title' | 'to' | 'rel'> {
