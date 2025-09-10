@@ -335,7 +335,7 @@ export function useSearchIndex(extendedAMResults: boolean) {
   useAmsterdamNLSearchEntries(term, setResults, extendedAMResults);
 
   useEffect(() => {
-    if (!api.isLoading && !api.isDirty) {
+    if (api.isPristine) {
       api.fetch();
     }
     if (
@@ -354,7 +354,7 @@ export function useSearchIndex(extendedAMResults: boolean) {
     dynamicSearchEntries,
     staticSearchEntries,
     api.isLoading,
-    api.isDirty,
+    api.isPristine,
     fuseInstance,
     isAppStateReady,
   ]);

@@ -61,6 +61,7 @@ export type ApiGetState<T> = {
   isDirty: boolean;
   isError: boolean;
   isLoading: boolean;
+  isPristine: boolean;
 };
 
 export type ApiFetch = {
@@ -73,6 +74,7 @@ const initialState: ApiGetState<null> = {
   data: null,
   errorData: null,
   isDirty: false,
+  isPristine: true,
 };
 
 export async function sendGetRequest<T extends any>(
@@ -105,7 +107,7 @@ export function createApiHook<T>(options?: ApiGetOptions<T>) {
         throw new Error('No URL provided');
       }
 
-      set({ isLoading: true });
+      set({ isLoading: true, isPristine: false });
 
       const response = await sendRequest(
         url_,
