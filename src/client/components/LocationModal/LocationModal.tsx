@@ -20,7 +20,7 @@ import {
 } from '../../../universal/helpers/bag';
 import { BaseLayerType } from '../../components/MyArea/Map/BaseLayerToggle';
 import { MyAreaLoader } from '../../components/MyArea/MyAreaLoader';
-import { createApiHook } from '../../hooks/api/useDataApi-v2';
+import { useBffApi } from '../../hooks/api/useDataApi-v2';
 import { Modal } from '../Modal/Modal';
 import { MapLocationMarker } from '../MyArea/MyArea.hooks';
 
@@ -68,14 +68,6 @@ export interface LocationModalProps {
   children?: ReactNode;
 }
 
-const useBagApi = createApiHook<BAGSourceData>({
-  init: {
-    headers: {
-      'X-Api-Key': import.meta.env.REACT_APP_DATA_AMSTERDAM_API_KEY,
-    },
-  },
-});
-
 export function LocationModal({
   // Addres
   address = null,
@@ -86,7 +78,17 @@ export function LocationModal({
 }: LocationModalProps) {
   const [isLocationModalOpen, setLocationModalOpen] = useState(false);
   const hasLocationData = !!(address || latlng);
-  const bagApi = useBagApi();
+  const bagApi = useBffApi<BAGSourceData>(
+    address ? `${BAG_ADRESSEERBARE_OBJECTEN_URL}?address=${address}` : null,
+    {
+      init: {
+        headers: {
+          'X-Api-Key': import.meta.env.REACT_APP_DATA_AMSTERDAM_API_KEY,
+        },
+      },
+      fetchImmediately: false,
+    }
+  );
   const querySearchAddress = useMemo(
     () => (address ? extractAddressParts(address) : null),
     [address]

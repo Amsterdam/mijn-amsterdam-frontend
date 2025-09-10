@@ -5,7 +5,7 @@ import { AUTH_API_URL, LOGOUT_URL } from '../../config/api';
 import { clearSessionStorage } from '../storage.hook';
 import { clearDeeplinkEntry } from '../useDeeplink.hook';
 import { useProfileType } from '../useProfileType';
-import { createApiHook } from './useDataApi-v2';
+import { useBffApi } from './useDataApi-v2';
 
 export const ONE_SECOND_MS = 1000;
 
@@ -16,12 +16,8 @@ export type SessionData = {
   expiresAtMilliseconds: number; // In milliseconds
 };
 
-const useSessionApiFetcher = createApiHook<SessionData>({
-  defaultUrl: AUTH_API_URL,
-});
-
 export function useSessionApi() {
-  const sessionApi = useSessionApiFetcher();
+  const sessionApi = useBffApi<SessionData>(AUTH_API_URL);
   const { data, fetch } = sessionApi;
   const sessionData = data?.content ?? null;
   const { setProfileType } = useProfileType();
