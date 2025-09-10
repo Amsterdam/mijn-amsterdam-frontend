@@ -1,18 +1,8 @@
-import { useEffect } from 'react';
-
 import { GenericDocument } from '../../../../../universal/types/App.types';
-import { createApiHook } from '../../../../hooks/api/useDataApi-v2';
-
-const useVergunningenDocumentsApi = createApiHook<GenericDocument[]>();
+import { useBffApi } from '../../../../hooks/api/useDataApi-v2';
 
 export function useVergunningDocumentList(url?: string) {
-  const api = useVergunningenDocumentsApi();
-
-  useEffect(() => {
-    if (!api.isLoading && !api.isError && url) {
-      api.fetch(url);
-    }
-  }, [api.fetch, api.isLoading, url]);
+  const api = useBffApi<GenericDocument[]>(url);
 
   const documents = api.data?.content ?? [];
   return { documents, isLoading: api.isLoading, isError: api.isError };

@@ -36,7 +36,7 @@ import { PageHeadingV2 } from '../../../components/PageHeading/PageHeadingV2';
 import { Spinner } from '../../../components/Spinner/Spinner';
 import { TableV2 } from '../../../components/Table/TableV2';
 import { getRedactedClass } from '../../../helpers/cobrowse';
-import { createApiHook } from '../../../hooks/api/useDataApi-v2';
+import { useBffApi } from '../../../hooks/api/useDataApi-v2';
 import { useSmallScreen } from '../../../hooks/media.hook';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
@@ -81,8 +81,6 @@ const PHONENUMBERS = {
   WerkEnInkomen: '020 252 6000',
 } as const;
 
-const useFetchTransactionsApi = createApiHook<StadspasBudgetTransaction[]>();
-
 export function HLIStadspasDetail() {
   const isPhoneScreen = useSmallScreen();
   const appState = useAppStateGetter();
@@ -115,14 +113,10 @@ export function HLIStadspasDetail() {
     content: `${stadspas?.balanceFormatted} (Dit is het bedrag dat u nog kunt uitgeven)`,
   };
 
-  const transactionsApi = useFetchTransactionsApi();
+  const transactionsApi = useBffApi<StadspasBudgetTransaction[]>(
+    stadspas?.urlTransactions
+  );
   const isLoadingTransacties = transactionsApi.isLoading;
-
-  useEffect(() => {
-    if (stadspas?.urlTransactions) {
-      transactionsApi.fetch(stadspas.urlTransactions);
-    }
-  }, [stadspas?.urlTransactions]);
 
   const transactions =
     stadspas?.budgets && transactionsApi.data?.content
@@ -155,8 +149,11 @@ export function HLIStadspasDetail() {
               </Paragraph>
               <Datalist rows={[NUMBER]} />
               {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
-              {stadspas.blockPassURL && <BlockStadspas stadspas={stadspas} />}
-              {stadspas.unblockPassURL && (
+              {!stadspas.actief && <PassBlockedAlert />}
+              {stadspas.blockPassURL && stadspas.actief && (
+                <BlockStadspas stadspas={stadspas} />
+              )}
+              {stadspas.unblockPassURL && !stadspas.actief && (
                 <UnblockStadspas stadspas={stadspas} />
               )}
             </PageContentCell>
@@ -268,17 +265,13 @@ function determineUwUitgavenDescription(
 function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showError, setShowError] = useState(false);
-  const { isError, isLoading, fetch } = useBlockStadspas();
+  const { isError, isLoading, fetch } = useBlockStadspas(stadspas.passNumber);
 
   useEffect(() => {
     if (isError && !isLoading && !showError) {
       setShowError(true);
     }
   }, [isError, showError, isLoading]);
-
-  if (!stadspas.actief && !isLoading) {
-    return <PassBlockedAlert />;
-  }
 
   return (
     <>
@@ -407,17 +400,14 @@ function PassBlockedAlert() {
 function UnblockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showError, setShowError] = useState(false);
-  const { isError, isLoading, fetch } = useBlockStadspas();
+
+  const { isError, isLoading, fetch } = useBlockStadspas(stadspas.passNumber);
 
   useEffect(() => {
     if (isError && !isLoading && !showError) {
       setShowError(true);
     }
   }, [isError, showError, isLoading]);
-
-  if (stadspas.actief) {
-    return;
-  }
 
   return (
     <PageContentCell>

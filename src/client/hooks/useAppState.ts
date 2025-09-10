@@ -9,7 +9,7 @@ import { PRISTINE_APPSTATE, createAllErrorState } from '../AppState';
 import { BFFApiUrls } from '../config/api';
 import { transformSourceData } from '../data-transform/appState';
 import { captureMessage } from '../helpers/monitoring';
-import { createApiHook } from './api/useDataApi-v2';
+import { useBffApi } from './api/useDataApi-v2';
 import { useProfileTypeValue } from './useProfileType';
 import { SSE_CLOSE_MESSAGE, SSE_ERROR_MESSAGE, useSSE } from './useSSE';
 
@@ -36,16 +36,15 @@ interface useAppStateFallbackServiceProps {
   isEnabled: boolean;
 }
 
-const useAppStateFallbackApi = createApiHook<AppState>({
-  defaultUrl: BFFApiUrls.SERVICES_SAURON,
-});
-
 export function useAppStateFallbackService({
   profileType,
   isEnabled,
 }: useAppStateFallbackServiceProps) {
-  const { appState, setAppState } = useAppStateStore();
-  const api = useAppStateFallbackApi();
+  const { appState, setAppState, setIsAppStateReady, isReady } =
+    useAppStateStore();
+  const api = useBffApi<AppState>(BFFApiUrls.SERVICES_SAURON, {
+    fetchImmediately: false,
+  });
   const appStateError = useCallback(
     (message: string) => {
       captureMessage('Could not load any data sources.', {
@@ -64,22 +63,23 @@ export function useAppStateFallbackService({
     if (isEnabled && api.isPristine) {
       api.fetch();
     }
-  }, [api.fetch, api.isPristine, isEnabled, profileType]);
+  }, [api.fetch, api.isPristine, isEnabled]);
 
   // Update the appState with data fetched by the Fallback service endpoint
   useEffect(() => {
-    if (!isEnabled) {
+    if (!isEnabled || isReady) {
       return;
     }
     if (api.data !== null && !api.isLoading && !api.isError) {
       setAppState(transformSourceData(api.data.content), true);
+      setIsAppStateReady(true);
     } else if (api.isError) {
       // If everything fails, this is the final state update.
       const errorMessage =
         'Services.all endpoint could not be reached or returns an error.';
       appStateError(errorMessage);
     }
-  }, [api, appStateError, setAppState, isEnabled]);
+  }, [api, appStateError, setAppState, isEnabled, api.isPristine]);
 }
 
 export function addParamsToStreamEndpoint(

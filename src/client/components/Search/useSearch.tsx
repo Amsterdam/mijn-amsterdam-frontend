@@ -25,7 +25,7 @@ import {
 import { pick, uniqueArray } from '../../../universal/helpers/utils';
 import { AppState } from '../../../universal/types/App.types';
 import { BFFApiUrls } from '../../config/api';
-import { createApiHook } from '../../hooks/api/useDataApi-v2';
+import { useBffApi } from '../../hooks/api/useDataApi-v2';
 import { useSmallScreen } from '../../hooks/media.hook';
 import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
@@ -194,21 +194,19 @@ export async function sendGetRequest(url: string | URL) {
   );
 }
 
-const useSearchAmsterdamApi = createApiHook<SearchEntry[]>({
-  sendRequest: sendGetRequest,
-});
-
 function useAmsterdamNLSearchEntries(
   term: string,
   setResults: SearchTermStore['setResults'],
   isExtendedAmsterdamSearch: boolean
 ) {
-  const api = useSearchAmsterdamApi();
-  const searchEntries = api.data?.content ?? null;
-
   const url = isExtendedAmsterdamSearch
     ? `https://api.swiftype.com/api/v1/public/engines/search.json?engine_key=zw32MDuzZjzNC8VutizD&page=1&per_page=${RESULTS_PER_PAGE}&q=${term}&spelling=retry`
     : `https://api.swiftype.com/api/v1/public/engines/suggest.json?q=${term}&engine_key=zw32MDuzZjzNC8VutizD&per_page=${RESULTS_PER_PAGE}`;
+  const api = useBffApi<SearchEntry[]>(url, {
+    fetchImmediately: false,
+    sendRequest: sendGetRequest,
+  });
+  const searchEntries = api.data?.content ?? null;
 
   useEffect(() => {
     if (term) {
@@ -254,14 +252,14 @@ export const useSearchStore = create<SearchTermStore>((set) => ({
     set((state) => ({ results: { ...state.results, ...results } })),
 }));
 
-const useSearchConfigRemoteApi = createApiHook<{
+type SearchConfig = {
   staticSearchEntries: SearchEntry[];
   apiSearchConfigs: RemoteApiSearchConfigs;
-}>({ defaultUrl: BFFApiUrls.SEARCH_CONFIGURATION });
+};
 
 export function useSearchConfigJSON() {
   const profileType = useProfileTypeValue();
-  const api = useSearchConfigRemoteApi();
+  const api = useBffApi<SearchConfig>(BFFApiUrls.SEARCH_CONFIGURATION);
   const staticSearchEntries =
     api.data?.content?.staticSearchEntries.filter((indexEntry) => {
       const isEnabled = 'isEnabled' in indexEntry ? indexEntry.isEnabled : true;
@@ -335,9 +333,6 @@ export function useSearchIndex(extendedAMResults: boolean) {
   useAmsterdamNLSearchEntries(term, setResults, extendedAMResults);
 
   useEffect(() => {
-    if (api.isPristine) {
-      api.fetch();
-    }
     if (
       isAppStateReady &&
       staticSearchEntries.length &&

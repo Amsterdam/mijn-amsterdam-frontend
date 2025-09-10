@@ -2,22 +2,23 @@ import {
   StadspasFrontend,
   type PasblokkadeByPasnummer,
 } from '../../../../server/services/hli/stadspas-types';
-import { createApiHook } from '../../../hooks/api/useDataApi-v2';
 import {
-  createItemStoreHook,
-  useApiStoreByKey,
-} from '../../../hooks/api/useItemStore';
+  useBffApi,
+  useBffApiStateStore,
+} from '../../../hooks/api/useDataApi-v2';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 
-const useBlockStadspasApi = createApiHook<PasblokkadeByPasnummer>();
-const useBlockStadspasStore =
-  createItemStoreHook<PasblokkadeByPasnummer>('passNumber');
+function getPasBlockedStateKey(passNumber: StadspasFrontend['passNumber']) {
+  return `pass-blocked-state-${passNumber}`;
+}
 
 export function useStadspassen() {
   const { HLI } = useAppStateGetter();
-  const { getItem } = useBlockStadspasStore();
+  const store = useBffApiStateStore();
   const stadspassen = (HLI.content?.stadspas?.stadspassen || []).map((pas) => {
-    const pasBlokkade = getItem(pas.passNumber);
+    const pasBlokkade =
+      store.get<PasblokkadeByPasnummer>(getPasBlockedStateKey(pas.passNumber))
+        ?.data?.content ?? null;
     const isGeblokkeerd =
       pasBlokkade !== null ? !pasBlokkade.actief : undefined;
     const stadspas: StadspasFrontend = {
@@ -32,13 +33,8 @@ export function useStadspassen() {
   return stadspassen;
 }
 
-export function useBlockStadspas() {
-  const store = useApiStoreByKey<PasblokkadeByPasnummer>(
-    useBlockStadspasApi,
-    useBlockStadspasStore,
-    'passNumber',
-    null
-  );
-
-  return store;
+export function useBlockStadspas(passNumber: StadspasFrontend['passNumber']) {
+  return useBffApi<PasblokkadeByPasnummer>(getPasBlockedStateKey(passNumber), {
+    fetchImmediately: false,
+  });
 }

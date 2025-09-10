@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useMemo } from 'react';
+import { ReactNode, useMemo } from 'react';
 
 import {
   AfisFacturenByStateFrontend,
@@ -30,11 +30,7 @@ import { LinkProps } from '../../../../universal/types/App.types';
 import { DocumentLink } from '../../../components/DocumentList/DocumentLink';
 import { MaLink } from '../../../components/MaLink/MaLink';
 import { BFFApiUrls } from '../../../config/api';
-import { createApiHook } from '../../../hooks/api/useDataApi-v2';
-import {
-  createItemStoreHook,
-  useApiStoreByKey,
-} from '../../../hooks/api/useItemStore';
+import { useBffApi } from '../../../hooks/api/useDataApi-v2';
 import { useSmallScreen } from '../../../hooks/media.hook';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 import {
@@ -117,10 +113,6 @@ function useTransformFacturen(
   return facturenByStateTransformed;
 }
 
-const useAfisFacturenFetchApi = createApiHook<AfisFacturenResponse>();
-const useAfisFacturenByStateStore =
-  createItemStoreHook<AfisFacturenResponse>('state');
-
 /**
  * Uses /overview endpoint for Open and Overview facturen (All the Open facuren are loaded with this endpoint)
  * Uses /facturen/(afgehandeld|overgedragen) for the facturen with this state.
@@ -131,26 +123,13 @@ function useAfisFacturenApi(
     | undefined,
   state: AfisFactuurState
 ) {
-  const {
-    item: facturenResponse,
-    isLoading,
-    isError,
-    fetch,
-  } = useApiStoreByKey<AfisFacturenResponse>(
-    useAfisFacturenFetchApi,
-    useAfisFacturenByStateStore,
-    'state',
-    state
-  );
-
-  useEffect(() => {
-    if (state && state !== 'open' && businessPartnerIdEncrypted) {
-      fetch(
-        `${BFFApiUrls.AFIS_FACTUREN}/${state}?id=${businessPartnerIdEncrypted}`
-      );
-    }
-  }, [fetch, state, businessPartnerIdEncrypted, isLoading]);
-
+  const url =
+    businessPartnerIdEncrypted && state && state !== 'open'
+      ? `${BFFApiUrls.AFIS_FACTUREN}/${state}?id=${businessPartnerIdEncrypted}`
+      : null;
+  console.log('url', url);
+  const { data, isError, isLoading } = useBffApi<AfisFacturenResponse>(url);
+  const facturenResponse = data?.content ?? null;
   const facturenByStateApiUpdated = useTransformFacturen(
     facturenResponse
       ? {
@@ -234,24 +213,16 @@ export function useAfisThemaData() {
   };
 }
 
-const useAfisBusinesspartnerApi =
-  createApiHook<AfisBusinessPartnerDetailsTransformed>();
-
 export function useAfisBetaalVoorkeurenData(
   businessPartnerIdEncrypted:
     | AfisThemaResponse['businessPartnerIdEncrypted']
     | undefined
 ) {
-  const api = useAfisBusinesspartnerApi();
-
-  useEffect(() => {
-    if (businessPartnerIdEncrypted && api.isPristine) {
-      api.fetch(
-        `${BFFApiUrls.AFIS_BUSINESSPARTNER}?id=${businessPartnerIdEncrypted}`
-      );
-    }
-  }, [businessPartnerIdEncrypted, api.fetch]);
-
+  const api = useBffApi<AfisBusinessPartnerDetailsTransformed>(
+    businessPartnerIdEncrypted
+      ? `${BFFApiUrls.AFIS_BUSINESSPARTNER}?id=${businessPartnerIdEncrypted}`
+      : null
+  );
   const businesspartnerDetailsApiResponse = api.data;
 
   return {

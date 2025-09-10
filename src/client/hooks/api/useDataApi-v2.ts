@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { create } from 'zustand/react';
 
 import {
@@ -20,6 +22,7 @@ async function handleResponse<T>(response: Response): ApiFetchResponse<T> {
   if ('status' in responseJson && 'content' in responseJson) {
     return responseJson;
   }
+
   return apiSuccessResult<T>(responseJson);
 }
 
@@ -55,7 +58,16 @@ export async function sendJSONPostRequest<T extends any>(
   }).then((response: Response) => handleResponse<T>(response));
 }
 
-export type ApiGetState<T> = {
+export async function sendGetRequest<T extends any>(
+  url: URL | string,
+  options?: RequestInit
+): Promise<ApiResponse<T>> {
+  return fetch(url, { credentials: 'include', ...options }).then(
+    (response: Response) => handleResponse<T>(response)
+  );
+}
+
+export type BffApiState<T> = {
   /**
    * The data returned from the API
    */
@@ -81,11 +93,11 @@ export type ApiGetState<T> = {
   isPristine: boolean;
 };
 
-export type ApiFetch = {
-  fetch(url?: URL | string, init_?: RequestInit): Promise<void>;
+export type ApiFetch<T> = {
+  fetch(url?: URL | string, init_?: RequestInit): Promise<T | null>;
 };
 
-const initialState: ApiGetState<null> = {
+const initialState: BffApiState<null> = {
   isLoading: false,
   isError: false,
   data: null,
@@ -94,62 +106,108 @@ const initialState: ApiGetState<null> = {
   isPristine: true,
 };
 
-export async function sendGetRequest<T extends any>(
-  url: URL | string,
-  options?: RequestInit
-): Promise<ApiResponse<T>> {
-  return fetch(url, { credentials: 'include', ...options }).then(
-    (response: Response) => handleResponse<T>(response)
-  );
-}
-
-type ApiGetOptions<T> = {
-  defaultUrl?: URL | string;
+type BffApiOptions<T> = {
+  url?: URL | string;
   init?: RequestInit;
+  fetchImmediately?: boolean;
   sendRequest?: (
     url: URL | string,
     init?: RequestInit
   ) => Promise<ApiResponse<T>>;
 };
 
-export function createApiHook<T>(options?: ApiGetOptions<T>) {
-  const { defaultUrl, sendRequest = sendGetRequest, init } = options || {};
+type StoreKey = string;
+type SetState = <T>(
+  key: StoreKey,
+  state: BffApiState<ApiResponse<T> | null>
+) => void;
+type GetState = <T>(key: StoreKey) => BffApiState<ApiResponse<T> | null>;
+type HasState = (key: StoreKey) => boolean;
 
-  return create<ApiGetState<ApiResponse<T>> & ApiFetch>((set, get) => ({
-    ...initialState,
+type StoreExample = {
+  set: SetState;
+  get: GetState;
+  has: HasState;
+} & { [key in StoreKey]?: BffApiState<ApiResponse<unknown> | null> };
 
-    async fetch(url?: URL | string, init_?: RequestInit): Promise<void> {
-      const url_ = url || defaultUrl;
-      if (!url_) {
-        throw new Error('No URL provided');
-      }
+export const useBffApiStateStore = create<StoreExample>((set, get) => ({
+  set: (key, state) => set({ [key]: state }),
+  get: (key: StoreKey) => {
+    const state = get();
+    return state[key];
+  },
+  has: (key: StoreKey) => key in get(),
+}));
 
-      set({ isLoading: true, isPristine: false });
+export function useBffApi<T>(
+  urlOrKey: string | null | undefined,
+  options?: BffApiOptions<T>
+): BffApiState<ApiResponse<T> | null> & {
+  fetch: (url?: URL | string, init_?: RequestInit) => void;
+} {
+  const { url, sendRequest = sendGetRequest } = options || {};
+  const store = useBffApiStateStore();
+  const hasState = urlOrKey ? store.has(urlOrKey) : false;
+  const state = urlOrKey ? store.get<T>(urlOrKey) : null;
+  const url_ = url || urlOrKey;
 
-      const response = await sendRequest(
-        url_,
-        init_ ?? init // TODO: Should we merge these inits?
-      );
+  const setState = (
+    partialState: Partial<BffApiState<ApiResponse<T> | null>>
+  ) => {
+    if (urlOrKey) {
+      const state = store.get<T>(urlOrKey);
+      const newState = { ...state, ...partialState };
+      store.set(urlOrKey, newState);
+    }
+  };
 
+  const fetch = (url?: string | URL, init?: RequestInit) => {
+    const reqUrl = url ?? url_;
+
+    if (!reqUrl) {
+      throw new Error('No URL provided');
+    }
+
+    setState({ isLoading: true, isPristine: false });
+
+    sendRequest(reqUrl, { ...options?.init, ...init }).then((response) => {
       if (response.status === 'ERROR') {
-        set({
+        return setState({
           data: null,
           errorData: response.message,
           isDirty: true,
           isError: true,
           isLoading: false,
         });
-      } else {
-        set({
-          data: response,
-          errorData: null,
-          isDirty: true,
-          isError: false,
-          isLoading: false,
-        });
       }
-    },
-  }));
+      return setState({
+        data: response,
+        errorData: null,
+        isDirty: true,
+        isError: false,
+        isLoading: false,
+      });
+    });
+  };
+
+  useEffect(() => {
+    if (urlOrKey && !hasState) {
+      store.set(urlOrKey, initialState);
+    }
+    // TODO: Implement: what to do if we have an error
+    if (
+      options?.fetchImmediately !== false &&
+      state?.isPristine &&
+      url_ &&
+      urlOrKey
+    ) {
+      fetch();
+    }
+  }, [state, url_, urlOrKey, store.set, options?.fetchImmediately]);
+
+  const rState = state ? state : initialState;
+
+  return Object.assign({}, rState, { fetch });
 }
 
 export const HttpStatusCode = {
