@@ -58,6 +58,8 @@ export function useSessionApi() {
 
   return {
     isPristine: sessionApi.isPristine,
+    isLoading: sessionApi.isLoading,
+    isDirty: sessionApi.isDirty,
     isAuthenticated: sessionData?.isAuthenticated ?? false,
     expiresAtMilliseconds: sessionData?.expiresAtMilliseconds ?? 0,
   };
