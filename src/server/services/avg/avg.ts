@@ -193,7 +193,8 @@ export async function fetchAVG(authProfileAndToken: AuthProfileAndToken) {
       data,
       headers: data.getHeaders(),
       cacheKey_UNSAFE: createSessionBasedCacheKey(
-        authProfileAndToken.profile.sid
+        authProfileAndToken.profile.sid,
+        'avg'
       ),
       postponeFetch: !featureToggle.avgActive,
     })
