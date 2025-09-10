@@ -10,13 +10,13 @@ export function useBodemData() {
   const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
   return {
-    id: themaConfig.id,
+    themaId: themaConfig.id,
     title: themaConfig.title,
     tableConfig,
     isLoading: isLoading(BODEM),
     isError: isError(BODEM),
     items,
-    linkListItems: themaConfig.linkListItems,
+    linkListItems: themaConfig.linksThemaPage,
     breadcrumbs,
     listPageRoute: routeConfig.listPage.path,
     routeConfig,

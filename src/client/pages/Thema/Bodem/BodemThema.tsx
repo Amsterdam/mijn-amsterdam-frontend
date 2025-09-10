@@ -14,7 +14,7 @@ export function BodemThema() {
     isLoading,
     isError,
     linkListItems,
-    id,
+    themaId: id,
     title,
     routeConfig,
   } = useBodemData();

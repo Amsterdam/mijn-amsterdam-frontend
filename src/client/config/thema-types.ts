@@ -12,14 +12,14 @@ export type ThemaConfig = {
   id: string;
   title: string;
   titleDetail: string;
-  linkListItems: LinkProps[]; ///andere naam linksThemaPage??
-  listPageParamKind: {
-    //andere naam colomsThemaPage
+  //Externe links op themapagina
+  linksThemaPage: LinkProps[];
+  //namen van tabellen op de Thema/lijstpagina   TODO > ik zou graag de waarden die bij Bodem staan als "default waarde" willen hebben, die ik eventueel kan overschrijven
+  tableHeaders: {
     inProgress: string;
     completed: string;
   };
   featureToggle: boolean;
-  ////uitlegPagina
   uitlegPageSections: {
     SectionProps: {
       id: string;
@@ -29,6 +29,7 @@ export type ThemaConfig = {
       active: boolean;
     };
   };
+  /// TO DO SEARCH TOEVOEGEN https://gemeente-amsterdam.atlassian.net/browse/MIJN-11547
 };
 
 export interface ThemaMenuItem<ID extends string = string>
