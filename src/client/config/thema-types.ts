@@ -7,6 +7,21 @@ import {
   SVGComponent,
 } from '../../universal/types/App.types';
 
+// ThemaConfig: basis-gegevens per thema (backend-safe)
+export type ThemaConfig = {
+  id: string; // uniek id van het thema (bijvoorbeeld:  'BODEM')
+  title: string;
+  titleDetail: string; // naam/titel van het thema
+  // themaTitleDetail?: string;  // ThemaTitleDetail is optioneel. Het wordt niet in elk thema gebruikt
+  // profileTypes: ProfileType[];   // wie dit thema mag zien (bijvoorbeeld:  ['private', 'commercial'])
+  // featureToggle: { [key: string]: boolean }; // toggles aan/uit (bijvoorbeeld: BodemActive: true })
+  // routeConfig: ThemaRoutesConfig;            // routes van het thema (detail, lijst, thema)
+  //   listPageParamKind: {
+  //    inProgress: 'lopende-aanvragen' | string,
+  //    completed: 'afgehandelde-aanvragen',
+  // }
+};
+
 export type IsThemaVisibleFN = (appState: AppState) => boolean;
 
 export interface ThemaMenuItem<ID extends string = string>
