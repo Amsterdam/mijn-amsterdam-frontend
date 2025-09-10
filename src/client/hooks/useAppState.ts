@@ -78,6 +78,7 @@ export function useAppStateFallbackService({
       const errorMessage =
         'Services.all endpoint could not be reached or returns an error.';
       appStateError(errorMessage);
+      setIsAppStateReady(true);
     }
   }, [api, appStateError, setAppState, isEnabled, api.isPristine]);
 }
