@@ -224,7 +224,6 @@ export async function fetchBrpByBsn(sessionID: AuthProfile['sid'], bsn: BSN[]) {
     },
     data: {
       type: 'RaadpleegMetBurgerservicenummer',
-      gemeenteVanInschrijving: GEMEENTE_CODE_AMSTERDAM,
       burgerservicenummer: bsn.map((bsn) => translateBSN(bsn)),
     },
     transformResponse: transformBenkBrpResponse,
