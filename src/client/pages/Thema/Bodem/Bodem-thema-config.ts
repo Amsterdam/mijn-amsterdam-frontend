@@ -10,6 +10,7 @@ import {
 import type {
   ThemaRoutesConfig,
   ThemaConfig,
+  RouteConfig,
 } from '../../../config/thema-types';
 
 export const themaConfig: ThemaConfig = {
@@ -27,6 +28,7 @@ export const themaConfig: ThemaConfig = {
     completed: 'afgehandelde-aanvragen',
   },
   featureToggle: true,
+  profileTypes: ['private', 'commercial'],
   uitlegPageSections: {
     ///gebruik deze nog niet, moet wel maar dan moet de hele pagina GegevensInfo.tsx worden omgebouwd
     SectionProps: {
@@ -36,22 +38,9 @@ export const themaConfig: ThemaConfig = {
       active: true,
     },
   },
-};
+} as const;
 
-// const listPageParamKind = {
-//   inProgress: 'lopende-aanvragen',
-//   completed: 'afgehandelde-aanvragen',
-// } as const;
-
-// export const featureToggle = {
-//   BodemActive: true,
-// };
-
-//export const themaId = 'BODEM' as const;
-//export const themaTitle = 'Bodem';
-//export const themaTitleDetail = 'Lood in bodem-check';
-
-export const routeConfig = {
+export const routeConfig: RouteConfig = {
   detailPage: {
     path: '/bodem/lood-meting/:id',
     trackingUrl: '/bodem/lood-meting',
@@ -60,7 +49,7 @@ export const routeConfig = {
   listPage: {
     path: '/bodem/lijst/lood-meting/:kind/:page?',
     documentTitle: (params) =>
-      `${params?.kind === themaConfig.tableHeaders.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaConfig.title}`,
+      `${params?.kind === themaConfig.tableHeaders.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaConfig.title}` as const,
   },
   themaPage: {
     path: '/bodem',
@@ -119,10 +108,3 @@ export const tableConfig = {
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   },
 } as const;
-
-// export const linkListItems: LinkProps[] = [
-//   {
-//     title: 'Meer informatie over lood in de bodem.',
-//     to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/bodem/loodcheck-tuin-aanvragen',
-//   },
-// ] as const;
