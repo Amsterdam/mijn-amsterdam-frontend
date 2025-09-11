@@ -129,7 +129,7 @@ export type VarenVergunningFrontend = OmitMapped<
   dateStartFormatted: string | null;
   dateEndFormatted: string | null;
   isExpired?: boolean;
-  hasActiveZaak: boolean;
+  linkedActiveZaakLink: ZaakDetail['link'] | null;
 } & ZaakDetail;
 
 export type Varen =

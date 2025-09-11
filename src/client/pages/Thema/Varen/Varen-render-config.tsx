@@ -4,7 +4,8 @@ import {
   themaTitle,
   featureToggle,
 } from './Varen-thema-config';
-import { VarenDetail } from './VarenDetail';
+import { VarenDetailPageContentExploitatieVergunning } from './VarenDetailVergunningExploitatie';
+import { VarenDetailPageContentExploitatieZaak } from './VarenDetailZaakExploitatie';
 import { default as VarenIcon } from './VarenIcon.svg?react';
 import { VarenList } from './VarenList';
 import { VarenThema } from './VarenThema';
@@ -17,8 +18,13 @@ import {
 
 export const VarenRoutes = [
   {
-    route: routeConfig.detailPage.path,
-    Component: VarenDetail,
+    route: routeConfig.detailZaakPage.path,
+    Component: VarenDetailPageContentExploitatieZaak,
+    isActive: featureToggle.varenActive,
+  },
+  {
+    route: routeConfig.detailVergunningPage.path,
+    Component: VarenDetailPageContentExploitatieVergunning,
     isActive: featureToggle.varenActive,
   },
   {

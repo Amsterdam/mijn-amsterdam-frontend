@@ -7,6 +7,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { routeConfig } from './Varen-thema-config';
 import { VarenList } from './VarenList';
 import {
+  VarenVergunningFrontend,
   VarenZakenFrontend,
   ZaakVergunningExploitatieType,
 } from '../../../../server/services/varen/config-and-types';
@@ -17,30 +18,46 @@ import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
 type ExploitatieAanvraag = VarenZakenFrontend<ZaakVergunningExploitatieType>;
-const exploitatieDecision: ExploitatieAanvraag = {
+const exploitatieInProgress: ExploitatieAanvraag = {
   id: 'Z-24-0000001',
   identifier: 'Z/24/0000001',
   caseType: 'Varen vergunning exploitatie',
   title: 'Varen vergunning exploitatie',
-  status: 'Afgehandeld',
-  decision: 'Verleend',
-  processed: true,
+  displayStatus: 'In behandeling',
+  decision: null,
+  processed: false,
   vesselName: 'BootjeVanBerend',
-  dateDecisionFormatted: '10 november 2023',
+  dateRequestFormatted: '10 november 2023',
+  dateDecisionFormatted: null,
   link: {
-    to: '/passagiers-en-beroepsvaart/vergunning/varen-vergunning-exploitatie/Z-24-0000001',
+    to: '/passagiers-en-beroepsvaart/zaak/varen-vergunning-exploitatie/Z-24-0000001',
     title: 'Bekijk hoe het met uw aanvraag staat',
   },
 } as unknown as ExploitatieAanvraag;
 
-const varenZaken = [exploitatieDecision];
+const vergunning: VarenVergunningFrontend = {
+  id: 'Z-24-0000001',
+  identifier: 'Z/24/0000001',
+  title: 'Varen vergunning exploitatie',
+  vesselName: 'BootjeVanBerend',
+  dateRequestFormatted: '08 november 2023',
+  dateStartFormatted: '10 november 2023',
+  link: {
+    to: '/passagiers-en-beroepsvaart/vergunning/Z-24-0000001',
+    title: 'Bekijk uw actieve vergunning',
+  },
+} as unknown as VarenVergunningFrontend;
 
-const getTestState = (content: VarenZakenFrontend[] = varenZaken): AppState =>
+const getTestState = (
+  zaken: VarenZakenFrontend[] = [exploitatieInProgress],
+  vergunningen: VarenVergunningFrontend[] = [vergunning]
+): AppState =>
   jsonCopy({
     VAREN: {
       content: {
         reder: {},
-        zaken: content,
+        zaken,
+        vergunningen,
       },
       status: 'OK',
     },
@@ -50,7 +67,83 @@ function initializeState(snapshot: MutableSnapshot, state: AppState) {
   snapshot.set(appStateAtom, state);
 }
 
-describe('<VarenList />', () => {
+describe('<VarenZakenList />', () => {
+  function Component({ state }: { state: AppState }) {
+    return (
+      <MockApp
+        routePath={routeConfig.listPage.path}
+        routeEntry={generatePath(routeConfig.listPage.path, {
+          kind: 'lopende-aanvragen',
+          page: '1',
+        })}
+        component={VarenList}
+        initializeState={(snap) => initializeState(snap, state)}
+      />
+    );
+  }
+
+  beforeAll(() => {
+    Mockdate.set('2025-03-04');
+  });
+
+  afterAll(() => {
+    Mockdate.reset();
+  });
+
+  it('Shows the expected title on the page', () => {
+    const screen = render(<Component state={getTestState([])} />);
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
+      'Lopende aanvragen'
+    );
+  });
+
+  it('Shows the expected rows in the tables', () => {
+    const vergunningen = [
+      exploitatieInProgress,
+      exploitatieInProgress,
+      exploitatieInProgress,
+      exploitatieInProgress,
+    ].map((vergunning, index) => ({
+      ...vergunning,
+      id: `${index}`,
+    }));
+    const screen = render(<Component state={getTestState(vergunningen)} />);
+
+    const table = screen.getByRole('table');
+    expectHeaders(table, [
+      'Naam vaartuig',
+      'Omschrijving',
+      'Aangevraagd',
+      'Status',
+    ]);
+
+    const withinTable = within(table);
+    expect(withinTable.getAllByText('BootjeVanBerend')).toHaveLength(
+      vergunningen.length
+    );
+    expect(
+      withinTable.getAllByText('Varen vergunning exploitatie')
+    ).toHaveLength(vergunningen.length);
+    expect(withinTable.getAllByText('10 november 2023')).toHaveLength(
+      vergunningen.length
+    );
+    expect(withinTable.getAllByText('In behandeling')).toHaveLength(
+      vergunningen.length
+    );
+  });
+
+  it('Naam vaartuig links to the corresponding aanvraag or vergunning', () => {
+    const screen = render(
+      <Component state={getTestState([exploitatieInProgress])} />
+    );
+
+    expect(
+      screen.getByRole('link', { name: 'BootjeVanBerend' }).getAttribute('href')
+    ).toContain('Z-24-0000001');
+  });
+});
+
+describe('<VarenVergunningList />', () => {
   function Component({ state }: { state: AppState }) {
     return (
       <MockApp
@@ -81,34 +174,18 @@ describe('<VarenList />', () => {
   });
 
   it('Shows the expected rows in the tables', () => {
-    const vergunningen = [
-      exploitatieDecision,
-      exploitatieDecision,
-      exploitatieDecision,
-      exploitatieDecision,
-    ].map((vergunning, index) => ({
-      ...vergunning,
-      id: `${index}`,
-    }));
-    const screen = render(<Component state={getTestState(vergunningen)} />);
+    const vergunningen = [vergunning, vergunning, vergunning, vergunning].map(
+      (vergunning, index) => ({
+        ...vergunning,
+        id: `${index}`,
+      })
+    );
+    const screen = render(<Component state={getTestState([], vergunningen)} />);
 
     const table = screen.getByRole('table');
-    expectHeaders(table, [
-      'Naam vaartuig',
-      'Omschrijving',
-      'Datum besluit',
-      'Resultaat',
-    ]);
+    expectHeaders(table, ['Naam vaartuig', 'Omschrijving', 'Datum besluit']);
 
     const withinTable = within(table);
-
-    const columnHeaders = withinTable.getAllByRole('columnheader');
-    expect(columnHeaders.map((h) => h.textContent)).toMatchObject([
-      'Naam vaartuig',
-      'Omschrijving',
-      'Datum besluit',
-      'Resultaat',
-    ]);
 
     expect(withinTable.getAllByText('BootjeVanBerend')).toHaveLength(
       vergunningen.length
@@ -119,14 +196,11 @@ describe('<VarenList />', () => {
     expect(withinTable.getAllByText('10 november 2023')).toHaveLength(
       vergunningen.length
     );
-    expect(withinTable.getAllByText('Verleend')).toHaveLength(
-      vergunningen.length
-    );
   });
 
   it('Naam vaartuig links to the corresponding aanvraag or vergunning', () => {
     const screen = render(
-      <Component state={getTestState([exploitatieDecision])} />
+      <Component state={getTestState([exploitatieInProgress])} />
     );
 
     expect(

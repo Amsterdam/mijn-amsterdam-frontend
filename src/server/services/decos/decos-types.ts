@@ -203,7 +203,7 @@ export type DecosZaakBase = {
   decision: string | null;
   isVerleend: boolean;
 
-  identifier: ZaakKenmerk;
+  identifier: ZaakKenmerk | SomeOtherString;
   id: ZaakKenmerkSlug | SomeOtherString;
   title: string;
 
@@ -216,7 +216,7 @@ export type DecosZaakBase = {
   termijnDates: ZaakTermijnDate[];
 };
 
-export type ZaakKenmerk = `Z/${number}/${number}`; // Z/23/2230346
+export type ZaakKenmerk = `Z/${number}/${number}-${number}`; // Z/23/2230346
 export type ZaakKenmerkSlug = `Z-${number}-${number}`; // Z-23-2230346
 
 export type ZaakStatus =

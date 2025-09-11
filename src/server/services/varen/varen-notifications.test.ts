@@ -20,7 +20,6 @@ const exploitatieBase_ = {
   key: 'ABCDEF0123456789ABCDEF0123456789',
   caseType: 'Varen vergunning exploitatie',
   title: 'Varen vergunning exploitatie',
-  status: 'In behandeling',
   decision: null,
   processed: false,
   dateRequest: '2025-01-01T00:00:00',
@@ -150,7 +149,7 @@ describe('Notifications', () => {
             datePublished: zaakInProgress.dateRequest,
             link: {
               title: 'Bekijk details',
-              to: '/passagiers-en-beroepsvaart/vergunning/varen-vergunning-exploitatie/Z-25-0000001',
+              to: '/passagiers-en-beroepsvaart/vergunningen/varen-vergunning-exploitatie/Z-25-0000001',
             },
           },
           {
@@ -164,7 +163,7 @@ describe('Notifications', () => {
             datePublished: zaakMeerInformatieTermijn.dateStart,
             link: {
               title: 'Bekijk details',
-              to: '/passagiers-en-beroepsvaart/vergunning/varen-vergunning-exploitatie/Z-25-0000001',
+              to: '/passagiers-en-beroepsvaart/vergunningen/varen-vergunning-exploitatie/Z-25-0000001',
             },
           },
           {

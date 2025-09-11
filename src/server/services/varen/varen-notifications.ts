@@ -48,7 +48,7 @@ function createVarenNotification(
   // We do not link to or show processed aanvragen, only vergunningen
   const ctaLinkToThemaOrDetail =
     !zaak.processed || isVergunning(zaak)
-      ? generatePath(routeConfig.detailPage.path, {
+      ? generatePath(routeConfig.detailZaakPage.path, {
           id: zaak.id,
           caseType: slug(zaak.caseType, { lower: true }),
         })
