@@ -1,4 +1,5 @@
 import { generatePath } from 'react-router';
+
 import { LoodMetingFrontend } from '../../../../server/services/bodem/types';
 import { dateSort } from '../../../../universal/helpers/date';
 import { LinkProps } from '../../../../universal/types/App.types';
@@ -7,7 +8,14 @@ import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
 } from '../../../config/app';
-import type { ThemaRoutesConfig } from '../../../config/thema-types';
+import { ThemaConfig, ThemaRoutesConfig } from '../../../config/thema-types';
+
+export const themaConfig: ThemaConfig = {
+  id: 'BODEM', // Bij USEBODEMLISTPAGEDATAHOOKS.TS NOG STEEDS THEMAID EN USEBODEMDATA.HOOKS.TSX
+  title: 'Bodem',
+  titleDetail: 'Lood in bodem-check',
+  profileTypes: ['private', 'commercial'],
+} as const;
 
 // -----------------------------
 // Pagina-soorten
@@ -27,8 +35,8 @@ export const featureToggle = {
 // -----------------------------
 // Thema-gegevens (backend-safe)
 // -----------------------------
-export const themaId = 'BODEM' as const;
-export const themaTitle = 'Bodem';
+// export const themaId = 'BODEM' as const;
+// export const themaTitle = 'Bodem';
 export const themaTitleDetail = 'Lood in bodem-check';
 export const profileTypes: ProfileType[] = ['private', 'commercial'] as const;
 
@@ -39,16 +47,16 @@ export const routeConfig = {
   detailPage: {
     path: '/bodem/lood-meting/:id',
     trackingUrl: '/bodem/lood-meting',
-    documentTitle: `Lood in de bodem-check | ${themaTitle}`,
+    documentTitle: `Lood in de bodem-check | ${themaConfig.title}`,
   },
   listPage: {
     path: '/bodem/lijst/lood-meting/:kind/:page?',
     documentTitle: (params) =>
-      `${params?.kind === listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaTitle}`,
+      `${params?.kind === listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaConfig.title}`,
   },
   themaPage: {
     path: '/bodem',
-    documentTitle: `${themaTitle} | overzicht`,
+    documentTitle: `${themaConfig.title} | overzicht`,
   },
 } as const satisfies ThemaRoutesConfig;
 
