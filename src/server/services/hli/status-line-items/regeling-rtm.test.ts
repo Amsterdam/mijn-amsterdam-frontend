@@ -4,7 +4,7 @@ import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../../zorgned/zorg
 /** The ID determines the sorting order.
  *  Thats why programmaticly adding an id makes predefined aanvragen more reusable.
  */
-function attachIDToAanvragen(
+function attachIDs(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ): ZorgnedAanvraagWithRelatedPersonsTransformed[] {
   return aanvragen.map((aanvraag, i) => ({
@@ -21,6 +21,23 @@ function getLastID(
     throw Error('No id found in the last aanvraag.');
   }
   return last;
+}
+
+function attachBetrokkenen(
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
+  ids: string[]
+): ZorgnedAanvraagWithRelatedPersonsTransformed {
+  const betrokkenPersonen = ids.map((id) => {
+    return {
+      bsn: id,
+      name: `${id} - Flex`,
+      dateOfBirth: '2023-06-12',
+      dateOfBirthFormatted: '12 juni 2023',
+      partnernaam: 'partner-2 - Flex',
+      partnervoorvoegsel: null,
+    };
+  });
+  return { ...aanvraag, betrokkenen: ids, betrokkenPersonen };
 }
 
 const base = {
@@ -250,14 +267,14 @@ const UNKNOWN: ZorgnedAanvraagWithRelatedPersonsTransformed = {
 
 describe('filterCombineRtmData', () => {
   test('Seperates from other zorgned type aanvragen', () => {
-    const aanvragen = attachIDToAanvragen([RTM_1_AANVRAAG, UNKNOWN]);
+    const aanvragen = attachIDs([RTM_1_AANVRAAG, UNKNOWN]);
     const [remainder, rtmAanvragen] = filterCombineRtmData(aanvragen);
     expect(rtmAanvragen[0].productIdentificatie).toBe('AV-RTM1');
     expect(remainder[0].productIdentificatie).toBe('AV-UNKNOWN');
   });
 
   test('Combines: Aanvraag -> Toegewezen', () => {
-    const aanvragen = attachIDToAanvragen([RTM_1_AANVRAAG, RTM_2_TOEGEWEZEN]);
+    const aanvragen = attachIDs([RTM_1_AANVRAAG, RTM_2_TOEGEWEZEN]);
     const [, result] = filterCombineRtmData(aanvragen);
     expect(result).toStrictEqual([
       {
@@ -275,7 +292,7 @@ describe('filterCombineRtmData', () => {
   });
 
   test('Combines: Aanvraag -> Einde Recht', () => {
-    const aanvragen = attachIDToAanvragen([RTM_1_AANVRAAG, RTM_2_EINDE_RECHT]);
+    const aanvragen = attachIDs([RTM_1_AANVRAAG, RTM_2_EINDE_RECHT]);
     const [, result] = filterCombineRtmData(aanvragen);
     expect(result).toStrictEqual([
       {
@@ -299,7 +316,7 @@ describe('filterCombineRtmData', () => {
       datumEindeGeldigheid: '2025-06-30',
       documenten: [],
     };
-    const aanvragen = attachIDToAanvragen([
+    const aanvragen = attachIDs([
       RTM_1_AANVRAAG,
       RTM_2_TOEGEWEZEN,
       {
@@ -327,7 +344,7 @@ describe('filterCombineRtmData', () => {
   });
 
   test('Combines: Aanvraag -> Toegewezen -> Wijzigings aanvraag -> Wijziging toegewezen', () => {
-    const aanvragen = attachIDToAanvragen([
+    const aanvragen = attachIDs([
       RTM_1_AANVRAAG,
       RTM_2_TOEGEWEZEN,
       RTM_WIJZIGINGS_AANVRAAG,
@@ -350,5 +367,30 @@ describe('filterCombineRtmData', () => {
         id: getLastID(aanvragen),
       },
     ]);
+  });
+
+  test('Does not combine: Aanvraag, Aanvraag, Aanvraag', () => {
+    const aanvragen = attachIDs([
+      attachBetrokkenen(RTM_1_AANVRAAG, ['1']),
+      attachBetrokkenen(RTM_1_AANVRAAG, ['2']),
+      attachBetrokkenen(RTM_1_AANVRAAG, ['3']),
+    ]);
+    const [, result] = filterCombineRtmData(aanvragen);
+    expect(result.length).toBe(3);
+  });
+
+  test('To combine or not to combined: Aanvraag, Aanvraag -> Toegewezen -> Aanvraag', () => {
+    const BETROKKENEN_IDS = ['2'];
+    const aanvragen = attachIDs([
+      attachBetrokkenen(RTM_1_AANVRAAG, ['1']),
+      attachBetrokkenen(RTM_1_AANVRAAG, BETROKKENEN_IDS),
+      attachBetrokkenen(RTM_2_TOEGEWEZEN, BETROKKENEN_IDS),
+      attachBetrokkenen(RTM_1_AANVRAAG, ['3']),
+    ]);
+    const [, result] = filterCombineRtmData(aanvragen);
+    expect(result.length).toBe(3);
+
+    // Little different '3 does not exist'
+    expect(result.find((aanvraag) => aanvraag.id == '3')).toStrictEqual({});
   });
 });
