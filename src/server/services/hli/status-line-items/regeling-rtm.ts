@@ -107,6 +107,7 @@ function combineRTMData(
     // Sort asc so we always end with an 'Einde recht'.
     // This keeps it in the same order as how we describe the scenarios, so you don't need to think in reverse.
     .toSorted(sortByNumber('id', 'asc'));
+
   aanvragen = dedupCombineRTMDeel2(aanvragen);
 
   const initialAccumulator: ZorgnedHLIRegeling[] = [];
@@ -120,7 +121,11 @@ function combineRTMData(
     }
 
     // Aanvraag is a 'Einde recht'.
-    if (isRTMDeel2(prev) && prev.isActueel === false) {
+    if (
+      isRTMDeel2(prev) &&
+      prev.procesAanvraagOmschrijving === 'Beëindigen RTM' &&
+      prev.isActueel === false
+    ) {
       return [...acc, aanvraag];
     }
 
