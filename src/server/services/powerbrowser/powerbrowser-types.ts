@@ -65,40 +65,6 @@ export type PBAdresLinkFields = PBRecordField<'FMT_CAPTION'>;
 
 export type PBAdresLinkRecord = PBRecord<'ADRESSEN', PBAdresLinkFields[]>;
 
-export type BBVergunningZaakStatus =
-  | 'Ontvangen'
-  | 'In behandeling'
-  | 'Afgehandeld'
-  | 'Verlopen'
-  | null;
-export type BBVergunningZaakResult =
-  | 'Verleend'
-  | 'Niet verleend'
-  | 'Ingetrokken'
-  | string
-  | null;
-
-export type BBVergunningFrontend = ZaakAanvraagDetail & {
-  location: string | null;
-  dateDecision: string | null;
-  dateDecisionFormatted: string | null;
-  dateEnd: string | null;
-  dateEndFormatted: string | null;
-  dateRequest: string | null;
-  dateRequestFormatted: string | null;
-  dateStart: string;
-  dateStartFormatted: string | null;
-  decision: BBVergunningZaakResult;
-  isVerleend: boolean;
-  documents: GenericDocument[];
-  heeftOvergangsRecht: boolean;
-  identifier: string;
-  processed: boolean;
-  isExpired: boolean;
-  displayStatus: BBVergunningZaakStatus | BBVergunningZaakResult;
-  title: 'Vergunning bed & breakfast';
-};
-
 export const fieldMap: Record<PBZaakFields['fieldName'], string> = {
   ZAAK_IDENTIFICATIE: 'zaaknummer',
   EINDDATUM: 'dateDecision',
@@ -183,7 +149,7 @@ export type PowerBrowserZaakFrontend<
   dateDecisionFormatted?: string | null;
   dateStartFormatted?: string | null;
   dateEndFormatted?: string | null;
-} & ZaakDetail;
+} & ZaakAanvraagDetail;
 
 export type ZaakStatusDate = {
   status: string;

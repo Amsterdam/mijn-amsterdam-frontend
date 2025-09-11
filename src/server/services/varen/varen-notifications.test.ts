@@ -42,7 +42,7 @@ describe('Notifications', () => {
     const response = await fetchVarenNotifications(authProfileAndToken);
     const errorResponse = {
       content: null,
-      message: '[VAREN] Error',
+      message: '[VAREN] Failed dependencies',
       status: 'DEPENDENCY_ERROR',
     };
     expect(response).toStrictEqual(errorResponse);
