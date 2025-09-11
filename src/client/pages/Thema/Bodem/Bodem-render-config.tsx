@@ -1,9 +1,4 @@
-import {
-  routeConfig,
-  featureToggle,
-  profileTypes,
-  themaConfig,
-} from './Bodem-thema-config';
+import { routeConfig, featureToggle, themaConfig } from './Bodem-thema-config';
 import { BodemDetail } from './BodemDetail';
 import { default as BodemIcon } from './BodemIcon.svg?react';
 import { BodemList } from './BodemList';
@@ -43,7 +38,7 @@ export const menuItem: ThemaMenuItem<typeof themaConfig.id> = {
   title: themaConfig.title,
   id: themaConfig.id,
   to: routeConfig.themaPage.path,
-  profileTypes: profileTypes,
+  profileTypes: themaConfig.profileTypes,
   redactedScope: 'none',
   isActive(appState: AppState) {
     return (

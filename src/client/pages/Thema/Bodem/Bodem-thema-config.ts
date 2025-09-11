@@ -38,7 +38,7 @@ export const featureToggle = {
 // export const themaId = 'BODEM' as const;
 // export const themaTitle = 'Bodem';
 // export const themaTitleDetail = 'Lood in bodem-check';
-export const profileTypes: ProfileType[] = ['private', 'commercial'] as const;
+// export const profileTypes: ProfileType[] = ['private', 'commercial'] as const;
 
 // -----------------------------
 // Routes (backend/data)
