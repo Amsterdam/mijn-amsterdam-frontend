@@ -454,7 +454,10 @@ export async function fetchAfisFacturen(
     formatUrl: ({ url }) => url + AFIS_FACTUUR_REQUEST_API_PATH,
     transformResponse: (responseData) =>
       transformFacturen(responseData, sessionID, deelbetalingen),
-    cacheKey_UNSAFE: createSessionBasedCacheKey(sessionID, params.state),
+    cacheKey_UNSAFE: createSessionBasedCacheKey(
+      sessionID,
+      `afis-facturen-${params.state}`
+    ),
   });
 
   return requestData<AfisFacturenResponse>(config);

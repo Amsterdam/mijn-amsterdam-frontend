@@ -116,7 +116,8 @@ export async function fetchIsKnownInAFIS(
         authProfileAndToken.profile.sid
       ),
     cacheKey_UNSAFE: createSessionBasedCacheKey(
-      authProfileAndToken.profile.sid
+      authProfileAndToken.profile.sid,
+      `afis-is-known`
     ),
     formatUrl(config) {
       return `${config.url}/businesspartner/${profileIdentifierType}/`;

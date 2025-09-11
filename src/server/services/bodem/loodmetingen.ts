@@ -194,7 +194,8 @@ export async function fetchLoodmetingen(
     transformResponse: (responseData) =>
       transformLood365Response(authProfileAndToken.profile.sid, responseData),
     cacheKey_UNSAFE: createSessionBasedCacheKey(
-      authProfileAndToken.profile.sid
+      authProfileAndToken.profile.sid,
+      'loodmetingen'
     ),
   });
 

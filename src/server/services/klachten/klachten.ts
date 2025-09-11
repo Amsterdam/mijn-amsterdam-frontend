@@ -156,7 +156,7 @@ async function fetchKlachten(
       headers: data.getHeaders(),
       cacheKey_UNSAFE: createSessionBasedCacheKey(
         authProfileAndToken.profile.sid,
-        `page${page}`
+        `klachten-page-${page}`
       ),
     })
   );
