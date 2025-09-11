@@ -15,6 +15,9 @@ export const themaConfig: ThemaConfig = {
   title: 'Bodem',
   titleDetail: 'Lood in bodem-check',
   profileTypes: ['private', 'commercial'],
+  featureToggle: {
+    BodemActive: true,
+  },
 } as const;
 
 // -----------------------------
@@ -28,9 +31,9 @@ const listPageParamKind = {
 // -----------------------------
 // Feature toggle
 // -----------------------------
-export const featureToggle = {
-  BodemActive: true,
-};
+// export const featureToggle = {
+//   BodemActive: true,
+// };
 
 // -----------------------------
 // Thema-gegevens (backend-safe)
