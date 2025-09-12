@@ -108,9 +108,9 @@ export async function fetchVaren(authProfileAndToken: AuthProfileAndToken) {
     _fetchDecosZaken(decosZaakTransformers).then((r) => {
       if (r.status === 'OK') {
         return apiSuccessResult(
-          r.content.flatMap((z) =>
-            transformVarenZaakFrontend(authProfileAndToken, z)
-          )
+          r.content
+            .filter((z) => !z.processed)
+            .flatMap((z) => transformVarenZaakFrontend(authProfileAndToken, z))
         );
       }
       return r;
