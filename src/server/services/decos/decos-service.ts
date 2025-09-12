@@ -440,17 +440,24 @@ async function fetchZakenByUserKey(
     zaakTypeTransformersByItemType
   ).map(async ([itemType, zaakTransformers]) => {
     const fields = getSelectFields(zaakTransformers);
-    const caseTypes = zaakTransformers.flatMap(
-      (transformer) => transformer.caseType || []
-    );
-    const caseTypeQuery = caseTypes
-      .map((caseType) => `${CASE_TYP_FIELD_DECOS} eq '${caseType}'`)
+    const filterQuery = zaakTransformers
+      .flatMap((t) => {
+        if (!t.caseType) {
+          return null;
+        }
+        const caseTypeFilter = `${CASE_TYP_FIELD_DECOS} eq '${t.caseType}'`;
+        if (t.itemFilterAfterCaseTypeFilter) {
+          return `(${t.itemFilterAfterCaseTypeFilter} and ${caseTypeFilter})`;
+        }
+        return caseTypeFilter;
+      })
+      .filter((q) => !!q)
       .join(' or ');
 
     const decosUrlParams = new URLSearchParams({
       top: DECOS_ZAKEN_FETCH_TOP,
       select: fields,
-      filter: caseTypeQuery,
+      filter: filterQuery,
     });
 
     const apiConfig = getApiConfig('DECOS_API', {
@@ -469,7 +476,7 @@ async function fetchZakenByUserKey(
     const responseSource = await requestData<DecosZaakSource[]>(apiConfig);
     debug({
       [`getZakenByUserKey:${userKey}`]: {
-        caseTypes,
+        caseTypes: zaakTransformers.flatMap((t) => t.caseType || []),
         count: responseSource.content?.length ?? 0,
       },
     });

@@ -150,6 +150,8 @@ export type DecosZaakTransformer<T extends DecosZaakBase = any> = {
   itemType: string;
   // The caseType (zaaktype) of the sourceData.
   caseType: CaseTypeLiteral<T>;
+  /** An additonal case filter, it is only applied if there is a caseType. Example: processed eq 'false'  */
+  itemFilterAfterCaseTypeFilter?: string;
   // Title of the DecosZaakBase, mostly a slightly different variant of the $caseType
   title: T['title'];
   // A mapping object that can be used to assign a readable attribute to the data sent to the frontend.
