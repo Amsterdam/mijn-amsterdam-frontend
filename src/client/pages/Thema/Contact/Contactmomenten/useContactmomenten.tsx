@@ -20,6 +20,7 @@ import type { ThemaMenuItemTransformed } from '../../../../config/thema-types';
 import { getRedactedClass } from '../../../../helpers/cobrowse';
 import { useAppStateGetter } from '../../../../hooks/useAppState';
 import { useThemaMenuItems } from '../../../../hooks/useThemaMenuItems';
+import { themaIdBRP } from '../../Profile/Profile-thema-config';
 
 function getMenuItem(
   onderwerp: string,
@@ -98,7 +99,7 @@ export function useContactmomenten() {
     isError: isError(CONTACT_MOMENTEN),
     isLoading: isLoading(CONTACT_MOMENTEN),
     title: contactMomentenTitle,
-    breadcrumbs,
+    breadcrumbs: [],
     routeParams,
     listPageRoute: generatePath(routeConfig.listPageContactmomenten.path, {
       page: null,
