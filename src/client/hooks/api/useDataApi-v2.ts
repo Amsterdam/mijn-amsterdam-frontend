@@ -171,6 +171,7 @@ export function useBffApi<T>(
     setState({ isLoading: true, isPristine: false });
 
     sendRequest(reqUrl, { ...options?.init, ...init }).then((response) => {
+      console.log('fetch response', urlOrKey, reqUrl, response);
       if (response.status === 'ERROR') {
         return setState({
           data: null,

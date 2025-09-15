@@ -1,6 +1,5 @@
 import { render, waitFor } from '@testing-library/react';
 import { generatePath } from 'react-router';
-import { MutableSnapshot } from 'recoil';
 
 import { routeConfig } from './Erfpacht-thema-config';
 import { ErfpachtListFacturen } from './ErfpachtListFacturen';
@@ -13,7 +12,6 @@ import {
 import { ErfpachtDossiersResponse } from '../../../../server/services/erfpacht/erfpacht-types';
 import { bffApi } from '../../../../testing/utils';
 import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
 describe('<ErfpachtOpenFacturen />', () => {
@@ -26,17 +24,13 @@ describe('<ErfpachtOpenFacturen />', () => {
     ERFPACHT_DOSSIER_DETAIL
   );
 
-  function Component({
-    initializeState,
-  }: {
-    initializeState: (snapshot: MutableSnapshot) => void;
-  }) {
+  function Component({ state }: { state: Partial<AppState> }) {
     return (
       <MockApp
         routeEntry={routeEntry}
         routePath={routePath}
         component={ErfpachtListFacturen}
-        initializeState={initializeState}
+        state={state}
       />
     );
   }
@@ -53,13 +47,7 @@ describe('<ErfpachtOpenFacturen />', () => {
       },
     } as AppState;
 
-    const screen = render(
-      <Component
-        initializeState={(snapshot) => {
-          snapshot.set(appStateAtom, testState);
-        }}
-      />
-    );
+    const screen = render(<Component state={testState} />);
 
     await waitFor(() => {
       expect(
@@ -86,13 +74,7 @@ describe('<ErfpachtOpenFacturen />', () => {
       },
     } as AppState;
 
-    const screen = render(
-      <Component
-        initializeState={(snapshot) => {
-          snapshot.set(appStateAtom, testState);
-        }}
-      />
-    );
+    const screen = render(<Component state={testState} />);
 
     await waitFor(async () => {
       expect(
@@ -148,13 +130,7 @@ describe('<ErfpachtOpenFacturen />', () => {
       .get('/services/erfpacht/dossier/E.123.123')
       .reply(500, { content: null, status: 'ERROR' });
 
-    const screen = render(
-      <Component
-        initializeState={(snapshot) => {
-          snapshot.set(appStateAtom, testState);
-        }}
-      />
-    );
+    const screen = render(<Component state={testState} />);
     await waitFor(() => {
       expect(screen.getByText('Foutmelding')).toBeInTheDocument();
       expect(

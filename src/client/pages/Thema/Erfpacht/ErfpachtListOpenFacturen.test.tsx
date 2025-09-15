@@ -1,6 +1,5 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
-import { MutableSnapshot } from 'recoil';
 
 import { routeConfig } from './Erfpacht-thema-config';
 import { ErfpachtListOpenFacturen } from './ErfpachtListOpenFacturen';
@@ -8,7 +7,6 @@ import ERFPACHT_DOSSIERS from '../../../../../mocks/fixtures/erfpacht-v2-dossier
 import { transformDossierResponse } from '../../../../server/services/erfpacht/erfpacht';
 import type { ErfpachtDossiersResponse } from '../../../../server/services/erfpacht/erfpacht-types';
 import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
 describe('<ErfpachtOpenFacturen />', () => {
@@ -20,17 +18,13 @@ describe('<ErfpachtOpenFacturen />', () => {
     'xxx-relatie-code-xxx'
   );
 
-  function Component({
-    initializeState,
-  }: {
-    initializeState: (snapshot: MutableSnapshot) => void;
-  }) {
+  function Component({ state }: { state: Partial<AppState> }) {
     return (
       <MockApp
         routeEntry={routeEntry}
         routePath={routePath}
         component={ErfpachtListOpenFacturen}
-        initializeState={initializeState}
+        state={state}
       />
     );
   }
@@ -43,13 +37,7 @@ describe('<ErfpachtOpenFacturen />', () => {
       },
     } as AppState;
 
-    const screen = render(
-      <Component
-        initializeState={(snapshot) => {
-          snapshot.set(appStateAtom, testState);
-        }}
-      />
-    );
+    const screen = render(<Component state={testState} />);
 
     expect(
       screen.getByRole('heading', { name: 'Openstaande facturen' })
@@ -67,13 +55,7 @@ describe('<ErfpachtOpenFacturen />', () => {
       },
     } as AppState;
 
-    const screen = render(
-      <Component
-        initializeState={(snapshot) => {
-          snapshot.set(appStateAtom, testState);
-        }}
-      />
-    );
+    const screen = render(<Component state={testState} />);
 
     expect(
       screen.getByRole('heading', { name: 'Openstaande facturen' })
@@ -107,13 +89,7 @@ describe('<ErfpachtOpenFacturen />', () => {
       },
     } as AppState;
 
-    const screen = render(
-      <Component
-        initializeState={(snapshot) => {
-          snapshot.set(appStateAtom, testState);
-        }}
-      />
-    );
+    const screen = render(<Component state={testState} />);
 
     vi.doMock('../../hooks/media.hook', (importActual) => {
       return {
@@ -154,13 +130,7 @@ describe('<ErfpachtOpenFacturen />', () => {
       },
     } as AppState;
 
-    const screen = render(
-      <Component
-        initializeState={(snapshot) => {
-          snapshot.set(appStateAtom, testState);
-        }}
-      />
-    );
+    const screen = render(<Component state={testState} />);
 
     expect(screen.getByText('Foutmelding')).toBeInTheDocument();
     expect(

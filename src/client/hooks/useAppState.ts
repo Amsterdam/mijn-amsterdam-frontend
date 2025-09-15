@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { create } from 'zustand/react';
 
@@ -13,19 +13,18 @@ import { useBffApi } from './api/useDataApi-v2';
 import { useProfileTypeValue } from './useProfileType';
 import { SSE_CLOSE_MESSAGE, SSE_ERROR_MESSAGE, useSSE } from './useSSE';
 
-type AppStateStore = {
-  appState: AppState;
+type AppStateStore = AppState & {
   setAppState: (appState: Partial<AppState>, isReady?: boolean) => void;
   isReady: boolean;
   setIsAppStateReady: (isReady: boolean) => void;
 };
 
 export const useAppStateStore = create<AppStateStore>((set) => ({
-  appState: PRISTINE_APPSTATE,
+  ...PRISTINE_APPSTATE,
   isReady: false,
   setAppState: (appState, isReady) =>
     set((state) => ({
-      appState: { ...state.appState, ...appState },
+      ...appState,
       isReady: isReady ?? state.isReady,
     })),
   setIsAppStateReady: (isReady) => set({ isReady }),
@@ -36,11 +35,13 @@ interface useAppStateFallbackServiceProps {
   isEnabled: boolean;
 }
 
+const i = 0;
+
 export function useAppStateFallbackService({
   profileType,
   isEnabled,
 }: useAppStateFallbackServiceProps) {
-  const { appState, setAppState, setIsAppStateReady, isReady } =
+  const { setAppState, setIsAppStateReady, isReady, ...appState } =
     useAppStateStore();
   const api = useBffApi<AppState>(BFFApiUrls.SERVICES_SAURON, {
     fetchImmediately: false,
@@ -60,16 +61,14 @@ export function useAppStateFallbackService({
 
   // If no EvenSource support or EventSource fails, the Fallback service endpoint is used for fetching all the data.
   useEffect(() => {
-    if (isEnabled && api.isPristine) {
-      api.fetch();
-    }
-  }, [api.fetch, api.isPristine, isEnabled]);
-
-  // Update the appState with data fetched by the Fallback service endpoint
-  useEffect(() => {
     if (!isEnabled || isReady) {
       return;
     }
+
+    if (isEnabled && api.isPristine) {
+      api.fetch();
+    }
+
     if (api.data !== null && !api.isLoading && !api.isError) {
       setAppState(transformSourceData(api.data.content), true);
       setIsAppStateReady(true);
@@ -131,17 +130,11 @@ export function useAppStateRemote() {
   );
 
   const profileType = useProfileTypeValue();
-  const { appState, setAppState, setIsAppStateReady } = useAppStateStore();
-
-  // First retrieve all the services specified in the BFF, after that Only retrieve incremental updates
-  const useIncremental = useRef(false);
-
-  useEffect(() => {
-    useIncremental.current = true;
-  }, []);
+  const { setAppState, setIsAppStateReady } = useAppStateStore();
 
   // The callback is fired on every incoming message from the EventSource.
   const onEvent = useCallback((messageData: string | object) => {
+    console.log('sse message', messageData);
     if (typeof messageData === 'object') {
       const transformedMessageData = transformSourceData(messageData);
       setAppState(transformedMessageData);
@@ -166,12 +159,9 @@ export function useAppStateRemote() {
     profileType,
     isEnabled: hasEventSourceSupport ? isFallbackServiceEnabled : true,
   });
-
-  return appState;
 }
-
 export function useAppStateGetter() {
-  return useAppStateStore((state) => state.appState);
+  return useAppStateStore.getState();
 }
 
 export function useAppStateReady() {

@@ -1,10 +1,8 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
-import { MutableSnapshot } from 'recoil';
 
 import { routeConfig } from './Bezwaren-thema-config';
 import { BezwarenThema } from './BezwarenThema';
-import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
 const testState = {
@@ -78,10 +76,6 @@ const testState = {
   },
 };
 
-function initializeState(testState: any) {
-  return (snapshot: MutableSnapshot) => snapshot.set(appStateAtom, testState);
-}
-
 function setupTestComponent(testState: any) {
   const routeEntry = generatePath(routeConfig.themaPage.path);
   const routePath = routeConfig.themaPage.path;
@@ -92,7 +86,7 @@ function setupTestComponent(testState: any) {
         routeEntry={routeEntry}
         routePath={routePath}
         component={BezwarenThema}
-        initializeState={initializeState(testState)}
+        state={testState}
       />
     );
   };
