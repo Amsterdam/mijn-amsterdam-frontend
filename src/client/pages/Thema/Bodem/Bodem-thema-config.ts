@@ -7,11 +7,7 @@ import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
 } from '../../../config/app';
-import type {
-  ThemaRoutesConfig,
-  ThemaConfig,
-  RouteConfig,
-} from '../../../config/thema-types';
+import type { ThemaConfig, RouteConfig } from '../../../config/thema-types';
 
 export const themaConfig: ThemaConfig = {
   id: 'BODEM', ///Bij useBodemListPageData.hook.ts nog steeds themaID en ook bij BodemList.tsx
@@ -30,7 +26,7 @@ export const themaConfig: ThemaConfig = {
   featureToggle: true,
   profileTypes: ['private', 'commercial'],
   uitlegPageSections: {
-    ///gebruik deze nog niet, moet wel maar dan moet de hele pagina GegevensInfo.tsx worden omgebouwd
+    ///gebruik deze nog niet, moet wel maar dan moet de hele pagina GegevensInfo.tsx worden omgebouwd, daarnaast moet de Uitlegpagina voor Eherk anders dan die van Digid > maar denk dat ik dat met Profiletype kan oplossen
     SectionProps: {
       id: 'BODEM',
       title: 'Bodem',
@@ -55,7 +51,7 @@ export const routeConfig: RouteConfig = {
     path: '/bodem',
     documentTitle: `${themaConfig.title} | overzicht`,
   },
-} as const satisfies ThemaRoutesConfig;
+} as const;
 
 export type TableHeadersKey = keyof typeof themaConfig.tableHeaders;
 export type TableHeaders = (typeof themaConfig.tableHeaders)[TableHeadersKey];

@@ -1,6 +1,5 @@
 import { type Params } from 'react-router';
 
-import { SomeOtherString } from '../../universal/helpers/types';
 import {
   AppState,
   LinkProps,
@@ -22,7 +21,7 @@ export type ThemaConfig = {
   featureToggle: boolean;
   profileTypes: ProfileType[];
   uitlegPageSections: {
-    ///nog niet in gebruik
+    ///nog niet in gebruik dan moet de hele pagina GegevensInfo.tsx worden omgebouwd, daarnaast moet de Uitlegpagina voor Eherk anders dan die van Digid > maar denk dat ik dat met Profiletype kan oplossen
     SectionProps: {
       id: string;
       title: string;
@@ -35,6 +34,7 @@ export type ThemaConfig = {
 };
 
 export type RouteConfig = {
+  // TO DO deze zou ik het liefst opnemen in type ThemaConfig, maar ik wil de title wel hergebruikt zien...ik hoor wellicht iets van een Constructor functie maken
   detailPage: {
     path: string;
     trackingUrl: string;
@@ -45,11 +45,12 @@ export type RouteConfig = {
     documentTitle: (params: { kind: string }) => `${string} | ${string}`; //bijv  (params) =>`${params?.kind === themaConfig.tableHeaders.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${ themaConfig.title } `,
   };
   themaPage: {
-    path: '/bodem';
+    path: string;
     documentTitle: `${string} | ${string}`; //bijv`${themaConfig.title} | overzicht`,
   };
 };
 
+///TO DO hieronder zou ik het liefts ook meenemen in de ThemaConfig
 export interface ThemaMenuItem<ID extends string = string>
   extends Omit<LinkProps, 'title' | 'to' | 'rel'> {
   id: ID;
@@ -81,11 +82,11 @@ export interface ThemaMenuItemTransformed<ID extends string = string>
   to: string;
 }
 
-type ThemaPageType =
-  | `themaPage${string}`
-  | `listPage${string}`
-  | `detailPage${string}`
-  | SomeOtherString;
+// type ThemaPageType =
+//   | `themaPage${string}`
+//   | `listPage${string}`
+//   | `detailPage${string}`
+//   | SomeOtherString;
 
 type DocumenttitleFN = <T extends Params<string>>(params: T | null) => string;
 
@@ -98,9 +99,9 @@ export type ThemaRouteConfig = {
   documentTitle: string | DocumenttitleFN;
 };
 
-export type ThemaRoutesConfig = {
-  [themaPageType in ThemaPageType]: ThemaRouteConfig;
-};
+// export type ThemaRoutesConfig = {
+//   [themaPageType in ThemaPageType]: ThemaRouteConfig;
+// };
 
 export type PatroonCRoutesConfig = {
   [profileType in ProfileType]: string;
