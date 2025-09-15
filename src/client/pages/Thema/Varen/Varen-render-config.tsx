@@ -49,7 +49,8 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
     return (
       !isLoading(appState.VAREN) &&
       (!!appState.VAREN?.content?.reder ||
-        !!appState.VAREN?.content?.zaken?.length) &&
+        !!appState.VAREN?.content?.zaken?.length ||
+        !!appState.VAREN?.content?.vergunningen?.length) &&
       featureToggle.varenActive
     );
   },
