@@ -7,13 +7,26 @@ import {
   SVGComponent,
 } from '../../universal/types/App.types';
 
+// InfoSection: een simpel info-blok met (optionele) titel en lijst
+export type InfoSection = {
+  title?: string; // titel mag leeg zijn;
+  listItems: string[]; // altijd een lijst van tekstjes; dit is zo afgesproken in de opdracht/pseudocode
+};
+
 // ThemaConfig: basis-gegevens per thema (backend-safe)
 export type ThemaConfig = {
   id: string; // uniek id van het thema (bijvoorbeeld:  'BODEM')
-  title: string;
-  titleDetail: string; // naam/titel van het thema
+  title: string; // naam/titel van het thema
+  titleDetail: string;
+  profileTypes: ProfileType[];
+  featureToggle: { [key: string]: boolean };
+  listPageParamKind: {
+    inProgress: 'lopende-aanvragen' | string;
+    completed: 'afgehandelde-aanvragen' | string;
+  };
+  routeConfig?: ThemaRoutesConfig; // routes van het thema (detail, lijst, thema)
+  linkListItems: LinkProps[];
   // themaTitleDetail?: string;  // ThemaTitleDetail is optioneel. Het wordt niet in elk thema gebruikt
-  // profileTypes: ProfileType[];   // wie dit thema mag zien (bijvoorbeeld:  ['private', 'commercial'])
   // featureToggle: { [key: string]: boolean }; // toggles aan/uit (bijvoorbeeld: BodemActive: true })
   // routeConfig: ThemaRoutesConfig;            // routes van het thema (detail, lijst, thema)
   //   listPageParamKind: {

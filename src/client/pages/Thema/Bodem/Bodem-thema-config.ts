@@ -22,6 +22,40 @@ export const themaConfig: ThemaConfig = {
     inProgress: 'lopende-aanvragen',
     completed: 'afgehandelde-aanvragen',
   },
+  linkListItems: [
+    {
+      title: 'Meer informatie over lood in de bodem.',
+      to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/bodem/loodcheck-tuin-aanvragen',
+    },
+  ],
+} as const;
+
+// -----------------------------
+// Routes (backend/data)
+// -----------------------------
+export const routeConfig = {
+  detailPage: {
+    path: '/bodem/lood-meting/:id',
+    trackingUrl: '/bodem/lood-meting',
+    documentTitle: `Lood in de bodem-check | ${themaConfig.title}`,
+  },
+  listPage: {
+    path: '/bodem/lijst/lood-meting/:kind/:page?',
+    documentTitle: (params) =>
+      `${params?.kind === themaConfig.listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaConfig.title}`,
+  },
+  themaPage: {
+    path: '/bodem',
+    documentTitle: `${themaConfig.title} | overzicht`,
+  },
+} as const satisfies ThemaRoutesConfig;
+
+// -----------------------------
+// Complete config (alles bij elkaar)
+// -----------------------------
+export const completeThemaConfig: ThemaConfig = {
+  ...themaConfig, // hier neem ik alle velden van themaConfig over
+  routeConfig, // Ik voeg routeConfig er aan toe
 } as const;
 
 // -----------------------------
@@ -47,25 +81,25 @@ export const themaConfig: ThemaConfig = {
 // export const themaTitleDetail = 'Lood in bodem-check';
 // export const profileTypes: ProfileType[] = ['private', 'commercial'] as const;
 
-// -----------------------------
-// Routes (backend/data)
-// -----------------------------
-export const routeConfig = {
-  detailPage: {
-    path: '/bodem/lood-meting/:id',
-    trackingUrl: '/bodem/lood-meting',
-    documentTitle: `Lood in de bodem-check | ${themaConfig.title}`,
-  },
-  listPage: {
-    path: '/bodem/lijst/lood-meting/:kind/:page?',
-    documentTitle: (params) =>
-      `${params?.kind === themaConfig.listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaConfig.title}`,
-  },
-  themaPage: {
-    path: '/bodem',
-    documentTitle: `${themaConfig.title} | overzicht`,
-  },
-} as const satisfies ThemaRoutesConfig;
+// // -----------------------------
+// // Routes (backend/data)
+// // -----------------------------
+// export const routeConfig = {
+//   detailPage: {
+//     path: '/bodem/lood-meting/:id',
+//     trackingUrl: '/bodem/lood-meting',
+//     documentTitle: `Lood in de bodem-check | ${themaConfig.title}`,
+//   },
+//   listPage: {
+//     path: '/bodem/lijst/lood-meting/:kind/:page?',
+//     documentTitle: (params) =>
+//       `${params?.kind === themaConfig.listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaConfig.title}`,
+//   },
+//   themaPage: {
+//     path: '/bodem',
+//     documentTitle: `${themaConfig.title} | overzicht`,
+//   },
+// } as const satisfies ThemaRoutesConfig;
 
 // -----------------------------
 // Types voor list page params
