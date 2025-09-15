@@ -346,23 +346,30 @@ export function useEmandateStatusPendingStorage(
       return;
     }
 
-    let updatedIbans: string[] = [...ibansPendingActivation];
+    let updatedIbansPendingActivation: string[] = [...ibansPendingActivation];
 
+    // Update the pending activation list based on the current eMandates status.
     eMandates.forEach((eMandate) => {
-      if (eMandate?.status !== '1' && iban && !updatedIbans.includes(iban)) {
-        updatedIbans.push(iban);
+      if (
+        eMandate?.status !== '1' &&
+        iban &&
+        !updatedIbansPendingActivation.includes(iban)
+      ) {
+        updatedIbansPendingActivation.push(iban);
       }
       if (
         eMandate?.status === '1' &&
         eMandate?.creditorIBAN &&
-        updatedIbans.includes(eMandate?.creditorIBAN)
+        updatedIbansPendingActivation.includes(eMandate?.creditorIBAN)
       ) {
-        updatedIbans = updatedIbans.filter((i) => i !== eMandate.creditorIBAN);
+        updatedIbansPendingActivation = updatedIbansPendingActivation.filter(
+          (i) => i !== eMandate.creditorIBAN
+        );
       }
     });
 
-    if (!isEqual(updatedIbans, ibansPendingActivation)) {
-      setIsPendingActivation(updatedIbans);
+    if (!isEqual(updatedIbansPendingActivation, ibansPendingActivation)) {
+      setIsPendingActivation(updatedIbansPendingActivation);
     }
 
     // Make sure the iban query parameter is removed after processing.
