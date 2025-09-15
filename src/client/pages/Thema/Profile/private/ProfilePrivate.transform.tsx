@@ -1,6 +1,5 @@
 import { Link } from '@amsterdam/design-system-react';
 
-import styles from './ProfilePrivate.module.scss';
 import type {
   BRPData,
   Persoon,
@@ -381,7 +380,6 @@ export const panelConfig: PanelConfig<BRPPanelKey, AppState['BRP']> = {
         title: 'Onjuiste inschrijving melden',
         url: profileLinks.CHANGE_RESIDENT_COUNT,
         external: true,
-        className: styles['ActionLink--reportIncorrectResidentCount'],
       });
     }
 

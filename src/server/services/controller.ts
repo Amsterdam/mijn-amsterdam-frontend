@@ -159,7 +159,7 @@ const BELASTINGEN = callAuthenticatedService(fetchBelasting);
 const MILIEUZONE = callAuthenticatedService(fetchMilieuzone);
 const OVERTREDINGEN = callAuthenticatedService(fetchOvertredingen);
 const SUBSIDIES = callAuthenticatedService(fetchSubsidie);
-const KLANT_CONTACT = callAuthenticatedService(fetchContactmomenten); // For now salesforcre only consists of contactmomenten.
+const CONTACT_MOMENTEN = callAuthenticatedService(fetchContactmomenten); // For now salesforcre only consists of contactmomenten.
 
 // Location, address, based services
 const AFVAL = callAuthenticatedService(fetchAfval);
@@ -205,7 +205,7 @@ const SERVICES_INDEX = {
   PROFILE,
   SUBSIDIES,
   SVWI,
-  KLANT_CONTACT,
+  CONTACT_MOMENTEN,
   TOERISTISCHE_VERHUUR,
   VAREN,
   VERGUNNINGEN,
@@ -281,7 +281,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     NOTIFICATIONS,
     OVERTREDINGEN,
     PARKEREN,
-    KLANT_CONTACT,
+    CONTACT_MOMENTEN,
     SUBSIDIES,
     SVWI,
     TOERISTISCHE_VERHUUR,
@@ -328,7 +328,7 @@ const tipsOmit = [
   'AFVALPUNTEN',
   'CMS_CONTENT',
   'NOTIFICATIONS',
-  'KLANT_CONTACT',
+  'CONTACT_MOMENTEN',
 ];
 
 export const servicesTipsByProfileType = {

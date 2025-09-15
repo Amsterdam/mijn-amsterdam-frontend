@@ -104,7 +104,7 @@ export const PRISTINE_APPSTATE: AppState = {
   BRP: apiPristineResult(null, {
     profileTypes: ['private'],
   }),
-  KLANT_CONTACT: apiPristineResult([], {
+  CONTACT_MOMENTEN: apiPristineResult([], {
     profileTypes: ['private'],
   }),
   PROFILE: apiPristineResult(null, {

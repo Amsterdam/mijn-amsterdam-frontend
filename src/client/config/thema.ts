@@ -7,6 +7,7 @@ import { menuItem as menuItemBelastingen } from '../pages/Thema/Belastingen/Bela
 import { menuItem as menuItemBezwaren } from '../pages/Thema/Bezwaren/Bezwaren-render-config';
 import { menuItem as menuItemBodem } from '../pages/Thema/Bodem/Bodem-render-config';
 import { menuItem as menuItemBurgerzaken } from '../pages/Thema/Burgerzaken/Burgerzaken-render-config';
+import { menuItem as menuItemContact } from '../pages/Thema/Contact/Contact-render-config';
 import {
   menuItem as menuItemErfpacht,
   menuItemZakelijk as menuItemErfpachtZakelijk,
@@ -42,6 +43,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   menuItemBezwaren,
   menuItemBodem,
   menuItemBurgerzaken,
+  menuItemContact,
   menuItemErfpacht,
   menuItemErfpachtZakelijk,
   menuItemHLI,

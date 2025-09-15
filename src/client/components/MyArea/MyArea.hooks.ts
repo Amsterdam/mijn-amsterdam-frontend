@@ -15,7 +15,7 @@ import {
 
 import { filterItemCheckboxState } from './LegendPanel/DatasetControlCheckbox';
 import styles from './MyAreaDatasets.module.scss';
-import { BAGData } from '../../../server/services';
+import type { BAGData } from '../../../server/services/bag/bag.types';
 import type {
   MaPointFeature,
   MaPolylineFeature,
