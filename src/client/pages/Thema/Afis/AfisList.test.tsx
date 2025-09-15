@@ -1,12 +1,10 @@
 import { render, waitFor } from '@testing-library/react';
 import { generatePath } from 'react-router';
-import { MutableSnapshot } from 'recoil';
 
 import { routeConfig } from './Afis-thema-config';
 import { AfisList } from './AfisList';
 import { bffApi } from '../../../../testing/utils';
 import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
 const businessPartnerIdEncrypted = 'yyy-456-yyy';
@@ -49,10 +47,6 @@ const testState = {
   },
 } as unknown as AppState;
 
-function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState);
-}
-
 describe('<AfisFacturen />', () => {
   const routePath = routeConfig.listPage.path;
 
@@ -68,7 +62,7 @@ describe('<AfisFacturen />', () => {
           routeEntry={routeEntry}
           routePath={routePath}
           component={AfisList}
-          initializeState={initializeState}
+          state={testState}
         />
       );
     }
@@ -138,7 +132,7 @@ describe('<AfisFacturen />', () => {
           routeEntry={routeEntry}
           routePath={routePath}
           component={AfisList}
-          initializeState={initializeState}
+          state={testState}
         />
       );
     }

@@ -1,7 +1,6 @@
 import { render, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { generatePath } from 'react-router';
-import { MutableSnapshot } from 'recoil';
 
 import { routeConfig } from './Erfpacht-thema-config';
 import { ErfpachtDetail } from './ErfpachtDetail';
@@ -14,7 +13,6 @@ import {
 import { bffApi } from '../../../../testing/utils';
 import { jsonCopy } from '../../../../universal/helpers/utils';
 import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
 describe('<Erfpacht/DossierDetail />', () => {
@@ -27,17 +25,13 @@ describe('<Erfpacht/DossierDetail />', () => {
     ERFPACHT_DOSSIER_DETAIL as any
   );
 
-  function Component({
-    initializeState,
-  }: {
-    initializeState: (snapshot: MutableSnapshot) => void;
-  }) {
+  function Component({ state }: { state: Partial<AppState> }) {
     return (
       <MockApp
         routeEntry={routeEntry}
         routePath={routePath}
         component={ErfpachtDetail}
-        initializeState={initializeState}
+        state={state}
       />
     );
   }
@@ -55,13 +49,7 @@ describe('<Erfpacht/DossierDetail />', () => {
       },
     } as AppState;
 
-    const screen = render(
-      <Component
-        initializeState={(snapshot) => {
-          snapshot.set(appStateAtom, testState);
-        }}
-      />
-    );
+    const screen = render(<Component state={testState} />);
 
     await waitFor(() => {
       expect(
@@ -93,13 +81,7 @@ describe('<Erfpacht/DossierDetail />', () => {
         },
       } as AppState;
 
-      const screen = render(
-        <Component
-          initializeState={(snapshot) => {
-            snapshot.set(appStateAtom, testState);
-          }}
-        />
-      );
+      const screen = render(<Component state={testState} />);
 
       const facturenPage1 = [
         { factuurNummer: 'A.123123123123' },
@@ -142,13 +124,7 @@ describe('<Erfpacht/DossierDetail />', () => {
         },
       } as AppState;
 
-      const screen = render(
-        <Component
-          initializeState={(snapshot) => {
-            snapshot.set(appStateAtom, testState);
-          }}
-        />
-      );
+      const screen = render(<Component state={testState} />);
 
       const dataIsLoadedTarget = 'E123/456';
       await waitFor(() => screen.getByText(dataIsLoadedTarget));
@@ -197,13 +173,7 @@ describe('<Erfpacht/DossierDetail />', () => {
         },
       } as AppState;
 
-      const screen = render(
-        <Component
-          initializeState={(snapshot) => {
-            snapshot.set(appStateAtom, testState);
-          }}
-        />
-      );
+      const screen = render(<Component state={testState} />);
 
       const dataIsLoadedTarget = 'E123/456';
       await waitFor(() => screen.getByText(dataIsLoadedTarget));
@@ -252,13 +222,7 @@ describe('<Erfpacht/DossierDetail />', () => {
       },
     } as AppState;
 
-    const screen = render(
-      <Component
-        initializeState={(snapshot) => {
-          snapshot.set(appStateAtom, testState);
-        }}
-      />
-    );
+    const screen = render(<Component state={testState} />);
 
     await waitFor(() =>
       expect(screen.getByText('Betaler aanpassen')).toBeInTheDocument()
@@ -278,13 +242,7 @@ describe('<Erfpacht/DossierDetail />', () => {
       .get('/services/erfpacht/dossier/E.123.123')
       .reply(500, { content: null, status: 'ERROR' });
 
-    const screen = render(
-      <Component
-        initializeState={(snapshot) => {
-          snapshot.set(appStateAtom, testState);
-        }}
-      />
-    );
+    const screen = render(<Component state={testState} />);
     await waitFor(() => {
       expect(screen.getByText('Foutmelding')).toBeInTheDocument();
       expect(

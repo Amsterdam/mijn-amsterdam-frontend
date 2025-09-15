@@ -2,14 +2,12 @@ import React from 'react';
 
 import { cleanup, render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router';
-import { MutableSnapshot } from 'recoil';
 import { beforeAll, describe, it } from 'vitest';
 
 import { SearchPage } from './Search';
 import { SearchPageRoute } from './Search-routes';
 import { bffApi } from '../../../testing/utils';
 import { AppState } from '../../../universal/types/App.types';
-import { appStateAtom, appStateReadyAtom } from '../../hooks/useAppState';
 import MockApp from '../../pages/MockApp';
 
 const testState = {
@@ -32,10 +30,7 @@ describe('<Search />', () => {
         routeEntry={routeEntry}
         routePath={routePath}
         component={SearchPage}
-        initializeState={function initializeState(snapshot: MutableSnapshot) {
-          snapshot.set(appStateAtom, testState);
-          snapshot.set(appStateReadyAtom, isAppStateReady);
-        }}
+        state={testState}
       />
     );
   }

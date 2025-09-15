@@ -111,7 +111,7 @@ describe('<Dashboard />', () => {
         routeEntry={routeEntry}
         routePath={routePath}
         component={Dashboard}
-        initializeState={initializeState}
+        state={testState}
       />
     );
   }

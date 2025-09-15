@@ -5,8 +5,8 @@ import { WelcomeNotification } from '../config/staticData';
 import { getRedactedClass } from '../helpers/cobrowse';
 
 export function useAppStateNotifications(top?: number) {
-  const { appState, isReady } = useAppStateStore();
-  const notifications_ = appState.NOTIFICATIONS?.content ?? [];
+  const { isReady, NOTIFICATIONS } = useAppStateStore();
+  const notifications_ = NOTIFICATIONS?.content ?? [];
   // Merge the WelcomeNotification when AppState is ready.
   const notifications = useMemo(
     () =>
