@@ -14,7 +14,7 @@ export type ThemaConfig = {
   title: string; ///hier  title: string | Record<string, string>; van maken en dan kan kan je daar alle titels in zetten (bijv ook detailtitle etc.)
   titleDetail: string;
   //Externe links op themapagina
-  linksThemaPage: LinkProps[];
+  linksThemaPage?: LinkProps[];
   //namen van tabellen op de Thema/lijstpagina   TODO > ik zou graag de waarden die bij Bodem staan als "default waarde" willen hebben, die ik eventueel kan overschrijven
   tableHeaders: {
     inProgress: string;
@@ -22,16 +22,9 @@ export type ThemaConfig = {
   };
   featureToggle: boolean;
   profileTypes: ProfileType[];
-  uitlegPageSections: {
-    ///nog niet in gebruik dan moet de hele pagina GegevensInfo.tsx worden omgebouwd, daarnaast moet de Uitlegpagina voor Eherk anders dan die van Digid > maar denk dat ik dat met Profiletype kan oplossen
-    SectionProps: {
-      id: string; // hier wil je de id herbruiken
-      title: string; // hier wil je de title herbruiken
-      listItems: string[] | string;
-      to?: string;
-      active: boolean;
-    };
-  };
+  uitlegPageSections: InfoSections[];
+  ///nog niet in gebruik dan moet de hele pagina GegevensInfo.tsx worden omgebouwd, daarnaast moet de Uitlegpagina voor Eherk anders dan die van Digid > maar denk dat ik dat met Profiletype kan oplossen
+
   /// TO DO SEARCH TOEVOEGEN https://gemeente-amsterdam.atlassian.net/browse/MIJN-11547
 };
 
@@ -50,6 +43,10 @@ export type RouteConfig = {
     path: string;
     documentTitle: `${string} | ${string}`; //bijv`${themaConfig.title} | overzicht`,
   };
+};
+export type InfoSections = {
+  title?: ''; //titel wel verplicht wanneer meer dan een sectie
+  listItems: string[];
 };
 
 ///TO DO hieronder zou ik het liefts ook meenemen in de ThemaConfig

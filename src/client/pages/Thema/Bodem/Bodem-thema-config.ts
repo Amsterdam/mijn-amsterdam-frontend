@@ -25,15 +25,10 @@ export const themaConfig: ThemaConfig = {
   },
   featureToggle: true,
   profileTypes: ['private', 'commercial'],
-  uitlegPageSections: {
-    ///gebruik deze nog niet, moet wel maar dan moet de hele pagina GegevensInfo.tsx worden omgebouwd, daarnaast moet de Uitlegpagina voor Eherk anders dan die van Digid > maar denk dat ik dat met Profiletype kan oplossen
-    SectionProps: {
-      id: 'BODEM',
-      title: 'Bodem',
-      listItems: ["Uw aanvraag voor 'lood in de bodem-check'"],
-      active: true,
-    },
-  },
+  uitlegPageSections: [
+    { listItems: ["Uw aanvraag voor 'lood in de bodem-check'"] },
+  ],
+  ///gebruik deze nog niet, moet wel maar dan moet de hele pagina GegevensInfo.tsx worden omgebouwd, daarnaast moet de Uitlegpagina voor Eherk anders dan die van Digid > maar denk dat ik dat met Profiletype kan oplossen
 } as const;
 
 export const routeConfig: RouteConfig = {
