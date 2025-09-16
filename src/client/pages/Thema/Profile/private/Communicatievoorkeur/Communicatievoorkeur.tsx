@@ -10,7 +10,7 @@ import LoadingContent from '../../../../../components/LoadingContent/LoadingCont
 import { MaButtonInline } from '../../../../../components/MaLink/MaLink';
 import { useDataApi } from '../../../../../hooks/api/useDataApi';
 
-export function Communicatievoorkeur() {
+export function useCommunicatievoorkeurApi() {
   const [contactUpdateApi, updateApiEmailValue_] =
     useDataApi<ApiResponse_DEPRECATED<{ ok: boolean }> | null>(
       {
@@ -31,10 +31,10 @@ export function Communicatievoorkeur() {
       { content: null, status: 'PRISTINE' }
     );
 
-  const [doVerify, setDoVerify] = useState(false);
   const email = contactApi.data?.content?.email ?? null;
   const hasEmail = !!email;
-  const [isChecked, setIsChecked] = useState(hasEmail);
+
+  const [doVerify, setDoVerify] = useState(false);
 
   function updateEmailValue(email: string) {
     // Send to State via Zorgned API
@@ -48,12 +48,52 @@ export function Communicatievoorkeur() {
     }
   }, [contactUpdateApi.data?.content?.ok]);
 
+  return {
+    contactApi,
+    refetchContactApi,
+    contactUpdateApi,
+    updateEmailValue,
+    email,
+    hasEmail,
+    doVerify,
+    setDoVerify,
+  };
+}
+
+export function Communicatievoorkeur() {
+  const { hasEmail, doVerify, email, updateEmailValue, setDoVerify } =
+    useCommunicatievoorkeurApi();
+
   useEffect(() => {
     if (email) {
-      setIsChecked(true);
       setDoVerify(false);
     }
   }, [email]);
+  return (
+    <>
+      {(!hasEmail || doVerify) && (
+        <EmailadresInstellen updateEmailValue={updateEmailValue} />
+      )}
+      {hasEmail && !doVerify && (
+        <Paragraph className="ams-mb-m">
+          Uw e-mailadres is: <strong>{email}</strong>{' '}
+          <MaButtonInline
+            onClick={() => {
+              setDoVerify(true);
+            }}
+          >
+            Wijzigen
+          </MaButtonInline>
+        </Paragraph>
+      )}
+    </>
+  );
+}
+export function CommunicatievoorkeurCollapisble() {
+  const { hasEmail, contactApi, updateEmailValue, setDoVerify } =
+    useCommunicatievoorkeurApi();
+
+  const [isChecked, setIsChecked] = useState(hasEmail);
 
   return (
     <CollapsiblePanel title="Communicatievoorkeur" startCollapsed={true}>
@@ -83,21 +123,7 @@ export function Communicatievoorkeur() {
                 Ja, ik wil mijn post digitaal ontvangen
               </Checkbox>
             </Field>
-            {isChecked && doVerify && (
-              <EmailadresInstellen updateEmailValue={updateEmailValue} />
-            )}
-            {hasEmail && isChecked && !doVerify && (
-              <Paragraph className="ams-mb-m">
-                Uw e-mailadres is: <strong>{email}</strong>{' '}
-                <MaButtonInline
-                  onClick={() => {
-                    setDoVerify(true);
-                  }}
-                >
-                  Wijzigen
-                </MaButtonInline>
-              </Paragraph>
-            )}
+            {isChecked && <Communicatievoorkeur />}
           </>
         )}
       </>

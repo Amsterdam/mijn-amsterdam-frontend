@@ -13,23 +13,21 @@ import { useSetRecoilState } from 'recoil';
 import { VoorkeurByTypeLabels } from './CommunicatieVoorkeuren-config';
 import styles from './CommunicatieVoorkeuren.module.scss';
 import { EmailForm, EmailOTP } from './EmailVoorkeur';
-import type {
+import {
   CommunicatieMediumSetting,
   Communicatievoorkeur,
 } from '../../../../../server/services/contact/contact.types';
-import {
-  MaButtonInline,
-  MaRouterLink,
-} from '../../../../components/MaLink/MaLink';
+import { MaButtonInline } from '../../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../../components/Page/Page';
 import ThemaDetailPagina from '../../../../components/Thema/ThemaDetailPagina';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle';
-import { routeConfig, themaTitle } from '../Contact-thema-config';
+import { routeConfig } from '../Contact-thema-config';
 import {
   useCommunicatieVoorkeurInstellen,
   voorkeurenAtom,
 } from './useCommunicatieVoorkeuren';
 import { useSessionStorage } from '../../../../hooks/storage.hook';
+import { Communicatievoorkeur as C2 } from '../../Profile/private/Communicatievoorkeur/Communicatievoorkeur';
 
 type MediumInstellenProps = {
   medium: CommunicatieMediumSetting;
@@ -50,8 +48,6 @@ function MediumInstellen({
   );
 
   const [emailFormActive, setEmailFormActive] = useState(false);
-
-  console.log('MediumInstellen', defaultValue);
 
   const setVoorkeurenBE = useSetRecoilState(voorkeurenAtom);
   const { step = '1' } = useParams<{ step: string }>();
@@ -213,7 +209,7 @@ export function CommunicatievoorkeurInstellen() {
       themaId={themaId}
       isLoading={isLoading}
       isError={isError}
-      zaak={voorkeur}
+      zaak={voorkeur ?? {}}
       breadcrumbs={breadcrumbs}
       pageContentMain={
         <PageContentCell spanWide={8}>
@@ -224,12 +220,7 @@ export function CommunicatievoorkeurInstellen() {
               defaultValue={defaultValue}
             />
           ) : (
-            <Paragraph>
-              Niets in te stellen.{' '}
-              <MaRouterLink href={routeConfig.themaPage.path}>
-                Ga terug naar {themaTitle}
-              </MaRouterLink>
-            </Paragraph>
+            <C2 />
           )}
         </PageContentCell>
       }

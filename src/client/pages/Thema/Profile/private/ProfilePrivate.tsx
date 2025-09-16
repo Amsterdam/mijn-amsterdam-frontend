@@ -1,9 +1,9 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 
 import { AdresInOnderzoek } from './AdresInOnderzoek';
+import { CommunicatievoorkeurCollapisble } from './Communicatievoorkeur/Communicatievoorkeur';
 import { panelConfig } from './ProfilePrivate.transform';
 import { ProfileSectionPanel } from '../ProfileSectionPanel';
-import { Communicatievoorkeur } from './Communicatievoorkeur/Communicatievoorkeur';
 import { useProfileData } from './useProfileData.hook';
 import { useProfileThemaData } from './useProfileThemaData.hook';
 import { VertrokkenOnbekendWaarheen } from './VertrokkenOnbekendWaarheen';
@@ -11,6 +11,7 @@ import {
   hasDutchAndOtherNationalities,
   isMokum,
 } from '../../../../../universal/helpers/brp';
+import { CollapsiblePanel } from '../../../../components/CollapsiblePanel/CollapsiblePanel';
 import { PageContentCell } from '../../../../components/Page/Page';
 import { ParagaphSuppressed } from '../../../../components/ParagraphSuppressed/ParagraphSuppressed';
 import ThemaPagina from '../../../../components/Thema/ThemaPagina';
@@ -166,12 +167,14 @@ export function MijnGegevensThema() {
           )}
           {hasZorgned && (
             <PageContentCell>
-              <Communicatievoorkeur />
+              <CommunicatievoorkeurCollapisble />
             </PageContentCell>
           )}
           {hasContactMomenten && (
             <PageContentCell>
-              <ContactMomenten showTitle={false} listPageRoute="xx" />
+              <CollapsiblePanel title="Contactmomenten" startCollapsed={true}>
+                <ContactMomenten showTitle={false} listPageRoute="xx" />
+              </CollapsiblePanel>
             </PageContentCell>
           )}
           <ProfilePrivateSectionPanels />
