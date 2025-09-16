@@ -52,6 +52,7 @@ export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 export const featureToggle = {
   erfpachtActive: true,
+  canonActive: false,
 };
 
 export const themaId = 'ERFPACHT' as const;
