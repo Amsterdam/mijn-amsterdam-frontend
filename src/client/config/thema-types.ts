@@ -7,6 +7,7 @@ import {
 } from '../../universal/types/App.types';
 
 export type IsThemaVisibleFN = (appState: AppState) => boolean;
+
 export type ThemaConfig = {
   id: string;
   title: string; ///hier  title: string | Record<string, string>; van maken en dan kan kan je daar alle titels in zetten (bijv ook detailtitle etc.)
@@ -23,8 +24,8 @@ export type ThemaConfig = {
   uitlegPageSections: {
     ///nog niet in gebruik dan moet de hele pagina GegevensInfo.tsx worden omgebouwd, daarnaast moet de Uitlegpagina voor Eherk anders dan die van Digid > maar denk dat ik dat met Profiletype kan oplossen
     SectionProps: {
-      id: string;
-      title: string;
+      id: string; // hier wil je de id herbruiken
+      title: string; // hier wil je de title herbruiken
       listItems: string[] | string;
       to?: string;
       active: boolean;
