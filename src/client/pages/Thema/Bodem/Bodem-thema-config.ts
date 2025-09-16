@@ -23,7 +23,7 @@ export const themaConfig: ThemaConfig = {
     inProgress: 'lopende-aanvragen',
     completed: 'afgehandelde-aanvragen',
   },
-  featureToggle: true,
+  featureToggle: { thema: true },
   profileTypes: ['private', 'commercial'],
   uitlegPageSections: [
     { listItems: ["Uw aanvraag voor 'lood in de bodem-check'"] },
