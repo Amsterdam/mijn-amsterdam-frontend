@@ -1,5 +1,6 @@
 import { type Params } from 'react-router';
 
+import { SomeOtherString } from '../../universal/helpers/types';
 import {
   AppState,
   LinkProps,
@@ -83,11 +84,11 @@ export interface ThemaMenuItemTransformed<ID extends string = string>
   to: string;
 }
 
-// type ThemaPageType =
-//   | `themaPage${string}`
-//   | `listPage${string}`
-//   | `detailPage${string}`
-//   | SomeOtherString;
+type ThemaPageType =
+  | `themaPage${string}`
+  | `listPage${string}`
+  | `detailPage${string}`
+  | SomeOtherString;
 
 type DocumenttitleFN = <T extends Params<string>>(params: T | null) => string;
 
@@ -100,9 +101,9 @@ export type ThemaRouteConfig = {
   documentTitle: string | DocumenttitleFN;
 };
 
-// export type ThemaRoutesConfig = {
-//   [themaPageType in ThemaPageType]: ThemaRouteConfig;
-// };
+export type ThemaRoutesConfig = {
+  [themaPageType in ThemaPageType]: ThemaRouteConfig;
+};
 
 export type PatroonCRoutesConfig = {
   [profileType in ProfileType]: string;
