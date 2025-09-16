@@ -16,16 +16,21 @@ export const themaConfig: ThemaConfig = {
   titleDetail: 'Lood in bodem-check',
   profileTypes: ['private', 'commercial'],
   featureToggle: {
-    BodemActive: true,
+    thema: true, // ook van infosection active toevoegen of het uit of aan en check het generalinfo gedeelte. import kan je aanpassen met as bodemn bijvoorbeeld
   },
-  listPageParamKind: {
-    inProgress: 'lopende-aanvragen',
-    completed: 'afgehandelde-aanvragen',
-  },
+  // listPageParamKind: {
+  //   inProgress: 'lopende-aanvragen',
+  //   completed: 'afgehandelde-aanvragen',
+  // },
   linkListItems: [
     {
       title: 'Meer informatie over lood in de bodem.',
       to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/bodem/loodcheck-tuin-aanvragen',
+    },
+  ],
+  uitlegPageSections: [
+    {
+      listItems: ["Uw aanvraag voor 'lood in de bodem-check'"],
     },
   ],
 } as const;
@@ -33,7 +38,7 @@ export const themaConfig: ThemaConfig = {
 // -----------------------------
 // Routes (backend/data)
 // -----------------------------
-export const routeConfig = {
+export const routeConfig: ThemaRoutesConfig = {
   detailPage: {
     path: '/bodem/lood-meting/:id',
     trackingUrl: '/bodem/lood-meting',
@@ -42,29 +47,21 @@ export const routeConfig = {
   listPage: {
     path: '/bodem/lijst/lood-meting/:kind/:page?',
     documentTitle: (params) =>
-      `${params?.kind === themaConfig.listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaConfig.title}`,
+      `${params?.kind === listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaConfig.title}`,
   },
   themaPage: {
     path: '/bodem',
     documentTitle: `${themaConfig.title} | overzicht`,
   },
-} as const satisfies ThemaRoutesConfig;
-
-// -----------------------------
-// Complete config (alles bij elkaar)
-// -----------------------------
-export const completeThemaConfig: ThemaConfig = {
-  ...themaConfig, // hier neem ik alle velden van themaConfig over
-  routeConfig, // Ik voeg routeConfig er aan toe
 } as const;
 
 // -----------------------------
 // Pagina-soorten
 // -----------------------------
-// const listPageParamKind = {
-//   inProgress: 'lopende-aanvragen',
-//   completed: 'afgehandelde-aanvragen',
-// } as const;
+const listPageParamKind = {
+  inProgress: 'lopende-aanvragen',
+  completed: 'afgehandelde-aanvragen',
+} as const;
 
 // -----------------------------
 // Feature toggle
@@ -104,9 +101,8 @@ export const completeThemaConfig: ThemaConfig = {
 // -----------------------------
 // Types voor list page params
 // -----------------------------
-export type ListPageParamKey = keyof typeof themaConfig.listPageParamKind;
-export type ListPageParamKind =
-  (typeof themaConfig.listPageParamKind)[ListPageParamKey];
+export type ListPageParamKey = keyof typeof listPageParamKind;
+export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 // -----------------------------
 // Tabellenconfig (backend/data)
@@ -136,23 +132,23 @@ const displayPropsEerder: DisplayProps<LoodMetingFrontend> = {
 };
 
 export const tableConfig = {
-  [themaConfig.listPageParamKind.inProgress]: {
+  [listPageParamKind.inProgress]: {
     title: 'Lopende aanvragen',
     sort: dateSort<LoodMetingFrontend>('datumAanvraag', 'desc'),
     filter: (bodemAanvraag: LoodMetingFrontend) => !bodemAanvraag.processed,
     listPageRoute: generatePath(routeConfig.listPage.path, {
-      kind: themaConfig.listPageParamKind.inProgress,
+      kind: listPageParamKind.inProgress,
       page: null,
     }),
     displayProps: displayPropsLopend,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
   },
-  [themaConfig.listPageParamKind.completed]: {
+  [listPageParamKind.completed]: {
     title: 'Afgehandelde aanvragen',
     sort: dateSort<LoodMetingFrontend>('datumAfgehandeld', 'desc'),
     filter: (bodemAanvraag: LoodMetingFrontend) => bodemAanvraag.processed,
     listPageRoute: generatePath(routeConfig.listPage.path, {
-      kind: themaConfig.listPageParamKind.completed,
+      kind: listPageParamKind.completed,
       page: null,
     }),
     displayProps: displayPropsEerder,
