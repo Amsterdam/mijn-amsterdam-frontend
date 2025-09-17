@@ -23,7 +23,7 @@ if (IS_DEVELOPMENT) {
 }
 
 if (process.env.DEBUG_RESPONSE_DATA) {
-  process.env.DEBUG = `source-api-request:request,${process.env.DEBUG ?? ''}`;
+  process.env.DEBUG = `source-api-request:raw-response,source-api-request:parsed-response,${process.env.DEBUG ?? ''}`;
 }
 
 // Note: Keep this line after loading in env files or LOG_LEVEL will be undefined.
