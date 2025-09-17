@@ -7,47 +7,67 @@ import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
 } from '../../../config/app';
-import type { ThemaConfig, RouteConfig } from '../../../config/thema-types';
+import type {
+  ThemaConfigBase,
+  WithDetailPage,
+  WithListPage,
+} from '../../../config/thema-types';
 
-export const themaConfig: ThemaConfig = {
+// !!!!!! LET OP TO DO SEARCH voor Bodem uitgezet //import { featureToggle as themaConfig } from '../../pages/Thema/Bodem/Bodem-thema-config';!!!!!!!!
+
+type BodemThemaConfig = ThemaConfigBase & WithDetailPage & WithListPage;
+
+export const themaConfig: BodemThemaConfig = {
   id: 'BODEM', ///Bij useBodemListPageData.hook.ts nog steeds themaID en ook bij BodemList.tsx
   title: 'Bodem',
-  titleDetail: 'Lood in bodem-check',
-  linksThemaPage: [
+  featureToggle: {
+    thema: true,
+  },
+  profileTypes: ['private', 'commercial'],
+  route: {
+    path: '/bodem',
+    documentTitle: `Bodem | overzicht`,
+  },
+  links: [
     {
-      to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/bodem/loodcheck-tuin-aanvragen',
       title: 'Meer informatie over lood in de bodem.',
+      to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/bodem/loodcheck-tuin-aanvragen',
     },
   ],
-
-  featureToggle: true,
-  profileTypes: ['private', 'commercial'],
   uitlegPageSections: [
     { listItems: ["Uw aanvraag voor 'lood in de bodem-check'"] },
   ],
   ///gebruik deze nog niet, moet wel maar dan moet de hele pagina GegevensInfo.tsx worden omgebouwd, daarnaast moet de Uitlegpagina voor Eherk anders dan die van Digid > maar denk dat ik dat met Profiletype kan oplossen
-} as const;
-
-const listPageParamKind = {
-  inProgress: 'lopende-aanvragen',
-  completed: 'afgehandelde-aanvragen',
-} as const;
-
-export const routeConfig: RouteConfig = {
   detailPage: {
-    path: '/bodem/lood-meting/:id',
-    trackingUrl: '/bodem/lood-meting',
-    documentTitle: `Lood in de bodem-check | ${themaConfig.title}`,
+    title: '',
+    route: {
+      path: '/bodem/lood-meting/:id',
+      trackingUrl: '/bodem/lood-meting',
+      documentTitle: `Lood in de bodem-check | Bodem`, //    get documentTitle() > WERKT niet bij mij.
+    },
   },
   listPage: {
-    path: '/bodem/lijst/lood-meting/:kind/:page?',
-    documentTitle: (params) =>
-      `${params?.kind === listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaConfig.title}` as const,
+    route: {
+      path: '/bodem/lijst/lood-meting/:kind/:page?',
+      documentTitle: (params: { kind: string }) =>
+        `${params?.kind === listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | Bodem` as const,
+    },
   },
-  themaPage: {
-    path: '/bodem',
-    documentTitle: `${themaConfig.title} | overzicht`,
-  },
+} as const;
+
+// export const withDetailPage: WithDetailPage = {
+//   titleDetail: 'Lood in bodem-check',
+// };
+
+//   export const withListPage: WithListPage = {
+//   linksThemaPage: [],
+//   to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/bodem/loodcheck-tuin-aanvragen',
+//   title: 'Meer informatie over lood in de bodem.',
+// };
+const listPageParamKind = {
+  //moet not erggens naar
+  inProgress: 'lopende-aanvragen',
+  completed: 'afgehandelde-aanvragen',
 } as const;
 
 export type TableHeadersKey = keyof typeof listPageParamKind;
@@ -82,7 +102,7 @@ export const tableConfig = {
     title: 'Lopende aanvragen',
     sort: dateSort<LoodMetingFrontend>('datumAanvraag', 'desc'),
     filter: (bodemAanvraag: LoodMetingFrontend) => !bodemAanvraag.processed,
-    listPageRoute: generatePath(routeConfig.listPage.path, {
+    listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.inProgress,
       page: null,
     }),
@@ -93,7 +113,7 @@ export const tableConfig = {
     title: 'Afgehandelde aanvragen',
     sort: dateSort<LoodMetingFrontend>('datumAfgehandeld', 'desc'),
     filter: (bodemAanvraag: LoodMetingFrontend) => bodemAanvraag.processed,
-    listPageRoute: generatePath(routeConfig.listPage.path, {
+    listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.completed,
       page: null,
     }),

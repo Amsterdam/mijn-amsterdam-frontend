@@ -1,4 +1,4 @@
-import { routeConfig, themaConfig } from './Bodem-thema-config';
+import { themaConfig } from './Bodem-thema-config';
 import { BodemDetail } from './BodemDetail';
 import { default as BodemIcon } from './BodemIcon.svg?react';
 import { BodemList } from './BodemList';
@@ -12,26 +12,26 @@ import {
 
 export const BodemRoutes = [
   {
-    route: routeConfig.detailPage.path,
+    route: themaConfig.detailPage.route.path,
     Component: BodemDetail,
-    isActive: themaConfig.featureToggle,
+    isActive: themaConfig.featureToggle.themaActive,
   },
   {
-    route: routeConfig.listPage.path,
+    route: themaConfig.listPage.route.path,
     Component: BodemList,
-    isActive: themaConfig.featureToggle,
+    isActive: themaConfig.featureToggle.themaActive,
   },
   {
-    route: routeConfig.themaPage.path,
+    route: themaConfig.route.path,
     Component: BodemThema,
-    isActive: themaConfig.featureToggle,
+    isActive: themaConfig.featureToggle.themaActive,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
 export const menuItem: ThemaMenuItem = {
   title: themaConfig.title,
   id: themaConfig.id,
-  to: routeConfig.themaPage.path,
+  to: themaConfig.route.path,
   profileTypes: ['private', 'commercial'],
   redactedScope: 'none',
   isActive(appState: AppState) {

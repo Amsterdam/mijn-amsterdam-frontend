@@ -9,36 +9,64 @@ import {
 
 export type IsThemaVisibleFN = (appState: AppState) => boolean;
 
-export type ThemaConfig = {
+// const thema = {
+//   featureToggle: { themaActive: true },
+
+//   get isActive() {
+//     return thema.featureToggle.themaActive;
+//   },
+
+//   get documentTitel() {
+//     return thema.titel + '';
+//   },
+// };
+
+export type ThemaConfigBase = {
   id: string;
-  title: string; ///hier  title: string | Record<string, string>; van maken en dan kan kan je daar alle titels in zetten (bijv ook detailtitle etc.)
-  titleDetail: string;
-  //Externe links op themapagina
-  linksThemaPage?: LinkProps[];
-  featureToggle: boolean;
+  title: string;
+  featureToggle: { [key: string]: boolean };
   profileTypes: ProfileType[];
   uitlegPageSections: InfoSections[];
+  links: LinkProps[];
+  route: {
+    path: string;
+    documentTitle: `${string} | ${string}`; //bijv `Lood in de bodem-check | ${themaConfig.title}`
+  };
   ///nog niet in gebruik dan moet de hele pagina GegevensInfo.tsx worden omgebouwd, daarnaast moet de Uitlegpagina voor Eherk anders dan die van Digid > maar denk dat ik dat met Profiletype kan oplossen
-
+  //TO DO menuItem > is interface ThemaMenuItem
   /// TO DO SEARCH TOEVOEGEN https://gemeente-amsterdam.atlassian.net/browse/MIJN-11547
 };
 
-export type RouteConfig = {
-  // TO DO deze zou ik het liefst opnemen in type ThemaConfig, maar ik wil de title wel hergebruikt zien...ik hoor wellicht iets van een Constructor functie maken
+export type WithDetailPage = {
   detailPage: {
-    path: string;
-    trackingUrl: string;
-    documentTitle: `${string} | ${string}`; //bijv `Lood in de bodem-check | ${themaConfig.title}`
-  };
-  listPage: {
-    path: string;
-    documentTitle: (params: { kind: string }) => `${string} | ${string}`; //bijv  (params) =>`${params?.kind === themaConfig.tableHeaders.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${ themaConfig.title } `,
-  };
-  themaPage: {
-    path: string;
-    documentTitle: `${string} | ${string}`; //bijv`${themaConfig.title} | overzicht`,
+    title: string;
+    route: {
+      path: string;
+      trackingUrl: string;
+      documentTitle: `${string} | ${string}`; //bijv `Lood in de bodem-check | ${themaConfig.title}`
+    };
   };
 };
+
+// type TableConfig<T> = {
+//   title: string;
+//   sort: (item: T) => number; // TODO: -1 | 0 | 1 ? Type ergens anders gedefinieerd?
+//   filter: (item: T) => boolean;
+//   listPageRoute: string;
+//   displayProps: DisplayProps<T>;
+//   maxItems: number;
+// };
+
+export type WithListPage = {
+  listPage: {
+    route: {
+      path: string;
+      documentTitle: (params: { kind: string }) => `${string} | ${string}`; //bijv  (params) =>`${params?.kind === themaConfig.tableHeaders.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${ themaConfig.title } `,
+    };
+  };
+  //tableConfig: Record<string, TableConfig<T>>;
+};
+
 export type InfoSections = {
   title?: ''; //titel wel verplicht wanneer meer dan een sectie
   listItems: string[];

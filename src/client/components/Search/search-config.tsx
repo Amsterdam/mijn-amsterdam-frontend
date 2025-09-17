@@ -52,6 +52,7 @@ import {
 } from '../../../universal/types/App.types';
 import { featureToggle as featureToggleAVG } from '../../pages/Thema/AVG/AVG-thema-config';
 import { featureToggle as featureToggleBezwaren } from '../../pages/Thema/Bezwaren/Bezwaren-thema-config';
+//import { themaConfig } from '../../pages/Thema/Bodem/Bodem-thema-config';
 import { themaConfig } from '../../pages/Thema/Bodem/Bodem-thema-config';
 import { featureToggle as featureToggleHoreca } from '../../pages/Thema/Horeca/Horeca-thema-config';
 import { featureToggle as featureToggleKlachten } from '../../pages/Thema/Klachten/Klachten-thema-config';
