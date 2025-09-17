@@ -19,16 +19,18 @@ export const themaConfig: ThemaConfig = {
       title: 'Meer informatie over lood in de bodem.',
     },
   ],
-  tableHeaders: {
-    inProgress: 'lopende-aanvragen',
-    completed: 'afgehandelde-aanvragen',
-  },
-  featureToggle: { thema: true },
+
+  featureToggle: true,
   profileTypes: ['private', 'commercial'],
   uitlegPageSections: [
     { listItems: ["Uw aanvraag voor 'lood in de bodem-check'"] },
   ],
   ///gebruik deze nog niet, moet wel maar dan moet de hele pagina GegevensInfo.tsx worden omgebouwd, daarnaast moet de Uitlegpagina voor Eherk anders dan die van Digid > maar denk dat ik dat met Profiletype kan oplossen
+} as const;
+
+const listPageParamKind = {
+  inProgress: 'lopende-aanvragen',
+  completed: 'afgehandelde-aanvragen',
 } as const;
 
 export const routeConfig: RouteConfig = {
@@ -40,7 +42,7 @@ export const routeConfig: RouteConfig = {
   listPage: {
     path: '/bodem/lijst/lood-meting/:kind/:page?',
     documentTitle: (params) =>
-      `${params?.kind === themaConfig.tableHeaders.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaConfig.title}` as const,
+      `${params?.kind === listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaConfig.title}` as const,
   },
   themaPage: {
     path: '/bodem',
@@ -48,8 +50,8 @@ export const routeConfig: RouteConfig = {
   },
 } as const;
 
-export type TableHeadersKey = keyof typeof themaConfig.tableHeaders;
-export type TableHeaders = (typeof themaConfig.tableHeaders)[TableHeadersKey];
+export type TableHeadersKey = keyof typeof listPageParamKind;
+export type TableHeaders = (typeof listPageParamKind)[TableHeadersKey];
 
 const displayPropsLopend: DisplayProps<LoodMetingFrontend> = {
   props: {
@@ -76,23 +78,23 @@ const displayPropsEerder: DisplayProps<LoodMetingFrontend> = {
 };
 
 export const tableConfig = {
-  [themaConfig.tableHeaders.inProgress]: {
+  [listPageParamKind.inProgress]: {
     title: 'Lopende aanvragen',
     sort: dateSort<LoodMetingFrontend>('datumAanvraag', 'desc'),
     filter: (bodemAanvraag: LoodMetingFrontend) => !bodemAanvraag.processed,
     listPageRoute: generatePath(routeConfig.listPage.path, {
-      kind: themaConfig.tableHeaders.inProgress,
+      kind: listPageParamKind.inProgress,
       page: null,
     }),
     displayProps: displayPropsLopend,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
   },
-  [themaConfig.tableHeaders.completed]: {
+  [listPageParamKind.completed]: {
     title: 'Afgehandelde aanvragen',
     sort: dateSort<LoodMetingFrontend>('datumAfgehandeld', 'desc'),
     filter: (bodemAanvraag: LoodMetingFrontend) => bodemAanvraag.processed,
     listPageRoute: generatePath(routeConfig.listPage.path, {
-      kind: themaConfig.tableHeaders.completed,
+      kind: listPageParamKind.completed,
       page: null,
     }),
     displayProps: displayPropsEerder,

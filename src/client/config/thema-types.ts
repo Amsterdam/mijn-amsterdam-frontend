@@ -15,12 +15,7 @@ export type ThemaConfig = {
   titleDetail: string;
   //Externe links op themapagina
   linksThemaPage?: LinkProps[];
-  //namen van tabellen op de Thema/lijstpagina   TODO > ik zou graag de waarden die bij Bodem staan als "default waarde" willen hebben, die ik eventueel kan overschrijven
-  tableHeaders: {
-    inProgress: string;
-    completed: string;
-  };
-  featureToggle: { [key: string]: boolean };
+  featureToggle: boolean;
   profileTypes: ProfileType[];
   uitlegPageSections: InfoSections[];
   ///nog niet in gebruik dan moet de hele pagina GegevensInfo.tsx worden omgebouwd, daarnaast moet de Uitlegpagina voor Eherk anders dan die van Digid > maar denk dat ik dat met Profiletype kan oplossen
