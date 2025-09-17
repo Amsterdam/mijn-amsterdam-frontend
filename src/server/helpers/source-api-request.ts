@@ -24,6 +24,7 @@ import {
 } from '../config/source-api';
 import { captureException } from '../services/monitoring';
 
+const debugRawResponse = createDebugger('source-api-request:raw-response');
 const debugRequest = createDebugger('source-api-request:request');
 const debugCacheHit = createDebugger('source-api-request:cache-hit');
 const debugCacheKey = createDebugger('source-api-request:cache-key');
@@ -101,7 +102,6 @@ export async function requestData<T>(
   }
 
   const debugResponseData = getDebugResponseData(config);
-  // Log/Debug the untransformed response data
   if (
     debugResponseDataTerms.filter(Boolean).some((term) => {
       const hasTermInRequestUrl = !!config.url?.includes(term.trim());
@@ -137,6 +137,11 @@ export async function requestData<T>(
     // Insert the debug transformer after the default transformer
     // This is important to ensure that the response is parsed before we log it.
     config.transformResponse.splice(1, 0, debugResponseData);
+    // Add an additional transformer to log the raw response before any other transformers are applied
+    config.transformResponse?.unshift((r, ...rest) => {
+      debugRawResponse(r, ...rest);
+      return r;
+    });
   }
 
   // Shortcut to passing the JWT of the connected OIDC provider along with the request as Bearer token
