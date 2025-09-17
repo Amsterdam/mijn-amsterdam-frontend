@@ -9,9 +9,9 @@ import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function BodemDetail() {
-  const { meting, isLoading, isError, breadcrumbs, title, routeConfig } =
+  const { meting, isLoading, isError, breadcrumbs, title } =
     useBodemDetailData();
-  useHTMLDocumentTitle(routeConfig.detailPage);
+  useHTMLDocumentTitle(themaConfig.detailPage.route);
 
   const LoodMetingRows = (meting: LoodMetingFrontend) => {
     const rows: Row[] = [{ label: 'Kenmerk', content: meting.kenmerk }];
