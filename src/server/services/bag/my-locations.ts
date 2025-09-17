@@ -12,14 +12,14 @@ import {
 } from '../../../universal/helpers/api';
 import { isMokum } from '../../../universal/helpers/brp';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { fetchBRP } from '../profile/brp';
+import { fetchBrpV2 } from '../brp/brp';
 import type { Adres } from '../profile/brp.types';
 import { fetchKVK, getKvkAddresses } from '../profile/kvk';
 
 async function fetchPrivate(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse_DEPRECATED<BAGData[] | null>> {
-  const BRP = await fetchBRP(authProfileAndToken);
+  const BRP = await fetchBrpV2(authProfileAndToken);
 
   if (BRP.status === 'OK') {
     if (isMokum(BRP.content)) {
