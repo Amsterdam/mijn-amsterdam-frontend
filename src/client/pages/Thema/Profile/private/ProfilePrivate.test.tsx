@@ -32,7 +32,7 @@ const panelHeadings = [
   'Persoonlijke gegevens',
   'Adres',
   'Partner',
-  //'Ouders',
+  'Ouders',
   'Kinderen',
 ];
 
