@@ -7,6 +7,7 @@ import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/Para
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { CommunicatievoorkeurCollapisble } from '../Profile/private/Communicatievoorkeur/Communicatievoorkeur';
 
 export const WMO_HELPDESK_PHONENUMBER = '0800 0643' as const;
 export const WMO_HELPDESK_HREF_TEL_LINK =
@@ -85,6 +86,9 @@ export function ZorgThema() {
         linkListItems={linkListItems}
         pageContentMain={
           <>
+            <PageContentCell>
+              <CommunicatievoorkeurCollapisble />
+            </PageContentCell>
             {tables}
             <PageContentCell spanWide={8} startWide={3}>
               <HistoricItemsMention />

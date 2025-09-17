@@ -13,6 +13,7 @@ import {
   communicatieVoorkeurenTitle,
 } from './CommunicatieVoorkeuren-config';
 import { uniqueArray } from '../../../../../universal/helpers/utils';
+import { useCommunicatievoorkeurApi } from '../../Profile/private/Communicatievoorkeur/Communicatievoorkeur';
 
 const MEDIUM_TYPES = {
   EMAIL: 'email',
@@ -30,7 +31,7 @@ const voorkeurenBE: Communicatievoorkeur[] = [
     stakeholder: 'Zorg en ondersteuning (WMO)',
     description: 'Informatie over uw aanvragen en voorzieningen',
     settings: [
-      { type: MEDIUM_TYPES.EMAIL, value: 'some@post.com' },
+      { type: MEDIUM_TYPES.EMAIL, value: null },
       {
         type: MEDIUM_TYPES.POSTADRES,
         value: 'Het Amstelplein 32-H',
@@ -64,6 +65,7 @@ export const voorkeurenAtom = atom<Communicatievoorkeur[]>({
 });
 
 export function useCommunicatievoorkeuren() {
+  const { email } = useCommunicatievoorkeurApi();
   const voorkeuren = useRecoilValue(voorkeurenAtom);
   const mediumsByType = voorkeuren.reduce(
     (acc, voorkeur) => {
@@ -71,7 +73,9 @@ export function useCommunicatievoorkeuren() {
         if (!acc[medium.type]) {
           acc[medium.type] = [];
         }
-        if (medium.value) {
+        if (medium.type === 'email') {
+          acc[medium.type].push({ ...medium, value: email || medium.value });
+        } else if (medium.value) {
           acc[medium.type].push(medium);
         }
       });
