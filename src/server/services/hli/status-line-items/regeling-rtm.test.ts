@@ -133,27 +133,21 @@ const RTM_2_TOEGEWEZEN: ZorgnedAanvraagWithRelatedPersonsTransformed = {
 
 const RTM_2_EINDE_RECHT: ZorgnedAanvraagWithRelatedPersonsTransformed = {
   id: '3',
-  datumAanvraag: '2025-05-20',
+  datumAanvraag: '2025-06-28',
   datumBeginLevering: null,
-  datumBesluit: '2025-07-15',
-  datumEindeGeldigheid: null,
+  datumBesluit: '2025-06-28',
+  datumEindeGeldigheid: '2025-06-30',
   datumEindeLevering: null,
-  datumIngangGeldigheid: null,
+  datumIngangGeldigheid: '2025-06-28',
   datumOpdrachtLevering: null,
   datumToewijzing: null,
   procesAanvraagOmschrijving: 'Beëindigen RTM',
   documenten: [
     {
-      id: 'B3405442',
-      title: 'AV-RTM afwijzing',
+      id: 'B3408768',
+      title: 'Beschikking beëindigen RTM',
       url: '',
-      datePublished: '2025-07-15T15:18:55.68',
-    },
-    {
-      id: 'E1082460',
-      title: 'aanvraagformulier HLI',
-      url: '',
-      datePublished: '2025-05-20T10:47:13.323',
+      datePublished: '2025-06-28T15:39:49',
     },
   ],
   isActueel: false,
@@ -161,11 +155,11 @@ const RTM_2_EINDE_RECHT: ZorgnedAanvraagWithRelatedPersonsTransformed = {
   leveringsVorm: '',
   productsoortCode: 'AV-D-RTM',
   productIdentificatie: 'AV-RTM',
-  beschiktProductIdentificatie: '329903',
-  resultaat: 'afgewezen',
+  beschiktProductIdentificatie: '1523496',
+  resultaat: 'toegewezen',
   titel: 'Regeling Tegemoetkoming Meerkosten',
   betrokkenen: base.betrokkenen,
-  betrokkenPersonen: [],
+  betrokkenPersonen: base.betrokkenPersonen,
   bsnAanvrager: base.bsnAanvrager,
 };
 
@@ -268,7 +262,7 @@ const RTM_WIJZIGINGS_AFWIJZING: ZorgnedAanvraagWithRelatedPersonsTransformed = {
   resultaat: 'afgewezen',
   titel: 'Regeling Tegemoetkoming Meerkosten',
   betrokkenen: base.betrokkenen,
-  betrokkenPersonen: base.betrokkenPersonen,
+  betrokkenPersonen: [],
   bsnAanvrager: base.bsnAanvrager,
 };
 
@@ -348,6 +342,9 @@ describe('filterCombineRtmData', () => {
       datumEindeGeldigheid: '2025-06-30',
       documenten: [],
     };
+    // RP TODO: If I go back I see that they are both toegewezen but with a isActueel false?
+    // What is that? check confluence and notes. This tests is not realistic at the moment.
+    // Need to put down the old data again.
     const aanvragen = attachIDs([
       RTM_1_AANVRAAG,
       RTM_2_TOEGEWEZEN,
