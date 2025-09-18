@@ -79,7 +79,12 @@ const sections: SectionProps[] = [
   varensectionProps,
 ];
 
-function Section({ id, title, listItems, to }: Omit<SectionProps, 'active'>) {
+export function Section({
+  id,
+  title,
+  listItems,
+  to,
+}: Omit<SectionProps, 'active'>) {
   const themaMenuItems = useThemaMenuItemsByThemaID();
 
   const listItemComponents = listItems.map((item, i) => {
