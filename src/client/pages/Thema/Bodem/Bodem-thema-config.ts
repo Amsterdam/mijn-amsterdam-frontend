@@ -8,12 +8,18 @@ import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
 } from '../../../config/app';
-import { ThemaConfig, ThemaRoutesConfig } from '../../../config/thema-types';
+import {
+  ThemaConfigBase,
+  WithDetailPage,
+  WithListPage,
+} from '../../../config/thema-types';
 
-export const themaConfig: ThemaConfig = {
+type BodemThemaConfig = ThemaConfigBase & WithDetailPage & WithListPage;
+
+export const themaConfig: BodemThemaConfig = {
   id: 'BODEM', // Bij USEBODEMLISTPAGEDATAHOOKS.TS NOG STEEDS THEMAID EN USEBODEMDATA.HOOKS.TSX
   title: 'Bodem',
-  titleDetail: 'Lood in bodem-check',
+  // titleDetail: 'Lood in bodem-check',
   profileTypes: ['private', 'commercial'],
   featureToggle: {
     thema: true, // ook van infosection active toevoegen of het uit of aan en check het generalinfo gedeelte. import kan je aanpassen met as bodemn bijvoorbeeld
@@ -33,27 +39,46 @@ export const themaConfig: ThemaConfig = {
       listItems: ["Uw aanvraag voor 'lood in de bodem-check'"],
     },
   ],
+  route: {
+    path: '/bodem',
+    documentTitle: `Bodem | overzicht`, //bijv
+  },
+  detailPage: {
+    title: 'Lood in bodem-check',
+    route: {
+      path: '/bodem/lood-meting/:id',
+      trackingUrl: '/bodem/lood-meting',
+      documentTitle: `Lood in de bodem-check | Bodem`,
+    },
+  },
+  listPage: {
+    route: {
+      path: '/bodem/lijst/lood-meting/:kind/:page?',
+      documentTitle: (params: { kind: string }) =>
+        `${params?.kind === listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | Bodem` as const,
+    },
+  },
 } as const;
 
 // -----------------------------
 // Routes (backend/data)
 // -----------------------------
-export const routeConfig: ThemaRoutesConfig = {
-  detailPage: {
-    path: '/bodem/lood-meting/:id',
-    trackingUrl: '/bodem/lood-meting',
-    documentTitle: `Lood in de bodem-check | ${themaConfig.title}`,
-  },
-  listPage: {
-    path: '/bodem/lijst/lood-meting/:kind/:page?',
-    documentTitle: (params) =>
-      `${params?.kind === listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaConfig.title}`,
-  },
-  themaPage: {
-    path: '/bodem',
-    documentTitle: `${themaConfig.title} | overzicht`,
-  },
-} as const;
+// export const routeConfig: ThemaRoutesConfig = {
+//   detailPage: {
+//     path: '/bodem/lood-meting/:id',
+//     trackingUrl: '/bodem/lood-meting',
+//     documentTitle: `Lood in de bodem-check | ${themaConfig.title}`,
+//   },
+//   listPage: {
+//     path: '/bodem/lijst/lood-meting/:kind/:page?',
+//     documentTitle: (params) =>
+//       `${params?.kind === listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaConfig.title}`,
+//   },
+//   themaPage: {
+//     path: '/bodem',
+//     documentTitle: `${themaConfig.title} | overzicht`,
+//   },
+// } as const;
 
 // -----------------------------
 // Pagina-soorten
@@ -136,7 +161,7 @@ export const tableConfig = {
     title: 'Lopende aanvragen',
     sort: dateSort<LoodMetingFrontend>('datumAanvraag', 'desc'),
     filter: (bodemAanvraag: LoodMetingFrontend) => !bodemAanvraag.processed,
-    listPageRoute: generatePath(routeConfig.listPage.path, {
+    listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.inProgress,
       page: null,
     }),
@@ -147,7 +172,7 @@ export const tableConfig = {
     title: 'Afgehandelde aanvragen',
     sort: dateSort<LoodMetingFrontend>('datumAfgehandeld', 'desc'),
     filter: (bodemAanvraag: LoodMetingFrontend) => bodemAanvraag.processed,
-    listPageRoute: generatePath(routeConfig.listPage.path, {
+    listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.completed,
       page: null,
     }),
