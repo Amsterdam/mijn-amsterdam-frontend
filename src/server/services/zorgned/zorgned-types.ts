@@ -119,9 +119,17 @@ export interface ZorgnedDocumentData {
 export interface ZorgnedAanvraagSource {
   beschikking: Beschikking;
   datumAanvraag: string;
+  // The following field seems to be always defined for RTM type aanvragen.
+  procesAanvraag?: ZorgnedProcesAanvraag;
   documenten: ZorgnedDocument[];
   identificatie: string;
 }
+
+export type ZorgnedProcesAanvraag = {
+  identificatie: string; // Is equal to ZorgnedAanvraagSource identificatie
+  omschrijving: string;
+  datumStart: string;
+};
 
 export interface ZorgnedResponseDataSource {
   _embedded: { aanvraag: ZorgnedAanvraagSource[] };
@@ -137,6 +145,7 @@ export interface ZorgnedAanvraagTransformed {
   datumIngangGeldigheid: string | null;
   datumOpdrachtLevering: string | null;
   datumToewijzing: string | null;
+  procesAanvraagOmschrijving: string | null;
   documenten: GenericDocument[];
   id: string;
   isActueel: boolean;

@@ -2,6 +2,7 @@ import { isAfter } from 'date-fns';
 
 import { BESLUIT, EINDE_RECHT, isAanvrager } from './generic';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
+import { sortByNumber } from '../../../../universal/helpers/utils';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
@@ -45,7 +46,7 @@ function dedupCombineRTMDeel2(
       dedupedAanvragen.push(aanvraag);
       continue;
     }
-    const id = aanvraag.beschiktProductIdentificatie;
+    const id = `${aanvraag.procesAanvraagOmschrijving}-${aanvraag.beschiktProductIdentificatie}`;
     if (seenAanvragen[id]) {
       seenAanvragen[id].documenten.push(...aanvraag.documenten);
       continue;
@@ -58,44 +59,134 @@ function dedupCombineRTMDeel2(
 
 export function filterCombineRtmData(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
-): ZorgnedHLIRegeling[] {
-  const dedupedAanvragen = dedupCombineRTMDeel2(aanvragen);
+): [ZorgnedAanvraagWithRelatedPersonsTransformed[], ZorgnedHLIRegeling[]] {
+  const rtmAanvragen = [];
+  const remainder = [];
 
-  // The aanvragen are sorted by datumIngangGeldigheid/DESC
-  // The first unseen deel1 aanvraag after a deel2 aanvraag is ___MOST_LIKELY___ related to that deel2 aanvraag.
-  const deel2Aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[] = [];
-  const combinedAanvragen: ZorgnedHLIRegeling[] = [];
-  for (const aanvraag of dedupedAanvragen) {
-    if (isRTMDeel2(aanvraag)) {
-      deel2Aanvragen.push(aanvraag);
-      continue;
+  for (const aanvraag of aanvragen) {
+    if (isRTMDeel1(aanvraag) || isRTMDeel2(aanvraag)) {
+      rtmAanvragen.push(aanvraag);
+    } else {
+      remainder.push(aanvraag);
     }
-    if (isRTMDeel1(aanvraag)) {
-      const deel1 = aanvraag;
-      if (deel1.resultaat !== 'toegewezen') {
-        combinedAanvragen.push(deel1);
-        continue;
-      }
-      const deel2 = deel2Aanvragen.pop();
-      if (!deel2) {
-        // This deel1 does not belong to any deel2.
-        combinedAanvragen.push(deel1);
-        continue;
-      }
-      combinedAanvragen.push({
-        ...deel2,
-        datumInBehandeling: deel1?.datumBesluit,
-        datumAanvraag: deel1?.datumAanvraag ?? deel2.datumAanvraag,
-        betrokkenen: [...deel1.betrokkenen], // TODO: Will the RTM deel2 have betrokkenen?
-        documenten: [...deel2.documenten, ...deel1.documenten],
-      });
-      continue;
-    }
-    combinedAanvragen.push(aanvraag);
   }
 
-  combinedAanvragen.push(...deel2Aanvragen);
+  // Prevent aanvragen from other 'betrokkenen' sets from being mixed up with eachother.
+  const aanvragenPerBetrokkenen = mapAanvragenPerBetrokkenen(rtmAanvragen);
+  return [
+    remainder,
+    Object.values(aanvragenPerBetrokkenen).flatMap(combineRTMData),
+  ];
+}
+
+/** Combine related aanvragen into one aanvraag all the way untill the aanvraag that cancels (Einde recht) it.
+ *
+ *  This requires a list of aanvragen for one person.
+ *
+ * ## Scenarios
+ *
+ *  2m - 1h - 2h - 1h - 2h.x   1t - 2 - 1h - 2h - 1h - 2h.x    1t - 2.x    1t - 2 - 1h - 2h - 1h - 2h.x
+ * |________________________| |____________________________|  |________|  |___________________________|
+ *
+ *  1a
+ * |__|
+ *
+ * 1t = RTM1 toegewezen
+ * 1a = RTM1 afgewezen
+ * 1h = Aanvraag Aanpassing (herkeuring)
+ * 2 = RTM
+ * 2h = RTM Aanpassing (obv herkeuring)
+ * 2m = RTM migratie (hier zit nooit een fase 1 voor)
+ * 2x = RTM + datum einde geldigheid verstreken
+ * 2h.x = RTM Aanpassing (herkeurd) + datum einde geldigheid verstreken
+ */
+function combineRTMData(
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
+): ZorgnedHLIRegeling[] {
+  aanvragen = aanvragen
+    // Sort asc so we always end with an 'Einde recht'.
+    // This keeps it in the same order as how we describe the scenarios, so you don't need to think in reverse.
+    .toSorted(sortByNumber('id', 'asc'));
+
+  aanvragen = dedupCombineRTMDeel2(aanvragen);
+
+  const initialAccumulator: ZorgnedHLIRegeling[] = [];
+  const combinedAanvragen = aanvragen.reduce((acc, aanvraag) => {
+    const prev = acc.at(-1);
+    if (!prev) {
+      if (isRTMDeel1(aanvraag)) {
+        return [aanvraag];
+      }
+      return acc;
+    }
+
+    // Aanvraag is a 'Einde recht'.
+    if (
+      isRTMDeel2(prev) &&
+      prev.procesAanvraagOmschrijving === 'Beëindigen RTM' &&
+      prev.isActueel === false
+    ) {
+      return [...acc, aanvraag];
+    }
+
+    return [
+      ...acc.slice(0, -1),
+      {
+        ...aanvraag,
+        datumAanvraag: prev.datumAanvraag ?? aanvraag.datumAanvraag,
+        documenten: [...aanvraag.documenten, ...prev.documenten],
+      },
+    ];
+  }, initialAccumulator);
+
   return combinedAanvragen;
+}
+
+type AanvragenMap = {
+  ontvanger: ZorgnedAanvraagWithRelatedPersonsTransformed[];
+} & Record<string, ZorgnedAanvraagWithRelatedPersonsTransformed[]>;
+
+function mapAanvragenPerBetrokkenen(
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
+): AanvragenMap {
+  aanvragen = aanvragen.map((aanvraag) => {
+    return {
+      ...aanvraag,
+      // Sort because I don't know if betrokkenen are always in the same order across different aanvragen.
+      betrokkenen: aanvraag.betrokkenen.toSorted((a, b) => (a <= b ? -1 : 1)),
+    };
+  });
+
+  const ontvangerID = aanvragen
+    .find((aanvraag) => {
+      return isRTMDeel2(aanvraag);
+    })
+    ?.betrokkenen.join('');
+
+  const aanvragenMap: AanvragenMap = { ontvanger: [] };
+
+  for (const aanvraag of aanvragen) {
+    if (!aanvraag.betrokkenen.length && isRTMDeel2(aanvraag)) {
+      aanvragenMap.ontvanger.push(aanvraag);
+      continue;
+    }
+
+    const id = aanvraag.betrokkenen.join('');
+
+    if (id === ontvangerID) {
+      aanvragenMap.ontvanger.push(aanvraag);
+      continue;
+    }
+
+    const aanvraagInMap = aanvragenMap[id];
+    if (aanvraagInMap) {
+      aanvragenMap[id].push(aanvraag);
+    } else {
+      aanvragenMap[id] = [aanvraag];
+    }
+  }
+
+  return aanvragenMap;
 }
 
 function getRtmDescriptionDeel1Toegewezen(

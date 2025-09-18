@@ -1,6 +1,5 @@
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { isDateInPast } from '../../../universal/helpers/date';
-import { GenericDocument } from '../../../universal/types/App.types';
 import {
   fetchAanvragenWithRelatedPersons,
   fetchPersoonsgegevensNAW,
