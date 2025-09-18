@@ -17,6 +17,7 @@ import {
   AfisFacturenByStateResponse,
   AfisFactuur,
   AfisFactuurState,
+  type AfisFacturenResponse,
 } from '../../../../server/services/afis/afis-types';
 import {
   hasFailedDependency,
@@ -29,6 +30,11 @@ import { LinkProps } from '../../../../universal/types/App.types';
 import { DocumentLink } from '../../../components/DocumentList/DocumentLink';
 import { MaLink } from '../../../components/MaLink/MaLink';
 import { BFFApiUrls } from '../../../config/api';
+import { createGetApiHook } from '../../../hooks/api/useDataApi-v2';
+import {
+  createItemStoreHook,
+  useItemStoreWithFetch,
+} from '../../../hooks/api/useItemStore';
 import { useSmallScreen } from '../../../hooks/media.hook';
 import {
   useAppStateBagApi,
@@ -114,6 +120,10 @@ function useTransformFacturen(
   return facturenByStateTransformed;
 }
 
+const useAfisFacturenFetchApi = createGetApiHook<AfisFacturenResponse>();
+const useAfisFacturenByStateStore =
+  createItemStoreHook<AfisFacturenResponse>('state');
+
 /**
  * Uses /overview endpoint for Open and Overview facturen (All the Open facuren are loaded with this endpoint)
  * Uses /facturen/(afgehandeld|overgedragen) for the facturen with this state.
@@ -122,37 +132,41 @@ function useAfisFacturenApi(
   businessPartnerIdEncrypted:
     | AfisThemaResponse['businessPartnerIdEncrypted']
     | undefined,
-  state?: AfisFactuurState
+  state: AfisFactuurState
 ) {
-  const [facturenByStateApiResponse, fetchFacturen, isApiDataCached] =
-    useAppStateBagApi<AfisThemaResponse['facturen']>({
-      bagThema: `${themaId}_BAG`,
-      key: `afis-facturen-${state}`,
-    });
-
-  useEffect(() => {
-    if (
-      businessPartnerIdEncrypted &&
-      !isApiDataCached &&
-      state &&
-      state !== 'open'
-    ) {
-      fetchFacturen({
-        url: `${BFFApiUrls.AFIS_FACTUREN}/${state}?id=${businessPartnerIdEncrypted}`,
-      });
-    }
-  }, [businessPartnerIdEncrypted, fetchFacturen, isApiDataCached, state]);
-
-  const facturenByStateApiUpdated = useTransformFacturen(
-    facturenByStateApiResponse.content ?? null
+  const {
+    item: facturenResponse,
+    isLoading,
+    isError,
+    fetch,
+  } = useItemStoreWithFetch<AfisFacturenResponse>(
+    useAfisFacturenFetchApi,
+    useAfisFacturenByStateStore,
+    'state',
+    state
   );
 
-  return [
-    facturenByStateApiUpdated,
-    facturenByStateApiResponse,
-    fetchFacturen,
-    isApiDataCached,
-  ] as const;
+  useEffect(() => {
+    if (state && state !== 'open' && businessPartnerIdEncrypted) {
+      fetch(
+        `${BFFApiUrls.AFIS_FACTUREN}/${state}?id=${businessPartnerIdEncrypted}`
+      );
+    }
+  }, [fetch, state, businessPartnerIdEncrypted]);
+
+  const facturenByStateApiUpdated = useTransformFacturen(
+    facturenResponse
+      ? {
+          [facturenResponse.state]: facturenResponse,
+        }
+      : null
+  );
+
+  return {
+    facturenByState: facturenByStateApiUpdated,
+    isLoading,
+    isError,
+  } as const;
 }
 
 export function useAfisListPageData(state: AfisFactuurState) {
@@ -160,8 +174,7 @@ export function useAfisListPageData(state: AfisFactuurState) {
   const businessPartnerIdEncrypted =
     AFIS.content?.businessPartnerIdEncrypted ?? null;
 
-  const [facturenByStateFromBAGState, facturenByStateApiResponse] =
-    useAfisFacturenApi(businessPartnerIdEncrypted, state);
+  const api = useAfisFacturenApi(businessPartnerIdEncrypted, state);
 
   const facturenByStateFromMainState = useTransformFacturen(
     AFIS.content?.facturen ?? null
@@ -172,16 +185,15 @@ export function useAfisListPageData(state: AfisFactuurState) {
   return {
     themaId: themaId,
     facturenListResponse:
-      (state === 'open'
-        ? facturenByStateFromMainState?.open
-        : facturenByStateFromBAGState?.[state]) ?? null,
+      state === 'open'
+        ? // Open facturen are always loaded and retrieved from the stream endpoint
+          facturenByStateFromMainState?.open
+        : (api.facturenByState?.[state] ?? null),
     facturenTableConfig,
     isThemaPaginaError: isError(AFIS, false),
     isThemaPaginaLoading: isLoading(AFIS),
-    isListPageError:
-      state !== 'open' ? isError(facturenByStateApiResponse, false) : false,
-    isListPageLoading:
-      state !== 'open' ? isLoading(facturenByStateApiResponse) : false,
+    isListPageError: state !== 'open' ? api.isError : false,
+    isListPageLoading: state !== 'open' ? api.isLoading : false,
     listPageTitle,
     routeConfig,
     breadcrumbs,
