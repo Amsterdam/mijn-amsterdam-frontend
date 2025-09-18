@@ -142,24 +142,41 @@ function combineRTMData(
   return combinedAanvragen;
 }
 
+type AanvragenMap = {
+  ontvanger: ZorgnedAanvraagWithRelatedPersonsTransformed[];
+} & Record<string, ZorgnedAanvraagWithRelatedPersonsTransformed[]>;
+
 function mapAanvragenPerBetrokkenen(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
-): Record<string, ZorgnedAanvraagWithRelatedPersonsTransformed[]> {
-  const aanvragenMap: Record<
-    string,
-    ZorgnedAanvraagWithRelatedPersonsTransformed[]
-  > = {};
+): AanvragenMap {
+  aanvragen = aanvragen.map((aanvraag) => {
+    return {
+      ...aanvraag,
+      // Sort because I don't know if betrokkenen are always in the same order across different aanvragen.
+      betrokkenen: aanvraag.betrokkenen.toSorted((a, b) => (a <= b ? -1 : 1)),
+    };
+  });
+
+  const ontvangerID = aanvragen
+    .find((aanvraag) => {
+      return isRTMDeel2(aanvraag);
+    })
+    ?.betrokkenen.join('');
+
+  const aanvragenMap: AanvragenMap = { ontvanger: [] };
 
   for (const aanvraag of aanvragen) {
-    if (!aanvraag.betrokkenen) {
-      aanvraag.betrokkenen = ['0'];
+    if (!aanvraag.betrokkenen.length && isRTMDeel2(aanvraag)) {
+      aanvragenMap.ontvanger.push(aanvraag);
+      continue;
     }
-    // Sort because I don't know if betrokkenen are always in the same order across different aanvragen.
-    const sortedBetrokkenen = aanvraag.betrokkenen.toSorted((a, b) =>
-      a <= b ? -1 : 1
-    );
 
-    const id = sortedBetrokkenen.join('');
+    const id = aanvraag.betrokkenen.join('');
+
+    if (id === ontvangerID) {
+      aanvragenMap.ontvanger.push(aanvraag);
+      continue;
+    }
 
     const aanvraagInMap = aanvragenMap[id];
     if (aanvraagInMap) {

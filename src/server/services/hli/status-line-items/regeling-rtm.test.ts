@@ -36,7 +36,7 @@ function attachBetrokkenen(
 
 const base = {
   bsnAanvrager: '000009945',
-  betrokkenen: ['999994542', '999991000'],
+  betrokkenen: ['999991000', '999994542'],
   betrokkenPersonen: [
     {
       bsn: '999994542',
@@ -251,7 +251,7 @@ const RTM_WIJZIGINGS_AFWIJZING: ZorgnedAanvraagWithRelatedPersonsTransformed = {
   beschiktProductIdentificatie: '329934',
   resultaat: 'afgewezen',
   titel: 'Regeling Tegemoetkoming Meerkosten',
-  betrokkenen: base.betrokkenen,
+  betrokkenen: [],
   betrokkenPersonen: [],
   bsnAanvrager: base.bsnAanvrager,
 };
@@ -282,6 +282,17 @@ const UNKNOWN: ZorgnedAanvraagWithRelatedPersonsTransformed = {
 };
 
 describe('filterCombineRtmData', () => {
+  test('Orders betrokkenen', () => {
+    const aanvragen = [
+      { ...RTM_1_AANVRAAG, betrokkenen: ['3', '2', '12', '1'] },
+    ];
+    const [, result] = filterCombineRtmData(aanvragen);
+
+    expect(result.length).toBe(1);
+    // This may look weird but I'm only after a consistent ordering, the actual order does not matter.
+    expect(result[0].betrokkenen).toStrictEqual(['1', '12', '2', '3']);
+  });
+
   test('Seperates from other zorgned type aanvragen', () => {
     const aanvragen = attachIDs([RTM_1_AANVRAAG, UNKNOWN]);
     const [remainder, rtmAanvragen] = filterCombineRtmData(aanvragen);
@@ -426,11 +437,10 @@ describe('filterCombineRtmData', () => {
       attachBetrokkenen(RTM_2_TOEGEWEZEN, BETROKKENEN_IDS),
       aanvraag,
     ]);
+
     const [, result] = filterCombineRtmData(aanvragen);
     expect(result.length).toBe(3);
-
-    const combinedAanvraag = result[1];
-    expect(combinedAanvraag.id).toBe('3');
+    const combinedAanvraag = result.find((a) => a.id === '3')!;
     expect(combinedAanvraag.procesAanvraagOmschrijving).toBe(
       'Aanvraag RTM fase 2'
     );
