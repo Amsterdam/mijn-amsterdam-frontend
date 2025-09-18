@@ -13,12 +13,10 @@ import type {
   WithListPage,
 } from '../../../config/thema-types';
 
-// !!!!!! LET OP TO DO SEARCH voor Bodem uitgezet //import { featureToggle as themaConfig } from '../../pages/Thema/Bodem/Bodem-thema-config';!!!!!!!!
-
 type BodemThemaConfig = ThemaConfigBase & WithDetailPage & WithListPage;
 
 export const themaConfig: BodemThemaConfig = {
-  id: 'BODEM', ///Bij useBodemListPageData.hook.ts nog steeds themaID en ook bij BodemList.tsx
+  id: 'BODEM', //steeds themaID bij BodemList.tsx > daar ook  routeConfig,    } = useBodemListPageData();    useHTMLDocumentTitle(routeConfig.listPage);
   title: 'Bodem',
   featureToggle: {
     thema: true,
@@ -26,7 +24,9 @@ export const themaConfig: BodemThemaConfig = {
   profileTypes: ['private', 'commercial'],
   route: {
     path: '/bodem',
-    documentTitle: `Bodem | overzicht`,
+    get documentTitle() {
+      return `${themaConfig.title} | Overzicht`;
+    },
   },
   links: [
     {
@@ -38,32 +38,39 @@ export const themaConfig: BodemThemaConfig = {
     { listItems: ["Uw aanvraag voor 'lood in de bodem-check'"] },
   ],
   ///gebruik deze nog niet, moet wel maar dan moet de hele pagina GegevensInfo.tsx worden omgebouwd, daarnaast moet de Uitlegpagina voor Eherk anders dan die van Digid > maar denk dat ik dat met Profiletype kan oplossen
+
+  // isLoading: {
+  //   redactedScope: 'none',
+  //   isActive(appState: AppState) {
+  //     return (
+  //       themaConfig.featureToggle &&
+  //       !isLoading(appState.BODEM) && /// hier wil voor BODEM ${themaConfig.id}
+  //       !!appState.BODEM.content?.length /// hier wil voor BODEM ${themaConfig.id}
+  //     );
+  //   }
+  // },
+
   detailPage: {
-    title: '',
+    title: 'Lood in bodem-check', // TO DO Deze zie ik niet terug op localhost > ik zie daar title > terwijl er in de title bij BodemDetail.tsx wordt verwezen naar title: themaConfig.detailPage.title,
     route: {
       path: '/bodem/lood-meting/:id',
       trackingUrl: '/bodem/lood-meting',
-      documentTitle: `Lood in de bodem-check | Bodem`, //    get documentTitle() > WERKT niet bij mij.
+      get documentTitle() {
+        return `Lood in de bodem-check | ${themaConfig.title}`;
+      },
     },
   },
   listPage: {
     route: {
       path: '/bodem/lijst/lood-meting/:kind/:page?',
       documentTitle: (params: { kind: string }) =>
-        `${params?.kind === listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | Bodem` as const,
+        `${params?.kind === listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | Bodem` as const /*TO DO hier nog een get van maken  get documentTitle() {
+    return `${this.params?.kind === listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaConfig.title}`;
+}  */,
     },
   },
 } as const;
 
-// export const withDetailPage: WithDetailPage = {
-//   titleDetail: 'Lood in bodem-check',
-// };
-
-//   export const withListPage: WithListPage = {
-//   linksThemaPage: [],
-//   to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/bodem/loodcheck-tuin-aanvragen',
-//   title: 'Meer informatie over lood in de bodem.',
-// };
 const listPageParamKind = {
   //moet not erggens naar
   inProgress: 'lopende-aanvragen',

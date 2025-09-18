@@ -9,18 +9,6 @@ import {
 
 export type IsThemaVisibleFN = (appState: AppState) => boolean;
 
-// const thema = {
-//   featureToggle: { themaActive: true },
-
-//   get isActive() {
-//     return thema.featureToggle.themaActive;
-//   },
-
-//   get documentTitel() {
-//     return thema.titel + '';
-//   },
-// };
-
 export type ThemaConfigBase = {
   id: string;
   title: string;
@@ -30,9 +18,18 @@ export type ThemaConfigBase = {
   links: LinkProps[];
   route: {
     path: string;
-    documentTitle: `${string} | ${string}`; //bijv `Lood in de bodem-check | ${themaConfig.title}`
+    documentTitle: string;
   };
-  ///nog niet in gebruik dan moet de hele pagina GegevensInfo.tsx worden omgebouwd, daarnaast moet de Uitlegpagina voor Eherk anders dan die van Digid > maar denk dat ik dat met Profiletype kan oplossen
+  //   isLoading: {
+  //    redactedScope: 'none',
+  //     isActive(appState: AppState) {
+  //   return (
+  //     themaConfig.featureToggle &&
+  //     !isLoading(appState.BODEM) && /// hier wil voor BODEM ${themaConfig.id}
+  //     !!appState.BODEM.content?.length /// hier wil voor BODEM ${themaConfig.id}
+  //   );
+  // };
+  //     }
   //TO DO menuItem > is interface ThemaMenuItem
   /// TO DO SEARCH TOEVOEGEN https://gemeente-amsterdam.atlassian.net/browse/MIJN-11547
 };
@@ -43,7 +40,7 @@ export type WithDetailPage = {
     route: {
       path: string;
       trackingUrl: string;
-      documentTitle: `${string} | ${string}`; //bijv `Lood in de bodem-check | ${themaConfig.title}`
+      documentTitle: string;
     };
   };
 };
@@ -61,7 +58,7 @@ export type WithListPage = {
   listPage: {
     route: {
       path: string;
-      documentTitle: (params: { kind: string }) => `${string} | ${string}`; //bijv  (params) =>`${params?.kind === themaConfig.tableHeaders.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${ themaConfig.title } `,
+      documentTitle: (params: { kind: string }) => `${string} | ${string}`;
     };
   };
   //tableConfig: Record<string, TableConfig<T>>;
