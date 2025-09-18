@@ -84,16 +84,16 @@ export async function sendGetRequest<T extends any>(
   );
 }
 
-type ApiGetOptions = {
+type ApiGetOptions<T> = {
   defaultUrl?: URL | string;
   init?: RequestInit;
-  sendRequest?: <T>(
+  sendRequest?: (
     url: URL | string,
     init?: RequestInit
   ) => Promise<ApiResponse<T>>;
 };
 
-export function createGetApiHook<T>(options?: ApiGetOptions) {
+export function createGetApiHook<T>(options?: ApiGetOptions<T>) {
   const { defaultUrl, sendRequest = sendGetRequest, init } = options || {};
 
   return create<ApiGetState<ApiResponse<T>> & ApiFetch>((set, get) => ({
@@ -107,7 +107,7 @@ export function createGetApiHook<T>(options?: ApiGetOptions) {
 
       set({ isLoading: true });
 
-      const response = await sendRequest<T>(
+      const response = await sendRequest(
         url_,
         init_ ?? init // TODO: Should we merge these inits?
       );
