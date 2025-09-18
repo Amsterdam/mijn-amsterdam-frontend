@@ -14,18 +14,25 @@ export type Section = {
 };
 
 // ThemaConfig: basis-gegevens per thema (backend-safe)
-export type ThemaConfig = {
+export type ThemaConfigBase = {
   id: string; // uniek id van het thema (bijvoorbeeld:  'BODEM')
   title: string; // naam/titel van het thema
-  titleDetail?: string;
   profileTypes: ProfileType[];
   featureToggle: { [key: string]: boolean };
+  // TODO: ROUTECONFIG
+  // TODO: MENUITEM > IS INTERFACE THEMAMENUITEM
+  // TODO: SEARCG TOEVOEGEN HTTPS://gemeente-amsterdam
+  // TODO:
   // listPageParamKind: {
   //   inProgress: 'lopende-aanvragen' | string;
   //   completed: 'afgehandelde-aanvragen' | string;
   // };
-  linkListItems?: LinkProps[]; // optioneel
+  linkListItems: LinkProps[]; // optioneel
   uitlegPageSections: Section[];
+  route: {
+    path: string;
+    documentTitle: `${string} | ${string}`; //bijv
+  };
   // themaTitleDetail?: string;  // ThemaTitleDetail is optioneel. Het wordt niet in elk thema gebruikt
   // featureToggle: { [key: string]: boolean }; // toggles aan/uit (bijvoorbeeld: BodemActive: true })
   // routeConfig: ThemaRoutesConfig;            // routes van het thema (detail, lijst, thema)
@@ -34,6 +41,49 @@ export type ThemaConfig = {
   //    completed: 'afgehandelde-aanvragen',
   // }
 };
+
+export type WithDetailPage = {
+  detailPage: {
+    title: string;
+    route: {
+      path: string;
+      trackingUrl: string;
+      documentTitle: `${string} | ${string}`; //bijv `Lood in de bodem-check | ${themaConfig.title}`
+    };
+  };
+};
+
+export type WithListPage = {
+  listPage: {
+    route: {
+      path: string;
+      documentTitle: (params: { kind: string }) => `${string} | ${string}`; //bijv (params) =>`${params?.kind === themaConfig.tableHeaders.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${ themaConfig.title } `,
+    };
+  };
+};
+
+export type withThemaPage = {
+  ThemaPage: {
+    title: string;
+    route: {
+      path: string;
+      documentTitle: `${string} | ${string}`; //bijv`${themaConfig.title} | overzicht`,
+    };
+  };
+};
+
+// type ExtendedFeatureToggle = {
+//   thema: boolean,
+//   betalen: boolean,
+//   facturen: {emandaat: boolean}
+// }
+
+// type AfisThemaConfig = ThemaConfig
+
+// type WithBareFeaturetoggle = { featuretoggle: boolean }
+// type withExtendedFeaturetoggle = { featuretoggle: { thema: boolean } & Record<string, boolean> }
+
+// type ThemaConfig = ThemaConfig & WithBareFeaturetoggle
 
 export type IsThemaVisibleFN = (appState: AppState) => boolean;
 
