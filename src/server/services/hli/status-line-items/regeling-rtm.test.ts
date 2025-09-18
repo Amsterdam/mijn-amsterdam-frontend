@@ -17,16 +17,6 @@ function attachIDs(
   });
 }
 
-function getLastID(
-  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
-): string {
-  const last = aanvragen.at(-1)?.id;
-  if (!last) {
-    throw Error('No id found in the last aanvraag.');
-  }
-  return last;
-}
-
 function attachBetrokkenen(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
   ids: string[]
@@ -312,7 +302,6 @@ describe('filterCombineRtmData', () => {
           ...RTM_2_TOEGEWEZEN.documenten,
           ...RTM_1_AANVRAAG.documenten,
         ],
-        id: getLastID(aanvragen),
       },
     ]);
   });
@@ -329,30 +318,16 @@ describe('filterCombineRtmData', () => {
           ...RTM_2_EINDE_RECHT.documenten,
           ...RTM_1_AANVRAAG.documenten,
         ],
-        id: getLastID(aanvragen),
         titel: RTM_1_AANVRAAG.titel,
       },
     ]);
   });
 
   test('Combines: Aanvraag -> Toegewezen -> Duplicate of the previous one', () => {
-    const differences: Partial<ZorgnedAanvraagWithRelatedPersonsTransformed> = {
-      resultaat: 'toegewezen',
-      datumIngangGeldigheid: '2025-02-01',
-      datumEindeGeldigheid: '2025-06-30',
-      documenten: [],
-    };
-    // RP TODO: If I go back I see that they are both toegewezen but with a isActueel false?
-    // What is that? check confluence and notes. This tests is not realistic at the moment.
-    // Need to put down the old data again.
     const aanvragen = attachIDs([
       RTM_1_AANVRAAG,
-      RTM_2_TOEGEWEZEN,
-      {
-        // The 'duplicate'.
-        ...RTM_2_EINDE_RECHT,
-        ...differences,
-      },
+      RTM_2_EINDE_RECHT,
+      RTM_2_EINDE_RECHT,
     ]);
     aanvragen[2].beschiktProductIdentificatie =
       aanvragen[1].beschiktProductIdentificatie;
@@ -361,15 +336,14 @@ describe('filterCombineRtmData', () => {
     expect(result).toStrictEqual([
       {
         ...aanvragen.at(-1),
+        id: '2',
         betrokkenen: base.betrokkenen,
         datumAanvraag: RTM_1_AANVRAAG.datumAanvraag,
-        datumEindeGeldigheid: differences.datumEindeGeldigheid,
-        datumIngangGeldigheid: differences.datumIngangGeldigheid,
         documenten: [
-          ...RTM_2_TOEGEWEZEN.documenten,
+          ...RTM_2_EINDE_RECHT.documenten,
+          ...RTM_2_EINDE_RECHT.documenten,
           ...RTM_1_AANVRAAG.documenten,
         ],
-        id: getLastID(aanvragen),
         resultaat: RTM_2_TOEGEWEZEN.resultaat,
       },
     ]);
@@ -396,7 +370,6 @@ describe('filterCombineRtmData', () => {
           ...RTM_2_TOEGEWEZEN.documenten,
           ...RTM_1_AANVRAAG.documenten,
         ],
-        id: getLastID(aanvragen),
       },
     ]);
   });
