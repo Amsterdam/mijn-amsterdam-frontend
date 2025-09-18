@@ -4,7 +4,7 @@ import { MutableSnapshot } from 'recoil';
 import { describe, expect, vi } from 'vitest';
 
 import { MyNotification } from './MyNotification';
-import { type ThemaID } from '../../../universal/config/thema';
+import { type ThemaID } from '../../../universal/config/thema-config.ts';
 import type {
   AppState,
   MyNotification as MyNotificationType,
