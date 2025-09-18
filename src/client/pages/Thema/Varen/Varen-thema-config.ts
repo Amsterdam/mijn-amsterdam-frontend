@@ -28,14 +28,14 @@ export const themaId = 'VAREN' as const;
 export const themaTitle = 'Passagiers- en beroepsvaart' as const;
 
 export const routeConfig = {
-  detailZaakPage: {
+  detailPageZaak: {
     path: '/passagiers-en-beroepsvaart/vergunningen/:caseType/:id',
     trackingUrl(params) {
       return `/passagiers-en-beroepsvaart/vergunningen/${params?.caseType ?? ''}`;
     },
     documentTitle: getVarenDetailPageDocumentTitle(themaTitle),
   },
-  detailVergunningPage: {
+  detailPageVergunning: {
     path: '/passagiers-en-beroepsvaart/vergunningen/:id',
     trackingUrl(params) {
       return `/passagiers-en-beroepsvaart/vergunning/${params?.caseType ?? ''}`;

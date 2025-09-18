@@ -18,12 +18,12 @@ import {
 
 export const VarenRoutes = [
   {
-    route: routeConfig.detailZaakPage.path,
+    route: routeConfig.detailPageZaak.path,
     Component: VarenDetailPageContentExploitatieZaak,
     isActive: featureToggle.varenActive,
   },
   {
-    route: routeConfig.detailVergunningPage.path,
+    route: routeConfig.detailPageVergunning.path,
     Component: VarenDetailPageContentExploitatieVergunning,
     isActive: featureToggle.varenActive,
   },

@@ -45,7 +45,7 @@ function transformVarenZaakFrontend(
   authProfileAndToken: AuthProfileAndToken,
   zaak: Varen
 ): VarenZakenFrontend {
-  const appRoute = routeConfig.detailZaakPage.path;
+  const appRoute = routeConfig.detailPageZaak.path;
   const zaakTransformed = transformDecosZaakFrontend(
     authProfileAndToken.profile.sid,
     zaak,
@@ -79,7 +79,7 @@ function transformVarenZaakFrontend(
 function transformVarenVergunningFrontend(
   vergunning: ZaakVergunningExploitatieType
 ): VarenVergunningFrontend {
-  const appRoute = routeConfig.detailVergunningPage.path;
+  const appRoute = routeConfig.detailPageVergunning.path;
   return {
     ...omit(vergunning, ['statusDates', 'termijnDates']),
     dateStartFormatted: toDateFormatted(vergunning.dateStart),
