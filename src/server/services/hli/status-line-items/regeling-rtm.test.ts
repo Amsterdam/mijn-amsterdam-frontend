@@ -34,6 +34,14 @@ function attachBetrokkenen(
   return { ...aanvraag, betrokkenen: ids, betrokkenPersonen };
 }
 
+// RP TODO: Use later in a test.
+const SPECIFICATIE_DOCUMENENT = {
+  id: 'B3374604',
+  title: 'AV-RTM Specificatie',
+  url: '',
+  datePublished: '2025-02-20T11:49:30.42',
+};
+
 const base = {
   bsnAanvrager: '000009945',
   betrokkenen: ['999991000', '999994542'],
@@ -267,32 +275,7 @@ const RTM_2_MIGRATIE: ZorgnedAanvraagWithRelatedPersonsTransformed = {
   datumOpdrachtLevering: null,
   datumToewijzing: null,
   procesAanvraagOmschrijving: 'Migratie RTM',
-  documenten: [
-    {
-      id: 'B3374604',
-      title: 'AV-RTM Specificatie',
-      url: '',
-      datePublished: '2025-02-20T11:49:30.42',
-    },
-    {
-      id: 'B3300648',
-      title: 'AV-RTM Specificatie',
-      url: '',
-      datePublished: '2025-01-20T16:26:12.387',
-    },
-    {
-      id: 'B3262746',
-      title: 'AV-RTM Specificatie',
-      url: '',
-      datePublished: '2024-12-20T11:22:29.4',
-    },
-    {
-      id: 'B3216445',
-      title: 'AV-RTM Specificatie',
-      url: '',
-      datePublished: '2024-11-20T18:27:42.367',
-    },
-  ],
+  documenten: [],
   isActueel: true,
   leverancier: '',
   leveringsVorm: 'ZIN',
@@ -350,10 +333,31 @@ describe('filterCombineRtmData', () => {
     expect(remainder[0].productIdentificatie).toBe('AV-UNKNOWN');
   });
 
-  test('Migratie', () => {
-    const aanvragen = attachIDs([RTM_2_MIGRATIE]);
+  test('Recognizes and does no merging or changes for a Aanvraag and Migratie', () => {
+    const aanvragen = attachIDs([
+      attachBetrokkenen(RTM_1_AANVRAAG, ['1']),
+      attachBetrokkenen(RTM_2_MIGRATIE, ['2']),
+    ]);
     const [, result] = filterCombineRtmData(aanvragen);
-    expect(result).toStrictEqual([aanvragen.at(-1)]);
+    expect(result).toStrictEqual(aanvragen);
+  });
+
+  test('Combines only (Aanvraag -> Toegewezen): Aanvraag, (Aanvraag -> Toegewezen), Aanvraag', () => {
+    const BETROKKENEN_IDS = ['2'];
+    const aanvraag = attachBetrokkenen(RTM_1_AANVRAAG, ['3']);
+    const aanvragen = attachIDs([
+      attachBetrokkenen(RTM_1_AANVRAAG, ['1']),
+      attachBetrokkenen(RTM_1_AANVRAAG, BETROKKENEN_IDS),
+      attachBetrokkenen(RTM_2_TOEGEWEZEN, BETROKKENEN_IDS),
+      aanvraag,
+    ]);
+
+    const [, result] = filterCombineRtmData(aanvragen);
+    expect(result.length).toBe(3);
+    const combinedAanvraag = result.find((a) => a.id === '3')!;
+    expect(combinedAanvraag.procesAanvraagOmschrijving).toBe(
+      'Aanvraag RTM fase 2'
+    );
   });
 
   test('Combines: Aanvraag -> Toegewezen', () => {
@@ -472,33 +476,5 @@ describe('filterCombineRtmData', () => {
         ...RTM_1_AANVRAAG.documenten,
       ],
     });
-  });
-
-  test('Does not combine: Aanvraag, Aanvraag, Aanvraag', () => {
-    const aanvragen = attachIDs([
-      attachBetrokkenen(RTM_1_AANVRAAG, ['1']),
-      attachBetrokkenen(RTM_1_AANVRAAG, ['2']),
-      attachBetrokkenen(RTM_1_AANVRAAG, ['3']),
-    ]);
-    const [, result] = filterCombineRtmData(aanvragen);
-    expect(result.length).toBe(3);
-  });
-
-  test('To combine or not to combined: Aanvraag, Aanvraag -> Toegewezen -> Aanvraag', () => {
-    const BETROKKENEN_IDS = ['2'];
-    const aanvraag = attachBetrokkenen(RTM_1_AANVRAAG, ['3']);
-    const aanvragen = attachIDs([
-      attachBetrokkenen(RTM_1_AANVRAAG, ['1']),
-      attachBetrokkenen(RTM_1_AANVRAAG, BETROKKENEN_IDS),
-      attachBetrokkenen(RTM_2_TOEGEWEZEN, BETROKKENEN_IDS),
-      aanvraag,
-    ]);
-
-    const [, result] = filterCombineRtmData(aanvragen);
-    expect(result.length).toBe(3);
-    const combinedAanvraag = result.find((a) => a.id === '3')!;
-    expect(combinedAanvraag.procesAanvraagOmschrijving).toBe(
-      'Aanvraag RTM fase 2'
-    );
   });
 });
