@@ -76,6 +76,7 @@ export type ToeristischeVerhuur = {
 export const VakantieverhuurVergunningaanvraag: DecosZaakTransformer<DecosVakantieverhuurVergunningaanvraag> =
   {
     isActive: true,
+    itemType: 'folders',
     caseType: caseTypeToeristischeVerhuur.VakantieverhuurVergunningaanvraag,
     title: 'Vergunning vakantieverhuur',
     transformFields: {

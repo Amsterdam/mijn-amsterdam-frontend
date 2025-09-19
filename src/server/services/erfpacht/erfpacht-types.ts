@@ -1,4 +1,4 @@
-import { ZaakDetail } from '../../../universal/types/App.types';
+import { ZaakAanvraagDetail } from '../../../universal/types/App.types';
 
 export type ErfpachtErpachterResponseSource = {
   erfpachter: boolean;
@@ -163,7 +163,7 @@ export type ErfpachtDossiersDetailSource = {
 export type ErfpachtDossierPropsFrontend<
   T extends ErfpachtDossierSource | ErfpachtDossiersDetailSource,
 > = T &
-  Omit<ZaakDetail, 'displayStatus' | 'steps'> & {
+  Omit<ZaakAanvraagDetail, 'displayStatus' | 'steps'> & {
     dossierNummerUrlParam: string | null;
   };
 

@@ -11,10 +11,11 @@ import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 
 import { CONTENT_EMPTY } from './helper';
 import { useVarenThemaData } from './useVarenThemaData.hook';
-import { rederRegistratieLink } from './Varen-thema-config';
+import { listPageParamKind, rederRegistratieLink } from './Varen-thema-config';
 import styles from './Varen.module.scss';
 import type {
   VarenRegistratieRederFrontend,
+  VarenVergunningFrontend,
   VarenZakenFrontend,
 } from '../../../../server/services/varen/config-and-types';
 import { Datalist, RowSet } from '../../../components/Datalist/Datalist';
@@ -114,6 +115,7 @@ export function VarenThema() {
   const {
     varenRederRegistratie,
     varenZaken,
+    varenVergunningen,
     tableConfig,
     isLoading,
     isError,
@@ -144,22 +146,35 @@ export function VarenThema() {
       </PageContentCell>
     ) : null;
 
-  const vergunningenTables = Object.entries(tableConfig).map(
-    ([kind, config]) => {
-      const zaken = varenZaken.filter(config.filter).sort(config.sort);
-      return (
-        <ThemaPaginaTable<VarenZakenFrontend>
-          key={kind}
-          title={config.title}
-          zaken={zaken}
-          displayProps={config.displayProps}
-          className={styles.VarenTableThemaPagina}
-          listPageRoute={config.listPageRoute}
-          listPageLinkLabel={`Alle ${config.title.toLowerCase()}`}
-          maxItems={config.maxItems}
-        />
-      );
-    }
+  const zakenTableconfig = tableConfig[listPageParamKind.inProgress];
+  const zakenTable = (
+    <ThemaPaginaTable<VarenZakenFrontend>
+      key={listPageParamKind.inProgress}
+      title={zakenTableconfig.title}
+      zaken={varenZaken
+        .filter(zakenTableconfig.filter)
+        .sort(zakenTableconfig.sort)}
+      displayProps={zakenTableconfig.displayProps}
+      className={styles.VarenTableThemaPagina}
+      listPageRoute={zakenTableconfig.listPageRoute}
+      listPageLinkLabel={`Alle ${zakenTableconfig.title.toLowerCase()}`}
+      maxItems={zakenTableconfig.maxItems}
+    />
+  );
+  const vergunningenTableconfig = tableConfig[listPageParamKind.actief];
+  const vergunningenTable = (
+    <ThemaPaginaTable<VarenVergunningFrontend>
+      key={listPageParamKind.actief}
+      title={vergunningenTableconfig.title}
+      zaken={varenVergunningen
+        .filter(vergunningenTableconfig.filter)
+        .sort(vergunningenTableconfig.sort)}
+      displayProps={vergunningenTableconfig.displayProps}
+      className={styles.VarenTableThemaPagina}
+      listPageRoute={vergunningenTableconfig.listPageRoute}
+      listPageLinkLabel={`Alle ${vergunningenTableconfig.title.toLowerCase()}`}
+      maxItems={vergunningenTableconfig.maxItems}
+    />
   );
 
   const gegevensRegistratieReder = varenRederRegistratie ? (
@@ -179,7 +194,8 @@ export function VarenThema() {
       pageContentMain={
         <>
           {gegevensRegistratieReder}
-          {vergunningenTables}
+          {zakenTable}
+          {vergunningenTable}
         </>
       }
       isPartialError={false}

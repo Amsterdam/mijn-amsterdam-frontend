@@ -1,6 +1,6 @@
 import {
   GenericDocument,
-  ZaakDetail,
+  ZaakAanvraagDetail,
 } from '../../../universal/types/App.types';
 
 export type kenmerkKey =
@@ -60,7 +60,7 @@ export type BezwaarFrontend = {
   resultaat: string | null;
   steps: never[];
   documenten: BezwaarDocument[];
-} & ZaakDetail;
+} & ZaakAanvraagDetail;
 
 export type BezwaarSourceStatus = {
   url: string;

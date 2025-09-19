@@ -1,7 +1,7 @@
 import { type StadspasResponseFrontend } from './stadspas-types';
 import {
   GenericDocument,
-  ZaakDetail,
+  ZaakAanvraagDetail,
 } from '../../../universal/types/App.types';
 import {
   BeschikkingsResultaat,
@@ -13,7 +13,7 @@ export type ZorgnedHLIRegeling =
     datumInBehandeling?: string | null;
   };
 
-export type HLIRegelingFrontend = ZaakDetail & {
+export type HLIRegelingFrontend = ZaakAanvraagDetail & {
   dateDecision: string;
   dateEnd: string | null;
   dateStart: string | null;
