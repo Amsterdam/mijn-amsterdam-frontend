@@ -216,8 +216,8 @@ export type DecosZaakBase = {
   termijnDates: ZaakTermijnDate[];
 };
 
-export type ZaakKenmerk = `Z/${number}/${number}-${number}`; // Z/23/2230346
-export type ZaakKenmerkSlug = `Z-${number}-${number}`; // Z-23-2230346
+export type ZaakKenmerk = `${string}/${string}` | `${string}-${string}`; // Z/23/2230346 or NT2025-000403-1-11328 (Varen)
+export type ZaakKenmerkSlug = `${string}-${string}`; // Z-23-2230346
 
 export type ZaakStatus =
   | 'Ontvangen'
