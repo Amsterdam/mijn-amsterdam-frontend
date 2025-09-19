@@ -1,6 +1,9 @@
 import { filterCombineRtmData } from './regeling-rtm';
 import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../../zorgned/zorgned-types';
 
+type Z = ZorgnedAanvraagWithRelatedPersonsTransformed;
+const IdCompareFn = (a: Z, b: Z) => (a.id > b.id ? -1 : 1);
+
 /** The ID determines the sorting order.
  *  Thats why programmaticly adding an id makes predefined aanvragen more reusable.
  */
@@ -340,6 +343,29 @@ describe('filterCombineRtmData', () => {
     ]);
     const [, result] = filterCombineRtmData(aanvragen);
     expect(result).toStrictEqual(aanvragen);
+  });
+
+  test('Keeps aanvraag voor other people and merges toegewezen for self', () => {
+    const aanvragen = attachIDs([
+      attachBetrokkenen(RTM_1_AANVRAAG, ['1', '2', '3']),
+      attachBetrokkenen(RTM_2_TOEGEWEZEN, ['1']),
+    ]);
+    const [, result] = filterCombineRtmData(aanvragen);
+    expect(result.sort(IdCompareFn)).toStrictEqual(
+      [
+        aanvragen[0],
+        {
+          ...aanvragen[1],
+          betrokkenPersonen: base.betrokkenPersonen,
+          betrokkenen: base.betrokkenen,
+          datumAanvraag: RTM_1_AANVRAAG.datumAanvraag,
+          documenten: [
+            ...RTM_2_TOEGEWEZEN.documenten,
+            ...RTM_1_AANVRAAG.documenten,
+          ],
+        },
+      ].sort(IdCompareFn)
+    );
   });
 
   test('Combines only (Aanvraag -> Toegewezen): Aanvraag, (Aanvraag -> Toegewezen), Aanvraag', () => {
