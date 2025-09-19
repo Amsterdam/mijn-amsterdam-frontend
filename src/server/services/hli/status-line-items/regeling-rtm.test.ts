@@ -256,6 +256,56 @@ const RTM_WIJZIGINGS_AFWIJZING: ZorgnedAanvraagWithRelatedPersonsTransformed = {
   bsnAanvrager: base.bsnAanvrager,
 };
 
+const RTM_2_MIGRATIE: ZorgnedAanvraagWithRelatedPersonsTransformed = {
+  id: '7',
+  datumAanvraag: '2022-06-29',
+  datumBeginLevering: null,
+  datumBesluit: '2022-06-29',
+  datumEindeGeldigheid: null,
+  datumEindeLevering: null,
+  datumIngangGeldigheid: '2022-06-01',
+  datumOpdrachtLevering: null,
+  datumToewijzing: null,
+  procesAanvraagOmschrijving: 'Migratie RTM',
+  documenten: [
+    {
+      id: 'B3374604',
+      title: 'AV-RTM Specificatie',
+      url: '',
+      datePublished: '2025-02-20T11:49:30.42',
+    },
+    {
+      id: 'B3300648',
+      title: 'AV-RTM Specificatie',
+      url: '',
+      datePublished: '2025-01-20T16:26:12.387',
+    },
+    {
+      id: 'B3262746',
+      title: 'AV-RTM Specificatie',
+      url: '',
+      datePublished: '2024-12-20T11:22:29.4',
+    },
+    {
+      id: 'B3216445',
+      title: 'AV-RTM Specificatie',
+      url: '',
+      datePublished: '2024-11-20T18:27:42.367',
+    },
+  ],
+  isActueel: true,
+  leverancier: '',
+  leveringsVorm: 'ZIN',
+  productsoortCode: 'AV-D-RTM',
+  productIdentificatie: 'AV-RTM',
+  beschiktProductIdentificatie: '1436337',
+  resultaat: 'toegewezen',
+  titel: 'Regeling Tegemoetkoming Meerkosten',
+  betrokkenen: [],
+  betrokkenPersonen: [],
+  bsnAanvrager: '000009945',
+};
+
 const UNKNOWN: ZorgnedAanvraagWithRelatedPersonsTransformed = {
   id: '9999999',
   datumAanvraag: '2025-01-01',
@@ -298,6 +348,12 @@ describe('filterCombineRtmData', () => {
     const [remainder, rtmAanvragen] = filterCombineRtmData(aanvragen);
     expect(rtmAanvragen[0].productIdentificatie).toBe('AV-RTM1');
     expect(remainder[0].productIdentificatie).toBe('AV-UNKNOWN');
+  });
+
+  test('Migratie', () => {
+    const aanvragen = attachIDs([RTM_2_MIGRATIE]);
+    const [, result] = filterCombineRtmData(aanvragen);
+    expect(result).toStrictEqual([aanvragen.at(-1)]);
   });
 
   test('Combines: Aanvraag -> Toegewezen', () => {

@@ -114,7 +114,10 @@ function combineRTMData(
   const combinedAanvragen = aanvragen.reduce((acc, aanvraag) => {
     const prev = acc.at(-1);
     if (!prev) {
-      if (isRTMDeel1(aanvraag)) {
+      if (
+        isRTMDeel1(aanvraag) ||
+        aanvraag.procesAanvraagOmschrijving === 'Migratie RTM'
+      ) {
         return [aanvraag];
       }
       return acc;
