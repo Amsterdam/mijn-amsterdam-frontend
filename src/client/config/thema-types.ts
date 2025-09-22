@@ -12,15 +12,11 @@ export type IsThemaVisibleFN = (appState: AppState) => boolean;
 export type ThemaConfigBase = {
   id: string;
   title: string;
-  featureToggle: { themaAcive: boolean };
+  featureToggle: { themaActive: boolean };
   profileTypes: ProfileType[];
   uitlegPageSections: InfoSections[];
   links: LinkProps[];
   route: {
-    listPageParamKind?: {
-      inProgress: string;
-      completed: string;
-    };
     path: string;
     documentTitle: string;
   };
@@ -60,6 +56,10 @@ export type WithDetailPage = {
 
 export type WithListPage = {
   listPage: {
+    paramKind: {
+      inProgress: string;
+      completed: string;
+    };
     route: {
       path: string;
       documentTitle: (params: { kind: string }) => `${string} | ${string}`;

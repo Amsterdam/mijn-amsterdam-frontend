@@ -61,24 +61,21 @@ export const themaConfig: BodemThemaConfig = {
     },
   },
   listPage: {
+    paramKind: {
+      inProgress: 'lopende-aanvragen',
+      completed: 'afgehandelde-aanvragen',
+    },
     route: {
       path: '/bodem/lijst/lood-meting/:kind/:page?',
       documentTitle: (params: { kind: string }) =>
-        `${params?.kind === listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | Bodem` as const /*TO DO hier nog een get van maken  get documentTitle() {
-    return `${this.params?.kind === listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaConfig.title}`;
-}  */,
+        `${params?.kind === themaConfig.listPage.paramKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaConfig.title}` as const,
     },
   },
 } as const;
 
-const listPageParamKind = {
-  //moet not erggens naar
-  inProgress: 'lopende-aanvragen',
-  completed: 'afgehandelde-aanvragen',
-} as const;
-
-export type TableHeadersKey = keyof typeof listPageParamKind;
-export type TableHeaders = (typeof listPageParamKind)[TableHeadersKey];
+export type TableHeadersKey = keyof typeof themaConfig.listPage.paramKind;
+export type TableHeaders =
+  (typeof themaConfig.listPage.paramKind)[TableHeadersKey];
 
 const displayPropsLopend: DisplayProps<LoodMetingFrontend> = {
   props: {
@@ -105,23 +102,23 @@ const displayPropsEerder: DisplayProps<LoodMetingFrontend> = {
 };
 
 export const tableConfig = {
-  [listPageParamKind.inProgress]: {
+  [themaConfig.listPage.paramKind.inProgress]: {
     title: 'Lopende aanvragen',
     sort: dateSort<LoodMetingFrontend>('datumAanvraag', 'desc'),
     filter: (bodemAanvraag: LoodMetingFrontend) => !bodemAanvraag.processed,
     listPageRoute: generatePath(themaConfig.listPage.route.path, {
-      kind: listPageParamKind.inProgress,
+      kind: themaConfig.listPage.paramKind.inProgress,
       page: null,
     }),
     displayProps: displayPropsLopend,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
   },
-  [listPageParamKind.completed]: {
+  [themaConfig.listPage.paramKind.completed]: {
     title: 'Afgehandelde aanvragen',
     sort: dateSort<LoodMetingFrontend>('datumAfgehandeld', 'desc'),
     filter: (bodemAanvraag: LoodMetingFrontend) => bodemAanvraag.processed,
     listPageRoute: generatePath(themaConfig.listPage.route.path, {
-      kind: listPageParamKind.completed,
+      kind: themaConfig.listPage.paramKind.completed,
       page: null,
     }),
     displayProps: displayPropsEerder,
