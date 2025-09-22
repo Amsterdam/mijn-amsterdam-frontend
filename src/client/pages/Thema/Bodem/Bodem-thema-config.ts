@@ -19,7 +19,7 @@ export const themaConfig: BodemThemaConfig = {
   id: 'BODEM', //steeds themaID bij BodemList.tsx > daar ook  routeConfig,    } = useBodemListPageData();    useHTMLDocumentTitle(routeConfig.listPage);
   title: 'Bodem',
   featureToggle: {
-    thema: true,
+    themaActive: true, ///TO DO zie nu bij uitlegpagina Bodem niet terug, terwijl daar nog steedns InfoSection.tsx wordt opgeroepen
   },
   profileTypes: ['private', 'commercial'],
   route: {
