@@ -153,12 +153,12 @@ async function transformRegelingenForFrontend(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
   today: Date
 ): Promise<HLIRegelingFrontend[]> {
-  const regelingenFrontend: HLIRegelingFrontend[] = [];
-
   let aanvragenWithDocumentsCombined = filterCombineUpcPcvData(aanvragen);
   aanvragenWithDocumentsCombined = filterCombineRtmData(
     aanvragenWithDocumentsCombined
   ).flat();
+
+  const regelingenFrontend: HLIRegelingFrontend[] = [];
 
   for (const aanvraag of aanvragenWithDocumentsCombined) {
     const statusLineItems = getStatusLineItems(
