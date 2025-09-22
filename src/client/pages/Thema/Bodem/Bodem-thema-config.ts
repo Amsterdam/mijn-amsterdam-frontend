@@ -28,6 +28,7 @@ export const themaConfig: BodemThemaConfig = {
       return `${themaConfig.title} | Overzicht`;
     },
   },
+  redactedScope: 'none',
   links: [
     {
       title: 'Meer informatie over lood in de bodem.',
@@ -38,17 +39,6 @@ export const themaConfig: BodemThemaConfig = {
     { listItems: ["Uw aanvraag voor 'lood in de bodem-check'"] },
   ],
   ///gebruik deze nog niet, moet wel maar dan moet de hele pagina GegevensInfo.tsx worden omgebouwd, daarnaast moet de Uitlegpagina voor Eherk anders dan die van Digid > maar denk dat ik dat met Profiletype kan oplossen
-
-  // isLoading: {
-  //   redactedScope: 'none',
-  //   isActive(appState: AppState) {
-  //     return (
-  //       themaConfig.featureToggle &&
-  //       !isLoading(appState.BODEM) && /// hier wil voor BODEM ${themaConfig.id}
-  //       !!appState.BODEM.content?.length /// hier wil voor BODEM ${themaConfig.id}
-  //     );
-  //   }
-  // },
 
   detailPage: {
     title: 'Lood in bodem-check',

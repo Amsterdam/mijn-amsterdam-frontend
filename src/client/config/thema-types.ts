@@ -20,18 +20,7 @@ export type ThemaConfigBase = {
     path: string;
     documentTitle: string;
   };
-  //   isLoading: {
-  //    redactedScope: 'none',
-  //     isActive(appState: AppState) {
-  //   return (
-  //     themaConfig.featureToggle.themaActive &&
-  //     !isLoading(appState.BODEM) && /// hier wil voor BODEM ${themaConfig.id}
-  //     !!appState.BODEM.content?.length /// hier wil voor BODEM ${themaConfig.id}
-  //   );
-  // };
-  //     }
-  //TO DO menuItem > is interface ThemaMenuItem
-  /// TO DO SEARCH TOEVOEGEN https://gemeente-amsterdam.atlassian.net/browse/MIJN-11547
+  redactedScope: 'full' | 'content' | 'none';
 };
 
 export type WithDetailPage = {
@@ -44,15 +33,6 @@ export type WithDetailPage = {
     };
   };
 };
-
-// type TableConfig<T> = {
-//   title: string;
-//   sort: (item: T) => number; // TODO: -1 | 0 | 1 ? Type ergens anders gedefinieerd?
-//   filter: (item: T) => boolean;
-//   listPageRoute: string;
-//   displayProps: DisplayProps<T>;
-//   maxItems: number;
-// };
 
 export type WithListPage = {
   listPage: {
