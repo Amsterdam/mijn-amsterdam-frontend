@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
-import { create } from 'zustand/react';
+import { create } from 'zustand';
 
 import {
   apiErrorResult,
@@ -10,20 +10,29 @@ import {
 
 type ApiFetchResponse<T> = Promise<ApiResponse<T>>;
 
-async function handleResponse<T>(response: Response): ApiFetchResponse<T> {
-  const responseJson = (await response.json()) as ApiResponse<T>;
-  if (!response.ok) {
+async function handleResponse<T>(fetchFn: () => Promise<Response>) {
+  try {
+    const response = await fetchFn();
+    const responseJson = (await response.json()) as ApiResponse<T>;
+
+    if (!response.ok || responseJson.status === 'ERROR') {
+      throw new Error(
+        `HTTP Error: Request to ${response.url} failed with status ${response.status} ${responseJson && 'message' in responseJson ? `message: ${responseJson.message}` : ''}`.trim()
+      );
+    }
+
+    // Verify that we have ApiResponse signature
+    if ('status' in responseJson && 'content' in responseJson) {
+      return responseJson;
+    }
+
+    return apiSuccessResult<T>(responseJson);
+  } catch (error: unknown) {
     return apiErrorResult(
-      `Request to ${response.url} failed with status ${response.status}.`,
+      (error as Error).message ?? `Unknown error: ${error}`,
       null
     );
   }
-
-  if ('status' in responseJson && 'content' in responseJson) {
-    return responseJson;
-  }
-
-  return apiSuccessResult<T>(responseJson);
 }
 
 export async function sendFormPostRequest<T extends any>(
@@ -31,15 +40,17 @@ export async function sendFormPostRequest<T extends any>(
   payload: Record<string, string>,
   options?: RequestInit
 ): ApiFetchResponse<T> {
-  return fetch(url, {
-    method: 'POST',
-    body: new URLSearchParams(payload),
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    credentials: 'include',
-    ...options,
-  }).then((response: Response) => handleResponse<T>(response));
+  return handleResponse(() =>
+    fetch(url, {
+      method: 'POST',
+      body: new URLSearchParams(payload),
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      credentials: 'include',
+      ...options,
+    })
+  );
 }
 
 export async function sendJSONPostRequest<T extends any>(
@@ -47,23 +58,25 @@ export async function sendJSONPostRequest<T extends any>(
   payload: Record<string, unknown>,
   options?: RequestInit
 ): ApiFetchResponse<T> {
-  return fetch(url, {
-    method: 'POST',
-    body: JSON.stringify(payload),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    credentials: 'include',
-    ...options,
-  }).then((response: Response) => handleResponse<T>(response));
+  return handleResponse(() =>
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      ...options,
+    })
+  );
 }
 
 export async function sendGetRequest<T extends any>(
   url: URL | string,
   options?: RequestInit
 ): Promise<ApiResponse<T>> {
-  return fetch(url, { credentials: 'include', ...options }).then(
-    (response: Response) => handleResponse<T>(response)
+  return handleResponse(() =>
+    fetch(url, { credentials: 'include', ...options })
   );
 }
 
@@ -147,64 +160,85 @@ export function useBffApi<T>(
 } {
   const { url, sendRequest = sendGetRequest } = options || {};
   const store = useBffApiStateStore();
-  const hasState = urlOrKey ? store.has(urlOrKey) : false;
   const state = urlOrKey ? store.get<T>(urlOrKey) : null;
   const url_ = url || urlOrKey;
+  const stateKeyRef = useRef<Set<string>>(new Set());
+  const storeSet = store.set;
+  const storeHas = store.has;
+  const storeGet = store.get;
 
-  const setState = (
-    partialState: Partial<BffApiState<ApiResponse<T> | null>>
-  ) => {
-    if (urlOrKey) {
-      const state = store.get<T>(urlOrKey);
-      const newState = { ...state, ...partialState };
-      store.set(urlOrKey, newState);
-    }
-  };
+  const setState = useCallback(
+    (partialState: Partial<BffApiState<ApiResponse<T> | null>>) => {
+      if (urlOrKey) {
+        const state = storeGet<T>(urlOrKey);
+        const newState = { ...state, ...partialState };
+        storeSet(urlOrKey, newState);
+      }
+    },
+    [storeGet, storeSet, urlOrKey]
+  );
 
-  const fetch = (url?: string | URL, init?: RequestInit) => {
-    const reqUrl = url ?? url_;
+  const fetch = useCallback(
+    (url?: string | URL, init?: RequestInit) => {
+      const reqUrl = url ?? url_;
 
-    if (!reqUrl) {
-      throw new Error('No URL provided');
-    }
+      if (!reqUrl) {
+        throw new Error('No URL provided');
+      }
 
-    setState({ isLoading: true, isPristine: false });
+      setState({ isLoading: true, isPristine: false });
 
-    sendRequest(reqUrl, { ...options?.init, ...init }).then((response) => {
-      console.log('fetch response', urlOrKey, reqUrl, response);
-      if (response.status === 'ERROR') {
+      sendRequest(reqUrl, { ...options?.init, ...init }).then((response) => {
+        if (response.status === 'ERROR') {
+          return setState({
+            data: null,
+            errorData: response.message,
+            isDirty: true,
+            isError: true,
+            isLoading: false,
+          });
+        }
         return setState({
-          data: null,
-          errorData: response.message,
+          data: response,
+          errorData: null,
           isDirty: true,
-          isError: true,
+          isError: false,
           isLoading: false,
         });
-      }
-      return setState({
-        data: response,
-        errorData: null,
-        isDirty: true,
-        isError: false,
-        isLoading: false,
       });
-    });
-  };
+    },
+    [options?.init, sendRequest, setState, url_]
+  );
 
   useEffect(() => {
-    if (urlOrKey && !hasState) {
-      store.set(urlOrKey, initialState);
+    // Because the the state can only be read after a re-render, we need to
+    // track if this is the first run to set the initial state.
+    // Otherwise we would set the initial state on every render.
+    // Also, pristine is only true when the state is not yet set AND we want to fetch immediately.
+    let isPristine = false;
+    // Sets initial state for specific key
+    if (
+      urlOrKey &&
+      !stateKeyRef.current?.has(urlOrKey) &&
+      !storeHas(urlOrKey)
+    ) {
+      stateKeyRef.current?.add(urlOrKey);
+      storeSet(urlOrKey, initialState);
+      isPristine = true;
     }
     // TODO: Implement: what to do if we have an error
-    if (
-      options?.fetchImmediately !== false &&
-      state?.isPristine &&
-      url_ &&
-      urlOrKey
-    ) {
+    if (options?.fetchImmediately !== false && isPristine && url_ && urlOrKey) {
       fetch();
     }
-  }, [state, url_, urlOrKey, store.set, options?.fetchImmediately]);
+  }, [
+    state,
+    url_,
+    urlOrKey,
+    storeSet,
+    storeHas,
+    options?.fetchImmediately,
+    fetch,
+  ]);
 
   const rState = state ? state : initialState;
 

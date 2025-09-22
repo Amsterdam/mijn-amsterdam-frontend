@@ -5,55 +5,56 @@ import {
   beforeEach,
   describe,
   expect,
-  it,
   vi,
 } from 'vitest';
 
-import * as dataApiHook from './api/useDataApi-v2';
-import { useAppStateRemote, useAppStateStore } from './useAppState';
-import { newEventSourceMock } from '../../testing/EventSourceMock';
-import * as appStateModule from '../AppState';
+import {
+  addParamsToStreamEndpoint,
+  useAppStateRemote,
+} from './useAppStateRemote';
+import { useAppStateStore } from './useAppStateStore';
 import * as sseHook from './useSSE';
 import { SSE_ERROR_MESSAGE } from './useSSE';
+import { newEventSourceMock } from '../../testing/EventSourceMock';
+import { FeatureToggle } from '../../universal/config/feature-toggles';
 
 vi.mock('./api/useTipsApi');
 vi.mock('./useProfileType');
-
-const fetch = vi.fn();
-global.fetch = fetch;
 
 function createFetchResponse(content: any, ok: boolean = true) {
   return {
     json: () => new Promise((resolve) => resolve(content)),
     ok,
+    url: 'http://example.com/request',
+    status: ok ? 200 : 500,
   };
 }
 
-const initialAppState = appStateModule.PRISTINE_APPSTATE;
+const originalFetch = global.fetch;
+
+let fetchMock: MockInstance;
 
 describe('useAppState', () => {
-  let useBffApiSpy: MockInstance;
   let sseSpy: MockInstance;
 
   beforeEach(() => {
-    useAppStateStore.setState(structuredClone(initialAppState));
-    useBffApiSpy = vi.spyOn(dataApiHook, 'useBffApi');
+    fetchMock = global.fetch = vi.fn();
     sseSpy = vi.spyOn(sseHook, 'useSSE');
   });
 
   afterEach(() => {
-    fetch.mockClear();
-    useBffApiSpy.mockRestore();
     sseSpy.mockRestore();
   });
 
-  it('Should start with the SSE endpoint', async () => {
+  afterAll(() => {
+    global.fetch = originalFetch;
+  });
+
+  test('Should start with the SSE endpoint', async () => {
     const EventSourceMock = ((window as any).EventSource =
       newEventSourceMock());
     const stateSliceMock = { BRP: { content: { hello: 'world' } } };
-    const { result } = renderHook(() => useAppStateRemote());
-
-    expect(result.current).toEqual(initialAppState);
+    renderHook(() => useAppStateRemote());
 
     act(() => {
       EventSourceMock.prototype.evHandlers.message({
@@ -61,41 +62,37 @@ describe('useAppState', () => {
       });
     });
 
-    expect(useBffApiSpy).toBeCalledTimes(4);
-    expect(fetch).toBeCalledTimes(0);
-
-    expect(result.current).toStrictEqual({
-      ...initialAppState,
-      ...stateSliceMock,
+    await waitFor(() => {
+      expect(fetchMock).toBeCalledTimes(0);
     });
+
+    const state = useAppStateStore.getState();
+    expect(state.BRP).toEqual(stateSliceMock.BRP);
   });
 
-  it('Should start with the Fallback service endpoint for browsers that do not have window.EventSource', async () => {
+  test('Should start with the Fallback service endpoint for browsers that do not have window.EventSource', async () => {
     delete (window as any).EventSource;
 
     const stateSliceMock = { BRP: { content: { bar: 'world' } } };
-    fetch.mockResolvedValueOnce(createFetchResponse(stateSliceMock));
+    fetchMock.mockResolvedValueOnce(createFetchResponse(stateSliceMock));
 
-    const { result } = renderHook(() => useAppStateRemote());
-
-    expect(fetch).toBeCalledTimes(1);
+    renderHook(() => useAppStateRemote());
 
     await waitFor(() => {
-      return expect(result.current).toEqual({
-        ...initialAppState,
-        ...stateSliceMock,
-      });
+      expect(fetchMock).toBeCalledTimes(1);
     });
+
+    expect(useAppStateStore.getState().BRP).toEqual(stateSliceMock.BRP);
   });
 
-  it('Should use Fallback service endpoint if EventSource fails to connect', async () => {
+  test('Should use Fallback service endpoint if EventSource fails to connect', async () => {
     const EventSourceMock = ((window as any).EventSource =
       newEventSourceMock());
 
-    const stateSliceMock = { BRP: { content: { foo: 'bar' } } };
-    fetch.mockResolvedValueOnce(createFetchResponse(stateSliceMock));
+    const stateSliceMock = { BRP: { content: { foo: 'blappie' } } };
+    fetchMock.mockResolvedValueOnce(createFetchResponse(stateSliceMock));
 
-    const { result } = renderHook(() => useAppStateRemote());
+    renderHook(() => useAppStateRemote());
 
     act(() => {
       EventSourceMock.prototype.evHandlers.message({
@@ -103,70 +100,59 @@ describe('useAppState', () => {
       }); // Hack to trigger the error callback
     });
 
-    await waitFor(() => expect(fetch).toBeCalledTimes(1));
+    // This tests the fallback fetch call
     await waitFor(() => {
-      expect(result.current).toEqual({ ...initialAppState, ...stateSliceMock });
+      expect(fetchMock).toBeCalledTimes(1);
     });
+
+    expect(useAppStateStore.getState().BRP).toEqual(stateSliceMock.BRP);
   });
 
-  // it('Should respond with an appState error entry if Fallback service and SSE both fail.', async () => {
-  //   const EventSourceMock = ((window as any).EventSource =
-  //     newEventSourceMock());
-  //   const { result } = renderHook(() => useAppStateRemote());
+  test('Should respond with an appState error entry if Fallback service and SSE both fail.', async () => {
+    const EventSourceMock = ((window as any).EventSource =
+      newEventSourceMock());
+    fetchMock.mockResolvedValue(createFetchResponse(null, false));
+    renderHook(() => useAppStateRemote());
 
-  //   fetch.mockRejectedValueOnce(new Error('bad stuff'));
+    act(() => {
+      EventSourceMock.prototype.evHandlers.message({
+        data: JSON.stringify(SSE_ERROR_MESSAGE),
+      }); // Hack to trigger the error callback
+    });
 
-  //   expect(result.current).toEqual(initialAppState);
+    await waitFor(() => {
+      expect(fetchMock).toBeCalledTimes(1);
+    });
 
-  //   act(() => {
-  //     EventSourceMock.prototype.evHandlers.message({
-  //       data: JSON.stringify(SSE_ERROR_MESSAGE),
-  //     }); // Hack to trigger the error callback
-  //   });
+    expect('ALL' in useAppStateStore.getState()).toBe(true);
+  });
 
-  //   expect(sseSpy).toBeCalledTimes(5);
-  //   expect(bffApiSpy).toBeCalledTimes(5);
-  //   expect(fetch).toBeCalledTimes(1);
+  test('addParamsToStreamEndpoint', () => {
+    const origValue = FeatureToggle.passQueryParamsToStreamUrl;
 
-  //   await waitFor(() => {
-  //     expect(result.current).toEqual(
-  //       Object.assign({}, initialAppState, {
-  //         ALL: {
-  //           status: 'ERROR',
-  //           message:
-  //             'Services.all endpoint could not be reached or returns an error.',
-  //         },
-  //       })
-  //     );
-  //   });
-  // });
+    // @ts-expect-error :: For testing purposes
+    FeatureToggle.passQueryParamsToStreamUrl = false;
 
-  // test('addParamsToStreamEndpoint', () => {
-  //   const origValue = FeatureToggle.passQueryParamsToStreamUrl;
+    expect(addParamsToStreamEndpoint('/foo/bar')).toBe('/foo/bar');
 
-  //   // @ts-expect-error :: For testing purposes
-  //   FeatureToggle.passQueryParamsToStreamUrl = false;
+    expect(
+      addParamsToStreamEndpoint(
+        '/foo/bar',
+        '?tipsCompareDate=2021-05-23&fooBar=blap'
+      )
+    ).toBe('/foo/bar');
 
-  //   expect(addParamsToStreamEndpoint('/foo/bar')).toBe('/foo/bar');
+    // @ts-expect-error :: For testing purposes
+    FeatureToggle.passQueryParamsToStreamUrl = true;
 
-  //   expect(
-  //     addParamsToStreamEndpoint(
-  //       '/foo/bar',
-  //       '?tipsCompareDate=2021-05-23&fooBar=blap'
-  //     )
-  //   ).toBe('/foo/bar');
+    expect(
+      addParamsToStreamEndpoint(
+        '/foo/bar',
+        '?tipsCompareDate=2021-05-23&fooBar=blap'
+      )
+    ).toBe('/foo/bar?tipsCompareDate=2021-05-23');
 
-  //   // @ts-expect-error :: For testing purposes
-  //   FeatureToggle.passQueryParamsToStreamUrl = true;
-
-  //   expect(
-  //     addParamsToStreamEndpoint(
-  //       '/foo/bar',
-  //       '?tipsCompareDate=2021-05-23&fooBar=blap'
-  //     )
-  //   ).toBe('/foo/bar?tipsCompareDate=2021-05-23');
-
-  //   // @ts-expect-error :: For testing purposes
-  //   FeatureToggle.passQueryParamsToStreamUrl = origValue;
-  // });
+    // @ts-expect-error :: For testing purposes
+    FeatureToggle.passQueryParamsToStreamUrl = origValue;
+  });
 });

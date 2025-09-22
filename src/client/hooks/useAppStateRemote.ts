@@ -1,93 +1,13 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
-import { create } from 'zustand/react';
-
-import { streamEndpointQueryParamKeys } from '../../universal/config/app';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
-import { AppState } from '../../universal/types/App.types';
-import { PRISTINE_APPSTATE, createAllErrorState } from '../AppState';
-import { BFFApiUrls } from '../config/api';
-import { transformSourceData } from '../data-transform/appState';
-import { captureMessage } from '../helpers/monitoring';
-import { useBffApi } from './api/useDataApi-v2';
+import { useAppStateFallbackService } from './useAppStateFallbackServicesAll';
+import { useAppStateStore } from './useAppStateStore';
 import { useProfileTypeValue } from './useProfileType';
 import { SSE_CLOSE_MESSAGE, SSE_ERROR_MESSAGE, useSSE } from './useSSE';
-
-type AppStateStore = AppState & {
-  setAppState: (appState: Partial<AppState>, isReady?: boolean) => void;
-  isReady: boolean;
-  setIsAppStateReady: (isReady: boolean) => void;
-};
-
-export const useAppStateStore = create<AppStateStore>((set) => ({
-  ...PRISTINE_APPSTATE,
-  isReady: false,
-  setAppState: (appState, isReady) =>
-    set((state) => ({
-      ...appState,
-      isReady: isReady ?? state.isReady,
-    })),
-  setIsAppStateReady: (isReady) => set({ isReady }),
-}));
-
-interface useAppStateFallbackServiceProps {
-  profileType: ProfileType;
-  isEnabled: boolean;
-}
-
-const i = 0;
-
-export function useAppStateFallbackService({
-  profileType,
-  isEnabled,
-}: useAppStateFallbackServiceProps) {
-  const { setAppState, setIsAppStateReady, isReady, ...appState } =
-    useAppStateStore();
-  const api = useBffApi<AppState>(BFFApiUrls.SERVICES_SAURON, {
-    fetchImmediately: false,
-  });
-  const appStateError = useCallback(
-    (message: string) => {
-      captureMessage('Could not load any data sources.', {
-        properties: {
-          message,
-        },
-        severity: 'critical',
-      });
-      setAppState(createAllErrorState(appState, message));
-    },
-    [setAppState]
-  );
-
-  // If no EvenSource support or EventSource fails, the Fallback service endpoint is used for fetching all the data.
-  useEffect(() => {
-    if (!isEnabled || isReady) {
-      return;
-    }
-
-    if (isEnabled && api.isPristine) {
-      api.fetch();
-    }
-
-    if (api.data !== null && !api.isLoading && !api.isError) {
-      setAppState(transformSourceData(api.data.content), true);
-      setIsAppStateReady(true);
-    } else if (api.isError) {
-      // If everything fails, this is the final state update.
-      const errorMessage =
-        'Services.all endpoint could not be reached or returns an error.';
-      appStateError(errorMessage);
-      setIsAppStateReady(true);
-    }
-  }, [
-    api.data,
-    setIsAppStateReady,
-    appStateError,
-    setAppState,
-    isEnabled,
-    api.isPristine,
-  ]);
-}
+import { streamEndpointQueryParamKeys } from '../../universal/config/app';
+import { FeatureToggle } from '../../universal/config/feature-toggles';
+import { BFFApiUrls } from '../config/api';
+import { transformSourceData } from '../data-transform/appState';
 
 export function addParamsToStreamEndpoint(
   url: string,
@@ -131,10 +51,8 @@ export function useAppStateRemote() {
 
   const profileType = useProfileTypeValue();
   const { setAppState, setIsAppStateReady } = useAppStateStore();
-
   // The callback is fired on every incoming message from the EventSource.
   const onEvent = useCallback((messageData: string | object) => {
-    console.log('sse message', messageData);
     if (typeof messageData === 'object') {
       const transformedMessageData = transformSourceData(messageData);
       setAppState(transformedMessageData);
@@ -142,9 +60,6 @@ export function useAppStateRemote() {
       setFallbackServiceEnabled(true);
     } else if (messageData === SSE_CLOSE_MESSAGE) {
       setIsAppStateReady(true);
-    } else {
-      // eslint-disable-next-line no-console
-      console.log('event source', messageData);
     }
   }, []);
 
