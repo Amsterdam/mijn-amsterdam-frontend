@@ -11,13 +11,10 @@ import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 
 import { CONTENT_EMPTY } from './helper';
 import { useVarenThemaData } from './useVarenThemaData.hook';
-import { listPageParamKind, rederRegistratieLink } from './Varen-thema-config';
+import { rederRegistratieLink } from './Varen-thema-config';
 import styles from './Varen.module.scss';
-import type {
-  VarenRegistratieRederFrontend,
-  VarenVergunningFrontend,
-  VarenZakenFrontend,
-} from '../../../../server/services/varen/config-and-types';
+import type { VarenRegistratieRederFrontend } from '../../../../server/services/varen/config-and-types';
+import { entries } from '../../../../universal/helpers/utils';
 import { Datalist, RowSet } from '../../../components/Datalist/Datalist';
 import { MaButtonLink } from '../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../components/Page/Page';
@@ -146,36 +143,23 @@ export function VarenThema() {
       </PageContentCell>
     ) : null;
 
-  const zakenTableconfig = tableConfig[listPageParamKind.inProgress];
-  const zakenTable = (
-    <ThemaPaginaTable<VarenZakenFrontend>
-      key={listPageParamKind.inProgress}
-      title={zakenTableconfig.title}
-      zaken={varenZaken
-        .filter(zakenTableconfig.filter)
-        .sort(zakenTableconfig.sort)}
-      displayProps={zakenTableconfig.displayProps}
-      className={styles.VarenTableThemaPagina}
-      listPageRoute={zakenTableconfig.listPageRoute}
-      listPageLinkLabel={`Alle ${zakenTableconfig.title.toLowerCase()}`}
-      maxItems={zakenTableconfig.maxItems}
-    />
-  );
-  const vergunningenTableconfig = tableConfig[listPageParamKind.actief];
-  const vergunningenTable = (
-    <ThemaPaginaTable<VarenVergunningFrontend>
-      key={listPageParamKind.actief}
-      title={vergunningenTableconfig.title}
-      zaken={varenVergunningen
-        .filter(vergunningenTableconfig.filter)
-        .sort(vergunningenTableconfig.sort)}
-      displayProps={vergunningenTableconfig.displayProps}
-      className={styles.VarenTableThemaPagina}
-      listPageRoute={vergunningenTableconfig.listPageRoute}
-      listPageLinkLabel={`Alle ${vergunningenTableconfig.title.toLowerCase()}`}
-      maxItems={vergunningenTableconfig.maxItems}
-    />
-  );
+  const tables = entries(tableConfig).map(([kind, config]) => {
+    const varenItems =
+      kind === 'actieve-vergunningen' ? varenVergunningen : varenZaken;
+    const items = varenItems.filter(config.filter).sort(config.sort);
+    return (
+      <ThemaPaginaTable
+        key={kind}
+        title={config.title}
+        zaken={items}
+        displayProps={config.displayProps}
+        className={styles.VarenTableThemaPagina}
+        listPageRoute={config.listPageRoute}
+        listPageLinkLabel={`Alle ${config.title.toLowerCase()}`}
+        maxItems={config.maxItems}
+      />
+    );
+  });
 
   const gegevensRegistratieReder = varenRederRegistratie ? (
     <VarenPageContentRederRegistratie registratie={varenRederRegistratie} />
@@ -194,8 +178,7 @@ export function VarenThema() {
       pageContentMain={
         <>
           {gegevensRegistratieReder}
-          {zakenTable}
-          {vergunningenTable}
+          {tables}
         </>
       }
       isPartialError={false}

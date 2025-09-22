@@ -52,10 +52,16 @@ export const routeConfig = {
   },
 } as const satisfies ThemaRoutesConfig;
 
+type VarenTableItem = {
+  processed: boolean | undefined;
+  isExpired?: boolean;
+  dateRequest: string;
+  dateStart: string | null;
+};
 type TableConfig<T> = {
   title: string;
-  filter: (vergunning: T) => boolean;
-  sort: (a: T, b: T) => number;
+  filter: (vergunning: VarenTableItem) => boolean;
+  sort: (a: VarenTableItem, b: VarenTableItem) => number;
   displayProps: DisplayProps<T>;
   listPageRoute: string;
   maxItems: number;
@@ -67,7 +73,7 @@ export const tableConfig: {
 } = {
   [listPageParamKind.inProgress]: {
     title: 'Lopende aanvragen',
-    filter: (zaak: VarenZakenFrontend) => !zaak.processed,
+    filter: (zaak) => !zaak.processed,
     sort: dateSort('dateRequest', 'desc'),
     listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.inProgress,
@@ -89,7 +95,7 @@ export const tableConfig: {
   },
   [listPageParamKind.actief]: {
     title: 'Actieve vergunningen',
-    filter: (vergunning: VarenVergunningFrontend) => !vergunning.isExpired,
+    filter: (vergunning) => !vergunning.isExpired,
     sort: dateSort('dateStart', 'desc'),
     listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.actief,
