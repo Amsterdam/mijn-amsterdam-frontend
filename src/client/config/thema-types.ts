@@ -12,11 +12,15 @@ export type IsThemaVisibleFN = (appState: AppState) => boolean;
 export type ThemaConfigBase = {
   id: string;
   title: string;
-  featureToggle: { [key: string]: boolean };
+  featureToggle: { themaAcive: boolean };
   profileTypes: ProfileType[];
   uitlegPageSections: InfoSections[];
   links: LinkProps[];
   route: {
+    listPageParamKind?: {
+      inProgress: string;
+      completed: string;
+    };
     path: string;
     documentTitle: string;
   };
@@ -24,7 +28,7 @@ export type ThemaConfigBase = {
   //    redactedScope: 'none',
   //     isActive(appState: AppState) {
   //   return (
-  //     themaConfig.featureToggle &&
+  //     themaConfig.featureToggle.themaActive &&
   //     !isLoading(appState.BODEM) && /// hier wil voor BODEM ${themaConfig.id}
   //     !!appState.BODEM.content?.length /// hier wil voor BODEM ${themaConfig.id}
   //   );
