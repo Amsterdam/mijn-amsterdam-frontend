@@ -6,9 +6,8 @@ import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPag
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function VarenList() {
-  const { kind = 'lopende-aanvragen', page } = useParams<{
+  const { kind = 'lopende-aanvragen' } = useParams<{
     kind: ListPageParamKind;
-    page: string;
   }>();
   const {
     varenZaken,
