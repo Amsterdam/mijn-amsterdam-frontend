@@ -1,4 +1,4 @@
-import { act, renderHook, waitFor } from '@testing-library/react';
+import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
 import {
   MockInstance,
   afterEach,
@@ -20,6 +20,7 @@ import { FeatureToggle } from '../../universal/config/feature-toggles';
 
 vi.mock('./api/useTipsApi');
 vi.mock('./useProfileType');
+vi.mock('zustand');
 
 function createFetchResponse(content: any, ok: boolean = true) {
   return {
@@ -32,18 +33,25 @@ function createFetchResponse(content: any, ok: boolean = true) {
 
 const originalFetch = global.fetch;
 
-let fetchMock: MockInstance;
-
 describe('useAppState', () => {
   let sseSpy: MockInstance;
+  const fetchMock = vi.fn();
+
+  beforeAll(() => {
+    global.fetch = fetchMock;
+  });
 
   beforeEach(() => {
-    fetchMock = global.fetch = vi.fn();
     sseSpy = vi.spyOn(sseHook, 'useSSE');
+    console.log('-'.repeat(20) + ' NEW TEST ' + '-'.repeat(20));
   });
 
   afterEach(() => {
+    cleanup();
+    console.log('-'.repeat(20) + ' END TEST ' + '-'.repeat(20));
     sseSpy.mockRestore();
+    console.log('fetch mock restore');
+    fetchMock.mockRestore();
   });
 
   afterAll(() => {

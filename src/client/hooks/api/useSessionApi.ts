@@ -18,16 +18,16 @@ export type SessionData = {
 
 export function useSessionApi() {
   const sessionApi = useBffApi<SessionData>(AUTH_API_URL);
-  const { data, fetch } = sessionApi;
+  const { data, isLoading, isDirty, fetch } = sessionApi;
   const sessionData = data?.content ?? null;
   const { setProfileType } = useProfileType();
 
   useEffect(() => {
-    if (sessionApi.isPristine) {
+    if (isDirty === false && isLoading === false) {
       // Fetch initial
-      sessionApi.fetch();
+      fetch();
     }
-  }, []);
+  }, [isDirty, isLoading, fetch]);
 
   useEffect(() => {
     if (sessionData?.profileType) {
@@ -54,10 +54,9 @@ export function useSessionApi() {
       window.removeEventListener('focus', checkAway);
       window.removeEventListener('blur', addAway);
     };
-  }, []);
+  }, [fetch]);
 
   return {
-    isPristine: sessionApi.isPristine,
     isLoading: sessionApi.isLoading,
     isDirty: sessionApi.isDirty,
     isAuthenticated: sessionData?.isAuthenticated ?? false,
