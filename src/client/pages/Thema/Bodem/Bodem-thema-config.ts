@@ -19,7 +19,7 @@ export const themaConfig: BodemThemaConfig = {
   id: 'BODEM', //steeds themaID bij BodemList.tsx > daar ook  routeConfig,    } = useBodemListPageData();    useHTMLDocumentTitle(routeConfig.listPage);
   title: 'Bodem',
   featureToggle: {
-    themaActive: true, ///TO DO zie nu bij uitlegpagina Bodem niet terug, terwijl daar nog steedns InfoSection.tsx wordt opgeroepen
+    themaActive: true,
   },
   profileTypes: ['private', 'commercial'],
   route: {
@@ -51,7 +51,7 @@ export const themaConfig: BodemThemaConfig = {
   // },
 
   detailPage: {
-    title: 'Lood in bodem-check', // TO DO Deze zie ik niet terug op localhost > ik zie daar title > terwijl er in de title bij BodemDetail.tsx wordt verwezen naar title: themaConfig.detailPage.title,
+    title: 'Lood in bodem-check',
     route: {
       path: '/bodem/lood-meting/:id',
       trackingUrl: '/bodem/lood-meting',
