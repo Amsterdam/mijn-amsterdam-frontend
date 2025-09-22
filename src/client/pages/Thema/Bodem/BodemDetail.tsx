@@ -59,7 +59,7 @@ export function BodemDetail() {
   return (
     <ThemaDetailPagina
       themaId={themaId}
-      title={title}
+      title="DetailPagina"
       zaak={meting}
       breadcrumbs={breadcrumbs}
       isError={isError}

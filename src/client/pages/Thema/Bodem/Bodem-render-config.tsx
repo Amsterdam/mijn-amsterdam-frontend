@@ -15,12 +15,12 @@ import {
 // -----------------------------
 export const BodemRoutes = [
   {
-    route: themaConfig.detailPage.path,
+    route: themaConfig.detailPage.route.path,
     Component: BodemDetail,
     isActive: true,
   },
   {
-    route: themaConfig.listPage.path,
+    route: themaConfig.listPage.route.path,
     Component: BodemList,
     isActive: true,
   },
