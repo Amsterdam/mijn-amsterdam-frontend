@@ -346,26 +346,56 @@ describe('filterCombineRtmData', () => {
   });
 
   test('Keeps aanvraag voor other people and merges toegewezen for self', () => {
-    const aanvragen = attachIDs([
-      attachBetrokkenen(RTM_1_AANVRAAG, ['1', '2', '3']),
-      attachBetrokkenen(RTM_2_TOEGEWEZEN, ['1']),
-    ]);
+    const ontvangerID = '1';
+
+    const rtm1Aanvraag = attachBetrokkenen(RTM_1_AANVRAAG, ['1', '2', '3']);
+    const rtm2Toegewezen = attachBetrokkenen(RTM_2_TOEGEWEZEN, ['1']);
+    const aanvragen = attachIDs([rtm1Aanvraag, rtm2Toegewezen]);
     const [, result] = filterCombineRtmData(aanvragen);
-    expect(result.sort(IdCompareFn)).toStrictEqual(
-      [
-        aanvragen[0],
-        {
-          ...aanvragen[1],
-          betrokkenPersonen: base.betrokkenPersonen,
-          betrokkenen: base.betrokkenen,
-          datumAanvraag: RTM_1_AANVRAAG.datumAanvraag,
-          documenten: [
-            ...RTM_2_TOEGEWEZEN.documenten,
-            ...RTM_1_AANVRAAG.documenten,
-          ],
-        },
-      ].sort(IdCompareFn)
-    );
+    expect(result.length).toBe(2);
+    expect(result).toStrictEqual([
+      {
+        ...aanvragen[0],
+        betrokkenen: ['2', '3'],
+        betrokkenPersonen: [
+          {
+            bsn: '2',
+            dateOfBirth: '2023-06-12',
+            dateOfBirthFormatted: '12 juni 2023',
+            name: '2 - Flex',
+            partnernaam: 'partner-2 - Flex',
+            partnervoorvoegsel: null,
+          },
+          {
+            bsn: '3',
+            dateOfBirth: '2023-06-12',
+            dateOfBirthFormatted: '12 juni 2023',
+            name: '3 - Flex',
+            partnernaam: 'partner-2 - Flex',
+            partnervoorvoegsel: null,
+          },
+        ],
+      },
+      {
+        ...aanvragen[1],
+        betrokkenPersonen: [
+          {
+            bsn: '1',
+            dateOfBirth: '2023-06-12',
+            dateOfBirthFormatted: '12 juni 2023',
+            name: '1 - Flex',
+            partnernaam: 'partner-2 - Flex',
+            partnervoorvoegsel: null,
+          },
+        ],
+        betrokkenen: [ontvangerID],
+        datumAanvraag: RTM_1_AANVRAAG.datumAanvraag,
+        documenten: [
+          ...rtm2Toegewezen.documenten,
+          ...RTM_1_AANVRAAG.documenten,
+        ],
+      },
+    ]);
   });
 
   test('Combines only (Aanvraag -> Toegewezen): Aanvraag, (Aanvraag -> Toegewezen), Aanvraag', () => {

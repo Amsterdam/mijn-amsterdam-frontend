@@ -169,7 +169,7 @@ function mapAanvragenPerBetrokkenen(
   const aanvragenMap: AanvragenMap = { ontvanger: [] };
 
   for (const aanvraag of aanvragen) {
-    if (!aanvraag.betrokkenen.length && isRTMDeel2(aanvraag)) {
+    if (isRTMDeel2(aanvraag)) {
       aanvragenMap.ontvanger.push(aanvraag);
       continue;
     }
@@ -179,6 +179,21 @@ function mapAanvragenPerBetrokkenen(
     if (id === ontvangerID) {
       aanvragenMap.ontvanger.push(aanvraag);
       continue;
+    }
+
+    if (ontvangerID && aanvraag.betrokkenen.includes(ontvangerID)) {
+      // An aanvraag can have multiple betrokkenen but also include the 'ontvanger'.
+      // So we copy/split an aanvraag to the betrokkenen,
+      // so we can merge the rtm-2 aanvragen that are only for the ontvanger.
+      aanvraag.betrokkenen = aanvraag.betrokkenen.filter(
+        (b) => b !== ontvangerID
+      );
+      aanvraag.betrokkenPersonen = aanvraag.betrokkenPersonen.filter(
+        (b) => b.bsn !== ontvangerID
+      );
+      const aanvraagCopy = structuredClone(aanvraag);
+      aanvraagCopy.betrokkenen = [ontvangerID];
+      aanvragenMap.ontvanger.push(aanvraagCopy);
     }
 
     const aanvraagInMap = aanvragenMap[id];
