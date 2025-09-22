@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { create } from 'zustand';
 
@@ -100,24 +100,19 @@ export type BffApiState<T> = {
    * Whether the data is currently being fetched
    */
   isLoading: boolean;
-  /**
-   * Whether the data has not been fetched yet and is not loading.
-   */
-  isPristine: boolean;
 };
 
 export type ApiFetch<T> = {
   fetch(url?: URL | string, init_?: RequestInit): Promise<T | null>;
 };
 
-const initialState: BffApiState<null> = {
+const initialState: BffApiState<null> = Object.seal({
   isLoading: false,
   isError: false,
   data: null,
   errorData: null,
   isDirty: false,
-  isPristine: true,
-};
+});
 
 type BffApiOptions<T> = {
   url?: URL | string;
@@ -162,12 +157,15 @@ export function useBffApi<T>(
   const store = useBffApiStateStore();
   const state = urlOrKey ? store.get<T>(urlOrKey) : null;
   const url_ = url || urlOrKey;
-  const stateKeyRef = useRef<Set<string>>(new Set());
+  // const stateKeyRef = useRef<Set<string>>(new Set());
+
   const storeSet = store.set;
   const storeHas = store.has;
   const storeGet = store.get;
+  const isDirty = state?.isDirty === true;
+  const isLoading = state?.isLoading === true;
 
-  const setState = useCallback(
+  const setApiState = useCallback(
     (partialState: Partial<BffApiState<ApiResponse<T> | null>>) => {
       if (urlOrKey) {
         const state = storeGet<T>(urlOrKey);
@@ -178,36 +176,43 @@ export function useBffApi<T>(
     [storeGet, storeSet, urlOrKey]
   );
 
+  useEffect(() => {
+    // Query logic
+    console.log('i fire once');
+  }, []);
+
   const fetch = useCallback(
     (url?: string | URL, init?: RequestInit) => {
       const reqUrl = url ?? url_;
 
       if (!reqUrl) {
+        console.error('[useBffApi] No URL provided for fetch');
         throw new Error('No URL provided');
       }
 
-      setState({ isLoading: true, isPristine: false });
+      console.log('[useBffApi] fetching', reqUrl);
+      setApiState({ ...initialState, isLoading: true });
 
       sendRequest(reqUrl, { ...options?.init, ...init }).then((response) => {
         if (response.status === 'ERROR') {
-          return setState({
-            data: null,
+          console.log('[useBffApi] store error response', response);
+          return setApiState({
+            ...initialState,
             errorData: response.message,
             isDirty: true,
             isError: true,
-            isLoading: false,
           });
         }
-        return setState({
+        console.log('[useBffApi] store success response');
+        console.dir(response, { depth: null });
+        return setApiState({
+          ...initialState,
           data: response,
-          errorData: null,
           isDirty: true,
-          isError: false,
-          isLoading: false,
         });
       });
     },
-    [options?.init, sendRequest, setState, url_]
+    [options?.init, sendRequest, setApiState, url_]
   );
 
   useEffect(() => {
@@ -215,20 +220,19 @@ export function useBffApi<T>(
     // track if this is the first run to set the initial state.
     // Otherwise we would set the initial state on every render.
     // Also, pristine is only true when the state is not yet set AND we want to fetch immediately.
-    let isPristine = false;
     // Sets initial state for specific key
-    if (
-      urlOrKey &&
-      !stateKeyRef.current?.has(urlOrKey) &&
-      !storeHas(urlOrKey)
-    ) {
-      stateKeyRef.current?.add(urlOrKey);
-      storeSet(urlOrKey, initialState);
-      isPristine = true;
+    if (urlOrKey && storeHas(urlOrKey)) {
+      console.log(
+        `[useBffApi] initializing state for key ${urlOrKey}, store has key:`
+      );
+      console.dir(storeGet(urlOrKey), { depth: null });
+      // Double check in store if key is already set (in case of multiple components using the same key)
+      // If not, set the initial state
+      // This should only run once per key (urlOrKey
     }
-    // TODO: Implement: what to do if we have an error
-    if (options?.fetchImmediately !== false && isPristine && url_ && urlOrKey) {
-      fetch();
+    if (urlOrKey && !storeHas(urlOrKey)) {
+      console.log('store.set.initial');
+      storeSet(urlOrKey, initialState);
     }
   }, [
     state,
@@ -238,7 +242,28 @@ export function useBffApi<T>(
     storeHas,
     options?.fetchImmediately,
     fetch,
+    storeGet,
   ]);
+
+  const hasKey = !!urlOrKey && storeHas(urlOrKey);
+
+  useEffect(() => {
+    console.log(
+      `[useBffApi] useEffect fetchImmediately: ${options?.fetchImmediately}, hasKey: ${hasKey}`
+    );
+    // TODO: Implement: what to do if we have an error
+    if (
+      options?.fetchImmediately !== false &&
+      isDirty === false &&
+      isLoading === false
+    ) {
+      console.log('store.fetch');
+      fetch();
+    }
+    return () => {
+      console.log('[useBffApi] unmounting, aborting fetch if needed????');
+    };
+  }, [options?.fetchImmediately, fetch, hasKey, isDirty, isLoading]);
 
   const rState = state ? state : initialState;
 

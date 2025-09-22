@@ -52,16 +52,19 @@ export function useAppStateRemote() {
   const profileType = useProfileTypeValue();
   const { setAppState, setIsAppStateReady } = useAppStateStore();
   // The callback is fired on every incoming message from the EventSource.
-  const onEvent = useCallback((messageData: string | object) => {
-    if (typeof messageData === 'object') {
-      const transformedMessageData = transformSourceData(messageData);
-      setAppState(transformedMessageData);
-    } else if (messageData === SSE_ERROR_MESSAGE) {
-      setFallbackServiceEnabled(true);
-    } else if (messageData === SSE_CLOSE_MESSAGE) {
-      setIsAppStateReady(true);
-    }
-  }, []);
+  const onEvent = useCallback(
+    (messageData: string | object) => {
+      if (typeof messageData === 'object') {
+        const transformedMessageData = transformSourceData(messageData);
+        setAppState(transformedMessageData);
+      } else if (messageData === SSE_ERROR_MESSAGE) {
+        setFallbackServiceEnabled(true);
+      } else if (messageData === SSE_CLOSE_MESSAGE) {
+        setIsAppStateReady(true);
+      }
+    },
+    [setAppState, setIsAppStateReady]
+  );
 
   useSSE({
     path: streamEndpoint,

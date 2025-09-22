@@ -17,19 +17,21 @@ export function useAppStateFallbackService({
   profileType,
   isEnabled,
 }: useAppStateFallbackServiceProps) {
-  const { setAppState, isReady, setIsAppStateReady, ...appState } =
-    useAppStateStore();
+  const { setAppState, isReady, ...appState } = useAppStateStore();
   const api = useBffApi<AppState>(BFFApiUrls.SERVICES_SAURON, {
     fetchImmediately: false,
   });
 
   // If no EvenSource support or EventSource fails, the Fallback service endpoint is used for fetching all the data.
   useEffect(() => {
+    console.log(
+      `[useAppStateFallbackService] isEnabled: ${isEnabled}, isReady: ${isReady}, isLoading: ${api.isLoading}, isError: ${api.isError}`
+    );
     if (!isEnabled || isReady) {
       return;
     }
 
-    if (isEnabled && api.isPristine) {
+    if (isEnabled && api.isLoading === false && api.isDirty === false) {
       api.fetch();
     }
 
@@ -48,5 +50,5 @@ export function useAppStateFallbackService({
       });
       setAppState(createAllErrorState(appState, errorMessage), true);
     }
-  }, [api.data, setAppState, isEnabled, api.isPristine, api.isError, isReady]);
+  }, [api.data, setAppState, isEnabled, api.isDirty, api.isError, isReady]);
 }
