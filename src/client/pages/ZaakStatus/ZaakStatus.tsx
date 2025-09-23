@@ -19,7 +19,7 @@ import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import {
   useAppStateGetter,
   useAppStateReady,
-} from '../../hooks/useAppStateRemote';
+} from '../../hooks/useAppStateStore';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 import { DashboardRoute } from '../Dashboard/Dashboard-routes';
 import * as HORECA from '../Thema/Horeca/Horeca-thema-config';

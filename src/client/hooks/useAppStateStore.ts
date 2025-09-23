@@ -30,3 +30,10 @@ export function createAppStateStoreHook() {
 }
 
 export const useAppStateStore = createAppStateStoreHook();
+export function useAppStateGetter() {
+  return useAppStateStore.getState();
+}
+
+export function useAppStateReady() {
+  return useAppStateStore((state) => state.isReady);
+}

@@ -2,7 +2,7 @@ import { renderHook } from '@testing-library/react';
 import { useLocation } from 'react-router';
 import { describe, it, expect, vi, Mock } from 'vitest';
 
-import { useAppStateGetter, useAppStateReady } from './useAppStateRemote';
+import { useAppStateGetter, useAppStateReady } from './useAppStateStore';
 import { useProfileTypeValue } from './useProfileType';
 import {
   compareThemas,

@@ -38,7 +38,7 @@ import { TableV2 } from '../../../components/Table/TableV2';
 import { getRedactedClass } from '../../../helpers/cobrowse';
 import { useBffApi } from '../../../hooks/api/useBffApi';
 import { useSmallScreen } from '../../../hooks/media.hook';
-import { useAppStateGetter } from '../../../hooks/useAppStateRemote';
+import { useAppStateGetter } from '../../../hooks/useAppStateStore';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 

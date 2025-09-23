@@ -1,9 +1,7 @@
-import React from 'react';
-import { render, screen, act, cleanup } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { useBffApi } from './useBffApi';
 import { apiSuccessResult } from '../../../universal/helpers/api';
-import { C } from 'vitest/dist/chunks/reporters.d.BFLkQcL6.js';
 
 const TestComponent = () => {
   const api1 = useBffApi('key1', { fetchImmediately: false });

@@ -34,7 +34,7 @@ import {
 import {
   useAppStateGetter,
   useAppStateReady,
-} from '../../hooks/useAppStateRemote';
+} from '../../hooks/useAppStateStore';
 
 const NO_DATA_ERROR_RESPONSE = {
   errors: [

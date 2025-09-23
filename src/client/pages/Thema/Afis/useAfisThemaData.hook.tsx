@@ -32,7 +32,7 @@ import { MaLink } from '../../../components/MaLink/MaLink';
 import { BFFApiUrls } from '../../../config/api';
 import { useBffApi } from '../../../hooks/api/useBffApi';
 import { useSmallScreen } from '../../../hooks/media.hook';
-import { useAppStateGetter } from '../../../hooks/useAppStateRemote';
+import { useAppStateGetter } from '../../../hooks/useAppStateStore';
 import {
   useThemaBreadcrumbs,
   useThemaMenuItemByThemaID,

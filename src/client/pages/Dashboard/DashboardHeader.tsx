@@ -9,7 +9,7 @@ import { useSmallScreen } from '../../hooks/media.hook';
 import {
   useAppStateGetter,
   useAppStateReady,
-} from '../../hooks/useAppStateRemote';
+} from '../../hooks/useAppStateStore';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 
 const STADSDELEN = [

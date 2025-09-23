@@ -30,7 +30,7 @@ import { useSmallScreen } from '../../hooks/media.hook';
 import {
   useAppStateGetter,
   useAppStateReady,
-} from '../../hooks/useAppStateRemote';
+} from '../../hooks/useAppStateStore';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { DashboardRoute } from '../../pages/Dashboard/Dashboard-routes';
 import { SearchPageRoute } from '../../pages/Search/Search-routes';
