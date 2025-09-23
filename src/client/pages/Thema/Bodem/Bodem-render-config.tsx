@@ -17,17 +17,17 @@ export const BodemRoutes = [
   {
     route: themaConfig.detailPage.route.path,
     Component: BodemDetail,
-    isActive: true,
+    isActive: themaConfig.featureToggle.themaActive,
   },
   {
     route: themaConfig.listPage.route.path,
     Component: BodemList,
-    isActive: true,
+    isActive: themaConfig.featureToggle.themaActive,
   },
   {
     route: themaConfig.route.path,
     Component: BodemThema,
-    isActive: true,
+    isActive: themaConfig.featureToggle.themaActive,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
@@ -42,7 +42,7 @@ export const menuItem: ThemaMenuItem<typeof themaConfig.id> = {
   redactedScope: 'none',
   isActive(appState: AppState) {
     return (
-      themaConfig.featureToggle &&
+      themaConfig.featureToggle.themaActive &&
       !isLoading(appState.BODEM) &&
       !!appState.BODEM.content?.length
     );

@@ -22,7 +22,7 @@ export const themaConfig: BodemThemaConfig = {
   // titleDetail: 'Lood in bodem-check',
   profileTypes: ['private', 'commercial'],
   featureToggle: {
-    thema: true, // ook van infosection active toevoegen of het uit of aan en check het generalinfo gedeelte. import kan je aanpassen met as bodemn bijvoorbeeld
+    themaActive: true, // ook van infosection active toevoegen of het uit of aan en check het generalinfo gedeelte. import kan je aanpassen met as bodemn bijvoorbeeld
   },
   // listPageParamKind: {
   //   inProgress: 'lopende-aanvragen',
@@ -48,7 +48,9 @@ export const themaConfig: BodemThemaConfig = {
     route: {
       path: '/bodem/lood-meting/:id',
       trackingUrl: '/bodem/lood-meting',
-      documentTitle: `Lood in de bodem-check | Bodem`,
+      get documentTitle() {
+        return `Lood in de bodem-check | Bodem, | ${themaConfig.title}`;
+      },
     },
   },
   listPage: {
