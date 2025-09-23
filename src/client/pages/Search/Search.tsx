@@ -20,13 +20,6 @@ export function SearchPage() {
     new URLSearchParams(window.location.search).get('term') || '';
   const isReady = useAppStateReady();
 
-  console.log(
-    'Rendering SearchPage with termParam',
-    termParam,
-    'isReady',
-    isReady
-  );
-
   return (
     <PageV2>
       <PageContentV2>

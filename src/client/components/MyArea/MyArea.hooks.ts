@@ -591,9 +591,8 @@ export function useMapLocations(
     }
 
     return center;
-    // Disable hook dependencies, the mapOptions only need to be determined once.
     // Using memo here because we don't need the options to cause re-renders of the <Map/> component.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- mapOptions only need to be determined once; dependencies intentionally omitted to avoid unnecessary re-renders
   }, []);
 
   return {
