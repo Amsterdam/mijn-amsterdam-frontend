@@ -30,6 +30,7 @@ export function createAppStateStoreHook() {
 }
 
 export const useAppStateStore = createAppStateStoreHook();
+
 export function useAppStateGetter() {
   return useAppStateStore.getState();
 }

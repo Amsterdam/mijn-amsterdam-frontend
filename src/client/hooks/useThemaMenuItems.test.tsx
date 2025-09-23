@@ -18,7 +18,7 @@ vi.mock('./useProfileType', () => ({
   useProfileTypeValue: vi.fn(),
 }));
 
-vi.mock('./useAppStateRemote', () => ({
+vi.mock('./useAppStateStore', () => ({
   useAppStateGetter: vi.fn(),
   useAppStateReady: vi.fn(),
 }));
