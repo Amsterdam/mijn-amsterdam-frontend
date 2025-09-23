@@ -5,7 +5,7 @@ import type {
   VarenZakenFrontend,
 } from '../../../../server/services/varen/config-and-types';
 import { IS_PRODUCTION } from '../../../../universal/config/env';
-import { dateSort } from '../../../../universal/helpers/date';
+import { dateSort, isDateInPast } from '../../../../universal/helpers/date';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
@@ -95,7 +95,9 @@ export const tableConfig: {
   },
   [listPageParamKind.actief]: {
     title: 'Actieve vergunningen',
-    filter: (vergunning) => !vergunning.isExpired,
+    filter: (vergunning) =>
+      !vergunning.isExpired &&
+      (!vergunning.dateStart || isDateInPast(vergunning.dateStart)),
     sort: dateSort('dateStart', 'desc'),
     listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.actief,
