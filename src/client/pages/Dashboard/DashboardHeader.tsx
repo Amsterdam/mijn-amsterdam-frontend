@@ -6,7 +6,10 @@ import styles from './DashboardHeader.module.scss';
 import { isLoading } from '../../../universal/helpers/api';
 import { Search } from '../../components/Search/Search';
 import { useSmallScreen } from '../../hooks/media.hook';
-import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
+import {
+  useAppStateGetter,
+  useAppStateReady,
+} from '../../hooks/useAppStateRemote';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 
 const STADSDELEN = [

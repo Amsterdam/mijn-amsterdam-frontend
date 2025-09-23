@@ -1,7 +1,6 @@
 import { render, within } from '@testing-library/react';
 import Mockdate from 'mockdate';
 import { generatePath } from 'react-router';
-import { MutableSnapshot } from 'recoil';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import { routeConfig } from './Varen-thema-config';
@@ -15,7 +14,6 @@ import {
 import { jsonCopy } from '../../../../universal/helpers/utils';
 import { AppState } from '../../../../universal/types/App.types';
 import { expectHeaders, getTable } from '../../../helpers/test-utils';
-import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
 type ExploitatieAanvraag = VarenZakenFrontend<ZaakVergunningExploitatieType>;
@@ -105,10 +103,6 @@ const getTestState = (
     },
   });
 
-function initializeState(snapshot: MutableSnapshot, state: AppState) {
-  snapshot.set(appStateAtom, state);
-}
-
 const routePath = routeConfig.themaPage.path;
 const routeEntry = generatePath(routeConfig.themaPage.path);
 
@@ -119,7 +113,7 @@ describe('<Varen />', () => {
         routePath={routePath}
         routeEntry={routeEntry}
         component={VarenThema}
-        initializeState={(snap) => initializeState(snap, state)}
+        state={state}
       />
     );
   }

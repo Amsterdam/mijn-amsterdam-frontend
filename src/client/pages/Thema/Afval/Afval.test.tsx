@@ -165,14 +165,18 @@ describe('<AfvalThemaPagina />', () => {
     );
   }
 
+  afterEach(() => {
+    (useProfileTypeValue as Mock).mockReset();
+  });
+
   it('Matches the Full Page snapshot', () => {
-    (useProfileTypeValue as Mock).mockReturnValueOnce('private');
+    (useProfileTypeValue as Mock).mockReturnValue('private');
     const { asFragment } = render(<Component />);
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('Renders commercial profile', () => {
-    (useProfileTypeValue as Mock).mockReturnValueOnce('commercial');
+    (useProfileTypeValue as Mock).mockReturnValue('commercial');
 
     render(<Component />);
 
@@ -184,7 +188,7 @@ describe('<AfvalThemaPagina />', () => {
   });
 
   it('Does not show warning concercing bedrijfsafval', () => {
-    (useProfileTypeValue as Mock).mockReturnValueOnce('private');
+    (useProfileTypeValue as Mock).mockReturnValue('private');
 
     const testState2 = jsonCopy(testState);
     testState2.MY_LOCATION.content[1].bagNummeraanduidingId =

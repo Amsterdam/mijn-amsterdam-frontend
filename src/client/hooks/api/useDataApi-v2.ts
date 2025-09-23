@@ -21,15 +21,18 @@ async function handleResponse<T>(fetchFn: () => Promise<Response>) {
       );
     }
 
-    // Verify that we have ApiResponse signature
-    if ('status' in responseJson && 'content' in responseJson) {
-      return responseJson;
+    // Try to be flexible and accept both enveloped and non-enveloped responses.
+    if (
+      ('status' in responseJson || response.status === HttpStatusCode.Ok) &&
+      'content' in responseJson
+    ) {
+      return apiSuccessResult(responseJson.content);
     }
 
     return apiSuccessResult<T>(responseJson);
   } catch (error: unknown) {
     return apiErrorResult(
-      (error as Error).message ?? `Unknown error: ${error}`,
+      (error as Error)?.message ?? `Unknown error: ${error}`,
       null
     );
   }
@@ -152,6 +155,7 @@ export function useBffApi<T>(
   options?: BffApiOptions<T>
 ): BffApiState<ApiResponse<T> | null> & {
   fetch: (url?: URL | string, init_?: RequestInit) => void;
+  isPristine: boolean;
 } {
   const { url, sendRequest = sendGetRequest } = options || {};
   const store = useBffApiStateStore();
@@ -176,26 +180,18 @@ export function useBffApi<T>(
     [storeGet, storeSet, urlOrKey]
   );
 
-  useEffect(() => {
-    // Query logic
-    console.log('i fire once');
-  }, []);
-
   const fetch = useCallback(
     (url?: string | URL, init?: RequestInit) => {
       const reqUrl = url ?? url_;
 
       if (!reqUrl) {
-        console.error('[useBffApi] No URL provided for fetch');
         throw new Error('No URL provided');
       }
 
-      console.log('[useBffApi] fetching', reqUrl);
       setApiState({ ...initialState, isLoading: true });
 
       sendRequest(reqUrl, { ...options?.init, ...init }).then((response) => {
         if (response.status === 'ERROR') {
-          console.log('[useBffApi] store error response', response);
           return setApiState({
             ...initialState,
             errorData: response.message,
@@ -203,8 +199,6 @@ export function useBffApi<T>(
             isError: true,
           });
         }
-        console.log('[useBffApi] store success response');
-        console.dir(response, { depth: null });
         return setApiState({
           ...initialState,
           data: response,
@@ -216,22 +210,7 @@ export function useBffApi<T>(
   );
 
   useEffect(() => {
-    // Because the the state can only be read after a re-render, we need to
-    // track if this is the first run to set the initial state.
-    // Otherwise we would set the initial state on every render.
-    // Also, pristine is only true when the state is not yet set AND we want to fetch immediately.
-    // Sets initial state for specific key
-    if (urlOrKey && storeHas(urlOrKey)) {
-      console.log(
-        `[useBffApi] initializing state for key ${urlOrKey}, store has key:`
-      );
-      console.dir(storeGet(urlOrKey), { depth: null });
-      // Double check in store if key is already set (in case of multiple components using the same key)
-      // If not, set the initial state
-      // This should only run once per key (urlOrKey
-    }
     if (urlOrKey && !storeHas(urlOrKey)) {
-      console.log('store.set.initial');
       storeSet(urlOrKey, initialState);
     }
   }, [
@@ -248,26 +227,23 @@ export function useBffApi<T>(
   const hasKey = !!urlOrKey && storeHas(urlOrKey);
 
   useEffect(() => {
-    console.log(
-      `[useBffApi] useEffect fetchImmediately: ${options?.fetchImmediately}, hasKey: ${hasKey}`
-    );
     // TODO: Implement: what to do if we have an error
     if (
+      urlOrKey &&
       options?.fetchImmediately !== false &&
       isDirty === false &&
       isLoading === false
     ) {
-      console.log('store.fetch');
       fetch();
     }
-    return () => {
-      console.log('[useBffApi] unmounting, aborting fetch if needed????');
-    };
-  }, [options?.fetchImmediately, fetch, hasKey, isDirty, isLoading]);
+  }, [options?.fetchImmediately, fetch, hasKey, isDirty, isLoading, urlOrKey]);
 
   const rState = state ? state : initialState;
 
-  return Object.assign({}, rState, { fetch });
+  return Object.assign({}, rState, {
+    fetch,
+    isPristine: rState.isDirty === false && rState.isLoading === false,
+  });
 }
 
 export const HttpStatusCode = {

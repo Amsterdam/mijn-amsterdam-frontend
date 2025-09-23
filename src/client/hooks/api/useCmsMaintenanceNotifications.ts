@@ -1,5 +1,5 @@
 import { BFFApiUrls } from '../../config/api';
-import { useAppStateGetter } from '../useAppState';
+import { useAppStateGetter } from '../useAppStateRemote';
 import { useBffApi } from './useDataApi-v2';
 import type { CMSMaintenanceNotification } from '../../../server/services/cms/cms-maintenance-notifications';
 

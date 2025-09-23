@@ -2,7 +2,6 @@ import { useCallback, useState } from 'react';
 
 import { useAppStateFallbackService } from './useAppStateFallbackServicesAll';
 import { useAppStateStore } from './useAppStateStore';
-import { useProfileTypeValue } from './useProfileType';
 import { SSE_CLOSE_MESSAGE, SSE_ERROR_MESSAGE, useSSE } from './useSSE';
 import { streamEndpointQueryParamKeys } from '../../universal/config/app';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
@@ -49,7 +48,6 @@ export function useAppStateRemote() {
     !hasEventSourceSupport
   );
 
-  const profileType = useProfileTypeValue();
   const { setAppState, setIsAppStateReady } = useAppStateStore();
   // The callback is fired on every incoming message from the EventSource.
   const onEvent = useCallback(
@@ -74,7 +72,6 @@ export function useAppStateRemote() {
   });
 
   useAppStateFallbackService({
-    profileType,
     isEnabled: hasEventSourceSupport ? isFallbackServiceEnabled : true,
   });
 }

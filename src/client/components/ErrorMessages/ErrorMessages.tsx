@@ -7,7 +7,7 @@ import styles from './ErrorMessages.module.scss';
 import { ApiError } from '../../../universal/types/App.types';
 import { ALL_ERROR_STATE_KEY } from '../../AppState';
 import { getApiErrors, LOGOUT_URL } from '../../config/api';
-import { useAppStateGetter } from '../../hooks/useAppState';
+import { useAppStateGetter } from '../../hooks/useAppStateRemote';
 import { Modal } from '../Modal/Modal';
 
 interface ComponentProps {

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { useAppStateStore } from './useAppState';
+import { useAppStateStore } from './useAppStateStore';
 import { WelcomeNotification } from '../config/staticData';
 import { getRedactedClass } from '../helpers/cobrowse';
 

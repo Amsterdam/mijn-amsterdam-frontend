@@ -24,6 +24,7 @@ export function useDossierData() {
   const url = dossierNummerUrlParam
     ? `${BFFApiUrls.ERFPACHT_DOSSIER_DETAILS}/${dossierNummerUrlParam}`
     : undefined;
+
   const { data, isLoading, isError } = useBffApi<ErfpachtDossiersDetail>(url);
   const dossier = data?.content ?? null;
 

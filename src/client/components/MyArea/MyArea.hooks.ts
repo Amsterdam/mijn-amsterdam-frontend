@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useMapInstance } from '@amsterdam/react-maps';
 import { LatLngBoundsLiteral, LatLngLiteral, LeafletEvent } from 'leaflet';
 import { useLocation } from 'react-router';
-import { create } from 'zustand/react';
+import { create } from 'zustand';
 
 import { filterItemCheckboxState } from './LegendPanel/checkbox-helpers';
 import styles from './MyAreaDatasets.module.scss';
@@ -31,7 +31,10 @@ import {
   sendGetRequest,
   sendJSONPostRequest,
 } from '../../hooks/api/useDataApi-v2';
-import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
+import {
+  useAppStateGetter,
+  useAppStateReady,
+} from '../../hooks/useAppStateRemote';
 
 const NO_DATA_ERROR_RESPONSE = {
   errors: [
@@ -545,7 +548,6 @@ export function useMapLocations(
 
       let homeLocationMarker: MapLocationMarker | null = null;
       const secondaryLocationMarkers: MapLocationMarker[] = [];
-
       if (primaryLocation?.latlng && !centerMarker) {
         const latlng = primaryLocation.latlng;
         const label = primaryLocation.address
@@ -591,6 +593,7 @@ export function useMapLocations(
     return center;
     // Disable hook dependencies, the mapOptions only need to be determined once.
     // Using memo here because we don't need the options to cause re-renders of the <Map/> component.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {

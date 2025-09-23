@@ -3,7 +3,7 @@ import { ComponentType, useEffect } from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router';
 
 import { AppState } from '../../universal/types/App.types';
-import { useAppStateStore } from '../hooks/useAppState';
+import { useAppStateStore } from '../hooks/useAppStateStore';
 
 interface MockAppProps {
   routePath: string;
@@ -23,16 +23,13 @@ export default function MockApp({
   }
   const Component = component as ComponentType;
 
-  if (state) {
-    const { setAppState, setIsAppStateReady } = useAppStateStore();
+  const { setAppState } = useAppStateStore();
 
-    useEffect(() => {
+  useEffect(() => {
+    if (state) {
       setAppState(state, true);
-      return () => {
-        setAppState({}, false);
-      };
-    }, [setAppState, setIsAppStateReady, state]);
-  }
+    }
+  }, [setAppState, state]);
 
   return (
     <MemoryRouter initialEntries={[routeEntry]}>

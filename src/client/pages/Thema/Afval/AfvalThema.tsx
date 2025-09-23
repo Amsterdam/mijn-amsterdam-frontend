@@ -35,7 +35,7 @@ import {
 } from '../../../components/Page/Page';
 import { PageHeadingV2 } from '../../../components/PageHeading/PageHeadingV2';
 import { parseHTML } from '../../../helpers/html-react-parse';
-import { useAppStateGetter } from '../../../hooks/useAppState';
+import { useAppStateGetter } from '../../../hooks/useAppStateRemote';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 import { useProfileTypeValue } from '../../../hooks/useProfileType';
 
@@ -208,7 +208,6 @@ export function AfvalThemaPagina() {
 
   const { AFVAL, AFVALPUNTEN, MY_LOCATION } = useAppStateGetter();
   const profileType = useProfileTypeValue();
-
   const isApiReady = !isLoading(MY_LOCATION) && !isLoading(AFVAL);
 
   const heeftGeenWoonfunctie = AFVAL.content?.some(

@@ -82,44 +82,43 @@ describe('<AfisFacturen />', () => {
       )
       .reply(200, {
         content: {
-          afgehandeld: {
-            count: 1,
-            facturen: [
-              {
-                id: '1',
-                factuurDocumentId: '1',
-                afzender: 'Company D',
-                datePublished: '2023-04-01',
-                datePublishedFormatted: '1 april 2023',
-                paymentDueDate: '2023-05-01',
-                paymentDueDateFormatted: '1 mei 2023',
-                debtClearingDate: null,
-                debtClearingDateFormatted: null,
-                amountOriginal: 1500,
-                amountOriginalFormatted: '€ 1.500,00',
-                factuurNummer: 'F001',
-                factuurNummerEl: 'F001',
-                status: 'betaald',
-                statusDescription: 'Betaalde description',
-                paylink: null,
-                documentDownloadLink: 'https://download.example.com/F004',
-              },
-            ],
-          },
+          count: 1,
+          state: 'afgehandeld',
+          facturen: [
+            {
+              id: '1',
+              factuurDocumentId: '1',
+              afzender: 'Company D',
+              datePublished: '2023-04-01',
+              datePublishedFormatted: '1 april 2023',
+              paymentDueDate: '2023-05-01',
+              paymentDueDateFormatted: '1 mei 2023',
+              debtClearingDate: null,
+              debtClearingDateFormatted: null,
+              amountOriginal: 1500,
+              amountOriginalFormatted: '€ 1.500,00',
+              factuurNummer: 'F001',
+              factuurNummerEl: 'F001',
+              status: 'betaald',
+              statusDescription: 'Betaalde description',
+              paylink: null,
+              documentDownloadLink: 'https://download.example.com/F004',
+            },
+          ],
         },
         status: 'OK',
       });
 
-    bffApi
-      .get(`/services/afis/facturen/overzicht?id=${businessPartnerIdEncrypted}`)
-      .reply(200, {
-        content: {
-          open: { count: 0, facturen: [] },
-          afgehandeld: { facturen: [], count: 0 },
-          overgedragen: { facturen: [], count: 0 },
-        },
-        status: 'OK',
-      });
+    // bffApi
+    //   .get(`/services/afis/facturen/overzicht?id=${businessPartnerIdEncrypted}`)
+    //   .reply(200, {
+    //     content: {
+    //       open: { count: 0, facturen: [] },
+    //       afgehandeld: { facturen: [], count: 0 },
+    //       overgedragen: { facturen: [], count: 0 },
+    //     },
+    //     status: 'OK',
+    //   });
 
     const routeEntry = generatePath(routePath, {
       state: 'afgehandeld',

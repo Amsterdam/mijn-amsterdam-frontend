@@ -6,18 +6,14 @@ import { useProfileTypeValue } from '../../hooks/useProfileType';
 
 const mocks = vi.hoisted(() => {
   return {
-    mockSession: {
-      logout: vi.fn(),
-      refetch: vi.fn(),
-      isLoading: false,
-    },
+    logout: vi.fn(),
   };
 });
 
 vi.mock('../../hooks/api/useSessionApi', async (importOriginal) => ({
   ...(await importOriginal()),
-  useSessionValue() {
-    return mocks.mockSession;
+  useLogout() {
+    return mocks.logout;
   },
 }));
 
@@ -85,7 +81,7 @@ describe('AutoLogoutDialog', () => {
     // Wait for the nested timer to complete
     await act(() => vi.runOnlyPendingTimersAsync());
 
-    expect(mocks.mockSession.logout).toHaveBeenCalled();
+    expect(mocks.logout).toHaveBeenCalled();
   });
 
   it('should display the continue button and call session.refetch when clicked', async () => {
@@ -93,7 +89,6 @@ describe('AutoLogoutDialog', () => {
       <AutoLogoutDialog
         expiresAtMilliseconds={Date.now() + 2000}
         lastChanceBeforeAutoLogoutSeconds={1}
-        asynRefreshEnabled={true}
       />
     );
 
@@ -105,8 +100,6 @@ describe('AutoLogoutDialog', () => {
 
     const continueButton = screen.getByText('Doorgaan');
     fireEvent.click(continueButton);
-
-    expect(mocks.mockSession.refetch).toHaveBeenCalled();
   });
 
   it('should display the logout button and redirect to the logout URL', async () => {

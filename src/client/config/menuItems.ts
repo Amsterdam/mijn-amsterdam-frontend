@@ -1,6 +1,6 @@
 import { myThemasMenuItems } from './thema';
 import { ThemaMenuItemTransformed, ThemaMenuItem } from './thema-types';
-import { useAppStateGetter } from '../hooks/useAppState';
+import { useAppStateGetter } from '../hooks/useAppStateRemote';
 
 export const themasByProfileType: (
   profileType: ProfileType

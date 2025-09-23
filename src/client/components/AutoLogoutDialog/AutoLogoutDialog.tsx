@@ -180,7 +180,7 @@ export function AutoLogoutDialog({
     return () => {
       document.title = originalTitle;
     };
-  }, [isOpen]);
+  }, [isOpen, originalTitle]);
 
   if (!isOpen) {
     return null;

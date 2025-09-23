@@ -1,26 +1,17 @@
-import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
-import {
-  MockInstance,
-  afterEach,
-  beforeEach,
-  describe,
-  expect,
-  vi,
-} from 'vitest';
+import { act, renderHook, waitFor } from '@testing-library/react';
+import { afterEach, describe, expect, vi } from 'vitest';
 
 import {
   addParamsToStreamEndpoint,
   useAppStateRemote,
 } from './useAppStateRemote';
 import { useAppStateStore } from './useAppStateStore';
-import * as sseHook from './useSSE';
 import { SSE_ERROR_MESSAGE } from './useSSE';
 import { newEventSourceMock } from '../../testing/EventSourceMock';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 
 vi.mock('./api/useTipsApi');
 vi.mock('./useProfileType');
-vi.mock('zustand');
 
 function createFetchResponse(content: any, ok: boolean = true) {
   return {
@@ -34,23 +25,13 @@ function createFetchResponse(content: any, ok: boolean = true) {
 const originalFetch = global.fetch;
 
 describe('useAppState', () => {
-  let sseSpy: MockInstance;
   const fetchMock = vi.fn();
 
   beforeAll(() => {
     global.fetch = fetchMock;
   });
 
-  beforeEach(() => {
-    sseSpy = vi.spyOn(sseHook, 'useSSE');
-    console.log('-'.repeat(20) + ' NEW TEST ' + '-'.repeat(20));
-  });
-
   afterEach(() => {
-    cleanup();
-    console.log('-'.repeat(20) + ' END TEST ' + '-'.repeat(20));
-    sseSpy.mockRestore();
-    console.log('fetch mock restore');
     fetchMock.mockRestore();
   });
 

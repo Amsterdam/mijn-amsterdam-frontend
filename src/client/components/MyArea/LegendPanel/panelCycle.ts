@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
 
-import { create } from 'zustand/react';
+import { create } from 'zustand';
 
 import { useLandScape, useWidescreen } from '../../../hooks/media.hook';
 

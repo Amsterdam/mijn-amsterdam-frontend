@@ -18,7 +18,7 @@ import { isLoading, isError } from '../../../../../universal/helpers/api';
 import { MaRouterLink } from '../../../../components/MaLink/MaLink';
 import { ThemaMenuItemTransformed } from '../../../../config/thema-types';
 import { getRedactedClass } from '../../../../helpers/cobrowse';
-import { useAppStateGetter } from '../../../../hooks/useAppState';
+import { useAppStateGetter } from '../../../../hooks/useAppStateRemote';
 import {
   useThemaBreadcrumbs,
   useThemaMenuItems,

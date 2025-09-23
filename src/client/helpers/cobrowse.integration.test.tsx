@@ -129,8 +129,6 @@ const testState = {
   },
 } as unknown as AppState;
 
-vi.mock('axios');
-
 describe('Cobrowse redacted components', () => {
   const routeEntry = generatePath(DashboardRoute.route);
   const routePath = DashboardRoute.route;
