@@ -1,8 +1,8 @@
 import { filterCombineRtmData } from './regeling-rtm';
+import { getAuthProfileAndToken } from '../../../../testing/utils';
 import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../../zorgned/zorgned-types';
-
-type Z = ZorgnedAanvraagWithRelatedPersonsTransformed;
-const IdCompareFn = (a: Z, b: Z) => (a.id > b.id ? -1 : 1);
+import { forTesting } from '../hli';
+import { HLIRegelingFrontend } from '../hli-regelingen-types';
 
 /** The ID determines the sorting order.
  *  Thats why programmaticly adding an id makes predefined aanvragen more reusable.
@@ -316,6 +316,74 @@ const UNKNOWN: ZorgnedAanvraagWithRelatedPersonsTransformed = {
   betrokkenPersonen: [],
   bsnAanvrager: '555555555',
 };
+
+describe('getStatusLineItems for RTM', () => {
+  // The following tests heavily use toMatchObject because I don't care about the following fields:
+  // document.id: Contains encryption and will always be different.
+  // document.url: Same as above.
+  // steps[n].description: static text that can be subject to change.
+  //
+  // The tests are mainly focussed on getting the right steps and documents.
+
+  function transformRegelingenForFrontend(
+    aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
+  ): HLIRegelingFrontend[] {
+    const auth = getAuthProfileAndToken();
+    return forTesting.transformRegelingenForFrontend(
+      auth,
+      aanvragen,
+      new Date()
+    );
+  }
+
+  test('Single Aanvraag', () => {
+    const regelingen = transformRegelingenForFrontend([RTM_1_AANVRAAG]);
+
+    expect(regelingen.length).toBe(1);
+    expect(regelingen).toMatchObject([
+      {
+        dateDecision: '2025-02-01',
+        dateEnd: '2026-05-01',
+        dateStart: '2025-05-01',
+        decision: 'toegewezen',
+        displayStatus: 'In behandeling genomen',
+        documents: [],
+        id: '1',
+        isActual: true,
+        link: {
+          title: 'Meer informatie',
+          to: '/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/1',
+        },
+        steps: [
+          {
+            datePublished: '2025-02-01',
+            documents: [
+              {
+                datePublished: '2025-07-15T15:11:36.503',
+                title: 'AV-RTM Info aan klant GGD',
+              },
+            ],
+            id: 'status-step-1',
+            isActive: false,
+            isChecked: true,
+            isVisible: true,
+            status: 'Aanvraag',
+          },
+          {
+            datePublished: '2025-02-01',
+            documents: [],
+            id: 'status-step-2',
+            isActive: true,
+            isChecked: true,
+            isVisible: true,
+            status: 'In behandeling genomen',
+          },
+        ],
+        title: 'Regeling Tegemoetkoming Meerkosten',
+      },
+    ]);
+  });
+});
 
 describe('filterCombineRtmData', () => {
   test('Orders betrokkenen', () => {
