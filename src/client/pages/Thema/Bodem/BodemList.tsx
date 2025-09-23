@@ -1,6 +1,7 @@
 import { useBodemListPageData } from './useBodemListPageData.hook';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { routeConfig } from '../Erfpacht/Erfpacht-thema-config';
 
 export function BodemList() {
   const {
@@ -14,7 +15,6 @@ export function BodemList() {
     displayProps,
     breadcrumbs,
     listPageRoute,
-    routeConfig,
   } = useBodemListPageData();
   useHTMLDocumentTitle(routeConfig.listPage);
 
