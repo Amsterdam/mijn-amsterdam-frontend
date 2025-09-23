@@ -18,9 +18,10 @@ async function handleResponse<T>(
     const responseJson = (await response.json()) as ApiResponse<T>;
 
     if (!response.ok || responseJson.status === 'ERROR') {
-      throw new Error(
-        `HTTP Error: Request to ${response.url} failed with status ${response.status} ${responseJson && 'message' in responseJson ? `message: ${responseJson.message}` : ''}`.trim()
-      );
+      const error =
+        `HTTP Error: Request to ${response.url} failed with status ${response.status} ${responseJson && 'message' in responseJson ? `message: ${responseJson.message}` : ''}`.trim();
+
+      throw new Error(error);
     }
 
     if (responseJson.status === 'POSTPONE') {
@@ -82,10 +83,10 @@ export async function sendJSONPostRequest<T extends any>(
 
 export async function sendGetRequest<T extends any>(
   url: URL | string,
-  options?: RequestInit
+  init?: RequestInit
 ): Promise<ApiResponse<T>> {
   return handleResponse<T>(() =>
-    fetch(url, { credentials: 'include', ...options })
+    fetch(url, { credentials: 'include', ...init })
   );
 }
 
@@ -163,7 +164,23 @@ export function useBffApi<T>(
   fetch: (url?: URL | string, init_?: RequestInit) => void;
   isPristine: boolean;
 } {
-  const { url, sendRequest = sendGetRequest } = options || {};
+  const {
+    url,
+    sendRequest = sendGetRequest,
+    fetchImmediately = true,
+  } = options || {};
+
+  if (
+    !url &&
+    urlOrKey &&
+    !urlOrKey.startsWith('http') &&
+    fetchImmediately === true
+  ) {
+    const error =
+      'When using a key, you must provide a URL in the options parameter or set fetchImmediately to false';
+    throw new Error(error);
+  }
+
   const store = useBffApiStateStore();
   const state = urlOrKey ? store.get<T>(urlOrKey) : null;
   const url_ = url || urlOrKey;
@@ -187,7 +204,7 @@ export function useBffApi<T>(
   );
 
   const fetch = useCallback(
-    (url?: string | URL, init?: RequestInit) => {
+    async (url?: string | URL, init?: RequestInit) => {
       const reqUrl = url ?? url_;
 
       if (!reqUrl) {
@@ -196,20 +213,20 @@ export function useBffApi<T>(
 
       setApiState({ ...initialState, isLoading: true });
 
-      sendRequest(reqUrl, { ...options?.init, ...init }).then((response) => {
-        if (response.status === 'ERROR') {
-          return setApiState({
-            ...initialState,
-            errorData: response.message,
-            isDirty: true,
-            isError: true,
-          });
-        }
+      const response = await sendRequest(reqUrl, { ...options?.init, ...init });
+
+      if (response.status === 'ERROR') {
         return setApiState({
           ...initialState,
-          data: response,
+          errorData: response.message,
           isDirty: true,
+          isError: true,
         });
+      }
+      return setApiState({
+        ...initialState,
+        data: response,
+        isDirty: true,
       });
     },
     [options?.init, sendRequest, setApiState, url_]
