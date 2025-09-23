@@ -1,7 +1,7 @@
 import { featureToggle, themaId, themaTitle } from './AVG-thema-config';
-import { SectionProps } from '../../GeneralInfo/GeneralInfo';
+import { Section } from '../../GeneralInfo/GeneralInfo';
 
-export const AVGsectionProps: SectionProps = {
+export const AVGsectionProps: Section = {
   id: themaId,
   title: themaTitle,
   listItems: ['Uw inzage of wijziging persoonsgegevens AVG'],

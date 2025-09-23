@@ -43,7 +43,7 @@ import { varensectionProps } from '../Thema/Varen/infoSection';
 import { vergunningensectionProps } from '../Thema/Vergunningen/InfoSection';
 import { zorgSectionProps } from '../Thema/Zorg/InfoSection';
 
-export type SectionProps = {
+export type Section = {
   id: string;
   title: string;
   to?: string; // Use this instead of the themaMenuItem 'to URL' and force link to be clickable.
@@ -52,7 +52,13 @@ export type SectionProps = {
 };
 type ListItems = Array<{ text: string; listItems?: string[] } | string>;
 
-const sections: SectionProps[] = [
+export type SectionProps = {
+  title: string;
+  href?: string;
+  listItems: ListItems;
+};
+
+const sections: Section[] = [
   profileSectionProps,
   burgerzakenSectionProps,
   myAreaSectionProps,
@@ -79,9 +85,7 @@ const sections: SectionProps[] = [
   varensectionProps,
 ];
 
-function Section({ id, title, listItems, to }: Omit<SectionProps, 'active'>) {
-  const themaMenuItems = useThemaMenuItemsByThemaID();
-
+function Section({ title, listItems, href }: SectionProps) {
   const listItemComponents = listItems.map((item, i) => {
     if (typeof item === 'string') {
       return <UnorderedList.Item key={i}>{item}</UnorderedList.Item>;
@@ -100,10 +104,7 @@ function Section({ id, title, listItems, to }: Omit<SectionProps, 'active'>) {
     );
   });
 
-  const themaMenuItem = themaMenuItems[id];
-
-  const href = to || (themaMenuItem && themaMenuItem.to);
-  const LinkComponent = getLinkComponent(href);
+  const LinkComponent = href && getLinkComponent(href);
   const titleComponent = LinkComponent ? (
     <LinkComponent maVariant="fatNoUnderline" href={href}>
       {title}
@@ -134,18 +135,23 @@ function getLinkComponent(href: string) {
 }
 
 export function GeneralInfo() {
+  const themaMenuItems = useThemaMenuItemsByThemaID();
   const sectionComponents = sections
-    .filter((section) => section.active)
+    .filter((section) => section.active && section.id in themaMenuItems)
     .toSorted(compareThemas)
-    .map((section, i) => (
-      <Section
-        key={i}
-        id={section.id}
-        title={section.title}
-        to={section.to}
-        listItems={section.listItems}
-      />
-    ));
+    .map((section, i) => {
+      const themaMenuItem = themaMenuItems[section.id];
+      section.to = section.to || (themaMenuItem && themaMenuItem.to);
+
+      return (
+        <Section
+          key={i}
+          title={section.title}
+          href={section.to}
+          listItems={section.listItems}
+        />
+      );
+    });
   return (
     <TextPageV2>
       <PageContentV2 span={8}>

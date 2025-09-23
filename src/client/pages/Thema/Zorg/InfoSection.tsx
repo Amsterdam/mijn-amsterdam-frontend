@@ -1,7 +1,7 @@
 import { featureToggle, themaId, themaTitle } from './Zorg-thema-config';
-import { SectionProps } from '../../GeneralInfo/GeneralInfo';
+import { Section } from '../../GeneralInfo/GeneralInfo';
 
-export const zorgSectionProps: SectionProps = {
+export const zorgSectionProps: Section = {
   id: themaId,
   title: themaTitle,
   listItems: ['Uw Wmo-regelingen (Wmo: wet maatschappelijke ondersteuning)'],
