@@ -15,7 +15,7 @@ import { SearchEntry, displayPath } from './search-config';
 import styles from './Search.module.scss';
 import { useSearchIndex } from './useSearch';
 import { useSmallScreen } from '../../hooks/media.hook';
-import { useAppStateReady } from '../../hooks/useAppStateRemote';
+import { useAppStateReady } from '../../hooks/useAppStateStore';
 import { useKeyDown } from '../../hooks/useKey';
 import { SearchPageRoute } from '../../pages/Search/Search-routes';
 import { MaButtonLink, MaLink, MaRouterLink } from '../MaLink/MaLink';

@@ -12,7 +12,7 @@ import { isLoading } from '../../../universal/helpers/api';
 import { getFullAddress } from '../../../universal/helpers/brp';
 import iconUrlCommercialSecondary from '../../assets/icons/map/homeSecondaryCommercial.svg';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
-import { useAppStateGetter } from '../../hooks/useAppStateRemote';
+import { useAppStateGetter } from '../../hooks/useAppStateStore';
 
 export function MyAreaDashboardMap() {
   const { MY_LOCATION } = useAppStateGetter();

@@ -12,7 +12,7 @@ import LoadingContent from '../../../components/LoadingContent/LoadingContent';
 import { AddressDisplayAndModal } from '../../../components/LocationModal/LocationModal';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
-import { useAppStateGetter } from '../../../hooks/useAppStateRemote';
+import { useAppStateGetter } from '../../../hooks/useAppStateStore';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 import { useVergunningDocumentList } from '../Vergunningen/detail-page-content/useVergunningDocumentsList.hook';
 

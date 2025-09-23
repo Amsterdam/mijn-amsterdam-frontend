@@ -19,7 +19,7 @@ import {
   PageV2,
 } from '../../components/Page/Page';
 import { useSmallScreen } from '../../hooks/media.hook';
-import { useAppStateGetter } from '../../hooks/useAppStateRemote';
+import { useAppStateGetter } from '../../hooks/useAppStateStore';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
 import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';

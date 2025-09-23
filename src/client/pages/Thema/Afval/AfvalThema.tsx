@@ -35,7 +35,7 @@ import {
 } from '../../../components/Page/Page';
 import { PageHeadingV2 } from '../../../components/PageHeading/PageHeadingV2';
 import { parseHTML } from '../../../helpers/html-react-parse';
-import { useAppStateGetter } from '../../../hooks/useAppStateRemote';
+import { useAppStateGetter } from '../../../hooks/useAppStateStore';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 import { useProfileTypeValue } from '../../../hooks/useProfileType';
 

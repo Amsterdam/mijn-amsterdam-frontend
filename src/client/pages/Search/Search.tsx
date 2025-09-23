@@ -8,7 +8,7 @@ import {
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { Search } from '../../components/Search/Search';
-import { useAppStateReady } from '../../hooks/useAppStateRemote';
+import { useAppStateReady } from '../../hooks/useAppStateStore';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 
 export function SearchPage() {

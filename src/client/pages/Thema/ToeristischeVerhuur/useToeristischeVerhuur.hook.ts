@@ -14,7 +14,7 @@ import {
 } from '../../../../universal/helpers/api';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
-import { useAppStateGetter } from '../../../hooks/useAppStateRemote';
+import { useAppStateGetter } from '../../../hooks/useAppStateStore';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 
 export const BB_VERGUNNING_DISCLAIMER =

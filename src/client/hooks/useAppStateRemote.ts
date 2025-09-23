@@ -75,10 +75,3 @@ export function useAppStateRemote() {
     isEnabled: hasEventSourceSupport ? isFallbackServiceEnabled : true,
   });
 }
-export function useAppStateGetter() {
-  return useAppStateStore.getState();
-}
-
-export function useAppStateReady() {
-  return useAppStateStore((state) => state.isReady);
-}

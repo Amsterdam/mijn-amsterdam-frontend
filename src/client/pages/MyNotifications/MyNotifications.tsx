@@ -17,7 +17,7 @@ import {
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { PaginationV2 } from '../../components/Pagination/PaginationV2';
-import { useAppStateGetter } from '../../hooks/useAppStateRemote';
+import { useAppStateGetter } from '../../hooks/useAppStateStore';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
 
