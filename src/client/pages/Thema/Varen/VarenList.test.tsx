@@ -61,10 +61,6 @@ const getTestState = (
     },
   });
 
-function initializeState(snapshot: MutableSnapshot, state: AppState) {
-  snapshot.set(appStateAtom, state);
-}
-
 describe('<VarenList />', () => {
   function Component({ state }: { state: AppState }) {
     return (
@@ -151,7 +147,7 @@ describe('<VarenVergunningList />', () => {
           page: '1',
         })}
         component={VarenList}
-        initializeState={(snap) => initializeState(snap, state)}
+        state={state}
       />
     );
   }
