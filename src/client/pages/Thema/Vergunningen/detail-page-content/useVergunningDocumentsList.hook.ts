@@ -1,9 +1,21 @@
+import { useEffect } from 'react';
+
 import { GenericDocument } from '../../../../../universal/types/App.types';
 import { useBffApi } from '../../../../hooks/api/useDataApi-v2';
 
 export function useVergunningDocumentList(url?: string) {
-  const api = useBffApi<GenericDocument[]>(url);
+  const { fetch, isPristine, data, isLoading, isError } = useBffApi<
+    GenericDocument[]
+  >(url, {
+    fetchImmediately: false,
+  });
 
-  const documents = api.data?.content ?? [];
-  return { documents, isLoading: api.isLoading, isError: api.isError };
+  useEffect(() => {
+    if (url && isPristine) {
+      fetch(url);
+    }
+  }, [url, isPristine, fetch]);
+
+  const documents = data?.content ?? [];
+  return { documents, isLoading, isError };
 }

@@ -6,7 +6,7 @@ import {
   useBffApi,
   useBffApiStateStore,
 } from '../../../hooks/api/useDataApi-v2';
-import { useAppStateGetter } from '../../../hooks/useAppState';
+import { useAppStateGetter } from '../../../hooks/useAppStateRemote';
 
 function getPasBlockedStateKey(passNumber: StadspasFrontend['passNumber']) {
   return `pass-blocked-state-${passNumber}`;

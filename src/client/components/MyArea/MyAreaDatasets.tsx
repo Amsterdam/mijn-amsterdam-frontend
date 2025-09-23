@@ -126,7 +126,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
       params.set('bbox', JSON.stringify(bbox));
     }
 
-    // Set the s parameter to indicate the url was constructed. s=1 means the atomState instead of the url is leading in setting the map state.
+    // Set the s parameter to indicate the url was constructed. s=1 means the zusand instead of the url is leading in setting the map state.
     params.set('s', '1');
 
     // Quick escape when url is already correct.

@@ -8,7 +8,7 @@ import {
 import type { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
-import { useAppStateGetter } from '../../../hooks/useAppState';
+import { useAppStateGetter } from '../../../hooks/useAppStateRemote';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 
 export function useVergunningenThemaData() {

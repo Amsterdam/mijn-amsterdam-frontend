@@ -1,5 +1,5 @@
 // __mocks__/zustand.ts
-import { act } from '@testing-library/react';
+import { act, cleanup } from '@testing-library/react';
 import { afterEach, vi } from 'vitest';
 import type * as ZustandExportedTypes from 'zustand';
 export * from 'zustand';
@@ -25,8 +25,6 @@ const createUncurried = <T>(
 export const create = (<T>(
   stateCreator: ZustandExportedTypes.StateCreator<T>
 ) => {
-  console.log('zustand create mock');
-
   // to support curried version of create
   return typeof stateCreator === 'function'
     ? createUncurried(stateCreator)
@@ -58,9 +56,11 @@ export const createStore = (<T>(
 
 // reset all stores after each test run
 afterEach(() => {
+  // Add an additional cleanup to avoid resetting states before the component unmounts.
+  // This prevents effects from re-running before they unmount.
+  cleanup();
   act(() => {
     storeResetFns.forEach((resetFn) => {
-      console.log('resetting store');
       resetFn();
     });
   });

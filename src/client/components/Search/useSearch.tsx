@@ -6,7 +6,7 @@ import {
 } from '@amsterdam/design-system-react-icons';
 import Fuse from 'fuse.js';
 import { matchPath, useLocation } from 'react-router';
-import { create } from 'zustand/react';
+import { create } from 'zustand';
 
 import {
   type ApiBaseItem,
@@ -27,7 +27,10 @@ import { AppState } from '../../../universal/types/App.types';
 import { BFFApiUrls } from '../../config/api';
 import { useBffApi } from '../../hooks/api/useDataApi-v2';
 import { useSmallScreen } from '../../hooks/media.hook';
-import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
+import {
+  useAppStateGetter,
+  useAppStateReady,
+} from '../../hooks/useAppStateRemote';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { DashboardRoute } from '../../pages/Dashboard/Dashboard-routes';
 import { SearchPageRoute } from '../../pages/Search/Search-routes';
@@ -259,9 +262,11 @@ type SearchConfig = {
 
 export function useSearchConfigJSON() {
   const profileType = useProfileTypeValue();
-  const api = useBffApi<SearchConfig>(BFFApiUrls.SEARCH_CONFIGURATION);
+  const api = useBffApi<SearchConfig>(BFFApiUrls.SEARCH_CONFIGURATION, {
+    fetchImmediately: false,
+  });
   const staticSearchEntries =
-    api.data?.content?.staticSearchEntries.filter((indexEntry) => {
+    api.data?.content?.staticSearchEntries?.filter((indexEntry) => {
       const isEnabled = 'isEnabled' in indexEntry ? indexEntry.isEnabled : true;
       return (
         isEnabled &&
@@ -325,7 +330,7 @@ export function useDynamicSearchEntries(
 
 export function useSearchIndex(extendedAMResults: boolean) {
   const isAppStateReady = useAppStateReady();
-  const [api, staticSearchEntries, remoteApiSearchConfigs] =
+  const [{ fetch, isLoading }, staticSearchEntries, remoteApiSearchConfigs] =
     useSearchConfigJSON();
   const dynamicSearchEntries = useDynamicSearchEntries(remoteApiSearchConfigs); // SearchEntry voor dynamische items (API resultaten)
   const { setFuseInstance, fuseInstance, term, setTerm, setResults, results } =
@@ -348,10 +353,10 @@ export function useSearchIndex(extendedAMResults: boolean) {
   }, [
     dynamicSearchEntries,
     staticSearchEntries,
-    api.isLoading,
-    api.isPristine,
+    isLoading,
     fuseInstance,
     isAppStateReady,
+    setFuseInstance,
   ]);
 
   useEffect(() => {
@@ -359,7 +364,10 @@ export function useSearchIndex(extendedAMResults: boolean) {
       const rawResults = fuseInstance.search(term).map((result) => result.item);
       setResults({ ma: rawResults });
     }
-  }, [term]);
+    if (term && !fuseInstance && !isLoading) {
+      fetch();
+    }
+  }, [term, fetch, fuseInstance, setResults, isLoading]);
 
   return {
     term,

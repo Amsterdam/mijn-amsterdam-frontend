@@ -1,7 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { BrowserRouter } from 'react-router';
-import { RecoilRoot } from 'recoil';
 import { describe, expect, it, vi, Mock } from 'vitest';
 
 import DocumentListV2 from './DocumentListV2';
@@ -41,13 +39,7 @@ describe('DocumentListV2', () => {
       .get('/wpi/document?id=24078091&isBulk=false&isDms=false')
       .reply(200, 'x');
 
-    render(
-      <RecoilRoot>
-        <BrowserRouter>
-          <DocumentListV2 documents={ITEMS} />
-        </BrowserRouter>
-      </RecoilRoot>
-    );
+    render(<DocumentListV2 documents={ITEMS} />);
 
     const downloadLinks = screen.getAllByText(ITEMS[0].title);
     expect(downloadLinks.length).toBe(2);
@@ -74,16 +66,12 @@ describe('DocumentListV2', () => {
       .reply(200, 'x');
 
     render(
-      <RecoilRoot>
-        <BrowserRouter>
-          <DocumentListV2
-            documents={ITEMS}
-            trackPath={(document) => {
-              return '/compleet/ander/pad.pdf';
-            }}
-          />
-        </BrowserRouter>
-      </RecoilRoot>
+      <DocumentListV2
+        documents={ITEMS}
+        trackPath={(document) => {
+          return '/compleet/ander/pad.pdf';
+        }}
+      />
     );
 
     const downloadLink = screen.getAllByText(ITEMS[0].title)[0];
@@ -109,13 +97,7 @@ describe('DocumentListV2', () => {
       .get('/wpi/document?id=24078091&isBulk=false&isDms=false')
       .reply(404, 'not found');
 
-    render(
-      <RecoilRoot>
-        <BrowserRouter>
-          <DocumentListV2 documents={ITEMS} />
-        </BrowserRouter>
-      </RecoilRoot>
-    );
+    render(<DocumentListV2 documents={ITEMS} />);
 
     const downloadLink = screen.getAllByText(ITEMS[0].title)[0];
     await user.click(downloadLink);
@@ -137,11 +119,7 @@ describe('DocumentListV2', () => {
 
   it('Add custom columns', async () => {
     render(
-      <RecoilRoot>
-        <BrowserRouter>
-          <DocumentListV2 documents={ITEMS} columns={['document', 'datum']} />
-        </BrowserRouter>
-      </RecoilRoot>
+      <DocumentListV2 documents={ITEMS} columns={['document', 'datum']} />
     );
 
     screen.findByText('document');

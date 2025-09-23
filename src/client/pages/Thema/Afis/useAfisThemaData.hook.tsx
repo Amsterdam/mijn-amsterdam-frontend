@@ -32,7 +32,7 @@ import { MaLink } from '../../../components/MaLink/MaLink';
 import { BFFApiUrls } from '../../../config/api';
 import { useBffApi } from '../../../hooks/api/useDataApi-v2';
 import { useSmallScreen } from '../../../hooks/media.hook';
-import { useAppStateGetter } from '../../../hooks/useAppState';
+import { useAppStateGetter } from '../../../hooks/useAppStateRemote';
 import {
   useThemaBreadcrumbs,
   useThemaMenuItemByThemaID,
@@ -127,7 +127,7 @@ function useAfisFacturenApi(
     businessPartnerIdEncrypted && state && state !== 'open'
       ? `${BFFApiUrls.AFIS_FACTUREN}/${state}?id=${businessPartnerIdEncrypted}`
       : null;
-  console.log('url', url);
+
   const { data, isError, isLoading } = useBffApi<AfisFacturenResponse>(url);
   const facturenResponse = data?.content ?? null;
   const facturenByStateApiUpdated = useTransformFacturen(

@@ -1,9 +1,9 @@
 import { useEffect, useMemo } from 'react';
 
 import { useLocation } from 'react-router';
-import { create } from 'zustand/react';
+import { create } from 'zustand';
 
-import { useAppStateGetter, useAppStateReady } from './useAppState';
+import { useAppStateGetter, useAppStateReady } from './useAppStateRemote';
 import { useProfileTypeValue } from './useProfileType';
 import { sortAlpha } from '../../universal/helpers/utils';
 import { LinkProps } from '../../universal/types/App.types';

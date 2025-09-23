@@ -1,9 +1,10 @@
 import * as reactMaps from '@amsterdam/react-maps';
+import { renderHook } from '@testing-library/react';
 import { describe, expect, it, test, vi } from 'vitest';
 
 import { useMapLocations, useSetMapCenterAtLocation } from './MyArea.hooks';
-import { renderRecoilHook } from '../../../testing/render-recoil.hook';
-import { appStateAtom } from '../../hooks/useAppState';
+import type { AppState } from '../../../universal/types/App.types';
+import MockApp from '../../pages/MockApp';
 
 const mapInstanceMock = {
   setView: vi.fn(),
@@ -28,7 +29,7 @@ describe('MyArea.hooks', () => {
 
   describe('useMapLocations', () => {
     it('By default return location', () => {
-      const { result } = renderRecoilHook(() => {
+      const { result } = renderHook(() => {
         return useMapLocations();
       });
 
@@ -56,7 +57,7 @@ describe('MyArea.hooks', () => {
     });
 
     it('Returns a passed locaton', () => {
-      const { result } = renderRecoilHook(() => {
+      const { result } = renderHook(() => {
         return useMapLocations(
           {
             type: 'home',
@@ -89,14 +90,11 @@ describe('MyArea.hooks', () => {
     });
 
     it('Returns locations fed by AppState', () => {
-      const { result } = renderRecoilHook(
-        () => {
-          return useMapLocations();
-        },
-        {
-          states: [
-            {
-              initialValue: {
+      function wrapper({ children }: { children: React.ReactNode }) {
+        return (
+          <MockApp
+            state={
+              {
                 MY_LOCATION: {
                   content: [
                     {
@@ -117,113 +115,131 @@ describe('MyArea.hooks', () => {
                     },
                   ],
                 },
-              },
-              recoilState: appStateAtom,
-            },
-          ],
-        }
-      );
+              } as AppState
+            }
+            routePath="/"
+            routeEntry="/"
+            component={() => <>{children} </>}
+          />
+        );
+      }
 
-      expect(result.current).toMatchInlineSnapshot(`
-        {
-          "customLocationMarker": {
-            "label": "Amsterdam centrum",
-            "latlng": {
-              "lat": 52.3676842478192,
-              "lng": 4.90022569871861,
-            },
-            "type": "default",
-          },
-          "homeLocationMarker": {
-            "label": "Amstel 1
-         Amsterdam",
-            "latlng": {
-              "lat": 123,
-              "lng": 456,
-            },
-            "type": "home",
-          },
-          "mapCenter": {
-            "lat": 52.3676842478192,
-            "lng": 4.90022569871861,
-          },
-          "mapZoom": 12,
-          "secondaryLocationMarkers": [
-            {
-              "label": "Cenraal stationstraat 999
-         Amsterdam",
-              "latlng": {
-                "lat": 678,
-                "lng": 901,
-              },
-              "type": "secondary",
-            },
-          ],
-        }
-      `);
-    });
-
-    it('Returns primary location fed by AppState', () => {
-      const { result } = renderRecoilHook(
+      const { result, rerender } = renderHook(
         () => {
           return useMapLocations();
         },
         {
-          states: [
-            {
-              initialValue: {
+          wrapper,
+        }
+      );
+
+      // Add rerender so we work with state set in the MockApp.
+      rerender();
+
+      expect(result.current).toStrictEqual({
+        customLocationMarker: {
+          label: 'Amsterdam centrum',
+          latlng: {
+            lat: 52.3676842478192,
+            lng: 4.90022569871861,
+          },
+          type: 'default',
+        },
+        homeLocationMarker: {
+          label: 'Amstel 1\n Amsterdam',
+          latlng: {
+            lat: 123,
+            lng: 456,
+          },
+          type: 'home',
+        },
+        mapCenter: {
+          lat: 123,
+          lng: 456,
+        },
+        mapZoom: 12,
+        secondaryLocationMarkers: [
+          {
+            label: 'Cenraal stationstraat 999\n Amsterdam',
+            latlng: {
+              lat: 678,
+              lng: 901,
+            },
+            type: 'secondary',
+          },
+        ],
+      });
+    });
+
+    it('Returns primary location fed by AppState', async () => {
+      function wrapper({ children }: { children: React.ReactNode }) {
+        return (
+          <MockApp
+            state={
+              {
                 MY_LOCATION: {
                   content: [
                     {
                       latlng: { lat: 678, lng: 901 },
                       address: {
                         huisnummer: '999',
-                        straatnaam: 'Cenraal stationstraat',
+                        straatnaam: 'Centraal stationstraat',
                         woonplaatsNaam: 'Amsterdam',
                       },
                     },
                   ],
                 },
-              },
-              recoilState: appStateAtom,
-            },
-          ],
+              } as AppState
+            }
+            routePath="/"
+            routeEntry="/"
+            component={() => <>{children} </>}
+          />
+        );
+      }
+
+      const { result, rerender } = renderHook(
+        () => {
+          return useMapLocations();
+        },
+        {
+          wrapper,
         }
       );
 
-      expect(result.current).toMatchInlineSnapshot(`
-        {
-          "customLocationMarker": {
-            "label": "Amsterdam centrum",
-            "latlng": {
-              "lat": 52.3676842478192,
-              "lng": 4.90022569871861,
-            },
-            "type": "default",
+      // Add rerender so we work with state set in the MockApp.
+      rerender();
+
+      expect(result.current).toStrictEqual({
+        customLocationMarker: {
+          label: 'Amsterdam centrum',
+          latlng: {
+            lat: 52.3676842478192,
+            lng: 4.90022569871861,
           },
-          "homeLocationMarker": {
-            "label": "Cenraal stationstraat 999
-         Amsterdam",
-            "latlng": {
-              "lat": 678,
-              "lng": 901,
-            },
-            "type": "home",
+          type: 'default',
+        },
+        homeLocationMarker: {
+          label: 'Centraal stationstraat 999\n Amsterdam',
+          latlng: {
+            lat: 678,
+            lng: 901,
           },
-          "mapCenter": {
-            "lat": 52.3676842478192,
-            "lng": 4.90022569871861,
-          },
-          "mapZoom": 12,
-          "secondaryLocationMarkers": [],
-        }
-      `);
+          type: 'home',
+        },
+        mapCenter: {
+          lat: 678,
+          lng: 901,
+        },
+        mapZoom: 12,
+        secondaryLocationMarkers: [],
+      });
     });
   });
 
   describe('useSetMapCenterAtLocation', () => {
     test('Center around custom location', () => {
-      renderRecoilHook(() => {
+      renderHook(() => {
         return useSetMapCenterAtLocation(
           mapInstanceMock,
           4,
@@ -256,7 +272,7 @@ describe('MyArea.hooks', () => {
     });
 
     test('Center around home location', () => {
-      renderRecoilHook(() => {
+      renderHook(() => {
         return useSetMapCenterAtLocation(
           mapInstanceMock,
           4,
@@ -289,7 +305,7 @@ describe('MyArea.hooks', () => {
     });
 
     test('Center around custom default location', () => {
-      renderRecoilHook(() => {
+      renderHook(() => {
         return useSetMapCenterAtLocation(
           mapInstanceMock,
           4,

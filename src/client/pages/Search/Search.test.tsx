@@ -1,8 +1,7 @@
-import React from 'react';
-
-import { cleanup, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import nock from 'nock';
 import { generatePath } from 'react-router';
-import { beforeAll, describe, it } from 'vitest';
+import { describe } from 'vitest';
 
 import { SearchPage } from './Search';
 import { SearchPageRoute } from './Search-routes';
@@ -13,6 +12,7 @@ import MockApp from '../../pages/MockApp';
 const testState = {
   WPI_AANVRAGEN: {
     content: [],
+    status: 'OK',
   },
 } as unknown as AppState;
 
@@ -20,11 +20,7 @@ describe('<Search />', () => {
   const routeEntry = generatePath(SearchPageRoute.route);
   const routePath = SearchPageRoute.route;
 
-  function Component({
-    isAppStateReady = false,
-  }: {
-    isAppStateReady?: boolean;
-  }) {
+  function Component() {
     return (
       <MockApp
         routeEntry={routeEntry}
@@ -51,17 +47,14 @@ describe('<Search />', () => {
     },
   };
 
-  beforeAll(() => {
+  test.only('Renders without crashing', async () => {
     bffApi.get('/services/search-config').reply(200, { content: remoteConfig });
-  });
-
-  it('Renders without crashing', async () => {
+    nock('https://api.swiftype.com')
+      .get('/api/v1/public/engines/search.json')
+      .reply(200, {
+        records: { page: [] },
+      });
     render(<Component />);
-
-    await screen.findByText('Zoeken voorbereiden...');
-    cleanup();
-
-    render(<Component isAppStateReady={true} />);
-    await screen.findByPlaceholderText('Zoeken naar...');
+    expect(screen.getByPlaceholderText('Zoeken naar...')).toBeInTheDocument();
   });
 });

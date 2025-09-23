@@ -9,12 +9,10 @@ import { useBffApi } from './api/useDataApi-v2';
 import { useAppStateStore } from './useAppStateStore';
 
 interface useAppStateFallbackServiceProps {
-  profileType: ProfileType;
   isEnabled: boolean;
 }
 
 export function useAppStateFallbackService({
-  profileType,
   isEnabled,
 }: useAppStateFallbackServiceProps) {
   const { setAppState, isReady, ...appState } = useAppStateStore();
@@ -24,9 +22,6 @@ export function useAppStateFallbackService({
 
   // If no EvenSource support or EventSource fails, the Fallback service endpoint is used for fetching all the data.
   useEffect(() => {
-    console.log(
-      `[useAppStateFallbackService] isEnabled: ${isEnabled}, isReady: ${isReady}, isLoading: ${api.isLoading}, isError: ${api.isError}`
-    );
     if (!isEnabled || isReady) {
       return;
     }
@@ -50,5 +45,6 @@ export function useAppStateFallbackService({
       });
       setAppState(createAllErrorState(appState, errorMessage), true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [api.data, setAppState, isEnabled, api.isDirty, api.isError, isReady]);
 }

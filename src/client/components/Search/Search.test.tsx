@@ -1,15 +1,13 @@
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import nock from 'nock';
-import { BrowserRouter } from 'react-router';
-import { RecoilRoot } from 'recoil';
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 
 import { Search } from './Search';
 import * as remoteConfig from './search-config.json';
 import { bffApi } from '../../../testing/utils';
 import { AppState } from '../../../universal/types/App.types';
-import { appStateAtom, appStateReadyAtom } from '../../hooks/useAppState';
+import MockApp from '../../pages/MockApp';
 
 const appStateMock = {
   VERGUNNINGEN: {
@@ -72,11 +70,7 @@ describe('<Search />', () => {
 
   test('Render search placeholder busy', async () => {
     const screen = render(
-      <BrowserRouter>
-        <RecoilRoot>
-          <Search />
-        </RecoilRoot>
-      </BrowserRouter>
+      <MockApp routePath="/" routeEntry="/" component={Search} />
     );
 
     await screen.findByPlaceholderText('Zoeken voorbereiden...');
@@ -84,38 +78,33 @@ describe('<Search />', () => {
 
   test('Render search placeholder ready', async () => {
     const screen = render(
-      <BrowserRouter>
-        <RecoilRoot
-          initializeState={(snapshot) => {
-            snapshot.set(appStateAtom, {
-              VERGUNNINGEN: { status: 'OK', content: [] },
-            } as unknown as AppState);
-            snapshot.set(appStateReadyAtom, true);
-          }}
-        >
-          <Search />
-        </RecoilRoot>
-      </BrowserRouter>
+      <MockApp
+        state={
+          {
+            VERGUNNINGEN: { status: 'OK', content: [] },
+          } as unknown as AppState
+        }
+        routePath="/"
+        routeEntry="/"
+        component={Search}
+      />
     );
 
     await screen.findByPlaceholderText('Zoeken naar...');
   });
 
   test('Enter search text and click result', async () => {
+    bffApi.get('/services/search-config').reply(200);
     const user = userEvent.setup();
     const onFinishCallback = vi.fn();
 
     const screen = render(
-      <BrowserRouter>
-        <RecoilRoot
-          initializeState={(snapshot) => {
-            snapshot.set(appStateAtom, appStateMock);
-            snapshot.set(appStateReadyAtom, true);
-          }}
-        >
-          <Search onFinish={onFinishCallback} />
-        </RecoilRoot>
-      </BrowserRouter>
+      <MockApp
+        state={appStateMock}
+        routePath="/"
+        routeEntry="/"
+        component={() => <Search onFinish={onFinishCallback} />}
+      />
     );
 
     const input = await screen.getByPlaceholderText('Zoeken naar...');
@@ -151,25 +140,21 @@ describe('<Search />', () => {
   });
 
   test('Clear search input', async () => {
+    bffApi.get('/services/search-config').reply(200);
     const user = userEvent.setup();
 
     const screen = render(
-      <BrowserRouter>
-        <RecoilRoot
-          initializeState={(snapshot) => {
-            snapshot.set(appStateAtom, appStateMock);
-            snapshot.set(appStateReadyAtom, true);
-          }}
-        >
-          <Search />
-        </RecoilRoot>
-      </BrowserRouter>
+      <MockApp
+        state={appStateMock}
+        routePath="/"
+        routeEntry="/"
+        component={Search}
+      />
     );
 
     const input = await screen.getByPlaceholderText('Zoeken naar...');
 
     await user.keyboard('gehandicaptenparkeerkaart');
-
     expect(input).toHaveValue('gehandicaptenparkeerkaart');
 
     const vergunning = await screen.findByText('Z/000/000008');
@@ -183,19 +168,16 @@ describe('<Search />', () => {
   });
 
   test('Navigates to search page', async () => {
+    bffApi.get('/services/search-config').reply(200);
     const user = userEvent.setup();
 
     const screen = render(
-      <BrowserRouter>
-        <RecoilRoot
-          initializeState={(snapshot) => {
-            snapshot.set(appStateAtom, appStateMock);
-            snapshot.set(appStateReadyAtom, true);
-          }}
-        >
-          <Search />
-        </RecoilRoot>
-      </BrowserRouter>
+      <MockApp
+        state={appStateMock}
+        routePath="/"
+        routeEntry="/"
+        component={Search}
+      />
     );
 
     await screen.getByPlaceholderText('Zoeken naar...');

@@ -15,7 +15,7 @@ import { loginUrlByAuthMethod } from './config/api';
 import { useMonitoring } from './helpers/monitoring';
 import { useAnalytics } from './hooks/analytics.hook';
 import { useSessionApi } from './hooks/api/useSessionApi';
-import { useAppStateRemote } from './hooks/useAppState';
+import { useAppStateRemote } from './hooks/useAppStateRemote';
 import {
   clearDeeplinkEntry,
   useDeeplinkRedirect,

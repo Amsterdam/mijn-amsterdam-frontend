@@ -16,7 +16,10 @@ import {
   TextPageV2,
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
-import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
+import {
+  useAppStateGetter,
+  useAppStateReady,
+} from '../../hooks/useAppStateRemote';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 import { DashboardRoute } from '../Dashboard/Dashboard-routes';
 import * as HORECA from '../Thema/Horeca/Horeca-thema-config';

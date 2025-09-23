@@ -117,7 +117,7 @@ export function LocationModal({
   const hasLocationDataAndCenterMarker = hasLocationData && centerMarker;
 
   useEffect(() => {
-    if (!bagApi.isPristine || querySearchAddress === null) {
+    if (bagApi.isDirty || bagApi.isLoading || querySearchAddress === null) {
       return;
     }
     if (isLocationModalOpen) {
@@ -133,7 +133,12 @@ export function LocationModal({
 
       bagApi.fetch(bagApiUrl);
     }
-  }, [isLocationModalOpen, querySearchAddress, bagApi.isPristine]);
+  }, [
+    isLocationModalOpen,
+    querySearchAddress,
+    bagApi.isDirty,
+    bagApi.isLoading,
+  ]);
 
   return (
     hasLocationData && (

@@ -1,11 +1,9 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
-import { MutableSnapshot } from 'recoil';
 
 import { routeConfig } from './Klachten-thema-config';
 import { KlachtenThema } from './KlachtenThema';
 import type { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
 const testState: Partial<AppState> = {
@@ -50,11 +48,6 @@ const testState: Partial<AppState> = {
   },
 };
 
-function initializeState(testState: Partial<AppState>) {
-  return (snapshot: MutableSnapshot) =>
-    snapshot.set(appStateAtom, testState as AppState);
-}
-
 function setupTestComponent(testState: Partial<AppState>) {
   const routeEntry = generatePath(routeConfig.themaPage.path);
   const routePath = routeConfig.themaPage.path;
@@ -65,7 +58,7 @@ function setupTestComponent(testState: Partial<AppState>) {
         routeEntry={routeEntry}
         routePath={routePath}
         component={KlachtenThema}
-        initializeState={initializeState(testState)}
+        state={testState as AppState}
       />
     );
   };

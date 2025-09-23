@@ -1,10 +1,8 @@
 import { render } from '@testing-library/react';
-import { MutableSnapshot } from 'recoil';
 
-import { InkomenThema } from './InkomenThema';
 import { routeConfig } from './Inkomen-thema-config';
+import { InkomenThema } from './InkomenThema';
 import type { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
 const testState = {
@@ -160,17 +158,13 @@ describe('<Inkomen />', () => {
   const routeEntry = routeConfig.themaPage.path;
 
   describe('with items from BBZ, TONK, TOZO', () => {
-    function initializeState(snapshot: MutableSnapshot) {
-      snapshot.set(appStateAtom, testState as unknown as AppState);
-    }
-
     function Component() {
       return (
         <MockApp
           routeEntry={routeEntry}
           routePath={routeEntry}
           component={InkomenThema}
-          initializeState={initializeState}
+          state={testState as unknown as AppState}
         />
       );
     }
@@ -182,24 +176,21 @@ describe('<Inkomen />', () => {
   });
 
   describe('without items from BBZ, TONK, TOZO', () => {
-    function initializeState(snapshot: MutableSnapshot) {
-      const { WPI_SPECIFICATIES } = testState;
-      snapshot.set(appStateAtom, {
-        WPI_SPECIFICATIES,
-        WPI_AANVRAGEN: {},
-        WPI_TOZO: {},
-        WPI_TONK: {},
-        WPI_BBZ: {},
-      } as unknown as AppState);
-    }
-
     function Component() {
       return (
         <MockApp
           routeEntry={routeEntry}
           routePath={routeEntry}
           component={InkomenThema}
-          initializeState={initializeState}
+          state={
+            {
+              WPI_SPECIFICATIES: testState.WPI_SPECIFICATIES,
+              WPI_AANVRAGEN: {},
+              WPI_TOZO: {},
+              WPI_TONK: {},
+              WPI_BBZ: {},
+            } as unknown as AppState
+          }
         />
       );
     }

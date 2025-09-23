@@ -1,12 +1,11 @@
 import { ReactNode } from 'react';
 
 import { renderHook } from '@testing-library/react';
-import { MutableSnapshot, RecoilRoot } from 'recoil';
 
-import { appStateAtom, appStateReadyAtom } from './useAppState';
 import { useTrackThemas } from './useTrackThemas.hook';
 import { AppState } from '../../universal/types/App.types';
 import { trackEvent } from '../helpers/monitoring';
+import MockApp from '../pages/MockApp';
 
 vi.mock('../helpers/monitoring', () => ({
   trackEvent: vi.fn(),
@@ -34,13 +33,13 @@ describe('useTrackThemas', () => {
       },
     } as AppState;
 
-    function initializeState(snapshot: MutableSnapshot) {
-      snapshot.set(appStateAtom, testState);
-      snapshot.set(appStateReadyAtom, true);
-    }
-
     const mockApp = ({ children }: { children: ReactNode }) => (
-      <RecoilRoot initializeState={initializeState}>{children}</RecoilRoot>
+      <MockApp
+        state={testState}
+        routePath="/"
+        routeEntry="/"
+        component={() => <>{children}</>}
+      />
     );
 
     renderHook(() => useTrackThemas(), {

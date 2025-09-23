@@ -8,7 +8,7 @@ import {
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { Search } from '../../components/Search/Search';
-import { useAppStateReady } from '../../hooks/useAppState';
+import { useAppStateReady } from '../../hooks/useAppStateRemote';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 
 export function SearchPage() {
@@ -19,6 +19,14 @@ export function SearchPage() {
   const termParam =
     new URLSearchParams(window.location.search).get('term') || '';
   const isReady = useAppStateReady();
+
+  console.log(
+    'Rendering SearchPage with termParam',
+    termParam,
+    'isReady',
+    isReady
+  );
+
   return (
     <PageV2>
       <PageContentV2>

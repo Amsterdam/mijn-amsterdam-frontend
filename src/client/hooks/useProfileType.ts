@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { create } from 'zustand/react';
+import { create } from 'zustand';
 
 import { useSessionStorage } from './storage.hook';
 

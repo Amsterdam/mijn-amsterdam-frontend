@@ -1,6 +1,6 @@
 import { useRef, useEffect, useCallback, useState } from 'react';
 
-import { create } from 'zustand/react';
+import { create } from 'zustand';
 
 import { useKeyUp } from '../../hooks/useKey';
 import { MAIN_MENU_ID } from '../MainMenu/MainMenu';

@@ -1,13 +1,11 @@
 import { screen, render } from '@testing-library/react';
 import { generatePath } from 'react-router';
-import { MutableSnapshot } from 'recoil';
 
 import { routeConfig } from './Horeca-thema-config';
 import { HorecaThema } from './HorecaThema';
 import { HorecaVergunningFrontend } from '../../../../server/services/horeca/decos-zaken';
 import { bffApiHost } from '../../../../testing/setup';
 import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
 export const DOC_API_PATH =
@@ -76,10 +74,6 @@ const testState = {
   },
 } as unknown as AppState;
 
-function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState);
-}
-
 describe('<Horeca />', () => {
   const routeEntry = generatePath(routeConfig.themaPage.path);
   const routePath = routeConfig.themaPage.path;
@@ -89,7 +83,7 @@ describe('<Horeca />', () => {
         routeEntry={routeEntry}
         routePath={routePath}
         component={HorecaThema}
-        initializeState={initializeState}
+        state={testState}
       />
     );
   }

@@ -8,7 +8,7 @@ import type { KrefiaDeepLink } from '../../../../server/services/krefia/krefia.t
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
-import { useAppStateGetter } from '../../../hooks/useAppState';
+import { useAppStateGetter } from '../../../hooks/useAppStateRemote';
 
 const kredietBankLink: LinkProps = {
   title: 'Meer informatie over Kredietbank Amsterdam',

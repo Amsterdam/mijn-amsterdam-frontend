@@ -22,7 +22,6 @@ export function ErfpachtDetail() {
     routeConfig,
   } = useDossierDetailData();
   useHTMLDocumentTitle(routeConfig.detailPage);
-
   return (
     <ThemaDetailPagina
       themaId={themaId}
