@@ -14,7 +14,7 @@ import {
 } from './TableV2.types';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { entries } from '../../../universal/helpers/utils';
-import { ZaakDetail } from '../../../universal/types/App.types';
+import { ZaakAanvraagDetail } from '../../../universal/types/App.types';
 import { useSmallScreen } from '../../hooks/media.hook';
 import { MaRouterLink } from '../MaLink/MaLink';
 
@@ -70,7 +70,7 @@ function getColWidth(
   return colWidths[size]?.filter((value) => parseInt(value, 10) !== 0)[index];
 }
 
-export function TableV2<T extends object = ZaakDetail>({
+export function TableV2<T extends object = ZaakAanvraagDetail>({
   caption,
   subTitle,
   items,
