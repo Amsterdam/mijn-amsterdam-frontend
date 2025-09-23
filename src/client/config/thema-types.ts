@@ -14,7 +14,10 @@ export type ThemaConfigBase = {
   title: string;
   featureToggle: { themaActive: boolean };
   profileTypes: ProfileType[];
-  uitlegPageSections: InfoSections[];
+  uitlegPageSections: {
+    title?: string;
+    listItems: string[];
+  };
   links: LinkProps[];
   route: {
     path: string;
