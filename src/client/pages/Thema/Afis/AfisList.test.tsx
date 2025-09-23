@@ -109,17 +109,6 @@ describe('<AfisFacturen />', () => {
         status: 'OK',
       });
 
-    // bffApi
-    //   .get(`/services/afis/facturen/overzicht?id=${businessPartnerIdEncrypted}`)
-    //   .reply(200, {
-    //     content: {
-    //       open: { count: 0, facturen: [] },
-    //       afgehandeld: { facturen: [], count: 0 },
-    //       overgedragen: { facturen: [], count: 0 },
-    //     },
-    //     status: 'OK',
-    //   });
-
     const routeEntry = generatePath(routePath, {
       state: 'afgehandeld',
       page: null,
