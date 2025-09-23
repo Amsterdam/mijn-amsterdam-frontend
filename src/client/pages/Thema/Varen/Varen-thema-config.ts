@@ -1,7 +1,9 @@
 import { generatePath, type Params } from 'react-router';
 
-import { isVergunning } from './helper';
-import type { VarenZakenFrontend } from '../../../../server/services/varen/config-and-types';
+import type {
+  VarenVergunningFrontend,
+  VarenZakenFrontend,
+} from '../../../../server/services/varen/config-and-types';
 import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { dateSort } from '../../../../universal/helpers/date';
 import { LinkProps } from '../../../../universal/types/App.types';
@@ -10,7 +12,7 @@ import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA = 5;
 
-const listPageParamKind = {
+export const listPageParamKind = {
   inProgress: 'lopende-aanvragen',
   actief: 'actieve-vergunningen',
 } as const;
@@ -26,8 +28,15 @@ export const themaId = 'VAREN' as const;
 export const themaTitle = 'Passagiers- en beroepsvaart' as const;
 
 export const routeConfig = {
-  detailPage: {
-    path: '/passagiers-en-beroepsvaart/vergunning/:caseType/:id',
+  detailPageZaak: {
+    path: '/passagiers-en-beroepsvaart/vergunningen/:caseType/:id',
+    trackingUrl(params) {
+      return `/passagiers-en-beroepsvaart/vergunningen/${params?.caseType ?? ''}`;
+    },
+    documentTitle: getVarenDetailPageDocumentTitle(themaTitle),
+  },
+  detailPageVergunning: {
+    path: '/passagiers-en-beroepsvaart/vergunningen/:id',
     trackingUrl(params) {
       return `/passagiers-en-beroepsvaart/vergunning/${params?.caseType ?? ''}`;
     },
@@ -43,25 +52,29 @@ export const routeConfig = {
   },
 } as const satisfies ThemaRoutesConfig;
 
-const tableConfigSort = {
-  sort: dateSort('dateRequest', 'desc'),
+type VarenTableItem = {
+  processed: boolean | undefined;
+  isExpired?: boolean;
+  dateRequest: string;
+  dateStart: string | null;
 };
-
 type TableConfig<T> = {
   title: string;
-  filter: (vergunning: T) => boolean;
-  sort: (a: T, b: T) => number;
+  filter: (vergunning: VarenTableItem) => boolean;
+  sort: (a: VarenTableItem, b: VarenTableItem) => number;
   displayProps: DisplayProps<T>;
   listPageRoute: string;
   maxItems: number;
 };
 
-type TableConfigByKind<T> = Record<ListPageParamKind, TableConfig<T>>;
-
-export const tableConfig: TableConfigByKind<VarenZakenFrontend> = {
+export const tableConfig: {
+  [listPageParamKind.inProgress]: TableConfig<VarenZakenFrontend>;
+  [listPageParamKind.actief]: TableConfig<VarenVergunningFrontend>;
+} = {
   [listPageParamKind.inProgress]: {
     title: 'Lopende aanvragen',
-    filter: (vergunning: VarenZakenFrontend) => !vergunning.processed,
+    filter: (zaak) => !zaak.processed,
+    sort: dateSort('dateRequest', 'desc'),
     listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.inProgress,
       page: null,
@@ -79,11 +92,11 @@ export const tableConfig: TableConfigByKind<VarenZakenFrontend> = {
       },
     },
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-    ...tableConfigSort,
   },
   [listPageParamKind.actief]: {
     title: 'Actieve vergunningen',
-    filter: isVergunning,
+    filter: (vergunning) => !vergunning.isExpired,
+    sort: dateSort('dateStart', 'desc'),
     listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.actief,
       page: null,
@@ -92,16 +105,14 @@ export const tableConfig: TableConfigByKind<VarenZakenFrontend> = {
       props: {
         detailLinkComponent: 'Naam vaartuig',
         title: 'Omschrijving',
-        dateDecisionFormatted: 'Datum besluit',
-        decision: 'Resultaat',
+        dateStartFormatted: 'Datum besluit',
       },
       colWidths: {
-        large: ['25%', '35%', '20%', '20%'],
+        large: ['25%', '35%', '40%', '0%'],
         small: ['50%', '50%', '0', '0'],
       },
     },
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-    ...tableConfigSort,
   },
 } as const;
 
