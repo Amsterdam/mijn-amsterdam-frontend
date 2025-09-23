@@ -184,7 +184,6 @@ export function useBffApi<T>(
   const store = useBffApiStateStore();
   const state = urlOrKey ? store.get<T>(urlOrKey) : null;
   const url_ = url || urlOrKey;
-  // const stateKeyRef = useRef<Set<string>>(new Set());
 
   const storeSet = store.set;
   const storeHas = store.has;
