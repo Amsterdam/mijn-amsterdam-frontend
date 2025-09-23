@@ -178,11 +178,11 @@ CMD /usr/local/bin/docker-entrypoint-bff.sh
 
 FROM deploy-bff AS deploy-bff-az
 
-# ssh (see also: https://github.com/Azure-Samples/docker-django-webapp-linux)
-RUN --mount=type=secret,id=SSH_PASSWD \
-  export SSH_PASSWD=$(cat /run/secrets/SSH_PASSWD) \
-  && apt-get install -y --no-install-recommends openssh-server \
-  && echo "$SSH_PASSWD" | chpasswd
+# # ssh (see also: https://github.com/Azure-Samples/docker-django-webapp-linux)
+# RUN --mount=type=secret,id=SSH_PASSWD \
+#   export SSH_PASSWD=$(cat /run/secrets/SSH_PASSWD) \
+#   && apt-get install -y --no-install-recommends openssh-server \
+#   && echo "$SSH_PASSWD" | chpasswd
 
-# SSH config
-COPY conf/sshd_config /etc/ssh/
+# # SSH config
+# COPY conf/sshd_config /etc/ssh/
