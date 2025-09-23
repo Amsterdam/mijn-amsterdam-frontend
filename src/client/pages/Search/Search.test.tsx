@@ -47,7 +47,7 @@ describe('<Search />', () => {
     },
   };
 
-  test.only('Renders without crashing', async () => {
+  test('Renders without crashing', async () => {
     bffApi.get('/services/search-config').reply(200, { content: remoteConfig });
     nock('https://api.swiftype.com')
       .get('/api/v1/public/engines/search.json')
