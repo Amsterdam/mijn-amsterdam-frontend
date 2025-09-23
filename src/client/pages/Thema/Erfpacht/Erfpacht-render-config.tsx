@@ -68,9 +68,6 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
 };
 
 export function useCanonmatigingFooterLink() {
-  if (!featureToggle.canonActive) {
-    return null;
-  }
   const { relatieCode } = useErfpachtThemaData();
 
   if (!relatieCode) {
