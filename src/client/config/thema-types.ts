@@ -13,12 +13,19 @@ export type Section = {
   listItems: string[]; // altijd een lijst van tekstjes; dit is zo afgesproken in de opdracht/pseudocode
 };
 
+// Menu item config (alleen data)
+// export type MenuItemConfig = {
+//   to: string; // pad of url
+//   redactedScope?: 'full' | 'content' | 'none'; // optioneel
+//   isAlwaysVisible?: boolean; // optioneel vlaggetje
+// };
+
 // ThemaConfig: basis-gegevens per thema (backend-safe)
 export type ThemaConfigBase = {
   id: string; // uniek id van het thema (bijvoorbeeld:  'BODEM')
   title: string; // naam/titel van het thema
   profileTypes: ProfileType[];
-  featureToggle: { [key: string]: boolean };
+  featureToggle: { themaActive: boolean };
   // TODO: ROUTECONFIG
   // TODO: MENUITEM > IS INTERFACE THEMAMENUITEM
   // TODO: SEARCG TOEVOEGEN HTTPS://gemeente-amsterdam
@@ -48,7 +55,7 @@ export type WithDetailPage = {
     route: {
       path: string;
       trackingUrl: string;
-      documentTitle: `${string} | ${string}`; //bijv `Lood in de bodem-check | ${themaConfig.title}`
+      documentTitle: string; //bijv `Lood in de bodem-check | ${themaConfig.title}`
     };
   };
 };

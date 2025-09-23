@@ -482,7 +482,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    isEnabled: themaConfig.featureToggle.BodemActive,
+    isEnabled: themaConfig.featureToggle.themaActive,
     stateKey: 'BODEM',
     profileTypes: ['private', 'commercial'],
     displayTitle(item: LoodMetingFrontend) {
