@@ -32,7 +32,7 @@ describe('useAppState', () => {
   });
 
   afterEach(() => {
-    fetchMock.mockRestore();
+    fetchMock.mockReset();
   });
 
   afterAll(() => {
