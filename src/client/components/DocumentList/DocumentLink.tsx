@@ -8,7 +8,7 @@ import styles from './DocumentLink.module.scss';
 import type { GenericDocument } from '../../../universal/types/App.types';
 import { captureException } from '../../helpers/monitoring';
 import { trackDownload } from '../../hooks/analytics.hook';
-import { HttpStatusCode } from '../../hooks/api/useDataApi-v2';
+import { HttpStatusCode } from '../../hooks/api/useBffApi';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { MaLink } from '../MaLink/MaLink';
 import { Spinner } from '../Spinner/Spinner';

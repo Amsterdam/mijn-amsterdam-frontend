@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { GenericDocument } from '../../../../../universal/types/App.types';
-import { useBffApi } from '../../../../hooks/api/useDataApi-v2';
+import { useBffApi } from '../../../../hooks/api/useBffApi';
 
 export function useVergunningDocumentList(url?: string) {
   const { fetch, isPristine, data, isLoading, isError } = useBffApi<

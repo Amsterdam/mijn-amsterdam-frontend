@@ -2,10 +2,7 @@ import {
   StadspasFrontend,
   type PasblokkadeByPasnummer,
 } from '../../../../server/services/hli/stadspas-types';
-import {
-  useBffApi,
-  useBffApiStateStore,
-} from '../../../hooks/api/useDataApi-v2';
+import { useBffApi, useBffApiStateStore } from '../../../hooks/api/useBffApi';
 import { useAppStateGetter } from '../../../hooks/useAppStateRemote';
 
 function getPasBlockedStateKey(passNumber: StadspasFrontend['passNumber']) {

@@ -36,7 +36,7 @@ import { PageHeadingV2 } from '../../../components/PageHeading/PageHeadingV2';
 import { Spinner } from '../../../components/Spinner/Spinner';
 import { TableV2 } from '../../../components/Table/TableV2';
 import { getRedactedClass } from '../../../helpers/cobrowse';
-import { useBffApi } from '../../../hooks/api/useDataApi-v2';
+import { useBffApi } from '../../../hooks/api/useBffApi';
 import { useSmallScreen } from '../../../hooks/media.hook';
 import { useAppStateGetter } from '../../../hooks/useAppStateRemote';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';

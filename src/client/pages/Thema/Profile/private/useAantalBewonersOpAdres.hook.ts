@@ -1,6 +1,6 @@
 import { FeatureToggle } from '../../../../../universal/config/feature-toggles';
 import { AppState } from '../../../../../universal/types/App.types';
-import { useBffApi } from '../../../../hooks/api/useDataApi-v2';
+import { useBffApi } from '../../../../hooks/api/useBffApi';
 
 export function useAantalBewonersOpAdres(
   brpContent: AppState['BRP']['content']

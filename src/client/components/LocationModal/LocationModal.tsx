@@ -20,7 +20,7 @@ import {
 } from '../../../universal/helpers/bag';
 import { BaseLayerType } from '../../components/MyArea/Map/BaseLayerToggle';
 import { MyAreaLoader } from '../../components/MyArea/MyAreaLoader';
-import { useBffApi } from '../../hooks/api/useDataApi-v2';
+import { useBffApi } from '../../hooks/api/useBffApi';
 import { Modal } from '../Modal/Modal';
 import { MapLocationMarker } from '../MyArea/MyArea.hooks';
 

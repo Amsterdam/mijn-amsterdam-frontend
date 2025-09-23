@@ -15,7 +15,7 @@ import type {
   CMSFooterSection,
 } from '../../../server/services/cms/cms-content';
 import { BFF_API_BASE_URL } from '../../config/api';
-import { useBffApi } from '../../hooks/api/useDataApi-v2';
+import { useBffApi } from '../../hooks/api/useBffApi';
 import { useCanonmatigingFooterLink } from '../../pages/Thema/Erfpacht/Erfpacht-render-config';
 import { featureToggle } from '../../pages/Thema/Erfpacht/Erfpacht-thema-config';
 

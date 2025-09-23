@@ -5,7 +5,7 @@ import { AUTH_API_URL, LOGOUT_URL } from '../../config/api';
 import { clearSessionStorage } from '../storage.hook';
 import { clearDeeplinkEntry } from '../useDeeplink.hook';
 import { useProfileType } from '../useProfileType';
-import { useBffApi } from './useDataApi-v2';
+import { useBffApi } from './useBffApi';
 
 export const ONE_SECOND_MS = 1000;
 
