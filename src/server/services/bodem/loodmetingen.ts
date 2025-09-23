@@ -9,11 +9,7 @@ import {
   LoodMetingStatusLowerCase,
   LoodMetingen,
 } from './types';
-import {
-  routeConfig,
-  themaId,
-  themaTitle,
-} from '../../../client/pages/Thema/Bodem/Bodem-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/Bodem/Bodem-thema-config';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -139,7 +135,7 @@ function transformLood365Response(
           rapportId: location?.Workorderid,
           redenAfwijzing: location?.Rejectionreason,
           link: {
-            to: generatePath(routeConfig.detailPage.path, {
+            to: generatePath(themaConfig.detailPage.route.path, {
               id: location.Reference,
             }),
             title: 'Bekijk loodmeting',
@@ -256,8 +252,8 @@ function createLoodNotification(meting: LoodMetingFrontend): MyNotification {
     MyNotification,
     'title' | 'description' | 'datePublished'
   > = {
-    themaID: themaId,
-    themaTitle: themaTitle,
+    themaID: themaConfig.id, // in plaats van themaid themaID in verband met wat er staat bij het export interface MyNotification
+    themaTitle: themaConfig.title,
     id: meting.kenmerk,
     link: {
       to: meting.link.to,
