@@ -10,7 +10,9 @@ import {
 
 type ApiFetchResponse<T> = Promise<ApiResponse<T>>;
 
-async function handleResponse<T>(fetchFn: () => Promise<Response>) {
+async function handleResponse<T>(
+  fetchFn: () => Promise<Response>
+): ApiFetchResponse<T> {
   try {
     const response = await fetchFn();
     const responseJson = (await response.json()) as ApiResponse<T>;
@@ -21,12 +23,16 @@ async function handleResponse<T>(fetchFn: () => Promise<Response>) {
       );
     }
 
+    if (responseJson.status === 'POSTPONE') {
+      return responseJson;
+    }
+
     // Try to be flexible and accept both enveloped and non-enveloped responses.
     if (
       ('status' in responseJson || response.status === HttpStatusCode.Ok) &&
       'content' in responseJson
     ) {
-      return apiSuccessResult(responseJson.content);
+      return apiSuccessResult<T>(responseJson.content);
     }
 
     return apiSuccessResult<T>(responseJson);
@@ -43,7 +49,7 @@ export async function sendFormPostRequest<T extends any>(
   payload: Record<string, string>,
   options?: RequestInit
 ): ApiFetchResponse<T> {
-  return handleResponse(() =>
+  return handleResponse<T>(() =>
     fetch(url, {
       method: 'POST',
       body: new URLSearchParams(payload),
@@ -61,7 +67,7 @@ export async function sendJSONPostRequest<T extends any>(
   payload: Record<string, unknown>,
   options?: RequestInit
 ): ApiFetchResponse<T> {
-  return handleResponse(() =>
+  return handleResponse<T>(() =>
     fetch(url, {
       method: 'POST',
       body: JSON.stringify(payload),
@@ -78,7 +84,7 @@ export async function sendGetRequest<T extends any>(
   url: URL | string,
   options?: RequestInit
 ): Promise<ApiResponse<T>> {
-  return handleResponse(() =>
+  return handleResponse<T>(() =>
     fetch(url, { credentials: 'include', ...options })
   );
 }

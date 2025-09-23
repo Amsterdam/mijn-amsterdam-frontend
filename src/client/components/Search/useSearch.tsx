@@ -25,7 +25,7 @@ import {
 import { pick, uniqueArray } from '../../../universal/helpers/utils';
 import { AppState } from '../../../universal/types/App.types';
 import { BFFApiUrls } from '../../config/api';
-import { useBffApi } from '../../hooks/api/useDataApi-v2';
+import { useBffApi } from '../../hooks/api/useBffApi';
 import { useSmallScreen } from '../../hooks/media.hook';
 import {
   useAppStateGetter,

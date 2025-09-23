@@ -4,7 +4,7 @@ import { useBezwarenThemaData } from './useBezwarenThemaData.hook';
 import { BezwaarDetail } from '../../../../server/services/bezwaren/bezwaren';
 import { hasFailedDependency } from '../../../../universal/helpers/api';
 import { uniqueArray } from '../../../../universal/helpers/utils';
-import { useBffApi } from '../../../hooks/api/useDataApi-v2';
+import { useBffApi } from '../../../hooks/api/useBffApi';
 
 export function useBezwarenDetailData() {
   const {

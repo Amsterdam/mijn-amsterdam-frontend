@@ -5,7 +5,7 @@ import { createAllErrorState } from '../AppState';
 import { BFFApiUrls } from '../config/api';
 import { transformSourceData } from '../data-transform/appState';
 import { captureMessage } from '../helpers/monitoring';
-import { useBffApi } from './api/useDataApi-v2';
+import { useBffApi } from './api/useBffApi';
 import { useAppStateStore } from './useAppStateStore';
 
 interface useAppStateFallbackServiceProps {

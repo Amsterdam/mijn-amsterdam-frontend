@@ -30,7 +30,7 @@ import {
   isAborted,
   sendGetRequest,
   sendJSONPostRequest,
-} from '../../hooks/api/useDataApi-v2';
+} from '../../hooks/api/useBffApi';
 import {
   useAppStateGetter,
   useAppStateReady,
