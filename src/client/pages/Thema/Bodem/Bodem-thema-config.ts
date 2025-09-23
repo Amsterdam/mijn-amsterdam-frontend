@@ -16,7 +16,7 @@ import type {
 type BodemThemaConfig = ThemaConfigBase & WithDetailPage & WithListPage;
 
 export const themaConfig: BodemThemaConfig = {
-  id: 'BODEM', //steeds themaID bij BodemList.tsx > daar ook  routeConfig,    } = useBodemListPageData();    useHTMLDocumentTitle(routeConfig.listPage);
+  id: 'BODEM',
   title: 'Bodem',
   featureToggle: {
     themaActive: true,
