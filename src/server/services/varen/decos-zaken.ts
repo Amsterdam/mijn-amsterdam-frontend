@@ -153,9 +153,9 @@ export const ZaakVergunningExploitatieWijzigingVergunningshouder: DecosZaakTrans
     ...ZaakWijzigenBase,
     transformFields: {
       ...ZaakWijzigenBase.transformFields,
-      text33: 'statutoryName',
-      text34: 'businessAddress',
-      text35: 'correspondenceAddress',
+      text34: 'statutoryName',
+      text35: 'businessAddress',
+      text36: 'correspondenceAddress',
     },
   };
 
