@@ -40,6 +40,7 @@ export type ThemaConfigBase = {
     path: string;
     documentTitle: `${string} | ${string}`; //bijv
   };
+  redactedScope: 'full' | 'content' | 'none';
   // themaTitleDetail?: string;  // ThemaTitleDetail is optioneel. Het wordt niet in elk thema gebruikt
   // featureToggle: { [key: string]: boolean }; // toggles aan/uit (bijvoorbeeld: BodemActive: true })
   // routeConfig: ThemaRoutesConfig;            // routes van het thema (detail, lijst, thema)

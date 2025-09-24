@@ -60,6 +60,7 @@ export const themaConfig: BodemThemaConfig = {
         `${params?.kind === listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | Bodem` as const,
     },
   },
+  redactedScope: 'none',
 } as const;
 
 // -----------------------------
