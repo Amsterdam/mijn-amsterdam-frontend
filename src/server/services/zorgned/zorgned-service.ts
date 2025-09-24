@@ -172,6 +172,16 @@ export function transformZorgnedAanvragen(
   return aanvragenTransformed.sort(sortAlpha('id', 'desc'));
 }
 
+export async function fetchAllDocuments(
+  bsn: BSN,
+  options: ZorgnedAanvragenServiceOptions
+) {
+  return fetchZorgnedByBSN(bsn, {
+    ...options,
+    path: '/documenten',
+  });
+}
+
 export async function fetchAanvragen(
   bsn: BSN,
   options: ZorgnedAanvragenServiceOptions

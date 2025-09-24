@@ -2,18 +2,20 @@ import { HttpStatusCode } from 'axios';
 import { NextFunction, Request, Response } from 'express';
 
 import { BffEndpoints } from './bff-routes';
-import { handleCheckProtectedRoute, isAuthenticated } from './route-handlers';
+import {
+  handleCheckProtectedRoute,
+  handleIsAuthenticated,
+} from './route-handlers';
 import {
   createBFFRouter,
   sendBadRequest,
   sendResponse,
-  sendUnauthorized,
   type RequestWithQueryParams,
+  type ResponseAuthenticated,
 } from './route-helpers';
 import type { streamEndpointQueryParamKeys } from '../../universal/config/app';
 import { IS_PRODUCTION } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
-import { getAuth } from '../auth/auth-helpers';
 import { setAdHocDependencyRequestCacheTtlMs } from '../config/source-api';
 import { fetchAfisDocument } from '../services/afis/afis-documents';
 import {
@@ -48,12 +50,15 @@ import { fetchZorgnedLLVDocument } from '../services/jeugd/route-handlers';
 import { fetchDocument as fetchBBDocument } from '../services/powerbrowser/powerbrowser-service';
 import { fetchAantalBewoners } from '../services/profile/brp';
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler';
-import { fetchZorgnedJZDDocument } from '../services/wmo/wmo-route-handlers';
+import {
+  fetchZorgnedJZDDocument,
+  fetchZorgnedJZDDocuments,
+} from '../services/wmo/wmo-route-handlers';
 import { fetchWpiDocument } from '../services/wpi/api-service';
 
 export const router = createBFFRouter({ id: 'router-protected' });
 
-router.use(handleCheckProtectedRoute, isAuthenticated);
+router.use(handleCheckProtectedRoute, handleIsAuthenticated);
 
 router.get(
   BffEndpoints.SERVICES_ALL,
@@ -136,6 +141,8 @@ attachDocumentDownloadRoute(
   fetchZorgnedJZDDocument
 );
 
+router.get(BffEndpoints.WMO_DOCUMENTS_LIST, fetchZorgnedJZDDocuments);
+
 // LLV Zorgned Doc download
 attachDocumentDownloadRoute(
   router,
@@ -145,18 +152,13 @@ attachDocumentDownloadRoute(
 
 router.get(
   BffEndpoints.MKS_AANTAL_BEWONERS,
-  async (req: Request, res: Response) => {
-    const authProfileAndToken = getAuth(req);
+  async (req: Request, res: ResponseAuthenticated) => {
+    const bewonersResponse = await fetchAantalBewoners(
+      res.locals.authProfileAndToken,
+      req.params.addressKeyEncrypted
+    );
 
-    if (authProfileAndToken) {
-      const bewonersResponse = await fetchAantalBewoners(
-        authProfileAndToken,
-        req.params.addressKeyEncrypted
-      );
-
-      return sendResponse(res, bewonersResponse);
-    }
-    return sendUnauthorized(res);
+    return sendResponse(res, bewonersResponse);
   }
 );
 
@@ -210,17 +212,13 @@ router.get(BffEndpoints.BEZWAREN_DETAIL, handleFetchBezwaarDetail);
 
 router.get(
   BffEndpoints.ERFPACHT_DOSSIER_DETAILS,
-  async (req: Request, res: Response) => {
-    const authProfileAndToken = getAuth(req);
-    if (authProfileAndToken) {
-      const response = await fetchErfpachtDossiersDetail(
-        authProfileAndToken,
-        req.params.dossierNummerUrlParam
-      );
+  async (req: Request, res: ResponseAuthenticated) => {
+    const response = await fetchErfpachtDossiersDetail(
+      res.locals.authProfileAndToken,
+      req.params.dossierNummerUrlParam
+    );
 
-      return sendResponse(res, response);
-    }
-    return sendUnauthorized(res);
+    return sendResponse(res, response);
   }
 );
 

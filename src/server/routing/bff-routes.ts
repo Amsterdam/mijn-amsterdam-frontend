@@ -49,6 +49,7 @@ export const BffEndpoints = {
 
   // WMO / Zorgned
   WMO_DOCUMENT_DOWNLOAD: `/services/wmo/document/:id`,
+  WMO_DOCUMENTS_LIST: `/services/wmo/documens`,
 
   // AV / Zorgned
   HLI_DOCUMENT_DOWNLOAD: `/services/v1/stadspas-en-andere-regelingen/document/:id`,
