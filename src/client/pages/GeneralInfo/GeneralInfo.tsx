@@ -137,7 +137,9 @@ function getLinkComponent(href: string) {
 export function GeneralInfo() {
   const themaMenuItems = useThemaMenuItemsByThemaID();
   const sectionComponents = sections
-    .filter((section) => section.active && section.id in themaMenuItems)
+    .filter((section) => {
+      return section.active && section.id in themaMenuItems;
+    })
     .toSorted(compareThemas)
     .map((section, i) => {
       const themaMenuItem = themaMenuItems[section.id];
