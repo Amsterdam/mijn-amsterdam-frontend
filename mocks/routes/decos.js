@@ -4,8 +4,7 @@ const DOCUMENTS_LIST = require('../fixtures/decos-vergunningen-documents-list-re
 const TERMIJNENS = require('../fixtures/decos-vergunningen-termijnens-response.json');
 const VARENS = require('../fixtures/decos-vergunningen-varens-response.json');
 const WORKFLOW_INSTANCES = require('../fixtures/decos-vergunningen-workflowinstances-response.json');
-const WORKFLOWS = require('../fixtures/decos-vergunningen-workflows-response.json');
-// const ZAKEN = require('../fixtures/decos-vergunningen-zaken-response.json');
+const ZAKEN = require('../fixtures/decos-vergunningen-zaken-response.json');
 const settings = require('../settings.js');
 
 const zakenKeysStatusInBehandeling = ZAKEN.content
