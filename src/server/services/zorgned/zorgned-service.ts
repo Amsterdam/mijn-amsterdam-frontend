@@ -193,6 +193,16 @@ export async function fetchAanvragen(
   });
 }
 
+export async function fetchAanvragenRaw(
+  bsn: BSN,
+  options: ZorgnedAanvragenServiceOptions
+) {
+  return fetchZorgnedByBSN(bsn, {
+    ...options,
+    path: '/aanvragen',
+  });
+}
+
 export async function fetchAndMergeRelatedPersons(
   bsnAanvrager: BSN,
   zorgnedApiConfigKey: ZorgnedApiConfigKey,
