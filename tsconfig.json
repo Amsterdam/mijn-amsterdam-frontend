@@ -3,9 +3,9 @@
     "outDir": "build/client",
     "target": "es2015",
     "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
+      "DOM",
+      "DOM.Iterable",
+      "ES2021"
     ],
     "allowJs": true,
     "skipLibCheck": true,
