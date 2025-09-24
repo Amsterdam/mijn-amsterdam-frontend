@@ -7,12 +7,12 @@ import {
   apiSuccessResult,
   apiErrorResult,
 } from '../../../universal/helpers/api';
-import { fetchBRP } from '../profile/brp';
+import { fetchBrpV2 } from '../brp/brp';
 import type { Adres } from '../profile/brp.types';
 import { fetchKVK, getKvkAddresses } from '../profile/kvk';
 
-vi.mock('../profile/brp', () => ({
-  fetchBRP: vi.fn(),
+vi.mock('../brp/brp', () => ({
+  fetchBrpV2: vi.fn(),
 }));
 
 vi.mock('./bag', () => ({
@@ -32,7 +32,7 @@ describe('fetchPrivate', () => {
   const authProfileAndToken = getAuthProfileAndToken();
 
   it('should return private addresses if fetching BRP data is successful', async () => {
-    (fetchBRP as Mock).mockResolvedValueOnce(
+    (fetchBrpV2 as Mock).mockResolvedValueOnce(
       apiSuccessResult({
         mokum: true,
         adres,
@@ -62,7 +62,7 @@ describe('fetchPrivate', () => {
   });
 
   it('should return default location if no BAG location is found', async () => {
-    (fetchBRP as Mock).mockResolvedValueOnce(
+    (fetchBrpV2 as Mock).mockResolvedValueOnce(
       apiSuccessResult({
         mokum: true,
         adres,
@@ -92,7 +92,7 @@ describe('fetchPrivate', () => {
   });
 
   it('should return a bare response if BRP data is not a Mokum address', async () => {
-    (fetchBRP as Mock).mockResolvedValueOnce(
+    (fetchBrpV2 as Mock).mockResolvedValueOnce(
       apiSuccessResult({ mokum: false, adres: null })
     );
 
@@ -111,7 +111,7 @@ describe('fetchPrivate', () => {
   });
 
   it('should return an error if fetching BRP data fails', async () => {
-    (fetchBRP as Mock).mockResolvedValueOnce(
+    (fetchBrpV2 as Mock).mockResolvedValueOnce(
       apiErrorResult('Error fetching BRP data', null)
     );
 
@@ -184,7 +184,7 @@ describe('fetchMyLocation', () => {
   const authProfileAndTokenCommercial = getAuthProfileAndToken('commercial');
 
   it('should return locations if fetching commercial and private data is successful', async () => {
-    (fetchBRP as Mock).mockResolvedValueOnce(
+    (fetchBrpV2 as Mock).mockResolvedValueOnce(
       apiSuccessResult({
         mokum: true,
         adres,
@@ -259,7 +259,7 @@ describe('fetchMyLocation', () => {
       apiSuccessResult({ vestigingen: [] })
     );
     (getKvkAddresses as Mock).mockReturnValueOnce([]);
-    (fetchBRP as Mock).mockResolvedValueOnce(
+    (fetchBrpV2 as Mock).mockResolvedValueOnce(
       apiErrorResult('Server down!', null)
     );
 
