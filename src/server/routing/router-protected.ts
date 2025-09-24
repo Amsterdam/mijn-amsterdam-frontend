@@ -51,6 +51,7 @@ import { fetchDocument as fetchBBDocument } from '../services/powerbrowser/power
 import { fetchAantalBewoners } from '../services/profile/brp';
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler';
 import {
+  fetchZorgnedJZDAanvragen,
   fetchZorgnedJZDDocument,
   fetchZorgnedJZDDocuments,
 } from '../services/wmo/wmo-route-handlers';
@@ -141,7 +142,8 @@ attachDocumentDownloadRoute(
   fetchZorgnedJZDDocument
 );
 
-router.get(BffEndpoints.WMO_DOCUMENTS_LIST, fetchZorgnedJZDDocuments);
+router.get(BffEndpoints.WMO_AANVRAGEN_RAW, fetchZorgnedJZDAanvragen);
+router.get(BffEndpoints.WMO_DOCUMENTS_LIST_RAW, fetchZorgnedJZDDocuments);
 
 // LLV Zorgned Doc download
 attachDocumentDownloadRoute(
