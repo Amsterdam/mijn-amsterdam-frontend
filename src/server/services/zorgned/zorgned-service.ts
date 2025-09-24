@@ -155,7 +155,7 @@ export function transformZorgnedAanvragen(
     for (const beschiktProduct of beschikteProducten) {
       if (beschiktProduct) {
         const aanvraagTransformed = transformZorgnedAanvraag(
-          aanvraagSource.identificatie,
+          `${aanvraagSource.identificatie}-${beschiktProduct.identificatie}`,
           datumAanvraag,
           datumBesluit,
           beschiktProduct,
