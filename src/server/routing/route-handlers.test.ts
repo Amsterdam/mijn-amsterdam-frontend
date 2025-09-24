@@ -1,4 +1,4 @@
-import { isAuthenticated, requestID } from './route-handlers';
+import { handleIsAuthenticated, requestID } from './route-handlers';
 import {
   getAuthProfileAndToken,
   getReqMockWithOidc,
@@ -33,7 +33,7 @@ describe('routing.route-handlers', () => {
         [OIDC_SESSION_COOKIE_NAME]: 'test',
       });
 
-      await isAuthenticated(reqMock, resMock, nextMock);
+      await handleIsAuthenticated(reqMock, resMock, nextMock);
 
       expect(nextMock).toHaveBeenCalled();
     });
@@ -45,7 +45,7 @@ describe('routing.route-handlers', () => {
         })
         .get();
 
-      await isAuthenticated(reqMock, resMock, nextMock);
+      await handleIsAuthenticated(reqMock, resMock, nextMock);
 
       expect(resMock.send).toHaveBeenCalledWith({
         code: 401,
@@ -64,7 +64,7 @@ describe('routing.route-handlers', () => {
         })
         .get();
 
-      await isAuthenticated(reqMock, resMock, nextMock);
+      await handleIsAuthenticated(reqMock, resMock, nextMock);
 
       expect(resMock.send).toHaveBeenCalledWith({
         code: 401,
