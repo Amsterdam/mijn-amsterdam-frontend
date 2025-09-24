@@ -202,9 +202,8 @@ describe('Bodem', () => {
     const screen = render(<MockBodem />);
 
     screen.getByRole('heading', { name: 'Bodem' });
-    screen.getByText(
-      /Op deze pagina vindt u informatie over uw lood in de bodem-check/
-    );
+    // aangepast naar de tekst die via uitlegPageSections wordt getoond
+    screen.getByText("Uw aanvraag voor 'lood in de bodem-check'");
   });
 
   describe('Tables', () => {
@@ -237,7 +236,6 @@ describe('Bodem', () => {
       });
 
       const lopendeAanvraagTable = lopendeAanvraagTableHeader.parentElement!;
-
       const afgehandeldeAanvraagTable =
         afgehandeldeAanvraagTableHeader.parentElement!;
 
@@ -251,9 +249,6 @@ describe('Bodem', () => {
         afgewezen: /Afgewezen/,
       };
 
-      // Test if the patterns we use are correct in this scope.
-      // If we don't do this, we can run into the situation that these -
-      // fail and that the tests afterwards always succeed while the pattern is incorrect.
       {
         within(lopendeAanvraagTable).getByRole('cell', {
           name: statusPatterns.ontvangen,
