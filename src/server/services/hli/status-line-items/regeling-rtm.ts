@@ -1,8 +1,14 @@
 import { isAfter } from 'date-fns';
 
-import { BESLUIT, EINDE_RECHT, isAanvrager } from './generic';
+import {
+  BESLUIT,
+  EINDE_RECHT,
+  getBesluitDescription,
+  isAanvrager,
+} from './generic';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { sortByNumber } from '../../../../universal/helpers/utils';
+import { StatusLineItem } from '../../../../universal/types/App.types';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
@@ -59,7 +65,7 @@ function dedupCombineRTMDeel2(
 
 export function filterCombineRtmData(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
-): [ZorgnedAanvraagWithRelatedPersonsTransformed[], ZorgnedHLIRegeling[]] {
+): [ZorgnedAanvraagWithRelatedPersonsTransformed[], RTMCombinedRegeling[]] {
   const rtmAanvragen = [];
   const remainder = [];
 
@@ -78,6 +84,8 @@ export function filterCombineRtmData(
     Object.values(aanvragenPerBetrokkenen).flatMap(combineRTMData),
   ];
 }
+
+type RTMCombinedRegeling = [ZorgnedHLIRegeling, StatusLineItem[]];
 
 /** Combine related aanvragen into one aanvraag all the way untill the aanvraag that cancels (Einde recht) it.
  *
@@ -102,7 +110,7 @@ export function filterCombineRtmData(
  */
 function combineRTMData(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
-): ZorgnedHLIRegeling[] {
+): RTMCombinedRegeling[] {
   aanvragen = aanvragen
     // Sort asc so we always end with an 'Einde recht'.
     // This keeps it in the same order as how we describe the scenarios, so you don't need to think in reverse.
@@ -110,7 +118,6 @@ function combineRTMData(
 
   aanvragen = dedupCombineRTMDeel2(aanvragen);
 
-  const initialAccumulator: ZorgnedHLIRegeling[] = [];
   const regelingen = aanvragen.map((aanvraag) => {
     const regeling: ZorgnedHLIRegeling = {
       ...aanvraag,
@@ -118,39 +125,158 @@ function combineRTMData(
     };
     return regeling;
   });
-  const combinedAanvragen = regelingen.reduce((acc, regeling) => {
-    const prev = acc.at(-1);
-    if (!prev) {
-      if (
-        isRTMDeel1(regeling) ||
-        regeling.procesAanvraagOmschrijving === 'Migratie RTM'
-      ) {
-        return [regeling];
+
+  const combinedRegelingen: RTMCombinedRegeling[] = [];
+
+  for (const regeling of regelingen) {
+    const lastItem = combinedRegelingen.pop();
+
+    if (!lastItem) {
+      const statusLineItems = getStatusLineItem(regeling, 'startOfChain');
+      if (!statusLineItems.length) {
+        continue;
       }
-      return acc;
+      // Documents are transferred to the statusLineStep.
+      const withoutDocuments = { ...regeling, documenten: [] };
+      combinedRegelingen.push([withoutDocuments, statusLineItems]);
+      continue;
     }
 
-    // Aanvraag is a 'Einde recht'.
+    const [lastRegeling, lastStatusLineItems] = lastItem;
+
+    // Previous aanvraag was a 'Einde recht'.
+    // We look for Einde recht as an endpoint instead of definin a start point.
+    // This is because the 'RTM_1_AANVRAAG' can mean two things depending on when
+    // in the aanvraag chain it is. (For example 'Aanvraag' or 'Aanvraag Herkeuring'.)
     if (
-      isRTMDeel2(prev) &&
-      prev.procesAanvraagOmschrijving === 'Beëindigen RTM' &&
-      prev.isActueel === false
+      isRTMDeel2(lastRegeling) &&
+      lastRegeling.procesAanvraagOmschrijving === 'Beëindigen RTM' &&
+      lastRegeling.isActueel === false
     ) {
-      return [...acc, regeling];
+      const withoutDocuments = { ...regeling, documenten: [] };
+      combinedRegelingen.push([
+        withoutDocuments,
+        getStatusLineItem(regeling, 'startOfChain'),
+      ]);
+      continue;
     }
 
-    return [
-      ...acc.slice(0, -1),
-      {
-        ...regeling,
-        datumInBehandeling: prev.datumInBehandeling,
-        datumAanvraag: prev.datumAanvraag ?? regeling.datumAanvraag,
-        documenten: [...regeling.documenten, ...prev.documenten],
-      },
+    const [statusLineItem] = getStatusLineItem(regeling, 'afterAanvraag');
+    const statusLineItems: StatusLineItem[] = [
+      ...lastStatusLineItems,
+      statusLineItem,
     ];
-  }, initialAccumulator);
+    combinedRegelingen.push([
+      {
+        ...lastRegeling,
+        datumInBehandeling: lastRegeling.datumInBehandeling,
+        datumAanvraag: lastRegeling.datumAanvraag ?? regeling.datumAanvraag,
+      },
+      statusLineItems,
+    ]);
+  }
 
-  return combinedAanvragen;
+  return combinedRegelingen.map(([regeling, statusLineItems]) => {
+    return [regeling, checkUntillAndIncludingActiveStep(statusLineItems)];
+  });
+}
+
+function checkUntillAndIncludingActiveStep(
+  statusLineItems: StatusLineItem[]
+): StatusLineItem[] {
+  const newSteps: StatusLineItem[] = [];
+  for (const item of statusLineItems) {
+    newSteps.push({ ...item, isChecked: true });
+    if (item.isActive) {
+      break;
+    }
+  }
+  return newSteps;
+}
+
+type Context = 'startOfChain' | 'afterAanvraag';
+
+function getStatusLineItem(
+  regeling: ZorgnedHLIRegeling,
+  context: Context
+): StatusLineItem[] {
+  const lineItems: Record<string, StatusLineItem> = {
+    aanvraag: {
+      id: 'status-step-1',
+      status: 'Aanvraag',
+      datePublished: regeling.datumInBehandeling || regeling.datumBesluit,
+      documents: regeling.documenten,
+      isChecked: true,
+      isActive: false,
+      isVisible: true,
+    },
+    inBehandelingGenomen: {
+      id: 'status-step-2',
+      status: 'In behandeling genomen',
+      datePublished: regeling.datumInBehandeling || regeling.datumBesluit,
+      documents: [],
+      isChecked: true,
+      isActive: isRTMDeel1(regeling), // RP TODO: This is always true, determine active status last?
+      isVisible: true,
+    },
+    besluit: {
+      id: 'status-step-3',
+      status: 'Besluit',
+      datePublished: regeling.datumBesluit,
+      documents: [],
+      description: getBesluitDescription(regeling),
+      isChecked: false,
+      isActive:
+        regeling.isActueel === true || regeling.resultaat === 'afgewezen',
+      isVisible: true,
+    },
+    eindeRecht: {
+      description: getBesluitDescription(regeling),
+      id: 'status-step-4',
+      status: 'Einde recht',
+      datePublished: regeling.datumInBehandeling || regeling.datumBesluit,
+      documents: [],
+      isChecked: false,
+      isActive: regeling.isActueel === false,
+      isVisible: true,
+    },
+  };
+
+  if (context === 'startOfChain') {
+    if (isRTMDeel1(regeling)) {
+      return [lineItems.aanvraag, lineItems.inBehandelingGenomen];
+    }
+    if (regeling.procesAanvraagOmschrijving === 'Migratie RTM') {
+      return [lineItems.besluit];
+    }
+    return [];
+  }
+
+  if (context === 'afterAanvraag') {
+    if (!regeling.procesAanvraagOmschrijving) {
+      throw Error('Regeling has nog procesAanvraagOmschrijving');
+    }
+    switch (regeling.procesAanvraagOmschrijving) {
+      case 'Beëindigen RTM': {
+        console.log('1:');
+        console.log(regeling);
+        return [lineItems.eindeRecht];
+      }
+      case 'RTM Herkeuring': {
+        break;
+      }
+      case 'Aanvraag RTM fase 1': {
+        break;
+      }
+      case 'Aanvraag RTM fase 2': {
+        console.log('2:');
+        console.log(regeling);
+        return [lineItems.besluit];
+      }
+    }
+  }
+
+  throw Error('Did not find a fitting regelingen.procesAanvraagOmschrijving');
 }
 
 type AanvragenMap = {

@@ -9,7 +9,6 @@ import { fetchStadspas } from './stadspas';
 import {
   filterCombineRtmData,
   isRTMDeel1,
-  isRTMDeel2,
   RTM_STATUS_IN_BEHANDELING,
 } from './status-line-items/regeling-rtm';
 import {
@@ -156,14 +155,27 @@ function transformRegelingenForFrontend(
 ): HLIRegelingFrontend[] {
   const [remainder, rtmAanvragenCombined] = filterCombineRtmData(aanvragen);
   const aanvragenCombined = filterCombineUpcPcvData(remainder);
-  const aanvragenWithDocumentsCombined = [
-    ...rtmAanvragenCombined,
-    ...aanvragenCombined,
-  ];
 
   const regelingenFrontend: HLIRegelingFrontend[] = [];
 
-  for (const aanvraag of aanvragenWithDocumentsCombined) {
+  for (const [regeling, statusLineItems_] of rtmAanvragenCombined) {
+    const statusLineItems = statusLineItems_.map((item) => {
+      return {
+        ...item,
+        documents:
+          item.documents &&
+          getDocumentsFrontend(authProfileAndToken.profile.sid, item.documents),
+      };
+    });
+    const regelingFrontend = transformRegelingForFrontend(
+      authProfileAndToken.profile.sid,
+      regeling,
+      statusLineItems
+    );
+    regelingenFrontend.push(regelingFrontend);
+  }
+
+  for (const aanvraag of aanvragenCombined) {
     const statusLineItems = getStatusLineItems(
       'HLI',
       hliStatusLineItemsConfig,
@@ -176,68 +188,16 @@ function transformRegelingenForFrontend(
       continue;
     }
 
-    const [updatedAanvraag, updatedStatusLineItems] =
-      addDocumentsToRTMStatusLineItems(statusLineItems, aanvraag);
-
     const regelingForFrontend = transformRegelingForFrontend(
       authProfileAndToken.profile.sid,
-      updatedAanvraag,
-      updatedStatusLineItems
+      aanvraag,
+      statusLineItems
     );
 
     regelingenFrontend.push(regelingForFrontend);
   }
 
   return dedupeDocumentsInDataSets(regelingenFrontend, 'documents');
-}
-
-function addDocumentsToRTMStatusLineItems(
-  statusLineItems: StatusLineItem[],
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-): [ZorgnedAanvraagWithRelatedPersonsTransformed, StatusLineItem[]] {
-  if (!(isRTMDeel1(aanvraag) || isRTMDeel2(aanvraag))) {
-    return [aanvraag, statusLineItems];
-  }
-
-  type DocumentGroups = {
-    rtm: {
-      aanvraag: GenericDocument[];
-    };
-    other: GenericDocument[];
-  };
-
-  const initial: DocumentGroups = {
-    rtm: {
-      aanvraag: [],
-    },
-    other: [],
-  };
-
-  const documents = aanvraag.documenten.reduce((documentGroups, document) => {
-    if (document.title === 'AV-RTM Info aan klant GGD') {
-      documentGroups.rtm.aanvraag.push(document);
-    } else {
-      documentGroups.other.push(document);
-    }
-    return documentGroups;
-  }, initial);
-
-  const updatedAanvraag = {
-    ...aanvraag,
-    documenten: documents.other,
-  };
-
-  const updatedStatusLineItems = statusLineItems.map((item) => {
-    if (item.status === 'Aanvraag') {
-      return {
-        ...item,
-        documents: documents.rtm.aanvraag,
-      };
-    }
-    return item;
-  });
-
-  return [updatedAanvraag, updatedStatusLineItems];
 }
 
 async function fetchRegelingen(authProfileAndToken: AuthProfileAndToken) {
