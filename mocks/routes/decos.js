@@ -1,9 +1,9 @@
-const ZAKEN = require('../fixtures/decos/decos-zaken-raw.json');
 const ADDRESS_BOOKS = require('../fixtures/decos-vergunningen-addressbook-response.json');
 const DOCUMENTS_LIST = require('../fixtures/decos-vergunningen-documents-list-response.json');
 const TERMIJNENS = require('../fixtures/decos-vergunningen-termijnens-response.json');
 const VARENS = require('../fixtures/decos-vergunningen-varens-response.json');
 const WORKFLOW_INSTANCES = require('../fixtures/decos-vergunningen-workflowinstances-response.json');
+const WORKFLOWS = require('../fixtures/decos-vergunningen-workflows-response.json');
 const ZAKEN = require('../fixtures/decos-vergunningen-zaken-response.json');
 const settings = require('../settings.js');
 
