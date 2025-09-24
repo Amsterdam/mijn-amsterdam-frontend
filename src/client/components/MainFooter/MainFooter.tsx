@@ -15,6 +15,7 @@ import type {
 import type { ApiResponse } from '../../../universal/helpers/api';
 import { BFF_API_BASE_URL } from '../../config/api';
 import { useCanonmatigingFooterLink } from '../../pages/Thema/Erfpacht/Erfpacht-render-config';
+import { featureToggle } from '../../pages/Thema/Erfpacht/Erfpacht-thema-config';
 
 function useCustomFooterSections(
   sections: CMSFooterSection[],
@@ -70,7 +71,10 @@ export function MainFooter() {
 
   const canonmatigingLink = useCanonmatigingFooterLink();
 
-  const customLinks = canonmatigingLink ? [canonmatigingLink] : [];
+  const customLinks =
+    featureToggle.canonmatigingLinkActive && canonmatigingLink
+      ? [canonmatigingLink]
+      : [];
 
   const customSections = useCustomFooterSections(
     footer?.content?.sections || [],
