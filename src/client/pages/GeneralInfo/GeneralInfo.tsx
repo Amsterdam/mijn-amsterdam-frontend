@@ -52,7 +52,7 @@ export type SectionProps = {
   active: boolean;
 };
 
-// voor overgezette thema's
+// voor overgezette thema's//function createSectionProps<T>(themaConfig: T extends ThemaConfigBase): SectionProps
 function createSectionProps(themaConfig: ThemaConfigBase): SectionProps {
   return {
     id: themaConfig.id,
