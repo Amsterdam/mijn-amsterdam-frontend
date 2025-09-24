@@ -404,13 +404,50 @@ describe('filterCombineRtmData', () => {
     expect(remainder[0].productIdentificatie).toBe('AV-UNKNOWN');
   });
 
+  test('Transforms into a ZorgnedHLIRegeling', () => {
+    const aanvragen = attachIDs([RTM_1_AANVRAAG]);
+    const [, result] = filterCombineRtmData(aanvragen);
+    expect(result.length).toBe(1);
+    expect(result[0].datumInBehandeling).toBeDefined();
+  });
+
+  test('Combines the relevant fields from previous regelingen', () => {
+    const aanvragen = attachIDs([
+      RTM_1_AANVRAAG,
+      RTM_2_TOEGEWEZEN,
+      RTM_2_EINDE_RECHT,
+    ]);
+    const [, result] = filterCombineRtmData(aanvragen);
+    expect(result).toMatchObject([
+      {
+        datumAanvraag: RTM_1_AANVRAAG.datumAanvraag,
+        datumInBehandeling: RTM_1_AANVRAAG.datumBesluit,
+        beschiktProductIdentificatie: 'voorziening-3',
+        datumBeginLevering: RTM_2_EINDE_RECHT.datumToewijzing,
+        datumBesluit: RTM_2_EINDE_RECHT.datumBesluit,
+        datumEindeGeldigheid: RTM_2_EINDE_RECHT.datumEindeGeldigheid,
+        datumEindeLevering: RTM_2_EINDE_RECHT.datumEindeLevering,
+        datumIngangGeldigheid: RTM_2_EINDE_RECHT.datumIngangGeldigheid,
+        datumOpdrachtLevering: RTM_2_EINDE_RECHT.datumOpdrachtLevering,
+        datumToewijzing: RTM_2_EINDE_RECHT.datumToewijzing,
+        isActueel: RTM_2_EINDE_RECHT.isActueel,
+        procesAanvraagOmschrijving:
+          RTM_2_EINDE_RECHT.procesAanvraagOmschrijving,
+        productIdentificatie: RTM_2_EINDE_RECHT.productIdentificatie,
+        productsoortCode: RTM_2_EINDE_RECHT.productsoortCode,
+        resultaat: RTM_2_EINDE_RECHT.resultaat,
+        titel: RTM_2_EINDE_RECHT.titel,
+      },
+    ]);
+  });
+
   test('Recognizes and does no merging or changes for a Aanvraag and Migratie', () => {
     const aanvragen = attachIDs([
       attachBetrokkenen(RTM_1_AANVRAAG, ['1']),
       attachBetrokkenen(RTM_2_MIGRATIE, ['2']),
     ]);
     const [, result] = filterCombineRtmData(aanvragen);
-    expect(result).toStrictEqual(aanvragen);
+    expect(result).toMatchObject(aanvragen);
   });
 
   test('Keeps aanvraag voor other people and merges toegewezen for self', () => {
@@ -421,7 +458,7 @@ describe('filterCombineRtmData', () => {
     const aanvragen = attachIDs([rtm1Aanvraag, rtm2Toegewezen]);
     const [, result] = filterCombineRtmData(aanvragen);
     expect(result.length).toBe(2);
-    expect(result).toStrictEqual([
+    expect(result).toMatchObject([
       {
         ...aanvragen[0],
         betrokkenen: ['2', '3'],
@@ -487,7 +524,7 @@ describe('filterCombineRtmData', () => {
   test('Combines: Aanvraag -> Toegewezen', () => {
     const aanvragen = attachIDs([RTM_1_AANVRAAG, RTM_2_TOEGEWEZEN]);
     const [, result] = filterCombineRtmData(aanvragen);
-    expect(result).toStrictEqual([
+    expect(result).toMatchObject([
       {
         ...aanvragen.at(-1),
         betrokkenPersonen: base.betrokkenPersonen,
@@ -504,7 +541,7 @@ describe('filterCombineRtmData', () => {
   test('Combines: Aanvraag -> Einde Recht', () => {
     const aanvragen = attachIDs([RTM_1_AANVRAAG, RTM_2_EINDE_RECHT]);
     const [, result] = filterCombineRtmData(aanvragen);
-    expect(result).toStrictEqual([
+    expect(result).toMatchObject([
       {
         ...aanvragen.at(-1),
         betrokkenen: base.betrokkenen,
@@ -528,7 +565,7 @@ describe('filterCombineRtmData', () => {
       aanvragen[1].beschiktProductIdentificatie;
 
     const [, result] = filterCombineRtmData(aanvragen);
-    expect(result).toStrictEqual([
+    expect(result).toMatchObject([
       {
         ...aanvragen.at(-1),
         id: '2',
@@ -552,7 +589,7 @@ describe('filterCombineRtmData', () => {
       RTM_WIJZIGINGS_TOEKENNING,
     ]);
     const [, result] = filterCombineRtmData(aanvragen);
-    expect(result).toStrictEqual([
+    expect(result).toMatchObject([
       {
         ...aanvragen.at(-1),
         betrokkenPersonen: base.betrokkenPersonen,
@@ -585,7 +622,7 @@ describe('filterCombineRtmData', () => {
     ]);
     const [, result] = filterCombineRtmData(aanvragen);
     expect(result.length).toBe(1);
-    expect(result[0]).toStrictEqual({
+    expect(result[0]).toMatchObject({
       ...aanvragen.at(-1),
       datumAanvraag: RTM_1_AANVRAAG.datumAanvraag,
       documenten: [

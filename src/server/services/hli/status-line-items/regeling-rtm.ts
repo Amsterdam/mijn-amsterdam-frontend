@@ -111,14 +111,21 @@ function combineRTMData(
   aanvragen = dedupCombineRTMDeel2(aanvragen);
 
   const initialAccumulator: ZorgnedHLIRegeling[] = [];
-  const combinedAanvragen = aanvragen.reduce((acc, aanvraag) => {
+  const regelingen = aanvragen.map((aanvraag) => {
+    const regeling: ZorgnedHLIRegeling = {
+      ...aanvraag,
+      datumInBehandeling: aanvraag.datumBesluit,
+    };
+    return regeling;
+  });
+  const combinedAanvragen = regelingen.reduce((acc, regeling) => {
     const prev = acc.at(-1);
     if (!prev) {
       if (
-        isRTMDeel1(aanvraag) ||
-        aanvraag.procesAanvraagOmschrijving === 'Migratie RTM'
+        isRTMDeel1(regeling) ||
+        regeling.procesAanvraagOmschrijving === 'Migratie RTM'
       ) {
-        return [aanvraag];
+        return [regeling];
       }
       return acc;
     }
@@ -129,15 +136,16 @@ function combineRTMData(
       prev.procesAanvraagOmschrijving === 'Beëindigen RTM' &&
       prev.isActueel === false
     ) {
-      return [...acc, aanvraag];
+      return [...acc, regeling];
     }
 
     return [
       ...acc.slice(0, -1),
       {
-        ...aanvraag,
-        datumAanvraag: prev.datumAanvraag ?? aanvraag.datumAanvraag,
-        documenten: [...aanvraag.documenten, ...prev.documenten],
+        ...regeling,
+        datumInBehandeling: prev.datumInBehandeling,
+        datumAanvraag: prev.datumAanvraag ?? regeling.datumAanvraag,
+        documenten: [...regeling.documenten, ...prev.documenten],
       },
     ];
   }, initialAccumulator);
