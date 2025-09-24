@@ -1,31 +1,22 @@
-import { Response } from 'express';
-
 import { fetchAfisBusinessPartnerDetails } from './afis-business-partner';
 import { FACTUUR_STATE_KEYS, fetchAfisFacturenByState } from './afis-facturen';
 import { AfisFactuurState } from './afis-types';
-import { getAuth } from '../../auth/auth-helpers';
 import {
   RequestWithQueryParams,
   RequestWithRouteAndQueryParams,
   sendBadRequest,
   sendResponse,
-  sendUnauthorized,
+  type ResponseAuthenticated,
 } from '../../routing/route-helpers';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 
 export async function handleFetchAfisBusinessPartner(
   req: RequestWithQueryParams<{ id: string }>,
-  res: Response
+  res: ResponseAuthenticated
 ) {
-  const authProfileAndToken = getAuth(req);
-
-  if (!authProfileAndToken) {
-    return sendUnauthorized(res);
-  }
-
   const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
     req.query.id,
-    authProfileAndToken
+    res.locals.authProfileAndToken
   );
 
   if (decryptResult.status === 'ERROR') {
@@ -57,21 +48,15 @@ export async function handleFetchAfisFacturen(
     },
     { id: string; top?: string }
   >,
-  res: Response
+  res: ResponseAuthenticated
 ) {
   if (!FACTUUR_STATE_KEYS.includes(req.params.state)) {
     return sendBadRequest(res, 'Unknown state param provided');
   }
 
-  const authProfileAndToken = getAuth(req);
-
-  if (!authProfileAndToken) {
-    return sendUnauthorized(res);
-  }
-
   const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
     req.query.id,
-    authProfileAndToken
+    res.locals.authProfileAndToken
   );
 
   if (decryptResult.status === 'ERROR') {
@@ -85,7 +70,7 @@ export async function handleFetchAfisFacturen(
   }
 
   const response = await fetchAfisFacturenByState(
-    authProfileAndToken.profile.sid,
+    res.locals.authProfileAndToken.profile.sid,
     { state: req.params.state, businessPartnerID, top }
   );
 

@@ -1,5 +1,6 @@
 import { HttpStatusCode } from 'axios';
 import type { Request, Response } from 'express';
+import express from 'express';
 import { generatePath, matchPath } from 'react-router';
 
 import { PUBLIC_BFF_ENDPOINTS } from './bff-routes';
@@ -7,8 +8,8 @@ import {
   ApiResponse_DEPRECATED,
   apiErrorResult,
 } from '../../universal/helpers/api';
+import type { AuthProfileAndToken } from '../auth/auth-types';
 import { BFF_API_BASE_URL } from '../config/app';
-import express from 'express';
 
 type BFFRouter = express.Router & { BFF_ID: string };
 
@@ -31,6 +32,14 @@ export type RequestWithRouteAndQueryParams<
   T2 extends Record<string, string> = Record<string, string>,
 > = Request<T, {}, {}, T2>;
 /* eslint-enable @typescript-eslint/no-empty-object-type */
+
+export type ResponseAuthenticated = Response & {
+  locals: {
+    [key: string]: unknown;
+    authProfileAndToken: AuthProfileAndToken;
+    userID: AuthProfileAndToken['profile']['id'];
+  };
+};
 
 export function queryParams<T extends Record<string, any>>(req: Request) {
   return req.query as T;
@@ -116,6 +125,7 @@ export function send404(res: Response) {
     apiErrorResult('Not Found', null, HttpStatusCode.NotFound)
   );
 }
+
 export function sendMessage(
   res: Response,
   id: string,
