@@ -1,10 +1,9 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
-import { MutableSnapshot } from 'recoil';
 
 import { routeConfig } from './Bezwaren-thema-config';
 import { BezwarenDetail } from './BezwarenDetail';
-import { appStateAtom } from '../../../hooks/useAppState';
+import type { AppState } from '../../../../universal/types/App.types';
 import MockApp from '../../MockApp';
 
 const testState = {
@@ -93,12 +92,6 @@ const testState = {
   },
 };
 
-function initializeState(testState: any) {
-  return (snapshot: MutableSnapshot) => {
-    snapshot.set(appStateAtom, testState);
-  };
-}
-
 function setupTestComponent(id: string) {
   const routeEntry = generatePath(routeConfig.detailPage.path, {
     uuid: id,
@@ -111,7 +104,7 @@ function setupTestComponent(id: string) {
         routeEntry={routeEntry}
         routePath={routePath}
         component={BezwarenDetail}
-        initializeState={initializeState(testState)}
+        state={testState as unknown as AppState}
       />
     );
   };

@@ -8,8 +8,6 @@ import {
 import { ErfpachtDetail } from './ErfpachtDetail';
 import { default as ErfpachtIcon } from './ErfpachtIcon.svg?react';
 import { ErfpachtList } from './ErfpachtList';
-import { ErfpachtListFacturen } from './ErfpachtListFacturen';
-import { ErfpachtListOpenFacturen } from './ErfpachtListOpenFacturen';
 import { ErfpachtThema } from './ErfpachtThema';
 import { useErfpachtThemaData } from './useErfpachtThemaData.hook';
 import { IS_PRODUCTION } from '../../../../universal/config/env';
@@ -21,16 +19,6 @@ import {
 } from '../../../config/thema-types';
 
 export const ErfpachtRoutes = [
-  {
-    route: routeConfig.listPageOpenFacturen.path,
-    Component: ErfpachtListOpenFacturen,
-    isActive: featureToggle.erfpachtActive,
-  },
-  {
-    route: routeConfig.listPageAlleFacturen.path,
-    Component: ErfpachtListFacturen,
-    isActive: featureToggle.erfpachtActive,
-  },
   {
     route: routeConfig.listPage.path,
     Component: ErfpachtList,

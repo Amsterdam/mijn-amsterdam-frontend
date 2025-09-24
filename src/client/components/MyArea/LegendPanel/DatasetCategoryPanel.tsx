@@ -11,15 +11,15 @@ import { DatasetControlPanel } from './DatasetControlPanel';
 import styles from './PanelComponent.module.scss';
 import { PanelList, PanelListItem } from './PanelList';
 
-export const CategoryPanel = ({ children }: { children: ReactNode }) => {
+export function CategoryPanel({ children }: { children: ReactNode }) {
   return <PanelList className={styles.CategoryPanel}>{children}</PanelList>;
-};
+}
 
 export function DatasetCategoryPanel() {
   const profileType = useProfileTypeValue();
   const onControlItemChange = useControlItemChange();
   const onFilterControlItemChange = useFilterControlItemChange();
-  const [activeDatasetIds] = useActiveDatasetIds();
+  const { activeDatasetIds } = useActiveDatasetIds();
   const datasets = useMemo(() => {
     return Object.entries(DATASETS).filter(([categoryId, category]) => {
       return (
@@ -28,6 +28,7 @@ export function DatasetCategoryPanel() {
       );
     });
   }, [profileType]);
+
   return (
     <CategoryPanel>
       {datasets

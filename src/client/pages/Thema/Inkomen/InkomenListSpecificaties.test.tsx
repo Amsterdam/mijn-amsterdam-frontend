@@ -1,7 +1,6 @@
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { generatePath } from 'react-router';
-import { MutableSnapshot } from 'recoil';
 import { describe, expect, it } from 'vitest';
 
 import { listPageParamKind, routeConfig } from './Inkomen-thema-config';
@@ -10,7 +9,6 @@ import { transformIncomSpecificationResponse } from '../../../../server/services
 import { WpiIncomeSpecificationResponseData } from '../../../../server/services/wpi/wpi-types';
 import { dateSort } from '../../../../universal/helpers/date';
 import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
 vi.mock('../../../components/DateInput/DateInput', async (importOriginal) => {
@@ -83,15 +81,6 @@ const content = transformIncomSpecificationResponse('xxxxxxxxxxxxxxxxxxxxx', {
   status: 'OK',
 });
 
-function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, {
-    WPI_SPECIFICATIES: {
-      content,
-      status: 'OK',
-    },
-  } as unknown as AppState);
-}
-
 describe('<InkomenSpecificaties /> Uitkering', () => {
   const routeEntry = generatePath(routeConfig.listPageSpecificaties.path, {
     kind: listPageParamKind.uitkering,
@@ -105,7 +94,14 @@ describe('<InkomenSpecificaties /> Uitkering', () => {
         routeEntry={routeEntry}
         routePath={routePath}
         component={InkomenListSpecificaties}
-        initializeState={initializeState}
+        state={
+          {
+            WPI_SPECIFICATIES: {
+              content,
+              status: 'OK',
+            },
+          } as unknown as AppState
+        }
       />
     );
   }
@@ -151,7 +147,14 @@ describe('<InkomenSpecificaties /> Jaaropgave', () => {
         routeEntry={routeEntry}
         routePath={routePath}
         component={InkomenListSpecificaties}
-        initializeState={initializeState}
+        state={
+          {
+            WPI_SPECIFICATIES: {
+              content,
+              status: 'OK',
+            },
+          } as unknown as AppState
+        }
       />
     );
   }

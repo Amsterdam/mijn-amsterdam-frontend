@@ -132,16 +132,17 @@ export function createFailedDependenciesError(
 export function getApiErrors(appState: AppState): ApiError[] {
   if (appState) {
     const filteredResponses = Object.entries(appState).filter(
-      ([, apiResponseData]: [string, unknown]) => {
+      ([k, apiResponseData]: [string, unknown]) => {
         return (
-          typeof apiResponseData !== 'object' ||
-          apiResponseData == null ||
-          ('status' in apiResponseData &&
-            (apiResponseData?.status === 'ERROR' ||
-              apiResponseData?.status === 'DEPENDENCY_ERROR' ||
-              (apiResponseData?.status === 'OK' &&
-                'failedDependencies' in apiResponseData &&
-                !!apiResponseData?.failedDependencies)))
+          !['setAppState', 'isReady', 'setIsAppStateReady'].includes(k) &&
+          (typeof apiResponseData !== 'object' ||
+            apiResponseData == null ||
+            ('status' in apiResponseData &&
+              (apiResponseData?.status === 'ERROR' ||
+                apiResponseData?.status === 'DEPENDENCY_ERROR' ||
+                (apiResponseData?.status === 'OK' &&
+                  'failedDependencies' in apiResponseData &&
+                  !!apiResponseData?.failedDependencies))))
         );
       }
     );

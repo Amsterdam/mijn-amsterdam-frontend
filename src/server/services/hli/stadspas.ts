@@ -223,7 +223,8 @@ async function blockUnBlockStadspas(
     }
 
     return apiSuccessResult({
-      [`${pasnummer}`]: !!mutateResponse.content?.isBlocked,
+      passNumber: pasnummer,
+      actief: !mutateResponse.content?.isBlocked,
     });
   }
 

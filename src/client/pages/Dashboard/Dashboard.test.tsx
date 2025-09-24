@@ -1,16 +1,15 @@
 import { act, render, screen } from '@testing-library/react';
 import Mockdate from 'mockdate';
 import { generatePath } from 'react-router';
-import { MutableSnapshot, RecoilState } from 'recoil';
 import { describe, it } from 'vitest';
 
 import { AppState } from '../../../universal/types/App.types';
-import { appStateAtom, appStateReadyAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import { Dashboard } from './Dashboard';
 import { themaId } from './Dashboard-config';
 import { DashboardRoute } from './Dashboard-routes';
 import { remoteApiHost } from '../../../testing/setup';
+import { bffApi } from '../../../testing/utils';
 import { toDateFormatted } from '../../../universal/helpers/utils';
 
 const testState = {
@@ -93,14 +92,6 @@ const testState = {
   },
 } as unknown as AppState;
 
-vi.mock('axios');
-// vi.mock('../../components/Search/useSearch');
-
-function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom as RecoilState<Partial<AppState>>, testState);
-  snapshot.set(appStateReadyAtom, true);
-}
-
 describe('<Dashboard />', () => {
   const routeEntry = generatePath(DashboardRoute.route);
   const routePath = DashboardRoute.route;
@@ -111,7 +102,7 @@ describe('<Dashboard />', () => {
         routeEntry={routeEntry}
         routePath={routePath}
         component={Dashboard}
-        initializeState={initializeState}
+        state={testState}
       />
     );
   }
@@ -125,7 +116,8 @@ describe('<Dashboard />', () => {
   });
 
   it('Renders dashboard correctly', async () => {
-    await act(() => render(<Component />));
+    bffApi.get('/services/cms/footer').reply(200);
+    render(<Component />);
     expect(screen.getByRole('heading', { name: 'Goedemorgen' }));
     expect(screen.getByRole('heading', { name: `Mijn thema's` }));
     expect(
@@ -136,15 +128,21 @@ describe('<Dashboard />', () => {
   });
 
   describe('Notifications', () => {
-    test.each(
+    const notifications =
       testState.NOTIFICATIONS.content?.map((notification) => [
         notification.title,
         toDateFormatted(notification.datePublished),
-      ]) || []
-    )('Notification %s with date %s exists', async (title, datePublished) => {
-      await act(() => render(<Component />));
-      expect(screen.getByRole('heading', { name: title })).toBeInTheDocument();
-      expect(screen.getByText(datePublished)).toBeInTheDocument();
-    });
+      ]) || [];
+    bffApi.get('/services/cms/footer').times(notifications.length).reply(200);
+    test.each(notifications)(
+      'Notification %s with date %s exists',
+      async (title, datePublished) => {
+        await act(() => render(<Component />));
+        expect(
+          screen.getByRole('heading', { name: title })
+        ).toBeInTheDocument();
+        expect(screen.getByText(datePublished)).toBeInTheDocument();
+      }
+    );
   });
 });

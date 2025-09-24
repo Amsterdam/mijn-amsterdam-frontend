@@ -8,7 +8,7 @@ import styles from './MyAreaDashboard.module.scss';
 import { MyAreaLoader } from './MyAreaLoader';
 import { isLoading } from '../../../universal/helpers/api';
 import { isMokum } from '../../../universal/helpers/brp';
-import { useAppStateGetter } from '../../hooks/useAppState';
+import { useAppStateGetter } from '../../hooks/useAppStateStore';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import LoadingContent from '../LoadingContent/LoadingContent';
 

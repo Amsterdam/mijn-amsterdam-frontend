@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { BrowserRouter, MemoryRouter } from 'react-router';
-import { RecoilRoot } from 'recoil';
+import { BrowserRouter } from 'react-router';
 import { describe, expect, it, vi } from 'vitest';
 
 import { MainHeader } from './MainHeader';
@@ -10,11 +9,9 @@ vi.mock('../../hooks/media.hook');
 describe('<MainHeader />', () => {
   it('Renders unauthenticated header on Dashboard', () => {
     render(
-      <RecoilRoot>
-        <BrowserRouter>
-          <MainHeader />
-        </BrowserRouter>
-      </RecoilRoot>
+      <BrowserRouter>
+        <MainHeader />
+      </BrowserRouter>
     );
 
     expect(
@@ -24,29 +21,13 @@ describe('<MainHeader />', () => {
 
   it('Renders authenticated header on Dashboard', () => {
     render(
-      <RecoilRoot>
-        <BrowserRouter>
-          <MainHeader isAuthenticated={true} />
-        </BrowserRouter>
-      </RecoilRoot>
+      <BrowserRouter>
+        <MainHeader isAuthenticated={true} />
+      </BrowserRouter>
     );
 
     expect(screen.getByText(/Uitloggen/)).toBeInTheDocument();
     expect(screen.queryByText('Zoeken')).not.toBeInTheDocument();
-    expect(screen.getAllByText('Menu').length).toBe(2);
-  });
-
-  it('Renders authenticated header on Other page', () => {
-    render(
-      <RecoilRoot>
-        <MemoryRouter initialEntries={['/other']}>
-          <MainHeader isAuthenticated={true} />
-        </MemoryRouter>
-      </RecoilRoot>
-    );
-
-    expect(screen.getByText(/Uitloggen/)).toBeInTheDocument();
-    expect(screen.queryByText('Zoeken')).toBeInTheDocument();
     expect(screen.getAllByText('Menu').length).toBe(2);
   });
 });

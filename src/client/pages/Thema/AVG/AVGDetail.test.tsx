@@ -1,6 +1,5 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
-import { MutableSnapshot } from 'recoil';
 
 import { routeConfig } from './AVG-thema-config';
 import { AVGDetail } from './AVGDetail';
@@ -9,7 +8,6 @@ import {
   AppState,
   StatusLineItem,
 } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
 const steps: StatusLineItem[] = [
@@ -105,10 +103,6 @@ export const testState = {
   },
 } as unknown as AppState;
 
-function initializeState(testState: AppState) {
-  return (snapshot: MutableSnapshot) => snapshot.set(appStateAtom, testState);
-}
-
 function setupTestComponent(id: string) {
   const routeEntry = generatePath(routeConfig.detailPage.path, {
     id,
@@ -121,7 +115,7 @@ function setupTestComponent(id: string) {
         routeEntry={routeEntry}
         routePath={routePath}
         component={AVGDetail}
-        initializeState={initializeState(testState)}
+        state={testState}
       />
     );
   };

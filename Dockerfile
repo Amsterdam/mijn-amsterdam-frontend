@@ -40,6 +40,7 @@ COPY vite.config.ts /build-space/
 COPY .env.local.template /build-space/
 COPY vendor /build-space/vendor
 COPY mocks/fixtures /build-space/mocks/fixtures
+COPY __mocks__ /build-space/__mocks__
 
 # Install the dependencies
 RUN pnpm install --frozen-lockfile --prefer-offline --reporter=append-only

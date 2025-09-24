@@ -9,13 +9,12 @@ import {
 import { ErfpachtDossiersResponse } from '../../../../server/services/erfpacht/erfpacht-types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
-import { useAppStateGetter } from '../../../hooks/useAppState';
+import { useAppStateGetter } from '../../../hooks/useAppStateStore';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 
 export function useErfpachtThemaData() {
   const { ERFPACHT } = useAppStateGetter();
   const erfpachtData = ERFPACHT.content as ErfpachtDossiersResponse | null;
-
   // Dossiers
   const dossiersBase = erfpachtData?.dossiers ?? null;
 

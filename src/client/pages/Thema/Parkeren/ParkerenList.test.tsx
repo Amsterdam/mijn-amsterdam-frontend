@@ -1,12 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router';
-import { MutableSnapshot } from 'recoil';
 import { describe, expect, it } from 'vitest';
 
 import { routeConfig } from './Parkeren-thema-config';
 import { ParkerenList } from './ParkerenList';
 import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 import { listPageParamKind } from '../Vergunningen/Vergunningen-thema-config';
 
@@ -67,10 +65,6 @@ const testState = {
   },
 } as unknown as AppState;
 
-function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState);
-}
-
 describe('ParkerenList', () => {
   const routeEntry = generatePath(routeConfig.listPage.path, {
     kind: listPageParamKind.inProgress,
@@ -85,7 +79,7 @@ describe('ParkerenList', () => {
         routeEntry={routeEntry}
         routePath={routePath}
         component={ParkerenList}
-        initializeState={initializeState}
+        state={testState}
       />
     );
   }

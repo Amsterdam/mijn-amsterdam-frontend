@@ -102,14 +102,17 @@ describe('fetchIsKnownInAFIS ', () => {
           afgehandeld: {
             count: 0,
             facturen: [],
+            state: 'afgehandeld',
           },
           open: {
             count: 0,
             facturen: [],
+            state: 'open',
           },
           overgedragen: {
             count: 0,
             facturen: [],
+            state: 'overgedragen',
           },
         },
         isKnown: true,
