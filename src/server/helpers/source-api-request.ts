@@ -24,11 +24,7 @@ import {
 } from '../config/source-api';
 import { captureException } from '../services/monitoring';
 
-const debugRawResponse = createDebugger('source-api-request:raw-response');
-const debugParsedResponse = createDebugger(
-  'source-api-request:parsed-response'
-);
-const debugRequest = createDebugger('source-api-request:request');
+const debugResponse = createDebugger('source-api-request:response');
 const debugCacheHit = createDebugger('source-api-request:cache-hit');
 const debugCacheKey = createDebugger('source-api-request:cache-key');
 
@@ -42,28 +38,16 @@ export function isSuccessStatus(statusCode: number): boolean {
   return statusCode >= 200 && statusCode < 300;
 }
 
-function getDebugResponseDataParsed(conf: AxiosRequestConfig) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return (responseDataParsed: any) => {
-    debugParsedResponse(
-      {
-        url: conf.url,
-        params: conf.params,
-      },
-      responseDataParsed,
-      'end:debug response data'
-    );
-    return responseDataParsed;
-  };
+const debugResponseDataTerms = (
+  process.env.DEBUG_RESPONSE_DATA?.split(',') ?? []
+)
+  .filter(Boolean)
+  .map((term) => term.trim());
+const hasDebugResponseDataTerms = debugResponseDataTerms.length > 0;
+
+if (hasDebugResponseDataTerms) {
+  debugResponse(debugResponseDataTerms, 'debug response data terms');
 }
-
-const debugResponseDataTerms =
-  process.env.DEBUG_RESPONSE_DATA?.split(',') ?? [];
-
-debugParsedResponse(debugResponseDataTerms, 'debug response data terms');
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const cache = new memoryCache.Cache<string, any>();
 
 function isDebugResponseDataMatch(config: AxiosRequestConfig) {
   return function isDebugResponseDataMatch(term: string) {
@@ -74,6 +58,45 @@ function isDebugResponseDataMatch(config: AxiosRequestConfig) {
     return hasTermInRequestUrl || hasTermInRequestParams;
   };
 }
+
+function addResponseDataDebugging(config: AxiosRequestConfig) {
+  config.transformResponse =
+    config.transformResponse as AxiosResponseTransformer[];
+
+  const configExcerpt = {
+    method: config.method ?? 'GET',
+    url: config.url,
+    params: config.params,
+  };
+
+  const isDebugResponseDataTermMatch = hasDebugResponseDataTerms
+    ? debugResponseDataTerms.some(isDebugResponseDataMatch(config))
+    : false;
+
+  // Add default transformer if no transformers are defined
+  if (!config.transformResponse) {
+    const transformers: AxiosResponseTransformer[] = [];
+    config.transformResponse = transformers.concat(
+      axios.defaults.transformResponse ?? []
+    );
+  }
+
+  // Add an additional transformer to log the raw response before any other transformers are applied
+  config.transformResponse?.unshift((responseDataRaw, headers, status) => {
+    if (!hasDebugResponseDataTerms || isDebugResponseDataTermMatch) {
+      debugResponse('');
+      debugResponse('------');
+      debugResponse('[CONFIG]: %o', configExcerpt);
+      debugResponse('[RESPONSE DATA]: %s', responseDataRaw);
+      debugResponse('[HEADERS]: %o', headers);
+      debugResponse('[STATUS]: %d', status);
+    }
+    return responseDataRaw;
+  });
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const cache = new memoryCache.Cache<string, any>();
 
 export function deleteCacheEntry(cacheKey: string) {
   const success = cache.del(cacheKey);
@@ -114,30 +137,7 @@ export async function requestData<T>(
     );
   }
 
-  const debugResponseDataParsed = getDebugResponseDataParsed(config);
-
-  if (
-    debugResponseDataTerms
-      .filter(Boolean)
-      .some(isDebugResponseDataMatch(config)) &&
-    !config.transformResponse?.includes(debugResponseDataParsed)
-  ) {
-    // Add default transformer if no transformers are defined
-    if (!config.transformResponse) {
-      const transformers: AxiosResponseTransformer[] = [];
-      config.transformResponse = transformers.concat(
-        axios.defaults.transformResponse ?? []
-      );
-    }
-    // Insert the debug transformer after the default transformer
-    // This is important to ensure that the response is parsed before we log it.
-    config.transformResponse.splice(1, 0, debugResponseDataParsed);
-    // Add an additional transformer to log the raw response before any other transformers are applied
-    config.transformResponse?.unshift((r, ...rest) => {
-      debugRawResponse(r, ...rest);
-      return r;
-    });
-  }
+  addResponseDataDebugging(config);
 
   // Shortcut to passing the JWT of the connected OIDC provider along with the request as Bearer token
   // A configured Authorization header passed via { ... headers: { Authorization: 'xxx' }, ... } takes presedence.
@@ -213,7 +213,7 @@ export async function requestData<T>(
   } catch (error: any) {
     const errorMessage = 'message' in error ? error.message : error.toString();
 
-    debugRequest(error, config.url, 'response error');
+    debugResponse('[ERROR]: %o', error, config.url);
 
     captureException(error, {
       properties: {

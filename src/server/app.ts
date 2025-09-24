@@ -22,12 +22,17 @@ if (IS_DEVELOPMENT) {
   dotenvExpand.expand(envConfig);
 }
 
-if (process.env.DEBUG_RESPONSE_DATA) {
-  process.env.DEBUG = `source-api-request:raw-response,source-api-request:parsed-response,${process.env.DEBUG ?? ''}`;
-}
-
 // Note: Keep this line after loading in env files or LOG_LEVEL will be undefined.
 import { logger } from './logging';
+
+const debugResponseDataTerms = process.env.DEBUG_RESPONSE_DATA;
+const debug = process.env.DEBUG;
+if (debugResponseDataTerms && !debug?.includes('source-api-request:response')) {
+  logger.info(
+    `Enabling debug for source-api-request:response because DEBUG_RESPONSE_DATA is set (${debugResponseDataTerms})`
+  );
+  process.env.DEBUG = `source-api-request:response,${process.env.DEBUG ?? ''}`;
+}
 
 import { HttpStatusCode } from 'axios';
 import compression from 'compression';
