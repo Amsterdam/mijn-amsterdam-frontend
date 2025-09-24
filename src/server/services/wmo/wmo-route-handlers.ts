@@ -5,7 +5,11 @@ import {
   sendResponse,
   type ResponseAuthenticated,
 } from '../../routing/route-helpers';
-import { fetchAllDocuments, fetchDocument } from '../zorgned/zorgned-service';
+import {
+  fetchAanvragenRaw,
+  fetchAllDocuments,
+  fetchDocument,
+} from '../zorgned/zorgned-service';
 
 const ZORGNED_JZD_API_CONFIG_KEY = 'ZORGNED_JZD';
 
@@ -26,6 +30,17 @@ export async function fetchZorgnedJZDDocuments(
   res: ResponseAuthenticated
 ) {
   const response = await fetchAllDocuments(res.locals.userID, {
+    zorgnedApiConfigKey: ZORGNED_JZD_API_CONFIG_KEY,
+  });
+
+  return sendResponse(res, response);
+}
+
+export async function fetchZorgnedJZDAanvragen(
+  req: Request,
+  res: ResponseAuthenticated
+) {
+  const response = await fetchAanvragenRaw(res.locals.userID, {
     zorgnedApiConfigKey: ZORGNED_JZD_API_CONFIG_KEY,
   });
 
