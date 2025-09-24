@@ -211,7 +211,7 @@ export function useBffApi<T>(
         throw new Error('No URL provided');
       }
 
-      setApiState({ ...initialState, isLoading: true });
+      setApiState({ isLoading: true });
 
       const response = await sendRequest(reqUrl, { ...options?.init, ...init });
 

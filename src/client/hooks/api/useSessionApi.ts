@@ -18,16 +18,9 @@ export type SessionData = {
 
 export function useSessionApi() {
   const sessionApi = useBffApi<SessionData>(AUTH_API_URL);
-  const { data, isLoading, isDirty, fetch } = sessionApi;
+  const { data, fetch } = sessionApi;
   const sessionData = data?.content ?? null;
   const { setProfileType } = useProfileType();
-
-  useEffect(() => {
-    if (isDirty === false && isLoading === false) {
-      // Fetch initial
-      fetch();
-    }
-  }, [isDirty, isLoading, fetch]);
 
   useEffect(() => {
     if (sessionData?.profileType) {
