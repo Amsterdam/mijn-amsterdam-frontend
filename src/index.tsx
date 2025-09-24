@@ -1,3 +1,5 @@
+import 'core-js/actual/array/to-sorted';
+
 import { AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js';
 import { createRoot } from 'react-dom/client';
 
