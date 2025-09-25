@@ -93,7 +93,7 @@ export function MainFooter() {
       </PageFooter.Spotlight>
 
       <PageFooter.Menu>
-        {footer?.content?.bottomLinks.map((link) => {
+        {footer?.content?.bottomLinks.slice(0, -1).map((link) => {
           return (
             <PageFooter.MenuLink key={link.label} href={link.url}>
               {link.label}
