@@ -117,7 +117,7 @@ export async function fetchVergunningen(
     vergunningenPB = responsePB.content.map((pbZaak) =>
       transformPBZaakFrontend<PBVergunning>(pbZaak, {
         detailPageRoute: appRouteDetailPage,
-        // getStepsFN: getStatusSteps,
+        // getStepsFN: getStatusSteps, // TODO: Make a custom getSteps function for PB vergunningen if needed
       })
     );
   }
