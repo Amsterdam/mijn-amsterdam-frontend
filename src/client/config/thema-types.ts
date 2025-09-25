@@ -7,6 +7,92 @@ import {
   SVGComponent,
 } from '../../universal/types/App.types';
 
+// InfoSection: een simpel info-blok met (optionele) titel en lijst
+export type Section = {
+  title?: string; // titel mag leeg zijn; dus voor elkaar krijgen dat titel wel verplicht is als het meer dan 1 sectie is
+  listItems: string[]; // altijd een lijst van tekstjes; dit is zo afgesproken in de opdracht/pseudocode
+};
+
+// Menu item config (alleen data)
+// export type MenuItemConfig = {
+//   to: string; // pad of url
+//   redactedScope?: 'full' | 'content' | 'none'; // optioneel
+//   isAlwaysVisible?: boolean; // optioneel vlaggetje
+// };
+
+// ThemaConfig: basis-gegevens per thema (backend-safe)
+export type ThemaConfigBase = {
+  id: string; // uniek id van het thema (bijvoorbeeld:  'BODEM')
+  title: string; // naam/titel van het thema
+  profileTypes: ProfileType[];
+  featureToggle: { themaActive: boolean };
+  // TODO: ROUTECONFIG
+  // TODO: MENUITEM > IS INTERFACE THEMAMENUITEM
+  // TODO: SEARCG TOEVOEGEN HTTPS://gemeente-amsterdam
+  // TODO:
+  // listPageParamKind: {
+  //   inProgress: 'lopende-aanvragen' | string;
+  //   completed: 'afgehandelde-aanvragen' | string;
+  // };
+  linkListItems: LinkProps[]; // optioneel
+  uitlegPageSections: Section[];
+  route: {
+    path: string;
+    documentTitle: `${string} | ${string}`; //bijv
+  };
+  redactedScope: 'full' | 'content' | 'none';
+  // themaTitleDetail?: string;  // ThemaTitleDetail is optioneel. Het wordt niet in elk thema gebruikt
+  // featureToggle: { [key: string]: boolean }; // toggles aan/uit (bijvoorbeeld: BodemActive: true })
+  // routeConfig: ThemaRoutesConfig;            // routes van het thema (detail, lijst, thema)
+  //   listPageParamKind: {
+  //    inProgress: 'lopende-aanvragen' | string,
+  //    completed: 'afgehandelde-aanvragen',
+  // }
+};
+
+export type WithDetailPage = {
+  detailPage: {
+    title: string;
+    route: {
+      path: string;
+      trackingUrl: string;
+      documentTitle: string; //bijv `Lood in de bodem-check | ${themaConfig.title}`
+    };
+  };
+};
+
+export type WithListPage = {
+  listPage: {
+    route: {
+      path: string;
+      documentTitle: (params: { kind: string }) => `${string} | ${string}`; //bijv (params) =>`${params?.kind === themaConfig.tableHeaders.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${ themaConfig.title } `,
+    };
+  };
+};
+
+export type withThemaPage = {
+  ThemaPage: {
+    title: string;
+    route: {
+      path: string;
+      documentTitle: `${string} | ${string}`; //bijv`${themaConfig.title} | overzicht`,
+    };
+  };
+};
+
+// type ExtendedFeatureToggle = {
+//   thema: boolean,
+//   betalen: boolean,
+//   facturen: {emandaat: boolean}
+// }
+
+// type AfisThemaConfig = ThemaConfig
+
+// type WithBareFeaturetoggle = { featuretoggle: boolean }
+// type withExtendedFeaturetoggle = { featuretoggle: { thema: boolean } & Record<string, boolean> }
+
+// type ThemaConfig = ThemaConfig & WithBareFeaturetoggle
+
 export type IsThemaVisibleFN = (appState: AppState) => boolean;
 
 export interface ThemaMenuItem<ID extends string = string>

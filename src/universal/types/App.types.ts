@@ -25,13 +25,13 @@ export interface Action {
   payload?: any;
 }
 
-export interface LinkProps {
+export type LinkProps = {
   to: string;
   title: string;
   target?: '_blank' | '_self' | '_parent' | '_top';
   rel?: string;
   download?: string;
-}
+};
 
 export type ButtonLinkProps = LinkProps & {
   isDisabled?: boolean;

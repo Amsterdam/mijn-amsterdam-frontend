@@ -1,5 +1,6 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
+import { themaConfig } from './Bodem-thema-config';
 import { useBodemData } from './useBodemData.hook';
 import { LoodMetingFrontend } from '../../../../server/services/bodem/types';
 import { PageContentCell } from '../../../components/Page/Page';
@@ -14,11 +15,10 @@ export function BodemThema() {
     isLoading,
     isError,
     linkListItems,
-    id,
+    themaId: id,
     title,
-    routeConfig,
   } = useBodemData();
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const tables = Object.entries(tableConfig).map(
     ([
@@ -38,6 +38,7 @@ export function BodemThema() {
       );
     }
   );
+
   return (
     <ThemaPagina
       id={id}
@@ -46,9 +47,14 @@ export function BodemThema() {
       isError={isError}
       pageContentTop={
         <PageContentCell spanWide={8}>
-          <Paragraph>
-            Op deze pagina vindt u informatie over uw lood in de bodem-check.
-          </Paragraph>
+          {themaConfig.uitlegPageSections.map((section, i) => (
+            <div key={i}>
+              {section.title && <h2>{section.title}</h2>}
+              {section.listItems.map((item, j) => (
+                <Paragraph key={j}>{item}</Paragraph>
+              ))}
+            </div>
+          ))}
         </PageContentCell>
       }
       pageContentMain={tables}
