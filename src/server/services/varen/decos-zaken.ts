@@ -103,14 +103,8 @@ const ZaakWijzigenBase = {
       transform: (vergunningen: DecosZaakVarensFieldsSource[] | null) =>
         (vergunningen || [])
           .map((vergunning) =>
-            transformFieldValuePairs<ZaakVergunningExploitatieType>(
-              {
-                ...vesselLengths,
-                ...vesselSegment,
-                ...vesselEniNumber,
-                mark: 'identifier',
-                subject2: 'vesselName' as const,
-              },
+            transformFieldValuePairs<VarenVergunningExploitatieType>(
+              VarenVergunningExploitatie.transformFields,
               vergunning
             )
           )
