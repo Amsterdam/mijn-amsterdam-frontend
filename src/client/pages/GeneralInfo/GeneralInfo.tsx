@@ -46,7 +46,7 @@ import { zorgSectionProps } from '../Thema/Zorg/InfoSection';
 export type Section = {
   id: string;
   title: string;
-  to?: string; // Use this instead of the themaMenuItem 'to URL' and force link to be clickable.
+  href?: string; // Use this instead of the themaMenuItem 'to URL' and force link to be clickable.
   listItems: ListItems;
   active: boolean;
 };
@@ -104,7 +104,19 @@ function Section({ title, listItems, href }: SectionProps) {
     );
   });
 
+  // const themaMenuItem = themaMenuItems[id];
+  // const href = to || (themaMenuItem && themaMenuItem.to);
+  // const LinkComponent = getLinkComponent(href);
+  // const titleComponent = LinkComponent ? (
+  //   <LinkComponent maVariant="fatNoUnderline" href={href}>
+  //     {title}
+  //   </LinkComponent>
+  // ) : (
+  //   title
+  // );
+
   const LinkComponent = href && getLinkComponent(href);
+
   const titleComponent = LinkComponent ? (
     <LinkComponent maVariant="fatNoUnderline" href={href}>
       {title}
@@ -143,13 +155,13 @@ export function GeneralInfo() {
     .toSorted(compareThemas)
     .map((section, i) => {
       const themaMenuItem = themaMenuItems[section.id];
-      section.to = section.to || (themaMenuItem && themaMenuItem.to);
+      section.href = section.href || (themaMenuItem && themaMenuItem.to);
 
       return (
         <Section
           key={i}
           title={section.title}
-          href={section.to}
+          href={section.href}
           listItems={section.listItems}
         />
       );
