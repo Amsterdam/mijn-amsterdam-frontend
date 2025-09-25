@@ -3,7 +3,7 @@ import { UnorderedList } from '@amsterdam/design-system-react';
 import { commonTransformers, getRows } from './fields-config';
 import styles from './fields-config.module.scss';
 import {
-  VergunningFrontend,
+  DecosZaakFrontend,
   WerkzaamhedenEnVervoerOpStraat,
 } from '../../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../../components/Datalist/Datalist';
@@ -11,7 +11,7 @@ import { Datalist } from '../../../../components/Datalist/Datalist';
 export function WVOSContent({
   vergunning,
 }: {
-  vergunning: VergunningFrontend<WerkzaamhedenEnVervoerOpStraat>;
+  vergunning: DecosZaakFrontend<WerkzaamhedenEnVervoerOpStraat>;
 }) {
   const decision = () => {
     return vergunning.processed

@@ -3,7 +3,7 @@ import {
   DecosZaakExploitatieHorecabedrijf,
   HorecaVergunningFrontend,
 } from '../../../../server/services/horeca/decos-zaken';
-import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
+import { DecosZaakFrontend } from '../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
@@ -16,7 +16,7 @@ import { VergunningDetailDocumentsList } from '../Vergunningen/detail-page-conte
 import { useVergunningenDetailData } from '../Vergunningen/useVergunningenDetailData.hook';
 
 type ExploitatieHorecaBedrijfProps = {
-  vergunning: VergunningFrontend<DecosZaakExploitatieHorecabedrijf>;
+  vergunning: DecosZaakFrontend<DecosZaakExploitatieHorecabedrijf>;
 };
 
 function ExploitatieHorecaBedrijf({

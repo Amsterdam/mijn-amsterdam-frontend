@@ -4,7 +4,6 @@ import {
   type EvenementMelding,
   type EvenementVergunning,
   type Flyeren,
-  type Omzettingsvergunning,
   type OnttrekkingsvergunningSloop,
   type Onttrekkingsvergunning,
   type RVVHeleStad,
@@ -16,7 +15,6 @@ import {
   type ZwaarVerkeer,
   caseTypeVergunningen,
   type Nachtwerkontheffing,
-  type Ligplaatsvergunning,
   type WerkzaamhedenEnVervoerOpStraat,
   type WVOSActiviteit,
   type Straatartiesten,
@@ -128,27 +126,6 @@ const EvenementVergunning: DecosZaakTransformer<EvenementVergunning> = {
     text6: location,
     text7: timeStart,
     text8: timeEnd,
-  },
-};
-
-const Omzettingsvergunning: DecosZaakTransformer<Omzettingsvergunning> = {
-  isActive: true,
-  itemType: 'folders',
-  caseType: caseTypeVergunningen.Omzettingsvergunning,
-  title: 'Vergunning voor kamerverhuur (omzettingsvergunning)',
-  fetchWorkflowStatusDatesFor: [
-    {
-      status: 'In behandeling',
-      decosActionCode: 'Omzettingsvergunning - Behandelen',
-    },
-  ],
-  transformFields: {
-    ...SELECT_FIELDS_TRANSFORM_BASE,
-    dfunction: transformDecision({
-      Verleend: ['Verleend zonder borden'],
-      '': ['Nog niet bekend', 'Nog niet  bekend'],
-    }),
-    text6: location,
   },
 };
 
@@ -420,27 +397,6 @@ const Splitsingsvergunning: DecosZaakTransformer<Splitsingsvergunning> = {
   },
 };
 
-const VOBvergunning: DecosZaakTransformer<Ligplaatsvergunning> = {
-  isActive: true,
-  itemType: 'folders',
-  caseType: caseTypeVergunningen.VOB,
-  title: 'Ligplaatsvergunning',
-  fetchWorkflowStatusDatesFor: [
-    {
-      status: 'In behandeling',
-      decosActionCode: 'VOB - Beoordelen en besluiten',
-    },
-  ],
-  transformFields: {
-    ...SELECT_FIELDS_TRANSFORM_BASE,
-    text9: { name: 'requestKind' },
-    text18: { name: 'reason' },
-    text6: location,
-    text10: { name: 'vesselKind' }, // soort vaartuig
-    text14: { name: 'vesselName' }, // naam vaartuig
-  },
-};
-
 const RVVHeleStad: DecosZaakTransformer<RVVHeleStad> = {
   isActive: !IS_PRODUCTION,
   itemType: 'folders',
@@ -603,12 +559,10 @@ export const decosCaseToZaakTransformers = {
   [Splitsingsvergunning.caseType]: Splitsingsvergunning,
   [Straatartiesten.caseType]: Straatartiesten,
   [TVMRVVObject.caseType]: TVMRVVObject,
-  [VOBvergunning.caseType]: VOBvergunning,
   [VormenVanWoonruimte.caseType]: VormenVanWoonruimte,
   [WerkEnVervoerOpStraat.caseType]: WerkEnVervoerOpStraat,
   [ZwaarVerkeer.caseType]: ZwaarVerkeer,
   [ERVV_TVM.caseType]: ERVV_TVM,
-  [Omzettingsvergunning.caseType]: Omzettingsvergunning,
 } as const;
 
 export const decosZaakTransformers = Object.values(decosCaseToZaakTransformers);

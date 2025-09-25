@@ -36,7 +36,7 @@ import {
   VarenVergunningFrontend,
   VarenZakenFrontend,
 } from '../../../server/services/varen/config-and-types';
-import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
+import { DecosZaakFrontend } from '../../../server/services/vergunningen/config-and-types';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
 import { getFullAddress, getFullName } from '../../../universal/helpers/brp';
@@ -249,7 +249,7 @@ interface ToeristischRegistratieItem {
 export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     stateKey: 'VERGUNNINGEN',
-    displayTitle: (vergunning: VergunningFrontend) => (term: string) => {
+    displayTitle: (vergunning: DecosZaakFrontend) => (term: string) => {
       return displayPath(term, [vergunning.title, vergunning.identifier]);
     },
     keywordsGeneratedFromProps: ['identifier'],

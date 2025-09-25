@@ -16,7 +16,7 @@ import {
   generateSearchIndexPageEntry,
   useSearchIndex,
 } from './useSearch';
-import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
+import { DecosZaakFrontend } from '../../../server/services/vergunningen/config-and-types';
 import { bffApi } from '../../../testing/utils';
 import { AppState } from '../../../universal/types/App.types';
 import MockApp from '../../pages/MockApp';
@@ -167,7 +167,7 @@ describe('Search hooks and helpers', () => {
         {
           ...API_SEARCH_CONFIG_DEFAULT,
           stateKey: 'VERGUNNINGEN',
-          displayTitle: (vergunning: VergunningFrontend) => (term: string) => {
+          displayTitle: (vergunning: DecosZaakFrontend) => (term: string) => {
             return displayPath(term, [vergunning.title, vergunning.identifier]);
           },
           ...apiConfigRemote,

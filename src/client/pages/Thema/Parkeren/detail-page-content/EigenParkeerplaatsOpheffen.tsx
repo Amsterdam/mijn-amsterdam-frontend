@@ -1,7 +1,7 @@
 import { Link } from '@amsterdam/design-system-react';
 
 import type { EigenParkeerplaatsOpheffen } from '../../../../../server/services/parkeren/config-and-types';
-import { VergunningFrontend } from '../../../../../server/services/vergunningen/config-and-types';
+import { DecosZaakFrontend } from '../../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../../components/Datalist/Datalist';
 import { AddressDisplayAndModal } from '../../../../components/LocationModal/LocationModal';
 import {
@@ -13,7 +13,7 @@ import {
 export function EigenParkeerplaatsOpheffen({
   vergunning,
 }: {
-  vergunning: VergunningFrontend<EigenParkeerplaatsOpheffen>;
+  vergunning: DecosZaakFrontend<EigenParkeerplaatsOpheffen>;
 }) {
   const requestType = () => {
     return {

@@ -1,13 +1,17 @@
 import { LinkProps } from '../../../universal/types/App.types';
-import {
+import { ZaakStatus } from '../../../universal/types/App.types';
+import type {
   DecosZaakBase,
-  WithLocation,
   WithKentekens,
   WithDateTimeRange,
   WithDateRange,
   DecosZaakFrontend,
+  WithLocation,
 } from '../decos/decos-types';
-import { ZaakStatus } from '../../../universal/types/App.types';
+import type {
+  PowerBrowserZaakBase,
+  PowerBrowserZaakFrontend,
+} from '../powerbrowser/powerbrowser-types';
 
 export const NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED = 3;
 export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
@@ -18,7 +22,6 @@ export const caseTypeVergunningen = {
   TVMRVVObject: 'TVM - RVV - Object',
   EvenementMelding: 'Evenement melding',
   EvenementVergunning: 'Evenement vergunning',
-  Omzettingsvergunning: 'Omzettingsvergunning',
   ERVV: 'E-RVV - TVM',
   Flyeren: 'Flyeren-Sampling',
   AanbiedenDiensten: 'Aanbieden van diensten',
@@ -30,7 +33,6 @@ export const caseTypeVergunningen = {
   OnttrekkingsvergunningSloop: 'Onttrekkingsvergunning voor sloop',
   VormenVanWoonruimte: 'Woningvormingsvergunning',
   Splitsingsvergunning: 'Splitsingsvergunning',
-  VOB: 'VOB',
   RVVHeleStad: 'RVV - Hele stad',
   RVVSloterweg: 'RVV Sloterweg',
   WVOS: 'Werk en vervoer op straat',
@@ -61,12 +63,6 @@ export type EvenementVergunning = DecosZaakBase &
   WithDateTimeRange & {
     caseType: GetCaseType<'EvenementVergunning'>;
     description: string | null;
-  };
-
-export type Omzettingsvergunning = DecosZaakBase &
-  WithLocation & {
-    caseType: GetCaseType<'Omzettingsvergunning'>;
-    dateInBehandeling: string | null;
   };
 
 export type ERVV = DecosZaakBase &
@@ -163,15 +159,6 @@ export type WoningVergunning =
   | Splitsingsvergunning
   | VormenVanWoonruimte;
 
-export type Ligplaatsvergunning = DecosZaakBase &
-  WithLocation & {
-    caseType: GetCaseType<'VOB'>;
-    requestKind: string | null;
-    reason: string | null;
-    vesselKind: string | null;
-    vesselName: string | null;
-  };
-
 export type WVOSActiviteit =
   | 'Rijden of een voertuig neerzetten waar dat normaal niet mag'
   | 'Object(en) neerzetten'
@@ -194,7 +181,6 @@ export type DecosVergunning =
   | TVMRVVObject
   | EvenementMelding
   | EvenementVergunning
-  | Omzettingsvergunning
   | ERVV
   | Flyeren
   | AanbiedenDiensten
@@ -206,23 +192,54 @@ export type DecosVergunning =
   | OnttrekkingsvergunningSloop
   | VormenVanWoonruimte
   | Splitsingsvergunning
-  | Ligplaatsvergunning
   | RVVHeleStad
   | RVVSloterweg
   | WerkzaamhedenEnVervoerOpStraat;
 
-export type VergunningFrontend<T extends DecosZaakBase = DecosZaakBase> =
-  DecosZaakFrontend<T>;
+/* ----------------------------------------
+    Powerbrowser
+  ---------------------------------------- */
 
+export const caseTypePB = {
+  Ligplaatsvergunning: 'Ligplaatsvergunning',
+  Omzettingsvergunning: 'Omzettingsvergunning',
+} as const;
+
+export type CaseTypePBKey = keyof typeof caseTypePB;
+export type CaseTypePB = (typeof caseTypePB)[CaseTypePBKey];
+export type GetCaseTypePB<T extends CaseTypePBKey> = (typeof caseTypePB)[T];
+
+export type Ligplaatsvergunning = PowerBrowserZaakBase &
+  WithLocation & {
+    caseType: GetCaseTypePB<'Ligplaatsvergunning'>;
+    requestKind: string | null;
+    reason: string | null;
+    vesselKind: string | null;
+    vesselName: string | null;
+  };
+
+export type Omzettingsvergunning = PowerBrowserZaakBase &
+  WithLocation & {
+    caseType: GetCaseTypePB<'Omzettingsvergunning'>;
+    dateInBehandeling: string | null;
+  };
+
+export type PBVergunning = Ligplaatsvergunning | Omzettingsvergunning;
+
+export type ZaakFrontendCombined = DecosZaakFrontend | PowerBrowserZaakFrontend;
+
+/* ----------------------------------------
+    Notifications
+  ---------------------------------------- */
 export type NotificationProperty =
   | 'title'
   | 'description'
   | 'datePublished'
   | 'link';
 
-type NotificationPropertyValue = (vergunning: VergunningFrontend) => string;
+type NotificationPropertyValue = (vergunning: DecosZaakFrontend) => string;
 
-type NotificationLink = (vergunning: VergunningFrontend) => LinkProps;
+type NotificationLink = (vergunning: DecosZaakFrontend) => LinkProps;
 
 type NotificationLabelsBase = {
   [key in Exclude<NotificationProperty, 'link'>]: NotificationPropertyValue;

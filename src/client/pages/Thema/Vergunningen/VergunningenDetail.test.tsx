@@ -6,14 +6,14 @@ import { useVergunningenThemaData } from './useVergunningenThemaData.hook';
 import { VergunningenDetail, forTesting } from './VergunningenDetail';
 import type {
   DecosVergunning,
-  VergunningFrontend,
+  DecosZaakFrontend,
 } from '../../../../server/services/vergunningen/config-and-types';
 import { decosCaseToZaakTransformers } from '../../../../server/services/vergunningen/decos-zaken';
 import { componentCreator } from '../../MockApp';
 
 const mocks = vi.hoisted(() => {
   return {
-    DetailComponent({ vergunning }: { vergunning: VergunningFrontend }) {
+    DetailComponent({ vergunning }: { vergunning: DecosZaakFrontend }) {
       return <span>{vergunning.caseType}</span>;
     },
   };
@@ -178,7 +178,7 @@ describe('DetailPageContent', () => {
     (caseType) => {
       const mockVergunning = {
         caseType,
-      } as VergunningFrontend<DecosVergunning>;
+      } as DecosZaakFrontend<DecosVergunning>;
 
       render(<DetailPageContent vergunning={mockVergunning} />);
 
@@ -190,7 +190,7 @@ describe('DetailPageContent', () => {
     const mockVergunning = {
       caseType: 'Unknown Case',
       key: 'value',
-    } as unknown as VergunningFrontend<DecosVergunning>;
+    } as unknown as DecosZaakFrontend<DecosVergunning>;
 
     render(<DetailPageContent vergunning={mockVergunning} />);
 
