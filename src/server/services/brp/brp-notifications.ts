@@ -4,6 +4,7 @@ import {
   themaIdBRP,
   themaTitle,
   routeConfig as routeConfigBrp,
+  featureToggle,
 } from '../../../client/pages/Thema/Profile/Profile-thema-config';
 import {
   apiSuccessResult,
@@ -12,6 +13,7 @@ import {
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import type { MyNotification } from '../../../universal/types/App.types';
 import type { AuthProfileAndToken } from '../../auth/auth-types';
+import { fetchBrpNotifications } from '../profile/brp';
 import type { BRPData } from '../profile/brp.types';
 
 export function transformBRPNotifications(data: BRPData, compareDate: Date) {
@@ -64,6 +66,10 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
 export async function fetchBrpNotificationsV2(
   authProfileAndToken: AuthProfileAndToken
 ) {
+  if (!featureToggle[themaIdBRP].benkBrpServiceActive) {
+    return fetchBrpNotifications(authProfileAndToken);
+  }
+
   const BRP = await fetchBrpV2(authProfileAndToken);
 
   if (BRP.status === 'OK') {
