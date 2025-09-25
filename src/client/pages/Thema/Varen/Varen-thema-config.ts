@@ -119,7 +119,7 @@ export const tableConfig: {
 } as const;
 
 export const varenMeerInformatieLink: LinkProps = {
-  to: 'https://www.amsterdam.nl/verkeer-vervoer/varen-amsterdam/varen-beroepsvaart/#:~:text=De%20passagiersvaart%20in%20Amsterdam%20is,stad%20willen%20we%20graag%20behouden.',
+  to: 'https://www.amsterdam.nl/ondernemen/vergunning-passagiersvaart-wijzigen',
   title: 'Meer informatie over passagiers- en beroepsvaart',
 } as const;
 
