@@ -380,7 +380,7 @@ describe('Powerbrowser service', () => {
         .post('/powerbrowser/Link/PERSONEN/GFO_ZAKEN/Table')
         .reply(500, 'some-error');
 
-      const result = await forTesting.fetchPBZaken(
+      const result = await forTesting.fetchZakenRecords(
         authProfile,
         powerBrowserZaakTransformers
       );
