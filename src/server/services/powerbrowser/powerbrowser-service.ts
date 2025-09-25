@@ -610,7 +610,6 @@ export async function fetchZaken<T extends PowerBrowserZaakTransformer>(
 
 export type PBZaakFrontendTransformOptions<T> = {
   detailPageRoute: string;
-  includeFetchDocumentsUrl?: boolean;
   getStepsFN?: (zaak: T) => StatusLineItem[];
 };
 

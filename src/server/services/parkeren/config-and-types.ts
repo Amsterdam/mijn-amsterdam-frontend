@@ -6,8 +6,8 @@ import {
   WithDateTimeRange,
   WithDateEnd,
   type WithDateStart,
+  type DecosZaakFrontend,
 } from '../decos/decos-types';
-import { VergunningFrontend } from '../vergunningen/config-and-types';
 
 export const caseTypeParkeren = {
   GPK: 'GPK',
@@ -152,4 +152,4 @@ export type DecosParkeerVergunning =
   | EigenParkeerplaatsOpheffen;
 
 export type ParkeerVergunningFrontend =
-  VergunningFrontend<DecosParkeerVergunning>;
+  DecosZaakFrontend<DecosParkeerVergunning>;

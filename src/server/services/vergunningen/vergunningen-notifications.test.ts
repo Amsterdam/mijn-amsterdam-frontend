@@ -1,7 +1,7 @@
 import MockDate from 'mockdate';
 import { describe, it, expect, vi, Mock } from 'vitest';
 
-import { VergunningFrontend } from './config-and-types';
+import { DecosZaakFrontend } from './config-and-types';
 import { fetchVergunningen } from './vergunningen';
 import {
   createNotificationDefault,
@@ -38,7 +38,7 @@ describe('vergunningen-notifications', () => {
         steps: [
           { status: 'Ontvangen', datePublished: '2023-01-10', isActive: true },
         ],
-      } as unknown as VergunningFrontend;
+      } as unknown as DecosZaakFrontend;
 
       const notification = createNotificationDefault(vergunning, {
         themaID: themaId,
@@ -65,7 +65,7 @@ describe('vergunningen-notifications', () => {
         caseType: 'TestCase',
         link: { to: '/test', title: 'Test' },
         steps: [],
-      } as unknown as VergunningFrontend;
+      } as unknown as DecosZaakFrontend;
 
       const notification = createNotificationDefault(vergunning, {
         themaID: themaId,
@@ -161,7 +161,7 @@ describe('vergunningen-notifications', () => {
           ],
           link: { to: '/test', title: 'Test' },
         },
-      ] as unknown as VergunningFrontend[];
+      ] as unknown as DecosZaakFrontend[];
 
       const notifications = getVergunningNotifications(
         vergunningen,
@@ -242,7 +242,7 @@ describe('vergunningen-notifications', () => {
         {
           steps: [],
         },
-      ] as unknown as VergunningFrontend[];
+      ] as unknown as DecosZaakFrontend[];
 
       const notifications = getVergunningNotifications(
         vergunningen,

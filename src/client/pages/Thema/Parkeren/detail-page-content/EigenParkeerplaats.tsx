@@ -1,7 +1,7 @@
 import { Link } from '@amsterdam/design-system-react';
 
 import type { EigenParkeerplaats } from '../../../../../server/services/parkeren/config-and-types';
-import type { VergunningFrontend } from '../../../../../server/services/vergunningen/config-and-types';
+import type { DecosZaakFrontend } from '../../../../../server/services/vergunningen/config-and-types';
 import { Datalist, type Row } from '../../../../components/Datalist/Datalist';
 import { AddressDisplayAndModal } from '../../../../components/LocationModal/LocationModal';
 import {
@@ -13,7 +13,7 @@ import {
 export function EigenParkeerplaats({
   vergunning,
 }: {
-  vergunning: VergunningFrontend<EigenParkeerplaats>;
+  vergunning: DecosZaakFrontend<EigenParkeerplaats>;
 }) {
   const location = () => {
     const rows: Row[] = vergunning.locations

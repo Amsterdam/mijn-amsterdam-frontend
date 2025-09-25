@@ -2,12 +2,12 @@ import { useParams } from 'react-router';
 
 import { useVergunningDocumentList } from './detail-page-content/useVergunningDocumentsList.hook';
 import { themaId } from './Vergunningen-thema-config';
-import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
+import { DecosZaakFrontend } from '../../../../server/services/vergunningen/config-and-types';
 
-export function useVergunningenDetailData<T extends VergunningFrontend>(
+export function useVergunningenDetailData<T extends DecosZaakFrontend>(
   vergunningen: T[]
 ) {
-  const { id } = useParams<{ id: VergunningFrontend['id'] }>();
+  const { id } = useParams<{ id: DecosZaakFrontend['id'] }>();
   const vergunning = vergunningen.find((vergunning) => vergunning.id === id);
   const fetchDocumentsUrl = vergunning?.fetchDocumentsUrl;
   const { documents, isError, isLoading } =

@@ -1,14 +1,12 @@
 import { commonTransformers, getRows } from './fields-config';
-import type {
-  VergunningFrontend,
-  Omzettingsvergunning,
-} from '../../../../../server/services/vergunningen/config-and-types';
+import type { PowerBrowserZaakFrontend } from '../../../../../server/services/powerbrowser/powerbrowser-types';
+import type { Omzettingsvergunning } from '../../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../../components/Datalist/Datalist';
 
 export function Omzettingsvergunning({
   vergunning,
 }: {
-  vergunning: VergunningFrontend<Omzettingsvergunning>;
+  vergunning: PowerBrowserZaakFrontend<Omzettingsvergunning>;
 }) {
   const rows = getRows(vergunning, [
     commonTransformers.identifier,

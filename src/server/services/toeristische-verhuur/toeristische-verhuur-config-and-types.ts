@@ -10,8 +10,8 @@ import {
   DecosZaakBase,
   WithLocation,
   WithDateRange,
+  type DecosZaakFrontend,
 } from '../decos/decos-types';
-import { VergunningFrontend } from '../vergunningen/config-and-types';
 
 export const caseTypeToeristischeVerhuur = {
   VakantieverhuurVergunningaanvraag: 'Vakantieverhuur vergunningsaanvraag',
@@ -61,7 +61,7 @@ export interface LVVRegistratiesSourceData {
 }
 
 export type VakantieverhuurVergunningFrontend =
-  VergunningFrontend<DecosVakantieverhuurVergunningaanvraag>;
+  DecosZaakFrontend<DecosVakantieverhuurVergunningaanvraag>;
 
 export type ToeristischeVerhuurVergunning =
   | BBVergunningFrontend

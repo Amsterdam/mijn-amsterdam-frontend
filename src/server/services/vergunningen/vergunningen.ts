@@ -1,18 +1,36 @@
 import createDebugger from 'debug';
 
-import { DecosVergunning, VergunningFrontend } from './config-and-types';
+import {
+  DecosVergunning,
+  type PBVergunning,
+  type ZaakFrontendCombined,
+} from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
+import { pbZaakTransformers } from './pb-zaken';
 import { getStatusSteps as getStatusStepsDefault } from './vergunningen-status-steps';
 import { routeConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config';
-import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
+import {
+  apiErrorResult,
+  ApiResponse,
+  apiSuccessResult,
+  getFailedDependencies,
+  getSettledResult,
+} from '../../../universal/helpers/api';
 import type { StatusLineItem } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   fetchDecosZaken,
   transformDecosZaakFrontend,
 } from '../decos/decos-service';
+import type { DecosZaakFrontend } from '../decos/decos-types';
+import {
+  fetchZaken,
+  transformPBZaakFrontend,
+} from '../powerbrowser/powerbrowser-service';
+import type { PowerBrowserZaakFrontend } from '../powerbrowser/powerbrowser-types';
 
-const debug = createDebugger('vergunningen');
+const debugDecos = createDebugger('vergunningen:decos');
+const debugPB = createDebugger('vergunningen:pb');
 
 function getStatusSteps(vergunning: DecosVergunning): StatusLineItem[] {
   const steps = getStatusStepsDefault(vergunning);
@@ -50,50 +68,69 @@ function getStatusSteps(vergunning: DecosVergunning): StatusLineItem[] {
   return steps;
 }
 
-function transformVergunningFrontend(
-  sessionID: SessionID,
-  zaak: DecosVergunning,
-  detailPageRoute: string
-) {
-  const zaakFrontend = transformDecosZaakFrontend<DecosVergunning>(
-    sessionID,
-    zaak,
-    {
-      detailPageRoute,
-      includeFetchDocumentsUrl: true,
-      getStepsFN: getStatusSteps,
-    }
-  );
-
-  return zaakFrontend;
-}
-
 export async function fetchVergunningen(
   authProfileAndToken: AuthProfileAndToken,
   appRouteDetailPage: string = routeConfig.detailPage.path
-): Promise<ApiResponse<VergunningFrontend[]>> {
-  const response = await fetchDecosZaken(
+): Promise<ApiResponse<ZaakFrontendCombined[]>> {
+  const requestDecos = fetchDecosZaken(
     authProfileAndToken,
     decosZaakTransformers
   );
+  const requestPB = fetchZaken(authProfileAndToken.profile, pbZaakTransformers);
 
-  debug(response, 'fetchVergunningen');
+  const [responseDecosResult, responsePBResult] = await Promise.allSettled([
+    requestDecos,
+    requestPB,
+  ]);
 
-  if (response.status === 'OK') {
-    const decosZaken = response.content;
-    const zakenFrontend: VergunningFrontend[] = decosZaken.map((vergunning) =>
-      transformVergunningFrontend(
-        authProfileAndToken.profile.sid,
-        vergunning,
-        appRouteDetailPage
-      )
+  const responseDecos = getSettledResult(responseDecosResult);
+  const responsePB = getSettledResult(responsePBResult);
+
+  debugDecos(responseDecos, 'fetchVergunningen');
+  debugPB(responsePB, 'fetchZaken');
+
+  if (responsePB.status === 'ERROR' && responseDecos.status === 'ERROR') {
+    return apiErrorResult(
+      'Failed to fetch vergunningen. All requests failed.',
+      null
     );
-    return apiSuccessResult(zakenFrontend);
   }
 
-  return response;
+  let vergunningenDecos: DecosZaakFrontend[] = [];
+  let vergunningenPB: PowerBrowserZaakFrontend[] = [];
+
+  if (responseDecos.status === 'OK') {
+    vergunningenDecos = responseDecos.content.map((decosZaak) =>
+      transformDecosZaakFrontend<DecosVergunning>(
+        authProfileAndToken.profile.sid,
+        decosZaak,
+        {
+          detailPageRoute: appRouteDetailPage,
+          includeFetchDocumentsUrl: true,
+          getStepsFN: getStatusSteps,
+        }
+      )
+    );
+  }
+
+  if (responsePB.status === 'OK') {
+    vergunningenPB = responsePB.content.map((pbZaak) =>
+      transformPBZaakFrontend<PBVergunning>(pbZaak, {
+        detailPageRoute: appRouteDetailPage,
+        // getStepsFN: getStatusSteps,
+      })
+    );
+  }
+
+  return apiSuccessResult<ZaakFrontendCombined[]>(
+    [...vergunningenDecos, ...vergunningenPB],
+    getFailedDependencies({
+      decos: responseDecos,
+      pb: responsePB,
+    })
+  );
 }
 
 export const forTesting = {
-  transformVergunningFrontend,
+  transformVergunningFrontend: () => void 0,
 };

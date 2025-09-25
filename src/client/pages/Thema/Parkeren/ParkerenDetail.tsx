@@ -7,7 +7,7 @@ import { GPPContent } from './detail-page-content/GPP';
 import { Touringcar } from './detail-page-content/Touringcar';
 import { useParkerenData } from './useParkerenData.hook';
 import { DecosParkeerVergunning } from '../../../../server/services/parkeren/config-and-types';
-import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
+import { DecosZaakFrontend } from '../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
@@ -21,7 +21,7 @@ interface DetailPageContentProps<V> {
 
 // TODO: Implement detailpages per case
 function DetailPageContent<
-  V extends VergunningFrontend<DecosParkeerVergunning>,
+  V extends DecosZaakFrontend<DecosParkeerVergunning>,
 >({ vergunning }: DetailPageContentProps<V>) {
   return (
     <PageContentCell>
