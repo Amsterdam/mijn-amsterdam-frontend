@@ -29,6 +29,7 @@ function transformContactmomentenResponse(
   responseData: ContactMomentenResponseSource
 ) {
   if (responseData.results) {
+    console.log('_______ responseData', responseData);
     return responseData.results
       .map((contactMoment) => ({
         referenceNumber: contactMoment.nummer,
@@ -41,6 +42,7 @@ function transformContactmomentenResponse(
       }))
       .sort(dateSort('datePublished', 'desc'));
   }
+  console.log('_______ no responseData');
   return [];
 }
 
@@ -77,5 +79,26 @@ export async function fetchContactmomenten(
       authProfileAndToken.profile.sid
     ),
   };
+  console.log(
+    '_____________Fetching contactmomenten from Salesforce',
+    requestConfig
+  );
+
+  const requestConfigAfspraken: DataRequestConfig = {
+    formatUrl({ url }) {
+      return `${url}/services/apexrest/klantinteracties/v1.0/appointments/`;
+    },
+    params: {
+      hadBetrokkene__uuid: encryptedBSN.toString('base64'),
+      iv: iv.toString('base64'),
+      pageSize: 100,
+    },
+    transformResponse: transformContactmomentenResponse,
+    cacheKey_UNSAFE: createSessionBasedCacheKey(
+      authProfileAndToken.profile.sid
+    ),
+  };
+
+  fetchSalesforceData<ContactMoment[]>(requestConfigAfspraken);
   return fetchSalesforceData<ContactMoment[]>(requestConfig);
 }
