@@ -5,7 +5,11 @@ import type {
   VarenZakenFrontend,
 } from '../../../../server/services/varen/config-and-types';
 import { IS_PRODUCTION } from '../../../../universal/config/env';
-import { dateSort, isDateInPast } from '../../../../universal/helpers/date';
+import {
+  dateSort,
+  isDateInFuture,
+  isDateInPast,
+} from '../../../../universal/helpers/date';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
@@ -57,6 +61,7 @@ type VarenTableItem = {
   isExpired?: boolean;
   dateRequest: string;
   dateStart: string | null;
+  dateEnd: string | null;
 };
 type TableConfig<T> = {
   title: string;
@@ -97,7 +102,8 @@ export const tableConfig: {
     title: 'Actieve vergunningen',
     filter: (vergunning) =>
       !vergunning.isExpired &&
-      (!vergunning.dateStart || isDateInPast(vergunning.dateStart)),
+      (!vergunning.dateStart || isDateInPast(vergunning.dateStart)) &&
+      (!vergunning.dateEnd || isDateInFuture(vergunning.dateEnd)),
     sort: dateSort('dateStart', 'desc'),
     listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.actief,
