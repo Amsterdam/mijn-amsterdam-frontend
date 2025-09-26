@@ -78,6 +78,15 @@ export function isDateInPast(
   const date_ = parseISO(date);
   return date_.getTime() <= dateNow.getTime();
 }
+/**
+ * Checks if date is a date in the future, dateNow _is_ included.
+ */
+export function isDateInFuture(
+  date: string,
+  dateNow: string | Date = new Date()
+) {
+  return !isDateInPast(date, dateNow);
+}
 
 export function dateSort<T extends object>(
   sortKey: keyof T,
