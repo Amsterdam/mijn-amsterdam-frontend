@@ -188,7 +188,7 @@ export function transformAVGResponse(data: SmileAvgResponse): AVGResponse {
 export async function fetchAVG(authProfileAndToken: AuthProfileAndToken) {
   const data = getDataForAVG(authProfileAndToken.profile.id);
   const response = await requestData<AVGResponse>(
-    getApiConfig('ENABLEU_2_SMILE', {
+    getApiConfig('SMILE', {
       transformResponse: transformAVGResponse,
       data,
       headers: data.getHeaders(),
@@ -231,7 +231,7 @@ export async function fetchAVGRequestThemes(
   const data = getDataForAvgThemas(avgIds);
 
   const res = await requestData<AvgThemesResponse>(
-    getApiConfig('ENABLEU_2_SMILE', {
+    getApiConfig('SMILE', {
       transformResponse: transformAVGThemeResponse,
       data,
       headers: data.getHeaders(),

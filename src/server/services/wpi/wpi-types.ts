@@ -1,7 +1,7 @@
 import {
   LinkProps,
   StatusLineItem,
-  ZaakDetail,
+  ZaakAanvraagDetail,
 } from '../../../universal/types/App.types';
 
 export interface WpiRequestStatusDocument {
@@ -25,7 +25,7 @@ export interface WpiRequestStatusHerstelTermijn extends WpiRequestStatus {
   dateUserFeedbackExpected: string;
 }
 
-export interface WpiRequestProcess extends ZaakDetail {
+export interface WpiRequestProcess extends ZaakAanvraagDetail {
   id: string;
   title: string;
   about:

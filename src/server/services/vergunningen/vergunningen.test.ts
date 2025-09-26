@@ -35,7 +35,8 @@ describe('vergunningen', () => {
     it('should correctly transform a DecosVergunning into a VergunningFrontend', () => {
       const decosVergunning: DecosZaakBase = {
         id: '1',
-        caseType: '',
+        itemType: 'folders',
+        caseType: 'Case Type 1',
         dateDecision: null,
         dateRequest: '',
         dateStart: null,
@@ -56,7 +57,8 @@ describe('vergunningen', () => {
         routeConfig.detailPage.path
       );
       expect(result).toStrictEqual({
-        caseType: '',
+        itemType: 'folders',
+        caseType: 'Case Type 1',
         dateDecision: null,
         dateDecisionFormatted: null,
         dateEnd: null,
@@ -75,7 +77,7 @@ describe('vergunningen', () => {
         key: 'x1',
         link: {
           title: 'Bekijk hoe het met uw aanvraag staat',
-          to: '/vergunningen/1',
+          to: '/vergunningen/case-type-1/1',
         },
         processed: false,
         steps: [{ status: 'FooBar', isActive: true }],

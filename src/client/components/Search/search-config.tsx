@@ -33,6 +33,7 @@ import {
 } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
 import {
   VarenRegistratieRederType,
+  VarenVergunningFrontend,
   VarenZakenFrontend,
 } from '../../../server/services/varen/config-and-types';
 import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
@@ -513,13 +514,18 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     getApiBaseItems: (apiContent: {
       reder: VarenRegistratieRederType;
       zaken: VarenZakenFrontend[];
+      vergunningen: VarenVergunningFrontend[];
     }) => {
       const zaken =
         apiContent?.zaken.map((zaak) => ({
           ...zaak,
         })) ?? [];
+      const vergunningen =
+        apiContent?.vergunningen.map((vergunning) => ({
+          ...vergunning,
+        })) ?? [];
       if (!apiContent.reder) {
-        return zaken;
+        return [...zaken, ...vergunningen];
       }
       const reder = {
         ...apiContent.reder,
@@ -528,14 +534,23 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
           title: themaTitleVaren,
         },
       };
-      return [reder, ...zaken];
+      return [reder, ...zaken, ...vergunningen];
     },
-    displayTitle: (item: VarenZakenFrontend) => (term: string) => {
-      return displayPath(term, [
-        item.title,
-        item.vesselName ?? item.identifier,
-      ]);
-    },
+    displayTitle:
+      (
+        item:
+          | VarenRegistratieRederType
+          | VarenZakenFrontend
+          | VarenVergunningFrontend
+      ) =>
+      (term: string) => {
+        return displayPath(term, [
+          item.title,
+          'vesselName' in item && item.vesselName
+            ? item.vesselName
+            : item.identifier,
+        ]);
+      },
     keywordsGeneratedFromProps: [
       'identifier',
       'vesselName',

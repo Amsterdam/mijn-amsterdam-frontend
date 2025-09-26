@@ -12,11 +12,11 @@ import {
   apiErrorResult,
 } from '../../../universal/helpers/api';
 import { fetchMyLocation } from '../bag/my-locations';
+import { fetchBrpV2 } from '../brp/brp';
 import { fetchDataset } from '../buurt/buurt';
-import { fetchBRP } from '../profile/brp';
 
-vi.mock('../profile/brp', () => ({
-  fetchBRP: vi.fn(),
+vi.mock('../brp/brp', () => ({
+  fetchBrpV2: vi.fn(),
 }));
 
 vi.mock('../bag/my-locations', () => ({
@@ -36,7 +36,7 @@ describe('fetchAdoptableTrashContainers', () => {
   });
 
   it('should return tips if all fetches are successful and age is above LATE_TEEN_AGE', async () => {
-    (fetchBRP as Mock).mockResolvedValue(brpApiResponse);
+    (fetchBrpV2 as Mock).mockResolvedValue(brpApiResponse);
     (fetchMyLocation as Mock).mockResolvedValue(locationApiResponse);
 
     const DISTANCE_ADDED = 0.0001;
@@ -65,7 +65,7 @@ describe('fetchAdoptableTrashContainers', () => {
   });
 
   it('should return an error if fetching BRP data fails', async () => {
-    (fetchBRP as Mock).mockResolvedValue(
+    (fetchBrpV2 as Mock).mockResolvedValue(
       apiErrorResult('Error fetching BRP data', null)
     );
 
@@ -74,7 +74,7 @@ describe('fetchAdoptableTrashContainers', () => {
   });
 
   it('should return an error if fetching location fails', async () => {
-    (fetchBRP as Mock).mockResolvedValue(brpApiResponse);
+    (fetchBrpV2 as Mock).mockResolvedValue(brpApiResponse);
     (fetchMyLocation as Mock).mockResolvedValue(
       apiErrorResult('Error fetching BAG location', null)
     );
@@ -84,7 +84,7 @@ describe('fetchAdoptableTrashContainers', () => {
   });
 
   it('should return an error if fetching dataset fails', async () => {
-    (fetchBRP as Mock).mockResolvedValue(brpApiResponse);
+    (fetchBrpV2 as Mock).mockResolvedValue(brpApiResponse);
     (fetchMyLocation as Mock).mockResolvedValue(locationApiResponse);
     (fetchDataset as Mock).mockResolvedValue(
       apiErrorResult('Error fetching Map locations dataset', null)
@@ -95,7 +95,7 @@ describe('fetchAdoptableTrashContainers', () => {
   });
 
   it('should return no tips if age is less than LATE_TEEN_AGE', async () => {
-    (fetchBRP as Mock).mockResolvedValue(
+    (fetchBrpV2 as Mock).mockResolvedValue(
       apiSuccessResult({ persoon: { geboortedatum: '2010-01-01' } })
     );
 
@@ -105,7 +105,7 @@ describe('fetchAdoptableTrashContainers', () => {
   });
 
   it('should not return tips if there are no adoptable trashcontainers found within the given radius', async () => {
-    (fetchBRP as Mock).mockResolvedValue(brpApiResponse);
+    (fetchBrpV2 as Mock).mockResolvedValue(brpApiResponse);
     (fetchMyLocation as Mock).mockResolvedValue(locationApiResponse);
 
     // A coord outside of the radius from the Home location returned by fetchMyLocation

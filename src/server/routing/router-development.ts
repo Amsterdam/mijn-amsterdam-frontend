@@ -26,7 +26,11 @@ import {
 } from '../auth/auth-helpers';
 import { signDevelopmentToken } from '../auth/auth-helpers-development';
 import { authRoutes } from '../auth/auth-routes';
-import { AuthProfile, MaSession } from '../auth/auth-types';
+import {
+  AuthProfile,
+  MaSession,
+  type AuthenticatedRequest,
+} from '../auth/auth-types';
 import { ONE_SECOND_MS } from '../config/app';
 import { getFromEnv } from '../helpers/env';
 import { countLoggedInVisit } from '../services/visitors';
@@ -226,6 +230,26 @@ authRouterDevelopment.get(
     }
 
     res.clearCookie(OIDC_SESSION_COOKIE_NAME);
+    return sendUnauthorized(res);
+  }
+);
+
+authRouterDevelopment.get(
+  authRoutes.AUTH_TOKEN_DATA,
+  async (req: AuthenticatedRequest, res: Response) => {
+    if (hasSessionCookie(req)) {
+      const auth = getAuth(req);
+      if (auth) {
+        return res.send(
+          apiSuccessResult({
+            tokenData: req[OIDC_SESSION_COOKIE_NAME],
+            token: auth.token,
+            profile: auth.profile,
+          })
+        );
+      }
+    }
+
     return sendUnauthorized(res);
   }
 );

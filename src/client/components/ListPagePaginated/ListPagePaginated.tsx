@@ -3,7 +3,10 @@ import { ReactNode, useMemo } from 'react';
 import { Paragraph } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router';
 
-import { LinkProps, ZaakDetail } from '../../../universal/types/App.types';
+import {
+  LinkProps,
+  ZaakAanvraagDetail,
+} from '../../../universal/types/App.types';
 import { getRedactedClass } from '../../helpers/cobrowse';
 import { usePageTypeSetting } from '../../hooks/useThemaMenuItems';
 import ErrorAlert from '../Alert/Alert';
@@ -33,7 +36,7 @@ interface ListPagePaginatedProps<T> {
   totalCount?: number;
 }
 
-export function ListPagePaginated<T extends object = ZaakDetail>({
+export function ListPagePaginated<T extends object = ZaakAanvraagDetail>({
   appRoute,
   breadcrumbs,
   pageContentTop,

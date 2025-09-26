@@ -2,7 +2,7 @@ import { SELECT_FIELDS_TRANSFORM_BASE } from './powerbrowser-field-transformers'
 import { OmitMapped } from '../../../universal/helpers/utils';
 import {
   GenericDocument,
-  ZaakDetail,
+  ZaakAanvraagDetail,
 } from '../../../universal/types/App.types';
 import { AuthProfile } from '../../auth/auth-types';
 
@@ -149,7 +149,7 @@ export type PowerBrowserZaakFrontend<
   dateDecisionFormatted?: string | null;
   dateStartFormatted?: string | null;
   dateEndFormatted?: string | null;
-} & ZaakDetail;
+} & ZaakAanvraagDetail;
 
 export type ZaakStatusDate = {
   status: string;

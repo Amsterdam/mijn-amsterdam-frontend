@@ -1,6 +1,9 @@
 import { ReactNode } from 'react';
 
-import { LinkProps, ZaakDetail } from '../../../universal/types/App.types';
+import {
+  LinkProps,
+  ZaakAanvraagDetail,
+} from '../../../universal/types/App.types';
 import { getRedactedClass } from '../../helpers/cobrowse';
 import ErrorAlert from '../Alert/Alert';
 import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
@@ -33,7 +36,9 @@ interface ThemaDetailPaginaProps<T> {
   showStatusSteps?: boolean;
 }
 
-export default function ThemaDetailPagina<T extends Partial<ZaakDetail>>({
+export default function ThemaDetailPagina<
+  T extends Partial<ZaakAanvraagDetail>,
+>({
   themaId,
   zaak,
   title = 'Detailpagina',

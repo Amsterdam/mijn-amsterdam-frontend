@@ -34,6 +34,7 @@ import { DecosZaakTransformer } from '../decos/decos-types';
 
 const GPP: DecosZaakTransformer<GPP> = {
   isActive: true,
+  itemType: 'folders',
   caseType: caseTypeParkeren.GPP,
   title: 'Vaste parkeerplaats voor gehandicapten (GPP)',
   transformFields: {
@@ -57,6 +58,7 @@ const GPP: DecosZaakTransformer<GPP> = {
 
 const GPK: DecosZaakTransformer<GPK> = {
   isActive: true,
+  itemType: 'folders',
   caseType: caseTypeParkeren.GPK,
   title: 'Europese gehandicaptenparkeerkaart (GPK)',
   isVerleend(decosZaak) {
@@ -95,6 +97,7 @@ const GPK: DecosZaakTransformer<GPK> = {
 
 const BZP: DecosZaakTransformer<BZP> = {
   isActive: true,
+  itemType: 'folders',
   caseType: caseTypeParkeren.BZP,
   title: capitalizeFirstLetter(caseTypeParkeren.BZP.toLowerCase()),
   requirePayment: true,
@@ -112,6 +115,7 @@ const BZP: DecosZaakTransformer<BZP> = {
 
 const BZB: DecosZaakTransformer<BZB> = {
   isActive: true,
+  itemType: 'folders',
   caseType: caseTypeParkeren.BZB,
   title: capitalizeFirstLetter(caseTypeParkeren.BZB.toLowerCase()),
   transformFields: {
@@ -125,6 +129,7 @@ const BZB: DecosZaakTransformer<BZB> = {
 
 const EigenParkeerplaats: DecosZaakTransformer<EigenParkeerplaats> = {
   isActive: true,
+  itemType: 'folders',
   caseType: caseTypeParkeren.EigenParkeerplaats,
   title: capitalizeFirstLetter(
     caseTypeParkeren.EigenParkeerplaats.toLowerCase()
@@ -226,6 +231,7 @@ const EigenParkeerplaats: DecosZaakTransformer<EigenParkeerplaats> = {
 const EigenParkeerplaatsOpheffen: DecosZaakTransformer<EigenParkeerplaatsOpheffen> =
   {
     isActive: true,
+    itemType: 'folders',
     caseType: caseTypeParkeren.EigenParkeerplaatsOpheffen,
     title: capitalizeFirstLetter(
       caseTypeParkeren.EigenParkeerplaatsOpheffen.toLowerCase()
@@ -262,6 +268,7 @@ const EigenParkeerplaatsOpheffen: DecosZaakTransformer<EigenParkeerplaatsOpheffe
 
 const TouringcarDagontheffing: DecosZaakTransformer<TouringcarDagontheffing> = {
   isActive: true,
+  itemType: 'folders',
   caseType: caseTypeParkeren.TouringcarDagontheffing,
   title: capitalizeFirstLetter(
     caseTypeParkeren.TouringcarDagontheffing.toLowerCase()
@@ -288,6 +295,7 @@ const TouringcarDagontheffing: DecosZaakTransformer<TouringcarDagontheffing> = {
 const TouringcarJaarontheffing: DecosZaakTransformer<TouringcarJaarontheffing> =
   {
     isActive: true,
+    itemType: 'folders',
     caseType: caseTypeParkeren.TouringcarJaarontheffing,
     title: capitalizeFirstLetter(
       caseTypeParkeren.TouringcarJaarontheffing.toLowerCase()

@@ -85,7 +85,7 @@ async function getConfig(authProfileAndToken: AuthProfileAndToken) {
     ): ApiPatternResponseA {
       return {
         ...response,
-        url: getFromEnv('BFF_SSO_URL_SUBSIDIES') ?? SUBSIDIES_ROUTE_DEFAULT,
+        url: `${getFromEnv('BFF_SSO_URL_SUBSIDIES') ?? SUBSIDIES_ROUTE_DEFAULT}?authMethod=${authProfileAndToken.profile.authMethod}`,
       };
     },
   });

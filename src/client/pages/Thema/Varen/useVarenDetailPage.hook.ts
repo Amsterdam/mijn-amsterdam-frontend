@@ -7,7 +7,37 @@ import {
 } from './Varen-thema-config';
 import { ButtonLinkProps } from '../../../../universal/types/App.types';
 
-export function useVarenDetailPage() {
+export function useVarenVergunningDetailPage() {
+  const {
+    varenRederRegistratie,
+    varenVergunningen,
+    id: themaId,
+    breadcrumbs,
+    isLoading,
+    isError,
+  } = useVarenThemaData();
+  const { id } = useParams<{ id: string }>();
+
+  const hasRegistratieReder = !!varenRederRegistratie;
+
+  const vergunning = varenVergunningen.find((item) => item.id === id) ?? null;
+  const buttonItems: ButtonLinkProps[] = vergunning?.id
+    ? [exploitatieVergunningWijzigenLink(vergunning.id)]
+    : [];
+
+  return {
+    vergunning,
+    themaId,
+    hasRegistratieReder,
+    buttonItems,
+    isLoading,
+    isError,
+    breadcrumbs,
+    routeConfig,
+  };
+}
+
+export function useVarenZaakDetailPage() {
   const {
     varenRederRegistratie,
     varenZaken,
@@ -16,21 +46,11 @@ export function useVarenDetailPage() {
     isLoading,
     isError,
   } = useVarenThemaData();
-
   const { id } = useParams<{ id: string }>();
 
-  const zaak = varenZaken.find((item) => item.id === id) ?? null;
-
   const hasRegistratieReder = !!varenRederRegistratie;
-  const linkedWijzigingZaak =
-    varenZaken.find(
-      (otherZaak) =>
-        otherZaak.id !== zaak?.id &&
-        otherZaak.vergunning != null &&
-        otherZaak.vergunning?.id === zaak?.vergunning?.id &&
-        otherZaak.processed === false
-    ) || null;
 
+  const zaak = varenZaken.find((item) => item.id === id) ?? null;
   const buttonItems: ButtonLinkProps[] = zaak?.vergunning?.id
     ? [exploitatieVergunningWijzigenLink(zaak.vergunning.id)]
     : [];
@@ -38,7 +58,6 @@ export function useVarenDetailPage() {
   return {
     zaak,
     themaId,
-    linkedWijzigingZaak,
     hasRegistratieReder,
     buttonItems,
     isLoading,

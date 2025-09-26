@@ -1,7 +1,7 @@
 import {
   GenericDocument,
   LinkProps,
-  ZaakDetail,
+  ZaakAanvraagDetail,
 } from '../../../universal/types/App.types';
 
 export type Lood365Response = {
@@ -52,7 +52,8 @@ export type LoodMetingStatus =
 export type LoodMetingDecision = 'Afgewezen' | 'Afgehandeld';
 export type LoodMetingen = LoodMetingFrontend[];
 
-export interface LoodMetingFrontend extends ZaakDetail<LoodMetingStatus> {
+export interface LoodMetingFrontend
+  extends ZaakAanvraagDetail<LoodMetingStatus> {
   adres: string;
   datumAanvraag: string; // RequestedOn
   datumAanvraagFormatted: string;

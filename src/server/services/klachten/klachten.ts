@@ -150,7 +150,7 @@ async function fetchKlachten(
   const data = getDataForKlachten(authProfileAndToken.profile.id, page);
 
   return requestData<KlachtenResponse>(
-    getApiConfig('ENABLEU_2_SMILE', {
+    getApiConfig('SMILE', {
       transformResponse: transformKlachtenResponse,
       data,
       headers: data.getHeaders(),
