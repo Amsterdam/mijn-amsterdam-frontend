@@ -1,7 +1,7 @@
 import { featureToggle, themaId, themaTitle } from './Subsidies-thema-config';
-import { SectionProps } from '../../GeneralInfo/GeneralInfo';
+import { Section } from '../../GeneralInfo/GeneralInfo';
 
-export const subsidiesSectionProps: SectionProps = {
+export const subsidiesSectionProps: Section = {
   id: themaId,
   title: themaTitle,
   listItems: ['Uw aanvraag voor een subsidie'],
