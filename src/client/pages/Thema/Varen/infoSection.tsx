@@ -1,7 +1,7 @@
 import { featureToggle, themaId, themaTitle } from './Varen-thema-config';
-import { SectionProps } from '../../GeneralInfo/GeneralInfo';
+import { Section } from '../../GeneralInfo/GeneralInfo';
 
-export const varensectionProps: SectionProps = {
+export const varensectionProps: Section = {
   id: themaId,
   title: themaTitle,
   listItems: [

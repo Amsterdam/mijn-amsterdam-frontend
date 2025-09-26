@@ -1,7 +1,7 @@
 import { themaId, themaTitle } from './Inkomen-thema-config';
-import { SectionProps } from '../../GeneralInfo/GeneralInfo';
+import { Section } from '../../GeneralInfo/GeneralInfo';
 
-export const inkomenSectionProps: SectionProps = {
+export const inkomenSectionProps: Section = {
   id: themaId,
   title: themaTitle,
   listItems: [
