@@ -30,13 +30,11 @@ import {
   fetchSubsidieNotifications,
 } from './patroon-c';
 import { fetchSVWINotifications } from './patroon-c/svwi';
-import { fetchBrpNotifications } from './profile/brp';
 import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur/toeristische-verhuur-notifications';
 import { fetchVarenNotifications } from './varen/varen-notifications';
 import { fetchVergunningenNotifications } from './vergunningen/vergunningen-notifications';
 import { fetchWiorNotifications } from './wior';
 import { fetchWpiNotifications } from './wpi';
-import { featureToggle } from '../../client/pages/Thema/Profile/Profile-thema-config';
 import { streamEndpointQueryParamKeys } from '../../universal/config/app';
 import { getFromEnv } from '../helpers/env';
 
@@ -82,9 +80,7 @@ export const notificationServices = {
     belasting: fetchBelastingNotifications,
     bezwaren: fetchBezwarenNotifications,
     bodem: fetchLoodMetingNotifications,
-    brp: featureToggle.BRP.benkBrpServiceActive
-      ? fetchBrpNotificationsV2
-      : fetchBrpNotifications,
+    brp: fetchBrpNotificationsV2,
     fetchKrefia: fetchKrefiaNotifications,
     fetchSVWI: fetchSVWINotifications,
     fetchWior: fetchWiorNotifications,

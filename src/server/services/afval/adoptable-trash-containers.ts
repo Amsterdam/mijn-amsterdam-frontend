@@ -1,19 +1,6 @@
 import { differenceInYears } from 'date-fns';
 import { LatLngBoundsLiteral } from 'leaflet';
 
-import { fetchBRP } from '../profile/brp';
-import { fetchDataset } from '../buurt/buurt';
-import {
-  datasetEndpoints,
-  DatasetFeatureProperties,
-  MaPointFeature,
-} from '../buurt/datasets';
-import {
-  filterDatasetFeatures,
-  filterFeaturesinRadius,
-  getBboxFromFeatures,
-} from '../buurt/helpers';
-import { fetchMyLocation } from '../bag/my-locations';
 import { routeConfig as buurtRouteConfig } from '../../../client/components/MyArea/MyArea-thema-config';
 import {
   themaId,
@@ -25,6 +12,19 @@ import {
 } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import { fetchMyLocation } from '../bag/my-locations';
+import { fetchBrpV2 } from '../brp/brp';
+import { fetchDataset } from '../buurt/buurt';
+import {
+  datasetEndpoints,
+  DatasetFeatureProperties,
+  MaPointFeature,
+} from '../buurt/datasets';
+import {
+  filterDatasetFeatures,
+  filterFeaturesinRadius,
+  getBboxFromFeatures,
+} from '../buurt/helpers';
 
 const ADULT_AGE = 18;
 const LATE_TEEN_AGE = 16;
@@ -42,7 +42,7 @@ const filterQueryParam = encodeURIComponent(JSON.stringify(filters));
 export async function fetchAdoptableTrashContainers(
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const BRP = await fetchBRP(authProfileAndToken);
+  const BRP = await fetchBrpV2(authProfileAndToken);
 
   if (!BRP.content?.persoon?.geboortedatum) {
     return apiDependencyError({ BRP });
