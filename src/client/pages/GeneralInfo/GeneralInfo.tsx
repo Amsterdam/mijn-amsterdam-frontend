@@ -15,7 +15,7 @@ import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { getRedactedClass } from '../../helpers/cobrowse';
 import {
   compareThemas,
-  useThemaMenuItemsByThemaID,
+  useAllThemaMenuItemsByThemaID,
 } from '../../hooks/useThemaMenuItems';
 import { afisSectionProps } from '../Thema/Afis/InfoSection';
 import { afvalSectionProps } from '../Thema/Afval/InfoSection';
@@ -147,7 +147,7 @@ function getLinkComponent(href: string) {
 }
 
 export function GeneralInfo() {
-  const themaMenuItems = useThemaMenuItemsByThemaID();
+  const themaMenuItems = useAllThemaMenuItemsByThemaID();
   const sectionComponents = sections
     .filter((section) => {
       return section.active && section.id in themaMenuItems;

@@ -22,7 +22,7 @@ import { useSmallScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
-import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
+import { useMyThemaMenuItems } from '../../hooks/useThemaMenuItems';
 import { myNotificationsMenuItem } from '../MyNotifications/MyNotifications-routes';
 
 const MAX_NOTIFICATIONS_VISIBLE = 6;
@@ -43,7 +43,7 @@ export function Dashboard() {
   const isPhoneScreen = useSmallScreen();
 
   const { items: myThemaItems, isLoading: isMyThemasLoading } =
-    useThemaMenuItems();
+    useMyThemaMenuItems();
 
   useEffect(() => {
     if (location.search) {

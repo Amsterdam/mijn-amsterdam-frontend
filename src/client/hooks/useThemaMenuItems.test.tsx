@@ -9,8 +9,8 @@ import {
   compareThemas,
   useThemaBreadcrumbs,
   useThemaMenuItemByThemaID,
-  useThemaMenuItems,
-  useThemaMenuItemsByThemaID,
+  useMyThemaMenuItems,
+  useAllThemaMenuItemsByThemaID,
 } from './useThemaMenuItems';
 import { themasByProfileType } from '../config/menuItems';
 import type { ThemaMenuItemTransformed } from '../config/thema-types';
@@ -104,7 +104,7 @@ describe('useThemaMenuItems', () => {
     (useAppStateReady as Mock).mockReturnValue(true);
     (themasByProfileType as Mock).mockReturnValue(mockThemaItems);
 
-    const { result } = renderHook(() => useThemaMenuItems(), {
+    const { result } = renderHook(() => useMyThemaMenuItems(), {
       wrapper: ({ children }) => <RecoilRoot>{children}</RecoilRoot>,
     });
 
@@ -120,7 +120,7 @@ describe('useThemaMenuItems', () => {
     (useAppStateReady as Mock).mockReturnValue(false);
     (themasByProfileType as Mock).mockReturnValue([]);
 
-    const { result } = renderHook(() => useThemaMenuItems());
+    const { result } = renderHook(() => useMyThemaMenuItems());
 
     expect(result.current.isLoading).toBe(true);
   });
@@ -147,7 +147,7 @@ describe('useThemaMenuItemsByThemaID', () => {
 
     (themasByProfileType as Mock).mockReturnValue(mockThemaItems);
 
-    const { result } = renderHook(() => useThemaMenuItemsByThemaID());
+    const { result } = renderHook(() => useAllThemaMenuItemsByThemaID());
 
     expect(result.current).toEqual({
       '1': itemA,
