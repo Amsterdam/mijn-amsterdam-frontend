@@ -12,7 +12,7 @@ import {
   TextPageV2,
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
-import { ThemaConfigBase } from '../../config/thema-types'; // ✅ nodig voor type
+import { ThemaConfigBase } from '../../config/thema-types'; // nodig voor de type
 import { getRedactedClass } from '../../helpers/cobrowse';
 import {
   compareThemas,
@@ -23,7 +23,6 @@ import { afvalSectionProps } from '../Thema/Afval/InfoSection';
 import { AVGsectionProps } from '../Thema/AVG/InfoSection';
 import { belastingenSectionProps } from '../Thema/Belastingen/InfoSection';
 import { bezwarenSectionProps } from '../Thema/Bezwaren/InfoSection';
-// import { bodemsectionProps } from '../Thema/Bodem/InfoSection'; // ❌ niet meer nodig
 import { themaConfig as bodemConfig } from '../Thema/Bodem/Bodem-thema-config';
 import { burgerzakenSectionProps } from '../Thema/Burgerzaken/InfoSection';
 import { erfpachtSectionProps } from '../Thema/Erfpacht/InfoSection';
@@ -88,7 +87,7 @@ const sections: SectionProps[] = [
   milieuzonesectionProps,
   overtredingensectionProps,
   vergunningensectionProps,
-  bodemsectionProps, // ✅ nu via createSectionProps
+  bodemsectionProps, // nu via createSectionProps
   varensectionProps,
 ];
 
