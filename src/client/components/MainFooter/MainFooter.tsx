@@ -6,7 +6,10 @@ import {
 } from '@amsterdam/design-system-react';
 import useSWR from 'swr';
 
-import { CobrowseFooter, hulpLabel } from './CobrowseFooter/CobrowseFooter';
+import {
+  CobrowseFooter,
+  LABEL_HULP_SCHERMDELEN,
+} from './CobrowseFooter/CobrowseFooter';
 import styles from './MainFooter.module.scss';
 import type {
   CMSFooter,
@@ -97,7 +100,7 @@ export function MainFooter() {
           .filter(
             (link) =>
               typeof link.label === 'string' &&
-              link.label.toLowerCase() !== hulpLabel.toLowerCase()
+              link.label.toLowerCase() !== LABEL_HULP_SCHERMDELEN.toLowerCase()
           )
           .map((link) => {
             return (

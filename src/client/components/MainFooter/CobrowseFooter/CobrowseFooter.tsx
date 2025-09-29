@@ -5,7 +5,7 @@ import { PageFooter } from '@amsterdam/design-system-react';
 import { BFF_API_BASE_URL } from '../../../config/api';
 import { useScript } from '../../../hooks/useScript';
 
-export const hulpLabel = 'Hulp via schermdelen' as const;
+export const LABEL_HULP_SCHERMDELEN = 'Hulp via schermdelen';
 const MAX_WAIT_FOR_COBROWSE_LIVE_MS = 5000;
 declare global {
   interface Window {
@@ -95,7 +95,7 @@ export function CobrowseFooter() {
         onClick={() => document.dispatchEvent(shift6keysDown)}
         href="#"
       >
-        {hulpLabel}
+        {LABEL_HULP_SCHERMDELEN}
       </PageFooter.MenuLink>
     )
   );
