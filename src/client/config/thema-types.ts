@@ -22,7 +22,7 @@ export type ThemaConfigBase = {
   route: {
     path: string;
     documentTitle: string;
-  };
+  }; ///of ThemaRouteConfig
   redactedScope: 'full' | 'content' | 'none';
 };
 

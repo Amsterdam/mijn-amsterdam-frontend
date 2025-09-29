@@ -1,7 +1,7 @@
+import { themaConfig } from './Bodem-thema-config';
 import { useBodemListPageData } from './useBodemListPageData.hook';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
-import { routeConfig } from '../Erfpacht/Erfpacht-thema-config';
 
 export function BodemList() {
   const {
@@ -10,19 +10,17 @@ export function BodemList() {
     isError,
     filter,
     sort,
-    themaId,
-    title,
     displayProps,
     breadcrumbs,
     listPageRoute,
   } = useBodemListPageData();
-  useHTMLDocumentTitle(routeConfig.listPage);
+  useHTMLDocumentTitle(themaConfig.route); //TODO Moet de juiste Docmenttitle ik dacht > themaConfig.listPage.route.DocumentTitle
 
   return (
     <ListPagePaginated
       items={items.filter(filter).sort(sort)}
-      themaId={themaId}
-      title={title}
+      themaId={themaConfig.id}
+      title={themaConfig.title}
       appRoute={listPageRoute}
       breadcrumbs={breadcrumbs}
       displayProps={displayProps}
