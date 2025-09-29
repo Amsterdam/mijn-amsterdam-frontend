@@ -6,7 +6,7 @@ import {
 } from '@amsterdam/design-system-react';
 import useSWR from 'swr';
 
-import { CobrowseFooter } from './CobrowseFooter/CobrowseFooter';
+import { CobrowseFooter, hulpLabel } from './CobrowseFooter/CobrowseFooter';
 import styles from './MainFooter.module.scss';
 import type {
   CMSFooter,
@@ -94,7 +94,11 @@ export function MainFooter() {
 
       <PageFooter.Menu>
         {footer?.content?.bottomLinks
-          .filter((link) => link.label.toLowerCase() !== 'hulp via schermdelen')
+          .filter(
+            (link) =>
+              typeof link.label === 'string' &&
+              link.label.toLowerCase() !== hulpLabel.toLowerCase()
+          )
           .map((link) => {
             return (
               <PageFooter.MenuLink key={link.label} href={link.url}>
