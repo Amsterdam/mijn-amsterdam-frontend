@@ -93,13 +93,15 @@ export function MainFooter() {
       </PageFooter.Spotlight>
 
       <PageFooter.Menu>
-        {footer?.content?.bottomLinks.slice(0, -1).map((link) => {
-          return (
-            <PageFooter.MenuLink key={link.label} href={link.url}>
-              {link.label}
-            </PageFooter.MenuLink>
-          );
-        })}
+        {footer?.content?.bottomLinks
+          .filter((link) => link.label.toLowerCase() !== 'hulp via schermdelen')
+          .map((link) => {
+            return (
+              <PageFooter.MenuLink key={link.label} href={link.url}>
+                {link.label}
+              </PageFooter.MenuLink>
+            );
+          })}
         <CobrowseFooter />
       </PageFooter.Menu>
     </PageFooter>
