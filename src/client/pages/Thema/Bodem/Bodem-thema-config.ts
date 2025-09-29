@@ -19,7 +19,6 @@ type BodemThemaConfig = ThemaConfigBase & WithDetailPage & WithListPage;
 export const themaConfig: BodemThemaConfig = {
   id: 'BODEM', // Bij USEBODEMLISTPAGEDATAHOOKS.TS NOG STEEDS THEMAID EN USEBODEMDATA.HOOKS.TSX
   title: 'Bodem',
-  // titleDetail: 'Lood in bodem-check',
   profileTypes: ['private', 'commercial'],
   featureToggle: {
     themaActive: true, // ook van infosection active toevoegen of het uit of aan en check het generalinfo gedeelte. import kan je aanpassen met as bodemn bijvoorbeeld
