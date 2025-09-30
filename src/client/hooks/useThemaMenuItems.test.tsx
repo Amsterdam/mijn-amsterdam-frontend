@@ -150,7 +150,16 @@ describe('useAllThemaMenuItemsByThemaID', () => {
       profileTypes: [],
       redactedScope: 'none',
     };
-    const mockThemaItems: ThemaMenuItemTransformed[] = [itemA, itemB];
+    const itemC: ThemaMenuItemTransformed = {
+      id: '3',
+      title: 'Thema C',
+      isAlwaysVisible: false,
+      isActive: () => false,
+      to: '',
+      profileTypes: [],
+      redactedScope: 'none',
+    };
+    const mockThemaItems: ThemaMenuItemTransformed[] = [itemA, itemB, itemC];
 
     (themasByProfileType as Mock).mockReturnValue(mockThemaItems);
 
@@ -159,6 +168,7 @@ describe('useAllThemaMenuItemsByThemaID', () => {
     expect(result.current).toEqual({
       '1': { ...itemA, hasData: true },
       '2': { ...itemB, hasData: true },
+      '3': { ...itemC, hasData: false },
     });
   });
 });
