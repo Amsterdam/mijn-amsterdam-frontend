@@ -104,17 +104,6 @@ function Section({ title, listItems, href }: SectionProps) {
     );
   });
 
-  // const themaMenuItem = themaMenuItems[id];
-  // const href = to || (themaMenuItem && themaMenuItem.to);
-  // const LinkComponent = getLinkComponent(href);
-  // const titleComponent = LinkComponent ? (
-  //   <LinkComponent maVariant="fatNoUnderline" href={href}>
-  //     {title}
-  //   </LinkComponent>
-  // ) : (
-  //   title
-  // );
-
   const LinkComponent = href && getLinkComponent(href);
 
   const titleComponent = LinkComponent ? (
@@ -161,7 +150,7 @@ export function GeneralInfo() {
         <Section
           key={i}
           title={section.title}
-          href={section.href}
+          href={themaMenuItem.hasData ? section.href : undefined}
           listItems={section.listItems}
         />
       );

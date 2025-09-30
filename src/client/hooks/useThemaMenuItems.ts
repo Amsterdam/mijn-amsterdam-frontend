@@ -14,8 +14,12 @@ import {
   themaIdKVK,
 } from '../pages/Thema/Profile/Profile-thema-config';
 
+type ThemaMenuItemTransformedWithHasData<ID extends string = string> =
+  ThemaMenuItemTransformed<ID> & {
+    hasData: boolean;
+  };
 export interface ThemasState {
-  items: Array<ThemaMenuItemTransformed & { hasData: boolean }>;
+  items: ThemaMenuItemTransformedWithHasData[];
   isLoading: boolean;
 }
 
@@ -83,7 +87,7 @@ export function useAllThemaMenuItemsByThemaID() {
           acc[item.id] = item;
           return acc;
         },
-        {} as Record<string, ThemaMenuItemTransformed>
+        {} as Record<string, ThemaMenuItemTransformedWithHasData>
       ),
     [items]
   );
@@ -96,7 +100,7 @@ export function useThemaMenuItemByThemaID<ID extends string = string>(
 ): ThemaMenuItemTransformed<ID> | null {
   const itemsById = useAllThemaMenuItemsByThemaID();
   return itemsById[themaID]
-    ? (itemsById[themaID] as ThemaMenuItemTransformed<ID>)
+    ? (itemsById[themaID] as ThemaMenuItemTransformedWithHasData<ID>)
     : null;
 }
 
