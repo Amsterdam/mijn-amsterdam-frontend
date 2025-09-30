@@ -37,7 +37,6 @@ export type WMOVoorzieningCompact = {
   id: ZorgnedAanvraagTransformed['id'];
   title: ZorgnedAanvraagTransformed['titel'];
   productGroup: ZorgnedStatusLineItemsConfig['statusLineItems']['name'];
-  resultaat: ZorgnedAanvraagTransformed['resultaat'];
   beschikkingNummer: ZorgnedAanvraagTransformed['beschikkingNummer'];
   productIdentificatie: ZorgnedAanvraagTransformed['productIdentificatie'];
   beschiktProductIdentificatie: ZorgnedAanvraagTransformed['beschiktProductIdentificatie'];

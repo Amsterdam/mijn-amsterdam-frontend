@@ -25,7 +25,6 @@ wmoRouterPrivateNetwork.post(
 
     const response = await fetchWmoVoorzieningenCompact(bsn, {
       productGroup: ['WRA'],
-      resultaat: ['toegewezen'],
     });
     return sendResponse(res, response);
   }

@@ -152,7 +152,6 @@ export async function fetchWmo(authProfileAndToken: AuthProfileAndToken) {
 
 type FetchWmoVoorzieningenCompactOptions = {
   productGroup?: string[];
-  resultaat?: string[];
 };
 
 export async function fetchWmoVoorzieningenCompact(
@@ -185,13 +184,10 @@ export async function fetchWmoVoorzieningenCompact(
             return null;
           }
 
-          // Filter the voorzieningen on resultaat if provided in options.
-          const hasResultaatMatch = !!(
-            voorziening.resultaat &&
-            options?.resultaat?.includes(voorziening.resultaat)
-          );
-
-          if (options?.resultaat && !hasResultaatMatch) {
+          if (
+            !voorziening.isActueel ||
+            voorziening.resultaat !== 'toegewezen'
+          ) {
             return null;
           }
 
@@ -199,7 +195,6 @@ export async function fetchWmoVoorzieningenCompact(
             productGroup: config?.statusLineItems.name,
             title: capitalizeFirstLetter(voorziening.titel),
             id: voorziening.id,
-            resultaat: voorziening.resultaat,
             beschikkingNummer: voorziening.beschikkingNummer,
             beschiktProductIdentificatie:
               voorziening.beschiktProductIdentificatie,
