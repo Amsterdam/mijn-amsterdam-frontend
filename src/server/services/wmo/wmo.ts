@@ -150,8 +150,14 @@ export async function fetchWmo(authProfileAndToken: AuthProfileAndToken) {
   return voorzieningenResponse;
 }
 
+export type FetchWmoVoorzieningFilter = (
+  voorziening: ZorgnedAanvraagTransformed,
+  steps: StatusLineItem[]
+) => boolean;
+
 type FetchWmoVoorzieningenCompactOptions = {
   productGroup?: string[];
+  filter?: FetchWmoVoorzieningFilter;
 };
 
 export async function fetchWmoVoorzieningenCompact(
@@ -161,6 +167,8 @@ export async function fetchWmoVoorzieningenCompact(
   const voorzieningenResponse = await fetchZorgnedAanvragenWMO(bsn);
 
   if (voorzieningenResponse.status === 'OK') {
+    const today = new Date();
+
     const statusLineItemsConfigsFiltered = wmoStatusLineItemsConfig.filter(
       (config) =>
         options?.productGroup
@@ -184,14 +192,23 @@ export async function fetchWmoVoorzieningenCompact(
             return null;
           }
 
-          if (
-            !voorziening.isActueel ||
-            voorziening.resultaat !== 'toegewezen'
-          ) {
+          const steps = getStatusLineItems(
+            'WMO',
+            [config],
+            voorziening,
+            voorzieningen,
+            today
+          );
+
+          if (!steps) {
             return null;
           }
 
-          return {
+          if (options?.filter && !options.filter(voorziening, steps)) {
+            return null;
+          }
+
+          const voorzieningCompact: WMOVoorzieningCompact = {
             productGroup: config?.statusLineItems.name,
             title: capitalizeFirstLetter(voorziening.titel),
             id: voorziening.id,
@@ -201,6 +218,8 @@ export async function fetchWmoVoorzieningenCompact(
             productIdentificatie: voorziening.productIdentificatie,
             datumBesluit: voorziening.datumBesluit,
           };
+
+          return voorzieningCompact;
         })
         .filter((voorziening) => voorziening !== null)
         .toSorted(dateSort('datumBesluit', 'desc'));
@@ -214,17 +233,4 @@ export async function fetchWmoVoorzieningenCompact(
 export const forTesting = {
   transformVoorzieningForFrontend,
   getDocuments,
-};
-
-type WithXPage<K extends string> = {
-  [key in K]: {
-    title: string;
-  };
-};
-
-type Thema = WithXPage<'detailPage'> & WithXPage<'listPage'>;
-
-const x: Thema = {
-  detailPage: { title: '' },
-  listPage: { title: '' },
 };
