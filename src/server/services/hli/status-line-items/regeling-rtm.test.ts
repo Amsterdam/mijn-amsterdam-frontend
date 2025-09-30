@@ -433,11 +433,11 @@ describe('getStatusLineItems for RTM', () => {
     const regeling = regelingen[0];
 
     expect(regeling).toMatchObject({
-      title: 'Regeling Tegemoetkoming Meerkosten',
-      isActual: false,
-      dateDecision: '2025-05-28',
-      dateStart: '2025-04-01',
-      dateEnd: '2025-05-31',
+      title: RTM_2_EINDE_RECHT.titel,
+      isActual: RTM_2_EINDE_RECHT.isActueel,
+      dateDecision: RTM_2_EINDE_RECHT.datumBesluit,
+      dateStart: RTM_2_EINDE_RECHT.datumIngangGeldigheid,
+      dateEnd: RTM_2_EINDE_RECHT.datumEindeGeldigheid,
       decision: 'toegewezen',
       displayStatus: 'Einde recht',
       documents: [],
@@ -446,8 +446,7 @@ describe('getStatusLineItems for RTM', () => {
       {
         id: 'status-step-1',
         status: 'Aanvraag',
-        description: '',
-        datePublished: '2025-08-18',
+        datePublished: RTM_1_AANVRAAG.datumBesluit,
         isActive: false,
         isChecked: true,
         isVisible: true,
@@ -460,7 +459,7 @@ describe('getStatusLineItems for RTM', () => {
       {
         id: 'status-step-2',
         status: 'In behandeling genomen',
-        datePublished: '2025-08-18',
+        datePublished: RTM_1_AANVRAAG.datumBesluit,
         isActive: false,
         isChecked: true,
         isVisible: true,
@@ -469,7 +468,7 @@ describe('getStatusLineItems for RTM', () => {
       {
         id: 'status-step-3',
         status: 'Besluit',
-        datePublished: '2025-05-28',
+        datePublished: RTM_2_TOEGEWEZEN.datumBesluit,
         isActive: false,
         isChecked: true,
         isVisible: true,
@@ -482,13 +481,13 @@ describe('getStatusLineItems for RTM', () => {
       {
         id: 'status-step-4',
         status: 'Einde recht',
-        datePublished: '2025-05-31',
+        datePublished: RTM_2_EINDE_RECHT.datumEindeGeldigheid,
         isActive: true,
         isChecked: true,
         isVisible: true,
         documents: [
           {
-            title: 'Beschikking beëindiging RTM',
+            title: 'Beschikking beëindigen RTM',
           },
         ],
       },

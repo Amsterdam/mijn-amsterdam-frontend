@@ -126,77 +126,106 @@ function combineRTMData(
     return regeling;
   });
 
-  const combinedRegelingen: RTMCombinedRegeling[] = [];
+  const firstRegeling = regelingen.shift();
+  if (!firstRegeling) {
+    return [];
+  }
+
+  const combinedRegelingen: RTMCombinedRegeling[] = [
+    [
+      removeDocuments(firstRegeling),
+      getStatusLineItems(firstRegeling, 'startOfChain'),
+    ],
+  ];
 
   for (const regeling of regelingen) {
     const lastItem = combinedRegelingen.pop();
-
-    if (!lastItem) {
-      const statusLineItems = getStatusLineItem(regeling, 'startOfChain');
-      if (!statusLineItems.length) {
-        continue;
-      }
-      // Documents are transferred to the statusLineStep.
-      const withoutDocuments = { ...regeling, documenten: [] };
-      combinedRegelingen.push([withoutDocuments, statusLineItems]);
-      continue;
-    }
+    assert(lastItem !== undefined);
 
     const [lastRegeling, lastStatusLineItems] = lastItem;
 
-    // Previous aanvraag was a 'Einde recht'.
-    // We look for Einde recht as an endpoint instead of definin a start point.
-    // This is because the 'RTM_1_AANVRAAG' can mean two things depending on when
-    // in the aanvraag chain it is. (For example 'Aanvraag' or 'Aanvraag Herkeuring'.)
     if (
-      isRTMDeel2(lastRegeling) &&
       lastRegeling.procesAanvraagOmschrijving === 'Beëindigen RTM' &&
       lastRegeling.isActueel === false
     ) {
-      const withoutDocuments = { ...regeling, documenten: [] };
       combinedRegelingen.push([
-        withoutDocuments,
-        getStatusLineItem(regeling, 'startOfChain'),
+        removeDocuments(regeling),
+        getStatusLineItems(regeling, 'startOfChain'),
       ]);
       continue;
     }
 
-    const [statusLineItem] = getStatusLineItem(regeling, 'afterAanvraag');
-    const statusLineItems: StatusLineItem[] = [
+    const statusLineItems = getStatusLineItems(regeling, 'afterAanvraag');
+    const mergedStatusLineItems: StatusLineItem[] = [
       ...lastStatusLineItems,
-      statusLineItem,
+      ...statusLineItems,
     ];
-    combinedRegelingen.push([
+    const combinedRegeling: RTMCombinedRegeling = [
       {
-        ...lastRegeling,
+        ...removeDocuments(regeling),
         datumInBehandeling: lastRegeling.datumInBehandeling,
         datumAanvraag: lastRegeling.datumAanvraag ?? regeling.datumAanvraag,
       },
-      statusLineItems,
-    ]);
+      mergedStatusLineItems,
+    ];
+    combinedRegelingen.push(combinedRegeling);
   }
 
   return combinedRegelingen.map(([regeling, statusLineItems]) => {
-    return [regeling, checkUntillAndIncludingActiveStep(statusLineItems)];
+    return [regeling, updateCheckedActiveStatusses(regeling, statusLineItems)];
   });
 }
 
-function checkUntillAndIncludingActiveStep(
+function removeDocuments(regeling: ZorgnedHLIRegeling): ZorgnedHLIRegeling {
+  return { ...regeling, documenten: [] };
+}
+
+/** Determines and activates the right active status step
+ *  and checks all steps up untill and including that status.
+ */
+function updateCheckedActiveStatusses(
+  regeling: ZorgnedHLIRegeling,
   statusLineItems: StatusLineItem[]
 ): StatusLineItem[] {
-  const newSteps: StatusLineItem[] = [];
-  for (const item of statusLineItems) {
-    newSteps.push({ ...item, isChecked: true });
-    if (item.isActive) {
-      break;
-    }
+  // TODO: Just leave out isActive from input? for now just force this.
+  const items = statusLineItems.map((item) => {
+    return { ...item, isActive: false };
+  });
+
+  const lastIdx = items.length - 1;
+  const lastItem = items[lastIdx];
+
+  if (lastItem.status === 'Einde Recht' && regeling.isActueel !== false) {
+    items[lastIdx - 1].isActive = true;
+  } else {
+    lastItem.isActive = true;
   }
+
+  return checkUntillIncludingActiveStep(items);
+}
+
+function checkUntillIncludingActiveStep(
+  statusLineItems: StatusLineItem[]
+): StatusLineItem[] {
+  let shouldCheck = true;
+
+  const newSteps = statusLineItems.map((statusLineItem) => {
+    const isChecked = shouldCheck;
+    if (statusLineItem.isActive) {
+      shouldCheck = false;
+    }
+    return {
+      ...statusLineItem,
+      isChecked,
+    };
+  });
+
   return newSteps;
 }
 
 type Context = 'startOfChain' | 'afterAanvraag';
 
-function getStatusLineItem(
+function getStatusLineItems(
   regeling: ZorgnedHLIRegeling,
   context: Context
 ): StatusLineItem[] {
@@ -214,16 +243,16 @@ function getStatusLineItem(
       id: 'status-step-2',
       status: 'In behandeling genomen',
       datePublished: regeling.datumInBehandeling || regeling.datumBesluit,
-      documents: [],
+      documents: [], // These documents are in 'Aanvraag' above.
       isChecked: true,
-      isActive: isRTMDeel1(regeling), // RP TODO: This is always true, determine active status last?
+      isActive: false,
       isVisible: true,
     },
     besluit: {
       id: 'status-step-3',
       status: 'Besluit',
       datePublished: regeling.datumBesluit,
-      documents: [],
+      documents: regeling.documenten,
       description: getBesluitDescription(regeling),
       isChecked: false,
       isActive:
@@ -234,8 +263,8 @@ function getStatusLineItem(
       description: getBesluitDescription(regeling),
       id: 'status-step-4',
       status: 'Einde recht',
-      datePublished: regeling.datumInBehandeling || regeling.datumBesluit,
-      documents: [],
+      datePublished: regeling.datumEindeGeldigheid || '',
+      documents: regeling.documenten,
       isChecked: false,
       isActive: regeling.isActueel === false,
       isVisible: true,
@@ -250,16 +279,12 @@ function getStatusLineItem(
       return [lineItems.besluit];
     }
     return [];
-  }
-
-  if (context === 'afterAanvraag') {
+  } else if (context === 'afterAanvraag') {
     if (!regeling.procesAanvraagOmschrijving) {
       throw Error('Regeling has nog procesAanvraagOmschrijving');
     }
     switch (regeling.procesAanvraagOmschrijving) {
       case 'Beëindigen RTM': {
-        console.log('1:');
-        console.log(regeling);
         return [lineItems.eindeRecht];
       }
       case 'RTM Herkeuring': {
@@ -269,11 +294,10 @@ function getStatusLineItem(
         break;
       }
       case 'Aanvraag RTM fase 2': {
-        console.log('2:');
-        console.log(regeling);
         return [lineItems.besluit];
       }
     }
+    throw Error('No statusstep found!');
   }
 
   throw Error('Did not find a fitting regelingen.procesAanvraagOmschrijving');
