@@ -409,7 +409,7 @@ describe('getStatusLineItems for RTM', () => {
     });
     expect(regeling.steps).toMatchObject([
       {
-        id: 'status-step-3',
+        id: 'status-step-1',
         status: 'Besluit',
         datePublished: '2022-06-29',
         isActive: true,

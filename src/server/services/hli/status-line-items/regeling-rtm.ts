@@ -8,8 +8,13 @@ import {
 } from './generic';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { sortByNumber } from '../../../../universal/helpers/utils';
-import { StatusLineItem } from '../../../../universal/types/App.types';
 import {
+  GenericDocument,
+  StatusLineItem,
+} from '../../../../universal/types/App.types';
+import { parseLabelContent } from '../../zorgned/zorgned-helpers';
+import {
+  TextPartContents,
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types';
@@ -172,7 +177,7 @@ function combineRTMData(
   }
 
   return combinedRegelingen.map(([regeling, statusLineItems]) => {
-    return [regeling, updateCheckedActiveStatusses(regeling, statusLineItems)];
+    return [regeling, finalizeStatusLineItems(regeling, statusLineItems)];
   });
 }
 
@@ -180,21 +185,20 @@ function removeDocuments(regeling: ZorgnedHLIRegeling): ZorgnedHLIRegeling {
   return { ...regeling, documenten: [] };
 }
 
-/** Determines and activates the right active status step
- *  and checks all steps up untill and including that status.
- */
-function updateCheckedActiveStatusses(
+/** Determines active step and checks untill there (including) and adds ids */
+function finalizeStatusLineItems(
   regeling: ZorgnedHLIRegeling,
   statusLineItems: StatusLineItem[]
 ): StatusLineItem[] {
   // TODO: Just leave out isActive from input? for now just force this.
-  const items = statusLineItems.map((item) => {
-    return { ...item, isActive: false };
+  const items = statusLineItems.map((item, i) => {
+    return { ...item, id: `status-step-${i + 1}`, isActive: false };
   });
 
   const lastIdx = items.length - 1;
   const lastItem = items[lastIdx];
 
+  // TODO: datumEindeGeldigheid?
   if (lastItem.status === 'Einde Recht' && regeling.isActueel !== false) {
     items[lastIdx - 1].isActive = true;
   } else {
@@ -225,58 +229,101 @@ function checkUntillIncludingActiveStep(
 
 type Context = 'startOfChain' | 'afterAanvraag';
 
-function getStatusLineItems(
-  regeling: ZorgnedHLIRegeling,
-  context: Context
-): StatusLineItem[] {
-  const lineItems: Record<string, StatusLineItem> = {
+type StatusLineItemTransformerConfig = {
+  status: string;
+  datePublished: TextPartContents<ZorgnedHLIRegeling>;
+  description: TextPartContents<ZorgnedHLIRegeling>;
+  documents: (regeling: ZorgnedHLIRegeling) => GenericDocument[];
+};
+
+type StatusLineKeys =
+  | 'aanvraag'
+  | 'inBehandelingGenomen'
+  | 'besluit'
+  | 'eindeRecht';
+
+const statusLineItems: Record<StatusLineKeys, StatusLineItemTransformerConfig> =
+  {
     aanvraag: {
-      id: 'status-step-1',
       status: 'Aanvraag',
-      datePublished: regeling.datumInBehandeling || regeling.datumBesluit,
-      documents: regeling.documenten,
-      isChecked: true,
-      isActive: false,
-      isVisible: true,
+      datePublished: (regeling) =>
+        regeling.datumInBehandeling || regeling.datumBesluit,
+      description: '',
+      documents: (regeling) => regeling.documenten,
     },
     inBehandelingGenomen: {
-      id: 'status-step-2',
       status: 'In behandeling genomen',
-      datePublished: regeling.datumInBehandeling || regeling.datumBesluit,
-      documents: [], // These documents are in 'Aanvraag' above.
-      isChecked: true,
-      isActive: false,
-      isVisible: true,
+      datePublished: (regeling) =>
+        regeling.datumInBehandeling || regeling.datumBesluit,
+      description: '',
+      documents: () => [], // These documents are in 'Aanvraag' above.
     },
     besluit: {
-      id: 'status-step-3',
       status: 'Besluit',
-      datePublished: regeling.datumBesluit,
-      documents: regeling.documenten,
-      description: getBesluitDescription(regeling),
-      isChecked: false,
-      isActive:
-        regeling.isActueel === true || regeling.resultaat === 'afgewezen',
-      isVisible: true,
+      datePublished: (regeling) => regeling.datumBesluit,
+      description: (regeling) => getBesluitDescription(regeling),
+      documents: (regeling) => regeling.documenten,
     },
     eindeRecht: {
-      description: getBesluitDescription(regeling),
-      id: 'status-step-4',
       status: 'Einde recht',
-      datePublished: regeling.datumEindeGeldigheid || '',
-      documents: regeling.documenten,
-      isChecked: false,
-      isActive: regeling.isActueel === false,
-      isVisible: true,
+      datePublished: (regeling) => regeling.datumEindeGeldigheid || '',
+      description: (regeling) => getBesluitDescription(regeling),
+      documents: (regeling) => regeling.documenten,
     },
   };
 
+// TODO: Add id afterwards when having the full statusLine
+type IncompleteStatusLineItem = Omit<StatusLineItem, 'id'>;
+
+type getStatusLineItemFn = (
+  itemChoice: StatusLineKeys
+) => IncompleteStatusLineItem;
+
+function createGetStatusLineItemFn(
+  regeling: ZorgnedHLIRegeling
+): getStatusLineItemFn {
+  return (itemChoice) => {
+    const statusItem = statusLineItems[itemChoice];
+    const now = new Date();
+
+    return {
+      status: statusItem.status,
+      description: parseLabelContent<ZorgnedHLIRegeling>(
+        statusItem.description,
+        regeling,
+        now,
+        []
+      ),
+      datePublished: parseLabelContent<ZorgnedHLIRegeling>(
+        statusItem.datePublished,
+        regeling,
+        now,
+        []
+      ) as string,
+      documents: statusItem.documents(regeling),
+      isActive: false,
+      isChecked: false,
+      // TODO: Do we need to define this?
+      isVisible: true,
+    };
+  };
+}
+
+function getStatusLineItems(
+  regeling: ZorgnedHLIRegeling,
+  context: Context
+): IncompleteStatusLineItem[] {
+  const getStatusLineItem = createGetStatusLineItemFn(regeling);
+
   if (context === 'startOfChain') {
     if (isRTMDeel1(regeling)) {
-      return [lineItems.aanvraag, lineItems.inBehandelingGenomen];
+      return [
+        getStatusLineItem('aanvraag'),
+        getStatusLineItem('inBehandelingGenomen'),
+      ];
     }
     if (regeling.procesAanvraagOmschrijving === 'Migratie RTM') {
-      return [lineItems.besluit];
+      return [getStatusLineItem('besluit')];
     }
     return [];
   } else if (context === 'afterAanvraag') {
@@ -285,7 +332,7 @@ function getStatusLineItems(
     }
     switch (regeling.procesAanvraagOmschrijving) {
       case 'Beëindigen RTM': {
-        return [lineItems.eindeRecht];
+        return [getStatusLineItem('eindeRecht')];
       }
       case 'RTM Herkeuring': {
         break;
@@ -294,7 +341,7 @@ function getStatusLineItems(
         break;
       }
       case 'Aanvraag RTM fase 2': {
-        return [lineItems.besluit];
+        return [getStatusLineItem('besluit')];
       }
     }
     throw Error('No statusstep found!');
