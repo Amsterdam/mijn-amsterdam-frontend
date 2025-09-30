@@ -1,7 +1,7 @@
 import { featureToggle, themaId, themaTitle } from './Erfpacht-thema-config';
-import { Section } from '../../GeneralInfo/GeneralInfo';
+import { InfoSection } from '../../GeneralInfo/GeneralInfo';
 
-export const erfpachtSectionProps: Section = {
+export const erfpachtSectionProps: InfoSection = {
   id: themaId,
   title: themaTitle,
   listItems: ['Overzicht van uw erfpachtgegevens'],

@@ -1,7 +1,7 @@
 import { featureToggle, themaId, themaTitle } from './Parkeren-thema-config';
-import { Section } from '../../GeneralInfo/GeneralInfo';
+import { InfoSection } from '../../GeneralInfo/GeneralInfo';
 
-export const parkerensectionProps: Section = {
+export const parkerensectionProps: InfoSection = {
   id: themaId,
   title: themaTitle,
   listItems: ['Het inzien, aanvragen of wijzigen van een bewonersvergunning'],

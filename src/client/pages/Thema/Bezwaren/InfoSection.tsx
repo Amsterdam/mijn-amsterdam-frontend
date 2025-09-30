@@ -1,7 +1,7 @@
 import { featureToggle, themaId, themaTitle } from './Bezwaren-thema-config';
-import { Section } from '../../GeneralInfo/GeneralInfo';
+import { InfoSection } from '../../GeneralInfo/GeneralInfo';
 
-export const bezwarenSectionProps: Section = {
+export const bezwarenSectionProps: InfoSection = {
   id: themaId,
   title: themaTitle,
   listItems: ['Bezwaren tegen een besluit van de gemeente Amsterdam'],

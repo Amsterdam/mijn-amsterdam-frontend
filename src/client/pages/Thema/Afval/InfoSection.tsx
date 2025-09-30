@@ -1,7 +1,7 @@
 import { featureToggle, themaId, themaTitle } from './Afval-thema-config';
-import { Section } from '../../GeneralInfo/GeneralInfo';
+import { InfoSection } from '../../GeneralInfo/GeneralInfo';
 
-export const afvalSectionProps: Section = {
+export const afvalSectionProps: InfoSection = {
   id: themaId,
   title: themaTitle,
   listItems: ['Informatie over afval laten ophalen en wegbrengen in uw buurt'],

@@ -1,7 +1,7 @@
 import { featureToggle, themaIdBRP, themaTitle } from './Profile-thema-config';
-import { Section } from '../../GeneralInfo/GeneralInfo';
+import { InfoSection } from '../../GeneralInfo/GeneralInfo';
 
-export const profileSectionProps: Section = {
+export const profileSectionProps: InfoSection = {
   id: themaIdBRP,
   title: themaTitle[themaIdBRP],
   listItems: [

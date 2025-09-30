@@ -1,7 +1,7 @@
 import { featureToggle, themaTitle, themaId } from './Jeugd-thema-config';
-import { Section } from '../../GeneralInfo/GeneralInfo';
+import { InfoSection } from '../../GeneralInfo/GeneralInfo';
 
-export const JeugdSectionProps: Section = {
+export const JeugdSectionProps: InfoSection = {
   id: themaId,
   title: themaTitle,
   listItems: [

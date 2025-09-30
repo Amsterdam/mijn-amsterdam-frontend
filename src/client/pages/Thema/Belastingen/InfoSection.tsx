@@ -1,7 +1,7 @@
 import { featureToggle, themaId, themaTitle } from './Belastingen-thema-config';
-import { Section } from '../../GeneralInfo/GeneralInfo';
+import { InfoSection } from '../../GeneralInfo/GeneralInfo';
 
-export const belastingenSectionProps: Section = {
+export const belastingenSectionProps: InfoSection = {
   id: themaId,
   title: themaTitle,
   listItems: [

@@ -3,9 +3,9 @@ import {
   themaId,
   themaTitle,
 } from './ToeristischeVerhuur-thema-config';
-import { Section } from '../../GeneralInfo/GeneralInfo';
+import { InfoSection } from '../../GeneralInfo/GeneralInfo';
 
-export const toeristischeverhuurSectionProps: Section = {
+export const toeristischeverhuurSectionProps: InfoSection = {
   id: themaId,
   title: themaTitle,
   listItems: [

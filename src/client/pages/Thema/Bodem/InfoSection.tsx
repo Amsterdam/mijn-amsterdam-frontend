@@ -1,7 +1,7 @@
 import { featureToggle, themaId, themaTitle } from './Bodem-thema-config';
-import { Section } from '../../GeneralInfo/GeneralInfo';
+import { InfoSection } from '../../GeneralInfo/GeneralInfo';
 
-export const bodemsectionProps: Section = {
+export const bodemsectionProps: InfoSection = {
   id: themaId,
   title: themaTitle,
   listItems: ["Uw aanvraag voor 'lood in de bodem-check'"],

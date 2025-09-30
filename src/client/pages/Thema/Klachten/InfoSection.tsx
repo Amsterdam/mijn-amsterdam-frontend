@@ -1,7 +1,7 @@
 import { featureToggle, themaId, themaTitle } from './Klachten-thema-config';
-import { Section } from '../../GeneralInfo/GeneralInfo';
+import { InfoSection } from '../../GeneralInfo/GeneralInfo';
 
-export const klachtenSectionProps: Section = {
+export const klachtenSectionProps: InfoSection = {
   id: themaId,
   title: themaTitle,
   listItems: ['Uw ingediende klachten'],

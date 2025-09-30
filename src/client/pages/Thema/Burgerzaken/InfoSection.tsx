@@ -1,7 +1,7 @@
 import { featureToggle, themaId, themaTitle } from './Burgerzaken-thema-config';
-import { Section } from '../../GeneralInfo/GeneralInfo';
+import { InfoSection } from '../../GeneralInfo/GeneralInfo';
 
-export const burgerzakenSectionProps: Section = {
+export const burgerzakenSectionProps: InfoSection = {
   id: themaId,
   title: themaTitle,
   listItems: ['Gegevens van uw paspoort of ID-kaart'],

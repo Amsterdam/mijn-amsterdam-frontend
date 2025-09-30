@@ -3,9 +3,9 @@ import {
   themaId,
   themaTitle,
 } from './Overtredingen-thema-config';
-import { Section } from '../../GeneralInfo/GeneralInfo';
+import { InfoSection } from '../../GeneralInfo/GeneralInfo';
 
-export const overtredingensectionProps: Section = {
+export const overtredingensectionProps: InfoSection = {
   id: themaId,
   title: themaTitle,
   listItems: ['Inzien van uw overtredingen in de milieuzone'],
