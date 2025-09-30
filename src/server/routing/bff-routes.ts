@@ -97,6 +97,7 @@ export const ExternalConsumerEndpoints = {
     STADSPAS_BLOCK_PAS: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/stadspas/block/:transactionsKeyEncrypted`,
     NOTIFICATIONS: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/notifications`,
     NOTIFICATIONS_JOB: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/job/notifications`,
+    WMO_VOORZIENINGEN: `${BFF_BASE_PATH_PRIVATE}/wmo/voorzieningen`,
   },
 } as const;
 

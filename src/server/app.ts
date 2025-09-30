@@ -55,6 +55,7 @@ import { captureException } from './services/monitoring';
 import { getFromEnv } from './helpers/env';
 import { notificationsExternalConsumerRouter } from './routing/router-notifications-external-consumer';
 import { FeatureToggle } from '../universal/config/feature-toggles';
+import { wmoRouterPrivateNetwork } from './services/wmo/wmo-router-external-consumer';
 
 const app = express();
 
@@ -123,8 +124,23 @@ if (FeatureToggle.amsNotificationsIsActive) {
 app.use(BFF_BASE_PATH, nocache, protectedRouter);
 app.use(BFF_BASE_PATH, nocache, adminRouter);
 
+if (IS_DEVELOPMENT) {
+  app.use(nocache, authRouterDevelopment);
+}
+
+/////////////////////////////////////////////////////////////////////////
+///// Routers for External Consumers
+///// These routes are not protected by our authentication system, but
+///// are protected by other means (e.g. IP whitelisting, API keys, etc).
+///// These routers are all prefixed with /private and not accessible
+///// from the public internet.
+////////////////////////////////////////////////////////////////////////
 if (FeatureToggle.amsNotificationsIsActive) {
   app.use(nocache, notificationsExternalConsumerRouter.private);
+}
+
+if (FeatureToggle.wmoPrivateNetworkRouterActive) {
+  app.use(nocache, wmoRouterPrivateNetwork);
 }
 
 app.use(nocache, stadspasExternalConsumerRouter.private);

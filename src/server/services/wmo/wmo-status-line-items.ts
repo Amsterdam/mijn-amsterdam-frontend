@@ -14,7 +14,7 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
   {
     leveringsVorm: 'ZIN',
     productsoortCodes: ['ZIN', 'WRA', 'WRA1', 'WRA2', 'WRA3', 'WRA4', 'WRA5'],
-    lineItemTransformers: WRA,
+    statusLineItems: { name: 'WRA', transformers: WRA },
   },
   {
     leveringsVorm: 'ZIN',
@@ -32,7 +32,7 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
       // TODO: Uncomment when the following productsoortCodes are available
       // 'ORW',
     ],
-    lineItemTransformers: hulpmiddelen,
+    statusLineItems: { name: 'hulpmiddelen', transformers: hulpmiddelen },
   },
   {
     leveringsVorm: 'ZIN',
@@ -56,17 +56,17 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
       'AWBG',
       'LGO',
     ],
-    lineItemTransformers: diensten,
+    statusLineItems: { name: 'diensten', transformers: diensten },
   },
   {
     leveringsVorm: '',
     productsoortCodes: ['MAO'],
-    lineItemTransformers: diensten,
+    statusLineItems: { name: 'diensten', transformers: diensten },
   },
   {
     leveringsVorm: '',
     productsoortCodes: ['AO2', 'AO5', 'DBS', 'KVB', 'WMH', 'AWBG'],
-    lineItemTransformers: diensten,
+    statusLineItems: { name: 'diensten', transformers: diensten },
   },
   {
     leveringsVorm: 'PGB',
@@ -83,12 +83,12 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
       'WMH',
       'AWBG',
     ],
-    lineItemTransformers: PGB,
+    statusLineItems: { name: 'PGB', transformers: PGB },
   },
   {
     leveringsVorm: 'ZIN',
     productsoortCodes: ['FIN', 'MVV', 'MVW', 'VHK', 'VVD', 'VVK'],
-    lineItemTransformers: vergoeding,
+    statusLineItems: { name: 'vergoeding', transformers: vergoeding },
   },
   {
     leveringsVorm: 'PGB',
@@ -114,27 +114,27 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
       'WRA4',
       'WRA5',
     ],
-    lineItemTransformers: vergoeding,
+    statusLineItems: { name: 'vergoeding', transformers: vergoeding },
   },
   {
     leveringsVorm: '',
     productsoortCodes: ['FIE', 'FIN', 'MVV', 'MVW', 'VHK', 'VVK', 'AAN'],
-    lineItemTransformers: vergoeding,
+    statusLineItems: { name: 'vergoeding', transformers: vergoeding },
   },
   {
     leveringsVorm: 'ZIN',
     productsoortCodes: ['AOV'],
-    lineItemTransformers: AOV,
+    statusLineItems: { name: 'AOV', transformers: AOV },
   },
   {
     leveringsVorm: 'PGB',
     productsoortCodes: ['AOV'],
-    lineItemTransformers: AOV,
+    statusLineItems: { name: 'AOV', transformers: AOV },
   },
   {
     leveringsVorm: '',
     productsoortCodes: ['AOV'],
-    lineItemTransformers: AOV,
+    statusLineItems: { name: 'AOV', transformers: AOV },
   },
 ];
 
@@ -142,7 +142,9 @@ export const PRODUCTS_WITH_DELIVERY: Record<LeveringsVorm, ProductSoortCode[]> =
   {};
 
 for (const config of wmoStatusLineItemsConfig) {
-  if ([diensten, WRA, hulpmiddelen].includes(config.lineItemTransformers)) {
+  if (
+    [diensten, WRA, hulpmiddelen].includes(config.statusLineItems.transformers)
+  ) {
     if (
       typeof config.leveringsVorm !== 'undefined' &&
       config.productsoortCodes

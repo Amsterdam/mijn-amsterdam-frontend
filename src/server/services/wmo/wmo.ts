@@ -1,25 +1,35 @@
 import { generatePath } from 'react-router';
 
 import { getHulpmiddelenDisclaimer } from './status-line-items/wmo-hulpmiddelen';
+import { wmoStatusLineItemsConfig } from './wmo-status-line-items';
 import { routeConfig } from '../../../client/pages/Thema/Zorg/Zorg-thema-config';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import { apiSuccessResult } from '../../../universal/helpers/api';
+import {
+  apiSuccessResult,
+  type ApiResponse,
+} from '../../../universal/helpers/api';
 import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
+import type { StatusLineItem } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
-import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types';
+import { ZorgnedAanvraagTransformed, type BSN } from '../zorgned/zorgned-types';
 import {
   hasDecision,
   isAfterWCAGValidDocumentsDate,
 } from './status-line-items/wmo-generic';
-import { WMOVoorzieningFrontend } from './wmo-config-and-types';
-import { wmoStatusLineItemsConfig } from './wmo-status-line-items';
+import {
+  WMOVoorzieningFrontend,
+  type WMOVoorzieningCompact,
+} from './wmo-config-and-types';
 import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service';
 import { getLatestStatus, getLatestStatusDate } from '../../helpers/zaken';
+import {
+  getStatusLineItems,
+  isStatusLineItemTransformerMatch,
+} from '../zorgned/zorgned-status-line-items';
 
 export function getDocuments(
   sessionID: SessionID,
@@ -51,73 +61,54 @@ export function getDocuments(
   return [];
 }
 
-function transformVoorzieningenForFrontend(
+function transformVoorzieningForFrontend(
+  aanvraag: ZorgnedAanvraagTransformed,
+  steps: StatusLineItem[],
   sessionID: SessionID,
-  aanvragen: ZorgnedAanvraagTransformed[],
-  today: Date
-): WMOVoorzieningFrontend[] {
-  const voorzieningenFrontend: WMOVoorzieningFrontend[] = [];
+  aanvragen: ZorgnedAanvraagTransformed[]
+): WMOVoorzieningFrontend | null {
+  const id = aanvraag.id;
 
-  for (const aanvraag of aanvragen) {
-    const id = aanvraag.id;
+  const route = generatePath(routeConfig.detailPage.path, {
+    id,
+  });
 
-    const lineItems = getStatusLineItems(
-      'WMO',
-      wmoStatusLineItemsConfig,
+  const dateDecision =
+    steps.find((step) => step.status === 'Besluit genomen')?.datePublished ??
+    '';
+
+  const disclaimer = getHulpmiddelenDisclaimer(aanvraag, aanvragen);
+
+  const voorzieningFrontend: WMOVoorzieningFrontend = {
+    id,
+    title: capitalizeFirstLetter(aanvraag.titel),
+    supplier: aanvraag.leverancier,
+    isActual: aanvraag.isActueel,
+    link: {
+      title: 'Meer informatie',
+      to: route,
+    },
+    documents: getDocuments(
+      sessionID,
       aanvraag,
-      aanvragen,
-      today
-    );
+      BffEndpoints.WMO_DOCUMENT_DOWNLOAD
+    ),
+    steps,
+    // NOTE: Keep! This field is added specifically for the Tips api.
+    itemTypeCode: aanvraag.productsoortCode,
+    decision:
+      hasDecision(aanvraag) && aanvraag.resultaat
+        ? capitalizeFirstLetter(aanvraag.resultaat)
+        : '',
+    dateDecision,
+    dateDecisionFormatted: dateDecision ? defaultDateFormat(dateDecision) : '',
+    displayStatus: getLatestStatus(steps),
+    statusDate: getLatestStatusDate(steps),
+    statusDateFormatted: getLatestStatusDate(steps, true),
+    disclaimer,
+  };
 
-    if (lineItems?.length) {
-      const route = generatePath(routeConfig.detailPage.path, {
-        id,
-      });
-
-      const dateDecision =
-        lineItems.find((step) => step.status === 'Besluit genomen')
-          ?.datePublished ?? '';
-
-      const disclaimer = getHulpmiddelenDisclaimer(aanvraag, aanvragen);
-
-      const voorzieningFrontend: WMOVoorzieningFrontend = {
-        id,
-        title: capitalizeFirstLetter(aanvraag.titel),
-        supplier: aanvraag.leverancier,
-        isActual: aanvraag.isActueel,
-        link: {
-          title: 'Meer informatie',
-          to: route,
-        },
-        documents: getDocuments(
-          sessionID,
-          aanvraag,
-          BffEndpoints.WMO_DOCUMENT_DOWNLOAD
-        ),
-        steps: lineItems,
-        // NOTE: Keep! This field is added specifically for the Tips api.
-        itemTypeCode: aanvraag.productsoortCode,
-        decision:
-          hasDecision(aanvraag) && aanvraag.resultaat
-            ? capitalizeFirstLetter(aanvraag.resultaat)
-            : '',
-        dateDecision,
-        dateDecisionFormatted: dateDecision
-          ? defaultDateFormat(dateDecision)
-          : '',
-        displayStatus: getLatestStatus(lineItems),
-        statusDate: getLatestStatusDate(lineItems),
-        statusDateFormatted: getLatestStatusDate(lineItems, true),
-        disclaimer,
-      };
-
-      voorzieningenFrontend.push(voorzieningFrontend);
-    }
-  }
-
-  voorzieningenFrontend.sort(dateSort('statusDate', 'desc'));
-
-  return voorzieningenFrontend;
+  return voorzieningFrontend;
 }
 
 export async function fetchWmo(authProfileAndToken: AuthProfileAndToken) {
@@ -126,18 +117,119 @@ export async function fetchWmo(authProfileAndToken: AuthProfileAndToken) {
   );
 
   if (voorzieningenResponse.status === 'OK') {
-    const voorzieningenFrontend = transformVoorzieningenForFrontend(
-      authProfileAndToken.profile.sid,
-      voorzieningenResponse.content,
-      new Date()
-    );
+    const today = new Date();
+
+    const voorzieningenFrontend: WMOVoorzieningFrontend[] =
+      voorzieningenResponse.content
+        .map((aanvraag, _index, aanvragen) => {
+          const steps = getStatusLineItems(
+            'WMO',
+            wmoStatusLineItemsConfig,
+            aanvraag,
+            aanvragen,
+            today
+          );
+
+          if (steps) {
+            return transformVoorzieningForFrontend(
+              aanvraag,
+              steps,
+              authProfileAndToken.profile.sid,
+              aanvragen
+            );
+          }
+
+          return null;
+        })
+        .filter((voorziening) => voorziening !== null)
+        .toSorted(dateSort('statusDate', 'desc'));
+
     return apiSuccessResult(voorzieningenFrontend);
   }
 
   return voorzieningenResponse;
 }
 
+type FetchWmoVoorzieningenCompactOptions = {
+  productGroup?: string[];
+  resultaat?: string[];
+};
+
+export async function fetchWmoVoorzieningenCompact(
+  bsn: BSN,
+  options?: FetchWmoVoorzieningenCompactOptions
+): Promise<ApiResponse<WMOVoorzieningCompact[]>> {
+  const voorzieningenResponse = await fetchZorgnedAanvragenWMO(bsn);
+
+  if (voorzieningenResponse.status === 'OK') {
+    const statusLineItemsConfigsFiltered = wmoStatusLineItemsConfig.filter(
+      (config) =>
+        options?.productGroup
+          ? options.productGroup.includes(config.statusLineItems.name)
+          : true
+    );
+
+    const voorzieningenCompact: WMOVoorzieningCompact[] =
+      voorzieningenResponse.content
+        .map((voorziening, _index, voorzieningen) => {
+          const config = statusLineItemsConfigsFiltered.find(
+            (statusLineItemsConfig) =>
+              isStatusLineItemTransformerMatch(
+                voorziening,
+                voorzieningen,
+                statusLineItemsConfig
+              )
+          );
+
+          if (!config) {
+            return null;
+          }
+
+          // Filter the voorzieningen on resultaat if provided in options.
+          const hasResultaatMatch = !!(
+            voorziening.resultaat &&
+            options?.resultaat?.includes(voorziening.resultaat)
+          );
+
+          if (options?.resultaat && !hasResultaatMatch) {
+            return null;
+          }
+
+          return {
+            productGroup: config?.statusLineItems.name,
+            title: capitalizeFirstLetter(voorziening.titel),
+            id: voorziening.id,
+            resultaat: voorziening.resultaat,
+            beschikkingNummer: voorziening.beschikkingNummer,
+            beschiktProductIdentificatie:
+              voorziening.beschiktProductIdentificatie,
+            productIdentificatie: voorziening.productIdentificatie,
+            datumBesluit: voorziening.datumBesluit,
+          };
+        })
+        .filter((voorziening) => voorziening !== null)
+        .toSorted(dateSort('datumBesluit', 'desc'));
+
+    return apiSuccessResult(voorzieningenCompact);
+  }
+
+  return voorzieningenResponse;
+}
+
 export const forTesting = {
-  transformVoorzieningenForFrontend,
+  transformVoorzieningForFrontend,
   getDocuments,
+};
+
+type WithXPage<K extends string> = {
+  [key in K]: {
+    title: string;
+  };
+};
+
+type Thema = WithXPage<'detailPage'> & WithXPage<'listPage'>;
+
+const x: Thema = {
+  detailPage: { title: '' },
+  listPage: { title: '' },
 };
