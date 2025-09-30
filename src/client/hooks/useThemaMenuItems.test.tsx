@@ -57,7 +57,7 @@ describe('compareThemas', () => {
   });
 });
 
-describe('useThemaMenuItems', () => {
+describe('useMyThemaMenuItems', () => {
   it('should return filtered and sorted thema items based on profile type', () => {
     const mockProfileType = 'private';
     const mockAppState = { someKey: 'someValue' };
@@ -68,6 +68,7 @@ describe('useThemaMenuItems', () => {
         isActive: () => true,
         to: '',
         profileTypes: [mockProfileType],
+        redactedScope: 'none',
       },
       {
         id: '2',
@@ -75,6 +76,7 @@ describe('useThemaMenuItems', () => {
         isActive: () => false,
         to: '',
         profileTypes: [mockProfileType],
+        redactedScope: 'none',
       },
       {
         id: '3',
@@ -82,6 +84,7 @@ describe('useThemaMenuItems', () => {
         isAlwaysVisible: false,
         to: '',
         profileTypes: [mockProfileType],
+        redactedScope: 'none',
       },
       {
         id: '4',
@@ -89,6 +92,7 @@ describe('useThemaMenuItems', () => {
         isActive: () => true,
         to: '',
         profileTypes: [],
+        redactedScope: 'none',
       },
       {
         id: '5',
@@ -96,6 +100,7 @@ describe('useThemaMenuItems', () => {
         isAlwaysVisible: true,
         to: '',
         profileTypes: [mockProfileType],
+        redactedScope: 'none',
       },
     ];
 
@@ -126,22 +131,24 @@ describe('useThemaMenuItems', () => {
   });
 });
 
-describe('useThemaMenuItemsByThemaID', () => {
+describe('useAllThemaMenuItemsByThemaID', () => {
   it('should return a map of thema items by ID', () => {
-    const itemA = {
+    const itemA: ThemaMenuItemTransformed = {
       id: '1',
       title: 'Thema A',
       isActive: () => true,
       isAlwaysVisible: false,
       to: '',
       profileTypes: [],
+      redactedScope: 'none',
     };
-    const itemB = {
+    const itemB: ThemaMenuItemTransformed = {
       id: '2',
       title: 'Thema B',
       isAlwaysVisible: true,
       to: '',
       profileTypes: [],
+      redactedScope: 'none',
     };
     const mockThemaItems: ThemaMenuItemTransformed[] = [itemA, itemB];
 
@@ -150,28 +157,30 @@ describe('useThemaMenuItemsByThemaID', () => {
     const { result } = renderHook(() => useAllThemaMenuItemsByThemaID());
 
     expect(result.current).toEqual({
-      '1': itemA,
-      '2': itemB,
+      '1': { ...itemA, hasData: true },
+      '2': { ...itemB, hasData: true },
     });
   });
 });
 
 describe('useThemaMenuItemByThemaID', () => {
   it('should return the correct thema item by ID', () => {
-    const itemA = {
+    const itemA: ThemaMenuItemTransformed = {
       id: '1',
       title: 'Thema A',
       isActive: () => true,
       isAlwaysVisible: false,
       to: '',
       profileTypes: [],
+      redactedScope: 'none',
     };
-    const itemB = {
+    const itemB: ThemaMenuItemTransformed = {
       id: '2',
       title: 'Thema B',
       isAlwaysVisible: true,
       to: '',
       profileTypes: [],
+      redactedScope: 'none',
     };
     const mockThemaItems: ThemaMenuItemTransformed[] = [itemA, itemB];
 
@@ -179,16 +188,17 @@ describe('useThemaMenuItemByThemaID', () => {
 
     const { result } = renderHook(() => useThemaMenuItemByThemaID('1'));
 
-    expect(result.current).toEqual(itemA);
+    expect(result.current).toEqual({ ...itemA, hasData: true });
   });
 
   it('should return null if the ID does not exist', () => {
-    const itemB = {
+    const itemB: ThemaMenuItemTransformed = {
       id: '2',
       title: 'Thema B',
       isAlwaysVisible: true,
       to: '',
       profileTypes: [],
+      redactedScope: 'none',
     };
     const mockThemaItems: ThemaMenuItemTransformed[] = [itemB];
 
@@ -204,12 +214,13 @@ describe('useThemaBreadcrumbs', () => {
   it('should return breadcrumbs with a list entry for a valid thema ID', () => {
     const mockLocation = { state: { from: '/list', pageType: 'listpage' } };
 
-    const itemB = {
+    const itemB: ThemaMenuItemTransformed = {
       id: '2',
       title: 'Thema B',
       isAlwaysVisible: true,
       to: '/thema-b',
       profileTypes: [],
+      redactedScope: 'none',
     };
 
     const mockThemaItems: ThemaMenuItemTransformed[] = [itemB];
@@ -228,12 +239,13 @@ describe('useThemaBreadcrumbs', () => {
   it('should return breadcrumbs without "Lijst" if pageType is not "listpage"', () => {
     const mockLocation = { state: { from: '/list', pageType: 'none' } };
 
-    const itemB = {
+    const itemB: ThemaMenuItemTransformed = {
       id: '2',
       title: 'Thema B',
       isAlwaysVisible: true,
       to: '/thema-b',
       profileTypes: [],
+      redactedScope: 'none',
     };
 
     const mockThemaItems: ThemaMenuItemTransformed[] = [itemB];
