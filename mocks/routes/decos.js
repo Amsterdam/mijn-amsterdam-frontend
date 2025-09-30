@@ -169,6 +169,16 @@ module.exports = [
         type: 'middleware',
         options: {
           middleware: (req, res, next, core) => {
+            // This is for directly requesting varens
+            if (
+              ADDRESS_BOOKS.itemDataResultSet.content.some(
+                ({ key }) => key === req.params.key
+              )
+            ) {
+              console.error('hit for', req.params.key);
+              return res.send({ content: VARENS.content });
+            }
+            // This is for fetching varens from a zaak
             const zaak = getZaakByKey(req.params.key);
             const vergunningen = getVarensBelongingToZaak(zaak);
             if (vergunningen) {

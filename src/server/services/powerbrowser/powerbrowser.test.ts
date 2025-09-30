@@ -324,38 +324,52 @@ describe('Powerbrowser service', () => {
   describe('fetchPersoonOrMaatschapIdByUid', () => {
     test('should fetch person ID successfully', async () => {
       remoteApi.post('/powerbrowser/SearchRequest').reply(200, {
-        records: [{ id: 'test-person-id' }],
+        records: [
+          { id: 'test-person-id' },
+          { id: 'test-person-id2' },
+          { id: 'test-person-id3' },
+        ],
       });
 
-      const result = await forTesting.fetchPersoonOrMaatschapIdByUid({
-        tableName: 'PERSONEN',
-        fieldName: 'BURGERSERVICENUMMER',
-        profileID: 'test-id',
-      });
+      const result = await forTesting.fetchPersonenOrMaatschappenIdsByProfileID(
+        {
+          tableName: 'PERSONEN',
+          fieldName: 'BURGERSERVICENUMMER',
+          profileID: 'test-id',
+        }
+      );
       expect(result.status).toBe('OK');
-      expect(result.content).toBe('test-person-id');
+      expect(result.content).toEqual([
+        'test-person-id',
+        'test-person-id2',
+        'test-person-id3',
+      ]);
     });
 
     test('should return null if no person ID found', async () => {
       remoteApi.post('/powerbrowser/SearchRequest').reply(200, { records: [] });
 
-      const result = await forTesting.fetchPersoonOrMaatschapIdByUid({
-        tableName: 'PERSONEN',
-        fieldName: 'BURGERSERVICENUMMER',
-        profileID: 'test-id',
-      });
+      const result = await forTesting.fetchPersonenOrMaatschappenIdsByProfileID(
+        {
+          tableName: 'PERSONEN',
+          fieldName: 'BURGERSERVICENUMMER',
+          profileID: 'test-id',
+        }
+      );
       expect(result.status).toBe('OK');
-      expect(result.content).toBeNull();
+      expect(result.content).toEqual([]);
     });
 
     test('should return an error if fetch fails', async () => {
       remoteApi.post('/powerbrowser/SearchRequest').reply(500, 'some-error');
 
-      const result = await forTesting.fetchPersoonOrMaatschapIdByUid({
-        tableName: 'PERSONEN',
-        fieldName: 'BURGERSERVICENUMMER',
-        profileID: 'test-id',
-      });
+      const result = await forTesting.fetchPersonenOrMaatschappenIdsByProfileID(
+        {
+          tableName: 'PERSONEN',
+          fieldName: 'BURGERSERVICENUMMER',
+          profileID: 'test-id',
+        }
+      );
       expect(result.status).toBe('ERROR');
     });
   });

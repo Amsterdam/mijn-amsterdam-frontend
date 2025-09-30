@@ -2,7 +2,7 @@ import { SomeOtherString } from '../../../universal/helpers/types';
 import { OmitMapped } from '../../../universal/helpers/utils';
 import {
   GenericDocument,
-  ZaakDetail,
+  ZaakAanvraagDetail,
 } from '../../../universal/types/App.types';
 
 type DecosDocumentBase = {
@@ -135,6 +135,7 @@ export type AddressBookEntry = {
 
 export type DecosFieldTransformer<T extends DecosZaakBase> = {
   name: keyof T;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   transform?: (input: any) => DecosFieldValue;
 };
 
@@ -143,8 +144,10 @@ type CaseTypeLiteral<T extends DecosZaakBase> = unknown extends T['caseType']
     ? unknown
     : never
   : T['caseType'];
-
-export type DecosZaakTransformer<T extends DecosZaakBase = DecosZaakBase> = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type DecosZaakTransformer<T extends DecosZaakBase = any> = {
+  // the itemType: e.g. folders, containers, vergunningen etc
+  itemType: string;
   // The caseType (zaaktype) of the sourceData.
   caseType: CaseTypeLiteral<T>;
   // Title of the DecosZaakBase, mostly a slightly different variant of the $caseType
@@ -188,7 +191,8 @@ export type DecosZaakTransformer<T extends DecosZaakBase = DecosZaakBase> = {
 export type ZakenFilter = (zaak: DecosZaakBase) => boolean;
 
 export type DecosZaakBase = {
-  caseType: string;
+  itemType: string;
+  caseType: string | null;
   dateDecision: string | null;
   dateRequest: string;
 
@@ -199,7 +203,7 @@ export type DecosZaakBase = {
   decision: string | null;
   isVerleend: boolean;
 
-  identifier: ZaakKenmerk;
+  identifier: ZaakKenmerk | SomeOtherString;
   id: ZaakKenmerkSlug | SomeOtherString;
   title: string;
 
@@ -212,8 +216,8 @@ export type DecosZaakBase = {
   termijnDates: ZaakTermijnDate[];
 };
 
-export type ZaakKenmerk = `Z/${number}/${number}`; // Z/23/2230346
-export type ZaakKenmerkSlug = `Z-${number}-${number}`; // Z-23-2230346
+export type ZaakKenmerk = `${string}/${string}` | `${string}-${string}`; // Z/23/2230346 or NT2025-000403-1-11328 (Varen)
+export type ZaakKenmerkSlug = `${string}-${string}`; // Z-23-2230346
 
 export type ZaakStatus =
   | 'Ontvangen'
@@ -269,4 +273,4 @@ export type DecosZaakFrontend<T extends DecosZaakBase = DecosZaakBase> =
     fetchDocumentsUrl?: string;
     // Url to fetch the raw data for a specific Zaak.
     fetchSourceRaw?: string;
-  } & ZaakDetail;
+  } & ZaakAanvraagDetail;

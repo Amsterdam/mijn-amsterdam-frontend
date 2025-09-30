@@ -325,9 +325,12 @@ const ApiConfig_ = {
       rejectUnauthorized: false, // NOTE: Risk is assessed and tolerable for now because this concerns a request to a trusted source (GH), no sensitive data is involved and no JS code is evaluated.
     }),
   },
-  ENABLEU_2_SMILE: {
+  SMILE: {
     url: `${getFromEnv('BFF_ENABLEU_2_SMILE_ENDPOINT')}`,
     method: 'POST',
+    headers: {
+      apiKey: getFromEnv('BFF_ENABLEU_API_KEY'),
+    },
   },
   LOOD_365: {
     url: `${getFromEnv('BFF_LOOD_API_URL')}`,

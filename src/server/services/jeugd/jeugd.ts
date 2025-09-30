@@ -7,7 +7,7 @@ import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import {
   GenericDocument,
-  ZaakDetail,
+  ZaakAanvraagDetail,
 } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getLatestStatus, getLatestStatusDate } from '../../helpers/zaken';
@@ -42,7 +42,8 @@ export async function fetchLeerlingenvervoer(
   return apiSuccessResult(voorzieningen);
 }
 
-export interface LeerlingenvervoerVoorzieningFrontend extends ZaakDetail {
+export interface LeerlingenvervoerVoorzieningFrontend
+  extends ZaakAanvraagDetail {
   dateDecision: string;
   dateDecisionFormatted: string;
   decision: string;

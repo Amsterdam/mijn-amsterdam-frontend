@@ -377,7 +377,8 @@ export async function fetchBezwaren(authProfileAndToken: AuthProfileAndToken) {
   };
 
   const cacheKeyBase = createSessionBasedCacheKey(
-    authProfileAndToken.profile.sid
+    authProfileAndToken.profile.sid,
+    'bezwaren'
   );
 
   const requestConfig = getApiConfig('BEZWAREN_LIST', {

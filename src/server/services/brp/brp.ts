@@ -10,6 +10,10 @@ import {
   PersonenResponseSource,
   type DatumSource,
 } from './brp-types';
+import {
+  featureToggle as featureToggleBrp,
+  themaIdBRP,
+} from '../../../client/pages/Thema/Profile/Profile-thema-config';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import type { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_HOUR_MS } from '../../config/app';
@@ -17,6 +21,7 @@ import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { fetchAuthTokenHeader } from '../ms-oauth/oauth-token';
+import { fetchBRP } from '../profile/brp';
 import type { BRPData, Persoon } from '../profile/brp.types';
 import { type BSN } from '../zorgned/zorgned-types';
 
@@ -224,7 +229,6 @@ export async function fetchBrpByBsn(sessionID: AuthProfile['sid'], bsn: BSN[]) {
     },
     data: {
       type: 'RaadpleegMetBurgerservicenummer',
-      gemeenteVanInschrijving: GEMEENTE_CODE_AMSTERDAM,
       burgerservicenummer: bsn.map((bsn) => translateBSN(bsn)),
     },
     transformResponse: transformBenkBrpResponse,
@@ -234,6 +238,9 @@ export async function fetchBrpByBsn(sessionID: AuthProfile['sid'], bsn: BSN[]) {
 }
 
 export async function fetchBrpV2(authProfileAndToken: AuthProfileAndToken) {
+  if (!featureToggleBrp[themaIdBRP].benkBrpServiceActive) {
+    return fetchBRP(authProfileAndToken);
+  }
   return fetchBrpByBsn(authProfileAndToken.profile.sid, [
     authProfileAndToken.profile.id,
   ]);
