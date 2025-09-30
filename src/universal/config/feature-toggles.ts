@@ -26,9 +26,6 @@ export const FeatureToggle = {
   // Bezwaren  / Octopus
   bezwarenActive: true,
 
-  // Loodmetingen
-  bodemActive: true,
-
   // Database
   dbSessionsEnabled: true,
 

@@ -2,46 +2,71 @@ import { generatePath } from 'react-router';
 
 import { LoodMetingFrontend } from '../../../../server/services/bodem/types';
 import { dateSort } from '../../../../universal/helpers/date';
-import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
 } from '../../../config/app';
-import type { ThemaRoutesConfig } from '../../../config/thema-types';
+import type {
+  ThemaConfigBase,
+  WithDetailPage,
+  WithListPage,
+} from '../../../config/thema-types';
 
-const listPageParamKind = {
-  inProgress: 'lopende-aanvragen',
-  completed: 'afgehandelde-aanvragen',
-} as const;
+type BodemThemaConfig = ThemaConfigBase & WithDetailPage & WithListPage;
 
-export const featureToggle = {
-  BodemActive: true,
-};
+export const themaConfig: BodemThemaConfig = {
+  id: 'BODEM',
+  title: 'Bodem',
+  featureToggle: {
+    themaActive: true,
+  },
+  profileTypes: ['private', 'commercial'],
+  route: {
+    path: '/bodem',
+    get documentTitle() {
+      return `${themaConfig.title} | Overzicht`;
+    },
+  },
+  redactedScope: 'none',
+  links: [
+    {
+      title: 'Meer informatie over lood in de bodem.',
+      to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/bodem/loodcheck-tuin-aanvragen',
+    },
+  ],
+  uitlegPageSections: {
+    listItems: ["Uw aanvraag voor 'lood in de bodem-check'"],
+  },
 
-export const themaId = 'BODEM' as const;
-export const themaTitle = 'Bodem';
-export const themaTitleDetail = 'Lood in bodem-check';
+  ///gebruik deze nog niet, moet wel maar dan moet de hele pagina GegevensInfo.tsx worden omgebouwd, daarnaast moet de Uitlegpagina voor Eherk anders dan die van Digid > maar denk dat ik dat met Profiletype kan oplossen
 
-export const routeConfig = {
   detailPage: {
-    path: '/bodem/lood-meting/:id',
-    trackingUrl: '/bodem/lood-meting',
-    documentTitle: `Lood in de bodem-check | ${themaTitle}`,
+    title: 'Lood in bodem-check',
+    route: {
+      path: '/bodem/lood-meting/:id',
+      trackingUrl: '/bodem/lood-meting',
+      get documentTitle() {
+        return `Lood in de bodem-check | ${themaConfig.title}`;
+      },
+    },
   },
   listPage: {
-    path: '/bodem/lijst/lood-meting/:kind/:page?',
-    documentTitle: (params) =>
-      `${params?.kind === listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaTitle}`,
+    paramKind: {
+      inProgress: 'lopende-aanvragen',
+      completed: 'afgehandelde-aanvragen',
+    },
+    route: {
+      path: '/bodem/lijst/lood-meting/:kind/:page?',
+      documentTitle: (params: { kind: string }) =>
+        `${params?.kind === themaConfig.listPage.paramKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaConfig.title}` as const,
+    },
   },
-  themaPage: {
-    path: '/bodem',
-    documentTitle: `${themaTitle} | overzicht`,
-  },
-} as const satisfies ThemaRoutesConfig;
+} as const;
 
-export type ListPageParamKey = keyof typeof listPageParamKind;
-export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
+export type TableHeadersKey = keyof typeof themaConfig.listPage.paramKind;
+export type TableHeaders =
+  (typeof themaConfig.listPage.paramKind)[TableHeadersKey];
 
 const displayPropsLopend: DisplayProps<LoodMetingFrontend> = {
   props: {
@@ -68,33 +93,26 @@ const displayPropsEerder: DisplayProps<LoodMetingFrontend> = {
 };
 
 export const tableConfig = {
-  [listPageParamKind.inProgress]: {
+  [themaConfig.listPage.paramKind.inProgress]: {
     title: 'Lopende aanvragen',
     sort: dateSort<LoodMetingFrontend>('datumAanvraag', 'desc'),
     filter: (bodemAanvraag: LoodMetingFrontend) => !bodemAanvraag.processed,
-    listPageRoute: generatePath(routeConfig.listPage.path, {
-      kind: listPageParamKind.inProgress,
+    listPageRoute: generatePath(themaConfig.listPage.route.path, {
+      kind: themaConfig.listPage.paramKind.inProgress,
       page: null,
     }),
     displayProps: displayPropsLopend,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
   },
-  [listPageParamKind.completed]: {
+  [themaConfig.listPage.paramKind.completed]: {
     title: 'Afgehandelde aanvragen',
     sort: dateSort<LoodMetingFrontend>('datumAfgehandeld', 'desc'),
     filter: (bodemAanvraag: LoodMetingFrontend) => bodemAanvraag.processed,
-    listPageRoute: generatePath(routeConfig.listPage.path, {
-      kind: listPageParamKind.completed,
+    listPageRoute: generatePath(themaConfig.listPage.route.path, {
+      kind: themaConfig.listPage.paramKind.completed,
       page: null,
     }),
     displayProps: displayPropsEerder,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   },
 } as const;
-
-export const linkListItems: LinkProps[] = [
-  {
-    title: 'Meer informatie over lood in de bodem.',
-    to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/bodem/loodcheck-tuin-aanvragen',
-  },
-] as const;

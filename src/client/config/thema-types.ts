@@ -9,6 +9,54 @@ import {
 
 export type IsThemaVisibleFN = (appState: AppState) => boolean;
 
+export type ThemaConfigBase = {
+  id: string;
+  title: string;
+  featureToggle: { themaActive: boolean };
+  profileTypes: ProfileType[];
+  uitlegPageSections: {
+    title?: string;
+    listItems: string[];
+  };
+  links: LinkProps[];
+  route: {
+    path: string;
+    documentTitle: string;
+  }; ///of ThemaRouteConfig
+  redactedScope: 'full' | 'content' | 'none';
+};
+
+export type WithDetailPage = {
+  detailPage: {
+    title: string;
+    route: {
+      path: string;
+      trackingUrl: string;
+      documentTitle: string;
+    };
+  };
+};
+
+export type WithListPage = {
+  listPage: {
+    paramKind: {
+      inProgress: string;
+      completed: string;
+    };
+    route: {
+      path: string;
+      documentTitle: (params: { kind: string }) => `${string} | ${string}`;
+    };
+  };
+  //tableConfig: Record<string, TableConfig<T>>;
+};
+
+export type InfoSections = {
+  title?: ''; //titel wel verplicht wanneer meer dan een sectie
+  listItems: string[];
+};
+
+///TO DO hieronder zou ik het liefts ook meenemen in de ThemaConfig
 export interface ThemaMenuItem<ID extends string = string>
   extends Omit<LinkProps, 'title' | 'to' | 'rel'> {
   id: ID;
