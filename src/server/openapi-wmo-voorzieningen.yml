@@ -38,7 +38,7 @@ paths:
       responses:
         '200':
           description: |
-            A list of WMO voorzieningen sorted by datumBesluit desc.
+            A list of huidige toegewezen WMO voorzieningen sorted by datumBesluit desc.
           content:
             'application/json':
               schema:
@@ -89,8 +89,6 @@ components:
         title:
           type: string
         productGroup:
-          type: string
-        resultaat:
           type: string
         beschikkingNummer:
           type: string
