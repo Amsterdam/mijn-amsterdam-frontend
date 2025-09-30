@@ -1,5 +1,6 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
+import { themaConfig } from './Bodem-thema-config';
 import { useBodemData } from './useBodemData.hook';
 import { LoodMetingFrontend } from '../../../../server/services/bodem/types';
 import { PageContentCell } from '../../../components/Page/Page';
@@ -16,9 +17,9 @@ export function BodemThema() {
     linkListItems,
     id,
     title,
-    routeConfig,
+    // themaConfig,
   } = useBodemData();
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const tables = Object.entries(tableConfig).map(
     ([

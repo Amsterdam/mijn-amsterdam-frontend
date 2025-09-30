@@ -1,9 +1,8 @@
 import {
   linkListItems,
-  routeConfig,
+  themaConfig,
   tableConfig,
-  themaId,
-  themaTitle,
+
 } from './Bodem-thema-config';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
@@ -13,18 +12,18 @@ import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 export function useBodemData() {
   const { BODEM } = useAppStateGetter();
   const items = addLinkElementToProperty(BODEM.content ?? [], 'adres', true);
-  const breadcrumbs = useThemaBreadcrumbs(themaId);
+  const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
   return {
-    id: themaId,
-    title: themaTitle,
+    id: themaConfig.id,
+    title: themaConfig.title,
     tableConfig,
     isLoading: isLoading(BODEM),
     isError: isError(BODEM),
     items,
     linkListItems,
     breadcrumbs,
-    listPageRoute: routeConfig.listPage.path,
-    routeConfig,
+    listPageRoute: themaConfig.listPage.route.path,
+    themaConfig,
   };
 }

@@ -1,6 +1,6 @@
 import { generatePath, useParams } from 'react-router';
 
-import { ListPageParamKind, routeConfig } from './Bodem-thema-config';
+import { ListPageParamKind, themaConfig } from './Bodem-thema-config';
 import { useBodemData } from './useBodemData.hook';
 
 export function useBodemListPageData() {
@@ -29,6 +29,6 @@ export function useBodemListPageData() {
     params,
     listPageRoute: generatePath(listPageRoute, { kind, page: null }),
     breadcrumbs,
-    routeConfig,
+    themaConfig,
   };
 }

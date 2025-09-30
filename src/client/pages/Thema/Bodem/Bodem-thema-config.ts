@@ -8,37 +8,81 @@ import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
 } from '../../../config/app';
-import type { ThemaRoutesConfig } from '../../../config/thema-types';
+import type {
+  ThemaConfigBase,
+  // ThemaRoutesConfig,
+  WithDetailPage,
+  WithListPage,
+} from '../../../config/thema-types';
 
 const listPageParamKind = {
   inProgress: 'lopende-aanvragen',
   completed: 'afgehandelde-aanvragen',
 } as const;
 
-export const featureToggle = {
-  BodemActive: true,
-};
+// export const featureToggle = {
+//   BodemActive: true,
+// };
+// feature toggle moet gedaan worden , linklist items moeten ook in config komen
+// export const themaId = 'BODEM' as const;
+// export const themaTitle = 'Bodem';
+// profileTypes moeten nog toegevoegd worden
+// redactedScope moet nog toegevoegd worden staat in thema types
+//linklist items moeten nog toegevoegd worden
+// uitleg page moet nog in de config (kijk generalinfo.tsx)
+//kijk ook naar info section.tsx
+type BodemThemaConfig = ThemaConfigBase & WithListPage & WithDetailPage;
 
-export const themaId = 'BODEM' as const;
-export const themaTitle = 'Bodem';
-export const themaTitleDetail = 'Lood in bodem-check';
-
-export const routeConfig = {
-  detailPage: {
-    path: '/bodem/lood-meting/:id',
-    trackingUrl: '/bodem/lood-meting',
-    documentTitle: `Lood in de bodem-check | ${themaTitle}`,
+export const themaConfig: BodemThemaConfig = {
+  id: 'BODEM',
+  title: 'Bodem',
+  featureToggle: {
+    themaActive: true,
+  },
+  sections: [{ listItems: ["Uw aanvraag voor 'lood in de bodem-check'"] }],
+  route: {
+    path: '/bodem',
+    get documentTitle() {
+      return `${themaConfig.title} | overzicht`;
+    },
   },
   listPage: {
-    path: '/bodem/lijst/lood-meting/:kind/:page?',
-    documentTitle: (params) =>
-      `${params?.kind === listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaTitle}`,
+    route: {
+      path: '/bodem/lijst/lood-meting/:kind/:page?',
+      documentTitle: (params) =>
+        `${params?.kind === listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaConfig.title}`,
+    },
   },
-  themaPage: {
-    path: '/bodem',
-    documentTitle: `${themaTitle} | overzicht`,
+  detailPage: {
+    title: 'Lood in bodem-check',
+    route: {
+      path: '/bodem/lood-meting/:id',
+      trackingUrl: '/bodem/lood-meting',
+      get documentTitle() {
+        return `Lood in de bodem-check | ${themaConfig.title}`;
+      },
+    },
   },
-} as const satisfies ThemaRoutesConfig;
+  profileTypes: ['private', 'commercial'],
+  redactedScope: 'none',
+};
+
+// export const routeConfig = {
+//   detailPage: {
+//     path: '/bodem/lood-meting/:id',
+//     trackingUrl: '/bodem/lood-meting',
+//     documentTitle: `Lood in de bodem-check | ${themaConfig.title}`,
+//   },
+//   listPage: {
+//     path: '/bodem/lijst/lood-meting/:kind/:page?',
+//     documentTitle: (params) =>
+//       `${params?.kind === listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaConfig.title}`,
+//   },
+//   themaPage: {
+//     path: '/bodem',
+//     documentTitle: `${themaConfig.title} | overzicht`,
+//   },
+// } as const satisfies ThemaRoutesConfig;
 
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
@@ -72,7 +116,7 @@ export const tableConfig = {
     title: 'Lopende aanvragen',
     sort: dateSort<LoodMetingFrontend>('datumAanvraag', 'desc'),
     filter: (bodemAanvraag: LoodMetingFrontend) => !bodemAanvraag.processed,
-    listPageRoute: generatePath(routeConfig.listPage.path, {
+    listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.inProgress,
       page: null,
     }),
@@ -83,7 +127,7 @@ export const tableConfig = {
     title: 'Afgehandelde aanvragen',
     sort: dateSort<LoodMetingFrontend>('datumAfgehandeld', 'desc'),
     filter: (bodemAanvraag: LoodMetingFrontend) => bodemAanvraag.processed,
-    listPageRoute: generatePath(routeConfig.listPage.path, {
+    listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.completed,
       page: null,
     }),
