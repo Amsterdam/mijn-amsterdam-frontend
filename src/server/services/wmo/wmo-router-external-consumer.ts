@@ -1,6 +1,9 @@
 import { Request, Response } from 'express';
 
-import { fetchWmoVoorzieningenCompact } from './wmo';
+import {
+  fetchWmoVoorzieningenCompact,
+  type FetchWmoVoorzieningFilter,
+} from './wmo';
 import { ExternalConsumerEndpoints } from '../../routing/bff-routes';
 import {
   createBFFRouter,
@@ -13,6 +16,16 @@ export const wmoRouterPrivateNetwork = createBFFRouter({
   id: 'external-consumer-private-network-wmo',
 });
 
+const WRA_PRODUCT_GROUP = 'WRA';
+const WRA_STEP_STATUS = 'Aanpassing uitgevoerd';
+
+const isActueleUitgevoerdeWoonruimteAanpassing: FetchWmoVoorzieningFilter = (
+  voorziening,
+  steps
+) =>
+  voorziening.isActueel &&
+  steps.some((step) => step.status === WRA_STEP_STATUS && step.isActive);
+
 wmoRouterPrivateNetwork.post(
   ExternalConsumerEndpoints.private.WMO_VOORZIENINGEN,
   async (req: Request, res: Response) => {
@@ -24,8 +37,10 @@ wmoRouterPrivateNetwork.post(
     }
 
     const response = await fetchWmoVoorzieningenCompact(bsn, {
-      productGroup: ['WRA'],
+      productGroup: [WRA_PRODUCT_GROUP],
+      filter: isActueleUitgevoerdeWoonruimteAanpassing,
     });
+
     return sendResponse(res, response);
   }
 );
