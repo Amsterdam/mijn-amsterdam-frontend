@@ -102,10 +102,7 @@ export function usePanelStateCycle(
   const nextPanelState = useCallback(
     (currentState: PanelState): PanelState => {
       const currentStateIndex = states.indexOf(currentState);
-      const nextState =
-        states.length - 1 === currentStateIndex
-          ? states[0]
-          : states[currentStateIndex + 1];
+      const nextState = states[(currentStateIndex + 1) % states.length];
       return nextState;
     },
     [states]
