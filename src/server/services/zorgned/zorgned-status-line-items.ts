@@ -2,6 +2,7 @@ import { parseLabelContent } from './zorgned-helpers';
 import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemsConfig,
+  type ZorgnedStatusLineItemTransformerConfig,
 } from './zorgned-types';
 import { StatusLineItem } from '../../../universal/types/App.types';
 import { logger } from '../../logging';
@@ -14,7 +15,7 @@ function getStatusLineItemTransformers<T extends ZorgnedAanvraagTransformed>(
   statusLineItemsConfig: ZorgnedStatusLineItemsConfig<T>[],
   aanvraagTransformed: T,
   allAanvragenTransformed: T[]
-) {
+): ZorgnedStatusLineItemTransformerConfig<T>[] | undefined {
   return statusLineItemsConfig
     .filter((config) => !config.isDisabled)
     .find((config) => {
@@ -44,11 +45,17 @@ function getStatusLineItemTransformers<T extends ZorgnedAanvraagTransformed>(
           ? config.filter(aanvraagTransformed, allAanvragenTransformed)
           : PASS_MATCH_DEFAULT;
 
+      const hasResultaatMatch =
+        typeof config.resultaat !== 'undefined'
+          ? aanvraagTransformed.resultaat === config.resultaat
+          : PASS_MATCH_DEFAULT;
+
       return (
         isFilterMatch &&
         hasRegelingsVormMatch &&
         hasProductSoortCodeMatch &&
-        hasProductIdentificatieMatch
+        hasProductIdentificatieMatch &&
+        hasResultaatMatch
       );
     })?.lineItemTransformers;
 }

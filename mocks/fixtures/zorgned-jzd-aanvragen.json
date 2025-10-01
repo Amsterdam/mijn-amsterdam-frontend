@@ -5779,7 +5779,7 @@
                 "code": "07",
                 "omschrijving": "Dagbesteding"
               },
-              "resultaat": "toegewezen1",
+              "resultaat": "toegewezen",
               "toegewezenProduct": {
                 "datumEindeGeldigheid": "2024-10-31",
                 "actueel": false,
@@ -6052,6 +6052,47 @@
             }
           ]
         }
+      },
+      {
+        "identificatie": "3184009",
+        "procesIdentificatie": "3184009",
+        "casusIdentificatie": "1750893",
+        "regeling": { "identificatie": "WMO", "omschrijving": "WMO" },
+        "hulpvraag": { "datumRegistratie": "2025-09-24" },
+        "datumAanmelding": "2025-09-24",
+        "datumAanvraag": "2025-09-24",
+        "beschikking": {
+          "beschikkingNummer": 301152181,
+          "datumAfgifte": "2025-09-24",
+          "toelichting": "<strong>Andere oplossingen<\\/strong>\r\nIn het onderzoek kijken wij eerst of u mogelijkheden hebt om uw probleem op te lossen zonder de aangevraagde voorziening. Bijvoorbeeld op eigen kracht, met hulp uit uw omgeving of met een algemeen gebruikelijke voorziening. Als dat zo is, krijgt u geen &lt;naam voorziening&gt; van ons. \r\n\r\n<strong>Op welke regels baseren wij dit besluit?<\\/strong>\r\nVerordening maatschappelijke ondersteuning Amsterdam, artikel 4.1, lid 2\r\n\r\n",
+          "beschikteProducten": [
+            {
+              "identificatie": "329941",
+              "product": {
+                "identificatie": "13W70",
+                "productCode": "13W70",
+                "productsoortCode": "WRA3",
+                "omschrijving": "douchezitje aan de wand (opklapbaar)"
+              },
+              "productCategorie": {
+                "code": "13",
+                "omschrijving": "Woonvoorzieningen"
+              },
+              "resultaat": "afgewezen"
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B3422713",
+            "procesIdentificatie": "3184009",
+            "casusIdentificatie": "1750893",
+            "omschrijving": "Opstellen afwijzing WRA",
+            "omschrijvingclientportaal": "Besluit: afwijzing woonruimteaanpassing",
+            "datumDefinitief": "2025-09-24T15:12:19.673",
+            "bestandsnaam": "BR3422713.pdf"
+          }
+        ]
       }
     ]
   }
