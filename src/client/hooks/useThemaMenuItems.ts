@@ -3,7 +3,7 @@ import { useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router';
 import { atom, useRecoilState, useRecoilValue } from 'recoil';
 
-import { useAppStateGetter, useAppStateReady } from './useAppState';
+import { useAppStateReady } from './useAppState';
 import { useProfileTypeValue } from './useProfileType';
 import { sortAlpha } from '../../universal/helpers/utils';
 import { LinkProps } from '../../universal/types/App.types';
@@ -14,12 +14,8 @@ import {
   themaIdKVK,
 } from '../pages/Thema/Profile/Profile-thema-config';
 
-type ThemaMenuItemTransformedWithHasData<ID extends string = string> =
-  ThemaMenuItemTransformed<ID> & {
-    hasData: boolean;
-  };
 export interface ThemasState {
-  items: ThemaMenuItemTransformedWithHasData[];
+  items: ThemaMenuItemTransformed[];
   isLoading: boolean;
 }
 
@@ -49,18 +45,8 @@ export function compareThemas<T extends withIDTitle>(a: T, b: T): 0 | 1 | -1 {
 
 export function useAllThemaMenuItems(): ThemasState {
   const profileType = useProfileTypeValue();
-  const appState = useAppStateGetter();
   const isAppStateReady = useAppStateReady();
-  const themaItems = themasByProfileType(profileType).toSorted(compareThemas);
-
-  const items = useMemo(() => {
-    return themaItems.map((item) => {
-      return {
-        ...item,
-        hasData: item.isActive ? item.isActive(appState) : item.isAlwaysVisible,
-      };
-    });
-  }, [themaItems, appState]);
+  const items = themasByProfileType(profileType).toSorted(compareThemas);
 
   return {
     items,
@@ -68,11 +54,11 @@ export function useAllThemaMenuItems(): ThemasState {
   };
 }
 
-export function useMyThemaMenuItems(): ThemasState {
+export function useActiveThemaMenuItems(): ThemasState {
   const { items, isLoading } = useAllThemaMenuItems();
 
   return {
-    items: items.filter((item) => item.hasData),
+    items: items.filter((item) => item.isActive),
     isLoading,
   };
 }
@@ -87,7 +73,7 @@ export function useAllThemaMenuItemsByThemaID() {
           acc[item.id] = item;
           return acc;
         },
-        {} as Record<string, ThemaMenuItemTransformedWithHasData>
+        {} as Record<string, ThemaMenuItemTransformed>
       ),
     [items]
   );
@@ -100,7 +86,7 @@ export function useThemaMenuItemByThemaID<ID extends string = string>(
 ): ThemaMenuItemTransformed<ID> | null {
   const itemsById = useAllThemaMenuItemsByThemaID();
   return itemsById[themaID]
-    ? (itemsById[themaID] as ThemaMenuItemTransformedWithHasData<ID>)
+    ? (itemsById[themaID] as ThemaMenuItemTransformed<ID>)
     : null;
 }
 

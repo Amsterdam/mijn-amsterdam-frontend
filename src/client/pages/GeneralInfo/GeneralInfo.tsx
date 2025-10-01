@@ -150,7 +150,7 @@ export function GeneralInfo() {
         <Section
           key={i}
           title={section.title}
-          href={themaMenuItem.hasData ? section.href : undefined}
+          href={themaMenuItem.isActive ? section.href : undefined}
           listItems={section.listItems}
         />
       );

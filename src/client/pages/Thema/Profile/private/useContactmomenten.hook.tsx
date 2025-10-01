@@ -21,7 +21,7 @@ import { getRedactedClass } from '../../../../helpers/cobrowse';
 import { useAppStateGetter } from '../../../../hooks/useAppState';
 import {
   useThemaBreadcrumbs,
-  useMyThemaMenuItems,
+  useActiveThemaMenuItems,
 } from '../../../../hooks/useThemaMenuItems';
 import { routeConfig, themaIdBRP } from '../Profile-thema-config';
 
@@ -76,7 +76,7 @@ function addIcon(type: string) {
 
 export function useContactmomenten() {
   const { KLANT_CONTACT } = useAppStateGetter();
-  const { items: myThemasMenuItems } = useMyThemaMenuItems();
+  const { items: myThemasMenuItems } = useActiveThemaMenuItems();
   const breadcrumbs = useThemaBreadcrumbs(themaIdBRP);
   const routeParams = useParams();
 

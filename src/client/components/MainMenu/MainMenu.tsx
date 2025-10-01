@@ -4,14 +4,14 @@ import { categoryMenuItems } from './MainMenu.constants';
 import styles from './MainMenu.module.scss';
 import { getRedactedClass } from '../../helpers/cobrowse';
 import { useSmallScreen } from '../../hooks/media.hook';
-import { useMyThemaMenuItems } from '../../hooks/useThemaMenuItems';
+import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems';
 import { MainHeaderSecondaryLinks } from '../MainHeader/MainHeader';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink';
 
 export const MAIN_MENU_ID = 'main-menu';
 
 export function MainMenu() {
-  const { items } = useMyThemaMenuItems();
+  const { items } = useActiveThemaMenuItems();
   const isPhoneScreen = useSmallScreen();
 
   return (

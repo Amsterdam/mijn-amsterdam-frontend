@@ -9,7 +9,7 @@ import {
   compareThemas,
   useThemaBreadcrumbs,
   useThemaMenuItemByThemaID,
-  useMyThemaMenuItems,
+  useActiveThemaMenuItems,
   useAllThemaMenuItemsByThemaID,
 } from './useThemaMenuItems';
 import { themasByProfileType } from '../config/menuItems';
@@ -57,7 +57,7 @@ describe('compareThemas', () => {
   });
 });
 
-describe('useMyThemaMenuItems', () => {
+describe('useActiveThemaMenuItems', () => {
   it('should return filtered and sorted thema items based on profile type', () => {
     const mockProfileType = 'private';
     const mockAppState = { someKey: 'someValue' };
@@ -65,7 +65,7 @@ describe('useMyThemaMenuItems', () => {
       {
         id: '1',
         title: 'Thema A',
-        isActive: () => true,
+        isActive: true,
         to: '',
         profileTypes: [mockProfileType],
         redactedScope: 'none',
@@ -73,7 +73,7 @@ describe('useMyThemaMenuItems', () => {
       {
         id: '2',
         title: 'Thema B',
-        isActive: () => false,
+        isActive: false,
         to: '',
         profileTypes: [mockProfileType],
         redactedScope: 'none',
@@ -85,11 +85,12 @@ describe('useMyThemaMenuItems', () => {
         to: '',
         profileTypes: [mockProfileType],
         redactedScope: 'none',
+        isActive: false,
       },
       {
         id: '4',
         title: 'Thema D',
-        isActive: () => true,
+        isActive: true,
         to: '',
         profileTypes: [],
         redactedScope: 'none',
@@ -101,6 +102,7 @@ describe('useMyThemaMenuItems', () => {
         to: '',
         profileTypes: [mockProfileType],
         redactedScope: 'none',
+        isActive: false,
       },
     ];
 
@@ -109,7 +111,7 @@ describe('useMyThemaMenuItems', () => {
     (useAppStateReady as Mock).mockReturnValue(true);
     (themasByProfileType as Mock).mockReturnValue(mockThemaItems);
 
-    const { result } = renderHook(() => useMyThemaMenuItems(), {
+    const { result } = renderHook(() => useActiveThemaMenuItems(), {
       wrapper: ({ children }) => <RecoilRoot>{children}</RecoilRoot>,
     });
 
@@ -125,7 +127,7 @@ describe('useMyThemaMenuItems', () => {
     (useAppStateReady as Mock).mockReturnValue(false);
     (themasByProfileType as Mock).mockReturnValue([]);
 
-    const { result } = renderHook(() => useMyThemaMenuItems());
+    const { result } = renderHook(() => useActiveThemaMenuItems());
 
     expect(result.current.isLoading).toBe(true);
   });
@@ -136,7 +138,7 @@ describe('useAllThemaMenuItemsByThemaID', () => {
     const itemA: ThemaMenuItemTransformed = {
       id: '1',
       title: 'Thema A',
-      isActive: () => true,
+      isActive: true,
       isAlwaysVisible: false,
       to: '',
       profileTypes: [],
@@ -149,12 +151,13 @@ describe('useAllThemaMenuItemsByThemaID', () => {
       to: '',
       profileTypes: [],
       redactedScope: 'none',
+      isActive: false,
     };
     const itemC: ThemaMenuItemTransformed = {
       id: '3',
       title: 'Thema C',
       isAlwaysVisible: false,
-      isActive: () => false,
+      isActive: false,
       to: '',
       profileTypes: [],
       redactedScope: 'none',
@@ -178,7 +181,7 @@ describe('useThemaMenuItemByThemaID', () => {
     const itemA: ThemaMenuItemTransformed = {
       id: '1',
       title: 'Thema A',
-      isActive: () => true,
+      isActive: true,
       isAlwaysVisible: false,
       to: '',
       profileTypes: [],
@@ -191,6 +194,7 @@ describe('useThemaMenuItemByThemaID', () => {
       to: '',
       profileTypes: [],
       redactedScope: 'none',
+      isActive: false,
     };
     const mockThemaItems: ThemaMenuItemTransformed[] = [itemA, itemB];
 
@@ -209,6 +213,7 @@ describe('useThemaMenuItemByThemaID', () => {
       to: '',
       profileTypes: [],
       redactedScope: 'none',
+      isActive: false,
     };
     const mockThemaItems: ThemaMenuItemTransformed[] = [itemB];
 
@@ -231,6 +236,7 @@ describe('useThemaBreadcrumbs', () => {
       to: '/thema-b',
       profileTypes: [],
       redactedScope: 'none',
+      isActive: false,
     };
 
     const mockThemaItems: ThemaMenuItemTransformed[] = [itemB];
@@ -256,6 +262,7 @@ describe('useThemaBreadcrumbs', () => {
       to: '/thema-b',
       profileTypes: [],
       redactedScope: 'none',
+      isActive: false,
     };
 
     const mockThemaItems: ThemaMenuItemTransformed[] = [itemB];
