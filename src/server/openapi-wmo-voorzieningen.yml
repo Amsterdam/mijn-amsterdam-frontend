@@ -10,16 +10,13 @@ info:
     url: https://mijn.amsterdam.nl/
     email: mijnAmsterdam@amsterdam.nl
 servers:
-  - url: https://mijn.amsterdam.nl
-  - url: https://az-acc.mijn.amsterdam.nl
-  - url: https://test.mijn.amsterdam.nl
+  - url: https://api.amsterdam.nl/dienstverlening
+  - url: https://acc.api.amsterdam.nl/dienstverlening
   - url: http://localhost:5000
 
 paths:
   /private/api/v1/services/wmo/voorzieningen:
     post:
-      security:
-        - ApiKeyAuth: []
       description: |
         Gets a list of compacted WMO voorzieningen.
       parameters:
@@ -64,11 +61,6 @@ paths:
                 $ref: '#/components/schemas/ApplicationError'
 
 components:
-  securitySchemes:
-    ApiKeyAuth:
-      type: apiKey
-      in: header
-      name: X-API-Key
   schemas:
     WmoVoorzieningenCompactResponse:
       type: object
