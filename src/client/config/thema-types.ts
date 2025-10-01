@@ -13,41 +13,20 @@ export type Section = {
   listItems: string[]; // altijd een lijst van tekstjes; dit is zo afgesproken in de opdracht/pseudocode
 };
 
-// Menu item config (alleen data)
-// export type MenuItemConfig = {
-//   to: string; // pad of url
-//   redactedScope?: 'full' | 'content' | 'none'; // optioneel
-//   isAlwaysVisible?: boolean; // optioneel vlaggetje
-// };
-
 // ThemaConfig: basis-gegevens per thema (backend-safe)
 export type ThemaConfigBase = {
   id: string; // uniek id van het thema (bijvoorbeeld:  'BODEM')
   title: string; // naam/titel van het thema
   profileTypes: ProfileType[];
   featureToggle: { themaActive: boolean };
-  // TODO: ROUTECONFIG
-  // TODO: MENUITEM > IS INTERFACE THEMAMENUITEM
-  // TODO: SEARCG TOEVOEGEN HTTPS://gemeente-amsterdam
-  // TODO:
-  // listPageParamKind: {
-  //   inProgress: 'lopende-aanvragen' | string;
-  //   completed: 'afgehandelde-aanvragen' | string;
-  // };
-  linkListItems: LinkProps[]; // optioneel
+  linkListItems: LinkProps[];
   uitlegPageSections: Section[];
+  // overviewListItems?: string[];
   route: {
     path: string;
-    documentTitle: `${string} | ${string}`; //bijv
-  };
+    documentTitle: string; //bijv
+  }; // TODO: GEBRUIK THEMAROUTECONFIG
   redactedScope: 'full' | 'content' | 'none';
-  // themaTitleDetail?: string;  // ThemaTitleDetail is optioneel. Het wordt niet in elk thema gebruikt
-  // featureToggle: { [key: string]: boolean }; // toggles aan/uit (bijvoorbeeld: BodemActive: true })
-  // routeConfig: ThemaRoutesConfig;            // routes van het thema (detail, lijst, thema)
-  //   listPageParamKind: {
-  //    inProgress: 'lopende-aanvragen' | string,
-  //    completed: 'afgehandelde-aanvragen',
-  // }
 };
 
 export type WithDetailPage = {
@@ -79,19 +58,6 @@ export type withThemaPage = {
     };
   };
 };
-
-// type ExtendedFeatureToggle = {
-//   thema: boolean,
-//   betalen: boolean,
-//   facturen: {emandaat: boolean}
-// }
-
-// type AfisThemaConfig = ThemaConfig
-
-// type WithBareFeaturetoggle = { featuretoggle: boolean }
-// type withExtendedFeaturetoggle = { featuretoggle: { thema: boolean } & Record<string, boolean> }
-
-// type ThemaConfig = ThemaConfig & WithBareFeaturetoggle
 
 export type IsThemaVisibleFN = (appState: AppState) => boolean;
 
