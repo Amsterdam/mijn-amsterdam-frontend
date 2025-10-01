@@ -5,7 +5,11 @@ import type {
   VarenZakenFrontend,
 } from '../../../../server/services/varen/config-and-types';
 import { IS_PRODUCTION } from '../../../../universal/config/env';
-import { dateSort } from '../../../../universal/helpers/date';
+import {
+  dateSort,
+  isDateInFuture,
+  isDateInPast,
+} from '../../../../universal/helpers/date';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
@@ -57,6 +61,7 @@ type VarenTableItem = {
   isExpired?: boolean;
   dateRequest: string;
   dateStart: string | null;
+  dateEnd: string | null;
 };
 type TableConfig<T> = {
   title: string;
@@ -95,7 +100,10 @@ export const tableConfig: {
   },
   [listPageParamKind.actief]: {
     title: 'Actieve vergunningen',
-    filter: (vergunning) => !vergunning.isExpired,
+    filter: (vergunning) =>
+      !vergunning.isExpired &&
+      (!vergunning.dateStart || isDateInPast(vergunning.dateStart)) &&
+      (!vergunning.dateEnd || isDateInFuture(vergunning.dateEnd)),
     sort: dateSort('dateStart', 'desc'),
     listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.actief,
@@ -117,7 +125,7 @@ export const tableConfig: {
 } as const;
 
 export const varenMeerInformatieLink: LinkProps = {
-  to: 'https://www.amsterdam.nl/verkeer-vervoer/varen-amsterdam/varen-beroepsvaart/#:~:text=De%20passagiersvaart%20in%20Amsterdam%20is,stad%20willen%20we%20graag%20behouden.',
+  to: 'https://www.amsterdam.nl/ondernemen/vergunning-passagiersvaart-wijzigen',
   title: 'Meer informatie over passagiers- en beroepsvaart',
 } as const;
 
