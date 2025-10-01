@@ -39,7 +39,7 @@ export const menuItem: ThemaMenuItem<typeof themaConfig.id> = {
   id: themaConfig.id,
   to: themaConfig.route.path,
   profileTypes: themaConfig.profileTypes,
-  redactedScope: 'none',
+  redactedScope: themaConfig.redactedScope,
   isActive(appState: AppState) {
     return (
       themaConfig.featureToggle.themaActive &&
