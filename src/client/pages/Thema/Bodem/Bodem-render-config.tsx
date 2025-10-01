@@ -1,9 +1,4 @@
-import {
-  routeConfig,
-  themaId,
-  themaTitle,
-  featureToggle,
-} from './Bodem-thema-config';
+import { themaConfig } from './Bodem-thema-config';
 import { BodemDetail } from './BodemDetail';
 import { default as BodemIcon } from './BodemIcon.svg?react';
 import { BodemList } from './BodemList';
@@ -15,33 +10,39 @@ import {
   type ThemaRenderRouteConfig,
 } from '../../../config/thema-types';
 
+// -----------------------------
+// Routes (frontend React-components)
+// -----------------------------
 export const BodemRoutes = [
   {
-    route: routeConfig.detailPage.path,
+    route: themaConfig.detailPage.route.path,
     Component: BodemDetail,
-    isActive: featureToggle.BodemActive,
+    isActive: themaConfig.featureToggle.themaActive,
   },
   {
-    route: routeConfig.listPage.path,
+    route: themaConfig.listPage.route.path,
     Component: BodemList,
-    isActive: featureToggle.BodemActive,
+    isActive: themaConfig.featureToggle.themaActive,
   },
   {
-    route: routeConfig.themaPage.path,
+    route: themaConfig.route.path,
     Component: BodemThema,
-    isActive: featureToggle.BodemActive,
+    isActive: themaConfig.featureToggle.themaActive,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
-export const menuItem: ThemaMenuItem<typeof themaId> = {
-  title: themaTitle,
-  id: themaId,
-  to: routeConfig.themaPage.path,
-  profileTypes: ['private', 'commercial'],
-  redactedScope: 'none',
+// -----------------------------
+// Menu-item configuratie (frontend)
+// -----------------------------
+export const menuItem: ThemaMenuItem<typeof themaConfig.id> = {
+  title: themaConfig.title,
+  id: themaConfig.id,
+  to: themaConfig.route.path,
+  profileTypes: themaConfig.profileTypes,
+  redactedScope: themaConfig.redactedScope,
   isActive(appState: AppState) {
     return (
-      featureToggle.BodemActive &&
+      themaConfig.featureToggle.themaActive &&
       !isLoading(appState.BODEM) &&
       !!appState.BODEM.content?.length
     );

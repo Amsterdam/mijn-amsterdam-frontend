@@ -12,6 +12,7 @@ import {
   TextPageV2,
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
+import { ThemaConfigBase } from '../../config/thema-types'; // nodig voor de type
 import { getRedactedClass } from '../../helpers/cobrowse';
 import {
   compareThemas,
@@ -22,7 +23,7 @@ import { afvalSectionProps } from '../Thema/Afval/InfoSection';
 import { AVGsectionProps } from '../Thema/AVG/InfoSection';
 import { belastingenSectionProps } from '../Thema/Belastingen/InfoSection';
 import { bezwarenSectionProps } from '../Thema/Bezwaren/InfoSection';
-import { bodemsectionProps } from '../Thema/Bodem/InfoSection';
+import { themaConfig as bodemConfig } from '../Thema/Bodem/Bodem-thema-config';
 import { burgerzakenSectionProps } from '../Thema/Burgerzaken/InfoSection';
 import { erfpachtSectionProps } from '../Thema/Erfpacht/InfoSection';
 import {
@@ -43,14 +44,25 @@ import { varensectionProps } from '../Thema/Varen/infoSection';
 import { vergunningensectionProps } from '../Thema/Vergunningen/InfoSection';
 import { zorgSectionProps } from '../Thema/Zorg/InfoSection';
 
+function createSectionProps(themaConfig: ThemaConfigBase): SectionProps {
+  return {
+    id: themaConfig.id,
+    title: themaConfig.title,
+    listItems:
+      // themaConfig.overviewListItems ??
+      themaConfig.uitlegPageSections[0].listItems, // Eerst een overview, anders fallback
+    active: themaConfig.featureToggle.themaActive,
+  };
+}
+
 export type SectionProps = {
   id: string;
   title: string;
-  to?: string; // Use this instead of the themaMenuItem 'to URL' and force link to be clickable.
+  to?: string;
   listItems: ListItems;
   active: boolean;
 };
-type ListItems = Array<{ text: string; listItems?: string[] } | string>;
+type ListItems = Array<{ text: string; listItems: string[] } | string>;
 
 const sections: SectionProps[] = [
   profileSectionProps,
@@ -75,11 +87,16 @@ const sections: SectionProps[] = [
   milieuzonesectionProps,
   overtredingensectionProps,
   vergunningensectionProps,
-  bodemsectionProps,
+  createSectionProps(bodemConfig),
   varensectionProps,
 ];
 
-function Section({ id, title, listItems, to }: Omit<SectionProps, 'active'>) {
+export function Section({
+  id,
+  title,
+  listItems,
+  to,
+}: Omit<SectionProps, 'active'>) {
   const themaMenuItems = useThemaMenuItemsByThemaID();
 
   const listItemComponents = listItems.map((item, i) => {
