@@ -42,15 +42,9 @@ import { toeristischeverhuurSectionProps } from '../Thema/ToeristischeVerhuur/In
 import { varensectionProps } from '../Thema/Varen/infoSection';
 import { vergunningensectionProps } from '../Thema/Vergunningen/InfoSection';
 import { zorgSectionProps } from '../Thema/Zorg/InfoSection';
+import type { ListItems } from '../../config/thema-types';
 
-export type SectionProps = {
-  id: string;
-  title: string;
-  to?: string; // Use this instead of the themaMenuItem 'to URL' and force link to be clickable.
-  listItems: ListItems;
-  active: boolean;
-};
-type ListItems = Array<{ text: string; listItems?: string[] } | string>;
+
 
 const sections: SectionProps[] = [
   profileSectionProps,
@@ -79,7 +73,14 @@ const sections: SectionProps[] = [
   varensectionProps,
 ];
 
-function Section({ id, title, listItems, to }: Omit<SectionProps, 'active'>) {
+ type SectionProps = {
+   id: string;
+   title: string;
+   listItems: ListItems;
+   to?: string;
+   
+ };
+function Section({ id, title, listItems, to }: SectionProps) {
   const themaMenuItems = useThemaMenuItemsByThemaID();
 
   const listItemComponents = listItems.map((item, i) => {

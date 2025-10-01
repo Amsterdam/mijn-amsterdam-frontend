@@ -6,9 +6,37 @@ import {
   LinkProps,
   SVGComponent,
 } from '../../universal/types/App.types';
+//generalinfo session active moet verandered worden kijk opname in teams voor uitleg!!!
+export type ThemaConfigBase = {
+  id: string;
+  title: string;
+  route: ThemaRouteConfig;
+  featureToggle: { themaActive: boolean };
+  sections: Section[];
+  profileTypes: ProfileType[];
+  redactedScope: 'full' | 'content' | 'none';
+};
+
+export type WithListPage = {
+  listPage: {
+    route: ThemaRouteConfig;
+  };
+};
+
+export type WithDetailPage = {
+  detailPage: {
+    title: string;
+    route: ThemaRouteConfig;
+  };
+};
+export type Section = {
+  title?: string;
+  listItems: ListItems;
+};
+
+export type ListItems = Array<{ text: string; listItems?: string[] } | string>;
 
 export type IsThemaVisibleFN = (appState: AppState) => boolean;
-
 export interface ThemaMenuItem<ID extends string = string>
   extends Omit<LinkProps, 'title' | 'to' | 'rel'> {
   id: ID;

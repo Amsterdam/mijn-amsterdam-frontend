@@ -27,7 +27,6 @@ Put the following commands in your terminal after all dependencies are installed
 
 ```bash
 pnpm serve-dev
-pnpm start
 ```
 
 It's also possible to run both the mocks server and bff seperately with:
