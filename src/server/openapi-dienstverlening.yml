@@ -9,11 +9,6 @@ info:
     name: Mijn Amsterdam
     url: https://mijn.amsterdam.nl/
     email: mijnAmsterdam@amsterdam.nl
-servers:
-  - url: https://api.amsterdam.nl/dienstverlening
-  - url: https://acc.api.amsterdam.nl/dienstverlening
-  - url: http://localhost:5000
-
 paths:
   /api/v1/status/health:
     get:
