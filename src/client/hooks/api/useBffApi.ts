@@ -140,13 +140,13 @@ type SetState = <T>(
 type GetState = <T>(key: StoreKey) => BffApiState<ApiResponse<T> | null>;
 type HasState = (key: StoreKey) => boolean;
 
-type StoreExample = {
+type BFFApiStore = {
   set: SetState;
   get: GetState;
   has: HasState;
 } & { [key in StoreKey]?: BffApiState<ApiResponse<unknown> | null> };
 
-export const useBffApiStateStore = create<StoreExample>((set, get) => ({
+export const useBffApiStateStore = create<BFFApiStore>((set, get) => ({
   set: (key, state) => set({ [key]: state }),
   get: (key: StoreKey) => {
     const state = get();
