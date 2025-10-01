@@ -82,7 +82,7 @@ export function MainFooter() {
       </PageFooter.Spotlight>
 
       <PageFooter.Menu>
-        {footer?.content?.bottomLinks
+        {data?.content?.bottomLinks
           .filter(
             (link) =>
               typeof link.label === 'string' &&
