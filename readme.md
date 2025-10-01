@@ -57,7 +57,7 @@ into other files as done in `src/client/pages/Profile` or `src/server/services/f
 
 **TODO: Describe thema concept + creation. See MIJN-11557**
 
-Configuration / static data and other related code for Thema's in the Front-end are put in `$Name-thema-config.ts` and `$Name-render-config.tsx` files. 
+Configuration / static data and other related code for Thema's in the Front-end are put in `$Name-thema-config.ts` and `$Name-render-config.tsx` files.
 The render config fields are used for code related to React components where the thema config are intended to be used without React. This way these files can also be imported in the BFF without having that (backend) environment
 to be configured for React.
 
@@ -88,7 +88,7 @@ It's basically an additional development server integrated in the BFF api.
 - Variables that get re-assigned are always `let`
 - All filenames in src/server should be `kebab-cased.ts`
 - React component Filenames in src/client are `PascalCased.tsx`
-- If you have a `TODO:`, provide  a ticket number
+- If you have a `TODO:`, provide a ticket number
 
 ## Tooling
 
@@ -108,7 +108,6 @@ It's basically an additional development server integrated in the BFF api.
 
 - `vitest` for BFF development
 
-
 #### Database
 
 Postgres is used. By default the database connection is not used in local development and faked programatically. To develop/test the database locally, a dockerized postgress instance can be started by running: `docker compose up` and setting the env `BFF_DB_ENABLED` to `true`
@@ -126,6 +125,7 @@ The main branch should always be production worthy in terms of functionality, st
 Every release to production is accompanied with a release tag in the from of: `release-v1.2.3`. Whenever you create a release on Github, the CI/CD pipeline will automatically detect the branch and starts building a release.
 
 ### Debugging
+
 To log all debug or higher severity levels of logs.
 `export LOG_LEVEL=debug`
 See all log levels at https://getpino.io/#/docs/api?id=loggerlevels-object
@@ -144,6 +144,7 @@ A comma separated list of keywords / pathsegments can be used to log specific re
 `export DEBUG_RESPONSE_DATA=term1,term2` this setting only works in conjunction with `DEBUG=source-api-request:request` and is turned on or added **automatically** when DEBUG_RESPONSE_DATA is defined.
 
 #### React Autologout timer
+
 To debug the autologout timer you can add a localstorage item `AUTO_LOGOUT_TIMER_LOGGING` with value `true`. This enables some logging in the console
 that shows information about the timer expiry.
 
@@ -152,11 +153,13 @@ that shows information about the timer expiry.
 ### Making use of an ENV variable in frontend
 
 - Add variable to `env.local.template`, prefix variable with `REACT_APP_` (don't forget to add to `env.local` as well)
-- Add variable as `build ARG` in Docker file 
+- Add variable as `build ARG` in Docker file
+
 ```
 ARG REACT_APP_VARIABLE_NAME=
 ENV REACT_APP_VARIABLE_NAME=$REACT_APP_VARIABLE_NAME
 ```
+
 - Add variable to infra repo for frontend ci/cd
 
 You should now be able to access `import.meta.env.REACT_APP_VARIABLE_NAME`

@@ -16,7 +16,7 @@ export function BodemList() {
     breadcrumbs,
     listPageRoute,
   } = useBodemListPageData();
-  useHTMLDocumentTitle(themaConfig.route);
+  useHTMLDocumentTitle(themaConfig.route); // TODO
 
   return (
     <ListPagePaginated
