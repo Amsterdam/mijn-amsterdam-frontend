@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   version: '1.0'
-  title: Mijn Amsterdam api spec for WMO voorzieningen
+  title: Mijn Amsterdam api spec for Mijn Amsterdam - Dienstverlening api's
   description: |
     We're providing a set of endpoints that can be used to retrieve data from source api's. These api's are intended for users other than Mijn Amsterdam
     Note: the paths that start with /private are only accessible in development mode (localhost) or via our private-network resources.
@@ -19,10 +19,7 @@ paths:
     post:
       description: |
         Gets a list of compacted WMO voorzieningen.
-      parameters:
-        - $ref: '#/components/parameters/xApiKeyHeader'
       requestBody:
-        description: Optional description in *Markdown*
         required: true
         content:
           application/json:
@@ -160,10 +157,3 @@ components:
             - "Bad request: ApiError 005 - Could not decrypt url parameter administratienummerEncrypted'"
             - 'Bad request: ApiError 000 - Onbekende fout'
             - 'Bad request: Bad request: Failed to decrypt transactions key'
-  parameters:
-    xApiKeyHeader:
-      name: x-api-key
-      in: header
-      required: true
-      schema:
-        type: string
