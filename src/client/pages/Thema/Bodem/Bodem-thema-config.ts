@@ -31,14 +31,7 @@ export const themaConfig: BodemThemaConfig = {
   // Alleen algemene uitleg voor de themapagina
   uitlegPageSections: [
     {
-      listItems: [
-        'Op deze pagina vindt u informatie over uw lood in de bodem-check.',
-      ],
-    },
-    {
-      listItems: [
-        'Op deze pagina vindt u informatie over uw lood in de bodem-check.',
-      ],
+      listItems: ["Uw aanvraag voor 'lood in de bodem-check'"],
     },
   ],
 
