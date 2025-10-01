@@ -102,7 +102,7 @@ describe('useActiveThemaMenuItems', () => {
         to: '',
         profileTypes: [mockProfileType],
         redactedScope: 'none',
-        isActive: false,
+        isActive: true,
       },
     ];
 
@@ -169,9 +169,9 @@ describe('useAllThemaMenuItemsByThemaID', () => {
     const { result } = renderHook(() => useAllThemaMenuItemsByThemaID());
 
     expect(result.current).toEqual({
-      '1': { ...itemA, hasData: true },
-      '2': { ...itemB, hasData: true },
-      '3': { ...itemC, hasData: false },
+      '1': itemA,
+      '2': itemB,
+      '3': itemC,
     });
   });
 });
@@ -202,7 +202,7 @@ describe('useThemaMenuItemByThemaID', () => {
 
     const { result } = renderHook(() => useThemaMenuItemByThemaID('1'));
 
-    expect(result.current).toEqual({ ...itemA, hasData: true });
+    expect(result.current).toEqual(itemA);
   });
 
   it('should return null if the ID does not exist', () => {
