@@ -183,8 +183,22 @@ function combineRTMData(
     combinedRegelingen.push(combinedRegeling);
   }
 
+  const [lastCombinedRegeling, lastStatusLine] =
+    combinedRegelingen[combinedRegelingen.length - 1];
+
+  if (
+    lastCombinedRegeling.procesAanvraagOmschrijving !== 'Beëindigen RTM' &&
+    !(
+      isRTMDeel1(lastCombinedRegeling) &&
+      lastCombinedRegeling.resultaat === 'afgewezen'
+    )
+  ) {
+    const getStatusLineItem = createGetStatusLineItemFn(lastCombinedRegeling);
+    lastStatusLine.push(getStatusLineItem('eindeRecht'));
+  }
+
   return combinedRegelingen.map(([regeling, statusLineItems]) => {
-    return [regeling, finalizeStatusLineItems(regeling, statusLineItems)];
+    return [regeling, finalizeStatusLineItems(statusLineItems)];
   });
 }
 
@@ -194,31 +208,43 @@ function removeDocuments(regeling: ZorgnedHLIRegeling): ZorgnedHLIRegeling {
 
 /** Determines active step and checks untill there (including), and adds ids */
 function finalizeStatusLineItems(
-  regeling: ZorgnedHLIRegeling,
   statusLineItems: IncompleteStatusLineItem[]
 ): StatusLineItem[] {
-  // TODO: Just leave out isActive from input? for now just force this.
-  const items = statusLineItems.map((item, i) => {
-    return { ...item, id: `status-step-${i + 1}`, isActive: false };
-  });
+  const lastIdx = statusLineItems.length - 1;
+  const lastItem = statusLineItems[lastIdx];
 
-  const lastIdx = items.length - 1;
-  const lastItem = items[lastIdx];
-
-  const now = new Date();
-
-  if (
-    regeling.datumEindeGeldigheid &&
-    lastItem.status === 'Einde Recht' &&
-    regeling.isActueel !== false &&
-    isAfter(now, regeling.datumEindeGeldigheid)
-  ) {
-    items[lastIdx - 1].isActive = true;
-  } else {
+  if (statusLineItems.length === 1) {
     lastItem.isActive = true;
+  } else if (lastItem.status === 'Einde recht' && !lastItem.isActive) {
+    statusLineItems[lastIdx - 1].isActive = true;
   }
 
-  return checkUntillIncludingActiveStep(items);
+  const statusLineItemsComplete: StatusLineItem[] = statusLineItems.map(
+    (item, i) => {
+      return {
+        ...item,
+        id: `status-step-${i + 1}`,
+        isActive: item.isActive ?? false,
+      };
+    }
+  );
+
+  const checkedSteps = checkUntillIncludingActiveStep(statusLineItemsComplete);
+
+  // TODO: Remove this check for development.
+  let count = 0;
+  checkedSteps.forEach((step) => {
+    if (step.isActive === true) {
+      count++;
+    }
+  });
+  if (count > 1 || count <= 0) {
+    // eslint-disable-next-line no-console
+    console.dir(statusLineItemsComplete, { depth: 10 });
+    throw Error(`Statustrain has ${count} active steps`);
+  }
+
+  return checkedSteps;
 }
 
 function checkUntillIncludingActiveStep(
@@ -247,6 +273,7 @@ type StatusLineItemTransformerConfig = {
   datePublished: TextPartContents<ZorgnedHLIRegeling>;
   description: TextPartContents<ZorgnedHLIRegeling>;
   documents: (regeling: ZorgnedHLIRegeling) => GenericDocument[];
+  isActive?: (regeling: ZorgnedHLIRegeling, now: Date) => boolean;
 };
 
 type StatusLineKeys =
@@ -267,25 +294,25 @@ const statusLineItems: Record<StatusLineKeys, StatusLineItemTransformerConfig> =
       status: 'Aanvraag',
       datePublished: getDatumAfgifte,
       description: '',
-      documents: (regeling) => regeling.documenten,
+      // The documents are in 'Aanvraag' above.
+      documents: () => [],
     },
     aanvraagAfgewezen: {
-      status: 'Besluit (afgewezen)',
+      status: 'Besluit',
       datePublished: getDatumAfgifte,
-      description: `<p>U krijgt geen productOmschrijving. In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`,
+      description: getBesluitDescription,
       documents: (regeling) => regeling.documenten,
     },
     inBehandelingGenomen: {
       status: 'In behandeling genomen',
       datePublished: getDatumAfgifte,
-      description: '',
-      // The documents are in 'Aanvraag' above.
-      documents: () => [],
+      description: (regeling) => getRtmDescriptionDeel1Toegewezen(regeling),
+      documents: (regeling) => regeling.documenten,
     },
     besluit: {
       status: 'Besluit',
       datePublished: getDatumAfgifte,
-      description: (regeling) => getBesluitDescription(regeling),
+      description: getBesluitDescription,
       documents: (regeling) => regeling.documenten,
     },
     wijzingsAanvraag: {
@@ -305,13 +332,32 @@ const statusLineItems: Record<StatusLineKeys, StatusLineItemTransformerConfig> =
     eindeRecht: {
       status: 'Einde recht',
       datePublished: (regeling) => regeling.datumEindeGeldigheid || '',
-      description: (regeling) => getBesluitDescription(regeling),
+      description: (regeling) => {
+        if (
+          !!regeling.datumEindeGeldigheid &&
+          isAfter(new Date(), regeling.datumEindeGeldigheid)
+        ) {
+          return `
+        <p>Uw recht op ${regeling.titel} is beëindigd per ${defaultDateFormat(regeling.datumEindeGeldigheid)}.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`;
+        }
+        return getNotEveryYearDescription(regeling);
+      },
       documents: (regeling) => regeling.documenten,
+      isActive(regeling, now) {
+        return !!(
+          regeling.isActueel === false &&
+          regeling.datumEindeGeldigheid &&
+          isAfter(now, regeling.datumEindeGeldigheid)
+        );
+      },
     },
   };
 
-// TODO: Add id afterwards when having the full statusLine
-type IncompleteStatusLineItem = Omit<StatusLineItem, 'id'>;
+// TODO: Make a better type.
+// Explicitly set isActive steps are the truth and will be used instead of determined.
+type IncompleteStatusLineItem = Omit<StatusLineItem, 'id' | 'isActive'> & {
+  isActive: boolean | null;
+};
 
 type getStatusLineItemFn = (
   itemChoice: StatusLineKeys
@@ -339,7 +385,7 @@ function createGetStatusLineItemFn(
         []
       ) as string,
       documents: statusItem.documents(regeling),
-      isActive: false,
+      isActive: statusItem.isActive ? statusItem.isActive(regeling, now) : null,
       isChecked: false,
       // TODO: Do we need to define this?
       isVisible: true,
@@ -456,16 +502,14 @@ function mapAanvragenPerBetrokkenen(
   return aanvragenMap;
 }
 
-function getRtmDescriptionDeel1Toegewezen(
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-) {
-  let description = `<p>Voordat u de ${aanvraag.titel} krijgt, moet u een afspraak maken voor een medische keuring bij de GGD. In de brief staat hoe u dat doet.</p>`;
+function getRtmDescriptionDeel1Toegewezen(regeling: ZorgnedHLIRegeling) {
+  let description = `<p>Voordat u de ${regeling.titel} krijgt, moet u een afspraak maken voor een medische keuring bij de GGD. In de brief staat hoe u dat doet.</p>`;
 
   // Betrokkenen always has the aanvrager listed as well.
-  const isAanvraagVoorMeerdereBetrokkenen = aanvraag.betrokkenen.length > 1;
+  const isAanvraagVoorMeerdereBetrokkenen = regeling.betrokkenen.length > 1;
 
   if (isAanvraagVoorMeerdereBetrokkenen) {
-    description += `<p><strong>Vraagt u de ${aanvraag.titel} (ook) voor andere gezinsleden aan?</strong><br/>De uitslag van de aanvraag is op Mijn Amsterdam te vinden met de DigiD login gegevens van uw gezinsleden.</p>
+    description += `<p><strong>Vraagt u de ${regeling.titel} (ook) voor andere gezinsleden aan?</strong><br/>De uitslag van de aanvraag is op Mijn Amsterdam te vinden met de DigiD login gegevens van uw gezinsleden.</p>
     <p>Nog geen DigiD login gegevens? <a rel="noopener noreferrer" href="https://www.digid.nl/aanvragen-en-activeren/digid-aanvragen">Ga naar DigiD aanvragen.</a></p>
     `;
 
@@ -590,6 +634,7 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
         if (!isAanvraagVoorMeerdereBetrokkenen) {
           return baseDescription;
         }
+        // TODO: implement this description and look at the other fields.
         return (
           baseDescription +
           `<p>

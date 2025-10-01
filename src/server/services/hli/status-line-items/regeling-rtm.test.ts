@@ -391,11 +391,7 @@ describe('getStatusLineItems for RTM', () => {
       {
         id: 'status-step-1',
         datePublished: '2025-02-01',
-        documents: [
-          {
-            title: 'AV-RTM Info aan klant GGD',
-          },
-        ],
+        documents: [],
         isActive: false,
         isChecked: true,
         isVisible: true,
@@ -404,19 +400,32 @@ describe('getStatusLineItems for RTM', () => {
       {
         id: 'status-step-2',
         datePublished: '2025-02-01',
-        documents: [],
+        documents: [
+          {
+            title: 'AV-RTM Info aan klant GGD',
+          },
+        ],
         isActive: true,
         isChecked: true,
         isVisible: true,
         status: 'In behandeling genomen',
       },
+      {
+        id: 'status-step-3',
+        datePublished: RTM_1_AANVRAAG.datumEindeGeldigheid,
+        documents: [],
+        isActive: false,
+        isChecked: false,
+        isVisible: true,
+        status: 'Einde recht',
+      },
     ]);
 
     // Check these once, to know they exist.
     // id and url has encrypted data that changes every run.
-    assert(regeling.steps[0].documents?.length == 1);
+    assert(regeling.steps[1].documents?.length == 1);
 
-    const document = regeling.steps[0].documents[0];
+    const document = regeling.steps[1].documents[0];
     expect(document.id.length > 20);
     expect(document.url).toContain(
       '/services/v1/stadspas-en-andere-regelingen/document'
@@ -455,7 +464,7 @@ describe('getStatusLineItems for RTM', () => {
         isActive: true,
         isChecked: true,
         isVisible: true,
-        status: 'Besluit (afgewezen)',
+        status: 'Besluit',
       },
     ]);
   });
@@ -485,6 +494,15 @@ describe('getStatusLineItems for RTM', () => {
         isChecked: true,
         isVisible: true,
         documents: [],
+      },
+      {
+        id: 'status-step-2',
+        datePublished: '',
+        documents: [],
+        isActive: false,
+        isChecked: false,
+        isVisible: true,
+        status: 'Einde recht',
       },
     ]);
   });
@@ -519,11 +537,7 @@ describe('getStatusLineItems for RTM', () => {
         isActive: false,
         isChecked: true,
         isVisible: true,
-        documents: [
-          {
-            title: 'AV-RTM Info aan klant GGD',
-          },
-        ],
+        documents: [],
       },
       {
         id: 'status-step-2',
@@ -532,7 +546,11 @@ describe('getStatusLineItems for RTM', () => {
         isActive: false,
         isChecked: true,
         isVisible: true,
-        documents: [],
+        documents: [
+          {
+            title: 'AV-RTM Info aan klant GGD',
+          },
+        ],
       },
       {
         id: 'status-step-3',
@@ -587,12 +605,7 @@ describe('getStatusLineItems for RTM', () => {
     expect(regeling.steps).toMatchObject([
       {
         datePublished: RTM_1_AANVRAAG.datumBesluit,
-        documents: [
-          {
-            datePublished: '2025-07-15T15:11:36.503',
-            title: 'AV-RTM Info aan klant GGD',
-          },
-        ],
+        documents: [],
         id: 'status-step-1',
         isActive: false,
         isChecked: true,
@@ -601,7 +614,12 @@ describe('getStatusLineItems for RTM', () => {
       },
       {
         datePublished: RTM_1_AANVRAAG.datumBesluit,
-        documents: [],
+        documents: [
+          {
+            datePublished: '2025-07-15T15:11:36.503',
+            title: 'AV-RTM Info aan klant GGD',
+          },
+        ],
         id: 'status-step-2',
         isActive: false,
         isChecked: true,
@@ -652,6 +670,15 @@ describe('getStatusLineItems for RTM', () => {
         isChecked: true,
         isVisible: true,
         status: 'Besluit wijziging',
+      },
+      {
+        id: 'status-step-6',
+        datePublished: '',
+        documents: [],
+        isActive: false,
+        isChecked: false,
+        isVisible: true,
+        status: 'Einde recht',
       },
     ]);
   });
