@@ -150,7 +150,9 @@ function combineRTMData(
 
   for (const regeling of regelingen) {
     const lastItem = combinedRegelingen.pop();
-    assert(lastItem !== undefined);
+    if (lastItem === undefined) {
+      throw new Error('lastItem shoulld always be defined');
+    }
 
     const [lastRegeling, lastStatusLineItems] = lastItem;
 
@@ -190,7 +192,7 @@ function removeDocuments(regeling: ZorgnedHLIRegeling): ZorgnedHLIRegeling {
   return { ...regeling, documenten: [] };
 }
 
-/** Determines active step and checks untill there (including) and adds ids */
+/** Determines active step and checks untill there (including), and adds ids */
 function finalizeStatusLineItems(
   regeling: ZorgnedHLIRegeling,
   statusLineItems: IncompleteStatusLineItem[]
@@ -203,8 +205,14 @@ function finalizeStatusLineItems(
   const lastIdx = items.length - 1;
   const lastItem = items[lastIdx];
 
-  // TODO: datumEindeGeldigheid?
-  if (lastItem.status === 'Einde Recht' && regeling.isActueel !== false) {
+  const now = new Date();
+
+  if (
+    regeling.datumEindeGeldigheid &&
+    lastItem.status === 'Einde Recht' &&
+    regeling.isActueel !== false &&
+    isAfter(now, regeling.datumEindeGeldigheid)
+  ) {
     items[lastIdx - 1].isActive = true;
   } else {
     lastItem.isActive = true;
@@ -245,28 +253,45 @@ type StatusLineKeys =
   | 'aanvraag'
   | 'inBehandelingGenomen'
   | 'besluit'
+  | 'wijzingsAanvraag'
+  | 'wijziginsBesluit'
   | 'eindeRecht';
+
+const getDatumAfgifte = (regeling: ZorgnedHLIRegeling) =>
+  regeling.datumInBehandeling || regeling.datumBesluit;
 
 const statusLineItems: Record<StatusLineKeys, StatusLineItemTransformerConfig> =
   {
     aanvraag: {
       status: 'Aanvraag',
-      datePublished: (regeling) =>
-        regeling.datumInBehandeling || regeling.datumBesluit,
+      datePublished: getDatumAfgifte,
       description: '',
       documents: (regeling) => regeling.documenten,
     },
     inBehandelingGenomen: {
       status: 'In behandeling genomen',
-      datePublished: (regeling) =>
-        regeling.datumInBehandeling || regeling.datumBesluit,
+      datePublished: getDatumAfgifte,
       description: '',
       documents: () => [], // These documents are in 'Aanvraag' above.
     },
     besluit: {
       status: 'Besluit',
-      datePublished: (regeling) => regeling.datumBesluit,
+      datePublished: getDatumAfgifte,
       description: (regeling) => getBesluitDescription(regeling),
+      documents: (regeling) => regeling.documenten,
+    },
+    wijzingsAanvraag: {
+      status: 'Aanvraag wijziging',
+      datePublished: getDatumAfgifte,
+      description: `<p>U heeft een aanvraag gedaan voor aanpassing op uw lopende RTM regeling.</p>
+        <p>Hiervoor moet u een afspraak maken voor een medisch gesprek bij de GGD. In de brief staat hoe u dat doet.</p>`,
+      documents: (regeling) => regeling.documenten,
+    },
+    wijziginsBesluit: {
+      status: 'Besluit wijziging',
+      datePublished: getDatumAfgifte,
+      description:
+        '<p>Uw aanvraag voor een wijziging is afgehandeld. Bekijk de brief voor meer informatie hierover.</p>',
       documents: (regeling) => regeling.documenten,
     },
     eindeRecht: {
@@ -333,22 +358,25 @@ function getStatusLineItems(
     return [];
   } else if (context === 'afterAanvraag') {
     if (!regeling.procesAanvraagOmschrijving) {
-      throw Error('Regeling has nog procesAanvraagOmschrijving');
+      throw Error(
+        'Regeling has nog procesAanvraagOmschrijving, is the mock data out of date?'
+      );
     }
     switch (regeling.procesAanvraagOmschrijving) {
       case 'Beëindigen RTM': {
         return [getStatusLineItem('eindeRecht')];
       }
-      case 'RTM Herkeuring': {
-        break;
-      }
       case 'Aanvraag RTM fase 1': {
-        break;
+        return [getStatusLineItem('wijzingsAanvraag')];
+      }
+      case 'RTM Herkeuring': {
+        return [getStatusLineItem('wijziginsBesluit')];
       }
       case 'Aanvraag RTM fase 2': {
         return [getStatusLineItem('besluit')];
       }
     }
+    console.dir(regeling);
     throw Error('No statusstep found!');
   }
 

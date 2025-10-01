@@ -493,6 +493,99 @@ describe('getStatusLineItems for RTM', () => {
       },
     ]);
   });
+
+  test('Combines: Aanvraag -> Toegewezen -> Wijzigings aanvraag -> Wijziging toegewezen', () => {
+    const aanvragen = attachIDs([
+      RTM_1_AANVRAAG,
+      RTM_2_TOEGEWEZEN,
+      RTM_WIJZIGINGS_AANVRAAG,
+      RTM_WIJZIGINGS_TOEKENNING,
+    ]);
+    const regelingen = transformRegelingenForFrontend(aanvragen);
+    expect(regelingen.length).toBe(1);
+    const regeling = regelingen[0];
+
+    expect(regeling).toMatchObject({
+      title: RTM_WIJZIGINGS_TOEKENNING.titel,
+      isActual: RTM_WIJZIGINGS_TOEKENNING.isActueel,
+      dateDecision: RTM_WIJZIGINGS_TOEKENNING.datumBesluit,
+      dateStart: RTM_WIJZIGINGS_TOEKENNING.datumIngangGeldigheid,
+      dateEnd: RTM_WIJZIGINGS_TOEKENNING.datumEindeGeldigheid,
+      decision: RTM_WIJZIGINGS_TOEKENNING.resultaat,
+      displayStatus: 'Toegewezen',
+      documents: [],
+    });
+    expect(regeling.steps).toMatchObject([
+      {
+        datePublished: RTM_1_AANVRAAG.datumBesluit,
+        documents: [
+          {
+            datePublished: '2025-07-15T15:11:36.503',
+            title: 'AV-RTM Info aan klant GGD',
+          },
+        ],
+        id: 'status-step-1',
+        isActive: false,
+        isChecked: true,
+        isVisible: true,
+        status: 'Aanvraag',
+      },
+      {
+        datePublished: RTM_1_AANVRAAG.datumBesluit,
+        documents: [],
+        id: 'status-step-2',
+        isActive: false,
+        isChecked: true,
+        status: 'In behandeling genomen',
+      },
+      {
+        datePublished: RTM_2_TOEGEWEZEN.datumBesluit,
+        documents: [
+          {
+            datePublished: '2025-05-28T14:36:05.743',
+            title: 'Beschikking toekenning Reg Tegemoetk Meerkosten',
+          },
+        ],
+        id: 'status-step-3',
+        isActive: false,
+        isChecked: true,
+        isVisible: true,
+        status: 'Besluit',
+      },
+      {
+        datePublished: '2025-08-18',
+        documents: [
+          {
+            datePublished: '2025-08-18T15:17:08.773',
+            title: 'AV-RTM Info aan klant GGD',
+          },
+          {
+            datePublished: '2025-08-18T14:09:48.83',
+            title: 'AV-RTM Info aan klant GGD',
+          },
+        ],
+        id: 'status-step-4',
+        isActive: false,
+        isChecked: true,
+        isVisible: true,
+        status: 'Aanvraag wijziging',
+      },
+      {
+        datePublished: RTM_WIJZIGINGS_TOEKENNING.datumBesluit,
+        documents: [
+          {
+            datePublished: '2025-08-18T14:57:41.793',
+            title: 'Beschikking wijziging RTM',
+          },
+        ],
+        id: 'status-step-5',
+        isActive: true,
+        isChecked: true,
+        isVisible: true,
+        status: 'Besluit wijziging',
+      },
+    ]);
+  });
 });
 
 describe.skip('filterCombineRtmData', () => {
@@ -670,31 +763,6 @@ describe.skip('filterCombineRtmData', () => {
           ...RTM_1_AANVRAAG.documenten,
         ],
         resultaat: RTM_2_TOEGEWEZEN.resultaat,
-      },
-    ]);
-  });
-
-  test('Combines: Aanvraag -> Toegewezen -> Wijzigings aanvraag -> Wijziging toegewezen', () => {
-    const aanvragen = attachIDs([
-      RTM_1_AANVRAAG,
-      RTM_2_TOEGEWEZEN,
-      RTM_WIJZIGINGS_AANVRAAG,
-      RTM_WIJZIGINGS_TOEKENNING,
-    ]);
-    const [, result] = filterCombineRtmData(aanvragen);
-    expect(result).toMatchObject([
-      {
-        ...aanvragen.at(-1),
-        betrokkenPersonen: base.betrokkenPersonen,
-        betrokkenen: base.betrokkenen,
-        bsnAanvrager: base.bsnAanvrager,
-        datumAanvraag: RTM_1_AANVRAAG.datumAanvraag,
-        documenten: [
-          ...RTM_WIJZIGINGS_TOEKENNING.documenten,
-          ...RTM_WIJZIGINGS_AANVRAAG.documenten,
-          ...RTM_2_TOEGEWEZEN.documenten,
-          ...RTM_1_AANVRAAG.documenten,
-        ],
       },
     ]);
   });
