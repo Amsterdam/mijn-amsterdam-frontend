@@ -250,7 +250,8 @@ type StatusLineItemTransformerConfig = {
 };
 
 type StatusLineKeys =
-  | 'aanvraag'
+  | 'aanvraagLopend'
+  | 'aanvraagAfgewezen'
   | 'inBehandelingGenomen'
   | 'besluit'
   | 'wijzingsAanvraag'
@@ -262,17 +263,24 @@ const getDatumAfgifte = (regeling: ZorgnedHLIRegeling) =>
 
 const statusLineItems: Record<StatusLineKeys, StatusLineItemTransformerConfig> =
   {
-    aanvraag: {
+    aanvraagLopend: {
       status: 'Aanvraag',
       datePublished: getDatumAfgifte,
       description: '',
+      documents: (regeling) => regeling.documenten,
+    },
+    aanvraagAfgewezen: {
+      status: 'Besluit (afgewezen)',
+      datePublished: getDatumAfgifte,
+      description: `<p>U krijgt geen productOmschrijving. In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`,
       documents: (regeling) => regeling.documenten,
     },
     inBehandelingGenomen: {
       status: 'In behandeling genomen',
       datePublished: getDatumAfgifte,
       description: '',
-      documents: () => [], // These documents are in 'Aanvraag' above.
+      // The documents are in 'Aanvraag' above.
+      documents: () => [],
     },
     besluit: {
       status: 'Besluit',
@@ -347,8 +355,11 @@ function getStatusLineItems(
 
   if (context === 'startOfChain') {
     if (isRTMDeel1(regeling)) {
+      if (regeling.resultaat === 'afgewezen') {
+        return [getStatusLineItem('aanvraagAfgewezen')];
+      }
       return [
-        getStatusLineItem('aanvraag'),
+        getStatusLineItem('aanvraagLopend'),
         getStatusLineItem('inBehandelingGenomen'),
       ];
     }

@@ -100,6 +100,38 @@ const RTM_1_AANVRAAG: ZorgnedAanvraagWithRelatedPersonsTransformed = {
   bsnAanvrager: base.bsnAanvrager,
 };
 
+const RTM_1_AFWIJZING: ZorgnedAanvraagWithRelatedPersonsTransformed = {
+  id: '3170120',
+  datumAanvraag: '2025-08-18',
+  datumBeginLevering: null,
+  datumBesluit: '2025-08-18',
+  datumEindeGeldigheid: null,
+  datumEindeLevering: null,
+  datumIngangGeldigheid: null,
+  datumOpdrachtLevering: null,
+  datumToewijzing: null,
+  procesAanvraagOmschrijving: 'Aanvraag RTM fase 1',
+  documenten: [
+    {
+      id: 'B3408764',
+      title: 'AV-ALG Besluit Afwijzing',
+      url: '',
+      datePublished: '2025-08-18T15:28:48.047',
+    },
+  ],
+  isActueel: false,
+  leverancier: '',
+  leveringsVorm: '',
+  productsoortCode: 'AV-ALG',
+  productIdentificatie: 'AV-RTM1',
+  beschiktProductIdentificatie: '329930',
+  resultaat: 'afgewezen',
+  titel: 'Regeling Tegemoetkoming Meerkosten',
+  betrokkenen: [],
+  betrokkenPersonen: [],
+  bsnAanvrager: '000009945',
+};
+
 const RTM_2_TOEGEWEZEN: ZorgnedAanvraagWithRelatedPersonsTransformed = {
   id: '2',
   datumAanvraag: '2025-05-28',
@@ -389,6 +421,43 @@ describe('getStatusLineItems for RTM', () => {
     expect(document.url).toContain(
       '/services/v1/stadspas-en-andere-regelingen/document'
     );
+  });
+
+  test('Single Aanvraag afgewezen', () => {
+    const regelingen = transformRegelingenForFrontend(
+      attachIDs([RTM_1_AFWIJZING])
+    );
+
+    expect(regelingen.length).toBe(1);
+    const regeling = regelingen[0];
+
+    expect(regeling).toMatchObject({
+      dateDecision: RTM_1_AFWIJZING.datumBesluit,
+      dateEnd: RTM_1_AFWIJZING.datumEindeGeldigheid,
+      dateStart: RTM_1_AFWIJZING.datumIngangGeldigheid,
+      decision: RTM_1_AFWIJZING.resultaat,
+      displayStatus: 'Afgewezen',
+      documents: [],
+      id: '1',
+      isActual: RTM_1_AFWIJZING.isActueel,
+      title: RTM_1_AFWIJZING.titel,
+    });
+
+    expect(regeling.steps).toMatchObject([
+      {
+        id: 'status-step-1',
+        datePublished: RTM_1_AFWIJZING.datumBesluit,
+        documents: [
+          {
+            title: 'AV-ALG Besluit Afwijzing',
+          },
+        ],
+        isActive: true,
+        isChecked: true,
+        isVisible: true,
+        status: 'Besluit (afgewezen)',
+      },
+    ]);
   });
 
   test('Single toegewezen Migratie aanvraag', () => {
