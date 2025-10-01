@@ -92,6 +92,11 @@ export function filterCombineRtmData(
 
 type RTMCombinedRegeling = [ZorgnedHLIRegeling, StatusLineItem[]];
 
+type IncompleteRTMCombinedRegeling = [
+  ZorgnedHLIRegeling,
+  IncompleteStatusLineItem[],
+];
+
 /** Combine related aanvragen into one aanvraag all the way untill the aanvraag that cancels (Einde recht) it.
  *
  *  This requires a list of aanvragen for one person.
@@ -136,7 +141,7 @@ function combineRTMData(
     return [];
   }
 
-  const combinedRegelingen: RTMCombinedRegeling[] = [
+  const combinedRegelingen: IncompleteRTMCombinedRegeling[] = [
     [
       removeDocuments(firstRegeling),
       getStatusLineItems(firstRegeling, 'startOfChain'),
@@ -161,11 +166,11 @@ function combineRTMData(
     }
 
     const statusLineItems = getStatusLineItems(regeling, 'afterAanvraag');
-    const mergedStatusLineItems: StatusLineItem[] = [
+    const mergedStatusLineItems: IncompleteStatusLineItem[] = [
       ...lastStatusLineItems,
       ...statusLineItems,
     ];
-    const combinedRegeling: RTMCombinedRegeling = [
+    const combinedRegeling: IncompleteRTMCombinedRegeling = [
       {
         ...removeDocuments(regeling),
         datumInBehandeling: lastRegeling.datumInBehandeling,
@@ -188,7 +193,7 @@ function removeDocuments(regeling: ZorgnedHLIRegeling): ZorgnedHLIRegeling {
 /** Determines active step and checks untill there (including) and adds ids */
 function finalizeStatusLineItems(
   regeling: ZorgnedHLIRegeling,
-  statusLineItems: StatusLineItem[]
+  statusLineItems: IncompleteStatusLineItem[]
 ): StatusLineItem[] {
   // TODO: Just leave out isActive from input? for now just force this.
   const items = statusLineItems.map((item, i) => {
