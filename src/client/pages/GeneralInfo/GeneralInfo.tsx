@@ -48,7 +48,9 @@ function createSectionProps(themaConfig: ThemaConfigBase): SectionProps {
   return {
     id: themaConfig.id,
     title: themaConfig.title,
-    listItems: themaConfig.uitlegPageSections[0].listItems,
+    listItems:
+      // themaConfig.overviewListItems ??
+      themaConfig.uitlegPageSections[0].listItems, // Eerst een overview, anders fallback
     active: themaConfig.featureToggle.themaActive,
   };
 }
@@ -60,9 +62,7 @@ export type SectionProps = {
   listItems: ListItems;
   active: boolean;
 };
-type ListItems = Array<{ text: string; listItems?: string[] } | string>;
-
-const bodemsectionProps = createSectionProps(bodemConfig);
+type ListItems = Array<{ text: string; listItems: string[] } | string>;
 
 const sections: SectionProps[] = [
   profileSectionProps,
@@ -87,7 +87,7 @@ const sections: SectionProps[] = [
   milieuzonesectionProps,
   overtredingensectionProps,
   vergunningensectionProps,
-  bodemsectionProps, // nu via createSectionProps
+  createSectionProps(bodemConfig),
   varensectionProps,
 ];
 
