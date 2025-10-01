@@ -28,14 +28,12 @@ async function handleResponse<T>(
       return responseJson;
     }
 
-    // Try to be flexible and accept both enveloped and non-enveloped responses.
-    if (
-      ('status' in responseJson || response.status === HttpStatusCode.Ok) &&
-      'content' in responseJson
-    ) {
-      return apiSuccessResult<T>(responseJson.content);
+    // Test if the response is already in ApiResponse format
+    if ('status' in responseJson && 'content' in responseJson) {
+      return responseJson;
     }
 
+    // If not, wrap it in a success ApiResponse
     return apiSuccessResult<T>(responseJson);
   } catch (error: unknown) {
     return apiErrorResult(
