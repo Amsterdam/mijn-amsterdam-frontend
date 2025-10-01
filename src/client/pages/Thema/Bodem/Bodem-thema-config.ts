@@ -2,7 +2,6 @@ import { generatePath } from 'react-router';
 
 import { LoodMetingFrontend } from '../../../../server/services/bodem/types';
 import { dateSort } from '../../../../universal/helpers/date';
-import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
@@ -23,24 +22,33 @@ export const themaConfig: BodemThemaConfig = {
   featureToggle: {
     themaActive: true, // ook van infosection active toevoegen of het uit of aan en check het generalinfo gedeelte. import kan je aanpassen met as bodemn bijvoorbeeld
   },
-  // listPageParamKind: {
-  //   inProgress: 'lopende-aanvragen',
-  //   completed: 'afgehandelde-aanvragen',
-  // },
   linkListItems: [
     {
       title: 'Meer informatie over lood in de bodem.',
       to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/bodem/loodcheck-tuin-aanvragen',
     },
   ],
+  // Alleen algemene uitleg voor de themapagina
   uitlegPageSections: [
     {
-      listItems: ["Uw aanvraag voor 'lood in de bodem-check'"],
+      listItems: [
+        'Op deze pagina vindt u informatie over uw lood in de bodem-check.',
+      ],
+    },
+    {
+      listItems: [
+        'Op deze pagina vindt u informatie over uw lood in de bodem-check.',
+      ],
     },
   ],
+
+  // Extra property speciaal voor GeneralInfo
+  // overviewListItems: ["Uw aanvraag voor 'lood in de bodem-check'"],
   route: {
     path: '/bodem',
-    documentTitle: `Bodem | overzicht`, //bijv
+    get documentTitle() {
+      return `${themaConfig.title} | Overzicht`;
+    }, //bijv
   },
   detailPage: {
     title: 'Lood in bodem-check',
@@ -48,7 +56,7 @@ export const themaConfig: BodemThemaConfig = {
       path: '/bodem/lood-meting/:id',
       trackingUrl: '/bodem/lood-meting',
       get documentTitle() {
-        return `Lood in de bodem-check | Bodem, | ${themaConfig.title}`;
+        return `Lood in de bodem-check | ${themaConfig.title}`;
       },
     },
   },
@@ -56,31 +64,11 @@ export const themaConfig: BodemThemaConfig = {
     route: {
       path: '/bodem/lijst/lood-meting/:kind/:page?',
       documentTitle: (params: { kind: string }) =>
-        `${params?.kind === listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | Bodem` as const,
+        `${params?.kind === listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaConfig.title}` as const,
     },
   },
   redactedScope: 'none',
 } as const;
-
-// -----------------------------
-// Routes (backend/data)
-// -----------------------------
-// export const routeConfig: ThemaRoutesConfig = {
-//   detailPage: {
-//     path: '/bodem/lood-meting/:id',
-//     trackingUrl: '/bodem/lood-meting',
-//     documentTitle: `Lood in de bodem-check | ${themaConfig.title}`,
-//   },
-//   listPage: {
-//     path: '/bodem/lijst/lood-meting/:kind/:page?',
-//     documentTitle: (params) =>
-//       `${params?.kind === listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaConfig.title}`,
-//   },
-//   themaPage: {
-//     path: '/bodem',
-//     documentTitle: `${themaConfig.title} | overzicht`,
-//   },
-// } as const;
 
 // -----------------------------
 // Pagina-soorten
@@ -89,41 +77,6 @@ const listPageParamKind = {
   inProgress: 'lopende-aanvragen',
   completed: 'afgehandelde-aanvragen',
 } as const;
-
-// -----------------------------
-// Feature toggle
-// -----------------------------
-// export const featureToggle = {
-//   BodemActive: true,
-// };
-
-// -----------------------------
-// Thema-gegevens (backend-safe)
-// -----------------------------
-// export const themaId = 'BODEM' as const;
-// export const themaTitle = 'Bodem';
-// export const themaTitleDetail = 'Lood in bodem-check';
-// export const profileTypes: ProfileType[] = ['private', 'commercial'] as const;
-
-// // -----------------------------
-// // Routes (backend/data)
-// // -----------------------------
-// export const routeConfig = {
-//   detailPage: {
-//     path: '/bodem/lood-meting/:id',
-//     trackingUrl: '/bodem/lood-meting',
-//     documentTitle: `Lood in de bodem-check | ${themaConfig.title}`,
-//   },
-//   listPage: {
-//     path: '/bodem/lijst/lood-meting/:kind/:page?',
-//     documentTitle: (params) =>
-//       `${params?.kind === themaConfig.listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaConfig.title}`,
-//   },
-//   themaPage: {
-//     path: '/bodem',
-//     documentTitle: `${themaConfig.title} | overzicht`,
-//   },
-// } as const satisfies ThemaRoutesConfig;
 
 // -----------------------------
 // Types voor list page params
@@ -182,13 +135,3 @@ export const tableConfig = {
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   },
 } as const;
-
-// -----------------------------
-// Links (backend/data)
-// -----------------------------
-export const linkListItems: LinkProps[] = [
-  {
-    title: 'Meer informatie over lood in de bodem.',
-    to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/bodem/loodcheck-tuin-aanvragen',
-  },
-] as const;
