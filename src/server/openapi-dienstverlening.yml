@@ -15,7 +15,17 @@ servers:
   - url: http://localhost:5000
 
 paths:
-  /private/api/v1/services/wmo/voorzieningen:
+  /api/v1/status/health:
+    get:
+      description: Endpoint for checking whether the server has started.
+      responses:
+        '200':
+          description: Returns "OK" when server is started.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthyResponse'
+  /api/v1/services/wmo/voorzieningen:
     post:
       description: |
         Gets a list of compacted WMO voorzieningen.
@@ -59,6 +69,17 @@ paths:
 
 components:
   schemas:
+    HealthyResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - OK
+        content:
+          type: string
+          enum:
+            - OK
     WmoVoorzieningenCompactResponse:
       type: object
       properties:
