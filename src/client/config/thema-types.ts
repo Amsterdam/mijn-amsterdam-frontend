@@ -20,44 +20,51 @@ export type ThemaConfigBase = {
   profileTypes: ProfileType[];
   featureToggle: { themaActive: boolean };
   linkListItems: LinkProps[];
+  route: ThemaRouteConfig;
   uitlegPageSections: Section[];
   // overviewListItems?: string[];
-  route: {
-    path: string;
-    documentTitle: string; //bijv
-  }; // TODO: GEBRUIK THEMAROUTECONFIG
   redactedScope: 'full' | 'content' | 'none';
 };
 
-export type WithDetailPage = {
-  detailPage: {
-    title: string;
-    route: {
-      path: string;
-      trackingUrl: string;
-      documentTitle: string; //bijv `Lood in de bodem-check | ${themaConfig.title}`
-    };
+type PageConfig<T extends string> = {
+  [K in T]: {
+    title?: string;
+    route: ThemaRouteConfig;
   };
 };
 
-export type WithListPage = {
-  listPage: {
-    route: {
-      path: string;
-      documentTitle: (params: { kind: string }) => `${string} | ${string}`; //bijv (params) =>`${params?.kind === themaConfig.tableHeaders.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${ themaConfig.title } `,
-    };
-  };
-};
+export type WithDetailPage = PageConfig<'detailPage'>;
+export type WithListPage = PageConfig<'listPage'>;
 
-export type withThemaPage = {
-  ThemaPage: {
-    title: string;
-    route: {
-      path: string;
-      documentTitle: `${string} | ${string}`; //bijv`${themaConfig.title} | overzicht`,
-    };
-  };
-};
+// export type WithDetailPage = {
+//   detailPage: {
+//     title: string;
+//     route: {
+//       path: string;
+//       trackingUrl: string;
+//       documentTitle: string; //bijv `Lood in de bodem-check | ${themaConfig.title}`
+//     };
+//   };
+// };
+
+// export type WithListPage = {
+//   listPage: {
+//     route: {
+//       path: string;
+//       documentTitle: (params: { kind: string }) => `${string} | ${string}`; //bijv (params) =>`${params?.kind === themaConfig.tableHeaders.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${ themaConfig.title } `,
+//     };
+//   };
+// };
+
+// export type withThemaPage = {
+//   ThemaPage: {
+//     title: string;
+//     route: {
+//       path: string;
+//       documentTitle: `${string} | ${string}`; //bijv`${themaConfig.title} | overzicht`,
+//     };
+//   };
+// };
 
 export type IsThemaVisibleFN = (appState: AppState) => boolean;
 
@@ -105,7 +112,7 @@ type TrackinUrlFN = <T extends Params<string>>(params: T | null) => string;
 export type ThemaRouteConfig = {
   path: string;
   // Only needed for routes with variable path segments
-  trackingUrl?: string | TrackinUrlFN;
+  trackingUrl?: string | null | TrackinUrlFN;
   documentTitle: string | DocumenttitleFN;
 };
 

@@ -34,15 +34,13 @@ export const themaConfig: BodemThemaConfig = {
       listItems: ["Uw aanvraag voor 'lood in de bodem-check'"],
     },
   ],
-
-  // Extra property speciaal voor GeneralInfo
-  // overviewListItems: ["Uw aanvraag voor 'lood in de bodem-check'"],
   route: {
     path: '/bodem',
     get documentTitle() {
       return `${themaConfig.title} | Overzicht`;
-    }, //bijv
+    },
   },
+
   detailPage: {
     title: 'Lood in bodem-check',
     route: {
@@ -56,8 +54,8 @@ export const themaConfig: BodemThemaConfig = {
   listPage: {
     route: {
       path: '/bodem/lijst/lood-meting/:kind/:page?',
-      documentTitle: (params: { kind: string }) =>
-        `${params?.kind === listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaConfig.title}` as const,
+      documentTitle: (params: { kind?: string } | null) =>
+        `${params?.kind === listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaConfig.title}`,
     },
   },
   redactedScope: 'none',
