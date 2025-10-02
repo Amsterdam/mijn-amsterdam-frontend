@@ -33,14 +33,19 @@ export type WMOVoorzieningFrontend = ZaakAanvraagDetail & {
   disclaimer?: string;
 };
 
-export type WMOVoorzieningCompact = {
-  id: ZorgnedAanvraagTransformed['id'];
-  title: ZorgnedAanvraagTransformed['titel'];
+export type WMOVoorzieningCompact = Pick<
+  ZorgnedAanvraagTransformed,
+  | 'id'
+  | 'titel'
+  | 'beschikkingNummer'
+  | 'productIdentificatie'
+  | 'beschiktProductIdentificatie'
+  | 'datumBesluit'
+  | 'datumBeginLevering'
+  | 'datumEindeLevering'
+  | 'datumOpdrachtLevering'
+> & {
   productGroup: ZorgnedStatusLineItemsConfig['statusLineItems']['name'];
-  beschikkingNummer: ZorgnedAanvraagTransformed['beschikkingNummer'];
-  productIdentificatie: ZorgnedAanvraagTransformed['productIdentificatie'];
-  beschiktProductIdentificatie: ZorgnedAanvraagTransformed['beschiktProductIdentificatie'];
-  datumBesluit: ZorgnedAanvraagTransformed['datumBesluit'];
 };
 
 export const DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH = 'Verzoek:'; // Documents starting with this token correspond to the 'meer informatie' step.

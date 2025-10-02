@@ -210,13 +210,16 @@ export async function fetchWmoVoorzieningenCompact(
 
           const voorzieningCompact: WMOVoorzieningCompact = {
             productGroup: config?.statusLineItems.name,
-            title: capitalizeFirstLetter(voorziening.titel),
+            titel: capitalizeFirstLetter(voorziening.titel),
             id: voorziening.id,
             beschikkingNummer: voorziening.beschikkingNummer,
             beschiktProductIdentificatie:
               voorziening.beschiktProductIdentificatie,
             productIdentificatie: voorziening.productIdentificatie,
             datumBesluit: voorziening.datumBesluit,
+            datumBeginLevering: voorziening.datumBeginLevering,
+            datumEindeLevering: voorziening.datumEindeLevering,
+            datumOpdrachtLevering: voorziening.datumOpdrachtLevering,
           };
 
           return voorzieningCompact;
