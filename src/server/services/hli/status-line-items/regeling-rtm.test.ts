@@ -37,6 +37,8 @@ function attachBetrokkenen(
   return { ...aanvraag, betrokkenen: ids, betrokkenPersonen };
 }
 
+const ONTVANGER_ID = '999991000';
+
 // RP TODO: Use later in a test.
 const SPECIFICATIE_DOCUMENENT = {
   id: 'B3374604',
@@ -46,17 +48,9 @@ const SPECIFICATIE_DOCUMENENT = {
 };
 
 const base = {
-  bsnAanvrager: '000009945',
-  betrokkenen: ['999991000', '999994542'],
+  bsnAanvrager: ONTVANGER_ID,
+  betrokkenen: [ONTVANGER_ID],
   betrokkenPersonen: [
-    {
-      bsn: '999994542',
-      name: '999994542 - Flex',
-      dateOfBirth: '2023-06-12',
-      dateOfBirthFormatted: '12 juni 2023',
-      partnernaam: 'partner-2 - Flex',
-      partnervoorvoegsel: null,
-    },
     {
       bsn: '999991000',
       name: '999991000 - Flex',
@@ -129,7 +123,7 @@ const RTM_1_AFWIJZING: ZorgnedAanvraagWithRelatedPersonsTransformed = {
   titel: 'Regeling Tegemoetkoming Meerkosten',
   betrokkenen: [],
   betrokkenPersonen: [],
-  bsnAanvrager: '000009945',
+  bsnAanvrager: base.bsnAanvrager,
 };
 
 const RTM_2_TOEGEWEZEN: ZorgnedAanvraagWithRelatedPersonsTransformed = {
@@ -321,7 +315,7 @@ const RTM_2_MIGRATIE: ZorgnedAanvraagWithRelatedPersonsTransformed = {
   titel: 'Regeling Tegemoetkoming Meerkosten',
   betrokkenen: [],
   betrokkenPersonen: [],
-  bsnAanvrager: '000009945',
+  bsnAanvrager: base.bsnAanvrager,
 };
 
 const UNKNOWN: ZorgnedAanvraagWithRelatedPersonsTransformed = {
@@ -355,9 +349,12 @@ describe('getStatusLineItems for RTM', () => {
   // document.url: Same as above.
   // steps[n].description: static text that can be subject to change.
   //
+  // TODO: Do tests for variable description texts.
+  //
   // The tests are mainly focussed on getting the right steps and documents.
 
   const auth = getAuthProfileAndToken();
+  auth.profile.id = ONTVANGER_ID;
 
   function transformRegelingenForFrontend(
     aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
@@ -673,6 +670,80 @@ describe('getStatusLineItems for RTM', () => {
       },
       {
         id: 'status-step-6',
+        datePublished: '',
+        documents: [],
+        isActive: false,
+        isChecked: false,
+        isVisible: true,
+        status: 'Einde recht',
+      },
+    ]);
+  });
+
+  test('Migratie -> Herkeuring -> Besluit afwijzing', () => {
+    const aanvragen = attachIDs([
+      RTM_2_MIGRATIE,
+      RTM_WIJZIGINGS_AANVRAAG,
+      RTM_WIJZIGINGS_AFWIJZING,
+    ]);
+    const regelingen = transformRegelingenForFrontend(aanvragen);
+    console.dir(regelingen);
+    expect(regelingen.length).toBe(1);
+    const regeling = regelingen[0];
+
+    expect(regeling).toMatchObject({
+      title: RTM_WIJZIGINGS_AFWIJZING.titel,
+      isActual: RTM_WIJZIGINGS_AFWIJZING.isActueel,
+      dateDecision: RTM_WIJZIGINGS_AFWIJZING.datumBesluit,
+      dateStart: RTM_WIJZIGINGS_AFWIJZING.datumIngangGeldigheid,
+      dateEnd: RTM_WIJZIGINGS_AFWIJZING.datumEindeGeldigheid,
+      decision: RTM_WIJZIGINGS_AFWIJZING.resultaat,
+      displayStatus: 'Afgewezen',
+      documents: [],
+    });
+    expect(regeling.steps).toMatchObject([
+      {
+        datePublished: RTM_2_MIGRATIE.datumBesluit,
+        documents: [],
+        id: 'status-step-1',
+        isActive: false,
+        isChecked: true,
+        isVisible: true,
+        status: 'Besluit',
+      },
+      {
+        datePublished: RTM_WIJZIGINGS_AANVRAAG.datumBesluit,
+        documents: [
+          {
+            datePublished: '2025-08-18T15:17:08.773',
+            title: 'AV-RTM Info aan klant GGD',
+          },
+          {
+            datePublished: '2025-08-18T14:09:48.83',
+            title: 'AV-RTM Info aan klant GGD',
+          },
+        ],
+        id: 'status-step-2',
+        isActive: false,
+        isChecked: true,
+        isVisible: true,
+        status: 'Aanvraag wijziging',
+      },
+      {
+        datePublished: RTM_WIJZIGINGS_AFWIJZING.datumBesluit,
+        documents: [
+          {
+            title: 'AV-RTM Afwijzing na herkeuring',
+          },
+        ],
+        id: 'status-step-3',
+        isActive: true,
+        isChecked: true,
+        isVisible: true,
+        status: 'Besluit wijziging',
+      },
+      {
+        id: 'status-step-4',
         datePublished: '',
         documents: [],
         isActive: false,

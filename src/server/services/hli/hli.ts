@@ -153,7 +153,10 @@ function transformRegelingenForFrontend(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
   today: Date
 ): HLIRegelingFrontend[] {
-  const [remainder, rtmAanvragenCombined] = filterCombineRtmData(aanvragen);
+  const [remainder, rtmAanvragenCombined] = filterCombineRtmData(
+    aanvragen,
+    authProfileAndToken.profile.id
+  );
   const aanvragenCombined = filterCombineUpcPcvData(remainder);
 
   const regelingenFrontend: HLIRegelingFrontend[] = [];

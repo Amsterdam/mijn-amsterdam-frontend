@@ -69,7 +69,8 @@ function dedupCombineRTMDeel2(
 }
 
 export function filterCombineRtmData(
-  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
+  bsnOntvanger: string
 ): [ZorgnedAanvraagWithRelatedPersonsTransformed[], RTMCombinedRegeling[]] {
   const rtmAanvragen = [];
   const remainder = [];
@@ -83,7 +84,10 @@ export function filterCombineRtmData(
   }
 
   // Prevent aanvragen from other 'betrokkenen' sets from being mixed up with eachother.
-  const aanvragenPerBetrokkenen = mapAanvragenPerBetrokkenen(rtmAanvragen);
+  const aanvragenPerBetrokkenen = mapAanvragenPerBetrokkenen(
+    rtmAanvragen,
+    bsnOntvanger
+  );
   return [
     remainder,
     Object.values(aanvragenPerBetrokkenen).flatMap(combineRTMData),
@@ -142,10 +146,7 @@ function combineRTMData(
   }
 
   const combinedRegelingen: IncompleteRTMCombinedRegeling[] = [
-    [
-      removeDocuments(firstRegeling),
-      getStatusLineItems(firstRegeling, 'startOfChain'),
-    ],
+    [firstRegeling, getStatusLineItems(firstRegeling, 'startOfChain', [])],
   ];
 
   for (const regeling of regelingen) {
@@ -161,20 +162,24 @@ function combineRTMData(
       lastRegeling.isActueel === false
     ) {
       combinedRegelingen.push([
-        removeDocuments(regeling),
-        getStatusLineItems(regeling, 'startOfChain'),
+        regeling,
+        getStatusLineItems(regeling, 'startOfChain', lastStatusLineItems),
       ]);
       continue;
     }
 
-    const statusLineItems = getStatusLineItems(regeling, 'afterAanvraag');
+    const statusLineItems = getStatusLineItems(
+      regeling,
+      'afterAanvraag',
+      lastStatusLineItems
+    );
     const mergedStatusLineItems: IncompleteStatusLineItem[] = [
       ...lastStatusLineItems,
       ...statusLineItems,
     ];
     const combinedRegeling: IncompleteRTMCombinedRegeling = [
       {
-        ...removeDocuments(regeling),
+        ...regeling,
         datumInBehandeling: lastRegeling.datumInBehandeling,
         datumAanvraag: lastRegeling.datumAanvraag ?? regeling.datumAanvraag,
       },
@@ -200,10 +205,6 @@ function combineRTMData(
   return combinedRegelingen.map(([regeling, statusLineItems]) => {
     return [regeling, finalizeStatusLineItems(statusLineItems)];
   });
-}
-
-function removeDocuments(regeling: ZorgnedHLIRegeling): ZorgnedHLIRegeling {
-  return { ...regeling, documenten: [] };
 }
 
 /** Determines active step and checks untill there (including), and adds ids */
@@ -272,7 +273,7 @@ type StatusLineItemTransformerConfig = {
   status: string;
   datePublished: TextPartContents<ZorgnedHLIRegeling>;
   description: TextPartContents<ZorgnedHLIRegeling>;
-  documents: (regeling: ZorgnedHLIRegeling) => GenericDocument[];
+  documents?: (regeling: ZorgnedHLIRegeling) => GenericDocument[];
   isActive?: (regeling: ZorgnedHLIRegeling, now: Date) => boolean;
 };
 
@@ -294,7 +295,7 @@ const statusLineItems: Record<StatusLineKeys, StatusLineItemTransformerConfig> =
       status: 'Aanvraag',
       datePublished: getDatumAfgifte,
       description: '',
-      // The documents are in 'Aanvraag' above.
+      // The documents are put in 'inBehandelingGenomen'.
       documents: () => [],
     },
     aanvraagAfgewezen: {
@@ -370,6 +371,15 @@ function createGetStatusLineItemFn(
     const statusItem = statusLineItems[itemChoice];
     const now = new Date();
 
+    // TODO: return new regeling.
+    let documents: GenericDocument[] = [];
+    if (typeof statusItem.documents === 'function') {
+      documents = statusItem.documents(regeling);
+      if (documents.length) {
+        regeling.documenten = [];
+      }
+    }
+
     return {
       status: statusItem.status,
       description: parseLabelContent<ZorgnedHLIRegeling>(
@@ -384,7 +394,7 @@ function createGetStatusLineItemFn(
         now,
         []
       ) as string,
-      documents: statusItem.documents(regeling),
+      documents,
       isActive: statusItem.isActive ? statusItem.isActive(regeling, now) : null,
       isChecked: false,
       // TODO: Do we need to define this?
@@ -395,7 +405,8 @@ function createGetStatusLineItemFn(
 
 function getStatusLineItems(
   regeling: ZorgnedHLIRegeling,
-  context: Context
+  context: Context,
+  statusLineItems: IncompleteStatusLineItem[]
 ): IncompleteStatusLineItem[] {
   const getStatusLineItem = createGetStatusLineItemFn(regeling);
 
@@ -418,6 +429,9 @@ function getStatusLineItems(
       throw Error(
         'Regeling has nog procesAanvraagOmschrijving, is the mock data out of date?'
       );
+    }
+    if (statusLineItems.at(-1)?.status === 'Aanvraag wijziging') {
+      return [getStatusLineItem('wijziginsBesluit')];
     }
     switch (regeling.procesAanvraagOmschrijving) {
       case 'Beëindigen RTM': {
@@ -445,7 +459,8 @@ type AanvragenMap = {
 } & Record<string, ZorgnedAanvraagWithRelatedPersonsTransformed[]>;
 
 function mapAanvragenPerBetrokkenen(
-  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
+  bsnOntvanger: string
 ): AanvragenMap {
   aanvragen = aanvragen.map((aanvraag) => {
     return {
@@ -454,12 +469,6 @@ function mapAanvragenPerBetrokkenen(
       betrokkenen: aanvraag.betrokkenen.toSorted((a, b) => (a <= b ? -1 : 1)),
     };
   });
-
-  const ontvangerID = aanvragen
-    .find((aanvraag) => {
-      return isRTMDeel2(aanvraag);
-    })
-    ?.betrokkenen.join('');
 
   const aanvragenMap: AanvragenMap = { ontvanger: [] };
 
@@ -471,23 +480,23 @@ function mapAanvragenPerBetrokkenen(
 
     const id = aanvraag.betrokkenen.join('');
 
-    if (id === ontvangerID) {
+    if (id === bsnOntvanger) {
       aanvragenMap.ontvanger.push(aanvraag);
       continue;
     }
 
-    if (ontvangerID && aanvraag.betrokkenen.includes(ontvangerID)) {
+    if (bsnOntvanger && aanvraag.betrokkenen.includes(bsnOntvanger)) {
       // An aanvraag can have multiple betrokkenen but also include the 'ontvanger'.
       // So we copy/split an aanvraag to the betrokkenen,
       // so we can merge the rtm-2 aanvragen that are only for the ontvanger.
       aanvraag.betrokkenen = aanvraag.betrokkenen.filter(
-        (b) => b !== ontvangerID
+        (b) => b !== bsnOntvanger
       );
       aanvraag.betrokkenPersonen = aanvraag.betrokkenPersonen.filter(
-        (b) => b.bsn !== ontvangerID
+        (b) => b.bsn !== bsnOntvanger
       );
       const aanvraagCopy = structuredClone(aanvraag);
-      aanvraagCopy.betrokkenen = [ontvangerID];
+      aanvraagCopy.betrokkenen = [bsnOntvanger];
       aanvragenMap.ontvanger.push(aanvraagCopy);
     }
 
