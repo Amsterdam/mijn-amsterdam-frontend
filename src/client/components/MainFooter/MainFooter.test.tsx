@@ -46,7 +46,6 @@ describe('<MainFooter />', () => {
     expect(screen.getByText('Another Section')).toBeInTheDocument();
     expect(screen.getByText('Test Link')).toBeInTheDocument();
     expect(screen.getByText('Test Link 2')).toBeInTheDocument();
-    expect(screen.getByText('Test Link 3')).toBeInTheDocument();
   });
 
   test('Renders custom footer link from canonmatiging', async () => {

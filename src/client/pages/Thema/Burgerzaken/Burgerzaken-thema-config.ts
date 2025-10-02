@@ -5,6 +5,7 @@ import { dateSort } from '../../../../universal/helpers/date';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
+import { featureToggle as featureToggleProfile } from '../Profile/Profile-thema-config';
 
 const displayProps: DisplayProps<IdentiteitsbewijsFrontend> = {
   props: {
@@ -25,7 +26,7 @@ export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 export const featureToggle = {
-  burgerzakenActive: true,
+  burgerzakenActive: !featureToggleProfile.BRP.benkBrpServiceActive,
 };
 
 export const themaId = 'BURGERZAKEN' as const;
