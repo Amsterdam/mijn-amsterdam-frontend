@@ -183,7 +183,7 @@ describe('<VarenVergunningList />', () => {
     const screen = render(<Component state={getTestState([], vergunningen)} />);
 
     const table = screen.getByRole('table');
-    expectHeaders(table, ['Naam vaartuig', 'Omschrijving', 'Datum besluit']);
+    expectHeaders(table, ['Naam vaartuig', 'Omschrijving']);
 
     const withinTable = within(table);
 
@@ -193,9 +193,6 @@ describe('<VarenVergunningList />', () => {
     expect(
       withinTable.getAllByText('Varen vergunning exploitatie')
     ).toHaveLength(vergunningen.length);
-    expect(withinTable.getAllByText('10 november 2023')).toHaveLength(
-      vergunningen.length
-    );
   });
 
   it('Naam vaartuig links to the corresponding aanvraag or vergunning', () => {
