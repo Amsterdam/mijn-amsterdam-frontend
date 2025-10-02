@@ -16,6 +16,7 @@ import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
+import { isDateInFuture } from '../../../universal/helpers/date';
 import { isRecentNotification } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
@@ -39,10 +40,14 @@ function createVarenRederRegisteredNotification(
 
 function createVarenVergunningNotification(
   vergunning: VarenVergunningFrontend
-): MyNotification {
+): MyNotification | null {
+  // Vergunning can be transferred from reder to reder on a future start date
+  if (!vergunning.dateStart || isDateInFuture(vergunning.dateStart)) {
+    return null;
+  }
   return {
     id: `varen-${vergunning.id}-vergunning-notification`,
-    datePublished: vergunning.dateStart || '',
+    datePublished: vergunning.dateStart,
     themaID: themaId,
     themaTitle: themaTitle,
     title: `Varen vergunning exploitatie`,
