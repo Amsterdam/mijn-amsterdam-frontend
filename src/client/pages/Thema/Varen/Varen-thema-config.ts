@@ -19,6 +19,7 @@ const MAX_TABLE_ROWS_ON_THEMA_PAGINA = 5;
 export const listPageParamKind = {
   inProgress: 'lopende-aanvragen',
   actief: 'actieve-vergunningen',
+  historic: 'afgehandelde-aanvragen',
 } as const;
 
 export type ListPageParamKey = keyof typeof listPageParamKind;
@@ -75,6 +76,7 @@ type TableConfig<T> = {
 export const tableConfig: {
   [listPageParamKind.inProgress]: TableConfig<VarenZakenFrontend>;
   [listPageParamKind.actief]: TableConfig<VarenVergunningFrontend>;
+  [listPageParamKind.historic]: TableConfig<VarenZakenFrontend>;
 } = {
   [listPageParamKind.inProgress]: {
     title: 'Lopende aanvragen',
@@ -113,10 +115,33 @@ export const tableConfig: {
       props: {
         detailLinkComponent: 'Naam vaartuig',
         title: 'Omschrijving',
-        dateStartFormatted: 'Datum besluit',
       },
       colWidths: {
-        large: ['25%', '35%', '40%', '0%'],
+        large: ['25%', '75%', '0', '0'],
+        small: ['50%', '50%', '0', '0'],
+      },
+    },
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+  },
+  [listPageParamKind.historic]: {
+    title: 'Afgehandelde aanvragen',
+    filter: (zaak) =>
+      !!zaak.processed &&
+      isDateInFuture(zaak.dateRequest, new Date('2025-01-01')),
+    sort: dateSort('dateRequest', 'desc'),
+    listPageRoute: generatePath(routeConfig.listPage.path, {
+      kind: listPageParamKind.inProgress,
+      page: null,
+    }),
+    displayProps: {
+      props: {
+        detailLinkComponent: 'Naam vaartuig',
+        title: 'Omschrijving',
+        dateDecisionFormatted: 'Datum besluit',
+        displayStatus: 'Status',
+      },
+      colWidths: {
+        large: ['25%', '35%', '20%', '20%'],
         small: ['50%', '50%', '0', '0'],
       },
     },

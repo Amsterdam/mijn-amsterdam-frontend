@@ -18,6 +18,7 @@ import { entries } from '../../../../universal/helpers/utils';
 import { Datalist, RowSet } from '../../../components/Datalist/Datalist';
 import { MaButtonLink } from '../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../components/Page/Page';
+import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
@@ -47,6 +48,14 @@ export const VarenDisclaimerRederNotRegistered = (
       </Paragraph>
     </Alert>
   </Grid.Cell>
+);
+
+const VarenOnlyShowAanvragenAfterDateDisclaimer = (
+  <PageContentCell spanWide={8}>
+    <ParagaphSuppressed className="ams-mb-m">
+      Er worden alleen aanvragen getoond die na 16 juli 2025 zijn ingediend.
+    </ParagaphSuppressed>
+  </PageContentCell>
 );
 
 type VarenPageContentRederRegistratieProps = {
@@ -179,6 +188,7 @@ export function VarenThema() {
         <>
           {gegevensRegistratieReder}
           {tables}
+          {VarenOnlyShowAanvragenAfterDateDisclaimer}
         </>
       }
       isPartialError={false}
