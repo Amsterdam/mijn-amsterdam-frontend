@@ -1,9 +1,9 @@
 import { useEffect, useMemo } from 'react';
 
 import { useLocation } from 'react-router';
-import { atom, useRecoilState, useRecoilValue } from 'recoil';
+import { create } from 'zustand';
 
-import { useAppStateReady } from './useAppState';
+import { useAppStateGetter, useAppStateReady } from './useAppStateStore';
 import { useProfileTypeValue } from './useProfileType';
 import { sortAlpha } from '../../universal/helpers/utils';
 import { LinkProps } from '../../universal/types/App.types';
@@ -116,18 +116,23 @@ export function useThemaBreadcrumbs<ID extends string = string>(
 
 type PageTypeSetting = 'listpage' | 'none';
 
-const pageTypeSetting = atom<PageTypeSetting>({
-  default: 'none',
-  key: 'pageTypeSetting',
-});
+type PageTypeStore = {
+  pageType: PageTypeSetting;
+  setPageType: (pageType: PageTypeSetting) => void;
+};
+
+export const useMainMenuOpen = create<PageTypeStore>((set) => ({
+  pageType: 'none',
+  setPageType: (pageType: PageTypeSetting) => set({ pageType }),
+}));
 
 export function usePageTypeSetting(pageTypeRequested: PageTypeSetting) {
-  const [pageType, setPageType] = useRecoilState(pageTypeSetting);
+  const { pageType, setPageType } = useMainMenuOpen();
 
   useEffect(() => {
     setPageType(pageTypeRequested);
     return () => {
-      setPageType(() => 'none');
+      setPageType('none');
     };
   }, [pageTypeRequested]);
 
@@ -135,5 +140,5 @@ export function usePageTypeSetting(pageTypeRequested: PageTypeSetting) {
 }
 
 export function usePageTypeSettingValue() {
-  return useRecoilValue(pageTypeSetting);
+  return useMainMenuOpen().pageType;
 }

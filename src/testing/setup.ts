@@ -9,6 +9,23 @@ const ENV_FILE = '.env.local.template';
 const envConfig = dotenv.config({ path: ENV_FILE });
 dotenvExpand.expand(envConfig);
 
+nock.disableNetConnect();
+
+// runs a cleanup after each test case (e.g. clearing jsdom)
+afterEach(() => {
+  nock.cleanAll();
+  cleanup();
+});
+
+afterAll(() => {
+  // Enable http requests.
+  nock.cleanAll();
+  nock.restore();
+  nock.enableNetConnect();
+});
+
+vi.mock('zustand');
+
 // Turn off memoization to make tests more stateless.
 // Often tests pass or fail without a clear reason because of this caching.
 vi.mock('memoizee', async (importOriginal) => {
@@ -49,21 +66,6 @@ vi.mock('../universal/config/feature-toggles.ts', async (importOriginal) => {
     ...featureToggleModule,
     FeatureToggle,
   };
-});
-
-nock.disableNetConnect();
-
-// runs a cleanup after each test case (e.g. clearing jsdom)
-afterEach(() => {
-  nock.cleanAll();
-  cleanup();
-});
-
-afterAll(() => {
-  // Enable http requests.
-  nock.cleanAll();
-  nock.restore();
-  nock.enableNetConnect();
 });
 
 export const bffApiHost = 'http://bff-api-host';

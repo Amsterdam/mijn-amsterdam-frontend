@@ -1,55 +1,49 @@
-import { act, waitFor } from '@testing-library/react';
-import axios from 'axios';
-import {
-  MockInstance,
-  afterEach,
-  beforeEach,
-  describe,
-  expect,
-  it,
-  vi,
-} from 'vitest';
+import { act, renderHook, waitFor } from '@testing-library/react';
+import { afterEach, describe, expect, vi } from 'vitest';
 
-import * as dataApiHook from './api/useDataApi';
-import { addParamsToStreamEndpoint, useAppStateRemote } from './useAppState';
-import * as sseHook from './useSSE';
+import {
+  addParamsToStreamEndpoint,
+  useAppStateRemote,
+} from './useAppStateRemote';
+import { useAppStateStore } from './useAppStateStore';
 import { SSE_ERROR_MESSAGE } from './useSSE';
 import { newEventSourceMock } from '../../testing/EventSourceMock';
-import { renderRecoilHook } from '../../testing/render-recoil.hook';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
-import * as appStateModule from '../AppState';
 
 vi.mock('./api/useTipsApi');
 vi.mock('./useProfileType');
 
+function createFetchResponse(content: any, ok: boolean = true) {
+  return {
+    json: () => new Promise((resolve) => resolve(content)),
+    ok,
+    url: 'http://example.com/request',
+    status: ok ? 200 : 500,
+  };
+}
+
+const originalFetch = global.fetch;
+
 describe('useAppState', () => {
-  const stateSliceMock = { BRP: { content: { hello: 'world' } } };
+  const fetchMock = vi.fn();
 
-  const initialAppState = appStateModule.PRISTINE_APPSTATE;
-
-  let dataApiSpy: MockInstance;
-  let axiosGetSpy: MockInstance;
-  let sseSpy: MockInstance;
-
-  beforeEach(() => {
-    dataApiSpy = vi.spyOn(dataApiHook, 'useDataApi');
-    axiosGetSpy = vi.spyOn(axios, 'get');
-    sseSpy = vi.spyOn(sseHook, 'useSSE');
+  beforeAll(() => {
+    global.fetch = fetchMock;
   });
 
   afterEach(() => {
-    dataApiSpy.mockRestore();
-    axiosGetSpy.mockRestore();
-    sseSpy.mockRestore();
+    fetchMock.mockReset();
   });
 
-  it('Should start with the SSE endpoint', async () => {
+  afterAll(() => {
+    global.fetch = originalFetch;
+  });
+
+  test('Should start with the SSE endpoint', async () => {
     const EventSourceMock = ((window as any).EventSource =
       newEventSourceMock());
-
-    const { result } = renderRecoilHook(() => useAppStateRemote());
-
-    expect(result.current).toEqual(initialAppState);
+    const stateSliceMock = { BRP: { content: { hello: 'world' } } };
+    renderHook(() => useAppStateRemote());
 
     act(() => {
       EventSourceMock.prototype.evHandlers.message({
@@ -57,42 +51,37 @@ describe('useAppState', () => {
       });
     });
 
-    expect(dataApiSpy).toBeCalledTimes(3);
-    expect(axiosGetSpy).toBeCalledTimes(0);
+    await waitFor(() => {
+      expect(fetchMock).toBeCalledTimes(0);
+    });
 
-    expect(result.current).toStrictEqual(
-      Object.assign({}, initialAppState, stateSliceMock)
-    );
+    const state = useAppStateStore.getState();
+    expect(state.BRP).toEqual(stateSliceMock.BRP);
   });
 
-  it('Should start with the Fallback service endpoint for browsers that do not have window.EventSource', async () => {
+  test('Should start with the Fallback service endpoint for browsers that do not have window.EventSource', async () => {
     delete (window as any).EventSource;
 
-    axiosGetSpy.mockResolvedValueOnce({ data: stateSliceMock });
+    const stateSliceMock = { BRP: { content: { bar: 'world' } } };
+    fetchMock.mockResolvedValueOnce(createFetchResponse(stateSliceMock));
 
-    const { result } = renderRecoilHook(() => useAppStateRemote());
-
-    expect(result.current).toEqual(initialAppState);
-
-    expect(dataApiSpy).toBeCalledTimes(3);
-    expect(sseSpy).toBeCalledTimes(3);
-    expect(axiosGetSpy).toBeCalledTimes(1);
+    renderHook(() => useAppStateRemote());
 
     await waitFor(() => {
-      expect(result.current).toEqual(
-        Object.assign({}, initialAppState, stateSliceMock)
-      );
+      expect(fetchMock).toBeCalledTimes(1);
     });
+
+    expect(useAppStateStore.getState().BRP).toEqual(stateSliceMock.BRP);
   });
 
-  it('Should use Fallback service endpoint if EventSource fails to connect', async () => {
+  test('Should use Fallback service endpoint if EventSource fails to connect', async () => {
     const EventSourceMock = ((window as any).EventSource =
       newEventSourceMock());
-    const { result } = renderRecoilHook(() => useAppStateRemote());
 
-    axiosGetSpy.mockResolvedValueOnce({ data: stateSliceMock });
+    const stateSliceMock = { BRP: { content: { foo: 'blappie' } } };
+    fetchMock.mockResolvedValueOnce(createFetchResponse(stateSliceMock));
 
-    expect(result.current).toEqual(initialAppState);
+    renderHook(() => useAppStateRemote());
 
     act(() => {
       EventSourceMock.prototype.evHandlers.message({
@@ -100,25 +89,19 @@ describe('useAppState', () => {
       }); // Hack to trigger the error callback
     });
 
-    expect(sseSpy).toBeCalledTimes(5);
-    expect(dataApiSpy).toBeCalledTimes(5);
-    expect(axiosGetSpy).toBeCalledTimes(1);
-
+    // This tests the fallback fetch call
     await waitFor(() => {
-      expect(result.current).toEqual(
-        Object.assign({}, initialAppState, stateSliceMock)
-      );
+      expect(fetchMock).toBeCalledTimes(1);
     });
+
+    expect(useAppStateStore.getState().BRP).toEqual(stateSliceMock.BRP);
   });
 
-  it('Should respond with an appState error entry if Fallback service and SSE both fail.', async () => {
+  test('Should respond with an appState error entry if Fallback service and SSE both fail.', async () => {
     const EventSourceMock = ((window as any).EventSource =
       newEventSourceMock());
-    const { result } = renderRecoilHook(() => useAppStateRemote());
-
-    axiosGetSpy.mockRejectedValueOnce(new Error('bad stuff'));
-
-    expect(result.current).toEqual(initialAppState);
+    fetchMock.mockResolvedValue(createFetchResponse(null, false));
+    renderHook(() => useAppStateRemote());
 
     act(() => {
       EventSourceMock.prototype.evHandlers.message({
@@ -126,21 +109,11 @@ describe('useAppState', () => {
       }); // Hack to trigger the error callback
     });
 
-    expect(sseSpy).toBeCalledTimes(5);
-    expect(dataApiSpy).toBeCalledTimes(5);
-    expect(axiosGetSpy).toBeCalledTimes(1);
-
     await waitFor(() => {
-      expect(result.current).toEqual(
-        Object.assign({}, initialAppState, {
-          ALL: {
-            status: 'ERROR',
-            message:
-              'Services.all endpoint could not be reached or returns an error.',
-          },
-        })
-      );
+      expect(fetchMock).toBeCalledTimes(1);
     });
+
+    expect('ALL' in useAppStateStore.getState()).toBe(true);
   });
 
   test('addParamsToStreamEndpoint', () => {

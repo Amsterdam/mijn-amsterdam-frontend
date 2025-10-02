@@ -1,20 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MutableSnapshot } from 'recoil';
 import { describe, expect, vi } from 'vitest';
 
 import { MyNotification } from './MyNotification';
-import { type ThemaID } from '../../../universal/config/thema';
 import type {
   AppState,
   MyNotification as MyNotificationType,
 } from '../../../universal/types/App.types';
-import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../../pages/MockApp';
-
-function initializeState(testState: AppState) {
-  return (snapshot: MutableSnapshot) => snapshot.set(appStateAtom, testState);
-}
 
 describe('<MyNotification />', () => {
   const callback = vi.fn();
@@ -22,7 +15,7 @@ describe('<MyNotification />', () => {
   const NOTIFICATIONS: MyNotificationType[] = [
     {
       id: 'test-notification',
-      themaID: 'TEST_THEMA' as ThemaID,
+      themaID: 'TEST_THEMA',
       datePublished: '2020-10-10',
       title: 'Test notification',
       description: 'A text related to this notification',
@@ -36,7 +29,7 @@ describe('<MyNotification />', () => {
     },
     {
       id: 'test-notification2',
-      themaID: 'TEST_THEMA' as ThemaID,
+      themaID: 'TEST_THEMA',
       datePublished: '2021-01-01',
       title: 'Second Test notification',
       description: 'A second text related to this notification',
@@ -61,7 +54,7 @@ describe('<MyNotification />', () => {
             <MyNotification notification={NOTIFICATIONS[1]} />
           </>
         )}
-        initializeState={initializeState({} as unknown as AppState)}
+        state={{} as unknown as AppState}
       />
     );
   }
@@ -91,7 +84,7 @@ describe('<MyNotification />', () => {
             <MyNotification notification={NOTIFICATIONS[1]} />
           </>
         )}
-        initializeState={initializeState({} as unknown as AppState)}
+        state={{} as unknown as AppState}
       />
     );
   }

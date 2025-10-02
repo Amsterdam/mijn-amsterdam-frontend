@@ -1,7 +1,6 @@
 import { ReactNode } from 'react';
 
 import { renderHook } from '@testing-library/react';
-import { RecoilRoot } from 'recoil';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 import {
@@ -13,7 +12,6 @@ import {
 } from './search-config';
 import * as remoteConfig from './search-config.json';
 import {
-  fuseInstanceReady,
   generateSearchIndexPageEntries,
   generateSearchIndexPageEntry,
   useSearchIndex,
@@ -21,7 +19,7 @@ import {
 import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
 import { bffApi } from '../../../testing/utils';
 import { AppState } from '../../../universal/types/App.types';
-import { appStateAtom } from '../../hooks/useAppState';
+import MockApp from '../../pages/MockApp';
 import { routeConfig } from '../MyArea/MyArea-thema-config';
 
 export function setupFetchStub(data: any) {
@@ -102,7 +100,9 @@ const krefiaData = {
 
 describe('Search hooks and helpers', () => {
   beforeEach(() => {
-    bffApi.get('/services/search-config').reply(200, { content: remoteConfig });
+    bffApi
+      .get('/services/search-config')
+      .reply(200, { content: remoteConfig, status: 'OK' });
   });
 
   afterEach(() => {
@@ -315,27 +315,27 @@ describe('Search hooks and helpers', () => {
     vi.spyOn(global, 'fetch').mockImplementation(() => Promise.reject());
 
     const wrapper = ({ children }: { children: ReactNode }) => (
-      <RecoilRoot
-        initializeState={(snapshot) => {
-          snapshot.set(appStateAtom, {
+      <MockApp
+        state={
+          {
             VERGUNNINGEN: { content: vergunningenData, status: 'OK' },
-          } as unknown as AppState);
-
-          snapshot.set(fuseInstanceReady, true);
-        }}
-      >
-        {children}
-      </RecoilRoot>
+          } as unknown as AppState
+        }
+        routePath="/"
+        routeEntry="/"
+        component={() => <>{children}</>}
+      />
     );
 
-    const { result, rerender } = renderHook(useSearchIndex, {
+    const { result } = renderHook(useSearchIndex, {
       wrapper,
     });
 
-    expect(result.current).toBeUndefined();
-
-    rerender();
-
-    expect(result.current).toBeUndefined();
+    expect(result.current).toEqual({
+      resultsAM: [],
+      resultsMA: [],
+      setTerm: expect.any(Function),
+      term: '',
+    });
   });
 });

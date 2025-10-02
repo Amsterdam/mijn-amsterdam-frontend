@@ -4,7 +4,7 @@ import type { BZB } from '../../../../../server/services/parkeren/config-and-typ
 import type { VergunningFrontend } from '../../../../../server/services/vergunningen/config-and-types';
 import { MyNotification } from '../../../../../universal/types/App.types';
 import { Datalist } from '../../../../components/Datalist/Datalist';
-import { useAppStateGetter } from '../../../../hooks/useAppState';
+import { useAppStateGetter } from '../../../../hooks/useAppStateStore';
 import {
   commonTransformers,
   dateRange,

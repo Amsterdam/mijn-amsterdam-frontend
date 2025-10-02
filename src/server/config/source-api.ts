@@ -13,7 +13,6 @@ import { featureToggle as featureToggleErfpacht } from '../../client/pages/Thema
 import { featureToggle as featureToggleHLI } from '../../client/pages/Thema/HLI/HLI-thema-config';
 import { featureToggle as featureToggleJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
-import { PUBLIC_API_URLS } from '../../universal/config/url';
 import { getCert } from '../helpers/cert';
 import { getFromEnv } from '../helpers/env';
 import { getHostNameFromUrl } from '../helpers/source-api-helpers';
@@ -263,7 +262,7 @@ const ApiConfig_ = {
     },
   },
   BAG: {
-    url: PUBLIC_API_URLS.BAG_ADRESSEERBARE_OBJECTEN,
+    url: 'https://api.data.amsterdam.nl/v1/benkagg/adresseerbareobjecten/',
   },
   ERFPACHT: {
     url: getFromEnv('BFF_ERFPACHT_API_URL'),

@@ -1,16 +1,14 @@
 import { render, waitFor } from '@testing-library/react';
 import { generatePath } from 'react-router';
-import { MutableSnapshot } from 'recoil';
 
-import { AfisThema } from './AfisThema';
 import { routeConfig } from './Afis-thema-config';
+import { AfisThema } from './AfisThema';
 import {
   AfisBusinessPartnerDetailsTransformed,
   AfisFacturenByStateResponse,
 } from '../../../../server/services/afis/afis-types';
 import { bffApi } from '../../../../testing/utils';
 import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
 const businessPartnerIdEncrypted = 'xxx-123-xxx';
@@ -119,10 +117,6 @@ const testState = {
   },
 } as AppState;
 
-function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState);
-}
-
 describe('<Afis />', () => {
   const businessPartnerDetails: AfisBusinessPartnerDetailsTransformed = {
     businessPartnerId: '000515177',
@@ -147,7 +141,7 @@ describe('<Afis />', () => {
         routeEntry={routeEntry}
         routePath={routePath}
         component={AfisThema}
-        initializeState={initializeState}
+        state={testState}
       />
     );
   }

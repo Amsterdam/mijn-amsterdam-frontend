@@ -116,7 +116,6 @@ export function BezwarenDetail() {
     routeConfig,
   } = useBezwarenDetailData();
   useHTMLDocumentTitle(routeConfig.detailPage);
-
   const pageContentErrorAlert = (
     <>
       We kunnen niet alle gegevens tonen.{' '}

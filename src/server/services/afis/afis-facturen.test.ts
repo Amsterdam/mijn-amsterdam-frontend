@@ -830,15 +830,9 @@ describe('afis-facturen', async () => {
         businessPartnerID: GENERIC_ID,
       });
 
-      expect(
-        response.content !== null && 'afgehandeld' in response.content
-      ).toBe(true);
+      expect(response.content?.state).toBe('afgehandeld');
 
-      expect(
-        response.content !== null &&
-          'afgehandeld' in response.content &&
-          response.content?.afgehandeld?.facturen.length
-      ).toBe(1);
+      expect(response.content?.facturen.length).toBe(1);
     });
   });
 });

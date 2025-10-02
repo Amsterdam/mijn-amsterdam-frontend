@@ -1,12 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router';
-import { MutableSnapshot } from 'recoil';
 import { describe, expect, vi } from 'vitest';
 
 import { forTesting, ZaakStatus } from './ZaakStatus';
 import { ZAAK_STATUS_ROUTE } from './ZaakStatus-config';
 import { AppState } from '../../../universal/types/App.types';
-import { appStateAtom, appStateReadyAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import {
   routeConfig as routeConfigVergunningen,
@@ -34,11 +32,6 @@ const testState = {
   },
 } as unknown as AppState;
 
-function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState);
-  snapshot.set(appStateReadyAtom, true);
-}
-
 vi.mock('react-router', async (requireActual) => {
   const origModule: object = await requireActual();
   return {
@@ -61,7 +54,7 @@ describe('ZaakStatus', () => {
           routeEntry={routeEntry}
           routePath={routePath}
           component={ZaakStatus}
-          initializeState={initializeState}
+          state={testState}
         />
       );
     }
@@ -84,11 +77,9 @@ describe('ZaakStatus', () => {
           routeEntry={routePath}
           routePath={routePath}
           component={ZaakStatus}
-          initializeState={(snapshot) =>
-            snapshot.set(appStateAtom, {
-              VERGUNNINGEN: { status: 'ERROR', content: null },
-            } as unknown as AppState)
-          }
+          state={{
+            VERGUNNINGEN: { status: 'ERROR', content: null },
+          }}
         />
       );
     }
@@ -110,7 +101,7 @@ describe('ZaakStatus', () => {
           routeEntry={routePath}
           routePath={routePath}
           component={ZaakStatus}
-          initializeState={initializeState}
+          state={testState}
         />
       );
     }
@@ -138,7 +129,7 @@ describe('ZaakStatus', () => {
           routeEntry={routePath}
           routePath={routePath}
           component={ZaakStatus}
-          initializeState={initializeState}
+          state={testState}
         />
       );
     }
@@ -171,7 +162,7 @@ describe('ZaakStatus', () => {
           routeEntry={routePath}
           routePath={routePath}
           component={ZaakStatus}
-          initializeState={initializeState}
+          state={testState}
         />
       );
     }

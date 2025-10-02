@@ -1,6 +1,6 @@
 import { isLoading } from '../../../universal/helpers/api';
 import { getFullName } from '../../../universal/helpers/brp';
-import { useAppStateGetter } from '../../hooks/useAppState';
+import { useAppStateGetter } from '../../hooks/useAppStateStore';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
 
