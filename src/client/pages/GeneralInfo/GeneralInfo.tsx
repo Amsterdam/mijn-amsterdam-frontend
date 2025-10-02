@@ -62,8 +62,6 @@ function createSectionProps(themaConfig: ThemaConfigBase): SectionProps {
   };
 }
 
-const bodemsectionProps = createSectionProps(themaConfig);
-
 type ListItems = Array<{ text: string; listItems?: string[] } | string>;
 
 const sections: SectionProps[] = [
@@ -89,7 +87,7 @@ const sections: SectionProps[] = [
   milieuzonesectionProps,
   overtredingensectionProps,
   vergunningensectionProps,
-  bodemsectionProps,
+  createSectionProps(themaConfig),
   varensectionProps,
 ];
 

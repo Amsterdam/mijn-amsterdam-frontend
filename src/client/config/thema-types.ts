@@ -19,36 +19,21 @@ export type ThemaConfigBase = {
     listItems: string[];
   };
   links: LinkProps[];
-  route: {
-    path: string;
-    documentTitle: string;
-  }; ///of ThemaRouteConfig
+  route: ThemaRouteConfig;
   redactedScope: 'full' | 'content' | 'none';
 };
 
 export type WithDetailPage = {
   detailPage: {
     title: string;
-    route: {
-      path: string;
-      trackingUrl: string;
-      documentTitle: string;
-    };
+    route: ThemaRouteConfig;
   };
 };
 
 export type WithListPage = {
   listPage: {
-    paramKind: {
-      inProgress: string;
-      completed: string;
-    };
-    route: {
-      path: string;
-      documentTitle: (params: { kind: string }) => `${string} | ${string}`;
-    };
+    route: ThemaRouteConfig;
   };
-  //tableConfig: Record<string, TableConfig<T>>;
 };
 
 export type InfoSections = {
@@ -101,7 +86,7 @@ type TrackinUrlFN = <T extends Params<string>>(params: T | null) => string;
 export type ThemaRouteConfig = {
   path: string;
   // Only needed for routes with variable path segments
-  trackingUrl?: string | TrackinUrlFN;
+  trackingUrl?: null | string | TrackinUrlFN;
   documentTitle: string | DocumenttitleFN;
 };
 
