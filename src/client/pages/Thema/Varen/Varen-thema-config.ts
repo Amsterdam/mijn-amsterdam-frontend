@@ -16,6 +16,11 @@ import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA = 5;
 
+// Aanvragen before this date will not be correctly linked to their vergunningen. These are not showed
+export const SHOW_HISTORICAL_AANVRAGEN_STARTING_FROM_DATE = new Date(
+  '2025-08-25'
+);
+
 export const listPageParamKind = {
   inProgress: 'lopende-aanvragen',
   actief: 'actieve-vergunningen',
@@ -66,6 +71,7 @@ type VarenTableItem = {
 };
 type TableConfig<T> = {
   title: string;
+  type: 'vergunning' | 'zaak';
   filter: (vergunning: VarenTableItem) => boolean;
   sort: (a: VarenTableItem, b: VarenTableItem) => number;
   displayProps: DisplayProps<T>;
@@ -80,6 +86,7 @@ export const tableConfig: {
 } = {
   [listPageParamKind.inProgress]: {
     title: 'Lopende aanvragen',
+    type: 'zaak',
     filter: (zaak) => !zaak.processed,
     sort: dateSort('dateRequest', 'desc'),
     listPageRoute: generatePath(routeConfig.listPage.path, {
@@ -102,6 +109,7 @@ export const tableConfig: {
   },
   [listPageParamKind.actief]: {
     title: 'Actieve vergunningen',
+    type: 'vergunning',
     filter: (vergunning) =>
       !vergunning.isExpired &&
       (!vergunning.dateStart || isDateInPast(vergunning.dateStart)) &&
@@ -125,9 +133,13 @@ export const tableConfig: {
   },
   [listPageParamKind.historic]: {
     title: 'Afgehandelde aanvragen',
+    type: 'zaak',
     filter: (zaak) =>
       !!zaak.processed &&
-      isDateInFuture(zaak.dateRequest, new Date('2025-01-01')),
+      isDateInFuture(
+        zaak.dateRequest,
+        SHOW_HISTORICAL_AANVRAGEN_STARTING_FROM_DATE
+      ),
     sort: dateSort('dateRequest', 'desc'),
     listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.inProgress,

@@ -11,10 +11,13 @@ import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 
 import { CONTENT_EMPTY } from './helper';
 import { useVarenThemaData } from './useVarenThemaData.hook';
-import { rederRegistratieLink } from './Varen-thema-config';
+import {
+  rederRegistratieLink,
+  SHOW_HISTORICAL_AANVRAGEN_STARTING_FROM_DATE,
+} from './Varen-thema-config';
 import styles from './Varen.module.scss';
 import type { VarenRegistratieRederFrontend } from '../../../../server/services/varen/config-and-types';
-import { entries } from '../../../../universal/helpers/utils';
+import { entries, toDateFormatted } from '../../../../universal/helpers/utils';
 import { Datalist, RowSet } from '../../../components/Datalist/Datalist';
 import { MaButtonLink } from '../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../components/Page/Page';
@@ -50,10 +53,12 @@ export const VarenDisclaimerRederNotRegistered = (
   </Grid.Cell>
 );
 
-const VarenOnlyShowAanvragenAfterDateDisclaimer = (
+export const VarenOnlyShowAanvragenAfterDateDisclaimer = (
   <PageContentCell spanWide={8}>
     <ParagaphSuppressed className="ams-mb-m">
-      Er worden alleen aanvragen getoond die na 16 juli 2025 zijn ingediend.
+      Er worden alleen aanvragen getoond die na{' '}
+      {toDateFormatted(SHOW_HISTORICAL_AANVRAGEN_STARTING_FROM_DATE)} zijn
+      ingediend.
     </ParagaphSuppressed>
   </PageContentCell>
 );
