@@ -18,7 +18,7 @@ const MAX_TABLE_ROWS_ON_THEMA_PAGINA = 5;
 
 // Aanvragen before this date will not be correctly linked to their vergunningen. These are not showed
 export const SHOW_HISTORICAL_AANVRAGEN_STARTING_FROM_DATE = new Date(
-  '2025-08-25'
+  '2025-08-25T00:00:00'
 );
 
 export const listPageParamKind = {

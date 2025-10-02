@@ -312,6 +312,36 @@ describe('<Varen />', () => {
     });
   });
 
+  it('does not show historical afgehandelde zaken', () => {
+    const screen = render(
+      <Component
+        state={getTestState(
+          [
+            {
+              ...exploitatieInProgress,
+              processed: true,
+              displayStatus: 'Verleend',
+              dateRequest: '2025-08-24T00:00:00',
+            },
+          ],
+          null,
+          []
+        )}
+      />
+    );
+
+    const afgehandeldeAanvraagTable = getTable(
+      screen,
+      'Afgehandelde aanvragen'
+    );
+    const withinAfgehandeldeAanvraagTable = within(afgehandeldeAanvraagTable);
+    expect(
+      withinAfgehandeldeAanvraagTable.queryByText(
+        exploitatieInProgress.vesselName!
+      )
+    ).toBeNull();
+  });
+
   it('Naam vaartuig links to the corresponding aanvraag or vergunning', () => {
     const screen = render(
       <Component state={getTestState([], null, [vergunning])} />
