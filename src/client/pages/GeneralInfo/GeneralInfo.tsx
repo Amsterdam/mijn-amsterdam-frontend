@@ -62,7 +62,7 @@ function createSectionProps(themaConfig: ThemaConfigBase): SectionProps {
   };
 }
 
-type ListItems = Array<{ text: string; listItems?: string[] } | string>;
+type ListItems = Array<{ text?: null | string; listItems?: string[] } | string>;
 
 const sections: SectionProps[] = [
   profileSectionProps,

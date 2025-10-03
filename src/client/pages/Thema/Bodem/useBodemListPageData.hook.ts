@@ -22,6 +22,6 @@ export function useBodemListPageData() {
     params,
     listPageRoute: generatePath(listPageRoute, { kind, page: null }),
     breadcrumbs,
-    routeConfig: themaConfig,
+    routeConfig: themaConfig, //TO DO  > dit zegt Tim > Dit klopt niet lijkt me?
   };
 }

@@ -37,6 +37,7 @@ export const themaConfig: BodemThemaConfig = {
     },
   ],
   uitlegPageSections: {
+    title: null,
     listItems: ["Uw aanvraag voor 'lood in de bodem-check'"],
   },
 

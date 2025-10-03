@@ -7,6 +7,10 @@ import {
   SVGComponent,
 } from '../../universal/types/App.types';
 
+// TO DO 6 okt
+// src/client/pages/Thema/Bodem/useBodemDetailData.hook.tsx > zie opmerking
+// listItems gaat niet goed zie ook GeneralInfo
+
 export type IsThemaVisibleFN = (appState: AppState) => boolean;
 
 export type ThemaConfigBase = {
@@ -14,10 +18,7 @@ export type ThemaConfigBase = {
   title: string;
   featureToggle: ThemaFeatureToggle;
   profileTypes: ProfileType[];
-  uitlegPageSections: {
-    title?: string;
-    listItems: string[];
-  };
+  uitlegPageSections: InfoSection;
   links: LinkProps[];
   route: ThemaRouteConfig;
   redactedScope: RedactedScope;
@@ -35,6 +36,21 @@ type PageConfig<T extends string> = {
     title: null | string;
     route: ThemaRouteConfig;
   };
+};
+// type ListItem =
+//   | string
+//   | {
+//       text?: null | string;
+//       listItems: string[];
+//     };
+// type InfoSection = {
+//   title?: null | string;
+//   listItems: ListItem ;
+// };
+
+type InfoSection = {
+  title?: null | string;
+  listItems: Array<{ text?: string; listItems?: string[] } | string>;
 };
 
 ///TO DO hieronder zou ik het liefts ook meenemen in de ThemaConfig
