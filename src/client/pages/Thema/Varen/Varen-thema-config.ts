@@ -66,6 +66,7 @@ type VarenTableItem = {
   processed: boolean | undefined;
   isExpired?: boolean;
   dateRequest: string;
+  dateDecision: string | null;
   dateStart: string | null;
   dateEnd: string | null;
 };
@@ -140,7 +141,7 @@ export const tableConfig: {
         zaak.dateRequest,
         SHOW_HISTORICAL_AANVRAGEN_STARTING_FROM_DATE
       ),
-    sort: dateSort('dateRequest', 'desc'),
+    sort: dateSort('dateDecision', 'desc'),
     listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.inProgress,
       page: null,
