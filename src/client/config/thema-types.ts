@@ -12,7 +12,7 @@ export type IsThemaVisibleFN = (appState: AppState) => boolean;
 export type ThemaConfigBase = {
   id: string;
   title: string;
-  featureToggle: { themaActive: boolean };
+  featureToggle: ThemaFeatureToggle;
   profileTypes: ProfileType[];
   uitlegPageSections: {
     title?: string;
@@ -20,22 +20,22 @@ export type ThemaConfigBase = {
   };
   links: LinkProps[];
   route: ThemaRouteConfig;
-  redactedScope: 'full' | 'content' | 'none';
+  redactedScope: RedactedScope;
 };
 
-export type InfoSections = {
-  title?: ''; //titel wel verplicht wanneer meer dan een sectie
-  listItems: string[];
-};
+export type WithDetailPage = PageConfig<'detailPage'>;
+
+export type WithListPage = PageConfig<'listPage'>;
+
+type FeatureToggle = Record<string, boolean>;
+type ThemaFeatureToggle = { themaActive: boolean } & FeatureToggle;
+type RedactedScope = 'full' | 'content' | 'none';
 type PageConfig<T extends string> = {
   [key in T]: {
     title: null | string;
     route: ThemaRouteConfig;
   };
 };
-export type WithDetailPage = PageConfig<'detailPage'>;
-
-export type WithListPage = PageConfig<'listPage'>;
 
 ///TO DO hieronder zou ik het liefts ook meenemen in de ThemaConfig
 export interface ThemaMenuItem<ID extends string = string>
