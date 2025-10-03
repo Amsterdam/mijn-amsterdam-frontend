@@ -75,7 +75,7 @@ export function getStatusLineItems<T extends ZorgnedAanvraagTransformed>(
 
   if (!lineItemTransformer) {
     logger.error(
-      `No line item formatters found for Service: ${serviceName}, leveringsVorm: ${aanvraagTransformed.leveringsVorm}, productsoortCode: ${aanvraagTransformed.productsoortCode}, productIdentificatie: ${aanvraagTransformed.productIdentificatie}`
+      `No line item formatters found for Service: ${serviceName}, resultaat: ${aanvraagTransformed.resultaat}, leveringsVorm: ${aanvraagTransformed.leveringsVorm}, productsoortCode: ${aanvraagTransformed.productsoortCode}, productIdentificatie: ${aanvraagTransformed.productIdentificatie}`
     );
     return null;
   }
