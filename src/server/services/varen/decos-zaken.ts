@@ -79,10 +79,7 @@ const ZaakBase = {
   fetchTermijnenFor: [fetchMeerInformatieTermijn],
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM,
-    dfunction: {
-      name: 'decision' as const,
-      transform: (dfunction) => (dfunction === 'Verleend' ? dfunction : null),
-    },
+    dfunction: 'decision',
     ...vesselName,
     ...vesselLengths,
     ...vesselSegment,
