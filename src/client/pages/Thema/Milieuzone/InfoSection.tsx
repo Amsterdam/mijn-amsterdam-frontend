@@ -1,7 +1,7 @@
 import { featureToggle, themaId, themaTitle } from './Milieuzone-thema-config';
-import { SectionProps } from '../../GeneralInfo/GeneralInfo';
+import { InfoSection } from '../../GeneralInfo/GeneralInfo';
 
-export const milieuzonesectionProps: SectionProps = {
+export const milieuzonesectionProps: InfoSection = {
   id: themaId,
   title: themaTitle,
   listItems: ['Inzien van uw ontheffingen in de milieuzone'],
