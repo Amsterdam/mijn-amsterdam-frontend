@@ -37,7 +37,7 @@ function attachBetrokkenen(
   return { ...aanvraag, betrokkenen: ids, betrokkenPersonen };
 }
 
-const ONTVANGER_ID = '999991000';
+const ONTVANGER_ID = '999999999';
 
 // RP TODO: Use later in a test.
 const SPECIFICATIE_DOCUMENENT = {
@@ -687,7 +687,6 @@ describe('getStatusLineItems for RTM', () => {
       RTM_WIJZIGINGS_AFWIJZING,
     ]);
     const regelingen = transformRegelingenForFrontend(aanvragen);
-    console.dir(regelingen);
     expect(regelingen.length).toBe(1);
     const regeling = regelingen[0];
 
