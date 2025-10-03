@@ -53,6 +53,7 @@ export const themaConfig: BodemThemaConfig = {
     },
   },
   listPage: {
+    title: null,
     route: {
       path: '/bodem/lijst/lood-meting/:kind/:page?',
       documentTitle: (params) =>

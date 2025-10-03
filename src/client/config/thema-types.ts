@@ -23,23 +23,19 @@ export type ThemaConfigBase = {
   redactedScope: 'full' | 'content' | 'none';
 };
 
-export type WithDetailPage = {
-  detailPage: {
-    title: string;
-    route: ThemaRouteConfig;
-  };
-};
-
-export type WithListPage = {
-  listPage: {
-    route: ThemaRouteConfig;
-  };
-};
-
 export type InfoSections = {
   title?: ''; //titel wel verplicht wanneer meer dan een sectie
   listItems: string[];
 };
+type PageConfig<T extends string> = {
+  [key in T]: {
+    title: null | string;
+    route: ThemaRouteConfig;
+  };
+};
+export type WithDetailPage = PageConfig<'detailPage'>;
+
+export type WithListPage = PageConfig<'listPage'>;
 
 ///TO DO hieronder zou ik het liefts ook meenemen in de ThemaConfig
 export interface ThemaMenuItem<ID extends string = string>
