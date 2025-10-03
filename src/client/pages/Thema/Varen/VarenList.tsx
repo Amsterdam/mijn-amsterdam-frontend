@@ -2,6 +2,7 @@ import { useParams } from 'react-router';
 
 import { useVarenThemaData } from './useVarenThemaData.hook';
 import { ListPageParamKind } from './Varen-thema-config';
+import { VarenOnlyShowAanvragenAfterDateDisclaimer } from './VarenThema';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
@@ -21,10 +22,11 @@ export function VarenList() {
   } = useVarenThemaData();
   useHTMLDocumentTitle(routeConfig.listPage);
 
-  const { title, displayProps, listPageRoute, filter, sort } =
+  const { title, displayProps, listPageRoute, filter, sort, type } =
     tableConfig[kind];
-  const varenItems =
-    kind === 'actieve-vergunningen' ? varenVergunningen : varenZaken;
+  const varenItems = type === 'vergunning' ? varenVergunningen : varenZaken;
+  const bottomDisclaimer =
+    type === 'zaak' ? VarenOnlyShowAanvragenAfterDateDisclaimer : '';
   return (
     <ListPagePaginated
       items={varenItems.filter(filter).sort(sort)}
@@ -35,6 +37,7 @@ export function VarenList() {
       appRoute={listPageRoute}
       breadcrumbs={breadcrumbs}
       displayProps={displayProps}
+      pageContentBottom={bottomDisclaimer}
     />
   );
 }

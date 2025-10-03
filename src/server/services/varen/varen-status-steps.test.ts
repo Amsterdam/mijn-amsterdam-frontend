@@ -94,7 +94,7 @@ describe('getStatusSteps', () => {
         actionButtonItems: [],
         datePublished: termijn2.dateStart,
         description:
-          'Er is meer informatie nodig om uw aanvraag verder te kunnen verwerken. Lever deze informatie aan voor 30 januari 2025',
+          'Er is meer informatie nodig om uw aanvraag verder te kunnen verwerken. Lever deze informatie aan voor 30 januari 2025.',
         isActive: true,
         isChecked: false,
         status: 'Meer informatie nodig',
@@ -180,7 +180,7 @@ describe('getStatusSteps', () => {
         actionButtonItems: [],
         datePublished: termijn2.dateStart,
         description:
-          'Er is meer informatie nodig om uw aanvraag verder te kunnen verwerken. Lever deze informatie aan voor 24 januari 2025',
+          'Er is meer informatie nodig om uw aanvraag verder te kunnen verwerken. Lever deze informatie aan voor 24 januari 2025.',
         isActive: true,
         isChecked: false,
         status: 'Meer informatie nodig',

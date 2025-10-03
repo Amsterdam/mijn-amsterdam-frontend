@@ -79,10 +79,7 @@ const ZaakBase = {
   fetchTermijnenFor: [fetchMeerInformatieTermijn],
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM,
-    dfunction: {
-      name: 'decision' as const,
-      transform: (dfunction) => (dfunction === 'Verleend' ? dfunction : null),
-    },
+    dfunction: 'decision',
     ...vesselName,
     ...vesselLengths,
     ...vesselSegment,
@@ -156,14 +153,14 @@ export const ZaakVergunningExploitatieWijzigingVergunningshouder: DecosZaakTrans
 export const ZaakVergunningExploitatieWijzigenVerbouwing: DecosZaakTransformer<ZaakVergunningExploitatieWijzigingVerbouwingType> =
   {
     caseType: 'Varen vergunning exploitatie Wijziging verbouwing',
-    title: 'Wijzigen: Vaartuig vervangen door een te (ver)bouwen vaartuig',
+    title: 'Wijzigen: Vaartuig verbouwen',
     ...ZaakWijzigenBase,
   };
 
 export const ZaakVergunningExploitatieWijzigingVervanging: DecosZaakTransformer<ZaakVergunningExploitatieWijzigingVervangingType> =
   {
     caseType: 'Varen vergunning exploitatie Wijziging vervanging',
-    title: 'Wijzigen: Vaartuig vervangen door een bestaand vaartuig',
+    title: 'Wijzigen: Vaartuig vervangen',
     ...ZaakWijzigenBase,
     transformFields: {
       ...ZaakWijzigenBase.transformFields,
