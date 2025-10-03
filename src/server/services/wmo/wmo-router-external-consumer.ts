@@ -32,28 +32,35 @@ const apiInput = z.object({
   bsn: ZodValidators.BSN,
 });
 
-wmoRouterPrivateNetwork.post(
-  ExternalConsumerEndpoints.private.WMO_VOORZIENINGEN,
-  async (req: Request, res: Response) => {
-    const bsn = req.body?.bsn as BSN;
+async function handleVoorzieningenRequest(req: Request, res: Response) {
+  console.log('-'.repeat(10), req.body);
 
-    try {
-      apiInput.parse(req.body);
-    } catch (error) {
-      let inputError = 'Invalid input';
+  try {
+    apiInput.parse(req.body);
+  } catch (error) {
+    let inputError = 'Invalid input';
 
-      if (error instanceof z.ZodError) {
-        inputError = error.issues.map((e) => e.message).join(', ');
-      }
-
-      return sendBadRequest(res, inputError);
+    if (error instanceof z.ZodError) {
+      inputError = error.issues.map((e) => e.message).join(', ');
     }
 
-    const response = await fetchWmoVoorzieningenCompact(bsn, {
-      productGroup: [WRA_PRODUCT_GROUP],
-      filter: isActueleUitgevoerdeWoonruimteAanpassing,
-    });
-
-    return sendResponse(res, response);
+    return sendBadRequest(res, inputError);
   }
+
+  const bsn = req.body?.bsn as BSN;
+  const response = await fetchWmoVoorzieningenCompact(bsn, {
+    productGroup: [WRA_PRODUCT_GROUP],
+    filter: isActueleUitgevoerdeWoonruimteAanpassing,
+  });
+
+  return sendResponse(res, response);
+}
+
+wmoRouterPrivateNetwork.post(
+  ExternalConsumerEndpoints.private.WMO_VOORZIENINGEN,
+  handleVoorzieningenRequest
 );
+
+export const forTesting = {
+  handleVoorzieningenRequest,
+};
