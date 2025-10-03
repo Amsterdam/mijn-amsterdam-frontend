@@ -28,5 +28,8 @@ function buildThemaMenuItem(item: ThemaMenuItem, profileType: ProfileType) {
     title,
     to:
       typeof item.to === 'function' ? item.to(appState, profileType) : item.to,
+    isActive: !!(item.isActive
+      ? item.isActive(appState)
+      : item.isAlwaysVisible),
   };
 }

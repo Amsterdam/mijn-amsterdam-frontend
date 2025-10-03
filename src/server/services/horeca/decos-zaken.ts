@@ -35,6 +35,7 @@ export type HorecaVergunningFrontend =
 export const ExploitatieHorecabedrijf: DecosZaakTransformer<DecosZaakExploitatieHorecabedrijf> =
   {
     isActive: FeatureToggle.horecaActive,
+    itemType: 'folders',
     caseType: caseTypeHorecaVergunningen.ExploitatieHorecabedrijf,
     title: caseTypeHorecaVergunningen.ExploitatieHorecabedrijf,
     fetchWorkflowStatusDatesFor: [

@@ -9,7 +9,8 @@ import { VarenThema } from './VarenThema';
 import {
   VarenZakenFrontend,
   VarenRegistratieRederType,
-  VarenVergunningExploitatieType,
+  ZaakVergunningExploitatieType,
+  VarenVergunningFrontend,
 } from '../../../../server/services/varen/config-and-types';
 import { jsonCopy } from '../../../../universal/helpers/utils';
 import { AppState } from '../../../../universal/types/App.types';
@@ -17,7 +18,7 @@ import { expectHeaders, getTable } from '../../../helpers/test-utils';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
-type ExploitatieAanvraag = VarenZakenFrontend<VarenVergunningExploitatieType>;
+type ExploitatieAanvraag = VarenZakenFrontend<ZaakVergunningExploitatieType>;
 const exploitatieInProgress = {
   id: 'Z-24-0000001',
   identifier: 'Z/24/0000001',
@@ -59,47 +60,18 @@ const exploitatieInProgress = {
   },
 } as unknown as ExploitatieAanvraag;
 
-const exploitatieDecision: ExploitatieAanvraag = {
+const vergunning: VarenVergunningFrontend = {
   id: 'Z-24-0000001',
   identifier: 'Z/24/0000001',
-  caseType: 'Varen vergunning exploitatie',
   title: 'Varen vergunning exploitatie',
-  displayStatus: 'Afgehandeld',
-  decision: 'Verleend',
-  processed: true,
   vesselName: 'BootjeVanBerend',
   dateRequestFormatted: '08 november 2023',
-  dateDecisionFormatted: '10 november 2023',
-  steps: [
-    {
-      status: 'Ontvangen',
-      datePublished: '2023-11-08T00:00:00',
-      description: '',
-      isActive: false,
-      isChecked: true,
-      id: 'step-0',
-    },
-    {
-      status: 'In behandeling',
-      datePublished: '2023-11-09T00:00:00',
-      description: '',
-      isActive: false,
-      isChecked: true,
-      id: 'step-1',
-    },
-    {
-      status: 'Afgehandeld',
-      datePublished: '2023-11-10T00:00:00',
-      isActive: true,
-      isChecked: false,
-      id: 'step-2',
-    },
-  ],
+  dateStartFormatted: '10 november 2023',
   link: {
-    to: '/passagiers-en-beroepsvaart/vergunning/varen-vergunning-exploitatie/Z-24-0000001',
-    title: 'Bekijk hoe het met uw aanvraag staat',
+    to: '/passagiers-en-beroepsvaart/vergunning/Z-24-0000001',
+    title: 'Bekijk uw actieve vergunning',
   },
-} as unknown as ExploitatieAanvraag;
+} as unknown as VarenVergunningFrontend;
 
 const rederRegistratie = {
   id: '2801937838',
@@ -117,17 +89,17 @@ const rederRegistratie = {
   dateRequestFormatted: '06 november 2023',
 } as unknown as VarenRegistratieRederType;
 
-const varenContent = [exploitatieInProgress, exploitatieDecision];
-
 const getTestState = (
-  zaken: VarenZakenFrontend[] = varenContent,
-  reder: VarenRegistratieRederType | null = rederRegistratie
+  zaken: VarenZakenFrontend[] = [exploitatieInProgress],
+  reder: VarenRegistratieRederType | null = rederRegistratie,
+  vergunningen: VarenVergunningFrontend[] = [vergunning]
 ): AppState =>
   jsonCopy({
     VAREN: {
       content: {
         reder,
         zaken,
+        vergunningen,
       },
       status: 'OK',
     },
@@ -279,7 +251,7 @@ describe('<Varen />', () => {
 
   describe('Tables', () => {
     it('Shows the expected empty tables', () => {
-      const screen = render(<Component state={getTestState([])} />);
+      const screen = render(<Component state={getTestState([], null, [])} />);
 
       const lopendeAanvraagTableHeader = screen.getByRole('heading', {
         name: 'Lopende aanvragen',
@@ -333,7 +305,6 @@ describe('<Varen />', () => {
         'Naam vaartuig',
         'Omschrijving',
         'Datum besluit',
-        'Resultaat',
       ]);
       const withinActieveVergunningTable = within(actieveVergunningTable);
       expect(
@@ -345,13 +316,12 @@ describe('<Varen />', () => {
       expect(
         withinActieveVergunningTable.getByText('10 november 2023')
       ).toBeDefined();
-      expect(withinActieveVergunningTable.getByText('Verleend')).toBeDefined();
     });
   });
 
   it('Naam vaartuig links to the corresponding aanvraag or vergunning', () => {
     const screen = render(
-      <Component state={getTestState([exploitatieDecision])} />
+      <Component state={getTestState([], null, [vergunning])} />
     );
 
     expect(screen.getByText('BootjeVanBerend').getAttribute('href')).toContain(
@@ -363,13 +333,15 @@ describe('<Varen />', () => {
     const screen = render(
       <Component
         state={getTestState(
+          [],
+          null,
           [
-            exploitatieDecision,
-            exploitatieDecision,
-            exploitatieDecision,
-            exploitatieDecision,
-            exploitatieDecision,
-            exploitatieDecision,
+            vergunning,
+            vergunning,
+            vergunning,
+            vergunning,
+            vergunning,
+            vergunning,
           ].map((vergunning, index) => ({ ...vergunning, id: `${index}` }))
         )}
       />

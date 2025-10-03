@@ -2,17 +2,16 @@ import { useParams } from 'react-router';
 
 import { useVarenThemaData } from './useVarenThemaData.hook';
 import { ListPageParamKind } from './Varen-thema-config';
-import type { VarenZakenFrontend } from '../../../../server/services/varen/config-and-types';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function VarenList() {
-  const { kind = 'lopende-aanvragen', page } = useParams<{
+  const { kind = 'lopende-aanvragen' } = useParams<{
     kind: ListPageParamKind;
-    page: string;
   }>();
   const {
     varenZaken,
+    varenVergunningen,
     id: themaId,
     tableConfig,
     isLoading,
@@ -24,11 +23,11 @@ export function VarenList() {
 
   const { title, displayProps, listPageRoute, filter, sort } =
     tableConfig[kind];
-  const zaken = varenZaken.filter(filter).sort(sort);
-
+  const varenItems =
+    kind === 'actieve-vergunningen' ? varenVergunningen : varenZaken;
   return (
-    <ListPagePaginated<VarenZakenFrontend>
-      items={zaken}
+    <ListPagePaginated
+      items={varenItems.filter(filter).sort(sort)}
       themaId={themaId}
       title={title}
       isLoading={isLoading}

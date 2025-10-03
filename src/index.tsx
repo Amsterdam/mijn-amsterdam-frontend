@@ -1,3 +1,9 @@
+import 'core-js/actual/array/to-sorted';
+import 'core-js/actual/array/find-last';
+import 'core-js/actual/array/find-index';
+import 'core-js/actual/array/find-last-index';
+import 'core-js/actual/string/replace-all';
+
 import { AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js';
 import { createRoot } from 'react-dom/client';
 

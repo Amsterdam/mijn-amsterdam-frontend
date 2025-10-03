@@ -1,7 +1,7 @@
 import { featureToggle, themaId, themaTitle } from './Afis-thema-config';
-import { SectionProps } from '../../GeneralInfo/GeneralInfo';
+import { InfoSection } from '../../GeneralInfo/GeneralInfo';
 
-export const afisSectionProps: SectionProps = {
+export const afisSectionProps: InfoSection = {
   id: themaId,
   title: themaTitle,
   listItems: ['Overzicht van facturen', 'Betalen van facturen'],

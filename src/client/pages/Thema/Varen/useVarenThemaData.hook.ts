@@ -6,7 +6,10 @@ import {
   themaId,
   routeConfig,
 } from './Varen-thema-config';
-import type { VarenZakenFrontend } from '../../../../server/services/varen/config-and-types';
+import type {
+  VarenVergunningFrontend,
+  VarenZakenFrontend,
+} from '../../../../server/services/varen/config-and-types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
 import { useAppStateGetter } from '../../../hooks/useAppState';
@@ -18,9 +21,15 @@ export function useVarenThemaData() {
   const varenRederRegistratie = VAREN.content?.reder || null;
 
   const zaken = VAREN.content?.zaken ?? [];
-
   const varenZaken = addLinkElementToProperty<VarenZakenFrontend>(
     zaken,
+    'vesselName',
+    true
+  );
+
+  const vergunningen = VAREN.content?.vergunningen ?? [];
+  const varenVergunningen = addLinkElementToProperty<VarenVergunningFrontend>(
+    vergunningen,
     'vesselName',
     true
   );
@@ -33,6 +42,7 @@ export function useVarenThemaData() {
     isLoading: isLoading(VAREN),
     isError: isError(VAREN),
     varenZaken,
+    varenVergunningen,
     linkListItems: [varenMeerInformatieLink, varenLegesTableLink],
     buttonItems: [],
     breadcrumbs,

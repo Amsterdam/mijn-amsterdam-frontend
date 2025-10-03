@@ -102,7 +102,7 @@ function transformZorgnedAanvraag(
   }
 
   const aanvraagTransformed: ZorgnedAanvraagTransformed = {
-    id: aanvraag.identificatie,
+    id: `${aanvraag.identificatie}-${beschiktProduct.identificatie}`,
     datumAanvraag: aanvraag.datumAanvraag,
     datumBeginLevering: levering?.begindatum ?? null,
     datumBesluit: aanvraag.beschikking.datumAfgifte ?? '', // See bug: MIJN-11809

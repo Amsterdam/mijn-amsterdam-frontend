@@ -18,6 +18,10 @@ import {
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { jsonCopy, range } from '../../../universal/helpers/utils';
 import * as sourceApiRequest from '../../helpers/source-api-request';
+import {
+  VarenVergunningExploitatie,
+  ZaakVergunningExploitatie,
+} from '../varen/decos-zaken';
 import type { WerkzaamhedenEnVervoerOpStraat } from '../vergunningen/config-and-types';
 import {
   decosCaseToZaakTransformers,
@@ -142,6 +146,10 @@ const blob = {
   ],
 };
 
+const emptyFoldersDecosZaakTransformer = [
+  { itemType: 'folders' },
+] as DecosZaakTransformer[];
+
 /**
  * Initally the servic performs a series of searches for zaken based on BFF_DECOS_API_ADRES_BOEKEN_BSN
  * In the tests there are 4 book keys defined. B1,B2,B3,B4. Everywhere you see .times(numberOfAddressBooksToSearch) it's to cover the
@@ -171,7 +179,10 @@ describe('decos-service', () => {
         .times(numberOfAddressBooksToSearch)
         .replyWithError('request failed');
 
-      const responseData = await fetchDecosZakenFromSource(authProfileAndToken);
+      const responseData = await fetchDecosZakenFromSource(
+        authProfileAndToken,
+        emptyFoldersDecosZaakTransformer
+      );
       expect(responseData.status).toBe('ERROR');
       expect(responseData.content).toBe(null);
     });
@@ -191,7 +202,10 @@ describe('decos-service', () => {
         .times(numberOfAddressBooksToSearch)
         .replyWithError('bad request to folder');
 
-      const responseData = await fetchDecosZakenFromSource(authProfileAndToken);
+      const responseData = await fetchDecosZakenFromSource(
+        authProfileAndToken,
+        emptyFoldersDecosZaakTransformer
+      );
 
       expect(responseData.status).toBe('ERROR');
       expect(responseData.content).toBe(null);
@@ -215,7 +229,10 @@ describe('decos-service', () => {
         .times(numberOfAddressBooksToSearch - 1)
         .reply(200);
 
-      const responseData = await fetchDecosZakenFromSource(authProfileAndToken);
+      const responseData = await fetchDecosZakenFromSource(
+        authProfileAndToken,
+        emptyFoldersDecosZaakTransformer
+      );
       expect(responseData).toStrictEqual({
         content: null,
         message: 'bad request',
@@ -625,7 +642,10 @@ describe('decos-service', () => {
         .times(numberOfAddressBooksToSearch)
         .replyWithError('De api geeft een error.');
 
-      const responseData = await forTesting.getZakenByUserKey('123456789');
+      const responseData = await forTesting.fetchZakenByUserKey(
+        '123456789',
+        emptyFoldersDecosZaakTransformer
+      );
 
       expect(responseData).toStrictEqual({
         content: null,
@@ -640,7 +660,10 @@ describe('decos-service', () => {
         .times(numberOfAddressBooksToSearch)
         .reply(200, 'abc');
 
-      const responseData = await forTesting.getZakenByUserKey('123456789');
+      const responseData = await forTesting.fetchZakenByUserKey(
+        '123456789',
+        emptyFoldersDecosZaakTransformer
+      );
 
       expect(responseData).toStrictEqual({
         content: null,
@@ -655,7 +678,10 @@ describe('decos-service', () => {
         .times(numberOfAddressBooksToSearch)
         .reply(200, '"abc"');
 
-      const responseData = await forTesting.getZakenByUserKey('123456789');
+      const responseData = await forTesting.fetchZakenByUserKey(
+        '123456789',
+        emptyFoldersDecosZaakTransformer
+      );
 
       expect(responseData).toStrictEqual({
         content: [],
@@ -685,7 +711,7 @@ describe('decos-service', () => {
         { ...vobTransformer, additionalSelectFields: ['text45', 'order66'] },
       ] as DecosZaakTransformer<DecosZaakBase>[];
 
-      const responseData = await forTesting.getZakenByUserKey(
+      const responseData = await forTesting.fetchZakenByUserKey(
         '123456789',
         transformers
       );
@@ -701,13 +727,47 @@ describe('decos-service', () => {
       axiosSpy.mockRestore();
     });
 
+    test('Called with itemKey other than folders', async () => {
+      const varenVergunningZaak = { key: 'varens', fields: { title: 'title' } };
+      remoteApi.get(/\/decos\/items\/123456789\/folders/).reply(200, {
+        status: 'OK',
+        content: [{ key: 'folders', fields: { title: 'title' } }],
+      });
+      remoteApi.get(/\/decos\/items\/123456789\/varens/).reply(200, {
+        status: 'OK',
+        content: [varenVergunningZaak],
+      });
+
+      const axiosSpy = vi.spyOn(sourceApiRequest.axiosRequest, 'request');
+
+      const transformers = [
+        VarenVergunningExploitatie,
+        ZaakVergunningExploitatie,
+      ];
+
+      const responseData = await forTesting.fetchZakenByUserKey(
+        '123456789',
+        transformers
+      );
+
+      expect(responseData.content?.length).toBe(2);
+      expect(
+        responseData.content?.find((r) => r?.key === 'varens')
+      ).toBeTruthy();
+
+      axiosSpy.mockRestore();
+    });
+
     test('Success', async () => {
       remoteApi
         .get(/\/decos\/items\/123456789\/folders/)
         .times(numberOfAddressBooksToSearch)
         .reply(200, zakenSource);
 
-      const responseData = await forTesting.getZakenByUserKey('123456789');
+      const responseData = await forTesting.fetchZakenByUserKey(
+        '123456789',
+        emptyFoldersDecosZaakTransformer
+      );
 
       expect(responseData.content?.length).toBe(1);
     });
