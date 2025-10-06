@@ -20,7 +20,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HealthyResponse'
-  /api/v1/services/wmo/voorzieningen:
+  /private/api/v1/services/wmo/voorzieningen:
     post:
       description: |
         Gets a list of compacted WMO voorzieningen.
