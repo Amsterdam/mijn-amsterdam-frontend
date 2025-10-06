@@ -37,6 +37,11 @@ type PageConfig<T extends string> = {
     route: ThemaRouteConfig;
   };
 };
+type InfoSection = {
+  title?: null | string;
+  listItems: Array<{ text?: string; listItems?: string[] } | string>;
+};
+
 // type ListItem =
 //   | string
 //   | {
@@ -47,11 +52,6 @@ type PageConfig<T extends string> = {
 //   title?: null | string;
 //   listItems: ListItem ;
 // };
-
-type InfoSection = {
-  title?: null | string;
-  listItems: Array<{ text?: string; listItems?: string[] } | string>;
-};
 
 ///TO DO hieronder zou ik het liefts ook meenemen in de ThemaConfig
 export interface ThemaMenuItem<ID extends string = string>
