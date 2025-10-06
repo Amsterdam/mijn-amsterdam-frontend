@@ -56,9 +56,9 @@ export const VarenDisclaimerRederNotRegistered = (
 export const VarenOnlyShowAanvragenAfterDateDisclaimer = (
   <PageContentCell spanWide={8}>
     <ParagaphSuppressed className="ams-mb-m">
-      Er worden alleen aanvragen getoond die na{' '}
+      Hier laten we alleen aanvragen zien die na{' '}
       {toDateFormatted(SHOW_HISTORICAL_AANVRAGEN_STARTING_FROM_DATE)} zijn
-      ingediend.
+      gedaan.
     </ParagaphSuppressed>
   </PageContentCell>
 );

@@ -51,7 +51,7 @@ function createVarenVergunningNotification(
     themaID: themaId,
     themaTitle: themaTitle,
     title: `Varen vergunning exploitatie`,
-    description: `Er is een vergunning toegekend aan uw onderneming voor vaartuig "${vergunning.vesselName}".`,
+    description: `U hebt een vergunning gekregen voor "${vergunning.vesselName}".`,
     link: {
       to: generatePath(routeConfig.detailPageVergunning.path, {
         id: vergunning.id,
