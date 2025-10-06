@@ -119,7 +119,7 @@ describe('Notifications', () => {
             description: 'U heeft zich geregistreerd.',
             link: {
               title: 'Bekijk details',
-              to: '/passagiersvaart',
+              to: '/varen',
             },
           },
         ],
@@ -220,8 +220,7 @@ describe('Notifications', () => {
         notifications: [
           {
             datePublished: '2025-01-03T00:00:00',
-            description:
-              'Er is een vergunning toegekend aan uw onderneming voor vaartuig "Titanic".',
+            description: 'U hebt een vergunning gekregen voor "Titanic".',
             id: 'varen-Z-25-0000001-10001-vergunning-notification',
             link: {
               title: 'Bekijk details',
