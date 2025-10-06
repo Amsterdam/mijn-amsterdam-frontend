@@ -167,7 +167,7 @@ describe('Varen service', () => {
         ],
         link: {
           title: 'Bekijk hoe het met uw aanvraag staat',
-          to: '/passagiers-en-beroepsvaart/vergunningen/varen-vergunning-exploitatie/Z-24-0000001',
+          to: '/varen/vergunningen/varen-vergunning-exploitatie/Z-24-0000001',
         },
       });
       expect(response.content?.zaken[1]).toMatchObject({
@@ -192,7 +192,7 @@ describe('Varen service', () => {
         identifier: 'Z/25/0000001/10001',
         linkedActiveZaakLink: {
           title: 'Bekijk hoe het met uw aanvraag staat',
-          to: '/passagiers-en-beroepsvaart/vergunningen/varen-vergunning-exploitatie-wijziging-vaartuignaam/Z-24-0000002',
+          to: '/varen/vergunningen/varen-vergunning-exploitatie-wijziging-vaartuignaam/Z-24-0000002',
         },
       });
     });

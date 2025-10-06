@@ -46,6 +46,11 @@
     left: calc(calc(var(--status-circle-box-width) + 2px) * -1);
   }
 
+  .PanelActionGroup {
+    margin-top: var(--ams-space-s);
+    display: block;
+  }
+
   // Don't show the line on the last step
   &:last-child:before {
     display: none;
