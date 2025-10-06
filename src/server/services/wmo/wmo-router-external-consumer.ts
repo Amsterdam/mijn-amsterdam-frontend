@@ -33,8 +33,6 @@ const apiInput = z.object({
 });
 
 async function handleVoorzieningenRequest(req: Request, res: Response) {
-  console.log('-'.repeat(10), req.body);
-
   try {
     apiInput.parse(req.body);
   } catch (error) {
