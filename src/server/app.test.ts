@@ -86,7 +86,7 @@ describe('app', async () => {
 
     expect(
       routerProtected.handle.stack.some(
-        (x: object) => 'name' in x && x.name === 'isAuthenticated'
+        (x: object) => 'name' in x && x.name === 'handleIsAuthenticated'
       )
     ).toBe(true);
     expect(

@@ -23,7 +23,7 @@ import {
 } from '../../routing/route-helpers';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 
-export async function fetchDecosDocumentsList(
+export async function handleFetchDecosDocumentsList(
   req: RequestWithQueryParams<{ id: string }>,
   res: ResponseAuthenticated
 ) {

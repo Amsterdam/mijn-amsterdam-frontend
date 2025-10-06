@@ -46,6 +46,7 @@ async function handleVoorzieningenRequest(req: Request, res: Response) {
   }
 
   const bsn = req.body?.bsn as BSN;
+
   const response = await fetchWmoVoorzieningenCompact(bsn, {
     productGroup: [WRA_PRODUCT_GROUP],
     filter: isActueleUitgevoerdeWoonruimteAanpassing,

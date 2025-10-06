@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, Mock } from 'vitest';
 
-import { fetchDecosDocumentsList } from './decos-route-handlers';
+import { handleFetchDecosDocumentsList } from './decos-route-handlers';
 import { fetchDecosDocumentList } from './decos-service';
 import { RequestMock, ResponseAuthenticatedMock } from '../../../testing/utils';
 import { RequestWithQueryParams } from '../../routing/route-helpers';
@@ -54,7 +54,7 @@ describe('fetchVergunningDocumentsList', () => {
 
     const res = ResponseAuthenticatedMock.new();
 
-    await fetchDecosDocumentsList(req, res);
+    await handleFetchDecosDocumentsList(req, res);
 
     expect(fetchDecosDocumentList).toHaveBeenCalledWith(
       res.locals.authProfileAndToken.profile.sid,
@@ -63,15 +63,17 @@ describe('fetchVergunningDocumentsList', () => {
     expect(res.send).toHaveBeenCalledWith(mockDocumentsResponse);
   });
 
-  it.only('should fail if the session id cannot be validated', async () => {
+  it('should fail if the session id cannot be validated', async () => {
     const res = ResponseAuthenticatedMock.new();
     (decryptEncryptedRouteParamAndValidateSessionID as Mock).mockReturnValue({
-      content: mockValues.id,
-      status: 'OK',
+      content: null,
+      status: 'ERROR',
+      code: 401,
     });
-    await fetchDecosDocumentsList(req, res);
+    await handleFetchDecosDocumentsList(req, res);
 
     expect(fetchDecosDocumentList).not.toHaveBeenCalled();
+
     expect(res.status).toHaveBeenCalledWith(401);
   });
 
@@ -89,7 +91,7 @@ describe('fetchVergunningDocumentsList', () => {
 
     const res = ResponseAuthenticatedMock.new();
 
-    await fetchDecosDocumentsList(
+    await handleFetchDecosDocumentsList(
       req as RequestWithQueryParams<{ id: string }>,
       res
     );

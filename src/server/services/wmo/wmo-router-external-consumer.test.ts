@@ -38,14 +38,14 @@ describe('handleVoorzieningenRequest', () => {
   });
 
   it('should call fetchWmoVoorzieningenCompact with correct parameters for valid input', async () => {
-    req.body = { bsn: '123456789' };
+    req.body = { bsn: '123456782' };
     const mockResponse = { data: 'mocked data' };
     fetchWmoVoorzieningenCompact.mockResolvedValue(mockResponse);
 
     await handleVoorzieningenRequest(req as Request, res as Response);
 
     expect(sendResponse).toHaveBeenCalledWith(res, mockResponse);
-    expect(fetchWmoVoorzieningenCompact).toHaveBeenCalledWith('123456789', {
+    expect(fetchWmoVoorzieningenCompact).toHaveBeenCalledWith('123456782', {
       productGroup: ['WRA'],
       filter: expect.any(Function),
     });
