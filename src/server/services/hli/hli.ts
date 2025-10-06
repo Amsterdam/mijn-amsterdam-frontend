@@ -2,7 +2,11 @@ import { isAfter, parseISO } from 'date-fns';
 import { generatePath } from 'react-router';
 import slug from 'slugme';
 
-import { HLIRegelingFrontend, HLIresponseData } from './hli-regelingen-types';
+import {
+  HLIRegelingFrontend,
+  HLIresponseData,
+  ZorgnedHLIRegeling,
+} from './hli-regelingen-types';
 import { hliStatusLineItemsConfig } from './hli-status-line-items';
 import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import { fetchStadspas } from './stadspas';
@@ -38,34 +42,58 @@ import {
 } from './status-line-items/regeling-pcvergoeding';
 import { toDateFormatted } from '../../../universal/helpers/utils';
 
-function getDisplayStatus(
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
+type GenericDisplayStatus =
+  | 'Toegewezen'
+  | 'Afgewezen'
+  | 'Einde recht'
+  | 'Onbekend';
+
+type GetDisplayStatusFn<T extends string, x = T | GenericDisplayStatus> = (
+  regeling: ZorgnedHLIRegeling,
   statusLineItems: StatusLineItem[]
-) {
+) => x;
+
+const getDisplayStatus: GetDisplayStatusFn<GenericDisplayStatus> = (
+  regeling: ZorgnedHLIRegeling,
+  statusLineItems: StatusLineItem[]
+) => {
   const hasEindeRecht = statusLineItems.some(
     (regeling) => regeling.status === 'Einde recht'
   );
   switch (true) {
-    // NOTE: Special status for PCVergoedingen.
-    case isWorkshopNietGevolgd(aanvraag):
+    // Special case for PC-vergoeding.
+    case isWorkshopNietGevolgd(regeling):
       return 'Afgewezen';
 
-    case isRTMDeel1(aanvraag) && aanvraag.resultaat === 'toegewezen':
-      return RTM_STATUS_IN_BEHANDELING;
-
-    case (aanvraag.isActueel || !hasEindeRecht) &&
-      aanvraag.resultaat === 'toegewezen':
+    case (regeling.isActueel || !hasEindeRecht) &&
+      regeling.resultaat === 'toegewezen':
       return 'Toegewezen';
 
-    case !aanvraag.isActueel && aanvraag.resultaat === 'toegewezen':
+    case !regeling.isActueel && regeling.resultaat === 'toegewezen':
       return 'Einde recht';
 
-    case !aanvraag.isActueel && aanvraag.resultaat !== 'toegewezen':
+    case !regeling.isActueel && regeling.resultaat !== 'toegewezen':
       return 'Afgewezen';
   }
 
-  return statusLineItems[statusLineItems.length - 1]?.status ?? 'Onbekend';
-}
+  return (
+    (statusLineItems[statusLineItems.length - 1]
+      ?.status as GenericDisplayStatus) ?? 'Onbekend'
+  );
+};
+
+const getRTMDisplayStatus: GetDisplayStatusFn<
+  GenericDisplayStatus | 'In behandeling genomen'
+> = (regeling: ZorgnedHLIRegeling, statusLineItems: StatusLineItem[]) => {
+  // RP TODO: make procesAanvraagOmschrijving into a type in case of changes.
+  if (regeling.procesAanvraagOmschrijving === 'wijzigingsAanvraag') {
+    return 'Toegewezen';
+  }
+  if (isRTMDeel1(regeling) && regeling.resultaat === 'toegewezen') {
+    return RTM_STATUS_IN_BEHANDELING;
+  }
+  return getDisplayStatus(regeling, statusLineItems);
+};
 
 function getDocumentsFrontend(
   sessionID: SessionID,
@@ -107,10 +135,11 @@ function transformRegelingTitle(
   }
 }
 
-function transformRegelingForFrontend(
+function transformRegelingForFrontend<T extends string>(
   sessionID: SessionID,
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
-  statusLineItems: StatusLineItem[]
+  statusLineItems: StatusLineItem[],
+  getDisplayStatusFn?: GetDisplayStatusFn<T>
 ) {
   const id = aanvraag.id;
 
@@ -119,7 +148,9 @@ function transformRegelingForFrontend(
     regeling: slug(aanvraag.titel),
   });
 
-  const displayStatus = getDisplayStatus(aanvraag, statusLineItems);
+  const displayStatus = getDisplayStatusFn
+    ? getDisplayStatusFn(aanvraag, statusLineItems)
+    : getDisplayStatus(aanvraag, statusLineItems);
 
   // Override isActueel for Afgewezen (RTM* / UPC*) regelingen.
   let isActual = aanvraag.isActueel;
@@ -173,7 +204,8 @@ function transformRegelingenForFrontend(
     const regelingFrontend = transformRegelingForFrontend(
       authProfileAndToken.profile.sid,
       regeling,
-      statusLineItems
+      statusLineItems,
+      getRTMDisplayStatus
     );
     regelingenFrontend.push(regelingFrontend);
   }

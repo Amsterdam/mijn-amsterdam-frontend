@@ -146,7 +146,7 @@ function combineRTMData(
   }
 
   const combinedRegelingen: IncompleteRTMCombinedRegeling[] = [
-    [firstRegeling, getStatusLineItems(firstRegeling, 'startOfChain', [])],
+    getStatusLineItems(firstRegeling, 'startOfChain', []),
   ];
 
   for (const regeling of regelingen) {
@@ -161,14 +161,13 @@ function combineRTMData(
       lastRegeling.procesAanvraagOmschrijving === 'Beëindigen RTM' &&
       lastRegeling.isActueel === false
     ) {
-      combinedRegelingen.push([
-        regeling,
-        getStatusLineItems(regeling, 'startOfChain', lastStatusLineItems),
-      ]);
+      combinedRegelingen.push(
+        getStatusLineItems(regeling, 'startOfChain', lastStatusLineItems)
+      );
       continue;
     }
 
-    const statusLineItems = getStatusLineItems(
+    const [updatedRegeling, statusLineItems] = getStatusLineItems(
       regeling,
       'afterAanvraag',
       lastStatusLineItems
@@ -177,9 +176,19 @@ function combineRTMData(
       ...lastStatusLineItems,
       ...statusLineItems,
     ];
+
     const combinedRegeling: IncompleteRTMCombinedRegeling = [
       {
-        ...regeling,
+        ...updatedRegeling,
+        isActueel:
+          lastStatusLineItems.length >= 1 && isRTMDeel1(lastRegeling) // This is a 'Wijzigings aanvraag'.
+            ? lastRegeling.isActueel
+            : regeling.isActueel,
+        resultaat:
+          lastStatusLineItems.length >= 1 &&
+          regeling.procesAanvraagOmschrijving === 'Einde recht'
+            ? regeling.resultaat
+            : lastRegeling.resultaat,
         datumInBehandeling: lastRegeling.datumInBehandeling,
         datumAanvraag: lastRegeling.datumAanvraag ?? regeling.datumAanvraag,
       },
@@ -192,14 +201,15 @@ function combineRTMData(
     combinedRegelingen[combinedRegelingen.length - 1];
 
   if (
-    lastCombinedRegeling.procesAanvraagOmschrijving !== 'Beëindigen RTM' &&
+    lastStatusLine.at(-1)?.status !== 'Einde recht' &&
     !(
       isRTMDeel1(lastCombinedRegeling) &&
       lastCombinedRegeling.resultaat === 'afgewezen'
     )
   ) {
     const getStatusLineItem = createGetStatusLineItemFn(lastCombinedRegeling);
-    lastStatusLine.push(getStatusLineItem('eindeRecht'));
+    const [, statusLineItems] = getStatusLineItem(['defaultEindeRecht']);
+    lastStatusLine.push(...statusLineItems);
   }
 
   return combinedRegelingen.map(([regeling, statusLineItems]) => {
@@ -277,19 +287,20 @@ type StatusLineItemTransformerConfig = {
   isActive?: (regeling: ZorgnedHLIRegeling, now: Date) => boolean;
 };
 
-type StatusLineKeys =
+type StatusLineKey =
   | 'aanvraagLopend'
   | 'aanvraagAfgewezen'
   | 'inBehandelingGenomen'
   | 'besluit'
-  | 'wijzingsAanvraag'
-  | 'wijziginsBesluit'
-  | 'eindeRecht';
+  | 'wijzigingsAanvraag'
+  | 'wijzigingsBesluit'
+  | 'eindeRecht'
+  | 'defaultEindeRecht';
 
 const getDatumAfgifte = (regeling: ZorgnedHLIRegeling) =>
   regeling.datumInBehandeling || regeling.datumBesluit;
 
-const statusLineItems: Record<StatusLineKeys, StatusLineItemTransformerConfig> =
+const statusLineItems: Record<StatusLineKey, StatusLineItemTransformerConfig> =
   {
     aanvraagLopend: {
       status: 'Aanvraag',
@@ -316,14 +327,14 @@ const statusLineItems: Record<StatusLineKeys, StatusLineItemTransformerConfig> =
       description: getBesluitDescription,
       documents: (regeling) => regeling.documenten,
     },
-    wijzingsAanvraag: {
+    wijzigingsAanvraag: {
       status: 'Aanvraag wijziging',
       datePublished: getDatumAfgifte,
       description: `<p>U heeft een aanvraag gedaan voor aanpassing op uw lopende RTM regeling.</p>
         <p>Hiervoor moet u een afspraak maken voor een medisch gesprek bij de GGD. In de brief staat hoe u dat doet.</p>`,
       documents: (regeling) => regeling.documenten,
     },
-    wijziginsBesluit: {
+    wijzigingsBesluit: {
       status: 'Besluit wijziging',
       datePublished: getDatumAfgifte,
       description:
@@ -334,23 +345,18 @@ const statusLineItems: Record<StatusLineKeys, StatusLineItemTransformerConfig> =
       status: 'Einde recht',
       datePublished: (regeling) => regeling.datumEindeGeldigheid || '',
       description: (regeling) => {
-        if (
-          !!regeling.datumEindeGeldigheid &&
-          isAfter(new Date(), regeling.datumEindeGeldigheid)
-        ) {
-          return `
-        <p>Uw recht op ${regeling.titel} is beëindigd per ${defaultDateFormat(regeling.datumEindeGeldigheid)}.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`;
-        }
-        return getNotEveryYearDescription(regeling);
+        return `<p>Uw recht op ${regeling.titel} is beëindigd per ${defaultDateFormat(regeling.datumEindeGeldigheid || '')}.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`;
       },
       documents: (regeling) => regeling.documenten,
-      isActive(regeling, now) {
-        return !!(
-          regeling.isActueel === false &&
-          regeling.datumEindeGeldigheid &&
-          isAfter(now, regeling.datumEindeGeldigheid)
-        );
-      },
+      isActive: () => true,
+    },
+    /** Default einde recht that is shown when a product is in a toegewezen RTM-2 state, einde recht is not actually present in the data in this case. */
+    defaultEindeRecht: {
+      status: 'Einde recht',
+      datePublished: '',
+      description: (regeling) => getNotEveryYearDescription(regeling),
+      documents: (regeling) => regeling.documenten,
+      isActive: () => false,
     },
   };
 
@@ -361,45 +367,57 @@ type IncompleteStatusLineItem = Omit<StatusLineItem, 'id' | 'isActive'> & {
 };
 
 type getStatusLineItemFn = (
-  itemChoice: StatusLineKeys
-) => IncompleteStatusLineItem;
+  itemChoices: StatusLineKey[]
+) => [ZorgnedHLIRegeling, IncompleteStatusLineItem[]];
 
 function createGetStatusLineItemFn(
   regeling: ZorgnedHLIRegeling
 ): getStatusLineItemFn {
-  return (itemChoice) => {
-    const statusItem = statusLineItems[itemChoice];
-    const now = new Date();
+  return (itemChoices) => {
+    const updatedRegeling = structuredClone(regeling);
+    const collectedStatusLineItems: IncompleteStatusLineItem[] = [];
 
-    // TODO: return new regeling.
-    let documents: GenericDocument[] = [];
-    if (typeof statusItem.documents === 'function') {
-      documents = statusItem.documents(regeling);
-      if (documents.length) {
-        regeling.documenten = [];
+    updatedRegeling.procesAanvraagOmschrijving =
+      itemChoices[itemChoices.length - 1];
+
+    for (const choice of itemChoices) {
+      const statusItem = statusLineItems[choice];
+      const now = new Date();
+
+      let documents: GenericDocument[] = [];
+      if (typeof statusItem.documents === 'function') {
+        documents = statusItem.documents(regeling);
+        if (documents.length) {
+          updatedRegeling.documenten = [];
+        }
       }
+
+      const statusLineItem: IncompleteStatusLineItem = {
+        status: statusItem.status,
+        description: parseLabelContent<ZorgnedHLIRegeling>(
+          statusItem.description,
+          regeling,
+          now,
+          []
+        ),
+        datePublished: parseLabelContent<ZorgnedHLIRegeling>(
+          statusItem.datePublished,
+          regeling,
+          now,
+          []
+        ) as string,
+        documents,
+        isActive: statusItem.isActive
+          ? statusItem.isActive(regeling, now)
+          : null,
+        isChecked: false,
+        isVisible: true,
+      };
+
+      collectedStatusLineItems.push(statusLineItem);
     }
 
-    return {
-      status: statusItem.status,
-      description: parseLabelContent<ZorgnedHLIRegeling>(
-        statusItem.description,
-        regeling,
-        now,
-        []
-      ),
-      datePublished: parseLabelContent<ZorgnedHLIRegeling>(
-        statusItem.datePublished,
-        regeling,
-        now,
-        []
-      ) as string,
-      documents,
-      isActive: statusItem.isActive ? statusItem.isActive(regeling, now) : null,
-      isChecked: false,
-      // TODO: Do we need to define this?
-      isVisible: true,
-    };
+    return [updatedRegeling, collectedStatusLineItems];
   };
 }
 
@@ -407,23 +425,20 @@ function getStatusLineItems(
   regeling: ZorgnedHLIRegeling,
   context: Context,
   statusLineItems: IncompleteStatusLineItem[]
-): IncompleteStatusLineItem[] {
+): [ZorgnedHLIRegeling, IncompleteStatusLineItem[]] {
   const getStatusLineItem = createGetStatusLineItemFn(regeling);
 
   if (context === 'startOfChain') {
     if (isRTMDeel1(regeling)) {
       if (regeling.resultaat === 'afgewezen') {
-        return [getStatusLineItem('aanvraagAfgewezen')];
+        return getStatusLineItem(['aanvraagAfgewezen']);
       }
-      return [
-        getStatusLineItem('aanvraagLopend'),
-        getStatusLineItem('inBehandelingGenomen'),
-      ];
+      return getStatusLineItem(['aanvraagLopend', 'inBehandelingGenomen']);
     }
     if (regeling.procesAanvraagOmschrijving === 'Migratie RTM') {
-      return [getStatusLineItem('besluit')];
+      return getStatusLineItem(['besluit']);
     }
-    return [];
+    return [regeling, []];
   } else if (context === 'afterAanvraag') {
     if (!regeling.procesAanvraagOmschrijving) {
       throw Error(
@@ -431,20 +446,28 @@ function getStatusLineItems(
       );
     }
     if (statusLineItems.at(-1)?.status === 'Aanvraag wijziging') {
-      return [getStatusLineItem('wijziginsBesluit')];
+      return getStatusLineItem(['wijzigingsBesluit']);
     }
     switch (regeling.procesAanvraagOmschrijving) {
       case 'Beëindigen RTM': {
-        return [getStatusLineItem('eindeRecht')];
+        if (
+          regeling.isActueel === false &&
+          regeling.datumEindeGeldigheid &&
+          // RP TODO: Remove date from ZorgnedStatusLineItemTransformerConfig?
+          isAfter(new Date(), regeling.datumEindeGeldigheid)
+        ) {
+          return getStatusLineItem(['eindeRecht']);
+        }
+        return getStatusLineItem(['defaultEindeRecht']);
       }
       case 'Aanvraag RTM fase 1': {
-        return [getStatusLineItem('wijzingsAanvraag')];
+        return getStatusLineItem(['wijzigingsAanvraag']);
       }
       case 'RTM Herkeuring': {
-        return [getStatusLineItem('wijziginsBesluit')];
+        return getStatusLineItem(['wijzigingsBesluit']);
       }
       case 'Aanvraag RTM fase 2': {
-        return [getStatusLineItem('besluit')];
+        return getStatusLineItem(['besluit']);
       }
     }
     console.dir(regeling);

@@ -343,29 +343,25 @@ const UNKNOWN: ZorgnedAanvraagWithRelatedPersonsTransformed = {
   bsnAanvrager: '555555555',
 };
 
-describe('getStatusLineItems for RTM', () => {
-  // The following tests heavily use toMatchObject because I don't care about the following fields:
-  // document.id: Contains encryption and will always be different.
-  // document.url: Same as above.
-  // steps[n].description: static text that can be subject to change.
-  //
-  // TODO: Do tests for variable description texts.
-  //
-  // The tests are mainly focussed on getting the right steps and documents.
+// The following tests heavily use toMatchObject because I don't care about the following fields:
+// document.id: Contains encryption and will always be different.
+// document.url: Same as above.
+// steps[n].description: static text that can be subject to change.
+//
+// TODO: Do tests for variable description texts.
+//
+// The tests are mainly focussed on getting the right steps and documents.
 
-  const auth = getAuthProfileAndToken();
-  auth.profile.id = ONTVANGER_ID;
+const auth = getAuthProfileAndToken();
+auth.profile.id = ONTVANGER_ID;
 
-  function transformRegelingenForFrontend(
-    aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
-  ): HLIRegelingFrontend[] {
-    return forTesting.transformRegelingenForFrontend(
-      auth,
-      aanvragen,
-      new Date()
-    );
-  }
+function transformRegelingenForFrontend(
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
+): HLIRegelingFrontend[] {
+  return forTesting.transformRegelingenForFrontend(auth, aanvragen, new Date());
+}
 
+describe('Aanvrager is ontvanger', () => {
   test('Single Aanvraag', () => {
     const regelingen = transformRegelingenForFrontend([RTM_1_AANVRAAG]);
 
@@ -409,7 +405,7 @@ describe('getStatusLineItems for RTM', () => {
       },
       {
         id: 'status-step-3',
-        datePublished: RTM_1_AANVRAAG.datumEindeGeldigheid,
+        datePublished: '',
         documents: [],
         isActive: false,
         isChecked: false,
@@ -680,7 +676,63 @@ describe('getStatusLineItems for RTM', () => {
     ]);
   });
 
-  test('Migratie -> Herkeuring -> Besluit afwijzing', () => {
+  test('Migratie -> Wijzigings aanvraag', () => {
+    const aanvragen = attachIDs([RTM_2_MIGRATIE, RTM_WIJZIGINGS_AANVRAAG]);
+    const regelingen = transformRegelingenForFrontend(aanvragen);
+    expect(regelingen.length).toBe(1);
+    const regeling = regelingen[0];
+
+    expect(regeling).toMatchObject({
+      title: RTM_WIJZIGINGS_AANVRAAG.titel,
+      isActual: true,
+      dateDecision: RTM_WIJZIGINGS_AANVRAAG.datumBesluit,
+      dateStart: RTM_WIJZIGINGS_AANVRAAG.datumIngangGeldigheid,
+      dateEnd: RTM_WIJZIGINGS_AANVRAAG.datumEindeGeldigheid,
+      decision: 'toegewezen',
+      displayStatus: 'Toegewezen',
+      documents: [],
+    });
+    expect(regeling.steps).toMatchObject([
+      {
+        id: 'status-step-1',
+        isActive: false,
+        isChecked: true,
+        isVisible: true,
+        status: 'Besluit',
+        datePublished: RTM_2_MIGRATIE.datumBesluit,
+        documents: [],
+      },
+      {
+        id: 'status-step-2',
+        isActive: true,
+        isChecked: true,
+        isVisible: true,
+        status: 'Aanvraag wijziging',
+        datePublished: RTM_WIJZIGINGS_AANVRAAG.datumBesluit,
+        documents: [
+          {
+            datePublished: '2025-08-18T15:17:08.773',
+            title: 'AV-RTM Info aan klant GGD',
+          },
+          {
+            datePublished: '2025-08-18T14:09:48.83',
+            title: 'AV-RTM Info aan klant GGD',
+          },
+        ],
+      },
+      {
+        id: 'status-step-3',
+        datePublished: '',
+        documents: [],
+        isActive: false,
+        isChecked: false,
+        isVisible: true,
+        status: 'Einde recht',
+      },
+    ]);
+  });
+
+  test('Migratie -> Wijzigings aanvraag -> Besluit afwijzing', () => {
     const aanvragen = attachIDs([
       RTM_2_MIGRATIE,
       RTM_WIJZIGINGS_AANVRAAG,
@@ -692,12 +744,12 @@ describe('getStatusLineItems for RTM', () => {
 
     expect(regeling).toMatchObject({
       title: RTM_WIJZIGINGS_AFWIJZING.titel,
-      isActual: RTM_WIJZIGINGS_AFWIJZING.isActueel,
+      isActual: true,
       dateDecision: RTM_WIJZIGINGS_AFWIJZING.datumBesluit,
       dateStart: RTM_WIJZIGINGS_AFWIJZING.datumIngangGeldigheid,
       dateEnd: RTM_WIJZIGINGS_AFWIJZING.datumEindeGeldigheid,
-      decision: RTM_WIJZIGINGS_AFWIJZING.resultaat,
-      displayStatus: 'Afgewezen',
+      decision: 'toegewezen',
+      displayStatus: 'Toegewezen',
       documents: [],
     });
     expect(regeling.steps).toMatchObject([

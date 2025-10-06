@@ -196,6 +196,7 @@ describe('HLI', () => {
       productsoortCode: '',
       bsnAanvrager: '123456789',
       beschiktProductIdentificatie: 'bpi-123',
+      procesAanvraagOmschrijving: null,
     };
 
     const statusLineItems: StatusLineItem[] = [
@@ -229,6 +230,7 @@ describe('HLI', () => {
         datumIngangGeldigheid: '2023-01-01',
         datumEindeGeldigheid: '2023-12-31',
         resultaat: 'toegewezen',
+        procesAanvraagOmschrijving: null,
         documenten: [],
         betrokkenPersonen: [
           {
@@ -257,7 +259,7 @@ describe('HLI', () => {
     const today = new Date();
     test('With productIdentificatie', async () => {
       vi.spyOn(document, 'dedupeDocumentsInDataSets');
-      const result = await forTesting.transformRegelingenForFrontend(
+      const result = forTesting.transformRegelingenForFrontend(
         authProfileAndToken,
         aanvragen,
         today
@@ -270,7 +272,7 @@ describe('HLI', () => {
 
     test('Without productIdentificatie', async () => {
       const aanvragen2 = [{ ...aanvragen[0], productIdentificatie: '' }];
-      const result = await forTesting.transformRegelingenForFrontend(
+      const result = forTesting.transformRegelingenForFrontend(
         authProfileAndToken,
         aanvragen2,
         today
@@ -310,6 +312,7 @@ describe('HLI', () => {
         productsoortCode: '',
         bsnAanvrager: '123456789',
         beschiktProductIdentificatie: 'bpi-123',
+        procesAanvraagOmschrijving: null,
       };
 
       const result = forTesting.transformRegelingTitle(aanvraag);
@@ -338,6 +341,7 @@ describe('HLI', () => {
         productsoortCode: '',
         bsnAanvrager: '123456789',
         beschiktProductIdentificatie: 'bpi-123',
+        procesAanvraagOmschrijving: null,
       };
 
       const result = forTesting.transformRegelingTitle(aanvraag);
@@ -366,6 +370,7 @@ describe('HLI', () => {
         productsoortCode: '',
         bsnAanvrager: '123456789',
         beschiktProductIdentificatie: 'bpi-123',
+        procesAanvraagOmschrijving: null,
       };
 
       const result = forTesting.transformRegelingTitle(aanvraag);
@@ -394,6 +399,7 @@ describe('HLI', () => {
         productsoortCode: '',
         bsnAanvrager: '123456789',
         beschiktProductIdentificatie: 'bpi-123',
+        procesAanvraagOmschrijving: null,
       };
 
       const result = forTesting.transformRegelingTitle(aanvraag);
@@ -422,6 +428,7 @@ describe('HLI', () => {
         productsoortCode: '',
         bsnAanvrager: '123456789',
         beschiktProductIdentificatie: 'bpi-123',
+        procesAanvraagOmschrijving: null,
       };
 
       const result = forTesting.transformRegelingTitle(aanvraag);

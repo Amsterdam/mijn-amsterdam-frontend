@@ -267,51 +267,6 @@
             "bestandsnaam": "BR3415373.pdf"
           }
         ]
-      },
-      {
-        "identificatie": "3176731",
-        "procesIdentificatie": "3176731",
-        "casusIdentificatie": "1743657",
-        "regeling": {
-          "identificatie": "Armoedevrz",
-          "omschrijving": "Armoedevoorzieningen"
-        },
-        "hulpvraag": {
-          "datumRegistratie": "2025-09-03"
-        },
-        "datumAanmelding": "2025-09-03",
-        "datumAanvraag": "2025-09-03",
-        "procesAanvraag": {
-          "identificatie": "3176731",
-          "omschrijving": "Aanvraag RTM fase 2",
-          "datumStart": "2025-09-03"
-        },
-        "beschikking": {
-          "beschikkingNummer": 301150687,
-          "datumAfgifte": "2025-09-03",
-          "beschikteProducten": [
-            {
-              "identificatie": "329934",
-              "product": {
-                "identificatie": "AV-RTM",
-                "productsoortCode": "AV-D-RTM",
-                "omschrijving": "Regeling Tegemoetkoming Meerkosten"
-              },
-              "productCategorie": {},
-              "resultaat": "afgewezen"
-            }
-          ]
-        },
-        "documenten": [
-          {
-            "documentidentificatie": "B3415374",
-            "procesIdentificatie": "3176731",
-            "casusIdentificatie": "1743657",
-            "omschrijving": "AV-RTM Afwijzing na herkeuring",
-            "datumDefinitief": "2025-09-03T14:39:40.957",
-            "bestandsnaam": "BR3415374.pdf"
-          }
-        ]
       }
     ]
   }
