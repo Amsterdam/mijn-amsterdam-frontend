@@ -232,15 +232,18 @@ export function useAfisBetaalVoorkeurenData(
     isLoadingBusinessPartnerDetails: api.isLoading,
     hasBusinessPartnerDetailsError: api.isError,
     hasEmandatesError: false,
-    hasFailedEmailDependency: businesspartnerDetailsApiResponse
-      ? hasFailedDependency(businesspartnerDetailsApiResponse, 'email')
-      : false,
-    hasFailedPhoneDependency: businesspartnerDetailsApiResponse
-      ? hasFailedDependency(businesspartnerDetailsApiResponse, 'phone')
-      : false,
-    hasFailedFullNameDependency: businesspartnerDetailsApiResponse
-      ? hasFailedDependency(businesspartnerDetailsApiResponse, 'fullName')
-      : false,
+    hasFailedEmailDependency: hasFailedDependency(
+      businesspartnerDetailsApiResponse,
+      'email'
+    ),
+    hasFailedPhoneDependency: hasFailedDependency(
+      businesspartnerDetailsApiResponse,
+      'phone'
+    ),
+    hasFailedFullNameDependency: hasFailedDependency(
+      businesspartnerDetailsApiResponse,
+      'fullName'
+    ),
     eMandateTableConfig,
     eMandates: [],
     isLoadingEmandates: false,
