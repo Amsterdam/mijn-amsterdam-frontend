@@ -28,13 +28,13 @@ const isActueleUitgevoerdeWoonruimteAanpassing: FetchWmoVoorzieningFilter = (
   voorziening.isActueel &&
   steps.some((step) => step.status === WRA_STEP_STATUS && step.isActive);
 
-const apiInput = z.object({
+const voorzieningenRequestInput = z.object({
   bsn: ZodValidators.BSN,
 });
 
 async function handleVoorzieningenRequest(req: Request, res: Response) {
   try {
-    apiInput.parse(req.body);
+    voorzieningenRequestInput.parse(req.body);
   } catch (error) {
     let inputError = 'Invalid input';
 
