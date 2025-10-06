@@ -55,7 +55,7 @@ const exploitatieInProgress = {
     },
   ],
   link: {
-    to: '/passagiers-en-beroepsvaart/vergunning/varen-vergunning-exploitatie/Z-24-0000001',
+    to: '/varen/vergunning/varen-vergunning-exploitatie/Z-24-0000001',
     title: 'Bekijk hoe het met uw aanvraag staat',
   },
 } as unknown as ExploitatieAanvraag;
@@ -68,7 +68,7 @@ const vergunning: VarenVergunningFrontend = {
   dateRequestFormatted: '08 september 2025',
   dateStartFormatted: '10 september 2025',
   link: {
-    to: '/passagiers-en-beroepsvaart/vergunning/Z-24-0000001',
+    to: '/varen/vergunning/Z-24-0000001',
     title: 'Bekijk uw actieve vergunning',
   },
 } as unknown as VarenVergunningFrontend;
@@ -135,7 +135,7 @@ describe('<Varen />', () => {
   it('Shows the expected title on the page', () => {
     const screen = render(<Component state={getTestState([])} />);
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
-      'Passagiers- en beroepsvaart'
+      'Passagiersvaart'
     );
   });
 
@@ -143,7 +143,7 @@ describe('<Varen />', () => {
     const screen = render(<Component state={getTestState([])} />);
     expect(
       screen.getByRole('link', {
-        name: 'Meer informatie over passagiers- en beroepsvaart',
+        name: 'Meer informatie over passagiersvaart',
       })
     ).toBeInTheDocument();
     expect(

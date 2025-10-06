@@ -112,14 +112,14 @@ describe('Notifications', () => {
         notifications: [
           {
             themaID: 'VAREN',
-            themaTitle: 'Passagiers- en beroepsvaart',
+            themaTitle: 'Passagiersvaart',
             id: 'varen-Z-25-0000001-reder-notification',
             datePublished: rederRegistratie.dateRequest,
             title: 'Reder geregistreerd',
             description: 'U heeft zich geregistreerd.',
             link: {
               title: 'Bekijk details',
-              to: '/passagiers-en-beroepsvaart',
+              to: '/passagiersvaart',
             },
           },
         ],
@@ -163,7 +163,7 @@ describe('Notifications', () => {
         notifications: [
           {
             themaID: 'VAREN',
-            themaTitle: 'Passagiers- en beroepsvaart',
+            themaTitle: 'Passagiersvaart',
             id: 'varen-Z-25-0000001-inbehandeling-notification',
             title: 'Aanvraag Varen vergunning exploitatie in behandeling',
             description:
@@ -171,12 +171,12 @@ describe('Notifications', () => {
             datePublished: zaakInProgress.dateRequest,
             link: {
               title: 'Bekijk details',
-              to: '/passagiers-en-beroepsvaart/vergunningen/varen-vergunning-exploitatie/Z-25-0000001',
+              to: '/varen/vergunningen/varen-vergunning-exploitatie/Z-25-0000001',
             },
           },
           {
             themaID: 'VAREN',
-            themaTitle: 'Passagiers- en beroepsvaart',
+            themaTitle: 'Passagiersvaart',
             id: 'varen-Z-25-0000001-meerinformatienodig-notification',
             title:
               'Meer informatie nodig omtrent uw Varen vergunning exploitatie aanvraag',
@@ -185,12 +185,12 @@ describe('Notifications', () => {
             datePublished: zaakMeerInformatieTermijn.dateStart,
             link: {
               title: 'Bekijk details',
-              to: '/passagiers-en-beroepsvaart/vergunningen/varen-vergunning-exploitatie/Z-25-0000001',
+              to: '/varen/vergunningen/varen-vergunning-exploitatie/Z-25-0000001',
             },
           },
           {
             themaID: 'VAREN',
-            themaTitle: 'Passagiers- en beroepsvaart',
+            themaTitle: 'Passagiersvaart',
             id: 'varen-Z-25-0000001-afgehandeld-notification',
             title: 'Aanvraag Varen vergunning exploitatie afgehandeld',
             description:
@@ -198,7 +198,7 @@ describe('Notifications', () => {
             datePublished: zaakDecision.dateDecision,
             link: {
               title: 'Bekijk details',
-              to: '/passagiers-en-beroepsvaart/vergunningen/varen-vergunning-exploitatie/Z-25-0000001',
+              to: '/varen/vergunningen/varen-vergunning-exploitatie/Z-25-0000001',
             },
           },
         ],
@@ -225,10 +225,10 @@ describe('Notifications', () => {
             id: 'varen-Z-25-0000001-10001-vergunning-notification',
             link: {
               title: 'Bekijk details',
-              to: '/passagiers-en-beroepsvaart/vergunningen/Z-25-0000001-10001',
+              to: '/varen/vergunningen/Z-25-0000001-10001',
             },
             themaID: 'VAREN',
-            themaTitle: 'Passagiers- en beroepsvaart',
+            themaTitle: 'Passagiersvaart',
             title: 'Varen vergunning exploitatie',
           },
         ],

@@ -35,29 +35,29 @@ export const featureToggle = {
 };
 
 export const themaId = 'VAREN' as const;
-export const themaTitle = 'Passagiers- en beroepsvaart' as const;
+export const themaTitle = 'Passagiersvaart' as const;
 
 export const routeConfig = {
   detailPageZaak: {
-    path: '/passagiers-en-beroepsvaart/vergunningen/:caseType/:id',
+    path: '/varen/vergunningen/:caseType/:id',
     trackingUrl(params) {
-      return `/passagiers-en-beroepsvaart/vergunningen/${params?.caseType ?? ''}`;
+      return `/varen/vergunningen/${params?.caseType ?? ''}`;
     },
     documentTitle: getVarenDetailPageDocumentTitle(themaTitle),
   },
   detailPageVergunning: {
-    path: '/passagiers-en-beroepsvaart/vergunningen/:id',
+    path: '/varen/vergunningen/:id',
     trackingUrl(params) {
-      return `/passagiers-en-beroepsvaart/vergunning/${params?.caseType ?? ''}`;
+      return `/varen/vergunning/${params?.caseType ?? ''}`;
     },
     documentTitle: getVarenDetailPageDocumentTitle(themaTitle),
   },
   listPage: {
-    path: '/passagiers-en-beroepsvaart/vergunningen/lijst/:kind/:page?',
+    path: '/varen/vergunningen/lijst/:kind/:page?',
     documentTitle: getVarenListPageDocumentTitle(themaTitle),
   },
   themaPage: {
-    path: '/passagiers-en-beroepsvaart',
+    path: '/varen',
     documentTitle: `${themaTitle} | overzicht`,
   },
 } as const satisfies ThemaRoutesConfig;
@@ -164,7 +164,7 @@ export const tableConfig: {
 
 export const varenMeerInformatieLink: LinkProps = {
   to: 'https://www.amsterdam.nl/ondernemen/vergunning-passagiersvaart-wijzigen',
-  title: 'Meer informatie over passagiers- en beroepsvaart',
+  title: 'Meer informatie over passagiersvaart',
 } as const;
 
 export const varenLegesTableLink: LinkProps = {

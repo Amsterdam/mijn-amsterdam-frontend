@@ -82,7 +82,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   TOERISTISCHE_VERHUUR_vakantieverhuurVergunningen:
     'Uw vergunning vakantieverhuur',
   TOERISTISCHE_VERHUUR: 'Toeristische verhuur + meldingen',
-  VAREN: 'Passagiers- en beroepsvaart',
+  VAREN: 'Passagiersvaart',
 
   VERGUNNINGEN: 'Vergunningen en ontheffingen',
   WMO: 'Zorg en ondersteuning',

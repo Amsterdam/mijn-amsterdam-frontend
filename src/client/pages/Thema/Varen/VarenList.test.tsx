@@ -30,7 +30,7 @@ const exploitatieInProgress: ExploitatieAanvraag = {
   dateRequestFormatted: '10 november 2023',
   dateDecisionFormatted: null,
   link: {
-    to: '/passagiers-en-beroepsvaart/zaak/varen-vergunning-exploitatie/Z-24-0000001',
+    to: '/varen/zaak/varen-vergunning-exploitatie/Z-24-0000001',
     title: 'Bekijk hoe het met uw aanvraag staat',
   },
 } as unknown as ExploitatieAanvraag;
@@ -43,7 +43,7 @@ const vergunning: VarenVergunningFrontend = {
   dateRequestFormatted: '08 november 2023',
   dateStartFormatted: '10 november 2023',
   link: {
-    to: '/passagiers-en-beroepsvaart/vergunning/Z-24-0000001',
+    to: '/varen/vergunning/Z-24-0000001',
     title: 'Bekijk uw actieve vergunning',
   },
 } as unknown as VarenVergunningFrontend;
