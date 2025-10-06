@@ -7,6 +7,8 @@
   height: auto;
   z-index: 401;
   @media screen and (min-width: $ams-breakpoint-medium) {
+    // Increased padding-top from 3.2rem to 4.2rem during state management refactor
+    // to accommodate new header layout and ensure consistent spacing with updated UI.
     padding-top: 4.2rem;
     padding-left: 3.2rem;
   }
