@@ -48,7 +48,7 @@ export function useBezwarenDetailData() {
     isErrorThemaData,
     isError: isError || isErrorThemaData || hasFailedDependencies,
     dependencyErrors:
-      data?.status === 'OK' && data.failedDependencies
+      hasFailedDependencies
         ? {
             Documenten: 'documents' in data.failedDependencies,
             Statussen: 'statussen' in data.failedDependencies,
