@@ -171,7 +171,7 @@ describe('zorgned-status-line-items', () => {
       test('Get line items', () => {
         expect(lineItems).toBe(null);
         expect(logSpy).toHaveBeenCalledWith(
-          `No line item formatters found for Service: WMO, leveringsVorm: NO, productsoortCode: MATCH, productIdentificatie: WORLD`
+          `No line item formatters found for Service: WMO, resultaat: undefined, leveringsVorm: NO, productsoortCode: MATCH, productIdentificatie: WORLD`
         );
       });
     });
