@@ -67,7 +67,7 @@ routerInternet.get(
 // PRIVATE NETWORK ROUTER
 // ======================
 export const routerPrivateNetwork = createBFFRouter({
-  id: 'external-consumer-private-network',
+  id: 'external-consumer-private-network-stadspas',
 });
 
 export const stadspasExternalConsumerRouter = {

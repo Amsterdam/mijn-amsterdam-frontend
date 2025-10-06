@@ -27,12 +27,12 @@ const transformerConfigs = [transformerConfig, transformerConfig2];
 const lineItemsConfig1: ZorgnedStatusLineItemsConfig = {
   leveringsVorm: 'FOO',
   productsoortCodes: ['BAR', 'FOO'],
-  lineItemTransformers: [transformerConfig, transformerConfig2],
+  statusLineItems: [transformerConfig, transformerConfig2],
 };
 
 const lineItemsConfig2: ZorgnedStatusLineItemsConfig = {
   productIdentificatie: ['BAR'],
-  lineItemTransformers: [transformerConfig2],
+  statusLineItems: [transformerConfig2],
   filter(aanvraag) {
     return aanvraag.betrokkenen?.includes('B');
   },
@@ -43,7 +43,7 @@ const lineItemsConfig3: ZorgnedStatusLineItemsConfig = {
   filter(aanvraag) {
     return aanvraag.betrokkenen?.includes('A');
   },
-  lineItemTransformers: [transformerConfig],
+  statusLineItems: [transformerConfig],
 };
 
 const lineItemConfigs = [lineItemsConfig1, lineItemsConfig2, lineItemsConfig3];
@@ -228,7 +228,7 @@ describe('zorgned-status-line-items', () => {
         [
           {
             ...lineItemsConfig1,
-            lineItemTransformers: [transformer1, transformer2],
+            statusLineItems: [transformer1, transformer2],
           },
         ],
         aanvraag,

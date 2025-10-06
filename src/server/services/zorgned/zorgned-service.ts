@@ -13,7 +13,9 @@ import {
   ZorgnedPerson,
   ZorgnedPersoonsgegevensNAWResponse,
   ZorgnedResponseDataSource,
+  type Beschikking,
   type BSN,
+  type ZorgnedAanvraagSource,
 } from './zorgned-types';
 import {
   apiErrorResult,
@@ -78,12 +80,14 @@ function transformDocumenten(documenten: ZorgnedDocument[]) {
 }
 
 function transformZorgnedAanvraag(
-  id: string,
+  aanvraagSource: ZorgnedAanvraagSource,
+  beschikking: Beschikking,
   datumAanvraag: string,
   datumBesluit: string,
   beschiktProduct: BeschiktProduct,
   documenten: ZorgnedDocument[]
 ): ZorgnedAanvraagTransformed {
+  const id = `${aanvraagSource.identificatie}-${beschiktProduct.identificatie}`;
   const toegewezenProduct = beschiktProduct.toegewezenProduct;
   const toewijzingen = toegewezenProduct?.toewijzingen ?? [];
   const toewijzing = toewijzingen.pop();
@@ -120,6 +124,7 @@ function transformZorgnedAanvraag(
     productsoortCode: productsoortCode,
     productIdentificatie,
     beschiktProductIdentificatie: beschiktProduct.identificatie,
+    beschikkingNummer: beschikking.beschikkingNummer,
     resultaat: beschiktProduct.resultaat,
     titel: beschiktProduct.product.omschrijving ?? '',
     betrokkenen: toegewezenProduct?.betrokkenen ?? [],
@@ -155,7 +160,8 @@ export function transformZorgnedAanvragen(
     for (const beschiktProduct of beschikteProducten) {
       if (beschiktProduct) {
         const aanvraagTransformed = transformZorgnedAanvraag(
-          `${aanvraagSource.identificatie}-${beschiktProduct.identificatie}`,
+          aanvraagSource,
+          beschikking,
           datumAanvraag,
           datumBesluit,
           beschiktProduct,
