@@ -50,8 +50,8 @@ export function useBezwarenDetailData() {
     dependencyErrors:
       hasFailedDependencies
         ? {
-            Documenten: 'documents' in data.failedDependencies,
-            Statussen: 'statussen' in data.failedDependencies,
+            Documenten: hasFailedDependency(data, 'documents'),
+            Statussen: hasFailedDependency(data, 'statussen'),
           }
         : null,
     breadcrumbs,
