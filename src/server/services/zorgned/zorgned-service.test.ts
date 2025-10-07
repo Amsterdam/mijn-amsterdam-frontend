@@ -84,47 +84,42 @@ describe('zorgned-service', () => {
   });
 
   test('transformZorgnedAanvragen', () => {
+    const aanvragenShuffled = ZORGNED_JZD_AANVRAGEN._embedded.aanvraag
+      .filter((aanvraag) =>
+        ['2703104', '2696493', '2719515'].includes(aanvraag.identificatie)
+      )
+      .toSorted(() => (Math.random() * 1 > 0.5 ? 1 : -1)); // Shuffle array to test sorting.
+
     expect(
       forTesting.transformZorgnedAanvragen({
         _embedded: {
-          aanvraag: [
-            ...ZORGNED_JZD_AANVRAGEN._embedded.aanvraag.filter((aanvraag) =>
-              ['2703104', '2696493', '2719515'].includes(aanvraag.identificatie)
-            ),
-          ].sort(() => (Math.random() > 0.5 ? 1 : -1)), // Shuffle array to test sorting.
+          aanvraag: aanvragenShuffled,
         },
       } as ZorgnedResponseDataSource)
     ).toMatchInlineSnapshot(`
       [
         {
-          "beschiktProductIdentificatie": "1194396",
+          "beschiktProductIdentificatie": "1215588",
           "betrokkenen": [
-            "123123123123",
+            "123123123",
           ],
-          "datumAanvraag": "2024-01-25",
-          "datumBeginLevering": "2024-03-14",
-          "datumBesluit": "2024-01-25",
-          "datumEindeGeldigheid": null,
-          "datumEindeLevering": null,
-          "datumIngangGeldigheid": "2024-01-01",
-          "datumOpdrachtLevering": "2024-01-25T17:10:55.2733333",
-          "datumToewijzing": "2024-01-25T17:10:55.2733333",
-          "documenten": [
-            {
-              "datePublished": "2024-01-25T17:08:09.837",
-              "id": "B2791921",
-              "title": "Besluit: toekenning AIO/AO/Dagbest/Logeeropvang",
-              "url": "",
-            },
-          ],
-          "id": "2696493-1194396",
-          "isActueel": true,
-          "leverancier": "Amstelring",
+          "datumAanvraag": "2024-09-30",
+          "datumBeginLevering": "2024-09-30",
+          "datumBesluit": "2024-09-30",
+          "datumEindeGeldigheid": "2024-10-01",
+          "datumEindeLevering": "2024-10-01",
+          "datumIngangGeldigheid": "2024-09-30",
+          "datumOpdrachtLevering": "2024-09-30T18:58:05.6966667",
+          "datumToewijzing": "2024-09-30T18:58:05.6966667",
+          "documenten": [],
+          "id": "2719515-1215588",
+          "isActueel": false,
+          "leverancier": "Otolift",
           "leveringsVorm": "ZIN",
-          "productIdentificatie": "07A08",
-          "productsoortCode": "DBS",
+          "productIdentificatie": "13W15",
+          "productsoortCode": "WRA1",
           "resultaat": "toegewezen",
-          "titel": "dagbesteding meedoen",
+          "titel": "reparatie-/verwijderopdracht   trapliften",
         },
         {
           "beschiktProductIdentificatie": "1200567",
@@ -169,27 +164,34 @@ describe('zorgned-service', () => {
           "titel": "hulp bij het huishouden bijzondere schoonmaak",
         },
         {
-          "beschiktProductIdentificatie": "1215588",
+          "beschiktProductIdentificatie": "1194396",
           "betrokkenen": [
-            "123123123",
+            "123123123123",
           ],
-          "datumAanvraag": "2024-09-30",
-          "datumBeginLevering": "2024-09-30",
-          "datumBesluit": "2024-09-30",
-          "datumEindeGeldigheid": "2024-10-01",
-          "datumEindeLevering": "2024-10-01",
-          "datumIngangGeldigheid": "2024-09-30",
-          "datumOpdrachtLevering": "2024-09-30T18:58:05.6966667",
-          "datumToewijzing": "2024-09-30T18:58:05.6966667",
-          "documenten": [],
-          "id": "2719515-1215588",
-          "isActueel": false,
-          "leverancier": "Otolift",
+          "datumAanvraag": "2024-01-25",
+          "datumBeginLevering": "2024-03-14",
+          "datumBesluit": "2024-01-25",
+          "datumEindeGeldigheid": null,
+          "datumEindeLevering": null,
+          "datumIngangGeldigheid": "2024-01-01",
+          "datumOpdrachtLevering": "2024-01-25T17:10:55.2733333",
+          "datumToewijzing": "2024-01-25T17:10:55.2733333",
+          "documenten": [
+            {
+              "datePublished": "2024-01-25T17:08:09.837",
+              "id": "B2791921",
+              "title": "Besluit: toekenning AIO/AO/Dagbest/Logeeropvang",
+              "url": "",
+            },
+          ],
+          "id": "2696493-1194396",
+          "isActueel": true,
+          "leverancier": "Amstelring",
           "leveringsVorm": "ZIN",
-          "productIdentificatie": "13W15",
-          "productsoortCode": "WRA1",
+          "productIdentificatie": "07A08",
+          "productsoortCode": "DBS",
           "resultaat": "toegewezen",
-          "titel": "reparatie-/verwijderopdracht   trapliften",
+          "titel": "dagbesteding meedoen",
         },
       ]
     `);
