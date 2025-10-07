@@ -332,7 +332,7 @@ const ApiConfig_ = {
   LOOD_365: {
     url: `${getFromEnv('BFF_LOOD_API_URL')}`,
     method: 'POST',
-    postponeFetch: !themaConfig.featureToggle,
+    postponeFetch: !themaConfig.featureToggle.themaActive,
   },
   MS_OAUTH: {
     url: `${getFromEnv('BFF_MS_OAUTH_ENDPOINT')}:tenant/oauth2/v2.0/token`,
