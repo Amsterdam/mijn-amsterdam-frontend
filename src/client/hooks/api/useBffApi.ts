@@ -33,8 +33,14 @@ async function handleResponse<T>(
       return responseJson;
     }
 
+    let responseContent: T | null = responseJson;
+
+    if (!('status' in responseJson) && 'content' in responseJson) {
+      responseContent = (responseJson as { content: T }).content;
+    }
+
     // If not, wrap it in a success ApiResponse
-    return apiSuccessResult<T>(responseJson);
+    return apiSuccessResult<T>(responseContent);
   } catch (error: unknown) {
     return apiErrorResult(
       (error as Error)?.message ?? `Unknown error: ${error}`,

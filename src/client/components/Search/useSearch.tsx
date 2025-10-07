@@ -210,18 +210,19 @@ function useAmsterdamNLSearchEntries(
     sendRequest: sendGetRequest,
   });
   const searchEntries = api.data?.content ?? null;
+  const apiFetch = api.fetch;
 
   useEffect(() => {
     if (term) {
-      api.fetch(url);
+      apiFetch(url);
     }
-  }, [term]);
+  }, [term, apiFetch, url]);
 
   useEffect(() => {
     if (searchEntries) {
       setResults({ am: searchEntries });
     }
-  }, [searchEntries]);
+  }, [searchEntries, setResults]);
 }
 
 type SearchTermStore = {
@@ -330,8 +331,11 @@ export function useDynamicSearchEntries(
 
 export function useSearchIndex(extendedAMResults: boolean) {
   const isAppStateReady = useAppStateReady();
-  const [{ fetch, isLoading }, staticSearchEntries, remoteApiSearchConfigs] =
-    useSearchConfigJSON();
+  const [
+    { fetch, isLoading, isDirty },
+    staticSearchEntries,
+    remoteApiSearchConfigs,
+  ] = useSearchConfigJSON();
   const dynamicSearchEntries = useDynamicSearchEntries(remoteApiSearchConfigs); // SearchEntry voor dynamische items (API resultaten)
   const { setFuseInstance, fuseInstance, term, setTerm, setResults, results } =
     useSearchStore();
@@ -364,10 +368,10 @@ export function useSearchIndex(extendedAMResults: boolean) {
       const rawResults = fuseInstance.search(term).map((result) => result.item);
       setResults({ ma: rawResults });
     }
-    if (term && !fuseInstance && !isLoading) {
+    if (term && !fuseInstance && !isLoading && !isDirty) {
       fetch();
     }
-  }, [term, fetch, fuseInstance, setResults, isLoading]);
+  }, [term, fetch, fuseInstance, setResults, isLoading, isDirty]);
 
   return {
     term,

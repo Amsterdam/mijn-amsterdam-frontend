@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import nock from 'nock';
-import { afterEach, beforeEach, describe, expect, test } from 'vitest';
+import { afterEach, describe, expect, test } from 'vitest';
 
 import { Search } from './Search';
 import * as remoteConfig from './search-config.json';
@@ -40,31 +40,18 @@ vi.mock('react-router', async (importOriginal) => {
   };
 });
 
+function mockSearchConfig() {
+  bffApi.get('/services/search-config').reply(200, { content: remoteConfig });
+}
+
+function mockSwiftSearch() {
+  nock('https://api.swiftype.com')
+    .get((uri) => uri.includes('/api/v1/public/engines/suggest.json'))
+    .reply(200, {});
+}
+
 describe('<Search />', () => {
-  beforeEach(() => {
-    bffApi.get('/services/search-config').reply(200, { content: remoteConfig });
-
-    nock('https://api.swiftype.com')
-      .defaultReplyHeaders({
-        'access-control-allow-origin': '*',
-        'access-control-allow-credentials': 'true',
-      })
-      .get(
-        '/api/v1/public/engines/suggest.json?q=gehandicaptenparkeerkaart&engine_key=zw32MDuzZjzNC8VutizD&per_page=10'
-      )
-      .reply(200, {})
-      .get(
-        '/api/v1/public/engines/suggest.json?q=Dashboard&engine_key=zw32MDuzZjzNC8VutizD&per_page=10'
-      )
-      .reply(200, {})
-      .get(
-        '/api/v1/public/engines/suggest.json?q=weesperplein&engine_key=zw32MDuzZjzNC8VutizD&per_page=10'
-      )
-      .reply(200, {});
-  });
-
   afterEach(() => {
-    nock.cleanAll();
     mocks.navigate.mockClear();
   });
 
@@ -94,7 +81,10 @@ describe('<Search />', () => {
   });
 
   test('Enter search text and click result', async () => {
-    bffApi.get('/services/search-config').reply(200);
+    mockSearchConfig(); // Only fetched once
+    mockSwiftSearch(); // Dashboard search
+    mockSwiftSearch(); // gehandicaptenparkeerkaart search
+
     const user = userEvent.setup();
     const onFinishCallback = vi.fn();
 
@@ -140,7 +130,9 @@ describe('<Search />', () => {
   });
 
   test('Clear search input', async () => {
-    bffApi.get('/services/search-config').reply(200);
+    mockSearchConfig(); // Only fetched once
+    mockSwiftSearch(); // gehandicaptenparkeerkaart search
+
     const user = userEvent.setup();
 
     const screen = render(
@@ -168,7 +160,9 @@ describe('<Search />', () => {
   });
 
   test('Navigates to search page', async () => {
-    bffApi.get('/services/search-config').reply(200);
+    mockSearchConfig(); // Only fetched once
+    mockSwiftSearch(); // gehandicaptenparkeerkaart search
+
     const user = userEvent.setup();
 
     const screen = render(

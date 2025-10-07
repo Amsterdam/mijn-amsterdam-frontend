@@ -1,9 +1,9 @@
 import { render, screen, act } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import { useBffApi } from './useBffApi';
-import { apiSuccessResult } from '../../../universal/helpers/api';
 
-const TestComponent = () => {
+import { useBffApi } from './useBffApi';
+
+function TestComponent() {
   const api1 = useBffApi('key1', { fetchImmediately: false });
   const api2 = useBffApi('key2', { fetchImmediately: false });
 
@@ -23,7 +23,7 @@ const TestComponent = () => {
       </div>
     </div>
   );
-};
+}
 
 describe('useBffApi in a component', () => {
   it('should fetch data from two separate URLs', async () => {
@@ -56,7 +56,7 @@ describe('useBffApi in a component', () => {
     });
 
     expect(screen.getByTestId('api1-data').textContent).toBe(
-      JSON.stringify(apiSuccessResult(mockResponse1.content))
+      JSON.stringify({ status: 'OK', content: { foo: 'bar1' } })
     );
     expect(screen.getByTestId('api2-data').textContent).toBe('No data');
 
@@ -67,7 +67,7 @@ describe('useBffApi in a component', () => {
     expect(global.fetch).toHaveBeenCalledTimes(2);
 
     expect(screen.getByTestId('api2-data').textContent).toBe(
-      JSON.stringify(apiSuccessResult(mockResponse2.content))
+      JSON.stringify({ status: 'OK', content: { foo: 'bar2' } })
     );
 
     expect(screen.queryByTestId('test-component')).not.toBeNull();
@@ -82,10 +82,10 @@ describe('useBffApi in a component', () => {
     expect(global.fetch).toHaveBeenCalledTimes(2);
 
     expect(screen.getByTestId('api1-data').textContent).toBe(
-      JSON.stringify(apiSuccessResult(mockResponse1.content))
+      JSON.stringify({ status: 'OK', content: { foo: 'bar1' } })
     );
     expect(screen.getByTestId('api2-data').textContent).toBe(
-      JSON.stringify(apiSuccessResult(mockResponse2.content))
+      JSON.stringify({ status: 'OK', content: { foo: 'bar2' } })
     );
   });
 });
