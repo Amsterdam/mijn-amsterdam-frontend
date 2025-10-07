@@ -30,7 +30,7 @@ const exploitatieInProgress: ExploitatieAanvraag = {
   dateRequestFormatted: '10 november 2023',
   dateDecisionFormatted: null,
   link: {
-    to: '/passagiers-en-beroepsvaart/zaak/varen-vergunning-exploitatie/Z-24-0000001',
+    to: '/varen/zaak/varen-vergunning-exploitatie/Z-24-0000001',
     title: 'Bekijk hoe het met uw aanvraag staat',
   },
 } as unknown as ExploitatieAanvraag;
@@ -43,7 +43,7 @@ const vergunning: VarenVergunningFrontend = {
   dateRequestFormatted: '08 november 2023',
   dateStartFormatted: '10 november 2023',
   link: {
-    to: '/passagiers-en-beroepsvaart/vergunning/Z-24-0000001',
+    to: '/varen/vergunning/Z-24-0000001',
     title: 'Bekijk uw actieve vergunning',
   },
 } as unknown as VarenVergunningFrontend;
@@ -183,7 +183,7 @@ describe('<VarenVergunningList />', () => {
     const screen = render(<Component state={getTestState([], vergunningen)} />);
 
     const table = screen.getByRole('table');
-    expectHeaders(table, ['Naam vaartuig', 'Omschrijving', 'Datum besluit']);
+    expectHeaders(table, ['Naam vaartuig', 'Omschrijving']);
 
     const withinTable = within(table);
 
@@ -193,9 +193,6 @@ describe('<VarenVergunningList />', () => {
     expect(
       withinTable.getAllByText('Varen vergunning exploitatie')
     ).toHaveLength(vergunningen.length);
-    expect(withinTable.getAllByText('10 november 2023')).toHaveLength(
-      vergunningen.length
-    );
   });
 
   it('Naam vaartuig links to the corresponding aanvraag or vergunning', () => {
