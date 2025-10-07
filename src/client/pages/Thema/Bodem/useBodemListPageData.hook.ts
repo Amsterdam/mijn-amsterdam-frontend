@@ -1,20 +1,28 @@
 import { generatePath, useParams } from 'react-router';
 
-import { TableHeaders, themaConfig } from './Bodem-thema-config';
+import { TableHeaders } from './Bodem-thema-config';
 import { useBodemData } from './useBodemData.hook';
 
 export function useBodemListPageData() {
-  const { items, isLoading, isError, tableConfig, breadcrumbs, listPageRoute } =
-    useBodemData();
+  const {
+    themaId,
+    items,
+    isLoading,
+    isError,
+    tableConfig,
+    breadcrumbs,
+    listPageRoute,
+    routeConfig,
+  } = useBodemData();
   const params = useParams<{ kind: TableHeaders }>();
   const { kind = 'lopende-aanvragen' } = params;
   const { filter, sort, title, displayProps } = tableConfig[kind];
 
   return {
+    themaId: themaId,
     items,
     filter,
     sort,
-    themaId: themaConfig.id,
     title,
     displayProps,
     isLoading,
@@ -22,6 +30,6 @@ export function useBodemListPageData() {
     params,
     listPageRoute: generatePath(listPageRoute, { kind, page: null }),
     breadcrumbs,
-    routeConfig: themaConfig, //TO DO  > dit zegt Tim > Dit klopt niet lijkt me?
+    routeConfig,
   };
 }

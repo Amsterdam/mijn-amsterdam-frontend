@@ -1,11 +1,13 @@
-import { themaConfig } from './Bodem-thema-config';
+//import { themaConfig } from './Bodem-thema-config';
 import { useBodemListPageData } from './useBodemListPageData.hook';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function BodemList() {
   const {
+    themaId,
     items,
+    title,
     isLoading,
     isError,
     filter,
@@ -13,14 +15,15 @@ export function BodemList() {
     displayProps,
     breadcrumbs,
     listPageRoute,
+    routeConfig,
   } = useBodemListPageData();
-  useHTMLDocumentTitle(themaConfig.listPage.route); //TO DO deze gaat niet goed!
+  useHTMLDocumentTitle(routeConfig.route);
 
   return (
     <ListPagePaginated
       items={items.filter(filter).sort(sort)}
-      themaId={themaConfig.id}
-      title={themaConfig.title}
+      themaId={themaId}
+      title={title}
       appRoute={listPageRoute}
       breadcrumbs={breadcrumbs}
       displayProps={displayProps}
