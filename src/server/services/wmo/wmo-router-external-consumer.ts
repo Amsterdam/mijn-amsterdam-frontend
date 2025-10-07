@@ -12,7 +12,6 @@ import {
   sendBadRequest,
   sendResponse,
 } from '../../routing/route-helpers';
-import type { BSN } from '../zorgned/zorgned-types';
 
 export const wmoRouterPrivateNetwork = createBFFRouter({
   id: 'external-consumer-private-network-wmo',
@@ -33,8 +32,10 @@ const voorzieningenRequestInput = z.object({
 });
 
 async function handleVoorzieningenRequest(req: Request, res: Response) {
+  // Validate the request body so we can be sure it has the correct shape and values.
+  let validatedRequestBody;
   try {
-    voorzieningenRequestInput.parse(req.body);
+    validatedRequestBody = voorzieningenRequestInput.parse(req.body);
   } catch (error) {
     let inputError = 'Invalid input';
 
@@ -45,8 +46,7 @@ async function handleVoorzieningenRequest(req: Request, res: Response) {
     return sendBadRequest(res, inputError);
   }
 
-  const bsn = req.body?.bsn as BSN;
-
+  const bsn = validatedRequestBody.bsn;
   const response = await fetchWmoVoorzieningenCompact(bsn, {
     productGroup: [WRA_PRODUCT_GROUP],
     filter: isActueleUitgevoerdeWoonruimteAanpassing,
