@@ -17,7 +17,7 @@ export function BodemList() {
     listPageRoute,
     routeConfig,
   } = useBodemListPageData();
-  useHTMLDocumentTitle(routeConfig.route);
+  useHTMLDocumentTitle(routeConfig);
 
   return (
     <ListPagePaginated
