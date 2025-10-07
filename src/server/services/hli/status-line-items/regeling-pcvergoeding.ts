@@ -40,7 +40,6 @@ function isBeforeRegelingV3Start(
   dateString: string,
   passMatchDefault: boolean = true
 ) {
-  console.log('isPcRegelingV3Active()', isPcRegelingV3Active());
   return isPcRegelingV3Active()
     ? isBefore(dateString, PC_REGELING_V3_START_DATE)
     : passMatchDefault;
