@@ -333,6 +333,7 @@ describe('pcvergoeding', () => {
       const testData = [
         {
           id: '2',
+          titel: 'PC vergoeding verzilvering',
           productIdentificatie: AV_PCVZIL,
           betrokkenen: ['A'],
           datumBesluit: '2024-06-18',
@@ -341,6 +342,7 @@ describe('pcvergoeding', () => {
         },
         {
           id: '1',
+          titel: 'PC vergoeding aanvraag',
           productIdentificatie: AV_PCVC,
           betrokkenen: ['A'],
           datumBesluit: '2024-05-18',
@@ -354,6 +356,7 @@ describe('pcvergoeding', () => {
       expect(result).toEqual([
         {
           id: '2',
+          titel: 'PC vergoeding aanvraag',
           productIdentificatie: AV_PCVZIL,
           betrokkenen: ['A'],
           datumBesluit: '2024-06-18',
@@ -369,6 +372,7 @@ describe('pcvergoeding', () => {
       const testData = [
         {
           id: 'new-2',
+          titel: 'PC vergoeding verzilvering',
           productIdentificatie: AV_PCVTG,
           betrokkenen: ['B'],
           datumBesluit: '2025-06-18',
@@ -378,6 +382,7 @@ describe('pcvergoeding', () => {
         },
         {
           id: 'historic-4',
+          titel: 'PC vergoeding verzilvering',
           productIdentificatie: AV_UPCZIL,
           betrokkenen: ['C'],
           datumBesluit: '2024-06-18',
@@ -387,6 +392,7 @@ describe('pcvergoeding', () => {
         },
         {
           id: 'historic-3',
+          titel: 'PC vergoeding aanvraag',
           productIdentificatie: AV_UPCC,
           betrokkenen: ['C'],
           datumBesluit: '2024-05-18',
@@ -396,6 +402,7 @@ describe('pcvergoeding', () => {
         },
         {
           id: 'new-1',
+          titel: 'PC vergoeding aanvraag',
           productIdentificatie: AV_PCVC,
           betrokkenen: ['B'],
           datumBesluit: '2025-05-18',
@@ -405,6 +412,7 @@ describe('pcvergoeding', () => {
         },
         {
           id: 'historic-2',
+          titel: 'PC vergoeding verzilvering',
           productIdentificatie: AV_PCVZIL,
           betrokkenen: ['A'],
           datumBesluit: '2024-06-18',
@@ -414,6 +422,7 @@ describe('pcvergoeding', () => {
         },
         {
           id: 'historic-1',
+          titel: 'PC vergoeding aanvraag',
           productIdentificatie: AV_PCVC,
           betrokkenen: ['A'],
           datumBesluit: '2024-05-18',
@@ -428,6 +437,7 @@ describe('pcvergoeding', () => {
       expect(result).toStrictEqual([
         {
           id: 'new-2',
+          titel: 'PC vergoeding aanvraag',
           productIdentificatie: AV_PCVTG,
           betrokkenen: ['B'],
           datumBesluit: '2025-06-18',
@@ -439,6 +449,7 @@ describe('pcvergoeding', () => {
         },
         {
           id: 'historic-4',
+          titel: 'PC vergoeding aanvraag',
           productIdentificatie: AV_UPCZIL,
           betrokkenen: ['C'],
           datumBesluit: '2024-06-18',
@@ -450,6 +461,7 @@ describe('pcvergoeding', () => {
         },
         {
           id: 'historic-2',
+          titel: 'PC vergoeding aanvraag',
           productIdentificatie: AV_PCVZIL,
           betrokkenen: ['A'],
           datumBesluit: '2024-06-18',
@@ -466,6 +478,7 @@ describe('pcvergoeding', () => {
       const testData = [
         {
           id: '3',
+          titel: 'PC vergoeding aanvraag',
           productIdentificatie: AV_PCVC,
           betrokkenen: ['B'],
           datumBesluit: '2024-07-18',
@@ -474,6 +487,7 @@ describe('pcvergoeding', () => {
         },
         {
           id: '2',
+          titel: 'PC vergoeding verzilvering',
           productIdentificatie: AV_PCVZIL,
           betrokkenen: ['A'],
           datumBesluit: '2024-06-18',
@@ -482,6 +496,7 @@ describe('pcvergoeding', () => {
         },
         {
           id: '1',
+          titel: 'PC vergoeding aanvraag',
           productIdentificatie: AV_PCVC,
           betrokkenen: ['A'],
           datumBesluit: '2024-05-18',
@@ -495,6 +510,7 @@ describe('pcvergoeding', () => {
       expect(result).toEqual([
         {
           id: '3',
+          titel: 'PC vergoeding aanvraag',
           productIdentificatie: AV_PCVC,
           betrokkenen: ['B'],
           datumBesluit: '2024-07-18',
@@ -503,6 +519,7 @@ describe('pcvergoeding', () => {
         },
         {
           id: '2',
+          titel: 'PC vergoeding aanvraag',
           productIdentificatie: AV_PCVZIL,
           betrokkenen: ['A'],
           datumBesluit: '2024-06-18',

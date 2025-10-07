@@ -128,6 +128,7 @@ export function filterCombineUpcPcvData(
 
       return {
         ...aanvraag,
+        titel: baseRegeling.titel,
         // Use Basis regeling to determine actualiteit en einde geldigheid.
         // If verzilvering is denied we treat regeling as "niet actueel"
         isActueel:
