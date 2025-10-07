@@ -11,13 +11,17 @@ import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 
 import { CONTENT_EMPTY } from './helper';
 import { useVarenThemaData } from './useVarenThemaData.hook';
-import { rederRegistratieLink } from './Varen-thema-config';
+import {
+  rederRegistratieLink,
+  SHOW_HISTORICAL_AANVRAGEN_STARTING_FROM_DATE,
+} from './Varen-thema-config';
 import styles from './Varen.module.scss';
 import type { VarenRegistratieRederFrontend } from '../../../../server/services/varen/config-and-types';
-import { entries } from '../../../../universal/helpers/utils';
+import { entries, toDateFormatted } from '../../../../universal/helpers/utils';
 import { Datalist, RowSet } from '../../../components/Datalist/Datalist';
 import { MaButtonLink } from '../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../components/Page/Page';
+import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
@@ -47,6 +51,16 @@ export const VarenDisclaimerRederNotRegistered = (
       </Paragraph>
     </Alert>
   </Grid.Cell>
+);
+
+export const VarenOnlyShowAanvragenAfterDateDisclaimer = (
+  <PageContentCell spanWide={8}>
+    <ParagaphSuppressed className="ams-mb-m">
+      Hier laten we alleen aanvragen zien die na{' '}
+      {toDateFormatted(SHOW_HISTORICAL_AANVRAGEN_STARTING_FROM_DATE)} zijn
+      gedaan.
+    </ParagaphSuppressed>
+  </PageContentCell>
 );
 
 type VarenPageContentRederRegistratieProps = {
@@ -179,6 +193,7 @@ export function VarenThema() {
         <>
           {gegevensRegistratieReder}
           {tables}
+          {VarenOnlyShowAanvragenAfterDateDisclaimer}
         </>
       }
       isPartialError={false}
