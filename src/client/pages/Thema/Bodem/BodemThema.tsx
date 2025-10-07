@@ -47,14 +47,9 @@ export function BodemThema() {
       isError={isError}
       pageContentTop={
         <PageContentCell spanWide={8}>
-          {themaConfig.uitlegPageSections.map((section, i) => (
-            <div key={i}>
-              {section.title && <h2>{section.title}</h2>}
-              {section.listItems.map((item, j) => (
-                <Paragraph key={j}>{item}</Paragraph>
-              ))}
-            </div>
-          ))}
+          <Paragraph>
+            Op deze pagina vindt u informatie over uw lood in de bodem-check.
+          </Paragraph>
         </PageContentCell>
       }
       pageContentMain={tables}

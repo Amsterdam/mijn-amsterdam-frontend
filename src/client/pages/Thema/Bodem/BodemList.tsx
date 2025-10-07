@@ -1,4 +1,3 @@
-import { themaConfig } from './Bodem-thema-config';
 import { useBodemListPageData } from './useBodemListPageData.hook';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
@@ -15,8 +14,9 @@ export function BodemList() {
     displayProps,
     breadcrumbs,
     listPageRoute,
+    routeConfig,
   } = useBodemListPageData();
-  useHTMLDocumentTitle(themaConfig.route); // TODO
+  useHTMLDocumentTitle(routeConfig); // TODO
 
   return (
     <ListPagePaginated

@@ -12,6 +12,7 @@ export function useBodemData() {
   return {
     themaId: themaConfig.id,
     title: themaConfig.title,
+    themaConfig,
     tableConfig,
     isLoading: isLoading(BODEM),
     isError: isError(BODEM),
@@ -19,5 +20,6 @@ export function useBodemData() {
     linkListItems: themaConfig.linkListItems,
     breadcrumbs,
     listPageRoute: themaConfig.listPage.route.path,
+    routeConfig: themaConfig.listPage.route,
   };
 }
