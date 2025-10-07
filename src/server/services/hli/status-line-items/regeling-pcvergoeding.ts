@@ -1,4 +1,4 @@
-import { isSameDay, parseISO } from 'date-fns';
+import { isBefore, isSameDay, parseISO } from 'date-fns';
 
 import { getBetrokkenKinderenDescription } from './generic';
 import { featureToggle } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
@@ -7,6 +7,8 @@ import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types';
+
+export const PC_REGELING_V3_START_DATE = new Date('2026-01-01');
 
 export const AV_UPCC = 'AV-UPCC';
 export const AV_UPCZIL = 'AV-UPCZIL';
@@ -112,7 +114,10 @@ export function filterCombineUpcPcvData(
     }
 
     // Add documenten to Verzilvering, e.g, (AV_PC{ZIL|TG})
-    if (isVerzilvering(aanvraag)) {
+    if (
+      isVerzilvering(aanvraag) &&
+      isBefore(aanvraag.datumAanvraag, PC_REGELING_V3_START_DATE)
+    ) {
       // Find first corresponding baseRegeling
       const baseRegeling = aanvragen.find((compareAanvraag) =>
         isRegelingVanVerzilvering(aanvraag, compareAanvraag)
