@@ -184,8 +184,8 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
         return `<p>
         ${
           regeling.resultaat === 'toegewezen' || isVerzilvering(regeling)
-            ? `U krijgt een ${regeling.titel} per ${regeling.datumIngangGeldigheid ? defaultDateFormat(regeling.datumIngangGeldigheid) : ''} voor uw kind${betrokkenKinderen ? ` ${betrokkenKinderen}` : ''}.`
-            : `U krijgt geen ${regeling.titel} voor uw kind${betrokkenKinderen ? ` ${betrokkenKinderen}` : ''}.`
+            ? `U krijgt een ${regeling.titel.toLowerCase()} per ${regeling.datumIngangGeldigheid ? defaultDateFormat(regeling.datumIngangGeldigheid) : ''} voor uw kind${betrokkenKinderen ? ` ${betrokkenKinderen}` : ''}.`
+            : `U krijgt geen ${regeling.titel.toLowerCase()} voor uw kind${betrokkenKinderen ? ` ${betrokkenKinderen}` : ''}.`
         }
         </p>
         <p>
@@ -207,7 +207,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
         const betrokkenKinderen = getBetrokkenKinderenDescription(regeling);
         return `
         <p>
-         Voordat u de laptop of tablet krijgt, moet uw kind ${betrokkenKinderen} een workshop volgen. Hiervoor moet u eerst een afspraak maken. In de brief staat hoe u dat doet.
+         Voordat u de ${regeling.titel.toLowerCase()} krijgt, moet uw kind ${betrokkenKinderen} een workshop volgen. Hiervoor moet u eerst een afspraak maken. In de brief staat hoe u dat doet.
         </p>
       `;
       },
@@ -221,8 +221,8 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
       isActive: () => true,
       description: (regeling) => {
         const betrokkenKinderen = getBetrokkenKinderenDescription(regeling);
-        return `<p>Uw kind ${betrokkenKinderen} krijgt een ${regeling.titel}. Lees in de brief hoe u de laptop of tablet bestelt.</p>
-        ${regeling.datumEindeGeldigheid ? `<p>U kunt per ${defaultDateFormat(regeling.datumEindeGeldigheid)} opnieuw een ${regeling.titel} aanvragen.</p>` : ''}`;
+        return `<p>Uw kind ${betrokkenKinderen} krijgt een ${regeling.titel.toLowerCase()}. Lees in de brief hoe u de ${regeling.titel.toLowerCase()} bestelt.</p>
+        ${regeling.datumEindeGeldigheid ? `<p>U kunt per ${defaultDateFormat(regeling.datumEindeGeldigheid)} opnieuw een ${regeling.titel.toLowerCase()} aanvragen.</p>` : ''}`;
       },
     },
     {
@@ -235,7 +235,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
         const betrokkenKinderen = getBetrokkenKinderenDescription(regeling);
         return `
         <p>
-         Uw kind ${betrokkenKinderen} krijgt geen ${regeling.titel}. De workshop is niet op tijd gevolgd. U kunt een nieuwe aanvraag doen.
+         Uw kind ${betrokkenKinderen} krijgt geen ${regeling.titel.toLowerCase()}. De workshop is niet op tijd gevolgd. U kunt een nieuwe aanvraag doen.
         </p>
         <p>
           In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.
