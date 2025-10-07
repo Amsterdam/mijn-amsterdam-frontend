@@ -11,24 +11,20 @@ export type ThemaConfigBase = {
   id: string;
   title: string;
   route: ThemaRouteConfig;
-  featureToggle: { themaActive: boolean };
+  featureToggle: {
+    themaActive: boolean;
+  };
   sections: Section[];
   profileTypes: ProfileType[];
   redactedScope: 'full' | 'content' | 'none';
 };
 
-export type WithListPage = {
-  listPage: {
-    route: ThemaRouteConfig;
-  };
+export type WithPageConfig<K extends string, T extends object = object> = {
+  [P in K]: T & { route: ThemaRouteConfig };
 };
 
-export type WithDetailPage = {
-  detailPage: {
-    title: string;
-    route: ThemaRouteConfig;
-  };
-};
+export type WithListPage = WithPageConfig<'listPage'>;
+export type WithDetailPage = WithPageConfig<'detailPage', { title: string }>;
 export type Section = {
   title?: string;
   listItems: ListItems;

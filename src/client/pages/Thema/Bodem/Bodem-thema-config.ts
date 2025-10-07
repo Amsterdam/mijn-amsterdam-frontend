@@ -29,6 +29,7 @@ const listPageParamKind = {
 // profileTypes moeten nog toegevoegd worden
 // redactedScope moet nog toegevoegd worden staat in thema types
 //linklist items moeten nog toegevoegd worden
+// check teams themaconfig refinment 3 puntjes klikken !!!!!!!!!
 // uitleg page moet nog in de config (kijk generalinfo.tsx)
 //kijk ook naar info section.tsx
 type BodemThemaConfig = ThemaConfigBase & WithListPage & WithDetailPage;
@@ -38,7 +39,7 @@ export const themaConfig: BodemThemaConfig = {
   title: 'Bodem',
   featureToggle: {
     themaActive: true,
-  },
+},
   sections: [{ listItems: ["Uw aanvraag voor 'lood in de bodem-check'"] }],
   route: {
     path: '/bodem',
