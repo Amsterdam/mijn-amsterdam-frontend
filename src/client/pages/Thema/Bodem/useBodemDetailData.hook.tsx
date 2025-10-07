@@ -16,6 +16,6 @@ export function useBodemDetailData() {
     isLoading,
     isError,
     breadcrumbs,
-    themaConfig,
+    routeConfig: themaConfig.listPage.route,
   };
 }
