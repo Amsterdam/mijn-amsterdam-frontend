@@ -117,7 +117,7 @@ function transformZorgnedAanvraag(
     leverancier: toegewezenProduct?.leverancier?.omschrijving ?? '',
     leveringsVorm,
     productsoortCode: productsoortCode,
-    productIdentificatie: productIdentificatie,
+    productIdentificatie,
     beschiktProductIdentificatie: beschiktProduct.identificatie,
     resultaat: beschiktProduct.resultaat,
     titel: beschiktProduct.product.omschrijving ?? '',
