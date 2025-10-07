@@ -85,11 +85,13 @@ const getDisplayStatus: GetDisplayStatusFn<GenericDisplayStatus> = (
 const getRTMDisplayStatus: GetDisplayStatusFn<
   GenericDisplayStatus | 'In behandeling genomen'
 > = (regeling: ZorgnedHLIRegeling, statusLineItems: StatusLineItem[]) => {
-  // RP TODO: make procesAanvraagOmschrijving into a type in case of changes.
-  if (regeling.procesAanvraagOmschrijving === 'wijzigingsAanvraag') {
-    return 'Toegewezen';
-  }
-  if (isRTMDeel1(regeling) && regeling.resultaat === 'toegewezen') {
+  // TODO: Accidently has this data, but shouldnt. Is there another way?
+  // Probably refactor transformRegelingenForFrontend.
+  if (
+    regeling.type !== 'aanvraag-wijziging' &&
+    isRTMDeel1(regeling) &&
+    regeling.resultaat === 'toegewezen'
+  ) {
     return RTM_STATUS_IN_BEHANDELING;
   }
   return getDisplayStatus(regeling, statusLineItems);

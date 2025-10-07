@@ -1,4 +1,3 @@
-import { filterCombineRtmData } from './regeling-rtm';
 import { getAuthProfileAndToken } from '../../../../testing/utils';
 import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../../zorgned/zorgned-types';
 import { forTesting } from '../hli';
@@ -156,6 +155,44 @@ const RTM_2_TOEGEWEZEN: ZorgnedAanvraagWithRelatedPersonsTransformed = {
   betrokkenen: base.betrokkenen,
   betrokkenPersonen: base.betrokkenPersonen,
   bsnAanvrager: base.bsnAanvrager,
+};
+
+const RTM_2_AFGEWEZEN: ZorgnedAanvraagWithRelatedPersonsTransformed = {
+  id: '2',
+  datumAanvraag: '2025-08-20',
+  datumBeginLevering: null,
+  datumBesluit: '2025-09-01',
+  datumEindeGeldigheid: null,
+  datumEindeLevering: null,
+  datumIngangGeldigheid: null,
+  datumOpdrachtLevering: null,
+  datumToewijzing: null,
+  procesAanvraagOmschrijving: 'Aanvraag RTM fase 2',
+  documenten: [
+    {
+      id: 'B3405442',
+      title: 'AV-RTM afwijzing',
+      url: '',
+      datePublished: '2025-09-01T15:18:55.68',
+    },
+    {
+      id: 'B3405443',
+      title: 'advies GGD',
+      url: '',
+      datePublished: '2025-09-01T15:18:55.68',
+    },
+  ],
+  isActueel: false,
+  leverancier: '',
+  leveringsVorm: '',
+  productsoortCode: 'AV-D-RTM',
+  productIdentificatie: 'AV-RTM',
+  beschiktProductIdentificatie: '329903',
+  resultaat: 'afgewezen',
+  titel: 'Regeling Tegemoetkoming Meerkosten',
+  betrokkenen: [],
+  betrokkenPersonen: [],
+  bsnAanvrager: '999999999',
 };
 
 const RTM_2_EINDE_RECHT: ZorgnedAanvraagWithRelatedPersonsTransformed = {
@@ -362,7 +399,7 @@ function transformRegelingenForFrontend(
 }
 
 describe('Aanvrager is ontvanger', () => {
-  test('Single Aanvraag', () => {
+  test('Single Aanvraag toegewezen', () => {
     const regelingen = transformRegelingenForFrontend([RTM_1_AANVRAAG]);
 
     expect(regelingen.length).toBe(1);
@@ -462,7 +499,7 @@ describe('Aanvrager is ontvanger', () => {
     ]);
   });
 
-  test('Single toegewezen Migratie aanvraag', () => {
+  test('Migratie of active regeling', () => {
     const regelingen = transformRegelingenForFrontend([RTM_2_MIGRATIE]);
 
     expect(regelingen.length).toBe(1);
@@ -500,7 +537,7 @@ describe('Aanvrager is ontvanger', () => {
     ]);
   });
 
-  test('Combines: Aanvraag -> Toegewezen -> Einde recht', () => {
+  test('Aanvraag -> Toegewezen -> Einde recht', () => {
     const aanvragen = attachIDs([
       RTM_1_AANVRAAG,
       RTM_2_TOEGEWEZEN,
@@ -574,7 +611,67 @@ describe('Aanvrager is ontvanger', () => {
     ]);
   });
 
-  test('Combines: Aanvraag -> Toegewezen -> Wijzigings aanvraag -> Wijziging toegewezen', () => {
+  test('Aanvraag -> Afgewezen', () => {
+    const aanvragen = attachIDs([RTM_1_AANVRAAG, RTM_2_AFGEWEZEN]);
+    const regelingen = transformRegelingenForFrontend(aanvragen);
+
+    expect(regelingen.length).toBe(1);
+
+    const regeling = regelingen[0];
+
+    expect(regeling).toMatchObject({
+      title: RTM_2_AFGEWEZEN.titel,
+      isActual: RTM_2_AFGEWEZEN.isActueel,
+      dateDecision: RTM_2_AFGEWEZEN.datumBesluit,
+      dateStart: RTM_2_AFGEWEZEN.datumIngangGeldigheid,
+      dateEnd: RTM_2_AFGEWEZEN.datumEindeGeldigheid,
+      decision: 'afgewezen',
+      displayStatus: 'Afgewezen',
+      documents: [],
+    });
+    expect(regeling.steps).toMatchObject([
+      {
+        id: 'status-step-1',
+        status: 'Aanvraag',
+        datePublished: RTM_1_AANVRAAG.datumBesluit,
+        isActive: false,
+        isChecked: true,
+        isVisible: true,
+        documents: [],
+      },
+      {
+        id: 'status-step-2',
+        status: 'In behandeling genomen',
+        datePublished: RTM_1_AANVRAAG.datumBesluit,
+        isActive: false,
+        isChecked: true,
+        isVisible: true,
+        documents: [
+          {
+            title: 'AV-RTM Info aan klant GGD',
+          },
+        ],
+      },
+      {
+        id: 'status-step-3',
+        status: 'Besluit',
+        datePublished: RTM_2_AFGEWEZEN.datumBesluit,
+        isActive: true,
+        isChecked: true,
+        isVisible: true,
+        documents: [
+          {
+            title: 'AV-RTM afwijzing',
+          },
+          {
+            title: 'advies GGD',
+          },
+        ],
+      },
+    ]);
+  });
+
+  test('Aanvraag -> Toegewezen -> Wijzigings aanvraag -> Wijziging toegewezen', () => {
     const aanvragen = attachIDs([
       RTM_1_AANVRAAG,
       RTM_2_TOEGEWEZEN,
@@ -732,7 +829,7 @@ describe('Aanvrager is ontvanger', () => {
     ]);
   });
 
-  test('Migratie -> Wijzigings aanvraag -> Besluit afwijzing', () => {
+  test('Migratie -> Wijzigings aanvraag -> Wijzigings afwijzing', () => {
     const aanvragen = attachIDs([
       RTM_2_MIGRATIE,
       RTM_WIJZIGINGS_AANVRAAG,
@@ -803,218 +900,5 @@ describe('Aanvrager is ontvanger', () => {
         status: 'Einde recht',
       },
     ]);
-  });
-});
-
-describe.skip('filterCombineRtmData', () => {
-  test('Orders betrokkenen', () => {
-    const aanvragen = [
-      { ...RTM_1_AANVRAAG, betrokkenen: ['3', '2', '12', '1'] },
-    ];
-    const [, result] = filterCombineRtmData(aanvragen);
-
-    expect(result.length).toBe(1);
-    // This may look weird but I'm only after a consistent ordering, the actual order does not matter.
-    expect(result[0].betrokkenen).toStrictEqual(['1', '12', '2', '3']);
-  });
-
-  test('Seperates from other zorgned type aanvragen', () => {
-    const aanvragen = attachIDs([RTM_1_AANVRAAG, UNKNOWN]);
-    const [remainder, rtmAanvragen] = filterCombineRtmData(aanvragen);
-    expect(rtmAanvragen[0].productIdentificatie).toBe('AV-RTM1');
-    expect(remainder[0].productIdentificatie).toBe('AV-UNKNOWN');
-  });
-
-  test('Transforms into a ZorgnedHLIRegeling', () => {
-    const aanvragen = attachIDs([RTM_1_AANVRAAG]);
-    const [, result] = filterCombineRtmData(aanvragen);
-    expect(result.length).toBe(1);
-    expect(result[0].datumInBehandeling).toBeDefined();
-  });
-
-  test('Combines the relevant fields from previous regelingen', () => {
-    const aanvragen = attachIDs([
-      RTM_1_AANVRAAG,
-      RTM_2_TOEGEWEZEN,
-      RTM_2_EINDE_RECHT,
-    ]);
-    const [, result] = filterCombineRtmData(aanvragen);
-    expect(result).toMatchObject([
-      {
-        datumAanvraag: RTM_1_AANVRAAG.datumAanvraag,
-        datumInBehandeling: RTM_1_AANVRAAG.datumBesluit,
-        beschiktProductIdentificatie: 'voorziening-3',
-        datumBeginLevering: RTM_2_EINDE_RECHT.datumToewijzing,
-        datumBesluit: RTM_2_EINDE_RECHT.datumBesluit,
-        datumEindeGeldigheid: RTM_2_EINDE_RECHT.datumEindeGeldigheid,
-        datumEindeLevering: RTM_2_EINDE_RECHT.datumEindeLevering,
-        datumIngangGeldigheid: RTM_2_EINDE_RECHT.datumIngangGeldigheid,
-        datumOpdrachtLevering: RTM_2_EINDE_RECHT.datumOpdrachtLevering,
-        datumToewijzing: RTM_2_EINDE_RECHT.datumToewijzing,
-        isActueel: RTM_2_EINDE_RECHT.isActueel,
-        procesAanvraagOmschrijving:
-          RTM_2_EINDE_RECHT.procesAanvraagOmschrijving,
-        productIdentificatie: RTM_2_EINDE_RECHT.productIdentificatie,
-        productsoortCode: RTM_2_EINDE_RECHT.productsoortCode,
-        resultaat: RTM_2_EINDE_RECHT.resultaat,
-        titel: RTM_2_EINDE_RECHT.titel,
-      },
-    ]);
-  });
-
-  test('Recognizes and does no merging or changes for a Aanvraag and Migratie', () => {
-    const aanvragen = attachIDs([
-      attachBetrokkenen(RTM_1_AANVRAAG, ['1']),
-      attachBetrokkenen(RTM_2_MIGRATIE, ['2']),
-    ]);
-    const [, result] = filterCombineRtmData(aanvragen);
-    expect(result).toMatchObject(aanvragen);
-  });
-
-  test('Keeps aanvraag voor other people and merges toegewezen for self', () => {
-    const ontvangerID = '1';
-
-    const rtm1Aanvraag = attachBetrokkenen(RTM_1_AANVRAAG, ['1', '2', '3']);
-    const rtm2Toegewezen = attachBetrokkenen(RTM_2_TOEGEWEZEN, ['1']);
-    const aanvragen = attachIDs([rtm1Aanvraag, rtm2Toegewezen]);
-    const [, result] = filterCombineRtmData(aanvragen);
-    expect(result.length).toBe(2);
-    expect(result).toMatchObject([
-      {
-        ...aanvragen[0],
-        betrokkenen: ['2', '3'],
-        betrokkenPersonen: [
-          {
-            bsn: '2',
-            dateOfBirth: '2023-06-12',
-            dateOfBirthFormatted: '12 juni 2023',
-            name: '2 - Flex',
-            partnernaam: 'partner-2 - Flex',
-            partnervoorvoegsel: null,
-          },
-          {
-            bsn: '3',
-            dateOfBirth: '2023-06-12',
-            dateOfBirthFormatted: '12 juni 2023',
-            name: '3 - Flex',
-            partnernaam: 'partner-2 - Flex',
-            partnervoorvoegsel: null,
-          },
-        ],
-      },
-      {
-        ...aanvragen[1],
-        betrokkenPersonen: [
-          {
-            bsn: '1',
-            dateOfBirth: '2023-06-12',
-            dateOfBirthFormatted: '12 juni 2023',
-            name: '1 - Flex',
-            partnernaam: 'partner-2 - Flex',
-            partnervoorvoegsel: null,
-          },
-        ],
-        betrokkenen: [ontvangerID],
-        datumAanvraag: RTM_1_AANVRAAG.datumAanvraag,
-        documenten: [
-          ...rtm2Toegewezen.documenten,
-          ...RTM_1_AANVRAAG.documenten,
-        ],
-      },
-    ]);
-  });
-
-  test('Combines only (Aanvraag -> Toegewezen): Aanvraag, (Aanvraag -> Toegewezen), Aanvraag', () => {
-    const BETROKKENEN_IDS = ['2'];
-    const aanvraag = attachBetrokkenen(RTM_1_AANVRAAG, ['3']);
-    const aanvragen = attachIDs([
-      attachBetrokkenen(RTM_1_AANVRAAG, ['1']),
-      attachBetrokkenen(RTM_1_AANVRAAG, BETROKKENEN_IDS),
-      attachBetrokkenen(RTM_2_TOEGEWEZEN, BETROKKENEN_IDS),
-      aanvraag,
-    ]);
-
-    const [, result] = filterCombineRtmData(aanvragen);
-    expect(result.length).toBe(3);
-    const combinedAanvraag = result.find((a) => a.id === '3')!;
-    expect(combinedAanvraag.procesAanvraagOmschrijving).toBe(
-      'Aanvraag RTM fase 2'
-    );
-  });
-
-  test('Combines: Aanvraag -> Einde Recht', () => {
-    const aanvragen = attachIDs([RTM_1_AANVRAAG, RTM_2_EINDE_RECHT]);
-    const [, result] = filterCombineRtmData(aanvragen);
-    expect(result).toMatchObject([
-      {
-        ...aanvragen.at(-1),
-        betrokkenen: base.betrokkenen,
-        datumAanvraag: RTM_1_AANVRAAG.datumAanvraag,
-        documenten: [
-          ...RTM_2_EINDE_RECHT.documenten,
-          ...RTM_1_AANVRAAG.documenten,
-        ],
-        titel: RTM_1_AANVRAAG.titel,
-      },
-    ]);
-  });
-
-  test('Combines: Aanvraag -> Toegewezen -> Duplicate of the previous one', () => {
-    const aanvragen = attachIDs([
-      RTM_1_AANVRAAG,
-      RTM_2_EINDE_RECHT,
-      RTM_2_EINDE_RECHT,
-    ]);
-    aanvragen[2].beschiktProductIdentificatie =
-      aanvragen[1].beschiktProductIdentificatie;
-
-    const [, result] = filterCombineRtmData(aanvragen);
-    expect(result).toMatchObject([
-      {
-        ...aanvragen.at(-1),
-        id: '2',
-        betrokkenen: base.betrokkenen,
-        datumAanvraag: RTM_1_AANVRAAG.datumAanvraag,
-        documenten: [
-          ...RTM_2_EINDE_RECHT.documenten,
-          ...RTM_2_EINDE_RECHT.documenten,
-          ...RTM_1_AANVRAAG.documenten,
-        ],
-        resultaat: RTM_2_TOEGEWEZEN.resultaat,
-      },
-    ]);
-  });
-
-  test(`Combines long chain:\
- Aanvraag -> Toegewezezen -> Herkeuring -> Toegewezen\
- -> Herkeuring -> Afgewezen -> Herkeuring -> Toegewezen`, () => {
-    const aanvragen = attachIDs([
-      RTM_1_AANVRAAG,
-      RTM_2_TOEGEWEZEN,
-      RTM_WIJZIGINGS_AANVRAAG,
-      RTM_WIJZIGINGS_TOEKENNING,
-      RTM_WIJZIGINGS_AANVRAAG,
-      RTM_WIJZIGINGS_AFWIJZING,
-      RTM_WIJZIGINGS_AANVRAAG,
-      RTM_WIJZIGINGS_TOEKENNING,
-      RTM_2_EINDE_RECHT,
-    ]);
-    const [, result] = filterCombineRtmData(aanvragen);
-    expect(result.length).toBe(1);
-    expect(result[0]).toMatchObject({
-      ...aanvragen.at(-1),
-      datumAanvraag: RTM_1_AANVRAAG.datumAanvraag,
-      documenten: [
-        ...RTM_2_EINDE_RECHT.documenten,
-        ...RTM_WIJZIGINGS_TOEKENNING.documenten,
-        ...RTM_WIJZIGINGS_AANVRAAG.documenten,
-        ...RTM_WIJZIGINGS_AFWIJZING.documenten,
-        ...RTM_WIJZIGINGS_AANVRAAG.documenten,
-        ...RTM_WIJZIGINGS_TOEKENNING.documenten,
-        ...RTM_WIJZIGINGS_AANVRAAG.documenten,
-        ...RTM_2_TOEGEWEZEN.documenten,
-        ...RTM_1_AANVRAAG.documenten,
-      ],
-    });
   });
 });
