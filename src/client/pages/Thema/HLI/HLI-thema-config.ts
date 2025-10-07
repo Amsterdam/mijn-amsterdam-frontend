@@ -25,6 +25,7 @@ const displayPropsEerdereRegelingen: DisplayProps<HLIRegelingFrontend> = {
   props: {
     detailLinkComponent: 'Regeling',
     displayStatus: 'Status',
+    ...(!IS_PRODUCTION && { betrokkenen: 'Ontvangers' }),
   },
   colWidths: {
     large: ['80%', '20%'],
