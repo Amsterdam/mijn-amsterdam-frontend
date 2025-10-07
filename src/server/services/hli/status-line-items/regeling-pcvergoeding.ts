@@ -78,7 +78,8 @@ function isRegelingVanVerzilvering(
 
   return (
     compareAanvraag.productIdentificatie === avCode &&
-    compareAanvraag.betrokkenen.some((id) =>
+    // We match on all betrokkenen to avoid issues with multiple aanvragen for different children.
+    compareAanvraag.betrokkenen.every((id) =>
       aanvraag.betrokkenen.includes(id)
     ) &&
     compareAanvraag.resultaat !== 'afgewezen'
@@ -87,7 +88,7 @@ function isRegelingVanVerzilvering(
 
 function getUpcPcvDecisionDate(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
-  today: Date,
+  _today: Date,
   allAanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ) {
   if (isVerzilvering(aanvraag)) {
@@ -104,7 +105,7 @@ export function filterCombineUpcPcvData(
 ) {
   const baseRegelingIdWithVerzilvering: string[] = [];
 
-  const aanvragenWithDocumentsCombined = aanvragen.map((aanvraag, index) => {
+  const aanvragenWithDocumentsCombined = aanvragen.map((aanvraag) => {
     // Exclude baseRegelingen that have verzilvering
     if (baseRegelingIdWithVerzilvering.includes(aanvraag.id)) {
       return null;
@@ -116,7 +117,6 @@ export function filterCombineUpcPcvData(
       const baseRegeling = aanvragen.find((compareAanvraag) =>
         isRegelingVanVerzilvering(aanvraag, compareAanvraag)
       );
-
       // If no baseRegeling is found, this must be an orphaned verzilvering.
       if (!baseRegeling) {
         return null;

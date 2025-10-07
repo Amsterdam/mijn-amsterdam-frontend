@@ -25,7 +25,7 @@ import {
 } from '../../../universal/helpers/api';
 import { getFullName } from '../../../universal/helpers/brp';
 import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
-import { sortByNumber, uniqueArray } from '../../../universal/helpers/utils';
+import { sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
 import { GenericDocument } from '../../../universal/types/App.types';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { isSuccessStatus, requestData } from '../../helpers/source-api-request';
@@ -169,7 +169,7 @@ export function transformZorgnedAanvragen(
     }
   }
 
-  return aanvragenTransformed.sort(sortByNumber('id', 'desc'));
+  return aanvragenTransformed.sort(sortAlpha('id', 'desc'));
 }
 
 export async function fetchAanvragen(

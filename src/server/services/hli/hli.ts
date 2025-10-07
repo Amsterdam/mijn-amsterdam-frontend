@@ -7,7 +7,6 @@ import { hliStatusLineItemsConfig } from './hli-status-line-items';
 import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import { fetchStadspas } from './stadspas';
 import {
-  filterCombineRtmData,
   isRTMDeel1,
   RTM_STATUS_IN_BEHANDELING,
 } from './status-line-items/regeling-rtm';
@@ -20,10 +19,7 @@ import {
   getFailedDependencies,
   getSettledResult,
 } from '../../../universal/helpers/api';
-import {
-  createDocumentDeduper,
-  dedupeDocumentsInDataSets,
-} from '../../../universal/helpers/document';
+import { dedupeDocumentsInDataSets } from '../../../universal/helpers/document';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import {
   GenericDocument,
@@ -146,6 +142,9 @@ async function transformRegelingForFrontend(
     decision: aanvraag.resultaat,
     displayStatus,
     documents: getDocumentsFrontend(sessionID, aanvraag.documenten),
+    betrokkenen: aanvraag.betrokkenPersonen
+      .map((persoon) => persoon.name)
+      .join(', '),
   };
 
   return regelingFrontend;
@@ -158,10 +157,10 @@ async function transformRegelingenForFrontend(
 ): Promise<HLIRegelingFrontend[]> {
   const regelingenFrontend: HLIRegelingFrontend[] = [];
 
-  let aanvragenWithDocumentsCombined = filterCombineUpcPcvData(aanvragen);
-  aanvragenWithDocumentsCombined = filterCombineRtmData(
-    aanvragenWithDocumentsCombined
-  );
+  const aanvragenWithDocumentsCombined = filterCombineUpcPcvData(aanvragen);
+  // aanvragenWithDocumentsCombined = filterCombineRtmData(
+  //   aanvragenWithDocumentsCombined
+  // );
 
   for (const aanvraag of aanvragenWithDocumentsCombined) {
     const statusLineItems = getStatusLineItems(

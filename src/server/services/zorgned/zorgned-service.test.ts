@@ -91,7 +91,7 @@ describe('zorgned-service', () => {
             ...ZORGNED_JZD_AANVRAGEN._embedded.aanvraag.filter((aanvraag) =>
               ['2703104', '2696493', '2719515'].includes(aanvraag.identificatie)
             ),
-          ],
+          ].sort(() => (Math.random() > 0.5 ? 1 : -1)), // Shuffle array to test sorting.
         },
       } as ZorgnedResponseDataSource)
     ).toMatchInlineSnapshot(`
