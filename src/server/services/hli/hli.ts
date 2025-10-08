@@ -20,10 +20,7 @@ import {
   getFailedDependencies,
   getSettledResult,
 } from '../../../universal/helpers/api';
-import {
-  createDocumentDeduper,
-  dedupeDocumentsInDataSets,
-} from '../../../universal/helpers/document';
+import { dedupeDocumentsInDataSets } from '../../../universal/helpers/document';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import {
   GenericDocument,
@@ -146,6 +143,9 @@ async function transformRegelingForFrontend(
     decision: aanvraag.resultaat,
     displayStatus,
     documents: getDocumentsFrontend(sessionID, aanvraag.documenten),
+    betrokkenen: aanvraag.betrokkenPersonen
+      .map((persoon) => persoon.name)
+      .join(', '),
   };
 
   return regelingFrontend;
