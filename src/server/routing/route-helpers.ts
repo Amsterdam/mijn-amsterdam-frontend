@@ -2,6 +2,7 @@ import { HttpStatusCode } from 'axios';
 import type { Request, Response } from 'express';
 import express from 'express';
 import { generatePath, matchPath } from 'react-router';
+import z from 'zod';
 
 import { PUBLIC_BFF_ENDPOINTS } from './bff-routes';
 import {
@@ -15,9 +16,22 @@ type BFFRouter = express.Router & { BFF_ID: string };
 
 export type RecordStr2 = Record<string, string>;
 
-export function createBFFRouter({ id: id }: { id: string }): BFFRouter {
+export function createBFFRouter({
+  id,
+  isEnabled = true,
+}: {
+  id: string;
+  isEnabled?: boolean;
+}): BFFRouter {
   const authRouterDevelopment = express.Router() as BFFRouter;
   authRouterDevelopment.BFF_ID = id;
+
+  if (!isEnabled) {
+    authRouterDevelopment.use((_req: Request, res: Response) =>
+      sendServiceUnavailable(res)
+    );
+  }
+
   return authRouterDevelopment;
 }
 
@@ -113,6 +127,16 @@ export function sendBadRequest(
     );
 }
 
+export function sendBadRequestInvalidInput(res: Response, error: unknown) {
+  let inputValidationError = 'Invalid input';
+
+  if (error instanceof z.ZodError) {
+    inputValidationError = error.issues.map((e) => e.message).join(', ');
+  }
+
+  return sendBadRequest(res, inputValidationError);
+}
+
 export function sendUnauthorized(
   res: Response,
   message: string = 'Unauthorized'
@@ -125,6 +149,17 @@ export function send404(res: Response) {
   return sendResponse(
     res,
     apiErrorResult('Not Found', null, HttpStatusCode.NotFound)
+  );
+}
+
+export function sendServiceUnavailable(res: Response) {
+  return sendResponse(
+    res,
+    apiErrorResult(
+      'Service Unavailable',
+      null,
+      HttpStatusCode.ServiceUnavailable
+    )
   );
 }
 

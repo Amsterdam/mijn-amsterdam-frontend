@@ -15,7 +15,6 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
   // For all rejection decisions from aanvraag to final decision.
   {
     resultaat: 'afgewezen',
-    leveringsVorm: '',
     statusLineItems: {
       name: 'Alle afgewezen',
       transformers: WMO_AFWIJZING_ALL,

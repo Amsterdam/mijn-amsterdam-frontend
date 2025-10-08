@@ -50,11 +50,7 @@ import { fetchZorgnedLLVDocument } from '../services/jeugd/route-handlers';
 import { fetchDocument as fetchBBDocument } from '../services/powerbrowser/powerbrowser-service';
 import { fetchAantalBewoners } from '../services/profile/brp';
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler';
-import {
-  fetchZorgnedJZDAanvragen,
-  fetchZorgnedJZDDocument,
-  fetchZorgnedJZDDocuments,
-} from '../services/wmo/wmo-route-handlers';
+import { wmoRouter } from '../services/wmo/wmo-router';
 import { fetchWpiDocument } from '../services/wpi/api-service';
 
 export const router = createBFFRouter({ id: 'router-protected' });
@@ -135,15 +131,7 @@ router.get(
 //// BFF Service Api Endpoints /////////////////////
 ////////////////////////////////////////////////////
 
-// WMO Zorgned Doc download
-attachDocumentDownloadRoute(
-  router,
-  BffEndpoints.WMO_DOCUMENT_DOWNLOAD,
-  fetchZorgnedJZDDocument
-);
-
-router.get(BffEndpoints.WMO_AANVRAGEN_RAW, fetchZorgnedJZDAanvragen);
-router.get(BffEndpoints.WMO_DOCUMENTS_LIST_RAW, fetchZorgnedJZDDocuments);
+router.use(wmoRouter.protected);
 
 // LLV Zorgned Doc download
 attachDocumentDownloadRoute(

@@ -41,7 +41,11 @@ import cors from 'cors';
 import express, { NextFunction, Request, Response } from 'express';
 
 import { BFF_PORT, ONE_MINUTE_SECONDS, ONE_SECOND_MS } from './config/app';
-import { BFF_BASE_PATH, BffEndpoints } from './routing/bff-routes';
+import {
+  BFF_BASE_PATH,
+  BFF_BASE_PATH_PRIVATE,
+  BffEndpoints,
+} from './routing/bff-routes';
 import { nocache, requestID } from './routing/route-handlers';
 import { send404 } from './routing/route-helpers';
 import { adminRouter } from './routing/router-admin';
@@ -55,7 +59,7 @@ import { captureException } from './services/monitoring';
 import { getFromEnv } from './helpers/env';
 import { notificationsExternalConsumerRouter } from './routing/router-notifications-external-consumer';
 import { FeatureToggle } from '../universal/config/feature-toggles';
-import { wmoRouterPrivateNetwork } from './services/wmo/wmo-router-external-consumer';
+import { router as privateNetworkRouter } from './routing/router-private';
 
 const app = express();
 
@@ -90,10 +94,6 @@ app.use(requestID);
 ///// [ACCEPTANCE - PRODUCTION]
 ///// Public routes Voor Acceptance - Development
 ////////////////////////////////////////////////////////////////////////
-if (IS_AP && !IS_OT) {
-  logger.info('Using AUTH OIDC Router');
-  app.use(oidcRouter);
-}
 
 app.use(legacyRouter);
 
@@ -101,15 +101,6 @@ app.use(legacyRouter);
  * The public router has routes that can be accessed by anyone without any authentication.
  */
 app.use(BFF_BASE_PATH, publicRouter);
-
-////////////////////////////////////////////////////////////////////////
-///// [DEVELOPMENT - TEST]
-///// Development routing for mock data
-////////////////////////////////////////////////////////////////////////
-if (IS_OT && !IS_AP) {
-  logger.info('Using AUTH Development Router');
-  app.use(authRouterDevelopment);
-}
 
 ////////////////////////////////////////////////////////////////////////
 ///// Generic Router Method for All environments
@@ -121,12 +112,28 @@ if (FeatureToggle.amsNotificationsIsActive) {
   app.use(BFF_BASE_PATH, nocache, notificationsExternalConsumerRouter.public);
 }
 
-app.use(BFF_BASE_PATH, nocache, protectedRouter);
-app.use(BFF_BASE_PATH, nocache, adminRouter);
+// All routes after this point are protected and need authentication
+////////////////////////////////////////////////////////////////////////
+///// Routers for Authenticated Users
+///// These routes are protected by our authentication system.
+///// These routers are all prefixed with /api/v1 and accessible
+///// from the public internet.
+////////////////////////////////////////////////////////////////////////
 
-if (IS_DEVELOPMENT) {
-  app.use(nocache, authRouterDevelopment);
+///// [DEVELOPMENT - TEST]
+//// In development we use the authRouterDevelopment which has a mock login.
+if (IS_OT && !IS_AP) {
+  logger.info('Using AUTH Development Router');
+  app.use(authRouterDevelopment);
 }
+///// [PRODUCTION - ACCEPTANCE]
+//// In production we use the oidcRouter which has real OIDC login.
+if (IS_AP && !IS_OT) {
+  logger.info('Using AUTH OIDC Router');
+  app.use(oidcRouter);
+}
+
+app.use(BFF_BASE_PATH, nocache, protectedRouter, adminRouter);
 
 /////////////////////////////////////////////////////////////////////////
 ///// Routers for External Consumers
@@ -135,16 +142,9 @@ if (IS_DEVELOPMENT) {
 ///// These routers are all prefixed with /private and not accessible
 ///// from the public internet.
 ////////////////////////////////////////////////////////////////////////
-if (FeatureToggle.amsNotificationsIsActive) {
-  app.use(nocache, notificationsExternalConsumerRouter.private);
-}
+app.use(BFF_BASE_PATH_PRIVATE, nocache, privateNetworkRouter);
 
-if (FeatureToggle.wmoPrivateNetworkRouterActive) {
-  app.use(nocache, wmoRouterPrivateNetwork);
-}
-
-app.use(nocache, stadspasExternalConsumerRouter.private);
-
+// Redirects to /api/v1
 app.get(BffEndpoints.ROOT, (_req, res) => {
   return res.redirect(`${BFF_BASE_PATH + BffEndpoints.ROOT}`);
 });

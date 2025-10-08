@@ -47,11 +47,6 @@ export const BffEndpoints = {
   // WPI Document download
   WPI_DOCUMENT_DOWNLOAD: '/services/wpi/document/:id',
 
-  // WMO / Zorgned
-  WMO_DOCUMENT_DOWNLOAD: `/services/wmo/document/:id`,
-  WMO_DOCUMENTS_LIST_RAW: `/services/wmo/raw/documents`,
-  WMO_AANVRAGEN_RAW: `/services/wmo/raw/aanvragen`,
-
   // AV / Zorgned
   HLI_DOCUMENT_DOWNLOAD: `/services/v1/stadspas-en-andere-regelingen/document/:id`,
 
@@ -91,13 +86,12 @@ export const ExternalConsumerEndpoints = {
   },
   // Privately accessible
   private: {
-    STADSPAS_PASSEN: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/stadspas/passen/:administratienummerEncrypted`,
-    STADSPAS_DISCOUNT_TRANSACTIONS: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/stadspas/aanbiedingen/transactions/:transactionsKeyEncrypted`,
-    STADSPAS_BUDGET_TRANSACTIONS: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/stadspas/budget/transactions/:transactionsKeyEncrypted`,
-    STADSPAS_BLOCK_PAS: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/stadspas/block/:transactionsKeyEncrypted`,
-    NOTIFICATIONS: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/notifications`,
-    NOTIFICATIONS_JOB: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/job/notifications`,
-    WMO_VOORZIENINGEN: `${BFF_BASE_PATH_PRIVATE}/services/wmo/voorzieningen`,
+    STADSPAS_PASSEN: `${AMSAPP_BASE}/stadspas/passen/:administratienummerEncrypted`,
+    STADSPAS_DISCOUNT_TRANSACTIONS: `${AMSAPP_BASE}/stadspas/aanbiedingen/transactions/:transactionsKeyEncrypted`,
+    STADSPAS_BUDGET_TRANSACTIONS: `${AMSAPP_BASE}/stadspas/budget/transactions/:transactionsKeyEncrypted`,
+    STADSPAS_BLOCK_PAS: `${AMSAPP_BASE}/stadspas/block/:transactionsKeyEncrypted`,
+    NOTIFICATIONS: `${AMSAPP_BASE}/notifications`,
+    NOTIFICATIONS_JOB: `${AMSAPP_BASE}/job/notifications`,
   },
 } as const;
 

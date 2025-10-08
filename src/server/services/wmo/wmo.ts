@@ -1,6 +1,7 @@
 import { generatePath } from 'react-router';
 
 import { getHulpmiddelenDisclaimer } from './status-line-items/wmo-hulpmiddelen';
+import { routes } from './wmo-service-config';
 import { wmoStatusLineItemsConfig } from './wmo-status-line-items';
 import { routeConfig } from '../../../client/pages/Thema/Zorg/Zorg-thema-config';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
@@ -13,7 +14,6 @@ import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import type { StatusLineItem } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { ZorgnedAanvraagTransformed, type BSN } from '../zorgned/zorgned-types';
 import {
@@ -91,7 +91,7 @@ function transformVoorzieningForFrontend(
     documents: getDocuments(
       sessionID,
       aanvraag,
-      BffEndpoints.WMO_DOCUMENT_DOWNLOAD
+      routes.protected.WMO_DOCUMENT_DOWNLOAD
     ),
     steps,
     // NOTE: Keep! This field is added specifically for the Tips api.
@@ -231,6 +231,27 @@ export async function fetchWmoVoorzieningenCompact(
   }
 
   return voorzieningenResponse;
+}
+
+// Specific filter and fetch function for Actuele Uitgevoerde Woonruimte Aanpassingen
+// consumed by Formulier app.
+const WRA_PRODUCT_GROUP = 'WRA';
+const WRA_STEP_STATUS = 'Aanpassing uitgevoerd';
+
+const isActueleUitgevoerdeWoonruimteAanpassing: FetchWmoVoorzieningFilter = (
+  voorziening,
+  steps
+) =>
+  voorziening.isActueel &&
+  steps.some((step) => step.status === WRA_STEP_STATUS && step.isActive);
+
+export function fetchActueleWRAVoorzieningenCompact(
+  bsn: BSN
+): Promise<ApiResponse<WMOVoorzieningCompact[]>> {
+  return fetchWmoVoorzieningenCompact(bsn, {
+    productGroup: [WRA_PRODUCT_GROUP],
+    filter: isActueleUitgevoerdeWoonruimteAanpassing,
+  });
 }
 
 export const forTesting = {

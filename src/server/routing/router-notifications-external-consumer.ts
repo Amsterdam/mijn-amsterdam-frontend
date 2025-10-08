@@ -5,6 +5,7 @@ import { ExternalConsumerEndpoints } from './bff-routes';
 import { apiKeyVerificationHandler } from './route-handlers';
 import { createBFFRouter, generateFullApiUrlBFF } from './route-helpers';
 import { IS_PRODUCTION } from '../../universal/config/env';
+import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { apiErrorResult, apiSuccessResult } from '../../universal/helpers/api';
 import {
   RETURNTO_AMSAPP_NOTIFICATIES_APP_LANDING,
@@ -69,6 +70,7 @@ routerPublic.delete(
 // ======================
 export const routerPrivate = createBFFRouter({
   id: 'external-consumer-private-notifications',
+  isEnabled: FeatureToggle.amsNotificationsIsActive,
 });
 
 // This route will never be enabled in production
