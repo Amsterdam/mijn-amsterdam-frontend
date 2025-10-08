@@ -1,4 +1,4 @@
-import { ZaakDetail } from '../../../universal/types/App.types';
+import { ZaakAanvraagDetail } from '../../../universal/types/App.types';
 
 /** @deprecated */
 export type IdentiteitsbewijsFromSource = {
@@ -10,7 +10,7 @@ export type IdentiteitsbewijsFromSource = {
 };
 
 /** @deprecated */
-export type IdentiteitsbewijsFrontend = ZaakDetail &
+export type IdentiteitsbewijsFrontend = ZaakAanvraagDetail &
   IdentiteitsbewijsFromSource & {
     datumUitgifteFormatted: string;
     datumAfloopFormatted: string;

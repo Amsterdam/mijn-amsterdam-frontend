@@ -3,7 +3,7 @@ import { useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router';
 import { atom, useRecoilState, useRecoilValue } from 'recoil';
 
-import { useAppStateGetter, useAppStateReady } from './useAppState';
+import { useAppStateReady } from './useAppState';
 import { useProfileTypeValue } from './useProfileType';
 import { sortAlpha } from '../../universal/helpers/utils';
 import { LinkProps } from '../../universal/types/App.types';
@@ -43,18 +43,10 @@ export function compareThemas<T extends withIDTitle>(a: T, b: T): 0 | 1 | -1 {
   return sortAlphaOnTitle(a, b);
 }
 
-export function useThemaMenuItems(): ThemasState {
+export function useAllThemaMenuItems(): ThemasState {
   const profileType = useProfileTypeValue();
-  const appState = useAppStateGetter();
   const isAppStateReady = useAppStateReady();
-  const themaItems = themasByProfileType(profileType).toSorted(compareThemas);
-
-  const items = useMemo(() => {
-    return themaItems.filter((item) => {
-      // Check to see if Thema has been loaded or if it is directly available
-      return item.isActive ? item.isActive(appState) : item.isAlwaysVisible;
-    });
-  }, [themaItems, appState]);
+  const items = themasByProfileType(profileType).toSorted(compareThemas);
 
   return {
     items,
@@ -62,8 +54,17 @@ export function useThemaMenuItems(): ThemasState {
   };
 }
 
-export function useThemaMenuItemsByThemaID() {
-  const { items } = useThemaMenuItems();
+export function useActiveThemaMenuItems(): ThemasState {
+  const { items, isLoading } = useAllThemaMenuItems();
+
+  return {
+    items: items.filter((item) => item.isActive),
+    isLoading,
+  };
+}
+
+export function useAllThemaMenuItemsByThemaID() {
+  const { items } = useAllThemaMenuItems();
 
   const themaById = useMemo(
     () =>
@@ -83,7 +84,7 @@ export function useThemaMenuItemsByThemaID() {
 export function useThemaMenuItemByThemaID<ID extends string = string>(
   themaID: ID
 ): ThemaMenuItemTransformed<ID> | null {
-  const itemsById = useThemaMenuItemsByThemaID();
+  const itemsById = useAllThemaMenuItemsByThemaID();
   return itemsById[themaID]
     ? (itemsById[themaID] as ThemaMenuItemTransformed<ID>)
     : null;

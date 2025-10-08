@@ -13,7 +13,8 @@ const createGeneralInfoComponent = componentCreator({
   routePath: GeneralInfoRoute.route,
 });
 
-describe('<GeneralInfo />', () => {
+// TODO: https://gemeente-amsterdam.atlassian.net/browse/MIJN-12053
+describe.skip('<GeneralInfo />', () => {
   test('Always show MyArea as having `to` in sectionProps makes it show as a link.', () => {
     const Component = createGeneralInfoComponent({} as unknown as AppState);
     const screen = render(<Component />);

@@ -4,10 +4,10 @@
     {
       "key": "51968C2072AA4323AC5336A59B469A51",
       "fields": {
-        "date6": "2024-11-04T00:00:00",
+        "date6": "2025-09-30T00:00:00",
         "itemtype_key": "VAREN",
         "mark": "Z/25/0000001-10001",
-        "subject2": "Vergunning naam boot 1",
+        "subject2": "Naam boot 1",
         "text10": "Groot",
         "text11": "Z/25/0000001",
         "text15": "1",
@@ -21,10 +21,10 @@
     {
       "key": "51968C2072AA4323AC5336A59B469A52",
       "fields": {
-        "date6": "2024-11-04T00:00:00",
+        "date6": "2025-09-28T00:00:00",
         "itemtype_key": "VAREN",
         "mark": "Z/25/0000002-10001",
-        "subject2": "Vergunning naam boot 2",
+        "subject2": "Een lange bootnaam boot 2",
         "text10": "Groot",
         "text11": "Z/25/0000002",
         "text15": "1",
@@ -39,6 +39,7 @@
       "key": "51968C2072AA4323AC5336A59B469A53",
       "fields": {
         "date6": "2024-11-04T00:00:00",
+        "date7": "2025-08-04T00:00:00",
         "itemtype_key": "VAREN",
         "mark": "Z/25/0000003-10001",
         "subject2": "Vergunning naam boot 3",

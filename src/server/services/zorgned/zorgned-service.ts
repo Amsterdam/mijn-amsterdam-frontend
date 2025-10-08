@@ -118,7 +118,7 @@ function transformZorgnedAanvraag(
     leverancier: toegewezenProduct?.leverancier?.omschrijving ?? '',
     leveringsVorm,
     productsoortCode: productsoortCode,
-    productIdentificatie: productIdentificatie,
+    productIdentificatie,
     beschiktProductIdentificatie: beschiktProduct.identificatie,
     resultaat: beschiktProduct.resultaat,
     titel: beschiktProduct.product.omschrijving ?? '',
@@ -155,7 +155,7 @@ export function transformZorgnedAanvragen(
     for (const beschiktProduct of beschikteProducten) {
       if (beschiktProduct) {
         const aanvraagTransformed = transformZorgnedAanvraag(
-          aanvraagSource.identificatie,
+          `${aanvraagSource.identificatie}-${beschiktProduct.identificatie}`,
           datumAanvraag,
           datumBesluit,
           beschiktProduct,

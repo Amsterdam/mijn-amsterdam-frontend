@@ -3,6 +3,7 @@ import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemsConfig,
   ZorgnedStatusLineItemTransformerConfig,
+  type BeschikkingsResultaat,
 } from './zorgned-types';
 import { logger } from '../../logging';
 
@@ -170,7 +171,7 @@ describe('zorgned-status-line-items', () => {
       test('Get line items', () => {
         expect(lineItems).toBe(null);
         expect(logSpy).toHaveBeenCalledWith(
-          `No line item formatters found for Service: WMO, leveringsVorm: NO, productsoortCode: MATCH, productIdentificatie: WORLD`
+          `No line item formatters found for Service: WMO, resultaat: undefined, leveringsVorm: NO, productsoortCode: MATCH, productIdentificatie: WORLD`
         );
       });
     });
@@ -259,6 +260,44 @@ describe('zorgned-status-line-items', () => {
       test('Get line items length', () => {
         expect(lineItems?.length).toBe(1);
       });
+    });
+
+    describe('Matches line items based on result', () => {
+      const aanvraag = getAanvraagTransformed();
+
+      delete aanvraag.leveringsVorm;
+
+      const transformer1 = getTransformerConfig();
+      const transformer2 = getTransformerConfig();
+
+      test.each([
+        ['afgewezen', 'afgewezen', 2],
+        ['toegewezen', 'afgewezen', undefined],
+        ['afgewezen', 'toegewezen', undefined],
+        ['toegewezen', 'toegewezen', 2],
+        [undefined, 'toegewezen', 2],
+        [undefined, 'afgewezen', 2],
+      ])(
+        'LineItemconfig resultaat: %s, aanvraag resultaat: %s',
+        (resultaatMatch, resultaatAanvraag, expectedLength) => {
+          const lineItems = getStatusLineItems(
+            'WMO',
+            [
+              {
+                resultaat: resultaatMatch as BeschikkingsResultaat,
+                lineItemTransformers: [transformer1, transformer2],
+              },
+            ],
+            {
+              ...aanvraag,
+              resultaat: resultaatAanvraag as BeschikkingsResultaat,
+            },
+            [],
+            new Date()
+          );
+          expect(lineItems?.length).toBe(expectedLength);
+        }
+      );
     });
   });
 });

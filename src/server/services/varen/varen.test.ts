@@ -3,7 +3,9 @@ import { afterAll, describe, expect, it } from 'vitest';
 
 import {
   DecosVarenZaakVergunning,
+  ZaakVergunningExploitatieType,
   VarenVergunningExploitatieType,
+  ZaakVergunningExploitatieWijzigingVaartuigNaamType,
 } from './config-and-types';
 import { fetchVaren } from './varen';
 import { getAuthProfileAndToken } from '../../../testing/utils';
@@ -14,47 +16,62 @@ import {
 import { omit } from '../../../universal/helpers/utils';
 import * as decos from '../decos/decos-service';
 
-const vergunning1 = {
+const vergunning = {
   vesselLength: '2,31',
   vesselWidth: '2,32',
   segment: 'Onbemand',
   eniNumber: '7654321',
-  id: 'Z-25-0000001-10001',
   vesselName: 'Titanic',
-  identifier: 'Z/25/0000001',
+  id: 'Z-25-0000001-10001',
+  identifier: 'Z/25/0000001/10001',
 } as DecosVarenZaakVergunning;
 
-const vergunning2 = {
+const vergunningContent = {
+  ...vergunning,
+  itemType: 'varens',
+  caseType: null,
+  title: 'Varen vergunning exploitatie',
+  dateEnd: '2025-01-03T00:00:00',
+} as unknown as VarenVergunningExploitatieType;
+
+const zaakAanvraagExploitatie = {
+  id: 'Z-24-0000001',
+  identifier: 'Z/24/0000001',
+  key: 'ABC',
+  caseType: 'Varen vergunning exploitatie',
+  title: 'Varen vergunning exploitatie',
+  decision: null,
+  processed: false,
+  linkDataRequest: 'https://test.test',
+  vesselName: 'Titanic',
   vesselLength: '2,31',
   vesselWidth: '2,32',
   segment: 'Onbemand',
-  eniNumber: '12345678',
-  id: 'Z-25-0000002-10002',
-  vesselName: 'Titanic 2',
-  identifier: 'Z/25/0000002',
-} as DecosVarenZaakVergunning;
+  statusDates: [],
+  termijnDates: [],
+  dateRequest: '2025-01-01T00:00:00',
+  vergunningen: [],
+} satisfies Partial<ZaakVergunningExploitatieType> as unknown as ZaakVergunningExploitatieType;
 
-const zakenContent = [
-  {
-    id: 'Z-24-0000001',
-    identifier: 'Z/24/0000001',
-    key: 'ABCDEF0123456789ABCDEF0123456789',
-    caseType: 'Varen vergunning exploitatie',
-    title: 'Varen vergunning exploitatie',
-    decision: 'Verleend',
-    processed: true,
-    linkDataRequest: 'https://test.test',
-    vesselName: 'Titanic',
-    vesselLength: '2,31',
-    vesselWidth: '2,32',
-    segment: 'Onbemand',
-    statusDates: [],
-    termijnDates: [],
-    dateRequest: '2025-01-01T00:00:00',
-    dateDecision: '2025-01-03T00:00:00',
-    vergunningen: [vergunning1, vergunning2],
-  } satisfies Partial<VarenVergunningExploitatieType>,
-] as unknown as VarenVergunningExploitatieType[];
+const zaakWijzigingExploitatie = {
+  id: 'Z-24-0000002',
+  identifier: 'Z/24/0000002',
+  key: 'ABC2',
+  caseType: 'Varen vergunning exploitatie Wijziging vaartuignaam',
+  title: 'Wijzigen: Vaartuig een andere naam geven',
+  decision: null,
+  processed: false,
+  linkDataRequest: 'https://test.test',
+  vesselName: 'Titanic Old',
+  vesselNameNew: 'Titanic New',
+  vesselLength: '2,31',
+  vesselWidth: '2,32',
+  segment: 'Onbemand',
+  statusDates: [],
+  termijnDates: [],
+  dateRequest: '2025-01-01T00:00:00',
+  vergunningen: [vergunning],
+} satisfies Partial<ZaakVergunningExploitatieWijzigingVaartuigNaamType> as unknown as ZaakVergunningExploitatieType;
 
 describe('Varen service', () => {
   const authProfileAndToken = getAuthProfileAndToken();
@@ -67,9 +84,10 @@ describe('Varen service', () => {
 
   describe('fetchVaren', () => {
     it('should respond with a success response on empty zaken list', async () => {
-      vi.spyOn(decos, 'fetchDecosZaken').mockResolvedValueOnce(
-        apiSuccessResult([])
-      );
+      vi.spyOn(decos, 'fetchDecosZaken')
+        .mockResolvedValueOnce(apiSuccessResult([]))
+        .mockResolvedValueOnce(apiSuccessResult([]))
+        .mockResolvedValueOnce(apiSuccessResult([]));
 
       const response = await fetchVaren(authProfileAndToken);
       const successResponse = {
@@ -77,47 +95,51 @@ describe('Varen service', () => {
         content: {
           reder: null,
           zaken: [],
+          vergunningen: [],
         },
       };
       expect(response).toStrictEqual(successResponse);
     });
 
     it('should respond with an error response if decos fetchDecosZaken returns an error', async () => {
-      vi.spyOn(decos, 'fetchDecosZaken').mockResolvedValueOnce(
+      vi.spyOn(decos, 'fetchDecosZaken').mockResolvedValue(
         apiErrorResult('Error', null)
       );
 
       const response = await fetchVaren(authProfileAndToken);
       const errorResponse = {
         content: null,
-        message: 'Error',
+        message: 'Failed dependencies',
         status: 'ERROR',
       };
       expect(response).toStrictEqual(errorResponse);
     });
 
     it('should return a list of VarenFrontend zaken', async () => {
-      vi.spyOn(decos, 'fetchDecosZaken').mockResolvedValueOnce(
-        apiSuccessResult(zakenContent)
-      );
+      vi.spyOn(decos, 'fetchDecosZaken')
+        .mockResolvedValueOnce(apiSuccessResult([]))
+        .mockResolvedValueOnce(
+          apiSuccessResult([zaakAanvraagExploitatie, zaakWijzigingExploitatie])
+        )
+        .mockResolvedValueOnce(apiSuccessResult([]));
 
       const response = await fetchVaren(authProfileAndToken);
       expect(response.status).toBe('OK');
       expect(response.content?.zaken[0]).toStrictEqual({
-        ...omit(zakenContent[0], [
+        ...omit(zaakAanvraagExploitatie, [
           'statusDates',
           'termijnDates',
           'vergunningen',
         ]),
-        displayStatus: 'Verleend',
+        displayStatus: 'In behandeling',
         fetchSourceRaw:
-          'http://bff-api-host/api/v1/services/decos/zaak-raw?key=ABCDEF0123456789ABCDEF0123456789',
-        id: 'Z-25-0000001-10001',
+          'http://bff-api-host/api/v1/services/decos/zaak-raw?key=ABC',
+        id: 'Z-24-0000001',
         identifier: 'Z/24/0000001',
         dateRequestFormatted: '01 januari 2025',
-        dateDecisionFormatted: '03 januari 2025',
-        vergunning: vergunning1,
-        vesselName: vergunning1.vesselName,
+        dateDecisionFormatted: null,
+        vergunning: null,
+        vesselName: zaakAanvraagExploitatie.vesselName,
         steps: [
           {
             datePublished: '2025-01-01T00:00:00',
@@ -131,52 +153,47 @@ describe('Varen service', () => {
             datePublished: '2025-01-01T00:00:00',
             description: '',
             id: 'step-1',
-            isActive: false,
-            isChecked: true,
+            isActive: true,
+            isChecked: false,
             status: 'In behandeling',
           },
           {
-            datePublished: '2025-01-03T00:00:00',
+            datePublished: '',
             id: 'step-2',
-            isActive: true,
-            isChecked: true,
+            isActive: false,
+            isChecked: false,
             status: 'Afgehandeld',
           },
         ],
         link: {
           title: 'Bekijk hoe het met uw aanvraag staat',
-          to: '/passagiers-en-beroepsvaart/vergunning/varen-vergunning-exploitatie/Z-25-0000001-10001',
+          to: '/varen/vergunningen/varen-vergunning-exploitatie/Z-24-0000001',
         },
       });
       expect(response.content?.zaken[1]).toMatchObject({
-        id: 'Z-25-0000002-10002',
-        identifier: 'Z/24/0000001',
-        vergunning: vergunning2,
-        vesselName: vergunning2.vesselName,
+        id: 'Z-24-0000002',
+        identifier: 'Z/24/0000002',
+        vergunning: zaakWijzigingExploitatie.vergunningen[0],
+        vesselName: zaakWijzigingExploitatie.vergunningen[0].vesselName,
       });
     });
 
-    it('should return a list of a single VarenFrontend zaak when no vergunning is linked', async () => {
-      const zakenContentWithoutVergunning = [
-        {
-          ...zakenContent[0],
-          vergunningen: [],
-          status: 'In behandeling',
-          decision: null,
-          processed: false,
-        },
-      ];
-
-      vi.spyOn(decos, 'fetchDecosZaken').mockResolvedValueOnce(
-        apiSuccessResult(zakenContentWithoutVergunning)
-      );
+    it('should return a list of a single vergunning with linkedActiveZaak', async () => {
+      vi.spyOn(decos, 'fetchDecosZaken')
+        .mockResolvedValueOnce(apiSuccessResult([]))
+        .mockResolvedValueOnce(apiSuccessResult([zaakWijzigingExploitatie]))
+        .mockResolvedValueOnce(apiSuccessResult([vergunningContent]));
 
       const response = await fetchVaren(authProfileAndToken);
       expect(response.status).toBe('OK');
-      expect(response.content?.zaken).toHaveLength(1);
-      expect(response.content?.zaken[0]).toMatchObject({
-        id: 'Z-24-0000001',
-        identifier: 'Z/24/0000001',
+      expect(response.content?.vergunningen).toHaveLength(1);
+      expect(response.content?.vergunningen[0]).toMatchObject({
+        id: 'Z-25-0000001-10001',
+        identifier: 'Z/25/0000001/10001',
+        linkedActiveZaakLink: {
+          title: 'Bekijk hoe het met uw aanvraag staat',
+          to: '/varen/vergunningen/varen-vergunning-exploitatie-wijziging-vaartuignaam/Z-24-0000002',
+        },
       });
     });
   });

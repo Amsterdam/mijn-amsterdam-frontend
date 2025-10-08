@@ -6,7 +6,10 @@ import {
 } from '@amsterdam/design-system-react';
 import useSWR from 'swr';
 
-import { CobrowseFooter } from './CobrowseFooter/CobrowseFooter';
+import {
+  CobrowseFooter,
+  LABEL_HULP_SCHERMDELEN,
+} from './CobrowseFooter/CobrowseFooter';
 import styles from './MainFooter.module.scss';
 import type {
   CMSFooter,
@@ -15,6 +18,7 @@ import type {
 import type { ApiResponse } from '../../../universal/helpers/api';
 import { BFF_API_BASE_URL } from '../../config/api';
 import { useCanonmatigingFooterLink } from '../../pages/Thema/Erfpacht/Erfpacht-render-config';
+import { featureToggle } from '../../pages/Thema/Erfpacht/Erfpacht-thema-config';
 
 function useCustomFooterSections(
   sections: CMSFooterSection[],
@@ -70,7 +74,10 @@ export function MainFooter() {
 
   const canonmatigingLink = useCanonmatigingFooterLink();
 
-  const customLinks = canonmatigingLink ? [canonmatigingLink] : [];
+  const customLinks =
+    featureToggle.canonmatigingLinkActive && canonmatigingLink
+      ? [canonmatigingLink]
+      : [];
 
   const customSections = useCustomFooterSections(
     footer?.content?.sections || [],
@@ -89,13 +96,19 @@ export function MainFooter() {
       </PageFooter.Spotlight>
 
       <PageFooter.Menu>
-        {footer?.content?.bottomLinks.map((link) => {
-          return (
-            <PageFooter.MenuLink key={link.label} href={link.url}>
-              {link.label}
-            </PageFooter.MenuLink>
-          );
-        })}
+        {footer?.content?.bottomLinks
+          .filter(
+            (link) =>
+              typeof link.label === 'string' &&
+              link.label.toLowerCase() !== LABEL_HULP_SCHERMDELEN.toLowerCase()
+          )
+          .map((link) => {
+            return (
+              <PageFooter.MenuLink key={link.label} href={link.url}>
+                {link.label}
+              </PageFooter.MenuLink>
+            );
+          })}
         <CobrowseFooter />
       </PageFooter.Menu>
     </PageFooter>

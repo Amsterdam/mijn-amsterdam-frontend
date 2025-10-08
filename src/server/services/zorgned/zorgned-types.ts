@@ -52,6 +52,7 @@ export interface ZorgnedStatusLineItemsConfig<
   productIdentificatie?: ProductIdentificatie[];
   filter?: ZorgnedLineItemsFilter;
   isDisabled?: boolean;
+  resultaat?: BeschikkingsResultaat;
 }
 
 export type LeveringsVorm = 'ZIN' | 'PGB' | '' | string;

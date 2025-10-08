@@ -80,9 +80,10 @@ export interface CategoryMenuItem<ID extends string> extends LinkProps {
 }
 
 export interface ThemaMenuItemTransformed<ID extends string = string>
-  extends Omit<ThemaMenuItem<ID>, 'title' | 'to'> {
+  extends Omit<ThemaMenuItem<ID>, 'title' | 'to' | 'isActive'> {
   title: string;
   to: string;
+  isActive: boolean;
 }
 
 type ThemaPageType =
