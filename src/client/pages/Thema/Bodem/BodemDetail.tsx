@@ -1,3 +1,4 @@
+import { themaConfig } from './Bodem-thema-config';
 import { useBodemDetailData } from './useBodemDetailData.hook';
 import { LoodMetingFrontend } from '../../../../server/services/bodem/types';
 import { Datalist, Row } from '../../../components/Datalist/Datalist';
@@ -8,16 +9,8 @@ import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function BodemDetail() {
-  const {
-    meting,
-    isLoading,
-    isError,
-    breadcrumbs,
-    themaId,
-    title,
-    routeConfig,
-  } = useBodemDetailData();
-  useHTMLDocumentTitle(routeConfig.detailPage);
+  const { meting, isLoading, isError, breadcrumbs } = useBodemDetailData();
+  useHTMLDocumentTitle(themaConfig.detailPage.route);
 
   const LoodMetingRows = (meting: LoodMetingFrontend) => {
     const rows: Row[] = [{ label: 'Kenmerk', content: meting.kenmerk }];
@@ -64,8 +57,8 @@ export function BodemDetail() {
 
   return (
     <ThemaDetailPagina
-      themaId={themaId}
-      title={title}
+      themaId={themaConfig.id}
+      title={themaConfig.detailPage.title}
       zaak={meting}
       breadcrumbs={breadcrumbs}
       isError={isError}
