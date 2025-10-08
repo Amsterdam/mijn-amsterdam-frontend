@@ -8,6 +8,7 @@ import {
 import apiResponse from '../../../../mocks/fixtures/klachten.json';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { ApiConfig } from '../../config/source-api';
+import type { identifier } from '../../../client/pages/Thema/Vergunningen/detail-page-content/fields-config';
 
 describe('Klachten', () => {
   const profileAndToken = getAuthProfileAndToken();
@@ -145,6 +146,7 @@ describe('Klachten', () => {
       gewensteOplossing: '',
       onderwerp: 'Belastingen en heffingen',
       displayStatus: 'Ontvangen',
+      identifier: '28032',
       id: '28032',
       title: '28032',
       locatie: '',

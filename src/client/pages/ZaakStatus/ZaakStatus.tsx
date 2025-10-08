@@ -85,12 +85,11 @@ type GetZakenFn<T extends AppStateBase[keyof AppStateBase]> = (
 function baseThemaConfig<K extends keyof AppStateBase>(
   baseRoute: string,
   appStateKey: K,
-  getZaken: GetZakenFn<AppStateBase[K]> = getZakenFromContentArray,
-  identifierKey: string = 'identifier'
+  getZaken: GetZakenFn<AppStateBase[K]> = getZakenFromContentArray
 ): PageRouteResolver {
   return {
     baseRoute,
-    getRoute(zaakID, appState) {
+    getRoute(identifier, appState) {
       const stateSlice = appState[appStateKey];
 
       if (isLoading(stateSlice)) {
@@ -107,7 +106,7 @@ function baseThemaConfig<K extends keyof AppStateBase>(
           return ITEM_NOT_FOUND;
         }
 
-        const zaak = zaken.find((zaak) => zaak.identifier === zaakID);
+        const zaak = zaken.find((zaak) => zaak.identifier === identifier);
         return zaak?.link?.to ?? ITEM_NOT_FOUND;
       }
 
@@ -133,7 +132,9 @@ const pageRouteResolvers: PageRouteResolvers = {
     TOERISTISCHE_VERHUUR.routeConfig.themaPage.path,
     TOERISTISCHE_VERHUUR.themaId,
     (stateSlice) => {
-      return stateSlice.content?.vakantieverhuurVergunningen ?? null;
+      const { vakantieverhuurVergunningen = [], bbVergunningen = [] } =
+        stateSlice.content ?? {};
+      return [...vakantieverhuurVergunningen, ...bbVergunningen];
     }
   ),
   bodem: baseThemaConfig(

@@ -4,6 +4,7 @@ import { fetchAVG, fetchAVGNotifications, transformAVGResponse } from './avg';
 import avgThemasResponse from '../../../../mocks/fixtures/avg-themas.json';
 import apiResponse from '../../../../mocks/fixtures/avg.json';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
+import { identifier } from '../../../client/pages/Thema/Vergunningen/detail-page-content/fields-config';
 
 describe('AVG', () => {
   const profileAndToken = getAuthProfileAndToken();
@@ -30,6 +31,7 @@ describe('AVG', () => {
         datumAfhandeling: '2023-03-19T00:00:00.000Z',
         datumInBehandeling: '2023-03-16T00:00:00.000Z',
         id: '223',
+        identifier: '223',
         link: {
           title: 'AVG verzoek 223',
           to: '/avg/verzoek/223',
@@ -88,6 +90,7 @@ describe('AVG', () => {
               datumAfhandeling: '',
               datumInBehandeling: '',
               id: '1',
+              identifier: '1',
               link: {
                 title: 'AVG verzoek 1',
                 to: '/avg/verzoek/1',
@@ -146,6 +149,7 @@ describe('AVG', () => {
               datumAfhandeling: '',
               datumInBehandeling: '2023-03-30T00:00:00.000Z',
               id: '2',
+              identifier: '2',
               link: {
                 title: 'AVG verzoek 2',
                 to: '/avg/verzoek/2',
@@ -194,6 +198,7 @@ describe('AVG', () => {
               datumAfhandeling: '2023-03-19T00:00:00.000Z',
               datumInBehandeling: '2023-03-16T00:00:00.000Z',
               id: '223',
+              identifier: '223',
               link: {
                 title: 'AVG verzoek 223',
                 to: '/avg/verzoek/223',
@@ -243,6 +248,7 @@ describe('AVG', () => {
               datumAfhandeling: '2023-03-25T00:00:00.000Z',
               datumInBehandeling: '2023-03-20T00:00:00.000Z',
               id: '425',
+              identifier: '425',
               link: {
                 title: 'AVG verzoek 425',
                 to: '/avg/verzoek/425',
@@ -302,6 +308,7 @@ describe('AVG', () => {
               datumAfhandeling: '',
               datumInBehandeling: '2023-05-30T00:00:00.000Z',
               id: '561',
+              identifier: '561',
               link: {
                 title: 'AVG verzoek 561',
                 to: '/avg/verzoek/561',
@@ -360,6 +367,7 @@ describe('AVG', () => {
               datumAfhandeling: '',
               datumInBehandeling: '',
               id: '156',
+              identifier: '156',
               link: {
                 title: 'AVG verzoek 156',
                 to: '/avg/verzoek/156',
