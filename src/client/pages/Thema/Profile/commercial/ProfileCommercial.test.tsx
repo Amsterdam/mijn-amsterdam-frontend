@@ -1,11 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MutableSnapshot } from 'recoil';
 
 import { MijnBedrijfsGegevensThema } from './ProfileCommercial';
 import { KVKData } from '../../../../../server/services/profile/kvk';
 import { AppState } from '../../../../../universal/types/App.types';
-import { appStateAtom } from '../../../../hooks/useAppState';
 import MockApp from '../../../MockApp';
 import { routeConfig } from '../Profile-thema-config';
 
@@ -195,10 +193,6 @@ const testState = {
   KVK: { status: 'OK', content: responseData },
 } as unknown as AppState;
 
-function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState);
-}
-
 const panelHeadings = [
   'Onderneming',
   'Hoofdvestiging',
@@ -219,7 +213,7 @@ describe('<MijnBedrijfsGegevensThema />', () => {
         routeEntry={routeEntry}
         routePath={routeEntry}
         component={MijnBedrijfsGegevensThema}
-        initializeState={initializeState}
+        state={testState}
       />
     );
   }

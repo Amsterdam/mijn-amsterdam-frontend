@@ -1,8 +1,6 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
-import { MutableSnapshot } from 'recoil';
 
-import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import { MyNotificationsPage } from './MyNotifications';
 import { MyNotificationsRoute } from './MyNotifications-routes';
@@ -69,10 +67,6 @@ const testState = {
   },
 };
 
-function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState as AppState);
-}
-
 describe('<MyNotifications />', () => {
   const routeEntry = generatePath(MyNotificationsRoute.route);
 
@@ -82,7 +76,7 @@ describe('<MyNotifications />', () => {
         routeEntry={routeEntry}
         routePath={routeEntry}
         component={MyNotificationsPage}
-        initializeState={initializeState}
+        state={testState as unknown as AppState}
       />
     );
   }

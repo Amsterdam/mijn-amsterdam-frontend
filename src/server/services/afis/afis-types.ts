@@ -45,7 +45,7 @@ export type AfisThemaResponse = {
   isKnown: boolean;
   businessPartnerIdEncrypted: string | null;
   businessPartnerId?: string | null;
-  facturen?: AfisFacturenByStateResponse | null;
+  facturen: AfisFacturenByStateResponse | null;
 };
 
 export type AfisApiFeedResponseSource<T> = {
@@ -115,6 +115,7 @@ export type AfisFactuurState = 'open' | 'afgehandeld' | 'overgedragen';
 export type AfisFacturenResponse = {
   count: number;
   facturen: AfisFactuur[];
+  state: AfisFactuurState;
 };
 
 export type AfisFacturenParams = {

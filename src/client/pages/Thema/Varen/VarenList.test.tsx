@@ -1,7 +1,6 @@
 import { render, within } from '@testing-library/react';
 import Mockdate from 'mockdate';
 import { generatePath } from 'react-router';
-import { MutableSnapshot } from 'recoil';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import { routeConfig } from './Varen-thema-config';
@@ -14,7 +13,6 @@ import {
 import { jsonCopy } from '../../../../universal/helpers/utils';
 import { AppState } from '../../../../universal/types/App.types';
 import { expectHeaders } from '../../../helpers/test-utils';
-import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
 type ExploitatieAanvraag = VarenZakenFrontend<ZaakVergunningExploitatieType>;
@@ -63,11 +61,7 @@ const getTestState = (
     },
   });
 
-function initializeState(snapshot: MutableSnapshot, state: AppState) {
-  snapshot.set(appStateAtom, state);
-}
-
-describe('<VarenZakenList />', () => {
+describe('<VarenList />', () => {
   function Component({ state }: { state: AppState }) {
     return (
       <MockApp
@@ -77,7 +71,7 @@ describe('<VarenZakenList />', () => {
           page: '1',
         })}
         component={VarenList}
-        initializeState={(snap) => initializeState(snap, state)}
+        state={state}
       />
     );
   }
@@ -153,7 +147,7 @@ describe('<VarenVergunningList />', () => {
           page: '1',
         })}
         component={VarenList}
-        initializeState={(snap) => initializeState(snap, state)}
+        state={state}
       />
     );
   }

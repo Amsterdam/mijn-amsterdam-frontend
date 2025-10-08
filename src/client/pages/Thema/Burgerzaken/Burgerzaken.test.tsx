@@ -1,11 +1,9 @@
 import { render } from '@testing-library/react';
-import { MutableSnapshot } from 'recoil';
 
 import { routeConfig } from './Burgerzaken-thema-config';
 import { BurgerzakenThema } from './BurgerzakenThema';
 import type { IdentiteitsbewijsFrontend } from '../../../../server/services/profile/brp.types';
 import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
 const identiteitsbewijzen: IdentiteitsbewijsFrontend[] = [
@@ -47,10 +45,6 @@ const testState = {
   BRP: { status: 'OK', content: { identiteitsbewijzen } },
 } as AppState;
 
-function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState);
-}
-
 describe('<Burgerzaken />', () => {
   const routePath = routeConfig.themaPage.path;
 
@@ -60,7 +54,7 @@ describe('<Burgerzaken />', () => {
         routeEntry={routePath}
         routePath={routePath}
         component={BurgerzakenThema}
-        initializeState={initializeState}
+        state={testState}
       />
     );
   }

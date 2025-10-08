@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { Paragraph, Page, SkipLink } from '@amsterdam/design-system-react';
 import { PiwikProvider, usePiwik } from '@amsterdam/piwik-tracker-react';
 import { BrowserRouter, useLocation, useNavigate } from 'react-router';
-import { RecoilRoot } from 'recoil';
 
 import styles from './App.module.scss';
 import { PrivateRoutes, PublicRoutes } from './App.routes';
@@ -16,7 +15,7 @@ import { loginUrlByAuthMethod } from './config/api';
 import { useMonitoring } from './helpers/monitoring';
 import { useAnalytics } from './hooks/analytics.hook';
 import { useSessionApi } from './hooks/api/useSessionApi';
-import { useAppStateRemote } from './hooks/useAppState';
+import { useAppStateRemote } from './hooks/useAppStateRemote';
 import {
   clearDeeplinkEntry,
   useDeeplinkRedirect,
@@ -102,12 +101,12 @@ function AppAuthenticated() {
 
 function AppLanding() {
   const session = useSessionApi();
-  const { isPristine, isAuthenticated } = session;
+  const { isAuthenticated, isDirty } = session;
 
   useScrollToTop();
 
   // If session was previously authenticated we don't want to show the loader again
-  if (isPristine) {
+  if (!isDirty) {
     return (
       <Paragraph className={styles.PreLoader}>
         Welkom op Mijn Amsterdam
@@ -134,11 +133,9 @@ export function App() {
   enableLinkTracking();
 
   return (
-    <RecoilRoot>
-      <BrowserRouter>
-        <AppLanding />
-      </BrowserRouter>
-    </RecoilRoot>
+    <BrowserRouter>
+      <AppLanding />
+    </BrowserRouter>
   );
 }
 

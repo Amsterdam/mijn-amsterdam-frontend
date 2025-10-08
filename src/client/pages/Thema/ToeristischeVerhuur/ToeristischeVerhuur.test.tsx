@@ -1,7 +1,6 @@
 import { render, within } from '@testing-library/react';
 import Mockdate from 'mockdate';
 import { generatePath } from 'react-router';
-import { MutableSnapshot } from 'recoil';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import { routeConfig } from './ToeristischeVerhuur-thema-config';
@@ -11,7 +10,6 @@ import type { VakantieverhuurVergunningFrontend } from '../../../../server/servi
 import { jsonCopy } from '../../../../universal/helpers/utils';
 import { AppState } from '../../../../universal/types/App.types';
 import { expectHeaders, getTable } from '../../../helpers/test-utils';
-import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
 function getVergunningen<
@@ -127,10 +125,6 @@ const getTestState = () =>
 
 const testStateBase = getTestState();
 
-function initializeState(snapshot: MutableSnapshot, state: AppState) {
-  snapshot.set(appStateAtom, state);
-}
-
 describe('<ToeristischeVerhuurThema />', () => {
   const routeEntry = generatePath(routeConfig.themaPage.path);
   const routePath = routeConfig.themaPage.path;
@@ -141,7 +135,7 @@ describe('<ToeristischeVerhuurThema />', () => {
         routeEntry={routeEntry}
         routePath={routePath}
         component={ToeristischeVerhuurThema}
-        initializeState={(snap) => initializeState(snap, state)}
+        state={state}
       />
     );
   }

@@ -3,8 +3,9 @@
 }
 
 .LocationModalInner {
-  height: 40rem;
   --map-container-height: 40rem;
+  height: var(--map-container-height);
+  margin-bottom: 5rem;
 }
 
 .Address {
