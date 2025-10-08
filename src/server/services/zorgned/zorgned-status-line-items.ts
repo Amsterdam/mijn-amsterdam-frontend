@@ -16,36 +16,30 @@ export function isStatusLineItemTransformerMatch<
 >(
   aanvraagTransformed: T,
   allAanvragenTransformed: T[],
-  statusLineItemsConfig: ZorgnedStatusLineItemsConfig<T>
+  config: ZorgnedStatusLineItemsConfig<T>
 ): boolean {
   const hasLeveringsVormMatch =
-    typeof statusLineItemsConfig.leveringsVorm !== 'undefined'
-      ? aanvraagTransformed.leveringsVorm ===
-        statusLineItemsConfig.leveringsVorm
+    typeof config.leveringsVorm !== 'undefined'
+      ? aanvraagTransformed.leveringsVorm === config.leveringsVorm
       : PASS_MATCH_DEFAULT;
 
   const hasProductSoortCodeMatch =
-    typeof statusLineItemsConfig.productsoortCodes !== 'undefined'
-      ? statusLineItemsConfig.productsoortCodes.includes(
-          aanvraagTransformed.productsoortCode
-        )
+    typeof config.productsoortCodes !== 'undefined'
+      ? config.productsoortCodes.includes(aanvraagTransformed.productsoortCode)
       : PASS_MATCH_DEFAULT;
 
   const hasProductIdentificatieMatch =
-    typeof statusLineItemsConfig.productIdentificatie !== 'undefined'
+    typeof config.productIdentificatie !== 'undefined'
       ? typeof aanvraagTransformed.productIdentificatie !== 'undefined'
-        ? statusLineItemsConfig.productIdentificatie.includes(
+        ? config.productIdentificatie.includes(
             aanvraagTransformed.productIdentificatie
           )
         : false
       : PASS_MATCH_DEFAULT;
 
   const isFilterMatch =
-    typeof statusLineItemsConfig.filter !== 'undefined'
-      ? statusLineItemsConfig.filter(
-          aanvraagTransformed,
-          allAanvragenTransformed
-        )
+    typeof config.filter !== 'undefined'
+      ? config.filter(aanvraagTransformed, allAanvragenTransformed)
       : PASS_MATCH_DEFAULT;
 
   const hasResultaatMatch =

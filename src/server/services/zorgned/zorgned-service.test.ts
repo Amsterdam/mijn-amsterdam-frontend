@@ -339,6 +339,7 @@ describe('zorgned-service', () => {
             datumAanvraag: '2023-04-25',
             beschikking: {
               datumAfgifte: '2023-05-17',
+              beschikkingNummer: 300967777,
               beschikteProducten: [
                 {
                   identificatie: '1',
@@ -404,6 +405,7 @@ describe('zorgned-service', () => {
       expect(result).toStrictEqual({
         content: [
           {
+            beschikkingNummer: 300967777,
             beschiktProductIdentificatie: '1',
             betrokkenPersonen: [
               {

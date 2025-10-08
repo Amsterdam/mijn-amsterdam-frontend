@@ -11,6 +11,7 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   RequestWithRouteAndQueryParams,
   sendResponse,
+  type RecordStr2,
   type ResponseAuthenticated,
 } from '../../routing/route-helpers';
 
@@ -31,7 +32,7 @@ export type DocumentDownloadResponse =
 export type FetchDocumentDownloadService = (
   authProfileAndToken: AuthProfileAndToken,
   documentIDEncrypted: string,
-  queryParams?: Record<string, string>
+  queryParams?: RecordStr2
 ) => Promise<DocumentDownloadResponse>;
 
 type FetchRouteOrQueryParamsFN = (
@@ -61,13 +62,10 @@ export function downloadDocumentRouteHandler(
       const documentResponse = await fetchDocument(
         res.locals.authProfileAndToken,
         decryptResult.content,
-        req.query as Record<string, string>
+        req.query as RecordStr2
       );
 
-      if (
-        documentResponse.status === 'ERROR' ||
-        documentResponse.status === 'POSTPONE'
-      ) {
+      if (documentResponse.status !== 'OK') {
         return sendResponse(res, documentResponse);
       }
 
@@ -77,10 +75,12 @@ export function downloadDocumentRouteHandler(
       ) {
         res.type(documentResponse.content.mimetype);
       }
+
       res.header(
         'Content-Disposition',
         `attachment${documentResponse.content.filename ? `; filename*="${encodeURIComponent(documentResponse.content.filename)}"` : ''}`
       );
+
       return 'pipe' in documentResponse.content.data &&
         typeof documentResponse.content.data.pipe === 'function'
         ? documentResponse.content.data.pipe(res)

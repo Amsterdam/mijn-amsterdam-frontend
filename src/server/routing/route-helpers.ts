@@ -13,6 +13,8 @@ import { BFF_API_BASE_URL } from '../config/app';
 
 type BFFRouter = express.Router & { BFF_ID: string };
 
+export type RecordStr2 = Record<string, string>;
+
 export function createBFFRouter({ id: id }: { id: string }): BFFRouter {
   const authRouterDevelopment = express.Router() as BFFRouter;
   authRouterDevelopment.BFF_ID = id;
@@ -20,7 +22,7 @@ export function createBFFRouter({ id: id }: { id: string }): BFFRouter {
 }
 
 /* eslint-disable @typescript-eslint/no-empty-object-type */
-export type RequestWithQueryParams<T extends Record<string, string>> = Request<
+export type RequestWithQueryParams<T extends RecordStr2> = Request<
   {},
   {},
   {},
@@ -28,8 +30,8 @@ export type RequestWithQueryParams<T extends Record<string, string>> = Request<
 >;
 
 export type RequestWithRouteAndQueryParams<
-  T extends Record<string, string> = Record<string, string>,
-  T2 extends Record<string, string> = Record<string, string>,
+  T extends RecordStr2 = RecordStr2,
+  T2 extends RecordStr2 = RecordStr2,
 > = Request<T, {}, {}, T2>;
 /* eslint-enable @typescript-eslint/no-empty-object-type */
 
@@ -63,8 +65,8 @@ export function isProtectedRoute(pathRequested: string) {
  * | params: Optional value to interpolate into the url parameters or a Tuple with query params and or url (path) params.
  * | baseUrl: Value that will be the base of the route (default value: `BFF_API_BASE_URL`)
  */
-type QueryParams = Record<string, string>;
-type PathParams = Record<string, string>;
+type QueryParams = RecordStr2;
+type PathParams = RecordStr2;
 type QueryAndOrPathParams = [QueryParams, PathParams] | [QueryParams];
 export function generateFullApiUrlBFF(
   path: string,
