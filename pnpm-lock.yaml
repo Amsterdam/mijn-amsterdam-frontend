@@ -10642,6 +10642,8 @@ snapshots:
 
   yocto-queue@0.1.0: {}
 
+  zod@4.1.11: {}
+
   zustand@5.0.8(@types/react@18.3.24)(react@18.3.1)(use-sync-external-store@1.5.0(react@18.3.1)):
     optionalDependencies:
       '@types/react': 18.3.24
