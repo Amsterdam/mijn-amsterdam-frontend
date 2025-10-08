@@ -7,7 +7,6 @@ import {
   apiSuccessResult,
   type ApiResponse,
 } from '../../../universal/helpers/api';
-import type { E } from 'vite/dist/node/moduleRunnerTransport.d-DJ_mE5sf';
 import type { SomeOtherString } from '../../../universal/helpers/types';
 
 type ApiFetchResponse<T> = Promise<ApiResponse<T>>;
@@ -177,10 +176,15 @@ export function useBffApi<T>(
     fetchImmediately = true,
   } = options || {};
 
+  const isUrlOrPathLike =
+    !!urlOrKey &&
+    (urlOrKey.startsWith('http') || urlOrKey.match(/^\/api\/v(\d+)\//));
+
   if (
     !url &&
     urlOrKey &&
-    !urlOrKey.startsWith('http') &&
+    // NOTE: not an ideal way to check this, but good enough for now.
+    !isUrlOrPathLike &&
     fetchImmediately === true
   ) {
     const error =
