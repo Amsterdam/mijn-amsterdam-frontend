@@ -83,124 +83,98 @@ describe('zorgned-service', () => {
     ).toStrictEqual([]);
   });
 
-  test('transformZorgnedAanvragen', () => {
-    const aanvragenShuffled = ZORGNED_JZD_AANVRAGEN._embedded.aanvraag
-      .filter((aanvraag) =>
+  describe('transformZorgnedAanvragen', () => {
+    const [A, B, C] = ZORGNED_JZD_AANVRAGEN._embedded.aanvraag.filter(
+      (aanvraag) =>
         ['2703104', '2696493', '2719515'].includes(aanvraag.identificatie)
-      )
-      .toSorted(() => (Math.random() * 1 > 0.5 ? 1 : -1)); // Shuffle array to test sorting.
+    );
 
-    expect(
-      forTesting.transformZorgnedAanvragen({
-        _embedded: {
-          aanvraag: aanvragenShuffled,
-        },
-      } as ZorgnedResponseDataSource)
-    ).toMatchInlineSnapshot(`
-      [
-        {
-          "beschiktProductIdentificatie": "1215588",
-          "betrokkenen": [
-            "123123123",
-          ],
-          "datumAanvraag": "2024-09-30",
-          "datumBeginLevering": "2024-09-30",
-          "datumBesluit": "2024-09-30",
-          "datumEindeGeldigheid": "2024-10-01",
-          "datumEindeLevering": "2024-10-01",
-          "datumIngangGeldigheid": "2024-09-30",
-          "datumOpdrachtLevering": "2024-09-30T18:58:05.6966667",
-          "datumToewijzing": "2024-09-30T18:58:05.6966667",
-          "documenten": [],
-          "id": "2719515-1215588",
-          "isActueel": false,
-          "leverancier": "Otolift",
-          "leveringsVorm": "ZIN",
-          "productIdentificatie": "13W15",
-          "productsoortCode": "WRA1",
-          "resultaat": "toegewezen",
-          "titel": "reparatie-/verwijderopdracht   trapliften",
-        },
-        {
-          "beschiktProductIdentificatie": "1200567",
-          "betrokkenen": [
-            "123123123123",
-          ],
-          "datumAanvraag": "2024-04-18",
-          "datumBeginLevering": null,
-          "datumBesluit": "2024-04-18",
-          "datumEindeGeldigheid": null,
-          "datumEindeLevering": null,
-          "datumIngangGeldigheid": "2024-01-01",
-          "datumOpdrachtLevering": "2024-07-09T16:44:10.89",
-          "datumToewijzing": "2024-07-09T16:44:10.89",
-          "documenten": [
-            {
-              "datePublished": "2024-08-20T16:02:09.277",
-              "id": "B2813755",
-              "title": "Besluit: toekenning AIO/AO/Dagbest/Logeeropvang",
-              "url": "",
-            },
-            {
-              "datePublished": "2024-07-09T16:45:28.253",
-              "id": "B2810215",
-              "title": "Naam in Inkijk-API",
-              "url": "",
-            },
-            {
-              "datePublished": "2024-07-09T16:43:58.217",
-              "id": "B2810214",
-              "title": "Besluit: toekenning AIO/AO/Dagbest/Logeeropvang",
-              "url": "",
-            },
-          ],
-          "id": "2703104-1200567",
-          "isActueel": false,
-          "leverancier": "Cordaan",
-          "leveringsVorm": "ZIN",
-          "productIdentificatie": "01214",
-          "productsoortCode": "WMH",
-          "resultaat": "toegewezen",
-          "titel": "hulp bij het huishouden bijzondere schoonmaak",
-        },
-        {
-          "beschiktProductIdentificatie": "1194396",
-          "betrokkenen": [
-            "123123123123",
-          ],
-          "datumAanvraag": "2024-01-25",
-          "datumBeginLevering": "2024-03-14",
-          "datumBesluit": "2024-01-25",
-          "datumEindeGeldigheid": null,
-          "datumEindeLevering": null,
-          "datumIngangGeldigheid": "2024-01-01",
-          "datumOpdrachtLevering": "2024-01-25T17:10:55.2733333",
-          "datumToewijzing": "2024-01-25T17:10:55.2733333",
-          "documenten": [
-            {
-              "datePublished": "2024-01-25T17:08:09.837",
-              "id": "B2791921",
-              "title": "Besluit: toekenning AIO/AO/Dagbest/Logeeropvang",
-              "url": "",
-            },
-          ],
-          "id": "2696493-1194396",
-          "isActueel": true,
-          "leverancier": "Amstelring",
-          "leveringsVorm": "ZIN",
-          "productIdentificatie": "07A08",
-          "productsoortCode": "DBS",
-          "resultaat": "toegewezen",
-          "titel": "dagbesteding meedoen",
-        },
-      ]
-    `);
+    it.each([[[A, B, C]], [[A, C, B]], [[B, A, C]]])(
+      'should always sort DESC',
+      (aanvragenShuffled) => {
+        expect(
+          forTesting
+            .transformZorgnedAanvragen({
+              _embedded: {
+                aanvraag: aanvragenShuffled,
+              },
+            } as ZorgnedResponseDataSource)
+            .map((a) => a.id)
+        ).toStrictEqual([
+          '2719515-1215588',
+          '2703104-1200567',
+          '2696493-1194396',
+        ]);
+      }
+    );
 
-    expect(
-      forTesting.transformZorgnedAanvragen(
-        null as unknown as ZorgnedResponseDataSource
-      )
-    ).toStrictEqual([]);
+    test('should have properties after transform', () => {
+      const keys = [
+        'beschiktProductIdentificatie',
+        'betrokkenen',
+        'datumAanvraag',
+        'datumBeginLevering',
+        'datumBesluit',
+        'datumEindeGeldigheid',
+        'datumEindeLevering',
+        'datumIngangGeldigheid',
+        'datumOpdrachtLevering',
+        'datumToewijzing',
+        'documenten',
+        'id',
+        'isActueel',
+        'leverancier',
+        'leveringsVorm',
+        'productIdentificatie',
+        'productsoortCode',
+        'resultaat',
+        'titel',
+      ].join(',');
+
+      forTesting
+        .transformZorgnedAanvragen(
+          ZORGNED_JZD_AANVRAGEN as unknown as ZorgnedResponseDataSource
+        )
+        .every((a) => {
+          expect(Object.keys(a).sort().join(',')).toBe(keys);
+        });
+    });
+
+    test('transforms correctly', () => {
+      expect(
+        forTesting.transformZorgnedAanvragen(
+          ZORGNED_JZD_AANVRAGEN as unknown as ZorgnedResponseDataSource
+        )[0]
+      ).toStrictEqual({
+        beschiktProductIdentificatie: '116841',
+        betrokkenen: [],
+        datumAanvraag: '2023-04-25',
+        datumBeginLevering: null,
+        datumBesluit: '2023-05-17',
+        datumEindeGeldigheid: null,
+        datumEindeLevering: null,
+        datumIngangGeldigheid: '2023-05-06',
+        datumOpdrachtLevering: null,
+        datumToewijzing: null,
+        documenten: [],
+        id: '912837sdfsdf198723-116841',
+        isActueel: true,
+        leverancier: 'Gebr Koenen B.V.',
+        leveringsVorm: 'ZIN',
+        productIdentificatie: 'WRA',
+        productsoortCode: 'WRA',
+        resultaat: 'toegewezen',
+        titel: 'woonruimteaanpassing (in behandeling)',
+      });
+    });
+
+    test('should handle null response', () => {
+      expect(
+        forTesting.transformZorgnedAanvragen(
+          null as unknown as ZorgnedResponseDataSource
+        )
+      ).toStrictEqual([]);
+    });
   });
 
   it('should fetch aanvragen', async () => {
