@@ -6,25 +6,11 @@ import {
   LinkProps,
   SVGComponent,
 } from '../../universal/types/App.types';
-//generalinfo session active moet verandered worden kijk opname in teams voor uitleg!!!
-export type ThemaConfigBase = {
-  id: string;
-  title: string;
-  route: ThemaRouteConfig;
-  featureToggle: {
-    themaActive: boolean;
-  };
-  sections: Section[];
-  profileTypes: ProfileType[];
-  redactedScope: 'full' | 'content' | 'none';
-};
 
 export type WithPageConfig<K extends string, T extends object = object> = {
   [P in K]: T & { route: ThemaRouteConfig };
 };
 
-export type WithListPage = WithPageConfig<'listPage'>;
-export type WithDetailPage = WithPageConfig<'detailPage', { title: string }>;
 export type Section = {
   title?: string;
   listItems: ListItems;
@@ -33,6 +19,36 @@ export type Section = {
 export type ListItems = Array<{ text: string; listItems?: string[] } | string>;
 
 export type IsThemaVisibleFN = (appState: AppState) => boolean;
+
+export type ThemaConfigBase = {
+  id: string;
+  title: string;
+  featureToggle: ThemaFeatureToggle;
+  profileTypes: ProfileType[];
+  uitlegPageSections: InfoSection;
+  links: LinkProps[];
+  route: ThemaRouteConfig;
+  redactedScope: RedactedScope;
+};
+
+export type WithDetailPage = PageConfig<'detailPage'>;
+
+export type WithListPage = PageConfig<'listPage'>;
+
+type FeatureToggle = Record<string, boolean>;
+type ThemaFeatureToggle = { themaActive: boolean } & FeatureToggle;
+type RedactedScope = 'full' | 'content' | 'none';
+type PageConfig<T extends string> = {
+  [key in T]: {
+    title: null | string;
+    route: ThemaRouteConfig;
+  };
+};
+type InfoSection = {
+  title?: null | string;
+  listItems: Array<{ text?: string; listItems?: string[] } | string>;
+};
+
 export interface ThemaMenuItem<ID extends string = string>
   extends Omit<LinkProps, 'title' | 'to' | 'rel'> {
   id: ID;
@@ -78,7 +94,7 @@ type TrackinUrlFN = <T extends Params<string>>(params: T | null) => string;
 export type ThemaRouteConfig = {
   path: string;
   // Only needed for routes with variable path segments
-  trackingUrl?: string | TrackinUrlFN;
+  trackingUrl?: null | string | TrackinUrlFN;
   documentTitle: string | DocumenttitleFN;
 };
 

@@ -1,27 +1,28 @@
 import { generatePath, useParams } from 'react-router';
 
-import { ListPageParamKind, themaConfig } from './Bodem-thema-config';
+import { TableHeaders } from './Bodem-thema-config';
 import { useBodemData } from './useBodemData.hook';
 
 export function useBodemListPageData() {
   const {
+    themaId,
     items,
-    id: themaId,
     isLoading,
     isError,
     tableConfig,
     breadcrumbs,
     listPageRoute,
+    themaConfig,
   } = useBodemData();
-  const params = useParams<{ kind: ListPageParamKind }>();
+  const params = useParams<{ kind: TableHeaders }>();
   const { kind = 'lopende-aanvragen' } = params;
   const { filter, sort, title, displayProps } = tableConfig[kind];
 
   return {
+    themaId: themaId,
     items,
     filter,
     sort,
-    themaId,
     title,
     displayProps,
     isLoading,
@@ -29,6 +30,6 @@ export function useBodemListPageData() {
     params,
     listPageRoute: generatePath(listPageRoute, { kind, page: null }),
     breadcrumbs,
-    themaConfig,
+    routeConfig: themaConfig.listPage.route,
   };
 }

@@ -15,9 +15,8 @@ export function BodemThema() {
     isLoading,
     isError,
     linkListItems,
-    id,
+    themaId: id,
     title,
-    // themaConfig,
   } = useBodemData();
   useHTMLDocumentTitle(themaConfig.route);
 

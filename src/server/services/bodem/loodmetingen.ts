@@ -9,9 +9,7 @@ import {
   LoodMetingStatusLowerCase,
   LoodMetingen,
 } from './types';
-import {
-  themaConfig,
-} from '../../../client/pages/Thema/Bodem/Bodem-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/Bodem/Bodem-thema-config';
 import {
   apiDependencyError,
   apiSuccessResult,
