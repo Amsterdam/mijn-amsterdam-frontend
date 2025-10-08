@@ -40,6 +40,9 @@ describe('useBffApi', () => {
     expect(() => renderHook(() => useBffApi('missing-url-key'))).toThrow(
       'When using a key, you must provide a URL in the options parameter or set fetchImmediately to false'
     );
+    expect(() => renderHook(() => useBffApi('/api/v1'))).toThrow();
+    expect(() => renderHook(() => useBffApi('api/v1'))).toThrow();
+    expect(() => renderHook(() => useBffApi('/api/v1/path'))).not.toThrow();
   });
 
   it('should not fetch immediately when fetchImmediately is false', () => {
