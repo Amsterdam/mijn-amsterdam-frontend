@@ -7,9 +7,16 @@ import {
   SVGComponent,
 } from '../../universal/types/App.types';
 
-// TO DO 6 okt
-// src/client/pages/Thema/Bodem/useBodemDetailData.hook.tsx > zie opmerking
-// listItems gaat niet goed zie ook GeneralInfo
+export type WithPageConfig<K extends string, T extends object = object> = {
+  [P in K]: T & { route: ThemaRouteConfig };
+};
+
+export type Section = {
+  title?: string;
+  listItems: ListItems;
+};
+
+export type ListItems = Array<{ text: string; listItems?: string[] } | string>;
 
 export type IsThemaVisibleFN = (appState: AppState) => boolean;
 
@@ -42,18 +49,6 @@ type InfoSection = {
   listItems: Array<{ text?: string; listItems?: string[] } | string>;
 };
 
-// type ListItem =
-//   | string
-//   | {
-//       text?: null | string;
-//       listItems: string[];
-//     };
-// type InfoSection = {
-//   title?: null | string;
-//   listItems: ListItem ;
-// };
-
-///TO DO hieronder zou ik het liefts ook meenemen in de ThemaConfig
 export interface ThemaMenuItem<ID extends string = string>
   extends Omit<LinkProps, 'title' | 'to' | 'rel'> {
   id: ID;

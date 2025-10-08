@@ -12,7 +12,7 @@ export function useBodemListPageData() {
     tableConfig,
     breadcrumbs,
     listPageRoute,
-    routeConfig,
+    themaConfig,
   } = useBodemData();
   const params = useParams<{ kind: TableHeaders }>();
   const { kind = 'lopende-aanvragen' } = params;
@@ -30,6 +30,6 @@ export function useBodemListPageData() {
     params,
     listPageRoute: generatePath(listPageRoute, { kind, page: null }),
     breadcrumbs,
-    routeConfig,
+    routeConfig: themaConfig.listPage.route,
   };
 }

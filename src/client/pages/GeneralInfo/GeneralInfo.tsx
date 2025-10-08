@@ -53,12 +53,12 @@ export type InfoSection = {
 };
 
 // voor overgezette thema's//function createSectionProps<T>(themaConfig: T extends ThemaConfigBase): SectionProps
-function createSectionProps(themaConfig: ThemaConfigBase): SectionProps {
+function createInfoSection(themaConfig: ThemaConfigBase): InfoSection {
   return {
     id: themaConfig.id,
+    active: themaConfig.featureToggle.themaActive,
     title: themaConfig.title,
     listItems: themaConfig.uitlegPageSections.listItems,
-    active: themaConfig.featureToggle.themaActive,
   };
 }
 
@@ -93,7 +93,7 @@ const sections: InfoSection[] = [
   milieuzonesectionProps,
   overtredingensectionProps,
   vergunningensectionProps,
-  createSectionProps(themaConfig),
+  createInfoSection(themaConfig),
   varensectionProps,
 ];
 
