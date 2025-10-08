@@ -15,7 +15,7 @@ import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { getRedactedClass } from '../../helpers/cobrowse';
 import {
   compareThemas,
-  useThemaMenuItemsByThemaID,
+  useAllThemaMenuItemsByThemaID,
 } from '../../hooks/useThemaMenuItems';
 import { afisSectionProps } from '../Thema/Afis/InfoSection';
 import { afvalSectionProps } from '../Thema/Afval/InfoSection';
@@ -42,11 +42,23 @@ import { toeristischeverhuurSectionProps } from '../Thema/ToeristischeVerhuur/In
 import { varensectionProps } from '../Thema/Varen/infoSection';
 import { vergunningensectionProps } from '../Thema/Vergunningen/InfoSection';
 import { zorgSectionProps } from '../Thema/Zorg/InfoSection';
-import type { ListItems } from '../../config/thema-types';
 
+export type InfoSection = {
+  id: string;
+  title: string;
+  href?: string; // Use this instead of the themaMenuItem 'to URL' and force link to be clickable.
+  listItems: ListItems;
+  active: boolean;
+};
+type ListItems = Array<{ text: string; listItems?: string[] } | string>;
 
+export type SectionProps = {
+  title: string;
+  href?: string;
+  listItems: ListItems;
+};
 
-const sections: SectionProps[] = [
+const sections: InfoSection[] = [
   profileSectionProps,
   burgerzakenSectionProps,
   myAreaSectionProps,
@@ -73,16 +85,7 @@ const sections: SectionProps[] = [
   varensectionProps,
 ];
 
- type SectionProps = {
-   id: string;
-   title: string;
-   listItems: ListItems;
-   to?: string;
-   
- };
-function Section({ id, title, listItems, to }: SectionProps) {
-  const themaMenuItems = useThemaMenuItemsByThemaID();
-
+function Section({ title, listItems, href }: SectionProps) {
   const listItemComponents = listItems.map((item, i) => {
     if (typeof item === 'string') {
       return <UnorderedList.Item key={i}>{item}</UnorderedList.Item>;
@@ -101,10 +104,8 @@ function Section({ id, title, listItems, to }: SectionProps) {
     );
   });
 
-  const themaMenuItem = themaMenuItems[id];
+  const LinkComponent = href && getLinkComponent(href);
 
-  const href = to || (themaMenuItem && themaMenuItem.to);
-  const LinkComponent = getLinkComponent(href);
   const titleComponent = LinkComponent ? (
     <LinkComponent maVariant="fatNoUnderline" href={href}>
       {title}
@@ -135,18 +136,25 @@ function getLinkComponent(href: string) {
 }
 
 export function GeneralInfo() {
+  const themaMenuItems = useAllThemaMenuItemsByThemaID();
   const sectionComponents = sections
-    .filter((section) => section.active)
+    .filter((section) => {
+      return section.active && section.id in themaMenuItems;
+    })
     .toSorted(compareThemas)
-    .map((section, i) => (
-      <Section
-        key={i}
-        id={section.id}
-        title={section.title}
-        to={section.to}
-        listItems={section.listItems}
-      />
-    ));
+    .map((section, i) => {
+      const themaMenuItem = themaMenuItems[section.id];
+      section.href = section.href || (themaMenuItem && themaMenuItem.to);
+
+      return (
+        <Section
+          key={i}
+          title={section.title}
+          href={themaMenuItem.isActive ? section.href : undefined}
+          listItems={section.listItems}
+        />
+      );
+    });
   return (
     <TextPageV2>
       <PageContentV2 span={8}>

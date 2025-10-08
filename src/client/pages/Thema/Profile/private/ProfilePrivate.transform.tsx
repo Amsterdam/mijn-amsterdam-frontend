@@ -387,25 +387,23 @@ export const panelConfig: PanelConfig<BRPPanelKey, AppState['BRP']> = {
         className: styles['ActionLink--reportIncorrectResidentCount'],
       });
     }
+    const subTitle = isMokum(BRP.content) ? (
+      <>
+        Uw huis verduurzamen? De gemeente biedt subsidies of gratis hulp. Bekijk{' '}
+        <Link rel="noopener noreferrer" href="https://duurzaamwonen.amsterdam/">
+          duurzaamwonen.amsterdam
+        </Link>{' '}
+        voor meer informatie.
+      </>
+    ) : null;
 
     return {
       title: 'Adres',
-      subTitle: (
-        <>
-          Uw huis verduurzamen? De gemeente biedt subsidies of gratis hulp.
-          Bekijk{' '}
-          <Link
-            rel="noopener noreferrer"
-            href="https://duurzaamwonen.amsterdam/"
-          >
-            duurzaamwonen.amsterdam
-          </Link>{' '}
-          voor meer informatie.
-        </>
-      ),
+      subTitle,
       actionLinks,
     };
   },
+
   verbintenis: (BRP) => ({
     title: featureToggle.BRP.benkBrpServiceActive
       ? 'Partner'
