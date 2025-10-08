@@ -298,8 +298,8 @@ export function Search({
             <ResultSet
               term={term}
               isLoading={isTyping || !isAppStateReady}
-              results={resultsMA?.slice(0, maxResultCountDisplay / 2) || []}
-              totalResultsCount={resultsMA?.length || 0}
+              results={resultsMA.slice(0, maxResultCountDisplay / 2) || []}
+              totalResultsCount={resultsMA.length || 0}
               noResultsMessage="Niets gevonden op Mijn Amsterdam"
               onClickResult={() => onFinish('Resultaat geklikt')}
             />
