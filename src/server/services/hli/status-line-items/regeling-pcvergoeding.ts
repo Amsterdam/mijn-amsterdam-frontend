@@ -3,6 +3,7 @@ import { isAfter, isBefore, isSameDay, parseISO, subDays } from 'date-fns';
 import { getBetrokkenKinderenDescription } from './generic';
 import { featureToggle } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
+import { lowercaseFirstLetter } from '../../../../universal/helpers/text';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
@@ -194,7 +195,7 @@ function descriptionDefinitief(
   regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
   const betrokkenKinderen = getBetrokkenKinderenDescription(regeling);
-  const titelLower = regeling.titel.toLowerCase();
+  const titelLower = lowercaseFirstLetter(regeling.titel);
   return `<p>Uw kind ${betrokkenKinderen} krijgt een ${titelLower}. Lees in de brief hoe u de ${titelLower} bestelt.</p>
         ${regeling.datumEindeGeldigheid ? `<p>U kunt per ${defaultDateFormat(regeling.datumEindeGeldigheid)} opnieuw een ${titelLower} aanvragen.</p>` : ''}`;
 }
@@ -221,7 +222,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
         ${
           regeling.resultaat === 'toegewezen' || isVerzilvering(regeling)
             ? descriptionDefinitief(regeling)
-            : `U krijgt geen ${regeling.titel.toLowerCase()} voor uw kind${betrokkenKinderen ? ` ${betrokkenKinderen}` : ''}.`
+            : `U krijgt geen ${lowercaseFirstLetter(regeling.titel)} voor uw kind${betrokkenKinderen ? ` ${betrokkenKinderen}` : ''}.`
         }
         </p>
         ${regeling.resultaat === 'toegewezen' || isVerzilvering(regeling) ? '' : '<p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>'}
@@ -238,7 +239,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
         !isVerzilvering(regeling) && regeling.resultaat === 'afgewezen',
       description: (regeling) => {
         const betrokkenKinderen = getBetrokkenKinderenDescription(regeling);
-        const titelLower = regeling.titel.toLowerCase();
+        const titelLower = lowercaseFirstLetter(regeling.titel);
         return `<p>
         ${
           regeling.resultaat === 'toegewezen' || isVerzilvering(regeling)
@@ -264,7 +265,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
         const betrokkenKinderen = getBetrokkenKinderenDescription(regeling);
         return `
         <p>
-         Voordat u de ${regeling.titel.toLowerCase()} krijgt, moet uw kind ${betrokkenKinderen} een workshop volgen. Hiervoor moet u eerst een afspraak maken. In de brief staat hoe u dat doet.
+         Voordat u de ${lowercaseFirstLetter(regeling.titel)} krijgt, moet uw kind ${betrokkenKinderen} een workshop volgen. Hiervoor moet u eerst een afspraak maken. In de brief staat hoe u dat doet.
         </p>
       `;
       },
@@ -292,7 +293,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
         const betrokkenKinderen = getBetrokkenKinderenDescription(regeling);
         return `
         <p>
-         Uw kind ${betrokkenKinderen} krijgt geen ${regeling.titel.toLowerCase()}. De workshop is niet op tijd gevolgd. U kunt een nieuwe aanvraag doen.
+         Uw kind ${betrokkenKinderen} krijgt geen ${lowercaseFirstLetter(regeling.titel)}. De workshop is niet op tijd gevolgd. U kunt een nieuwe aanvraag doen.
         </p>
         <p>
           In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.
