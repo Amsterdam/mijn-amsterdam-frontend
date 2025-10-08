@@ -600,7 +600,7 @@ describe('pcvergoeding', () => {
       ] as unknown as ZorgnedAanvraagWithRelatedPersonsTransformed[];
 
       test('Startdate is >= 01-01-2026', () => {
-        Mockdate.set('2026-06-01');
+        Mockdate.set('2026-01-01');
         const result = forTesting.filterCombineUpcPcvData(testData);
         expect(result).toEqual(testData);
       });
@@ -613,7 +613,7 @@ describe('pcvergoeding', () => {
 
       test('Feature toggle is off -> Verzilvering is orphaned / No base regeling.', () => {
         mocks.hli2026PCVergoedingV3Enabled = false;
-        Mockdate.set('2026-06-01');
+        Mockdate.set('2026-01-01');
         const result = forTesting.filterCombineUpcPcvData(testData);
         expect(result).toEqual([]);
       });
