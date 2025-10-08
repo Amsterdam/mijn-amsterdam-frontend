@@ -3,11 +3,9 @@ import { act, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Mockdate from 'mockdate';
 import { generatePath } from 'react-router';
-import { MutableSnapshot, RecoilState } from 'recoil';
 import { describe, it } from 'vitest';
 
 import { AppState } from '../../universal/types/App.types';
-import { appStateAtom, appStateReadyAtom } from '../hooks/useAppState';
 import { Dashboard } from '../pages/Dashboard/Dashboard';
 import { DashboardRoute } from '../pages/Dashboard/Dashboard-routes';
 import MockApp from '../pages/MockApp';
@@ -131,13 +129,6 @@ const testState = {
   },
 } as unknown as AppState;
 
-vi.mock('axios');
-
-function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom as RecoilState<Partial<AppState>>, testState);
-  snapshot.set(appStateReadyAtom, true);
-}
-
 describe('Cobrowse redacted components', () => {
   const routeEntry = generatePath(DashboardRoute.route);
   const routePath = DashboardRoute.route;
@@ -148,7 +139,7 @@ describe('Cobrowse redacted components', () => {
         routeEntry={routeEntry}
         routePath={routePath}
         component={component}
-        initializeState={initializeState}
+        state={testState}
       />
     );
   }

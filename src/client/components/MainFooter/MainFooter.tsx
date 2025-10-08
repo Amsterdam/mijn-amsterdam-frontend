@@ -4,7 +4,6 @@ import {
   LinkList,
   PageFooter,
 } from '@amsterdam/design-system-react';
-import useSWR from 'swr';
 
 import {
   CobrowseFooter,
@@ -15,8 +14,8 @@ import type {
   CMSFooter,
   CMSFooterSection,
 } from '../../../server/services/cms/cms-content';
-import type { ApiResponse } from '../../../universal/helpers/api';
 import { BFF_API_BASE_URL } from '../../config/api';
+import { useBffApi } from '../../hooks/api/useBffApi';
 import { useCanonmatigingFooterLink } from '../../pages/Thema/Erfpacht/Erfpacht-render-config';
 import { featureToggle } from '../../pages/Thema/Erfpacht/Erfpacht-thema-config';
 
@@ -55,21 +54,8 @@ function FooterBlock({ title, links }: CMSFooterSection) {
 }
 
 export function MainFooter() {
-  const { data: footer } = useSWR<ApiResponse<CMSFooter>>(
-    `${BFF_API_BASE_URL}/services/cms/footer`,
-    async (url) => {
-      const response = await fetch(url);
-      const responseData: ApiResponse<CMSFooter> = await response.json();
-      if (!response.ok || responseData.status !== 'OK') {
-        throw new Error('Failed to fetch footer data');
-      }
-      return responseData;
-    },
-    {
-      revalidateIfStale: false,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    }
+  const { data } = useBffApi<CMSFooter>(
+    `${BFF_API_BASE_URL}/services/cms/footer`
   );
 
   const canonmatigingLink = useCanonmatigingFooterLink();
@@ -80,7 +66,7 @@ export function MainFooter() {
       : [];
 
   const customSections = useCustomFooterSections(
-    footer?.content?.sections || [],
+    data?.content?.sections || [],
     (_section, index) => index === 0,
     customLinks
   );
@@ -96,7 +82,7 @@ export function MainFooter() {
       </PageFooter.Spotlight>
 
       <PageFooter.Menu>
-        {footer?.content?.bottomLinks
+        {data?.content?.bottomLinks
           .filter(
             (link) =>
               typeof link.label === 'string' &&
