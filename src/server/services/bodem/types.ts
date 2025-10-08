@@ -63,7 +63,7 @@ export interface LoodMetingFrontend
   displayStatus: LoodMetingStatus;
   decision: LoodMetingDecision | null;
   processed: boolean;
-  kenmerk: string;
+  identifier: string;
   aanvraagNummer: string;
   rapportBeschikbaar: boolean;
   link: LinkProps;
