@@ -7,8 +7,53 @@ import {
   SVGComponent,
 } from '../../universal/types/App.types';
 
+// TO DO 6 okt
+// src/client/pages/Thema/Bodem/useBodemDetailData.hook.tsx > zie opmerking
+// listItems gaat niet goed zie ook GeneralInfo
+
 export type IsThemaVisibleFN = (appState: AppState) => boolean;
 
+export type ThemaConfigBase = {
+  id: string;
+  title: string;
+  featureToggle: ThemaFeatureToggle;
+  profileTypes: ProfileType[];
+  uitlegPageSections: InfoSection;
+  links: LinkProps[];
+  route: ThemaRouteConfig;
+  redactedScope: RedactedScope;
+};
+
+export type WithDetailPage = PageConfig<'detailPage'>;
+
+export type WithListPage = PageConfig<'listPage'>;
+
+type FeatureToggle = Record<string, boolean>;
+type ThemaFeatureToggle = { themaActive: boolean } & FeatureToggle;
+type RedactedScope = 'full' | 'content' | 'none';
+type PageConfig<T extends string> = {
+  [key in T]: {
+    title: null | string;
+    route: ThemaRouteConfig;
+  };
+};
+type InfoSection = {
+  title?: null | string;
+  listItems: Array<{ text?: string; listItems?: string[] } | string>;
+};
+
+// type ListItem =
+//   | string
+//   | {
+//       text?: null | string;
+//       listItems: string[];
+//     };
+// type InfoSection = {
+//   title?: null | string;
+//   listItems: ListItem ;
+// };
+
+///TO DO hieronder zou ik het liefts ook meenemen in de ThemaConfig
 export interface ThemaMenuItem<ID extends string = string>
   extends Omit<LinkProps, 'title' | 'to' | 'rel'> {
   id: ID;
@@ -54,7 +99,7 @@ type TrackinUrlFN = <T extends Params<string>>(params: T | null) => string;
 export type ThemaRouteConfig = {
   path: string;
   // Only needed for routes with variable path segments
-  trackingUrl?: string | TrackinUrlFN;
+  trackingUrl?: null | string | TrackinUrlFN;
   documentTitle: string | DocumenttitleFN;
 };
 
