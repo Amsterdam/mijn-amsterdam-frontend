@@ -7,6 +7,65 @@ import {
   SVGComponent,
 } from '../../universal/types/App.types';
 
+// InfoSection: een simpel info-blok met (optionele) titel en lijst
+export type Section = {
+  title?: string; // titel mag leeg zijn; dus voor elkaar krijgen dat titel wel verplicht is als het meer dan 1 sectie is
+  listItems: string[]; // altijd een lijst van tekstjes; dit is zo afgesproken in de opdracht/pseudocode
+};
+
+// ThemaConfig: basis-gegevens per thema (backend-safe)
+export type ThemaConfigBase = {
+  id: string; // uniek id van het thema (bijvoorbeeld:  'BODEM')
+  title: string; // naam/titel van het thema
+  profileTypes: ProfileType[];
+  featureToggle: { themaActive: boolean };
+  linkListItems: LinkProps[];
+  route: ThemaRouteConfig;
+  uitlegPageSections: Section[];
+  // overviewListItems?: string[];
+  redactedScope: 'full' | 'content' | 'none';
+};
+
+type PageConfig<T extends string> = {
+  [K in T]: {
+    title?: string;
+    route: ThemaRouteConfig;
+  };
+};
+
+export type WithDetailPage = PageConfig<'detailPage'>;
+export type WithListPage = PageConfig<'listPage'>;
+
+// export type WithDetailPage = {
+//   detailPage: {
+//     title: string;
+//     route: {
+//       path: string;
+//       trackingUrl: string;
+//       documentTitle: string; //bijv `Lood in de bodem-check | ${themaConfig.title}`
+//     };
+//   };
+// };
+
+// export type WithListPage = {
+//   listPage: {
+//     route: {
+//       path: string;
+//       documentTitle: (params: { kind: string }) => `${string} | ${string}`; //bijv (params) =>`${params?.kind === themaConfig.tableHeaders.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${ themaConfig.title } `,
+//     };
+//   };
+// };
+
+// export type withThemaPage = {
+//   ThemaPage: {
+//     title: string;
+//     route: {
+//       path: string;
+//       documentTitle: `${string} | ${string}`; //bijv`${themaConfig.title} | overzicht`,
+//     };
+//   };
+// };
+
 export type IsThemaVisibleFN = (appState: AppState) => boolean;
 
 export interface ThemaMenuItem<ID extends string = string>
@@ -54,7 +113,7 @@ type TrackinUrlFN = <T extends Params<string>>(params: T | null) => string;
 export type ThemaRouteConfig = {
   path: string;
   // Only needed for routes with variable path segments
-  trackingUrl?: string | TrackinUrlFN;
+  trackingUrl?: string | null | TrackinUrlFN;
   documentTitle: string | DocumenttitleFN;
 };
 
