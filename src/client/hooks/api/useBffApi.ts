@@ -7,6 +7,8 @@ import {
   apiSuccessResult,
   type ApiResponse,
 } from '../../../universal/helpers/api';
+import type { E } from 'vite/dist/node/moduleRunnerTransport.d-DJ_mE5sf';
+import type { SomeOtherString } from '../../../universal/helpers/types';
 
 type ApiFetchResponse<T> = Promise<ApiResponse<T>>;
 
@@ -138,7 +140,7 @@ type BffApiOptions<T> = {
   ) => Promise<ApiResponse<T>>;
 };
 
-type StoreKey = string;
+type StoreKey = Exclude<SomeOtherString, 'set' | 'get' | 'has'>;
 type SetState = <T>(
   key: StoreKey,
   state: BffApiState<ApiResponse<T> | null>
@@ -150,15 +152,16 @@ type BFFApiStore = {
   set: SetState;
   get: GetState;
   has: HasState;
-} & { [key in StoreKey]?: BffApiState<ApiResponse<unknown> | null> };
+} & { [key in StoreKey]: any }; // see https://github.com/pmndrs/zustand/discussions/2566, it's not possible to type this strictly as zustand doesn't support generics in the store itself.
 
 export const useBffApiStateStore = create<BFFApiStore>((set, get) => ({
   set: (key, state) => set({ [key]: state }),
-  get: (key: StoreKey) => {
+  get: <T>(key: StoreKey) => {
     const state = get();
-    return state[key];
+    const x = state[key] as BffApiState<ApiResponse<T> | null>;
+    return x;
   },
-  has: (key: StoreKey) => key in get(),
+  has: (key) => key in get(),
 }));
 
 export function useBffApi<T>(
