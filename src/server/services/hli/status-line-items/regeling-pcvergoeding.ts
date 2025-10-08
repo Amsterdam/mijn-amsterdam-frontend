@@ -36,22 +36,10 @@ const avCodes = {
 const verzilveringsCodesPC = toVerzilveringCodes(avCodes.PC);
 const verzilveringsCodesUPC = toVerzilveringCodes(avCodes.UPC);
 
-function isBeforeRegelingV3Start(
-  dateString: string,
-  passMatchDefault: boolean = true
-) {
+function isAangevraagdVoorRegelingV3ActiefWerd(dateString: string) {
   return isPcRegelingV3Active()
     ? isBefore(dateString, PC_REGELING_V3_START_DATE)
-    : passMatchDefault;
-}
-
-function isAfterRegelingV3Start(
-  dateString: string,
-  passMatchDefault: boolean = false
-) {
-  return isPcRegelingV3Active()
-    ? isAfter(dateString, subDays(PC_REGELING_V3_START_DATE, 1))
-    : passMatchDefault;
+    : true;
 }
 
 export const verzilveringCodes = [
@@ -138,7 +126,7 @@ export function filterCombineUpcPcvData(
     // Add documenten to Verzilvering, e.g, (AV_PC{ZIL|TG})
     if (
       isVerzilvering(aanvraag) &&
-      isBeforeRegelingV3Start(aanvraag.datumAanvraag, true)
+      isAangevraagdVoorRegelingV3ActiefWerd(aanvraag.datumAanvraag)
     ) {
       // Find first corresponding baseRegeling
       const baseRegeling = aanvragen.find((compareAanvraag) =>
@@ -217,7 +205,15 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
       status: 'Besluit',
       datePublished: getUpcPcvDecisionDate,
       isChecked: () => true,
-      isVisible: (regeling) => isAfterRegelingV3Start(regeling.datumAanvraag),
+      isVisible: (regeling) => {
+        // Alleen zichtbaar als regeling is aangevraagd nadat PC regeling v3 actief werd.
+        return isPcRegelingV3Active()
+          ? isAfter(
+              regeling.datumAanvraag,
+              subDays(PC_REGELING_V3_START_DATE, 1)
+            )
+          : false;
+      },
       isActive: () => true,
       description: (regeling) => {
         const betrokkenKinderen = getBetrokkenKinderenDescription(regeling);
@@ -236,7 +232,8 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
       status: 'Besluit',
       datePublished: getUpcPcvDecisionDate,
       isChecked: () => true,
-      isVisible: (regeling) => isBeforeRegelingV3Start(regeling.datumAanvraag),
+      isVisible: (regeling) =>
+        isAangevraagdVoorRegelingV3ActiefWerd(regeling.datumAanvraag),
       isActive: (regeling) =>
         !isVerzilvering(regeling) && regeling.resultaat === 'afgewezen',
       description: (regeling) => {
@@ -256,7 +253,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
     {
       status: 'Workshop',
       isVisible: (regeling) =>
-        isBeforeRegelingV3Start(regeling.datumAanvraag) &&
+        isAangevraagdVoorRegelingV3ActiefWerd(regeling.datumAanvraag) &&
         !isVerzilvering(regeling) &&
         regeling.resultaat === 'toegewezen' &&
         !isWorkshopNietGevolgd(regeling),
@@ -275,7 +272,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
     {
       status: 'Workshop gevolgd',
       isVisible: (regeling) =>
-        isBeforeRegelingV3Start(regeling.datumAanvraag) &&
+        isAangevraagdVoorRegelingV3ActiefWerd(regeling.datumAanvraag) &&
         isVerzilvering(regeling) &&
         regeling.resultaat === 'toegewezen',
       datePublished: (regeling) => regeling.datumBesluit,
@@ -286,7 +283,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
     {
       status: 'Workshop niet gevolgd',
       isVisible: (regeling) =>
-        isBeforeRegelingV3Start(regeling.datumAanvraag) &&
+        isAangevraagdVoorRegelingV3ActiefWerd(regeling.datumAanvraag) &&
         isWorkshopNietGevolgd(regeling),
       datePublished: (regeling) => regeling.datumEindeGeldigheid ?? '',
       isChecked: () => true,
