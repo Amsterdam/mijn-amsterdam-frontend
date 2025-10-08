@@ -7,6 +7,7 @@ import { hliStatusLineItemsConfig } from './hli-status-line-items';
 import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import { fetchStadspas } from './stadspas';
 import {
+  filterCombineRtmData,
   isRTMDeel1,
   RTM_STATUS_IN_BEHANDELING,
 } from './status-line-items/regeling-rtm';
@@ -157,10 +158,10 @@ async function transformRegelingenForFrontend(
 ): Promise<HLIRegelingFrontend[]> {
   const regelingenFrontend: HLIRegelingFrontend[] = [];
 
-  const aanvragenWithDocumentsCombined = filterCombineUpcPcvData(aanvragen);
-  // aanvragenWithDocumentsCombined = filterCombineRtmData(
-  //   aanvragenWithDocumentsCombined
-  // );
+  let aanvragenWithDocumentsCombined = filterCombineUpcPcvData(aanvragen);
+  aanvragenWithDocumentsCombined = filterCombineRtmData(
+    aanvragenWithDocumentsCombined
+  );
 
   for (const aanvraag of aanvragenWithDocumentsCombined) {
     const statusLineItems = getStatusLineItems(
