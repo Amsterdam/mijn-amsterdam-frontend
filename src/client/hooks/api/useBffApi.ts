@@ -176,11 +176,15 @@ export function useBffApi<T>(
     fetchImmediately = true,
   } = options || {};
 
+  const isUrlOrPathLike =
+    !!urlOrKey &&
+    (urlOrKey.startsWith('http') || urlOrKey.match(/^\/api\/v(\d+)\//));
+
   if (
     !url &&
     urlOrKey &&
     // NOTE: not an ideal way to check this, but good enough for now.
-    (!urlOrKey.startsWith('http') || !urlOrKey.match(/^\/api\/v(\d+)\//)) &&
+    !isUrlOrPathLike &&
     fetchImmediately === true
   ) {
     const error =
