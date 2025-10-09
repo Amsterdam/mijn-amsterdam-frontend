@@ -231,7 +231,9 @@ function transformFactuur(
   const status = determineFactuurStatus(invoice, amountPayed, hasDeelbetaling);
 
   const documentDownloadLink = factuurDocumentIdEncrypted
-    ? `${generateFullApiUrlBFF(BffEndpoints.AFIS_DOCUMENT_DOWNLOAD)}?id=${factuurDocumentIdEncrypted}`
+    ? generateFullApiUrlBFF(BffEndpoints.AFIS_DOCUMENT_DOWNLOAD, [
+        { id: factuurDocumentIdEncrypted },
+      ])
     : null;
 
   return {

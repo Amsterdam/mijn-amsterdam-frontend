@@ -295,7 +295,7 @@ describe('auth-helpers', () => {
     test('getReturnUrl should return the landingpage when no returnTo is provided', () => {
       const url = getReturnToUrl({});
 
-      expect(url).toBe('/api/v1/auth/digid/login/landing');
+      expect(url).toBe('http://bff-api-host/api/v1/auth/digid/login/landing');
     });
   });
 });

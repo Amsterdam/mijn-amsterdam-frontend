@@ -1,0 +1,175 @@
+openapi: 3.0.3
+info:
+  version: '1.0'
+  title: Mijn Amsterdam api spec for Mijn Amsterdam - Dienstverlening api's
+  description: |
+    We're providing a set of endpoints that can be used to retrieve data from source api's. These api's are intended for users other than Mijn Amsterdam
+    Note: the paths that start with /private are only accessible in development mode (localhost) or via our private-network resources.
+  contact:
+    name: Mijn Amsterdam
+    url: https://mijn.amsterdam.nl/
+    email: mijnAmsterdam@amsterdam.nl
+paths:
+  /api/v1/status/health:
+    get:
+      description: Endpoint for checking whether the server has started.
+      responses:
+        '200':
+          description: Returns "OK" when server is started.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthyResponse'
+  /private/api/v1/services/wmo/voorzieningen:
+    post:
+      description: |
+        Gets a list of compacted WMO voorzieningen.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bsn:
+                  type: string
+                  description: The BSN of the user to fetch the WMO voorzieningen for.
+      responses:
+        '200':
+          description: |
+            A list of huidige toegewezen WMO voorzieningen sorted by datumBesluit desc.
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/WmoVoorzieningenCompactResponse'
+        '400':
+          description: Returns bad request error
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequest'
+        '401':
+          description: Returns unauthorized error (invalid api key)
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthorized'
+        '500':
+          description: |
+            Returns Application error, any error in code or from failed requests.
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+
+components:
+  schemas:
+    HealthyResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - OK
+        content:
+          type: string
+          enum:
+            - OK
+    WmoVoorzieningenCompactResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/WmoVoorzieningCompact'
+        status:
+          type: string
+          enum:
+            - 'SUCCESS'
+    WmoVoorzieningCompact:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        productGroup:
+          type: string
+        beschikkingNummer:
+          type: string
+        productIdentificatie:
+          type: string
+        beschiktProductIdentificatie:
+          type: string
+        datumBesluit:
+          type: string
+    ApplicationError:
+      type: object
+      description: |
+        Error if a part of the application returns an error, mostly dependency errors to remote systems.
+      properties:
+        content:
+          nullable: true
+        code:
+          type: number
+          enum:
+            - 500
+        status:
+          type: string
+          enum:
+            - 'ERROR'
+        message:
+          type: string
+    ErrorNotFound:
+      type: object
+      properties:
+        content:
+          nullable: true
+        code:
+          type: number
+          enum:
+            - 404
+        status:
+          type: string
+          enum:
+            - 'ERROR'
+        message:
+          type: string
+          enum:
+            - 'Not Found'
+    ErrorUnauthorized:
+      type: object
+      properties:
+        content:
+          nullable: true
+        code:
+          type: number
+          enum:
+            - 401
+        status:
+          type: string
+          enum:
+            - 'ERROR'
+        message:
+          type: string
+          enum:
+            - 'Api key ongeldig'
+    ErrorBadRequest:
+      type: object
+      properties:
+        content:
+          nullable: true
+        code:
+          type: number
+          enum:
+            - 400
+        status:
+          type: string
+          enum:
+            - 'ERROR'
+        message:
+          type: string
+          enum:
+            - "Bad request: ApiError 005 - Could not decrypt url parameter administratienummerEncrypted'"
+            - 'Bad request: ApiError 000 - Onbekende fout'
+            - 'Bad request: Bad request: Failed to decrypt transactions key'

@@ -5,7 +5,11 @@ import express, { NextFunction, Request, Response } from 'express';
 import proxy from 'express-http-proxy';
 
 import { BffEndpoints } from './bff-routes';
-import { queryParams, type RequestWithQueryParams } from './route-helpers';
+import {
+  apiRoute,
+  queryParams,
+  type RequestWithQueryParams,
+} from './route-helpers';
 import { ZAAK_STATUS_ROUTE } from '../../client/pages/ZaakStatus/ZaakStatus-config';
 import { OTAP_ENV } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
@@ -205,7 +209,7 @@ export async function zaakStatusHandler(
 
   const authType =
     params['auth-type'] === 'eherkenning' ? 'EHERKENNING' : 'DIGID';
-  const loginRoute = authRoutes[`AUTH_LOGIN_${authType}`];
+  const loginRoute = apiRoute(authRoutes[`AUTH_LOGIN_${authType}`]);
   const loginRouteWithReturnTo = `${loginRoute}${getZaakStatusQueryParams(params)}&returnTo=${ZAAK_STATUS_ROUTE}`;
   return res.redirect(loginRouteWithReturnTo);
 }
@@ -270,9 +274,9 @@ router.all(
 export const legacyRouter = express.Router();
 
 legacyRouter.get(BffEndpoints.LEGACY_LOGIN_API_LOGIN, (req, res) => {
-  return res.redirect(authRoutes.AUTH_LOGIN_DIGID);
+  return res.redirect(apiRoute(authRoutes.AUTH_LOGIN_DIGID));
 });
 
 legacyRouter.get(BffEndpoints.LEGACY_LOGIN_API1_LOGIN, (req, res) => {
-  return res.redirect(authRoutes.AUTH_LOGIN_EHERKENNING);
+  return res.redirect(apiRoute(authRoutes.AUTH_LOGIN_EHERKENNING));
 });

@@ -1,6 +1,7 @@
 import { act } from 'react';
 
 import { renderHook } from '@testing-library/react';
+import nock from 'nock';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 import {
@@ -42,6 +43,10 @@ describe('useBffApi', () => {
     );
     expect(() => renderHook(() => useBffApi('/api/v1'))).toThrow();
     expect(() => renderHook(() => useBffApi('api/v1'))).toThrow();
+
+    nock('http://localhost:3000')
+      .get('/api/v1/path')
+      .reply(200, { foo: 'bar' });
     expect(() => renderHook(() => useBffApi('/api/v1/path'))).not.toThrow();
   });
 

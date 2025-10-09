@@ -92,9 +92,11 @@ function transformLood365Response(
             id: location.Workorderid,
             url: generateFullApiUrlBFF(
               BffEndpoints.LOODMETING_DOCUMENT_DOWNLOAD,
-              {
-                id: documentIDEncrypted,
-              }
+              [
+                {
+                  id: documentIDEncrypted,
+                },
+              ]
             ),
             datePublished: location.Reportsenton,
           };

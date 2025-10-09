@@ -45,16 +45,13 @@ export const BffEndpoints = {
   MKS_AANTAL_BEWONERS: '/service/mks/aantal-bewoners/:addressKeyEncrypted',
 
   // WPI Document download
-  WPI_DOCUMENT_DOWNLOAD: '/services/wpi/document/:id',
-
-  // WMO / Zorgned
-  WMO_DOCUMENT_DOWNLOAD: `/services/wmo/document/:id`,
+  WPI_DOCUMENT_DOWNLOAD: '/services/wpi/document',
 
   // AV / Zorgned
-  HLI_DOCUMENT_DOWNLOAD: `/services/v1/stadspas-en-andere-regelingen/document/:id`,
+  HLI_DOCUMENT_DOWNLOAD: `/services/v1/stadspas-en-andere-regelingen/document`,
 
   // LLV / Zorgned
-  LLV_DOCUMENT_DOWNLOAD: `/services/llv/document/:id`,
+  LLV_DOCUMENT_DOWNLOAD: `/services/llv/document`,
 
   // Legacy login links (still used in other portals)
   LEGACY_LOGIN_API_LOGIN: '/api/login',
@@ -71,7 +68,7 @@ export const BffEndpoints = {
   POWERBROWSER_DOCUMENT_DOWNLOAD: `/services/${hash('powerbrowser')}/documents/download`,
 
   // Bodem / loodmetingen
-  LOODMETING_DOCUMENT_DOWNLOAD: '/services/lood/document/:id',
+  LOODMETING_DOCUMENT_DOWNLOAD: '/services/lood/document',
 } as const;
 
 const AMSAPP_BASE = '/services/amsapp';
@@ -89,12 +86,12 @@ export const ExternalConsumerEndpoints = {
   },
   // Privately accessible
   private: {
-    STADSPAS_PASSEN: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/stadspas/passen/:administratienummerEncrypted`,
-    STADSPAS_DISCOUNT_TRANSACTIONS: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/stadspas/aanbiedingen/transactions/:transactionsKeyEncrypted`,
-    STADSPAS_BUDGET_TRANSACTIONS: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/stadspas/budget/transactions/:transactionsKeyEncrypted`,
-    STADSPAS_BLOCK_PAS: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/stadspas/block/:transactionsKeyEncrypted`,
-    NOTIFICATIONS: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/notifications`,
-    NOTIFICATIONS_JOB: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/job/notifications`,
+    STADSPAS_PASSEN: `${AMSAPP_BASE}/stadspas/passen/:administratienummerEncrypted`,
+    STADSPAS_DISCOUNT_TRANSACTIONS: `${AMSAPP_BASE}/stadspas/aanbiedingen/transactions/:transactionsKeyEncrypted`,
+    STADSPAS_BUDGET_TRANSACTIONS: `${AMSAPP_BASE}/stadspas/budget/transactions/:transactionsKeyEncrypted`,
+    STADSPAS_BLOCK_PAS: `${AMSAPP_BASE}/stadspas/block/:transactionsKeyEncrypted`,
+    NOTIFICATIONS: `${AMSAPP_BASE}/notifications`,
+    NOTIFICATIONS_JOB: `${AMSAPP_BASE}/job/notifications`,
   },
 } as const;
 
@@ -109,7 +106,7 @@ export const PUBLIC_BFF_ENDPOINTS = [
 ] as const;
 
 export const DevelopmentRoutes = {
-  DEV_LOGIN: '/api/v1/auth/:authMethod/login{/:user}',
+  DEV_LOGIN: '/auth/:authMethod/login{/:user}',
 } as const;
 
 export const PREDEFINED_REDIRECT_URLS = [

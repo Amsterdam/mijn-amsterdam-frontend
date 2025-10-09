@@ -110,6 +110,7 @@ describe('zorgned-service', () => {
 
     test('should have properties after transform', () => {
       const keys = [
+        'beschikkingNummer',
         'beschiktProductIdentificatie',
         'betrokkenen',
         'datumAanvraag',
@@ -146,6 +147,7 @@ describe('zorgned-service', () => {
           ZORGNED_JZD_AANVRAGEN as unknown as ZorgnedResponseDataSource
         )[0]
       ).toStrictEqual({
+        beschikkingNummer: 300111429,
         beschiktProductIdentificatie: '116841',
         betrokkenen: [],
         datumAanvraag: '2023-04-25',
@@ -339,6 +341,7 @@ describe('zorgned-service', () => {
             datumAanvraag: '2023-04-25',
             beschikking: {
               datumAfgifte: '2023-05-17',
+              beschikkingNummer: 300967777,
               beschikteProducten: [
                 {
                   identificatie: '1',
@@ -404,6 +407,7 @@ describe('zorgned-service', () => {
       expect(result).toStrictEqual({
         content: [
           {
+            beschikkingNummer: 300967777,
             beschiktProductIdentificatie: '1',
             betrokkenPersonen: [
               {
@@ -443,8 +447,7 @@ describe('zorgned-service', () => {
 
     test('NAW request error', async () => {
       remoteApi.post('/zorgned/aanvragen').reply(200, ZORGNED_RESPONSE_CONTENT);
-
-      remoteApi.post('/zorgned/persoonsgegevensNAW').reply(500);
+      remoteApi.post('/zorgned/persoonsgegevensNAW').times(2).reply(500);
 
       const result = await fetchAanvragenWithRelatedPersons(
         getAuthProfileAndToken().profile.id,
@@ -464,7 +467,7 @@ describe('zorgned-service', () => {
     test('NAW relation not found', async () => {
       remoteApi.post('/zorgned/aanvragen').reply(200, ZORGNED_RESPONSE_CONTENT);
 
-      remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, null!);
+      remoteApi.post('/zorgned/persoonsgegevensNAW').times(2).reply(200, null!);
 
       const result = await fetchAanvragenWithRelatedPersons(
         getAuthProfileAndToken().profile.id,

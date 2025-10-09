@@ -1,13 +1,8 @@
 import { describe, it, expect, vi, Mock } from 'vitest';
 
-import { fetchDecosDocumentsList } from './decos-route-handlers';
+import { handleFetchDecosDocumentsList } from './decos-route-handlers';
 import { fetchDecosDocumentList } from './decos-service';
-import {
-  getAuthProfileAndToken,
-  RequestMock,
-  ResponseMock,
-} from '../../../testing/utils';
-import { getAuth } from '../../auth/auth-helpers';
+import { RequestMock, ResponseAuthenticatedMock } from '../../../testing/utils';
 import { RequestWithQueryParams } from '../../routing/route-helpers';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 
@@ -42,51 +37,47 @@ describe('fetchVergunningDocumentsList', () => {
     ],
   };
 
-  const req = RequestMock.new().setQuery({ id: mockValues.idEncrypted }).get();
+  const req = RequestMock.new<{ id: string }>().setQuery({
+    id: mockValues.idEncrypted,
+  });
 
   afterEach(() => {
     vi.resetAllMocks();
   });
 
   it('should return a list of vergunning documents', async () => {
-    const authProfileAndToken = getAuthProfileAndToken('private');
-    (getAuth as Mock).mockReturnValue(authProfileAndToken);
     (decryptEncryptedRouteParamAndValidateSessionID as Mock).mockReturnValue({
       content: mockValues.id,
       status: 'OK',
     });
     (fetchDecosDocumentList as Mock).mockResolvedValue(mockDocumentsResponse);
 
-    const res = ResponseMock.new();
+    const res = ResponseAuthenticatedMock.new();
 
-    await fetchDecosDocumentsList(
-      req as RequestWithQueryParams<{ id: string }>,
-      res
-    );
+    await handleFetchDecosDocumentsList(req, res);
 
     expect(fetchDecosDocumentList).toHaveBeenCalledWith(
-      authProfileAndToken.profile.sid,
+      res.locals.authProfileAndToken.profile.sid,
       mockValues.id
     );
     expect(res.send).toHaveBeenCalledWith(mockDocumentsResponse);
   });
 
   it('should fail if the session id cannot be validated', async () => {
-    (getAuth as Mock).mockReturnValue(null);
-
-    const res = ResponseMock.new();
-
-    await fetchDecosDocumentsList(
-      req as RequestWithQueryParams<{ id: string }>,
-      res
-    );
+    const res = ResponseAuthenticatedMock.new();
+    (decryptEncryptedRouteParamAndValidateSessionID as Mock).mockReturnValue({
+      content: null,
+      status: 'ERROR',
+      code: 401,
+    });
+    await handleFetchDecosDocumentsList(req, res);
 
     expect(fetchDecosDocumentList).not.toHaveBeenCalled();
+
     expect(res.status).toHaveBeenCalledWith(401);
   });
 
   it('should return an error if the api fails', async () => {
-    (getAuth as Mock).mockReturnValue(getAuthProfileAndToken('private'));
     (decryptEncryptedRouteParamAndValidateSessionID as Mock).mockReturnValue({
       content: mockValues.id,
       status: 'OK',
@@ -98,9 +89,9 @@ describe('fetchVergunningDocumentsList', () => {
       content: null,
     });
 
-    const res = ResponseMock.new();
+    const res = ResponseAuthenticatedMock.new();
 
-    await fetchDecosDocumentsList(
+    await handleFetchDecosDocumentsList(
       req as RequestWithQueryParams<{ id: string }>,
       res
     );

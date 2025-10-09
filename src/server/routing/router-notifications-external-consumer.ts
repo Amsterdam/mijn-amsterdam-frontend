@@ -3,8 +3,13 @@ import { Request, Response } from 'express';
 
 import { ExternalConsumerEndpoints } from './bff-routes';
 import { apiKeyVerificationHandler } from './route-handlers';
-import { createBFFRouter, generateFullApiUrlBFF } from './route-helpers';
+import {
+  apiRoute,
+  createBFFRouter,
+  generateFullApiUrlBFF,
+} from './route-helpers';
 import { IS_PRODUCTION } from '../../universal/config/env';
+import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { apiErrorResult, apiSuccessResult } from '../../universal/helpers/api';
 import {
   RETURNTO_AMSAPP_NOTIFICATIES_APP_LANDING,
@@ -69,6 +74,7 @@ routerPublic.delete(
 // ======================
 export const routerPrivate = createBFFRouter({
   id: 'external-consumer-private-notifications',
+  isEnabled: FeatureToggle.amsNotificationsIsActive,
 });
 
 // This route will never be enabled in production
@@ -120,11 +126,11 @@ type RenderProps = {
 
 const maFrontendUrl = getFromEnv('MA_FRONTEND_URL')!;
 const nonce = getFromEnv('BFF_AMSAPP_NONCE')!;
-const logoutUrl = `${generateFullApiUrlBFF(
-  authRoutes.AUTH_LOGOUT_DIGID,
-  {},
+const logoutUrl = generateFullApiUrlBFF(
+  apiRoute(authRoutes.AUTH_LOGOUT_DIGID),
+  [{ returnTo: RETURNTO_AMSAPP_NOTIFICATIES_APP_LANDING }],
   getFromEnv('BFF_OIDC_BASE_URL')
-)}?returnTo=${RETURNTO_AMSAPP_NOTIFICATIES_APP_LANDING}`;
+);
 
 const baseRenderProps = {
   nonce,
