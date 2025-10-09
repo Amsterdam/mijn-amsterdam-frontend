@@ -9,6 +9,7 @@ import {
 } from './useAfisThemaData.hook';
 import type { AfisFactuurState } from '../../../../server/services/afis/afis-types';
 import { Datalist } from '../../../components/Datalist/Datalist';
+import LoadingContent from '../../../components/LoadingContent/LoadingContent';
 import { MaRouterLink } from '../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
@@ -23,11 +24,17 @@ function FactuurDetailContent({
   factuurNummer,
   state,
 }: FactuurDetailContentProps) {
-  const { facturenListResponse, routeConfig } = useAfisListPageData(state);
+  const { facturenListResponse, routeConfig, isListPageLoading } =
+    useAfisListPageData(state);
+
   const factuur =
     facturenListResponse?.facturen.find(
       (f) => f.factuurNummer === factuurNummer
     ) ?? null;
+
+  if (isListPageLoading) {
+    return <LoadingContent />;
+  }
 
   if (!factuur) {
     return (
