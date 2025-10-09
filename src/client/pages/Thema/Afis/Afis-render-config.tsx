@@ -5,6 +5,7 @@ import {
   featureToggle,
 } from './Afis-thema-config';
 import { AfisBetaalVoorkeuren } from './AfisBetaalVoorkeuren';
+import { AfisFactuur } from './AfisFactuur';
 import { default as AfisIcon } from './AfisIcon.svg?react';
 import { AfisList } from './AfisList';
 import { AfisThema } from './AfisThema';
@@ -19,6 +20,11 @@ export const AfisRoutes = [
   {
     route: routeConfig.listPage.path,
     Component: AfisList,
+    isActive: featureToggle.AfisActive,
+  },
+  {
+    route: routeConfig.detailPage.path,
+    Component: AfisFactuur,
     isActive: featureToggle.AfisActive,
   },
   {

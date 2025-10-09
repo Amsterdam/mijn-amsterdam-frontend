@@ -24,6 +24,10 @@ export const themaId = 'AFIS' as const;
 export const themaTitle = 'Facturen en betalen';
 
 export const routeConfig = {
+  detailPage: {
+    path: '/facturen-en-betalen/factuur/:state/:factuurNummer',
+    documentTitle: `Factuurgegevens | ${themaTitle}`,
+  },
   betaalVoorkeuren: {
     path: '/facturen-en-betalen/betaalvoorkeuren',
     documentTitle: `Betaalvoorkeuren | ${themaTitle}`,
