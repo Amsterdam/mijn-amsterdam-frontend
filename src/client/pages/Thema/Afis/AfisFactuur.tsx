@@ -2,7 +2,11 @@ import { Alert } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router';
 
 import type { AfisFactuurFrontend } from './Afis-thema-config';
-import { useAfisListPageData, useAfisThemaData } from './useAfisThemaData.hook';
+import {
+  getDocumentLink,
+  useAfisListPageData,
+  useAfisThemaData,
+} from './useAfisThemaData.hook';
 import type { AfisFactuurState } from '../../../../server/services/afis/afis-types';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { MaRouterLink } from '../../../components/MaLink/MaLink';
@@ -58,6 +62,10 @@ function FactuurDetailContent({
     {
       label: 'Status',
       content: factuur.statusDescription ?? '-',
+    },
+    {
+      label: 'Download',
+      content: getDocumentLink(factuur) ?? 'niet beschikbaar',
     },
   ];
 

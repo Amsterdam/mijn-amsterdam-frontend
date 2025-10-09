@@ -64,6 +64,22 @@ function getInvoiceStatusDescriptionFrontend(factuur: AfisFactuur): ReactNode {
   }
 }
 
+export function getDocumentLink(factuur: AfisFactuur): ReactNode {
+  if (factuur.documentDownloadLink) {
+    return (
+      <DocumentLink
+        document={{
+          id: factuur.factuurNummer,
+          datePublished: factuur.datePublished ?? '',
+          url: factuur.documentDownloadLink,
+          title: `factuur ${factuur.factuurNummer}`,
+        }}
+      />
+    );
+  }
+  return null;
+}
+
 function mapFactuur(
   factuur: AfisFactuur,
   state: AfisFactuurState,
@@ -84,16 +100,7 @@ function mapFactuur(
       </MaRouterLink>
     );
   } else if (factuur.documentDownloadLink) {
-    factuurNummerEl = (
-      <DocumentLink
-        document={{
-          id: factuur.factuurNummer,
-          datePublished: factuur.datePublished ?? '',
-          url: factuur.documentDownloadLink,
-          title: `factuur ${factuur.factuurNummer}`,
-        }}
-      />
-    );
+    factuurNummerEl = getDocumentLink(factuur);
   }
 
   return {
