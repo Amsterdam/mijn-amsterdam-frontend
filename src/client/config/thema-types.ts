@@ -25,7 +25,7 @@ export type ThemaConfigBase = {
   title: string;
   featureToggle: ThemaFeatureToggle;
   profileTypes: ProfileType[];
-  uitlegPageSections: InfoSection[];
+  uitlegPageSections: InfoSection;
   links: LinkProps[];
   route: ThemaRouteConfig;
   redactedScope: RedactedScope;
