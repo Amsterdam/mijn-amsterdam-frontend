@@ -22,7 +22,7 @@
           "@type": "application/xml",
           "properties": {
             "DunningLevel": 0,
-            "DunningBlockingReason": "D",
+            "DunningBlockingReason": "",
             "ProfitCenterName": "Bedrijf: Ok",
             "SEPAMandate": "",
             "PostingDate": "2023-11-21T00:00:00",
@@ -31,7 +31,8 @@
             "AmountInBalanceTransacCrcy": "343.00",
             "DocumentReferenceID": "5555555-A",
             "AccountingDocument": "5555555-A",
-            "Paylink": "http://localhost:3100/mocks-api/afis/paylink"
+            "Paylink": "http://localhost:3100/mocks-api/afis/paylink",
+            "IsCleared": false
           }
         }
       },
@@ -40,7 +41,7 @@
           "@type": "application/xml",
           "properties": {
             "DunningLevel": 0,
-            "DunningBlockingReason": "D",
+            "DunningBlockingReason": "",
             "ProfitCenterName": "Foobaz",
             "SEPAMandate": "",
             "PostingDate": "2023-12-12T00:00:00",
@@ -49,7 +50,8 @@
             "AmountInBalanceTransacCrcy": "-80.00",
             "DocumentReferenceID": "5555555-B",
             "AccountingDocument": "5555555-B",
-            "Paylink": "http://localhost:3100/mocks-api/afis/paylink"
+            "Paylink": "http://localhost:3100/mocks-api/afis/paylink",
+            "IsCleared": false
           }
         }
       },
@@ -58,7 +60,7 @@
           "@type": "application/xml",
           "properties": {
             "DunningLevel": 0,
-            "DunningBlockingReason": "D",
+            "DunningBlockingReason": "",
             "ProfitCenterName": "GO Erfpacht en Uitgi",
             "SEPAMandate": "",
             "PostingDate": "2023-12-12T00:00:00",
@@ -67,7 +69,8 @@
             "AmountInBalanceTransacCrcy": "-0.01",
             "DocumentReferenceID": "5658555",
             "AccountingDocument": "5658555",
-            "Paylink": "http://localhost:3100/mocks-api/afis/paylink"
+            "Paylink": "http://localhost:3100/mocks-api/afis/paylink",
+            "IsCleared": false
           }
         }
       },
@@ -85,7 +88,8 @@
             "AmountInBalanceTransacCrcy": "-12.10",
             "DocumentReferenceID": "5555555",
             "AccountingDocument": "5555555",
-            "Paylink": "http://localhost:3100/mocks-api/afis/paylink"
+            "Paylink": "http://localhost:3100/mocks-api/afis/paylink",
+            "IsCleared": false
           }
         }
       },
@@ -94,7 +98,7 @@
           "@type": "application/xml",
           "properties": {
             "DunningLevel": 0,
-            "DunningBlockingReason": "D",
+            "DunningBlockingReason": "",
             "ProfitCenterName": "Bedrijfje",
             "SEPAMandate": "",
             "PostingDate": "2023-08-09T00:00:00",
@@ -103,7 +107,8 @@
             "AmountInBalanceTransacCrcy": "-16.00",
             "DocumentReferenceID": "5555555-C",
             "AccountingDocument": "5555555-C",
-            "Paylink": "http://localhost:3100/mocks-api/afis/paylink"
+            "Paylink": "http://localhost:3100/mocks-api/afis/paylink",
+            "IsCleared": false
           }
         }
       },
@@ -121,7 +126,8 @@
             "AmountInBalanceTransacCrcy": "1000.00",
             "DocumentReferenceID": "1231231230",
             "AccountingDocument": "1231231230",
-            "Paylink": "http://localhost:3100/mocks-api/afis/paylink"
+            "Paylink": "http://localhost:3100/mocks-api/afis/paylink",
+            "IsCleared": false
           }
         }
       },
@@ -130,7 +136,7 @@
           "@type": "application/xml",
           "properties": {
             "DunningLevel": 0,
-            "DunningBlockingReason": "D",
+            "DunningBlockingReason": "",
             "ProfitCenterName": "Trala",
             "SEPAMandate": "",
             "PostingDate": "2023-11-30T00:00:00",
@@ -139,7 +145,8 @@
             "AmountInBalanceTransacCrcy": "121.00",
             "DocumentReferenceID": "5555555-E",
             "AccountingDocument": "5555555-E",
-            "Paylink": "http://localhost:3100/mocks-api/afis/paylink"
+            "Paylink": "http://localhost:3100/mocks-api/afis/paylink",
+            "IsCleared": false
           }
         }
       },
@@ -159,7 +166,8 @@
             "AmountInBalanceTransacCrcy": "230.00",
             "DocumentReferenceID": "5555555-F",
             "AccountingDocument": "5555555-F",
-            "Paylink": "http://localhost:3100/mocks-api/afis/paylink"
+            "Paylink": "http://localhost:3100/mocks-api/afis/paylink",
+            "IsCleared": false
           }
         }
       }

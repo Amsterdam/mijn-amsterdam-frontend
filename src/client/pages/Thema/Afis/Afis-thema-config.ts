@@ -25,6 +25,10 @@ export const themaTitle = 'Facturen en betalen';
 
 export const routeConfig = {
   detailPage: {
+    path: '/facturen-en-betalen/factuur/:state/:factuurNummer',
+    documentTitle: `Factuurgegevens | ${themaTitle}`,
+  },
+  betaalVoorkeuren: {
     path: '/facturen-en-betalen/betaalvoorkeuren',
     documentTitle: `Betaalvoorkeuren | ${themaTitle}`,
   },
@@ -53,7 +57,7 @@ const displayPropsFacturenOpen: DisplayProps<AfisFactuurFrontend> = {
   },
   colWidths: {
     large: ['25%', '20%', '20%', '35%'],
-    small: ['100%', '0', '0', '0'],
+    small: ['25%', '0', '0', '75%'],
   },
 };
 
