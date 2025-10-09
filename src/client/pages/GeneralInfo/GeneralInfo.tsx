@@ -52,7 +52,6 @@ export type InfoSection = {
   active: boolean;
 };
 
-// voor overgezette thema's//function createSectionProps<T>(themaConfig: T extends ThemaConfigBase): SectionProps
 function createInfoSection(themaConfig: ThemaConfigBase): InfoSection {
   return {
     id: themaConfig.id,
