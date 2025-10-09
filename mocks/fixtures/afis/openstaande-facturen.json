@@ -22,7 +22,7 @@
           "@type": "application/xml",
           "properties": {
             "DunningLevel": 0,
-            "DunningBlockingReason": "D",
+            "DunningBlockingReason": "",
             "ProfitCenterName": "Bedrijf: Ok",
             "SEPAMandate": "",
             "PostingDate": "2023-11-21T00:00:00",
@@ -41,7 +41,7 @@
           "@type": "application/xml",
           "properties": {
             "DunningLevel": 0,
-            "DunningBlockingReason": "D",
+            "DunningBlockingReason": "",
             "ProfitCenterName": "Foobaz",
             "SEPAMandate": "",
             "PostingDate": "2023-12-12T00:00:00",
@@ -60,7 +60,7 @@
           "@type": "application/xml",
           "properties": {
             "DunningLevel": 0,
-            "DunningBlockingReason": "D",
+            "DunningBlockingReason": "",
             "ProfitCenterName": "GO Erfpacht en Uitgi",
             "SEPAMandate": "",
             "PostingDate": "2023-12-12T00:00:00",
@@ -98,7 +98,7 @@
           "@type": "application/xml",
           "properties": {
             "DunningLevel": 0,
-            "DunningBlockingReason": "D",
+            "DunningBlockingReason": "",
             "ProfitCenterName": "Bedrijfje",
             "SEPAMandate": "",
             "PostingDate": "2023-08-09T00:00:00",
@@ -136,7 +136,7 @@
           "@type": "application/xml",
           "properties": {
             "DunningLevel": 0,
-            "DunningBlockingReason": "D",
+            "DunningBlockingReason": "",
             "ProfitCenterName": "Trala",
             "SEPAMandate": "",
             "PostingDate": "2023-11-30T00:00:00",

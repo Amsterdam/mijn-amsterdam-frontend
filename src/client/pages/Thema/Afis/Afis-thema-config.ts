@@ -57,7 +57,7 @@ const displayPropsFacturenOpen: DisplayProps<AfisFactuurFrontend> = {
   },
   colWidths: {
     large: ['25%', '20%', '20%', '35%'],
-    small: ['100%', '0', '0', '0'],
+    small: ['25%', '0', '0', '75%'],
   },
 };
 
