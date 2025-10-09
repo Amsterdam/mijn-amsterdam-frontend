@@ -36,10 +36,12 @@ export const themaConfig: BodemThemaConfig = {
       to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/bodem/loodcheck-tuin-aanvragen',
     },
   ],
-  uitlegPageSections: {
-    title: null,
-    listItems: ["Uw aanvraag voor 'lood in de bodem-check'"],
-  },
+  uitlegPageSections: [
+    {
+      title: null,
+      listItems: ["Uw aanvraag voor 'lood in de bodem-check'"],
+    },
+  ],
 
   ///gebruik deze nog niet, moet wel maar dan moet de hele pagina GegevensInfo.tsx worden omgebouwd, daarnaast moet de Uitlegpagina voor Eherk anders dan die van Digid > maar denk dat ik dat met Profiletype kan oplossen
 
