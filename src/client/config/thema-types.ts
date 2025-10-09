@@ -94,7 +94,7 @@ type TrackinUrlFN = <T extends Params<string>>(params: T | null) => string;
 export type ThemaRouteConfig = {
   path: string;
   // Only needed for routes with variable path segments
-  trackingUrl?: null | string | TrackinUrlFN;
+  trackingUrl: null | string | TrackinUrlFN;
   documentTitle: string | DocumenttitleFN;
 };
 

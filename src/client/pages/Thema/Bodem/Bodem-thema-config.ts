@@ -41,8 +41,6 @@ export const themaConfig: BodemThemaConfig = {
     listItems: ["Uw aanvraag voor 'lood in de bodem-check'"],
   },
 
-  ///gebruik deze nog niet, moet wel maar dan moet de hele pagina GegevensInfo.tsx worden omgebouwd, daarnaast moet de Uitlegpagina voor Eherk anders dan die van Digid > maar denk dat ik dat met Profiletype kan oplossen
-
   detailPage: {
     title: 'Lood in bodem-check',
     route: {
@@ -57,6 +55,7 @@ export const themaConfig: BodemThemaConfig = {
     title: null,
     route: {
       path: '/bodem/lijst/lood-meting/:kind/:page?',
+      trackingUrl: null,
       documentTitle: (params) =>
         `${params?.kind === listPageKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaConfig.title}`,
     },

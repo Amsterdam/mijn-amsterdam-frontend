@@ -23,7 +23,7 @@ import { afvalSectionProps } from '../Thema/Afval/InfoSection';
 import { AVGsectionProps } from '../Thema/AVG/InfoSection';
 import { belastingenSectionProps } from '../Thema/Belastingen/InfoSection';
 import { bezwarenSectionProps } from '../Thema/Bezwaren/InfoSection';
-import { themaConfig } from '../Thema/Bodem/Bodem-thema-config';
+import { themaConfig as bodemThemaConfig } from '../Thema/Bodem/Bodem-thema-config';
 import { burgerzakenSectionProps } from '../Thema/Burgerzaken/InfoSection';
 import { erfpachtSectionProps } from '../Thema/Erfpacht/InfoSection';
 import {
@@ -92,7 +92,7 @@ const sections: InfoSection[] = [
   milieuzonesectionProps,
   overtredingensectionProps,
   vergunningensectionProps,
-  createInfoSection(themaConfig),
+  createInfoSection(bodemThemaConfig),
   varensectionProps,
 ];
 
