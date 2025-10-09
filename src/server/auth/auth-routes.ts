@@ -1,6 +1,6 @@
 import { getFromEnv } from '../helpers/env';
 
-export const AUTH_BASE = '/api/v1/auth';
+export const AUTH_BASE = '/auth';
 export const AUTH_BASE_DIGID = `${AUTH_BASE}/digid`;
 export const AUTH_BASE_EHERKENNING = `${AUTH_BASE}/eherkenning`;
 

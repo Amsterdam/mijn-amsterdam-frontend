@@ -106,7 +106,7 @@ export const PUBLIC_BFF_ENDPOINTS = [
 ] as const;
 
 export const DevelopmentRoutes = {
-  DEV_LOGIN: '/api/v1/auth/:authMethod/login{/:user}',
+  DEV_LOGIN: '/auth/:authMethod/login{/:user}',
 } as const;
 
 export const PREDEFINED_REDIRECT_URLS = [

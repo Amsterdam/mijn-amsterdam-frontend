@@ -124,13 +124,13 @@ if (FeatureToggle.amsNotificationsIsActive) {
 //// In development we use the authRouterDevelopment which has a mock login.
 if (IS_OT && !IS_AP) {
   logger.info('Using AUTH Development Router');
-  app.use(authRouterDevelopment);
+  app.use(BFF_BASE_PATH, authRouterDevelopment);
 }
 ///// [PRODUCTION - ACCEPTANCE]
 //// In production we use the oidcRouter which has real OIDC login.
 if (IS_AP && !IS_OT) {
   logger.info('Using AUTH OIDC Router');
-  app.use(oidcRouter);
+  app.use(BFF_BASE_PATH, oidcRouter);
 }
 
 app.use(BFF_BASE_PATH, nocache, protectedRouter, adminRouter);
