@@ -51,9 +51,11 @@ export function getDocuments(
         );
         return {
           ...document,
-          url: generateFullApiUrlBFF(withDownloadBFFEndpoint, {
-            id: idEncrypted,
-          }),
+          url: generateFullApiUrlBFF(withDownloadBFFEndpoint, [
+            {
+              id: idEncrypted,
+            },
+          ]),
         };
       });
   }

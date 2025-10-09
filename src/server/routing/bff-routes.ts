@@ -45,13 +45,13 @@ export const BffEndpoints = {
   MKS_AANTAL_BEWONERS: '/service/mks/aantal-bewoners/:addressKeyEncrypted',
 
   // WPI Document download
-  WPI_DOCUMENT_DOWNLOAD: '/services/wpi/document/:id',
+  WPI_DOCUMENT_DOWNLOAD: '/services/wpi/document',
 
   // AV / Zorgned
-  HLI_DOCUMENT_DOWNLOAD: `/services/v1/stadspas-en-andere-regelingen/document/:id`,
+  HLI_DOCUMENT_DOWNLOAD: `/services/v1/stadspas-en-andere-regelingen/document`,
 
   // LLV / Zorgned
-  LLV_DOCUMENT_DOWNLOAD: `/services/llv/document/:id`,
+  LLV_DOCUMENT_DOWNLOAD: `/services/llv/document`,
 
   // Legacy login links (still used in other portals)
   LEGACY_LOGIN_API_LOGIN: '/api/login',
@@ -68,7 +68,7 @@ export const BffEndpoints = {
   POWERBROWSER_DOCUMENT_DOWNLOAD: `/services/${hash('powerbrowser')}/documents/download`,
 
   // Bodem / loodmetingen
-  LOODMETING_DOCUMENT_DOWNLOAD: '/services/lood/document/:id',
+  LOODMETING_DOCUMENT_DOWNLOAD: '/services/lood/document',
 } as const;
 
 const AMSAPP_BASE = '/services/amsapp';

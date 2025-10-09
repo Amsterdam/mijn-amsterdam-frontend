@@ -64,7 +64,7 @@ describe('Transform api items', () => {
               "datePublished": "2024-06-24",
               "id": "document-1",
               "title": "Document 1",
-              "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
+              "url": "http://bff-api-host/api/v1/services/wmo/document?id=123-123-123-123",
             },
           ]
         `);
@@ -99,13 +99,13 @@ describe('Transform api items', () => {
             "datePublished": "2024-06-24",
             "id": "document-1",
             "title": "Document 1",
-            "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
+            "url": "http://bff-api-host/api/v1/services/wmo/document?id=123-123-123-123",
           },
           {
             "datePublished": "2024-06-24",
             "id": "document-1",
             "title": "Document 1",
-            "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
+            "url": "http://bff-api-host/api/v1/services/wmo/document?id=123-123-123-123",
           },
         ]
       `);

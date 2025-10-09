@@ -13,7 +13,7 @@ export const routes = {
     WMO_VOORZIENINGEN: `/services/wmo/voorzieningen`,
   },
   protected: {
-    WMO_DOCUMENT_DOWNLOAD: `/services/wmo/document/:id`,
+    WMO_DOCUMENT_DOWNLOAD: `/services/wmo/document`,
     WMO_DOCUMENTS_LIST_RAW: `/services/wmo/raw/documents`,
     WMO_AANVRAGEN_RAW: `/services/wmo/raw/aanvragen`,
   },
