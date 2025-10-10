@@ -1,5 +1,8 @@
 import { getAuthProfileAndToken } from '../../../../testing/utils';
-import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../../zorgned/zorgned-types';
+import {
+  ZorgnedAanvraagWithRelatedPersonsTransformed,
+  ZorgnedPerson,
+} from '../../zorgned/zorgned-types';
 import { forTesting } from '../hli';
 import { HLIRegelingFrontend } from '../hli-regelingen-types';
 
@@ -69,7 +72,7 @@ const base = {
       partnernaam: 'partner-2 - Flex',
       partnervoorvoegsel: null,
     },
-  ],
+  ] as ZorgnedPerson[],
 };
 
 const descriptions = {
