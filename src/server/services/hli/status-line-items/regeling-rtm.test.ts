@@ -1069,4 +1069,84 @@ describe('Ontvanger but aanvragen made by someone else', () => {
       },
     ]);
   });
+
+  test('Besluit toegewezen -> Wijzigings aanvraag -> Wijzigings toegewezen', () => {
+    const aanvragen = attachIDs([
+      RTM_2_TOEGEWEZEN,
+      RTM_WIJZIGINGS_AANVRAAG,
+      RTM_WIJZIGINGS_TOEKENNING,
+    ]);
+    const regelingen = transformRegelingenForFrontend(aanvragen);
+
+    expect(regelingen.length).toBe(1);
+
+    const regeling = regelingen[0];
+
+    expect(regeling).toMatchObject({
+      title: RTM_WIJZIGINGS_TOEKENNING.titel,
+      isActual: true,
+      dateDecision: RTM_WIJZIGINGS_TOEKENNING.datumBesluit,
+      dateStart: RTM_WIJZIGINGS_TOEKENNING.datumIngangGeldigheid,
+      dateEnd: RTM_WIJZIGINGS_TOEKENNING.datumEindeGeldigheid,
+      decision: 'toegewezen',
+      displayStatus: 'Toegewezen',
+      documents: [],
+    });
+    expect(regeling.steps).toMatchObject([
+      {
+        id: 'status-step-1',
+        status: 'Besluit',
+        datePublished: RTM_2_TOEGEWEZEN.datumBesluit,
+        isActive: false,
+        isChecked: true,
+        isVisible: true,
+        documents: [
+          {
+            title: 'Beschikking toekenning Reg Tegemoetk Meerkosten',
+          },
+        ],
+      },
+      {
+        id: 'status-step-2',
+        status: 'Aanvraag wijziging',
+        isActive: false,
+        isChecked: true,
+        isVisible: true,
+        datePublished: '2025-08-18',
+        documents: [
+          {
+            datePublished: '2025-08-18T15:17:08.773',
+            title: 'AV-RTM Info aan klant GGD',
+          },
+          {
+            datePublished: '2025-08-18T14:09:48.83',
+            title: 'AV-RTM Info aan klant GGD',
+          },
+        ],
+      },
+      {
+        id: 'status-step-3',
+        status: 'Besluit wijziging',
+        isActive: true,
+        isChecked: true,
+        isVisible: true,
+        datePublished: RTM_WIJZIGINGS_TOEKENNING.datumBesluit,
+        documents: [
+          {
+            datePublished: '2025-08-18T14:57:41.793',
+            title: 'Beschikking wijziging RTM',
+          },
+        ],
+      },
+      {
+        id: 'status-step-4',
+        datePublished: '',
+        documents: [],
+        isActive: false,
+        isChecked: false,
+        isVisible: true,
+        status: 'Einde recht',
+      },
+    ]);
+  });
 });
