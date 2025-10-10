@@ -9,7 +9,6 @@ import document from '../../../../mocks/fixtures/loodmeting-rapport.json';
 import metingen from '../../../../mocks/fixtures/loodmetingen.json';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import type { identifier } from '../../../client/pages/Thema/Vergunningen/detail-page-content/fields-config';
 
 vi.mock('../../routing/route-helpers.ts', async (importOriginal) => {
   return {

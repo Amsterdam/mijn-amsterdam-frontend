@@ -4,7 +4,6 @@ import { fetchAVG, fetchAVGNotifications, transformAVGResponse } from './avg';
 import avgThemasResponse from '../../../../mocks/fixtures/avg-themas.json';
 import apiResponse from '../../../../mocks/fixtures/avg.json';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
-import { identifier } from '../../../client/pages/Thema/Vergunningen/detail-page-content/fields-config';
 
 describe('AVG', () => {
   const profileAndToken = getAuthProfileAndToken();
