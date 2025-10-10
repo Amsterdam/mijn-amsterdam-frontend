@@ -444,7 +444,7 @@ async function fetchZakenByUserKey(
       (transformer) => transformer.caseType || []
     );
     const caseTypeQuery = caseTypes
-      .map((caseType) => `${CASE_TYP_FIELD_DECOS} eq '${caseType}'`)
+      .map((caseType) => `(${CASE_TYP_FIELD_DECOS} eq '${caseType}')`)
       .join(' or ');
 
     const decosUrlParams = new URLSearchParams({
