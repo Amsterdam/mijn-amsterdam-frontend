@@ -21,7 +21,8 @@ function attachIDs(
 
 function replaceBetrokkenen(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
-  betrokkenen: { bsn: string; isAanvrager?: boolean }[]
+  betrokkenen: { bsn: string; isAanvrager?: boolean }[],
+  bsnAanvrager: string = '555555555'
 ): ZorgnedAanvraagWithRelatedPersonsTransformed[] {
   return aanvragen.map((aanvraag) => {
     return {
@@ -40,6 +41,7 @@ function replaceBetrokkenen(
             partnervoorvoegsel: null,
           };
         }),
+      bsnAanvrager,
     };
   });
 }
@@ -74,12 +76,15 @@ const descriptions = {
   toegewezen:
     '<p> U krijgt Regeling Tegemoetkoming Meerkosten per 01 mei 2025. </p> <p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>',
   afgewezen: `<p> U krijgt geen Regeling Tegemoetkoming Meerkosten. </p> <p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`,
-  eindeRechtKind:
-    '<p>Uw recht op Regeling Tegemoetkoming Meerkosten is beëindigd per 30 juni 2025.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p> <p>Wordt uw kind 18? Dan moet uw kind deze regeling voor zichzelf aanvragen.</p>',
   wijzigingsAanvraag: `<p>U heeft een aanvraag gedaan voor aanpassing op uw lopende RTM regeling.</p>
 <p>Hiervoor moet u een afspraak maken voor een medisch gesprek bij de GGD. In de brief staat hoe u dat doet.</p>`,
   wijzigingsBesluit:
     '<p>Uw aanvraag voor een wijziging is afgehandeld. Bekijk de brief voor meer informatie hierover.</p>',
+  inBehandeling: `<p>Voordat u de Regeling Tegemoetkoming Meerkosten krijgt, moet u een afspraak maken voor een medische keuring bij de GGD. In de brief staat hoe u dat doet.</p>`,
+  activeEindeRecht: `<p>Uw recht op Regeling Tegemoetkoming Meerkosten is beëindigd per 30 juni 2025.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`,
+  activeEindeRechtForChild: `<p>Uw recht op Regeling Tegemoetkoming Meerkosten is beëindigd per 30 juni 2025.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p> <p>Wordt uw kind 18? Dan moet uw kind deze regeling voor zichzelf aanvragen.</p>`,
+  activeEindeRechtAtChild: `<p>Uw recht op Regeling Tegemoetkoming Meerkosten is beëindigd per 30 juni 2025.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p><p>Bent u net of binnenkort 18 jaar oud? Dan moet u deze regeling voor uzelf aanvragen.'} <a href="https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/extra-geld-als-u-chronisch-ziek-of/">Lees meer over de voorwaarden</a>.</p>`,
+  inactiveEindeRecht: `<p>U hoeft de Regeling Tegemoetkoming Meerkosten niet elk jaar opnieuw aan te vragen. De gemeente verlengt de regeling stilzwijgend, maar controleert wel elk jaar of u nog in aanmerking komt.</p><p>U kunt dan ook een brief krijgen met het verzoek om extra informatie te geven.</p><p><a href="https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/extra-geld-als-u-chronisch-ziek-of/">Als er wijzigingen zijn in uw situatie moet u die direct doorgeven</a>.</p>`,
 };
 
 const RTM_1_AANVRAAG: ZorgnedAanvraagWithRelatedPersonsTransformed = {
@@ -353,12 +358,12 @@ const RTM_WIJZIGINGS_AFWIJZING: ZorgnedAanvraagWithRelatedPersonsTransformed = {
 
 const RTM_2_MIGRATIE: ZorgnedAanvraagWithRelatedPersonsTransformed = {
   id: '7',
-  datumAanvraag: '2022-06-29',
+  datumAanvraag: '2025-03-29',
   datumBeginLevering: null,
-  datumBesluit: '2022-06-29',
+  datumBesluit: '2025-04-01',
   datumEindeGeldigheid: null,
   datumEindeLevering: null,
-  datumIngangGeldigheid: '2022-06-01',
+  datumIngangGeldigheid: '2025-05-01',
   datumOpdrachtLevering: null,
   datumToewijzing: null,
   procesAanvraagOmschrijving: 'Migratie RTM',
@@ -413,16 +418,18 @@ describe('Aanvrager is ontvanger', () => {
     expect(regeling.steps).toMatchObject([
       {
         id: 'status-step-1',
-        datePublished: '2025-02-01',
-        documents: [],
+        status: 'Aanvraag',
+        datePublished: RTM_1_AANVRAAG.datumBesluit,
+        description: '',
         isActive: false,
         isChecked: true,
         isVisible: true,
-        status: 'Aanvraag',
+        documents: [],
       },
       {
         id: 'status-step-2',
-        datePublished: '2025-02-01',
+        status: 'In behandeling genomen',
+        datePublished: RTM_1_AANVRAAG.datumBesluit,
         documents: [
           {
             title: 'AV-RTM Info aan klant GGD',
@@ -431,16 +438,17 @@ describe('Aanvrager is ontvanger', () => {
         isActive: true,
         isChecked: true,
         isVisible: true,
-        status: 'In behandeling genomen',
+        description: descriptions.inBehandeling,
       },
       {
         id: 'status-step-3',
+        status: 'Einde recht',
         datePublished: '',
-        documents: [],
         isActive: false,
         isChecked: false,
         isVisible: true,
-        status: 'Einde recht',
+        documents: [],
+        description: descriptions.inactiveEindeRecht,
       },
     ]);
 
@@ -479,6 +487,7 @@ describe('Aanvrager is ontvanger', () => {
       {
         id: 'status-step-1',
         datePublished: RTM_1_AFWIJZING.datumBesluit,
+        description: descriptions.afgewezen,
         documents: [
           {
             title: 'AV-ALG Besluit Afwijzing',
@@ -504,28 +513,30 @@ describe('Aanvrager is ontvanger', () => {
       displayStatus: 'Toegewezen',
       documents: [],
       isActual: true,
-      dateDecision: '2022-06-29',
-      dateStart: '2022-06-01',
+      dateDecision: RTM_2_MIGRATIE.datumBesluit,
+      dateStart: RTM_2_MIGRATIE.datumIngangGeldigheid,
       dateEnd: null,
     });
     expect(regeling.steps).toMatchObject([
       {
         id: 'status-step-1',
         status: 'Besluit',
-        datePublished: '2022-06-29',
+        datePublished: RTM_2_MIGRATIE.datumBesluit,
         isActive: true,
         isChecked: true,
         isVisible: true,
         documents: [],
+        description: descriptions.toegewezen,
       },
       {
         id: 'status-step-2',
+        status: 'Einde recht',
         datePublished: '',
         documents: [],
         isActive: false,
         isChecked: false,
         isVisible: true,
-        status: 'Einde recht',
+        description: descriptions.inactiveEindeRecht,
       },
     ]);
   });
@@ -557,6 +568,7 @@ describe('Aanvrager is ontvanger', () => {
         id: 'status-step-1',
         status: 'Aanvraag',
         datePublished: RTM_1_AANVRAAG.datumBesluit,
+        description: '',
         isActive: false,
         isChecked: true,
         isVisible: true,
@@ -566,6 +578,7 @@ describe('Aanvrager is ontvanger', () => {
         id: 'status-step-2',
         status: 'In behandeling genomen',
         datePublished: RTM_1_AANVRAAG.datumBesluit,
+        description: descriptions.inBehandeling,
         isActive: false,
         isChecked: true,
         isVisible: true,
@@ -579,6 +592,7 @@ describe('Aanvrager is ontvanger', () => {
         id: 'status-step-3',
         status: 'Besluit',
         datePublished: RTM_2_TOEGEWEZEN.datumBesluit,
+        description: descriptions.toegewezen,
         isActive: false,
         isChecked: true,
         isVisible: true,
@@ -591,6 +605,7 @@ describe('Aanvrager is ontvanger', () => {
       {
         id: 'status-step-4',
         status: 'Einde recht',
+        description: descriptions.activeEindeRecht,
         datePublished: RTM_2_EINDE_RECHT.datumEindeGeldigheid,
         isActive: true,
         isChecked: true,
@@ -1242,7 +1257,7 @@ describe('Ontvanger but aanvragen made by someone else', () => {
         isActive: true,
         isChecked: true,
         isVisible: true,
-        description: descriptions.eindeRechtKind,
+        description: descriptions.activeEindeRechtAtChild,
         documents: [
           {
             title: 'Beschikking beëindigen RTM',

@@ -1,11 +1,7 @@
 import { isAfter } from 'date-fns';
 
-import {
-  BESLUIT,
-  EINDE_RECHT,
-  getBesluitDescription,
-  isAanvrager,
-} from './generic';
+import { getBesluitDescription, isAanvrager } from './generic';
+import { featureToggle } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { sortByNumber } from '../../../../universal/helpers/utils';
 import {
@@ -16,7 +12,6 @@ import { parseLabelContent } from '../../zorgned/zorgned-helpers';
 import {
   TextPartContents,
   ZorgnedAanvraagWithRelatedPersonsTransformed,
-  ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types';
 import type { ZorgnedHLIRegeling } from '../hli-regelingen-types';
 
@@ -26,6 +21,9 @@ export const AV_RTM_DEEL1 = 'AV-RTM1';
 export const AV_RTM_DEEL2 = 'AV-RTM';
 
 export const RTM_STATUS_IN_BEHANDELING = 'In behandeling genomen';
+
+const INFO_LINK =
+  'https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/extra-geld-als-u-chronisch-ziek-of/';
 
 export function isRTMDeel2(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
@@ -83,6 +81,10 @@ export function filterCombineRtmData(
     }
   }
 
+  if (!featureToggle.hliRegelingEnabledRTM) {
+    return [remainder, []];
+  }
+
   // Prevent aanvragen from other 'betrokkenen' sets from being mixed up with eachother.
   const aanvragenPerBetrokkenen = mapAanvragenPerBetrokkenen(
     rtmAanvragen,
@@ -92,6 +94,63 @@ export function filterCombineRtmData(
     remainder,
     Object.values(aanvragenPerBetrokkenen).flatMap(combineRTMData),
   ];
+}
+
+type AanvragenMap = {
+  ontvanger: ZorgnedAanvraagWithRelatedPersonsTransformed[];
+} & Record<string, ZorgnedAanvraagWithRelatedPersonsTransformed[]>;
+
+function mapAanvragenPerBetrokkenen(
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
+  bsnOntvanger: string
+): AanvragenMap {
+  aanvragen = aanvragen.map((aanvraag) => {
+    return {
+      ...aanvraag,
+      // Sort because I don't know if betrokkenen are always in the same order across different aanvragen.
+      betrokkenen: aanvraag.betrokkenen.toSorted((a, b) => (a <= b ? -1 : 1)),
+    };
+  });
+
+  const aanvragenMap: AanvragenMap = { ontvanger: [] };
+
+  for (const aanvraag of aanvragen) {
+    if (isRTMDeel2(aanvraag)) {
+      aanvragenMap.ontvanger.push(aanvraag);
+      continue;
+    }
+
+    const id = aanvraag.betrokkenen.join('');
+
+    if (id === bsnOntvanger) {
+      aanvragenMap.ontvanger.push(aanvraag);
+      continue;
+    }
+
+    if (bsnOntvanger && aanvraag.betrokkenen.includes(bsnOntvanger)) {
+      // An aanvraag can have multiple betrokkenen but also include the 'ontvanger'.
+      // So we copy/split an aanvraag to the betrokkenen,
+      // so we can merge the rtm-2 aanvragen that are only for the ontvanger.
+      aanvraag.betrokkenen = aanvraag.betrokkenen.filter(
+        (b) => b !== bsnOntvanger
+      );
+      aanvraag.betrokkenPersonen = aanvraag.betrokkenPersonen.filter(
+        (b) => b.bsn !== bsnOntvanger
+      );
+      const aanvraagCopy = structuredClone(aanvraag);
+      aanvraagCopy.betrokkenen = [bsnOntvanger];
+      aanvragenMap.ontvanger.push(aanvraagCopy);
+    }
+
+    const aanvraagInMap = aanvragenMap[id];
+    if (aanvraagInMap) {
+      aanvragenMap[id].push(aanvraag);
+    } else {
+      aanvragenMap[id] = [aanvraag];
+    }
+  }
+
+  return aanvragenMap;
 }
 
 type RTMCombinedRegeling = [ZorgnedHLIRegeling, StatusLineItem[]];
@@ -288,6 +347,9 @@ type StatusLineItemTransformerConfig = {
   ) => boolean;
 };
 
+const getDatumAfgifte = (regeling: ZorgnedHLIRegeling) =>
+  regeling.datumInBehandeling || regeling.datumBesluit;
+
 type StatusLineKey =
   | 'aanvraagLopend'
   | 'aanvraagAfgewezen'
@@ -297,9 +359,6 @@ type StatusLineKey =
   | 'wijzigingsBesluit'
   | 'eindeRecht'
   | 'defaultEindeRecht';
-
-const getDatumAfgifte = (regeling: ZorgnedHLIRegeling) =>
-  regeling.datumInBehandeling || regeling.datumBesluit;
 
 const statusLineItems: Record<StatusLineKey, StatusLineItemTransformerConfig> =
   {
@@ -319,7 +378,18 @@ const statusLineItems: Record<StatusLineKey, StatusLineItemTransformerConfig> =
     inBehandelingGenomen: {
       status: 'In behandeling genomen',
       datePublished: getDatumAfgifte,
-      description: (aanvraag) => getRtmDescriptionDeel1Toegewezen(aanvraag),
+      description: (aanvraag) => {
+        let description = `<p>Voordat u de ${aanvraag.titel} krijgt, moet u een afspraak maken voor een medische keuring bij de GGD. In de brief staat hoe u dat doet.</p>`;
+
+        if (aanvraag.betrokkenen.length > 1) {
+          description += `<p><strong>Vraagt u de ${aanvraag.titel} (ook) voor andere gezinsleden aan?</strong><br/>De uitslag van de aanvraag is op Mijn Amsterdam te vinden met de DigiD login gegevens van uw gezinsleden.</p>
+          <p>Nog geen DigiD login gegevens? <a rel="noopener noreferrer" href="https://www.digid.nl/aanvragen-en-activeren/digid-aanvragen">Ga naar DigiD aanvragen.</a></p>
+          `;
+          description += `<p><strong>Gedeeltelijke afwijzing voor u of uw gezinsleden?</strong><br/>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`;
+        }
+
+        return description;
+      },
       documents: (aanvraag) => aanvraag.documenten,
     },
     besluit: {
@@ -347,7 +417,13 @@ const statusLineItems: Record<StatusLineKey, StatusLineItemTransformerConfig> =
       datePublished: (aanvraag) => aanvraag.datumEindeGeldigheid || '',
       description: (aanvraag) => {
         const base = `<p>Uw recht op ${aanvraag.titel} is beëindigd per ${defaultDateFormat(aanvraag.datumEindeGeldigheid || '')}.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`;
-        if (isAanvrager(aanvraag)) {
+        const isAanvraagForChild =
+          aanvraag.betrokkenen.length &&
+          !aanvraag.betrokkenen.includes(aanvraag.bsnAanvrager);
+        if (!isAanvrager(aanvraag)) {
+          return `${base}<p>Bent u net of binnenkort 18 jaar oud? Dan moet u deze regeling voor uzelf aanvragen.'} <a href="${INFO_LINK}">Lees meer over de voorwaarden</a>.</p>`;
+        }
+        if (isAanvraagForChild) {
           return `${base}
           <p>Wordt uw kind 18? Dan moet uw kind deze regeling voor zichzelf aanvragen.</p>`;
         }
@@ -360,14 +436,17 @@ const statusLineItems: Record<StatusLineKey, StatusLineItemTransformerConfig> =
     defaultEindeRecht: {
       status: 'Einde recht',
       datePublished: '',
-      description: (aanvraag) => getNotEveryYearDescription(aanvraag),
+      description: (regeling: ZorgnedHLIRegeling) => {
+        return `
+<p>U hoeft de ${regeling.titel} niet elk jaar opnieuw aan te vragen. De gemeente verlengt de regeling stilzwijgend, maar controleert wel elk jaar of u nog in aanmerking komt.</p>
+<p>U kunt dan ook een brief krijgen met het verzoek om extra informatie te geven.</p>
+<p><a href="${INFO_LINK}">Als er wijzigingen zijn in uw situatie moet u die direct doorgeven</a>.</p>`;
+      },
       documents: () => [],
       isActive: () => false,
     },
   };
 
-// TODO: Make a better type.
-// Explicitly set isActive steps are the truth and will be used instead of determined later on.
 type IncompleteStatusLineItem = Omit<StatusLineItem, 'id' | 'isActive'> & {
   isActive: boolean | null;
 };
@@ -537,205 +616,3 @@ function getStatusLineItems(
     }
   }
 }
-
-type AanvragenMap = {
-  ontvanger: ZorgnedAanvraagWithRelatedPersonsTransformed[];
-} & Record<string, ZorgnedAanvraagWithRelatedPersonsTransformed[]>;
-
-function mapAanvragenPerBetrokkenen(
-  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
-  bsnOntvanger: string
-): AanvragenMap {
-  aanvragen = aanvragen.map((aanvraag) => {
-    return {
-      ...aanvraag,
-      // Sort because I don't know if betrokkenen are always in the same order across different aanvragen.
-      betrokkenen: aanvraag.betrokkenen.toSorted((a, b) => (a <= b ? -1 : 1)),
-    };
-  });
-
-  const aanvragenMap: AanvragenMap = { ontvanger: [] };
-
-  for (const aanvraag of aanvragen) {
-    if (isRTMDeel2(aanvraag)) {
-      aanvragenMap.ontvanger.push(aanvraag);
-      continue;
-    }
-
-    const id = aanvraag.betrokkenen.join('');
-
-    if (id === bsnOntvanger) {
-      aanvragenMap.ontvanger.push(aanvraag);
-      continue;
-    }
-
-    if (bsnOntvanger && aanvraag.betrokkenen.includes(bsnOntvanger)) {
-      // An aanvraag can have multiple betrokkenen but also include the 'ontvanger'.
-      // So we copy/split an aanvraag to the betrokkenen,
-      // so we can merge the rtm-2 aanvragen that are only for the ontvanger.
-      aanvraag.betrokkenen = aanvraag.betrokkenen.filter(
-        (b) => b !== bsnOntvanger
-      );
-      aanvraag.betrokkenPersonen = aanvraag.betrokkenPersonen.filter(
-        (b) => b.bsn !== bsnOntvanger
-      );
-      const aanvraagCopy = structuredClone(aanvraag);
-      aanvraagCopy.betrokkenen = [bsnOntvanger];
-      aanvragenMap.ontvanger.push(aanvraagCopy);
-    }
-
-    const aanvraagInMap = aanvragenMap[id];
-    if (aanvraagInMap) {
-      aanvragenMap[id].push(aanvraag);
-    } else {
-      aanvragenMap[id] = [aanvraag];
-    }
-  }
-
-  return aanvragenMap;
-}
-
-function getRtmDescriptionDeel1Toegewezen(regeling: ZorgnedHLIRegeling) {
-  let description = `<p>Voordat u de ${regeling.titel} krijgt, moet u een afspraak maken voor een medische keuring bij de GGD. In de brief staat hoe u dat doet.</p>`;
-
-  // Betrokkenen always has the aanvrager listed as well.
-  const isAanvraagVoorMeerdereBetrokkenen = regeling.betrokkenen.length > 1;
-
-  if (isAanvraagVoorMeerdereBetrokkenen) {
-    description += `<p><strong>Vraagt u de ${regeling.titel} (ook) voor andere gezinsleden aan?</strong><br/>De uitslag van de aanvraag is op Mijn Amsterdam te vinden met de DigiD login gegevens van uw gezinsleden.</p>
-    <p>Nog geen DigiD login gegevens? <a rel="noopener noreferrer" href="https://www.digid.nl/aanvragen-en-activeren/digid-aanvragen">Ga naar DigiD aanvragen.</a></p>
-    `;
-
-    description += `<p><strong>Gedeeltelijke afwijzing voor u of uw gezinsleden?</strong><br/>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`;
-  }
-
-  return description;
-}
-
-const INFO_LINK =
-  'https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/extra-geld-als-u-chronisch-ziek-of/';
-
-const getNotEveryYearDescription = (regeling: ZorgnedHLIRegeling) => `
-<p>U hoeft de ${regeling.titel} niet elk jaar opnieuw aan te vragen. De gemeente verlengt de regeling stilzwijgend, maar controleert wel elk jaar of u nog in aanmerking komt.</p>
-<p>U kunt dan ook een brief krijgen met het verzoek om extra informatie te geven.</p>
-<p><a href="${INFO_LINK}">Als er wijzigingen zijn in uw situatie moet u die direct doorgeven</a>.</p>`;
-
-const isEindeRechtForBetrokkenenActive = (regeling: ZorgnedHLIRegeling) =>
-  isRTMDeel2(regeling) &&
-  regeling.resultaat === 'toegewezen' &&
-  regeling.isActueel === false &&
-  !regeling.datumInBehandeling;
-
-const isToegewezenEindeRecht = (regeling: ZorgnedHLIRegeling) =>
-  !!regeling.datumInBehandeling && regeling.resultaat === 'toegewezen';
-
-// TODO: Remove when done.
-export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
-  [
-    // Besluit - afgewezen - voor RTM Deel 1. Betrokkenen krijgen deze stap nooit te zien.
-    {
-      ...BESLUIT,
-      isActive(aanvraag) {
-        return aanvraag.resultaat === 'afgewezen';
-      },
-      isVisible(aanvraag) {
-        return isRTMDeel1(aanvraag) && aanvraag.resultaat === 'afgewezen';
-      },
-    },
-    // Deel 1 is (deels) toegewezen. Alleen voor de aanvrager.
-    {
-      status: 'Aanvraag',
-      isChecked: true,
-      description: '',
-      isVisible(aanvraag) {
-        return (
-          (isRTMDeel1(aanvraag) && aanvraag.resultaat === 'toegewezen') ||
-          (isRTMDeel2(aanvraag) && 'datumInBehandeling' in aanvraag) // dateInBehandeling is een property die wordt togevoegd aan de aanvraag indien een deel1 aanvraag is toegewezen voor de aanvrager.
-        );
-      },
-      isActive: false,
-      datePublished(regeling) {
-        return (
-          /** if Deel2 */ regeling.datumInBehandeling ||
-          /** if Deel1 */ regeling.datumBesluit
-        );
-      },
-    },
-    // In behandeling (in afwatching van uitslag GGD), alleen voor de aanvrager/ontvanger zónder betrokkenen.
-    {
-      status: RTM_STATUS_IN_BEHANDELING,
-      isChecked: true,
-      description: getRtmDescriptionDeel1Toegewezen,
-      isVisible(aanvraag) {
-        return (
-          (isRTMDeel1(aanvraag) && aanvraag.resultaat === 'toegewezen') ||
-          (isRTMDeel2(aanvraag) && 'datumInBehandeling' in aanvraag) // dateInBehandeling is een property die wordt toegevoegd aan de aanvraag indien een deel1 aanvraag is toegewezen voor de aanvrager.
-        );
-      },
-      isActive(aanvraag) {
-        return isRTMDeel1(aanvraag);
-      },
-      datePublished(regeling) {
-        return (
-          /** if Deel2 */ regeling.datumInBehandeling ||
-          /** if Deel1 */ regeling.datumBesluit
-        );
-      },
-    },
-    // Besluit - afgewezen/toegewezen - voor RTM Deel 2. Voor zowel de aanvrager als de betrokkenen.
-    // Betrokkkenen krijgen alléén deze stap (RTM Deel 2) te zien.
-    {
-      ...BESLUIT,
-      isVisible: isRTMDeel2,
-    },
-    // Einde recht - voor RTM Deel 2. Voor de aanvrager.
-    {
-      ...EINDE_RECHT,
-      isVisible(regeling) {
-        return isRTMDeel2(regeling) && isToegewezenEindeRecht(regeling);
-      },
-      description(regeling) {
-        if (
-          !!regeling.datumEindeGeldigheid &&
-          isAfter(new Date(), regeling.datumEindeGeldigheid)
-        ) {
-          return `
-        <p>Uw recht op ${regeling.titel} is beëindigd per ${defaultDateFormat(regeling.datumEindeGeldigheid)}.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`;
-        }
-        return getNotEveryYearDescription(regeling);
-      },
-    },
-    // Einde recht - voor RTM Deel 2. Voor de betrokkenen.
-    {
-      ...EINDE_RECHT,
-      isVisible(regeling) {
-        return isRTMDeel2(regeling) && !isToegewezenEindeRecht(regeling);
-      },
-      isChecked: isEindeRechtForBetrokkenenActive,
-      isActive: isEindeRechtForBetrokkenenActive,
-      description(regeling, today, allAanvragen) {
-        const baseDescription =
-          typeof EINDE_RECHT.description === 'function'
-            ? EINDE_RECHT.description(regeling, today, allAanvragen)
-            : EINDE_RECHT.description || '';
-        // Betrokkenen always has the aanvrager listed as well.
-        const isAanvraagVoorMeerdereBetrokkenen =
-          regeling.betrokkenen.length > 1;
-        const isAanvrager_ = isAanvrager(regeling);
-        if (!isEindeRechtForBetrokkenenActive(regeling)) {
-          return getNotEveryYearDescription(regeling);
-        }
-        if (!isAanvraagVoorMeerdereBetrokkenen) {
-          return baseDescription;
-        }
-        // TODO: implement this description and look at the other fields.
-        return (
-          baseDescription +
-          `<p>
-            ${isAanvrager_ ? 'Wordt uw kind 18? Dan moet uw kind deze regeling voor zichzelf aanvragen.' : 'Bent u net of binnenkort 18 jaar oud? Dan moet u deze regeling voor uzelf aanvragen.'} <a href="${INFO_LINK}">Lees meer over de voorwaarden</a>.
-          </p>
-          `
-        );
-      },
-    },
-  ];
