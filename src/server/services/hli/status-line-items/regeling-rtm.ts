@@ -450,7 +450,10 @@ function createAanvraagWithType(
       return withType('result-migratie');
     }
 
-    return withType('result-toegewezen');
+    if (aanvraag.resultaat === 'toegewezen') {
+      return withType('result-toegewezen');
+    }
+    return withType('result-afwijzing');
   }
 
   if (isRTMDeel1(aanvraag)) {

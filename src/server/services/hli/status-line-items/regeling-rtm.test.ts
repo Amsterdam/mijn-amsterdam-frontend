@@ -1032,7 +1032,7 @@ describe('Ontvanger but aanvragen made by someone else', () => {
     ]);
   });
 
-  test.skip('Besluit afgewezen', () => {
+  test('Besluit afgewezen', () => {
     const aanvragen = attachIDs([RTM_2_AFGEWEZEN]);
     const regelingen = transformRegelingenForFrontend(aanvragen);
 
@@ -1041,26 +1041,29 @@ describe('Ontvanger but aanvragen made by someone else', () => {
     const regeling = regelingen[0];
 
     expect(regeling).toMatchObject({
-      title: RTM_2_TOEGEWEZEN.titel,
-      isActual: true,
-      dateDecision: RTM_2_TOEGEWEZEN.datumBesluit,
-      dateStart: RTM_2_TOEGEWEZEN.datumIngangGeldigheid,
-      dateEnd: RTM_2_TOEGEWEZEN.datumEindeGeldigheid,
-      decision: 'toegewezen',
-      displayStatus: 'Toegewezen',
+      title: RTM_2_AFGEWEZEN.titel,
+      isActual: false,
+      dateDecision: RTM_2_AFGEWEZEN.datumBesluit,
+      dateStart: RTM_2_AFGEWEZEN.datumIngangGeldigheid,
+      dateEnd: RTM_2_AFGEWEZEN.datumEindeGeldigheid,
+      decision: 'afgewezen',
+      displayStatus: 'Afgewezen',
       documents: [],
     });
     expect(regeling.steps).toMatchObject([
       {
         id: 'status-step-1',
         status: 'Besluit',
-        datePublished: RTM_2_TOEGEWEZEN.datumBesluit,
+        datePublished: RTM_2_AFGEWEZEN.datumBesluit,
         isActive: true,
         isChecked: true,
         isVisible: true,
         documents: [
           {
-            title: 'Beschikking toekenning Reg Tegemoetk Meerkosten',
+            title: 'AV-RTM afwijzing',
+          },
+          {
+            title: 'advies GGD',
           },
         ],
       },
