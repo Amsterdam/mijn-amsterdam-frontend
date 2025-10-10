@@ -185,11 +185,7 @@ router.get(BffEndpoints.SCREEN_SHARE, async (_, res) => {
 //  */
 router.get(BffEndpoints.ZAAK_STATUS, zaakStatusHandler);
 
-export async function zaakStatusHandler(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
+export async function zaakStatusHandler(req: Request, res: Response) {
   const authProfileAndToken = getAuth(req);
   const params = queryParams<{
     id: string;
@@ -207,6 +203,7 @@ export async function zaakStatusHandler(
     params['auth-type'] === 'eherkenning' ? 'EHERKENNING' : 'DIGID';
   const loginRoute = authRoutes[`AUTH_LOGIN_${authType}`];
   const loginRouteWithReturnTo = `${loginRoute}${getZaakStatusQueryParams(params)}&returnTo=${ZAAK_STATUS_ROUTE}`;
+
   return res.redirect(loginRouteWithReturnTo);
 }
 

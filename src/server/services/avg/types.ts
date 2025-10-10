@@ -7,6 +7,7 @@ export type AVGResponse = {
 };
 
 export interface AVGRequestFrontend extends ZaakAanvraagDetail {
+  identifier: string;
   registratieDatum: string;
   type: string;
   toelichting: string;

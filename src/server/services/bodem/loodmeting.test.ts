@@ -73,7 +73,7 @@ describe('Loodmeting', () => {
           url: 'https://document.doc',
         },
         id: 'OL-001518',
-        kenmerk: 'OL-001518',
+        identifier: 'OL-001518',
         link: {
           title: 'Bekijk loodmeting',
           to: '/bodem/lood-meting/OL-001518',

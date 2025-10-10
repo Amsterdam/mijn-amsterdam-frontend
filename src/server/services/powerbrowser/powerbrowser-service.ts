@@ -619,7 +619,7 @@ export function transformPBZaakFrontend<T extends PowerBrowserZaakBase>(
   options: PBZaakFrontendTransformOptions<T>
 ): PowerBrowserZaakFrontend<T> {
   const steps = options.getStepsFN?.(zaak) ?? [];
-  const zaakFrontend = {
+  const zaakFrontend: PowerBrowserZaakFrontend<T> = {
     ...omit(zaak, ['statusDates']),
     dateRequestFormatted: toDateFormatted(zaak.dateRequest) || '-',
     dateDecisionFormatted: toDateFormatted(zaak.dateDecision) || '-',

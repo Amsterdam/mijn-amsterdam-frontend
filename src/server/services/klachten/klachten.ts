@@ -84,8 +84,9 @@ export function transformKlachtenResponse(
     };
   }
 
+  const BYTE_LENGTH = 18;
+
   const klachten = data.List.map((klachtSource) => {
-    const BYTE_LENGTH = 18;
     const id = klachtSource.klacht_id.value || UID.sync(BYTE_LENGTH);
     const ontvangstDatum = smileDateParser(
       klachtSource?.klacht_datumontvangstklacht.value || ''
@@ -93,6 +94,7 @@ export function transformKlachtenResponse(
 
     const klacht: KlachtFrontend = {
       id,
+      identifier: id,
       title: id,
       inbehandelingSinds: smileDateParser(
         klachtSource?.klacht_inbehandeling.value || ''
