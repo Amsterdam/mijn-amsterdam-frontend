@@ -1,10 +1,13 @@
 import { getAuthProfileAndToken } from '../../../../testing/utils';
+import { AuthProfileAndToken } from '../../../auth/auth-types';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedPerson,
 } from '../../zorgned/zorgned-types';
 import { forTesting } from '../hli';
 import { HLIRegelingFrontend } from '../hli-regelingen-types';
+
+const ONTVANGER_ID = '999999999';
 
 /** The ID determines the sorting order.
  *  Thats why programmaticly adding an id makes predefined aanvragen more reusable.
@@ -22,34 +25,35 @@ function attachIDs(
   });
 }
 
-function replaceBetrokkenen(
+function replacePropsInAanvragen(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
-  betrokkenen: { bsn: string; isAanvrager?: boolean }[],
-  bsnAanvrager: string = '555555555'
+  props: {
+    betrokkenen: { bsn: string; isAanvrager?: true }[];
+    bsnAanvrager: string;
+  }
 ): ZorgnedAanvraagWithRelatedPersonsTransformed[] {
   return aanvragen.map((aanvraag) => {
     return {
       ...aanvraag,
-      betrokkenen: aanvraag.betrokkenen ?? betrokkenen,
-      betrokkenPersonen:
-        aanvraag.betrokkenPersonen ??
-        betrokkenen.map(({ bsn, isAanvrager }) => {
-          return {
-            bsn,
-            name: `${bsn} - Flex`,
-            isAanvrager,
-            dateOfBirth: '2023-06-12',
-            dateOfBirthFormatted: '12 juni 2023',
-            partnernaam: 'partner-2 - Flex',
-            partnervoorvoegsel: null,
-          };
-        }),
-      bsnAanvrager,
+      betrokkenen: props.betrokkenen.map(({ bsn }) => bsn),
+      betrokkenPersonen: props.betrokkenen.map(({ bsn, isAanvrager }) => {
+        const betrokkenPersoon: ZorgnedPerson = {
+          bsn,
+          name: `${bsn} - Flex`,
+          dateOfBirth: '2023-06-12',
+          dateOfBirthFormatted: '12 juni 2023',
+          partnernaam: 'partner-2 - Flex',
+          partnervoorvoegsel: null,
+        };
+        if (isAanvrager) {
+          betrokkenPersoon.isAanvrager = true;
+        }
+        return betrokkenPersoon;
+      }),
+      bsnAanvrager: props.bsnAanvrager,
     };
   });
 }
-
-const ONTVANGER_ID = '999999999';
 
 // RP TODO: Use later in a test.
 const SPECIFICATIE_DOCUMENENT = {
@@ -84,6 +88,7 @@ const descriptions = {
   wijzigingsBesluit:
     '<p>Uw aanvraag voor een wijziging is afgehandeld. Bekijk de brief voor meer informatie hierover.</p>',
   inBehandeling: `<p>Voordat u de Regeling Tegemoetkoming Meerkosten krijgt, moet u een afspraak maken voor een medische keuring bij de GGD. In de brief staat hoe u dat doet.</p>`,
+  inBehandelingVoorMeerdereBetrokkenen: `<p>Voordat u de Regeling Tegemoetkoming Meerkosten krijgt, moet u een afspraak maken voor een medische keuring bij de GGD. In de brief staat hoe u dat doet.</p><p><strong>Vraagt u de Regeling Tegemoetkoming Meerkosten (ook) voor andere gezinsleden aan?</strong><br/>De uitslag van de aanvraag is op Mijn Amsterdam te vinden met de DigiD login gegevens van uw gezinsleden.</p> <p>Nog geen DigiD login gegevens? <a rel="noopener noreferrer" href="https://www.digid.nl/aanvragen-en-activeren/digid-aanvragen">Ga naar DigiD aanvragen.</a></p> <p><strong>Gedeeltelijke afwijzing voor u of uw gezinsleden?</strong><br/>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`,
   activeEindeRecht: `<p>Uw recht op Regeling Tegemoetkoming Meerkosten is beëindigd per 30 juni 2025.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`,
   activeEindeRechtForChild: `<p>Uw recht op Regeling Tegemoetkoming Meerkosten is beëindigd per 30 juni 2025.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p> <p>Wordt uw kind 18? Dan moet uw kind deze regeling voor zichzelf aanvragen.</p>`,
   activeEindeRechtAtChild: `<p>Uw recht op Regeling Tegemoetkoming Meerkosten is beëindigd per 30 juni 2025.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p><p>Bent u net of binnenkort 18 jaar oud? Dan moet u deze regeling voor uzelf aanvragen.'} <a href="https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/extra-geld-als-u-chronisch-ziek-of/">Lees meer over de voorwaarden</a>.</p>`,
@@ -384,13 +389,18 @@ const RTM_2_MIGRATIE: ZorgnedAanvraagWithRelatedPersonsTransformed = {
   bsnAanvrager: base.bsnAanvrager,
 };
 
-const auth = getAuthProfileAndToken();
-auth.profile.id = ONTVANGER_ID;
+const defaultAuthProfileAndToken = getAuthProfileAndToken();
+defaultAuthProfileAndToken.profile.id = ONTVANGER_ID;
 
 function transformRegelingenForFrontend(
-  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
+  authProfileAndToken?: AuthProfileAndToken
 ): HLIRegelingFrontend[] {
-  return forTesting.transformRegelingenForFrontend(auth, aanvragen, new Date());
+  return forTesting.transformRegelingenForFrontend(
+    authProfileAndToken ?? defaultAuthProfileAndToken,
+    aanvragen,
+    new Date()
+  );
 }
 
 /** The following tests heavily use toMatchObject because I don't care about the following fields:
@@ -464,6 +474,71 @@ describe('Aanvrager is ontvanger', () => {
     expect(document.url).toContain(
       '/services/v1/stadspas-en-andere-regelingen/document'
     );
+  });
+
+  // RP TODO: Fix this test, we should have one regeling with all betrokkenen.
+  // Only when a regeling become toegewezen should we split a regeling up!
+  test.skip('Single Aanvraag toegewezen voor meerdere betrokkenen', () => {
+    const aanvragen = replacePropsInAanvragen([RTM_1_AANVRAAG], {
+      betrokkenen: [
+        { bsn: ONTVANGER_ID, isAanvrager: true },
+        { bsn: '222222222' },
+      ],
+      bsnAanvrager: '999999999',
+    });
+    const regelingen = transformRegelingenForFrontend(aanvragen);
+
+    expect(regelingen.length).toBe(1);
+    const regeling = regelingen[0];
+
+    expect(regeling).toMatchObject({
+      dateDecision: '2025-02-01',
+      dateEnd: '2026-05-01',
+      dateStart: '2025-05-01',
+      decision: 'toegewezen',
+      displayStatus: 'In behandeling genomen',
+      documents: [],
+      id: '1',
+      isActual: true,
+      title: 'Regeling Tegemoetkoming Meerkosten',
+    });
+
+    expect(regeling.steps).toMatchObject([
+      {
+        id: 'status-step-1',
+        status: 'Aanvraag',
+        datePublished: RTM_1_AANVRAAG.datumBesluit,
+        description: '',
+        isActive: false,
+        isChecked: true,
+        isVisible: true,
+        documents: [],
+      },
+      {
+        id: 'status-step-2',
+        status: 'In behandeling genomen',
+        datePublished: RTM_1_AANVRAAG.datumBesluit,
+        documents: [
+          {
+            title: 'AV-RTM Info aan klant GGD',
+          },
+        ],
+        isActive: true,
+        isChecked: true,
+        isVisible: true,
+        description: descriptions.inBehandelingVoorMeerdereBetrokkenen,
+      },
+      {
+        id: 'status-step-3',
+        status: 'Einde recht',
+        datePublished: '',
+        isActive: false,
+        isChecked: false,
+        isVisible: true,
+        documents: [],
+        description: descriptions.inactiveEindeRecht,
+      },
+    ]);
   });
 
   test('Single Aanvraag afgewezen', () => {
@@ -1044,18 +1119,27 @@ describe('Aanvrager is ontvanger', () => {
 });
 
 describe('Ontvanger but aanvragen made by someone else', () => {
+  const ONTVANGER_ID = '111111111';
+
+  const authProfileAndToken = getAuthProfileAndToken();
+  authProfileAndToken.profile.id = ONTVANGER_ID;
+
   function prepTestData(
     aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
   ): ZorgnedAanvraagWithRelatedPersonsTransformed[] {
     const aanvragenWithIDs = attachIDs(aanvragen);
-    return replaceBetrokkenen(aanvragenWithIDs, [
-      { bsn: ONTVANGER_ID, isAanvrager: false },
-    ]);
+    return replacePropsInAanvragen(aanvragenWithIDs, {
+      betrokkenen: [{ bsn: ONTVANGER_ID }],
+      bsnAanvrager: '999999999',
+    });
   }
 
   test('Besluit toegewezen', () => {
-    const aanvragen = attachIDs([RTM_2_TOEGEWEZEN]);
-    const regelingen = transformRegelingenForFrontend(aanvragen);
+    const aanvragen = prepTestData([RTM_2_TOEGEWEZEN]);
+    const regelingen = transformRegelingenForFrontend(
+      aanvragen,
+      authProfileAndToken
+    );
 
     expect(regelingen.length).toBe(1);
 
@@ -1100,7 +1184,10 @@ describe('Ontvanger but aanvragen made by someone else', () => {
 
   test('Besluit afgewezen', () => {
     const aanvragen = prepTestData([RTM_2_AFGEWEZEN]);
-    const regelingen = transformRegelingenForFrontend(aanvragen);
+    const regelingen = transformRegelingenForFrontend(
+      aanvragen,
+      authProfileAndToken
+    );
 
     expect(regelingen.length).toBe(1);
 
@@ -1143,7 +1230,10 @@ describe('Ontvanger but aanvragen made by someone else', () => {
       RTM_WIJZIGINGS_AANVRAAG,
       RTM_WIJZIGINGS_TOEKENNING,
     ]);
-    const regelingen = transformRegelingenForFrontend(aanvragen);
+    const regelingen = transformRegelingenForFrontend(
+      aanvragen,
+      authProfileAndToken
+    );
 
     expect(regelingen.length).toBe(1);
 
@@ -1222,7 +1312,10 @@ describe('Ontvanger but aanvragen made by someone else', () => {
 
   test('Besluit toegewezen -> Einde Recht', () => {
     const aanvragen = prepTestData([RTM_2_TOEGEWEZEN, RTM_2_EINDE_RECHT]);
-    const regelingen = transformRegelingenForFrontend(aanvragen);
+    const regelingen = transformRegelingenForFrontend(
+      aanvragen,
+      authProfileAndToken
+    );
 
     expect(regelingen.length).toBe(1);
 
