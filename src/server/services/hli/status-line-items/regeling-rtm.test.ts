@@ -1149,4 +1149,52 @@ describe('Ontvanger but aanvragen made by someone else', () => {
       },
     ]);
   });
+
+  test('Besluit toegewezen -> Einde Recht', () => {
+    const aanvragen = attachIDs([RTM_2_TOEGEWEZEN, RTM_2_EINDE_RECHT]);
+    const regelingen = transformRegelingenForFrontend(aanvragen);
+
+    expect(regelingen.length).toBe(1);
+
+    const regeling = regelingen[0];
+
+    expect(regeling).toMatchObject({
+      title: RTM_2_EINDE_RECHT.titel,
+      isActual: false,
+      dateDecision: RTM_2_EINDE_RECHT.datumBesluit,
+      dateStart: RTM_2_EINDE_RECHT.datumIngangGeldigheid,
+      dateEnd: RTM_2_EINDE_RECHT.datumEindeGeldigheid,
+      decision: 'toegewezen',
+      displayStatus: 'Einde recht',
+      documents: [],
+    });
+    expect(regeling.steps).toMatchObject([
+      {
+        id: 'status-step-1',
+        status: 'Besluit',
+        datePublished: RTM_2_TOEGEWEZEN.datumBesluit,
+        isActive: false,
+        isChecked: true,
+        isVisible: true,
+        documents: [
+          {
+            title: 'Beschikking toekenning Reg Tegemoetk Meerkosten',
+          },
+        ],
+      },
+      {
+        id: 'status-step-2',
+        status: 'Einde recht',
+        datePublished: RTM_2_EINDE_RECHT.datumEindeGeldigheid,
+        isActive: true,
+        isChecked: true,
+        isVisible: true,
+        documents: [
+          {
+            title: 'Beschikking beëindigen RTM',
+          },
+        ],
+      },
+    ]);
+  });
 });
