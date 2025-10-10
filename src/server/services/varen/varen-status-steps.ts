@@ -73,6 +73,10 @@ export function getStatusSteps<T extends Varen>(
       status: 'Afgehandeld' as const,
       datePublished: decosZaak.dateDecision || '',
       isChecked: isAfgehandeld,
+      description:
+        decosZaak.processed && decosZaak.decision
+          ? `Wij hebben een besluit genomen over uw aanvraag “${decosZaak.title}”.<br/>Het besluit is per mail naar u gestuurd.`
+          : '',
     },
   ] as const satisfies Partial<StatusLineItem>[];
 
