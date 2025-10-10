@@ -19,6 +19,31 @@ function attachIDs(
   });
 }
 
+function replaceBetrokkenen(
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
+  betrokkenen: { bsn: string; isAanvrager?: boolean }[]
+): ZorgnedAanvraagWithRelatedPersonsTransformed[] {
+  return aanvragen.map((aanvraag) => {
+    return {
+      ...aanvraag,
+      betrokkenen: aanvraag.betrokkenen ?? betrokkenen,
+      betrokkenPersonen:
+        aanvraag.betrokkenPersonen ??
+        betrokkenen.map(({ bsn, isAanvrager }) => {
+          return {
+            bsn,
+            name: `${bsn} - Flex`,
+            isAanvrager,
+            dateOfBirth: '2023-06-12',
+            dateOfBirthFormatted: '12 juni 2023',
+            partnernaam: 'partner-2 - Flex',
+            partnervoorvoegsel: null,
+          };
+        }),
+    };
+  });
+}
+
 const ONTVANGER_ID = '999999999';
 
 // RP TODO: Use later in a test.
@@ -34,14 +59,27 @@ const base = {
   betrokkenen: [ONTVANGER_ID],
   betrokkenPersonen: [
     {
-      bsn: '999991000',
-      name: '999991000 - Flex',
+      bsn: ONTVANGER_ID,
+      name: `${ONTVANGER_ID} - Flex`,
+      isAanvrager: true,
       dateOfBirth: '2023-06-12',
       dateOfBirthFormatted: '12 juni 2023',
       partnernaam: 'partner-2 - Flex',
       partnervoorvoegsel: null,
     },
   ],
+};
+
+const descriptions = {
+  toegewezen:
+    '<p> U krijgt Regeling Tegemoetkoming Meerkosten per 01 mei 2025. </p> <p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>',
+  afgewezen: `<p> U krijgt geen Regeling Tegemoetkoming Meerkosten. </p> <p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`,
+  eindeRechtKind:
+    '<p>Uw recht op Regeling Tegemoetkoming Meerkosten is beëindigd per 30 juni 2025.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p> <p>Wordt uw kind 18? Dan moet uw kind deze regeling voor zichzelf aanvragen.</p>',
+  wijzigingsAanvraag: `<p>U heeft een aanvraag gedaan voor aanpassing op uw lopende RTM regeling.</p>
+<p>Hiervoor moet u een afspraak maken voor een medisch gesprek bij de GGD. In de brief staat hoe u dat doet.</p>`,
+  wijzigingsBesluit:
+    '<p>Uw aanvraag voor een wijziging is afgehandeld. Bekijk de brief voor meer informatie hierover.</p>',
 };
 
 const RTM_1_AANVRAAG: ZorgnedAanvraagWithRelatedPersonsTransformed = {
@@ -988,6 +1026,15 @@ describe('Aanvrager is ontvanger', () => {
 });
 
 describe('Ontvanger but aanvragen made by someone else', () => {
+  function prepTestData(
+    aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
+  ): ZorgnedAanvraagWithRelatedPersonsTransformed[] {
+    const aanvragenWithIDs = attachIDs(aanvragen);
+    return replaceBetrokkenen(aanvragenWithIDs, [
+      { bsn: ONTVANGER_ID, isAanvrager: false },
+    ]);
+  }
+
   test('Besluit toegewezen', () => {
     const aanvragen = attachIDs([RTM_2_TOEGEWEZEN]);
     const regelingen = transformRegelingenForFrontend(aanvragen);
@@ -1014,6 +1061,7 @@ describe('Ontvanger but aanvragen made by someone else', () => {
         isActive: true,
         isChecked: true,
         isVisible: true,
+        description: descriptions.toegewezen,
         documents: [
           {
             title: 'Beschikking toekenning Reg Tegemoetk Meerkosten',
@@ -1033,7 +1081,7 @@ describe('Ontvanger but aanvragen made by someone else', () => {
   });
 
   test('Besluit afgewezen', () => {
-    const aanvragen = attachIDs([RTM_2_AFGEWEZEN]);
+    const aanvragen = prepTestData([RTM_2_AFGEWEZEN]);
     const regelingen = transformRegelingenForFrontend(aanvragen);
 
     expect(regelingen.length).toBe(1);
@@ -1058,6 +1106,7 @@ describe('Ontvanger but aanvragen made by someone else', () => {
         isActive: true,
         isChecked: true,
         isVisible: true,
+        description: descriptions.afgewezen,
         documents: [
           {
             title: 'AV-RTM afwijzing',
@@ -1071,7 +1120,7 @@ describe('Ontvanger but aanvragen made by someone else', () => {
   });
 
   test('Besluit toegewezen -> Wijzigings aanvraag -> Wijzigings toegewezen', () => {
-    const aanvragen = attachIDs([
+    const aanvragen = prepTestData([
       RTM_2_TOEGEWEZEN,
       RTM_WIJZIGINGS_AANVRAAG,
       RTM_WIJZIGINGS_TOEKENNING,
@@ -1100,6 +1149,7 @@ describe('Ontvanger but aanvragen made by someone else', () => {
         isActive: false,
         isChecked: true,
         isVisible: true,
+        description: descriptions.toegewezen,
         documents: [
           {
             title: 'Beschikking toekenning Reg Tegemoetk Meerkosten',
@@ -1113,6 +1163,7 @@ describe('Ontvanger but aanvragen made by someone else', () => {
         isChecked: true,
         isVisible: true,
         datePublished: '2025-08-18',
+        description: descriptions.wijzigingsAanvraag,
         documents: [
           {
             datePublished: '2025-08-18T15:17:08.773',
@@ -1130,6 +1181,7 @@ describe('Ontvanger but aanvragen made by someone else', () => {
         isActive: true,
         isChecked: true,
         isVisible: true,
+        description: descriptions.wijzigingsBesluit,
         datePublished: RTM_WIJZIGINGS_TOEKENNING.datumBesluit,
         documents: [
           {
@@ -1151,7 +1203,7 @@ describe('Ontvanger but aanvragen made by someone else', () => {
   });
 
   test('Besluit toegewezen -> Einde Recht', () => {
-    const aanvragen = attachIDs([RTM_2_TOEGEWEZEN, RTM_2_EINDE_RECHT]);
+    const aanvragen = prepTestData([RTM_2_TOEGEWEZEN, RTM_2_EINDE_RECHT]);
     const regelingen = transformRegelingenForFrontend(aanvragen);
 
     expect(regelingen.length).toBe(1);
@@ -1176,6 +1228,7 @@ describe('Ontvanger but aanvragen made by someone else', () => {
         isActive: false,
         isChecked: true,
         isVisible: true,
+        description: descriptions.toegewezen,
         documents: [
           {
             title: 'Beschikking toekenning Reg Tegemoetk Meerkosten',
@@ -1189,6 +1242,7 @@ describe('Ontvanger but aanvragen made by someone else', () => {
         isActive: true,
         isChecked: true,
         isVisible: true,
+        description: descriptions.eindeRechtKind,
         documents: [
           {
             title: 'Beschikking beëindigen RTM',

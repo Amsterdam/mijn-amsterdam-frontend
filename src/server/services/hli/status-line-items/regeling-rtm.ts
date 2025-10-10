@@ -332,7 +332,7 @@ const statusLineItems: Record<StatusLineKey, StatusLineItemTransformerConfig> =
       status: 'Aanvraag wijziging',
       datePublished: getDatumAfgifte,
       description: `<p>U heeft een aanvraag gedaan voor aanpassing op uw lopende RTM regeling.</p>
-        <p>Hiervoor moet u een afspraak maken voor een medisch gesprek bij de GGD. In de brief staat hoe u dat doet.</p>`,
+<p>Hiervoor moet u een afspraak maken voor een medisch gesprek bij de GGD. In de brief staat hoe u dat doet.</p>`,
       documents: (aanvraag) => aanvraag.documenten,
     },
     wijzigingsBesluit: {
@@ -346,7 +346,12 @@ const statusLineItems: Record<StatusLineKey, StatusLineItemTransformerConfig> =
       status: 'Einde recht',
       datePublished: (aanvraag) => aanvraag.datumEindeGeldigheid || '',
       description: (aanvraag) => {
-        return `<p>Uw recht op ${aanvraag.titel} is beëindigd per ${defaultDateFormat(aanvraag.datumEindeGeldigheid || '')}.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`;
+        const base = `<p>Uw recht op ${aanvraag.titel} is beëindigd per ${defaultDateFormat(aanvraag.datumEindeGeldigheid || '')}.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`;
+        if (isAanvrager(aanvraag)) {
+          return `${base}
+          <p>Wordt uw kind 18? Dan moet uw kind deze regeling voor zichzelf aanvragen.</p>`;
+        }
+        return base;
       },
       documents: (aanvraag) => aanvraag.documenten,
       isActive: () => true,
@@ -734,7 +739,3 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
       },
     },
   ];
-
-export const forTesting = {
-  isRTMDeel2,
-};
