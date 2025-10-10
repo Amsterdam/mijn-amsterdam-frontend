@@ -695,7 +695,7 @@ describe('decos-service', () => {
         .query((queryObject) => {
           return (
             queryObject.filter ===
-            `text45 eq 'Aanbieden van diensten' or text45 eq 'VOB'`
+            `(text45 eq 'Aanbieden van diensten') or (text45 eq 'VOB')`
           );
         })
         .times(numberOfAddressBooksToSearch)
