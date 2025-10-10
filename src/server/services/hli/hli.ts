@@ -12,7 +12,6 @@ import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import { fetchStadspas } from './stadspas';
 import {
   filterCombineRtmData,
-  isRTMDeel1,
   RTM_STATUS_IN_BEHANDELING,
 } from './status-line-items/regeling-rtm';
 import {
@@ -85,13 +84,10 @@ const getDisplayStatus: GetDisplayStatusFn<GenericDisplayStatus> = (
 const getRTMDisplayStatus: GetDisplayStatusFn<
   GenericDisplayStatus | 'In behandeling genomen'
 > = (regeling: ZorgnedHLIRegeling, statusLineItems: StatusLineItem[]) => {
-  // TODO: Accidently has this data, but shouldnt. Is there another way?
-  // Probably refactor transformRegelingenForFrontend.
-  if (
-    regeling.type !== 'aanvraag-wijziging' &&
-    isRTMDeel1(regeling) &&
-    regeling.resultaat === 'toegewezen'
-  ) {
+  const isInBehandelingGenomen = statusLineItems.some((item) => {
+    return item.status === RTM_STATUS_IN_BEHANDELING && item.isActive;
+  });
+  if (isInBehandelingGenomen) {
     return RTM_STATUS_IN_BEHANDELING;
   }
   return getDisplayStatus(regeling, statusLineItems);

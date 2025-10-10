@@ -19,23 +19,6 @@ function attachIDs(
   });
 }
 
-function attachBetrokkenen(
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
-  ids: string[]
-): ZorgnedAanvraagWithRelatedPersonsTransformed {
-  const betrokkenPersonen = ids.map((id) => {
-    return {
-      bsn: id,
-      name: `${id} - Flex`,
-      dateOfBirth: '2023-06-12',
-      dateOfBirthFormatted: '12 juni 2023',
-      partnernaam: 'partner-2 - Flex',
-      partnervoorvoegsel: null,
-    };
-  });
-  return { ...aanvraag, betrokkenen: ids, betrokkenPersonen };
-}
-
 const ONTVANGER_ID = '999999999';
 
 // RP TODO: Use later in a test.
@@ -355,40 +338,6 @@ const RTM_2_MIGRATIE: ZorgnedAanvraagWithRelatedPersonsTransformed = {
   bsnAanvrager: base.bsnAanvrager,
 };
 
-const UNKNOWN: ZorgnedAanvraagWithRelatedPersonsTransformed = {
-  id: '9999999',
-  datumAanvraag: '2025-01-01',
-  datumBeginLevering: null,
-  datumBesluit: '2025-02-01',
-  datumEindeGeldigheid: null,
-  datumEindeLevering: null,
-  datumIngangGeldigheid: null,
-  datumOpdrachtLevering: null,
-  datumToewijzing: null,
-  procesAanvraagOmschrijving: null,
-  documenten: [],
-  isActueel: true,
-  leverancier: '',
-  leveringsVorm: '',
-  productsoortCode: 'AV-UNKNOWN',
-  productIdentificatie: 'AV-UNKNOWN',
-  beschiktProductIdentificatie: '222222',
-  resultaat: 'toegewezen',
-  titel: 'UNKNOWN',
-  betrokkenen: [],
-  betrokkenPersonen: [],
-  bsnAanvrager: '555555555',
-};
-
-// The following tests heavily use toMatchObject because I don't care about the following fields:
-// document.id: Contains encryption and will always be different.
-// document.url: Same as above.
-// steps[n].description: static text that can be subject to change.
-//
-// TODO: Do tests for variable description texts.
-//
-// The tests are mainly focussed on getting the right steps and documents.
-
 const auth = getAuthProfileAndToken();
 auth.profile.id = ONTVANGER_ID;
 
@@ -398,6 +347,12 @@ function transformRegelingenForFrontend(
   return forTesting.transformRegelingenForFrontend(auth, aanvragen, new Date());
 }
 
+/** The following tests heavily use toMatchObject because I don't care about the following fields:
+ * document.id: Contains encryption and will always be different.
+ * document.url: Same as above.
+ * steps[n].description: static text that can be subject to change.
+ * The tests are mainly focussed on getting the right steps and documents.
+ */
 describe('Aanvrager is ontvanger', () => {
   test('Single Aanvraag toegewezen', () => {
     const regelingen = transformRegelingenForFrontend([RTM_1_AANVRAAG]);
@@ -472,7 +427,7 @@ describe('Aanvrager is ontvanger', () => {
 
     expect(regeling).toMatchObject({
       dateDecision: RTM_1_AFWIJZING.datumBesluit,
-      dateEnd: RTM_1_AFWIJZING.datumEindeGeldigheid,
+      dateEnd: null,
       dateStart: RTM_1_AFWIJZING.datumIngangGeldigheid,
       decision: RTM_1_AFWIJZING.resultaat,
       displayStatus: 'Afgewezen',
@@ -624,7 +579,7 @@ describe('Aanvrager is ontvanger', () => {
       isActual: RTM_2_AFGEWEZEN.isActueel,
       dateDecision: RTM_2_AFGEWEZEN.datumBesluit,
       dateStart: RTM_2_AFGEWEZEN.datumIngangGeldigheid,
-      dateEnd: RTM_2_AFGEWEZEN.datumEindeGeldigheid,
+      dateEnd: null,
       decision: 'afgewezen',
       displayStatus: 'Afgewezen',
       documents: [],
@@ -687,7 +642,7 @@ describe('Aanvrager is ontvanger', () => {
       isActual: RTM_WIJZIGINGS_TOEKENNING.isActueel,
       dateDecision: RTM_WIJZIGINGS_TOEKENNING.datumBesluit,
       dateStart: RTM_WIJZIGINGS_TOEKENNING.datumIngangGeldigheid,
-      dateEnd: RTM_WIJZIGINGS_TOEKENNING.datumEindeGeldigheid,
+      dateEnd: null,
       decision: RTM_WIJZIGINGS_TOEKENNING.resultaat,
       displayStatus: 'Toegewezen',
       documents: [],
@@ -784,7 +739,7 @@ describe('Aanvrager is ontvanger', () => {
       isActual: true,
       dateDecision: RTM_WIJZIGINGS_AANVRAAG.datumBesluit,
       dateStart: RTM_WIJZIGINGS_AANVRAAG.datumIngangGeldigheid,
-      dateEnd: RTM_WIJZIGINGS_AANVRAAG.datumEindeGeldigheid,
+      dateEnd: null,
       decision: 'toegewezen',
       displayStatus: 'Toegewezen',
       documents: [],
@@ -843,8 +798,8 @@ describe('Aanvrager is ontvanger', () => {
       title: RTM_WIJZIGINGS_AFWIJZING.titel,
       isActual: true,
       dateDecision: RTM_WIJZIGINGS_AFWIJZING.datumBesluit,
-      dateStart: RTM_WIJZIGINGS_AFWIJZING.datumIngangGeldigheid,
-      dateEnd: RTM_WIJZIGINGS_AFWIJZING.datumEindeGeldigheid,
+      dateStart: RTM_WIJZIGINGS_AANVRAAG.datumIngangGeldigheid,
+      dateEnd: null,
       decision: 'toegewezen',
       displayStatus: 'Toegewezen',
       documents: [],
@@ -898,6 +853,216 @@ describe('Aanvrager is ontvanger', () => {
         isChecked: false,
         isVisible: true,
         status: 'Einde recht',
+      },
+    ]);
+  });
+
+  test('Migratie -> Wijzigings aanvraag -> Einde recht', () => {
+    const aanvragen = attachIDs([
+      RTM_2_MIGRATIE,
+      RTM_WIJZIGINGS_AANVRAAG,
+      RTM_2_EINDE_RECHT,
+    ]);
+    const regelingen = transformRegelingenForFrontend(aanvragen);
+    expect(regelingen.length).toBe(1);
+    const regeling = regelingen[0];
+
+    expect(regeling).toMatchObject({
+      title: RTM_2_EINDE_RECHT.titel,
+      isActual: RTM_2_EINDE_RECHT.isActueel,
+      dateDecision: RTM_2_EINDE_RECHT.datumBesluit,
+      dateStart: RTM_2_EINDE_RECHT.datumIngangGeldigheid,
+      dateEnd: RTM_2_EINDE_RECHT.datumEindeGeldigheid,
+      decision: 'toegewezen',
+      displayStatus: 'Einde recht',
+      documents: [],
+    });
+    expect(regeling.steps).toMatchObject([
+      {
+        datePublished: RTM_2_MIGRATIE.datumBesluit,
+        documents: [],
+        id: 'status-step-1',
+        isActive: false,
+        isChecked: true,
+        isVisible: true,
+        status: 'Besluit',
+      },
+      {
+        datePublished: RTM_WIJZIGINGS_AANVRAAG.datumBesluit,
+        documents: [
+          {
+            datePublished: '2025-08-18T15:17:08.773',
+            title: 'AV-RTM Info aan klant GGD',
+          },
+          {
+            datePublished: '2025-08-18T14:09:48.83',
+            title: 'AV-RTM Info aan klant GGD',
+          },
+        ],
+        id: 'status-step-2',
+        isActive: false,
+        isChecked: true,
+        isVisible: true,
+        status: 'Aanvraag wijziging',
+      },
+      {
+        id: 'status-step-3',
+        status: 'Einde recht',
+        datePublished: RTM_2_EINDE_RECHT.datumEindeGeldigheid,
+        isActive: true,
+        isChecked: true,
+        isVisible: true,
+        documents: [
+          {
+            title: 'Beschikking beëindigen RTM',
+          },
+        ],
+      },
+    ]);
+  });
+
+  // A very unlucky person that has no one to look at their Wijzigings aanvragen for years now.
+  test('Migratie -> Wijzigings aanvraag x3', () => {
+    const aanvragen = attachIDs([
+      RTM_2_MIGRATIE,
+      RTM_WIJZIGINGS_AANVRAAG,
+      RTM_WIJZIGINGS_AANVRAAG,
+      RTM_WIJZIGINGS_AANVRAAG,
+    ]);
+    const regelingen = transformRegelingenForFrontend(aanvragen);
+    expect(regelingen.length).toBe(1);
+    const regeling = regelingen[0];
+
+    const statusStepWijzigingsAanvraag = {
+      datePublished: RTM_WIJZIGINGS_AANVRAAG.datumBesluit,
+      documents: [
+        {
+          datePublished: '2025-08-18T15:17:08.773',
+          title: 'AV-RTM Info aan klant GGD',
+        },
+        {
+          datePublished: '2025-08-18T14:09:48.83',
+          title: 'AV-RTM Info aan klant GGD',
+        },
+      ],
+      isActive: false,
+      isChecked: true,
+      isVisible: true,
+      status: 'Aanvraag wijziging',
+    };
+
+    expect(regeling).toMatchObject({
+      title: RTM_WIJZIGINGS_AANVRAAG.titel,
+      isActual: true,
+      dateDecision: RTM_WIJZIGINGS_AANVRAAG.datumBesluit,
+      dateStart: RTM_WIJZIGINGS_AANVRAAG.datumIngangGeldigheid,
+      dateEnd: null,
+      decision: 'toegewezen',
+      displayStatus: 'Toegewezen',
+      documents: [],
+    });
+    expect(regeling.steps).toMatchObject([
+      {
+        datePublished: RTM_2_MIGRATIE.datumBesluit,
+        documents: [],
+        id: 'status-step-1',
+        isActive: false,
+        isChecked: true,
+        isVisible: true,
+        status: 'Besluit',
+      },
+      { ...statusStepWijzigingsAanvraag, id: 'status-step-2' },
+      { ...statusStepWijzigingsAanvraag, id: 'status-step-3' },
+      { ...statusStepWijzigingsAanvraag, id: 'status-step-4', isActive: true },
+      {
+        id: 'status-step-5',
+        status: 'Einde recht',
+        datePublished: '',
+        isActive: false,
+        isChecked: false,
+        isVisible: true,
+        documents: [],
+      },
+    ]);
+  });
+});
+
+describe('Ontvanger but aanvragen made by someone else', () => {
+  test('Besluit toegewezen', () => {
+    const aanvragen = attachIDs([RTM_2_TOEGEWEZEN]);
+    const regelingen = transformRegelingenForFrontend(aanvragen);
+
+    expect(regelingen.length).toBe(1);
+
+    const regeling = regelingen[0];
+
+    expect(regeling).toMatchObject({
+      title: RTM_2_TOEGEWEZEN.titel,
+      isActual: true,
+      dateDecision: RTM_2_TOEGEWEZEN.datumBesluit,
+      dateStart: RTM_2_TOEGEWEZEN.datumIngangGeldigheid,
+      dateEnd: RTM_2_TOEGEWEZEN.datumEindeGeldigheid,
+      decision: 'toegewezen',
+      displayStatus: 'Toegewezen',
+      documents: [],
+    });
+    expect(regeling.steps).toMatchObject([
+      {
+        id: 'status-step-1',
+        status: 'Besluit',
+        datePublished: RTM_2_TOEGEWEZEN.datumBesluit,
+        isActive: true,
+        isChecked: true,
+        isVisible: true,
+        documents: [
+          {
+            title: 'Beschikking toekenning Reg Tegemoetk Meerkosten',
+          },
+        ],
+      },
+      {
+        id: 'status-step-2',
+        status: 'Einde recht',
+        datePublished: '',
+        isActive: false,
+        isChecked: false,
+        isVisible: true,
+        documents: [],
+      },
+    ]);
+  });
+
+  test.skip('Besluit afgewezen', () => {
+    const aanvragen = attachIDs([RTM_2_AFGEWEZEN]);
+    const regelingen = transformRegelingenForFrontend(aanvragen);
+
+    expect(regelingen.length).toBe(1);
+
+    const regeling = regelingen[0];
+
+    expect(regeling).toMatchObject({
+      title: RTM_2_TOEGEWEZEN.titel,
+      isActual: true,
+      dateDecision: RTM_2_TOEGEWEZEN.datumBesluit,
+      dateStart: RTM_2_TOEGEWEZEN.datumIngangGeldigheid,
+      dateEnd: RTM_2_TOEGEWEZEN.datumEindeGeldigheid,
+      decision: 'toegewezen',
+      displayStatus: 'Toegewezen',
+      documents: [],
+    });
+    expect(regeling.steps).toMatchObject([
+      {
+        id: 'status-step-1',
+        status: 'Besluit',
+        datePublished: RTM_2_TOEGEWEZEN.datumBesluit,
+        isActive: true,
+        isChecked: true,
+        isVisible: true,
+        documents: [
+          {
+            title: 'Beschikking toekenning Reg Tegemoetk Meerkosten',
+          },
+        ],
       },
     ]);
   });

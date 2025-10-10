@@ -160,18 +160,29 @@ function mergeAanvragenIntoRegeling(
   aanvragen: AanvraagWithType[]
 ): ZorgnedHLIRegeling {
   const [head, ...aanvragenTail] = aanvragen;
-  return aanvragenTail.reduce(
+  const regeling = aanvragenTail.reduce(
     (regeling, aanvraag) => {
+      if (aanvraag.type === 'result-wijziging-afgewezen') {
+        return {
+          ...regeling,
+          datumBesluit: aanvraag.datumBesluit,
+        };
+      }
       return {
         ...aanvraag,
-        datumInBehandeling: aanvraag.datumBesluit,
-        datumAanvraag: regeling.datumAanvraag ?? aanvraag.datumAanvraag,
-        // Documents are put in the statusLineItems.
-        documenten: [],
+        // When a regeling is active and there is no einde recht, the regeling is
+        // active indefinitely.
+        datumEindeGeldigheid:
+          aanvraag.type === 'result-einde-recht'
+            ? aanvraag.datumEindeGeldigheid
+            : null,
       };
     },
-    { ...head, datumInBehandeling: head.datumBesluit, documenten: [] }
+    { ...head, datumInBehandeling: head.datumBesluit }
   );
+  // Documents are put in the statusLineItems.
+  regeling.documenten = [];
+  return regeling;
 }
 
 function getAllStatusLineItems(
@@ -435,12 +446,11 @@ function createAanvraagWithType(
       }
       return withType('aanvraag-afgewezen');
     }
-
     if (aanvraag.procesAanvraagOmschrijving === 'Migratie RTM') {
       return withType('result-migratie');
     }
 
-    return withType(null);
+    return withType('result-toegewezen');
   }
 
   if (isRTMDeel1(aanvraag)) {
@@ -476,10 +486,10 @@ function createAanvraagWithType(
 }
 
 function getStatusLineItems(
-  aanvaagWithType: AanvraagWithType
+  aanvraagWithType: AanvraagWithType
 ): IncompleteStatusLineItem[] {
-  const getStatusLineItem = createGetStatusLineItemFn(aanvaagWithType);
-  switch (aanvaagWithType.type) {
+  const getStatusLineItem = createGetStatusLineItemFn(aanvraagWithType);
+  switch (aanvraagWithType.type) {
     // RTM-1 Aanvragen
     case 'aanvraag-toegewezen': {
       return getStatusLineItem(['aanvraagLopend', 'inBehandelingGenomen']);
@@ -514,7 +524,7 @@ function getStatusLineItems(
     // case 'result-wijziging-einde-recht': {
     // }
     default: {
-      console.dir(aanvaagWithType);
+      console.dir(aanvraagWithType);
       throw Error('No statusstep found!');
     }
   }
