@@ -27,12 +27,14 @@ import { PROFILE_TYPES } from '../../universal/types/App.types';
 import { ONE_SECOND_MS } from '../config/app';
 import { logger } from '../logging';
 import { ExternalConsumerEndpoints } from '../routing/bff-routes';
-import { apiRoute, generateFullApiUrlBFF } from '../routing/route-helpers';
+import { generateFullApiUrlBFF } from '../routing/route-helpers';
 import { captureException } from '../services/monitoring';
 
 export function getReturnToUrl(
   queryParams?: ParsedQs,
-  defaultReturnTo: string = apiRoute(authRoutes.AUTH_LOGIN_DIGID_LANDING)
+  defaultReturnTo: string = generateFullApiUrlBFF(
+    authRoutes.AUTH_LOGIN_DIGID_LANDING
+  )
 ) {
   switch (queryParams?.returnTo) {
     case RETURNTO_MAMS_FRONTEND_ROUTE: {
@@ -65,9 +67,9 @@ export function getReturnToUrl(
     case ZAAK_STATUS_ROUTE:
       return getReturnToUrlZaakStatus(queryParams);
     case RETURNTO_MAMS_LANDING_EHERKENNING:
-      return apiRoute(authRoutes.AUTH_LOGIN_EHERKENNING_LANDING);
+      return generateFullApiUrlBFF(authRoutes.AUTH_LOGIN_EHERKENNING_LANDING);
     case RETURNTO_MAMS_LANDING_DIGID:
-      return apiRoute(authRoutes.AUTH_LOGIN_DIGID_LANDING);
+      return generateFullApiUrlBFF(authRoutes.AUTH_LOGIN_DIGID_LANDING);
     default:
       return defaultReturnTo;
   }

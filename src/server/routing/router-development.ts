@@ -5,10 +5,11 @@ import UID from 'uid-safe';
 
 import { DevelopmentRoutes, PREDEFINED_REDIRECT_URLS } from './bff-routes';
 import {
-  apiRoute,
   createBFFRouter,
+  generateFullApiUrlBFF,
   sendBadRequest,
   sendUnauthorized,
+  type RecordStr2,
 } from './route-helpers';
 import {
   testAccountsDigid,
@@ -129,11 +130,11 @@ authRouterDevelopment.get(
     if (!req.params.user && allUsernames.length > 1) {
       const list = Object.keys(testAccounts)
         .map((userName) => {
-          const queryEntries = Object.entries(req.query);
-          const queryString = queryEntries.length
-            ? `?${queryEntries.map(([key, val]) => `${key}=${val}`).join('&')}`
-            : '';
-          return `<li><a href="${apiRoute(authMethod === 'digid' ? authRoutes.AUTH_LOGIN_DIGID : authRoutes.AUTH_LOGIN_EHERKENNING)}/${userName}${queryString}">${userName}</a>`;
+          const href = generateFullApiUrlBFF(
+            `${authMethod === 'digid' ? authRoutes.AUTH_LOGIN_DIGID : authRoutes.AUTH_LOGIN_EHERKENNING}/${userName}`,
+            [req.query as RecordStr2]
+          );
+          return `<li><a href="${href}">${userName}</a>`;
         })
         .join('');
       return res.send(

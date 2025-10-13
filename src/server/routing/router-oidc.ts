@@ -3,11 +3,7 @@ import { ConfigParams, requiresAuth } from 'express-openid-connect';
 import { NextFunction } from 'express';
 
 import { nocache, verifyAuthenticated } from './route-handlers';
-import {
-  apiRoute,
-  generateFullApiUrlBFF,
-  sendUnauthorized,
-} from './route-helpers';
+import { generateFullApiUrlBFF, sendUnauthorized } from './route-helpers';
 import { apiSuccessResult } from '../../universal/helpers/api';
 import {
   OIDC_SESSION_COOKIE_NAME,
@@ -201,10 +197,10 @@ async function authLogoutHandler(req: Request, res: Response) {
 
   switch (authMethodRequested) {
     case 'eherkenning':
-      redirectUrl = apiRoute(authRoutes.AUTH_LOGOUT_EHERKENNING);
+      redirectUrl = generateFullApiUrlBFF(authRoutes.AUTH_LOGOUT_EHERKENNING);
       break;
     case 'digid':
-      redirectUrl = apiRoute(authRoutes.AUTH_LOGOUT_DIGID);
+      redirectUrl = generateFullApiUrlBFF(authRoutes.AUTH_LOGOUT_DIGID);
       break;
   }
 

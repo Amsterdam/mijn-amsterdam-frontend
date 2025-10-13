@@ -27,6 +27,7 @@ import { logger } from './logging';
 
 const debugResponseDataTerms = process.env.DEBUG_RESPONSE_DATA;
 const debug = process.env.DEBUG;
+
 if (debugResponseDataTerms && !debug?.includes('source-api-request:response')) {
   logger.info(
     `Enabling debug for source-api-request:response because DEBUG_RESPONSE_DATA is set (${debugResponseDataTerms})`
@@ -47,7 +48,7 @@ import {
   BffEndpoints,
 } from './routing/bff-routes';
 import { nocache, requestID } from './routing/route-handlers';
-import { apiRoute, send404 } from './routing/route-helpers';
+import { generateFullApiUrlBFF, send404 } from './routing/route-helpers';
 import { adminRouter } from './routing/router-admin';
 import { authRouterDevelopment } from './routing/router-development';
 import { oidcRouter } from './routing/router-oidc';
@@ -99,23 +100,6 @@ app.use(legacyRouter);
 
 app.use(BFF_BASE_PATH, publicRouter);
 
-////////////////////////////////////////////////////////////////////////
-///// Generic Router Method for All environments
-////////////////////////////////////////////////////////////////////////
-// Mount the routers at the base path
-app.use(BFF_BASE_PATH, nocache, stadspasExternalConsumerRouter.public);
-
-if (FeatureToggle.amsNotificationsIsActive) {
-  app.use(BFF_BASE_PATH, nocache, notificationsExternalConsumerRouter.public);
-}
-
-// All routes after this point are protected and need authentication
-////////////////////////////////////////////////////////////////////////
-///// Routers for Authenticated Users
-///// These routes are protected by our authentication system.
-///// These routers are all accessible from the public internet.
-////////////////////////////////////////////////////////////////////////
-
 ///// [DEVELOPMENT - TEST]
 //// In development we use the authRouterDevelopment which has a mock login.
 if (IS_OT && !IS_AP) {
@@ -129,6 +113,17 @@ if (IS_AP && !IS_OT) {
   app.use(BFF_BASE_PATH, oidcRouter);
 }
 
+////////////////////////////////////////////////////////////////////////
+///// Generic Router Method for All environments
+////////////////////////////////////////////////////////////////////////
+// Mount the routers at the base path
+app.use(BFF_BASE_PATH, nocache, stadspasExternalConsumerRouter.public);
+
+if (FeatureToggle.amsNotificationsIsActive) {
+  app.use(BFF_BASE_PATH, nocache, notificationsExternalConsumerRouter.public);
+}
+
+// All routes after this point are protected and need authentication
 app.use(BFF_BASE_PATH, nocache, protectedRouter, adminRouter);
 
 /////////////////////////////////////////////////////////////////////////
@@ -142,7 +137,7 @@ app.use(BFF_BASE_PATH_PRIVATE, nocache, privateNetworkRouter);
 
 // Redirects to /api/v1
 app.get(BffEndpoints.ROOT, (_req, res) => {
-  return res.redirect(apiRoute(BffEndpoints.ROOT));
+  return res.redirect(generateFullApiUrlBFF(BffEndpoints.ROOT));
 });
 
 // Optional fallthrough error handler
