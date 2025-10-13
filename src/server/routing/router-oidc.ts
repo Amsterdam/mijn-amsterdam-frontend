@@ -3,7 +3,7 @@ import { ConfigParams, requiresAuth } from 'express-openid-connect';
 import { NextFunction } from 'express';
 
 import { nocache, verifyAuthenticated } from './route-handlers';
-import { sendUnauthorized } from './route-helpers';
+import { apiRoute, sendUnauthorized } from './route-helpers';
 import { apiSuccessResult } from '../../universal/helpers/api';
 import {
   OIDC_SESSION_COOKIE_NAME,
@@ -75,7 +75,7 @@ oidcRouter.get(
   authRoutes.AUTH_BASE_DIGID + AUTH_CALLBACK,
   (req: Request, res: Response) => {
     return res.oidc.callback({
-      redirectUri: authRoutes.AUTH_CALLBACK_DIGID,
+      redirectUri: apiRoute(authRoutes.AUTH_CALLBACK_DIGID),
     });
   }
 );
@@ -89,7 +89,7 @@ oidcRouter.get(
         ...req.query,
       }),
       authorizationParams: {
-        redirect_uri: authRoutes.AUTH_CALLBACK_DIGID,
+        redirect_uri: apiRoute(authRoutes.AUTH_CALLBACK_DIGID),
       },
     });
   }
@@ -114,7 +114,7 @@ oidcRouter.get(
   authRoutes.AUTH_BASE_EHERKENNING + AUTH_CALLBACK,
   (req: Request, res: Response) => {
     const callbackOptions = {
-      redirectUri: authRoutes.AUTH_CALLBACK_EHERKENNING,
+      redirectUri: apiRoute(authRoutes.AUTH_CALLBACK_EHERKENNING),
     };
     return res.oidc.callback(callbackOptions);
   }
@@ -129,7 +129,7 @@ oidcRouter.get(
         ...req.query,
       }),
       authorizationParams: {
-        redirect_uri: authRoutes.AUTH_CALLBACK_EHERKENNING,
+        redirect_uri: apiRoute(authRoutes.AUTH_CALLBACK_EHERKENNING),
       },
     });
   }
@@ -195,10 +195,10 @@ async function authLogoutHandler(req: Request, res: Response) {
 
   switch (authMethodRequested) {
     case 'eherkenning':
-      redirectUrl = authRoutes.AUTH_LOGOUT_EHERKENNING;
+      redirectUrl = apiRoute(authRoutes.AUTH_LOGOUT_EHERKENNING);
       break;
     case 'digid':
-      redirectUrl = authRoutes.AUTH_LOGOUT_DIGID;
+      redirectUrl = apiRoute(authRoutes.AUTH_LOGOUT_DIGID);
       break;
   }
 

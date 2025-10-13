@@ -47,7 +47,7 @@ import {
   BffEndpoints,
 } from './routing/bff-routes';
 import { nocache, requestID } from './routing/route-handlers';
-import { send404 } from './routing/route-helpers';
+import { apiRoute, send404 } from './routing/route-helpers';
 import { adminRouter } from './routing/router-admin';
 import { authRouterDevelopment } from './routing/router-development';
 import { oidcRouter } from './routing/router-oidc';
@@ -90,16 +90,13 @@ app.use(compression());
 // Generate request id
 app.use(requestID);
 
-////////////////////////////////////////////////////////////////////////
-///// [ACCEPTANCE - PRODUCTION]
-///// Public routes Voor Acceptance - Development
-////////////////////////////////////////////////////////////////////////
-
+// Some legacy routes that are not prefixed with /api/v1
 app.use(legacyRouter);
 
-/**
- * The public router has routes that can be accessed by anyone without any authentication.
- */
+////////////////////////////////////////////////////////////////////////
+///// The public router has routes that can be accessed by anyone without any authentication.
+////////////////////////////////////////////////////////////////////////
+
 app.use(BFF_BASE_PATH, publicRouter);
 
 ////////////////////////////////////////////////////////////////////////
@@ -116,8 +113,7 @@ if (FeatureToggle.amsNotificationsIsActive) {
 ////////////////////////////////////////////////////////////////////////
 ///// Routers for Authenticated Users
 ///// These routes are protected by our authentication system.
-///// These routers are all prefixed with /api/v1 and accessible
-///// from the public internet.
+///// These routers are all accessible from the public internet.
 ////////////////////////////////////////////////////////////////////////
 
 ///// [DEVELOPMENT - TEST]
@@ -146,7 +142,7 @@ app.use(BFF_BASE_PATH_PRIVATE, nocache, privateNetworkRouter);
 
 // Redirects to /api/v1
 app.get(BffEndpoints.ROOT, (_req, res) => {
-  return res.redirect(`${BFF_BASE_PATH + BffEndpoints.ROOT}`);
+  return res.redirect(apiRoute(BffEndpoints.ROOT));
 });
 
 // Optional fallthrough error handler
@@ -162,16 +158,14 @@ app.use(function onError(
     },
   });
 
+  const redirectUrl = `${process.env.MA_FRONTEND_URL}/server-error-500`;
+
   if (!IS_PRODUCTION) {
     return res.redirect(
-      `${process.env.MA_FRONTEND_URL}/server-error-500?stack=${JSON.stringify(
-        err.stack,
-        null,
-        2
-      )}`
+      `${redirectUrl}?stack=${JSON.stringify(err.stack, null, 2)}`
     );
   }
-  return res.redirect(`${process.env.MA_FRONTEND_URL}/server-error-500`);
+  return res.redirect(`${redirectUrl}`);
 });
 
 app.use((_req: Request, res: Response) => {

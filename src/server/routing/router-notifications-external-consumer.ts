@@ -44,8 +44,10 @@ routerPublic.get(
   ExternalConsumerEndpoints.public.NOTIFICATIONS_LOGIN,
   async (req: Request<{ consumerId: string }>, res: Response) => {
     return res.redirect(
-      authRoutes.AUTH_LOGIN_DIGID +
-        `?returnTo=${RETURNTO_NOTIFICATIES_CONSUMER_ID}&consumerId=${req.params.consumerId}`
+      apiRoute(
+        authRoutes.AUTH_LOGIN_DIGID +
+          `?returnTo=${RETURNTO_NOTIFICATIES_CONSUMER_ID}&consumerId=${req.params.consumerId}`
+      )
     );
   }
 );
