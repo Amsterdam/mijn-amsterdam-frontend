@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { Router } from 'express';
+import { Response, Router } from 'express';
 
 import { decryptEncryptedRouteParamAndValidateSessionID } from './decrypt-route-param';
 import {
@@ -7,12 +7,12 @@ import {
   ApiPostponeResponse,
   ApiSuccessResponse,
 } from '../../../universal/helpers/api';
+import { getAuth } from '../../auth/auth-helpers';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   RequestWithRouteAndQueryParams,
   sendResponse,
-  type RecordStr2,
-  type ResponseAuthenticated,
+  sendUnauthorized,
 } from '../../routing/route-helpers';
 
 export const DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE = 'application/pdf';
@@ -32,7 +32,7 @@ export type DocumentDownloadResponse =
 export type FetchDocumentDownloadService = (
   authProfileAndToken: AuthProfileAndToken,
   documentIDEncrypted: string,
-  queryParams?: RecordStr2
+  queryParams?: Record<string, string>
 ) => Promise<DocumentDownloadResponse>;
 
 type FetchRouteOrQueryParamsFN = (
@@ -50,44 +50,51 @@ export function downloadDocumentRouteHandler(
       { id: string },
       { id: string; [key: string]: string }
     >,
-    res: ResponseAuthenticated
+    res: Response
   ) {
-    const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
-      // TODO: params.id should be removed, BFF routes should use queryParams for handling route/service variables.
-      getRouteOrQueryParams(req),
-      res.locals.authProfileAndToken
-    );
+    const authProfileAndToken = getAuth(req);
 
-    if (decryptResult.status === 'OK') {
-      const documentResponse = await fetchDocument(
-        res.locals.authProfileAndToken,
-        decryptResult.content,
-        req.query as RecordStr2
+    if (authProfileAndToken) {
+      const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
+        // TODO: params.id should be removed, BFF routes should use queryParams for handling route/service variables.
+        getRouteOrQueryParams(req),
+        authProfileAndToken
       );
 
-      if (documentResponse.status !== 'OK') {
-        return sendResponse(res, documentResponse);
+      if (decryptResult.status === 'OK') {
+        const documentResponse = await fetchDocument(
+          authProfileAndToken,
+          decryptResult.content,
+          req.query as Record<string, string>
+        );
+
+        if (
+          documentResponse.status === 'ERROR' ||
+          documentResponse.status === 'POSTPONE'
+        ) {
+          return sendResponse(res, documentResponse);
+        }
+
+        if (
+          'mimetype' in documentResponse.content &&
+          documentResponse.content.mimetype
+        ) {
+          res.type(documentResponse.content.mimetype);
+        }
+        res.header(
+          'Content-Disposition',
+          `attachment${documentResponse.content.filename ? `; filename*="${encodeURIComponent(documentResponse.content.filename)}"` : ''}`
+        );
+        return 'pipe' in documentResponse.content.data &&
+          typeof documentResponse.content.data.pipe === 'function'
+          ? documentResponse.content.data.pipe(res)
+          : res.send(documentResponse.content.data);
       }
 
-      if (
-        'mimetype' in documentResponse.content &&
-        documentResponse.content.mimetype
-      ) {
-        res.type(documentResponse.content.mimetype);
-      }
-
-      res.header(
-        'Content-Disposition',
-        `attachment${documentResponse.content.filename ? `; filename*="${encodeURIComponent(documentResponse.content.filename)}"` : ''}`
-      );
-
-      return 'pipe' in documentResponse.content.data &&
-        typeof documentResponse.content.data.pipe === 'function'
-        ? documentResponse.content.data.pipe(res)
-        : res.send(documentResponse.content.data);
+      return sendResponse(res, decryptResult);
     }
 
-    return sendResponse(res, decryptResult);
+    return sendUnauthorized(res);
   };
 }
 

@@ -45,13 +45,6 @@ describe('app', async () => {
           : false
       )
     ).toBe(true);
-    expect(
-      app.router.stack.some((layer: ILayer) =>
-        'BFF_ID' in layer.handle
-          ? layer.handle.BFF_ID === 'router-private-network'
-          : false
-      )
-    ).toBe(true);
   }, 30000);
 
   test('app middleware AP', async () => {
@@ -78,13 +71,6 @@ describe('app', async () => {
           : false
       )
     ).toBe(true);
-    expect(
-      app.router.stack.some((layer: ILayer) =>
-        'BFF_ID' in layer.handle
-          ? layer.handle.BFF_ID === 'router-private-network'
-          : false
-      )
-    ).toBe(true);
   });
 
   test('Router protected', async () => {
@@ -99,12 +85,12 @@ describe('app', async () => {
     expect(routerProtected).toBeTruthy();
 
     expect(
-      routerProtected?.handle.stack.some(
-        (x: object) => 'name' in x && x.name === 'handleIsAuthenticated'
+      routerProtected.handle.stack.some(
+        (x: object) => 'name' in x && x.name === 'isAuthenticated'
       )
     ).toBe(true);
     expect(
-      routerProtected?.handle.stack.some(
+      routerProtected.handle.stack.some(
         (x: object) => 'name' in x && x.name === 'handleCheckProtectedRoute'
       )
     ).toBe(true);

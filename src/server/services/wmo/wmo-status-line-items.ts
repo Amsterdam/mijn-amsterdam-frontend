@@ -15,16 +15,13 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
   // For all rejection decisions from aanvraag to final decision.
   {
     resultaat: 'afgewezen',
-    statusLineItems: {
-      name: 'Alle afgewezen',
-      transformers: WMO_AFWIJZING_ALL,
-    },
+    lineItemTransformers: WMO_AFWIJZING_ALL,
   },
   {
     resultaat: 'toegewezen',
     leveringsVorm: 'ZIN',
     productsoortCodes: ['ZIN', 'WRA', 'WRA1', 'WRA2', 'WRA3', 'WRA4', 'WRA5'],
-    statusLineItems: { name: 'WRA', transformers: WRA },
+    lineItemTransformers: WRA,
   },
   {
     resultaat: 'toegewezen',
@@ -43,7 +40,7 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
       // TODO: Uncomment when the following productsoortCodes are available
       // 'ORW',
     ],
-    statusLineItems: { name: 'hulpmiddelen', transformers: hulpmiddelen },
+    lineItemTransformers: hulpmiddelen,
   },
   {
     resultaat: 'toegewezen',
@@ -68,19 +65,19 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
       'AWBG',
       'LGO',
     ],
-    statusLineItems: { name: 'diensten', transformers: diensten },
+    lineItemTransformers: diensten,
   },
   {
     resultaat: 'toegewezen',
     leveringsVorm: '',
     productsoortCodes: ['MAO'],
-    statusLineItems: { name: 'diensten', transformers: diensten },
+    lineItemTransformers: diensten,
   },
   {
     resultaat: 'toegewezen',
     leveringsVorm: '',
     productsoortCodes: ['AO2', 'AO5', 'DBS', 'KVB', 'WMH', 'AWBG'],
-    statusLineItems: { name: 'diensten', transformers: diensten },
+    lineItemTransformers: diensten,
   },
   {
     resultaat: 'toegewezen',
@@ -98,13 +95,13 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
       'WMH',
       'AWBG',
     ],
-    statusLineItems: { name: 'PGB', transformers: PGB },
+    lineItemTransformers: PGB,
   },
   {
     resultaat: 'toegewezen',
     leveringsVorm: 'ZIN',
     productsoortCodes: ['FIN', 'MVV', 'MVW', 'VHK', 'VVD', 'VVK'],
-    statusLineItems: { name: 'vergoeding', transformers: vergoeding },
+    lineItemTransformers: vergoeding,
   },
   {
     resultaat: 'toegewezen',
@@ -131,31 +128,31 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
       'WRA4',
       'WRA5',
     ],
-    statusLineItems: { name: 'vergoeding', transformers: vergoeding },
+    lineItemTransformers: vergoeding,
   },
   {
     resultaat: 'toegewezen',
     leveringsVorm: '',
     productsoortCodes: ['FIE', 'FIN', 'MVV', 'MVW', 'VHK', 'VVK', 'AAN'],
-    statusLineItems: { name: 'vergoeding', transformers: vergoeding },
+    lineItemTransformers: vergoeding,
   },
   {
     resultaat: 'toegewezen',
     leveringsVorm: 'ZIN',
     productsoortCodes: ['AOV'],
-    statusLineItems: { name: 'AOV', transformers: AOV },
+    lineItemTransformers: AOV,
   },
   {
     resultaat: 'toegewezen',
     leveringsVorm: 'PGB',
     productsoortCodes: ['AOV'],
-    statusLineItems: { name: 'AOV', transformers: AOV },
+    lineItemTransformers: AOV,
   },
   {
     resultaat: 'toegewezen',
     leveringsVorm: '',
     productsoortCodes: ['AOV'],
-    statusLineItems: { name: 'AOV', transformers: AOV },
+    lineItemTransformers: AOV,
   },
 ];
 
@@ -163,9 +160,7 @@ export const PRODUCTS_WITH_DELIVERY: Record<LeveringsVorm, ProductSoortCode[]> =
   {};
 
 for (const config of wmoStatusLineItemsConfig) {
-  if (
-    [diensten, WRA, hulpmiddelen].includes(config.statusLineItems.transformers)
-  ) {
+  if ([diensten, WRA, hulpmiddelen].includes(config.lineItemTransformers)) {
     if (
       typeof config.leveringsVorm !== 'undefined' &&
       config.productsoortCodes

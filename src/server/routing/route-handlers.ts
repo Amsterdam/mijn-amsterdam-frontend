@@ -1,11 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import uid from 'uid-safe';
 
-import {
-  isProtectedRoute,
-  sendUnauthorized,
-  type ResponseAuthenticated,
-} from './route-helpers';
+import { isProtectedRoute, sendUnauthorized } from './route-helpers';
 import { apiSuccessResult } from '../../universal/helpers/api';
 import {
   destroySession,
@@ -27,18 +23,12 @@ export function handleCheckProtectedRoute(
   return next();
 }
 
-export async function handleIsAuthenticated(
+export async function isAuthenticated(
   req: Request,
   res: Response,
   next: NextFunction
 ) {
-  const authProfileAndToken = getAuth(req);
-  if (hasSessionCookie(req) && authProfileAndToken) {
-    // Assigns locals for use in later route handlers.
-    // We cast to ResponseAuthenticated here, as we know authProfileAndToken exists.
-    const resAuthenticated = res as ResponseAuthenticated;
-    resAuthenticated.locals.authProfileAndToken = authProfileAndToken;
-    resAuthenticated.locals.userID = authProfileAndToken.profile.id;
+  if (hasSessionCookie(req) && getAuth(req)) {
     return next();
   }
   return sendUnauthorized(res);

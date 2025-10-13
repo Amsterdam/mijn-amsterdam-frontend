@@ -78,11 +78,9 @@ function getDocumentsFrontend(
     );
     return {
       ...document,
-      url: generateFullApiUrlBFF(BffEndpoints.HLI_DOCUMENT_DOWNLOAD, [
-        {
-          id: idEncrypted,
-        },
-      ]),
+      url: generateFullApiUrlBFF(BffEndpoints.HLI_DOCUMENT_DOWNLOAD, {
+        id: idEncrypted,
+      }),
       id: idEncrypted,
     };
   });

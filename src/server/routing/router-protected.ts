@@ -2,20 +2,18 @@ import { HttpStatusCode } from 'axios';
 import { NextFunction, Request, Response } from 'express';
 
 import { BffEndpoints } from './bff-routes';
-import {
-  handleCheckProtectedRoute,
-  handleIsAuthenticated,
-} from './route-handlers';
+import { handleCheckProtectedRoute, isAuthenticated } from './route-handlers';
 import {
   createBFFRouter,
   sendBadRequest,
   sendResponse,
+  sendUnauthorized,
   type RequestWithQueryParams,
-  type ResponseAuthenticated,
 } from './route-helpers';
 import type { streamEndpointQueryParamKeys } from '../../universal/config/app';
 import { IS_PRODUCTION } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
+import { getAuth } from '../auth/auth-helpers';
 import { setAdHocDependencyRequestCacheTtlMs } from '../config/source-api';
 import { fetchAfisDocument } from '../services/afis/afis-documents';
 import {
@@ -31,7 +29,7 @@ import {
   loadServicesSSE,
 } from '../services/controller';
 import {
-  handleFetchDecosDocumentsList,
+  fetchDecosDocumentsList,
   fetchZaakByKey,
   fetchZakenByUserIDs,
 } from '../services/decos/decos-route-handlers';
@@ -50,12 +48,12 @@ import { fetchZorgnedLLVDocument } from '../services/jeugd/route-handlers';
 import { fetchDocument as fetchBBDocument } from '../services/powerbrowser/powerbrowser-service';
 import { fetchAantalBewoners } from '../services/profile/brp';
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler';
-import { wmoRouter } from '../services/wmo/wmo-router';
+import { fetchZorgnedJZDDocument } from '../services/wmo/wmo-route-handlers';
 import { fetchWpiDocument } from '../services/wpi/api-service';
 
 export const router = createBFFRouter({ id: 'router-protected' });
 
-router.use(handleCheckProtectedRoute, handleIsAuthenticated);
+router.use(handleCheckProtectedRoute, isAuthenticated);
 
 router.get(
   BffEndpoints.SERVICES_ALL,
@@ -131,7 +129,12 @@ router.get(
 //// BFF Service Api Endpoints /////////////////////
 ////////////////////////////////////////////////////
 
-router.use(wmoRouter.protected);
+// WMO Zorgned Doc download
+attachDocumentDownloadRoute(
+  router,
+  BffEndpoints.WMO_DOCUMENT_DOWNLOAD,
+  fetchZorgnedJZDDocument
+);
 
 // LLV Zorgned Doc download
 attachDocumentDownloadRoute(
@@ -142,18 +145,23 @@ attachDocumentDownloadRoute(
 
 router.get(
   BffEndpoints.MKS_AANTAL_BEWONERS,
-  async (req: Request, res: ResponseAuthenticated) => {
-    const bewonersResponse = await fetchAantalBewoners(
-      res.locals.authProfileAndToken,
-      req.params.addressKeyEncrypted
-    );
+  async (req: Request, res: Response) => {
+    const authProfileAndToken = getAuth(req);
 
-    return sendResponse(res, bewonersResponse);
+    if (authProfileAndToken) {
+      const bewonersResponse = await fetchAantalBewoners(
+        authProfileAndToken,
+        req.params.addressKeyEncrypted
+      );
+
+      return sendResponse(res, bewonersResponse);
+    }
+    return sendUnauthorized(res);
   }
 );
 
 // Decos (Vergunningen, Horeca, Toeristische verhuur, Parkeren)
-router.get(BffEndpoints.DECOS_DOCUMENTS_LIST, handleFetchDecosDocumentsList);
+router.get(BffEndpoints.DECOS_DOCUMENTS_LIST, fetchDecosDocumentsList);
 
 if (!IS_PRODUCTION) {
   router.get(BffEndpoints.DECOS_ZAKEN_BY_USERIDS_RAW, fetchZakenByUserIDs);
@@ -202,13 +210,17 @@ router.get(BffEndpoints.BEZWAREN_DETAIL, handleFetchBezwaarDetail);
 
 router.get(
   BffEndpoints.ERFPACHT_DOSSIER_DETAILS,
-  async (req: Request, res: ResponseAuthenticated) => {
-    const response = await fetchErfpachtDossiersDetail(
-      res.locals.authProfileAndToken,
-      req.params.dossierNummerUrlParam
-    );
+  async (req: Request, res: Response) => {
+    const authProfileAndToken = getAuth(req);
+    if (authProfileAndToken) {
+      const response = await fetchErfpachtDossiersDetail(
+        authProfileAndToken,
+        req.params.dossierNummerUrlParam
+      );
 
-    return sendResponse(res, response);
+      return sendResponse(res, response);
+    }
+    return sendUnauthorized(res);
   }
 );
 

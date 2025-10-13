@@ -1,4 +1,4 @@
-import { Request } from 'express';
+import { Request, Response } from 'express';
 
 import {
   blockStadspas,
@@ -6,11 +6,9 @@ import {
   unblockStadspas,
 } from './stadspas';
 import { StadspasBudget, StadspasFrontend } from './stadspas-types';
+import { getAuth } from '../../auth/auth-helpers';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import {
-  sendResponse,
-  type ResponseAuthenticated,
-} from '../../routing/route-helpers';
+import { sendResponse, sendUnauthorized } from '../../routing/route-helpers';
 import { fetchDocument } from '../zorgned/zorgned-service';
 
 type TransactionKeysEncryptedRequest = Request<{
@@ -19,15 +17,19 @@ type TransactionKeysEncryptedRequest = Request<{
 
 export async function handleFetchTransactionsRequest(
   req: TransactionKeysEncryptedRequest,
-  res: ResponseAuthenticated
+  res: Response
 ) {
-  const response = await fetchStadspasBudgetTransactions(
-    req.params.transactionsKeyEncrypted,
-    req.query.budgetCode as StadspasBudget['code'],
-    res.locals.authProfileAndToken.profile.sid
-  );
+  const authProfileAndToken = getAuth(req);
+  if (authProfileAndToken) {
+    const response = await fetchStadspasBudgetTransactions(
+      req.params.transactionsKeyEncrypted,
+      req.query.budgetCode as StadspasBudget['code'],
+      authProfileAndToken.profile.sid
+    );
 
-  return sendResponse(res, response);
+    return sendResponse(res, response);
+  }
+  return sendUnauthorized(res);
 }
 
 export async function fetchZorgnedAVDocument(
@@ -44,11 +46,17 @@ export async function fetchZorgnedAVDocument(
 
 export async function handleBlockStadspas(
   req: TransactionKeysEncryptedRequest,
-  res: ResponseAuthenticated
+  res: Response
 ) {
+  const authProfileAndToken = getAuth(req);
+
+  if (!authProfileAndToken) {
+    return sendUnauthorized(res);
+  }
+
   const response = await blockStadspas(
     req.params.transactionsKeyEncrypted,
-    res.locals.authProfileAndToken.profile.sid
+    authProfileAndToken.profile.sid
   );
 
   return sendResponse(res, response);
@@ -56,11 +64,17 @@ export async function handleBlockStadspas(
 
 export async function handleUnblockStadspas(
   req: TransactionKeysEncryptedRequest,
-  res: ResponseAuthenticated
+  res: Response
 ) {
+  const authProfileAndToken = getAuth(req);
+
+  if (!authProfileAndToken) {
+    return sendUnauthorized(res);
+  }
+
   const response = await unblockStadspas(
     req.params.transactionsKeyEncrypted,
-    res.locals.authProfileAndToken.profile.sid
+    authProfileAndToken.profile.sid
   );
 
   return sendResponse(res, response);

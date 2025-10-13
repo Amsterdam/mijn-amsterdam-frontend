@@ -27,18 +27,12 @@ const transformerConfigs = [transformerConfig, transformerConfig2];
 const lineItemsConfig1: ZorgnedStatusLineItemsConfig = {
   leveringsVorm: 'FOO',
   productsoortCodes: ['BAR', 'FOO'],
-  statusLineItems: {
-    name: 'Test line items 1',
-    transformers: [transformerConfig, transformerConfig2],
-  },
+  lineItemTransformers: [transformerConfig, transformerConfig2],
 };
 
 const lineItemsConfig2: ZorgnedStatusLineItemsConfig = {
   productIdentificatie: ['BAR'],
-  statusLineItems: {
-    name: 'Test line items 2',
-    transformers: [transformerConfig2],
-  },
+  lineItemTransformers: [transformerConfig2],
   filter(aanvraag) {
     return aanvraag.betrokkenen?.includes('B');
   },
@@ -49,10 +43,7 @@ const lineItemsConfig3: ZorgnedStatusLineItemsConfig = {
   filter(aanvraag) {
     return aanvraag.betrokkenen?.includes('A');
   },
-  statusLineItems: {
-    name: 'Test line items 3',
-    transformers: [transformerConfig],
-  },
+  lineItemTransformers: [transformerConfig],
 };
 
 const lineItemConfigs = [lineItemsConfig1, lineItemsConfig2, lineItemsConfig3];
@@ -127,7 +118,7 @@ describe('zorgned-status-line-items', () => {
         []
       );
 
-      expect(lineItemTransformers).toBe(null);
+      expect(lineItemTransformers).toBe(undefined);
     });
 
     test('Get transformers: No match for productSoortCode or productIdentificatie', () => {
@@ -141,7 +132,7 @@ describe('zorgned-status-line-items', () => {
         []
       );
 
-      expect(lineItemTransformers).toBe(null);
+      expect(lineItemTransformers).toBe(undefined);
     });
   });
 
@@ -237,10 +228,7 @@ describe('zorgned-status-line-items', () => {
         [
           {
             ...lineItemsConfig1,
-            statusLineItems: {
-              name: 'Test line items 4',
-              transformers: [transformer1, transformer2],
-            },
+            lineItemTransformers: [transformer1, transformer2],
           },
         ],
         aanvraag,
@@ -277,7 +265,6 @@ describe('zorgned-status-line-items', () => {
     describe('Matches line items based on result', () => {
       const aanvraag = getAanvraagTransformed();
 
-      // @ts-ignore - Ignore possibly missing optional property for testing
       delete aanvraag.leveringsVorm;
 
       const transformer1 = getTransformerConfig();
@@ -298,10 +285,7 @@ describe('zorgned-status-line-items', () => {
             [
               {
                 resultaat: resultaatMatch as BeschikkingsResultaat,
-                statusLineItems: {
-                  name: 'Test line items 5',
-                  transformers: [transformer1, transformer2],
-                },
+                lineItemTransformers: [transformer1, transformer2],
               },
             ],
             {

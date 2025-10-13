@@ -13,11 +13,6 @@ import {
   AuthProfile,
   AuthProfileAndToken,
 } from '../server/auth/auth-types';
-import type {
-  RecordStr2,
-  RequestWithRouteAndQueryParams,
-  ResponseAuthenticated,
-} from '../server/routing/route-helpers';
 import { createOIDCStub } from '../server/routing/router-development';
 
 const defaultReplyHeaders = {
@@ -38,8 +33,6 @@ export const EMPTY_OKAY_RESPONSE = {
   status: 'OK',
 };
 
-export const TEST_SESSION_ID = '0D8ugZyqnzPTyknBDwxsMPb7';
-
 /** Quikly create an AuthProfileAndToken object */
 export function getAuthProfileAndToken(
   profileType: ProfileType = 'private',
@@ -50,7 +43,7 @@ export function getAuthProfileAndToken(
       authMethod: profileType === 'private' ? 'digid' : 'eherkenning',
       profileType,
       id: 'I.M Mokum',
-      sid: TEST_SESSION_ID,
+      sid: '0D8ugZyqnzPTyknBDwxsMPb7',
     },
     expiresAtMilliseconds,
     token: 'tttttttttttttttttttttttttttttt',
@@ -60,17 +53,14 @@ export function getAuthProfileAndToken(
 
 export class ResponseMock {
   statusCode: number;
-  locals: {
-    requestID: string;
-    [key: string]: unknown;
-  };
+  locals: { requestID: string };
   oidc = { logout: vi.fn() };
 
   static new() {
     return new ResponseMock() as unknown as Response & ResponseMock;
   }
 
-  constructor() {
+  private constructor() {
     this.statusCode = HttpStatusCode.Ok;
     const REQUEST_ID_LENGTH = 18;
     this.locals = {
@@ -94,36 +84,15 @@ export class ResponseMock {
   header = vi.fn();
 }
 
-export class ResponseAuthenticatedMock extends ResponseMock {
-  constructor(profileType: AuthProfile['profileType'] = 'private') {
-    super();
-    const authProfileAndToken = getAuthProfileAndToken(profileType);
-    this.locals.authProfileAndToken = authProfileAndToken;
-    this.locals.userID = authProfileAndToken.profile.id;
-  }
-
-  static new() {
-    return new ResponseAuthenticatedMock() as unknown as ResponseAuthenticated &
-      ResponseAuthenticatedMock;
-  }
-}
-
 export class RequestMock {
   cookies: Record<string, string> = {};
-  params: RecordStr2 = {};
-  query: RecordStr2 = {};
+  params: Record<string, string> = {};
+  query: Record<string, string> = {};
   oidc: Record<string, string> | null = null;
   url: string | null = null;
 
-  static new<
-    QueryParams extends RecordStr2 = RecordStr2,
-    RouteParams extends RecordStr2 = RecordStr2,
-  >() {
-    return new RequestMock() as unknown as RequestWithRouteAndQueryParams<
-      RouteParams,
-      QueryParams
-    > &
-      RequestMock;
+  static new() {
+    return new RequestMock() as unknown as Request & RequestMock;
   }
 
   setCookies(cookies: typeof this.cookies) {

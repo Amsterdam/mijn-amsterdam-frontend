@@ -6,7 +6,7 @@
       "DOM",
       "DOM.Iterable",
       "ES2021",
-      "ES2023.Array",
+      "ES2023.Array"
     ],
     "allowJs": true,
     "skipLibCheck": true,

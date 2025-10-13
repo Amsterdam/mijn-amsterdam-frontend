@@ -1,18 +1,12 @@
 import Mockdate from 'mockdate';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-import {
-  fetchActueleWRAVoorzieningenCompact,
-  fetchWmo,
-  fetchWmoVoorzieningenCompact,
-  forTesting,
-} from './wmo';
-import { routes } from './wmo-service-config';
+import { fetchWmo, forTesting } from './wmo';
 import ZORGNED_AANVRAGEN_WMO from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { jsonCopy } from '../../../universal/helpers/utils';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types';
 import { getHulpmiddelenDisclaimer } from './status-line-items/wmo-hulpmiddelen';
+import { BffEndpoints } from '../../routing/bff-routes';
 
 vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => ({
   ...((await importOriginal()) as object),
@@ -56,7 +50,7 @@ describe('Transform api items', () => {
         forTesting.getDocuments(
           'xxx-222',
           jsonCopy(aanvraag),
-          routes.protected.WMO_DOCUMENT_DOWNLOAD
+          BffEndpoints.WMO_DOCUMENT_DOWNLOAD
         )
       ).toMatchInlineSnapshot(`
           [
@@ -64,7 +58,7 @@ describe('Transform api items', () => {
               "datePublished": "2024-06-24",
               "id": "document-1",
               "title": "Document 1",
-              "url": "http://bff-api-host/api/v1/services/wmo/document?id=123-123-123-123",
+              "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
             },
           ]
         `);
@@ -75,7 +69,7 @@ describe('Transform api items', () => {
         forTesting.getDocuments(
           'xxx-222',
           jsonCopy({ ...aanvraag, datumAanvraag: '2017-04-12' }),
-          routes.protected.WMO_DOCUMENT_DOWNLOAD
+          BffEndpoints.WMO_DOCUMENT_DOWNLOAD
         )
       ).toMatchInlineSnapshot(`[]`);
     });
@@ -91,7 +85,7 @@ describe('Transform api items', () => {
         forTesting.getDocuments(
           'xxx-222',
           aanvraag2,
-          routes.protected.WMO_DOCUMENT_DOWNLOAD
+          BffEndpoints.WMO_DOCUMENT_DOWNLOAD
         )
       ).toMatchInlineSnapshot(`
         [
@@ -99,13 +93,13 @@ describe('Transform api items', () => {
             "datePublished": "2024-06-24",
             "id": "document-1",
             "title": "Document 1",
-            "url": "http://bff-api-host/api/v1/services/wmo/document?id=123-123-123-123",
+            "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
           },
           {
             "datePublished": "2024-06-24",
             "id": "document-1",
             "title": "Document 1",
-            "url": "http://bff-api-host/api/v1/services/wmo/document?id=123-123-123-123",
+            "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
           },
         ]
       `);
@@ -132,8 +126,6 @@ describe('Transform api items', () => {
       betrokkenen: [],
       documenten: [],
       id: 'test-id',
-      beschiktProductIdentificatie: '',
-      beschikkingNummer: null,
     };
 
     const baseAanvragen = [baseAanvraag];
@@ -184,56 +176,6 @@ describe('Transform api items', () => {
       expect(result).toBe(
         'Door een fout kan het zijn dat dit hulpmiddel ook bij "Eerdere en afgewezen voorzieningen" staat. Daar vindt u dan het originele besluit met de juiste datums.'
       );
-    });
-  });
-
-  describe('fetchWmoVoorzieningenCompact', () => {
-    const mockBSN = '123456789';
-
-    beforeEach(() => {
-      vi.clearAllMocks();
-    });
-
-    it('should fetch, filter and transform voorzieningen', async () => {
-      remoteApi.post('/zorgned/aanvragen').reply(200, ZORGNED_AANVRAGEN_WMO);
-
-      const result = await fetchWmoVoorzieningenCompact(mockBSN, {
-        productGroup: ['WRA', 'hulpmiddelen'],
-      });
-
-      expect(
-        result.content?.every((voorziening) => {
-          return (
-            voorziening.productGroup === 'WRA' ||
-            voorziening.productGroup === 'hulpmiddelen'
-          );
-        })
-      ).toBe(true);
-
-      expect(result.content?.[0] && Object.keys(result.content[0])).toEqual([
-        'productGroup',
-        'titel',
-        'id',
-        'beschikkingNummer',
-        'beschiktProductIdentificatie',
-        'productIdentificatie',
-        'datumBesluit',
-        'datumBeginLevering',
-        'datumEindeLevering',
-        'datumOpdrachtLevering',
-      ]);
-    });
-
-    it('should fetch and filter actuele WRA voorzieningen', async () => {
-      remoteApi.post('/zorgned/aanvragen').reply(200, ZORGNED_AANVRAGEN_WMO);
-
-      const result = await fetchActueleWRAVoorzieningenCompact(mockBSN);
-
-      expect(
-        result.content?.every((voorziening) => {
-          return voorziening.productGroup === 'WRA';
-        })
-      ).toBe(true);
     });
   });
 });

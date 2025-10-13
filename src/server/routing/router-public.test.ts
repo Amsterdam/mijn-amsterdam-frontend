@@ -20,7 +20,7 @@ describe('router-public', () => {
       await zaakStatusHandler(reqMock, resMock, nextMock);
 
       expect(resMock.redirect).toHaveBeenCalledWith(
-        'http://bff-api-host/api/v1/auth/digid/login?id=Z%2F000%2F000001&thema=vergunningen&returnTo=/zaak-status'
+        '/api/v1/auth/digid/login?id=Z%2F000%2F000001&thema=vergunningen&returnTo=/zaak-status'
       );
     });
 
@@ -40,7 +40,7 @@ describe('router-public', () => {
       await zaakStatusHandler(reqMock, resMock, nextMock);
 
       expect(resMock.redirect).toHaveBeenCalledWith(
-        'http://bff-api-host/api/v1/auth/eherkenning/login?id=Z%2F000%2F000001&thema=vergunningen&returnTo=/zaak-status'
+        '/api/v1/auth/eherkenning/login?id=Z%2F000%2F000001&thema=vergunningen&returnTo=/zaak-status'
       );
     });
   });

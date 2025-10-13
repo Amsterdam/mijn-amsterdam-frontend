@@ -13,9 +13,7 @@ import {
   ZorgnedPerson,
   ZorgnedPersoonsgegevensNAWResponse,
   ZorgnedResponseDataSource,
-  type Beschikking,
   type BSN,
-  type ZorgnedAanvraagSource,
 } from './zorgned-types';
 import {
   apiErrorResult,
@@ -80,14 +78,12 @@ function transformDocumenten(documenten: ZorgnedDocument[]) {
 }
 
 function transformZorgnedAanvraag(
-  aanvraagSource: ZorgnedAanvraagSource,
-  beschikking: Beschikking,
+  id: string,
   datumAanvraag: string,
   datumBesluit: string,
   beschiktProduct: BeschiktProduct,
   documenten: ZorgnedDocument[]
 ): ZorgnedAanvraagTransformed {
-  const id = `${aanvraagSource.identificatie}-${beschiktProduct.identificatie}`;
   const toegewezenProduct = beschiktProduct.toegewezenProduct;
   const toewijzingen = toegewezenProduct?.toewijzingen ?? [];
   const toewijzing = toewijzingen.pop();
@@ -124,7 +120,6 @@ function transformZorgnedAanvraag(
     productsoortCode: productsoortCode,
     productIdentificatie,
     beschiktProductIdentificatie: beschiktProduct.identificatie,
-    beschikkingNummer: beschikking.beschikkingNummer,
     resultaat: beschiktProduct.resultaat,
     titel: beschiktProduct.product.omschrijving ?? '',
     betrokkenen: toegewezenProduct?.betrokkenen ?? [],
@@ -160,8 +155,7 @@ export function transformZorgnedAanvragen(
     for (const beschiktProduct of beschikteProducten) {
       if (beschiktProduct) {
         const aanvraagTransformed = transformZorgnedAanvraag(
-          aanvraagSource,
-          beschikking,
+          `${aanvraagSource.identificatie}-${beschiktProduct.identificatie}`,
           datumAanvraag,
           datumBesluit,
           beschiktProduct,
@@ -178,16 +172,6 @@ export function transformZorgnedAanvragen(
   return aanvragenTransformed.sort(sortAlpha('id', 'desc'));
 }
 
-export async function fetchAllDocuments(
-  bsn: BSN,
-  options: ZorgnedAanvragenServiceOptions
-) {
-  return fetchZorgnedByBSN(bsn, {
-    ...options,
-    path: '/documenten',
-  });
-}
-
 export async function fetchAanvragen(
   bsn: BSN,
   options: ZorgnedAanvragenServiceOptions
@@ -196,16 +180,6 @@ export async function fetchAanvragen(
     ...options,
     path: '/aanvragen',
     transform: transformZorgnedAanvragen,
-  });
-}
-
-export async function fetchAanvragenRaw(
-  bsn: BSN,
-  options: ZorgnedAanvragenServiceOptions
-) {
-  return fetchZorgnedByBSN(bsn, {
-    ...options,
-    path: '/aanvragen',
   });
 }
 

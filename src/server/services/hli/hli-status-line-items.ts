@@ -25,31 +25,28 @@ export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<
 >[] = [
   {
     productIdentificatie: [AV_UPCC, AV_PCVC, ...verzilveringCodes],
-    statusLineItems: { name: 'PCVERGOEDING', transformers: PCVERGOEDING },
+    lineItemTransformers: PCVERGOEDING,
   },
   {
     productIdentificatie: [AV_RTM_DEEL1, AV_RTM_DEEL2],
-    statusLineItems: { name: 'RTM', transformers: RTM },
+    lineItemTransformers: RTM,
     isDisabled: !featureToggle.hliRegelingEnabledRTM,
   },
   {
     productIdentificatie: ['AV-GOV', 'AV-OVM', 'AV-RTM'],
-    statusLineItems: { name: 'REGELING', transformers: REGELING },
+    lineItemTransformers: REGELING,
   },
   {
     productIdentificatie: ['AV-DECLA'],
-    statusLineItems: { name: 'DECLARATIE', transformers: DECLARATIE },
+    lineItemTransformers: DECLARATIE,
   },
   {
     productIdentificatie: ['AV-IIT', 'AV-KVS', 'AV-SPM', 'AV-TAOV', 'AV-RKV'],
-    statusLineItems: {
-      name: 'REGELING_PERIODIEK',
-      transformers: REGELING_PERIODIEK,
-    },
+    lineItemTransformers: REGELING_PERIODIEK,
   },
   {
     productIdentificatie: [AV_CZM],
-    statusLineItems: { name: 'REGELING_CZM', transformers: REGELING_CZM },
+    lineItemTransformers: REGELING_CZM,
     isDisabled: !featureToggle.hliRegelingEnabledCZM,
   },
 ];

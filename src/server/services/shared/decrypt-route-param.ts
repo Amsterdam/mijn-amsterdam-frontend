@@ -19,6 +19,7 @@ export function decryptEncryptedRouteParamAndValidateSessionID(
 ) {
   let sessionID: SessionID | null = null;
   let id: string | null = null;
+
   try {
     [sessionID, id] = decrypt(sessionIDAndRouteParamIdEncrypted).split(':');
   } catch (error) {

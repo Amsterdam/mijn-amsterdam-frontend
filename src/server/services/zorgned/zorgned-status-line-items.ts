@@ -11,67 +11,53 @@ import { logger } from '../../logging';
 // we set the match to true so the check doesn't influence the selection criteria and returns items by default.
 const PASS_MATCH_DEFAULT = true;
 
-export function isStatusLineItemTransformerMatch<
-  T extends ZorgnedAanvraagTransformed,
->(
-  aanvraagTransformed: T,
-  allAanvragenTransformed: T[],
-  config: ZorgnedStatusLineItemsConfig<T>
-): boolean {
-  const hasLeveringsVormMatch =
-    typeof config.leveringsVorm !== 'undefined'
-      ? aanvraagTransformed.leveringsVorm === config.leveringsVorm
-      : PASS_MATCH_DEFAULT;
-
-  const hasProductSoortCodeMatch =
-    typeof config.productsoortCodes !== 'undefined'
-      ? config.productsoortCodes.includes(aanvraagTransformed.productsoortCode)
-      : PASS_MATCH_DEFAULT;
-
-  const hasProductIdentificatieMatch =
-    typeof config.productIdentificatie !== 'undefined'
-      ? typeof aanvraagTransformed.productIdentificatie !== 'undefined'
-        ? config.productIdentificatie.includes(
-            aanvraagTransformed.productIdentificatie
-          )
-        : false
-      : PASS_MATCH_DEFAULT;
-
-  const isFilterMatch =
-    typeof config.filter !== 'undefined'
-      ? config.filter(aanvraagTransformed, allAanvragenTransformed)
-      : PASS_MATCH_DEFAULT;
-
-  const hasResultaatMatch =
-    typeof config.resultaat !== 'undefined'
-      ? aanvraagTransformed.resultaat === config.resultaat
-      : PASS_MATCH_DEFAULT;
-
-  return (
-    isFilterMatch &&
-    hasLeveringsVormMatch &&
-    hasProductSoortCodeMatch &&
-    hasProductIdentificatieMatch &&
-    hasResultaatMatch
-  );
-}
-
 function getStatusLineItemTransformers<T extends ZorgnedAanvraagTransformed>(
   statusLineItemsConfig: ZorgnedStatusLineItemsConfig<T>[],
   aanvraagTransformed: T,
   allAanvragenTransformed: T[]
-): ZorgnedStatusLineItemTransformerConfig<T>[] | null {
-  return (
-    statusLineItemsConfig
-      .filter((config) => !config.isDisabled)
-      .find((config) =>
-        isStatusLineItemTransformerMatch(
-          aanvraagTransformed,
-          allAanvragenTransformed,
-          config
-        )
-      )?.statusLineItems.transformers ?? null
-  );
+): ZorgnedStatusLineItemTransformerConfig<T>[] | undefined {
+  return statusLineItemsConfig
+    .filter((config) => !config.isDisabled)
+    .find((config) => {
+      const hasRegelingsVormMatch =
+        typeof config.leveringsVorm !== 'undefined'
+          ? aanvraagTransformed.leveringsVorm === config.leveringsVorm
+          : PASS_MATCH_DEFAULT;
+
+      const hasProductSoortCodeMatch =
+        typeof config.productsoortCodes !== 'undefined'
+          ? config.productsoortCodes.includes(
+              aanvraagTransformed.productsoortCode
+            )
+          : PASS_MATCH_DEFAULT;
+
+      const hasProductIdentificatieMatch =
+        typeof config.productIdentificatie !== 'undefined'
+          ? typeof aanvraagTransformed.productIdentificatie !== 'undefined'
+            ? config.productIdentificatie.includes(
+                aanvraagTransformed.productIdentificatie
+              )
+            : false
+          : PASS_MATCH_DEFAULT;
+
+      const isFilterMatch =
+        typeof config.filter !== 'undefined'
+          ? config.filter(aanvraagTransformed, allAanvragenTransformed)
+          : PASS_MATCH_DEFAULT;
+
+      const hasResultaatMatch =
+        typeof config.resultaat !== 'undefined'
+          ? aanvraagTransformed.resultaat === config.resultaat
+          : PASS_MATCH_DEFAULT;
+
+      return (
+        isFilterMatch &&
+        hasRegelingsVormMatch &&
+        hasProductSoortCodeMatch &&
+        hasProductIdentificatieMatch &&
+        hasResultaatMatch
+      );
+    })?.lineItemTransformers;
 }
 
 export function getStatusLineItems<T extends ZorgnedAanvraagTransformed>(

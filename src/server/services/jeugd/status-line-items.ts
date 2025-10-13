@@ -18,23 +18,20 @@ export const jeugdStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
       'LLVAV',
       'LLVAVG',
     ],
-    statusLineItems: {
-      name: 'leerlingenvervoer',
-      transformers: [
-        AANVRAAG,
-        IN_BEHANDELING,
-        {
-          ...MEER_INFORMATIE,
-          description: `
+    lineItemTransformers: [
+      AANVRAAG,
+      IN_BEHANDELING,
+      {
+        ...MEER_INFORMATIE,
+        description: `
 <p>Wij kunnen uw aanvraag nog niet beoordelen. U moet meer informatie aanleveren. Dat kan door het op te sturen naar ons gratis antwoordnummer:</p>
 <p>Gemeente Amsterdam<br />
 Services & Data<br />
 Antwoordnummer 9087<br />
 1000 VV Amsterdam</p>`,
-        },
-        getTransformerConfigBesluit(isDecisionStatusActive, false),
-        EINDE_RECHT,
-      ],
-    },
+      },
+      getTransformerConfigBesluit(isDecisionStatusActive, false),
+      EINDE_RECHT,
+    ],
   },
 ];

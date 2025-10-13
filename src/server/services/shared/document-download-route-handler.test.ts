@@ -2,8 +2,9 @@ import { describe, it, expect, vi, Mock } from 'vitest';
 
 import { decryptEncryptedRouteParamAndValidateSessionID } from './decrypt-route-param';
 import { downloadDocumentRouteHandler } from './document-download-route-handler';
-import { RequestMock, ResponseAuthenticatedMock } from '../../../testing/utils';
-import { sendResponse } from '../../routing/route-helpers';
+import { RequestMock, ResponseMock } from '../../../testing/utils';
+import { getAuth } from '../../auth/auth-helpers';
+import { sendResponse, sendUnauthorized } from '../../routing/route-helpers';
 
 vi.mock('../../auth/auth-helpers', () => ({
   getAuth: vi.fn(),
@@ -30,9 +31,10 @@ describe('document-download-route-handler', () => {
       },
     });
 
-    const req = RequestMock.new<{ id: string }, { id: string }>();
-    const res = ResponseAuthenticatedMock.new();
+    const req = RequestMock.new();
+    const res = ResponseMock.new();
 
+    (getAuth as Mock).mockReturnValue({ profile: { sid: 'test-sid' } });
     (decryptEncryptedRouteParamAndValidateSessionID as Mock).mockReturnValue({
       status: 'OK',
       content: 'decrypted-id',
@@ -42,7 +44,7 @@ describe('document-download-route-handler', () => {
     await handler(req, res);
 
     expect(fetchDocument).toHaveBeenCalledWith(
-      res.locals.authProfileAndToken,
+      { profile: { sid: 'test-sid' } },
       'decrypted-id',
       req.query
     );
@@ -64,11 +66,12 @@ describe('document-download-route-handler', () => {
       },
     });
 
-    const req = RequestMock.new<{ id: string }, { id: string }>()
+    const req = RequestMock.new()
       .setQuery({ id: 'encrypted-id' })
       .setParams({ id: 'encrypted-id' });
-    const res = ResponseAuthenticatedMock.new();
+    const res = ResponseMock.new();
 
+    (getAuth as Mock).mockReturnValue({ profile: { sid: 'test-sid' } });
     (decryptEncryptedRouteParamAndValidateSessionID as Mock).mockReturnValue({
       status: 'OK',
       content: 'decrypted-id',
@@ -78,7 +81,7 @@ describe('document-download-route-handler', () => {
     await handler(req, res);
 
     expect(fetchDocument).toHaveBeenCalledWith(
-      res.locals.authProfileAndToken,
+      { profile: { sid: 'test-sid' } },
       'decrypted-id',
       req.query
     );
@@ -99,11 +102,12 @@ describe('document-download-route-handler', () => {
       },
     });
 
-    const req = RequestMock.new<{ id: string }, { id: string }>()
+    const req = RequestMock.new()
       .setQuery({ id: 'encrypted-id' })
       .setParams({ id: 'encrypted-id' });
-    const res = ResponseAuthenticatedMock.new();
+    const res = ResponseMock.new();
 
+    (getAuth as Mock).mockReturnValue({ profile: { sid: 'test-sid' } });
     (decryptEncryptedRouteParamAndValidateSessionID as Mock).mockReturnValue({
       status: 'OK',
       content: 'decrypted-id',
@@ -113,7 +117,7 @@ describe('document-download-route-handler', () => {
     await handler(req, res);
 
     expect(fetchDocument).toHaveBeenCalledWith(
-      res.locals.authProfileAndToken,
+      { profile: { sid: 'test-sid' } },
       'decrypted-id',
       req.query
     );
@@ -131,9 +135,10 @@ describe('document-download-route-handler', () => {
       content: null,
     });
 
-    const req = RequestMock.new<{ id: string }, { id: string }>();
-    const res = ResponseAuthenticatedMock.new();
+    const req = RequestMock.new();
+    const res = ResponseMock.new();
 
+    (getAuth as Mock).mockReturnValue({ profile: { sid: 'test-sid' } });
     (decryptEncryptedRouteParamAndValidateSessionID as Mock).mockReturnValue({
       status: 'OK',
       content: 'decrypted-id',
@@ -143,7 +148,7 @@ describe('document-download-route-handler', () => {
     await handler(req, res);
 
     expect(fetchDocument).toHaveBeenCalledWith(
-      res.locals.authProfileAndToken,
+      { profile: { sid: 'test-sid' } },
       'decrypted-id',
       req.query
     );
@@ -151,5 +156,20 @@ describe('document-download-route-handler', () => {
       status: 'ERROR',
       content: null,
     });
+  });
+
+  it('should handle an unauthorized request', async () => {
+    const fetchDocument = vi.fn();
+
+    const req = RequestMock.new();
+    const res = ResponseMock.new();
+
+    (getAuth as Mock).mockReturnValue(null);
+
+    const handler = downloadDocumentRouteHandler(fetchDocument);
+    await handler(req, res);
+
+    expect(fetchDocument).not.toHaveBeenCalled();
+    expect(sendUnauthorized).toHaveBeenCalledWith(res);
   });
 });

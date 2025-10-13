@@ -47,10 +47,7 @@ export interface ZorgnedStatusLineItemsConfig<
   T extends ZorgnedAanvraagTransformed = ZorgnedAanvraagTransformed,
 > {
   leveringsVorm?: LeveringsVorm;
-  statusLineItems: {
-    name: string;
-    transformers: ZorgnedStatusLineItemTransformerConfig<T>[];
-  };
+  lineItemTransformers: ZorgnedStatusLineItemTransformerConfig<T>[];
   productsoortCodes?: ProductSoortCode[];
   productIdentificatie?: ProductIdentificatie[];
   filter?: ZorgnedLineItemsFilter;
@@ -100,7 +97,7 @@ export interface BeschiktProduct {
   toegewezenProduct: ToegewezenProduct | null;
 }
 
-export interface Beschikking {
+interface Beschikking {
   beschikkingNummer: number;
   beschikteProducten: BeschiktProduct[];
   datumAfgifte?: string;
@@ -149,7 +146,6 @@ export interface ZorgnedAanvraagTransformed {
   productsoortCode: ProductSoortCode;
   productIdentificatie?: ProductIdentificatie;
   beschiktProductIdentificatie: BeschiktProduct['identificatie'];
-  beschikkingNummer: number | null;
   resultaat: BeschikkingsResultaat;
   titel: string;
 }
