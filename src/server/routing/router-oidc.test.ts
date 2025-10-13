@@ -15,6 +15,7 @@ import {
 } from '../auth/auth-config';
 import { authRoutes } from '../auth/auth-routes';
 import { getFromEnv } from '../helpers/env';
+import { apiRoute } from './route-helpers';
 
 const mocks = vi.hoisted(() => {
   const openIdAuthHandlerEH = vi.fn();
@@ -184,7 +185,7 @@ describe('router-oids', () => {
       forTesting.authLogoutHandler(reqMock, resMock);
 
       expect(resMock.redirect).toHaveBeenCalledWith(
-        authRoutes.AUTH_LOGOUT_DIGID
+        apiRoute(authRoutes.AUTH_LOGOUT_DIGID)
       );
     });
 
@@ -212,7 +213,7 @@ describe('router-oids', () => {
       forTesting.authLogoutHandler(reqMock, resMock);
 
       expect(resMock.redirect).toHaveBeenCalledWith(
-        authRoutes.AUTH_LOGOUT_EHERKENNING
+        apiRoute(authRoutes.AUTH_LOGOUT_EHERKENNING)
       );
     });
 
@@ -223,7 +224,7 @@ describe('router-oids', () => {
       forTesting.authLogoutHandler(reqMock, resMock);
 
       expect(resMock.redirect).toHaveBeenCalledWith(
-        authRoutes.AUTH_LOGOUT_DIGID
+        apiRoute(authRoutes.AUTH_LOGOUT_DIGID)
       );
     });
     test('Logout explicit by known query.authMethod EHerkenning', async () => {
@@ -235,7 +236,7 @@ describe('router-oids', () => {
       forTesting.authLogoutHandler(reqMock, resMock);
 
       expect(resMock.redirect).toHaveBeenCalledWith(
-        authRoutes.AUTH_LOGOUT_EHERKENNING
+        apiRoute(authRoutes.AUTH_LOGOUT_EHERKENNING)
       );
     });
 
