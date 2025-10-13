@@ -1,38 +1,30 @@
-import { Response } from 'express';
-
 import { fetchBezwaarDetail } from './bezwaren';
-import { getAuth } from '../../auth/auth-helpers';
 import {
   RequestWithQueryParams,
   sendResponse,
-  sendUnauthorized,
+  type ResponseAuthenticated,
 } from '../../routing/route-helpers';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 
 export async function handleFetchBezwaarDetail(
   req: RequestWithQueryParams<{ id: string }>,
-  res: Response
+  res: ResponseAuthenticated
 ) {
-  const authProfileAndToken = getAuth(req);
+  const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
+    req.query.id,
+    res.locals.authProfileAndToken
+  );
 
-  if (authProfileAndToken) {
-    const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
-      req.query.id,
-      authProfileAndToken
+  if (decryptResult.status === 'ERROR') {
+    return sendResponse(res, decryptResult);
+  }
+
+  if (decryptResult.status === 'OK') {
+    const response = await fetchBezwaarDetail(
+      res.locals.authProfileAndToken,
+      decryptResult.content
     );
 
-    if (decryptResult.status === 'ERROR') {
-      return sendResponse(res, decryptResult);
-    }
-
-    if (decryptResult.status === 'OK') {
-      const response = await fetchBezwaarDetail(
-        authProfileAndToken,
-        decryptResult.content
-      );
-
-      return sendResponse(res, response);
-    }
+    return sendResponse(res, response);
   }
-  return sendUnauthorized(res);
 }

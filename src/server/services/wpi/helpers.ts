@@ -75,9 +75,11 @@ export function addApiBasePathToDocumentUrls(
       sourceUrl.searchParams.get('id') ?? ''
     );
     const url = new URL(
-      generateFullApiUrlBFF(BffEndpoints.WPI_DOCUMENT_DOWNLOAD, {
-        id: idEncrypted,
-      })
+      generateFullApiUrlBFF(BffEndpoints.WPI_DOCUMENT_DOWNLOAD, [
+        {
+          id: idEncrypted,
+        },
+      ])
     );
 
     for (const key of ['isBulk', 'isDms']) {

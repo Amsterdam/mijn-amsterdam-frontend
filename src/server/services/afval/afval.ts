@@ -1,11 +1,11 @@
+import { fetchAfvalpuntenByLatLng } from './afvalpunten';
+import { fetchAfvalwijzer } from './afvalwijzer';
 import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { fetchMyLocation } from '../bag/my-locations';
-import { fetchAfvalpuntenByLatLng } from './afvalpunten';
-import { fetchAfvalwijzer } from './afvalwijzer';
 
 export async function fetchAfval(authProfileAndToken: AuthProfileAndToken) {
   const MY_LOCATION = await fetchMyLocation(authProfileAndToken);
