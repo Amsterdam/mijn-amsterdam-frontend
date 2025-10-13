@@ -22,7 +22,10 @@ import {
 } from '../../hooks/useAppStateStore';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 import { DashboardRoute } from '../Dashboard/Dashboard-routes';
+import * as AVG from '../Thema/AVG/AVG-thema-config';
+import * as BODEM from '../Thema/Bodem/Bodem-thema-config';
 import * as HORECA from '../Thema/Horeca/Horeca-thema-config';
+import * as KLACHTEN from '../Thema/Klachten/Klachten-thema-config';
 import * as PARKEREN from '../Thema/Parkeren/Parkeren-thema-config';
 import * as TOERISTISCHE_VERHUUR from '../Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 import * as VERGUNNINGEN from '../Thema/Vergunningen/Vergunningen-thema-config';
@@ -35,7 +38,10 @@ type ThemaQueryParam =
   | 'vergunningen'
   | 'toeristischeVerhuur'
   | 'horeca'
-  | 'parkeren';
+  | 'parkeren'
+  | 'bodem'
+  | 'klachten'
+  | 'avg';
 
 type PageRouteResolver = {
   baseRoute: string;
@@ -83,7 +89,7 @@ function baseThemaConfig<K extends keyof AppStateBase>(
 ): PageRouteResolver {
   return {
     baseRoute,
-    getRoute(zaakID, appState) {
+    getRoute(identifier, appState) {
       const stateSlice = appState[appStateKey];
 
       if (isLoading(stateSlice)) {
@@ -100,7 +106,7 @@ function baseThemaConfig<K extends keyof AppStateBase>(
           return ITEM_NOT_FOUND;
         }
 
-        const zaak = zaken.find((zaak) => zaak.identifier === zaakID);
+        const zaak = zaken.find((zaak) => zaak.identifier === identifier);
         return zaak?.link?.to ?? ITEM_NOT_FOUND;
       }
 
@@ -126,7 +132,30 @@ const pageRouteResolvers: PageRouteResolvers = {
     TOERISTISCHE_VERHUUR.routeConfig.themaPage.path,
     TOERISTISCHE_VERHUUR.themaId,
     (stateSlice) => {
-      return stateSlice.content?.vakantieverhuurVergunningen ?? null;
+      const { vakantieverhuurVergunningen = [], bbVergunningen = [] } =
+        stateSlice.content ?? {};
+      return [...vakantieverhuurVergunningen, ...bbVergunningen];
+    }
+  ),
+  bodem: baseThemaConfig(
+    BODEM.routeConfig.themaPage.path,
+    BODEM.themaId,
+    (stateSlice) => {
+      return stateSlice.content;
+    }
+  ),
+  avg: baseThemaConfig(
+    AVG.routeConfig.themaPage.path,
+    AVG.themaId,
+    (stateSlice) => {
+      return stateSlice.content?.verzoeken ?? null;
+    }
+  ),
+  klachten: baseThemaConfig(
+    KLACHTEN.routeConfig.themaPage.path,
+    KLACHTEN.themaId,
+    (stateSlice) => {
+      return stateSlice.content;
     }
   ),
 };

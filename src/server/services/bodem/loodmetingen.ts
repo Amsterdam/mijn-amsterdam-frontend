@@ -135,7 +135,7 @@ function transformLood365Response(
           decision: decision,
           displayStatus: location.Friendlystatus,
           processed: isProcessed,
-          kenmerk: location.Reference,
+          identifier: location.Reference,
           aanvraagNummer: request.Reference,
           rapportBeschikbaar: location?.Reportavailable ?? false,
           rapportId: location?.Workorderid,
@@ -261,7 +261,7 @@ function createLoodNotification(meting: LoodMetingFrontend): MyNotification {
   > = {
     themaID: themaId,
     themaTitle: themaTitle,
-    id: meting.kenmerk,
+    id: meting.identifier,
     link: {
       to: meting.link.to,
       title: 'Bekijk details',

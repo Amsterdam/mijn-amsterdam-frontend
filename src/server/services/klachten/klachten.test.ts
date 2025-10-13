@@ -145,6 +145,7 @@ describe('Klachten', () => {
       gewensteOplossing: '',
       onderwerp: 'Belastingen en heffingen',
       displayStatus: 'Ontvangen',
+      identifier: '28032',
       id: '28032',
       title: '28032',
       locatie: '',
