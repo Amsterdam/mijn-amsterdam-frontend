@@ -80,7 +80,7 @@ export function getDocumentLink(factuur: AfisFactuur): ReactNode {
   return null;
 }
 
-function mapFactuur(
+function transformFactuur(
   factuur: AfisFactuur,
   state: AfisFactuurState,
   isPhoneScreen: boolean
@@ -126,7 +126,7 @@ function useTransformFacturen(
                 ...facturenResponse,
                 facturen:
                   facturenResponse?.facturen?.map((factuur) =>
-                    mapFactuur(factuur, state, isPhoneScreen)
+                    transformFactuur(factuur, state, isPhoneScreen)
                   ) ?? [],
               },
             ])
