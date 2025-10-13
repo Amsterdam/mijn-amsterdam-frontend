@@ -127,21 +127,6 @@ function mapAanvragenPerBetrokkenen(
       continue;
     }
 
-    if (bsnOntvanger && aanvraag.betrokkenen.includes(bsnOntvanger)) {
-      // An aanvraag can have multiple betrokkenen but also include the 'ontvanger'.
-      // So we copy/split an aanvraag to the betrokkenen,
-      // so we can merge the rtm-2 aanvragen that are only for the ontvanger.
-      aanvraag.betrokkenen = aanvraag.betrokkenen.filter(
-        (b) => b !== bsnOntvanger
-      );
-      aanvraag.betrokkenPersonen = aanvraag.betrokkenPersonen.filter(
-        (b) => b.bsn !== bsnOntvanger
-      );
-      const aanvraagCopy = structuredClone(aanvraag);
-      aanvraagCopy.betrokkenen = [bsnOntvanger];
-      aanvragenMap.ontvanger.push(aanvraagCopy);
-    }
-
     const aanvraagInMap = aanvragenMap[id];
     if (aanvraagInMap) {
       aanvragenMap[id].push(aanvraag);

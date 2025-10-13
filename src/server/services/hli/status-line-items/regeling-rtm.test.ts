@@ -476,15 +476,13 @@ describe('Aanvrager is ontvanger', () => {
     );
   });
 
-  // RP TODO: Fix this test, we should have one regeling with all betrokkenen.
-  // Only when a regeling become toegewezen should we split a regeling up!
-  test.skip('Single Aanvraag toegewezen voor meerdere betrokkenen', () => {
+  test('Single Aanvraag toegewezen voor meerdere betrokkenen', () => {
     const aanvragen = replacePropsInAanvragen([RTM_1_AANVRAAG], {
       betrokkenen: [
         { bsn: ONTVANGER_ID, isAanvrager: true },
         { bsn: '222222222' },
       ],
-      bsnAanvrager: '999999999',
+      bsnAanvrager: ONTVANGER_ID,
     });
     const regelingen = transformRegelingenForFrontend(aanvragen);
 
