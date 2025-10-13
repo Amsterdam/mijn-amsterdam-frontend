@@ -109,6 +109,8 @@ export interface ZorgnedDocument {
   omschrijving: string;
   omschrijvingclientportaal: string;
   zaakidentificatie: string | null;
+  /** Some kind of code followed by a filename. Example: `"BR3400279.pdf"` */
+  bestandsnaam: string;
 }
 
 export interface ZorgnedDocumentData {

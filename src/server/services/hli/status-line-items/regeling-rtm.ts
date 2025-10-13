@@ -85,9 +85,11 @@ export function filterCombineRtmData(
     return [remainder, []];
   }
 
+  const aanvragenWithoutPdfDocuments = removeNonPdfDocuments(rtmAanvragen);
+
   // Prevent aanvragen from other 'betrokkenen' sets from being mixed up with eachother.
   let aanvragenPerBetrokkenen = mapAanvragenPerBetrokkenen(
-    rtmAanvragen,
+    aanvragenWithoutPdfDocuments,
     bsnOntvanger
   );
   aanvragenPerBetrokkenen = removeExpiredIndividualAanvragen(
@@ -97,6 +99,25 @@ export function filterCombineRtmData(
     remainder,
     Object.values(aanvragenPerBetrokkenen).flatMap(combineRTMData),
   ];
+}
+
+function removeNonPdfDocuments(
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
+): ZorgnedAanvraagWithRelatedPersonsTransformed[] {
+  const withoutDocuments = aanvragen.map((aanvraag) => {
+    return {
+      ...aanvraag,
+      documenten: aanvraag.documenten.filter((doc) => {
+        // It is more likely that a document will be a pdf.
+        // Therefore we will assume that to be true, when we cannot determine the filetype.
+        if (!doc.filename) {
+          return true;
+        }
+        return doc.filename.endsWith('pdf');
+      }),
+    };
+  });
+  return withoutDocuments;
 }
 
 type AanvragenMap = {

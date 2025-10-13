@@ -12,6 +12,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "documents": [
         {
           "datePublished": "2025-09-24T15:12:19.673",
+          "filename": "BR3422713.pdf",
           "id": "B3422713",
           "title": "Besluit: afwijzing woonruimteaanpassing",
           "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",

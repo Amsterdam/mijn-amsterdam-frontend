@@ -72,6 +72,10 @@ function transformDocumenten(documenten: ZorgnedDocument[]) {
       url: '', // NOTE: URL added later (wmo.ts > encryptDocumentIds) because we need an ecrypted id with specific session id.
       datePublished: document.datumDefinitief!, // definitieveDocumenten is filtered by checking the existance of this property.
     };
+    if (document.bestandsnaam) {
+      doc.filename = document.bestandsnaam;
+    }
+
     documents.push(doc);
   }
 

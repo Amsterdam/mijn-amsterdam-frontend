@@ -1376,3 +1376,27 @@ describe('Ontvanger but aanvragen made by someone else', () => {
     ]);
   });
 });
+
+test('Does not contain docx (word) documents', () => {
+  const regelingen = transformRegelingenForFrontend([
+    {
+      ...RTM_1_AANVRAAG,
+      documenten: [
+        {
+          id: '1',
+          title: 'Info bij regeling',
+          filename: 'abc.docx',
+          url: '',
+          datePublished: '2025-01-01',
+        },
+      ],
+    },
+  ]);
+
+  expect(regelingen.length).toBe(1);
+  const regeling = regelingen[0];
+  expect(regeling.documents).toStrictEqual([]);
+
+  const statusLineDocs = regeling.steps.flatMap((step) => step.documents);
+  expect(statusLineDocs).toStrictEqual([]);
+});

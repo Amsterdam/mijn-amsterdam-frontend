@@ -67,6 +67,7 @@ export interface MyNotification<ID extends string = string> {
 export interface GenericDocument {
   id: string;
   title: string;
+  filename?: string;
   url: string;
   download?: string;
   external?: boolean;
