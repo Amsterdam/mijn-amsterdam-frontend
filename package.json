@@ -160,11 +160,11 @@
     "@rollup/rollup-linux-x64-gnu": "4.44.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.35.0",
+    "@eslint/js": "^9.37.0",
     "@mocks-server/main": "^4.1.0",
     "@types/debug": "^4.1.12",
     "@types/stack-trace": "^0.0.33",
-    "eslint": "^9.35.0",
+    "eslint": "^9.37.0",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
@@ -174,7 +174,7 @@
     "happy-dom": "^18.0.1",
     "history": "^5.3.0",
     "nodemon": "^3.1.10",
-    "pino-pretty": "^13.1.1",
-    "typescript-eslint": "^8.43.0"
+    "pino-pretty": "^13.1.2",
+    "typescript-eslint": "^8.46.1"
   }
 }
