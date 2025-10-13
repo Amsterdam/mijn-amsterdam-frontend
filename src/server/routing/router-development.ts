@@ -5,6 +5,7 @@ import UID from 'uid-safe';
 
 import { DevelopmentRoutes, PREDEFINED_REDIRECT_URLS } from './bff-routes';
 import {
+  apiRoute,
   createBFFRouter,
   sendBadRequest,
   sendUnauthorized,
@@ -132,7 +133,7 @@ authRouterDevelopment.get(
           const queryString = queryEntries.length
             ? `?${queryEntries.map(([key, val]) => `${key}=${val}`).join('&')}`
             : '';
-          return `<li><a href="${authMethod === 'digid' ? authRoutes.AUTH_LOGIN_DIGID : authRoutes.AUTH_LOGIN_EHERKENNING}/${userName}${queryString}">${userName}</a>`;
+          return `<li><a href="${apiRoute(authMethod === 'digid' ? authRoutes.AUTH_LOGIN_DIGID : authRoutes.AUTH_LOGIN_EHERKENNING)}/${userName}${queryString}">${userName}</a>`;
         })
         .join('');
       return res.send(
