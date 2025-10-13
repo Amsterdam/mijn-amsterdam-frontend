@@ -3,7 +3,11 @@ import { ConfigParams, requiresAuth } from 'express-openid-connect';
 import { NextFunction } from 'express';
 
 import { nocache, verifyAuthenticated } from './route-handlers';
-import { apiRoute, sendUnauthorized } from './route-helpers';
+import {
+  apiRoute,
+  generateFullApiUrlBFF,
+  sendUnauthorized,
+} from './route-helpers';
 import { apiSuccessResult } from '../../universal/helpers/api';
 import {
   OIDC_SESSION_COOKIE_NAME,
@@ -75,7 +79,7 @@ oidcRouter.get(
   authRoutes.AUTH_BASE_DIGID + AUTH_CALLBACK,
   (req: Request, res: Response) => {
     return res.oidc.callback({
-      redirectUri: apiRoute(authRoutes.AUTH_CALLBACK_DIGID),
+      redirectUri: generateFullApiUrlBFF(authRoutes.AUTH_CALLBACK_DIGID),
     });
   }
 );
@@ -89,7 +93,7 @@ oidcRouter.get(
         ...req.query,
       }),
       authorizationParams: {
-        redirect_uri: apiRoute(authRoutes.AUTH_CALLBACK_DIGID),
+        redirect_uri: generateFullApiUrlBFF(authRoutes.AUTH_CALLBACK_DIGID),
       },
     });
   }
@@ -114,7 +118,7 @@ oidcRouter.get(
   authRoutes.AUTH_BASE_EHERKENNING + AUTH_CALLBACK,
   (req: Request, res: Response) => {
     const callbackOptions = {
-      redirectUri: apiRoute(authRoutes.AUTH_CALLBACK_EHERKENNING),
+      redirectUri: generateFullApiUrlBFF(authRoutes.AUTH_CALLBACK_EHERKENNING),
     };
     return res.oidc.callback(callbackOptions);
   }
@@ -129,7 +133,9 @@ oidcRouter.get(
         ...req.query,
       }),
       authorizationParams: {
-        redirect_uri: apiRoute(authRoutes.AUTH_CALLBACK_EHERKENNING),
+        redirect_uri: generateFullApiUrlBFF(
+          authRoutes.AUTH_CALLBACK_EHERKENNING
+        ),
       },
     });
   }
