@@ -34,6 +34,7 @@ const AMSAPP_NOTIFICATIONS_DEEP_LINK = `${AMSAPP_PROTOCOl}notifications`;
 // ==============================
 export const routerPublic = createBFFRouter({
   id: 'external-consumer-public-notifications',
+  isEnabled: FeatureToggle.amsNotificationsIsActive,
 });
 
 routerPublic.get(

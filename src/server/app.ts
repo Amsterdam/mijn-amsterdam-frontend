@@ -47,7 +47,12 @@ import {
   BFF_BASE_PATH_PRIVATE,
   BffEndpoints,
 } from './routing/bff-routes';
-import { nocache, requestID } from './routing/route-handlers';
+import {
+  handleCheckProtectedRoute,
+  handleIsAuthenticated,
+  nocache,
+  requestID,
+} from './routing/route-handlers';
 import { generateFullApiUrlBFF, send404 } from './routing/route-helpers';
 import { adminRouter } from './routing/router-admin';
 import { authRouterDevelopment } from './routing/router-development';
@@ -59,7 +64,6 @@ import { captureException } from './services/monitoring';
 
 import { getFromEnv } from './helpers/env';
 import { notificationsExternalConsumerRouter } from './routing/router-notifications-external-consumer';
-import { FeatureToggle } from '../universal/config/feature-toggles';
 import { router as privateNetworkRouter } from './routing/router-private';
 
 const app = express();
@@ -113,22 +117,24 @@ if (IS_AP && !IS_OT) {
   app.use(BFF_BASE_PATH, oidcRouter);
 }
 
-////////////////////////////////////////////////////////////////////////
-///// Generic Router Method for All environments
-////////////////////////////////////////////////////////////////////////
-// Mount the routers at the base path
-app.use(BFF_BASE_PATH, nocache, stadspasExternalConsumerRouter.public);
+app.use(
+  BFF_BASE_PATH,
+  nocache,
+  stadspasExternalConsumerRouter.public,
+  notificationsExternalConsumerRouter.public
+);
 
-if (FeatureToggle.amsNotificationsIsActive) {
-  app.use(BFF_BASE_PATH, nocache, notificationsExternalConsumerRouter.public);
-}
-
-// All routes after this point are protected and need authentication
-app.use(BFF_BASE_PATH, nocache, protectedRouter, adminRouter);
+app.use(
+  BFF_BASE_PATH,
+  nocache,
+  handleCheckProtectedRoute,
+  handleIsAuthenticated,
+  protectedRouter,
+  adminRouter
+);
 
 /////////////////////////////////////////////////////////////////////////
-///// Routers for External Consumers
-///// These routes are not protected by our authentication system, but
+///// These routes are not protected by TMA/OIDC system, but
 ///// are protected by other means (e.g. IP whitelisting, API keys, etc).
 ///// These routers are all prefixed with /private and not accessible
 ///// from the public internet.
