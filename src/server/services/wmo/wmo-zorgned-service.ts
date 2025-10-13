@@ -121,7 +121,7 @@ export async function fetchZorgnedAanvragenWMO(bsn: BSN) {
           // Wij voegen een nep document toe zodat de businesslogica tav de statustreinen obv Besluit: documenten kan blijven bestaan.
           // Zie ook MIJN-9343
           documenten: getFakeDecisionDocuments(aanvraagTransformed),
-        };
+        } as ZorgnedAanvraagTransformed;
       });
 
     return apiSuccessResult(aanvragenFiltered);

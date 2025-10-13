@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { ExternalConsumerEndpoints } from './bff-routes';
 import { apiKeyVerificationHandler } from './route-handlers';
 import {
+  apiRoute,
   createBFFRouter,
   generateFullApiUrlBFF,
   sendBadRequest,
@@ -48,7 +49,7 @@ routerInternet.get(
   ExternalConsumerEndpoints.public.STADSPAS_AMSAPP_LOGIN,
   async (req: Request<{ token: string }>, res: Response) => {
     return res.redirect(
-      authRoutes.AUTH_LOGIN_DIGID +
+      apiRoute(authRoutes.AUTH_LOGIN_DIGID) +
         `?returnTo=${RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER}&amsapp-session-token=${req.params.token}`
     );
   }
@@ -67,7 +68,7 @@ routerInternet.get(
 // PRIVATE NETWORK ROUTER
 // ======================
 export const routerPrivateNetwork = createBFFRouter({
-  id: 'external-consumer-private-network',
+  id: 'external-consumer-private-network-stadspas',
 });
 
 export const stadspasExternalConsumerRouter = {
@@ -141,11 +142,11 @@ type RenderProps = {
 
 const maFrontendUrl = getFromEnv('MA_FRONTEND_URL')!;
 const nonce = getFromEnv('BFF_AMSAPP_NONCE')!;
-const logoutUrl = `${generateFullApiUrlBFF(
-  authRoutes.AUTH_LOGOUT_DIGID,
-  {},
+const logoutUrl = generateFullApiUrlBFF(
+  apiRoute(authRoutes.AUTH_LOGOUT_DIGID),
+  [{ returnTo: RETURNTO_AMSAPP_STADSPAS_APP_LANDING }],
   getFromEnv('BFF_OIDC_BASE_URL')
-)}?returnTo=${RETURNTO_AMSAPP_STADSPAS_APP_LANDING}`;
+);
 
 const baseRenderProps = {
   nonce,
