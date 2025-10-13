@@ -30,6 +30,7 @@ import {
 import { authRoutes } from '../auth/auth-routes';
 import { RELEASE_VERSION } from '../config/app';
 import { getFromEnv } from '../helpers/env';
+import { getRequestParamsFromQueryString } from '../helpers/source-api-request';
 import {
   fetchDataset,
   loadFeatureDetail,
@@ -208,7 +209,12 @@ export async function zaakStatusHandler(req: Request, res: Response) {
     params['auth-type'] === 'eherkenning' ? 'EHERKENNING' : 'DIGID';
   const loginRouteWithReturnTo = generateFullApiUrlBFF(
     authRoutes[`AUTH_LOGIN_${authType}`],
-    [{ ...params, returnTo: ZAAK_STATUS_ROUTE }]
+    [
+      {
+        ...getRequestParamsFromQueryString(getZaakStatusQueryParams(params)),
+        returnTo: ZAAK_STATUS_ROUTE,
+      },
+    ]
   );
 
   return res.redirect(loginRouteWithReturnTo);

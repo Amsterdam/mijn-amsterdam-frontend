@@ -99,12 +99,12 @@ describe('app', async () => {
     expect(routerProtected).toBeTruthy();
 
     expect(
-      routerProtected?.handle.stack.some(
+      app.router.stack.some(
         (x: object) => 'name' in x && x.name === 'handleIsAuthenticated'
       )
     ).toBe(true);
     expect(
-      routerProtected?.handle.stack.some(
+      app.router.stack.some(
         (x: object) => 'name' in x && x.name === 'handleCheckProtectedRoute'
       )
     ).toBe(true);

@@ -74,6 +74,7 @@ export function getReturnToUrl(
       return defaultReturnTo;
   }
 }
+
 export function getZaakStatusQueryParams(
   queryParams?: ParsedQs
 ): `?${string}` | string {
