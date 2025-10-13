@@ -404,10 +404,9 @@ function transformRegelingenForFrontend(
 }
 
 /** The following tests heavily use toMatchObject because I don't care about the following fields:
- * document.id: Contains encryption and will always be different.
- * document.url: Same as above.
- * steps[n].description: static text that can be subject to change.
- * The tests are mainly focussed on getting the right steps and documents.
+ *    document.id: Contains encryption and will always be different.
+ *    document.url: Same as above.
+ *  These are checked once for existing and containing data.
  */
 describe('Aanvrager is ontvanger', () => {
   test('Single Aanvraag toegewezen', () => {
