@@ -86,9 +86,12 @@ export function filterCombineRtmData(
   }
 
   // Prevent aanvragen from other 'betrokkenen' sets from being mixed up with eachother.
-  const aanvragenPerBetrokkenen = mapAanvragenPerBetrokkenen(
+  let aanvragenPerBetrokkenen = mapAanvragenPerBetrokkenen(
     rtmAanvragen,
     bsnOntvanger
+  );
+  aanvragenPerBetrokkenen = removeExpiredIndividualAanvragen(
+    aanvragenPerBetrokkenen
   );
   return [
     remainder,
@@ -136,6 +139,20 @@ function mapAanvragenPerBetrokkenen(
   }
 
   return aanvragenMap;
+}
+
+function removeExpiredIndividualAanvragen(
+  aanvragen: AanvragenMap
+): AanvragenMap {
+  const aanvraagEntries = Object.entries(aanvragen).filter(([_, aanvragen]) => {
+    return !(
+      aanvragen.length === 1 &&
+      isRTMDeel1(aanvragen[0]) &&
+      isAfter(new Date(), aanvragen[0].datumEindeGeldigheid ?? '')
+    );
+  });
+
+  return Object.fromEntries(aanvraagEntries) as AanvragenMap;
 }
 
 type RTMCombinedRegeling = [ZorgnedHLIRegeling, StatusLineItem[]];

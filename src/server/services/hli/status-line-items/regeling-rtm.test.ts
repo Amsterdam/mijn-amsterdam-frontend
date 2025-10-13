@@ -1,3 +1,5 @@
+import Mockdate from 'mockdate';
+
 import { getAuthProfileAndToken } from '../../../../testing/utils';
 import { AuthProfileAndToken } from '../../../auth/auth-types';
 import {
@@ -403,6 +405,10 @@ function transformRegelingenForFrontend(
   );
 }
 
+afterEach(() => {
+  Mockdate.reset();
+});
+
 /** The following tests heavily use toMatchObject because I don't care about the following fields:
  *    document.id: Contains encryption and will always be different.
  *    document.url: Same as above.
@@ -574,6 +580,16 @@ describe('Aanvrager is ontvanger', () => {
         status: 'Besluit',
       },
     ]);
+  });
+
+  test('Single aanvraag for external betrokkenen is no longer shown because of expiry', () => {
+    Mockdate.set('2025-01-02');
+
+    const regelingen = transformRegelingenForFrontend([
+      { ...RTM_1_AANVRAAG, datumEindeGeldigheid: '2025-01-01' },
+    ]);
+
+    expect(regelingen.length).toBe(0);
   });
 
   test('Migratie of active regeling', () => {
