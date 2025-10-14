@@ -12,8 +12,8 @@ const createStadspas = stadspasCreator();
 
 const createHLIComponent = componentCreator({
   component: HLIThema,
-  routeEntry: generatePath(themaConfig.listPage.route.path),
-  routePath: themaConfig.listPage.route.path,
+  routeEntry: generatePath(themaConfig.route.path),
+  routePath: themaConfig.route.path,
 });
 
 describe('<HLI />', () => {
