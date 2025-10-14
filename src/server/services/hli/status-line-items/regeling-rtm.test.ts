@@ -1129,6 +1129,91 @@ describe('Aanvrager is ontvanger', () => {
       },
     ]);
   });
+
+  test('Able to extract two regelingen from a list of aanvragen', () => {
+    const aanvragen = attachIDs([
+      RTM_1_AANVRAAG,
+      RTM_2_TOEGEWEZEN,
+      RTM_2_EINDE_RECHT,
+      RTM_1_AANVRAAG,
+      RTM_2_TOEGEWEZEN,
+      RTM_2_EINDE_RECHT,
+    ]);
+    const regelingen = transformRegelingenForFrontend(aanvragen);
+
+    expect(regelingen.length).toBe(2);
+
+    const expectedRegeling = {
+      title: RTM_2_EINDE_RECHT.titel,
+      isActual: RTM_2_EINDE_RECHT.isActueel,
+      dateDecision: RTM_2_EINDE_RECHT.datumBesluit,
+      dateStart: RTM_2_EINDE_RECHT.datumIngangGeldigheid,
+      dateEnd: RTM_2_EINDE_RECHT.datumEindeGeldigheid,
+      decision: 'toegewezen',
+      displayStatus: 'Einde recht',
+      documents: [],
+    };
+    const expectedSteps = [
+      {
+        id: 'status-step-1',
+        status: 'Aanvraag',
+        datePublished: RTM_1_AANVRAAG.datumBesluit,
+        description: '',
+        isActive: false,
+        isChecked: true,
+        isVisible: true,
+        documents: [],
+      },
+      {
+        id: 'status-step-2',
+        status: 'In behandeling genomen',
+        datePublished: RTM_1_AANVRAAG.datumBesluit,
+        description: descriptions.inBehandeling,
+        isActive: false,
+        isChecked: true,
+        isVisible: true,
+        documents: [
+          {
+            title: 'AV-RTM Info aan klant GGD',
+          },
+        ],
+      },
+      {
+        id: 'status-step-3',
+        status: 'Besluit',
+        datePublished: RTM_2_TOEGEWEZEN.datumBesluit,
+        description: descriptions.toegewezen,
+        isActive: false,
+        isChecked: true,
+        isVisible: true,
+        documents: [
+          {
+            title: 'Beschikking toekenning Reg Tegemoetk Meerkosten',
+          },
+        ],
+      },
+      {
+        id: 'status-step-4',
+        status: 'Einde recht',
+        description: descriptions.activeEindeRecht,
+        datePublished: RTM_2_EINDE_RECHT.datumEindeGeldigheid,
+        isActive: true,
+        isChecked: true,
+        isVisible: true,
+        documents: [
+          {
+            title: 'Beschikking beëindigen RTM',
+          },
+        ],
+      },
+    ];
+
+    expect(regelingen[0]).toMatchObject(expectedRegeling);
+    expect(regelingen[0].steps).toMatchObject(expectedSteps);
+
+    expect(regelingen[1]).toMatchObject(expectedRegeling);
+    expect(regelingen[1].steps).toMatchObject(expectedSteps);
+  });
 });
 
 describe('Ontvanger but aanvragen made by someone else', () => {

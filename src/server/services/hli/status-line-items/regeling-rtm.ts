@@ -192,10 +192,17 @@ function combineRTMData(
 
   aanvragen = dedupCombineRTMDeel2(aanvragen);
 
-  const groupedAanvragenPerRegeling = groupAanvragenPerRegeling(aanvragen);
+  const groupedAanvragenPerRegeling = groupAanvragenPerRegeling(aanvragen).map(
+    (aanvragen) => {
+      const aanvragenWithType = aanvragen.map((aanvraag, idx, aanvragen) => {
+        return createAanvraagWithType(aanvraag, aanvragen, idx);
+      });
+      return aanvragenWithType;
+    }
+  );
 
   const combinedRegelingen = groupedAanvragenPerRegeling.reduce(
-    (combinedRegelingen, aanvragen) => {
+    (combinedRegelingen, aanvragen, i, groupedAanvragenPerRegeling) => {
       const regeling = mergeAanvragenIntoRegeling(aanvragen);
       const lastAanvraag = aanvragen[aanvragen.length - 1];
       // A Afgewezen wijziging changes nothing about the active regeling.
@@ -205,7 +212,9 @@ function combineRTMData(
         regeling.resultaat = 'toegewezen';
       }
 
-      const statusLineItems = getAllStatusLineItems(aanvragen);
+      const statusLineItems = getAllStatusLineItems(
+        groupedAanvragenPerRegeling[i]
+      );
       const combinedRegeling: RTMCombinedRegeling = [regeling, statusLineItems];
       return [...combinedRegelingen, combinedRegeling];
     },
@@ -217,21 +226,16 @@ function combineRTMData(
 
 function groupAanvragenPerRegeling(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
-): AanvraagWithType[][] {
-  const groupedAanvragen: AanvraagWithType[][] = [];
+): ZorgnedAanvraagWithRelatedPersonsTransformed[][] {
+  const groupedAanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[][] = [];
 
-  let group: AanvraagWithType[] = [];
-  aanvragen.forEach((aanvraag, idx) => {
-    const typed = createAanvraagWithType(aanvraag, aanvragen, idx);
-    if (!typed) {
-      return;
-    }
-
-    group.push(typed);
+  let group: ZorgnedAanvraagWithRelatedPersonsTransformed[] = [];
+  aanvragen.forEach((aanvraag) => {
+    group.push(aanvraag);
 
     if (
-      typed.type === 'aanvraag-afgewezen' ||
-      typed.type === 'result-einde-recht'
+      (isRTMDeel1(aanvraag) && aanvraag.resultaat === 'afgewezen') ||
+      (isRTMDeel2(aanvraag) && isEindeRechtReached(aanvraag))
     ) {
       groupedAanvragen.push(group);
       group = [];
@@ -241,6 +245,69 @@ function groupAanvragenPerRegeling(
     groupedAanvragen.push(group);
   }
   return groupedAanvragen;
+}
+
+/** Check if einde recht is reached, this assumes that the aanvraag is RTM-2 */
+function isEindeRechtReached(
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+): boolean {
+  return !!(
+    aanvraag.isActueel === false &&
+    aanvraag.datumEindeGeldigheid &&
+    isAfter(new Date(), aanvraag.datumEindeGeldigheid)
+  );
+}
+
+type AanvraagType =
+  | null
+  | 'aanvraag-toegewezen'
+  | 'aanvraag-afgewezen'
+  | 'aanvraag-wijziging'
+  | 'result-migratie'
+  | 'result-toegewezen'
+  | 'result-afgewezen'
+  | 'result-einde-recht'
+  | 'result-wijziging-toegewezen'
+  | 'result-wijziging-afgewezen';
+
+type AanvraagWithType = ZorgnedHLIRegeling & { type: AanvraagType };
+
+function createAanvraagWithType(
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
+  idx: number
+): AanvraagWithType {
+  const withType = (type: AanvraagType) => {
+    return {
+      ...aanvraag,
+      type,
+    };
+  };
+
+  if (!aanvraag.resultaat) {
+    return withType(null);
+  }
+
+  if (idx === 0) {
+    if (isRTMDeel1(aanvraag)) {
+      return withType(`aanvraag-${aanvraag.resultaat}`);
+    }
+    return withType(`result-${aanvraag.resultaat}`);
+  }
+
+  if (isRTMDeel1(aanvraag)) {
+    return withType('aanvraag-wijziging');
+  }
+
+  if (isEindeRechtReached(aanvraag)) {
+    return withType('result-einde-recht');
+  }
+
+  const previousAanvraag = aanvragen[idx - 1];
+  if (idx >= 2 && isRTMDeel1(previousAanvraag)) {
+    return withType(`result-wijziging-${aanvraag.resultaat}`);
+  }
+  return withType(`result-${aanvraag.resultaat}`);
 }
 
 function mergeAanvragenIntoRegeling(
@@ -526,73 +593,6 @@ function createGetStatusLineItemFn(
 
     return collectedStatusLineItems;
   };
-}
-
-type AanvraagType =
-  | null
-  | 'aanvraag-toegewezen'
-  | 'aanvraag-afgewezen'
-  | 'aanvraag-wijziging'
-  | 'result-migratie'
-  | 'result-toegewezen'
-  | 'result-afgewezen'
-  | 'result-einde-recht'
-  | 'result-wijziging-toegewezen'
-  | 'result-wijziging-afgewezen';
-
-type AanvraagWithType = ZorgnedHLIRegeling & { type: AanvraagType };
-
-function createAanvraagWithType(
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
-  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
-  idx: number
-): AanvraagWithType {
-  const withType = (type: AanvraagType) => {
-    return {
-      ...aanvraag,
-      type,
-    };
-  };
-
-  if (!aanvraag.resultaat) {
-    return withType(null);
-  }
-
-  if (idx === 0) {
-    if (aanvraag.procesAanvraagOmschrijving === 'Migratie RTM') {
-      return withType('result-migratie');
-    }
-    if (isRTMDeel1(aanvraag)) {
-      return withType(`aanvraag-${aanvraag.resultaat}`);
-    }
-    if (isRTMDeel2(aanvraag)) {
-      return withType(`result-${aanvraag.resultaat}`);
-    }
-  }
-
-  if (isRTMDeel1(aanvraag)) {
-    return withType('aanvraag-wijziging');
-  }
-
-  if (
-    aanvraag.procesAanvraagOmschrijving === 'Beëindigen RTM' &&
-    aanvraag.isActueel === false &&
-    aanvraag.datumEindeGeldigheid &&
-    isAfter(new Date(), aanvraag.datumEindeGeldigheid)
-  ) {
-    return withType('result-einde-recht');
-  }
-
-  if (isRTMDeel2(aanvraag)) {
-    const previousAanvraag = aanvragen[idx - 1];
-    if (idx >= 2 && isRTMDeel1(previousAanvraag)) {
-      return withType(`result-wijziging-${aanvraag.resultaat}`);
-    }
-    return withType(`result-${aanvraag.resultaat}`);
-  }
-
-  captureMessage('Could not determine type of aanvraag', { severity: 'error' });
-  return withType(null);
 }
 
 function getStatusLineItems(
