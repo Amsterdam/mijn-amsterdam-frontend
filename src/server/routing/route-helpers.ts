@@ -35,10 +35,6 @@ export function createBFFRouter({
   return authRouterDevelopment;
 }
 
-export function apiRoute(...segments: string[]) {
-  return `${BFF_API_BASE_URL + segments.join('/')}`;
-}
-
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 export type RequestWithQueryParams<T extends RecordStr2> = Request<
   {},
