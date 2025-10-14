@@ -315,7 +315,7 @@ describe('<Varen />', () => {
               ...exploitatieInProgress,
               processed: true,
               displayStatus: 'Verleend',
-              dateRequest: '2025-06-16T00:00:00',
+              dateRequest: '2025-07-16T00:00:00',
             },
           ],
           null,
