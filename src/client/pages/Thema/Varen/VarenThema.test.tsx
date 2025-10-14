@@ -306,7 +306,7 @@ describe('<Varen />', () => {
     });
   });
 
-  it('does not show historical afgehandelde zaken', () => {
+  it('does not show historical afgehandelde zaken before 17 july 2025', () => {
     const screen = render(
       <Component
         state={getTestState(
@@ -315,7 +315,7 @@ describe('<Varen />', () => {
               ...exploitatieInProgress,
               processed: true,
               displayStatus: 'Verleend',
-              dateRequest: '2025-08-24T00:00:00',
+              dateRequest: '2025-07-16T00:00:00',
             },
           ],
           null,
