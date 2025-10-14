@@ -3,7 +3,6 @@ import { generatePath } from 'react-router';
 import { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
 import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { dateSort } from '../../../../universal/helpers/date';
-import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 import type {
@@ -173,16 +172,16 @@ export const listPageTitle = {
   [listPageKind.historic]: 'Eerdere en afgewezen regelingen',
 } as const;
 
-export const linkListItems: LinkProps[] = [
-  {
-    to: 'https://www.amsterdam.nl/werk-inkomen/hulp-bij-laag-inkomen/',
-    title: 'Meer informatie over regelingen',
-  },
-  {
-    to: 'https://www.amsterdam.nl/stadspas',
-    title: 'Meer informatie over Stadspas',
-  },
-] as const;
+// export const linkListItems: LinkProps[] = [
+//   {
+//     to: 'https://www.amsterdam.nl/werk-inkomen/hulp-bij-laag-inkomen/',
+//     title: 'Meer informatie over regelingen',
+//   },
+//   {
+//     to: 'https://www.amsterdam.nl/stadspas',
+//     title: 'Meer informatie over Stadspas',
+//   },
+// ] as const;
 
 export const kindTegoedLinkListItem: LinkProps = {
   to: 'https://www.amsterdam.nl/stadspas/kindtegoed/kosten-terugvragen/',
