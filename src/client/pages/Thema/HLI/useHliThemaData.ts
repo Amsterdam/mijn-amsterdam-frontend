@@ -6,7 +6,6 @@ import {
   listPageKind,
   themaId,
   kindTegoedLinkListItem,
-  linkListItems,
 } from './HLI-thema-config';
 import { useStadspassen } from './useStadspassen.hook';
 import type { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
@@ -63,8 +62,8 @@ export function useHliThemaData() {
     listPageTitle,
     listPageParamKind: listPageKind,
     linkListItems: hasKindtegoed
-      ? [...themaConfig.uitlegPageSections.listItems, kindTegoedLinkListItem]
-      : linkListItems,
+      ? [...themaConfig.links, kindTegoedLinkListItem]
+      : themaConfig.links,
     breadcrumbs,
     themaConfig,
   };
