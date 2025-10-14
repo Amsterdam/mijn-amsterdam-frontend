@@ -8,6 +8,7 @@ import {
   GenericDocument,
   StatusLineItem,
 } from '../../../../universal/types/App.types';
+import { captureMessage } from '../../monitoring';
 import { parseLabelContent } from '../../zorgned/zorgned-helpers';
 import {
   TextPartContents,
@@ -222,6 +223,10 @@ function groupAanvragenPerRegeling(
   let group: AanvraagWithType[] = [];
   aanvragen.forEach((aanvraag, idx) => {
     const typed = createAanvraagWithType(aanvraag, aanvragen, idx);
+    if (!typed) {
+      return;
+    }
+
     group.push(typed);
 
     if (
@@ -276,6 +281,9 @@ function getAllStatusLineItems(
     },
     [] as IncompleteStatusLineItem[]
   );
+  if (!incompleteStatusLineItems.length) {
+    return [];
+  }
   return finalizeStatusLineItems(incompleteStatusLineItems, aanvragen);
 }
 
@@ -302,7 +310,7 @@ function finalizeStatusLineItems(
 
   const lastAanvraag = aanvragen[aanvragen.length - 1];
   if (
-    lastAanvraag.type !== 'result-afwijzing' &&
+    lastAanvraag.type !== 'result-afgewezen' &&
     statusLineItems.at(-1)?.status !== 'Einde recht' &&
     !(isRTMDeel1(lastAanvraag) && lastAanvraag.resultaat === 'afgewezen')
   ) {
@@ -527,7 +535,7 @@ type AanvraagType =
   | 'aanvraag-wijziging'
   | 'result-migratie'
   | 'result-toegewezen'
-  | 'result-afwijzing'
+  | 'result-afgewezen'
   | 'result-einde-recht'
   | 'result-wijziging-toegewezen'
   | 'result-wijziging-afgewezen';
@@ -546,21 +554,20 @@ function createAanvraagWithType(
     };
   };
 
+  if (!aanvraag.resultaat) {
+    return withType(null);
+  }
+
   if (idx === 0) {
-    if (isRTMDeel1(aanvraag)) {
-      if (aanvraag.resultaat === 'toegewezen') {
-        return withType('aanvraag-toegewezen');
-      }
-      return withType('aanvraag-afgewezen');
-    }
     if (aanvraag.procesAanvraagOmschrijving === 'Migratie RTM') {
       return withType('result-migratie');
     }
-
-    if (aanvraag.resultaat === 'toegewezen') {
-      return withType('result-toegewezen');
+    if (isRTMDeel1(aanvraag)) {
+      return withType(`aanvraag-${aanvraag.resultaat}`);
     }
-    return withType('result-afwijzing');
+    if (isRTMDeel2(aanvraag)) {
+      return withType(`result-${aanvraag.resultaat}`);
+    }
   }
 
   if (isRTMDeel1(aanvraag)) {
@@ -579,20 +586,13 @@ function createAanvraagWithType(
   if (isRTMDeel2(aanvraag)) {
     const previousAanvraag = aanvragen[idx - 1];
     if (idx >= 2 && isRTMDeel1(previousAanvraag)) {
-      if (aanvraag.resultaat === 'toegewezen') {
-        return withType('result-wijziging-toegewezen');
-      }
-      return withType('result-wijziging-afgewezen');
+      return withType(`result-wijziging-${aanvraag.resultaat}`);
     }
-
-    if (aanvraag.resultaat === 'toegewezen') {
-      return withType('result-toegewezen');
-    }
-    return withType('result-afwijzing');
+    return withType(`result-${aanvraag.resultaat}`);
   }
 
-  console.dir(aanvraag);
-  throw Error('No type could be given to regeling');
+  captureMessage('Could not determine type of aanvraag', { severity: 'error' });
+  return withType(null);
 }
 
 function getStatusLineItems(
@@ -614,7 +614,7 @@ function getStatusLineItems(
     case 'result-toegewezen': {
       return getStatusLineItem(['besluit']);
     }
-    case 'result-afwijzing': {
+    case 'result-afgewezen': {
       return getStatusLineItem(['besluit']);
     }
     case 'result-einde-recht': {
@@ -630,12 +630,12 @@ function getStatusLineItems(
     case 'result-wijziging-afgewezen': {
       return getStatusLineItem(['wijzigingsBesluit']);
     }
-    // TODO;
-    // case 'result-wijziging-einde-recht': {
-    // }
     default: {
-      console.dir(aanvraagWithType);
-      throw Error('No statusstep found!');
+      captureMessage(
+        `No statusstep found for aanvraag type: ${aanvraagWithType.type}`,
+        { severity: 'error' }
+      );
+      return [];
     }
   }
 }
