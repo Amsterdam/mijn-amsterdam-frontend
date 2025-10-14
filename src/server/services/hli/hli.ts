@@ -13,17 +13,14 @@ import {
 } from './status-line-items/regeling-rtm';
 import {
   featureToggle,
-  routeConfig,
+  themaConfig,
 } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import {
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
 } from '../../../universal/helpers/api';
-import {
-  createDocumentDeduper,
-  dedupeDocumentsInDataSets,
-} from '../../../universal/helpers/document';
+import { dedupeDocumentsInDataSets } from '../../../universal/helpers/document';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import {
   GenericDocument,
@@ -117,7 +114,7 @@ async function transformRegelingForFrontend(
 ) {
   const id = aanvraag.id;
 
-  const route = generatePath(routeConfig.detailPage.path, {
+  const route = generatePath(themaConfig.detailPage.route.path, {
     id,
     regeling: slug(aanvraag.titel),
   });

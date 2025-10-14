@@ -10,7 +10,7 @@ import {
 } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router';
 
-import { featureToggle, routeConfig, themaId } from './HLI-thema-config';
+import { featureToggle, themaConfig, themaId } from './HLI-thema-config';
 import styles from './HLIStadspasDetail.module.scss';
 import { useBlockStadspas, useStadspassen } from './useStadspassen.hook';
 import {
@@ -89,7 +89,7 @@ const PHONENUMBERS = {
 export function HLIStadspasDetail() {
   const isPhoneScreen = useSmallScreen();
   const appState = useAppStateGetter();
-  useHTMLDocumentTitle(routeConfig.detailPageStadspas);
+  useHTMLDocumentTitle(themaConfig.stadspasPage.route);
 
   const { HLI } = appState;
   const { passNumber } = useParams<{ passNumber: string }>();
@@ -181,7 +181,7 @@ export function HLIStadspasDetail() {
             {(isErrorStadspas || (!isLoadingStadspas && noContent)) && (
               <ErrorAlert>
                 We kunnen op dit moment geen gegevens tonen.{' '}
-                <MaRouterLink href={routeConfig.themaPage.path}>
+                <MaRouterLink href={themaConfig.route.path}>
                   Naar het overzicht
                 </MaRouterLink>
               </ErrorAlert>

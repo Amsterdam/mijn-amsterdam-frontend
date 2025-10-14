@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { featureToggle, listPageParamKind } from './HLI-thema-config';
+import { featureToggle, listPageKind } from './HLI-thema-config';
 import styles from './HLIThema.module.scss';
 import { useHliThemaData } from './useHliThemaData';
 import { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
@@ -90,12 +90,12 @@ export function HLIThema() {
     stadspassen,
     dateExpiryFormatted,
     linkListItems,
-    routeConfig,
+    themaConfig,
   } = useHliThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const hasAanvragen = regelingen.some(
-    tableConfig[listPageParamKind.lopend].filter
+    tableConfig[listPageKind.inProgress].filter
   );
 
   const pageContentTop = (
@@ -110,7 +110,7 @@ export function HLIThema() {
   const regelingenTables = featureToggle.hliThemaRegelingenActive
     ? entries(tableConfig)
         .filter(([kind]) => {
-          return kind === listPageParamKind.lopend ? hasAanvragen : true;
+          return kind === listPageKind.inProgress ? hasAanvragen : true;
         })
         .map(
           ([

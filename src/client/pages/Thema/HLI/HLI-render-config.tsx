@@ -1,5 +1,5 @@
 import { getThemaTitleWithAppState } from './helpers';
-import { themaId, routeConfig, featureToggle } from './HLI-thema-config';
+import { themaId, featureToggle, themaConfig } from './HLI-thema-config';
 import { HLIDetail } from './HLIDetail';
 import { default as HLIIcon } from './HLIIcon.svg?react';
 import { HLIList } from './HLIList';
@@ -14,24 +14,24 @@ import type {
 
 export const HLIRoutes = [
   {
-    route: routeConfig.detailPageStadspas.path,
+    route: themaConfig.stadspasPage.route.path,
     Component: HLIStadspasDetail,
-    isActive: featureToggle.hliStadspasActive,
+    isActive: themaConfig.featureToggle.hliStadspasActive,
   },
   {
-    route: routeConfig.detailPage.path,
+    route: themaConfig.detailPage.route.path,
     Component: HLIDetail,
-    isActive: featureToggle.hliActive,
+    isActive: themaConfig.featureToggle.themaActive,
   },
   {
-    route: routeConfig.listPage.path,
+    route: themaConfig.listPage.route.path,
     Component: HLIList,
-    isActive: featureToggle.hliActive,
+    isActive: themaConfig.featureToggle.themaActive,
   },
   {
-    route: routeConfig.themaPage.path,
+    route: themaConfig.route.path,
     Component: HLIThema,
-    isActive: featureToggle.hliActive,
+    isActive: themaConfig.featureToggle.themaActive,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
@@ -40,9 +40,9 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
     return getThemaTitleWithAppState(appState);
   },
   id: themaId,
-  to: routeConfig.themaPage.path,
-  profileTypes: ['private'],
-  redactedScope: 'full',
+  to: themaConfig.route.path,
+  profileTypes: themaConfig.profileTypes,
+  redactedScope: themaConfig.redactedScope,
   isActive(appState: AppState) {
     const hasStadspas =
       !!appState.HLI?.content?.stadspas?.stadspassen?.length &&

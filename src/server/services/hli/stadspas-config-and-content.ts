@@ -2,7 +2,7 @@ import { generatePath } from 'react-router';
 
 import { StadspasFrontend } from './stadspas-types';
 import {
-  routeConfig,
+  themaConfig,
   themaId,
   themaTitle,
 } from '../../../client/pages/Thema/HLI/HLI-thema-config';
@@ -41,10 +41,10 @@ export function getBudgetNotifications(stadspassen: StadspasFrontend[]) {
     description,
     link: {
       to: stadspasPassNumber
-        ? generatePath(routeConfig.detailPageStadspas.path, {
+        ? generatePath(themaConfig.stadspasPage.route.path, {
             passNumber: stadspasPassNumber,
           })
-        : routeConfig.themaPage.path,
+        : themaConfig.route.path,
       title: 'Check het saldo',
     },
   });

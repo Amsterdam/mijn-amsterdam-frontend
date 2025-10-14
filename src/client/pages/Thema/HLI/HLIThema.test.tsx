@@ -1,11 +1,7 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import {
-  listPageParamKind,
-  routeConfig,
-  tableConfig,
-} from './HLI-thema-config';
+import { listPageKind, themaConfig, tableConfig } from './HLI-thema-config';
 import { HLIThema } from './HLIThema';
 import { stadspasCreator } from './test-helpers';
 import { createHLIState } from './test-helpers';
@@ -16,8 +12,8 @@ const createStadspas = stadspasCreator();
 
 const createHLIComponent = componentCreator({
   component: HLIThema,
-  routeEntry: generatePath(routeConfig.themaPage.path),
-  routePath: routeConfig.themaPage.path,
+  routeEntry: generatePath(themaConfig.listPage.route.path),
+  routePath: themaConfig.listPage.route.path,
 });
 
 describe('<HLI />', () => {
@@ -112,7 +108,7 @@ describe('<HLI />', () => {
     ] as HLIRegelingFrontend[];
 
     expect(
-      regelingen.filter(tableConfig[listPageParamKind.lopend].filter)
+      regelingen.filter(tableConfig[listPageKind.inProgress].filter)
     ).toEqual([regelingen[1], regelingen[2], regelingen[3]]);
   });
 });

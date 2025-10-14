@@ -32,6 +32,7 @@ export type ThemaConfigBase = {
 };
 
 export type WithDetailPage = PageConfig<'detailPage'>;
+export type WithDetailPageStadspas = PageConfig<'stadspasPage'>;
 
 export type WithListPage = PageConfig<'listPage'>;
 
@@ -40,6 +41,7 @@ type ThemaFeatureToggle = { themaActive: boolean } & FeatureToggle;
 type RedactedScope = 'full' | 'content' | 'none';
 type PageConfig<T extends string> = {
   [key in T]: {
+    //path(path: any, arg1: { kind: "lopende-aanvragen"; page: null; }): unknown;
     title: null | string;
     route: ThemaRouteConfig;
   };
@@ -47,6 +49,12 @@ type PageConfig<T extends string> = {
 type InfoSection = {
   title?: null | string;
   listItems: Array<{ text?: string; listItems?: string[] } | string>;
+};
+export type ThemaRouteConfig = {
+  path: string;
+  //TO DO bij alle thema's die nog niet behandeld zijn krijg ik nu een error dat trackingUrl leeg is, dus van daar even met een?
+  trackingUrl?: null | string | TrackinUrlFN;
+  documentTitle: string | DocumenttitleFN;
 };
 
 export interface ThemaMenuItem<ID extends string = string>
@@ -90,13 +98,6 @@ type ThemaPageType =
 type DocumenttitleFN = <T extends Params<string>>(params: T | null) => string;
 
 type TrackinUrlFN = <T extends Params<string>>(params: T | null) => string;
-
-export type ThemaRouteConfig = {
-  path: string;
-  // Only needed for routes with variable path segments
-  trackingUrl: null | string | TrackinUrlFN;
-  documentTitle: string | DocumenttitleFN;
-};
 
 export type ThemaRoutesConfig = {
   [themaPageType in ThemaPageType]: ThemaRouteConfig;
