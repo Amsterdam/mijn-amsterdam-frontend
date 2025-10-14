@@ -27,6 +27,7 @@ import { logger } from './logging';
 
 const debugResponseDataTerms = process.env.DEBUG_RESPONSE_DATA;
 const debug = process.env.DEBUG;
+
 if (debugResponseDataTerms && !debug?.includes('source-api-request:response')) {
   logger.info(
     `Enabling debug for source-api-request:response because DEBUG_RESPONSE_DATA is set (${debugResponseDataTerms})`
@@ -46,8 +47,13 @@ import {
   BFF_BASE_PATH_PRIVATE,
   BffEndpoints,
 } from './routing/bff-routes';
-import { nocache, requestID } from './routing/route-handlers';
-import { send404 } from './routing/route-helpers';
+import {
+  handleCheckProtectedRoute,
+  handleIsAuthenticated,
+  nocache,
+  requestID,
+} from './routing/route-handlers';
+import { generateFullApiUrlBFF, send404 } from './routing/route-helpers';
 import { adminRouter } from './routing/router-admin';
 import { authRouterDevelopment } from './routing/router-development';
 import { oidcRouter } from './routing/router-oidc';
@@ -58,7 +64,6 @@ import { captureException } from './services/monitoring';
 
 import { getFromEnv } from './helpers/env';
 import { notificationsExternalConsumerRouter } from './routing/router-notifications-external-consumer';
-import { FeatureToggle } from '../universal/config/feature-toggles';
 import { router as privateNetworkRouter } from './routing/router-private';
 
 const app = express();
@@ -90,35 +95,14 @@ app.use(compression());
 // Generate request id
 app.use(requestID);
 
-////////////////////////////////////////////////////////////////////////
-///// [ACCEPTANCE - PRODUCTION]
-///// Public routes Voor Acceptance - Development
-////////////////////////////////////////////////////////////////////////
-
+// Some legacy routes that are not prefixed with /api/v1
 app.use(legacyRouter);
 
-/**
- * The public router has routes that can be accessed by anyone without any authentication.
- */
+////////////////////////////////////////////////////////////////////////
+///// The public router has routes that can be accessed by anyone without any authentication.
+////////////////////////////////////////////////////////////////////////
+
 app.use(BFF_BASE_PATH, publicRouter);
-
-////////////////////////////////////////////////////////////////////////
-///// Generic Router Method for All environments
-////////////////////////////////////////////////////////////////////////
-// Mount the routers at the base path
-app.use(BFF_BASE_PATH, nocache, stadspasExternalConsumerRouter.public);
-
-if (FeatureToggle.amsNotificationsIsActive) {
-  app.use(BFF_BASE_PATH, nocache, notificationsExternalConsumerRouter.public);
-}
-
-// All routes after this point are protected and need authentication
-////////////////////////////////////////////////////////////////////////
-///// Routers for Authenticated Users
-///// These routes are protected by our authentication system.
-///// These routers are all prefixed with /api/v1 and accessible
-///// from the public internet.
-////////////////////////////////////////////////////////////////////////
 
 ///// [DEVELOPMENT - TEST]
 //// In development we use the authRouterDevelopment which has a mock login.
@@ -133,11 +117,24 @@ if (IS_AP && !IS_OT) {
   app.use(BFF_BASE_PATH, oidcRouter);
 }
 
-app.use(BFF_BASE_PATH, nocache, protectedRouter, adminRouter);
+app.use(
+  BFF_BASE_PATH,
+  nocache,
+  stadspasExternalConsumerRouter.public,
+  notificationsExternalConsumerRouter.public
+);
+
+app.use(
+  BFF_BASE_PATH,
+  nocache,
+  handleCheckProtectedRoute,
+  handleIsAuthenticated,
+  protectedRouter,
+  adminRouter
+);
 
 /////////////////////////////////////////////////////////////////////////
-///// Routers for External Consumers
-///// These routes are not protected by our authentication system, but
+///// These routes are not protected by TMA/OIDC system, but
 ///// are protected by other means (e.g. IP whitelisting, API keys, etc).
 ///// These routers are all prefixed with /private and not accessible
 ///// from the public internet.
@@ -146,7 +143,7 @@ app.use(BFF_BASE_PATH_PRIVATE, nocache, privateNetworkRouter);
 
 // Redirects to /api/v1
 app.get(BffEndpoints.ROOT, (_req, res) => {
-  return res.redirect(`${BFF_BASE_PATH + BffEndpoints.ROOT}`);
+  return res.redirect(generateFullApiUrlBFF(BffEndpoints.ROOT));
 });
 
 // Optional fallthrough error handler
@@ -162,16 +159,14 @@ app.use(function onError(
     },
   });
 
+  const redirectUrl = `${process.env.MA_FRONTEND_URL}/server-error-500`;
+
   if (!IS_PRODUCTION) {
     return res.redirect(
-      `${process.env.MA_FRONTEND_URL}/server-error-500?stack=${JSON.stringify(
-        err.stack,
-        null,
-        2
-      )}`
+      `${redirectUrl}?stack=${JSON.stringify(err.stack, null, 2)}`
     );
   }
-  return res.redirect(`${process.env.MA_FRONTEND_URL}/server-error-500`);
+  return res.redirect(`${redirectUrl}`);
 });
 
 app.use((_req: Request, res: Response) => {

@@ -3,10 +3,6 @@ import { NextFunction, Request, Response } from 'express';
 
 import { BffEndpoints } from './bff-routes';
 import {
-  handleCheckProtectedRoute,
-  handleIsAuthenticated,
-} from './route-handlers';
-import {
   createBFFRouter,
   sendBadRequest,
   sendResponse,
@@ -54,8 +50,6 @@ import { wmoRouter } from '../services/wmo/wmo-router';
 import { fetchWpiDocument } from '../services/wpi/api-service';
 
 export const router = createBFFRouter({ id: 'router-protected' });
-
-router.use(handleCheckProtectedRoute, handleIsAuthenticated);
 
 router.get(
   BffEndpoints.SERVICES_ALL,
