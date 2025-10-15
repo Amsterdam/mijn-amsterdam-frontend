@@ -10,7 +10,7 @@ export function useBodemDetailData() {
   const meting = items.find((meting) => meting.kenmerk === id) ?? null;
 
   return {
-    id: themaConfig.id,
+    themaId: themaConfig.id,
     title: themaConfig.detailPage.title ?? undefined,
     meting,
     isLoading,

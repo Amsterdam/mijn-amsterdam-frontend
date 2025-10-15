@@ -1,4 +1,3 @@
-import { themaConfig } from './Bodem-thema-config';
 import { useBodemDetailData } from './useBodemDetailData.hook';
 import { LoodMetingFrontend } from '../../../../server/services/bodem/types';
 import { Datalist, Row } from '../../../components/Datalist/Datalist';
@@ -9,8 +8,17 @@ import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function BodemDetail() {
-  const { meting, isLoading, isError, breadcrumbs, title } = useBodemDetailData();
-  useHTMLDocumentTitle(themaConfig.detailPage.route);
+  const {
+    themaId,
+    meting,
+    isLoading,
+    isError,
+    breadcrumbs,
+    title,
+    routeConfig,
+  } = useBodemDetailData();
+
+  useHTMLDocumentTitle(routeConfig);
 
   const LoodMetingRows = (meting: LoodMetingFrontend) => {
     const rows: Row[] = [{ label: 'Kenmerk', content: meting.kenmerk }];
@@ -32,14 +40,8 @@ export function BodemDetail() {
     if (meting.decision === 'Afgewezen') {
       rows.push(
         ...[
-          {
-            label: 'Resultaat',
-            content: meting.decision,
-          },
-          {
-            label: 'Reden afwijzing',
-            content: meting.redenAfwijzing,
-          },
+          { label: 'Resultaat', content: meting.decision },
+          { label: 'Reden afwijzing', content: meting.redenAfwijzing },
         ]
       );
     }
@@ -57,7 +59,7 @@ export function BodemDetail() {
 
   return (
     <ThemaDetailPagina
-      themaId={themaConfig.id}
+      themaId={themaId}
       title={title}
       zaak={meting}
       breadcrumbs={breadcrumbs}
