@@ -226,7 +226,75 @@ attachDocumentDownloadRoute(
 );
 
 // AFIS facturen en betalen
-router.get(BffEndpoints.AFIS_BUSINESSPARTNER, handleFetchAfisBusinessPartner);
+
+{
+  type QueryPayload = BusinessPartnerIdPayload;
+  type ServiceReturnType = ReturnType<typeof fetchAfisBusinessPartnerDetails>;
+
+  router.get(
+    BffEndpoints.AFIS_BUSINESSPARTNER,
+    handleAfisRequestWithEncryptedPayloadQueryParam<
+      QueryPayload,
+      ServiceReturnType
+    >(fetchAfisBusinessPartnerDetails)
+  );
+}
+
+{
+  type QueryPayload = BusinessPartnerIdPayload;
+  type ServiceReturnType = ReturnType<typeof fetchAfisEMandates>;
+
+  router.get(
+    BffEndpoints.AFIS_EMANDATES,
+    handleAfisRequestWithEncryptedPayloadQueryParam<
+      QueryPayload,
+      ServiceReturnType
+    >(fetchAfisEMandates)
+  );
+}
+
+{
+  type QueryPayload = EMandateStatusChangePayload;
+  type ServiceReturnType = ReturnType<typeof changeEMandateStatus>;
+
+  router.get(
+    BffEndpoints.AFIS_EMANDATES_STATUS_CHANGE,
+    handleAfisRequestWithEncryptedPayloadQueryParam<
+      QueryPayload,
+      ServiceReturnType
+    >(changeEMandateStatus)
+  );
+}
+
+{
+  type QueryPayload = EMandateSignRequestPayload;
+  type ServiceReturnType = ReturnType<
+    typeof fetchEmandateRedirectUrlFromProvider
+  >;
+
+  router.get(
+    BffEndpoints.AFIS_EMANDATES_SIGN_REQUEST_URL,
+    handleAfisRequestWithEncryptedPayloadQueryParam<
+      QueryPayload,
+      ServiceReturnType
+    >(fetchEmandateRedirectUrlFromProvider)
+  );
+}
+
+{
+  type QueryPayload = BusinessPartnerIdPayload;
+  type ServiceReturnType = ReturnType<typeof handleFetchAfisFacturen>;
+
+  router.get(
+    BffEndpoints.AFIS_FACTUREN,
+    handleAfisRequestWithEncryptedPayloadQueryParam<
+      QueryPayload,
+      ServiceReturnType,
+      AfisFacturenRouteParams
+    >(handleFetchAfisFacturen)
+  );
+}
+
 attachDocumentDownloadRoute(
   router,
   BffEndpoints.AFIS_DOCUMENT_DOWNLOAD,
