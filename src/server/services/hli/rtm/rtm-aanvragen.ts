@@ -1,4 +1,5 @@
 const aanvragen_ = [
+  // Mix of RMT and RTM1, multiple betrokkenen
   [
     {
       productsoortCode: 'RTM',
@@ -26,35 +27,37 @@ const aanvragen_ = [
       resultaat: 'toegewezen',
     },
   ],
+  // Mix of RTM and RTM1, multiple afgewezen aanvragen with single betrokkene
   [
     {
       productsoortCode: 'RTM1',
-      betrokkenen: ['A'],
+      betrokkenen: ['A3'],
       resultaat: 'toegewezen',
     },
     {
       productsoortCode: 'RTM',
-      betrokkenen: ['A'],
+      betrokkenen: ['A3'],
       resultaat: 'toegewezen',
     },
     { productsoortCode: 'RTM1', betrokkenen: [], resultaat: 'afgewezen' },
     {
       productsoortCode: 'RTM1',
-      betrokkenen: ['A'],
+      betrokkenen: ['A3'],
       resultaat: 'toegewezen',
     },
     { productsoortCode: 'RTM', betrokkenen: [], resultaat: 'afgewezen' },
     {
       productsoortCode: 'RTM1',
-      betrokkenen: ['A'],
+      betrokkenen: ['A3'],
       resultaat: 'toegewezen',
     },
     {
       productsoortCode: 'RTM',
-      betrokkenen: ['A'],
+      betrokkenen: ['A3'],
       resultaat: 'toegewezen',
     },
   ],
+  // Mix of RTM and RTM1, multiple afgewezen aanvragen with multiple betrokkenen, only aanvragen voor betrokkenen.
   [
     {
       productsoortCode: 'RTM1',
@@ -69,6 +72,8 @@ const aanvragen_ = [
       resultaat: 'toegewezen',
     },
   ],
+  // Mix of RTM and RTM1, aanvraag voor Aanvrager/Ontvanger en aanvraag voor betrokkene.
+  // Afgewezen aanvraag results in orphan.
   [
     {
       productsoortCode: 'RTM1',
@@ -87,6 +92,7 @@ const aanvragen_ = [
     },
     { productsoortCode: 'RTM1', betrokkenen: [], resultaat: 'afgewezen' },
   ],
+  // Single betrokkene, only ontvanger.
   [
     { productsoortCode: 'RTM', betrokkenen: ['H'], resultaat: 'afgewezen' },
     { productsoortCode: 'RTM', betrokkenen: ['H'], resultaat: 'afgewezen' },
@@ -97,6 +103,7 @@ const aanvragen_ = [
     },
     { productsoortCode: 'RTM', betrokkenen: ['H'], resultaat: 'afgewezen' },
   ],
+  // Ontvanger turns 18 and needs to request RTM1 for self.
   [
     {
       productsoortCode: 'RTM',
@@ -125,6 +132,7 @@ const aanvragen_ = [
       resultaat: 'toegewezen',
     },
   ],
+  // Aan/Uit single betrokkene, multiple aanvragen, some with datumEindeGeldigheid
   [
     {
       productsoortCode: 'RTM1',
@@ -169,6 +177,8 @@ const aanvragen_ = [
       resultaat: 'toegewezen',
     },
   ],
+  // Mix of RTM and RTM1, multiple betrokkenen. Afgewezen aanvraag results in orphan.
+  // Multiple statustrein per betrokkene with aanvraag step that applies to both.
   [
     {
       productsoortCode: 'RTM1',
@@ -203,6 +213,7 @@ const aanvragen_ = [
     },
     { productsoortCode: 'RTM1', betrokkenen: [], resultaat: 'afgewezen' },
   ],
+  // Aanvraag mixed 2 - Alleen ontvangers
   [
     {
       productsoortCode: 'RTM1',
@@ -220,6 +231,7 @@ const aanvragen_ = [
       resultaat: 'toegewezen',
     },
   ],
+  // Aanvraag mixed 3 - Alleen ontvangers
   [
     {
       productsoortCode: 'RTM1',
@@ -255,7 +267,7 @@ const aanvragen_ = [
       resultaat: 'toegewezen',
     },
   ],
-  // // Because we have multiple betrokkenen in multiple aanvragen, we cannot know for sure which afgewezen aanvragen belong to.
+  // Because we have multiple betrokkenen in multiple aanvragen, we cannot know for sure which afgewezen aanvragen belong to.
   [
     { productsoortCode: 'RTM1', betrokkenen: [], resultaat: 'afgewezen' },
     { productsoortCode: 'RTM1', betrokkenen: [], resultaat: 'afgewezen' },
