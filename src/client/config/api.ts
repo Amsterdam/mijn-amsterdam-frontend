@@ -21,7 +21,6 @@ export const BFFApiUrls = {
   AFIS_EMANDATES: `${BFF_API_BASE_URL}/services/afis/e-mandates`,
   AFIS_EMANDATES_SIGN_REQUEST_URL: `${BFF_API_BASE_URL}/services/afis/e-mandates/sign-request-url`,
   AFIS_EMANDATES_DEACTIVATE: `${BFF_API_BASE_URL}/services/afis/e-mandates/deactivate`,
-  AFIS_EMANDATES_UPDATE: `${BFF_API_BASE_URL}/services/afis/e-mandates/update`,
   AFIS_FACTUREN: `${BFF_API_BASE_URL}/services/afis/facturen/:state`,
 } as const;
 

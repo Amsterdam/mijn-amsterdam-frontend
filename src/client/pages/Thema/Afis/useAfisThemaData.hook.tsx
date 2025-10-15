@@ -260,44 +260,52 @@ function generateApiUrl(
 }
 
 export function useAfisEMandateSWR(businessPartnerIdEncrypted: string | null) {
-  return useSWR<ApiSuccessResponse<AfisEMandateFrontend[]>>(
+  return useSWR<AfisEMandateFrontend[]>(
     generateApiUrl(businessPartnerIdEncrypted, 'AFIS_EMANDATES'),
-    fetchAfisApi,
+    sendGetRequest,
     { dedupingInterval: FIFTEEN_MINUTES_MS }
   );
 }
 
 export function useAfisEmandateUpdate(
-  businessPartnerIdEncrypted: string | null
+  businessPartnerIdEncrypted: string | null,
+  eMandate: AfisEMandateFrontend | null
 ) {
-  async function sendRequest(
-    url: string,
-    { arg: eMandateUpdatePayload }: { arg: { dateValidTo: string } }
-  ) {
-    return fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(eMandateUpdatePayload),
-      credentials: 'include',
-    }).then((res) => res.json());
-  }
-
-  const { trigger, isMutating } = useSWRMutation(
-    generateApiUrl(businessPartnerIdEncrypted, 'AFIS_EMANDATES_UPDATE'),
-    sendRequest /* options */
+  const { mutate, isLoading, isValidating } = useAfisEMandateSWR(
+    businessPartnerIdEncrypted
+  );
+  const { trigger, isMutating, ...rest } = useSWRMutation(
+    eMandate?.updateUrl,
+    swrPostRequestDefault(),
+    {
+      onSuccess(eMandateUpdatePayload) {
+        mutate(
+          (eMandates) => {
+            if (!eMandates) {
+              return eMandates;
+            }
+            return eMandates.map((mandate) => {
+              if (mandate.id === eMandate?.id) {
+                return {
+                  ...mandate,
+                  ...eMandateUpdatePayload,
+                };
+              }
+              return mandate;
+            });
+          },
+          { revalidate: false }
+        );
+      },
+    }
   );
 
   return {
     update: async (dateValidTo: string) => {
-      try {
-        const result = await trigger({ dateValidTo } /* options */);
-        return result;
-      } catch (e) {
-        // error handling
-        alert('errro!' + e);
-      }
-      return;
+      trigger({ dateValidTo });
     },
-    isMutating,
+    isMutating: isMutating || isLoading || isValidating,
+    ...rest,
   };
 }
 

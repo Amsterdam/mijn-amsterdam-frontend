@@ -16,6 +16,7 @@ import {
 } from './useAfisThemaData.hook';
 import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types';
 import { Datalist } from '../../../components/Datalist/Datalist';
+import LoadingContent from '../../../components/LoadingContent/LoadingContent';
 import { MaRouterLink } from '../../../components/MaLink/MaLink';
 import { Modal } from '../../../components/Modal/Modal';
 import { PageContentCell } from '../../../components/Page/Page';
@@ -86,17 +87,58 @@ function DateAdjustModal({
   );
 }
 
+function DateAdjust({ eMandate }: { eMandate: AfisEMandateFrontend }) {
+  const { businessPartnerIdEncrypted } = useAfisThemaData();
+  const [isDateAdjustModalActive, setDateAdjustModal] = useState(false);
+  const { isMutating, update, error } = useAfisEmandateUpdate(
+    businessPartnerIdEncrypted,
+    eMandate
+  );
+
+  const dateContent = eMandate.dateValidTo?.includes('9999')
+    ? 'doorlopend'
+    : eMandate.dateValidToFormatted;
+
+  console.log('error', error);
+
+  return (
+    <div>
+      {isMutating ? (
+        <LoadingContent inline barConfig={[['140px', '2rem', '0']]} />
+      ) : (
+        dateContent
+      )}
+      &nbsp;&nbsp;
+      <MaRouterLink
+        href={window.location.pathname}
+        onClick={(event) => {
+          event.preventDefault();
+          setDateAdjustModal(true);
+        }}
+      >
+        einddatum aanpassen
+      </MaRouterLink>
+      {error && <Paragraph size="small">{error.message}</Paragraph>}
+      <DateAdjustModal
+        eMandate={eMandate}
+        isDateAdjustModalActive={isDateAdjustModalActive}
+        setDateAdjustModal={setDateAdjustModal}
+        onSubmit={(event) => {
+          event.preventDefault();
+          const formdata = new FormData(event.currentTarget);
+          setDateAdjustModal(false);
+          update(formdata.get('endDate') as string);
+        }}
+      />
+    </div>
+  );
+}
+
 type EMandateProps = {
   eMandate: WithActionButtons<AfisEMandateFrontend>;
 };
 
 function EMandate({ eMandate }: EMandateProps) {
-  const { businessPartnerIdEncrypted } = useAfisThemaData();
-  const [isDateAdjustModalActive, setDateAdjustModal] = useState(false);
-  const { isMutating, update } = useAfisEmandateUpdate(
-    businessPartnerIdEncrypted
-  );
-
   return (
     <PageContentCell>
       <Datalist
@@ -131,37 +173,7 @@ function EMandate({ eMandate }: EMandateProps) {
               {
                 label: 'Einddatum',
                 isVisible: eMandate.status === '1',
-                content: (
-                  <>
-                    {eMandate.dateValidTo?.includes('9999')
-                      ? 'doorlopend'
-                      : eMandate.dateValidToFormatted}{' '}
-                    &nbsp;
-                    <>
-                      <MaRouterLink
-                        href={window.location.pathname}
-                        onClick={(event) => {
-                          event.preventDefault();
-                          setDateAdjustModal(true);
-                        }}
-                      >
-                        einddatum aanpassen
-                      </MaRouterLink>
-                      <DateAdjustModal
-                        eMandate={eMandate}
-                        isDateAdjustModalActive={isDateAdjustModalActive}
-                        setDateAdjustModal={setDateAdjustModal}
-                        onSubmit={(event) => {
-                          const formdata = new FormData(event.currentTarget);
-                          console.log('formdata', formdata);
-                          event.preventDefault();
-                          setDateAdjustModal(false);
-                          update(formdata.get('endDate') as string);
-                        }}
-                      />
-                    </>
-                  </>
-                ),
+                content: <DateAdjust eMandate={eMandate} />,
               },
             ],
           },

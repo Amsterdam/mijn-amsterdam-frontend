@@ -1,5 +1,6 @@
 import { HttpStatusCode } from 'axios';
 import { NextFunction, Request, Response } from 'express';
+import express from 'express';
 
 import { BffEndpoints } from './bff-routes';
 import {
@@ -286,8 +287,9 @@ attachDocumentDownloadRoute(
   type QueryPayload = EMandateUpdatePayload;
   type ServiceReturnType = ReturnType<typeof handleEmandateUpdate>;
 
-  router.get(
+  router.post(
     BffEndpoints.AFIS_EMANDATES_UPDATE,
+    express.urlencoded({ extended: true }),
     handleAfisRequestWithEncryptedPayloadQueryParam<
       QueryPayload,
       ServiceReturnType

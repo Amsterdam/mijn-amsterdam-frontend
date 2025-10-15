@@ -1,5 +1,5 @@
-import { Buffer } from 'buffer';
-import crypto from 'crypto';
+import { Buffer } from 'node:buffer';
+import crypto from 'node:crypto';
 
 import { DecryptedPayloadAndSessionID } from '../services/shared/decrypt-route-param';
 

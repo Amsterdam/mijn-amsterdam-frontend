@@ -388,6 +388,7 @@ export type AfisEMandateFrontend = {
   // Urls to interact with the mandate state
   statusChangeUrl?: string;
   signRequestUrl?: string;
+  updateUrl?: string;
 
   link: LinkProps;
 };
