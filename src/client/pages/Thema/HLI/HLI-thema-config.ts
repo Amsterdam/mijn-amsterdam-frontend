@@ -44,16 +44,16 @@ export const themaConfig: HLIThemaConfig = {
   id: 'HLI',
   title: 'Stadspas en regelingen bij laag inkomen',
   featureToggle: {
-    themaActive: true, //uitsluitend Regelingemn
+    themaActive: true, //uitsluitend Regelingen is nu denk ik HLIActive
     hliActive: true, //misschien bij render config waar nu themaActive staat HLIActive weer terug?/
     hliStadspasActive: true,
     zorgnedAvApiActive: true,
     hliThemaStadspasBlokkerenActive: true,
     hliThemaStadspasDeblokkerenActive: !IS_PRODUCTION,
-    hliThemaRegelingenActive: true,
-    hliRegelingEnabledCZM: true,
-    hliRegelingEnabledRTM: !IS_PRODUCTION,
-    hli2025PCTegoedCodesEnabled: !IS_PRODUCTION,
+    hliThemaRegelingenActive: true, //volgens mij is deze voor aanvragen (en niet regelingen)
+    hliRegelingCZM: true,
+    hliRegelingRTM: !IS_PRODUCTION,
+    hliRegelingPCTegoedCodes2025: !IS_PRODUCTION,
   },
   profileTypes: ['private'],
   route: {
@@ -88,7 +88,7 @@ export const themaConfig: HLIThemaConfig = {
       //     regeling: params?.regeling ?? '',
       //   }),
       get documentTitle() {
-        return `Regelingen | ${themaConfig.title}`;
+        return `Regelingen | ${themaConfig.title}`; //FOUT DIT MOET DE REGELING ZIJN ALS TITEL
       },
     },
   },
