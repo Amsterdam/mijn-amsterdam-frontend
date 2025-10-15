@@ -13,6 +13,7 @@ import {
 import { bffApi } from '../../../../testing/utils';
 import { AppState } from '../../../../universal/types/App.types';
 import MockApp from '../../MockApp';
+import { EMANDATE_ENDDATE_INDICATOR } from '../Afis/Afis-thema-config';
 
 function mockDetailFetch(
   content: unknown = transformErfpachtDossierProperties(
@@ -182,7 +183,10 @@ describe('<Erfpacht/DossierDetail />', () => {
     const testState = {
       ERFPACHT: {
         status: 'OK',
-        content: transformDossierResponse(ERFPACHT_DOSSIERS as any, '999999'),
+        content: transformDossierResponse(
+          ERFPACHT_DOSSIERS as any,
+          EMANDATE_ENDDATE_INDICATOR
+        ),
       },
     } as AppState;
 

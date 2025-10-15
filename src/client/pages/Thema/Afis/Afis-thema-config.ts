@@ -30,6 +30,9 @@ export const featureToggle = {
   afisMigratedFacturenDownloadActive: !IS_PRODUCTION,
 };
 
+// E-Mandates are always recurring and have a default date far in the future!
+export const EMANDATE_ENDDATE_INDICATOR = '9999';
+
 export const themaId = 'AFIS' as const;
 export const themaTitle = 'Facturen en betalen';
 
