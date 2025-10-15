@@ -13,9 +13,7 @@ import {
   themaTitle,
   themaId,
   routeConfig,
-  type WithActionButtons,
 } from './Afis-thema-config';
-import { AfisEMandateActionUrls } from './AfisEmandateActionButtons';
 import {
   AfisBusinessPartnerDetailsTransformed,
   AfisThemaResponse,
@@ -329,7 +327,6 @@ export function useAfisEMandatesData() {
   const eMandates = (eMandatesApiResponse ?? []).map((eMandate) => {
     return {
       ...eMandate,
-      action: <AfisEMandateActionUrls eMandate={eMandate} />,
       detailLinkComponent: (
         <>
           <MaRouterLink maVariant="fatNoUnderline" href={eMandate.link.to}>
@@ -353,7 +350,7 @@ export function useAfisEMandatesData() {
 
   return {
     title,
-    eMandate: eMandate as WithActionButtons<AfisEMandateFrontend>,
+    eMandate,
     breadcrumbs,
     hasEMandatesError: !!error,
     isLoadingEMandates: isLoading || !eMandatesApiResponse,

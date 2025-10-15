@@ -146,8 +146,6 @@ export const facturenTableConfig = {
   },
 } as const;
 
-export type WithActionButtons<T> = T & { action: ReactNode };
-
 export const businessPartnerDetailsLabels: DisplayProps<AfisBusinessPartnerDetailsTransformed> =
   {
     fullName: 'Debiteurnaam',
@@ -158,9 +156,7 @@ export const businessPartnerDetailsLabels: DisplayProps<AfisBusinessPartnerDetai
   };
 
 // Betaalvoorkeuren
-const displayPropsEMandates: DisplayProps<
-  WithActionButtons<AfisEMandateFrontend>
-> = {
+const displayPropsEMandates: DisplayProps<AfisEMandateFrontend> = {
   detailLinkComponent: 'Afdeling gemeente',
   // acceptantIBAN: 'IBAN gemeente',
   // senderName: 'Naam rekeninghouder',
