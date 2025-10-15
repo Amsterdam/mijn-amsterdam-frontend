@@ -1,6 +1,7 @@
 import { ReactNode, useMemo } from 'react';
 
-import { generatePath } from 'react-router';
+import { generatePath,useParams } from 'react-router';
+import { Paragraph } from '@amsterdam/design-system-react';
 
 import {
   AfisFacturenByStateFrontend,
@@ -12,6 +13,7 @@ import {
   themaTitle,
   themaId,
   routeConfig,
+  type WithActionButtons,
 } from './Afis-thema-config';
 import { AfisEMandateActionUrls } from './AfisEmandateActionButtons';
 import {
@@ -238,6 +240,82 @@ export function useAfisThemaData() {
     },
   };
 }
+
+function fetchAfisApi(url: string) {
+  return fetch(url, { credentials: 'include' }).then((response) =>
+    response.json()
+  );
+}
+
+function generateApiUrl(
+  businessPartnerIdEncrypted: string | null,
+  route: keyof typeof BFFApiUrls
+) {
+  return businessPartnerIdEncrypted
+    ? generateBffApiUrlWithEncryptedPayloadQuery(
+        route,
+        businessPartnerIdEncrypted
+      )
+    : null;
+}
+
+
+export function useAfisEMandatesData() {
+  const isSmallScreen = useSmallScreen();
+
+  const { businessPartnerIdEncrypted } = useAfisThemaData();
+  const { title: betaalVoorkeurenTitle } = useAfisBetaalVoorkeurenData(
+    businessPartnerIdEncrypted
+  );
+
+  const {
+    data: eMandatesApiResponse,
+    isLoading: isLoadingEMandates,
+    error: hasEMandatesError,
+    mutate: refetchEMandates,
+  } = useSWR<ApiSuccessResponse<AfisEMandateFrontend[]>>(
+    generateApiUrl(businessPartnerIdEncrypted, 'AFIS_EMANDATES'),
+    fetchAfisApi,
+    { dedupingInterval: FIFTEEN_MINUTES_MS }
+  );
+
+  const eMandates = (eMandatesApiResponse?.content ?? []).map((eMandate) => {
+    return {
+      ...eMandate,
+      action: <AfisEMandateActionUrls eMandate={eMandate} />,
+      detailLinkComponent: (
+        <>
+          <MaRouterLink maVariant="fatNoUnderline" href={eMandate.link.to}>
+            {eMandate.link.title}
+          </MaRouterLink>
+          {!isSmallScreen && eMandate.acceptantDescription && (
+            <Paragraph size="small">{eMandate.acceptantDescription}</Paragraph>
+          )}
+        </>
+      ),
+    };
+  });
+
+  const title = 'E-Mandaat';
+  const breadcrumbs = [
+    ...useThemaBreadcrumbs(themaId),
+    { to: routeConfig.detailPage.path, title: betaalVoorkeurenTitle },
+  ];
+  const { id } = useParams<{ id: AfisEMandateFrontend['id'] }>();
+  const eMandate = eMandates.find((mandate) => mandate.id === id);
+
+  return {
+    title,
+    eMandate: eMandate as WithActionButtons<AfisEMandateFrontend>,
+    breadcrumbs,
+    hasEMandatesError,
+    isLoadingEMandates,
+    eMandateTableConfig,
+    eMandates,
+    refetchEMandates,
+  };
+}
+
 
 export function useAfisBetaalVoorkeurenData(
   businessPartnerIdEncrypted:

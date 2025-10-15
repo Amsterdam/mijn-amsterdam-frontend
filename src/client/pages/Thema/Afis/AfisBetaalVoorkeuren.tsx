@@ -1,8 +1,10 @@
 import { Grid, Heading, Link, Paragraph } from '@amsterdam/design-system-react';
 
+import { featureToggle } from './Afis-thema-config';
 import styles from './AfisBetaalVoorkeuren.module.scss';
 import {
   useAfisBetaalVoorkeurenData,
+  useAfisEMandatesData,
   useAfisThemaData,
 } from './useAfisThemaData.hook';
 import {
@@ -86,22 +88,25 @@ export function AfisBetaalVoorkeuren() {
     themaId,
   } = useAfisThemaData();
 
+  useHTMLDocumentTitle(routeConfig.detailPage);
+
   const {
     title,
     businesspartnerDetails,
     businessPartnerDetailsLabels,
-    eMandates,
-    eMandateTableConfig,
     hasBusinessPartnerDetailsError,
-    hasEMandatesError,
     hasFailedEmailDependency,
     hasFailedPhoneDependency,
     hasFailedFullNameDependency,
     isLoadingBusinessPartnerDetails,
-    isLoadingEMandates,
   } = useAfisBetaalVoorkeurenData(businessPartnerIdEncrypted);
 
-  useHTMLDocumentTitle(routeConfig.betaalVoorkeuren);
+  const {
+    eMandates,
+    eMandateTableConfig,
+    hasEMandatesError,
+    isLoadingEMandates,
+  } = useAfisEMandatesData();
 
   const isLoadingAllAPis =
     isThemaPaginaLoading &&
@@ -132,7 +137,7 @@ export function AfisBetaalVoorkeuren() {
         </Link>
         .
       </Paragraph>
-      {!FeatureToggle.afisEMandatesActive && (
+      {!featureToggle.afisEMandatesActive && (
         <>
           <Heading level={3} size="level-5">
             Via automatische incasso betalen
@@ -170,9 +175,9 @@ export function AfisBetaalVoorkeuren() {
         businesspartner={businesspartnerDetails}
         labels={businessPartnerDetailsLabels}
         isLoading={!!(isLoadingBusinessPartnerDetails || isThemaPaginaLoading)}
-        startCollapsed={FeatureToggle.afisEMandatesActive}
+        startCollapsed={featureToggle.afisEMandatesActive}
       />
-      {eMandateTables}
+      {eMandatesTable}
     </>
   );
 

@@ -13,7 +13,6 @@ import type { streamEndpointQueryParamKeys } from '../../universal/config/app';
 import { IS_PRODUCTION } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { setAdHocDependencyRequestCacheTtlMs } from '../config/source-api';
-import { getFromEnv } from '../helpers/env';
 import { fetchAfisBusinessPartnerDetails } from '../services/afis/afis-business-partner';
 import { fetchAfisDocument } from '../services/afis/afis-documents';
 import {
@@ -306,17 +305,6 @@ attachDocumentDownloadRoute(
       QueryPayload,
       ServiceReturnType
     >(fetchEmandateSignRequestStatus)
-  );
-}
-
-{
-  // TODO: This is a temporary solution to redirect the user back to the frontend after signing the mandate.
-  // This should be replaced with a proper solution.
-  router.get(
-    BffEndpoints.AFIS_EMANDATES_SIGN_REQUEST_RETURNTO,
-    (req: Request, res: Response, next: NextFunction) => {
-      return res.redirect(getFromEnv('MA_FRONTEND_URL') ?? '/');
-    }
   );
 }
 

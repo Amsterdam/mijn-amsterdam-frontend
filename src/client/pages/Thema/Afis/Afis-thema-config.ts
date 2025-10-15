@@ -9,6 +9,7 @@ import {
   AfisFactuurState,
   type AfisEMandateFrontend,
 } from '../../../../server/services/afis/afis-types';
+import { IS_OT, IS_PRODUCTION } from '../../../../universal/config/env';
 import {
   LinkProps,
   ZaakAanvraagDetail,
@@ -19,6 +20,14 @@ import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
 export const featureToggle = {
   AfisActive: true,
+  afisEMandatesActive: !IS_PRODUCTION,
+  // Display of phone number is not needed atm.
+  afisBusinesspartnerPhoneActive: false,
+  // We don't filter out the undownloadable facturen for testing purposes.
+  // We want to be able to test immediately and not wait until the evening.
+  afisFilterOutUndownloadableFacturenActive: IS_OT || IS_PRODUCTION,
+  // See also MIJN-10042: Bug where migrated documents "$year < 2025" do not have PDF downloads available.
+  afisMigratedFacturenDownloadActive: !IS_PRODUCTION,
 };
 
 export const themaId = 'AFIS' as const;

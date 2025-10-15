@@ -64,7 +64,7 @@ export function encryptPayloadAndSessionID<T extends Record<string, unknown>>(
 ) {
   const payloadToEncrypt: DecryptedPayloadAndSessionID<T> = {
     sessionID,
-    ...payload,
+    payload,
   };
   const [encrptedValue] = encrypt(JSON.stringify(payloadToEncrypt));
   return encrptedValue;
