@@ -11,7 +11,6 @@ import {
   AfisBusinessPartnerDetailsTransformed,
   type AfisEMandateFrontend,
 } from '../../../../server/services/afis/afis-types';
-import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 import { entries } from '../../../../universal/helpers/utils';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
 import { Datalist } from '../../../components/Datalist/Datalist';
@@ -95,9 +94,6 @@ export function AfisBetaalVoorkeuren() {
     businesspartnerDetails,
     businessPartnerDetailsLabels,
     hasBusinessPartnerDetailsError,
-    hasFailedEmailDependency,
-    hasFailedPhoneDependency,
-    hasFailedFullNameDependency,
     isLoadingBusinessPartnerDetails,
   } = useAfisBetaalVoorkeurenData(businessPartnerIdEncrypted);
 
@@ -109,11 +105,11 @@ export function AfisBetaalVoorkeuren() {
   } = useAfisEMandatesData();
 
   const isLoadingAllAPis =
-    isThemaPaginaLoading &&
-    isLoadingBusinessPartnerDetails &&
+    isThemaPaginaLoading ||
+    isLoadingBusinessPartnerDetails ||
     isLoadingEMandates;
 
-  const eMandateTables = FeatureToggle.afisEMandatesActive && (
+  const eMandatesTable = featureToggle.afisEMandatesActive && (
     <ThemaPaginaTable<AfisEMandateFrontend>
       displayProps={eMandateTableConfig.displayProps}
       maxItems={-1}
@@ -185,29 +181,6 @@ export function AfisBetaalVoorkeuren() {
     <>Wij kunnen nu niet alle gegevens laten zien.</>
   ) : (
     <>
-      {!hasBusinessPartnerDetailsError &&
-        (hasFailedEmailDependency ||
-          hasFailedPhoneDependency ||
-          hasFailedFullNameDependency) && (
-          <>
-            De volgende gegevens konden niet worden opgehaald:
-            {hasFailedFullNameDependency && (
-              <>
-                <br />- Debiteurnaam
-              </>
-            )}
-            {hasFailedEmailDependency && (
-              <>
-                <br />- E-mailadres
-              </>
-            )}
-            {hasFailedPhoneDependency && (
-              <>
-                <br />- Telefoonnummer
-              </>
-            )}
-          </>
-        )}
       {hasBusinessPartnerDetailsError && (
         <>
           Wij kunnen nu geen facturatiegegevens laten zien.

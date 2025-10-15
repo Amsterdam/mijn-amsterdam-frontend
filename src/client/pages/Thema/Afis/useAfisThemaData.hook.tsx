@@ -240,13 +240,6 @@ export function useAfisThemaData() {
     },
   };
 }
-
-function fetchAfisApi(url: string) {
-  return fetch(url, { credentials: 'include' }).then((response) =>
-    response.json()
-  );
-}
-
 function generateApiUrl(
   businessPartnerIdEncrypted: string | null,
   route: keyof typeof BFFApiUrls
@@ -318,7 +311,6 @@ export function useAfisEmandateUpdate(
   };
 }
 
-
 export function useAfisEMandatesData() {
   const isSmallScreen = useSmallScreen();
 
@@ -331,10 +323,10 @@ export function useAfisEMandatesData() {
     data: eMandatesApiResponse,
     isLoading,
     error,
-    mutate: refetchEMandates,
+    mutate,
   } = useAfisEMandateSWR(businessPartnerIdEncrypted);
 
-  const eMandates = (eMandatesApiResponse?.content ?? []).map((eMandate) => {
+  const eMandates = (eMandatesApiResponse ?? []).map((eMandate) => {
     return {
       ...eMandate,
       action: <AfisEMandateActionUrls eMandate={eMandate} />,
@@ -367,9 +359,11 @@ export function useAfisEMandatesData() {
     isLoadingEMandates: isLoading || !eMandatesApiResponse,
     eMandateTableConfig,
     eMandates,
-    refetchEMandates,
+    refetchEMandates: mutate,
+    mutate,
   };
 }
+
 
 export function useAfisBetaalVoorkeurenData(
   businessPartnerIdEncrypted:
