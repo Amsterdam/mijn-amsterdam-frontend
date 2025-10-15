@@ -84,7 +84,7 @@ export function useAfisEmandateUpdate(
   );
   const { trigger, isMutating, ...rest } =
     useSWRMutation<AfisEMandateUpdatePayloadFrontend>(
-      eMandate?.updateUrl,
+      eMandate?.lifetimeUpdateUrl,
       swrPostRequestDefault(),
       {
         onSuccess(eMandateUpdatePayload) {

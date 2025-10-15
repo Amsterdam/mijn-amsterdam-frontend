@@ -369,12 +369,23 @@ export type AfisEMandateCreatePayload = Omit<
 
 export type AfisEMandateUpdatePayload = Partial<AfisEMandateSource>;
 
+export type AfisEMandateStatusCodes = {
+  '1': 'Actief';
+  '2': 'Te bevestigen';
+  '3': 'Geblokkeerd';
+  '4': 'Gestorneerd';
+  '5': 'Verouderd';
+  '6': 'Afgesloten';
+};
+
+export type EmandateStatusCode = Prettify<keyof AfisEMandateStatusCodes>;
+
 export type AfisEMandateFrontend = {
   id: string;
   creditorName: string;
   creditorIBAN: string;
   creditorDescription?: string;
-  status: '1' | '0';
+  status: EmandateStatusCode;
   displayStatus: string;
 
   // Sender properties
@@ -390,7 +401,7 @@ export type AfisEMandateFrontend = {
   // Urls to interact with the mandate state
   statusChangeUrl?: string;
   signRequestUrl?: string;
-  updateUrl?: string;
+  lifetimeUpdateUrl?: string;
 
   link: LinkProps;
 };
