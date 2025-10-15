@@ -244,52 +244,53 @@ const aanvragen_ = [
   ],
   // We assume these aanvragen belong to the same person, but we cannot know for sure.
   // Eventough there are no betrokkenen in the afgewezen aanvragen, we assume it's the same person as the toegewezen aanvraag.
-  // [
-  //   { productsoortCode: 'RTM1', betrokkenen: [], resultaat: 'afgewezen' },
-  //   { productsoortCode: 'RTM1', betrokkenen: [], resultaat: 'afgewezen' },
-  //   { productsoortCode: 'RTM1', betrokkenen: [], resultaat: 'afgewezen' },
-  //   { productsoortCode: 'RTM1', betrokkenen: [], resultaat: 'afgewezen' },
-  //   {
-  //     productsoortCode: 'RTM1',
-  //     betrokkenen: ['C1'],
-  //     resultaat: 'toegewezen',
-  //   },
-  // ],
+  [
+    { productsoortCode: 'RTM1', betrokkenen: [], resultaat: 'afgewezen' },
+    { productsoortCode: 'RTM1', betrokkenen: [], resultaat: 'afgewezen' },
+    { productsoortCode: 'RTM1', betrokkenen: [], resultaat: 'afgewezen' },
+    { productsoortCode: 'RTM1', betrokkenen: [], resultaat: 'afgewezen' },
+    {
+      productsoortCode: 'RTM1',
+      betrokkenen: ['C1'],
+      resultaat: 'toegewezen',
+    },
+  ],
   // // Because we have multiple betrokkenen in multiple aanvragen, we cannot know for sure which afgewezen aanvragen belong to.
-  // [
-  //   { productsoortCode: 'RTM1', betrokkenen: [], resultaat: 'afgewezen' },
-  //   { productsoortCode: 'RTM1', betrokkenen: [], resultaat: 'afgewezen' },
-  //   {
-  //     productsoortCode: 'RTM1',
-  //     betrokkenen: ['A1'],
-  //     resultaat: 'toegewezen',
-  //   },
-  //   {
-  //     productsoortCode: 'RTM1',
-  //     betrokkenen: ['B1'],
-  //     resultaat: 'toegewezen',
-  //   },
-  //   { productsoortCode: 'RTM1', betrokkenen: [], resultaat: 'afgewezen' },
-  // ],
-  // [
-  //   { productsoortCode: 'RTM1', betrokkenen: [], resultaat: 'afgewezen' },
-  //   {
-  //     productsoortCode: 'RTM1',
-  //     betrokkenen: ['D1'],
-  //     resultaat: 'toegewezen',
-  //   },
-  //   { productsoortCode: 'RTM1', betrokkenen: [], resultaat: 'afgewezen' },
-  //   {
-  //     productsoortCode: 'RTM',
-  //     betrokkenen: ['D1'],
-  //     resultaat: 'toegewezen',
-  //   },
-  //   {
-  //     productsoortCode: 'RTM1',
-  //     betrokkenen: ['D1'],
-  //     resultaat: 'toegewezen',
-  //   },
-  // ],
+  [
+    { productsoortCode: 'RTM1', betrokkenen: [], resultaat: 'afgewezen' },
+    { productsoortCode: 'RTM1', betrokkenen: [], resultaat: 'afgewezen' },
+    {
+      productsoortCode: 'RTM1',
+      betrokkenen: ['A1'],
+      resultaat: 'toegewezen',
+    },
+    {
+      productsoortCode: 'RTM1',
+      betrokkenen: ['B1'],
+      resultaat: 'toegewezen',
+    },
+    { productsoortCode: 'RTM1', betrokkenen: [], resultaat: 'afgewezen' },
+  ],
+  // Some other exotic combination
+  [
+    { productsoortCode: 'RTM1', betrokkenen: [], resultaat: 'afgewezen' },
+    {
+      productsoortCode: 'RTM1',
+      betrokkenen: ['D1'],
+      resultaat: 'toegewezen',
+    },
+    { productsoortCode: 'RTM1', betrokkenen: [], resultaat: 'afgewezen' },
+    {
+      productsoortCode: 'RTM',
+      betrokkenen: ['D1'],
+      resultaat: 'toegewezen',
+    },
+    {
+      productsoortCode: 'RTM1',
+      betrokkenen: ['D1'],
+      resultaat: 'toegewezen',
+    },
+  ],
 ];
 
 export const aanvragen = aanvragen_;

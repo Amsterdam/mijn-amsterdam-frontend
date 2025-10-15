@@ -3,7 +3,7 @@
 import assert from 'node:assert';
 
 import { aanvragen } from './rtm-aanvragen';
-import statustreinTestSetFromSheet from './statustrein-result-from-sheet.json';
+import statustreinTestSetFromSheet from './statustrein-result-from-sheet-and-more.json';
 import type { StatusLineItem } from '../../../../universal/types/App.types';
 import type {
   BSN,

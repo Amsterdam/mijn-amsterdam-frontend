@@ -172,6 +172,42 @@
     "steps": ["Aanvraag", "In behandeling"]
   },
   {
+    "id": 22,
+    "persoon": "C1",
+    "steps": [
+      "Aanvraag afgewezen",
+      "Aanvraag afgewezen",
+      "Aanvraag afgewezen",
+      "Aanvraag afgewezen",
+      "Aanvraag",
+      "In behandeling"
+    ]
+  },
+  {
+    "id": 23,
+    "persoon": "A1",
+    "steps": ["Aanvraag", "In behandeling"]
+  },
+  {
+    "id": 24,
+    "persoon": "B1",
+    "steps": ["Aanvraag", "In behandeling"]
+  },
+  {
+    "id": 25,
+    "persoon": "D1",
+    "steps": [
+      "Aanvraag afgewezen",
+      "Aanvraag",
+      "In behandeling",
+      "Aanvraag afgewezen",
+      "Besluit",
+      "Wijzigingsaanvraag",
+      "In behandeling",
+      "Einde recht"
+    ]
+  },
+  {
     "id": 30,
     "persoon": "orphans",
     "steps": ["Aanvraag afgewezen"]
@@ -180,5 +216,10 @@
     "id": 31,
     "persoon": "orphans",
     "steps": ["Aanvraag afgewezen"]
+  },
+  {
+    "id": 32,
+    "persoon": "orphans",
+    "steps": ["Aanvraag afgewezen", "Aanvraag afgewezen", "Aanvraag afgewezen"]
   }
 ]
