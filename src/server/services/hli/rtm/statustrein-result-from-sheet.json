@@ -1,0 +1,184 @@
+[
+  {
+    "id": 1,
+    "persoon": "A",
+    "steps": [
+      "Besluit",
+      "Wijzigingsaanvraag",
+      "In behandeling",
+      "Besluit",
+      "Einde recht"
+    ]
+  },
+  {
+    "id": 2,
+    "persoon": "B",
+    "steps": [
+      "Aanvraag",
+      "In behandeling",
+      "Aanvraag",
+      "In behandeling",
+      "Aanvraag",
+      "In behandeling"
+    ]
+  },
+  {
+    "id": 3,
+    "persoon": "A",
+    "steps": [
+      "Aanvraag",
+      "In behandeling",
+      "Besluit",
+      "Wijzigingsaanvraag afgewezen",
+      "Wijzigingsaanvraag",
+      "In behandeling",
+      "Besluit afgewezen",
+      "Wijzigingsaanvraag",
+      "In behandeling",
+      "Besluit",
+      "Einde recht"
+    ]
+  },
+  {
+    "id": 4,
+    "persoon": "C,D",
+    "steps": [
+      "Aanvraag",
+      "In behandeling",
+      "Aanvraag afgewezen",
+      "Aanvraag afgewezen",
+      "Aanvraag",
+      "In behandeling"
+    ]
+  },
+  {
+    "id": 5,
+    "persoon": "F",
+    "steps": ["Aanvraag", "In behandeling", "Besluit", "Einde recht"]
+  },
+  {
+    "id": 6,
+    "persoon": "G",
+    "steps": ["Aanvraag", "In behandeling"]
+  },
+  {
+    "id": 7,
+    "persoon": "H",
+    "steps": [
+      "Besluit afgewezen",
+      "Besluit afgewezen",
+      "Besluit",
+      "Besluit afgewezen",
+      "Einde recht"
+    ]
+  },
+  {
+    "id": 8,
+    "persoon": "I",
+    "steps": ["Besluit", "Besluit", "Besluit", "Einde recht"]
+  },
+  {
+    "id": 9,
+    "persoon": "I-1",
+    "steps": ["Aanvraag", "In behandeling", "Besluit", "Einde recht"]
+  },
+  {
+    "id": 10,
+    "persoon": "J",
+    "steps": [
+      "Aanvraag",
+      "In behandeling",
+      "Besluit",
+      "Wijzigingsaanvraag",
+      "In behandeling",
+      "Besluit",
+      "Einde recht"
+    ]
+  },
+  {
+    "id": 11,
+    "persoon": "J-1",
+    "steps": ["Aanvraag", "In behandeling", "Besluit", "Einde recht"]
+  },
+  {
+    "id": 12,
+    "persoon": "J-2",
+    "steps": ["Aanvraag", "In behandeling", "Besluit", "Einde recht"]
+  },
+  {
+    "id": 13,
+    "persoon": "K",
+    "steps": ["Aanvraag", "In behandeling", "Besluit", "Einde recht"]
+  },
+  {
+    "id": 14,
+    "persoon": "L",
+    "steps": [
+      "Aanvraag",
+      "In behandeling",
+      "Aanvraag",
+      "In behandeling",
+      "Aanvraag",
+      "In behandeling"
+    ]
+  },
+  {
+    "id": 15,
+    "persoon": "K-1",
+    "steps": [
+      "Aanvraag",
+      "In behandeling",
+      "Besluit",
+      "Wijzigingsaanvraag",
+      "In behandeling",
+      "Einde recht"
+    ]
+  },
+  {
+    "id": 16,
+    "persoon": "Y",
+    "steps": ["Aanvraag", "In behandeling", "Aanvraag", "In behandeling"]
+  },
+  {
+    "id": 17,
+    "persoon": "Z",
+    "steps": ["Aanvraag", "In behandeling", "Aanvraag", "In behandeling"]
+  },
+  {
+    "id": 18,
+    "persoon": "N",
+    "steps": ["Aanvraag", "In behandeling"]
+  },
+  {
+    "id": 19,
+    "persoon": "O",
+    "steps": ["Aanvraag", "In behandeling", "Aanvraag", "In behandeling"]
+  },
+  {
+    "id": 20,
+    "persoon": "P",
+    "steps": [
+      "Aanvraag",
+      "In behandeling",
+      "Aanvraag",
+      "In behandeling",
+      "Aanvraag",
+      "In behandeling"
+    ]
+  },
+  {
+    "id": 21,
+    "persoon": "Q",
+    "steps": ["Aanvraag", "In behandeling"]
+  },
+  {
+    "id": 30,
+    "persoon": "orphans",
+    "steps": ["Aanvraag afgewezen"]
+  },
+  {
+    "id": 31,
+    "persoon": "orphans",
+    "steps": ["Aanvraag afgewezen"]
+  }
+]
