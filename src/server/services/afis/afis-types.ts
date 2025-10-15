@@ -379,7 +379,9 @@ export type AfisEMandateCreatePayload = Omit<
 export type AfisEMandateUpdatePayload = Partial<AfisEMandateSource>;
 
 export type AfisEMandateFrontend = {
+  id: string;
   acceptant: string;
+  acceptantIBAN?: string;
   status: string;
   displayStatus: string;
 

@@ -31,7 +31,7 @@ function ApiActionButton<T>({
 }: ApiActionProps<T>) {
   return (
     <span className={api.isError ? styles.Error : ''}>
-      <Button variant="tertiary" onClick={() => fetch()}>
+      <Button variant="secondary" onClick={() => fetch()}>
         {api.isLoading && <Spinner />}
         {!api.isLoading && api.isError && (
           <Icon className={styles.Icon} svg={AlertIcon} size="heading-5" />
@@ -85,6 +85,7 @@ export function AfisEMandateActionUrls({
           errorMessage="Er is iets misgegaan bij het ophalen van de link"
         />
       )}
+      &nbsp;
       {eMandate.statusChangeUrl && (
         <ApiActionButton
           api={statusChangeApi}

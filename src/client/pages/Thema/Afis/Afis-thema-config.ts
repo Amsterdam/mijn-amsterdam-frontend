@@ -7,6 +7,7 @@ import {
   AfisFacturenResponse,
   AfisFactuur,
   AfisFactuurState,
+  type AfisEMandateFrontend,
 } from '../../../../server/services/afis/afis-types';
 import {
   LinkProps,
@@ -31,6 +32,10 @@ export const routeConfig = {
   betaalVoorkeuren: {
     path: '/facturen-en-betalen/betaalvoorkeuren',
     documentTitle: `Betaalvoorkeuren | ${themaTitle}`,
+  },
+  detailPageEMandate: {
+    path: '/facturen-en-betalen/betaalvoorkeuren/emandate/:id',
+    documentTitle: `E-Mandaat | ${themaTitle}`,
   },
   listPage: {
     path: '/facturen-en-betalen/facturen/lijst/:state/:page?',
@@ -129,10 +134,7 @@ export const facturenTableConfig = {
   },
 } as const;
 
-// Betaalvoorkeuren
-const displayPropsEmandates: DisplayProps<AfisEmandateStub> = {
-  name: 'Naam',
-};
+export type WithActionButtons<T> = T & { action: ReactNode };
 
 export const businessPartnerDetailsLabels: DisplayProps<AfisBusinessPartnerDetailsTransformed> =
   {
@@ -140,20 +142,24 @@ export const businessPartnerDetailsLabels: DisplayProps<AfisBusinessPartnerDetai
     businessPartnerId: 'Debiteurnummer',
     email: 'E-mailadres factuur',
     phone: 'Telefoonnummer',
-    address: 'Adres',
+    fullAddress: 'Adres',
   };
 
+// Betaalvoorkeuren
+const displayPropsEMandates: DisplayProps<
+  WithActionButtons<AfisEMandateFrontend>
+> = {
+  detailLinkComponent: 'Afdeling gemeente',
+  // acceptantIBAN: 'IBAN gemeente',
+  // senderName: 'Naam rekeninghouder',
+  // senderIBAN: 'Van bankrekeningnummer',
+  displayStatus: 'Status',
+  // action: 'Actie',
+};
+
 export const eMandateTableConfig = {
-  active: {
-    title: `Actieve automatische incasso's`,
-    filter: (emandate: AfisEmandateStub) => emandate.isActive,
-    displayProps: displayPropsEmandates,
-  },
-  inactive: {
-    title: `Niet actieve automatische incasso's`,
-    filter: (emandate: AfisEmandateStub) => !emandate.isActive,
-    displayProps: displayPropsEmandates,
-  },
+  title: `Automatische incasso's`,
+  displayProps: displayPropsEMandates,
 } as const;
 
 export const linkListItems: LinkProps[] = [
