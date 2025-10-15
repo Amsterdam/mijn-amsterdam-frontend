@@ -5,8 +5,8 @@ import styles from './AfisBetaalVoorkeuren.module.scss';
 import {
   useAfisBetaalVoorkeurenData,
   useAfisEMandatesData,
-  useAfisThemaData,
-} from './useAfisThemaData.hook';
+} from './useAfisEmandateApi';
+import { useAfisThemaData } from './useAfisThemaData.hook';
 import {
   AfisBusinessPartnerDetailsTransformed,
   type AfisEMandateFrontend,
