@@ -249,6 +249,12 @@ export function useAfisBetaalVoorkeurenData(
       : null
   );
   const businesspartnerDetailsApiResponse = api.data;
+  const eMandates = (eMandatesApiResponse.content ?? []).map((eMandate) => {
+    return {
+      ...eMandate,
+      action: <AfisEMandateActionUrls eMandate={eMandate} />,
+    };
+  });
 
   return {
     title: 'Betaalvoorkeuren',
@@ -256,7 +262,7 @@ export function useAfisBetaalVoorkeurenData(
     businessPartnerDetailsLabels,
     isLoadingBusinessPartnerDetails: api.isLoading,
     hasBusinessPartnerDetailsError: api.isError,
-    hasEmandatesError: false,
+    hasEMandatesError: isError(eMandatesApiResponse, false),
     hasFailedEmailDependency: hasFailedDependency(
       businesspartnerDetailsApiResponse,
       'email'
@@ -270,7 +276,7 @@ export function useAfisBetaalVoorkeurenData(
       'fullName'
     ),
     eMandateTableConfig,
-    eMandates: [],
-    isLoadingEmandates: false,
+    eMandates,
+    isLoadingEMandates: false,
   };
 }
