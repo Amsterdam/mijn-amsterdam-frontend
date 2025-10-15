@@ -50,7 +50,7 @@ export const themaConfig: HLIThemaConfig = {
     zorgnedAvApiActive: true,
     hliThemaStadspasBlokkerenActive: true,
     hliThemaStadspasDeblokkerenActive: !IS_PRODUCTION,
-    hliThemaRegelingenActive: true, //volgens mij is deze voor aanvragen (en niet regelingen)
+    hliThemaRegelingenAanvraagActive: true, //volgens mij is deze voor aanvragen (en niet regelingen)
     hliRegelingCZM: true,
     hliRegelingRTM: !IS_PRODUCTION,
     hliRegelingPCTegoedCodes2025: !IS_PRODUCTION,
