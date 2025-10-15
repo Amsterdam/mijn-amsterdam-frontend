@@ -43,7 +43,8 @@ function transformBusinessPartnerAddressResponse(
     const includeLand = true;
     return {
       id: addressEntry.AddressID,
-      address: getFullAddress(
+      address: addressEntry,
+      fullAddress: getFullAddress(
         {
           straatnaam: addressEntry.StreetName,
           huisnummer: addressEntry.HouseNumber?.toString() ?? '',
