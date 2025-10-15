@@ -201,6 +201,7 @@ function createStatustreinen(
   return statustreinen;
 }
 
+// Aanvragen are processed in chronological order (ASC), so the order of the aanvragen from Zorgned matter.
 function processAanvragen(bsn: BSN, aanvraagSet: ZorgnedAanvraagTransformed[]) {
   const aanvragenByBetrokkenen = mapAanvragenByBetrokkenen(bsn, aanvraagSet);
   const aanvragenByBetrokkenenSplitted =
