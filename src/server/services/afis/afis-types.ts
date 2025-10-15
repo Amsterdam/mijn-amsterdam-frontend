@@ -1,4 +1,5 @@
 import Decimal from 'decimal.js';
+import type { SetNonNullableDeep } from 'type-fest';
 
 import { LinkProps } from '../../../universal/types/App.types';
 
@@ -447,6 +448,10 @@ export type EMandateSignRequestStatusPayload = {
   mpid: string;
 };
 
+export type EMandateUpdatePayload = {
+  IMandateId: AfisEMandateSource['IMandateId'];
+};
+
 export type EMandateStatusChangePayload = {
   Status: AfisEMandateSource['Status'];
   IMandateId: AfisEMandateSource['IMandateId'];
@@ -462,6 +467,11 @@ export type AfisEMandateSignRequestResponse = {
 export type AfisEMandateStatusChangeResponse = {
   status: AfisEMandateFrontend['status'];
 };
+
+export type AfisEMandateUpdatePayloadFrontend = SetNonNullableDeep<
+  Pick<AfisEMandateFrontend, 'dateValidTo'>,
+  'dateValidTo'
+>;
 
 // POM payment api status codes
 export const signRequestStatusCodes = {

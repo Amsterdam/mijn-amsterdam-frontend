@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { Button, Icon } from '@amsterdam/design-system-react';
 import { AlertIcon } from '@amsterdam/design-system-react-icons';
@@ -8,17 +8,22 @@ import { useAfisEMandatesData } from './useAfisThemaData.hook';
 import type {
   AfisEMandateFrontend,
   AfisEMandateSignRequestResponse,
+  AfisEMandateStatusChangeResponse,
 } from '../../../../server/services/afis/afis-types';
 import type { ApiResponse } from '../../../../universal/helpers/api';
 import { Spinner } from '../../../components/Spinner/Spinner';
-import { type ApiState, useDataApi } from '../../../hooks/api/useDataApi';
+import {
+  type ApiStateV2,
+  fetchDefault,
+  useDataApiV2,
+} from '../../../hooks/api/useDataApi';
 
 type AfisEMandateActionUrlProps = {
   eMandate: AfisEMandateFrontend;
 };
 
-type ApiActionProps<T> = {
-  api: ApiState<ApiResponse<T> | null>;
+type ApiActionButtonProps<T> = {
+  api: ApiStateV2<ApiResponse<T>>;
   fetch: () => void;
   label: React.ReactNode;
   errorMessage: React.ReactNode;
@@ -29,7 +34,7 @@ function ApiActionButton<T>({
   fetch,
   label,
   errorMessage,
-}: ApiActionProps<T>) {
+}: ApiActionButtonProps<T>) {
   return (
     <span className={api.isError ? styles.Error : ''}>
       <Button variant="secondary" onClick={() => fetch()}>
@@ -50,40 +55,36 @@ export function AfisEMandateActionUrls({
 }: AfisEMandateActionUrlProps) {
   const { refetchEMandates } = useAfisEMandatesData();
 
-  const [redirectUrlApi, fetchRedirectUrl] =
-    useDataApi<ApiResponse<AfisEMandateSignRequestResponse> | null>(
-      {
-        postpone: true,
-      },
-      null
-    );
+  const redirectUrlApi = useDataApiV2<
+    ApiResponse<AfisEMandateSignRequestResponse>
+  >(eMandate.signRequestUrl, {
+    postpone: true,
+    fetcher: (url) => {
+      return fetchDefault(url).then((response) => {
+        window.location.href = response.content.redirectUrl;
+        return response;
+      });
+    },
+  });
 
-  useEffect(() => {
-    if (redirectUrlApi.data?.content?.redirectUrl) {
-      window.location.href = redirectUrlApi.data.content.redirectUrl;
-    }
-  }, [redirectUrlApi.data]);
-
-  const [statusChangeApi, fetchStatusChange] =
-    useDataApi<ApiResponse<AfisEMandateSignRequestResponse> | null>(
-      {
-        postpone: true,
-      },
-      null
-    );
-
-  useEffect(() => {
-    if (statusChangeApi.data?.status === 'OK') {
-      refetchEMandates();
-    }
-  }, [statusChangeApi.data]);
+  const statusChangeApi = useDataApiV2<
+    ApiResponse<AfisEMandateStatusChangeResponse>
+  >(eMandate.statusChangeUrl, {
+    postpone: true,
+    fetcher: (url) => {
+      return fetchDefault(url).then((response) => {
+        refetchEMandates();
+        return response;
+      });
+    },
+  });
 
   return (
     <>
       {eMandate.signRequestUrl && (
         <ApiActionButton
           api={redirectUrlApi}
-          fetch={() => fetchRedirectUrl({ url: eMandate.signRequestUrl })}
+          fetch={() => redirectUrlApi.fetch()}
           label={eMandate.status === '1' ? 'Wijzigen' : 'Activeren'}
           errorMessage="Er is iets misgegaan bij het ophalen van de link naar het volgende scherm"
         />
@@ -92,7 +93,7 @@ export function AfisEMandateActionUrls({
       {eMandate.statusChangeUrl && eMandate.status === '1' && (
         <ApiActionButton
           api={statusChangeApi}
-          fetch={() => fetchStatusChange({ url: eMandate.statusChangeUrl })}
+          fetch={() => statusChangeApi.fetch()}
           label="Stopzetten"
           errorMessage="Er is iets misgegaan bij het veranderen van de status"
         />

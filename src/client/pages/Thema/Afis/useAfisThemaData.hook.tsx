@@ -259,6 +259,47 @@ function generateApiUrl(
     : null;
 }
 
+export function useAfisEMandateSWR(businessPartnerIdEncrypted: string | null) {
+  return useSWR<ApiSuccessResponse<AfisEMandateFrontend[]>>(
+    generateApiUrl(businessPartnerIdEncrypted, 'AFIS_EMANDATES'),
+    fetchAfisApi,
+    { dedupingInterval: FIFTEEN_MINUTES_MS }
+  );
+}
+
+export function useAfisEmandateUpdate(
+  businessPartnerIdEncrypted: string | null
+) {
+  async function sendRequest(
+    url: string,
+    { arg: eMandateUpdatePayload }: { arg: { dateValidTo: string } }
+  ) {
+    return fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(eMandateUpdatePayload),
+      credentials: 'include',
+    }).then((res) => res.json());
+  }
+
+  const { trigger, isMutating } = useSWRMutation(
+    generateApiUrl(businessPartnerIdEncrypted, 'AFIS_EMANDATES_UPDATE'),
+    sendRequest /* options */
+  );
+
+  return {
+    update: async (dateValidTo: string) => {
+      try {
+        const result = await trigger({ dateValidTo } /* options */);
+        return result;
+      } catch (e) {
+        // error handling
+        alert('errro!' + e);
+      }
+      return;
+    },
+    isMutating,
+  };
+}
 
 export function useAfisEMandatesData() {
   const isSmallScreen = useSmallScreen();
@@ -270,14 +311,10 @@ export function useAfisEMandatesData() {
 
   const {
     data: eMandatesApiResponse,
-    isLoading: isLoadingEMandates,
-    error: hasEMandatesError,
+    isLoading,
+    error,
     mutate: refetchEMandates,
-  } = useSWR<ApiSuccessResponse<AfisEMandateFrontend[]>>(
-    generateApiUrl(businessPartnerIdEncrypted, 'AFIS_EMANDATES'),
-    fetchAfisApi,
-    { dedupingInterval: FIFTEEN_MINUTES_MS }
-  );
+  } = useAfisEMandateSWR(businessPartnerIdEncrypted);
 
   const eMandates = (eMandatesApiResponse?.content ?? []).map((eMandate) => {
     return {
@@ -299,7 +336,7 @@ export function useAfisEMandatesData() {
   const title = 'E-Mandaat';
   const breadcrumbs = [
     ...useThemaBreadcrumbs(themaId),
-    { to: routeConfig.detailPage.path, title: betaalVoorkeurenTitle },
+    { to: routeConfig.betaalVoorkeuren.path, title: betaalVoorkeurenTitle },
   ];
   const { id } = useParams<{ id: AfisEMandateFrontend['id'] }>();
   const eMandate = eMandates.find((mandate) => mandate.id === id);
@@ -308,56 +345,43 @@ export function useAfisEMandatesData() {
     title,
     eMandate: eMandate as WithActionButtons<AfisEMandateFrontend>,
     breadcrumbs,
-    hasEMandatesError,
-    isLoadingEMandates,
+    hasEMandatesError: !!error,
+    isLoadingEMandates: isLoading || !eMandatesApiResponse,
     eMandateTableConfig,
     eMandates,
     refetchEMandates,
   };
 }
 
-
 export function useAfisBetaalVoorkeurenData(
   businessPartnerIdEncrypted:
     | AfisThemaResponse['businessPartnerIdEncrypted']
     | undefined
 ) {
-  const api = useBffApi<AfisBusinessPartnerDetailsTransformed>(
+    const api = useBffApi<AfisBusinessPartnerDetailsTransformed>(
     businessPartnerIdEncrypted
       ? `${BFFApiUrls.AFIS_BUSINESSPARTNER}?id=${businessPartnerIdEncrypted}`
       : null
   );
   const businesspartnerDetailsApiResponse = api.data;
-  const eMandates = (eMandatesApiResponse.content ?? []).map((eMandate) => {
-    return {
-      ...eMandate,
-      action: <AfisEMandateActionUrls eMandate={eMandate} />,
-    };
-  });
+
+  function hasFailedBusinesspartnerDependency(
+    dependency: keyof AfisBusinessPartnerDetailsTransformed
+  ): boolean {
+    return businesspartnerDetailsApiResponse
+      ? hasFailedDependency(businesspartnerDetailsApiResponse, dependency)
+      : false;
+  }
 
   return {
     title: 'Betaalvoorkeuren',
-    businesspartnerDetails: businesspartnerDetailsApiResponse?.content,
+    businesspartnerDetails: businesspartnerDetailsApiResponse?.content ?? null,
     businessPartnerDetailsLabels,
-    isLoadingBusinessPartnerDetails: api.isLoading,
-    hasBusinessPartnerDetailsError: api.isError,
-    hasEMandatesError: isError(eMandatesApiResponse, false),
-    hasFailedEmailDependency: hasFailedDependency(
-      businesspartnerDetailsApiResponse,
-      'email'
-    ),
-    hasFailedPhoneDependency: hasFailedDependency(
-      businesspartnerDetailsApiResponse,
-      'phone'
-    ),
-    hasFailedFullNameDependency: hasFailedDependency(
-      businesspartnerDetailsApiResponse,
-      'fullName'
-    ),
-    eMandateTableConfig,
-    eMandates,
-    isLoadingEMandates: false,
-    hasEMandatesError: isError(eMandatesApiResponse, false),
-    isLoadingEMandates: isLoading(eMandatesApiResponse),
+    isLoadingBusinessPartnerDetails,
+    hasBusinessPartnerDetailsError,
+    hasFailedEmailDependency: hasFailedBusinesspartnerDependency('email'),
+    hasFailedPhoneDependency: hasFailedBusinesspartnerDependency('phone'),
+    hasFailedFullNameDependency: hasFailedBusinesspartnerDependency('fullName'),
   };
 }
+
