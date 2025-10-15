@@ -88,7 +88,7 @@ export function AfisBetaalVoorkeuren() {
     themaId,
   } = useAfisThemaData();
 
-  useHTMLDocumentTitle(routeConfig.detailPage);
+  useHTMLDocumentTitle(routeConfig.betaalVoorkeuren);
 
   const {
     title,
