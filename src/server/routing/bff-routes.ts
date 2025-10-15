@@ -95,6 +95,9 @@ export const ExternalConsumerEndpoints = {
     STADSPAS_BLOCK_PAS: `${AMSAPP_BASE}/stadspas/block/:transactionsKeyEncrypted`,
     NOTIFICATIONS: `${AMSAPP_BASE}/notifications`,
     NOTIFICATIONS_JOB: `${AMSAPP_BASE}/job/notifications`,
+
+    // Afis E-Mandates
+    AFIS_EMANDATE_SIGN_REQUEST_STATUS_NOTIFY: `${BFF_BASE_PATH_PRIVATE}/services/afis/e-mandates/sign-request-status-notify`,
   },
 } as const;
 
