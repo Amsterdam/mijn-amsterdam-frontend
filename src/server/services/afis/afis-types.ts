@@ -2,6 +2,24 @@ import Decimal from 'decimal.js';
 
 import { LinkProps } from '../../../universal/types/App.types';
 
+export type AfisApiFeedResponseSource<T> = {
+  feed?: {
+    count?: number;
+    entry?: Array<{
+      content?: {
+        properties?: T;
+      };
+    }>;
+  };
+};
+
+export type XmlNullable<T extends Record<string, unknown>> = {
+  [key in keyof T]: { '@null': true } | T[key];
+};
+
+// Business partner
+// ================
+
 type JaOfNee = 'Ja' | 'Nee';
 
 /** Business partner private response from external AFIS API.
@@ -110,6 +128,52 @@ export type AfisBusinessPartnerDetailsTransformed = {
   address?: string | null;
 };
 
+// Facturen
+// ================
+
+/** Extra property information
+ *  ==========================
+ * `ProfitCenterName`: The one requiring payment from the debtor (debiteur).
+ * `AmountInBalanceTransacCrcy`: Is a decimal number and represents the amount that should be payed.
+ *   When this is negative it is a 'krediet factuur' which means that money shall be returned -
+ *   to the debtor.
+ *  `IsCleared`: `true` means the 'factuur' is fully payed for.
+ */
+export type AfisFactuurPropertiesSource = {
+  AccountingDocument: string;
+  AmountInBalanceTransacCrcy: string;
+  AccountingDocumentType: AccountingDocumentType;
+  ClearingDate?: string;
+  DocumentReferenceID: string;
+  DunningBlockingReason: string;
+  DunningLevel: number;
+  IsCleared?: boolean;
+  NetDueDate: string;
+  InvoiceReference: string | null;
+  Paylink: string | null;
+  PaymentMethod: string | null;
+  PostingDate: string;
+  ProfitCenterName: string;
+  ReverseDocument?: string;
+  SEPAMandate: string;
+};
+
+export type AfisInvoicesSource =
+  AfisApiFeedResponseSource<AfisFactuurPropertiesSource>;
+
+export type AfisFactuurStatus =
+  | 'openstaand'
+  | 'automatische-incasso'
+  | 'in-dispuut'
+  | 'gedeeltelijke-betaling'
+  | 'handmatig-betalen'
+  | 'overgedragen-aan-belastingen'
+  | 'geld-terug'
+  | 'betaald'
+  | 'geannuleerd'
+  | 'herinnering'
+  | 'onbekend';
+
 export type AfisFactuurState = 'open' | 'afgehandeld' | 'overgedragen';
 
 export type AfisFacturenResponse = {
@@ -146,19 +210,6 @@ export type AfisFactuur = {
   link: LinkProps;
 };
 
-export type AfisFactuurStatus =
-  | 'openstaand'
-  | 'automatische-incasso'
-  | 'in-dispuut'
-  | 'gedeeltelijke-betaling'
-  | 'handmatig-betalen'
-  | 'overgedragen-aan-belastingen'
-  | 'geld-terug'
-  | 'betaald'
-  | 'geannuleerd'
-  | 'herinnering'
-  | 'onbekend';
-
 export type AfisInvoicesSource =
   AfisApiFeedResponseSource<AfisFactuurPropertiesSource>;
 
@@ -169,38 +220,45 @@ export type AfisInvoicesPartialPaymentsSource = AfisApiFeedResponseSource<
   >
 >;
 
-export type AccountingDocumentType = string;
-
+// Facturen / Deelbetalingen
+// =========================
 export type AfisFactuurDeelbetalingen = {
   [factuurNummer: string]: Decimal;
 };
 
-/** Extra property information
- *  ==========================
- * `ProfitCenterName`: The one requiring payment from the debtor (debiteur).
- * `AmountInBalanceTransacCrcy`: Is a decimal number and represents the amount that should be payed.
- *   When this is negative it is a 'krediet factuur' which means that money shall be returned -
- *   to the debtor.
- *  `IsCleared`: `true` means the 'factuur' is fully payed for.
- */
-export type AfisFactuurPropertiesSource = {
-  AccountingDocument: string;
-  AmountInBalanceTransacCrcy: string;
-  AccountingDocumentType: AccountingDocumentType;
-  ClearingDate?: string;
-  DocumentReferenceID: string;
-  DunningBlockingReason: string;
-  DunningLevel: number;
-  IsCleared?: boolean;
-  NetDueDate: string;
-  InvoiceReference: string | null;
-  Paylink: string | null;
-  PaymentMethod: string | null;
-  PostingDate: string;
-  ProfitCenterName: string;
-  ReverseDocument?: string;
-  SEPAMandate: string;
+export type AccountingDocumentType = string;
+
+
+export type AfisFactuurState = 'open' | 'afgehandeld' | 'overgedragen';
+
+export type AfisFacturenResponse = {
+  count: number;
+  facturen: AfisFactuur[];
 };
+
+export type AfisFacturenByStateResponse = {
+  [key in AfisFactuurState]?: AfisFacturenResponse | null;
+};
+
+export type AfisThemaResponse = {
+  isKnown: boolean;
+  businessPartnerIdEncrypted: string | null;
+  businessPartnerId?:
+    | AfisBusinessPartnerDetailsTransformed['businessPartnerId']
+    | null;
+  facturen?: AfisFacturenByStateResponse | null;
+};
+
+export type AfisFacturenParams = {
+  state: AfisFactuurState | 'deelbetalingen';
+  businessPartnerID: AfisBusinessPartnerDetailsTransformed['businessPartnerId'];
+  top?: string;
+};
+
+// Documents / PDF's
+// =================
+
+export type AccountingDocumentType = string;
 
 export type AfisArcDocID = AfisDocumentIDPropertiesSource['ArcDocId'];
 
@@ -216,6 +274,76 @@ export type AfisDocumentDownloadSource = {
     attachment: string;
     attachmentname: string;
   };
+};
+
+// E-Mandates
+// =================
+
+export type AfisEMandateSource = {
+  ABC: string;
+};
+
+export type AfisEMandatesResponseDataSource =
+  AfisApiFeedResponseSource<AfisEMandateSource>;
+
+export type AfisEMandateFrontend = {
+  id: AfisEMandateSource['ABC'];
+  dateCreated: string;
+  dateCreatedFormatted: string;
+  incassantName: string;
+  incassantIBAN: string;
+};
+
+export type AfisEMandatesResponseFrontend = AfisEMandateFrontend[];
+
+export type AfisEMandatePayloadBase = Readonly<{
+  SEPAMandateApplication: string;
+  Recipient: string;
+  RecipientType: string;
+  SenderType: string;
+  Creditor: string;
+}>;
+
+export type AfisEMandatePayloadCreate = {
+  // Business partner
+  SenderExternalID: AfisBusinessPartnerDetailsTransformed['businessPartnerId'];
+
+  // Mandate
+  SEPAMandateReferenceType: string;
+  SEPAMandateReference: string;
+  SEPAMandateStatus: string;
+  ValidityStartDate: string;
+  ValidityEndDate: string;
+  SEPASignatureCityName: string;
+  SEPASignatureDate: string;
+
+  // Debtor
+  // SenderType: string;
+  Sender: string;
+  SenderLastName: string;
+  SenderFirstName: string;
+  SenderStreetName: string;
+  SenderHouseNumber: string;
+  SenderPostalCode: string;
+  SenderCityName: string;
+  SenderCountry: string;
+  SenderIBAN: string;
+  SenderBankSWIFTCode?: string;
+
+  // Creditor
+  // RecipientType: string;
+  Recipient: string;
+  RecipientName1: string;
+  // RecipientName2: string;
+  RecipientStreetName: string;
+  RecipientHouseNumber: string;
+  RecipientPostalCode: string;
+  RecipientCityName: string;
+  RecipientCountry: string;
+};
+
+export type AfisEMandatePayloadUpdate = {
+  SenderExternalID: AfisBusinessPartnerDetailsTransformed['businessPartnerId'];
 };
 
 export type XmlNullable<T extends Record<string, unknown>> = {
