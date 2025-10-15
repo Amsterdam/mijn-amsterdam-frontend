@@ -77,7 +77,7 @@ export const BffEndpoints = {
 const AMSAPP_BASE = '/services/amsapp';
 
 export const ExternalConsumerEndpoints = {
-  // Publicly accessible
+  // Publicly accessible over the internet
   public: {
     STADSPAS_AMSAPP_LOGIN: `${AMSAPP_BASE}/stadspas/login/:token`,
     STADSPAS_ADMINISTRATIENUMMER: `${AMSAPP_BASE}/stadspas/administratienummer/:token`,
@@ -87,7 +87,7 @@ export const ExternalConsumerEndpoints = {
     NOTIFICATIONS_CONSUMER_APP: `${AMSAPP_BASE}/notifications/consumer/:consumerId/app`,
     NOTIFICATIONS_CONSUMER: `${AMSAPP_BASE}/notifications/consumer/:consumerId`,
   },
-  // Privately accessible
+  // Privately accessible over private network
   private: {
     STADSPAS_PASSEN: `${AMSAPP_BASE}/stadspas/passen/:administratienummerEncrypted`,
     STADSPAS_DISCOUNT_TRANSACTIONS: `${AMSAPP_BASE}/stadspas/aanbiedingen/transactions/:transactionsKeyEncrypted`,
@@ -97,6 +97,7 @@ export const ExternalConsumerEndpoints = {
     NOTIFICATIONS_JOB: `${AMSAPP_BASE}/job/notifications`,
 
     // Afis E-Mandates
+    // This endppoint is reached over the private network from the EnableU network.
     AFIS_EMANDATE_SIGN_REQUEST_STATUS_NOTIFY: `${BFF_BASE_PATH_PRIVATE}/services/afis/e-mandates/sign-request-status-notify`,
   },
 } as const;
