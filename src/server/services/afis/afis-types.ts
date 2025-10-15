@@ -462,7 +462,6 @@ export type EMandateStatusChangePayload = {
 
 export type AfisEMandateSignRequestResponse = {
   redirectUrl: string;
-  statusCheckUrl: string;
 };
 
 export type AfisEMandateStatusChangeResponse = {
