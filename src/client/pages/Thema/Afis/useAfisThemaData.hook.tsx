@@ -278,5 +278,7 @@ export function useAfisBetaalVoorkeurenData(
     eMandateTableConfig,
     eMandates,
     isLoadingEMandates: false,
+    hasEMandatesError: isError(eMandatesApiResponse, false),
+    isLoadingEMandates: isLoading(eMandatesApiResponse),
   };
 }
