@@ -23,14 +23,6 @@ export const BffEndpoints = {
 
   TELEMETRY_PROXY: '/services/telemetry/v2/track',
 
-  // AFIS
-  AFIS_BUSINESSPARTNER: '/services/afis/businesspartner',
-  AFIS_EMANDATES: '/services/afis/e-mandates',
-  AFIS_EMANDATES_STATUS_CHANGE: '/services/afis/e-mandates/change-status',
-  AFIS_EMANDATES_SIGN_REQUEST_URL: '/services/afis/e-mandates/sign-request-url',
-  AFIS_FACTUREN: '/services/afis/facturen/:state',
-  AFIS_DOCUMENT_DOWNLOAD: '/services/afis/facturen/document',
-
   // Stadspas
   STADSPAS_TRANSACTIONS:
     '/services/stadspas/transactions/:transactionsKeyEncrypted',
@@ -95,10 +87,6 @@ export const ExternalConsumerEndpoints = {
     STADSPAS_BLOCK_PAS: `${AMSAPP_BASE}/stadspas/block/:transactionsKeyEncrypted`,
     NOTIFICATIONS: `${AMSAPP_BASE}/notifications`,
     NOTIFICATIONS_JOB: `${AMSAPP_BASE}/job/notifications`,
-
-    // Afis E-Mandates
-    // This endppoint is reached over the private network from the EnableU network.
-    AFIS_EMANDATE_SIGN_REQUEST_STATUS_NOTIFY: `${BFF_BASE_PATH_PRIVATE}/services/afis/e-mandates/sign-request-status-notify`,
   },
 } as const;
 

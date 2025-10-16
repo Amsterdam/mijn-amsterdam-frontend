@@ -91,7 +91,7 @@ export function DateAdjust({
 
   return (
     <div>
-      {eMandateUpdateApi.isMutating ? (
+      {eMandateUpdateApi.isUpdating ? (
         <Spinner />
       ) : (
         eMandate.dateValidToFormatted

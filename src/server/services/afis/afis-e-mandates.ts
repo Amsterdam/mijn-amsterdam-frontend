@@ -58,9 +58,9 @@ import { encryptPayloadAndSessionID } from '../../helpers/encrypt-decrypt';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
-import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureException } from '../monitoring';
+import { routes } from './afis-service-config';
 
 const AFIS_EMANDATE_RECURRING_DATE_END = '9999-12-31T00:00:00';
 const AFIS_EMANDATE_COMPANY_NAME = 'Gemeente Amsterdam';
@@ -253,7 +253,7 @@ function getStatusChangeApiUrl(
     statusChangePayloadData.LifetimeFrom = today;
   }
 
-  return generateFullApiUrlBFF(BffEndpoints.AFIS_EMANDATES_STATUS_CHANGE, [
+  return generateFullApiUrlBFF(routes.protected.AFIS_EMANDATES_STATUS_CHANGE, [
     {
       payload: encryptPayloadAndSessionID(sessionID, statusChangePayloadData),
     },
@@ -272,7 +272,7 @@ function getSignRequestApiUrl(
   };
 
   const url = generateFullApiUrlBFF(
-    BffEndpoints.AFIS_EMANDATES_SIGN_REQUEST_URL,
+    routes.protected.AFIS_EMANDATES_SIGN_REQUEST_URL,
     [
       {
         payload: encryptPayloadAndSessionID(sessionID, signRequestPayload),
@@ -287,7 +287,7 @@ function getUpdateApiUrl(
   sessionID: SessionID,
   afisEMandateSource: AfisEMandateSource
 ) {
-  const url = generateFullApiUrlBFF(BffEndpoints.AFIS_EMANDATES_UPDATE, [
+  const url = generateFullApiUrlBFF(routes.protected.AFIS_EMANDATES_UPDATE, [
     {
       payload: encryptPayloadAndSessionID(sessionID, {
         IMandateId: afisEMandateSource.IMandateId.toString(),

@@ -2,6 +2,7 @@ import { useCallback, useEffect } from 'react';
 
 import { create } from 'zustand';
 
+import type { RecordStr2 } from '../../../server/routing/route-helpers';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -51,37 +52,35 @@ async function handleResponse<T>(
 }
 
 export async function sendFormPostRequest<T extends any>(
-  url: string,
-  payload: Record<string, string>,
-  options?: RequestInit
+  url: string | URL,
+  init?: RequestInit & { payload?: RecordStr2 }
 ): ApiFetchResponse<T> {
   return handleResponse<T>(() =>
     fetch(url, {
       method: 'POST',
-      body: new URLSearchParams(payload),
+      body: init?.payload ? new URLSearchParams(init.payload) : init?.body,
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       credentials: 'include',
-      ...options,
+      ...init,
     })
   );
 }
 
 export async function sendJSONPostRequest<T extends any>(
-  url: string,
-  payload: Record<string, unknown>,
-  options?: RequestInit
+  url: string | URL,
+  init?: RequestInit & { payload?: RecordStr2 }
 ): ApiFetchResponse<T> {
   return handleResponse<T>(() =>
     fetch(url, {
       method: 'POST',
-      body: JSON.stringify(payload),
+      body: init?.payload ? JSON.stringify(init.payload) : init?.body,
       headers: {
         'Content-Type': 'application/json',
       },
       credentials: 'include',
-      ...options,
+      ...init,
     })
   );
 }
@@ -118,7 +117,10 @@ export type BffApiState<T> = {
 };
 
 export type ApiFetch<T> = {
-  fetch(url?: URL | string, init_?: RequestInit): Promise<T | null>;
+  fetch(
+    url?: URL | string,
+    init_?: RequestInit & { payload?: RecordStr2 }
+  ): Promise<T | null>;
 };
 
 const initialState: BffApiState<null> = Object.seal({
@@ -135,7 +137,7 @@ type BffApiOptions<T> = {
   fetchImmediately?: boolean;
   sendRequest?: (
     url: URL | string,
-    init?: RequestInit
+    init?: RequestInit & { payload?: RecordStr2 }
   ) => Promise<ApiResponse<T>>;
 };
 
@@ -167,7 +169,10 @@ export function useBffApi<T>(
   urlOrKey: string | null | undefined,
   options?: BffApiOptions<T>
 ): BffApiState<ApiResponse<T> | null> & {
-  fetch: (url?: URL | string, init_?: RequestInit) => void;
+  fetch: (
+    url?: URL | string,
+    init_?: RequestInit & { payload?: RecordStr2 }
+  ) => void;
   isPristine: boolean;
 } {
   const {

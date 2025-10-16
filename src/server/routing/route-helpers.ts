@@ -82,6 +82,7 @@ export function isProtectedRoute(pathRequested: string) {
 type QueryParams = RecordStr2;
 type PathParams = RecordStr2;
 type QueryAndOrPathParams = [QueryParams, PathParams] | [QueryParams];
+
 export function generateFullApiUrlBFF(
   path: string,
   params?: PathParams | QueryAndOrPathParams,

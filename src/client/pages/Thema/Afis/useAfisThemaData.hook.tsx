@@ -1,12 +1,9 @@
 import { ReactNode, useMemo } from 'react';
 
-import { generatePath,useParams } from 'react-router';
-import { Paragraph } from '@amsterdam/design-system-react';
+import { generatePath } from 'react-router';
 
 import {
   AfisFacturenByStateFrontend,
-  businessPartnerDetailsLabels,
-  eMandateTableConfig,
   facturenTableConfig,
   listPageTitle,
   linkListItems,
@@ -15,7 +12,6 @@ import {
   routeConfig,
 } from './Afis-thema-config';
 import {
-  AfisBusinessPartnerDetailsTransformed,
   AfisThemaResponse,
   AfisFacturenByStateResponse,
   AfisFactuur,
@@ -238,5 +234,3 @@ export function useAfisThemaData() {
     },
   };
 }
-
-

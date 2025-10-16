@@ -3,8 +3,6 @@ import { useState, useEffect } from 'react';
 import { Paragraph } from '@amsterdam/design-system-react';
 import isEqual from 'lodash.isequal';
 import { useNavigate, useParams } from 'react-router';
-import useSWR from 'swr';
-import useSWRMutation from 'swr/mutation';
 
 import {
   themaId,
@@ -21,16 +19,17 @@ import type {
   AfisEMandateUpdatePayloadFrontend,
   AfisThemaResponse,
 } from '../../../../server/services/afis/afis-types';
-import { FIFTEEN_MINUTES_MS } from '../../../../universal/config/app';
+import { hasFailedDependency } from '../../../../universal/helpers/api';
 import { entries } from '../../../../universal/helpers/utils';
 import { MaRouterLink } from '../../../components/MaLink/MaLink';
-import type { BFFApiUrls } from '../../../config/api';
+import { BFFApiUrls } from '../../../config/api';
 import { generateBffApiUrlWithEncryptedPayloadQuery } from '../../../helpers/api';
 import {
-  useDataApiV2,
+  sendFormPostRequest,
   sendGetRequest,
-  swrPostRequestDefault,
-} from '../../../hooks/api/useDataApi';
+  useBffApi,
+  useBffApiStateStore,
+} from '../../../hooks/api/useBffApi';
 import { useSmallScreen } from '../../../hooks/media.hook';
 import { useSessionStorage } from '../../../hooks/storage.hook';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
@@ -45,14 +44,6 @@ function generateApiUrl(
         businessPartnerIdEncrypted
       )
     : null;
-}
-
-export function useAfisEMandateSWR(businessPartnerIdEncrypted: string | null) {
-  return useSWR<AfisEMandateFrontend[]>(
-    generateApiUrl(businessPartnerIdEncrypted, 'AFIS_EMANDATES'),
-    sendGetRequest,
-    { dedupingInterval: FIFTEEN_MINUTES_MS }
-  );
 }
 
 export function optimisticEmandatesUpdate(
@@ -79,29 +70,41 @@ export function useAfisEmandateUpdate(
   businessPartnerIdEncrypted: string | null,
   eMandate: AfisEMandateFrontend | null
 ) {
-  const { mutate, isLoading, isValidating } = useAfisEMandateSWR(
-    businessPartnerIdEncrypted
+  const bffApiStateStore = useBffApiStateStore();
+  const {
+    fetch,
+    isLoading: isUpdating,
+    data,
+    ...rest
+  } = useBffApi<AfisEMandateUpdatePayloadFrontend>(
+    eMandate?.lifetimeUpdateUrl,
+    {
+      fetchImmediately: false,
+      sendRequest: sendFormPostRequest,
+    }
   );
-  const { trigger, isMutating, ...rest } =
-    useSWRMutation<AfisEMandateUpdatePayloadFrontend>(
-      eMandate?.lifetimeUpdateUrl,
-      swrPostRequestDefault(),
-      {
-        onSuccess(eMandateUpdatePayload) {
-          if (eMandate && eMandateUpdatePayload) {
-            mutate(optimisticEmandatesUpdate(eMandate, eMandateUpdatePayload), {
-              revalidate: false,
-            });
-          }
-        },
-      }
-    );
+
+  // TODO: Update the state so we can optimistically update the mandate in the list, use bffApiStateStore
+  //optimisticEmandatesUpdate(eMandate, eMandateUpdatePayload)
+  const url = generateApiUrl(businessPartnerIdEncrypted, 'AFIS_EMANDATES');
+  if (url && eMandate && data?.content) {
+    const eMandates = bffApiStateStore.get(url);
+    if (eMandates?.data?.content) {
+      bffApiStateStore.set(
+        url,
+        optimisticEmandatesUpdate(
+          eMandate,
+          data?.content
+        )(eMandates.data?.content)
+      );
+    }
+  }
 
   return {
     update: async (dateValidTo: string) => {
-      trigger({ dateValidTo });
+      fetch(eMandate?.lifetimeUpdateUrl, { payload: { dateValidTo } });
     },
-    isMutating: isMutating || isLoading || isValidating,
+    isUpdating,
     ...rest,
   };
 }
@@ -115,13 +118,14 @@ export function useAfisEMandatesData() {
   );
 
   const {
-    data: eMandatesApiResponse,
     isLoading,
-    error,
-    mutate,
-  } = useAfisEMandateSWR(businessPartnerIdEncrypted);
+    isError,
+    data: eMandatesApiResponse,
+  } = useBffApi<AfisEMandateFrontend[]>(
+    generateApiUrl(businessPartnerIdEncrypted, 'AFIS_EMANDATES')
+  );
 
-  const eMandates = (eMandatesApiResponse ?? []).map((eMandate) => {
+  const eMandates = (eMandatesApiResponse?.content ?? []).map((eMandate) => {
     return {
       ...eMandate,
       detailLinkComponent: (
@@ -163,32 +167,36 @@ export function useAfisEMandatesData() {
     eMandate,
     eMandates: eMandates_,
     eMandateTableConfig,
-    hasEMandatesError: !!error,
+    hasEMandatesError: !isError,
     isLoadingEMandates: isLoading || !eMandatesApiResponse,
-    mutate,
-    refetchEMandates: mutate,
+    updateEmandate: (...rest: any) => {
+      console.log('updateEmandate', ...rest);
+    },
     statusNotification: statusNotificationStorage,
     title,
   };
 }
 
 export function useEmandateApis(eMandate: AfisEMandateFrontend) {
-  const { mutate, statusNotification } = useAfisEMandatesData();
+  const { updateEmandate, statusNotification } = useAfisEMandatesData();
 
-  const redirectUrlApi = useDataApiV2<AfisEMandateSignRequestResponse>(
+  const redirectUrlApi = useBffApi<AfisEMandateSignRequestResponse>(
     eMandate.signRequestUrl,
     {
-      postpone: true,
-      fetcher: async (url: string) => {
+      fetchImmediately: false,
+      sendRequest: async (url) => {
         return sendGetRequest<AfisEMandateSignRequestResponse>(url).then(
-          (content) => {
-            window.location.href = content.redirectUrl;
-            return content;
+          (response) => {
+            if (response.content?.redirectUrl) {
+              window.location.href = response.content?.redirectUrl;
+            }
+            return response;
           }
         );
       },
     }
   );
+
   const statusChangeApi = useDataApiV2<AfisEMandateStatusChangeResponse>(
     eMandate.statusChangeUrl,
     {
@@ -197,7 +205,7 @@ export function useEmandateApis(eMandate: AfisEMandateFrontend) {
         return sendGetRequest<AfisEMandateStatusChangeResponse>(url).then(
           (eMandateUpdatePayload) => {
             if (eMandate && eMandateUpdatePayload) {
-              mutate(
+              updateEmandate(
                 optimisticEmandatesUpdate(eMandate, eMandateUpdatePayload),
                 {
                   revalidate: false,
@@ -227,7 +235,7 @@ export function useEmandateApis(eMandate: AfisEMandateFrontend) {
     entries({
       redirectUrlApi: redirectUrlApi.isLoading,
       statusChangeApi: statusChangeApi.isLoading,
-      updateApi: eMandateUpdateApi.isMutating,
+      updateApi: eMandateUpdateApi.isUpdating,
     }).forEach(([apiName, isLoading]) => {
       if (isLoading) {
         setLastActiveApi(apiName);
@@ -236,23 +244,23 @@ export function useEmandateApis(eMandate: AfisEMandateFrontend) {
   }, [
     redirectUrlApi.isLoading,
     statusChangeApi.isLoading,
-    eMandateUpdateApi.isMutating,
+    eMandateUpdateApi.isUpdating,
   ]);
 
   const isErrorVisible =
     showError &&
     !redirectUrlApi.isLoading &&
     !statusChangeApi.isLoading &&
-    !eMandateUpdateApi.isMutating &&
+    !eMandateUpdateApi.isUpdating &&
     (redirectUrlApi.isError ||
       statusChangeApi.isError ||
-      !!eMandateUpdateApi.error);
+      !!eMandateUpdateApi.isError);
 
   useEffect(() => {
     entries({
       redirectUrlApi: redirectUrlApi.isError,
       statusChangeApi: statusChangeApi.isError,
-      updateApi: !!eMandateUpdateApi.error,
+      updateApi: !!eMandateUpdateApi.isError,
     }).forEach(([apiName, isError]) => {
       if (apiName === lastActiveApi && isError) {
         setShowError(true);
@@ -261,8 +269,8 @@ export function useEmandateApis(eMandate: AfisEMandateFrontend) {
   }, [
     redirectUrlApi.isError,
     statusChangeApi.isError,
-    !!eMandateUpdateApi.error,
     lastActiveApi,
+    eMandateUpdateApi.isError,
   ]);
 
   return {
@@ -283,22 +291,35 @@ export function useAfisBetaalVoorkeurenData(
     | AfisThemaResponse['businessPartnerIdEncrypted']
     | undefined
 ) {
-  const {
-    data: businesspartnerDetails,
-    isLoading: isLoadingBusinessPartnerDetails,
-    error: hasBusinessPartnerDetailsError,
-  } = useSWR<AfisBusinessPartnerDetailsTransformed>(
-    generateApiUrl(businessPartnerIdEncrypted ?? null, 'AFIS_BUSINESSPARTNER'),
-    sendGetRequest,
-    { dedupingInterval: FIFTEEN_MINUTES_MS }
+  const api = useBffApi<AfisBusinessPartnerDetailsTransformed>(
+    businessPartnerIdEncrypted
+      ? `${BFFApiUrls.AFIS_BUSINESSPARTNER}?id=${businessPartnerIdEncrypted}`
+      : null
   );
+  const businesspartnerDetailsApiResponse = api.data;
 
   return {
     title: 'Betaalvoorkeuren',
-    businesspartnerDetails: businesspartnerDetails ?? null,
+    businesspartnerDetails: businesspartnerDetailsApiResponse?.content,
     businessPartnerDetailsLabels,
-    isLoadingBusinessPartnerDetails,
-    hasBusinessPartnerDetailsError,
+    isLoadingBusinessPartnerDetails: api.isLoading,
+    hasBusinessPartnerDetailsError: api.isError,
+    hasEmandatesError: false,
+    hasFailedEmailDependency: hasFailedDependency(
+      businesspartnerDetailsApiResponse,
+      'email'
+    ),
+    hasFailedPhoneDependency: hasFailedDependency(
+      businesspartnerDetailsApiResponse,
+      'phone'
+    ),
+    hasFailedFullNameDependency: hasFailedDependency(
+      businesspartnerDetailsApiResponse,
+      'fullName'
+    ),
+    eMandateTableConfig,
+    eMandates: [],
+    isLoadingEmandates: false,
   };
 }
 
@@ -317,7 +338,11 @@ function useIsPendingNotification() {
     if (ibansPendingActivation_ !== ibansPendingActivationCurrent) {
       setIsPendingActivation_(ibansPendingActivationCurrent);
     }
-  }, [ibansPendingActivationCurrent, ibansPendingActivation_]);
+  }, [
+    ibansPendingActivationCurrent,
+    ibansPendingActivation_,
+    setIsPendingActivation_,
+  ]);
 
   return {
     ibansPendingActivation,
@@ -379,7 +404,13 @@ export function useEmandateStatusPendingStorage(
         replace: true,
       });
     }
-  }, [iban, eMandates]);
+  }, [
+    iban,
+    eMandates,
+    ibansPendingActivation,
+    setIsPendingActivation,
+    navigate,
+  ]);
 
   return pendingStorage;
 }
