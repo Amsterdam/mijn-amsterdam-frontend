@@ -17,6 +17,7 @@ import {
 import { transformFieldValuePairs } from '../decos/decos-service';
 import { DecosZaakTransformer } from '../decos/decos-types';
 import { dateSort } from '../../../universal/helpers/date';
+import { sortAlpha } from '../../../universal/helpers/utils';
 
 const vesselName = { text18: 'vesselName' } as const;
 const vesselLengths = {
@@ -168,8 +169,7 @@ export const ZaakVergunningExploitatieWijzigingVergunningshouder: DecosZaakTrans
       const sortFn =
         allHaveDateStart && allHaveUniqueDateStart
           ? dateSort('dateStart', 'asc')
-          : (a: DecosVarenZaakVergunning, b: DecosVarenZaakVergunning) =>
-              a.identifier.localeCompare(b.identifier);
+          : sortAlpha('identifier', 'asc');
 
       return {
         ...decosZaak,
