@@ -1,4 +1,5 @@
 import type {
+  DecosVarenZaakVergunning,
   DecosZaakVarensFieldsSource,
   VarenRegistratieRederType,
   VarenVergunningExploitatieType,
@@ -15,6 +16,8 @@ import {
 } from '../decos/decos-field-transformers';
 import { transformFieldValuePairs } from '../decos/decos-service';
 import { DecosZaakTransformer } from '../decos/decos-types';
+import { dateSort } from '../../../universal/helpers/date';
+import { sortAlpha } from '../../../universal/helpers/utils';
 
 const vesselName = { text18: 'vesselName' } as const;
 const vesselLengths = {
@@ -147,6 +150,32 @@ export const ZaakVergunningExploitatieWijzigingVergunningshouder: DecosZaakTrans
       text34: 'statutoryName',
       text35: 'businessAddress',
       text36: 'correspondenceAddress',
+    },
+    async afterTransform(decosZaak, _decosZaakSource) {
+      const hasMultipleVergunningen = decosZaak.vergunningen?.length > 1;
+      if (!hasMultipleVergunningen) {
+        return decosZaak;
+      }
+      // There can be multiple linked vergunningen
+      // The earliest vergunning belongs to the current reder and is returned
+      // If dateStart is not correctly set we fallback to sorting based on the identifier
+      let vergunningen = decosZaak.vergunningen;
+      const allHaveDateStart = decosZaak.vergunningen.every(
+        (z) => !!z.dateStart
+      );
+      const allHaveUniqueDateStart =
+        new Set(vergunningen.map((z) => z.dateStart)).size ===
+        vergunningen.length;
+
+      const sortFn =
+        allHaveDateStart && allHaveUniqueDateStart
+          ? dateSort('dateStart', 'asc')
+          : sortAlpha('identifier', 'asc');
+
+      return {
+        ...decosZaak,
+        vergunningen: [vergunningen.sort(sortFn)[0]],
+      };
     },
   };
 

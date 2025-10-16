@@ -121,7 +121,7 @@ describe('Varen service', () => {
         .mockResolvedValueOnce(
           apiSuccessResult([zaakAanvraagExploitatie, zaakWijzigingExploitatie])
         )
-        .mockResolvedValueOnce(apiSuccessResult([]));
+        .mockResolvedValueOnce(apiSuccessResult([vergunningContent]));
 
       const response = await fetchVaren(authProfileAndToken);
       expect(response.status).toBe('OK');
