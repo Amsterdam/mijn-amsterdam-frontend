@@ -99,6 +99,7 @@ const descriptions = {
 
 const RTM_1_AANVRAAG: ZorgnedAanvraagWithRelatedPersonsTransformed = {
   id: '1',
+  beschikkingNummer: 101,
   datumAanvraag: '2025-01-01',
   datumBeginLevering: null,
   datumBesluit: '2025-02-01',
@@ -131,6 +132,7 @@ const RTM_1_AANVRAAG: ZorgnedAanvraagWithRelatedPersonsTransformed = {
 
 const RTM_1_AFWIJZING: ZorgnedAanvraagWithRelatedPersonsTransformed = {
   id: '3170120',
+  beschikkingNummer: 102,
   datumAanvraag: '2025-08-18',
   datumBeginLevering: null,
   datumBesluit: '2025-08-18',
@@ -163,6 +165,7 @@ const RTM_1_AFWIJZING: ZorgnedAanvraagWithRelatedPersonsTransformed = {
 
 const RTM_2_TOEGEWEZEN: ZorgnedAanvraagWithRelatedPersonsTransformed = {
   id: '2',
+  beschikkingNummer: 102,
   datumAanvraag: '2025-05-28',
   datumBeginLevering: null,
   datumBesluit: '2025-05-28',
@@ -195,6 +198,7 @@ const RTM_2_TOEGEWEZEN: ZorgnedAanvraagWithRelatedPersonsTransformed = {
 
 const RTM_2_AFGEWEZEN: ZorgnedAanvraagWithRelatedPersonsTransformed = {
   id: '2',
+  beschikkingNummer: 102,
   datumAanvraag: '2025-08-20',
   datumBeginLevering: null,
   datumBesluit: '2025-09-01',
@@ -233,6 +237,7 @@ const RTM_2_AFGEWEZEN: ZorgnedAanvraagWithRelatedPersonsTransformed = {
 
 const RTM_2_EINDE_RECHT: ZorgnedAanvraagWithRelatedPersonsTransformed = {
   id: '3',
+  beschikkingNummer: 103,
   datumAanvraag: '2025-05-28',
   datumBeginLevering: null,
   datumBesluit: '2025-05-28',
@@ -265,6 +270,7 @@ const RTM_2_EINDE_RECHT: ZorgnedAanvraagWithRelatedPersonsTransformed = {
 
 const RTM_WIJZIGINGS_AANVRAAG: ZorgnedAanvraagWithRelatedPersonsTransformed = {
   id: '4',
+  beschikkingNummer: 104,
   datumAanvraag: '2025-08-18',
   datumBeginLevering: null,
   datumBesluit: '2025-08-18',
@@ -304,6 +310,7 @@ const RTM_WIJZIGINGS_AANVRAAG: ZorgnedAanvraagWithRelatedPersonsTransformed = {
 const RTM_WIJZIGINGS_TOEKENNING: ZorgnedAanvraagWithRelatedPersonsTransformed =
   {
     id: '5',
+    beschikkingNummer: 105,
     datumAanvraag: '2025-08-30',
     datumBeginLevering: null,
     datumBesluit: '2025-08-31',
@@ -336,6 +343,7 @@ const RTM_WIJZIGINGS_TOEKENNING: ZorgnedAanvraagWithRelatedPersonsTransformed =
 
 const RTM_WIJZIGINGS_AFWIJZING: ZorgnedAanvraagWithRelatedPersonsTransformed = {
   id: '6',
+  beschikkingNummer: 106,
   datumAanvraag: '2025-09-30',
   datumBeginLevering: null,
   datumBesluit: '2025-09-31',
@@ -368,6 +376,7 @@ const RTM_WIJZIGINGS_AFWIJZING: ZorgnedAanvraagWithRelatedPersonsTransformed = {
 
 const RTM_2_MIGRATIE: ZorgnedAanvraagWithRelatedPersonsTransformed = {
   id: '7',
+  beschikkingNummer: 107,
   datumAanvraag: '2025-03-29',
   datumBeginLevering: null,
   datumBesluit: '2025-04-01',
