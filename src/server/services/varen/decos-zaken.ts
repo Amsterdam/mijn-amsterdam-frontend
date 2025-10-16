@@ -151,8 +151,10 @@ export const ZaakVergunningExploitatieWijzigingVergunningshouder: DecosZaakTrans
       text35: 'businessAddress',
       text36: 'correspondenceAddress',
     },
-    async afterTransform(decosZaak, decosZaakSource) {
-      if (!decosZaak.vergunningen || decosZaak.vergunningen.length <= 1) {
+    async afterTransform(decosZaak, _decosZaakSource) {
+      const hasMultipleVergunningen =
+        decosZaak.vergunningen?.length > 1 || false;
+      if (!hasMultipleVergunningen) {
         return decosZaak;
       }
       // There can be multiple linked vergunningen
