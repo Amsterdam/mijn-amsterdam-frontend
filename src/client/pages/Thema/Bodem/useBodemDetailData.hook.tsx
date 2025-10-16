@@ -11,7 +11,7 @@ export function useBodemDetailData() {
 
   return {
     themaId: themaConfig.id,
-    title: themaConfig.detailPage.title ?? undefined,
+    title: themaConfig.detailPage.title,
     meting,
     isLoading,
     isError,
