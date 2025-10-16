@@ -40,7 +40,7 @@ type ThemaFeatureToggle = { themaActive: boolean } & FeatureToggle;
 type RedactedScope = 'full' | 'content' | 'none';
 type PageConfig<T extends string> = {
   [key in T]: {
-    title: null | string;
+    title: string;
     route: ThemaRouteConfig;
   };
 };
