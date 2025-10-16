@@ -1233,6 +1233,25 @@ describe('Aanvrager is ontvanger', () => {
     expect(regelingen[1]).toMatchObject(expectedRegeling);
     expect(regelingen[1].steps).toMatchObject(expectedSteps);
   });
+
+  test('Only two regelingen expected', () => {
+    const aanvragen = attachIDs([
+      { ...RTM_1_AANVRAAG },
+      {
+        ...RTM_2_EINDE_RECHT,
+        datumIngangGeldigheid: '2020-01-01',
+        datumEindeGeldigheid: '2020-06-01',
+      },
+      { ...RTM_2_MIGRATIE, datumIngangGeldigheid: '2021-01-01' },
+      RTM_WIJZIGINGS_AANVRAAG,
+      RTM_WIJZIGINGS_TOEKENNING,
+      RTM_WIJZIGINGS_AANVRAAG,
+      { ...RTM_2_EINDE_RECHT, datumEindeGeldigheid: '2021-06-01' },
+    ]);
+    const regelingen = transformRegelingenForFrontend(aanvragen);
+
+    expect(regelingen.length).toBe(2);
+  });
 });
 
 describe('Ontvanger but aanvragen made by someone else', () => {
@@ -1475,6 +1494,20 @@ describe('Ontvanger but aanvragen made by someone else', () => {
       },
     ]);
   });
+});
+
+test('Correctly sorted on the first part of the id', () => {
+  const regelingen = transformRegelingenForFrontend([
+    { ...RTM_2_TOEGEWEZEN, id: '11-22' },
+    { ...RTM_WIJZIGINGS_AANVRAAG, id: '12-22' },
+    { ...RTM_1_AANVRAAG, id: '10-22' },
+    { ...RTM_2_EINDE_RECHT, id: '13-22' },
+    { ...RTM_2_TOEGEWEZEN, id: '21-11' },
+    { ...RTM_WIJZIGINGS_AANVRAAG, id: '22-11' },
+    { ...RTM_1_AANVRAAG, id: '20-11' },
+  ]);
+  // Only the end of the ids are taken from the aanvragen chain when being combined into a regeling.
+  expect(regelingen.map((r) => r.id)).toStrictEqual(['13-22', '22-11']);
 });
 
 test('Does not contain docx (word) documents', () => {

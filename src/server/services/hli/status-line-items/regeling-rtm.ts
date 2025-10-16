@@ -3,7 +3,7 @@ import { isAfter } from 'date-fns';
 import { getBesluitDescription, isAanvrager } from './generic';
 import { featureToggle } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
-import { sortByNumber } from '../../../../universal/helpers/utils';
+import { sortAlpha } from '../../../../universal/helpers/utils';
 import {
   GenericDocument,
   StatusLineItem,
@@ -188,7 +188,7 @@ function combineRTMData(
   aanvragen = aanvragen
     // Sort asc so we always end with an 'Einde recht'.
     // This keeps it in the same order as how we describe the scenarios, so you don't need to think in reverse.
-    .toSorted(sortByNumber('id', 'asc'));
+    .toSorted(sortAlpha('id', 'asc'));
 
   aanvragen = dedupCombineRTMDeel2(aanvragen);
 
