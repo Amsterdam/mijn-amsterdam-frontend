@@ -234,10 +234,7 @@ function groupAanvragenPerRegeling(
   aanvragen.forEach((aanvraag) => {
     group.push(aanvraag);
 
-    if (
-      (isRTMDeel1(aanvraag) && aanvraag.resultaat === 'afgewezen') ||
-      (isRTMDeel2(aanvraag) && isEindeRechtReached(aanvraag))
-    ) {
+    if (aanvraag.datumEindeGeldigheid && isRTMDeel2(aanvraag)) {
       groupedAanvragen.push(group);
       group = [];
     }
