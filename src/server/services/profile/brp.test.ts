@@ -1,3 +1,5 @@
+import MockDate from 'mockdate';
+
 import { transformBRPData, transformBRPNotifications } from './brp';
 import { BRPDataFromSource } from './brp.types';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
@@ -231,6 +233,8 @@ const {
 } = brpDataTyped;
 
 describe('BRP data api + transformation', () => {
+  MockDate.set('2022-01-01');
+
   it('should construct a complete addresss', () => {
     expect(
       getFullAddress({ ...adres, huisletter: 'X', huisnummertoevoeging: 'h' })
