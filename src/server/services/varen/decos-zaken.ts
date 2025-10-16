@@ -152,8 +152,7 @@ export const ZaakVergunningExploitatieWijzigingVergunningshouder: DecosZaakTrans
       text36: 'correspondenceAddress',
     },
     async afterTransform(decosZaak, _decosZaakSource) {
-      const hasMultipleVergunningen =
-        decosZaak.vergunningen?.length > 1 || false;
+      const hasMultipleVergunningen = decosZaak.vergunningen?.length > 1;
       if (!hasMultipleVergunningen) {
         return decosZaak;
       }
