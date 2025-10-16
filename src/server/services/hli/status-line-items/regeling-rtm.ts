@@ -213,6 +213,7 @@ function combineRTMData(
       }
 
       const statusLineItems = getAllStatusLineItems(
+        regeling,
         groupedAanvragenPerRegeling[i]
       );
       const combinedRegeling: RTMCombinedRegeling = [regeling, statusLineItems];
@@ -288,6 +289,10 @@ function createAanvraagWithType(
     return withType(null);
   }
 
+  if (isEindeRechtReached(aanvraag)) {
+    return withType('result-einde-recht');
+  }
+
   if (idx === 0) {
     if (isRTMDeel1(aanvraag)) {
       return withType(`aanvraag-${aanvraag.resultaat}`);
@@ -297,10 +302,6 @@ function createAanvraagWithType(
 
   if (isRTMDeel1(aanvraag)) {
     return withType('aanvraag-wijziging');
-  }
-
-  if (isEindeRechtReached(aanvraag)) {
-    return withType('result-einde-recht');
   }
 
   const previousAanvraag = aanvragen[idx - 1];
@@ -340,22 +341,31 @@ function mergeAanvragenIntoRegeling(
 }
 
 function getAllStatusLineItems(
+  regeling: ZorgnedHLIRegeling,
   aanvragen: AanvraagWithType[]
 ): StatusLineItem[] {
   const incompleteStatusLineItems = aanvragen.reduce(
-    (statusLineItems, aanvraag) => {
-      return [...statusLineItems, ...getStatusLineItems(aanvraag)];
+    (statusLineItems, aanvraag, i, aanvragen) => {
+      return [
+        ...statusLineItems,
+        ...getStatusLineItems(aanvraag, aanvragen[i - 1]),
+      ];
     },
     [] as IncompleteStatusLineItem[]
   );
   if (!incompleteStatusLineItems.length) {
     return [];
   }
-  return finalizeStatusLineItems(incompleteStatusLineItems, aanvragen);
+  return finalizeStatusLineItems(
+    regeling,
+    incompleteStatusLineItems,
+    aanvragen
+  );
 }
 
 /** Determines active step and checks untill there (including), and adds ids */
 function finalizeStatusLineItems(
+  regeling: ZorgnedHLIRegeling,
   statusLineItems: IncompleteStatusLineItem[],
   aanvragen: AanvraagWithType[]
 ): StatusLineItem[] {
@@ -376,11 +386,7 @@ function finalizeStatusLineItems(
   }
 
   const lastAanvraag = aanvragen[aanvragen.length - 1];
-  if (
-    lastAanvraag.type !== 'result-afgewezen' &&
-    statusLineItems.at(-1)?.status !== 'Einde recht' &&
-    !(isRTMDeel1(lastAanvraag) && lastAanvraag.resultaat === 'afgewezen')
-  ) {
+  if (regeling.isActueel) {
     const getStatusLineItem = createGetStatusLineItemFn(lastAanvraag);
     const eindeRecht = getStatusLineItem(['defaultEindeRecht']);
     statusLineItems.push(...eindeRecht);
@@ -397,20 +403,6 @@ function finalizeStatusLineItems(
   );
 
   const checkedSteps = checkUntillIncludingActiveStep(statusLineItemsComplete);
-
-  // TODO: Remove this check for development.
-  let count = 0;
-  checkedSteps.forEach((step) => {
-    if (step.isActive === true) {
-      count++;
-    }
-  });
-  if (count > 1 || count <= 0) {
-    // eslint-disable-next-line no-console
-    console.dir(statusLineItemsComplete, { depth: 10 });
-    throw Error(`Statustrain has ${count} active steps`);
-  }
-
   return checkedSteps;
 }
 
@@ -527,7 +519,8 @@ const statusLineItems: Record<StatusLineKey, StatusLineItemTransformerConfig> =
         }
         return base;
       },
-      documents: (aanvraag) => aanvraag.documenten,
+      // These documents are put in 'besluit'.
+      documents: () => [],
       isActive: () => true,
     },
     /** Default einde recht that is shown when a product is in a toegewezen RTM-2 state, einde recht is not actually present in the data in this case. */
@@ -596,10 +589,11 @@ function createGetStatusLineItemFn(
 }
 
 function getStatusLineItems(
-  aanvraagWithType: AanvraagWithType
+  aanvraag: AanvraagWithType,
+  previousAanvraag: AanvraagWithType | undefined
 ): IncompleteStatusLineItem[] {
-  const getStatusLineItem = createGetStatusLineItemFn(aanvraagWithType);
-  switch (aanvraagWithType.type) {
+  const getStatusLineItem = createGetStatusLineItemFn(aanvraag);
+  switch (aanvraag.type) {
     // RTM-1 Aanvragen
     case 'aanvraag-toegewezen': {
       return getStatusLineItem(['aanvraagLopend', 'inBehandelingGenomen']);
@@ -618,6 +612,9 @@ function getStatusLineItems(
       return getStatusLineItem(['besluit']);
     }
     case 'result-einde-recht': {
+      if (!previousAanvraag || previousAanvraag.type !== 'aanvraag-wijziging') {
+        return getStatusLineItem(['besluit', 'eindeRecht']);
+      }
       return getStatusLineItem(['eindeRecht']);
     }
     // Wijzigings process
@@ -632,7 +629,7 @@ function getStatusLineItems(
     }
     default: {
       captureMessage(
-        `No statusstep found for aanvraag type: ${aanvraagWithType.type}`,
+        `No statusstep found for aanvraag type: ${aanvraag.type}`,
         { severity: 'error' }
       );
       return [];
