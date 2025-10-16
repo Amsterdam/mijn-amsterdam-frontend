@@ -1,3 +1,5 @@
+import Mockdate from 'mockdate';
+
 import {
   AV_PCVC,
   AV_PCVTG,
@@ -8,6 +10,31 @@ import {
   forTesting,
 } from './regeling-pcvergoeding';
 import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../../zorgned/zorgned-types';
+
+const mocks = vi.hoisted(() => {
+  return {
+    hli2026PCVergoedingV3Enabled: true,
+  };
+});
+
+vi.mock(
+  '../../../../client/pages/Thema/HLI/HLI-thema-config',
+  async (importActual) => {
+    const actual =
+      await importActual<
+        typeof import('../../../../client/pages/Thema/HLI/HLI-thema-config')
+      >();
+    return {
+      ...actual,
+      featureToggle: {
+        ...actual.featureToggle,
+        get hli2026PCVergoedingV3Enabled() {
+          return mocks.hli2026PCVergoedingV3Enabled;
+        },
+      },
+    };
+  }
+);
 
 describe('pcvergoeding', () => {
   describe('isRegelingVanVerzilvering', () => {
@@ -170,11 +197,13 @@ describe('pcvergoeding', () => {
         productIdentificatie: AV_UPCC,
         betrokkenen: ['A'],
         datumBesluit: '2024-05-18',
+        datumAanvraag: '2024-01-01',
       },
       {
         productIdentificatie: AV_UPCZIL,
         betrokkenen: ['A'],
         datumBesluit: '2028-05-18',
+        datumAanvraag: '2024-01-01',
       },
     ] as unknown as ZorgnedAanvraagWithRelatedPersonsTransformed[];
 
@@ -333,16 +362,20 @@ describe('pcvergoeding', () => {
       const testData = [
         {
           id: '2',
+          titel: 'PC vergoeding verzilvering',
           productIdentificatie: AV_PCVZIL,
           betrokkenen: ['A'],
+          datumAanvraag: '2024-01-01',
           datumBesluit: '2024-06-18',
           resultaat: 'toegewezen',
           documenten: ['doc2'],
         },
         {
           id: '1',
+          titel: 'PC vergoeding aanvraag',
           productIdentificatie: AV_PCVC,
           betrokkenen: ['A'],
+          datumAanvraag: '2024-01-01',
           datumBesluit: '2024-05-18',
           isActueel: true,
           documenten: ['doc1'],
@@ -354,8 +387,10 @@ describe('pcvergoeding', () => {
       expect(result).toEqual([
         {
           id: '2',
+          titel: 'PC vergoeding aanvraag',
           productIdentificatie: AV_PCVZIL,
           betrokkenen: ['A'],
+          datumAanvraag: '2024-01-01',
           datumBesluit: '2024-06-18',
           resultaat: 'toegewezen',
           isActueel: true,
@@ -369,6 +404,7 @@ describe('pcvergoeding', () => {
       const testData = [
         {
           id: 'new-2',
+          titel: 'PC vergoeding verzilvering',
           productIdentificatie: AV_PCVTG,
           betrokkenen: ['B'],
           datumBesluit: '2025-06-18',
@@ -378,6 +414,7 @@ describe('pcvergoeding', () => {
         },
         {
           id: 'historic-4',
+          titel: 'PC vergoeding verzilvering',
           productIdentificatie: AV_UPCZIL,
           betrokkenen: ['C'],
           datumBesluit: '2024-06-18',
@@ -387,6 +424,7 @@ describe('pcvergoeding', () => {
         },
         {
           id: 'historic-3',
+          titel: 'PC vergoeding aanvraag',
           productIdentificatie: AV_UPCC,
           betrokkenen: ['C'],
           datumBesluit: '2024-05-18',
@@ -396,6 +434,7 @@ describe('pcvergoeding', () => {
         },
         {
           id: 'new-1',
+          titel: 'PC vergoeding aanvraag',
           productIdentificatie: AV_PCVC,
           betrokkenen: ['B'],
           datumBesluit: '2025-05-18',
@@ -405,6 +444,7 @@ describe('pcvergoeding', () => {
         },
         {
           id: 'historic-2',
+          titel: 'PC vergoeding verzilvering',
           productIdentificatie: AV_PCVZIL,
           betrokkenen: ['A'],
           datumBesluit: '2024-06-18',
@@ -414,6 +454,7 @@ describe('pcvergoeding', () => {
         },
         {
           id: 'historic-1',
+          titel: 'PC vergoeding aanvraag',
           productIdentificatie: AV_PCVC,
           betrokkenen: ['A'],
           datumBesluit: '2024-05-18',
@@ -428,6 +469,7 @@ describe('pcvergoeding', () => {
       expect(result).toStrictEqual([
         {
           id: 'new-2',
+          titel: 'PC vergoeding aanvraag',
           productIdentificatie: AV_PCVTG,
           betrokkenen: ['B'],
           datumBesluit: '2025-06-18',
@@ -439,6 +481,7 @@ describe('pcvergoeding', () => {
         },
         {
           id: 'historic-4',
+          titel: 'PC vergoeding aanvraag',
           productIdentificatie: AV_UPCZIL,
           betrokkenen: ['C'],
           datumBesluit: '2024-06-18',
@@ -450,6 +493,7 @@ describe('pcvergoeding', () => {
         },
         {
           id: 'historic-2',
+          titel: 'PC vergoeding aanvraag',
           productIdentificatie: AV_PCVZIL,
           betrokkenen: ['A'],
           datumBesluit: '2024-06-18',
@@ -466,24 +510,30 @@ describe('pcvergoeding', () => {
       const testData = [
         {
           id: '3',
+          titel: 'PC vergoeding aanvraag',
           productIdentificatie: AV_PCVC,
           betrokkenen: ['B'],
+          datumAanvraag: '2024-01-01',
           datumBesluit: '2024-07-18',
           isActueel: true,
           documenten: ['doc3'],
         },
         {
           id: '2',
+          titel: 'PC vergoeding verzilvering',
           productIdentificatie: AV_PCVZIL,
           betrokkenen: ['A'],
+          datumAanvraag: '2024-01-02',
           datumBesluit: '2024-06-18',
           resultaat: 'toegewezen',
           documenten: ['doc2'],
         },
         {
           id: '1',
+          titel: 'PC vergoeding aanvraag',
           productIdentificatie: AV_PCVC,
           betrokkenen: ['A'],
+          datumAanvraag: '2024-01-03',
           datumBesluit: '2024-05-18',
           isActueel: true,
           documenten: ['doc1'],
@@ -495,16 +545,20 @@ describe('pcvergoeding', () => {
       expect(result).toEqual([
         {
           id: '3',
+          titel: 'PC vergoeding aanvraag',
           productIdentificatie: AV_PCVC,
           betrokkenen: ['B'],
+          datumAanvraag: '2024-01-01',
           datumBesluit: '2024-07-18',
           isActueel: true,
           documenten: ['doc3'],
         },
         {
           id: '2',
+          titel: 'PC vergoeding aanvraag',
           productIdentificatie: AV_PCVZIL,
           betrokkenen: ['A'],
+          datumAanvraag: '2024-01-02',
           datumBesluit: '2024-06-18',
           resultaat: 'toegewezen',
           isActueel: true,
@@ -520,6 +574,7 @@ describe('pcvergoeding', () => {
           id: '1',
           productIdentificatie: AV_PCVZIL,
           betrokkenen: ['A'],
+          datumAanvraag: '2024-01-01',
           datumBesluit: '2024-05-18',
           resultaat: 'toegewezen',
           documenten: ['doc1'],
@@ -529,6 +584,41 @@ describe('pcvergoeding', () => {
       const result = forTesting.filterCombineUpcPcvData(testData);
 
       expect(result).toEqual([]);
+    });
+
+    describe('Regeling V3 conditional', () => {
+      const testData = [
+        {
+          id: '1',
+          productIdentificatie: AV_PCVZIL,
+          betrokkenen: ['A'],
+          datumAanvraag: '2026-01-01',
+          datumBesluit: '2026-02-18',
+          resultaat: 'toegewezen',
+          documenten: ['doc1'],
+        },
+      ] as unknown as ZorgnedAanvraagWithRelatedPersonsTransformed[];
+
+      test('Startdate is >= 01-01-2026', () => {
+        Mockdate.set('2026-01-01');
+        const result = forTesting.filterCombineUpcPcvData(testData);
+        expect(result).toEqual(testData);
+      });
+
+      test('Startdate is < 01-01-2026', () => {
+        Mockdate.set('2025-12-31');
+        const result = forTesting.filterCombineUpcPcvData(testData);
+        expect(result).toEqual([]);
+      });
+
+      test('Feature toggle is off -> Verzilvering is orphaned / No base regeling.', () => {
+        mocks.hli2026PCVergoedingV3Enabled = false;
+        Mockdate.set('2026-01-01');
+        const result = forTesting.filterCombineUpcPcvData(testData);
+        expect(result).toEqual([]);
+      });
+
+      Mockdate.reset();
     });
   });
 });

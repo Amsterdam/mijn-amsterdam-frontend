@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router';
-import { RecoilRoot } from 'recoil';
 
 import { MyThemasPanel } from './MyThemasPanel';
 import type { ThemaMenuItemTransformed } from '../../config/thema-types';
@@ -11,17 +10,16 @@ const items: ThemaMenuItemTransformed[] = [
     id: 'BELASTINGEN',
     to: 'https://belastingbalie.amsterdam.nl/digid.saml.php?start',
     profileTypes: ['private'],
+    redactedScope: 'none',
   },
 ];
 
 describe('Thema panel display', () => {
   it('Renders thema items', () => {
     render(
-      <RecoilRoot>
-        <BrowserRouter>
-          <MyThemasPanel items={items} isLoading={false} />
-        </BrowserRouter>
-      </RecoilRoot>
+      <BrowserRouter>
+        <MyThemasPanel items={items} isLoading={false} />
+      </BrowserRouter>
     );
     expect(screen.getByText('Belastingen')).toBeInTheDocument();
     expect(
@@ -31,11 +29,9 @@ describe('Thema panel display', () => {
 
   it('Displays content loading placeholder', () => {
     const { container } = render(
-      <RecoilRoot>
-        <BrowserRouter>
-          <MyThemasPanel items={items} isLoading={true} />
-        </BrowserRouter>
-      </RecoilRoot>
+      <BrowserRouter>
+        <MyThemasPanel items={items} isLoading={true} />
+      </BrowserRouter>
     );
 
     expect(

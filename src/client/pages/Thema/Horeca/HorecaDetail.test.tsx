@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router';
-import { MutableSnapshot } from 'recoil';
 import slug from 'slugme';
 
 import { routeConfig } from './Horeca-thema-config';
@@ -9,7 +8,6 @@ import { HorecaDetail } from './HorecaDetail';
 import { HorecaVergunningFrontend } from '../../../../server/services/horeca/decos-zaken';
 import { bffApi } from '../../../../testing/utils';
 import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
 const vergunning2: HorecaVergunningFrontend = {
@@ -44,48 +42,44 @@ function MockVergunningDetail({ identifier }: { identifier: string }) {
       routeEntry={routeEntry}
       routePath={routePath}
       component={HorecaDetail}
-      initializeState={(snapshot: MutableSnapshot) => {
-        snapshot.set(appStateAtom, testState);
-      }}
+      state={testState}
     />
   );
 }
 
 describe('<HorecaDetail />', () => {
-  describe('<ExploitatieHorecaBedrijf />', () => {
-    test('DetailPagina should be rendered', () => {
-      bffApi.get(DOC_API_PATH).reply(200, {
-        content: [],
-        status: 'OK',
-      });
-      render(<MockVergunningDetail identifier="Z/24/2238078" />);
-      expect(
-        screen.getByRole('heading', {
-          name: 'Horeca vergunning exploitatie Horecabedrijf',
-        })
-      ).toBeInTheDocument();
-      expect(screen.getByText('Ontvangen')).toBeInTheDocument();
-      expect(screen.getByText('In behandeling')).toBeInTheDocument();
-      expect(screen.getByText('Afgehandeld')).toBeInTheDocument();
-      expect(screen.getByText('Amstel 1 A 1011PN')).toBeInTheDocument();
+  test('DetailPagina should be rendered', () => {
+    bffApi.get(DOC_API_PATH).reply(200, {
+      content: [],
+      status: 'OK',
     });
+    render(<MockVergunningDetail identifier="Z/24/2238078" />);
+    expect(
+      screen.getByRole('heading', {
+        name: 'Horeca vergunning exploitatie Horecabedrijf',
+      })
+    ).toBeInTheDocument();
+    expect(screen.getByText('Ontvangen')).toBeInTheDocument();
+    expect(screen.getByText('In behandeling')).toBeInTheDocument();
+    expect(screen.getByText('Afgehandeld')).toBeInTheDocument();
+    expect(screen.getByText('Amstel 1 A 1011PN')).toBeInTheDocument();
+  });
 
-    test('DetailPagina with verleende vergunning should be rendered', () => {
-      bffApi.get(DOC_API_PATH).reply(200, {
-        content: [],
-        status: 'OK',
-      });
-      render(<MockVergunningDetail identifier="Z/24/2238079" />);
-      expect(
-        screen.getByRole('heading', {
-          name: 'Horeca vergunning exploitatie Horecabedrijf',
-        })
-      ).toBeInTheDocument();
-      expect(screen.getByText('Ontvangen')).toBeInTheDocument();
-      expect(screen.getByText('In behandeling')).toBeInTheDocument();
-      expect(screen.getByText('Afgehandeld')).toBeInTheDocument();
-      expect(screen.getByText('Amstel 1 A 1011PN')).toBeInTheDocument();
-      expect(screen.getByText('Verleend')).toBeInTheDocument();
+  test('DetailPagina with verleende vergunning should be rendered', () => {
+    bffApi.get(DOC_API_PATH).reply(200, {
+      content: [],
+      status: 'OK',
     });
+    render(<MockVergunningDetail identifier="Z/24/2238079" />);
+    expect(
+      screen.getByRole('heading', {
+        name: 'Horeca vergunning exploitatie Horecabedrijf',
+      })
+    ).toBeInTheDocument();
+    expect(screen.getByText('Ontvangen')).toBeInTheDocument();
+    expect(screen.getByText('In behandeling')).toBeInTheDocument();
+    expect(screen.getByText('Afgehandeld')).toBeInTheDocument();
+    expect(screen.getByText('Amstel 1 A 1011PN')).toBeInTheDocument();
+    expect(screen.getByText('Verleend')).toBeInTheDocument();
   });
 });

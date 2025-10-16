@@ -1,6 +1,6 @@
 import { useContactmomenten } from './useContactmomenten.hook';
 import { isError, isLoading } from '../../../../../universal/helpers/api';
-import { useAppStateGetter } from '../../../../hooks/useAppState';
+import { useAppStateGetter } from '../../../../hooks/useAppStateStore';
 import { themaId } from '../../Bodem/Bodem-thema-config';
 import { themaTitle } from '../Profile-thema-config';
 

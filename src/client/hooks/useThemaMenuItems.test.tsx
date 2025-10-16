@@ -1,9 +1,8 @@
 import { renderHook } from '@testing-library/react';
 import { useLocation } from 'react-router';
-import { RecoilRoot } from 'recoil';
 import { describe, it, expect, vi, Mock } from 'vitest';
 
-import { useAppStateGetter, useAppStateReady } from './useAppState';
+import { useAppStateGetter, useAppStateReady } from './useAppStateStore';
 import { useProfileTypeValue } from './useProfileType';
 import {
   compareThemas,
@@ -19,7 +18,7 @@ vi.mock('./useProfileType', () => ({
   useProfileTypeValue: vi.fn(),
 }));
 
-vi.mock('./useAppState', () => ({
+vi.mock('./useAppStateStore', () => ({
   useAppStateGetter: vi.fn(),
   useAppStateReady: vi.fn(),
 }));
@@ -112,7 +111,7 @@ describe('useActiveThemaMenuItems', () => {
     (themasByProfileType as Mock).mockReturnValue(mockThemaItems);
 
     const { result } = renderHook(() => useActiveThemaMenuItems(), {
-      wrapper: ({ children }) => <RecoilRoot>{children}</RecoilRoot>,
+      wrapper: ({ children }) => <>{children}</>,
     });
 
     expect(result.current.items.map((item) => item.id)).toEqual([

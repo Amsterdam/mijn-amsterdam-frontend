@@ -1,6 +1,5 @@
 import { render, screen, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MutableSnapshot } from 'recoil';
 import type { PartialDeep } from 'type-fest';
 
 import { MijnGegevensThema } from './ProfilePrivate';
@@ -10,7 +9,6 @@ import type {
 } from '../../../../../server/services/profile/brp.types';
 import { ContactMoment } from '../../../../../server/services/salesforce/contactmomenten.types';
 import { AppState } from '../../../../../universal/types/App.types';
-import { appStateAtom } from '../../../../hooks/useAppState';
 import MockApp from '../../../MockApp';
 import { routeConfig } from '../Profile-thema-config';
 
@@ -22,11 +20,6 @@ const testState = (
   KVK: { status: 'OK', content: null },
   KLANT_CONTACT: { status: 'OK', content: responseSF },
 });
-
-function initializeState(testState: unknown) {
-  return (snapshot: MutableSnapshot) =>
-    snapshot.set(appStateAtom, testState as AppState);
-}
 
 const panelHeadings = [
   'Persoonlijke gegevens',
@@ -49,7 +42,7 @@ describe('<Profile />', () => {
         routeEntry={routeEntry}
         routePath={routeEntry}
         component={MijnGegevensThema}
-        initializeState={initializeState(testState(state))}
+        state={testState(state) as AppState}
       />
     );
   }
@@ -273,7 +266,7 @@ describe('<Profile />', () => {
           routeEntry={routeEntry}
           routePath={routeEntry}
           component={MijnGegevensThema}
-          initializeState={initializeState(
+          state={
             testState({ persoon: { mokum: true } }, [
               {
                 datePublished: '2024-05-29 08:02:38',
@@ -303,8 +296,8 @@ describe('<Profile />', () => {
                 referenceNumber: '00002032',
                 themaKanaal: 'Kanaal world',
               },
-            ])
-          )}
+            ]) as AppState
+          }
         />
       );
     }

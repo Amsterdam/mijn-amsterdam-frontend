@@ -4,7 +4,6 @@ import {
   BeschiktProduct,
   LeveringsVorm,
   ZORGNED_GEMEENTE_CODE,
-  ZorgnedAanvraagSource,
   ZorgnedAanvraagTransformed,
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedAanvragenServiceOptions,
@@ -15,6 +14,7 @@ import {
   ZorgnedPersoonsgegevensNAWResponse,
   ZorgnedResponseDataSource,
   type BSN,
+  type ZorgnedAanvraagSource,
 } from './zorgned-types';
 import {
   apiErrorResult,
@@ -26,7 +26,7 @@ import {
 } from '../../../universal/helpers/api';
 import { getFullName } from '../../../universal/helpers/brp';
 import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
-import { sortByNumber, uniqueArray } from '../../../universal/helpers/utils';
+import { sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
 import { GenericDocument } from '../../../universal/types/App.types';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { isSuccessStatus, requestData } from '../../helpers/source-api-request';
@@ -123,6 +123,7 @@ function transformZorgnedAanvraag(
     productsoortCode: productsoortCode,
     productIdentificatie,
     beschiktProductIdentificatie: beschiktProduct.identificatie,
+    beschikkingNummer: aanvraag.beschikking.beschikkingNummer,
     resultaat: beschiktProduct.resultaat,
     titel: beschiktProduct.product.omschrijving ?? '',
     betrokkenen: toegewezenProduct?.betrokkenen ?? [],
@@ -165,7 +166,17 @@ export function transformZorgnedAanvragen(
     }
   }
 
-  return aanvragenTransformed.sort(sortByNumber('id', 'desc'));
+  return aanvragenTransformed.sort(sortAlpha('id', 'desc'));
+}
+
+export async function fetchAllDocuments(
+  bsn: BSN,
+  options: ZorgnedAanvragenServiceOptions
+) {
+  return fetchZorgnedByBSN(bsn, {
+    ...options,
+    path: '/documenten',
+  });
 }
 
 export async function fetchAanvragen(
@@ -176,6 +187,16 @@ export async function fetchAanvragen(
     ...options,
     path: '/aanvragen',
     transform: transformZorgnedAanvragen,
+  });
+}
+
+export async function fetchAanvragenRaw(
+  bsn: BSN,
+  options: ZorgnedAanvragenServiceOptions
+) {
+  return fetchZorgnedByBSN(bsn, {
+    ...options,
+    path: '/aanvragen',
   });
 }
 

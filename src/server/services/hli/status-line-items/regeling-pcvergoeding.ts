@@ -1,12 +1,19 @@
-import { isSameDay, parseISO } from 'date-fns';
+import { isAfter, isBefore, isSameDay, parseISO, subDays } from 'date-fns';
 
 import { getBetrokkenKinderenDescription } from './generic';
 import { featureToggle } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
+import { lowercaseFirstLetter } from '../../../../universal/helpers/text';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types';
+
+export const PC_REGELING_V3_START_DATE = new Date('2026-01-01');
+
+const isPcRegelingV3Active = () =>
+  featureToggle.hli2026PCVergoedingV3Enabled &&
+  isAfter(new Date(), subDays(PC_REGELING_V3_START_DATE, 1));
 
 export const AV_UPCC = 'AV-UPCC';
 export const AV_UPCZIL = 'AV-UPCZIL';
@@ -29,6 +36,12 @@ const avCodes = {
 
 const verzilveringsCodesPC = toVerzilveringCodes(avCodes.PC);
 const verzilveringsCodesUPC = toVerzilveringCodes(avCodes.UPC);
+
+function isAangevraagdVoorRegelingV3ActiefWerd(dateString: string) {
+  return isPcRegelingV3Active()
+    ? isBefore(dateString, PC_REGELING_V3_START_DATE)
+    : true;
+}
 
 export const verzilveringCodes = [
   ...verzilveringsCodesUPC,
@@ -78,7 +91,8 @@ function isRegelingVanVerzilvering(
 
   return (
     compareAanvraag.productIdentificatie === avCode &&
-    compareAanvraag.betrokkenen.some((id) =>
+    // We match on all betrokkenen to avoid issues with multiple aanvragen for different children.
+    compareAanvraag.betrokkenen.every((id) =>
       aanvraag.betrokkenen.includes(id)
     ) &&
     compareAanvraag.resultaat !== 'afgewezen'
@@ -87,7 +101,7 @@ function isRegelingVanVerzilvering(
 
 function getUpcPcvDecisionDate(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
-  today: Date,
+  _today: Date,
   allAanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ) {
   if (isVerzilvering(aanvraag)) {
@@ -104,21 +118,26 @@ export function filterCombineUpcPcvData(
 ) {
   const baseRegelingIdWithVerzilvering: string[] = [];
 
-  const aanvragenWithDocumentsCombined = aanvragen.map((aanvraag, index) => {
+  const aanvragenWithDocumentsCombined = aanvragen.map((aanvraag) => {
     // Exclude baseRegelingen that have verzilvering
     if (baseRegelingIdWithVerzilvering.includes(aanvraag.id)) {
       return null;
     }
 
     // Add documenten to Verzilvering, e.g, (AV_PC{ZIL|TG})
-    if (isVerzilvering(aanvraag)) {
+    if (
+      isVerzilvering(aanvraag) &&
+      isAangevraagdVoorRegelingV3ActiefWerd(aanvraag.datumAanvraag)
+    ) {
       // Find first corresponding baseRegeling
       const baseRegeling = aanvragen.find((compareAanvraag) =>
         isRegelingVanVerzilvering(aanvraag, compareAanvraag)
       );
-
-      // If no baseRegeling is found, this must be an orphaned verzilvering.
-      if (!baseRegeling) {
+      // If no baseRegeling is found or already used, this must be an orphaned verzilvering.
+      if (
+        !baseRegeling ||
+        baseRegelingIdWithVerzilvering.includes(baseRegeling.id)
+      ) {
         return null;
       }
 
@@ -128,6 +147,7 @@ export function filterCombineUpcPcvData(
 
       return {
         ...aanvraag,
+        titel: baseRegeling.titel,
         // Use Basis regeling to determine actualiteit en einde geldigheid.
         // If verzilvering is denied we treat regeling as "niet actueel"
         isActueel:
@@ -171,32 +191,70 @@ export function isWorkshopNietGevolgd(
   );
 }
 
+function descriptionDefinitief(
+  regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
+) {
+  const betrokkenKinderen = getBetrokkenKinderenDescription(regeling);
+  const titelLower = lowercaseFirstLetter(regeling.titel);
+  return `<p>Uw kind ${betrokkenKinderen} krijgt een ${titelLower}. Lees in de brief hoe u de ${titelLower} bestelt.</p>
+        ${regeling.datumEindeGeldigheid ? `<p>U kunt per ${defaultDateFormat(regeling.datumEindeGeldigheid)} opnieuw een ${titelLower} aanvragen.</p>` : ''}`;
+}
+
 export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWithRelatedPersonsTransformed>[] =
   [
     {
       status: 'Besluit',
       datePublished: getUpcPcvDecisionDate,
-      isChecked: (regeling) => true,
-      isActive: (regeling) =>
-        !isVerzilvering(regeling) && regeling.resultaat === 'afgewezen',
+      isChecked: () => true,
+      isVisible: (regeling) => {
+        // Alleen zichtbaar als regeling is aangevraagd nadat PC regeling v3 actief werd.
+        return isPcRegelingV3Active()
+          ? isAfter(
+              regeling.datumAanvraag,
+              subDays(PC_REGELING_V3_START_DATE, 1)
+            )
+          : false;
+      },
+      isActive: () => true,
       description: (regeling) => {
         const betrokkenKinderen = getBetrokkenKinderenDescription(regeling);
         return `<p>
         ${
           regeling.resultaat === 'toegewezen' || isVerzilvering(regeling)
-            ? `U krijgt een ${regeling.titel} per ${regeling.datumIngangGeldigheid ? defaultDateFormat(regeling.datumIngangGeldigheid) : ''} voor uw kind${betrokkenKinderen ? ` ${betrokkenKinderen}` : ''}.`
-            : `U krijgt geen ${regeling.titel} voor uw kind${betrokkenKinderen ? ` ${betrokkenKinderen}` : ''}.`
+            ? descriptionDefinitief(regeling)
+            : `U krijgt geen ${lowercaseFirstLetter(regeling.titel)} voor uw kind${betrokkenKinderen ? ` ${betrokkenKinderen}` : ''}.`
         }
         </p>
-        <p>
-          ${regeling.resultaat === 'toegewezen' || isVerzilvering(regeling) ? '' : 'In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.'}
+        ${regeling.resultaat === 'toegewezen' || isVerzilvering(regeling) ? '' : '<p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>'}
+      `;
+      },
+    },
+    {
+      status: 'Besluit',
+      datePublished: getUpcPcvDecisionDate,
+      isChecked: () => true,
+      isVisible: (regeling) =>
+        isAangevraagdVoorRegelingV3ActiefWerd(regeling.datumAanvraag),
+      isActive: (regeling) =>
+        !isVerzilvering(regeling) && regeling.resultaat === 'afgewezen',
+      description: (regeling) => {
+        const betrokkenKinderen = getBetrokkenKinderenDescription(regeling);
+        const titelLower = lowercaseFirstLetter(regeling.titel);
+        return `<p>
+        ${
+          regeling.resultaat === 'toegewezen' || isVerzilvering(regeling)
+            ? `U krijgt een ${titelLower} per ${regeling.datumIngangGeldigheid ? defaultDateFormat(regeling.datumIngangGeldigheid) : ''} voor uw kind${betrokkenKinderen ? ` ${betrokkenKinderen}` : ''}.`
+            : `U krijgt geen ${titelLower} voor uw kind${betrokkenKinderen ? ` ${betrokkenKinderen}` : ''}.`
+        }
         </p>
+        ${regeling.resultaat === 'toegewezen' || isVerzilvering(regeling) ? '' : '<p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>'}
       `;
       },
     },
     {
       status: 'Workshop',
       isVisible: (regeling) =>
+        isAangevraagdVoorRegelingV3ActiefWerd(regeling.datumAanvraag) &&
         !isVerzilvering(regeling) &&
         regeling.resultaat === 'toegewezen' &&
         !isWorkshopNietGevolgd(regeling),
@@ -207,7 +265,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
         const betrokkenKinderen = getBetrokkenKinderenDescription(regeling);
         return `
         <p>
-         Voordat u de laptop krijgt, moet uw kind ${betrokkenKinderen} een workshop volgen. Hiervoor moet u eerst een afspraak maken. In de brief staat hoe u dat doet.
+         Voordat u de ${lowercaseFirstLetter(regeling.titel)} krijgt, moet uw kind ${betrokkenKinderen} een workshop volgen. Hiervoor moet u eerst een afspraak maken. In de brief staat hoe u dat doet.
         </p>
       `;
       },
@@ -215,19 +273,19 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
     {
       status: 'Workshop gevolgd',
       isVisible: (regeling) =>
-        isVerzilvering(regeling) && regeling.resultaat === 'toegewezen',
+        isAangevraagdVoorRegelingV3ActiefWerd(regeling.datumAanvraag) &&
+        isVerzilvering(regeling) &&
+        regeling.resultaat === 'toegewezen',
       datePublished: (regeling) => regeling.datumBesluit,
       isChecked: () => true,
       isActive: () => true,
-      description: (regeling) => {
-        const betrokkenKinderen = getBetrokkenKinderenDescription(regeling);
-        return `<p>Uw kind ${betrokkenKinderen} krijgt een ${regeling.titel}. Lees in de brief hoe u de laptop of tablet bestelt.</p>
-        ${regeling.datumEindeGeldigheid ? `<p>U kunt per ${defaultDateFormat(regeling.datumEindeGeldigheid)} opnieuw een ${regeling.titel} aanvragen.</p>` : ''}`;
-      },
+      description: descriptionDefinitief,
     },
     {
       status: 'Workshop niet gevolgd',
-      isVisible: (regeling) => isWorkshopNietGevolgd(regeling),
+      isVisible: (regeling) =>
+        isAangevraagdVoorRegelingV3ActiefWerd(regeling.datumAanvraag) &&
+        isWorkshopNietGevolgd(regeling),
       datePublished: (regeling) => regeling.datumEindeGeldigheid ?? '',
       isChecked: () => true,
       isActive: () => true,
@@ -235,7 +293,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
         const betrokkenKinderen = getBetrokkenKinderenDescription(regeling);
         return `
         <p>
-         Uw kind ${betrokkenKinderen} krijgt geen ${regeling.titel}. De workshop is niet op tijd gevolgd. U kunt een nieuwe aanvraag doen.
+         Uw kind ${betrokkenKinderen} krijgt geen ${lowercaseFirstLetter(regeling.titel)}. De workshop is niet op tijd gevolgd. U kunt een nieuwe aanvraag doen.
         </p>
         <p>
           In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.

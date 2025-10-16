@@ -160,7 +160,7 @@ describe('HLI', () => {
     expect(result).toHaveLength(2);
     expect(result[0].id).toBe('test-encrypted-id');
     expect(result[0].url).toContain(
-      'http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document/test-encrypted-id'
+      'http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id'
     );
   });
 

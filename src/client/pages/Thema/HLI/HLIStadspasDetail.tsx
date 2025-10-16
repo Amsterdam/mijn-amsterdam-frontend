@@ -18,12 +18,7 @@ import {
   StadspasBudgetTransaction,
   StadspasFrontend,
 } from '../../../../server/services/hli/stadspas-types';
-import {
-  apiPristineResult,
-  isError,
-  isLoading,
-  type ApiResponse_DEPRECATED,
-} from '../../../../universal/helpers/api';
+import { isError, isLoading } from '../../../../universal/helpers/api';
 import { dateSort } from '../../../../universal/helpers/date';
 import ErrorAlert from '../../../components/Alert/Alert';
 import { Datalist } from '../../../components/Datalist/Datalist';
@@ -41,9 +36,9 @@ import { PageHeadingV2 } from '../../../components/PageHeading/PageHeadingV2';
 import { Spinner } from '../../../components/Spinner/Spinner';
 import { TableV2 } from '../../../components/Table/TableV2';
 import { getRedactedClass } from '../../../helpers/cobrowse';
-import { useDataApi } from '../../../hooks/api/useDataApi';
+import { useBffApi } from '../../../hooks/api/useBffApi';
 import { useSmallScreen } from '../../../hooks/media.hook';
-import { useAppStateGetter } from '../../../hooks/useAppState';
+import { useAppStateGetter } from '../../../hooks/useAppStateStore';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 
@@ -118,30 +113,17 @@ export function HLIStadspasDetail() {
     content: `${stadspas?.balanceFormatted} (Dit is het bedrag dat u nog kunt uitgeven)`,
   };
 
-  const requestOptions = {
-    method: 'get',
-    url: stadspas?.urlTransactions,
-    postpone: true,
-  };
-
-  const [transactionsApi, fetchTransactions] = useDataApi<
-    ApiResponse_DEPRECATED<StadspasBudgetTransaction[]>
-  >(requestOptions, apiPristineResult([]));
-
+  const transactionsApi = useBffApi<StadspasBudgetTransaction[]>(
+    stadspas?.urlTransactions
+  );
   const isLoadingTransacties = transactionsApi.isLoading;
 
-  useEffect(() => {
-    if (stadspas?.urlTransactions) {
-      fetchTransactions({ ...requestOptions, postpone: false });
-    }
-  }, [fetchTransactions, stadspas?.urlTransactions]);
-
   const transactions =
-    stadspas?.budgets && transactionsApi.data.content
+    stadspas?.budgets && transactionsApi.data?.content
       ? transactionsApi.data.content
       : [];
 
-  const hasTransactions = !!transactionsApi.data.content?.length;
+  const hasTransactions = !!transactionsApi.data?.content?.length;
 
   const showMultiBudgetTransactions =
     !!stadspas?.budgets.length && stadspas.budgets.length > 1 && !isPhoneScreen;
@@ -167,8 +149,11 @@ export function HLIStadspasDetail() {
               </Paragraph>
               <Datalist rows={[NUMBER]} />
               {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
-              {stadspas.blockPassURL && <BlockStadspas stadspas={stadspas} />}
-              {stadspas.unblockPassURL && (
+              {!stadspas.actief && <PassBlockedAlert />}
+              {stadspas.blockPassURL && stadspas.actief && (
+                <BlockStadspas stadspas={stadspas} />
+              )}
+              {stadspas.unblockPassURL && !stadspas.actief && (
                 <UnblockStadspas stadspas={stadspas} />
               )}
             </PageContentCell>
@@ -280,17 +265,13 @@ function determineUwUitgavenDescription(
 function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showError, setShowError] = useState(false);
-  const { error, isMutating, trigger: blockStadspas } = useBlockStadspas();
+  const { isError, isLoading, fetch } = useBlockStadspas(stadspas.passNumber);
 
   useEffect(() => {
-    if (error && !isMutating && !showError) {
+    if (isError && !isLoading && !showError) {
       setShowError(true);
     }
-  }, [error, showError, isMutating]);
-
-  if (!stadspas.actief && !isMutating) {
-    return <PassBlockedAlert />;
-  }
+  }, [isError, showError, isLoading]);
 
   return (
     <>
@@ -309,7 +290,7 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
           </Paragraph>
         </Alert>
       )}
-      {isMutating ? (
+      {isLoading ? (
         <Alert severity="warning" heading="Blokkeren" headingLevel={4}>
           <Paragraph>
             <Spinner /> <span>Bezig met het blokkeren van de pas...</span>
@@ -344,7 +325,7 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
                 setShowError(false);
                 setIsModalOpen(false);
                 if (stadspas.blockPassURL) {
-                  blockStadspas(stadspas.blockPassURL);
+                  fetch(stadspas.blockPassURL);
                 }
               }}
             >
@@ -419,17 +400,14 @@ function PassBlockedAlert() {
 function UnblockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showError, setShowError] = useState(false);
-  const { error, isMutating, trigger: deblokkeerStadspas } = useBlockStadspas();
+
+  const { isError, isLoading, fetch } = useBlockStadspas(stadspas.passNumber);
 
   useEffect(() => {
-    if (error && !isMutating && !showError) {
+    if (isError && !isLoading && !showError) {
       setShowError(true);
     }
-  }, [error, showError, isMutating]);
-
-  if (stadspas.actief) {
-    return;
-  }
+  }, [isError, showError, isLoading]);
 
   return (
     <PageContentCell>
@@ -443,7 +421,7 @@ function UnblockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
           <Paragraph>Probeer het nog eens.</Paragraph>
         </Alert>
       )}
-      {isMutating ? (
+      {isLoading ? (
         <Alert heading="Deblokkeren" headingLevel={4} severity="warning">
           <Paragraph>
             <Spinner /> <span>Bezig met deblokkeren...</span>
@@ -478,7 +456,7 @@ function UnblockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
                 setShowError(false);
                 setIsModalOpen(false);
                 if (stadspas.unblockPassURL) {
-                  deblokkeerStadspas(stadspas.unblockPassURL);
+                  fetch(stadspas.unblockPassURL);
                 }
               }}
             >

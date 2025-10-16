@@ -1,16 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MutableSnapshot } from 'recoil';
 import { describe, it, expect } from 'vitest';
 
 import { ErrorMessages } from './ErrorMessages';
 import { AppState } from '../../../universal/types/App.types';
-import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../../pages/MockApp';
-
-function initializeState(testState: AppState) {
-  return (snapshot: MutableSnapshot) => snapshot.set(appStateAtom, testState);
-}
 
 describe('<ErrorMessages />', () => {
   function Component() {
@@ -19,12 +13,14 @@ describe('<ErrorMessages />', () => {
         routeEntry="/"
         routePath="/"
         component={ErrorMessages}
-        initializeState={initializeState({
-          BRP: {
-            status: 'ERROR',
-            content: null,
-          },
-        } as AppState)}
+        state={
+          {
+            BRP: {
+              status: 'ERROR',
+              content: null,
+            },
+          } as AppState
+        }
       />
     );
   }

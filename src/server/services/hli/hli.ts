@@ -104,9 +104,11 @@ function getDocumentsFrontend(
     );
     return {
       ...document,
-      url: generateFullApiUrlBFF(BffEndpoints.HLI_DOCUMENT_DOWNLOAD, {
-        id: idEncrypted,
-      }),
+      url: generateFullApiUrlBFF(BffEndpoints.HLI_DOCUMENT_DOWNLOAD, [
+        {
+          id: idEncrypted,
+        },
+      ]),
       id: idEncrypted,
     };
   });
@@ -172,6 +174,9 @@ function transformRegelingForFrontend<T extends string>(
     decision: aanvraag.resultaat,
     displayStatus,
     documents: getDocumentsFrontend(sessionID, aanvraag.documenten),
+    betrokkenen: aanvraag.betrokkenPersonen
+      .map((persoon) => persoon.name)
+      .join(', '),
   };
 
   return regelingFrontend;

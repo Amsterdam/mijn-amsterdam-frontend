@@ -5,7 +5,7 @@ import { Link } from '@amsterdam/design-system-react';
 import { formatBrpProfileData } from './ProfilePrivate.transform';
 import { useAantalBewonersOpAdres } from './useAantalBewonersOpAdres.hook';
 import { FeatureToggle } from '../../../../../universal/config/feature-toggles';
-import { useAppStateGetter } from '../../../../hooks/useAppState';
+import { useAppStateGetter } from '../../../../hooks/useAppStateStore';
 import { routeConfig } from '../Profile-thema-config';
 
 export function useProfileData() {

@@ -1,17 +1,23 @@
-import useSWR from 'swr';
-import useSWRMutation from 'swr/mutation';
-
 import {
   StadspasFrontend,
   type PasblokkadeByPasnummer,
 } from '../../../../server/services/hli/stadspas-types';
-import { useAppStateGetter } from '../../../hooks/useAppState';
+import { useBffApi, useBffApiStateStore } from '../../../hooks/api/useBffApi';
+import { useAppStateGetter } from '../../../hooks/useAppStateStore';
+
+function getPasBlockedStateKey(passNumber: StadspasFrontend['passNumber']) {
+  return `pass-blocked-state-${passNumber}`;
+}
 
 export function useStadspassen() {
   const { HLI } = useAppStateGetter();
-  const { data: passBlokkadeByPasnummer } = useBlockStadspas();
+  const store = useBffApiStateStore();
   const stadspassen = (HLI.content?.stadspas?.stadspassen || []).map((pas) => {
-    const isGeblokkeerd = passBlokkadeByPasnummer?.[pas.passNumber];
+    const pasBlokkade =
+      store.get<PasblokkadeByPasnummer>(getPasBlockedStateKey(pas.passNumber))
+        ?.data?.content ?? null;
+    const isGeblokkeerd =
+      pasBlokkade !== null ? !pasBlokkade.actief : undefined;
     const stadspas: StadspasFrontend = {
       ...pas,
       actief:
@@ -24,42 +30,8 @@ export function useStadspassen() {
   return stadspassen;
 }
 
-type BlokkeerURL = string;
-
-export function useBlockStadspas() {
-  const { data } = useSWR<PasblokkadeByPasnummer>('pasblokkades');
-  const mutation = useSWRMutation<
-    PasblokkadeByPasnummer,
-    Error,
-    'pasblokkades',
-    BlokkeerURL
-  >(
-    'pasblokkades',
-    async (_key, { arg: url }) => {
-      const response = await fetch(url, {
-        credentials: 'include',
-      }).then((response) => response.json());
-
-      if (response.status !== 'OK') {
-        throw new Error(response.message);
-      }
-
-      return response.content;
-    },
-    {
-      revalidate: false,
-      populateCache: (responseContent, pasBlokkadeByPasnummer) => {
-        const newState = {
-          ...pasBlokkadeByPasnummer,
-          ...responseContent,
-        };
-        return newState;
-      },
-    }
-  );
-
-  return {
-    ...mutation,
-    data,
-  };
+export function useBlockStadspas(passNumber: StadspasFrontend['passNumber']) {
+  return useBffApi<PasblokkadeByPasnummer>(getPasBlockedStateKey(passNumber), {
+    fetchImmediately: false,
+  });
 }
