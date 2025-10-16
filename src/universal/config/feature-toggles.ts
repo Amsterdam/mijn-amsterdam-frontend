@@ -106,7 +106,4 @@ export const FeatureToggle = {
 
   // Cobrowse widget
   cobrowseIsActive: true,
-
-  // WMO router for private network access -> TripleForms team
-  wmoPrivateNetworkRouterActive: !IS_PRODUCTION,
 } as const;
