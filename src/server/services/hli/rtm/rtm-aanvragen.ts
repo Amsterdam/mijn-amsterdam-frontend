@@ -303,6 +303,15 @@ const aanvragen_ = [
       resultaat: 'toegewezen',
     },
   ],
+  // Filtered out, we don't show verlopen aanvragen.
+  [
+    {
+      productsoortCode: 'RTM1',
+      betrokkenen: ['E1'],
+      resultaat: 'toegewezen',
+      datumEindeGeldigheid: '2024-12-31',
+    },
+  ],
 ];
 
 export const aanvragen = aanvragen_;

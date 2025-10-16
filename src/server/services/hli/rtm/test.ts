@@ -72,19 +72,24 @@ function mapAanvragenByBetrokkenen(
   bsn: BSN,
   aanvraagSet: ZorgnedAanvraagTransformed[]
 ) {
+  const aanvraagSetFiltered = aanvraagSet.filter(
+    (a) =>
+      (a.productsoortCode === RTM_FASE1 && !a.datumEindeGeldigheid) ||
+      a.productsoortCode === RTM_FASE2
+  );
   const aanvragenByBetrokkenen = new Map<string, ZorgnedAanvraagTransformed[]>([
     ['orphans', []],
   ]);
-  const betrokkenenKeys = aanvraagSet
+  const betrokkenenKeys = aanvraagSetFiltered
     .filter((a) => a.betrokkenen.length > 0)
     .map((a) => a.betrokkenen.sort().join(','));
 
   const hasSingleBetrokkene =
-    new Set(aanvraagSet.flatMap((a) => a.betrokkenen)).size === 1;
-  const hasOnlyAfgewezen = aanvraagSet.every(
+    new Set(aanvraagSetFiltered.flatMap((a) => a.betrokkenen)).size === 1;
+  const hasOnlyAfgewezen = aanvraagSetFiltered.every(
     (a) => a.resultaat === 'afgewezen'
   );
-  const hasNobetrokkenen = aanvraagSet.every(
+  const hasNobetrokkenen = aanvraagSetFiltered.every(
     (a) => a.resultaat === 'toegewezen' && a.betrokkenen.length === 0
   );
   const hasSamebetrokkenen = new Set(betrokkenenKeys).size === 1;
@@ -98,15 +103,15 @@ function mapAanvragenByBetrokkenen(
     let betrokkene: string | undefined;
 
     if (hasSingleBetrokkene) {
-      betrokkene = aanvraagSet.find((a) => a.betrokkenen.length)
+      betrokkene = aanvraagSetFiltered.find((a) => a.betrokkenen.length)
         ?.betrokkenen[0];
     } else if (hasSamebetrokkenen) {
-      betrokkene = aanvraagSet[0].betrokkenen.join(',');
+      betrokkene = aanvraagSetFiltered[0].betrokkenen.join(',');
     }
 
-    aanvragenByBetrokkenen.set(betrokkene ?? bsn, aanvraagSet);
+    aanvragenByBetrokkenen.set(betrokkene ?? bsn, aanvraagSetFiltered);
   } else {
-    for (const aanvraag of aanvraagSet) {
+    for (const aanvraag of aanvraagSetFiltered) {
       // If afgewezen and fase 1, we cannot know the betrokkene, so we add it to orphans.
       // Orphans will be assigned a separate statustrein later.
       if (
