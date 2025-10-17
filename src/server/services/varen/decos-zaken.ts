@@ -159,22 +159,20 @@ export const ZaakVergunningExploitatieWijzigingVergunningshouder: DecosZaakTrans
       // There can be multiple linked vergunningen
       // The earliest vergunning belongs to the current reder and is returned
       // If dateStart is not correctly set we fallback to sorting based on the identifier
-      let vergunningen = decosZaak.vergunningen;
+      let vergunningen = decosZaak.vergunningen.toReversed(); // Decos returns the latest linked vergunning first
       const allHaveDateStart = decosZaak.vergunningen.every(
         (z) => !!z.dateStart
       );
       const allHaveUniqueDateStart =
         new Set(vergunningen.map((z) => z.dateStart)).size ===
         vergunningen.length;
-
-      const sortFn =
-        allHaveDateStart && allHaveUniqueDateStart
-          ? dateSort('dateStart', 'asc')
-          : sortAlpha('identifier', 'asc');
+      if (allHaveDateStart && allHaveUniqueDateStart) {
+        vergunningen = vergunningen.sort(dateSort('dateStart', 'asc'));
+      }
 
       return {
         ...decosZaak,
-        vergunningen: [vergunningen.sort(sortFn)[0]],
+        vergunningen: [vergunningen[0]],
       };
     },
   };
