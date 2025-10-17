@@ -65,10 +65,7 @@ export function filterCombineRtmData(
   aanvragenPerBetrokkenen = removeExpiredIndividualAanvragen(
     aanvragenPerBetrokkenen
   );
-  return [
-    remainder,
-    Object.values(aanvragenPerBetrokkenen).flatMap(combineRTMData),
-  ];
+  return [remainder, combineRTMData(aanvragenPerBetrokkenen, bsnOntvanger)];
 }
 
 /** Aanvragen can contain duplicate RTMDeel2. We combine the documents and drop the dupe. */
@@ -131,7 +128,7 @@ function removeNonPdfDocuments(
   return withoutDocuments;
 }
 
-type AanvragenMap = Record<
+type AanvragenPerBetrokkene = Record<
   string,
   ZorgnedAanvraagWithRelatedPersonsTransformed[]
 >;
@@ -139,7 +136,7 @@ type AanvragenMap = Record<
 function mapAanvragenPerBetrokkenen(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
   bsnOntvanger: string
-): AanvragenMap {
+): AanvragenPerBetrokkene {
   aanvragen = aanvragen.map((aanvraag) => {
     return {
       ...aanvraag,
@@ -148,14 +145,9 @@ function mapAanvragenPerBetrokkenen(
     };
   });
 
-  const aanvragenMap: AanvragenMap = {};
+  const aanvragenMap: AanvragenPerBetrokkene = {};
 
-  // Just copy/distribute aanvragen for all BSN's.
-  //
-  // We can go very fancy here, but someoen can still do aanvragen for everyone seperately.
-  // There's just too many things that we are able to do, but will never result in a nice overview anyway.
-  //
-  // So I choose the simplest solution for us that might result in a few extra table rows.
+  // Just copy/distribute aanvragen for every individual betrokkene.
   for (const aanvraag of aanvragen) {
     let betrokkenen = aanvraag.betrokkenen;
     if (!betrokkenen.length) {
@@ -171,14 +163,12 @@ function mapAanvragenPerBetrokkenen(
     }
   }
 
-  // RP TODO: Maybe dedupe duplicate results? Aanvraag for [a, b] becomes [a], [b]. Maybe just keep a in that case?
-
   return aanvragenMap;
 }
 
 function removeExpiredIndividualAanvragen(
-  aanvragen: AanvragenMap
-): AanvragenMap {
+  aanvragen: AanvragenPerBetrokkene
+): AanvragenPerBetrokkene {
   const aanvraagEntries = Object.entries(aanvragen).filter(([_, aanvragen]) => {
     return !(
       aanvragen.length === 1 &&
@@ -187,7 +177,7 @@ function removeExpiredIndividualAanvragen(
     );
   });
 
-  return Object.fromEntries(aanvraagEntries) as AanvragenMap;
+  return Object.fromEntries(aanvraagEntries) as AanvragenPerBetrokkene;
 }
 
 type RTMCombinedRegeling = [ZorgnedHLIRegeling, StatusLineItem[]];
@@ -196,12 +186,38 @@ type RTMCombinedRegeling = [ZorgnedHLIRegeling, StatusLineItem[]];
  *  This requires a list of aanvragen for one person.
  */
 function combineRTMData(
+  aanvragenPerBetrokkene: AanvragenPerBetrokkene,
+  bsnOntvanger: string
+): RTMCombinedRegeling[] {
+  const preprocessedAanvragenPerBetrokkenen: AanvragenPerBetrokkene = {};
+
+  for (const [betrokkene, aanvragen] of Object.entries(
+    aanvragenPerBetrokkene
+  )) {
+    preprocessedAanvragenPerBetrokkenen[betrokkene] = aanvragen
+      // Sort asc so we always end with an 'Einde recht'.
+      // This keeps it in the same order as how we describe the scenarios, so you don't need to think in reverse.
+      .toSorted(sortAlpha('id', 'asc'));
+  }
+
+  const regelingenForOntvanger = processOntvanger(
+    preprocessedAanvragenPerBetrokkenen[bsnOntvanger]
+  );
+  const regelingenForRelatedPersons = processRelatedPersons(
+    Object.entries(preprocessedAanvragenPerBetrokkenen)
+      .filter(([betrokkene]) => betrokkene !== bsnOntvanger)
+      .map(([, aanvragen]) => aanvragen)
+  );
+
+  return [...regelingenForOntvanger, ...regelingenForRelatedPersons];
+}
+
+function processOntvanger(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ): RTMCombinedRegeling[] {
-  aanvragen = aanvragen
-    // Sort asc so we always end with an 'Einde recht'.
-    // This keeps it in the same order as how we describe the scenarios, so you don't need to think in reverse.
-    .toSorted(sortAlpha('id', 'asc'));
+  if (!aanvragen) {
+    return [];
+  }
 
   aanvragen = dedupCombineRTMDeel2(aanvragen);
 
@@ -236,6 +252,44 @@ function combineRTMData(
   );
 
   return combinedRegelingen;
+}
+
+function processRelatedPersons(
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[][]
+): RTMCombinedRegeling[] {
+  const regelingenForRelatedPersons: RTMCombinedRegeling[] = aanvragen.reduce(
+    (rtmCombinedRegeling, aanvragen) => {
+      const last = aanvragen[aanvragen.length - 1];
+      const regeling: ZorgnedHLIRegeling = {
+        ...last,
+        datumInBehandeling: last.datumBesluit,
+      };
+      const statusLineItems = aanvragen
+        .flatMap((aanvraag) => {
+          const getStatusLineItem = createGetStatusLineItemFn(aanvraag);
+          if (aanvraag.resultaat === 'toegewezen') {
+            return getStatusLineItem([
+              'aanvraagLopend',
+              'inBehandelingGenomen',
+            ]);
+          }
+          return getStatusLineItem(['aanvraagAfgewezen']);
+        })
+        .map((item, i) => {
+          const complete: StatusLineItem = {
+            ...item,
+            id: `status-step-${i + 1}`,
+            isActive: true,
+            isChecked: false,
+          };
+          return complete;
+        });
+      regeling.documenten = [];
+      return [...rtmCombinedRegeling, [regeling, statusLineItems]];
+    },
+    [] as RTMCombinedRegeling[]
+  );
+  return regelingenForRelatedPersons;
 }
 
 function groupAanvragenPerRegeling(

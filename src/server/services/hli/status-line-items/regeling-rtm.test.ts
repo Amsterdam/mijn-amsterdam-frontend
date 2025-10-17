@@ -520,9 +520,9 @@ describe('Aanvrager is ontvanger', () => {
     expect(regelingen.length).toBe(expectedRegelingenAmount);
 
     const expectedRegeling = {
-      dateDecision: '2025-02-01',
-      dateEnd: '2026-05-01',
-      dateStart: '2025-05-01',
+      dateDecision: RTM_1_AANVRAAG.datumBesluit,
+      dateEnd: RTM_1_AANVRAAG.datumEindeGeldigheid,
+      dateStart: RTM_1_AANVRAAG.datumIngangGeldigheid,
       decision: 'toegewezen',
       displayStatus: 'In behandeling genomen',
       documents: [],
@@ -570,8 +570,48 @@ describe('Aanvrager is ontvanger', () => {
     expect(regelingen[0]).toMatchObject(expectedRegeling);
     expect(regelingen[0].steps).toMatchObject(expectedSteps);
 
-    expect(regelingen[1]).toMatchObject(expectedRegeling);
-    expect(regelingen[1].steps).toMatchObject(expectedSteps);
+    expect(regelingen[1]).toMatchObject({
+      betrokkenen: '999999999 - Flex, 222222222 - Flex',
+      dateDecision: RTM_1_AANVRAAG.datumBesluit,
+      dateEnd: RTM_1_AANVRAAG.datumEindeGeldigheid,
+      dateStart: RTM_1_AANVRAAG.datumIngangGeldigheid,
+      decision: 'toegewezen',
+      displayStatus: 'In behandeling genomen',
+      documents: [],
+      id: '1',
+      isActual: true,
+      link: {
+        title: 'Meer informatie',
+        to: '/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/1',
+      },
+      title: 'Regeling Tegemoetkoming Meerkosten',
+    });
+    expect(regelingen[1].steps).toMatchObject([
+      {
+        datePublished: RTM_1_AANVRAAG.datumBesluit,
+        description: '',
+        documents: [],
+        id: 'status-step-1',
+        isActive: true,
+        isChecked: false,
+        isVisible: true,
+        status: 'Aanvraag',
+      },
+      {
+        datePublished: RTM_1_AANVRAAG.datumBesluit,
+        description: descriptions.inBehandelingVoorMeerdereBetrokkenen,
+        documents: [
+          {
+            title: 'AV-RTM Info aan klant GGD',
+          },
+        ],
+        id: 'status-step-2',
+        isActive: true,
+        isChecked: false,
+        isVisible: true,
+        status: 'In behandeling genomen',
+      },
+    ]);
   });
 
   test('Single Aanvraag afgewezen', () => {
@@ -1514,7 +1554,7 @@ describe('Ontvanger but aanvragen made by someone else', () => {
 });
 
 describe('Mixed betrokkenen', () => {
-  test.skip('Migratie into toegewezen with different but overlapping betrokkenen', () => {
+  test('Migratie into toegewezen with different but overlapping betrokkenen', () => {
     const betrokkeneAanvrager: Betrokkene = {
       bsn: ONTVANGER_ID,
       isAanvrager: true,
@@ -1531,25 +1571,24 @@ describe('Mixed betrokkenen', () => {
     const regelingen = transformRegelingenForFrontend(aanvragen);
     expect(regelingen.length).toBe(2);
 
-    const regelingAanvrager = regelingen[1];
-    const regelingOther = regelingen[0];
+    const regelingAanvrager = regelingen[0];
+    const regelingOther = regelingen[1];
 
-    expect(regelingAanvrager).toMatchObject({
-      betrokkenen: '999999999 - Flex',
-    });
+    expect(regelingAanvrager.betrokkenen).toBe('999999999 - Flex');
     expect(regelingAanvrager.steps).toMatchObject([
       { status: 'Besluit' },
       { status: 'Aanvraag wijziging' },
       { status: 'Besluit wijziging', isActive: true },
       { status: 'Einde recht', isActive: false },
     ]);
-    expect(regelingOther).toMatchObject({
-      betrokkenen: '111111111 - Flex',
-    });
+    expect(regelingOther.betrokkenen).toBe('111111111 - Flex');
     expect(regelingOther.steps).toMatchObject([
-      { status: 'Aanvraag wijziging', isActive: false },
-      { status: 'Aanvraag wijziging', isActive: false },
-      { status: 'Aanvraag wijziging', isActive: true },
+      { status: 'Aanvraag', isChecked: false, isActive: true },
+      { status: 'In behandeling genomen', isChecked: false, isActive: true },
+      { status: 'Aanvraag', isChecked: false, isActive: true },
+      { status: 'In behandeling genomen', isChecked: false, isActive: true },
+      { status: 'Aanvraag', isChecked: false, isActive: true },
+      { status: 'In behandeling genomen', isChecked: false, isActive: true },
     ]);
   });
 });
