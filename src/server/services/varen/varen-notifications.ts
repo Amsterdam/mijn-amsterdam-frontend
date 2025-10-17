@@ -23,10 +23,14 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 
 function createVarenRederRegisteredNotification(
   zaak: VarenRegistratieRederType
-): MyNotification {
+): MyNotification | null {
+  const datePublished = zaak.dateRequest;
+  if (!isRecentNotification(datePublished)) {
+    return null;
+  }
   return {
     id: `varen-${zaak.id}-reder-notification`,
-    datePublished: zaak.dateRequest,
+    datePublished,
     themaID: themaId,
     themaTitle: themaTitle,
     title: `Reder geregistreerd`,
@@ -45,9 +49,13 @@ function createVarenVergunningNotification(
   if (!vergunning.dateStart || isDateInFuture(vergunning.dateStart)) {
     return null;
   }
+  const datePublished = vergunning.dateStart;
+  if (!isRecentNotification(datePublished)) {
+    return null;
+  }
   return {
     id: `varen-${vergunning.id}-vergunning-notification`,
-    datePublished: vergunning.dateStart,
+    datePublished,
     themaID: themaId,
     themaTitle: themaTitle,
     title: vergunning.title,
@@ -108,6 +116,9 @@ function createVarenNotification(
         description: `Wij hebben meer informatie nodig om uw aanvraag voor vaartuig "${zaak.vesselName}" verder te kunnen verwerken.`,
       };
     case 'Afgehandeld':
+      if (!isRecentNotification(baseNotification.datePublished)) {
+        return null;
+      }
       return {
         ...baseNotification,
         id: `varen-${zaak.id}-afgehandeld-notification`,
@@ -135,9 +146,7 @@ export async function fetchVarenNotifications(
     );
   }
 
-  notifications.push(
-    ...VAREN.content.zaken.map(createVarenNotification).filter((n) => !!n)
-  );
+  notifications.push(...VAREN.content.zaken.map(createVarenNotification));
 
   notifications.push(
     ...VAREN.content.vergunningen
@@ -145,11 +154,9 @@ export async function fetchVarenNotifications(
       .filter((n) => !!n)
   );
 
-  const recentNotifications = notifications.filter(
-    (notification) =>
-      !!notification.datePublished &&
-      isRecentNotification(notification.datePublished)
-  );
+  const recentNotifications = notifications
+    .filter((notification) => !!notification) // Check if notification exists seperately for typescript
+    .filter((notification) => !!notification.datePublished);
 
   return apiSuccessResult({
     notifications: recentNotifications,

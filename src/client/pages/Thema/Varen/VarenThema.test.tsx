@@ -294,7 +294,11 @@ describe('<Varen />', () => {
       ).toBeDefined();
 
       const actieveVergunningTable = getTable(screen, 'Actieve vergunningen');
-      expectHeaders(actieveVergunningTable, ['Naam vaartuig', 'Omschrijving']);
+      expectHeaders(actieveVergunningTable, [
+        'Naam vaartuig',
+        'Omschrijving',
+        'Vergunningkenmerk',
+      ]);
 
       const withinActieveVergunningTable = within(actieveVergunningTable);
       expect(

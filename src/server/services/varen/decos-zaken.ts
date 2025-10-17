@@ -131,7 +131,7 @@ export const ZaakVergunningExploitatie: DecosZaakTransformer<ZaakVergunningExplo
 export const ZaakVergunningExploitatieWijzigenVaartuignaam: DecosZaakTransformer<ZaakVergunningExploitatieWijzigingVaartuigNaamType> =
   {
     caseType: 'Varen vergunning exploitatie Wijziging vaartuignaam',
-    title: 'Naamswijziging vaartuig',
+    title: 'Vaartuig naamswijziging',
     ...ZaakWijzigenBase,
     transformFields: {
       ...ZaakWijzigenBase.transformFields,
