@@ -50,7 +50,7 @@ function createVarenVergunningNotification(
     datePublished: vergunning.dateStart,
     themaID: themaId,
     themaTitle: themaTitle,
-    title: `Varen vergunning exploitatie`,
+    title: vergunning.title,
     description: `U hebt een vergunning gekregen voor "${vergunning.vesselName}".`,
     link: {
       to: generatePath(routeConfig.detailPageVergunning.path, {
@@ -90,28 +90,28 @@ function createVarenNotification(
       return {
         ...baseNotification,
         id: `varen-${zaak.id}-ontvangen-notification`,
-        title: `Aanvraag ${zaak.caseType} ontvangen`,
+        title: `Aanvraag ${zaak.title} ontvangen`,
         description: `Wij hebben uw aanvraag voor vaartuig "${zaak.vesselName}" ontvangen`,
       };
     case 'In behandeling':
       return {
         ...baseNotification,
         id: `varen-${zaak.id}-inbehandeling-notification`,
-        title: `Aanvraag ${zaak.caseType} in behandeling`,
+        title: `Aanvraag ${zaak.title} in behandeling`,
         description: `Wij hebben uw aanvraag voor vaartuig "${zaak.vesselName}" in behandeling genomen.`,
       };
     case 'Meer informatie nodig':
       return {
         ...baseNotification,
         id: `varen-${zaak.id}-meerinformatienodig-notification`,
-        title: `Meer informatie nodig omtrent uw ${zaak.caseType} aanvraag`,
+        title: `Meer informatie nodig omtrent uw ${zaak.title} aanvraag`,
         description: `Wij hebben meer informatie nodig om uw aanvraag voor vaartuig "${zaak.vesselName}" verder te kunnen verwerken.`,
       };
     case 'Afgehandeld':
       return {
         ...baseNotification,
         id: `varen-${zaak.id}-afgehandeld-notification`,
-        title: `Aanvraag ${zaak.caseType} afgehandeld`,
+        title: `Aanvraag ${zaak.title} afgehandeld`,
         description: `Wij hebben uw aanvraag voor vaartuig "${zaak.vesselName}" afgehandeld.`,
       };
   }

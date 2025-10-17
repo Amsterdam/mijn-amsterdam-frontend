@@ -151,7 +151,7 @@ export const tableConfig: {
         detailLinkComponent: 'Naam vaartuig',
         title: 'Omschrijving',
         dateDecisionFormatted: 'Datum besluit',
-        displayStatus: 'Status',
+        displayStatus: 'Resultaat',
       },
       colWidths: {
         large: ['25%', '35%', '20%', '20%'],
