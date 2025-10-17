@@ -20,8 +20,8 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import {
-  entries,
   omit,
+  removeEmpty,
   toDateFormatted,
 } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
@@ -61,23 +61,23 @@ function transformVarenZaakFrontend(
     vergunning: null,
   };
 
-  if (!zaak.vergunningen || zaak.vergunningen.length === 0) {
+  // A zaak can link to a vergunning of another reder.
+  // A linked vergunning not in vergunningIdsOfThisReder does not belong to this reder.
+  const vergunningenOfThisReder = zaak.vergunningen?.filter((vergunning) =>
+    vergunningIdsOfThisReder.has(vergunning.identifier)
+  );
+
+  if (!vergunningenOfThisReder || vergunningenOfThisReder.length === 0) {
     return zaakFrontend;
   }
 
-  // A zaak can link to a vergunning of another reder.
-  // A linked vergunning not in vergunningIdsOfThisReder does not belong to this reder.
-  const firstLinkedVergunningOfThisReder = zaak.vergunningen.filter((v) =>
-    vergunningIdsOfThisReder.has(v.identifier)
-  )[0];
-  const vergunning = Object.fromEntries(
-    entries(firstLinkedVergunningOfThisReder).filter(([_, val]) => val != null)
-  ) as (typeof zaak.vergunningen)[0];
-
   return {
     ...zaakFrontend,
-    ...omit(vergunning, ['id', 'identifier']),
-    vergunning,
+    ...omit(removeEmpty(vergunningenOfThisReder[0] ?? {}), [
+      'id',
+      'identifier',
+    ]),
+    vergunning: vergunningenOfThisReder[0] ?? null,
   };
 }
 

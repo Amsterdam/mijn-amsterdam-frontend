@@ -130,6 +130,15 @@ export function deepOmitKeys(data: any, omitKeys: string[] = []): any {
   return data;
 }
 
+export function removeEmpty<T extends Record<string, unknown>>(
+  obj: T
+): Partial<T> {
+  return Object.fromEntries(
+    Object.entries(obj).filter(([_, v]) => v !== null)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ) as any;
+}
+
 export function uniqueArray(arr: any[]) {
   return Array.from(new Set(arr));
 }
