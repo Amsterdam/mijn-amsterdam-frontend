@@ -156,7 +156,7 @@ export const contentTips: ContentTipSource[] = [
     description:
       'U heeft een geldige ID-kaart of geldig paspoort nodig om te stemmen. Heeft u een Stadspas met groene stip? Dan kunt u gratis een nieuwe ID-kaart krijgen.',
     predicates: [
-      not(hasValidIdForVoting),
+      not((pred) => hasValidIdForVoting(pred, new Date('2025-10-29'))),
       is18OrOlder,
       hasStadspasGroeneStip,
       hasDutchNationality,
