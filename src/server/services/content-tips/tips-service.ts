@@ -34,11 +34,10 @@ function tipsFilter(serviceResults: ServiceResults, now: Date = new Date()) {
     }
 
     // All predicates have to return true to show the tip.
-    if (t.predicates) {
-      return t.predicates.every((p) => p(serviceResults, now));
+    if (!t.predicates) {
+      return true;
     }
-
-    return true;
+    return t.predicates.every((p) => p(serviceResults, now));
   };
 }
 
