@@ -71,9 +71,7 @@ function transformVarenZaakFrontend(
     vergunningIdsOfThisReder.has(v.identifier)
   )[0];
   const vergunning = Object.fromEntries(
-    entries(firstLinkedVergunningOfThisReder).filter(
-      ([_key, val]) => val != null
-    )
+    entries(firstLinkedVergunningOfThisReder).filter(([_, val]) => val != null)
   ) as (typeof zaak.vergunningen)[0];
 
   return {
@@ -95,7 +93,8 @@ function transformVarenVergunningFrontend(
     dateEndFormatted: toDateFormatted(vergunning.dateEnd),
     linkedActiveZaakLink:
       zaken.find(
-        (z) => z.vergunning?.id === vergunning.id && z.processed === false
+        (zaak) =>
+          zaak.vergunning?.id === vergunning.id && zaak.processed === false
       )?.link || null,
     link: {
       to: generatePath(appRoute, {
@@ -126,7 +125,9 @@ export async function fetchVaren(authProfileAndToken: AuthProfileAndToken) {
     transformVarenZaakFrontend(
       authProfileAndToken,
       zaak,
-      new Set(vergunningenRaw.content.map((v) => v.identifier))
+      new Set(
+        vergunningenRaw.content.map((vergunning) => vergunning.identifier)
+      )
     )
   );
   const vergunningen = vergunningenRaw.content.flatMap((vergunning) =>
