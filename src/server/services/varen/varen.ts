@@ -134,11 +134,12 @@ export async function fetchVaren(authProfileAndToken: AuthProfileAndToken) {
   }
 
   // A zaak can link to a vergunning of another reder.
-  // Vergunningen contains all vergunningen that belong to this reder.
-  // A vergunning is not returned if it does not belong to this reder.
-  const rederVergunningenIds = vergunningen.content.map((v) => v.identifier);
+  // A linked vergunning not in vergunningen does not belong to this reder.
+  const rederVergunningenIds = new Set(
+    vergunningen.content.map((v) => v.identifier)
+  );
   zaken.content = zaken.content.map((z) =>
-    !z.vergunning || rederVergunningenIds.includes(z.vergunning.identifier)
+    !z.vergunning || rederVergunningenIds.has(z.vergunning.identifier)
       ? z
       : { ...z, vergunning: null }
   );
