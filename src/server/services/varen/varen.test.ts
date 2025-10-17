@@ -163,6 +163,7 @@ describe('Varen service', () => {
             isActive: false,
             isChecked: false,
             status: 'Afgehandeld',
+            description: '',
           },
         ],
         link: {
