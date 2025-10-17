@@ -27,34 +27,50 @@ function attachIDs(
   });
 }
 
+type Betrokkene = { bsn: string; isAanvrager?: true };
+
 function replacePropsInAanvragen(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
   props: {
-    betrokkenen: { bsn: string; isAanvrager?: true }[];
+    betrokkenen: Betrokkene[];
     bsnAanvrager: string;
   }
 ): ZorgnedAanvraagWithRelatedPersonsTransformed[] {
   return aanvragen.map((aanvraag) => {
+    const aanvraagWithBetrokkenenReplaced = replaceBetrokkenen(
+      aanvraag,
+      props.betrokkenen
+    );
+
     return {
-      ...aanvraag,
-      betrokkenen: props.betrokkenen.map(({ bsn }) => bsn),
-      betrokkenPersonen: props.betrokkenen.map(({ bsn, isAanvrager }) => {
-        const betrokkenPersoon: ZorgnedPerson = {
-          bsn,
-          name: `${bsn} - Flex`,
-          dateOfBirth: '2023-06-12',
-          dateOfBirthFormatted: '12 juni 2023',
-          partnernaam: 'partner-2 - Flex',
-          partnervoorvoegsel: null,
-        };
-        if (isAanvrager) {
-          betrokkenPersoon.isAanvrager = true;
-        }
-        return betrokkenPersoon;
-      }),
+      ...aanvraagWithBetrokkenenReplaced,
       bsnAanvrager: props.bsnAanvrager,
     };
   });
+}
+
+function replaceBetrokkenen(
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
+  betrokkenen: Betrokkene[]
+): ZorgnedAanvraagWithRelatedPersonsTransformed {
+  return {
+    ...aanvraag,
+    betrokkenen: betrokkenen.map(({ bsn }) => bsn),
+    betrokkenPersonen: betrokkenen.map(({ bsn, isAanvrager }) => {
+      const betrokkenPersoon: ZorgnedPerson = {
+        bsn,
+        name: `${bsn} - Flex`,
+        dateOfBirth: '2023-06-12',
+        dateOfBirthFormatted: '12 juni 2023',
+        partnernaam: 'partner-2 - Flex',
+        partnervoorvoegsel: null,
+      };
+      if (isAanvrager) {
+        betrokkenPersoon.isAanvrager = true;
+      }
+      return betrokkenPersoon;
+    }),
+  };
 }
 
 // RP TODO: Use later in a test.
@@ -500,10 +516,10 @@ describe('Aanvrager is ontvanger', () => {
     });
     const regelingen = transformRegelingenForFrontend(aanvragen);
 
-    expect(regelingen.length).toBe(1);
-    const regeling = regelingen[0];
+    const expectedRegelingenAmount = 2;
+    expect(regelingen.length).toBe(expectedRegelingenAmount);
 
-    expect(regeling).toMatchObject({
+    const expectedRegeling = {
       dateDecision: '2025-02-01',
       dateEnd: '2026-05-01',
       dateStart: '2025-05-01',
@@ -513,9 +529,8 @@ describe('Aanvrager is ontvanger', () => {
       id: '1',
       isActual: true,
       title: 'Regeling Tegemoetkoming Meerkosten',
-    });
-
-    expect(regeling.steps).toMatchObject([
+    };
+    const expectedSteps = [
       {
         id: 'status-step-1',
         status: 'Aanvraag',
@@ -550,7 +565,13 @@ describe('Aanvrager is ontvanger', () => {
         documents: [],
         description: descriptions.inactiveEindeRecht,
       },
-    ]);
+    ];
+
+    expect(regelingen[0]).toMatchObject(expectedRegeling);
+    expect(regelingen[0].steps).toMatchObject(expectedSteps);
+
+    expect(regelingen[1]).toMatchObject(expectedRegeling);
+    expect(regelingen[1].steps).toMatchObject(expectedSteps);
   });
 
   test('Single Aanvraag afgewezen', () => {
@@ -1236,17 +1257,13 @@ describe('Aanvrager is ontvanger', () => {
 
   test('Only two regelingen expected', () => {
     const aanvragen = attachIDs([
-      { ...RTM_1_AANVRAAG },
-      {
-        ...RTM_2_EINDE_RECHT,
-        datumIngangGeldigheid: '2020-01-01',
-        datumEindeGeldigheid: '2020-06-01',
-      },
-      { ...RTM_2_MIGRATIE, datumIngangGeldigheid: '2021-01-01' },
+      RTM_1_AANVRAAG,
+      RTM_2_EINDE_RECHT,
+      RTM_2_MIGRATIE,
       RTM_WIJZIGINGS_AANVRAAG,
       RTM_WIJZIGINGS_TOEKENNING,
       RTM_WIJZIGINGS_AANVRAAG,
-      { ...RTM_2_EINDE_RECHT, datumEindeGeldigheid: '2021-06-01' },
+      RTM_2_EINDE_RECHT,
     ]);
     const regelingen = transformRegelingenForFrontend(aanvragen);
 
@@ -1496,6 +1513,49 @@ describe('Ontvanger but aanvragen made by someone else', () => {
   });
 });
 
+describe('Mixed betrokkenen', () => {
+  test.skip('Migratie into toegewezen with different but overlapping betrokkenen', () => {
+    const betrokkeneAanvrager: Betrokkene = {
+      bsn: ONTVANGER_ID,
+      isAanvrager: true,
+    };
+    const betrokkeneOther: Betrokkene = { bsn: '111111111' };
+    const betrokkenenAll: Betrokkene[] = [betrokkeneAanvrager, betrokkeneOther];
+    const aanvragen = attachIDs([
+      RTM_2_MIGRATIE,
+      replaceBetrokkenen(RTM_WIJZIGINGS_AANVRAAG, betrokkenenAll),
+      RTM_WIJZIGINGS_TOEKENNING,
+      replaceBetrokkenen(RTM_WIJZIGINGS_AANVRAAG, [betrokkeneOther]),
+      replaceBetrokkenen(RTM_WIJZIGINGS_AANVRAAG, [betrokkeneOther]),
+    ]);
+    const regelingen = transformRegelingenForFrontend(aanvragen);
+    expect(regelingen.length).toBe(2);
+
+    const regelingAanvrager = regelingen[1];
+    const regelingOther = regelingen[0];
+
+    expect(regelingAanvrager).toMatchObject({
+      betrokkenen: '999999999 - Flex',
+    });
+    expect(regelingAanvrager.steps).toMatchObject([
+      { status: 'Besluit' },
+      { status: 'Aanvraag wijziging' },
+      { status: 'Besluit wijziging', isActive: true },
+      { status: 'Einde recht', isActive: false },
+    ]);
+    expect(regelingOther).toMatchObject({
+      betrokkenen: '111111111 - Flex',
+    });
+    expect(regelingOther.steps).toMatchObject([
+      { status: 'Aanvraag wijziging', isActive: false },
+      { status: 'Aanvraag wijziging', isActive: false },
+      { status: 'Aanvraag wijziging', isActive: true },
+    ]);
+  });
+});
+
+// RP TODO: When testing a long chain, make it contaitn some complicated ID's like here.
+// Then we no longer need to have this test.
 test('Correctly sorted on the first part of the id', () => {
   const regelingen = transformRegelingenForFrontend([
     { ...RTM_2_TOEGEWEZEN, id: '11-22' },

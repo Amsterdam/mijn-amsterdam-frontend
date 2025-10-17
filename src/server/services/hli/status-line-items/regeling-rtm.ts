@@ -26,15 +26,6 @@ export const RTM_STATUS_IN_BEHANDELING = 'In behandeling genomen';
 const INFO_LINK =
   'https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/extra-geld-als-u-chronisch-ziek-of/';
 
-export function isRTMDeel2(
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-) {
-  return (
-    !!aanvraag.productIdentificatie &&
-    AV_RTM_DEEL2 === aanvraag.productIdentificatie
-  );
-}
-
 export function isRTMDeel1(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
@@ -44,6 +35,42 @@ export function isRTMDeel1(
   );
 }
 
+export function isRTMDeel2(
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+) {
+  return (
+    !!aanvraag.productIdentificatie &&
+    AV_RTM_DEEL2 === aanvraag.productIdentificatie
+  );
+}
+
+export function filterCombineRtmData(
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
+  bsnOntvanger: string
+): [ZorgnedAanvraagWithRelatedPersonsTransformed[], RTMCombinedRegeling[]] {
+  const [remainder, rtmAanvragen] = extractRTMAanvragen(aanvragen);
+
+  if (!featureToggle.hliRegelingEnabledRTM) {
+    return [remainder, []];
+  }
+
+  let aanvragenClean = dedupCombineRTMDeel2(rtmAanvragen);
+  aanvragenClean = removeNonPdfDocuments(aanvragenClean);
+
+  // Prevent aanvragen from other 'betrokkenen' sets from being mixed up with eachother.
+  let aanvragenPerBetrokkenen = mapAanvragenPerBetrokkenen(
+    aanvragenClean,
+    bsnOntvanger
+  );
+  aanvragenPerBetrokkenen = removeExpiredIndividualAanvragen(
+    aanvragenPerBetrokkenen
+  );
+  return [
+    remainder,
+    Object.values(aanvragenPerBetrokkenen).flatMap(combineRTMData),
+  ];
+}
+
 /** Aanvragen can contain duplicate RTMDeel2. We combine the documents and drop the dupe. */
 function dedupCombineRTMDeel2(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
@@ -51,7 +78,7 @@ function dedupCombineRTMDeel2(
   const dedupedAanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[] = [];
   const seenAanvragen: Record<string, ZorgnedHLIRegeling> = {};
 
-  for (const aanvraag of structuredClone(aanvragen)) {
+  for (const aanvraag of aanvragen) {
     if (!isRTMDeel2(aanvraag)) {
       dedupedAanvragen.push(aanvraag);
       continue;
@@ -67,13 +94,14 @@ function dedupCombineRTMDeel2(
   return dedupedAanvragen;
 }
 
-export function filterCombineRtmData(
-  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
-  bsnOntvanger: string
-): [ZorgnedAanvraagWithRelatedPersonsTransformed[], RTMCombinedRegeling[]] {
-  const rtmAanvragen = [];
+function extractRTMAanvragen(
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
+): [
+  ZorgnedAanvraagWithRelatedPersonsTransformed[],
+  ZorgnedAanvraagWithRelatedPersonsTransformed[],
+] {
   const remainder = [];
-
+  const rtmAanvragen = [];
   for (const aanvraag of aanvragen) {
     if (isRTMDeel1(aanvraag) || isRTMDeel2(aanvraag)) {
       rtmAanvragen.push(aanvraag);
@@ -81,25 +109,7 @@ export function filterCombineRtmData(
       remainder.push(aanvraag);
     }
   }
-
-  if (!featureToggle.hliRegelingEnabledRTM) {
-    return [remainder, []];
-  }
-
-  const aanvragenWithoutPdfDocuments = removeNonPdfDocuments(rtmAanvragen);
-
-  // Prevent aanvragen from other 'betrokkenen' sets from being mixed up with eachother.
-  let aanvragenPerBetrokkenen = mapAanvragenPerBetrokkenen(
-    aanvragenWithoutPdfDocuments,
-    bsnOntvanger
-  );
-  aanvragenPerBetrokkenen = removeExpiredIndividualAanvragen(
-    aanvragenPerBetrokkenen
-  );
-  return [
-    remainder,
-    Object.values(aanvragenPerBetrokkenen).flatMap(combineRTMData),
-  ];
+  return [remainder, rtmAanvragen];
 }
 
 function removeNonPdfDocuments(
@@ -121,9 +131,10 @@ function removeNonPdfDocuments(
   return withoutDocuments;
 }
 
-type AanvragenMap = {
-  ontvanger: ZorgnedAanvraagWithRelatedPersonsTransformed[];
-} & Record<string, ZorgnedAanvraagWithRelatedPersonsTransformed[]>;
+type AanvragenMap = Record<
+  string,
+  ZorgnedAanvraagWithRelatedPersonsTransformed[]
+>;
 
 function mapAanvragenPerBetrokkenen(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
@@ -137,28 +148,30 @@ function mapAanvragenPerBetrokkenen(
     };
   });
 
-  const aanvragenMap: AanvragenMap = { ontvanger: [] };
+  const aanvragenMap: AanvragenMap = {};
 
+  // Just copy/distribute aanvragen for all BSN's.
+  //
+  // We can go very fancy here, but someoen can still do aanvragen for everyone seperately.
+  // There's just too many things that we are able to do, but will never result in a nice overview anyway.
+  //
+  // So I choose the simplest solution for us that might result in a few extra table rows.
   for (const aanvraag of aanvragen) {
-    if (isRTMDeel2(aanvraag)) {
-      aanvragenMap.ontvanger.push(aanvraag);
-      continue;
+    let betrokkenen = aanvraag.betrokkenen;
+    if (!betrokkenen.length) {
+      betrokkenen = [bsnOntvanger];
     }
-
-    const id = aanvraag.betrokkenen.join('');
-
-    if (id === bsnOntvanger) {
-      aanvragenMap.ontvanger.push(aanvraag);
-      continue;
-    }
-
-    const aanvraagInMap = aanvragenMap[id];
-    if (aanvraagInMap) {
-      aanvragenMap[id].push(aanvraag);
-    } else {
-      aanvragenMap[id] = [aanvraag];
+    for (const bsn of betrokkenen) {
+      const aanvraagInMap = aanvragenMap[bsn];
+      if (aanvraagInMap) {
+        aanvragenMap[bsn].push(aanvraag);
+      } else {
+        aanvragenMap[bsn] = [aanvraag];
+      }
     }
   }
+
+  // RP TODO: Maybe dedupe duplicate results? Aanvraag for [a, b] becomes [a], [b]. Maybe just keep a in that case?
 
   return aanvragenMap;
 }
