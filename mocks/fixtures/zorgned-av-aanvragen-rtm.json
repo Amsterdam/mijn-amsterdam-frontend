@@ -2,71 +2,6 @@
   "_embedded": {
     "aanvraag": [
       {
-        "__comment": "Start - Single aanvraag for other betrokkenen (kind)",
-        "identificatie": "3162664",
-        "procesIdentificatie": "3162664",
-        "casusIdentificatie": "1729963",
-        "regeling": {
-          "identificatie": "Armoedevrz",
-          "omschrijving": "Armoedevoorzieningen"
-        },
-        "hulpvraag": {
-          "datumRegistratie": "2025-05-28"
-        },
-        "datumAanmelding": "2025-05-28",
-        "datumAanvraag": "2025-05-28",
-        "procesAanvraag": {
-          "identificatie": "3162664",
-          "omschrijving": "Aanvraag RTM fase 1",
-          "datumStart": "2025-05-28"
-        },
-        "beschikking": {
-          "beschikkingNummer": 301144205,
-          "datumAfgifte": "2025-05-28",
-          "beschikteProducten": [
-            {
-              "identificatie": "1516883",
-              "product": {
-                "identificatie": "AV-RTM1",
-                "productsoortCode": "AV-ALG",
-                "omschrijving": "Regeling Tegemoetkoming Meerkosten"
-              },
-              "productCategorie": {},
-              "resultaat": "toegewezen",
-              "toegewezenProduct": {
-                "datumIngangGeldigheid": "2025-05-28",
-                "datumEindeGeldigheid": "2026-05-28",
-                "actueel": true,
-                "omvang": {
-                  "volume": 1,
-                  "eenheid": {
-                    "code": "82",
-                    "omschrijving": "Stuks (output)"
-                  },
-                  "frequentie": {
-                    "code": "6",
-                    "omschrijving": "Per beschikking"
-                  },
-                  "omschrijving": "1 stuks (output) per beschikking"
-                },
-                "toewijzingen": [],
-                "betrokkenen": ["999994104", "999995182"]
-              }
-            }
-          ]
-        },
-        "documenten": [
-          {
-            "documentidentificatie": "B3400273",
-            "procesIdentificatie": "3162664",
-            "casusIdentificatie": "1729963",
-            "omschrijving": "AV-RTM Info aan klant GGD",
-            "datumDefinitief": "2025-05-28T11:59:28.757",
-            "bestandsnaam": "BR3400273.pdf"
-          }
-        ]
-      },
-      {
         "__comment": "Start - Einde Recht",
         "identificatie": "10",
         "procesIdentificatie": "3162697",
@@ -100,7 +35,7 @@
               "resultaat": "toegewezen",
               "toegewezenProduct": {
                 "datumIngangGeldigheid": "2025-05-01",
-                "datumEindeGeldigheid": "2026-05-01",
+                "datumEindeGeldigheid": "2050-05-01",
                 "actueel": true,
                 "omvang": {
                   "volume": 1,
@@ -305,7 +240,7 @@
               "resultaat": "toegewezen",
               "toegewezenProduct": {
                 "datumIngangGeldigheid": "2025-01-01",
-                "datumEindeGeldigheid": "2025-12-31",
+                "datumEindeGeldigheid": "2050-12-31",
                 "actueel": true,
                 "omvang": {
                   "volume": 1,
@@ -433,7 +368,7 @@
               "resultaat": "toegewezen",
               "toegewezenProduct": {
                 "datumIngangGeldigheid": "2025-09-03",
-                "datumEindeGeldigheid": "2026-09-04",
+                "datumEindeGeldigheid": "2050-09-04",
                 "actueel": true,
                 "omvang": {
                   "volume": 1,
@@ -564,7 +499,7 @@
               "resultaat": "toegewezen",
               "toegewezenProduct": {
                 "datumIngangGeldigheid": "2025-05-01",
-                "datumEindeGeldigheid": "2026-05-01",
+                "datumEindeGeldigheid": "2050-05-01",
                 "actueel": true,
                 "omvang": {
                   "volume": 1,
@@ -715,7 +650,7 @@
               "resultaat": "toegewezen",
               "toegewezenProduct": {
                 "datumIngangGeldigheid": "2025-08-18",
-                "datumEindeGeldigheid": "2026-08-18",
+                "datumEindeGeldigheid": "2050-08-18",
                 "actueel": true,
                 "omvang": {
                   "volume": 1,
@@ -815,6 +750,71 @@
             "omschrijvingclientportaal": "Beschikking wijziging RTM",
             "datumDefinitief": "2025-08-18T14:57:41.793",
             "bestandsnaam": "BR3408757.pdf"
+          }
+        ]
+      },
+      {
+        "__comment": "Start - Single aanvraag for other betrokkenen (kind)",
+        "identificatie": "40",
+        "procesIdentificatie": "3162664",
+        "casusIdentificatie": "1729963",
+        "regeling": {
+          "identificatie": "Armoedevrz",
+          "omschrijving": "Armoedevoorzieningen"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2025-05-28"
+        },
+        "datumAanmelding": "2025-05-28",
+        "datumAanvraag": "2025-05-28",
+        "procesAanvraag": {
+          "identificatie": "3162664",
+          "omschrijving": "Aanvraag RTM fase 1",
+          "datumStart": "2025-05-28"
+        },
+        "beschikking": {
+          "beschikkingNummer": 301144205,
+          "datumAfgifte": "2025-05-28",
+          "beschikteProducten": [
+            {
+              "identificatie": "1516883",
+              "product": {
+                "identificatie": "AV-RTM1",
+                "productsoortCode": "AV-ALG",
+                "omschrijving": "Regeling Tegemoetkoming Meerkosten"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2025-05-28",
+                "datumEindeGeldigheid": "2050-05-28",
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "toewijzingen": [],
+                "betrokkenen": ["111111111"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B3400273",
+            "procesIdentificatie": "3162664",
+            "casusIdentificatie": "1729963",
+            "omschrijving": "AV-RTM Info aan klant GGD",
+            "datumDefinitief": "2025-05-28T11:59:28.757",
+            "bestandsnaam": "BR3400273.pdf"
           }
         ]
       }
