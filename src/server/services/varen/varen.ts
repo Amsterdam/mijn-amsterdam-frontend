@@ -4,9 +4,9 @@ import {
   Varen,
   VarenRegistratieRederFrontend,
   VarenRegistratieRederType,
+  VarenVergunningExploitatieType,
   VarenVergunningFrontend,
   VarenZakenFrontend,
-  ZaakVergunningExploitatieType,
 } from './config-and-types';
 import {
   decosRederZaakTransformers,
@@ -27,7 +27,6 @@ import {
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { fetchDecosZaken } from '../decos/decos-service';
 import { transformDecosZaakFrontend } from '../decos/decos-service';
-import { DecosZaakTransformer } from '../decos/decos-types';
 
 function transformVarenRederFrontend(
   zaak: VarenRegistratieRederType | null | undefined
@@ -43,7 +42,8 @@ function transformVarenRederFrontend(
 
 function transformVarenZaakFrontend(
   authProfileAndToken: AuthProfileAndToken,
-  zaak: Varen
+  zaak: Varen,
+  vergunningIdsOfThisReder: Set<VarenVergunningExploitatieType['identifier']>
 ): VarenZakenFrontend {
   const appRoute = routeConfig.detailPageZaak.path;
   const zaakTransformed = transformDecosZaakFrontend(
@@ -65,8 +65,15 @@ function transformVarenZaakFrontend(
     return zaakFrontend;
   }
 
+  // A zaak can link to a vergunning of another reder.
+  // A linked vergunning not in vergunningIdsOfThisReder does not belong to this reder.
+  const firstLinkedVergunningOfThisReder = zaak.vergunningen.filter((v) =>
+    vergunningIdsOfThisReder.has(v.identifier)
+  )[0];
   const vergunning = Object.fromEntries(
-    entries(zaak.vergunningen[0]).filter(([_key, val]) => val != null)
+    entries(firstLinkedVergunningOfThisReder).filter(
+      ([_key, val]) => val != null
+    )
   ) as (typeof zaak.vergunningen)[0];
 
   return {
@@ -77,14 +84,19 @@ function transformVarenZaakFrontend(
 }
 
 function transformVarenVergunningFrontend(
-  vergunning: ZaakVergunningExploitatieType
+  vergunning: VarenVergunningExploitatieType,
+  zaken: VarenZakenFrontend[]
 ): VarenVergunningFrontend {
   const appRoute = routeConfig.detailPageVergunning.path;
+
   return {
     ...omit(vergunning, ['statusDates', 'termijnDates']),
     dateStartFormatted: toDateFormatted(vergunning.dateStart),
     dateEndFormatted: toDateFormatted(vergunning.dateEnd),
-    linkedActiveZaakLink: null,
+    linkedActiveZaakLink:
+      zaken.find(
+        (z) => z.vergunning?.id === vergunning.id && z.processed === false
+      )?.link || null,
     link: {
       to: generatePath(appRoute, {
         id: vergunning.id,
@@ -95,66 +107,35 @@ function transformVarenVergunningFrontend(
 }
 
 export async function fetchVaren(authProfileAndToken: AuthProfileAndToken) {
-  const _fetchDecosZaken = (transformers: DecosZaakTransformer[]) =>
-    fetchDecosZaken(authProfileAndToken, transformers);
-
-  const [reder, zaken, vergunningen] = await Promise.all([
-    _fetchDecosZaken(decosRederZaakTransformers).then((r) => {
-      if (r.status === 'OK') {
-        return apiSuccessResult(transformVarenRederFrontend(r.content[0]));
-      }
-      return r;
-    }),
-    _fetchDecosZaken(decosZaakTransformers).then((r) => {
-      if (r.status === 'OK') {
-        return apiSuccessResult(
-          r.content.flatMap((z) =>
-            transformVarenZaakFrontend(authProfileAndToken, z)
-          )
-        );
-      }
-      return r;
-    }),
-    _fetchDecosZaken(decosVergunningTransformers).then((r) => {
-      if (r.status === 'OK') {
-        return apiSuccessResult(
-          r.content.flatMap(transformVarenVergunningFrontend)
-        );
-      }
-      return apiSuccessResult([]);
-    }),
+  const [rederRaw, zakenRaw, vergunningenRaw] = await Promise.all([
+    fetchDecosZaken(authProfileAndToken, decosRederZaakTransformers),
+    fetchDecosZaken(authProfileAndToken, decosZaakTransformers),
+    fetchDecosZaken(authProfileAndToken, decosVergunningTransformers),
   ]);
 
   if (
-    reder.status !== 'OK' ||
-    zaken.status !== 'OK' ||
-    vergunningen.status !== 'OK'
+    rederRaw.status !== 'OK' ||
+    zakenRaw.status !== 'OK' ||
+    vergunningenRaw.status !== 'OK'
   ) {
     return apiErrorResult('Failed dependencies', null);
   }
 
-  // A zaak can link to a vergunning of another reder.
-  // A linked vergunning not in vergunningen does not belong to this reder.
-  const rederVergunningenIds = new Set(
-    vergunningen.content.map((v) => v.identifier)
+  const reder = transformVarenRederFrontend(rederRaw.content[0]);
+  const zaken = zakenRaw.content.flatMap((zaak) =>
+    transformVarenZaakFrontend(
+      authProfileAndToken,
+      zaak,
+      new Set(vergunningenRaw.content.map((v) => v.identifier))
+    )
   );
-  zaken.content = zaken.content.map((z) =>
-    !z.vergunning || rederVergunningenIds.has(z.vergunning.identifier)
-      ? z
-      : { ...z, vergunning: null }
+  const vergunningen = vergunningenRaw.content.flatMap((vergunning) =>
+    transformVarenVergunningFrontend(vergunning, zaken)
   );
-
-  const vergunningWithLinkedActiveZaak = vergunningen.content.map((v) => ({
-    ...v,
-    linkedActiveZaakLink:
-      zaken.content.find(
-        (z) => z.vergunning?.id === v.id && z.processed === false
-      )?.link || null,
-  }));
 
   return apiSuccessResult({
-    reder: reder.content,
-    zaken: zaken.content,
-    vergunningen: vergunningWithLinkedActiveZaak,
+    reder,
+    zaken,
+    vergunningen,
   });
 }
