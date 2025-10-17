@@ -3,7 +3,6 @@ import { describe, expect, it } from 'vitest';
 
 import { ZaakVergunningExploitatieType } from './config-and-types';
 import { getStatusSteps } from './varen-status-steps';
-import { decision } from '../decos/decos-field-transformers';
 
 const exploitatieBase = {
   vesselName: 'boatName',
