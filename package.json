@@ -171,7 +171,7 @@
     "eslint-plugin-unused-imports": "^4.2.0",
     "formidable": "^3.5.4",
     "globals": "^15.15.0",
-    "happy-dom": "^18.0.1",
+    "happy-dom": "^20.0.2",
     "history": "^5.3.0",
     "nodemon": "^3.1.10",
     "pino-pretty": "^13.1.1",

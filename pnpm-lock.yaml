@@ -358,7 +358,7 @@ importers:
         version: 4.5.0(rollup@4.50.2)(typescript@5.9.2)(vite@6.3.6(@types/node@22.18.3)(sass@1.92.1))
       vitest:
         specifier: ^3.2.4
-        version: 3.2.4(@types/debug@4.1.12)(@types/node@22.18.3)(happy-dom@18.0.1)(jsdom@26.1.0)(sass@1.92.1)
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@22.18.3)(happy-dom@20.0.2)(jsdom@26.1.0)(sass@1.92.1)
       xlsx:
         specifier: file:vendor/xlsx-0.20.2.tgz
         version: file:vendor/xlsx-0.20.2.tgz
@@ -403,8 +403,8 @@ importers:
         specifier: ^15.15.0
         version: 15.15.0
       happy-dom:
-        specifier: ^18.0.1
-        version: 18.0.1
+        specifier: ^20.0.2
+        version: 20.0.2
       history:
         specifier: ^5.3.0
         version: 5.3.0
@@ -1595,8 +1595,8 @@ packages:
   '@types/node-jose@1.1.13':
     resolution: {integrity: sha512-QjMd4yhwy1EvSToQn0YI3cD29YhyfxFwj7NecuymjLys2/P0FwxWnkgBlFxCai6Y3aBCe7rbwmqwJJawxlgcXw==}
 
-  '@types/node@20.19.14':
-    resolution: {integrity: sha512-gqiKWld3YIkmtrrg9zDvg9jfksZCcPywXVN7IauUGhilwGV/yOyeUsvpR796m/Jye0zUzMXPKe8Ct1B79A7N5Q==}
+  '@types/node@20.19.21':
+    resolution: {integrity: sha512-CsGG2P3I5y48RPMfprQGfy4JPRZ6csfC3ltBZSRItG3ngggmNY/qs2uZKp4p9VbrpqNNSMzUZNFZKzgOGnd/VA==}
 
   '@types/node@22.18.3':
     resolution: {integrity: sha512-gTVM8js2twdtqM+AE2PdGEe9zGQY4UvmFjan9rZcVb6FGdStfjWoWejdmy4CfWVO9rh5MiYQGZloKAGkJt8lMw==}
@@ -2999,8 +2999,8 @@ packages:
     engines: {node: '>=0.4.7'}
     hasBin: true
 
-  happy-dom@18.0.1:
-    resolution: {integrity: sha512-qn+rKOW7KWpVTtgIUi6RVmTBZJSe2k0Db0vh1f7CWrWclkkc7/Q+FrOfkZIb2eiErLyqu5AXEzE7XthO9JVxRA==}
+  happy-dom@20.0.2:
+    resolution: {integrity: sha512-pYOyu624+6HDbY+qkjILpQGnpvZOusItCk+rvF5/V+6NkcgTKnbOldpIy22tBnxoaLtlM9nXgoqAcW29/B7CIw==}
     engines: {node: '>=20.0.0'}
 
   has-bigints@1.1.0:
@@ -6458,7 +6458,7 @@ snapshots:
     dependencies:
       '@types/node': 22.18.3
 
-  '@types/node@20.19.14':
+  '@types/node@20.19.21':
     dependencies:
       undici-types: 6.21.0
 
@@ -8284,9 +8284,9 @@ snapshots:
     optionalDependencies:
       uglify-js: 3.19.3
 
-  happy-dom@18.0.1:
+  happy-dom@20.0.2:
     dependencies:
-      '@types/node': 20.19.14
+      '@types/node': 20.19.21
       '@types/whatwg-mimetype': 3.0.2
       whatwg-mimetype: 3.0.0
 
@@ -10419,7 +10419,7 @@ snapshots:
       fsevents: 2.3.3
       sass: 1.92.1
 
-  vitest@3.2.4(@types/debug@4.1.12)(@types/node@22.18.3)(happy-dom@18.0.1)(jsdom@26.1.0)(sass@1.92.1):
+  vitest@3.2.4(@types/debug@4.1.12)(@types/node@22.18.3)(happy-dom@20.0.2)(jsdom@26.1.0)(sass@1.92.1):
     dependencies:
       '@types/chai': 5.2.2
       '@vitest/expect': 3.2.4
@@ -10447,7 +10447,7 @@ snapshots:
     optionalDependencies:
       '@types/debug': 4.1.12
       '@types/node': 22.18.3
-      happy-dom: 18.0.1
+      happy-dom: 20.0.2
       jsdom: 26.1.0
     transitivePeerDependencies:
       - jiti
