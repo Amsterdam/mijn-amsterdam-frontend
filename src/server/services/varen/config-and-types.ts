@@ -124,7 +124,7 @@ export type VarenRegistratieRederFrontend = VarenRegistratieRederType & {
 };
 
 export type VarenVergunningFrontend = OmitMapped<
-  ZaakVergunningExploitatieType,
+  VarenVergunningExploitatieType,
   'statusDates' | 'termijnDates'
 > & {
   dateStartFormatted: string | null;
