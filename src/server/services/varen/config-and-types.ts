@@ -51,6 +51,8 @@ export type DecosVarenZaakVergunning = {
   vesselName: string | null;
   vesselWidth: string | null; // 0.01 meters
   vesselLength: string | null; // 0.01 meters
+  dateStart: string | null;
+  dateEnd: string | null;
 };
 
 export type DecosVarenZaakBase = DecosZaakBase &
@@ -65,7 +67,6 @@ export type VarenVergunningExploitatieType = DecosZaakBase &
     itemType: 'varens';
     caseType: null;
     title: 'Varen vergunning exploitatie';
-    dateEnd: string | null;
   };
 
 export type ZaakVergunningExploitatieType = DecosVarenZaakBase & {
@@ -123,7 +124,7 @@ export type VarenRegistratieRederFrontend = VarenRegistratieRederType & {
 };
 
 export type VarenVergunningFrontend = OmitMapped<
-  ZaakVergunningExploitatieType,
+  VarenVergunningExploitatieType,
   'statusDates' | 'termijnDates'
 > & {
   dateStartFormatted: string | null;
