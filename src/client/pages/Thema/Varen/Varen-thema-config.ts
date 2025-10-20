@@ -15,6 +15,7 @@ import { DisplayProps } from '../../../components/Table/TableV2.types';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA = 5;
+const MAX_TABLE_ROWS_ON_THEMA_PAGINA_AFGEHANDELD = 3;
 
 // Aanvragen before this date will not be correctly linked to their vergunningen. These are not showed
 export const SHOW_HISTORICAL_AANVRAGEN_STARTING_FROM_DATE = new Date(
@@ -144,7 +145,7 @@ export const tableConfig: {
       ),
     sort: dateSort('dateDecision', 'desc'),
     listPageRoute: generatePath(routeConfig.listPage.path, {
-      kind: listPageParamKind.inProgress,
+      kind: listPageParamKind.historic,
       page: null,
     }),
     displayProps: {
@@ -159,7 +160,7 @@ export const tableConfig: {
         small: ['50%', '50%', '0', '0'],
       },
     },
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_AFGEHANDELD,
   },
 } as const;
 
