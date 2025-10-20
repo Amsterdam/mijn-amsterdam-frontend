@@ -5,7 +5,6 @@ import isEqual from 'lodash.isequal';
 import { useNavigate, useParams } from 'react-router';
 
 import {
-  themaId,
   routeConfig,
   eMandateTableConfig,
   businessPartnerDetailsLabels,
@@ -67,7 +66,7 @@ export function updateEmandateById(
 export function useAfisEMandatesData() {
   const isSmallScreen = useSmallScreen();
 
-  const { businessPartnerIdEncrypted } = useAfisThemaData();
+  const { businessPartnerIdEncrypted, themaId } = useAfisThemaData();
   const { title: betaalVoorkeurenTitle } = useAfisBetaalVoorkeurenData(
     businessPartnerIdEncrypted
   );
@@ -77,7 +76,7 @@ export function useAfisEMandatesData() {
     isError,
     isDirty,
     data: eMandatesApiResponse,
-    fetch: fetchEMandates,
+    fetch,
     optimisticUpdateContent,
   } = useBffApi<AfisEMandateFrontend[]>(
     generateApiUrl(businessPartnerIdEncrypted, 'AFIS_EMANDATES')
@@ -96,11 +95,13 @@ export function useAfisEMandatesData() {
           )}
         </>
       ),
-      displayStatus: statusNotificationStorage.isPendingActivation(
-        eMandate.creditorIBAN
-      )
-        ? 'Wachten op activatie'
-        : eMandate.displayStatus,
+      get displayStatus() {
+        return statusNotificationStorage.isPendingActivation(
+          eMandate.creditorIBAN
+        )
+          ? 'Wachten op activatie'
+          : eMandate.displayStatus;
+      },
     };
   });
 
@@ -115,12 +116,13 @@ export function useAfisEMandatesData() {
   const eMandate = eMandates.find((mandate) => mandate.id === id);
 
   return {
+    themaId,
     breadcrumbs,
     eMandate,
     eMandates,
     eMandateTableConfig,
     hasEMandatesError: isError,
-    isLoadingEMandates: isLoading || !isDirty,
+    isLoadingEMandates: isLoading && !isDirty,
     optimisticUpdateContent: (
       eMandateId: string,
       payload: Partial<AfisEMandateFrontend>
@@ -131,7 +133,9 @@ export function useAfisEMandatesData() {
     },
     statusNotification: statusNotificationStorage,
     title,
-    fetchEMandates,
+    fetchEMandates: () => {
+      fetch();
+    },
   };
 }
 
@@ -332,7 +336,7 @@ export function useEmandateStatusPendingStorage(
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!eMandates || eMandates.length === 0) {
+    if (!eMandates?.length) {
       return;
     }
 

@@ -152,17 +152,19 @@ export function AfisEMandateDetail() {
 
   const {
     title,
+    themaId,
     eMandate,
     breadcrumbs,
     hasEMandatesError,
     isLoadingEMandates,
-    refetchEMandates,
+    fetchEMandates,
     statusNotification: { isPendingActivation },
   } = useAfisEMandatesData();
 
   return (
     <ThemaDetailPagina
       title={title}
+      themaId={themaId}
       zaak={eMandate}
       isError={hasEMandatesError}
       isLoading={isLoadingEMandates}
@@ -170,7 +172,7 @@ export function AfisEMandateDetail() {
         !!eMandate && (
           <>
             {isPendingActivation(eMandate.creditorIBAN) && (
-              <EmandateRefetchInterval fetch={refetchEMandates} />
+              <EmandateRefetchInterval fetch={fetchEMandates} />
             )}
             <EMandate eMandate={eMandate} />
           </>

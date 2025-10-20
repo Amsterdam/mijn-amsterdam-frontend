@@ -170,7 +170,7 @@ export function useBffApi<
   options?: BffApiOptions<T, P>
 ): BffApiState<ApiResponse<T> | null> & {
   fetch: (
-    url: U | RequestInitWithPayload<P>,
+    url?: U | RequestInitWithPayload<P>,
     init_?: U extends URL | string ? RequestInitWithPayload<P> : never
   ) => void;
   optimisticUpdateContent: (payload: Partial<T>) => void;

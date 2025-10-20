@@ -10,10 +10,7 @@ import {
   type AfisEMandateFrontend,
 } from '../../../../server/services/afis/afis-types';
 import { IS_OT, IS_PRODUCTION } from '../../../../universal/config/env';
-import {
-  LinkProps,
-  ZaakAanvraagDetail,
-} from '../../../../universal/types/App.types';
+import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
@@ -97,8 +94,6 @@ export const listPageTitle: Record<AfisFactuurState, string> = {
   overgedragen:
     'Facturen in het incasso- en invorderingstraject van directie Belastingen',
 };
-
-export type AfisEmandateStub = ZaakAanvraagDetail & Record<string, string>;
 
 export type AfisFactuurFrontend = AfisFactuur & {
   factuurNummerEl: ReactNode;
