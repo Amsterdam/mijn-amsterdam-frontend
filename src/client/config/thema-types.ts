@@ -16,7 +16,7 @@ export type Section = {
   listItems: ListItems;
 };
 
-export type ListItems = Array<{ text: string; listItems?: string[] } | string>;
+export type ListItems = Array<{ text?: string; listItems?: string[] } | string>;
 
 export type IsThemaVisibleFN = (appState: AppState) => boolean;
 
@@ -32,20 +32,21 @@ export type ThemaConfigBase = {
 };
 
 export type WithDetailPage = PageConfig<'detailPage'>;
-
 export type WithListPage = PageConfig<'listPage'>;
 
 type FeatureToggle = Record<string, boolean>;
 type ThemaFeatureToggle = { themaActive: boolean } & FeatureToggle;
 type RedactedScope = 'full' | 'content' | 'none';
+
 type PageConfig<T extends string> = {
   [key in T]: {
-    title: string;
+    title?: string | null;
     route: ThemaRouteConfig;
   };
 };
+
 type InfoSection = {
-  title?: string;
+  title: string | null;
   listItems: Array<{ text?: string; listItems?: string[] } | string>;
 };
 
@@ -63,7 +64,6 @@ export interface ThemaMenuItem<ID extends string = string>
   to:
     | LinkProps['to']
     | ((appState: AppState, profileType?: ProfileType) => string);
-  // TODO: Make non optional if all thema menu items are migrated to the thema configs.
   isActive?: IsThemaVisibleFN;
   IconSVG?: SVGComponent;
 }
@@ -88,13 +88,11 @@ type ThemaPageType =
   | SomeOtherString;
 
 type DocumenttitleFN = <T extends Params<string>>(params: T | null) => string;
-
 type TrackinUrlFN = <T extends Params<string>>(params: T | null) => string;
 
 export type ThemaRouteConfig = {
   path: string;
-  // Only needed for routes with variable path segments
-  trackingUrl: null | string | TrackinUrlFN;
+  trackingUrl?: null | string | TrackinUrlFN;
   documentTitle: string | DocumenttitleFN;
 };
 
