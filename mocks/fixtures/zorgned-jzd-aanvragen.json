@@ -6093,6 +6093,46 @@
             "bestandsnaam": "BR3422713.pdf"
           }
         ]
+      },
+      {
+        "identificatie": "3184000123",
+        "procesIdentificatie": "3184000123",
+        "casusIdentificatie": "1750890123",
+        "regeling": { "identificatie": "WMO", "omschrijving": "WMO" },
+        "hulpvraag": { "datumRegistratie": "2025-10-23" },
+        "datumAanmelding": "2025-10-23",
+        "datumAanvraag": "2025-10-23",
+        "beschikking": {
+          "beschikkingNummer": 301152179123,
+          "datumAfgifte": "2025-10-23",
+          "beschikteProducten": [
+            {
+              "identificatie": "1531660123",
+              "product": {
+                "identificatie": "13W84",
+                "productCode": "13W84",
+                "productsoortCode": "WRA3",
+                "omschrijving": "niet standaard opdracht natte cel en toilet"
+              },
+              "productCategorie": {
+                "code": "13",
+                "omschrijving": "Woonvoorzieningen"
+              },
+              "resultaat": "afgewezen"
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B3422709",
+            "procesIdentificatie": "3184000123",
+            "casusIdentificatie": "1750890123",
+            "omschrijving": "Besluit: Afwijzing grote WRA",
+            "omschrijvingclientportaal": "Besluit: afwijzing woonruimteaanpassing",
+            "datumDefinitief": "2025-10-23T16:29:51.547",
+            "bestandsnaam": "BR3422709.pdf"
+          }
+        ]
       }
     ]
   }

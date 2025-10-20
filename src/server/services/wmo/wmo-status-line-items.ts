@@ -10,6 +10,7 @@ import { hulpmiddelen } from './status-line-items/wmo-hulpmiddelen';
 import { PGB } from './status-line-items/wmo-pgb';
 import { vergoeding } from './status-line-items/wmo-vergoeding';
 import { WRA } from './status-line-items/wmo-wra';
+import { featureToggle } from './wmo-service-config';
 
 export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
   // For all rejection decisions from aanvraag to final decision.
@@ -19,6 +20,8 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
       name: 'Alle afgewezen',
       transformers: WMO_AFWIJZING_ALL,
     },
+    isDisabled:
+      !featureToggle.statusLineItems.alleAfgewezenWmoAanvragen.isEnabled,
   },
   {
     resultaat: 'toegewezen',
