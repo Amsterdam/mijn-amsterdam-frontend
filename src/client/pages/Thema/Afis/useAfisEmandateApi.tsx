@@ -243,7 +243,7 @@ export function useEmandateApis(eMandate: AfisEMandateFrontend) {
     lifetimeUpdateApi: {
       ...lifetimeUpdateApi,
       update(endDate: string) {
-        lifetimeUpdateApi.fetch(undefined, { payload: { endDate } });
+        lifetimeUpdateApi.fetch({ payload: { endDate } });
       },
     },
     isErrorVisible,

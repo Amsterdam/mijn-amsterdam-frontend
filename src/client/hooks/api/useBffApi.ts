@@ -11,6 +11,9 @@ import {
 import type { SomeOtherString } from '../../../universal/helpers/types';
 
 type ApiFetchResponse<T> = Promise<ApiResponse<T>>;
+type RequestInitWithPayload<P extends RecordStr2 = RecordStr2> = RequestInit & {
+  payload?: P;
+};
 
 async function handleResponse<T>(
   fetchFn: () => Promise<Response>
@@ -51,12 +54,9 @@ async function handleResponse<T>(
   }
 }
 
-export async function sendFormPostRequest<
-  T extends any,
-  P extends RecordStr2 = RecordStr2,
->(
+export async function sendFormPostRequest<T extends any, P extends RecordStr2>(
   url: string | URL,
-  init?: RequestInit & { payload?: P }
+  init?: RequestInitWithPayload<P>
 ): ApiFetchResponse<T> {
   return handleResponse<T>(() =>
     fetch(url, {
@@ -71,12 +71,9 @@ export async function sendFormPostRequest<
   );
 }
 
-export async function sendJSONPostRequest<
-  T extends any,
-  P extends RecordStr2 = RecordStr2,
->(
+export async function sendJSONPostRequest<T extends any, P extends RecordStr2>(
   url: string | URL,
-  init?: RequestInit & { payload?: P }
+  init?: RequestInitWithPayload<P>
 ): ApiFetchResponse<T> {
   return handleResponse<T>(() =>
     fetch(url, {
@@ -136,7 +133,7 @@ type BffApiOptions<T, P> = {
   fetchImmediately?: boolean;
   sendRequest?: (
     url: URL | string,
-    init?: RequestInit & { payload?: P }
+    init?: RequestInitWithPayload<P>
   ) => Promise<ApiResponse<T>>;
 };
 
@@ -164,13 +161,18 @@ export const useBffApiStateStore = create<BFFApiStore>((set, get) => ({
   has: (key) => key in get(),
 }));
 
-export function useBffApi<T, P>(
+export function useBffApi<
+  T,
+  P extends RecordStr2 = RecordStr2,
+  U = URL | string,
+>(
   urlOrKey: string | null | undefined,
   options?: BffApiOptions<T, P>
 ): BffApiState<ApiResponse<T> | null> & {
-  fetch:
-    | ((url?: URL | string, init_?: RequestInit & { payload?: P }) => void)
-    | ((init_?: RequestInit & { payload?: P }) => void);
+  fetch: (
+    url: U | RequestInitWithPayload<P>,
+    init_?: U extends URL | string ? RequestInitWithPayload<P> : never
+  ) => void;
   optimisticUpdateContent: (payload: Partial<T>) => void;
   isPristine: boolean;
 } {
@@ -221,8 +223,20 @@ export function useBffApi<T, P>(
   );
 
   const fetch = useCallback(
-    async (url?: string | URL, init?: RequestInit) => {
-      const reqUrl = url ?? url_;
+    async (
+      urlOrInit?: string | URL | RequestInitWithPayload<P>,
+      init?: RequestInitWithPayload<P>
+    ) => {
+      const reqUrl =
+        typeof urlOrInit === 'string' || urlOrInit instanceof URL
+          ? urlOrInit
+          : url_;
+      const init_ =
+        urlOrInit &&
+        !init &&
+        !(typeof urlOrInit === 'string' || urlOrInit instanceof URL)
+          ? urlOrInit
+          : init;
 
       if (!reqUrl) {
         throw new Error('No URL provided');
@@ -230,7 +244,10 @@ export function useBffApi<T, P>(
 
       setApiState({ isLoading: true });
 
-      const response = await sendRequest(reqUrl, { ...options?.init, ...init });
+      const response = await sendRequest(reqUrl, {
+        ...options?.init,
+        ...init_,
+      });
 
       if (response.status === 'ERROR') {
         return setApiState({
