@@ -67,8 +67,8 @@ const listPageKind = {
   completed: 'afgehandelde-aanvragen',
 } as const;
 
-export type TableHeadersKey = keyof typeof listPageKind;
-export type TableHeaders = (typeof listPageKind)[TableHeadersKey];
+export type ListPageParamKey = keyof typeof listPageKind;
+export type ListPageParamKind = (typeof listPageKind)[ListPageParamKey];
 
 const displayPropsLopend: DisplayProps<LoodMetingFrontend> = {
   props: {
