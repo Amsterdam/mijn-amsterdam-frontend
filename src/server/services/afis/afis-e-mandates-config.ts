@@ -1,7 +1,17 @@
-import { AfisEMandateAcceptant } from './afis-types';
+import { AfisEMandateCreditor, EMandateReceiverSource } from './afis-types';
+
+// TODO: Uitvinden of de receiver mogelijk per Creditor kan verschillen
+export const eMandateReceiver: EMandateReceiverSource = {
+  RecName1: 'Gemeente Amsterdam',
+  RecPostal: '1011 PN',
+  RecStreet: 'Amstel',
+  RecHouse: '1',
+  RecCity: 'Amsterdam',
+  RecCountry: 'NL',
+};
 
 // Public data, see also: https://www.amsterdam.nl/veelgevraagd/facturen-van-de-gemeente-controleren-gegevens-wijzigen-automatische-incasso-regelen-38caa#m4bgm6izgl3skf8ue1p
-export const EMandateAcceptantenGemeenteAmsterdam: AfisEMandateAcceptant[] = [
+export const EMandateCreditorsGemeenteAmsterdam: AfisEMandateCreditor[] = [
   {
     name: 'Afval',
     iban: 'NL21RABO0110055004',
@@ -27,12 +37,6 @@ export const EMandateAcceptantenGemeenteAmsterdam: AfisEMandateAcceptant[] = [
     refId: 'VASTGOED',
   },
   {
-    name: 'Kunstuitleen Oost',
-    iban: 'NL65RABO0110055667',
-    subId: '5',
-    refId: 'KUNSTUITLEEN',
-  },
-  {
     name: 'Markten',
     iban: 'NL55RABO0110099885',
     subId: '6',
@@ -43,6 +47,8 @@ export const EMandateAcceptantenGemeenteAmsterdam: AfisEMandateAcceptant[] = [
     iban: 'NL78RABO0110011880',
     subId: '7',
     refId: 'OVERIG',
+    description:
+      'Dit is een algemene rekening voor overige betalingen aan de gemeente Amsterdam.',
   },
   {
     name: 'Parkeren',

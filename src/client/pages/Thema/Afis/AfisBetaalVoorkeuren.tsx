@@ -1,13 +1,17 @@
 import { Grid, Heading, Link, Paragraph } from '@amsterdam/design-system-react';
 
-import { AfisEmandateStub } from './Afis-thema-config';
+import { featureToggle } from './Afis-thema-config';
 import styles from './AfisBetaalVoorkeuren.module.scss';
+import { EmandateRefetchInterval } from './AfisEMandateDetail';
 import {
   useAfisBetaalVoorkeurenData,
-  useAfisThemaData,
-} from './useAfisThemaData.hook';
-import { AfisBusinessPartnerDetailsTransformed } from '../../../../server/services/afis/afis-types';
-import { FeatureToggle } from '../../../../universal/config/feature-toggles';
+  useAfisEMandatesData,
+} from './useAfisEmandateApi';
+import { useAfisThemaData } from './useAfisThemaData.hook';
+import {
+  type AfisBusinessPartnerDetailsTransformed,
+  type AfisEMandateFrontend,
+} from '../../../../server/services/afis/afis-types';
 import { entries } from '../../../../universal/helpers/utils';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
 import { Datalist } from '../../../components/Datalist/Datalist';
@@ -19,10 +23,15 @@ import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 type AfisBusinessPartnerProps = {
-  businesspartner: AfisBusinessPartnerDetailsTransformed | null;
-  labels: Omit<
-    DisplayProps<AfisBusinessPartnerDetailsTransformed>,
-    'smallscreen'
+  businesspartner: Omit<
+    AfisBusinessPartnerDetailsTransformed,
+    'address'
+  > | null;
+  labels: DisplayProps<
+    Omit<
+      AfisBusinessPartnerDetailsTransformed,
+      'address' | 'firstName' | 'lastName'
+    >
   >;
   isLoading: boolean;
   startCollapsed: boolean;
@@ -82,31 +91,34 @@ export function AfisBetaalVoorkeuren() {
     themaId,
   } = useAfisThemaData();
 
+  useHTMLDocumentTitle(routeConfig.betaalVoorkeuren);
+
   const {
     title,
     businesspartnerDetails,
     businessPartnerDetailsLabels,
-    eMandates,
-    eMandateTableConfig,
     hasBusinessPartnerDetailsError,
-    hasEMandatesError,
-    hasFailedEmailDependency,
-    hasFailedPhoneDependency,
     hasFailedFullNameDependency,
+    hasFailedPhoneDependency,
     isLoadingBusinessPartnerDetails,
-    isLoadingEMandates,
   } = useAfisBetaalVoorkeurenData(businessPartnerIdEncrypted);
 
-  useHTMLDocumentTitle(routeConfig.betaalVoorkeuren);
+  const {
+    eMandates,
+    eMandateTableConfig,
+    hasEMandatesError,
+    isLoadingEMandates,
+    statusNotification: { ibansPendingActivation },
+    fetchEMandates,
+  } = useAfisEMandatesData();
 
   const isLoadingAllAPis =
-    isThemaPaginaLoading &&
-    isLoadingBusinessPartnerDetails &&
+    isThemaPaginaLoading ||
+    isLoadingBusinessPartnerDetails ||
     isLoadingEMandates;
 
-  const eMandateTables = FeatureToggle.afisEMandatesActive && (
+  const eMandatesTable = featureToggle.afisEMandatesActive && (
     <ThemaPaginaTable<AfisEMandateFrontend>
-      className={eMandateTableConfig.className}
       displayProps={eMandateTableConfig.displayProps}
       maxItems={-1}
       title={eMandateTableConfig.title}
@@ -129,7 +141,7 @@ export function AfisBetaalVoorkeuren() {
         </Link>
         .
       </Paragraph>
-      {!FeatureToggle.afisEmandatesActive && (
+      {!featureToggle.afisEMandatesActive && (
         <>
           <Heading level={3} size="level-5">
             Via automatische incasso betalen
@@ -167,9 +179,12 @@ export function AfisBetaalVoorkeuren() {
         businesspartner={businesspartnerDetails}
         labels={businessPartnerDetailsLabels}
         isLoading={!!(isLoadingBusinessPartnerDetails || isThemaPaginaLoading)}
-        startCollapsed={FeatureToggle.afisEMandatesActive}
+        startCollapsed={featureToggle.afisEMandatesActive}
       />
-      {eMandateTables}
+      {!!ibansPendingActivation.length && (
+        <EmandateRefetchInterval fetch={fetchEMandates} />
+      )}
+      {eMandatesTable}
     </>
   );
 
@@ -177,29 +192,6 @@ export function AfisBetaalVoorkeuren() {
     <>Wij kunnen nu niet alle gegevens laten zien.</>
   ) : (
     <>
-      {!hasBusinessPartnerDetailsError &&
-        (hasFailedEmailDependency ||
-          hasFailedPhoneDependency ||
-          hasFailedFullNameDependency) && (
-          <>
-            De volgende gegevens konden niet worden opgehaald:
-            {hasFailedFullNameDependency && (
-              <>
-                <br />- Debiteurnaam
-              </>
-            )}
-            {hasFailedEmailDependency && (
-              <>
-                <br />- E-mailadres
-              </>
-            )}
-            {hasFailedPhoneDependency && (
-              <>
-                <br />- Telefoonnummer
-              </>
-            )}
-          </>
-        )}
       {hasBusinessPartnerDetailsError && (
         <>
           Wij kunnen nu geen facturatiegegevens laten zien.
@@ -218,14 +210,14 @@ export function AfisBetaalVoorkeuren() {
       title={title}
       isError={
         isThemaPaginaError ||
-        (hasBusinessPartnerDetailsError && hasEmandatesError)
+        (hasBusinessPartnerDetailsError && hasEMandatesError)
       }
       isPartialError={
         hasFailedFullNameDependency ||
         hasFailedPhoneDependency ||
         hasFailedPhoneDependency ||
         hasBusinessPartnerDetailsError ||
-        hasEmandatesError
+        hasEMandatesError
       }
       errorAlertContent={errorAlertContent}
       isLoading={isLoadingAllAPis}

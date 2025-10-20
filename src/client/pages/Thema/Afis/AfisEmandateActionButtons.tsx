@@ -1,98 +1,165 @@
-import React, { useEffect } from 'react';
+import { useState, type ReactNode } from 'react';
 
-import { Button, Icon } from '@amsterdam/design-system-react';
+import { ActionGroup, Button, Paragraph } from '@amsterdam/design-system-react';
 
-import styles from './AfisEmandateActionButtons.module.scss';
-import {
+import type {
   AfisEMandateFrontend,
   AfisEMandateSignRequestResponse,
-} from '../../../server/services/afis/afis-types';
-import { ApiResponse } from '../../../universal/helpers/api';
-import { IconAlert } from '../../assets/icons';
-import { Spinner } from '../../components/Spinner/Spinner';
-import { ApiState, useDataApi } from '../../hooks/api/useDataApi';
+  AfisEMandateStatusChangeResponse,
+} from '../../../../server/services/afis/afis-types';
+import { Modal } from '../../../components/Modal/Modal';
+import { Spinner } from '../../../components/Spinner/Spinner';
+import { type ApiStateV2 } from '../../../hooks/api/useDataApi';
 
-type AfisEMandateActionUrlProps = {
-  eMandate: AfisEMandateFrontend;
+type ActionConfirmationModalProps = {
+  confirmationText: ReactNode;
+  confirmLabel: string;
+  title: string;
+  onClose: () => void;
+  onConfirm: () => void;
 };
 
-type ApiActionProps<T> = {
-  api: ApiState<ApiResponse<T> | null>;
+function ActionConfirmationModal({
+  confirmationText,
+  confirmLabel,
+  onClose,
+  onConfirm,
+  title,
+}: ActionConfirmationModalProps) {
+  const confirmationTextNode =
+    typeof confirmationText === 'string' ? (
+      <Paragraph className="ams-mb-s">{confirmationText}</Paragraph>
+    ) : (
+      confirmationText
+    );
+  return (
+    <Modal
+      title={title}
+      isOpen
+      showCloseButton
+      closeOnEscape
+      onClose={onClose}
+      pollingQuerySelector="#action-confirmation"
+      actions={
+        <ActionGroup>
+          <Button
+            id="action-confirmation"
+            onClick={onConfirm}
+            variant="primary"
+          >
+            {confirmLabel}
+          </Button>
+          <Button variant="tertiary" onClick={onClose}>
+            Terug
+          </Button>
+        </ActionGroup>
+      }
+    >
+      {confirmationTextNode}
+    </Modal>
+  );
+}
+
+type ApiActionButtonProps<T> = {
+  api: ApiStateV2<T>;
   fetch: () => void;
-  label: React.ReactNode;
-  errorMessage: React.ReactNode;
+  label: string;
+  doConfirm: boolean;
+  confirmationModal?: Pick<
+    ActionConfirmationModalProps,
+    'confirmationText' | 'confirmLabel' | 'title'
+  >;
 };
 
 function ApiActionButton<T>({
   api,
   fetch,
   label,
-  errorMessage,
-}: ApiActionProps<T>) {
+  doConfirm = false,
+  confirmationModal = {
+    confirmationText: 'Weet je zeker dat je deze actie wilt uitvoeren?',
+    confirmLabel: `Ja`,
+    title: 'Bevestig actie',
+  },
+}: ApiActionButtonProps<T>) {
+  const [isConfirmationModalActive, setIsConfirmationModalActive] =
+    useState(false);
   return (
-    <span className={api.isError ? styles.DocumentDownloadError : ''}>
-      <Button variant="tertiary" onClick={() => fetch()}>
+    <>
+      <Button
+        variant="secondary"
+        disabled={api.isLoading}
+        onClick={
+          doConfirm ? () => setIsConfirmationModalActive(true) : () => fetch()
+        }
+      >
         {api.isLoading && <Spinner />}
-        {!api.isLoading && api.isError && (
-          <Icon className={styles.LinkIcon} svg={IconAlert} size="level-5" />
-        )}
         {label}
       </Button>
-      {api.isLoading && <span className={styles.DownloadInfo}>Bezig...</span>}
-      {api.isError && (
-        <span className={styles.DownloadInfo}>{errorMessage}</span>
+      {isConfirmationModalActive && (
+        <ActionConfirmationModal
+          confirmationText={confirmationModal.confirmationText}
+          confirmLabel={confirmationModal.confirmLabel}
+          title={confirmationModal.title}
+          onConfirm={() => {
+            setIsConfirmationModalActive(false);
+            fetch();
+          }}
+          onClose={() => {
+            setIsConfirmationModalActive(false);
+          }}
+        />
       )}
-    </span>
+    </>
   );
 }
 
+type AfisEMandateActionUrlProps = {
+  eMandate: AfisEMandateFrontend;
+  redirectUrlApi: ApiStateV2<AfisEMandateSignRequestResponse>;
+  statusChangeApi: ApiStateV2<AfisEMandateStatusChangeResponse>;
+};
+
 export function AfisEMandateActionUrls({
   eMandate,
+  redirectUrlApi,
+  statusChangeApi,
 }: AfisEMandateActionUrlProps) {
-  const [redirectUrlApi, fetchRedirectUrl] =
-    useDataApi<ApiResponse<AfisEMandateSignRequestResponse> | null>(
-      {
-        postpone: true,
-      },
-      null
-    );
-
-  useEffect(() => {
-    if (redirectUrlApi.data?.content?.redirectUrl) {
-      window.location.href = redirectUrlApi.data.content.redirectUrl;
-    }
-  }, [redirectUrlApi.data]);
-
-  const [statusChangeApi, fetchStatusChange] =
-    useDataApi<ApiResponse<AfisEMandateSignRequestResponse> | null>(
-      {
-        postpone: true,
-      },
-      null
-    );
-
-  useEffect(() => {
-    if (redirectUrlApi.data?.status === 'OK') {
-      alert('Update eMandate');
-    }
-  }, [statusChangeApi.data]);
-
   return (
     <>
       {eMandate.signRequestUrl && (
         <ApiActionButton
           api={redirectUrlApi}
-          fetch={() => fetchRedirectUrl({ url: eMandate.signRequestUrl })}
+          fetch={() => redirectUrlApi.fetch()}
           label={eMandate.status === '1' ? 'Wijzigen' : 'Activeren'}
-          errorMessage="Er is iets misgegaan bij het ophalen van de link"
+          doConfirm={false}
         />
       )}
-      {eMandate.statusChangeUrl && (
+      &nbsp;
+      {eMandate.statusChangeUrl && eMandate.status === '1' && (
         <ApiActionButton
           api={statusChangeApi}
-          fetch={() => fetchStatusChange({ url: eMandate.statusChangeUrl })}
-          label={eMandate.status === '1' ? 'Stopzetten' : 'Activeren'}
-          errorMessage="Er is iets misgegaan bij het veranderen van de status"
+          fetch={() => statusChangeApi.fetch()}
+          label="Stopzetten"
+          doConfirm
+          confirmationModal={{
+            title: 'Stopzetten E-Mandaat',
+            confirmationText: (
+              <>
+                <Paragraph className="ams-mb-s">
+                  Weet je zeker dat je dit E-mandaat wilt stopzetten?
+                </Paragraph>
+                <Paragraph className="ams-mb-s">
+                  Het E-mandaat wordt dan niet meer gebruikt voor automatische
+                  incasso.
+                </Paragraph>
+                <Paragraph className="ams-mb-s">
+                  Je kunt het E-mandaat later opnieuw activeren.
+                </Paragraph>
+              </>
+            ),
+            confirmLabel: 'Ja, stopzetten',
+          }}
         />
       )}
     </>

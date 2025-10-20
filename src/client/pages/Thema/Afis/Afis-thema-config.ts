@@ -7,18 +7,28 @@ import {
   AfisFacturenResponse,
   AfisFactuur,
   AfisFactuurState,
+  type AfisEMandateFrontend,
 } from '../../../../server/services/afis/afis-types';
-import {
-  LinkProps,
-  ZaakAanvraagDetail,
-} from '../../../../universal/types/App.types';
+import { IS_OT, IS_PRODUCTION } from '../../../../universal/config/env';
+import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
 export const featureToggle = {
   AfisActive: true,
+  afisEMandatesActive: !IS_PRODUCTION,
+  // Display of phone number is not needed atm.
+  afisBusinesspartnerPhoneActive: false,
+  // We don't filter out the undownloadable facturen for testing purposes.
+  // We want to be able to test immediately and not wait until the evening.
+  afisFilterOutUndownloadableFacturenActive: IS_OT || IS_PRODUCTION,
+  // See also MIJN-10042: Bug where migrated documents "$year < 2025" do not have PDF downloads available.
+  afisMigratedFacturenDownloadActive: !IS_PRODUCTION,
 };
+
+// E-Mandates are always recurring and have a default date far in the future!
+export const EMANDATE_ENDDATE_INDICATOR = '9999';
 
 export const themaId = 'AFIS' as const;
 export const themaTitle = 'Facturen en betalen';
@@ -31,6 +41,10 @@ export const routeConfig = {
   betaalVoorkeuren: {
     path: '/facturen-en-betalen/betaalvoorkeuren',
     documentTitle: `Betaalvoorkeuren | ${themaTitle}`,
+  },
+  detailPageEMandate: {
+    path: '/facturen-en-betalen/betaalvoorkeuren/emandate/:id',
+    documentTitle: `E-Mandaat | ${themaTitle}`,
   },
   listPage: {
     path: '/facturen-en-betalen/facturen/lijst/:state/:page?',
@@ -81,8 +95,6 @@ export const listPageTitle: Record<AfisFactuurState, string> = {
     'Facturen in het incasso- en invorderingstraject van directie Belastingen',
 };
 
-export type AfisEmandateStub = ZaakAanvraagDetail & Record<string, string>;
-
 export type AfisFactuurFrontend = AfisFactuur & {
   factuurNummerEl: ReactNode;
 };
@@ -129,31 +141,25 @@ export const facturenTableConfig = {
   },
 } as const;
 
-// Betaalvoorkeuren
-const displayPropsEmandates: DisplayProps<AfisEmandateStub> = {
-  name: 'Naam',
-};
-
 export const businessPartnerDetailsLabels: DisplayProps<AfisBusinessPartnerDetailsTransformed> =
   {
     fullName: 'Debiteurnaam',
     businessPartnerId: 'Debiteurnummer',
     email: 'E-mailadres factuur',
     phone: 'Telefoonnummer',
-    address: 'Adres',
+    fullAddress: 'Adres',
   };
 
+// Betaalvoorkeuren
+
+const displayPropsEMandates: DisplayProps<AfisEMandateFrontend> = {
+  detailLinkComponent: 'Afdeling gemeente',
+  displayStatus: 'Status',
+};
+
 export const eMandateTableConfig = {
-  active: {
-    title: `Actieve automatische incasso's`,
-    filter: (emandate: AfisEmandateStub) => emandate.isActive,
-    displayProps: displayPropsEmandates,
-  },
-  inactive: {
-    title: `Niet actieve automatische incasso's`,
-    filter: (emandate: AfisEmandateStub) => !emandate.isActive,
-    displayProps: displayPropsEmandates,
-  },
+  title: `Automatische incasso's`,
+  displayProps: displayPropsEMandates,
 } as const;
 
 export const linkListItems: LinkProps[] = [

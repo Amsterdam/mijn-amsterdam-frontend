@@ -4,8 +4,6 @@ import { generatePath } from 'react-router';
 
 import {
   AfisFacturenByStateFrontend,
-  businessPartnerDetailsLabels,
-  eMandateTableConfig,
   facturenTableConfig,
   listPageTitle,
   linkListItems,
@@ -14,7 +12,6 @@ import {
   routeConfig,
 } from './Afis-thema-config';
 import {
-  AfisBusinessPartnerDetailsTransformed,
   AfisThemaResponse,
   AfisFacturenByStateResponse,
   AfisFactuur,
@@ -235,48 +232,5 @@ export function useAfisThemaData() {
       afgehandeld: hasFailedDependency(AFIS, 'afgehandeld'),
       overgedragen: hasFailedDependency(AFIS, 'overgedragen'),
     },
-  };
-}
-
-export function useAfisBetaalVoorkeurenData(
-  businessPartnerIdEncrypted:
-    | AfisThemaResponse['businessPartnerIdEncrypted']
-    | undefined
-) {
-  const api = useBffApi<AfisBusinessPartnerDetailsTransformed>(
-    businessPartnerIdEncrypted
-      ? `${BFFApiUrls.AFIS_BUSINESSPARTNER}?id=${businessPartnerIdEncrypted}`
-      : null
-  );
-  const businesspartnerDetailsApiResponse = api.data;
-  const eMandates = (eMandatesApiResponse.content ?? []).map((eMandate) => {
-    return {
-      ...eMandate,
-      action: <AfisEMandateActionUrls eMandate={eMandate} />,
-    };
-  });
-
-  return {
-    title: 'Betaalvoorkeuren',
-    businesspartnerDetails: businesspartnerDetailsApiResponse?.content,
-    businessPartnerDetailsLabels,
-    isLoadingBusinessPartnerDetails: api.isLoading,
-    hasBusinessPartnerDetailsError: api.isError,
-    hasEMandatesError: isError(eMandatesApiResponse, false),
-    hasFailedEmailDependency: hasFailedDependency(
-      businesspartnerDetailsApiResponse,
-      'email'
-    ),
-    hasFailedPhoneDependency: hasFailedDependency(
-      businesspartnerDetailsApiResponse,
-      'phone'
-    ),
-    hasFailedFullNameDependency: hasFailedDependency(
-      businesspartnerDetailsApiResponse,
-      'fullName'
-    ),
-    eMandateTableConfig,
-    eMandates,
-    isLoadingEMandates: false,
   };
 }

@@ -293,8 +293,7 @@ async function sendStadspassenResponse(
 
   return sendBadRequest(
     res,
-    `ApiError ${apiResponseError.code} - ${apiResponseError.message}`,
-    null
+    `ApiError ${apiResponseError.code} - ${apiResponseError.message}`
   );
 }
 

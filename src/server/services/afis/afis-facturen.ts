@@ -4,8 +4,11 @@ import Decimal from 'decimal.js';
 import { firstBy } from 'thenby';
 
 import { getAfisApiConfig, getFeedEntryProperties } from './afis-helpers';
-import { routeConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import { routes } from './afis-service-config';
+import {
+  featureToggle,
+  routeConfig,
+} from '../../../client/pages/Thema/Afis/Afis-thema-config';
 import {
   apiErrorResult,
   ApiResponse_DEPRECATED,
@@ -29,7 +32,6 @@ import {
   getRequestParamsFromQueryString,
   requestData,
 } from '../../helpers/source-api-request';
-import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureMessage, trackEvent } from '../monitoring';
 import type {
@@ -205,7 +207,7 @@ function transformFactuur(
 
   if (
     isFactuurCreatedInAFIS(accountingDocumentId) ||
-    FeatureToggle.afisMigratedFacturenDownloadActive
+    featureToggle.afisMigratedFacturenDownloadActive
   ) {
     factuurDocumentIdEncrypted = encryptSessionIdWithRouteIdParam(
       sessionID,
@@ -231,7 +233,7 @@ function transformFactuur(
   const status = determineFactuurStatus(invoice, amountPayed, hasDeelbetaling);
 
   const documentDownloadLink = factuurDocumentIdEncrypted
-    ? generateFullApiUrlBFF(BffEndpoints.AFIS_DOCUMENT_DOWNLOAD, [
+    ? generateFullApiUrlBFF(routes.protected.AFIS_DOCUMENT_DOWNLOAD, [
         { id: factuurDocumentIdEncrypted },
       ])
     : null;
@@ -292,7 +294,7 @@ function transformFacturen(
   const count = responseData?.feed?.count ?? feedProperties.length;
   const facturenTransformed = feedProperties
     .filter((invoiceProperties) => {
-      return FeatureToggle.afisFilterOutUndownloadableFacturenActive
+      return featureToggle.afisFilterOutUndownloadableFacturenActive
         ? isDownloadAvailable(invoiceProperties.PostingDate)
         : true;
     })

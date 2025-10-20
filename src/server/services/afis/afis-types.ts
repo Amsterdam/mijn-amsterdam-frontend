@@ -1,17 +1,7 @@
 import Decimal from 'decimal.js';
+import type { SetNonNullableDeep } from 'type-fest';
 
 import { LinkProps } from '../../../universal/types/App.types';
-
-export type AfisApiFeedResponseSource<T> = {
-  feed?: {
-    count?: number;
-    entry?: Array<{
-      content?: {
-        properties?: T;
-      };
-    }>;
-  };
-};
 
 export type XmlNullable<T extends Record<string, unknown>> = {
   [key in keyof T]: { '@null': true } | T[key];
@@ -31,7 +21,7 @@ type JaOfNee = 'Ja' | 'Nee';
 export type AfisBusinessPartnerPrivateResponseSource = {
   BSN: number | string;
   Gevonden: JaOfNee;
-  Zakenpartnernummer?: string;
+  Zakenpartnernummer: string;
   Blokkade?: JaOfNee;
 };
 
@@ -43,11 +33,15 @@ export type AfisBusinessPartnerPrivateResponseSource = {
  */
 type AfisBusinessPartnerRecordCommercial = {
   KVK: number | string;
-  Zakenpartnernummer?: string;
+  Zakenpartnernummer: string;
   Vestigingsnummer?: string;
   Blokkade: JaOfNee;
   Gevonden: JaOfNee;
 };
+
+export type BusinessPartnerId =
+  | AfisBusinessPartnerPrivateResponseSource['Zakenpartnernummer']
+  | AfisBusinessPartnerRecordCommercial['Zakenpartnernummer'];
 
 export type AfisBusinessPartnerCommercialResponseSource = {
   Record:
@@ -93,6 +87,8 @@ export type AfisBusinessPartnerAddressSource = {
 export type AfisBusinessPartnerDetailsSource = {
   BusinessPartner: number;
   BusinessPartnerFullName: string;
+  FirstName: string;
+  LastName: string;
 };
 
 export type AfisBusinessPartnerPhoneSource = {
@@ -105,11 +101,14 @@ export type AfisBusinessPartnerEmailSource = {
 
 export type AfisBusinessPartnerDetails = {
   fullName: string;
+  firstName: string;
+  lastName: string;
 };
 
 export type AfisBusinessPartnerAddress = {
   id: string;
-  address: string;
+  fullAddress: string;
+  address: AfisBusinessPartnerAddressSource;
 };
 
 export type AfisBusinessPartnerPhone = {
@@ -121,11 +120,32 @@ export type AfisBusinessPartnerEmail = {
 };
 
 export type AfisBusinessPartnerDetailsTransformed = {
-  businessPartnerId: string;
-  email?: string | null;
-  fullName?: string | null;
-  phone?: string | null;
-  address?: string | null;
+  businessPartnerId: BusinessPartnerId;
+  email?: AfisBusinessPartnerEmail['email'];
+  fullName?: AfisBusinessPartnerDetails['fullName'];
+  firstName?: AfisBusinessPartnerDetails['firstName'];
+  lastName?: AfisBusinessPartnerDetails['lastName'];
+  phone?: AfisBusinessPartnerPhone['phone'];
+  fullAddress?: AfisBusinessPartnerAddress['fullAddress'];
+  address?: AfisBusinessPartnerAddress['address'];
+};
+
+export type AfisBusinessPartnerBankAccount = {
+  BusinessPartner: BusinessPartnerId;
+  BankName: string;
+  BankNumber: string;
+  SWIFTCode: string;
+  BankAccountHolderName: string;
+  IBAN: string;
+  BankAccount: string;
+};
+
+export type AfisBusinessPartnerBankPayload = {
+  businessPartnerId: BusinessPartnerId;
+  iban: string;
+  bic: string;
+  swiftCode: string;
+  senderName: string;
 };
 
 // Facturen
@@ -157,9 +177,6 @@ export type AfisFactuurPropertiesSource = {
   ReverseDocument?: string;
   SEPAMandate: string;
 };
-
-export type AfisInvoicesSource =
-  AfisApiFeedResponseSource<AfisFactuurPropertiesSource>;
 
 export type AfisFactuurStatus =
   | 'openstaand'
@@ -226,35 +243,6 @@ export type AfisFactuurDeelbetalingen = {
   [factuurNummer: string]: Decimal;
 };
 
-export type AccountingDocumentType = string;
-
-
-export type AfisFactuurState = 'open' | 'afgehandeld' | 'overgedragen';
-
-export type AfisFacturenResponse = {
-  count: number;
-  facturen: AfisFactuur[];
-};
-
-export type AfisFacturenByStateResponse = {
-  [key in AfisFactuurState]?: AfisFacturenResponse | null;
-};
-
-export type AfisThemaResponse = {
-  isKnown: boolean;
-  businessPartnerIdEncrypted: string | null;
-  businessPartnerId?:
-    | AfisBusinessPartnerDetailsTransformed['businessPartnerId']
-    | null;
-  facturen?: AfisFacturenByStateResponse | null;
-};
-
-export type AfisFacturenParams = {
-  state: AfisFactuurState | 'deelbetalingen';
-  businessPartnerID: AfisBusinessPartnerDetailsTransformed['businessPartnerId'];
-  top?: string;
-};
-
 // Documents / PDF's
 // =================
 
@@ -289,8 +277,8 @@ export type AfisEMandateSourceStatic = {
 };
 
 type EMandateSenderSource = {
-  // Sender
-  SndId: AfisBusinessPartnerDetailsTransformed['businessPartnerId'];
+  // Sender/Debtor (The one who signs the e-mandate)
+  SndId: BusinessPartnerId;
   SndPostal: string;
   SndCountry: string; // Country code
   SndIban: string;
@@ -300,25 +288,30 @@ type EMandateSenderSource = {
   SndCity: string;
   SndName1: string; // Firstname
   SndName2: string; // Lastname
-  SndDebtorId: string; // Acceptant reference ID (RefId)
+
+  // Creditor reference ID (RefId)
+  SndDebtorId: string; // Creditor reference ID (RefId)
+};
+
+export type EMandateReceiverSource = {
+  // Receiver/Creditor/Incassant (The one who uses the e-mandate to collect payments)
+  RecName1: string;
+  RecPostal: string;
+  RecStreet: string;
+  RecHouse: string;
+  RecCity: string;
+  RecCountry: string;
 };
 
 export type AfisEMandateSource = AfisEMandateSourceStatic &
+  EMandateReceiverSource &
   EMandateSenderSource & {
     // ID of the mandate in AFIS
     IMandateId: string;
 
-    // Recipient
-    RecName1: string;
-    RecPostal: string;
-    RecStreet: string;
-    RecHouse: string;
-    RecCity: string;
-    RecCountry: string;
-
     // Mandate
     LifetimeFrom: string;
-    LifetimeTo: string; // '9999-12-31T00:00:00'; // Far in the future, Gem. Amsterdam only uses indefinite mandates. Change to today when deactivating eMandate.
+    LifetimeTo: string;
     SignDate: string;
     SignCity: string;
   };
@@ -333,18 +326,25 @@ export type AfisEMandateCreatePayload = Omit<
   LifetimeTo: '9999-12-31T00:00:00';
 };
 
-export type AfisEMandateUpdatePayload = AfisEMandateSource;
+export type AfisEMandateUpdatePayload = Partial<AfisEMandateSource>;
 
-export type AfisEMandateCreateParams = {
-  acceptantIBAN: AfisEMandateAcceptant['iban'];
-  sender: EMandateSenderSource;
-  eMandateSignDate: string;
-  eMandatesignCity: string;
+export type AfisEMandateStatusCodes = {
+  '1': 'Actief';
+  '2': 'Te bevestigen';
+  '3': 'Geblokkeerd';
+  '4': 'Gestorneerd';
+  '5': 'Verouderd';
+  '6': 'Afgesloten';
 };
 
+export type EmandateStatusCode = Prettify<keyof AfisEMandateStatusCodes>;
+
 export type AfisEMandateFrontend = {
-  acceptant: string;
-  status: string;
+  id: string;
+  creditorName: string;
+  creditorIBAN: string;
+  creditorDescription?: string;
+  status: EmandateStatusCode;
   displayStatus: string;
 
   // Sender properties
@@ -354,41 +354,142 @@ export type AfisEMandateFrontend = {
   // Properties from existing Afis mandates
   dateValidFrom: string | null;
   dateValidFromFormatted: string | null;
+  dateValidTo: string | null;
+  dateValidToFormatted: string | null;
 
   // Urls to interact with the mandate state
   statusChangeUrl?: string;
   signRequestUrl?: string;
+  lifetimeUpdateUrl?: string;
+
+  link: LinkProps;
 };
 
-export type AfisEMandateAcceptant = {
+export type AfisEMandateCreditor = {
   iban: string;
   name: string;
   subId: string;
   refId: string;
+  description?: string;
+};
+
+export type POMEMandateSignRequestPayload = {
+  id_client: number;
+  debtornumber: number;
+  cid: number;
+  mpid: number;
+  payment_reference: number;
+  id_request_client: string;
+  event_type: string;
+  amount_total: number;
+  id_bank: string;
+  iban: string;
+  bic: string;
+  account_owner: string;
+  event_date: string;
+  event_time: string;
+
+  variable1: string; // Optional, used for creditor (Gemeente Amsterdam) IBAN
+};
+
+export type POMEMandateSignRequestPayloadTransformed = {
+  debtornumber: string;
+  debtorIBAN: string;
+  debtorBIC: string;
+  creditorIBAN: string;
+  debtorAccountOwner: string;
+  eMandateSignDate: string;
 };
 
 export type EMandateSignRequestPayload = {
-  acceptantIBAN: AfisEMandateAcceptant['iban'];
-  businessPartnerId: AfisBusinessPartnerDetailsTransformed['businessPartnerId'];
+  creditorIBAN: AfisEMandateCreditor['iban'];
+  businessPartnerId: BusinessPartnerId;
+  eMandateSignDate: string;
+};
+
+export type EMandateSignRequestNotificationPayload = {
+  senderIBAN: string;
+  senderBIC: string;
+  senderName: string;
 };
 
 export type BusinessPartnerIdPayload = {
-  businessPartnerId: AfisBusinessPartnerDetailsTransformed['businessPartnerId'];
+  businessPartnerId: BusinessPartnerId;
 };
 
 export type EMandateSignRequestStatusPayload = {
-  foo: string;
+  mpid: string;
+};
+
+export type EMandateUpdatePayload = {
+  IMandateId: AfisEMandateSource['IMandateId'];
 };
 
 export type EMandateStatusChangePayload = {
-  status: '1' | '0'; // TODO: Add type
+  Status: AfisEMandateSource['Status'];
   IMandateId: AfisEMandateSource['IMandateId'];
+  LifetimeTo: AfisEMandateSource['LifetimeTo'];
+  LifetimeFrom?: AfisEMandateSource['LifetimeFrom'];
 };
 
 export type AfisEMandateSignRequestResponse = {
   redirectUrl: string;
 };
 
-export type XmlNullable<T extends Record<string, unknown>> = {
-  [key in keyof T]: { '@null': true } | T[key];
+export type AfisEMandateStatusChangeResponse = {
+  status: AfisEMandateFrontend['status'];
+};
+
+export type AfisEMandateUpdatePayloadFrontend = SetNonNullableDeep<
+  Pick<AfisEMandateFrontend, 'dateValidTo'>,
+  'dateValidTo'
+>;
+
+// POM payment api status codes
+export const signRequestStatusCodes = {
+  101: 'NoResponse', // No reaction to the message
+  500: 'VisitedWebsite', // Customer has clicked on the link
+  700: 'PaymentStarted', // Payment started, but not yet finished
+  701: 'PaymentCanceled', // Payment cancelled by the customer
+  702: 'PaymentFailed', // Payment failed. E.g. insufficient funds
+  703: 'PaymentInvalid', // Payment started, but status not yet known
+  704: 'PaymentExpired', // Payment started, but not completed on time
+  900: 'Paid', // Full amount has been paid
+  998: 'Chargeback', // Payment was reversed by customer
+} as const;
+
+export type POMSignRequestStatusCode = keyof typeof signRequestStatusCodes;
+export type POMSignRequestUrlResponseSource = { paylink: string; mpid: string };
+export type POMSignRequestStatusResponseSource = {
+  mpid: number;
+  status_code: POMSignRequestStatusCode;
+  status_date: string; // e.g 2015-03-01T12:23:44
+};
+export type POMSignRequestUrlPayload = {
+  first_name: string;
+  last_name: string;
+  debtor_number: string;
+  payment_reference: string;
+  concerning: string;
+  batch_name: string;
+  request_id: string;
+  company_name: string;
+  variable1: string;
+  due_date: string;
+  return_url: string;
+  cid: null;
+  payment_modules: ['emandate_recurring'];
+  invoices: [
+    {
+      invoice_number: string;
+      invoice_date: string;
+      invoice_description: string;
+      invoice_amount: 0;
+      invoice_due_date: string;
+    },
+  ];
+};
+export type AfisEMandateSignRequestStatusResponse = {
+  status: string;
+  code: POMSignRequestStatusCode;
 };
