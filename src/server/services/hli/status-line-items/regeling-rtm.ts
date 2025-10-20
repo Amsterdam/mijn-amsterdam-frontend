@@ -56,6 +56,9 @@ export function filterCombineRtmData(
 
   let aanvragenClean = dedupCombineRTMDeel2(rtmAanvragen);
   aanvragenClean = removeNonPdfDocuments(aanvragenClean);
+  // Sort asc so we always end with an 'Einde recht'.
+  // This keeps it in the same order as how we describe the scenarios, so you don't need to think in reverse.
+  aanvragenClean.sort(sortAlpha('id', 'asc'));
 
   // Prevent aanvragen from other 'betrokkenen' sets from being mixed up with eachother.
   let aanvragenPerBetrokkenen = mapAanvragenPerBetrokkenen(
@@ -65,7 +68,7 @@ export function filterCombineRtmData(
   aanvragenPerBetrokkenen = removeExpiredIndividualAanvragen(
     aanvragenPerBetrokkenen
   );
-  return [remainder, combineRTMData(aanvragenPerBetrokkenen, bsnOntvanger)];
+  return [remainder, combineRTMData(aanvragenPerBetrokkenen)];
 }
 
 /** Aanvragen can contain duplicate RTMDeel2. We combine the documents and drop the dupe. */
@@ -131,7 +134,10 @@ function removeNonPdfDocuments(
 type AanvragenPerBetrokkene = Record<
   string,
   ZorgnedAanvraagWithRelatedPersonsTransformed[]
->;
+> & {
+  ontvanger: ZorgnedAanvraagWithRelatedPersonsTransformed[];
+  orphaned: ZorgnedAanvraagWithRelatedPersonsTransformed[];
+};
 
 function mapAanvragenPerBetrokkenen(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
@@ -145,20 +151,55 @@ function mapAanvragenPerBetrokkenen(
     };
   });
 
-  const aanvragenMap: AanvragenPerBetrokkene = {};
+  const betrokkenenKeys = aanvragen
+    .filter((a) => a.betrokkenen.length > 0)
+    .map((a) => a.betrokkenen.join(','));
+  const hasSamebetrokkenen = new Set(betrokkenenKeys).size === 1;
 
-  // Just copy/distribute aanvragen for every individual betrokkene.
-  for (const aanvraag of aanvragen) {
-    let betrokkenen = aanvraag.betrokkenen;
-    if (!betrokkenen.length) {
-      betrokkenen = [bsnOntvanger];
+  const hasSingleBetrokkene =
+    new Set(aanvragen.flatMap((a) => a.betrokkenen)).size === 1;
+
+  const hasOnlyRTMDeel1Afgewezen = aanvragen.every(
+    (a) => isRTMDeel1(a) && a.resultaat === 'afgewezen'
+  );
+
+  const aanvragenMap: AanvragenPerBetrokkene = { ontvanger: [], orphaned: [] };
+
+  if (hasOnlyRTMDeel1Afgewezen) {
+    aanvragenMap.orphaned.push(...aanvragen);
+    return aanvragenMap;
+  }
+
+  if (hasSamebetrokkenen) {
+    if (betrokkenenKeys[0].includes(bsnOntvanger)) {
+      aanvragenMap.ontvanger = aanvragen;
+      return aanvragenMap;
     }
-    for (const bsn of betrokkenen) {
-      const aanvraagInMap = aanvragenMap[bsn];
-      if (aanvraagInMap) {
-        aanvragenMap[bsn].push(aanvraag);
-      } else {
-        aanvragenMap[bsn] = [aanvraag];
+    aanvragenMap[betrokkenenKeys.join('-')] = aanvragen;
+    return aanvragenMap;
+  }
+
+  // Copy/distribute aanvragen for every individual betrokkene.
+  for (const aanvraag of aanvragen) {
+    const betrokkenen = aanvraag.betrokkenen;
+    if (!betrokkenen.length) {
+      if (isRTMDeel2(aanvraag)) {
+        aanvragenMap.ontvanger.push(aanvraag);
+      } else if (!hasSingleBetrokkene) {
+        aanvragenMap.orphaned.push(aanvraag);
+      }
+    } else {
+      for (const bsn of betrokkenen) {
+        if (bsn === bsnOntvanger) {
+          aanvragenMap.ontvanger.push(aanvraag);
+        } else {
+          const aanvraagInMap = aanvragenMap[bsn];
+          if (aanvraagInMap) {
+            aanvragenMap[bsn].push(aanvraag);
+          } else {
+            aanvragenMap[bsn] = [aanvraag];
+          }
+        }
       }
     }
   }
@@ -186,30 +227,22 @@ type RTMCombinedRegeling = [ZorgnedHLIRegeling, StatusLineItem[]];
  *  This requires a list of aanvragen for one person.
  */
 function combineRTMData(
-  aanvragenPerBetrokkene: AanvragenPerBetrokkene,
-  bsnOntvanger: string
+  aanvragenPerBetrokkene: AanvragenPerBetrokkene
 ): RTMCombinedRegeling[] {
-  const preprocessedAanvragenPerBetrokkenen: AanvragenPerBetrokkene = {};
-
-  for (const [betrokkene, aanvragen] of Object.entries(
-    aanvragenPerBetrokkene
-  )) {
-    preprocessedAanvragenPerBetrokkenen[betrokkene] = aanvragen
-      // Sort asc so we always end with an 'Einde recht'.
-      // This keeps it in the same order as how we describe the scenarios, so you don't need to think in reverse.
-      .toSorted(sortAlpha('id', 'asc'));
-  }
-
   const regelingenForOntvanger = processOntvanger(
-    preprocessedAanvragenPerBetrokkenen[bsnOntvanger]
+    aanvragenPerBetrokkene.ontvanger
   );
   const regelingenForRelatedPersons = processRelatedPersons(
-    Object.entries(preprocessedAanvragenPerBetrokkenen)
-      .filter(([betrokkene]) => betrokkene !== bsnOntvanger)
+    Object.entries(aanvragenPerBetrokkene)
+      .filter(([betrokkene]) => betrokkene !== 'ontvanger')
       .map(([, aanvragen]) => aanvragen)
   );
 
-  return [...regelingenForOntvanger, ...regelingenForRelatedPersons];
+  const rtmCombinedRegelingen: RTMCombinedRegeling[] = [
+    ...regelingenForOntvanger,
+    ...regelingenForRelatedPersons,
+  ];
+  return rtmCombinedRegelingen;
 }
 
 function processOntvanger(
@@ -255,11 +288,14 @@ function processOntvanger(
 }
 
 function processRelatedPersons(
-  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[][]
+  aanvragenPerRelatedPerson: ZorgnedAanvraagWithRelatedPersonsTransformed[][]
 ): RTMCombinedRegeling[] {
-  const regelingenForRelatedPersons: RTMCombinedRegeling[] = aanvragen.reduce(
-    (rtmCombinedRegeling, aanvragen) => {
+  const regelingenForRelatedPersons: RTMCombinedRegeling[] =
+    aanvragenPerRelatedPerson.reduce((rtmCombinedRegeling, aanvragen) => {
       const last = aanvragen[aanvragen.length - 1];
+      if (!last) {
+        return rtmCombinedRegeling;
+      }
       const regeling: ZorgnedHLIRegeling = {
         ...last,
         datumInBehandeling: last.datumBesluit,
@@ -286,9 +322,7 @@ function processRelatedPersons(
         });
       regeling.documenten = [];
       return [...rtmCombinedRegeling, [regeling, statusLineItems]];
-    },
-    [] as RTMCombinedRegeling[]
-  );
+    }, [] as RTMCombinedRegeling[]);
   return regelingenForRelatedPersons;
 }
 

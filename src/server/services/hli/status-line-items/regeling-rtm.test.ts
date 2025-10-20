@@ -515,11 +515,9 @@ describe('Aanvrager is ontvanger', () => {
       bsnAanvrager: ONTVANGER_ID,
     });
     const regelingen = transformRegelingenForFrontend(aanvragen);
+    expect(regelingen.length).toBe(1);
 
-    const expectedRegelingenAmount = 2;
-    expect(regelingen.length).toBe(expectedRegelingenAmount);
-
-    const expectedRegeling = {
+    expect(regelingen[0]).toMatchObject({
       dateDecision: RTM_1_AANVRAAG.datumBesluit,
       dateEnd: RTM_1_AANVRAAG.datumEindeGeldigheid,
       dateStart: RTM_1_AANVRAAG.datumIngangGeldigheid,
@@ -529,8 +527,8 @@ describe('Aanvrager is ontvanger', () => {
       id: '1',
       isActual: true,
       title: 'Regeling Tegemoetkoming Meerkosten',
-    };
-    const expectedSteps = [
+    });
+    expect(regelingen[0].steps).toMatchObject([
       {
         id: 'status-step-1',
         status: 'Aanvraag',
@@ -564,90 +562,6 @@ describe('Aanvrager is ontvanger', () => {
         isVisible: true,
         documents: [],
         description: descriptions.inactiveEindeRecht,
-      },
-    ];
-
-    expect(regelingen[0]).toMatchObject(expectedRegeling);
-    expect(regelingen[0].steps).toMatchObject(expectedSteps);
-
-    expect(regelingen[1]).toMatchObject({
-      betrokkenen: '999999999 - Flex, 222222222 - Flex',
-      dateDecision: RTM_1_AANVRAAG.datumBesluit,
-      dateEnd: RTM_1_AANVRAAG.datumEindeGeldigheid,
-      dateStart: RTM_1_AANVRAAG.datumIngangGeldigheid,
-      decision: 'toegewezen',
-      displayStatus: 'In behandeling genomen',
-      documents: [],
-      id: '1',
-      isActual: true,
-      link: {
-        title: 'Meer informatie',
-        to: '/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/1',
-      },
-      title: 'Regeling Tegemoetkoming Meerkosten',
-    });
-    expect(regelingen[1].steps).toMatchObject([
-      {
-        datePublished: RTM_1_AANVRAAG.datumBesluit,
-        description: '',
-        documents: [],
-        id: 'status-step-1',
-        isActive: true,
-        isChecked: false,
-        isVisible: true,
-        status: 'Aanvraag',
-      },
-      {
-        datePublished: RTM_1_AANVRAAG.datumBesluit,
-        description: descriptions.inBehandelingVoorMeerdereBetrokkenen,
-        documents: [
-          {
-            title: 'AV-RTM Info aan klant GGD',
-          },
-        ],
-        id: 'status-step-2',
-        isActive: true,
-        isChecked: false,
-        isVisible: true,
-        status: 'In behandeling genomen',
-      },
-    ]);
-  });
-
-  test('Single Aanvraag afgewezen', () => {
-    const regelingen = transformRegelingenForFrontend(
-      attachIDs([RTM_1_AFWIJZING])
-    );
-
-    expect(regelingen.length).toBe(1);
-    const regeling = regelingen[0];
-
-    expect(regeling).toMatchObject({
-      dateDecision: RTM_1_AFWIJZING.datumBesluit,
-      dateEnd: null,
-      dateStart: RTM_1_AFWIJZING.datumIngangGeldigheid,
-      decision: RTM_1_AFWIJZING.resultaat,
-      displayStatus: 'Afgewezen',
-      documents: [],
-      id: '1',
-      isActual: RTM_1_AFWIJZING.isActueel,
-      title: RTM_1_AFWIJZING.titel,
-    });
-
-    expect(regeling.steps).toMatchObject([
-      {
-        id: 'status-step-1',
-        datePublished: RTM_1_AFWIJZING.datumBesluit,
-        description: descriptions.afgewezen,
-        documents: [
-          {
-            title: 'AV-ALG Besluit Afwijzing',
-          },
-        ],
-        isActive: true,
-        isChecked: true,
-        isVisible: true,
-        status: 'Besluit',
       },
     ]);
   });
@@ -1553,6 +1467,44 @@ describe('Ontvanger but aanvragen made by someone else', () => {
   });
 });
 
+test('Single Aanvraag afgewezen results in orphaned regeling', () => {
+  const regelingen = transformRegelingenForFrontend(
+    attachIDs([RTM_1_AFWIJZING])
+  );
+
+  expect(regelingen.length).toBe(1);
+  const regeling = regelingen[0];
+
+  expect(regeling).toMatchObject({
+    dateDecision: RTM_1_AFWIJZING.datumBesluit,
+    dateEnd: null,
+    dateStart: RTM_1_AFWIJZING.datumIngangGeldigheid,
+    decision: RTM_1_AFWIJZING.resultaat,
+    displayStatus: 'Afgewezen',
+    documents: [],
+    id: '1',
+    isActual: RTM_1_AFWIJZING.isActueel,
+    title: RTM_1_AFWIJZING.titel,
+  });
+
+  expect(regeling.steps).toMatchObject([
+    {
+      id: 'status-step-1',
+      datePublished: RTM_1_AFWIJZING.datumBesluit,
+      description: descriptions.afgewezen,
+      documents: [
+        {
+          title: 'AV-ALG Besluit Afwijzing',
+        },
+      ],
+      isActive: true,
+      isChecked: false,
+      isVisible: true,
+      status: 'Besluit',
+    },
+  ]);
+});
+
 describe('Mixed betrokkenen', () => {
   test('Migratie into toegewezen with different but overlapping betrokkenen', () => {
     const betrokkeneAanvrager: Betrokkene = {
@@ -1589,6 +1541,24 @@ describe('Mixed betrokkenen', () => {
       { status: 'In behandeling genomen', isChecked: false, isActive: true },
       { status: 'Aanvraag', isChecked: false, isActive: true },
       { status: 'In behandeling genomen', isChecked: false, isActive: true },
+    ]);
+  });
+
+  test('Afgewezen aanvraag that results in orphaned regeling', () => {
+    const betrokkeneOther: Betrokkene = { bsn: '111111111' };
+
+    const aanvragen = attachIDs([
+      RTM_1_AANVRAAG,
+      replaceBetrokkenen(RTM_1_AANVRAAG, [betrokkeneOther]),
+      RTM_2_TOEGEWEZEN,
+      RTM_1_AFWIJZING,
+    ]);
+    const regelingen = transformRegelingenForFrontend(aanvragen);
+    expect(regelingen.length).toBe(3);
+    expect(regelingen.map((r) => r.betrokkenen)).toStrictEqual([
+      '999999999 - Flex',
+      '111111111 - Flex',
+      '',
     ]);
   });
 });
