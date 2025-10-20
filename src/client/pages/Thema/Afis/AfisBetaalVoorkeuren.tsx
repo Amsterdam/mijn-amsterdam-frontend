@@ -1,12 +1,14 @@
 import { Grid, Heading, Link, Paragraph } from '@amsterdam/design-system-react';
 
-import { AfisEmandateStub } from './Afis-thema-config';
 import styles from './AfisBetaalVoorkeuren.module.scss';
 import {
   useAfisBetaalVoorkeurenData,
   useAfisThemaData,
 } from './useAfisThemaData.hook';
-import { AfisBusinessPartnerDetailsTransformed } from '../../../../server/services/afis/afis-types';
+import {
+  AfisBusinessPartnerDetailsTransformed,
+  type AfisEMandateFrontend,
+} from '../../../../server/services/afis/afis-types';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 import { entries } from '../../../../universal/helpers/utils';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
@@ -108,7 +110,6 @@ export function AfisBetaalVoorkeuren() {
 
   const eMandateTables = FeatureToggle.afisEMandatesActive && (
     <ThemaPaginaTable<AfisEMandateFrontend>
-      className={eMandateTableConfig.className}
       displayProps={eMandateTableConfig.displayProps}
       maxItems={-1}
       title={eMandateTableConfig.title}
@@ -220,14 +221,14 @@ export function AfisBetaalVoorkeuren() {
       title={title}
       isError={
         isThemaPaginaError ||
-        (hasBusinessPartnerDetailsError && hasEmandatesError)
+        (hasBusinessPartnerDetailsError && hasEMandatesError)
       }
       isPartialError={
         hasFailedFullNameDependency ||
         hasFailedPhoneDependency ||
         hasFailedPhoneDependency ||
         hasBusinessPartnerDetailsError ||
-        hasEmandatesError
+        hasEMandatesError
       }
       errorAlertContent={errorAlertContent}
       isLoading={isLoadingAllAPis}

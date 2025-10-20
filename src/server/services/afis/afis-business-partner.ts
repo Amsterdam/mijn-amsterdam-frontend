@@ -25,6 +25,7 @@ import {
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
+  type ApiResponse,
 } from '../../../universal/helpers/api';
 import { getFullAddress } from '../../../universal/helpers/brp';
 import { DataRequestConfig } from '../../config/source-api';
@@ -98,7 +99,9 @@ function transformBusinessPartnerFullNameResponse(
   return null;
 }
 
-async function fetchBusinessPartnerFullName(businessPartnerId: BusinessPartnerId): Promise<ApiResponse<AfisBusinessPartnerDetails | null>> {
+async function fetchBusinessPartnerFullName(
+  businessPartnerId: BusinessPartnerId
+): Promise<ApiResponse<AfisBusinessPartnerDetails | null>> {
   const additionalConfig: DataRequestConfig = {
     params: getRequestParamsFromQueryString(
       `?$filter=BusinessPartner eq '${businessPartnerId}'&$select=BusinessPartnerFullName`
@@ -175,7 +178,7 @@ async function fetchEmail(addressId: AfisBusinessPartnerAddress['id']) {
 export async function fetchAfisBusinessPartnerDetails(
   payload: BusinessPartnerIdPayload
 ): Promise<ApiSuccessResponse<AfisBusinessPartnerDetailsTransformed>> {
-  const businessPartnerId:BusinessPartnerId = payload.businessPartnerId;
+  const businessPartnerId: BusinessPartnerId = payload.businessPartnerId;
   const fullNameRequest = fetchBusinessPartnerFullName(businessPartnerId);
   const addressRequest = fetchBusinessPartnerAddress(businessPartnerId);
 
@@ -229,7 +232,6 @@ export async function fetchAfisBusinessPartnerDetails(
 }
 
 export async function createBusinessPartnerBankAccount(
-  requestID: RequestID,
   payload: AfisBusinessPartnerBankPayload
 ) {
   const iban = ibantools.extractIBAN(payload.iban);
@@ -267,15 +269,9 @@ export async function createBusinessPartnerBankAccount(
     data: createBankAccountPayload,
   };
 
-  const businessPartnerRequestConfig = await getAfisApiConfig(
-    additionalConfig,
-    requestID
-  );
+  const businessPartnerRequestConfig = await getAfisApiConfig(additionalConfig);
 
-  return requestData<AfisBusinessPartnerEmail>(
-    businessPartnerRequestConfig,
-    requestID
-  );
+  return requestData<AfisBusinessPartnerEmail>(businessPartnerRequestConfig);
 }
 
 function transformBusinessPartnerBankAccounts(
@@ -285,7 +281,6 @@ function transformBusinessPartnerBankAccounts(
 }
 
 export async function fetchBusinessPartnerBankAccounts(
-  requestID: RequestID,
   businessPartnerId: BusinessPartnerId
 ) {
   const additionalConfig: DataRequestConfig = {
@@ -295,13 +290,9 @@ export async function fetchBusinessPartnerBankAccounts(
     transformResponse: transformBusinessPartnerBankAccounts,
   };
 
-  const businessPartnerRequestConfig = await getAfisApiConfig(
-    additionalConfig,
-    requestID
-  );
+  const businessPartnerRequestConfig = await getAfisApiConfig(additionalConfig);
 
   return requestData<AfisBusinessPartnerBankAccount[]>(
-    businessPartnerRequestConfig,
-    requestID
+    businessPartnerRequestConfig
   );
 }

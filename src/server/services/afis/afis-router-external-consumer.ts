@@ -1,16 +1,18 @@
-import express, { Request, Response } from 'express';
+import { HttpStatusCode } from 'axios';
+import { Request, Response } from 'express';
 
 import { createAfisEMandate } from './afis-e-mandates';
 import {
   EMandateSignRequestNotificationPayload,
   EMandateSignRequestPayload,
 } from './afis-types';
-import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import { ExternalConsumerEndpoints } from '../../routing/bff-routes';
+import { createBFFRouter } from '../../routing/route-helpers';
 import { captureMessage } from '../monitoring';
 
-const routerPrivateNetwork = express.Router();
-routerPrivateNetwork.BFF_ID = 'afis-external-consumer-private-network';
+const routerPrivateNetwork = createBFFRouter({
+  id: 'afis-external-consumer-private-network',
+});
 
 function validateAndExtractPayload(xmlPayload: string) {
   /**
@@ -58,16 +60,11 @@ routerPrivateNetwork.post(
     };
 
     // TODO: Figure out if we can actually create the eMandate from this event.
-    const createEmandateResponse = await createAfisEMandate(
-      res.locals.requestID,
-      signRequestPayload
-    );
+    const createEmandateResponse = await createAfisEMandate(signRequestPayload);
 
     const isOK = createEmandateResponse.status === 'OK';
 
-    res.status(
-      isOK ? HTTP_STATUS_CODES.OK : HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR
-    );
+    res.status(isOK ? HttpStatusCode.Ok : HttpStatusCode.InternalServerError);
 
     if (!isOK && createEmandateResponse.status === 'ERROR') {
       // TODO: Add this message to observability. We need to know be notified when this happens.

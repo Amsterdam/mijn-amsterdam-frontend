@@ -13,6 +13,7 @@ import {
   themaId,
   routeConfig,
 } from './Afis-thema-config';
+import { AfisEMandateActionUrls } from './AfisEmandateActionButtons';
 import {
   AfisBusinessPartnerDetailsTransformed,
   AfisThemaResponse,
