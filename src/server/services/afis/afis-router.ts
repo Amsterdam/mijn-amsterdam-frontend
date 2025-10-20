@@ -5,7 +5,7 @@ import { fetchAfisDocument } from './afis-documents';
 import {
   fetchEMandates,
   changeEMandateStatus,
-  handleEmandateLifeTimeUpdate,
+  handleEmandateLifetimeUpdate,
   fetchEmandateSignRequestRedirectUrlFromPaymentProvider,
 } from './afis-e-mandates';
 import {
@@ -108,7 +108,7 @@ attachDocumentDownloadRoute(
    * Updates the end date of an E-mandate.
    */
   type QueryPayload = EMandateUpdatePayload;
-  type ServiceReturnType = ReturnType<typeof handleEmandateLifeTimeUpdate>;
+  type ServiceReturnType = ReturnType<typeof handleEmandateLifetimeUpdate>;
 
   routerProtected.post(
     routes.protected.AFIS_EMANDATES_UPDATE_LIFETIME,
@@ -116,7 +116,7 @@ attachDocumentDownloadRoute(
     handleAfisRequestWithEncryptedPayloadQueryParam<
       QueryPayload,
       ServiceReturnType
-    >(handleEmandateLifeTimeUpdate)
+    >(handleEmandateLifetimeUpdate)
   );
 }
 

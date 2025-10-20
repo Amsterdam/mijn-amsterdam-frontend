@@ -32,7 +32,7 @@ module.exports = [
             // A mock push notification to simulate a real-world scenario.
             // Simulate a delay to mimic real-world processing time
             try {
-              await new Promise((resolve) => setTimeout(resolve, 4000));
+              await new Promise((resolve) => setTimeout(resolve, 8000));
               await axios({
                 method: 'POST',
                 url: 'http://localhost:5000/private/api/v1/services/afis/e-mandates/sign-request-status-notify',

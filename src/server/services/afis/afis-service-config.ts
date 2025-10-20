@@ -6,7 +6,7 @@ export const featureToggle = {
       isEnabled: !IS_PRODUCTION,
     },
   },
-};
+} as const;
 
 export const routes = {
   private: {
@@ -27,4 +27,4 @@ export const routes = {
     AFIS_FACTUREN: '/services/afis/facturen/:state',
     AFIS_DOCUMENT_DOWNLOAD: '/services/afis/facturen/document',
   },
-};
+} as const;

@@ -164,13 +164,16 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
     SndDebtorId: creditor.refId,
   };
 
-  const eMandateExistsResponse = await fetchAndCheckEmandateExists(
+  const eMandateIdResponse = await fetchEmandateIdByCreditorRefId(
     payload.businessPartnerId,
     creditor.refId
   );
 
-  const response = await (eMandateExistsResponse.content === true
-    ? updateAfisEMandate(payloadFinal)
+  const response = await (eMandateIdResponse.content
+    ? updateAfisEMandate({
+        ...payloadFinal,
+        IMandateId: eMandateIdResponse.content,
+      })
     : createAfisEMandate(payloadFinal));
 
   if (response.status !== 'OK') {
@@ -420,10 +423,10 @@ function transformEMandatesResponse(
   );
 }
 
-export async function fetchAndCheckEmandateExists(
+export async function fetchEmandateIdByCreditorRefId(
   businessPartnerId: BusinessPartnerId,
   creditorRefID: AfisEMandateCreditor['refId']
-): Promise<ApiResponse<boolean>> {
+): Promise<ApiResponse<AfisEMandateSource['IMandateId'] | null>> {
   const config = await getAfisApiConfig({
     formatUrl: ({ url }) => {
       return `${url}/Mandate/ZGW_FI_MANDATE_SRV_01/Mandate_readSet?$filter=SndId eq '${businessPartnerId}'`;
@@ -431,8 +434,9 @@ export async function fetchAndCheckEmandateExists(
     transformResponse: (responseData) => {
       const sourceMandates =
         getFeedEntryProperties<AfisEMandateSource>(responseData);
-      return sourceMandates.some(
-        (mandate) => mandate.SndDebtorId === creditorRefID
+      return (
+        sourceMandates.find((mandate) => mandate.SndDebtorId === creditorRefID)
+          ?.IMandateId ?? null
       );
     },
 
@@ -612,7 +616,7 @@ export async function changeEMandateStatus(
   return updateAfisEMandate(eMandateStatusChangePayload, transformResponse);
 }
 
-export async function handleEmandateLifeTimeUpdate(
+export async function handleEmandateLifetimeUpdate(
   eMandateStatusChangePayload: EMandateUpdatePayload,
   _authProfile: AuthProfile,
   req: Request
@@ -665,7 +669,7 @@ export const forTesting = {
   getSignRequestApiUrl,
   getStatusChangeApiUrl,
   getUpdateApiUrl,
-  handleEmandateLifeTimeUpdate,
+  handleEmandateLifeTimeUpdate: handleEmandateLifetimeUpdate,
   transformEmandateSignRequestStatus,
   transformEMandateSource,
   transformEMandatesRedirectUrlResponse,

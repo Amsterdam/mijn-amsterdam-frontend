@@ -82,7 +82,9 @@ export function useAfisEMandatesData() {
     generateApiUrl(businessPartnerIdEncrypted, 'AFIS_EMANDATES')
   );
 
-  const eMandates = (eMandatesApiResponse?.content ?? []).map((eMandate) => {
+  const EMandatesSource = eMandatesApiResponse?.content ?? [];
+
+  const eMandates = EMandatesSource.map((eMandate) => {
     return {
       ...eMandate,
       detailLinkComponent: (
@@ -181,15 +183,16 @@ export function useEmandateApis(eMandate: AfisEMandateFrontend) {
     eMandate?.lifetimeUpdateUrl,
     {
       fetchImmediately: false,
-      sendRequest: async (url) => {
-        return sendFormPostRequest<AfisEMandateUpdatePayloadFrontend>(url).then(
-          (response) => {
-            if (response.content) {
-              optimisticUpdateContent(eMandate.id, response.content);
-            }
-            return response;
+      sendRequest: async (url, init) => {
+        return sendFormPostRequest<AfisEMandateUpdatePayloadFrontend>(
+          url,
+          init
+        ).then((response) => {
+          if (response.content) {
+            optimisticUpdateContent(eMandate.id, response.content);
           }
-        );
+          return response;
+        });
       },
     }
   );
@@ -246,8 +249,8 @@ export function useEmandateApis(eMandate: AfisEMandateFrontend) {
     statusChangeApi,
     lifetimeUpdateApi: {
       ...lifetimeUpdateApi,
-      update(endDate: string) {
-        lifetimeUpdateApi.fetch({ payload: { endDate } });
+      update(dateValidTo: string) {
+        lifetimeUpdateApi.fetch({ payload: { dateValidTo } });
       },
     },
     isErrorVisible,

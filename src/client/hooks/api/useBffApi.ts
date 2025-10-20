@@ -54,10 +54,10 @@ async function handleResponse<T>(
   }
 }
 
-export async function sendFormPostRequest<T extends any, P extends RecordStr2>(
-  url: string | URL,
-  init?: RequestInitWithPayload<P>
-): ApiFetchResponse<T> {
+export async function sendFormPostRequest<
+  T extends any,
+  P extends RecordStr2 = RecordStr2,
+>(url: string | URL, init?: RequestInitWithPayload<P>): ApiFetchResponse<T> {
   return handleResponse<T>(() =>
     fetch(url, {
       method: 'POST',
@@ -71,10 +71,10 @@ export async function sendFormPostRequest<T extends any, P extends RecordStr2>(
   );
 }
 
-export async function sendJSONPostRequest<T extends any, P extends RecordStr2>(
-  url: string | URL,
-  init?: RequestInitWithPayload<P>
-): ApiFetchResponse<T> {
+export async function sendJSONPostRequest<
+  T extends any,
+  P extends RecordStr2 = RecordStr2,
+>(url: string | URL, init?: RequestInitWithPayload<P>): ApiFetchResponse<T> {
   return handleResponse<T>(() =>
     fetch(url, {
       method: 'POST',
@@ -267,12 +267,12 @@ export function useBffApi<
   );
 
   const optimisticUpdateContent = useCallback(
-    (payload: Partial<T>) => {
+    (content: T) => {
       if (rState.data?.content && rState.data.status === 'OK') {
         setApiState({
           data: {
             ...rState.data,
-            content: { ...rState.data?.content, ...payload },
+            content,
           },
         });
       }

@@ -9,6 +9,7 @@ import {
 import { addDays, addYears } from 'date-fns';
 
 import { EMANDATE_ENDDATE_INDICATOR } from './Afis-thema-config';
+import type { useEmandateApis } from './useAfisEmandateApi';
 import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types';
 import { MaRouterLink } from '../../../components/MaLink/MaLink';
 import { Modal } from '../../../components/Modal/Modal';
@@ -28,7 +29,7 @@ function DateAdjustModal({
   onSubmit,
 }: DateAdjustModalProps) {
   const minDate = addDays(new Date(), 1).toISOString().split('T')[0]; // Set minimum date to tomorrow.
-  const currentDate =
+  const dateValidTo =
     eMandate.dateValidTo?.includes(EMANDATE_ENDDATE_INDICATOR) ||
     !eMandate.dateValidTo
       ? addYears(new Date(), 1).toISOString().split('T')[0]
@@ -68,10 +69,10 @@ function DateAdjustModal({
         </Paragraph>
         <form id="date-adjust-form" onSubmit={onSubmit}>
           <DateInput
-            name="endDate"
+            name="dateValidTo"
             type="date"
             min={minDate}
-            defaultValue={currentDate}
+            defaultValue={dateValidTo}
           />
         </form>
       </>
@@ -84,13 +85,13 @@ export function DateAdjust({
   lifetimeUpdateApi,
 }: {
   eMandate: AfisEMandateFrontend;
-  lifetimeUpdateApi: ReturnType<typeof useAfisMandateLifeTimeUpdateApi>;
+  lifetimeUpdateApi: ReturnType<typeof useEmandateApis>['lifetimeUpdateApi'];
 }) {
   const [isDateAdjustModalActive, setDateAdjustModal] = useState(false);
 
   return (
     <div>
-      {lifetimeUpdateApi.isUpdating ? (
+      {lifetimeUpdateApi.isLoading ? (
         <Spinner />
       ) : (
         eMandate.dateValidToFormatted
@@ -113,7 +114,7 @@ export function DateAdjust({
           event.preventDefault();
           const formdata = new FormData(event.currentTarget);
           setDateAdjustModal(false);
-          lifetimeUpdateApi.update(formdata.get('endDate') as string);
+          lifetimeUpdateApi.update(formdata.get('dateValidTo') as string);
         }}
       />
     </div>
