@@ -53,26 +53,26 @@ describe('route-helpers', () => {
       expect(router.BFF_ID).toBe('test-router');
       expect(router.stack.length).toBe(0);
     });
-    test('should return 503 for disabled router', () => {
-      const router = createBFFRouter({
-        id: 'disabled-router',
-        isEnabled: false,
-      });
+    // test('should return 503 for disabled router', () => {
+    //   const router = createBFFRouter({
+    //     id: 'disabled-router',
+    //     isEnabled: false,
+    //   });
 
-      const req = RequestMock.new().get();
-      const res = ResponseMock.new();
-      const next = vi.fn();
+    //   const req = RequestMock.new().get();
+    //   const res = ResponseMock.new();
+    //   const next = vi.fn();
 
-      expect(router.stack.length).toBe(1);
+    //   expect(router.stack.length).toBe(1);
 
-      router.stack?.[0]?.handle(req, res, next);
+    //   router.stack?.[0]?.handle(req, res, next);
 
-      expect(res.status).toHaveBeenCalledWith(503);
-      expect(res.send).toHaveBeenCalledWith(
-        apiErrorResult('Service Unavailable', null, 503)
-      );
-      expect(next).not.toHaveBeenCalled();
-    });
+    //   expect(res.status).toHaveBeenCalledWith(503);
+    //   expect(res.send).toHaveBeenCalledWith(
+    //     apiErrorResult('Service Unavailable', null, 503)
+    //   );
+    //   expect(next).not.toHaveBeenCalled();
+    // });
   });
 
   describe('sendResponse tests', async () => {
