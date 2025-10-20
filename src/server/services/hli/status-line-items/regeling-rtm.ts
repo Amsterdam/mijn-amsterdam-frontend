@@ -151,26 +151,16 @@ function mapAanvragenPerBetrokkenen(
     };
   });
 
+  const aanvragenMap: AanvragenPerBetrokkene = { ontvanger: [], orphaned: [] };
+
   const betrokkenenKeys = aanvragen
     .filter((a) => a.betrokkenen.length > 0)
     .map((a) => a.betrokkenen.join(','));
-  const hasSamebetrokkenen = new Set(betrokkenenKeys).size === 1;
 
-  const hasSingleBetrokkene =
-    new Set(aanvragen.flatMap((a) => a.betrokkenen)).size === 1;
+  const hasAllAanvragenIdenticalBetrokkene =
+    new Set(betrokkenenKeys).size === 1;
 
-  const hasOnlyRTMDeel1Afgewezen = aanvragen.every(
-    (a) => isRTMDeel1(a) && a.resultaat === 'afgewezen'
-  );
-
-  const aanvragenMap: AanvragenPerBetrokkene = { ontvanger: [], orphaned: [] };
-
-  if (hasOnlyRTMDeel1Afgewezen) {
-    aanvragenMap.orphaned.push(...aanvragen);
-    return aanvragenMap;
-  }
-
-  if (hasSamebetrokkenen) {
+  if (hasAllAanvragenIdenticalBetrokkene) {
     if (betrokkenenKeys[0].includes(bsnOntvanger)) {
       aanvragenMap.ontvanger = aanvragen;
       return aanvragenMap;
@@ -185,7 +175,7 @@ function mapAanvragenPerBetrokkenen(
     if (!betrokkenen.length) {
       if (isRTMDeel2(aanvraag)) {
         aanvragenMap.ontvanger.push(aanvraag);
-      } else if (!hasSingleBetrokkene) {
+      } else {
         aanvragenMap.orphaned.push(aanvraag);
       }
     } else {
