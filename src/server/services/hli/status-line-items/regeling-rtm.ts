@@ -172,7 +172,6 @@ function mapAanvragenPerBetrokkenen(
     return aanvragenMap;
   }
 
-  // Copy/distribute aanvragen for every individual betrokkene.
   for (const aanvraag of aanvragen) {
     const betrokkenen = aanvraag.betrokkenen;
     if (!betrokkenen.length) {
@@ -182,6 +181,7 @@ function mapAanvragenPerBetrokkenen(
         aanvragenMap.orphaned.push(aanvraag);
       }
     } else {
+      // Copy/distribute aanvragen for every individual betrokkene.
       for (const bsn of betrokkenen) {
         if (bsn === bsnOntvanger) {
           aanvragenMap.ontvanger.push(aanvraag);
