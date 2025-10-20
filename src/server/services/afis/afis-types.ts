@@ -3,17 +3,6 @@ import type { SetNonNullableDeep } from 'type-fest';
 
 import { LinkProps } from '../../../universal/types/App.types';
 
-export type AfisApiFeedResponseSource<T> = {
-  feed?: {
-    count?: number;
-    entry?: Array<{
-      content?: {
-        properties?: T;
-      };
-    }>;
-  };
-};
-
 export type XmlNullable<T extends Record<string, unknown>> = {
   [key in keyof T]: { '@null': true } | T[key];
 };
@@ -189,9 +178,6 @@ export type AfisFactuurPropertiesSource = {
   SEPAMandate: string;
 };
 
-export type AfisInvoicesSource =
-  AfisApiFeedResponseSource<AfisFactuurPropertiesSource>;
-
 export type AfisFactuurStatus =
   | 'openstaand'
   | 'automatische-incasso'
@@ -255,33 +241,6 @@ export type AfisInvoicesPartialPaymentsSource = AfisApiFeedResponseSource<
 // =========================
 export type AfisFactuurDeelbetalingen = {
   [factuurNummer: string]: Decimal;
-};
-
-export type AccountingDocumentType = string;
-
-
-export type AfisFactuurState = 'open' | 'afgehandeld' | 'overgedragen';
-
-export type AfisFacturenResponse = {
-  count: number;
-  facturen: AfisFactuur[];
-};
-
-export type AfisFacturenByStateResponse = {
-  [key in AfisFactuurState]?: AfisFacturenResponse | null;
-};
-
-export type AfisThemaResponse = {
-  isKnown: boolean;
-  businessPartnerIdEncrypted: string | null;
-  businessPartnerId?: BusinessPartnerId | null;
-  facturen?: AfisFacturenByStateResponse | null;
-};
-
-export type AfisFacturenParams = {
-  state: AfisFactuurState | 'deelbetalingen';
-  businessPartnerID: BusinessPartnerId;
-  top?: string;
 };
 
 // Documents / PDF's
@@ -533,8 +492,4 @@ export type POMSignRequestUrlPayload = {
 export type AfisEMandateSignRequestStatusResponse = {
   status: string;
   code: POMSignRequestStatusCode;
-};
-
-export type XmlNullable<T extends Record<string, unknown>> = {
-  [key in keyof T]: { '@null': true } | T[key];
 };

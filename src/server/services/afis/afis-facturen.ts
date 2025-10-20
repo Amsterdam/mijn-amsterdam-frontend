@@ -4,6 +4,7 @@ import Decimal from 'decimal.js';
 import { firstBy } from 'thenby';
 
 import { getAfisApiConfig, getFeedEntryProperties } from './afis-helpers';
+import { routes } from './afis-service-config';
 import {
   featureToggle,
   routeConfig,
@@ -31,7 +32,6 @@ import {
   getRequestParamsFromQueryString,
   requestData,
 } from '../../helpers/source-api-request';
-import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureMessage, trackEvent } from '../monitoring';
 import type {
@@ -233,7 +233,7 @@ function transformFactuur(
   const status = determineFactuurStatus(invoice, amountPayed, hasDeelbetaling);
 
   const documentDownloadLink = factuurDocumentIdEncrypted
-    ? generateFullApiUrlBFF(BffEndpoints.AFIS_DOCUMENT_DOWNLOAD, [
+    ? generateFullApiUrlBFF(routes.protected.AFIS_DOCUMENT_DOWNLOAD, [
         { id: factuurDocumentIdEncrypted },
       ])
     : null;

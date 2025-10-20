@@ -34,13 +34,6 @@ export function setAdHocDependencyRequestCacheTtlMs(
   }, RESET_AD_HOC_DEPENDENCY_REQUEST_CACHE_TTL_TIMEOUT_MS);
 }
 
-export type ApiConfigOptions = {
-  /** If true the callstack function names and api config name be
-   * will be added to cacheKey_UNSAFE for extra security.
-   * If set to `false` you have to be EXTRA CAREFUL with the choice for a cacheKey_UNSAFE unique to the visitor!!! */
-  useApiConfigBasedCallstackCacheKeyTransform?: boolean;
-};
-
 export interface DataRequestConfig extends AxiosRequestConfig {
   cacheTimeout?: number;
   cancelTimeout?: number;

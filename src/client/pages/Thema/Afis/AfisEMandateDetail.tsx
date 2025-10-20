@@ -19,7 +19,7 @@ function EMandate({ eMandate }: EMandateProps) {
   const {
     redirectUrlApi,
     statusChangeApi,
-    eMandateUpdateApi,
+    lifetimeUpdateApi,
     isErrorVisible,
     hideError,
     lastActiveApi,
@@ -47,9 +47,10 @@ function EMandate({ eMandate }: EMandateProps) {
             {lastActiveApi === 'statusChangeApi' && statusChangeApi.isError && (
               <>Er is iets misgegaan bij het stopzetten.</>
             )}
-            {lastActiveApi === 'updateApi' && !!eMandateUpdateApi.error && (
-              <>Er is iets misgegaan bij het aanpassen van einddatum.</>
-            )}
+            {lastActiveApi === 'lifetimeUpdateApi' &&
+              !!lifetimeUpdateApi.isError && (
+                <>Er is iets misgegaan bij het aanpassen van einddatum.</>
+              )}
           </Paragraph>
         </Alert>
       )}
@@ -88,7 +89,7 @@ function EMandate({ eMandate }: EMandateProps) {
                 isVisible: eMandate.status === '1',
                 content: (
                   <DateAdjust
-                    eMandateUpdateApi={eMandateUpdateApi}
+                    lifetimeUpdateApi={lifetimeUpdateApi}
                     eMandate={eMandate}
                   />
                 ),

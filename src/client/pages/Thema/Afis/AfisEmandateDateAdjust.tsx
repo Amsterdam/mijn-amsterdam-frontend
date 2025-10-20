@@ -9,7 +9,6 @@ import {
 import { addDays, addYears } from 'date-fns';
 
 import { EMANDATE_ENDDATE_INDICATOR } from './Afis-thema-config';
-import type { useAfisEmandateUpdate } from './useAfisEmandateApi';
 import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types';
 import { MaRouterLink } from '../../../components/MaLink/MaLink';
 import { Modal } from '../../../components/Modal/Modal';
@@ -82,16 +81,16 @@ function DateAdjustModal({
 
 export function DateAdjust({
   eMandate,
-  eMandateUpdateApi,
+  lifetimeUpdateApi,
 }: {
   eMandate: AfisEMandateFrontend;
-  eMandateUpdateApi: ReturnType<typeof useAfisEmandateUpdate>;
+  lifetimeUpdateApi: ReturnType<typeof useAfisMandateLifeTimeUpdateApi>;
 }) {
   const [isDateAdjustModalActive, setDateAdjustModal] = useState(false);
 
   return (
     <div>
-      {eMandateUpdateApi.isUpdating ? (
+      {lifetimeUpdateApi.isUpdating ? (
         <Spinner />
       ) : (
         eMandate.dateValidToFormatted
@@ -114,7 +113,7 @@ export function DateAdjust({
           event.preventDefault();
           const formdata = new FormData(event.currentTarget);
           setDateAdjustModal(false);
-          eMandateUpdateApi.update(formdata.get('endDate') as string);
+          lifetimeUpdateApi.update(formdata.get('endDate') as string);
         }}
       />
     </div>

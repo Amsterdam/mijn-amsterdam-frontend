@@ -189,6 +189,7 @@ async function createAfisEMandate(payload: AfisEMandateCreatePayload) {
     formatUrl: ({ url }) => {
       return `${url}/CreateMandate/ZGW_FI_MANDATE_SRV_01/Mandate_createSet`;
     },
+    enableCache: false,
   });
 
   return requestData<AfisEMandateSource>(config);
@@ -202,6 +203,8 @@ async function updateAfisEMandate(
   const payloadFinal: AfisEMandateUpdatePayload = {
     ...payload,
   };
+
+  console.log('Updating e-mandate with payload:', payloadFinal);
 
   const config = await getAfisApiConfig({
     method: 'PUT',
@@ -287,13 +290,16 @@ function getUpdateApiUrl(
   sessionID: SessionID,
   afisEMandateSource: AfisEMandateSource
 ) {
-  const url = generateFullApiUrlBFF(routes.protected.AFIS_EMANDATES_UPDATE, [
-    {
-      payload: encryptPayloadAndSessionID(sessionID, {
-        IMandateId: afisEMandateSource.IMandateId.toString(),
-      }),
-    },
-  ]);
+  const url = generateFullApiUrlBFF(
+    routes.protected.AFIS_EMANDATES_UPDATE_LIFETIME,
+    [
+      {
+        payload: encryptPayloadAndSessionID(sessionID, {
+          IMandateId: afisEMandateSource.IMandateId.toString(),
+        }),
+      },
+    ]
+  );
 
   return url;
 }
@@ -636,6 +642,7 @@ export async function handleEmandateLifeTimeUpdate(
       HttpStatusCode.BadRequest
     );
   }
+
   function transformResponse() {
     const dateValidTo = payload.LifetimeTo || null;
     return {
@@ -643,6 +650,7 @@ export async function handleEmandateLifeTimeUpdate(
       dateValidToFormatted: getEmandateValidityDateFormatted(dateValidTo),
     };
   }
+
   return updateAfisEMandate(payload, transformResponse);
 }
 

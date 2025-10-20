@@ -24,16 +24,10 @@ describe('Config', () => {
     expect(config.headers!['X-Custom-Header']).toBe('CustomValue');
   });
   test('getApiConfig without cache key wrapper', () => {
-    const config = getApiConfig(
-      'ERFPACHT',
-      {
-        cacheKey_UNSAFE: 'foo',
-      },
-      {
-        useApiConfigBasedCallstackCacheKeyTransform: false,
-      }
-    );
+    const config = getApiConfig('ERFPACHT', {
+      cacheKey_UNSAFE: 'test',
+    });
 
-    expect(config.cacheKey_UNSAFE).toBe('foo');
+    expect(config.cacheKey_UNSAFE).toBe('ERFPACHT-test');
   });
 });

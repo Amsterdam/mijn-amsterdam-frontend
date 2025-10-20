@@ -9,7 +9,7 @@ import {
 } from './useAfisEmandateApi';
 import { useAfisThemaData } from './useAfisThemaData.hook';
 import {
-  AfisBusinessPartnerDetailsTransformed,
+  type AfisBusinessPartnerDetailsTransformed,
   type AfisEMandateFrontend,
 } from '../../../../server/services/afis/afis-types';
 import { entries } from '../../../../universal/helpers/utils';
@@ -23,7 +23,10 @@ import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 type AfisBusinessPartnerProps = {
-  businesspartner: AfisBusinessPartnerDetailsTransformed | null;
+  businesspartner: Omit<
+    AfisBusinessPartnerDetailsTransformed,
+    'address'
+  > | null;
   labels: DisplayProps<
     Omit<
       AfisBusinessPartnerDetailsTransformed,
@@ -95,6 +98,8 @@ export function AfisBetaalVoorkeuren() {
     businesspartnerDetails,
     businessPartnerDetailsLabels,
     hasBusinessPartnerDetailsError,
+    hasFailedFullNameDependency,
+    hasFailedPhoneDependency,
     isLoadingBusinessPartnerDetails,
   } = useAfisBetaalVoorkeurenData(businessPartnerIdEncrypted);
 
@@ -104,7 +109,7 @@ export function AfisBetaalVoorkeuren() {
     hasEMandatesError,
     isLoadingEMandates,
     statusNotification: { ibansPendingActivation },
-    refetchEMandates,
+    fetchEMandates,
   } = useAfisEMandatesData();
 
   const isLoadingAllAPis =
@@ -177,7 +182,7 @@ export function AfisBetaalVoorkeuren() {
         startCollapsed={featureToggle.afisEMandatesActive}
       />
       {!!ibansPendingActivation.length && (
-        <EmandateRefetchInterval fetch={refetchEMandates} />
+        <EmandateRefetchInterval fetch={fetchEMandates} />
       )}
       {eMandatesTable}
     </>

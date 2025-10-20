@@ -47,7 +47,7 @@ attachDocumentDownloadRoute(
     handleAfisRequestWithEncryptedPayloadQueryParam<
       QueryPayload,
       ServiceReturnType
-    >(fetchAfisBusinessPartnerDetails)
+    >(fetchAfisBusinessPartnerDetails, 'id')
   );
 }
 
@@ -111,7 +111,7 @@ attachDocumentDownloadRoute(
   type ServiceReturnType = ReturnType<typeof handleEmandateLifeTimeUpdate>;
 
   routerProtected.post(
-    routes.protected.AFIS_EMANDATES_UPDATE,
+    routes.protected.AFIS_EMANDATES_UPDATE_LIFETIME,
     express.urlencoded({ extended: true }),
     handleAfisRequestWithEncryptedPayloadQueryParam<
       QueryPayload,
@@ -149,7 +149,7 @@ routerPrivate.post(
   handleAfisEMandateSignRequestStatusNotification
 );
 
-export const afisExternalConsumerRouter = {
+export const afisRouter = {
   private: routerPrivate,
   protected: routerProtected,
 };

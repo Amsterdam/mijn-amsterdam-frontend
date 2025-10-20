@@ -28,7 +28,6 @@ import {
   sendFormPostRequest,
   sendGetRequest,
   useBffApi,
-  useBffApiStateStore,
 } from '../../../hooks/api/useBffApi';
 import { useSmallScreen } from '../../../hooks/media.hook';
 import { useSessionStorage } from '../../../hooks/storage.hook';
@@ -46,67 +45,23 @@ function generateApiUrl(
     : null;
 }
 
-export function optimisticEmandatesUpdate(
-  eMandate: AfisEMandateFrontend,
-  payload: Record<string, string>
-) {
-  return (eMandates: AfisEMandateFrontend[] | undefined) => {
-    if (!eMandates) {
-      return eMandates;
-    }
-    return eMandates.map((mandate) => {
-      if (mandate.id === eMandate?.id) {
-        return {
-          ...mandate,
-          ...payload,
-        };
-      }
-      return mandate;
-    });
-  };
-}
-
-export function useAfisEmandateUpdate(
-  businessPartnerIdEncrypted: string | null,
-  eMandate: AfisEMandateFrontend | null
-) {
-  const bffApiStateStore = useBffApiStateStore();
-  const {
-    fetch,
-    isLoading: isUpdating,
-    data,
-    ...rest
-  } = useBffApi<AfisEMandateUpdatePayloadFrontend>(
-    eMandate?.lifetimeUpdateUrl,
-    {
-      fetchImmediately: false,
-      sendRequest: sendFormPostRequest,
-    }
-  );
-
-  // TODO: Update the state so we can optimistically update the mandate in the list, use bffApiStateStore
-  //optimisticEmandatesUpdate(eMandate, eMandateUpdatePayload)
-  const url = generateApiUrl(businessPartnerIdEncrypted, 'AFIS_EMANDATES');
-  if (url && eMandate && data?.content) {
-    const eMandates = bffApiStateStore.get(url);
-    if (eMandates?.data?.content) {
-      bffApiStateStore.set(
-        url,
-        optimisticEmandatesUpdate(
-          eMandate,
-          data?.content
-        )(eMandates.data?.content)
-      );
-    }
+export function updateEmandateById(
+  id: AfisEMandateFrontend['id'],
+  payload: Partial<AfisEMandateFrontend>,
+  eMandates: AfisEMandateFrontend[] | undefined
+): AfisEMandateFrontend[] {
+  if (!eMandates) {
+    return eMandates ?? [];
   }
-
-  return {
-    update: async (dateValidTo: string) => {
-      fetch(eMandate?.lifetimeUpdateUrl, { payload: { dateValidTo } });
-    },
-    isUpdating,
-    ...rest,
-  };
+  return eMandates.map((mandate) => {
+    if (mandate.id === id) {
+      return {
+        ...mandate,
+        ...payload,
+      };
+    }
+    return mandate;
+  });
 }
 
 export function useAfisEMandatesData() {
@@ -120,7 +75,10 @@ export function useAfisEMandatesData() {
   const {
     isLoading,
     isError,
+    isDirty,
     data: eMandatesApiResponse,
+    fetch: fetchEMandates,
+    optimisticUpdateContent,
   } = useBffApi<AfisEMandateFrontend[]>(
     generateApiUrl(businessPartnerIdEncrypted, 'AFIS_EMANDATES')
   );
@@ -138,14 +96,6 @@ export function useAfisEMandatesData() {
           )}
         </>
       ),
-    };
-  });
-
-  const statusNotificationStorage = useEmandateStatusPendingStorage(eMandates);
-
-  const eMandates_ = eMandates.map((eMandate) => {
-    return {
-      ...eMandate,
       displayStatus: statusNotificationStorage.isPendingActivation(
         eMandate.creditorIBAN
       )
@@ -154,31 +104,40 @@ export function useAfisEMandatesData() {
     };
   });
 
+  const statusNotificationStorage = useEmandateStatusPendingStorage(eMandates);
+
   const title = 'E-Mandaat';
   const breadcrumbs = [
     ...useThemaBreadcrumbs(themaId),
     { to: routeConfig.betaalVoorkeuren.path, title: betaalVoorkeurenTitle },
   ];
   const { id } = useParams<{ id: AfisEMandateFrontend['id'] }>();
-  const eMandate = eMandates_.find((mandate) => mandate.id === id);
+  const eMandate = eMandates.find((mandate) => mandate.id === id);
 
   return {
     breadcrumbs,
     eMandate,
-    eMandates: eMandates_,
+    eMandates,
     eMandateTableConfig,
-    hasEMandatesError: !isError,
-    isLoadingEMandates: isLoading || !eMandatesApiResponse,
-    updateEmandate: (...rest: any) => {
-      console.log('updateEmandate', ...rest);
+    hasEMandatesError: isError,
+    isLoadingEMandates: isLoading || !isDirty,
+    optimisticUpdateContent: (
+      eMandateId: string,
+      payload: Partial<AfisEMandateFrontend>
+    ) => {
+      optimisticUpdateContent(
+        updateEmandateById(eMandateId, payload, eMandates)
+      );
     },
     statusNotification: statusNotificationStorage,
     title,
+    fetchEMandates,
   };
 }
 
 export function useEmandateApis(eMandate: AfisEMandateFrontend) {
-  const { updateEmandate, statusNotification } = useAfisEMandatesData();
+  const { optimisticUpdateContent, statusNotification } =
+    useAfisEMandatesData();
 
   const redirectUrlApi = useBffApi<AfisEMandateSignRequestResponse>(
     eMandate.signRequestUrl,
@@ -197,36 +156,41 @@ export function useEmandateApis(eMandate: AfisEMandateFrontend) {
     }
   );
 
-  const statusChangeApi = useDataApiV2<AfisEMandateStatusChangeResponse>(
+  const statusChangeApi = useBffApi<AfisEMandateStatusChangeResponse>(
     eMandate.statusChangeUrl,
     {
-      postpone: true,
-      fetcher: async (url) => {
+      fetchImmediately: false,
+      sendRequest: async (url) => {
         return sendGetRequest<AfisEMandateStatusChangeResponse>(url).then(
-          (eMandateUpdatePayload) => {
-            if (eMandate && eMandateUpdatePayload) {
-              updateEmandate(
-                optimisticEmandatesUpdate(eMandate, eMandateUpdatePayload),
-                {
-                  revalidate: false,
-                }
-              );
+          (response) => {
+            if (response.content) {
+              optimisticUpdateContent(eMandate.id, response.content);
             }
-            return eMandateUpdatePayload;
+            return response;
           }
         );
       },
     }
   );
 
-  const { businessPartnerIdEncrypted } = useAfisThemaData();
-
-  const eMandateUpdateApi = useAfisEmandateUpdate(
-    businessPartnerIdEncrypted,
-    eMandate
+  const lifetimeUpdateApi = useBffApi<AfisEMandateUpdatePayloadFrontend>(
+    eMandate?.lifetimeUpdateUrl,
+    {
+      fetchImmediately: false,
+      sendRequest: async (url) => {
+        return sendFormPostRequest<AfisEMandateUpdatePayloadFrontend>(url).then(
+          (response) => {
+            if (response.content) {
+              optimisticUpdateContent(eMandate.id, response.content);
+            }
+            return response;
+          }
+        );
+      },
+    }
   );
 
-  type ApiName = 'redirectUrlApi' | 'statusChangeApi' | 'updateApi';
+  type ApiName = 'redirectUrlApi' | 'statusChangeApi' | 'lifetimeUpdateApi';
 
   const [showError, setShowError] = useState(false);
   const [lastActiveApi, setLastActiveApi] = useState<ApiName | null>(null);
@@ -235,7 +199,7 @@ export function useEmandateApis(eMandate: AfisEMandateFrontend) {
     entries({
       redirectUrlApi: redirectUrlApi.isLoading,
       statusChangeApi: statusChangeApi.isLoading,
-      updateApi: eMandateUpdateApi.isUpdating,
+      lifetimeUpdateApi: lifetimeUpdateApi.isLoading,
     }).forEach(([apiName, isLoading]) => {
       if (isLoading) {
         setLastActiveApi(apiName);
@@ -244,23 +208,23 @@ export function useEmandateApis(eMandate: AfisEMandateFrontend) {
   }, [
     redirectUrlApi.isLoading,
     statusChangeApi.isLoading,
-    eMandateUpdateApi.isUpdating,
+    lifetimeUpdateApi.isLoading,
   ]);
 
   const isErrorVisible =
     showError &&
     !redirectUrlApi.isLoading &&
     !statusChangeApi.isLoading &&
-    !eMandateUpdateApi.isUpdating &&
+    !lifetimeUpdateApi.isLoading &&
     (redirectUrlApi.isError ||
       statusChangeApi.isError ||
-      !!eMandateUpdateApi.isError);
+      !!lifetimeUpdateApi.isError);
 
   useEffect(() => {
     entries({
       redirectUrlApi: redirectUrlApi.isError,
       statusChangeApi: statusChangeApi.isError,
-      updateApi: !!eMandateUpdateApi.isError,
+      lifetimeUpdateApi: lifetimeUpdateApi.isError,
     }).forEach(([apiName, isError]) => {
       if (apiName === lastActiveApi && isError) {
         setShowError(true);
@@ -270,13 +234,18 @@ export function useEmandateApis(eMandate: AfisEMandateFrontend) {
     redirectUrlApi.isError,
     statusChangeApi.isError,
     lastActiveApi,
-    eMandateUpdateApi.isError,
+    lifetimeUpdateApi.isError,
   ]);
 
   return {
     redirectUrlApi,
     statusChangeApi,
-    eMandateUpdateApi,
+    lifetimeUpdateApi: {
+      ...lifetimeUpdateApi,
+      update(endDate: string) {
+        lifetimeUpdateApi.fetch(undefined, { payload: { endDate } });
+      },
+    },
     isErrorVisible,
     lastActiveApi,
     hideError: () => {
@@ -300,11 +269,10 @@ export function useAfisBetaalVoorkeurenData(
 
   return {
     title: 'Betaalvoorkeuren',
-    businesspartnerDetails: businesspartnerDetailsApiResponse?.content,
+    businesspartnerDetails: businesspartnerDetailsApiResponse?.content ?? null,
     businessPartnerDetailsLabels,
     isLoadingBusinessPartnerDetails: api.isLoading,
     hasBusinessPartnerDetailsError: api.isError,
-    hasEmandatesError: false,
     hasFailedEmailDependency: hasFailedDependency(
       businesspartnerDetailsApiResponse,
       'email'
@@ -317,9 +285,6 @@ export function useAfisBetaalVoorkeurenData(
       businesspartnerDetailsApiResponse,
       'fullName'
     ),
-    eMandateTableConfig,
-    eMandates: [],
-    isLoadingEmandates: false,
   };
 }
 

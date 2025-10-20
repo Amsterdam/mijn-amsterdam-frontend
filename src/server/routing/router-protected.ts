@@ -13,6 +13,7 @@ import type { streamEndpointQueryParamKeys } from '../../universal/config/app';
 import { IS_PRODUCTION } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { setAdHocDependencyRequestCacheTtlMs } from '../config/source-api';
+import { afisRouter } from '../services/afis/afis-router';
 import { fetchBezwaarDocument } from '../services/bezwaren/bezwaren';
 import { handleFetchBezwaarDetail } from '../services/bezwaren/bezwaren-route-handlers';
 import { fetchLoodMetingDocument } from '../services/bodem/loodmetingen';
@@ -121,6 +122,7 @@ router.get(
 ////////////////////////////////////////////////////
 
 router.use(wmoRouter.protected);
+router.use(afisRouter.protected);
 
 // LLV Zorgned Doc download
 attachDocumentDownloadRoute(

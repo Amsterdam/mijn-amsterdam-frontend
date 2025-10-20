@@ -16,14 +16,14 @@ import {
   ApiResponse_DEPRECATED,
   type ApiResponse,
 } from '../../../universal/helpers/api';
-import { getAuth } from '../../auth/auth-helpers';
 import { AuthProfile } from '../../auth/auth-types';
 import {
   RequestWithRouteAndQueryParams,
   sendBadRequestInvalidInput,
   sendInternalServerError,
   sendResponse,
-  sendUnauthorized,
+  type RecordStr2,
+  type ResponseAuthenticated,
 } from '../../routing/route-helpers';
 import { captureException } from '../monitoring';
 import {
@@ -36,7 +36,7 @@ function isPostiveInt(str: string) {
 }
 
 type QueryParamsWithEncryptedPayload<
-  QuerParamsAdditional extends qs.ParsedQs = qs.ParsedQs,
+  QuerParamsAdditional extends RecordStr2 = RecordStr2,
   K extends string = string,
 > = {
   [key in K]: EncryptedPayloadAndSessionID;
@@ -44,7 +44,7 @@ type QueryParamsWithEncryptedPayload<
 
 export type RequestWithEncryptedPayloadParam<
   P extends ParamsDictionary,
-  Q extends qs.ParsedQs = QueryParamsWithEncryptedPayload,
+  Q extends RecordStr2 = QueryParamsWithEncryptedPayload,
 > = RequestWithRouteAndQueryParams<P, Q>;
 
 export interface AfisFacturenRouteParams extends ParamsDictionary {
@@ -93,32 +93,25 @@ export function handleAfisRequestWithEncryptedPayloadQueryParam<
   // Return the route handler (middleware) that will handle the request.
   return async function handleEMandateApiRequest(
     req: RequestWithEncryptedPayloadParam<RouteParams>,
-    res: Response
+    res: ResponseAuthenticated
   ) {
-    const authProfileAndToken = getAuth(req);
-
-    if (!authProfileAndToken) {
-      return sendUnauthorized(res);
-    }
-
     // Get the query parameter value for the encrypted payload.
     const payloadParamValue = req.query[payloadParamName];
 
     const decryptResult = decryptPayloadAndValidateSessionID<QueryPayload>(
       payloadParamValue,
-      authProfileAndToken
+      res.locals.authProfileAndToken
     );
-
     if (decryptResult.status === 'ERROR') {
       return sendResponse(res, decryptResult);
     }
 
-    const payloadDecrypted = decryptResult.content;
+    const payloadDecrypted = decryptResult.content.payload as QueryPayload;
 
     // Call the service method with the decrypted payload.
     const statusChangeResponse = await serviceMethod(
       payloadDecrypted,
-      authProfileAndToken.profile,
+      res.locals.authProfileAndToken.profile,
       req
     );
 

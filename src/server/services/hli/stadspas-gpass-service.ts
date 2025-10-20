@@ -129,24 +129,18 @@ export async function fetchStadspasSource(
   administratienummer: string,
   enableCache: boolean = true
 ): Promise<ApiResponse<StadspasDetailSource>> {
-  const dataRequestConfig = getApiConfig(
-    'GPASS',
-    {
-      formatUrl: ({ url }) => `${url}/rest/sales/v1/pas/${passNumber}`,
-      headers: getHeaders(administratienummer),
-      enableCache,
-      params: {
-        include_balance: true,
-      },
-      cacheKey_UNSAFE: createStadspasSourceCacheKey(
-        passNumber,
-        administratienummer
-      ),
+  const dataRequestConfig = getApiConfig('GPASS', {
+    formatUrl: ({ url }) => `${url}/rest/sales/v1/pas/${passNumber}`,
+    headers: getHeaders(administratienummer),
+    enableCache,
+    params: {
+      include_balance: true,
     },
-    {
-      useApiConfigBasedCallstackCacheKeyTransform: false,
-    }
-  );
+    cacheKey_UNSAFE: createStadspasSourceCacheKey(
+      passNumber,
+      administratienummer
+    ),
+  });
   return requestData<StadspasDetailSource>(dataRequestConfig);
 }
 
