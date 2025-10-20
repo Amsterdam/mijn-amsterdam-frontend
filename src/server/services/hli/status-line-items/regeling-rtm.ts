@@ -161,7 +161,10 @@ function mapAanvragenPerBetrokkenen(
     new Set(betrokkenenKeys).size === 1;
 
   if (hasAllAanvragenIdenticalBetrokkene) {
-    if (betrokkenenKeys[0].includes(bsnOntvanger)) {
+    const hasOntvanger = betrokkenenKeys.some((betrokkenen) =>
+      betrokkenen.includes(bsnOntvanger)
+    );
+    if (hasOntvanger) {
       aanvragenMap.ontvanger = aanvragen;
       return aanvragenMap;
     }
