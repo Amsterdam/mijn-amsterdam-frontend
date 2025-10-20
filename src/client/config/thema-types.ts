@@ -45,7 +45,7 @@ type PageConfig<T extends string> = {
   };
 };
 type InfoSection = {
-  title?: null | string;
+  title?: string;
   listItems: Array<{ text?: string; listItems?: string[] } | string>;
 };
 
