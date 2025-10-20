@@ -98,7 +98,7 @@
     "express": "^5.1.0",
     "express-basic-auth": "^1.2.1",
     "express-http-proxy": "^2.1.2",
-    "express-openid-connect": "2.19.2",
+    "express-openid-connect": "2.18.1",
     "express-session": "^1.18.2",
     "flat-cache": "^6.1.18",
     "form-data": "^4.0.4",
