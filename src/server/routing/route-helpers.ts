@@ -1,5 +1,5 @@
 import { HttpStatusCode } from 'axios';
-import type { Request, Response } from 'express';
+import type { Request, Response, NextFunction } from 'express';
 import express from 'express';
 import { generatePath, matchPath } from 'react-router';
 import z from 'zod';
@@ -27,7 +27,9 @@ export function createBFFRouter({
   router.BFF_ID = id;
 
   if (!isEnabled) {
-    // router.use((_req: Request, res: Response) => sendServiceUnavailable(res));
+    router.use((_req: Request, res: Response, next: NextFunction) => {
+      next('router');
+    });
   }
 
   return router;
