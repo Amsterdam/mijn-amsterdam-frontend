@@ -1,5 +1,5 @@
 import { HttpStatusCode } from 'axios';
-import type { Request, Response } from 'express';
+import type { Request, Response, NextFunction } from 'express';
 import express from 'express';
 import { generatePath, matchPath } from 'react-router';
 import z from 'zod';
@@ -23,16 +23,16 @@ export function createBFFRouter({
   id: string;
   isEnabled?: boolean;
 }): BFFRouter {
-  const authRouterDevelopment = express.Router() as BFFRouter;
-  authRouterDevelopment.BFF_ID = id;
+  const router = express.Router() as BFFRouter;
+  router.BFF_ID = id;
 
   if (!isEnabled) {
-    authRouterDevelopment.use((_req: Request, res: Response) =>
-      sendServiceUnavailable(res)
-    );
+    router.use((_req: Request, res: Response, next: NextFunction) => {
+      next('router');
+    });
   }
 
-  return authRouterDevelopment;
+  return router;
 }
 
 /* eslint-disable @typescript-eslint/no-empty-object-type */
