@@ -23,16 +23,14 @@ export function createBFFRouter({
   id: string;
   isEnabled?: boolean;
 }): BFFRouter {
-  const authRouterDevelopment = express.Router() as BFFRouter;
-  authRouterDevelopment.BFF_ID = id;
+  const router = express.Router() as BFFRouter;
+  router.BFF_ID = id;
 
   if (!isEnabled) {
-    authRouterDevelopment.use((_req: Request, res: Response) =>
-      sendServiceUnavailable(res)
-    );
+    // router.use((_req: Request, res: Response) => sendServiceUnavailable(res));
   }
 
-  return authRouterDevelopment;
+  return router;
 }
 
 /* eslint-disable @typescript-eslint/no-empty-object-type */
