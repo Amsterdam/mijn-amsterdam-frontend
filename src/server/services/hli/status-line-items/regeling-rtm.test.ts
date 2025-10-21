@@ -101,8 +101,8 @@ const descriptions = {
   toegewezen:
     '<p> U krijgt Regeling Tegemoetkoming Meerkosten per 01 mei 2025. </p> <p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>',
   afgewezen: `<p> U krijgt geen Regeling Tegemoetkoming Meerkosten. </p> <p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`,
-  wijzigingsAanvraag: `<p>U heeft een aanvraag gedaan voor aanpassing op uw lopende RTM regeling.</p>
-<p>Hiervoor moet u een afspraak maken voor een medisch gesprek bij de GGD. In de brief staat hoe u dat doet.</p>`,
+  wijzigingsAanvraag: `<p>U heeft een aanvraag gedaan voor aanpassing op uw lopende RTM regeling.</p><p>Hiervoor moet u een afspraak maken voor een medisch gesprek bij de GGD. In de brief staat hoe u dat doet.</p>`,
+  wijzigingsAanvraagVoorMeerdereBetrokkenen: `<p>U heeft een aanvraag gedaan voor aanpassing op uw lopende RTM regeling.</p><p>Hiervoor moet u een afspraak maken voor een medisch gesprek bij de GGD. In de brief staat hoe u dat doet.</p><p><strong>Vraagt u de Regeling Tegemoetkoming Meerkosten (ook) voor andere gezinsleden aan?</strong><br/>De uitslag van de aanvraag is op Mijn Amsterdam te vinden met de DigiD login gegevens van uw gezinsleden.</p> <p>Nog geen DigiD login gegevens? <a rel="noopener noreferrer" href="https://www.digid.nl/aanvragen-en-activeren/digid-aanvragen">Ga naar DigiD aanvragen.</a></p> <p><strong>Gedeeltelijke afwijzing voor u of uw gezinsleden?</strong><br/>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`,
   wijzigingsBesluit:
     '<p>Uw aanvraag voor een wijziging is afgehandeld. Bekijk de brief voor meer informatie hierover.</p>',
   inBehandeling: `<p>Voordat u de Regeling Tegemoetkoming Meerkosten krijgt, moet u een afspraak maken voor een medische keuring bij de GGD. In de brief staat hoe u dat doet.</p>`,
@@ -1529,7 +1529,10 @@ describe('Mixed betrokkenen', () => {
     expect(regelingAanvrager.betrokkenen).toBe('999999999 - Flex');
     expect(regelingAanvrager.steps).toMatchObject([
       { status: 'Besluit' },
-      { status: 'Aanvraag wijziging' },
+      {
+        status: 'Aanvraag wijziging',
+        description: descriptions.wijzigingsAanvraagVoorMeerdereBetrokkenen,
+      },
       { status: 'Besluit wijziging', isActive: true },
       { status: 'Einde recht', isActive: false },
     ]);

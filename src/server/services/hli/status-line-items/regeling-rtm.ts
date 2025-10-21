@@ -541,6 +541,20 @@ type StatusLineKey =
   | 'eindeRecht'
   | 'defaultEindeRecht';
 
+function getInBehandelingGenomenDescription(
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
+  descriptionStart: string
+): string {
+  if (aanvraag.betrokkenen.length > 1) {
+    descriptionStart += `<p><strong>Vraagt u de ${aanvraag.titel} (ook) voor andere gezinsleden aan?</strong><br/>De uitslag van de aanvraag is op Mijn Amsterdam te vinden met de DigiD login gegevens van uw gezinsleden.</p>
+          <p>Nog geen DigiD login gegevens? <a rel="noopener noreferrer" href="https://www.digid.nl/aanvragen-en-activeren/digid-aanvragen">Ga naar DigiD aanvragen.</a></p>
+          `;
+    descriptionStart += `<p><strong>Gedeeltelijke afwijzing voor u of uw gezinsleden?</strong><br/>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`;
+  }
+
+  return descriptionStart;
+}
+
 const statusLineItems: Record<StatusLineKey, StatusLineItemTransformerConfig> =
   {
     aanvraagLopend: {
@@ -560,16 +574,8 @@ const statusLineItems: Record<StatusLineKey, StatusLineItemTransformerConfig> =
       status: 'In behandeling genomen',
       datePublished: getDatumAfgifte,
       description: (aanvraag) => {
-        let description = `<p>Voordat u de ${aanvraag.titel} krijgt, moet u een afspraak maken voor een medische keuring bij de GGD. In de brief staat hoe u dat doet.</p>`;
-
-        if (aanvraag.betrokkenen.length > 1) {
-          description += `<p><strong>Vraagt u de ${aanvraag.titel} (ook) voor andere gezinsleden aan?</strong><br/>De uitslag van de aanvraag is op Mijn Amsterdam te vinden met de DigiD login gegevens van uw gezinsleden.</p>
-          <p>Nog geen DigiD login gegevens? <a rel="noopener noreferrer" href="https://www.digid.nl/aanvragen-en-activeren/digid-aanvragen">Ga naar DigiD aanvragen.</a></p>
-          `;
-          description += `<p><strong>Gedeeltelijke afwijzing voor u of uw gezinsleden?</strong><br/>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`;
-        }
-
-        return description;
+        const description = `<p>Voordat u de ${aanvraag.titel} krijgt, moet u een afspraak maken voor een medische keuring bij de GGD. In de brief staat hoe u dat doet.</p>`;
+        return getInBehandelingGenomenDescription(aanvraag, description);
       },
       documents: (aanvraag) => aanvraag.documenten,
     },
@@ -582,8 +588,11 @@ const statusLineItems: Record<StatusLineKey, StatusLineItemTransformerConfig> =
     wijzigingsAanvraag: {
       status: 'Aanvraag wijziging',
       datePublished: getDatumAfgifte,
-      description: `<p>U heeft een aanvraag gedaan voor aanpassing op uw lopende RTM regeling.</p>
-<p>Hiervoor moet u een afspraak maken voor een medisch gesprek bij de GGD. In de brief staat hoe u dat doet.</p>`,
+      description: (aanvraag) => {
+        const description = `<p>U heeft een aanvraag gedaan voor aanpassing op uw lopende RTM regeling.</p>
+<p>Hiervoor moet u een afspraak maken voor een medisch gesprek bij de GGD. In de brief staat hoe u dat doet.</p>`;
+        return getInBehandelingGenomenDescription(aanvraag, description);
+      },
       documents: (aanvraag) => aanvraag.documenten,
     },
     wijzigingsBesluit: {
