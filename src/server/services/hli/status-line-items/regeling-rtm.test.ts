@@ -746,6 +746,28 @@ describe('Aanvrager is ontvanger', () => {
     ]);
   });
 
+  test('Aanvraag afgewezen -> Aanvraag afgwezen -> Aanvraag toegewezen -> Afgewezen', () => {
+    const aanvragen = attachIDs([
+      RTM_1_AFWIJZING,
+      RTM_1_AFWIJZING,
+      RTM_1_AANVRAAG,
+      RTM_2_AFGEWEZEN,
+    ]);
+    const regelingen = transformRegelingenForFrontend(aanvragen);
+    expect(regelingen.length).toBe(1);
+    const regeling = regelingen[0];
+    expect(regeling).toMatchObject({
+      displayStatus: 'Afgewezen',
+    });
+    expect(regeling.steps).toMatchObject([
+      { status: 'Besluit' },
+      { status: 'Besluit' },
+      { status: 'Aanvraag' },
+      { status: 'In behandeling genomen' },
+      { status: 'Besluit', description: descriptions.afgewezen },
+    ]);
+  });
+
   test('Aanvraag -> Toegewezen -> Wijzigings aanvraag -> Wijziging toegewezen', () => {
     const aanvragen = attachIDs([
       RTM_1_AANVRAAG,
@@ -1562,6 +1584,69 @@ describe('Mixed betrokkenen', () => {
       '999999999 - Flex',
       '111111111 - Flex',
       '-',
+    ]);
+  });
+
+  // RP TODO
+  test.skip('Stacks aanvragen that most likely belongs to eachother', () => {
+    const betrokkenen: Betrokkene[] = [
+      { bsn: ONTVANGER_ID, isAanvrager: true },
+      { bsn: '111111111' },
+    ];
+
+    const aanvragen = attachIDs([
+      replaceBetrokkenen(RTM_1_AANVRAAG, betrokkenen),
+      RTM_1_AFWIJZING,
+      RTM_1_AFWIJZING,
+      replaceBetrokkenen(RTM_1_AANVRAAG, betrokkenen),
+    ]);
+    const regelingen = transformRegelingenForFrontend(aanvragen);
+  });
+
+  test('Lopende regeling, Aanvraag toegewezen en Orphaned aanvraag afgewezen', () => {
+    const otherBetrokkenen: Betrokkene[] = [{ bsn: '111111111' }];
+
+    const aanvragen = attachIDs([
+      RTM_1_AANVRAAG,
+      replaceBetrokkenen(RTM_1_AANVRAAG, otherBetrokkenen),
+      RTM_2_TOEGEWEZEN,
+      RTM_1_AFWIJZING,
+    ]);
+    const regelingen = transformRegelingenForFrontend(aanvragen);
+    expect(regelingen.length).toBe(3);
+
+    const regelingAanvrager = regelingen[0];
+    expect(regelingAanvrager).toMatchObject({
+      displayStatus: 'Toegewezen',
+      isActual: true,
+      betrokkenen: '999999999 - Flex',
+    });
+    expect(regelingAanvrager.steps).toMatchObject([
+      { status: 'Aanvraag' },
+      { status: 'In behandeling genomen' },
+      { status: 'Besluit' },
+      { status: 'Einde recht' },
+    ]);
+
+    const regelingKnownBetrokkene = regelingen[1];
+    expect(regelingKnownBetrokkene).toMatchObject({
+      displayStatus: 'In behandeling genomen',
+      isActual: true,
+      betrokkenen: '111111111 - Flex',
+    });
+    expect(regelingKnownBetrokkene.steps).toMatchObject([
+      { status: 'Aanvraag' },
+      { status: 'In behandeling genomen' },
+    ]);
+
+    const regelingOrphaned = regelingen[2];
+    expect(regelingOrphaned).toMatchObject({
+      displayStatus: 'Afgewezen',
+      isActual: false,
+      betrokkenen: '-',
+    });
+    expect(regelingOrphaned.steps).toMatchObject([
+      { status: 'Besluit', description: descriptions.afgewezen },
     ]);
   });
 });

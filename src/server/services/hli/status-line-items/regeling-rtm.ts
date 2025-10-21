@@ -153,22 +153,22 @@ function mapAanvragenPerBetrokkenen(
 
   const aanvragenMap: AanvragenPerBetrokkene = { ontvanger: [], orphaned: [] };
 
-  const betrokkenenKeys = aanvragen
+  const foundBetrokkenenSets = aanvragen
     .filter((a) => a.betrokkenen.length > 0)
     .map((a) => a.betrokkenen.join(','));
 
   const hasAllAanvragenIdenticalBetrokkene =
-    new Set(betrokkenenKeys).size === 1;
+    new Set(foundBetrokkenenSets).size === 1;
 
   if (hasAllAanvragenIdenticalBetrokkene) {
-    const hasOntvanger = betrokkenenKeys.some((betrokkenen) =>
+    const hasOntvanger = foundBetrokkenenSets.some((betrokkenen) =>
       betrokkenen.includes(bsnOntvanger)
     );
     if (hasOntvanger) {
       aanvragenMap.ontvanger = aanvragen;
       return aanvragenMap;
     }
-    aanvragenMap[betrokkenenKeys.join('-')] = aanvragen;
+    aanvragenMap[foundBetrokkenenSets.join('-')] = aanvragen;
     return aanvragenMap;
   }
 
@@ -260,8 +260,7 @@ function processOntvanger(
     (combinedRegelingen, aanvragen, i, groupedAanvragenPerRegeling) => {
       const regeling = mergeAanvragenIntoRegeling(aanvragen);
       const lastAanvraag = aanvragen[aanvragen.length - 1];
-      // A Afgewezen wijziging changes nothing about the active regeling.
-      // So we put activate the regeling again.
+      // An Afgewezen wijziging changes nothing about the status of the active regeling.
       if (lastAanvraag.type === 'result-wijziging-afgewezen') {
         regeling.isActueel = true;
         regeling.resultaat = 'toegewezen';
@@ -376,6 +375,12 @@ function createAanvraagWithType(
     };
   };
 
+  const previousAfgewezenIdx =
+    aanvragen.slice(0, idx).findLastIndex((aanvraag) => {
+      return aanvraag.isActueel === false;
+    }) ?? 0;
+  const distanceFromAfgewezen = idx - previousAfgewezenIdx;
+
   if (!aanvraag.resultaat) {
     return withType(null);
   }
@@ -384,7 +389,7 @@ function createAanvraagWithType(
     return withType('result-einde-recht');
   }
 
-  if (idx === 0) {
+  if (distanceFromAfgewezen === 1) {
     if (isRTMDeel1(aanvraag)) {
       return withType(`aanvraag-${aanvraag.resultaat}`);
     }
@@ -396,7 +401,11 @@ function createAanvraagWithType(
   }
 
   const previousAanvraag = aanvragen[idx - 1];
-  if (idx >= 2 && isRTMDeel1(previousAanvraag)) {
+  const minimumAanvragenBetweenResultWijzigingAndStart = 3;
+  if (
+    distanceFromAfgewezen >= minimumAanvragenBetweenResultWijzigingAndStart &&
+    isRTMDeel1(previousAanvraag)
+  ) {
     return withType(`result-wijziging-${aanvraag.resultaat}`);
   }
   return withType(`result-${aanvraag.resultaat}`);
