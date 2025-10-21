@@ -464,7 +464,6 @@
           }
         ]
       },
-
       {
         "__comment": "Start - Aanvraag toegewezen with wijziging",
         "identificatie": "30",
@@ -815,6 +814,71 @@
             "omschrijving": "AV-RTM Info aan klant GGD",
             "datumDefinitief": "2025-05-28T11:59:28.757",
             "bestandsnaam": "BR3400273.pdf"
+          }
+        ]
+      },
+      {
+        "__comment": "Start - Aanvraag afgewezen",
+        "identificatie": "30",
+        "procesIdentificatie": "3162694",
+        "casusIdentificatie": "1729987",
+        "regeling": {
+          "identificatie": "Armoedevrz",
+          "omschrijving": "Armoedevoorzieningen"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2025-05-28"
+        },
+        "datumAanmelding": "2025-05-28",
+        "datumAanvraag": "2025-05-28",
+        "procesAanvraag": {
+          "identificatie": "3162694",
+          "omschrijving": "Aanvraag RTM fase 1",
+          "datumStart": "2025-05-28"
+        },
+        "beschikking": {
+          "beschikkingNummer": 301144212,
+          "datumAfgifte": "2025-05-28",
+          "beschikteProducten": [
+            {
+              "identificatie": "1516904",
+              "product": {
+                "identificatie": "AV-RTM1",
+                "productsoortCode": "AV-ALG",
+                "omschrijving": "Regeling Tegemoetkoming Meerkosten"
+              },
+              "productCategorie": {},
+              "resultaat": "afgewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": null,
+                "datumEindeGeldigheid": null,
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "toewijzingen": [],
+                "betrokkenen": []
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B3400305",
+            "procesIdentificatie": "3162694",
+            "casusIdentificatie": "1729987",
+            "omschrijving": "AV-ALG Besluit Afwijzing",
+            "datumDefinitief": "2025-07-15T15:31:56.833",
+            "bestandsnaam": "BR3400305.pdf"
           }
         ]
       }

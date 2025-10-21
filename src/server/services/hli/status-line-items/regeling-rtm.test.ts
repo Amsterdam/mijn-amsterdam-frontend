@@ -1558,7 +1558,7 @@ describe('Mixed betrokkenen', () => {
     expect(regelingen.map((r) => r.betrokkenen)).toStrictEqual([
       '999999999 - Flex',
       '111111111 - Flex',
-      '',
+      '-',
     ]);
   });
 });

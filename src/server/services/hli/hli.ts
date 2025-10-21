@@ -174,9 +174,9 @@ function transformRegelingForFrontend<T extends string>(
     decision: aanvraag.resultaat,
     displayStatus,
     documents: getDocumentsFrontend(sessionID, aanvraag.documenten),
-    betrokkenen: aanvraag.betrokkenPersonen
-      .map((persoon) => persoon.name)
-      .join(', '),
+    betrokkenen: aanvraag.betrokkenPersonen.length
+      ? aanvraag.betrokkenPersonen.map((persoon) => persoon.name).join(', ')
+      : '-',
   };
 
   return regelingFrontend;
