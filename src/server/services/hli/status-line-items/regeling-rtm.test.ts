@@ -1560,11 +1560,11 @@ describe('Mixed betrokkenen', () => {
     ]);
     expect(regelingOther.betrokkenen).toBe('111111111 - Flex');
     expect(regelingOther.steps).toMatchObject([
-      { status: 'Aanvraag', isChecked: false, isActive: true },
+      { status: 'Aanvraag', isChecked: true, isActive: false },
       { status: 'In behandeling genomen', isChecked: false, isActive: true },
-      { status: 'Aanvraag', isChecked: false, isActive: true },
+      { status: 'Aanvraag', isChecked: true, isActive: false },
       { status: 'In behandeling genomen', isChecked: false, isActive: true },
-      { status: 'Aanvraag', isChecked: false, isActive: true },
+      { status: 'Aanvraag', isChecked: true, isActive: false },
       { status: 'In behandeling genomen', isChecked: false, isActive: true },
     ]);
   });

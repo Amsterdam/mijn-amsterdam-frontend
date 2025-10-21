@@ -307,8 +307,8 @@ function processRelatedPersons(
           const complete: StatusLineItem = {
             ...item,
             id: `status-step-${i + 1}`,
-            isActive: true,
-            isChecked: false,
+            isActive: item.status !== 'Aanvraag',
+            isChecked: item.status === 'Aanvraag',
           };
           return complete;
         });
