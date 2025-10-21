@@ -121,13 +121,6 @@ const ZaakWijzigenBase = {
   'caseType' | 'title'
 >;
 
-export const ZaakVergunningExploitatie: DecosZaakTransformer<ZaakVergunningExploitatieType> =
-  {
-    caseType: 'Varen vergunning exploitatie',
-    title: 'Varen exploitatievergunning',
-    ...ZaakBase,
-  };
-
 export const ZaakVergunningExploitatieWijzigenVaartuignaam: DecosZaakTransformer<ZaakVergunningExploitatieWijzigingVaartuigNaamType> =
   {
     caseType: 'Varen vergunning exploitatie Wijziging vaartuignaam',
@@ -199,7 +192,6 @@ export const ZaakVergunningExploitatieWijzigingVervanging: DecosZaakTransformer<
 export const decosRederZaakTransformers = [ZaakRegistratieReder];
 export const decosVergunningTransformers = [VarenVergunningExploitatie];
 export const decosZaakTransformers = [
-  ZaakVergunningExploitatie,
   ZaakVergunningExploitatieWijzigenVaartuignaam,
   ZaakVergunningExploitatieWijzigenVerbouwing,
   ZaakVergunningExploitatieWijzigingVergunningshouder,
