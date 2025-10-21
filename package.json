@@ -86,7 +86,7 @@
     "connect-pg-simple": "^10.0.0",
     "cookie-parser": "^1.4.7",
     "cookie-session": "^2.1.1",
-    "core-js": "^3.45.1",
+    "core-js": "^3.46.0",
     "cors": "^2.8.5",
     "cron": "^3.5.0",
     "cross-env": "^7.0.3",
