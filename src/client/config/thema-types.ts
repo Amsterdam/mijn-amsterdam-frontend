@@ -40,13 +40,13 @@ type RedactedScope = 'full' | 'content' | 'none';
 
 type PageConfig<T extends string> = {
   [key in T]: {
-    title?: string | null;
+    title?: string;
     route: ThemaRouteConfig;
   };
 };
 
 type InfoSection = {
-  title: string | null;
+  title: string;
   listItems: Array<{ text?: string; listItems?: string[] } | string>;
 };
 
@@ -92,7 +92,7 @@ type TrackinUrlFN = <T extends Params<string>>(params: T | null) => string;
 
 export type ThemaRouteConfig = {
   path: string;
-  trackingUrl?: null | string | TrackinUrlFN;
+  trackingUrl: null | string | TrackinUrlFN;
   documentTitle: string | DocumenttitleFN;
 };
 

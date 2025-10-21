@@ -15,7 +15,7 @@ export function BodemThema() {
     isLoading,
     isError,
     linkListItems,
-    themaId, // < aangepast van "themaId: id" naar "themaId"
+    themaId,
     title,
   } = useBodemData();
   useHTMLDocumentTitle(themaConfig.route);
@@ -40,7 +40,7 @@ export function BodemThema() {
   );
   return (
     <ThemaPagina
-      id={themaId} // "id={id}" aangepast naar "id={themaId}"
+      id={themaId}
       title={title}
       isLoading={isLoading}
       isError={isError}

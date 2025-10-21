@@ -37,7 +37,7 @@ export const themaConfig: BodemThemaConfig = {
     },
   ],
   uitlegPageSections: {
-    title: null,
+    title: 'Lood in de bodem-check',
     listItems: ["Uw aanvraag voor 'lood in de bodem-check'"],
   },
 
@@ -52,7 +52,6 @@ export const themaConfig: BodemThemaConfig = {
     },
   },
   listPage: {
-    title: null,
     route: {
       path: '/bodem/lijst/lood-meting/:kind/:page?',
       trackingUrl: null,
