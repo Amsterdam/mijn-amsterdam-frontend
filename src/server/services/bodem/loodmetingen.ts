@@ -88,9 +88,11 @@ function transformLood365Response(
             id: location.Workorderid,
             url: generateFullApiUrlBFF(
               BffEndpoints.LOODMETING_DOCUMENT_DOWNLOAD,
-              {
-                id: documentIDEncrypted,
-              }
+              [
+                {
+                  id: documentIDEncrypted,
+                },
+              ]
             ),
             datePublished: location.Reportsenton,
           };
@@ -129,7 +131,7 @@ function transformLood365Response(
           decision: decision,
           displayStatus: location.Friendlystatus,
           processed: isProcessed,
-          kenmerk: location.Reference,
+          identifier: location.Reference,
           aanvraagNummer: request.Reference,
           rapportBeschikbaar: location?.Reportavailable ?? false,
           rapportId: location?.Workorderid,
@@ -255,7 +257,7 @@ function createLoodNotification(meting: LoodMetingFrontend): MyNotification {
   > = {
     themaID: themaConfig.id,
     themaTitle: themaConfig.title,
-    id: meting.kenmerk,
+    id: meting.identifier,
     link: {
       to: meting.link.to,
       title: 'Bekijk details',

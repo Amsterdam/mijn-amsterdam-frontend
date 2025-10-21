@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { atom, useRecoilState, useRecoilValue } from 'recoil';
+import { create } from 'zustand';
 
 import { useSessionStorage } from './storage.hook';
 
@@ -19,34 +19,39 @@ try {
   console.info("Can't use profileType session value");
 }
 
-export const profileTypeState = atom<ProfileType>({
-  key: PROFILE_TYPE_STORAGE_KEY,
-  default: initialProfileType,
-});
+type ProfileTypeStore = {
+  profileType: ProfileType;
+  setProfileType: (profileType: ProfileType) => void;
+};
+
+export const useProfileTypeStore = create<ProfileTypeStore>((set) => ({
+  profileType: initialProfileType,
+  setProfileType: (profileType: ProfileType) => set({ profileType }),
+}));
 
 export function useProfileType() {
-  const state = useRecoilState(profileTypeState);
-  const [stateValue, setState] = state;
+  const store = useProfileTypeStore();
+  const { profileType: stateValue, setProfileType: setState } = store;
+
   const [profileType, setSessionState] = useSessionStorage(
     PROFILE_TYPE_STORAGE_KEY,
     stateValue
   );
 
-  // If we encounter a profileType stored in the SessionStorage, transfer it to the recoil state on first load.
+  // If we encounter a profileType stored in the SessionStorage, transfer it to the zustand on first load.
   useEffect(() => {
     if (profileType !== stateValue && profileType !== null) {
       setState(profileType);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     setSessionState(stateValue);
   }, [stateValue, setSessionState]);
 
-  return state;
+  return store;
 }
 
 export function useProfileTypeValue(): ProfileType {
-  return useRecoilValue(profileTypeState);
+  return useProfileTypeStore((state) => state.profileType);
 }

@@ -20,10 +20,7 @@ import {
   getFailedDependencies,
   getSettledResult,
 } from '../../../universal/helpers/api';
-import {
-  createDocumentDeduper,
-  dedupeDocumentsInDataSets,
-} from '../../../universal/helpers/document';
+import { dedupeDocumentsInDataSets } from '../../../universal/helpers/document';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import {
   GenericDocument,
@@ -81,9 +78,11 @@ function getDocumentsFrontend(
     );
     return {
       ...document,
-      url: generateFullApiUrlBFF(BffEndpoints.HLI_DOCUMENT_DOWNLOAD, {
-        id: idEncrypted,
-      }),
+      url: generateFullApiUrlBFF(BffEndpoints.HLI_DOCUMENT_DOWNLOAD, [
+        {
+          id: idEncrypted,
+        },
+      ]),
       id: idEncrypted,
     };
   });
@@ -146,6 +145,9 @@ async function transformRegelingForFrontend(
     decision: aanvraag.resultaat,
     displayStatus,
     documents: getDocumentsFrontend(sessionID, aanvraag.documenten),
+    betrokkenen: aanvraag.betrokkenPersonen
+      .map((persoon) => persoon.name)
+      .join(', '),
   };
 
   return regelingFrontend;

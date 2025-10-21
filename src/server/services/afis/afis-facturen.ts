@@ -231,7 +231,9 @@ function transformFactuur(
   const status = determineFactuurStatus(invoice, amountPayed, hasDeelbetaling);
 
   const documentDownloadLink = factuurDocumentIdEncrypted
-    ? `${generateFullApiUrlBFF(BffEndpoints.AFIS_DOCUMENT_DOWNLOAD)}?id=${factuurDocumentIdEncrypted}`
+    ? generateFullApiUrlBFF(BffEndpoints.AFIS_DOCUMENT_DOWNLOAD, [
+        { id: factuurDocumentIdEncrypted },
+      ])
     : null;
 
   return {
@@ -281,6 +283,7 @@ function replaceXmlNulls(
 }
 
 function transformFacturen(
+  state: AfisFactuurState,
   responseData: AfisInvoicesSource,
   sessionID: SessionID,
   deelbetalingen?: AfisFactuurDeelbetalingen
@@ -298,6 +301,7 @@ function transformFacturen(
     });
   return {
     count,
+    state,
     facturen: facturenTransformed,
   };
 }
@@ -430,7 +434,7 @@ function determineFactuurStatusDescription(
 
 export async function fetchAfisFacturen(
   sessionID: SessionID,
-  params: AfisFacturenParams
+  params: AfisFacturenParams & { state: AfisFactuurState }
 ): Promise<ApiResponse_DEPRECATED<AfisFacturenResponse | null>> {
   let deelbetalingen: AfisFactuurDeelbetalingen | undefined;
 
@@ -453,7 +457,7 @@ export async function fetchAfisFacturen(
     params: getFactuurRequestQueryParams(params),
     formatUrl: ({ url }) => url + AFIS_FACTUUR_REQUEST_API_PATH,
     transformResponse: (responseData) =>
-      transformFacturen(responseData, sessionID, deelbetalingen),
+      transformFacturen(params.state, responseData, sessionID, deelbetalingen),
     cacheKey_UNSAFE: createSessionBasedCacheKey(
       sessionID,
       `afis-facturen-${params.state}`
@@ -507,6 +511,7 @@ export async function fetchAfisFacturenOverview(
     const facturenOpen = facturenOpenResult.content?.facturen ?? [];
     const openFacturenContentSorted: AfisFacturenResponse = {
       count: facturenOpenResult.content?.count ?? 0,
+      state: 'open',
       facturen: facturenOpen.sort(
         firstBy(function (factuur: AfisFactuur) {
           return factuur.status === 'herinnering' ? -1 : 1;
@@ -569,17 +574,9 @@ export async function fetchAfisFacturenOverview(
 
 export async function fetchAfisFacturenByState(
   sessionID: SessionID,
-  params: AfisFacturenParams
+  params: AfisFacturenParams & { state: AfisFactuurState }
 ) {
-  const facturenResponse = await fetchAfisFacturen(sessionID, params);
-
-  if ((await facturenResponse.status) === 'OK') {
-    return apiSuccessResult({
-      [params.state]: facturenResponse.content,
-    });
-  }
-
-  return facturenResponse;
+  return fetchAfisFacturen(sessionID, params);
 }
 
 export const forTesting = {

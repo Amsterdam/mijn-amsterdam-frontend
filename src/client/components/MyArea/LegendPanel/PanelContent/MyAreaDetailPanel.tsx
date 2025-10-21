@@ -79,8 +79,8 @@ function MyAreaPanelContentSwitch({
 }
 
 export default function MyAreaDetailPanel() {
-  const [selectedFeature] = useSelectedFeature();
-  const [loadingFeature] = useLoadingFeature();
+  const { selectedFeature } = useSelectedFeature();
+  const { loadingFeature } = useLoadingFeature();
 
   if (
     (!selectedFeature ||
@@ -95,7 +95,7 @@ export default function MyAreaDetailPanel() {
     );
   }
 
-  if (loadingFeature?.isError) {
+  if (loadingFeature?.isError || !selectedFeature) {
     return (
       <ErrorAlert>
         Er kan op dit moment geen informatie getoond worden over deze locatie.

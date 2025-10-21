@@ -7,7 +7,7 @@ export function useBodemDetailData() {
   const { items, isLoading, isError, breadcrumbs } = useBodemData();
   const { id } = useParams<{ id: string }>();
 
-  const meting = items.find((meting) => meting.kenmerk === id) ?? null;
+  const meting = items.find((meting) => meting.identifier === id) ?? null;
 
   return {
     themaId: themaConfig.id,

@@ -206,6 +206,7 @@ describe('Bezwaren', () => {
           "content": {
             "documents": null,
             "statussen": null,
+            "zaakId": "xxx",
           },
           "failedDependencies": {
             "documents": {

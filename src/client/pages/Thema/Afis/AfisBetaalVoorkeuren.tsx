@@ -97,7 +97,7 @@ export function AfisBetaalVoorkeuren() {
     isLoadingEmandates,
   } = useAfisBetaalVoorkeurenData(businessPartnerIdEncrypted);
 
-  useHTMLDocumentTitle(routeConfig.detailPage);
+  useHTMLDocumentTitle(routeConfig.betaalVoorkeuren);
 
   const isLoadingAllAPis =
     isThemaPaginaLoading &&

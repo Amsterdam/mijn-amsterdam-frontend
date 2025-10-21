@@ -6,6 +6,7 @@ import { apiErrorResult, apiSuccessResult } from '../../universal/helpers/api';
 import { AuthProfile } from '../auth/auth-types';
 import * as stadspas from '../services/hli/stadspas';
 import * as gpass from '../services/hli/stadspas-gpass-service';
+import type { Stadspas } from '../services/hli/stadspas-types';
 
 vi.mock('../helpers/encrypt-decrypt', async (requireActual) => {
   return {
@@ -215,7 +216,7 @@ describe('hli/router-external-consumer', async () => {
         status: 'OK',
         content: {
           administratienummer: '123456789',
-          stadspassen: [{ foo: 'bar' }],
+          stadspassen: [{ foo: 'bar' } as unknown as Stadspas],
         },
       });
 

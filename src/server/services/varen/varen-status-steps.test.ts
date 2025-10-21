@@ -40,6 +40,7 @@ describe('getStatusSteps', () => {
       },
       {
         datePublished: '',
+        description: '',
         id: 'step-2',
         isActive: false,
         isChecked: false,
@@ -101,6 +102,7 @@ describe('getStatusSteps', () => {
       },
       {
         datePublished: '',
+        description: '',
         isActive: false,
         isChecked: false,
         status: 'Afgehandeld',
@@ -230,6 +232,8 @@ describe('getStatusSteps', () => {
     const exploitatieDecision = {
       ...exploitatieBase,
       processed: true,
+      title: 'Varen vergunning exploitatie Wijziging verbouwing',
+      decision: 'Verleend',
       dateDecision: '2025-01-20T00:00:00',
       termijnDates: [],
     } as unknown as ZaakVergunningExploitatieType;
@@ -252,6 +256,8 @@ describe('getStatusSteps', () => {
         isActive: true,
         isChecked: true,
         status: 'Afgehandeld',
+        description:
+          'Wij hebben een besluit genomen over uw aanvraag "Varen vergunning exploitatie Wijziging verbouwing".<br/>Het besluit is per mail naar u gestuurd.',
       },
     ]);
   });

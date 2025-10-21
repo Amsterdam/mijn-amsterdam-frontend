@@ -32,7 +32,9 @@ import { captureException } from '../services/monitoring';
 
 export function getReturnToUrl(
   queryParams?: ParsedQs,
-  defaultReturnTo: string = authRoutes.AUTH_LOGIN_DIGID_LANDING
+  defaultReturnTo: string = generateFullApiUrlBFF(
+    authRoutes.AUTH_LOGIN_DIGID_LANDING
+  )
 ) {
   switch (queryParams?.returnTo) {
     case RETURNTO_MAMS_FRONTEND_ROUTE: {
@@ -65,13 +67,14 @@ export function getReturnToUrl(
     case ZAAK_STATUS_ROUTE:
       return getReturnToUrlZaakStatus(queryParams);
     case RETURNTO_MAMS_LANDING_EHERKENNING:
-      return authRoutes.AUTH_LOGIN_EHERKENNING_LANDING;
+      return generateFullApiUrlBFF(authRoutes.AUTH_LOGIN_EHERKENNING_LANDING);
     case RETURNTO_MAMS_LANDING_DIGID:
-      return authRoutes.AUTH_LOGIN_DIGID_LANDING;
+      return generateFullApiUrlBFF(authRoutes.AUTH_LOGIN_DIGID_LANDING);
     default:
       return defaultReturnTo;
   }
 }
+
 export function getZaakStatusQueryParams(
   queryParams?: ParsedQs
 ): `?${string}` | string {

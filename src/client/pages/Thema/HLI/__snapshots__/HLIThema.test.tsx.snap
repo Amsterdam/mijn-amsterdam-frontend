@@ -248,6 +248,12 @@ exports[`<HLI /> > Matches the Full Page snapshot with an active and a blocked p
               >
                 Regeling
               </th>
+              <th
+                class="ams-table__header-cell"
+                style="width: 20%;"
+              >
+                Ontvangers
+              </th>
             </tr>
           </thead>
           <tbody
@@ -267,6 +273,9 @@ exports[`<HLI /> > Matches the Full Page snapshot with an active and a blocked p
                   Hli item 1
                 </a>
               </td>
+              <td
+                class="ams-table__cell"
+              />
             </tr>
           </tbody>
         </table>

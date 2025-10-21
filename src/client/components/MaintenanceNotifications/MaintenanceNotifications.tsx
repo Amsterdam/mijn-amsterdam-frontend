@@ -6,7 +6,7 @@ import { parseHTML } from '../../helpers/html-react-parse';
 import { useCmsMaintenanceNotifications } from '../../hooks/api/useCmsMaintenanceNotifications';
 
 interface MaintenanceNotificationsProps {
-  page?: string;
+  page: string;
   fromApiDirectly?: boolean;
   className?: string;
 }

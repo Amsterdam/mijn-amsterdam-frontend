@@ -2,6 +2,7 @@ import { ReactNode, useMemo } from 'react';
 
 import { Paragraph } from '@amsterdam/design-system-react';
 
+import { filterItemCheckboxState } from './checkbox-helpers';
 import {
   DatasetFilterSelection,
   DatasetId,
@@ -11,10 +12,7 @@ import {
 } from '../../../../universal/config/myarea-datasets';
 import { sortAlpha } from '../../../../universal/helpers/utils';
 import { getIcon, getIconChildIdFromValue } from '../dataset-icons';
-import {
-  DatasetControlCheckbox,
-  filterItemCheckboxState,
-} from './DatasetControlCheckbox';
+import { DatasetControlCheckbox } from './DatasetControlCheckbox';
 import { DatasetControlPanelProps } from './DatasetControlPanel';
 import styles from './PanelComponent.module.scss';
 import { PanelList, PanelListItem } from './PanelList';

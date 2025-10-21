@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { formatKvkProfileData } from './ProfileCommercial.transform';
 import { isError, isLoading } from '../../../../../universal/helpers/api';
-import { useAppStateGetter } from '../../../../hooks/useAppState';
+import { useAppStateGetter } from '../../../../hooks/useAppStateStore';
 import { routeConfig, themaTitle, themaIdKVK } from '../Profile-thema-config';
 
 export function useProfileData() {

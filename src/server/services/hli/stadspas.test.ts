@@ -544,7 +544,8 @@ describe('stadspas services', () => {
 
       expect(response).toStrictEqual({
         content: {
-          '123123123': true,
+          actief: false,
+          passNumber: 123123123,
         },
         status: 'OK',
       });
@@ -575,7 +576,8 @@ describe('stadspas services', () => {
 
       expect(response).toStrictEqual({
         content: {
-          '123123123': false,
+          actief: true,
+          passNumber: 123123123,
         },
         status: 'OK',
       });

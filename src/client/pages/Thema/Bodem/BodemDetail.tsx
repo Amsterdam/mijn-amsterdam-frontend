@@ -21,7 +21,7 @@ export function BodemDetail() {
   useHTMLDocumentTitle(routeConfig);
 
   const LoodMetingRows = (meting: LoodMetingFrontend) => {
-    const rows: Row[] = [{ label: 'Kenmerk', content: meting.kenmerk }];
+    const rows: Row[] = [{ label: 'Kenmerk', content: meting.identifier }];
 
     if (meting.adres) {
       rows.push({

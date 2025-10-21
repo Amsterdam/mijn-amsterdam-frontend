@@ -8,11 +8,9 @@ import {
   DatasetPropertyValue,
 } from '../../../../universal/config/myarea-datasets';
 import { getIcon } from '../dataset-icons';
+import { categoryCheckboxState } from './checkbox-helpers';
 import MyAreaCollapsiblePanel, { CollapsedState } from './CollapsiblePanel';
-import {
-  DatasetControlCheckbox,
-  categoryCheckboxState,
-} from './DatasetControlCheckbox';
+import { DatasetControlCheckbox } from './DatasetControlCheckbox';
 import { DatasetPanel } from './DatasetPanel';
 import { PanelList, PanelListItem } from './PanelList';
 
@@ -87,7 +85,11 @@ export function DatasetControlPanel({
     : CollapsedState.Collapsed;
 
   return (
-    <MyAreaCollapsiblePanel title={categoryTitle} initialState={initialState}>
+    <MyAreaCollapsiblePanel
+      title={category.title}
+      heading={categoryTitle}
+      initialState={initialState}
+    >
       <PanelList>
         {Object.entries(category.datasets).map(([datasetId, dataset]) => {
           return (

@@ -1,11 +1,9 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
-import { MutableSnapshot } from 'recoil';
 
 import { routeConfig } from './Zorg-thema-config';
 import { ZorgDetail } from './ZorgDetail';
 import type { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
 const testState = {
@@ -253,10 +251,6 @@ const testState = {
   },
 };
 
-function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState as unknown as AppState);
-}
-
 function testDetailPage(id: string, title: string) {
   const routeEntry = generatePath(routeConfig.detailPage.path, {
     id,
@@ -269,7 +263,7 @@ function testDetailPage(id: string, title: string) {
         routeEntry={routeEntry}
         routePath={routePath}
         component={ZorgDetail}
-        initializeState={initializeState}
+        state={testState as unknown as AppState}
       />
     );
   }

@@ -13,6 +13,7 @@ const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 const displayPropsHuidigeRegelingen: DisplayProps<HLIRegelingFrontend> = {
   props: {
     detailLinkComponent: 'Regeling',
+    ...(!IS_PRODUCTION && { betrokkenen: 'Ontvangers' }),
   },
   colWidths: {
     large: ['80%', '20%'],
@@ -24,6 +25,7 @@ const displayPropsEerdereRegelingen: DisplayProps<HLIRegelingFrontend> = {
   props: {
     detailLinkComponent: 'Regeling',
     displayStatus: 'Status',
+    ...(!IS_PRODUCTION && { betrokkenen: 'Ontvangers' }),
   },
   colWidths: {
     large: ['80%', '20%'],
@@ -50,6 +52,7 @@ export const featureToggle = {
   hliRegelingEnabledCZM: true,
   hliRegelingEnabledRTM: !IS_PRODUCTION,
   hli2025PCTegoedCodesEnabled: !IS_PRODUCTION,
+  hli2026PCVergoedingV3Enabled: !IS_PRODUCTION,
 } as const;
 
 export const themaId = 'HLI' as const;

@@ -13,9 +13,9 @@ import { useDebouncedCallback } from 'use-debounce';
 
 import { SearchEntry, displayPath } from './search-config';
 import styles from './Search.module.scss';
-import { useSearchIndex, useSearchResults, useSearchTerm } from './useSearch';
+import { useSearchIndex } from './useSearch';
 import { useSmallScreen } from '../../hooks/media.hook';
-import { useAppStateReady } from '../../hooks/useAppState';
+import { useAppStateReady } from '../../hooks/useAppStateStore';
 import { useKeyDown } from '../../hooks/useKey';
 import { SearchPageRoute } from '../../pages/Search/Search-routes';
 import { MaButtonLink, MaLink, MaRouterLink } from '../MaLink/MaLink';
@@ -86,12 +86,7 @@ export function ResultSet({
                   : typeof result.displayTitle === 'string'
                     ? displayPath(term, [result.displayTitle])
                     : result.displayTitle}
-                {extendedResults && (
-                  <Paragraph>
-                    <span>{result.url}</span>
-                    {result.description}
-                  </Paragraph>
-                )}
+                {extendedResults && <Paragraph>{result.description}</Paragraph>}
               </LinkComponent>
             </UnorderedList.Item>
           );
@@ -128,13 +123,14 @@ export function Search({
   const resultsRef = useRef<HTMLDivElement>(null);
 
   const [isResultsVisible, setResultsVisible] = useState(false);
-
   const [isTyping, setIsTyping] = useState(false);
-  const [term, setTerm_] = useSearchTerm();
 
-  useSearchIndex();
-
-  const results = useSearchResults(extendedAMResults);
+  const {
+    term,
+    setTerm: setTerm_,
+    resultsMA,
+    resultsAM,
+  } = useSearchIndex(extendedAMResults);
 
   const setTerm = useCallback(
     (term: string) => {
@@ -216,7 +212,7 @@ export function Search({
     return () => {
       document.removeEventListener('mousedown', checkIfClickedOutside);
     };
-  }, [isResultsVisible, isPhoneScreen, typeAhead]);
+  }, [isResultsVisible, isPhoneScreen, typeAhead, inPage]);
 
   useEffect(() => {
     if (termInitial) {
@@ -302,29 +298,20 @@ export function Search({
             <ResultSet
               term={term}
               isLoading={isTyping || !isAppStateReady}
-              results={results?.ma?.slice(0, maxResultCountDisplay / 2) || []}
-              totalResultsCount={results?.ma?.length || 0}
+              results={resultsMA.slice(0, maxResultCountDisplay / 2) || []}
+              totalResultsCount={resultsMA.length || 0}
               noResultsMessage="Niets gevonden op Mijn Amsterdam"
               onClickResult={() => onFinish('Resultaat geklikt')}
             />
 
             <ResultSet
-              term={term}
-              isLoading={results?.am?.state === 'loading' || isTyping}
               title="Overige informatie op Amsterdam.nl"
+              term={term}
+              isLoading={isTyping}
+              results={resultsAM.slice(0, maxResultCountDisplay / 2)}
+              totalResultsCount={resultsAM.length}
               noResultsMessage="Niets gevonden op Amsterdam.nl"
               extendedResults={extendedAMResults}
-              results={
-                results.am?.state === 'hasValue' && results.am.contents !== null
-                  ? results.am.contents.slice(0, maxResultCountDisplay / 2)
-                  : []
-              }
-              totalResultsCount={
-                results?.am?.state === 'hasValue' &&
-                results.am.contents !== null
-                  ? results.am.contents.length
-                  : 0
-              }
             />
 
             {extendedAMResults && (

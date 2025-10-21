@@ -13,7 +13,9 @@ import {
   ZorgnedPerson,
   ZorgnedPersoonsgegevensNAWResponse,
   ZorgnedResponseDataSource,
+  type Beschikking,
   type BSN,
+  type ZorgnedAanvraagSource,
 } from './zorgned-types';
 import {
   apiErrorResult,
@@ -25,7 +27,7 @@ import {
 } from '../../../universal/helpers/api';
 import { getFullName } from '../../../universal/helpers/brp';
 import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
-import { sortByNumber, uniqueArray } from '../../../universal/helpers/utils';
+import { sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
 import { GenericDocument } from '../../../universal/types/App.types';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { isSuccessStatus, requestData } from '../../helpers/source-api-request';
@@ -78,12 +80,14 @@ function transformDocumenten(documenten: ZorgnedDocument[]) {
 }
 
 function transformZorgnedAanvraag(
-  id: string,
+  aanvraagSource: ZorgnedAanvraagSource,
+  beschikking: Beschikking,
   datumAanvraag: string,
   datumBesluit: string,
   beschiktProduct: BeschiktProduct,
   documenten: ZorgnedDocument[]
 ): ZorgnedAanvraagTransformed {
+  const id = `${aanvraagSource.identificatie}-${beschiktProduct.identificatie}`;
   const toegewezenProduct = beschiktProduct.toegewezenProduct;
   const toewijzingen = toegewezenProduct?.toewijzingen ?? [];
   const toewijzing = toewijzingen.pop();
@@ -120,6 +124,7 @@ function transformZorgnedAanvraag(
     productsoortCode: productsoortCode,
     productIdentificatie,
     beschiktProductIdentificatie: beschiktProduct.identificatie,
+    beschikkingNummer: beschikking.beschikkingNummer,
     resultaat: beschiktProduct.resultaat,
     titel: beschiktProduct.product.omschrijving ?? '',
     betrokkenen: toegewezenProduct?.betrokkenen ?? [],
@@ -155,7 +160,8 @@ export function transformZorgnedAanvragen(
     for (const beschiktProduct of beschikteProducten) {
       if (beschiktProduct) {
         const aanvraagTransformed = transformZorgnedAanvraag(
-          `${aanvraagSource.identificatie}-${beschiktProduct.identificatie}`,
+          aanvraagSource,
+          beschikking,
           datumAanvraag,
           datumBesluit,
           beschiktProduct,
@@ -169,7 +175,17 @@ export function transformZorgnedAanvragen(
     }
   }
 
-  return aanvragenTransformed.sort(sortByNumber('id', 'desc'));
+  return aanvragenTransformed.sort(sortAlpha('id', 'desc'));
+}
+
+export async function fetchAllDocuments(
+  bsn: BSN,
+  options: ZorgnedAanvragenServiceOptions
+) {
+  return fetchZorgnedByBSN(bsn, {
+    ...options,
+    path: '/documenten',
+  });
 }
 
 export async function fetchAanvragen(
@@ -180,6 +196,16 @@ export async function fetchAanvragen(
     ...options,
     path: '/aanvragen',
     transform: transformZorgnedAanvragen,
+  });
+}
+
+export async function fetchAanvragenRaw(
+  bsn: BSN,
+  options: ZorgnedAanvragenServiceOptions
+) {
+  return fetchZorgnedByBSN(bsn, {
+    ...options,
+    path: '/aanvragen',
   });
 }
 
