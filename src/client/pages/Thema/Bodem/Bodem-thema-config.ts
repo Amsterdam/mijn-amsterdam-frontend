@@ -15,6 +15,8 @@ import type {
 
 type BodemThemaConfig = ThemaConfigBase & WithDetailPage & WithListPage;
 
+const THEMA_TITLE = 'Bodem';
+
 export const themaConfig: BodemThemaConfig = {
   id: 'BODEM',
   title: 'Bodem',
@@ -37,7 +39,7 @@ export const themaConfig: BodemThemaConfig = {
     },
   ],
   uitlegPageSections: {
-    title: 'Lood in de bodem-check',
+    title: THEMA_TITLE,
     listItems: ["Uw aanvraag voor 'lood in de bodem-check'"],
   },
 
