@@ -20,8 +20,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HealthyResponse'
+
   /private/api/v1/services/wmo/voorzieningen:
     post:
+      security:
+        - bearerAuth: []
+        - apimSubscriptionKey: []
       description: |
         Gets a list of compacted WMO voorzieningen.
       requestBody:
@@ -42,27 +46,77 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/WmoVoorzieningenCompactResponse'
+        '500':
+          $ref: '#/components/responses/ApplicationErrorResponse'
         '400':
-          description: Returns bad request error
-          content:
-            'application/json':
-              schema:
-                $ref: '#/components/schemas/ErrorBadRequest'
+          $ref: '#/components/responses/BadRequestResponse'
         '401':
-          description: Returns unauthorized error (invalid api key)
+          $ref: '#/components/responses/UnauthorizedResponse'
+
+  /private/api/v1/services/afis/e-mandates/sign-request-status-notify:
+    post:
+      security:
+        - bearerAuth: []
+        - apimSubscriptionKey: []
+      description: |
+        Endpoint to receive push notifications from AFIS about the status of e-mandate sign requests.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AfisStatusNotificationRequestBody'
+      responses:
+        '200':
+          description: |
+            Acknowledgement of the received notification.
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/ErrorUnauthorized'
+                $ref: '#/components/schemas/AfisStatusNotificationResponse'
         '500':
           description: |
             Returns Application error, any error in code or from failed requests.
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/ApplicationError'
+                $ref: '#/components/schemas/AfisApplicationError'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
 
 components:
+  securitySchemes:
+    apimSubscriptionKey:
+      description: Apim subscription key provided via https://devportal.api.amsterdam.nl/
+      type: apiKey
+      name: Ocp-Apim-Subscription-Key
+      in: header
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    BadRequestResponse:
+      description: Returns bad request error
+      content:
+        'application/json':
+          schema:
+            $ref: '#/components/schemas/ErrorBadRequest'
+    UnauthorizedResponse:
+      description: Returns unauthorized error (invalid api key / token)
+      content:
+        'application/json':
+          schema:
+            $ref: '#/components/schemas/ErrorUnauthorized'
+    ApplicationErrorResponse:
+      description: |
+        Returns Application error, any error in code or from failed requests.
+      content:
+        'application/json':
+          schema:
+            $ref: '#/components/schemas/ApplicationError'
   schemas:
     HealthyResponse:
       type: object
@@ -103,6 +157,67 @@ components:
           type: string
         datumBesluit:
           type: string
+    AfisStatusNotificationRequestBody:
+      type: object
+      properties:
+        id_client:
+          type: string
+          example: '1000'
+        debtornumber:
+          type: string
+          example: '123456'
+        cid:
+          type: string
+          example: '2345678910'
+        mpid:
+          type: string
+          example: '1234567890'
+        payment_reference:
+          type: string
+          example: '123456789'
+        id_request_client:
+          type: string
+          example: 'test'
+        event_type:
+          type: string
+          example: 'payment'
+        amount_total:
+          type: string
+          example: '45500'
+        id_bank:
+          type: string
+          example: 'ABNANL2A'
+        iban:
+          type: string
+          example: 'GB33BUKB20201555555555'
+        bic:
+          type: string
+          example: 'INGBNL2A'
+        account_owner:
+          type: string
+          example: 'John Doe'
+        event_date:
+          type: string
+          format: date
+          example: '2024-01-05'
+        event_time:
+          type: string
+          format: time
+          example: '11:27'
+        variable1:
+          type: string
+          example: 'GB33BUKB20201555555555'
+    AfisStatusNotificationResponse:
+      type: object
+      properties:
+        content:
+          type: string
+          enum:
+            - 'E-Mandate created successfully'
+        status:
+          type: string
+          enum:
+            - 'SUCCESS'
     ApplicationError:
       type: object
       description: |
@@ -120,6 +235,15 @@ components:
             - 'ERROR'
         message:
           type: string
+    AfisApplicationError:
+      allOf:
+        - $ref: '#/components/schemas/ApplicationError'
+        - type: object
+          properties:
+            message:
+              type: string
+              enum:
+                - 'Failed to create E-Mandate from sign request status notification'
     ErrorNotFound:
       type: object
       properties:
@@ -154,6 +278,7 @@ components:
           type: string
           enum:
             - 'Api key ongeldig'
+            - 'Unauthorized'
     ErrorBadRequest:
       type: object
       properties:
@@ -169,7 +294,4 @@ components:
             - 'ERROR'
         message:
           type: string
-          enum:
-            - "Bad request: ApiError 005 - Could not decrypt url parameter administratienummerEncrypted'"
-            - 'Bad request: ApiError 000 - Onbekende fout'
-            - 'Bad request: Bad request: Failed to decrypt transactions key'
+          example: 'Invalid input'

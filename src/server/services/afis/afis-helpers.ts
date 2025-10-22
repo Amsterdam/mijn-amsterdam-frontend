@@ -1,5 +1,8 @@
+import { parseISO } from 'date-fns';
+
 import { fetchAfisTokenHeader } from './afis';
 import { AfisApiFeedResponseSource } from './afis-types';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import { DataRequestConfig } from '../../config/source-api';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
@@ -35,4 +38,44 @@ export async function getAfisApiConfig(
     },
   };
   return getApiConfig('AFIS', additionalConfigWithHeader);
+}
+
+export function getEmandateValidityDateFormatted(dateValidTo: string | null) {
+  const dateValidToFormatted =
+    dateValidTo && !dateValidTo.includes('9999')
+      ? defaultDateFormat(dateValidTo)
+      : dateValidTo
+        ? 'Doorlopend'
+        : null;
+
+  return dateValidToFormatted;
+}
+
+export function isEmandateActive(dateValidTo: string | null) {
+  if (!dateValidTo) {
+    return false;
+  }
+  // Active if date is in the future.
+  return parseISO(dateValidTo) > new Date();
+}
+
+export const EMANDATE_STATUS = {
+  ON: '1',
+  OFF: '6',
+} as const;
+
+export function getEmandateStatus(dateValidTo: string | null) {
+  return isEmandateActive(dateValidTo)
+    ? EMANDATE_STATUS.ON
+    : EMANDATE_STATUS.OFF;
+}
+
+export function getEmandateDisplayStatus(
+  dateValidTo: string | null,
+  dateValidFromFormatted: string | null
+): string {
+  if (isEmandateActive(dateValidTo)) {
+    return `Actief sinds ${dateValidFromFormatted}`;
+  }
+  return 'Niet actief';
 }

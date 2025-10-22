@@ -270,7 +270,7 @@ describe('sendJSONPostRequest', () => {
 
     const result = await sendJSONPostRequest<{ foo: string }>(
       'http://localhost/test',
-      { foo: 'bar' }
+      { payload: { foo: 'bar' } }
     );
     expect(result.status).toBe('OK');
     expect(result.content).toEqual({ foo: 'bar' });
@@ -292,7 +292,7 @@ describe('sendFormPostRequest', () => {
 
     const result = await sendFormPostRequest<{ foo: string }>(
       'http://localhost/test',
-      { foo: 'bar' }
+      { payload: { foo: 'bar' } }
     );
     expect(result.status).toBe('OK');
     expect(result.content).toEqual({ foo: 'bar' });

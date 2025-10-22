@@ -13,11 +13,7 @@ import type { streamEndpointQueryParamKeys } from '../../universal/config/app';
 import { IS_PRODUCTION } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { setAdHocDependencyRequestCacheTtlMs } from '../config/source-api';
-import { fetchAfisDocument } from '../services/afis/afis-documents';
-import {
-  handleFetchAfisBusinessPartner,
-  handleFetchAfisFacturen,
-} from '../services/afis/afis-route-handlers';
+import { afisRouter } from '../services/afis/afis-router';
 import { fetchBezwaarDocument } from '../services/bezwaren/bezwaren';
 import { handleFetchBezwaarDetail } from '../services/bezwaren/bezwaren-route-handlers';
 import { fetchLoodMetingDocument } from '../services/bodem/loodmetingen';
@@ -126,6 +122,7 @@ router.get(
 ////////////////////////////////////////////////////
 
 router.use(wmoRouter.protected);
+router.use(afisRouter.protected);
 
 // LLV Zorgned Doc download
 attachDocumentDownloadRoute(
@@ -224,12 +221,3 @@ attachDocumentDownloadRoute(
   BffEndpoints.HLI_DOCUMENT_DOWNLOAD,
   fetchZorgnedAVDocument
 );
-
-// AFIS facturen en betalen
-router.get(BffEndpoints.AFIS_BUSINESSPARTNER, handleFetchAfisBusinessPartner);
-attachDocumentDownloadRoute(
-  router,
-  BffEndpoints.AFIS_DOCUMENT_DOWNLOAD,
-  fetchAfisDocument
-);
-router.get(BffEndpoints.AFIS_FACTUREN, handleFetchAfisFacturen);
