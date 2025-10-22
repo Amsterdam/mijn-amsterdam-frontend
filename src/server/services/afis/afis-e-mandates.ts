@@ -202,19 +202,12 @@ async function updateAfisEMandate(
   payload: AfisEMandateUpdatePayload,
   transform?: (data: unknown) => Partial<AfisEMandateFrontend>
 ) {
-  // TODO: Sanitize payload, check if all required fields are present.
-  const payloadFinal: AfisEMandateUpdatePayload = {
-    ...payload,
-  };
-
-  console.log('Updating e-mandate with payload:', payloadFinal);
-
   const config = await getAfisApiConfig({
     method: 'PUT',
-    data: payloadFinal,
+    data: payload,
     enableCache: false,
     formatUrl: ({ url }) => {
-      return `${url}/ChangeMandate/ZGW_FI_MANDATE_SRV_01/Mandate_changeSet(IMandateId='${payloadFinal.IMandateId}')`;
+      return `${url}/ChangeMandate/ZGW_FI_MANDATE_SRV_01/Mandate_changeSet(IMandateId='${payload.IMandateId}')`;
     },
     transformResponse: transform,
   });
