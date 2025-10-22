@@ -448,7 +448,7 @@ export async function fetchEmandateIdByCreditorRefId(
     enableCache: false,
   });
 
-  return requestData<boolean>(config);
+  return requestData<AfisEMandateSource['IMandateId'] | null>(config);
 }
 
 export async function fetchEMandates(
