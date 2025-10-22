@@ -1152,6 +1152,30 @@ describe('Aanvrager is ontvanger', () => {
     ]);
   });
 
+  test('Multiple aanvragen get stacked on top of eachother', () => {
+    const aanvragen = attachIDs([
+      RTM_1_AANVRAAG,
+      RTM_1_AANVRAAG,
+      RTM_1_AFWIJZING,
+      RTM_2_TOEGEWEZEN,
+      RTM_2_AFGEWEZEN,
+    ]);
+    const regelingen = transformRegelingenForFrontend(aanvragen);
+    expect(regelingen.length).toBe(1);
+    const regeling = regelingen[0];
+    expect(regeling.isActual).toBe(true);
+    expect(regeling.steps.map((s) => [s.status, s.description])).toStrictEqual([
+      ['Aanvraag', ''],
+      ['In behandeling genomen', descriptions.inBehandeling],
+      ['Aanvraag', ''],
+      ['In behandeling genomen', descriptions.inBehandeling],
+      ['Afgewezen', descriptions.afgewezen],
+      ['Besluit', descriptions.toegewezen],
+      ['Besluit', descriptions.afgewezen],
+      ['Einde recht', descriptions.inactiveEindeRecht],
+    ]);
+  });
+
   test('Able to extract two regelingen from a list of aanvragen', () => {
     const aanvragen = attachIDs([
       RTM_1_AANVRAAG,
@@ -1587,7 +1611,7 @@ describe('Mixed betrokkenen', () => {
     ]);
   });
 
-  // RP TODO
+  // RP TODO: This was said to be very theoretical and not realistic.
   test.skip('Stacks aanvragen that most likely belongs to eachother', () => {
     const betrokkenen: Betrokkene[] = [
       { bsn: ONTVANGER_ID, isAanvrager: true },
@@ -1651,9 +1675,7 @@ describe('Mixed betrokkenen', () => {
   });
 });
 
-// RP TODO: When testing a long chain, make it contaitn some complicated ID's like here.
-// Then we no longer need to have this test.
-test('Correctly sorted on the first part of the id', () => {
+test('Handles multipart ids', () => {
   const regelingen = transformRegelingenForFrontend([
     { ...RTM_2_TOEGEWEZEN, id: '11-22' },
     { ...RTM_WIJZIGINGS_AANVRAAG, id: '12-22' },
@@ -1663,7 +1685,6 @@ test('Correctly sorted on the first part of the id', () => {
     { ...RTM_WIJZIGINGS_AANVRAAG, id: '22-11' },
     { ...RTM_1_AANVRAAG, id: '20-11' },
   ]);
-  // Only the end of the ids are taken from the aanvragen chain when being combined into a regeling.
   expect(regelingen.map((r) => r.id)).toStrictEqual(['13-22', '22-11']);
 });
 

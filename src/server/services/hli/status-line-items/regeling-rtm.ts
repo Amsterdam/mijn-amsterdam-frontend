@@ -259,13 +259,6 @@ function processOntvanger(
   const combinedRegelingen = groupedAanvragenPerRegeling.reduce(
     (combinedRegelingen, aanvragen, i, groupedAanvragenPerRegeling) => {
       const regeling = mergeAanvragenIntoRegeling(aanvragen);
-      const lastAanvraag = aanvragen[aanvragen.length - 1];
-      // An Afgewezen wijziging changes nothing about the status of the active regeling.
-      if (lastAanvraag.type === 'result-wijziging-afgewezen') {
-        regeling.isActueel = true;
-        regeling.resultaat = 'toegewezen';
-      }
-
       const statusLineItems = getAllStatusLineItems(
         regeling,
         groupedAanvragenPerRegeling[i]
@@ -324,18 +317,26 @@ function groupAanvragenPerRegeling(
   const groupedAanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[][] = [];
 
   let group: ZorgnedAanvraagWithRelatedPersonsTransformed[] = [];
+
   aanvragen.forEach((aanvraag) => {
     group.push(aanvraag);
 
     if (aanvraag.datumEindeGeldigheid && isRTMDeel2(aanvraag)) {
       groupedAanvragen.push(group);
       group = [];
+      return;
     }
   });
-  if (group.length) {
-    groupedAanvragen.push(group);
-  }
-  return groupedAanvragen;
+
+  const remainingToegewezenAanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[] =
+    [];
+
+  const aanvragenGroupedPerRegeling = [
+    remainingToegewezenAanvragen,
+    ...groupedAanvragen,
+    group,
+  ].filter((g) => g.length);
+  return aanvragenGroupedPerRegeling;
 }
 
 /** Check if einde recht is reached, this assumes that the aanvraag is RTM-2 */
@@ -415,16 +416,37 @@ function mergeAanvragenIntoRegeling(
   aanvragen: AanvraagWithType[]
 ): ZorgnedHLIRegeling {
   const [head, ...aanvragenTail] = aanvragen;
+
+  let isBesluitToegewezenState = false;
+
   const regeling = aanvragenTail.reduce(
     (regeling, aanvraag) => {
+      // An Afgewezen wijziging changes nothing about the status of the active regeling.
       if (aanvraag.type === 'result-wijziging-afgewezen') {
         return {
           ...regeling,
           datumBesluit: aanvraag.datumBesluit,
         };
       }
+
+      if (aanvraag.type === 'result-toegewezen') {
+        isBesluitToegewezenState = true;
+      }
+
+      let isActueel = aanvraag.isActueel;
+
+      if (isBesluitToegewezenState) {
+        if (isRTMDeel2(aanvraag) && isEindeRechtReached(aanvraag)) {
+          isActueel = false;
+          isBesluitToegewezenState = false;
+        } else {
+          isActueel = true;
+        }
+      }
+
       return {
         ...aanvraag,
+        isActueel,
         // When a regeling is active and there is no einde recht, the regeling is
         // active indefinitely.
         datumEindeGeldigheid:
