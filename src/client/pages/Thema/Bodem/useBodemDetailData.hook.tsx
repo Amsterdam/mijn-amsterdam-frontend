@@ -1,21 +1,28 @@
 import { useParams } from 'react-router';
 
-import { themaConfig } from './Bodem-thema-config';
 import { useBodemData } from './useBodemData.hook';
 
 export function useBodemDetailData() {
-  const { items, isLoading, isError, breadcrumbs } = useBodemData();
+  const {
+    themaId,
+    title,
+    items,
+    isLoading,
+    isError,
+    breadcrumbs,
+    detailPageConfig,
+  } = useBodemData();
   const { id } = useParams<{ id: string }>();
 
   const meting = items.find((meting) => meting.identifier === id) ?? null;
 
   return {
-    themaId: themaConfig.id,
-    title: themaConfig.detailPage.title,
+    themaId,
+    title,
     meting,
     isLoading,
     isError,
     breadcrumbs,
-    routeConfig: themaConfig.detailPage.route,
+    routeConfig: detailPageConfig.route,
   };
 }
