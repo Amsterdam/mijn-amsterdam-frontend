@@ -13,14 +13,15 @@ import {
   type POMEMandateSignRequestPayload,
 } from './afis-types';
 import {
+  apiErrorResult,
   ApiResponse_DEPRECATED,
+  apiSuccessResult,
   type ApiResponse,
 } from '../../../universal/helpers/api';
 import { AuthProfile } from '../../auth/auth-types';
 import {
   RequestWithRouteAndQueryParams,
   sendBadRequestInvalidInput,
-  sendInternalServerError,
   sendResponse,
   type RecordStr2,
   type ResponseAuthenticated,
@@ -169,15 +170,17 @@ export async function handleAfisEMandateSignRequestStatusNotification(
     // If the eMandate creation fails, we should log the error and return an error response.
     // This is important for observability and debugging.
     captureException(error);
-    return sendInternalServerError(
-      res,
-      'Failed to create eMandate from sign request status notification'
-    );
   }
 
   const isOK = createEmandateResponse !== null;
 
-  res.status(isOK ? HttpStatusCode.Ok : HttpStatusCode.InternalServerError);
+  const response = isOK
+    ? apiSuccessResult('E-Mandate created successfully')
+    : apiErrorResult(
+        'Failed to create E-Mandate from sign request status notification',
+        null,
+        HttpStatusCode.InternalServerError
+      );
 
-  return res.send(isOK ? 'OK' : 'ERROR');
+  return sendResponse(res, response);
 }
