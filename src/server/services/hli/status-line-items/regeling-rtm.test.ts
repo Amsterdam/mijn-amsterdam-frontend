@@ -1544,7 +1544,7 @@ test('Single Aanvraag afgewezen results in orphaned regeling', () => {
         },
       ],
       isActive: true,
-      isChecked: false,
+      isChecked: true,
       isVisible: true,
       status: 'Besluit',
     },
@@ -1569,8 +1569,8 @@ describe('Mixed betrokkenen', () => {
     const regelingen = transformRegelingenForFrontend(aanvragen);
     expect(regelingen.length).toBe(2);
 
-    const regelingAanvrager = regelingen[0];
-    const regelingOther = regelingen[1];
+    const regelingAanvrager = regelingen[1];
+    const regelingOther = regelingen[0];
 
     expect(regelingAanvrager.betrokkenen).toBe('999999999 - Flex');
     expect(regelingAanvrager.steps).toMatchObject([
@@ -1584,12 +1584,13 @@ describe('Mixed betrokkenen', () => {
     ]);
     expect(regelingOther.betrokkenen).toBe('111111111 - Flex');
     expect(regelingOther.steps).toMatchObject([
-      { status: 'Aanvraag', isChecked: true, isActive: false },
-      { status: 'In behandeling genomen', isChecked: false, isActive: true },
-      { status: 'Aanvraag', isChecked: true, isActive: false },
-      { status: 'In behandeling genomen', isChecked: false, isActive: true },
-      { status: 'Aanvraag', isChecked: true, isActive: false },
-      { status: 'In behandeling genomen', isChecked: false, isActive: true },
+      { status: 'Aanvraag' },
+      { status: 'In behandeling genomen' },
+      { status: 'Aanvraag' },
+      { status: 'In behandeling genomen' },
+      { status: 'Aanvraag' },
+      { status: 'In behandeling genomen' },
+      { status: 'Einde recht', isChecked: false, isActive: false },
     ]);
   });
 
@@ -1602,11 +1603,13 @@ describe('Mixed betrokkenen', () => {
       RTM_2_TOEGEWEZEN,
       RTM_1_AFWIJZING,
     ]);
-    const regelingen = transformRegelingenForFrontend(aanvragen);
+    const regelingen = transformRegelingenForFrontend(aanvragen).sort((a, b) =>
+      a.id < b.id ? -1 : 1
+    );
     expect(regelingen.length).toBe(3);
     expect(regelingen.map((r) => r.betrokkenen)).toStrictEqual([
-      '999999999 - Flex',
       '111111111 - Flex',
+      '999999999 - Flex',
       '-',
     ]);
   });
@@ -1659,10 +1662,12 @@ describe('Mixed betrokkenen', () => {
       RTM_2_TOEGEWEZEN,
       RTM_1_AFWIJZING,
     ]);
-    const regelingen = transformRegelingenForFrontend(aanvragen);
+    const regelingen = transformRegelingenForFrontend(aanvragen).sort((a, b) =>
+      a.id < b.id ? -1 : 1
+    );
     expect(regelingen.length).toBe(3);
 
-    const regelingAanvrager = regelingen[0];
+    const regelingAanvrager = regelingen[1];
     expect(regelingAanvrager).toMatchObject({
       displayStatus: 'Toegewezen',
       isActual: true,
@@ -1675,7 +1680,7 @@ describe('Mixed betrokkenen', () => {
       { status: 'Einde recht' },
     ]);
 
-    const regelingKnownBetrokkene = regelingen[1];
+    const regelingKnownBetrokkene = regelingen[0];
     expect(regelingKnownBetrokkene).toMatchObject({
       displayStatus: 'In behandeling genomen',
       isActual: true,
@@ -1684,6 +1689,7 @@ describe('Mixed betrokkenen', () => {
     expect(regelingKnownBetrokkene.steps).toMatchObject([
       { status: 'Aanvraag' },
       { status: 'In behandeling genomen' },
+      { status: 'Einde recht' },
     ]);
 
     const regelingOrphaned = regelingen[2];

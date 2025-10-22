@@ -216,29 +216,16 @@ function removeExpiredIndividualAanvragen(
 
 type RTMCombinedRegeling = [ZorgnedHLIRegeling, StatusLineItem[]];
 
-/** Combine related aanvragen into one aanvraag all the way untill the aanvraag that cancels (Einde recht) it.
- *  This requires a list of aanvragen for one person.
- */
 function combineRTMData(
   aanvragenPerBetrokkene: AanvragenPerBetrokkene
 ): RTMCombinedRegeling[] {
-  const regelingenForOntvanger = processOntvanger(
-    aanvragenPerBetrokkene.ontvanger
+  const regelingenForOntvanger = Object.entries(aanvragenPerBetrokkene).map(
+    ([_betrokkene, aanvragen]) => processToRTMRegelingen(aanvragen)
   );
-  const regelingenForRelatedPersons = processRelatedPersons(
-    Object.entries(aanvragenPerBetrokkene)
-      .filter(([betrokkene]) => betrokkene !== 'ontvanger')
-      .map(([, aanvragen]) => aanvragen)
-  );
-
-  const rtmCombinedRegelingen: RTMCombinedRegeling[] = [
-    ...regelingenForOntvanger,
-    ...regelingenForRelatedPersons,
-  ];
-  return rtmCombinedRegelingen;
+  return regelingenForOntvanger.flat();
 }
 
-function processOntvanger(
+function processToRTMRegelingen(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ): RTMCombinedRegeling[] {
   if (!aanvragen) {
@@ -281,45 +268,6 @@ function processOntvanger(
   );
 
   return combinedRegelingen;
-}
-
-function processRelatedPersons(
-  aanvragenPerRelatedPerson: ZorgnedAanvraagWithRelatedPersonsTransformed[][]
-): RTMCombinedRegeling[] {
-  const regelingenForRelatedPersons: RTMCombinedRegeling[] =
-    aanvragenPerRelatedPerson.reduce((rtmCombinedRegeling, aanvragen) => {
-      const last = aanvragen[aanvragen.length - 1];
-      if (!last) {
-        return rtmCombinedRegeling;
-      }
-      const regeling: ZorgnedHLIRegeling = {
-        ...last,
-        datumInBehandeling: last.datumBesluit,
-      };
-      const statusLineItems = aanvragen
-        .flatMap((aanvraag) => {
-          const getStatusLineItem = createGetStatusLineItemFn(aanvraag);
-          if (aanvraag.resultaat === 'toegewezen') {
-            return getStatusLineItem([
-              'aanvraagLopend',
-              'inBehandelingGenomen',
-            ]);
-          }
-          return getStatusLineItem(['aanvraagAfgewezen']);
-        })
-        .map((item, i) => {
-          const complete: StatusLineItem = {
-            ...item,
-            id: `status-step-${i + 1}`,
-            isActive: item.status !== 'Aanvraag',
-            isChecked: item.status === 'Aanvraag',
-          };
-          return complete;
-        });
-      regeling.documenten = [];
-      return [...rtmCombinedRegeling, [regeling, statusLineItems]];
-    }, [] as RTMCombinedRegeling[]);
-  return regelingenForRelatedPersons;
 }
 
 function groupAanvragenPerRegeling(
