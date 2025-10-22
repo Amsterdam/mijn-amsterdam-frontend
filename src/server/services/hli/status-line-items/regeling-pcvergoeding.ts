@@ -134,6 +134,8 @@ export function filterCombineUpcPcvData(
         isRegelingVanVerzilvering(aanvraag, compareAanvraag)
       );
       // If no baseRegeling is found or already used, this must be an orphaned verzilvering.
+      // This can be the case when a user gets a (UPC|PCV)ZIL and a (UPC|PCV)TG for the same base regeling.
+      // This happened at the end of 2024 when the PCV StadspasTegoed codes were introduced.
       if (
         !baseRegeling ||
         baseRegelingIdWithVerzilvering.includes(baseRegeling.id)
