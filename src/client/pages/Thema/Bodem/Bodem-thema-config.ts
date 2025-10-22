@@ -19,7 +19,7 @@ const THEMA_TITLE = 'Bodem';
 
 export const themaConfig: BodemThemaConfig = {
   id: 'BODEM',
-  title: 'Bodem',
+  title: THEMA_TITLE,
   featureToggle: {
     themaActive: true,
   },
