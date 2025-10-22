@@ -312,6 +312,44 @@ const aanvragen_ = [
       datumEindeGeldigheid: '2024-12-31',
     },
   ],
+
+  [
+    {
+      productsoortCode: 'RTM1',
+      betrokkenen: ['A4'],
+      resultaat: 'toegewezen',
+    },
+    {
+      productsoortCode: 'RTM1',
+      betrokkenen: ['A4'],
+      resultaat: 'toegewezen',
+    },
+    {
+      productsoortCode: 'RTM1',
+      betrokkenen: ['A4'],
+      resultaat: 'toegewezen',
+    },
+    {
+      productsoortCode: 'RTM1',
+      betrokkenen: [],
+      resultaat: 'afgewezen',
+    },
+    {
+      productsoortCode: 'RTM',
+      betrokkenen: ['A4'],
+      resultaat: 'toegewezen',
+    },
+    {
+      productsoortCode: 'RTM',
+      betrokkenen: ['A4'],
+      resultaat: 'afgewezen',
+    },
+    {
+      productsoortCode: 'RTM',
+      betrokkenen: ['A4'],
+      resultaat: 'afgewezen',
+    },
+  ],
 ];
 
 export const aanvragen = aanvragen_;

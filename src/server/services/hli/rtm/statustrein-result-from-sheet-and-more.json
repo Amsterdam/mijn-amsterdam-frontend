@@ -208,6 +208,23 @@
     ]
   },
   {
+    "id": 26,
+    "persoon": "A4",
+    "steps": [
+      "Aanvraag",
+      "In behandeling",
+      "Aanvraag",
+      "In behandeling",
+      "Aanvraag",
+      "In behandeling",
+      "Aanvraag afgewezen",
+      "Besluit",
+      "Besluit afgewezen",
+      "Besluit afgewezen",
+      "Einde recht"
+    ]
+  },
+  {
     "id": 30,
     "persoon": "orphans",
     "steps": ["Aanvraag afgewezen"]
