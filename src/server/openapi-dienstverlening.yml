@@ -23,6 +23,9 @@ paths:
 
   /private/api/v1/services/wmo/voorzieningen:
     post:
+      security:
+        - bearerAuth: []
+        - apimSubscriptionKey: []
       description: |
         Gets a list of compacted WMO voorzieningen.
       requestBody:
@@ -54,6 +57,7 @@ paths:
     post:
       security:
         - bearerAuth: []
+        - apimSubscriptionKey: []
       description: |
         Endpoint to receive push notifications from AFIS about the status of e-mandate sign requests.
       requestBody:
@@ -84,6 +88,11 @@ paths:
 
 components:
   securitySchemes:
+    apimSubscriptionKey:
+      description: Apim subscription key provided via https://devportal.api.amsterdam.nl/
+      type: apiKey
+      name: Ocp-Apim-Subscription-Key
+      in: header
     bearerAuth:
       type: http
       scheme: bearer
