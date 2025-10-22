@@ -70,6 +70,7 @@ export const routeConfig = {
   listPageOpenFacturen: {
     path: '/erfpacht/lijst/open-facturen/:page?',
     documentTitle: `Lijst met open facturen | ${themaTitle}`,
+    trackingUrl: null,
   },
   listPageAlleFacturen: {
     path: '/erfpacht/lijst/facturen/:dossierNummerUrlParam/:page?',
@@ -79,10 +80,12 @@ export const routeConfig = {
   listPage: {
     path: '/erfpacht/dossiers/:page?',
     documentTitle: `Lijst met facturen | ${themaTitle}`,
+    trackingUrl: null,
   },
   themaPage: {
     path: '/erfpacht',
     documentTitle: `${themaTitle} | overzicht`,
+    trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
 
