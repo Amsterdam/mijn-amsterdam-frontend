@@ -1169,7 +1169,7 @@ describe('Aanvrager is ontvanger', () => {
       ['In behandeling genomen', descriptions.inBehandeling],
       ['Aanvraag', ''],
       ['In behandeling genomen', descriptions.inBehandeling],
-      ['Afgewezen', descriptions.afgewezen],
+      ['Besluit', descriptions.afgewezen],
       ['Besluit', descriptions.toegewezen],
       ['Besluit', descriptions.afgewezen],
       ['Einde recht', descriptions.inactiveEindeRecht],
@@ -1611,8 +1611,7 @@ describe('Mixed betrokkenen', () => {
     ]);
   });
 
-  // RP TODO: This was said to be very theoretical and not realistic.
-  test.skip('Stacks aanvragen that most likely belongs to eachother', () => {
+  test('Stacks aanvragen that most likely belongs to eachother', () => {
     const betrokkenen: Betrokkene[] = [
       { bsn: ONTVANGER_ID, isAanvrager: true },
       { bsn: '111111111' },
@@ -1625,6 +1624,30 @@ describe('Mixed betrokkenen', () => {
       replaceBetrokkenen(RTM_1_AANVRAAG, betrokkenen),
     ]);
     const regelingen = transformRegelingenForFrontend(aanvragen);
+    expect(regelingen.length).toBe(1);
+
+    const regeling = regelingen[0];
+    expect(regeling).toMatchObject({
+      displayStatus: 'In behandeling genomen',
+      isActual: true,
+    });
+    expect(
+      regeling.steps.map((s) => [s.status, s.description])
+    ).toMatchInlineSnapshot([
+      ['Aanvraag', ''],
+      [
+        'In behandeling genomen',
+        descriptions.inBehandelingVoorMeerdereBetrokkenen,
+      ],
+      ['Besluit', descriptions.afgewezen],
+      ['Besluit', descriptions.afgewezen],
+      ['Aanvraag', ''],
+      [
+        'In behandeling genomen',
+        descriptions.inBehandelingVoorMeerdereBetrokkenen,
+      ],
+      ['Einde recht', descriptions.inactiveEindeRecht],
+    ]);
   });
 
   test('Lopende regeling, Aanvraag toegewezen en Orphaned aanvraag afgewezen', () => {

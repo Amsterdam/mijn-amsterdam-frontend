@@ -249,8 +249,19 @@ function processOntvanger(
 
   const groupedAanvragenPerRegeling = groupAanvragenPerRegeling(aanvragen).map(
     (aanvragen) => {
+      let isRegelingBesluitToegewezenState = false;
+
       const aanvragenWithType = aanvragen.map((aanvraag, idx, aanvragen) => {
-        return createAanvraagWithType(aanvraag, aanvragen, idx);
+        const newAanvraag = createAanvraagWithType(
+          aanvraag,
+          isRegelingBesluitToegewezenState,
+          aanvragen,
+          idx
+        );
+        if (newAanvraag.type === 'result-toegewezen') {
+          isRegelingBesluitToegewezenState = true;
+        }
+        return newAanvraag;
       });
       return aanvragenWithType;
     }
@@ -366,6 +377,7 @@ type AanvraagWithType = ZorgnedHLIRegeling & { type: AanvraagType };
 
 function createAanvraagWithType(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
+  isRegelingBesluitToegewezenState: boolean,
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
   idx: number
 ): AanvraagWithType {
@@ -376,12 +388,6 @@ function createAanvraagWithType(
     };
   };
 
-  const previousAfgewezenIdx =
-    aanvragen.slice(0, idx).findLastIndex((aanvraag) => {
-      return aanvraag.isActueel === false;
-    }) ?? 0;
-  const distanceFromAfgewezen = idx - previousAfgewezenIdx;
-
   if (!aanvraag.resultaat) {
     return withType(null);
   }
@@ -390,7 +396,7 @@ function createAanvraagWithType(
     return withType('result-einde-recht');
   }
 
-  if (distanceFromAfgewezen === 1) {
+  if (!isRegelingBesluitToegewezenState) {
     if (isRTMDeel1(aanvraag)) {
       return withType(`aanvraag-${aanvraag.resultaat}`);
     }
@@ -402,11 +408,7 @@ function createAanvraagWithType(
   }
 
   const previousAanvraag = aanvragen[idx - 1];
-  const minimumAanvragenBetweenResultWijzigingAndStart = 3;
-  if (
-    distanceFromAfgewezen >= minimumAanvragenBetweenResultWijzigingAndStart &&
-    isRTMDeel1(previousAanvraag)
-  ) {
+  if (isRegelingBesluitToegewezenState && isRTMDeel1(previousAanvraag)) {
     return withType(`result-wijziging-${aanvraag.resultaat}`);
   }
   return withType(`result-${aanvraag.resultaat}`);
