@@ -32,7 +32,7 @@ export const themaConfig: BodemThemaConfig = {
     trackingUrl: null,
   },
   redactedScope: 'none',
-  links: [
+  pageLinks: [
     {
       title: 'Meer informatie over lood in de bodem.',
       to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/bodem/loodcheck-tuin-aanvragen',

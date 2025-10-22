@@ -16,7 +16,7 @@ export function useBodemData() {
     isLoading: isLoading(BODEM),
     isError: isError(BODEM),
     items,
-    linkListItems: themaConfig.links,
+    linkListItems: themaConfig.pageLinks,
     breadcrumbs,
     listPageRoute: themaConfig.listPage.route.path,
   };
