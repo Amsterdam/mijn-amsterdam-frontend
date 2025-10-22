@@ -51,6 +51,7 @@ export const themaConfig: BodemThemaConfig = {
       },
     },
   },
+
   listPage: {
     route: {
       path: '/bodem/lijst/lood-meting/:kind/:page?',
@@ -61,7 +62,7 @@ export const themaConfig: BodemThemaConfig = {
   },
 } as const;
 
-const listPageKind = {
+export const listPageKind = {
   inProgress: 'lopende-aanvragen',
   completed: 'afgehandelde-aanvragen',
 } as const;
