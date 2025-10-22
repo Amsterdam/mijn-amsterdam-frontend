@@ -45,12 +45,12 @@ export const themaConfig: BodemThemaConfig = {
 
   detailPage: {
     title: 'Lood in bodem-check',
-    get documentTitle() {
-      return `Lood in de bodem-check | ${themaConfig.title}`;
-    },
     route: {
       path: '/bodem/lood-meting/:id',
       trackingUrl: '/bodem/lood-meting',
+      get documentTitle() {
+        return `Lood in de bodem-check | ${themaConfig.title}`;
+      },
     },
   },
 
