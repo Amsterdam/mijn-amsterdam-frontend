@@ -16,6 +16,7 @@ import {
   isLoading,
 } from '../../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
+import { useAddDocumentLinkComponents } from '../../../data-transform/useAddDocumentLinks';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 
@@ -28,6 +29,10 @@ export function useHliThemaData() {
     'title',
     true
   );
+  const specificaties = useAddDocumentLinkComponents(
+    HLI.content?.specificaties ?? []
+  );
+
   const breadcrumbs = useThemaBreadcrumbs(themaId);
   const hasRegelingen = !!regelingen.length;
   const title = getThemaTitle(hasStadspas, hasRegelingen);
@@ -53,6 +58,7 @@ export function useHliThemaData() {
     stadspassen,
     dateExpiryFormatted: HLI.content?.stadspas?.dateExpiryFormatted ?? null,
     regelingen,
+    specificaties,
     themaId,
     title,
     hasKindtegoed,

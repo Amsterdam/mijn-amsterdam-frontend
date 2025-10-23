@@ -74,7 +74,11 @@ export const routeConfig = {
     trackingUrl: '/regelingen-bij-laag-inkomen/stadspas',
     documentTitle: `Stadspas | ${themaTitle}`,
   },
-  listPage: {
+  specificatieListPage: {
+    path: '/regelingen-bij-laag-inkomen/lijst/specificatie',
+    documentTitle: `Specificaties | ${themaTitle}`,
+  },
+  regelingenListPage: {
     path: '/regelingen-bij-laag-inkomen/lijst/:kind/:page?',
     documentTitle: (params) =>
       `${params?.kind === listPageParamKind.historic ? 'Eerdere' : 'Huidige'} regelingen | ${themaTitle}`,
@@ -115,7 +119,7 @@ export const tableConfig = {
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsHuidigeRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-    listPageRoute: generatePath(routeConfig.listPage.path, {
+    listPageRoute: generatePath(routeConfig.regelingenListPage.path, {
       kind: listPageParamKind.lopend,
       page: null,
     }),
@@ -127,7 +131,7 @@ export const tableConfig = {
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsHuidigeRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-    listPageRoute: generatePath(routeConfig.listPage.path, {
+    listPageRoute: generatePath(routeConfig.regelingenListPage.path, {
       kind: listPageParamKind.actual,
       page: null,
     }),
@@ -138,7 +142,7 @@ export const tableConfig = {
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsEerdereRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER,
-    listPageRoute: generatePath(routeConfig.listPage.path, {
+    listPageRoute: generatePath(routeConfig.regelingenListPage.path, {
       kind: listPageParamKind.historic,
       page: null,
     }),
