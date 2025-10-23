@@ -1,5 +1,13 @@
 import { Request, Response } from 'express';
 
+import { ExternalConsumerEndpoints } from './bff-routes';
+import { apiKeyVerificationHandler } from './route-handlers';
+import {
+  createBFFRouter,
+  generateFullApiUrlBFF,
+  sendBadRequest,
+  sendResponse,
+} from './route-helpers';
 import { IS_PRODUCTION } from '../../universal/config/env';
 import { apiSuccessResult } from '../../universal/helpers/api';
 import {
@@ -26,14 +34,6 @@ import {
   TransactionKeysEncryptedWithoutSessionID,
 } from '../services/hli/stadspas-types';
 import { captureException, captureMessage } from '../services/monitoring';
-import { ExternalConsumerEndpoints } from './bff-routes';
-import { apiKeyVerificationHandler } from './route-handlers';
-import {
-  createBFFRouter,
-  generateFullApiUrlBFF,
-  sendBadRequest,
-  sendResponse,
-} from './route-helpers';
 
 const AMSAPP_PROTOCOl = 'amsterdam://';
 const AMSAPP_STADSPAS_DEEP_LINK = `${AMSAPP_PROTOCOl}stadspas`;
