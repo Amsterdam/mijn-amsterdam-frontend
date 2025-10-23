@@ -12,6 +12,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "documents": [
         {
           "datePublished": "2025-10-23T16:29:51.547",
+          "filename": "BR3422709.pdf",
           "id": "B3422709",
           "title": "Besluit: afwijzing woonruimteaanpassing",
           "url": "http://bff-api-host/api/v1/services/wmo/document?id=123-123-123-123",
@@ -70,6 +71,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "documents": [
         {
           "datePublished": "2025-09-24T15:12:19.673",
+          "filename": "BR3422713.pdf",
           "id": "B3422713",
           "title": "Besluit: afwijzing woonruimteaanpassing",
           "url": "http://bff-api-host/api/v1/services/wmo/document?id=123-123-123-123",
