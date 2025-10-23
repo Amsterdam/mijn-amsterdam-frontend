@@ -151,14 +151,14 @@ function mapAanvragenPerBetrokkenen(
     };
   });
 
-  const aanvragenMap: AanvragenPerBetrokkene = { ontvanger: [], orphaned: [] };
-
   const foundBetrokkenenSets = aanvragen
     .filter((a) => a.betrokkenen.length > 0)
     .map((a) => a.betrokkenen.join(','));
 
   const hasAllAanvragenIdenticalBetrokkene =
     new Set(foundBetrokkenenSets).size === 1;
+
+  const aanvragenMap: AanvragenPerBetrokkene = { ontvanger: [], orphaned: [] };
 
   if (hasAllAanvragenIdenticalBetrokkene) {
     const hasOntvanger = foundBetrokkenenSets.some((betrokkenen) =>
@@ -351,20 +351,20 @@ function createAanvraagWithType(
     return withType('result-einde-recht');
   }
 
-  if (!isRegelingBesluitToegewezenState) {
+  if (isRegelingBesluitToegewezenState) {
     if (isRTMDeel1(aanvraag)) {
-      return withType(`aanvraag-${aanvraag.resultaat}`);
+      return withType('aanvraag-wijziging');
+    }
+
+    const previousAanvraag = aanvragen[idx - 1];
+    if (isRTMDeel1(previousAanvraag)) {
+      return withType(`result-wijziging-${aanvraag.resultaat}`);
     }
     return withType(`result-${aanvraag.resultaat}`);
   }
 
   if (isRTMDeel1(aanvraag)) {
-    return withType('aanvraag-wijziging');
-  }
-
-  const previousAanvraag = aanvragen[idx - 1];
-  if (isRegelingBesluitToegewezenState && isRTMDeel1(previousAanvraag)) {
-    return withType(`result-wijziging-${aanvraag.resultaat}`);
+    return withType(`aanvraag-${aanvraag.resultaat}`);
   }
   return withType(`result-${aanvraag.resultaat}`);
 }
