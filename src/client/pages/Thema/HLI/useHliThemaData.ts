@@ -28,6 +28,7 @@ export function useHliThemaData() {
     'title',
     true
   );
+  const specificaties = HLI.content?.specificaties ?? [];
   const breadcrumbs = useThemaBreadcrumbs(themaId);
   const hasRegelingen = !!regelingen.length;
   const title = getThemaTitle(hasStadspas, hasRegelingen);
@@ -53,6 +54,7 @@ export function useHliThemaData() {
     stadspassen,
     dateExpiryFormatted: HLI.content?.stadspas?.dateExpiryFormatted ?? null,
     regelingen,
+    specificaties,
     themaId,
     title,
     hasKindtegoed,

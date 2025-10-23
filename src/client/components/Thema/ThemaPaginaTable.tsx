@@ -48,6 +48,7 @@ export default function ThemaPaginaTable<
 
   const hasListPage = !!listPageRoute && maxItems !== -1;
 
+  console.log(hasListPage ? zaken.slice(0, maxItems) : zaken);
   return (
     <PageContentCell>
       <TableV2
