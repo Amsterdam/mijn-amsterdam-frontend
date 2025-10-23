@@ -11,6 +11,7 @@ export const routeConfig = {
   themaPage: {
     path: '/afval',
     documentTitle: `${themaTitle} | overzicht`,
+    trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
 
