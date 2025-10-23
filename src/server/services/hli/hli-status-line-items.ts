@@ -13,11 +13,6 @@ import {
   PCVERGOEDING,
 } from './status-line-items/regeling-pcvergoeding';
 import { REGELING_PERIODIEK } from './status-line-items/regeling-periodiek';
-import {
-  AV_RTM_DEEL1,
-  AV_RTM_DEEL2,
-  RTM,
-} from './status-line-items/regeling-rtm';
 import { featureToggle } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 
 export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<
@@ -26,11 +21,6 @@ export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<
   {
     productIdentificatie: [AV_UPCC, AV_PCVC, ...verzilveringCodes],
     statusLineItems: { name: 'PCVERGOEDING', transformers: PCVERGOEDING },
-  },
-  {
-    productIdentificatie: [AV_RTM_DEEL1, AV_RTM_DEEL2],
-    statusLineItems: { name: 'RTM', transformers: RTM },
-    isDisabled: !featureToggle.hliRegelingEnabledRTM,
   },
   {
     productIdentificatie: ['AV-GOV', 'AV-OVM', 'AV-RTM'],

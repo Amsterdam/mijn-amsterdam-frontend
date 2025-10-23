@@ -27,13 +27,13 @@ export function getBetrokkenKinderenDescription(
 }
 
 export function getBesluitDescription(
-  regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ): string {
   return `<p>
     ${
-      regeling.resultaat === 'toegewezen'
-        ? `U krijgt ${regeling.titel} per ${regeling.datumIngangGeldigheid ? defaultDateFormat(regeling.datumIngangGeldigheid) : ''}.`
-        : `U krijgt geen ${regeling.titel}.`
+      aanvraag.resultaat === 'toegewezen'
+        ? `U krijgt ${aanvraag.titel} per ${aanvraag.datumIngangGeldigheid ? defaultDateFormat(aanvraag.datumIngangGeldigheid) : ''}.`
+        : `U krijgt geen ${aanvraag.titel}.`
     }
     </p>
     <p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>

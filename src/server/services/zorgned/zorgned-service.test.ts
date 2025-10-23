@@ -54,6 +54,7 @@ describe('zorgned-service', () => {
     expect(
       forTesting.transformDocumenten([
         {
+          bestandsnaam: '',
           documentidentificatie: 'B73199',
           omschrijving: 'WRA beschikking Definitief',
           omschrijvingclientportaal: 'WRA beschikking Definitief',
@@ -73,6 +74,7 @@ describe('zorgned-service', () => {
     expect(
       forTesting.transformDocumenten([
         {
+          bestandsnaam: '',
           documentidentificatie: 'B73199',
           omschrijving: 'WRA beschikking Definitief',
           omschrijvingclientportaal: 'WRA beschikking Definitief',
@@ -98,7 +100,7 @@ describe('zorgned-service', () => {
               _embedded: {
                 aanvraag: aanvragenShuffled,
               },
-            } as ZorgnedResponseDataSource)
+            } as unknown as ZorgnedResponseDataSource)
             .map((a) => a.id)
         ).toStrictEqual([
           '2719515-1215588',
@@ -126,6 +128,7 @@ describe('zorgned-service', () => {
         'isActueel',
         'leverancier',
         'leveringsVorm',
+        'procesAanvraagOmschrijving',
         'productIdentificatie',
         'productsoortCode',
         'resultaat',
@@ -161,6 +164,7 @@ describe('zorgned-service', () => {
         documenten: [],
         id: '912837sdfsdf198723-116841',
         isActueel: true,
+        procesAanvraagOmschrijving: null,
         leverancier: 'Gebr Koenen B.V.',
         leveringsVorm: 'ZIN',
         productIdentificatie: 'WRA',
@@ -435,6 +439,7 @@ describe('zorgned-service', () => {
             isActueel: true,
             leverancier: 'Gebr Koenen B.V.',
             leveringsVorm: 'ZIN',
+            procesAanvraagOmschrijving: null,
             productIdentificatie: 'WRA',
             productsoortCode: 'WRA',
             resultaat: 'toegewezen',
