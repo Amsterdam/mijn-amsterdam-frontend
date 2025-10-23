@@ -4,6 +4,7 @@ import slug from 'slugme';
 
 import {
   HLIRegelingFrontend,
+  HLIRegelingSpecificatieFrontend,
   HLIresponseData,
   ZorgnedHLIRegeling,
 } from './hli-regelingen-types';
@@ -19,10 +20,12 @@ import {
   routeConfig,
 } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import {
+  ApiResponse,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
 } from '../../../universal/helpers/api';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import { dedupeDocumentsInDataSets } from '../../../universal/helpers/document';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import {
@@ -96,7 +99,7 @@ const getRTMDisplayStatus: GetDisplayStatusFn<
 function getDocumentsFrontend(
   sessionID: SessionID,
   documents: GenericDocument[]
-) {
+): GenericDocument[] {
   return documents.map((document) => {
     const idEncrypted = encryptSessionIdWithRouteIdParam(
       sessionID,
@@ -258,18 +261,69 @@ async function fetchRegelingen(authProfileAndToken: AuthProfileAndToken) {
   return aanvragenResponse;
 }
 
+async function fetchSpecificaties(
+  authProfileAndToken: AuthProfileAndToken
+): Promise<ApiResponse<HLIRegelingSpecificatieFrontend[]>> {
+  const response = await fetchZorgnedAanvragenHLI(
+    authProfileAndToken.profile.id
+  );
+  if (response.status === 'ERROR' || response.content === null) {
+    return response;
+  }
+
+  const aanvragen = response.content.reduce(
+    (
+      filteredAanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
+      aanvraag
+    ) => {
+      const documents = aanvraag.documenten.filter(
+        (d) => d.title === 'AV-RTM Specificatie'
+      );
+      if (!documents) {
+        return filteredAanvragen;
+      }
+      filteredAanvragen.push({ ...aanvraag, documenten: documents });
+      return filteredAanvragen;
+    },
+    [] as ZorgnedAanvraagWithRelatedPersonsTransformed[]
+  );
+
+  const specificaties: HLIRegelingSpecificatieFrontend[] = aanvragen.flatMap(
+    (aanvraag) => {
+      const specificaties = getDocumentsFrontend(
+        authProfileAndToken.profile.sid,
+        aanvraag.documenten
+      ).map((doc) => {
+        const specificatie: HLIRegelingSpecificatieFrontend = {
+          ...doc,
+          category: aanvraag.titel,
+          datePublishedFormatted: defaultDateFormat(doc.datePublished),
+        };
+        return specificatie;
+      });
+      return specificaties;
+    }
+  );
+
+  return apiSuccessResult(specificaties);
+}
+
 export async function fetchHLI(authProfileAndToken: AuthProfileAndToken) {
-  const [stadspasResult, regelingenResult] = await Promise.allSettled([
-    fetchStadspas(authProfileAndToken),
-    fetchRegelingen(authProfileAndToken),
-  ]);
+  const [stadspasResult, regelingenResult, specificatieResult] =
+    await Promise.allSettled([
+      fetchStadspas(authProfileAndToken),
+      fetchRegelingen(authProfileAndToken),
+      fetchSpecificaties(authProfileAndToken),
+    ]);
 
   const regelingenResponseData = getSettledResult(regelingenResult);
   const stadspasResponseData = getSettledResult(stadspasResult);
+  const specificatieResponseData = getSettledResult(specificatieResult);
 
   const HLIResponseData: HLIresponseData = {
     regelingen: regelingenResponseData.content ?? [],
     stadspas: stadspasResponseData.content,
+    specificaties: specificatieResponseData.content ?? [],
   };
 
   return apiSuccessResult(

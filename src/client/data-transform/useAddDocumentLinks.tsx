@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
 
-import { WpiIncomeSpecificationTransformed } from '../../../../server/services/wpi/wpi-types';
-import { DocumentLink } from '../../../components/DocumentList/DocumentLink';
+import { GenericDocument } from '../../universal/types/App.types';
+import { DocumentLink } from '../components/DocumentList/DocumentLink';
 
-export function useAddDocumentLinkComponents(
-  specificaties: WpiIncomeSpecificationTransformed[]
+export function useAddDocumentLinkComponents<T extends GenericDocument>(
+  specificaties: T[]
 ) {
   return useMemo(() => {
     return specificaties.map((document) => {

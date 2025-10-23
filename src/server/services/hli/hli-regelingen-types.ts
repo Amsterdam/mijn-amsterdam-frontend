@@ -26,4 +26,10 @@ export type HLIRegelingFrontend = ZaakAanvraagDetail & {
 export type HLIresponseData = {
   regelingen: HLIRegelingFrontend[];
   stadspas: StadspasResponseFrontend | null;
+  specificaties: HLIRegelingSpecificatieFrontend[];
+};
+
+export type HLIRegelingSpecificatieFrontend = GenericDocument & {
+  category: string;
+  datePublishedFormatted: string;
 };

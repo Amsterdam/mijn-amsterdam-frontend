@@ -24,7 +24,13 @@ export const HLIRoutes = [
     isActive: featureToggle.hliActive,
   },
   {
-    route: routeConfig.listPage.path,
+    route: routeConfig.specificatieListPage.path,
+    // RP TODO: wrong list
+    Component: HLIList,
+    isActive: featureToggle.hliRegelingEnabledRTM,
+  },
+  {
+    route: routeConfig.regelingenListPage.path,
     Component: HLIList,
     isActive: featureToggle.hliActive,
   },
