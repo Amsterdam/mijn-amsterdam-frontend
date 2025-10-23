@@ -73,14 +73,6 @@ function replaceBetrokkenen(
   };
 }
 
-// RP TODO: Use later in a test.
-const SPECIFICATIE_DOCUMENENT = {
-  id: 'B3374604',
-  title: 'AV-RTM Specificatie',
-  url: '',
-  datePublished: '2025-02-20T11:49:30.42',
-};
-
 const base = {
   bsnAanvrager: ONTVANGER_ID,
   betrokkenen: [ONTVANGER_ID],
