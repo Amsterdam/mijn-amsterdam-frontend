@@ -186,11 +186,18 @@ function mapAanvragenPerBetrokkenen(
         if (bsn === bsnOntvanger) {
           aanvragenMap.ontvanger.push(aanvraag);
         } else {
+          const newAanvraag = {
+            ...aanvraag,
+            betrokkenen: [bsn],
+            betrokkenPersonen: aanvraag.betrokkenPersonen.filter(
+              (p) => p.bsn === bsn
+            ),
+          };
           const aanvraagInMap = aanvragenMap[bsn];
           if (aanvraagInMap) {
-            aanvragenMap[bsn].push(aanvraag);
+            aanvragenMap[bsn].push(newAanvraag);
           } else {
-            aanvragenMap[bsn] = [aanvraag];
+            aanvragenMap[bsn] = [newAanvraag];
           }
         }
       }

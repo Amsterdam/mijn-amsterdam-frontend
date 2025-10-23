@@ -1702,6 +1702,27 @@ describe('Mixed betrokkenen', () => {
       { status: 'Besluit', description: descriptions.afgewezen },
     ]);
   });
+
+  test('Many and Overlapping betrokkenen', () => {
+    const a: Betrokkene = { bsn: '111111111' };
+    const b: Betrokkene = { bsn: '222222222' };
+    const c: Betrokkene = { bsn: '333333333' };
+    const aanvragen = attachIDs([
+      replaceBetrokkenen(RTM_1_AANVRAAG, [a, b]),
+      replaceBetrokkenen(RTM_1_AANVRAAG, [a]),
+      replaceBetrokkenen(RTM_1_AANVRAAG, [b, c]),
+    ]);
+    const regelingen = transformRegelingenForFrontend(aanvragen).sort((a, b) =>
+      a.id < b.id ? -1 : 1
+    );
+    expect(regelingen.length).toBe(3);
+    const betrokkenen = regelingen.map((r) => r.betrokkenen);
+    expect(betrokkenen).toStrictEqual([
+      '111111111 - Flex',
+      '222222222 - Flex',
+      '333333333 - Flex',
+    ]);
+  });
 });
 
 test('Handles multipart ids', () => {
