@@ -39,7 +39,7 @@ export const routeConfig = {
     documentTitle: `Burgerzaken | ${themaTitle}`,
   },
   listPage: {
-    path: '/papnspoort-en-id-kaart/lijst/:kind/:page?',
+    path: '/paspoort-en-id-kaart/lijst/:kind/:page?',
     documentTitle: (params) =>
       `${params?.documentType === 'paspoort' ? 'Paspoort' : 'ID-kaart'} | ${themaTitle}`,
     trackingUrl: null,
