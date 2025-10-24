@@ -139,10 +139,6 @@ authRouterDevelopment.get(
         href,
         name: name_,
         mokum: name.startsWith('Provincie') ? 'Nee' : 'Ja',
-        digid:
-          authMethod === 'digid' && id.toString().match(/^(999|0)/)
-            ? 'Ja'
-            : 'Nee',
         id,
       };
     });

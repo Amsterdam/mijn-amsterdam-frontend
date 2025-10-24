@@ -163,7 +163,7 @@ describe('brp.ts', () => {
         expect.objectContaining({
           headers: expect.objectContaining({
             Authorization: 'Bearer test-token',
-            'X-Correlation-ID': 'fetch-brp-test-session-id',
+            'X-Correlation-ID': 'test-session-id',
           }),
         })
       );
