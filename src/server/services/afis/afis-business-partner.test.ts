@@ -140,7 +140,9 @@ describe('Afis Business Partner services', () => {
       .get(ROUTES.businesspartnerFullName)
       .reply(200, responseBodyBusinessPartnerFullName);
 
-    const response = await fetchAfisBusinessPartnerDetails(GENERIC_ID);
+    const response = await fetchAfisBusinessPartnerDetails({
+      businessPartnerId: GENERIC_ID,
+    });
 
     expect(response).toMatchInlineSnapshot(`
         {
@@ -242,7 +244,9 @@ it('Omits email and phone properties when the business partner details data qual
     },
   });
 
-  const response = await fetchAfisBusinessPartnerDetails(GENERIC_ID);
+  const response = await fetchAfisBusinessPartnerDetails({
+    businessPartnerId: GENERIC_ID,
+  });
 
   expect(response).toMatchInlineSnapshot(`
       {
@@ -279,7 +283,9 @@ it('Omits email and phone properties when the business partner details data qual
     },
   });
 
-  const response2 = await fetchAfisBusinessPartnerDetails(GENERIC_ID);
+  const response2 = await fetchAfisBusinessPartnerDetails({
+    businessPartnerId: GENERIC_ID,
+  });
 
   expect(response2).toMatchInlineSnapshot(`
       {

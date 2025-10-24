@@ -191,7 +191,7 @@ describe('route-helpers', () => {
 
     test('With ZOD error', () => {
       const responseData2 = apiErrorResult(
-        'Bad request: First error, Second error',
+        'Bad request:  First error -  Second error',
         null,
         400
       );
