@@ -66,7 +66,7 @@ export type VarenVergunningExploitatieType = DecosZaakBase &
   DecosVarenZaakVergunning & {
     itemType: 'varens';
     caseType: null;
-    title: 'Varen exploitatievergunning';
+    title: 'Vergunning passagiersvaart';
   };
 
 export type ZaakVergunningExploitatieType = DecosVarenZaakBase & {
