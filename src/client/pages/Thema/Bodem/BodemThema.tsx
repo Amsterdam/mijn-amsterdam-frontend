@@ -1,5 +1,6 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
+import { themaConfig } from './Bodem-thema-config';
 import { useBodemData } from './useBodemData.hook';
 import { LoodMetingFrontend } from '../../../../server/services/bodem/types';
 import { PageContentCell } from '../../../components/Page/Page';
@@ -14,11 +15,10 @@ export function BodemThema() {
     isLoading,
     isError,
     linkListItems,
-    id,
+    themaId,
     title,
-    routeConfig,
   } = useBodemData();
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const tables = Object.entries(tableConfig).map(
     ([
@@ -40,7 +40,7 @@ export function BodemThema() {
   );
   return (
     <ThemaPagina
-      id={id}
+      id={themaId}
       title={title}
       isLoading={isLoading}
       isError={isError}

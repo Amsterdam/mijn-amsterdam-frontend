@@ -92,10 +92,12 @@ export const routeConfig = {
   listPage: {
     path: '/vergunningen/lijst/:kind/:page?',
     documentTitle: getListPageDocumentTitle(themaTitle),
+    trackingUrl: null,
   },
   themaPage: {
     path: '/vergunningen',
     documentTitle: `${themaTitle} | overzicht`,
+    trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
 

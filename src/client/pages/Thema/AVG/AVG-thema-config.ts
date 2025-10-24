@@ -35,10 +35,12 @@ export const routeConfig = {
       const kind = params?.kind as ListPageParamKind;
       return `${capitalizeFirstLetter(kind === 'lopende-aanvragen' ? 'Lopende' : 'Afgehandelde')} ${themaTitle} verzoeken | overzicht`;
     },
+    trackingUrl: null,
   },
   themaPage: {
     path: '/avg',
     documentTitle: `${themaTitle} verzoeken | overzicht`,
+    trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
 

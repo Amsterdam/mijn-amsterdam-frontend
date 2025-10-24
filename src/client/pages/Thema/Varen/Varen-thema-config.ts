@@ -55,10 +55,12 @@ export const routeConfig = {
   listPage: {
     path: '/varen/vergunningen/lijst/:kind/:page?',
     documentTitle: getVarenListPageDocumentTitle(themaTitle),
+    trackingUrl: null,
   },
   themaPage: {
     path: '/varen',
     documentTitle: `${themaTitle} | overzicht`,
+    trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
 

@@ -12,6 +12,7 @@ import {
   TextPageV2,
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
+import { ThemaConfigBase } from '../../config/thema-types';
 import { getRedactedClass } from '../../helpers/cobrowse';
 import {
   compareThemas,
@@ -22,7 +23,7 @@ import { afvalSectionProps } from '../Thema/Afval/InfoSection';
 import { AVGsectionProps } from '../Thema/AVG/InfoSection';
 import { belastingenSectionProps } from '../Thema/Belastingen/InfoSection';
 import { bezwarenSectionProps } from '../Thema/Bezwaren/InfoSection';
-import { bodemsectionProps } from '../Thema/Bodem/InfoSection';
+import { themaConfig as bodemThemaConfig } from '../Thema/Bodem/Bodem-thema-config';
 import { burgerzakenSectionProps } from '../Thema/Burgerzaken/InfoSection';
 import { erfpachtSectionProps } from '../Thema/Erfpacht/InfoSection';
 import {
@@ -50,7 +51,17 @@ export type InfoSection = {
   listItems: ListItems;
   active: boolean;
 };
-type ListItems = Array<{ text: string; listItems?: string[] } | string>;
+
+function createInfoSection(themaConfig: ThemaConfigBase): InfoSection {
+  return {
+    id: themaConfig.id,
+    active: themaConfig.featureToggle.themaActive,
+    title: themaConfig.title,
+    listItems: themaConfig.uitlegPageSections.listItems,
+  };
+}
+
+type ListItems = Array<{ text?: null | string; listItems?: string[] } | string>;
 
 export type SectionProps = {
   title: string;
@@ -81,7 +92,7 @@ const sections: InfoSection[] = [
   milieuzonesectionProps,
   overtredingensectionProps,
   vergunningensectionProps,
-  bodemsectionProps,
+  createInfoSection(bodemThemaConfig),
   varensectionProps,
 ];
 
