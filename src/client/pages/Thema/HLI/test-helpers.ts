@@ -1,3 +1,4 @@
+import { HLIRegelingSpecificatieFrontend } from '../../../../server/services/hli/hli-regelingen-types';
 import {
   StadspasFrontend,
   StadspasOwner,
@@ -9,6 +10,7 @@ export function createHLIState(withData: {
   status?: string;
   stadspas?: StadspasFrontend[];
   regelingen?: object[];
+  specificaties?: HLIRegelingSpecificatieFrontend[];
 }): AppState {
   const state = {
     HLI: {
@@ -19,6 +21,7 @@ export function createHLIState(withData: {
           stadspassen: withData.stadspas || [],
           dateExpiryFormatted: '31 juli 2025',
         },
+        specificaties: withData.specificaties || [],
       },
     },
   } as unknown as AppState;
