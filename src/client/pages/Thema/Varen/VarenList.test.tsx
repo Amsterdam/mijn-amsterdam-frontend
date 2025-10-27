@@ -107,7 +107,7 @@ describe('<VarenList />', () => {
     expectHeaders(table, [
       'Naam vaartuig',
       'Omschrijving',
-      'Aangevraagd',
+      'Datum aanvraag',
       'Status',
     ]);
 

@@ -277,7 +277,7 @@ describe('<Varen />', () => {
       expectHeaders(lopendeAanvraagTable, [
         'Naam vaartuig',
         'Omschrijving',
-        'Aangevraagd',
+        'Datum aanvraag',
         'Status',
       ]);
 

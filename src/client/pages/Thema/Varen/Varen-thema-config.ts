@@ -99,7 +99,7 @@ export const tableConfig: {
       props: {
         detailLinkComponent: 'Naam vaartuig',
         title: 'Omschrijving',
-        dateRequestFormatted: 'Aangevraagd',
+        dateRequestFormatted: 'Datum aanvraag',
         displayStatus: 'Status',
       },
       colWidths: {
