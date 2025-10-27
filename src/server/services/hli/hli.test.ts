@@ -248,7 +248,6 @@ describe('HLI', () => {
       productsoortCode: '',
       bsnAanvrager: '123456789',
       beschiktProductIdentificatie: 'bpi-123',
-      procesAanvraagOmschrijving: null,
       beschikkingNummer: null,
     };
 
@@ -262,7 +261,7 @@ describe('HLI', () => {
       },
     ];
 
-    const result = forTesting.transformRegelingForFrontend(
+    const result = await forTesting.transformRegelingForFrontend(
       sessionID,
       aanvraag,
       statusLineItems

@@ -222,7 +222,7 @@ async function fetchSpecificaties(
   const response = await fetchZorgnedAanvragenHLI(
     authProfileAndToken.profile.id
   );
-  if (response.status === 'ERROR' || response.content === null) {
+  if (response.status !== 'OK') {
     return response;
   }
 

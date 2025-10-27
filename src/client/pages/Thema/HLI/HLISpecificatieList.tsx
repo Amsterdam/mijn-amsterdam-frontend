@@ -12,7 +12,7 @@ export function HLISpecificatieList() {
     breadcrumbs,
     routeConfig,
   } = useHliThemaData();
-  useHTMLDocumentTitle(routeConfig.detailPage);
+  useHTMLDocumentTitle(routeConfig.specificatieListPage);
 
   const { sort, title, displayProps, listPageRoute } = specificatieTableConfig;
 
