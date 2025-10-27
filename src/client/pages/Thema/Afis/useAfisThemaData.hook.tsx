@@ -147,8 +147,7 @@ function useAfisFacturenApi(
 ) {
   const url =
     businessPartnerIdEncrypted && state && state !== 'open'
-      ? generatePath(BFFApiUrls.AFIS_FACTUREN, { state }) +
-        `?id=${businessPartnerIdEncrypted}`
+      ? `${BFFApiUrls.AFIS_FACTUREN}/${state}?id=${businessPartnerIdEncrypted}`
       : null;
 
   const { data, isError, isLoading } = useBffApi<AfisFacturenResponse>(url);

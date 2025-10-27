@@ -75,7 +75,7 @@ describe('<AfisFacturen />', () => {
     });
   });
 
-  test.only('Lists Closed facturen', async () => {
+  test('Lists Closed facturen', async () => {
     bffApi
       .get(
         `/services/afis/facturen/afgehandeld?id=${businessPartnerIdEncrypted}`
