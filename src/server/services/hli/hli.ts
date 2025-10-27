@@ -292,6 +292,7 @@ export async function fetchHLI(authProfileAndToken: AuthProfileAndToken) {
 
 export const forTesting = {
   fetchRegelingen,
+  fetchSpecificaties,
   getDisplayStatus,
   getDocumentsFrontend,
   transformRegelingenForFrontend,

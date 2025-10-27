@@ -123,7 +123,7 @@ describe('HLI', () => {
   test('fetchRegelingen', async () => {
     const authProfileAndToken = getAuthProfileAndToken('private');
 
-    (fetchZorgnedAanvragenHLI as unknown as Mock).mockResolvedValue(
+    (fetchZorgnedAanvragenHLI as unknown as Mock).mockResolvedValueOnce(
       apiSuccessResult([])
     );
 
@@ -131,11 +131,63 @@ describe('HLI', () => {
     expect(result.status).toBe('OK');
     expect(result.content).toEqual([]);
 
-    (fetchZorgnedAanvragenHLI as unknown as Mock).mockResolvedValue(
+    (fetchZorgnedAanvragenHLI as unknown as Mock).mockResolvedValueOnce(
       apiErrorResult('Error fetching aanvragen', null)
     );
 
     const resultError = await forTesting.fetchRegelingen(authProfileAndToken);
+    expect(resultError.status).toBe('ERROR');
+  });
+
+  test('fetchSpecificaties: filters out the correct specificatie documents', async () => {
+    const authProfileAndToken = getAuthProfileAndToken('private');
+
+    (fetchZorgnedAanvragenHLI as unknown as Mock).mockResolvedValueOnce(
+      apiSuccessResult([
+        {
+          titel: 'PC Vergoeding',
+          documenten: [
+            {
+              title: 'PC Vergoeding Specificatie',
+              datePublished: '2024-11-20T18:27:42.367',
+            },
+          ],
+        },
+        {
+          titel: 'Regeling Tegemoetkoming Meerkosten',
+          documenten: [
+            {
+              title: 'AV-RTM Non-Specificatie',
+              datePublished: '2024-11-20T18:27:42.367',
+            },
+            {
+              title: 'AV-RTM Specificatie',
+              datePublished: '2024-11-20T18:27:42.367',
+            },
+          ],
+        },
+      ])
+    );
+
+    const result = await forTesting.fetchSpecificaties(authProfileAndToken);
+    expect(result.status).toBe('OK');
+    expect(result.content).toStrictEqual([
+      {
+        category: 'Regeling Tegemoetkoming Meerkosten',
+        datePublished: '2024-11-20T18:27:42.367',
+        datePublishedFormatted: '20 november 2024',
+        id: 'test-encrypted-id',
+        title: 'AV-RTM Specificatie',
+        url: 'http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id',
+      },
+    ]);
+
+    (fetchZorgnedAanvragenHLI as unknown as Mock).mockResolvedValueOnce(
+      apiErrorResult('Error fetching aanvragen', null)
+    );
+
+    const resultError =
+      await forTesting.fetchSpecificaties(authProfileAndToken);
     expect(resultError.status).toBe('ERROR');
   });
 
@@ -196,6 +248,8 @@ describe('HLI', () => {
       productsoortCode: '',
       bsnAanvrager: '123456789',
       beschiktProductIdentificatie: 'bpi-123',
+      procesAanvraagOmschrijving: null,
+      beschikkingNummer: null,
     };
 
     const statusLineItems: StatusLineItem[] = [
