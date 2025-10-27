@@ -148,8 +148,13 @@ function transformBenkBrpResponse(
           datumSluitingFormatted:
             partner.aangaanHuwelijkPartnerschap?.datum?.langFormaat ?? null,
           persoon: {
+            geboortedatum: getDatum(partner.geboorte?.datum),
+            geboortedatumFormatted:
+              partner.geboorte?.datum?.langFormaat ?? null,
             voornamen: partner.naam?.voornamen ?? null,
             geslachtsnaam: partner.naam?.geslachtsnaam ?? null,
+            omschrijvingAdellijkeTitel:
+              partner.naam?.adellijkeTitelPredicaat?.omschrijving ?? null,
             voorvoegselGeslachtsnaam: partner.naam?.voorvoegsel ?? null,
             opgemaakteNaam: partner.naam?.volledigeNaam ?? null,
             geboortelandnaam: partner.geboorte?.land?.omschrijving ?? null,
