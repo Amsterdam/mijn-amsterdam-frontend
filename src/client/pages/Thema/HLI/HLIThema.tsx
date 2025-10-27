@@ -10,7 +10,6 @@ import {
   HLIRegelingSpecificatieFrontend,
 } from '../../../../server/services/hli/hli-regelingen-types';
 import { type StadspasResponseFrontend } from '../../../../server/services/hli/stadspas-types';
-import { dateSort } from '../../../../universal/helpers/date';
 import { entries } from '../../../../universal/helpers/utils';
 import { MaRouterLink } from '../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../components/Page/Page';
@@ -37,18 +36,6 @@ type StadspasDisplayProps = {
 const stadspasDisplayProps: DisplayProps<StadspasDisplayProps> = {
   owner: '',
   actief: 'Status',
-};
-
-type SpecificatieDisplayProps = {
-  datePublishedFormatted: ReactNode;
-  category: ReactNode;
-  documentUrl: ReactNode;
-};
-
-const specificatieDisplayProps: DisplayProps<SpecificatieDisplayProps> = {
-  datePublishedFormatted: 'Datum',
-  category: 'Regeling',
-  documentUrl: 'Document',
 };
 
 function Stadspassen({
@@ -103,6 +90,7 @@ export function HLIThema() {
     themaId,
     title,
     tableConfig,
+    specificatieTableConfig,
     dependencyError,
     stadspassen,
     dateExpiryFormatted,
@@ -165,12 +153,11 @@ export function HLIThema() {
             )}
             {!!specificaties.length && (
               <ThemaPaginaTable<HLIRegelingSpecificatieFrontend>
-                title="Specificaties"
-                textNoContent="U heeft nog geen specificaties"
-                displayProps={specificatieDisplayProps}
-                zaken={specificaties.sort(dateSort('datePublished', 'desc'))}
-                listPageRoute={routeConfig.specificatieListPage.path}
-                maxItems={3}
+                title={specificatieTableConfig.title}
+                displayProps={specificatieTableConfig.displayProps}
+                zaken={specificaties.sort(specificatieTableConfig.sort)}
+                maxItems={specificatieTableConfig.maxItems}
+                listPageRoute={specificatieTableConfig.listPageRoute}
               />
             )}
             {!!regelingen?.length && regelingenTables}
