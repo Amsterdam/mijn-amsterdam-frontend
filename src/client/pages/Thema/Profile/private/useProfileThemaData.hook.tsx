@@ -12,8 +12,8 @@ export function useProfileThemaData() {
   } = useContactmomenten();
 
   return {
-  id: themaIdBRP,
-  title: themaTitle.BRP,
+    id: themaIdBRP,
+    title: themaTitle.BRP,
     brpContent: BRP.content,
     isErrorBrp: isError(BRP),
     isErrorContactmomenten,
