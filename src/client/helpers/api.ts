@@ -13,7 +13,8 @@ export function generateBffApiUrl(
 export function generateBffApiUrlWithEncryptedPayloadQuery(
   route: keyof typeof BFFApiUrls,
   encryptedPayload: string,
-  routeParams?: Record<string, string>
+  routeParams?: Record<string, string>,
+  payloadParamName = 'payload'
 ) {
-  return `${generateBffApiUrl(route, routeParams)}?payload=${encodeURIComponent(encryptedPayload)}`;
+  return `${generateBffApiUrl(route, routeParams)}?${payloadParamName}=${encodeURIComponent(encryptedPayload)}`;
 }

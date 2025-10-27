@@ -34,6 +34,7 @@ describe('useBffApi', () => {
       data: null,
       errorData: null,
       fetch: expect.any(Function),
+      optimisticUpdateContent: expect.any(Function),
     });
   });
 
@@ -139,6 +140,7 @@ describe('useBffApi', () => {
       data: mockResponse,
       errorData: null,
       fetch: expect.any(Function),
+      optimisticUpdateContent: expect.any(Function),
     });
   });
 
@@ -171,6 +173,7 @@ describe('useBffApi', () => {
       errorData:
         'HTTP Error: Request to http://localhost/test failed with status 500 message: Failed',
       fetch: expect.any(Function),
+      optimisticUpdateContent: expect.any(Function),
     });
   });
 
@@ -213,6 +216,7 @@ describe('useBffApi', () => {
       data: null,
       errorData: 'Unknown error: Stop now!',
       fetch: expect.any(Function),
+      optimisticUpdateContent: expect.any(Function),
     });
   });
 });

@@ -28,7 +28,7 @@ import { entries } from '../../../../universal/helpers/utils';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { DocumentLink } from '../../../components/DocumentList/DocumentLink';
 import { MaLink, MaRouterLink } from '../../../components/MaLink/MaLink';
-import { BFFApiUrls } from '../../../config/api';
+import { generateBffApiUrlWithEncryptedPayloadQuery } from '../../../helpers/api';
 import { useBffApi } from '../../../hooks/api/useBffApi';
 import { useSmallScreen } from '../../../hooks/media.hook';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore';
@@ -147,7 +147,14 @@ function useAfisFacturenApi(
 ) {
   const url =
     businessPartnerIdEncrypted && state && state !== 'open'
-      ? `${BFFApiUrls.AFIS_FACTUREN}/${state}?id=${businessPartnerIdEncrypted}`
+      ? generateBffApiUrlWithEncryptedPayloadQuery(
+          'AFIS_FACTUREN',
+          businessPartnerIdEncrypted,
+          {
+            state,
+          },
+          'id'
+        )
       : null;
 
   const { data, isError, isLoading } = useBffApi<AfisFacturenResponse>(url);

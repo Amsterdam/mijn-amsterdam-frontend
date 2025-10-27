@@ -39,7 +39,9 @@ function generateApiUrl(
   return businessPartnerIdEncrypted
     ? generateBffApiUrlWithEncryptedPayloadQuery(
         route,
-        businessPartnerIdEncrypted
+        businessPartnerIdEncrypted,
+        undefined,
+        'id'
       )
     : null;
 }
