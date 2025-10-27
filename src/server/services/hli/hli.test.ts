@@ -209,7 +209,7 @@ describe('HLI', () => {
       },
     ];
 
-    const result = await forTesting.transformRegelingForFrontend(
+    const result = forTesting.transformRegelingForFrontend(
       sessionID,
       aanvraag,
       statusLineItems
@@ -224,6 +224,7 @@ describe('HLI', () => {
     const aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[] = [
       {
         id: 'aanvraag1',
+        beschikkingNummer: null,
         titel: 'Test Aanvraag',
         isActueel: true,
         datumBesluit: '2023-01-01',
