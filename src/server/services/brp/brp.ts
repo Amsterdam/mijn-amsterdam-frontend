@@ -20,6 +20,7 @@ import { ONE_HOUR_MS } from '../../config/app';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
+import { getContextOperationId } from '../monitoring';
 import { fetchAuthTokenHeader } from '../ms-oauth/oauth-token';
 import { fetchBRP } from '../profile/brp';
 import type { BRPData, Persoon } from '../profile/brp.types';
@@ -213,19 +214,19 @@ function translateBSN(bsn: BSN): BSN {
 
   return translationsMap.get(bsn) ?? bsn;
 }
-
 export async function fetchBrpByBsn(sessionID: AuthProfile['sid'], bsn: BSN[]) {
   const response = await fetchBenkBrpTokenHeader();
   if (response.status !== 'OK') {
     return response;
   }
+
   const requestConfig = getApiConfig('BENK_BRP', {
     formatUrl(requestConfig) {
       return `${requestConfig.url}/personen`;
     },
     headers: {
       ...response.content,
-      'X-Correlation-ID': `fetch-brp-${sessionID}`, // Required for tracing
+      'X-Correlation-ID': getContextOperationId(sessionID), // Required for tracing
     },
     data: {
       type: 'RaadpleegMetBurgerservicenummer',

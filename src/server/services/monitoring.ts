@@ -13,7 +13,11 @@ import {
 } from './should-send-telemetry';
 import { IS_DEVELOPMENT } from '../../universal/config/env';
 import { logger } from '../logging';
-if (!IS_DEVELOPMENT && process.env.NODE_ENV !== 'test') {
+
+if (
+  process.env.APPLICATIONINSIGHTS_CONNECTION_STRING &&
+  process.env.NODE_ENV !== 'test'
+) {
   appInsights
     .setup(process.env.APPLICATIONINSIGHTS_CONNECTION_STRING)
     .setInternalLogging(false)
@@ -57,6 +61,12 @@ if (client) {
   } catch {
     client.config.samplingPercentage = 100;
   }
+}
+
+export function getContextOperationId(
+  fallbackId: string = 'correlation-id-not-in-context'
+): string | undefined {
+  return appInsights.getCorrelationContext()?.operation.id ?? fallbackId;
 }
 
 export type Severity =
