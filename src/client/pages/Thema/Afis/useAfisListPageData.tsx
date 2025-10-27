@@ -1,10 +1,14 @@
+import {
+  facturenTableConfig,
+  listPageTitle,
+  routeConfig,
+  themaId,
+} from './Afis-thema-config';
+import { useAfisFacturenApi, useTransformFacturen } from './useAfisFacturenApi';
 import type { AfisFactuurState } from '../../../../server/services/afis/afis-types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
-import { themaId } from './Afis-thema-config';
-import { useTransformFacturen } from './useAfisThemaData.hook';
-import { useAfisFacturenApi } from './useAfisFacturenApi';
 
 export function useAfisListPageData(state: AfisFactuurState) {
   const { AFIS } = useAppStateGetter();

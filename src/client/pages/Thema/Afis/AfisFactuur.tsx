@@ -2,8 +2,9 @@ import { Alert } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router';
 
 import type { AfisFactuurFrontend } from './Afis-thema-config';
-import { getDocumentLink, useAfisThemaData } from './useAfisThemaData.hook';
+import { getDocumentLink } from './useAfisFacturenApi';
 import { useAfisListPageData } from './useAfisListPageData';
+import { useAfisThemaData } from './useAfisThemaData.hook';
 import type { AfisFactuurState } from '../../../../server/services/afis/afis-types';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import LoadingContent from '../../../components/LoadingContent/LoadingContent';
