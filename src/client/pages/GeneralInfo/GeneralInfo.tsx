@@ -56,7 +56,7 @@ function createInfoSection(themaConfig: ThemaConfigBase): InfoSection {
   return {
     id: themaConfig.id,
     active: themaConfig.featureToggle.themaActive,
-    title: themaConfig.title,
+    title: themaConfig.uitlegPageSections.title,
     listItems: themaConfig.uitlegPageSections.listItems,
   };
 }
