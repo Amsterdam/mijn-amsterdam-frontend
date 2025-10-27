@@ -60,7 +60,7 @@ describe('<Erfpacht/DossierDetail />', () => {
       expect(
         screen.getByRole('heading', { name: 'Erfpachtdossier' })
       ).toBeInTheDocument();
-      expect(screen.getByText('Foutmelding')).toBeInTheDocument();
+      expect(screen.getByText('Geen gegevens gevonden')).toBeInTheDocument();
       expect(
         screen.getByText('We kunnen op dit moment geen gegevens tonen.')
       ).toBeInTheDocument();

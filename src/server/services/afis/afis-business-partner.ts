@@ -202,7 +202,7 @@ export async function fetchAfisBusinessPartnerDetails(
   let phoneResponse: ApiResponse_DEPRECATED<AfisBusinessPartnerPhone | null>;
   let emailResponse: ApiResponse_DEPRECATED<AfisBusinessPartnerEmail | null>;
 
-  if (addressResponse.status === 'OK' && addressResponse.content) {
+  if (addressResponse.status === 'OK' && addressResponse.content?.id) {
     const phoneRequest = fetchPhoneNumber(addressResponse.content.id);
     const emailRequest = fetchEmail(addressResponse.content.id);
 

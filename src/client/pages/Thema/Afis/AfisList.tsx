@@ -23,6 +23,7 @@ function AfisListPageBody({ state }: { state: AfisFactuurState }) {
 
 export function AfisList() {
   const { state = 'open' } = useParams<{ state: AfisFactuurState }>();
+  console.log('stattat', state);
   const {
     facturenListResponse,
     isListPageError,

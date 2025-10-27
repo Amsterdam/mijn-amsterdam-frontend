@@ -155,3 +155,5 @@ process.env.BFF_AMSAPP_NONCE = '123456789123456789123456';
 process.env.DEBUG_RESPONSE_DATA = '';
 
 process.env.BFF_CONTACTMOMENTEN_BASE_URL = `${remoteApiHost}/salesforce/contactmomenten`;
+
+process.env.BFF_POM_API_BASE_URL = `${remoteApiHost}/pom`;

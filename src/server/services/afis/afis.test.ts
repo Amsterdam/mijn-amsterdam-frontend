@@ -13,11 +13,13 @@ const mocks = vi.hoisted(() => {
   };
 });
 
-vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => {
+// encryptPayloadAndSessionID;
+
+vi.mock('../../helpers/encrypt-decrypt', async (importOriginal) => {
   const original: object = await importOriginal();
   return {
     ...original,
-    encryptSessionIdWithRouteIdParam: vi
+    encryptPayloadAndSessionID: vi
       .fn()
       .mockReturnValue(mocks.MOCK_VALUE_ENCRYPTED),
     decrypt: vi.fn().mockReturnValue(mocks.MOCK_VALUE_DECRYPTED),

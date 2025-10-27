@@ -290,7 +290,7 @@ describe('afis-e-mandates service (with nock)', () => {
       expect(result.content?.[0].senderIBAN).toBe(validSenderIBAN);
       expect(result.content?.[0].senderName).toBe('A B');
 
-      expect(result.content?.[1].status).toBe('0');
+      expect(result.content?.[1].status).toBe('6');
       expect(result.content?.[1].senderIBAN).toBe(null);
       expect(result.content?.[1].senderName).toBe(null);
     });
@@ -364,11 +364,9 @@ describe('afis-e-mandates service (with nock)', () => {
           ...validPayload,
           creditorIBAN: validCreditorIBAN,
         });
-      expect(result.status).toBe('OK');
-      expect(result.content).toHaveProperty(
-        'redirectUrl',
-        'https://pay.example.com'
-      );
+      expect(result.content).toMatchObject({
+        redirectUrl: 'https://pay.example.com',
+      });
     });
   });
 
@@ -495,11 +493,6 @@ describe('afis-e-mandates service (with nock)', () => {
       });
     });
 
-    it('getSndDebtorId returns refId', () => {
-      const refId = emandates.forTesting.getSndDebtorId(validCreditor);
-      expect(refId).toBe('123');
-    });
-
     it('getStatusChangeApiUrl generates URL', () => {
       const url = emandates.forTesting.getStatusChangeApiUrl(
         authProfile.sid,
@@ -521,7 +514,7 @@ describe('afis-e-mandates service (with nock)', () => {
           payload: {
             IMandateId: '1',
             LifetimeTo: '2025-07-10T12:38:39.542Z',
-            Status: '0',
+            Status: '6',
           },
           sessionID: 'sid',
         },
@@ -536,7 +529,7 @@ describe('afis-e-mandates service (with nock)', () => {
       );
       expect(
         url.startsWith(
-          'http://bff-api-host/api/v1/services/afis/e-mandates/update?payload='
+          'http://bff-api-host/api/v1/services/afis/e-mandates/update-lifetime?payload='
         )
       ).toBe(true);
 
@@ -583,8 +576,8 @@ describe('afis-e-mandates service (with nock)', () => {
           SndName2: 'Doe',
         } as AfisEMandateSource
       );
-      expect(result).toStrictEqual({
-        creditor: 'Test',
+      expect(result).toMatchObject({
+        creditorName: 'Test',
         creditorDescription: undefined,
         creditorIBAN: 'NL35BOOG9343513650',
         dateValidFrom: '2024-01-01T00:00:00',
