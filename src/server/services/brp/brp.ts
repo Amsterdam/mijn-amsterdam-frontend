@@ -169,6 +169,8 @@ function transformBenkBrpResponse(
           voornamen: ouder.naam?.voornamen ?? null,
           geslachtsnaam: ouder.naam?.geslachtsnaam ?? null,
           voorvoegselGeslachtsnaam: ouder.naam?.voorvoegsel ?? null,
+          geboorteplaatsnaam: ouder.geboorte?.plaats?.omschrijving ?? null,
+          geboortelandnaam: ouder.geboorte?.land?.omschrijving ?? null,
         })) ?? [],
     kinderen:
       persoon.kinderen
@@ -180,6 +182,8 @@ function transformBenkBrpResponse(
           voornamen: kind.naam?.voornamen ?? null,
           geslachtsnaam: kind.naam?.geslachtsnaam ?? null,
           voorvoegselGeslachtsnaam: kind.naam?.voorvoegsel ?? null,
+          geboorteplaatsnaam: kind.geboorte?.plaats?.omschrijving ?? null,
+          geboortelandnaam: kind.geboorte?.land?.omschrijving ?? null,
         })) ?? [],
     adres: {
       locatiebeschrijving: adres?.locatiebeschrijving ?? null,
