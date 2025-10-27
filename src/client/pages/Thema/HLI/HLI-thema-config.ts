@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 import { generatePath } from 'react-router';
 
 import { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
@@ -31,6 +33,18 @@ const displayPropsEerdereRegelingen: DisplayProps<HLIRegelingFrontend> = {
     large: ['80%', '20%'],
     small: ['100%', '0'],
   },
+};
+
+type SpecificatieDisplayProps = {
+  datePublishedFormatted: ReactNode;
+  category: ReactNode;
+  documentUrl: ReactNode;
+};
+
+const specificatieDisplayProps: DisplayProps<SpecificatieDisplayProps> = {
+  datePublishedFormatted: 'Datum',
+  category: 'Regeling',
+  documentUrl: 'Document',
 };
 
 export const listPageParamKind = {
@@ -75,7 +89,7 @@ export const routeConfig = {
     documentTitle: `Stadspas | ${themaTitle}`,
   },
   specificatieListPage: {
-    path: '/regelingen-bij-laag-inkomen/lijst/specificatie',
+    path: '/regelingen-bij-laag-inkomen/lijst/specificaties/:page?',
     documentTitle: `Specificaties | ${themaTitle}`,
   },
   regelingenListPage: {
@@ -148,3 +162,13 @@ export const tableConfig = {
     }),
   },
 } as const;
+
+export const specificatieTableConfig = {
+  title: 'Specificaties',
+  sort: dateSort('datePublished', 'desc'),
+  displayProps: specificatieDisplayProps,
+  maxItems: 3,
+  listPageRoute: generatePath(routeConfig.specificatieListPage.path, {
+    page: null,
+  }),
+};

@@ -3,6 +3,7 @@ import { themaId, routeConfig, featureToggle } from './HLI-thema-config';
 import { HLIDetail } from './HLIDetail';
 import { default as HLIIcon } from './HLIIcon.svg?react';
 import { HLIList } from './HLIList';
+import { HLISpecificatieList } from './HLISpecificatieList';
 import { HLIStadspasDetail } from './HLIStadspasDetail';
 import { HLIThema } from './HLIThema';
 import { isLoading } from '../../../../universal/helpers/api';
@@ -25,8 +26,7 @@ export const HLIRoutes = [
   },
   {
     route: routeConfig.specificatieListPage.path,
-    // RP TODO: wrong list
-    Component: HLIList,
+    Component: HLISpecificatieList,
     isActive: featureToggle.hliRegelingEnabledRTM,
   },
   {

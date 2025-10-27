@@ -5,6 +5,7 @@ import {
   listPageParamKind,
   listPageTitle,
   routeConfig,
+  specificatieTableConfig,
   tableConfig,
   themaId,
 } from './HLI-thema-config';
@@ -66,6 +67,7 @@ export function useHliThemaData() {
     isError: isError(HLI, false),
     dependencyError,
     tableConfig,
+    specificatieTableConfig,
     listPageTitle,
     listPageParamKind,
     linkListItems: hasKindtegoed
