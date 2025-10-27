@@ -4,7 +4,7 @@ import {
   AfisDisclaimer,
   AfisDisclaimerOvergedragenFacturen,
 } from './AfisThema';
-import { useAfisListPageData } from './useAfisThemaData.hook';
+import { useAfisListPageData } from './useAfisListPageData';
 import { AfisFactuurState } from '../../../../server/services/afis/afis-types';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 import { PageContentCell } from '../../../components/Page/Page';

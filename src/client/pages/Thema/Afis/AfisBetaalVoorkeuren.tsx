@@ -3,10 +3,8 @@ import { Grid, Heading, Link, Paragraph } from '@amsterdam/design-system-react';
 import { featureToggle } from './Afis-thema-config';
 import styles from './AfisBetaalVoorkeuren.module.scss';
 import { EmandateRefetchInterval } from './AfisEMandateDetail';
-import {
-  useAfisBetaalVoorkeurenData,
-  useAfisEMandatesData,
-} from './useAfisEmandateApi';
+import { useAfisEMandatesData } from './useAfisEmandateApi';
+import { useAfisBetaalVoorkeurenData } from './useAfisBetaalVoorkeurenData';
 import { useAfisThemaData } from './useAfisThemaData.hook';
 import {
   type AfisBusinessPartnerDetailsTransformed,

@@ -4,25 +4,18 @@ import { Paragraph } from '@amsterdam/design-system-react';
 import isEqual from 'lodash.isequal';
 import { useNavigate, useParams } from 'react-router';
 
-import {
-  routeConfig,
-  eMandateTableConfig,
-  businessPartnerDetailsLabels,
-} from './Afis-thema-config';
+import { generateApiUrl } from './Afis-helpers';
+import { routeConfig, eMandateTableConfig } from './Afis-thema-config';
+import { useAfisBetaalVoorkeurenData } from './useAfisBetaalVoorkeurenData';
 import { useAfisThemaData } from './useAfisThemaData.hook';
 import type {
-  AfisBusinessPartnerDetailsTransformed,
   AfisEMandateFrontend,
   AfisEMandateSignRequestResponse,
   AfisEMandateStatusChangeResponse,
   AfisEMandateUpdatePayloadFrontend,
-  AfisThemaResponse,
 } from '../../../../server/services/afis/afis-types';
-import { hasFailedDependency } from '../../../../universal/helpers/api';
 import { entries } from '../../../../universal/helpers/utils';
 import { MaRouterLink } from '../../../components/MaLink/MaLink';
-import { BFFApiUrls } from '../../../config/api';
-import { generateBffApiUrlWithEncryptedPayloadQuery } from '../../../helpers/api';
 import {
   sendFormPostRequest,
   sendGetRequest,
@@ -32,21 +25,7 @@ import { useSmallScreen } from '../../../hooks/media.hook';
 import { useSessionStorage } from '../../../hooks/storage.hook';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 
-function generateApiUrl(
-  businessPartnerIdEncrypted: string | null,
-  route: keyof typeof BFFApiUrls
-) {
-  return businessPartnerIdEncrypted
-    ? generateBffApiUrlWithEncryptedPayloadQuery(
-        route,
-        businessPartnerIdEncrypted,
-        undefined,
-        'id'
-      )
-    : null;
-}
-
-export function updateEmandateById(
+function updateEmandateById(
   id: AfisEMandateFrontend['id'],
   payload: Partial<AfisEMandateFrontend>,
   eMandates: AfisEMandateFrontend[] | undefined
@@ -261,39 +240,6 @@ export function useEmandateApis(eMandate: AfisEMandateFrontend) {
       setShowError(false);
     },
     statusNotification,
-  };
-}
-
-export function useAfisBetaalVoorkeurenData(
-  businessPartnerIdEncrypted:
-    | AfisThemaResponse['businessPartnerIdEncrypted']
-    | undefined
-) {
-  const api = useBffApi<AfisBusinessPartnerDetailsTransformed>(
-    businessPartnerIdEncrypted
-      ? `${BFFApiUrls.AFIS_BUSINESSPARTNER}?id=${businessPartnerIdEncrypted}`
-      : null
-  );
-  const businesspartnerDetailsApiResponse = api.data;
-
-  return {
-    title: 'Betaalvoorkeuren',
-    businesspartnerDetails: businesspartnerDetailsApiResponse?.content ?? null,
-    businessPartnerDetailsLabels,
-    isLoadingBusinessPartnerDetails: api.isLoading,
-    hasBusinessPartnerDetailsError: api.isError,
-    hasFailedEmailDependency: hasFailedDependency(
-      businesspartnerDetailsApiResponse,
-      'email'
-    ),
-    hasFailedPhoneDependency: hasFailedDependency(
-      businesspartnerDetailsApiResponse,
-      'phone'
-    ),
-    hasFailedFullNameDependency: hasFailedDependency(
-      businesspartnerDetailsApiResponse,
-      'fullName'
-    ),
   };
 }
 
