@@ -266,10 +266,6 @@ function combineRTMData(
 function processToRTMRegelingen(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ): RTMCombinedRegeling[] {
-  if (!aanvragen) {
-    return [];
-  }
-
   aanvragen = dedupCombineRTMDeel2(aanvragen);
 
   const groupedAanvragenPerRegeling = groupAanvragenPerRegeling(aanvragen).map(
