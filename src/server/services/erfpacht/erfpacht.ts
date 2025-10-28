@@ -132,14 +132,16 @@ export function transformDossierResponse(
       })
       .sort(sortAlpha('voorkeursadres', 'asc')) ?? [];
 
-  responseData.openstaandeFacturen.facturen =
-    responseData.openstaandeFacturen?.facturen?.map((factuur) => {
-      return {
-        ...factuur,
-        dossierNummerUrlParam: getDossierNummerUrlParam(factuur.dossierAdres),
-        vervalDatum: defaultDateFormat(factuur.vervalDatum),
-      };
-    }) ?? [];
+  if (responseData.openstaandeFacturen) {
+    responseData.openstaandeFacturen.facturen =
+      responseData.openstaandeFacturen?.facturen?.map((factuur) => {
+        return {
+          ...factuur,
+          dossierNummerUrlParam: getDossierNummerUrlParam(factuur.dossierAdres),
+          vervalDatum: defaultDateFormat(factuur.vervalDatum),
+        };
+      }) ?? [];
+  }
 
   responseData.relatieCode = relatieCode;
   responseData.isKnown = hasDossiers;
