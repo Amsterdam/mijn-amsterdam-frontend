@@ -137,7 +137,10 @@ To log outgoing request urls, headers or bodies set these to true:
 
 We also make use of the debug npm packages. For now the following debug settings possible:
 
-`DEBUG=vergunningen,source-api-request:request,source-api-request:cache-hit,source-api-request:cache-key,decos-service`
+Services:
+`DEBUG=vergunningen,decos-service`
+
+Request tooling:`DEBUG=vergunningen,source-api-request:request,source-api-request:cache-hit,source-api-request:cache-key,decos-service`
 
 To log response data from incoming responses before any transformation.
 A comma separated list of keywords / pathsegments can be used to log specific requests. For example: zorgned/aanvragen,gpass
