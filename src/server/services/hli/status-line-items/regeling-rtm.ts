@@ -75,7 +75,7 @@ export function filterCombineRtmData(
     return [];
   }
 
-  let aanvragenClean = dedupCombineRTMDeel2(aanvragen);
+  let aanvragenClean = dedupeButKeepDocuments(aanvragen);
   aanvragenClean = removeNonPdfDocuments(aanvragenClean);
   // Sort asc so we always end with an 'Einde recht'.
   // This keeps it in the same order as how we describe the scenarios, so you don't need to think in reverse.
@@ -116,7 +116,7 @@ export function filterCombineRtmData(
 }
 
 /** Aanvragen can contain duplicate RTMDeel2. We combine the documents and drop the dupe. */
-function dedupCombineRTMDeel2(
+function dedupeButKeepDocuments(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ) {
   const dedupedAanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[] = [];
@@ -266,7 +266,7 @@ function combineRTMData(
 function processToRTMRegelingen(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ): RTMCombinedRegeling[] {
-  aanvragen = dedupCombineRTMDeel2(aanvragen);
+  aanvragen = dedupeButKeepDocuments(aanvragen);
 
   const groupedAanvragenPerRegeling = groupAanvragenPerRegeling(aanvragen).map(
     (aanvragen) => {
