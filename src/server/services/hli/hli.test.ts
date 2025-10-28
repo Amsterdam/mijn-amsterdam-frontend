@@ -1,7 +1,11 @@
 import MockDate from 'mockdate';
 import { Mock } from 'vitest';
 
-import { forTesting } from './hli';
+import {
+  forTesting,
+  getDocumentsFrontend,
+  transformRegelingForFrontend,
+} from './hli';
 import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import { getAuthProfileAndToken } from '../../../testing/utils';
 import {
@@ -156,7 +160,7 @@ describe('HLI', () => {
       },
     ];
 
-    const result = forTesting.getDocumentsFrontend(sessionID, documents);
+    const result = getDocumentsFrontend(sessionID, documents);
     expect(result).toHaveLength(2);
     expect(result[0].id).toBe('test-encrypted-id');
     expect(result[0].url).toContain(
@@ -209,7 +213,7 @@ describe('HLI', () => {
       },
     ];
 
-    const result = await forTesting.transformRegelingForFrontend(
+    const result = transformRegelingForFrontend(
       sessionID,
       aanvraag,
       statusLineItems

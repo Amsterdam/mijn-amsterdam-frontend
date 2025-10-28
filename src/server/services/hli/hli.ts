@@ -10,10 +10,7 @@ import {
 import { hliStatusLineItemsConfig } from './hli-status-line-items';
 import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import { fetchStadspas } from './stadspas';
-import {
-  filterCombineRtmData,
-  getRTMDisplayStatus,
-} from './status-line-items/regeling-rtm';
+import { filterCombineRtmData } from './status-line-items/regeling-rtm';
 import {
   featureToggle,
   routeConfig,
@@ -81,7 +78,7 @@ export const getDisplayStatus: GetDisplayStatusFn<GenericDisplayStatus> = (
   );
 };
 
-function getDocumentsFrontend(
+export function getDocumentsFrontend(
   sessionID: SessionID,
   documents: GenericDocument[]
 ) {
@@ -123,7 +120,7 @@ function transformRegelingTitle(
   }
 }
 
-function transformRegelingForFrontend<T extends string>(
+export function transformRegelingForFrontend<T extends string>(
   sessionID: SessionID,
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
   statusLineItems: StatusLineItem[],
@@ -173,31 +170,13 @@ function transformRegelingenForFrontend(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
   today: Date
 ): HLIRegelingFrontend[] {
-  const [remainder, rtmAanvragenCombined] = filterCombineRtmData(
-    aanvragen,
-    authProfileAndToken.profile.id
+  const [remainder, RTMRegelingenFrontend] = filterCombineRtmData(
+    authProfileAndToken,
+    aanvragen
   );
   const aanvragenCombined = filterCombineUpcPcvData(remainder);
 
-  const regelingenFrontend: HLIRegelingFrontend[] = [];
-
-  for (const [regeling, statusLineItems_] of rtmAanvragenCombined) {
-    const statusLineItems = statusLineItems_.map((item) => {
-      return {
-        ...item,
-        documents:
-          item.documents &&
-          getDocumentsFrontend(authProfileAndToken.profile.sid, item.documents),
-      };
-    });
-    const regelingFrontend = transformRegelingForFrontend(
-      authProfileAndToken.profile.sid,
-      regeling,
-      statusLineItems,
-      getRTMDisplayStatus
-    );
-    regelingenFrontend.push(regelingFrontend);
-  }
+  const regelingenFrontend: HLIRegelingFrontend[] = [...RTMRegelingenFrontend];
 
   for (const aanvraag of aanvragenCombined) {
     const statusLineItems = getStatusLineItems(
@@ -270,8 +249,6 @@ export async function fetchHLI(authProfileAndToken: AuthProfileAndToken) {
 export const forTesting = {
   fetchRegelingen,
   getDisplayStatus,
-  getDocumentsFrontend,
   transformRegelingenForFrontend,
-  transformRegelingForFrontend,
   transformRegelingTitle,
 };

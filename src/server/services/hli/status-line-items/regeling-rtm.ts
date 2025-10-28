@@ -8,6 +8,7 @@ import {
   GenericDocument,
   StatusLineItem,
 } from '../../../../universal/types/App.types';
+import { AuthProfileAndToken } from '../../../auth/auth-types';
 import { captureMessage } from '../../monitoring';
 import { parseLabelContent } from '../../zorgned/zorgned-helpers';
 import {
@@ -18,8 +19,13 @@ import {
   GenericDisplayStatus,
   getDisplayStatus,
   GetDisplayStatusFn,
+  getDocumentsFrontend,
+  transformRegelingForFrontend,
 } from '../hli';
-import type { ZorgnedHLIRegeling } from '../hli-regelingen-types';
+import type {
+  HLIRegelingFrontend,
+  ZorgnedHLIRegeling,
+} from '../hli-regelingen-types';
 
 // Toets voorwaarden voor een afspraak GGD
 export const AV_RTM_DEEL1 = 'AV-RTM1';
@@ -62,9 +68,9 @@ export function isRTMDeel2(
 }
 
 export function filterCombineRtmData(
-  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
-  bsnOntvanger: string
-): [ZorgnedAanvraagWithRelatedPersonsTransformed[], RTMCombinedRegeling[]] {
+  authProfileAndToken: AuthProfileAndToken,
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
+): [ZorgnedAanvraagWithRelatedPersonsTransformed[], HLIRegelingFrontend[]] {
   const [remainder, rtmAanvragen] = extractRTMAanvragen(aanvragen);
 
   if (!featureToggle.hliRegelingEnabledRTM) {
@@ -80,12 +86,35 @@ export function filterCombineRtmData(
   // Prevent aanvragen from other 'betrokkenen' sets from being mixed up with eachother.
   let aanvragenPerBetrokkenen = mapAanvragenPerBetrokkenen(
     aanvragenClean,
-    bsnOntvanger
+    authProfileAndToken.profile.id
   );
   aanvragenPerBetrokkenen = removeExpiredIndividualAanvragen(
     aanvragenPerBetrokkenen
   );
-  return [remainder, combineRTMData(aanvragenPerBetrokkenen)];
+
+  const combinedRTMData = combineRTMData(aanvragenPerBetrokkenen);
+
+  const regelingenFrontend: HLIRegelingFrontend[] = [];
+
+  for (const [regeling, statusLineItems_] of combinedRTMData) {
+    const statusLineItems = statusLineItems_.map((item) => {
+      return {
+        ...item,
+        documents:
+          item.documents &&
+          getDocumentsFrontend(authProfileAndToken.profile.sid, item.documents),
+      };
+    });
+    const regelingFrontend = transformRegelingForFrontend(
+      authProfileAndToken.profile.sid,
+      regeling,
+      statusLineItems,
+      getRTMDisplayStatus
+    );
+    regelingenFrontend.push(regelingFrontend);
+  }
+
+  return [remainder, regelingenFrontend];
 }
 
 /** Aanvragen can contain duplicate RTMDeel2. We combine the documents and drop the dupe. */
