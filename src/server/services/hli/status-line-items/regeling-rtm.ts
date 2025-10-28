@@ -225,8 +225,7 @@ function mapAanvragenPerBetrokkenen(
               (p) => p.bsn === bsn
             ),
           };
-          const aanvraagInMap = aanvragenMap[bsn];
-          if (aanvraagInMap) {
+          if (aanvragenMap[bsn]) {
             aanvragenMap[bsn].push(newAanvraag);
           } else {
             aanvragenMap[bsn] = [newAanvraag];
