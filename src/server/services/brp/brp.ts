@@ -148,8 +148,13 @@ function transformBenkBrpResponse(
           datumSluitingFormatted:
             partner.aangaanHuwelijkPartnerschap?.datum?.langFormaat ?? null,
           persoon: {
+            geboortedatum: getDatum(partner.geboorte?.datum),
+            geboortedatumFormatted:
+              partner.geboorte?.datum?.langFormaat ?? null,
             voornamen: partner.naam?.voornamen ?? null,
             geslachtsnaam: partner.naam?.geslachtsnaam ?? null,
+            omschrijvingAdellijkeTitel:
+              partner.naam?.adellijkeTitelPredicaat?.omschrijving ?? null,
             voorvoegselGeslachtsnaam: partner.naam?.voorvoegsel ?? null,
             opgemaakteNaam: partner.naam?.volledigeNaam ?? null,
             geboortelandnaam: partner.geboorte?.land?.omschrijving ?? null,
@@ -168,7 +173,11 @@ function transformBenkBrpResponse(
           opgemaakteNaam: ouder.naam?.volledigeNaam ?? null,
           voornamen: ouder.naam?.voornamen ?? null,
           geslachtsnaam: ouder.naam?.geslachtsnaam ?? null,
+          omschrijvingAdellijkeTitel:
+            ouder.naam?.adellijkeTitelPredicaat?.omschrijving ?? null,
           voorvoegselGeslachtsnaam: ouder.naam?.voorvoegsel ?? null,
+          geboorteplaatsnaam: ouder.geboorte?.plaats?.omschrijving ?? null,
+          geboortelandnaam: ouder.geboorte?.land?.omschrijving ?? null,
         })) ?? [],
     kinderen:
       persoon.kinderen
@@ -179,7 +188,11 @@ function transformBenkBrpResponse(
           opgemaakteNaam: kind.naam?.volledigeNaam ?? null,
           voornamen: kind.naam?.voornamen ?? null,
           geslachtsnaam: kind.naam?.geslachtsnaam ?? null,
+          omschrijvingAdellijkeTitel:
+            kind.naam?.adellijkeTitelPredicaat?.omschrijving ?? null,
           voorvoegselGeslachtsnaam: kind.naam?.voorvoegsel ?? null,
+          geboorteplaatsnaam: kind.geboorte?.plaats?.omschrijving ?? null,
+          geboortelandnaam: kind.geboorte?.land?.omschrijving ?? null,
         })) ?? [],
     adres: {
       locatiebeschrijving: adres?.locatiebeschrijving ?? null,
