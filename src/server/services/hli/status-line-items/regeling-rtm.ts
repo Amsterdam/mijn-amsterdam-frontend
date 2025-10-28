@@ -138,6 +138,12 @@ function dedupCombineRTMDeel2(
   return dedupedAanvragen;
 }
 
+/* Only keep PDF documents in the aanvragen
+ *
+ * Mistakes happen, and sometimes the wrong type of document is uploaded in Zorgned.
+ * A concern with this is that a docx file (MS Word) is more easily edited.
+ * Which is speculated to cause people to try their luck more with fraudulant documents.
+ */
 function removeNonPdfDocuments(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ): ZorgnedAanvraagWithRelatedPersonsTransformed[] {
