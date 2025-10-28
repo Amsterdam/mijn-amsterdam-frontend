@@ -321,14 +321,9 @@ function groupAanvragenPerRegeling(
     }
   });
 
-  const remainingToegewezenAanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[] =
-    [];
-
-  const aanvragenGroupedPerRegeling = [
-    remainingToegewezenAanvragen,
-    ...groupedAanvragen,
-    group,
-  ].filter((g) => g.length);
+  const aanvragenGroupedPerRegeling = [...groupedAanvragen, group].filter(
+    (g) => g.length
+  );
   return aanvragenGroupedPerRegeling;
 }
 
