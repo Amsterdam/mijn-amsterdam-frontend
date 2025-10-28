@@ -127,7 +127,7 @@ function transformRegelingForFrontend<T extends string>(
   sessionID: SessionID,
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
   statusLineItems: StatusLineItem[],
-  getDisplayStatusFn?: GetDisplayStatusFn<T>
+  getDisplayStatusFn: GetDisplayStatusFn<T> = getDisplayStatus
 ) {
   const id = aanvraag.id;
 
@@ -136,9 +136,7 @@ function transformRegelingForFrontend<T extends string>(
     regeling: slug(aanvraag.titel),
   });
 
-  const displayStatus = getDisplayStatusFn
-    ? getDisplayStatusFn(aanvraag, statusLineItems)
-    : getDisplayStatus(aanvraag, statusLineItems);
+  const displayStatus = getDisplayStatusFn(aanvraag, statusLineItems);
 
   // Override isActueel for Afgewezen (RTM* / UPC*) regelingen.
   let isActual = aanvraag.isActueel;
