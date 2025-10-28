@@ -173,7 +173,7 @@ function mapAanvragenPerBetrokkenen(
     return {
       ...aanvraag,
       // Sort because I don't know if betrokkenen are always in the same order across different aanvragen.
-      betrokkenen: aanvraag.betrokkenen.toSorted((a, b) => (a <= b ? -1 : 1)),
+      betrokkenen: aanvraag.betrokkenen.toSorted(),
     };
   });
 
