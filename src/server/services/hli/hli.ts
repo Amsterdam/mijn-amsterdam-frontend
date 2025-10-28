@@ -185,15 +185,15 @@ function transformRegelingenForFrontend(
     RTMAanvragen
   );
 
-  const [, PCAanvragen] = extractAanvragen(remainder, [
+  const [remainder_, PCAanvragen] = extractAanvragen(remainder, [
     isPcVergoeding,
     isVerzilvering,
   ]);
-  const aanvragenCombined = filterCombineUpcPcvData(PCAanvragen);
+  const PCVergoedingAanvragen = filterCombineUpcPcvData(PCAanvragen);
 
   const regelingenFrontend: HLIRegelingFrontend[] = [...RTMRegelingenFrontend];
 
-  for (const aanvraag of aanvragenCombined) {
+  for (const aanvraag of [...remainder_, ...PCVergoedingAanvragen]) {
     const statusLineItems = getStatusLineItems(
       'HLI',
       hliStatusLineItemsConfig,
