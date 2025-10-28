@@ -6,6 +6,11 @@ export const featureToggle = {
       isEnabled: !IS_PRODUCTION,
     },
   },
+  statusLineItems: {
+    alleAfgewezenWmoAanvragen: {
+      isEnabled: !IS_PRODUCTION,
+    },
+  },
 };
 
 export const routes = {

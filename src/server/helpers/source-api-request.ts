@@ -25,6 +25,9 @@ import {
 import { captureException } from '../services/monitoring';
 
 const debugResponse = createDebugger('source-api-request:response');
+const debugResponseError = createDebugger(
+  'source-api-request:response-error-object'
+);
 const debugCacheHit = createDebugger('source-api-request:cache-hit');
 const debugCacheKey = createDebugger('source-api-request:cache-key');
 
@@ -213,7 +216,8 @@ export async function requestData<T>(
   } catch (error: any) {
     const errorMessage = 'message' in error ? error.message : error.toString();
 
-    debugResponse('[ERROR]: %o', error, config.url);
+    debugResponse('[ERROR]: %s', errorMessage, config.url);
+    debugResponseError('[ERROR]: %o', error);
 
     captureException(error, {
       properties: {

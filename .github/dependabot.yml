@@ -16,6 +16,9 @@ updates:
     ignore:
       - dependency-name: '*'
         update-types: ['version-update:semver-major']
+      - dependency-name: 'express-openid-connect'
+        versions:
+          - '> 2.18.1'
     groups:
       production-dependencies:
         dependency-type: 'production'

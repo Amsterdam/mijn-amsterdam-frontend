@@ -145,18 +145,18 @@ export const contentTips: ContentTipSource[] = [
   {
     id: 'mijn-27',
     owner: '',
-    dateActiveStart: '2023-10-16',
-    dateActiveEnd: '2023-11-20',
+    dateActiveStart: '2025-10-16',
+    dateActiveEnd: '2025-10-27',
     // TODO: Enable if we have access to Identiteitsbewijzen data.
     active: !featureToggleProfile[themaIdBRP].benkBrpServiceActive,
-    datePublished: '2023-10-16',
+    datePublished: '2025-10-17',
     title: 'Tip: Gratis ID-kaart om te stemmen',
     themaID: themaIdBRP,
     profileTypes: ['private'],
     description:
       'U heeft een geldige ID-kaart of geldig paspoort nodig om te stemmen. Heeft u een Stadspas met groene stip? Dan kunt u gratis een nieuwe ID-kaart krijgen.',
     predicates: [
-      not(hasValidIdForVoting),
+      not((pred) => hasValidIdForVoting(pred, new Date('2025-10-29'))),
       is18OrOlder,
       hasStadspasGroeneStip,
       hasDutchNationality,
