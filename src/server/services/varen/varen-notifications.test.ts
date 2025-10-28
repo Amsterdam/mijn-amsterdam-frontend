@@ -76,6 +76,8 @@ describe('Notifications', () => {
     const zaakOlderThen3Months = {
       ...exploitatieBase,
       dateRequest: '2024-09-01T00:00:00',
+      processed: true,
+      decision: 'Verleend',
     };
 
     vi.spyOn(decos, 'fetchDecosZaken')

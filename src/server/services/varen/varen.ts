@@ -19,11 +19,7 @@ import {
   apiErrorResult,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
-import {
-  omit,
-  removeEmpty,
-  toDateFormatted,
-} from '../../../universal/helpers/utils';
+import { omit, toDateFormatted } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { fetchDecosZaken } from '../decos/decos-service';
 import { transformDecosZaakFrontend } from '../decos/decos-service';
@@ -73,10 +69,6 @@ function transformVarenZaakFrontend(
 
   return {
     ...zaakFrontend,
-    ...omit(removeEmpty(vergunningenOfThisReder[0] ?? {}), [
-      'id',
-      'identifier',
-    ]),
     vergunning: vergunningenOfThisReder[0] ?? null,
   };
 }

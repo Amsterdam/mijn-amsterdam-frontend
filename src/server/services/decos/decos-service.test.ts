@@ -20,7 +20,7 @@ import { jsonCopy, range } from '../../../universal/helpers/utils';
 import * as sourceApiRequest from '../../helpers/source-api-request';
 import {
   VarenVergunningExploitatie,
-  ZaakVergunningExploitatie,
+  ZaakVergunningExploitatieWijzigingVervanging,
 } from '../varen/decos-zaken';
 import type { WerkzaamhedenEnVervoerOpStraat } from '../vergunningen/config-and-types';
 import {
@@ -742,7 +742,7 @@ describe('decos-service', () => {
 
       const transformers = [
         VarenVergunningExploitatie,
-        ZaakVergunningExploitatie,
+        ZaakVergunningExploitatieWijzigingVervanging,
       ];
 
       const responseData = await forTesting.fetchZakenByUserKey(
