@@ -58,13 +58,23 @@ export const FACTUUR_STATE_KEYS: AfisFactuurState[] = [
   'overgedragen',
 ];
 
+const ACCOUNTING_DOCUMENT_TYPES_DEFAULT: AccountingDocumentType[] = [
+  'DR',
+  'DE',
+  'DM',
+  'DV',
+  'DG',
+  'DF',
+  'DW',
+];
+
 const accountingDocumentTypesByState: Record<
   AfisFacturenParams['state'],
   AccountingDocumentType[]
 > = {
-  open: ['DR', 'DG', 'DM', 'DE', 'DF', 'DV', 'DW'],
-  afgehandeld: ['DR', 'DE', 'DM', 'DV', 'DG', 'DF', 'DM', 'DW'],
-  overgedragen: ['DR', 'DE', 'DM', 'DV', 'DG', 'DF', 'DM', 'DW'],
+  open: ACCOUNTING_DOCUMENT_TYPES_DEFAULT,
+  afgehandeld: ACCOUNTING_DOCUMENT_TYPES_DEFAULT,
+  overgedragen: ACCOUNTING_DOCUMENT_TYPES_DEFAULT,
   deelbetalingen: ['AB', 'BA'],
 };
 
