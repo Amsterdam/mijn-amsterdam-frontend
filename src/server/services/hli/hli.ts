@@ -10,7 +10,11 @@ import {
 import { hliStatusLineItemsConfig } from './hli-status-line-items';
 import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import { fetchStadspas } from './stadspas';
-import { filterCombineRtmData } from './status-line-items/regeling-rtm';
+import {
+  filterCombineRtmData,
+  isRTMDeel1,
+  isRTMDeel2,
+} from './status-line-items/regeling-rtm';
 import {
   featureToggle,
   routeConfig,
@@ -34,6 +38,8 @@ import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
 import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types';
 import {
   filterCombineUpcPcvData,
+  isPcVergoeding,
+  isVerzilvering,
   isWorkshopNietGevolgd,
 } from './status-line-items/regeling-pcvergoeding';
 import { toDateFormatted } from '../../../universal/helpers/utils';
@@ -170,11 +176,20 @@ function transformRegelingenForFrontend(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
   today: Date
 ): HLIRegelingFrontend[] {
-  const [remainder, RTMRegelingenFrontend] = filterCombineRtmData(
+  const [remainder, RTMAanvragen] = extractAanvragen(aanvragen, [
+    isRTMDeel1,
+    isRTMDeel2,
+  ]);
+  const RTMRegelingenFrontend = filterCombineRtmData(
     authProfileAndToken,
-    aanvragen
+    RTMAanvragen
   );
-  const aanvragenCombined = filterCombineUpcPcvData(remainder);
+
+  const [, PCAanvragen] = extractAanvragen(remainder, [
+    isPcVergoeding,
+    isVerzilvering,
+  ]);
+  const aanvragenCombined = filterCombineUpcPcvData(PCAanvragen);
 
   const regelingenFrontend: HLIRegelingFrontend[] = [...RTMRegelingenFrontend];
 
@@ -201,6 +216,33 @@ function transformRegelingenForFrontend(
   }
 
   return dedupeDocumentsInDataSets(regelingenFrontend, 'documents');
+}
+
+type TypeDeterminingFunction = (
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+) => boolean;
+
+function extractAanvragen(
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
+  typeDeterminingFNs: TypeDeterminingFunction[]
+): [
+  ZorgnedAanvraagWithRelatedPersonsTransformed[],
+  ZorgnedAanvraagWithRelatedPersonsTransformed[],
+] {
+  const remainder = [];
+  const targetAanvragen = [];
+
+  outerLoop: for (const aanvraag of aanvragen) {
+    for (const typeDeterminingFn of typeDeterminingFNs) {
+      if (typeDeterminingFn(aanvraag)) {
+        targetAanvragen.push(aanvraag);
+        continue outerLoop;
+      }
+    }
+    remainder.push(aanvraag);
+  }
+
+  return [remainder, targetAanvragen];
 }
 
 async function fetchRegelingen(authProfileAndToken: AuthProfileAndToken) {

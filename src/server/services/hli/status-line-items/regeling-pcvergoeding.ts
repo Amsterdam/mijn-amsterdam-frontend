@@ -54,7 +54,7 @@ function toVerzilveringCodes(codes: Record<string, boolean>): string[] {
     .map(([code]) => code);
 }
 
-function isVerzilvering(
+export function isVerzilvering(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
   return (
@@ -63,7 +63,7 @@ function isVerzilvering(
   );
 }
 
-function isPcVergoeding(
+export function isPcVergoeding(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
   return (

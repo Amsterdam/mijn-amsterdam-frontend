@@ -70,14 +70,12 @@ export function isRTMDeel2(
 export function filterCombineRtmData(
   authProfileAndToken: AuthProfileAndToken,
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
-): [ZorgnedAanvraagWithRelatedPersonsTransformed[], HLIRegelingFrontend[]] {
-  const [remainder, rtmAanvragen] = extractRTMAanvragen(aanvragen);
-
+): HLIRegelingFrontend[] {
   if (!featureToggle.hliRegelingEnabledRTM) {
-    return [remainder, []];
+    return [];
   }
 
-  let aanvragenClean = dedupCombineRTMDeel2(rtmAanvragen);
+  let aanvragenClean = dedupCombineRTMDeel2(aanvragen);
   aanvragenClean = removeNonPdfDocuments(aanvragenClean);
   // Sort asc so we always end with an 'Einde recht'.
   // This keeps it in the same order as how we describe the scenarios, so you don't need to think in reverse.
@@ -114,7 +112,7 @@ export function filterCombineRtmData(
     regelingenFrontend.push(regelingFrontend);
   }
 
-  return [remainder, regelingenFrontend];
+  return regelingenFrontend;
 }
 
 /** Aanvragen can contain duplicate RTMDeel2. We combine the documents and drop the dupe. */
@@ -138,24 +136,6 @@ function dedupCombineRTMDeel2(
     dedupedAanvragen.push(aanvraag);
   }
   return dedupedAanvragen;
-}
-
-function extractRTMAanvragen(
-  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
-): [
-  ZorgnedAanvraagWithRelatedPersonsTransformed[],
-  ZorgnedAanvraagWithRelatedPersonsTransformed[],
-] {
-  const remainder = [];
-  const rtmAanvragen = [];
-  for (const aanvraag of aanvragen) {
-    if (isRTMDeel1(aanvraag) || isRTMDeel2(aanvraag)) {
-      rtmAanvragen.push(aanvraag);
-    } else {
-      remainder.push(aanvraag);
-    }
-  }
-  return [remainder, rtmAanvragen];
 }
 
 function removeNonPdfDocuments(
