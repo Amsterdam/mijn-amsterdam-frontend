@@ -40,7 +40,7 @@ describe('simple-connect/erfpacht', () => {
     expect(responseContent).toMatchSnapshot();
   });
 
-  test('fetchErfpacht: dossiers - no openstaandeFacturen', async () => {
+  test('fetchErfpacht: dossiers - does not include openstaandeFacturen property if not present in source data.', async () => {
     remoteApi
       .get('/erfpacht/vernise/api/erfpachter')
       .reply(200, { erfpachter: true, relationCode: '123-abc' });
@@ -55,7 +55,8 @@ describe('simple-connect/erfpacht', () => {
       .reply(200, dossiersWithoutOpenstaandeFacturen);
 
     const responseContent = await fetchErfpacht(authProfileAndToken);
-    expect(responseContent).toMatchSnapshot();
+    expect(responseContent.content).not.toBeFalsy();
+    expect(responseContent.content).not.toHaveProperty('openstaandeFacturen');
   });
 
   test('fetchErfpacht: dossier detail', async () => {
