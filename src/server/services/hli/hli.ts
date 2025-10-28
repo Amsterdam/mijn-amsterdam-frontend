@@ -12,7 +12,7 @@ import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import { fetchStadspas } from './stadspas';
 import {
   filterCombineRtmData,
-  RTM_STATUS_IN_BEHANDELING,
+  getRTMDisplayStatus,
 } from './status-line-items/regeling-rtm';
 import {
   featureToggle,
@@ -41,18 +41,18 @@ import {
 } from './status-line-items/regeling-pcvergoeding';
 import { toDateFormatted } from '../../../universal/helpers/utils';
 
-type GenericDisplayStatus =
+export type GenericDisplayStatus =
   | 'Toegewezen'
   | 'Afgewezen'
   | 'Einde recht'
   | 'Onbekend';
 
-type GetDisplayStatusFn<T extends string, x = T | GenericDisplayStatus> = (
-  regeling: ZorgnedHLIRegeling,
-  statusLineItems: StatusLineItem[]
-) => x;
+export type GetDisplayStatusFn<
+  T extends string,
+  x = T | GenericDisplayStatus,
+> = (regeling: ZorgnedHLIRegeling, statusLineItems: StatusLineItem[]) => x;
 
-const getDisplayStatus: GetDisplayStatusFn<GenericDisplayStatus> = (
+export const getDisplayStatus: GetDisplayStatusFn<GenericDisplayStatus> = (
   regeling: ZorgnedHLIRegeling,
   statusLineItems: StatusLineItem[]
 ) => {
@@ -79,18 +79,6 @@ const getDisplayStatus: GetDisplayStatusFn<GenericDisplayStatus> = (
     (statusLineItems[statusLineItems.length - 1]
       ?.status as GenericDisplayStatus) ?? 'Onbekend'
   );
-};
-
-const getRTMDisplayStatus: GetDisplayStatusFn<
-  GenericDisplayStatus | 'In behandeling genomen'
-> = (regeling: ZorgnedHLIRegeling, statusLineItems: StatusLineItem[]) => {
-  const isInBehandelingGenomen = statusLineItems.some((item) => {
-    return item.status === RTM_STATUS_IN_BEHANDELING && item.isActive;
-  });
-  if (isInBehandelingGenomen) {
-    return RTM_STATUS_IN_BEHANDELING;
-  }
-  return getDisplayStatus(regeling, statusLineItems);
 };
 
 function getDocumentsFrontend(

@@ -14,6 +14,11 @@ import {
   TextPartContents,
   ZorgnedAanvraagWithRelatedPersonsTransformed,
 } from '../../zorgned/zorgned-types';
+import {
+  GenericDisplayStatus,
+  getDisplayStatus,
+  GetDisplayStatusFn,
+} from '../hli';
 import type { ZorgnedHLIRegeling } from '../hli-regelingen-types';
 
 // Toets voorwaarden voor een afspraak GGD
@@ -25,6 +30,18 @@ export const RTM_STATUS_IN_BEHANDELING = 'In behandeling genomen';
 
 const INFO_LINK =
   'https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/extra-geld-als-u-chronisch-ziek-of/';
+
+export const getRTMDisplayStatus: GetDisplayStatusFn<
+  GenericDisplayStatus | 'In behandeling genomen'
+> = (regeling: ZorgnedHLIRegeling, statusLineItems: StatusLineItem[]) => {
+  const isInBehandelingGenomen = statusLineItems.some((item) => {
+    return item.status === RTM_STATUS_IN_BEHANDELING && item.isActive;
+  });
+  if (isInBehandelingGenomen) {
+    return RTM_STATUS_IN_BEHANDELING;
+  }
+  return getDisplayStatus(regeling, statusLineItems);
+};
 
 export function isRTMDeel1(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
