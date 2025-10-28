@@ -489,7 +489,7 @@ function finalizeStatusLineItems(
   const lastAanvraag = aanvragen[aanvragen.length - 1];
   if (regeling.isActueel) {
     const getStatusLineItem = createGetStatusLineItemFn(lastAanvraag);
-    const eindeRecht = getStatusLineItem(['defaultEindeRecht']);
+    const eindeRecht = getStatusLineItem(['inactiveEindeRecht']);
     statusLineItems.push(...eindeRecht);
   }
 
@@ -549,7 +549,7 @@ type StatusLineKey =
   | 'wijzigingsAanvraag'
   | 'wijzigingsBesluit'
   | 'eindeRecht'
-  | 'defaultEindeRecht';
+  | 'inactiveEindeRecht';
 
 function getInBehandelingGenomenDescription(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
@@ -634,7 +634,7 @@ const statusLineItems: Record<StatusLineKey, StatusLineItemTransformerConfig> =
       isActive: () => true,
     },
     /** Default einde recht that is shown when a product is in a toegewezen RTM-2 state, einde recht is not actually present in the data in this case. */
-    defaultEindeRecht: {
+    inactiveEindeRecht: {
       status: 'Einde recht',
       datePublished: '',
       description: (regeling: ZorgnedHLIRegeling) => {
