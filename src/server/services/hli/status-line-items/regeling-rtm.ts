@@ -90,28 +90,10 @@ export function filterCombineRtmData(
     aanvragenPerBetrokkenen
   );
 
-  const combinedRTMData = combineRTMData(aanvragenPerBetrokkenen);
-
-  const regelingenFrontend: HLIRegelingFrontend[] = [];
-
-  for (const [regeling, statusLineItems_] of combinedRTMData) {
-    const statusLineItems = statusLineItems_.map((item) => {
-      return {
-        ...item,
-        documents:
-          item.documents &&
-          getDocumentsFrontend(authProfileAndToken.profile.sid, item.documents),
-      };
-    });
-    const regelingFrontend = transformRegelingForFrontend(
-      authProfileAndToken.profile.sid,
-      regeling,
-      statusLineItems,
-      getRTMDisplayStatus
-    );
-    regelingenFrontend.push(regelingFrontend);
-  }
-
+  const regelingenFrontend = processRTMAanvragen(
+    aanvragenPerBetrokkenen,
+    authProfileAndToken
+  );
   return regelingenFrontend;
 }
 
@@ -254,54 +236,73 @@ function removeExpiredIndividualAanvragen(
 
 type RTMCombinedRegeling = [ZorgnedHLIRegeling, StatusLineItem[]];
 
-function combineRTMData(
-  aanvragenPerBetrokkene: AanvragenPerBetrokkene
-): RTMCombinedRegeling[] {
-  const regelingenForOntvanger = Object.entries(aanvragenPerBetrokkene).map(
-    ([_betrokkene, aanvragen]) => processToRTMRegelingen(aanvragen)
-  );
-  return regelingenForOntvanger.flat();
-}
+function processRTMAanvragen(
+  aanvragenPerBetrokkene: AanvragenPerBetrokkene,
+  authProfileAndToken: AuthProfileAndToken
+): HLIRegelingFrontend[] {
+  const regelingen = Object.entries(aanvragenPerBetrokkene).flatMap(
+    ([, aanvragen]) => {
+      const groupedAanvragenPerRegeling = groupAanvragenPerRegeling(
+        aanvragen
+      ).map((aanvragen) => {
+        let isRegelingBesluitToegewezenState = false;
 
-function processToRTMRegelingen(
-  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
-): RTMCombinedRegeling[] {
-  aanvragen = dedupeButKeepDocuments(aanvragen);
-
-  const groupedAanvragenPerRegeling = groupAanvragenPerRegeling(aanvragen).map(
-    (aanvragen) => {
-      let isRegelingBesluitToegewezenState = false;
-
-      const aanvragenWithType = aanvragen.map((aanvraag, idx, aanvragen) => {
-        const newAanvraag = createAanvraagWithType(
-          aanvraag,
-          isRegelingBesluitToegewezenState,
-          aanvragen,
-          idx
-        );
-        if (newAanvraag.type === 'result-toegewezen') {
-          isRegelingBesluitToegewezenState = true;
-        }
-        return newAanvraag;
+        const aanvragenWithType = aanvragen.map((aanvraag, idx, aanvragen) => {
+          const newAanvraag = createAanvraagWithType(
+            aanvraag,
+            isRegelingBesluitToegewezenState,
+            aanvragen,
+            idx
+          );
+          if (newAanvraag.type === 'result-toegewezen') {
+            isRegelingBesluitToegewezenState = true;
+          }
+          return newAanvraag;
+        });
+        return aanvragenWithType;
       });
-      return aanvragenWithType;
+
+      const combinedRegelingen = groupedAanvragenPerRegeling.reduce(
+        (combinedRegelingen, aanvragen, i, groupedAanvragenPerRegeling) => {
+          const regeling = mergeAanvragenIntoRegeling(aanvragen);
+          const statusLineItems = getAllStatusLineItems(
+            regeling,
+            groupedAanvragenPerRegeling[i]
+          );
+          const combinedRegeling: RTMCombinedRegeling = [
+            regeling,
+            statusLineItems,
+          ];
+          return [...combinedRegelingen, combinedRegeling];
+        },
+        [] as RTMCombinedRegeling[]
+      );
+
+      return combinedRegelingen;
     }
   );
 
-  const combinedRegelingen = groupedAanvragenPerRegeling.reduce(
-    (combinedRegelingen, aanvragen, i, groupedAanvragenPerRegeling) => {
-      const regeling = mergeAanvragenIntoRegeling(aanvragen);
-      const statusLineItems = getAllStatusLineItems(
-        regeling,
-        groupedAanvragenPerRegeling[i]
-      );
-      const combinedRegeling: RTMCombinedRegeling = [regeling, statusLineItems];
-      return [...combinedRegelingen, combinedRegeling];
-    },
-    [] as RTMCombinedRegeling[]
-  );
+  const regelingenFrontend: HLIRegelingFrontend[] = [];
 
-  return combinedRegelingen;
+  for (const [regeling, statusLineItems_] of regelingen) {
+    const statusLineItems = statusLineItems_.map((item) => {
+      return {
+        ...item,
+        documents:
+          item.documents &&
+          getDocumentsFrontend(authProfileAndToken.profile.sid, item.documents),
+      };
+    });
+    const regelingFrontend = transformRegelingForFrontend(
+      authProfileAndToken.profile.sid,
+      regeling,
+      statusLineItems,
+      getRTMDisplayStatus
+    );
+    regelingenFrontend.push(regelingFrontend);
+  }
+
+  return regelingenFrontend;
 }
 
 function groupAanvragenPerRegeling(
