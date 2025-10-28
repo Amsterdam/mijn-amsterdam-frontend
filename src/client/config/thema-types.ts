@@ -11,8 +11,6 @@ export type WithPageConfig<K extends string, T extends object = object> = {
   [P in K]: T & { route: ThemaRouteConfig };
 };
 
-export type ListItems = Array<{ text?: string; listItems?: string[] } | string>;
-
 export type IsThemaVisibleFN = (appState: AppState) => boolean;
 
 export type ThemaConfigBase = {
