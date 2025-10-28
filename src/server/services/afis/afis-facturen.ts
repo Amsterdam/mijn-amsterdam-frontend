@@ -1,6 +1,7 @@
 import { isToday } from 'date-fns/isToday';
 import { parseISO } from 'date-fns/parseISO';
 import Decimal from 'decimal.js';
+import slug from 'slugme';
 import { firstBy } from 'thenby';
 
 import { getAfisApiConfig, getFeedEntryProperties } from './afis-helpers';
@@ -247,7 +248,9 @@ function transformFactuur(
     : null;
 
   return {
-    id: factuurDocumentId,
+    id: slug(
+      `${factuurDocumentId}-${factuurNummer}-${invoice.NetDueDate ?? invoice.PostingDate}`
+    ),
     afzender: invoice.ProfitCenterName || DEFAULT_PROFIT_CENTER_NAME,
     datePublished: invoice.PostingDate || null,
     datePublishedFormatted: defaultDateFormat(invoice.PostingDate) || null,
