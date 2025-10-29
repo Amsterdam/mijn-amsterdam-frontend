@@ -64,7 +64,7 @@ attachDocumentDownloadRoute(
       QueryPayload,
       ServiceReturnType,
       AfisFacturenRouteParams
-    >(handleFetchAfisFacturen)
+    >(handleFetchAfisFacturen, 'id')
   );
 }
 
@@ -80,7 +80,7 @@ attachDocumentDownloadRoute(
     handleAfisRequestWithEncryptedPayloadQueryParam<
       QueryPayload,
       ServiceReturnType
-    >(fetchEMandates)
+    >(fetchEMandates, 'id')
   );
 }
 
