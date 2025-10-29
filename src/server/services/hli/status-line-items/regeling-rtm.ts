@@ -1,17 +1,21 @@
 import { isAfter } from 'date-fns';
+import { generatePath } from 'react-router';
+import slug from 'slugme';
 
 import { getBesluitDescription } from './generic';
 import { featureToggle } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
+import { routeConfig } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
+import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
 import { sortAlpha } from '../../../../universal/helpers/utils';
 import {
   GenericDocument,
   StatusLineItem,
 } from '../../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../../auth/auth-types';
-import { captureMessage } from '../../monitoring';
 import { parseLabelContent } from '../../zorgned/zorgned-helpers';
 import {
+  BeschikkingsResultaat,
   TextPartContents,
   ZorgnedAanvraagWithRelatedPersonsTransformed,
 } from '../../zorgned/zorgned-types';
@@ -20,7 +24,6 @@ import {
   getDisplayStatus,
   GetDisplayStatusFn,
   getDocumentsFrontend,
-  transformRegelingForFrontend,
 } from '../hli';
 import type {
   HLIRegelingFrontend,
@@ -38,7 +41,7 @@ const INFO_LINK =
   'https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/extra-geld-als-u-chronisch-ziek-of/';
 
 export const getRTMDisplayStatus: GetDisplayStatusFn<
-  GenericDisplayStatus | 'In behandeling genomen'
+  GenericDisplayStatus | typeof RTM_STATUS_IN_BEHANDELING
 > = (regeling: ZorgnedHLIRegeling, statusLineItems: StatusLineItem[]) => {
   const isInBehandelingGenomen = statusLineItems.some((item) => {
     return item.status === RTM_STATUS_IN_BEHANDELING && item.isActive;
@@ -241,65 +244,43 @@ function removeExpiredIndividualAanvragen(
   return Object.fromEntries(aanvraagEntries) as AanvragenPerBetrokkene;
 }
 
-type RTMCombinedRegeling = [ZorgnedHLIRegeling, StatusLineItem[]];
-
 function processRTMAanvragen(
   groupedAanvragenPerRegeling: ZorgnedAanvraagWithRelatedPersonsTransformed[][],
   authProfileAndToken: AuthProfileAndToken
 ): HLIRegelingFrontend[] {
-  const groupedAanvragenWithType: AanvraagWithType[][] =
-    groupedAanvragenPerRegeling.map((aanvragen) => {
-      let isRegelingBesluitToegewezenState = false;
-
-      const aanvragenWithType = aanvragen.map((aanvraag, idx, aanvragen) => {
-        const newAanvraag = createAanvraagWithType(
-          aanvraag,
-          isRegelingBesluitToegewezenState,
-          aanvragen,
-          idx
-        );
-        if (newAanvraag.type === 'result-toegewezen') {
-          isRegelingBesluitToegewezenState = true;
-        }
-        return newAanvraag;
+  const regelingen = Object.values(groupedAanvragenPerRegeling).reduce(
+    (regelingen, aanvragen, i) => {
+      const firstToegewezenRTMIdx = aanvragen.findIndex((aanvraag) => {
+        return isRTMDeel2(aanvraag) && aanvraag.resultaat === 'toegewezen';
       });
-      return aanvragenWithType;
-    });
 
-  const combinedRegelingen = groupedAanvragenWithType.reduce(
-    (combinedRegelingen, aanvragen, i, groupedAanvragenPerRegeling) => {
-      const regeling = mergeAanvragenIntoRegeling(aanvragen);
       const statusLineItems = getAllStatusLineItems(
-        regeling,
-        groupedAanvragenPerRegeling[i]
+        groupedAanvragenPerRegeling[i],
+        firstToegewezenRTMIdx
+      ).map((statusLineItem) => {
+        return {
+          ...statusLineItem,
+          documents:
+            statusLineItem.documents &&
+            getDocumentsFrontend(
+              authProfileAndToken.profile.sid,
+              statusLineItem.documents
+            ),
+        };
+      });
+
+      const regeling = createHLIRegelingFrontend(
+        aanvragen,
+        statusLineItems,
+        firstToegewezenRTMIdx
       );
-      const combinedRegeling: RTMCombinedRegeling = [regeling, statusLineItems];
-      return [...combinedRegelingen, combinedRegeling];
+
+      regelingen.push(regeling);
+      return regelingen;
     },
-    [] as RTMCombinedRegeling[]
+    [] as HLIRegelingFrontend[]
   );
-
-  const regelingenFrontend: HLIRegelingFrontend[] = [];
-
-  for (const [regeling, statusLineItems_] of combinedRegelingen) {
-    const statusLineItems = statusLineItems_.map((item) => {
-      return {
-        ...item,
-        documents:
-          item.documents &&
-          getDocumentsFrontend(authProfileAndToken.profile.sid, item.documents),
-      };
-    });
-    const regelingFrontend = transformRegelingForFrontend(
-      authProfileAndToken.profile.sid,
-      regeling,
-      statusLineItems,
-      getRTMDisplayStatus
-    );
-    regelingenFrontend.push(regelingFrontend);
-  }
-
-  return regelingenFrontend;
+  return regelingen;
 }
 
 function groupAanvragenPerRegeling(
@@ -336,137 +317,122 @@ function isEindeRechtReached(
   );
 }
 
-type AanvraagType =
-  | null
-  | 'aanvraag-toegewezen'
-  | 'aanvraag-afgewezen'
-  | 'aanvraag-wijziging'
-  | 'result-migratie'
-  | 'result-toegewezen'
-  | 'result-afgewezen'
-  | 'result-einde-recht'
-  | 'result-wijziging-toegewezen'
-  | 'result-wijziging-afgewezen';
-
-type AanvraagWithType = ZorgnedHLIRegeling & { type: AanvraagType };
-
-function createAanvraagWithType(
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
-  isRegelingBesluitToegewezenState: boolean,
+function createHLIRegelingFrontend(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
-  idx: number
-): AanvraagWithType {
-  const withType = (type: AanvraagType) => {
-    return {
-      ...aanvraag,
-      type,
-    };
+  statusLineItems: StatusLineItem[],
+  firstToegewezenRTM2Idx: number
+): HLIRegelingFrontend {
+  const lastAanvraag = aanvragen[aanvragen.length - 1];
+  const toegewezenRTM2 = aanvragen.find(
+    (a) => isRTMDeel2(a) && a.resultaat === 'toegewezen'
+  );
+  const lastRTM2 = aanvragen.findLast((a) => isRTMDeel2(a));
+  const eindeRecht = aanvragen.find(
+    (a) =>
+      isRTMDeel2(a) && a.resultaat === 'toegewezen' && a.isActueel === false
+  );
+
+  const id = lastAanvraag.id;
+
+  const isToegewezenRTM2Found = firstToegewezenRTM2Idx !== -1;
+
+  const [decision, isActual] = aanvragen.reduce(
+    ([decisionState, isActualState], aanvraag, i) => {
+      const afterFirstToegewezenRTM =
+        isToegewezenRTM2Found && i > firstToegewezenRTM2Idx;
+      const isAfgewezenWijzigingsBesluit =
+        afterFirstToegewezenRTM &&
+        isRTMDeel2(aanvraag) &&
+        aanvraag.resultaat === 'afgewezen';
+
+      // An afgwezen wijziging besluit results in no change to an active regeling.
+      if (isAfgewezenWijzigingsBesluit) {
+        return [decisionState, isActualState];
+      }
+      return [aanvraag.resultaat, aanvraag.isActueel];
+    },
+    ['afgewezen', false] as [BeschikkingsResultaat, boolean]
+  );
+
+  let displayStatus = getRTMDisplayStatus(lastAanvraag, statusLineItems);
+  // This happen with an afgewezen wijzigings besluit because it is afgewezen,
+  // but again it changes nothing, this only happens in the following case.
+  displayStatus =
+    displayStatus === 'Afgewezen' && decision === 'toegewezen'
+      ? 'Toegewezen'
+      : displayStatus;
+
+  const regelingFrontend: HLIRegelingFrontend = {
+    id,
+    title: capitalizeFirstLetter(lastAanvraag.titel),
+    isActual,
+    link: {
+      title: 'Meer informatie',
+      to: generatePath(routeConfig.detailPage.path, {
+        id,
+        regeling: slug(lastAanvraag.titel),
+      }),
+    },
+    steps: statusLineItems,
+    dateDecision:
+      lastRTM2?.datumBesluit ??
+      aanvragen.findLast((a) => a.datumBesluit)?.datumBesluit ??
+      '',
+    dateStart: toegewezenRTM2?.datumIngangGeldigheid ?? null,
+    dateEnd: eindeRecht?.datumEindeGeldigheid ?? null,
+    decision,
+    displayStatus,
+    // Documents are put in the statusLineItems.
+    documents: [],
+    betrokkenen: lastAanvraag.betrokkenPersonen.length
+      ? lastAanvraag.betrokkenPersonen.map((persoon) => persoon.name).join(', ')
+      : '-',
   };
 
-  if (!aanvraag.resultaat) {
-    return withType(null);
-  }
-
-  if (isEindeRechtReached(aanvraag)) {
-    return withType('result-einde-recht');
-  }
-
-  if (isRegelingBesluitToegewezenState) {
-    if (isRTMDeel1(aanvraag)) {
-      return withType('aanvraag-wijziging');
-    }
-
-    const previousAanvraag = aanvragen[idx - 1];
-    if (isRTMDeel1(previousAanvraag)) {
-      return withType(`result-wijziging-${aanvraag.resultaat}`);
-    }
-    return withType(`result-${aanvraag.resultaat}`);
-  }
-
-  if (isRTMDeel1(aanvraag)) {
-    return withType(`aanvraag-${aanvraag.resultaat}`);
-  }
-  return withType(`result-${aanvraag.resultaat}`);
-}
-
-function mergeAanvragenIntoRegeling(
-  aanvragen: AanvraagWithType[]
-): ZorgnedHLIRegeling {
-  const [head, ...aanvragenTail] = aanvragen;
-
-  let isBesluitToegewezenState = false;
-
-  const regeling = aanvragenTail.reduce(
-    (regeling, aanvraag) => {
-      // An Afgewezen wijziging changes nothing about the status of the active regeling.
-      if (aanvraag.type === 'result-wijziging-afgewezen') {
-        return {
-          ...regeling,
-          datumBesluit: aanvraag.datumBesluit,
-        };
-      }
-
-      if (aanvraag.type === 'result-toegewezen') {
-        isBesluitToegewezenState = true;
-      }
-
-      let isActueel = aanvraag.isActueel;
-
-      if (isBesluitToegewezenState) {
-        if (isRTMDeel2(aanvraag) && isEindeRechtReached(aanvraag)) {
-          isActueel = false;
-          isBesluitToegewezenState = false;
-        } else {
-          isActueel = true;
-        }
-      }
-
-      return {
-        ...aanvraag,
-        isActueel,
-        // When a regeling is active and there is no einde recht, the regeling is
-        // active indefinitely.
-        datumEindeGeldigheid:
-          aanvraag.type === 'result-einde-recht'
-            ? aanvraag.datumEindeGeldigheid
-            : null,
-      };
-    },
-    { ...head, datumInBehandeling: head.datumBesluit }
-  );
-  // Documents are put in the statusLineItems.
-  regeling.documenten = [];
-  return regeling;
+  return regelingFrontend;
 }
 
 function getAllStatusLineItems(
-  regeling: ZorgnedHLIRegeling,
-  aanvragen: AanvraagWithType[]
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
+  firstToegewezenRTM2Idx: number
 ): StatusLineItem[] {
+  let isInToegewezenState = false;
+  const isToegewezenRTMFound = firstToegewezenRTM2Idx !== -1;
+
   const incompleteStatusLineItems = aanvragen.reduce(
-    (statusLineItems, aanvraag, i, aanvragen) => {
-      return [
-        ...statusLineItems,
-        ...getStatusLineItems(aanvraag, aanvragen[i - 1]),
-      ];
+    (statusLineItems, aanvraag, i) => {
+      if (isToegewezenRTMFound && i > firstToegewezenRTM2Idx) {
+        isInToegewezenState = true;
+      }
+      statusLineItems.push(
+        ...getStatusLineItems(aanvraag, isInToegewezenState)
+      );
+      return statusLineItems;
     },
     [] as IncompleteStatusLineItem[]
   );
+  const lastAanvraag = aanvragen[aanvragen.length - 1];
+  if (
+    (!(isRTMDeel2(lastAanvraag) && isEindeRechtReached(lastAanvraag)) &&
+      lastAanvraag.resultaat !== 'afgewezen') ||
+    (isInToegewezenState && lastAanvraag.resultaat === 'afgewezen')
+  ) {
+    // RP TODO: Only the title is used, and this is the same in every aanvraag.
+    // So any aanvraag will suffice.
+    const getStatusLineItem = createGetStatusLineItemFn(aanvragen[0]);
+    incompleteStatusLineItems.push(
+      ...getStatusLineItem(['inactiveEindeRecht'])
+    );
+  }
   if (!incompleteStatusLineItems.length) {
     return [];
   }
-  return finalizeStatusLineItems(
-    regeling,
-    incompleteStatusLineItems,
-    aanvragen
-  );
+  return finalizeStatusLineItems(incompleteStatusLineItems);
 }
 
 /** Determines active step and checks untill there (including), and adds ids */
 function finalizeStatusLineItems(
-  regeling: ZorgnedHLIRegeling,
-  statusLineItems: IncompleteStatusLineItem[],
-  aanvragen: AanvraagWithType[]
+  statusLineItems: IncompleteStatusLineItem[]
 ): StatusLineItem[] {
   const lastIdx = statusLineItems.length - 1;
   const lastItem = statusLineItems[lastIdx];
@@ -482,13 +448,6 @@ function finalizeStatusLineItems(
     } else {
       lastItem.isActive = true;
     }
-  }
-
-  const lastAanvraag = aanvragen[aanvragen.length - 1];
-  if (regeling.isActueel) {
-    const getStatusLineItem = createGetStatusLineItemFn(lastAanvraag);
-    const eindeRecht = getStatusLineItem(['inactiveEindeRecht']);
-    statusLineItems.push(...eindeRecht);
   }
 
   const statusLineItemsComplete: StatusLineItem[] = statusLineItems.map(
@@ -579,7 +538,7 @@ const statusLineItems: Record<StatusLineKey, StatusLineItemTransformerConfig> =
       documents: (aanvraag) => aanvraag.documenten,
     },
     inBehandelingGenomen: {
-      status: 'In behandeling genomen',
+      status: RTM_STATUS_IN_BEHANDELING,
       datePublished: getDatumAfgifte,
       description: (aanvraag) => {
         const description = `<p>Voordat u de ${aanvraag.titel} krijgt, moet u een afspraak maken voor een medische keuring bij de GGD. In de brief staat hoe u dat doet.</p>`;
@@ -685,50 +644,31 @@ function createGetStatusLineItemFn(
 }
 
 function getStatusLineItems(
-  aanvraag: AanvraagWithType,
-  previousAanvraag: AanvraagWithType | undefined
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
+  isInToegewezenState: boolean
 ): IncompleteStatusLineItem[] {
   const getStatusLineItem = createGetStatusLineItemFn(aanvraag);
-  switch (aanvraag.type) {
-    // RTM-1 Aanvragen
-    case 'aanvraag-toegewezen': {
-      return getStatusLineItem(['aanvraagLopend', 'inBehandelingGenomen']);
+
+  if (isEindeRechtReached(aanvraag)) {
+    if (isInToegewezenState) {
+      return getStatusLineItem(['wijzigingsBesluit', 'eindeRecht']);
     }
-    case 'aanvraag-afgewezen': {
-      return getStatusLineItem(['aanvraagAfgewezen']);
-    }
-    // RTM-2 Resultaten
-    case 'result-migratie': {
-      return getStatusLineItem(['besluit']);
-    }
-    case 'result-toegewezen': {
-      return getStatusLineItem(['besluit']);
-    }
-    case 'result-afgewezen': {
-      return getStatusLineItem(['besluit']);
-    }
-    case 'result-einde-recht': {
-      if (!previousAanvraag || previousAanvraag.type !== 'aanvraag-wijziging') {
-        return getStatusLineItem(['besluit', 'eindeRecht']);
-      }
-      return getStatusLineItem(['eindeRecht']);
-    }
-    // Wijzigings process
-    case 'aanvraag-wijziging': {
+    return getStatusLineItem(['besluit', 'eindeRecht']);
+  }
+
+  if (isInToegewezenState) {
+    if (isRTMDeel1(aanvraag)) {
       return getStatusLineItem(['wijzigingsAanvraag']);
     }
-    case 'result-wijziging-toegewezen': {
-      return getStatusLineItem(['wijzigingsBesluit']);
-    }
-    case 'result-wijziging-afgewezen': {
-      return getStatusLineItem(['wijzigingsBesluit']);
-    }
-    default: {
-      captureMessage(
-        `No statusstep found for aanvraag type: ${aanvraag.type}`,
-        { severity: 'error' }
-      );
-      return [];
-    }
+
+    return getStatusLineItem(['wijzigingsBesluit']);
   }
+
+  if (isRTMDeel1(aanvraag)) {
+    if (aanvraag.resultaat === 'toegewezen') {
+      return getStatusLineItem(['aanvraagLopend', 'inBehandelingGenomen']);
+    }
+    return getStatusLineItem(['aanvraagAfgewezen']);
+  }
+  return getStatusLineItem(['besluit']);
 }

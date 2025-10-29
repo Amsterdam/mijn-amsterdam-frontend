@@ -141,7 +141,7 @@ export function transformRegelingForFrontend<T extends string>(
 
   const displayStatus = getDisplayStatusFn(aanvraag, statusLineItems);
 
-  // Override isActueel for Afgewezen (RTM* / UPC*) regelingen.
+  // Override isActueel for Afgewezen (UPC*) regelingen.
   let isActual = aanvraag.isActueel;
 
   if (displayStatus === 'Afgewezen' && aanvraag.isActueel) {

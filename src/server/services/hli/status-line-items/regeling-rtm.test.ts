@@ -438,8 +438,8 @@ describe('Aanvrager is ontvanger', () => {
 
     expect(regeling).toMatchObject({
       dateDecision: '2025-02-01',
-      dateEnd: '2026-05-01',
-      dateStart: '2025-05-01',
+      dateStart: null,
+      dateEnd: null,
       decision: 'toegewezen',
       displayStatus: 'In behandeling genomen',
       documents: [],
@@ -509,8 +509,8 @@ describe('Aanvrager is ontvanger', () => {
 
     expect(regelingen[0]).toMatchObject({
       dateDecision: RTM_1_AANVRAAG.datumBesluit,
-      dateEnd: RTM_1_AANVRAAG.datumEindeGeldigheid,
-      dateStart: RTM_1_AANVRAAG.datumIngangGeldigheid,
+      dateStart: null,
+      dateEnd: null,
       decision: 'toegewezen',
       displayStatus: 'In behandeling genomen',
       documents: [],
@@ -938,6 +938,20 @@ describe('Aanvrager is ontvanger', () => {
       },
       {
         id: 'status-step-5',
+        status: 'Besluit wijziging',
+        datePublished: RTM_2_EINDE_RECHT.datumBesluit,
+        documents: [
+          {
+            datePublished: '2025-06-28T15:39:49',
+            title: 'Beschikking beëindigen RTM',
+          },
+        ],
+        isActive: false,
+        isChecked: true,
+        isVisible: true,
+      },
+      {
+        id: 'status-step-6',
         datePublished: RTM_2_EINDE_RECHT.datumEindeGeldigheid,
         documents: [],
         isActive: true,
@@ -957,8 +971,8 @@ describe('Aanvrager is ontvanger', () => {
     expect(regeling).toMatchObject({
       title: RTM_WIJZIGINGS_AANVRAAG.titel,
       isActual: true,
-      dateDecision: RTM_WIJZIGINGS_AANVRAAG.datumBesluit,
-      dateStart: RTM_WIJZIGINGS_AANVRAAG.datumIngangGeldigheid,
+      dateDecision: RTM_2_MIGRATIE.datumBesluit,
+      dateStart: RTM_2_MIGRATIE.datumIngangGeldigheid,
       dateEnd: null,
       decision: 'toegewezen',
       displayStatus: 'Toegewezen',
@@ -1018,7 +1032,7 @@ describe('Aanvrager is ontvanger', () => {
       title: RTM_WIJZIGINGS_AFWIJZING.titel,
       isActual: true,
       dateDecision: RTM_WIJZIGINGS_AFWIJZING.datumBesluit,
-      dateStart: RTM_WIJZIGINGS_AANVRAAG.datumIngangGeldigheid,
+      dateStart: RTM_2_MIGRATIE.datumIngangGeldigheid,
       dateEnd: null,
       decision: 'toegewezen',
       displayStatus: 'Toegewezen',
@@ -1029,6 +1043,7 @@ describe('Aanvrager is ontvanger', () => {
         datePublished: RTM_2_MIGRATIE.datumBesluit,
         documents: [],
         id: 'status-step-1',
+        description: descriptions.toegewezen,
         isActive: false,
         isChecked: true,
         isVisible: true,
@@ -1051,6 +1066,7 @@ describe('Aanvrager is ontvanger', () => {
         isChecked: true,
         isVisible: true,
         status: 'Aanvraag wijziging',
+        description: descriptions.wijzigingsAanvraag,
       },
       {
         datePublished: RTM_WIJZIGINGS_AFWIJZING.datumBesluit,
@@ -1064,6 +1080,7 @@ describe('Aanvrager is ontvanger', () => {
         isChecked: true,
         isVisible: true,
         status: 'Besluit wijziging',
+        description: descriptions.wijzigingsBesluit,
       },
       {
         id: 'status-step-4',
@@ -1110,8 +1127,8 @@ describe('Aanvrager is ontvanger', () => {
     expect(regeling).toMatchObject({
       title: RTM_WIJZIGINGS_AANVRAAG.titel,
       isActual: true,
-      dateDecision: RTM_WIJZIGINGS_AANVRAAG.datumBesluit,
-      dateStart: RTM_WIJZIGINGS_AANVRAAG.datumIngangGeldigheid,
+      dateDecision: RTM_2_MIGRATIE.datumBesluit,
+      dateStart: RTM_2_MIGRATIE.datumIngangGeldigheid,
       dateEnd: null,
       decision: 'toegewezen',
       displayStatus: 'Toegewezen',
@@ -1161,7 +1178,7 @@ describe('Aanvrager is ontvanger', () => {
       ['In behandeling genomen', descriptions.inBehandeling],
       ['Besluit', descriptions.afgewezen],
       ['Besluit', descriptions.toegewezen],
-      ['Besluit', descriptions.afgewezen],
+      ['Besluit wijziging', descriptions.wijzigingsBesluit],
       ['Einde recht', descriptions.inactiveEindeRecht],
     ]);
   });
