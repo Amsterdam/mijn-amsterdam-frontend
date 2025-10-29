@@ -36,6 +36,7 @@ export const AV_RTM_DEEL1 = 'AV-RTM1';
 export const AV_RTM_DEEL2 = 'AV-RTM';
 
 export const RTM_STATUS_IN_BEHANDELING = 'In behandeling genomen';
+export const RTM_STATUS_EINDE_RECHT = 'Einde recht';
 
 const INFO_LINK =
   'https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/extra-geld-als-u-chronisch-ziek-of/';
@@ -445,7 +446,10 @@ function finalizeStatusLineItems(
   if (!hasActiveStep) {
     if (statusLineItems.length === 1) {
       lastItem.isActive = true;
-    } else if (lastItem.status === 'Einde recht' && !lastItem.isActive) {
+    } else if (
+      lastItem.status === RTM_STATUS_EINDE_RECHT &&
+      !lastItem.isActive
+    ) {
       statusLineItems[lastIdx - 1].isActive = true;
     } else {
       lastItem.isActive = true;
@@ -572,7 +576,7 @@ const statusLineItems: Record<StatusLineKey, StatusLineItemTransformerConfig> =
       documents: (aanvraag) => aanvraag.documenten,
     },
     eindeRecht: {
-      status: 'Einde recht',
+      status: RTM_STATUS_EINDE_RECHT,
       datePublished: (aanvraag) => aanvraag.datumEindeGeldigheid || '',
       description: (aanvraag) => {
         return `<p>Uw recht op ${aanvraag.titel} is beëindigd per ${defaultDateFormat(aanvraag.datumEindeGeldigheid || '')}.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`;
@@ -582,7 +586,7 @@ const statusLineItems: Record<StatusLineKey, StatusLineItemTransformerConfig> =
       isActive: () => true,
     },
     inactiveEindeRecht: {
-      status: 'Einde recht',
+      status: RTM_STATUS_EINDE_RECHT,
       datePublished: '',
       description: (regeling: ZorgnedHLIRegeling) => {
         return `

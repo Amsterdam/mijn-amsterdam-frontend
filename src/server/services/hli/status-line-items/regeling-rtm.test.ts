@@ -8,6 +8,7 @@ import {
 } from '../../zorgned/zorgned-types';
 import { forTesting } from '../hli';
 import { HLIRegelingFrontend } from '../hli-regelingen-types';
+import { RTM_STATUS_EINDE_RECHT } from './regeling-rtm';
 
 const ONTVANGER_ID = '999999999';
 
@@ -475,7 +476,7 @@ describe('Aanvrager is ontvanger', () => {
       },
       {
         id: 'status-step-3',
-        status: 'Einde recht',
+        status: RTM_STATUS_EINDE_RECHT,
         datePublished: '',
         isActive: false,
         isChecked: false,
@@ -545,7 +546,7 @@ describe('Aanvrager is ontvanger', () => {
       },
       {
         id: 'status-step-3',
-        status: 'Einde recht',
+        status: RTM_STATUS_EINDE_RECHT,
         datePublished: '',
         isActive: false,
         isChecked: false,
@@ -595,7 +596,7 @@ describe('Aanvrager is ontvanger', () => {
       },
       {
         id: 'status-step-2',
-        status: 'Einde recht',
+        status: RTM_STATUS_EINDE_RECHT,
         datePublished: '',
         documents: [],
         isActive: false,
@@ -621,7 +622,7 @@ describe('Aanvrager is ontvanger', () => {
       dateStart: RTM_2_EINDE_RECHT.datumIngangGeldigheid,
       dateEnd: RTM_2_EINDE_RECHT.datumEindeGeldigheid,
       decision: 'toegewezen',
-      displayStatus: 'Einde recht',
+      displayStatus: RTM_STATUS_EINDE_RECHT,
       documents: [],
     });
     expect(regeling.steps).toMatchObject([
@@ -665,7 +666,7 @@ describe('Aanvrager is ontvanger', () => {
       },
       {
         id: 'status-step-4',
-        status: 'Einde recht',
+        status: RTM_STATUS_EINDE_RECHT,
         description: descriptions.activeEindeRecht,
         datePublished: RTM_2_EINDE_RECHT.datumEindeGeldigheid,
         isActive: true,
@@ -855,7 +856,7 @@ describe('Aanvrager is ontvanger', () => {
         isActive: false,
         isChecked: false,
         isVisible: true,
-        status: 'Einde recht',
+        status: RTM_STATUS_EINDE_RECHT,
       },
     ]);
   });
@@ -878,7 +879,7 @@ describe('Aanvrager is ontvanger', () => {
       dateStart: RTM_2_EINDE_RECHT.datumIngangGeldigheid,
       dateEnd: RTM_2_EINDE_RECHT.datumEindeGeldigheid,
       decision: 'toegewezen',
-      displayStatus: 'Einde recht',
+      displayStatus: RTM_STATUS_EINDE_RECHT,
       documents: [],
     });
     expect(regeling.steps).toMatchObject([
@@ -957,7 +958,7 @@ describe('Aanvrager is ontvanger', () => {
         isActive: true,
         isChecked: true,
         isVisible: true,
-        status: 'Einde recht',
+        status: RTM_STATUS_EINDE_RECHT,
       },
     ]);
   });
@@ -1013,7 +1014,7 @@ describe('Aanvrager is ontvanger', () => {
         isActive: false,
         isChecked: false,
         isVisible: true,
-        status: 'Einde recht',
+        status: RTM_STATUS_EINDE_RECHT,
       },
     ]);
   });
@@ -1089,7 +1090,7 @@ describe('Aanvrager is ontvanger', () => {
         isActive: false,
         isChecked: false,
         isVisible: true,
-        status: 'Einde recht',
+        status: RTM_STATUS_EINDE_RECHT,
       },
     ]);
   });
@@ -1149,7 +1150,7 @@ describe('Aanvrager is ontvanger', () => {
       { ...statusStepWijzigingsAanvraag, id: 'status-step-4', isActive: true },
       {
         id: 'status-step-5',
-        status: 'Einde recht',
+        status: RTM_STATUS_EINDE_RECHT,
         datePublished: '',
         isActive: false,
         isChecked: false,
@@ -1179,7 +1180,7 @@ describe('Aanvrager is ontvanger', () => {
       ['Besluit', descriptions.afgewezen],
       ['Besluit', descriptions.toegewezen],
       ['Besluit wijziging', descriptions.wijzigingsBesluit],
-      ['Einde recht', descriptions.inactiveEindeRecht],
+      [RTM_STATUS_EINDE_RECHT, descriptions.inactiveEindeRecht],
     ]);
   });
 
@@ -1201,7 +1202,7 @@ describe('Aanvrager is ontvanger', () => {
       dateStart: RTM_2_EINDE_RECHT.datumIngangGeldigheid,
       dateEnd: RTM_2_EINDE_RECHT.datumEindeGeldigheid,
       decision: 'toegewezen',
-      displayStatus: 'Einde recht',
+      displayStatus: RTM_STATUS_EINDE_RECHT,
       documents: [],
     };
     const expectedSteps = [
@@ -1245,7 +1246,7 @@ describe('Aanvrager is ontvanger', () => {
       },
       {
         id: 'status-step-4',
-        status: 'Einde recht',
+        status: RTM_STATUS_EINDE_RECHT,
         description: descriptions.activeEindeRecht,
         datePublished: RTM_2_EINDE_RECHT.datumEindeGeldigheid,
         isActive: true,
@@ -1332,7 +1333,7 @@ describe('Ontvanger but aanvragen made by someone else', () => {
       },
       {
         id: 'status-step-2',
-        status: 'Einde recht',
+        status: RTM_STATUS_EINDE_RECHT,
         datePublished: '',
         isActive: false,
         isChecked: false,
@@ -1465,7 +1466,7 @@ describe('Ontvanger but aanvragen made by someone else', () => {
         isActive: false,
         isChecked: false,
         isVisible: true,
-        status: 'Einde recht',
+        status: RTM_STATUS_EINDE_RECHT,
       },
     ]);
   });
@@ -1488,7 +1489,7 @@ describe('Ontvanger but aanvragen made by someone else', () => {
       dateStart: RTM_2_EINDE_RECHT.datumIngangGeldigheid,
       dateEnd: RTM_2_EINDE_RECHT.datumEindeGeldigheid,
       decision: 'toegewezen',
-      displayStatus: 'Einde recht',
+      displayStatus: RTM_STATUS_EINDE_RECHT,
       documents: [],
     });
     expect(regeling.steps).toMatchObject([
@@ -1508,7 +1509,7 @@ describe('Ontvanger but aanvragen made by someone else', () => {
       },
       {
         id: 'status-step-2',
-        status: 'Einde recht',
+        status: RTM_STATUS_EINDE_RECHT,
         datePublished: RTM_2_EINDE_RECHT.datumEindeGeldigheid,
         isActive: true,
         isChecked: true,
@@ -1587,7 +1588,7 @@ describe('Mixed betrokkenen', () => {
         description: descriptions.wijzigingsAanvraagVoorMeerdereBetrokkenen,
       },
       { status: 'Besluit wijziging', isActive: true },
-      { status: 'Einde recht', isActive: false },
+      { status: RTM_STATUS_EINDE_RECHT, isActive: false },
     ]);
     expect(regelingOther.betrokkenen).toBe('111111111 - Flex');
     expect(regelingOther.steps).toMatchObject([
@@ -1597,7 +1598,7 @@ describe('Mixed betrokkenen', () => {
       { status: 'In behandeling genomen' },
       { status: 'Aanvraag' },
       { status: 'In behandeling genomen' },
-      { status: 'Einde recht', isChecked: false, isActive: false },
+      { status: RTM_STATUS_EINDE_RECHT, isChecked: false, isActive: false },
     ]);
   });
 
@@ -1643,7 +1644,7 @@ describe('Mixed betrokkenen', () => {
     });
     expect(
       regeling.steps.map((s) => [s.status, s.description])
-    ).toMatchInlineSnapshot([
+    ).toStrictEqual([
       ['Aanvraag', ''],
       [
         'In behandeling genomen',
@@ -1656,7 +1657,7 @@ describe('Mixed betrokkenen', () => {
         'In behandeling genomen',
         descriptions.inBehandelingVoorMeerdereBetrokkenen,
       ],
-      ['Einde recht', descriptions.inactiveEindeRecht],
+      [RTM_STATUS_EINDE_RECHT, descriptions.inactiveEindeRecht],
     ]);
   });
 
@@ -1684,7 +1685,7 @@ describe('Mixed betrokkenen', () => {
       { status: 'Aanvraag' },
       { status: 'In behandeling genomen' },
       { status: 'Besluit' },
-      { status: 'Einde recht' },
+      { status: RTM_STATUS_EINDE_RECHT },
     ]);
 
     const regelingKnownBetrokkene = regelingen[0];
@@ -1696,7 +1697,7 @@ describe('Mixed betrokkenen', () => {
     expect(regelingKnownBetrokkene.steps).toMatchObject([
       { status: 'Aanvraag' },
       { status: 'In behandeling genomen' },
-      { status: 'Einde recht' },
+      { status: RTM_STATUS_EINDE_RECHT },
     ]);
 
     const regelingOrphaned = regelingen[2];
