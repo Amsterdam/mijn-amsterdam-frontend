@@ -159,13 +159,12 @@ type AanvragenPerBetrokkene = Record<
   string,
   ZorgnedAanvraagWithRelatedPersonsTransformed[]
 > & {
-  ontvanger: ZorgnedAanvraagWithRelatedPersonsTransformed[];
   orphaned: ZorgnedAanvraagWithRelatedPersonsTransformed[];
 };
 
 function mapAanvragenPerBetrokkenen(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
-  bsnOntvanger: string
+  bsnLoggedInPerson: string
 ): AanvragenPerBetrokkene {
   aanvragen = aanvragen.map((aanvraag) => {
     return {
@@ -182,11 +181,14 @@ function mapAanvragenPerBetrokkenen(
   const hasAllAanvragenIdenticalBetrokkene =
     new Set(foundBetrokkenenSets).size === 1;
 
-  const aanvragenMap: AanvragenPerBetrokkene = { ontvanger: [], orphaned: [] };
+  const aanvragenMap: AanvragenPerBetrokkene = {
+    [bsnLoggedInPerson]: [],
+    orphaned: [],
+  };
 
   if (hasAllAanvragenIdenticalBetrokkene) {
     const hasOntvanger = foundBetrokkenenSets.some((betrokkenen) =>
-      betrokkenen.includes(bsnOntvanger)
+      betrokkenen.includes(bsnLoggedInPerson)
     );
     if (hasOntvanger) {
       aanvragenMap.ontvanger = aanvragen;
@@ -200,15 +202,15 @@ function mapAanvragenPerBetrokkenen(
     const betrokkenen = aanvraag.betrokkenen;
     if (!betrokkenen.length) {
       if (isRTMDeel2(aanvraag)) {
-        aanvragenMap.ontvanger.push(aanvraag);
+        aanvragenMap[bsnLoggedInPerson].push(aanvraag);
       } else {
         aanvragenMap.orphaned.push(aanvraag);
       }
     } else {
       // Copy/distribute aanvragen for every individual betrokkene.
       for (const bsn of betrokkenen) {
-        if (bsn === bsnOntvanger) {
-          aanvragenMap.ontvanger.push(aanvraag);
+        if (bsn === bsnLoggedInPerson) {
+          aanvragenMap[bsnLoggedInPerson].push(aanvraag);
         } else {
           const newAanvraag = {
             ...aanvraag,
