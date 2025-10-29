@@ -141,7 +141,7 @@ Services:
 `DEBUG=vergunningen,decos-service`
 
 Request tooling:
-`DEBUG=source-api-request:cache-hit,source-api-request:cache-key,source-api-request:response`
+`DEBUG=source-api-request:cache-hit,source-api-request:cache-key,source-api-request:response,source-api-request:response-error-object`
 
 To log response data from incoming responses before any transformation.
 A comma separated list of keywords / pathsegments can be used to log specific requests. For example: zorgned/aanvragen,gpass

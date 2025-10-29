@@ -107,7 +107,7 @@ describe('<VarenList />', () => {
     expectHeaders(table, [
       'Naam vaartuig',
       'Omschrijving',
-      'Aangevraagd',
+      'Datum aanvraag',
       'Status',
     ]);
 
@@ -177,7 +177,11 @@ describe('<VarenVergunningList />', () => {
     const screen = render(<Component state={getTestState([], vergunningen)} />);
 
     const table = screen.getByRole('table');
-    expectHeaders(table, ['Naam vaartuig', 'Omschrijving']);
+    expectHeaders(table, [
+      'Naam vaartuig',
+      'Omschrijving',
+      'Vergunningkenmerk',
+    ]);
 
     const withinTable = within(table);
 

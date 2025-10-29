@@ -1,6 +1,7 @@
 import { differenceInSeconds } from 'date-fns';
 import { CookieOptions, Request, Response } from 'express';
 import { AccessToken } from 'express-openid-connect';
+import slug from 'slugme';
 import UID from 'uid-safe';
 
 import { DevelopmentRoutes, PREDEFINED_REDIRECT_URLS } from './bff-routes';
@@ -121,28 +122,42 @@ authRouterDevelopment.get(
       );
     }
 
-    const allUsernames = Object.keys(testAccounts);
-    const userName =
-      req.params.user && req.params.user in testAccounts
-        ? req.params.user
-        : allUsernames[0];
+    const allUsernames = Object.entries(testAccounts).map(([name, id]) => {
+      const name_ = name.trim().replace('Provincie-', '');
+      const user = slug(name_);
+      const href = generateFullApiUrlBFF(
+        `${authMethod === 'digid' ? authRoutes.AUTH_LOGIN_DIGID : authRoutes.AUTH_LOGIN_EHERKENNING}/${user}`,
+        [req.query as RecordStr2]
+      );
+
+      if (!id) {
+        throw new Error(`No id found for test account ${name}`);
+      }
+
+      return {
+        user,
+        href,
+        name: name_,
+        mokum: name.startsWith('Provincie') ? 'Nee' : 'Ja',
+        id,
+      };
+    });
+
+    const user =
+      (req.params.user
+        ? allUsernames.find((u) => u.user === req.params.user)
+        : null) ?? allUsernames[0];
 
     if (!req.params.user && allUsernames.length > 1) {
-      const list = Object.keys(testAccounts)
-        .map((userName) => {
-          const href = generateFullApiUrlBFF(
-            `${authMethod === 'digid' ? authRoutes.AUTH_LOGIN_DIGID : authRoutes.AUTH_LOGIN_EHERKENNING}/${userName}`,
-            [req.query as RecordStr2]
-          );
-          return `<li><a href="${href}">${userName}</a>`;
-        })
-        .join('');
-      return res.send(
-        `<div style="height:100vh;width:100vw;display:flex;justify-content:center;"><div><h1>Selecteer ${authMethod} test account.</h1><ul>${list}</ul></div></div>`
-      );
+      const renderProps = {
+        title: `Selecteer ${authMethod} test account.`,
+        list: allUsernames,
+      };
+
+      return res.render('select-test-account', renderProps);
     }
 
-    const userId = testAccounts[userName];
+    const userId = user.id;
 
     countLoggedInVisit(userId, authMethod);
 

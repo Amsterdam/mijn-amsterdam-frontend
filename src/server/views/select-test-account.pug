@@ -1,0 +1,46 @@
+h1 #{title}
+
+style.
+  h1 {
+    text-align: center;
+  }
+  table {
+    border-collapse: collapse;
+    margin: 0 auto;
+  }
+  th {
+    text-align: left;
+    background-color: #f2f2f2;
+    padding: 8px;
+    text-align: left;
+  }
+  tr {
+    background: #fff;
+  }
+  tr:nth-child(even) {
+    background: #f2f2f2;
+  }
+  td {
+    padding: 8px;
+  }
+  .test-account-name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 300px;
+  }
+
+table
+  thead
+    tr
+      th Naam
+      th Bsn
+      th Mokum
+  tbody
+    each account in list
+      tr
+        td
+          a(href=account.href)
+            div(class="test-account-name") #{account.name}
+        td #{account.id}
+        td #{account.mokum}
