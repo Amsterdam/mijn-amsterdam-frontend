@@ -39,7 +39,7 @@ type PageConfig<T extends string> = {
   };
 };
 
-type InfoSection = {
+export type InfoSection = {
   title: string;
   listItems: Array<{ text?: string; listItems?: string[] } | string>;
 };

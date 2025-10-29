@@ -12,7 +12,10 @@ import {
   TextPageV2,
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
-import { ThemaConfigBase } from '../../config/thema-types';
+import {
+  ThemaConfigBase,
+  InfoSection as ThemaInfoSection,
+} from '../../config/thema-types';
 import { getRedactedClass } from '../../helpers/cobrowse';
 import {
   compareThemas,
@@ -48,7 +51,7 @@ export type InfoSection = {
   id: string;
   title: string;
   href?: string; // Use this instead of the themaMenuItem 'to URL' and force link to be clickable.
-  listItems: ListItems;
+  listItems: ThemaInfoSection['listItems'];
   active: boolean;
 };
 
@@ -61,12 +64,10 @@ function createInfoSection(themaConfig: ThemaConfigBase): InfoSection {
   };
 }
 
-type ListItems = Array<{ text?: null | string; listItems?: string[] } | string>;
-
 export type SectionProps = {
   title: string;
   href?: string;
-  listItems: ListItems;
+  listItems: ThemaInfoSection['listItems'];
 };
 
 const sections: InfoSection[] = [
