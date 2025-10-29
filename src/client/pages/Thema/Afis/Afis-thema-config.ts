@@ -33,6 +33,9 @@ export const EMANDATE_ENDDATE_INDICATOR = '9999';
 export const themaId = 'AFIS' as const;
 export const themaTitle = 'Facturen en betalen';
 
+export const titleBetaalvoorkeurenPage = 'Betaalvoorkeuren';
+export const titleEMandaatPage = 'E-Mandaat';
+
 export const routeConfig = {
   detailPage: {
     path: '/facturen-en-betalen/factuur/:state/:factuurNummer',

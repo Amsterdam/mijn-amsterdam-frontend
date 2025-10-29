@@ -5,8 +5,12 @@ import isEqual from 'lodash.isequal';
 import { useNavigate, useParams } from 'react-router';
 
 import { generateApiUrl } from './Afis-helpers';
-import { routeConfig, eMandateTableConfig } from './Afis-thema-config';
-import { useAfisBetaalVoorkeurenData } from './useAfisBetaalVoorkeurenData';
+import {
+  routeConfig,
+  eMandateTableConfig,
+  titleBetaalvoorkeurenPage,
+  titleEMandaatPage,
+} from './Afis-thema-config';
 import { useAfisThemaData } from './useAfisThemaData.hook';
 import type {
   AfisEMandateFrontend,
@@ -48,9 +52,6 @@ export function useAfisEMandatesData() {
   const isSmallScreen = useSmallScreen();
 
   const { businessPartnerIdEncrypted, themaId } = useAfisThemaData();
-  const { title: betaalVoorkeurenTitle } = useAfisBetaalVoorkeurenData(
-    businessPartnerIdEncrypted
-  );
 
   const {
     isLoading,
@@ -90,10 +91,9 @@ export function useAfisEMandatesData() {
 
   const statusNotificationStorage = useEmandateStatusPendingStorage(eMandates);
 
-  const title = 'E-Mandaat';
   const breadcrumbs = [
     ...useThemaBreadcrumbs(themaId),
-    { to: routeConfig.betaalVoorkeuren.path, title: betaalVoorkeurenTitle },
+    { to: routeConfig.betaalVoorkeuren.path, title: titleBetaalvoorkeurenPage },
   ];
   const { id } = useParams<{ id: AfisEMandateFrontend['id'] }>();
   const eMandate = eMandates.find((mandate) => mandate.id === id);
@@ -115,7 +115,7 @@ export function useAfisEMandatesData() {
       );
     },
     statusNotification: statusNotificationStorage,
-    title,
+    title: titleEMandaatPage,
     fetchEMandates: () => {
       fetch();
     },
@@ -243,6 +243,11 @@ export function useEmandateApis(eMandate: AfisEMandateFrontend) {
   };
 }
 
+/**
+ * This hook synchronizes the state of pending IBANs with session storage to
+ * ensure persistence across page reloads within the same session. It also
+ * ensures that changes to the state are reflected in session storage.
+ */
 function useIsPendingNotification() {
   const [ibansPendingActivation_, setIsPendingActivation_] = useSessionStorage(
     'afis-emandate-pending-activation',
@@ -276,6 +281,22 @@ function useIsPendingNotification() {
   };
 }
 
+/**
+ * Custom hook to manage and update the pending activation status of eMandates.
+ *
+ * This hook processes the current eMandates and updates the list of IBANs that are
+ * pending activation. It also ensures that the `iban` query parameter is removed
+ * from the URL after processing.
+ *
+ * - The hook listens for changes in the `eMandates`, `iban` query parameter, and the
+ *   current list of pending IBANs to determine if updates are needed.
+ * - If an eMandate's status is not '1' and the `iban` query parameter is present, the
+ *   IBAN is added to the pending activation list.
+ * - If an eMandate's status is '1', its associated creditor IBAN is removed from the
+ *   pending activation list.
+ * - The hook uses `useNavigate` to remove the `iban` query parameter from the URL after
+ *   processing, replacing the current URL without reloading the page.
+ */
 export function useEmandateStatusPendingStorage(
   eMandates?: AfisEMandateFrontend[]
 ) {

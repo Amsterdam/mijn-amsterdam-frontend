@@ -1,5 +1,8 @@
 import { generateApiUrl } from './Afis-helpers';
-import { businessPartnerDetailsLabels } from './Afis-thema-config';
+import {
+  businessPartnerDetailsLabels,
+  titleBetaalvoorkeurenPage,
+} from './Afis-thema-config';
 import type {
   AfisThemaResponse,
   AfisBusinessPartnerDetailsTransformed,
@@ -20,7 +23,7 @@ export function useAfisBetaalVoorkeurenData(
   const businesspartnerDetailsApiResponse = api.data;
 
   return {
-    title: 'Betaalvoorkeuren',
+    title: titleBetaalvoorkeurenPage,
     businesspartnerDetails: businesspartnerDetailsApiResponse?.content ?? null,
     businessPartnerDetailsLabels,
     isLoadingBusinessPartnerDetails: api.isLoading,
