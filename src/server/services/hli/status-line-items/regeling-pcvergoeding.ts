@@ -4,6 +4,7 @@ import { getBetrokkenKinderenDescription } from './generic';
 import { featureToggle } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { lowercaseFirstLetter } from '../../../../universal/helpers/text';
+import { sortAlpha } from '../../../../universal/helpers/utils';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
@@ -113,12 +114,69 @@ function getUpcPcvDecisionDate(
   return aanvraag.datumBesluit;
 }
 
+function filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNietGevolgd(
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
+) {
+  const pcVergoedingAanvragenByBeschikkingNummer = aanvragen.reduce(
+    (acc, aanvraag) => {
+      if (isVerzilvering(aanvraag) || isPcVergoeding(aanvraag)) {
+        const beschikkingNummer =
+          aanvraag.beschikkingNummer || 'undefined_beschikkingNummer';
+        acc[beschikkingNummer] = acc[beschikkingNummer] || [];
+        acc[beschikkingNummer].push(aanvraag);
+      }
+      return acc;
+    },
+    {} as Record<string, ZorgnedAanvraagWithRelatedPersonsTransformed[]>
+  );
+
+  const PCVergoedingAanvragenFiltered = Object.values(
+    pcVergoedingAanvragenByBeschikkingNummer
+  ).flatMap((group) => {
+    if (group.length <= 1) {
+      return group[0];
+    }
+    const groupSorted = group.toSorted(sortAlpha('id', 'asc'));
+    // If there are multiple aanvragen with the same beschikkingNummer, we need to filter them.
+    // We keep the aanvraag where the workshop is not followed, and filter out the denied ones for the same productIdentificatie.
+    const workshopAanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed | null =
+      groupSorted.find((aanvraag) => isWorkshopNietGevolgd(aanvraag)) ?? null;
+
+    const filteredGroup = groupSorted.filter((aanvraag) => {
+      if (aanvraag === workshopAanvraag) {
+        return true;
+      } else if (
+        // Filters out the aanvraag derived from a redundant beschiktProduct in the same beschikking.
+        // In this case the workshop is not followed, the business sets datumIngangGeldigheid and datumEindeGeldigheid to the same date.
+        // But also adds a denied beschiktproduct for the same productIdentificatie. This is a redundant entry that should not be shown.
+        workshopAanvraag &&
+        aanvraag.resultaat === 'afgewezen' &&
+        aanvraag.productIdentificatie === workshopAanvraag.productIdentificatie
+      ) {
+        return false;
+      }
+      return true;
+    });
+    return filteredGroup;
+  });
+
+  return aanvragen.filter((aanvraag) => {
+    if (isVerzilvering(aanvraag) || isPcVergoeding(aanvraag)) {
+      return PCVergoedingAanvragenFiltered.includes(aanvraag);
+    }
+    return true;
+  });
+}
+
 export function filterCombineUpcPcvData(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ) {
   const baseRegelingIdWithVerzilvering: string[] = [];
-
-  const aanvragenWithDocumentsCombined = aanvragen.map((aanvraag) => {
+  const aanvragen_ =
+    filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNietGevolgd(
+      aanvragen
+    );
+  const aanvragenWithDocumentsCombined = aanvragen_.map((aanvraag) => {
     // Exclude baseRegelingen that have verzilvering
     if (baseRegelingIdWithVerzilvering.includes(aanvraag.id)) {
       return null;
@@ -171,7 +229,6 @@ export function filterCombineUpcPcvData(
 }
 
 /** Checks of een Workshop niet gevolgd is.
- *
  * In Zorgned worden datumIngangGeldigheid en datumEindeGeledigheid gebruikt om aan te geven dat de workshop niet gevolgd is.
  * Als de workshop niet gevolgd is, zijn de datumIngangGeldigheid en datumEindeGeledigheid gelijk aan elkaar.
  */
@@ -312,4 +369,5 @@ export const forTesting = {
   isVerzilvering,
   isWorkshopNietGevolgd,
   filterCombineUpcPcvData,
+  filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNietGevolgd,
 };
