@@ -1,6 +1,6 @@
 import { isAfter } from 'date-fns';
 
-import { getBesluitDescription, isAanvrager } from './generic';
+import { getBesluitDescription } from './generic';
 import { featureToggle } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { sortAlpha } from '../../../../universal/helpers/utils';
@@ -614,24 +614,12 @@ const statusLineItems: Record<StatusLineKey, StatusLineItemTransformerConfig> =
       status: 'Einde recht',
       datePublished: (aanvraag) => aanvraag.datumEindeGeldigheid || '',
       description: (aanvraag) => {
-        const base = `<p>Uw recht op ${aanvraag.titel} is beëindigd per ${defaultDateFormat(aanvraag.datumEindeGeldigheid || '')}.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`;
-        const isAanvraagForChild =
-          aanvraag.betrokkenen.length &&
-          !aanvraag.betrokkenen.includes(aanvraag.bsnAanvrager);
-        if (!isAanvrager(aanvraag)) {
-          return `${base}<p>Bent u net of binnenkort 18 jaar oud? Dan moet u deze regeling voor uzelf aanvragen.'} <a href="${INFO_LINK}">Lees meer over de voorwaarden</a>.</p>`;
-        }
-        if (isAanvraagForChild) {
-          return `${base}
-          <p>Wordt uw kind 18? Dan moet uw kind deze regeling voor zichzelf aanvragen.</p>`;
-        }
-        return base;
+        return `<p>Uw recht op ${aanvraag.titel} is beëindigd per ${defaultDateFormat(aanvraag.datumEindeGeldigheid || '')}.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`;
       },
       // These documents are put in 'besluit'.
       documents: () => [],
       isActive: () => true,
     },
-    /** Default einde recht that is shown when a product is in a toegewezen RTM-2 state, einde recht is not actually present in the data in this case. */
     inactiveEindeRecht: {
       status: 'Einde recht',
       datePublished: '',

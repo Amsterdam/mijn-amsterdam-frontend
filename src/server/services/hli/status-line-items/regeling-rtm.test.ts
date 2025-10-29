@@ -100,8 +100,6 @@ const descriptions = {
   inBehandeling: `<p>Voordat u de Regeling Tegemoetkoming Meerkosten krijgt, moet u een afspraak maken voor een medische keuring bij de GGD. In de brief staat hoe u dat doet.</p>`,
   inBehandelingVoorMeerdereBetrokkenen: `<p>Voordat u de Regeling Tegemoetkoming Meerkosten krijgt, moet u een afspraak maken voor een medische keuring bij de GGD. In de brief staat hoe u dat doet.</p><p><strong>Vraagt u de Regeling Tegemoetkoming Meerkosten (ook) voor andere gezinsleden aan?</strong><br/>De uitslag van de aanvraag is op Mijn Amsterdam te vinden met de DigiD login gegevens van uw gezinsleden.</p> <p>Nog geen DigiD login gegevens? <a rel="noopener noreferrer" href="https://www.digid.nl/aanvragen-en-activeren/digid-aanvragen">Ga naar DigiD aanvragen.</a></p> <p><strong>Gedeeltelijke afwijzing voor u of uw gezinsleden?</strong><br/>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`,
   activeEindeRecht: `<p>Uw recht op Regeling Tegemoetkoming Meerkosten is beëindigd per 30 juni 2025.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`,
-  activeEindeRechtForChild: `<p>Uw recht op Regeling Tegemoetkoming Meerkosten is beëindigd per 30 juni 2025.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p> <p>Wordt uw kind 18? Dan moet uw kind deze regeling voor zichzelf aanvragen.</p>`,
-  activeEindeRechtAtChild: `<p>Uw recht op Regeling Tegemoetkoming Meerkosten is beëindigd per 30 juni 2025.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p><p>Bent u net of binnenkort 18 jaar oud? Dan moet u deze regeling voor uzelf aanvragen.'} <a href="https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/extra-geld-als-u-chronisch-ziek-of/">Lees meer over de voorwaarden</a>.</p>`,
   inactiveEindeRecht: `<p>U hoeft de Regeling Tegemoetkoming Meerkosten niet elk jaar opnieuw aan te vragen. De gemeente verlengt de regeling stilzwijgend, maar controleert wel elk jaar of u nog in aanmerking komt.</p><p>U kunt dan ook een brief krijgen met het verzoek om extra informatie te geven.</p><p><a href="https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/extra-geld-als-u-chronisch-ziek-of/">Als er wijzigingen zijn in uw situatie moet u die direct doorgeven</a>.</p>`,
 };
 
@@ -1498,7 +1496,7 @@ describe('Ontvanger but aanvragen made by someone else', () => {
         isActive: true,
         isChecked: true,
         isVisible: true,
-        description: descriptions.activeEindeRechtAtChild,
+        description: descriptions.activeEindeRecht,
         documents: [],
       },
     ]);
