@@ -125,7 +125,7 @@ export const tableConfig: {
       props: {
         detailLinkComponent: 'Naam vaartuig',
         title: 'Omschrijving',
-        id: 'Vergunningkenmerk',
+        vergunningKenmerk: 'Vergunningkenmerk',
       },
       colWidths: {
         large: ['25%', '35%', '40%', '0'],
