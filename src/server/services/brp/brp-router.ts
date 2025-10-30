@@ -17,13 +17,20 @@ if (!IS_PRODUCTION) {
   routerProtected.get(
     routes.protected.BRP_PERSONEN_RAW,
     async (_req: Request, res: ResponseAuthenticated) => {
-      const RAW_DATA = true;
       return res.send(
-        await fetchBrpByBsn(
-          res.locals.sessionId,
-          [res.locals.authProfileAndToken.profile.id],
-          RAW_DATA
-        )
+        await fetchBrpByBsn(res.locals.sessionId, [
+          res.locals.authProfileAndToken.profile.id,
+        ])
+      );
+    }
+  );
+  routerProtected.get(
+    routes.protected.BRP_VERBLIJFPLAATSHISTORIE_RAW,
+    async (_req: Request, res: ResponseAuthenticated) => {
+      return res.send(
+        await fetchBrpByBsn(res.locals.sessionId, [
+          res.locals.authProfileAndToken.profile.id,
+        ])
       );
     }
   );

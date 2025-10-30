@@ -1,5 +1,6 @@
-import { fetchBrpV2 } from './brp';
+import { fetchBrpByBsnTransformed } from './brp';
 import { ADRES_IN_ONDERZOEK_A } from './brp-config';
+import type { BrpFrontend } from './brp-types';
 import {
   themaIdBRP,
   themaTitle,
@@ -14,9 +15,11 @@ import { defaultDateFormat } from '../../../universal/helpers/date';
 import type { MyNotification } from '../../../universal/types/App.types';
 import type { AuthProfileAndToken } from '../../auth/auth-types';
 import { fetchBrpNotifications } from '../profile/brp';
-import type { BRPData } from '../profile/brp.types';
 
-export function transformBRPNotifications(data: BRPData, compareDate: Date) {
+export function transformBRPNotifications(
+  data: BrpFrontend,
+  compareDate: Date
+) {
   const adresInOnderzoek = data?.persoon?.adresInOnderzoek;
   const isOnbekendWaarheen = data?.persoon?.vertrokkenOnbekendWaarheen || false;
   const dateLeft = data?.persoon?.datumVertrekUitNederland
@@ -70,12 +73,15 @@ export async function fetchBrpNotificationsV2(
     return fetchBrpNotifications(authProfileAndToken);
   }
 
-  const BRP = await fetchBrpV2(authProfileAndToken);
+  const BRP = await fetchBrpByBsnTransformed(authProfileAndToken.profile.sid, [
+    authProfileAndToken.profile.id,
+  ]);
 
   if (BRP.status === 'OK') {
     return apiSuccessResult({
       notifications: transformBRPNotifications(BRP.content, new Date()),
     });
   }
+
   return apiDependencyError({ BRP });
 }

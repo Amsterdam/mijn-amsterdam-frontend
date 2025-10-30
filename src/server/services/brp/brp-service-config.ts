@@ -11,5 +11,6 @@ export const featureToggle = {
 export const routes = {
   protected: {
     BRP_PERSONEN_RAW: `/services/brp/personen/raw`,
+    BRP_VERBLIJFPLAATSHISTORIE_RAW: `/services/brp/verblijfplaatshistorie/raw`,
   },
 } as const;
