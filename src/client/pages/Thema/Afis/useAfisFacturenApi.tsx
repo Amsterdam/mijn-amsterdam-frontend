@@ -22,15 +22,15 @@ import { useBffApi } from '../../../hooks/api/useBffApi';
 import { useSmallScreen } from '../../../hooks/media.hook';
 
 function getInvoiceStatusDescriptionFrontend(factuur: AfisFactuur): ReactNode {
-  switch (factuur.status) {
-    case 'openstaand':
+  switch (true) {
+    case factuur.status === 'openstaand' && !!factuur.paylink:
       return (
         <>
           {capitalizeFirstLetter(factuur.status)}:{' '}
           <MaLink
             maVariant="fatNoUnderline"
             target="_blank"
-            href={factuur.paylink ?? '#missing-paylink'}
+            href={factuur.paylink}
           >
             {factuur.statusDescription}
           </MaLink>
@@ -154,3 +154,8 @@ export function useAfisFacturenApi(
     isError,
   } as const;
 }
+
+export const forTesting = {
+  getInvoiceStatusDescriptionFrontend,
+  transformFactuur,
+};
