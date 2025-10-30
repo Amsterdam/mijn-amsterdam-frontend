@@ -133,7 +133,7 @@ describe('<AfisFacturen />', () => {
     });
   });
 
-  test('Partial error display', () => {});
+  // test('Partial error display', () => {});
 
-  test('Error display', () => {});
+  // test('Error display', () => {});
 });

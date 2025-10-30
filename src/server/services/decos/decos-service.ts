@@ -1,4 +1,4 @@
-import assert from 'assert';
+import assert from 'node:assert';
 
 import createDebugger from 'debug';
 import { generatePath } from 'react-router';

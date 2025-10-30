@@ -34,6 +34,7 @@ describe('useBffApi', () => {
       data: null,
       errorData: null,
       fetch: expect.any(Function),
+      optimisticUpdateContent: expect.any(Function),
     });
   });
 
@@ -139,6 +140,7 @@ describe('useBffApi', () => {
       data: mockResponse,
       errorData: null,
       fetch: expect.any(Function),
+      optimisticUpdateContent: expect.any(Function),
     });
   });
 
@@ -171,6 +173,7 @@ describe('useBffApi', () => {
       errorData:
         'HTTP Error: Request to http://localhost/test failed with status 500 message: Failed',
       fetch: expect.any(Function),
+      optimisticUpdateContent: expect.any(Function),
     });
   });
 
@@ -213,6 +216,7 @@ describe('useBffApi', () => {
       data: null,
       errorData: 'Unknown error: Stop now!',
       fetch: expect.any(Function),
+      optimisticUpdateContent: expect.any(Function),
     });
   });
 });
@@ -270,7 +274,7 @@ describe('sendJSONPostRequest', () => {
 
     const result = await sendJSONPostRequest<{ foo: string }>(
       'http://localhost/test',
-      { foo: 'bar' }
+      { payload: { foo: 'bar' } }
     );
     expect(result.status).toBe('OK');
     expect(result.content).toEqual({ foo: 'bar' });
@@ -292,7 +296,7 @@ describe('sendFormPostRequest', () => {
 
     const result = await sendFormPostRequest<{ foo: string }>(
       'http://localhost/test',
-      { foo: 'bar' }
+      { payload: { foo: 'bar' } }
     );
     expect(result.status).toBe('OK');
     expect(result.content).toEqual({ foo: 'bar' });

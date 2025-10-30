@@ -247,7 +247,7 @@ describe('LoodMeting', () => {
 
       const errorMessage = screen.getByRole('heading', {
         level: 4,
-        name: 'Foutmelding',
+        name: 'Geen gegevens gevonden',
       });
       expect(errorMessage).toBeInTheDocument();
     });

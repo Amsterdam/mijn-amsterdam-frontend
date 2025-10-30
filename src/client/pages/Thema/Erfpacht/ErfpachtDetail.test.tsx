@@ -13,6 +13,7 @@ import {
 import { bffApi } from '../../../../testing/utils';
 import { AppState } from '../../../../universal/types/App.types';
 import MockApp from '../../MockApp';
+import { EMANDATE_ENDDATE_INDICATOR } from '../Afis/Afis-thema-config';
 
 function mockDetailFetch(
   content: unknown = transformErfpachtDossierProperties(
@@ -59,7 +60,7 @@ describe('<Erfpacht/DossierDetail />', () => {
       expect(
         screen.getByRole('heading', { name: 'Erfpachtdossier' })
       ).toBeInTheDocument();
-      expect(screen.getByText('Foutmelding')).toBeInTheDocument();
+      expect(screen.getByText('Geen gegevens gevonden')).toBeInTheDocument();
       expect(
         screen.getByText('We kunnen op dit moment geen gegevens tonen.')
       ).toBeInTheDocument();
@@ -182,7 +183,10 @@ describe('<Erfpacht/DossierDetail />', () => {
     const testState = {
       ERFPACHT: {
         status: 'OK',
-        content: transformDossierResponse(ERFPACHT_DOSSIERS as any, '999999'),
+        content: transformDossierResponse(
+          ERFPACHT_DOSSIERS as any,
+          EMANDATE_ENDDATE_INDICATOR
+        ),
       },
     } as AppState;
 

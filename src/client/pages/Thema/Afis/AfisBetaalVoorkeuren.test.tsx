@@ -38,8 +38,16 @@ describe('<AfisBetaalVoorkeuren />', () => {
 
   bffApi
     .get(`/services/afis/businesspartner?id=${businessPartnerIdEncrypted}`)
+    .times(2)
     .reply(200, {
       content: businessPartnerDetails,
+      status: 'OK',
+    });
+
+  bffApi
+    .get(`/services/afis/e-mandates?id=${businessPartnerIdEncrypted}`)
+    .reply(200, {
+      content: [],
       status: 'OK',
     });
 
@@ -73,10 +81,11 @@ describe('<AfisBetaalVoorkeuren />', () => {
 
     const screen = render(<Component />);
 
-    const toonKnop = screen.getByText('Toon');
-    expect(toonKnop).toBeInTheDocument();
-
-    await user.click(toonKnop);
+    await waitFor(async () => {
+      const toonKnop = screen.getByText('Toon');
+      expect(toonKnop).toBeInTheDocument();
+      await user.click(toonKnop);
+    });
 
     await waitFor(() => {
       expect(screen.getByText('someone@example.org')).toBeInTheDocument();
