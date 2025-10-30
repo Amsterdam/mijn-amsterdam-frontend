@@ -3,10 +3,10 @@ import { Link } from '@amsterdam/design-system-react';
 import styles from './ProfilePrivate.module.scss';
 import type {
   BRPData,
-  Persoon,
-  Adres,
   VerbintenisHistorisch,
 } from '../../../../../server/services/profile/brp.types';
+import type { Persoon } from '../../../../../server/services/brp/brp-types';
+import type { Adres } from '../../../../../server/services/brp/brp-types';
 import { FeatureToggle } from '../../../../../universal/config/feature-toggles';
 import {
   formatBirthdate,

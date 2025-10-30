@@ -1,7 +1,7 @@
 import nock from 'nock';
 
 import { fetchBAG } from './bag';
-import type { Adres } from '../profile/brp.types';
+import type { Adres } from '../brp/brp-types';
 
 const ADDRESS = {
   straatnaam: 'straatje',

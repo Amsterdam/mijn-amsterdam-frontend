@@ -3,10 +3,8 @@ import userEvent from '@testing-library/user-event';
 import type { PartialDeep } from 'type-fest';
 
 import { MijnGegevensThema } from './ProfilePrivate';
-import type {
-  BRPData,
-  Adres,
-} from '../../../../../server/services/profile/brp.types';
+import type { BRPData } from '../../../../../server/services/profile/brp.types';
+import type { Adres } from '../../../../../server/services/brp/brp-types';
 import { ContactMoment } from '../../../../../server/services/salesforce/contactmomenten.types';
 import { AppState } from '../../../../../universal/types/App.types';
 import MockApp from '../../../MockApp';
