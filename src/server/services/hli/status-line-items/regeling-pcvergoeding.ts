@@ -148,7 +148,7 @@ function filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNie
       } else if (
         // Filters out the aanvraag derived from a redundant beschiktProduct in the same beschikking.
         // In this case the workshop is not followed, the business sets datumIngangGeldigheid and datumEindeGeldigheid to the same date.
-        // But also adds a denied beschiktproduct for the same productIdentificatie. This is a redundant entry that should not be shown.
+        // But also adds a denied beschiktproduct for the same productIdentificatie.
         workshopAanvraag &&
         aanvraag.resultaat === 'afgewezen' &&
         aanvraag.productIdentificatie === workshopAanvraag.productIdentificatie
