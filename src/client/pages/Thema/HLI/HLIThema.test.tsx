@@ -9,6 +9,7 @@ import {
 import { HLIThema } from './HLIThema';
 import { stadspasCreator } from './test-helpers';
 import { createHLIState } from './test-helpers';
+import { RTM_SPECIFICATIE_TITLE } from '../../../../server/services/hli/hli';
 import type { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
 import { componentCreator } from '../../MockApp';
 
@@ -76,7 +77,7 @@ describe('<HLI />', () => {
         datePublished: '2024-11-20T18:27:42.367',
         datePublishedFormatted: '20 november 2024',
         id: 'test-encrypted-id',
-        title: 'AV-RTM Specificatie',
+        title: RTM_SPECIFICATIE_TITLE,
         url: 'http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id',
       },
     ];

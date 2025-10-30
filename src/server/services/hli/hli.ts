@@ -44,6 +44,8 @@ import {
 } from './status-line-items/regeling-pcvergoeding';
 import { toDateFormatted } from '../../../universal/helpers/utils';
 
+export const RTM_SPECIFICATIE_TITLE = 'AV-RTM Specificatie';
+
 function getDisplayStatus(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
   statusLineItems: StatusLineItem[]
@@ -232,9 +234,9 @@ async function fetchSpecificaties(
       aanvraag
     ) => {
       const documents = aanvraag.documenten.filter(
-        (d) => d.title === 'AV-RTM Specificatie'
+        (d) => d.title === RTM_SPECIFICATIE_TITLE
       );
-      if (!documents) {
+      if (!documents.length) {
         return filteredAanvragen;
       }
       filteredAanvragen.push({ ...aanvraag, documenten: documents });

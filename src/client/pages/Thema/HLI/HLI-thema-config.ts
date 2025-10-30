@@ -43,7 +43,6 @@ type SpecificatieDisplayProps = {
 
 const specificatieDisplayProps: DisplayProps<SpecificatieDisplayProps> = {
   datePublishedFormatted: 'Datum',
-  category: 'Regeling',
   documentUrl: 'Document',
 };
 
@@ -164,7 +163,7 @@ export const tableConfig = {
 } as const;
 
 export const specificatieTableConfig = {
-  title: 'Specificaties',
+  title: 'Specificaties regeling tegemoetkoming meerkosten',
   sort: dateSort('datePublished', 'desc'),
   displayProps: specificatieDisplayProps,
   maxItems: 3,

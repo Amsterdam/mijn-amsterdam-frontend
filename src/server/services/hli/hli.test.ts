@@ -1,7 +1,7 @@
 import MockDate from 'mockdate';
 import { Mock } from 'vitest';
 
-import { forTesting } from './hli';
+import { forTesting, RTM_SPECIFICATIE_TITLE } from './hli';
 import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import { getAuthProfileAndToken } from '../../../testing/utils';
 import {
@@ -161,7 +161,7 @@ describe('HLI', () => {
               datePublished: '2024-11-20T18:27:42.367',
             },
             {
-              title: 'AV-RTM Specificatie',
+              title: RTM_SPECIFICATIE_TITLE,
               datePublished: '2024-11-20T18:27:42.367',
             },
           ],
@@ -177,7 +177,7 @@ describe('HLI', () => {
         datePublished: '2024-11-20T18:27:42.367',
         datePublishedFormatted: '20 november 2024',
         id: 'test-encrypted-id',
-        title: 'AV-RTM Specificatie',
+        title: RTM_SPECIFICATIE_TITLE,
         url: 'http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id',
       },
     ]);
