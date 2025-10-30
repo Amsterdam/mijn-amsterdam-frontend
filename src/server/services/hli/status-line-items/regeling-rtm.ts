@@ -426,7 +426,7 @@ function getAllStatusLineItems(
       lastAanvraag.resultaat !== 'afgewezen') ||
     (isInToegewezenState && lastAanvraag.resultaat === 'afgewezen')
   ) {
-    // RP TODO: Only the title is used, and this is the same in every aanvraag.
+    // Only the title is used, and this is the same in every aanvraag.
     // So any aanvraag will suffice.
     const getStatusLineItem = createGetStatusLineItemFn(aanvragen[0]);
     incompleteStatusLineItems.push(
@@ -437,15 +437,20 @@ function getAllStatusLineItems(
   const eindeRechtLineItem = incompleteStatusLineItems.find(
     (item) => item.status === RTM_STATUS_EINDE_RECHT
   );
+
+  const lastStatusLineItem =
+    incompleteStatusLineItems[incompleteStatusLineItems.length - 1];
+
   if (eindeRechtLineItem && !eindeRechtLineItem.isActive) {
     // An eindeRechtLineItem is always at the end of the statusLineItems.
     // That's why we check the one before it.
     incompleteStatusLineItems[incompleteStatusLineItems.length - 2].isActive =
       true;
   } else {
-    incompleteStatusLineItems[incompleteStatusLineItems.length - 1].isActive =
-      true;
+    lastStatusLineItem.isActive = true;
   }
+  // Either the last item is active or the one before it so the the last statusLineItem can never be checked.
+  lastStatusLineItem.isChecked = false;
 
   const statusLineItemsComplete: StatusLineItem[] =
     incompleteStatusLineItems.map((item, i) => {
@@ -456,27 +461,7 @@ function getAllStatusLineItems(
       };
     });
 
-  const checkedSteps = checkUntillIncludingActiveStep(statusLineItemsComplete);
-  return checkedSteps;
-}
-
-function checkUntillIncludingActiveStep(
-  statusLineItems: StatusLineItem[]
-): StatusLineItem[] {
-  let shouldCheck = true;
-
-  const newSteps = statusLineItems.map((statusLineItem) => {
-    const isChecked = shouldCheck;
-    if (statusLineItem.isActive) {
-      shouldCheck = false;
-    }
-    return {
-      ...statusLineItem,
-      isChecked,
-    };
-  });
-
-  return newSteps;
+  return statusLineItemsComplete;
 }
 
 type StatusLineItemTransformerConfig = {
@@ -628,7 +613,7 @@ function createGetStatusLineItemFn(
         ) as string,
         documents,
         isActive: statusItem.isActive ? statusItem.isActive(aanvraag) : null,
-        isChecked: false,
+        isChecked: true,
         isVisible: true,
       };
 

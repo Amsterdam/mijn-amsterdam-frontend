@@ -17,7 +17,7 @@ const ONTVANGER_ID = '999999999';
  */
 function attachIDs(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
-  overwriteProps: { beschiktProductIdentificaties?: string[] }
+  overwriteProps?: { beschiktProductIdentificaties?: string[] }
 ): ZorgnedAanvraagWithRelatedPersonsTransformed[] {
   return aanvragen.map((aanvraag, i) => {
     const id = (i + 1).toString();
@@ -674,7 +674,7 @@ describe('Aanvrager is ontvanger', () => {
         description: descriptions.activeEindeRecht,
         datePublished: RTM_2_EINDE_RECHT.datumEindeGeldigheid,
         isActive: true,
-        isChecked: true,
+        isChecked: false,
         isVisible: true,
         documents: [],
       },
@@ -727,7 +727,7 @@ describe('Aanvrager is ontvanger', () => {
         status: 'Besluit',
         datePublished: RTM_2_AFGEWEZEN.datumBesluit,
         isActive: true,
-        isChecked: true,
+        isChecked: false,
         isVisible: true,
         documents: [
           {
@@ -960,7 +960,7 @@ describe('Aanvrager is ontvanger', () => {
         datePublished: RTM_2_EINDE_RECHT.datumEindeGeldigheid,
         documents: [],
         isActive: true,
-        isChecked: true,
+        isChecked: false,
         isVisible: true,
         status: RTM_STATUS_EINDE_RECHT,
       },
@@ -1254,7 +1254,7 @@ describe('Aanvrager is ontvanger', () => {
         description: descriptions.activeEindeRecht,
         datePublished: RTM_2_EINDE_RECHT.datumEindeGeldigheid,
         isActive: true,
-        isChecked: true,
+        isChecked: false,
         isVisible: true,
         documents: [],
       },
@@ -1374,7 +1374,7 @@ describe('Ontvanger but aanvragen made by someone else', () => {
         status: 'Besluit',
         datePublished: RTM_2_AFGEWEZEN.datumBesluit,
         isActive: true,
-        isChecked: true,
+        isChecked: false,
         isVisible: true,
         description: descriptions.afgewezen,
         documents: [
@@ -1516,7 +1516,7 @@ describe('Ontvanger but aanvragen made by someone else', () => {
         status: RTM_STATUS_EINDE_RECHT,
         datePublished: RTM_2_EINDE_RECHT.datumEindeGeldigheid,
         isActive: true,
-        isChecked: true,
+        isChecked: false,
         isVisible: true,
         description: descriptions.activeEindeRecht,
         documents: [],
@@ -1556,7 +1556,7 @@ test('Single Aanvraag afgewezen results in orphaned regeling', () => {
         },
       ],
       isActive: true,
-      isChecked: true,
+      isChecked: false,
       isVisible: true,
       status: 'Besluit',
     },
