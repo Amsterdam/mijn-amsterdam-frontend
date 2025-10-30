@@ -8,8 +8,8 @@ import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import { fetchStadspas } from './stadspas';
 import {
   filterCombineRtmData,
+  isRTMAanvraag,
   isRTMDeel1,
-  isRTMDeel2,
   RTM_STATUS_IN_BEHANDELING,
 } from './status-line-items/regeling-rtm';
 import {
@@ -35,9 +35,10 @@ import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
 import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types';
 import {
   filterCombineUpcPcvData,
+  isPcVergoedingAanvraag,
   isWorkshopNietGevolgd,
 } from './status-line-items/regeling-pcvergoeding';
-import { toDateFormatted } from '../../../universal/helpers/utils';
+import { sortAlpha, toDateFormatted } from '../../../universal/helpers/utils';
 
 function getDisplayStatus(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
@@ -154,6 +155,17 @@ async function transformRegelingForFrontend(
   return regelingFrontend;
 }
 
+function extractAanvragen(
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
+  filterFn: (aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed) => boolean
+) {
+  const aanvragenFiltered = aanvragen.filter(filterFn);
+  const otherAanvragen = aanvragen.filter(
+    (aanvraag) => !aanvragenFiltered.includes(aanvraag)
+  );
+  return [otherAanvragen, aanvragenFiltered];
+}
+
 async function transformRegelingenForFrontend(
   authProfileAndToken: AuthProfileAndToken,
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
@@ -161,29 +173,29 @@ async function transformRegelingenForFrontend(
 ): Promise<HLIRegelingFrontend[]> {
   const regelingenFrontend: HLIRegelingFrontend[] = [];
 
-  const PCVergoedingAanvragen = aanvragen.filter((aanvraag) => {
-    return isVerzilvering(aanvraag) || isPcVergoeding(aanvraag);
-  });
-  const otherAanvragen = aanvragen.filter((aanvraag) => {
-    return !PCVergoedingAanvragen.includes(aanvraag);
-  });
+  const [otherAanvragen, PCVergoedingAanvragen] = extractAanvragen(
+    aanvragen,
+    isPcVergoedingAanvraag
+  );
+
   const PCVergoedingAanvragenCombined = filterCombineUpcPcvData(
     PCVergoedingAanvragen
   );
 
-  const RTMAanvragen = otherAanvragen.filter((aanvraag) => {
-    return isRTMDeel1(aanvraag) || isRTMDeel2(aanvraag);
-  });
-  const otherAanvragen_ = aanvragen.filter((aanvraag) => {
-    return !RTMAanvragen.includes(aanvraag);
-  });
+  const [otherAanvragen_, RTMAanvragen] = extractAanvragen(
+    otherAanvragen,
+    isRTMAanvraag
+  );
+
   const RTMAanvragenCombined = filterCombineRtmData(RTMAanvragen);
 
-  for (const aanvraag of [
+  const allAanvragen = [
     ...PCVergoedingAanvragenCombined,
     ...RTMAanvragenCombined,
     ...otherAanvragen_,
-  ]) {
+  ].toSorted(sortAlpha('id', 'desc'));
+
+  for (const aanvraag of allAanvragen) {
     const statusLineItems = getStatusLineItems(
       'HLI',
       hliStatusLineItemsConfig,
@@ -259,14 +271,3 @@ export const forTesting = {
   transformRegelingForFrontend,
   transformRegelingTitle,
 };
-function isPcVergoeding(
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-): unknown {
-  throw new Error('Function not implemented.');
-}
-
-function isVerzilvering(
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-): unknown {
-  throw new Error('Function not implemented.');
-}

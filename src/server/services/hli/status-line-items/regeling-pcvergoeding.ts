@@ -73,6 +73,12 @@ function isPcVergoeding(
   );
 }
 
+export function isPcVergoedingAanvraag(
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+) {
+  return isVerzilvering(aanvraag) || isPcVergoeding(aanvraag);
+}
+
 function isRegelingVanVerzilvering(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
   compareAanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
@@ -172,7 +178,7 @@ export function filterCombineUpcPcvData(
   const aanvragen_ =
     filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNietGevolgd(
       aanvragen
-    );
+    ).toSorted(sortAlpha('id', 'desc'));
   const aanvragenWithDocumentsCombined = aanvragen_.map((aanvraag) => {
     // Exclude baseRegelingen that have verzilvering
     if (baseRegelingIdWithVerzilvering.includes(aanvraag.id)) {
