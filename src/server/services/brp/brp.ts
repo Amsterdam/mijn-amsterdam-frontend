@@ -262,8 +262,6 @@ export async function fetchBrpByBsn(sessionID: AuthProfile['sid'], bsn: BSN[]) {
     transformResponse: transformBenkBrpResponse,
   });
 
-  console.log('reqiestConfig', requestConfig);
-
   return requestData<BRPData>(requestConfig);
 }
 

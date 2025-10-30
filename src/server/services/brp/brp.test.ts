@@ -123,10 +123,14 @@ describe('brp.ts', () => {
     });
 
     it('should translate BSN if translations are set', () => {
+      const envValue = process.env.BFF_BENK_BSN_TRANSLATIONS;
       process.env.BFF_BENK_BSN_TRANSLATIONS =
         '123456789=987654321,111111111=222222222';
+
       expect(translateBSN('123456789')).toBe('987654321');
       expect(translateBSN('111111111')).toBe('222222222');
+
+      process.env.BFF_BENK_BSN_TRANSLATIONS = envValue;
     });
   });
 
