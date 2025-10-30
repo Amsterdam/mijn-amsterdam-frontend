@@ -165,7 +165,13 @@ function transformBenkBrpResponse(
     ouders:
       persoon.ouders
         ?.filter(
-          (ouder) => typeof ouder !== 'undefined' && !!ouder.naam.voornamen
+          (ouder) =>
+            typeof ouder !== 'undefined' &&
+            !!(
+              ouder.naam.voornamen ||
+              ouder.naam.geslachtsnaam ||
+              ouder.naam.volledigeNaam
+            )
         )
         .map((ouder) => ({
           geboortedatum: getDatum(ouder.geboorte?.datum),
@@ -181,7 +187,15 @@ function transformBenkBrpResponse(
         })) ?? [],
     kinderen:
       persoon.kinderen
-        ?.filter((kind) => typeof kind !== 'undefined' && !!kind.naam.voornamen)
+        ?.filter(
+          (kind) =>
+            typeof kind !== 'undefined' &&
+            !!(
+              kind.naam.voornamen ||
+              kind.naam.geslachtsnaam ||
+              kind.naam.volledigeNaam
+            )
+        )
         ?.map((kind) => ({
           geboortedatum: getDatum(kind.geboorte?.datum) ?? null,
           geboortedatumFormatted: kind.geboorte?.datum?.langFormaat ?? null,
@@ -247,6 +261,8 @@ export async function fetchBrpByBsn(sessionID: AuthProfile['sid'], bsn: BSN[]) {
     },
     transformResponse: transformBenkBrpResponse,
   });
+
+  console.log('reqiestConfig', requestConfig);
 
   return requestData<BRPData>(requestConfig);
 }
