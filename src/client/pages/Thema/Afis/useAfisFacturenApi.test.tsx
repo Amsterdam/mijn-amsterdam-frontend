@@ -65,7 +65,7 @@ describe('useAfisFacturenApi', () => {
       <React.Fragment>
         <React.Fragment>
           Openstaand
-          : 
+          :
         </React.Fragment>
         <MaLink
           href="http://example.com/pay"
