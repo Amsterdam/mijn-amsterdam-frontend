@@ -265,8 +265,8 @@ export async function fetchBrpByBsn(
     await fetchBrpVerblijfplaatsHistoryByBsn(
       sessionID,
       translateBSN(bsn[0]),
-      brpBsnResponse.content.persoon.geboortedatum || '1900-01-01',
-      brpBsnResponse.content.adres?.begindatumVerblijf ||
+      brpBsnResponse.content?.persoon?.geboortedatum ?? '1900-01-01',
+      brpBsnResponse.content?.adres?.begindatumVerblijf ??
         dateFormat(new Date(), 'YYYY-MM-DD'),
       raw
     );
