@@ -107,8 +107,7 @@ export function filterCombineRtmData(
   const groupedAanvragenPerRegeling = Object.entries(
     aanvragenPerBetrokkenen
   ).flatMap(([, aanvragen]) => {
-    const groupedAanvragenPerRegeling = groupAanvragenPerRegeling(aanvragen);
-    return groupedAanvragenPerRegeling;
+    return groupAanvragenPerRegeling(aanvragen);
   });
 
   const regelingenFrontend = processRTMAanvragen(
@@ -126,7 +125,8 @@ function dedupeButKeepDocuments(
   const seenAanvragen: Record<string, ZorgnedHLIRegeling> = {};
 
   for (const aanvraag of aanvragen) {
-    if (!isRTMDeel2(aanvraag)) {
+    if (isRTMDeel1(aanvraag)) {
+      // I did not find any RTM-1 duplicate, the problem was only seen with RTM-2.
       dedupedAanvragen.push(aanvraag);
       continue;
     }
