@@ -1642,9 +1642,7 @@ describe('Mixed betrokkenen', () => {
       displayStatus: 'In behandeling genomen',
       isActual: true,
     });
-    expect(
-      regeling.steps.map((s) => [s.status, s.description])
-    ).toStrictEqual([
+    expect(regeling.steps.map((s) => [s.status, s.description])).toStrictEqual([
       ['Aanvraag', ''],
       [
         'In behandeling genomen',
