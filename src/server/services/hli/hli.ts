@@ -9,6 +9,7 @@ import { fetchStadspas } from './stadspas';
 import {
   filterCombineRtmData,
   isRTMDeel1,
+  isRTMDeel2,
   RTM_STATUS_IN_BEHANDELING,
 } from './status-line-items/regeling-rtm';
 import {
@@ -160,12 +161,29 @@ async function transformRegelingenForFrontend(
 ): Promise<HLIRegelingFrontend[]> {
   const regelingenFrontend: HLIRegelingFrontend[] = [];
 
-  let aanvragenWithDocumentsCombined = filterCombineUpcPcvData(aanvragen);
-  aanvragenWithDocumentsCombined = filterCombineRtmData(
-    aanvragenWithDocumentsCombined
+  const PCVergoedingAanvragen = aanvragen.filter((aanvraag) => {
+    return isVerzilvering(aanvraag) || isPcVergoeding(aanvraag);
+  });
+  const otherAanvragen = aanvragen.filter((aanvraag) => {
+    return !PCVergoedingAanvragen.includes(aanvraag);
+  });
+  const PCVergoedingAanvragenCombined = filterCombineUpcPcvData(
+    PCVergoedingAanvragen
   );
 
-  for (const aanvraag of aanvragenWithDocumentsCombined) {
+  const RTMAanvragen = otherAanvragen.filter((aanvraag) => {
+    return isRTMDeel1(aanvraag) || isRTMDeel2(aanvraag);
+  });
+  const otherAanvragen_ = aanvragen.filter((aanvraag) => {
+    return !RTMAanvragen.includes(aanvraag);
+  });
+  const RTMAanvragenCombined = filterCombineRtmData(RTMAanvragen);
+
+  for (const aanvraag of [
+    ...PCVergoedingAanvragenCombined,
+    ...RTMAanvragenCombined,
+    ...otherAanvragen_,
+  ]) {
     const statusLineItems = getStatusLineItems(
       'HLI',
       hliStatusLineItemsConfig,
@@ -241,3 +259,14 @@ export const forTesting = {
   transformRegelingForFrontend,
   transformRegelingTitle,
 };
+function isPcVergoeding(
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+): unknown {
+  throw new Error('Function not implemented.');
+}
+
+function isVerzilvering(
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+): unknown {
+  throw new Error('Function not implemented.');
+}
