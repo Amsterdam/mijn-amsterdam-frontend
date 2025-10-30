@@ -137,19 +137,20 @@ function filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNie
     const groupSorted = group.toSorted(sortAlpha('id', 'asc'));
     // If there are multiple aanvragen with the same beschikkingNummer, we need to filter them.
     // We keep the aanvraag where the workshop is not followed, and filter out the denied ones for the same productIdentificatie.
-    const workshopAanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed | null =
+    const workshopAanvraagNietGevolgd: ZorgnedAanvraagWithRelatedPersonsTransformed | null =
       groupSorted.find((aanvraag) => isWorkshopNietGevolgd(aanvraag)) ?? null;
 
     const filteredGroup = groupSorted.filter((aanvraag) => {
-      if (aanvraag === workshopAanvraag) {
+      if (aanvraag === workshopAanvraagNietGevolgd) {
         return true;
       } else if (
         // Filters out the aanvraag derived from a redundant beschiktProduct in the same beschikking.
         // In this case the workshop is not followed, the business sets datumIngangGeldigheid and datumEindeGeldigheid to the same date.
         // But also adds a denied beschiktproduct for the same productIdentificatie.
-        workshopAanvraag &&
+        workshopAanvraagNietGevolgd &&
         aanvraag.resultaat === 'afgewezen' &&
-        aanvraag.productIdentificatie === workshopAanvraag.productIdentificatie
+        aanvraag.productIdentificatie ===
+          workshopAanvraagNietGevolgd.productIdentificatie
       ) {
         return false;
       }
