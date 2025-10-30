@@ -420,15 +420,16 @@ function getAllStatusLineItems(
     },
     [] as IncompleteStatusLineItem[]
   );
+
   const lastAanvraag = aanvragen[aanvragen.length - 1];
-  if (
-    (!(isRTMDeel2(lastAanvraag) && isEindeRechtReached(lastAanvraag)) &&
-      lastAanvraag.resultaat !== 'afgewezen') ||
+
+  const getStatusLineItem = createGetStatusLineItemFn(lastAanvraag);
+  if (isRTMDeel2(lastAanvraag) && isEindeRechtReached(lastAanvraag)) {
+    incompleteStatusLineItems.push(...getStatusLineItem(['eindeRecht']));
+  } else if (
+    lastAanvraag.resultaat !== 'afgewezen' ||
     (isInToegewezenState && lastAanvraag.resultaat === 'afgewezen')
   ) {
-    // Only the title is used, and this is the same in every aanvraag.
-    // So any aanvraag will suffice.
-    const getStatusLineItem = createGetStatusLineItemFn(aanvragen[0]);
     incompleteStatusLineItems.push(
       ...getStatusLineItem(['inactiveEindeRecht'])
     );
@@ -503,6 +504,7 @@ function getInBehandelingGenomenDescription(
   return descriptionStart;
 }
 
+// Occasionally, aanvragen generate two statusLineItems, with the documents placed in only one of them.
 const statusLineItems: Record<StatusLineKey, StatusLineItemTransformerConfig> =
   {
     aanvraagLopend: {
@@ -629,19 +631,10 @@ function getStatusLineItems(
   isInToegewezenState: boolean
 ): IncompleteStatusLineItem[] {
   const getStatusLineItem = createGetStatusLineItemFn(aanvraag);
-
-  if (isEindeRechtReached(aanvraag)) {
-    if (isInToegewezenState) {
-      return getStatusLineItem(['wijzigingsBesluit', 'eindeRecht']);
-    }
-    return getStatusLineItem(['besluit', 'eindeRecht']);
-  }
-
   if (isInToegewezenState) {
     if (isRTMDeel1(aanvraag)) {
       return getStatusLineItem(['wijzigingsAanvraag']);
     }
-
     return getStatusLineItem(['wijzigingsBesluit']);
   }
 
