@@ -433,44 +433,28 @@ function getAllStatusLineItems(
       ...getStatusLineItem(['inactiveEindeRecht'])
     );
   }
-  if (!incompleteStatusLineItems.length) {
-    return [];
-  }
-  return finalizeStatusLineItems(incompleteStatusLineItems);
-}
 
-/** Determines active step and checks untill there (including), and adds ids */
-function finalizeStatusLineItems(
-  statusLineItems: IncompleteStatusLineItem[]
-): StatusLineItem[] {
-  const lastIdx = statusLineItems.length - 1;
-  const lastItem = statusLineItems[lastIdx];
-
-  const hasActiveStep = statusLineItems.some((item) => {
-    return item.isActive;
-  });
-  if (!hasActiveStep) {
-    if (statusLineItems.length === 1) {
-      lastItem.isActive = true;
-    } else if (
-      lastItem.status === RTM_STATUS_EINDE_RECHT &&
-      !lastItem.isActive
-    ) {
-      statusLineItems[lastIdx - 1].isActive = true;
-    } else {
-      lastItem.isActive = true;
-    }
+  const eindeRechtLineItem = incompleteStatusLineItems.find(
+    (item) => item.status === RTM_STATUS_EINDE_RECHT
+  );
+  if (eindeRechtLineItem && !eindeRechtLineItem.isActive) {
+    // An eindeRechtLineItem is always at the end of the statusLineItems.
+    // That's why we check the one before it.
+    incompleteStatusLineItems[incompleteStatusLineItems.length - 2].isActive =
+      true;
+  } else {
+    incompleteStatusLineItems[incompleteStatusLineItems.length - 1].isActive =
+      true;
   }
 
-  const statusLineItemsComplete: StatusLineItem[] = statusLineItems.map(
-    (item, i) => {
+  const statusLineItemsComplete: StatusLineItem[] =
+    incompleteStatusLineItems.map((item, i) => {
       return {
         ...item,
         id: `status-step-${i + 1}`,
         isActive: item.isActive ?? false,
       };
-    }
-  );
+    });
 
   const checkedSteps = checkUntillIncludingActiveStep(statusLineItemsComplete);
   return checkedSteps;
