@@ -16,14 +16,18 @@ const ONTVANGER_ID = '999999999';
  *  Thats why programmaticly adding an id makes predefined aanvragen more reusable.
  */
 function attachIDs(
-  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
+  overwriteProps: { beschiktProductIdentificaties?: string[] }
 ): ZorgnedAanvraagWithRelatedPersonsTransformed[] {
   return aanvragen.map((aanvraag, i) => {
     const id = (i + 1).toString();
     return {
       ...aanvraag,
       id,
-      beschiktProductIdentificatie: `voorziening-${id}`,
+      beschiktProductIdentificatie:
+        overwriteProps?.beschiktProductIdentificaties
+          ? overwriteProps.beschiktProductIdentificaties[i]
+          : `voorziening-${id}`,
     };
   });
 }
@@ -1766,4 +1770,31 @@ test('Does not contain docx (word) documents', () => {
 
   const statusLineDocs = regeling.steps.flatMap((step) => step.documents);
   expect(statusLineDocs).toStrictEqual([]);
+});
+
+test('Dedupes aanvragen that belong to the same voorziening", but keeps the included documents', () => {
+  const regelingen = transformRegelingenForFrontend(
+    attachIDs([RTM_1_AANVRAAG, RTM_2_TOEGEWEZEN, RTM_2_EINDE_RECHT], {
+      beschiktProductIdentificaties: ['1', '2', '2'],
+    })
+  );
+
+  expect(regelingen.length).toBe(1);
+  const regeling = regelingen[0];
+
+  expect(regeling.steps.map((s) => s.status)).toStrictEqual([
+    'Aanvraag',
+    'In behandeling genomen',
+    'Besluit',
+    'Einde recht',
+  ]);
+  expect(
+    regeling.steps.flatMap((s) =>
+      !s.documents ? [] : s.documents.flatMap((d) => d.title)
+    )
+  ).toStrictEqual([
+    'AV-RTM Info aan klant GGD',
+    'Beschikking toekenning Reg Tegemoetk Meerkosten',
+    'Beschikking beëindigen RTM',
+  ]);
 });

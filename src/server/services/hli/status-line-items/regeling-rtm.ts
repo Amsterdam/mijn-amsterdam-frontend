@@ -120,9 +120,12 @@ function dedupeButKeepDocuments(
       dedupedAanvragen.push(aanvraag);
       continue;
     }
-    const id = `${aanvraag.procesAanvraagOmschrijving}-${aanvraag.beschiktProductIdentificatie}`;
+    const id = aanvraag.beschiktProductIdentificatie;
     if (seenAanvragen[id]) {
-      seenAanvragen[id].documenten.push(...aanvraag.documenten);
+      seenAanvragen[id].documenten = [
+        ...seenAanvragen[id].documenten,
+        ...aanvraag.documenten,
+      ];
       continue;
     }
     seenAanvragen[id] = aanvraag;
