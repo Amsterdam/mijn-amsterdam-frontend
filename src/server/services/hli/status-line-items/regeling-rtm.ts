@@ -41,18 +41,6 @@ export const RTM_STATUS_EINDE_RECHT = 'Einde recht';
 const INFO_LINK =
   'https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/extra-geld-als-u-chronisch-ziek-of/';
 
-export const getRTMDisplayStatus: GetDisplayStatusFn<
-  GenericDisplayStatus | typeof RTM_STATUS_IN_BEHANDELING
-> = (regeling: ZorgnedHLIRegeling, statusLineItems: StatusLineItem[]) => {
-  const isInBehandelingGenomen = statusLineItems.some((item) => {
-    return item.status === RTM_STATUS_IN_BEHANDELING && item.isActive;
-  });
-  if (isInBehandelingGenomen) {
-    return RTM_STATUS_IN_BEHANDELING;
-  }
-  return getDisplayStatus(regeling, statusLineItems);
-};
-
 export function isRTMDeel1(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
@@ -70,6 +58,28 @@ export function isRTMDeel2(
     AV_RTM_DEEL2 === aanvraag.productIdentificatie
   );
 }
+/** Check if einde recht is reached, this assumes that the aanvraag is RTM-2 */
+function isEindeRechtReached(
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+): boolean {
+  return !!(
+    aanvraag.isActueel === false &&
+    aanvraag.datumEindeGeldigheid &&
+    isAfter(new Date(), aanvraag.datumEindeGeldigheid)
+  );
+}
+
+export const getRTMDisplayStatus: GetDisplayStatusFn<
+  GenericDisplayStatus | typeof RTM_STATUS_IN_BEHANDELING
+> = (regeling: ZorgnedHLIRegeling, statusLineItems: StatusLineItem[]) => {
+  const isInBehandelingGenomen = statusLineItems.some((item) => {
+    return item.status === RTM_STATUS_IN_BEHANDELING && item.isActive;
+  });
+  if (isInBehandelingGenomen) {
+    return RTM_STATUS_IN_BEHANDELING;
+  }
+  return getDisplayStatus(regeling, statusLineItems);
+};
 
 export function filterCombineRtmData(
   authProfileAndToken: AuthProfileAndToken,
@@ -315,17 +325,6 @@ function groupAanvragenPerRegeling(
   return aanvragenGroupedPerRegeling;
 }
 
-/** Check if einde recht is reached, this assumes that the aanvraag is RTM-2 */
-function isEindeRechtReached(
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-): boolean {
-  return !!(
-    aanvraag.isActueel === false &&
-    aanvraag.datumEindeGeldigheid &&
-    isAfter(new Date(), aanvraag.datumEindeGeldigheid)
-  );
-}
-
 function createHLIRegelingFrontend(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
   statusLineItems: StatusLineItem[],
@@ -467,17 +466,79 @@ function getAllStatusLineItems(
   return statusLineItemsComplete;
 }
 
-type StatusLineItemTransformerConfig = {
-  status: string;
-  datePublished: TextPartContents<ZorgnedHLIRegeling>;
-  description: TextPartContents<ZorgnedHLIRegeling>;
-  documents?: (
-    aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-  ) => GenericDocument[];
-  isActive?: (
-    aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-  ) => boolean;
+function getStatusLineItems(
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
+  isInToegewezenState: boolean
+): IncompleteStatusLineItem[] {
+  const getStatusLineItem = createGetStatusLineItemFn(aanvraag);
+  if (isInToegewezenState) {
+    if (isRTMDeel1(aanvraag)) {
+      return getStatusLineItem([statusLineItems.wijzigingsAanvraag]);
+    }
+    return getStatusLineItem([statusLineItems.wijzigingsBesluit]);
+  }
+
+  if (isRTMDeel1(aanvraag)) {
+    if (aanvraag.resultaat === 'toegewezen') {
+      return getStatusLineItem([
+        statusLineItems.aanvraagLopend,
+        statusLineItems.inBehandelingGenomen,
+      ]);
+    }
+    return getStatusLineItem([statusLineItems.aanvraagAfgewezen]);
+  }
+  return getStatusLineItem([statusLineItems.besluit]);
+}
+
+type IncompleteStatusLineItem = Omit<StatusLineItem, 'id' | 'isActive'> & {
+  isActive: boolean | null;
 };
+
+type getStatusLineItemFn = (
+  itemChoices: StatusLineItemTransformerConfig[]
+) => IncompleteStatusLineItem[];
+
+function createGetStatusLineItemFn(
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+): getStatusLineItemFn {
+  return (transformerConfigs) => {
+    const collectedStatusLineItems: IncompleteStatusLineItem[] = [];
+
+    for (const transformerConfig of transformerConfigs) {
+      const statusItem = transformerConfig;
+      const now = new Date();
+
+      let documents: GenericDocument[] = [];
+      if (typeof statusItem.documents === 'function') {
+        documents = statusItem.documents(aanvraag);
+      }
+
+      const statusLineItem: IncompleteStatusLineItem = {
+        status: statusItem.status,
+        description: parseLabelContent<ZorgnedHLIRegeling>(
+          statusItem.description,
+          aanvraag,
+          now,
+          []
+        ),
+        datePublished: parseLabelContent<ZorgnedHLIRegeling>(
+          statusItem.datePublished,
+          aanvraag,
+          now,
+          []
+        ) as string,
+        documents,
+        isActive: statusItem.isActive ? statusItem.isActive(aanvraag) : null,
+        isChecked: true,
+        isVisible: true,
+      };
+
+      collectedStatusLineItems.push(statusLineItem);
+    }
+
+    return collectedStatusLineItems;
+  };
+}
 
 const getDatumAfgifte = (regeling: ZorgnedHLIRegeling) =>
   regeling.datumInBehandeling || regeling.datumBesluit;
@@ -495,6 +556,18 @@ function getInBehandelingGenomenDescription(
 
   return descriptionStart;
 }
+
+type StatusLineItemTransformerConfig = {
+  status: string;
+  datePublished: TextPartContents<ZorgnedHLIRegeling>;
+  description: TextPartContents<ZorgnedHLIRegeling>;
+  documents?: (
+    aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+  ) => GenericDocument[];
+  isActive?: (
+    aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+  ) => boolean;
+};
 
 // Occasionally, aanvragen generate two statusLineItems, with the documents placed in only one of them.
 const statusLineItems = {
@@ -566,77 +639,3 @@ const statusLineItems = {
     isActive: () => false,
   },
 } satisfies Record<string, StatusLineItemTransformerConfig>;
-
-type IncompleteStatusLineItem = Omit<StatusLineItem, 'id' | 'isActive'> & {
-  isActive: boolean | null;
-};
-
-type getStatusLineItemFn = (
-  itemChoices: StatusLineItemTransformerConfig[]
-) => IncompleteStatusLineItem[];
-
-function createGetStatusLineItemFn(
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-): getStatusLineItemFn {
-  return (itemChoices) => {
-    const collectedStatusLineItems: IncompleteStatusLineItem[] = [];
-
-    for (const choice of itemChoices) {
-      const statusItem = choice;
-      const now = new Date();
-
-      let documents: GenericDocument[] = [];
-      if (typeof statusItem.documents === 'function') {
-        documents = statusItem.documents(aanvraag);
-      }
-
-      const statusLineItem: IncompleteStatusLineItem = {
-        status: statusItem.status,
-        description: parseLabelContent<ZorgnedHLIRegeling>(
-          statusItem.description,
-          aanvraag,
-          now,
-          []
-        ),
-        datePublished: parseLabelContent<ZorgnedHLIRegeling>(
-          statusItem.datePublished,
-          aanvraag,
-          now,
-          []
-        ) as string,
-        documents,
-        isActive: statusItem.isActive ? statusItem.isActive(aanvraag) : null,
-        isChecked: true,
-        isVisible: true,
-      };
-
-      collectedStatusLineItems.push(statusLineItem);
-    }
-
-    return collectedStatusLineItems;
-  };
-}
-
-function getStatusLineItems(
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
-  isInToegewezenState: boolean
-): IncompleteStatusLineItem[] {
-  const getStatusLineItem = createGetStatusLineItemFn(aanvraag);
-  if (isInToegewezenState) {
-    if (isRTMDeel1(aanvraag)) {
-      return getStatusLineItem([statusLineItems.wijzigingsAanvraag]);
-    }
-    return getStatusLineItem([statusLineItems.wijzigingsBesluit]);
-  }
-
-  if (isRTMDeel1(aanvraag)) {
-    if (aanvraag.resultaat === 'toegewezen') {
-      return getStatusLineItem([
-        statusLineItems.aanvraagLopend,
-        statusLineItems.inBehandelingGenomen,
-      ]);
-    }
-    return getStatusLineItem([statusLineItems.aanvraagAfgewezen]);
-  }
-  return getStatusLineItem([statusLineItems.besluit]);
-}
