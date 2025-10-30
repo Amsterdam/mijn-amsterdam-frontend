@@ -229,7 +229,11 @@ function translateBSN(bsn: BSN): BSN {
 
   return translationsMap.get(bsn) ?? bsn;
 }
-export async function fetchBrpByBsn(sessionID: AuthProfile['sid'], bsn: BSN[]) {
+export async function fetchBrpByBsn(
+  sessionID: AuthProfile['sid'],
+  bsn: BSN[],
+  raw: boolean = false
+) {
   const response = await fetchBenkBrpTokenHeader();
 
   if (response.status !== 'OK') {
@@ -248,7 +252,7 @@ export async function fetchBrpByBsn(sessionID: AuthProfile['sid'], bsn: BSN[]) {
       type: 'RaadpleegMetBurgerservicenummer',
       burgerservicenummer: bsn.map((bsn) => translateBSN(bsn)),
     },
-    transformResponse: transformBenkBrpResponse,
+    transformResponse: !raw ? transformBenkBrpResponse : undefined,
   });
 
   const brpBsnResponse = await requestData<BRPData>(requestConfig);
@@ -263,7 +267,8 @@ export async function fetchBrpByBsn(sessionID: AuthProfile['sid'], bsn: BSN[]) {
       translateBSN(bsn[0]),
       brpBsnResponse.content.persoon.geboortedatum || '1900-01-01',
       brpBsnResponse.content.adres?.begindatumVerblijf ||
-        dateFormat(new Date(), 'YYYY-MM-DD')
+        dateFormat(new Date(), 'YYYY-MM-DD'),
+      raw
     );
 
   if (
@@ -293,7 +298,8 @@ export async function fetchBrpVerblijfplaatsHistoryByBsn(
   sessionID: AuthProfile['sid'],
   bsn: BSN,
   dateFrom: string,
-  dateTo: string
+  dateTo: string,
+  raw: boolean = false
 ) {
   const response = await fetchBenkBrpTokenHeader();
 
@@ -315,7 +321,9 @@ export async function fetchBrpVerblijfplaatsHistoryByBsn(
       datumVan: dateFrom,
       datumTot: dateTo,
     },
-    transformResponse: transformBenkBrpVerblijfplaatsHistoryResponse,
+    transformResponse: !raw
+      ? transformBenkBrpVerblijfplaatsHistoryResponse
+      : undefined,
   });
 
   return requestData<Adres[]>(requestConfig);
