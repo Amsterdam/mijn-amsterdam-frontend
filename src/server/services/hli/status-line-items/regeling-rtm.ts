@@ -256,6 +256,9 @@ function processRTMAanvragen(
 ): HLIRegelingFrontend[] {
   const regelingen = Object.values(groupedAanvragenPerRegeling).reduce(
     (regelingen, aanvragen, i) => {
+      // This can be used to determine if we are in a toegewezen RTM regeling context.
+      // Which is usefull if you want to differentiate between RTM-1 Aanvragen and RTM-1 Wijzigings aanvragen,
+      // or RTM-2 Besluiten and RTM-2 Wijzigings besluiten.
       const firstToegewezenRTMIdx = aanvragen.findIndex((aanvraag) => {
         return isRTMDeel2(aanvraag) && aanvraag.resultaat === 'toegewezen';
       });
