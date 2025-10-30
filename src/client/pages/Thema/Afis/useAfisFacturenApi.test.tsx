@@ -2,7 +2,11 @@ import { renderHook, waitFor } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 
 import type { AfisFactuurFrontend } from './Afis-thema-config';
-import { forTesting, useAfisFacturenApi } from './useAfisFacturenApi';
+import {
+  forTesting,
+  getDocumentLink,
+  useAfisFacturenApi,
+} from './useAfisFacturenApi';
 import { bffApi } from '../../../../testing/utils';
 
 describe('useAfisFacturenApi', () => {
@@ -59,9 +63,10 @@ describe('useAfisFacturenApi', () => {
 
     expect(el).toMatchInlineSnapshot(`
       <React.Fragment>
-        Openstaand
-        :
-         
+        <React.Fragment>
+          Openstaand
+          : 
+        </React.Fragment>
         <MaLink
           href="http://example.com/pay"
           maVariant="fatNoUnderline"
@@ -98,5 +103,26 @@ describe('useAfisFacturenApi', () => {
 
     expect(result.current.isError).toBe(true);
     expect(result.current.facturenByState).toBeNull();
+  });
+
+  it('gets a clickable download link', () => {
+    const el = getDocumentLink({
+      factuurNummer: '1',
+      documentDownloadLink: 'http://example.com/document/1.pdf',
+      datePublished: '2024-01-01',
+    } as AfisFactuurFrontend);
+
+    expect(el).toMatchInlineSnapshot(`
+      <DocumentLink
+        document={
+          {
+            "datePublished": "2024-01-01",
+            "id": "1",
+            "title": "factuur 1",
+            "url": "http://example.com/document/1.pdf",
+          }
+        }
+      />
+    `);
   });
 });
