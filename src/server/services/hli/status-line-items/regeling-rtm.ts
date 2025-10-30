@@ -425,13 +425,15 @@ function getAllStatusLineItems(
 
   const getStatusLineItem = createGetStatusLineItemFn(lastAanvraag);
   if (isRTMDeel2(lastAanvraag) && isEindeRechtReached(lastAanvraag)) {
-    incompleteStatusLineItems.push(...getStatusLineItem(['eindeRecht']));
+    incompleteStatusLineItems.push(
+      ...getStatusLineItem([statusLineItems.eindeRecht])
+    );
   } else if (
     lastAanvraag.resultaat !== 'afgewezen' ||
     (isInToegewezenState && lastAanvraag.resultaat === 'afgewezen')
   ) {
     incompleteStatusLineItems.push(
-      ...getStatusLineItem(['inactiveEindeRecht'])
+      ...getStatusLineItem([statusLineItems.inactiveEindeRecht])
     );
   }
 
@@ -480,16 +482,6 @@ type StatusLineItemTransformerConfig = {
 const getDatumAfgifte = (regeling: ZorgnedHLIRegeling) =>
   regeling.datumInBehandeling || regeling.datumBesluit;
 
-type StatusLineKey =
-  | 'aanvraagLopend'
-  | 'aanvraagAfgewezen'
-  | 'inBehandelingGenomen'
-  | 'besluit'
-  | 'wijzigingsAanvraag'
-  | 'wijzigingsBesluit'
-  | 'eindeRecht'
-  | 'inactiveEindeRecht';
-
 function getInBehandelingGenomenDescription(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
   descriptionStart: string
@@ -505,83 +497,82 @@ function getInBehandelingGenomenDescription(
 }
 
 // Occasionally, aanvragen generate two statusLineItems, with the documents placed in only one of them.
-const statusLineItems: Record<StatusLineKey, StatusLineItemTransformerConfig> =
-  {
-    aanvraagLopend: {
-      status: 'Aanvraag',
-      datePublished: getDatumAfgifte,
-      description: '',
-      // The documents are put in 'inBehandelingGenomen'.
-      documents: () => [],
+const statusLineItems = {
+  aanvraagLopend: {
+    status: 'Aanvraag',
+    datePublished: getDatumAfgifte,
+    description: '',
+    // The documents are put in 'inBehandelingGenomen'.
+    documents: () => [],
+  },
+  aanvraagAfgewezen: {
+    status: 'Besluit',
+    datePublished: getDatumAfgifte,
+    description: getBesluitDescription,
+    documents: (aanvraag) => aanvraag.documenten,
+  },
+  inBehandelingGenomen: {
+    status: RTM_STATUS_IN_BEHANDELING,
+    datePublished: getDatumAfgifte,
+    description: (aanvraag) => {
+      const description = `<p>Voordat u de ${aanvraag.titel} krijgt, moet u een afspraak maken voor een medische keuring bij de GGD. In de brief staat hoe u dat doet.</p>`;
+      return getInBehandelingGenomenDescription(aanvraag, description);
     },
-    aanvraagAfgewezen: {
-      status: 'Besluit',
-      datePublished: getDatumAfgifte,
-      description: getBesluitDescription,
-      documents: (aanvraag) => aanvraag.documenten,
-    },
-    inBehandelingGenomen: {
-      status: RTM_STATUS_IN_BEHANDELING,
-      datePublished: getDatumAfgifte,
-      description: (aanvraag) => {
-        const description = `<p>Voordat u de ${aanvraag.titel} krijgt, moet u een afspraak maken voor een medische keuring bij de GGD. In de brief staat hoe u dat doet.</p>`;
-        return getInBehandelingGenomenDescription(aanvraag, description);
-      },
-      documents: (aanvraag) => aanvraag.documenten,
-    },
-    besluit: {
-      status: 'Besluit',
-      datePublished: getDatumAfgifte,
-      description: getBesluitDescription,
-      documents: (aanvraag) => aanvraag.documenten,
-    },
-    wijzigingsAanvraag: {
-      status: 'Aanvraag wijziging',
-      datePublished: getDatumAfgifte,
-      description: (aanvraag) => {
-        const description = `<p>U heeft een aanvraag gedaan voor aanpassing op uw lopende RTM regeling.</p>
+    documents: (aanvraag) => aanvraag.documenten,
+  },
+  besluit: {
+    status: 'Besluit',
+    datePublished: getDatumAfgifte,
+    description: getBesluitDescription,
+    documents: (aanvraag) => aanvraag.documenten,
+  },
+  wijzigingsAanvraag: {
+    status: 'Aanvraag wijziging',
+    datePublished: getDatumAfgifte,
+    description: (aanvraag) => {
+      const description = `<p>U heeft een aanvraag gedaan voor aanpassing op uw lopende RTM regeling.</p>
 <p>Hiervoor moet u een afspraak maken voor een medisch gesprek bij de GGD. In de brief staat hoe u dat doet.</p>`;
-        return getInBehandelingGenomenDescription(aanvraag, description);
-      },
-      documents: (aanvraag) => aanvraag.documenten,
+      return getInBehandelingGenomenDescription(aanvraag, description);
     },
-    wijzigingsBesluit: {
-      status: 'Besluit wijziging',
-      datePublished: getDatumAfgifte,
-      description:
-        '<p>Uw aanvraag voor een wijziging is afgehandeld. Bekijk de brief voor meer informatie hierover.</p>',
-      documents: (aanvraag) => aanvraag.documenten,
+    documents: (aanvraag) => aanvraag.documenten,
+  },
+  wijzigingsBesluit: {
+    status: 'Besluit wijziging',
+    datePublished: getDatumAfgifte,
+    description:
+      '<p>Uw aanvraag voor een wijziging is afgehandeld. Bekijk de brief voor meer informatie hierover.</p>',
+    documents: (aanvraag) => aanvraag.documenten,
+  },
+  eindeRecht: {
+    status: RTM_STATUS_EINDE_RECHT,
+    datePublished: (aanvraag) => aanvraag.datumEindeGeldigheid || '',
+    description: (aanvraag) => {
+      return `<p>Uw recht op ${aanvraag.titel} is beëindigd per ${defaultDateFormat(aanvraag.datumEindeGeldigheid || '')}.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`;
     },
-    eindeRecht: {
-      status: RTM_STATUS_EINDE_RECHT,
-      datePublished: (aanvraag) => aanvraag.datumEindeGeldigheid || '',
-      description: (aanvraag) => {
-        return `<p>Uw recht op ${aanvraag.titel} is beëindigd per ${defaultDateFormat(aanvraag.datumEindeGeldigheid || '')}.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`;
-      },
-      // These documents are put in 'besluit'.
-      documents: () => [],
-      isActive: () => true,
-    },
-    inactiveEindeRecht: {
-      status: RTM_STATUS_EINDE_RECHT,
-      datePublished: '',
-      description: (regeling: ZorgnedHLIRegeling) => {
-        return `
+    // These documents are put in 'besluit'.
+    documents: () => [],
+    isActive: () => true,
+  },
+  inactiveEindeRecht: {
+    status: RTM_STATUS_EINDE_RECHT,
+    datePublished: '',
+    description: (regeling: ZorgnedHLIRegeling) => {
+      return `
 <p>U hoeft de ${regeling.titel} niet elk jaar opnieuw aan te vragen. De gemeente verlengt de regeling stilzwijgend, maar controleert wel elk jaar of u nog in aanmerking komt.</p>
 <p>U kunt dan ook een brief krijgen met het verzoek om extra informatie te geven.</p>
 <p><a href="${INFO_LINK}">Als er wijzigingen zijn in uw situatie moet u die direct doorgeven</a>.</p>`;
-      },
-      documents: () => [],
-      isActive: () => false,
     },
-  };
+    documents: () => [],
+    isActive: () => false,
+  },
+} satisfies Record<string, StatusLineItemTransformerConfig>;
 
 type IncompleteStatusLineItem = Omit<StatusLineItem, 'id' | 'isActive'> & {
   isActive: boolean | null;
 };
 
 type getStatusLineItemFn = (
-  itemChoices: StatusLineKey[]
+  itemChoices: StatusLineItemTransformerConfig[]
 ) => IncompleteStatusLineItem[];
 
 function createGetStatusLineItemFn(
@@ -591,7 +582,7 @@ function createGetStatusLineItemFn(
     const collectedStatusLineItems: IncompleteStatusLineItem[] = [];
 
     for (const choice of itemChoices) {
-      const statusItem = statusLineItems[choice];
+      const statusItem = choice;
       const now = new Date();
 
       let documents: GenericDocument[] = [];
@@ -633,16 +624,19 @@ function getStatusLineItems(
   const getStatusLineItem = createGetStatusLineItemFn(aanvraag);
   if (isInToegewezenState) {
     if (isRTMDeel1(aanvraag)) {
-      return getStatusLineItem(['wijzigingsAanvraag']);
+      return getStatusLineItem([statusLineItems.wijzigingsAanvraag]);
     }
-    return getStatusLineItem(['wijzigingsBesluit']);
+    return getStatusLineItem([statusLineItems.wijzigingsBesluit]);
   }
 
   if (isRTMDeel1(aanvraag)) {
     if (aanvraag.resultaat === 'toegewezen') {
-      return getStatusLineItem(['aanvraagLopend', 'inBehandelingGenomen']);
+      return getStatusLineItem([
+        statusLineItems.aanvraagLopend,
+        statusLineItems.inBehandelingGenomen,
+      ]);
     }
-    return getStatusLineItem(['aanvraagAfgewezen']);
+    return getStatusLineItem([statusLineItems.aanvraagAfgewezen]);
   }
-  return getStatusLineItem(['besluit']);
+  return getStatusLineItem([statusLineItems.besluit]);
 }
