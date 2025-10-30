@@ -3,6 +3,7 @@ import type { Mock } from 'vitest';
 
 import { forTesting, fetchBrpByBsn } from './brp';
 import testPersonenResponse from '../../../../mocks/fixtures/brp/test-personen.json';
+import verblijfplaatsenResponse from '../../../../mocks/fixtures/brp/verblijfplaatshistorie.json';
 import { remoteApi } from '../../../testing/utils';
 import { fetchAuthTokenHeader } from '../ms-oauth/oauth-token';
 
@@ -138,40 +139,54 @@ describe('brp.ts', () => {
       expect(result).toEqual({ status: 'ERROR' });
     });
 
-    it('Should format response data correctly', async () => {
-      vi.unmock('../../helpers/source-api-request');
+    describe('Should format response data correctly', () => {
+      test('Formatting for test BSN 1, with verblijfplaatshistorie', async () => {
+        vi.unmock('../../helpers/source-api-request');
 
-      (fetchAuthTokenHeader as Mock).mockResolvedValue({
-        content: { Authorization: 'Bearer test-token' },
-        status: 'OK',
-      });
+        (fetchAuthTokenHeader as Mock).mockResolvedValue({
+          content: { Authorization: 'Bearer test-token' },
+          status: 'OK',
+        });
 
-      {
         const BSN = '999971074';
         const testPersoon = testPersonenResponse.personen.find(
           (p) => p.burgerservicenummer === BSN
         );
         remoteApi.post(/\/personen/).reply(200, { personen: [testPersoon] });
+        remoteApi
+          .post(/\/verblijfplaatshistorie/)
+          .reply(200, verblijfplaatsenResponse);
 
         const response = await fetchBrpByBsn('test-session-id', [BSN]);
 
         expect(response).toMatchSnapshot();
         expect(response.status).toBe('OK');
         expect(response.content?.persoon.bsn).toBe(BSN);
-      }
-      {
+      });
+
+      test('Formatting for test BSN 2, with verblijfplaatshistorie returning an error', async () => {
+        vi.unmock('../../helpers/source-api-request');
+
+        (fetchAuthTokenHeader as Mock).mockResolvedValue({
+          content: { Authorization: 'Bearer test-token' },
+          status: 'OK',
+        });
+
         const BSN = '999990810';
         const testPersoon = testPersonenResponse.personen.find(
           (p) => p.burgerservicenummer === BSN
         );
         remoteApi.post(/\/personen/).reply(200, { personen: [testPersoon] });
+        remoteApi
+          .post(/\/verblijfplaatshistorie/)
+          .reply(500, 'Internal Server Error');
 
         const response = await fetchBrpByBsn('test-session-id', [BSN]);
 
         expect(response).toMatchSnapshot();
         expect(response.status).toBe('OK');
         expect(response.content?.persoon.bsn).toBe(BSN);
-      }
+      });
     });
   });
 });
