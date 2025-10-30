@@ -186,12 +186,26 @@ function transformBenkBrpResponse(
     ouders:
       persoon.ouders
         ?.filter(
-          (ouder) => typeof ouder !== 'undefined' && !!ouder.naam.voornamen
+          (ouder) =>
+            typeof ouder !== 'undefined' &&
+            !!(
+              ouder.naam.voornamen ||
+              ouder.naam.geslachtsnaam ||
+              ouder.naam.volledigeNaam
+            )
         )
         .map((ouder) => getPersoonBasis(ouder)) ?? [],
     kinderen:
       persoon.kinderen
-        ?.filter((kind) => typeof kind !== 'undefined' && !!kind.naam.voornamen)
+        ?.filter(
+          (kind) =>
+            typeof kind !== 'undefined' &&
+            !!(
+              kind.naam.voornamen ||
+              kind.naam.geslachtsnaam ||
+              kind.naam.volledigeNaam
+            )
+        )
         ?.map((kind) => getPersoonBasis(kind)) ?? [],
     adres: verblijfplaats?.verblijfadres ? getAdres(verblijfplaats) : null,
     adresHistorisch: [],
