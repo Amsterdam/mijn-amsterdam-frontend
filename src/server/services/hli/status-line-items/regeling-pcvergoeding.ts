@@ -141,20 +141,23 @@ function filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNie
       groupSorted.find((aanvraag) => isWorkshopNietGevolgd(aanvraag)) ?? null;
 
     const filteredGroup = groupSorted.filter((aanvraag) => {
-      if (aanvraag === workshopAanvraagNietGevolgd) {
-        return true;
-      } else if (
+      switch (true) {
+        // This is the aanvraag we want to keep.
+        case aanvraag === workshopAanvraagNietGevolgd:
+          return true;
+
         // Filters out the aanvraag derived from a redundant beschiktProduct in the same beschikking.
         // In this case the workshop is not followed, the business sets datumIngangGeldigheid and datumEindeGeldigheid to the same date.
         // But also adds a denied beschiktproduct for the same productIdentificatie.
-        workshopAanvraagNietGevolgd &&
-        aanvraag.resultaat === 'afgewezen' &&
-        aanvraag.productIdentificatie ===
-          workshopAanvraagNietGevolgd.productIdentificatie
-      ) {
-        return false;
+        case aanvraag.resultaat === 'afgewezen' &&
+          aanvraag.productIdentificatie ===
+            workshopAanvraagNietGevolgd?.productIdentificatie:
+          return false;
+
+        // These are all the non-workshop aanvragen, we keep them as well.
+        default:
+          return true;
       }
-      return true;
     });
     return filteredGroup;
   });
