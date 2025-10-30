@@ -414,7 +414,7 @@
         "datumAanvraag": "2025-08-18",
         "procesAanvraag": {
           "identificatie": "3170124",
-          "omschrijving": "BeÃ«indigen RTM",
+          "omschrijving": "Beëindigen RTM",
           "datumStart": "2025-08-18"
         },
         "beschikking": {
@@ -457,8 +457,8 @@
             "documentidentificatie": "B3408768",
             "procesIdentificatie": "3170124",
             "casusIdentificatie": "1737101",
-            "omschrijving": "AV-RTM BeÃ«indiging",
-            "omschrijvingclientportaal": "Beschikking beÃ«indiging RTM",
+            "omschrijving": "AV-RTM Beëindiging",
+            "omschrijvingclientportaal": "Beschikking beëindiging RTM",
             "datumDefinitief": "2025-08-18T15:39:49",
             "bestandsnaam": "BR3408768.pdf"
           }
