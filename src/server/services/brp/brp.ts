@@ -22,8 +22,8 @@ import { IS_PRODUCTION } from '../../../universal/config/env';
 import {
   apiSuccessResult,
   getFailedDependencies,
+  type ApiResponse,
 } from '../../../universal/helpers/api';
-import { dateFormat } from '../../../universal/helpers/date';
 import type { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_HOUR_MS } from '../../config/app';
 import { getFromEnv } from '../../helpers/env';
@@ -32,7 +32,6 @@ import { requestData } from '../../helpers/source-api-request';
 import { getContextOperationId } from '../monitoring';
 import { fetchAuthTokenHeader } from '../ms-oauth/oauth-token';
 import { fetchBRP } from '../profile/brp';
-import type { BRPData } from '../profile/brp.types';
 import { type BSN } from '../zorgned/zorgned-types';
 
 const TOKEN_VALIDITY_PERIOD = 1 * ONE_HOUR_MS;
@@ -110,13 +109,8 @@ function getPersoonBasis(persoon: PersoonBasisSource): PersoonBasis {
 }
 
 function transformBenkBrpResponse(
-  responseData: PersonenResponseSource
-): BrpFrontend | null {
-  const [persoon] = responseData.personen ?? [];
-  if (!persoon) {
-    throw new Error('No person found in Benk BRP response');
-  }
-
+  persoon: PersonenResponseSource['personen'][0]
+): BrpFrontend {
   let adresInOnderzoek: Persoon['adresInOnderzoek'] | null = null;
   const verblijfplaats = persoon.verblijfplaats;
 
@@ -229,11 +223,8 @@ function translateBSN(bsn: BSN): BSN {
 
   return translationsMap.get(bsn) ?? bsn;
 }
-export async function fetchBrpByBsn(
-  sessionID: AuthProfile['sid'],
-  bsn: BSN[],
-  raw: boolean = false
-) {
+
+export async function fetchBrpByBsn(sessionID: AuthProfile['sid'], bsn: BSN[]) {
   const response = await fetchBenkBrpTokenHeader();
 
   if (response.status !== 'OK') {
@@ -252,60 +243,62 @@ export async function fetchBrpByBsn(
       type: 'RaadpleegMetBurgerservicenummer',
       burgerservicenummer: bsn.map((bsn) => translateBSN(bsn)),
     },
-    transformResponse: !raw ? transformBenkBrpResponse : undefined,
   });
 
-  const brpBsnResponse = await requestData<BRPData>(requestConfig);
+  const brpBsnResponse =
+    await requestData<PersonenResponseSource>(requestConfig);
 
-  if (brpBsnResponse.status !== 'OK' || brpBsnResponse.content === null) {
-    return brpBsnResponse;
+  return brpBsnResponse;
+}
+
+export async function fetchBrpByBsnTransformed(
+  sessionID: AuthProfile['sid'],
+  bsn: BSN[]
+): Promise<ApiResponse<BrpFrontend>> {
+  const brpResponse = await fetchBrpByBsn(sessionID, bsn);
+
+  if (brpResponse.status !== 'OK' || brpResponse.content === null) {
+    return brpResponse;
   }
 
+  const transformedContent = transformBenkBrpResponse(
+    brpResponse.content.personen[0]
+  );
+
   const verblijfplaatshistorieResponse =
-    await fetchBrpVerblijfplaatsHistoryByBsn(
+    await fetchBrpVerblijfplaatsHistoryByBsnTransformed(
       sessionID,
       translateBSN(bsn[0]),
-      brpBsnResponse.content.persoon.geboortedatum || '1900-01-01',
-      brpBsnResponse.content.adres?.begindatumVerblijf ||
-        dateFormat(new Date(), 'YYYY-MM-DD'),
-      raw
+      transformedContent.persoon.geboortedatum,
+      transformedContent.adres?.begindatumVerblijf
     );
 
-  if (
-    brpBsnResponse.status === 'OK' &&
-    verblijfplaatshistorieResponse.status === 'OK'
-  ) {
-    brpBsnResponse.content.adresHistorisch =
-      verblijfplaatshistorieResponse.content;
+  if (verblijfplaatshistorieResponse.status === 'OK') {
+    transformedContent.adresHistorisch = verblijfplaatshistorieResponse.content;
   }
 
   return apiSuccessResult(
-    brpBsnResponse.content,
+    transformedContent,
     getFailedDependencies({
       adresHistorisch: verblijfplaatshistorieResponse,
     })
-  );
-}
-function transformBenkBrpVerblijfplaatsHistoryResponse(
-  responseData: VerblijfplaatshistorieResponseSource
-): Adres[] {
-  return responseData.verblijfplaatsen.map((verblijfplaats) =>
-    getAdres(verblijfplaats)
   );
 }
 
 export async function fetchBrpVerblijfplaatsHistoryByBsn(
   sessionID: AuthProfile['sid'],
   bsn: BSN,
-  dateFrom: string,
-  dateTo: string,
-  raw: boolean = false
+  dateFrom?: string | null,
+  dateTo?: string | null
 ) {
   const response = await fetchBenkBrpTokenHeader();
 
   if (response.status !== 'OK') {
     return response;
   }
+
+  const DEFAULT_DATE_FROM = '1900-01-01';
+  const DEFAULT_DATE_TO = '2100-01-01';
 
   const requestConfig = getApiConfig('BENK_BRP', {
     formatUrl(requestConfig) {
@@ -318,22 +311,54 @@ export async function fetchBrpVerblijfplaatsHistoryByBsn(
     data: {
       type: 'RaadpleegMetPeriode',
       burgerservicenummer: bsn,
-      datumVan: dateFrom,
-      datumTot: dateTo,
+      datumVan: dateFrom ?? DEFAULT_DATE_FROM,
+      datumTot: dateTo ?? DEFAULT_DATE_TO,
     },
-    transformResponse: !raw
-      ? transformBenkBrpVerblijfplaatsHistoryResponse
-      : undefined,
   });
 
-  return requestData<Adres[]>(requestConfig);
+  return requestData<VerblijfplaatshistorieResponseSource>(requestConfig);
+}
+
+function transformBenkBrpVerblijfplaatsHistoryResponse(
+  responseData: VerblijfplaatshistorieResponseSource
+): Adres[] {
+  return responseData.verblijfplaatsen.map((verblijfplaats) =>
+    getAdres(verblijfplaats)
+  );
+}
+
+export async function fetchBrpVerblijfplaatsHistoryByBsnTransformed(
+  sessionID: AuthProfile['sid'],
+  bsn: BSN,
+  dateFrom?: string | null,
+  dateTo?: string | null
+): Promise<ApiResponse<Adres[]>> {
+  const verblijfplaatsenResponse = await fetchBrpVerblijfplaatsHistoryByBsn(
+    sessionID,
+    bsn,
+    dateFrom,
+    dateTo
+  );
+
+  if (
+    verblijfplaatsenResponse.status !== 'OK' ||
+    verblijfplaatsenResponse.content === null
+  ) {
+    return verblijfplaatsenResponse;
+  }
+
+  const transformedContent = transformBenkBrpVerblijfplaatsHistoryResponse(
+    verblijfplaatsenResponse.content
+  );
+
+  return apiSuccessResult(transformedContent);
 }
 
 export async function fetchBrpV2(authProfileAndToken: AuthProfileAndToken) {
   if (!featureToggleBrp[themaIdBRP].benkBrpServiceActive) {
     return fetchBRP(authProfileAndToken);
   }
-  return fetchBrpByBsn(authProfileAndToken.profile.sid, [
+  return fetchBrpByBsnTransformed(authProfileAndToken.profile.sid, [
     authProfileAndToken.profile.id,
   ]);
 }

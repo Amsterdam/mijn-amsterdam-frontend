@@ -6,10 +6,10 @@ import {
 
 import type { TipsPredicateFN } from './tip-types';
 import type { AppStateBase } from '../../../universal/types/App.types';
+import type { Kind } from '../brp/brp-types';
 import { isAmsterdamAddress } from '../buurt/helpers';
 import type { HLIRegelingFrontend } from '../hli/hli-regelingen-types';
 import type { IdentiteitsbewijsFrontend } from '../profile/brp.types';
-import type { Kind } from '../brp/brp-types';
 import type { BBVergunningFrontend } from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types';
 import type { WMOVoorzieningFrontend } from '../wmo/wmo-config-and-types';
 import type { WpiRequestProcess } from '../wpi/wpi-types';
@@ -33,7 +33,12 @@ export const hasValidId: TipsPredicateFN = (
   appState,
   today: Date = new Date()
 ) => {
-  const ids = appState.BRP?.content?.identiteitsbewijzen ?? [];
+  const brpContent = appState.BRP?.content;
+  const ids =
+    (brpContent &&
+      'identiteitsbewijzen' in brpContent &&
+      brpContent.identiteitsbewijzen) ||
+    [];
   const validIds = ids.some((idBewijs: IdentiteitsbewijsFrontend) => {
     return today <= new Date(idBewijs.datumAfloop);
   });
