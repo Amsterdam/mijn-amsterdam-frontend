@@ -115,16 +115,14 @@ function getUpcPcvDecisionDate(
 }
 
 function filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNietGevolgd(
-  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
+  PCVergoedingAanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ) {
-  const pcVergoedingAanvragenByBeschikkingNummer = aanvragen.reduce(
+  const pcVergoedingAanvragenByBeschikkingNummer = PCVergoedingAanvragen.reduce(
     (acc, aanvraag) => {
-      if (isVerzilvering(aanvraag) || isPcVergoeding(aanvraag)) {
-        const beschikkingNummer =
-          aanvraag.beschikkingNummer || 'undefined_beschikkingNummer';
-        acc[beschikkingNummer] = acc[beschikkingNummer] || [];
-        acc[beschikkingNummer].push(aanvraag);
-      }
+      const beschikkingNummer =
+        aanvraag.beschikkingNummer || 'undefined_beschikkingNummer';
+      acc[beschikkingNummer] = acc[beschikkingNummer] || [];
+      acc[beschikkingNummer].push(aanvraag);
       return acc;
     },
     {} as Record<string, ZorgnedAanvraagWithRelatedPersonsTransformed[]>
@@ -160,12 +158,7 @@ function filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNie
     return filteredGroup;
   });
 
-  return aanvragen.filter((aanvraag) => {
-    if (isVerzilvering(aanvraag) || isPcVergoeding(aanvraag)) {
-      return PCVergoedingAanvragenFiltered.includes(aanvraag);
-    }
-    return true;
-  });
+  return PCVergoedingAanvragenFiltered;
 }
 
 export function filterCombineUpcPcvData(
