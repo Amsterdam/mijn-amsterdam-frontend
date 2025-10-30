@@ -48,6 +48,7 @@ export type DecosVarenZaakVergunning = {
     | 'Klein en middelgroot'
     | 'Onbemand';
   eniNumber: string | null;
+  vergunningKenmerk: string | null;
   vesselName: string | null;
   vesselWidth: string | null; // 0.01 meters
   vesselLength: string | null; // 0.01 meters

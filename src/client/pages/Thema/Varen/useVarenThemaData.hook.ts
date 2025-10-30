@@ -1,3 +1,4 @@
+import { CONTENT_EMPTY } from './helper';
 import {
   tableConfig,
   varenLegesTableLink,
@@ -22,14 +23,20 @@ export function useVarenThemaData() {
 
   const zaken = VAREN.content?.zaken ?? [];
   const varenZaken = addLinkElementToProperty<VarenZakenFrontend>(
-    zaken,
+    zaken.map((z) => ({
+      ...z,
+      vesselName: z.vesselName || z.identifier || CONTENT_EMPTY, // Fallback to have clickable text, vesselname should never be empty
+    })),
     'vesselName',
     true
   );
 
   const vergunningen = VAREN.content?.vergunningen ?? [];
   const varenVergunningen = addLinkElementToProperty<VarenVergunningFrontend>(
-    vergunningen,
+    vergunningen.map((v) => ({
+      ...v,
+      vesselName: v.vesselName || v.vergunningKenmerk || CONTENT_EMPTY, // Fallback to have clickable text, vesselname should never be empty
+    })),
     'vesselName',
     true
   );
