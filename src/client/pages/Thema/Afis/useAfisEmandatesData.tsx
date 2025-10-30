@@ -253,6 +253,7 @@ function useIsPendingNotification() {
     'afis-emandate-pending-activation',
     ''
   );
+
   const [ibansPendingActivation, setIsPendingActivation] = useState<string[]>(
     ibansPendingActivation_.split(',').filter(Boolean)
   );
@@ -355,3 +356,8 @@ export function useEmandateStatusPendingStorage(
 
   return pendingStorage;
 }
+
+export const forTesting = {
+  updateEmandateById,
+  useIsPendingNotification,
+};

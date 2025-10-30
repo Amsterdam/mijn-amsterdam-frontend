@@ -3,7 +3,7 @@ import { useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router';
 import { create } from 'zustand';
 
-import { useAppStateGetter, useAppStateReady } from './useAppStateStore';
+import { useAppStateReady } from './useAppStateStore';
 import { useProfileTypeValue } from './useProfileType';
 import { sortAlpha } from '../../universal/helpers/utils';
 import { LinkProps } from '../../universal/types/App.types';

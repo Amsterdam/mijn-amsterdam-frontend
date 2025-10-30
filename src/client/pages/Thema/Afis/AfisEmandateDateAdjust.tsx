@@ -9,7 +9,7 @@ import {
 import { addDays, addYears } from 'date-fns';
 
 import { EMANDATE_ENDDATE_INDICATOR } from './Afis-thema-config';
-import type { useEmandateApis } from './useAfisEmandateApi';
+import type { useEmandateApis } from './useAfisEmandatesData';
 import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types';
 import { MaRouterLink } from '../../../components/MaLink/MaLink';
 import { Modal } from '../../../components/Modal/Modal';

@@ -3,7 +3,7 @@ import { Alert, Paragraph } from '@amsterdam/design-system-react';
 import { routeConfig } from './Afis-thema-config';
 import { AfisEMandateActionUrls } from './AfisEmandateActionButtons';
 import { DateAdjust } from './AfisEmandateDateAdjust';
-import { useAfisEMandatesData, useEmandateApis } from './useAfisEmandateApi';
+import { useAfisEMandatesData, useEmandateApis } from './useAfisEmandatesData';
 import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
