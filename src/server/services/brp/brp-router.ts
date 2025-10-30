@@ -8,13 +8,13 @@ import {
   type ResponseAuthenticated,
 } from '../../routing/route-helpers';
 
-const protectedRouter = createBFFRouter({
+export const routerProtected = createBFFRouter({
   id: 'protected-brp',
   isEnabled: featureToggle.router.protected.isEnabled,
 });
 
 if (!IS_PRODUCTION) {
-  protectedRouter.get(
+  routerProtected.get(
     routes.protected.BRP_PERSONEN_RAW,
     async (_req: Request, res: ResponseAuthenticated) => {
       const RAW_DATA = true;
@@ -28,3 +28,7 @@ if (!IS_PRODUCTION) {
     }
   );
 }
+
+export const brpRouter = {
+  protected: routerProtected,
+};
