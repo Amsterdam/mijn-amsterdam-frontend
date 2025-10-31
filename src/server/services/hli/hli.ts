@@ -4,8 +4,9 @@ import slug from 'slugme';
 
 import {
   HLIRegelingFrontend,
-  HLIRegelingSpecificatieFrontend,
   HLIresponseData,
+  ZorgnedHLIRegeling,
+  HLIRegelingSpecificatieFrontend,
 } from './hli-regelingen-types';
 import { hliStatusLineItemsConfig } from './hli-status-line-items';
 import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
@@ -13,8 +14,6 @@ import { fetchStadspas } from './stadspas';
 import {
   filterCombineRtmData,
   isRTMAanvraag,
-  isRTMDeel1,
-  RTM_STATUS_IN_BEHANDELING,
 } from './status-line-items/regeling-rtm';
 import {
   featureToggle,
@@ -41,43 +40,54 @@ import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
 import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types';
 import {
   filterCombineUpcPcvData,
-  isPcVergoedingAanvraag,
+  isPcAanvraag,
   isWorkshopNietGevolgd,
 } from './status-line-items/regeling-pcvergoeding';
 import { sortAlpha, toDateFormatted } from '../../../universal/helpers/utils';
 
 export const RTM_SPECIFICATIE_TITLE = 'AV-RTM Specificatie';
 
-function getDisplayStatus(
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
+export type GenericDisplayStatus =
+  | 'Toegewezen'
+  | 'Afgewezen'
+  | 'Einde recht'
+  | 'Onbekend';
+
+export type GetDisplayStatusFn<
+  T extends string,
+  x = T | GenericDisplayStatus,
+> = (regeling: ZorgnedHLIRegeling, statusLineItems: StatusLineItem[]) => x;
+
+export const getDisplayStatus: GetDisplayStatusFn<GenericDisplayStatus> = (
+  regeling: ZorgnedHLIRegeling,
   statusLineItems: StatusLineItem[]
-) {
+) => {
   const hasEindeRecht = statusLineItems.some(
     (regeling) => regeling.status === 'Einde recht'
   );
   switch (true) {
-    // NOTE: Special status for PCVergoedingen.
-    case isWorkshopNietGevolgd(aanvraag):
+    // Special case for PC-vergoeding.
+    case isWorkshopNietGevolgd(regeling):
       return 'Afgewezen';
 
-    case isRTMDeel1(aanvraag) && aanvraag.resultaat === 'toegewezen':
-      return RTM_STATUS_IN_BEHANDELING;
-
-    case (aanvraag.isActueel || !hasEindeRecht) &&
-      aanvraag.resultaat === 'toegewezen':
+    case (regeling.isActueel || !hasEindeRecht) &&
+      regeling.resultaat === 'toegewezen':
       return 'Toegewezen';
 
-    case !aanvraag.isActueel && aanvraag.resultaat === 'toegewezen':
+    case !regeling.isActueel && regeling.resultaat === 'toegewezen':
       return 'Einde recht';
 
-    case !aanvraag.isActueel && aanvraag.resultaat !== 'toegewezen':
+    case !regeling.isActueel && regeling.resultaat !== 'toegewezen':
       return 'Afgewezen';
   }
 
-  return statusLineItems[statusLineItems.length - 1]?.status ?? 'Onbekend';
-}
+  return (
+    (statusLineItems[statusLineItems.length - 1]
+      ?.status as GenericDisplayStatus) ?? 'Onbekend'
+  );
+};
 
-function getDocumentsFrontend(
+export function getDocumentsFrontend(
   sessionID: SessionID,
   documents: GenericDocument[]
 ): GenericDocument[] {
@@ -119,10 +129,11 @@ function transformRegelingTitle(
   }
 }
 
-async function transformRegelingForFrontend(
+export function transformRegelingForFrontend<T extends string>(
   sessionID: SessionID,
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
-  statusLineItems: StatusLineItem[]
+  statusLineItems: StatusLineItem[],
+  getDisplayStatusFn: GetDisplayStatusFn<T> = getDisplayStatus
 ) {
   const id = aanvraag.id;
 
@@ -131,9 +142,9 @@ async function transformRegelingForFrontend(
     regeling: slug(aanvraag.titel),
   });
 
-  const displayStatus = getDisplayStatus(aanvraag, statusLineItems);
+  const displayStatus = getDisplayStatusFn(aanvraag, statusLineItems);
 
-  // Override isActueel for Afgewezen (RTM* / UPC*) regelingen.
+  // Override isActueel for Afgewezen (UPC*) regelingen.
   let isActual = aanvraag.isActueel;
 
   if (displayStatus === 'Afgewezen' && aanvraag.isActueel) {
@@ -155,53 +166,41 @@ async function transformRegelingForFrontend(
     decision: aanvraag.resultaat,
     displayStatus,
     documents: getDocumentsFrontend(sessionID, aanvraag.documenten),
-    betrokkenen: aanvraag.betrokkenPersonen
-      .map((persoon) => persoon.name)
-      .join(', '),
+    betrokkenen: aanvraag.betrokkenPersonen.length
+      ? aanvraag.betrokkenPersonen.map((persoon) => persoon.name).join(', ')
+      : '-',
   };
 
   return regelingFrontend;
 }
 
-function extractAanvragen(
-  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
-  filterFn: (aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed) => boolean
-) {
-  const aanvragenFiltered = aanvragen.filter(filterFn);
-  const otherAanvragen = aanvragen.filter(
-    (aanvraag) => !aanvragenFiltered.includes(aanvraag)
-  );
-  return [otherAanvragen, aanvragenFiltered];
-}
-
-async function transformRegelingenForFrontend(
+function transformRegelingenForFrontend(
   authProfileAndToken: AuthProfileAndToken,
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
   today: Date
-): Promise<HLIRegelingFrontend[]> {
-  const regelingenFrontend: HLIRegelingFrontend[] = [];
-
-  const [otherAanvragen, PCVergoedingAanvragen] = extractAanvragen(
+): HLIRegelingFrontend[] {
+  const [remainingAanvragen, RTMAanvragen] = extractAanvragen(
     aanvragen,
-    isPcVergoedingAanvraag
+    isRTMAanvraag
   );
-
+  const RTMRegelingenFrontend = filterCombineRtmData(
+    authProfileAndToken,
+    RTMAanvragen
+  );
+  const [remainingAanvragen_, PCVergoedingAanvragen] = extractAanvragen(
+    remainingAanvragen,
+    isPcAanvraag
+  );
   const PCVergoedingAanvragenCombined = filterCombineUpcPcvData(
     PCVergoedingAanvragen
   );
 
-  const [otherAanvragen_, RTMAanvragen] = extractAanvragen(
-    otherAanvragen,
-    isRTMAanvraag
-  );
-
-  const RTMAanvragenCombined = filterCombineRtmData(RTMAanvragen);
-
   const allAanvragen = [
     ...PCVergoedingAanvragenCombined,
-    ...RTMAanvragenCombined,
-    ...otherAanvragen_,
+    ...remainingAanvragen_,
   ].toSorted(sortAlpha('id', 'desc'));
+
+  const regelingenFrontend = [...RTMRegelingenFrontend];
 
   for (const aanvraag of allAanvragen) {
     const statusLineItems = getStatusLineItems(
@@ -216,7 +215,7 @@ async function transformRegelingenForFrontend(
       continue;
     }
 
-    const regelingForFrontend = await transformRegelingForFrontend(
+    const regelingForFrontend = transformRegelingForFrontend(
       authProfileAndToken.profile.sid,
       aanvraag,
       statusLineItems
@@ -226,6 +225,31 @@ async function transformRegelingenForFrontend(
   }
 
   return dedupeDocumentsInDataSets(regelingenFrontend, 'documents');
+}
+
+type IsTargetAanvraagFn = (
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+) => boolean;
+
+function extractAanvragen(
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
+  isTargetAanvraag: IsTargetAanvraagFn
+): [
+  ZorgnedAanvraagWithRelatedPersonsTransformed[],
+  ZorgnedAanvraagWithRelatedPersonsTransformed[],
+] {
+  const remainder = [];
+  const targetAanvragen = [];
+
+  for (const aanvraag of aanvragen) {
+    if (isTargetAanvraag(aanvraag)) {
+      targetAanvragen.push(aanvraag);
+    } else {
+      remainder.push(aanvraag);
+    }
+  }
+
+  return [remainder, targetAanvragen];
 }
 
 async function fetchRegelingen(authProfileAndToken: AuthProfileAndToken) {
@@ -238,7 +262,7 @@ async function fetchRegelingen(authProfileAndToken: AuthProfileAndToken) {
   );
 
   if (aanvragenResponse.status === 'OK') {
-    const regelingen = await transformRegelingenForFrontend(
+    const regelingen = transformRegelingenForFrontend(
       authProfileAndToken,
       aanvragenResponse.content,
       new Date()
@@ -326,8 +350,6 @@ export const forTesting = {
   fetchRegelingen,
   fetchSpecificaties,
   getDisplayStatus,
-  getDocumentsFrontend,
   transformRegelingenForFrontend,
-  transformRegelingForFrontend,
   transformRegelingTitle,
 };

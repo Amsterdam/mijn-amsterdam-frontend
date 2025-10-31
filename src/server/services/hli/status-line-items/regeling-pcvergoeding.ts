@@ -55,9 +55,15 @@ function toVerzilveringCodes(codes: Record<string, boolean>): string[] {
     .map(([code]) => code);
 }
 
+export function isPcAanvraag(
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+): boolean {
+  return isVerzilvering(aanvraag) || isPcVergoeding(aanvraag);
+}
+
 function isVerzilvering(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-) {
+): boolean {
   return (
     !!aanvraag.productIdentificatie &&
     verzilveringCodes.includes(aanvraag.productIdentificatie)
@@ -66,23 +72,17 @@ function isVerzilvering(
 
 function isPcVergoeding(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-) {
+): boolean {
   return (
     !!aanvraag.productIdentificatie &&
     [AV_PCVC, AV_UPCC].includes(aanvraag.productIdentificatie)
   );
 }
 
-export function isPcVergoedingAanvraag(
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-) {
-  return isVerzilvering(aanvraag) || isPcVergoeding(aanvraag);
-}
-
 function isRegelingVanVerzilvering(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
   compareAanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-) {
+): boolean {
   const aanvraagProductId = aanvraag.productIdentificatie;
   if (!aanvraagProductId) {
     return false;
