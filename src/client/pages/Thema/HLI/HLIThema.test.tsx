@@ -9,6 +9,7 @@ import {
 import { HLIThema } from './HLIThema';
 import { stadspasCreator } from './test-helpers';
 import { createHLIState } from './test-helpers';
+import { RTM_SPECIFICATIE_TITLE } from '../../../../server/services/hli/hli';
 import type { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
 import { componentCreator } from '../../MockApp';
 
@@ -21,7 +22,7 @@ const createHLIComponent = componentCreator({
 });
 
 describe('<HLI />', () => {
-  test('Matches the Full Page snapshot with an active and a blocked pas', () => {
+  test('Matches the Full Page snapshot', () => {
     const stadspas = [
       createStadspas(
         { actief: true, balance: 5, balanceFormatted: '€5,00' },
@@ -70,8 +71,18 @@ describe('<HLI />', () => {
         decision: 'toegewezen',
       },
     ];
+    const specificaties = [
+      {
+        category: 'Regeling Tegemoetkoming Meerkosten',
+        datePublished: '2024-11-20T18:27:42.367',
+        datePublishedFormatted: '20 november 2024',
+        id: 'test-encrypted-id',
+        title: RTM_SPECIFICATIE_TITLE,
+        url: 'http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id',
+      },
+    ];
     const Component = createHLIComponent(
-      createHLIState({ stadspas, regelingen })
+      createHLIState({ stadspas, regelingen, specificaties })
     );
     const { asFragment } = render(<Component />);
     expect(asFragment()).toMatchSnapshot();
