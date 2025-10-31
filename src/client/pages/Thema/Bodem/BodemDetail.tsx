@@ -9,15 +9,16 @@ import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function BodemDetail() {
   const {
+    themaId,
     meting,
     isLoading,
     isError,
     breadcrumbs,
-    themaId,
     title,
     routeConfig,
   } = useBodemDetailData();
-  useHTMLDocumentTitle(routeConfig.detailPage);
+
+  useHTMLDocumentTitle(routeConfig);
 
   const LoodMetingRows = (meting: LoodMetingFrontend) => {
     const rows: Row[] = [{ label: 'Kenmerk', content: meting.identifier }];
@@ -39,14 +40,8 @@ export function BodemDetail() {
     if (meting.decision === 'Afgewezen') {
       rows.push(
         ...[
-          {
-            label: 'Resultaat',
-            content: meting.decision,
-          },
-          {
-            label: 'Reden afwijzing',
-            content: meting.redenAfwijzing,
-          },
+          { label: 'Resultaat', content: meting.decision },
+          { label: 'Reden afwijzing', content: meting.redenAfwijzing },
         ]
       );
     }

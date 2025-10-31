@@ -12,6 +12,7 @@ import {
   TextPageV2,
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
+import { ThemaConfigBase, InfoSection } from '../../config/thema-types';
 import { getRedactedClass } from '../../helpers/cobrowse';
 import {
   compareThemas,
@@ -22,7 +23,7 @@ import { afvalSectionProps } from '../Thema/Afval/InfoSection';
 import { AVGsectionProps } from '../Thema/AVG/InfoSection';
 import { belastingenSectionProps } from '../Thema/Belastingen/InfoSection';
 import { bezwarenSectionProps } from '../Thema/Bezwaren/InfoSection';
-import { bodemsectionProps } from '../Thema/Bodem/InfoSection';
+import { themaConfig as bodemThemaConfig } from '../Thema/Bodem/Bodem-thema-config';
 import { burgerzakenSectionProps } from '../Thema/Burgerzaken/InfoSection';
 import { erfpachtSectionProps } from '../Thema/Erfpacht/InfoSection';
 import {
@@ -43,22 +44,32 @@ import { varensectionProps } from '../Thema/Varen/infoSection';
 import { vergunningensectionProps } from '../Thema/Vergunningen/InfoSection';
 import { zorgSectionProps } from '../Thema/Zorg/InfoSection';
 
-export type InfoSection = {
+export type InfoSection_DEPRECATED = {
   id: string;
   title: string;
   href?: string; // Use this instead of the themaMenuItem 'to URL' and force link to be clickable.
-  listItems: ListItems;
+  listItems: InfoSection['listItems'];
   active: boolean;
 };
-type ListItems = Array<{ text: string; listItems?: string[] } | string>;
+
+function createDeprecatedInfoSection(
+  themaConfig: ThemaConfigBase
+): InfoSection_DEPRECATED {
+  return {
+    id: themaConfig.id,
+    active: themaConfig.featureToggle.themaActive,
+    title: themaConfig.uitlegPageSections.title,
+    listItems: themaConfig.uitlegPageSections.listItems,
+  };
+}
 
 export type SectionProps = {
   title: string;
   href?: string;
-  listItems: ListItems;
+  listItems: InfoSection['listItems'];
 };
 
-const sections: InfoSection[] = [
+const sections: InfoSection_DEPRECATED[] = [
   profileSectionProps,
   burgerzakenSectionProps,
   myAreaSectionProps,
@@ -81,7 +92,7 @@ const sections: InfoSection[] = [
   milieuzonesectionProps,
   overtredingensectionProps,
   vergunningensectionProps,
-  bodemsectionProps,
+  createDeprecatedInfoSection(bodemThemaConfig),
   varensectionProps,
 ];
 

@@ -13,6 +13,7 @@ export const routeConfig = {
   themaPage: {
     path: '/kredietbank-fibu',
     documentTitle: `${themaTitle} | overzicht`,
+    trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
 

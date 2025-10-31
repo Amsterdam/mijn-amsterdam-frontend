@@ -23,14 +23,17 @@ export const routeConfig = {
   themaPageBRP: {
     path: '/persoonlijke-gegevens',
     documentTitle: `${themaTitle.BRP} | Mijn Amsterdam`,
+    trackingUrl: null,
   },
   themaPageKVK: {
     path: '/gegevens-handelsregister',
     documentTitle: `${themaTitle.KVK} | Mijn Amsterdam`,
+    trackingUrl: null,
   },
   listPageContactmomenten: {
     path: '/contactmomenten/:page?',
     documentTitle: `Alle contactmomenten | ${themaTitle.BRP}`,
+    trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
 

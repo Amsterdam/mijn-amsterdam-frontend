@@ -34,10 +34,12 @@ export const routeConfig = {
     path: '/zorg-en-ondersteuning/lijst/:kind/:page?',
     documentTitle: (params) =>
       `${params?.kind === listPageParamKind.actual ? 'Huidige' : 'Eerdere en afgewezen'} voorzieningen | ${themaTitle}`,
+    trackingUrl: null,
   },
   themaPage: {
     path: '/zorg-en-ondersteuning',
     documentTitle: `${themaTitle} | overzicht`,
+    trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
 

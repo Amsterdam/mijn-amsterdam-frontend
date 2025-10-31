@@ -18,10 +18,12 @@ export const routeConfig = {
   themaPage: {
     path: '/jeugd',
     documentTitle: themaTitle,
+    trackingUrl: null,
   },
   listPage: {
     path: '/jeugd/lijst/:kind/:page?',
     documentTitle: themaTitle,
+    trackingUrl: null,
   },
   detailPage: {
     path: `${detailRouteBase}/:id`,
