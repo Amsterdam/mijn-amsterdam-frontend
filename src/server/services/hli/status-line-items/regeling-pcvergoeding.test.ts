@@ -620,5 +620,69 @@ describe('pcvergoeding', () => {
 
       Mockdate.reset();
     });
+
+    test('Filters out redundant pcvergoeding aanvragen in the case a Workshop is not followed', () => {
+      const testData = [
+        {
+          id: '1-1',
+          productIdentificatie: AV_PCVC,
+          resultaat: 'toegewezen',
+          datumIngangGeldigheid: '2024-08-29',
+          datumEindeGeldigheid: '2024-08-29',
+          beschikkingNummer: 123,
+        },
+        {
+          id: '1-2',
+          productIdentificatie: AV_PCVC,
+          resultaat: 'afgewezen',
+          datumIngangGeldigheid: null,
+          datumEindeGeldigheid: null,
+          beschikkingNummer: 123,
+        },
+      ] as ZorgnedAanvraagWithRelatedPersonsTransformed[];
+
+      const result =
+        forTesting.filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNietGevolgd(
+          testData
+        );
+
+      expect(result).toEqual([testData[0]]);
+    });
+
+    test('Does not filter out aanvragen derived from the same beschikking with different product identificatie and at least 1 pcvergoeding aanvraag present', () => {
+      const testData = [
+        {
+          id: '1-1',
+          productIdentificatie: AV_PCVC,
+          resultaat: 'toegewezen',
+          datumIngangGeldigheid: '2024-08-29',
+          datumEindeGeldigheid: '2024-08-29',
+          beschikkingNummer: 123,
+        },
+        {
+          id: '1-2',
+          productIdentificatie: 'AV-OTHER',
+          resultaat: 'toegewezen',
+          datumIngangGeldigheid: null,
+          datumEindeGeldigheid: null,
+          beschikkingNummer: 123,
+        },
+        {
+          id: '1-3',
+          productIdentificatie: 'AV-YET-ANOTHER',
+          resultaat: 'afgewezen',
+          datumIngangGeldigheid: null,
+          datumEindeGeldigheid: null,
+          beschikkingNummer: 123,
+        },
+      ] as ZorgnedAanvraagWithRelatedPersonsTransformed[];
+
+      const result =
+        forTesting.filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNietGevolgd(
+          testData
+        );
+
+      expect(result).toEqual(testData);
+    });
   });
 });

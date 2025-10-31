@@ -38,7 +38,7 @@ export function getStatusSteps<T extends Varen>(
         status: 'Meer informatie nodig' as const,
         datePublished: termijn.dateStart || '',
         description: isTermijnActive
-          ? `Er is meer informatie nodig om uw aanvraag verder te kunnen verwerken. Lever deze informatie aan voor ${defaultDateFormat(termijn.dateEnd)}.`
+          ? `Er is meer informatie nodig om uw aanvraag verder te kunnen behandelen. Stuur deze informatie naar ons vóór ${defaultDateFormat(termijn.dateEnd)}.`
           : '',
         actionButtonItems:
           isTermijnActive && decosZaak.linkDataRequest

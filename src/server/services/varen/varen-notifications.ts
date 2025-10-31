@@ -23,10 +23,14 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 
 function createVarenRederRegisteredNotification(
   zaak: VarenRegistratieRederType
-): MyNotification {
+): MyNotification | null {
+  const datePublished = zaak.dateRequest;
+  if (!isRecentNotification(datePublished)) {
+    return null;
+  }
   return {
     id: `varen-${zaak.id}-reder-notification`,
-    datePublished: zaak.dateRequest,
+    datePublished,
     themaID: themaId,
     themaTitle: themaTitle,
     title: `Reder geregistreerd`,
@@ -45,12 +49,16 @@ function createVarenVergunningNotification(
   if (!vergunning.dateStart || isDateInFuture(vergunning.dateStart)) {
     return null;
   }
+  const datePublished = vergunning.dateStart;
+  if (!isRecentNotification(datePublished)) {
+    return null;
+  }
   return {
     id: `varen-${vergunning.id}-vergunning-notification`,
-    datePublished: vergunning.dateStart,
+    datePublished,
     themaID: themaId,
     themaTitle: themaTitle,
-    title: `Varen vergunning exploitatie`,
+    title: vergunning.title,
     description: `U hebt een vergunning gekregen voor "${vergunning.vesselName}".`,
     link: {
       to: generatePath(routeConfig.detailPageVergunning.path, {
@@ -90,28 +98,31 @@ function createVarenNotification(
       return {
         ...baseNotification,
         id: `varen-${zaak.id}-ontvangen-notification`,
-        title: `Aanvraag ${zaak.caseType} ontvangen`,
+        title: `Aanvraag ${zaak.title} ontvangen`,
         description: `Wij hebben uw aanvraag voor vaartuig "${zaak.vesselName}" ontvangen`,
       };
     case 'In behandeling':
       return {
         ...baseNotification,
         id: `varen-${zaak.id}-inbehandeling-notification`,
-        title: `Aanvraag ${zaak.caseType} in behandeling`,
+        title: `Aanvraag ${zaak.title} in behandeling`,
         description: `Wij hebben uw aanvraag voor vaartuig "${zaak.vesselName}" in behandeling genomen.`,
       };
     case 'Meer informatie nodig':
       return {
         ...baseNotification,
         id: `varen-${zaak.id}-meerinformatienodig-notification`,
-        title: `Meer informatie nodig omtrent uw ${zaak.caseType} aanvraag`,
+        title: `Meer informatie nodig omtrent uw ${zaak.title} aanvraag`,
         description: `Wij hebben meer informatie nodig om uw aanvraag voor vaartuig "${zaak.vesselName}" verder te kunnen verwerken.`,
       };
     case 'Afgehandeld':
+      if (!isRecentNotification(baseNotification.datePublished)) {
+        return null;
+      }
       return {
         ...baseNotification,
         id: `varen-${zaak.id}-afgehandeld-notification`,
-        title: `Aanvraag ${zaak.caseType} afgehandeld`,
+        title: `Aanvraag ${zaak.title} afgehandeld`,
         description: `Wij hebben uw aanvraag voor vaartuig "${zaak.vesselName}" afgehandeld.`,
       };
   }
@@ -135,9 +146,7 @@ export async function fetchVarenNotifications(
     );
   }
 
-  notifications.push(
-    ...VAREN.content.zaken.map(createVarenNotification).filter((n) => !!n)
-  );
+  notifications.push(...VAREN.content.zaken.map(createVarenNotification));
 
   notifications.push(
     ...VAREN.content.vergunningen
@@ -145,11 +154,9 @@ export async function fetchVarenNotifications(
       .filter((n) => !!n)
   );
 
-  const recentNotifications = notifications.filter(
-    (notification) =>
-      !!notification.datePublished &&
-      isRecentNotification(notification.datePublished)
-  );
+  const recentNotifications = notifications
+    .filter((notification) => !!notification) // Check if notification exists seperately for typescript
+    .filter((notification) => !!notification.datePublished);
 
   return apiSuccessResult({
     notifications: recentNotifications,

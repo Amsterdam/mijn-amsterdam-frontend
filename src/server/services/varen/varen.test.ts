@@ -175,7 +175,7 @@ describe('Varen service', () => {
         id: 'Z-24-0000002',
         identifier: 'Z/24/0000002',
         vergunning: zaakWijzigingExploitatie.vergunningen[0],
-        vesselName: zaakWijzigingExploitatie.vergunningen[0].vesselName,
+        vesselName: zaakWijzigingExploitatie.vesselName,
       });
     });
 
