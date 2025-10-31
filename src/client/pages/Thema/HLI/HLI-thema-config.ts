@@ -37,6 +37,8 @@ const displayPropsEerdereRegelingen: DisplayProps<HLIRegelingFrontend> = {
 
 type SpecificatieDisplayProps = {
   datePublishedFormatted: ReactNode;
+  // We don't use category just yet, since we only have one type of category at the moment.
+  // This is shown in the title of the specificatie table.
   category: ReactNode;
   documentUrl: ReactNode;
 };
