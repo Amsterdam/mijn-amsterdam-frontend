@@ -392,8 +392,7 @@ function createHLIRegelingFrontend(
     dateEnd: eindeRecht?.datumEindeGeldigheid ?? null,
     decision,
     displayStatus,
-    // Documents are put in the statusLineItems.
-    documents: [],
+    documents: aanvragen.flatMap((a) => a.documenten),
     betrokkenen: lastAanvraag.betrokkenPersonen.length
       ? lastAanvraag.betrokkenPersonen.map((persoon) => persoon.name).join(', ')
       : '-',
@@ -507,30 +506,34 @@ function createGetStatusLineItemFn(
     const collectedStatusLineItems: IncompleteStatusLineItem[] = [];
 
     for (const transformerConfig of transformerConfigs) {
-      const statusItem = transformerConfig;
       const now = new Date();
 
       let documents: GenericDocument[] = [];
-      if (typeof statusItem.documents === 'function') {
-        documents = statusItem.documents(aanvraag);
+      if (typeof transformerConfig.documents === 'function') {
+        documents = transformerConfig.documents(aanvraag);
+        aanvraag.documenten = aanvraag.documenten.filter(
+          (doc) => !documents.includes(doc)
+        );
       }
 
       const statusLineItem: IncompleteStatusLineItem = {
-        status: statusItem.status,
+        status: transformerConfig.status,
         description: parseLabelContent<ZorgnedHLIRegeling>(
-          statusItem.description,
+          transformerConfig.description,
           aanvraag,
           now,
           []
         ),
         datePublished: parseLabelContent<ZorgnedHLIRegeling>(
-          statusItem.datePublished,
+          transformerConfig.datePublished,
           aanvraag,
           now,
           []
         ) as string,
         documents,
-        isActive: statusItem.isActive ? statusItem.isActive(aanvraag) : null,
+        isActive: transformerConfig.isActive
+          ? transformerConfig.isActive(aanvraag)
+          : null,
         isChecked: true,
         isVisible: true,
       };
