@@ -8,6 +8,7 @@ import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import { fetchStadspas } from './stadspas';
 import {
   filterCombineRtmData,
+  isRTMAanvraag,
   isRTMDeel1,
   RTM_STATUS_IN_BEHANDELING,
 } from './status-line-items/regeling-rtm';
@@ -34,9 +35,10 @@ import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
 import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types';
 import {
   filterCombineUpcPcvData,
+  isPcVergoedingAanvraag,
   isWorkshopNietGevolgd,
 } from './status-line-items/regeling-pcvergoeding';
-import { toDateFormatted } from '../../../universal/helpers/utils';
+import { sortAlpha, toDateFormatted } from '../../../universal/helpers/utils';
 
 function getDisplayStatus(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
@@ -153,6 +155,17 @@ async function transformRegelingForFrontend(
   return regelingFrontend;
 }
 
+function extractAanvragen(
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
+  filterFn: (aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed) => boolean
+) {
+  const aanvragenFiltered = aanvragen.filter(filterFn);
+  const otherAanvragen = aanvragen.filter(
+    (aanvraag) => !aanvragenFiltered.includes(aanvraag)
+  );
+  return [otherAanvragen, aanvragenFiltered];
+}
+
 async function transformRegelingenForFrontend(
   authProfileAndToken: AuthProfileAndToken,
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
@@ -160,12 +173,29 @@ async function transformRegelingenForFrontend(
 ): Promise<HLIRegelingFrontend[]> {
   const regelingenFrontend: HLIRegelingFrontend[] = [];
 
-  let aanvragenWithDocumentsCombined = filterCombineUpcPcvData(aanvragen);
-  aanvragenWithDocumentsCombined = filterCombineRtmData(
-    aanvragenWithDocumentsCombined
+  const [otherAanvragen, PCVergoedingAanvragen] = extractAanvragen(
+    aanvragen,
+    isPcVergoedingAanvraag
   );
 
-  for (const aanvraag of aanvragenWithDocumentsCombined) {
+  const PCVergoedingAanvragenCombined = filterCombineUpcPcvData(
+    PCVergoedingAanvragen
+  );
+
+  const [otherAanvragen_, RTMAanvragen] = extractAanvragen(
+    otherAanvragen,
+    isRTMAanvraag
+  );
+
+  const RTMAanvragenCombined = filterCombineRtmData(RTMAanvragen);
+
+  const allAanvragen = [
+    ...PCVergoedingAanvragenCombined,
+    ...RTMAanvragenCombined,
+    ...otherAanvragen_,
+  ].toSorted(sortAlpha('id', 'desc'));
+
+  for (const aanvraag of allAanvragen) {
     const statusLineItems = getStatusLineItems(
       'HLI',
       hliStatusLineItemsConfig,
