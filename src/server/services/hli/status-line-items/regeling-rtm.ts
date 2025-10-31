@@ -58,6 +58,13 @@ export function isRTMDeel2(
     AV_RTM_DEEL2 === aanvraag.productIdentificatie
   );
 }
+
+function isAfgewezenRTM2(
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+) {
+  return isRTMDeel2(aanvraag) && aanvraag.resultaat === 'afgewezen';
+}
+
 /** Check if einde recht is reached, this assumes that the aanvraag is RTM-2 */
 function isEindeRechtReached(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
@@ -345,9 +352,7 @@ function createHLIRegelingFrontend(
       const afterFirstToegewezenRTM =
         isToegewezenRTM2Found && i > firstToegewezenRTM2Idx;
       const isAfgewezenWijzigingsBesluit =
-        afterFirstToegewezenRTM &&
-        isRTMDeel2(aanvraag) &&
-        aanvraag.resultaat === 'afgewezen';
+        afterFirstToegewezenRTM && isAfgewezenRTM2(aanvraag);
 
       // An afgwezen wijziging besluit results in no change to an active regeling.
       if (isAfgewezenWijzigingsBesluit) {
@@ -358,13 +363,14 @@ function createHLIRegelingFrontend(
     ['afgewezen', false] as [BeschikkingsResultaat, boolean]
   );
 
-  let displayStatus = getRTMDisplayStatus(lastAanvraag, statusLineItems);
-  // This happen with an afgewezen wijzigings besluit because it is afgewezen,
-  // but again it changes nothing, this only happens in the following case.
-  displayStatus =
-    displayStatus === 'Afgewezen' && decision === 'toegewezen'
-      ? 'Toegewezen'
-      : displayStatus;
+  const displayStatus = getRTMDisplayStatus(
+    isToegewezenRTM2Found && isAfgewezenRTM2(lastAanvraag)
+      ? // We know aanvragen.length > 2 because, an AfgewezenWijzigingsBesluit is always after an aanvraag for a wijziging,
+        // and must be in a toegewezen regeling context.
+        aanvragen[aanvragen.length - 2]
+      : lastAanvraag,
+    statusLineItems
+  );
 
   const regelingFrontend: HLIRegelingFrontend = {
     id,
