@@ -209,13 +209,13 @@ function transformRegelingenForFrontend(
   return dedupeDocumentsInDataSets(regelingenFrontend, 'documents');
 }
 
-type TypeDeterminingFunction = (
+type IsTargetAanvraagFn = (
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) => boolean;
 
 function extractAanvragen(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
-  typeDeterminingFn: TypeDeterminingFunction
+  isTargetAanvraag: IsTargetAanvraagFn
 ): [
   ZorgnedAanvraagWithRelatedPersonsTransformed[],
   ZorgnedAanvraagWithRelatedPersonsTransformed[],
@@ -224,7 +224,7 @@ function extractAanvragen(
   const targetAanvragen = [];
 
   for (const aanvraag of aanvragen) {
-    if (typeDeterminingFn(aanvraag)) {
+    if (isTargetAanvraag(aanvraag)) {
       targetAanvragen.push(aanvraag);
     } else {
       remainder.push(aanvraag);
