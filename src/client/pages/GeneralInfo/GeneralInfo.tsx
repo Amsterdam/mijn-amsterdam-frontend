@@ -12,10 +12,7 @@ import {
   TextPageV2,
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
-import {
-  ThemaConfigBase,
-  InfoSection as ThemaInfoSection,
-} from '../../config/thema-types';
+import { ThemaConfigBase, InfoSection } from '../../config/thema-types';
 import { getRedactedClass } from '../../helpers/cobrowse';
 import {
   compareThemas,
@@ -47,15 +44,15 @@ import { varensectionProps } from '../Thema/Varen/infoSection';
 import { vergunningensectionProps } from '../Thema/Vergunningen/InfoSection';
 import { zorgSectionProps } from '../Thema/Zorg/InfoSection';
 
-export type InfoSection = {
+export type GeneralInfoSection = {
   id: string;
   title: string;
   href?: string; // Use this instead of the themaMenuItem 'to URL' and force link to be clickable.
-  listItems: ThemaInfoSection['listItems'];
+  listItems: InfoSection['listItems'];
   active: boolean;
 };
 
-function createInfoSection(themaConfig: ThemaConfigBase): InfoSection {
+function createInfoSection(themaConfig: ThemaConfigBase): GeneralInfoSection {
   return {
     id: themaConfig.id,
     active: themaConfig.featureToggle.themaActive,
@@ -67,10 +64,10 @@ function createInfoSection(themaConfig: ThemaConfigBase): InfoSection {
 export type SectionProps = {
   title: string;
   href?: string;
-  listItems: ThemaInfoSection['listItems'];
+  listItems: InfoSection['listItems'];
 };
 
-const sections: InfoSection[] = [
+const sections: GeneralInfoSection[] = [
   profileSectionProps,
   burgerzakenSectionProps,
   myAreaSectionProps,
