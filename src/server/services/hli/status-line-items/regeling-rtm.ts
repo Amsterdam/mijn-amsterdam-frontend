@@ -41,18 +41,20 @@ export const RTM_STATUS_EINDE_RECHT = 'Einde recht';
 const INFO_LINK =
   'https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/extra-geld-als-u-chronisch-ziek-of/';
 
-export function isRTMDeel1(
+export function isRTMAanvraag(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
+  return isRTMDeel1(aanvraag) || isRTMDeel2(aanvraag);
+}
+
+function isRTMDeel1(aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed) {
   return (
     !!aanvraag.productIdentificatie &&
     AV_RTM_DEEL1 === aanvraag.productIdentificatie
   );
 }
 
-export function isRTMDeel2(
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-) {
+function isRTMDeel2(aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed) {
   return (
     !!aanvraag.productIdentificatie &&
     AV_RTM_DEEL2 === aanvraag.productIdentificatie

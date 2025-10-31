@@ -12,8 +12,7 @@ import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import { fetchStadspas } from './stadspas';
 import {
   filterCombineRtmData,
-  isRTMDeel1,
-  isRTMDeel2,
+  isRTMAanvraag,
 } from './status-line-items/regeling-rtm';
 import {
   featureToggle,
@@ -38,8 +37,7 @@ import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
 import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types';
 import {
   filterCombineUpcPcvData,
-  isPcVergoeding,
-  isVerzilvering,
+  isPCAanvraag,
   isWorkshopNietGevolgd,
 } from './status-line-items/regeling-pcvergoeding';
 import { toDateFormatted } from '../../../universal/helpers/utils';
@@ -176,19 +174,12 @@ function transformRegelingenForFrontend(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
   today: Date
 ): HLIRegelingFrontend[] {
-  const [remainder, RTMAanvragen] = extractAanvragen(aanvragen, [
-    isRTMDeel1,
-    isRTMDeel2,
-  ]);
+  const [remainder, RTMAanvragen] = extractAanvragen(aanvragen, isRTMAanvraag);
   const RTMRegelingenFrontend = filterCombineRtmData(
     authProfileAndToken,
     RTMAanvragen
   );
-
-  const [remainder_, PCAanvragen] = extractAanvragen(remainder, [
-    isPcVergoeding,
-    isVerzilvering,
-  ]);
+  const [remainder_, PCAanvragen] = extractAanvragen(remainder, isPCAanvraag);
   const PCVergoedingAanvragen = filterCombineUpcPcvData(PCAanvragen);
 
   const regelingenFrontend: HLIRegelingFrontend[] = [...RTMRegelingenFrontend];
@@ -224,7 +215,7 @@ type TypeDeterminingFunction = (
 
 function extractAanvragen(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
-  typeDeterminingFNs: TypeDeterminingFunction[]
+  typeDeterminingFn: TypeDeterminingFunction
 ): [
   ZorgnedAanvraagWithRelatedPersonsTransformed[],
   ZorgnedAanvraagWithRelatedPersonsTransformed[],
@@ -232,14 +223,12 @@ function extractAanvragen(
   const remainder = [];
   const targetAanvragen = [];
 
-  outerLoop: for (const aanvraag of aanvragen) {
-    for (const typeDeterminingFn of typeDeterminingFNs) {
-      if (typeDeterminingFn(aanvraag)) {
-        targetAanvragen.push(aanvraag);
-        continue outerLoop;
-      }
+  for (const aanvraag of aanvragen) {
+    if (typeDeterminingFn(aanvraag)) {
+      targetAanvragen.push(aanvraag);
+    } else {
+      remainder.push(aanvraag);
     }
-    remainder.push(aanvraag);
   }
 
   return [remainder, targetAanvragen];
