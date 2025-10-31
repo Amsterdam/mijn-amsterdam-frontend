@@ -92,6 +92,7 @@ export const routeConfig = {
   specificatieListPage: {
     path: '/regelingen-bij-laag-inkomen/lijst/specificaties/:page?',
     documentTitle: `Specificaties | ${themaTitle}`,
+    trackingUrl: null,
   },
   regelingenListPage: {
     path: '/regelingen-bij-laag-inkomen/lijst/:kind/:page?',
