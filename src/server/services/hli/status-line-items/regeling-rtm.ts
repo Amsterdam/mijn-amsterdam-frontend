@@ -43,18 +43,22 @@ const INFO_LINK =
 
 export function isRTMAanvraag(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-) {
+): boolean {
   return isRTMDeel1(aanvraag) || isRTMDeel2(aanvraag);
 }
 
-function isRTMDeel1(aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed) {
+function isRTMDeel1(
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+): boolean {
   return (
     !!aanvraag.productIdentificatie &&
     AV_RTM_DEEL1 === aanvraag.productIdentificatie
   );
 }
 
-function isRTMDeel2(aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed) {
+function isRTMDeel2(
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+): boolean {
   return (
     !!aanvraag.productIdentificatie &&
     AV_RTM_DEEL2 === aanvraag.productIdentificatie
@@ -63,7 +67,7 @@ function isRTMDeel2(aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed) {
 
 function isAfgewezenRTM2(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-) {
+): boolean {
   return isRTMDeel2(aanvraag) && aanvraag.resultaat === 'afgewezen';
 }
 

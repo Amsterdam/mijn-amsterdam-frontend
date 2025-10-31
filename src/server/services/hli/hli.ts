@@ -6,6 +6,7 @@ import {
   HLIRegelingFrontend,
   HLIresponseData,
   ZorgnedHLIRegeling,
+  HLIRegelingSpecificatieFrontend,
 } from './hli-regelingen-types';
 import { hliStatusLineItemsConfig } from './hli-status-line-items';
 import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
@@ -19,10 +20,12 @@ import {
   routeConfig,
 } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import {
+  ApiResponse,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
 } from '../../../universal/helpers/api';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import { dedupeDocumentsInDataSets } from '../../../universal/helpers/document';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import {
@@ -37,10 +40,12 @@ import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
 import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types';
 import {
   filterCombineUpcPcvData,
-  isPCAanvraag,
+  isPcAanvraag,
   isWorkshopNietGevolgd,
 } from './status-line-items/regeling-pcvergoeding';
-import { toDateFormatted } from '../../../universal/helpers/utils';
+import { sortAlpha, toDateFormatted } from '../../../universal/helpers/utils';
+
+export const RTM_SPECIFICATIE_TITLE = 'AV-RTM Specificatie';
 
 export type GenericDisplayStatus =
   | 'Toegewezen'
@@ -85,7 +90,7 @@ export const getDisplayStatus: GetDisplayStatusFn<GenericDisplayStatus> = (
 export function getDocumentsFrontend(
   sessionID: SessionID,
   documents: GenericDocument[]
-) {
+): GenericDocument[] {
   return documents.map((document) => {
     const idEncrypted = encryptSessionIdWithRouteIdParam(
       sessionID,
@@ -174,17 +179,30 @@ function transformRegelingenForFrontend(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
   today: Date
 ): HLIRegelingFrontend[] {
-  const [remainder, RTMAanvragen] = extractAanvragen(aanvragen, isRTMAanvraag);
+  const [remainingAanvragen, RTMAanvragen] = extractAanvragen(
+    aanvragen,
+    isRTMAanvraag
+  );
   const RTMRegelingenFrontend = filterCombineRtmData(
     authProfileAndToken,
     RTMAanvragen
   );
-  const [remainder_, PCAanvragen] = extractAanvragen(remainder, isPCAanvraag);
-  const PCVergoedingAanvragen = filterCombineUpcPcvData(PCAanvragen);
+  const [remainingAanvragen_, PCVergoedingAanvragen] = extractAanvragen(
+    remainingAanvragen,
+    isPcAanvraag
+  );
+  const PCVergoedingAanvragenCombined = filterCombineUpcPcvData(
+    PCVergoedingAanvragen
+  );
 
-  const regelingenFrontend: HLIRegelingFrontend[] = [...RTMRegelingenFrontend];
+  const allAanvragen = [
+    ...PCVergoedingAanvragenCombined,
+    ...remainingAanvragen_,
+  ].toSorted(sortAlpha('id', 'desc'));
 
-  for (const aanvraag of [...remainder_, ...PCVergoedingAanvragen]) {
+  const regelingenFrontend = [...RTMRegelingenFrontend];
+
+  for (const aanvraag of allAanvragen) {
     const statusLineItems = getStatusLineItems(
       'HLI',
       hliStatusLineItemsConfig,
@@ -254,18 +272,69 @@ async function fetchRegelingen(authProfileAndToken: AuthProfileAndToken) {
   return aanvragenResponse;
 }
 
+async function fetchSpecificaties(
+  authProfileAndToken: AuthProfileAndToken
+): Promise<ApiResponse<HLIRegelingSpecificatieFrontend[]>> {
+  const response = await fetchZorgnedAanvragenHLI(
+    authProfileAndToken.profile.id
+  );
+  if (response.status !== 'OK') {
+    return response;
+  }
+
+  const aanvragen = response.content.reduce(
+    (
+      filteredAanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
+      aanvraag
+    ) => {
+      const documents = aanvraag.documenten.filter(
+        (d) => d.title === RTM_SPECIFICATIE_TITLE
+      );
+      if (!documents.length) {
+        return filteredAanvragen;
+      }
+      filteredAanvragen.push({ ...aanvraag, documenten: documents });
+      return filteredAanvragen;
+    },
+    [] as ZorgnedAanvraagWithRelatedPersonsTransformed[]
+  );
+
+  const specificaties: HLIRegelingSpecificatieFrontend[] = aanvragen.flatMap(
+    (aanvraag) => {
+      const specificaties = getDocumentsFrontend(
+        authProfileAndToken.profile.sid,
+        aanvraag.documenten
+      ).map((doc) => {
+        const specificatie: HLIRegelingSpecificatieFrontend = {
+          ...doc,
+          category: aanvraag.titel,
+          datePublishedFormatted: defaultDateFormat(doc.datePublished),
+        };
+        return specificatie;
+      });
+      return specificaties;
+    }
+  );
+
+  return apiSuccessResult(specificaties);
+}
+
 export async function fetchHLI(authProfileAndToken: AuthProfileAndToken) {
-  const [stadspasResult, regelingenResult] = await Promise.allSettled([
-    fetchStadspas(authProfileAndToken),
-    fetchRegelingen(authProfileAndToken),
-  ]);
+  const [stadspasResult, regelingenResult, specificatieResult] =
+    await Promise.allSettled([
+      fetchStadspas(authProfileAndToken),
+      fetchRegelingen(authProfileAndToken),
+      fetchSpecificaties(authProfileAndToken),
+    ]);
 
   const regelingenResponseData = getSettledResult(regelingenResult);
   const stadspasResponseData = getSettledResult(stadspasResult);
+  const specificatieResponseData = getSettledResult(specificatieResult);
 
   const HLIResponseData: HLIresponseData = {
     regelingen: regelingenResponseData.content ?? [],
     stadspas: stadspasResponseData.content,
+    specificaties: specificatieResponseData.content ?? [],
   };
 
   return apiSuccessResult(
@@ -279,6 +348,7 @@ export async function fetchHLI(authProfileAndToken: AuthProfileAndToken) {
 
 export const forTesting = {
   fetchRegelingen,
+  fetchSpecificaties,
   getDisplayStatus,
   transformRegelingenForFrontend,
   transformRegelingTitle,

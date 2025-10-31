@@ -5,7 +5,10 @@ import { Paragraph } from '@amsterdam/design-system-react';
 import { featureToggle, listPageParamKind } from './HLI-thema-config';
 import styles from './HLIThema.module.scss';
 import { useHliThemaData } from './useHliThemaData';
-import { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
+import {
+  HLIRegelingFrontend,
+  HLIRegelingSpecificatieFrontend,
+} from '../../../../server/services/hli/hli-regelingen-types';
 import { type StadspasResponseFrontend } from '../../../../server/services/hli/stadspas-types';
 import { entries } from '../../../../universal/helpers/utils';
 import { MaRouterLink } from '../../../components/MaLink/MaLink';
@@ -30,7 +33,7 @@ type StadspasDisplayProps = {
   actief: ReactNode;
 };
 
-const displayProps: DisplayProps<StadspasDisplayProps> = {
+const stadspasDisplayProps: DisplayProps<StadspasDisplayProps> = {
   owner: '',
   actief: 'Status',
 };
@@ -64,7 +67,7 @@ function Stadspassen({
   return (
     <PageContentCell>
       <ThemaPaginaTable<StadspasDisplayProps>
-        displayProps={displayProps}
+        displayProps={stadspasDisplayProps}
         zaken={passen}
         className={styles.Stadspassen}
       />
@@ -83,9 +86,11 @@ export function HLIThema() {
     isError,
     isLoading,
     regelingen,
+    specificaties,
     themaId,
     title,
     tableConfig,
+    specificatieTableConfig,
     dependencyError,
     stadspassen,
     dateExpiryFormatted,
@@ -144,6 +149,15 @@ export function HLIThema() {
               <Stadspassen
                 stadspassen={stadspassen}
                 dateExpiryFormatted={dateExpiryFormatted}
+              />
+            )}
+            {!!specificaties.length && (
+              <ThemaPaginaTable<HLIRegelingSpecificatieFrontend>
+                title={specificatieTableConfig.title}
+                displayProps={specificatieTableConfig.displayProps}
+                zaken={specificaties.sort(specificatieTableConfig.sort)}
+                maxItems={specificatieTableConfig.maxItems}
+                listPageRoute={specificatieTableConfig.listPageRoute}
               />
             )}
             {!!regelingen?.length && regelingenTables}

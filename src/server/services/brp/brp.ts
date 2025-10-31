@@ -20,6 +20,7 @@ import { ONE_HOUR_MS } from '../../config/app';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
+import { getContextOperationId } from '../monitoring';
 import { fetchAuthTokenHeader } from '../ms-oauth/oauth-token';
 import { fetchBRP } from '../profile/brp';
 import type { BRPData, Persoon } from '../profile/brp.types';
@@ -147,8 +148,13 @@ function transformBenkBrpResponse(
           datumSluitingFormatted:
             partner.aangaanHuwelijkPartnerschap?.datum?.langFormaat ?? null,
           persoon: {
+            geboortedatum: getDatum(partner.geboorte?.datum),
+            geboortedatumFormatted:
+              partner.geboorte?.datum?.langFormaat ?? null,
             voornamen: partner.naam?.voornamen ?? null,
             geslachtsnaam: partner.naam?.geslachtsnaam ?? null,
+            omschrijvingAdellijkeTitel:
+              partner.naam?.adellijkeTitelPredicaat?.omschrijving ?? null,
             voorvoegselGeslachtsnaam: partner.naam?.voorvoegsel ?? null,
             opgemaakteNaam: partner.naam?.volledigeNaam ?? null,
             geboortelandnaam: partner.geboorte?.land?.omschrijving ?? null,
@@ -159,7 +165,13 @@ function transformBenkBrpResponse(
     ouders:
       persoon.ouders
         ?.filter(
-          (ouder) => typeof ouder !== 'undefined' && !!ouder.naam.voornamen
+          (ouder) =>
+            typeof ouder !== 'undefined' &&
+            !!(
+              ouder.naam.voornamen ||
+              ouder.naam.geslachtsnaam ||
+              ouder.naam.volledigeNaam
+            )
         )
         .map((ouder) => ({
           geboortedatum: getDatum(ouder.geboorte?.datum),
@@ -167,18 +179,34 @@ function transformBenkBrpResponse(
           opgemaakteNaam: ouder.naam?.volledigeNaam ?? null,
           voornamen: ouder.naam?.voornamen ?? null,
           geslachtsnaam: ouder.naam?.geslachtsnaam ?? null,
+          omschrijvingAdellijkeTitel:
+            ouder.naam?.adellijkeTitelPredicaat?.omschrijving ?? null,
           voorvoegselGeslachtsnaam: ouder.naam?.voorvoegsel ?? null,
+          geboorteplaatsnaam: ouder.geboorte?.plaats?.omschrijving ?? null,
+          geboortelandnaam: ouder.geboorte?.land?.omschrijving ?? null,
         })) ?? [],
     kinderen:
       persoon.kinderen
-        ?.filter((kind) => typeof kind !== 'undefined' && !!kind.naam.voornamen)
+        ?.filter(
+          (kind) =>
+            typeof kind !== 'undefined' &&
+            !!(
+              kind.naam.voornamen ||
+              kind.naam.geslachtsnaam ||
+              kind.naam.volledigeNaam
+            )
+        )
         ?.map((kind) => ({
           geboortedatum: getDatum(kind.geboorte?.datum) ?? null,
           geboortedatumFormatted: kind.geboorte?.datum?.langFormaat ?? null,
           opgemaakteNaam: kind.naam?.volledigeNaam ?? null,
           voornamen: kind.naam?.voornamen ?? null,
           geslachtsnaam: kind.naam?.geslachtsnaam ?? null,
+          omschrijvingAdellijkeTitel:
+            kind.naam?.adellijkeTitelPredicaat?.omschrijving ?? null,
           voorvoegselGeslachtsnaam: kind.naam?.voorvoegsel ?? null,
+          geboorteplaatsnaam: kind.geboorte?.plaats?.omschrijving ?? null,
+          geboortelandnaam: kind.geboorte?.land?.omschrijving ?? null,
         })) ?? [],
     adres: {
       locatiebeschrijving: adres?.locatiebeschrijving ?? null,
@@ -213,19 +241,19 @@ function translateBSN(bsn: BSN): BSN {
 
   return translationsMap.get(bsn) ?? bsn;
 }
-
 export async function fetchBrpByBsn(sessionID: AuthProfile['sid'], bsn: BSN[]) {
   const response = await fetchBenkBrpTokenHeader();
   if (response.status !== 'OK') {
     return response;
   }
+
   const requestConfig = getApiConfig('BENK_BRP', {
     formatUrl(requestConfig) {
       return `${requestConfig.url}/personen`;
     },
     headers: {
       ...response.content,
-      'X-Correlation-ID': `fetch-brp-${sessionID}`, // Required for tracing
+      'X-Correlation-ID': getContextOperationId(sessionID), // Required for tracing
     },
     data: {
       type: 'RaadpleegMetBurgerservicenummer',

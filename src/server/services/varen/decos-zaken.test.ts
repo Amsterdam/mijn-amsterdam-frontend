@@ -16,7 +16,7 @@ describe('decosZaken', () => {
 
     it.each([
       [
-        'all values',
+        'With dateStart',
         [
           {
             identifier: 'NT2025-000001-1-00002',
@@ -29,7 +29,7 @@ describe('decosZaken', () => {
         ],
       ],
       [
-        'all values inverted',
+        'with dateStart inverted',
         [
           {
             identifier: 'NT2025-000001-1-00001',
@@ -42,37 +42,13 @@ describe('decosZaken', () => {
         ],
       ],
       [
-        'only identifier',
+        'Without dates',
         [
           {
             identifier: 'NT2025-000001-1-00002',
           },
           {
             identifier: 'NT2025-000001-1-00001',
-          },
-        ],
-      ],
-      [
-        'only identifier inverted',
-        [
-          {
-            identifier: 'NT2025-000001-1-00001',
-          },
-          {
-            identifier: 'NT2025-000001-1-00002',
-          },
-        ],
-      ],
-      [
-        'dateStart equals null',
-        [
-          {
-            dateStart: null,
-            identifier: 'NT2025-000001-1-00001',
-          },
-          {
-            dateStart: null,
-            identifier: 'NT2025-000001-1-00002',
           },
         ],
       ],

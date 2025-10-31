@@ -583,12 +583,116 @@
         },
         "documenten": [
           {
-            "documentidentificatie": "E1082518",
-            "procesIdentificatie": "3162696",
-            "casusIdentificatie": "1729987",
-            "omschrijving": "advies GGD",
-            "datumDefinitief": "2025-05-28T14:31:15",
-            "bestandsnaam": "BIDocumentatie (4).pdf"
+            "documentidentificatie": "B3400279",
+            "procesIdentificatie": "3162670",
+            "casusIdentificatie": "1729966",
+            "omschrijving": "AV-RTM Toekenning",
+            "omschrijvingclientportaal": "Beschikking toekenning Reg Tegemoetk Meerkosten",
+            "datumDefinitief": "2025-05-28T14:36:05.743",
+            "bestandsnaam": "BR3400309.pdf"
+          },
+          {
+            "documentidentificatie": "B3216445",
+            "procesIdentificatie": "3019281",
+            "casusIdentificatie": "1611898",
+            "omschrijving": "AV-RTM Specificatie",
+            "datumDefinitief": "2024-11-20T18:27:42.367",
+            "bestandsnaam": "BR3216445.pdf"
+          },
+          {
+            "documentidentificatie": "B3262746",
+            "procesIdentificatie": "3019281",
+            "casusIdentificatie": "1611898",
+            "omschrijving": "AV-RTM Specificatie",
+            "datumDefinitief": "2024-12-20T11:22:29.4",
+            "bestandsnaam": "BR3262746.pdf"
+          },
+          {
+            "documentidentificatie": "B3300648",
+            "procesIdentificatie": "3019281",
+            "casusIdentificatie": "1611898",
+            "omschrijving": "AV-RTM Specificatie",
+            "datumDefinitief": "2025-01-20T16:26:12.387",
+            "bestandsnaam": "BR3300648.pdf"
+          },
+          {
+            "documentidentificatie": "B3374604",
+            "procesIdentificatie": "3019281",
+            "casusIdentificatie": "1611898",
+            "omschrijving": "AV-RTM Specificatie",
+            "datumDefinitief": "2025-02-20T11:49:30.42",
+            "bestandsnaam": "BR3374604.pdf"
+          }
+        ]
+      },
+      {
+        "identificatie": "32",
+        "procesIdentificatie": "3170110",
+        "casusIdentificatie": "1737097",
+        "regeling": {
+          "identificatie": "Armoedevrz",
+          "omschrijving": "Armoedevoorzieningen"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2025-08-18"
+        },
+        "datumAanmelding": "2025-08-18",
+        "datumAanvraag": "2025-08-18",
+        "procesAanvraag": {
+          "identificatie": "3170110",
+          "omschrijving": "Aanvraag RTM fase 1",
+          "datumStart": "2025-08-18",
+          "memos": [
+            {
+              "identificatie": "32",
+              "omschrijving": "AV-Hersteltermijn algemeen",
+              "tekst": "<ul><li>Uw bankrekeningnummer lijkt niet langer in gebruik. &nbsp;<br /><br /><strong>Welke informatie hebben wij van u nodig?</strong><br />Zorgt u ervoor dat wij uiterlijk &lt;datum&gt; de volgende informatie hebben ontvangen:<br /><br />Een kopie van een rekeningafschrift of bankpas waarop de naam van de rekeningnummerhouder&nbsp;en het rekeningnummer zelf staan vermeld.</li></ul>"
+            }
+          ]
+        },
+        "beschikking": {
+          "beschikkingNummer": 301149772,
+          "datumAfgifte": "2025-08-18",
+          "beschikteProducten": [
+            {
+              "identificatie": "1523491",
+              "product": {
+                "identificatie": "AV-RTM1",
+                "productsoortCode": "AV-ALG",
+                "omschrijving": "Regeling Tegemoetkoming Meerkosten"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2025-08-18",
+                "datumEindeGeldigheid": "2050-08-18",
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "toewijzingen": [],
+                "betrokkenen": ["999999999"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B3408752",
+            "procesIdentificatie": "3170110",
+            "casusIdentificatie": "1737097",
+            "omschrijving": "AV-RTM Info aan klant GGD",
+            "datumDefinitief": "2025-08-18T14:09:48.83",
+            "bestandsnaam": "BR3408752.pdf"
           },
           {
             "documentidentificatie": "E1082971",

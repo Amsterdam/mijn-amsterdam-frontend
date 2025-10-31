@@ -524,6 +524,8 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
       const zaken =
         apiContent?.zaken.map((zaak) => ({
           ...zaak,
+          vergunningKenmerk:
+            zaak.vergunningKenmerk || zaak.vergunning?.vergunningKenmerk,
         })) ?? [];
       const vergunningen =
         apiContent?.vergunningen.map((vergunning) => ({
@@ -549,11 +551,12 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
           | VarenVergunningFrontend
       ) =>
       (term: string) => {
+        const vesselName = 'vesselName' in item ? item.vesselName : null;
+        const vergunningKenmerk =
+          ('vergunningKenmerk' in item && item.vergunningKenmerk) || null;
         return displayPath(term, [
           item.title,
-          'vesselName' in item && item.vesselName
-            ? item.vesselName
-            : item.identifier,
+          vesselName || vergunningKenmerk || item.identifier,
         ]);
       },
     keywordsGeneratedFromProps: [
