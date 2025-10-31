@@ -155,3 +155,9 @@ process.env.BFF_AMSAPP_NONCE = '123456789123456789123456';
 process.env.DEBUG_RESPONSE_DATA = '';
 
 process.env.BFF_CONTACTMOMENTEN_BASE_URL = `${remoteApiHost}/salesforce/contactmomenten`;
+
+process.env.BFF_BENK_BRP_CLIENT_ID = 'test-client-id';
+process.env.BFF_BENK_BRP_CLIENT_SECRET = 'test-client-secret';
+process.env.BFF_BENK_BRP_TENANT = 'test-tenant';
+process.env.BFF_BENK_BRP_APPLICATION_ID = 'test-app-id';
+process.env.BFF_BENK_BRP_API_BASE_URL = `${remoteApiHost}/benk_brp`;
