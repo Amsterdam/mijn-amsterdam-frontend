@@ -173,6 +173,7 @@ type AanvragenPerBetrokkene = Record<
   string,
   ZorgnedAanvraagWithRelatedPersonsTransformed[]
 > & {
+  /* Orphaned aanvragen are aanvragen where we don't know to who it belongs. */
   orphaned: ZorgnedAanvraagWithRelatedPersonsTransformed[];
 };
 
@@ -195,15 +196,17 @@ function mapAanvragenPerBetrokkenen(
   const hasAllAanvragenIdenticalBetrokkene =
     new Set(foundBetrokkenenSets).size === 1;
 
+  if (hasAllAanvragenIdenticalBetrokkene) {
+    return {
+      [foundBetrokkenenSets.join('-')]: aanvragen,
+      orphaned: [],
+    };
+  }
+
   const aanvragenMap: AanvragenPerBetrokkene = {
     [bsnLoggedInPerson]: [],
     orphaned: [],
   };
-
-  if (hasAllAanvragenIdenticalBetrokkene) {
-    aanvragenMap[foundBetrokkenenSets.join('-')] = aanvragen;
-    return aanvragenMap;
-  }
 
   for (const aanvraag of aanvragen) {
     const betrokkenen = aanvraag.betrokkenen;
