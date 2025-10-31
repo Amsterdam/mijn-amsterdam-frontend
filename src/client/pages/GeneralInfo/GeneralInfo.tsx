@@ -44,7 +44,7 @@ import { varensectionProps } from '../Thema/Varen/infoSection';
 import { vergunningensectionProps } from '../Thema/Vergunningen/InfoSection';
 import { zorgSectionProps } from '../Thema/Zorg/InfoSection';
 
-export type GeneralInfoSection = {
+export type InfoSection_DEPRECATED = {
   id: string;
   title: string;
   href?: string; // Use this instead of the themaMenuItem 'to URL' and force link to be clickable.
@@ -52,7 +52,9 @@ export type GeneralInfoSection = {
   active: boolean;
 };
 
-function createInfoSection(themaConfig: ThemaConfigBase): GeneralInfoSection {
+function createDeprecatedInfoSection(
+  themaConfig: ThemaConfigBase
+): InfoSection_DEPRECATED {
   return {
     id: themaConfig.id,
     active: themaConfig.featureToggle.themaActive,
@@ -67,7 +69,7 @@ export type SectionProps = {
   listItems: InfoSection['listItems'];
 };
 
-const sections: GeneralInfoSection[] = [
+const sections: InfoSection_DEPRECATED[] = [
   profileSectionProps,
   burgerzakenSectionProps,
   myAreaSectionProps,
@@ -90,7 +92,7 @@ const sections: GeneralInfoSection[] = [
   milieuzonesectionProps,
   overtredingensectionProps,
   vergunningensectionProps,
-  createInfoSection(bodemThemaConfig),
+  createDeprecatedInfoSection(bodemThemaConfig),
   varensectionProps,
 ];
 
