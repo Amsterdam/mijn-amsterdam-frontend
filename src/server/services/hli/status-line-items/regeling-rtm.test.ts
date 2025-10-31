@@ -10,7 +10,7 @@ import { forTesting } from '../hli';
 import { HLIRegelingFrontend } from '../hli-regelingen-types';
 import { RTM_STATUS_EINDE_RECHT } from './regeling-rtm';
 
-const ONTVANGER_ID = '999999999';
+const bsnLoggedInPerson = '999999999';
 
 /** The ID determines the sorting order.
  *  Thats why programmaticly adding an id makes predefined aanvragen more reusable.
@@ -79,12 +79,12 @@ function replaceBetrokkenen(
 }
 
 const base = {
-  bsnAanvrager: ONTVANGER_ID,
-  betrokkenen: [ONTVANGER_ID],
+  bsnAanvrager: bsnLoggedInPerson,
+  betrokkenen: [bsnLoggedInPerson],
   betrokkenPersonen: [
     {
-      bsn: ONTVANGER_ID,
-      name: `${ONTVANGER_ID} - Flex`,
+      bsn: bsnLoggedInPerson,
+      name: `${bsnLoggedInPerson} - Flex`,
       isAanvrager: true,
       dateOfBirth: '2023-06-12',
       dateOfBirthFormatted: '12 juni 2023',
@@ -412,7 +412,7 @@ const RTM_2_MIGRATIE: ZorgnedAanvraagWithRelatedPersonsTransformed = {
 };
 
 const defaultAuthProfileAndToken = getAuthProfileAndToken();
-defaultAuthProfileAndToken.profile.id = ONTVANGER_ID;
+defaultAuthProfileAndToken.profile.id = bsnLoggedInPerson;
 
 function transformRegelingenForFrontend(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
@@ -504,10 +504,10 @@ describe('Aanvrager is ontvanger', () => {
   test('Single Aanvraag toegewezen voor meerdere betrokkenen', () => {
     const aanvragen = replacePropsInAanvragen([RTM_1_AANVRAAG], {
       betrokkenen: [
-        { bsn: ONTVANGER_ID, isAanvrager: true },
+        { bsn: bsnLoggedInPerson, isAanvrager: true },
         { bsn: '222222222' },
       ],
-      bsnAanvrager: ONTVANGER_ID,
+      bsnAanvrager: bsnLoggedInPerson,
     });
     const regelingen = transformRegelingenForFrontend(aanvragen);
     expect(regelingen.length).toBe(1);
@@ -1566,7 +1566,7 @@ test('Single Aanvraag afgewezen results in orphaned regeling', () => {
 describe('Mixed betrokkenen', () => {
   test('Migratie into toegewezen with different but overlapping betrokkenen', () => {
     const betrokkeneAanvrager: Betrokkene = {
-      bsn: ONTVANGER_ID,
+      bsn: bsnLoggedInPerson,
       isAanvrager: true,
     };
     const betrokkeneOther: Betrokkene = { bsn: '111111111' };
@@ -1628,7 +1628,7 @@ describe('Mixed betrokkenen', () => {
 
   test('Stacks aanvragen that most likely belongs to eachother', () => {
     const betrokkenen: Betrokkene[] = [
-      { bsn: ONTVANGER_ID, isAanvrager: true },
+      { bsn: bsnLoggedInPerson, isAanvrager: true },
       { bsn: '111111111' },
     ];
 

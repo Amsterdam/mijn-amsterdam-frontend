@@ -201,13 +201,6 @@ function mapAanvragenPerBetrokkenen(
   };
 
   if (hasAllAanvragenIdenticalBetrokkene) {
-    const hasOntvanger = foundBetrokkenenSets.some((betrokkenen) =>
-      betrokkenen.includes(bsnLoggedInPerson)
-    );
-    if (hasOntvanger) {
-      aanvragenMap.ontvanger = aanvragen;
-      return aanvragenMap;
-    }
     aanvragenMap[foundBetrokkenenSets.join('-')] = aanvragen;
     return aanvragenMap;
   }
