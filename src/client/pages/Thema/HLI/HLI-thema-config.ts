@@ -8,7 +8,34 @@ import { dateSort } from '../../../../universal/helpers/date';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
-import type { ThemaRoutesConfig } from '../../../config/thema-types';
+import type {
+  ThemaRoutesConfig,
+  ThemaConfigBase,
+} from '../../../config/thema-types';
+
+const THEMA_TITLE = 'Stadspas en regelingen bij laag inkomen';
+
+export type HLIThemaConfig = ThemaConfigBase;
+
+export const themaConfig: HLIThemaConfig = {
+  id: 'HLI',
+  title: THEMA_TITLE,
+  featureToggle: {
+    themaActive: true,
+  },
+  profileTypes: [],
+  uitlegPageSections: {
+    title: '',
+    listItems: [],
+  },
+  pageLinks: [],
+  route: {
+    path: '',
+    trackingUrl: null,
+    documentTitle: '',
+  },
+  redactedScope: 'none',
+} as const;
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
