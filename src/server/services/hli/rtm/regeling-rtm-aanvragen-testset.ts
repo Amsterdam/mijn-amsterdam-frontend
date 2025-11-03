@@ -18,31 +18,35 @@ export type RTMTestInput = {
   expected: RTMAanvraagTestResult[];
 };
 
-const RTM1 = 'AV-RTM1';
-const RTM2 = 'AV-RTM';
-const TOE = 'toegewezen';
-const AFW = 'afgewezen';
+export const RTM1 = 'AV-RTM1';
+export const RTM2 = 'AV-RTM';
+export const TOE = 'toegewezen';
+export const AFW = 'afgewezen';
 
 // ZorgnedAanvraagTransformed with only the properties needed for the testset
-function aanvraag(
+export function aanvraag(
   productIdentificatie: string,
   resultaat: 'toegewezen' | 'afgewezen',
   betrokkenen: string[] = [],
-  datumEindeGeldigheid?: string
+  otherProps?: {
+    id?: string;
+    titel?: string;
+    datumAanvraag?: string;
+    datumBesluit?: string;
+    datumEindeGeldigheid?: string | null;
+    documenten?: unknown[];
+    beschiktProductIdentificatie?: string;
+    betrokkenPersonen?: unknown[];
+    productOmschrijving?: string;
+  }
 ) {
-  const aanvraag: {
-    productIdentificatie: string;
-    betrokkenen?: string[];
-    resultaat: 'toegewezen' | 'afgewezen';
-    datumEindeGeldigheid?: string;
-  } = {
+  const aanvraag = {
+    titel: 'Regeling tegemoetkoming meerkosten',
     productIdentificatie,
     betrokkenen,
     resultaat,
+    ...otherProps,
   };
-  if (datumEindeGeldigheid) {
-    aanvraag.datumEindeGeldigheid = datumEindeGeldigheid;
-  }
   return aanvraag;
 }
 
@@ -191,7 +195,7 @@ export const aanvragenTestsetInput = [
     aanvragen: [
       aanvraag(RTM2, TOE, ['I']),
       aanvraag(RTM2, TOE, ['I']),
-      aanvraag(RTM2, TOE, ['I'], '2024-12-31'),
+      aanvraag(RTM2, TOE, ['I'], { datumEindeGeldigheid: '2024-12-31' }),
       aanvraag(RTM1, TOE, ['I']),
       aanvraag(RTM2, TOE, ['I']),
     ],
@@ -222,10 +226,10 @@ export const aanvragenTestsetInput = [
       aanvraag(RTM1, TOE, ['J']),
       aanvraag(RTM2, TOE, ['J']),
       aanvraag(RTM1, TOE, ['J']),
-      aanvraag(RTM2, TOE, ['J'], '2024-12-31'),
+      aanvraag(RTM2, TOE, ['J'], { datumEindeGeldigheid: '2024-12-31' }),
 
       aanvraag(RTM1, TOE, ['J']),
-      aanvraag(RTM2, TOE, ['J'], '2024-12-31'),
+      aanvraag(RTM2, TOE, ['J'], { datumEindeGeldigheid: '2024-12-31' }),
 
       aanvraag(RTM1, TOE, ['J']),
       aanvraag(RTM2, TOE, ['J']),
@@ -263,7 +267,7 @@ export const aanvragenTestsetInput = [
       'Mix of RTM and RTM1, multiple betrokkenen. Afgewezen aanvraag results in orphan. - Multiple statustrein per betrokkene with aanvraag step that applies to both.',
     aanvragen: [
       aanvraag(RTM1, TOE, ['K', 'L']),
-      aanvraag(RTM2, TOE, ['K'], '2024-12-31'),
+      aanvraag(RTM2, TOE, ['K'], { datumEindeGeldigheid: '2024-12-31' }),
       aanvraag(RTM1, TOE, ['L']),
       aanvraag(RTM1, TOE, ['K']),
       aanvraag(RTM2, TOE, ['K']),
@@ -474,7 +478,9 @@ export const aanvragenTestsetInput = [
   },
   {
     title: 'Single toegewezen aanvraag with end date / Verlopen aanvraag',
-    aanvragen: [aanvraag(RTM1, TOE, ['E1'], '2024-12-31')],
+    aanvragen: [
+      aanvraag(RTM1, TOE, ['E1'], { datumEindeGeldigheid: '2024-12-31' }),
+    ],
     expected: [
       {
         id: 26,
@@ -514,6 +520,30 @@ export const aanvragenTestsetInput = [
           'Einde recht',
         ],
         displayStatus: 'Besluit wijziging',
+      },
+    ],
+  },
+  {
+    title: 'Common testset for Aanvrager/Ontvanger',
+    aanvragen: [
+      aanvraag(RTM1, TOE, ['A5']),
+      aanvraag(RTM2, TOE, ['A5']),
+      aanvraag(RTM1, TOE, ['A5']),
+      aanvraag(RTM2, TOE, ['A5']),
+    ],
+    expected: [
+      {
+        displayStatus: 'Besluit wijziging',
+        id: 28,
+        persoon: 'Persoon A5',
+        steps: [
+          'Aanvraag',
+          'In behandeling genomen',
+          'Besluit',
+          'Aanvraag wijziging',
+          'Besluit wijziging',
+          'Einde recht',
+        ],
       },
     ],
   },

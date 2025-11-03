@@ -147,15 +147,19 @@ function createStatusLineItemStep(
   return {
     status,
     description: descriptionsByStatus[status](aanvraag),
-    id: `${status}-${aanvraag.id}`,
+    id: slug(`${status}-${aanvraag.id}`),
     datePublished: getStatusDate(status, aanvraag),
     isActive: false,
     // We default to checked and determine which step can be unchecked later.
     isChecked: true,
     // We might want to include the beëindigingsdocumenten only for Einde recht steps.
     // Currently, documents related to Einde recht end-up in the most recent (toegewezen RTM regeling) Besluit step.
-    documents:
-      status !== lineItemConfig.eindeRecht.status ? aanvraag.documenten : [],
+    documents: ![
+      lineItemConfig.eindeRecht.status,
+      lineItemConfig.inBehandeling.status,
+    ].includes(status)
+      ? aanvraag.documenten
+      : [],
   };
 }
 
@@ -380,16 +384,14 @@ function transformRTMRegelingenFrontend(
     });
 
     // Get dates for the HLIRegeling from the steps.
-    const lastRTM2 = aanvragen.findLast(
+    const RTM2Aanvragen = aanvragen.filter(
       (a) => a.productIdentificatie === AV_RTM_DEEL2
     );
+    const lastRTM2 = RTM2Aanvragen.at(-1);
     const dateDecision = lastRTM2?.datumBesluit ?? '';
     // We assume that datumEindeGeldigheid is always set for the latest RTM-2 aanvraag.
     const dateEnd = lastRTM2?.datumEindeGeldigheid ?? '';
-
-    const dateStart =
-      aanvragen.find((a) => a.productIdentificatie === AV_RTM_DEEL2)
-        ?.datumBesluit ?? '';
+    const dateStart = RTM2Aanvragen?.[0]?.datumBesluit ?? '';
 
     const isActual = !aanvragen.some(isEindeRechtReached);
     const displayStatus =
@@ -403,7 +405,9 @@ function transformRTMRegelingenFrontend(
       dateStart,
       documents: [],
       isActual,
-      decision: 'toegewezen', // what to show here?
+      decision: aanvragen.some((a) => a.resultaat === 'toegewezen')
+        ? 'toegewezen'
+        : 'afgewezen',
       betrokkenen,
       title,
       link: {
@@ -462,10 +466,11 @@ export function transformRTMAanvragen(
   bsnLoggedinUser: BSN,
   RTMaanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ) {
-  const aanvragenDeduped = dedupeButKeepDocuments(RTMaanvragen);
+  const aanvragenSorted = RTMaanvragen.toSorted(sortAlpha('id', 'asc'));
+  const aanvragenDeduped = dedupeButKeepDocuments(aanvragenSorted);
+
   const aanvragenWithPdfDocumentsOnly = removeNonPdfDocuments(aanvragenDeduped);
   // RTM aanvragen are processed in chronological order (ASC), so we sort them first.
-  aanvragenWithPdfDocumentsOnly.sort(sortAlpha('id', 'asc'));
   const aanvragenByBetrokkenen = mapAanvragenByBetrokkenen(
     bsnLoggedinUser,
     aanvragenWithPdfDocumentsOnly
