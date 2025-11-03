@@ -10,7 +10,7 @@ import {
 } from './hli-regelingen-types';
 import { hliStatusLineItemsConfig } from './hli-status-line-items';
 import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
-import { transformRTMAanvragen, isRTMAanvraag } from './rtm/rtm-organizer';
+import { transformRTMAanvragen, isRTMAanvraag } from './rtm/regeling-rtm';
 import { fetchStadspas } from './stadspas';
 import {
   featureToggle,

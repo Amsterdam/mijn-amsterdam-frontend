@@ -115,9 +115,10 @@ const descriptionsByStatus = Object.fromEntries(
   ])
 );
 
-const ORPHAN_REGELING_ID_START = 30;
+const REGELING_ID_START = 1;
+const ORPHAN_REGELING_ID_START = 60;
 
-let statustreinId = 1;
+let statustreinId = REGELING_ID_START;
 let statustreinOrphansId = ORPHAN_REGELING_ID_START;
 
 function getStatusDate(
@@ -144,9 +145,7 @@ function createStatusLineItemStep(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ): StatusLineItem {
   return {
-    status: process.argv.includes('--make-test-data')
-      ? addResultToStatus(status, aanvraag.resultaat)
-      : status,
+    status,
     description: descriptionsByStatus[status](aanvraag),
     id: `${status}-${aanvraag.id}`,
     datePublished: getStatusDate(status, aanvraag),
@@ -158,23 +157,6 @@ function createStatusLineItemStep(
     documents:
       status !== lineItemConfig.eindeRecht.status ? aanvraag.documenten : [],
   };
-}
-
-// Adds 'afgewezen' to status if needed, to match the expected output.
-// Not needed in the real implementation.
-function addResultToStatus(
-  status: StatusLineItem['status'],
-  resultaat: ZorgnedAanvraagWithRelatedPersonsTransformed['resultaat']
-) {
-  if (
-    status === lineItemConfig.besluit.status ||
-    status === lineItemConfig.besluitWijziging.status ||
-    status === lineItemConfig.aanvraag.status ||
-    status === lineItemConfig.aanvraagWijziging.status
-  ) {
-    return `${status}${resultaat === 'toegewezen' ? '' : ' afgewezen'}`;
-  }
-  return status;
 }
 
 export function mapAanvragenByBetrokkenen(
@@ -316,12 +298,6 @@ function getSteps(aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]) {
       a.productIdentificatie === AV_RTM_DEEL2 && a.resultaat === 'toegewezen'
   );
 
-  const LAST_STEP_INDEX = -1;
-  const lastStep = steps.at(LAST_STEP_INDEX);
-
-  const SECOND_TO_LAST_STEP_INDEX = -2;
-  const secondToLastStep = steps.at(SECOND_TO_LAST_STEP_INDEX);
-
   let eindeRechtStep: StatusLineItem | null = null;
   if (mostRecentToegewezenRTM) {
     eindeRechtStep = createStatusLineItemStep(
@@ -330,8 +306,15 @@ function getSteps(aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]) {
     );
     steps.push(eindeRechtStep);
   }
+
+  const LAST_STEP_INDEX = -1;
+  const lastStep = steps.at(LAST_STEP_INDEX);
+
+  const SECOND_TO_LAST_STEP_INDEX = -2;
+  const secondToLastStep = steps.at(SECOND_TO_LAST_STEP_INDEX);
+
   const isEindeRechtReached = eindeRechtStep
-    ? parseISO(eindeRechtStep.datePublished) >= new Date()
+    ? new Date() > parseISO(eindeRechtStep.datePublished)
     : false;
 
   if (eindeRechtStep) {
@@ -369,22 +352,6 @@ function getBetrokkenen(
   return betrokkenen;
 }
 
-function getDisplayStatus(
-  steps: StatusLineItem[],
-  lastDecision: string
-): string {
-  let displayStatus: string =
-    steps.findLast((step) => step.isActive)?.status ?? '';
-  if (
-    displayStatus === lineItemConfig.besluit.status ||
-    displayStatus === lineItemConfig.besluitWijziging.status
-  ) {
-    displayStatus = lastDecision;
-  }
-
-  return displayStatus;
-}
-
 function transformRTMRegelingenFrontend(
   aanvragenByBetrokkenen: Map<
     string,
@@ -406,7 +373,6 @@ function transformRTMRegelingenFrontend(
     const id = `${betrokkenenMapStr === 'orphans' ? statustreinOrphansId++ : statustreinId++}`;
     const title = aanvragen.at(-1)?.titel || REGELING_TITLE_DEFAULT_PLACEHOLDER;
     const betrokkenen = getBetrokkenen(betrokkenenMapStr, aanvragen);
-    console.log('betrokkenen', betrokkenen);
 
     const route = generatePath(routeConfig.detailPage.path, {
       id,
@@ -426,7 +392,8 @@ function transformRTMRegelingenFrontend(
         ?.datumBesluit ?? '';
 
     const isActual = !aanvragen.some(isEindeRechtReached);
-    const displayStatus = getDisplayStatus(steps, dateDecision);
+    const displayStatus =
+      steps.findLast((step) => step.isActive)?.status ?? 'Onbekend';
 
     const RTMRegeling: HLIRegelingFrontend = {
       id,
