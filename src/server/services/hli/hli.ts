@@ -8,6 +8,7 @@ import {
   ZorgnedHLIRegeling,
   HLIRegelingSpecificatieFrontend,
 } from './hli-regelingen-types';
+import { routes } from './hli-service-config';
 import { hliStatusLineItemsConfig } from './hli-status-line-items';
 import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import { transformRTMAanvragen, isRTMAanvraag } from './rtm/regeling-rtm';
@@ -31,7 +32,6 @@ import {
 } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
 import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types';
@@ -95,7 +95,7 @@ export function getDocumentsFrontend(
     );
     return {
       ...document,
-      url: generateFullApiUrlBFF(BffEndpoints.HLI_DOCUMENT_DOWNLOAD, [
+      url: generateFullApiUrlBFF(routes.protected.HLI_DOCUMENT_DOWNLOAD, [
         {
           id: idEncrypted,
         },
