@@ -38,10 +38,12 @@ export const routeConfig = {
     path: '/horeca/lijst/:kind/:page?',
     documentTitle: (params) =>
       `${tableConfigVergunningen[(params?.kind as ListPageParamKind) || 'lopende-aanvragen'].title} | ${themaTitle}`,
+    trackingUrl: null,
   },
   themaPage: {
     path: '/horeca',
     documentTitle: `${themaTitle} | overzicht`,
+    trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
 

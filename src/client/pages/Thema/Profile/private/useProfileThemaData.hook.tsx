@@ -1,7 +1,7 @@
 import { useContactmomenten } from './useContactmomenten.hook';
 import { isError, isLoading } from '../../../../../universal/helpers/api';
 import { useAppStateGetter } from '../../../../hooks/useAppStateStore';
-import { themaIdBRP, themaTitle } from '../Profile-thema-config';
+import { themaTitle, themaIdBRP } from '../Profile-thema-config';
 
 export function useProfileThemaData() {
   const { BRP } = useAppStateGetter();

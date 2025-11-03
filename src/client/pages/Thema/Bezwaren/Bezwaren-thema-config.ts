@@ -26,10 +26,12 @@ export const routeConfig = {
     path: '/bezwaren/lijst/:kind/:page?',
     documentTitle: (params) =>
       `${params?.kind === listPageParamKind.afgehandeld ? 'Afgehandelde' : 'Lopende'} bezwaren | ${themaTitle}`,
+    trackingUrl: null,
   },
   themaPage: {
     path: '/bezwaren',
     documentTitle: `${themaTitle} | overzicht`,
+    trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
 

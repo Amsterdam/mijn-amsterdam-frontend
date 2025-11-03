@@ -42,10 +42,12 @@ export const routeConfig = {
     path: '/paspoort-en-id-kaart/lijst/:kind/:page?',
     documentTitle: (params) =>
       `${params?.documentType === 'paspoort' ? 'Paspoort' : 'ID-kaart'} | ${themaTitle}`,
+    trackingUrl: null,
   },
   themaPage: {
     path: '/paspoort-en-id-kaart',
     documentTitle: `${themaTitle} | overzicht`,
+    trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
 

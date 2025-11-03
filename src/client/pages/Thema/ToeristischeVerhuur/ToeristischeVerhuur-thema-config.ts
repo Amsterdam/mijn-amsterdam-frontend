@@ -32,10 +32,12 @@ export const routeConfig = {
     path: '/toeristische-verhuur/vergunning/lijst/:kind/:page?',
     documentTitle: (params) =>
       `${tableConfigVergunningen[(params?.kind as ListPageParamKind) || 'lopende-aanvragen'].title} | ${themaTitle}`,
+    trackingUrl: null,
   },
   themaPage: {
     path: '/toeristische-verhuur',
     documentTitle: `${themaTitle} | overzicht`,
+    trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
 
