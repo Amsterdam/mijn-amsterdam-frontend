@@ -21,6 +21,7 @@ function imposeZorgnedAanvraagTransformed(
   index: number
 ): ZorgnedAanvraagWithRelatedPersonsTransformed {
   return {
+    titel: 'Regeling tegemoetkoming meerkosten',
     bsnAanvrager: '',
     datumAanvraag: '',
     datumBeginLevering: null,
