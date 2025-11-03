@@ -136,181 +136,103 @@ exports[`brp.ts > fetchBrpByBsn > Should format response data correctly > Format
 exports[`brp.ts > fetchBrpByBsn > Should format response data correctly > Formatting for test BSN 2, with verblijfplaatshistorie returning an error 1`] = `
 {
   "content": {
-    "personen": [
+    "adres": {
+      "begindatumVerblijf": "2001-05-01",
+      "begindatumVerblijfFormatted": "1 mei 2001",
+      "huisletter": null,
+      "huisnummer": "650",
+      "huisnummertoevoeging": null,
+      "landnaam": null,
+      "locatiebeschrijving": null,
+      "postcode": "1098XH",
+      "straatnaam": "Science Park",
+      "woonplaatsNaam": "Amsterdam",
+    },
+    "adresHistorisch": [],
+    "kinderen": [],
+    "ouders": [
       {
-        "aNummer": "4630692617",
-        "adressering": {
-          "aanhef": "Geachte mevrouw De Roos",
-          "aanschrijfwijze": {
-            "naam": "H.I.G.J. de Roos",
-          },
-          "adresregel1": "Science Park 650",
-          "adresregel2": "1098 XH  AMSTERDAM",
-          "gebruikInLopendeTekst": "mevrouw De Roos",
-        },
-        "burgerservicenummer": "999990810",
-        "datumInschrijvingInGemeente": {
-          "datum": "1992-05-08",
-          "langFormaat": "8 mei 1992",
-          "type": "Datum",
-        },
-        "geboorte": {
-          "datum": {
-            "datum": "1955-06-02",
-            "langFormaat": "2 juni 1955",
-            "type": "Datum",
-          },
-          "land": {
-            "code": "6030",
-            "omschrijving": "Nederland",
-          },
-          "plaats": {
-            "code": "0392",
-            "omschrijving": "Haarlem",
-          },
-        },
-        "gemeenteVanInschrijving": {
-          "code": "0363",
-          "omschrijving": "Amsterdam",
-        },
-        "geslacht": {
-          "code": "V",
-          "omschrijving": "vrouw",
-        },
-        "immigratie": {},
-        "kinderen": [],
-        "leeftijd": 70,
-        "naam": {
-          "aanduidingNaamgebruik": {
-            "code": "E",
-            "omschrijving": "eigen geslachtsnaam",
-          },
-          "geslachtsnaam": "Roos",
-          "volledigeNaam": "Hendrika Isabella Gerarda Johanna de Roos",
-          "voorletters": "H.I.G.J.",
-          "voornamen": "Hendrika Isabella Gerarda Johanna",
-          "voorvoegsel": "de",
-        },
-        "nationaliteiten": [
-          {
-            "datumIngangGeldigheid": {
-              "langFormaat": "onbekend",
-              "onbekend": true,
-              "type": "DatumOnbekend",
-            },
-            "nationaliteit": {
-              "code": "0001",
-              "omschrijving": "Nederlandse",
-            },
-            "redenOpname": {
-              "code": "001",
-              "omschrijving": "Wet op het Nederlanderschap 1892, art.1, lid 1a",
-            },
-            "type": "Nationaliteit",
-          },
-        ],
-        "ouders": [
-          {
-            "geboorte": {
-              "datum": {
-                "datum": "1914-01-11",
-                "langFormaat": "11 januari 1914",
-                "type": "Datum",
-              },
-              "land": {
-                "code": "6030",
-                "omschrijving": "Nederland",
-              },
-              "plaats": {
-                "code": "0399",
-                "omschrijving": "Heiloo",
-              },
-            },
-            "naam": {
-              "geslachtsnaam": "Manderley",
-              "voorletters": "J.",
-              "voornamen": "Johanna",
-            },
-            "ouderAanduiding": "1",
-          },
-          {
-            "geboorte": {
-              "datum": {
-                "datum": "1919-04-29",
-                "langFormaat": "29 april 1919",
-                "type": "Datum",
-              },
-              "land": {
-                "code": "6030",
-                "omschrijving": "Nederland",
-              },
-              "plaats": {
-                "code": "0399",
-                "omschrijving": "Heiloo",
-              },
-            },
-            "naam": {
-              "geslachtsnaam": "Roos",
-              "voorletters": "H.",
-              "voornamen": "Hendrikus",
-              "voorvoegsel": "de",
-            },
-            "ouderAanduiding": "2",
-          },
-        ],
-        "partners": [
-          {
-            "aangaanHuwelijkPartnerschap": {
-              "datum": {
-                "datum": "2002-02-02",
-                "langFormaat": "2 februari 2002",
-                "type": "Datum",
-              },
-            },
-            "geboorte": {
-              "datum": {
-                "datum": "1970-02-28",
-                "langFormaat": "28 februari 1970",
-                "type": "Datum",
-              },
-              "land": {
-                "code": "6015",
-                "omschrijving": "Bolivia",
-              },
-              "plaats": {
-                "omschrijving": "Cochabambo",
-              },
-            },
-            "naam": {
-              "geslachtsnaam": "Bruchs",
-              "voorletters": "H.",
-              "voornamen": "Helène",
-            },
-          },
-        ],
-        "verblijfplaats": {
-          "adresseerbaarObjectIdentificatie": "0363010001166707",
-          "datumVan": {
-            "datum": "2001-05-01",
-            "langFormaat": "1 mei 2001",
-            "type": "Datum",
-          },
-          "functieAdres": {
-            "code": "W",
-            "omschrijving": "woonadres",
-          },
-          "nummeraanduidingIdentificatie": "0363200000537299",
-          "type": "Adres",
-          "verblijfadres": {
-            "huisnummer": 650,
-            "korteStraatnaam": "Science Park",
-            "officieleStraatnaam": "Science Park",
-            "postcode": "1098XH",
-            "woonplaats": "Amsterdam",
-          },
-        },
+        "geboortedatum": "1914-01-11",
+        "geboortedatumFormatted": "11 januari 1914",
+        "geboortelandnaam": "Nederland",
+        "geboorteplaatsnaam": "Heiloo",
+        "geslachtsnaam": "Manderley",
+        "omschrijvingAdellijkeTitel": null,
+        "opgemaakteNaam": null,
+        "overlijdensdatum": null,
+        "overlijdensdatumFormatted": null,
+        "voornamen": "Johanna",
+        "voorvoegselGeslachtsnaam": null,
+      },
+      {
+        "geboortedatum": "1919-04-29",
+        "geboortedatumFormatted": "29 april 1919",
+        "geboortelandnaam": "Nederland",
+        "geboorteplaatsnaam": "Heiloo",
+        "geslachtsnaam": "Roos",
+        "omschrijvingAdellijkeTitel": null,
+        "opgemaakteNaam": null,
+        "overlijdensdatum": null,
+        "overlijdensdatumFormatted": null,
+        "voornamen": "Hendrikus",
+        "voorvoegselGeslachtsnaam": "de",
       },
     ],
+    "persoon": {
+      "aanduidingNaamgebruikOmschrijving": "eigen geslachtsnaam",
+      "adresInOnderzoek": null,
+      "bsn": "999990810",
+      "datumVertrekUitNederland": null,
+      "datumVertrekUitNederlandFormatted": null,
+      "geboortedatum": "1955-06-02",
+      "geboortedatumFormatted": "2 juni 1955",
+      "geboortelandnaam": "Nederland",
+      "geboorteplaatsnaam": "Haarlem",
+      "gemeentenaamInschrijving": "Amsterdam",
+      "geslachtsnaam": "Roos",
+      "indicatieGeheim": false,
+      "mokum": true,
+      "nationaliteiten": [
+        {
+          "omschrijving": "Nederlandse",
+        },
+      ],
+      "omschrijvingAdellijkeTitel": null,
+      "omschrijvingBurgerlijkeStaat": null,
+      "omschrijvingGeslachtsaanduiding": "vrouw",
+      "opgemaakteNaam": "Hendrika Isabella Gerarda Johanna de Roos",
+      "overlijdensdatum": null,
+      "overlijdensdatumFormatted": null,
+      "vertrokkenOnbekendWaarheen": false,
+      "voornamen": "Hendrika Isabella Gerarda Johanna",
+      "voorvoegselGeslachtsnaam": "de",
+    },
+    "verbintenis": {
+      "datumOntbinding": null,
+      "datumOntbindingFormatted": null,
+      "datumSluiting": "2002-02-02",
+      "datumSluitingFormatted": "2 februari 2002",
+      "persoon": {
+        "geboortedatum": "1970-02-28",
+        "geboortedatumFormatted": "28 februari 1970",
+        "geboortelandnaam": "Bolivia",
+        "geboorteplaatsnaam": "Cochabambo",
+        "geslachtsnaam": "Bruchs",
+        "omschrijvingAdellijkeTitel": null,
+        "opgemaakteNaam": null,
+        "overlijdensdatum": null,
+        "overlijdensdatumFormatted": null,
+        "voornamen": "Helène",
+        "voorvoegselGeslachtsnaam": null,
+      },
+    },
+  },
+  "failedDependencies": {
+    "adresHistorisch": {
+      "content": null,
+      "message": "Unexpected token 'I', "Internal S"... is not valid JSON",
+      "status": "ERROR",
+    },
   },
   "status": "OK",
 }
