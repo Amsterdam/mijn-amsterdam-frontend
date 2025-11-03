@@ -24,12 +24,6 @@ const REGELING_TITLE_DEFAULT_PLACEHOLDER = 'Regeling tegemoetkoming meerkosten';
 const INFO_LINK =
   'https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/extra-geld-als-u-chronisch-ziek-of/';
 
-export type RTMaanvraagTransformed = {
-  steps: StatusLineItem[];
-  persoon: string | number;
-  id: number;
-};
-
 export function isRTMAanvraag(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ): boolean {
@@ -133,11 +127,10 @@ function getStatusDate(
     case lineItemConfig.besluit.status:
       return aanvraag.datumBesluit;
     case lineItemConfig.eindeRecht.status:
-      return aanvraag.datumEindeGeldigheid ?? aanvraag.datumBesluit;
+      return aanvraag.datumEindeGeldigheid ?? '';
     default:
-      break;
+      return '';
   }
-  return '';
 }
 
 function createStatusLineItemStep(

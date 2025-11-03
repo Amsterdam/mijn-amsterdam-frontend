@@ -98,6 +98,7 @@ describe('RTM aanvraag transformation', () => {
       aanvraag(RTM2, TOE, ['X1'], {
         id: '1-3',
         datumBesluit: '2024-02-01',
+        datumIngangGeldigheid: '2024-05-01',
         documenten: [{ id: 'baz' }],
         betrokkenPersonen: [{ bsn: 'X1', name: 'Persoon X1' }],
         beschiktProductIdentificatie: '12435687',
@@ -112,6 +113,7 @@ describe('RTM aanvraag transformation', () => {
       aanvraag(RTM2, TOE, ['X1'], {
         id: '2-2',
         datumBesluit: '2025-02-01',
+        datumIngangGeldigheid: '2025-05-01',
         documenten: [{ id: 'baz' }],
         betrokkenPersonen: [{ bsn: 'X1', name: 'Persoon X1' }],
         beschiktProductIdentificatie: '890123',
@@ -127,7 +129,7 @@ describe('RTM aanvraag transformation', () => {
           "dateEnd": "",
           "dateStart": "2024-02-01",
           "decision": "toegewezen",
-          "displayStatus": "Einde recht",
+          "displayStatus": "Besluit wijziging",
           "documents": [],
           "id": "29",
           "isActual": true,
@@ -164,7 +166,7 @@ describe('RTM aanvraag transformation', () => {
             {
               "datePublished": "2024-02-01",
               "description": "<p>
-          U krijgt Regeling tegemoetkoming meerkosten per .
+          U krijgt Regeling tegemoetkoming meerkosten per 01 mei 2024.
           </p>
           <p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>
         ",
@@ -201,20 +203,20 @@ describe('RTM aanvraag transformation', () => {
                 },
               ],
               "id": "besluit-wijziging-2-2",
-              "isActive": false,
+              "isActive": true,
               "isChecked": true,
               "status": "Besluit wijziging",
             },
             {
-              "datePublished": "2025-02-01",
+              "datePublished": "",
               "description": "
       <p>U hoeft de Regeling tegemoetkoming meerkosten niet elk jaar opnieuw aan te vragen. De gemeente verlengt de regeling stilzwijgend, maar controleert wel elk jaar of u nog in aanmerking komt.</p>
       <p>U kunt dan ook een brief krijgen met het verzoek om extra informatie te geven.</p>
       <p><a href="https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/extra-geld-als-u-chronisch-ziek-of/">Als er wijzigingen zijn in uw situatie moet u die direct doorgeven</a>.</p>",
               "documents": [],
               "id": "einde-recht-2-2",
-              "isActive": true,
-              "isChecked": true,
+              "isActive": false,
+              "isChecked": false,
               "status": "Einde recht",
             },
           ],
@@ -398,7 +400,7 @@ describe('RTM aanvraag transformation', () => {
               "status": "Besluit wijziging",
             },
             {
-              "datePublished": "2026-02-01",
+              "datePublished": "",
               "description": "
       <p>U hoeft de Regeling tegemoetkoming meerkosten niet elk jaar opnieuw aan te vragen. De gemeente verlengt de regeling stilzwijgend, maar controleert wel elk jaar of u nog in aanmerking komt.</p>
       <p>U kunt dan ook een brief krijgen met het verzoek om extra informatie te geven.</p>

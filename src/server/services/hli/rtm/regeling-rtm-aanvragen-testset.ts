@@ -33,6 +33,7 @@ export function aanvraag(
     titel?: string;
     datumAanvraag?: string;
     datumBesluit?: string;
+    datumIngangGeldigheid?: string | null;
     datumEindeGeldigheid?: string | null;
     documenten?: unknown[];
     beschiktProductIdentificatie?: string;
