@@ -239,17 +239,17 @@
   },
   {
     "id": 30,
-    "persoon": "orphans",
+    "persoon": "",
     "steps": ["Aanvraag"]
   },
   {
     "id": 31,
-    "persoon": "orphans",
+    "persoon": "",
     "steps": ["Aanvraag"]
   },
   {
     "id": 32,
-    "persoon": "orphans",
+    "persoon": "",
     "steps": ["Aanvraag", "Aanvraag", "Aanvraag"]
   }
 ]

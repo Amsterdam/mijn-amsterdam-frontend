@@ -1,5 +1,7 @@
 // Weird combos of aanvragen to test the logic.
 
+import assert from 'node:assert';
+
 import { parseISO } from 'date-fns/parseISO';
 import { generatePath } from 'react-router';
 import slug from 'slugme';
@@ -11,7 +13,12 @@ import type {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
 } from '../../zorgned/zorgned-types';
 import type { HLIRegelingFrontend } from '../hli-regelingen-types';
-import { AV_RTM_DEEL1, AV_RTM_DEEL2 } from './rtm-organizer';
+import {
+  AV_RTM_DEEL1,
+  AV_RTM_DEEL2,
+  mapAanvragenByBetrokkenen as mapAanvragenByBetrokkenenNew,
+  splitAanvragenByBetrokkenenAtDatumGeldigheid as splitAanvragenByBetrokkenenAtDatumGeldigheidNew,
+} from './rtm-organizer';
 
 export type RTMaanvraagTransformed = {
   steps: StatusLineItem[];
@@ -36,9 +43,10 @@ function getStatusDate(
   switch (status) {
     case 'Aanvraag':
     case 'Aanvraag wijziging':
-    case 'In behandeling':
+    case 'In behandeling genomen':
       return aanvraag.datumAanvraag;
     case 'Besluit':
+    case 'Besluit wijziging':
       return aanvraag.datumBesluit;
     case 'Einde recht':
       return aanvraag.datumEindeGeldigheid ?? aanvraag.datumBesluit;
@@ -85,7 +93,7 @@ function addResultToStatus(
   return status;
 }
 
-function mapAanvragenByBetrokkenen(
+export function mapAanvragenByBetrokkenen(
   bsn: BSN,
   aanvraagSet: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ) {
@@ -216,7 +224,7 @@ function transformRTMRegelingenFrontend(
       const aanvraagStep = createStep(aanvraagStatus, aanvraag);
       return aanvraag.resultaat === 'toegewezen' &&
         aanvraagStatus === 'Aanvraag'
-        ? [aanvraagStep, createStep('In behandeling', aanvraag)]
+        ? [aanvraagStep, createStep('In behandeling genomen', aanvraag)]
         : [aanvraagStep];
     });
 
@@ -249,9 +257,8 @@ function transformRTMRegelingenFrontend(
           (obj1, i, arr) => arr.findIndex((obj2) => obj2.bsn === obj1.bsn) === i
         );
       const betrokkenen = betrokkenenBSNs
-        .map(
-          (bsn) => betrokkenPersonen.find((bp) => bp.bsn === bsn)?.name ?? bsn
-        )
+        .map((bsn) => betrokkenPersonen.find((bp) => bp.bsn === bsn)?.name)
+        .filter(Boolean)
         .join(', ');
 
       const title =
@@ -322,8 +329,23 @@ export function processAanvragen(
   aanvraagSet: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ) {
   const aanvragenByBetrokkenen = mapAanvragenByBetrokkenen(bsn, aanvraagSet);
+  const aanvragenByBetrokkenen2 = mapAanvragenByBetrokkenenNew(
+    bsn,
+    aanvraagSet
+  );
+
+  assert.deepEqual(aanvragenByBetrokkenen, aanvragenByBetrokkenen2);
+
   const aanvragenByBetrokkenenSplitted =
     splitAanvragenByBetrokkenenAtDatumGeldigheid(aanvragenByBetrokkenen);
+
+  const aanvragenByBetrokkenenSplitted2 =
+    splitAanvragenByBetrokkenenAtDatumGeldigheidNew(aanvragenByBetrokkenen2);
+
+  assert.deepEqual(
+    aanvragenByBetrokkenenSplitted,
+    aanvragenByBetrokkenenSplitted2
+  );
 
   return transformRTMRegelingenFrontend(aanvragenByBetrokkenenSplitted);
 }

@@ -1,7 +1,7 @@
 import assert from 'node:assert';
 
 import { aanvragen } from './rtm-aanvragen';
-import { processAanvragen } from './rtm-organizer';
+import { processAanvragen } from './rtm-organizer-reference';
 import statustreinTestSetFromSheet from './statustrein-result-from-sheet-and-more.json';
 import type {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
@@ -81,4 +81,5 @@ statustreinenCompacted.forEach((trein, i) => {
   );
 });
 
-console.log(statustreinenCompacted);
+// console.log(statustreinenCompacted);
+console.log('ALL-IS-OK');

@@ -177,7 +177,7 @@ function addResultToStatus(
   return status;
 }
 
-function mapAanvragenByBetrokkenen(
+export function mapAanvragenByBetrokkenen(
   bsn: BSN,
   aanvraagSet: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ) {
@@ -243,7 +243,7 @@ function getBetrokkenenBSNs(betrokkenenMapStr: string) {
   return betrokkenenMapStr.split(',').map((b) => b.split('-')[0]);
 }
 
-function splitAanvragenByBetrokkenenAtDatumGeldigheid(
+export function splitAanvragenByBetrokkenenAtDatumGeldigheid(
   aanvragenByBetrokkenen: Map<
     string,
     ZorgnedAanvraagWithRelatedPersonsTransformed[]
@@ -360,14 +360,12 @@ function getBetrokkenen(
     (a) => a.betrokkenPersonen
   );
   const betrokkenen = betrokkenenBSNs
-    .map((persoon) => {
-      const betrokkene = betrokkenPersonenFlattened.find(
-        (p) => p.bsn === persoon
-      );
-      return betrokkene?.name ?? betrokkene?.bsn;
+    .map((bsn) => {
+      const betrokkene = betrokkenPersonenFlattened.find((p) => p.bsn === bsn);
+      return betrokkene?.name;
     })
+    .filter(Boolean)
     .join(', ');
-
   return betrokkenen;
 }
 
@@ -401,9 +399,14 @@ function transformRTMRegelingenFrontend(
   ] of aanvragenByBetrokkenen.entries()) {
     const steps = getSteps(aanvragen);
 
+    if (!steps.length) {
+      continue;
+    }
+
     const id = `${betrokkenenMapStr === 'orphans' ? statustreinOrphansId++ : statustreinId++}`;
     const title = aanvragen.at(-1)?.titel || REGELING_TITLE_DEFAULT_PLACEHOLDER;
     const betrokkenen = getBetrokkenen(betrokkenenMapStr, aanvragen);
+    console.log('betrokkenen', betrokkenen);
 
     const route = generatePath(routeConfig.detailPage.path, {
       id,
@@ -500,6 +503,7 @@ export function transformRTMAanvragen(
     bsn,
     aanvragenWithPdfDocumentsOnly
   );
+
   const aanvragenByBetrokkenenSplitted =
     splitAanvragenByBetrokkenenAtDatumGeldigheid(aanvragenByBetrokkenen);
 
