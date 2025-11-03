@@ -133,7 +133,7 @@ describe('afis-facturen', async () => {
         'http://bff-api-host/api/v1/services/afis/facturen/document?id=xx-encrypted-xx',
       factuurDocumentId: '1234567890',
       factuurNummer: '1234567890',
-      id: '1234567890',
+      id: '1234567890-1234567890-2023-12-21t000000',
       link: {
         title: 'Factuur 1234567890',
         to: 'http://bff-api-host/api/v1/services/afis/facturen/document?id=xx-encrypted-xx',
@@ -204,7 +204,7 @@ describe('afis-facturen', async () => {
         "documentDownloadLink": "http://bff-api-host/api/v1/services/afis/facturen/document?id=xx-encrypted-xx",
         "factuurDocumentId": "INV-2023-010",
         "factuurNummer": "INV-2023-010",
-        "id": "INV-2023-010",
+        "id": "inv-2023-010-inv-2023-010-2023-12-21t000000",
         "link": {
           "title": "Factuur INV-2023-010",
           "to": "http://bff-api-host/api/v1/services/afis/facturen/document?id=xx-encrypted-xx",
@@ -294,7 +294,7 @@ describe('afis-facturen', async () => {
   test('getAccountingDocumentTypesFilter returns correct filter', () => {
     const filter = forTesting.getAccountingDocumentTypesFilter('open');
     expect(filter).toBe(
-      " and (AccountingDocumentType eq 'DR' or AccountingDocumentType eq 'DG' or AccountingDocumentType eq 'DM' or AccountingDocumentType eq 'DE' or AccountingDocumentType eq 'DF' or AccountingDocumentType eq 'DV' or AccountingDocumentType eq 'DW')"
+      " and (AccountingDocumentType eq 'DR' or AccountingDocumentType eq 'DE' or AccountingDocumentType eq 'DM' or AccountingDocumentType eq 'DV' or AccountingDocumentType eq 'DG' or AccountingDocumentType eq 'DF' or AccountingDocumentType eq 'DW')"
     );
   });
 

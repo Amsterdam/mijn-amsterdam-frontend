@@ -1,6 +1,6 @@
 import { render, within } from '@testing-library/react';
 
-import { routeConfig } from './Bodem-thema-config';
+import { themaConfig } from './Bodem-thema-config';
 import { BodemThema } from './BodemThema';
 import { LoodMetingFrontend } from '../../../../server/services/bodem/types';
 import { AppState } from '../../../../universal/types/App.types';
@@ -192,8 +192,8 @@ const testState = {
 
 const createComponent = componentCreator({
   component: BodemThema,
-  routeEntry: routeConfig.themaPage.path,
-  routePath: routeConfig.themaPage.path,
+  routeEntry: themaConfig.route.path,
+  routePath: themaConfig.route.path,
 });
 
 describe('Bodem', () => {

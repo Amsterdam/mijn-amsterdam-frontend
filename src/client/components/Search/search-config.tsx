@@ -53,7 +53,7 @@ import {
 } from '../../../universal/types/App.types';
 import { featureToggle as featureToggleAVG } from '../../pages/Thema/AVG/AVG-thema-config';
 import { featureToggle as featureToggleBezwaren } from '../../pages/Thema/Bezwaren/Bezwaren-thema-config';
-import { featureToggle as featureToggleBodem } from '../../pages/Thema/Bodem/Bodem-thema-config';
+import { themaConfig as themaConfigBodem } from '../../pages/Thema/Bodem/Bodem-thema-config';
 import { featureToggle as featureToggleHoreca } from '../../pages/Thema/Horeca/Horeca-thema-config';
 import { featureToggle as featureToggleKlachten } from '../../pages/Thema/Klachten/Klachten-thema-config';
 import { featureToggle as featureToggleKrefia } from '../../pages/Thema/Krefia/Krefia-thema-config';
@@ -488,7 +488,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    isEnabled: featureToggleBodem.BodemActive,
+    isEnabled: themaConfigBodem.featureToggle.themaActive,
     stateKey: 'BODEM',
     profileTypes: ['private', 'commercial'],
     displayTitle(item: LoodMetingFrontend) {
@@ -524,6 +524,8 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
       const zaken =
         apiContent?.zaken.map((zaak) => ({
           ...zaak,
+          vergunningKenmerk:
+            zaak.vergunningKenmerk || zaak.vergunning?.vergunningKenmerk,
         })) ?? [];
       const vergunningen =
         apiContent?.vergunningen.map((vergunning) => ({
@@ -549,11 +551,12 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
           | VarenVergunningFrontend
       ) =>
       (term: string) => {
+        const vesselName = 'vesselName' in item ? item.vesselName : null;
+        const vergunningKenmerk =
+          ('vergunningKenmerk' in item && item.vergunningKenmerk) || null;
         return displayPath(term, [
           item.title,
-          'vesselName' in item && item.vesselName
-            ? item.vesselName
-            : item.identifier,
+          vesselName || vergunningKenmerk || item.identifier,
         ]);
       },
     keywordsGeneratedFromProps: [
