@@ -184,12 +184,12 @@ function transformRegelingenForFrontend(
     authProfileAndToken.profile.id,
     RTMAanvragen
   );
-  const [remainingAanvragen_, PCVergoedingAanvragen] = extractAanvragen(
+  const [remainingAanvragen_, PCVergoedingAanvragen_pre2026] = extractAanvragen(
     remainingAanvragen,
     isPcAanvraag
   );
-  const PCVergoedingAanvragenCombined = transformPCVergoedingAanvragen(
-    PCVergoedingAanvragen
+  const PCVergoedingAanvragenCombined = filterCombineUpcPcvData_pre2026(
+    PCVergoedingAanvragen_pre2026
   );
 
   // Transform PC and remaining aanvragen to HLIRegelingFrontend.

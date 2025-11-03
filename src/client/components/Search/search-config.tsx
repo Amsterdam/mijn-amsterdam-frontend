@@ -53,7 +53,7 @@ import {
 } from '../../../universal/types/App.types';
 import { featureToggle as featureToggleAVG } from '../../pages/Thema/AVG/AVG-thema-config';
 import { featureToggle as featureToggleBezwaren } from '../../pages/Thema/Bezwaren/Bezwaren-thema-config';
-import { featureToggle as featureToggleBodem } from '../../pages/Thema/Bodem/Bodem-thema-config';
+import { themaConfig as themaConfigBodem } from '../../pages/Thema/Bodem/Bodem-thema-config';
 import { featureToggle as featureToggleHoreca } from '../../pages/Thema/Horeca/Horeca-thema-config';
 import { featureToggle as featureToggleKlachten } from '../../pages/Thema/Klachten/Klachten-thema-config';
 import { featureToggle as featureToggleKrefia } from '../../pages/Thema/Krefia/Krefia-thema-config';
@@ -488,7 +488,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    isEnabled: featureToggleBodem.BodemActive,
+    isEnabled: themaConfigBodem.featureToggle.themaActive,
     stateKey: 'BODEM',
     profileTypes: ['private', 'commercial'],
     displayTitle(item: LoodMetingFrontend) {

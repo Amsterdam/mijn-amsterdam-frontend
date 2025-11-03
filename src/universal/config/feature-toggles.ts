@@ -26,9 +26,6 @@ export const FeatureToggle = {
   // Bezwaren  / Octopus
   bezwarenActive: true,
 
-  // Loodmetingen
-  bodemActive: true,
-
   // Database
   dbSessionsEnabled: true,
 
@@ -87,9 +84,6 @@ export const FeatureToggle = {
   powerbrowserActive: true,
   // B&B Downloads actief
   bbDocumentDownloadsActive: true,
-
-  //Varen (komt uit Decos)
-  varenActive: !IS_PRODUCTION,
 
   vergunningenActive: true,
   decosServiceActive: true,

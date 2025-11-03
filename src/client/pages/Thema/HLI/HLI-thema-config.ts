@@ -92,15 +92,18 @@ export const routeConfig = {
   specificatieListPage: {
     path: '/regelingen-bij-laag-inkomen/lijst/specificaties/:page?',
     documentTitle: `Specificaties | ${themaTitle}`,
+    trackingUrl: null,
   },
   regelingenListPage: {
     path: '/regelingen-bij-laag-inkomen/lijst/:kind/:page?',
     documentTitle: (params) =>
       `${params?.kind === listPageParamKind.historic ? 'Eerdere' : 'Huidige'} regelingen | ${themaTitle}`,
+    trackingUrl: null,
   },
   themaPage: {
     path: '/regelingen-bij-laag-inkomen',
     documentTitle: `${themaTitle} | overzicht`,
+    trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
 
