@@ -36,9 +36,9 @@ import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
 import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types';
 import {
-  transformPCVergoedingAanvragen,
   isPcAanvraag,
   isWorkshopNietGevolgd,
+  filterCombineUpcPcvData_pre2026,
 } from './status-line-items/regeling-pcvergoeding';
 import { sortAlpha, toDateFormatted } from '../../../universal/helpers/utils';
 
