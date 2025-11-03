@@ -1,5 +1,3 @@
-// Weird combos of aanvragen to test the logic.
-
 import { isAfter } from 'date-fns/isAfter';
 import { parseISO } from 'date-fns/parseISO';
 import { generatePath } from 'react-router';
@@ -141,8 +139,7 @@ function getStatusDate(
   return '';
 }
 
-// Just a placeholder implementation of createStep, see existing implementation for actual step creation.
-function createStep(
+function createStatusLineItemStep(
   status: StatusLineItem['status'],
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ): StatusLineItem {
@@ -276,6 +273,7 @@ function splitAanvragenByBetrokkenenAtDatumGeldigheid(
 
 function getSteps(aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]) {
   const steps = aanvragen.flatMap((aanvraag, index, aanvragen) => {
+    // Searches for items that came before the current aanvraag and checks if it's RTM FASE 2.
     const previousRTM2 = aanvragen
       .slice(0, index)
       .find((prevA) => prevA.productIdentificatie === AV_RTM_DEEL2);
@@ -288,7 +286,7 @@ function getSteps(aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]) {
         previousRTM2?.resultaat === 'toegewezen'
           ? lineItemConfig.besluitWijziging.status
           : lineItemConfig.besluit.status;
-      return createStep(besluitStatus, aanvraag);
+      return createStatusLineItemStep(besluitStatus, aanvraag);
     }
 
     // ============================
@@ -300,17 +298,20 @@ function getSteps(aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]) {
         ? lineItemConfig.aanvraagWijziging.status
         : lineItemConfig.aanvraag.status;
 
-    const aanvraagStep = createStep(aanvraagStatus, aanvraag);
+    const aanvraagStep = createStatusLineItemStep(aanvraagStatus, aanvraag);
     return aanvraag.resultaat === 'toegewezen' &&
       aanvraagStatus === lineItemConfig.aanvraag.status
       ? [
           aanvraagStep,
-          createStep(lineItemConfig.inBehandeling.status, aanvraag),
+          createStatusLineItemStep(
+            lineItemConfig.inBehandeling.status,
+            aanvraag
+          ),
         ]
       : [aanvraagStep];
   });
 
-  const toegewezenRTM = aanvragen.findLast(
+  const mostRecentToegewezenRTM = aanvragen.findLast(
     (a) =>
       a.productIdentificatie === AV_RTM_DEEL2 && a.resultaat === 'toegewezen'
   );
@@ -322,10 +323,10 @@ function getSteps(aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]) {
   const secondToLastStep = steps.at(SECOND_TO_LAST_STEP_INDEX);
 
   let eindeRechtStep: StatusLineItem | null = null;
-  if (toegewezenRTM) {
-    eindeRechtStep = createStep(
+  if (mostRecentToegewezenRTM) {
+    eindeRechtStep = createStatusLineItemStep(
       lineItemConfig.eindeRecht.status,
-      toegewezenRTM
+      mostRecentToegewezenRTM
     );
     steps.push(eindeRechtStep);
   }
@@ -334,13 +335,13 @@ function getSteps(aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]) {
     : false;
 
   if (eindeRechtStep) {
-    // Einde recht step always is checked and active.
-    eindeRechtStep.isChecked = eindeRechtStep.isActive = isEindeRechtReached;
-    // If einde recht is not reached, the previous step is active.
-
+    // If einde recht is not reached, the second to last step is active.
     if (secondToLastStep) {
       secondToLastStep.isActive = !isEindeRechtReached;
     }
+
+    // Einde recht step always is checked and active.
+    eindeRechtStep.isChecked = eindeRechtStep.isActive = isEindeRechtReached;
   } else if (lastStep) {
     // If there is no einde recht step, the last step is always active.
     lastStep.isActive = true;
@@ -355,15 +356,16 @@ function getBetrokkenen(
 ): string {
   const betrokkenenBSNs = getBetrokkenenBSNs(betrokkenenMapStr);
   // Filter unique persons by BSN.
-  const betrokkenen = aanvragen
-    .flatMap((a) => a.betrokkenPersonen)
-    // Filter out only the ones in the current set.
-    .filter((bp) => betrokkenenBSNs.includes(bp.bsn))
-    // Filter out duplicates
-    .filter(
-      (obj1, i, arr) => arr.findIndex((obj2) => obj2.bsn === obj1.bsn) === i
-    )
-    .map((persoon) => persoon.name ?? persoon.bsn)
+  const betrokkenPersonenFlattened = aanvragen.flatMap(
+    (a) => a.betrokkenPersonen
+  );
+  const betrokkenen = betrokkenenBSNs
+    .map((persoon) => {
+      const betrokkene = betrokkenPersonenFlattened.find(
+        (p) => p.bsn === persoon
+      );
+      return betrokkene?.name ?? betrokkene?.bsn;
+    })
     .join(', ');
 
   return betrokkenen;
@@ -371,8 +373,7 @@ function getBetrokkenen(
 
 function getDisplayStatus(
   steps: StatusLineItem[],
-  dateEnd: string,
-  isActual: boolean
+  lastDecision: string
 ): string {
   let displayStatus: string =
     steps.findLast((step) => step.isActive)?.status ?? '';
@@ -380,11 +381,9 @@ function getDisplayStatus(
     displayStatus === lineItemConfig.besluit.status ||
     displayStatus === lineItemConfig.besluitWijziging.status
   ) {
-    displayStatus = lineItemConfig.eindeRecht.status;
+    displayStatus = lastDecision;
   }
-  if (!dateEnd && isActual) {
-    displayStatus = lineItemConfig.toegewezen.status;
-  }
+
   return displayStatus;
 }
 
@@ -412,21 +411,19 @@ function transformRTMRegelingenFrontend(
     });
 
     // Get dates for the HLIRegeling from the steps.
-    const dateDecision =
-      aanvragen.findLast((a) => a.productIdentificatie === AV_RTM_DEEL2)
-        ?.datumBesluit ?? '';
-
-    const dateEnd =
-      aanvragen.findLast(
-        (a) => a.productIdentificatie === AV_RTM_DEEL2 && a.datumEindeGeldigheid
-      )?.datumEindeGeldigheid ?? '';
+    const lastRTM2 = aanvragen.findLast(
+      (a) => a.productIdentificatie === AV_RTM_DEEL2
+    );
+    const dateDecision = lastRTM2?.datumBesluit ?? '';
+    // We assume that datumEindeGeldigheid is always set for the latest RTM-2 aanvraag.
+    const dateEnd = lastRTM2?.datumEindeGeldigheid ?? '';
 
     const dateStart =
       aanvragen.find((a) => a.productIdentificatie === AV_RTM_DEEL2)
         ?.datumBesluit ?? '';
 
     const isActual = !aanvragen.some(isEindeRechtReached);
-    const displayStatus = getDisplayStatus(steps, dateEnd, isActual);
+    const displayStatus = getDisplayStatus(steps, dateDecision);
 
     const RTMRegeling: HLIRegelingFrontend = {
       id,
@@ -460,47 +457,34 @@ function transformRTMRegelingenFrontend(
 function removeNonPdfDocuments(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ): ZorgnedAanvraagWithRelatedPersonsTransformed[] {
-  const withoutDocuments = aanvragen.map((aanvraag) => {
-    return {
-      ...aanvraag,
-      documenten: aanvraag.documenten.filter((doc) => {
-        // It is more likely that a document will be a pdf.
-        // Therefore we will assume that to be true, when we cannot determine the filetype.
-        if (!doc.filename) {
-          return true;
-        }
-        return doc.filename.endsWith('pdf');
-      }),
-    };
-  });
-  return withoutDocuments;
+  return aanvragen.map((aanvraag) => ({
+    ...aanvraag,
+    documenten: aanvraag.documenten.filter(
+      // We assume documents without filename are PDFs.
+      (doc) => !doc.filename || doc.filename.endsWith('pdf')
+    ),
+  }));
 }
 
 /** Aanvragen can contain duplicate RTMDeel2. We combine the documents and drop the dupe. */
 function dedupeButKeepDocuments(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ) {
-  const dedupedAanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[] = [];
-  const seenAanvragen: Record<string, ZorgnedHLIRegeling> = {};
+  const seenAanvragen = new Map<
+    string,
+    ZorgnedAanvraagWithRelatedPersonsTransformed
+  >();
 
   for (const aanvraag of aanvragen) {
-    if (isRTMDeel1(aanvraag)) {
-      // I did not find any RTM-1 duplicate, the problem was only seen with RTM-2.
-      dedupedAanvragen.push(aanvraag);
-      continue;
-    }
     const id = aanvraag.beschiktProductIdentificatie;
-    if (seenAanvragen[id]) {
-      seenAanvragen[id].documenten = [
-        ...seenAanvragen[id].documenten,
-        ...aanvraag.documenten,
-      ];
-      continue;
+    if (seenAanvragen.has(id)) {
+      seenAanvragen.get(id)!.documenten.push(...aanvraag.documenten);
+    } else {
+      seenAanvragen.set(id, aanvraag);
     }
-    seenAanvragen[id] = aanvraag;
-    dedupedAanvragen.push(aanvraag);
   }
-  return dedupedAanvragen;
+
+  return Array.from(seenAanvragen.values());
 }
 
 // Aanvragen are processed in chronological order (ASC), so the order of the aanvragen from Zorgned matter.
