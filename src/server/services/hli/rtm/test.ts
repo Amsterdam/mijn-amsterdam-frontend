@@ -20,7 +20,8 @@ type RTMAanvraagProps = {
 };
 
 function imposeZorgnedAanvraagTransformed(
-  aanvraagProps: RTMAanvraagProps
+  aanvraagProps: RTMAanvraagProps,
+  index: number
 ): ZorgnedAanvraagWithRelatedPersonsTransformed {
   return {
     bsnAanvrager: '',
@@ -32,14 +33,15 @@ function imposeZorgnedAanvraagTransformed(
     datumOpdrachtLevering: null,
     datumToewijzing: null,
     documenten: [],
-    id: '',
+    id: `aanvraag-${index}}`,
     isActueel: false,
     leverancier: '',
     leveringsVorm: '',
     productsoortCode: '',
-    beschiktProductIdentificatie: '',
+    beschiktProductIdentificatie: `  beschikt-product-${index}}`,
+    procesAanvraagOmschrijving: '',
     beschikkingNummer: null,
-    titel: '',
+    titel: 'Regeling Tegemoetkoming Meerkosten',
     ...aanvraagProps,
     betrokkenPersonen: aanvraagProps.betrokkenen.map((b) => {
       const persoon: ZorgnedPerson = {
@@ -58,7 +60,7 @@ function imposeZorgnedAanvraagTransformed(
 for (const aanvraagSet of aanvragen as unknown as RTMAanvraagProps[][]) {
   const treinen = transformRTMAanvragen(
     (bsn++).toString(),
-    aanvraagSet.map(imposeZorgnedAanvraagTransformed)
+    aanvraagSet.map((a, index) => imposeZorgnedAanvraagTransformed(a, index))
   );
   statustreinen.push(...treinen);
 }
