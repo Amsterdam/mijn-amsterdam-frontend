@@ -1,7 +1,7 @@
 import assert from 'node:assert';
 
 import { aanvragen } from './rtm-aanvragen';
-import { processAanvragen } from './rtm-organizer';
+import { transformRTMAanvragen } from './rtm-organizer';
 import statustreinTestSetFromSheet from './statustrein-result-from-sheet-and-more.json';
 import type {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
@@ -56,7 +56,7 @@ function imposeZorgnedAanvraagTransformed(
 }
 
 for (const aanvraagSet of aanvragen as unknown as RTMAanvraagProps[][]) {
-  const treinen = processAanvragen(
+  const treinen = transformRTMAanvragen(
     (bsn++).toString(),
     aanvraagSet.map(imposeZorgnedAanvraagTransformed)
   );

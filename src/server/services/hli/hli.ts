@@ -10,11 +10,8 @@ import {
 } from './hli-regelingen-types';
 import { hliStatusLineItemsConfig } from './hli-status-line-items';
 import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
+import { transformRTMAanvragen, isRTMAanvraag } from './rtm/rtm-organizer';
 import { fetchStadspas } from './stadspas';
-import {
-  filterCombineRtmData,
-  isRTMAanvraag,
-} from './status-line-items/regeling-rtm';
 import {
   featureToggle,
   routeConfig,
@@ -39,7 +36,7 @@ import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
 import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types';
 import {
-  filterCombineUpcPcvData,
+  transformPCVergoedingAanvragen,
   isPcAanvraag,
   isWorkshopNietGevolgd,
 } from './status-line-items/regeling-pcvergoeding';
@@ -183,23 +180,25 @@ function transformRegelingenForFrontend(
     aanvragen,
     isRTMAanvraag
   );
-  const RTMRegelingenFrontend = filterCombineRtmData(
-    authProfileAndToken,
+  const RTMRegelingenFrontend = transformRTMAanvragen(
+    authProfileAndToken.profile.id,
     RTMAanvragen
   );
   const [remainingAanvragen_, PCVergoedingAanvragen] = extractAanvragen(
     remainingAanvragen,
     isPcAanvraag
   );
-  const PCVergoedingAanvragenCombined = filterCombineUpcPcvData(
+  const PCVergoedingAanvragenCombined = transformPCVergoedingAanvragen(
     PCVergoedingAanvragen
   );
 
+  // Transform PC and remaining aanvragen to HLIRegelingFrontend.
   const allAanvragen = [
     ...PCVergoedingAanvragenCombined,
     ...remainingAanvragen_,
   ].toSorted(sortAlpha('id', 'desc'));
 
+  // RTM aanvragen are already completely transformed to HLIRegelingFrontend and do not need further processing.
   const regelingenFrontend = [...RTMRegelingenFrontend];
 
   for (const aanvraag of allAanvragen) {
