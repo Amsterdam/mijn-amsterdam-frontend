@@ -1,21 +1,16 @@
-import { transformRTMAanvragen } from './regeling-rtm';
-import type {
-  ZorgnedAanvraagWithRelatedPersonsTransformed,
-  ZorgnedPerson,
-} from '../../zorgned/zorgned-types';
-import type { HLIRegelingFrontend } from '../hli-regelingen-types';
+import { forTesting, transformRTMAanvragen } from './regeling-rtm';
 import {
   aanvragenTestsetInput,
   type RTMAanvraagProps,
   type RTMTestInput,
 } from './regeling-rtm-aanvragen-testset-input';
-import {
-  aanvragenTestsetResults,
-  type RTMAanvraagTestResult,
-} from './regeling-rtm-aanvragen-testset-results';
+import { type RTMAanvraagTestResult } from './regeling-rtm-aanvragen-testset-results';
+import type {
+  ZorgnedAanvraagWithRelatedPersonsTransformed,
+  ZorgnedPerson,
+} from '../../zorgned/zorgned-types';
 
 let bsn = 0;
-const statustreinen: Array<HLIRegelingFrontend & { testTitle: string }> = [];
 
 function imposeZorgnedAanvraagTransformed(
   aanvraagProps: RTMAanvraagProps,
@@ -56,37 +51,76 @@ function imposeZorgnedAanvraagTransformed(
   };
 }
 
-for (const testInput of aanvragenTestsetInput as RTMTestInput[]) {
-  const treinen = transformRTMAanvragen(
-    (bsn++).toString(),
-    testInput.aanvragen.map((a, index) =>
-      imposeZorgnedAanvraagTransformed(a, index)
+describe('RTM aanvraag transformation and grouping', () => {
+  for (const testInput of aanvragenTestsetInput as RTMTestInput[]) {
+    const bsnLoggedinUser = (bsn++).toString();
+    const aanvragenTransformed = transformRTMAanvragen(
+      bsnLoggedinUser,
+      testInput.aanvragen.map(imposeZorgnedAanvraagTransformed)
     )
-  );
-  statustreinen.push(
-    ...treinen.map((t) => ({ ...t, testTitle: testInput.title }))
-  );
-}
+      .toSorted((a, b) => parseInt(a.id, 10) - parseInt(b.id, 10))
+      .map((t) => {
+        return {
+          id: parseInt(t.id, 10),
+          persoon: t.betrokkenen,
+          steps: t.steps.map((s) => s.status),
+          displayStatus: t.displayStatus,
+        } as RTMAanvraagTestResult;
+      });
 
-const statustreinenCompacted = statustreinen
-  .toSorted((a, b) => parseInt(a.id, 10) - parseInt(b.id, 10))
-  .map((t) => {
-    return {
-      testTitle: t.testTitle,
-      id: parseInt(t.id, 10),
-      persoon: t.betrokkenen,
-      steps: t.steps.map((s) => s.status),
-      displayStatus: t.displayStatus,
-    } as RTMAanvraagTestResult;
+    test(testInput.title, () => {
+      expect(aanvragenTransformed).toStrictEqual(testInput.expected);
+    });
+  }
+});
+
+describe('RTM processing', () => {
+  test('Does not contain docx (word) documents', () => {
+    const regelingen = forTesting.removeNonPdfDocuments([
+      {
+        documenten: [
+          {
+            id: '1',
+            title: 'Info bij regeling',
+            filename: 'abc.docx',
+            url: '',
+            datePublished: '2025-01-01',
+          },
+        ],
+      },
+    ] as ZorgnedAanvraagWithRelatedPersonsTransformed[]);
+
+    expect(regelingen.length).toBe(1);
+    const regeling = regelingen[0];
+    expect(regeling.documenten).toStrictEqual([]);
   });
 
-describe('RTM Regeling Transformations', () => {
-  test.each(
-    statustreinenCompacted.map((statustreinResult, index) => {
-      return [statustreinResult, aanvragenTestsetResults[index]];
-    })
-    // .filter(([_, expected]) => expected.id === 9)
-  )('id: $id - $testTitle', (result, expected) => {
-    expect(result).toEqual(expected);
+  test('Dedupes aanvragen that belong to the same voorziening", but keeps the included documents', () => {
+    const regelingen = forTesting.dedupeButKeepDocuments([
+      {
+        beschiktProductIdentificatie: '1',
+        documenten: ['foo', 'bar'],
+      },
+      {
+        beschiktProductIdentificatie: '1',
+        documenten: ['baz'],
+      },
+      {
+        beschiktProductIdentificatie: '2',
+        documenten: ['world'],
+      },
+    ] as unknown as ZorgnedAanvraagWithRelatedPersonsTransformed[]);
+
+    expect(regelingen.length).toBe(2);
+    expect(regelingen).toEqual([
+      {
+        beschiktProductIdentificatie: '1',
+        documenten: ['foo', 'bar', 'baz'],
+      },
+      {
+        beschiktProductIdentificatie: '2',
+        documenten: ['world'],
+      },
+    ]);
   });
 });

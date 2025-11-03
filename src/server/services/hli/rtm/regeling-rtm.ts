@@ -160,7 +160,7 @@ function createStatusLineItemStep(
 }
 
 export function mapAanvragenByBetrokkenen(
-  bsn: BSN,
+  bsnLoggedinUser: BSN,
   aanvraagSet: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ) {
   const aanvragenByBetrokkenen = new Map<
@@ -196,7 +196,7 @@ export function mapAanvragenByBetrokkenen(
       betrokkene = aanvraagSet[0].betrokkenen.join(',');
     }
 
-    aanvragenByBetrokkenen.set(betrokkene ?? bsn, aanvraagSet);
+    aanvragenByBetrokkenen.set(betrokkene ?? bsnLoggedinUser, aanvraagSet);
   } else {
     for (const aanvraag of aanvraagSet) {
       // If afgewezen and fase 1, we cannot know the betrokkene(n), so we add it to orphans.
@@ -459,7 +459,7 @@ function dedupeButKeepDocuments(
 
 // Aanvragen are processed in chronological order (ASC), so the order of the aanvragen from Zorgned matter.
 export function transformRTMAanvragen(
-  bsn: BSN,
+  bsnLoggedinUser: BSN,
   RTMaanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ) {
   const aanvragenDeduped = dedupeButKeepDocuments(RTMaanvragen);
@@ -467,7 +467,7 @@ export function transformRTMAanvragen(
   // RTM aanvragen are processed in chronological order (ASC), so we sort them first.
   aanvragenWithPdfDocumentsOnly.sort(sortAlpha('id', 'asc'));
   const aanvragenByBetrokkenen = mapAanvragenByBetrokkenen(
-    bsn,
+    bsnLoggedinUser,
     aanvragenWithPdfDocumentsOnly
   );
 
@@ -476,3 +476,12 @@ export function transformRTMAanvragen(
 
   return transformRTMRegelingenFrontend(aanvragenByBetrokkenenSplitted);
 }
+
+export const forTesting = {
+  dedupeButKeepDocuments,
+  removeNonPdfDocuments,
+  getSteps,
+  mapAanvragenByBetrokkenen,
+  splitAanvragenByBetrokkenenAtDatumGeldigheid,
+  getBetrokkenenBSNs,
+};

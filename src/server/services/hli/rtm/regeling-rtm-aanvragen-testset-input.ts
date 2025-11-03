@@ -5,9 +5,17 @@ export type RTMAanvraagProps = {
   datumEindeGeldigheid: string | null;
 };
 
+export type RTMAanvraagTestResult = {
+  id: number;
+  persoon: string;
+  steps: string[];
+  displayStatus: string;
+};
+
 export type RTMTestInput = {
   title: string;
   aanvragen: RTMAanvraagProps[];
+  expected: RTMAanvraagTestResult[];
 };
 
 const RTM1 = 'AV-RTM1';
@@ -40,13 +48,39 @@ function aanvraag(
 
 export const aanvragenTestsetInput = [
   {
-    title: 'Mix of RMT and RTM1, multiple betrokkenen',
+    title: 'Mix of RTM and RTM1, multiple betrokkenen',
     aanvragen: [
       aanvraag(RTM2, TOE, ['A']),
       aanvraag(RTM1, TOE, ['A', 'B']),
       aanvraag(RTM2, TOE, ['A']),
       aanvraag(RTM1, TOE, ['B']),
       aanvraag(RTM1, TOE, ['B']),
+    ],
+    expected: [
+      {
+        id: 1,
+        persoon: 'Persoon A',
+        steps: [
+          'Besluit',
+          'Aanvraag wijziging',
+          'Besluit wijziging',
+          'Einde recht',
+        ],
+        displayStatus: 'Besluit wijziging',
+      },
+      {
+        id: 2,
+        persoon: 'Persoon B',
+        steps: [
+          'Aanvraag',
+          'In behandeling genomen',
+          'Aanvraag',
+          'In behandeling genomen',
+          'Aanvraag',
+          'In behandeling genomen',
+        ],
+        displayStatus: 'In behandeling genomen',
+      },
     ],
   },
   {
@@ -61,6 +95,24 @@ export const aanvragenTestsetInput = [
       aanvraag(RTM1, TOE, ['A3']),
       aanvraag(RTM2, TOE, ['A3']),
     ],
+    expected: [
+      {
+        id: 3,
+        persoon: 'Persoon A3',
+        steps: [
+          'Aanvraag',
+          'In behandeling genomen',
+          'Besluit',
+          'Aanvraag wijziging',
+          'Aanvraag wijziging',
+          'Besluit wijziging',
+          'Aanvraag wijziging',
+          'Besluit wijziging',
+          'Einde recht',
+        ],
+        displayStatus: 'Besluit wijziging',
+      },
+    ],
   },
   {
     title:
@@ -70,6 +122,21 @@ export const aanvragenTestsetInput = [
       aanvraag(RTM1, AFW),
       aanvraag(RTM1, AFW),
       aanvraag(RTM1, TOE, ['C', 'D']),
+    ],
+    expected: [
+      {
+        id: 4,
+        persoon: 'Persoon C, Persoon D',
+        steps: [
+          'Aanvraag',
+          'In behandeling genomen',
+          'Aanvraag',
+          'Aanvraag',
+          'Aanvraag',
+          'In behandeling genomen',
+        ],
+        displayStatus: 'In behandeling genomen',
+      },
     ],
   },
   {
@@ -81,6 +148,26 @@ export const aanvragenTestsetInput = [
       aanvraag(RTM2, TOE, ['F']),
       aanvraag(RTM1, AFW),
     ],
+    expected: [
+      {
+        id: 5,
+        persoon: 'Persoon F',
+        steps: ['Aanvraag', 'In behandeling genomen', 'Besluit', 'Einde recht'],
+        displayStatus: 'Besluit',
+      },
+      {
+        id: 6,
+        persoon: 'Persoon G',
+        steps: ['Aanvraag', 'In behandeling genomen'],
+        displayStatus: 'In behandeling genomen',
+      },
+      {
+        id: 60,
+        persoon: '',
+        steps: ['Aanvraag'],
+        displayStatus: 'Aanvraag',
+      },
+    ],
   },
   {
     title: 'Single betrokkene, only ontvanger.',
@@ -89,6 +176,14 @@ export const aanvragenTestsetInput = [
       aanvraag(RTM2, AFW, ['H']),
       aanvraag(RTM2, TOE, ['H']),
       aanvraag(RTM2, AFW, ['H']),
+    ],
+    expected: [
+      {
+        id: 7,
+        persoon: 'Persoon H',
+        steps: ['Besluit', 'Besluit', 'Besluit', 'Besluit', 'Einde recht'],
+        displayStatus: 'Besluit',
+      },
     ],
   },
   {
@@ -99,6 +194,25 @@ export const aanvragenTestsetInput = [
       aanvraag(RTM2, TOE, ['I'], '2024-12-31'),
       aanvraag(RTM1, TOE, ['I']),
       aanvraag(RTM2, TOE, ['I']),
+    ],
+    expected: [
+      {
+        id: 8,
+        persoon: 'Persoon I',
+        steps: [
+          'Besluit',
+          'Besluit wijziging',
+          'Besluit wijziging',
+          'Einde recht',
+        ],
+        displayStatus: 'Einde recht',
+      },
+      {
+        id: 9,
+        persoon: 'Persoon I',
+        steps: ['Aanvraag', 'In behandeling genomen', 'Besluit', 'Einde recht'],
+        displayStatus: 'Besluit',
+      },
     ],
   },
   {
@@ -116,6 +230,33 @@ export const aanvragenTestsetInput = [
       aanvraag(RTM1, TOE, ['J']),
       aanvraag(RTM2, TOE, ['J']),
     ],
+    expected: [
+      {
+        id: 10,
+        persoon: 'Persoon J',
+        steps: [
+          'Aanvraag',
+          'In behandeling genomen',
+          'Besluit',
+          'Aanvraag wijziging',
+          'Besluit wijziging',
+          'Einde recht',
+        ],
+        displayStatus: 'Einde recht',
+      },
+      {
+        id: 11,
+        persoon: 'Persoon J',
+        steps: ['Aanvraag', 'In behandeling genomen', 'Besluit', 'Einde recht'],
+        displayStatus: 'Einde recht',
+      },
+      {
+        id: 12,
+        persoon: 'Persoon J',
+        steps: ['Aanvraag', 'In behandeling genomen', 'Besluit', 'Einde recht'],
+        displayStatus: 'Besluit',
+      },
+    ],
   },
   {
     title:
@@ -129,6 +270,45 @@ export const aanvragenTestsetInput = [
       aanvraag(RTM1, TOE, ['L', 'K']),
       aanvraag(RTM1, AFW),
     ],
+    expected: [
+      {
+        id: 13,
+        persoon: 'Persoon K',
+        steps: ['Aanvraag', 'In behandeling genomen', 'Besluit', 'Einde recht'],
+        displayStatus: 'Einde recht',
+      },
+      {
+        id: 14,
+        persoon: 'Persoon L',
+        steps: [
+          'Aanvraag',
+          'In behandeling genomen',
+          'Aanvraag',
+          'In behandeling genomen',
+          'Aanvraag',
+          'In behandeling genomen',
+        ],
+        displayStatus: 'In behandeling genomen',
+      },
+      {
+        id: 15,
+        persoon: 'Persoon K',
+        steps: [
+          'Aanvraag',
+          'In behandeling genomen',
+          'Besluit',
+          'Aanvraag wijziging',
+          'Einde recht',
+        ],
+        displayStatus: 'Aanvraag wijziging',
+      },
+      {
+        id: 61,
+        persoon: '',
+        steps: ['Aanvraag'],
+        displayStatus: 'Aanvraag',
+      },
+    ],
   },
   {
     title: 'Aanvraag mixed 2 - Alleen ontvangers',
@@ -136,6 +316,36 @@ export const aanvragenTestsetInput = [
       aanvraag(RTM1, TOE, ['Z', 'Y']),
       aanvraag(RTM1, TOE, ['Z']),
       aanvraag(RTM1, TOE, ['Y', 'N']),
+    ],
+    expected: [
+      {
+        id: 16,
+        persoon: 'Persoon Y',
+        steps: [
+          'Aanvraag',
+          'In behandeling genomen',
+          'Aanvraag',
+          'In behandeling genomen',
+        ],
+        displayStatus: 'In behandeling genomen',
+      },
+      {
+        id: 17,
+        persoon: 'Persoon Z',
+        steps: [
+          'Aanvraag',
+          'In behandeling genomen',
+          'Aanvraag',
+          'In behandeling genomen',
+        ],
+        displayStatus: 'In behandeling genomen',
+      },
+      {
+        id: 18,
+        persoon: 'Persoon N',
+        steps: ['Aanvraag', 'In behandeling genomen'],
+        displayStatus: 'In behandeling genomen',
+      },
     ],
   },
   {
@@ -145,6 +355,38 @@ export const aanvragenTestsetInput = [
       aanvraag(RTM1, TOE, ['O']),
       aanvraag(RTM1, TOE, ['P', 'Q']),
       aanvraag(RTM1, TOE, ['P']),
+    ],
+    expected: [
+      {
+        id: 19,
+        persoon: 'Persoon O',
+        steps: [
+          'Aanvraag',
+          'In behandeling genomen',
+          'Aanvraag',
+          'In behandeling genomen',
+        ],
+        displayStatus: 'In behandeling genomen',
+      },
+      {
+        id: 20,
+        persoon: 'Persoon P',
+        steps: [
+          'Aanvraag',
+          'In behandeling genomen',
+          'Aanvraag',
+          'In behandeling genomen',
+          'Aanvraag',
+          'In behandeling genomen',
+        ],
+        displayStatus: 'In behandeling genomen',
+      },
+      {
+        id: 21,
+        persoon: 'Persoon Q',
+        steps: ['Aanvraag', 'In behandeling genomen'],
+        displayStatus: 'In behandeling genomen',
+      },
     ],
   },
   {
@@ -157,6 +399,21 @@ export const aanvragenTestsetInput = [
       aanvraag(RTM1, AFW),
       aanvraag(RTM1, TOE, ['C1']),
     ],
+    expected: [
+      {
+        id: 22,
+        persoon: 'Persoon C1',
+        steps: [
+          'Aanvraag',
+          'Aanvraag',
+          'Aanvraag',
+          'Aanvraag',
+          'Aanvraag',
+          'In behandeling genomen',
+        ],
+        displayStatus: 'In behandeling genomen',
+      },
+    ],
   },
   {
     title:
@@ -168,6 +425,26 @@ export const aanvragenTestsetInput = [
       aanvraag(RTM1, TOE, ['B1']),
       aanvraag(RTM1, AFW),
     ],
+    expected: [
+      {
+        id: 23,
+        persoon: 'Persoon A1',
+        steps: ['Aanvraag', 'In behandeling genomen'],
+        displayStatus: 'In behandeling genomen',
+      },
+      {
+        id: 24,
+        persoon: 'Persoon B1',
+        steps: ['Aanvraag', 'In behandeling genomen'],
+        displayStatus: 'In behandeling genomen',
+      },
+      {
+        id: 62,
+        persoon: '',
+        steps: ['Aanvraag', 'Aanvraag', 'Aanvraag'],
+        displayStatus: 'Aanvraag',
+      },
+    ],
   },
   {
     title: 'Some other exotic combinations',
@@ -178,10 +455,34 @@ export const aanvragenTestsetInput = [
       aanvraag(RTM2, TOE, ['D1']),
       aanvraag(RTM1, TOE, ['D1']),
     ],
+    expected: [
+      {
+        id: 25,
+        persoon: 'Persoon D1',
+        steps: [
+          'Aanvraag',
+          'Aanvraag',
+          'In behandeling genomen',
+          'Aanvraag',
+          'Besluit',
+          'Aanvraag wijziging',
+          'Einde recht',
+        ],
+        displayStatus: 'Aanvraag wijziging',
+      },
+    ],
   },
   {
     title: 'Single toegewezen aanvraag with end date / Verlopen aanvraag',
     aanvragen: [aanvraag(RTM1, TOE, ['E1'], '2024-12-31')],
+    expected: [
+      {
+        id: 26,
+        persoon: 'Persoon E1',
+        steps: ['Aanvraag', 'In behandeling genomen'],
+        displayStatus: 'In behandeling genomen',
+      },
+    ],
   },
   {
     title:
@@ -194,6 +495,26 @@ export const aanvragenTestsetInput = [
       aanvraag(RTM2, TOE, ['A4']),
       aanvraag(RTM2, AFW, ['A4']),
       aanvraag(RTM2, AFW, ['A4']),
+    ],
+    expected: [
+      {
+        id: 27,
+        persoon: 'Persoon A4',
+        steps: [
+          'Aanvraag',
+          'In behandeling genomen',
+          'Aanvraag',
+          'In behandeling genomen',
+          'Aanvraag',
+          'In behandeling genomen',
+          'Aanvraag',
+          'Besluit',
+          'Besluit wijziging',
+          'Besluit wijziging',
+          'Einde recht',
+        ],
+        displayStatus: 'Besluit wijziging',
+      },
     ],
   },
 ];
