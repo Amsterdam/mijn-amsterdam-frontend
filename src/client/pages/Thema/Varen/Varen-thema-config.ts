@@ -32,7 +32,7 @@ export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 export const featureToggle = {
-  varenActive: !IS_PRODUCTION,
+  varenActive: true,
 };
 
 export const themaId = 'VAREN' as const;
