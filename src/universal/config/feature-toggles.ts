@@ -88,9 +88,6 @@ export const FeatureToggle = {
   // B&B Downloads actief
   bbDocumentDownloadsActive: true,
 
-  //Varen (komt uit Decos)
-  varenActive: !IS_PRODUCTION,
-
   vergunningenActive: true,
   decosServiceActive: true,
 
