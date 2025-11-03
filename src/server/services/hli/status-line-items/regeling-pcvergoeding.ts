@@ -162,7 +162,7 @@ function filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNie
   return PCVergoedingAanvragenFiltered;
 }
 
-export function filterCombineUpcPcvData(
+export function filterCombineUpcPcvData_pre2026(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ) {
   const baseRegelingIdWithVerzilvering: string[] = [];
@@ -347,6 +347,6 @@ export const forTesting = {
   isRegelingVanVerzilvering,
   isVerzilvering,
   isWorkshopNietGevolgd,
-  filterCombineUpcPcvData,
+  filterCombineUpcPcvData: filterCombineUpcPcvData_pre2026,
   filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNietGevolgd,
 };

@@ -40,7 +40,7 @@ import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
 import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types';
 import {
-  filterCombineUpcPcvData,
+  filterCombineUpcPcvData_pre2026,
   isPcVergoedingAanvraag,
   isWorkshopNietGevolgd,
 } from './status-line-items/regeling-pcvergoeding';
@@ -181,13 +181,13 @@ async function transformRegelingenForFrontend(
 ): Promise<HLIRegelingFrontend[]> {
   const regelingenFrontend: HLIRegelingFrontend[] = [];
 
-  const [otherAanvragen, PCVergoedingAanvragen] = extractAanvragen(
+  const [otherAanvragen, PCVergoedingAanvragen_pre2026] = extractAanvragen(
     aanvragen,
     isPcVergoedingAanvraag
   );
 
-  const PCVergoedingAanvragenCombined = filterCombineUpcPcvData(
-    PCVergoedingAanvragen
+  const PCVergoedingAanvragenCombined = filterCombineUpcPcvData_pre2026(
+    PCVergoedingAanvragen_pre2026
   );
 
   const [otherAanvragen_, RTMAanvragen] = extractAanvragen(
