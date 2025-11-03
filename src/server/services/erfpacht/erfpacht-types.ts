@@ -238,7 +238,7 @@ export type ErfpachtDossiersResponse = ErfpachtDossiersResponseSource & {
   dossiers: ErfpachtDossiersResponseSource['dossiers'] & {
     dossiers?: ErfpachtDossierFrontend[];
   };
-  openstaandeFacturen: ErfpachtDossiersResponseSource['openstaandeFacturen'] & {
+  openstaandeFacturen?: ErfpachtDossiersResponseSource['openstaandeFacturen'] & {
     facturen: ErfpachtDossierFactuurFrontend[];
   };
   isKnown: boolean;
