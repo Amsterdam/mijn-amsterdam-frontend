@@ -7,10 +7,12 @@ import { routeConfig } from '../../../../client/pages/Thema/HLI/HLI-thema-config
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { sortAlpha } from '../../../../universal/helpers/utils';
 import type { StatusLineItem } from '../../../../universal/types/App.types';
+import type { AuthProfile } from '../../../auth/auth-types';
 import type {
   BSN,
   ZorgnedAanvraagWithRelatedPersonsTransformed,
 } from '../../zorgned/zorgned-types';
+import { getDocumentsFrontend } from '../hli';
 import type { HLIRegelingFrontend } from '../hli-regelingen-types';
 import { getBesluitDescription } from '../status-line-items/generic';
 
@@ -250,7 +252,10 @@ export function splitAanvragenByBetrokkenenAtDatumGeldigheid(
   return aanvragenByBetrokkenen;
 }
 
-function getSteps(aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]) {
+function getSteps(
+  sessionID: AuthProfile['sid'],
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
+) {
   const steps = aanvragen.flatMap((aanvraag, index, aanvragen) => {
     // Searches for items that came before the current aanvraag and checks if it's RTM FASE 2.
     const previousRTM2 = aanvragen
@@ -327,7 +332,14 @@ function getSteps(aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]) {
     lastStep.isActive = true;
   }
 
-  return steps;
+  const stepsWithDocumentUrls = steps.map((step) => {
+    return {
+      ...step,
+      documents: getDocumentsFrontend(sessionID, step.documents ?? []),
+    };
+  });
+
+  return stepsWithDocumentUrls;
 }
 
 function getBetrokkenen(
@@ -350,6 +362,7 @@ function getBetrokkenen(
 }
 
 function transformRTMRegelingenFrontend(
+  sessionID: AuthProfile['sid'],
   aanvragenByBetrokkenen: Map<
     string,
     ZorgnedAanvraagWithRelatedPersonsTransformed[]
@@ -361,7 +374,7 @@ function transformRTMRegelingenFrontend(
     betrokkenenMapStr,
     aanvragen,
   ] of aanvragenByBetrokkenen.entries()) {
-    const steps = getSteps(aanvragen);
+    const steps = getSteps(sessionID, aanvragen);
 
     if (!steps.length) {
       continue;
@@ -456,6 +469,7 @@ function dedupeButKeepDocuments(
 
 // Aanvragen are processed in chronological order (ASC), so the order of the aanvragen from Zorgned matter.
 export function transformRTMAanvragen(
+  sessionID: AuthProfile['sid'],
   bsnLoggedinUser: BSN,
   RTMaanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ) {
@@ -472,7 +486,10 @@ export function transformRTMAanvragen(
   const aanvragenByBetrokkenenSplitted =
     splitAanvragenByBetrokkenenAtDatumGeldigheid(aanvragenByBetrokkenen);
 
-  return transformRTMRegelingenFrontend(aanvragenByBetrokkenenSplitted);
+  return transformRTMRegelingenFrontend(
+    sessionID,
+    aanvragenByBetrokkenenSplitted
+  );
 }
 
 export const forTesting = {

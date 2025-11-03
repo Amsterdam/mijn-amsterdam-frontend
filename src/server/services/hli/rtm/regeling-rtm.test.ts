@@ -14,6 +14,16 @@ import type {
   ZorgnedPerson,
 } from '../../zorgned/zorgned-types';
 
+vi.mock('../../../helpers/encrypt-decrypt', async (requireActual) => {
+  return {
+    ...((await requireActual()) as object),
+    encryptSessionIdWithRouteIdParam: () => {
+      return 'test-encrypted-id';
+    },
+    decrypt: () => 'session-id:e6ed38c3-a44a-4c16-97c1-89d7ebfca095',
+  };
+});
+
 let bsn = 0;
 
 function imposeZorgnedAanvraagTransformed(
@@ -59,6 +69,7 @@ describe('RTM aanvraag transformation and grouping', () => {
   for (const testInput of aanvragenTestsetInput as RTMTestInput[]) {
     const bsnLoggedinUser = (bsn++).toString();
     const aanvragenTransformed = transformRTMAanvragen(
+      'xxxx-session-id-xxxx',
       bsnLoggedinUser,
       testInput.aanvragen.map(imposeZorgnedAanvraagTransformed)
     )
@@ -120,7 +131,11 @@ describe('RTM aanvraag transformation', () => {
       }),
     ] as ZorgnedAanvraagWithRelatedPersonsTransformed[];
 
-    const transformed = transformRTMAanvragen('12345', aanvragen);
+    const transformed = transformRTMAanvragen(
+      'xxx-session-id-xxxx',
+      '12345',
+      aanvragen
+    );
     expect(transformed).toMatchInlineSnapshot(`
       [
         {
@@ -143,10 +158,12 @@ describe('RTM aanvraag transformation', () => {
               "description": "",
               "documents": [
                 {
-                  "id": "bar",
+                  "id": "test-encrypted-id",
+                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
                 },
                 {
-                  "id": "foo",
+                  "id": "test-encrypted-id",
+                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
                 },
               ],
               "id": "aanvraag-1-1",
@@ -172,7 +189,8 @@ describe('RTM aanvraag transformation', () => {
         ",
               "documents": [
                 {
-                  "id": "baz",
+                  "id": "test-encrypted-id",
+                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
                 },
               ],
               "id": "besluit-1-3",
@@ -186,7 +204,8 @@ describe('RTM aanvraag transformation', () => {
       <p>Hiervoor moet u een afspraak maken voor een medisch gesprek bij de GGD. In de brief staat hoe u dat doet.</p>",
               "documents": [
                 {
-                  "id": "bar",
+                  "id": "test-encrypted-id",
+                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
                 },
               ],
               "id": "aanvraag-wijziging-2-1",
@@ -199,7 +218,8 @@ describe('RTM aanvraag transformation', () => {
               "description": "<p>Uw aanvraag voor een wijziging is afgehandeld. Bekijk de brief voor meer informatie hierover.</p>",
               "documents": [
                 {
-                  "id": "baz",
+                  "id": "test-encrypted-id",
+                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
                 },
               ],
               "id": "besluit-wijziging-2-2",
@@ -250,7 +270,11 @@ describe('RTM aanvraag transformation', () => {
       }),
     ] as ZorgnedAanvraagWithRelatedPersonsTransformed[];
 
-    const transformed = transformRTMAanvragen('12345', aanvragen);
+    const transformed = transformRTMAanvragen(
+      'xxxx-session-id-xxxx',
+      '12345',
+      aanvragen
+    );
     expect(transformed).toMatchInlineSnapshot(`
       [
         {
@@ -273,7 +297,8 @@ describe('RTM aanvraag transformation', () => {
               "description": "",
               "documents": [
                 {
-                  "id": "bar",
+                  "id": "test-encrypted-id",
+                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
                 },
               ],
               "id": "aanvraag-1-1",
@@ -297,7 +322,8 @@ describe('RTM aanvraag transformation', () => {
               "description": "",
               "documents": [
                 {
-                  "id": "foo",
+                  "id": "test-encrypted-id",
+                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
                 },
               ],
               "id": "aanvraag-1-2",
@@ -348,7 +374,11 @@ describe('RTM aanvraag transformation', () => {
       }),
     ] as ZorgnedAanvraagWithRelatedPersonsTransformed[];
 
-    const transformed = transformRTMAanvragen('12345', aanvragen);
+    const transformed = transformRTMAanvragen(
+      'xxxx-session-id-xxxx',
+      '12345',
+      aanvragen
+    );
     expect(transformed).toMatchInlineSnapshot(`
       [
         {
@@ -375,7 +405,8 @@ describe('RTM aanvraag transformation', () => {
         ",
               "documents": [
                 {
-                  "id": "baz",
+                  "id": "test-encrypted-id",
+                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
                 },
               ],
               "id": "besluit-2-2",
@@ -388,10 +419,12 @@ describe('RTM aanvraag transformation', () => {
               "description": "<p>Uw aanvraag voor een wijziging is afgehandeld. Bekijk de brief voor meer informatie hierover.</p>",
               "documents": [
                 {
-                  "id": "baz",
+                  "id": "test-encrypted-id",
+                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
                 },
                 {
-                  "id": "baz",
+                  "id": "test-encrypted-id",
+                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
                 },
               ],
               "id": "besluit-wijziging-3-1",

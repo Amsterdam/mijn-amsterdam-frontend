@@ -181,6 +181,7 @@ function transformRegelingenForFrontend(
     isRTMAanvraag
   );
   const RTMRegelingenFrontend = transformRTMAanvragen(
+    authProfileAndToken.profile.sid,
     authProfileAndToken.profile.id,
     RTMAanvragen
   );
