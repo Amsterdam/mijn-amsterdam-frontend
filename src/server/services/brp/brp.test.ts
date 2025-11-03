@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import type { Mock } from 'vitest';
 
-import { forTesting, fetchBrpByBsn } from './brp';
+import { forTesting, fetchBrpByBsn, fetchBrpByBsnTransformed } from './brp';
 import testPersonenResponse from '../../../../mocks/fixtures/brp/test-personen.json';
 import verblijfplaatsenResponse from '../../../../mocks/fixtures/brp/verblijfplaatshistorie.json';
 import { remoteApi } from '../../../testing/utils';
@@ -91,15 +91,6 @@ describe('brp.ts', () => {
   });
 
   describe('transformBenkBrpResponse', () => {
-    it('should throw an error if no person is found in response', () => {
-      expect(() =>
-        transformBenkBrpResponse({
-          personen: [],
-          type: '',
-        })
-      ).toThrow('No person found in Benk BRP response');
-    });
-
     it('should transform response data correctly', () => {
       const responseData = {
         personen: [
@@ -111,7 +102,7 @@ describe('brp.ts', () => {
         ],
       };
 
-      const result = transformBenkBrpResponse(responseData as any);
+      const result = transformBenkBrpResponse(responseData.personen[0] as any);
       expect(result).toHaveProperty('persoon.opgemaakteNaam', 'John Doe');
       expect(result).toHaveProperty('persoon.vertrokkenOnbekendWaarheen', true);
       expect(result).toHaveProperty('persoon.mokum', true);
@@ -160,7 +151,9 @@ describe('brp.ts', () => {
           .post(/\/verblijfplaatshistorie/)
           .reply(200, verblijfplaatsenResponse);
 
-        const response = await fetchBrpByBsn('test-session-id', [BSN]);
+        const response = await fetchBrpByBsnTransformed('test-session-id', [
+          BSN,
+        ]);
 
         expect(response).toMatchSnapshot();
         expect(response.status).toBe('OK');
@@ -188,7 +181,6 @@ describe('brp.ts', () => {
 
         expect(response).toMatchSnapshot();
         expect(response.status).toBe('OK');
-        expect(response.content?.persoon.bsn).toBe(BSN);
       });
     });
   });
