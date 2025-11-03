@@ -1,4 +1,4 @@
-export const aanvragen_ = [
+export const aanvragenTestSets = [
   // Mix of RMT and RTM1, multiple betrokkenen
   [
     {
@@ -418,4 +418,4 @@ export const aanvragen_ = [
   ],
 ];
 
-export const aanvragen = aanvragen_;
+export const aanvragen = aanvragenTestSets;
