@@ -189,16 +189,16 @@ function transformRegelingenForFrontend(
     PCVergoedingAanvragen_pre2026
   );
 
-  // Transform PC and remaining aanvragen to HLIRegelingFrontend.
-  const allAanvragen = [
+  // RTM aanvragen are already completely transformed to HLIRegelingFrontend and do not need further processing.
+  const regelingenFrontend = [...RTMRegelingenFrontend];
+
+  // The Remaining aanvragen are not transformed to HLIRegelingFrontend yet.
+  const remainingAanvragen__ = [
     ...PCVergoedingAanvragenCombined,
     ...remainingAanvragen_,
   ].toSorted(sortAlpha('id', 'desc'));
 
-  // RTM aanvragen are already completely transformed to HLIRegelingFrontend and do not need further processing.
-  const regelingenFrontend = [...RTMRegelingenFrontend];
-
-  for (const aanvraag of allAanvragen) {
+  for (const aanvraag of remainingAanvragen__) {
     const statusLineItems = getStatusLineItems(
       'HLI',
       hliStatusLineItemsConfig,
