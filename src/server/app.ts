@@ -59,7 +59,7 @@ import { authRouterDevelopment } from './routing/router-development';
 import { oidcRouter } from './routing/router-oidc';
 import { router as protectedRouter } from './routing/router-protected';
 import { legacyRouter, router as publicRouter } from './routing/router-public';
-import { stadspasExternalConsumerRouter } from './routing/router-stadspas-external-consumer';
+import { stadspasExternalConsumerRouter } from './services/hli/router-stadspas-external-consumer';
 import { captureException } from './services/monitoring';
 
 import { getFromEnv } from './helpers/env';

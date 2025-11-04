@@ -1,6 +1,6 @@
 import { createBFFRouter } from './route-helpers';
 import { notificationsExternalConsumerRouter } from './router-notifications-external-consumer';
-import { stadspasExternalConsumerRouter } from './router-stadspas-external-consumer';
+import { stadspasExternalConsumerRouter } from '../services/hli/router-stadspas-external-consumer';
 import { afisRouter } from '../services/afis/afis-router';
 import { wmoRouter } from '../services/wmo/wmo-router';
 
