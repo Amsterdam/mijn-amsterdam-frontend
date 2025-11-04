@@ -31,7 +31,11 @@ import {
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { dedupeDocumentsInDataSets } from '../../../universal/helpers/document';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
-import { sortAlpha, toDateFormatted } from '../../../universal/helpers/utils';
+import {
+  sortAlpha,
+  splitBy,
+  toDateFormatted,
+} from '../../../universal/helpers/utils';
 import {
   GenericDocument,
   StatusLineItem,
@@ -172,16 +176,13 @@ function transformRegelingenForFrontend(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
   today: Date
 ): HLIRegelingFrontend[] {
-  const [remainingAanvragen, RTMAanvragen] = extractAanvragen(
-    aanvragen,
-    isRTMAanvraag
-  );
+  const [remainingAanvragen, RTMAanvragen] = splitBy(aanvragen, isRTMAanvraag);
   const RTMRegelingenFrontend = transformRTMAanvragen(
     sessionID,
     aanvrager,
     RTMAanvragen
   );
-  const [remainingAanvragen_, PCVergoedingAanvragen_pre2026] = extractAanvragen(
+  const [remainingAanvragen_, PCVergoedingAanvragen_pre2026] = splitBy(
     remainingAanvragen,
     isPcAanvraag
   );
@@ -193,10 +194,9 @@ function transformRegelingenForFrontend(
   const regelingenFrontend = [...RTMRegelingenFrontend];
 
   // The Remaining aanvragen are not transformed to HLIRegelingFrontend yet.
-  const remainingAanvragen__ = [
-    ...PCVergoedingAanvragenCombined,
-    ...remainingAanvragen_,
-  ].toSorted(sortAlpha('id', 'desc'));
+  const remainingAanvragen__ = remainingAanvragen_.concat(
+    PCVergoedingAanvragenCombined
+  );
 
   for (const aanvraag of remainingAanvragen__) {
     const statusLineItems = getStatusLineItems(
@@ -220,32 +220,9 @@ function transformRegelingenForFrontend(
     regelingenFrontend.push(regelingForFrontend);
   }
 
+  regelingenFrontend.sort(sortAlpha('id', 'desc'));
+
   return dedupeDocumentsInDataSets(regelingenFrontend, 'documents');
-}
-
-type IsTargetAanvraagFn = (
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-) => boolean;
-
-function extractAanvragen(
-  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
-  isTargetAanvraag: IsTargetAanvraagFn
-): [
-  ZorgnedAanvraagWithRelatedPersonsTransformed[],
-  ZorgnedAanvraagWithRelatedPersonsTransformed[],
-] {
-  const remainder = [];
-  const targetAanvragen = [];
-
-  for (const aanvraag of aanvragen) {
-    if (isTargetAanvraag(aanvraag)) {
-      targetAanvragen.push(aanvraag);
-    } else {
-      remainder.push(aanvraag);
-    }
-  }
-
-  return [remainder, targetAanvragen];
 }
 
 async function fetchRegelingen(authProfileAndToken: AuthProfileAndToken) {
