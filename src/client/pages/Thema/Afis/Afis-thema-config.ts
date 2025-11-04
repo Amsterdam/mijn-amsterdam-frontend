@@ -50,6 +50,7 @@ export const routeConfig = {
   detailPageEMandate: {
     path: '/facturen-en-betalen/betaalvoorkeuren/emandate/:id',
     documentTitle: `E-Mandaat | ${themaTitle}`,
+    trackingUrl: null,
   },
   listPage: {
     path: '/facturen-en-betalen/facturen/lijst/:state/:page?',
