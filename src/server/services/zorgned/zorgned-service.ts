@@ -359,7 +359,7 @@ export async function fetchRelatedPersons(
   });
 
   const results = await Promise.allSettled(requests);
-  const namesAndDatesOfBirth: ZorgnedPerson[] = [];
+  const persons: ZorgnedPerson[] = [];
 
   for (const result of results) {
     const response = getSettledResult(result);
@@ -373,10 +373,10 @@ export async function fetchRelatedPersons(
         null
       );
     }
-    namesAndDatesOfBirth.push(person);
+    persons.push(person);
   }
 
-  return apiSuccessResult(namesAndDatesOfBirth);
+  return apiSuccessResult(persons);
 }
 
 export async function fetchPersoonsgegevensNAW(

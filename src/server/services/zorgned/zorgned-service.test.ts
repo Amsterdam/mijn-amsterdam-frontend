@@ -22,6 +22,8 @@ import {
   ApiSuccessResponse,
 } from '../../../universal/helpers/api';
 import * as request from '../../helpers/source-api-request';
+import { ZORGNED_AV_API_CONFIG_KEY } from '../hli/hli-service-config';
+import { ZORGNED_JZD_API_CONFIG_KEY } from '../wmo/wmo-service-config';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -189,7 +191,7 @@ describe('zorgned-service', () => {
 
     const BSN = '123456789';
     const result = await fetchAanvragen(BSN, {
-      zorgnedApiConfigKey: 'ZORGNED_JZD',
+      zorgnedApiConfigKey: ZORGNED_JZD_API_CONFIG_KEY,
       requestBodyParams: {
         maxeinddatum: '2018-01-01',
         regeling: 'wmo',
@@ -233,7 +235,7 @@ describe('zorgned-service', () => {
     const BSN = '567890';
     const result = await fetchDocument(
       BSN,
-      'ZORGNED_JZD',
+      ZORGNED_JZD_API_CONFIG_KEY,
       mocks.mockDocumentId
     );
 
@@ -259,7 +261,7 @@ describe('zorgned-service', () => {
 
     const result = await fetchDocument(
       BSN,
-      'ZORGNED_JZD',
+      ZORGNED_JZD_API_CONFIG_KEY,
       mocks.mockDocumentId
     );
 
@@ -406,7 +408,7 @@ describe('zorgned-service', () => {
         } as ZorgnedPersoonsgegevensNAWResponse);
 
       const result = await fetchAanvragenWithRelatedPersons('9999999999', {
-        zorgnedApiConfigKey: 'ZORGNED_AV',
+        zorgnedApiConfigKey: ZORGNED_AV_API_CONFIG_KEY,
       });
 
       expect(result).toStrictEqual({
@@ -458,7 +460,7 @@ describe('zorgned-service', () => {
       const result = await fetchAanvragenWithRelatedPersons(
         getAuthProfileAndToken().profile.id,
         {
-          zorgnedApiConfigKey: 'ZORGNED_AV',
+          zorgnedApiConfigKey: ZORGNED_AV_API_CONFIG_KEY,
         }
       );
 
@@ -478,7 +480,7 @@ describe('zorgned-service', () => {
       const result = await fetchAanvragenWithRelatedPersons(
         getAuthProfileAndToken().profile.id,
         {
-          zorgnedApiConfigKey: 'ZORGNED_AV',
+          zorgnedApiConfigKey: ZORGNED_AV_API_CONFIG_KEY,
         }
       );
 
@@ -538,7 +540,10 @@ describe('fetchRelatedPersons', async () => {
 
     const userIDs = ['1', '2'];
 
-    const response = await fetchRelatedPersons(userIDs, 'ZORGNED_AV');
+    const response = await fetchRelatedPersons(
+      userIDs,
+      ZORGNED_AV_API_CONFIG_KEY
+    );
     expect(response).toStrictEqual(
       apiErrorResult(
         'Something went wrong when retrieving related persons.',
@@ -582,7 +587,10 @@ describe('fetchRelatedPersons', async () => {
 
     const userIDs = ['1', '2'];
 
-    const response = await fetchRelatedPersons(userIDs, 'ZORGNED_AV');
+    const response = await fetchRelatedPersons(
+      userIDs,
+      ZORGNED_AV_API_CONFIG_KEY
+    );
     const expected: ApiSuccessResponse<ZorgnedPerson[]> = {
       content: [
         {
