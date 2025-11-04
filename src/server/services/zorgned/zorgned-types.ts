@@ -179,19 +179,21 @@ export interface ZorgnedDocumentResponseSource {
   mimetype: string;
 }
 
+export type ZorgnedPersoonSource = {
+  bsn: string;
+  clientidentificatie: number | null;
+  geboortenaam: string;
+  roepnaam: string | null;
+  voorletters: string;
+  voornamen: string;
+  voorvoegsel: string | null;
+  geboortedatum: string | null;
+  partnernaam?: string | null;
+  partnervoorvoegsel?: string | null;
+};
+
 export interface ZorgnedPersoonsgegevensNAWResponse {
-  persoon?: {
-    bsn: string;
-    clientidentificatie: number | null;
-    geboortenaam: string;
-    roepnaam: string | null;
-    voorletters: string;
-    voornamen: string;
-    voorvoegsel: string | null;
-    geboortedatum: string | null;
-    partnernaam?: string | null;
-    partnervoorvoegsel?: string | null;
-  };
+  persoon?: ZorgnedPersoonSource;
 }
 
 export interface ZorgnedRelatieSource {

@@ -12,6 +12,7 @@ import {
   ZorgnedPerson,
   ZorgnedPersoonsgegevensNAWResponse,
   ZorgnedResponseDataSource,
+  type ZorgnedPersoonSource,
 } from './zorgned-types';
 import ZORGNED_JZD_AANVRAGEN from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json';
 import { remoteApiHost } from '../../../testing/setup';
@@ -492,9 +493,9 @@ describe('zorgned-service', () => {
 });
 
 describe('fetchRelatedPersons', async () => {
-  type Person = ZorgnedPersoonsgegevensNAWResponse['persoon'];
-
-  function createPerson(person: Partial<Person>): Person {
+  function createPerson(
+    person: Partial<ZorgnedPersoonSource>
+  ): ZorgnedPersoonSource {
     if (person.voornamen) {
       person.roepnaam = person.voornamen;
       person.voorletters = person.voornamen[0];
