@@ -110,7 +110,7 @@ export const aanvragenTestsetInput = [
           'Aanvraag',
           'In behandeling genomen',
           'Besluit',
-          'Besluit',
+          'Besluit wijziging',
           'Aanvraag wijziging',
           'Besluit wijziging',
           'Aanvraag wijziging',

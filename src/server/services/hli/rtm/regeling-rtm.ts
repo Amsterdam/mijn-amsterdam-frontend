@@ -270,7 +270,9 @@ function getSteps(
 
     if (aanvraag.resultaat === 'afgewezen') {
       return createStatusLineItemStep(
-        lineItemConfigs.besluitAanvraagAfgewezen,
+        previousRTM2?.resultaat === 'toegewezen'
+          ? lineItemConfigs.besluitWijziging
+          : lineItemConfigs.besluitAanvraagAfgewezen,
         aanvraag
       );
     }
