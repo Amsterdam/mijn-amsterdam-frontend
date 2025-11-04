@@ -14,6 +14,11 @@ import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import { transformRTMAanvragen, isRTMAanvraag } from './rtm/regeling-rtm';
 import { fetchStadspas } from './stadspas';
 import {
+  isPcAanvraag,
+  isWorkshopNietGevolgd,
+  filterCombineUpcPcvData_pre2026,
+} from './status-line-items/regeling-pcvergoeding';
+import {
   featureToggle,
   routeConfig,
 } from '../../../client/pages/Thema/HLI/HLI-thema-config';
@@ -26,40 +31,29 @@ import {
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { dedupeDocumentsInDataSets } from '../../../universal/helpers/document';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
+import { sortAlpha, toDateFormatted } from '../../../universal/helpers/utils';
 import {
   GenericDocument,
   StatusLineItem,
 } from '../../../universal/types/App.types';
+import type { ZaakDisplayStatus } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
+import { fetchRelatedPersons } from '../zorgned/zorgned-service';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   type ZorgnedPerson,
 } from '../zorgned/zorgned-types';
-import {
-  isPcAanvraag,
-  isWorkshopNietGevolgd,
-  filterCombineUpcPcvData_pre2026,
-} from './status-line-items/regeling-pcvergoeding';
-import { sortAlpha, toDateFormatted } from '../../../universal/helpers/utils';
-import { fetchRelatedPersons } from '../zorgned/zorgned-service';
 
 export const RTM_SPECIFICATIE_TITLE = 'AV-RTM Specificatie';
 
-export type GenericDisplayStatus =
-  | 'Toegewezen'
-  | 'Afgewezen'
-  | 'Einde recht'
-  | 'Onbekend';
-
 export type GetDisplayStatusFn<
-  T extends string,
-  x = T | GenericDisplayStatus,
-> = (regeling: ZorgnedHLIRegeling, statusLineItems: StatusLineItem[]) => x;
+  T extends ZaakDisplayStatus = ZaakDisplayStatus,
+> = (regeling: ZorgnedHLIRegeling, statusLineItems: StatusLineItem[]) => T;
 
-export const getDisplayStatus: GetDisplayStatusFn<GenericDisplayStatus> = (
+export const getDisplayStatus: GetDisplayStatusFn = (
   regeling: ZorgnedHLIRegeling,
   statusLineItems: StatusLineItem[]
 ) => {
@@ -82,10 +76,7 @@ export const getDisplayStatus: GetDisplayStatusFn<GenericDisplayStatus> = (
       return 'Afgewezen';
   }
 
-  return (
-    (statusLineItems[statusLineItems.length - 1]
-      ?.status as GenericDisplayStatus) ?? 'Onbekend'
-  );
+  return statusLineItems[statusLineItems.length - 1]?.status ?? 'Onbekend';
 };
 
 export function getDocumentsFrontend(
@@ -130,11 +121,11 @@ function transformRegelingTitle(
   }
 }
 
-export function transformRegelingForFrontend<T extends string>(
+export function transformRegelingForFrontend(
   sessionID: SessionID,
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
   statusLineItems: StatusLineItem[],
-  getDisplayStatusFn: GetDisplayStatusFn<T> = getDisplayStatus
+  getDisplayStatusFn: GetDisplayStatusFn = getDisplayStatus
 ) {
   const id = aanvraag.id;
 
