@@ -20,6 +20,7 @@ import {
 } from '../../../client/pages/Thema/Profile/Profile-thema-config';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import {
+  apiErrorResult,
   apiSuccessResult,
   getFailedDependencies,
   type ApiResponse,
@@ -257,8 +258,13 @@ export async function fetchBrpByBsnTransformed(
 ): Promise<ApiResponse<BrpFrontend>> {
   const brpResponse = await fetchBrpByBsn(sessionID, bsn);
 
-  if (brpResponse.status !== 'OK' || brpResponse.content === null) {
-    return brpResponse;
+  if (brpResponse.status !== 'OK' || !brpResponse.content?.personen.length) {
+    return apiErrorResult(
+      brpResponse.status === 'ERROR'
+        ? brpResponse.message
+        : 'No person found in BRP response',
+      null
+    );
   }
 
   const transformedContent = transformBenkBrpResponse(
