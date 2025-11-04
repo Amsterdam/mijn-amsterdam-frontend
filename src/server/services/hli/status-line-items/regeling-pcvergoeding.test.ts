@@ -1,6 +1,6 @@
-import Mockdate from 'mockdate';
-
 import {
+  AV_PCTGBO,
+  AV_PCTGVO,
   AV_PCVC,
   AV_PCVTG,
   AV_PCVZIL,
@@ -9,7 +9,9 @@ import {
   AV_UPCZIL,
   forTesting,
 } from './regeling-pcvergoeding';
+import { getAuthProfileAndToken } from '../../../../testing/utils';
 import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../../zorgned/zorgned-types';
+import { forTesting as forTestingHLI } from '../hli';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -357,7 +359,7 @@ describe('pcvergoeding', () => {
     });
   });
 
-  describe('filterCombineUpcPcvData', () => {
+  describe('filterCombineUpcPcvData_pre2026', () => {
     test('combines documents and updates fields correctly', () => {
       const testData = [
         {
@@ -412,6 +414,7 @@ describe('pcvergoeding', () => {
           resultaat: 'toegewezen',
           documenten: ['new-doc-2'],
         },
+
         {
           id: 'historic-4',
           titel: 'PC vergoeding verzilvering',
@@ -586,39 +589,164 @@ describe('pcvergoeding', () => {
       expect(result).toEqual([]);
     });
 
-    describe('Regeling V3 conditional', () => {
+    test('Filters out redundant pcvergoeding aanvragen in the case a Workshop is not followed', () => {
       const testData = [
         {
-          id: '1',
-          productIdentificatie: AV_PCVZIL,
-          betrokkenen: ['A'],
-          datumAanvraag: '2026-01-01',
-          datumBesluit: '2026-02-18',
+          id: '1-1',
+          productIdentificatie: AV_PCVC,
           resultaat: 'toegewezen',
-          documenten: ['doc1'],
+          datumIngangGeldigheid: '2024-08-29',
+          datumEindeGeldigheid: '2024-08-29',
+          beschikkingNummer: 123,
         },
-      ] as unknown as ZorgnedAanvraagWithRelatedPersonsTransformed[];
+        {
+          id: '1-2',
+          productIdentificatie: AV_PCVC,
+          resultaat: 'afgewezen',
+          datumIngangGeldigheid: null,
+          datumEindeGeldigheid: null,
+          beschikkingNummer: 123,
+        },
+      ] as ZorgnedAanvraagWithRelatedPersonsTransformed[];
 
-      test('Startdate is >= 01-01-2026', () => {
-        Mockdate.set('2026-01-01');
-        const result = forTesting.filterCombineUpcPcvData(testData);
-        expect(result).toEqual(testData);
-      });
+      const result =
+        forTesting.filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNietGevolgd(
+          testData
+        );
 
-      test('Startdate is < 01-01-2026', () => {
-        Mockdate.set('2025-12-31');
-        const result = forTesting.filterCombineUpcPcvData(testData);
-        expect(result).toEqual([]);
-      });
+      expect(result).toEqual([testData[0]]);
+    });
 
-      test('Feature toggle is off -> Verzilvering is orphaned / No base regeling.', () => {
-        mocks.hli2026PCVergoedingV3Enabled = false;
-        Mockdate.set('2026-01-01');
-        const result = forTesting.filterCombineUpcPcvData(testData);
-        expect(result).toEqual([]);
-      });
+    test('Does not filter out aanvragen derived from the same beschikking with different product identificatie and at least 1 pcvergoeding aanvraag present', () => {
+      const testData = [
+        {
+          id: '1-1',
+          productIdentificatie: AV_PCVC,
+          resultaat: 'toegewezen',
+          datumIngangGeldigheid: '2024-08-29',
+          datumEindeGeldigheid: '2024-08-29',
+          beschikkingNummer: 123,
+        },
+        {
+          id: '1-2',
+          productIdentificatie: 'AV-OTHER',
+          resultaat: 'toegewezen',
+          datumIngangGeldigheid: null,
+          datumEindeGeldigheid: null,
+          beschikkingNummer: 123,
+        },
+        {
+          id: '1-3',
+          productIdentificatie: 'AV-YET-ANOTHER',
+          resultaat: 'afgewezen',
+          datumIngangGeldigheid: null,
+          datumEindeGeldigheid: null,
+          beschikkingNummer: 123,
+        },
+      ] as ZorgnedAanvraagWithRelatedPersonsTransformed[];
 
-      Mockdate.reset();
+      const result =
+        forTesting.filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNietGevolgd(
+          testData
+        );
+
+      expect(result).toEqual(testData);
+    });
+  });
+
+  describe('PC tegoed >= 2026', () => {
+    const testData = [
+      {
+        id: '2',
+        titel: 'Gratis laptop of tablet basis onderwijs',
+        productIdentificatie: AV_PCTGBO,
+        betrokkenen: ['A'],
+        datumAanvraag: '2026-01-01',
+        datumBesluit: '2026-06-18',
+        resultaat: 'toegewezen',
+        documenten: [],
+        betrokkenPersonen: [{ name: 'Persoon A' }],
+      },
+      {
+        id: '1',
+        titel: 'Gratis laptop of tablet voortgezet onderwijs',
+        productIdentificatie: AV_PCTGVO,
+        betrokkenen: ['A'],
+        datumAanvraag: '2026-01-01',
+        datumBesluit: '2026-05-18',
+        isActueel: true,
+        documenten: [],
+        betrokkenPersonen: [{ name: 'Persoon B' }],
+      },
+    ] as unknown as ZorgnedAanvraagWithRelatedPersonsTransformed[];
+
+    test('PCRegelingen with AV_PCTGBO ans AV_PCTGVO are transformed correctly', async () => {
+      expect(
+        await forTestingHLI.transformRegelingenForFrontend(
+          getAuthProfileAndToken(),
+          testData,
+          new Date('2026-01-01')
+        )
+      ).toStrictEqual([
+        {
+          betrokkenen: 'Persoon A',
+          dateDecision: '2026-06-18',
+          dateEnd: undefined,
+          dateStart: undefined,
+          decision: 'toegewezen',
+          displayStatus: 'Toegewezen',
+          documents: [],
+          id: '2',
+          isActual: undefined,
+          link: {
+            title: 'Meer informatie',
+            to: '/regelingen-bij-laag-inkomen/regeling/gratis-laptop-of-tablet-basis-onderwijs/2',
+          },
+          steps: [
+            {
+              datePublished: '2026-06-18',
+              description:
+                '<p> <p>Uw kind Persoon A krijgt een gratis laptop of tablet basis onderwijs. Lees in de brief hoe u de gratis laptop of tablet basis onderwijs bestelt.</p> </p>',
+              documents: [],
+              id: 'status-step-0',
+              isActive: true,
+              isChecked: true,
+              isVisible: true,
+              status: 'Besluit',
+            },
+          ],
+          title: 'Gratis laptop of tablet basis onderwijs',
+        },
+        {
+          betrokkenen: 'Persoon B',
+          dateDecision: '2026-05-18',
+          dateEnd: undefined,
+          dateStart: undefined,
+          decision: undefined,
+          displayStatus: 'Besluit',
+          documents: [],
+          id: '1',
+          isActual: true,
+          link: {
+            title: 'Meer informatie',
+            to: '/regelingen-bij-laag-inkomen/regeling/gratis-laptop-of-tablet-voortgezet-onderwijs/1',
+          },
+          steps: [
+            {
+              datePublished: '2026-05-18',
+              description:
+                '<p> U krijgt geen gratis laptop of tablet voortgezet onderwijs voor uw kind Persoon B. </p> <p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>',
+              documents: [],
+              id: 'status-step-0',
+              isActive: true,
+              isChecked: true,
+              isVisible: true,
+              status: 'Besluit',
+            },
+          ],
+          title: 'Gratis laptop of tablet voortgezet onderwijs',
+        },
+      ]);
     });
   });
 });

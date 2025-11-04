@@ -1,9 +1,10 @@
 import { describe, it, expect, vi } from 'vitest';
 import type { Mock } from 'vitest';
 
-import { forTesting, fetchBrpByBsn } from './brp';
-import { getFromEnv } from '../../helpers/env';
-import { requestData } from '../../helpers/source-api-request';
+import { forTesting, fetchBrpByBsn, fetchBrpByBsnTransformed } from './brp';
+import testPersonenResponse from '../../../../mocks/fixtures/brp/test-personen.json';
+import verblijfplaatsenResponse from '../../../../mocks/fixtures/brp/verblijfplaatshistorie.json';
+import { remoteApi } from '../../../testing/utils';
 import { fetchAuthTokenHeader } from '../ms-oauth/oauth-token';
 
 const {
@@ -13,16 +14,8 @@ const {
   translateBSN,
 } = forTesting;
 
-vi.mock('../../helpers/env', () => ({
-  getFromEnv: vi.fn(),
-}));
-
 vi.mock('../ms-oauth/oauth-token', () => ({
   fetchAuthTokenHeader: vi.fn(),
-}));
-
-vi.mock('../../helpers/source-api-request', () => ({
-  requestData: vi.fn(),
 }));
 
 describe('brp.ts', () => {
@@ -33,16 +26,6 @@ describe('brp.ts', () => {
 
   describe('fetchBenkBrpTokenHeader', () => {
     it('should call fetchAuthTokenHeader with correct parameters', () => {
-      (getFromEnv as Mock).mockImplementation((key: string) => {
-        const env = {
-          BFF_BENK_BRP_CLIENT_ID: 'test-client-id',
-          BFF_BENK_BRP_CLIENT_SECRET: 'test-client-secret',
-          BFF_BENK_BRP_TENANT: 'test-tenant',
-          BFF_BENK_BRP_APPLICATION_ID: 'test-app-id',
-        };
-        return env[key];
-      });
-
       fetchBenkBrpTokenHeader();
 
       expect(fetchAuthTokenHeader).toHaveBeenCalledWith(
@@ -108,15 +91,6 @@ describe('brp.ts', () => {
   });
 
   describe('transformBenkBrpResponse', () => {
-    it('should throw an error if no person is found in response', () => {
-      expect(() =>
-        transformBenkBrpResponse({
-          personen: [],
-          type: '',
-        })
-      ).toThrow('No person found in Benk BRP response');
-    });
-
     it('should transform response data correctly', () => {
       const responseData = {
         personen: [
@@ -128,7 +102,7 @@ describe('brp.ts', () => {
         ],
       };
 
-      const result = transformBenkBrpResponse(responseData as any);
+      const result = transformBenkBrpResponse(responseData.personen[0] as any);
       expect(result).toHaveProperty('persoon.opgemaakteNaam', 'John Doe');
       expect(result).toHaveProperty('persoon.vertrokkenOnbekendWaarheen', true);
       expect(result).toHaveProperty('persoon.mokum', true);
@@ -137,44 +111,80 @@ describe('brp.ts', () => {
 
   describe('translateBSN', () => {
     it('should return the same BSN if translations are not set', () => {
-      (getFromEnv as Mock).mockReturnValue(null);
       expect(translateBSN('123456789')).toBe('123456789');
     });
 
     it('should translate BSN if translations are set', () => {
-      (getFromEnv as Mock).mockReturnValue('123456789=987654321');
+      const envValue = process.env.BFF_BENK_BSN_TRANSLATIONS;
+      process.env.BFF_BENK_BSN_TRANSLATIONS =
+        '123456789=987654321,111111111=222222222';
       expect(translateBSN('123456789')).toBe('987654321');
+      expect(translateBSN('111111111')).toBe('222222222');
+
+      process.env.BFF_BENK_BSN_TRANSLATIONS = envValue;
     });
   });
 
   describe('fetchBrpByBsn', () => {
-    it('should call requestData with correct parameters', async () => {
-      (fetchAuthTokenHeader as Mock).mockResolvedValue({
-        status: 'OK',
-        content: { Authorization: 'Bearer test-token' },
-      });
-
-      (requestData as Mock).mockResolvedValue({ data: 'test-data' });
-
-      const result = await fetchBrpByBsn('test-session-id', ['123456789']);
-
-      expect(fetchAuthTokenHeader).toHaveBeenCalled();
-      expect(requestData).toHaveBeenCalledWith(
-        expect.objectContaining({
-          headers: expect.objectContaining({
-            Authorization: 'Bearer test-token',
-            'X-Correlation-ID': 'test-session-id',
-          }),
-        })
-      );
-      expect(result).toEqual({ data: 'test-data' });
-    });
-
     it('should return response if fetchAuthTokenHeader fails', async () => {
       (fetchAuthTokenHeader as Mock).mockResolvedValue({ status: 'ERROR' });
 
       const result = await fetchBrpByBsn('test-session-id', ['123456789']);
       expect(result).toEqual({ status: 'ERROR' });
+    });
+
+    describe('Should format response data correctly', () => {
+      test('Formatting for test BSN 1, with verblijfplaatshistorie', async () => {
+        vi.unmock('../../helpers/source-api-request');
+
+        (fetchAuthTokenHeader as Mock).mockResolvedValue({
+          content: { Authorization: 'Bearer test-token' },
+          status: 'OK',
+        });
+
+        const BSN = '999971074';
+        const testPersoon = testPersonenResponse.personen.find(
+          (p) => p.burgerservicenummer === BSN
+        );
+        remoteApi.post(/\/personen/).reply(200, { personen: [testPersoon] });
+        remoteApi
+          .post(/\/verblijfplaatshistorie/)
+          .reply(200, verblijfplaatsenResponse);
+
+        const response = await fetchBrpByBsnTransformed('test-session-id', [
+          BSN,
+        ]);
+
+        expect(response).toMatchSnapshot();
+        expect(response.status).toBe('OK');
+        expect(response.content?.persoon.bsn).toBe(BSN);
+      });
+
+      test('Formatting for test BSN 2, with verblijfplaatshistorie returning an error', async () => {
+        vi.unmock('../../helpers/source-api-request');
+
+        (fetchAuthTokenHeader as Mock).mockResolvedValue({
+          content: { Authorization: 'Bearer test-token' },
+          status: 'OK',
+        });
+
+        const BSN = '999990810';
+        const testPersoon = testPersonenResponse.personen.find(
+          (p) => p.burgerservicenummer === BSN
+        );
+        remoteApi.post(/\/personen/).reply(200, { personen: [testPersoon] });
+        remoteApi
+          .post(/\/verblijfplaatshistorie/)
+          .reply(500, 'Internal Server Error');
+
+        const response = await fetchBrpByBsnTransformed('test-session-id', [
+          BSN,
+        ]);
+
+        expect(response).toMatchSnapshot();
+        expect(response.status).toBe('OK');
+        expect(response.content?.persoon.bsn).toBe(BSN);
+      });
     });
   });
 });

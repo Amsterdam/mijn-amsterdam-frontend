@@ -8,7 +8,7 @@ import {
   apiErrorResult,
 } from '../../../universal/helpers/api';
 import { fetchBrpV2 } from '../brp/brp';
-import type { Adres } from '../profile/brp.types';
+import type { Adres } from '../brp/brp-types';
 import { fetchKVK, getKvkAddresses } from '../profile/kvk';
 
 vi.mock('../brp/brp', () => ({

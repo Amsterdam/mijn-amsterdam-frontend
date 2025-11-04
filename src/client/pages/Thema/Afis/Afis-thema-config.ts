@@ -40,10 +40,12 @@ export const routeConfig = {
   detailPage: {
     path: '/facturen-en-betalen/factuur/:state/:factuurNummer',
     documentTitle: `Factuurgegevens | ${themaTitle}`,
+    trackingUrl: null,
   },
   betaalVoorkeuren: {
     path: '/facturen-en-betalen/betaalvoorkeuren',
     documentTitle: `Betaalvoorkeuren | ${themaTitle}`,
+    trackingUrl: null,
   },
   detailPageEMandate: {
     path: '/facturen-en-betalen/betaalvoorkeuren/emandate/:id',
@@ -52,10 +54,12 @@ export const routeConfig = {
   listPage: {
     path: '/facturen-en-betalen/facturen/lijst/:state/:page?',
     documentTitle: getAfisListPageDocumentTitle,
+    trackingUrl: null,
   },
   themaPage: {
     path: '/facturen-en-betalen',
     documentTitle: `${themaTitle} | overzicht`,
+    trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
 

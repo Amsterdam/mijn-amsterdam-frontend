@@ -1,19 +1,17 @@
-import { isAfter, isBefore, isSameDay, parseISO, subDays } from 'date-fns';
+import { isSameDay, parseISO } from 'date-fns';
 
 import { getBetrokkenKinderenDescription } from './generic';
 import { featureToggle } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { lowercaseFirstLetter } from '../../../../universal/helpers/text';
+import { sortAlpha } from '../../../../universal/helpers/utils';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types';
 
-export const PC_REGELING_V3_START_DATE = new Date('2026-01-01');
-
-const isPcRegelingV3Active = () =>
-  featureToggle.hli2026PCVergoedingV3Enabled &&
-  isAfter(new Date(), subDays(PC_REGELING_V3_START_DATE, 1));
+export const AV_PCTGBO = 'AV-PCTGBO'; // PC Tegoed Basisonderwijs
+export const AV_PCTGVO = 'AV-PCTGVO'; // PC Tegoed Voortgezet Onderwijs
 
 export const AV_UPCC = 'AV-UPCC';
 export const AV_UPCZIL = 'AV-UPCZIL';
@@ -36,12 +34,6 @@ const avCodes = {
 
 const verzilveringsCodesPC = toVerzilveringCodes(avCodes.PC);
 const verzilveringsCodesUPC = toVerzilveringCodes(avCodes.UPC);
-
-function isAangevraagdVoorRegelingV3ActiefWerd(dateString: string) {
-  return isPcRegelingV3Active()
-    ? isBefore(dateString, PC_REGELING_V3_START_DATE)
-    : true;
-}
 
 export const verzilveringCodes = [
   ...verzilveringsCodesUPC,
@@ -70,6 +62,12 @@ function isPcVergoeding(
     !!aanvraag.productIdentificatie &&
     [AV_PCVC, AV_UPCC].includes(aanvraag.productIdentificatie)
   );
+}
+
+export function isPcVergoedingAanvraag(
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+) {
+  return isVerzilvering(aanvraag) || isPcVergoeding(aanvraag);
 }
 
 function isRegelingVanVerzilvering(
@@ -113,22 +111,73 @@ function getUpcPcvDecisionDate(
   return aanvraag.datumBesluit;
 }
 
-export function filterCombineUpcPcvData(
+function filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNietGevolgd(
+  PCVergoedingAanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
+) {
+  const pcVergoedingAanvragenByBeschikkingNummer = PCVergoedingAanvragen.reduce(
+    (acc, aanvraag) => {
+      const beschikkingNummer =
+        aanvraag.beschikkingNummer || 'undefined_beschikkingNummer';
+      acc[beschikkingNummer] = acc[beschikkingNummer] || [];
+      acc[beschikkingNummer].push(aanvraag);
+      return acc;
+    },
+    {} as Record<string, ZorgnedAanvraagWithRelatedPersonsTransformed[]>
+  );
+
+  const PCVergoedingAanvragenFiltered = Object.values(
+    pcVergoedingAanvragenByBeschikkingNummer
+  ).flatMap((group) => {
+    if (group.length <= 1) {
+      return group[0];
+    }
+    const groupSorted = group.toSorted(sortAlpha('id', 'asc'));
+    // If there are multiple aanvragen with the same beschikkingNummer, we need to filter them.
+    // We keep the aanvraag where the workshop is not followed, and filter out the denied ones for the same productIdentificatie.
+    const workshopAanvraagNietGevolgd: ZorgnedAanvraagWithRelatedPersonsTransformed | null =
+      groupSorted.find((aanvraag) => isWorkshopNietGevolgd(aanvraag)) ?? null;
+
+    const filteredGroup = groupSorted.filter((aanvraag) => {
+      switch (true) {
+        // This is the aanvraag we want to keep.
+        case aanvraag === workshopAanvraagNietGevolgd:
+          return true;
+
+        // Filters out the aanvraag derived from a redundant beschiktProduct in the same beschikking.
+        // In this case the workshop is not followed, the business sets datumIngangGeldigheid and datumEindeGeldigheid to the same date.
+        // But also adds a denied beschiktproduct for the same productIdentificatie.
+        case aanvraag.resultaat === 'afgewezen' &&
+          aanvraag.productIdentificatie ===
+            workshopAanvraagNietGevolgd?.productIdentificatie:
+          return false;
+
+        // These are all the non-workshop aanvragen, we keep them as well.
+        default:
+          return true;
+      }
+    });
+    return filteredGroup;
+  });
+
+  return PCVergoedingAanvragenFiltered;
+}
+
+export function filterCombineUpcPcvData_pre2026(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ) {
   const baseRegelingIdWithVerzilvering: string[] = [];
-
-  const aanvragenWithDocumentsCombined = aanvragen.map((aanvraag) => {
+  const aanvragen_ =
+    filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNietGevolgd(
+      aanvragen
+    ).toSorted(sortAlpha('id', 'desc'));
+  const aanvragenWithDocumentsCombined = aanvragen_.map((aanvraag) => {
     // Exclude baseRegelingen that have verzilvering
     if (baseRegelingIdWithVerzilvering.includes(aanvraag.id)) {
       return null;
     }
 
     // Add documenten to Verzilvering, e.g, (AV_PC{ZIL|TG})
-    if (
-      isVerzilvering(aanvraag) &&
-      isAangevraagdVoorRegelingV3ActiefWerd(aanvraag.datumAanvraag)
-    ) {
+    if (isVerzilvering(aanvraag)) {
       // Find first corresponding baseRegeling
       const baseRegeling = aanvragen.find((compareAanvraag) =>
         isRegelingVanVerzilvering(aanvraag, compareAanvraag)
@@ -171,7 +220,6 @@ export function filterCombineUpcPcvData(
 }
 
 /** Checks of een Workshop niet gevolgd is.
- *
  * In Zorgned worden datumIngangGeldigheid en datumEindeGeledigheid gebruikt om aan te geven dat de workshop niet gevolgd is.
  * Als de workshop niet gevolgd is, zijn de datumIngangGeldigheid en datumEindeGeledigheid gelijk aan elkaar.
  */
@@ -201,22 +249,12 @@ function descriptionDefinitief(
   return `<p>Uw kind ${betrokkenKinderen} krijgt een ${titelLower}. Lees in de brief hoe u de ${titelLower} bestelt.</p>
         ${regeling.datumEindeGeldigheid ? `<p>U kunt per ${defaultDateFormat(regeling.datumEindeGeldigheid)} opnieuw een ${titelLower} aanvragen.</p>` : ''}`;
 }
-
-export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWithRelatedPersonsTransformed>[] =
+export const PCVERGOEDING_2026: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWithRelatedPersonsTransformed>[] =
   [
     {
       status: 'Besluit',
       datePublished: getUpcPcvDecisionDate,
       isChecked: () => true,
-      isVisible: (regeling) => {
-        // Alleen zichtbaar als regeling is aangevraagd nadat PC regeling v3 actief werd.
-        return isPcRegelingV3Active()
-          ? isAfter(
-              regeling.datumAanvraag,
-              subDays(PC_REGELING_V3_START_DATE, 1)
-            )
-          : false;
-      },
       isActive: () => true,
       description: (regeling) => {
         const betrokkenKinderen = getBetrokkenKinderenDescription(regeling);
@@ -231,12 +269,15 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
       `;
       },
     },
+  ];
+
+export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWithRelatedPersonsTransformed>[] =
+  [
     {
       status: 'Besluit',
       datePublished: getUpcPcvDecisionDate,
       isChecked: () => true,
-      isVisible: (regeling) =>
-        isAangevraagdVoorRegelingV3ActiefWerd(regeling.datumAanvraag),
+
       isActive: (regeling) =>
         !isVerzilvering(regeling) && regeling.resultaat === 'afgewezen',
       description: (regeling) => {
@@ -256,7 +297,6 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
     {
       status: 'Workshop',
       isVisible: (regeling) =>
-        isAangevraagdVoorRegelingV3ActiefWerd(regeling.datumAanvraag) &&
         !isVerzilvering(regeling) &&
         regeling.resultaat === 'toegewezen' &&
         !isWorkshopNietGevolgd(regeling),
@@ -275,9 +315,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
     {
       status: 'Workshop gevolgd',
       isVisible: (regeling) =>
-        isAangevraagdVoorRegelingV3ActiefWerd(regeling.datumAanvraag) &&
-        isVerzilvering(regeling) &&
-        regeling.resultaat === 'toegewezen',
+        isVerzilvering(regeling) && regeling.resultaat === 'toegewezen',
       datePublished: (regeling) => regeling.datumBesluit,
       isChecked: () => true,
       isActive: () => true,
@@ -285,9 +323,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
     },
     {
       status: 'Workshop niet gevolgd',
-      isVisible: (regeling) =>
-        isAangevraagdVoorRegelingV3ActiefWerd(regeling.datumAanvraag) &&
-        isWorkshopNietGevolgd(regeling),
+      isVisible: (regeling) => isWorkshopNietGevolgd(regeling),
       datePublished: (regeling) => regeling.datumEindeGeldigheid ?? '',
       isChecked: () => true,
       isActive: () => true,
@@ -311,5 +347,6 @@ export const forTesting = {
   isRegelingVanVerzilvering,
   isVerzilvering,
   isWorkshopNietGevolgd,
-  filterCombineUpcPcvData,
+  filterCombineUpcPcvData: filterCombineUpcPcvData_pre2026,
+  filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNietGevolgd,
 };

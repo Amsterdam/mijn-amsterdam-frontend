@@ -32,7 +32,7 @@ export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 export const featureToggle = {
-  varenActive: !IS_PRODUCTION,
+  varenActive: true,
 };
 
 export const themaId = 'VAREN' as const;
@@ -56,10 +56,12 @@ export const routeConfig = {
   listPage: {
     path: '/varen/vergunningen/lijst/:kind/:page?',
     documentTitle: getVarenListPageDocumentTitle(themaTitle),
+    trackingUrl: null,
   },
   themaPage: {
     path: '/varen',
     documentTitle: `${themaTitle} | overzicht`,
+    trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
 
@@ -125,7 +127,7 @@ export const tableConfig: {
       props: {
         detailLinkComponent: 'Naam vaartuig',
         title: 'Omschrijving',
-        id: 'Vergunningkenmerk',
+        vergunningKenmerk: 'Vergunningkenmerk',
       },
       colWidths: {
         large: ['25%', '35%', '40%', '0'],

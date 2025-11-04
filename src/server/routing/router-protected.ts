@@ -17,6 +17,7 @@ import { afisRouter } from '../services/afis/afis-router';
 import { fetchBezwaarDocument } from '../services/bezwaren/bezwaren';
 import { handleFetchBezwaarDetail } from '../services/bezwaren/bezwaren-route-handlers';
 import { fetchLoodMetingDocument } from '../services/bodem/loodmetingen';
+import { brpRouter } from '../services/brp/brp-router';
 import {
   NOTIFICATIONS,
   loadServicesAll,
@@ -121,8 +122,7 @@ router.get(
 //// BFF Service Api Endpoints /////////////////////
 ////////////////////////////////////////////////////
 
-router.use(wmoRouter.protected);
-router.use(afisRouter.protected);
+router.use(wmoRouter.protected, brpRouter.protected, afisRouter.protected);
 
 // LLV Zorgned Doc download
 attachDocumentDownloadRoute(

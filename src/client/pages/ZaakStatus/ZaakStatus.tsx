@@ -138,8 +138,8 @@ const pageRouteResolvers: PageRouteResolvers = {
     }
   ),
   bodem: baseThemaConfig(
-    BODEM.routeConfig.themaPage.path,
-    BODEM.themaId,
+    BODEM.themaConfig.route.path,
+    BODEM.themaConfig.id,
     (stateSlice) => {
       return stateSlice.content;
     }

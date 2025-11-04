@@ -33,6 +33,12 @@ export function isRTMDeel1(
   );
 }
 
+export function isRTMAanvraag(
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+) {
+  return isRTMDeel1(aanvraag) || isRTMDeel2(aanvraag);
+}
+
 /** Aanvragen can contain duplicate RTMDeel2. We combine the documents and drop the dupe. */
 function dedupCombineRTMDeel2(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
