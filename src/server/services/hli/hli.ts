@@ -4,18 +4,20 @@ import slug from 'slugme';
 
 import {
   HLIRegelingFrontend,
-  HLIRegelingSpecificatieFrontend,
   HLIresponseData,
+  ZorgnedHLIRegeling,
+  HLIRegelingSpecificatieFrontend,
 } from './hli-regelingen-types';
+import { routes, ZORGNED_AV_API_CONFIG_KEY } from './hli-service-config';
 import { hliStatusLineItemsConfig } from './hli-status-line-items';
 import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
+import { transformRTMAanvragen, isRTMAanvraag } from './rtm/regeling-rtm';
 import { fetchStadspas } from './stadspas';
 import {
-  filterCombineRtmData,
-  isRTMAanvraag,
-  isRTMDeel1,
-  RTM_STATUS_IN_BEHANDELING,
-} from './status-line-items/regeling-rtm';
+  isPcAanvraag,
+  isWorkshopNietGevolgd,
+  filterCombineUpcPcvData_pre2026,
+} from './status-line-items/regeling-pcvergoeding';
 import {
   featureToggle,
   routeConfig,
@@ -30,54 +32,58 @@ import { defaultDateFormat } from '../../../universal/helpers/date';
 import { dedupeDocumentsInDataSets } from '../../../universal/helpers/document';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import {
+  sortAlpha,
+  splitBy,
+  toDateFormatted,
+} from '../../../universal/helpers/utils';
+import {
   GenericDocument,
   StatusLineItem,
 } from '../../../universal/types/App.types';
+import type { ZaakDisplayStatus } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
+import { fetchRelatedPersons } from '../zorgned/zorgned-service';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
-import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types';
 import {
-  filterCombineUpcPcvData_pre2026,
-  isPcVergoedingAanvraag,
-  isWorkshopNietGevolgd,
-} from './status-line-items/regeling-pcvergoeding';
-import { sortAlpha, toDateFormatted } from '../../../universal/helpers/utils';
+  ZorgnedAanvraagWithRelatedPersonsTransformed,
+  type ZorgnedPerson,
+} from '../zorgned/zorgned-types';
 
 export const RTM_SPECIFICATIE_TITLE = 'AV-RTM Specificatie';
 
-function getDisplayStatus(
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
+export type GetDisplayStatusFn<
+  T extends ZaakDisplayStatus = ZaakDisplayStatus,
+> = (regeling: ZorgnedHLIRegeling, statusLineItems: StatusLineItem[]) => T;
+
+export const getDisplayStatus: GetDisplayStatusFn = (
+  regeling: ZorgnedHLIRegeling,
   statusLineItems: StatusLineItem[]
-) {
+) => {
   const hasEindeRecht = statusLineItems.some(
     (regeling) => regeling.status === 'Einde recht'
   );
   switch (true) {
-    // NOTE: Special status for PCVergoedingen.
-    case isWorkshopNietGevolgd(aanvraag):
+    // Special case for PC-vergoeding.
+    case isWorkshopNietGevolgd(regeling):
       return 'Afgewezen';
 
-    case isRTMDeel1(aanvraag) && aanvraag.resultaat === 'toegewezen':
-      return RTM_STATUS_IN_BEHANDELING;
-
-    case (aanvraag.isActueel || !hasEindeRecht) &&
-      aanvraag.resultaat === 'toegewezen':
+    case (regeling.isActueel || !hasEindeRecht) &&
+      regeling.resultaat === 'toegewezen':
       return 'Toegewezen';
 
-    case !aanvraag.isActueel && aanvraag.resultaat === 'toegewezen':
+    case !regeling.isActueel && regeling.resultaat === 'toegewezen':
       return 'Einde recht';
 
-    case !aanvraag.isActueel && aanvraag.resultaat !== 'toegewezen':
+    case !regeling.isActueel && regeling.resultaat !== 'toegewezen':
       return 'Afgewezen';
   }
 
   return statusLineItems[statusLineItems.length - 1]?.status ?? 'Onbekend';
-}
+};
 
-function getDocumentsFrontend(
+export function getDocumentsFrontend(
   sessionID: SessionID,
   documents: GenericDocument[]
 ): GenericDocument[] {
@@ -88,7 +94,7 @@ function getDocumentsFrontend(
     );
     return {
       ...document,
-      url: generateFullApiUrlBFF(BffEndpoints.HLI_DOCUMENT_DOWNLOAD, [
+      url: generateFullApiUrlBFF(routes.protected.HLI_DOCUMENT_DOWNLOAD, [
         {
           id: idEncrypted,
         },
@@ -119,10 +125,11 @@ function transformRegelingTitle(
   }
 }
 
-async function transformRegelingForFrontend(
+export function transformRegelingForFrontend(
   sessionID: SessionID,
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
-  statusLineItems: StatusLineItem[]
+  statusLineItems: StatusLineItem[],
+  getDisplayStatusFn: GetDisplayStatusFn = getDisplayStatus
 ) {
   const id = aanvraag.id;
 
@@ -131,9 +138,9 @@ async function transformRegelingForFrontend(
     regeling: slug(aanvraag.titel),
   });
 
-  const displayStatus = getDisplayStatus(aanvraag, statusLineItems);
+  const displayStatus = getDisplayStatusFn(aanvraag, statusLineItems);
 
-  // Override isActueel for Afgewezen (RTM* / UPC*) regelingen.
+  // Override isActueel for Afgewezen (UPC*) regelingen.
   let isActual = aanvraag.isActueel;
 
   if (displayStatus === 'Afgewezen' && aanvraag.isActueel) {
@@ -155,55 +162,43 @@ async function transformRegelingForFrontend(
     decision: aanvraag.resultaat,
     displayStatus,
     documents: getDocumentsFrontend(sessionID, aanvraag.documenten),
-    betrokkenen: aanvraag.betrokkenPersonen
-      .map((persoon) => persoon.name)
-      .join(', '),
+    betrokkenen: aanvraag.betrokkenPersonen.length
+      ? aanvraag.betrokkenPersonen.map((persoon) => persoon.name).join(', ')
+      : '-',
   };
 
   return regelingFrontend;
 }
 
-function extractAanvragen(
-  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
-  filterFn: (aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed) => boolean
-) {
-  const aanvragenFiltered = aanvragen.filter(filterFn);
-  const otherAanvragen = aanvragen.filter(
-    (aanvraag) => !aanvragenFiltered.includes(aanvraag)
-  );
-  return [otherAanvragen, aanvragenFiltered];
-}
-
-async function transformRegelingenForFrontend(
-  authProfileAndToken: AuthProfileAndToken,
+function transformRegelingenForFrontend(
+  sessionID: AuthProfileAndToken['profile']['sid'],
+  aanvrager: ZorgnedPerson | Pick<ZorgnedPerson, 'bsn'>,
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
   today: Date
-): Promise<HLIRegelingFrontend[]> {
-  const regelingenFrontend: HLIRegelingFrontend[] = [];
-
-  const [otherAanvragen, PCVergoedingAanvragen_pre2026] = extractAanvragen(
-    aanvragen,
-    isPcVergoedingAanvraag
+): HLIRegelingFrontend[] {
+  const [remainingAanvragen, RTMAanvragen] = splitBy(aanvragen, isRTMAanvraag);
+  const RTMRegelingenFrontend = transformRTMAanvragen(
+    sessionID,
+    aanvrager,
+    RTMAanvragen
   );
-
+  const [remainingAanvragen_, PCVergoedingAanvragen_pre2026] = splitBy(
+    remainingAanvragen,
+    isPcAanvraag
+  );
   const PCVergoedingAanvragenCombined = filterCombineUpcPcvData_pre2026(
     PCVergoedingAanvragen_pre2026
   );
 
-  const [otherAanvragen_, RTMAanvragen] = extractAanvragen(
-    otherAanvragen,
-    isRTMAanvraag
+  // RTM aanvragen are already completely transformed to HLIRegelingFrontend and do not need further processing.
+  const regelingenFrontend = [...RTMRegelingenFrontend];
+
+  // The Remaining aanvragen are not transformed to HLIRegelingFrontend yet.
+  const remainingAanvragen__ = remainingAanvragen_.concat(
+    PCVergoedingAanvragenCombined
   );
 
-  const RTMAanvragenCombined = filterCombineRtmData(RTMAanvragen);
-
-  const allAanvragen = [
-    ...PCVergoedingAanvragenCombined,
-    ...RTMAanvragenCombined,
-    ...otherAanvragen_,
-  ].toSorted(sortAlpha('id', 'desc'));
-
-  for (const aanvraag of allAanvragen) {
+  for (const aanvraag of remainingAanvragen__) {
     const statusLineItems = getStatusLineItems(
       'HLI',
       hliStatusLineItemsConfig,
@@ -216,14 +211,16 @@ async function transformRegelingenForFrontend(
       continue;
     }
 
-    const regelingForFrontend = await transformRegelingForFrontend(
-      authProfileAndToken.profile.sid,
+    const regelingForFrontend = transformRegelingForFrontend(
+      sessionID,
       aanvraag,
       statusLineItems
     );
 
     regelingenFrontend.push(regelingForFrontend);
   }
+
+  regelingenFrontend.sort(sortAlpha('id', 'desc'));
 
   return dedupeDocumentsInDataSets(regelingenFrontend, 'documents');
 }
@@ -233,13 +230,25 @@ async function fetchRegelingen(authProfileAndToken: AuthProfileAndToken) {
     return apiSuccessResult([]);
   }
 
-  const aanvragenResponse = await fetchZorgnedAanvragenHLI(
-    authProfileAndToken.profile.id
-  );
+  const [aanvragenResult, personResult] = await Promise.allSettled([
+    fetchZorgnedAanvragenHLI(authProfileAndToken.profile.id),
+    fetchRelatedPersons(
+      [authProfileAndToken.profile.id],
+      ZORGNED_AV_API_CONFIG_KEY
+    ),
+  ]);
+
+  const aanvragenResponse = getSettledResult(aanvragenResult);
+  const personResponse = getSettledResult(personResult);
 
   if (aanvragenResponse.status === 'OK') {
-    const regelingen = await transformRegelingenForFrontend(
-      authProfileAndToken,
+    const aanvrager =
+      personResponse.status === 'OK' && personResponse.content.length
+        ? personResponse.content?.[0]
+        : { bsn: authProfileAndToken.profile.id };
+    const regelingen = transformRegelingenForFrontend(
+      authProfileAndToken.profile.sid,
+      aanvrager,
       aanvragenResponse.content,
       new Date()
     );
@@ -326,8 +335,6 @@ export const forTesting = {
   fetchRegelingen,
   fetchSpecificaties,
   getDisplayStatus,
-  getDocumentsFrontend,
   transformRegelingenForFrontend,
-  transformRegelingForFrontend,
   transformRegelingTitle,
 };

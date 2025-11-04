@@ -5,9 +5,9 @@ import {
   WithKentekens,
   WithDateTimeRange,
   WithDateRange,
-  ZaakStatus,
   DecosZaakFrontend,
 } from '../decos/decos-types';
+import { ZaakStatus } from '../../../universal/types/App.types';
 
 export const NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED = 3;
 export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
