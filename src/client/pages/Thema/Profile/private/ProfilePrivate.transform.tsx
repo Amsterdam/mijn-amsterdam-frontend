@@ -345,25 +345,6 @@ export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
   return profileData;
 }
 
-function verbintenisPanelConfig(BRP: AppState['BRP']) {
-  return {
-    title: featureToggle.BRP.benkBrpServiceActive
-      ? BRP.content?.verbintenis?.datumOntbinding
-        ? 'Eerder huwelijk of partnerschap'
-        : 'Partner'
-      : 'Burgerlijke staat',
-    actionLinks: isMokum(BRP.content)
-      ? [
-          {
-            title: 'Inzien of correctie doorgeven',
-            url: profileLinks.CHANGE_PERSONAL_DATA,
-            external: true,
-          },
-        ]
-      : [],
-  };
-}
-
 export const panelConfig: PanelConfig<BRPPanelKey, AppState['BRP']> = {
   persoon: (BRP) => {
     const actionLinks = [];
@@ -422,7 +403,22 @@ export const panelConfig: PanelConfig<BRPPanelKey, AppState['BRP']> = {
       actionLinks,
     };
   },
-  verbintenis: verbintenisPanelConfig,
+  verbintenis: (BRP: AppState['BRP']) => ({
+    title: featureToggle.BRP.benkBrpServiceActive
+      ? BRP.content?.verbintenis?.datumOntbinding
+        ? 'Eerder huwelijk of partnerschap'
+        : 'Partner'
+      : 'Burgerlijke staat',
+    actionLinks: isMokum(BRP.content)
+      ? [
+          {
+            title: 'Inzien of correctie doorgeven',
+            url: profileLinks.CHANGE_PERSONAL_DATA,
+            external: true,
+          },
+        ]
+      : [],
+  }),
   verbintenisHistorisch: (BRP) => ({
     title: 'Eerdere huwelijken of partnerschappen',
     actionLinks: isMokum(BRP.content)

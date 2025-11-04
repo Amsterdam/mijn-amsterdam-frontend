@@ -39,13 +39,10 @@ function ProfilePrivateSectionPanels() {
       )}
       {!!profileData?.verbintenis &&
         !BRP.content?.verbintenis?.datumOntbinding && (
-          <>
-            HOI!
-            <ProfileSectionPanel
-              sectionData={profileData.verbintenis}
-              {...panelConfig.verbintenis(BRP)}
-            />
-          </>
+          <ProfileSectionPanel
+            sectionData={profileData.verbintenis}
+            {...panelConfig.verbintenis(BRP)}
+          />
         )}
       {!!profileData?.kinderen?.length && (
         <ProfileSectionPanel
