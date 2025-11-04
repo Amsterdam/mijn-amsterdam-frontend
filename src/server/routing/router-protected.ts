@@ -117,7 +117,12 @@ router.get(
 //// BFF Service Api Endpoints /////////////////////
 ////////////////////////////////////////////////////
 
-router.use(wmoRouter.protected, hliRouter.protected, brpRouter.protected, afisRouter.protected);
+router.use(
+  wmoRouter.protected,
+  hliRouter.protected,
+  brpRouter.protected,
+  afisRouter.protected
+);
 
 // LLV Zorgned Doc download
 attachDocumentDownloadRoute(
@@ -204,24 +209,3 @@ attachDocumentDownloadRoute(
   BffEndpoints.POWERBROWSER_DOCUMENT_DOWNLOAD,
   fetchBBDocument
 );
-
-// HLI Stadspas transacties
-router.get(BffEndpoints.STADSPAS_TRANSACTIONS, handleFetchTransactionsRequest);
-router.get(BffEndpoints.STADSPAS_BLOCK_PASS, handleBlockStadspas);
-router.get(BffEndpoints.STADSPAS_UNBLOCK_PASS, handleUnblockStadspas);
-
-// HLI Regelingen / doc download
-attachDocumentDownloadRoute(
-  router,
-  BffEndpoints.HLI_DOCUMENT_DOWNLOAD,
-  fetchZorgnedAVDocument
-);
-
-// AFIS facturen en betalen
-router.get(BffEndpoints.AFIS_BUSINESSPARTNER, handleFetchAfisBusinessPartner);
-attachDocumentDownloadRoute(
-  router,
-  BffEndpoints.AFIS_DOCUMENT_DOWNLOAD,
-  fetchAfisDocument
-);
-router.get(BffEndpoints.AFIS_FACTUREN, handleFetchAfisFacturen);
