@@ -280,7 +280,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
               <td
                 class="ams-table__cell"
               >
-                Openstaand: 
+                Openstaand: 
                 <a
                   class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline-fat_10c0a4"
                   href="https://payment.example.com/F001"
@@ -316,7 +316,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
               <td
                 class="ams-table__cell"
               >
-                Openstaand: 
+                Openstaand: 
                 <a
                   class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline-fat_10c0a4"
                   href="https://payment.example.com/F003"

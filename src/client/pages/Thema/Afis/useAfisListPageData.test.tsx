@@ -71,16 +71,12 @@ describe('useAfisListPageData', () => {
             "amount": 100,
             "documentDownloadLink": "http://example.com/document/afgehandeld-1.pdf",
             "factuurNummer": "afgehandeld-1",
-            "factuurNummerEl": <DocumentLink
-              document={
-                {
-                  "datePublished": "",
-                  "id": "afgehandeld-1",
-                  "title": "factuur afgehandeld-1",
-                  "url": "http://example.com/document/afgehandeld-1.pdf",
-                }
-              }
-            />,
+            "factuurNummerEl": <MaRouterLink
+              href="/facturen-en-betalen/factuur/afgehandeld/afgehandeld-1"
+              maVariant="fatNoDefaultUnderline"
+            >
+              afgehandeld-1
+            </MaRouterLink>,
             "status": "afgehandeld",
             "statusDescription": "Afgehandeld",
           },
@@ -103,16 +99,12 @@ describe('useAfisListPageData', () => {
             "amount": 100,
             "documentDownloadLink": "http://example.com/document/open-1.pdf",
             "factuurNummer": "open-1",
-            "factuurNummerEl": <DocumentLink
-              document={
-                {
-                  "datePublished": "",
-                  "id": "open-1",
-                  "title": "factuur open-1",
-                  "url": "http://example.com/document/open-1.pdf",
-                }
-              }
-            />,
+            "factuurNummerEl": <MaRouterLink
+              href="/facturen-en-betalen/factuur/open/open-1"
+              maVariant="fatNoDefaultUnderline"
+            >
+              open-1
+            </MaRouterLink>,
             "status": "openstaand",
             "statusDescription": "Openstaand",
           },

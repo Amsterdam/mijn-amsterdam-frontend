@@ -19,7 +19,6 @@ import { DocumentLink } from '../../../components/DocumentList/DocumentLink';
 import { MaLink, MaRouterLink } from '../../../components/MaLink/MaLink';
 import { generateBffApiUrlWithEncryptedPayloadQuery } from '../../../helpers/api';
 import { useBffApi } from '../../../hooks/api/useBffApi';
-import { useSmallScreen } from '../../../hooks/media.hook';
 
 function getInvoiceStatusDescriptionFrontend(factuur: AfisFactuur): ReactNode {
   switch (true) {
@@ -57,28 +56,18 @@ export function getDocumentLink(factuur: AfisFactuur): ReactNode {
   return null;
 }
 
-function transformFactuur(
-  factuur: AfisFactuur,
-  state: AfisFactuurState,
-  isPhoneScreen: boolean
-) {
-  let factuurNummerEl: ReactNode = factuur.factuurNummer;
-
-  if (isPhoneScreen) {
-    factuurNummerEl = (
-      <MaRouterLink
-        maVariant="fatNoDefaultUnderline"
-        href={generatePath(routeConfig.detailPage.path, {
-          factuurNummer: factuur.factuurNummer,
-          state,
-        })}
-      >
-        {factuur.factuurNummer}
-      </MaRouterLink>
-    );
-  } else if (factuur.documentDownloadLink) {
-    factuurNummerEl = getDocumentLink(factuur);
-  }
+function transformFactuur(factuur: AfisFactuur, state: AfisFactuurState) {
+  const factuurNummerEl: ReactNode = (
+    <MaRouterLink
+      maVariant="fatNoDefaultUnderline"
+      href={generatePath(routeConfig.detailPage.path, {
+        factuurNummer: factuur.factuurNummer,
+        state,
+      })}
+    >
+      {factuur.factuurNummer}
+    </MaRouterLink>
+  );
 
   return {
     ...factuur,
@@ -90,7 +79,6 @@ function transformFactuur(
 export function useTransformFacturen(
   facturenByState: AfisFacturenByStateResponse | null
 ): AfisFacturenByStateFrontend | null {
-  const isPhoneScreen = useSmallScreen();
   const facturenByStateTransformed: AfisFacturenByStateFrontend | null =
     useMemo(() => {
       if (facturenByState) {
@@ -103,14 +91,14 @@ export function useTransformFacturen(
                 ...facturenResponse,
                 facturen:
                   facturenResponse?.facturen?.map((factuur) =>
-                    transformFactuur(factuur, state, isPhoneScreen)
+                    transformFactuur(factuur, state)
                   ) ?? [],
               },
             ])
         );
       }
       return null;
-    }, [facturenByState, isPhoneScreen]);
+    }, [facturenByState]);
 
   return facturenByStateTransformed;
 }
