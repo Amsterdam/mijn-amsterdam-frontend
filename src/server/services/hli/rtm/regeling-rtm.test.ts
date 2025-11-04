@@ -381,7 +381,7 @@ describe('RTM aanvraag transformation', () => {
 
     const transformed = transformRTMAanvragen(
       'xxxx-session-id-xxxx',
-      { bsn: '12345', name: 'Persoon 12345' },
+      { bsn: bsnLoggedinUser },
       aanvragen
     );
     expect(transformed).toMatchInlineSnapshot(`
@@ -499,6 +499,64 @@ describe('RTM aanvraag transformation', () => {
                 },
               ],
               "id": "besluit-5-1",
+              "isActive": true,
+              "isChecked": true,
+              "status": "Besluit",
+            },
+          ],
+          "title": "Regeling tegemoetkoming meerkosten",
+        },
+      ]
+    `);
+  });
+
+  test('transform complete FASE2 -> afgewezen', () => {
+    const aanvragen = [
+      aanvraag(RTM2, AFW, [], {
+        id: '6-1',
+        datumBesluit: '2026-05-01',
+        documenten: [{ id: 'baz' }],
+        betrokkenPersonen: [],
+        beschiktProductIdentificatie: '7788999',
+      }),
+    ] as ZorgnedAanvraagWithRelatedPersonsTransformed[];
+
+    const transformed = transformRTMAanvragen(
+      'xxxx-session-id-xxxx',
+      { bsn: '12345' },
+      aanvragen
+    );
+    expect(transformed).toMatchInlineSnapshot(`
+      [
+        {
+          "betrokkenen": "Met bsn: 12345",
+          "dateDecision": "2026-05-01",
+          "dateEnd": "",
+          "dateStart": "2026-05-01",
+          "decision": "afgewezen",
+          "displayStatus": "Besluit",
+          "documents": [],
+          "id": "4227117982",
+          "isActual": false,
+          "link": {
+            "title": "Meer informatie",
+            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/4227117982",
+          },
+          "steps": [
+            {
+              "datePublished": "2026-05-01",
+              "description": "<p>
+          U krijgt geen Regeling tegemoetkoming meerkosten.
+          </p>
+          <p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>
+        ",
+              "documents": [
+                {
+                  "id": "test-encrypted-id",
+                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
+                },
+              ],
+              "id": "besluit-6-1",
               "isActive": true,
               "isChecked": true,
               "status": "Besluit",
