@@ -79,14 +79,14 @@ type AanschrijfwijzeSource = {
 
 type JaarDatum = {
   type: 'JaarDatum';
-  jaar: string;
+  jaar: number;
   langFormaat: string;
 };
 
 type JaarMaandDatum = {
   type: 'JaarMaandDatum';
-  jaar: string;
-  maand: string;
+  jaar: number;
+  maand: number;
   langFormaat: string;
 };
 
