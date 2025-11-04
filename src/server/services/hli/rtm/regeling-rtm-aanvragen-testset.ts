@@ -14,6 +14,7 @@ export type RTMAanvraagTestResult = {
 
 export type RTMTestInput = {
   title: string;
+  bsnLoggedinUser: string;
   // Set to true to run only this test.
   only?: boolean;
   aanvragen: RTMAanvraagProps[];
@@ -56,6 +57,7 @@ export function aanvraag(
 export const aanvragenTestsetInput = [
   {
     title: 'Mix of RTM and RTM1, multiple betrokkenen',
+    bsnLoggedinUser: 'A',
     aanvragen: [
       aanvraag(RTM2, TOE, ['A']),
       aanvraag(RTM1, TOE, ['A', 'B']),
@@ -93,6 +95,7 @@ export const aanvragenTestsetInput = [
   {
     title:
       'Mix of RTM and RTM1, multiple afgewezen aanvragen with single betrokkene',
+    bsnLoggedinUser: 'A3',
     aanvragen: [
       aanvraag(RTM1, TOE, ['A3']),
       aanvraag(RTM2, TOE, ['A3']),
@@ -124,6 +127,7 @@ export const aanvragenTestsetInput = [
   {
     title:
       'Mix of RTM and RTM1, multiple afgewezen aanvragen with multiple betrokkenen, only aanvragen voor betrokkenen.',
+    bsnLoggedinUser: 'X',
     aanvragen: [
       aanvraag(RTM1, TOE, ['C', 'D']),
       aanvraag(RTM1, AFW),
@@ -149,11 +153,12 @@ export const aanvragenTestsetInput = [
   {
     title:
       'Mix of RTM and RTM1, aanvraag voor Aanvrager/Ontvanger en aanvraag voor betrokkene. - Afgewezen aanvraag results in orphan.',
+    bsnLoggedinUser: 'F',
     aanvragen: [
       aanvraag(RTM1, TOE, ['F']),
       aanvraag(RTM1, TOE, ['G']),
       aanvraag(RTM2, TOE, ['F']),
-      aanvraag(RTM2, AFW, ['F']),
+      aanvraag(RTM2, AFW),
       aanvraag(RTM1, AFW),
     ],
     expected: [
@@ -185,11 +190,12 @@ export const aanvragenTestsetInput = [
   },
   {
     title: 'Single betrokkene, only ontvanger.',
+    bsnLoggedinUser: 'H',
     aanvragen: [
-      aanvraag(RTM2, AFW, ['H']),
-      aanvraag(RTM2, AFW, ['H']),
+      aanvraag(RTM2, AFW),
+      aanvraag(RTM2, AFW),
       aanvraag(RTM2, TOE, ['H']),
-      aanvraag(RTM2, AFW, ['H']),
+      aanvraag(RTM2, AFW),
     ],
     expected: [
       {
@@ -202,6 +208,7 @@ export const aanvragenTestsetInput = [
   },
   {
     title: 'Ontvanger turns 18 and needs to request RTM1 for self.',
+    bsnLoggedinUser: 'I',
     aanvragen: [
       aanvraag(RTM2, TOE, ['I']),
       aanvraag(RTM2, TOE, ['I']),
@@ -232,6 +239,7 @@ export const aanvragenTestsetInput = [
   {
     title:
       'Aan/Uit single betrokkene, multiple aanvragen, some with datumEindeGeldigheid',
+    bsnLoggedinUser: 'J',
     aanvragen: [
       aanvraag(RTM1, TOE, ['J']),
       aanvraag(RTM2, TOE, ['J']),
@@ -275,6 +283,7 @@ export const aanvragenTestsetInput = [
   {
     title:
       'Mix of RTM and RTM1, multiple betrokkenen. Afgewezen aanvraag results in orphan. - Multiple statustrein per betrokkene with aanvraag step that applies to both.',
+    bsnLoggedinUser: 'K',
     aanvragen: [
       aanvraag(RTM1, TOE, ['K', 'L']),
       aanvraag(RTM2, TOE, ['K'], { datumEindeGeldigheid: '2024-12-31' }),
@@ -326,6 +335,7 @@ export const aanvragenTestsetInput = [
   },
   {
     title: 'Aanvraag mixed 2 - Alleen ontvangers',
+    bsnLoggedinUser: 'X',
     aanvragen: [
       aanvraag(RTM1, TOE, ['Z', 'Y']),
       aanvraag(RTM1, TOE, ['Z']),
@@ -364,6 +374,7 @@ export const aanvragenTestsetInput = [
   },
   {
     title: 'Aanvraag mixed 3 - Alleen ontvangers',
+    bsnLoggedinUser: 'X',
     aanvragen: [
       aanvraag(RTM1, TOE, ['O', 'P']),
       aanvraag(RTM1, TOE, ['O']),
@@ -406,6 +417,7 @@ export const aanvragenTestsetInput = [
   {
     title:
       "We assume these aanvragen belong to the same person, but we cannot know for sure. - Eventough there are no betrokkenen in the afgewezen aanvragen, we assume it's the same person as the toegewezen aanvraag.",
+    bsnLoggedinUser: 'X',
     aanvragen: [
       aanvraag(RTM1, AFW),
       aanvraag(RTM1, AFW),
@@ -432,6 +444,7 @@ export const aanvragenTestsetInput = [
   {
     title:
       'Because we have multiple betrokkenen in multiple aanvragen, we cannot know for sure which afgewezen aanvragen belong to.',
+    bsnLoggedinUser: 'X',
     aanvragen: [
       aanvraag(RTM1, AFW),
       aanvraag(RTM1, AFW),
@@ -462,6 +475,7 @@ export const aanvragenTestsetInput = [
   },
   {
     title: 'Some other exotic combinations',
+    bsnLoggedinUser: 'D1',
     aanvragen: [
       aanvraag(RTM1, AFW),
       aanvraag(RTM1, TOE, ['D1']),
@@ -488,6 +502,7 @@ export const aanvragenTestsetInput = [
   },
   {
     title: 'Single toegewezen aanvraag with end date / Verlopen aanvraag',
+    bsnLoggedinUser: 'X',
     aanvragen: [
       aanvraag(RTM1, TOE, ['E1'], { datumEindeGeldigheid: '2024-12-31' }),
     ],
@@ -503,6 +518,7 @@ export const aanvragenTestsetInput = [
   {
     title:
       'Multiple aanvragen in weird combination, leading to single statstrein for single betrokkene',
+    bsnLoggedinUser: 'A4',
     aanvragen: [
       aanvraag(RTM1, TOE, ['A4']),
       aanvraag(RTM1, TOE, ['A4']),
@@ -535,6 +551,7 @@ export const aanvragenTestsetInput = [
   },
   {
     title: 'Common testset for Aanvrager/Ontvanger',
+    bsnLoggedinUser: 'A5',
     aanvragen: [
       aanvraag(RTM1, TOE, ['A5']),
       aanvraag(RTM2, TOE, ['A5']),
@@ -559,11 +576,12 @@ export const aanvragenTestsetInput = [
   },
   {
     title: 'Single afgewezen aanvraag',
+    bsnLoggedinUser: 'X',
     aanvragen: [aanvraag(RTM1, AFW)],
     // only: true,
     expected: [
       {
-        id: 4063165682,
+        id: 454722509,
         persoon: '',
         steps: ['Besluit'],
         displayStatus: 'Besluit',

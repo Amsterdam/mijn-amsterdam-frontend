@@ -156,7 +156,10 @@ export function mapAanvragenByBetrokkenen(
   const aanvragenByBetrokkenen = new Map<
     string,
     ZorgnedAanvraagWithRelatedPersonsTransformed[]
-  >([['orphans', []]]);
+  >([
+    ['orphans', []],
+    [bsnLoggedinUser, []],
+  ]);
   const betrokkenenKeys = aanvraagSet
     .filter((a) => a.betrokkenen.length > 0)
     .map((a) => a.betrokkenen.sort().join(','));
@@ -470,6 +473,25 @@ function dedupeButKeepDocuments(
   return Array.from(seenAanvragen.values());
 }
 
+// The RTM2 aanvraag is only present for the logged-in user so we know for sure they are a betrokkene.
+function addBsnLoggedinUserToRTM2Aanvragen(
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
+  bsnLoggedinUser: BSN
+) {
+  return aanvragen.map((aanvraag) => {
+    if (
+      aanvraag.productIdentificatie === AV_RTM_DEEL2 &&
+      !aanvraag.betrokkenen.includes(bsnLoggedinUser)
+    ) {
+      return {
+        ...aanvraag,
+        betrokkenen: [bsnLoggedinUser, ...aanvraag.betrokkenen],
+      };
+    }
+    return aanvraag;
+  });
+}
+
 // Aanvragen are processed in chronological order (ASC), so the order of the aanvragen from Zorgned matter.
 export function transformRTMAanvragen(
   sessionID: AuthProfile['sid'],
@@ -480,10 +502,14 @@ export function transformRTMAanvragen(
   const aanvragenDeduped = dedupeButKeepDocuments(aanvragenSorted);
 
   const aanvragenWithPdfDocumentsOnly = removeNonPdfDocuments(aanvragenDeduped);
+  const aaanvragenWithAddedBsnLoggedinUser = addBsnLoggedinUserToRTM2Aanvragen(
+    aanvragenWithPdfDocumentsOnly,
+    bsnLoggedinUser
+  );
   // RTM aanvragen are processed in chronological order (ASC), so we sort them first.
   const aanvragenByBetrokkenen = mapAanvragenByBetrokkenen(
     bsnLoggedinUser,
-    aanvragenWithPdfDocumentsOnly
+    aaanvragenWithAddedBsnLoggedinUser
   );
 
   const aanvragenByBetrokkenenSplitted =

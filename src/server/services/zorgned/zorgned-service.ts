@@ -215,7 +215,7 @@ export async function fetchAndMergeRelatedPersons(
   );
 
   const relatedPersonsResponse = await fetchRelatedPersons(
-    bsns,
+    [...bsns, bsnAanvrager],
     zorgnedApiConfigKey
   );
 

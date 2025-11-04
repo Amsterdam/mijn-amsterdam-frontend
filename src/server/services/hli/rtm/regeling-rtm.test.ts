@@ -24,7 +24,7 @@ vi.mock('../../../helpers/encrypt-decrypt', async (requireActual) => {
   };
 });
 
-let bsn = 0;
+const bsn = 0;
 
 function imposeZorgnedAanvraagTransformed(
   aanvraagProps: RTMAanvraagProps,
@@ -67,10 +67,9 @@ function imposeZorgnedAanvraagTransformed(
 
 describe('RTM aanvraag transformation and grouping', () => {
   for (const testInput of aanvragenTestsetInput as RTMTestInput[]) {
-    const bsnLoggedinUser = (bsn++).toString();
     const aanvragenTransformed = transformRTMAanvragen(
       'xxxx-session-id-xxxx',
-      bsnLoggedinUser,
+      testInput.bsnLoggedinUser,
       testInput.aanvragen.map(imposeZorgnedAanvraagTransformed)
     )
       .toSorted((a, b) => parseInt(a.id, 10) - parseInt(b.id, 10))
@@ -92,49 +91,50 @@ describe('RTM aanvraag transformation and grouping', () => {
 
 describe('RTM aanvraag transformation', () => {
   test('transform complete aanvraag single aanvrager/ontvanger', () => {
+    const bsnLoggedinUser = 'X1';
     const aanvragen = [
-      aanvraag(RTM1, TOE, ['X1'], {
+      aanvraag(RTM1, TOE, [bsnLoggedinUser], {
         id: '1-2',
         datumAanvraag: '2024-01-01',
         documenten: [{ id: 'foo' }],
         beschiktProductIdentificatie: '12345',
-        betrokkenPersonen: [{ bsn: 'X1', name: 'Persoon X1' }],
+        betrokkenPersonen: [{ bsn: bsnLoggedinUser, name: 'Persoon X1' }],
       }),
-      aanvraag(RTM1, TOE, ['X1'], {
+      aanvraag(RTM1, TOE, [bsnLoggedinUser], {
         id: '1-1',
         datumAanvraag: '2024-01-01',
         documenten: [{ id: 'bar' }],
         beschiktProductIdentificatie: '12345',
-        betrokkenPersonen: [{ bsn: 'X1', name: 'Persoon X1' }],
+        betrokkenPersonen: [{ bsn: bsnLoggedinUser, name: 'Persoon X1' }],
       }),
-      aanvraag(RTM2, TOE, ['X1'], {
+      aanvraag(RTM2, TOE, [bsnLoggedinUser], {
         id: '1-3',
         datumBesluit: '2024-02-01',
         datumIngangGeldigheid: '2024-05-01',
         documenten: [{ id: 'baz' }],
-        betrokkenPersonen: [{ bsn: 'X1', name: 'Persoon X1' }],
+        betrokkenPersonen: [{ bsn: bsnLoggedinUser, name: 'Persoon X1' }],
         beschiktProductIdentificatie: '12435687',
       }),
-      aanvraag(RTM1, TOE, ['X1'], {
+      aanvraag(RTM1, TOE, [bsnLoggedinUser], {
         id: '2-1',
         datumAanvraag: '2025-01-01',
         documenten: [{ id: 'bar' }],
         beschiktProductIdentificatie: '7766778',
-        betrokkenPersonen: [{ bsn: 'X1', name: 'Persoon X1' }],
+        betrokkenPersonen: [{ bsn: bsnLoggedinUser, name: 'Persoon X1' }],
       }),
-      aanvraag(RTM2, TOE, ['X1'], {
+      aanvraag(RTM2, TOE, [bsnLoggedinUser], {
         id: '2-2',
         datumBesluit: '2025-02-01',
         datumIngangGeldigheid: '2025-05-01',
         documenten: [{ id: 'baz' }],
-        betrokkenPersonen: [{ bsn: 'X1', name: 'Persoon X1' }],
+        betrokkenPersonen: [{ bsn: bsnLoggedinUser, name: 'Persoon X1' }],
         beschiktProductIdentificatie: '890123',
       }),
     ] as ZorgnedAanvraagWithRelatedPersonsTransformed[];
 
     const transformed = transformRTMAanvragen(
       'xxx-session-id-xxxx',
-      '12345',
+      bsnLoggedinUser,
       aanvragen
     );
     expect(transformed).toMatchInlineSnapshot(`
@@ -351,19 +351,20 @@ describe('RTM aanvraag transformation', () => {
   });
 
   test('transform complete aanvraag single betrokkene/ontvanger', () => {
+    const bsnLoggedinUser = 'X1';
     const aanvragen = [
-      aanvraag(RTM2, TOE, ['X1'], {
+      aanvraag(RTM2, TOE, [bsnLoggedinUser], {
         id: '2-2',
         datumBesluit: '2025-02-01',
         documenten: [{ id: 'baz' }],
-        betrokkenPersonen: [{ bsn: 'X1', name: 'Persoon X1' }],
+        betrokkenPersonen: [{ bsn: bsnLoggedinUser, name: 'Persoon X1' }],
         beschiktProductIdentificatie: '890123',
       }),
-      aanvraag(RTM2, TOE, ['X1'], {
+      aanvraag(RTM2, TOE, [bsnLoggedinUser], {
         id: '3-1',
         datumBesluit: '2026-02-01',
         documenten: [{ id: 'baz' }],
-        betrokkenPersonen: [{ bsn: 'X1', name: 'Persoon X1' }],
+        betrokkenPersonen: [{ bsn: bsnLoggedinUser, name: 'Persoon X1' }],
         beschiktProductIdentificatie: '1232224',
       }),
       aanvraag(RTM2, AFW, [], {
@@ -390,11 +391,11 @@ describe('RTM aanvraag transformation', () => {
           "decision": "toegewezen",
           "displayStatus": "Besluit wijziging",
           "documents": [],
-          "id": "116057025",
+          "id": "546884284",
           "isActual": true,
           "link": {
             "title": "Meer informatie",
-            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/116057025",
+            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/546884284",
           },
           "steps": [
             {
