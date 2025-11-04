@@ -1,6 +1,6 @@
 import type { LatLngLiteral } from 'leaflet';
 
-import type { Adres } from '../profile/brp.types';
+import type { Adres } from '../brp/brp-types';
 
 /** An incomplete slice of a BAG adresseerbaar object.
  *  That is because not all fields are used.

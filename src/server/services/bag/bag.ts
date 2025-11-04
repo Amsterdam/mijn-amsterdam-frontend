@@ -6,7 +6,7 @@ import {
 import { getLatLngCoordinates } from '../../../universal/helpers/bag';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
-import type { Adres } from '../profile/brp.types';
+import type { Adres } from '../brp/brp-types';
 
 function transformBagResponse(
   sourceAddress: Adres,

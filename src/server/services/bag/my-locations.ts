@@ -13,7 +13,7 @@ import {
 import { isMokum } from '../../../universal/helpers/brp';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { fetchBrpV2 } from '../brp/brp';
-import type { Adres } from '../profile/brp.types';
+import type { Adres } from '../brp/brp-types';
 import { fetchKVK, getKvkAddresses } from '../profile/kvk';
 
 async function fetchPrivate(
