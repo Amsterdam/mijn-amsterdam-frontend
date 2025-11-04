@@ -1,8 +1,9 @@
 import { describe, it, expect, vi } from 'vitest';
 import type { Mock } from 'vitest';
 
-import { forTesting, fetchBrpByBsn } from './brp';
+import { forTesting, fetchBrpByBsn, fetchBrpByBsnTransformed } from './brp';
 import testPersonenResponse from '../../../../mocks/fixtures/brp/test-personen.json';
+import verblijfplaatsenResponse from '../../../../mocks/fixtures/brp/verblijfplaatshistorie.json';
 import { remoteApi } from '../../../testing/utils';
 import { fetchAuthTokenHeader } from '../ms-oauth/oauth-token';
 
@@ -90,15 +91,6 @@ describe('brp.ts', () => {
   });
 
   describe('transformBenkBrpResponse', () => {
-    it('should throw an error if no person is found in response', () => {
-      expect(() =>
-        transformBenkBrpResponse({
-          personen: [],
-          type: '',
-        })
-      ).toThrow('No person found in Benk BRP response');
-    });
-
     it('should transform response data correctly', () => {
       const responseData = {
         personen: [
@@ -110,7 +102,7 @@ describe('brp.ts', () => {
         ],
       };
 
-      const result = transformBenkBrpResponse(responseData as any);
+      const result = transformBenkBrpResponse(responseData.personen[0] as any);
       expect(result).toHaveProperty('persoon.opgemaakteNaam', 'John Doe');
       expect(result).toHaveProperty('persoon.vertrokkenOnbekendWaarheen', true);
       expect(result).toHaveProperty('persoon.mokum', true);
@@ -126,7 +118,6 @@ describe('brp.ts', () => {
       const envValue = process.env.BFF_BENK_BSN_TRANSLATIONS;
       process.env.BFF_BENK_BSN_TRANSLATIONS =
         '123456789=987654321,111111111=222222222';
-
       expect(translateBSN('123456789')).toBe('987654321');
       expect(translateBSN('111111111')).toBe('222222222');
 
@@ -142,40 +133,58 @@ describe('brp.ts', () => {
       expect(result).toEqual({ status: 'ERROR' });
     });
 
-    it('Should format response data correctly', async () => {
-      vi.unmock('../../helpers/source-api-request');
+    describe('Should format response data correctly', () => {
+      test('Formatting for test BSN 1, with verblijfplaatshistorie', async () => {
+        vi.unmock('../../helpers/source-api-request');
 
-      (fetchAuthTokenHeader as Mock).mockResolvedValue({
-        content: { Authorization: 'Bearer test-token' },
-        status: 'OK',
-      });
+        (fetchAuthTokenHeader as Mock).mockResolvedValue({
+          content: { Authorization: 'Bearer test-token' },
+          status: 'OK',
+        });
 
-      {
         const BSN = '999971074';
         const testPersoon = testPersonenResponse.personen.find(
           (p) => p.burgerservicenummer === BSN
         );
         remoteApi.post(/\/personen/).reply(200, { personen: [testPersoon] });
+        remoteApi
+          .post(/\/verblijfplaatshistorie/)
+          .reply(200, verblijfplaatsenResponse);
 
-        const response = await fetchBrpByBsn('test-session-id', [BSN]);
+        const response = await fetchBrpByBsnTransformed('test-session-id', [
+          BSN,
+        ]);
 
         expect(response).toMatchSnapshot();
         expect(response.status).toBe('OK');
         expect(response.content?.persoon.bsn).toBe(BSN);
-      }
-      {
+      });
+
+      test('Formatting for test BSN 2, with verblijfplaatshistorie returning an error', async () => {
+        vi.unmock('../../helpers/source-api-request');
+
+        (fetchAuthTokenHeader as Mock).mockResolvedValue({
+          content: { Authorization: 'Bearer test-token' },
+          status: 'OK',
+        });
+
         const BSN = '999990810';
         const testPersoon = testPersonenResponse.personen.find(
           (p) => p.burgerservicenummer === BSN
         );
         remoteApi.post(/\/personen/).reply(200, { personen: [testPersoon] });
+        remoteApi
+          .post(/\/verblijfplaatshistorie/)
+          .reply(500, 'Internal Server Error');
 
-        const response = await fetchBrpByBsn('test-session-id', [BSN]);
+        const response = await fetchBrpByBsnTransformed('test-session-id', [
+          BSN,
+        ]);
 
         expect(response).toMatchSnapshot();
         expect(response.status).toBe('OK');
         expect(response.content?.persoon.bsn).toBe(BSN);
-      }
+      });
     });
   });
 });
