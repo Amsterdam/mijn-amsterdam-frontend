@@ -112,7 +112,7 @@ export interface ZorgnedDocument {
   omschrijving: string;
   omschrijvingclientportaal: string;
   zaakidentificatie: string | null;
-  /** Some kind of code followed by a filename. Example: `"BR3400279.pdf"` */
+  /** Some kind of code followed by a file extension. Example: `"BR3400279.pdf"` */
   bestandsnaam: string;
 }
 
