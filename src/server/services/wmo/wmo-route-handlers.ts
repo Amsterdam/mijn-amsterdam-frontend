@@ -12,7 +12,7 @@ import {
 } from '../../routing/route-helpers';
 import {
   fetchAanvragenRaw,
-  fetchAllDocuments,
+  fetchAllDocumentsRaw,
   fetchDocument,
 } from '../zorgned/zorgned-service';
 
@@ -32,7 +32,7 @@ export async function fetchZorgnedJZDDocuments(
   req: Request,
   res: ResponseAuthenticated
 ) {
-  const response = await fetchAllDocuments(res.locals.userID, {
+  const response = await fetchAllDocumentsRaw(res.locals.userID, {
     zorgnedApiConfigKey: ZORGNED_JZD_API_CONFIG_KEY,
   });
 

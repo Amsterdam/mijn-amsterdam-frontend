@@ -37,6 +37,7 @@ async function fetchZorgnedByBSN<S, T>(
     path: string;
     transform?: (response: S) => T;
     validateStatus?: (statusCode: number) => boolean;
+    useCache?: boolean;
   }
 ): Promise<ApiResponse<T>> {
   const postBody = {
@@ -48,13 +49,19 @@ async function fetchZorgnedByBSN<S, T>(
   const dataRequestConfig = getApiConfig(options.zorgnedApiConfigKey);
   const url = dataRequestConfig.url + options.path;
 
-  const zorgnedResponse = await requestData<T>({
+  const dataRequestConfig_ = {
     ...dataRequestConfig,
     url,
     data: postBody,
     transformResponse: options.transform,
     validateStatus: options.validateStatus,
-  });
+  };
+
+  if (typeof options.useCache !== 'undefined') {
+    dataRequestConfig_.enableCache = options.useCache;
+  }
+
+  const zorgnedResponse = await requestData<T>(dataRequestConfig_);
 
   return zorgnedResponse;
 }
@@ -169,13 +176,14 @@ export function transformZorgnedAanvragen(
   return aanvragenTransformed.sort(sortAlpha('id', 'desc'));
 }
 
-export async function fetchAllDocuments(
+export async function fetchAllDocumentsRaw(
   bsn: BSN,
   options: ZorgnedAanvragenServiceOptions
 ) {
   return fetchZorgnedByBSN(bsn, {
     ...options,
     path: '/documenten',
+    useCache: false,
   });
 }
 
@@ -197,6 +205,7 @@ export async function fetchAanvragenRaw(
   return fetchZorgnedByBSN(bsn, {
     ...options,
     path: '/aanvragen',
+    useCache: false,
   });
 }
 
