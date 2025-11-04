@@ -451,6 +451,60 @@ describe('RTM aanvraag transformation', () => {
       ]
     `);
   });
+
+  test('transform complete aanvraag only afgewezen', () => {
+    const aanvragen = [
+      aanvraag(RTM1, AFW, [], {
+        id: '5-1',
+        datumBesluit: '2026-05-01',
+        documenten: [{ id: 'baz' }],
+        betrokkenPersonen: [],
+        beschiktProductIdentificatie: '7788999',
+      }),
+    ] as ZorgnedAanvraagWithRelatedPersonsTransformed[];
+
+    const transformed = transformRTMAanvragen(
+      'xxxx-session-id-xxxx',
+      '12345',
+      aanvragen
+    );
+    expect(transformed).toMatchInlineSnapshot(`
+      [
+        {
+          "betrokkenen": "",
+          "dateDecision": "",
+          "dateEnd": "",
+          "dateStart": "",
+          "decision": "afgewezen",
+          "displayStatus": "Besluit",
+          "documents": [],
+          "id": "4227117981",
+          "isActual": false,
+          "link": {
+            "title": "Meer informatie",
+            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/4227117981",
+          },
+          "steps": [
+            {
+              "datePublished": "2026-05-01",
+              "description": "<p>Uw aanvraag is afgewezen. Bekijk de brief voor meer informatie hierover.</p>",
+              "documents": [
+                {
+                  "id": "test-encrypted-id",
+                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
+                },
+              ],
+              "id": "besluit-5-1",
+              "isActive": true,
+              "isChecked": true,
+              "status": "Besluit",
+            },
+          ],
+          "title": "Regeling tegemoetkoming meerkosten",
+        },
+      ]
+    `);
+  });
 });
 
 describe('RTM combine and dedupe', () => {

@@ -166,7 +166,7 @@ export function mapAanvragenByBetrokkenen(
   const hasOnlyAfgewezen = aanvraagSet.every(
     (a) => a.resultaat === 'afgewezen'
   );
-  const hasNobetrokkenen = aanvraagSet.every(
+  const hasNoBetrokkenen = aanvraagSet.every(
     (a) => a.resultaat === 'toegewezen' && a.betrokkenen.length === 0
   );
   const hasSamebetrokkenen = new Set(betrokkenenKeys).size === 1;
@@ -174,7 +174,7 @@ export function mapAanvragenByBetrokkenen(
   if (
     hasSingleBetrokkene ||
     hasOnlyAfgewezen ||
-    hasNobetrokkenen ||
+    hasNoBetrokkenen ||
     hasSamebetrokkenen
   ) {
     let betrokkene: string | undefined;
@@ -400,7 +400,9 @@ function transformRTMRegelingenFrontend(
     const dateEnd = lastRTM2?.datumEindeGeldigheid ?? '';
     const dateStart = RTM2Aanvragen?.[0]?.datumBesluit ?? '';
 
-    const isActual = !aanvragen.some(isEindeRechtReached);
+    const isActual = aanvragen.every((a) => a.resultaat === 'afgewezen')
+      ? false
+      : !aanvragen.some(isEindeRechtReached);
     const displayStatus =
       steps.findLast((step) => step.isActive)?.status ?? 'Onbekend';
 
