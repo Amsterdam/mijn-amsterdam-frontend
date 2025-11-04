@@ -23,3 +23,5 @@ export const routes = {
     WMO_AANVRAGEN_RAW: `/services/wmo/raw/aanvragen`,
   },
 } as const;
+
+export const ZORGNED_JZD_API_CONFIG_KEY = 'ZORGNED_JZD';

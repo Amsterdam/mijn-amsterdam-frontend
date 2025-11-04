@@ -112,6 +112,8 @@ export interface ZorgnedDocument {
   omschrijving: string;
   omschrijvingclientportaal: string;
   zaakidentificatie: string | null;
+  /** Some kind of code followed by a file extension. Example: `"BR3400279.pdf"` */
+  bestandsnaam: string;
 }
 
 export interface ZorgnedDocumentData {
@@ -123,9 +125,17 @@ export interface ZorgnedDocumentData {
 export interface ZorgnedAanvraagSource {
   beschikking: Beschikking;
   datumAanvraag: string;
+  // The following field seems to be always defined for RTM type aanvragen.
+  procesAanvraag?: ZorgnedProcesAanvraag;
   documenten: ZorgnedDocument[];
   identificatie: string;
 }
+
+export type ZorgnedProcesAanvraag = {
+  identificatie: ZorgnedAanvraagSource['identificatie']; // Is equal to ZorgnedAanvraagSource identificatie
+  omschrijving: string;
+  datumStart: string;
+};
 
 export interface ZorgnedResponseDataSource {
   _embedded: { aanvraag: ZorgnedAanvraagSource[] };
@@ -141,6 +151,7 @@ export interface ZorgnedAanvraagTransformed {
   datumIngangGeldigheid: string | null;
   datumOpdrachtLevering: string | null;
   datumToewijzing: string | null;
+  procesAanvraagOmschrijving: string | null;
   documenten: GenericDocument[];
   id: string;
   isActueel: boolean;
@@ -168,19 +179,21 @@ export interface ZorgnedDocumentResponseSource {
   mimetype: string;
 }
 
+export type ZorgnedPersoonSource = {
+  bsn: string;
+  clientidentificatie: number | null;
+  geboortenaam: string;
+  roepnaam: string | null;
+  voorletters: string;
+  voornamen: string;
+  voorvoegsel: string | null;
+  geboortedatum: string | null;
+  partnernaam?: string | null;
+  partnervoorvoegsel?: string | null;
+};
+
 export interface ZorgnedPersoonsgegevensNAWResponse {
-  persoon?: {
-    bsn: string;
-    clientidentificatie: number | null;
-    geboortenaam: string;
-    roepnaam: string | null;
-    voorletters: string;
-    voornamen: string;
-    voorvoegsel: string | null;
-    geboortedatum: string | null;
-    partnernaam?: string | null;
-    partnervoorvoegsel?: string | null;
-  };
+  persoon?: ZorgnedPersoonSource;
 }
 
 export interface ZorgnedRelatieSource {

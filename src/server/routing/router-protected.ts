@@ -33,12 +33,7 @@ import {
   fetchDecosWorkflows,
 } from '../services/decos/decos-service';
 import { fetchErfpachtDossiersDetail as fetchErfpachtDossiersDetail } from '../services/erfpacht/erfpacht';
-import {
-  fetchZorgnedAVDocument,
-  handleBlockStadspas,
-  handleFetchTransactionsRequest,
-  handleUnblockStadspas,
-} from '../services/hli/hli-route-handlers';
+import { hliRouter } from '../services/hli/hli-router';
 import { fetchZorgnedLLVDocument } from '../services/jeugd/route-handlers';
 import { fetchDocument as fetchBBDocument } from '../services/powerbrowser/powerbrowser-service';
 import { fetchAantalBewoners } from '../services/profile/brp';
@@ -122,7 +117,7 @@ router.get(
 //// BFF Service Api Endpoints /////////////////////
 ////////////////////////////////////////////////////
 
-router.use(wmoRouter.protected, brpRouter.protected, afisRouter.protected);
+router.use(wmoRouter.protected, hliRouter.protected, brpRouter.protected, afisRouter.protected);
 
 // LLV Zorgned Doc download
 attachDocumentDownloadRoute(
@@ -221,3 +216,12 @@ attachDocumentDownloadRoute(
   BffEndpoints.HLI_DOCUMENT_DOWNLOAD,
   fetchZorgnedAVDocument
 );
+
+// AFIS facturen en betalen
+router.get(BffEndpoints.AFIS_BUSINESSPARTNER, handleFetchAfisBusinessPartner);
+attachDocumentDownloadRoute(
+  router,
+  BffEndpoints.AFIS_DOCUMENT_DOWNLOAD,
+  fetchAfisDocument
+);
+router.get(BffEndpoints.AFIS_FACTUREN, handleFetchAfisFacturen);

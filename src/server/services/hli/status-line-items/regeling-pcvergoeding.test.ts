@@ -681,9 +681,11 @@ describe('pcvergoeding', () => {
     ] as unknown as ZorgnedAanvraagWithRelatedPersonsTransformed[];
 
     test('PCRegelingen with AV_PCTGBO ans AV_PCTGVO are transformed correctly', async () => {
+      const profile = getAuthProfileAndToken().profile;
       expect(
         await forTestingHLI.transformRegelingenForFrontend(
-          getAuthProfileAndToken(),
+          profile.sid,
+          { bsn: profile.id },
           testData,
           new Date('2026-01-01')
         )

@@ -23,6 +23,11 @@ export const BffEndpoints = {
 
   TELEMETRY_PROXY: '/services/telemetry/v2/track',
 
+  // AFIS
+  AFIS_BUSINESSPARTNER: '/services/afis/businesspartner',
+  AFIS_FACTUREN: '/services/afis/facturen/:state',
+  AFIS_DOCUMENT_DOWNLOAD: '/services/afis/facturen/document',
+
   // Stadspas
   STADSPAS_TRANSACTIONS:
     '/services/stadspas/transactions/:transactionsKeyEncrypted',
@@ -41,9 +46,6 @@ export const BffEndpoints = {
 
   // WPI Document download
   WPI_DOCUMENT_DOWNLOAD: '/services/wpi/document',
-
-  // AV / Zorgned
-  HLI_DOCUMENT_DOWNLOAD: `/services/v1/stadspas-en-andere-regelingen/document`,
 
   // LLV / Zorgned
   LLV_DOCUMENT_DOWNLOAD: `/services/llv/document`,

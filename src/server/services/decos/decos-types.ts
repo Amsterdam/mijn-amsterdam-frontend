@@ -1,8 +1,9 @@
 import { SomeOtherString } from '../../../universal/helpers/types';
 import { OmitMapped } from '../../../universal/helpers/utils';
-import {
+import type {
   GenericDocument,
   ZaakAanvraagDetail,
+  ZaakStatus,
 } from '../../../universal/types/App.types';
 
 type DecosDocumentBase = {
@@ -218,14 +219,6 @@ export type DecosZaakBase = {
 
 export type ZaakKenmerk = `${string}/${string}` | `${string}-${string}`; // Z/23/2230346 or NT2025-000403-1-11328 (Varen)
 export type ZaakKenmerkSlug = `${string}-${string}`; // Z-23-2230346
-
-export type ZaakStatus =
-  | 'Ontvangen'
-  | 'In behandeling'
-  | 'Afgehandeld'
-  | 'Ingetrokken'
-  | 'Meer informatie nodig'
-  | SomeOtherString;
 
 export type ZaakStatusDate = {
   status: ZaakStatus;

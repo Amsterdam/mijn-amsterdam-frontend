@@ -11,9 +11,9 @@ import type {
   DecosZaakSource,
   DecosZaakBase,
   WithKentekens,
-  ZaakStatus,
   DecosFieldValue,
 } from './decos-types';
+import type { ZaakStatus } from '../../../universal/types/App.types';
 import { isDateInPast } from '../../../universal/helpers/date';
 import { entries } from '../../../universal/helpers/utils';
 import type { StatusLineItem } from '../../../universal/types/App.types';
