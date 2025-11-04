@@ -395,7 +395,7 @@ describe('zorgned-service', () => {
 
       remoteApi
         .post('/zorgned/persoonsgegevensNAW')
-        .times(2) // Request caching is not enabled in test mode.
+        .times(3) // Request caching is not enabled in test mode.
         .reply(200, {
           persoon: {
             bsn: '9999999999',

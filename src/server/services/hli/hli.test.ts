@@ -318,8 +318,10 @@ describe('HLI', () => {
     const today = new Date();
     test('With productIdentificatie', async () => {
       vi.spyOn(document, 'dedupeDocumentsInDataSets');
+      const profile = authProfileAndToken.profile;
       const result = forTesting.transformRegelingenForFrontend(
-        authProfileAndToken,
+        profile.sid,
+        { bsn: profile.id },
         aanvragen,
         today
       );
@@ -331,8 +333,10 @@ describe('HLI', () => {
 
     test('Without productIdentificatie', async () => {
       const aanvragen2 = [{ ...aanvragen[0], productIdentificatie: '' }];
+      const profile = authProfileAndToken.profile;
       const result = forTesting.transformRegelingenForFrontend(
-        authProfileAndToken,
+        profile.sid,
+        { bsn: profile.id },
         aanvragen2,
         today
       );
@@ -372,6 +376,7 @@ describe('HLI', () => {
         bsnAanvrager: '123456789',
         beschiktProductIdentificatie: 'bpi-123',
         procesAanvraagOmschrijving: null,
+        beschikkingNummer: null,
       };
 
       const result = forTesting.transformRegelingTitle(aanvraag);
@@ -401,6 +406,7 @@ describe('HLI', () => {
         bsnAanvrager: '123456789',
         beschiktProductIdentificatie: 'bpi-123',
         procesAanvraagOmschrijving: null,
+        beschikkingNummer: null,
       };
 
       const result = forTesting.transformRegelingTitle(aanvraag);
@@ -430,6 +436,7 @@ describe('HLI', () => {
         bsnAanvrager: '123456789',
         beschiktProductIdentificatie: 'bpi-123',
         procesAanvraagOmschrijving: null,
+        beschikkingNummer: null,
       };
 
       const result = forTesting.transformRegelingTitle(aanvraag);
@@ -459,6 +466,7 @@ describe('HLI', () => {
         bsnAanvrager: '123456789',
         beschiktProductIdentificatie: 'bpi-123',
         procesAanvraagOmschrijving: null,
+        beschikkingNummer: null,
       };
 
       const result = forTesting.transformRegelingTitle(aanvraag);
@@ -488,6 +496,7 @@ describe('HLI', () => {
         bsnAanvrager: '123456789',
         beschiktProductIdentificatie: 'bpi-123',
         procesAanvraagOmschrijving: null,
+        beschikkingNummer: null,
       };
 
       const result = forTesting.transformRegelingTitle(aanvraag);

@@ -8,7 +8,7 @@ import {
   ZorgnedHLIRegeling,
   HLIRegelingSpecificatieFrontend,
 } from './hli-regelingen-types';
-import { routes } from './hli-service-config';
+import { routes, ZORGNED_AV_API_CONFIG_KEY } from './hli-service-config';
 import { hliStatusLineItemsConfig } from './hli-status-line-items';
 import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import { transformRTMAanvragen, isRTMAanvraag } from './rtm/regeling-rtm';
@@ -34,13 +34,17 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
-import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types';
+import {
+  ZorgnedAanvraagWithRelatedPersonsTransformed,
+  type ZorgnedPerson,
+} from '../zorgned/zorgned-types';
 import {
   isPcAanvraag,
   isWorkshopNietGevolgd,
   filterCombineUpcPcvData_pre2026,
 } from './status-line-items/regeling-pcvergoeding';
 import { sortAlpha, toDateFormatted } from '../../../universal/helpers/utils';
+import { fetchRelatedPersons } from '../zorgned/zorgned-service';
 
 export const RTM_SPECIFICATIE_TITLE = 'AV-RTM Specificatie';
 
@@ -172,7 +176,8 @@ export function transformRegelingForFrontend<T extends string>(
 }
 
 function transformRegelingenForFrontend(
-  authProfileAndToken: AuthProfileAndToken,
+  sessionID: AuthProfileAndToken['profile']['sid'],
+  aanvrager: ZorgnedPerson | Pick<ZorgnedPerson, 'bsn'>,
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
   today: Date
 ): HLIRegelingFrontend[] {
@@ -181,8 +186,8 @@ function transformRegelingenForFrontend(
     isRTMAanvraag
   );
   const RTMRegelingenFrontend = transformRTMAanvragen(
-    authProfileAndToken.profile.sid,
-    authProfileAndToken.profile.id,
+    sessionID,
+    aanvrager,
     RTMAanvragen
   );
   const [remainingAanvragen_, PCVergoedingAanvragen_pre2026] = extractAanvragen(
@@ -216,7 +221,7 @@ function transformRegelingenForFrontend(
     }
 
     const regelingForFrontend = transformRegelingForFrontend(
-      authProfileAndToken.profile.sid,
+      sessionID,
       aanvraag,
       statusLineItems
     );
@@ -257,13 +262,25 @@ async function fetchRegelingen(authProfileAndToken: AuthProfileAndToken) {
     return apiSuccessResult([]);
   }
 
-  const aanvragenResponse = await fetchZorgnedAanvragenHLI(
-    authProfileAndToken.profile.id
-  );
+  const [aanvragenResult, personResult] = await Promise.allSettled([
+    fetchZorgnedAanvragenHLI(authProfileAndToken.profile.id),
+    fetchRelatedPersons(
+      [authProfileAndToken.profile.id],
+      ZORGNED_AV_API_CONFIG_KEY
+    ),
+  ]);
+
+  const aanvragenResponse = getSettledResult(aanvragenResult);
+  const personResponse = getSettledResult(personResult);
 
   if (aanvragenResponse.status === 'OK') {
+    const aanvrager =
+      personResponse.status === 'OK' && personResponse.content.length
+        ? personResponse.content?.[0]
+        : { bsn: authProfileAndToken.profile.id };
     const regelingen = transformRegelingenForFrontend(
-      authProfileAndToken,
+      authProfileAndToken.profile.sid,
+      aanvrager,
       aanvragenResponse.content,
       new Date()
     );

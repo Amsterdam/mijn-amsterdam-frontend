@@ -11,6 +11,7 @@ import type { AuthProfile } from '../../../auth/auth-types';
 import type {
   BSN,
   ZorgnedAanvraagWithRelatedPersonsTransformed,
+  ZorgnedPerson,
 } from '../../zorgned/zorgned-types';
 import { getDocumentsFrontend } from '../hli';
 import type { HLIRegelingFrontend } from '../hli-regelingen-types';
@@ -474,18 +475,23 @@ function dedupeButKeepDocuments(
 }
 
 // The RTM2 aanvraag is only present for the logged-in user so we know for sure they are a betrokkene.
-function addBsnLoggedinUserToRTM2Aanvragen(
+function addAanvragerToRTM2Aanvragen(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
-  bsnLoggedinUser: BSN
+  aanvrager: ZorgnedPerson | Pick<ZorgnedPerson, 'bsn'>
 ) {
   return aanvragen.map((aanvraag) => {
     if (
       aanvraag.productIdentificatie === AV_RTM_DEEL2 &&
-      !aanvraag.betrokkenen.includes(bsnLoggedinUser)
+      aanvraag.resultaat === 'afgewezen' &&
+      !aanvraag.betrokkenen.includes(aanvrager.bsn)
     ) {
       return {
         ...aanvraag,
-        betrokkenen: [bsnLoggedinUser, ...aanvraag.betrokkenen],
+        betrokkenen: [aanvrager.bsn, ...aanvraag.betrokkenen],
+        betrokkenPersonen: [
+          { name: `Met bsn: ${aanvrager.bsn}`, ...aanvrager } as ZorgnedPerson,
+          ...aanvraag.betrokkenPersonen,
+        ],
       };
     }
     return aanvraag;
@@ -495,21 +501,21 @@ function addBsnLoggedinUserToRTM2Aanvragen(
 // Aanvragen are processed in chronological order (ASC), so the order of the aanvragen from Zorgned matter.
 export function transformRTMAanvragen(
   sessionID: AuthProfile['sid'],
-  bsnLoggedinUser: BSN,
+  aanvrager: ZorgnedPerson | Pick<ZorgnedPerson, 'bsn'>,
   RTMaanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ) {
   const aanvragenSorted = RTMaanvragen.toSorted(sortAlpha('id', 'asc'));
   const aanvragenDeduped = dedupeButKeepDocuments(aanvragenSorted);
 
   const aanvragenWithPdfDocumentsOnly = removeNonPdfDocuments(aanvragenDeduped);
-  const aaanvragenWithAddedBsnLoggedinUser = addBsnLoggedinUserToRTM2Aanvragen(
+  const aanvragenWithAddedAanvrager = addAanvragerToRTM2Aanvragen(
     aanvragenWithPdfDocumentsOnly,
-    bsnLoggedinUser
+    aanvrager
   );
   // RTM aanvragen are processed in chronological order (ASC), so we sort them first.
   const aanvragenByBetrokkenen = mapAanvragenByBetrokkenen(
-    bsnLoggedinUser,
-    aaanvragenWithAddedBsnLoggedinUser
+    aanvrager.bsn,
+    aanvragenWithAddedAanvrager
   );
 
   const aanvragenByBetrokkenenSplitted =

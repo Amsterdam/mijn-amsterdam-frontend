@@ -20,3 +20,5 @@ export const routes = {
     HLI_AANVRAGEN_RAW: `/services/hli/raw/aanvragen`,
   },
 };
+
+export const ZORGNED_AV_API_CONFIG_KEY = 'ZORGNED_AV';

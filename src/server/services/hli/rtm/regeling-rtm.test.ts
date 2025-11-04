@@ -69,7 +69,10 @@ describe('RTM aanvraag transformation and grouping', () => {
   for (const testInput of aanvragenTestsetInput as RTMTestInput[]) {
     const aanvragenTransformed = transformRTMAanvragen(
       'xxxx-session-id-xxxx',
-      testInput.bsnLoggedinUser,
+      {
+        bsn: testInput.bsnLoggedinUser,
+        name: `Persoon ${testInput.bsnLoggedinUser}`,
+      },
       testInput.aanvragen.map(imposeZorgnedAanvraagTransformed)
     )
       .toSorted((a, b) => parseInt(a.id, 10) - parseInt(b.id, 10))
@@ -134,7 +137,7 @@ describe('RTM aanvraag transformation', () => {
 
     const transformed = transformRTMAanvragen(
       'xxx-session-id-xxxx',
-      bsnLoggedinUser,
+      { bsn: bsnLoggedinUser, name: `Persoon ${bsnLoggedinUser}` },
       aanvragen
     );
     expect(transformed).toMatchInlineSnapshot(`
@@ -273,7 +276,7 @@ describe('RTM aanvraag transformation', () => {
 
     const transformed = transformRTMAanvragen(
       'xxxx-session-id-xxxx',
-      '12345',
+      { bsn: '12345', name: `Persoon 12345` },
       aanvragen
     );
     expect(transformed).toMatchInlineSnapshot(`
@@ -378,7 +381,7 @@ describe('RTM aanvraag transformation', () => {
 
     const transformed = transformRTMAanvragen(
       'xxxx-session-id-xxxx',
-      '12345',
+      { bsn: '12345', name: 'Persoon 12345' },
       aanvragen
     );
     expect(transformed).toMatchInlineSnapshot(`
@@ -391,11 +394,11 @@ describe('RTM aanvraag transformation', () => {
           "decision": "toegewezen",
           "displayStatus": "Besluit wijziging",
           "documents": [],
-          "id": "546884284",
+          "id": "116057025",
           "isActual": true,
           "link": {
             "title": "Meer informatie",
-            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/546884284",
+            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/116057025",
           },
           "steps": [
             {
@@ -466,7 +469,7 @@ describe('RTM aanvraag transformation', () => {
 
     const transformed = transformRTMAanvragen(
       'xxxx-session-id-xxxx',
-      '12345',
+      { bsn: '12345', name: 'Persoon 12345' },
       aanvragen
     );
     expect(transformed).toMatchInlineSnapshot(`

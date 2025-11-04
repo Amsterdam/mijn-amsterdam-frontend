@@ -1,5 +1,6 @@
 import { Request } from 'express';
 
+import { ZORGNED_AV_API_CONFIG_KEY } from './hli-service-config';
 import {
   blockStadspas,
   fetchStadspasBudgetTransactions,
@@ -12,8 +13,6 @@ import {
   type ResponseAuthenticated,
 } from '../../routing/route-helpers';
 import { fetchAanvragenRaw, fetchDocument } from '../zorgned/zorgned-service';
-
-const ZORGNED_AV_API_CONFIG_KEY = 'ZORGNED_AV';
 
 type TransactionKeysEncryptedRequest = Request<{
   transactionsKeyEncrypted: StadspasFrontend['transactionsKeyEncrypted'];
