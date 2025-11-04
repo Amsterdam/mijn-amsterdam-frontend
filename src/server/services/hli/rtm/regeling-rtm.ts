@@ -5,7 +5,7 @@ import slug from 'slugme';
 
 import { routeConfig } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
-import { sortAlpha } from '../../../../universal/helpers/utils';
+import { hash, sortAlpha } from '../../../../universal/helpers/utils';
 import type { StatusLineItem } from '../../../../universal/types/App.types';
 import type { AuthProfile } from '../../../auth/auth-types';
 import type {
@@ -58,17 +58,19 @@ function maybeWithAdditionalInfoForBetrokkenen(
   return descriptionStart;
 }
 
+type LineItemConfig = {
+  status: string;
+  description: (
+    aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+  ) => string;
+};
 // Occasionally, aanvragen generate two statusLineItems, with the documents placed in only one of them.
-const lineItemConfig: Record<
-  string,
-  {
-    status: string;
-    description: (
-      aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-    ) => string;
-  }
-> = {
-  besluit: { status: 'Besluit', description: getBesluitDescription },
+const lineItemConfigs: Record<string, LineItemConfig> = {
+  besluitAanvraagAfgewezen: {
+    status: 'Besluit',
+    description: () =>
+      '<p>Uw aanvraag is afgewezen. Bekijk de brief voor meer informatie hierover.</p>',
+  },
   aanvraag: { status: 'Aanvraag', description: () => '' },
   inBehandeling: {
     status: 'In behandeling genomen',
@@ -77,6 +79,7 @@ const lineItemConfig: Record<
       return maybeWithAdditionalInfoForBetrokkenen(aanvraag, description);
     },
   },
+  besluit: { status: 'Besluit', description: getBesluitDescription },
   aanvraagWijziging: {
     status: 'Aanvraag wijziging',
     description: (aanvraag) => {
@@ -104,31 +107,19 @@ const lineItemConfig: Record<
   },
 } as const;
 
-const descriptionsByStatus = Object.fromEntries(
-  Object.values(lineItemConfig).map(({ status, description }) => [
-    status,
-    description,
-  ])
-);
-
-const REGELING_ID_START = 1;
-const ORPHAN_REGELING_ID_START = 60;
-
-let statustreinId = REGELING_ID_START;
-let statustreinOrphansId = ORPHAN_REGELING_ID_START;
-
 function getStatusDate(
   status: StatusLineItem['status'],
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ): string {
   switch (status) {
-    case lineItemConfig.aanvraag.status:
-    case lineItemConfig.aanvraagWijziging.status:
-    case lineItemConfig.inBehandeling.status:
+    case lineItemConfigs.aanvraag.status:
+    case lineItemConfigs.aanvraagWijziging.status:
+    case lineItemConfigs.inBehandeling.status:
       return aanvraag.datumAanvraag;
-    case lineItemConfig.besluit.status:
+    case lineItemConfigs.besluit.status:
+    case lineItemConfigs.besluitAanvraagAfgewezen.status:
       return aanvraag.datumBesluit;
-    case lineItemConfig.eindeRecht.status:
+    case lineItemConfigs.eindeRecht.status:
       return aanvraag.datumEindeGeldigheid ?? '';
     default:
       return '';
@@ -136,23 +127,23 @@ function getStatusDate(
 }
 
 function createStatusLineItemStep(
-  status: StatusLineItem['status'],
+  lineItemConfig: LineItemConfig,
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ): StatusLineItem {
   return {
-    status,
-    description: descriptionsByStatus[status](aanvraag),
-    id: slug(`${status}-${aanvraag.id}`),
-    datePublished: getStatusDate(status, aanvraag),
+    status: lineItemConfig.status,
+    description: lineItemConfig.description(aanvraag),
+    id: slug(`${lineItemConfig.status}-${aanvraag.id}`),
+    datePublished: getStatusDate(lineItemConfig.status, aanvraag),
     isActive: false,
     // We default to checked and determine which step can be unchecked later.
     isChecked: true,
     // We might want to include the beëindigingsdocumenten only for Einde recht steps.
     // Currently, documents related to Einde recht end-up in the most recent (toegewezen RTM regeling) Besluit step.
     documents: ![
-      lineItemConfig.eindeRecht.status,
-      lineItemConfig.inBehandeling.status,
-    ].includes(status)
+      lineItemConfigs.eindeRecht.status,
+      lineItemConfigs.aanvraag.status,
+    ].includes(lineItemConfig.status)
       ? aanvraag.documenten
       : [],
   };
@@ -268,31 +259,38 @@ function getSteps(
     if (aanvraag.productIdentificatie === AV_RTM_DEEL2) {
       const besluitStatus =
         previousRTM2?.resultaat === 'toegewezen'
-          ? lineItemConfig.besluitWijziging.status
-          : lineItemConfig.besluit.status;
+          ? lineItemConfigs.besluitWijziging
+          : lineItemConfigs.besluit;
       return createStatusLineItemStep(besluitStatus, aanvraag);
     }
 
     // ============================
     // Steps for RTM FASE 1.
     // ============================
-    // There must be a toegewezen RTM FASE 2 before this aanvraag for this to be a Aanvraag wijziging.
+
+    if (aanvraag.resultaat === 'afgewezen') {
+      return createStatusLineItemStep(
+        lineItemConfigs.besluitAanvraagAfgewezen,
+        aanvraag
+      );
+    }
+
+    // There must be a toegewezen RTM FASE 2 before this aanvraag for this to be a "Aanvraag wijziging".
     const aanvraagStatus =
       previousRTM2?.resultaat === 'toegewezen'
-        ? lineItemConfig.aanvraagWijziging.status
-        : lineItemConfig.aanvraag.status;
-
+        ? lineItemConfigs.aanvraagWijziging
+        : lineItemConfigs.aanvraag;
     const aanvraagStep = createStatusLineItemStep(aanvraagStatus, aanvraag);
-    return aanvraag.resultaat === 'toegewezen' &&
-      aanvraagStatus === lineItemConfig.aanvraag.status
-      ? [
-          aanvraagStep,
-          createStatusLineItemStep(
-            lineItemConfig.inBehandeling.status,
-            aanvraag
-          ),
-        ]
-      : [aanvraagStep];
+
+    const aanvraagSteps =
+      aanvraagStatus === lineItemConfigs.aanvraag
+        ? [
+            aanvraagStep,
+            createStatusLineItemStep(lineItemConfigs.inBehandeling, aanvraag),
+          ]
+        : [aanvraagStep];
+
+    return aanvraagSteps;
   });
 
   const mostRecentToegewezenRTM = aanvragen.findLast(
@@ -303,7 +301,7 @@ function getSteps(
   let eindeRechtStep: StatusLineItem | null = null;
   if (mostRecentToegewezenRTM) {
     eindeRechtStep = createStatusLineItemStep(
-      lineItemConfig.eindeRecht.status,
+      lineItemConfigs.eindeRecht,
       mostRecentToegewezenRTM
     );
     steps.push(eindeRechtStep);
@@ -380,7 +378,8 @@ function transformRTMRegelingenFrontend(
       continue;
     }
 
-    const id = `${betrokkenenMapStr === 'orphans' ? statustreinOrphansId++ : statustreinId++}`;
+    // TODO: Replace statustreinId with a proper unique ID from the aanvraag data.
+    const id = `${hash(aanvragen?.[0].id + betrokkenenMapStr)}`;
     const title = aanvragen.at(-1)?.titel || REGELING_TITLE_DEFAULT_PLACEHOLDER;
     const betrokkenen = getBetrokkenen(betrokkenenMapStr, aanvragen);
 

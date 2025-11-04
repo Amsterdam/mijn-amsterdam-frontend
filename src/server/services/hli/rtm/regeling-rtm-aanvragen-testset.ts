@@ -14,6 +14,8 @@ export type RTMAanvraagTestResult = {
 
 export type RTMTestInput = {
   title: string;
+  // Set to true to run only this test.
+  only?: boolean;
   aanvragen: RTMAanvraagProps[];
   expected: RTMAanvraagTestResult[];
 };
@@ -63,18 +65,7 @@ export const aanvragenTestsetInput = [
     ],
     expected: [
       {
-        id: 1,
-        persoon: 'Persoon A',
-        steps: [
-          'Besluit',
-          'Aanvraag wijziging',
-          'Besluit wijziging',
-          'Einde recht',
-        ],
-        displayStatus: 'Besluit wijziging',
-      },
-      {
-        id: 2,
+        id: 374098486,
         persoon: 'Persoon B',
         steps: [
           'Aanvraag',
@@ -85,6 +76,17 @@ export const aanvragenTestsetInput = [
           'In behandeling genomen',
         ],
         displayStatus: 'In behandeling genomen',
+      },
+      {
+        id: 3262006676,
+        persoon: 'Persoon A',
+        steps: [
+          'Besluit',
+          'Aanvraag wijziging',
+          'Besluit wijziging',
+          'Einde recht',
+        ],
+        displayStatus: 'Besluit wijziging',
       },
     ],
   },
@@ -102,13 +104,13 @@ export const aanvragenTestsetInput = [
     ],
     expected: [
       {
-        id: 3,
+        id: 1274761191,
         persoon: 'Persoon A3',
         steps: [
           'Aanvraag',
           'In behandeling genomen',
           'Besluit',
-          'Aanvraag wijziging',
+          'Besluit',
           'Aanvraag wijziging',
           'Besluit wijziging',
           'Aanvraag wijziging',
@@ -130,13 +132,13 @@ export const aanvragenTestsetInput = [
     ],
     expected: [
       {
-        id: 4,
+        id: 612666814,
         persoon: 'Persoon C, Persoon D',
         steps: [
           'Aanvraag',
           'In behandeling genomen',
-          'Aanvraag',
-          'Aanvraag',
+          'Besluit',
+          'Besluit',
           'Aanvraag',
           'In behandeling genomen',
         ],
@@ -155,22 +157,22 @@ export const aanvragenTestsetInput = [
     ],
     expected: [
       {
-        id: 5,
+        id: 854079571,
         persoon: 'Persoon F',
         steps: ['Aanvraag', 'In behandeling genomen', 'Besluit', 'Einde recht'],
         displayStatus: 'Besluit',
       },
       {
-        id: 6,
+        id: 1711446607,
+        persoon: '',
+        steps: ['Besluit'],
+        displayStatus: 'Besluit',
+      },
+      {
+        id: 2545265331,
         persoon: 'Persoon G',
         steps: ['Aanvraag', 'In behandeling genomen'],
         displayStatus: 'In behandeling genomen',
-      },
-      {
-        id: 60,
-        persoon: '',
-        steps: ['Aanvraag'],
-        displayStatus: 'Aanvraag',
       },
     ],
   },
@@ -184,7 +186,7 @@ export const aanvragenTestsetInput = [
     ],
     expected: [
       {
-        id: 7,
+        id: 1148178397,
         persoon: 'Persoon H',
         steps: ['Besluit', 'Besluit', 'Besluit', 'Besluit', 'Einde recht'],
         displayStatus: 'Besluit',
@@ -202,7 +204,7 @@ export const aanvragenTestsetInput = [
     ],
     expected: [
       {
-        id: 8,
+        id: 2777490332,
         persoon: 'Persoon I',
         steps: [
           'Besluit',
@@ -213,7 +215,7 @@ export const aanvragenTestsetInput = [
         displayStatus: 'Einde recht',
       },
       {
-        id: 9,
+        id: 3830300675,
         persoon: 'Persoon I',
         steps: ['Aanvraag', 'In behandeling genomen', 'Besluit', 'Einde recht'],
         displayStatus: 'Besluit',
@@ -237,7 +239,19 @@ export const aanvragenTestsetInput = [
     ],
     expected: [
       {
-        id: 10,
+        id: 300586790,
+        persoon: 'Persoon J',
+        steps: ['Aanvraag', 'In behandeling genomen', 'Besluit', 'Einde recht'],
+        displayStatus: 'Besluit',
+      },
+      {
+        id: 1997833831,
+        persoon: 'Persoon J',
+        steps: ['Aanvraag', 'In behandeling genomen', 'Besluit', 'Einde recht'],
+        displayStatus: 'Einde recht',
+      },
+      {
+        id: 3919628639,
         persoon: 'Persoon J',
         steps: [
           'Aanvraag',
@@ -248,18 +262,6 @@ export const aanvragenTestsetInput = [
           'Einde recht',
         ],
         displayStatus: 'Einde recht',
-      },
-      {
-        id: 11,
-        persoon: 'Persoon J',
-        steps: ['Aanvraag', 'In behandeling genomen', 'Besluit', 'Einde recht'],
-        displayStatus: 'Einde recht',
-      },
-      {
-        id: 12,
-        persoon: 'Persoon J',
-        steps: ['Aanvraag', 'In behandeling genomen', 'Besluit', 'Einde recht'],
-        displayStatus: 'Besluit',
       },
     ],
   },
@@ -277,13 +279,7 @@ export const aanvragenTestsetInput = [
     ],
     expected: [
       {
-        id: 13,
-        persoon: 'Persoon K',
-        steps: ['Aanvraag', 'In behandeling genomen', 'Besluit', 'Einde recht'],
-        displayStatus: 'Einde recht',
-      },
-      {
-        id: 14,
+        id: 1893080281,
         persoon: 'Persoon L',
         steps: [
           'Aanvraag',
@@ -296,7 +292,19 @@ export const aanvragenTestsetInput = [
         displayStatus: 'In behandeling genomen',
       },
       {
-        id: 15,
+        id: 2809910954,
+        persoon: '',
+        steps: ['Besluit'],
+        displayStatus: 'Besluit',
+      },
+      {
+        id: 3024935710,
+        persoon: 'Persoon K',
+        steps: ['Aanvraag', 'In behandeling genomen', 'Besluit', 'Einde recht'],
+        displayStatus: 'Einde recht',
+      },
+      {
+        id: 3671496961,
         persoon: 'Persoon K',
         steps: [
           'Aanvraag',
@@ -306,12 +314,6 @@ export const aanvragenTestsetInput = [
           'Einde recht',
         ],
         displayStatus: 'Aanvraag wijziging',
-      },
-      {
-        id: 61,
-        persoon: '',
-        steps: ['Aanvraag'],
-        displayStatus: 'Aanvraag',
       },
     ],
   },
@@ -324,7 +326,13 @@ export const aanvragenTestsetInput = [
     ],
     expected: [
       {
-        id: 16,
+        id: 851920409,
+        persoon: 'Persoon N',
+        steps: ['Aanvraag', 'In behandeling genomen'],
+        displayStatus: 'In behandeling genomen',
+      },
+      {
+        id: 2084034444,
         persoon: 'Persoon Y',
         steps: [
           'Aanvraag',
@@ -335,7 +343,7 @@ export const aanvragenTestsetInput = [
         displayStatus: 'In behandeling genomen',
       },
       {
-        id: 17,
+        id: 3226172751,
         persoon: 'Persoon Z',
         steps: [
           'Aanvraag',
@@ -343,12 +351,6 @@ export const aanvragenTestsetInput = [
           'Aanvraag',
           'In behandeling genomen',
         ],
-        displayStatus: 'In behandeling genomen',
-      },
-      {
-        id: 18,
-        persoon: 'Persoon N',
-        steps: ['Aanvraag', 'In behandeling genomen'],
         displayStatus: 'In behandeling genomen',
       },
     ],
@@ -363,18 +365,7 @@ export const aanvragenTestsetInput = [
     ],
     expected: [
       {
-        id: 19,
-        persoon: 'Persoon O',
-        steps: [
-          'Aanvraag',
-          'In behandeling genomen',
-          'Aanvraag',
-          'In behandeling genomen',
-        ],
-        displayStatus: 'In behandeling genomen',
-      },
-      {
-        id: 20,
+        id: 939238853,
         persoon: 'Persoon P',
         steps: [
           'Aanvraag',
@@ -387,9 +378,20 @@ export const aanvragenTestsetInput = [
         displayStatus: 'In behandeling genomen',
       },
       {
-        id: 21,
+        id: 1782876614,
         persoon: 'Persoon Q',
         steps: ['Aanvraag', 'In behandeling genomen'],
+        displayStatus: 'In behandeling genomen',
+      },
+      {
+        id: 3769837594,
+        persoon: 'Persoon O',
+        steps: [
+          'Aanvraag',
+          'In behandeling genomen',
+          'Aanvraag',
+          'In behandeling genomen',
+        ],
         displayStatus: 'In behandeling genomen',
       },
     ],
@@ -406,13 +408,13 @@ export const aanvragenTestsetInput = [
     ],
     expected: [
       {
-        id: 22,
+        id: 535650343,
         persoon: 'Persoon C1',
         steps: [
-          'Aanvraag',
-          'Aanvraag',
-          'Aanvraag',
-          'Aanvraag',
+          'Besluit',
+          'Besluit',
+          'Besluit',
+          'Besluit',
           'Aanvraag',
           'In behandeling genomen',
         ],
@@ -432,22 +434,22 @@ export const aanvragenTestsetInput = [
     ],
     expected: [
       {
-        id: 23,
-        persoon: 'Persoon A1',
-        steps: ['Aanvraag', 'In behandeling genomen'],
-        displayStatus: 'In behandeling genomen',
-      },
-      {
-        id: 24,
+        id: 367981637,
         persoon: 'Persoon B1',
         steps: ['Aanvraag', 'In behandeling genomen'],
         displayStatus: 'In behandeling genomen',
       },
       {
-        id: 62,
+        id: 2693027815,
+        persoon: 'Persoon A1',
+        steps: ['Aanvraag', 'In behandeling genomen'],
+        displayStatus: 'In behandeling genomen',
+      },
+      {
+        id: 2858723564,
         persoon: '',
-        steps: ['Aanvraag', 'Aanvraag', 'Aanvraag'],
-        displayStatus: 'Aanvraag',
+        steps: ['Besluit', 'Besluit', 'Besluit'],
+        displayStatus: 'Besluit',
       },
     ],
   },
@@ -462,13 +464,13 @@ export const aanvragenTestsetInput = [
     ],
     expected: [
       {
-        id: 25,
+        id: 648001760,
         persoon: 'Persoon D1',
         steps: [
-          'Aanvraag',
+          'Besluit',
           'Aanvraag',
           'In behandeling genomen',
-          'Aanvraag',
+          'Besluit',
           'Besluit',
           'Aanvraag wijziging',
           'Einde recht',
@@ -484,7 +486,7 @@ export const aanvragenTestsetInput = [
     ],
     expected: [
       {
-        id: 26,
+        id: 4223603873,
         persoon: 'Persoon E1',
         steps: ['Aanvraag', 'In behandeling genomen'],
         displayStatus: 'In behandeling genomen',
@@ -505,7 +507,7 @@ export const aanvragenTestsetInput = [
     ],
     expected: [
       {
-        id: 27,
+        id: 526153856,
         persoon: 'Persoon A4',
         steps: [
           'Aanvraag',
@@ -514,7 +516,7 @@ export const aanvragenTestsetInput = [
           'In behandeling genomen',
           'Aanvraag',
           'In behandeling genomen',
-          'Aanvraag',
+          'Besluit',
           'Besluit',
           'Besluit wijziging',
           'Besluit wijziging',
@@ -535,7 +537,7 @@ export const aanvragenTestsetInput = [
     expected: [
       {
         displayStatus: 'Besluit wijziging',
-        id: 28,
+        id: 1298428961,
         persoon: 'Persoon A5',
         steps: [
           'Aanvraag',
@@ -545,6 +547,19 @@ export const aanvragenTestsetInput = [
           'Besluit wijziging',
           'Einde recht',
         ],
+      },
+    ],
+  },
+  {
+    title: 'Single afgewezen aanvraag',
+    aanvragen: [aanvraag(RTM1, AFW)],
+    // only: true,
+    expected: [
+      {
+        id: 4063165682,
+        persoon: '',
+        steps: ['Besluit'],
+        displayStatus: 'Besluit',
       },
     ],
   },

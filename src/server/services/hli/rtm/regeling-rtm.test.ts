@@ -2,9 +2,9 @@ import { forTesting, transformRTMAanvragen } from './regeling-rtm';
 import {
   aanvraag,
   aanvragenTestsetInput,
-  AFW,
   RTM1,
   RTM2,
+  AFW,
   TOE,
   type RTMAanvraagProps,
   type RTMTestInput,
@@ -83,7 +83,8 @@ describe('RTM aanvraag transformation and grouping', () => {
         };
       });
 
-    test(testInput.title, () => {
+    const tstFn = testInput.only ? test.only : test;
+    tstFn(testInput.title, () => {
       expect(aanvragenTransformed).toStrictEqual(testInput.expected);
     });
   }
@@ -146,16 +147,25 @@ describe('RTM aanvraag transformation', () => {
           "decision": "toegewezen",
           "displayStatus": "Besluit wijziging",
           "documents": [],
-          "id": "29",
+          "id": "116057985",
           "isActual": true,
           "link": {
             "title": "Meer informatie",
-            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/29",
+            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/116057985",
           },
           "steps": [
             {
               "datePublished": "2024-01-01",
               "description": "",
+              "documents": [],
+              "id": "aanvraag-1-1",
+              "isActive": false,
+              "isChecked": true,
+              "status": "Aanvraag",
+            },
+            {
+              "datePublished": "2024-01-01",
+              "description": "<p>Voordat u de Regeling tegemoetkoming meerkosten krijgt, moet u een afspraak maken voor een medische keuring bij de GGD. In de brief staat hoe u dat doet.</p>",
               "documents": [
                 {
                   "id": "test-encrypted-id",
@@ -166,15 +176,6 @@ describe('RTM aanvraag transformation', () => {
                   "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
                 },
               ],
-              "id": "aanvraag-1-1",
-              "isActive": false,
-              "isChecked": true,
-              "status": "Aanvraag",
-            },
-            {
-              "datePublished": "2024-01-01",
-              "description": "<p>Voordat u de Regeling tegemoetkoming meerkosten krijgt, moet u een afspraak maken voor een medische keuring bij de GGD. In de brief staat hoe u dat doet.</p>",
-              "documents": [],
               "id": "in-behandeling-genomen-1-1",
               "isActive": false,
               "isChecked": true,
@@ -285,22 +286,17 @@ describe('RTM aanvraag transformation', () => {
           "decision": "toegewezen",
           "displayStatus": "In behandeling genomen",
           "documents": [],
-          "id": "30",
+          "id": "462060519",
           "isActual": true,
           "link": {
             "title": "Meer informatie",
-            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/30",
+            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/462060519",
           },
           "steps": [
             {
               "datePublished": "2025-01-01",
               "description": "",
-              "documents": [
-                {
-                  "id": "test-encrypted-id",
-                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
-                },
-              ],
+              "documents": [],
               "id": "aanvraag-1-1",
               "isActive": false,
               "isChecked": true,
@@ -311,7 +307,12 @@ describe('RTM aanvraag transformation', () => {
               "description": "<p>Voordat u de Regeling tegemoetkoming meerkosten krijgt, moet u een afspraak maken voor een medische keuring bij de GGD. In de brief staat hoe u dat doet.</p><p><strong>Vraagt u de Regeling tegemoetkoming meerkosten (ook) voor andere gezinsleden aan?</strong><br/>De uitslag van de aanvraag is op Mijn Amsterdam te vinden met de DigiD login gegevens van uw gezinsleden.</p>
                 <p>Nog geen DigiD login gegevens? <a rel="noopener noreferrer" href="https://www.digid.nl/aanvragen-en-activeren/digid-aanvragen">Ga naar DigiD aanvragen.</a></p>
                 <p><strong>Gedeeltelijke afwijzing voor u of uw gezinsleden?</strong><br/>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>",
-              "documents": [],
+              "documents": [
+                {
+                  "id": "test-encrypted-id",
+                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
+                },
+              ],
               "id": "in-behandeling-genomen-1-1",
               "isActive": false,
               "isChecked": true,
@@ -320,12 +321,7 @@ describe('RTM aanvraag transformation', () => {
             {
               "datePublished": "2024-01-01",
               "description": "",
-              "documents": [
-                {
-                  "id": "test-encrypted-id",
-                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
-                },
-              ],
+              "documents": [],
               "id": "aanvraag-1-2",
               "isActive": false,
               "isChecked": true,
@@ -336,7 +332,12 @@ describe('RTM aanvraag transformation', () => {
               "description": "<p>Voordat u de Regeling tegemoetkoming meerkosten krijgt, moet u een afspraak maken voor een medische keuring bij de GGD. In de brief staat hoe u dat doet.</p><p><strong>Vraagt u de Regeling tegemoetkoming meerkosten (ook) voor andere gezinsleden aan?</strong><br/>De uitslag van de aanvraag is op Mijn Amsterdam te vinden met de DigiD login gegevens van uw gezinsleden.</p>
                 <p>Nog geen DigiD login gegevens? <a rel="noopener noreferrer" href="https://www.digid.nl/aanvragen-en-activeren/digid-aanvragen">Ga naar DigiD aanvragen.</a></p>
                 <p><strong>Gedeeltelijke afwijzing voor u of uw gezinsleden?</strong><br/>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>",
-              "documents": [],
+              "documents": [
+                {
+                  "id": "test-encrypted-id",
+                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
+                },
+              ],
               "id": "in-behandeling-genomen-1-2",
               "isActive": true,
               "isChecked": true,
@@ -389,11 +390,11 @@ describe('RTM aanvraag transformation', () => {
           "decision": "toegewezen",
           "displayStatus": "Besluit wijziging",
           "documents": [],
-          "id": "31",
+          "id": "116057025",
           "isActual": true,
           "link": {
             "title": "Meer informatie",
-            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/31",
+            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/116057025",
           },
           "steps": [
             {
