@@ -304,7 +304,7 @@ export async function fetchBrpVerblijfplaatsHistoryByBsn(
   }
 
   const DEFAULT_DATE_FROM = '1900-01-01';
-  const DEFAULT_DATE_TO = '2100-01-01';
+  const DEFAULT_DATE_TO = new Date().getFullYear().toString() + '-12-31';
 
   const requestConfig = getApiConfig('BENK_BRP', {
     formatUrl(requestConfig) {
