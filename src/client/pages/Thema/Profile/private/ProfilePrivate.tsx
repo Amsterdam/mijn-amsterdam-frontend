@@ -37,18 +37,16 @@ function ProfilePrivateSectionPanels() {
           {...panelConfig.adres(BRP)}
         />
       )}
-      {!!profileData?.verbintenis && (
-        <ProfileSectionPanel
-          sectionData={profileData.verbintenis}
-          {...panelConfig.verbintenis(BRP)}
-        />
-      )}
-      {!!profileData?.verbintenisHistorisch?.length && (
-        <ProfileSectionPanel
-          sectionData={profileData.verbintenisHistorisch}
-          {...panelConfig.verbintenisHistorisch(BRP)}
-        />
-      )}
+      {!!profileData?.verbintenis &&
+        !BRP.content?.verbintenis?.datumOntbinding && (
+          <>
+            HOI!
+            <ProfileSectionPanel
+              sectionData={profileData.verbintenis}
+              {...panelConfig.verbintenis(BRP)}
+            />
+          </>
+        )}
       {!!profileData?.kinderen?.length && (
         <ProfileSectionPanel
           sectionData={profileData.kinderen}
@@ -59,6 +57,19 @@ function ProfilePrivateSectionPanels() {
         <ProfileSectionPanel
           sectionData={profileData.ouders}
           {...panelConfig.ouders(BRP)}
+        />
+      )}
+      {!!profileData?.verbintenis &&
+        BRP.content?.verbintenis?.datumOntbinding && (
+          <ProfileSectionPanel
+            sectionData={profileData.verbintenis}
+            {...panelConfig.verbintenis(BRP)}
+          />
+        )}
+      {!!profileData?.verbintenisHistorisch?.length && (
+        <ProfileSectionPanel
+          sectionData={profileData.verbintenisHistorisch}
+          {...panelConfig.verbintenisHistorisch(BRP)}
         />
       )}
       {!!profileData?.adresHistorisch?.length && (

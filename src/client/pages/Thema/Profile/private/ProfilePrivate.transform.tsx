@@ -1,12 +1,12 @@
 import { Link } from '@amsterdam/design-system-react';
 
 import styles from './ProfilePrivate.module.scss';
+import type { Persoon } from '../../../../../server/services/brp/brp-types';
+import type { Adres } from '../../../../../server/services/brp/brp-types';
 import type {
   BRPData,
   VerbintenisHistorisch,
 } from '../../../../../server/services/profile/brp.types';
-import type { Persoon } from '../../../../../server/services/brp/brp-types';
-import type { Adres } from '../../../../../server/services/brp/brp-types';
 import { FeatureToggle } from '../../../../../universal/config/feature-toggles';
 import {
   formatBirthdate,
@@ -345,6 +345,25 @@ export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
   return profileData;
 }
 
+function verbintenisPanelConfig(BRP: AppState['BRP']) {
+  return {
+    title: featureToggle.BRP.benkBrpServiceActive
+      ? BRP.content?.verbintenis?.datumOntbinding
+        ? 'Eerder huwelijk of partnerschap'
+        : 'Partner'
+      : 'Burgerlijke staat',
+    actionLinks: isMokum(BRP.content)
+      ? [
+          {
+            title: 'Inzien of correctie doorgeven',
+            url: profileLinks.CHANGE_PERSONAL_DATA,
+            external: true,
+          },
+        ]
+      : [],
+  };
+}
+
 export const panelConfig: PanelConfig<BRPPanelKey, AppState['BRP']> = {
   persoon: (BRP) => {
     const actionLinks = [];
@@ -403,21 +422,7 @@ export const panelConfig: PanelConfig<BRPPanelKey, AppState['BRP']> = {
       actionLinks,
     };
   },
-
-  verbintenis: (BRP) => ({
-    title: featureToggle.BRP.benkBrpServiceActive
-      ? 'Partner'
-      : 'Burgerlijke staat',
-    actionLinks: isMokum(BRP.content)
-      ? [
-          {
-            title: 'Inzien of correctie doorgeven',
-            url: profileLinks.CHANGE_PERSONAL_DATA,
-            external: true,
-          },
-        ]
-      : [],
-  }),
+  verbintenis: verbintenisPanelConfig,
   verbintenisHistorisch: (BRP) => ({
     title: 'Eerdere huwelijken of partnerschappen',
     actionLinks: isMokum(BRP.content)
