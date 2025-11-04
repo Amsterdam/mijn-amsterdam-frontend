@@ -132,7 +132,7 @@ export interface ZorgnedAanvraagSource {
 }
 
 export type ZorgnedProcesAanvraag = {
-  identificatie: string; // Is equal to ZorgnedAanvraagSource identificatie
+  identificatie: ZorgnedAanvraagSource['identificatie']; // Is equal to ZorgnedAanvraagSource identificatie
   omschrijving: string;
   datumStart: string;
 };
