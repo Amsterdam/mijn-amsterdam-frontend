@@ -23,17 +23,6 @@ export const BffEndpoints = {
 
   TELEMETRY_PROXY: '/services/telemetry/v2/track',
 
-  // AFIS
-  AFIS_BUSINESSPARTNER: '/services/afis/businesspartner',
-  AFIS_FACTUREN: '/services/afis/facturen/:state',
-  AFIS_DOCUMENT_DOWNLOAD: '/services/afis/facturen/document',
-
-  // Stadspas
-  STADSPAS_TRANSACTIONS:
-    '/services/stadspas/transactions/:transactionsKeyEncrypted',
-  STADSPAS_BLOCK_PASS: '/services/stadspas/block/:transactionsKeyEncrypted',
-  STADSPAS_UNBLOCK_PASS: '/services/stadspas/unblock/:transactionsKeyEncrypted',
-
   // Decos (Vergunningen, Horeca, Parkeren en Toeristische verhuur)
   DECOS_DOCUMENTS_LIST: `/services/decos/documents`,
   DECOS_DOCUMENT_DOWNLOAD: '/services/decos/documents/download',
