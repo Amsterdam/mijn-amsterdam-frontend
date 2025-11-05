@@ -370,7 +370,7 @@ function sortByBezwaarIdentificatie(
 export async function fetchBezwaren(authProfileAndToken: AuthProfileAndToken) {
   const requestBody = JSON.stringify({
     [getIdAttribute(authProfileAndToken)]: authProfileAndToken.profile.id,
-    ordering: '-startdatum',
+    ordering: 'startdatum',
   });
 
   const params = {
