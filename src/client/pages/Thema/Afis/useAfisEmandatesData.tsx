@@ -10,6 +10,7 @@ import {
   eMandateTableConfig,
   titleBetaalvoorkeurenPage,
   titleEMandaatPage,
+  featureToggle,
 } from './Afis-thema-config';
 import { useAfisThemaData } from './useAfisThemaData.hook';
 import type {
@@ -61,7 +62,10 @@ export function useAfisEMandatesData() {
     fetch,
     optimisticUpdateContent,
   } = useBffApi<AfisEMandateFrontend[]>(
-    generateApiUrl(businessPartnerIdEncrypted, 'AFIS_EMANDATES')
+    generateApiUrl(businessPartnerIdEncrypted, 'AFIS_EMANDATES'),
+    {
+      fetchImmediately: featureToggle.afisEMandatesActive,
+    }
   );
 
   const EMandatesSource = eMandatesApiResponse?.content ?? [];
