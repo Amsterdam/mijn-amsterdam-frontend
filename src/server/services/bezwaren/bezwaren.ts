@@ -43,7 +43,7 @@ import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 
-const MAX_PAGE_COUNT = 5; // Should amount to 5 * 20 (per page) = 100 bezwaren
+const MAX_PAGE_COUNT = 5; // Should amount to 10 * 20 (per page) = 200 bezwaren
 
 async function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
   const now = new Date();
@@ -370,6 +370,7 @@ function sortByBezwaarIdentificatie(
 export async function fetchBezwaren(authProfileAndToken: AuthProfileAndToken) {
   const requestBody = JSON.stringify({
     [getIdAttribute(authProfileAndToken)]: authProfileAndToken.profile.id,
+    ordering: '-startdatum',
   });
 
   const params = {
