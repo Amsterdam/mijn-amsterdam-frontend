@@ -1,11 +1,7 @@
 import { generatePath } from 'react-router';
 
 import { StadspasFrontend } from './stadspas-types';
-import {
-  routeConfig,
-  themaId,
-  themaTitle,
-} from '../../../client/pages/Thema/HLI/HLI-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import { dateFormat, defaultDateFormat } from '../../../universal/helpers/date';
 import { MyNotification } from '../../../universal/types/App.types';
 
@@ -26,25 +22,26 @@ const BUDGET_NOTIFICATION_CHILD = `
 
 export function getBudgetNotifications(stadspassen: StadspasFrontend[]) {
   const notifications: MyNotification[] = [];
-
+  // de routes moeten nog goed geimporteerd worden in thema config
   const createNotificationBudget = (
     description: string,
     stadspasPassNumber?: string
   ): MyNotification => ({
     id: `stadspas-budget-notification`,
     datePublished: dateFormat(new Date(), 'yyyy-MM-dd'),
-    themaID: themaId,
-    themaTitle: themaTitle,
+    themaID: themaConfig.id,
+    themaTitle: themaConfig.title,
     title: `Stadspas kindtegoed: Maak je tegoed op voor ${defaultDateFormat(
       BUDGET_NOTIFICATION_DATE_END
     )}!`,
     description,
     link: {
       to: stadspasPassNumber
-        ? generatePath(routeConfig.detailPageStadspas.path, {
-            passNumber: stadspasPassNumber,
-          })
-        : routeConfig.themaPage.path,
+        ? generatePath(
+            themaConfig.routeConfig?.detailPageStadspas?.path ?? '',
+            { passNumber: stadspasPassNumber }
+          )
+        : (themaConfig.routeConfig?.themaPage?.path ?? ''),
       title: 'Check het saldo',
     },
   });

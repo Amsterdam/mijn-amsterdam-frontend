@@ -1,4 +1,9 @@
 import type { ReactNode } from 'react';
+import type {
+  ThemaConfigBase,
+  WithDetailPage,
+  WithListPage,
+} from '../../../config/thema-types';
 
 import { generatePath } from 'react-router';
 
@@ -8,7 +13,55 @@ import { dateSort } from '../../../../universal/helpers/date';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
-import type { ThemaRoutesConfig } from '../../../config/thema-types';
+// params moet misschien  gefixed worden heb deze naar params any verandert
+type HLIThemaConfig = ThemaConfigBase & WithDetailPage & WithListPage;
+
+const THEMA_TITLE = 'HLI';
+
+export const themaConfig: HLIThemaConfig = {
+  id: 'HLI',
+  title: THEMA_TITLE,
+  featureToggle: {
+    themaActive: true,
+  },
+  profileTypes: ['private', 'commercial'],
+  route: {
+    path: '/regelingen-bij-laag-inkomen',
+    get documentTitle() {
+      return `${themaConfig.title} | Overzicht`;
+    },
+    trackingUrl: null,
+  },
+  redactedScope: 'none',
+  pageLinks: [
+    {
+      title: 'Meer informatie over regelingen bij laag inkomen.',
+      to: 'https://www.amsterdam.nl/werk-inkomen/hulp-bij-laag-inkomen/',
+    },
+  ],
+  uitlegPageSections: {
+    title: THEMA_TITLE,
+    listItems: ["Uw aanvraag voor 'regeling bij laag inkomen'"],
+  },
+  detailPage: {
+    title: 'Regeling bij laag inkomen',
+    route: {
+      path: '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
+      trackingUrl: '/regelingen-bij-laag-inkomen/regeling',
+      get documentTitle() {
+        return `Regeling bij laag inkomen | ${themaConfig.title}`;
+      },
+    },
+  },
+  listPage: {
+    route: {
+      path: '/regelingen-bij-laag-inkomen/lijst/:kind/:page?',
+      trackingUrl: null,
+      documentTitle: (params) =>
+        `${params?.kind === 'eerdere-en-afgehandelde-regelingen' ? 'Eerdere' : 'Huidige'} regelingen | ${themaConfig.title}`,
+    },
+  },
+} as const;
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
@@ -78,7 +131,7 @@ export const stadspasTitle = 'Stadspas' as const;
 export const routeConfig = {
   detailPage: {
     path: '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
-    trackingUrl: (params) =>
+    trackingUrl: (params: any) =>
       generatePath('/regelingen-bij-laag-inkomen/regeling/:regeling', {
         regeling: params?.regeling ?? '',
       }),
@@ -96,7 +149,7 @@ export const routeConfig = {
   },
   regelingenListPage: {
     path: '/regelingen-bij-laag-inkomen/lijst/:kind/:page?',
-    documentTitle: (params) =>
+    documentTitle: (params: any) =>
       `${params?.kind === listPageParamKind.historic ? 'Eerdere' : 'Huidige'} regelingen | ${themaTitle}`,
     trackingUrl: null,
   },
@@ -105,8 +158,8 @@ export const routeConfig = {
     documentTitle: `${themaTitle} | overzicht`,
     trackingUrl: null,
   },
-} as const satisfies ThemaRoutesConfig;
-
+} as const;
+// }  was eerst as const satisfies ThemaRoutesConfig;
 export const listPageTitle = {
   [listPageParamKind.lopend]: 'Aanvragen',
   [listPageParamKind.actual]: 'Huidige regelingen',
