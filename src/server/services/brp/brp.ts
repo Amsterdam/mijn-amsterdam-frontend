@@ -64,7 +64,7 @@ function getDatum(datum?: DatumSource): string | null {
       return datum.jaar ? `${datum.jaar}-01-01` : null;
     case 'JaarMaandDatum':
       return datum.jaar && datum.maand
-        ? `${datum.jaar}-${datum.maand.padStart(2, '0')}-01`
+        ? `${datum.jaar}-${datum.maand.toString().padStart(2, '0')}-01`
         : null;
     default:
     case 'Datum':

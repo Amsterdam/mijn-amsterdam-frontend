@@ -52,7 +52,7 @@ describe('brp.ts', () => {
       expect(
         getDatum({
           type: 'JaarDatum',
-          jaar: '2023',
+          jaar: 2023,
           langFormaat: '',
         })
       ).toBe('2023-01-01');
@@ -62,8 +62,8 @@ describe('brp.ts', () => {
       expect(
         getDatum({
           type: 'JaarMaandDatum',
-          jaar: '2023',
-          maand: '5',
+          jaar: 2023,
+          maand: 5,
           langFormaat: '',
         })
       ).toBe('2023-05-01');
