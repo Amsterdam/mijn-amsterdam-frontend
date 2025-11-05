@@ -177,11 +177,10 @@ function transformRegelingenForFrontend(
   today: Date
 ): HLIRegelingFrontend[] {
   const [remainingAanvragen, RTMAanvragen] = splitBy(aanvragen, isRTMAanvraag);
-  const RTMRegelingenFrontend = transformRTMAanvragen(
-    sessionID,
-    aanvrager,
-    RTMAanvragen
-  );
+  const RTMRegelingenFrontend = featureToggle.hliRegelingEnabledRTM
+    ? transformRTMAanvragen(sessionID, aanvrager, RTMAanvragen)
+    : [];
+
   const [remainingAanvragen_, PCVergoedingAanvragen_pre2026] = splitBy(
     remainingAanvragen,
     isPcAanvraag
