@@ -123,7 +123,7 @@ function getExcludeAccountingDocumentIdsFilter(params: AfisFacturenParams) {
     return '';
   }
   const docIdFilters = params.excludeAccountingDocumentIds
-    .map((type) => `AccountingDocument eq '${type}'`)
+    .map((type) => `AccountingDocument ne '${type}'`)
     .join(' and ');
 
   return ` and (${docIdFilters})`;
