@@ -63,6 +63,12 @@ const ROUTES = {
       `and IsCleared eq true and (DunningLevel ne '3' or ReverseDocument ne '')`
     );
   },
+  termijnFacturen: (uri: string) => {
+    return isQueryStringIncludedInUri(
+      uri,
+      `and PaymentTerms gt 'B' and SEPAMandate ne '' and IsCleared eq true and (DunningLevel ne '3' or ReverseDocument ne '')`
+    );
+  },
   overgedragenFacturen: (uri: string) => {
     return isQueryStringIncludedInUri(
       uri,
@@ -791,6 +797,12 @@ describe('afis-facturen', async () => {
       remoteApi.get(ROUTES.openstaandeFacturen).reply(200, {
         feed: {
           entry: [factuur()],
+        },
+      });
+
+      remoteApi.get(ROUTES.termijnFacturen).reply(200, {
+        feed: {
+          entry: [],
         },
       });
 
