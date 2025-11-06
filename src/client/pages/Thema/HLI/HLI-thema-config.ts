@@ -5,7 +5,6 @@ import { generatePath } from 'react-router';
 import { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
 import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { dateSort } from '../../../../universal/helpers/date';
-import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 import type {
@@ -18,21 +17,43 @@ const THEMA_TITLE = 'Stadspas en regelingen bij laag inkomen';
 export type HLIThemaConfig = ThemaConfigBase;
 
 export const themaConfig: HLIThemaConfig = {
-  id: 'HLI',
+  id: 'HLI' as const,
   title: THEMA_TITLE,
   featureToggle: {
     themaActive: true,
+    features: {
+      stadspas: true,
+      regelingen: true,
+      laagInkomenInfo: true,
+    },
   },
-  profileTypes: [],
+  profileTypes: ['private'],
   uitlegPageSections: {
-    title: '',
-    listItems: [],
+    title: THEMA_TITLE,
+    listItems: [
+      'De Stadspas is er voor Amsterdammers met een laag inkomen.',
+      'Met de pas krijg je korting of gratis toegang tot activiteiten.',
+      'Daarnaast zijn er regelingen voor mensen met een laag inkomen.',
+    ],
   },
-  pageLinks: [],
+  pageLinks: [
+    {
+      title: 'Meer informatie over regelingen',
+      to: 'https://www.amsterdam.nl/werk-inkomen/hulp-bij-laag-inkomen/',
+    },
+    {
+      title: 'Meer informatie over Stadspas',
+      to: 'https://www.amsterdam.nl/stadspas',
+    },
+    {
+      title: 'Meer informatie over Kindtegoed declareren',
+      to: 'https://www.amsterdam.nl/stadspas/kindtegoed/kosten-terugvragen/',
+    },
+  ],
   route: {
-    path: '',
+    path: '/regelingen-bij-laag-inkomen',
     trackingUrl: null,
-    documentTitle: '',
+    documentTitle: `${THEMA_TITLE} | Overzicht`,
   },
   redactedScope: 'none',
 } as const;
@@ -97,7 +118,7 @@ export const featureToggle = {
   hli2026PCVergoedingV3Enabled: !IS_PRODUCTION,
 } as const;
 
-export const themaId = 'HLI' as const;
+// export const themaId = 'HLI' as const;
 export const themaTitle = 'Stadspas en regelingen bij laag inkomen' as const;
 export const regelingenTitle = 'Regelingen bij laag inkomen' as const;
 export const stadspasTitle = 'Stadspas' as const;
@@ -140,21 +161,21 @@ export const listPageTitle = {
   [listPageParamKind.historic]: 'Eerdere en afgewezen regelingen',
 } as const;
 
-export const linkListItems: LinkProps[] = [
-  {
-    to: 'https://www.amsterdam.nl/werk-inkomen/hulp-bij-laag-inkomen/',
-    title: 'Meer informatie over regelingen',
-  },
-  {
-    to: 'https://www.amsterdam.nl/stadspas',
-    title: 'Meer informatie over Stadspas',
-  },
-] as const;
+// export const linkListItems: LinkProps[] = [
+//   {
+//     to: 'https://www.amsterdam.nl/werk-inkomen/hulp-bij-laag-inkomen/',
+//     title: 'Meer informatie over regelingen',
+//   },
+//   {
+//     to: 'https://www.amsterdam.nl/stadspas',
+//     title: 'Meer informatie over Stadspas',
+//   },
+// ] as const;
 
-export const kindTegoedLinkListItem: LinkProps = {
-  to: 'https://www.amsterdam.nl/stadspas/kindtegoed/kosten-terugvragen/',
-  title: 'Meer informatie over Kindtegoed declareren',
-};
+// export const kindTegoedLinkListItem: LinkProps = {
+//   to: 'https://www.amsterdam.nl/stadspas/kindtegoed/kosten-terugvragen/',
+//   title: 'Meer informatie over Kindtegoed declareren',
+// };
 
 export const tableConfig = {
   [listPageParamKind.lopend]: {
