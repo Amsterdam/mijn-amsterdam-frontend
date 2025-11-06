@@ -1,24 +1,30 @@
 import { myThemasMenuItems } from './thema';
 import { ThemaMenuItemTransformed, ThemaMenuItem } from './thema-types';
+import type { AppState } from '../../universal/types/App.types';
 import { useAppStateGetter } from '../hooks/useAppStateStore';
 
-export const themasByProfileType: (
+export function useThemasByProfileType(
   profileType: ProfileType
-) => ThemaMenuItemTransformed[] = (profileType) =>
-  ({
+): ThemaMenuItemTransformed[] {
+  const appState = useAppStateGetter();
+  return {
     private: myThemasMenuItems
       .filter((item) => item.profileTypes.includes('private'))
-      .map((item) => buildThemaMenuItem(item, 'private')),
+      .map((item) => getThemaMenuItem(appState, item, 'private')),
     'private-attributes': myThemasMenuItems
       .filter((item) => item.profileTypes.includes('private-attributes'))
-      .map((item) => buildThemaMenuItem(item, 'private-attributes')),
+      .map((item) => getThemaMenuItem(appState, item, 'private-attributes')),
     commercial: myThemasMenuItems
       .filter((item) => item.profileTypes.includes('commercial'))
-      .map((item) => buildThemaMenuItem(item, 'commercial')),
-  })[profileType || 'private'];
+      .map((item) => getThemaMenuItem(appState, item, 'commercial')),
+  }[profileType || 'private'];
+}
 
-function buildThemaMenuItem(item: ThemaMenuItem, profileType: ProfileType) {
-  const appState = useAppStateGetter();
+function getThemaMenuItem(
+  appState: AppState,
+  item: ThemaMenuItem,
+  profileType: ProfileType
+) {
   const title =
     typeof item.title === 'function'
       ? item.title(appState, profileType)

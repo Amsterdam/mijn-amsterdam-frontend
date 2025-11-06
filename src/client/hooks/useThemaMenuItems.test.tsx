@@ -11,7 +11,7 @@ import {
   useActiveThemaMenuItems,
   useAllThemaMenuItemsByThemaID,
 } from './useThemaMenuItems';
-import { themasByProfileType } from '../config/menuItems';
+import { useThemasByProfileType } from '../config/menuItems';
 import type { ThemaMenuItemTransformed } from '../config/thema-types';
 
 vi.mock('./useProfileType', () => ({
@@ -108,7 +108,7 @@ describe('useActiveThemaMenuItems', () => {
     (useProfileTypeValue as Mock).mockReturnValue(mockProfileType);
     (useAppStateGetter as Mock).mockReturnValue(mockAppState);
     (useAppStateReady as Mock).mockReturnValue(true);
-    (themasByProfileType as Mock).mockReturnValue(mockThemaItems);
+    (useThemasByProfileType as Mock).mockReturnValue(mockThemaItems);
 
     const { result } = renderHook(() => useActiveThemaMenuItems(), {
       wrapper: ({ children }) => <>{children}</>,
@@ -124,7 +124,7 @@ describe('useActiveThemaMenuItems', () => {
 
   it('should return isLoading as true when app state is not ready', () => {
     (useAppStateReady as Mock).mockReturnValue(false);
-    (themasByProfileType as Mock).mockReturnValue([]);
+    (useThemasByProfileType as Mock).mockReturnValue([]);
 
     const { result } = renderHook(() => useActiveThemaMenuItems());
 
@@ -163,7 +163,7 @@ describe('useAllThemaMenuItemsByThemaID', () => {
     };
     const mockThemaItems: ThemaMenuItemTransformed[] = [itemA, itemB, itemC];
 
-    (themasByProfileType as Mock).mockReturnValue(mockThemaItems);
+    (useThemasByProfileType as Mock).mockReturnValue(mockThemaItems);
 
     const { result } = renderHook(() => useAllThemaMenuItemsByThemaID());
 
@@ -197,7 +197,7 @@ describe('useThemaMenuItemByThemaID', () => {
     };
     const mockThemaItems: ThemaMenuItemTransformed[] = [itemA, itemB];
 
-    (themasByProfileType as Mock).mockReturnValue(mockThemaItems);
+    (useThemasByProfileType as Mock).mockReturnValue(mockThemaItems);
 
     const { result } = renderHook(() => useThemaMenuItemByThemaID('1'));
 
@@ -216,7 +216,7 @@ describe('useThemaMenuItemByThemaID', () => {
     };
     const mockThemaItems: ThemaMenuItemTransformed[] = [itemB];
 
-    (themasByProfileType as Mock).mockReturnValue(mockThemaItems);
+    (useThemasByProfileType as Mock).mockReturnValue(mockThemaItems);
 
     const { result } = renderHook(() => useThemaMenuItemByThemaID('3'));
 
@@ -240,7 +240,7 @@ describe('useThemaBreadcrumbs', () => {
 
     const mockThemaItems: ThemaMenuItemTransformed[] = [itemB];
 
-    (themasByProfileType as Mock).mockReturnValue(mockThemaItems);
+    (useThemasByProfileType as Mock).mockReturnValue(mockThemaItems);
     (useLocation as Mock).mockReturnValue(mockLocation);
 
     const { result } = renderHook(() => useThemaBreadcrumbs('2'));
@@ -266,7 +266,7 @@ describe('useThemaBreadcrumbs', () => {
 
     const mockThemaItems: ThemaMenuItemTransformed[] = [itemB];
 
-    (themasByProfileType as Mock).mockReturnValue(mockThemaItems);
+    (useThemasByProfileType as Mock).mockReturnValue(mockThemaItems);
     (useLocation as Mock).mockReturnValue(mockLocation);
 
     const { result } = renderHook(() => useThemaBreadcrumbs('2'));
@@ -277,7 +277,7 @@ describe('useThemaBreadcrumbs', () => {
   it('should return an empty array if no thema item is found', () => {
     const mockLocation = { state: { from: '/x-list', pageType: 'listpage' } };
 
-    (themasByProfileType as Mock).mockReturnValue([]);
+    (useThemasByProfileType as Mock).mockReturnValue([]);
     (useLocation as Mock).mockReturnValue(mockLocation);
 
     const { result } = renderHook(() => useThemaBreadcrumbs('3'));

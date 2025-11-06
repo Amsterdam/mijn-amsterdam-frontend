@@ -1,5 +1,5 @@
 import { fetchBAG } from './bag';
-import { BAGData } from './bag.types';
+import { BAGLocation } from './bag.types';
 import {
   DEFAULT_LAT,
   DEFAULT_LNG,
@@ -18,7 +18,7 @@ import { fetchKVK, getKvkAddresses } from '../profile/kvk';
 
 async function fetchPrivate(
   authProfileAndToken: AuthProfileAndToken
-): Promise<ApiResponse_DEPRECATED<BAGData[] | null>> {
+): Promise<ApiResponse_DEPRECATED<BAGLocation[] | null>> {
   const BRP = await fetchBrpV2(authProfileAndToken);
 
   if (BRP.status === 'OK') {
@@ -57,10 +57,10 @@ async function fetchPrivate(
 
 async function fetchCommercial(
   authProfileAndToken: AuthProfileAndToken
-): Promise<ApiResponse_DEPRECATED<BAGData[] | null>> {
+): Promise<ApiResponse_DEPRECATED<BAGLocation[] | null>> {
   const KVK = await fetchKVK(authProfileAndToken);
 
-  let MY_LOCATION: ApiResponse_DEPRECATED<BAGData[] | null>;
+  let MY_LOCATION: ApiResponse_DEPRECATED<BAGLocation[] | null>;
 
   if (KVK.status === 'OK') {
     const addresses: Adres[] = getKvkAddresses(KVK.content);
@@ -96,7 +96,7 @@ async function fetchCommercial(
 
 export async function fetchMyLocation(
   authProfileAndToken: AuthProfileAndToken
-): Promise<ApiResponse_DEPRECATED<BAGData[] | null>> {
+): Promise<ApiResponse_DEPRECATED<BAGLocation[] | null>> {
   const commercialResponse = await fetchCommercial(authProfileAndToken);
 
   if (authProfileAndToken.profile.profileType === 'commercial') {
@@ -105,7 +105,7 @@ export async function fetchMyLocation(
 
   const { content: privateAddresses } = await fetchPrivate(authProfileAndToken);
 
-  const locations: BAGData[] = [
+  const locations: BAGLocation[] = [
     ...(privateAddresses || []),
     ...(commercialResponse.content || []),
   ].filter((location) => location !== null);
