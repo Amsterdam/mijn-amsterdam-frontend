@@ -107,13 +107,24 @@ function getAccountingDocumentTypesFilter(state: AfisFacturenParams['state']) {
   return ` and (${docTypeFilters})`;
 }
 
-function getAccountingDocumentIdsFilter(params: AfisFacturenParams) {
+function getIncludeAccountingDocumentIdsFilter(params: AfisFacturenParams) {
   if (!params.includeAccountingDocumentIds?.length) {
     return '';
   }
   const docIdFilters = params.includeAccountingDocumentIds
     .map((type) => `AccountingDocument eq '${type}'`)
     .join(' or ');
+
+  return ` and (${docIdFilters})`;
+}
+
+function getExcludeAccountingDocumentIdsFilter(params: AfisFacturenParams) {
+  if (!params.excludeAccountingDocumentIds?.length) {
+    return '';
+  }
+  const docIdFilters = params.excludeAccountingDocumentIds
+    .map((type) => `AccountingDocument eq '${type}'`)
+    .join(' and ');
 
   return ` and (${docIdFilters})`;
 }
@@ -139,9 +150,9 @@ function getFactuurRequestQueryParams(
   };
 
   const top = params.top
-    ? Math.max(parseInt(params.top, 10), AFIS_MAX_FACTUREN_TOP)
+    ? Math.min(parseInt(params.top, 10), AFIS_MAX_FACTUREN_TOP)
     : AFIS_MAX_FACTUREN_TOP;
-  const query = `?$inlinecount=allpages&${filters[params.state]}${getAccountingDocumentTypesFilter(params.state)}${getAccountingDocumentIdsFilter(params)}&${selectFieldsQueryByState[params.state]}&${orderByQueryByState[params.state]}&$top=${top}`;
+  const query = `?$inlinecount=allpages&${filters[params.state]}${getAccountingDocumentTypesFilter(params.state)}${getIncludeAccountingDocumentIdsFilter(params)}${getExcludeAccountingDocumentIdsFilter(params)}&${selectFieldsQueryByState[params.state]}&${orderByQueryByState[params.state]}&$top=${top}`;
 
   return getRequestParamsFromQueryString(query);
 }
@@ -585,6 +596,16 @@ export async function fetchAfisFacturen(
   return requestData<AfisFacturenResponse>(config);
 }
 
+function getTermijnFactuurAccountingDocumentIds(
+  facturen: AfisFactuur[]
+): string[] {
+  return uniqueArray(
+    facturen
+      .filter((factuur) => factuur.status === 'automatische-incasso-termijnen')
+      .map((factuur) => factuur.factuurNummer)
+  );
+}
+
 async function fetchAfisOpenFacturenIncludingAfgehandeldeTermijnFacturen(
   sessionID: SessionID,
   params: Omit<AfisFacturenParams, 'state'>
@@ -598,10 +619,8 @@ async function fetchAfisOpenFacturenIncludingAfgehandeldeTermijnFacturen(
     return facturenOpenResponse;
   }
 
-  const includeAccountingDocumentIds: string[] = uniqueArray(
-    facturenOpenResponse.content?.facturen
-      .filter((factuur) => factuur.status === 'automatische-incasso-termijnen')
-      .map((factuur) => factuur.factuurNummer) ?? []
+  const includeAccountingDocumentIds = getTermijnFactuurAccountingDocumentIds(
+    facturenOpenResponse.content?.facturen ?? []
   );
 
   const possiblyAfgehandeldTermijnenFacturenResponse = await fetchAfisFacturen(
@@ -636,14 +655,17 @@ export async function fetchAfisFacturenOverview(
   sessionID: SessionID,
   params: Omit<AfisFacturenParams, 'state' | 'top'>
 ) {
-  const facturenOpenRequest =
-    fetchAfisOpenFacturenIncludingAfgehandeldeTermijnFacturen(sessionID, {
+  const facturenOpenResponse =
+    await fetchAfisOpenFacturenIncludingAfgehandeldeTermijnFacturen(sessionID, {
       businessPartnerID: params.businessPartnerID,
     });
 
   const facturenClosedRequest = fetchAfisFacturen(sessionID, {
     state: 'afgehandeld',
     businessPartnerID: params.businessPartnerID,
+    excludeAccountingDocumentIds: getTermijnFactuurAccountingDocumentIds(
+      facturenOpenResponse.content?.facturen ?? []
+    ),
     top: '3',
   });
 
@@ -653,26 +675,21 @@ export async function fetchAfisFacturenOverview(
     top: '3',
   });
 
-  const [
-    facturenOpenResponse,
-    facturenClosedResponse,
-    facturenTransferredResponse,
-  ] = await Promise.allSettled([
-    facturenOpenRequest,
-    facturenClosedRequest,
-    facturenTransferredRequest,
-  ]);
+  const [facturenClosedResponse, facturenTransferredResponse] =
+    await Promise.allSettled([
+      facturenClosedRequest,
+      facturenTransferredRequest,
+    ]);
 
-  const facturenOpenResult = getSettledResult(facturenOpenResponse);
   const facturenClosedResult = getSettledResult(facturenClosedResponse);
   const facturenTransferredResult = getSettledResult(
     facturenTransferredResponse
   );
 
   let openFacturenContent: AfisFacturenResponse | null =
-    facturenOpenResult.content;
+    facturenOpenResponse.content;
 
-  if (facturenOpenResult.status === 'OK') {
+  if (facturenOpenResponse.status === 'OK') {
     const facturenOpen = openFacturenContent?.facturen ?? [];
     const openFacturenContentSorted: AfisFacturenResponse = {
       count: openFacturenContent?.count ?? 0,
@@ -703,7 +720,7 @@ export async function fetchAfisFacturenOverview(
   };
 
   const failedDependencies = getFailedDependencies({
-    open: facturenOpenResult,
+    open: facturenOpenResponse,
     afgehandeld: facturenClosedResult,
     overgedragen: facturenTransferredResult,
   });
@@ -764,12 +781,10 @@ export async function fetchAfisFacturenByState(
     let excludeAccountingDocumentIdsFromResult: string[] = [];
 
     if (facturenOpenResult.status === 'OK') {
-      const ids = facturenOpenResult.content?.facturen
-        .filter(
-          (factuur) => factuur.status === 'automatische-incasso-termijnen'
-        )
-        .map((factuur) => factuur.factuurNummer);
-      excludeAccountingDocumentIdsFromResult = uniqueArray(ids ?? []);
+      excludeAccountingDocumentIdsFromResult =
+        getTermijnFactuurAccountingDocumentIds(
+          facturenOpenResult.content?.facturen ?? []
+        );
     }
 
     const facturenFiltered = facturenResult.content?.facturen.filter(

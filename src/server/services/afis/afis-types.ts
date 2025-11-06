@@ -133,6 +133,7 @@ export type AfisFacturenParams = {
   businessPartnerID: string;
   top?: string;
   includeAccountingDocumentIds?: string[];
+  excludeAccountingDocumentIds?: string[];
 };
 
 export type AfisFactuurTermijn = {
