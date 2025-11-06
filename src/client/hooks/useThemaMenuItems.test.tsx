@@ -24,7 +24,7 @@ vi.mock('./useAppStateStore', () => ({
 }));
 
 vi.mock('../config/menuItems', () => ({
-  themasByProfileType: vi.fn(),
+  useThemasByProfileType: vi.fn(),
 }));
 
 vi.mock('react-router', async (importOriginal) => ({
