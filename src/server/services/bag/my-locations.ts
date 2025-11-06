@@ -34,6 +34,7 @@ async function fetchPrivate(
             },
             address: null,
             bagAddress: null,
+            mokum: true,
             profileType: 'private',
           },
         ]);
@@ -42,11 +43,13 @@ async function fetchPrivate(
         Object.assign(BAGLocation, { profileType: 'private' }),
       ]);
     }
+
     return apiSuccessResult([
       {
         latlng: null,
         address: null,
         bagAddress: null,
+        mokum: false,
         profileType: 'private',
       },
     ]);
