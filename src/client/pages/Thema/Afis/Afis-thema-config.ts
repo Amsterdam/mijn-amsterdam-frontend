@@ -6,7 +6,8 @@ import {
   AfisBusinessPartnerDetailsTransformed,
   AfisFacturenResponse,
   AfisFactuur,
-  AfisFactuurState,
+  type AfisFactuurStateFrontend,
+  type AfisFactuurTermijn,
 } from '../../../../server/services/afis/afis-types';
 import {
   LinkProps,
@@ -78,7 +79,21 @@ const displayPropsFacturenAfgehandeldOfOvergedragen: DisplayProps<AfisFactuurFro
     },
   };
 
-export const listPageTitle: Record<AfisFactuurState, string> = {
+export const displayPropsTermijnenTable: DisplayProps<AfisFactuurTermijn> = {
+  props: {
+    term: 'Termijn',
+    paymentDueDateFormatted: 'Vervaldatum',
+    amountOriginalFormatted: 'Bedrag',
+    paymentStatus: 'Status',
+    statusDescription: 'Termijn',
+  },
+  colWidths: {
+    large: ['10%', '25%', '20%', '45%', '0'],
+    small: ['0', '0', '0', '0', '100%'],
+  },
+};
+
+export const listPageTitle: Record<AfisFactuurStateFrontend, string> = {
   open: 'Openstaande facturen',
   afgehandeld: 'Afgehandelde facturen',
   overgedragen:
@@ -87,16 +102,20 @@ export const listPageTitle: Record<AfisFactuurState, string> = {
 
 export type AfisEmandateStub = ZaakAanvraagDetail & Record<string, string>;
 
-export type AfisFactuurFrontend = AfisFactuur & {
+export type AfisFactuurFrontend = Omit<AfisFactuur, 'statusDescription'> & {
   factuurNummerEl: ReactNode;
+  statusDescription: ReactNode;
 };
 
-export type AfisFacturenResponseFrontend = AfisFacturenResponse & {
+export type AfisFacturenResponseFrontend = Omit<
+  AfisFacturenResponse,
+  'facturen'
+> & {
   facturen: AfisFactuurFrontend[];
 };
 
 export type AfisFacturenByStateFrontend = {
-  [key in AfisFactuurState]?: AfisFacturenResponseFrontend;
+  [key in AfisFactuurStateFrontend]?: AfisFacturenResponseFrontend;
 };
 
 export const facturenTableConfig = {

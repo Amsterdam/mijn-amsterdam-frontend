@@ -1,23 +1,48 @@
-import { Alert } from '@amsterdam/design-system-react';
+import { Alert, Paragraph } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router';
 
-import type { AfisFactuurFrontend } from './Afis-thema-config';
+import {
+  AfisFactuurFrontend,
+  displayPropsTermijnenTable,
+} from './Afis-thema-config';
+import styles from './AfisFactuur.module.scss';
 import {
   getDocumentLink,
   useAfisListPageData,
   useAfisThemaData,
 } from './useAfisThemaData.hook';
-import type { AfisFactuurState } from '../../../../server/services/afis/afis-types';
+import type { AfisFactuurStateFrontend } from '../../../../server/services/afis/afis-types';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import LoadingContent from '../../../components/LoadingContent/LoadingContent';
 import { MaRouterLink } from '../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../components/Page/Page';
+import { TableV2 } from '../../../components/Table/TableV2';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
+function getTermijnenTable(factuur: AfisFactuurFrontend) {
+  if (!factuur.termijnen || factuur.termijnen.length === 0) {
+    return 'Geen termijnen beschikbaar';
+  }
+
+  return (
+    <TableV2
+      className={styles.termijnenTable}
+      showTHead
+      subTitle={
+        <Paragraph className="ams-mb-m">
+          De factuur wordt in termijnen per automatische incasso voldaan.
+        </Paragraph>
+      }
+      items={factuur.termijnen}
+      displayProps={displayPropsTermijnenTable}
+    />
+  );
+}
+
 type FactuurDetailContentProps = {
   factuurNummer: AfisFactuurFrontend['factuurNummer'];
-  state: AfisFactuurState;
+  state: AfisFactuurStateFrontend;
 };
 
 function FactuurDetailContent({
@@ -59,16 +84,23 @@ function FactuurDetailContent({
     {
       label: 'Vervaldatum',
       content: factuur.paymentDueDateFormatted ?? '-',
-      isVisible: !!factuur.paymentDueDateFormatted,
+      isVisible:
+        !!factuur.paymentDueDateFormatted &&
+        factuur.status !== 'automatische-incasso-termijnen',
     },
     {
       label: 'Afzender',
       content: factuur.afzender ?? '-',
     },
-
     {
       label: 'Status',
       content: factuur.statusDescription ?? '-',
+      isVisible: factuur.status !== 'automatische-incasso-termijnen',
+    },
+    {
+      label: 'Termijnen',
+      content: getTermijnenTable(factuur),
+      isVisible: factuur.status === 'automatische-incasso-termijnen',
     },
     {
       label: 'Download',
@@ -90,7 +122,7 @@ export function AfisFactuur() {
 
   const { factuurNummer, state } = useParams<{
     factuurNummer: AfisFactuurFrontend['factuurNummer'];
-    state: AfisFactuurState;
+    state: AfisFactuurStateFrontend;
   }>();
 
   useHTMLDocumentTitle(routeConfig.detailPage);

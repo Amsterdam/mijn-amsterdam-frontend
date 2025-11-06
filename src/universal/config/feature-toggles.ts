@@ -12,8 +12,6 @@ export const FeatureToggle = {
   // We don't filter out the undownloadable facturen for testing purposes.
   // We want to be able to test immediately and not wait until the evening.
   afisFilterOutUndownloadableFacturenActive: IS_OT || IS_PRODUCTION,
-  // See also MIJN-10042: Bug where migrated documents "$year < 2025" do not have PDF downloads available.
-  afisMigratedFacturenDownloadActive: !IS_PRODUCTION,
 
   // AVG (Smile)
   avgActive: true,

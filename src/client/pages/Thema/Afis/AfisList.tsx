@@ -5,12 +5,12 @@ import {
   AfisDisclaimerOvergedragenFacturen,
 } from './AfisThema';
 import { useAfisListPageData } from './useAfisThemaData.hook';
-import { AfisFactuurState } from '../../../../server/services/afis/afis-types';
+import { type AfisFactuurStateFrontend } from '../../../../server/services/afis/afis-types';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 import { PageContentCell } from '../../../components/Page/Page';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
-function AfisListPageBody({ state }: { state: AfisFactuurState }) {
+function AfisListPageBody({ state }: { state: AfisFactuurStateFrontend }) {
   switch (state) {
     case 'open':
       return <AfisDisclaimer />;
@@ -22,7 +22,7 @@ function AfisListPageBody({ state }: { state: AfisFactuurState }) {
 }
 
 export function AfisList() {
-  const { state = 'open' } = useParams<{ state: AfisFactuurState }>();
+  const { state = 'open' } = useParams<{ state: AfisFactuurStateFrontend }>();
   const {
     facturenListResponse,
     isListPageError,

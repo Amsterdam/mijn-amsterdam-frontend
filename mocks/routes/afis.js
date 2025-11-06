@@ -1,5 +1,7 @@
 const httpConstants = require('http2').constants;
 
+const e = require('express');
+
 const settings = require('../settings');
 
 const BASE = '/afis';
@@ -202,6 +204,7 @@ module.exports = [
           middleware: (req, res) => {
             const stateFilters = {
               openstaande: 'IsCleared eq false',
+              afgehandeldetermijn: `and PaymentTerms gt 'B' and SEPAMandate ne '' `,
               afgehandelde: `DunningLevel ne '3' or ReverseDocument ne ''`,
               overgedragen: `DunningLevel eq '3'`,
             };
@@ -216,25 +219,37 @@ module.exports = [
               return res.status(httpConstants.HTTP_STATUS_FORBIDDEN).end();
             }
 
-            // DO NOT adjust this mock data (tests depend on it).
-            // If needed copy, mutate and let it point to the newly made copy.
-            const facturenData = require(
-              `../fixtures/afis/${stateName}-facturen.json`
-            );
+            const facturenByState = {
+              openstaande: require('../fixtures/afis/openstaande-facturen.json'),
+              afgehandelde: require('../fixtures/afis/afgehandelde-facturen.json'),
+              afgehandeldetermijn: require('../fixtures/afis/afgehandeldetermijn-facturen.json'),
+              overgedragen: require('../fixtures/afis/overgedragen-facturen.json'),
+            };
 
-            if (req.query?.$top) {
-              return res.send({
-                feed: {
-                  count: facturenData.feed.count,
-                  entry: facturenData.feed.entry.slice(
-                    0,
-                    parseInt(req.query?.$top, 10)
-                  ),
-                },
-              });
+            let feedEntries = [...facturenByState[stateName].feed.entry];
+
+            // Afgehandelde termijnfacturen can also be present in the afgehandelde facturen.
+            // We exclude them in the BFF Afis-facturen-service if they belong to a factuur that also has openstaande termijnen.
+            // Therefore we need to merge these results here for the mock to behave the same.
+            if (stateName === 'afgehandelde') {
+              feedEntries = [
+                ...feedEntries,
+                ...facturenByState.afgehandeldetermijn.feed.entry,
+              ];
             }
 
-            return res.send(facturenData);
+            const count = feedEntries.length;
+
+            if (req.query?.$top) {
+              feedEntries = feedEntries.slice(0, Number(req.query.$top));
+            }
+
+            return res.send({
+              feed: {
+                entry: feedEntries,
+                count,
+              },
+            });
           },
         },
       },
