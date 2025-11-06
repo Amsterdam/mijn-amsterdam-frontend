@@ -14,6 +14,7 @@ export type ZorgnedHLIRegeling =
   };
 
 export type HLIRegelingFrontend = ZaakAanvraagDetail & {
+  dateRequest: string;
   dateDecision: string;
   dateEnd: string | null;
   dateStart: string | null;

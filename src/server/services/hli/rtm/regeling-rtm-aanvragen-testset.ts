@@ -67,7 +67,18 @@ export const aanvragenTestsetInput = [
     ],
     expected: [
       {
-        id: 374098486,
+        id: 214558390,
+        persoon: 'Persoon A',
+        steps: [
+          'Besluit',
+          'Aanvraag wijziging',
+          'Besluit wijziging',
+          'Einde recht',
+        ],
+        displayStatus: 'Besluit wijziging',
+      },
+      {
+        id: 3825269075,
         persoon: 'Persoon B',
         steps: [
           'Aanvraag',
@@ -78,17 +89,6 @@ export const aanvragenTestsetInput = [
           'In behandeling genomen',
         ],
         displayStatus: 'In behandeling genomen',
-      },
-      {
-        id: 3262006676,
-        persoon: 'Persoon A',
-        steps: [
-          'Besluit',
-          'Aanvraag wijziging',
-          'Besluit wijziging',
-          'Einde recht',
-        ],
-        displayStatus: 'Besluit wijziging',
       },
     ],
   },
@@ -107,7 +107,7 @@ export const aanvragenTestsetInput = [
     ],
     expected: [
       {
-        id: 1274761191,
+        id: 538352114,
         persoon: 'Persoon A3',
         steps: [
           'Aanvraag',
@@ -136,7 +136,7 @@ export const aanvragenTestsetInput = [
     ],
     expected: [
       {
-        id: 612666814,
+        id: 1334817865,
         persoon: 'Persoon C, Persoon D',
         steps: [
           'Aanvraag',
@@ -163,7 +163,13 @@ export const aanvragenTestsetInput = [
     ],
     expected: [
       {
-        id: 854079571,
+        id: 826691057,
+        persoon: '',
+        steps: ['Besluit'],
+        displayStatus: 'Besluit',
+      },
+      {
+        id: 1497696404,
         persoon: 'Persoon F',
         steps: [
           'Aanvraag',
@@ -175,16 +181,10 @@ export const aanvragenTestsetInput = [
         displayStatus: 'Besluit wijziging',
       },
       {
-        id: 2545265331,
+        id: 1702236116,
         persoon: 'Persoon G',
         steps: ['Aanvraag', 'In behandeling genomen'],
         displayStatus: 'In behandeling genomen',
-      },
-      {
-        id: 3692267112,
-        persoon: '',
-        steps: ['Besluit'],
-        displayStatus: 'Besluit',
       },
     ],
   },
@@ -199,7 +199,7 @@ export const aanvragenTestsetInput = [
     ],
     expected: [
       {
-        id: 1148178397,
+        id: 1334817865,
         persoon: 'Persoon H',
         steps: ['Besluit', 'Besluit', 'Besluit', 'Besluit', 'Einde recht'],
         displayStatus: 'Besluit',
@@ -218,7 +218,7 @@ export const aanvragenTestsetInput = [
     ],
     expected: [
       {
-        id: 2777490332,
+        id: 214558390,
         persoon: 'Persoon I',
         steps: [
           'Besluit',
@@ -229,7 +229,7 @@ export const aanvragenTestsetInput = [
         displayStatus: 'Einde recht',
       },
       {
-        id: 3830300675,
+        id: 2860460942,
         persoon: 'Persoon I',
         steps: ['Aanvraag', 'In behandeling genomen', 'Besluit', 'Einde recht'],
         displayStatus: 'Besluit',
@@ -254,19 +254,7 @@ export const aanvragenTestsetInput = [
     ],
     expected: [
       {
-        id: 300586790,
-        persoon: 'Persoon J',
-        steps: ['Aanvraag', 'In behandeling genomen', 'Besluit', 'Einde recht'],
-        displayStatus: 'Besluit',
-      },
-      {
-        id: 1997833831,
-        persoon: 'Persoon J',
-        steps: ['Aanvraag', 'In behandeling genomen', 'Besluit', 'Einde recht'],
-        displayStatus: 'Einde recht',
-      },
-      {
-        id: 3919628639,
+        id: 1334817865,
         persoon: 'Persoon J',
         steps: [
           'Aanvraag',
@@ -276,6 +264,19 @@ export const aanvragenTestsetInput = [
           'Besluit wijziging',
           'Einde recht',
         ],
+        displayStatus: 'Einde recht',
+      },
+      {
+        id: 2616346664,
+        persoon: 'Persoon J',
+        steps: ['Aanvraag', 'In behandeling genomen', 'Besluit', 'Einde recht'],
+        displayStatus: 'Besluit',
+      },
+
+      {
+        id: 3189131112,
+        persoon: 'Persoon J',
+        steps: ['Aanvraag', 'In behandeling genomen', 'Besluit', 'Einde recht'],
         displayStatus: 'Einde recht',
       },
     ],
@@ -295,7 +296,13 @@ export const aanvragenTestsetInput = [
     ],
     expected: [
       {
-        id: 1893080281,
+        id: 247651891,
+        persoon: '',
+        steps: ['Besluit'],
+        displayStatus: 'Besluit',
+      },
+      {
+        id: 1545565778,
         persoon: 'Persoon L',
         steps: [
           'Aanvraag',
@@ -307,20 +314,15 @@ export const aanvragenTestsetInput = [
         ],
         displayStatus: 'In behandeling genomen',
       },
+
       {
-        id: 2809910954,
-        persoon: '',
-        steps: ['Besluit'],
-        displayStatus: 'Besluit',
-      },
-      {
-        id: 3024935710,
+        id: 3438209512,
         persoon: 'Persoon K',
         steps: ['Aanvraag', 'In behandeling genomen', 'Besluit', 'Einde recht'],
         displayStatus: 'Einde recht',
       },
       {
-        id: 3671496961,
+        id: 3817870519,
         persoon: 'Persoon K',
         steps: [
           'Aanvraag',
@@ -343,13 +345,7 @@ export const aanvragenTestsetInput = [
     ],
     expected: [
       {
-        id: 851920409,
-        persoon: 'Persoon N',
-        steps: ['Aanvraag', 'In behandeling genomen'],
-        displayStatus: 'In behandeling genomen',
-      },
-      {
-        id: 2084034444,
+        id: 2290932555,
         persoon: 'Persoon Y',
         steps: [
           'Aanvraag',
@@ -360,7 +356,7 @@ export const aanvragenTestsetInput = [
         displayStatus: 'In behandeling genomen',
       },
       {
-        id: 3226172751,
+        id: 3438209512,
         persoon: 'Persoon Z',
         steps: [
           'Aanvraag',
@@ -368,6 +364,13 @@ export const aanvragenTestsetInput = [
           'Aanvraag',
           'In behandeling genomen',
         ],
+        displayStatus: 'In behandeling genomen',
+      },
+
+      {
+        id: 3709075639,
+        persoon: 'Persoon N',
+        steps: ['Aanvraag', 'In behandeling genomen'],
         displayStatus: 'In behandeling genomen',
       },
     ],
@@ -383,7 +386,7 @@ export const aanvragenTestsetInput = [
     ],
     expected: [
       {
-        id: 939238853,
+        id: 1497696404,
         persoon: 'Persoon P',
         steps: [
           'Aanvraag',
@@ -396,13 +399,7 @@ export const aanvragenTestsetInput = [
         displayStatus: 'In behandeling genomen',
       },
       {
-        id: 1782876614,
-        persoon: 'Persoon Q',
-        steps: ['Aanvraag', 'In behandeling genomen'],
-        displayStatus: 'In behandeling genomen',
-      },
-      {
-        id: 3769837594,
+        id: 3438209512,
         persoon: 'Persoon O',
         steps: [
           'Aanvraag',
@@ -410,6 +407,12 @@ export const aanvragenTestsetInput = [
           'Aanvraag',
           'In behandeling genomen',
         ],
+        displayStatus: 'In behandeling genomen',
+      },
+      {
+        id: 3709075639,
+        persoon: 'Persoon Q',
+        steps: ['Aanvraag', 'In behandeling genomen'],
         displayStatus: 'In behandeling genomen',
       },
     ],
@@ -427,7 +430,7 @@ export const aanvragenTestsetInput = [
     ],
     expected: [
       {
-        id: 535650343,
+        id: 4116186673,
         persoon: 'Persoon C1',
         steps: [
           'Besluit',
@@ -454,22 +457,22 @@ export const aanvragenTestsetInput = [
     ],
     expected: [
       {
-        id: 367981637,
+        id: 1123196950,
         persoon: 'Persoon B1',
         steps: ['Aanvraag', 'In behandeling genomen'],
         displayStatus: 'In behandeling genomen',
       },
       {
-        id: 2693027815,
-        persoon: 'Persoon A1',
-        steps: ['Aanvraag', 'In behandeling genomen'],
-        displayStatus: 'In behandeling genomen',
-      },
-      {
-        id: 2858723564,
+        id: 1930458096,
         persoon: '',
         steps: ['Besluit', 'Besluit', 'Besluit'],
         displayStatus: 'Besluit',
+      },
+      {
+        id: 3709075639,
+        persoon: 'Persoon A1',
+        steps: ['Aanvraag', 'In behandeling genomen'],
+        displayStatus: 'In behandeling genomen',
       },
     ],
   },
@@ -485,7 +488,7 @@ export const aanvragenTestsetInput = [
     ],
     expected: [
       {
-        id: 648001760,
+        id: 4116186673,
         persoon: 'Persoon D1',
         steps: [
           'Besluit',
@@ -508,7 +511,7 @@ export const aanvragenTestsetInput = [
     ],
     expected: [
       {
-        id: 4223603873,
+        id: 4288114805,
         persoon: 'Persoon E1',
         steps: ['Aanvraag', 'In behandeling genomen'],
         displayStatus: 'In behandeling genomen',
@@ -530,7 +533,7 @@ export const aanvragenTestsetInput = [
     ],
     expected: [
       {
-        id: 526153856,
+        id: 538352114,
         persoon: 'Persoon A4',
         steps: [
           'Aanvraag',
@@ -561,7 +564,7 @@ export const aanvragenTestsetInput = [
     expected: [
       {
         displayStatus: 'Besluit wijziging',
-        id: 1298428961,
+        id: 1334817865,
         persoon: 'Persoon A5',
         steps: [
           'Aanvraag',
@@ -581,7 +584,7 @@ export const aanvragenTestsetInput = [
     // only: true,
     expected: [
       {
-        id: 454722509,
+        id: 4288114805,
         persoon: '',
         steps: ['Besluit'],
         displayStatus: 'Besluit',
