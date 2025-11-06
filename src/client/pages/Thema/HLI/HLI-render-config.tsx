@@ -1,5 +1,5 @@
 import { getThemaTitleWithAppState } from './helpers';
-import { themaId, routeConfig, featureToggle } from './HLI-thema-config';
+import { routeConfig, featureToggle, themaConfig } from './HLI-thema-config';
 import { HLIDetail } from './HLIDetail';
 import { default as HLIIcon } from './HLIIcon.svg?react';
 import { HLIList } from './HLIList';
@@ -12,7 +12,6 @@ import type {
   ThemaRenderRouteConfig,
   ThemaMenuItem,
 } from '../../../config/thema-types';
-
 export const HLIRoutes = [
   {
     route: routeConfig.detailPageStadspas.path,
@@ -41,11 +40,11 @@ export const HLIRoutes = [
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
-export const menuItem: ThemaMenuItem<typeof themaId> = {
+export const menuItem: ThemaMenuItem<typeof themaConfig.id> = {
   title: (appState: AppState) => {
     return getThemaTitleWithAppState(appState);
   },
-  id: themaId,
+  id: themaConfig.id,
   to: routeConfig.themaPage.path,
   profileTypes: ['private'],
   redactedScope: 'full',
