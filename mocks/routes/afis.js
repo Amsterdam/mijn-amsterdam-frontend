@@ -202,18 +202,22 @@ module.exports = [
         type: 'middleware',
         options: {
           middleware: (req, res) => {
-            const stateFilters = {
-              openstaande: 'IsCleared eq false',
-              afgehandeldetermijn: `and PaymentTerms gt 'B' and SEPAMandate ne '' `,
-              afgehandelde: `DunningLevel ne '3' or ReverseDocument ne ''`,
-              overgedragen: `DunningLevel eq '3'`,
-            };
+            const stateFilters = [
+              { state: 'openstaande', filter: 'IsCleared eq false' },
+              {
+                state: 'afgehandeldetermijn',
+                filter: `and PaymentTerms gt 'B' and SEPAMandate ne '' `,
+              },
+              {
+                state: 'afgehandelde',
+                filter: `DunningLevel ne '3' or ReverseDocument ne ''`,
+              },
+              { state: 'overgedragen', filter: `DunningLevel eq '3'` },
+            ];
 
-            const stateName = Object.entries(stateFilters).find(
-              ([_name, filterValueSegment]) => {
-                return req.query?.$filter?.includes(filterValueSegment);
-              }
-            )?.[0];
+            const stateName = stateFilters.find(({ filter }) => {
+              return req.query?.$filter?.includes(filter);
+            })?.state;
 
             if (!stateName) {
               return res.status(httpConstants.HTTP_STATUS_FORBIDDEN).end();

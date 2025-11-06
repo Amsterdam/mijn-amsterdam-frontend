@@ -112,7 +112,7 @@ function getAccountingDocumentIdsFilter(params: AfisFacturenParams) {
     return '';
   }
   const docIdFilters = params.includeAccountingDocumentIds
-    .map((type) => `AccountingDocumentId eq '${type}'`)
+    .map((type) => `AccountingDocument eq '${type}'`)
     .join(' or ');
 
   return ` and (${docIdFilters})`;
