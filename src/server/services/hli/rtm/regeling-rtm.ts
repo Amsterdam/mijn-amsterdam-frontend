@@ -384,9 +384,16 @@ function transformRTMRegelingenFrontend(
       continue;
     }
 
-    // TODO: Replace statustreinId with a proper unique ID from the aanvraag data.
-    const id = `${hash(aanvragen?.[0].id + betrokkenenMapStr)}`;
-    const title = aanvragen.at(-1)?.titel || REGELING_TITLE_DEFAULT_PLACEHOLDER;
+    const mostRecentAanvraag = aanvragen.at(-1)!;
+
+    // We reverse because the most recent aanvraag should be first in the hash.
+    const id = hash(
+      aanvragen
+        .map((a) => a.id)
+        .toReversed()
+        .join()
+    );
+    const title = mostRecentAanvraag.titel;
     const betrokkenen = getBetrokkenen(betrokkenenMapStr, aanvragen);
 
     const route = generatePath(routeConfig.detailPage.path, {
@@ -400,6 +407,7 @@ function transformRTMRegelingenFrontend(
     );
     const lastRTM2 = RTM2Aanvragen.at(-1);
     const dateDecision = lastRTM2?.datumBesluit ?? '';
+    const dateRequest = mostRecentAanvraag.datumAanvraag ?? '';
     // We assume that datumEindeGeldigheid is always set for the latest RTM-2 aanvraag.
     const dateEnd = lastRTM2?.datumEindeGeldigheid ?? '';
     const dateStart = RTM2Aanvragen?.[0]?.datumBesluit ?? '';
@@ -413,11 +421,13 @@ function transformRTMRegelingenFrontend(
     const RTMRegeling: HLIRegelingFrontend = {
       id,
       steps,
+      dateRequest,
       dateDecision,
       dateEnd,
       dateStart,
       documents: [],
       isActual,
+      // Decision cannot be reliably determined because there might be both toegewezen and afgewezen aanvragen for different betrokkenen.
       decision: aanvragen.some((a) => a.resultaat === 'toegewezen')
         ? 'toegewezen'
         : 'afgewezen',

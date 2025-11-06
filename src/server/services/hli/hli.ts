@@ -31,11 +31,7 @@ import {
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { dedupeDocumentsInDataSets } from '../../../universal/helpers/document';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
-import {
-  sortAlpha,
-  splitBy,
-  toDateFormatted,
-} from '../../../universal/helpers/utils';
+import { splitBy, toDateFormatted } from '../../../universal/helpers/utils';
 import {
   GenericDocument,
   StatusLineItem,
@@ -44,7 +40,10 @@ import type { ZaakDisplayStatus } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { fetchRelatedPersons } from '../zorgned/zorgned-service';
+import {
+  fetchRelatedPersons,
+  sortZorgnedAanvragenByDateAndId,
+} from '../zorgned/zorgned-service';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
@@ -156,6 +155,7 @@ export function transformRegelingForFrontend(
       to: route,
     },
     steps: statusLineItems,
+    dateRequest: aanvraag.datumAanvraag,
     dateDecision: aanvraag.datumBesluit,
     dateStart: aanvraag.datumIngangGeldigheid,
     dateEnd: aanvraag.datumEindeGeldigheid,
@@ -177,11 +177,10 @@ function transformRegelingenForFrontend(
   today: Date
 ): HLIRegelingFrontend[] {
   const [remainingAanvragen, RTMAanvragen] = splitBy(aanvragen, isRTMAanvraag);
-  const RTMRegelingenFrontend = transformRTMAanvragen(
-    sessionID,
-    aanvrager,
-    RTMAanvragen
-  );
+  const RTMRegelingenFrontend = featureToggle.hliRegelingEnabledRTM
+    ? transformRTMAanvragen(sessionID, aanvrager, RTMAanvragen)
+    : [];
+
   const [remainingAanvragen_, PCVergoedingAanvragen_pre2026] = splitBy(
     remainingAanvragen,
     isPcAanvraag
@@ -220,9 +219,13 @@ function transformRegelingenForFrontend(
     regelingenFrontend.push(regelingForFrontend);
   }
 
-  regelingenFrontend.sort(sortAlpha('id', 'desc'));
+  const regelingenFrontendSorted = sortZorgnedAanvragenByDateAndId(
+    regelingenFrontend,
+    'dateRequest',
+    'id'
+  );
 
-  return dedupeDocumentsInDataSets(regelingenFrontend, 'documents');
+  return dedupeDocumentsInDataSets(regelingenFrontendSorted, 'documents');
 }
 
 async function fetchRegelingen(authProfileAndToken: AuthProfileAndToken) {

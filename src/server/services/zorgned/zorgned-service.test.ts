@@ -6,6 +6,7 @@ import {
   fetchDocument,
   fetchRelatedPersons,
   forTesting,
+  sortZorgnedAanvragenByDateAndId,
 } from './zorgned-service';
 import {
   ZORGNED_GEMEENTE_CODE,
@@ -89,30 +90,6 @@ describe('zorgned-service', () => {
   });
 
   describe('transformZorgnedAanvragen', () => {
-    const [A, B, C] = ZORGNED_JZD_AANVRAGEN._embedded.aanvraag.filter(
-      (aanvraag) =>
-        ['2703104', '2696493', '2719515'].includes(aanvraag.identificatie)
-    );
-
-    it.each([[[A, B, C]], [[A, C, B]], [[B, A, C]]])(
-      'should always sort DESC',
-      (aanvragenShuffled) => {
-        expect(
-          forTesting
-            .transformZorgnedAanvragen({
-              _embedded: {
-                aanvraag: aanvragenShuffled,
-              },
-            } as unknown as ZorgnedResponseDataSource)
-            .map((a) => a.id)
-        ).toStrictEqual([
-          '2719515-1215588',
-          '2703104-1200567',
-          '2696493-1194396',
-        ]);
-      }
-    );
-
     test('should have properties after transform', () => {
       const keys = [
         'beschikkingNummer',
@@ -156,7 +133,7 @@ describe('zorgned-service', () => {
         beschikkingNummer: 300111429,
         beschiktProductIdentificatie: '116841',
         betrokkenen: [],
-        datumAanvraag: '2023-04-25',
+        datumAanvraag: '2025-11-25',
         datumBeginLevering: null,
         datumBesluit: '2023-05-17',
         datumEindeGeldigheid: null,
@@ -165,7 +142,7 @@ describe('zorgned-service', () => {
         datumOpdrachtLevering: null,
         datumToewijzing: null,
         documenten: [],
-        id: '912837sdfsdf198723-116841',
+        id: '1990846371',
         isActueel: true,
         procesAanvraagOmschrijving: null,
         leverancier: 'Gebr Koenen B.V.',
@@ -438,7 +415,7 @@ describe('zorgned-service', () => {
             datumOpdrachtLevering: '2024-01-25T17:10:55.2733333',
             datumToewijzing: '2024-01-25T17:10:55.2733333',
             documenten: [],
-            id: '1126685618-1',
+            id: '3804878809',
             isActueel: true,
             leverancier: 'Gebr Koenen B.V.',
             leveringsVorm: 'ZIN',
@@ -614,5 +591,27 @@ describe('fetchRelatedPersons', async () => {
     };
 
     expect(response).toStrictEqual(expected);
+  });
+
+  test('sortZorgnedAanvragenByDateAndId', () => {
+    const aanvragen = [
+      { id: 'a1', dateDecision: '2023-01-01' },
+      { id: 'a2', dateDecision: '2023-03-01' },
+      { id: 'a3', dateDecision: '2023-02-01' },
+      { id: 'a4', dateDecision: '2023-03-01' },
+    ];
+
+    const sorted = sortZorgnedAanvragenByDateAndId(
+      aanvragen,
+      'dateDecision',
+      'id'
+    );
+
+    expect(sorted).toEqual([
+      { id: 'a4', dateDecision: '2023-03-01' },
+      { id: 'a2', dateDecision: '2023-03-01' },
+      { id: 'a3', dateDecision: '2023-02-01' },
+      { id: 'a1', dateDecision: '2023-01-01' },
+    ]);
   });
 });
