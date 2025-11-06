@@ -19,7 +19,7 @@ export function MyAreaDashboard() {
   const isPrivate = profileType === 'private';
   // Check if the Map is nearly scrolled into view
   const mokum = isPrivate ? isMokum(BRP.content) : isMokum(KVK.content);
-  const isLoadingBrpKvk = isLoading(BRP) || isLoading(KVK);
+  const isLoadingBrpKvk = isPrivate ? isLoading(BRP) : isLoading(KVK);
   return (
     <div ref={ref} className={styles.DashboardMapContainer}>
       <MyAreaLoader isDashboard={true} />
