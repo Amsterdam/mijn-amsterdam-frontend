@@ -25,3 +25,6 @@ build-bff
 *.db
 *.db-shm
 *.db-wal
+/.localstorage
+/.localstorage-shm
+/.localstorage-wal

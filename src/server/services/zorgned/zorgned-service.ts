@@ -1,4 +1,5 @@
 import { HttpStatusCode } from 'axios';
+import { firstBy } from 'thenby';
 
 import {
   BeschiktProduct,
@@ -26,7 +27,7 @@ import {
 } from '../../../universal/helpers/api';
 import { getFullName } from '../../../universal/helpers/brp';
 import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
-import { sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
+import { hash, sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
 import { GenericDocument } from '../../../universal/types/App.types';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { isSuccessStatus, requestData } from '../../helpers/source-api-request';
@@ -89,6 +90,13 @@ function transformDocumenten(documenten: ZorgnedDocument[]) {
   return documents;
 }
 
+function getZorgnedAanvraagID(
+  aanvraagIdentificatie: string,
+  beschiktProductIdentificatie: string
+): string {
+  return hash(`${aanvraagIdentificatie}-${beschiktProductIdentificatie}`);
+}
+
 function transformZorgnedAanvraag(
   aanvraag: ZorgnedAanvraagSource,
   beschiktProduct: BeschiktProduct
@@ -113,7 +121,10 @@ function transformZorgnedAanvraag(
   }
 
   const aanvraagTransformed: ZorgnedAanvraagTransformed = {
-    id: `${aanvraag.identificatie}-${beschiktProduct.identificatie}`,
+    id: getZorgnedAanvraagID(
+      aanvraag.identificatie,
+      beschiktProduct.identificatie
+    ),
     datumAanvraag: aanvraag.datumAanvraag,
     datumBeginLevering: levering?.begindatum ?? null,
     datumBesluit: aanvraag.beschikking.datumAfgifte ?? '', // See bug: MIJN-11809
@@ -137,6 +148,16 @@ function transformZorgnedAanvraag(
   };
 
   return aanvraagTransformed;
+}
+
+export function sortZorgnedAanvragenByDateAndId<T extends object>(
+  aanvragen: T[],
+  dateKey: keyof T,
+  idKey: keyof T
+) {
+  return aanvragen.toSorted(
+    firstBy(dateSort(dateKey, 'desc')).thenBy(sortAlpha(idKey, 'desc'))
+  );
 }
 
 export function transformZorgnedAanvragen(
@@ -173,7 +194,11 @@ export function transformZorgnedAanvragen(
     }
   }
 
-  return aanvragenTransformed.sort(sortAlpha('id', 'desc'));
+  return sortZorgnedAanvragenByDateAndId(
+    aanvragenTransformed,
+    'datumAanvraag',
+    'id'
+  );
 }
 
 export async function fetchAllDocumentsRaw(
