@@ -3,7 +3,7 @@ import { generatePath } from 'react-router';
 import { StadspasFrontend } from './stadspas-types';
 import {
   routeConfig,
-  themaId,
+  themaConfig,
   themaTitle,
 } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import { dateFormat, defaultDateFormat } from '../../../universal/helpers/date';
@@ -33,7 +33,7 @@ export function getBudgetNotifications(stadspassen: StadspasFrontend[]) {
   ): MyNotification => ({
     id: `stadspas-budget-notification`,
     datePublished: dateFormat(new Date(), 'yyyy-MM-dd'),
-    themaID: themaId,
+    themaID: themaConfig.id,
     themaTitle: themaTitle,
     title: `Stadspas kindtegoed: Maak je tegoed op voor ${defaultDateFormat(
       BUDGET_NOTIFICATION_DATE_END
