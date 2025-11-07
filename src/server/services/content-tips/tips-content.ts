@@ -26,7 +26,7 @@ import {
 import { ContentTipSource } from './tip-types';
 import { themaId as themaIdAfval } from '../../../client/pages/Thema/Afval/Afval-thema-config';
 import {
-  themaId as themaIdHLI,
+  themaConfig,
   themaTitle as themaTitleHLI,
 } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import { themaId as themaIdInkomen } from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
@@ -64,7 +64,7 @@ export const contentTips: ContentTipSource[] = [
     datePublished: '2019-10-22',
     title: 'Tip: Op stap met uw Stadspas',
     profileTypes: ['private'],
-    themaID: themaIdHLI,
+    themaID: themaConfig.id,
     themaTitle: themaTitleHLI,
     description: 'Haalt u alles uit uw Stadspas?',
     reason: 'U ziet deze tip omdat u een Stadspas hebt aangevraagd.',
@@ -104,7 +104,7 @@ export const contentTips: ContentTipSource[] = [
     active: true,
     datePublished: '2020-11-26',
     title: 'Tip: Sporten met korting',
-    themaID: themaIdHLI,
+    themaID: themaConfig.id,
     themaTitle: themaTitleHLI,
     profileTypes: ['private'],
     description:
@@ -406,7 +406,7 @@ export const contentTips: ContentTipSource[] = [
     active: true,
     datePublished: '2025-01-16',
     title: '€300 korting op witgoed',
-    themaID: themaIdHLI,
+    themaID: themaConfig.id,
     themaTitle: themaTitleHLI,
     profileTypes: ['private'],
     description:
