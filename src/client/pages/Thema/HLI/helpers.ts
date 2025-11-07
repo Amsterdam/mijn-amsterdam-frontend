@@ -1,11 +1,15 @@
-import { regelingenTitle, stadspasTitle, themaTitle } from './HLI-thema-config';
+import {
+  regelingenTitle,
+  stadspasTitle,
+  themaConfig,
+} from './HLI-thema-config';
 import { AppState } from '../../../../universal/types/App.types';
 
 export function getThemaTitle(hasStadspas: boolean, hasRegelingen: boolean) {
   switch (true) {
     default:
     case hasStadspas && hasRegelingen:
-      return themaTitle;
+      return themaConfig.title;
     case hasStadspas:
       return stadspasTitle;
     case hasRegelingen:

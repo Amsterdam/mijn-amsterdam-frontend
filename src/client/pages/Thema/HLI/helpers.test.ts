@@ -1,14 +1,14 @@
 import { describe, it, expect } from 'vitest';
 
 import { getThemaTitle, getThemaTitleWithAppState } from './helpers';
-import { regelingenTitle, themaTitle } from './HLI-thema-config';
+import { regelingenTitle, themaConfig } from './HLI-thema-config';
 import { AppState } from '../../../../universal/types/App.types';
 
 describe('helpers', () => {
   describe('getThemaTitle', () => {
     it('should return default (HLI) when both hasRegelingen and hasStadspas are true', () => {
       const result = getThemaTitle(true, true);
-      expect(result).toBe(themaTitle);
+      expect(result).toBe(themaConfig.title);
     });
 
     it('should return Stadspas when only hasStadspas is true', () => {
@@ -23,7 +23,7 @@ describe('helpers', () => {
 
     it('should return default (HLI) when both hasStadspas and hasRegelingen are false', () => {
       const result = getThemaTitle(false, false);
-      expect(result).toBe(themaTitle);
+      expect(result).toBe(themaConfig.title);
     });
   });
 
@@ -38,7 +38,7 @@ describe('helpers', () => {
         },
       } as unknown as AppState;
       const result = getThemaTitleWithAppState(appState);
-      expect(result).toBe(themaTitle);
+      expect(result).toBe(themaConfig.title);
     });
 
     it('should return Stadspas when appState has only Stadspas', () => {
@@ -77,7 +77,7 @@ describe('helpers', () => {
         },
       } as unknown as AppState;
       const result = getThemaTitleWithAppState(appState);
-      expect(result).toBe(themaTitle);
+      expect(result).toBe(themaConfig.title);
     });
   });
 });
