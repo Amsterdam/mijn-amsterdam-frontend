@@ -1,7 +1,7 @@
 import { featureToggle, themaId, themaTitle } from './Subsidies-thema-config';
-import { InfoSection } from '../../GeneralInfo/GeneralInfo';
+import { InfoSection_DEPRECATED } from '../../GeneralInfo/GeneralInfo';
 
-export const subsidiesSectionProps: InfoSection = {
+export const subsidiesSectionProps: InfoSection_DEPRECATED = {
   id: themaId,
   title: themaTitle,
   listItems: ['Uw aanvraag voor een subsidie'],
