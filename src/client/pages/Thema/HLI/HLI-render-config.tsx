@@ -46,7 +46,7 @@ export const menuItem: ThemaMenuItem<typeof themaConfig.id> = {
   },
   id: themaConfig.id,
   to: routeConfig.themaPage.path,
-  profileTypes: ['private'],
+  profileTypes: themaConfig.profileTypes,
   redactedScope: 'full',
   isActive(appState: AppState) {
     const hasStadspas =
