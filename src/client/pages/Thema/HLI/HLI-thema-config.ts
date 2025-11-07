@@ -119,7 +119,7 @@ export const featureToggle = {
 } as const;
 
 // export const themaId = 'HLI' as const;
-export const themaTitle = 'Stadspas en regelingen bij laag inkomen' as const;
+// export const themaTitle = 'Stadspas en regelingen bij laag inkomen' as const;
 export const regelingenTitle = 'Regelingen bij laag inkomen' as const;
 export const stadspasTitle = 'Stadspas' as const;
 
@@ -130,27 +130,27 @@ export const routeConfig = {
       generatePath('/regelingen-bij-laag-inkomen/regeling/:regeling', {
         regeling: params?.regeling ?? '',
       }),
-    documentTitle: `Regeling | ${themaTitle}`,
+    documentTitle: `Regeling | ${themaConfig.title}`,
   },
   detailPageStadspas: {
     path: '/regelingen-bij-laag-inkomen/stadspas/:passNumber',
     trackingUrl: '/regelingen-bij-laag-inkomen/stadspas',
-    documentTitle: `Stadspas | ${themaTitle}`,
+    documentTitle: `Stadspas | ${themaConfig.title}`,
   },
   specificatieListPage: {
     path: '/regelingen-bij-laag-inkomen/lijst/specificaties/:page?',
-    documentTitle: `Specificaties | ${themaTitle}`,
+    documentTitle: `Specificaties | ${themaConfig.title}`,
     trackingUrl: null,
   },
   regelingenListPage: {
     path: '/regelingen-bij-laag-inkomen/lijst/:kind/:page?',
     documentTitle: (params) =>
-      `${params?.kind === listPageParamKind.historic ? 'Eerdere' : 'Huidige'} regelingen | ${themaTitle}`,
+      `${params?.kind === listPageParamKind.historic ? 'Eerdere' : 'Huidige'} regelingen | ${themaConfig.title}`,
     trackingUrl: null,
   },
   themaPage: {
     path: '/regelingen-bij-laag-inkomen',
-    documentTitle: `${themaTitle} | overzicht`,
+    documentTitle: `${themaConfig.title} | overzicht`,
     trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
