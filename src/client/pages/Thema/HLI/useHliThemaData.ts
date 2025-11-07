@@ -59,7 +59,7 @@ export function useHliThemaData() {
     regelingen,
     specificaties,
     themaId: themaConfig.id,
-    title,
+    title: themaConfig.title,
     hasKindtegoed,
     isLoading: isLoading(HLI),
     isError: isError(HLI, false),
