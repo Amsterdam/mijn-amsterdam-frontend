@@ -4,7 +4,6 @@ import { StadspasFrontend } from './stadspas-types';
 import {
   routeConfig,
   themaConfig,
-  themaTitle,
 } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import { dateFormat, defaultDateFormat } from '../../../universal/helpers/date';
 import { MyNotification } from '../../../universal/types/App.types';
@@ -34,7 +33,7 @@ export function getBudgetNotifications(stadspassen: StadspasFrontend[]) {
     id: `stadspas-budget-notification`,
     datePublished: dateFormat(new Date(), 'yyyy-MM-dd'),
     themaID: themaConfig.id,
-    themaTitle: themaTitle,
+    themaTitle: themaConfig.title,
     title: `Stadspas kindtegoed: Maak je tegoed op voor ${defaultDateFormat(
       BUDGET_NOTIFICATION_DATE_END
     )}!`,
