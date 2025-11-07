@@ -25,10 +25,7 @@ import {
 } from './predicates';
 import { ContentTipSource } from './tip-types';
 import { themaId as themaIdAfval } from '../../../client/pages/Thema/Afval/Afval-thema-config';
-import {
-  themaConfig,
-  themaTitle as themaTitleHLI,
-} from '../../../client/pages/Thema/HLI/HLI-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import { themaId as themaIdInkomen } from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
 import {
   featureToggle as featureToggleProfile,
@@ -65,7 +62,7 @@ export const contentTips: ContentTipSource[] = [
     title: 'Tip: Op stap met uw Stadspas',
     profileTypes: ['private'],
     themaID: themaConfig.id,
-    themaTitle: themaTitleHLI,
+    themaTitle: themaConfig.title,
     description: 'Haalt u alles uit uw Stadspas?',
     reason: 'U ziet deze tip omdat u een Stadspas hebt aangevraagd.',
     predicates: [hasValidRecentStadspasRequest],
@@ -105,7 +102,7 @@ export const contentTips: ContentTipSource[] = [
     datePublished: '2020-11-26',
     title: 'Tip: Sporten met korting',
     themaID: themaConfig.id,
-    themaTitle: themaTitleHLI,
+    themaTitle: themaConfig.title,
     profileTypes: ['private'],
     description:
       'Met de Stadspas krijgt u maximaal € 300 korting op een sportabonnement voor uw kind.',
@@ -407,7 +404,7 @@ export const contentTips: ContentTipSource[] = [
     datePublished: '2025-01-16',
     title: '€300 korting op witgoed',
     themaID: themaConfig.id,
-    themaTitle: themaTitleHLI,
+    themaTitle: themaConfig.title,
     profileTypes: ['private'],
     description:
       'Met je Stadspas krijg je € 300,- korting op een nieuwe energiezuinige wasmachine of koelkast. Dit helpt je om geld te besparen op je energierekening.',
