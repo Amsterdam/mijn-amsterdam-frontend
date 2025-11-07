@@ -2,97 +2,44 @@ import { useEffect, useState } from 'react';
 
 import { PageFooter } from '@amsterdam/design-system-react';
 
-import { BFF_API_BASE_URL } from '../../../config/api';
-import { useScript } from '../../../hooks/useScript';
+// https://github.com/import-js/eslint-plugin-import/issues/2876
+// eslint-disable-next-line import/order
+import type { CobrowseWidget } from './lib/cobrowse-widget';
+
+import './lib/cobrowse-widget.css';
+import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 
 export const LABEL_HULP_SCHERMDELEN = 'Hulp via schermdelen';
-const MAX_WAIT_FOR_COBROWSE_LIVE_MS = 5000;
 declare global {
   interface Window {
     CobrowseWidget?: unknown;
   }
 }
-function waitForCobrowseLiveInWindow(window: Window & typeof globalThis) {
-  let polling: NodeJS.Timeout | undefined = undefined;
-  let timeoutReached = false;
-  return new Promise(function (resolve, reject) {
-    (function waitForFoo() {
-      if (window.CobrowseWidget) {
-        return resolve(true);
-      }
-      const timeoutMs = 50;
-      if (!timeoutReached) {
-        polling = setTimeout(waitForFoo, timeoutMs);
-      }
-    })();
-    setTimeout(() => {
-      window.clearTimeout(polling);
-      timeoutReached = true;
-      reject();
-    }, MAX_WAIT_FOR_COBROWSE_LIVE_MS);
-  });
-}
 
 export function CobrowseFooter() {
   const licenseKey = import.meta.env.REACT_APP_COBROWSE_LICENSE_KEY;
-  if (!licenseKey || MA_APP_MODE === 'unittest') {
-    return;
-  }
-  const [isCobrowseLoaded] = useScript({
-    src: `${BFF_API_BASE_URL}/services/screenshare`,
-    defer: true,
-    async: false,
-    isEnabled: true,
-    dataset: {
-      licenseKey,
-    },
-  });
-  const [showCobrowseFooter, setShowCobrowseFooter] = useState(false);
+  const [cobrowseWidget, setCobrowseWidget] = useState<CobrowseWidget | null>(
+    null
+  );
   useEffect(() => {
-    waitForCobrowseLiveInWindow(window)
-      .then(() => {
-        setShowCobrowseFooter(true);
-      })
-      .catch((e) => {
-        // ignore reject
-      });
-  }, [isCobrowseLoaded]);
-  useEffect(() => {
-    if (!showCobrowseFooter) {
+    if (!FeatureToggle.cobrowseIsActive || !licenseKey) {
       return;
     }
-    const head = document.head;
-    const link = document.createElement('link');
+    if (cobrowseWidget) {
+      return;
+    }
+    import('./lib/cobrowse-widget.js').then(({ CobrowseWidget }) => {
+      setCobrowseWidget(new CobrowseWidget(licenseKey));
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [licenseKey]);
 
-    link.type = 'text/css';
-    link.rel = 'stylesheet';
-    link.href = '/css/cobrowse-widget-2025-08-14.css';
-
-    head.appendChild(link);
-
-    return () => {
-      head.removeChild(link);
-    };
-  }, [showCobrowseFooter]);
-
-  // MIJN-11933
-  // Setting the id to startCobrowseButton (script add eventHandler) is not stable in an SPA
-  // The external script also listens for the Shift+6 keydown event to display the modal
-  const shift6keysDown = new KeyboardEvent('keydown', {
-    key: '6',
-    code: 'Digit6',
-    shiftKey: true,
-    keyCode: 54,
-    which: 54,
-    bubbles: true,
-    cancelable: true,
-  });
   return (
-    showCobrowseFooter && (
+    cobrowseWidget && (
       <PageFooter.MenuLink
         key="footer-cobrowse"
         id="startCobrowseButton"
-        onClick={() => document.dispatchEvent(shift6keysDown)}
+        onClick={cobrowseWidget?.startSession.bind(cobrowseWidget)}
         href="#"
       >
         {LABEL_HULP_SCHERMDELEN}
