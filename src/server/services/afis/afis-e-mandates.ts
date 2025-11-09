@@ -100,12 +100,11 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
   const senderIBAN = payload.senderIBAN;
   const senderBIC = payload.senderBIC;
 
-  // TODO: Check if this bank account exists in the sender's bank account list.
+  // Check if this bank account exists in the sender's bank account list.
   // If not add it to the list.
   const bankAccountResponse = await fetchCheckIfIBANexists(senderIBAN);
   const bankAccountExists = bankAccountResponse.content === true;
 
-  // TODO: Should we try to add the bank account if we cannnot check if it exists?
   if (bankAccountResponse.status !== 'OK') {
     throw new Error(
       `Error checking if bank account exists - ${'message' in bankAccountResponse ? bankAccountResponse.message : ''}`
@@ -131,7 +130,8 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
     }
   }
 
-  // TODO: Also allow this date to be set by the user.
+  // We start the e-mandate lifetime with an end date far in the future.
+  // The user can later adjust this date.
   const lifetimeTo = AFIS_EMANDATE_RECURRING_DATE_END;
 
   const payloadFinal: AfisEMandateCreatePayload = {
@@ -148,7 +148,7 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
     SndIban: senderIBAN,
     SndBic: senderBIC,
 
-    // NOTE: These fields are always the same as BusinessPartnerDetails, not coupled to the bankaccount (IBAN) holder.
+    // These fields are always the same as BusinessPartnerDetails, not coupled to the bankaccount (IBAN) holder.
     SndCity: sender.address?.CityName ?? '',
     SndCountry: sender.address?.Country ?? '',
     SndHouse: `${sender.address?.HouseNumber ?? ''} ${sender.address?.HouseNumberSupplementText ?? ''}`,
@@ -380,7 +380,6 @@ function getEMandateSourceByCreditor(
   creditor: AfisEMandateCreditor
 ): AfisEMandateSource | undefined {
   return sourceMandates.find((eMandateSource) => {
-    // TODO: Find out / Confirm if the debtorId is the creditor id?!??!?!?
     return eMandateSource.SndDebtorId === creditor.refId;
   });
 }
@@ -497,8 +496,6 @@ function createEMandateSignRequestPayload(
   // TODO: Moet dit met een gegeven uit AFIS te koppelen zijn?
   const paymentReference = `${creditor.refId}-${businessPartner.businessPartnerId}`;
   const idBatch = `batch-${paymentReference}`;
-
-  // TODO: Generate encrypted number
   const idRequestClient = `${creditor.refId}-${businessPartner.businessPartnerId}-${isoDateString}`;
 
   // Paylinks are valid for 1 day
