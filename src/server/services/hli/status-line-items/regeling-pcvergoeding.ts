@@ -1,7 +1,6 @@
 import { isSameDay, parseISO } from 'date-fns';
 
 import { getBetrokkenKinderenDescription } from './generic';
-import { featureToggle } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { lowercaseFirstLetter } from '../../../../universal/helpers/text';
 import { sortAlpha } from '../../../../universal/helpers/utils';
@@ -24,11 +23,11 @@ export const AV_PCVTG = 'AV-PCVTG';
 const avCodes = {
   PC: {
     [AV_PCVZIL]: true,
-    [AV_PCVTG]: featureToggle.hli2025PCTegoedCodesEnabled,
+    [AV_PCVTG]: true,
   },
   UPC: {
     [AV_UPCZIL]: true,
-    [AV_UPCTG]: featureToggle.hli2025PCTegoedCodesEnabled,
+    [AV_UPCTG]: true,
   },
 };
 
@@ -111,7 +110,7 @@ function getUpcPcvDecisionDate(
   return aanvraag.datumBesluit;
 }
 
-function filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNietGevolgd(
+function filterOutRedundantPcVergoedingsAanvragenWhenWorkShopNietGevolgd(
   PCVergoedingAanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ) {
   const pcVergoedingAanvragenByBeschikkingNummer = PCVergoedingAanvragen.reduce(
@@ -167,7 +166,7 @@ export function filterCombineUpcPcvData_pre2026(
 ) {
   const baseRegelingIdWithVerzilvering: string[] = [];
   const aanvragen_ =
-    filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNietGevolgd(
+    filterOutRedundantPcVergoedingsAanvragenWhenWorkShopNietGevolgd(
       aanvragen
     ).toSorted(sortAlpha('id', 'desc'));
   const aanvragenWithDocumentsCombined = aanvragen_.map((aanvraag) => {
@@ -348,5 +347,6 @@ export const forTesting = {
   isVerzilvering,
   isWorkshopNietGevolgd,
   filterCombineUpcPcvData: filterCombineUpcPcvData_pre2026,
-  filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNietGevolgd,
+  filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNietGevolgd:
+    filterOutRedundantPcVergoedingsAanvragenWhenWorkShopNietGevolgd,
 };

@@ -33,7 +33,7 @@ function imposeZorgnedAanvraagTransformed(
   return {
     titel: 'Regeling tegemoetkoming meerkosten',
     bsnAanvrager: '',
-    datumAanvraag: '',
+    datumAanvraag: '2023-01-01',
     datumBeginLevering: null,
     datumBesluit: '',
     datumEindeLevering: null,
@@ -86,6 +86,7 @@ describe('RTM aanvraag transformation and grouping', () => {
       });
 
     const tstFn = testInput.only ? test.only : test;
+
     tstFn(testInput.title, () => {
       expect(aanvragenTransformed).toStrictEqual(testInput.expected);
     });
@@ -146,15 +147,16 @@ describe('RTM aanvraag transformation', () => {
           "betrokkenen": "Persoon X1",
           "dateDecision": "2025-02-01",
           "dateEnd": "",
+          "dateRequest": "",
           "dateStart": "2024-02-01",
           "decision": "toegewezen",
           "displayStatus": "Besluit wijziging",
           "documents": [],
-          "id": "116057985",
+          "id": "3549777800",
           "isActual": true,
           "link": {
             "title": "Meer informatie",
-            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/116057985",
+            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/3549777800",
           },
           "steps": [
             {
@@ -285,15 +287,16 @@ describe('RTM aanvraag transformation', () => {
           "betrokkenen": "Persoon X1, Persoon X2",
           "dateDecision": "",
           "dateEnd": "",
+          "dateRequest": "2024-01-01",
           "dateStart": "",
           "decision": "toegewezen",
           "displayStatus": "In behandeling genomen",
           "documents": [],
-          "id": "462060519",
+          "id": "1047328458",
           "isActual": true,
           "link": {
             "title": "Meer informatie",
-            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/462060519",
+            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/1047328458",
           },
           "steps": [
             {
@@ -390,15 +393,16 @@ describe('RTM aanvraag transformation', () => {
           "betrokkenen": "Persoon X1",
           "dateDecision": "2026-02-01",
           "dateEnd": "",
+          "dateRequest": "",
           "dateStart": "2025-02-01",
           "decision": "toegewezen",
           "displayStatus": "Besluit wijziging",
           "documents": [],
-          "id": "116057025",
+          "id": "2337611467",
           "isActual": true,
           "link": {
             "title": "Meer informatie",
-            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/116057025",
+            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/2337611467",
           },
           "steps": [
             {
@@ -478,15 +482,16 @@ describe('RTM aanvraag transformation', () => {
           "betrokkenen": "",
           "dateDecision": "",
           "dateEnd": "",
+          "dateRequest": "",
           "dateStart": "",
           "decision": "afgewezen",
           "displayStatus": "Besluit",
           "documents": [],
-          "id": "4227117981",
+          "id": "193359724",
           "isActual": false,
           "link": {
             "title": "Meer informatie",
-            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/4227117981",
+            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/193359724",
           },
           "steps": [
             {
@@ -532,15 +537,16 @@ describe('RTM aanvraag transformation', () => {
           "betrokkenen": "Met bsn: 12345",
           "dateDecision": "2026-05-01",
           "dateEnd": "",
+          "dateRequest": "",
           "dateStart": "2026-05-01",
           "decision": "afgewezen",
           "displayStatus": "Besluit",
           "documents": [],
-          "id": "4227117982",
+          "id": "193359727",
           "isActual": false,
           "link": {
             "title": "Meer informatie",
-            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/4227117982",
+            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/193359727",
           },
           "steps": [
             {
