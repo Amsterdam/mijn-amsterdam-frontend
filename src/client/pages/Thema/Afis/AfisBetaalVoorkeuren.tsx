@@ -1,10 +1,16 @@
-import { Grid, Heading, Link, Paragraph } from '@amsterdam/design-system-react';
+import {
+  Alert,
+  Grid,
+  Heading,
+  Link,
+  Paragraph,
+} from '@amsterdam/design-system-react';
 
 import { featureToggle } from './Afis-thema-config';
 import styles from './AfisBetaalVoorkeuren.module.scss';
 import { EmandateRefetchInterval } from './AfisEMandateDetail';
-import { useAfisEMandatesData } from './useAfisEmandatesData';
 import { useAfisBetaalVoorkeurenData } from './useAfisBetaalVoorkeurenData';
+import { useAfisEMandatesData } from './useAfisEmandatesData';
 import { useAfisThemaData } from './useAfisThemaData.hook';
 import {
   type AfisBusinessPartnerDetailsTransformed,
@@ -121,6 +127,30 @@ export function AfisBetaalVoorkeuren() {
       maxItems={-1}
       title={eMandateTableConfig.title}
       zaken={eMandates}
+      subTitle={
+        <Alert
+          severity="warning"
+          heading="Let op uitzonderingen"
+          headingLevel={3}
+          className="ams-mb-m"
+        >
+          <Paragraph className="ams-mb-s">
+            Een automatische incasso instellen voor de directie Belastingen gaat
+            via
+            <br />
+            <Link href="https://belastingbalie.amsterdam.nl/digid.info.php">
+              Mijn Belastingen - gemeente Amsterdam
+            </Link>
+          </Paragraph>
+          <Paragraph>
+            Voor parkeervergunningen ga je naar
+            <br />
+            <Link href="https://www.amsterdam.nl/parkeren/parkeervergunning/wijzigen-opzeggen/parkeervergunning-betaalgegevens/">
+              Parkeervergunning: betaalgegevens wijzigen - Gemeente Amsterdam
+            </Link>
+          </Paragraph>
+        </Alert>
+      }
     />
   );
 
