@@ -25,7 +25,7 @@ function getInvoiceStatusDescriptionFrontend(factuur: AfisFactuur): ReactNode {
     case factuur.status === 'openstaand' && !!factuur.paylink:
       return (
         <>
-          <>{capitalizeFirstLetter(factuur.status)}:&nbsp;</>
+          <>{capitalizeFirstLetter(factuur.status)}: </>
           <MaLink
             maVariant="fatNoUnderline"
             target="_blank"
