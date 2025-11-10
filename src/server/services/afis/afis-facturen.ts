@@ -650,7 +650,7 @@ export async function fetchAfisFacturenOverview(
   sessionID: SessionID,
   params: Omit<AfisFacturenParams, 'state' | 'top'>
 ) {
-  const facturenOpenResponse =
+  const facturenOpenResult =
     await fetchAfisOpenFacturenIncludingAfgehandeldeTermijnFacturen(sessionID, {
       businessPartnerID: params.businessPartnerID,
     });
@@ -659,7 +659,7 @@ export async function fetchAfisFacturenOverview(
     state: 'afgehandeld',
     businessPartnerID: params.businessPartnerID,
     excludeAccountingDocumentIds: getTermijnFactuurAccountingDocumentIds(
-      facturenOpenResponse.content?.facturen ?? []
+      facturenOpenResult.content?.facturen ?? []
     ),
     top: '3',
   });
@@ -682,9 +682,9 @@ export async function fetchAfisFacturenOverview(
   );
 
   let openFacturenContent: AfisFacturenResponse | null =
-    facturenOpenResponse.content;
+    facturenOpenResult.content;
 
-  if (facturenOpenResponse.status === 'OK') {
+  if (facturenOpenResult.status === 'OK') {
     const facturenOpen = openFacturenContent?.facturen ?? [];
     const openFacturenContentSorted: AfisFacturenResponse = {
       count: openFacturenContent?.count ?? 0,
@@ -715,7 +715,7 @@ export async function fetchAfisFacturenOverview(
   };
 
   const failedDependencies = getFailedDependencies({
-    open: facturenOpenResponse,
+    open: facturenOpenResult,
     afgehandeld: facturenClosedResult,
     overgedragen: facturenTransferredResult,
   });
