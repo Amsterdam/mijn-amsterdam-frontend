@@ -2,18 +2,18 @@ import { ReactNode } from 'react';
 
 import { generatePath, type Params } from 'react-router';
 
-import {
+import type {
   AfisBusinessPartnerDetailsTransformed,
   AfisFacturenResponse,
   AfisFactuur,
-  type AfisFactuurStateFrontend,
-  type AfisFactuurTermijn,
+  AfisFactuurStateFrontend,
+  AfisFactuurTermijn,
 } from '../../../../server/services/afis/afis-types';
-import {
+import type {
   LinkProps,
   ZaakAanvraagDetail,
 } from '../../../../universal/types/App.types';
-import { DisplayProps } from '../../../components/Table/TableV2.types';
+import type { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
