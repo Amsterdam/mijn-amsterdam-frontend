@@ -1,6 +1,7 @@
 import ibantools from 'ibantools';
 
 import { getAfisApiConfig, getFeedEntryProperties } from './afis-helpers';
+import { featureToggle } from './afis-service-config';
 import {
   AfisApiFeedResponseSource,
   AfisBusinessPartnerAddress,
@@ -17,7 +18,6 @@ import {
   BusinessPartnerId,
   BusinessPartnerIdPayload,
 } from './afis-types';
-import { featureToggle } from '../../../client/pages/Thema/Afis/Afis-thema-config';
 import {
   apiErrorResult,
   ApiResponse_DEPRECATED,
@@ -137,7 +137,7 @@ async function fetchPhoneNumber(addressId: AfisBusinessPartnerAddress['id']) {
     formatUrl(config) {
       return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber`;
     },
-    postponeFetch: !featureToggle.afisBusinesspartnerPhoneActive,
+    postponeFetch: !featureToggle.businesspartnerPhoneActive,
   };
 
   const businessPartnerRequestConfig = await getAfisApiConfig(additionalConfig);

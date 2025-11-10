@@ -5,8 +5,8 @@ import slug from 'slugme';
 import { firstBy } from 'thenby';
 
 import { getAfisApiConfig, getFeedEntryProperties } from './afis-helpers';
+import { featureToggle, routes } from './afis-service-config';
 import { routeConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -29,7 +29,6 @@ import {
   getRequestParamsFromQueryString,
   requestData,
 } from '../../helpers/source-api-request';
-import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureMessage, trackEvent } from '../monitoring';
 import type {
@@ -409,7 +408,7 @@ function transformFacturen(
   const count = responseData?.feed?.count ?? feedProperties.length;
   const facturenTransformed = feedProperties
     .filter((invoiceProperties) => {
-      return FeatureToggle.afisFilterOutUndownloadableFacturenActive
+      return featureToggle.filterOutUndownloadableFacturenActive
         ? isDownloadAvailable(invoiceProperties.PostingDate)
         : true;
     })
@@ -482,7 +481,7 @@ function determineFactuurStatus(
       (sourceInvoice.DunningLevel == 1 || sourceInvoice.DunningLevel == 2):
       return 'herinnering';
 
-    case FeatureToggle.afisTermijnFacturenActive &&
+    case featureToggle.termijnFacturenActive &&
       !!sourceInvoice.SEPAMandate &&
       sourceInvoice.PaymentMethod !== 'B' &&
       paymentTermsRegex.test(sourceInvoice.PaymentTerms):
@@ -615,7 +614,7 @@ async function fetchAfisOpenFacturenIncludingAfgehandeldeTermijnFacturen(
     return facturenOpenResponse;
   }
 
-  if (!FeatureToggle.afisTermijnFacturenActive) {
+  if (!featureToggle.termijnFacturenActive) {
     return facturenOpenResponse as ApiResponse<AfisFacturenResponse>;
   }
 

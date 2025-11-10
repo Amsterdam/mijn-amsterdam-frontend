@@ -176,20 +176,8 @@ export type AfisFactuurPropertiesSource = {
   ProfitCenterName: string;
   ReverseDocument?: string;
   SEPAMandate: string;
+  PaymentTerms: string;
 };
-
-export type AfisFactuurStatus =
-  | 'openstaand'
-  | 'automatische-incasso'
-  | 'in-dispuut'
-  | 'gedeeltelijke-betaling'
-  | 'handmatig-betalen'
-  | 'overgedragen-aan-belastingen'
-  | 'geld-terug'
-  | 'betaald'
-  | 'geannuleerd'
-  | 'herinnering'
-  | 'onbekend';
 
 export type AfisFactuurState =
   | 'open'
@@ -280,34 +268,6 @@ export type AfisInvoicesPartialPaymentsSource = AfisApiFeedResponseSource<
 // =========================
 export type AfisFactuurDeelbetalingen = {
   [factuurNummer: string]: Decimal;
-};
-
-/** Extra property information
- *  ==========================
- * `ProfitCenterName`: The one requiring payment from the debtor (debiteur).
- * `AmountInBalanceTransacCrcy`: Is a decimal number and represents the amount that should be payed.
- *   When this is negative it is a 'krediet factuur' which means that money shall be returned -
- *   to the debtor.
- *  `IsCleared`: `true` means the 'factuur' is fully payed for.
- */
-export type AfisFactuurPropertiesSource = {
-  AccountingDocument: string;
-  AmountInBalanceTransacCrcy: string;
-  AccountingDocumentType: AccountingDocumentType;
-  ClearingDate?: string;
-  DocumentReferenceID: string;
-  DunningBlockingReason: string;
-  DunningLevel: number;
-  IsCleared?: boolean;
-  NetDueDate: string;
-  InvoiceReference: string | null;
-  Paylink: string | null;
-  PaymentMethod: string | null;
-  PostingDate: string;
-  ProfitCenterName: string;
-  ReverseDocument?: string;
-  SEPAMandate: string;
-  PaymentTerms: string;
 };
 
 // Documents / PDF's

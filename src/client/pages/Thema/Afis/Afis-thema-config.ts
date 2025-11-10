@@ -4,14 +4,14 @@ import { generatePath, type Params } from 'react-router';
 
 import type {
   AfisBusinessPartnerDetailsTransformed,
+  AfisEMandateFrontend,
   AfisFacturenResponse,
   AfisFactuur,
   AfisFactuurStateFrontend,
   AfisFactuurTermijn,
-import type {
-  LinkProps,
-  ZaakAanvraagDetail,
-} from '../../../../universal/types/App.types';
+} from '../../../../server/services/afis/afis-types';
+import { IS_PRODUCTION } from '../../../../universal/config/env';
+import type { LinkProps } from '../../../../universal/types/App.types';
 import type { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
@@ -19,13 +19,6 @@ import type { ThemaRoutesConfig } from '../../../config/thema-types';
 export const featureToggle = {
   AfisActive: true,
   afisEMandatesActive: !IS_PRODUCTION,
-  // Display of phone number is not needed atm.
-  afisBusinesspartnerPhoneActive: false,
-  // We don't filter out the undownloadable facturen for testing purposes.
-  // We want to be able to test immediately and not wait until the evening.
-  afisFilterOutUndownloadableFacturenActive: IS_OT || IS_PRODUCTION,
-  // See also MIJN-10042: Bug where migrated documents "$year < 2025" do not have PDF downloads available.
-  afisMigratedFacturenDownloadActive: !IS_PRODUCTION,
 };
 
 // E-Mandates are always recurring and have a default date far in the future!
@@ -185,16 +178,8 @@ const displayPropsEMandates: DisplayProps<AfisEMandateFrontend> = {
 };
 
 export const eMandateTableConfig = {
-  active: {
-    title: `Actieve automatische incasso's`,
-    filter: (emandate: AfisEmandateStub) => emandate.isActive,
-    displayProps: displayPropsEmandates,
-  },
-  inactive: {
-    title: `Niet actieve automatische incasso's`,
-    filter: (emandate: AfisEmandateStub) => !emandate.isActive,
-    displayProps: displayPropsEmandates,
-  },
+  title: `Automatische incasso's`,
+  displayProps: displayPropsEMandates,
 } as const;
 
 export const linkListItems: LinkProps[] = [

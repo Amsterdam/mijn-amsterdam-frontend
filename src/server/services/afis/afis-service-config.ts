@@ -1,4 +1,4 @@
-import { IS_PRODUCTION } from '../../../universal/config/env';
+import { IS_OT, IS_PRODUCTION } from '../../../universal/config/env';
 
 export const featureToggle = {
   router: {
@@ -6,6 +6,12 @@ export const featureToggle = {
       isEnabled: !IS_PRODUCTION,
     },
   },
+  termijnFacturenActive: !IS_PRODUCTION,
+  // Display of phone number is not needed atm.
+  businesspartnerPhoneActive: false,
+  // We don't filter out the undownloadable facturen for testing purposes.
+  // We want to be able to test immediately and not wait until the evening.
+  filterOutUndownloadableFacturenActive: IS_OT || IS_PRODUCTION,
 } as const;
 
 export const routes = {
