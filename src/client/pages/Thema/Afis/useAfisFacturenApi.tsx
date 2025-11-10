@@ -5,16 +5,18 @@ import { generatePath } from 'react-router';
 import {
   routeConfig,
   type AfisFacturenByStateFrontend,
+  type AfisFactuurFrontend,
 } from './Afis-thema-config';
 import type {
   AfisThemaResponse,
   AfisFactuurState,
   AfisFacturenResponse,
-  AfisFacturenByStateResponse,
+  AfisFactuurStateFrontend,
+  AfisFacturenOverviewResponse,
   AfisFactuur,
 } from '../../../../server/services/afis/afis-types';
 import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
-import { entries } from '../../../../universal/helpers/utils';
+import { entries, omit } from '../../../../universal/helpers/utils';
 import { DocumentLink } from '../../../components/DocumentList/DocumentLink';
 import { MaLink, MaRouterLink } from '../../../components/MaLink/MaLink';
 import { generateBffApiUrlWithEncryptedPayloadQuery } from '../../../helpers/api';
@@ -56,7 +58,10 @@ export function getDocumentLink(factuur: AfisFactuur): ReactNode {
   return null;
 }
 
-function transformFactuur(factuur: AfisFactuur, state: AfisFactuurState) {
+function transformFactuur(
+  factuur: AfisFactuur,
+  state: AfisFactuurStateFrontend
+): AfisFactuurFrontend {
   const factuurNummerEl: ReactNode = (
     <MaRouterLink
       maVariant="fatNoDefaultUnderline"
@@ -77,18 +82,25 @@ function transformFactuur(factuur: AfisFactuur, state: AfisFactuurState) {
 }
 
 export function useTransformFacturen(
-  facturenByState: AfisFacturenByStateResponse | null
+  facturenByState: Partial<AfisFacturenOverviewResponse> | null
 ): AfisFacturenByStateFrontend | null {
   const facturenByStateTransformed: AfisFacturenByStateFrontend | null =
     useMemo(() => {
       if (facturenByState) {
         return Object.fromEntries(
           entries(facturenByState)
-            .filter(([_state, facturenResponse]) => facturenResponse !== null)
+            .filter(
+              (
+                state
+              ): state is [AfisFactuurStateFrontend, AfisFacturenResponse] => {
+                const [_state, _facturenResponse] = state;
+                return _facturenResponse != null;
+              }
+            )
             .map(([state, facturenResponse]) => [
               state,
               {
-                ...facturenResponse,
+                ...omit(facturenResponse, ['facturen']),
                 facturen:
                   facturenResponse?.facturen?.map((factuur) =>
                     transformFactuur(factuur, state)

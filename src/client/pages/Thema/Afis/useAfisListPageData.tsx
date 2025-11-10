@@ -5,12 +5,12 @@ import {
   themaId,
 } from './Afis-thema-config';
 import { useAfisFacturenApi, useTransformFacturen } from './useAfisFacturenApi';
-import type { AfisFactuurState } from '../../../../server/services/afis/afis-types';
+import type { AfisFactuurStateFrontend } from '../../../../server/services/afis/afis-types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 
-export function useAfisListPageData(state: AfisFactuurState) {
+export function useAfisListPageData(state: AfisFactuurStateFrontend) {
   const { AFIS } = useAppStateGetter();
   const businessPartnerIdEncrypted =
     AFIS.content?.businessPartnerIdEncrypted ?? null;
@@ -25,11 +25,12 @@ export function useAfisListPageData(state: AfisFactuurState) {
 
   return {
     themaId: themaId,
-    facturenListResponse:
-      state === 'open'
+    facturen:
+      (state === 'open'
         ? // Open facturen are always loaded and retrieved from the stream endpoint
           facturenByStateFromMainState?.open
-        : (api.facturenByState?.[state] ?? null),
+        : (api.facturenByState?.[state] ?? null)
+      )?.facturen ?? [],
     facturenTableConfig,
     isThemaPaginaError: isError(AFIS, false),
     isThemaPaginaLoading: isLoading(AFIS),
