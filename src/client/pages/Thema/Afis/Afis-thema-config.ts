@@ -61,7 +61,7 @@ const displayPropsFacturenOpen: DisplayProps<AfisFactuurFrontend> = {
     statusDescription: 'Status',
   },
   colWidths: {
-    large: ['25%', '20%', '20%', '35%'],
+    large: ['15%', '25%', '25%', '35%'],
     small: ['25%', '0', '0', '75%'],
   },
 };
