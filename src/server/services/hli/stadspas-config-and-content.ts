@@ -43,7 +43,7 @@ export function getBudgetNotifications(stadspassen: StadspasFrontend[]) {
         ? generatePath(routeConfig.detailPageStadspas.path, {
             passNumber: stadspasPassNumber,
           })
-        : routeConfig.themaPage.path,
+        : themaConfig.route.path,
       title: 'Check het saldo',
     },
   });
