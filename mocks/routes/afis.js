@@ -232,15 +232,12 @@ module.exports = [
 
             let feedEntries = [...facturenByState[stateName].feed.entry];
 
-            // Afgehandelde termijnfacturen can also be present in the afgehandelde facturen.
-            // We exclude them in the BFF Afis-facturen-service if they belong to a factuur that also has openstaande termijnen.
-            // Therefore we need to merge these results here for the mock to behave the same.
-            if (stateName === 'afgehandelde') {
-              feedEntries = [
-                ...feedEntries,
-                ...facturenByState.afgehandeldetermijn.feed.entry,
-              ];
-            }
+            // if (stateName === 'afgehandelde') {
+            //   feedEntries = [
+            //     ...feedEntries,
+            //     ...facturenByState.afgehandeldetermijn.feed.entry,
+            //   ];
+            // }
 
             const count = feedEntries.length;
 
