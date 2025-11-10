@@ -34,7 +34,7 @@ export const HLIRoutes = [
     isActive: featureToggle.hliActive,
   },
   {
-    route: routeConfig.themaPage.path,
+    route: themaConfig.route.path,
     Component: HLIThema,
     isActive: featureToggle.hliActive,
   },
@@ -45,9 +45,9 @@ export const menuItem: ThemaMenuItem<typeof themaConfig.id> = {
     return getThemaTitleWithAppState(appState);
   },
   id: themaConfig.id,
-  to: routeConfig.themaPage.path,
+  to: themaConfig.route.path,
   profileTypes: themaConfig.profileTypes,
-  redactedScope: 'full',
+  redactedScope: themaConfig.redactedScope,
   isActive(appState: AppState) {
     const hasStadspas =
       !!appState.HLI?.content?.stadspas?.stadspassen?.length &&
