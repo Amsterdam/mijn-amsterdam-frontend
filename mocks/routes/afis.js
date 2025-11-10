@@ -1,7 +1,5 @@
 const httpConstants = require('http2').constants;
 
-const e = require('express');
-
 const settings = require('../settings');
 
 const BASE = '/afis';
