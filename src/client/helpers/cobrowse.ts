@@ -2,7 +2,7 @@ import { myThemasMenuItems } from '../config/thema';
 import { ThemaMenuItem } from '../config/thema-types';
 import { themaId as themaIdNotificaties } from '../pages/MyNotifications/MyNotifications-config';
 
-export const REDACTED_CLASS = 'cobrowse-redacted';
+export const REDACTED_CLASS = 'redacted';
 
 const otherContentRedactedItems = [
   'Algemeen',
