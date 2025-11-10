@@ -63,6 +63,12 @@ const ROUTES = {
       `and IsCleared eq true and (DunningLevel ne '3' or ReverseDocument ne '')`
     );
   },
+  termijnFacturen: (uri: string) => {
+    return isQueryStringIncludedInUri(
+      uri,
+      `and PaymentTerms gt 'B' and SEPAMandate ne '' and IsCleared eq true and (DunningLevel ne '3' or ReverseDocument ne '')`
+    );
+  },
   overgedragenFacturen: (uri: string) => {
     return isQueryStringIncludedInUri(
       uri,
@@ -585,11 +591,13 @@ describe('afis-facturen', async () => {
           const IS_CLEARED = false;
           const statusDescription =
             forTesting.determineFactuurStatusDescription(
-              status as AfisFactuur['status'],
-              '€ 123,40',
-              '€ 210,40',
-              IS_CLEARED,
-              '16 juni 2024'
+              {
+                status,
+                amountPayedFormatted: '€ 123,40',
+                amountOriginalFormatted: '€ 210,40',
+                debtClearingDateFormatted: '16 juni 2024',
+              } as AfisFactuur,
+              IS_CLEARED
             );
           return [status, statusDescription];
         });
@@ -639,11 +647,13 @@ describe('afis-facturen', async () => {
         .map((status) => {
           const statusDescription =
             forTesting.determineFactuurStatusDescription(
-              status as AfisFactuur['status'],
-              '€ 123,40',
-              '€ 210,40',
-              IS_CLEARED,
-              '16 juni 2024'
+              {
+                status,
+                amountPayedFormatted: '€ 123,40',
+                amountOriginalFormatted: '€ 210,40',
+                debtClearingDateFormatted: '16 juni 2024',
+              } as AfisFactuur,
+              IS_CLEARED
             );
           return [status, statusDescription];
         });
@@ -787,6 +797,12 @@ describe('afis-facturen', async () => {
       remoteApi.get(ROUTES.openstaandeFacturen).reply(200, {
         feed: {
           entry: [factuur()],
+        },
+      });
+
+      remoteApi.get(ROUTES.termijnFacturen).reply(200, {
+        feed: {
+          entry: [],
         },
       });
 

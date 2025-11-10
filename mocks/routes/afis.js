@@ -205,41 +205,48 @@ module.exports = [
         type: 'middleware',
         options: {
           middleware: (req, res) => {
-            const stateFilters = {
-              openstaande: 'IsCleared eq false',
-              afgehandelde: `DunningLevel ne '3' or ReverseDocument ne ''`,
-              overgedragen: `DunningLevel eq '3'`,
-            };
+            const stateFilters = [
+              { state: 'openstaande', filter: 'IsCleared eq false' },
+              {
+                state: 'afgehandeldetermijn',
+                filter: `and PaymentTerms gt 'B' and SEPAMandate ne '' `,
+              },
+              {
+                state: 'afgehandelde',
+                filter: `DunningLevel ne '3' or ReverseDocument ne ''`,
+              },
+              { state: 'overgedragen', filter: `DunningLevel eq '3'` },
+            ];
 
-            const stateName = Object.entries(stateFilters).find(
-              ([_name, filterValueSegment]) => {
-                return req.query?.$filter?.includes(filterValueSegment);
-              }
-            )?.[0];
+            const stateName = stateFilters.find(({ filter }) => {
+              return req.query?.$filter?.includes(filter);
+            })?.state;
 
             if (!stateName) {
               return res.status(httpConstants.HTTP_STATUS_FORBIDDEN).end();
             }
 
-            // DO NOT adjust this mock data (tests depend on it).
-            // If needed copy, mutate and let it point to the newly made copy.
-            const facturenData = require(
-              `../fixtures/afis/${stateName}-facturen.json`
-            );
+            const facturenByState = {
+              openstaande: require('../fixtures/afis/openstaande-facturen.json'),
+              afgehandelde: require('../fixtures/afis/afgehandelde-facturen.json'),
+              afgehandeldetermijn: require('../fixtures/afis/afgehandeldetermijn-facturen.json'),
+              overgedragen: require('../fixtures/afis/overgedragen-facturen.json'),
+            };
+
+            let feedEntries = [...facturenByState[stateName].feed.entry];
+
+            const count = feedEntries.length;
 
             if (req.query?.$top) {
-              return res.send({
-                feed: {
-                  count: facturenData.feed.count,
-                  entry: facturenData.feed.entry.slice(
-                    0,
-                    parseInt(req.query?.$top, 10)
-                  ),
-                },
-              });
+              feedEntries = feedEntries.slice(0, Number(req.query.$top));
             }
 
-            return res.send(facturenData);
+            return res.send({
+              feed: {
+                entry: feedEntries,
+                count,
+              },
+            });
           },
         },
       },

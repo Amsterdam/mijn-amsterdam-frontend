@@ -49,15 +49,15 @@ export type AfisBusinessPartnerCommercialResponseSource = {
     | AfisBusinessPartnerRecordCommercial[];
 };
 
-export type AfisFacturenByStateResponse = {
-  [key in AfisFactuurState]?: AfisFacturenResponse | null;
+export type AfisFacturenOverviewResponse = {
+  [key in AfisFactuurStateFrontend]: AfisFacturenResponse | null;
 };
 
 export type AfisThemaResponse = {
   isKnown: boolean;
   businessPartnerIdEncrypted: string | null;
   businessPartnerId?: string | null;
-  facturen: AfisFacturenByStateResponse | null;
+  facturen: AfisFacturenOverviewResponse | null;
 };
 
 export type AfisApiFeedResponseSource<T> = {
@@ -191,7 +191,17 @@ export type AfisFactuurStatus =
   | 'herinnering'
   | 'onbekend';
 
-export type AfisFactuurState = 'open' | 'afgehandeld' | 'overgedragen';
+export type AfisFactuurState =
+  | 'open'
+  | 'afgehandeld'
+  | 'overgedragen'
+  | 'deelbetalingen'
+  | 'termijnen';
+
+export type AfisFactuurStateFrontend = Exclude<
+  AfisFactuurState,
+  'termijnen' | 'deelbetalingen'
+>;
 
 export type AfisFacturenResponse = {
   count: number;
@@ -200,9 +210,23 @@ export type AfisFacturenResponse = {
 };
 
 export type AfisFacturenParams = {
-  state: AfisFactuurState | 'deelbetalingen';
+  state: AfisFactuurState;
   businessPartnerID: string;
   top?: string;
+  includeAccountingDocumentIds?: string[];
+  excludeAccountingDocumentIds?: string[];
+};
+
+export type AfisFactuurTermijn = {
+  paymentDueDate: string;
+  paymentDueDateFormatted: string;
+  paymentStatus: string;
+  debtClearingDate: string | null;
+  debtClearingDateFormatted: string | null;
+  amountOriginal: string;
+  amountOriginalFormatted: string;
+  term: string;
+  statusDescription: string;
 };
 
 export type AfisFactuur = {
@@ -221,11 +245,26 @@ export type AfisFactuur = {
   factuurNummer: string;
   factuurDocumentId: string;
   status: AfisFactuurStatus;
+  termijnen?: AfisFactuurTermijn[];
   paylink: string | null;
   documentDownloadLink: string | null;
   statusDescription: string;
   link: LinkProps;
 };
+
+export type AfisFactuurStatus =
+  | 'openstaand'
+  | 'automatische-incasso'
+  | 'automatische-incasso-termijnen'
+  | 'in-dispuut'
+  | 'gedeeltelijke-betaling'
+  | 'handmatig-betalen'
+  | 'overgedragen-aan-belastingen'
+  | 'geld-terug'
+  | 'betaald'
+  | 'geannuleerd'
+  | 'herinnering'
+  | 'onbekend';
 
 export type AfisInvoicesSource =
   AfisApiFeedResponseSource<AfisFactuurPropertiesSource>;
@@ -243,9 +282,36 @@ export type AfisFactuurDeelbetalingen = {
   [factuurNummer: string]: Decimal;
 };
 
+/** Extra property information
+ *  ==========================
+ * `ProfitCenterName`: The one requiring payment from the debtor (debiteur).
+ * `AmountInBalanceTransacCrcy`: Is a decimal number and represents the amount that should be payed.
+ *   When this is negative it is a 'krediet factuur' which means that money shall be returned -
+ *   to the debtor.
+ *  `IsCleared`: `true` means the 'factuur' is fully payed for.
+ */
+export type AfisFactuurPropertiesSource = {
+  AccountingDocument: string;
+  AmountInBalanceTransacCrcy: string;
+  AccountingDocumentType: AccountingDocumentType;
+  ClearingDate?: string;
+  DocumentReferenceID: string;
+  DunningBlockingReason: string;
+  DunningLevel: number;
+  IsCleared?: boolean;
+  NetDueDate: string;
+  InvoiceReference: string | null;
+  Paylink: string | null;
+  PaymentMethod: string | null;
+  PostingDate: string;
+  ProfitCenterName: string;
+  ReverseDocument?: string;
+  SEPAMandate: string;
+  PaymentTerms: string;
+};
+
 // Documents / PDF's
 // =================
-
 export type AccountingDocumentType = string;
 
 export type AfisArcDocID = AfisDocumentIDPropertiesSource['ArcDocId'];
