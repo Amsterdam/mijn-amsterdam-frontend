@@ -230,13 +230,6 @@ module.exports = [
 
             let feedEntries = [...facturenByState[stateName].feed.entry];
 
-            // if (stateName === 'afgehandelde') {
-            //   feedEntries = [
-            //     ...feedEntries,
-            //     ...facturenByState.afgehandeldetermijn.feed.entry,
-            //   ];
-            // }
-
             const count = feedEntries.length;
 
             if (req.query?.$top) {
