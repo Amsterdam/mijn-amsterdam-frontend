@@ -157,6 +157,20 @@ router.get(
   }
 );
 
+router.get(BffEndpoints.SERVICES_TOGGLES, async (_, res) => {
+  const isToggleEnabled = (key: string, default_value: boolean = false) => {
+    const envValue =
+      getFromEnv(key, false)?.toLowerCase() ?? `${default_value}`;
+    return envValue === 'true';
+  };
+  res.send({
+    BFF_COBROWSE_IS_ACTIVE: isToggleEnabled(
+      'BFF_COBROWSE_IS_ACTIVE',
+      FeatureToggle.cobrowseIsActive
+    ),
+  });
+});
+
 // /**
 //  * Zaak status endpoint redirects to zaakstatus if authenticated, else redirect to login
 //  */
