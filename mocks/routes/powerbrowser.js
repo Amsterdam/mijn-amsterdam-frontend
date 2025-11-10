@@ -97,11 +97,8 @@ module.exports = [
         type: 'middleware',
         options: {
           middleware: (req, res) => {
-            console.log(req.url, req.query, req.body);
             return res.send(BB_LINK_ZAAK_ADRES);
           },
-          // status: 200,
-          // body: BB_LINK_ZAAK_ADRES,
         },
       },
     ],
