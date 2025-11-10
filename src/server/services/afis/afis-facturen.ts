@@ -482,7 +482,8 @@ function determineFactuurStatus(
       (sourceInvoice.DunningLevel == 1 || sourceInvoice.DunningLevel == 2):
       return 'herinnering';
 
-    case !!sourceInvoice.SEPAMandate &&
+    case FeatureToggle.afisTermijnFacturenActive &&
+      !!sourceInvoice.SEPAMandate &&
       sourceInvoice.PaymentMethod !== 'B' &&
       paymentTermsRegex.test(sourceInvoice.PaymentTerms):
       return 'automatische-incasso-termijnen';
@@ -612,6 +613,10 @@ async function fetchAfisOpenFacturenIncludingAfgehandeldeTermijnFacturen(
 
   if (facturenOpenResponse.status !== 'OK') {
     return facturenOpenResponse;
+  }
+
+  if (!FeatureToggle.afisTermijnFacturenActive) {
+    return facturenOpenResponse as ApiResponse<AfisFacturenResponse>;
   }
 
   const includeAccountingDocumentIds = getTermijnFactuurAccountingDocumentIds(
