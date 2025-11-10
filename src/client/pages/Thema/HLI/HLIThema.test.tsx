@@ -1,24 +1,21 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import {
-  listPageParamKind,
-  routeConfig,
-  tableConfig,
-} from './HLI-thema-config';
+import { listPageParamKind, tableConfig } from './HLI-thema-config';
 import { HLIThema } from './HLIThema';
 import { stadspasCreator } from './test-helpers';
 import { createHLIState } from './test-helpers';
 import { RTM_SPECIFICATIE_TITLE } from '../../../../server/services/hli/hli';
 import type { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
 import { componentCreator } from '../../MockApp';
+import { themaConfig } from '../Bodem/Bodem-thema-config';
 
 const createStadspas = stadspasCreator();
 
 const createHLIComponent = componentCreator({
   component: HLIThema,
-  routeEntry: generatePath(routeConfig.themaPage.path),
-  routePath: routeConfig.themaPage.path,
+  routeEntry: generatePath(themaConfig.route.path),
+  routePath: themaConfig.route.path,
 });
 
 describe('<HLI />', () => {
