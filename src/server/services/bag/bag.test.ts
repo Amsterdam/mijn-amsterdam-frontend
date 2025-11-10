@@ -48,6 +48,7 @@ describe('BAG service', () => {
       content: {
         address: ADDRESS,
         bagAddress,
+        mokum: false,
         bagNummeraanduidingId: '0363200012145295',
         latlng: {
           lat: 52.3676456,
