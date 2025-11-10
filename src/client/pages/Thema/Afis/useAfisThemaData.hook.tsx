@@ -111,13 +111,18 @@ function useTransformFacturen(
       if (facturenByState) {
         return Object.fromEntries(
           entries(facturenByState)
-            .filter(([_state, facturenResponse]) => facturenResponse !== null)
+            .filter(
+              (
+                state
+              ): state is [AfisFactuurStateFrontend, AfisFacturenResponse] => {
+                const [_state, _facturenResponse] = state;
+                return _facturenResponse != null;
+              }
+            )
             .map(([state, facturenResponse]) => [
               state,
               {
-                ...(facturenResponse
-                  ? omit(facturenResponse, ['facturen'])
-                  : facturenResponse),
+                ...omit(facturenResponse, ['facturen']),
                 facturen:
                   facturenResponse?.facturen?.map((factuur) =>
                     transformFactuur(factuur, state)
