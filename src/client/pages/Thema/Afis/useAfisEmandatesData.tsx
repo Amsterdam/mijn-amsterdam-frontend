@@ -30,7 +30,7 @@ import { useSmallScreen } from '../../../hooks/media.hook';
 import { useSessionStorage } from '../../../hooks/storage.hook';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 
-function updateEmandateById(
+function mergePayloadIntoEmandateById(
   id: AfisEMandateFrontend['id'],
   payload: Partial<AfisEMandateFrontend>,
   eMandates: AfisEMandateFrontend[] | undefined
@@ -115,7 +115,7 @@ export function useAfisEMandatesData() {
       payload: Partial<AfisEMandateFrontend>
     ) => {
       optimisticUpdateContent(
-        updateEmandateById(eMandateId, payload, eMandates)
+        mergePayloadIntoEmandateById(eMandateId, payload, eMandates)
       );
     },
     statusNotification: statusNotificationStorage,
@@ -362,6 +362,6 @@ export function useEmandateStatusPendingStorage(
 }
 
 export const forTesting = {
-  updateEmandateById,
+  updateEmandateById: mergePayloadIntoEmandateById,
   useIsPendingNotification,
 };

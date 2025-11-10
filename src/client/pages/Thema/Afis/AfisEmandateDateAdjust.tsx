@@ -6,9 +6,9 @@ import {
   DateInput,
   Paragraph,
 } from '@amsterdam/design-system-react';
-import { addDays, addYears } from 'date-fns';
+import { addDays } from 'date-fns';
 
-import { EMANDATE_ENDDATE_INDICATOR } from './Afis-thema-config';
+import { getEMandateValidityDate } from './Afis-helpers';
 import type { useEmandateApis } from './useAfisEmandatesData';
 import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types';
 import { MaRouterLink } from '../../../components/MaLink/MaLink';
@@ -29,11 +29,7 @@ function DateAdjustModal({
   onSubmit,
 }: DateAdjustModalProps) {
   const minDate = addDays(new Date(), 1).toISOString().split('T')[0]; // Set minimum date to tomorrow.
-  const dateValidTo =
-    eMandate.dateValidTo?.includes(EMANDATE_ENDDATE_INDICATOR) ||
-    !eMandate.dateValidTo
-      ? addYears(new Date(), 1).toISOString().split('T')[0]
-      : eMandate.dateValidTo;
+  const dateValidTo = getEMandateValidityDate(eMandate);
   return (
     <Modal
       title="E-Mandaat einddatum aanpassen"
