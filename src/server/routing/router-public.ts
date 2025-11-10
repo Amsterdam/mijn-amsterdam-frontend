@@ -164,10 +164,7 @@ router.get(BffEndpoints.SERVICES_TOGGLES, async (_, res) => {
     return envValue === 'true';
   };
   res.send({
-    BFF_COBROWSE_IS_ACTIVE: isToggleEnabled(
-      'BFF_COBROWSE_IS_ACTIVE',
-      FeatureToggle.cobrowseIsActive
-    ),
+    BFF_COBROWSE_IS_ACTIVE: isToggleEnabled('BFF_COBROWSE_IS_ACTIVE'),
   });
 });
 

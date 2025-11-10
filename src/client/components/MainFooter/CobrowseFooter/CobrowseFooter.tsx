@@ -7,6 +7,7 @@ import { PageFooter } from '@amsterdam/design-system-react';
 import type { CobrowseWidget } from './lib/cobrowse-widget';
 
 import './lib/cobrowse-widget.css';
+import { REDACTED_CLASS } from '../../../helpers/cobrowse';
 import { useIsBffToggleEnabled } from '../../../helpers/env';
 
 export const LABEL_HULP_SCHERMDELEN = 'Hulp via schermdelen';
@@ -30,7 +31,9 @@ export function CobrowseFooter() {
       return;
     }
     import('./lib/cobrowse-widget.js').then(({ CobrowseWidget }) => {
-      setCobrowseWidget(new CobrowseWidget(licenseKey));
+      const redactedViews = [REDACTED_CLASS];
+      const widget = new CobrowseWidget(licenseKey, redactedViews);
+      setCobrowseWidget(widget);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCobrowseActive]);

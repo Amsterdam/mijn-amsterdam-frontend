@@ -1,5 +1,7 @@
 export class CobrowseWidget {
-  constructor(licenseKey: string, language?: 'nl');
+  constructor(licenseKey: string, redactedViews: string[], language?: 'nl');
   startSession: () => void;
-  CobrowseIO: unknown;
+  CobrowseIO: {
+    redactedViews: string[];
+  };
 }
