@@ -12,13 +12,14 @@ import {
   themaTitle,
   themaId,
   routeConfig,
+  type AfisFactuurFrontend,
 } from './Afis-thema-config';
 import {
   AfisBusinessPartnerDetailsTransformed,
   AfisThemaResponse,
-  AfisFacturenByStateResponse,
+  AfisFacturenOverviewResponse,
   AfisFactuur,
-  AfisFactuurState,
+  type AfisFactuurStateFrontend,
   type AfisFacturenResponse,
 } from '../../../../server/services/afis/afis-types';
 import {
@@ -27,7 +28,7 @@ import {
   isLoading,
 } from '../../../../universal/helpers/api';
 import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
-import { entries } from '../../../../universal/helpers/utils';
+import { entries, omit } from '../../../../universal/helpers/utils';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { DocumentLink } from '../../../components/DocumentList/DocumentLink';
 import { MaLink, MaRouterLink } from '../../../components/MaLink/MaLink';
@@ -63,7 +64,7 @@ function getInvoiceStatusDescriptionFrontend(factuur: AfisFactuur): ReactNode {
   }
 }
 
-export function getDocumentLink(factuur: AfisFactuur): ReactNode {
+export function getDocumentLink(factuur: AfisFactuurFrontend): ReactNode {
   if (factuur.documentDownloadLink) {
     return (
       <DocumentLink
@@ -79,7 +80,10 @@ export function getDocumentLink(factuur: AfisFactuur): ReactNode {
   return null;
 }
 
-function transformFactuur(factuur: AfisFactuur, state: AfisFactuurState) {
+function transformFactuur(
+  factuur: AfisFactuur,
+  state: AfisFactuurStateFrontend
+): AfisFactuurFrontend {
   const factuurNummerEl: ReactNode = (
     <MaRouterLink
       maVariant="fatNoDefaultUnderline"
@@ -100,18 +104,25 @@ function transformFactuur(factuur: AfisFactuur, state: AfisFactuurState) {
 }
 
 function useTransformFacturen(
-  facturenByState: AfisFacturenByStateResponse | null
+  facturenByState: Partial<AfisFacturenOverviewResponse> | null
 ): AfisFacturenByStateFrontend | null {
   const facturenByStateTransformed: AfisFacturenByStateFrontend | null =
     useMemo(() => {
       if (facturenByState) {
         return Object.fromEntries(
           entries(facturenByState)
-            .filter(([_state, facturenResponse]) => facturenResponse !== null)
+            .filter(
+              (
+                state
+              ): state is [AfisFactuurStateFrontend, AfisFacturenResponse] => {
+                const [_state, _facturenResponse] = state;
+                return _facturenResponse != null;
+              }
+            )
             .map(([state, facturenResponse]) => [
               state,
               {
-                ...facturenResponse,
+                ...omit(facturenResponse, ['facturen']),
                 facturen:
                   facturenResponse?.facturen?.map((factuur) =>
                     transformFactuur(factuur, state)
@@ -134,7 +145,7 @@ function useAfisFacturenApi(
   businessPartnerIdEncrypted:
     | AfisThemaResponse['businessPartnerIdEncrypted']
     | undefined,
-  state: AfisFactuurState
+  state: AfisFactuurStateFrontend
 ) {
   const url =
     businessPartnerIdEncrypted && state && state !== 'open'
@@ -158,7 +169,7 @@ function useAfisFacturenApi(
   } as const;
 }
 
-export function useAfisListPageData(state: AfisFactuurState) {
+export function useAfisListPageData(state: AfisFactuurStateFrontend) {
   const { AFIS } = useAppStateGetter();
   const businessPartnerIdEncrypted =
     AFIS.content?.businessPartnerIdEncrypted ?? null;
@@ -171,13 +182,15 @@ export function useAfisListPageData(state: AfisFactuurState) {
 
   const breadcrumbs = useThemaBreadcrumbs(themaId);
 
+  // Open facturen are always loaded and retrieved from the stream endpoint
+  const openFacturenFromMainState = facturenByStateFromMainState?.open ?? null;
+  const facturenByStateFromApi = api.facturenByState?.[state] ?? null;
+
   return {
     themaId: themaId,
-    facturenListResponse:
-      state === 'open'
-        ? // Open facturen are always loaded and retrieved from the stream endpoint
-          facturenByStateFromMainState?.open
-        : (api.facturenByState?.[state] ?? null),
+    facturen:
+      (state === 'open' ? openFacturenFromMainState : facturenByStateFromApi)
+        ?.facturen ?? [],
     facturenTableConfig,
     isThemaPaginaError: isError(AFIS, false),
     isThemaPaginaLoading: isLoading(AFIS),
@@ -240,7 +253,7 @@ export function useAfisBetaalVoorkeurenData(
 
   return {
     title: 'Betaalvoorkeuren',
-    businesspartnerDetails: businesspartnerDetailsApiResponse?.content,
+    businesspartnerDetails: businesspartnerDetailsApiResponse?.content ?? null,
     businessPartnerDetailsLabels,
     isLoadingBusinessPartnerDetails: api.isLoading,
     hasBusinessPartnerDetailsError: api.isError,
