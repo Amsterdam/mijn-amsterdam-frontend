@@ -49,13 +49,11 @@ function FactuurDetailContent({
   factuurNummer,
   state,
 }: FactuurDetailContentProps) {
-  const { facturenListResponse, routeConfig, isListPageLoading } =
+  const { facturen, routeConfig, isListPageLoading } =
     useAfisListPageData(state);
 
   const factuur =
-    facturenListResponse?.facturen.find(
-      (f) => f.factuurNummer === factuurNummer
-    ) ?? null;
+    facturen.find((f) => f.factuurNummer === factuurNummer) ?? null;
 
   if (isListPageLoading) {
     return <LoadingContent />;

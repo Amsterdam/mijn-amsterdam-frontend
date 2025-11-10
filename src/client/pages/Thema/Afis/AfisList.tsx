@@ -24,7 +24,7 @@ function AfisListPageBody({ state }: { state: AfisFactuurStateFrontend }) {
 export function AfisList() {
   const { state = 'open' } = useParams<{ state: AfisFactuurStateFrontend }>();
   const {
-    facturenListResponse,
+    facturen,
     isListPageError,
     isListPageLoading,
     facturenTableConfig,
@@ -37,7 +37,6 @@ export function AfisList() {
   useHTMLDocumentTitle(routeConfig.listPage);
 
   const listPageTableConfig = facturenTableConfig[state];
-  const facturen = facturenListResponse?.facturen ?? [];
 
   return (
     <ListPagePaginated

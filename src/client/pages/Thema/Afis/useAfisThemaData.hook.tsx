@@ -188,8 +188,9 @@ export function useAfisListPageData(state: AfisFactuurStateFrontend) {
 
   return {
     themaId: themaId,
-    facturenListResponse:
-      state === 'open' ? openFacturenFromMainState : facturenByStateFromApi,
+    facturen:
+      (state === 'open' ? openFacturenFromMainState : facturenByStateFromApi)
+        ?.facturen ?? [],
     facturenTableConfig,
     isThemaPaginaError: isError(AFIS, false),
     isThemaPaginaLoading: isLoading(AFIS),
