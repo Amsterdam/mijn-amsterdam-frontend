@@ -3,7 +3,7 @@
 exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="ams-grid cobrowse-redacted"
+    class="ams-grid"
   >
     <div
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
@@ -33,7 +33,7 @@ exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
             >
               <a
                 class="ams-breadcrumb__link"
-                href="/regelingen-bij-laag-inkomen"
+                href="/bodem"
                 tabindex="-1"
               >
                 <span
@@ -115,6 +115,31 @@ exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
               </svg>
             </span>
             Meer informatie over Stadspas
+          </a>
+        </li>
+        <li>
+          <a
+            class="ams-link-list__link"
+            href="https://www.amsterdam.nl/stadspas/kindtegoed/kosten-terugvragen/"
+            rel="noreferrer"
+          >
+            <span
+              class="ams-icon"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M7.911 2.5 17.5 12l-9.589 9.5L6.5 20.102 14.677 12 6.5 3.898z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Meer informatie over Kindtegoed declareren
           </a>
         </li>
       </ul>
