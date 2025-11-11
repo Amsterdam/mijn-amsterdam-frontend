@@ -26,6 +26,9 @@ export type ThemaConfigBase = {
 
 export type WithDetailPage = PageConfig<'detailPage'>;
 export type WithListPage = PageConfig<'listPage'>;
+export type WithRegelingenListPage = PageConfig<'regelingenListPage'>;
+export type WithspecificatieListPage = PageConfig<'specificatieListPage'>;
+export type WithdetailPageStadspas = PageConfig<'detailPageStadspas'>;
 
 type ThemaFeatureToggle = {
   themaActive: boolean;
