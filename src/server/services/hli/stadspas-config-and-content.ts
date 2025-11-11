@@ -1,10 +1,7 @@
 import { generatePath } from 'react-router';
 
 import { StadspasFrontend } from './stadspas-types';
-import {
-  routeConfig,
-  themaConfig,
-} from '../../../client/pages/Thema/HLI/HLI-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import { dateFormat, defaultDateFormat } from '../../../universal/helpers/date';
 import { MyNotification } from '../../../universal/types/App.types';
 
@@ -40,7 +37,7 @@ export function getBudgetNotifications(stadspassen: StadspasFrontend[]) {
     description,
     link: {
       to: stadspasPassNumber
-        ? generatePath(routeConfig.detailPageStadspas.path, {
+        ? generatePath(themaConfig.detailPageStadspas.route.path, {
             passNumber: stadspasPassNumber,
           })
         : themaConfig.route.path,
