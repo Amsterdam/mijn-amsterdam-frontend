@@ -10,7 +10,7 @@ import {
 } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router';
 
-import { featureToggle, routeConfig, themaConfig } from './HLI-thema-config';
+import { featureToggle, themaConfig } from './HLI-thema-config';
 import styles from './HLIStadspasDetail.module.scss';
 import { useBlockStadspas, useStadspassen } from './useStadspassen.hook';
 import {
@@ -84,7 +84,7 @@ const PHONENUMBERS = {
 export function HLIStadspasDetail() {
   const isPhoneScreen = useSmallScreen();
   const appState = useAppStateGetter();
-  useHTMLDocumentTitle(routeConfig.detailPageStadspas);
+  useHTMLDocumentTitle(themaConfig.detailPageStadspas.route);
 
   const { HLI } = appState;
   const { passNumber } = useParams<{ passNumber: string }>();
