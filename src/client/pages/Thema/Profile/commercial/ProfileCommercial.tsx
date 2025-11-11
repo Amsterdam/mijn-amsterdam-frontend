@@ -22,18 +22,10 @@ function ProfileCommercialSectionPanels() {
         />
       )}
 
-      {!!KVK.content?.rechtspersonen && profileData?.rechtspersonen && (
-        <ProfileSectionPanel
-          sectionData={profileData.rechtspersonen}
-          startCollapsed={false}
-          {...panelConfig.rechtspersonen(KVK)}
-        />
-      )}
-
       {!!profileData?.eigenaar && (
         <ProfileSectionPanel
           sectionData={profileData.eigenaar}
-          startCollapsed={!!KVK.content?.rechtspersonen?.length}
+          startCollapsed={false}
           {...panelConfig.eigenaar(KVK)}
         />
       )}
@@ -52,39 +44,6 @@ function ProfileCommercialSectionPanels() {
         />
       )}
 
-      {!!KVK.content?.aandeelhouders && profileData?.aandeelhouders && (
-        <ProfileSectionPanel
-          sectionData={profileData.aandeelhouders}
-          {...panelConfig.aandeelhouders(KVK)}
-        />
-      )}
-
-      {!!KVK.content?.gemachtigden && profileData?.gemachtigden && (
-        <ProfileSectionPanel
-          sectionData={profileData.gemachtigden}
-          {...panelConfig.gemachtigden(KVK)}
-        />
-      )}
-
-      {!!KVK.content?.bestuurders && profileData?.bestuurders && (
-        <ProfileSectionPanel
-          sectionData={profileData.bestuurders}
-          {...panelConfig.bestuurders(KVK)}
-        />
-      )}
-      {!!KVK.content?.aansprakelijken && profileData?.aansprakelijken && (
-        <ProfileSectionPanel
-          sectionData={profileData.aansprakelijken}
-          {...panelConfig.aansprakelijken(KVK)}
-        />
-      )}
-      {!!KVK.content?.overigeFunctionarissen &&
-        profileData?.overigeFunctionarissen && (
-          <ProfileSectionPanel
-            sectionData={profileData.overigeFunctionarissen}
-            {...panelConfig.overigeFunctionarissen(KVK)}
-          />
-        )}
       <PageContentCell spanWide={8}>
         <ParagaphSuppressed className="ams-mb-m">
           Heeft u de afgelopen 14 dagen uw KvK-gegevens gewijzigd? Dan kan het

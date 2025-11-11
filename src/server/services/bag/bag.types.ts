@@ -37,6 +37,7 @@ export type BAGQueryParams = {
   huisnummer?: string;
   huisletter?: string;
   huisnummertoevoeging?: string;
+  identificatie?: string;
 };
 
 export type BAGLocation = {

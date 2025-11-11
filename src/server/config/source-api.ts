@@ -261,6 +261,19 @@ const ApiConfig_ = {
       'X-Task-Description': getFromEnv('BFF_BENK_BRP_X_TASK_DESCRIPTION'),
     },
   },
+  IAM_DATAPUNT: {
+    url: `https://iam.amsterdam.nl/auth/realms/datapunt-ad/protocol/openid-connect/token`,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  },
+  HR_KVK: {
+    url: `https://https://api.data.amsterdam.nl/v1/hr_kvk`,
+    headers: {
+      'Content-Type': 'application/hal+json',
+    },
+  },
   BAG: {
     url: 'https://api.data.amsterdam.nl/v1/benkagg/adresseerbareobjecten/',
   },
@@ -336,7 +349,7 @@ const ApiConfig_ = {
     method: 'POST',
     postponeFetch: !themaConfigBodem.featureToggle.themaActive,
   },
-  MS_OAUTH: {
+  IAM_MS_OAUTH: {
     url: `${getFromEnv('BFF_MS_OAUTH_ENDPOINT')}:tenant/oauth2/v2.0/token`,
     method: 'POST',
   },
@@ -359,3 +372,5 @@ type ApiUrlObject = string | Partial<Record<ProfileType, string>>;
 type ApiUrlEntry = [apiKey: SourceApiName, apiUrl: ApiUrlObject];
 
 export type ApiUrlEntries = ApiUrlEntry[];
+
+export type IAMSourceConfigKey = Extract<SourceApiName, `IAM_${string}`>;

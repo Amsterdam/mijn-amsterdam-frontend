@@ -40,7 +40,6 @@ import { fetchErfpachtDossiersDetail as fetchErfpachtDossiersDetail } from '../s
 import { hliRouter } from '../services/hli/hli-router';
 import { fetchZorgnedLLVDocument } from '../services/jeugd/route-handlers';
 import { fetchDocument as fetchBBDocument } from '../services/powerbrowser/powerbrowser-service';
-import { fetchAantalBewoners } from '../services/profile/brp';
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler';
 import { wmoRouter } from '../services/wmo/wmo-router';
 import { fetchWpiDocument } from '../services/wpi/api-service';
@@ -128,18 +127,6 @@ attachDocumentDownloadRoute(
   router,
   BffEndpoints.LLV_DOCUMENT_DOWNLOAD,
   fetchZorgnedLLVDocument
-);
-
-router.get(
-  BffEndpoints.MKS_AANTAL_BEWONERS,
-  async (req: Request, res: ResponseAuthenticated) => {
-    const bewonersResponse = await fetchAantalBewoners(
-      res.locals.authProfileAndToken,
-      req.params.addressKeyEncrypted
-    );
-
-    return sendResponse(res, bewonersResponse);
-  }
 );
 
 // Decos (Vergunningen, Horeca, Toeristische verhuur, Parkeren)

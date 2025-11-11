@@ -5,7 +5,7 @@ import { forTesting, fetchBrpByBsn, fetchBrpByBsnTransformed } from './brp';
 import testPersonenResponse from '../../../../mocks/fixtures/brp/test-personen.json';
 import verblijfplaatsenResponse from '../../../../mocks/fixtures/brp/verblijfplaatshistorie.json';
 import { remoteApi } from '../../../testing/utils';
-import { fetchAuthTokenHeader } from '../ms-oauth/oauth-token';
+import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token';
 
 const {
   fetchBenkBrpTokenHeader,
@@ -29,6 +29,7 @@ describe('brp.ts', () => {
       fetchBenkBrpTokenHeader();
 
       expect(fetchAuthTokenHeader).toHaveBeenCalledWith(
+        'IAM_MS_OAUTH',
         {
           sourceApiName: 'BRP',
           tokenValidityMS: expect.any(Number),

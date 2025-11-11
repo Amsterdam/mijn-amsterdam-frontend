@@ -30,8 +30,8 @@ import { ONE_HOUR_MS } from '../../config/app';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
+import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token';
 import { getContextOperationId } from '../monitoring';
-import { fetchAuthTokenHeader } from '../ms-oauth/oauth-token';
 import { fetchBRP } from '../profile/brp';
 import { type BSN } from '../zorgned/zorgned-types';
 
@@ -40,6 +40,7 @@ const PERCENTAGE_DISTANCE_FROM_EXPIRY = 0.1;
 
 function fetchBenkBrpTokenHeader() {
   return fetchAuthTokenHeader(
+    'IAM_MS_OAUTH',
     {
       sourceApiName: 'BRP',
       tokenValidityMS:

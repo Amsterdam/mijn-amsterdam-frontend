@@ -36,7 +36,7 @@ type BRPPanelKey = keyof Omit<
   BRPData,
   | 'identiteitsbewijzen'
   | 'notifications'
-  | 'kvkNummer'
+  | 'kvknummer'
   | 'fetchUrlAantalBewoners'
 >;
 
