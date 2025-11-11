@@ -1,3 +1,4 @@
+import { themaConfig } from './HLI-thema-config';
 import { useHliThemaData } from './useHliThemaData';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
@@ -10,9 +11,8 @@ export function HLISpecificatieList() {
     isLoading,
     isError,
     breadcrumbs,
-    routeConfig,
   } = useHliThemaData();
-  useHTMLDocumentTitle(routeConfig.specificatieListPage);
+  useHTMLDocumentTitle(themaConfig.specificatieListPage.route);
 
   const { sort, title, displayProps, listPageRoute } = specificatieTableConfig;
 
