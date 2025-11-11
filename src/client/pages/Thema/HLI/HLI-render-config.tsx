@@ -21,7 +21,7 @@ export const HLIRoutes = [
   {
     route: routeConfig.detailPage.path,
     Component: HLIDetail,
-    isActive: featureToggle.hliActive,
+    isActive: themaConfig.featureToggle.themaActive,
   },
   {
     route: routeConfig.specificatieListPage.path,
@@ -31,12 +31,12 @@ export const HLIRoutes = [
   {
     route: routeConfig.regelingenListPage.path,
     Component: HLIList,
-    isActive: featureToggle.hliActive,
+    isActive: themaConfig.featureToggle.themaActive,
   },
   {
     route: themaConfig.route.path,
     Component: HLIThema,
-    isActive: featureToggle.hliActive,
+    isActive: themaConfig.featureToggle.themaActive,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
@@ -53,10 +53,13 @@ export const menuItem: ThemaMenuItem<typeof themaConfig.id> = {
       !!appState.HLI?.content?.stadspas?.stadspassen?.length &&
       featureToggle.hliStadspasActive;
     const hasRegelingen =
-      !!appState.HLI?.content?.regelingen?.length && featureToggle.hliActive;
+      !!appState.HLI?.content?.regelingen?.length &&
+      themaConfig.featureToggle.themaActive;
     const isLoadingHLI = isLoading(appState.HLI);
     return (
-      featureToggle.hliActive && !isLoadingHLI && (hasStadspas || hasRegelingen)
+      themaConfig.featureToggle.themaActive &&
+      !isLoadingHLI &&
+      (hasStadspas || hasRegelingen)
     );
   },
   IconSVG: HLIIcon,
