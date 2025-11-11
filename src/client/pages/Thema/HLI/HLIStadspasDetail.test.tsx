@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { generatePath } from 'react-router';
 
-import { routeConfig } from './HLI-thema-config';
+import { themaConfig } from './HLI-thema-config';
 import { HLIStadspasDetail } from './HLIStadspasDetail';
 import { forTesting } from './HLIStadspasDetail';
 import { createHLIState } from './test-helpers';
@@ -28,8 +28,8 @@ const pasBlockedState = createHLIState({
 
 const createHLIStadspasComponent = componentCreator({
   component: HLIStadspasDetail,
-  routePath: routeConfig.detailPageStadspas.path,
-  routeEntry: generatePath(routeConfig.detailPageStadspas.path, {
+  routePath: themaConfig.detailPageStadspas.route.path,
+  routeEntry: generatePath(themaConfig.detailPageStadspas.route.path, {
     passNumber: `${passNumber}`,
   }),
 });
