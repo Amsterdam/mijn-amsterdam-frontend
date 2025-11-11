@@ -1,5 +1,5 @@
 import { getThemaTitleWithAppState } from './helpers';
-import { routeConfig, featureToggle, themaConfig } from './HLI-thema-config';
+import { featureToggle, themaConfig } from './HLI-thema-config';
 import { HLIDetail } from './HLIDetail';
 import { default as HLIIcon } from './HLIIcon.svg?react';
 import { HLIList } from './HLIList';
@@ -14,22 +14,22 @@ import type {
 } from '../../../config/thema-types';
 export const HLIRoutes = [
   {
-    route: routeConfig.detailPageStadspas.path,
+    route: themaConfig.detailPageStadspas.route.path,
     Component: HLIStadspasDetail,
     isActive: featureToggle.hliStadspasActive,
   },
   {
-    route: routeConfig.detailPage.path,
+    route: themaConfig.detailPage.route.path,
     Component: HLIDetail,
     isActive: themaConfig.featureToggle.themaActive,
   },
   {
-    route: routeConfig.specificatieListPage.path,
+    route: themaConfig.specificatieListPage.route.path,
     Component: HLISpecificatieList,
     isActive: featureToggle.hliRegelingEnabledRTM,
   },
   {
-    route: routeConfig.regelingenListPage.path,
+    route: themaConfig.regelingenListPage.route.path,
     Component: HLIList,
     isActive: themaConfig.featureToggle.themaActive,
   },
