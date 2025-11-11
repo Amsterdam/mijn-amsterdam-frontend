@@ -2,7 +2,6 @@ import { getThemaTitle } from './helpers';
 import {
   listPageParamKind,
   listPageTitle,
-  routeConfig,
   specificatieTableConfig,
   tableConfig,
   themaConfig,
@@ -70,6 +69,5 @@ export function useHliThemaData() {
     listPageParamKind,
     linkListItems: themaConfig.pageLinks,
     breadcrumbs,
-    routeConfig,
   };
 }

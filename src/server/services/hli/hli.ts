@@ -18,7 +18,7 @@ import {
 } from './status-line-items/regeling-rtm';
 import {
   featureToggle,
-  routeConfig,
+  themaConfig,
 } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import {
   ApiResponse,
@@ -126,7 +126,7 @@ async function transformRegelingForFrontend(
 ) {
   const id = aanvraag.id;
 
-  const route = generatePath(routeConfig.detailPage.path, {
+  const route = generatePath(themaConfig.detailPage.route.path, {
     id,
     regeling: slug(aanvraag.titel),
   });
