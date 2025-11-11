@@ -28,11 +28,6 @@ export const themaConfig: HLIThemaConfig = {
   title: THEMA_TITLE,
   featureToggle: {
     themaActive: true,
-    features: {
-      stadspas: true,
-      regelingen: true,
-      laagInkomenInfo: true,
-    },
   },
   profileTypes: ['private'],
   uitlegPageSections: {
@@ -151,7 +146,6 @@ export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 export const featureToggle = {
-  // hliActive: true,
   hliStadspasActive: true,
   zorgnedAvApiActive: true,
   hliThemaStadspasBlokkerenActive: true,
