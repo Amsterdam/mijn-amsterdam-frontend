@@ -19,7 +19,7 @@ import {
 } from './stadspas-types';
 import {
   featureToggle,
-  routeConfig,
+  themaConfig,
 } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import {
   apiErrorResult,
@@ -62,7 +62,7 @@ export async function fetchStadspas(
         urlTransactions,
         transactionsKeyEncrypted,
         link: {
-          to: generatePath(routeConfig.detailPageStadspas.path, {
+          to: generatePath(themaConfig.detailPageStadspas.route.path, {
             passNumber: `${stadspas.passNumber}`,
           }),
           title: `Stadspas van ${stadspas.owner.firstname}`,
