@@ -12,7 +12,7 @@ import type {
   ThemaConfigBase,
 } from '../../../config/thema-types';
 
-const THEMA_TITLE = 'Stadspas en regelingen bij laag inkomen';
+const THEMA_TITLE = 'Stadspas en regelingen bij laag inkomen' as const;
 
 export type HLIThemaConfig = ThemaConfigBase;
 
@@ -36,6 +36,7 @@ export const themaConfig: HLIThemaConfig = {
       'Daarnaast zijn er regelingen voor mensen met een laag inkomen.',
     ],
   },
+
   pageLinks: [
     {
       title: 'Meer informatie over regelingen',
@@ -53,7 +54,9 @@ export const themaConfig: HLIThemaConfig = {
   route: {
     path: '/regelingen-bij-laag-inkomen',
     trackingUrl: null,
-    documentTitle: `${THEMA_TITLE} | Overzicht`,
+    get documentTitle() {
+      return `${THEMA_TITLE} | Overzicht`;
+    },
   },
   redactedScope: 'none',
 } as const;
@@ -106,7 +109,7 @@ export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 export const featureToggle = {
-  hliActive: true,
+  // hliActive: true,
   hliStadspasActive: true,
   zorgnedAvApiActive: true,
   hliThemaStadspasBlokkerenActive: true,
