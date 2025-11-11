@@ -1,5 +1,6 @@
 import { useParams } from 'react-router';
 
+import { themaConfig } from './HLI-thema-config';
 import { useHliThemaData } from './useHliThemaData';
 import type { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
 import { Datalist, Row } from '../../../components/Datalist/Datalist';
@@ -26,9 +27,9 @@ function DetailPageContent({ hliRegeling }: DetailPageContentProps) {
 }
 
 export function HLIDetail() {
-  const { regelingen, isError, isLoading, breadcrumbs, routeConfig, themaId } =
+  const { regelingen, isError, isLoading, breadcrumbs, themaId } =
     useHliThemaData();
-  useHTMLDocumentTitle(routeConfig.detailPage);
+  useHTMLDocumentTitle(themaConfig.detailPage.route);
   const { id } = useParams<{ id: string }>();
   const regelingDetail = regelingen?.find((item) => item.id === id) ?? null;
 
