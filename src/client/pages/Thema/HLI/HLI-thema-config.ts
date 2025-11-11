@@ -8,13 +8,20 @@ import { dateSort } from '../../../../universal/helpers/date';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 import type {
-  ThemaRoutesConfig,
   ThemaConfigBase,
+  WithDetailPage,
+  WithRegelingenListPage,
+  WithspecificatieListPage,
+  WithdetailPageStadspas,
 } from '../../../config/thema-types';
 
 const THEMA_TITLE = 'Stadspas en regelingen bij laag inkomen' as const;
 
-export type HLIThemaConfig = ThemaConfigBase;
+export type HLIThemaConfig = ThemaConfigBase &
+  WithDetailPage &
+  WithdetailPageStadspas &
+  WithRegelingenListPage &
+  WithspecificatieListPage;
 
 export const themaConfig: HLIThemaConfig = {
   id: 'HLI' as const,
@@ -59,6 +66,41 @@ export const themaConfig: HLIThemaConfig = {
     },
   },
   redactedScope: 'none',
+  detailPage: {
+    route: {
+      path: '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
+      trackingUrl: '/regelingen-bij-laag-inkomen/regeling',
+      get documentTitle() {
+        return `Regeling | ${THEMA_TITLE}`;
+      },
+    },
+  },
+  detailPageStadspas: {
+    route: {
+      path: '/regelingen-bij-laag-inkomen/stadspas/:passNumber',
+      trackingUrl: '/regelingen-bij-laag-inkomen/stadspas',
+      get documentTitle() {
+        return `Stadspas | ${THEMA_TITLE}`;
+      },
+    },
+  },
+  specificatieListPage: {
+    route: {
+      path: '/regelingen-bij-laag-inkomen/lijst/specificaties/:page?',
+      trackingUrl: null,
+      get documentTitle() {
+        return `Specificaties | ${THEMA_TITLE}`;
+      },
+    },
+  },
+  regelingenListPage: {
+    route: {
+      path: '/regelingen-bij-laag-inkomen/lijst/:kind/:page?',
+      trackingUrl: null,
+      documentTitle: (params) =>
+        `${params?.kind === 'eerdere-en-afgehandelde-regelingen' ? 'Eerdere' : 'Huidige'} regelingen | ${THEMA_TITLE}`,
+    },
+  },
 } as const;
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
@@ -126,37 +168,37 @@ export const featureToggle = {
 export const regelingenTitle = 'Regelingen bij laag inkomen' as const;
 export const stadspasTitle = 'Stadspas' as const;
 
-export const routeConfig = {
-  detailPage: {
-    path: '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
-    trackingUrl: (params) =>
-      generatePath('/regelingen-bij-laag-inkomen/regeling/:regeling', {
-        regeling: params?.regeling ?? '',
-      }),
-    documentTitle: `Regeling | ${themaConfig.title}`,
-  },
-  detailPageStadspas: {
-    path: '/regelingen-bij-laag-inkomen/stadspas/:passNumber',
-    trackingUrl: '/regelingen-bij-laag-inkomen/stadspas',
-    documentTitle: `Stadspas | ${themaConfig.title}`,
-  },
-  specificatieListPage: {
-    path: '/regelingen-bij-laag-inkomen/lijst/specificaties/:page?',
-    documentTitle: `Specificaties | ${themaConfig.title}`,
-    trackingUrl: null,
-  },
-  regelingenListPage: {
-    path: '/regelingen-bij-laag-inkomen/lijst/:kind/:page?',
-    documentTitle: (params) =>
-      `${params?.kind === listPageParamKind.historic ? 'Eerdere' : 'Huidige'} regelingen | ${themaConfig.title}`,
-    trackingUrl: null,
-  },
-  // themaPage: {
-  //   path: '/regelingen-bij-laag-inkomen',
-  //   documentTitle: `${themaConfig.title} | overzicht`,
-  //   trackingUrl: null,
-  // },
-} as const satisfies ThemaRoutesConfig;
+// export const routeConfig = {
+// detailPage: {
+//   path: '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
+//   trackingUrl: (params) =>
+//     generatePath('/regelingen-bij-laag-inkomen/regeling/:regeling', {
+//       regeling: params?.regeling ?? '',
+//     }),
+//   documentTitle: `Regeling | ${THEMA_TITLE}`,
+// },
+// detailPageStadspas: {
+//   path: '/regelingen-bij-laag-inkomen/stadspas/:passNumber',
+//   trackingUrl: '/regelingen-bij-laag-inkomen/stadspas',
+//   documentTitle: `Stadspas | ${THEMA_TITLE}`,
+// },
+// specificatieListPage: {
+//   path: '/regelingen-bij-laag-inkomen/lijst/specificaties/:page?',
+//   documentTitle: `Specificaties | ${THEMA_TITLE}`,
+//   trackingUrl: null,
+// },
+// regelingenListPage: {
+//   path: '/regelingen-bij-laag-inkomen/lijst/:kind/:page?',
+//   documentTitle: (params) =>
+//     `${params?.kind === listPageParamKind.historic ? 'Eerdere' : 'Huidige'} regelingen | ${THEMA_TITLE}`,
+//   trackingUrl: null,
+// },
+// themaPage: {
+//   path: '/regelingen-bij-laag-inkomen',
+//   documentTitle: `${themaConfig.title} | overzicht`,
+//   trackingUrl: null,
+// },
+// } as const satisfies ThemaRoutesConfig;
 
 export const listPageTitle = {
   [listPageParamKind.lopend]: 'Aanvragen',
@@ -188,7 +230,7 @@ export const tableConfig = {
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsHuidigeRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-    listPageRoute: generatePath(routeConfig.regelingenListPage.path, {
+    listPageRoute: generatePath(themaConfig.regelingenListPage.route.path, {
       kind: listPageParamKind.lopend,
       page: null,
     }),
@@ -200,7 +242,7 @@ export const tableConfig = {
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsHuidigeRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-    listPageRoute: generatePath(routeConfig.regelingenListPage.path, {
+    listPageRoute: generatePath(themaConfig.regelingenListPage.route.path, {
       kind: listPageParamKind.actual,
       page: null,
     }),
@@ -211,7 +253,7 @@ export const tableConfig = {
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsEerdereRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER,
-    listPageRoute: generatePath(routeConfig.regelingenListPage.path, {
+    listPageRoute: generatePath(themaConfig.regelingenListPage.route.path, {
       kind: listPageParamKind.historic,
       page: null,
     }),
@@ -223,7 +265,7 @@ export const specificatieTableConfig = {
   sort: dateSort('datePublished', 'desc'),
   displayProps: specificatieDisplayProps,
   maxItems: 3,
-  listPageRoute: generatePath(routeConfig.specificatieListPage.path, {
+  listPageRoute: generatePath(themaConfig.specificatieListPage.route.path, {
     page: null,
   }),
 };
