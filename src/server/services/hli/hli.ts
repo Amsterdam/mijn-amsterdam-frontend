@@ -130,7 +130,7 @@ export function transformRegelingForFrontend(
   statusLineItems: StatusLineItem[],
   getDisplayStatusFn: GetDisplayStatusFn = getDisplayStatus
 ) {
-  const id = aanvraag.id;
+  const id = aanvraag.prettyID;
 
   const route = generatePath(routeConfig.detailPage.path, {
     id,

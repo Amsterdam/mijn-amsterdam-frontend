@@ -90,11 +90,13 @@ function transformDocumenten(documenten: ZorgnedDocument[]) {
   return documents;
 }
 
-function getZorgnedAanvraagID(
+export function getZorgnedAanvraagID(
   aanvraagIdentificatie: string,
-  beschiktProductIdentificatie: string
+  beschiktProductIdentificatie: string,
+  doHash: boolean = true
 ): string {
-  return hash(`${aanvraagIdentificatie}-${beschiktProductIdentificatie}`);
+  const id = `${aanvraagIdentificatie}-${beschiktProductIdentificatie}`;
+  return doHash ? hash(id) : id;
 }
 
 function transformZorgnedAanvraag(
@@ -123,7 +125,13 @@ function transformZorgnedAanvraag(
   const aanvraagTransformed: ZorgnedAanvraagTransformed = {
     id: getZorgnedAanvraagID(
       aanvraag.identificatie,
-      beschiktProduct.identificatie
+      beschiktProduct.identificatie,
+      false
+    ),
+    prettyID: getZorgnedAanvraagID(
+      aanvraag.identificatie,
+      beschiktProduct.identificatie,
+      false
     ),
     datumAanvraag: aanvraag.datumAanvraag,
     datumBeginLevering: levering?.begindatum ?? null,
@@ -197,7 +205,7 @@ export function transformZorgnedAanvragen(
   return sortZorgnedAanvragenByDateAndId(
     aanvragenTransformed,
     'datumAanvraag',
-    'id'
+    'prettyID'
   );
 }
 

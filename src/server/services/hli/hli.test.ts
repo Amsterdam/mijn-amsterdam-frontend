@@ -225,6 +225,7 @@ describe('HLI', () => {
     const sessionID = 'test-session-id';
     const aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed = {
       id: 'aanvraag1',
+      prettyID: '11231231',
       titel: 'Test Aanvraag',
       isActueel: true,
       datumBesluit: '2023-01-01',
@@ -272,7 +273,7 @@ describe('HLI', () => {
       aanvraag,
       statusLineItems
     );
-    expect(result.id).toBe('aanvraag1');
+    expect(result.id).toBe('11231231');
     expect(result.title).toBe('Test Aanvraag');
     expect(result.displayStatus).toBe('Toegewezen');
   });
@@ -282,6 +283,7 @@ describe('HLI', () => {
     const aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[] = [
       {
         id: 'aanvraag1',
+        prettyID: '11231231',
         beschikkingNummer: null,
         titel: 'Test Aanvraag',
         isActueel: true,
@@ -327,7 +329,7 @@ describe('HLI', () => {
       );
       expect(document.dedupeDocumentsInDataSets).toHaveBeenCalled();
       expect(result).toHaveLength(1);
-      expect(result[0].id).toBe('aanvraag1');
+      expect(result[0].id).toBe('11231231');
       expect(result[0].title).toBe('Test Aanvraag');
     });
 
