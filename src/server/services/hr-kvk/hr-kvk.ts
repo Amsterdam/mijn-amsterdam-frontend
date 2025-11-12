@@ -12,6 +12,7 @@ import type {
   VestigingSource,
   VestigingenResponseSource,
 } from './hr-kvk.types';
+import { IS_DEVELOPMENT } from '../../../universal/config/env';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -60,7 +61,9 @@ async function fetchHrKvk<T, T2>(
   const apiConfig = getApiConfig('HR_KVK', {
     headers: {
       ...(tokenHeader.status === 'OK' ? tokenHeader.content : {}),
-      'x-cache-key-supplement': options.profileType,
+      ...(IS_DEVELOPMENT
+        ? { 'x-cache-key-supplement': options.profileType }
+        : {}),
     },
     formatUrl(requestConfig) {
       return `${requestConfig.url}${options.endpoint}`;
