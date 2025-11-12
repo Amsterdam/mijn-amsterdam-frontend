@@ -1,6 +1,7 @@
 import { HttpStatusCode } from 'axios';
 import FormData from 'form-data';
 import * as jose from 'jose';
+import memoizee from 'memoizee';
 
 import {
   ActivePermitSourceResponse,
@@ -9,7 +10,7 @@ import {
 import { featureToggle } from '../../../client/pages/Thema/Parkeren/Parkeren-thema-config';
 import { ApiResponse } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { ONE_SECOND_MS } from '../../config/app';
+import { ONE_HOUR_MS, ONE_SECOND_MS } from '../../config/app';
 import { DataRequestConfig } from '../../config/source-api';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
@@ -124,7 +125,10 @@ async function getJWEToken(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<string | null> {
   if (featureToggle.parkerenJWETokenCreationActive) {
-    return createJWEToken(authProfileAndToken);
+    return createJWEToken(
+      authProfileAndToken.profile.profileType,
+      authProfileAndToken.profile.id
+    );
   }
 
   const jweTokenResponse = await fetchJWEToken(authProfileAndToken);
@@ -143,8 +147,9 @@ type JWEPayload = {
   kvk_number?: string;
 };
 
-async function createJWEToken(
-  authProfileAndToken: AuthProfileAndToken
+async function createJWEToken_(
+  profileType: AuthProfileAndToken['profile']['profileType'],
+  id: AuthProfileAndToken['profile']['id']
 ): Promise<string | null> {
   const sharedKey = {
     kty: 'oct',
@@ -161,10 +166,10 @@ async function createJWEToken(
     iss: getFromEnv('BFF_API_BASE_URL', true)!,
     aud: getFromEnv('BFF_PARKEREN_JWT_AUDIENCE', true)!,
   };
-  if (authProfileAndToken.profile.profileType === 'private') {
-    payload.bsn = authProfileAndToken.profile.id;
+  if (profileType === 'private') {
+    payload.bsn = id;
   } else {
-    payload.kvk_number = authProfileAndToken.profile.id;
+    payload.kvk_number = id;
   }
 
   try {
@@ -182,5 +187,14 @@ async function createJWEToken(
     return null;
   }
 }
+
+const TOKEN_VALIDITY_PERIOD = 1 * ONE_HOUR_MS;
+const PERCENTAGE_DISTANCE_FROM_EXPIRY = 0.1;
+
+const createJWEToken = memoizee(createJWEToken_, {
+  maxAge: TOKEN_VALIDITY_PERIOD,
+  preFetch: PERCENTAGE_DISTANCE_FROM_EXPIRY,
+  promise: true,
+});
 
 export const forTesting = { fetchJWEToken };
