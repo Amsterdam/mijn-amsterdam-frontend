@@ -80,7 +80,7 @@ function transformVoorzieningenForFrontend(
       const dateDecision =
         lineItems.find((step) => step.status === 'Besluit genomen')
           ?.datePublished ?? '';
-      const id = aanvraag.id;
+      const id = aanvraag.prettyID;
       const statusDate = getLatestStatusDate(lineItems);
 
       const voorzieningFrontend: LeerlingenvervoerVoorzieningFrontend = {
