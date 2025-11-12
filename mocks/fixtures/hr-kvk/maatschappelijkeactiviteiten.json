@@ -1,0 +1,2091 @@
+{
+  "_embedded": {
+    "maatschappelijkeactiviteiten": [
+      {
+        "_links": {
+          "schema": "https://schemas.data.amsterdam.nl/datasets/hr_kvk/maatschappelijkeactiviteiten/v2",
+          "self": {
+            "href": "https://api.data.amsterdam.nl/v1/hr_kvk/maatschappelijkeactiviteiten/34366966?_format=json",
+            "title": "34366966",
+            "kvknummer": "34366966"
+          },
+          "heeftHrHoofdvestiging": {
+            "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007678460?_format=json",
+            "title": "000007678460",
+            "vestigingsnummer": "000007678460"
+          },
+          "heeftAlsEigenaarHrNnp": {
+            "href": "https://api.data.amsterdam.nl/v1/hr_kvk/nietnatuurlijkepersonen/34366966.NNP?_format=json",
+            "title": "34366966.NNP",
+            "identificatie": "34366966.NNP"
+          },
+          "bezoekHeeftBagNummeraanduiding": null,
+          "bezoekHeeftBagVerblijfsobject": null,
+          "bezoekHeeftBagLigplaats": null,
+          "bezoekHeeftBagStandplaats": null,
+          "postHeeftBagNummeraanduiding": null,
+          "postHeeftBagVerblijfsobject": null,
+          "postHeeftBagLigplaats": null,
+          "postHeeftBagStandplaats": null,
+          "wordtUitgeoefendInCommercieleHrVestigingen": [
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000020632215?_format=json",
+              "vestigingsnummer": "000020632215",
+              "title": "000020632215"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000021343519?_format=json",
+              "vestigingsnummer": "000021343519",
+              "title": "000021343519"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000021343527?_format=json",
+              "vestigingsnummer": "000021343527",
+              "title": "000021343527"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000021343543?_format=json",
+              "vestigingsnummer": "000021343543",
+              "title": "000021343543"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000022951474?_format=json",
+              "vestigingsnummer": "000022951474",
+              "title": "000022951474"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000034564926?_format=json",
+              "vestigingsnummer": "000034564926",
+              "title": "000034564926"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000037783637?_format=json",
+              "vestigingsnummer": "000037783637",
+              "title": "000037783637"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000044364784?_format=json",
+              "vestigingsnummer": "000044364784",
+              "title": "000044364784"
+            }
+          ],
+          "wordtUitgeoefendInNietCommercieleHrVestigingen": [
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000006363571?_format=json",
+              "vestigingsnummer": "000006363571",
+              "title": "000006363571"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000006363601?_format=json",
+              "vestigingsnummer": "000006363601",
+              "title": "000006363601"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000006363652?_format=json",
+              "vestigingsnummer": "000006363652",
+              "title": "000006363652"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000006363687?_format=json",
+              "vestigingsnummer": "000006363687",
+              "title": "000006363687"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000006363709?_format=json",
+              "vestigingsnummer": "000006363709",
+              "title": "000006363709"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000006363717?_format=json",
+              "vestigingsnummer": "000006363717",
+              "title": "000006363717"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000006363733?_format=json",
+              "vestigingsnummer": "000006363733",
+              "title": "000006363733"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000006363768?_format=json",
+              "vestigingsnummer": "000006363768",
+              "title": "000006363768"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000006363792?_format=json",
+              "vestigingsnummer": "000006363792",
+              "title": "000006363792"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000006363814?_format=json",
+              "vestigingsnummer": "000006363814",
+              "title": "000006363814"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000006363830?_format=json",
+              "vestigingsnummer": "000006363830",
+              "title": "000006363830"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000006363865?_format=json",
+              "vestigingsnummer": "000006363865",
+              "title": "000006363865"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000006363873?_format=json",
+              "vestigingsnummer": "000006363873",
+              "title": "000006363873"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000006363881?_format=json",
+              "vestigingsnummer": "000006363881",
+              "title": "000006363881"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000006363954?_format=json",
+              "vestigingsnummer": "000006363954",
+              "title": "000006363954"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007678460?_format=json",
+              "vestigingsnummer": "000007678460",
+              "title": "000007678460"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007678487?_format=json",
+              "vestigingsnummer": "000007678487",
+              "title": "000007678487"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007678495?_format=json",
+              "vestigingsnummer": "000007678495",
+              "title": "000007678495"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007678525?_format=json",
+              "vestigingsnummer": "000007678525",
+              "title": "000007678525"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007678584?_format=json",
+              "vestigingsnummer": "000007678584",
+              "title": "000007678584"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007678649?_format=json",
+              "vestigingsnummer": "000007678649",
+              "title": "000007678649"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007678789?_format=json",
+              "vestigingsnummer": "000007678789",
+              "title": "000007678789"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007678835?_format=json",
+              "vestigingsnummer": "000007678835",
+              "title": "000007678835"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007678851?_format=json",
+              "vestigingsnummer": "000007678851",
+              "title": "000007678851"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007678886?_format=json",
+              "vestigingsnummer": "000007678886",
+              "title": "000007678886"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007678908?_format=json",
+              "vestigingsnummer": "000007678908",
+              "title": "000007678908"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007678983?_format=json",
+              "vestigingsnummer": "000007678983",
+              "title": "000007678983"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007679025?_format=json",
+              "vestigingsnummer": "000007679025",
+              "title": "000007679025"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007679033?_format=json",
+              "vestigingsnummer": "000007679033",
+              "title": "000007679033"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007679041?_format=json",
+              "vestigingsnummer": "000007679041",
+              "title": "000007679041"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007679092?_format=json",
+              "vestigingsnummer": "000007679092",
+              "title": "000007679092"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007679130?_format=json",
+              "vestigingsnummer": "000007679130",
+              "title": "000007679130"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007679165?_format=json",
+              "vestigingsnummer": "000007679165",
+              "title": "000007679165"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007679173?_format=json",
+              "vestigingsnummer": "000007679173",
+              "title": "000007679173"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007679289?_format=json",
+              "vestigingsnummer": "000007679289",
+              "title": "000007679289"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007679300?_format=json",
+              "vestigingsnummer": "000007679300",
+              "title": "000007679300"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007679327?_format=json",
+              "vestigingsnummer": "000007679327",
+              "title": "000007679327"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007679351?_format=json",
+              "vestigingsnummer": "000007679351",
+              "title": "000007679351"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007679394?_format=json",
+              "vestigingsnummer": "000007679394",
+              "title": "000007679394"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007679416?_format=json",
+              "vestigingsnummer": "000007679416",
+              "title": "000007679416"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007679432?_format=json",
+              "vestigingsnummer": "000007679432",
+              "title": "000007679432"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007679459?_format=json",
+              "vestigingsnummer": "000007679459",
+              "title": "000007679459"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007679475?_format=json",
+              "vestigingsnummer": "000007679475",
+              "title": "000007679475"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007679491?_format=json",
+              "vestigingsnummer": "000007679491",
+              "title": "000007679491"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007679505?_format=json",
+              "vestigingsnummer": "000007679505",
+              "title": "000007679505"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007679521?_format=json",
+              "vestigingsnummer": "000007679521",
+              "title": "000007679521"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007679556?_format=json",
+              "vestigingsnummer": "000007679556",
+              "title": "000007679556"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007679572?_format=json",
+              "vestigingsnummer": "000007679572",
+              "title": "000007679572"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007679610?_format=json",
+              "vestigingsnummer": "000007679610",
+              "title": "000007679610"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007679688?_format=json",
+              "vestigingsnummer": "000007679688",
+              "title": "000007679688"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007679696?_format=json",
+              "vestigingsnummer": "000007679696",
+              "title": "000007679696"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007680635?_format=json",
+              "vestigingsnummer": "000007680635",
+              "title": "000007680635"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007680694?_format=json",
+              "vestigingsnummer": "000007680694",
+              "title": "000007680694"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007680708?_format=json",
+              "vestigingsnummer": "000007680708",
+              "title": "000007680708"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007680740?_format=json",
+              "vestigingsnummer": "000007680740",
+              "title": "000007680740"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007680767?_format=json",
+              "vestigingsnummer": "000007680767",
+              "title": "000007680767"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007680775?_format=json",
+              "vestigingsnummer": "000007680775",
+              "title": "000007680775"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007680813?_format=json",
+              "vestigingsnummer": "000007680813",
+              "title": "000007680813"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007680856?_format=json",
+              "vestigingsnummer": "000007680856",
+              "title": "000007680856"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007680880?_format=json",
+              "vestigingsnummer": "000007680880",
+              "title": "000007680880"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007680899?_format=json",
+              "vestigingsnummer": "000007680899",
+              "title": "000007680899"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007680902?_format=json",
+              "vestigingsnummer": "000007680902",
+              "title": "000007680902"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007680910?_format=json",
+              "vestigingsnummer": "000007680910",
+              "title": "000007680910"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007680937?_format=json",
+              "vestigingsnummer": "000007680937",
+              "title": "000007680937"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007680961?_format=json",
+              "vestigingsnummer": "000007680961",
+              "title": "000007680961"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007680988?_format=json",
+              "vestigingsnummer": "000007680988",
+              "title": "000007680988"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007680996?_format=json",
+              "vestigingsnummer": "000007680996",
+              "title": "000007680996"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007681011?_format=json",
+              "vestigingsnummer": "000007681011",
+              "title": "000007681011"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007681046?_format=json",
+              "vestigingsnummer": "000007681046",
+              "title": "000007681046"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007681070?_format=json",
+              "vestigingsnummer": "000007681070",
+              "title": "000007681070"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007681097?_format=json",
+              "vestigingsnummer": "000007681097",
+              "title": "000007681097"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007681119?_format=json",
+              "vestigingsnummer": "000007681119",
+              "title": "000007681119"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007681135?_format=json",
+              "vestigingsnummer": "000007681135",
+              "title": "000007681135"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007681143?_format=json",
+              "vestigingsnummer": "000007681143",
+              "title": "000007681143"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007681151?_format=json",
+              "vestigingsnummer": "000007681151",
+              "title": "000007681151"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007681178?_format=json",
+              "vestigingsnummer": "000007681178",
+              "title": "000007681178"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007681208?_format=json",
+              "vestigingsnummer": "000007681208",
+              "title": "000007681208"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007681216?_format=json",
+              "vestigingsnummer": "000007681216",
+              "title": "000007681216"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007681240?_format=json",
+              "vestigingsnummer": "000007681240",
+              "title": "000007681240"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007681291?_format=json",
+              "vestigingsnummer": "000007681291",
+              "title": "000007681291"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007681321?_format=json",
+              "vestigingsnummer": "000007681321",
+              "title": "000007681321"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000020632231?_format=json",
+              "vestigingsnummer": "000020632231",
+              "title": "000020632231"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000020632266?_format=json",
+              "vestigingsnummer": "000020632266",
+              "title": "000020632266"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000020632290?_format=json",
+              "vestigingsnummer": "000020632290",
+              "title": "000020632290"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000020632355?_format=json",
+              "vestigingsnummer": "000020632355",
+              "title": "000020632355"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000021344566?_format=json",
+              "vestigingsnummer": "000021344566",
+              "title": "000021344566"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000021344582?_format=json",
+              "vestigingsnummer": "000021344582",
+              "title": "000021344582"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000021344590?_format=json",
+              "vestigingsnummer": "000021344590",
+              "title": "000021344590"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000021346380?_format=json",
+              "vestigingsnummer": "000021346380",
+              "title": "000021346380"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000021346399?_format=json",
+              "vestigingsnummer": "000021346399",
+              "title": "000021346399"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000021347255?_format=json",
+              "vestigingsnummer": "000021347255",
+              "title": "000021347255"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000021347263?_format=json",
+              "vestigingsnummer": "000021347263",
+              "title": "000021347263"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000021347271?_format=json",
+              "vestigingsnummer": "000021347271",
+              "title": "000021347271"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000021347298?_format=json",
+              "vestigingsnummer": "000021347298",
+              "title": "000021347298"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000021347301?_format=json",
+              "vestigingsnummer": "000021347301",
+              "title": "000021347301"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000021347328?_format=json",
+              "vestigingsnummer": "000021347328",
+              "title": "000021347328"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000021347336?_format=json",
+              "vestigingsnummer": "000021347336",
+              "title": "000021347336"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000021347344?_format=json",
+              "vestigingsnummer": "000021347344",
+              "title": "000021347344"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000021347352?_format=json",
+              "vestigingsnummer": "000021347352",
+              "title": "000021347352"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000021347360?_format=json",
+              "vestigingsnummer": "000021347360",
+              "title": "000021347360"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000021347379?_format=json",
+              "vestigingsnummer": "000021347379",
+              "title": "000021347379"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000021347387?_format=json",
+              "vestigingsnummer": "000021347387",
+              "title": "000021347387"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000021521719?_format=json",
+              "vestigingsnummer": "000021521719",
+              "title": "000021521719"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000021946485?_format=json",
+              "vestigingsnummer": "000021946485",
+              "title": "000021946485"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000022025081?_format=json",
+              "vestigingsnummer": "000022025081",
+              "title": "000022025081"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000022025103?_format=json",
+              "vestigingsnummer": "000022025103",
+              "title": "000022025103"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000022871225?_format=json",
+              "vestigingsnummer": "000022871225",
+              "title": "000022871225"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000022871241?_format=json",
+              "vestigingsnummer": "000022871241",
+              "title": "000022871241"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000022871268?_format=json",
+              "vestigingsnummer": "000022871268",
+              "title": "000022871268"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000022871276?_format=json",
+              "vestigingsnummer": "000022871276",
+              "title": "000022871276"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000022886052?_format=json",
+              "vestigingsnummer": "000022886052",
+              "title": "000022886052"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000022886176?_format=json",
+              "vestigingsnummer": "000022886176",
+              "title": "000022886176"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000022886206?_format=json",
+              "vestigingsnummer": "000022886206",
+              "title": "000022886206"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000022886257?_format=json",
+              "vestigingsnummer": "000022886257",
+              "title": "000022886257"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000022937277?_format=json",
+              "vestigingsnummer": "000022937277",
+              "title": "000022937277"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000022937285?_format=json",
+              "vestigingsnummer": "000022937285",
+              "title": "000022937285"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000022937293?_format=json",
+              "vestigingsnummer": "000022937293",
+              "title": "000022937293"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000022937595?_format=json",
+              "vestigingsnummer": "000022937595",
+              "title": "000022937595"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000022942548?_format=json",
+              "vestigingsnummer": "000022942548",
+              "title": "000022942548"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023004185?_format=json",
+              "vestigingsnummer": "000023004185",
+              "title": "000023004185"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023004959?_format=json",
+              "vestigingsnummer": "000023004959",
+              "title": "000023004959"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023005122?_format=json",
+              "vestigingsnummer": "000023005122",
+              "title": "000023005122"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023005882?_format=json",
+              "vestigingsnummer": "000023005882",
+              "title": "000023005882"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023006021?_format=json",
+              "vestigingsnummer": "000023006021",
+              "title": "000023006021"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023006048?_format=json",
+              "vestigingsnummer": "000023006048",
+              "title": "000023006048"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023602392?_format=json",
+              "vestigingsnummer": "000023602392",
+              "title": "000023602392"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023602414?_format=json",
+              "vestigingsnummer": "000023602414",
+              "title": "000023602414"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023602422?_format=json",
+              "vestigingsnummer": "000023602422",
+              "title": "000023602422"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023602430?_format=json",
+              "vestigingsnummer": "000023602430",
+              "title": "000023602430"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023602449?_format=json",
+              "vestigingsnummer": "000023602449",
+              "title": "000023602449"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023602457?_format=json",
+              "vestigingsnummer": "000023602457",
+              "title": "000023602457"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023602465?_format=json",
+              "vestigingsnummer": "000023602465",
+              "title": "000023602465"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023602473?_format=json",
+              "vestigingsnummer": "000023602473",
+              "title": "000023602473"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023602481?_format=json",
+              "vestigingsnummer": "000023602481",
+              "title": "000023602481"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023602503?_format=json",
+              "vestigingsnummer": "000023602503",
+              "title": "000023602503"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023603984?_format=json",
+              "vestigingsnummer": "000023603984",
+              "title": "000023603984"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023604336?_format=json",
+              "vestigingsnummer": "000023604336",
+              "title": "000023604336"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023604697?_format=json",
+              "vestigingsnummer": "000023604697",
+              "title": "000023604697"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023604964?_format=json",
+              "vestigingsnummer": "000023604964",
+              "title": "000023604964"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023614897?_format=json",
+              "vestigingsnummer": "000023614897",
+              "title": "000023614897"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023678151?_format=json",
+              "vestigingsnummer": "000023678151",
+              "title": "000023678151"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023678283?_format=json",
+              "vestigingsnummer": "000023678283",
+              "title": "000023678283"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023714239?_format=json",
+              "vestigingsnummer": "000023714239",
+              "title": "000023714239"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023759631?_format=json",
+              "vestigingsnummer": "000023759631",
+              "title": "000023759631"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023759895?_format=json",
+              "vestigingsnummer": "000023759895",
+              "title": "000023759895"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023760028?_format=json",
+              "vestigingsnummer": "000023760028",
+              "title": "000023760028"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023760044?_format=json",
+              "vestigingsnummer": "000023760044",
+              "title": "000023760044"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023760052?_format=json",
+              "vestigingsnummer": "000023760052",
+              "title": "000023760052"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023760079?_format=json",
+              "vestigingsnummer": "000023760079",
+              "title": "000023760079"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023760095?_format=json",
+              "vestigingsnummer": "000023760095",
+              "title": "000023760095"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023760109?_format=json",
+              "vestigingsnummer": "000023760109",
+              "title": "000023760109"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023765100?_format=json",
+              "vestigingsnummer": "000023765100",
+              "title": "000023765100"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000023936614?_format=json",
+              "vestigingsnummer": "000023936614",
+              "title": "000023936614"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000024204552?_format=json",
+              "vestigingsnummer": "000024204552",
+              "title": "000024204552"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000024204560?_format=json",
+              "vestigingsnummer": "000024204560",
+              "title": "000024204560"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000024204587?_format=json",
+              "vestigingsnummer": "000024204587",
+              "title": "000024204587"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000024204595?_format=json",
+              "vestigingsnummer": "000024204595",
+              "title": "000024204595"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000024213241?_format=json",
+              "vestigingsnummer": "000024213241",
+              "title": "000024213241"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000024213268?_format=json",
+              "vestigingsnummer": "000024213268",
+              "title": "000024213268"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000024213276?_format=json",
+              "vestigingsnummer": "000024213276",
+              "title": "000024213276"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000024213284?_format=json",
+              "vestigingsnummer": "000024213284",
+              "title": "000024213284"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000024213292?_format=json",
+              "vestigingsnummer": "000024213292",
+              "title": "000024213292"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000024213306?_format=json",
+              "vestigingsnummer": "000024213306",
+              "title": "000024213306"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000024213314?_format=json",
+              "vestigingsnummer": "000024213314",
+              "title": "000024213314"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000024213322?_format=json",
+              "vestigingsnummer": "000024213322",
+              "title": "000024213322"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000024213330?_format=json",
+              "vestigingsnummer": "000024213330",
+              "title": "000024213330"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000024475432?_format=json",
+              "vestigingsnummer": "000024475432",
+              "title": "000024475432"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000024475440?_format=json",
+              "vestigingsnummer": "000024475440",
+              "title": "000024475440"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000024489417?_format=json",
+              "vestigingsnummer": "000024489417",
+              "title": "000024489417"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000024489425?_format=json",
+              "vestigingsnummer": "000024489425",
+              "title": "000024489425"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000024489433?_format=json",
+              "vestigingsnummer": "000024489433",
+              "title": "000024489433"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000024490989?_format=json",
+              "vestigingsnummer": "000024490989",
+              "title": "000024490989"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000025573314?_format=json",
+              "vestigingsnummer": "000025573314",
+              "title": "000025573314"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000026062119?_format=json",
+              "vestigingsnummer": "000026062119",
+              "title": "000026062119"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000027139948?_format=json",
+              "vestigingsnummer": "000027139948",
+              "title": "000027139948"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000027139956?_format=json",
+              "vestigingsnummer": "000027139956",
+              "title": "000027139956"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000027156389?_format=json",
+              "vestigingsnummer": "000027156389",
+              "title": "000027156389"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000027156397?_format=json",
+              "vestigingsnummer": "000027156397",
+              "title": "000027156397"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000027156400?_format=json",
+              "vestigingsnummer": "000027156400",
+              "title": "000027156400"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000027156419?_format=json",
+              "vestigingsnummer": "000027156419",
+              "title": "000027156419"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000027158810?_format=json",
+              "vestigingsnummer": "000027158810",
+              "title": "000027158810"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000031587267?_format=json",
+              "vestigingsnummer": "000031587267",
+              "title": "000031587267"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000031607675?_format=json",
+              "vestigingsnummer": "000031607675",
+              "title": "000031607675"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000037141325?_format=json",
+              "vestigingsnummer": "000037141325",
+              "title": "000037141325"
+            }
+          ]
+        },
+        "kvknummer": "34366966",
+        "datumAanvangMaatschappelijkeActiviteitDatum": "1988-09-05",
+        "datumAanvangMaatschappelijkeActiviteitJaar": 1988,
+        "datumAanvangMaatschappelijkeActiviteitMaand": 9,
+        "datumAanvangMaatschappelijkeActiviteitDag": 5,
+        "datumEindeMaatschappelijkeActiviteitDatum": null,
+        "datumEindeMaatschappelijkeActiviteitJaar": null,
+        "datumEindeMaatschappelijkeActiviteitMaand": null,
+        "datumEindeMaatschappelijkeActiviteitDag": null,
+        "registratieTijdstipMaatschappelijkeActiviteit": null,
+        "naam": "Gemeente Amsterdam",
+        "nonMailing": "Ja",
+        "incidenteelUitlenenArbeidskrachten": "Ja",
+        "heeftHrHoofdvestigingId": "000007678460",
+        "heeftAlsEigenaarHrNpsId": null,
+        "heeftAlsEigenaarHrNnpId": "34366966.NNP",
+        "onderneming": true,
+        "totaalWerkzamePersonen": 1,
+        "voltijdWerkzamePersonen": 1,
+        "deeltijdWerkzamePersonen": 0,
+        "datumAanvangOndernemingDatum": "1993-01-01",
+        "datumAanvangOndernemingJaar": 1993,
+        "datumAanvangOndernemingMaand": 1,
+        "datumAanvangOndernemingDag": 1,
+        "datumEindeOndernemingDatum": null,
+        "datumEindeOndernemingJaar": null,
+        "datumEindeOndernemingMaand": null,
+        "datumEindeOndernemingDag": null,
+        "datumOverdrachtVoortzettingOndernemingDatum": null,
+        "datumOverdrachtVoortzettingOndernemingJaar": null,
+        "datumOverdrachtVoortzettingOndernemingMaand": null,
+        "datumOverdrachtVoortzettingOndernemingDag": null,
+        "overdrachtOfVoortzettingOnderneming": null,
+        "bezoekLocatieAfgeschermd": "Nee",
+        "bezoekLocatieToevoegingAdres": null,
+        "bezoekLocatieVolledigAdres": "Amstel 1\n1011PN Amsterdam",
+        "bezoekLocatieStraatnaam": "Amstel",
+        "bezoekLocatieHuisnummer": 1,
+        "bezoekLocatieHuisletter": null,
+        "bezoekLocatieHuisnummerToevoeging": null,
+        "bezoekLocatiePostcode": "1011PN",
+        "bezoekLocatiePlaats": "Amsterdam",
+        "bezoekLocatieStraatHuisnummerBuitenland": null,
+        "bezoekLocatiePostcodePlaatsBuitenland": null,
+        "bezoekLocatieRegioBuitenland": null,
+        "bezoekLocatieLandBuitenland": null,
+        "bezoekHeeftBagNummeraanduidingId": "0363200012145295",
+        "bezoekHeeftBagVerblijfsobjectId": "0363010012143319",
+        "bezoekHeeftBagLigplaatsId": null,
+        "bezoekHeeftBagStandplaatsId": null,
+        "postLocatieAfgeschermd": "Nee",
+        "postLocatieToevoegingAdres": null,
+        "postLocatieVolledigAdres": "Postbus 202\n1000AE Amsterdam",
+        "postLocatieStraatnaam": null,
+        "postLocatieHuisnummer": null,
+        "postLocatieHuisletter": null,
+        "postLocatieHuisnummerToevoeging": null,
+        "postLocatiePostbusnummer": 202,
+        "postLocatiePostcode": "1000AE",
+        "postLocatiePlaats": "Amsterdam",
+        "postLocatieStraatHuisnummerBuitenland": null,
+        "postLocatiePostcodePlaatsBuitenland": null,
+        "postLocatieRegioBuitenland": null,
+        "postLocatieLandBuitenland": null,
+        "postHeeftBagNummeraanduidingId": null,
+        "postHeeftBagVerblijfsobjectId": null,
+        "postHeeftBagLigplaatsId": null,
+        "postHeeftBagStandplaatsId": null,
+        "activiteiten": [
+          {
+            "sbiCode": "91220",
+            "omschrijving": "Activiteiten met betrekking tot historische locaties en monumenten",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "72200",
+            "omschrijving": "Onderzoek en experimentele ontwikkeling op het gebied van de maatschappij- en geesteswetenschappen",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "93193",
+            "omschrijving": "Organiseren van sportevenementen",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "84300",
+            "omschrijving": "Diensten van Verplichte sociale verzekeringen",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "69202",
+            "omschrijving": "Activiteiten van accountants-administratieconsulenten",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "96301",
+            "omschrijving": "Uitvaartverzorging",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "85510",
+            "omschrijving": "Sport- en recreatieonderwijs",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "39002",
+            "omschrijving": "Overige sanering en afvalbeheer",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "85202",
+            "omschrijving": "Speciaal basisonderwijs",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "52250",
+            "omschrijving": "Logistieke diensten: vrachtafhandeling",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "38110",
+            "omschrijving": "Inzameling van niet-schadelijk afval",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "02400",
+            "omschrijving": "Dienstverlening voor de bosbouw",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "52109",
+            "omschrijving": "Opslag in distributiecentra en overige opslag (niet in tanks, koelhuizen e.d.)",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "84122",
+            "omschrijving": "Beheer van sociale werkplaatsen",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "86221",
+            "omschrijving": "Medisch specialistische zorg zonder verblijf (met uitzondering van psychiatrische zorg)",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "88999",
+            "omschrijving": "Overige welzijnszorg",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "85201",
+            "omschrijving": "Regulier basisonderwijs",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "95316",
+            "omschrijving": "Overige gespecialiseerde reparatie en slepen van auto's",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "66110",
+            "omschrijving": "Beheer van financiële markten",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "91119",
+            "omschrijving": "Activiteiten van overige culturele uitleencentra en bibliotheken",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "52210",
+            "omschrijving": "Dienstverlening voor vervoer over land",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "63920",
+            "omschrijving": "Overige dienstverlenende activiteiten op het gebied van informatie",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "55300",
+            "omschrijving": "Exploitatie van kampeerterreinen",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "66210",
+            "omschrijving": "Activiteiten van risicoanalisten en schadetaxateurs",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "73300",
+            "omschrijving": "Activiteiten van adviesbureaus op het gebied van public relations en communicatie",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "84231",
+            "omschrijving": "Rechtspraak",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "68320",
+            "omschrijving": "Overige bemiddeling in en beheer van onroerend goed voor een vast bedrag of op contractbasis",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "10610",
+            "omschrijving": "Vervaardiging van maalderijproducten",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "64922",
+            "omschrijving": "Activiteiten van volkskredietbanken en commerciële financieringsmaatschappijen",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "93291",
+            "omschrijving": "Exploitatie van jachthavens",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "93194",
+            "omschrijving": "Activiteiten van overkoepelende organen en samenwerkings- en adviesorganen op het gebied van sport",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "38210",
+            "omschrijving": "Terugwinning van materialen uit afval",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "93124",
+            "omschrijving": "Activiteiten van zwemclubs en onderwatersportclubs",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "43990",
+            "omschrijving": "Overige gespecialiseerde bouwactiviteiten, n.e.g.",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "85312",
+            "omschrijving": "Praktijkonderwijs",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "86992",
+            "omschrijving": "Preventieve zorg",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "86222",
+            "omschrijving": "Psychiatrische zorg",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "68203",
+            "omschrijving": "Verhuur en exploitatie van onroerend goed (niet van woonruimte)",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "46710",
+            "omschrijving": "Groothandel in motorvoertuigen",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "81100",
+            "omschrijving": "Facility management",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "91420",
+            "omschrijving": "Activiteiten op het gebied van beheer en instandhouding van natuurreservaten",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "42990",
+            "omschrijving": "Bouw van overige civieltechnische werken (rest)",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "62200",
+            "omschrijving": "Activiteiten op het gebied van computerconsultancy en beheer van computerfaciliteiten",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "77210",
+            "omschrijving": "Verhuur en lease van recreatie- en sportartikelen",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "81302",
+            "omschrijving": "Natuurbeheer",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "84250",
+            "omschrijving": "Diensten van de Brandweer",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "87992",
+            "omschrijving": "Maatschappelijke opvang met verblijf",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "96302",
+            "omschrijving": "Activiteiten van crematoria, mortuaria en begraafplaatsen",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "71111",
+            "omschrijving": "Activiteiten van architecten (geen interieurarchitecten)",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "73110",
+            "omschrijving": "Activiteiten van reclamebureaus",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "78100",
+            "omschrijving": "Arbeidsbemiddeling",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "81301",
+            "omschrijving": "Onderhoud van tuinen, parken en plantsoenen",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "91410",
+            "omschrijving": "Activiteiten van botanische tuinen en dierentuinen",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "56210",
+            "omschrijving": "Cateringdiensten op evenementen",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "93129",
+            "omschrijving": "Activiteiten van overige sportclubs en omnisportclubs",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "88992",
+            "omschrijving": "Sociaal-maatschappelijk welzijnswerk",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "84110",
+            "omschrijving": "Algemeen overheidsbestuur",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "86920",
+            "omschrijving": "Ambulancezorg",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "77112",
+            "omschrijving": "Operational lease van personenauto’s en andere lichte motorvoertuigen",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "84121",
+            "omschrijving": "Openbaar bestuur van de zorg, onderwijs, cultuur en andere sociale diensten (met uitzondering van sociale werkplaatsen en banenpools sector overheid)",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "91120",
+            "omschrijving": "Activiteiten van archieven",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "59140",
+            "omschrijving": "Vertoning van films",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "77120",
+            "omschrijving": "Verhuur en lease van vrachtwagens, autobussen, campers en aanhangwagens",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "88991",
+            "omschrijving": "Ondersteuning en begeleiding jeugdigen zonder verblijf (inclusief dagactiviteiten)",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "85311",
+            "omschrijving": "Havo, vwo en vmbo",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "46110",
+            "omschrijving": "Handelsbemiddeling in de groothandel in landbouwproducten, levende dieren, textielgrondstoffen en halffabricaten",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "73200",
+            "omschrijving": "Markt- en opinieonderzoek",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "93111",
+            "omschrijving": "Exploitatie van zwembaden",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "93112",
+            "omschrijving": "Exploitatie van sporthallen, sportzalen en gymzalen",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "84130",
+            "omschrijving": "Openbaar bestuur op het gebied van het bedrijfsleven",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "38330",
+            "omschrijving": "Overige afvalverwijdering",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "86941",
+            "omschrijving": "Verloskundige zorg",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "94991",
+            "omschrijving": "Activiteiten van gezelligheidsverenigingen",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "86999",
+            "omschrijving": "Overige gezondheidszorg zonder verblijf, n.e.g.",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "70201",
+            "omschrijving": "Activiteiten van organisatie-adviesbureaus",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "71120",
+            "omschrijving": "Activiteiten van ingenieurs en overig technisch ontwerp en advies",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "38120",
+            "omschrijving": "Inzameling van schadelijk afval",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "86210",
+            "omschrijving": "Huisartsenzorg",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "02200",
+            "omschrijving": "Exploitatie van bossen",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "70202",
+            "omschrijving": "Advisering op het gebied van management en bedrijfsvoering (geen public relations en organisatie-adviesbureaus)",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "43240",
+            "omschrijving": "Overige bouwinstallatie",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "43212",
+            "omschrijving": "Overige elektrische installatie",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "69209",
+            "omschrijving": "Overige diensten op het gebied van boekhouding",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "87202",
+            "omschrijving": "Verblijfszorg voor mensen met een langdurige geestelijke gezondheidszorgvraag of een middelenverslaving",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "42120",
+            "omschrijving": "Bouw van boven- en ondergrondse spoorwegen",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "85203",
+            "omschrijving": "Speciaal onderwijs en voortgezet speciaal onderwijs",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "66220",
+            "omschrijving": "Activiteiten van verzekeringsagenten, makelaars en assurantietussenpersonen",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "46190",
+            "omschrijving": "Handelsbemiddeling in de niet-gespecialiseerde groothandel",
+            "isHoofdactiviteit": "Nee"
+          }
+        ],
+        "handelsnamen": [
+          {
+            "datumAanvang": "1988-09-05",
+            "datumEinde": null,
+            "handelsnaam": "Bestuursdienst Amsterdam",
+            "volgorde": 0
+          },
+          {
+            "datumAanvang": "1988-09-05",
+            "datumEinde": null,
+            "handelsnaam": "stadsdeel Centrum",
+            "volgorde": 1
+          },
+          {
+            "datumAanvang": "1981-01-01",
+            "datumEinde": null,
+            "handelsnaam": "stadsdeel Nieuw West (samenvoeging Slotervaart Geuzenveld en Osdorp)",
+            "volgorde": 2
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "stadsdeel Noord",
+            "volgorde": 3
+          },
+          {
+            "datumAanvang": "2010-01-01",
+            "datumEinde": null,
+            "handelsnaam": "stadsdeel Oost (samenvoeging Zeeburg en Oost-Watergraafsmeer)",
+            "volgorde": 4
+          },
+          {
+            "datumAanvang": "1990-01-01",
+            "datumEinde": null,
+            "handelsnaam": "stadsdeel West (samenvoeging Westerpark, Oud-West, de Baarsjes, Bos en Lommer)",
+            "volgorde": 5
+          },
+          {
+            "datumAanvang": "1990-01-01",
+            "datumEinde": null,
+            "handelsnaam": "stadsdeel Zuid (samenvoeging Zuideramstel en Oud-Zuid)",
+            "volgorde": 6
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "stadsdeel Zuidoost",
+            "volgorde": 7
+          },
+          {
+            "datumAanvang": "1960-01-01",
+            "datumEinde": null,
+            "handelsnaam": "Haven Amsterdam",
+            "volgorde": 8
+          },
+          {
+            "datumAanvang": "1998-10-01",
+            "datumEinde": null,
+            "handelsnaam": "Bedrijf Zuidas",
+            "volgorde": 9
+          },
+          {
+            "datumAanvang": "2005-07-01",
+            "datumEinde": null,
+            "handelsnaam": "ACAM Accountancy en Advies",
+            "volgorde": 10
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "Ambulancedienst",
+            "volgorde": 11
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "Ambulancepost AMC (dependance Ambulancedienst)",
+            "volgorde": 12
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "poli West",
+            "volgorde": 13
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "poli PNP",
+            "volgorde": 14
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "poli Zuid-Oost / Geintegreerde Voorziening Zuid-Oost",
+            "volgorde": 15
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "CB Ravenswaaipad / Consultatiebureau",
+            "volgorde": 16
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "CB Albardakade / Consultatiebureau",
+            "volgorde": 17
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "CB Aldebaranplein / Consultatiebureau",
+            "volgorde": 18
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "CB Amstelplein / Consultatiebureau",
+            "volgorde": 19
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "CB Bijlmerdreef / Consultatiebureau",
+            "volgorde": 20
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "CB Bourgondischelaan / Consultatiebureau",
+            "volgorde": 21
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "CB Bur. De Vlugtlaan / Consultatiebureau",
+            "volgorde": 22
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "CB Hageland / Consultatiebureau",
+            "volgorde": 23
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "CB Henrick de Keijserstraat / Consultatiebureau",
+            "volgorde": 24
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "CB Julianalaan / Consultatiebureau",
+            "volgorde": 25
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "CB Laan van de Helende Meesters / Consultatiebureau",
+            "volgorde": 26
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "CB Lunaweg / Consultatiebureau",
+            "volgorde": 27
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "CB Melkweg / Consultatiebureau",
+            "volgorde": 28
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "CB Muiderstraatweg, Consultatiebureau",
+            "volgorde": 29
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "CB Purmerweg / Consulatiebureau",
+            "volgorde": 30
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "CB Schalkburgerstraat / Consultatiebureau",
+            "volgorde": 31
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "CB Van Swietenstraat / Consultatiebureau",
+            "volgorde": 32
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "CB 1e JC Mensinglaan / Consultatiebureau",
+            "volgorde": 33
+          },
+          {
+            "datumAanvang": "2002-05-01",
+            "datumEinde": null,
+            "handelsnaam": "Dienst Belastingen",
+            "volgorde": 34
+          },
+          {
+            "datumAanvang": "2003-09-01",
+            "datumEinde": null,
+            "handelsnaam": "Dienst Binnenwater Beheer",
+            "volgorde": 35
+          },
+          {
+            "datumAanvang": "2000-01-01",
+            "datumEinde": null,
+            "handelsnaam": "Dienst Infrastructuur Verkeer en Vervoer",
+            "volgorde": 36
+          },
+          {
+            "datumAanvang": "1995-11-01",
+            "datumEinde": null,
+            "handelsnaam": "Dienst Maatschappelijke Ontwikkeling",
+            "volgorde": 37
+          },
+          {
+            "datumAanvang": "1990-01-01",
+            "datumEinde": null,
+            "handelsnaam": "Dienst Milieu en Bouwtoezicht",
+            "volgorde": 38
+          },
+          {
+            "datumAanvang": "2008-12-01",
+            "datumEinde": null,
+            "handelsnaam": "Dienst Onderzoek en Statistiek",
+            "volgorde": 39
+          },
+          {
+            "datumAanvang": "1997-04-01",
+            "datumEinde": null,
+            "handelsnaam": "Dienst Persoons- en Geo-informatie",
+            "volgorde": 40
+          },
+          {
+            "datumAanvang": "1997-05-01",
+            "datumEinde": null,
+            "handelsnaam": "Dienst Ruimtelijke Ordening",
+            "volgorde": 41
+          },
+          {
+            "datumAanvang": "1998-10-01",
+            "datumEinde": null,
+            "handelsnaam": "Dienst Stadstoezicht",
+            "volgorde": 42
+          },
+          {
+            "datumAanvang": "2007-01-01",
+            "datumEinde": null,
+            "handelsnaam": "Dienst Werk en Inkomen",
+            "volgorde": 43
+          },
+          {
+            "datumAanvang": "1997-05-01",
+            "datumEinde": null,
+            "handelsnaam": "Dienst Wonen, Zorg en Samenleven",
+            "volgorde": 44
+          },
+          {
+            "datumAanvang": "1988-09-05",
+            "datumEinde": null,
+            "handelsnaam": "Dienstverlening en Facilitair Management",
+            "volgorde": 45
+          },
+          {
+            "datumAanvang": "1997-01-01",
+            "datumEinde": null,
+            "handelsnaam": "Economische Zaken",
+            "volgorde": 46
+          },
+          {
+            "datumAanvang": "2007-01-01",
+            "datumEinde": null,
+            "handelsnaam": "Gemeentelijk Wagenparkbeheer Amsterdam",
+            "volgorde": 47
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "Geneeskundige en Gezondheidsdienst Amsterdam",
+            "volgorde": 48
+          },
+          {
+            "datumAanvang": "1920-01-01",
+            "datumEinde": null,
+            "handelsnaam": "GDV Gemeentelijke Dienst Verzekeringszaken",
+            "volgorde": 49
+          },
+          {
+            "datumAanvang": "2006-01-01",
+            "datumEinde": null,
+            "handelsnaam": "Ingenieursbureau Amsterdam",
+            "volgorde": 50
+          },
+          {
+            "datumAanvang": "2005-05-09",
+            "datumEinde": null,
+            "handelsnaam": "Ontwikkelingsbedrijf Gemeente Amsterdam",
+            "volgorde": 51
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "OKC Bedrederodestraat / Ouder en Kindcentrum",
+            "volgorde": 52
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "OKC Evertweertsplantsoen / Ouder en Kindcentrum",
+            "volgorde": 53
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "OKC Flevohuis / Ouder en Kindcentrum",
+            "volgorde": 54
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "OKC IJburg / Ouder en Kindcentrum",
+            "volgorde": 55
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "OKC Jan Tooropstraat / Ouder en Kindcentrum",
+            "volgorde": 56
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "OKC Klein Gooioord / Ouder en kindcentrum",
+            "volgorde": 57
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "OKC Krayenhoffstraat / Ouder en Kindcentrum",
+            "volgorde": 58
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "OKC Leijenberglaan / Ouder en Kindcentrum",
+            "volgorde": 59
+          },
+          {
+            "datumAanvang": "2010-01-01",
+            "datumEinde": null,
+            "handelsnaam": "OKC Lindengracht / Ouder en Kindcentrum",
+            "volgorde": 60
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "OKC Magalhaensplein / Ouder en Kindcentrum",
+            "volgorde": 61
+          },
+          {
+            "datumAanvang": "2010-03-01",
+            "datumEinde": null,
+            "handelsnaam": "OKC Theophile de Bockstraat / Ouder en Kindcentrum",
+            "volgorde": 62
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "OKC Tijl Uilenspiegel / Ouder en Kindcentrum",
+            "volgorde": 63
+          },
+          {
+            "datumAanvang": "2010-03-09",
+            "datumEinde": null,
+            "handelsnaam": "OKC Westerpark / Ouder en Kindcentrum",
+            "volgorde": 64
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "OKC Wingerdweg / Ouder en Kindcentrum",
+            "volgorde": 65
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "Poli Centrum",
+            "volgorde": 66
+          },
+          {
+            "datumAanvang": "1990-04-01",
+            "datumEinde": null,
+            "handelsnaam": "ProjectManagement Bureau",
+            "volgorde": 67
+          },
+          {
+            "datumAanvang": "2009-01-01",
+            "datumEinde": null,
+            "handelsnaam": "Servicehuis ICT",
+            "volgorde": 68
+          },
+          {
+            "datumAanvang": "2006-03-01",
+            "datumEinde": null,
+            "handelsnaam": "Servicehuis Personeel",
+            "volgorde": 69
+          },
+          {
+            "datumAanvang": "1988-09-05",
+            "datumEinde": null,
+            "handelsnaam": "Stadhuis",
+            "volgorde": 70
+          },
+          {
+            "datumAanvang": "2007-01-01",
+            "datumEinde": null,
+            "handelsnaam": "Stadsarchief Amsterdam",
+            "volgorde": 71
+          },
+          {
+            "datumAanvang": "1614-01-01",
+            "datumEinde": null,
+            "handelsnaam": "Stadsbank van Lening",
+            "volgorde": 72
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "Foodcenter Amsterdam/OGA",
+            "volgorde": 73
+          },
+          {
+            "datumAanvang": "1995-11-01",
+            "datumEinde": null,
+            "handelsnaam": "De Bazel, DMO Kunst & Cultuur",
+            "volgorde": 74
+          },
+          {
+            "datumAanvang": "2008-01-01",
+            "datumEinde": null,
+            "handelsnaam": "Amsterdamse Bos/gemeente Amsterdam",
+            "volgorde": 75
+          },
+          {
+            "datumAanvang": "2010-03-12",
+            "datumEinde": null,
+            "handelsnaam": "Sport-o-theek",
+            "volgorde": 76
+          },
+          {
+            "datumAanvang": "2011-03-07",
+            "datumEinde": null,
+            "handelsnaam": "Watersportcentrum Sloterplas (Stadsdeel Nieuw-West)",
+            "volgorde": 77
+          },
+          {
+            "datumAanvang": "2004-01-01",
+            "datumEinde": null,
+            "handelsnaam": "Huisartsenpraktijk D. Valckenier",
+            "volgorde": 78
+          },
+          {
+            "datumAanvang": "2015-01-01",
+            "datumEinde": null,
+            "handelsnaam": "Verkeer en Openbare Ruimte",
+            "volgorde": 79
+          },
+          {
+            "datumAanvang": "2019-10-30",
+            "datumEinde": null,
+            "handelsnaam": "Afvalpunt Faas Wilkesstraat",
+            "volgorde": 80
+          }
+        ],
+        "communicatie": [
+          { "toegangscode": "+31", "nummer": "0206241111", "soort": "Telefoon" }
+        ],
+        "emailAdressen": [],
+        "domeinnamen": [
+          { "domeinnaam": "www.amsterdam.nl" },
+          { "domeinnaam": "www.gemeenteraad.amsterdam.nl" },
+          { "domeinnaam": "www.regelgeving.amsterdam.nl" },
+          { "domeinnaam": "www.opdekaart.amsterdam.nl" },
+          { "domeinnaam": "www.sbl.nl" },
+          { "domeinnaam": "www.iamsterdam.com" },
+          { "domeinnaam": "www.hierzijnwij.nu" }
+        ]
+      }
+    ],
+    "heeftAlsEigenaarHrNnp": [
+      {
+        "_links": {
+          "schema": "https://schemas.data.amsterdam.nl/datasets/hr_kvk/nietnatuurlijkepersonen/v3",
+          "self": {
+            "href": "https://api.data.amsterdam.nl/v1/hr_kvk/nietnatuurlijkepersonen/34366966.NNP?_format=json",
+            "title": "34366966.NNP",
+            "identificatie": "34366966.NNP"
+          },
+          "heeftHrFunctievervullingen": [
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/functievervullingen/34366966.FVV.1?_format=json",
+              "identificatie": "34366966.FVV.1",
+              "title": "34366966.FVV.1"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/functievervullingen/34366966.FVV.2?_format=json",
+              "identificatie": "34366966.FVV.2",
+              "title": "34366966.FVV.2"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/functievervullingen/34366966.FVV.3?_format=json",
+              "identificatie": "34366966.FVV.3",
+              "title": "34366966.FVV.3"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/functievervullingen/34366966.FVV.4?_format=json",
+              "identificatie": "34366966.FVV.4",
+              "title": "34366966.FVV.4"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/functievervullingen/34366966.FVV.5?_format=json",
+              "identificatie": "34366966.FVV.5",
+              "title": "34366966.FVV.5"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/functievervullingen/34366966.FVV.6?_format=json",
+              "identificatie": "34366966.FVV.6",
+              "title": "34366966.FVV.6"
+            },
+            {
+              "href": "https://api.data.amsterdam.nl/v1/hr_kvk/functievervullingen/34366966.FVV.7?_format=json",
+              "identificatie": "34366966.FVV.7",
+              "title": "34366966.FVV.7"
+            }
+          ]
+        },
+        "identificatie": "34366966.NNP",
+        "rsin": "002564440",
+        "datumUitschrijvingDatum": null,
+        "datumUitschrijvingJaar": null,
+        "datumUitschrijvingMaand": null,
+        "datumUitschrijvingDag": null,
+        "surceanceVanBetaling": false,
+        "status": null,
+        "duur": null,
+        "faillissement": false,
+        "naam": "Gemeente Amsterdam",
+        "volledigeNaam": "Gemeente Amsterdam",
+        "ookGenoemd": null,
+        "typePersoon": "Rechtspersoon",
+        "doelRechtsvorm": null,
+        "rechtsvorm": "Publiekrechtelijke Rechtspersoon",
+        "persoonRechtsvorm": "Publiekrechtelijke Rechtspersoon",
+        "uitgebreideRechtsvorm": "Publiekrechtelijke Rechtspersoon: Gemeente",
+        "rol": "Eigenaar",
+        "datumAanvangDatum": null,
+        "datumAanvangJaar": null,
+        "datumAanvangMaand": null,
+        "datumAanvangDag": null,
+        "datumEindeDatum": null,
+        "datumEindeJaar": null,
+        "datumEindeMaand": null,
+        "datumEindeDag": null
+      }
+    ]
+  },
+  "_links": {
+    "self": {
+      "href": "https://api.data.amsterdam.nl/v1/hr_kvk/maatschappelijkeactiviteiten?kvknummer=34366966&_expandScope=heeftAlsEigenaarHrNnp&_format=json"
+    }
+  },
+  "page": { "number": 1, "size": 20 }
+}

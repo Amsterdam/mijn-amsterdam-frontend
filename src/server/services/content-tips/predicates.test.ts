@@ -10,8 +10,6 @@ import {
   hasStadspasGroeneStip,
   hasToeristicheVerhuurVergunningen,
   hasTozo,
-  hasValidId,
-  hasValidIdForVoting,
   hasValidRecentStadspasRequest,
   is18OrOlder,
   isBetweenAges,
@@ -87,68 +85,6 @@ describe('predicates', () => {
       ])('should return %s for birthday %s', (expected, birthday) => {
         const appState = getMockAppState(birthday);
         expect(is18OrOlder(appState)).toBe(expected);
-      });
-    });
-
-    describe('hasValidId', () => {
-      const getMockAppState = (datumAfloop: string) => {
-        return {
-          BRP: brpApiResponse<BRPData>({
-            identiteitsbewijzen: [{ datumAfloop }],
-          }),
-        } as AppState;
-      };
-
-      it.each([
-        [false, '2002-07-26'],
-        [false, '2022-07-24'],
-        [true, '2022-07-25'],
-        [true, '2022-07-26'],
-        [true, '2028-07-24'],
-      ])('should return %s for datumAfloop %s', (expected, datumAfloop) => {
-        const appState = getMockAppState(datumAfloop);
-
-        expect(hasValidId(appState)).toBe(expected);
-      });
-    });
-
-    describe('hasValidIdForVoting', () => {
-      const getMockAppState = (datumAfloop: string) => {
-        return {
-          BRP: brpApiResponse<BRPData>({
-            identiteitsbewijzen: [{ datumAfloop }],
-          }),
-        } as AppState;
-      };
-
-      it.each([
-        [false, '2002-07-26'],
-        [false, '2017-07-24'],
-        [true, '2018-11-20'],
-        [true, '2022-07-24'],
-        [true, '2022-07-25'],
-        [true, '2028-07-24'],
-      ])('should return %s for datumAfloop %s', (expected, datumAfloop) => {
-        const appState = getMockAppState(datumAfloop);
-
-        expect(hasValidIdForVoting(appState, new Date('2023-11-20'))).toBe(
-          expected
-        );
-      });
-
-      it.each([
-        [false, '2017-07-24'],
-        [false, '2020-10-26'],
-        [true, '2020-10-27'],
-        [true, '2022-07-24'],
-        [true, '2022-07-25'],
-        [true, '2028-07-24'],
-      ])('should return %s for datumAfloop %s', (expected, datumAfloop) => {
-        const appState = getMockAppState(datumAfloop);
-
-        expect(hasValidIdForVoting(appState, new Date('2025-10-29'))).toBe(
-          expected
-        );
       });
     });
 

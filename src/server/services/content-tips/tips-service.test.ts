@@ -20,7 +20,7 @@ import {
   MyNotification,
   type AppState,
 } from '../../../universal/types/App.types';
-import type { BRPData } from '../profile/brp.types';
+import type { BrpFrontend } from '../brp/brp-types';
 import { WpiRequestProcess } from '../wpi/wpi-types';
 
 export function brpApiResponse<T>(
@@ -114,12 +114,11 @@ describe('createTipsFromServiceResults', () => {
     const now = new Date('2023-11-25');
     vi.setSystemTime(now);
 
-    const BRP = brpApiResponse<BRPData>({
+    const BRP = brpApiResponse<BrpFrontend>({
       persoon: {
         geboortedatum: '2000-01-01',
         nationaliteiten: [{ omschrijving: 'Nederlandse' }],
       },
-      identiteitsbewijzen: [{ datumAfloop: '2020-07-24' }],
     });
 
     const appState = {

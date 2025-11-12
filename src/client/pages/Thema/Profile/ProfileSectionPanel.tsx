@@ -86,7 +86,7 @@ export function ProfileSectionPanel({
       <CollapsiblePanel title={title ?? ''} startCollapsed={startCollapsed}>
         {subTitle && <Paragraph className="ams-mb-m">{subTitle}</Paragraph>}
         <Grid className={styles.ProfileSectionPanelGrid}>
-          <Grid.Cell start={1} span={{ narrow: 4, medium: 5, wide: 7 }}>
+          <Grid.Cell start={1} span={{ narrow: 4, medium: 5, wide: 10 }}>
             {sections.map((sectionData, index) => (
               <Datalist
                 key={index}
@@ -98,8 +98,8 @@ export function ProfileSectionPanel({
           </Grid.Cell>
           {!!actionLinks?.length && (
             <Grid.Cell
-              start={{ narrow: 1, medium: 6, wide: 8 }}
-              span={{ narrow: 4, medium: 3, wide: 5 }}
+              start={{ narrow: 1, medium: 6, wide: 11 }}
+              span={{ narrow: 4, medium: 3, wide: 2 }}
             >
               <ProfileSectionActionLinks actionLinks={actionLinks} />
             </Grid.Cell>

@@ -34,10 +34,7 @@ import {
 
 type BRPPanelKey = keyof Omit<
   BRPData,
-  | 'identiteitsbewijzen'
-  | 'notifications'
-  | 'kvknummer'
-  | 'fetchUrlAantalBewoners'
+  'notifications' | 'kvknummer' | 'fetchUrlAantalBewoners'
 >;
 
 const persoon: ProfileLabels<Partial<Persoon>, AppState['BRP']['content']> = {

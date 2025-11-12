@@ -42,7 +42,7 @@ export const ExcludePageViewTrackingUrls = [
  * @deprecated
  */
 export const ErrorNames: Record<string /* ApiStateKey */, string> = {
-  BRP: 'Persoonlijke gegevens, paspoort, ID-kaart',
+  BRP: 'Persoonlijke gegevens',
   KVK: 'Mijn onderneming',
   JEUGD: 'Jeugd: aanvragen en voorzieningen',
   AFIS: 'Facturen en betalen',

@@ -18,10 +18,10 @@ import {
 import { fetchIsKnownInAFIS } from './afis/afis';
 import { fetchAfval, fetchAfvalPunten } from './afval/afval';
 import { fetchAVG } from './avg/avg';
-import { fetchMyLocation } from './bag/my-locations';
+import { fetchMyLocations } from './bag/my-locations';
 import { fetchBezwaren } from './bezwaren/bezwaren';
 import { fetchLoodmetingen } from './bodem/loodmetingen';
-import { fetchBrpV2 } from './brp/brp';
+import { fetchBrp } from './brp/brp';
 import { fetchMijnAmsterdamUitlegPage } from './cms/cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms/cms-maintenance-notifications';
 import { fetchErfpacht } from './erfpacht/erfpacht';
@@ -125,7 +125,7 @@ const AFIS = callAuthenticatedService(fetchIsKnownInAFIS);
 const AVG = callAuthenticatedService(fetchAVG);
 const BEZWAREN = callAuthenticatedService(fetchBezwaren);
 const BODEM = callAuthenticatedService(fetchLoodmetingen); // For now bodem only consists of loodmetingen.
-const BRP = callAuthenticatedService(fetchBrpV2);
+const BRP = callAuthenticatedService(fetchBrp);
 const ERFPACHT = callAuthenticatedService(fetchErfpacht);
 const HLI = callAuthenticatedService(fetchHLI);
 const HORECA = callAuthenticatedService(fetchHorecaVergunningen);
@@ -155,7 +155,7 @@ const KLANT_CONTACT = callAuthenticatedService(fetchContactmomenten); // For now
 // Location, address, based services
 const AFVAL = callAuthenticatedService(fetchAfval);
 const AFVALPUNTEN = callAuthenticatedService(fetchAfvalPunten);
-const MY_LOCATION = callAuthenticatedService(fetchMyLocation);
+const MY_LOCATION = callAuthenticatedService(fetchMyLocations);
 
 // Special services that aggregates NOTIFICATIONS from various services
 export const NOTIFICATIONS = async (req: Request) => {

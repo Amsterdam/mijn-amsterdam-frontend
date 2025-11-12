@@ -9,12 +9,12 @@
 
     .Label {
       grid-column-start: 1;
-      grid-column-end: span 5;
+      grid-column-end: span 3;
     }
 
     .Content {
-      grid-column-start: 6;
-      grid-column-end: span 7;
+      grid-column-start: 4;
+      grid-column-end: span 9;
     }
   }
 }

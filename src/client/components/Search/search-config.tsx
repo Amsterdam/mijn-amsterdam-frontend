@@ -22,10 +22,6 @@ import type {
   KrefiaDeepLink,
 } from '../../../server/services/krefia/krefia.types';
 import type { ParkeerVergunningFrontend } from '../../../server/services/parkeren/config-and-types';
-import type {
-  BRPData,
-  IdentiteitsbewijsFrontend,
-} from '../../../server/services/profile/brp.types';
 import { BBVergunningFrontend } from '../../../server/services/toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types';
 import {
   LVVRegistratie,
@@ -39,12 +35,10 @@ import {
 import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
-import { getFullAddress, getFullName } from '../../../universal/helpers/brp';
 import {
   defaultDateFormat,
   displayDateRange,
 } from '../../../universal/helpers/date';
-import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { uniqueArray } from '../../../universal/helpers/utils';
 import {
   AppStateKey,
@@ -57,7 +51,6 @@ import { themaConfig as themaConfigBodem } from '../../pages/Thema/Bodem/Bodem-t
 import { featureToggle as featureToggleHoreca } from '../../pages/Thema/Horeca/Horeca-thema-config';
 import { featureToggle as featureToggleKlachten } from '../../pages/Thema/Klachten/Klachten-thema-config';
 import { featureToggle as featureToggleKrefia } from '../../pages/Thema/Krefia/Krefia-thema-config';
-import { routeConfig as routeConfigProfile } from '../../pages/Thema/Profile/Profile-thema-config';
 import { routeConfig as routeConfigToeristischeVerhuur } from '../../pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 import {
   featureToggle as featureToggleVaren,
@@ -407,35 +400,6 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   getWpiConfig('WPI_TONK'),
   getWpiConfig('WPI_BBZ'),
   getWpiConfig('WPI_AANVRAGEN'),
-  {
-    stateKey: 'BRP',
-    getApiBaseItems: (apiContent: BRPData) => {
-      const identiteitsBewijzen = apiContent?.identiteitsbewijzen || [];
-      const address = getFullAddress(apiContent.adres, true);
-      const name = getFullName(apiContent.persoon);
-      const brpDataItems: ApiBaseItem<{ title: string; link: LinkProps }>[] = [
-        {
-          title: name || 'Mijn naam',
-          link: {
-            to: routeConfigProfile.themaPageBRP.path,
-            title: `Mijn naam | ${name}`,
-          },
-        },
-        {
-          title: address || 'Mijn adres',
-          link: {
-            to: routeConfigProfile.themaPageBRP.path,
-            title: `Mijn adres | ${address}`,
-          },
-        },
-      ];
-      return [...identiteitsBewijzen, ...brpDataItems];
-    },
-    displayTitle: (item: IdentiteitsbewijsFrontend | ApiBaseItem) => {
-      return (term: string) =>
-        displayPath(term, [capitalizeFirstLetter(item.title)]);
-    },
-  },
   {
     isEnabled: featureToggleKrefia.krefiaActive,
     stateKey: 'KREFIA',

@@ -138,7 +138,8 @@ export type VestigingSource = {
   datumVoortzettingMaand: number | null;
   datumVoortzettingDag: number | null;
   isCommercieleVestiging: 'Nee' | 'Ja';
-  eersteHandelsnaam: string;
+  naam: string | null;
+  eersteHandelsnaam: string | null;
   hoofdvestiging: 'Nee' | 'Ja';
   activiteitOmschrijving: string;
   bezoekLocatieVolledigAdres: string;
@@ -147,7 +148,6 @@ export type VestigingSource = {
   bezoekHeeftBagStandplaatsId: string | null;
   postLocatieVolledigAdres: string | null;
   postHeeftBagNummeraanduidingId: string | null;
-  postHeeftBagVerblijfsobjectId: string | null;
   postHeeftBagLigplaatsId: string | null;
   postHeeftBagStandplaatsId: string | null;
   communicatie: Array<{
@@ -192,7 +192,7 @@ export type NatuurlijkPersoonSource = {
 
 export type ApiResponseEnvelope<T, K extends string> = {
   _embedded: {
-    [key in K]: T[];
+    [key in K]?: T[];
   };
 };
 
@@ -205,6 +205,11 @@ export type MACResponseSource = Prettify<
     ApiResponseEnvelope<NatuurlijkPersoonSource, 'heeftAlsEigenaarHrNps'>
 >;
 
+export type VestigingenResponseSource = ApiResponseEnvelope<
+  VestigingSource,
+  'vestigingen'
+>;
+
 // ==============================================
 // FRONTEND TYPES
 // ===============================================
@@ -213,42 +218,51 @@ type Rechtsvorm = string;
 
 export type Onderneming = {
   handelsnaam: string | null;
-  handelsnamen: string[] | null;
+  handelsnamen: string[];
   rechtsvorm: Rechtsvorm;
   hoofdactiviteit: string;
-  overigeActiviteiten: string[] | null;
-  datumAanvang: string;
-  datumEinde: string | null;
+  overigeActiviteiten: string[];
+  datumAanvang: DatumNormalizedSource | null;
+  datumAanvangFormatted: string | null;
+  datumEinde: DatumNormalizedSource | null;
+  datumEindeFormatted: string | null;
   kvknummer: string;
 };
 
 export type NietNatuurlijkPersoon = {
   naam: string | null;
   rsin?: string;
-  kvknummer?: string;
   statutaireZetel?: string;
+  typePersoon?: string;
 };
 
 export type NatuurlijkPersoon = {
   naam: string | null;
-  geboortedatum: string | null;
+  typePersoon?: string;
 };
 
 export type Vestiging = {
   vestigingsNummer: string;
+  naam: string | null;
   handelsnamen: string[];
-  eersteHandelsnaam: string | null;
-  typeringVestiging: string;
   bezoekadres: string | null;
   postadres: string | null;
-  telefoonnummer: string | null;
-  websites: string[] | null;
-  faxnummer: string | null;
-  emailadres: string | null;
+  telefoonnummer: string[];
+  websites: string[];
+  faxnummer: string[];
+  emailadres: string[];
   activiteiten: string[];
-  datumAanvang: string | null;
-  datumEinde: string | null;
+  datumAanvang: DatumNormalizedSource | null;
+  datumAanvangFormatted: string | null;
+  datumEinde: DatumNormalizedSource | null;
+  datumEindeFormatted: string | null;
   isHoofdvestiging?: boolean;
+  postHeeftBagNummeraanduidingId: string | null;
+  postHeeftBagLigplaatsId: string | null;
+  postHeeftBagStandplaatsId: string | null;
+  bezoekHeeftBagNummeraanduidingId: string | null;
+  bezoekHeeftBagLigplaatsId: string | null;
+  bezoekHeeftBagStandplaatsId: string | null;
 };
 
 export type KvkResponseFrontend = {
@@ -259,6 +273,6 @@ export type KvkResponseFrontend = {
 };
 
 export type MACResponse = {
-  onderneming: Onderneming;
-  eigenaar: NatuurlijkPersoon | NietNatuurlijkPersoon;
+  onderneming: Onderneming | null;
+  eigenaar: NatuurlijkPersoon | NietNatuurlijkPersoon | null;
 };

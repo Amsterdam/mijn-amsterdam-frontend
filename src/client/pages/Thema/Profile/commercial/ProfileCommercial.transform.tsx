@@ -1,14 +1,17 @@
 import { Link } from '@amsterdam/design-system-react';
 
 import type {
+  DatumNormalizedSource,
   KvkResponseFrontend,
   NatuurlijkPersoon,
   NietNatuurlijkPersoon,
   Vestiging,
 } from '../../../../../server/services/hr-kvk/hr-kvk.types';
 import type { Onderneming } from '../../../../../server/services/hr-kvk/hr-kvk.types';
-import { defaultDateFormat } from '../../../../../universal/helpers/date';
+import { dateFormat } from '../../../../../universal/helpers/date';
 import { AppState } from '../../../../../universal/types/App.types';
+import { ListExpandable } from '../../../../components/ListExpandable/ListExpandable';
+import { PreWrap } from '../../../../components/PreWrap/PreWrap';
 import {
   ProfileLabels,
   formatProfileSectionData,
@@ -22,151 +25,208 @@ import { PanelConfig, ProfileSectionData } from '../ProfileSectionPanel';
 
 type KVKPanelKey = keyof Omit<KvkResponseFrontend, 'mokum'> | 'hoofdVestiging';
 
+function getPartialDateFormatted(datum?: DatumNormalizedSource | null) {
+  if (!datum) {
+    return null;
+  }
+  const { dag, maand, jaar } = datum;
+  if ((dag && maand && jaar) || (!dag && !maand && !jaar)) {
+    return null;
+  }
+  if (jaar && !maand) {
+    return `Anno ${jaar}`;
+  }
+  if (maand && jaar) {
+    return dateFormat(
+      `${jaar}-${maand.toString().padStart(2, '0')}`,
+      'MMMM yyyy'
+    );
+  }
+  return null;
+}
+
 const onderneming: ProfileLabels<Partial<Onderneming>, AppState['KVK']> = {
+  kvknummer: 'KVK nummer',
   handelsnaam: 'Handelsnaam',
+  datumAanvang: ['Startdatum onderneming', getPartialDateFormatted],
+  datumAanvangFormatted: 'Startdatum onderneming',
+  datumEinde: ['Einddatum onderneming', getPartialDateFormatted],
+  datumEindeFormatted: 'Einddatum onderneming',
   handelsnamen: [
     'Overige handelsnamen',
     (handelsnamen) =>
-      handelsnamen?.length
-        ? handelsnamen.map((handelsnaam) => (
-            <span key={handelsnaam}>
-              {handelsnaam}
-              <br />
-            </span>
-          ))
-        : null,
+      handelsnamen?.length ? (
+        <ListExpandable
+          className="ams-mb-l"
+          expandButtonText="Toon alle handelsnamen"
+          items={handelsnamen}
+        />
+      ) : (
+        handelsnamen?.[0]
+      ),
   ],
   rechtsvorm: 'Rechtsvorm',
   hoofdactiviteit: 'Activiteiten',
   overigeActiviteiten: [
     'Overige activiteiten',
     (activiteiten) =>
-      activiteiten?.length
-        ? activiteiten.map((activiteit) => (
-            <span key={activiteit}>
-              {activiteit}
-              <br />
-            </span>
-          ))
-        : null,
+      activiteiten && activiteiten.length > 1 ? (
+        <ListExpandable
+          className="ams-mb-l"
+          expandButtonText="Toon alle activiteiten"
+          items={activiteiten}
+        />
+      ) : (
+        activiteiten?.[0]
+      ),
   ],
-  datumAanvang: [
-    'Startdatum onderneming',
-    (value) => (typeof value === 'string' ? defaultDateFormat(value) : null),
-  ],
-  datumEinde: [
-    'Einddatum onderneming',
-    (value, item, all) => {
-      return value ? defaultDateFormat(value) : null;
-    },
-  ],
-  kvknummer: 'KVK nummer',
 };
 
 const vestiging: ProfileLabels<Partial<Vestiging>, AppState['KVK']> = {
+  naam: ['Naam vestiging', (name) => (name ? <strong>{name}</strong> : null)],
   vestigingsNummer: 'Vestigingsnummer',
+  datumAanvangFormatted: 'Datum vestiging',
+  datumAanvang: ['Datum vestiging', getPartialDateFormatted],
+  datumEindeFormatted: 'Datum sluiting',
+  datumEinde: ['Datum sluiting', getPartialDateFormatted],
   handelsnamen: [
-    'Handelsnaam',
-    (handelsnamen, { isHoofdvestiging }) =>
-      handelsnamen?.length
-        ? handelsnamen
-            .filter((handelsnaam, index) =>
-              isHoofdvestiging ? index === 0 : true
-            )
-            .map((handelsnaam) => (
-              <span key={handelsnaam}>
-                {handelsnaam}
-                <br />
-              </span>
-            ))
-        : null,
+    'Overige namen',
+    (handelsnamen) =>
+      handelsnamen && handelsnamen.length > 1 ? (
+        <ListExpandable
+          className="ams-mb-l"
+          expandButtonText="Toon alle namen"
+          items={handelsnamen}
+        />
+      ) : (
+        handelsnamen?.[0]
+      ),
   ],
-  bezoekadres: ['Bezoekadres', (adres) => adres],
-  postadres: ['Postadres', (adres) => adres],
+  bezoekadres: [
+    'Bezoekadres',
+    (adres) => (adres ? <PreWrap>{adres}</PreWrap> : null),
+  ],
+  postadres: [
+    'Postadres',
+    (adres) => (adres ? <PreWrap>{adres}</PreWrap> : null),
+  ],
   telefoonnummer: [
     'Telefoonnummer',
-    (value) => (
-      <Link href={`tel:${value}`} rel="noopener noreferrer">
-        {value}
-      </Link>
-    ),
+    (phonenumbers) =>
+      phonenumbers && phonenumbers.length > 1 ? (
+        <ListExpandable
+          className="ams-mb-l"
+          expandButtonText="Toon alle websites"
+          items={phonenumbers}
+          renderItem={(number) => (
+            <Link href={`tel:${number}`} rel="noopener noreferrer">
+              {number}
+            </Link>
+          )}
+        />
+      ) : phonenumbers?.length ? (
+        <Link href={`tel:${phonenumbers[0]}`} rel="noopener noreferrer">
+          {phonenumbers[0]}
+        </Link>
+      ) : null,
   ],
   websites: [
     'Website',
     (urls) =>
-      urls?.length ? (
-        <>
-          {urls.map((url) => (
-            <span key={url}>
-              <Link key={url} href={url} rel="noopener noreferrer">
-                {url.replace(/(https?:\/\/)/, '')}
-              </Link>
-              <br />
-            </span>
-          ))}
-        </>
+      urls && urls.length > 1 ? (
+        <ListExpandable
+          className="ams-mb-l"
+          expandButtonText="Toon alle websites"
+          items={urls}
+          renderItem={(url) => (
+            <Link
+              key={url}
+              href={url.startsWith('http') ? url : `https://${url}`}
+              rel="noopener noreferrer"
+            >
+              {url.replace(/(https?:\/\/)/, '')}
+            </Link>
+          )}
+        />
+      ) : urls?.length ? (
+        <Link
+          key={urls[0]}
+          href={urls[0].startsWith('http') ? urls[0] : `https://${urls[0]}`}
+          rel="noopener noreferrer"
+        >
+          {urls[0].replace(/(https?:\/\/)/, '')}
+        </Link>
       ) : null,
   ],
   emailadres: [
     'E-mail',
-    (value) =>
-      value ? (
-        <Link rel="noopener noreferrer" href={`mailto:${value}`}>
-          {value}
+    (emails) =>
+      emails && emails.length > 1 ? (
+        <ListExpandable
+          className="ams-mb-l"
+          expandButtonText="Toon alle websites"
+          items={emails}
+          renderItem={(email) => (
+            <Link href={`mailto:${email}`} rel="noopener noreferrer">
+              {email}
+            </Link>
+          )}
+        />
+      ) : emails?.length ? (
+        <Link href={`mailto:${emails[0]}`} rel="noopener noreferrer">
+          {emails[0]}
         </Link>
       ) : null,
   ],
-  faxnummer: 'Fax',
+  faxnummer: [
+    'Fax',
+    (faxnumbers) =>
+      faxnumbers && faxnumbers.length > 1 ? (
+        <ListExpandable
+          className="ams-mb-l"
+          expandButtonText="Toon alle websites"
+          items={faxnumbers}
+          renderItem={(number) => (
+            <Link href={`fax:${number}`} rel="noopener noreferrer">
+              {number}
+            </Link>
+          )}
+        />
+      ) : faxnumbers?.length ? (
+        <Link href={`fax:${faxnumbers[0]}`} rel="noopener noreferrer">
+          {faxnumbers[0]}
+        </Link>
+      ) : null,
+  ],
   activiteiten: [
     'Activiteiten',
     (activiteiten) =>
-      activiteiten?.length
-        ? activiteiten.map((activiteit) => (
-            <span key={activiteit}>
-              {activiteit}
-              <br />
-            </span>
-          ))
-        : null,
+      activiteiten && activiteiten.length > 1 ? (
+        <ListExpandable
+          expandButtonText="Toon alle activiteiten"
+          items={activiteiten}
+        />
+      ) : (
+        activiteiten?.[0]
+      ),
   ],
-  datumAanvang: [
-    'Datum vestiging',
-    (value) => (typeof value === 'string' ? defaultDateFormat(value) : null),
-  ],
-  datumEinde: [
-    'Datum sluiting',
-    (value) => (typeof value === 'string' ? defaultDateFormat(value) : null),
-  ],
-};
-
-const rechtspersoon: ProfileLabels<
-  Partial<NietNatuurlijkPersoon> & {
-    bsn?: string;
-  },
-  AppState['KVK']
-> = {
-  rsin: 'RSIN',
-  kvknummer: 'kvknummer',
-  bsn: 'BSN',
-  naam: 'Statutaire naam',
-  statutaireZetel: 'Statutaire zetel',
 };
 
 // TODO: TvO: Check if this is correct
-const eigenaar: ProfileLabels<NatuurlijkPersoon, AppState['KVK']> = {
+const eigenaar: ProfileLabels<
+  NatuurlijkPersoon | NietNatuurlijkPersoon,
+  AppState['KVK']
+> = {
+  typePersoon: 'Type persoon',
   naam: 'Naam',
-  geboortedatum: [
-    'Geboortedatum',
-    (value) => (typeof value === 'string' ? defaultDateFormat(value) : null),
-  ],
-  bsn: 'BSN',
+  rsin: 'RSIN',
+  statutaireZetel: 'Statutaire zetel',
   adres: ['Adres', (address) => address],
 };
 
 export const labelConfig = {
   onderneming,
   vestiging,
-  rechtspersoon,
   eigenaar,
 };
 

@@ -48,3 +48,8 @@ export type BAGLocation = {
   bagNummeraanduidingId?: string | null;
   profileType?: ProfileType;
 };
+
+export type BAGLocationExtended = BAGLocation & {
+  title: string | null;
+  profileType: ProfileType;
+};

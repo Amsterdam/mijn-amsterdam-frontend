@@ -59,12 +59,9 @@ export async function fetchBAG(
   return requestData<BAGLocation>(config);
 }
 
-export async function fetchBAGByNummeraanduidingId(
-  nummeraanduidingId: string
+export async function fetchBAGByQuery(
+  params: Record<string, string>
 ): Promise<ApiResponse<BAGLocation>> {
-  const params: BAGQueryParams = {
-    identificatie: nummeraanduidingId,
-  };
   const config = getApiConfig('BAG', {
     params,
     transformResponse(responseData: BAGSourceData): BAGLocation | null {

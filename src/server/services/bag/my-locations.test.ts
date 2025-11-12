@@ -1,13 +1,13 @@
 import { describe, it, expect, vi, Mock } from 'vitest';
 
 import { fetchBAG } from './bag';
-import { fetchMyLocation, forTesting } from './my-locations';
+import { fetchMyLocations, forTesting } from './my-locations';
 import { getAuthProfileAndToken } from '../../../testing/utils';
 import {
   apiSuccessResult,
   apiErrorResult,
 } from '../../../universal/helpers/api';
-import { fetchBrpV2 } from '../brp/brp';
+import { fetchBrp } from '../brp/brp';
 import type { Adres } from '../brp/brp-types';
 import { fetchKVK, getKvkAddresses } from '../profile/kvk';
 
@@ -32,7 +32,7 @@ describe('fetchPrivate', () => {
   const authProfileAndToken = getAuthProfileAndToken();
 
   it('should return private addresses if fetching BRP data is successful', async () => {
-    (fetchBrpV2 as Mock).mockResolvedValueOnce(
+    (fetchBrp as Mock).mockResolvedValueOnce(
       apiSuccessResult({
         mokum: true,
         adres,
@@ -62,7 +62,7 @@ describe('fetchPrivate', () => {
   });
 
   it('should return default location if no BAG location is found', async () => {
-    (fetchBrpV2 as Mock).mockResolvedValueOnce(
+    (fetchBrp as Mock).mockResolvedValueOnce(
       apiSuccessResult({
         mokum: true,
         adres,
@@ -93,7 +93,7 @@ describe('fetchPrivate', () => {
   });
 
   it('should return a bare response if BRP data is not a Mokum address', async () => {
-    (fetchBrpV2 as Mock).mockResolvedValueOnce(
+    (fetchBrp as Mock).mockResolvedValueOnce(
       apiSuccessResult({ mokum: false, adres: null })
     );
 
@@ -113,7 +113,7 @@ describe('fetchPrivate', () => {
   });
 
   it('should return an error if fetching BRP data fails', async () => {
-    (fetchBrpV2 as Mock).mockResolvedValueOnce(
+    (fetchBrp as Mock).mockResolvedValueOnce(
       apiErrorResult('Error fetching BRP data', null)
     );
 
@@ -186,7 +186,7 @@ describe('fetchMyLocation', () => {
   const authProfileAndTokenCommercial = getAuthProfileAndToken('commercial');
 
   it('should return locations if fetching commercial and private data is successful', async () => {
-    (fetchBrpV2 as Mock).mockResolvedValueOnce(
+    (fetchBrp as Mock).mockResolvedValueOnce(
       apiSuccessResult({
         mokum: true,
         adres,
@@ -207,7 +207,7 @@ describe('fetchMyLocation', () => {
 
     (getKvkAddresses as Mock).mockReturnValueOnce([adres2]);
 
-    const result = await fetchMyLocation(authProfileAndTokenPrivate);
+    const result = await fetchMyLocations(authProfileAndTokenPrivate);
     expect(result).toEqual({
       content: [
         {
@@ -242,7 +242,7 @@ describe('fetchMyLocation', () => {
 
     (getKvkAddresses as Mock).mockReturnValueOnce([adres2]);
 
-    const result = await fetchMyLocation(authProfileAndTokenCommercial);
+    const result = await fetchMyLocations(authProfileAndTokenCommercial);
     expect(result.status).toBe('OK');
     expect(result.content).toHaveLength(1);
   });
@@ -252,7 +252,7 @@ describe('fetchMyLocation', () => {
       apiErrorResult('Oh Oh Server down', null)
     );
 
-    const result = await fetchMyLocation(authProfileAndTokenCommercial);
+    const result = await fetchMyLocations(authProfileAndTokenCommercial);
     expect(result.status).toBe('DEPENDENCY_ERROR');
   });
 
@@ -261,11 +261,11 @@ describe('fetchMyLocation', () => {
       apiSuccessResult({ vestigingen: [] })
     );
     (getKvkAddresses as Mock).mockReturnValueOnce([]);
-    (fetchBrpV2 as Mock).mockResolvedValueOnce(
+    (fetchBrp as Mock).mockResolvedValueOnce(
       apiErrorResult('Server down!', null)
     );
 
-    const result = await fetchMyLocation(authProfileAndTokenPrivate);
+    const result = await fetchMyLocations(authProfileAndTokenPrivate);
     expect(result).toEqual({
       content: null,
       message: 'Could not fetch locations.',

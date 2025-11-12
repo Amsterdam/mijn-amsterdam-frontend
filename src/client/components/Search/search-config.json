@@ -50,29 +50,6 @@
       "profileTypes": ["private"]
     },
     {
-      "url": "/paspoort-en-id-kaart",
-      "displayTitle": "Paspoort en ID-kaart",
-      "description": "Informatie over uw officiële documenten, zoals uw paspoort of aktes. Als u gaat trouwen of een partnerschap aangaat, dan ziet u hier de aankondiging.",
-      "keywords": [
-        "Burgerzaken",
-        "Paspoort",
-        "Passport",
-        "Huwelijk",
-        "Huwelijksakte",
-        "Trouwen",
-        "Partnerschap",
-        "ID/id",
-        "ID kaart",
-        "ID bewijs",
-        "Identiteitsbewijs",
-        "Identiteitskaart",
-        "Reis document",
-        "Document",
-        "Reisdocumenten"
-      ],
-      "profileTypes": ["private"]
-    },
-    {
       "url": "/zorg-en-ondersteuning",
       "displayTitle": "Zorg en ondersteuning",
       "description": "Uw regelingen en hulpmiddelen vanuit de Wmo.",

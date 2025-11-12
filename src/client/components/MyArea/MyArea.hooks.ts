@@ -7,7 +7,7 @@ import { create } from 'zustand';
 
 import { filterItemCheckboxState } from './LegendPanel/checkbox-helpers';
 import styles from './MyAreaDatasets.module.scss';
-import type { BAGLocation } from '../../../server/services/bag/bag.types';
+import type { BAGLocationExtended } from '../../../server/services/bag/bag.types';
 import type {
   MaPointFeature,
   MaPolylineFeature,
@@ -542,7 +542,9 @@ export function useMapLocations(
   const { home: homeLocationMarker, secondary: secondaryLocationMarkers } =
     useMemo(() => {
       const locations = (MY_LOCATION.content || []).filter(
-        (location: BAGLocation | null): location is BAGLocation => !!location
+        (
+          location: BAGLocationExtended | null
+        ): location is BAGLocationExtended => !!location
       );
       const [primaryLocation, ...secondaryLocations] = locations;
 
@@ -550,17 +552,20 @@ export function useMapLocations(
       const secondaryLocationMarkers: MapLocationMarker[] = [];
       if (primaryLocation?.latlng && !centerMarker) {
         const latlng = primaryLocation.latlng;
-        const label = primaryLocation.address
-          ? getFullAddress(primaryLocation.address, true)
-          : 'Mijn locatie';
+        const label =
+          primaryLocation.title ??
+          (primaryLocation.address &&
+            getFullAddress(primaryLocation.address, true)) ??
+          'Mijn locatie';
         homeLocationMarker = { latlng, label, type: 'home' };
       }
       if (secondaryLocations?.length) {
         for (const location of secondaryLocations) {
           const latlng = location.latlng;
-          const label = location.address
-            ? getFullAddress(location.address, true)
-            : 'Mijn andere locatie';
+          const label =
+            location.title ??
+            (location.address && getFullAddress(location.address, true)) ??
+            'Mijn andere locatie';
           if (latlng) {
             secondaryLocationMarkers.push({ latlng, label, type: 'secondary' });
           }

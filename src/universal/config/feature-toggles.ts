@@ -43,9 +43,6 @@ export const FeatureToggle = {
   // Horeca vergunningen
   horecaActive: true,
 
-  // ID Bewijzen thema
-  identiteitsbewijzenActive: true,
-
   // BBZ inkomen
   inkomenBBZActive: true,
 

@@ -10,7 +10,7 @@ describe('Api utils', () => {
   test('createErrorDisplayData', () => {
     const expectedErrorDisplay = {
       stateKey: 'BRP',
-      name: 'Persoonlijke gegevens, paspoort, ID-kaart',
+      name: 'Persoonlijke gegevens',
       error: 'Dingen gingen mis.',
     };
     expect(

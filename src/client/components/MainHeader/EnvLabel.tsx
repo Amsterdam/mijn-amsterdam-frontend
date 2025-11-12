@@ -1,8 +1,8 @@
 import classnames from 'classnames';
 
 import styles from './OtapLabel.module.scss';
-import { OTAP_ENV } from '../../../universal/config/env';
 import { ProfileName } from './ProfileName';
+import { OTAP_ENV } from '../../../universal/config/env';
 
 export function EnvLabel({ showProfileName }: { showProfileName: boolean }) {
   return ['test', 'development', 'acceptance'].includes(OTAP_ENV) ? (

@@ -14,10 +14,6 @@ import {
   type VerblijfplaatsSource,
 } from './brp-types';
 import type { Persoon, PersoonBasis, PersoonBasisSource } from './brp-types';
-import {
-  featureToggle as featureToggleBrp,
-  themaIdBRP,
-} from '../../../client/pages/Thema/Profile/Profile-thema-config';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import {
   apiErrorResult,
@@ -32,7 +28,6 @@ import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token';
 import { getContextOperationId } from '../monitoring';
-import { fetchBRP } from '../profile/brp';
 import { type BSN } from '../zorgned/zorgned-types';
 
 const TOKEN_VALIDITY_PERIOD = 1 * ONE_HOUR_MS;
@@ -361,10 +356,7 @@ export async function fetchBrpVerblijfplaatsHistoryByBsnTransformed(
   return apiSuccessResult(transformedContent);
 }
 
-export async function fetchBrpV2(authProfileAndToken: AuthProfileAndToken) {
-  if (!featureToggleBrp[themaIdBRP].benkBrpServiceActive) {
-    return fetchBRP(authProfileAndToken);
-  }
+export async function fetchBrp(authProfileAndToken: AuthProfileAndToken) {
   return fetchBrpByBsnTransformed(authProfileAndToken.profile.sid, [
     authProfileAndToken.profile.id,
   ]);

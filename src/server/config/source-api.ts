@@ -262,20 +262,22 @@ const ApiConfig_ = {
     },
   },
   IAM_DATAPUNT: {
-    url: `https://iam.amsterdam.nl/auth/realms/datapunt-ad/protocol/openid-connect/token`,
+    url: `${getFromEnv('BFF_DATAPUNT_IAM_API_BASE_URL')}`,
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
   },
   HR_KVK: {
-    url: `https://https://api.data.amsterdam.nl/v1/hr_kvk`,
+    url: `${getFromEnv('BFF_HR_KVK_API_BASE_URL')}`,
     headers: {
       'Content-Type': 'application/hal+json',
     },
   },
   BAG: {
-    url: 'https://api.data.amsterdam.nl/v1/benkagg/adresseerbareobjecten/',
+    url: `${getFromEnv('BFF_BAG_API_BASE_URL')}`,
+    cacheTimeout: 24 * ONE_HOUR_MS, // 24 hours
+    // headers: { 'X-Api-Key': getFromEnv('BFF_DATA_AMSTERDAM_API_KEY', false) },
   },
   ERFPACHT: {
     url: getFromEnv('BFF_ERFPACHT_API_URL'),
