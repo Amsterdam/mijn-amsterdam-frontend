@@ -5,6 +5,7 @@ import slug from 'slugme';
 
 import { routeConfig } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
+import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
 import { hash, sortAlpha } from '../../../../universal/helpers/utils';
 import type { StatusLineItem } from '../../../../universal/types/App.types';
 import type { AuthProfile } from '../../../auth/auth-types';
@@ -21,8 +22,6 @@ import { getBesluitDescription } from '../status-line-items/generic';
 export const AV_RTM_DEEL1 = 'AV-RTM1';
 // Afhandeling afspraak GGD
 export const AV_RTM_DEEL2 = 'AV-RTM';
-
-const REGELING_TITLE_DEFAULT_PLACEHOLDER = 'Regeling tegemoetkoming meerkosten';
 
 const INFO_LINK =
   'https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/extra-geld-als-u-chronisch-ziek-of/';
@@ -405,8 +404,12 @@ function transformRTMRegelingenFrontend(
     const RTM2Aanvragen = aanvragen.filter(
       (a) => a.productIdentificatie === AV_RTM_DEEL2
     );
+    const hasToegewezenRTM2 = RTM2Aanvragen.some(
+      (a) => a.resultaat === 'toegewezen'
+    );
     const lastRTM2 = RTM2Aanvragen.at(-1);
-    const dateDecision = lastRTM2?.datumBesluit ?? '';
+    const dateDecision =
+      lastRTM2?.datumBesluit ?? mostRecentAanvraag.datumBesluit ?? '';
     const dateRequest = mostRecentAanvraag.datumAanvraag ?? '';
     // We assume that datumEindeGeldigheid is always set for the latest RTM-2 aanvraag.
     const dateEnd = lastRTM2?.datumEindeGeldigheid ?? '';
@@ -415,8 +418,12 @@ function transformRTMRegelingenFrontend(
     const isActual = aanvragen.every((a) => a.resultaat === 'afgewezen')
       ? false
       : !aanvragen.some(isEindeRechtReached);
-    const displayStatus =
+    let displayStatus =
       steps.findLast((step) => step.isActive)?.status ?? 'Onbekend';
+
+    if (displayStatus === 'Besluit' && !hasToegewezenRTM2) {
+      displayStatus = capitalizeFirstLetter(mostRecentAanvraag.resultaat);
+    }
 
     const RTMRegeling: HLIRegelingFrontend = {
       id,

@@ -480,12 +480,12 @@ describe('RTM aanvraag transformation', () => {
       [
         {
           "betrokkenen": "",
-          "dateDecision": "",
+          "dateDecision": "2026-05-01",
           "dateEnd": "",
           "dateRequest": "",
           "dateStart": "",
           "decision": "afgewezen",
-          "displayStatus": "Besluit",
+          "displayStatus": "Afgewezen",
           "documents": [],
           "id": "193359724",
           "isActual": false,
@@ -540,7 +540,7 @@ describe('RTM aanvraag transformation', () => {
           "dateRequest": "",
           "dateStart": "2026-05-01",
           "decision": "afgewezen",
-          "displayStatus": "Besluit",
+          "displayStatus": "Afgewezen",
           "documents": [],
           "id": "193359727",
           "isActual": false,

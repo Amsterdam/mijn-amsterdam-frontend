@@ -77,7 +77,7 @@ interface Leverancier {
   omschrijving: string;
 }
 
-export type BeschikkingsResultaat = 'toegewezen' | 'afgewezen' | null;
+export type BeschikkingsResultaat = 'toegewezen' | 'afgewezen';
 
 export interface ToegewezenProduct {
   actueel: boolean;

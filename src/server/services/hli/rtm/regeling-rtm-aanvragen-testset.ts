@@ -166,7 +166,7 @@ export const aanvragenTestsetInput = [
         id: 826691057,
         persoon: '',
         steps: ['Besluit'],
-        displayStatus: 'Besluit',
+        displayStatus: 'Afgewezen',
       },
       {
         id: 1497696404,
@@ -299,7 +299,7 @@ export const aanvragenTestsetInput = [
         id: 247651891,
         persoon: '',
         steps: ['Besluit'],
-        displayStatus: 'Besluit',
+        displayStatus: 'Afgewezen',
       },
       {
         id: 1545565778,
@@ -466,7 +466,7 @@ export const aanvragenTestsetInput = [
         id: 1930458096,
         persoon: '',
         steps: ['Besluit', 'Besluit', 'Besluit'],
-        displayStatus: 'Besluit',
+        displayStatus: 'Afgewezen',
       },
       {
         id: 3709075639,
@@ -587,7 +587,7 @@ export const aanvragenTestsetInput = [
         id: 4288114805,
         persoon: '',
         steps: ['Besluit'],
-        displayStatus: 'Besluit',
+        displayStatus: 'Afgewezen',
       },
     ],
   },
