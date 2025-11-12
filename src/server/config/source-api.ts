@@ -270,9 +270,6 @@ const ApiConfig_ = {
   },
   HR_KVK: {
     url: `${getFromEnv('BFF_HR_KVK_API_BASE_URL')}`,
-    headers: {
-      'Content-Type': 'application/hal+json',
-    },
   },
   BAG: {
     url: `${getFromEnv('BFF_BAG_API_BASE_URL')}`,
