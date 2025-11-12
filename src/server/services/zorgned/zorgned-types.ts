@@ -154,6 +154,7 @@ export interface ZorgnedAanvraagTransformed {
   procesAanvraagOmschrijving: string | null;
   documenten: GenericDocument[];
   id: string;
+  prettyID: string;
   isActueel: boolean;
   leverancier: string;
   leveringsVorm: LeveringsVorm;

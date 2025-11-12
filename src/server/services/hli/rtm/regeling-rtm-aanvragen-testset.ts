@@ -1,3 +1,5 @@
+import { hash } from '../../../../universal/helpers/utils';
+
 export type RTMAanvraagProps = {
   productIdentificatie: 'AV-RTM1' | 'AV-RTM';
   betrokkenen: string[];
@@ -33,6 +35,7 @@ export function aanvraag(
   betrokkenen: string[] = [],
   otherProps?: {
     id?: string;
+    prettyID?: string;
     titel?: string;
     datumAanvraag?: string;
     datumBesluit?: string;
@@ -51,6 +54,9 @@ export function aanvraag(
     resultaat,
     ...otherProps,
   };
+  if (aanvraag.id) {
+    aanvraag.prettyID = hash(aanvraag.id);
+  }
   return aanvraag;
 }
 

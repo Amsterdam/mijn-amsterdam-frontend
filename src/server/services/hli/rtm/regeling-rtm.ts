@@ -133,7 +133,7 @@ function createStatusLineItemStep(
   return {
     status: lineItemConfig.status,
     description: lineItemConfig.description(aanvraag),
-    id: slug(`${lineItemConfig.status}-${aanvraag.id}`),
+    id: slug(`${lineItemConfig.status}-${aanvraag.prettyID}`),
     datePublished: getStatusDate(lineItemConfig.status, aanvraag),
     isActive: false,
     // We default to checked and determine which step can be unchecked later.
@@ -388,7 +388,7 @@ function transformRTMRegelingenFrontend(
     // We reverse because the most recent aanvraag should be first in the hash.
     const id = hash(
       aanvragen
-        .map((a) => a.id)
+        .map((a) => a.prettyID)
         .toReversed()
         .join()
     );
