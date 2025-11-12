@@ -96,7 +96,7 @@ export interface BeschiktProduct {
     productsoortCode: ProductSoortCode;
     identificatie?: ProductIdentificatie;
   };
-  resultaat: BeschikkingsResultaat | null;
+  resultaat: BeschikkingsResultaat;
   toegewezenProduct: ToegewezenProduct | null;
 }
 

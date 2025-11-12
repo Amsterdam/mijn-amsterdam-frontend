@@ -404,9 +404,10 @@ function transformRTMRegelingenFrontend(
     const RTM2Aanvragen = aanvragen.filter(
       (a) => a.productIdentificatie === AV_RTM_DEEL2
     );
-    const hasToegewezenRTM2 = RTM2Aanvragen.some(
+    const toegewezenRTM2 = RTM2Aanvragen.find(
       (a) => a.resultaat === 'toegewezen'
     );
+    const hasToegewezenRTM2 = !!toegewezenRTM2;
     const lastRTM2 = RTM2Aanvragen.at(-1);
     const dateDecision =
       lastRTM2?.datumBesluit ?? mostRecentAanvraag.datumBesluit ?? '';
@@ -415,9 +416,22 @@ function transformRTMRegelingenFrontend(
     const dateEnd = lastRTM2?.datumEindeGeldigheid ?? '';
     const dateStart = RTM2Aanvragen?.[0]?.datumBesluit ?? '';
 
-    const isActual = aanvragen.every((a) => a.resultaat === 'afgewezen')
-      ? false
-      : !aanvragen.some(isEindeRechtReached);
+    // Determine if the regeling is actual. This is needed to show the regeling as lopend or huidig.
+    let isActual = false;
+    // A active RTM is present
+    if (hasToegewezenRTM2 && !isEindeRechtReached(toegewezenRTM2)) {
+      isActual = true;
+    }
+    // A lopende aanvraag is present.
+    if (
+      !hasToegewezenRTM2 &&
+      aanvragen.some(
+        (a) => a.resultaat === 'toegewezen' && !isEindeRechtReached(a)
+      )
+    ) {
+      isActual = true;
+    }
+
     let displayStatus =
       steps.findLast((step) => step.isActive)?.status ?? 'Onbekend';
 
@@ -435,9 +449,11 @@ function transformRTMRegelingenFrontend(
       documents: [],
       isActual,
       // Decision cannot be reliably determined because there might be both toegewezen and afgewezen aanvragen for different betrokkenen.
-      decision: aanvragen.some((a) => a.resultaat === 'toegewezen')
-        ? 'toegewezen'
-        : 'afgewezen',
+      decision:
+        aanvragen.every((a) => a.resultaat === 'toegewezen') ||
+        hasToegewezenRTM2
+          ? 'toegewezen'
+          : 'afgewezen',
       betrokkenen,
       title,
       link: {
