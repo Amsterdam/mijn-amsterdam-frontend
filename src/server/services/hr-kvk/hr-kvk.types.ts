@@ -276,3 +276,5 @@ export type MACResponse = {
   onderneming: Onderneming | null;
   eigenaar: NatuurlijkPersoon | NietNatuurlijkPersoon | null;
 };
+
+export type KVKNummer = MaatschappelijkeActiviteitSource['kvknummer'];

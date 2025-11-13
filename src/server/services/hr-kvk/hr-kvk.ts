@@ -11,8 +11,9 @@ import type {
   Vestiging,
   VestigingSource,
   VestigingenResponseSource,
+  KVKNummer,
 } from './hr-kvk.types';
-import { IS_DEVELOPMENT } from '../../../universal/config/env';
+import { IS_DEVELOPMENT, IS_PRODUCTION } from '../../../universal/config/env';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -31,6 +32,22 @@ import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token';
 
 const TOKEN_VALIDITY_PERIOD = 1 * ONE_HOUR_MS;
 const PERCENTAGE_DISTANCE_FROM_EXPIRY = 0.1;
+
+function translateKVKNummer(kvknummer: KVKNummer): KVKNummer {
+  const translations = getFromEnv('BFF_HR_KVK_KVKNUMMER_TRANSLATIONS', false);
+  // IS_PRODUCTION is explicitly set to exclude this code from being used in this environment.
+  if (!translations || IS_PRODUCTION) {
+    return kvknummer;
+  }
+
+  const translationsMap = new Map(
+    translations.split(',').map((pair) => pair.split('=')) as Iterable<
+      [string, string]
+    >
+  );
+
+  return translationsMap.get(kvknummer) ?? kvknummer;
+}
 
 function fetchTokenHeader() {
   return fetchAuthTokenHeader(
@@ -217,7 +234,7 @@ async function fetchMAC(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<MACResponse>> {
   const params = {
-    kvknummer: authProfileAndToken.profile.id,
+    kvknummer: translateKVKNummer(authProfileAndToken.profile.id),
     _expandScope: MACExpandScopes.join(','),
   };
 
