@@ -871,8 +871,6 @@ describe('afis-facturen', async () => {
     });
 
     test('fetchAfisFacturenOverview', async () => {
-      // remoteApi.get(ROUTES.deelbetalingen).times(3).reply(200, {});
-
       remoteApi.get(ROUTES.openstaandeFacturen).reply(200, {
         feed: {
           entry: [factuur()],
