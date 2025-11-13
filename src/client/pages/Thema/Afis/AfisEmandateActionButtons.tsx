@@ -9,7 +9,7 @@ import type {
 } from '../../../../server/services/afis/afis-types';
 import { Modal } from '../../../components/Modal/Modal';
 import { Spinner } from '../../../components/Spinner/Spinner';
-import { type ApiStateV2 } from '../../../hooks/api/useDataApi';
+import type { BFFApiHook } from '../../../hooks/api/useBffApi';
 
 type ActionConfirmationModalProps = {
   confirmationText: ReactNode;
@@ -61,7 +61,7 @@ function ActionConfirmationModal({
 }
 
 type ApiActionButtonProps<T> = {
-  api: ApiStateV2<T>;
+  api: BFFApiHook<T>;
   fetch: () => void;
   label: string;
   doConfirm: boolean;
@@ -116,8 +116,8 @@ function ApiActionButton<T>({
 
 type AfisEMandateActionUrlProps = {
   eMandate: AfisEMandateFrontend;
-  redirectUrlApi: ApiStateV2<AfisEMandateSignRequestResponse>;
-  statusChangeApi: ApiStateV2<AfisEMandateStatusChangeResponse>;
+  redirectUrlApi: BFFApiHook<AfisEMandateSignRequestResponse>;
+  statusChangeApi: BFFApiHook<AfisEMandateStatusChangeResponse>;
 };
 
 export function AfisEMandateActionUrls({

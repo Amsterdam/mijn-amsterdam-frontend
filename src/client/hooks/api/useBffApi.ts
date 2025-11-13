@@ -119,6 +119,15 @@ export type BffApiState<T> = {
   isLoading: boolean;
 };
 
+export type BFFApiHook<T> = BffApiState<T> & {
+  fetch: (
+    url?: U | RequestInitWithPayload<P>,
+    init_?: U extends URL | string ? RequestInitWithPayload<P> : never
+  ) => void;
+  optimisticUpdateContent: (payload: Partial<T>) => void;
+  isPristine: boolean;
+};
+
 const initialState: BffApiState<null> = Object.seal({
   isLoading: false,
   isError: false,
@@ -168,14 +177,7 @@ export function useBffApi<
 >(
   urlOrKey: string | null | undefined,
   options?: BffApiOptions<T, P>
-): BffApiState<ApiResponse<T> | null> & {
-  fetch: (
-    url?: U | RequestInitWithPayload<P>,
-    init_?: U extends URL | string ? RequestInitWithPayload<P> : never
-  ) => void;
-  optimisticUpdateContent: (payload: Partial<T>) => void;
-  isPristine: boolean;
-} {
+): BFFApiHook<ApiResponse<T> | null> {
   const {
     url,
     sendRequest = sendGetRequest,
