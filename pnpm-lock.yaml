@@ -213,8 +213,11 @@ importers:
         specifier: ^7.1.0
         version: 7.1.0
       html-react-parser:
-        specifier: ^5.2.7
-        version: 5.2.7(@types/react@18.3.24)(react@18.3.1)
+        specifier: ^5.2.8
+        version: 5.2.8(@types/react@18.3.24)(react@18.3.1)
+      ibantools:
+        specifier: ^4.5.1
+        version: 4.5.1
       install:
         specifier: ^0.13.0
         version: 0.13.0
