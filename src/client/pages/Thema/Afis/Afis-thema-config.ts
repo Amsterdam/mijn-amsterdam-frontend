@@ -170,8 +170,6 @@ export const businessPartnerDetailsLabels: DisplayProps<AfisBusinessPartnerDetai
     fullAddress: 'Adres',
   };
 
-// Betaalvoorkeuren
-
 const displayPropsEMandates: DisplayProps<AfisEMandateFrontend> = {
   detailLinkComponent: 'Afdeling gemeente',
   displayStatus: 'Status',
