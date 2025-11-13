@@ -11,6 +11,8 @@ import {
 import type { SomeOtherString } from '../../../universal/helpers/types';
 
 type ApiFetchResponse<T> = Promise<ApiResponse<T>>;
+// Extend RequestInit to include a payload property. The body property always takes precedence over payload.
+// E.g: if both body and payload are provided, body will be used.
 type RequestInitWithPayload<P extends RecordStr2 = RecordStr2> = RequestInit & {
   payload?: P;
 };
@@ -54,6 +56,12 @@ async function handleResponse<T>(
   }
 }
 
+/**
+ *
+ * @param url
+ * @param init Payload can be a regular object and will be converted to URLSearchParams. The provided body however, takes precedence over payload.
+ * @returns
+ */
 export async function sendFormPostRequest<
   T extends any,
   P extends RecordStr2 = RecordStr2,
@@ -71,6 +79,12 @@ export async function sendFormPostRequest<
   );
 }
 
+/**
+ *
+ * @param url
+ * @param init Payload can be a regular object and will be converted to URLSearchParams. The provided body however, takes precedence over payload.
+ * @returns
+ */
 export async function sendJSONPostRequest<
   T extends any,
   P extends RecordStr2 = RecordStr2,
