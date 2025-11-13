@@ -810,7 +810,7 @@ describe('afis-facturen', async () => {
           entry: [
             factuur({
               PostingDate: '2054-09-21T00:00:00',
-              NetDueDate: '2054-09-21T00:00:00',
+              NetDueDate: '2046-09-21T00:00:00',
             }),
           ],
         },
@@ -821,7 +821,9 @@ describe('afis-facturen', async () => {
         businessPartnerID: GENERIC_ID,
       });
 
-      expect(rs.content?.facturen[0].datePublished).toBe('2023-09-21T00:00:00');
+      expect(rs.content?.facturen[0].datePublished).toBe(
+        defaultProps.AccountingDocumentCreationDate
+      );
     });
 
     test('factuurdatum is derived from PostingDate if AccountingDocumentCreationDate is not present', async () => {
