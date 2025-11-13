@@ -1,4 +1,4 @@
-import { addYears } from 'date-fns';
+import mockdate from 'mockdate';
 import { describe, it, expect } from 'vitest';
 
 import { generateApiUrl, getEMandateValidityDate } from './Afis-helpers';
@@ -29,6 +29,14 @@ describe('Afis-helpers', () => {
   });
 
   describe('getEMandateValidityDate', () => {
+    beforeAll(() => {
+      mockdate.set(new Date('2024-06-15'));
+    });
+
+    afterAll(() => {
+      mockdate.reset();
+    });
+
     it('should return the current date plus one year if dateValidTo includes the end date indicator', () => {
       const eMandate = {
         dateValidTo: `${EMANDATE_ENDDATE_INDICATOR}-12-31`,
@@ -36,7 +44,7 @@ describe('Afis-helpers', () => {
 
       const result = getEMandateValidityDate(eMandate);
 
-      const expectedDate = addYears(new Date(), 1).toISOString().split('T')[0];
+      const expectedDate = '2025-06-15';
       expect(result).toBe(expectedDate);
     });
 
@@ -47,7 +55,7 @@ describe('Afis-helpers', () => {
 
       const result = getEMandateValidityDate(eMandate);
 
-      const expectedDate = addYears(new Date(), 1).toISOString().split('T')[0];
+      const expectedDate = '2025-06-15';
       expect(result).toBe(expectedDate);
     });
 
