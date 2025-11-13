@@ -127,7 +127,7 @@ export function AfisBetaalVoorkeuren() {
       maxItems={-1}
       title={eMandateTableConfig.title}
       zaken={eMandates}
-      subTitle={
+      contentAfterTheTitle={
         <Alert
           severity="warning"
           heading="Let op uitzonderingen"

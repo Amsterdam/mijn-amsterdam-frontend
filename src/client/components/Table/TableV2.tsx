@@ -72,7 +72,7 @@ function getColWidth(
 
 export function TableV2<T extends object = ZaakAanvraagDetail>({
   caption,
-  subTitle,
+  contentAfterTheCaption,
   items,
   displayProps,
   className,
@@ -95,12 +95,12 @@ export function TableV2<T extends object = ZaakAanvraagDetail>({
         <Heading
           level={3}
           size="level-2"
-          className={subTitle ? 'ams-mb-s' : ''}
+          className={contentAfterTheCaption ? 'ams-mb-s' : ''}
         >
           {caption}
         </Heading>
       )}
-      {subTitle}
+      {contentAfterTheCaption}
       <Table className={classNames(styles.TableV2, className)}>
         {showTHead && (
           <Table.Header>
