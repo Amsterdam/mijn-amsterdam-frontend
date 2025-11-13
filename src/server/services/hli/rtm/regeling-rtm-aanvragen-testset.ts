@@ -1,3 +1,5 @@
+import { hash } from '../../../../universal/helpers/utils';
+
 export type RTMAanvraagProps = {
   productIdentificatie: 'AV-RTM1' | 'AV-RTM';
   betrokkenen: string[];
@@ -33,6 +35,7 @@ export function aanvraag(
   betrokkenen: string[] = [],
   otherProps?: {
     id?: string;
+    prettyID?: string;
     titel?: string;
     datumAanvraag?: string;
     datumBesluit?: string;
@@ -51,6 +54,9 @@ export function aanvraag(
     resultaat,
     ...otherProps,
   };
+  if (aanvraag.id) {
+    aanvraag.prettyID = hash(aanvraag.id);
+  }
   return aanvraag;
 }
 
@@ -166,7 +172,7 @@ export const aanvragenTestsetInput = [
         id: 826691057,
         persoon: '',
         steps: ['Besluit'],
-        displayStatus: 'Besluit',
+        displayStatus: 'Afgewezen',
       },
       {
         id: 1497696404,
@@ -299,7 +305,7 @@ export const aanvragenTestsetInput = [
         id: 247651891,
         persoon: '',
         steps: ['Besluit'],
-        displayStatus: 'Besluit',
+        displayStatus: 'Afgewezen',
       },
       {
         id: 1545565778,
@@ -466,7 +472,7 @@ export const aanvragenTestsetInput = [
         id: 1930458096,
         persoon: '',
         steps: ['Besluit', 'Besluit', 'Besluit'],
-        displayStatus: 'Besluit',
+        displayStatus: 'Afgewezen',
       },
       {
         id: 3709075639,
@@ -587,7 +593,7 @@ export const aanvragenTestsetInput = [
         id: 4288114805,
         persoon: '',
         steps: ['Besluit'],
-        displayStatus: 'Besluit',
+        displayStatus: 'Afgewezen',
       },
     ],
   },

@@ -24,8 +24,6 @@ vi.mock('../../../helpers/encrypt-decrypt', async (requireActual) => {
   };
 });
 
-const bsn = 0;
-
 function imposeZorgnedAanvraagTransformed(
   aanvraagProps: RTMAanvraagProps,
   index: number
@@ -42,6 +40,7 @@ function imposeZorgnedAanvraagTransformed(
     datumToewijzing: null,
     documenten: [],
     id: `aanvraag-${index}`,
+    prettyID: `aanvraag-${index}`,
     isActueel: false,
     leverancier: '',
     leveringsVorm: '',
@@ -152,18 +151,18 @@ describe('RTM aanvraag transformation', () => {
           "decision": "toegewezen",
           "displayStatus": "Besluit wijziging",
           "documents": [],
-          "id": "3549777800",
+          "id": "2984003010",
           "isActual": true,
           "link": {
             "title": "Meer informatie",
-            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/3549777800",
+            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/2984003010",
           },
           "steps": [
             {
               "datePublished": "2024-01-01",
               "description": "",
               "documents": [],
-              "id": "aanvraag-1-1",
+              "id": "aanvraag-193359720",
               "isActive": false,
               "isChecked": true,
               "status": "Aanvraag",
@@ -181,7 +180,7 @@ describe('RTM aanvraag transformation', () => {
                   "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
                 },
               ],
-              "id": "in-behandeling-genomen-1-1",
+              "id": "in-behandeling-genomen-193359720",
               "isActive": false,
               "isChecked": true,
               "status": "In behandeling genomen",
@@ -199,7 +198,7 @@ describe('RTM aanvraag transformation', () => {
                   "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
                 },
               ],
-              "id": "besluit-1-3",
+              "id": "besluit-193361898",
               "isActive": false,
               "isChecked": true,
               "status": "Besluit",
@@ -214,7 +213,7 @@ describe('RTM aanvraag transformation', () => {
                   "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
                 },
               ],
-              "id": "aanvraag-wijziging-2-1",
+              "id": "aanvraag-wijziging-193359723",
               "isActive": false,
               "isChecked": true,
               "status": "Aanvraag wijziging",
@@ -228,7 +227,7 @@ describe('RTM aanvraag transformation', () => {
                   "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
                 },
               ],
-              "id": "besluit-wijziging-2-2",
+              "id": "besluit-wijziging-193360808",
               "isActive": true,
               "isChecked": true,
               "status": "Besluit wijziging",
@@ -240,7 +239,7 @@ describe('RTM aanvraag transformation', () => {
       <p>U kunt dan ook een brief krijgen met het verzoek om extra informatie te geven.</p>
       <p><a href="https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/extra-geld-als-u-chronisch-ziek-of/">Als er wijzigingen zijn in uw situatie moet u die direct doorgeven</a>.</p>",
               "documents": [],
-              "id": "einde-recht-2-2",
+              "id": "einde-recht-193360808",
               "isActive": false,
               "isChecked": false,
               "status": "Einde recht",
@@ -292,18 +291,18 @@ describe('RTM aanvraag transformation', () => {
           "decision": "toegewezen",
           "displayStatus": "In behandeling genomen",
           "documents": [],
-          "id": "1047328458",
+          "id": "210986318",
           "isActual": true,
           "link": {
             "title": "Meer informatie",
-            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/1047328458",
+            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/210986318",
           },
           "steps": [
             {
               "datePublished": "2025-01-01",
               "description": "",
               "documents": [],
-              "id": "aanvraag-1-1",
+              "id": "aanvraag-193359720",
               "isActive": false,
               "isChecked": true,
               "status": "Aanvraag",
@@ -319,7 +318,7 @@ describe('RTM aanvraag transformation', () => {
                   "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
                 },
               ],
-              "id": "in-behandeling-genomen-1-1",
+              "id": "in-behandeling-genomen-193359720",
               "isActive": false,
               "isChecked": true,
               "status": "In behandeling genomen",
@@ -328,7 +327,7 @@ describe('RTM aanvraag transformation', () => {
               "datePublished": "2024-01-01",
               "description": "",
               "documents": [],
-              "id": "aanvraag-1-2",
+              "id": "aanvraag-193360811",
               "isActive": false,
               "isChecked": true,
               "status": "Aanvraag",
@@ -344,7 +343,7 @@ describe('RTM aanvraag transformation', () => {
                   "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
                 },
               ],
-              "id": "in-behandeling-genomen-1-2",
+              "id": "in-behandeling-genomen-193360811",
               "isActive": true,
               "isChecked": true,
               "status": "In behandeling genomen",
@@ -398,11 +397,11 @@ describe('RTM aanvraag transformation', () => {
           "decision": "toegewezen",
           "displayStatus": "Besluit wijziging",
           "documents": [],
-          "id": "2337611467",
+          "id": "3588173220",
           "isActual": true,
           "link": {
             "title": "Meer informatie",
-            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/2337611467",
+            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/3588173220",
           },
           "steps": [
             {
@@ -418,7 +417,7 @@ describe('RTM aanvraag transformation', () => {
                   "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
                 },
               ],
-              "id": "besluit-2-2",
+              "id": "besluit-193360808",
               "isActive": false,
               "isChecked": true,
               "status": "Besluit",
@@ -436,7 +435,7 @@ describe('RTM aanvraag transformation', () => {
                   "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
                 },
               ],
-              "id": "besluit-wijziging-3-1",
+              "id": "besluit-wijziging-193359722",
               "isActive": true,
               "isChecked": true,
               "status": "Besluit wijziging",
@@ -448,7 +447,7 @@ describe('RTM aanvraag transformation', () => {
       <p>U kunt dan ook een brief krijgen met het verzoek om extra informatie te geven.</p>
       <p><a href="https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/extra-geld-als-u-chronisch-ziek-of/">Als er wijzigingen zijn in uw situatie moet u die direct doorgeven</a>.</p>",
               "documents": [],
-              "id": "einde-recht-3-1",
+              "id": "einde-recht-193359722",
               "isActive": false,
               "isChecked": false,
               "status": "Einde recht",
@@ -480,18 +479,18 @@ describe('RTM aanvraag transformation', () => {
       [
         {
           "betrokkenen": "",
-          "dateDecision": "",
+          "dateDecision": "2026-05-01",
           "dateEnd": "",
           "dateRequest": "",
           "dateStart": "",
           "decision": "afgewezen",
-          "displayStatus": "Besluit",
+          "displayStatus": "Afgewezen",
           "documents": [],
-          "id": "193359724",
+          "id": "522715056",
           "isActual": false,
           "link": {
             "title": "Meer informatie",
-            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/193359724",
+            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/522715056",
           },
           "steps": [
             {
@@ -503,7 +502,7 @@ describe('RTM aanvraag transformation', () => {
                   "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
                 },
               ],
-              "id": "besluit-5-1",
+              "id": "besluit-193359724",
               "isActive": true,
               "isChecked": true,
               "status": "Besluit",
@@ -540,13 +539,13 @@ describe('RTM aanvraag transformation', () => {
           "dateRequest": "",
           "dateStart": "2026-05-01",
           "decision": "afgewezen",
-          "displayStatus": "Besluit",
+          "displayStatus": "Afgewezen",
           "documents": [],
-          "id": "193359727",
+          "id": "658462835",
           "isActual": false,
           "link": {
             "title": "Meer informatie",
-            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/193359727",
+            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/658462835",
           },
           "steps": [
             {
@@ -562,7 +561,7 @@ describe('RTM aanvraag transformation', () => {
                   "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
                 },
               ],
-              "id": "besluit-6-1",
+              "id": "besluit-193359727",
               "isActive": true,
               "isChecked": true,
               "status": "Besluit",
