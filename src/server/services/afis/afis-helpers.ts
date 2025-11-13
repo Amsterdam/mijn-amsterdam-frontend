@@ -3,7 +3,7 @@ import { parseISO } from 'date-fns';
 import { fetchAfisTokenHeader } from './afis';
 import { EMANDATE_ENDDATE_INDICATOR } from './afis-e-mandates-config';
 import { AfisApiFeedResponseSource } from './afis-types';
-import { defaultDateFormat } from '../../../universal/helpers/date';
+import { toDateFormatted } from '../../../universal/helpers/utils';
 import { DataRequestConfig } from '../../config/source-api';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
@@ -42,14 +42,9 @@ export async function getAfisApiConfig(
 }
 
 export function getEmandateValidityDateFormatted(dateValidTo: string | null) {
-  const dateValidToFormatted =
-    dateValidTo && !dateValidTo.includes(EMANDATE_ENDDATE_INDICATOR)
-      ? defaultDateFormat(dateValidTo)
-      : dateValidTo
-        ? 'Doorlopend'
-        : null;
-
-  return dateValidToFormatted;
+  return dateValidTo?.includes(EMANDATE_ENDDATE_INDICATOR)
+    ? 'Doorlopend'
+    : toDateFormatted(dateValidTo);
 }
 
 export function isEmandateActive(dateValidTo: string | null) {
