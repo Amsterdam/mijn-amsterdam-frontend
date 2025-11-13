@@ -336,7 +336,9 @@ async function fetchVestigingen(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<Vestiging[]>> {
   const params = {
-    'isEenUitoefeningVanHrMac.kvknummer': authProfileAndToken.profile.id,
+    'isEenUitoefeningVanHrMac.kvknummer': translateKVKNummer(
+      authProfileAndToken.profile.id
+    ),
   };
 
   const vestigingenResponse = await fetchHrKvk<
