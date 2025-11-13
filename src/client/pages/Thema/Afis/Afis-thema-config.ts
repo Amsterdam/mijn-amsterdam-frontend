@@ -201,3 +201,5 @@ export function getAfisListPageDocumentTitle<T extends Params<string>>(
       return `Facturen | ${themaTitle}`;
   }
 }
+
+export const EMANDATE_STATUS_ACTIVE = '1';

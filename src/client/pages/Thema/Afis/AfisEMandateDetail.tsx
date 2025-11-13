@@ -1,6 +1,6 @@
 import { Alert, Paragraph } from '@amsterdam/design-system-react';
 
-import { routeConfig } from './Afis-thema-config';
+import { EMANDATE_STATUS_ACTIVE, routeConfig } from './Afis-thema-config';
 import { AfisEMandateActionUrls } from './AfisEmandateActionButtons';
 import { DateAdjust } from './AfisEmandateDateAdjust';
 import { useAfisEMandatesData, useEmandateApis } from './useAfisEmandatesData';
@@ -86,7 +86,7 @@ function EMandate({ eMandate }: EMandateProps) {
               },
               {
                 label: 'Einddatum',
-                isVisible: eMandate.status === '1',
+                isVisible: eMandate.status === EMANDATE_STATUS_ACTIVE,
                 content: (
                   <DateAdjust
                     lifetimeUpdateApi={lifetimeUpdateApi}
@@ -96,7 +96,7 @@ function EMandate({ eMandate }: EMandateProps) {
               },
             ],
           },
-          ...(eMandate.status === '1'
+          ...(eMandate.status === EMANDATE_STATUS_ACTIVE
             ? [
                 {
                   rows: [

@@ -2,6 +2,7 @@ import { useState, type ReactNode } from 'react';
 
 import { ActionGroup, Button, Paragraph } from '@amsterdam/design-system-react';
 
+import { EMANDATE_STATUS_ACTIVE } from './Afis-thema-config';
 import type {
   AfisEMandateFrontend,
   AfisEMandateSignRequestResponse,
@@ -131,37 +132,42 @@ export function AfisEMandateActionUrls({
         <ApiActionButton
           api={redirectUrlApi}
           fetch={() => redirectUrlApi.fetch()}
-          label={eMandate.status === '1' ? 'Wijzigen' : 'Activeren'}
+          label={
+            eMandate.status === EMANDATE_STATUS_ACTIVE
+              ? 'Wijzigen'
+              : 'Activeren'
+          }
           doConfirm={false}
         />
       )}
       &nbsp;
-      {eMandate.statusChangeUrl && eMandate.status === '1' && (
-        <ApiActionButton
-          api={statusChangeApi}
-          fetch={() => statusChangeApi.fetch()}
-          label="Stopzetten"
-          doConfirm
-          confirmationModal={{
-            title: 'Stopzetten E-Mandaat',
-            confirmationText: (
-              <>
-                <Paragraph className="ams-mb-s">
-                  Weet je zeker dat je dit E-mandaat wilt stopzetten?
-                </Paragraph>
-                <Paragraph className="ams-mb-s">
-                  Het E-mandaat wordt dan niet meer gebruikt voor automatische
-                  incasso.
-                </Paragraph>
-                <Paragraph className="ams-mb-s">
-                  Je kunt het E-mandaat later opnieuw activeren.
-                </Paragraph>
-              </>
-            ),
-            confirmLabel: 'Ja, stopzetten',
-          }}
-        />
-      )}
+      {eMandate.statusChangeUrl &&
+        eMandate.status === EMANDATE_STATUS_ACTIVE && (
+          <ApiActionButton
+            api={statusChangeApi}
+            fetch={() => statusChangeApi.fetch()}
+            label="Stopzetten"
+            doConfirm
+            confirmationModal={{
+              title: 'Stopzetten E-Mandaat',
+              confirmationText: (
+                <>
+                  <Paragraph className="ams-mb-s">
+                    Weet je zeker dat je dit E-mandaat wilt stopzetten?
+                  </Paragraph>
+                  <Paragraph className="ams-mb-s">
+                    Het E-mandaat wordt dan niet meer gebruikt voor automatische
+                    incasso.
+                  </Paragraph>
+                  <Paragraph className="ams-mb-s">
+                    Je kunt het E-mandaat later opnieuw activeren.
+                  </Paragraph>
+                </>
+              ),
+              confirmLabel: 'Ja, stopzetten',
+            }}
+          />
+        )}
     </>
   );
 }

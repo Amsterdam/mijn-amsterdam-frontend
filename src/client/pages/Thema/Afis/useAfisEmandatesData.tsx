@@ -11,6 +11,7 @@ import {
   titleBetaalvoorkeurenPage,
   titleEMandaatPage,
   featureToggle,
+  EMANDATE_STATUS_ACTIVE,
 } from './Afis-thema-config';
 import { useAfisThemaData } from './useAfisThemaData.hook';
 import type {
@@ -329,7 +330,7 @@ export function useEmandateStatusPendingStorage(
         updatedIbansPendingActivation.push(iban);
       }
       if (
-        eMandate?.status === '1' &&
+        eMandate?.status === EMANDATE_STATUS_ACTIVE &&
         eMandate?.creditorIBAN &&
         updatedIbansPendingActivation.includes(eMandate?.creditorIBAN)
       ) {
