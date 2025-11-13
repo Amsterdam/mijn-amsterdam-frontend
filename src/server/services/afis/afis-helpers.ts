@@ -1,6 +1,7 @@
 import { parseISO } from 'date-fns';
 
 import { fetchAfisTokenHeader } from './afis';
+import { EMANDATE_ENDDATE_INDICATOR } from './afis-e-mandates-config';
 import { AfisApiFeedResponseSource } from './afis-types';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { DataRequestConfig } from '../../config/source-api';
@@ -42,7 +43,7 @@ export async function getAfisApiConfig(
 
 export function getEmandateValidityDateFormatted(dateValidTo: string | null) {
   const dateValidToFormatted =
-    dateValidTo && !dateValidTo.includes('9999')
+    dateValidTo && !dateValidTo.includes(EMANDATE_ENDDATE_INDICATOR)
       ? defaultDateFormat(dateValidTo)
       : dateValidTo
         ? 'Doorlopend'

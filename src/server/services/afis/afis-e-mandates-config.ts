@@ -81,3 +81,6 @@ export const EMandateCreditorsGemeenteAmsterdam: AfisEMandateCreditor[] = [
     refId: '',
   },
 ];
+
+// E-Mandates are always recurring and have a default date far in the future!
+export const EMANDATE_ENDDATE_INDICATOR = '9999';
