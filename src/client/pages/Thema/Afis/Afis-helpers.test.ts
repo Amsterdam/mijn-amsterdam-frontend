@@ -4,13 +4,12 @@ import { describe, it, expect } from 'vitest';
 import { generateApiUrl, getEMandateValidityDate } from './Afis-helpers';
 import { EMANDATE_ENDDATE_INDICATOR } from './Afis-thema-config';
 import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types';
-import { BFFApiUrls } from '../../../config/api';
 
 describe('Afis-helpers', () => {
   describe('generateApiUrl', () => {
     it('should generate a valid API URL when businessPartnerIdEncrypted is provided', () => {
       const businessPartnerIdEncrypted = 'encrypted-id';
-      const route = 'AFIS_BUSINESSPARTNER' as keyof typeof BFFApiUrls;
+      const route = 'AFIS_BUSINESSPARTNER' as const;
 
       const result = generateApiUrl(businessPartnerIdEncrypted, route);
 
@@ -21,7 +20,7 @@ describe('Afis-helpers', () => {
 
     it('should return null when businessPartnerIdEncrypted is null', () => {
       const businessPartnerIdEncrypted = null;
-      const route = 'AFIS_BUSINESSPARTNER' as keyof typeof BFFApiUrls;
+      const route = 'AFIS_BUSINESSPARTNER' as const;
 
       const result = generateApiUrl(businessPartnerIdEncrypted, route);
 
