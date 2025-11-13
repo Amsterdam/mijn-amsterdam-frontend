@@ -163,6 +163,7 @@ export type AfisFactuurPropertiesSource = {
   AccountingDocument: string;
   AmountInBalanceTransacCrcy: string;
   AccountingDocumentType: AccountingDocumentType;
+  AccountingDocumentCreationDate: string;
   ClearingDate?: string;
   DocumentReferenceID: string;
   DunningBlockingReason: string;
