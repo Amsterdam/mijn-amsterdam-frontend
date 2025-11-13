@@ -829,8 +829,8 @@ describe('afis-facturen', async () => {
         feed: {
           entry: [
             factuur({
-              PostingDate: '2054-09-21T00:00:00',
-              NetDueDate: '2054-09-21T00:00:00',
+              PostingDate: '2024-09-21T00:00:00',
+              NetDueDate: '2024-09-21T00:00:00',
               AccountingDocumentCreationDate: null,
             }),
           ],
@@ -842,7 +842,30 @@ describe('afis-facturen', async () => {
         businessPartnerID: GENERIC_ID,
       });
 
-      expect(rs.content?.facturen[0].datePublished).toBe('2054-09-21T00:00:00');
+      expect(rs.content?.facturen[0].datePublished).toBe('2024-09-21T00:00:00');
+    });
+
+    test('factuur is filtered out because download not available', async () => {
+      remoteApi.get(ROUTES.openstaandeFacturen).reply(200, {
+        feed: {
+          entry: [
+            factuur({
+              AccountingDocumentCreationDate: '2024-11-01',
+            }),
+            factuur({
+              AccountingDocumentCreationDate: null,
+              PostingDate: '2024-11-01',
+            }),
+          ],
+        },
+      });
+
+      const rs = await fetchAfisFacturen(SESSION_ID, {
+        state: 'open',
+        businessPartnerID: GENERIC_ID,
+      });
+
+      expect(rs.content?.facturen.length).toBe(0);
     });
 
     test('fetchAfisFacturenOverview', async () => {

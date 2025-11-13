@@ -419,7 +419,7 @@ function transformFacturen(
       return FeatureToggle.afisFilterOutUndownloadableFacturenActive
         ? isDownloadAvailable(
             invoiceProperties.AccountingDocumentCreationDate ||
-              invoiceProperties.AccountingDocumentCreationDate
+              invoiceProperties.PostingDate
           )
         : true;
     })
