@@ -130,7 +130,3 @@ export async function fetchVergunningen(
     })
   );
 }
-
-export const forTesting = {
-  transformVergunningFrontend: () => void 0,
-};

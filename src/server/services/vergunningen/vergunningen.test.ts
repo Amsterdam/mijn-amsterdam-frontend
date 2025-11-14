@@ -1,13 +1,12 @@
 import { describe, it, expect, vi, type Mock } from 'vitest';
 
 import { DecosVergunning } from './config-and-types';
-import { forTesting } from './vergunningen';
+import { getStatusSteps } from './vergunningen-status-steps';
 import { routeConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config';
 import { getAuthProfileAndToken } from '../../../testing/utils';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
+import { transformDecosZaakFrontend } from '../decos/decos-service';
 import type { DecosZaakBase } from '../decos/decos-types';
-
-const { transformVergunningFrontend } = forTesting;
 
 vi.mock('../../helpers/encrypt-decrypt');
 
@@ -51,11 +50,16 @@ describe('vergunningen', () => {
         isVerleend: false,
       };
 
-      const result = transformVergunningFrontend(
+      const result = transformDecosZaakFrontend<DecosVergunning>(
         authProfileAndToken.profile.sid,
         decosVergunning as DecosVergunning,
-        routeConfig.detailPage.path
+        {
+          detailPageRoute: routeConfig.detailPage.path,
+          includeFetchDocumentsUrl: true,
+          getStepsFN: getStatusSteps,
+        }
       );
+
       expect(result).toStrictEqual({
         itemType: 'folders',
         caseType: 'Case Type 1',
