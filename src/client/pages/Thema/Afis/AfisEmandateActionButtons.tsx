@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react';
+import { useState, type ReactElement } from 'react';
 
 import { ActionGroup, Button, Paragraph } from '@amsterdam/design-system-react';
 
@@ -13,7 +13,7 @@ import { Spinner } from '../../../components/Spinner/Spinner';
 import type { BFFApiHook } from '../../../hooks/api/useBffApi';
 
 type ActionConfirmationModalProps = {
-  confirmationText: ReactNode;
+  confirmationText: ReactElement | string;
   confirmLabel: string;
   title: string;
   onClose: () => void;
