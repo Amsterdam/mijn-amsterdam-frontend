@@ -416,7 +416,8 @@ function transformFacturen(
   const facturenTransformed = feedProperties
     .filter((invoiceProperties) => {
       return featureToggle.filterOutUndownloadableFacturenActive
-        ? isDownloadAvailable(invoiceProperties.AccountingDocumentCreationDate)
+        ? isDownloadAvailable(invoiceProperties.AccountingDocumentCreationDate ||
+              invoiceProperties.PostingDate)
         : true;
     })
     .map((invoiceProperties) => {
