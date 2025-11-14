@@ -4,7 +4,7 @@ import {
   type Omzettingsvergunning,
 } from './config-and-types';
 import { SELECT_FIELDS_TRANSFORM_BASE } from '../powerbrowser/powerbrowser-field-transformers';
-import { getCaseTypeFromFMT_CAPTION } from '../powerbrowser/powerbrowser-helpers';
+import { hasCaseTypeInFMT_CAPTION } from '../powerbrowser/powerbrowser-helpers';
 import { PowerBrowserZaakTransformer } from '../powerbrowser/powerbrowser-types';
 
 const LigplaatsvergunningZaakTransformer: PowerBrowserZaakTransformer<Ligplaatsvergunning> =
@@ -12,7 +12,7 @@ const LigplaatsvergunningZaakTransformer: PowerBrowserZaakTransformer<Ligplaatsv
     caseType: caseTypePB.Ligplaatsvergunning,
     title: 'Ligplaatsvergunning',
     fetchZaakIdFilter: (pbRecordField) =>
-      getCaseTypeFromFMT_CAPTION(pbRecordField, caseTypePB.Ligplaatsvergunning),
+      hasCaseTypeInFMT_CAPTION(pbRecordField, caseTypePB.Ligplaatsvergunning),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
       A: 'requestKind',
@@ -30,10 +30,7 @@ const OmzettingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Omzetting
     caseType: caseTypePB.Omzettingsvergunning,
     title: 'Vergunning voor kamerverhuur (omzettingsvergunning)',
     fetchZaakIdFilter: (pbRecordField) =>
-      getCaseTypeFromFMT_CAPTION(
-        pbRecordField,
-        caseTypePB.Omzettingsvergunning
-      ),
+      hasCaseTypeInFMT_CAPTION(pbRecordField, caseTypePB.Omzettingsvergunning),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
       X: 'dateInBehandeling',

@@ -1,6 +1,6 @@
 import type { PBRecordField } from './powerbrowser-types';
 
-export function getCaseTypeFromFMT_CAPTION(
+export function hasCaseTypeInFMT_CAPTION(
   pbRecordField: PBRecordField<string>,
   caseType: string
 ) {
