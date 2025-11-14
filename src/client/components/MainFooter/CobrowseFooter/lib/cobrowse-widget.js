@@ -4,6 +4,7 @@
  * Addition:
  * The loading of the cobrowseIO script is delayed until the user needs it (on clicking the schermdelen footer button).
  * The localStorage is used to persist the cobrowse session to allow navigating between pages.
+ * A redactedViews constructor parameter is added to sync the redactedViews class used
  */
 
 const translations = {
