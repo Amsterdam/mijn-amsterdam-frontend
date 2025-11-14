@@ -28,7 +28,7 @@ function DateAdjustModal({
   setDateAdjustModal,
   onSubmit,
 }: DateAdjustModalProps) {
-  const minDate = addDays(new Date(), 1).toISOString().split('T')[0]; // Set minimum date to tomorrow.
+  const tomorrow = addDays(new Date(), 1).toISOString().split('T')[0];
   const dateValidTo = getEMandateValidityDate(eMandate);
   return (
     <Modal
@@ -67,7 +67,7 @@ function DateAdjustModal({
           <DateInput
             name="dateValidTo"
             type="date"
-            min={minDate}
+            min={tomorrow}
             defaultValue={dateValidTo}
           />
         </form>
