@@ -18,7 +18,9 @@ import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
 export const featureToggle = {
   AfisActive: true,
-  afisEMandatesActive: !IS_PRODUCTION,
+  get afisEMandatesActive() {
+    return featureToggle.AfisActive && !IS_PRODUCTION;
+  },
 };
 
 // E-Mandates are always recurring and have a default date far in the future!
