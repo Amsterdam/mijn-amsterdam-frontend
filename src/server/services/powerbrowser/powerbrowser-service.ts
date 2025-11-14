@@ -570,9 +570,12 @@ async function fetchZakenRecords<T extends PowerBrowserZaakTransformer>(
   }
 
   return apiSuccessResult(
-    zakenResponse.content.map(
-      (zaak) => [zaak, zakenIdToZakentransformer[zaak.id]] as [PBZaakRecord, T]
-    )
+    zakenResponse.content
+      .map(
+        (zaak) =>
+          [zaak, zakenIdToZakentransformer[zaak.id]] as [PBZaakRecord, T]
+      )
+      .filter(([_zaak, transformer]) => !!transformer)
   );
 }
 

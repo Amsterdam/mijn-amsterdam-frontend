@@ -22,7 +22,7 @@ const LigplaatsvergunningZaakTransformer: PowerBrowserZaakTransformer<Ligplaatsv
     },
     transformDoclinks: {
       'Besluiten en vastleggen': ['Besluit Ligplaatsvergunning'],
-    },
+    } as const,
   };
 
 const OmzettingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Omzettingsvergunning> =
@@ -37,7 +37,7 @@ const OmzettingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Omzetting
     },
     transformDoclinks: {
       'Besluiten en vastleggen': ['Besluit Omzettingsvergunning'],
-    },
+    } as const,
   };
 
 export const pbZaakTransformers = [
