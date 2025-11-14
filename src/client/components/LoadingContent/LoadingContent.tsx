@@ -37,6 +37,7 @@ export default function LoadingContent({
         className
       )}
     >
+      <span className="ams-visually-hidden">Inhoud wordt opgehaald...</span>
       {barConfig.map(([width, height, marginBottom], index) => {
         return (
           <span
