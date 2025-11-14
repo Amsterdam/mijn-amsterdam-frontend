@@ -111,11 +111,11 @@ export async function sendGetRequest<T extends any>(
   );
 }
 
-export type BffApiState<T> = {
+export type BffApiState<D> = {
   /**
    * The data returned from the API
    */
-  data: T | null;
+  data: D | null;
   /** The error message when the request failed
    */
   errorData: string | null;
@@ -133,12 +133,14 @@ export type BffApiState<T> = {
   isLoading: boolean;
 };
 
-export type BFFApiHook<T> = BffApiState<T> & {
+export type BFFApiHook<T, P extends RecordStr2, U> = BffApiState<
+  ApiResponse<T>
+> & {
   fetch: (
     url?: U | RequestInitWithPayload<P>,
     init_?: U extends URL | string ? RequestInitWithPayload<P> : never
   ) => void;
-  optimisticUpdateContent: (payload: Partial<T>) => void;
+  optimisticUpdateContent: (payload: T) => void;
   isPristine: boolean;
 };
 
@@ -191,7 +193,7 @@ export function useBffApi<
 >(
   urlOrKey: string | null | undefined,
   options?: BffApiOptions<T, P>
-): BFFApiHook<ApiResponse<T> | null> {
+): BFFApiHook<T | null, P, U> {
   const {
     url,
     sendRequest = sendGetRequest,
