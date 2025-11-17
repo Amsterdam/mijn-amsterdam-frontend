@@ -16,6 +16,7 @@ import { defaultDateFormat } from '../../../../../universal/helpers/date';
 import type { AppState } from '../../../../../universal/types/App.types';
 import LoadingContent from '../../../../components/LoadingContent/LoadingContent';
 import {
+  BRP_LABEL_AANTAL_BEWONERS,
   featureToggle,
   profileLinks,
   themaIdBRP,
@@ -142,9 +143,12 @@ const adres: ProfileLabels<
   ],
   begindatumVerblijfFormatted: 'Vanaf',
   aantalBewoners: [
-    'Aantal bewoners',
-    (value) => {
-      if (featureToggle[themaIdBRP].aantalBewonersOpAdresTonenActive) {
+    BRP_LABEL_AANTAL_BEWONERS,
+    (value, _x, BRPContent) => {
+      if (
+        BRPContent?.persoon?.mokum === true &&
+        featureToggle[themaIdBRP].aantalBewonersOpAdresTonenActive
+      ) {
         return value === -1 ? (
           <LoadingContent barConfig={[['2rem', '2rem', '0']]} />
         ) : (
@@ -292,11 +296,7 @@ export const panelConfig: PanelConfig<
       },
     ];
 
-    if (
-      featureToggle[themaIdBRP].aantalBewonersOpAdresTonenActive &&
-      profileData.adres?.aantalBewoners !== null &&
-      profileData.adres?.aantalBewoners !== -1
-    ) {
+    if (profileData.adres?.[BRP_LABEL_AANTAL_BEWONERS]) {
       actionLinks.push({
         title: 'Onjuiste inschrijving melden',
         url: profileLinks.CHANGE_RESIDENT_COUNT,
