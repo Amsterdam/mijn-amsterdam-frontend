@@ -810,7 +810,6 @@ describe('afis-facturen', async () => {
           entry: [
             factuur({
               PostingDate: '2054-09-21T00:00:00',
-              NetDueDate: '2046-09-21T00:00:00',
             }),
           ],
         },
@@ -832,7 +831,6 @@ describe('afis-facturen', async () => {
           entry: [
             factuur({
               PostingDate: '2024-09-21T00:00:00',
-              NetDueDate: '2024-09-21T00:00:00',
               AccountingDocumentCreationDate: null,
             }),
           ],

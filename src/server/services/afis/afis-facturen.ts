@@ -441,7 +441,7 @@ function transformFacturen(
  * */
 function isDownloadAvailable(documentDate: string): boolean {
   if (!documentDate) {
-    // Return true if we cannot determine the account document creation date.
+    // Return true if we cannot determine the documentDate.
     // This should not be the case. However if it does happen we at least show the factuur to the user.
     return true;
   }
