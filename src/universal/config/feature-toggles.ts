@@ -65,9 +65,6 @@ export const FeatureToggle = {
   parkerenActive: true,
   parkerenCheckForProductAndPermitsActive: !IS_PRODUCTION,
 
-  // Mijn Gegegvens -> aantal bewoners op adres.
-  residentCountActive: true,
-
   // Subsidie patroon C
   subsidieActive: true,
 

@@ -1,4 +1,3 @@
-import { defaultDateFormat, formatMonthAndYear, formatYear } from './date';
 import type { Persoon } from '../../server/services/brp/brp-types';
 
 export function getFullName(
@@ -72,23 +71,4 @@ export function hasDutchAndOtherNationalities(
     nationaliteiten.length > 1 &&
     nationaliteiten.some(({ omschrijving }) => omschrijving === 'Nederlandse')
   );
-}
-
-export function formatBirthdate(
-  indicatie: Persoon['indicatieGeboortedatum'],
-  geboortedatum: string
-) {
-  if (indicatie === 'J') {
-    return '00 00 0000';
-  }
-
-  if (indicatie === 'M') {
-    return `00 00 ${formatYear(geboortedatum)}`;
-  }
-
-  if (indicatie === 'D') {
-    return `00 ${formatMonthAndYear(geboortedatum)}`;
-  }
-
-  return defaultDateFormat(geboortedatum);
 }
