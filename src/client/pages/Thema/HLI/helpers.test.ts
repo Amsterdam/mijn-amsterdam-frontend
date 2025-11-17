@@ -1,7 +1,11 @@
 import { describe, it, expect } from 'vitest';
 
 import { getThemaTitle, getThemaTitleWithAppState } from './helpers';
-import { regelingenTitle, themaConfig } from './HLI-thema-config';
+import {
+  regelingenTitle,
+  stadspasTitle,
+  themaConfig,
+} from './HLI-thema-config';
 import { AppState } from '../../../../universal/types/App.types';
 
 describe('helpers', () => {
@@ -13,7 +17,7 @@ describe('helpers', () => {
 
     it('should return Stadspas when only hasStadspas is true', () => {
       const result = getThemaTitle(true, false);
-      expect(result).toBe('Stadspas');
+      expect(result).toBe(stadspasTitle);
     });
 
     it('should return Regelingen when only hasRegelingen is true', () => {
@@ -51,7 +55,7 @@ describe('helpers', () => {
         },
       } as unknown as AppState;
       const result = getThemaTitleWithAppState(appState);
-      expect(result).toBe('Stadspas');
+      expect(result).toBe(stadspasTitle);
     });
 
     it('should return Regelingen when appState has only Regelingen', () => {
