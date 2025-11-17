@@ -11,11 +11,10 @@ import { routeConfig } from '../Profile-thema-config';
 const responseData: KvkResponseFrontend = {
   eigenaar: {
     naam: 'Hendrika Johanna Theodora Grupstal',
-    geboortedatum: '1976-10-01',
   },
   mokum: true,
   onderneming: {
-    datumAanvang: '',
+    datumAanvang: null,
     datumEinde: null,
     handelsnamen: ['Ballonenverkoop B.V.'],
     hoofdactiviteit: 'Detailhandel via internet in kleding en mode-artikelen',
@@ -23,6 +22,8 @@ const responseData: KvkResponseFrontend = {
     rechtsvorm: 'BeslotenVennootschap',
     handelsnaam: 'Feestwinkel',
     kvknummer: '',
+    datumAanvangFormatted: null,
+    datumEindeFormatted: null,
   },
   vestigingen: [
     {
@@ -38,10 +39,12 @@ const responseData: KvkResponseFrontend = {
         straatnaam: 'Laan der Hesperiden',
         woonplaatsNaam: 'Amsterdam',
       }),
-      datumAanvang: '2020-01-01',
+      datumAanvang: { datum: '2020-01-01', dag: null, maand: null, jaar: null },
+      datumAanvangFormatted: '1 januari 2020',
       datumEinde: null,
-      emailadres: 'info@electrotechniek.amsterdam.nl',
-      faxnummer: '+310204107999',
+      datumEindeFormatted: null,
+      emailadres: ['info@electrotechniek.amsterdam.nl'],
+      faxnummer: ['+310204107999'],
       handelsnamen: ['Ballonenverkoop B.V.'],
       postadres: getFullAddress({
         huisletter: null,
@@ -51,12 +54,17 @@ const responseData: KvkResponseFrontend = {
         straatnaam: 'Laan der Hesperiden',
         woonplaatsNaam: 'Amsterdam',
       }),
-      telefoonnummer: '+310209991362',
-      typeringVestiging: 'Hoofdvestiging',
+      telefoonnummer: ['+310209991362'],
       vestigingsNummer: '990000996064',
       websites: ['www.electrotechniek.amsterdam.nl'],
       isHoofdvestiging: true,
-      eersteHandelsnaam: null,
+      naam: null,
+      postHeeftBagNummeraanduidingId: null,
+      postHeeftBagLigplaatsId: null,
+      postHeeftBagStandplaatsId: null,
+      bezoekHeeftBagNummeraanduidingId: null,
+      bezoekHeeftBagLigplaatsId: null,
+      bezoekHeeftBagStandplaatsId: null,
     },
     {
       activiteiten: ['Winkels in boeken'],
@@ -68,10 +76,12 @@ const responseData: KvkResponseFrontend = {
         straatnaam: 'Borchlandweg',
         woonplaatsNaam: 'Amsterdam-Duivendrecht',
       }),
-      datumAanvang: '2020-05-01',
+      datumAanvang: { datum: '2020-05-01', dag: null, maand: null, jaar: null },
+      datumAanvangFormatted: '1 mei 2020',
       datumEinde: null,
-      emailadres: 'info@feestwinkel.nl',
-      faxnummer: '+310204107765',
+      datumEindeFormatted: null,
+      emailadres: ['info@feestwinkel.nl'],
+      faxnummer: ['+310204107765'],
       handelsnamen: ['Ballonenverkoop B.V.', 'Feestwinkel'],
       postadres: getFullAddress({
         huisletter: null,
@@ -81,12 +91,17 @@ const responseData: KvkResponseFrontend = {
         straatnaam: 'Borchlandweg',
         woonplaatsNaam: 'Amsterdam-Duivendrecht',
       }),
-      telefoonnummer: '+310208451362',
-      typeringVestiging: 'Nevenvestiging',
+      telefoonnummer: ['+310208451362'],
       vestigingsNummer: '990000996080',
       websites: ['www.feestwinkel.nl'],
       isHoofdvestiging: false,
-      eersteHandelsnaam: null,
+      naam: null,
+      postHeeftBagNummeraanduidingId: null,
+      postHeeftBagLigplaatsId: null,
+      postHeeftBagStandplaatsId: null,
+      bezoekHeeftBagNummeraanduidingId: null,
+      bezoekHeeftBagLigplaatsId: null,
+      bezoekHeeftBagStandplaatsId: null,
     },
     {
       activiteiten: ['Detailhandel via internet in kleding en mode-artikelen'],
@@ -98,10 +113,12 @@ const responseData: KvkResponseFrontend = {
         straatnaam: 'Arena boulevard',
         woonplaatsNaam: 'Amsterdam',
       }),
-      datumAanvang: '2020-05-01',
+      datumAanvang: { datum: '2020-05-01', dag: null, maand: null, jaar: null },
+      datumAanvangFormatted: '1 mei 2020',
       datumEinde: null,
-      emailadres: null,
-      faxnummer: null,
+      datumEindeFormatted: null,
+      emailadres: [],
+      faxnummer: [],
       handelsnamen: ['Ballonenverkoop B.V.'],
       postadres: getFullAddress({
         huisletter: null,
@@ -111,12 +128,17 @@ const responseData: KvkResponseFrontend = {
         straatnaam: 'Arena boulevard',
         woonplaatsNaam: 'Amsterdam',
       }),
-      telefoonnummer: '+310205641954',
-      typeringVestiging: 'Nevenvestiging',
+      telefoonnummer: ['+310205641954'],
       vestigingsNummer: '990000996072',
       websites: [],
       isHoofdvestiging: false,
-      eersteHandelsnaam: null,
+      naam: null,
+      postHeeftBagNummeraanduidingId: null,
+      postHeeftBagLigplaatsId: null,
+      postHeeftBagStandplaatsId: null,
+      bezoekHeeftBagNummeraanduidingId: null,
+      bezoekHeeftBagLigplaatsId: null,
+      bezoekHeeftBagStandplaatsId: null,
     },
   ],
 };
@@ -161,7 +183,7 @@ describe('<MijnBedrijfsGegevensThema />', () => {
     });
 
     expect(screen.getAllByText(`${responseData.eigenaar?.naam}`)).toHaveLength(
-      2
+      1
     );
 
     await user.click(screen.getAllByText('Toon')[0]);
