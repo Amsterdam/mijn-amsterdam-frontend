@@ -32,7 +32,7 @@ export type WithdetailPageStadspas = PageConfig<'detailPageStadspas'>;
 
 type ThemaFeatureToggle = {
   themaActive: boolean;
-  features?: Record<string, boolean>;
+  [key: string]: boolean;
 };
 
 type RedactedScope = 'full' | 'content' | 'none';

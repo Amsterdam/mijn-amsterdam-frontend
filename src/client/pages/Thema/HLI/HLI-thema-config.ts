@@ -28,6 +28,35 @@ export const themaConfig: HLIThemaConfig = {
   title: THEMA_TITLE,
   featureToggle: {
     themaActive: true,
+    hliStadspasActive: true,
+    hliThemaRegelingenActive: true,
+    zorgnedAvApiActive: true,
+
+    get hliThemaStadspasBlokkerenActive() {
+      return this.themaActive && this.hliStadspasActive && true;
+    },
+
+    get hliThemaStadspasDeblokkerenActive() {
+      return this.themaActive && this.hliStadspasActive && !IS_PRODUCTION;
+    },
+
+    get hliRegelingEnabledCZM() {
+      return this.themaActive && this.hliThemaRegelingenActive && true;
+    },
+
+    get hliRegelingEnabledRTM() {
+      return (
+        this.themaActive && this.hliThemaRegelingenActive && !IS_PRODUCTION
+      );
+    },
+
+    get hli2025PCTegoedCodesEnabled() {
+      return this.themaActive && !IS_PRODUCTION;
+    },
+
+    get hli2026PCVergoedingV3Enabled() {
+      return this.themaActive && !IS_PRODUCTION;
+    },
   },
   profileTypes: ['private'],
   uitlegPageSections: {
