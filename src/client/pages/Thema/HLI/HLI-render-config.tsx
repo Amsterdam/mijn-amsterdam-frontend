@@ -1,11 +1,6 @@
-import { getThemaTitleWithAppState } from './helpers';
 // routeconfig en featuretoggle moeten eerst gefixed worden komt omdat hlistadspas nog niet goed in het themaconfig zit dit is opdracht 2 in jira
-import {
-  themaId, 
-  routeConfig,
-  featureToggle,
-  themaConfig,
-} from './HLI-thema-config';
+import { getThemaTitleWithAppState } from './helpers';
+import { featureToggle, themaConfig } from './HLI-thema-config';
 import { HLIDetail } from './HLIDetail';
 import { default as HLIIcon } from './HLIIcon.svg?react';
 import { HLIList } from './HLIList';
@@ -18,47 +13,54 @@ import type {
   ThemaRenderRouteConfig,
   ThemaMenuItem,
 } from '../../../config/thema-types';
-
 export const HLIRoutes = [
   {
-    route: routeConfig.detailPageStadspas.path,
+    route: themaConfig.detailPageStadspas.route.path,
     Component: HLIStadspasDetail,
     isActive: featureToggle.hliStadspasActive,
   },
   {
-    route: routeConfig.detailPage.path,
+    route: themaConfig.detailPage.route.path,
     Component: HLIDetail,
-    isActive: featureToggle.hliActive,
+    isActive: themaConfig.featureToggle.themaActive,
   },
   {
-    route: routeConfig.specificatieListPage.path,
+    route: themaConfig.specificatieListPage.route.path,
     Component: HLISpecificatieList,
     isActive: featureToggle.hliRegelingEnabledRTM,
   },
   {
-    route: routeConfig.regelingenListPage.path,
+    route: themaConfig.regelingenListPage.route.path,
     Component: HLIList,
-    isActive: featureToggle.hliActive,
+    isActive: themaConfig.featureToggle.themaActive,
   },
   {
-    route: routeConfig.themaPage.path,
+    route: themaConfig.route.path,
     Component: HLIThema,
-    isActive: featureToggle.hliActive,
+    isActive: themaConfig.featureToggle.themaActive,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
-export const menuItem: ThemaMenuItem = {
-  title: themaConfig.title,
+export const menuItem: ThemaMenuItem<typeof themaConfig.id> = {
+  title: (appState: AppState) => {
+    return getThemaTitleWithAppState(appState);
+  },
   id: themaConfig.id,
   to: themaConfig.route.path,
   profileTypes: themaConfig.profileTypes,
   redactedScope: themaConfig.redactedScope,
   isActive(appState: AppState) {
+    const hasStadspas =
+      !!appState.HLI?.content?.stadspas?.stadspassen?.length &&
+      featureToggle.hliStadspasActive;
+    const hasRegelingen =
+      !!appState.HLI?.content?.regelingen?.length &&
+      themaConfig.featureToggle.themaActive;
+    const isLoadingHLI = isLoading(appState.HLI);
     return (
       themaConfig.featureToggle.themaActive &&
-      !isLoading(appState.HLI) &&
-      (!!appState.HLI?.content?.stadspas?.stadspassen?.length ||
-        !!appState.HLI?.content?.regelingen?.length)
+      !isLoadingHLI &&
+      (hasStadspas || hasRegelingen)
     );
   },
   IconSVG: HLIIcon,

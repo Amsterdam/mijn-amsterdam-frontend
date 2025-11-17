@@ -1,6 +1,6 @@
 import { useParams } from 'react-router';
 
-import { ListPageParamKind } from './HLI-thema-config';
+import { ListPageParamKind, themaConfig } from './HLI-thema-config';
 import { HistoricItemsMention } from './HLIThema';
 import { useHliThemaData } from './useHliThemaData';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
@@ -11,16 +11,9 @@ export function HLIList() {
   const { kind = 'huidige-regelingen' } = useParams<{
     kind: ListPageParamKind;
   }>();
-  const {
-    themaId,
-    regelingen,
-    tableConfig,
-    isLoading,
-    isError,
-    breadcrumbs,
-    routeConfig,
-  } = useHliThemaData();
-  useHTMLDocumentTitle(routeConfig.detailPage);
+  const { regelingen, tableConfig, isLoading, isError, breadcrumbs } =
+    useHliThemaData();
+  useHTMLDocumentTitle(themaConfig.detailPage.route);
 
   const { filter, sort, title, displayProps, listPageRoute } =
     tableConfig[kind];
@@ -28,7 +21,7 @@ export function HLIList() {
   return (
     <>
       <ListPagePaginated
-        themaId={themaId}
+        themaId={themaConfig.id}
         items={regelingen.filter(filter).sort(sort)}
         title={title}
         appRoute={listPageRoute}

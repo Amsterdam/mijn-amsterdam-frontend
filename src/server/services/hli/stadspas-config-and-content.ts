@@ -22,7 +22,7 @@ const BUDGET_NOTIFICATION_CHILD = `
 
 export function getBudgetNotifications(stadspassen: StadspasFrontend[]) {
   const notifications: MyNotification[] = [];
-  // de routes moeten nog goed geimporteerd worden in thema config
+
   const createNotificationBudget = (
     description: string,
     stadspasPassNumber?: string
@@ -37,11 +37,10 @@ export function getBudgetNotifications(stadspassen: StadspasFrontend[]) {
     description,
     link: {
       to: stadspasPassNumber
-        ? generatePath(
-            themaConfig.routeConfig?.detailPageStadspas?.path ?? '',
-            { passNumber: stadspasPassNumber }
-          )
-        : (themaConfig.routeConfig?.themaPage?.path ?? ''),
+        ? generatePath(themaConfig.detailPageStadspas.route.path, {
+            passNumber: stadspasPassNumber,
+          })
+        : themaConfig.route.path,
       title: 'Check het saldo',
     },
   });

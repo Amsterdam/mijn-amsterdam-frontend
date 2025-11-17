@@ -79,7 +79,7 @@ function AppAuthenticated() {
       clearDeeplinkEntry();
       navigate(redirectAfterLogin);
     }
-  }, [redirectAfterLogin]);
+  }, [navigate, redirectAfterLogin]);
 
   const isBuurt = location.pathname === buurtRouteConfig.themaPage.path;
 

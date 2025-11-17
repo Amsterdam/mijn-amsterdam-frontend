@@ -2,12 +2,12 @@ import {
   featureToggle,
   regelingenTitle,
   stadspasTitle,
-  themaId,
+  themaConfig,
 } from './HLI-thema-config';
-import { InfoSection } from '../../GeneralInfo/GeneralInfo';
+import { InfoSection_DEPRECATED } from '../../GeneralInfo/GeneralInfo';
 
-export const HLIRegelingenSectionProps: InfoSection = {
-  id: themaId,
+export const HLIRegelingenSectionProps: InfoSection_DEPRECATED = {
+  id: themaConfig.id,
   title: regelingenTitle,
   listItems: [
     'Collectieve zorgverzekering',
@@ -23,8 +23,8 @@ export const HLIRegelingenSectionProps: InfoSection = {
   ],
   active: featureToggle.hliThemaRegelingenActive,
 };
-export const HLIstadspasSectionProps: InfoSection = {
-  id: themaId,
+export const HLIstadspasSectionProps: InfoSection_DEPRECATED = {
+  id: themaConfig.id,
   title: stadspasTitle,
   listItems: [
     'Status aanvraag Stadspas van u of uw gezin',

@@ -10,7 +10,7 @@ import {
 } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router';
 
-import { featureToggle, routeConfig, themaId } from './HLI-thema-config';
+import { featureToggle, themaConfig } from './HLI-thema-config';
 import styles from './HLIStadspasDetail.module.scss';
 import { useBlockStadspas, useStadspassen } from './useStadspassen.hook';
 import {
@@ -84,7 +84,7 @@ const PHONENUMBERS = {
 export function HLIStadspasDetail() {
   const isPhoneScreen = useSmallScreen();
   const appState = useAppStateGetter();
-  useHTMLDocumentTitle(routeConfig.detailPageStadspas);
+  useHTMLDocumentTitle(themaConfig.detailPageStadspas.route);
 
   const { HLI } = appState;
   const { passNumber } = useParams<{ passNumber: string }>();
@@ -128,11 +128,11 @@ export function HLIStadspasDetail() {
   const showMultiBudgetTransactions =
     !!stadspas?.budgets.length && stadspas.budgets.length > 1 && !isPhoneScreen;
 
-  const breadcrumbs = useThemaBreadcrumbs(themaId);
+  const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
   return (
     <DetailPageV2>
-      <PageContentV2 className={getRedactedClass(themaId)}>
+      <PageContentV2 className={getRedactedClass(themaConfig.id)}>
         <PageHeadingV2 breadcrumbs={breadcrumbs}>
           Overzicht Stadspas{' '}
           {stadspas?.owner && ` van ${stadspas?.owner.firstname}`}
@@ -166,7 +166,7 @@ export function HLIStadspasDetail() {
             {(isErrorStadspas || (!isLoadingStadspas && noContent)) && (
               <ErrorAlert>
                 We kunnen op dit moment geen gegevens tonen.{' '}
-                <MaRouterLink href={routeConfig.themaPage.path}>
+                <MaRouterLink href={themaConfig.route.path}>
                   Naar het overzicht
                 </MaRouterLink>
               </ErrorAlert>

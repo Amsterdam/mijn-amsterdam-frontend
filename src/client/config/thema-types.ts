@@ -26,9 +26,15 @@ export type ThemaConfigBase = {
 
 export type WithDetailPage = PageConfig<'detailPage'>;
 export type WithListPage = PageConfig<'listPage'>;
+export type WithRegelingenListPage = PageConfig<'regelingenListPage'>;
+export type WithspecificatieListPage = PageConfig<'specificatieListPage'>;
+export type WithdetailPageStadspas = PageConfig<'detailPageStadspas'>;
 
-type FeatureToggle = Record<string, boolean>;
-type ThemaFeatureToggle = { themaActive: boolean } & FeatureToggle;
+type ThemaFeatureToggle = {
+  themaActive: boolean;
+  features?: Record<string, boolean>;
+};
+
 type RedactedScope = 'full' | 'content' | 'none';
 
 type PageConfig<T extends string> = {
