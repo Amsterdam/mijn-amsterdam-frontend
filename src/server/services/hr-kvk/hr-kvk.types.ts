@@ -31,10 +31,10 @@ type DatumEindeMaatschappelijkeActiviteitSource = {
 };
 
 export type DatumNormalizedSource = {
-  datum: string;
-  jaar: string;
-  maand: string;
-  dag: string;
+  datum: string | null;
+  jaar: string | null;
+  maand: string | null;
+  dag: string | null;
 };
 
 type ActiviteitSource = {
