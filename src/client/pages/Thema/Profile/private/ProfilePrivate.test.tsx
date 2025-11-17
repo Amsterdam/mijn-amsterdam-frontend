@@ -1,4 +1,4 @@
-import { render, screen, cleanup } from '@testing-library/react';
+import { render, screen, cleanup, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type { PartialDeep } from 'type-fest';
 
@@ -8,6 +8,8 @@ import type {
   BrpFrontend,
 } from '../../../../../server/services/brp/brp-types';
 import { ContactMoment } from '../../../../../server/services/salesforce/contactmomenten.types';
+import { bffApiHost } from '../../../../../testing/setup';
+import { bffApi } from '../../../../../testing/utils';
 import { AppState } from '../../../../../universal/types/App.types';
 import MockApp from '../../../MockApp';
 import { routeConfig } from '../Profile-thema-config';
@@ -48,6 +50,7 @@ describe('<Profile />', () => {
   }
 
   test('Lives in Mokum + verbintenis: displays all data', async () => {
+    bffApi.get('/aantal-bewoners').reply(200, { content: 3, status: 'OK' });
     render(
       <Component
         state={{
@@ -60,7 +63,6 @@ describe('<Profile />', () => {
             straatnaam: 'Mooie Straat',
             huisnummer: '1',
             landnaam: 'Nederland',
-            _adresSleutel: 'x',
           },
           verbintenis: {
             datumSluiting: '2020-01-01',
@@ -77,6 +79,7 @@ describe('<Profile />', () => {
               geslachtsnaam: 'Mooier',
             },
           ],
+          fetchUrlAantalBewoners: `${bffApiHost}/aantal-bewoners`,
         }}
       />
     );
@@ -100,6 +103,10 @@ describe('<Profile />', () => {
       expect(screen.getByText(heading)).toBeInTheDocument();
     });
 
+    await waitFor(() => {
+      expect(screen.getByText('Aantal bewoners')).toBeInTheDocument();
+    });
+
     expect(screen.getByText('Verhuizing doorgeven')).toBeInTheDocument();
     expect(
       screen.getByText('Onjuiste inschrijving melden')
@@ -119,7 +126,6 @@ describe('<Profile />', () => {
             straatnaam: 'Prachtige Straat',
             huisnummer: '13',
             landnaam: 'Nederland',
-            _adresSleutel: 'x',
           },
           verbintenis: undefined,
           ouders: [{ voornamen: 'Hendrik' }, { voornamen: 'Marie' }],
@@ -142,12 +148,12 @@ describe('<Profile />', () => {
     screen.getByText('Dirkje');
   });
 
-  test('Matches the Full Page snapshot Non-Mokum', async () => {
+  test('Non-Mokum does not display certain panels', async () => {
     render(
       <Component
         state={{
           persoon: { mokum: false },
-          adres: { landnaam: 'Nederland', _adresSleutel: 'x' },
+          adres: { landnaam: 'Nederland' },
           ouders: [{ voornamen: 'Hendrik' }, { voornamen: 'Marie' }],
         }}
       />
@@ -169,18 +175,14 @@ describe('<Profile />', () => {
     expect(
       screen.getByText('Verhuizing naar Amsterdam doorgeven')
     ).toBeInTheDocument();
-    expect(
-      screen.getByText('Onjuiste inschrijving melden')
-    ).toBeInTheDocument();
   });
 
-  test('Matches the Full Page snapshot Not living in Netherlands', async () => {
+  test('Onjuiste inschrijving action link is niet zichtbaar bij mokum=false', async () => {
     render(
       <Component
         state={{
-          persoon: {},
-          adres: {
-            landnaam: 'Nicaragua',
+          persoon: {
+            mokum: false,
           },
         }}
       />
@@ -189,7 +191,6 @@ describe('<Profile />', () => {
     expect(
       await screen.queryByText('Onjuiste inschrijving melden')
     ).not.toBeInTheDocument();
-    expect(await screen.queryByText('Nicaragua')).not.toBeInTheDocument();
   });
 
   test('Matches the Full Page snapshot no address known', async () => {

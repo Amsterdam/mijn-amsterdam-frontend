@@ -1,6 +1,7 @@
 import {
   IS_DEVELOPMENT,
   IS_PRODUCTION,
+  IS_TEST,
 } from '../../../../universal/config/env';
 import { ThemaRoutesConfig } from '../../../config/thema-types';
 
@@ -12,7 +13,9 @@ export const featureToggle = {
     themaActive: true,
     benkBrpServiceActive: !IS_PRODUCTION,
     get aantalBewonersOpAdresTonenActive() {
-      return featureToggle[themaIdBRP].themaActive && IS_DEVELOPMENT;
+      return (
+        featureToggle[themaIdBRP].themaActive && (IS_DEVELOPMENT || IS_TEST)
+      );
     },
   },
   [themaIdKVK]: {
@@ -51,3 +54,5 @@ export const profileLinks = {
   REPORT_RELOCATION:
     'https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/',
 };
+
+export const BRP_LABEL_AANTAL_BEWONERS = 'Aantal bewoners';
