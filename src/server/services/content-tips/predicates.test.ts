@@ -288,6 +288,7 @@ describe('predicates', () => {
         const aanvraag = {
           decision,
           dateDecision,
+          title: 'Stadspas 2025',
         };
 
         return {

@@ -65,7 +65,8 @@ export const hasValidRecentStadspasRequest: TipsPredicateFN = (
       (aanvraag: HLIRegelingFrontend) => {
         return aanvraag.dateDecision
           ? differenceInYears(today, parseISO(aanvraag.dateDecision)) <= 1 &&
-              aanvraag.decision === 'toegewezen'
+              aanvraag.decision === 'toegewezen' &&
+              aanvraag.title.includes('Stadspas')
           : false;
       }
     );
