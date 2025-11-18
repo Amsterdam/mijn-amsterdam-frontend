@@ -41,7 +41,7 @@ function fetchBenkBrpTokenHeader() {
   return fetchAuthTokenHeader(
     'IAM_MS_OAUTH',
     {
-      sourceApiName: 'BRP',
+      sourceApiName: 'BENK_BRP',
       tokenValidityMS:
         TOKEN_VALIDITY_PERIOD * (1 - PERCENTAGE_DISTANCE_FROM_EXPIRY),
     },
@@ -400,7 +400,6 @@ export async function fetchAantalBewoners(
       'X-Correlation-ID': getContextOperationId(sessionID), // Required for tracing
     },
     transformResponse: (responseData: PersonenResponseSource) => {
-      console.log('responseDataresponseData', responseData);
       return responseData.personen.length;
     },
     data: {
