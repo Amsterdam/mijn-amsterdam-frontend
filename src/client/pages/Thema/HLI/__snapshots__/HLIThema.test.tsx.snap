@@ -33,7 +33,7 @@ exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
             >
               <a
                 class="ams-breadcrumb__link"
-                href="/bodem"
+                href="/regelingen-bij-laag-inkomen"
                 tabindex="-1"
               >
                 <span

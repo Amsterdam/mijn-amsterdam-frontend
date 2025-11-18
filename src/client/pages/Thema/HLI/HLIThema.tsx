@@ -2,11 +2,7 @@ import { ReactNode } from 'react';
 
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import {
-  featureToggle,
-  listPageParamKind,
-  themaConfig,
-} from './HLI-thema-config';
+import { featureToggle, listPageParamKind } from './HLI-thema-config';
 import styles from './HLIThema.module.scss';
 import { useHliThemaData } from './useHliThemaData';
 import {
@@ -99,8 +95,10 @@ export function HLIThema() {
     stadspassen,
     dateExpiryFormatted,
     linkListItems,
+    routeConfig,
   } = useHliThemaData();
-  useHTMLDocumentTitle(themaConfig.route);
+
+  useHTMLDocumentTitle(routeConfig);
 
   const hasAanvragen = regelingen.some(
     tableConfig[listPageParamKind.lopend].filter
