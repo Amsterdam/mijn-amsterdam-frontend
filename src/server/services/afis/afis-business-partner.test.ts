@@ -197,7 +197,7 @@ describe('Afis Business Partner services', () => {
     expect(response).toMatchInlineSnapshot(`
     {
       "content": {
-        "address": "not an object",
+        "address": null,
         "businessPartnerId": "12346789",
         "firstName": null,
         "fullAddress": "onbekend adres",
