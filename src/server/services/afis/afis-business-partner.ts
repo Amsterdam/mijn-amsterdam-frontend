@@ -257,8 +257,9 @@ export async function createBusinessPartnerBankAccount(
 
   const createBankAccountPayload: AfisBusinessPartnerBankAccount = {
     BusinessPartner: payload.businessPartnerId,
+    // We don't maintain a list of banks so we use the bank identifier as name and number.
     BankName: iban.bankIdentifier ?? '',
-    BankNumber: iban.bankIdentifier ?? '',
+    BankNumber: iban.bankIdentifier ?? '', // This is not a bankrekeningnummer. Instead it's the number of the bank (id?).
     SWIFTCode: payload.swiftCode,
     BankAccountHolderName: payload.senderName,
     IBAN: payload.iban,
