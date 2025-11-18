@@ -88,9 +88,9 @@ const validSourceMandate: AfisEMandateSource = {
   SndHouse: '2B',
   SndCity: 'Rotterdam',
   SndStreet: 'Sender Street',
-  SndDebtorId: '123', // Added required property
-  SignDate: '2024-01-01T00:00:00', // Added required property
-  SignCity: 'Amsterdam', // Added required property
+  SndDebtorId: '123',
+  SignDate: '2024-01-01T00:00:00',
+  SignCity: 'Amsterdam',
 };
 
 describe('afis-e-mandates service (with nock)', () => {
