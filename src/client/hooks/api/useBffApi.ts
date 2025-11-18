@@ -62,10 +62,10 @@ async function handleResponse<T>(
  * @param init Payload can be a regular object and will be converted to URLSearchParams. The provided body however, takes precedence over payload.
  * @returns
  */
-export async function sendFormPostRequest<
-  T extends any,
-  P extends RecordStr2 = RecordStr2,
->(url: string | URL, init?: RequestInitWithPayload<P>): ApiFetchResponse<T> {
+export async function sendFormPostRequest<T, P extends RecordStr2 = RecordStr2>(
+  url: string | URL,
+  init?: RequestInitWithPayload<P>
+): ApiFetchResponse<T> {
   return handleResponse<T>(() =>
     fetch(url, {
       method: 'POST',
@@ -85,10 +85,10 @@ export async function sendFormPostRequest<
  * @param init Payload can be a regular object and will be converted to URLSearchParams. The provided body however, takes precedence over payload.
  * @returns
  */
-export async function sendJSONPostRequest<
-  T extends any,
-  P extends RecordStr2 = RecordStr2,
->(url: string | URL, init?: RequestInitWithPayload<P>): ApiFetchResponse<T> {
+export async function sendJSONPostRequest<T, P extends RecordStr2 = RecordStr2>(
+  url: string | URL,
+  init?: RequestInitWithPayload<P>
+): ApiFetchResponse<T> {
   return handleResponse<T>(() =>
     fetch(url, {
       method: 'POST',
@@ -102,7 +102,7 @@ export async function sendJSONPostRequest<
   );
 }
 
-export async function sendGetRequest<T extends any>(
+export async function sendGetRequest<T>(
   url: URL | string,
   init?: RequestInit
 ): Promise<ApiResponse<T>> {
