@@ -37,7 +37,7 @@ function mergePayloadIntoEmandateById(
   eMandates: AfisEMandateFrontend[] | undefined
 ): AfisEMandateFrontend[] {
   if (!eMandates) {
-    return eMandates ?? [];
+    return [];
   }
   return eMandates.map((mandate) => {
     if (mandate.id === id) {
