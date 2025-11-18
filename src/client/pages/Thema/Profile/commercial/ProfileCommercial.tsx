@@ -1,4 +1,4 @@
-import { Link, Paragraph } from '@amsterdam/design-system-react';
+import { Alert, Link, Paragraph } from '@amsterdam/design-system-react';
 
 import { panelConfig } from './ProfileCommercial.transform';
 import { useProfileData } from './useProfileData.hook';
@@ -62,19 +62,43 @@ function ProfileCommercialSectionPanels() {
   );
 }
 
-const pageContentTop = (
-  <PageContentCell spanWide={8}>
-    <Paragraph>
-      Hier ziet u hoe uw onderneming ingeschreven staat in het Handelsregister
-      van de Kamer van Koophandel. In dat register staan onder meer uw
-      bedrijfsnaam, vestigingsadres en KvK-nummer. De gemeente gebruikt deze
-      gegevens. Het is dus belangrijk dat uw gegevens kloppen.
-    </Paragraph>
-  </PageContentCell>
-);
-
+function CommercialPageContentTop({
+  kvkTranslation,
+}: {
+  kvkTranslation?: { from: string; to: string };
+}) {
+  return (
+    <>
+      <PageContentCell spanWide={8}>
+        <Paragraph>
+          Hier ziet u hoe uw onderneming ingeschreven staat in het
+          Handelsregister van de Kamer van Koophandel. In dat register staan
+          onder meer uw bedrijfsnaam, vestigingsadres en KvK-nummer. De gemeente
+          gebruikt deze gegevens. Het is dus belangrijk dat uw gegevens kloppen.
+        </Paragraph>
+      </PageContentCell>
+      {kvkTranslation && (
+        <PageContentCell>
+          <Alert heading="Let op! KvK vertaald" headingLevel={1}>
+            <Paragraph>
+              Het EHerkenning test account KvKnummer is vertaald van{' '}
+              {kvkTranslation.from} naar {kvkTranslation.to}.
+            </Paragraph>
+            <Paragraph>
+              Dit betekent dat de bedrijfsgegevens, locatiegegevens op de kaart
+              en andere informatie mogelijk niet overeenkomen met de gegevens
+              gekoppeld aan het KvKnummer ({kvkTranslation.from}) in de
+              bronsystemen.
+            </Paragraph>
+          </Alert>
+        </PageContentCell>
+      )}
+    </>
+  );
+}
 export function MijnBedrijfsGegevensThema() {
-  const { isLoading, isError, linkListItems, id, title } = useProfileData();
+  const { isLoading, isError, linkListItems, id, title, KVK } =
+    useProfileData();
 
   return (
     <ThemaPagina
@@ -83,7 +107,11 @@ export function MijnBedrijfsGegevensThema() {
       isError={isError}
       isLoading={!isLoading && isError}
       linkListItems={linkListItems}
-      pageContentTop={pageContentTop}
+      pageContentTop={
+        <CommercialPageContentTop
+          kvkTranslation={KVK?.content?.kvkTranslation}
+        />
+      }
       pageContentMain={<ProfileCommercialSectionPanels />}
     />
   );

@@ -152,9 +152,7 @@ describe('brp.ts', () => {
           .post(/\/verblijfplaatshistorie/)
           .reply(200, verblijfplaatsenResponse);
 
-        const response = await fetchBrpByBsnTransformed('test-session-id', [
-          BSN,
-        ]);
+        const response = await fetchBrpByBsnTransformed('test-session-id', BSN);
 
         expect(response).toMatchSnapshot();
         expect(response.status).toBe('OK');
@@ -178,9 +176,7 @@ describe('brp.ts', () => {
           .post(/\/verblijfplaatshistorie/)
           .reply(500, 'Internal Server Error');
 
-        const response = await fetchBrpByBsnTransformed('test-session-id', [
-          BSN,
-        ]);
+        const response = await fetchBrpByBsnTransformed('test-session-id', BSN);
 
         expect(response).toMatchSnapshot();
         expect(response.status).toBe('OK');
