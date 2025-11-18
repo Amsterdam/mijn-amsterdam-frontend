@@ -111,7 +111,8 @@ function getPersoonBasis(persoon: PersoonBasisSource): PersoonBasis {
 
 function transformBenkBrpResponse(
   sessionID: AuthProfile['sid'],
-  persoon: PersonenResponseSource['personen'][0]
+  persoon: PersonenResponseSource['personen'][0],
+  bsnTranslation?: { from: BSN; to: BSN }
 ): BrpFrontend {
   let adresInOnderzoek: Persoon['adresInOnderzoek'] | null = null;
   const verblijfplaats = persoon.verblijfplaats;
@@ -220,6 +221,14 @@ function transformBenkBrpResponse(
     aantalBewoners: AANTAL_BEWONERS_NOT_SET,
   };
 
+  if (
+    !IS_PRODUCTION &&
+    bsnTranslation &&
+    bsnTranslation?.from !== bsnTranslation?.to
+  ) {
+    responseContent.bsnTranslation = bsnTranslation;
+  }
+
   return responseContent;
 }
 
@@ -268,9 +277,9 @@ export async function fetchBrpByBsn(sessionID: AuthProfile['sid'], bsn: BSN[]) {
 
 export async function fetchBrpByBsnTransformed(
   sessionID: AuthProfile['sid'],
-  bsn: BSN[]
+  bsn: BSN
 ): Promise<ApiResponse<BrpFrontend>> {
-  const brpResponse = await fetchBrpByBsn(sessionID, bsn);
+  const brpResponse = await fetchBrpByBsn(sessionID, [bsn]);
 
   if (brpResponse.status !== 'OK' || !brpResponse.content?.personen.length) {
     return apiErrorResult(
@@ -281,15 +290,16 @@ export async function fetchBrpByBsnTransformed(
     );
   }
 
-  const transformedContent = transformBenkBrpResponse(
-    sessionID,
-    brpResponse.content.personen[0]
-  );
+  const [persoon] = brpResponse.content.personen;
+  const transformedContent = transformBenkBrpResponse(sessionID, persoon, {
+    from: bsn,
+    to: translateBSN(bsn),
+  });
 
   const verblijfplaatshistorieResponse =
     await fetchBrpVerblijfplaatsHistoryByBsnTransformed(
       sessionID,
-      translateBSN(bsn[0]),
+      translateBSN(bsn),
       transformedContent.persoon.geboortedatum,
       transformedContent.adres?.begindatumVerblijf
     );
@@ -376,9 +386,10 @@ export async function fetchBrpVerblijfplaatsHistoryByBsnTransformed(
 }
 
 export async function fetchBrp(authProfileAndToken: AuthProfileAndToken) {
-  return fetchBrpByBsnTransformed(authProfileAndToken.profile.sid, [
-    authProfileAndToken.profile.id,
-  ]);
+  return fetchBrpByBsnTransformed(
+    authProfileAndToken.profile.sid,
+    authProfileAndToken.profile.id
+  );
 }
 
 export async function fetchAantalBewoners(

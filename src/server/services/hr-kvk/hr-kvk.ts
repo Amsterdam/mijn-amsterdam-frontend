@@ -207,7 +207,7 @@ function transformMAC(MACResponseData: MACResponseSource): MACResponse {
 
   return {
     onderneming: {
-      handelsnaam: MAC.naam, // TODO: verify of we dit wel nodig hebben
+      handelsnaam: MAC.naam,
       handelsnamen,
       rechtsvorm,
       hoofdactiviteit,
@@ -244,6 +244,8 @@ async function fetchMAC(
     transformResponse: transformMAC,
     profileType: authProfileAndToken.profile.profileType,
   });
+
+  console.log('MAC response', macResponse);
 
   if (macResponse.status !== 'OK' || !macResponse.content) {
     return apiErrorResult('Failed to fetch onderneming data', null);
@@ -364,6 +366,8 @@ export async function fetchKVK(
     MACRequest,
   ]);
 
+  console.log(vestigingenResponse, MACResponse);
+
   const vestigingResult = getSettledResult(vestigingenResponse);
   const MACResult = getSettledResult(MACResponse);
 
@@ -384,6 +388,15 @@ export async function fetchKVK(
     ),
     eigenaar: MACResult.content?.eigenaar ?? null,
   };
+
+  const kvkTranslation = {
+    from: authProfileAndToken.profile.id,
+    to: translateKVKNummer(authProfileAndToken.profile.id),
+  };
+
+  if (!IS_PRODUCTION && kvkTranslation.from !== kvkTranslation.to) {
+    KvkResponseFrontend.kvkTranslation = kvkTranslation;
+  }
 
   return apiSuccessResult(
     KvkResponseFrontend,
