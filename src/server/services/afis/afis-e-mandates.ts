@@ -11,6 +11,10 @@ import {
   fetchCheckIfIBANexists,
 } from './afis-business-partner';
 import {
+  AFIS_EMANDATE_COMPANY_NAME,
+  AFIS_EMANDATE_RECURRING_DATE_END,
+  AFIS_EMANDATE_SIGN_REQUEST_URL_VALIDITY_IN_DAYS,
+  afisEMandatePostbodyStatic,
   EMandateCreditorsGemeenteAmsterdam,
   eMandateReceiver,
 } from './afis-e-mandates-config';
@@ -26,7 +30,6 @@ import {
 import {
   type AfisBusinessPartnerDetailsTransformed,
   type AfisEMandateCreatePayload,
-  type AfisEMandateSourceStatic,
   type AfisEMandatesResponseDataSource,
   type AfisEMandateUpdatePayload,
   type AfisEMandateFrontend,
@@ -61,19 +64,6 @@ import { requestData } from '../../helpers/source-api-request';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureException } from '../monitoring';
 import { routes } from './afis-service-config';
-
-const AFIS_EMANDATE_RECURRING_DATE_END = '9999-12-31T00:00:00';
-const AFIS_EMANDATE_COMPANY_NAME = 'Gemeente Amsterdam';
-const AFIS_EMANDATE_SIGN_REQUEST_URL_VALIDITY_IN_DAYS = 1;
-
-const afisEMandatePostbodyStatic: AfisEMandateSourceStatic = {
-  PayType: getFromEnv('BFF_AFIS_EMANDATE_PAYTYPE') ?? '',
-  SndType: getFromEnv('BFF_AFIS_EMANDATE_SNDTYPE') ?? '',
-  RefType: getFromEnv('BFF_AFIS_EMANDATE_REFTYPE') ?? '',
-  RecType: getFromEnv('BFF_AFIS_EMANDATE_RECTYPE') ?? '',
-  RecId: getFromEnv('BFF_AFIS_EMANDATE_RECID') ?? '',
-  Status: getFromEnv('BFF_AFIS_EMANDATE_STATUS') ?? '',
-};
 
 export async function createOrUpdateEMandateFromStatusNotificationPayload(
   payload: EMandateSignRequestPayload & EMandateSignRequestNotificationPayload

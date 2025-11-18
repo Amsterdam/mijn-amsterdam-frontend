@@ -1,4 +1,9 @@
-import { AfisEMandateCreditor, EMandateReceiverSource } from './afis-types';
+import {
+  AfisEMandateCreditor,
+  EMandateReceiverSource,
+  type AfisEMandateSourceStatic,
+} from './afis-types';
+import { getFromEnv } from '../../helpers/env';
 
 // TODO: Uitvinden of de receiver mogelijk per Creditor kan verschillen
 export const eMandateReceiver: EMandateReceiverSource = {
@@ -84,3 +89,15 @@ export const EMandateCreditorsGemeenteAmsterdam: AfisEMandateCreditor[] = [
 
 // E-Mandates are always recurring and have a default date far in the future!
 export const EMANDATE_ENDDATE_INDICATOR = '9999';
+export const AFIS_EMANDATE_RECURRING_DATE_END = `${EMANDATE_ENDDATE_INDICATOR}-12-31T00:00:00`;
+export const AFIS_EMANDATE_COMPANY_NAME = 'Gemeente Amsterdam';
+export const AFIS_EMANDATE_SIGN_REQUEST_URL_VALIDITY_IN_DAYS = 1;
+
+export const afisEMandatePostbodyStatic: AfisEMandateSourceStatic = {
+  PayType: getFromEnv('BFF_AFIS_EMANDATE_PAYTYPE') ?? '',
+  SndType: getFromEnv('BFF_AFIS_EMANDATE_SNDTYPE') ?? '',
+  RefType: getFromEnv('BFF_AFIS_EMANDATE_REFTYPE') ?? '',
+  RecType: getFromEnv('BFF_AFIS_EMANDATE_RECTYPE') ?? '',
+  RecId: getFromEnv('BFF_AFIS_EMANDATE_RECID') ?? '',
+  Status: getFromEnv('BFF_AFIS_EMANDATE_STATUS') ?? '',
+};
