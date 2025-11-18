@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import type { Mock } from 'vitest';
 
 import { forTesting, fetchBrpByBsn, fetchBrpByBsnTransformed } from './brp';
+import type { PersonenResponseSource } from './brp-types';
 import testPersonenResponse from '../../../../mocks/fixtures/brp/test-personen.json';
 import verblijfplaatsenResponse from '../../../../mocks/fixtures/brp/verblijfplaatshistorie.json';
 import { remoteApi } from '../../../testing/utils';
@@ -14,7 +15,15 @@ const {
   translateBSN,
 } = forTesting;
 
-vi.mock('../ms-oauth/oauth-token', () => ({
+vi.mock('../../helpers/encrypt-decrypt', () => {
+  return {
+    encryptSessionIdWithRouteIdParam: () => {
+      return ['test-encrypted-id'];
+    },
+  };
+});
+
+vi.mock('../iam-oauth/oauth-token', () => ({
   fetchAuthTokenHeader: vi.fn(),
 }));
 
@@ -31,7 +40,7 @@ describe('brp.ts', () => {
       expect(fetchAuthTokenHeader).toHaveBeenCalledWith(
         'IAM_MS_OAUTH',
         {
-          sourceApiName: 'BRP',
+          sourceApiName: 'BENK_BRP',
           tokenValidityMS: expect.any(Number),
         },
         {
@@ -103,7 +112,10 @@ describe('brp.ts', () => {
         ],
       };
 
-      const result = transformBenkBrpResponse(responseData.personen[0] as any);
+      const result = transformBenkBrpResponse(
+        'xx-aa',
+        responseData.personen[0] as PersonenResponseSource['personen'][0]
+      );
       expect(result).toHaveProperty('persoon.opgemaakteNaam', 'John Doe');
       expect(result).toHaveProperty('persoon.vertrokkenOnbekendWaarheen', true);
       expect(result).toHaveProperty('persoon.mokum', true);
