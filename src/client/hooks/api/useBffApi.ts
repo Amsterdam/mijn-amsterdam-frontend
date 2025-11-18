@@ -17,6 +17,8 @@ type RequestInitWithPayload<P extends RecordStr2 = RecordStr2> = RequestInit & {
   payload?: P;
 };
 
+type UrlOrString = URL | string;
+
 async function handleResponse<T>(
   fetchFn: () => Promise<Response>
 ): ApiFetchResponse<T> {
@@ -103,7 +105,7 @@ export async function sendJSONPostRequest<T, P extends RecordStr2 = RecordStr2>(
 }
 
 export async function sendGetRequest<T>(
-  url: URL | string,
+  url: UrlOrString,
   init?: RequestInit
 ): Promise<ApiResponse<T>> {
   return handleResponse<T>(() =>
@@ -133,14 +135,14 @@ export type BffApiState<D> = {
   isLoading: boolean;
 };
 
-export type BFFApiHook<T, P extends RecordStr2, U> = BffApiState<
+export type BFFApiHook<T, P extends RecordStr2, U = UrlOrString> = BffApiState<
   ApiResponse<T>
 > & {
   fetch: (
-    url?: U | RequestInitWithPayload<P>,
-    init_?: U extends URL | string ? RequestInitWithPayload<P> : never
+    url?: UrlOrString | RequestInitWithPayload<P>,
+    init_?: U extends UrlOrString ? RequestInitWithPayload<P> : never
   ) => void;
-  optimisticUpdateContent: (payload: T) => void;
+  optimisticUpdateContent: (content: T) => void;
   isPristine: boolean;
 };
 
@@ -152,12 +154,12 @@ const initialState: BffApiState<null> = Object.seal({
   isDirty: false,
 });
 
-type BffApiOptions<T, P> = {
-  url?: URL | string;
-  init?: RequestInit;
+type BffApiOptions<T, P extends RecordStr2> = {
+  url?: UrlOrString;
+  init?: RequestInitWithPayload<P>;
   fetchImmediately?: boolean;
   sendRequest?: (
-    url: URL | string,
+    url: UrlOrString,
     init?: RequestInitWithPayload<P>
   ) => Promise<ApiResponse<T>>;
 };
@@ -174,7 +176,7 @@ type BFFApiStore = {
   set: SetState;
   get: GetState;
   has: HasState;
-} & { [key in StoreKey]: any }; // see https://github.com/pmndrs/zustand/discussions/2566, it's not possible to type this strictly as zustand doesn't support generics in the store itself.
+} & { [key in StoreKey]: unknown }; // see https://github.com/pmndrs/zustand/discussions/2566, it's not possible to type this strictly as zustand doesn't support generics in the store itself.
 
 export const useBffApiStateStore = create<BFFApiStore>((set, get) => ({
   set: (key, state) => set({ [key]: state }),
@@ -189,7 +191,7 @@ export const useBffApiStateStore = create<BFFApiStore>((set, get) => ({
 export function useBffApi<
   T,
   P extends RecordStr2 = RecordStr2,
-  U = URL | string,
+  U = UrlOrString,
 >(
   urlOrKey: string | null | undefined,
   options?: BffApiOptions<T, P>
@@ -230,7 +232,7 @@ export function useBffApi<
   const hasKey = !!urlOrKey && storeHas(urlOrKey);
 
   const setApiState = useCallback(
-    (partialState: Partial<BffApiState<ApiResponse<T> | null>>) => {
+    (partialState: Partial<BffApiState<ApiResponse<T | null> | null>>) => {
       if (urlOrKey) {
         const state = storeGet<T>(urlOrKey);
         const newState = { ...state, ...partialState };
@@ -242,7 +244,7 @@ export function useBffApi<
 
   const fetch = useCallback(
     async (
-      urlOrInit?: string | URL | RequestInitWithPayload<P>,
+      urlOrInit?: UrlOrString | RequestInitWithPayload<P>,
       init?: RequestInitWithPayload<P>
     ) => {
       const reqUrl =
@@ -285,7 +287,7 @@ export function useBffApi<
   );
 
   const optimisticUpdateContent = useCallback(
-    (content: T) => {
+    (content: T | null) => {
       if (rState.data?.content && rState.data.status === 'OK') {
         setApiState({
           data: {
