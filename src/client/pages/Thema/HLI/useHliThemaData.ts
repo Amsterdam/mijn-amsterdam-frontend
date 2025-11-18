@@ -69,5 +69,10 @@ export function useHliThemaData() {
     listPageParamKind,
     linkListItems: themaConfig.pageLinks,
     breadcrumbs,
+    regelingenListPageConfig: themaConfig.regelingenListPage,
+    specificatieListPageConfig: themaConfig.specificatieListPage,
+    detailPageConfig: themaConfig.detailPage,
+    detailPageStadspasConfig: themaConfig.detailPageStadspas,
+    routeConfig: themaConfig.route,
   };
 }
