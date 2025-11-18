@@ -40,7 +40,7 @@ describe('useBffApi', () => {
 
   it('should throw error if key is used without url and fetchImmediately is not false', () => {
     expect(() => renderHook(() => useBffApi('missing-url-key'))).toThrow(
-      'When using a key, you must provide a URL in the options parameter or set fetchImmediately to false'
+      'When using a cacheKey that is not an URL or path, you must provide a URL in the options parameter or set fetchImmediately to false'
     );
     expect(() => renderHook(() => useBffApi('/api/v1'))).toThrow();
     expect(() => renderHook(() => useBffApi('api/v1'))).toThrow();
