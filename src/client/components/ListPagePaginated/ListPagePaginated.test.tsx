@@ -147,9 +147,12 @@ describe('ListPagePaginated', () => {
       '/test'
     );
 
+    const textOfUnselectedPageLinks = /Ga naar pagina/;
+    const textOfSelectedPageLinks = /Pagina/;
+
     // We have 2 pagination components on the list page, both with 5 pages.
     // The first pagination item is selected and has a different text.
-    expect(screen.getAllByText(/Ga naar pagina/)).toHaveLength(8);
-    expect(screen.getAllByText(/Pagina/)).toHaveLength(2);
+    expect(screen.getAllByText(textOfUnselectedPageLinks)).toHaveLength(8);
+    expect(screen.getAllByText(textOfSelectedPageLinks)).toHaveLength(2);
   });
 });
