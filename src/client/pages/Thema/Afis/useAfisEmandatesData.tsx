@@ -323,7 +323,7 @@ export function useEmandateStatusPendingStorage(
     // Update the pending activation list based on the current eMandates status.
     eMandates.forEach((eMandate) => {
       if (
-        eMandate?.status !== '1' &&
+        eMandate?.status !== EMANDATE_STATUS_ACTIVE &&
         iban &&
         !updatedIbansPendingActivation.includes(iban)
       ) {
