@@ -48,7 +48,12 @@ describe('ListPagePaginated', () => {
       '/test'
     );
 
-    expect(screen.getAllByText('Test Title')).toHaveLength(2);
+    expect(
+      screen.getByRole('heading', { name: 'Test Title' })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: 'Test Title' })
+    ).toBeInTheDocument();
     expect(screen.getByText('Themapagina')).toBeInTheDocument();
     expect(screen.getByText('Home')).toBeInTheDocument();
   });
@@ -121,11 +126,13 @@ describe('ListPagePaginated', () => {
       '/test/2'
     );
 
+    expect(screen.queryByText('Item 10')).not.toBeInTheDocument();
     expect(screen.getByText('Item 11')).toBeInTheDocument();
     expect(screen.getByText('Item 20')).toBeInTheDocument();
+    expect(screen.queryByText('Item 21')).not.toBeInTheDocument();
   });
 
-  it('renders pagination controls when items exceed page size', () => {
+  it('renders 2 pagination controls when items exceed page size', () => {
     renderWithRouter(
       <ListPagePaginated
         appRoute="/test"
@@ -140,6 +147,9 @@ describe('ListPagePaginated', () => {
       '/test'
     );
 
-    expect(screen.getAllByText(/Ga naar pagina/i)).toHaveLength(28); // 50 items, 10 per page
+    // We have 2 pagination components on the list page, both with 5 pages.
+    // The first pagination item is selected and has a different text.
+    expect(screen.getAllByText(/Ga naar pagina/)).toHaveLength(8);
+    expect(screen.getAllByText(/Pagina/)).toHaveLength(2);
   });
 });

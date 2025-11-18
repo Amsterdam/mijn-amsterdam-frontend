@@ -34,7 +34,7 @@ describe('<Pagination />', () => {
     expect(
       screen
         .getAllByText('Pagina 1')[0]
-        .parentElement?.parentElement?.getAttribute('aria-current')
+        .parentElement?.getAttribute('aria-current')
     ).toBe('page');
     expect(screen.getAllByText('Ga naar pagina 2')[0]).toBeInTheDocument();
 
@@ -53,7 +53,7 @@ describe('<Pagination />', () => {
     expect(
       screen
         .getAllByText('Pagina 2')[0]
-        .parentElement?.parentElement?.getAttribute('aria-current')
+        .parentElement?.getAttribute('aria-current')
     ).toBe('page');
   });
 });
