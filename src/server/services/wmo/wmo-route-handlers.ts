@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import z from 'zod';
 
 import { fetchActueleWRAVoorzieningenCompact } from './wmo';
+import { ZORGNED_JZD_API_CONFIG_KEY } from './wmo-service-config';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { ZodValidators } from '../../helpers/validation';
 import {
@@ -11,11 +12,9 @@ import {
 } from '../../routing/route-helpers';
 import {
   fetchAanvragenRaw,
-  fetchAllDocuments,
+  fetchAllDocumentsRaw,
   fetchDocument,
 } from '../zorgned/zorgned-service';
-
-const ZORGNED_JZD_API_CONFIG_KEY = 'ZORGNED_JZD';
 
 export async function fetchZorgnedJZDDocument(
   authProfileAndToken: AuthProfileAndToken,
@@ -33,7 +32,7 @@ export async function fetchZorgnedJZDDocuments(
   req: Request,
   res: ResponseAuthenticated
 ) {
-  const response = await fetchAllDocuments(res.locals.userID, {
+  const response = await fetchAllDocumentsRaw(res.locals.userID, {
     zorgnedApiConfigKey: ZORGNED_JZD_API_CONFIG_KEY,
   });
 

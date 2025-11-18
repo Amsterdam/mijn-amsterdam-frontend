@@ -1,7 +1,7 @@
 import nock from 'nock';
 
 import { fetchBAG } from './bag';
-import type { Adres } from '../profile/brp.types';
+import type { Adres } from '../brp/brp-types';
 
 const ADDRESS = {
   straatnaam: 'straatje',
@@ -48,6 +48,7 @@ describe('BAG service', () => {
       content: {
         address: ADDRESS,
         bagAddress,
+        mokum: false,
         bagNummeraanduidingId: '0363200012145295',
         latlng: {
           lat: 52.3676456,

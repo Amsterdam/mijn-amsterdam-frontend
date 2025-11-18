@@ -12,6 +12,7 @@ import {
   DATE_END_NOT_OLDER_THAN,
   ZORGNED_JZD_REGELING_IDENTIFICATIE,
 } from './wmo-config-and-types';
+import { ZORGNED_JZD_API_CONFIG_KEY } from './wmo-service-config';
 import { PRODUCTS_WITH_DELIVERY } from './wmo-status-line-items';
 
 function isProductWithDelivery(
@@ -100,7 +101,7 @@ export async function fetchZorgnedAanvragenWMO(bsn: BSN) {
   };
 
   const aanvragenResponse = await fetchAanvragen(bsn, {
-    zorgnedApiConfigKey: 'ZORGNED_JZD',
+    zorgnedApiConfigKey: ZORGNED_JZD_API_CONFIG_KEY,
     requestBodyParams,
   });
 

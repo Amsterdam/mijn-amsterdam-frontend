@@ -1,10 +1,11 @@
 import { featureToggle, themaId, themaTitle } from './Varen-thema-config';
-import { InfoSection } from '../../GeneralInfo/GeneralInfo';
+import { InfoSection_DEPRECATED } from '../../GeneralInfo/GeneralInfo';
 
-export const varensectionProps: InfoSection = {
+export const varensectionProps: InfoSection_DEPRECATED = {
   id: themaId,
   title: themaTitle,
   listItems: [
+    'Registreren van uw onderneming',
     {
       text: 'Inzien en wijzigen van uw vergunning passagiersvaart:',
       listItems: [

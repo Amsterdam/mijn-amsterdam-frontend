@@ -7,7 +7,6 @@ import {
 import { default as AfvalIcon } from './AfvalIcon.svg?react';
 import { AfvalThemaPagina } from './AfvalThema';
 import { isLoading } from '../../../../universal/helpers/api';
-import { isMokum } from '../../../../universal/helpers/brp';
 import { type AppState } from '../../../../universal/types/App.types';
 import {
   type ThemaMenuItem,
@@ -29,12 +28,12 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
   profileTypes: ['private', 'commercial'],
   redactedScope: 'none',
   isActive(appState: AppState) {
-    return (
+    return !!(
       featureToggle.AfvalActive &&
       !isLoading(appState.AFVAL) &&
       !isLoading(appState.MY_LOCATION) &&
-      isMokum(appState.BRP?.content) &&
-      !!appState.AFVAL.content?.length
+      appState.MY_LOCATION.content?.some((location) => location.mokum) &&
+      appState.AFVAL.content?.length
     );
   },
   IconSVG: AfvalIcon,

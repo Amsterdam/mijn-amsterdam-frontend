@@ -31,6 +31,8 @@ module.exports = [
                   _embedded: {
                     aanvraag: [
                       ...ZORGNED_AV_AANVRAGEN_RESPONSE._embedded.aanvraag,
+                      // When adjusting the testdata for RTM, make sure the 'ontvanger'
+                      // his BSN is '999999999'. This is because of some sorting 'betrokkenen' logic.
                       ...ZORGNED_AV_AANVRAGEN_RESPONSE_RTM._embedded.aanvraag,
                     ],
                   },

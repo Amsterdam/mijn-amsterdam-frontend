@@ -29,9 +29,9 @@ import {
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
-import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureException } from '../monitoring';
+import { routes } from './hli-service-config';
 
 export async function fetchStadspas(
   authProfileAndToken: AuthProfileAndToken
@@ -51,7 +51,7 @@ export async function fetchStadspas(
       );
 
       const urlTransactions = generateFullApiUrlBFF(
-        BffEndpoints.STADSPAS_TRANSACTIONS,
+        routes.protected.STADSPAS_TRANSACTIONS,
         {
           transactionsKeyEncrypted,
         }
@@ -71,7 +71,7 @@ export async function fetchStadspas(
 
       if (featureToggle.hliThemaStadspasBlokkerenActive) {
         stadspasFrontend.blockPassURL = generateFullApiUrlBFF(
-          BffEndpoints.STADSPAS_BLOCK_PASS,
+          routes.protected.STADSPAS_BLOCK_PASS,
           {
             transactionsKeyEncrypted,
           }
@@ -80,7 +80,7 @@ export async function fetchStadspas(
 
       if (featureToggle.hliThemaStadspasDeblokkerenActive) {
         stadspasFrontend.unblockPassURL = generateFullApiUrlBFF(
-          BffEndpoints.STADSPAS_UNBLOCK_PASS,
+          routes.protected.STADSPAS_UNBLOCK_PASS,
           { transactionsKeyEncrypted }
         );
       }

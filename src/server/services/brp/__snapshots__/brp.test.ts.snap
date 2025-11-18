@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`brp.ts > fetchBrpByBsn > Should format response data correctly 1`] = `
+exports[`brp.ts > fetchBrpByBsn > Should format response data correctly > Formatting for test BSN 1, with verblijfplaatshistorie 1`] = `
 {
   "content": {
     "adres": {
@@ -15,6 +15,32 @@ exports[`brp.ts > fetchBrpByBsn > Should format response data correctly 1`] = `
       "straatnaam": "E Cady Stantonpln",
       "woonplaatsNaam": "Amsterdam",
     },
+    "adresHistorisch": [
+      {
+        "begindatumVerblijf": "1995-10-20",
+        "begindatumVerblijfFormatted": "20 oktober 1995",
+        "huisletter": null,
+        "huisnummer": "4",
+        "huisnummertoevoeging": null,
+        "landnaam": null,
+        "locatiebeschrijving": null,
+        "postcode": "1098NK",
+        "straatnaam": "Ampèrestraat",
+        "woonplaatsNaam": "Amsterdam",
+      },
+      {
+        "begindatumVerblijf": "1995-04-12",
+        "begindatumVerblijfFormatted": "12 april 1995",
+        "huisletter": null,
+        "huisnummer": "100",
+        "huisnummertoevoeging": null,
+        "landnaam": null,
+        "locatiebeschrijving": null,
+        "postcode": "1011AH",
+        "straatnaam": "Prins Hendrikkade",
+        "woonplaatsNaam": null,
+      },
+    ],
     "kinderen": [
       {
         "geboortedatum": "2015-09-01",
@@ -24,6 +50,8 @@ exports[`brp.ts > fetchBrpByBsn > Should format response data correctly 1`] = `
         "geslachtsnaam": "Abayomi - Akwasi",
         "omschrijvingAdellijkeTitel": null,
         "opgemaakteNaam": null,
+        "overlijdensdatum": null,
+        "overlijdensdatumFormatted": null,
         "voornamen": null,
         "voorvoegselGeslachtsnaam": null,
       },
@@ -37,6 +65,8 @@ exports[`brp.ts > fetchBrpByBsn > Should format response data correctly 1`] = `
         "geslachtsnaam": "Bawana",
         "omschrijvingAdellijkeTitel": null,
         "opgemaakteNaam": null,
+        "overlijdensdatum": null,
+        "overlijdensdatumFormatted": null,
         "voornamen": null,
         "voorvoegselGeslachtsnaam": null,
       },
@@ -48,6 +78,8 @@ exports[`brp.ts > fetchBrpByBsn > Should format response data correctly 1`] = `
         "geslachtsnaam": "Akwasi",
         "omschrijvingAdellijkeTitel": null,
         "opgemaakteNaam": null,
+        "overlijdensdatum": null,
+        "overlijdensdatumFormatted": null,
         "voornamen": null,
         "voorvoegselGeslachtsnaam": null,
       },
@@ -90,6 +122,8 @@ exports[`brp.ts > fetchBrpByBsn > Should format response data correctly 1`] = `
         "geslachtsnaam": "Abayomi",
         "omschrijvingAdellijkeTitel": null,
         "opgemaakteNaam": null,
+        "overlijdensdatum": null,
+        "overlijdensdatumFormatted": null,
         "voornamen": null,
         "voorvoegselGeslachtsnaam": null,
       },
@@ -99,7 +133,7 @@ exports[`brp.ts > fetchBrpByBsn > Should format response data correctly 1`] = `
 }
 `;
 
-exports[`brp.ts > fetchBrpByBsn > Should format response data correctly 2`] = `
+exports[`brp.ts > fetchBrpByBsn > Should format response data correctly > Formatting for test BSN 2, with verblijfplaatshistorie returning an error 1`] = `
 {
   "content": {
     "adres": {
@@ -114,6 +148,7 @@ exports[`brp.ts > fetchBrpByBsn > Should format response data correctly 2`] = `
       "straatnaam": "Science Park",
       "woonplaatsNaam": "Amsterdam",
     },
+    "adresHistorisch": [],
     "kinderen": [],
     "ouders": [
       {
@@ -124,6 +159,8 @@ exports[`brp.ts > fetchBrpByBsn > Should format response data correctly 2`] = `
         "geslachtsnaam": "Manderley",
         "omschrijvingAdellijkeTitel": null,
         "opgemaakteNaam": null,
+        "overlijdensdatum": null,
+        "overlijdensdatumFormatted": null,
         "voornamen": "Johanna",
         "voorvoegselGeslachtsnaam": null,
       },
@@ -135,6 +172,8 @@ exports[`brp.ts > fetchBrpByBsn > Should format response data correctly 2`] = `
         "geslachtsnaam": "Roos",
         "omschrijvingAdellijkeTitel": null,
         "opgemaakteNaam": null,
+        "overlijdensdatum": null,
+        "overlijdensdatumFormatted": null,
         "voornamen": "Hendrikus",
         "voorvoegselGeslachtsnaam": "de",
       },
@@ -181,9 +220,18 @@ exports[`brp.ts > fetchBrpByBsn > Should format response data correctly 2`] = `
         "geslachtsnaam": "Bruchs",
         "omschrijvingAdellijkeTitel": null,
         "opgemaakteNaam": null,
+        "overlijdensdatum": null,
+        "overlijdensdatumFormatted": null,
         "voornamen": "Helène",
         "voorvoegselGeslachtsnaam": null,
       },
+    },
+  },
+  "failedDependencies": {
+    "adresHistorisch": {
+      "content": null,
+      "message": "Unexpected token 'I', "Internal S"... is not valid JSON",
+      "status": "ERROR",
     },
   },
   "status": "OK",
