@@ -80,7 +80,6 @@ const validSourceMandate: AfisEMandateSource = {
   RecHouse: '1A',
   RecCountry: 'NL',
   RecCity: 'Amsterdam',
-  // Added missing sender properties
   SndId: 'snd123',
   SndPostal: '5678CD',
   SndCountry: 'NL',
