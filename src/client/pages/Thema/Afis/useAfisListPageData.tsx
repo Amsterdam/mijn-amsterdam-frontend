@@ -21,16 +21,18 @@ export function useAfisListPageData(state: AfisFactuurStateFrontend) {
     AFIS.content?.facturen ?? null
   );
 
+  const facturen =
+    (state === 'open'
+      ? // Open facturen are always loaded and retrieved from the stream endpoint
+        facturenByStateFromMainState?.open
+      : (api.facturenByState?.[state] ?? null)
+    )?.facturen ?? [];
+
   const breadcrumbs = useThemaBreadcrumbs(themaId);
 
   return {
     themaId: themaId,
-    facturen:
-      (state === 'open'
-        ? // Open facturen are always loaded and retrieved from the stream endpoint
-          facturenByStateFromMainState?.open
-        : (api.facturenByState?.[state] ?? null)
-      )?.facturen ?? [],
+    facturen,
     facturenTableConfig,
     isThemaPaginaError: isError(AFIS, false),
     isThemaPaginaLoading: isLoading(AFIS),

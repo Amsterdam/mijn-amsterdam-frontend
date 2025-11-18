@@ -6,7 +6,6 @@ import { useAfisListPageData } from './useAfisListPageData';
 import { bffApi } from '../../../../testing/utils';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore';
 
-// vi.mock('./useAfisFacturenApi');
 vi.mock('../../../hooks/useAppStateStore');
 vi.mock('../../../hooks/useThemaMenuItems');
 
@@ -64,7 +63,23 @@ describe('useAfisListPageData', () => {
       expect(result.current.isListPageLoading).toBe(false);
     });
 
-    expect(result.current.facturenListResponse).toMatchInlineSnapshot(`undefined`);
+    expect(result.current.facturen).toMatchInlineSnapshot(`
+      [
+        {
+          "amount": 100,
+          "documentDownloadLink": "http://example.com/document/afgehandeld-1.pdf",
+          "factuurNummer": "afgehandeld-1",
+          "factuurNummerEl": <MaRouterLink
+            href="/facturen-en-betalen/factuur/afgehandeld/afgehandeld-1"
+            maVariant="fatNoDefaultUnderline"
+          >
+            afgehandeld-1
+          </MaRouterLink>,
+          "status": "afgehandeld",
+          "statusDescription": "Afgehandeld",
+        },
+      ]
+    `);
   });
 
   it('should return default values for open state', () => {
@@ -72,6 +87,22 @@ describe('useAfisListPageData', () => {
 
     const { result } = renderHook(() => useAfisListPageData('open'));
 
-    expect(result.current.facturenListResponse).toMatchInlineSnapshot(`undefined`);
+    expect(result.current.facturen).toMatchInlineSnapshot(`
+      [
+        {
+          "amount": 100,
+          "documentDownloadLink": "http://example.com/document/open-1.pdf",
+          "factuurNummer": "open-1",
+          "factuurNummerEl": <MaRouterLink
+            href="/facturen-en-betalen/factuur/open/open-1"
+            maVariant="fatNoDefaultUnderline"
+          >
+            open-1
+          </MaRouterLink>,
+          "status": "openstaand",
+          "statusDescription": "Openstaand",
+        },
+      ]
+    `);
   });
 });
