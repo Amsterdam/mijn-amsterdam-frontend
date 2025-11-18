@@ -43,12 +43,15 @@ function transformBusinessPartnerAddressResponse(
     const includeLand = true;
     return {
       id: addressEntry.AddressID,
-      address: addressEntry,
+      address:
+        typeof addressEntry === 'object' && 'AddressID' in addressEntry
+          ? addressEntry
+          : null,
       fullAddress: getFullAddress(
         {
           straatnaam: addressEntry.StreetName,
           huisnummer: addressEntry.HouseNumber?.toString() ?? '',
-          huisletter: addressEntry.StreetSuffixName, // ? TODO: check if this is correct
+          huisletter: null, // Not provided by AFIS
           huisnummertoevoeging: addressEntry.HouseNumberSupplementText,
           postcode: addressEntry.PostalCode,
           woonplaatsNaam: addressEntry.CityName,

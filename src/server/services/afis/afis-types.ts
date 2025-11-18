@@ -108,7 +108,7 @@ export type AfisBusinessPartnerDetails = {
 export type AfisBusinessPartnerAddress = {
   id: string;
   fullAddress: string;
-  address: AfisBusinessPartnerAddressSource;
+  address: AfisBusinessPartnerAddressSource | null;
 };
 
 export type AfisBusinessPartnerPhone = {
