@@ -8,14 +8,11 @@ import DocumentListV2 from '../../../components/DocumentList/DocumentListV2';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
-
 type DetailPageContentProps = {
   hliRegeling: HLIRegelingFrontend;
 };
-
 function DetailPageContent({ hliRegeling }: DetailPageContentProps) {
   const rows: Row[] = [];
-
   return (
     <PageContentCell>
       {!!rows.length && <Datalist rows={rows} />}
@@ -25,16 +22,15 @@ function DetailPageContent({ hliRegeling }: DetailPageContentProps) {
     </PageContentCell>
   );
 }
-
 export function HLIDetail() {
-  const { regelingen, isError, isLoading, breadcrumbs } = useHliThemaData();
+  const { regelingen, isError, isLoading, breadcrumbs, themaId } =
+    useHliThemaData();
   useHTMLDocumentTitle(themaConfig.detailPage.route);
   const { id } = useParams<{ id: string }>();
   const regelingDetail = regelingen?.find((item) => item.id === id) ?? null;
-
   return (
     <ThemaDetailPagina
-      themaId={themaConfig.id}
+      themaId={themaId}
       title={regelingDetail?.title ?? 'Regeling bij laag inkomen'}
       zaak={regelingDetail}
       isError={isError}

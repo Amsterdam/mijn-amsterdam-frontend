@@ -38,7 +38,6 @@ export const themaConfig: HLIThemaConfig = {
       'Daarnaast zijn er regelingen voor mensen met een laag inkomen.',
     ],
   },
-
   pageLinks: [
     {
       title: 'Meer informatie over regelingen',
@@ -53,6 +52,7 @@ export const themaConfig: HLIThemaConfig = {
       to: 'https://www.amsterdam.nl/stadspas/kindtegoed/kosten-terugvragen/',
     },
   ],
+  redactedScope: 'none',
   route: {
     path: '/regelingen-bij-laag-inkomen',
     trackingUrl: null,
@@ -60,7 +60,6 @@ export const themaConfig: HLIThemaConfig = {
       return `${THEMA_TITLE} | Overzicht`;
     },
   },
-  redactedScope: 'none',
   detailPage: {
     route: {
       path: '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
