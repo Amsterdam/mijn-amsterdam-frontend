@@ -193,7 +193,7 @@ export function useBffApi<
   P extends RecordStr2 = RecordStr2,
   U = UrlOrString,
 >(
-  urlOrKey: string | null | undefined,
+  cacheKey: string | null | undefined,
   options?: BffApiOptions<T, P>
 ): BFFApiHook<T | null, P, U> {
   const {
@@ -203,25 +203,25 @@ export function useBffApi<
   } = options || {};
 
   const isUrlOrPathLike =
-    !!urlOrKey &&
-    (urlOrKey.startsWith('http') || urlOrKey.match(/^\/api\/v(\d+)\//));
+    !!cacheKey &&
+    (cacheKey.startsWith('http') || cacheKey.match(/^\/api\/v(\d+)\//));
 
   if (
     !url &&
-    urlOrKey &&
+    cacheKey &&
     // NOTE: not an ideal way to check this, but good enough for now.
     !isUrlOrPathLike &&
     fetchImmediately === true
   ) {
     const error =
-      'When using a key, you must provide a URL in the options parameter or set fetchImmediately to false';
+      'When using a cacheKey that is not an URL or path, you must provide a URL in the options parameter or set fetchImmediately to false';
     throw new Error(error);
   }
 
   const store = useBffApiStateStore();
-  const state = urlOrKey ? store.get<T>(urlOrKey) : null;
+  const state = cacheKey ? store.get<T>(cacheKey) : null;
   const rState = state ? state : initialState;
-  const url_ = url || urlOrKey;
+  const url_ = url || cacheKey;
 
   const storeSet = store.set;
   const storeHas = store.has;
@@ -229,17 +229,17 @@ export function useBffApi<
   const isDirty = state?.isDirty === true;
   const isLoading = state?.isLoading === true;
 
-  const hasKey = !!urlOrKey && storeHas(urlOrKey);
+  const hasKeyInStore = !!cacheKey && storeHas(cacheKey);
 
   const setApiState = useCallback(
     (partialState: Partial<BffApiState<ApiResponse<T | null> | null>>) => {
-      if (urlOrKey) {
-        const state = storeGet<T>(urlOrKey);
+      if (cacheKey) {
+        const state = storeGet<T>(cacheKey);
         const newState = { ...state, ...partialState };
-        storeSet(urlOrKey, newState);
+        storeSet(cacheKey, newState);
       }
     },
-    [storeGet, storeSet, urlOrKey]
+    [storeGet, storeSet, cacheKey]
   );
 
   const fetch = useCallback(
@@ -286,6 +286,9 @@ export function useBffApi<
     [options?.init, sendRequest, setApiState, url_]
   );
 
+  // Allows optimistic updating of the content in the API response.
+  // E.g. after a successful POST/PATCH/PUT request, we can optimistically update the content
+  // of the GET request in the store without refetching.
   const optimisticUpdateContent = useCallback(
     (content: T | null) => {
       if (rState.data?.content && rState.data.status === 'OK') {
@@ -300,14 +303,15 @@ export function useBffApi<
     [rState.data, setApiState]
   );
 
+  // Sets initial state in the store if not present.
   useEffect(() => {
-    if (urlOrKey && !storeHas(urlOrKey)) {
-      storeSet(urlOrKey, initialState);
+    if (cacheKey && !storeHas(cacheKey)) {
+      storeSet(cacheKey, initialState);
     }
   }, [
     state,
     url_,
-    urlOrKey,
+    cacheKey,
     storeSet,
     storeHas,
     options?.fetchImmediately,
@@ -315,16 +319,24 @@ export function useBffApi<
     storeGet,
   ]);
 
+  // Fetch data immediately if required.
   useEffect(() => {
     if (
-      urlOrKey &&
+      cacheKey &&
       options?.fetchImmediately !== false &&
       isDirty === false &&
       isLoading === false
     ) {
       fetch();
     }
-  }, [options?.fetchImmediately, fetch, hasKey, isDirty, isLoading, urlOrKey]);
+  }, [
+    options?.fetchImmediately,
+    fetch,
+    hasKeyInStore,
+    isDirty,
+    isLoading,
+    cacheKey,
+  ]);
 
   return Object.assign({}, rState, {
     fetch,
