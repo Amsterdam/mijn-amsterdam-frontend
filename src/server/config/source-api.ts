@@ -270,7 +270,6 @@ const ApiConfig_ = {
   BAG: {
     url: `${getFromEnv('BFF_BAG_API_BASE_URL')}`,
     cacheTimeout: 24 * ONE_HOUR_MS, // 24 hours
-    // headers: { 'X-Api-Key': getFromEnv('BFF_DATA_AMSTERDAM_API_KEY', false) },
   },
   ERFPACHT: {
     url: getFromEnv('BFF_ERFPACHT_API_URL'),
