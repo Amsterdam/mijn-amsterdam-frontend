@@ -280,7 +280,6 @@ function transformVestiging(vestigingSource: VestigingSource): Vestiging {
   const vestiging: Vestiging = {
     naam: vestigingSource.naam || vestigingSource.eersteHandelsnaam || null,
     vestigingsNummer: vestigingSource.vestigingsnummer,
-    // TODO: Wat is voortzetting datum?
     datumAanvang: normalizeDate('datumAanvang', datumAanvangSource),
     datumAanvangFormatted: datumAanvang
       ? defaultDateFormat(datumAanvang)
