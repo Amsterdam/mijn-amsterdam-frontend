@@ -715,6 +715,83 @@ describe('RTM aanvraag transformation', () => {
     const aanvragen = [
       aanvraag(RTM2, TOE, [], {
         id: '8-2',
+        datumBesluit: '2024-12-01',
+        datumEindeGeldigheid: '2025-11-30',
+        datumIngangGeldigheid: '2024-12-01',
+        documenten: [{ id: 'baz' }],
+        betrokkenPersonen: [],
+        beschiktProductIdentificatie: '7788999',
+      }),
+    ] as ZorgnedAanvraagWithRelatedPersonsTransformed[];
+
+    const transformed = transformRTMAanvragen(
+      'xxxx-session-id-xxxx',
+      { bsn: '12345' },
+      aanvragen
+    );
+    expect(transformed).toMatchInlineSnapshot(`
+      [
+        {
+          "betrokkenen": "",
+          "dateDecision": "2024-12-01",
+          "dateEnd": "2025-11-30",
+          "dateRequest": "",
+          "dateStart": "2024-12-01",
+          "decision": "toegewezen",
+          "displayStatus": "Besluit",
+          "documents": [],
+          "id": "1837487633",
+          "isActual": true,
+          "link": {
+            "title": "Meer informatie",
+            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/1837487633",
+          },
+          "steps": [
+            {
+              "datePublished": "2024-12-01",
+              "description": "<p>
+          U krijgt Regeling tegemoetkoming meerkosten per 01 december 2024.
+          </p>
+          <p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>
+        ",
+              "documents": [
+                {
+                  "id": "test-encrypted-id",
+                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
+                },
+              ],
+              "id": "besluit-193360802",
+              "isActive": true,
+              "isChecked": true,
+              "status": "Besluit",
+            },
+            {
+              "datePublished": "2025-12-01",
+              "description": "<p>Uw recht op Regeling tegemoetkoming meerkosten stopt per 01 december 2025.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>",
+              "documents": [
+                {
+                  "id": "test-encrypted-id",
+                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
+                },
+              ],
+              "id": "einde-recht-193360802",
+              "isActive": false,
+              "isChecked": false,
+              "status": "Einde recht",
+            },
+          ],
+          "title": "Regeling tegemoetkoming meerkosten",
+        },
+      ]
+    `);
+  });
+
+  test('Einde recht step in future', () => {
+    mockdate.set('2025-01-01');
+
+    const aanvragen = [
+      aanvraag(RTM2, TOE, [], {
+        id: '8-2',
         datumBesluit: '2024-11-01',
         datumEindeGeldigheid: '2025-11-30',
         documenten: [{ id: 'baz' }],

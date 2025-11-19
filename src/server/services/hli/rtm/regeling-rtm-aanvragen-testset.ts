@@ -646,4 +646,25 @@ export const aanvragenTestsetInput = [
       },
     ],
   },
+  {
+    title: 'RTM voor één jaar, mét einde recht, zonder beëindigingsproces',
+    bsnLoggedinUser: 'A8',
+    aanvragen: [
+      aanvraag(RTM2, TOE, ['A8'], {
+        beschiktProductIdentificatie: 'A8-1',
+        datumIngangGeldigheid: '2024-12-01',
+        datumEindeGeldigheid: '2025-11-30',
+        procesAanvraagOmschrijving: 'Aanvraag RTM fase 2',
+      }),
+    ],
+    // only: true,
+    expected: [
+      {
+        id: 4288114805,
+        persoon: 'Persoon A8',
+        steps: ['Besluit', 'Einde recht'],
+        displayStatus: 'Besluit',
+      },
+    ],
+  },
 ];
