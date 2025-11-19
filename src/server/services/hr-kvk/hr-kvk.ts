@@ -393,9 +393,3 @@ export async function fetchKVK(
     })
   );
 }
-
-export async function fetchAantalBewoners(
-  bagNummeraanduidingId: string
-): Promise<ApiResponse<number>> {
-  return apiSuccessResult<number>(0);
-}

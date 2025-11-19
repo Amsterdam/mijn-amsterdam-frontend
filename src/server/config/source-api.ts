@@ -249,10 +249,6 @@ const ApiConfig_ = {
     url: `${getFromEnv('BFF_CMS_BASE_URL')}/storingsmeldingen/alle-meldingen-mijn-amsterdam?new_json=true&reload=true`,
     cacheTimeout: ONE_HOUR_MS, // 1 hour
   },
-  BRP: {
-    url: `${getFromEnv('BFF_MKS_API_BASE_URL')}/brp/brp`,
-    passthroughOIDCToken: true,
-  },
   BENK_BRP: {
     url: `${getFromEnv('BFF_BENK_BRP_API_BASE_URL')}`,
     method: 'POST',
@@ -291,10 +287,6 @@ const ApiConfig_ = {
   AFVAL: {
     url: `https://api.data.amsterdam.nl/v1/afvalwijzer/afvalwijzer/`,
     headers: { 'X-Api-Key': getFromEnv('BFF_DATA_AMSTERDAM_API_KEY ', false) },
-  },
-  KVK: {
-    url: `${getFromEnv('BFF_MKS_API_BASE_URL')}/brp/hr`,
-    passthroughOIDCToken: true,
   },
   PARKEREN: {
     url: `${getFromEnv('BFF_PARKEREN_API_BASE_URL')}`,

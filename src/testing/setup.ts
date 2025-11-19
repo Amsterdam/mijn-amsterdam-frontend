@@ -121,7 +121,6 @@ process.env.BFF_CLEOPATRA_API_ENDPOINT = `${remoteApiHost}/cleopatra`;
 process.env.BFF_POWERBROWSER_API_URL = `${remoteApiHost}/powerbrowser`;
 
 // Koppel api base urls
-process.env.BFF_MKS_API_BASE_URL = `${remoteApiHost}`;
 process.env.BFF_KREFIA_API_BASE_URL = `${remoteApiHost}`;
 process.env.BFF_VERGUNNINGEN_API_BASE_URL = `${remoteApiHost}`;
 process.env.BFF_WPI_API_BASE_URL = `${remoteApiHost}`;
