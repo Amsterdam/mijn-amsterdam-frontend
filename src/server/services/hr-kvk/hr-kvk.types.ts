@@ -232,7 +232,6 @@ export type Onderneming = {
 export type NietNatuurlijkPersoon = {
   naam: string | null;
   rsin?: string;
-  statutaireZetel?: string;
   typePersoon?: string;
 };
 

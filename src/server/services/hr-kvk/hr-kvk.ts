@@ -162,7 +162,6 @@ function getRechtspersoon(
   const rechtspersoon: NietNatuurlijkPersoon = {
     rsin: nietNatuurlijkPersoonSource.rsin,
     naam: nietNatuurlijkPersoonSource.naam,
-    statutaireZetel: '', // TODO: Wat is dit?
     typePersoon: nietNatuurlijkPersoonSource.typePersoon,
   };
 

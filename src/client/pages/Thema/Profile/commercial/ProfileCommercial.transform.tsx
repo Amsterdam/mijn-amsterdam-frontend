@@ -23,7 +23,9 @@ import { PanelConfig, ProfileSectionData } from '../ProfileSectionPanel';
  * into the Profile page data.
  */
 
-type KVKPanelKey = keyof Omit<KvkResponseFrontend, 'mokum'> | 'hoofdVestiging';
+type KVKPanelKey =
+  | keyof Omit<KvkResponseFrontend, 'mokum' | 'kvkTranslation'>
+  | 'hoofdVestiging';
 
 function getPartialDateFormatted(datum?: DatumNormalizedSource | null) {
   if (!datum) {
@@ -212,7 +214,6 @@ const vestiging: ProfileLabels<Partial<Vestiging>, AppState['KVK']> = {
   ],
 };
 
-// TODO: TvO: Check if this is correct
 const eigenaar: ProfileLabels<
   NatuurlijkPersoon | NietNatuurlijkPersoon,
   AppState['KVK']
@@ -220,7 +221,6 @@ const eigenaar: ProfileLabels<
   typePersoon: 'Type persoon',
   naam: 'Naam',
   rsin: 'RSIN',
-  statutaireZetel: 'Statutaire zetel',
   adres: ['Adres', (address) => address],
 };
 
@@ -291,7 +291,11 @@ export function formatKvkProfileData(
   return profileData;
 }
 
-export const panelConfig: PanelConfig<KVKPanelKey, AppState['KVK']> = {
+export const panelConfig: PanelConfig<
+  KVKPanelKey,
+  AppState['KVK'],
+  ReturnType<typeof formatKvkProfileData>
+> = {
   onderneming: () => ({
     title: 'Onderneming',
     actionLinks: [],
