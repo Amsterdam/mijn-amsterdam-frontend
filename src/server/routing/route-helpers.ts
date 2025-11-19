@@ -135,7 +135,10 @@ export function sendBadRequestInvalidInput(res: Response, error: unknown) {
 
   if (error instanceof z.ZodError) {
     inputValidationError = error.issues
-      .map((e) => `${e.path.join('.')} ${e.message}`)
+      .map(
+        (e) =>
+          `for property '${e.path.join('.') || '.'}' with error '${e.message}'`
+      )
       .join(' - ');
   }
 

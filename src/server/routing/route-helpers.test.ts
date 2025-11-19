@@ -167,7 +167,7 @@ describe('route-helpers', () => {
     const resMock = ResponseMock.new();
     const responseData = apiErrorResult('Bad request: No can do!', null, 400);
 
-    sendBadRequest(resMock, 'No can do!', null);
+    sendBadRequest(resMock, 'No can do!');
 
     expect(resMock.status).toHaveBeenCalledWith(400);
     expect(resMock.send).toHaveBeenCalledWith(responseData);
@@ -191,7 +191,7 @@ describe('route-helpers', () => {
 
     test('With ZOD error', () => {
       const responseData2 = apiErrorResult(
-        'Bad request:  First error -  Second error',
+        `Bad request: for property 'some.path' with error 'First error' - for property 'other.path' with error 'Second error'`,
         null,
         400
       );
@@ -199,8 +199,8 @@ describe('route-helpers', () => {
       sendBadRequestInvalidInput(
         resMock,
         new z.ZodError([
-          { code: 'custom', message: 'First error', path: [] },
-          { code: 'custom', message: 'Second error', path: [] },
+          { code: 'custom', message: 'First error', path: ['some.path'] },
+          { code: 'custom', message: 'Second error', path: ['other.path'] },
         ])
       );
 

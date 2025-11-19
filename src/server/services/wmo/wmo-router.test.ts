@@ -33,7 +33,7 @@ describe('handleVoorzieningenRequest', () => {
     expect(res.send).toHaveBeenCalledWith({
       code: 400,
       content: null,
-      message: 'Bad request: bsn Invalid BSN',
+      message: `Bad request: for property 'bsn' with error 'Invalid BSN'`,
       status: 'ERROR',
     });
   });
