@@ -316,8 +316,9 @@ type EMandateSenderSource = {
   SndName1: string; // Firstname
   SndName2: string; // Lastname
 
-  // Creditor reference ID (RefId)
-  SndDebtorId: string; // Creditor reference ID (RefId)
+  // This parameter seems to be named ambiguously. It's supposed to be a Creditor reference ID (RefId)
+  // see also: ./afis-e-mandates-config.ts - EMandateCreditorsGemeenteAmsterdam
+  SndDebtorId: string;
 };
 
 export type EMandateReceiverSource = {
