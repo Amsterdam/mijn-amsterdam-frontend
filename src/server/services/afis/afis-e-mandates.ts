@@ -146,7 +146,7 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
     SndStreet: sender.address?.StreetName ?? '',
 
     SignDate: payload.eMandateSignDate,
-    SignCity: eMandateReceiver.RecCity, // TODO: Hoe komen we aan dit gegeven, altijd Amsterdam?
+    SignCity: eMandateReceiver.RecCity, // TODO: Hoe komen we aan dit gegeven, altijd Amsterdam? - https://gemeente-amsterdam.atlassian.net/browse/MIJN-12289
     LifetimeFrom: new Date().toISOString(),
     LifetimeTo: lifetimeTo,
     SndDebtorId: creditor.refId,
@@ -479,7 +479,7 @@ function createEMandateSignRequestPayload(
   const invoiceDate = isoDateFormat(today);
   const invoiceNumber = `EMandaat-${creditor.refId}-${invoiceDate}`;
 
-  // TODO: Moet dit met een gegeven uit AFIS te koppelen zijn?
+  // TODO: Moet dit met een gegeven uit AFIS te koppelen zijn? - https://gemeente-amsterdam.atlassian.net/browse/MIJN-12289
   const paymentReference = `${creditor.refId}-${businessPartner.businessPartnerId}`;
   const idBatch = `batch-${paymentReference}`;
   const idRequestClient = `${creditor.refId}-${businessPartner.businessPartnerId}-${isoDateString}`;
