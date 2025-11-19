@@ -27,52 +27,46 @@ function ProfilePrivateSectionPanels() {
         <ProfileSectionPanel
           sectionData={profileData.persoon}
           startCollapsed={false}
-          {...panelConfig.persoon(BRP)}
+          {...panelConfig.persoon(BRP, profileData)}
         />
       )}
       {!!profileData?.adres && (
         <ProfileSectionPanel
           sectionData={profileData.adres}
           startCollapsed={false}
-          {...panelConfig.adres(BRP)}
+          {...panelConfig.adres(BRP, profileData)}
         />
       )}
       {!!profileData?.verbintenis &&
         !BRP.content?.verbintenis?.datumOntbinding && (
           <ProfileSectionPanel
             sectionData={profileData.verbintenis}
-            {...panelConfig.verbintenis(BRP)}
+            {...panelConfig.verbintenis(BRP, profileData)}
           />
         )}
       {!!profileData?.kinderen?.length && (
         <ProfileSectionPanel
           sectionData={profileData.kinderen}
-          {...panelConfig.kinderen(BRP)}
+          {...panelConfig.kinderen(BRP, profileData)}
         />
       )}
       {!!profileData?.ouders?.length && (
         <ProfileSectionPanel
           sectionData={profileData.ouders}
-          {...panelConfig.ouders(BRP)}
+          {...panelConfig.ouders(BRP, profileData)}
         />
       )}
       {!!profileData?.verbintenis &&
         BRP.content?.verbintenis?.datumOntbinding && (
           <ProfileSectionPanel
             sectionData={profileData.verbintenis}
-            {...panelConfig.verbintenis(BRP)}
+            {...panelConfig.verbintenis(BRP, profileData)}
           />
         )}
-      {!!profileData?.verbintenisHistorisch?.length && (
-        <ProfileSectionPanel
-          sectionData={profileData.verbintenisHistorisch}
-          {...panelConfig.verbintenisHistorisch(BRP)}
-        />
-      )}
       {!!profileData?.adresHistorisch?.length && (
         <ProfileSectionPanel
           sectionData={profileData.adresHistorisch}
-          {...panelConfig.adresHistorisch(BRP)}
+          {...panelConfig.adresHistorisch(BRP, profileData)}
         />
       )}
       {isMokum(BRP.content) && (

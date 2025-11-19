@@ -16,11 +16,11 @@ import { fetchBrp } from '../brp/brp';
 import { fetchDataset } from '../buurt/buurt';
 
 vi.mock('../brp/brp', () => ({
-  fetchBrpV2: vi.fn(),
+  fetchBrp: vi.fn(),
 }));
 
 vi.mock('../bag/my-locations', () => ({
-  fetchMyLocation: vi.fn(),
+  fetchMyLocations: vi.fn(),
 }));
 
 vi.mock('../buurt/buurt', () => ({

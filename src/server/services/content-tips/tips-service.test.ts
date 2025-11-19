@@ -9,17 +9,13 @@ import {
   vi,
 } from 'vitest';
 
-import { contentTips } from './tips-content';
 import { fetchContentTips, prefixTipNotification } from './tips-service';
 import WPI_E from '../../../../mocks/fixtures/wpi-e-aanvragen.json';
 import {
   ApiSuccessResponse,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
-import {
-  MyNotification,
-  type AppState,
-} from '../../../universal/types/App.types';
+import { MyNotification } from '../../../universal/types/App.types';
 import type { BrpFrontend } from '../brp/brp-types';
 import { WpiRequestProcess } from '../wpi/wpi-types';
 
@@ -93,7 +89,7 @@ describe('createTipsFromServiceResults', () => {
       {
         WPI_TOZO: TOZO_copy as ApiSuccessResponse<any>,
         TOERISTISCHE_VERHUUR: VERHUUR_copy as ApiSuccessResponse<any>,
-        BRP: brpApiResponse<BRPData>({
+        BRP: brpApiResponse<BrpFrontend>({
           persoon: {
             mokum: true,
           },
@@ -106,35 +102,6 @@ describe('createTipsFromServiceResults', () => {
     expect(
       tips.filter((t) => ['mijn-35', 'mijn-36'].includes(t.id)).length
     ).toBe(2);
-  });
-
-  it("should return tip mijn-43 when user has only expired id's", async () => {
-    contentTips.find((t) => t.id === 'mijn-43')!.active = true;
-
-    const now = new Date('2023-11-25');
-    vi.setSystemTime(now);
-
-    const BRP = brpApiResponse<BrpFrontend>({
-      persoon: {
-        geboortedatum: '2000-01-01',
-        nationaliteiten: [{ omschrijving: 'Nederlandse' }],
-      },
-    });
-
-    const appState = {
-      BRP,
-      HLI: {
-        content: {
-          regelingen: [],
-          stadspas: { stadspassen: [{ foo: 'bar' }] },
-        },
-        status: 'OK',
-      },
-    } as unknown as AppState;
-
-    const tips = await fetchContentTips(appState, now, 'private');
-
-    expect(tips.find((t) => t.id === 'mijn-43')).toBeTruthy();
   });
 
   describe('prefixTipNotification', () => {

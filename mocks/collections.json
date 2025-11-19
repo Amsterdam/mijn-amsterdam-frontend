@@ -12,8 +12,6 @@
       "post-brp-verblijfplaatshistorie:standard",
       "post-ms-oauth:standard",
       "post-datapunt-iam-oauth:standard",
-      "get-brp:standard",
-      "post-brp-aantal-bewoners:standard",
       "post-cleopatra:standard",
       "get-cms-footer:standard",
       "get-cms-maintainance-notifications-dashboard:standard",

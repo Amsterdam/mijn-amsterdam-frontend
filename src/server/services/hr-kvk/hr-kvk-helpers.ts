@@ -47,7 +47,7 @@ export function getVestigingBagIds(
     .filter((vestiging) => vestiging.bezoekadres || vestiging.postadres)
     .map((vestiging) => {
       const bagIds = vestigingBagKeys
-        .map((key) => vestiging[key])
+        .map((key) => vestiging[key] ?? null)
         .filter((x) => x !== null);
       return { ...vestiging, bagIds };
     })

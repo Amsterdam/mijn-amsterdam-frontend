@@ -168,12 +168,6 @@ export type Adres = {
   begindatumVerblijf: string | null;
   begindatumVerblijfFormatted?: string | null;
   locatiebeschrijving?: string | null;
-  /** @deprecated Onderstaande gegevens worden niet meer gebruikt. */
-  einddatumVerblijf?: string | null;
-  /** @deprecated */
-  mokum?: boolean;
-  /** @deprecated */
-  _adresSleutel?: string;
 };
 
 export type PersoonBasis = {
@@ -202,10 +196,6 @@ export type Persoon = PersoonBasis & {
   datumVertrekUitNederlandFormatted?: string | null;
   indicatieGeheim: boolean;
   adresInOnderzoek: '080000' | '089999' | null;
-
-  /** @deprecated Deze gegevens worden niet meer gebruikt. */
-  aanduidingNaamgebruikOmschrijving: string | null;
-  indicatieGeboortedatum?: 'J' | 'M' | 'D' | 'V' | null;
 };
 
 export type Verbintenis = {
@@ -214,11 +204,6 @@ export type Verbintenis = {
   datumSluiting: string | null;
   datumSluitingFormatted?: string | null;
   persoon: PersoonBasis;
-
-  /** @deprecated Deze gegevens worden in de BENK-BRP niet meer gebruikt. */
-  plaatsnaamSluitingOmschrijving?: string | null;
-  soortVerbintenis?: string | null;
-  soortVerbintenisOmschrijving?: string | null;
 };
 
 export type Kind = PersoonBasis;
@@ -232,4 +217,6 @@ export type BrpFrontend = {
   ouders: Ouder[];
   adres: Adres | null;
   adresHistorisch: Adres[];
+  fetchUrlAantalBewoners: string | null;
+  aantalBewoners: number | null;
 };
