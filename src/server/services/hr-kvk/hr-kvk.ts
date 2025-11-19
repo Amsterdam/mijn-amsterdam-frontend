@@ -207,7 +207,7 @@ function transformMAC(MACResponseData: MACResponseSource): MACResponse {
 
   return {
     onderneming: {
-      handelsnaam: MAC.naam, // TODO: verify of we dit wel nodig hebben
+      handelsnaam: MAC.naam,
       handelsnamen,
       rechtsvorm,
       hoofdactiviteit,
@@ -384,6 +384,15 @@ export async function fetchKVK(
     ),
     eigenaar: MACResult.content?.eigenaar ?? null,
   };
+
+  const kvkTranslation = {
+    from: authProfileAndToken.profile.id,
+    to: translateKVKNummer(authProfileAndToken.profile.id),
+  };
+
+  if (!IS_PRODUCTION && kvkTranslation.from !== kvkTranslation.to) {
+    KvkResponseFrontend.kvkTranslation = kvkTranslation;
+  }
 
   return apiSuccessResult(
     KvkResponseFrontend,

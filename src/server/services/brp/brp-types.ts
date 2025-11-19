@@ -1,3 +1,5 @@
+import type { BSN } from '../zorgned/zorgned-types';
+
 type TyperingSource = {
   code: string;
   omschrijving: string;
@@ -209,6 +211,7 @@ export type Ouder = PersoonBasis;
 
 export type BrpFrontend = {
   persoon: Persoon;
+  bsnTranslation?: { from: BSN; to: BSN };
   verbintenis: Verbintenis | null;
   kinderen: Kind[];
   ouders: Ouder[];

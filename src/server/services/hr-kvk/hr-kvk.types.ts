@@ -270,6 +270,7 @@ export type KvkResponseFrontend = {
   onderneming: Onderneming | null;
   vestigingen: Vestiging[];
   eigenaar: NatuurlijkPersoon | NietNatuurlijkPersoon | null;
+  kvkTranslation?: { from: string; to: string };
 };
 
 export type MACResponse = {

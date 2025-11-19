@@ -64,12 +64,13 @@ export function transformBRPNotifications(
   return notifications;
 }
 
-export async function fetchBrpNotificationsV2(
+export async function fetchBrpNotifications(
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const BRP = await fetchBrpByBsnTransformed(authProfileAndToken.profile.sid, [
-    authProfileAndToken.profile.id,
-  ]);
+  const BRP = await fetchBrpByBsnTransformed(
+    authProfileAndToken.profile.sid,
+    authProfileAndToken.profile.id
+  );
 
   if (BRP.status === 'OK') {
     return apiSuccessResult({
