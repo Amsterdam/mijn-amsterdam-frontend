@@ -52,10 +52,7 @@ import {
 import { routeConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config';
 import { IS_AP } from '../../../universal/config/env';
 import { apiErrorResult, ApiResponse } from '../../../universal/helpers/api';
-import {
-  defaultDateFormat,
-  isoDateFormat,
-} from '../../../universal/helpers/date';
+import { isoDateFormat } from '../../../universal/helpers/date';
 import { AuthProfile } from '../../auth/auth-types';
 import { encryptPayloadAndSessionID } from '../../helpers/encrypt-decrypt';
 import { getFromEnv } from '../../helpers/env';
@@ -64,6 +61,7 @@ import { requestData } from '../../helpers/source-api-request';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureException } from '../monitoring';
 import { routes } from './afis-service-config';
+import { toDateFormatted } from '../../../universal/helpers/utils';
 
 export async function createOrUpdateEMandateFromStatusNotificationPayload(
   payload: EMandateSignRequestPayload & EMandateSignRequestNotificationPayload
@@ -319,9 +317,7 @@ function transformEMandateSource(
   afisEMandateSource?: AfisEMandateSource
 ): Readonly<AfisEMandateFrontend> {
   const dateValidFrom = afisEMandateSource?.LifetimeFrom || null;
-  const dateValidFromFormatted = dateValidFrom
-    ? defaultDateFormat(dateValidFrom)
-    : null;
+  const dateValidFromFormatted = toDateFormatted(dateValidFrom);
 
   const dateValidTo = afisEMandateSource?.LifetimeTo || null;
   const dateValidToFormatted = getEmandateValidityDateFormatted(dateValidTo);
