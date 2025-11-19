@@ -594,39 +594,23 @@ export async function fetchRTMSpecificaties(
     return response;
   }
 
-  const aanvragen = response.content.reduce(
-    (
-      filteredAanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
-      aanvraag
-    ) => {
-      const documents = aanvraag.documenten.filter(
-        (d) => d.title === RTM_SPECIFICATIE_TITLE
-      );
-      if (!documents.length) {
-        return filteredAanvragen;
-      }
-      filteredAanvragen.push({ ...aanvraag, documenten: documents });
-      return filteredAanvragen;
-    },
-    [] as ZorgnedAanvraagWithRelatedPersonsTransformed[]
-  );
-
-  const specificaties: HLIRegelingSpecificatieFrontend[] = aanvragen.flatMap(
-    (aanvraag) => {
+  const specificaties: HLIRegelingSpecificatieFrontend[] =
+    response.content.flatMap((aanvraag) => {
       const specificaties = getDocumentsFrontend(
         authProfileAndToken.profile.sid,
         aanvraag.documenten
-      ).map((doc) => {
-        const specificatie: HLIRegelingSpecificatieFrontend = {
-          ...doc,
-          category: aanvraag.titel,
-          datePublishedFormatted: defaultDateFormat(doc.datePublished),
-        };
-        return specificatie;
-      });
+      )
+        .filter((doc) => doc.title === RTM_SPECIFICATIE_TITLE)
+        .map((doc) => {
+          const specificatie: HLIRegelingSpecificatieFrontend = {
+            ...doc,
+            category: aanvraag.titel,
+            datePublishedFormatted: defaultDateFormat(doc.datePublished),
+          };
+          return specificatie;
+        });
       return specificaties;
-    }
-  );
+    });
 
   return apiSuccessResult(specificaties);
 }

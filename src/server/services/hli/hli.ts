@@ -288,7 +288,7 @@ export async function fetchHLI(authProfileAndToken: AuthProfileAndToken) {
 
 export const forTesting = {
   fetchRegelingen,
-  fetchSpecificaties: fetchRTMSpecificaties,
+  fetchRTMSpecificaties,
   getDisplayStatus,
   transformRegelingenForFrontend,
   transformRegelingTitle,
