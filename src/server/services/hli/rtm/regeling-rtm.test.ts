@@ -715,8 +715,8 @@ describe('RTM aanvraag transformation', () => {
     const aanvragen = [
       aanvraag(RTM2, TOE, [], {
         id: '8-2',
-        datumBesluit: '2026-05-01',
-        datumEindeGeldigheid: '2025-02-01',
+        datumBesluit: '2024-11-01',
+        datumEindeGeldigheid: '2025-11-30',
         documenten: [{ id: 'baz' }],
         betrokkenPersonen: [],
         beschiktProductIdentificatie: '7788999',
@@ -732,10 +732,10 @@ describe('RTM aanvraag transformation', () => {
       [
         {
           "betrokkenen": "",
-          "dateDecision": "2026-05-01",
-          "dateEnd": "2025-02-01",
+          "dateDecision": "2024-11-01",
+          "dateEnd": "2025-11-30",
           "dateRequest": "",
-          "dateStart": "2026-05-01",
+          "dateStart": "2024-11-01",
           "decision": "toegewezen",
           "displayStatus": "Besluit",
           "documents": [],
@@ -747,7 +747,7 @@ describe('RTM aanvraag transformation', () => {
           },
           "steps": [
             {
-              "datePublished": "2026-05-01",
+              "datePublished": "2024-11-01",
               "description": "<p>
           U krijgt Regeling tegemoetkoming meerkosten per .
           </p>
@@ -765,8 +765,8 @@ describe('RTM aanvraag transformation', () => {
               "status": "Besluit",
             },
             {
-              "datePublished": "2025-02-01",
-              "description": "<p>Uw recht op Regeling tegemoetkoming meerkosten stopt per 02 februari 2025.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>",
+              "datePublished": "2025-12-01",
+              "description": "<p>Uw recht op Regeling tegemoetkoming meerkosten stopt per 01 december 2025.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>",
               "documents": [
                 {
                   "id": "test-encrypted-id",

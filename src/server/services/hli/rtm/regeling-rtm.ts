@@ -9,7 +9,10 @@ import {
   type ApiResponse,
   apiSuccessResult,
 } from '../../../../universal/helpers/api';
-import { defaultDateFormat } from '../../../../universal/helpers/date';
+import {
+  dateFormat,
+  defaultDateFormat,
+} from '../../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
 import { hash, sortAlpha } from '../../../../universal/helpers/utils';
 import type { StatusLineItem } from '../../../../universal/types/App.types';
@@ -115,7 +118,7 @@ const lineItemConfigs: Record<string, LineItemConfig> = {
         // The brief mentions the following if the Einde recht is on 30 november:
         // "Uw recht op RTM stopt per 1 december."
         const dateStr = defaultDateFormat(
-          addDays(aanvraag.datumEindeGeldigheid, 1)
+          addDays(parseISO(aanvraag.datumEindeGeldigheid), 1)
         );
 
         if (isEindeRechtReached(aanvraag)) {
@@ -145,7 +148,12 @@ function getStatusDate(
     case lineItemConfigs.besluitAanvraagAfgewezen.status:
       return aanvraag.datumBesluit;
     case lineItemConfigs.eindeRecht.status:
-      return aanvraag.datumEindeGeldigheid ?? '';
+      return aanvraag.datumEindeGeldigheid
+        ? dateFormat(
+            addDays(parseISO(aanvraag.datumEindeGeldigheid), 1),
+            'yyyy-MM-dd'
+          )
+        : '';
     default:
       return '';
   }
