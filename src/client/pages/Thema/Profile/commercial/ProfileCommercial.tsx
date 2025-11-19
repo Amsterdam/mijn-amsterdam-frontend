@@ -18,7 +18,7 @@ function ProfileCommercialSectionPanels() {
         <ProfileSectionPanel
           sectionData={profileData.onderneming}
           startCollapsed={false}
-          {...panelConfig.onderneming(KVK)}
+          {...panelConfig.onderneming(KVK, profileData)}
         />
       )}
 
@@ -26,21 +26,21 @@ function ProfileCommercialSectionPanels() {
         <ProfileSectionPanel
           sectionData={profileData.eigenaar}
           startCollapsed={false}
-          {...panelConfig.eigenaar(KVK)}
+          {...panelConfig.eigenaar(KVK, profileData)}
         />
       )}
 
       {profileData?.hoofdVestiging && (
         <ProfileSectionPanel
           sectionData={profileData.hoofdVestiging}
-          {...panelConfig.hoofdVestiging(KVK)}
+          {...panelConfig.hoofdVestiging(KVK, profileData)}
         />
       )}
 
       {!!profileData?.vestigingen?.length && KVK.content?.vestigingen && (
         <ProfileSectionPanel
           sectionData={profileData.vestigingen}
-          {...panelConfig.vestigingen(KVK)}
+          {...panelConfig.vestigingen(KVK, profileData)}
         />
       )}
 
