@@ -97,10 +97,10 @@ export function handleAfisRequestWithEncryptedPayloadQueryParam<
     res: ResponseAuthenticated
   ) {
     // Get the query parameter value for the encrypted payload.
-    const payloadParamValue = req.query[payloadParamName];
+    const payloadEncrypted = req.query[payloadParamName];
 
     const decryptResult = decryptPayloadAndValidateSessionID<QueryPayload>(
-      payloadParamValue,
+      payloadEncrypted,
       res.locals.authProfileAndToken
     );
     if (decryptResult.status === 'ERROR') {
