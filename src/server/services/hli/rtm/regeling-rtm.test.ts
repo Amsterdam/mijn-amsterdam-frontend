@@ -179,10 +179,6 @@ describe('RTM aanvraag transformation', () => {
                   "id": "test-encrypted-id",
                   "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
                 },
-                {
-                  "id": "test-encrypted-id",
-                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
-                },
               ],
               "id": "in-behandeling-genomen-193359720",
               "isActive": false,
@@ -242,7 +238,12 @@ describe('RTM aanvraag transformation', () => {
       <p>U hoeft de Regeling tegemoetkoming meerkosten niet elk jaar opnieuw aan te vragen. De gemeente verlengt de regeling stilzwijgend, maar controleert wel elk jaar of u nog in aanmerking komt.</p>
       <p>U kunt dan ook een brief krijgen met het verzoek om extra informatie te geven.</p>
       <p><a href="https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/extra-geld-als-u-chronisch-ziek-of/">Als er wijzigingen zijn in uw situatie moet u die direct doorgeven</a>.</p>",
-              "documents": [],
+              "documents": [
+                {
+                  "id": "test-encrypted-id",
+                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
+                },
+              ],
               "id": "einde-recht-193360808",
               "isActive": false,
               "isChecked": false,
@@ -434,12 +435,22 @@ describe('RTM aanvraag transformation', () => {
                   "id": "test-encrypted-id",
                   "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
                 },
+              ],
+              "id": "besluit-wijziging-193359722",
+              "isActive": false,
+              "isChecked": true,
+              "status": "Besluit wijziging",
+            },
+            {
+              "datePublished": "",
+              "description": "<p>Uw aanvraag voor een wijziging is afgehandeld. Bekijk de brief voor meer informatie hierover.</p>",
+              "documents": [
                 {
                   "id": "test-encrypted-id",
                   "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
                 },
               ],
-              "id": "besluit-wijziging-193359722",
+              "id": "besluit-wijziging-193359725",
               "isActive": true,
               "isChecked": true,
               "status": "Besluit wijziging",
@@ -450,7 +461,12 @@ describe('RTM aanvraag transformation', () => {
       <p>U hoeft de Regeling tegemoetkoming meerkosten niet elk jaar opnieuw aan te vragen. De gemeente verlengt de regeling stilzwijgend, maar controleert wel elk jaar of u nog in aanmerking komt.</p>
       <p>U kunt dan ook een brief krijgen met het verzoek om extra informatie te geven.</p>
       <p><a href="https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/extra-geld-als-u-chronisch-ziek-of/">Als er wijzigingen zijn in uw situatie moet u die direct doorgeven</a>.</p>",
-              "documents": [],
+              "documents": [
+                {
+                  "id": "test-encrypted-id",
+                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
+                },
+              ],
               "id": "einde-recht-193359722",
               "isActive": false,
               "isChecked": false,
@@ -720,7 +736,7 @@ describe('RTM combine and dedupe', () => {
     expect(regeling.documenten).toStrictEqual([]);
   });
 
-  test('Dedupes aanvragen that have the same beschiktProductIdentificatie, but keeps the included documents', () => {
+  test('Collects aanvragen that have the same beschiktProductIdentificatie and adds them to a procesAanvragen array in the first aanvraag', () => {
     const regelingen = forTesting.dedupeButKeepDocuments([
       {
         beschiktProductIdentificatie: '1',
@@ -740,7 +756,13 @@ describe('RTM combine and dedupe', () => {
     expect(regelingen).toEqual([
       {
         beschiktProductIdentificatie: '1',
-        documenten: ['foo', 'bar', 'baz'],
+        documenten: ['foo', 'bar'],
+        procesAanvragen: [
+          {
+            beschiktProductIdentificatie: '1',
+            documenten: ['baz'],
+          },
+        ],
       },
       {
         beschiktProductIdentificatie: '2',
