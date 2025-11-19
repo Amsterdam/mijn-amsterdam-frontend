@@ -766,7 +766,7 @@ describe('RTM aanvraag transformation', () => {
             },
             {
               "datePublished": "2025-02-01",
-              "description": "<p>Uw recht op Regeling tegemoetkoming meerkosten stopt per 01 februari 2025.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>",
+              "description": "<p>Uw recht op Regeling tegemoetkoming meerkosten stopt per 02 februari 2025.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>",
               "documents": [
                 {
                   "id": "test-encrypted-id",

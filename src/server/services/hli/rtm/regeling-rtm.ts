@@ -1,3 +1,4 @@
+import { addDays } from 'date-fns';
 import { isAfter } from 'date-fns/isAfter';
 import { parseISO } from 'date-fns/parseISO';
 import { generatePath } from 'react-router';
@@ -111,7 +112,11 @@ const lineItemConfigs: Record<string, LineItemConfig> = {
       if (aanvraag.datumEindeGeldigheid) {
         const bezwaarDescription =
           '<p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>';
-        const dateStr = defaultDateFormat(aanvraag.datumEindeGeldigheid || '');
+        // The brief mentions the following if the Einde recht is on 30 november:
+        // "Uw recht op RTM stopt per 1 december."
+        const dateStr = defaultDateFormat(
+          addDays(aanvraag.datumEindeGeldigheid, 1)
+        );
 
         if (isEindeRechtReached(aanvraag)) {
           return `<p>Uw recht op ${aanvraag.titel} is beëindigd per ${dateStr}.</p>${bezwaarDescription}`;
