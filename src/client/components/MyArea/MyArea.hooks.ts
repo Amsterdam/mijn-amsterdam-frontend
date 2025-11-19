@@ -45,6 +45,9 @@ const NO_DATA_ERROR_RESPONSE = {
   ],
 };
 
+const PRIMARY_LOCATION_TITLE_DEFAULT = 'Mijn hoofdlocatie';
+const SECONDARY_LOCATION_TITLE_DEFAULT = 'Mijn andere locatie';
+
 function getActiveDatasetIdsDefaultValue() {
   const queryConfig = getQueryConfig(window.location.search);
   const defaultValue = queryConfig?.datasetIds?.length
@@ -556,7 +559,7 @@ export function useMapLocations(
           primaryLocation.title ??
           (primaryLocation.address &&
             getFullAddress(primaryLocation.address, true)) ??
-          'Mijn locatie';
+          PRIMARY_LOCATION_TITLE_DEFAULT;
         homeLocationMarker = { latlng, label, type: 'home' };
       }
       if (secondaryLocations?.length) {
@@ -565,7 +568,7 @@ export function useMapLocations(
           const label =
             location.title ??
             (location.address && getFullAddress(location.address, true)) ??
-            'Mijn andere locatie';
+            SECONDARY_LOCATION_TITLE_DEFAULT;
           if (latlng) {
             secondaryLocationMarkers.push({ latlng, label, type: 'secondary' });
           }
