@@ -1,4 +1,8 @@
-import { forTesting, transformRTMAanvragen } from './regeling-rtm';
+import {
+  forTesting,
+  RTM_SPECIFICATIE_TITLE,
+  transformRTMAanvragen,
+} from './regeling-rtm';
 import {
   aanvraag,
   aanvragenTestsetInput,
@@ -660,6 +664,31 @@ describe('RTM aanvraag transformation', () => {
         },
       ]
     `);
+  });
+
+  test('removes specificatie documents', () => {
+    const aanvragen = [
+      aanvraag(RTM2, TOE, [], {
+        id: '8-1',
+        datumBesluit: '2026-07-01',
+        documenten: [
+          { id: 'bar', title: RTM_SPECIFICATIE_TITLE },
+          { id: 'foo', title: 'Ander document' },
+        ],
+        betrokkenPersonen: [],
+        beschiktProductIdentificatie: '887766',
+      }),
+    ] as ZorgnedAanvraagWithRelatedPersonsTransformed[];
+
+    const transformed = transformRTMAanvragen(
+      'xxxx-session-id-xxxx',
+      { bsn: '12345' },
+      aanvragen
+    );
+
+    const documents = transformed[0].steps[0].documents;
+    expect(documents).toHaveLength(1);
+    expect(documents?.[0].title).not.toBe(RTM_SPECIFICATIE_TITLE);
   });
 });
 

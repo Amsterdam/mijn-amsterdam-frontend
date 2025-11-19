@@ -4,19 +4,33 @@ import { generatePath } from 'react-router';
 import slug from 'slugme';
 
 import { routeConfig } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
+import {
+  type ApiResponse,
+  apiSuccessResult,
+} from '../../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
 import { hash, sortAlpha } from '../../../../universal/helpers/utils';
 import type { StatusLineItem } from '../../../../universal/types/App.types';
-import type { AuthProfile } from '../../../auth/auth-types';
+import type {
+  AuthProfile,
+  AuthProfileAndToken,
+} from '../../../auth/auth-types';
 import type {
   BSN,
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedPerson,
 } from '../../zorgned/zorgned-types';
 import { getDocumentsFrontend } from '../hli';
-import type { HLIRegelingFrontend } from '../hli-regelingen-types';
+import type {
+  HLIRegelingFrontend,
+  HLIRegelingSpecificatieFrontend,
+} from '../hli-regelingen-types';
+import { fetchZorgnedAanvragenHLI } from '../hli-zorgned-service';
 import { getBesluitDescription } from '../status-line-items/generic';
+
+// Titel for RTM Specificatie documents in Zorgned
+export const RTM_SPECIFICATIE_TITLE = 'AV-RTM Specificatie';
 
 // Toets voorwaarden voor een afspraak GGD
 export const AV_RTM_DEEL1 = 'AV-RTM1';
@@ -482,6 +496,17 @@ function removeNonPdfDocuments(
   }));
 }
 
+function removeSpecificatieDocuments(
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
+): ZorgnedAanvraagWithRelatedPersonsTransformed[] {
+  return aanvragen.map((aanvraag) => ({
+    ...aanvraag,
+    documenten: aanvraag.documenten.filter(
+      (doc) => doc.title !== RTM_SPECIFICATIE_TITLE
+    ),
+  }));
+}
+
 /** Aanvragen can contain duplicate RTMDeel2. We combine the documents and drop the dupe. */
 function dedupeButKeepDocuments(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
@@ -537,8 +562,11 @@ export function transformRTMAanvragen(
   const aanvragenDeduped = dedupeButKeepDocuments(aanvragenSorted);
 
   const aanvragenWithPdfDocumentsOnly = removeNonPdfDocuments(aanvragenDeduped);
+  const aanvragenWithoutSpecificaties = removeSpecificatieDocuments(
+    aanvragenWithPdfDocumentsOnly
+  );
   const aanvragenWithAddedAanvrager = addAanvragerToRTM2Aanvragen(
-    aanvragenWithPdfDocumentsOnly,
+    aanvragenWithoutSpecificaties,
     aanvrager
   );
   // RTM aanvragen are processed in chronological order (ASC), so we sort them first.
@@ -554,6 +582,53 @@ export function transformRTMAanvragen(
     sessionID,
     aanvragenByBetrokkenenSplitted
   );
+}
+
+export async function fetchRTMSpecificaties(
+  authProfileAndToken: AuthProfileAndToken
+): Promise<ApiResponse<HLIRegelingSpecificatieFrontend[]>> {
+  const response = await fetchZorgnedAanvragenHLI(
+    authProfileAndToken.profile.id
+  );
+  if (response.status !== 'OK') {
+    return response;
+  }
+
+  const aanvragen = response.content.reduce(
+    (
+      filteredAanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
+      aanvraag
+    ) => {
+      const documents = aanvraag.documenten.filter(
+        (d) => d.title === RTM_SPECIFICATIE_TITLE
+      );
+      if (!documents.length) {
+        return filteredAanvragen;
+      }
+      filteredAanvragen.push({ ...aanvraag, documenten: documents });
+      return filteredAanvragen;
+    },
+    [] as ZorgnedAanvraagWithRelatedPersonsTransformed[]
+  );
+
+  const specificaties: HLIRegelingSpecificatieFrontend[] = aanvragen.flatMap(
+    (aanvraag) => {
+      const specificaties = getDocumentsFrontend(
+        authProfileAndToken.profile.sid,
+        aanvraag.documenten
+      ).map((doc) => {
+        const specificatie: HLIRegelingSpecificatieFrontend = {
+          ...doc,
+          category: aanvraag.titel,
+          datePublishedFormatted: defaultDateFormat(doc.datePublished),
+        };
+        return specificatie;
+      });
+      return specificaties;
+    }
+  );
+
+  return apiSuccessResult(specificaties);
 }
 
 export const forTesting = {
