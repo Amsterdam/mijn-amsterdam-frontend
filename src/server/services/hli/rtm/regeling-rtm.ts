@@ -108,8 +108,16 @@ const lineItemConfigs: Record<string, LineItemConfig> = {
   eindeRecht: {
     status: 'Einde recht',
     description: (aanvraag) => {
-      if (isEindeRechtReached(aanvraag)) {
-        return `<p>Uw recht op ${aanvraag.titel} is beëindigd per ${defaultDateFormat(aanvraag.datumEindeGeldigheid || '')}.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`;
+      if (aanvraag.datumEindeGeldigheid) {
+        const bezwaarDescription =
+          '<p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>';
+        const dateStr = defaultDateFormat(aanvraag.datumEindeGeldigheid || '');
+
+        if (isEindeRechtReached(aanvraag)) {
+          return `<p>Uw recht op ${aanvraag.titel} is beëindigd per ${dateStr}.</p>${bezwaarDescription}`;
+        }
+
+        return `<p>Uw recht op ${aanvraag.titel} stopt per ${dateStr}.</p>${bezwaarDescription}`;
       }
       return `
 <p>U hoeft de ${aanvraag.titel} niet elk jaar opnieuw aan te vragen. De gemeente verlengt de regeling stilzwijgend, maar controleert wel elk jaar of u nog in aanmerking komt.</p>
