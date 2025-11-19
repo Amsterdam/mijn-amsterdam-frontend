@@ -1,4 +1,3 @@
-import { MACExpandScopes } from './hr-kvk-service-config';
 import type {
   DatumNormalizedSource,
   NatuurlijkPersoon,
@@ -232,10 +231,16 @@ function transformMAC(MACResponseData: MACResponseSource): MACResponse {
 async function fetchMAC(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<MACResponse>> {
-  const params = {
-    kvknummer: translateKVKNummer(authProfileAndToken.profile.id),
-    _expandScope: MACExpandScopes.join(','),
-  };
+  const params: Record<string, string> =
+    authProfileAndToken.profile.profileType === 'private'
+      ? {
+          'heeftAlsEigenaarHrNps.bsn': authProfileAndToken.profile.id,
+          _expandScope: 'heeftAlsEigenaarHrNps',
+        }
+      : {
+          kvknummer: translateKVKNummer(authProfileAndToken.profile.id),
+          _expandScope: 'heeftAlsEigenaarHrNnp',
+        };
 
   const macResponse = await fetchHrKvk<MACResponseSource, MACResponse>({
     endpoint: '/maatschappelijkeactiviteiten',
