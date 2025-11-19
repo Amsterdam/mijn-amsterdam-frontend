@@ -144,7 +144,11 @@ export const useLoadingFeature = create<LoadingFeatureStore>((set) => ({
   setLoadingFeature: (feature) => set({ loadingFeature: feature }),
 }));
 
-type SelectedFeature = { id: string; datasetId: string; [string: string]: any };
+type SelectedFeature = {
+  id: string;
+  datasetId: string;
+  [string: string]: unknown;
+};
 type SelectedFeatureStore = {
   selectedFeature: SelectedFeature | null;
   setSelectedFeature: (feature: SelectedFeature | null) => void;
