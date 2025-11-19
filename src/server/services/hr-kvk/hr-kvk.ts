@@ -245,8 +245,6 @@ async function fetchMAC(
     profileType: authProfileAndToken.profile.profileType,
   });
 
-  console.log('MAC response', macResponse);
-
   if (macResponse.status !== 'OK' || !macResponse.content) {
     return apiErrorResult('Failed to fetch onderneming data', null);
   }
@@ -365,8 +363,6 @@ export async function fetchKVK(
     vestigingenRequest,
     MACRequest,
   ]);
-
-  console.log(vestigingenResponse, MACResponse);
 
   const vestigingResult = getSettledResult(vestigingenResponse);
   const MACResult = getSettledResult(MACResponse);
