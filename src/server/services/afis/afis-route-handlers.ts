@@ -160,7 +160,7 @@ export async function handleAfisEMandateSignRequestStatusNotification(
 
   let createEmandateResponse: ApiResponse<unknown> | null = null;
 
-  // TODO: Figure out if we can actually create the eMandate from this event.
+  // TODO: Figure out if we can actually create the eMandate from this event. - https://gemeente-amsterdam.atlassian.net/browse/MIJN-12289
   try {
     createEmandateResponse =
       await createOrUpdateEMandateFromStatusNotificationPayload(
@@ -168,7 +168,8 @@ export async function handleAfisEMandateSignRequestStatusNotification(
       );
   } catch (error) {
     // If the eMandate creation fails, we should log the error and return an error response.
-    // This is important for observability and debugging.
+    // This is important because the creation of the eMandate is a crucial part of the sign request process.
+    // Without it, the user will not be able to complete their mandate activation.
     captureException(error);
   }
 
