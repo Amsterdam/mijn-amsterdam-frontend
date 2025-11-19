@@ -98,7 +98,7 @@ function getPersoonOrMaatschapOptions(
   > = {
     commercial: {
       tableName: 'MAATSCHAP',
-      fieldName: 'kvknummer',
+      fieldName: 'KVKNUMMER',
       profileID: authProfile.id,
     },
     private: {

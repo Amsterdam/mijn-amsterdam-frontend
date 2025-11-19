@@ -19,7 +19,7 @@ export type PowerBrowserStatusResponse = PowerBrowserStatus[];
 export type FetchPersoonOrMaatschapIdByUidOptions = {
   profileID: AuthProfile['id'];
   tableName: 'PERSONEN' | 'MAATSCHAP';
-  fieldName: 'BURGERSERVICENUMMER' | 'kvknummer';
+  fieldName: 'BURGERSERVICENUMMER' | 'KVKNUMMER';
 };
 
 // Bead & Breakfast vergunningen (Powerbrowser)
