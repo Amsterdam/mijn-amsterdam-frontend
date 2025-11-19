@@ -167,6 +167,74 @@
           { "domeinnaam": "www.sbl.nl" },
           { "domeinnaam": "www.iamsterdam.com" },
           { "domeinnaam": "www.hierzijnwij.nu" }
+        ],
+        "handelsnamen": [
+          {
+            "datumAanvang": "1988-09-05",
+            "datumEinde": null,
+            "handelsnaam": "Bestuursdienst Amsterdam",
+            "volgorde": 0
+          },
+          {
+            "datumAanvang": "1988-09-05",
+            "datumEinde": null,
+            "handelsnaam": "stadsdeel Centrum",
+            "volgorde": 1
+          },
+          {
+            "datumAanvang": "1981-01-01",
+            "datumEinde": null,
+            "handelsnaam": "stadsdeel Nieuw West (samenvoeging Slotervaart Geuzenveld en Osdorp)",
+            "volgorde": 2
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "stadsdeel Noord",
+            "volgorde": 3
+          },
+          {
+            "datumAanvang": "2010-01-01",
+            "datumEinde": null,
+            "handelsnaam": "stadsdeel Oost (samenvoeging Zeeburg en Oost-Watergraafsmeer)",
+            "volgorde": 4
+          },
+          {
+            "datumAanvang": "1990-01-01",
+            "datumEinde": null,
+            "handelsnaam": "stadsdeel West (samenvoeging Westerpark, Oud-West, de Baarsjes, Bos en Lommer)",
+            "volgorde": 5
+          },
+          {
+            "datumAanvang": "1990-01-01",
+            "datumEinde": null,
+            "handelsnaam": "stadsdeel Zuid (samenvoeging Zuideramstel en Oud-Zuid)",
+            "volgorde": 6
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "stadsdeel Zuidoost",
+            "volgorde": 7
+          },
+          {
+            "datumAanvang": "1960-01-01",
+            "datumEinde": null,
+            "handelsnaam": "Haven Amsterdam",
+            "volgorde": 8
+          },
+          {
+            "datumAanvang": "1998-10-01",
+            "datumEinde": null,
+            "handelsnaam": "Bedrijf Zuidas",
+            "volgorde": 9
+          },
+          {
+            "datumAanvang": "2005-07-01",
+            "datumEinde": null,
+            "handelsnaam": "ACAM Accountancy en Advies",
+            "volgorde": 10
+          }
         ]
       }
     ],
