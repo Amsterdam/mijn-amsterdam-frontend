@@ -67,7 +67,7 @@ function fetchTokenHeader() {
 type FetchOptions<T, T2> = {
   endpoint: string;
   params?: Record<string, string>;
-  transformResponse?: (data: T, ...rest: any[]) => T2;
+  transformResponse?: (data: T, ...rest: unknown[]) => T2;
   profileType: ProfileType;
 };
 
