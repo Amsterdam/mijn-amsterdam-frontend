@@ -144,7 +144,7 @@ describe('HLI', () => {
     expect(resultError.status).toBe('ERROR');
   });
 
-  test.only('fetchSpecificaties: filters out the correct specificatie documents', async () => {
+  test('fetchSpecificaties: filters out the correct specificatie documents', async () => {
     const authProfileAndToken = getAuthProfileAndToken('private');
 
     (fetchZorgnedAanvragenHLI as unknown as Mock).mockResolvedValueOnce(
