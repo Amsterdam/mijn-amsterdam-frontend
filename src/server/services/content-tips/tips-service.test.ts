@@ -93,7 +93,7 @@ describe('createTipsFromServiceResults', () => {
       {
         WPI_TOZO: TOZO_copy as ApiSuccessResponse<any>,
         TOERISTISCHE_VERHUUR: VERHUUR_copy as ApiSuccessResponse<any>,
-        BRP: brpApiResponse<BRPData>({
+        BRP: brpApiResponse<BrpFrontend>({
           persoon: {
             mokum: true,
           },
