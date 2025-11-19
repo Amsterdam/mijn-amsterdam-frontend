@@ -572,6 +572,95 @@ describe('RTM aanvraag transformation', () => {
       ]
     `);
   });
+
+  test('transform complete RTM1 toegewezen -> RTM2 afgewezen', () => {
+    const aanvragen = [
+      aanvraag(RTM1, TOE, [], {
+        id: '7-1',
+        datumBesluit: '2026-05-01',
+        documenten: [{ id: 'baz' }],
+        betrokkenPersonen: [],
+        beschiktProductIdentificatie: '7788999',
+      }),
+      aanvraag(RTM2, AFW, [], {
+        id: '7-2',
+        datumBesluit: '2026-07-01',
+        documenten: [{ id: 'bar' }],
+        betrokkenPersonen: [],
+        beschiktProductIdentificatie: '887766',
+      }),
+    ] as ZorgnedAanvraagWithRelatedPersonsTransformed[];
+
+    const transformed = transformRTMAanvragen(
+      'xxxx-session-id-xxxx',
+      { bsn: '12345' },
+      aanvragen
+    );
+    expect(transformed).toMatchInlineSnapshot(`
+      [
+        {
+          "betrokkenen": "Met bsn: 12345",
+          "dateDecision": "2026-07-01",
+          "dateEnd": "",
+          "dateRequest": "",
+          "dateStart": "2026-07-01",
+          "decision": "afgewezen",
+          "displayStatus": "Afgewezen",
+          "documents": [],
+          "id": "1103584458",
+          "isActual": false,
+          "link": {
+            "title": "Meer informatie",
+            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/1103584458",
+          },
+          "steps": [
+            {
+              "datePublished": undefined,
+              "description": "",
+              "documents": [],
+              "id": "aanvraag-193359726",
+              "isActive": false,
+              "isChecked": true,
+              "status": "Aanvraag",
+            },
+            {
+              "datePublished": undefined,
+              "description": "<p>Voordat u de Regeling tegemoetkoming meerkosten krijgt, moet u een afspraak maken voor een medische keuring bij de GGD. In de brief staat hoe u dat doet.</p>",
+              "documents": [
+                {
+                  "id": "test-encrypted-id",
+                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
+                },
+              ],
+              "id": "in-behandeling-genomen-193359726",
+              "isActive": false,
+              "isChecked": true,
+              "status": "In behandeling genomen",
+            },
+            {
+              "datePublished": "2026-07-01",
+              "description": "<p>
+          U krijgt geen Regeling tegemoetkoming meerkosten.
+          </p>
+          <p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>
+        ",
+              "documents": [
+                {
+                  "id": "test-encrypted-id",
+                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
+                },
+              ],
+              "id": "besluit-193360813",
+              "isActive": true,
+              "isChecked": true,
+              "status": "Besluit",
+            },
+          ],
+          "title": "Regeling tegemoetkoming meerkosten",
+        },
+      ]
+    `);
+  });
 });
 
 describe('RTM combine and dedupe', () => {

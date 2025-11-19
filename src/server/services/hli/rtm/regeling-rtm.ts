@@ -399,7 +399,6 @@ function transformRTMRegelingenFrontend(
       id,
       regeling: slug(title),
     });
-
     // Get dates for the HLIRegeling from the steps.
     const RTM2Aanvragen = aanvragen.filter(
       (a) => a.productIdentificatie === AV_RTM_DEEL2
@@ -418,16 +417,13 @@ function transformRTMRegelingenFrontend(
 
     // Determine if the regeling is actual. This is needed to show the regeling as lopend or huidig.
     let isActual = false;
-    // A active RTM is present
-    if (hasToegewezenRTM2 && !isEindeRechtReached(toegewezenRTM2)) {
-      isActual = true;
-    }
-    // A lopende aanvraag is present.
+
+    // An active RTM is present
     if (
-      !hasToegewezenRTM2 &&
-      aanvragen.some(
-        (a) => a.resultaat === 'toegewezen' && !isEindeRechtReached(a)
-      )
+      // Any valid RTM2 means the regeling is actual
+      (hasToegewezenRTM2 && !isEindeRechtReached(toegewezenRTM2)) ||
+      (aanvragen.every((a) => a.resultaat === 'toegewezen') &&
+        !isEindeRechtReached(mostRecentAanvraag))
     ) {
       isActual = true;
     }
