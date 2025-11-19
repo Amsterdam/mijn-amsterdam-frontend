@@ -16,19 +16,19 @@ module.exports = [
         type: 'middleware',
         options: {
           middleware: (req, res) => {
-            const { type, burgerservicenummer } = req.body;
-
-            const persoonsgegevens = BRP_PERSOONSGEGEVENS.personen.filter(
-              (persoon) =>
-                burgerservicenummer.includes(persoon.burgerservicenummer)
-            );
+            const { type, burgerservicenummer = [] } = req.body;
 
             switch (type) {
-              case 'RaadpleegMetBurgerservicenummer':
+              case 'RaadpleegMetBurgerservicenummer': {
+                const persoonsgegevens = BRP_PERSOONSGEGEVENS.personen.filter(
+                  (persoon) =>
+                    burgerservicenummer.includes(persoon.burgerservicenummer)
+                );
                 return res.send({
                   ...BRP_PERSOONSGEGEVENS,
                   personen: persoonsgegevens,
                 });
+              }
               case 'ZoekMetAdresseerbaarObjectIdentificatie':
                 return res.send(BRP_PERSONEN_OP_ADRES);
               default:

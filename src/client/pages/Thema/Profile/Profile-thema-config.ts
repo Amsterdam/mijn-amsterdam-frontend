@@ -1,3 +1,4 @@
+import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { ThemaRoutesConfig } from '../../../config/thema-types';
 
 export const themaIdKVK = 'KVK' as const;
@@ -6,7 +7,10 @@ export const themaIdBRP = 'BRP' as const;
 export const featureToggle = {
   [themaIdBRP]: {
     themaActive: true,
-    benkBrpServiceActive: true,
+    benkBrpServiceActive: !IS_PRODUCTION,
+    get aantalBewonersOpAdresTonenActive() {
+      return featureToggle[themaIdBRP].themaActive;
+    },
   },
   [themaIdKVK]: {
     themaActive: true,

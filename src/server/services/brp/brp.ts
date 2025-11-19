@@ -4,7 +4,9 @@ import {
   LANDCODE_NEDERLAND,
   LANDCODE_ONBEKEND,
   ADRES_IN_ONDERZOEK_A,
+  AANTAL_BEWONERS_NOT_SET,
 } from './brp-config';
+import { featureToggle, routes } from './brp-service-config';
 import {
   type BrpFrontend,
   type PersonenResponseSource,
@@ -23,9 +25,11 @@ import {
 } from '../../../universal/helpers/api';
 import type { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_HOUR_MS } from '../../config/app';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token';
 import { getContextOperationId } from '../monitoring';
 import { type BSN } from '../zorgned/zorgned-types';
@@ -106,6 +110,7 @@ function getPersoonBasis(persoon: PersoonBasisSource): PersoonBasis {
 }
 
 function transformBenkBrpResponse(
+  sessionID: AuthProfile['sid'],
   persoon: PersonenResponseSource['personen'][0]
 ): BrpFrontend {
   let adresInOnderzoek: Persoon['adresInOnderzoek'] | null = null;
@@ -130,11 +135,22 @@ function transformBenkBrpResponse(
     adres?.land?.code !== LANDCODE_NEDERLAND &&
     adres?.land?.code !== LANDCODE_ONBEKEND;
 
+  const fetchUrlAantalBewoners =
+    verblijfplaats?.adresseerbaarObjectIdentificatie &&
+    featureToggle.service.fetchAantalBewonersOpAdres.isEnabled
+      ? generateFullApiUrlBFF(routes.protected.BRP_AANTAL_BEWONERS_OP_ADRES, [
+          {
+            id: encryptSessionIdWithRouteIdParam(
+              sessionID,
+              verblijfplaats.adresseerbaarObjectIdentificatie
+            ),
+          },
+        ])
+      : null;
+
   const responseContent: BrpFrontend = {
     persoon: {
       ...getPersoonBasis(persoon),
-      aanduidingNaamgebruikOmschrijving:
-        persoon.naam?.aanduidingNaamgebruik?.omschrijving ?? null,
       bsn: persoon.burgerservicenummer ?? null,
       gemeentenaamInschrijving:
         persoon.gemeenteVanInschrijving?.omschrijving ?? null,
@@ -199,7 +215,9 @@ function transformBenkBrpResponse(
         )
         ?.map((kind) => getPersoonBasis(kind)) ?? [],
     adres: verblijfplaats?.verblijfadres ? getAdres(verblijfplaats) : null,
+    fetchUrlAantalBewoners,
     adresHistorisch: [],
+    aantalBewoners: AANTAL_BEWONERS_NOT_SET,
   };
 
   return responseContent;
@@ -264,6 +282,7 @@ export async function fetchBrpByBsnTransformed(
   }
 
   const transformedContent = transformBenkBrpResponse(
+    sessionID,
     brpResponse.content.personen[0]
   );
 
@@ -360,6 +379,43 @@ export async function fetchBrp(authProfileAndToken: AuthProfileAndToken) {
   return fetchBrpByBsnTransformed(authProfileAndToken.profile.sid, [
     authProfileAndToken.profile.id,
   ]);
+}
+
+export async function fetchAantalBewoners(
+  sessionID: AuthProfile['sid'],
+  bagID: string
+) {
+  const response = await fetchBenkBrpTokenHeader();
+
+  if (response.status !== 'OK') {
+    return response;
+  }
+
+  const requestConfig = getApiConfig('BENK_BRP', {
+    formatUrl(requestConfig) {
+      return `${requestConfig.url}/personen`;
+    },
+    headers: {
+      ...response.content,
+      'X-Correlation-ID': getContextOperationId(sessionID), // Required for tracing
+    },
+    transformResponse: (responseData: PersonenResponseSource) => {
+      console.log('responseDataresponseData', responseData);
+      return responseData.personen.length;
+    },
+    data: {
+      type: 'ZoekMetAdresseerbaarObjectIdentificatie',
+      // Only request aNummer to reduce payload. We don't require any other data to be fetched here.
+      // The response will be used to count the number of personen related to a certain adresseerbaarObject.
+      fields: ['aNummer'],
+      gemeenteVanInschrijving: GEMEENTE_CODE_AMSTERDAM,
+      adresseerbaarObjectIdentificatie: bagID,
+    },
+  });
+
+  const brpBsnResponse = await requestData<number>(requestConfig);
+
+  return brpBsnResponse;
 }
 
 export const forTesting = {

@@ -3,15 +3,17 @@ import userEvent from '@testing-library/user-event';
 import type { PartialDeep } from 'type-fest';
 
 import { MijnGegevensThema } from './ProfilePrivate';
-import type { Adres } from '../../../../../server/services/brp/brp-types';
-import type { BRPData } from '../../../../../server/services/profile/brp.types';
+import type {
+  Adres,
+  BrpFrontend,
+} from '../../../../../server/services/brp/brp-types';
 import { ContactMoment } from '../../../../../server/services/salesforce/contactmomenten.types';
 import { AppState } from '../../../../../universal/types/App.types';
 import MockApp from '../../../MockApp';
 import { routeConfig } from '../Profile-thema-config';
 
 const testState = (
-  responseBRP: BRPData | object = {},
+  responseBRP: BrpFrontend | object = {},
   responseSF: ContactMoment[] = []
 ) => ({
   BRP: { status: 'OK', content: responseBRP },
@@ -33,7 +35,7 @@ describe('<Profile />', () => {
   function Component({
     state,
   }: {
-    state?: PartialDeep<BRPData, { recurseIntoArrays: true }>;
+    state?: PartialDeep<BrpFrontend, { recurseIntoArrays: true }>;
   }) {
     return (
       <MockApp
