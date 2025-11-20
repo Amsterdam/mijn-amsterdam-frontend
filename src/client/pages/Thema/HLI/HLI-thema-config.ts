@@ -32,30 +32,55 @@ export const themaConfig: HLIThemaConfig = {
     hliThemaRegelingenActive: true,
     zorgnedAvApiActive: true,
 
+    _hliThemaStadspasBlokkerenActive: true,
+    _hliThemaStadspasDeblokkerenActive: true,
+    _hliRegelingEnabledCZM: true,
+    _hliRegelingEnabledRTM: !IS_PRODUCTION,
+    _hli2025PCTegoedCodesEnabled: !IS_PRODUCTION,
+    _hli2026PCVergoedingV3Enabled: !IS_PRODUCTION,
+
     get hliThemaStadspasBlokkerenActive() {
-      return this.themaActive && this.hliStadspasActive && true;
+      return (
+        this.themaActive &&
+        this.hliStadspasActive &&
+        this._hliThemaStadspasBlokkerenActive
+      );
     },
 
     get hliThemaStadspasDeblokkerenActive() {
-      return this.themaActive && this.hliStadspasActive && !IS_PRODUCTION;
+      return (
+        this.themaActive &&
+        this.hliStadspasActive &&
+        this._hliThemaStadspasDeblokkerenActive
+      );
     },
 
     get hliRegelingEnabledCZM() {
-      return this.themaActive && this.hliThemaRegelingenActive && true;
+      return (
+        this.themaActive &&
+        this.hliThemaRegelingenActive &&
+        this._hliRegelingEnabledCZM
+      );
     },
 
     get hliRegelingEnabledRTM() {
       return (
-        this.themaActive && this.hliThemaRegelingenActive && !IS_PRODUCTION
+        this.themaActive &&
+        this.hliThemaRegelingenActive &&
+        this._hliRegelingEnabledRTM
       );
     },
 
     get hli2025PCTegoedCodesEnabled() {
-      return this.themaActive && !IS_PRODUCTION;
+      return (
+        this.themaActive && this._hli2025PCTegoedCodesEnabled && !IS_PRODUCTION
+      );
     },
 
     get hli2026PCVergoedingV3Enabled() {
-      return this.themaActive && !IS_PRODUCTION;
+      return (
+        this.themaActive && this._hli2026PCVergoedingV3Enabled && !IS_PRODUCTION
+      );
     },
   },
   profileTypes: ['private'],
@@ -173,17 +198,17 @@ export const listPageParamKind = {
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
-export const featureToggle = {
-  hliStadspasActive: true,
-  zorgnedAvApiActive: true,
-  hliThemaStadspasBlokkerenActive: true,
-  hliThemaStadspasDeblokkerenActive: !IS_PRODUCTION,
-  hliThemaRegelingenActive: true,
-  hliRegelingEnabledCZM: true,
-  hliRegelingEnabledRTM: !IS_PRODUCTION,
-  hli2025PCTegoedCodesEnabled: !IS_PRODUCTION,
-  hli2026PCVergoedingV3Enabled: !IS_PRODUCTION,
-} as const;
+// export const featureToggle = {
+// hliStadspasActive: true,
+// zorgnedAvApiActive: true,
+// hliThemaStadspasBlokkerenActive: true,
+// hliThemaStadspasDeblokkerenActive: !IS_PRODUCTION,
+// hliThemaRegelingenActive: true,
+// hliRegelingEnabledCZM: true,
+// hliRegelingEnabledRTM: !IS_PRODUCTION,
+// hli2025PCTegoedCodesEnabled: !IS_PRODUCTION,
+// hli2026PCVergoedingV3Enabled: !IS_PRODUCTION,
+// } as const;
 
 export const regelingenTitle = 'Regelingen bij laag inkomen' as const;
 export const stadspasTitle = 'Stadspas' as const;
