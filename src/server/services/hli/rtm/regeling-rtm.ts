@@ -3,6 +3,7 @@ import { isAfter } from 'date-fns/isAfter';
 import { parseISO } from 'date-fns/parseISO';
 import { generatePath } from 'react-router';
 import slug from 'slugme';
+import { firstBy } from 'thenby';
 
 import { routeConfig } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
 import {
@@ -11,6 +12,7 @@ import {
 } from '../../../../universal/helpers/api';
 import {
   dateFormat,
+  dateSort,
   defaultDateFormat,
 } from '../../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
@@ -146,6 +148,7 @@ function getStatusDate(
       return aanvraag.datumAanvraag;
     case lineItemConfigs.besluit.status:
     case lineItemConfigs.besluitAanvraagAfgewezen.status:
+    case lineItemConfigs.besluitWijziging.status:
       return aanvraag.datumBesluit;
     case lineItemConfigs.eindeRecht.status:
       return aanvraag.datumEindeGeldigheid
@@ -159,15 +162,21 @@ function getStatusDate(
   }
 }
 
+type StepOptions = {
+  excludeDocuments?: boolean;
+  sortModifier?: string;
+};
+
 function createStatusLineItemStep(
   lineItemConfig: LineItemConfig,
   aanvraag: ZorgnedRTMAanvraag,
-  excludeDocuments: boolean = false
+  options: StepOptions = {}
 ): StatusLineItem {
+  const { excludeDocuments = false, sortModifier = '' } = options;
   return {
     status: lineItemConfig.status,
     description: lineItemConfig.description(aanvraag),
-    id: slug(`${lineItemConfig.status}-${aanvraag.prettyID}`),
+    id: slug(`${aanvraag.id}-${sortModifier}-${lineItemConfig.status}`),
     datePublished: getStatusDate(lineItemConfig.status, aanvraag),
     isActive: false,
     // We default to checked and determine which step can be unchecked later.
@@ -273,75 +282,87 @@ function getSteps(
 ) {
   const EXCLUDE_DOCUMENTS = true;
 
-  const steps = aanvragen.flatMap((aanvraag, index, aanvragen) => {
-    // Searches for items that came before the current aanvraag and checks if it's RTM FASE 2.
-    const previousRTM2 = aanvragen
-      .slice(0, index)
-      .find((prevA) => prevA.productIdentificatie === AV_RTM_DEEL2);
+  const steps = aanvragen
+    .flatMap((aanvraag, index, aanvragen) => {
+      // Searches for items that came before the current aanvraag and checks if it's RTM FASE 2.
+      const previousRTM2 = aanvragen
+        .slice(0, index)
+        .find((prevA) => prevA.productIdentificatie === AV_RTM_DEEL2);
 
-    // ============================
-    // Steps for RTM FASE 2.
-    // ============================
-    if (aanvraag.productIdentificatie === AV_RTM_DEEL2) {
-      const besluitStatus =
+      // ============================
+      // Steps for RTM FASE 2.
+      // ============================
+      if (aanvraag.productIdentificatie === AV_RTM_DEEL2) {
+        const besluitStatus =
+          previousRTM2?.resultaat === 'toegewezen'
+            ? lineItemConfigs.besluitWijziging
+            : lineItemConfigs.besluit;
+        // Wijzigingen en Einde recht worden mbh een proces toegepast op de bestaande RTM2 regeling.
+        // Hierdoor komen er dus meerdere aanvragen met dezelfde beschiktProductIdentificatie door.
+        // In het geval van de RTM2 regeling, maken we dus meerdere stappen aan voor dezelfde regeling obv de verschillende processen i.r.t de RTM2 regeling.
+        const RTM2ProcesSteps = aanvraag.procesAanvragen?.length
+          ? aanvraag.procesAanvragen.map((procesAanvraag) => {
+              const lineItemConfig =
+                procesAanvraag.procesAanvraagOmschrijving?.endsWith(
+                  'Beëindigen RTM'
+                )
+                  ? lineItemConfigs.eindeRecht
+                  : lineItemConfigs.besluitWijziging;
+
+              return createStatusLineItemStep(lineItemConfig, procesAanvraag, {
+                sortModifier:
+                  lineItemConfig === lineItemConfigs.eindeRecht ? 'z' : '',
+              });
+            })
+          : [];
+        return [
+          createStatusLineItemStep(besluitStatus, aanvraag),
+          ...RTM2ProcesSteps,
+        ];
+      }
+
+      // ============================
+      // Steps for RTM FASE 1.
+      // ============================
+
+      if (aanvraag.resultaat === 'afgewezen') {
+        return createStatusLineItemStep(
+          previousRTM2?.resultaat === 'toegewezen'
+            ? lineItemConfigs.besluitWijziging
+            : lineItemConfigs.besluitAanvraagAfgewezen,
+          aanvraag
+        );
+      }
+
+      // There must be a toegewezen RTM FASE 2 before this aanvraag for this to be a "Aanvraag wijziging".
+      const aanvraagStatus =
         previousRTM2?.resultaat === 'toegewezen'
-          ? lineItemConfigs.besluitWijziging
-          : lineItemConfigs.besluit;
-      // Wijzigingen en Einde recht worden mbh een proces toegepast op de bestaande RTM2 regeling.
-      // Hierdoor komen er dus meerdere aanvragen met dezelfde beschiktProductIdentificatie door.
-      // In het geval van de RTM2 regeling, maken we dus meerdere stappen aan voor dezelfde regeling obv de verschillende processen i.r.t de RTM2 regeling.
-      const RTM2ProcesSteps = aanvraag.procesAanvragen?.length
-        ? aanvraag.procesAanvragen.map((procesAanvraag) => {
-            const lineItemConfig =
-              procesAanvraag.procesAanvraagOmschrijving?.endsWith(
-                'Beëindigen RTM'
-              )
-                ? lineItemConfigs.eindeRecht
-                : lineItemConfigs.besluitWijziging;
+          ? lineItemConfigs.aanvraagWijziging
+          : lineItemConfigs.aanvraag;
 
-            return createStatusLineItemStep(lineItemConfig, procesAanvraag);
-          })
-        : [];
-      return [
-        createStatusLineItemStep(besluitStatus, aanvraag),
-        ...RTM2ProcesSteps,
-      ];
-    }
+      const aanvraagSteps =
+        aanvraagStatus === lineItemConfigs.aanvraag
+          ? [
+              // If we show an In Behandeling step, we don't show documents on the Aanvraag step.
+              createStatusLineItemStep(aanvraagStatus, aanvraag, {
+                excludeDocuments: true,
+                sortModifier: 'a',
+              }),
+              createStatusLineItemStep(
+                lineItemConfigs.inBehandeling,
+                aanvraag,
+                {
+                  sortModifier: 'b',
+                }
+              ),
+            ]
+          : [createStatusLineItemStep(aanvraagStatus, aanvraag)];
 
-    // ============================
-    // Steps for RTM FASE 1.
-    // ============================
-
-    if (aanvraag.resultaat === 'afgewezen') {
-      return createStatusLineItemStep(
-        previousRTM2?.resultaat === 'toegewezen'
-          ? lineItemConfigs.besluitWijziging
-          : lineItemConfigs.besluitAanvraagAfgewezen,
-        aanvraag
-      );
-    }
-
-    // There must be a toegewezen RTM FASE 2 before this aanvraag for this to be a "Aanvraag wijziging".
-    const aanvraagStatus =
-      previousRTM2?.resultaat === 'toegewezen'
-        ? lineItemConfigs.aanvraagWijziging
-        : lineItemConfigs.aanvraag;
-
-    const aanvraagSteps =
-      aanvraagStatus === lineItemConfigs.aanvraag
-        ? [
-            // If we show an In Behandeling step, we don't show documents on the Aanvraag step.
-            createStatusLineItemStep(
-              aanvraagStatus,
-              aanvraag,
-              EXCLUDE_DOCUMENTS
-            ),
-            createStatusLineItemStep(lineItemConfigs.inBehandeling, aanvraag),
-          ]
-        : [createStatusLineItemStep(aanvraagStatus, aanvraag)];
-
-    return aanvraagSteps;
-  });
+      return aanvraagSteps;
+    })
+    .toSorted(
+      firstBy(dateSort('datePublished', 'asc')).thenBy(sortAlpha('id', 'asc'))
+    );
 
   const mostRecentToegewezenRTM = aanvragen.findLast(
     (a) =>
@@ -359,7 +380,7 @@ function getSteps(
     eindeRechtStep = createStatusLineItemStep(
       lineItemConfigs.eindeRecht,
       mostRecentToegewezenRTM,
-      EXCLUDE_DOCUMENTS
+      { excludeDocuments: true }
     );
     steps.push(eindeRechtStep);
   }
