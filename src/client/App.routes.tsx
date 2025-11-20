@@ -3,6 +3,7 @@ import { Routes, Route, matchPath } from 'react-router';
 import { MyAreaRoutes } from './components/MyArea/MyArea-routes';
 import type { ThemaRenderRouteConfig } from './config/thema-types';
 import { BffErrorRoutes } from './pages/BffError/BffError-routes';
+import { BurgerzakenRoutes } from './pages/Burgerzaken/Burgerzaken-routes';
 import { DashboardRoutes } from './pages/Dashboard/Dashboard-routes';
 import { GeneralInfoRoutes } from './pages/GeneralInfo/GeneralInfo-routes';
 import { LandingRoutes } from './pages/Landing/Landing-routes';
@@ -44,6 +45,7 @@ const routeComponents: ApplicationRouteConfig[] = [
   BezwarenRoutes,
   BffErrorRoutes,
   BodemRoutes,
+  BurgerzakenRoutes,
   DashboardRoutes,
   ErfpachtRoutes,
   GeneralInfoRoutes,
