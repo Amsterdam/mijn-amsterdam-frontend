@@ -11,7 +11,7 @@ export const featureToggle = {
       isEnabled: !IS_PRODUCTION,
     },
   },
-};
+} as const;
 
 export const routes = {
   private: {
@@ -22,6 +22,6 @@ export const routes = {
     WMO_DOCUMENTS_LIST_RAW: `/services/wmo/raw/documents`,
     WMO_AANVRAGEN_RAW: `/services/wmo/raw/aanvragen`,
   },
-};
+} as const;
 
 export const ZORGNED_JZD_API_CONFIG_KEY = 'ZORGNED_JZD';
