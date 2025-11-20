@@ -56,22 +56,6 @@ module.exports = [
       },
     ],
   },
-  // Legacy MKS / Koppel API endpoints
-  {
-    id: 'get-brp',
-    url: `${settings.MOCK_BASE_PATH}/mks-koppel-api/brp/brp`,
-    method: 'GET',
-    variants: [
-      {
-        id: 'standard',
-        type: 'json',
-        options: {
-          status: 200,
-          body: BRP_RESPONSE,
-        },
-      },
-    ],
-  },
   {
     id: 'post-brp-aantal-bewoners',
     url: `${settings.MOCK_BASE_PATH}/mks-koppel-api/brp/aantal_bewoners`,
