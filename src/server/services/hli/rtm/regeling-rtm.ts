@@ -360,6 +360,8 @@ function getSteps(
 
       return aanvraagSteps;
     })
+    // We sort the steps because the steps are created per aanvraag, and aanvragen can be out of order.
+    // This is mainly because we add procesAanvragen which are added to the first encountered aanvraag but most likely have a later datePublished.
     .toSorted(
       // sorting by datePublished asc, and by id asc to ensure consistent order for same-date steps
       firstBy(dateSort('datePublished', 'asc')).thenBy(sortAlpha('id', 'asc'))
