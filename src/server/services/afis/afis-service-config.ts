@@ -6,7 +6,7 @@ export const featureToggle = {
       isEnabled: !IS_PRODUCTION,
     },
   },
-  termijnFacturenActive: !IS_PRODUCTION,
+  termijnFacturenActive: true,
   // Display of phone number is not needed atm.
   businesspartnerPhoneActive: false,
   // We don't filter out the undownloadable facturen for testing purposes.
