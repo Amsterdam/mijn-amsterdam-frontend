@@ -12,8 +12,8 @@ import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import type { Adres } from '../brp/brp-types';
 
-function transformBagResponse(
-  sourceAddress: Adres,
+function transformBagAddressResponse(
+  sourceAddress: Adres | null,
   responseData: BAGSourceData
 ): BAGLocation | null {
   const data = responseData._embedded?.adresseerbareobjecten;
@@ -53,7 +53,19 @@ export async function fetchBAG(
   const config = getApiConfig('BAG', {
     params,
     transformResponse(responseData: BAGSourceData): BAGLocation | null {
-      return transformBagResponse(sourceAddress, responseData);
+      return transformBagAddressResponse(sourceAddress, responseData);
+    },
+  });
+  return requestData<BAGLocation>(config);
+}
+
+export async function fetchBAGByQuery(
+  params: Record<string, string>
+): Promise<ApiResponse<BAGLocation>> {
+  const config = getApiConfig('BAG', {
+    params,
+    transformResponse(responseData: BAGSourceData): BAGLocation | null {
+      return transformBagAddressResponse(null, responseData);
     },
   });
   return requestData<BAGLocation>(config);

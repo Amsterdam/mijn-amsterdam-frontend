@@ -14,7 +14,6 @@ import { AfvalRoutes } from './pages/Thema/Afval/Afval-render-config';
 import { AvgRoutes } from './pages/Thema/AVG/AVG-render-config';
 import { BezwarenRoutes } from './pages/Thema/Bezwaren/Bezwaren-render-config';
 import { BodemRoutes } from './pages/Thema/Bodem/Bodem-render-config';
-import { BurgerzakenRoutes } from './pages/Thema/Burgerzaken/Burgerzaken-render-config';
 import { ErfpachtRoutes } from './pages/Thema/Erfpacht/Erfpacht-render-config';
 import { HLIRoutes } from './pages/Thema/HLI/HLI-render-config';
 import { HorecaRoutes } from './pages/Thema/Horeca/Horeca-render-config';
@@ -45,7 +44,6 @@ const routeComponents: ApplicationRouteConfig[] = [
   BezwarenRoutes,
   BffErrorRoutes,
   BodemRoutes,
-  BurgerzakenRoutes,
   DashboardRoutes,
   ErfpachtRoutes,
   GeneralInfoRoutes,

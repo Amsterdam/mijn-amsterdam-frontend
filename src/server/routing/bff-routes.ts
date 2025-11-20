@@ -35,9 +35,6 @@ export const BffEndpoints = {
   DECOS_ZAAK_BY_KEY_RAW: '/services/decos/zaak-raw',
   DECOS_WORKFLOW_BY_KEY_RAW: '/services/decos/zaak-workflows-raw',
 
-  // MKS bewoners
-  MKS_AANTAL_BEWONERS: '/service/mks/aantal-bewoners/:addressKeyEncrypted',
-
   // WPI Document download
   WPI_DOCUMENT_DOWNLOAD: '/services/wpi/document',
 

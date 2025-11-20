@@ -3,6 +3,7 @@
 exports[`brp.ts > fetchBrpByBsn > Should format response data correctly > Formatting for test BSN 1, with verblijfplaatshistorie 1`] = `
 {
   "content": {
+    "aantalBewoners": -1,
     "adres": {
       "begindatumVerblijf": "2015-10-01",
       "begindatumVerblijfFormatted": "1 oktober 2015",
@@ -41,6 +42,7 @@ exports[`brp.ts > fetchBrpByBsn > Should format response data correctly > Format
         "woonplaatsNaam": null,
       },
     ],
+    "fetchUrlAantalBewoners": "http://bff-api-host/api/v1/service/brp/aantal-bewoners?id=test-encrypted-id",
     "kinderen": [
       {
         "geboortedatum": "2015-09-01",
@@ -85,7 +87,6 @@ exports[`brp.ts > fetchBrpByBsn > Should format response data correctly > Format
       },
     ],
     "persoon": {
-      "aanduidingNaamgebruikOmschrijving": "eigen geslachtsnaam",
       "adresInOnderzoek": null,
       "bsn": "999971074",
       "datumVertrekUitNederland": null,
@@ -136,6 +137,7 @@ exports[`brp.ts > fetchBrpByBsn > Should format response data correctly > Format
 exports[`brp.ts > fetchBrpByBsn > Should format response data correctly > Formatting for test BSN 2, with verblijfplaatshistorie returning an error 1`] = `
 {
   "content": {
+    "aantalBewoners": -1,
     "adres": {
       "begindatumVerblijf": "2001-05-01",
       "begindatumVerblijfFormatted": "1 mei 2001",
@@ -149,6 +151,7 @@ exports[`brp.ts > fetchBrpByBsn > Should format response data correctly > Format
       "woonplaatsNaam": "Amsterdam",
     },
     "adresHistorisch": [],
+    "fetchUrlAantalBewoners": "http://bff-api-host/api/v1/service/brp/aantal-bewoners?id=test-encrypted-id",
     "kinderen": [],
     "ouders": [
       {
@@ -179,7 +182,6 @@ exports[`brp.ts > fetchBrpByBsn > Should format response data correctly > Format
       },
     ],
     "persoon": {
-      "aanduidingNaamgebruikOmschrijving": "eigen geslachtsnaam",
       "adresInOnderzoek": null,
       "bsn": "999990810",
       "datumVertrekUitNederland": null,

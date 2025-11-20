@@ -23,17 +23,15 @@ const bagAddress = {
 };
 
 // This is only a section of the mock data from the source.
-const BAG_MOCK_DATA = {
+export const BAG_MOCK_DATA = {
   _embedded: {
     adresseerbareobjecten: [bagAddress],
   },
 };
 
-function setupNockResponse(reply: number, response?: object) {
+export function setupNockResponse(reply: number, response?: object) {
   nock('https://api.data.amsterdam.nl')
-    .get(
-      '/v1/benkagg/adresseerbareobjecten/?openbareruimteNaam=straatje&huisnummer=25'
-    )
+    .get(/benkagg\/adresseerbareobjecten/)
     .reply(reply, response);
 }
 

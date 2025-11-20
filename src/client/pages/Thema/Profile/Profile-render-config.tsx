@@ -54,7 +54,7 @@ export const menuItems: [
     redactedScope: 'content',
     profileTypes: ['commercial', 'private'],
     isActive(appState: AppState) {
-      return !isLoading(appState.KVK) && !!appState.KVK.content;
+      return !isLoading(appState.KVK) && !!appState.KVK.content?.onderneming;
     },
     IconSVG: BuildingsIcon,
   } as const,

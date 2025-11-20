@@ -5,10 +5,10 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { fetchMyLocation } from '../bag/my-locations';
+import { fetchMyLocations } from '../bag/my-locations';
 
 export async function fetchAfval(authProfileAndToken: AuthProfileAndToken) {
-  const MY_LOCATION = await fetchMyLocation(authProfileAndToken);
+  const MY_LOCATION = await fetchMyLocations(authProfileAndToken);
 
   if (MY_LOCATION.status === 'OK') {
     const primaryLocation = MY_LOCATION.content?.[0];
@@ -27,7 +27,7 @@ export async function fetchAfval(authProfileAndToken: AuthProfileAndToken) {
 export async function fetchAfvalPunten(
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const MY_LOCATION = await fetchMyLocation(authProfileAndToken);
+  const MY_LOCATION = await fetchMyLocations(authProfileAndToken);
 
   if (MY_LOCATION.status === 'OK') {
     const primaryLocation = MY_LOCATION.content?.[0]?.latlng;

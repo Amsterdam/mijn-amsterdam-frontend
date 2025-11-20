@@ -24,9 +24,12 @@ export interface ProfileSectionData {
 
 type PanelProps = object;
 
-export type PanelConfigFormatter<T> = (panelData: T) => PanelProps;
-export type PanelConfig<K extends string, T> = {
-  [key in K]: PanelConfigFormatter<T>;
+export type PanelConfigFormatter<T, P> = (
+  panelData: T,
+  profileData: P
+) => PanelProps;
+export type PanelConfig<K extends string, T, P> = {
+  [key in K]: PanelConfigFormatter<T, P>;
 };
 
 interface ProfileSectionActionLinksProps {

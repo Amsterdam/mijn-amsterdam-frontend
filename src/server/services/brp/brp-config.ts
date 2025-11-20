@@ -9,3 +9,5 @@ export const GEMEENTE_CODE_AMSTERDAM = '0363';
  */
 export const ADRES_IN_ONDERZOEK_A = '080000';
 export const ADRES_IN_ONDERZOEK_B = '089999';
+
+export const AANTAL_BEWONERS_NOT_SET = -1;
