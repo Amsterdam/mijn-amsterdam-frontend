@@ -72,13 +72,13 @@ type ProfilePanelProps = {
   sectionData: ProfileSectionData | ProfileSectionData[];
   startCollapsed?: boolean;
   title?: string;
-  subTitle?: string;
+  contentAfterTheTitle?: string;
 };
 
 export function ProfileSectionPanel({
   sectionData,
   title,
-  subTitle,
+  contentAfterTheTitle,
   actionLinks,
   startCollapsed = true,
 }: ProfilePanelProps) {
@@ -87,7 +87,9 @@ export function ProfileSectionPanel({
   return (
     <PageContentCell>
       <CollapsiblePanel title={title ?? ''} startCollapsed={startCollapsed}>
-        {subTitle && <Paragraph className="ams-mb-m">{subTitle}</Paragraph>}
+        {contentAfterTheTitle && (
+          <Paragraph className="ams-mb-m">{contentAfterTheTitle}</Paragraph>
+        )}
         <Grid className={styles.ProfileSectionPanelGrid}>
           <Grid.Cell start={1} span={{ narrow: 4, medium: 5, wide: 7 }}>
             {sections.map((sectionData, index) => (

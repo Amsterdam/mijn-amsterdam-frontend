@@ -29,7 +29,7 @@ export interface TableV2Props<T> {
   className?: string;
   showTHead?: boolean;
   caption?: string;
-  subTitle?: ReactNode;
+  contentAfterTheCaption?: ReactNode;
 }
 
 export interface ObjectWithOptionalLinkAttr extends Unshaped {

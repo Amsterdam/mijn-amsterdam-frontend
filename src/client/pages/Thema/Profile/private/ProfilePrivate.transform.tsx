@@ -308,8 +308,7 @@ export const panelConfig: PanelConfig<
         className: styles['ActionLink--reportIncorrectResidentCount'],
       });
     }
-
-    const subTitle = isMokum(BRP.content) ? (
+    const contentAfterTheTitle = isMokum(BRP.content) ? (
       <>
         <strong>Uw huis verduurzamen?</strong> De gemeente biedt subsidies of
         gratis hulp.
@@ -323,7 +322,7 @@ export const panelConfig: PanelConfig<
 
     return {
       title: 'Adres',
-      subTitle,
+      contentAfterTheTitle,
       actionLinks,
     };
   },
