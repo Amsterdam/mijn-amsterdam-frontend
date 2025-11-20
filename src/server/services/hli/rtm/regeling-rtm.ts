@@ -280,8 +280,6 @@ function getSteps(
   sessionID: AuthProfile['sid'],
   aanvragen: ZorgnedRTMAanvraag[]
 ) {
-  const EXCLUDE_DOCUMENTS = true;
-
   const steps = aanvragen
     .flatMap((aanvraag, index, aanvragen) => {
       // Searches for items that came before the current aanvraag and checks if it's RTM FASE 2.
@@ -311,6 +309,7 @@ function getSteps(
 
               return createStatusLineItemStep(lineItemConfig, procesAanvraag, {
                 sortModifier:
+                  // we add 'z' to ensure the einde recht step is always last
                   lineItemConfig === lineItemConfigs.eindeRecht ? 'z' : '',
               });
             })
@@ -346,6 +345,7 @@ function getSteps(
               // If we show an In Behandeling step, we don't show documents on the Aanvraag step.
               createStatusLineItemStep(aanvraagStatus, aanvraag, {
                 excludeDocuments: true,
+                // we add 'a' and 'b' to ensure the aanvraag step is before the inBehandeling step
                 sortModifier: 'a',
               }),
               createStatusLineItemStep(
@@ -361,6 +361,7 @@ function getSteps(
       return aanvraagSteps;
     })
     .toSorted(
+      // sorting by datePublished asc, and by id asc to ensure consistent order for same-date steps
       firstBy(dateSort('datePublished', 'asc')).thenBy(sortAlpha('id', 'asc'))
     );
 
