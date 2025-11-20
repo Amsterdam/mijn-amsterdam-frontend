@@ -793,6 +793,7 @@ describe('RTM aanvraag transformation', () => {
       aanvraag(RTM2, TOE, [], {
         id: '8-2',
         datumBesluit: '2024-11-01',
+        datumIngangGeldigheid: '2024-12-01',
         datumEindeGeldigheid: '2025-11-30',
         documenten: [{ id: 'baz' }],
         betrokkenPersonen: [],
@@ -826,7 +827,7 @@ describe('RTM aanvraag transformation', () => {
             {
               "datePublished": "2024-11-01",
               "description": "<p>
-          U krijgt Regeling tegemoetkoming meerkosten per .
+          U krijgt Regeling tegemoetkoming meerkosten per 01 december 2024.
           </p>
           <p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>
         ",
