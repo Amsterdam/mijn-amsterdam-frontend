@@ -12,7 +12,7 @@ export const FeatureToggle = {
   // We don't filter out the undownloadable facturen for testing purposes.
   // We want to be able to test immediately and not wait until the evening.
   afisFilterOutUndownloadableFacturenActive: IS_OT || IS_PRODUCTION,
-  afisTermijnFacturenActive: !IS_PRODUCTION,
+  afisTermijnFacturenActive: true,
 
   // AVG (Smile)
   avgActive: true,
