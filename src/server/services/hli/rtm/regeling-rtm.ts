@@ -161,7 +161,8 @@ function getStatusDate(
 
 function createStatusLineItemStep(
   lineItemConfig: LineItemConfig,
-  aanvraag: ZorgnedRTMAanvraag
+  aanvraag: ZorgnedRTMAanvraag,
+  excludeDocuments: boolean = false
 ): StatusLineItem {
   return {
     status: lineItemConfig.status,
@@ -171,7 +172,7 @@ function createStatusLineItemStep(
     isActive: false,
     // We default to checked and determine which step can be unchecked later.
     isChecked: true,
-    documents: aanvraag.documenten,
+    documents: excludeDocuments ? [] : aanvraag.documenten,
   };
 }
 
@@ -270,6 +271,8 @@ function getSteps(
   sessionID: AuthProfile['sid'],
   aanvragen: ZorgnedRTMAanvraag[]
 ) {
+  const EXCLUDE_DOCUMENTS_IN_STEP = true;
+
   const steps = aanvragen.flatMap((aanvraag, index, aanvragen) => {
     // Searches for items that came before the current aanvraag and checks if it's RTM FASE 2.
     const previousRTM2 = aanvragen
@@ -323,16 +326,19 @@ function getSteps(
       previousRTM2?.resultaat === 'toegewezen'
         ? lineItemConfigs.aanvraagWijziging
         : lineItemConfigs.aanvraag;
-    const aanvraagStep = createStatusLineItemStep(aanvraagStatus, aanvraag);
 
     const aanvraagSteps =
       aanvraagStatus === lineItemConfigs.aanvraag
         ? [
             // If we show an In Behandeling step, we don't show documents on the Aanvraag step.
-            { ...aanvraagStep, documents: [] },
+            createStatusLineItemStep(
+              aanvraagStatus,
+              aanvraag,
+              EXCLUDE_DOCUMENTS_IN_STEP
+            ),
             createStatusLineItemStep(lineItemConfigs.inBehandeling, aanvraag),
           ]
-        : [aanvraagStep];
+        : [createStatusLineItemStep(aanvraagStatus, aanvraag)];
 
     return aanvraagSteps;
   });
@@ -352,7 +358,8 @@ function getSteps(
   if (mostRecentToegewezenRTM && !eindeRechtStep) {
     eindeRechtStep = createStatusLineItemStep(
       lineItemConfigs.eindeRecht,
-      mostRecentToegewezenRTM
+      mostRecentToegewezenRTM,
+      EXCLUDE_DOCUMENTS_IN_STEP
     );
     steps.push(eindeRechtStep);
   }

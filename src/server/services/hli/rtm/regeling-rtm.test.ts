@@ -240,12 +240,7 @@ describe('RTM aanvraag transformation', () => {
       <p>U hoeft de Regeling tegemoetkoming meerkosten niet elk jaar opnieuw aan te vragen. De gemeente verlengt de regeling stilzwijgend, maar controleert wel elk jaar of u nog in aanmerking komt.</p>
       <p>U kunt dan ook een brief krijgen met het verzoek om extra informatie te geven.</p>
       <p><a href="https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/extra-geld-als-u-chronisch-ziek-of/">Als er wijzigingen zijn in uw situatie moet u die direct doorgeven</a>.</p>",
-              "documents": [
-                {
-                  "id": "test-encrypted-id",
-                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
-                },
-              ],
+              "documents": [],
               "id": "einde-recht-193360808",
               "isActive": false,
               "isChecked": false,
@@ -463,12 +458,7 @@ describe('RTM aanvraag transformation', () => {
       <p>U hoeft de Regeling tegemoetkoming meerkosten niet elk jaar opnieuw aan te vragen. De gemeente verlengt de regeling stilzwijgend, maar controleert wel elk jaar of u nog in aanmerking komt.</p>
       <p>U kunt dan ook een brief krijgen met het verzoek om extra informatie te geven.</p>
       <p><a href="https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/extra-geld-als-u-chronisch-ziek-of/">Als er wijzigingen zijn in uw situatie moet u die direct doorgeven</a>.</p>",
-              "documents": [
-                {
-                  "id": "test-encrypted-id",
-                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
-                },
-              ],
+              "documents": [],
               "id": "einde-recht-193359722",
               "isActive": false,
               "isChecked": false,
@@ -768,12 +758,7 @@ describe('RTM aanvraag transformation', () => {
             {
               "datePublished": "2025-12-01",
               "description": "<p>Uw recht op Regeling tegemoetkoming meerkosten stopt per 01 december 2025.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>",
-              "documents": [
-                {
-                  "id": "test-encrypted-id",
-                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
-                },
-              ],
+              "documents": [],
               "id": "einde-recht-193360802",
               "isActive": false,
               "isChecked": false,
@@ -845,12 +830,7 @@ describe('RTM aanvraag transformation', () => {
             {
               "datePublished": "2025-12-01",
               "description": "<p>Uw recht op Regeling tegemoetkoming meerkosten stopt per 01 december 2025.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>",
-              "documents": [
-                {
-                  "id": "test-encrypted-id",
-                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
-                },
-              ],
+              "documents": [],
               "id": "einde-recht-193360802",
               "isActive": false,
               "isChecked": false,
