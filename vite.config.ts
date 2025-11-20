@@ -28,6 +28,7 @@ export default defineConfig({
     sourcemap: true,
     target: 'es2015',
   },
+
   test: {
     globals: true,
     environment: 'happy-dom', // NOTE: overridden with 'node' when testing bff application

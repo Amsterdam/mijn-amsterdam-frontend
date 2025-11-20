@@ -2,6 +2,7 @@ import { useCallback, useEffect } from 'react';
 
 import { create } from 'zustand';
 
+import type { RecordStr2 } from '../../../server/routing/route-helpers';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -10,6 +11,13 @@ import {
 import type { SomeOtherString } from '../../../universal/helpers/types';
 
 type ApiFetchResponse<T> = Promise<ApiResponse<T>>;
+// Extend RequestInit to include a payload property. The body property always takes precedence over payload.
+// E.g: if both body and payload are provided, body will be used.
+type RequestInitWithPayload<P extends RecordStr2 = RecordStr2> = RequestInit & {
+  payload?: P;
+};
+
+type UrlOrString = URL | string;
 
 async function handleResponse<T>(
   fetchFn: () => Promise<Response>
@@ -50,44 +58,54 @@ async function handleResponse<T>(
   }
 }
 
-export async function sendFormPostRequest<T extends any>(
-  url: string,
-  payload: Record<string, string>,
-  options?: RequestInit
+/**
+ *
+ * @param url
+ * @param init Payload can be a regular object and will be converted to URLSearchParams. The provided body however, takes precedence over payload.
+ * @returns
+ */
+export async function sendFormPostRequest<T, P extends RecordStr2 = RecordStr2>(
+  url: string | URL,
+  init?: RequestInitWithPayload<P>
 ): ApiFetchResponse<T> {
   return handleResponse<T>(() =>
     fetch(url, {
       method: 'POST',
-      body: new URLSearchParams(payload),
+      body: init?.payload ? new URLSearchParams(init.payload) : init?.body,
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       credentials: 'include',
-      ...options,
+      ...init,
     })
   );
 }
 
-export async function sendJSONPostRequest<T extends any>(
-  url: string,
-  payload: Record<string, unknown>,
-  options?: RequestInit
+/**
+ *
+ * @param url
+ * @param init Payload can be a regular object and will be converted to URLSearchParams. The provided body however, takes precedence over payload.
+ * @returns
+ */
+export async function sendJSONPostRequest<T, P extends RecordStr2 = RecordStr2>(
+  url: string | URL,
+  init?: RequestInitWithPayload<P>
 ): ApiFetchResponse<T> {
   return handleResponse<T>(() =>
     fetch(url, {
       method: 'POST',
-      body: JSON.stringify(payload),
+      body: init?.payload ? JSON.stringify(init.payload) : init?.body,
       headers: {
         'Content-Type': 'application/json',
       },
       credentials: 'include',
-      ...options,
+      ...init,
     })
   );
 }
 
-export async function sendGetRequest<T extends any>(
-  url: URL | string,
+export async function sendGetRequest<T>(
+  url: UrlOrString,
   init?: RequestInit
 ): Promise<ApiResponse<T>> {
   return handleResponse<T>(() =>
@@ -95,11 +113,11 @@ export async function sendGetRequest<T extends any>(
   );
 }
 
-export type BffApiState<T> = {
+export type BffApiState<D> = {
   /**
    * The data returned from the API
    */
-  data: T | null;
+  data: D | null;
   /** The error message when the request failed
    */
   errorData: string | null;
@@ -117,8 +135,15 @@ export type BffApiState<T> = {
   isLoading: boolean;
 };
 
-export type ApiFetch<T> = {
-  fetch(url?: URL | string, init_?: RequestInit): Promise<T | null>;
+export type BFFApiHook<T, P extends RecordStr2, U = UrlOrString> = BffApiState<
+  ApiResponse<T>
+> & {
+  fetch: (
+    url?: UrlOrString | RequestInitWithPayload<P>,
+    init_?: U extends UrlOrString ? RequestInitWithPayload<P> : never
+  ) => void;
+  optimisticUpdateContent: (content: T) => void;
+  isPristine: boolean;
 };
 
 const initialState: BffApiState<null> = Object.seal({
@@ -129,13 +154,13 @@ const initialState: BffApiState<null> = Object.seal({
   isDirty: false,
 });
 
-type BffApiOptions<T> = {
-  url?: URL | string;
-  init?: RequestInit;
+type BffApiOptions<T, P extends RecordStr2> = {
+  url?: UrlOrString;
+  init?: RequestInitWithPayload<P>;
   fetchImmediately?: boolean;
   sendRequest?: (
-    url: URL | string,
-    init?: RequestInit
+    url: UrlOrString,
+    init?: RequestInitWithPayload<P>
   ) => Promise<ApiResponse<T>>;
 };
 
@@ -151,7 +176,7 @@ type BFFApiStore = {
   set: SetState;
   get: GetState;
   has: HasState;
-} & { [key in StoreKey]: any }; // see https://github.com/pmndrs/zustand/discussions/2566, it's not possible to type this strictly as zustand doesn't support generics in the store itself.
+} & { [key in StoreKey]: unknown }; // see https://github.com/pmndrs/zustand/discussions/2566, it's not possible to type this strictly as zustand doesn't support generics in the store itself.
 
 export const useBffApiStateStore = create<BFFApiStore>((set, get) => ({
   set: (key, state) => set({ [key]: state }),
@@ -163,13 +188,14 @@ export const useBffApiStateStore = create<BFFApiStore>((set, get) => ({
   has: (key) => key in get(),
 }));
 
-export function useBffApi<T>(
-  urlOrKey: string | null | undefined,
-  options?: BffApiOptions<T>
-): BffApiState<ApiResponse<T> | null> & {
-  fetch: (url?: URL | string, init_?: RequestInit) => void;
-  isPristine: boolean;
-} {
+export function useBffApi<
+  T,
+  P extends RecordStr2 = RecordStr2,
+  U = UrlOrString,
+>(
+  cacheKey: string | null | undefined,
+  options?: BffApiOptions<T, P>
+): BFFApiHook<T | null, P, U> {
   const {
     url,
     sendRequest = sendGetRequest,
@@ -177,24 +203,25 @@ export function useBffApi<T>(
   } = options || {};
 
   const isUrlOrPathLike =
-    !!urlOrKey &&
-    (urlOrKey.startsWith('http') || urlOrKey.match(/^\/api\/v(\d+)\//));
+    !!cacheKey &&
+    (cacheKey.startsWith('http') || cacheKey.match(/^\/api\/v(\d+)\//));
 
   if (
     !url &&
-    urlOrKey &&
+    cacheKey &&
     // NOTE: not an ideal way to check this, but good enough for now.
     !isUrlOrPathLike &&
     fetchImmediately === true
   ) {
     const error =
-      'When using a key, you must provide a URL in the options parameter or set fetchImmediately to false';
+      'When using a cacheKey that is not an URL or path, you must provide a URL in the options parameter or set fetchImmediately to false';
     throw new Error(error);
   }
 
   const store = useBffApiStateStore();
-  const state = urlOrKey ? store.get<T>(urlOrKey) : null;
-  const url_ = url || urlOrKey;
+  const state = cacheKey ? store.get<T>(cacheKey) : null;
+  const rState = state ? state : initialState;
+  const url_ = url || cacheKey;
 
   const storeSet = store.set;
   const storeHas = store.has;
@@ -202,20 +229,34 @@ export function useBffApi<T>(
   const isDirty = state?.isDirty === true;
   const isLoading = state?.isLoading === true;
 
+  const hasKeyInStore = !!cacheKey && storeHas(cacheKey);
+
   const setApiState = useCallback(
-    (partialState: Partial<BffApiState<ApiResponse<T> | null>>) => {
-      if (urlOrKey) {
-        const state = storeGet<T>(urlOrKey);
+    (partialState: Partial<BffApiState<ApiResponse<T | null> | null>>) => {
+      if (cacheKey) {
+        const state = storeGet<T>(cacheKey);
         const newState = { ...state, ...partialState };
-        storeSet(urlOrKey, newState);
+        storeSet(cacheKey, newState);
       }
     },
-    [storeGet, storeSet, urlOrKey]
+    [storeGet, storeSet, cacheKey]
   );
 
   const fetch = useCallback(
-    async (url?: string | URL, init?: RequestInit) => {
-      const reqUrl = url ?? url_;
+    async (
+      urlOrInit?: UrlOrString | RequestInitWithPayload<P>,
+      init?: RequestInitWithPayload<P>
+    ) => {
+      const reqUrl =
+        typeof urlOrInit === 'string' || urlOrInit instanceof URL
+          ? urlOrInit
+          : url_;
+      const init_ =
+        urlOrInit &&
+        !init &&
+        !(typeof urlOrInit === 'string' || urlOrInit instanceof URL)
+          ? urlOrInit
+          : init;
 
       if (!reqUrl) {
         throw new Error('No URL provided');
@@ -223,7 +264,10 @@ export function useBffApi<T>(
 
       setApiState({ isLoading: true });
 
-      const response = await sendRequest(reqUrl, { ...options?.init, ...init });
+      const response = await sendRequest(reqUrl, {
+        ...options?.init,
+        ...init_,
+      });
 
       if (response.status === 'ERROR') {
         return setApiState({
@@ -242,14 +286,32 @@ export function useBffApi<T>(
     [options?.init, sendRequest, setApiState, url_]
   );
 
+  // Allows optimistic updating of the content in the API response.
+  // E.g. after a successful POST/PATCH/PUT request, we can optimistically update the content
+  // of the GET request in the store without refetching.
+  const optimisticUpdateContent = useCallback(
+    (content: T | null) => {
+      if (rState.data?.content && rState.data.status === 'OK') {
+        setApiState({
+          data: {
+            ...rState.data,
+            content,
+          },
+        });
+      }
+    },
+    [rState.data, setApiState]
+  );
+
+  // Sets initial state in the store if not present.
   useEffect(() => {
-    if (urlOrKey && !storeHas(urlOrKey)) {
-      storeSet(urlOrKey, initialState);
+    if (cacheKey && !storeHas(cacheKey)) {
+      storeSet(cacheKey, initialState);
     }
   }, [
     state,
     url_,
-    urlOrKey,
+    cacheKey,
     storeSet,
     storeHas,
     options?.fetchImmediately,
@@ -257,23 +319,28 @@ export function useBffApi<T>(
     storeGet,
   ]);
 
-  const hasKey = !!urlOrKey && storeHas(urlOrKey);
-
+  // Fetch data immediately if required.
   useEffect(() => {
     if (
-      urlOrKey &&
+      cacheKey &&
       options?.fetchImmediately !== false &&
       isDirty === false &&
       isLoading === false
     ) {
       fetch();
     }
-  }, [options?.fetchImmediately, fetch, hasKey, isDirty, isLoading, urlOrKey]);
-
-  const rState = state ? state : initialState;
+  }, [
+    options?.fetchImmediately,
+    fetch,
+    hasKeyInStore,
+    isDirty,
+    isLoading,
+    cacheKey,
+  ]);
 
   return Object.assign({}, rState, {
     fetch,
+    optimisticUpdateContent,
     isPristine: rState.isDirty === false && rState.isLoading === false,
   });
 }

@@ -10,10 +10,11 @@ type marginBottom = string;
 
 export type BarConfig = Array<[width, height, marginBottom]>;
 
-export interface ComponentProps {
+export interface LoadingContentProps {
   children?: ReactNode;
   barConfig?: BarConfig;
   className?: string;
+  inline?: boolean;
 }
 
 const defaultBarConfig: BarConfig = [
@@ -25,10 +26,18 @@ const defaultBarConfig: BarConfig = [
 
 export default function LoadingContent({
   barConfig = defaultBarConfig,
+  inline = false,
   className,
-}: ComponentProps) {
+}: LoadingContentProps) {
   return (
-    <span className={classnames(styles.LoadingContent, className)}>
+    <span
+      className={classnames(
+        styles.LoadingContent,
+        inline ? styles['LoadingContent--inline'] : '',
+        className
+      )}
+    >
+      <span className="ams-visually-hidden">Inhoud wordt opgehaald...</span>
       {barConfig.map(([width, height, marginBottom], index) => {
         return (
           <span

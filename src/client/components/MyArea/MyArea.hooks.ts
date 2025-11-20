@@ -276,9 +276,9 @@ export function useFetchFeatures() {
       try {
         const response = await sendJSONPostRequest<DatasetResponseContent>(
           BFFApiUrls.MAP_DATASETS,
-          payload,
           {
             signal: tokenSource.signal,
+            payload,
           }
         );
         return response.content;

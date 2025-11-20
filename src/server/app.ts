@@ -59,7 +59,7 @@ import { authRouterDevelopment } from './routing/router-development';
 import { oidcRouter } from './routing/router-oidc';
 import { router as protectedRouter } from './routing/router-protected';
 import { legacyRouter, router as publicRouter } from './routing/router-public';
-import { stadspasExternalConsumerRouter } from './routing/router-stadspas-external-consumer';
+import { stadspasExternalConsumerRouter } from './services/hli/router-stadspas-external-consumer';
 import { captureException } from './services/monitoring';
 
 import { getFromEnv } from './helpers/env';
@@ -212,10 +212,10 @@ async function startServerBFF() {
   server.keepAliveTimeout = ONE_MINUTE_SECONDS;
   server.headersTimeout = HEADER_TIMEOUT_SECONDS * ONE_SECOND_MS; // This should be bigger than `keepAliveTimeout + your server's expected response time`
 }
-
 if (
   require.main?.filename.endsWith('bffserver.ts') ||
-  require.main?.filename.endsWith('app.js')
+  require.main?.filename.endsWith('app.js') ||
+  typeof process.versions?.bun !== 'undefined'
 ) {
   startServerBFF();
 }

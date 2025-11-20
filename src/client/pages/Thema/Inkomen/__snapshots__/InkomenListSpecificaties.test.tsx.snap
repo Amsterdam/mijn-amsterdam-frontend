@@ -393,31 +393,12 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               <span
                 class="ams-visually-hidden"
               >
-                Ga naar pagina 
-                <span
-                  class="ams-visually-hidden"
-                >
-                  Pagina 1
-                </span>
-                <span
-                  aria-hidden="true"
-                >
-                  1
-                </span>
+                Pagina 1
               </span>
               <span
                 aria-hidden="true"
               >
-                <span
-                  class="ams-visually-hidden"
-                >
-                  Pagina 1
-                </span>
-                <span
-                  aria-hidden="true"
-                >
-                  1
-                </span>
+                1
               </span>
             </a>
           </li>
@@ -429,31 +410,12 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               <span
                 class="ams-visually-hidden"
               >
-                Ga naar pagina 
-                <span
-                  class="ams-visually-hidden"
-                >
-                  Ga naar pagina 2
-                </span>
-                <span
-                  aria-hidden="true"
-                >
-                  2
-                </span>
+                Ga naar pagina 2
               </span>
               <span
                 aria-hidden="true"
               >
-                <span
-                  class="ams-visually-hidden"
-                >
-                  Ga naar pagina 2
-                </span>
-                <span
-                  aria-hidden="true"
-                >
-                  2
-                </span>
+                2
               </span>
             </a>
           </li>
@@ -466,63 +428,28 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
           <span
             class="ams-visually-hidden"
           >
-            Ga naar pagina 
-            <span
-              class="ams-visually-hidden"
-            >
-              Volgende pagina
-            </span>
-            <span
-              aria-hidden="true"
-            >
-              volgende
-            </span>
-            <span
-              class="ams-icon"
-            >
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  clip-rule="evenodd"
-                  d="M7.911 2.5 17.5 12l-9.589 9.5L6.5 20.102 14.677 12 6.5 3.898z"
-                  fill-rule="evenodd"
-                />
-              </svg>
-            </span>
+            Volgende pagina
           </span>
           <span
             aria-hidden="true"
           >
-            <span
-              class="ams-visually-hidden"
-            >
-              Volgende pagina
-            </span>
-            <span
+            volgende
+          </span>
+          <span
+            class="ams-icon"
+          >
+            <svg
               aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              volgende
-            </span>
-            <span
-              class="ams-icon"
-            >
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  clip-rule="evenodd"
-                  d="M7.911 2.5 17.5 12l-9.589 9.5L6.5 20.102 14.677 12 6.5 3.898z"
-                  fill-rule="evenodd"
-                />
-              </svg>
-            </span>
+              <path
+                clip-rule="evenodd"
+                d="M7.911 2.5 17.5 12l-9.589 9.5L6.5 20.102 14.677 12 6.5 3.898z"
+                fill-rule="evenodd"
+              />
+            </svg>
           </span>
         </a>
       </nav>
@@ -1506,31 +1433,12 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               <span
                 class="ams-visually-hidden"
               >
-                Ga naar pagina 
-                <span
-                  class="ams-visually-hidden"
-                >
-                  Pagina 1
-                </span>
-                <span
-                  aria-hidden="true"
-                >
-                  1
-                </span>
+                Pagina 1
               </span>
               <span
                 aria-hidden="true"
               >
-                <span
-                  class="ams-visually-hidden"
-                >
-                  Pagina 1
-                </span>
-                <span
-                  aria-hidden="true"
-                >
-                  1
-                </span>
+                1
               </span>
             </a>
           </li>
@@ -1542,31 +1450,12 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               <span
                 class="ams-visually-hidden"
               >
-                Ga naar pagina 
-                <span
-                  class="ams-visually-hidden"
-                >
-                  Ga naar pagina 2
-                </span>
-                <span
-                  aria-hidden="true"
-                >
-                  2
-                </span>
+                Ga naar pagina 2
               </span>
               <span
                 aria-hidden="true"
               >
-                <span
-                  class="ams-visually-hidden"
-                >
-                  Ga naar pagina 2
-                </span>
-                <span
-                  aria-hidden="true"
-                >
-                  2
-                </span>
+                2
               </span>
             </a>
           </li>
@@ -1579,63 +1468,28 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
           <span
             class="ams-visually-hidden"
           >
-            Ga naar pagina 
-            <span
-              class="ams-visually-hidden"
-            >
-              Volgende pagina
-            </span>
-            <span
-              aria-hidden="true"
-            >
-              volgende
-            </span>
-            <span
-              class="ams-icon"
-            >
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  clip-rule="evenodd"
-                  d="M7.911 2.5 17.5 12l-9.589 9.5L6.5 20.102 14.677 12 6.5 3.898z"
-                  fill-rule="evenodd"
-                />
-              </svg>
-            </span>
+            Volgende pagina
           </span>
           <span
             aria-hidden="true"
           >
-            <span
-              class="ams-visually-hidden"
-            >
-              Volgende pagina
-            </span>
-            <span
+            volgende
+          </span>
+          <span
+            class="ams-icon"
+          >
+            <svg
               aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              volgende
-            </span>
-            <span
-              class="ams-icon"
-            >
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  clip-rule="evenodd"
-                  d="M7.911 2.5 17.5 12l-9.589 9.5L6.5 20.102 14.677 12 6.5 3.898z"
-                  fill-rule="evenodd"
-                />
-              </svg>
-            </span>
+              <path
+                clip-rule="evenodd"
+                d="M7.911 2.5 17.5 12l-9.589 9.5L6.5 20.102 14.677 12 6.5 3.898z"
+                fill-rule="evenodd"
+              />
+            </svg>
           </span>
         </a>
       </nav>

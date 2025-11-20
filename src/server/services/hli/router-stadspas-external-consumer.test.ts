@@ -1,14 +1,17 @@
 import { HttpStatusCode } from 'axios';
 
 import { forTesting } from './router-stadspas-external-consumer';
-import { remoteApi, RequestMock, ResponseMock } from '../../testing/utils';
-import { apiErrorResult, apiSuccessResult } from '../../universal/helpers/api';
-import { AuthProfile } from '../auth/auth-types';
-import * as stadspas from '../services/hli/stadspas';
-import * as gpass from '../services/hli/stadspas-gpass-service';
-import type { Stadspas } from '../services/hli/stadspas-types';
+import * as stadspas from './stadspas';
+import * as gpass from './stadspas-gpass-service';
+import type { Stadspas } from './stadspas-types';
+import { remoteApi, RequestMock, ResponseMock } from '../../../testing/utils';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+} from '../../../universal/helpers/api';
+import { AuthProfile } from '../../auth/auth-types';
 
-vi.mock('../helpers/encrypt-decrypt', async (requireActual) => {
+vi.mock('../../helpers/encrypt-decrypt', async (requireActual) => {
   return {
     ...((await requireActual()) as object),
     encrypt: () => {
@@ -317,14 +320,14 @@ describe('hli/router-external-consumer', async () => {
       const resMock = ResponseMock.new();
 
       vi.spyOn(stadspas, 'blockStadspas').mockResolvedValueOnce(
-        apiSuccessResult({ status: 'blocked' })
+        apiSuccessResult({ passNumber: 123123, actief: false })
       );
 
       await forTesting.sendStadspasBlockRequest(reqMock, resMock);
 
       expect(resMock.send).toHaveBeenCalledWith({
         status: 'OK',
-        content: { status: 'blocked' },
+        content: { passNumber: 123123, actief: false },
       });
     });
   });

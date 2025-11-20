@@ -50,10 +50,7 @@ export function PaginationV2({
             }}
             href={href}
           >
-            <span className="ams-visually-hidden">
-              Ga naar pagina {children}
-            </span>
-            <span aria-hidden="true">{children}</span>
+            {children}
           </a>
         );
       }}

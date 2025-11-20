@@ -387,7 +387,7 @@ export const panelConfig: PanelConfig<BRPPanelKey, AppState['BRP']> = {
         className: styles['ActionLink--reportIncorrectResidentCount'],
       });
     }
-    const subTitle = isMokum(BRP.content) ? (
+    const contentAfterTheTitle = isMokum(BRP.content) ? (
       <>
         Uw huis verduurzamen? De gemeente biedt subsidies of gratis hulp. Bekijk{' '}
         <Link rel="noopener noreferrer" href="https://duurzaamwonen.amsterdam/">
@@ -399,7 +399,7 @@ export const panelConfig: PanelConfig<BRPPanelKey, AppState['BRP']> = {
 
     return {
       title: 'Adres',
-      subTitle,
+      contentAfterTheTitle,
       actionLinks,
     };
   },

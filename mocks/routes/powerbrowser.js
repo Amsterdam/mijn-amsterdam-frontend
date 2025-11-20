@@ -99,10 +99,11 @@ module.exports = [
     variants: [
       {
         id: 'standard',
-        type: 'json',
+        type: 'middleware',
         options: {
-          status: 200,
-          body: BB_LINK_ZAAK_ADRES,
+          middleware: (req, res) => {
+            return res.send(BB_LINK_ZAAK_ADRES);
+          },
         },
       },
     ],

@@ -1,39 +1,39 @@
 import { Request, Response } from 'express';
 
-import { ExternalConsumerEndpoints } from './bff-routes';
-import { apiKeyVerificationHandler } from './route-handlers';
+import { fetchAdministratienummer } from './hli-zorgned-service';
+import {
+  blockStadspas,
+  fetchStadspasBudgetTransactions,
+  fetchStadspasDiscountTransactions,
+} from './stadspas';
+import { fetchStadspassenByAdministratienummer } from './stadspas-gpass-service';
+import {
+  StadspasAMSAPPFrontend,
+  StadspasBudget,
+  TransactionKeysEncryptedWithoutSessionID,
+} from './stadspas-types';
+import { IS_PRODUCTION } from '../../../universal/config/env';
+import { apiSuccessResult } from '../../../universal/helpers/api';
+import {
+  RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
+  RETURNTO_AMSAPP_STADSPAS_APP_LANDING,
+} from '../../auth/auth-config';
+import { getAuth } from '../../auth/auth-helpers';
+import { authRoutes } from '../../auth/auth-routes';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
+import { getFromEnv } from '../../helpers/env';
+import { getApiConfig } from '../../helpers/source-api-helpers';
+import { requestData } from '../../helpers/source-api-request';
+import { ExternalConsumerEndpoints } from '../../routing/bff-routes';
+import { apiKeyVerificationHandler } from '../../routing/route-handlers';
 import {
   createBFFRouter,
   generateFullApiUrlBFF,
   sendBadRequest,
   sendResponse,
-} from './route-helpers';
-import { IS_PRODUCTION } from '../../universal/config/env';
-import { apiSuccessResult } from '../../universal/helpers/api';
-import {
-  RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
-  RETURNTO_AMSAPP_STADSPAS_APP_LANDING,
-} from '../auth/auth-config';
-import { getAuth } from '../auth/auth-helpers';
-import { authRoutes } from '../auth/auth-routes';
-import { AuthProfileAndToken } from '../auth/auth-types';
-import { decrypt, encrypt } from '../helpers/encrypt-decrypt';
-import { getFromEnv } from '../helpers/env';
-import { getApiConfig } from '../helpers/source-api-helpers';
-import { requestData } from '../helpers/source-api-request';
-import { fetchAdministratienummer } from '../services/hli/hli-zorgned-service';
-import {
-  blockStadspas,
-  fetchStadspasBudgetTransactions,
-  fetchStadspasDiscountTransactions,
-} from '../services/hli/stadspas';
-import { fetchStadspassenByAdministratienummer } from '../services/hli/stadspas-gpass-service';
-import {
-  StadspasAMSAPPFrontend,
-  StadspasBudget,
-  TransactionKeysEncryptedWithoutSessionID,
-} from '../services/hli/stadspas-types';
-import { captureException, captureMessage } from '../services/monitoring';
+} from '../../routing/route-helpers';
+import { captureException, captureMessage } from '../monitoring';
 
 const AMSAPP_PROTOCOl = 'amsterdam://';
 const AMSAPP_STADSPAS_DEEP_LINK = `${AMSAPP_PROTOCOl}stadspas`;
@@ -293,8 +293,7 @@ async function sendStadspassenResponse(
 
   return sendBadRequest(
     res,
-    `ApiError ${apiResponseError.code} - ${apiResponseError.message}`,
-    null
+    `ApiError ${apiResponseError.code} - ${apiResponseError.message}`
   );
 }
 

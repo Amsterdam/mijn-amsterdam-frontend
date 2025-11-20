@@ -1,13 +1,21 @@
-import { Grid, Heading, Link, Paragraph } from '@amsterdam/design-system-react';
-
-import { AfisEmandateStub } from './Afis-thema-config';
-import styles from './AfisBetaalVoorkeuren.module.scss';
 import {
-  useAfisBetaalVoorkeurenData,
-  useAfisThemaData,
-} from './useAfisThemaData.hook';
-import { AfisBusinessPartnerDetailsTransformed } from '../../../../server/services/afis/afis-types';
-import { FeatureToggle } from '../../../../universal/config/feature-toggles';
+  Alert,
+  Grid,
+  Heading,
+  Link,
+  Paragraph,
+} from '@amsterdam/design-system-react';
+
+import { featureToggle } from './Afis-thema-config';
+import styles from './AfisBetaalVoorkeuren.module.scss';
+import { EmandateRefetchInterval } from './AfisEMandateDetail';
+import { useAfisBetaalVoorkeurenData } from './useAfisBetaalVoorkeurenData';
+import { useAfisEMandatesData } from './useAfisEmandatesData';
+import { useAfisThemaData } from './useAfisThemaData.hook';
+import {
+  type AfisBusinessPartnerDetailsTransformed,
+  type AfisEMandateFrontend,
+} from '../../../../server/services/afis/afis-types';
 import { entries } from '../../../../universal/helpers/utils';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
 import { Datalist } from '../../../components/Datalist/Datalist';
@@ -19,10 +27,15 @@ import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 type AfisBusinessPartnerProps = {
-  businesspartner: AfisBusinessPartnerDetailsTransformed | null;
-  labels: Omit<
-    DisplayProps<AfisBusinessPartnerDetailsTransformed>,
-    'smallscreen'
+  businesspartner: Omit<
+    AfisBusinessPartnerDetailsTransformed,
+    'address'
+  > | null;
+  labels: DisplayProps<
+    Omit<
+      AfisBusinessPartnerDetailsTransformed,
+      'address' | 'firstName' | 'lastName'
+    >
   >;
   isLoading: boolean;
   startCollapsed: boolean;
@@ -82,43 +95,64 @@ export function AfisBetaalVoorkeuren() {
     themaId,
   } = useAfisThemaData();
 
+  useHTMLDocumentTitle(routeConfig.betaalVoorkeuren);
+
   const {
     title,
     businesspartnerDetails,
     businessPartnerDetailsLabels,
-    eMandates,
-    eMandateTableConfig,
     hasBusinessPartnerDetailsError,
-    hasEmandatesError,
-    hasFailedEmailDependency,
-    hasFailedPhoneDependency,
     hasFailedFullNameDependency,
+    hasFailedPhoneDependency,
     isLoadingBusinessPartnerDetails,
-    isLoadingEmandates,
   } = useAfisBetaalVoorkeurenData(businessPartnerIdEncrypted);
 
-  useHTMLDocumentTitle(routeConfig.betaalVoorkeuren);
+  const {
+    eMandates,
+    eMandateTableConfig,
+    hasEMandatesError,
+    isLoadingEMandates,
+    statusNotification: { ibansPendingActivation },
+    fetchEMandates,
+  } = useAfisEMandatesData();
 
   const isLoadingAllAPis =
-    isThemaPaginaLoading &&
-    isLoadingBusinessPartnerDetails &&
-    isLoadingEmandates;
+    isThemaPaginaLoading ||
+    isLoadingBusinessPartnerDetails ||
+    isLoadingEMandates;
 
-  const eMandateTables =
-    FeatureToggle.afisEmandatesActive &&
-    entries(eMandateTableConfig).map(
-      ([kind, { title, displayProps, filter }]) => {
-        return (
-          <ThemaPaginaTable<AfisEmandateStub>
-            key={kind}
-            title={title}
-            zaken={eMandates.filter(filter)}
-            displayProps={displayProps}
-            maxItems={-1}
-          />
-        );
+  const eMandatesTable = featureToggle.afisEMandatesActive && (
+    <ThemaPaginaTable<AfisEMandateFrontend>
+      displayProps={eMandateTableConfig.displayProps}
+      maxItems={-1}
+      title={eMandateTableConfig.title}
+      zaken={eMandates}
+      contentAfterTheTitle={
+        <Alert
+          severity="warning"
+          heading="Let op uitzonderingen"
+          headingLevel={3}
+          className="ams-mb-m"
+        >
+          <Paragraph className="ams-mb-s">
+            Een automatische incasso instellen voor de directie Belastingen gaat
+            via
+            <br />
+            <Link href="https://belastingbalie.amsterdam.nl/digid.info.php">
+              Mijn Belastingen - gemeente Amsterdam
+            </Link>
+          </Paragraph>
+          <Paragraph>
+            Voor parkeervergunningen ga je naar
+            <br />
+            <Link href="https://www.amsterdam.nl/parkeren/parkeervergunning/wijzigen-opzeggen/parkeervergunning-betaalgegevens/">
+              Parkeervergunning: betaalgegevens wijzigen - Gemeente Amsterdam
+            </Link>
+          </Paragraph>
+        </Alert>
       }
-    );
+    />
+  );
 
   const mailBody = `Debiteurnaam: ${businesspartnerDetails?.fullName ?? '-'}%0D%0ADebiteurnummer: ${businesspartnerDetails?.businessPartnerId ?? '-'}`;
 
@@ -135,7 +169,7 @@ export function AfisBetaalVoorkeuren() {
         </Link>
         .
       </Paragraph>
-      {!FeatureToggle.afisEmandatesActive && (
+      {!featureToggle.afisEMandatesActive && (
         <>
           <Heading level={3} size="level-5">
             Via automatische incasso betalen
@@ -173,9 +207,12 @@ export function AfisBetaalVoorkeuren() {
         businesspartner={businesspartnerDetails}
         labels={businessPartnerDetailsLabels}
         isLoading={!!(isLoadingBusinessPartnerDetails || isThemaPaginaLoading)}
-        startCollapsed={FeatureToggle.afisEmandatesActive}
+        startCollapsed={featureToggle.afisEMandatesActive}
       />
-      {eMandateTables}
+      {!!ibansPendingActivation.length && (
+        <EmandateRefetchInterval fetch={fetchEMandates} />
+      )}
+      {eMandatesTable}
     </>
   );
 
@@ -183,36 +220,13 @@ export function AfisBetaalVoorkeuren() {
     <>Wij kunnen nu niet alle gegevens laten zien.</>
   ) : (
     <>
-      {!hasBusinessPartnerDetailsError &&
-        (hasFailedEmailDependency ||
-          hasFailedPhoneDependency ||
-          hasFailedFullNameDependency) && (
-          <>
-            De volgende gegevens konden niet worden opgehaald:
-            {hasFailedFullNameDependency && (
-              <>
-                <br />- Debiteurnaam
-              </>
-            )}
-            {hasFailedEmailDependency && (
-              <>
-                <br />- E-mailadres
-              </>
-            )}
-            {hasFailedPhoneDependency && (
-              <>
-                <br />- Telefoonnummer
-              </>
-            )}
-          </>
-        )}
       {hasBusinessPartnerDetailsError && (
         <>
           Wij kunnen nu geen facturatiegegevens laten zien.
           <br />
         </>
       )}
-      {hasEmandatesError && (
+      {hasEMandatesError && (
         <>Wij kunnen nu geen automatische incasso&apos;s laten zien.</>
       )}
     </>
@@ -224,14 +238,14 @@ export function AfisBetaalVoorkeuren() {
       title={title}
       isError={
         isThemaPaginaError ||
-        (hasBusinessPartnerDetailsError && hasEmandatesError)
+        (hasBusinessPartnerDetailsError && hasEMandatesError)
       }
       isPartialError={
         hasFailedFullNameDependency ||
         hasFailedPhoneDependency ||
         hasFailedPhoneDependency ||
         hasBusinessPartnerDetailsError ||
-        hasEmandatesError
+        hasEMandatesError
       }
       errorAlertContent={errorAlertContent}
       isLoading={isLoadingAllAPis}
