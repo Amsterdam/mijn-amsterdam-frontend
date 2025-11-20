@@ -1,4 +1,10 @@
-import { forTesting, transformRTMAanvragen } from './regeling-rtm';
+import mockdate from 'mockdate';
+
+import {
+  forTesting,
+  RTM_SPECIFICATIE_TITLE,
+  transformRTMAanvragen,
+} from './regeling-rtm';
 import {
   aanvraag,
   aanvragenTestsetInput,
@@ -175,10 +181,6 @@ describe('RTM aanvraag transformation', () => {
                   "id": "test-encrypted-id",
                   "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
                 },
-                {
-                  "id": "test-encrypted-id",
-                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
-                },
               ],
               "id": "in-behandeling-genomen-193359720",
               "isActive": false,
@@ -238,7 +240,12 @@ describe('RTM aanvraag transformation', () => {
       <p>U hoeft de Regeling tegemoetkoming meerkosten niet elk jaar opnieuw aan te vragen. De gemeente verlengt de regeling stilzwijgend, maar controleert wel elk jaar of u nog in aanmerking komt.</p>
       <p>U kunt dan ook een brief krijgen met het verzoek om extra informatie te geven.</p>
       <p><a href="https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/extra-geld-als-u-chronisch-ziek-of/">Als er wijzigingen zijn in uw situatie moet u die direct doorgeven</a>.</p>",
-              "documents": [],
+              "documents": [
+                {
+                  "id": "test-encrypted-id",
+                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
+                },
+              ],
               "id": "einde-recht-193360808",
               "isActive": false,
               "isChecked": false,
@@ -430,12 +437,22 @@ describe('RTM aanvraag transformation', () => {
                   "id": "test-encrypted-id",
                   "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
                 },
+              ],
+              "id": "besluit-wijziging-193359722",
+              "isActive": false,
+              "isChecked": true,
+              "status": "Besluit wijziging",
+            },
+            {
+              "datePublished": "",
+              "description": "<p>Uw aanvraag voor een wijziging is afgehandeld. Bekijk de brief voor meer informatie hierover.</p>",
+              "documents": [
                 {
                   "id": "test-encrypted-id",
                   "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
                 },
               ],
-              "id": "besluit-wijziging-193359722",
+              "id": "besluit-wijziging-193359725",
               "isActive": true,
               "isChecked": true,
               "status": "Besluit wijziging",
@@ -446,7 +463,12 @@ describe('RTM aanvraag transformation', () => {
       <p>U hoeft de Regeling tegemoetkoming meerkosten niet elk jaar opnieuw aan te vragen. De gemeente verlengt de regeling stilzwijgend, maar controleert wel elk jaar of u nog in aanmerking komt.</p>
       <p>U kunt dan ook een brief krijgen met het verzoek om extra informatie te geven.</p>
       <p><a href="https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/extra-geld-als-u-chronisch-ziek-of/">Als er wijzigingen zijn in uw situatie moet u die direct doorgeven</a>.</p>",
-              "documents": [],
+              "documents": [
+                {
+                  "id": "test-encrypted-id",
+                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
+                },
+              ],
               "id": "einde-recht-193359722",
               "isActive": false,
               "isChecked": false,
@@ -572,6 +594,276 @@ describe('RTM aanvraag transformation', () => {
       ]
     `);
   });
+
+  test('transform complete RTM1 toegewezen -> RTM2 afgewezen', () => {
+    const aanvragen = [
+      aanvraag(RTM1, TOE, [], {
+        id: '7-1',
+        datumBesluit: '2026-05-01',
+        documenten: [{ id: 'baz' }],
+        betrokkenPersonen: [],
+        beschiktProductIdentificatie: '7788999',
+      }),
+      aanvraag(RTM2, AFW, [], {
+        id: '7-2',
+        datumBesluit: '2026-07-01',
+        documenten: [{ id: 'bar' }],
+        betrokkenPersonen: [],
+        beschiktProductIdentificatie: '887766',
+      }),
+    ] as ZorgnedAanvraagWithRelatedPersonsTransformed[];
+
+    const transformed = transformRTMAanvragen(
+      'xxxx-session-id-xxxx',
+      { bsn: '12345' },
+      aanvragen
+    );
+    expect(transformed).toMatchInlineSnapshot(`
+      [
+        {
+          "betrokkenen": "Met bsn: 12345",
+          "dateDecision": "2026-07-01",
+          "dateEnd": "",
+          "dateRequest": "",
+          "dateStart": "2026-07-01",
+          "decision": "afgewezen",
+          "displayStatus": "Afgewezen",
+          "documents": [],
+          "id": "1103584458",
+          "isActual": false,
+          "link": {
+            "title": "Meer informatie",
+            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/1103584458",
+          },
+          "steps": [
+            {
+              "datePublished": undefined,
+              "description": "",
+              "documents": [],
+              "id": "aanvraag-193359726",
+              "isActive": false,
+              "isChecked": true,
+              "status": "Aanvraag",
+            },
+            {
+              "datePublished": undefined,
+              "description": "<p>Voordat u de Regeling tegemoetkoming meerkosten krijgt, moet u een afspraak maken voor een medische keuring bij de GGD. In de brief staat hoe u dat doet.</p>",
+              "documents": [
+                {
+                  "id": "test-encrypted-id",
+                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
+                },
+              ],
+              "id": "in-behandeling-genomen-193359726",
+              "isActive": false,
+              "isChecked": true,
+              "status": "In behandeling genomen",
+            },
+            {
+              "datePublished": "2026-07-01",
+              "description": "<p>
+          U krijgt geen Regeling tegemoetkoming meerkosten.
+          </p>
+          <p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>
+        ",
+              "documents": [
+                {
+                  "id": "test-encrypted-id",
+                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
+                },
+              ],
+              "id": "besluit-193360813",
+              "isActive": true,
+              "isChecked": true,
+              "status": "Besluit",
+            },
+          ],
+          "title": "Regeling tegemoetkoming meerkosten",
+        },
+      ]
+    `);
+  });
+
+  test('removes specificatie documents', () => {
+    const aanvragen = [
+      aanvraag(RTM2, TOE, [], {
+        id: '8-1',
+        datumBesluit: '2026-07-01',
+        documenten: [
+          { id: 'bar', title: RTM_SPECIFICATIE_TITLE },
+          { id: 'foo', title: 'Ander document' },
+        ],
+        betrokkenPersonen: [],
+        beschiktProductIdentificatie: '887766',
+      }),
+    ] as ZorgnedAanvraagWithRelatedPersonsTransformed[];
+
+    const transformed = transformRTMAanvragen(
+      'xxxx-session-id-xxxx',
+      { bsn: '12345' },
+      aanvragen
+    );
+
+    const documents = transformed[0].steps[0].documents;
+    expect(documents).toHaveLength(1);
+    expect(documents?.[0].title).not.toBe(RTM_SPECIFICATIE_TITLE);
+  });
+
+  test('Einde recht step in future', () => {
+    mockdate.set('2025-01-01');
+
+    const aanvragen = [
+      aanvraag(RTM2, TOE, [], {
+        id: '8-2',
+        datumBesluit: '2024-12-01',
+        datumEindeGeldigheid: '2025-11-30',
+        datumIngangGeldigheid: '2024-12-01',
+        documenten: [{ id: 'baz' }],
+        betrokkenPersonen: [],
+        beschiktProductIdentificatie: '7788999',
+      }),
+    ] as ZorgnedAanvraagWithRelatedPersonsTransformed[];
+
+    const transformed = transformRTMAanvragen(
+      'xxxx-session-id-xxxx',
+      { bsn: '12345' },
+      aanvragen
+    );
+    expect(transformed).toMatchInlineSnapshot(`
+      [
+        {
+          "betrokkenen": "",
+          "dateDecision": "2024-12-01",
+          "dateEnd": "2025-11-30",
+          "dateRequest": "",
+          "dateStart": "2024-12-01",
+          "decision": "toegewezen",
+          "displayStatus": "Besluit",
+          "documents": [],
+          "id": "1837487633",
+          "isActual": true,
+          "link": {
+            "title": "Meer informatie",
+            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/1837487633",
+          },
+          "steps": [
+            {
+              "datePublished": "2024-12-01",
+              "description": "<p>
+          U krijgt Regeling tegemoetkoming meerkosten per 01 december 2024.
+          </p>
+          <p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>
+        ",
+              "documents": [
+                {
+                  "id": "test-encrypted-id",
+                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
+                },
+              ],
+              "id": "besluit-193360802",
+              "isActive": true,
+              "isChecked": true,
+              "status": "Besluit",
+            },
+            {
+              "datePublished": "2025-12-01",
+              "description": "<p>Uw recht op Regeling tegemoetkoming meerkosten stopt per 01 december 2025.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>",
+              "documents": [
+                {
+                  "id": "test-encrypted-id",
+                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
+                },
+              ],
+              "id": "einde-recht-193360802",
+              "isActive": false,
+              "isChecked": false,
+              "status": "Einde recht",
+            },
+          ],
+          "title": "Regeling tegemoetkoming meerkosten",
+        },
+      ]
+    `);
+  });
+
+  test('Einde recht step in future', () => {
+    mockdate.set('2025-01-01');
+
+    const aanvragen = [
+      aanvraag(RTM2, TOE, [], {
+        id: '8-2',
+        datumBesluit: '2024-11-01',
+        datumIngangGeldigheid: '2024-12-01',
+        datumEindeGeldigheid: '2025-11-30',
+        documenten: [{ id: 'baz' }],
+        betrokkenPersonen: [],
+        beschiktProductIdentificatie: '7788999',
+      }),
+    ] as ZorgnedAanvraagWithRelatedPersonsTransformed[];
+
+    const transformed = transformRTMAanvragen(
+      'xxxx-session-id-xxxx',
+      { bsn: '12345' },
+      aanvragen
+    );
+    expect(transformed).toMatchInlineSnapshot(`
+      [
+        {
+          "betrokkenen": "",
+          "dateDecision": "2024-11-01",
+          "dateEnd": "2025-11-30",
+          "dateRequest": "",
+          "dateStart": "2024-11-01",
+          "decision": "toegewezen",
+          "displayStatus": "Besluit",
+          "documents": [],
+          "id": "1837487633",
+          "isActual": true,
+          "link": {
+            "title": "Meer informatie",
+            "to": "/regelingen-bij-laag-inkomen/regeling/regeling-tegemoetkoming-meerkosten/1837487633",
+          },
+          "steps": [
+            {
+              "datePublished": "2024-11-01",
+              "description": "<p>
+          U krijgt Regeling tegemoetkoming meerkosten per 01 december 2024.
+          </p>
+          <p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>
+        ",
+              "documents": [
+                {
+                  "id": "test-encrypted-id",
+                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
+                },
+              ],
+              "id": "besluit-193360802",
+              "isActive": true,
+              "isChecked": true,
+              "status": "Besluit",
+            },
+            {
+              "datePublished": "2025-12-01",
+              "description": "<p>Uw recht op Regeling tegemoetkoming meerkosten stopt per 01 december 2025.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>",
+              "documents": [
+                {
+                  "id": "test-encrypted-id",
+                  "url": "http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id",
+                },
+              ],
+              "id": "einde-recht-193360802",
+              "isActive": false,
+              "isChecked": false,
+              "status": "Einde recht",
+            },
+          ],
+          "title": "Regeling tegemoetkoming meerkosten",
+        },
+      ]
+    `);
+
+    mockdate.reset();
+  });
 });
 
 describe('RTM combine and dedupe', () => {
@@ -602,7 +894,7 @@ describe('RTM combine and dedupe', () => {
     expect(regeling.documenten).toStrictEqual([]);
   });
 
-  test('Dedupes aanvragen that have the same beschiktProductIdentificatie, but keeps the included documents', () => {
+  test('Collects aanvragen that have the same beschiktProductIdentificatie and adds them to a procesAanvragen array in the first aanvraag', () => {
     const regelingen = forTesting.dedupeButKeepDocuments([
       {
         beschiktProductIdentificatie: '1',
@@ -622,7 +914,13 @@ describe('RTM combine and dedupe', () => {
     expect(regelingen).toEqual([
       {
         beschiktProductIdentificatie: '1',
-        documenten: ['foo', 'bar', 'baz'],
+        documenten: ['foo', 'bar'],
+        procesAanvragen: [
+          {
+            beschiktProductIdentificatie: '1',
+            documenten: ['baz'],
+          },
+        ],
       },
       {
         beschiktProductIdentificatie: '2',

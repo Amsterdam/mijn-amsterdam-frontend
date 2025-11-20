@@ -5,7 +5,6 @@ import {
   forTesting,
   getDocumentsFrontend,
   transformRegelingForFrontend,
-  RTM_SPECIFICATIE_TITLE,
 } from './hli';
 import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import { getAuthProfileAndToken } from '../../../testing/utils';
@@ -19,6 +18,7 @@ import {
   StatusLineItem,
 } from '../../../universal/types/App.types';
 import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types';
+import { RTM_SPECIFICATIE_TITLE } from './rtm/regeling-rtm';
 
 vi.mock('./hli-zorgned-service', () => ({
   fetchZorgnedAanvragenHLI: vi.fn(),
@@ -174,7 +174,7 @@ describe('HLI', () => {
       ])
     );
 
-    const result = await forTesting.fetchSpecificaties(authProfileAndToken);
+    const result = await forTesting.fetchRTMSpecificaties(authProfileAndToken);
     expect(result.status).toBe('OK');
     expect(result.content).toStrictEqual([
       {
@@ -192,7 +192,7 @@ describe('HLI', () => {
     );
 
     const resultError =
-      await forTesting.fetchSpecificaties(authProfileAndToken);
+      await forTesting.fetchRTMSpecificaties(authProfileAndToken);
     expect(resultError.status).toBe('ERROR');
   });
 
@@ -365,6 +365,7 @@ describe('HLI', () => {
         resultaat: 'toegewezen',
         isActueel: true,
         id: '1',
+        prettyID: '1',
         betrokkenen: [],
         datumAanvraag: '',
         datumBeginLevering: null,
@@ -395,6 +396,7 @@ describe('HLI', () => {
         resultaat: 'toegewezen',
         isActueel: true,
         id: '2',
+        prettyID: '2',
         betrokkenen: [],
         datumAanvraag: '',
         datumBeginLevering: null,
@@ -425,6 +427,7 @@ describe('HLI', () => {
         resultaat: 'toegewezen',
         isActueel: true,
         id: '3',
+        prettyID: '3',
         betrokkenen: [],
         datumAanvraag: '',
         datumBeginLevering: null,
@@ -455,6 +458,7 @@ describe('HLI', () => {
         resultaat: 'toegewezen',
         isActueel: true,
         id: '4',
+        prettyID: '4',
         betrokkenen: [],
         datumAanvraag: '',
         datumBeginLevering: null,
@@ -485,6 +489,7 @@ describe('HLI', () => {
         resultaat: 'afgewezen',
         isActueel: true,
         id: '4',
+        prettyID: '4',
         betrokkenen: [],
         datumAanvraag: '',
         datumBeginLevering: null,
