@@ -43,7 +43,10 @@ export const ExcludePageViewTrackingUrls = [
  */
 export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   BRP: 'Persoonlijke gegevens',
+  BRP_adresHistorisch: 'Vorige adressen',
   KVK: 'Mijn onderneming',
+  KVK_onderneming: 'Mijn onderneming',
+  KVK_vestigingen: 'Vestigingen van mijn onderneming',
   JEUGD: 'Jeugd: aanvragen en voorzieningen',
   AFIS: 'Facturen en betalen',
   AFIS_facturenoverview: 'Facturen en betalen: Overzicht van facturen',
