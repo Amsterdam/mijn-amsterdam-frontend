@@ -405,3 +405,16 @@ export async function fetchKVK(
     })
   );
 }
+
+export const forTesting = {
+  translateKVKNummer,
+  fetchTokenHeader,
+  normalizeDate,
+  getDate,
+  getEigenaar,
+  getRechtspersoon,
+  transformMAC,
+  getCommunicatie,
+  transformVestiging,
+  transformVestigingen,
+};
