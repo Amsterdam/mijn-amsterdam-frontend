@@ -5,7 +5,7 @@ import {
 } from './Flyeren';
 import type {
   Nachtwerkontheffing,
-  VergunningFrontend,
+  DecosZaakFrontend,
 } from '../../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../../components/Datalist/Datalist';
 
@@ -14,7 +14,7 @@ import { Datalist } from '../../../../components/Datalist/Datalist';
 export function Nachtwerkontheffing({
   vergunning,
 }: {
-  vergunning: VergunningFrontend<Nachtwerkontheffing>;
+  vergunning: DecosZaakFrontend<Nachtwerkontheffing>;
 }) {
   const rows = getRows(vergunning, [
     commonTransformers.identifier,

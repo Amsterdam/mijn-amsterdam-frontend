@@ -1,16 +1,16 @@
 import { commonTransformers, getRows } from './fields-config';
 import type {
   EvenementMelding,
-  VergunningFrontend,
+  DecosZaakFrontend,
 } from '../../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../../components/Datalist/Datalist';
 
 export function EvenementMelding({
   vergunning,
 }: {
-  vergunning: VergunningFrontend<EvenementMelding>;
+  vergunning: DecosZaakFrontend<EvenementMelding>;
 }) {
-  const onFromTo = (vergunning: VergunningFrontend<EvenementMelding>) => {
+  const onFromTo = (vergunning: DecosZaakFrontend<EvenementMelding>) => {
     return vergunning.processed
       ? commonTransformers.onFromTo(vergunning)
       : null;

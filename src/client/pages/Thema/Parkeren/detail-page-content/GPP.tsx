@@ -1,5 +1,5 @@
 import type { GPP } from '../../../../../server/services/parkeren/config-and-types';
-import { VergunningFrontend } from '../../../../../server/services/vergunningen/config-and-types';
+import { DecosZaakFrontend } from '../../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../../components/Datalist/Datalist';
 import {
   commonTransformers,
@@ -9,7 +9,7 @@ import {
 export function GPPContent({
   vergunning,
 }: {
-  vergunning: VergunningFrontend<GPP>;
+  vergunning: DecosZaakFrontend<GPP>;
 }) {
   const rows = getRows(vergunning, [
     commonTransformers.identifier,

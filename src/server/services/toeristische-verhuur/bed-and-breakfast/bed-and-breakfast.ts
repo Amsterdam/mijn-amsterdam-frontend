@@ -25,7 +25,6 @@ function transformBBFrontend(zaak: BedAndBreakfastType): BBVergunningFrontend {
   const appRoute = routeConfig.detailPage.path;
   const zaakTransformed = transformPBZaakFrontend(zaak, {
     detailPageRoute: appRoute,
-    includeFetchDocumentsUrl: false,
     getStepsFN: getStatusSteps,
   });
   return {
