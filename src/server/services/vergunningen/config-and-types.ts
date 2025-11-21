@@ -28,11 +28,6 @@ export const caseTypeVergunningen = {
   Straatartiesten: 'Straatartiesten',
   NachtwerkOntheffing: 'Nachtwerkontheffing',
   ZwaarVerkeer: 'Zwaar verkeer',
-  Samenvoegingsvergunning: 'Samenvoegingsvergunning',
-  Onttrekkingsvergunning: 'Onttrekkingsvergunning voor ander gebruik',
-  OnttrekkingsvergunningSloop: 'Onttrekkingsvergunning voor sloop',
-  VormenVanWoonruimte: 'Woningvormingsvergunning',
-  Splitsingsvergunning: 'Splitsingsvergunning',
   RVVHeleStad: 'RVV - Hele stad',
   RVVSloterweg: 'RVV Sloterweg',
   WVOS: 'Werk en vervoer op straat',
@@ -127,38 +122,6 @@ export type RVVSloterweg = DecosZaakBase &
     status: ZaakStatus & 'Actief';
   };
 
-export type Samenvoegingsvergunning = DecosZaakBase &
-  WithLocation & {
-    caseType: GetCaseType<'Samenvoegingsvergunning'>;
-  };
-
-export type Onttrekkingsvergunning = DecosZaakBase &
-  WithLocation & {
-    caseType: GetCaseType<'Onttrekkingsvergunning'>;
-  };
-
-export type OnttrekkingsvergunningSloop = DecosZaakBase &
-  WithLocation & {
-    caseType: GetCaseType<'OnttrekkingsvergunningSloop'>;
-  };
-
-export type VormenVanWoonruimte = DecosZaakBase &
-  WithLocation & {
-    caseType: GetCaseType<'VormenVanWoonruimte'>;
-  };
-
-export type Splitsingsvergunning = DecosZaakBase &
-  WithLocation & {
-    caseType: GetCaseType<'Splitsingsvergunning'>;
-  };
-
-export type WoningVergunning =
-  | Samenvoegingsvergunning
-  | Onttrekkingsvergunning
-  | OnttrekkingsvergunningSloop
-  | Splitsingsvergunning
-  | VormenVanWoonruimte;
-
 export type WVOSActiviteit =
   | 'Rijden of een voertuig neerzetten waar dat normaal niet mag'
   | 'Object(en) neerzetten'
@@ -187,11 +150,6 @@ export type DecosVergunning =
   | Straatartiesten
   | Nachtwerkontheffing
   | ZwaarVerkeer
-  | Samenvoegingsvergunning
-  | Onttrekkingsvergunning
-  | OnttrekkingsvergunningSloop
-  | VormenVanWoonruimte
-  | Splitsingsvergunning
   | RVVHeleStad
   | RVVSloterweg
   | WerkzaamhedenEnVervoerOpStraat;
@@ -203,6 +161,11 @@ export type DecosVergunning =
 export const caseTypePB = {
   Ligplaatsvergunning: 'Ligplaatsvergunning',
   Omzettingsvergunning: 'Omzettingsvergunning',
+  Samenvoegingsvergunning: 'Samenvoegingsvergunning',
+  Onttrekkingsvergunning: 'Onttrekkingsvergunning voor ander gebruik',
+  OnttrekkingsvergunningSloop: 'Onttrekkingsvergunning voor sloop',
+  VormenVanWoonruimte: 'Woningvormingsvergunning',
+  Splitsingsvergunning: 'Splitsingsvergunning',
 } as const;
 
 export type CaseTypePBKey = keyof typeof caseTypePB;
@@ -224,7 +187,42 @@ export type Omzettingsvergunning = PowerBrowserZaakBase &
     dateInBehandeling: string | null;
   };
 
-export type PBVergunning = Ligplaatsvergunning | Omzettingsvergunning;
+export type Samenvoegingsvergunning = PowerBrowserZaakBase &
+  WithLocation & {
+    caseType: GetCaseTypePB<'Samenvoegingsvergunning'>;
+  };
+
+export type Onttrekkingsvergunning = PowerBrowserZaakBase &
+  WithLocation & {
+    caseType: GetCaseTypePB<'Onttrekkingsvergunning'>;
+  };
+
+export type OnttrekkingsvergunningSloop = PowerBrowserZaakBase &
+  WithLocation & {
+    caseType: GetCaseTypePB<'OnttrekkingsvergunningSloop'>;
+  };
+
+export type VormenVanWoonruimte = PowerBrowserZaakBase &
+  WithLocation & {
+    caseType: GetCaseTypePB<'VormenVanWoonruimte'>;
+  };
+
+export type Splitsingsvergunning = PowerBrowserZaakBase &
+  WithLocation & {
+    caseType: GetCaseTypePB<'Splitsingsvergunning'>;
+  };
+
+export type WoningVergunning =
+  | Samenvoegingsvergunning
+  | Onttrekkingsvergunning
+  | OnttrekkingsvergunningSloop
+  | Splitsingsvergunning
+  | VormenVanWoonruimte;
+
+export type PBVergunning =
+  | Ligplaatsvergunning
+  | Omzettingsvergunning
+  | WoningVergunning;
 
 export type ZaakFrontendCombined = DecosZaakFrontend | PowerBrowserZaakFrontend;
 

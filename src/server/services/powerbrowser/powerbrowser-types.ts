@@ -136,7 +136,7 @@ export type PowerBrowserZaakTransformer<T extends PowerBrowserZaakBase = any> =
   {
     caseType: CaseTypeLiteral<T>;
     title: string;
-    fetchZaakIdFilter: (field: PBRecord<'GFO_ZAKEN'>['fields'][0]) => boolean;
+    fetchZaakIdFilter?: (field: PBRecord<'GFO_ZAKEN'>['fields'][0]) => boolean;
     transformFields: typeof SELECT_FIELDS_TRANSFORM_BASE &
       Record<string, string>;
     transformDoclinks: Record<string, Readonly<string[]>>;

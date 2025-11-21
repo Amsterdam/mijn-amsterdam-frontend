@@ -2,6 +2,7 @@ import memoizee from 'memoizee';
 import { generatePath } from 'react-router';
 import slug from 'slugme';
 
+import { hasCaseTypeInFMT_CAPTION } from './powerbrowser-helpers';
 import {
   PowerBrowserZaakBase,
   FetchPersoonOrMaatschapIdByUidOptions,
@@ -557,10 +558,14 @@ async function fetchZakenRecords<T extends PowerBrowserZaakTransformer>(
 
   const zakenIdToZakentransformer = assignTransformerByFilter(
     zakenSearchResponse.content.records || [],
-    zaakTransformers.map((t) => ({
-      zaakTransformer: t,
-      filter: t.fetchZaakIdFilter,
-    }))
+    zaakTransformers.map((t) => {
+      const defaultFetchZaakIdFilter = (pbRecordField: PBRecordField<string>) =>
+        hasCaseTypeInFMT_CAPTION(pbRecordField, t.caseType as string);
+      return {
+        zaakTransformer: t,
+        filter: t.fetchZaakIdFilter ?? defaultFetchZaakIdFilter,
+      };
+    })
   );
   const zakenIds = Object.keys(zakenIdToZakentransformer);
   const zakenResponse = await fetchZakenByIds(zakenIds);

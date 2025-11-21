@@ -4,14 +4,9 @@ import {
   type EvenementMelding,
   type EvenementVergunning,
   type Flyeren,
-  type OnttrekkingsvergunningSloop,
-  type Onttrekkingsvergunning,
   type RVVHeleStad,
   type RVVSloterweg,
-  type Samenvoegingsvergunning,
-  type Splitsingsvergunning,
   type TVMRVVObject,
-  type VormenVanWoonruimte,
   type ZwaarVerkeer,
   caseTypeVergunningen,
   type Nachtwerkontheffing,
@@ -309,94 +304,6 @@ const ZwaarVerkeer: DecosZaakTransformer<ZwaarVerkeer> = {
   },
 };
 
-const Samenvoegingsvergunning: DecosZaakTransformer<Samenvoegingsvergunning> = {
-  isActive: true,
-  itemType: 'folders',
-  caseType: caseTypeVergunningen.Samenvoegingsvergunning,
-  title: 'Vergunning voor samenvoegen van woonruimten',
-  fetchWorkflowStatusDatesFor: [
-    {
-      status: 'In behandeling',
-      decosActionCode: 'Samenvoegingsvergunning - Beoordelen en besluiten',
-    },
-  ],
-  transformFields: {
-    ...SELECT_FIELDS_TRANSFORM_BASE,
-    text6: location,
-  },
-};
-
-const Onttrekkingsvergunning: DecosZaakTransformer<Onttrekkingsvergunning> = {
-  isActive: true,
-  itemType: 'folders',
-  caseType: caseTypeVergunningen.Onttrekkingsvergunning,
-  title: caseTypeVergunningen.Onttrekkingsvergunning,
-  fetchWorkflowStatusDatesFor: [],
-  transformFields: {
-    ...SELECT_FIELDS_TRANSFORM_BASE,
-    text6: location,
-  },
-};
-
-const OnttrekkingsvergunningSloop: DecosZaakTransformer<OnttrekkingsvergunningSloop> =
-  {
-    isActive: true,
-    itemType: 'folders',
-    caseType: caseTypeVergunningen.OnttrekkingsvergunningSloop,
-    title: caseTypeVergunningen.OnttrekkingsvergunningSloop,
-    fetchWorkflowStatusDatesFor: [
-      {
-        status: 'In behandeling',
-        decosActionCode:
-          'Onttrekkingsvergunning voor sloop - Beoordelen en besluiten',
-      },
-    ],
-    transformFields: {
-      ...SELECT_FIELDS_TRANSFORM_BASE,
-      text6: location,
-      dfunction: transformDecision({
-        Ingetrokken: ['Ingetrokken aanvraag door gemeente'],
-      }),
-    },
-  };
-
-const VormenVanWoonruimte: DecosZaakTransformer<VormenVanWoonruimte> = {
-  isActive: true,
-  itemType: 'folders',
-  caseType: caseTypeVergunningen.VormenVanWoonruimte,
-  title: 'Vergunning voor woningvorming',
-  fetchWorkflowStatusDatesFor: [
-    {
-      status: 'In behandeling',
-      decosActionCode: 'Woningvormingsvergunning - Beoordelen en besluiten',
-    },
-  ],
-  transformFields: {
-    ...SELECT_FIELDS_TRANSFORM_BASE,
-    text6: location,
-  },
-};
-
-const Splitsingsvergunning: DecosZaakTransformer<Splitsingsvergunning> = {
-  isActive: true,
-  itemType: 'folders',
-  caseType: caseTypeVergunningen.Splitsingsvergunning,
-  title: caseTypeVergunningen.Splitsingsvergunning,
-  fetchWorkflowStatusDatesFor: [
-    {
-      status: 'In behandeling',
-      decosActionCode: 'Splitsingsvergunning - Behandelen',
-    },
-  ],
-  transformFields: {
-    ...SELECT_FIELDS_TRANSFORM_BASE,
-    text6: location,
-    dfunction: transformDecision({
-      Ingetrokken: ['Ingetrokken aanvraag op eigen verzoek'],
-    }),
-  },
-};
-
 const RVVHeleStad: DecosZaakTransformer<RVVHeleStad> = {
   isActive: !IS_PRODUCTION,
   itemType: 'folders',
@@ -551,15 +458,10 @@ export const decosCaseToZaakTransformers = {
   [EvenementVergunning.caseType]: EvenementVergunning,
   [Flyeren.caseType]: Flyeren,
   [NachtwerkOntheffing.caseType]: NachtwerkOntheffing,
-  [Onttrekkingsvergunning.caseType]: Onttrekkingsvergunning,
-  [OnttrekkingsvergunningSloop.caseType]: OnttrekkingsvergunningSloop,
   [RVVHeleStad.caseType]: RVVHeleStad,
   [RVVSloterweg.caseType]: RVVSloterweg,
-  [Samenvoegingsvergunning.caseType]: Samenvoegingsvergunning,
-  [Splitsingsvergunning.caseType]: Splitsingsvergunning,
   [Straatartiesten.caseType]: Straatartiesten,
   [TVMRVVObject.caseType]: TVMRVVObject,
-  [VormenVanWoonruimte.caseType]: VormenVanWoonruimte,
   [WerkEnVervoerOpStraat.caseType]: WerkEnVervoerOpStraat,
   [ZwaarVerkeer.caseType]: ZwaarVerkeer,
   [ERVV_TVM.caseType]: ERVV_TVM,
