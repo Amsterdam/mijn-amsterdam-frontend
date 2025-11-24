@@ -45,7 +45,11 @@ const OmzettingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Omzetting
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
     transformDoclinks: {
-      'Besluiten en vastleggen': ['Besluit Omzettingsvergunning'],
+      // TODO: MIJN-12348 - Replace with actual document names and add mock data
+      'Besluiten en vastleggen': [
+        'Besluit Omzettingsvergunning',
+        'Besluit Vergunning voor kamerverhuur',
+      ],
       [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
     } as const,
   };
@@ -60,7 +64,11 @@ const SamenvoegingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Samenv
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
     transformDoclinks: {
-      'Besluiten en vastleggen': ['Besluit Omzettingsvergunning'],
+      // TODO: MIJN-12348 - Replace with actual document names and add mock data
+      'Besluiten en vastleggen': [
+        'Besluit Samenvoegingsvergunning',
+        'Besluit Vergunning voor samenvoegen',
+      ],
       [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
     } as const,
   };
@@ -78,7 +86,8 @@ const OnttrekkingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Onttrek
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
     transformDoclinks: {
-      'Besluiten en vastleggen': ['Besluit Omzettingsvergunning'],
+      // TODO: MIJN-12348 - Replace with actual document names and add mock data
+      'Besluiten en vastleggen': ['Besluit Onttrekkingsvergunning'],
       [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
     } as const,
   };
@@ -101,7 +110,11 @@ const OnttrekkingsvergunningSloopZaakTransformer: PowerBrowserZaakTransformer<On
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
     transformDoclinks: {
-      'Besluiten en vastleggen': ['Besluit Omzettingsvergunning'],
+      // TODO: MIJN-12348 - Replace with actual document names and add mock data
+      'Besluiten en vastleggen': [
+        'Besluit Ontrekkingsvergunning',
+        'Besluit Onttrekkingsvergunning ',
+      ],
       [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
     } as const,
   };
@@ -116,7 +129,11 @@ const VormenVanWoonruimteZaakTransformer: PowerBrowserZaakTransformer<VormenVanW
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
     transformDoclinks: {
-      'Besluiten en vastleggen': ['Besluit Omzettingsvergunning'],
+      // TODO: MIJN-12348 - Replace with actual document names and add mock data
+      'Besluiten en vastleggen': [
+        'Besluit Woningvormingsvergunning',
+        'Besluit woningvormen',
+      ],
       [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
     } as const,
   };
