@@ -84,14 +84,15 @@ export async function hasPermitsOrPermitRequests(
     transformResponse(
       responseData:
         | ClientProductDetailsSourceResponse
-        | ActivePermitSourceResponse,
+        | ActivePermitSourceResponse
+        | null,
       _headers,
       statusCode
     ) {
       if (statusCode === HttpStatusCode.NotFound) {
         return false;
       }
-      return !!responseData.data.length;
+      return !!responseData?.data?.length;
     },
   };
 
