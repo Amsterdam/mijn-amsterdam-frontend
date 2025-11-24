@@ -1,5 +1,9 @@
+import {
+  normalizeDatePropertyNames,
+  getFullDate,
+  getPartialDateFormatted,
+} from './hr-kvk-helpers';
 import type {
-  DateSource,
   NatuurlijkPersoon,
   KvkResponseFrontend,
   MACResponse,
@@ -20,7 +24,6 @@ import {
   getSettledResult,
   type ApiResponse,
 } from '../../../universal/helpers/api';
-import { dateFormat, defaultDateFormat } from '../../../universal/helpers/date';
 import { sortByNumber } from '../../../universal/helpers/utils';
 import type { AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_HOUR_MS } from '../../config/app';
@@ -104,85 +107,6 @@ export async function fetchNatuurlijkpersoon(
     params,
     profileType: authProfileAndToken.profile.profileType,
   });
-}
-
-function normalizeDatePropertyNames(
-  prefix: string,
-  date: Record<string, number | string | null> | null
-): DateSource {
-  if (!date) {
-    return {
-      datum: null,
-      jaar: null,
-      maand: null,
-      dag: null,
-    };
-  }
-  return Object.fromEntries(
-    Object.entries(date).map(([key, value]) => {
-      return [
-        key.replace(prefix, '').toLowerCase(),
-        value ? value.toString() : null,
-      ];
-    })
-  ) as DateSource;
-}
-
-function getPartialDateFormatted(dateSource?: DateSource | null) {
-  if (!dateSource) {
-    return null;
-  }
-
-  const { dag, maand, jaar } = dateSource;
-
-  if (!dag && !maand && !jaar) {
-    return null;
-  }
-
-  if (dateSource.datum) {
-    return defaultDateFormat(dateSource.datum);
-  }
-
-  if (dag && maand && jaar) {
-    return defaultDateFormat(
-      `${jaar}-${maand.padStart(2, '0')}-${dag.padStart(2, '0')}`
-    );
-  }
-
-  if (maand && jaar) {
-    return dateFormat(
-      `${jaar}-${maand.toString().padStart(2, '0')}`,
-      'MMMM yyyy'
-    );
-  }
-
-  if (jaar && !maand) {
-    return `Anno ${jaar}`;
-  }
-
-  return null;
-}
-
-function getFullDate(date: DateSource | null): string | null {
-  if (!date) {
-    return null;
-  }
-
-  const { jaar, maand, dag, datum } = date;
-
-  if (datum) {
-    return datum;
-  }
-
-  // We only return a date when all parts are present.
-  if (!jaar || !maand || !dag) {
-    return null;
-  }
-
-  const monthPadded = maand.padStart(2, '0');
-  const dayPadded = dag.padStart(2, '0');
-
-  return `${jaar}-${monthPadded}-${dayPadded}`;
 }
 
 function getEigenaarNPS(

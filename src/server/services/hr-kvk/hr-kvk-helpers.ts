@@ -1,4 +1,10 @@
-import type { KvkResponseFrontend, Vestiging } from './hr-kvk.types';
+import type {
+  DateSource,
+  KvkResponseFrontend,
+  Vestiging,
+} from './hr-kvk.types';
+import { defaultDateFormat, dateFormat } from '../../../universal/helpers/date';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { isAmsterdamAddress } from '../buurt/helpers';
 
 export type KvkBagIds = Pick<
@@ -54,4 +60,86 @@ export function getVestigingBagIds(
     .flat();
 
   return vestigingenWithBagIds;
+}
+
+export function normalizeDatePropertyNames(
+  prefix: string,
+  date: Record<string, number | string | null> | null
+): DateSource {
+  const defaultSource = {
+    datum: null,
+    jaar: null,
+    maand: null,
+    dag: null,
+  };
+  if (!date) {
+    return defaultSource;
+  }
+  return Object.assign(
+    defaultSource,
+    Object.fromEntries(
+      Object.entries(date).map(([key, value]) => {
+        return [
+          key.replace(prefix, '').toLowerCase(),
+          value ? value.toString() : null,
+        ];
+      })
+    )
+  ) as DateSource;
+}
+
+export function getPartialDateFormatted(dateSource?: DateSource | null) {
+  if (!dateSource) {
+    return null;
+  }
+
+  const { dag, maand, jaar } = dateSource;
+
+  if (!dag && !maand && !jaar) {
+    return null;
+  }
+
+  if (dateSource.datum) {
+    return defaultDateFormat(dateSource.datum);
+  }
+
+  if (dag && maand && jaar) {
+    return defaultDateFormat(
+      `${jaar}-${maand.padStart(2, '0')}-${dag.padStart(2, '0')}`
+    );
+  }
+
+  if (maand && jaar) {
+    return capitalizeFirstLetter(
+      dateFormat(`${jaar}-${maand.toString().padStart(2, '0')}`, 'MMMM yyyy')
+    );
+  }
+
+  if (jaar && !maand) {
+    return `Anno ${jaar}`;
+  }
+
+  return null;
+}
+
+export function getFullDate(date: DateSource | null): string | null {
+  if (!date) {
+    return null;
+  }
+
+  const { jaar, maand, dag, datum } = date;
+
+  if (datum) {
+    return datum;
+  }
+
+  // We only return a date when all parts are present.
+  if (!jaar || !maand || !dag) {
+    return null;
+  }
+
+  const monthPadded = maand.padStart(2, '0');
+  const dayPadded = dag.padStart(2, '0');
+
+  return `${jaar}-${monthPadded}-${dayPadded}`;
 }

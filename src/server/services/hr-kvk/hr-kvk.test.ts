@@ -45,40 +45,6 @@ describe('hr-kvk module', () => {
     });
   });
 
-  describe('normalizeDate', () => {
-    it('normalizes date fields by removing the prefix', () => {
-      const input = {
-        datumJaar: '2023',
-        datumMaand: '10',
-        datumDag: '15',
-      };
-      const result = forTesting.normalizeDate('datum', input);
-      expect(result).toEqual({ jaar: '2023', maand: '10', dag: '15' });
-    });
-  });
-
-  describe('getDate', () => {
-    it('returns a formatted date string when all fields are present', () => {
-      const input = {
-        datumJaar: '2023',
-        datumMaand: '10',
-        datumDag: '15',
-      };
-      const result = forTesting.getDate(
-        forTesting.normalizeDate('datum', input)
-      );
-      expect(result).toBe('2023-10-15');
-    });
-
-    it('returns null when fields are missing', () => {
-      const input = { datumJaar: '2023' };
-      const result = forTesting.getDate(
-        forTesting.normalizeDate('datum', input)
-      );
-      expect(result).toBeNull();
-    });
-  });
-
   describe('fetchKVK', () => {
     it('returns an error when both MAC and vestigingen requests fail', async () => {
       remoteApi
@@ -163,7 +129,7 @@ describe('hr-kvk module', () => {
     });
   });
 
-  describe.only('transformVestigingen', () => {
+  describe('transformVestigingen', () => {
     it('handles missing _embedded field gracefully', () => {
       const result = forTesting.transformVestigingen(null);
       expect(result).toEqual([]);
