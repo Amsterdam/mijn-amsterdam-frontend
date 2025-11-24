@@ -131,7 +131,7 @@ type HuwelijkPartnerschapSource = {
   plaats?: TyperingSource;
 };
 
-type PersoonSource = PersoonBasisSource & {
+export type PersoonSource = PersoonBasisSource & {
   aNummer: string;
   geheimhoudingPersoonsgegevens: boolean;
   burgerservicenummer: string;
@@ -150,7 +150,7 @@ type PersoonSource = PersoonBasisSource & {
 
 export type PersonenResponseSource = {
   type: string;
-  personen: PersoonSource[];
+  personen?: PersoonSource[];
 };
 
 export type VerblijfplaatshistorieResponseSource = {

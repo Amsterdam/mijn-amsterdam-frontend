@@ -21,7 +21,12 @@ import {
   type VerblijfplaatshistorieResponseSource,
   type VerblijfplaatsSource,
 } from './brp-types';
-import type { Persoon, PersoonBasis, PersoonBasisSource } from './brp-types';
+import type {
+  Persoon,
+  PersoonBasis,
+  PersoonBasisSource,
+  PersoonSource,
+} from './brp-types';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import {
   apiErrorResult,
@@ -117,7 +122,7 @@ function getPersoonBasis(persoon: PersoonBasisSource): PersoonBasis {
 
 function transformBenkBrpResponse(
   sessionID: AuthProfile['sid'],
-  persoon: PersonenResponseSource['personen'][0],
+  persoon: PersoonSource,
   bsnTranslation?: { from: BSN; to: BSN }
 ): BrpFrontend {
   let adresInOnderzoek: Persoon['adresInOnderzoek'] | null = null;
@@ -287,7 +292,7 @@ export async function fetchBrpByBsnTransformed(
 ): Promise<ApiResponse<BrpFrontend>> {
   const brpResponse = await fetchBrpByBsn(sessionID, [bsn]);
 
-  if (brpResponse.status !== 'OK' || !brpResponse.content?.personen.length) {
+  if (brpResponse.status !== 'OK' || !brpResponse.content?.personen?.length) {
     return apiErrorResult(
       brpResponse.status === 'ERROR'
         ? brpResponse.message
@@ -418,8 +423,8 @@ export async function fetchAantalBewoners(
       ...response.content,
       'X-Correlation-ID': getContextOperationId(sessionID), // Required for tracing
     },
-    transformResponse: (responseData: PersonenResponseSource) => {
-      return responseData.personen.length;
+    transformResponse: (responseData: PersonenResponseSource | null) => {
+      return responseData?.personen?.length ?? AANTAL_BEWONERS_NOT_SET;
     },
     data: {
       type: 'ZoekMetAdresseerbaarObjectIdentificatie',
