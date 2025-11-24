@@ -1,7 +1,16 @@
 import { describe, it, expect, vi } from 'vitest';
 import type { Mock } from 'vitest';
 
-import { forTesting, fetchBrpByBsn, fetchBrpByBsnTransformed } from './brp';
+import {
+  forTesting,
+  fetchBrpByBsn,
+  fetchBrpByBsnTransformed,
+  fetchBrpVerblijfplaatsHistoryByBsn,
+} from './brp';
+import {
+  DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_FROM,
+  DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_TO,
+} from './brp-service-config';
 import type { PersonenResponseSource } from './brp-types';
 import testPersonenResponse from '../../../../mocks/fixtures/brp/test-personen.json';
 import verblijfplaatsenResponse from '../../../../mocks/fixtures/brp/verblijfplaatshistorie.json';
@@ -148,8 +157,6 @@ describe('brp.ts', () => {
 
     describe('Should format response data correctly', () => {
       test('Formatting for test BSN 1, with verblijfplaatshistorie', async () => {
-        vi.unmock('../../helpers/source-api-request');
-
         (fetchAuthTokenHeader as Mock).mockResolvedValue({
           content: { Authorization: 'Bearer test-token' },
           status: 'OK',
@@ -172,8 +179,6 @@ describe('brp.ts', () => {
       });
 
       test('Formatting for test BSN 2, with verblijfplaatshistorie returning an error', async () => {
-        vi.unmock('../../helpers/source-api-request');
-
         (fetchAuthTokenHeader as Mock).mockResolvedValue({
           content: { Authorization: 'Bearer test-token' },
           status: 'OK',
@@ -193,6 +198,74 @@ describe('brp.ts', () => {
         expect(response).toMatchSnapshot();
         expect(response.status).toBe('OK');
         expect(response.content?.persoon.bsn).toBe(BSN);
+      });
+    });
+  });
+
+  describe('fetchBrpVerblijfplaatsHistoryByBsn', () => {
+    const BSN = '999990810';
+    const SID = 'xx-yy-zz';
+    const requestSpy = vi.spyOn(sourceApi, 'requestData');
+
+    beforeEach(() => {
+      requestSpy.mockClear();
+    });
+
+    test('Uses passed dateFrom and dateTo', async () => {
+      (fetchAuthTokenHeader as Mock).mockResolvedValue({
+        content: { Authorization: 'Bearer test-token' },
+        status: 'OK',
+      });
+      remoteApi.post(/benk_brp/).reply(200);
+
+      await fetchBrpVerblijfplaatsHistoryByBsn(
+        SID,
+        BSN,
+        '2020-01-01',
+        '2021-01-01'
+      );
+      expect(requestSpy.mock.calls[0][0].data).toStrictEqual({
+        burgerservicenummer: BSN,
+        datumTot: '2021-01-01',
+        datumVan: '2020-01-01',
+        type: 'RaadpleegMetPeriode',
+      });
+    });
+
+    test('Subtracts 1 year from dateFrom if dateFrom and dateTo are the same', async () => {
+      (fetchAuthTokenHeader as Mock).mockResolvedValue({
+        content: { Authorization: 'Bearer test-token' },
+        status: 'OK',
+      });
+      remoteApi.post(/benk_brp/).reply(200);
+
+      await fetchBrpVerblijfplaatsHistoryByBsn(
+        SID,
+        BSN,
+        '2021-01-01',
+        '2021-01-01'
+      );
+      expect(requestSpy.mock.calls[0][0].data).toStrictEqual({
+        burgerservicenummer: '999990810',
+        datumTot: '2021-01-01',
+        datumVan: '2020-01-01',
+        type: 'RaadpleegMetPeriode',
+      });
+    });
+
+    test('Uses default dateFrom and dateTo if omitted', async () => {
+      (fetchAuthTokenHeader as Mock).mockResolvedValue({
+        content: { Authorization: 'Bearer test-token' },
+        status: 'OK',
+      });
+      remoteApi.post(/benk_brp/).reply(200);
+
+      await fetchBrpVerblijfplaatsHistoryByBsn(SID, BSN);
+      expect(requestSpy.mock.calls[0][0].data).toStrictEqual({
+        burgerservicenummer: '999990810',
+        datumTot: DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_TO,
+        datumVan: DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_FROM,
+        type: 'RaadpleegMetPeriode',
       });
     });
   });

@@ -1,3 +1,5 @@
+import { subYears } from 'date-fns';
+
 import {
   ADRES_IN_ONDERZOEK_B,
   GEMEENTE_CODE_AMSTERDAM,
@@ -7,6 +9,10 @@ import {
   AANTAL_BEWONERS_NOT_SET,
 } from './brp-config';
 import { featureToggle, routes } from './brp-service-config';
+import {
+  DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_FROM,
+  DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_TO,
+} from './brp-service-config';
 import {
   type BrpFrontend,
   type PersonenResponseSource,
@@ -328,8 +334,10 @@ export async function fetchBrpVerblijfplaatsHistoryByBsn(
     return response;
   }
 
-  const DEFAULT_DATE_FROM = '1900-01-01';
-  const DEFAULT_DATE_TO = new Date().getFullYear().toString() + '-12-31';
+  const dateFrom_ =
+    dateFrom && dateTo && dateFrom === dateTo
+      ? subYears(dateFrom, 1).toISOString().split('T')[0]
+      : dateFrom;
 
   const requestConfig = getApiConfig('BENK_BRP', {
     formatUrl(requestConfig) {
@@ -342,8 +350,8 @@ export async function fetchBrpVerblijfplaatsHistoryByBsn(
     data: {
       type: 'RaadpleegMetPeriode',
       burgerservicenummer: bsn,
-      datumVan: dateFrom ?? DEFAULT_DATE_FROM,
-      datumTot: dateTo ?? DEFAULT_DATE_TO,
+      datumVan: dateFrom_ ?? DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_FROM,
+      datumTot: dateTo ?? DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_TO,
     },
   });
 
