@@ -28,10 +28,6 @@ const LigplaatsvergunningZaakTransformer: PowerBrowserZaakTransformer<Ligplaatsv
     title: 'Ligplaatsvergunning',
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
-      A: 'requestKind',
-      B: 'reason',
-      C: 'vesselKind',
-      D: 'vesselName',
     },
     transformDoclinks: {
       'Besluiten en vastleggen': ['Besluit Ligplaatsvergunning'],
