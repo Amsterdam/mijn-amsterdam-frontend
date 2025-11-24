@@ -54,7 +54,13 @@ export const menuItems: [
     redactedScope: 'content',
     profileTypes: ['commercial', 'private'],
     isActive(appState: AppState) {
-      return !isLoading(appState.KVK) && !!appState.KVK.content?.onderneming;
+      return (
+        !isLoading(appState.KVK) &&
+        !!(
+          appState.KVK.content?.onderneming ||
+          appState.KVK.content?.vestigingen?.length
+        )
+      );
     },
     IconSVG: BuildingsIcon,
   } as const,
