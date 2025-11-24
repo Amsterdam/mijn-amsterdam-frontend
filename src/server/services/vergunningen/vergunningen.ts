@@ -5,9 +5,10 @@ import {
   type PBVergunning,
   type ZaakFrontendCombined,
 } from './config-and-types';
+import { getStatusStepsDecos as getStatusStepsDefault } from './decos-status-steps';
 import { decosZaakTransformers } from './decos-zaken';
+import { getStatusStepsPB } from './pb-status-steps';
 import { pbZaakTransformers } from './pb-zaken';
-import { getStatusSteps as getStatusStepsDefault } from './vergunningen-status-steps';
 import { routeConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config';
 import {
   apiErrorResult,
@@ -117,7 +118,7 @@ export async function fetchVergunningen(
     vergunningenPB = responsePB.content.map((pbZaak) =>
       transformPBZaakFrontend<PBVergunning>(pbZaak, {
         detailPageRoute: appRouteDetailPage,
-        // getStepsFN: getStatusSteps, // TODO: Make a custom getSteps function for PB vergunningen if needed
+        getStepsFN: getStatusStepsPB,
       })
     );
   }

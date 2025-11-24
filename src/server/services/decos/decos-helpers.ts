@@ -13,9 +13,9 @@ import type {
   WithKentekens,
   DecosFieldValue,
 } from './decos-types';
-import type { ZaakStatus } from '../../../universal/types/App.types';
 import { isDateInPast } from '../../../universal/helpers/date';
 import { entries } from '../../../universal/helpers/utils';
+import type { ZaakStatus } from '../../../universal/types/App.types';
 import type { StatusLineItem } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 

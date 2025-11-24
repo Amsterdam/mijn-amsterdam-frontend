@@ -4,9 +4,9 @@ import { MA_VERLEEND_DECISIONS_COMMOM } from '../decos/decos-field-transformers'
 import { getWorkflowStatusDate } from '../decos/decos-helpers';
 import { DecosZaakBase, WithDateEnd } from '../decos/decos-types';
 
-export function getStatusSteps<DZ extends DecosZaakBase & Partial<WithDateEnd>>(
-  zaak: DZ
-) {
+export function getStatusStepsDecos<
+  DZ extends DecosZaakBase & Partial<WithDateEnd>,
+>(zaak: DZ) {
   const isAfgehandeld = zaak.processed;
   const dateInBehandeling = getWorkflowStatusDate('In behandeling', zaak);
   const isInBehandeling = !!dateInBehandeling;
