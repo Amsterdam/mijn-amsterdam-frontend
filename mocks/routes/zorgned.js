@@ -22,7 +22,7 @@ module.exports = [
               return res
                 .status(HttpStatusCode.BadRequest)
                 .send(
-                  'x-cache-key-supplement key not found in request headers.'
+                  'x-cache-key-supplement key not found in request headers. This header is required to determine the correct fixture for the response.'
                 );
             }
 
