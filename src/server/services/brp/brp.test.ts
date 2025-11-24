@@ -15,6 +15,7 @@ import type { PersonenResponseSource } from './brp-types';
 import testPersonenResponse from '../../../../mocks/fixtures/brp/test-personen.json';
 import verblijfplaatsenResponse from '../../../../mocks/fixtures/brp/verblijfplaatshistorie.json';
 import { remoteApi } from '../../../testing/utils';
+import * as sourceApi from '../../helpers/source-api-request';
 import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token';
 
 const {
