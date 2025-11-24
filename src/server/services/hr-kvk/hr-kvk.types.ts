@@ -9,20 +9,6 @@ type DatumAanvangMaatschappelijkeActiviteitSource = {
   datumAanvangMaatschappelijkeActiviteitDag: string;
 };
 
-type DatumAanvangOnderneming = {
-  datumAanvangOndernemingDatum: string;
-  datumAanvangOndernemingJaar: string;
-  datumAanvangOndernemingMaand: string;
-  datumAanvangOndernemingDag: string;
-};
-
-type DatumEindeOnderneming = {
-  datumEindeOndernemingDatum: string;
-  datumEindeOndernemingJaar: string;
-  datumEindeOndernemingMaand: string;
-  datumEindeOndernemingDag: string;
-};
-
 type DatumEindeMaatschappelijkeActiviteitSource = {
   datumEindeMaatschappelijkeActiviteitDatum: string;
   datumEindeMaatschappelijkeActiviteitJaar: string;
@@ -30,7 +16,7 @@ type DatumEindeMaatschappelijkeActiviteitSource = {
   datumEindeMaatschappelijkeActiviteitDag: string;
 };
 
-export type DatumNormalizedSource = {
+export type DateSource = {
   datum: string | null;
   jaar: string | null;
   maand: string | null;
@@ -38,89 +24,27 @@ export type DatumNormalizedSource = {
 };
 
 type ActiviteitSource = {
-  sbiCode: string;
   omschrijving: string;
   isHoofdactiviteit: boolean;
 };
 
 type HandelsnaamSource = {
-  datumAanvang: string;
-  datumEinde: string;
   handelsnaam: string;
   volgorde: string;
 };
 
 type CommunicatieSource = {
-  toegangscode: string;
   nummer: string;
   soort: string;
-};
-
-type BezoekLocatieSource = {
-  bezoekLocatieAfgeschermd: boolean;
-  bezoekLocatieToevoegingAdres: string;
-  bezoekLocatieVolledigAdres: string;
-  bezoekLocatieStraatnaam: string;
-  bezoekLocatieHuisnummer: string;
-  bezoekLocatieHuisletter: string;
-  bezoekLocatieHuisnummerToevoeging: string;
-  bezoekLocatiePostcode: string;
-  bezoekLocatiePlaats: string;
-  bezoekLocatieStraatHuisnummerBuitenland: string;
-  bezoekLocatiePostcodePlaatsBuitenland: string;
-  bezoekLocatieRegioBuitenland: string;
-  bezoekLocatieLandBuitenland: string;
-};
-
-type PostLocatieSource = {
-  postLocatieAfgeschermd: boolean;
-  postLocatieToevoegingAdres: string;
-  postLocatieVolledigAdres: string;
-  postLocatieStraatnaam: string;
-  postLocatieHuisnummer: string;
-  postLocatieHuisletter: string;
-  postLocatieHuisnummerToevoeging: string;
-  postLocatiePostbusnummer: string;
-  postLocatiePostcode: string;
-  postLocatiePlaats: string;
-  postLocatieStraatHuisnummerBuitenland: string;
-  postLocatiePostcodePlaatsBuitenland: string;
-  postLocatieRegioBuitenland: string;
-  postLocatieLandBuitenland: string;
-};
-
-type BagLocatie = {
-  identificatie: string;
-  volgnummer: string;
 };
 
 export type MaatschappelijkeActiviteitSource = {
   kvknummer: string;
   datumAanvangMaatschappelijkeActiviteit: DatumAanvangMaatschappelijkeActiviteitSource;
   datumEindeMaatschappelijkeActiviteit: DatumEindeMaatschappelijkeActiviteitSource;
-  registratieTijdstipMaatschappelijkeActiviteit: string;
   naam: string;
-  nonMailing: boolean;
   activiteiten: ActiviteitSource[];
-  heeftHrHoofdvestiging: { vestigingsnummer: string };
-  heeftAlsEigenaarHrNps: { identificatie: string };
-  heeftAlsEigenaarHrNnp: { identificatie: string };
-  onderneming: boolean;
-  totaalWerkzamePersonen: number;
-  datumAanvangOnderneming: DatumAanvangOnderneming;
-  datumEindeOnderneming: DatumEindeOnderneming;
-  wordtUitgeoefendInCommercieleHrVestigingen: string;
-  wordtUitgeoefendInNietCommercieleHrVestigingen: string;
   handelsnamen: HandelsnaamSource[];
-  communicatie: CommunicatieSource[];
-  emailAdressen: Array<{ emailAdres: string }>;
-  domeinnamen: Array<{ domeinnaam: string }>;
-  bezoekLocatie: BezoekLocatieSource;
-  bezoekHeeftBagNummeraanduiding: BagLocatie;
-  bezoekHeeftBagVerblijfsobject: BagLocatie;
-  bezoekHeeftBagLigplaats: BagLocatie;
-  bezoekHeeftBagStandplaats: BagLocatie;
-  postLocatie: PostLocatieSource;
 };
 
 export type VestigingSource = {
@@ -141,7 +65,6 @@ export type VestigingSource = {
   naam: string | null;
   eersteHandelsnaam: string | null;
   hoofdvestiging: 'Nee' | 'Ja';
-  activiteitOmschrijving: string;
   bezoekLocatieVolledigAdres: string;
   bezoekHeeftBagNummeraanduidingId: string | null;
   bezoekHeeftBagLigplaatsId: string | null;
@@ -150,29 +73,17 @@ export type VestigingSource = {
   postHeeftBagNummeraanduidingId: string | null;
   postHeeftBagLigplaatsId: string | null;
   postHeeftBagStandplaatsId: string | null;
-  communicatie: Array<{
-    toegangscode: string | null;
-    nummer: string | null;
-    soort: string | null;
-  }>;
-  emailAdressen: Array<{ emailAdres: string | null }>;
+  communicatie: CommunicatieSource[];
+  emailAdressen: Array<{ emailAdres: string | null }> | null;
   domeinnamen: Array<{
     domeinnaam: string | null;
-  }>;
-  activiteiten: Array<{
-    sbiCode: string | null;
-    omschrijving: string | null;
-    isHoofdactiviteit: 'Ja' | 'Nee';
-  }>;
-  handelsnamen: Array<{
-    handelsnaam: string | null;
-  }>;
+  }> | null;
+  activiteiten: ActiviteitSource[] | null;
+  handelsnamen: HandelsnaamSource[] | null;
 };
 
 export type NietNatuurlijkPersoonSource = {
-  identificatie: string;
   rechtsvorm: string;
-  rol: string;
   rsin: string;
   typePersoon: string;
   uitgebreideRechtsvorm: string;
@@ -182,16 +93,14 @@ export type NietNatuurlijkPersoonSource = {
 
 export type NatuurlijkPersoonSource = {
   bsn: string;
-  identificatie: string;
   persoonRechtsvorm: string;
-  rol: string;
   typePersoon: string;
   uitgebreideRechtsvorm: string;
   volledigeNaam: string;
 };
 
 export type ApiResponseEnvelope<T, K extends string> = {
-  _embedded: {
+  _embedded?: {
     [key in K]?: T[];
   };
 };
@@ -222,9 +131,9 @@ export type Onderneming = {
   rechtsvorm: Rechtsvorm;
   hoofdactiviteit: string;
   overigeActiviteiten: string[];
-  datumAanvang: DatumNormalizedSource | null;
+  datumAanvang: string | null;
   datumAanvangFormatted: string | null;
-  datumEinde: DatumNormalizedSource | null;
+  datumEinde: string | null;
   datumEindeFormatted: string | null;
   kvknummer: string;
 };
@@ -251,9 +160,9 @@ export type Vestiging = {
   faxnummer: string[];
   emailadres: string[];
   activiteiten: string[];
-  datumAanvang: DatumNormalizedSource | null;
+  datumAanvang: string | null;
   datumAanvangFormatted: string | null;
-  datumEinde: DatumNormalizedSource | null;
+  datumEinde: string | null;
   datumEindeFormatted: string | null;
   isHoofdvestiging?: boolean;
   postHeeftBagNummeraanduidingId: string | null;

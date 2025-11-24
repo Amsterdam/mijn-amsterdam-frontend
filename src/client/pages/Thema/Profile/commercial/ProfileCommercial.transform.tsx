@@ -1,14 +1,12 @@
 import { Link } from '@amsterdam/design-system-react';
 
 import type {
-  DatumNormalizedSource,
   KvkResponseFrontend,
   NatuurlijkPersoon,
   NietNatuurlijkPersoon,
   Vestiging,
 } from '../../../../../server/services/hr-kvk/hr-kvk.types';
 import type { Onderneming } from '../../../../../server/services/hr-kvk/hr-kvk.types';
-import { dateFormat } from '../../../../../universal/helpers/date';
 import { AppState } from '../../../../../universal/types/App.types';
 import { ListExpandable } from '../../../../components/ListExpandable/ListExpandable';
 import { PreWrap } from '../../../../components/PreWrap/PreWrap';
@@ -27,32 +25,10 @@ type KVKPanelKey =
   | keyof Omit<KvkResponseFrontend, 'mokum' | 'kvkTranslation'>
   | 'hoofdVestiging';
 
-function getPartialDateFormatted(datum?: DatumNormalizedSource | null) {
-  if (!datum) {
-    return null;
-  }
-  const { dag, maand, jaar } = datum;
-  if ((dag && maand && jaar) || (!dag && !maand && !jaar)) {
-    return null;
-  }
-  if (jaar && !maand) {
-    return `Anno ${jaar}`;
-  }
-  if (maand && jaar) {
-    return dateFormat(
-      `${jaar}-${maand.toString().padStart(2, '0')}`,
-      'MMMM yyyy'
-    );
-  }
-  return null;
-}
-
 const onderneming: ProfileLabels<Partial<Onderneming>, AppState['KVK']> = {
   kvknummer: 'KVK nummer',
   handelsnaam: 'Handelsnaam',
-  datumAanvang: ['Startdatum onderneming', getPartialDateFormatted],
   datumAanvangFormatted: 'Startdatum onderneming',
-  datumEinde: ['Einddatum onderneming', getPartialDateFormatted],
   datumEindeFormatted: 'Einddatum onderneming',
   handelsnamen: [
     'Overige handelsnamen',
@@ -88,9 +64,7 @@ const vestiging: ProfileLabels<Partial<Vestiging>, AppState['KVK']> = {
   naam: ['Naam vestiging', (name) => (name ? <strong>{name}</strong> : null)],
   vestigingsNummer: 'Vestigingsnummer',
   datumAanvangFormatted: 'Datum vestiging',
-  datumAanvang: ['Datum vestiging', getPartialDateFormatted],
   datumEindeFormatted: 'Datum sluiting',
-  datumEinde: ['Datum sluiting', getPartialDateFormatted],
   handelsnamen: [
     'Overige namen',
     (handelsnamen) =>

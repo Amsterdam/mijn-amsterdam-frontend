@@ -1,5 +1,5 @@
 import type {
-  DatumNormalizedSource,
+  DateSource,
   NatuurlijkPersoon,
   KvkResponseFrontend,
   MACResponse,
@@ -20,7 +20,8 @@ import {
   getSettledResult,
   type ApiResponse,
 } from '../../../universal/helpers/api';
-import { defaultDateFormat } from '../../../universal/helpers/date';
+import { dateFormat, defaultDateFormat } from '../../../universal/helpers/date';
+import { sortByNumber } from '../../../universal/helpers/utils';
 import type { AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_HOUR_MS } from '../../config/app';
 import { getFromEnv } from '../../helpers/env';
@@ -105,10 +106,18 @@ export async function fetchNatuurlijkpersoon(
   });
 }
 
-function normalizeDate(
+function normalizeDatePropertyNames(
   prefix: string,
-  date: Record<string, number | string | null>
-): DatumNormalizedSource {
+  date: Record<string, number | string | null> | null
+): DateSource {
+  if (!date) {
+    return {
+      datum: null,
+      jaar: null,
+      maand: null,
+      dag: null,
+    };
+  }
   return Object.fromEntries(
     Object.entries(date).map(([key, value]) => {
       return [
@@ -116,35 +125,67 @@ function normalizeDate(
         value ? value.toString() : null,
       ];
     })
-  ) as DatumNormalizedSource;
+  ) as DateSource;
 }
 
-function getDate(
-  prefix: string,
-  date: Record<string, number | string | null> | null
-): string | null {
+function getPartialDateFormatted(dateSource?: DateSource | null) {
+  if (!dateSource) {
+    return null;
+  }
+
+  const { dag, maand, jaar } = dateSource;
+
+  if (!dag && !maand && !jaar) {
+    return null;
+  }
+
+  if (dateSource.datum) {
+    return defaultDateFormat(dateSource.datum);
+  }
+
+  if (dag && maand && jaar) {
+    return defaultDateFormat(
+      `${jaar}-${maand.padStart(2, '0')}-${dag.padStart(2, '0')}`
+    );
+  }
+
+  if (maand && jaar) {
+    return dateFormat(
+      `${jaar}-${maand.toString().padStart(2, '0')}`,
+      'MMMM yyyy'
+    );
+  }
+
+  if (jaar && !maand) {
+    return `Anno ${jaar}`;
+  }
+
+  return null;
+}
+
+function getFullDate(date: DateSource | null): string | null {
   if (!date) {
     return null;
   }
 
-  const datex = normalizeDate(prefix, date);
-  const { jaar, maand, dag, datum } = datex;
+  const { jaar, maand, dag, datum } = date;
 
   if (datum) {
     return datum;
   }
 
+  // We only return a date when all parts are present.
   if (!jaar || !maand || !dag) {
     return null;
   }
 
-  const monthPadded = maand ? maand.padStart(2, '0') : '01';
-  const dayPadded = dag ? dag.padStart(2, '0') : '01';
+  const monthPadded = maand.padStart(2, '0');
+  const dayPadded = dag.padStart(2, '0');
 
   return `${jaar}-${monthPadded}-${dayPadded}`;
 }
 
-function getEigenaar(
+function getEigenaarNPS(
   natuurlijkPersoonSource: NatuurlijkPersoonSource
 ): NatuurlijkPersoon {
   const eigenaar: NatuurlijkPersoon = {
@@ -155,7 +196,7 @@ function getEigenaar(
   return eigenaar;
 }
 
-function getRechtspersoon(
+function getRechtspersoonNNP(
   nietNatuurlijkPersoonSource: NietNatuurlijkPersoonSource
 ): NietNatuurlijkPersoon {
   const rechtspersoon: NietNatuurlijkPersoon = {
@@ -168,9 +209,9 @@ function getRechtspersoon(
 }
 
 function transformMAC(MACResponseData: MACResponseSource): MACResponse {
-  const [MAC] = MACResponseData._embedded.maatschappelijkeactiviteiten ?? [];
-  const [eigenaarNNP] = MACResponseData._embedded.heeftAlsEigenaarHrNnp ?? [];
-  const [eigenaarNPS] = MACResponseData._embedded.heeftAlsEigenaarHrNps ?? [];
+  const [MAC] = MACResponseData._embedded?.maatschappelijkeactiviteiten ?? [];
+  const [eigenaarNNP] = MACResponseData._embedded?.heeftAlsEigenaarHrNnp ?? [];
+  const [eigenaarNPS] = MACResponseData._embedded?.heeftAlsEigenaarHrNps ?? [];
 
   if (!MAC) {
     return {
@@ -182,23 +223,25 @@ function transformMAC(MACResponseData: MACResponseSource): MACResponse {
   const [hoofdactiviteit, ...overigeActiviteiten] = MAC.activiteiten
     .toSorted((a) => (a.isHoofdactiviteit ? 1 : -1))
     .map((a) => a.omschrijving);
-  const handelsnamen = MAC.handelsnamen.map((hn) => hn.handelsnaam);
+  const handelsnamen = MAC.handelsnamen
+    .toSorted(sortByNumber('volgorde', 'asc'))
+    .map((hn) => hn.handelsnaam);
   const rechtsvorm = (eigenaarNNP ?? eigenaarNPS)?.rechtsvorm ?? 'Onbekend';
 
   let eigenaar: NatuurlijkPersoon | NietNatuurlijkPersoon | null = null;
 
   if (eigenaarNNP) {
-    eigenaar = getRechtspersoon(eigenaarNNP);
+    eigenaar = getRechtspersoonNNP(eigenaarNNP);
   } else if (eigenaarNPS) {
-    eigenaar = getEigenaar(eigenaarNPS);
+    eigenaar = getEigenaarNPS(eigenaarNPS);
   }
 
-  const datumEinde = getDate(
+  const datumEinde = normalizeDatePropertyNames(
     'datumEindeMaatschappelijkeActiviteit',
     MAC.datumEindeMaatschappelijkeActiviteit
   );
 
-  const datumAanvang = getDate(
+  const datumAanvang = normalizeDatePropertyNames(
     'datumAanvangMaatschappelijkeActiviteit',
     MAC.datumAanvangMaatschappelijkeActiviteit
   );
@@ -210,18 +253,12 @@ function transformMAC(MACResponseData: MACResponseSource): MACResponse {
       rechtsvorm,
       hoofdactiviteit,
       overigeActiviteiten: overigeActiviteiten ?? [],
-      datumAanvang: normalizeDate(
-        'datumAanvangMaatschappelijkeActiviteit',
-        MAC.datumAanvangMaatschappelijkeActiviteit || {}
-      ),
-      datumAanvangFormatted: datumAanvang
-        ? defaultDateFormat(datumAanvang)
-        : null,
-      datumEinde: normalizeDate(
-        'datumEindeMaatschappelijkeActiviteit',
-        MAC.datumEindeMaatschappelijkeActiviteit || {}
-      ),
-      datumEindeFormatted: datumEinde ? defaultDateFormat(datumEinde) : null,
+      // We use normalieDate here to be able to show a partial date in the UI.
+      // A date can be only a year or year+month.
+      datumAanvang: getFullDate(datumAanvang),
+      datumAanvangFormatted: getPartialDateFormatted(datumAanvang),
+      datumEinde: getFullDate(datumEinde),
+      datumEindeFormatted: getPartialDateFormatted(datumEinde),
       kvknummer: MAC.kvknummer,
     },
     eigenaar,
@@ -272,7 +309,10 @@ function transformVestiging(vestigingSource: VestigingSource): Vestiging {
     datumAanvangMaand: vestigingSource.datumAanvangMaand,
     datumAanvangDag: vestigingSource.datumAanvangDag,
   };
-  const datumAanvang = getDate('datumAanvang', datumAanvangSource);
+  const datumAanvang = normalizeDatePropertyNames(
+    'datumAanvang',
+    datumAanvangSource
+  );
 
   const datumEindeSource = {
     datumEindeDatum: vestigingSource.datumEindeDatum,
@@ -280,20 +320,17 @@ function transformVestiging(vestigingSource: VestigingSource): Vestiging {
     datumEindeMaand: vestigingSource.datumEindeMaand,
     datumEindeDag: vestigingSource.datumEindeDag,
   };
-  const datumEinde = getDate('datumEinde', datumEindeSource);
+  const datumEinde = normalizeDatePropertyNames('datumEinde', datumEindeSource);
 
   const vestiging: Vestiging = {
     naam: vestigingSource.naam || vestigingSource.eersteHandelsnaam || null,
     vestigingsNummer: vestigingSource.vestigingsnummer,
-    datumAanvang: normalizeDate('datumAanvang', datumAanvangSource),
-    datumAanvangFormatted: datumAanvang
-      ? defaultDateFormat(datumAanvang)
-      : null,
-    datumEinde: normalizeDate('datumEinde', datumEindeSource),
-    datumEindeFormatted: datumEinde ? defaultDateFormat(datumEinde) : null,
-    handelsnamen: vestigingSource.handelsnamen.map(
-      (hn) => hn.handelsnaam ?? ''
-    ),
+    datumAanvang: getFullDate(datumAanvang),
+    datumAanvangFormatted: getPartialDateFormatted(datumAanvang),
+    datumEinde: getFullDate(datumEinde),
+    datumEindeFormatted: getPartialDateFormatted(datumEinde),
+    handelsnamen:
+      vestigingSource.handelsnamen?.map((hn) => hn.handelsnaam ?? '') ?? [],
     isHoofdvestiging: vestigingSource.hoofdvestiging === 'Ja',
     bezoekadres: vestigingSource.bezoekLocatieVolledigAdres || null,
     postadres: vestigingSource.postLocatieVolledigAdres || null,
@@ -301,16 +338,18 @@ function transformVestiging(vestigingSource: VestigingSource): Vestiging {
       vestigingSource.communicatie,
       'telefoonnummer'
     ),
-    websites: vestigingSource.domeinnamen
-      .map((domein) => domein.domeinnaam)
-      .filter((domein) => domein !== null),
+    websites:
+      vestigingSource.domeinnamen
+        ?.map((domein) => domein.domeinnaam)
+        .filter((domein) => domein !== null) ?? [],
     faxnummer: getCommunicatie(vestigingSource.communicatie, 'faxnummer'),
-    emailadres: vestigingSource.emailAdressen
-      .map((e) => e.emailAdres)
-      .filter((e) => e !== null) as string[],
-    activiteiten: vestigingSource.activiteiten
-      .map((act) => act.omschrijving)
-      .filter((act) => act !== null),
+    emailadres: (vestigingSource.emailAdressen
+      ?.map((e) => e.emailAdres)
+      .filter((e) => e !== null) ?? []) as string[],
+    activiteiten:
+      vestigingSource.activiteiten
+        ?.map((act) => act.omschrijving)
+        .filter((act) => act !== null) ?? [],
     postHeeftBagNummeraanduidingId:
       vestigingSource.postHeeftBagNummeraanduidingId,
     postHeeftBagLigplaatsId: vestigingSource.postHeeftBagLigplaatsId,
@@ -325,12 +364,13 @@ function transformVestiging(vestigingSource: VestigingSource): Vestiging {
 }
 
 function transformVestigingen(
-  responseData: VestigingenResponseSource
+  responseData: VestigingenResponseSource | null
 ): Vestiging[] {
-  //
   return (
-    responseData._embedded.vestigingen
-      ?.toSorted((a) => (a.hoofdvestiging === 'Ja' ? -1 : 1))
+    responseData?._embedded?.vestigingen
+      ?.toSorted((a, b) =>
+        a.hoofdvestiging === 'Ja' ? -1 : b.hoofdvestiging === 'Ja' ? 1 : 0
+      )
       .map((vestiging) => transformVestiging(vestiging)) ?? []
   );
 }
@@ -409,10 +449,10 @@ export async function fetchKVK(
 export const forTesting = {
   translateKVKNummer,
   fetchTokenHeader,
-  normalizeDate,
-  getDate,
-  getEigenaar,
-  getRechtspersoon,
+  normalizeDate: normalizeDatePropertyNames,
+  getDate: getFullDate,
+  getEigenaar: getEigenaarNPS,
+  getRechtspersoon: getRechtspersoonNNP,
   transformMAC,
   getCommunicatie,
   transformVestiging,
