@@ -176,7 +176,7 @@ function transformMAC(MACResponseData: MACResponseSource): MACResponse {
   return {
     onderneming: {
       handelsnaam: MAC.naam,
-      handelsnamen,
+      handelsnamen: handelsnamen.filter((hn) => hn !== MAC.naam),
       hoofdactiviteit,
       overigeActiviteiten: overigeActiviteiten ?? [],
       // We use normalieDate here to be able to show a partial date in the UI.
@@ -247,16 +247,18 @@ function transformVestiging(vestigingSource: VestigingSource): Vestiging {
     datumEindeDag: vestigingSource.datumEindeDag,
   };
   const datumEinde = normalizeDatePropertyNames('datumEinde', datumEindeSource);
-
+  const naam = vestigingSource.naam || vestigingSource.eersteHandelsnaam;
   const vestiging: Vestiging = {
-    naam: vestigingSource.naam || vestigingSource.eersteHandelsnaam || null,
+    naam: naam || null,
     vestigingsNummer: vestigingSource.vestigingsnummer,
     datumAanvang: getFullDate(datumAanvang),
     datumAanvangFormatted: getPartialDateFormatted(datumAanvang),
     datumEinde: getFullDate(datumEinde),
     datumEindeFormatted: getPartialDateFormatted(datumEinde),
     handelsnamen:
-      vestigingSource.handelsnamen?.map((hn) => hn.handelsnaam ?? '') ?? [],
+      vestigingSource.handelsnamen
+        ?.map((hn) => hn.handelsnaam ?? '')
+        .filter((hn) => hn !== naam) ?? [],
     isHoofdvestiging: vestigingSource.hoofdvestiging === 'Ja',
     bezoekadres: vestigingSource.bezoekLocatieVolledigAdres || null,
     postadres: vestigingSource.postLocatieVolledigAdres || null,
