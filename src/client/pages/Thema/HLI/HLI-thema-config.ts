@@ -14,7 +14,7 @@ import type {
   WithspecificatieListPage,
   WithdetailPageStadspas,
 } from '../../../config/thema-types';
-
+// stadspas of themanamen moeten hier niet voorkomen
 const THEMA_TITLE = 'Stadspas en regelingen bij laag inkomen' as const;
 
 export type HLIThemaConfig = ThemaConfigBase &
@@ -26,9 +26,28 @@ export type HLIThemaConfig = ThemaConfigBase &
 export const themaConfig: HLIThemaConfig = {
   id: 'HLI' as const,
   title: THEMA_TITLE,
-  featureToggle: {
+  featureToggle: Object.assign(Object.create(null), {
     themaActive: true,
-  },
+    stadspas: Object.create(null, {
+      active: { value: true, writable: true, configurable: true },
+      _blokkerenActive: { value: true, writable: true, configurable: true },
+      blokkerenActive: {
+        get() {
+          // 'this' verwijst naar stadspas, parent is het omvattende featureToggle-object anders werkt dit niet met het type boolean in theama-types.ts
+          const parent = Object.getPrototypeOf(this) as {
+            themaActive?: boolean;
+            active?: boolean;
+          };
+          return this._blokkerenActive && this.active && !!parent?.themaActive;
+        },
+        set(value: boolean) {
+          this._blokkerenActive = value;
+        },
+        configurable: true,
+      },
+    }),
+    hli: { active: true },
+  }),
   profileTypes: ['private'],
   uitlegPageSections: {
     title: THEMA_TITLE,

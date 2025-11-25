@@ -29,10 +29,10 @@ export type WithListPage = PageConfig<'listPage'>;
 export type WithRegelingenListPage = PageConfig<'regelingenListPage'>;
 export type WithspecificatieListPage = PageConfig<'specificatieListPage'>;
 export type WithdetailPageStadspas = PageConfig<'detailPageStadspas'>;
-
+// stadspas of themanamen moeten hier niet voorkomen, speciefieke namen of dingen voor een bepaald thema mogen hier niet voorkomen
 type ThemaFeatureToggle = {
   themaActive: boolean;
-  features?: Record<string, boolean>;
+  [key: string]: boolean;
 };
 
 type RedactedScope = 'full' | 'content' | 'none';
