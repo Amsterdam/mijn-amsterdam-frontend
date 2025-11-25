@@ -1,8 +1,9 @@
 import { UnorderedList } from '@amsterdam/design-system-react';
 
 import styles from './fields-config.module.scss';
+import type { DecosZaakBase } from '../../../../../server/services/decos/decos-types';
+import type { PowerBrowserZaakBase } from '../../../../../server/services/powerbrowser/powerbrowser-types';
 import type {
-  DecosZaakBase,
   WithDateTimeRange,
   WithDateRange,
   WithLocation,
@@ -10,8 +11,7 @@ import type {
   WithDateStart,
   WithDateEnd,
   WithTimeRange,
-} from '../../../../../server/services/decos/decos-types';
-import type { PowerBrowserZaakBase } from '../../../../../server/services/powerbrowser/powerbrowser-types';
+} from '../../../../../server/services/vergunningen/config-and-types';
 import { type ZaakFrontendCombined } from '../../../../../server/services/vergunningen/config-and-types';
 import { dateTimeFormatYear } from '../../../../../universal/helpers/date';
 import {

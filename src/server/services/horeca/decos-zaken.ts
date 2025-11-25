@@ -8,10 +8,9 @@ import {
 import {
   DecosZaakBase,
   DecosZaakTransformer,
-  WithDateRange,
-  WithLocation,
   type DecosZaakFrontend,
 } from '../decos/decos-types';
+import { WithDateRange, WithLocation } from '../vergunningen/config-and-types';
 
 export const caseTypeHorecaVergunningen = {
   ExploitatieHorecabedrijf: 'Horeca vergunning exploitatie Horecabedrijf',

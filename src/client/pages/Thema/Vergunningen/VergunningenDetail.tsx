@@ -20,6 +20,7 @@ import type { PowerBrowserZaakFrontend } from '../../../../server/services/power
 import type {
   DecosVergunning,
   PBVergunning,
+  ZaakFrontendCombined,
 } from '../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
@@ -127,7 +128,7 @@ export function VergunningenDetail() {
         vergunning && (
           <>
             <DetailPageContent
-              vergunning={vergunning as DecosZaakFrontend<DecosVergunning>}
+              vergunning={vergunning as ZaakFrontendCombined<DecosVergunning>}
             />
             <PageContentCell spanWide={8}>
               <VergunningDetailDocumentsList

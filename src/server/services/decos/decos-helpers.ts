@@ -10,7 +10,6 @@ import type {
   DecosZaakTransformer,
   DecosZaakSource,
   DecosZaakBase,
-  WithKentekens,
   DecosFieldValue,
 } from './decos-types';
 import { isDateInPast } from '../../../universal/helpers/date';
@@ -18,6 +17,7 @@ import { entries } from '../../../universal/helpers/utils';
 import type { ZaakStatus } from '../../../universal/types/App.types';
 import type { StatusLineItem } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import type { WithKentekens } from '../vergunningen/config-and-types';
 
 // Checks to see if a payment was not processed correctly/completely yet.
 export function isWaitingForPaymentConfirmation(

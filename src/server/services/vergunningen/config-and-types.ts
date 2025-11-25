@@ -1,13 +1,6 @@
 import { LinkProps } from '../../../universal/types/App.types';
 import { ZaakStatus } from '../../../universal/types/App.types';
-import type {
-  DecosZaakBase,
-  WithLocation,
-  WithKentekens,
-  WithDateTimeRange,
-  WithDateRange,
-  DecosZaakFrontend,
-} from '../decos/decos-types';
+import type { DecosZaakBase, DecosZaakFrontend } from '../decos/decos-types';
 export type { DecosZaakFrontend } from '../decos/decos-types';
 import type {
   PowerBrowserZaakBase,
@@ -18,6 +11,32 @@ export const NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED = 3;
 export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
 export const MINIMUM_DAYS_FOR_WILL_EXPIRE_NOTIFICATION = 14;
 export const PERCENTAGE_OF_LIFETIME_FOR_WILL_EXPIRE_NOTIFICATION = 0.8;
+
+export type WithLocation = {
+  location: string | null;
+};
+
+export type WithKentekens = {
+  kentekens: string | null;
+};
+
+export type WithDateStart = {
+  dateStart: string | null;
+  dateStartFormatted: string | null;
+};
+
+export type WithDateEnd = {
+  dateEnd: string | null;
+  dateEndFormatted: string | null;
+};
+
+export type WithDateRange = WithDateStart & WithDateEnd;
+
+export type WithTimeRange = {
+  timeStart: string | null;
+  timeEnd: string | null;
+};
+export type WithDateTimeRange = WithDateRange & WithTimeRange; // A list of common readable api attributes
 
 export const caseTypeVergunningen = {
   // TODO: MIJN-12357: Remove after move to Powerbrowser is finalized

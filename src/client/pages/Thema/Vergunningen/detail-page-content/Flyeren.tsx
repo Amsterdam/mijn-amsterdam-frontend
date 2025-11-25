@@ -1,9 +1,9 @@
 import { commonTransformers, getRows } from './fields-config';
+import { DecosZaakBase } from '../../../../../server/services/decos/decos-types';
 import {
-  DecosZaakBase,
   WithDateRange,
   WithDateTimeRange,
-} from '../../../../../server/services/decos/decos-types';
+} from '../../../../../server/services/vergunningen/config-and-types';
 import type {
   Flyeren,
   DecosZaakFrontend,

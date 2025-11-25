@@ -1,13 +1,12 @@
+import { DecosZaakBase, type DecosZaakFrontend } from '../decos/decos-types';
 import {
-  DecosZaakBase,
   WithLocation,
   WithDateRange,
   WithKentekens,
   WithDateTimeRange,
   WithDateEnd,
   type WithDateStart,
-  type DecosZaakFrontend,
-} from '../decos/decos-types';
+} from '../vergunningen/config-and-types';
 
 export const caseTypeParkeren = {
   GPK: 'GPK',

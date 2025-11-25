@@ -8,9 +8,9 @@ import {
 import {
   DecosZaakTransformer,
   DecosZaakBase,
-  WithLocation,
-  WithDateRange,
   type DecosZaakFrontend,
+  type WithLocation,
+  type WithDateRange,
 } from '../decos/decos-types';
 
 export const caseTypeToeristischeVerhuur = {
