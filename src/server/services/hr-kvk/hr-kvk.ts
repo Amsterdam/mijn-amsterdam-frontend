@@ -258,8 +258,9 @@ function transformVestiging(vestigingSource: VestigingSource): Vestiging {
     datumEindeFormatted: getPartialDateFormatted(datumEinde),
     handelsnamen:
       vestigingSource.handelsnamen
-        ?.map((hn) => hn.handelsnaam ?? '')
-        .filter((hn) => hn !== naam) ?? [],
+        ?.toSorted(sortByNumber('volgorde', 'asc'))
+        .map((hn) => hn.handelsnaam)
+        .filter((hn) => hn !== naam && !!hn) ?? [],
     isHoofdvestiging: vestigingSource.hoofdvestiging === 'Ja',
     bezoekadres: vestigingSource.bezoekLocatieVolledigAdres || null,
     postadres: vestigingSource.postLocatieVolledigAdres || null,
