@@ -24,12 +24,16 @@ vi.mock(
       await importActual<
         typeof import('../../../../client/pages/Thema/HLI/HLI-thema-config')
       >();
+
     return {
       ...actual,
-      featureToggle: {
-        ...actual.featureToggle,
-        get hli2026PCVergoedingV3Enabled() {
-          return mocks.hli2026PCVergoedingV3Enabled;
+      themaConfig: {
+        ...actual.themaConfig,
+        featureToggle: {
+          ...actual.themaConfig.featureToggle,
+          get hli2026PCVergoedingV3Enabled() {
+            return mocks.hli2026PCVergoedingV3Enabled;
+          },
         },
       },
     };
