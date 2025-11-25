@@ -14,7 +14,7 @@ import {
 } from '../../../../universal/helpers/api';
 import { AuthProfile } from '../../../auth/auth-types';
 import {
-  fetchZaken,
+  fetchPBZaken,
   transformPBZaakFrontend,
 } from '../../powerbrowser/powerbrowser-service';
 
@@ -25,7 +25,6 @@ function transformBBFrontend(zaak: BedAndBreakfastType): BBVergunningFrontend {
   const appRoute = routeConfig.detailPage.path;
   const zaakTransformed = transformPBZaakFrontend(zaak, {
     detailPageRoute: appRoute,
-    includeFetchDocumentsUrl: false,
     getStepsFN: getStatusSteps,
   });
   return {
@@ -49,7 +48,10 @@ function transformBBFrontend(zaak: BedAndBreakfastType): BBVergunningFrontend {
 export async function fetchBedAndBreakfast(
   authProfile: AuthProfile
 ): Promise<ApiResponse<BBVergunningFrontend[]>> {
-  const response = await fetchZaken(authProfile, powerBrowserZaakTransformers);
+  const response = await fetchPBZaken(
+    authProfile,
+    powerBrowserZaakTransformers
+  );
   if (response.status !== 'OK') {
     return response;
   }

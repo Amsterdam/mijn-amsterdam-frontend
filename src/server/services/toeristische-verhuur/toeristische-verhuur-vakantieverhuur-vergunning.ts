@@ -9,7 +9,7 @@ import {
   fetchDecosZaken,
   transformDecosZaakFrontend,
 } from '../decos/decos-service';
-import { getStatusSteps } from '../vergunningen/vergunningen-status-steps';
+import { getStatusStepsDecos } from '../vergunningen/decos-status-steps';
 
 export async function fetchVakantieverhuurVergunningen(
   authProfileAndToken: AuthProfileAndToken
@@ -29,7 +29,7 @@ export async function fetchVakantieverhuurVergunningen(
           {
             detailPageRoute: routeConfig.detailPage.path,
             includeFetchDocumentsUrl: true,
-            getStepsFN: getStatusSteps,
+            getStepsFN: getStatusStepsDecos,
           }
         );
 

@@ -1,5 +1,5 @@
 import type { BZP } from '../../../../../server/services/parkeren/config-and-types';
-import { VergunningFrontend } from '../../../../../server/services/vergunningen/config-and-types';
+import { DecosZaakFrontend } from '../../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../../components/Datalist/Datalist';
 import {
   getRows,
@@ -7,7 +7,7 @@ import {
   commonTransformers,
 } from '../../Vergunningen/detail-page-content/fields-config';
 
-export function BZP({ vergunning }: { vergunning: VergunningFrontend<BZP> }) {
+export function BZP({ vergunning }: { vergunning: DecosZaakFrontend<BZP> }) {
   const dateRangeTransformer = () => {
     return vergunning.processed ? dateRange(vergunning) : null;
   };

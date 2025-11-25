@@ -16,7 +16,7 @@ import {
   transformDecosZaakFrontend,
 } from '../decos/decos-service';
 import { getVergunningNotifications } from '../vergunningen/vergunningen-notifications';
-import { getStatusSteps } from '../vergunningen/vergunningen-status-steps';
+import { getStatusStepsDecos } from '../vergunningen/decos-status-steps';
 
 export async function fetchHorecaVergunningen(
   authProfileAndToken: AuthProfileAndToken
@@ -35,7 +35,7 @@ export async function fetchHorecaVergunningen(
         {
           detailPageRoute: routeConfig.detailPage.path,
           includeFetchDocumentsUrl: true,
-          getStepsFN: getStatusSteps,
+          getStepsFN: getStatusStepsDecos,
         }
       );
 
@@ -57,9 +57,7 @@ export async function fetchHorecaNotifications(
     });
   }
 
-  const horecaResponse = await fetchHorecaVergunningen(
-    authProfileAndToken
-  );
+  const horecaResponse = await fetchHorecaVergunningen(authProfileAndToken);
 
   if (horecaResponse.status === 'OK') {
     const notifications = getVergunningNotifications(

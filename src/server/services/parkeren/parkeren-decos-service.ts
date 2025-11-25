@@ -7,7 +7,7 @@ import {
   fetchDecosZaken,
   transformDecosZaakFrontend,
 } from '../decos/decos-service';
-import { getStatusSteps } from '../vergunningen/vergunningen-status-steps';
+import { getStatusStepsDecos } from '../vergunningen/decos-status-steps';
 
 export async function fetchDecosParkeerVergunningen(
   authProfileAndToken: AuthProfileAndToken
@@ -26,7 +26,7 @@ export async function fetchDecosParkeerVergunningen(
           {
             detailPageRoute: routeConfig.detailPage.path,
             includeFetchDocumentsUrl: true,
-            getStepsFN: getStatusSteps,
+            getStepsFN: getStatusStepsDecos,
           }
         );
         return zaakTransformed;

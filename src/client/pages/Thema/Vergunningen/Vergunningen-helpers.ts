@@ -1,7 +1,7 @@
 import type {
   WithDateEnd,
   WithTimeRange,
-} from '../../../../server/services/decos/decos-types';
+} from '../../../../server/services/vergunningen/config-and-types';
 import { dateTimeFormatYear } from '../../../../universal/helpers/date';
 import type { ZaakAanvraagDetail } from '../../../../universal/types/App.types';
 

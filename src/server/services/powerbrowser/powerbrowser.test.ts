@@ -3,7 +3,11 @@ import stream from 'node:stream';
 import Mockdate from 'mockdate';
 import { describe, expect } from 'vitest';
 
-import { fetchZaken, fetchDocument, forTesting } from './powerbrowser-service';
+import {
+  fetchPBZaken,
+  fetchDocument,
+  forTesting,
+} from './powerbrowser-service';
 import type {
   PBDocumentFields,
   PBZaakFields,
@@ -72,7 +76,7 @@ describe('Powerbrowser service', () => {
           return [200, null];
         });
 
-      const result = await fetchZaken(
+      const result = await fetchPBZaken(
         authProfile,
         powerBrowserZaakTransformers
       );
@@ -118,7 +122,7 @@ describe('Powerbrowser service', () => {
         return [200, null];
       });
 
-      const result = await fetchZaken(
+      const result = await fetchPBZaken(
         authProfile,
         powerBrowserZaakTransformers
       );
@@ -133,7 +137,7 @@ describe('Powerbrowser service', () => {
         }
       });
 
-      const result = await fetchZaken(
+      const result = await fetchPBZaken(
         authProfile,
         powerBrowserZaakTransformers
       );
@@ -154,7 +158,7 @@ describe('Powerbrowser service', () => {
           }
         });
 
-      const result = await fetchZaken(
+      const result = await fetchPBZaken(
         authProfile,
         powerBrowserZaakTransformers
       );
@@ -182,7 +186,7 @@ describe('Powerbrowser service', () => {
         return [200, null];
       });
 
-      const result = await fetchZaken(
+      const result = await fetchPBZaken(
         authProfile,
         powerBrowserZaakTransformers
       );
@@ -380,7 +384,7 @@ describe('Powerbrowser service', () => {
         .post('/powerbrowser/Link/PERSONEN/GFO_ZAKEN/Table')
         .reply(500, 'some-error');
 
-      const result = await forTesting.fetchPBZaken(
+      const result = await forTesting.fetchZakenRecords(
         authProfile,
         powerBrowserZaakTransformers
       );
