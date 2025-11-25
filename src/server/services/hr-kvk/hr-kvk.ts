@@ -126,6 +126,10 @@ function getRechtspersoonNNP(
   const rechtspersoon: NietNatuurlijkPersoon = {
     rsin: nietNatuurlijkPersoonSource.rsin,
     naam: nietNatuurlijkPersoonSource.naam,
+    rechtsvorm:
+      nietNatuurlijkPersoonSource?.uitgebreideRechtsvorm ||
+      nietNatuurlijkPersoonSource?.rechtsvorm ||
+      'Onbekend',
     typePersoon: nietNatuurlijkPersoonSource.typePersoon,
   };
 
@@ -150,7 +154,6 @@ function transformMAC(MACResponseData: MACResponseSource): MACResponse {
   const handelsnamen = MAC.handelsnamen
     .toSorted(sortByNumber('volgorde', 'asc'))
     .map((hn) => hn.handelsnaam);
-  const rechtsvorm = (eigenaarNNP ?? eigenaarNPS)?.rechtsvorm ?? 'Onbekend';
 
   let eigenaar: NatuurlijkPersoon | NietNatuurlijkPersoon | null = null;
 
@@ -174,7 +177,6 @@ function transformMAC(MACResponseData: MACResponseSource): MACResponse {
     onderneming: {
       handelsnaam: MAC.naam,
       handelsnamen,
-      rechtsvorm,
       hoofdactiviteit,
       overigeActiviteiten: overigeActiviteiten ?? [],
       // We use normalieDate here to be able to show a partial date in the UI.

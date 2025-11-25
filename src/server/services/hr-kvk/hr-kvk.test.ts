@@ -249,7 +249,7 @@ describe('hr-kvk module', () => {
               rechtsvorm: 'BV',
               rsin: '987654321',
               typePersoon: 'Rechtspersoon',
-              uitgebreideRechtsvorm: '',
+              uitgebreideRechtsvorm: 'BV uitgebreid',
               volledigeNaam: '',
             },
           ],
@@ -262,6 +262,7 @@ describe('hr-kvk module', () => {
         eigenaar: {
           naam: 'Test Owner',
           rsin: '987654321',
+          rechtsvorm: 'BV uitgebreid',
           typePersoon: 'Rechtspersoon',
         },
         onderneming: {
@@ -274,7 +275,6 @@ describe('hr-kvk module', () => {
           hoofdactiviteit: 'Overige activiteit',
           kvknummer: '12345678',
           overigeActiviteiten: ['Hoofdactiviteit'],
-          rechtsvorm: 'BV',
         },
       });
     });

@@ -128,7 +128,6 @@ type Rechtsvorm = string;
 export type Onderneming = {
   handelsnaam: string | null;
   handelsnamen: string[];
-  rechtsvorm: Rechtsvorm;
   hoofdactiviteit: string;
   overigeActiviteiten: string[];
   datumAanvang: string | null;
@@ -141,11 +140,13 @@ export type Onderneming = {
 export type NietNatuurlijkPersoon = {
   naam: string | null;
   rsin?: string;
+  rechtsvorm: Rechtsvorm;
   typePersoon?: string;
 };
 
 export type NatuurlijkPersoon = {
   naam: string | null;
+  rechtsvorm: Rechtsvorm;
   typePersoon?: string;
 };
 
