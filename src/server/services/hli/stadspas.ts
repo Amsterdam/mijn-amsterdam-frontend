@@ -17,10 +17,7 @@ import {
   type PasblokkadeByPasnummer,
   type StadspasResponseFrontend,
 } from './stadspas-types';
-import {
-  featureToggle,
-  themaConfig,
-} from '../../../client/pages/Thema/HLI/HLI-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -69,7 +66,7 @@ export async function fetchStadspas(
         },
       };
 
-      if (featureToggle.hliThemaStadspasBlokkerenActive) {
+      if (themaConfig.featureToggle.hliThemaStadspasBlokkerenActive) {
         stadspasFrontend.blockPassURL = generateFullApiUrlBFF(
           BffEndpoints.STADSPAS_BLOCK_PASS,
           {
@@ -78,7 +75,7 @@ export async function fetchStadspas(
         );
       }
 
-      if (featureToggle.hliThemaStadspasDeblokkerenActive) {
+      if (themaConfig.featureToggle._hliThemaStadspasDeblokkerenActive) {
         stadspasFrontend.unblockPassURL = generateFullApiUrlBFF(
           BffEndpoints.STADSPAS_UNBLOCK_PASS,
           { transactionsKeyEncrypted }

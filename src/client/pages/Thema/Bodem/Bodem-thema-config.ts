@@ -27,7 +27,7 @@ export const themaConfig: BodemThemaConfig = {
   route: {
     path: '/bodem',
     get documentTitle() {
-      return `${themaConfig.title} | Overzicht`;
+      return `${THEMA_TITLE} | Overzicht`;
     },
     trackingUrl: null,
   },
@@ -49,7 +49,7 @@ export const themaConfig: BodemThemaConfig = {
       path: '/bodem/lood-meting/:id',
       trackingUrl: '/bodem/lood-meting',
       get documentTitle() {
-        return `Lood in de bodem-check | ${themaConfig.title}`;
+        return `Lood in de bodem-check | ${THEMA_TITLE}`;
       },
     },
   },
@@ -59,7 +59,7 @@ export const themaConfig: BodemThemaConfig = {
       path: '/bodem/lijst/lood-meting/:kind/:page?',
       trackingUrl: null,
       documentTitle: (params) =>
-        `${params?.kind === listPageKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaConfig.title}`,
+        `${params?.kind === listPageKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${THEMA_TITLE}`,
     },
   },
 } as const;
