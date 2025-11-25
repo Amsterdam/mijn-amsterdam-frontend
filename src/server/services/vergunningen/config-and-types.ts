@@ -224,7 +224,15 @@ export type PBVergunning =
   | Omzettingsvergunning
   | WoningVergunning;
 
-export type ZaakFrontendCombined = DecosZaakFrontend | PowerBrowserZaakFrontend;
+export type ZaakFrontendCombined<
+  T extends DecosZaakBase | PowerBrowserZaakBase =
+    | DecosZaakBase
+    | PowerBrowserZaakBase,
+> = T extends DecosZaakBase
+  ? DecosZaakFrontend<T>
+  : T extends PowerBrowserZaakBase
+    ? PowerBrowserZaakFrontend<T>
+    : never;
 
 /* ----------------------------------------
     Notifications

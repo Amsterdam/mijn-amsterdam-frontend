@@ -1,12 +1,14 @@
 import { commonTransformers, getRows } from './fields-config';
-import type { PowerBrowserZaakFrontend } from '../../../../../server/services/powerbrowser/powerbrowser-types';
-import type { Ligplaatsvergunning } from '../../../../../server/services/vergunningen/config-and-types';
+import type {
+  Ligplaatsvergunning,
+  ZaakFrontendCombined,
+} from '../../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../../components/Datalist/Datalist';
 
 export function LigplaatsVergunning({
   vergunning,
 }: {
-  vergunning: PowerBrowserZaakFrontend<Ligplaatsvergunning>;
+  vergunning: ZaakFrontendCombined<Ligplaatsvergunning>;
 }) {
   const vesselKind = () =>
     vergunning.vesselKind

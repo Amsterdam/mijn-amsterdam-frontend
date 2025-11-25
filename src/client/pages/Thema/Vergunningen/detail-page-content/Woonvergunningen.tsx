@@ -1,14 +1,14 @@
 import { commonTransformers, getRows } from './fields-config';
 import type {
-  DecosZaakFrontend,
   WoningVergunning,
+  ZaakFrontendCombined,
 } from '../../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../../components/Datalist/Datalist';
 
 export function Woonvergunningen({
   vergunning,
 }: {
-  vergunning: DecosZaakFrontend<WoningVergunning>;
+  vergunning: ZaakFrontendCombined<WoningVergunning>;
 }) {
   const rows = getRows(vergunning, [
     commonTransformers.identifier,
