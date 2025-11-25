@@ -306,6 +306,7 @@ async function fetchVestigingen(
     'isEenUitoefeningVanHrMac.kvknummer': translateKVKNummer(
       authProfileAndToken.profile.id
     ),
+    _pageSize: '500', // Large page size to avoid pagination
   };
 
   const vestigingenResponse = await fetchHrKvk<
