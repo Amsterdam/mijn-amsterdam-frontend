@@ -26,28 +26,23 @@ export type HLIThemaConfig = ThemaConfigBase &
 export const themaConfig: HLIThemaConfig = {
   id: 'HLI' as const,
   title: THEMA_TITLE,
-  featureToggle: Object.assign(Object.create(null), {
+  featureToggle: {
     themaActive: true,
-    stadspas: Object.create(null, {
-      active: { value: true, writable: true, configurable: true },
-      _blokkerenActive: { value: true, writable: true, configurable: true },
-      blokkerenActive: {
-        get() {
-          // 'this' verwijst naar stadspas, parent is het omvattende featureToggle-object anders werkt dit niet met het type boolean in theama-types.ts
-          const parent = Object.getPrototypeOf(this) as {
-            themaActive?: boolean;
-            active?: boolean;
-          };
-          return this._blokkerenActive && this.active && !!parent?.themaActive;
-        },
-        set(value: boolean) {
-          this._blokkerenActive = value;
-        },
-        configurable: true,
-      },
-    }),
-    hli: { active: true },
-  }),
+    stadspas: {
+      active: true,
+      blokkerenActive: true,
+    },
+    hli: {
+      active: true,
+    },
+    get stadspasBlokkeren() {
+      return (
+        this.stadspas.blokkerenActive &&
+        this.stadspas.active &&
+        this.themaActive
+      );
+    },
+  },
   profileTypes: ['private'],
   uitlegPageSections: {
     title: THEMA_TITLE,
