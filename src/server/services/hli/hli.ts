@@ -6,12 +6,15 @@ import {
   HLIRegelingFrontend,
   HLIresponseData,
   ZorgnedHLIRegeling,
-  HLIRegelingSpecificatieFrontend,
 } from './hli-regelingen-types';
 import { routes, ZORGNED_AV_API_CONFIG_KEY } from './hli-service-config';
 import { hliStatusLineItemsConfig } from './hli-status-line-items';
 import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
-import { transformRTMAanvragen, isRTMAanvraag } from './rtm/regeling-rtm';
+import {
+  transformRTMAanvragen,
+  isRTMAanvraag,
+  fetchRTMSpecificaties,
+} from './rtm/regeling-rtm';
 import { fetchStadspas } from './stadspas';
 import {
   isPcAanvraag,
@@ -23,12 +26,10 @@ import {
   routeConfig,
 } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import {
-  ApiResponse,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
 } from '../../../universal/helpers/api';
-import { defaultDateFormat } from '../../../universal/helpers/date';
 import { dedupeDocumentsInDataSets } from '../../../universal/helpers/document';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { splitBy, toDateFormatted } from '../../../universal/helpers/utils';
@@ -49,8 +50,6 @@ import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   type ZorgnedPerson,
 } from '../zorgned/zorgned-types';
-
-export const RTM_SPECIFICATIE_TITLE = 'AV-RTM Specificatie';
 
 export type GetDisplayStatusFn<
   T extends ZaakDisplayStatus = ZaakDisplayStatus,
@@ -260,59 +259,12 @@ async function fetchRegelingen(authProfileAndToken: AuthProfileAndToken) {
   return aanvragenResponse;
 }
 
-async function fetchSpecificaties(
-  authProfileAndToken: AuthProfileAndToken
-): Promise<ApiResponse<HLIRegelingSpecificatieFrontend[]>> {
-  const response = await fetchZorgnedAanvragenHLI(
-    authProfileAndToken.profile.id
-  );
-  if (response.status !== 'OK') {
-    return response;
-  }
-
-  const aanvragen = response.content.reduce(
-    (
-      filteredAanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
-      aanvraag
-    ) => {
-      const documents = aanvraag.documenten.filter(
-        (d) => d.title === RTM_SPECIFICATIE_TITLE
-      );
-      if (!documents.length) {
-        return filteredAanvragen;
-      }
-      filteredAanvragen.push({ ...aanvraag, documenten: documents });
-      return filteredAanvragen;
-    },
-    [] as ZorgnedAanvraagWithRelatedPersonsTransformed[]
-  );
-
-  const specificaties: HLIRegelingSpecificatieFrontend[] = aanvragen.flatMap(
-    (aanvraag) => {
-      const specificaties = getDocumentsFrontend(
-        authProfileAndToken.profile.sid,
-        aanvraag.documenten
-      ).map((doc) => {
-        const specificatie: HLIRegelingSpecificatieFrontend = {
-          ...doc,
-          category: aanvraag.titel,
-          datePublishedFormatted: defaultDateFormat(doc.datePublished),
-        };
-        return specificatie;
-      });
-      return specificaties;
-    }
-  );
-
-  return apiSuccessResult(specificaties);
-}
-
 export async function fetchHLI(authProfileAndToken: AuthProfileAndToken) {
   const [stadspasResult, regelingenResult, specificatieResult] =
     await Promise.allSettled([
       fetchStadspas(authProfileAndToken),
       fetchRegelingen(authProfileAndToken),
-      fetchSpecificaties(authProfileAndToken),
+      fetchRTMSpecificaties(authProfileAndToken),
     ]);
 
   const regelingenResponseData = getSettledResult(regelingenResult);
@@ -336,7 +288,7 @@ export async function fetchHLI(authProfileAndToken: AuthProfileAndToken) {
 
 export const forTesting = {
   fetchRegelingen,
-  fetchSpecificaties,
+  fetchRTMSpecificaties,
   getDisplayStatus,
   transformRegelingenForFrontend,
   transformRegelingTitle,

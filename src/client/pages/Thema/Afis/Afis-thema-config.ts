@@ -4,25 +4,33 @@ import { generatePath, type Params } from 'react-router';
 
 import type {
   AfisBusinessPartnerDetailsTransformed,
+  AfisEMandateFrontend,
   AfisFacturenResponse,
   AfisFactuur,
   AfisFactuurStateFrontend,
   AfisFactuurTermijn,
 } from '../../../../server/services/afis/afis-types';
-import type {
-  LinkProps,
-  ZaakAanvraagDetail,
-} from '../../../../universal/types/App.types';
+import { IS_PRODUCTION } from '../../../../universal/config/env';
+import type { LinkProps } from '../../../../universal/types/App.types';
 import type { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
 export const featureToggle = {
   AfisActive: true,
+  get afisEMandatesActive() {
+    return featureToggle.AfisActive && !IS_PRODUCTION;
+  },
 };
+
+// E-Mandates are always recurring and have a default date far in the future!
+export const EMANDATE_ENDDATE_INDICATOR = '9999';
 
 export const themaId = 'AFIS' as const;
 export const themaTitle = 'Facturen en betalen';
+
+export const titleBetaalvoorkeurenPage = 'Betaalvoorkeuren';
+export const titleEMandaatPage = 'E-Mandaat';
 
 export const routeConfig = {
   detailPage: {
@@ -33,6 +41,11 @@ export const routeConfig = {
   betaalVoorkeuren: {
     path: '/facturen-en-betalen/betaalvoorkeuren',
     documentTitle: `Betaalvoorkeuren | ${themaTitle}`,
+    trackingUrl: null,
+  },
+  detailPageEMandate: {
+    path: '/facturen-en-betalen/betaalvoorkeuren/emandate/:id',
+    documentTitle: `E-Mandaat | ${themaTitle}`,
     trackingUrl: null,
   },
   listPage: {
@@ -100,8 +113,6 @@ export const listPageTitle: Record<AfisFactuurStateFrontend, string> = {
     'Facturen in het incasso- en invorderingstraject van directie Belastingen',
 };
 
-export type AfisEmandateStub = ZaakAanvraagDetail & Record<string, string>;
-
 export type AfisFactuurFrontend = Omit<AfisFactuur, 'statusDescription'> & {
   factuurNummerEl: ReactNode;
   statusDescription: ReactNode;
@@ -152,31 +163,23 @@ export const facturenTableConfig = {
   },
 } as const;
 
-// Betaalvoorkeuren
-const displayPropsEmandates: DisplayProps<AfisEmandateStub> = {
-  name: 'Naam',
-};
-
 export const businessPartnerDetailsLabels: DisplayProps<AfisBusinessPartnerDetailsTransformed> =
   {
     fullName: 'Debiteurnaam',
     businessPartnerId: 'Debiteurnummer',
     email: 'E-mailadres factuur',
     phone: 'Telefoonnummer',
-    address: 'Adres',
+    fullAddress: 'Adres',
   };
 
+const displayPropsEMandates: DisplayProps<AfisEMandateFrontend> = {
+  detailLinkComponent: 'Afdeling gemeente',
+  displayStatus: 'Status',
+};
+
 export const eMandateTableConfig = {
-  active: {
-    title: `Actieve automatische incasso's`,
-    filter: (emandate: AfisEmandateStub) => emandate.isActive,
-    displayProps: displayPropsEmandates,
-  },
-  inactive: {
-    title: `Niet actieve automatische incasso's`,
-    filter: (emandate: AfisEmandateStub) => !emandate.isActive,
-    displayProps: displayPropsEmandates,
-  },
+  title: `Automatische incasso's`,
+  displayProps: displayPropsEMandates,
 } as const;
 
 export const linkListItems: LinkProps[] = [
@@ -200,3 +203,5 @@ export function getAfisListPageDocumentTitle<T extends Params<string>>(
       return `Facturen | ${themaTitle}`;
   }
 }
+
+export const EMANDATE_STATUS_ACTIVE = '1';

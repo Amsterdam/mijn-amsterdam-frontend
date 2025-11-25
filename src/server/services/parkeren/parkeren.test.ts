@@ -1,8 +1,9 @@
+import { HttpStatusCode } from 'axios';
+
 import { fetchParkeren } from './parkeren';
 import { hasPermitsOrPermitRequests } from './parkeren-egis-service';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { HttpStatusCode } from 'axios';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -210,12 +211,30 @@ describe('hasPermitsOrPermitRequests', () => {
 
   test('Doing a request with a created JWE token', async () => {
     mocks.JWETokenCreationActive = true;
+    remoteApi
+      .post(JWE_CREATE_ROUTE)
+      .reply(HttpStatusCode.Ok, { token: 'xxxtokenxxx' });
     const response = await hasPermitsOrPermitRequests(authProfileAndToken);
     expect(response).toBe(true);
   });
 
   test('Doing a request while fetching a JWT', async () => {
     mocks.JWETokenCreationActive = false;
+    const response = await hasPermitsOrPermitRequests(authProfileAndToken);
+    expect(response).toBe(true);
+  });
+
+  test('Shows parkeren by default if there is an internal server error', async () => {
+    mocks.JWETokenCreationActive = true;
+    remoteApi
+      .post(JWE_CREATE_ROUTE)
+      .reply(HttpStatusCode.Ok, { token: 'xxxtokenxxx' });
+    remoteApi
+      .post(`${BASE_ROUTE}/v1/private/active_permit_request`)
+      .reply(HttpStatusCode.InternalServerError);
+    remoteApi
+      .post(`${BASE_ROUTE}/v1/private/client_product_details`)
+      .reply(HttpStatusCode.InternalServerError);
     const response = await hasPermitsOrPermitRequests(authProfileAndToken);
     expect(response).toBe(true);
   });

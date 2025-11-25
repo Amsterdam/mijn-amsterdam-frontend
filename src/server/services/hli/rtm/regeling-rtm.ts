@@ -1,43 +1,63 @@
+import { addDays } from 'date-fns';
 import { isAfter } from 'date-fns/isAfter';
 import { parseISO } from 'date-fns/parseISO';
 import { generatePath } from 'react-router';
 import slug from 'slugme';
+import { firstBy } from 'thenby';
 
 import { routeConfig } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
-import { defaultDateFormat } from '../../../../universal/helpers/date';
+import {
+  type ApiResponse,
+  apiSuccessResult,
+} from '../../../../universal/helpers/api';
+import {
+  dateFormat,
+  dateSort,
+  defaultDateFormat,
+} from '../../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
 import { hash, sortAlpha } from '../../../../universal/helpers/utils';
 import type { StatusLineItem } from '../../../../universal/types/App.types';
-import type { AuthProfile } from '../../../auth/auth-types';
+import type {
+  AuthProfile,
+  AuthProfileAndToken,
+} from '../../../auth/auth-types';
 import type {
   BSN,
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedPerson,
 } from '../../zorgned/zorgned-types';
 import { getDocumentsFrontend } from '../hli';
-import type { HLIRegelingFrontend } from '../hli-regelingen-types';
+import type {
+  HLIRegelingFrontend,
+  HLIRegelingSpecificatieFrontend,
+} from '../hli-regelingen-types';
+import { fetchZorgnedAanvragenHLI } from '../hli-zorgned-service';
 import { getBesluitDescription } from '../status-line-items/generic';
+
+// Titel for RTM Specificatie documents in Zorgned
+export const RTM_SPECIFICATIE_TITLE = 'AV-RTM Specificatie';
 
 // Toets voorwaarden voor een afspraak GGD
 export const AV_RTM_DEEL1 = 'AV-RTM1';
 // Afhandeling afspraak GGD
 export const AV_RTM_DEEL2 = 'AV-RTM';
 
+type ZorgnedRTMAanvraag = ZorgnedAanvraagWithRelatedPersonsTransformed & {
+  procesAanvragen?: ZorgnedRTMAanvraag[];
+};
+
 const INFO_LINK =
   'https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/extra-geld-als-u-chronisch-ziek-of/';
 
-export function isRTMAanvraag(
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-): boolean {
+export function isRTMAanvraag(aanvraag: ZorgnedRTMAanvraag): boolean {
   return (
     !!aanvraag.productIdentificatie &&
     [AV_RTM_DEEL1, AV_RTM_DEEL2].includes(aanvraag.productIdentificatie)
   );
 }
 
-function isEindeRechtReached(
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-): boolean {
+function isEindeRechtReached(aanvraag: ZorgnedRTMAanvraag): boolean {
   return !!(
     aanvraag.datumEindeGeldigheid &&
     isAfter(new Date(), aanvraag.datumEindeGeldigheid)
@@ -45,7 +65,7 @@ function isEindeRechtReached(
 }
 
 function maybeWithAdditionalInfoForBetrokkenen(
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
+  aanvraag: ZorgnedRTMAanvraag,
   descriptionStart: string
 ): string {
   if (aanvraag.betrokkenen.length > 1) {
@@ -60,9 +80,7 @@ function maybeWithAdditionalInfoForBetrokkenen(
 
 type LineItemConfig = {
   status: string;
-  description: (
-    aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-  ) => string;
+  description: (aanvraag: ZorgnedRTMAanvraag) => string;
 };
 // Occasionally, aanvragen generate two statusLineItems, with the documents placed in only one of them.
 const lineItemConfigs: Record<string, LineItemConfig> = {
@@ -96,8 +114,20 @@ const lineItemConfigs: Record<string, LineItemConfig> = {
   eindeRecht: {
     status: 'Einde recht',
     description: (aanvraag) => {
-      if (isEindeRechtReached(aanvraag)) {
-        return `<p>Uw recht op ${aanvraag.titel} is beëindigd per ${defaultDateFormat(aanvraag.datumEindeGeldigheid || '')}.</p><p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>`;
+      if (aanvraag.datumEindeGeldigheid) {
+        const bezwaarDescription =
+          '<p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>';
+        // The brief mentions the following if the Einde recht is on 30 november:
+        // "Uw recht op RTM stopt per 1 december."
+        const dateStr = defaultDateFormat(
+          addDays(parseISO(aanvraag.datumEindeGeldigheid), 1)
+        );
+
+        if (isEindeRechtReached(aanvraag)) {
+          return `<p>Uw recht op ${aanvraag.titel} is beëindigd per ${dateStr}.</p>${bezwaarDescription}`;
+        }
+
+        return `<p>Uw recht op ${aanvraag.titel} stopt per ${dateStr}.</p>${bezwaarDescription}`;
       }
       return `
 <p>U hoeft de ${aanvraag.titel} niet elk jaar opnieuw aan te vragen. De gemeente verlengt de regeling stilzwijgend, maar controleert wel elk jaar of u nog in aanmerking komt.</p>
@@ -109,7 +139,7 @@ const lineItemConfigs: Record<string, LineItemConfig> = {
 
 function getStatusDate(
   status: StatusLineItem['status'],
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+  aanvraag: ZorgnedRTMAanvraag
 ): string {
   switch (status) {
     case lineItemConfigs.aanvraag.status:
@@ -118,45 +148,48 @@ function getStatusDate(
       return aanvraag.datumAanvraag;
     case lineItemConfigs.besluit.status:
     case lineItemConfigs.besluitAanvraagAfgewezen.status:
+    case lineItemConfigs.besluitWijziging.status:
       return aanvraag.datumBesluit;
     case lineItemConfigs.eindeRecht.status:
-      return aanvraag.datumEindeGeldigheid ?? '';
+      return aanvraag.datumEindeGeldigheid
+        ? dateFormat(
+            addDays(parseISO(aanvraag.datumEindeGeldigheid), 1),
+            'yyyy-MM-dd'
+          )
+        : '';
     default:
       return '';
   }
 }
 
+type StepOptions = {
+  excludeDocuments?: boolean;
+  sortModifier?: string;
+};
+
 function createStatusLineItemStep(
   lineItemConfig: LineItemConfig,
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+  aanvraag: ZorgnedRTMAanvraag,
+  options: StepOptions = {}
 ): StatusLineItem {
+  const { excludeDocuments = false, sortModifier = '' } = options;
   return {
     status: lineItemConfig.status,
     description: lineItemConfig.description(aanvraag),
-    id: slug(`${lineItemConfig.status}-${aanvraag.prettyID}`),
+    id: slug(`${aanvraag.id}-${sortModifier}-${lineItemConfig.status}`),
     datePublished: getStatusDate(lineItemConfig.status, aanvraag),
     isActive: false,
     // We default to checked and determine which step can be unchecked later.
     isChecked: true,
-    // We might want to include the beëindigingsdocumenten only for Einde recht steps.
-    // Currently, documents related to Einde recht end-up in the most recent (toegewezen RTM regeling) Besluit step.
-    documents: ![
-      lineItemConfigs.eindeRecht.status,
-      lineItemConfigs.aanvraag.status,
-    ].includes(lineItemConfig.status)
-      ? aanvraag.documenten
-      : [],
+    documents: excludeDocuments ? [] : aanvraag.documenten,
   };
 }
 
 export function mapAanvragenByBetrokkenen(
   bsnLoggedinUser: BSN,
-  aanvraagSet: ZorgnedAanvraagWithRelatedPersonsTransformed[]
+  aanvraagSet: ZorgnedRTMAanvraag[]
 ) {
-  const aanvragenByBetrokkenen = new Map<
-    string,
-    ZorgnedAanvraagWithRelatedPersonsTransformed[]
-  >([
+  const aanvragenByBetrokkenen = new Map<string, ZorgnedRTMAanvraag[]>([
     ['orphans', []],
     [bsnLoggedinUser, []],
   ]);
@@ -219,10 +252,7 @@ function getBetrokkenenBSNs(betrokkenenMapStr: string) {
 }
 
 export function splitAanvragenByBetrokkenenAtDatumGeldigheid(
-  aanvragenByBetrokkenen: Map<
-    string,
-    ZorgnedAanvraagWithRelatedPersonsTransformed[]
-  >
+  aanvragenByBetrokkenen: Map<string, ZorgnedRTMAanvraag[]>
 ) {
   for (const [betrokkene, aanvragen] of aanvragenByBetrokkenen.entries()) {
     let splitIndex = 0;
@@ -248,66 +278,110 @@ export function splitAanvragenByBetrokkenenAtDatumGeldigheid(
 
 function getSteps(
   sessionID: AuthProfile['sid'],
-  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
+  aanvragen: ZorgnedRTMAanvraag[]
 ) {
-  const steps = aanvragen.flatMap((aanvraag, index, aanvragen) => {
-    // Searches for items that came before the current aanvraag and checks if it's RTM FASE 2.
-    const previousRTM2 = aanvragen
-      .slice(0, index)
-      .find((prevA) => prevA.productIdentificatie === AV_RTM_DEEL2);
+  const steps = aanvragen
+    .flatMap((aanvraag, index, aanvragen) => {
+      // Searches for items that came before the current aanvraag and checks if it's RTM FASE 2.
+      const previousRTM2 = aanvragen
+        .slice(0, index)
+        .find((prevA) => prevA.productIdentificatie === AV_RTM_DEEL2);
 
-    // ============================
-    // Steps for RTM FASE 2.
-    // ============================
-    if (aanvraag.productIdentificatie === AV_RTM_DEEL2) {
-      const besluitStatus =
+      // ============================
+      // Steps for RTM FASE 2.
+      // ============================
+      if (aanvraag.productIdentificatie === AV_RTM_DEEL2) {
+        const besluitStatus =
+          previousRTM2?.resultaat === 'toegewezen'
+            ? lineItemConfigs.besluitWijziging
+            : lineItemConfigs.besluit;
+        // Wijzigingen en Einde recht worden mbh een proces toegepast op de bestaande RTM2 regeling.
+        // Hierdoor komen er dus meerdere aanvragen met dezelfde beschiktProductIdentificatie door.
+        // In het geval van de RTM2 regeling, maken we dus meerdere stappen aan voor dezelfde regeling obv de verschillende processen i.r.t de RTM2 regeling.
+        const RTM2ProcesSteps = aanvraag.procesAanvragen?.length
+          ? aanvraag.procesAanvragen.map((procesAanvraag) => {
+              const lineItemConfig =
+                procesAanvraag.procesAanvraagOmschrijving?.endsWith(
+                  'Beëindigen RTM'
+                )
+                  ? lineItemConfigs.eindeRecht
+                  : lineItemConfigs.besluitWijziging;
+
+              return createStatusLineItemStep(lineItemConfig, procesAanvraag, {
+                sortModifier:
+                  // we add 'z' to ensure the einde recht step is always last
+                  lineItemConfig === lineItemConfigs.eindeRecht ? 'z' : '',
+              });
+            })
+          : [];
+        return [
+          createStatusLineItemStep(besluitStatus, aanvraag),
+          ...RTM2ProcesSteps,
+        ];
+      }
+
+      // ============================
+      // Steps for RTM FASE 1.
+      // ============================
+
+      if (aanvraag.resultaat === 'afgewezen') {
+        return createStatusLineItemStep(
+          previousRTM2?.resultaat === 'toegewezen'
+            ? lineItemConfigs.besluitWijziging
+            : lineItemConfigs.besluitAanvraagAfgewezen,
+          aanvraag
+        );
+      }
+
+      // There must be a toegewezen RTM FASE 2 before this aanvraag for this to be a "Aanvraag wijziging".
+      const aanvraagStatus =
         previousRTM2?.resultaat === 'toegewezen'
-          ? lineItemConfigs.besluitWijziging
-          : lineItemConfigs.besluit;
-      return createStatusLineItemStep(besluitStatus, aanvraag);
-    }
+          ? lineItemConfigs.aanvraagWijziging
+          : lineItemConfigs.aanvraag;
 
-    // ============================
-    // Steps for RTM FASE 1.
-    // ============================
+      const aanvraagSteps =
+        aanvraagStatus === lineItemConfigs.aanvraag
+          ? [
+              // If we show an In Behandeling step, we don't show documents on the Aanvraag step.
+              createStatusLineItemStep(aanvraagStatus, aanvraag, {
+                excludeDocuments: true,
+                // we add 'a' and 'b' to ensure the aanvraag step is before the inBehandeling step
+                sortModifier: 'a',
+              }),
+              createStatusLineItemStep(
+                lineItemConfigs.inBehandeling,
+                aanvraag,
+                {
+                  sortModifier: 'b',
+                }
+              ),
+            ]
+          : [createStatusLineItemStep(aanvraagStatus, aanvraag)];
 
-    if (aanvraag.resultaat === 'afgewezen') {
-      return createStatusLineItemStep(
-        previousRTM2?.resultaat === 'toegewezen'
-          ? lineItemConfigs.besluitWijziging
-          : lineItemConfigs.besluitAanvraagAfgewezen,
-        aanvraag
-      );
-    }
-
-    // There must be a toegewezen RTM FASE 2 before this aanvraag for this to be a "Aanvraag wijziging".
-    const aanvraagStatus =
-      previousRTM2?.resultaat === 'toegewezen'
-        ? lineItemConfigs.aanvraagWijziging
-        : lineItemConfigs.aanvraag;
-    const aanvraagStep = createStatusLineItemStep(aanvraagStatus, aanvraag);
-
-    const aanvraagSteps =
-      aanvraagStatus === lineItemConfigs.aanvraag
-        ? [
-            aanvraagStep,
-            createStatusLineItemStep(lineItemConfigs.inBehandeling, aanvraag),
-          ]
-        : [aanvraagStep];
-
-    return aanvraagSteps;
-  });
+      return aanvraagSteps;
+    })
+    .toSorted(
+      // sorting by datePublished asc, and by id asc to ensure consistent order for same-date steps
+      firstBy(dateSort('datePublished', 'asc')).thenBy(sortAlpha('id', 'asc'))
+    );
 
   const mostRecentToegewezenRTM = aanvragen.findLast(
     (a) =>
       a.productIdentificatie === AV_RTM_DEEL2 && a.resultaat === 'toegewezen'
   );
 
-  let eindeRechtStep: StatusLineItem | null = null;
-  if (mostRecentToegewezenRTM) {
+  // Check if there is an einde recht step (by a beëindigingsproces) already present.
+  let eindeRechtStep: StatusLineItem | null =
+    steps.findLast(
+      (step) => step.status === lineItemConfigs.eindeRecht.status
+    ) ?? null;
+  // If we don't have an einde recht step yet, but there is a most recent toegewezen RTM regeling,
+  // we create the "inactive" einde recht step.
+  if (mostRecentToegewezenRTM && !eindeRechtStep) {
     eindeRechtStep = createStatusLineItemStep(
       lineItemConfigs.eindeRecht,
-      mostRecentToegewezenRTM
+      mostRecentToegewezenRTM,
+      { excludeDocuments: true }
     );
     steps.push(eindeRechtStep);
   }
@@ -330,7 +404,7 @@ function getSteps(
 
     // Einde recht step always is checked and active.
     eindeRechtStep.isChecked = eindeRechtStep.isActive = isEindeRechtReached;
-  } else if (lastStep) {
+  } else if (!eindeRechtStep && lastStep) {
     // If there is no einde recht step, the last step is always active.
     lastStep.isActive = true;
   }
@@ -347,7 +421,7 @@ function getSteps(
 
 function getBetrokkenen(
   betrokkenenMapStr: string,
-  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
+  aanvragen: ZorgnedRTMAanvraag[]
 ): string {
   const betrokkenenBSNs = getBetrokkenenBSNs(betrokkenenMapStr);
   // Filter unique persons by BSN.
@@ -366,10 +440,7 @@ function getBetrokkenen(
 
 function transformRTMRegelingenFrontend(
   sessionID: AuthProfile['sid'],
-  aanvragenByBetrokkenen: Map<
-    string,
-    ZorgnedAanvraagWithRelatedPersonsTransformed[]
-  >
+  aanvragenByBetrokkenen: Map<string, ZorgnedRTMAanvraag[]>
 ) {
   const regelingen: HLIRegelingFrontend[] = [];
 
@@ -399,7 +470,6 @@ function transformRTMRegelingenFrontend(
       id,
       regeling: slug(title),
     });
-
     // Get dates for the HLIRegeling from the steps.
     const RTM2Aanvragen = aanvragen.filter(
       (a) => a.productIdentificatie === AV_RTM_DEEL2
@@ -418,16 +488,13 @@ function transformRTMRegelingenFrontend(
 
     // Determine if the regeling is actual. This is needed to show the regeling as lopend or huidig.
     let isActual = false;
-    // A active RTM is present
-    if (hasToegewezenRTM2 && !isEindeRechtReached(toegewezenRTM2)) {
-      isActual = true;
-    }
-    // A lopende aanvraag is present.
+
+    // An active RTM is present
     if (
-      !hasToegewezenRTM2 &&
-      aanvragen.some(
-        (a) => a.resultaat === 'toegewezen' && !isEindeRechtReached(a)
-      )
+      // Any valid RTM2 means the regeling is actual
+      (hasToegewezenRTM2 && !isEindeRechtReached(toegewezenRTM2)) ||
+      (aanvragen.every((a) => a.resultaat === 'toegewezen') &&
+        !isEindeRechtReached(mostRecentAanvraag))
     ) {
       isActual = true;
     }
@@ -475,8 +542,8 @@ function transformRTMRegelingenFrontend(
  * Which is speculated to cause people to try their luck more with fraudulant documents.
  */
 function removeNonPdfDocuments(
-  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
-): ZorgnedAanvraagWithRelatedPersonsTransformed[] {
+  aanvragen: ZorgnedRTMAanvraag[]
+): ZorgnedRTMAanvraag[] {
   return aanvragen.map((aanvraag) => ({
     ...aanvraag,
     documenten: aanvraag.documenten.filter(
@@ -486,19 +553,35 @@ function removeNonPdfDocuments(
   }));
 }
 
-/** Aanvragen can contain duplicate RTMDeel2. We combine the documents and drop the dupe. */
-function dedupeButKeepDocuments(
+function removeSpecificatieDocuments(
+  aanvragen: ZorgnedRTMAanvraag[]
+): ZorgnedRTMAanvraag[] {
+  return aanvragen.map((aanvraag) => ({
+    ...aanvraag,
+    documenten: aanvraag.documenten.filter(
+      (doc) => doc.title !== RTM_SPECIFICATIE_TITLE
+    ),
+  }));
+}
+
+// Checks if there are multiple aanvragen with the same beschiktProductIdentificatie
+// and adds all subsequent aanvragen as procesAanvragen to the first aanvraag.
+function collectProcesAanvragen(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
-) {
-  const seenAanvragen = new Map<
-    string,
-    ZorgnedAanvraagWithRelatedPersonsTransformed
-  >();
+): ZorgnedRTMAanvraag[] {
+  const seenAanvragen = new Map<string, ZorgnedRTMAanvraag>();
 
   for (const aanvraag of aanvragen) {
     const id = aanvraag.beschiktProductIdentificatie;
     if (seenAanvragen.has(id)) {
-      seenAanvragen.get(id)!.documenten.push(...aanvraag.documenten);
+      const existingAanvraag = seenAanvragen.get(id)!;
+      seenAanvragen.set(id, {
+        ...existingAanvraag,
+        procesAanvragen: [
+          ...(existingAanvraag.procesAanvragen ?? []),
+          aanvraag,
+        ],
+      });
     } else {
       seenAanvragen.set(id, aanvraag);
     }
@@ -509,7 +592,7 @@ function dedupeButKeepDocuments(
 
 // The RTM2 aanvraag is only present for the logged-in user so we know for sure they are a betrokkene.
 function addAanvragerToRTM2Aanvragen(
-  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
+  aanvragen: ZorgnedRTMAanvraag[],
   aanvrager: ZorgnedPerson | Pick<ZorgnedPerson, 'bsn'>
 ) {
   return aanvragen.map((aanvraag) => {
@@ -538,11 +621,14 @@ export function transformRTMAanvragen(
   RTMaanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ) {
   const aanvragenSorted = RTMaanvragen.toSorted(sortAlpha('id', 'asc'));
-  const aanvragenDeduped = dedupeButKeepDocuments(aanvragenSorted);
+  const aanvragenDeduped = collectProcesAanvragen(aanvragenSorted);
 
   const aanvragenWithPdfDocumentsOnly = removeNonPdfDocuments(aanvragenDeduped);
+  const aanvragenWithoutSpecificaties = removeSpecificatieDocuments(
+    aanvragenWithPdfDocumentsOnly
+  );
   const aanvragenWithAddedAanvrager = addAanvragerToRTM2Aanvragen(
-    aanvragenWithPdfDocumentsOnly,
+    aanvragenWithoutSpecificaties,
     aanvrager
   );
   // RTM aanvragen are processed in chronological order (ASC), so we sort them first.
@@ -560,8 +646,39 @@ export function transformRTMAanvragen(
   );
 }
 
+export async function fetchRTMSpecificaties(
+  authProfileAndToken: AuthProfileAndToken
+): Promise<ApiResponse<HLIRegelingSpecificatieFrontend[]>> {
+  const response = await fetchZorgnedAanvragenHLI(
+    authProfileAndToken.profile.id
+  );
+  if (response.status !== 'OK') {
+    return response;
+  }
+
+  const specificaties: HLIRegelingSpecificatieFrontend[] =
+    response.content.flatMap((aanvraag) => {
+      const specificaties = getDocumentsFrontend(
+        authProfileAndToken.profile.sid,
+        aanvraag.documenten
+      )
+        .filter((doc) => doc.title === RTM_SPECIFICATIE_TITLE)
+        .map((doc) => {
+          const specificatie: HLIRegelingSpecificatieFrontend = {
+            ...doc,
+            category: aanvraag.titel,
+            datePublishedFormatted: defaultDateFormat(doc.datePublished),
+          };
+          return specificatie;
+        });
+      return specificaties;
+    });
+
+  return apiSuccessResult(specificaties);
+}
+
 export const forTesting = {
-  dedupeButKeepDocuments,
+  dedupeButKeepDocuments: collectProcesAanvragen,
   removeNonPdfDocuments,
   getSteps,
   mapAanvragenByBetrokkenen,

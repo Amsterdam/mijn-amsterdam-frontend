@@ -20,7 +20,7 @@ interface ThemaPaginaTableProps<T> {
   maxItems?: number | -1;
   totalItems?: number;
   textNoContent?: string;
-  subTitle?: ReactNode;
+  contentAfterTheTitle?: ReactNode;
   title?: string;
   listPageLinkLabel?: string;
   listPageLinkTitle?: string;
@@ -31,7 +31,7 @@ export default function ThemaPaginaTable<
   T extends object = ZaakAanvraagDetail,
 >({
   title = '',
-  subTitle = '',
+  contentAfterTheTitle = '',
   zaken,
   className,
   textNoContent,
@@ -53,7 +53,7 @@ export default function ThemaPaginaTable<
       <TableV2
         showTHead={!!zaken.length}
         caption={title}
-        subTitle={subTitle}
+        contentAfterTheCaption={contentAfterTheTitle}
         items={hasListPage ? zaken.slice(0, maxItems) : zaken}
         displayProps={displayProps}
         className={className}
