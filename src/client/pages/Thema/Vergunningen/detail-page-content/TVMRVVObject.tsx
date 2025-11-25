@@ -1,14 +1,14 @@
 import { commonTransformers, getRows } from './fields-config';
 import type {
-  DecosZaakFrontend,
   TVMRVVObject,
+  ZaakFrontendCombined,
 } from '../../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../../components/Datalist/Datalist';
 
 export function TVMRVVObject({
   vergunning,
 }: {
-  vergunning: DecosZaakFrontend<TVMRVVObject>;
+  vergunning: ZaakFrontendCombined<TVMRVVObject>;
 }) {
   const rows = getRows(vergunning, [
     commonTransformers.identifier,

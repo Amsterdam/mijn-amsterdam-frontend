@@ -1,6 +1,8 @@
 import createDebugger from 'debug';
 
 import {
+  caseTypePB,
+  caseTypeVergunningen,
   DecosVergunning,
   type PBVergunning,
   type ZaakFrontendCombined,
@@ -10,6 +12,7 @@ import { decosZaakTransformers } from './decos-zaken';
 import { getStatusStepsPB } from './pb-status-steps';
 import { pbZaakTransformers } from './pb-zaken';
 import { routeConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
   apiErrorResult,
   ApiResponse,
@@ -25,7 +28,7 @@ import {
 } from '../decos/decos-service';
 import type { DecosZaakFrontend } from '../decos/decos-types';
 import {
-  fetchZaken,
+  fetchPBZaken,
   transformPBZaakFrontend,
 } from '../powerbrowser/powerbrowser-service';
 import type { PowerBrowserZaakFrontend } from '../powerbrowser/powerbrowser-types';
@@ -69,15 +72,52 @@ function getStatusSteps(vergunning: DecosVergunning): StatusLineItem[] {
   return steps;
 }
 
+// TODO: MIJN-12357: Remove after move to Powerbrowser is finalized
+const activeTransformersDecos = FeatureToggle.VTHOnPowerbrowserActive
+  ? decosZaakTransformers.filter(
+      (transformer) =>
+        !(
+          [
+            caseTypeVergunningen.Omzettingsvergunning,
+            caseTypeVergunningen.Onttrekkingsvergunning,
+            caseTypeVergunningen.OnttrekkingsvergunningSloop,
+            caseTypeVergunningen.Samenvoegingsvergunning,
+            caseTypeVergunningen.VormenVanWoonruimte,
+            caseTypeVergunningen.VOB,
+          ] as string[]
+        ).includes(transformer.caseType)
+    )
+  : decosZaakTransformers;
+
+// TODO: MIJN-12357: Remove after move to Powerbrowser is finalized
+const activeTransformersPB = FeatureToggle.VTHOnPowerbrowserActive
+  ? pbZaakTransformers
+  : pbZaakTransformers.filter(
+      (transformer) =>
+        !(
+          [
+            caseTypePB.Omzettingsvergunning,
+            caseTypePB.Onttrekkingsvergunning,
+            caseTypePB.OnttrekkingsvergunningSloop,
+            caseTypePB.Samenvoegingsvergunning,
+            caseTypePB.VormenVanWoonruimte,
+            caseTypePB.Ligplaatsvergunning,
+          ] as string[]
+        ).includes(transformer.caseType)
+    );
+
 export async function fetchVergunningen(
   authProfileAndToken: AuthProfileAndToken,
   appRouteDetailPage: string = routeConfig.detailPage.path
 ): Promise<ApiResponse<ZaakFrontendCombined[]>> {
   const requestDecos = fetchDecosZaken(
     authProfileAndToken,
-    decosZaakTransformers
+    activeTransformersDecos
   );
-  const requestPB = fetchZaken(authProfileAndToken.profile, pbZaakTransformers);
+  const requestPB = fetchPBZaken(
+    authProfileAndToken.profile,
+    activeTransformersPB
+  );
 
   const [responseDecosResult, responsePBResult] = await Promise.allSettled([
     requestDecos,

@@ -11,7 +11,8 @@ import type {
   WithDateEnd,
   WithTimeRange,
 } from '../../../../../server/services/decos/decos-types';
-import { DecosZaakFrontend } from '../../../../../server/services/vergunningen/config-and-types';
+import type { PowerBrowserZaakBase } from '../../../../../server/services/powerbrowser/powerbrowser-types';
+import { type ZaakFrontendCombined } from '../../../../../server/services/vergunningen/config-and-types';
 import { dateTimeFormatYear } from '../../../../../universal/helpers/date';
 import {
   Row,
@@ -25,13 +26,17 @@ type DataListRowOptions = {
   endDateIncluded?: boolean;
 };
 
-type VergunningDataListRow<T extends DecosZaakFrontend = DecosZaakFrontend> = (
+type VergunningDataListRow<
+  T extends ZaakFrontendCombined = ZaakFrontendCombined,
+> = (
   vergunning: T,
   options?: DataListRowOptions
 ) => Row | RowSet | null | Array<Row | RowSet | null>;
 
-export type RowTransformer<T extends DecosZaakFrontend = DecosZaakFrontend> =
-  Record<string, VergunningDataListRow<T>>;
+type zaakBase = DecosZaakBase | PowerBrowserZaakBase;
+export type RowTransformer<
+  T extends ZaakFrontendCombined = ZaakFrontendCombined,
+> = Record<string, VergunningDataListRow<T>>;
 
 export const identifier: VergunningDataListRow = (vergunning) => {
   return {
@@ -41,7 +46,7 @@ export const identifier: VergunningDataListRow = (vergunning) => {
 };
 
 export const onFromTo: VergunningDataListRow<
-  DecosZaakFrontend<DecosZaakBase & WithDateTimeRange>
+  ZaakFrontendCombined<zaakBase & WithDateTimeRange>
 > = (vergunning) => {
   if (!('timeStart' in vergunning && 'timeEnd' in vergunning)) {
     return null;
@@ -76,7 +81,7 @@ export const onFromTo: VergunningDataListRow<
 };
 
 export const dateTimeRange: VergunningDataListRow<
-  DecosZaakFrontend<DecosZaakBase & WithDateTimeRange>
+  ZaakFrontendCombined<zaakBase & WithDateTimeRange>
 > = (vergunning) => {
   if (!('timeStart' in vergunning && 'timeEnd' in vergunning)) {
     return null;
@@ -112,7 +117,7 @@ export const dateTimeRange: VergunningDataListRow<
 };
 
 export const dateRange: VergunningDataListRow<
-  DecosZaakFrontend<DecosZaakBase & WithDateRange>
+  ZaakFrontendCombined<zaakBase & WithDateRange>
 > = (vergunning, options: DataListRowOptions = { endDateIncluded: true }) => {
   const from = commonTransformers.dateStart(vergunning) as WrappedRow;
   const to = commonTransformers.dateEnd(vergunning, options) as WrappedRow;
@@ -128,7 +133,7 @@ export const dateRange: VergunningDataListRow<
 };
 
 export const dateTimeRangeBetween: VergunningDataListRow<
-  DecosZaakFrontend<DecosZaakBase & WithDateTimeRange>
+  ZaakFrontendCombined<zaakBase & WithDateTimeRange>
 > = (vergunning) => {
   const dateTimeRangeRowSet = dateRange(vergunning);
   if (!dateTimeRangeRowSet) {
@@ -152,7 +157,7 @@ export const dateTimeRangeBetween: VergunningDataListRow<
 };
 
 export const location: VergunningDataListRow<
-  DecosZaakFrontend<DecosZaakBase & WithLocation>
+  ZaakFrontendCombined<zaakBase & WithLocation>
 > = (vergunning) =>
   'location' in vergunning && typeof vergunning.location === 'string'
     ? {
@@ -162,7 +167,7 @@ export const location: VergunningDataListRow<
     : null;
 
 export const address: VergunningDataListRow<
-  DecosZaakFrontend<DecosZaakBase & WithLocation>
+  ZaakFrontendCombined<zaakBase & WithLocation>
 > = (vergunning) =>
   'location' in vergunning && typeof vergunning.location === 'string'
     ? {
@@ -171,7 +176,7 @@ export const address: VergunningDataListRow<
       }
     : null;
 
-export const decision: VergunningDataListRow<DecosZaakFrontend> = (
+export const decision: VergunningDataListRow<ZaakFrontendCombined> = (
   vergunning
 ) =>
   vergunning.decision && vergunning.processed
@@ -182,7 +187,7 @@ export const decision: VergunningDataListRow<DecosZaakFrontend> = (
     : null;
 
 export const kentekens: VergunningDataListRow<
-  DecosZaakFrontend<DecosZaakBase & WithKentekens>
+  ZaakFrontendCombined<zaakBase & WithKentekens>
 > = (vergunning) => {
   const hasMultipleKentekens = vergunning?.kentekens?.includes('|');
   return 'kentekens' in vergunning && typeof vergunning.kentekens === 'string'
@@ -204,27 +209,27 @@ export const kentekens: VergunningDataListRow<
 };
 
 export const dateStartedOn: VergunningDataListRow<
-  DecosZaakFrontend<DecosZaakBase & WithDateStart>
+  ZaakFrontendCombined<zaakBase & WithDateStart>
 > = (vergunning) => ({
   label: `Op`,
   content: vergunning.dateStartFormatted,
 });
 
 export const dateStart: VergunningDataListRow<
-  DecosZaakFrontend<DecosZaakBase & WithDateStart>
+  ZaakFrontendCombined<zaakBase & WithDateStart>
 > = (vergunning) => ({
   label: `Van`,
   content: vergunning.dateStartFormatted,
 });
 
 export const dateEnd: VergunningDataListRow<
-  DecosZaakFrontend<DecosZaakBase & WithDateEnd>
+  ZaakFrontendCombined<zaakBase & WithDateEnd>
 > = (vergunning, options = { endDateIncluded: true }) => ({
   label: options?.endDateIncluded ? `Tot en met` : 'Tot',
   content: vergunning.dateEndFormatted,
 });
 
-export const timeStart: VergunningDataListRow<DecosZaakFrontend> = (
+export const timeStart: VergunningDataListRow<ZaakFrontendCombined> = (
   vergunning
 ) =>
   'timeStart' in vergunning && typeof vergunning.timeStart === 'string'
@@ -234,7 +239,7 @@ export const timeStart: VergunningDataListRow<DecosZaakFrontend> = (
       }
     : null;
 
-export const timeEnd: VergunningDataListRow<DecosZaakFrontend> = (
+export const timeEnd: VergunningDataListRow<ZaakFrontendCombined> = (
   vergunning
 ) =>
   'timeEnd' in vergunning && typeof vergunning.timeEnd === 'string'
@@ -245,7 +250,7 @@ export const timeEnd: VergunningDataListRow<DecosZaakFrontend> = (
     : null;
 
 export const timeRange: VergunningDataListRow<
-  DecosZaakFrontend<DecosZaakBase & WithTimeRange>
+  ZaakFrontendCombined<zaakBase & WithTimeRange>
 > = (vergunning) =>
   'timeStart' in vergunning &&
   'timeEnd' in vergunning &&
@@ -258,7 +263,7 @@ export const timeRange: VergunningDataListRow<
     : null;
 
 export const description: VergunningDataListRow<
-  DecosZaakFrontend<DecosZaakBase & { description: string | null }>
+  ZaakFrontendCombined<zaakBase & { description: string | null }>
 > = (vergunning) => {
   return {
     label: 'Omschrijving',
@@ -285,7 +290,7 @@ export const commonTransformers = {
   timeStart,
 } as const;
 
-export function getRows<T extends DecosZaakFrontend>(
+export function getRows<T extends ZaakFrontendCombined>(
   vergunning: T,
   keysOrTransformers: (VergunningDataListRow<T> | Row | RowSet)[]
 ): DatalistProps['rows'] {

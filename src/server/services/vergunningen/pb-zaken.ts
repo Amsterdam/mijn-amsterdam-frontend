@@ -165,3 +165,7 @@ export const pbZaakTransformers = [
   OnttrekkingsvergunningZaakTransformer,
   OnttrekkingsvergunningSloopZaakTransformer,
 ];
+
+export const pbCaseToZaakTransformers = pbZaakTransformers.reduce<
+  Record<string, PowerBrowserZaakTransformer>
+>((acc, t) => ({ ...acc, [t.caseType]: t }), {});

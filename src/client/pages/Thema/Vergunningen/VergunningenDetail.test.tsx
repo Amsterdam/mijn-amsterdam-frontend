@@ -4,16 +4,20 @@ import { describe, it, expect, vi, Mock } from 'vitest';
 import { useVergunningenDetailData } from './useVergunningenDetailData.hook';
 import { useVergunningenThemaData } from './useVergunningenThemaData.hook';
 import { VergunningenDetail, forTesting } from './VergunningenDetail';
+import type { DecosZaakFrontend } from '../../../../server/services/decos/decos-types';
+import type { PowerBrowserZaakFrontend } from '../../../../server/services/powerbrowser/powerbrowser-types';
 import type {
   DecosVergunning,
-  DecosZaakFrontend,
+  PBVergunning,
+  ZaakFrontendCombined,
 } from '../../../../server/services/vergunningen/config-and-types';
 import { decosCaseToZaakTransformers } from '../../../../server/services/vergunningen/decos-zaken';
+import { pbCaseToZaakTransformers } from '../../../../server/services/vergunningen/pb-zaken';
 import { componentCreator } from '../../MockApp';
 
 const mocks = vi.hoisted(() => {
   return {
-    DetailComponent({ vergunning }: { vergunning: DecosZaakFrontend }) {
+    DetailComponent({ vergunning }: { vergunning: ZaakFrontendCombined }) {
       return <span>{vergunning.caseType}</span>;
     },
   };
@@ -50,8 +54,8 @@ vi.mock('./detail-page-content/RvvSloterweg', () => ({
 vi.mock('./detail-page-content/TVMRVVObject', () => ({
   TVMRVVObject: mocks.DetailComponent,
 }));
-vi.mock('./detail-page-content/VOB', () => ({
-  VOB: mocks.DetailComponent,
+vi.mock('./detail-page-content/LigplaatsVergunning', () => ({
+  LigplaatsVergunning: mocks.DetailComponent,
 }));
 vi.mock('./detail-page-content/Woonvergunningen', () => ({
   Woonvergunningen: mocks.DetailComponent,
@@ -171,10 +175,9 @@ describe('VergunningDetailPagina', () => {
 describe('DetailPageContent', () => {
   const { DetailPageContent } = forTesting;
 
-  const caseTypes = Object.keys(decosCaseToZaakTransformers);
-
-  test.each(caseTypes)(
-    'should render the correct component for caseType "%s"',
+  const caseTypesDecos = Object.keys(decosCaseToZaakTransformers);
+  test.each(caseTypesDecos)(
+    'should render the correct component for decos caseType "%s"',
     (caseType) => {
       const mockVergunning = {
         caseType,
@@ -186,11 +189,25 @@ describe('DetailPageContent', () => {
     }
   );
 
+  const caseTypesPB = Object.keys(pbCaseToZaakTransformers);
+  test.todo.each(caseTypesPB)(
+    'should render the correct component for powerbrowser caseType "%s"',
+    (caseType) => {
+      const mockVergunning = {
+        caseType,
+      } as PowerBrowserZaakFrontend<PBVergunning>;
+
+      render(<DetailPageContent vergunning={mockVergunning} />);
+
+      expect(screen.getByText(caseType)).toBeInTheDocument();
+    }
+  );
+
   it('should render the default Datalist for an unknown caseType', () => {
     const mockVergunning = {
       caseType: 'Unknown Case',
       key: 'value',
-    } as unknown as DecosZaakFrontend<DecosVergunning>;
+    } as unknown as ZaakFrontendCombined<DecosVergunning | PBVergunning>;
 
     render(<DetailPageContent vergunning={mockVergunning} />);
 

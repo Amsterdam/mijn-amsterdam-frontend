@@ -13,6 +13,12 @@ import {
   type WerkzaamhedenEnVervoerOpStraat,
   type WVOSActiviteit,
   type Straatartiesten,
+  type OmzettingsvergunningDecos,
+  type SamenvoegingsvergunningDecos,
+  type OnttrekkingsvergunningDecos,
+  type OnttrekkingsvergunningSloopDecos,
+  type VormenVanWoonruimteDecos,
+  type LigplaatsvergunningDecos,
 } from './config-and-types';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import {
@@ -35,6 +41,118 @@ import {
   DecosZaakTransformer,
   DecosFieldNameSource,
 } from '../decos/decos-types';
+
+const Omzettingsvergunning: DecosZaakTransformer<OmzettingsvergunningDecos> = {
+  isActive: true,
+  itemType: 'folders',
+  caseType: caseTypeVergunningen.Omzettingsvergunning,
+  title: 'Vergunning voor kamerverhuur (omzettingsvergunning)',
+  fetchWorkflowStatusDatesFor: [
+    {
+      status: 'In behandeling',
+      decosActionCode: 'Omzettingsvergunning - Behandelen',
+    },
+  ],
+  transformFields: {
+    ...SELECT_FIELDS_TRANSFORM_BASE,
+    dfunction: transformDecision({
+      Verleend: ['Verleend zonder borden'],
+      '': ['Nog niet bekend', 'Nog niet  bekend'],
+    }),
+    text6: location,
+  },
+};
+
+const Samenvoegingsvergunning: DecosZaakTransformer<SamenvoegingsvergunningDecos> =
+  {
+    isActive: true,
+    itemType: 'folders',
+    caseType: caseTypeVergunningen.Samenvoegingsvergunning,
+    title: 'Vergunning voor samenvoegen van woonruimten',
+    fetchWorkflowStatusDatesFor: [
+      {
+        status: 'In behandeling',
+        decosActionCode: 'Samenvoegingsvergunning - Beoordelen en besluiten',
+      },
+    ],
+    transformFields: {
+      ...SELECT_FIELDS_TRANSFORM_BASE,
+      text6: location,
+    },
+  };
+
+const Onttrekkingsvergunning: DecosZaakTransformer<OnttrekkingsvergunningDecos> =
+  {
+    isActive: true,
+    itemType: 'folders',
+    caseType: caseTypeVergunningen.Onttrekkingsvergunning,
+    title: caseTypeVergunningen.Onttrekkingsvergunning,
+    fetchWorkflowStatusDatesFor: [],
+    transformFields: {
+      ...SELECT_FIELDS_TRANSFORM_BASE,
+      text6: location,
+    },
+  };
+
+const OnttrekkingsvergunningSloop: DecosZaakTransformer<OnttrekkingsvergunningSloopDecos> =
+  {
+    isActive: true,
+    itemType: 'folders',
+    caseType: caseTypeVergunningen.OnttrekkingsvergunningSloop,
+    title: caseTypeVergunningen.OnttrekkingsvergunningSloop,
+    fetchWorkflowStatusDatesFor: [
+      {
+        status: 'In behandeling',
+        decosActionCode:
+          'Onttrekkingsvergunning voor sloop - Beoordelen en besluiten',
+      },
+    ],
+    transformFields: {
+      ...SELECT_FIELDS_TRANSFORM_BASE,
+      text6: location,
+      dfunction: transformDecision({
+        Ingetrokken: ['Ingetrokken aanvraag door gemeente'],
+      }),
+    },
+  };
+
+const VormenVanWoonruimte: DecosZaakTransformer<VormenVanWoonruimteDecos> = {
+  isActive: true,
+  itemType: 'folders',
+  caseType: caseTypeVergunningen.VormenVanWoonruimte,
+  title: 'Vergunning voor woningvorming',
+  fetchWorkflowStatusDatesFor: [
+    {
+      status: 'In behandeling',
+      decosActionCode: 'Woningvormingsvergunning - Beoordelen en besluiten',
+    },
+  ],
+  transformFields: {
+    ...SELECT_FIELDS_TRANSFORM_BASE,
+    text6: location,
+  },
+};
+
+const VOBvergunning: DecosZaakTransformer<LigplaatsvergunningDecos> = {
+  isActive: true,
+  itemType: 'folders',
+  caseType: caseTypeVergunningen.VOB,
+  title: 'Ligplaatsvergunning',
+  fetchWorkflowStatusDatesFor: [
+    {
+      status: 'In behandeling',
+      decosActionCode: 'VOB - Beoordelen en besluiten',
+    },
+  ],
+  transformFields: {
+    ...SELECT_FIELDS_TRANSFORM_BASE,
+    text9: { name: 'requestKind' },
+    text18: { name: 'reason' },
+    text6: location,
+    text10: { name: 'vesselKind' }, // soort vaartuig
+    text14: { name: 'vesselName' }, // naam vaartuig
+  },
+};
 
 const TVMRVVObject: DecosZaakTransformer<TVMRVVObject> = {
   isActive: true,
@@ -453,6 +571,12 @@ const WerkEnVervoerOpStraat: DecosZaakTransformer<WerkzaamhedenEnVervoerOpStraat
   };
 
 export const decosCaseToZaakTransformers = {
+  [Onttrekkingsvergunning.caseType]: Onttrekkingsvergunning,
+  [OnttrekkingsvergunningSloop.caseType]: OnttrekkingsvergunningSloop,
+  [Samenvoegingsvergunning.caseType]: Samenvoegingsvergunning,
+  [VOBvergunning.caseType]: VOBvergunning,
+  [VormenVanWoonruimte.caseType]: VormenVanWoonruimte,
+  [Omzettingsvergunning.caseType]: Omzettingsvergunning,
   [AanbiedenDiensten.caseType]: AanbiedenDiensten,
   [EvenementMelding.caseType]: EvenementMelding,
   [EvenementVergunning.caseType]: EvenementVergunning,
