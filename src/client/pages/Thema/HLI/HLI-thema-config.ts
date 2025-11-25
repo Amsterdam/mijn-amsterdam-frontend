@@ -28,63 +28,68 @@ export const themaConfig: HLIThemaConfig = {
   title: THEMA_TITLE,
   featureToggle: {
     themaActive: true,
-    hliStadspasActive: true,
-    hliThemaRegelingenActive: true,
     zorgnedAvApiActive: true,
 
-    _hliThemaStadspasBlokkerenActive: true,
-    _hliThemaStadspasDeblokkerenActive: true,
-    _hliRegelingEnabledCZM: true,
-    _hliRegelingEnabledRTM: !IS_PRODUCTION,
-    _hli2025PCTegoedCodesEnabled: !IS_PRODUCTION,
-    _hli2026PCVergoedingV3Enabled: !IS_PRODUCTION,
+    stadspas: {
+      hliStadspasActive: true,
+      _hliThemaStadspasBlokkerenActive: false,
+      _hliThemaStadspasDeblokkerenActive: true,
 
-    get hliThemaStadspasBlokkerenActive() {
-      return (
-        themaConfig.featureToggle.themaActive &&
-        themaConfig.featureToggle.hliStadspasActive &&
-        themaConfig.featureToggle._hliThemaStadspasBlokkerenActive
-      );
+      get hliThemaStadspasBlokkerenActive() {
+        return (
+          themaConfig.featureToggle.themaActive &&
+          themaConfig.featureToggle.stadspas.hliStadspasActive &&
+          themaConfig.featureToggle.stadspas._hliThemaStadspasBlokkerenActive
+        );
+      },
+
+      get hliThemaStadspasDeblokkerenActive() {
+        return (
+          themaConfig.featureToggle.themaActive &&
+          themaConfig.featureToggle.stadspas.hliStadspasActive &&
+          themaConfig.featureToggle.stadspas._hliThemaStadspasDeblokkerenActive
+        );
+      },
     },
 
-    get hliThemaStadspasDeblokkerenActive() {
-      return (
-        themaConfig.featureToggle.themaActive &&
-        themaConfig.featureToggle.hliStadspasActive &&
-        themaConfig.featureToggle._hliThemaStadspasDeblokkerenActive
-      );
-    },
+    regelingen: {
+      hliThemaRegelingenActive: true,
+      _hliRegelingEnabledCZM: true,
+      _hliRegelingEnabledRTM: !IS_PRODUCTION,
+      _hli2025PCTegoedCodesEnabled: !IS_PRODUCTION,
+      _hli2026PCVergoedingV3Enabled: !IS_PRODUCTION,
 
-    get hliRegelingEnabledCZM() {
-      return (
-        themaConfig.featureToggle.themaActive &&
-        themaConfig.featureToggle.hliThemaRegelingenActive &&
-        themaConfig.featureToggle._hliRegelingEnabledCZM
-      );
-    },
+      get hliRegelingEnabledCZM() {
+        return (
+          themaConfig.featureToggle.themaActive &&
+          themaConfig.featureToggle.regelingen.hliThemaRegelingenActive &&
+          themaConfig.featureToggle.regelingen._hliRegelingEnabledCZM
+        );
+      },
 
-    get hliRegelingEnabledRTM() {
-      return (
-        themaConfig.featureToggle.themaActive &&
-        themaConfig.featureToggle.hliThemaRegelingenActive &&
-        themaConfig.featureToggle._hliRegelingEnabledRTM
-      );
-    },
+      get hliRegelingEnabledRTM() {
+        return (
+          themaConfig.featureToggle.themaActive &&
+          themaConfig.featureToggle.regelingen.hliThemaRegelingenActive &&
+          themaConfig.featureToggle.regelingen._hliRegelingEnabledRTM
+        );
+      },
 
-    get hli2025PCTegoedCodesEnabled() {
-      return (
-        themaConfig.featureToggle.themaActive &&
-        themaConfig.featureToggle._hli2025PCTegoedCodesEnabled &&
-        !IS_PRODUCTION
-      );
-    },
+      get hli2025PCTegoedCodesEnabled() {
+        return (
+          themaConfig.featureToggle.themaActive &&
+          themaConfig.featureToggle.regelingen._hli2025PCTegoedCodesEnabled &&
+          !IS_PRODUCTION
+        );
+      },
 
-    get hli2026PCVergoedingV3Enabled() {
-      return (
-        themaConfig.featureToggle.themaActive &&
-        themaConfig.featureToggle._hli2026PCVergoedingV3Enabled &&
-        !IS_PRODUCTION
-      );
+      get hli2026PCVergoedingV3Enabled() {
+        return (
+          themaConfig.featureToggle.themaActive &&
+          themaConfig.featureToggle.regelingen._hli2026PCVergoedingV3Enabled &&
+          !IS_PRODUCTION
+        );
+      },
     },
   },
   profileTypes: ['private'],
