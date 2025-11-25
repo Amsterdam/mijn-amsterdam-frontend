@@ -41,45 +41,49 @@ export const themaConfig: HLIThemaConfig = {
 
     get hliThemaStadspasBlokkerenActive() {
       return (
-        this.themaActive &&
-        this.hliStadspasActive &&
-        this._hliThemaStadspasBlokkerenActive
+        themaConfig.featureToggle.themaActive &&
+        themaConfig.featureToggle.hliStadspasActive &&
+        themaConfig.featureToggle._hliThemaStadspasBlokkerenActive
       );
     },
 
     get hliThemaStadspasDeblokkerenActive() {
       return (
-        this.themaActive &&
-        this.hliStadspasActive &&
-        this._hliThemaStadspasDeblokkerenActive
+        themaConfig.featureToggle.themaActive &&
+        themaConfig.featureToggle.hliStadspasActive &&
+        themaConfig.featureToggle._hliThemaStadspasDeblokkerenActive
       );
     },
 
     get hliRegelingEnabledCZM() {
       return (
-        this.themaActive &&
-        this.hliThemaRegelingenActive &&
-        this._hliRegelingEnabledCZM
+        themaConfig.featureToggle.themaActive &&
+        themaConfig.featureToggle.hliThemaRegelingenActive &&
+        themaConfig.featureToggle._hliRegelingEnabledCZM
       );
     },
 
     get hliRegelingEnabledRTM() {
       return (
-        this.themaActive &&
-        this.hliThemaRegelingenActive &&
-        this._hliRegelingEnabledRTM
+        themaConfig.featureToggle.themaActive &&
+        themaConfig.featureToggle.hliThemaRegelingenActive &&
+        themaConfig.featureToggle._hliRegelingEnabledRTM
       );
     },
 
     get hli2025PCTegoedCodesEnabled() {
       return (
-        this.themaActive && this._hli2025PCTegoedCodesEnabled && !IS_PRODUCTION
+        themaConfig.featureToggle.themaActive &&
+        themaConfig.featureToggle._hli2025PCTegoedCodesEnabled &&
+        !IS_PRODUCTION
       );
     },
 
     get hli2026PCVergoedingV3Enabled() {
       return (
-        this.themaActive && this._hli2026PCVergoedingV3Enabled && !IS_PRODUCTION
+        themaConfig.featureToggle.themaActive &&
+        themaConfig.featureToggle._hli2026PCVergoedingV3Enabled &&
+        !IS_PRODUCTION
       );
     },
   },
@@ -197,18 +201,6 @@ export const listPageParamKind = {
 
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
-
-// export const featureToggle = {
-// hliStadspasActive: true,
-// zorgnedAvApiActive: true,
-// hliThemaStadspasBlokkerenActive: true,
-// hliThemaStadspasDeblokkerenActive: !IS_PRODUCTION,
-// hliThemaRegelingenActive: true,
-// hliRegelingEnabledCZM: true,
-// hliRegelingEnabledRTM: !IS_PRODUCTION,
-// hli2025PCTegoedCodesEnabled: !IS_PRODUCTION,
-// hli2026PCVergoedingV3Enabled: !IS_PRODUCTION,
-// } as const;
 
 export const regelingenTitle = 'Regelingen bij laag inkomen' as const;
 export const stadspasTitle = 'Stadspas' as const;
