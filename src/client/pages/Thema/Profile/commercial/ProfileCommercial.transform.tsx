@@ -43,7 +43,6 @@ const onderneming: ProfileLabels<Partial<Onderneming>, AppState['KVK']> = {
         handelsnamen?.[0]
       ),
   ],
-  rechtsvorm: 'Rechtsvorm',
   hoofdactiviteit: 'Activiteiten',
   overigeActiviteiten: [
     'Overige activiteiten',
@@ -192,8 +191,8 @@ const eigenaar: ProfileLabels<
   NatuurlijkPersoon | NietNatuurlijkPersoon,
   AppState['KVK']
 > = {
-  typePersoon: 'Type persoon',
   naam: 'Naam',
+  rechtsvorm: 'Rechtsvorm',
   rsin: 'RSIN',
   adres: ['Adres', (address) => address],
 };
