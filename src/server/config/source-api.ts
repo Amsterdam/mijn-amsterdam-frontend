@@ -10,7 +10,7 @@ import {
 } from './app';
 import { themaConfig as themaConfigBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config';
 import { featureToggle as featureToggleErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
-import { featureToggle as featureToggleHLI } from '../../client/pages/Thema/HLI/HLI-thema-config';
+import { themaConfig } from '../../client/pages/Thema/HLI/HLI-thema-config';
 import { featureToggle as featureToggleJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { getCert } from '../helpers/cert';
@@ -146,7 +146,7 @@ const ApiConfig_ = {
       cert: getCert('BFF_ZORGNED_AV_CERT'),
       key: getCert('BFF_ZORGNED_AV_KEY'),
     }),
-    postponeFetch: !featureToggleHLI.zorgnedAvApiActive,
+    postponeFetch: !themaConfig.featureToggle.zorgnedAvApiActive,
   },
   ZORGNED_LEERLINGENVERVOER: {
     method: 'post',
