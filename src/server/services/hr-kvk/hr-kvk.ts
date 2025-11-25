@@ -115,6 +115,7 @@ function getEigenaarNPS(
   const eigenaar: NatuurlijkPersoon = {
     naam: natuurlijkPersoonSource.volledigeNaam,
     typePersoon: natuurlijkPersoonSource.typePersoon,
+    rechtsvorm: natuurlijkPersoonSource?.persoonRechtsvorm || 'Onbekend',
   };
 
   return eigenaar;
