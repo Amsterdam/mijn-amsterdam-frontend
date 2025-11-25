@@ -1,7 +1,7 @@
 import { isAfter, isBefore, isSameDay, parseISO, subDays } from 'date-fns';
 
 import { getBetrokkenKinderenDescription } from './generic';
-import { featureToggle } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
+import { themaConfig } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { lowercaseFirstLetter } from '../../../../universal/helpers/text';
 import { sortAlpha } from '../../../../universal/helpers/utils';
@@ -13,7 +13,7 @@ import {
 export const PC_REGELING_V3_START_DATE = new Date('2026-01-01');
 
 const isPcRegelingV3Active = () =>
-  featureToggle.hli2026PCVergoedingV3Enabled &&
+  themaConfig.featureToggle.hli2026PCVergoedingV3Enabled &&
   isAfter(new Date(), subDays(PC_REGELING_V3_START_DATE, 1));
 
 export const AV_UPCC = 'AV-UPCC';
@@ -27,11 +27,11 @@ export const AV_PCVTG = 'AV-PCVTG';
 const avCodes = {
   PC: {
     [AV_PCVZIL]: true,
-    [AV_PCVTG]: featureToggle.hli2025PCTegoedCodesEnabled,
+    [AV_PCVTG]: themaConfig.featureToggle.hli2025PCTegoedCodesEnabled,
   },
   UPC: {
     [AV_UPCZIL]: true,
-    [AV_UPCTG]: featureToggle.hli2025PCTegoedCodesEnabled,
+    [AV_UPCTG]: themaConfig.featureToggle.hli2025PCTegoedCodesEnabled,
   },
 };
 
