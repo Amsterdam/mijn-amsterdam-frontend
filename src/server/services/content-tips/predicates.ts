@@ -11,7 +11,7 @@ import { isAmsterdamAddress } from '../buurt/helpers';
 import type { HLIRegelingFrontend } from '../hli/hli-regelingen-types';
 import type { IdentiteitsbewijsFrontend } from '../profile/brp.types';
 import type { BBVergunningFrontend } from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types';
-import type { WMOVoorzieningFrontend } from '../wmo/wmo-config-and-types';
+import type { WMOVoorzieningFrontend } from '../wmo/wmo-types';
 import type { WpiRequestProcess } from '../wpi/wpi-types';
 
 // rule 2

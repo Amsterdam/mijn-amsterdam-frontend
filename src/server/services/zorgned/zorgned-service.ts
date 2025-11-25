@@ -223,6 +223,99 @@ export async function fetchAllDocumentsRaw(
   });
 }
 
+const FAKE_CASUS_ID = 'casus-id-not-set';
+
+function transformCasusAanvragen(responseData: ZorgnedResponseDataSource) {
+  const aanvragenSource = responseData?._embedded?.aanvraag ?? [];
+  const aanvragenByCasusID = aanvragenSource.reduce(
+    (acc, aanvraag) => {
+      const casusID = aanvraag.casusIdentificatie || FAKE_CASUS_ID;
+
+      if (!acc[casusID]) {
+        acc[casusID] = {
+          aanvragen: [],
+          documenten: [],
+        };
+      }
+
+      const documenten = aanvraag.documenten ?? [];
+      acc[casusID].documenten.push(...documenten);
+      acc[casusID].aanvragen.push(aanvraag);
+
+      return acc;
+    },
+    {} as Record<
+      string,
+      { aanvragen: ZorgnedAanvraagSource[]; documenten: ZorgnedDocument[] }
+    >
+  );
+
+  const casusAanvragen: ZorgnedAanvraagSource[] = [];
+
+  for (const [casusID, { aanvragen, documenten }] of Object.entries(
+    aanvragenByCasusID
+  )) {
+    if (casusID !== FAKE_CASUS_ID) {
+      const aanvragenWithSingleBeschiktProduct = aanvragen.filter(
+        (aanvraag) => aanvraag.beschikking?.beschikteProducten?.length === 1
+      );
+      const beschiktProductIds = uniqueArray(
+        aanvragenWithSingleBeschiktProduct.flatMap(
+          (aanvraag) =>
+            aanvraag.beschikking?.beschikteProducten?.map(
+              (bp) => bp.identificatie
+            ) || []
+        )
+      );
+      // If all aanvragen in this Casus have only one beschikt product assigned,
+      // consolidate all documents from these aanvragen (regardless of beschiktProduct presence) into a single aanvraag.
+      // This ensures that documents related to the same Casus, which might otherwise be hidden, are displayed to the user.
+      // However, this approach is not applicable for aanvragen with multiple beschikte producten within the same Casus,
+      // as documents cannot be reliably associated in such cases due to the absence of a beschikt product identifier in the documents.
+      if (beschiktProductIds.length === 1 && aanvragen.length > 1) {
+        // Get the reference to the designated aanvraag and add the documents.
+        const [id] = beschiktProductIds;
+        const aanvraagWithAddedDocuments = {
+          ...aanvragenWithSingleBeschiktProduct[0],
+          documenten: documenten.toSorted(dateSort('datumDefinitief', 'desc')),
+        };
+        casusAanvragen.push(
+          // There can be more than one aanvraag with the same beschikt product id within the same casus.
+          // This happens for example when a beëindingsproces is started that applies to an existing beschikt product.
+          // In this case we have 2 aanvragen with the same beschikt product id. We need to add the same documenten to both aanvragen to be consistent.
+          ...aanvragen.map((aanvraag) => {
+            if (
+              aanvraag.beschikking?.beschikteProducten?.[0]?.identificatie ===
+              id
+            ) {
+              return aanvraagWithAddedDocuments;
+            }
+            return aanvraag;
+          })
+        );
+        continue;
+      }
+    }
+
+    casusAanvragen.push(...aanvragen);
+  }
+
+  return transformZorgnedAanvragen({
+    _embedded: { aanvraag: casusAanvragen },
+  });
+}
+
+export async function fetchCasusAanvragen(
+  bsn: BSN,
+  options: ZorgnedAanvragenServiceOptions
+) {
+  return fetchZorgnedByBSN(bsn, {
+    ...options,
+    path: '/aanvragen',
+    transform: transformCasusAanvragen,
+  });
+}
+
 export async function fetchAanvragen(
   bsn: BSN,
   options: ZorgnedAanvragenServiceOptions
@@ -450,6 +543,7 @@ export const forTesting = {
   transformDocumenten,
   transformZorgnedAanvraag,
   transformZorgnedAanvragen,
+  transformCasusAanvragen,
   transformZorgnedPersonResponse,
   fetchAanvragen,
   fetchDocument,
