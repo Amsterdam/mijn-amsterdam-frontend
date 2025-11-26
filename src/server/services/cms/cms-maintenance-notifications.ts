@@ -185,21 +185,21 @@ export async function fetchMaintenanceNotificationsActual(
     return maintenanceNotifications;
   }
 
-  return apiSuccessResult(
-    maintenanceNotifications.content
-      .filter((notification) =>
-        queryParams?.page ? notification.path === `/${queryParams.page}` : true
-      )
-      .filter((notification) => {
-        const startDateTime = parseISO(
-          notification.dateStart + 'T' + notification.timeStart
-        );
-        const endDateTime = parseISO(
-          notification.dateEnd + 'T' + notification.timeEnd
-        );
-        return isPast(startDateTime) && isFuture(endDateTime);
-      })
-  );
+  const filteredNotifications = maintenanceNotifications.content
+    .filter((notification) =>
+      queryParams?.page ? notification.path === `/${queryParams.page}` : true
+    )
+    .filter((notification) => {
+      const startDateTime = parseISO(
+        notification.dateStart + 'T' + notification.timeStart
+      );
+      const endDateTime = parseISO(
+        notification.dateEnd + 'T' + notification.timeEnd
+      );
+      return isPast(startDateTime) && isFuture(endDateTime);
+    });
+
+  return apiSuccessResult(filteredNotifications);
 }
 
 export async function fetchMaintenanceNotificationsDashboard() {

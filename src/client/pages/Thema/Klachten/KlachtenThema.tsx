@@ -46,6 +46,7 @@ export function KlachtenThema() {
         />
       }
       linkListItems={linkListItems}
+      maintenanceNotificationsPageSlug="klachten"
     />
   );
 }

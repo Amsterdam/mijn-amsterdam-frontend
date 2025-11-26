@@ -184,6 +184,7 @@ export function AfisThema() {
           {pageContentTables}
         </>
       }
+      maintenanceNotificationsPageSlug="afis"
     />
   );
 }

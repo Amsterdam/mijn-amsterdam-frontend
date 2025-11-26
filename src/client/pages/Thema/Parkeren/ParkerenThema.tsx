@@ -45,7 +45,7 @@ export function ParkerenThema() {
     }
   );
 
-  const pageContentTop = determinePageContentTop(
+  const pageContentTop = usePageContentTop(
     hasMijnParkerenVergunningen,
     parkerenUrlSSO
   );
@@ -75,16 +75,17 @@ export function ParkerenThema() {
       linkListItems={linkListItems}
       pageContentMain={tables}
       pageContentBottom={pageContentBottom}
+      maintenanceNotificationsPageSlug="parkeren"
     />
   );
 }
 
-function determinePageContentTop(
+function usePageContentTop(
   hasMijnParkerenVergunningen: boolean,
   parkerenUrlSSO: string
 ) {
+  const profileType = useProfileTypeValue();
   if (hasMijnParkerenVergunningen) {
-    const profileType = useProfileTypeValue();
     const profileTypeLabel =
       profileType === 'commercial' ? 'bedrijven' : 'bewoners';
 
@@ -115,4 +116,4 @@ function determinePageContentTop(
   );
 }
 
-export const forTesting = { determinePageContentTop };
+export const forTesting = { determinePageContentTop: usePageContentTop };

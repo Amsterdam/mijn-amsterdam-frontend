@@ -53,6 +53,9 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
       </div>
     </div>
     <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    />
+    <div
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-8-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <p
@@ -204,6 +207,9 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
         </h1>
       </div>
     </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    />
     <div
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-8-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
@@ -360,6 +366,9 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
         </h1>
       </div>
     </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    />
     <div
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-8-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >

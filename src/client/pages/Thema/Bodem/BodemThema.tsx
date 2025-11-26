@@ -53,6 +53,7 @@ export function BodemThema() {
       }
       pageContentMain={tables}
       linkListItems={linkListItems}
+      maintenanceNotificationsPageSlug="bodem"
     />
   );
 }
