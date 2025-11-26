@@ -14,6 +14,8 @@ import { ONE_HOUR_MS } from '../../config/app';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 
+const DEFAULT_SEVERITY = 'warning';
+
 interface Tyd {
   Nam: 'Starttijd' | 'Eindtijd';
   Tyd: string;
@@ -26,6 +28,10 @@ interface Website {
 interface Dtm {
   Nam: 'Einddatum' | 'Startdatum';
   Dtm: string;
+}
+interface Wrd {
+  Nam: 'Locatie';
+  Wrd: string;
 }
 interface MeerInfo {
   Nam: 'Meer informatie';
@@ -41,7 +47,7 @@ interface CMSEventData {
     relUrl: string;
     page: {
       cluster: {
-        veld: Array<Tyd | Website | Dtm | MeerInfo | Omschrijving>;
+        veld: Array<Tyd | Website | Dtm | MeerInfo | Omschrijving | Wrd>;
       };
       title: string;
       CorDtm: string;
@@ -64,6 +70,7 @@ export interface CMSMaintenanceNotification extends MyNotification {
   timeStart: string;
   description: string;
   path: string;
+  severity?: 'error' | 'info' | 'success' | 'warning';
   link?: LinkProps;
 }
 
@@ -95,6 +102,14 @@ function transformCMSEventResponse(
         break;
       case 'Eindtijd':
         item.timeEnd = veld.Tyd.replace(/(\d{2})(\d{2})/, '$1:$2');
+        break;
+      case 'Locatie':
+        {
+          const severity = veld.Wrd.match(/(error|info|success|warning)/i)?.[0]
+            .toLowerCase()
+            .trim() as CMSMaintenanceNotification['severity'];
+          item.severity = !severity ? DEFAULT_SEVERITY : severity;
+        }
         break;
       case 'Website':
         if (veld.Src && veld.Wrd) {

@@ -124,4 +124,4 @@ export function ParkerenThema() {
   );
 }
 
-export const forTesting = { determinePageContentTop: PageContentTop };
+export const forTesting = { PageContentTop };
