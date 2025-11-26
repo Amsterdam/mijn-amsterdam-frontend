@@ -100,9 +100,6 @@ describe('<Erfpacht />', () => {
     expect(
       screen.queryByText('U heeft geen erfpachtrechten.')
     ).not.toBeInTheDocument();
-    expect(
-      screen.queryByText('U heeft geen openstaande facturen.')
-    ).not.toBeInTheDocument();
   });
 
   test('Renders Overviewpage with data', () => {

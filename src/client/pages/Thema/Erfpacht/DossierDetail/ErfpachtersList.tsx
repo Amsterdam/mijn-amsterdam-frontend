@@ -11,7 +11,7 @@ const MAX_ERFPACHTERS_VISIBLE_INITIALLY = 3;
 
 interface ErfpachtersListProps {
   erfpachters?: ErfpachtDossiersDetail['relaties'];
-  debiteurNummer?: string;
+  debiteurNummer: string | null;
   dossierNummer?: string;
   relatieCode?: string;
 }
