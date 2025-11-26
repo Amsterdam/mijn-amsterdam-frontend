@@ -6,6 +6,11 @@ import {
   themaTitle,
 } from '../../../client/pages/MyNotifications/MyNotifications-config';
 import {
+  IS_ACCEPTANCE,
+  IS_PRODUCTION,
+  IS_TEST,
+} from '../../../universal/config/env';
+import {
   ApiResponse_DEPRECATED,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
@@ -16,6 +21,7 @@ import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 
 const DEFAULT_SEVERITY = 'warning';
+const DEFAULT_OTAP_ENV = 'prd';
 
 interface Tyd {
   Nam: 'Starttijd' | 'Eindtijd';
@@ -31,15 +37,11 @@ interface Dtm {
   Dtm: string;
 }
 interface Wrd {
-  Nam: 'Locatie';
+  Nam: 'Locatie' | 'Toevoeging';
   Wrd: string;
 }
-interface MeerInfo {
-  Nam: 'Meer informatie';
-  Src: string;
-}
-interface Omschrijving {
-  Nam: 'Omschrijving';
+interface Src {
+  Nam: 'Meer informatie' | 'Omschrijving';
   Src: string;
 }
 
@@ -48,7 +50,7 @@ interface CMSEventData {
     relUrl: string;
     page: {
       cluster: {
-        veld: Array<Tyd | Website | Dtm | MeerInfo | Omschrijving | Wrd>;
+        veld: Array<Tyd | Website | Dtm | Src | Wrd>;
       };
       title: string;
       CorDtm: string;
@@ -72,6 +74,7 @@ export interface CMSMaintenanceNotification extends MyNotification {
   description: string;
   path: string;
   severity?: 'error' | 'info' | 'success' | 'warning';
+  otapEnv?: 'tst' | 'acc' | 'prd';
   link?: LinkProps;
 }
 
@@ -104,6 +107,14 @@ function transformCMSEventResponse(
       case 'Eindtijd':
         item.timeEnd = veld.Tyd.replace(/(\d{2})(\d{2})/, '$1:$2');
         break;
+      case 'Toevoeging':
+        {
+          const otapEnv = veld.Wrd.match(/(tst|acc|prd)/i)?.[0]
+            .toLowerCase()
+            .trim() as CMSMaintenanceNotification['otapEnv'];
+          item.otapEnv = !otapEnv ? DEFAULT_OTAP_ENV : otapEnv;
+        }
+        break;
       case 'Locatie':
         {
           const severity = veld.Wrd.match(/(error|info|success|warning)/i)?.[0]
@@ -127,6 +138,14 @@ function transformCMSEventResponse(
   }
 
   return item;
+}
+
+function isOtapEnvMatch(notification: CMSMaintenanceNotification): boolean {
+  return {
+    tst: IS_TEST,
+    acc: IS_ACCEPTANCE,
+    prd: IS_PRODUCTION,
+  }[notification.otapEnv || DEFAULT_OTAP_ENV];
 }
 
 const CMS_MAINTENANCE_NOTIFICATIONS_CACHE_TIMEOUT_MS = ONE_HOUR_MS;
@@ -184,11 +203,12 @@ async function fetchCMSMaintenanceNotifications(
         });
     });
 
-  const eventItemsResponse = apiSuccessResult(
-    eventItems.filter(
-      (eventItem): eventItem is CMSMaintenanceNotification => eventItem !== null
-    )
+  const eventItemsFiltered = eventItems.filter(
+    (eventItem): eventItem is CMSMaintenanceNotification =>
+      eventItem !== null && isOtapEnvMatch(eventItem)
   );
+
+  const eventItemsResponse = apiSuccessResult(eventItemsFiltered);
 
   return eventItemsResponse;
 }
