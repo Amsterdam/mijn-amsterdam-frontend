@@ -11,6 +11,7 @@ import {
 } from '../../../universal/helpers/api';
 import { LinkProps, MyNotification } from '../../../universal/types/App.types';
 import { ONE_HOUR_MS } from '../../config/app';
+import { FORCE_RENEW_CACHE_TTL_MS } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 
@@ -128,20 +129,26 @@ function transformCMSEventResponse(
   return item;
 }
 
-const CMS_MAINTENANCE_NOTIFICATIONS_CACHE_TIMEOUT_MS = 24 * ONE_HOUR_MS; // 24 hours
+const CMS_MAINTENANCE_NOTIFICATIONS_CACHE_TIMEOUT_MS = ONE_HOUR_MS;
 
-async function fetchCMSMaintenanceNotifications(): Promise<
-  ApiResponse_DEPRECATED<CMSMaintenanceNotification[]>
-> {
+async function fetchCMSMaintenanceNotifications(
+  forceRenew: boolean
+): Promise<ApiResponse_DEPRECATED<CMSMaintenanceNotification[]>> {
   function fetchCMSEventData(url: string) {
     return requestData<CMSMaintenanceNotification>({
       url: url + '?Appidt=app-pagetype&reload=true',
       transformResponse: transformCMSEventResponse,
-      cacheTimeout: CMS_MAINTENANCE_NOTIFICATIONS_CACHE_TIMEOUT_MS,
+      cacheTimeout: forceRenew
+        ? FORCE_RENEW_CACHE_TTL_MS
+        : CMS_MAINTENANCE_NOTIFICATIONS_CACHE_TIMEOUT_MS,
     });
   }
 
-  const requestConfig = getApiConfig('CMS_MAINTENANCE_NOTIFICATIONS');
+  const requestConfig = getApiConfig('CMS_MAINTENANCE_NOTIFICATIONS', {
+    cacheTimeout: forceRenew
+      ? FORCE_RENEW_CACHE_TTL_MS
+      : CMS_MAINTENANCE_NOTIFICATIONS_CACHE_TIMEOUT_MS,
+  });
 
   const eventItems = await requestData<CMSFeedItem[]>(requestConfig)
     .then((apiData) => {
@@ -189,12 +196,15 @@ async function fetchCMSMaintenanceNotifications(): Promise<
 export interface QueryParamsMaintenanceNotifications
   extends Record<string, string | undefined> {
   page?: string;
+  forceRenew?: 'true';
 }
 
 export async function fetchMaintenanceNotificationsActual(
   queryParams: QueryParamsMaintenanceNotifications
 ) {
-  const maintenanceNotifications = await fetchCMSMaintenanceNotifications();
+  const maintenanceNotifications = await fetchCMSMaintenanceNotifications(
+    queryParams.forceRenew === 'true'
+  );
 
   if (!maintenanceNotifications.content?.length) {
     return maintenanceNotifications;

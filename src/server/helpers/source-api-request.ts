@@ -19,8 +19,10 @@ import {
 import { AuthProfileAndToken } from '../auth/auth-types';
 import {
   ApiUrlEntries,
+  DEFAULT_REQUEST_CACHE_TTL_MS,
   DEFAULT_REQUEST_CONFIG,
   DataRequestConfig,
+  FORCE_RENEW_CACHE_TTL_MS,
 } from '../config/source-api';
 import { captureException } from '../services/monitoring';
 
@@ -159,8 +161,16 @@ export async function requestData<T>(
 
   // Check if a cache key for this particular request exists
   const cacheEntry = cache.get(cacheKey);
+  const cacheTimeout = config.cacheTimeout ?? DEFAULT_REQUEST_CACHE_TTL_MS;
 
-  if (config.enableCache && cacheEntry !== null) {
+  // Do not use cache when cache timeout is set to 0
+  // This way we can force renew the cache for this cache key.
+  if (
+    config.enableCache &&
+    cacheEntry !== null &&
+    // Do not return cache when cache timeout is set to FORCE_RENEW_CACHE
+    cacheTimeout !== FORCE_RENEW_CACHE_TTL_MS
+  ) {
     debugCacheHit(`Cache hit! ${config.url}`);
     return cacheEntry.promise as Promise<
       ApiSuccessResponse<T> | ApiErrorResponse<null>
@@ -168,21 +178,12 @@ export async function requestData<T>(
   }
 
   // Set the cache Deferred
-  if (
-    config.enableCache &&
-    cacheKey &&
-    !!config.cacheTimeout &&
-    config.cacheTimeout > 0
-  ) {
+  if (config.enableCache && cacheKey) {
     // Debug the cache key to check if the cache key is set and uses the custom cache key if provided.
     debugCacheKey(
-      `Caching ${config.url}${config.cacheKey_UNSAFE ? ` with custom cachekey ${config.cacheKey_UNSAFE}` : ''}, releases in ${config.cacheTimeout}ms`
+      `Caching ${config.url}${config.cacheKey_UNSAFE ? ` with custom cachekey ${config.cacheKey_UNSAFE}` : ''}, releases in ${cacheTimeout}ms`
     );
-    cache.put(
-      cacheKey,
-      new Deferred<ApiSuccessResponse<T>>(),
-      config.cacheTimeout
-    );
+    cache.put(cacheKey, new Deferred<ApiSuccessResponse<T>>(), cacheTimeout);
   }
 
   let cancelTimeout;

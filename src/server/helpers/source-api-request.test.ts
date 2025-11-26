@@ -34,6 +34,7 @@ import type { AuthProfile } from '../auth/auth-types';
 import {
   ApiUrlEntries,
   DEFAULT_REQUEST_CACHE_TTL_MS,
+  FORCE_RENEW_CACHE_TTL_MS,
 } from '../config/source-api';
 import { captureException } from '../services/monitoring';
 
@@ -55,15 +56,25 @@ vi.mock('../config/app.ts', async (importOrigModule) => {
 vi.mock('../services/monitoring');
 
 describe('source-api-request caching', () => {
-  function fetchThings(sessionID: AuthProfile['sid'], cacheKey?: string) {
+  function fetchThings(
+    sessionID: AuthProfile['sid'],
+    cacheKey?: string,
+    forceRenew = false
+  ) {
     return requestData<[string, string]>({
       url: `${remoteApiHost}/1`,
       method: 'get',
       transformResponse: (data) => {
+        // Add encrypted sessionID to response for testing purposes.
+        // This generates a different response payload every time.
         const [value] = encrypt(sessionID);
         return [data, value];
       },
       cacheKey_UNSAFE: cacheKey,
+      cacheTimeout: forceRenew
+        ? FORCE_RENEW_CACHE_TTL_MS
+        : DEFAULT_REQUEST_CACHE_TTL_MS,
+      enableCache: true,
     });
   }
 
@@ -108,6 +119,44 @@ describe('source-api-request caching', () => {
     expect(rs2.content?.[1]).not.toBe(rs3.content?.[1]);
     expect(rs2.content?.[0]).not.toBe(rs3.content?.[0]);
     expect(rs3.content?.[0]).toBe('notfoo');
+  });
+
+  test('Correct: Forces to renew cache if cacheTimeout set to 0.', async () => {
+    remoteApi.get('/1').reply(200, '"foo"');
+    remoteApi.get('/1').reply(200, '"releasefoo"');
+    remoteApi.get('/1').reply(200, '"renewedfoo"');
+
+    const SESSION_ID_1 = '123';
+
+    const rs1 = await fetchThings(
+      SESSION_ID_1,
+      createSessionBasedCacheKey(SESSION_ID_1, 'things')
+    );
+    const rs2 = await fetchThings(
+      SESSION_ID_1,
+      createSessionBasedCacheKey(SESSION_ID_1, 'things')
+    );
+
+    expect(rs1.content?.[0]).toBe('foo');
+    expect(rs2.content?.[1]).toBe(rs1.content?.[1]);
+
+    const DO_FORCE_RENEW = true;
+
+    const rs3 = await fetchThings(
+      SESSION_ID_1,
+      createSessionBasedCacheKey(SESSION_ID_1, 'things'),
+      DO_FORCE_RENEW
+    );
+
+    vi.advanceTimersByTime(FORCE_RENEW_CACHE_TTL_MS);
+
+    const rs4 = await fetchThings(
+      SESSION_ID_1,
+      createSessionBasedCacheKey(SESSION_ID_1, 'things')
+    );
+
+    expect(rs3.content?.[0]).toBe('releasefoo');
+    expect(rs4.content?.[0]).toBe('renewedfoo');
   });
 
   test("Correct: Doesn't use cache with different sessionID", async () => {
@@ -160,7 +209,7 @@ describe('requestData', () => {
 
   const AUTH_PROFILE_AND_TOKEN = getAuthProfileAndToken();
 
-  const CACHE_KEY_1 = `${DEFAULT_REQUEST_CACHE_TTL_MS}-get-${DUMMY_URL}-no-params-no-data-no-headers`;
+  const CACHE_KEY_1 = `get-${DUMMY_URL}-no-params-no-data-no-headers`;
 
   let axiosRequestSpy: MockInstance;
 
@@ -359,9 +408,7 @@ describe('requestData', () => {
         method: 'post',
         data: { foo: 'bar' },
       })
-    ).toStrictEqual(
-      'no-cache-timeout-post--no-params-{"foo":"bar"}-no-headers'
-    );
+    ).toStrictEqual('post--no-params-{"foo":"bar"}-no-headers');
 
     expect(
       getRequestConfigCacheKey({
@@ -369,18 +416,14 @@ describe('requestData', () => {
         url: 'http://foo',
         params: { foo: 'bar' },
       })
-    ).toStrictEqual(
-      'no-cache-timeout-get-http://foo-{"foo":"bar"}-no-data-no-headers'
-    );
+    ).toStrictEqual('get-http://foo-{"foo":"bar"}-no-data-no-headers');
 
     expect(
       getRequestConfigCacheKey({
         method: 'get',
         url: 'http://foo',
       })
-    ).toStrictEqual(
-      'no-cache-timeout-get-http://foo-no-params-no-data-no-headers'
-    );
+    ).toStrictEqual('get-http://foo-no-params-no-data-no-headers');
 
     expect(
       getRequestConfigCacheKey({
@@ -388,7 +431,7 @@ describe('requestData', () => {
         url: 'http://foo',
         cacheTimeout: 1000,
       })
-    ).toStrictEqual('1000-get-http://foo-no-params-no-data-no-headers');
+    ).toStrictEqual('get-http://foo-no-params-no-data-no-headers');
 
     expect(
       getRequestConfigCacheKey({
@@ -399,7 +442,7 @@ describe('requestData', () => {
         },
       })
     ).toStrictEqual(
-      'no-cache-timeout-get-http://foo-no-params-no-data-{"Authorization":"Bearer 123123123123"}'
+      'get-http://foo-no-params-no-data-{"Authorization":"Bearer 123123123123"}'
     );
   });
 });
