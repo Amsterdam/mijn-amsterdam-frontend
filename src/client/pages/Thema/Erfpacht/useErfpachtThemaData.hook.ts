@@ -24,18 +24,13 @@ export function useErfpachtThemaData() {
   );
 
   const breadcrumbs = useThemaBreadcrumbs(themaId);
-
-  // Facturen
-  const openFacturenBase = erfpachtData?.openstaandeFacturen ?? null;
-  const openFacturen = openFacturenBase?.facturen ?? [];
-  const tableConfig = getTableConfig({ erfpachtData });
+  const tableConfig = getTableConfig(erfpachtData);
 
   return {
     id: themaId,
     title: themaTitle,
     erfpachtData,
     relatieCode: erfpachtData?.relatieCode,
-    openFacturen,
     dossiers,
     isLoading: isLoading(ERFPACHT),
     isError: isError(ERFPACHT),
