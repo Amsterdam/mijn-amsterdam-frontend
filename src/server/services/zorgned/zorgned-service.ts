@@ -277,7 +277,7 @@ function transformCasusAanvragen(responseData: ZorgnedResponseDataSource) {
       casusID !== FAKE_CASUS_ID &&
       // All aanvragen in a Casus must have only one beschikt product assigned.
       beschiktProductIds.length === 1 &&
-      // Only consolidate if there are multiple aanvragen in this casus.
+      // Only consolidate if there are multiple aanvragen (with or without beschiktProduct) in this casus.
       aanvragen.length > 1
     ) {
       // Get the reference to the designated aanvraag and add the documents.
