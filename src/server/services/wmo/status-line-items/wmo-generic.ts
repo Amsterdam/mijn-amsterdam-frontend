@@ -10,13 +10,13 @@ import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types';
+import { MINIMUM_REQUEST_DATE_FOR_DOCUMENTS } from '../wmo-service-config';
 import {
   DOCUMENT_PGB_BESLUIT,
   DOCUMENT_TITLE_BESLUIT_STARTS_WITH,
   DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH,
   DOCUMENT_UPLOAD_LINK_MEER_INFORMATIE,
-  MINIMUM_REQUEST_DATE_FOR_DOCUMENTS,
-} from '../wmo-config-and-types';
+} from '../wmo-service-config';
 
 export const FAKE_DECISION_DOCUMENT_ID = 'besluit-document-mist';
 

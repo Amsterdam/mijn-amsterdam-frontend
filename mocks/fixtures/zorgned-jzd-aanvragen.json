@@ -6133,6 +6133,26 @@
             "bestandsnaam": "BR3422709.pdf"
           }
         ]
+      },
+      {
+        "identificatie": "3184000123.B",
+        "procesIdentificatie": "3184000123",
+        "casusIdentificatie": "1750890123",
+        "regeling": { "identificatie": "WMO", "omschrijving": "WMO" },
+        "hulpvraag": { "datumRegistratie": "2025-10-23" },
+        "datumAanmelding": "2025-10-23",
+        "datumAanvraag": "2025-10-23",
+        "documenten": [
+          {
+            "documentidentificatie": "B3422709.B",
+            "procesIdentificatie": "3184000123",
+            "casusIdentificatie": "1750890123",
+            "omschrijving": "Verzoek: Meer informatie aanvraag",
+            "omschrijvingclientportaal": "Verzoek: meer informatie aanvraag",
+            "datumDefinitief": "2025-10-23T16:29:51.547",
+            "bestandsnaam": "BR3422709B.pdf"
+          }
+        ]
       }
     ]
   }

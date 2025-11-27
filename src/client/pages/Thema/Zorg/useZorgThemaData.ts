@@ -7,7 +7,7 @@ import {
   themaId,
   themaTitle,
 } from './Zorg-thema-config';
-import { WMOVoorzieningFrontend } from '../../../../server/services/wmo/wmo-config-and-types';
+import { WMOVoorzieningFrontend } from '../../../../server/services/wmo/wmo-types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore';
