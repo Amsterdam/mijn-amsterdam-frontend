@@ -16,7 +16,7 @@ export const HLIRoutes = [
   {
     route: themaConfig.detailPageStadspas.route.path,
     Component: HLIStadspasDetail,
-    isActive: themaConfig.featureToggle.hliStadspasActive,
+    isActive: themaConfig.featureToggle.stadspas.hliStadspasActive,
   },
   {
     route: themaConfig.detailPage.route.path,
@@ -26,7 +26,7 @@ export const HLIRoutes = [
   {
     route: themaConfig.specificatieListPage.route.path,
     Component: HLISpecificatieList,
-    isActive: themaConfig.featureToggle.hliRegelingEnabledRTM,
+    isActive: themaConfig.featureToggle.regelingen.hliRegelingEnabledRTM,
   },
   {
     route: themaConfig.regelingenListPage.route.path,
@@ -51,7 +51,7 @@ export const menuItem: ThemaMenuItem<typeof themaConfig.id> = {
   isActive(appState: AppState) {
     const hasStadspas =
       !!appState.HLI?.content?.stadspas?.stadspassen?.length &&
-      themaConfig.featureToggle.hliStadspasActive;
+      themaConfig.featureToggle.stadspas.hliStadspasActive;
     const hasRegelingen =
       !!appState.HLI?.content?.regelingen?.length &&
       themaConfig.featureToggle.themaActive;

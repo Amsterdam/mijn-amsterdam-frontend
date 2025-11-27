@@ -32,7 +32,7 @@ export const themaConfig: HLIThemaConfig = {
 
     stadspas: {
       hliStadspasActive: true,
-      _hliThemaStadspasBlokkerenActive: false,
+      _hliThemaStadspasBlokkerenActive: true,
       _hliThemaStadspasDeblokkerenActive: true,
 
       get hliThemaStadspasBlokkerenActive() {
