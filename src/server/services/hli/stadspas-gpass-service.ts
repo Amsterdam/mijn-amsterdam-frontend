@@ -522,7 +522,8 @@ export async function mutateGpassSetPasIsBlockedState(
     formatUrl: ({ url }) => `${url}/rest/sales/v1/togglepas/${passNumber}`,
     headers: getHeaders(administratienummer),
     enableCache: false,
-    postponeFetch: !themaConfig.featureToggle.hliThemaStadspasBlokkerenActive,
+    postponeFetch:
+      !themaConfig.featureToggle.stadspas.hliThemaStadspasBlokkerenActive,
     transformResponse: transformPassIsBlockedResponse,
   });
 
