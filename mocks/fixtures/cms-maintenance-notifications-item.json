@@ -24,6 +24,10 @@
         "Nam": "Inhoud",
         "veld": [
           {
+            "Nam": "Toevoeging",
+            "Wrd": "acc|prd|tst|dev"
+          },
+          {
             "PagVldIdt": "21495489",
             "VlgNum": "2",
             "GgvTyp": "21",

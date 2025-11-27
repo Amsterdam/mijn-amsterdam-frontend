@@ -7,6 +7,7 @@ import {
 } from '../../../client/pages/MyNotifications/MyNotifications-config';
 import {
   IS_ACCEPTANCE,
+  IS_DEVELOPMENT,
   IS_PRODUCTION,
   IS_TEST,
 } from '../../../universal/config/env';
@@ -64,6 +65,9 @@ interface CMSFeedItem {
   feedid: string;
 }
 
+type OtapEnv = 'tst' | 'acc' | 'prd' | 'dev';
+type SeverityLevel = 'error' | 'info' | 'success' | 'warning';
+
 export interface CMSMaintenanceNotification extends MyNotification {
   title: string;
   datePublished: string;
@@ -73,8 +77,8 @@ export interface CMSMaintenanceNotification extends MyNotification {
   timeStart: string;
   description: string;
   path: string;
-  severity?: 'error' | 'info' | 'success' | 'warning';
-  otapEnv?: 'tst' | 'acc' | 'prd';
+  severity?: SeverityLevel;
+  otapEnvs?: OtapEnv[];
   link?: LinkProps;
 }
 
@@ -109,10 +113,13 @@ function transformCMSEventResponse(
         break;
       case 'Toevoeging':
         {
-          const otapEnv = veld.Wrd.match(/(tst|acc|prd)/i)?.[0]
-            .toLowerCase()
-            .trim() as CMSMaintenanceNotification['otapEnv'];
-          item.otapEnv = !otapEnv ? DEFAULT_OTAP_ENV : otapEnv;
+          const otapEnvs =
+            veld.Wrd.match(/(tst|acc|prd|dev)/gi)?.map((env) =>
+              env.toLowerCase().trim()
+            ) ?? [];
+          item.otapEnvs = (
+            otapEnvs.length ? otapEnvs : [DEFAULT_OTAP_ENV]
+          ) as OtapEnv[];
         }
         break;
       case 'Locatie':
@@ -141,11 +148,15 @@ function transformCMSEventResponse(
 }
 
 function isOtapEnvMatch(notification: CMSMaintenanceNotification): boolean {
-  return {
+  const envMap = {
     tst: IS_TEST,
     acc: IS_ACCEPTANCE,
     prd: IS_PRODUCTION,
-  }[notification.otapEnv || DEFAULT_OTAP_ENV];
+    dev: IS_DEVELOPMENT,
+  };
+  return notification.otapEnvs
+    ? notification.otapEnvs.some((env) => envMap[env])
+    : false;
 }
 
 const CMS_MAINTENANCE_NOTIFICATIONS_CACHE_TIMEOUT_MS = ONE_HOUR_MS;
