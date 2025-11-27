@@ -3,6 +3,7 @@ import {
   IS_ACCEPTANCE,
   IS_PRODUCTION,
   IS_DEVELOPMENT,
+  APP_MODE,
 } from '../../../universal/config/env';
 import { ONE_HOUR_MS } from '../../config/app';
 
@@ -12,7 +13,7 @@ export const notificationEnvMap = {
   acc: IS_ACCEPTANCE,
   prd: IS_PRODUCTION,
   dev: IS_DEVELOPMENT,
-  unittest: MA_APP_MODE === 'unittest',
+  unittest: APP_MODE === 'unittest',
 } as const;
 
 export const DEFAULT_SEVERITY = 'warning';
