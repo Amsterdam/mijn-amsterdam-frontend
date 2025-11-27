@@ -146,8 +146,8 @@ describe('zorgned-service', () => {
         datumOpdrachtLevering: null,
         datumToewijzing: null,
         documenten: [],
-        id: '300111429-912837sdfsdf198723',
-        prettyID: '300111429-912837sdfsdf198723',
+        id: '300111429-116841',
+        prettyID: '300111429-116841',
         isActueel: true,
         procesAanvraagOmschrijving: null,
         leverancier: 'Gebr Koenen B.V.',
@@ -420,8 +420,8 @@ describe('zorgned-service', () => {
             datumOpdrachtLevering: '2024-01-25T17:10:55.2733333',
             datumToewijzing: '2024-01-25T17:10:55.2733333',
             documenten: [],
-            id: '300967777-1126685618',
-            prettyID: '300967777-1126685618',
+            id: '300967777-1',
+            prettyID: '300967777-1',
             isActueel: true,
             leverancier: 'Gebr Koenen B.V.',
             leveringsVorm: 'ZIN',
@@ -701,81 +701,40 @@ describe('fetchRelatedPersons', async () => {
               url: '',
             },
           ],
-          id: '456-123',
+          id: '456-123-beschikt-product',
           titel: 'Een geleverde product of dienst',
         },
       ]);
     });
 
-    it('does __not__ combine documents if aanvragen within same casus have more than 1 beschiktproduct', () => {
+    it('does __not__ combine documents if 1 or more aanvragen within same casus have more than 1 beschiktproduct', () => {
       const responseSource2 = jsonCopy(responseSource);
       // Add another aanvraag with a different beschikt product in the same casus.
-      responseSource2._embedded.aanvraag.push({
-        identificatie: '789',
-        casusIdentificatie: 'casus-123',
-        datumAanvraag: '2025-05-23',
-        beschikking: {
-          beschikkingNummer: 457,
-          beschikteProducten: [
-            {
-              identificatie: '789-beschikt-product',
-              product: {
-                omschrijving: 'Een geleverde product of dienst',
-                productsoortCode: '',
-                identificatie: undefined,
-              },
-              resultaat: 'toegewezen',
-              toegewezenProduct: null,
-            },
-          ],
-        },
-        documenten: [
-          {
-            datumDefinitief: '2025-05-29T00:00:00',
-            documentidentificatie: 'HIJ',
-            omschrijving: 'Besluit: aanvraag goedgekeurd',
-            omschrijvingclientportaal:
-              'Besluit: aanvraag ander product goedgekeurd',
-            zaakidentificatie: null,
-            bestandsnaam: 'HIJ.pdf',
+      responseSource2._embedded.aanvraag[0].beschikking.beschikteProducten.push(
+        {
+          identificatie: '789-beschikt-product',
+          product: {
+            omschrijving: 'Een geleverde product of dienst',
+            productsoortCode: '',
+            identificatie: undefined,
           },
-        ],
-      });
+          resultaat: 'toegewezen',
+          toegewezenProduct: null,
+        }
+      );
 
       const transformed = forTesting.transformCasusAanvragen(responseSource2);
 
       expect(transformed).toMatchObject([
         {
-          beschikkingNummer: 457,
+          beschikkingNummer: 456,
           beschiktProductIdentificatie: '789-beschikt-product',
-          datumAanvraag: '2025-05-23',
-          documenten: [
-            {
-              datePublished: '2025-05-29T00:00:00',
-              filename: 'HIJ.pdf',
-              id: 'HIJ',
-              title: 'Besluit: aanvraag ander product goedgekeurd',
-              url: '',
-            },
-          ],
-          id: '457-789',
-          titel: 'Een geleverde product of dienst',
+          id: '456-789-beschikt-product',
         },
         {
           beschikkingNummer: 456,
           beschiktProductIdentificatie: '123-beschikt-product',
-          datumAanvraag: '2025-01-01',
-          documenten: [
-            {
-              datePublished: '2025-01-01T00:00:00',
-              filename: 'ABC.pdf',
-              id: 'ABC',
-              title: 'Besluit: aanvraag goedgekeurd',
-              url: '',
-            },
-          ],
-          id: '456-123',
-          titel: 'Een geleverde product of dienst',
+          id: '456-123-beschikt-product',
         },
       ]);
     });
@@ -833,7 +792,7 @@ describe('fetchRelatedPersons', async () => {
               url: '',
             },
           ],
-          id: '457-789',
+          id: '457-789-beschikt-product',
           titel: 'Een geleverde product of dienst',
         },
         {
@@ -849,7 +808,7 @@ describe('fetchRelatedPersons', async () => {
               url: '',
             },
           ],
-          id: '456-123',
+          id: '456-123-beschikt-product',
           titel: 'Een geleverde product of dienst',
         },
       ]);

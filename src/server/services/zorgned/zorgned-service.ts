@@ -127,12 +127,12 @@ function transformZorgnedAanvraag(
   const aanvraagTransformed: ZorgnedAanvraagTransformed = {
     id: getZorgnedAanvraagID(
       beschikking.beschikkingNummer,
-      aanvraag.identificatie,
+      beschiktProduct.identificatie,
       false
     ),
     prettyID: getZorgnedAanvraagID(
       beschikking.beschikkingNummer,
-      aanvraag.identificatie,
+      beschiktProduct.identificatie,
       false
     ),
     datumAanvraag: aanvraag.datumAanvraag,
@@ -255,18 +255,20 @@ function transformCasusAanvragen(responseData: ZorgnedResponseDataSource) {
   for (const [casusID, { aanvragen, documenten }] of Object.entries(
     aanvragenByCasusID
   )) {
-    if (casusID !== FAKE_CASUS_ID) {
-      const aanvragenWithSingleBeschiktProduct = aanvragen.filter(
-        (aanvraag) => aanvraag.beschikking?.beschikteProducten?.length === 1
-      );
-      const beschiktProductIds = uniqueArray(
-        aanvragenWithSingleBeschiktProduct.flatMap(
-          (aanvraag) =>
-            aanvraag.beschikking?.beschikteProducten?.map(
-              (bp) => bp.identificatie
-            ) || []
-        )
-      );
+    const aanvragenWithBeschiktProduct = aanvragen.filter((aanvraag) => {
+      return aanvraag.beschikking?.beschikteProducten?.length > 0;
+    });
+
+    const beschiktProductIds = uniqueArray(
+      aanvragenWithBeschiktProduct.flatMap(
+        (aanvraag) =>
+          aanvraag.beschikking?.beschikteProducten?.map(
+            (bp) => bp.identificatie
+          ) || []
+      )
+    );
+
+    if (casusID !== FAKE_CASUS_ID && beschiktProductIds.length === 1) {
       // If all aanvragen in this Casus have only one beschikt product assigned,
       // consolidate all documents from these aanvragen (regardless of beschiktProduct presence) into a single aanvraag.
       // This ensures that documents related to the same Casus, which might otherwise be hidden, are displayed to the user.
@@ -276,7 +278,7 @@ function transformCasusAanvragen(responseData: ZorgnedResponseDataSource) {
         // Get the reference to the designated aanvraag and add the documents.
         const [id] = beschiktProductIds;
         const aanvraagWithAddedDocuments = {
-          ...aanvragenWithSingleBeschiktProduct[0],
+          ...aanvragenWithBeschiktProduct[0],
           documenten: documenten.toSorted(dateSort('datumDefinitief', 'desc')),
         };
         casusAanvragen.push(
