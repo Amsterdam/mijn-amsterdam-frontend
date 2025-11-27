@@ -9,6 +9,7 @@ import {
   notificationEnvMap,
   REPLACE_REL_URL_PARTS,
   CMS_TIME_REGEX,
+  CMS_ENV_REGEX,
 } from './cms-service-config';
 import type {
   CMSEventData,
@@ -39,29 +40,38 @@ function isOtapEnvMatch(notification: CMSMaintenanceNotification): boolean {
 function transformCMSEventResponse(
   eventData: CMSEventData
 ): CMSMaintenanceNotification {
+  if (!eventData.item || !eventData.item.page) {
+    throw new Error('Invalid CMS event data format');
+  }
+
   const item = {
     title: eventData.item.page.title,
     path: eventData.item.relUrl.replace(REPLACE_REL_URL_PARTS, ''),
     themaID: themaId,
     themaTitle: themaTitle,
     isAlert: true,
+    severity: DEFAULT_SEVERITY,
     datePublished: new Date().toISOString(),
   } as CMSMaintenanceNotification;
 
   for (const veld of eventData.item.page.cluster.veld) {
     switch (veld.Nam) {
       case 'Startdatum':
+        item.dateStart = veld.Dtm.replace(CMS_DATE_REGEX, '$1-$2-$3');
+        break;
       case 'Einddatum':
         item.dateEnd = veld.Dtm.replace(CMS_DATE_REGEX, '$1-$2-$3');
         break;
       case 'Starttijd':
-      case 'Eindtijd':
         item.timeStart = veld.Tyd.replace(CMS_TIME_REGEX, '$1:$2');
+        break;
+      case 'Eindtijd':
+        item.timeEnd = veld.Tyd.replace(CMS_TIME_REGEX, '$1:$2');
         break;
       case 'Toevoeging':
         {
           const otapEnvs =
-            veld.Wrd.match(/(tst|acc|prd|dev)/gi)?.map((env) =>
+            veld.Wrd.match(CMS_ENV_REGEX)?.map((env) =>
               env.toLowerCase().trim()
             ) ?? [];
           item.otapEnvs = (
@@ -132,7 +142,7 @@ async function fetchCMSMaintenanceNotifications(
   const notifications = eventItemsResponses
     .filter((response) => response.content !== null)
     .map((response) => response.content)
-    .filter((notification) => isOtapEnvMatch(notification!));
+    .filter((notification) => isOtapEnvMatch(notification));
 
   return apiSuccessResult(notifications);
 }
@@ -172,6 +182,7 @@ export async function fetchMaintenanceNotificationsDashboard() {
 }
 
 export const forTesting = {
+  fetchCMSMaintenanceNotifications,
   transformCMSEventResponse,
   isOtapEnvMatch,
 };

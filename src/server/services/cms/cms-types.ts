@@ -25,14 +25,13 @@ type Src = {
   Src: string;
 };
 export type CMSEventData = {
-  item: {
+  item?: {
     relUrl: string;
-    page: {
+    page?: {
       cluster: {
         veld: Array<Tyd | Website | Dtm | Src | Wrd>;
       };
       title: string;
-      CorDtm: string;
     };
   };
 };
@@ -41,7 +40,7 @@ export type CMSFeedItem = {
   content: string;
   feedid: string;
 };
-export type OtapEnv = 'tst' | 'acc' | 'prd' | 'dev';
+export type OtapEnv = 'tst' | 'acc' | 'prd' | 'dev' | 'unittest';
 type SeverityLevel = 'error' | 'info' | 'success' | 'warning';
 export type CMSMaintenanceNotification = MyNotification & {
   title: string;

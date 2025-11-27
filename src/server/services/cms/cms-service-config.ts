@@ -12,6 +12,7 @@ export const notificationEnvMap = {
   acc: IS_ACCEPTANCE,
   prd: IS_PRODUCTION,
   dev: IS_DEVELOPMENT,
+  unittest: MA_APP_MODE === 'unittest',
 } as const;
 
 export const DEFAULT_SEVERITY = 'warning';
@@ -20,3 +21,4 @@ export const REPLACE_REL_URL_PARTS =
   'storingsmeldingen/alle-meldingen-mijn-amsterdam';
 export const CMS_DATE_REGEX = /(\d{4})(\d{2})(\d{2})/; //20230118
 export const CMS_TIME_REGEX = /(\d{2})(\d{2})/; //2359
+export const CMS_ENV_REGEX = /(tst|acc|prd|dev|unittest)/gi;

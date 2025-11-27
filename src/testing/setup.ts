@@ -163,3 +163,5 @@ process.env.BFF_BENK_BRP_CLIENT_SECRET = 'test-client-secret';
 process.env.BFF_BENK_BRP_TENANT = 'test-tenant';
 process.env.BFF_BENK_BRP_APPLICATION_ID = 'test-app-id';
 process.env.BFF_BENK_BRP_API_BASE_URL = `${remoteApiHost}/benk_brp`;
+
+process.env.BFF_CMS_BASE_URL = `${remoteApiHost}/cms`;
