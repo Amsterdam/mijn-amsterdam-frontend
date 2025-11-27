@@ -268,35 +268,38 @@ function transformCasusAanvragen(responseData: ZorgnedResponseDataSource) {
       )
     );
 
-    if (casusID !== FAKE_CASUS_ID && beschiktProductIds.length === 1) {
-      // If all aanvragen in this Casus have only one beschikt product assigned,
-      // consolidate all documents from these aanvragen (regardless of beschiktProduct presence) into a single aanvraag.
-      // This ensures that documents related to the same Casus, which might otherwise be hidden, are displayed to the user.
-      // However, this approach is not applicable for aanvragen with multiple beschikte producten within the same Casus,
-      // as documents cannot be reliably associated in such cases due to the absence of a beschikt product identifier in the documents.
-      if (beschiktProductIds.length === 1 && aanvragen.length > 1) {
-        // Get the reference to the designated aanvraag and add the documents.
-        const [id] = beschiktProductIds;
-        const aanvraagWithAddedDocuments = {
-          ...aanvragenWithBeschiktProduct[0],
-          documenten: documenten.toSorted(dateSort('datumDefinitief', 'desc')),
-        };
-        casusAanvragen.push(
-          // There can be more than one aanvraag with the same beschikt product id within the same casus.
-          // This happens for example when a beëindingsproces is started that applies to an existing beschikt product.
-          // In this case we have 2 aanvragen with the same beschikt product id. We need to add the same documenten to both aanvragen to be consistent.
-          ...aanvragen.map((aanvraag) => {
-            if (
-              aanvraag.beschikking?.beschikteProducten?.[0]?.identificatie ===
-              id
-            ) {
-              return aanvraagWithAddedDocuments;
-            }
-            return aanvraag;
-          })
-        );
-        continue;
-      }
+    // Take only the aanvragen that have only one beschikt product assigned within the whole Casus.
+    // Consolidate all documents from these aanvragen (regardless of beschiktProduct presence) into a single aanvraag.
+    // This ensures that documents related to the same Casus, which might otherwise be hidden, are displayed to the user.
+    // This approach is not applicable for aanvragen with multiple beschikte producten within the same Casus,
+    // as documents cannot be reliably associated in such cases due to the absence of a beschikt product identifier in the documents.
+    if (
+      casusID !== FAKE_CASUS_ID &&
+      // All aanvragen in a Casus must have only one beschikt product assigned.
+      beschiktProductIds.length === 1 &&
+      // Only consolidate if there are multiple aanvragen in this casus.
+      aanvragen.length > 1
+    ) {
+      // Get the reference to the designated aanvraag and add the documents.
+      const [id] = beschiktProductIds;
+      const aanvraagWithAddedDocuments = {
+        ...aanvragenWithBeschiktProduct[0],
+        documenten: documenten.toSorted(dateSort('datumDefinitief', 'desc')),
+      };
+      casusAanvragen.push(
+        // There can be more than one aanvraag with the same beschikt product id within the same casus.
+        // This happens for example when a beëindingsproces is started that applies to an existing beschikt product.
+        // In this case we have 2 aanvragen with the same beschikt product id. We need to add the same documenten to both aanvragen to be consistent.
+        ...aanvragen.map((aanvraag) => {
+          if (
+            aanvraag.beschikking?.beschikteProducten?.[0]?.identificatie === id
+          ) {
+            return aanvraagWithAddedDocuments;
+          }
+          return aanvraag;
+        })
+      );
+      continue;
     }
 
     casusAanvragen.push(...aanvragen);
