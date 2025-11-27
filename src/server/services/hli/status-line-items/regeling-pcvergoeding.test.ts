@@ -31,8 +31,11 @@ vi.mock(
         ...actual.themaConfig,
         featureToggle: {
           ...actual.themaConfig.featureToggle,
-          get hli2026PCVergoedingV3Enabled() {
-            return mocks.hli2026PCVergoedingV3Enabled;
+          regelingen: {
+            ...actual.themaConfig.featureToggle.regelingen,
+            get hli2026PCVergoedingV3Enabled() {
+              return mocks.hli2026PCVergoedingV3Enabled;
+            },
           },
         },
       },
