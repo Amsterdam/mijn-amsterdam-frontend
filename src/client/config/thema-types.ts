@@ -30,9 +30,31 @@ export type WithRegelingenListPage = PageConfig<'regelingenListPage'>;
 export type WithspecificatieListPage = PageConfig<'specificatieListPage'>;
 export type WithdetailPageStadspas = PageConfig<'detailPageStadspas'>;
 
-type ThemaFeatureToggle = {
+type StadspasToggleGroup = {
+  hliStadspasActive: boolean;
+  _hliThemaStadspasBlokkerenActive: boolean;
+  _hliThemaStadspasDeblokkerenActive: boolean;
+  readonly hliThemaStadspasBlokkerenActive: boolean;
+  readonly hliThemaStadspasDeblokkerenActive: boolean;
+};
+
+type RegelingenToggleGroup = {
+  hliThemaRegelingenActive: boolean;
+  _hliRegelingEnabledCZM: boolean;
+  _hliRegelingEnabledRTM: boolean;
+  _hli2025PCTegoedCodesEnabled: boolean;
+  _hli2026PCVergoedingV3Enabled: boolean;
+  readonly hliRegelingEnabledCZM: boolean;
+  readonly hliRegelingEnabledRTM: boolean;
+  readonly hli2025PCTegoedCodesEnabled: boolean;
+  readonly hli2026PCVergoedingV3Enabled: boolean;
+};
+
+export type ThemaFeatureToggle = {
   themaActive: boolean;
-  [key: string]: boolean;
+  stadspas: StadspasToggleGroup;
+  regelingen: RegelingenToggleGroup;
+  zorgnedAvApiActive: boolean;
 };
 
 type RedactedScope = 'full' | 'content' | 'none';
