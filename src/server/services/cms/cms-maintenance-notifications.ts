@@ -2,84 +2,38 @@ import { isFuture, isPast, parseISO } from 'date-fns';
 
 import { sanitizeCmsContent } from './cms-content';
 import {
+  CMS_MAINTENANCE_NOTIFICATIONS_CACHE_TIMEOUT_MS,
+  CMS_DATE_REGEX,
+  DEFAULT_OTAP_ENV,
+  DEFAULT_SEVERITY,
+  notificationEnvMap,
+  REPLACE_REL_URL_PARTS,
+  CMS_TIME_REGEX,
+} from './cms-service-config';
+import type {
+  CMSEventData,
+  CMSMaintenanceNotification,
+  OtapEnv,
+  CMSFeedItem,
+  QueryParamsMaintenanceNotifications,
+} from './cms-types';
+import {
   themaId,
   themaTitle,
 } from '../../../client/pages/MyNotifications/MyNotifications-config';
 import {
-  IS_ACCEPTANCE,
-  IS_DEVELOPMENT,
-  IS_PRODUCTION,
-  IS_TEST,
-} from '../../../universal/config/env';
-import {
-  ApiResponse_DEPRECATED,
+  ApiResponse,
   apiSuccessResult,
+  getFailedDependencies,
 } from '../../../universal/helpers/api';
-import { LinkProps, MyNotification } from '../../../universal/types/App.types';
-import { ONE_HOUR_MS } from '../../config/app';
 import { FORCE_RENEW_CACHE_TTL_MS } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 
-const DEFAULT_SEVERITY = 'warning';
-const DEFAULT_OTAP_ENV = 'prd';
-
-interface Tyd {
-  Nam: 'Starttijd' | 'Eindtijd';
-  Tyd: string;
-}
-interface Website {
-  Nam: 'Website';
-  Src: string;
-  Wrd: string;
-}
-interface Dtm {
-  Nam: 'Einddatum' | 'Startdatum';
-  Dtm: string;
-}
-interface Wrd {
-  Nam: 'Locatie' | 'Toevoeging';
-  Wrd: string;
-}
-interface Src {
-  Nam: 'Meer informatie' | 'Omschrijving';
-  Src: string;
-}
-
-interface CMSEventData {
-  item: {
-    relUrl: string;
-    page: {
-      cluster: {
-        veld: Array<Tyd | Website | Dtm | Src | Wrd>;
-      };
-      title: string;
-      CorDtm: string;
-    };
-  };
-}
-
-interface CMSFeedItem {
-  title: string;
-  content: string;
-  feedid: string;
-}
-
-type OtapEnv = 'tst' | 'acc' | 'prd' | 'dev';
-type SeverityLevel = 'error' | 'info' | 'success' | 'warning';
-
-export interface CMSMaintenanceNotification extends MyNotification {
-  title: string;
-  datePublished: string;
-  dateStart: string;
-  dateEnd: string;
-  timeEnd: string;
-  timeStart: string;
-  description: string;
-  path: string;
-  severity?: SeverityLevel;
-  otapEnvs?: OtapEnv[];
-  link?: LinkProps;
+function isOtapEnvMatch(notification: CMSMaintenanceNotification): boolean {
+  return notification.otapEnvs
+    ? notification.otapEnvs.some((env) => notificationEnvMap[env])
+    : false;
 }
 
 function transformCMSEventResponse(
@@ -87,10 +41,7 @@ function transformCMSEventResponse(
 ): CMSMaintenanceNotification {
   const item = {
     title: eventData.item.page.title,
-    path: eventData.item.relUrl.replace(
-      'storingsmeldingen/alle-meldingen-mijn-amsterdam',
-      ''
-    ),
+    path: eventData.item.relUrl.replace(REPLACE_REL_URL_PARTS, ''),
     themaID: themaId,
     themaTitle: themaTitle,
     isAlert: true,
@@ -100,16 +51,12 @@ function transformCMSEventResponse(
   for (const veld of eventData.item.page.cluster.veld) {
     switch (veld.Nam) {
       case 'Startdatum':
-        item.dateStart = veld.Dtm.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
-        break;
       case 'Einddatum':
-        item.dateEnd = veld.Dtm.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
+        item.dateEnd = veld.Dtm.replace(CMS_DATE_REGEX, '$1-$2-$3');
         break;
       case 'Starttijd':
-        item.timeStart = veld.Tyd.replace(/(\d{2})(\d{2})/, '$1:$2');
-        break;
       case 'Eindtijd':
-        item.timeEnd = veld.Tyd.replace(/(\d{2})(\d{2})/, '$1:$2');
+        item.timeStart = veld.Tyd.replace(CMS_TIME_REGEX, '$1:$2');
         break;
       case 'Toevoeging':
         {
@@ -139,7 +86,7 @@ function transformCMSEventResponse(
         }
         break;
       case 'Omschrijving':
-        item.description = veld.Src;
+        item.description = sanitizeCmsContent(veld.Src);
         break;
     }
   }
@@ -147,90 +94,50 @@ function transformCMSEventResponse(
   return item;
 }
 
-function isOtapEnvMatch(notification: CMSMaintenanceNotification): boolean {
-  const envMap = {
-    tst: IS_TEST,
-    acc: IS_ACCEPTANCE,
-    prd: IS_PRODUCTION,
-    dev: IS_DEVELOPMENT,
-  };
-  return notification.otapEnvs
-    ? notification.otapEnvs.some((env) => envMap[env])
-    : false;
+// We use the term Event here because we misuse the CMS Event content type for Maintenance Notifications.
+async function fetchCMSEventData(url: string, forceRenew: boolean) {
+  return requestData<CMSMaintenanceNotification>({
+    url: url + '?Appidt=app-pagetype&reload=true',
+    transformResponse: transformCMSEventResponse,
+    cacheTimeout: forceRenew
+      ? FORCE_RENEW_CACHE_TTL_MS
+      : CMS_MAINTENANCE_NOTIFICATIONS_CACHE_TIMEOUT_MS,
+  });
 }
-
-const CMS_MAINTENANCE_NOTIFICATIONS_CACHE_TIMEOUT_MS = ONE_HOUR_MS;
 
 async function fetchCMSMaintenanceNotifications(
   forceRenew: boolean
-): Promise<ApiResponse_DEPRECATED<CMSMaintenanceNotification[]>> {
-  function fetchCMSEventData(url: string) {
-    return requestData<CMSMaintenanceNotification>({
-      url: url + '?Appidt=app-pagetype&reload=true',
-      transformResponse: transformCMSEventResponse,
-      cacheTimeout: forceRenew
-        ? FORCE_RENEW_CACHE_TTL_MS
-        : CMS_MAINTENANCE_NOTIFICATIONS_CACHE_TIMEOUT_MS,
-    });
-  }
-
+): Promise<ApiResponse<CMSMaintenanceNotification[]>> {
   const requestConfig = getApiConfig('CMS_MAINTENANCE_NOTIFICATIONS', {
     cacheTimeout: forceRenew
       ? FORCE_RENEW_CACHE_TTL_MS
       : CMS_MAINTENANCE_NOTIFICATIONS_CACHE_TIMEOUT_MS,
   });
 
-  const eventItems = await requestData<CMSFeedItem[]>(requestConfig)
-    .then((apiData) => {
-      if (Array.isArray(apiData.content)) {
-        return Promise.all(
-          apiData.content.map((feedItem) =>
-            fetchCMSEventData(feedItem.feedid).then(
-              (response) => response.content
-            )
-          )
-        );
-      }
-      return [];
-    })
-    .then((notifications) => {
-      return notifications
-        .filter(
-          (notification): notification is CMSMaintenanceNotification =>
-            notification !== null
-        )
-        .map((notification) => {
-          if (notification.description) {
-            notification.description = sanitizeCmsContent(
-              notification.description,
-              {
-                allowedAttributes: { a: [] },
-                allowedTags: [],
-                exclusiveFilter: () => true,
-              }
-            );
-          }
-          return notification;
-        });
-    });
+  const eventFeedResponse = await requestData<CMSFeedItem[]>(requestConfig);
 
-  const eventItemsFiltered = eventItems.filter(
-    (eventItem): eventItem is CMSMaintenanceNotification =>
-      eventItem !== null && isOtapEnvMatch(eventItem)
+  if (!eventFeedResponse.content?.length) {
+    return apiSuccessResult([], getFailedDependencies({ eventFeedResponse }));
+  }
+
+  const eventItemsResponses = await Promise.all(
+    eventFeedResponse.content.map((feedItem) =>
+      fetchCMSEventData(feedItem.feedid, forceRenew)
+    )
   );
 
-  const eventItemsResponse = apiSuccessResult(eventItemsFiltered);
+  // We don't perform error handling here. We simply filter out possibly failed requests.
+  // This particular endpoint is not critical for the application to function.
+  // Failed requests are still logged in the requestData function.
+  const notifications = eventItemsResponses
+    .filter((response) => response.content !== null)
+    .map((response) => response.content)
+    .filter((notification) => isOtapEnvMatch(notification!));
 
-  return eventItemsResponse;
+  return apiSuccessResult(notifications);
 }
 
-export interface QueryParamsMaintenanceNotifications
-  extends Record<string, string | undefined> {
-  page?: string;
-  forceRenew?: 'true';
-}
-
-export async function fetchMaintenanceNotificationsActual(
+export async function fetchActiveMaintenanceNotifications(
   queryParams: QueryParamsMaintenanceNotifications
 ) {
   const maintenanceNotifications = await fetchCMSMaintenanceNotifications(
@@ -259,13 +166,12 @@ export async function fetchMaintenanceNotificationsActual(
 }
 
 export async function fetchMaintenanceNotificationsDashboard() {
-  const maintenanceNotifications = await fetchMaintenanceNotificationsActual({
+  return fetchActiveMaintenanceNotifications({
     page: 'dashboard',
   });
-
-  if (!maintenanceNotifications.content?.length) {
-    return maintenanceNotifications;
-  }
-
-  return apiSuccessResult({ notifications: maintenanceNotifications.content });
 }
+
+export const forTesting = {
+  transformCMSEventResponse,
+  isOtapEnvMatch,
+};
