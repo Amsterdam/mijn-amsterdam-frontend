@@ -513,20 +513,27 @@ describe('AVG', () => {
     afterEach(() => {
       nock.cleanAll();
     });
-    it('should not call readthemaperavgverzoek when there are no avg verzoeken', () => {
-      const scope = remoteApi
-        .post('/smile', /readthemaperavgverzoek/gi)
-        .reply(200, []);
-
-      transformAVGResponse({
+    it('should not call readthemaperavgverzoek when there are no avg verzoeken', async () => {
+      remoteApi.post('/smile', /readavgverzoek/gi).reply(200, {
         rowcount: 0,
         List: [],
       });
 
+      const scope = remoteApi
+        .post('/smile', /readthemaperavgverzoek/gi)
+        .reply(200, []);
+
+      await fetchAVG(profileAndToken);
+
       expect(scope.isDone()).toBeFalsy();
     });
 
-    it('should call readthemaperavgverzoek when there are avg verzoeken', () => {
+    it('should call readthemaperavgverzoek when there are avg verzoeken', async () => {
+      remoteApi.post('/smile', /readavgverzoek/gi).reply(200, {
+        rowcount: 1,
+        List: [apiResponse.List[0]],
+      });
+
       const scope = remoteApi
         .post('/smile', /readthemaperavgverzoek/gi)
         .reply(200, {
@@ -534,12 +541,9 @@ describe('AVG', () => {
           List: [],
         });
 
-      transformAVGResponse({
-        rowcount: 1,
-        List: [apiResponse.List[0]],
-      });
+      await fetchAVG(profileAndToken);
 
-      expect(scope.isDone()).toBeFalsy();
+      expect(scope.isDone()).toBeTruthy();
     });
   });
 });
