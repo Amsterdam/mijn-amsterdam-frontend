@@ -121,7 +121,7 @@ describe('source-api-request caching', () => {
     expect(rs3.content?.[0]).toBe('notfoo');
   });
 
-  test('Correct: Forces to renew cache if cacheTimeout set to 0.', async () => {
+  test('Correct: Forces to renew cache if cacheTimeout set to FORCE_RENEW_CACHE_TTL_MS.', async () => {
     remoteApi.get('/1').reply(200, '"foo"');
     remoteApi.get('/1').reply(200, '"releasefoo"');
     remoteApi.get('/1').reply(200, '"renewedfoo"');
@@ -148,15 +148,23 @@ describe('source-api-request caching', () => {
       DO_FORCE_RENEW
     );
 
-    vi.advanceTimersByTime(FORCE_RENEW_CACHE_TTL_MS);
-
+    // If we request again within the FORCE_RENEW_CACHE_TTL_MS period, we should get the same cached value.
+    // In other words, it takes a little time for the cache to expire.
     const rs4 = await fetchThings(
       SESSION_ID_1,
       createSessionBasedCacheKey(SESSION_ID_1, 'things')
     );
 
+    vi.advanceTimersByTime(FORCE_RENEW_CACHE_TTL_MS);
+
+    const rs5 = await fetchThings(
+      SESSION_ID_1,
+      createSessionBasedCacheKey(SESSION_ID_1, 'things')
+    );
+
     expect(rs3.content?.[0]).toBe('releasefoo');
-    expect(rs4.content?.[0]).toBe('renewedfoo');
+    expect(rs4.content?.[0]).toBe(rs3.content?.[0]);
+    expect(rs5.content?.[0]).toBe('renewedfoo');
   });
 
   test("Correct: Doesn't use cache with different sessionID", async () => {
