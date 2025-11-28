@@ -51,8 +51,8 @@ export type CMSMaintenanceNotification = MyNotification & {
   timeStart: string;
   description: string;
   path: string;
-  severity?: SeverityLevel;
-  otapEnvs?: OtapEnv[];
+  severity: SeverityLevel;
+  otapEnvs: OtapEnv[];
   link?: LinkProps;
 };
 export type QueryParamsMaintenanceNotifications = {

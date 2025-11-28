@@ -32,7 +32,7 @@ import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 
 function isOtapEnvMatch(notification: CMSMaintenanceNotification): boolean {
-  return notification.otapEnvs?.some((env) => notificationEnvMap[env]) ?? false;
+  return notification.otapEnvs.some((env) => notificationEnvMap[env]);
 }
 
 function transformCMSEventResponse(
@@ -50,6 +50,7 @@ function transformCMSEventResponse(
     isAlert: true,
     severity: DEFAULT_SEVERITY,
     datePublished: new Date().toISOString(),
+    otapEnvs: [DEFAULT_OTAP_ENV],
   } as CMSMaintenanceNotification;
 
   for (const veld of eventData.item.page.cluster.veld) {
@@ -68,13 +69,11 @@ function transformCMSEventResponse(
         break;
       case 'Toevoeging':
         {
-          const otapEnvs =
-            veld.Wrd.match(CMS_ENV_REGEX)?.map((env) =>
-              env.toLowerCase().trim()
-            ) ?? [];
-          item.otapEnvs = (
-            otapEnvs.length ? otapEnvs : [DEFAULT_OTAP_ENV]
-          ) as OtapEnv[];
+          const otapEnvs = (veld.Wrd.match(CMS_ENV_REGEX)?.map((env) =>
+            env.toLowerCase().trim()
+          ) ?? []) as OtapEnv[];
+
+          item.otapEnvs = otapEnvs.length ? otapEnvs : item.otapEnvs;
         }
         break;
       case 'Locatie':

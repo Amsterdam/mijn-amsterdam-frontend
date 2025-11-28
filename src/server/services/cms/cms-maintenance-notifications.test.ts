@@ -77,7 +77,9 @@ describe('cms-maintenance-notifications', () => {
     });
 
     it('should return false if the notification has no OTAP environments', () => {
-      const notification = {} as CMSMaintenanceNotification;
+      const notification = {
+        otapEnvs: [],
+      } as unknown as CMSMaintenanceNotification;
       expect(isOtapEnvMatch(notification)).toBe(false);
     });
   });
