@@ -32,9 +32,7 @@ import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 
 function isOtapEnvMatch(notification: CMSMaintenanceNotification): boolean {
-  return notification.otapEnvs
-    ? notification.otapEnvs.some((env) => notificationEnvMap[env])
-    : false;
+  return notification.otapEnvs?.some((env) => notificationEnvMap[env]) ?? false;
 }
 
 function transformCMSEventResponse(
