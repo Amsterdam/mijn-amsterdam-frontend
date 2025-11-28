@@ -1,15 +1,13 @@
 import { Link } from '@amsterdam/design-system-react';
 
 import styles from './ProfilePrivate.module.scss';
-import type { Persoon } from '../../../../../server/services/brp/brp-types';
-import type { Adres } from '../../../../../server/services/brp/brp-types';
 import type {
-  BRPData,
-  VerbintenisHistorisch,
-} from '../../../../../server/services/profile/brp.types';
-import { FeatureToggle } from '../../../../../universal/config/feature-toggles';
+  BrpFrontend,
+  Persoon,
+  Verbintenis,
+} from '../../../../../server/services/brp/brp-types';
+import type { Adres } from '../../../../../server/services/brp/brp-types';
 import {
-  formatBirthdate,
   getFullAddress,
   hasDutchNationality,
   isMokum,
@@ -17,7 +15,12 @@ import {
 import { defaultDateFormat } from '../../../../../universal/helpers/date';
 import type { AppState } from '../../../../../universal/types/App.types';
 import LoadingContent from '../../../../components/LoadingContent/LoadingContent';
-import { featureToggle, profileLinks } from '../Profile-thema-config';
+import {
+  BRP_LABEL_AANTAL_BEWONERS,
+  featureToggle,
+  profileLinks,
+  themaIdBRP,
+} from '../Profile-thema-config';
 import {
   ProfileLabels,
   formatProfileSectionData,
@@ -33,11 +36,12 @@ import {
  */
 
 type BRPPanelKey = keyof Omit<
-  BRPData,
-  | 'identiteitsbewijzen'
+  BrpFrontend,
   | 'notifications'
-  | 'kvkNummer'
+  | 'kvknummer'
   | 'fetchUrlAantalBewoners'
+  | 'aantalBewoners'
+  | 'bsnTranslation'
 >;
 
 const persoon: ProfileLabels<Partial<Persoon>, AppState['BRP']['content']> = {
@@ -47,17 +51,6 @@ const persoon: ProfileLabels<Partial<Persoon>, AppState['BRP']['content']> = {
   voorvoegselGeslachtsnaam: 'Voorvoegsel',
   geslachtsnaam: 'Achternaam',
   omschrijvingGeslachtsaanduiding: 'Geslacht',
-  geboortedatum: [
-    'Geboortedatum',
-    (geboorteDatum, persoon) => {
-      if (typeof geboorteDatum === 'string') {
-        return persoon.indicatieGeboortedatum
-          ? formatBirthdate(persoon.indicatieGeboortedatum, geboorteDatum)
-          : defaultDateFormat(geboorteDatum);
-      }
-      return '';
-    },
-  ],
   geboortedatumFormatted: 'Geboortedatum',
   overlijdensdatum: [
     'Datum overlijden',
@@ -66,21 +59,21 @@ const persoon: ProfileLabels<Partial<Persoon>, AppState['BRP']['content']> = {
   overlijdensdatumFormatted: 'Datum overlijden',
   geboorteplaatsnaam: [
     'Geboorteplaats',
-    (value, _item, BRPData) =>
-      BRPData?.persoon.mokum ? value || 'Onbekend' : value,
+    (value, _item, brpData) =>
+      brpData?.persoon.mokum ? value || 'Onbekend' : value,
   ],
   geboortelandnaam: [
     'Geboorteland',
-    (value, _item, BRPData) =>
-      BRPData?.persoon.mokum ? value || 'Onbekend' : value,
+    (value, _item, brpData) =>
+      brpData?.persoon.mokum ? value || 'Onbekend' : value,
   ],
   nationaliteiten: [
     'Nationaliteit',
-    (nationaliteiten, _item, BRPData) => {
-      if (!BRPData) {
+    (nationaliteiten, _item, brpData) => {
+      if (!brpData) {
         return <>&mdash;</>;
       }
-      if (hasDutchNationality(BRPData)) {
+      if (hasDutchNationality(brpData)) {
         return 'Nederlandse';
       }
       return nationaliteiten
@@ -121,7 +114,7 @@ delete persoonSecundair.nationaliteiten;
 delete persoonSecundair.indicatieGeheim;
 
 const adres: ProfileLabels<
-  Partial<Adres> & { aantalBewoners: number; wozWaarde: string },
+  Partial<Adres> & { aantalBewoners: number },
   AppState['BRP']['content']
 > = {
   locatiebeschrijving: 'Locatie',
@@ -153,18 +146,12 @@ const adres: ProfileLabels<
     (value) => (value ? defaultDateFormat(value) : 'Onbekend'),
   ],
   begindatumVerblijfFormatted: 'Vanaf',
-  /** @deprecated */
-  einddatumVerblijf: [
-    'Tot',
-    (value) => (value ? defaultDateFormat(value) : null),
-  ],
-  /** @deprecated */
   aantalBewoners: [
-    'Aantal bewoners',
-    (value, _item, brpData) => {
+    BRP_LABEL_AANTAL_BEWONERS,
+    (value, _x, BRPContent) => {
       if (
-        FeatureToggle.residentCountActive &&
-        !!brpData?.adres?._adresSleutel
+        BRPContent?.persoon?.mokum === true &&
+        featureToggle[themaIdBRP].aantalBewonersOpAdresTonenActive
       ) {
         return value === -1 ? (
           <LoadingContent barConfig={[['2rem', '2rem', '0']]} />
@@ -175,73 +162,36 @@ const adres: ProfileLabels<
       return null;
     },
   ],
-  wozWaarde: 'WOZ-waarde',
-};
-
-/** @deprecated */
-function transformVerbintenisStatus(value: string) {
-  const status: { [value: string]: string } = {
-    Huwelijk: 'Gehuwd',
-  };
-  return status[value] || value;
-}
-
-const verbintenis: ProfileLabels<
-  Partial<VerbintenisHistorisch>,
-  AppState['BRP']['content']
-> = {
-  /** @deprecated */
-  soortVerbintenisOmschrijving: [
-    (verbintenis) =>
-      !verbintenis.datumOntbinding && !verbintenis.redenOntbindingOmschrijving
-        ? 'Status'
-        : 'Verbintenis',
-    (value, verbintenis) =>
-      !verbintenis.datumOntbinding && typeof value === 'string'
-        ? transformVerbintenisStatus(value)
-        : value,
-  ],
-  /** @deprecated */
-  datumSluiting: [
-    'Vanaf',
-    (value) => {
-      if (featureToggle.BRP.benkBrpServiceActive) {
-        return null;
-      }
-      return !!value && defaultDateFormat(value);
+  wozWaarde: [
+    'WOZ-waarde',
+    () => {
+      return (
+        <>
+          Te vinden op{' '}
+          <Link rel="noopener noreferrer" href="https://www.wozwaardeloket.nl/">
+            WOZ-waardeloket
+          </Link>
+        </>
+      );
     },
   ],
+};
+
+const verbintenis: ProfileLabels<
+  Partial<Verbintenis>,
+  AppState['BRP']['content']
+> = {
   datumSluitingFormatted: 'Geregistreerd op',
   datumOntbinding: [
     'Einddatum',
-    (dateValue, verbintenis) => {
+    (dateValue) => {
       if (dateValue) {
         return defaultDateFormat(dateValue);
-      }
-      if (verbintenis.redenOntbindingOmschrijving) {
-        return 'Onbekend';
       }
       return null;
     },
   ],
   datumOntbindingFormatted: 'Einddatum',
-  /** @deprecated */
-  plaatsnaamSluitingOmschrijving: 'Plaats',
-  /** @deprecated */
-  landnaamSluiting: 'Land',
-};
-
-/** @deprecated */
-const verbintenisHistorisch: ProfileLabels<
-  Partial<VerbintenisHistorisch>,
-  AppState['BRP']['content']
-> = {
-  soortVerbintenisOmschrijving: verbintenis.soortVerbintenisOmschrijving!,
-  datumSluiting: verbintenis.datumSluiting!,
-  plaatsnaamSluitingOmschrijving: 'Plaats',
-  landnaamSluiting: 'Land',
-  redenOntbindingOmschrijving: 'Reden',
-  datumOntbinding: verbintenis.datumOntbinding!,
 };
 
 const labelConfig = {
@@ -249,22 +199,18 @@ const labelConfig = {
   persoonSecundair,
   adres,
   verbintenis,
-  verbintenisHistorisch,
 };
 
 export interface BrpProfileData {
-  persoon: ProfileSectionData | null;
   adres: ProfileSectionData | null;
-  verbintenis?: ProfileSectionData;
-  ouders?: ProfileSectionData[];
-  kinderen?: ProfileSectionData[];
-  /** @deprecated */
   adresHistorisch?: ProfileSectionData[];
-  /** @deprecated */
-  verbintenisHistorisch?: ProfileSectionData[];
+  kinderen?: ProfileSectionData[];
+  ouders?: ProfileSectionData[];
+  persoon: ProfileSectionData | null;
+  verbintenis?: ProfileSectionData;
 }
 
-export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
+export function formatBrpProfileData(brpData: BrpFrontend): BrpProfileData {
   const profileData: BrpProfileData = {
     persoon: formatProfileSectionData(
       labelConfig.persoon,
@@ -296,30 +242,6 @@ export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
     };
   }
 
-  /** @deprecated */
-  if (
-    Array.isArray(brpData.verbintenisHistorisch) &&
-    brpData.verbintenisHistorisch.length
-  ) {
-    const verbintenisHistorisch = brpData.verbintenisHistorisch.map(
-      (verbintenis) => {
-        return {
-          ...formatProfileSectionData(
-            labelConfig.verbintenisHistorisch,
-            verbintenis,
-            brpData
-          ),
-          ...formatProfileSectionData(
-            labelConfig.persoonSecundair,
-            verbintenis.persoon,
-            brpData
-          ),
-        };
-      }
-    );
-    profileData.verbintenisHistorisch = verbintenisHistorisch;
-  }
-
   if (Array.isArray(brpData.kinderen) && brpData.kinderen.length) {
     profileData.kinderen = brpData.kinderen.map((kind) =>
       formatProfileSectionData(labelConfig.persoonSecundair, kind, brpData)
@@ -332,7 +254,6 @@ export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
     );
   }
 
-  /** @deprecated */
   if (
     Array.isArray(brpData.adresHistorisch) &&
     brpData.adresHistorisch.length
@@ -345,7 +266,11 @@ export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
   return profileData;
 }
 
-export const panelConfig: PanelConfig<BRPPanelKey, AppState['BRP']> = {
+export const panelConfig: PanelConfig<
+  BRPPanelKey,
+  AppState['BRP'],
+  BrpProfileData
+> = {
   persoon: (BRP) => {
     const actionLinks = [];
 
@@ -362,7 +287,7 @@ export const panelConfig: PanelConfig<BRPPanelKey, AppState['BRP']> = {
       actionLinks,
     };
   },
-  adres: (BRP) => {
+  adres: (BRP, profileData) => {
     const title = isMokum(BRP.content)
       ? 'Verhuizing doorgeven'
       : 'Verhuizing naar Amsterdam doorgeven';
@@ -375,11 +300,7 @@ export const panelConfig: PanelConfig<BRPPanelKey, AppState['BRP']> = {
       },
     ];
 
-    if (
-      FeatureToggle.residentCountActive &&
-      !!BRP.content?.adres?._adresSleutel &&
-      BRP.content?.adres?.landnaam === 'Nederland'
-    ) {
+    if (profileData.adres?.[BRP_LABEL_AANTAL_BEWONERS]) {
       actionLinks.push({
         title: 'Onjuiste inschrijving melden',
         url: profileLinks.CHANGE_RESIDENT_COUNT,
@@ -389,7 +310,9 @@ export const panelConfig: PanelConfig<BRPPanelKey, AppState['BRP']> = {
     }
     const contentAfterTheTitle = isMokum(BRP.content) ? (
       <>
-        Uw huis verduurzamen? De gemeente biedt subsidies of gratis hulp. Bekijk{' '}
+        <strong>Uw huis verduurzamen?</strong> De gemeente biedt subsidies of
+        gratis hulp.
+        <br /> Bekijk{' '}
         <Link rel="noopener noreferrer" href="https://duurzaamwonen.amsterdam/">
           duurzaamwonen.amsterdam
         </Link>{' '}
@@ -409,18 +332,6 @@ export const panelConfig: PanelConfig<BRPPanelKey, AppState['BRP']> = {
         ? 'Eerder huwelijk of partnerschap'
         : 'Partner'
       : 'Burgerlijke staat',
-    actionLinks: isMokum(BRP.content)
-      ? [
-          {
-            title: 'Inzien of correctie doorgeven',
-            url: profileLinks.CHANGE_PERSONAL_DATA,
-            external: true,
-          },
-        ]
-      : [],
-  }),
-  verbintenisHistorisch: (BRP) => ({
-    title: 'Eerdere huwelijken of partnerschappen',
     actionLinks: isMokum(BRP.content)
       ? [
           {

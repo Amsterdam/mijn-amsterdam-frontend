@@ -1,8 +1,6 @@
 const BRP_PERSONEN_OP_ADRES = require('../fixtures/brp/personen-op-adres.json');
-// const BRP_PERSOONSGEGEVENS = require('../fixtures/brp/persoonsgegevens.json');
 const BRP_PERSOONSGEGEVENS = require('../fixtures/brp/test-personen.json');
 const BRP_VERBLIJFPLAATSHISTORIE = require('../fixtures/brp/verblijfplaatshistorie.json');
-const BRP_RESPONSE = require('../fixtures/brp.json');
 const settings = require('../settings.js');
 
 const httpConstants = require('http2').constants;
@@ -17,20 +15,20 @@ module.exports = [
         id: 'standard',
         type: 'middleware',
         options: {
-          middleware: (req, res, next, core) => {
-            const { type, burgerservicenummer } = req.body;
-
-            const persoonsgegevens = BRP_PERSOONSGEGEVENS.personen.filter(
-              (persoon) =>
-                burgerservicenummer.includes(persoon.burgerservicenummer)
-            );
+          middleware: (req, res) => {
+            const { type, burgerservicenummer = [] } = req.body;
 
             switch (type) {
-              case 'RaadpleegMetBurgerservicenummer':
+              case 'RaadpleegMetBurgerservicenummer': {
+                const persoonsgegevens = BRP_PERSOONSGEGEVENS.personen.filter(
+                  (persoon) =>
+                    burgerservicenummer.includes(persoon.burgerservicenummer)
+                );
                 return res.send({
                   ...BRP_PERSOONSGEGEVENS,
                   personen: persoonsgegevens,
                 });
+              }
               case 'ZoekMetAdresseerbaarObjectIdentificatie':
                 return res.send(BRP_PERSONEN_OP_ADRES);
               default:
@@ -54,22 +52,6 @@ module.exports = [
         options: {
           status: 200,
           body: BRP_VERBLIJFPLAATSHISTORIE,
-        },
-      },
-    ],
-  },
-  // Legacy MKS / Koppel API endpoints
-  {
-    id: 'get-brp',
-    url: `${settings.MOCK_BASE_PATH}/mks-koppel-api/brp/brp`,
-    method: 'GET',
-    variants: [
-      {
-        id: 'standard',
-        type: 'json',
-        options: {
-          status: 200,
-          body: BRP_RESPONSE,
         },
       },
     ],

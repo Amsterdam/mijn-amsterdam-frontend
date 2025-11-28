@@ -7,7 +7,7 @@ import { create } from 'zustand';
 
 import { filterItemCheckboxState } from './LegendPanel/checkbox-helpers';
 import styles from './MyAreaDatasets.module.scss';
-import type { BAGLocation } from '../../../server/services/bag/bag.types';
+import type { BAGLocationExtended } from '../../../server/services/bag/bag.types';
 import type {
   MaPointFeature,
   MaPolylineFeature,
@@ -44,6 +44,9 @@ const NO_DATA_ERROR_RESPONSE = {
     },
   ],
 };
+
+const PRIMARY_LOCATION_TITLE_DEFAULT = 'Mijn hoofdlocatie';
+const SECONDARY_LOCATION_TITLE_DEFAULT = 'Mijn andere locatie';
 
 function getActiveDatasetIdsDefaultValue() {
   const queryConfig = getQueryConfig(window.location.search);
@@ -141,7 +144,11 @@ export const useLoadingFeature = create<LoadingFeatureStore>((set) => ({
   setLoadingFeature: (feature) => set({ loadingFeature: feature }),
 }));
 
-type SelectedFeature = { id: string; datasetId: string; [string: string]: any };
+type SelectedFeature = {
+  id: string;
+  datasetId: string;
+  [string: string]: unknown;
+};
 type SelectedFeatureStore = {
   selectedFeature: SelectedFeature | null;
   setSelectedFeature: (feature: SelectedFeature | null) => void;
@@ -542,7 +549,9 @@ export function useMapLocations(
   const { home: homeLocationMarker, secondary: secondaryLocationMarkers } =
     useMemo(() => {
       const locations = (MY_LOCATION.content || []).filter(
-        (location: BAGLocation | null): location is BAGLocation => !!location
+        (
+          location: BAGLocationExtended | null
+        ): location is BAGLocationExtended => !!location
       );
       const [primaryLocation, ...secondaryLocations] = locations;
 
@@ -550,17 +559,20 @@ export function useMapLocations(
       const secondaryLocationMarkers: MapLocationMarker[] = [];
       if (primaryLocation?.latlng && !centerMarker) {
         const latlng = primaryLocation.latlng;
-        const label = primaryLocation.address
-          ? getFullAddress(primaryLocation.address, true)
-          : 'Mijn locatie';
+        const label =
+          primaryLocation.title ??
+          (primaryLocation.address &&
+            getFullAddress(primaryLocation.address, true)) ??
+          PRIMARY_LOCATION_TITLE_DEFAULT;
         homeLocationMarker = { latlng, label, type: 'home' };
       }
       if (secondaryLocations?.length) {
         for (const location of secondaryLocations) {
           const latlng = location.latlng;
-          const label = location.address
-            ? getFullAddress(location.address, true)
-            : 'Mijn andere locatie';
+          const label =
+            location.title ??
+            (location.address && getFullAddress(location.address, true)) ??
+            SECONDARY_LOCATION_TITLE_DEFAULT;
           if (latlng) {
             secondaryLocationMarkers.push({ latlng, label, type: 'secondary' });
           }

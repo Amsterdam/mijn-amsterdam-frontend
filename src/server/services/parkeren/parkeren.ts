@@ -11,7 +11,7 @@ import {
 import { isMokum } from '../../../universal/helpers/brp';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getFromEnv } from '../../helpers/env';
-import { fetchBrpV2 } from '../brp/brp';
+import { fetchBrp } from '../brp/brp';
 
 export async function fetchParkeren(authProfileAndToken: AuthProfileAndToken) {
   const isProfileTypePrivate =
@@ -20,7 +20,7 @@ export async function fetchParkeren(authProfileAndToken: AuthProfileAndToken) {
   let shouldCheckForPermitsOrPermitRequests;
 
   if (isProfileTypePrivate) {
-    const brpData = await fetchBrpV2(authProfileAndToken);
+    const brpData = await fetchBrp(authProfileAndToken);
     const livesOutsideAmsterdam = !isMokum(brpData?.content);
     shouldCheckForPermitsOrPermitRequests = livesOutsideAmsterdam;
   } else {

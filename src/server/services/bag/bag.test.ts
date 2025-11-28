@@ -31,9 +31,7 @@ const BAG_MOCK_DATA = {
 
 function setupNockResponse(reply: number, response?: object) {
   nock('https://api.data.amsterdam.nl')
-    .get(
-      '/v1/benkagg/adresseerbareobjecten/?openbareruimteNaam=straatje&huisnummer=25'
-    )
+    .get(/benkagg\/adresseerbareobjecten/)
     .reply(reply, response);
 }
 

@@ -88,7 +88,7 @@ describe('controller', () => {
               hoofdactiviteit: 'Caf\u00e9s',
               overigeActiviteiten: ['Jachthavens'],
               rechtsvorm: null,
-              kvkNummer: '90006178',
+              kvknummer: '90006178',
             },
             vestigingen: [],
           },
@@ -147,7 +147,7 @@ describe('controller', () => {
                 "Local Streetplanet Eenmanszaak",
               ],
               "hoofdactiviteit": "Cafés",
-              "kvkNummer": "90006178",
+              "kvknummer": "90006178",
               "overigeActiviteiten": [
                 "Jachthavens",
               ],

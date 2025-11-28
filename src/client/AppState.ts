@@ -107,9 +107,6 @@ export const PRISTINE_APPSTATE: AppState = {
   KLANT_CONTACT: apiPristineResult([], {
     profileTypes: ['private'],
   }),
-  PROFILE: apiPristineResult(null, {
-    profileTypes: ['private-attributes'],
-  }),
   AFVAL: apiPristineResult([]),
   AFVALPUNTEN: apiPristineResult({
     centers: [],
