@@ -66,7 +66,6 @@ export function getApiConfig(
 
 export function getRequestConfigCacheKey(requestConfig: DataRequestConfig) {
   return [
-    requestConfig.cacheTimeout ?? 'no-cache-timeout', // Cache timeout can be adjusted and we want the adjusted value to be part of the cache key so we can invalidate it immediately.
     requestConfig.method,
     requestConfig.url,
     requestConfig.params ? JSON.stringify(requestConfig.params) : 'no-params',

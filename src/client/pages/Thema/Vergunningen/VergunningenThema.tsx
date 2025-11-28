@@ -68,6 +68,7 @@ export function VergunningenThema() {
       pageContentMain={tables}
       isError={isError}
       isLoading={isLoading}
+      maintenanceNotificationsPageSlug="vergunningen"
     />
   );
 }

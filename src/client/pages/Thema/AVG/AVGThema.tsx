@@ -53,6 +53,7 @@ export function AVGThema() {
       pageContentTop={pageContentTop}
       pageContentMain={tables}
       linkListItems={linkListItems}
+      maintenanceNotificationsPageSlug="avg"
     />
   );
 }

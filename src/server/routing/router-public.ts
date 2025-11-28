@@ -39,10 +39,8 @@ import {
 import { getDatasetEndpointConfig } from '../services/buurt/helpers';
 import { loadClusterDatasets } from '../services/buurt/supercluster';
 import { fetchCmsFooter, fetchSearchConfig } from '../services/cms/cms-content';
-import {
-  fetchMaintenanceNotificationsActual,
-  QueryParamsMaintenanceNotifications,
-} from '../services/cms/cms-maintenance-notifications';
+import { fetchActiveMaintenanceNotifications } from '../services/cms/cms-maintenance-notifications';
+import { QueryParamsMaintenanceNotifications } from '../services/cms/cms-types';
 
 export const router = express.Router();
 
@@ -53,7 +51,7 @@ router.get(
   BffEndpoints.CMS_MAINTENANCE_NOTIFICATIONS,
   async (req, res, next) => {
     try {
-      const response = await fetchMaintenanceNotificationsActual(
+      const response = await fetchActiveMaintenanceNotifications(
         queryParams<QueryParamsMaintenanceNotifications>(req)
       );
       return res.json(response);

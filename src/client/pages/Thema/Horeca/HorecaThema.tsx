@@ -53,6 +53,7 @@ export function HorecaThema() {
       pageContentTop={pageContentTop}
       pageContentMain={tables}
       linkListItems={linkListItems}
+      maintenanceNotificationsPageSlug="horeca"
     />
   );
 }

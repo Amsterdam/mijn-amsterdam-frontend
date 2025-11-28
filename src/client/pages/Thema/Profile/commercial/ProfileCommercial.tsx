@@ -126,6 +126,7 @@ export function MijnBedrijfsGegevensThema() {
       linkListItems={linkListItems}
       pageContentTop={pageContentTop}
       pageContentMain={<ProfileCommercialSectionPanels />}
+      maintenanceNotificationsPageSlug="kvk"
     />
   );
 }

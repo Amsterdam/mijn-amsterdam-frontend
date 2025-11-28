@@ -34,6 +34,7 @@ import type { AuthProfile } from '../auth/auth-types';
 import {
   ApiUrlEntries,
   DEFAULT_REQUEST_CACHE_TTL_MS,
+  FORCE_RENEW_CACHE_TTL_MS,
 } from '../config/source-api';
 import { captureException } from '../services/monitoring';
 
@@ -55,15 +56,25 @@ vi.mock('../config/app.ts', async (importOrigModule) => {
 vi.mock('../services/monitoring');
 
 describe('source-api-request caching', () => {
-  function fetchThings(sessionID: AuthProfile['sid'], cacheKey?: string) {
+  function fetchThings(
+    sessionID: AuthProfile['sid'],
+    cacheKey?: string,
+    forceRenew = false
+  ) {
     return requestData<[string, string]>({
       url: `${remoteApiHost}/1`,
       method: 'get',
       transformResponse: (data) => {
+        // Add encrypted sessionID to response for testing purposes.
+        // This generates a different response payload every time.
         const [value] = encrypt(sessionID);
         return [data, value];
       },
       cacheKey_UNSAFE: cacheKey,
+      cacheTimeout: forceRenew
+        ? FORCE_RENEW_CACHE_TTL_MS
+        : DEFAULT_REQUEST_CACHE_TTL_MS,
+      enableCache: true,
     });
   }
 
@@ -108,6 +119,64 @@ describe('source-api-request caching', () => {
     expect(rs2.content?.[1]).not.toBe(rs3.content?.[1]);
     expect(rs2.content?.[0]).not.toBe(rs3.content?.[0]);
     expect(rs3.content?.[0]).toBe('notfoo');
+  });
+
+  test('Correct: Forces to renew cache if cacheTimeout set to FORCE_RENEW_CACHE_TTL_MS.', async () => {
+    remoteApi.get('/1').reply(200, '"foo"');
+    remoteApi.get('/1').reply(200, '"releasefoo"');
+    remoteApi.get('/1').reply(200, '"renewedfoo"');
+
+    const SESSION_ID_1 = '123';
+
+    const rs1 = await fetchThings(
+      SESSION_ID_1,
+      createSessionBasedCacheKey(SESSION_ID_1, 'things')
+    );
+    const rs2 = await fetchThings(
+      SESSION_ID_1,
+      createSessionBasedCacheKey(SESSION_ID_1, 'things')
+    );
+
+    const [responseValue1, encryptedSessionID1] = rs1.content ?? [];
+    const [responseValue2, encryptedSessionID2] = rs2.content ?? [];
+
+    expect(responseValue1).toBe('foo');
+    expect(responseValue2).toBe(responseValue1);
+
+    // Ah yes, the encrpted sessionID is the same as well. Caching works!
+    expect(encryptedSessionID2).toBe(encryptedSessionID1);
+
+    const DO_FORCE_RENEW = true;
+
+    const rs3 = await fetchThings(
+      SESSION_ID_1,
+      createSessionBasedCacheKey(SESSION_ID_1, 'things'),
+      DO_FORCE_RENEW
+    );
+
+    // If we request again within the FORCE_RENEW_CACHE_TTL_MS period, we should get the same cached value.
+    // In other words, it takes a little time for the cache to expire.
+    const rs4 = await fetchThings(
+      SESSION_ID_1,
+      createSessionBasedCacheKey(SESSION_ID_1, 'things')
+    );
+
+    vi.advanceTimersByTime(FORCE_RENEW_CACHE_TTL_MS);
+
+    const rs5 = await fetchThings(
+      SESSION_ID_1,
+      createSessionBasedCacheKey(SESSION_ID_1, 'things')
+    );
+
+    const [responseValue3, encryptedSessionID3] = rs3.content ?? [];
+    const [responseValue4, encryptedSessionID4] = rs4.content ?? [];
+    const [responseValue5, encryptedSessionID5] = rs5.content ?? [];
+
+    expect(responseValue3).toBe('releasefoo');
+    expect(responseValue4).toBe(responseValue3);
+    expect(encryptedSessionID4).toBe(encryptedSessionID3);
+    expect(responseValue5).toBe('renewedfoo');
+    expect(encryptedSessionID5).not.toBe(encryptedSessionID3);
   });
 
   test("Correct: Doesn't use cache with different sessionID", async () => {
@@ -160,7 +229,7 @@ describe('requestData', () => {
 
   const AUTH_PROFILE_AND_TOKEN = getAuthProfileAndToken();
 
-  const CACHE_KEY_1 = `${DEFAULT_REQUEST_CACHE_TTL_MS}-get-${DUMMY_URL}-no-params-no-data-no-headers`;
+  const CACHE_KEY_1 = `get-${DUMMY_URL}-no-params-no-data-no-headers`;
 
   let axiosRequestSpy: MockInstance;
 
@@ -359,9 +428,7 @@ describe('requestData', () => {
         method: 'post',
         data: { foo: 'bar' },
       })
-    ).toStrictEqual(
-      'no-cache-timeout-post--no-params-{"foo":"bar"}-no-headers'
-    );
+    ).toStrictEqual('post--no-params-{"foo":"bar"}-no-headers');
 
     expect(
       getRequestConfigCacheKey({
@@ -369,18 +436,14 @@ describe('requestData', () => {
         url: 'http://foo',
         params: { foo: 'bar' },
       })
-    ).toStrictEqual(
-      'no-cache-timeout-get-http://foo-{"foo":"bar"}-no-data-no-headers'
-    );
+    ).toStrictEqual('get-http://foo-{"foo":"bar"}-no-data-no-headers');
 
     expect(
       getRequestConfigCacheKey({
         method: 'get',
         url: 'http://foo',
       })
-    ).toStrictEqual(
-      'no-cache-timeout-get-http://foo-no-params-no-data-no-headers'
-    );
+    ).toStrictEqual('get-http://foo-no-params-no-data-no-headers');
 
     expect(
       getRequestConfigCacheKey({
@@ -388,7 +451,7 @@ describe('requestData', () => {
         url: 'http://foo',
         cacheTimeout: 1000,
       })
-    ).toStrictEqual('1000-get-http://foo-no-params-no-data-no-headers');
+    ).toStrictEqual('get-http://foo-no-params-no-data-no-headers');
 
     expect(
       getRequestConfigCacheKey({
@@ -399,7 +462,7 @@ describe('requestData', () => {
         },
       })
     ).toStrictEqual(
-      'no-cache-timeout-get-http://foo-no-params-no-data-{"Authorization":"Bearer 123123123123"}'
+      'get-http://foo-no-params-no-data-{"Authorization":"Bearer 123123123123"}'
     );
   });
 });

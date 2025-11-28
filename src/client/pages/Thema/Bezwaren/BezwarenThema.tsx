@@ -60,6 +60,7 @@ export function BezwarenThema() {
       pageContentTop={pageContentTop}
       pageContentMain={tables}
       linkListItems={linkListItems}
+      maintenanceNotificationsPageSlug="bezwaren"
     />
   );
 }

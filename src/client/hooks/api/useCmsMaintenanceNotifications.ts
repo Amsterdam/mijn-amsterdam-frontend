@@ -1,7 +1,7 @@
 import { BFFApiUrls } from '../../config/api';
 import { useAppStateGetter } from '../useAppStateStore';
 import { useBffApi } from './useBffApi';
-import type { CMSMaintenanceNotification } from '../../../server/services/cms/cms-maintenance-notifications';
+import type { CMSMaintenanceNotification } from '../../../server/services/cms/cms-types';
 
 export function useCmsMaintenanceNotifications(
   page: string,

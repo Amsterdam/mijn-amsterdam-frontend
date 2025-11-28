@@ -5,6 +5,9 @@ import styles from './MaintenanceNotifications.module.scss';
 import { parseHTML } from '../../helpers/html-react-parse';
 import { useCmsMaintenanceNotifications } from '../../hooks/api/useCmsMaintenanceNotifications';
 
+const DEFAULT_SEVERITY = 'warning';
+const DEFAULT_HEADING = 'Onderhoudsbericht';
+
 interface MaintenanceNotificationsProps {
   page: string;
   fromApiDirectly?: boolean;
@@ -31,8 +34,12 @@ export function MaintenanceNotifications({
         return (
           <Alert
             key={notification.title + index}
-            severity="warning"
-            heading="Onderhoudsmelding"
+            severity={
+              notification.severity === 'info'
+                ? undefined
+                : notification.severity || DEFAULT_SEVERITY
+            }
+            heading={notification.title || DEFAULT_HEADING}
             headingLevel={4}
             className={classNames(styles.MaintenanceNotification, className)}
           >

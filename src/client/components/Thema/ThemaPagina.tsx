@@ -6,6 +6,7 @@ import { LinkProps } from '../../../universal/types/App.types';
 import { getRedactedClass } from '../../helpers/cobrowse';
 import ErrorAlert from '../Alert/Alert';
 import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
+import { MaintenanceNotifications } from '../MaintenanceNotifications/MaintenanceNotifications';
 import { OverviewPageV2, PageContentCell, PageContentV2 } from '../Page/Page';
 import { PageHeadingV2 } from '../PageHeading/PageHeadingV2';
 
@@ -34,6 +35,7 @@ interface ThemaPaginaProps {
   isError: boolean;
   isPartialError?: boolean;
   isLoading: boolean;
+  maintenanceNotificationsPageSlug?: string;
 }
 
 export default function ThemaPagina({
@@ -50,12 +52,18 @@ export default function ThemaPagina({
   isError,
   isPartialError,
   isLoading,
+  maintenanceNotificationsPageSlug,
 }: ThemaPaginaProps) {
   const showError = (!isError && isPartialError) || isError;
   return (
     <OverviewPageV2>
       <PageContentV2 className={getRedactedClass(id)}>
         <PageHeadingV2 breadcrumbs={breadcrumbs}>{title}</PageHeadingV2>
+        {maintenanceNotificationsPageSlug && (
+          <PageContentCell>
+            <MaintenanceNotifications page={maintenanceNotificationsPageSlug} />
+          </PageContentCell>
+        )}
         {pageContentTop}
         {!!linkListItems.length && (
           <PageContentCell>

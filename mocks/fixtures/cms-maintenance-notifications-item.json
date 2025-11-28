@@ -13,8 +13,6 @@
       "interactive": "0",
       "Cmp": "1",
       "CorDtm": "20240118",
-      "CreGebNam": "Tim van Oostrom",
-      "LstPubGebNam": "Ali Kaya",
       "title": "Technisch onderhoud",
       "Lbl": "Dashboard",
       "cluster": {
@@ -25,6 +23,10 @@
         "DefVlgNum": "0",
         "Nam": "Inhoud",
         "veld": [
+          {
+            "Nam": "Toevoeging",
+            "Wrd": "acc|prd|tst|dev"
+          },
           {
             "PagVldIdt": "21495489",
             "VlgNum": "2",
