@@ -38,7 +38,7 @@ function isOtapEnvMatch(notification: CMSMaintenanceNotification): boolean {
 function transformCMSEventResponse(
   eventData: CMSEventData
 ): CMSMaintenanceNotification {
-  if (!eventData.item || !eventData.item.page) {
+  if (!eventData.item?.page) {
     throw new Error('Invalid CMS event data format');
   }
 
