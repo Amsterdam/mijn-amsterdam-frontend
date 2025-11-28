@@ -11,9 +11,9 @@ import type {
   DecosZaakSource,
   DecosZaakBase,
   WithKentekens,
-  ZaakStatus,
   DecosFieldValue,
 } from './decos-types';
+import type { ZaakStatus } from '../../../universal/types/App.types';
 import { isDateInPast } from '../../../universal/helpers/date';
 import { entries } from '../../../universal/helpers/utils';
 import type { StatusLineItem } from '../../../universal/types/App.types';
@@ -190,13 +190,13 @@ export function getDisplayStatus<DZ extends DecosZaakBase>(
   zaak: DZ,
   steps: StatusLineItem[]
 ) {
-  const status = steps.find((step) => step.isActive)?.status;
+  const lastActiveStep = steps.findLast((step) => step.isActive)?.status;
 
-  if (status === 'Afgehandeld' && zaak.decision) {
+  if (lastActiveStep === 'Afgehandeld' && zaak.decision) {
     return zaak.decision;
   }
 
-  return status ?? 'Onbekend';
+  return lastActiveStep ?? 'Onbekend';
 }
 
 export function isZaakDecisionVerleend<DZ extends DecosZaakBase>(

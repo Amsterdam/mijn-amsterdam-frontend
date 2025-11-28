@@ -1,5 +1,5 @@
 import { HttpStatusCode } from 'axios';
-import { differenceInMonths, subMonths } from 'date-fns';
+import * as date from 'date-fns';
 import { generatePath } from 'react-router';
 
 import { getBudgetNotifications } from './stadspas-config-and-content';
@@ -7,8 +7,7 @@ import {
   fetchGpassBudgetTransactions,
   fetchGpassDiscountTransactions,
   fetchStadspassen,
-  getCurrentPasYearExpiryDate,
-  getPreviousYearsDefaultExpiryDate,
+  getActivePassYearDateRange,
   mutateGpassSetPasIsBlockedState,
 } from './stadspas-gpass-service';
 import {
@@ -30,9 +29,9 @@ import {
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
-import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureException } from '../monitoring';
+import { routes } from './hli-service-config';
 
 export async function fetchStadspas(
   authProfileAndToken: AuthProfileAndToken
@@ -52,7 +51,7 @@ export async function fetchStadspas(
       );
 
       const urlTransactions = generateFullApiUrlBFF(
-        BffEndpoints.STADSPAS_TRANSACTIONS,
+        routes.protected.STADSPAS_TRANSACTIONS,
         {
           transactionsKeyEncrypted,
         }
@@ -72,7 +71,7 @@ export async function fetchStadspas(
 
       if (featureToggle.hliThemaStadspasBlokkerenActive) {
         stadspasFrontend.blockPassURL = generateFullApiUrlBFF(
-          BffEndpoints.STADSPAS_BLOCK_PASS,
+          routes.protected.STADSPAS_BLOCK_PASS,
           {
             transactionsKeyEncrypted,
           }
@@ -81,7 +80,7 @@ export async function fetchStadspas(
 
       if (featureToggle.hliThemaStadspasDeblokkerenActive) {
         stadspasFrontend.unblockPassURL = generateFullApiUrlBFF(
-          BffEndpoints.STADSPAS_UNBLOCK_PASS,
+          routes.protected.STADSPAS_UNBLOCK_PASS,
           { transactionsKeyEncrypted }
         );
       }
@@ -89,9 +88,10 @@ export async function fetchStadspas(
       return stadspasFrontend;
     });
 
+  const [, dateEnd] = getActivePassYearDateRange(new Date());
   return apiSuccessResult({
     stadspassen,
-    dateExpiryFormatted: defaultDateFormat(getCurrentPasYearExpiryDate()),
+    dateExpiryFormatted: defaultDateFormat(dateEnd),
   });
 }
 
@@ -177,20 +177,22 @@ export async function fetchStadspasBudgetTransactions(
   budgetcode?: StadspasBudget['code'],
   verifySessionId?: AuthProfileAndToken['profile']['sid']
 ) {
-  const prev = getPreviousYearsDefaultExpiryDate();
-  const monthsAgo = differenceInMonths(new Date(), prev);
-  const MONTHS_BACK_IN_PREVIOUS_YEAR = 6;
-  const from = subMonths(
-    prev,
-    Math.max(0, MONTHS_BACK_IN_PREVIOUS_YEAR - monthsAgo)
-  );
+  const now = new Date();
+
+  const oneYearAgo = date.subYears(now, 1);
+  const [, previousExpiryDate] = getActivePassYearDateRange(oneYearAgo);
+
+  const MONTHS = 6;
+  const sixMonthsAgo = date.subMonths(now, MONTHS);
+  const dateFrom = date.min([new Date(previousExpiryDate), sixMonthsAgo]);
+
   return stadspasDecryptAndFetch(
     (administratienummer, pasnummer) =>
       fetchGpassBudgetTransactions(administratienummer, {
         pasnummer,
         budgetcode,
         sub_transactions: true,
-        date_from: from.toISOString().split('T')[0],
+        date_from: dateFrom.toISOString().split('T')[0],
         date_until: new Date().toISOString().split('T')[0],
         limit: 20,
         offset: 0,
@@ -221,7 +223,8 @@ async function blockUnBlockStadspas(
     }
 
     return apiSuccessResult({
-      [`${pasnummer}`]: !!mutateResponse.content?.isBlocked,
+      passNumber: pasnummer,
+      actief: !mutateResponse.content?.isBlocked,
     });
   }
 

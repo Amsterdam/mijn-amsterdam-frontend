@@ -4,7 +4,7 @@
 ########################################################################################################################
 ########################################################################################################################
 
-FROM node:24.3.0 AS updated-local
+FROM node:25.1.0 AS updated-local
 
 ENV TZ=Europe/Amsterdam
 ENV CI=true
@@ -16,7 +16,8 @@ RUN apt-get update \
   && apt-get dist-upgrade -y \
   && apt-get autoremove -y \
   && apt-get install -y --no-install-recommends \
-  nano
+  nano \
+  openssh-server
 
 ########################################################################################################################
 ########################################################################################################################
@@ -24,6 +25,8 @@ RUN apt-get update \
 ########################################################################################################################
 ########################################################################################################################
 FROM updated-local AS build-deps
+
+RUN npm i -g corepack --force
 
 # PNPM Setup
 ENV PNPM_HOME="/pnpm"
@@ -39,6 +42,7 @@ COPY vite.config.ts /build-space/
 COPY .env.local.template /build-space/
 COPY vendor /build-space/vendor
 COPY mocks/fixtures /build-space/mocks/fixtures
+COPY __mocks__ /build-space/__mocks__
 
 # Install the dependencies
 RUN pnpm install --frozen-lockfile --prefer-offline --reporter=append-only
@@ -86,6 +90,9 @@ ENV REACT_APP_ANALYTICS_ID=$REACT_APP_ANALYTICS_ID
 
 ARG REACT_APP_MONITORING_CONNECTION_STRING=
 ENV REACT_APP_MONITORING_CONNECTION_STRING=$REACT_APP_MONITORING_CONNECTION_STRING
+
+ARG REACT_APP_COBROWSE_LICENSE_KEY=
+ENV REACT_APP_COBROWSE_LICENSE_KEY=$REACT_APP_COBROWSE_LICENSE_KEY
 
 COPY public /build-space/public
 
@@ -175,12 +182,8 @@ CMD /usr/local/bin/docker-entrypoint-bff.sh
 
 FROM deploy-bff AS deploy-bff-az
 
-# ssh ( see also: https://github.com/Azure-Samples/docker-django-webapp-linux )
-ARG SSH_PASSWD
-ENV SSH_PASSWD=$SSH_PASSWD
-
-RUN apt-get install -y --no-install-recommends openssh-server \
-  && echo "$SSH_PASSWD" | chpasswd
+# ssh (see also: https://github.com/Azure-Samples/docker-django-webapp-linux)
+RUN --mount=type=secret,id=SSH_PASSWD export SSH_PASSWD=$(cat /run/secrets/SSH_PASSWD) && echo "$SSH_PASSWD" | chpasswd
 
 # SSH config
 COPY conf/sshd_config /etc/ssh/

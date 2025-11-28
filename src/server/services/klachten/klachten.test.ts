@@ -12,7 +12,7 @@ import { ApiConfig } from '../../config/source-api';
 describe('Klachten', () => {
   const profileAndToken = getAuthProfileAndToken();
 
-  ApiConfig.ENABLEU_2_SMILE.postponeFetch = false;
+  ApiConfig.SMILE.postponeFetch = false;
 
   afterEach(() => {
     vi.clearAllMocks();
@@ -145,6 +145,7 @@ describe('Klachten', () => {
       gewensteOplossing: '',
       onderwerp: 'Belastingen en heffingen',
       displayStatus: 'Ontvangen',
+      identifier: '28032',
       id: '28032',
       title: '28032',
       locatie: '',

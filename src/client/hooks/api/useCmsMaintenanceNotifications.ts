@@ -1,27 +1,17 @@
-import { CMSMaintenanceNotification } from '../../../server/services/cms/cms-maintenance-notifications';
-import {
-  ApiResponse_DEPRECATED,
-  apiPristineResult,
-} from '../../../universal/helpers/api';
 import { BFFApiUrls } from '../../config/api';
-import { useAppStateGetter } from '../useAppState';
-import { useDataApi } from './useDataApi';
+import { useAppStateGetter } from '../useAppStateStore';
+import { useBffApi } from './useBffApi';
+import type { CMSMaintenanceNotification } from '../../../server/services/cms/cms-maintenance-notifications';
 
 export function useCmsMaintenanceNotifications(
-  page?: string,
+  page: string,
   fromApiDirectly: boolean = false
 ) {
   const { CMS_MAINTENANCE_NOTIFICATIONS } = useAppStateGetter();
-  const [api] = useDataApi<
-    ApiResponse_DEPRECATED<CMSMaintenanceNotification[]>
-  >(
-    {
-      url:
-        BFFApiUrls.SERVICES_CMS_MAINTENANCE_NOTIFICATIONS_URL +
-        (page ? `?page=${page}` : ''),
-      postpone: !fromApiDirectly,
-    },
-    apiPristineResult([])
+  const url = new URL(BFFApiUrls.SERVICES_CMS_MAINTENANCE_NOTIFICATIONS_URL);
+  url.searchParams.append('page', page || '');
+  const api = useBffApi<CMSMaintenanceNotification[]>(
+    fromApiDirectly ? url.toString() : null
   );
 
   const notifications = fromApiDirectly

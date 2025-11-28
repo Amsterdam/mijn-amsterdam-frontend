@@ -1,13 +1,12 @@
 import { generatePath } from 'react-router';
 
 import { LeerlingenvervoerVoorzieningFrontend } from '../../../../server/services/jeugd/jeugd';
-import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { ThemaRoutesConfig } from '../../../config/thema-types';
 
 export const featureToggle = {
-  leerlingenvervoerActive: !IS_PRODUCTION,
+  leerlingenvervoerActive: true,
 };
 
 export const themaTitle = 'Onderwijs en Jeugd';
@@ -19,10 +18,12 @@ export const routeConfig = {
   themaPage: {
     path: '/jeugd',
     documentTitle: themaTitle,
+    trackingUrl: null,
   },
   listPage: {
     path: '/jeugd/lijst/:kind/:page?',
     documentTitle: themaTitle,
+    trackingUrl: null,
   },
   detailPage: {
     path: `${detailRouteBase}/:id`,

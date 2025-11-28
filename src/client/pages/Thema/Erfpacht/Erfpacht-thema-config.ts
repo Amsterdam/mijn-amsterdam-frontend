@@ -2,9 +2,7 @@ import { generatePath } from 'react-router';
 
 import {
   ErfpachtDossierFrontend,
-  ErfpachtDossierFactuurFrontend,
   ErfpachtDossiersResponse,
-  ErfpachtDossiersDetail,
 } from '../../../../server/services/erfpacht/erfpacht-types';
 import {
   IS_OT,
@@ -17,10 +15,6 @@ import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
 // Themapagina
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_DOSSIERS = 5;
-const MAX_TABLE_ROWS_ON_THEMA_PAGINA_FACTUREN =
-  MAX_TABLE_ROWS_ON_THEMA_PAGINA_DOSSIERS;
-const MAX_TABLE_ROWS_ON_DETAIL_PAGINA_FACTUREN =
-  MAX_TABLE_ROWS_ON_THEMA_PAGINA_FACTUREN;
 
 export const LINKS = {
   algemeneBepalingen:
@@ -47,8 +41,6 @@ export const linkListItems: LinkProps[] = [
 
 export const listPageParamKind = {
   erfpachtDossiers: 'erfpacht-dossiers',
-  openFacturen: 'openstaande-facturen',
-  alleFacturen: 'alle-facturen',
 } as const;
 
 export type ListPageParamKey = keyof typeof listPageParamKind;
@@ -57,6 +49,7 @@ export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 export const featureToggle = {
   erfpachtActive: true,
   vveIsActive: IS_OT || IS_TEST,
+  canonmatigingLinkActive: true,
 };
 
 export const themaId = 'ERFPACHT' as const;
@@ -73,37 +66,22 @@ export const routeConfig = {
     trackingUrl: '/erfpacht/dossier',
     documentTitle: `Erfpachtdossier | ${themaTitle}`,
   },
-  listPageOpenFacturen: {
-    path: '/erfpacht/lijst/open-facturen/:page?',
-    documentTitle: `Lijst met open facturen | ${themaTitle}`,
-  },
-  listPageAlleFacturen: {
-    path: '/erfpacht/lijst/facturen/:dossierNummerUrlParam/:page?',
-    trackingUrl: '/erfpacht/lijst/facturen-dossier',
-    documentTitle: `Lijst met facturen | ${themaTitle}`,
-  },
   listPage: {
     path: '/erfpacht/dossiers/:page?',
-    documentTitle: `Lijst met facturen | ${themaTitle}`,
+    documentTitle: `Lijst met dossiers | ${themaTitle}`,
+    trackingUrl: null,
   },
   themaPage: {
     path: '/erfpacht',
     documentTitle: `${themaTitle} | overzicht`,
+    trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
 
 type DisplayPropsDossiers = DisplayProps<ErfpachtDossierFrontend>;
-export type DisplayPropsFacturen = DisplayProps<ErfpachtDossierFactuurFrontend>;
 
-export function getTableConfig({
-  erfpachtData,
-  dossier,
-}: {
-  erfpachtData: ErfpachtDossiersResponse | null;
-  dossier?: ErfpachtDossiersDetail;
-}) {
+export function getTableConfig(erfpachtData: ErfpachtDossiersResponse | null) {
   const dossiersBase = erfpachtData?.dossiers;
-  const openFacturenBase = erfpachtData?.openstaandeFacturen;
 
   const displayPropsDossiers: DisplayPropsDossiers = {
     voorkeursadres: dossiersBase?.titelVoorkeursAdres,
@@ -111,34 +89,6 @@ export function getTableConfig({
   };
 
   const titleDossiers = erfpachtData?.titelDossiersKop;
-  const titleOpenFacturen = erfpachtData?.titelOpenFacturenKop;
-
-  const displayPropsOpenFacturen: DisplayPropsFacturen = {
-    props: {
-      dossierAdres: openFacturenBase?.titelFacturenDossierAdres,
-      factuurNummer: openFacturenBase?.titelFacturenNummer,
-      formattedFactuurBedrag: openFacturenBase?.titelFacturenFactuurBedrag,
-      status: openFacturenBase?.titelFacturenStatus,
-      vervalDatum: openFacturenBase?.titelFacturenVervaldatum,
-    },
-    colWidths: {
-      large: ['20%', '20%', '20%', '20%', '20%'],
-      small: ['0', '50%', '0', '0', '50%'],
-    },
-  };
-
-  const displayPropsAlleFacturen: DisplayPropsFacturen = {
-    props: {
-      factuurNummer: openFacturenBase?.titelFacturenNummer,
-      formattedFactuurBedrag: openFacturenBase?.titelFacturenFactuurBedrag,
-      status: openFacturenBase?.titelFacturenStatus,
-      vervalDatum: openFacturenBase?.titelFacturenVervaldatum,
-    },
-    colWidths: {
-      large: ['25%', '25%', '25%', '25%'],
-      small: ['50%', '0', '50%', '0'],
-    },
-  };
 
   const tableConfig = {
     [listPageParamKind.erfpachtDossiers]: {
@@ -148,20 +98,6 @@ export function getTableConfig({
       }),
       displayProps: displayPropsDossiers,
       maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_DOSSIERS,
-    },
-    [listPageParamKind.openFacturen]: {
-      title: titleOpenFacturen ?? 'Openstaande facturen',
-      listPageRoute: generatePath(routeConfig.listPageOpenFacturen.path, {
-        page: null,
-      }),
-      displayProps: displayPropsOpenFacturen,
-      maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_FACTUREN,
-    },
-    [listPageParamKind.alleFacturen]: {
-      title: dossier?.facturen.titelFacturen?.toLocaleLowerCase() ?? 'Facturen',
-      listPageRoute: routeConfig.listPageAlleFacturen.path,
-      displayProps: displayPropsAlleFacturen,
-      maxItems: MAX_TABLE_ROWS_ON_DETAIL_PAGINA_FACTUREN,
     },
   } as const;
 

@@ -1,3 +1,5 @@
+import { subYears } from 'date-fns';
+
 import {
   ADRES_IN_ONDERZOEK_B,
   GEMEENTE_CODE_AMSTERDAM,
@@ -6,17 +8,37 @@ import {
   ADRES_IN_ONDERZOEK_A,
 } from './brp-config';
 import {
-  BrpFrontend,
-  PersonenResponseSource,
+  DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_FROM,
+  DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_TO,
+} from './brp-service-config';
+import {
+  type BrpFrontend,
+  type PersonenResponseSource,
   type DatumSource,
+  type Adres,
+  type VerblijfplaatshistorieResponseSource,
+  type VerblijfplaatsSource,
 } from './brp-types';
+import type { Persoon, PersoonBasis, PersoonBasisSource } from './brp-types';
+import {
+  featureToggle as featureToggleBrp,
+  themaIdBRP,
+} from '../../../client/pages/Thema/Profile/Profile-thema-config';
+import { IS_PRODUCTION } from '../../../universal/config/env';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+  getFailedDependencies,
+  type ApiResponse,
+} from '../../../universal/helpers/api';
 import type { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_HOUR_MS } from '../../config/app';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
+import { getContextOperationId } from '../monitoring';
 import { fetchAuthTokenHeader } from '../ms-oauth/oauth-token';
-import type { BRPData, Persoon } from '../profile/brp.types';
+import { fetchBRP } from '../profile/brp';
 import { type BSN } from '../zorgned/zorgned-types';
 
 const TOKEN_VALIDITY_PERIOD = 1 * ONE_HOUR_MS;
@@ -25,7 +47,7 @@ const PERCENTAGE_DISTANCE_FROM_EXPIRY = 0.1;
 function fetchBenkBrpTokenHeader() {
   return fetchAuthTokenHeader(
     {
-      apiKey: 'BRP',
+      sourceApiName: 'BRP',
       tokenValidityMS:
         TOKEN_VALIDITY_PERIOD * (1 - PERCENTAGE_DISTANCE_FROM_EXPIRY),
     },
@@ -48,7 +70,7 @@ function getDatum(datum?: DatumSource): string | null {
       return datum.jaar ? `${datum.jaar}-01-01` : null;
     case 'JaarMaandDatum':
       return datum.jaar && datum.maand
-        ? `${datum.jaar}-${datum.maand.padStart(2, '0')}-01`
+        ? `${datum.jaar}-${datum.maand.toString().padStart(2, '0')}-01`
         : null;
     default:
     case 'Datum':
@@ -58,14 +80,44 @@ function getDatum(datum?: DatumSource): string | null {
   }
 }
 
-function transformBenkBrpResponse(
-  responseData: PersonenResponseSource
-): BrpFrontend | null {
-  const [persoon] = responseData.personen ?? [];
-  if (!persoon) {
-    throw new Error('No person found in Benk BRP response');
-  }
+function getAdres(verblijfplaats: VerblijfplaatsSource) {
+  const verblijfadres = verblijfplaats?.verblijfadres;
+  return {
+    locatiebeschrijving: verblijfadres?.locatiebeschrijving ?? null,
+    straatnaam: verblijfadres?.korteStraatnaam ?? null,
+    postcode: verblijfadres?.postcode ?? null,
+    woonplaatsNaam: verblijfadres?.woonplaats ?? null,
+    landnaam: verblijfadres?.land?.omschrijving ?? null,
+    huisnummer: verblijfadres?.huisnummer?.toString() || null,
+    huisnummertoevoeging: verblijfadres?.huisnummertoevoeging ?? null,
+    huisletter: verblijfadres?.huisletter ?? null,
+    begindatumVerblijf: getDatum(verblijfplaats?.datumVan) ?? null,
+    begindatumVerblijfFormatted: verblijfplaats?.datumVan?.langFormaat ?? null,
+  };
+}
 
+function getPersoonBasis(persoon: PersoonBasisSource): PersoonBasis {
+  return {
+    voornamen: persoon.naam?.voornamen ?? null,
+    geslachtsnaam: persoon.naam?.geslachtsnaam ?? null,
+    omschrijvingAdellijkeTitel:
+      persoon.naam?.adellijkeTitelPredicaat?.omschrijving ?? null,
+    voorvoegselGeslachtsnaam: persoon.naam?.voorvoegsel ?? null,
+    opgemaakteNaam: persoon.naam?.volledigeNaam ?? null,
+
+    geboortedatum: getDatum(persoon.geboorte?.datum),
+    geboortedatumFormatted: persoon.geboorte?.datum?.langFormaat ?? null,
+    geboortelandnaam: persoon.geboorte?.land?.omschrijving ?? null,
+    geboorteplaatsnaam: persoon.geboorte?.plaats?.omschrijving ?? null,
+
+    overlijdensdatum: getDatum(persoon.overlijden?.datum),
+    overlijdensdatumFormatted: persoon.overlijden?.datum?.langFormaat ?? null,
+  };
+}
+
+function transformBenkBrpResponse(
+  persoon: PersonenResponseSource['personen'][0]
+): BrpFrontend {
   let adresInOnderzoek: Persoon['adresInOnderzoek'] | null = null;
   const verblijfplaats = persoon.verblijfplaats;
 
@@ -90,26 +142,15 @@ function transformBenkBrpResponse(
 
   const responseContent: BrpFrontend = {
     persoon: {
+      ...getPersoonBasis(persoon),
       aanduidingNaamgebruikOmschrijving:
         persoon.naam?.aanduidingNaamgebruik?.omschrijving ?? null,
       bsn: persoon.burgerservicenummer ?? null,
-      geboortedatum: getDatum(persoon.geboorte?.datum),
-      geboortedatumFormatted: persoon.geboorte?.datum?.langFormaat ?? null,
-      overlijdensdatum: getDatum(persoon.overlijden?.datum),
-      overlijdensdatumFormatted: persoon.overlijden?.datum?.langFormaat ?? null,
-      geboortelandnaam: persoon.geboorte?.land?.omschrijving ?? null,
-      geboorteplaatsnaam: persoon.geboorte?.plaats?.omschrijving ?? null,
       gemeentenaamInschrijving:
         persoon.gemeenteVanInschrijving?.omschrijving ?? null,
-      voorvoegselGeslachtsnaam: persoon.naam?.voorvoegsel ?? null,
-      geslachtsnaam: persoon.naam?.geslachtsnaam ?? null,
       omschrijvingBurgerlijkeStaat:
         partner && !partner.ontbindingHuwelijkPartnerschap ? null : 'Ongehuwd', // Only for person without a partner.
       omschrijvingGeslachtsaanduiding: persoon.geslacht?.omschrijving ?? null,
-      omschrijvingAdellijkeTitel:
-        persoon.naam?.adellijkeTitelPredicaat?.omschrijving ?? null,
-      opgemaakteNaam: persoon.naam?.volledigeNaam ?? null,
-      voornamen: persoon.naam?.voornamen ?? null,
       nationaliteiten:
         persoon.nationaliteiten
           ?.filter((n) => typeof n !== 'undefined')
@@ -140,87 +181,205 @@ function transformBenkBrpResponse(
           datumSluiting: getDatum(partner.aangaanHuwelijkPartnerschap?.datum),
           datumSluitingFormatted:
             partner.aangaanHuwelijkPartnerschap?.datum?.langFormaat ?? null,
-          persoon: {
-            voornamen: partner.naam?.voornamen ?? null,
-            geslachtsnaam: partner.naam?.geslachtsnaam ?? null,
-            voorvoegselGeslachtsnaam: partner.naam?.voorvoegsel ?? null,
-            opgemaakteNaam: partner.naam?.volledigeNaam ?? null,
-            geboortelandnaam: partner.geboorte?.land?.omschrijving ?? null,
-            geboorteplaatsnaam: partner.geboorte?.plaats?.omschrijving ?? null,
-          },
+          persoon: getPersoonBasis(partner),
         }
       : null,
     ouders:
       persoon.ouders
         ?.filter(
-          (ouder) => typeof ouder !== 'undefined' && !!ouder.naam.voornamen
+          (ouder) =>
+            typeof ouder !== 'undefined' &&
+            !!(
+              ouder.naam.voornamen ||
+              ouder.naam.geslachtsnaam ||
+              ouder.naam.volledigeNaam
+            )
         )
-        .map((ouder) => ({
-          overlijdensdatum: getDatum(ouder.overlijden?.datum),
-          overlijdensdatumFormatted:
-            ouder.overlijden?.datum?.langFormaat ?? null,
-          geboortedatum: getDatum(ouder.geboorte?.datum),
-          geboortedatumFormatted: ouder.geboorte?.datum?.langFormaat ?? null,
-          opgemaakteNaam: ouder.naam?.volledigeNaam ?? null,
-          voornamen: ouder.naam?.voornamen ?? null,
-          geslachtsnaam: ouder.naam?.geslachtsnaam ?? null,
-          voorvoegselGeslachtsnaam: ouder.naam?.voorvoegsel ?? null,
-        })) ?? [],
+        .map((ouder) => getPersoonBasis(ouder)) ?? [],
     kinderen:
       persoon.kinderen
-        ?.filter((kind) => typeof kind !== 'undefined' && !!kind.naam.voornamen)
-        ?.map((kind) => ({
-          geboortedatum: getDatum(kind.geboorte?.datum) ?? null,
-          geboortedatumFormatted: kind.geboorte?.datum?.langFormaat ?? null,
-          opgemaakteNaam: kind.naam?.volledigeNaam ?? null,
-          voornamen: kind.naam?.voornamen ?? null,
-          geslachtsnaam: kind.naam?.geslachtsnaam ?? null,
-          voorvoegselGeslachtsnaam: kind.naam?.voorvoegsel ?? null,
-        })) ?? [],
-    adres: {
-      locatiebeschrijving: adres?.locatiebeschrijving ?? null,
-      straatnaam: adres?.korteStraatnaam ?? null,
-      postcode: adres?.postcode ?? null,
-      woonplaatsNaam: adres?.woonplaats ?? null,
-      landnaam: adres?.land?.omschrijving ?? null,
-      huisnummer: adres?.huisnummer?.toString() || null,
-      huisnummertoevoeging: adres?.huisnummertoevoeging ?? null,
-      huisletter: adres?.huisletter ?? null,
-      begindatumVerblijf: getDatum(persoon.verblijfplaats?.datumVan) ?? null,
-      begindatumVerblijfFormatted:
-        persoon.verblijfplaats?.datumVan?.langFormaat ?? null,
-    },
+        ?.filter(
+          (kind) =>
+            typeof kind !== 'undefined' &&
+            !!(
+              kind.naam.voornamen ||
+              kind.naam.geslachtsnaam ||
+              kind.naam.volledigeNaam
+            )
+        )
+        ?.map((kind) => getPersoonBasis(kind)) ?? [],
+    adres: verblijfplaats?.verblijfadres ? getAdres(verblijfplaats) : null,
+    adresHistorisch: [],
   };
 
   return responseContent;
 }
 
+function translateBSN(bsn: BSN): BSN {
+  const translations = getFromEnv('BFF_BENK_BSN_TRANSLATIONS', false);
+  // IS_PRODUCTION is explicitly set to exclude this code from being used in this environment.
+  if (!translations || IS_PRODUCTION) {
+    return bsn;
+  }
+
+  const translationsMap = new Map(
+    translations.split(',').map((pair) => pair.split('=')) as Iterable<
+      [string, string]
+    >
+  );
+
+  return translationsMap.get(bsn) ?? bsn;
+}
+
 export async function fetchBrpByBsn(sessionID: AuthProfile['sid'], bsn: BSN[]) {
   const response = await fetchBenkBrpTokenHeader();
+
   if (response.status !== 'OK') {
     return response;
   }
+
   const requestConfig = getApiConfig('BENK_BRP', {
     formatUrl(requestConfig) {
       return `${requestConfig.url}/personen`;
     },
     headers: {
       ...response.content,
-      'X-Correlation-ID': `fetch-brp-${sessionID}`, // Required for tracing
+      'X-Correlation-ID': getContextOperationId(sessionID), // Required for tracing
     },
     data: {
       type: 'RaadpleegMetBurgerservicenummer',
-      gemeenteVanInschrijving: GEMEENTE_CODE_AMSTERDAM,
-      burgerservicenummer: bsn,
+      burgerservicenummer: bsn.map((bsn) => translateBSN(bsn)),
     },
-    transformResponse: transformBenkBrpResponse,
   });
 
-  return requestData<BRPData>(requestConfig);
+  const brpBsnResponse =
+    await requestData<PersonenResponseSource>(requestConfig);
+
+  return brpBsnResponse;
+}
+
+export async function fetchBrpByBsnTransformed(
+  sessionID: AuthProfile['sid'],
+  bsn: BSN[]
+): Promise<ApiResponse<BrpFrontend>> {
+  const brpResponse = await fetchBrpByBsn(sessionID, bsn);
+
+  if (brpResponse.status !== 'OK' || !brpResponse.content?.personen.length) {
+    return apiErrorResult(
+      brpResponse.status === 'ERROR'
+        ? brpResponse.message
+        : 'No person found in BRP response',
+      null
+    );
+  }
+
+  const transformedContent = transformBenkBrpResponse(
+    brpResponse.content.personen[0]
+  );
+
+  const verblijfplaatshistorieResponse =
+    await fetchBrpVerblijfplaatsHistoryByBsnTransformed(
+      sessionID,
+      translateBSN(bsn[0]),
+      transformedContent.persoon.geboortedatum,
+      transformedContent.adres?.begindatumVerblijf
+    );
+
+  if (verblijfplaatshistorieResponse.status === 'OK') {
+    transformedContent.adresHistorisch = verblijfplaatshistorieResponse.content;
+  }
+
+  return apiSuccessResult(
+    transformedContent,
+    getFailedDependencies({
+      adresHistorisch: verblijfplaatshistorieResponse,
+    })
+  );
+}
+
+export async function fetchBrpVerblijfplaatsHistoryByBsn(
+  sessionID: AuthProfile['sid'],
+  bsn: BSN,
+  dateFrom?: string | null,
+  dateTo?: string | null
+) {
+  const response = await fetchBenkBrpTokenHeader();
+
+  if (response.status !== 'OK') {
+    return response;
+  }
+
+  const dateFrom_ =
+    dateFrom && dateTo && dateFrom === dateTo
+      ? subYears(dateFrom, 1).toISOString().split('T')[0]
+      : dateFrom;
+
+  const requestConfig = getApiConfig('BENK_BRP', {
+    formatUrl(requestConfig) {
+      return `${requestConfig.url}/verblijfplaatshistorie`;
+    },
+    headers: {
+      ...response.content,
+      'X-Correlation-ID': getContextOperationId(sessionID), // Required for tracing
+    },
+    data: {
+      type: 'RaadpleegMetPeriode',
+      burgerservicenummer: bsn,
+      datumVan: dateFrom_ ?? DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_FROM,
+      datumTot: dateTo ?? DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_TO,
+    },
+  });
+
+  return requestData<VerblijfplaatshistorieResponseSource>(requestConfig);
+}
+
+function transformBenkBrpVerblijfplaatsHistoryResponse(
+  responseData: VerblijfplaatshistorieResponseSource
+): Adres[] {
+  return responseData.verblijfplaatsen.map((verblijfplaats) =>
+    getAdres(verblijfplaats)
+  );
+}
+
+export async function fetchBrpVerblijfplaatsHistoryByBsnTransformed(
+  sessionID: AuthProfile['sid'],
+  bsn: BSN,
+  dateFrom?: string | null,
+  dateTo?: string | null
+): Promise<ApiResponse<Adres[]>> {
+  const verblijfplaatsenResponse = await fetchBrpVerblijfplaatsHistoryByBsn(
+    sessionID,
+    bsn,
+    dateFrom,
+    dateTo
+  );
+
+  if (
+    verblijfplaatsenResponse.status !== 'OK' ||
+    verblijfplaatsenResponse.content === null
+  ) {
+    return verblijfplaatsenResponse;
+  }
+
+  const transformedContent = transformBenkBrpVerblijfplaatsHistoryResponse(
+    verblijfplaatsenResponse.content
+  );
+
+  return apiSuccessResult(transformedContent);
 }
 
 export async function fetchBrpV2(authProfileAndToken: AuthProfileAndToken) {
-  return fetchBrpByBsn(authProfileAndToken.profile.sid, [
+  if (!featureToggleBrp[themaIdBRP].benkBrpServiceActive) {
+    return fetchBRP(authProfileAndToken);
+  }
+  return fetchBrpByBsnTransformed(authProfileAndToken.profile.sid, [
     authProfileAndToken.profile.id,
   ]);
 }
+
+export const forTesting = {
+  fetchBenkBrpTokenHeader,
+  getDatum,
+  transformBenkBrpResponse,
+  translateBSN,
+};

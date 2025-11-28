@@ -2,11 +2,12 @@ import { ReactNode } from 'react';
 
 import { LinkList, Grid, Paragraph } from '@amsterdam/design-system-react';
 
+import { themaIdBRP } from './Profile-thema-config';
 import styles from './ProfileSectionPanel.module.scss';
-import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
+import { getRedactedClass } from '../../../helpers/cobrowse';
 import { useSmallScreen } from '../../../hooks/media.hook';
 
 export interface ActionLink {
@@ -58,7 +59,7 @@ function getRows(sectionData: ProfileSectionData) {
       content: value,
       isVisible: !!value,
       classNameLabel: styles.Label,
-      classNameContent: `${styles.Content} ${FeatureToggle.cobrowseIsActive ? 'cobrowse-redacted' : ''}`,
+      classNameContent: `${styles.Content} ${getRedactedClass(themaIdBRP, 'content')}`,
     };
   });
 }
@@ -68,13 +69,13 @@ type ProfilePanelProps = {
   sectionData: ProfileSectionData | ProfileSectionData[];
   startCollapsed?: boolean;
   title?: string;
-  subTitle?: string;
+  contentAfterTheTitle?: string;
 };
 
 export function ProfileSectionPanel({
   sectionData,
   title,
-  subTitle,
+  contentAfterTheTitle,
   actionLinks,
   startCollapsed = true,
 }: ProfilePanelProps) {
@@ -83,7 +84,9 @@ export function ProfileSectionPanel({
   return (
     <PageContentCell>
       <CollapsiblePanel title={title ?? ''} startCollapsed={startCollapsed}>
-        {subTitle && <Paragraph className="ams-mb-m">{subTitle}</Paragraph>}
+        {contentAfterTheTitle && (
+          <Paragraph className="ams-mb-m">{contentAfterTheTitle}</Paragraph>
+        )}
         <Grid className={styles.ProfileSectionPanelGrid}>
           <Grid.Cell start={1} span={{ narrow: 4, medium: 5, wide: 7 }}>
             {sections.map((sectionData, index) => (

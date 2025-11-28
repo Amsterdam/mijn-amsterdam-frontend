@@ -158,7 +158,7 @@ describe('stadspas services', () => {
         balance: 0,
         balanceFormatted: '€0,00',
         blockPassURL:
-          'http://bff-api-host/api/v1/services/stadspas/block/1x2x3x-##########-4x5x6x',
+          'http://bff-api-host/api/v1/services/stadspas/block/1x2x3x-%23%23%23%23%23%23%23%23%23%23-4x5x6x',
         budgets: [
           {
             budgetAssigned: 150,
@@ -190,9 +190,9 @@ describe('stadspas services', () => {
         securityCode: '012345',
         transactionsKeyEncrypted: '1x2x3x-##########-4x5x6x',
         unblockPassURL:
-          'http://bff-api-host/api/v1/services/stadspas/unblock/1x2x3x-##########-4x5x6x',
+          'http://bff-api-host/api/v1/services/stadspas/unblock/1x2x3x-%23%23%23%23%23%23%23%23%23%23-4x5x6x',
         urlTransactions:
-          'http://bff-api-host/api/v1/services/stadspas/transactions/1x2x3x-##########-4x5x6x',
+          'http://bff-api-host/api/v1/services/stadspas/transactions/1x2x3x-%23%23%23%23%23%23%23%23%23%23-4x5x6x',
       });
     });
 
@@ -544,7 +544,8 @@ describe('stadspas services', () => {
 
       expect(response).toStrictEqual({
         content: {
-          '123123123': true,
+          actief: false,
+          passNumber: 123123123,
         },
         status: 'OK',
       });
@@ -575,7 +576,8 @@ describe('stadspas services', () => {
 
       expect(response).toStrictEqual({
         content: {
-          '123123123': false,
+          actief: true,
+          passNumber: 123123123,
         },
         status: 'OK',
       });

@@ -14,7 +14,7 @@ import {
 } from './TableV2.types';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { entries } from '../../../universal/helpers/utils';
-import { ZaakDetail } from '../../../universal/types/App.types';
+import { ZaakAanvraagDetail } from '../../../universal/types/App.types';
 import { useSmallScreen } from '../../hooks/media.hook';
 import { MaRouterLink } from '../MaLink/MaLink';
 
@@ -70,9 +70,9 @@ function getColWidth(
   return colWidths[size]?.filter((value) => parseInt(value, 10) !== 0)[index];
 }
 
-export function TableV2<T extends object = ZaakDetail>({
+export function TableV2<T extends object = ZaakAanvraagDetail>({
   caption,
-  subTitle,
+  contentAfterTheCaption,
   items,
   displayProps,
   className,
@@ -92,11 +92,15 @@ export function TableV2<T extends object = ZaakDetail>({
   return (
     <>
       {!!caption && (
-        <Heading level={3} size="level-2">
+        <Heading
+          level={3}
+          size="level-2"
+          className={contentAfterTheCaption ? 'ams-mb-s' : ''}
+        >
           {caption}
         </Heading>
       )}
-      {subTitle}
+      {contentAfterTheCaption}
       <Table className={classNames(styles.TableV2, className)}>
         {showTHead && (
           <Table.Header>
@@ -130,8 +134,12 @@ export function TableV2<T extends object = ZaakDetail>({
             const key = String(
               ('id' in item ? item.id : `item-${index}`) ?? `tr-${index}`
             );
+            const className =
+              'className' in item && item.className
+                ? (item.className as string)
+                : '';
             return (
-              <Table.Row key={key}>
+              <Table.Row key={key} className={className}>
                 {displayPropEntries.map(([key]) => {
                   return (
                     <Table.Cell key={`td-${key}`}>

@@ -1,12 +1,10 @@
 import { render, waitFor } from '@testing-library/react';
 import { generatePath } from 'react-router';
-import { MutableSnapshot } from 'recoil';
 
 import { routeConfig } from './Afis-thema-config';
 import { AfisList } from './AfisList';
 import { bffApi } from '../../../../testing/utils';
 import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
 const businessPartnerIdEncrypted = 'yyy-456-yyy';
@@ -49,10 +47,6 @@ const testState = {
   },
 } as unknown as AppState;
 
-function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState);
-}
-
 describe('<AfisFacturen />', () => {
   const routePath = routeConfig.listPage.path;
 
@@ -68,7 +62,7 @@ describe('<AfisFacturen />', () => {
           routeEntry={routeEntry}
           routePath={routePath}
           component={AfisList}
-          initializeState={initializeState}
+          state={testState}
         />
       );
     }
@@ -88,41 +82,29 @@ describe('<AfisFacturen />', () => {
       )
       .reply(200, {
         content: {
-          afgehandeld: {
-            count: 1,
-            facturen: [
-              {
-                id: '1',
-                factuurDocumentId: '1',
-                afzender: 'Company D',
-                datePublished: '2023-04-01',
-                datePublishedFormatted: '1 april 2023',
-                paymentDueDate: '2023-05-01',
-                paymentDueDateFormatted: '1 mei 2023',
-                debtClearingDate: null,
-                debtClearingDateFormatted: null,
-                amountOriginal: 1500,
-                amountOriginalFormatted: '€ 1.500,00',
-                factuurNummer: 'F001',
-                factuurNummerEl: 'F001',
-                status: 'betaald',
-                statusDescription: 'Betaalde description',
-                paylink: null,
-                documentDownloadLink: 'https://download.example.com/F004',
-              },
-            ],
-          },
-        },
-        status: 'OK',
-      });
-
-    bffApi
-      .get(`/services/afis/facturen/overzicht?id=${businessPartnerIdEncrypted}`)
-      .reply(200, {
-        content: {
-          open: { count: 0, facturen: [] },
-          afgehandeld: { facturen: [], count: 0 },
-          overgedragen: { facturen: [], count: 0 },
+          count: 1,
+          state: 'afgehandeld',
+          facturen: [
+            {
+              id: '1',
+              factuurDocumentId: '1',
+              afzender: 'Company D',
+              datePublished: '2023-04-01',
+              datePublishedFormatted: '1 april 2023',
+              paymentDueDate: '2023-05-01',
+              paymentDueDateFormatted: '1 mei 2023',
+              debtClearingDate: null,
+              debtClearingDateFormatted: null,
+              amountOriginal: 1500,
+              amountOriginalFormatted: '€ 1.500,00',
+              factuurNummer: 'F001',
+              factuurNummerEl: 'F001',
+              status: 'betaald',
+              statusDescription: 'Betaalde description',
+              paylink: null,
+              documentDownloadLink: 'https://download.example.com/F004',
+            },
+          ],
         },
         status: 'OK',
       });
@@ -138,7 +120,7 @@ describe('<AfisFacturen />', () => {
           routeEntry={routeEntry}
           routePath={routePath}
           component={AfisList}
-          initializeState={initializeState}
+          state={testState}
         />
       );
     }
@@ -150,8 +132,4 @@ describe('<AfisFacturen />', () => {
       expect(screen.queryByText('15 mei 2023')).not.toBeInTheDocument();
     });
   });
-
-  test('Partial error display', () => {});
-
-  test('Error display', () => {});
 });

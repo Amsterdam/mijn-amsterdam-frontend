@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 import { generatePath } from 'react-router';
 
 import { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
@@ -13,6 +15,7 @@ const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 const displayPropsHuidigeRegelingen: DisplayProps<HLIRegelingFrontend> = {
   props: {
     detailLinkComponent: 'Regeling',
+    ...(!IS_PRODUCTION && { betrokkenen: 'Ontvangers' }),
   },
   colWidths: {
     large: ['80%', '20%'],
@@ -24,11 +27,25 @@ const displayPropsEerdereRegelingen: DisplayProps<HLIRegelingFrontend> = {
   props: {
     detailLinkComponent: 'Regeling',
     displayStatus: 'Status',
+    ...(!IS_PRODUCTION && { betrokkenen: 'Ontvangers' }),
   },
   colWidths: {
     large: ['80%', '20%'],
     small: ['100%', '0'],
   },
+};
+
+type SpecificatieDisplayProps = {
+  datePublishedFormatted: ReactNode;
+  // We don't use category just yet, since we only have one type of category at the moment.
+  // This is shown in the title of the specificatie table.
+  category: ReactNode;
+  documentUrl: ReactNode;
+};
+
+const specificatieDisplayProps: DisplayProps<SpecificatieDisplayProps> = {
+  datePublishedFormatted: 'Datum',
+  documentUrl: 'Document',
 };
 
 export const listPageParamKind = {
@@ -49,11 +66,12 @@ export const featureToggle = {
   hliThemaRegelingenActive: true,
   hliRegelingEnabledCZM: true,
   hliRegelingEnabledRTM: !IS_PRODUCTION,
-  hli2025PCTegoedCodesEnabled: !IS_PRODUCTION,
 } as const;
 
 export const themaId = 'HLI' as const;
 export const themaTitle = 'Stadspas en regelingen bij laag inkomen' as const;
+export const regelingenTitle = 'Regelingen bij laag inkomen' as const;
+export const stadspasTitle = 'Stadspas' as const;
 
 export const routeConfig = {
   detailPage: {
@@ -69,14 +87,21 @@ export const routeConfig = {
     trackingUrl: '/regelingen-bij-laag-inkomen/stadspas',
     documentTitle: `Stadspas | ${themaTitle}`,
   },
-  listPage: {
+  specificatieListPage: {
+    path: '/regelingen-bij-laag-inkomen/lijst/specificaties/:page?',
+    documentTitle: `Specificaties | ${themaTitle}`,
+    trackingUrl: null,
+  },
+  regelingenListPage: {
     path: '/regelingen-bij-laag-inkomen/lijst/:kind/:page?',
     documentTitle: (params) =>
       `${params?.kind === listPageParamKind.historic ? 'Eerdere' : 'Huidige'} regelingen | ${themaTitle}`,
+    trackingUrl: null,
   },
   themaPage: {
     path: '/regelingen-bij-laag-inkomen',
     documentTitle: `${themaTitle} | overzicht`,
+    trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
 
@@ -110,7 +135,7 @@ export const tableConfig = {
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsHuidigeRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-    listPageRoute: generatePath(routeConfig.listPage.path, {
+    listPageRoute: generatePath(routeConfig.regelingenListPage.path, {
       kind: listPageParamKind.lopend,
       page: null,
     }),
@@ -122,7 +147,7 @@ export const tableConfig = {
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsHuidigeRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-    listPageRoute: generatePath(routeConfig.listPage.path, {
+    listPageRoute: generatePath(routeConfig.regelingenListPage.path, {
       kind: listPageParamKind.actual,
       page: null,
     }),
@@ -133,9 +158,19 @@ export const tableConfig = {
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsEerdereRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER,
-    listPageRoute: generatePath(routeConfig.listPage.path, {
+    listPageRoute: generatePath(routeConfig.regelingenListPage.path, {
       kind: listPageParamKind.historic,
       page: null,
     }),
   },
 } as const;
+
+export const specificatieTableConfig = {
+  title: 'Specificaties regeling tegemoetkoming meerkosten',
+  sort: dateSort('datePublished', 'desc'),
+  displayProps: specificatieDisplayProps,
+  maxItems: 3,
+  listPageRoute: generatePath(routeConfig.specificatieListPage.path, {
+    page: null,
+  }),
+};

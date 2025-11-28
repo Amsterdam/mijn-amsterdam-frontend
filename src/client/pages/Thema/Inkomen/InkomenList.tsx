@@ -10,6 +10,7 @@ export function InkomenList() {
     kind: Exclude<ListPageParamKind, 'jaaropgaven' | 'uitkering'>;
   }>();
   const {
+    id,
     zaken,
     tableConfig,
     isLoadingWpi,
@@ -22,6 +23,7 @@ export function InkomenList() {
 
   return (
     <ListPagePaginated
+      themaId={id}
       items={zaken.filter(listPageTableConfig.filter)}
       title={listPageTableConfig.title}
       appRoute={listPageTableConfig.listPageRoute}

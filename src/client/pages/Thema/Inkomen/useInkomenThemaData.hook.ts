@@ -8,7 +8,6 @@ import {
   themaTitle,
 } from './Inkomen-thema-config';
 import { linkListItems } from './Inkomen-thema-config';
-import { useAddDocumentLinkComponents } from './useAddDocumentLinks';
 import { WpiRequestProcess } from '../../../../server/services/wpi/wpi-types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import {
@@ -16,7 +15,8 @@ import {
   dateSort,
 } from '../../../../universal/helpers/date';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
-import { useAppStateGetter } from '../../../hooks/useAppState';
+import { useAddDocumentLinkComponents } from '../../../data-transform/useAddDocumentLinks';
+import { useAppStateGetter } from '../../../hooks/useAppStateStore';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 
 export function useInkomenThemaData() {
@@ -92,6 +92,7 @@ export function useInkomenThemaData() {
     zaken,
     specificaties,
     jaaropgaven,
+    id: themaId,
     title: themaTitle,
     linkListItems,
     isLoadingWpi,

@@ -1015,13 +1015,15 @@ function sheetThemaContent(resultsByUser: ResultsByUser): SheetData {
         return acc;
       }, base);
 
-      // Add the count of all the different kinds of verguninngen.
-      for (const vergunning of serviceResults.VERGUNNINGEN.content) {
-        const id = vergunning.caseType;
-        if (!resVal[id]) {
-          resVal[id] = 1;
-        } else {
-          (resVal[id] as number)++;
+      if (Array.isArray(serviceResults.VERGUNNINGEN?.content)) {
+        // Add the count of all the different kinds of verguninngen.
+        for (const vergunning of serviceResults.VERGUNNINGEN.content) {
+          const id = vergunning.caseType;
+          if (!resVal[id]) {
+            resVal[id] = 1;
+          } else {
+            (resVal[id] as number)++;
+          }
         }
       }
 

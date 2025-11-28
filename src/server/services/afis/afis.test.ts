@@ -13,11 +13,11 @@ const mocks = vi.hoisted(() => {
   };
 });
 
-vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => {
+vi.mock('../../helpers/encrypt-decrypt', async (importOriginal) => {
   const original: object = await importOriginal();
   return {
     ...original,
-    encryptSessionIdWithRouteIdParam: vi
+    encryptPayloadAndSessionID: vi
       .fn()
       .mockReturnValue(mocks.MOCK_VALUE_ENCRYPTED),
     decrypt: vi.fn().mockReturnValue(mocks.MOCK_VALUE_DECRYPTED),
@@ -102,14 +102,17 @@ describe('fetchIsKnownInAFIS ', () => {
           afgehandeld: {
             count: 0,
             facturen: [],
+            state: 'afgehandeld',
           },
           open: {
             count: 0,
             facturen: [],
+            state: 'open',
           },
           overgedragen: {
             count: 0,
             facturen: [],
+            state: 'overgedragen',
           },
         },
         isKnown: true,

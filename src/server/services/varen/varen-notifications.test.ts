@@ -2,8 +2,10 @@ import MockDate from 'mockdate';
 import { describe, expect, it } from 'vitest';
 
 import {
+  DecosVarenZaakVergunning,
   VarenRegistratieRederType,
   VarenVergunningExploitatieType,
+  ZaakVergunningExploitatieType,
 } from './config-and-types';
 import { fetchVarenNotifications } from './varen-notifications';
 import { getAuthProfileAndToken } from '../../../testing/utils';
@@ -13,6 +15,24 @@ import {
 } from '../../../universal/helpers/api';
 import * as decos from '../decos/decos-service';
 
+const vergunning = {
+  vesselLength: '2,31',
+  vesselWidth: '2,32',
+  segment: 'Onbemand',
+  eniNumber: '7654321',
+  vesselName: 'Titanic',
+  id: 'Z-25-0000001-10001',
+  identifier: 'Z/25/0000001/10001',
+} as DecosVarenZaakVergunning;
+
+const vergunningContent = {
+  ...vergunning,
+  itemType: 'varens',
+  caseType: null,
+  title: 'Varen vergunning exploitatie',
+  dateStart: '2025-01-03T00:00:00',
+} as unknown as VarenVergunningExploitatieType;
+
 const exploitatieBase_ = {
   vesselName: 'boatName',
   id: 'Z-25-0000001',
@@ -20,20 +40,21 @@ const exploitatieBase_ = {
   key: 'ABCDEF0123456789ABCDEF0123456789',
   caseType: 'Varen vergunning exploitatie',
   title: 'Varen vergunning exploitatie',
-  status: 'In behandeling',
   decision: null,
   processed: false,
   dateRequest: '2025-01-01T00:00:00',
   statusDates: [],
   termijnDates: [],
-} satisfies Partial<VarenVergunningExploitatieType>;
+} satisfies Partial<ZaakVergunningExploitatieType>;
 const exploitatieBase =
-  exploitatieBase_ as unknown as VarenVergunningExploitatieType;
+  exploitatieBase_ as unknown as ZaakVergunningExploitatieType;
 
+const TODAY_DATE = '2025-01-20T00:00:00';
+const TOMMORROW_DATE = '2025-01-21T00:00:00';
 describe('Notifications', () => {
   const authProfileAndToken = getAuthProfileAndToken();
 
-  MockDate.set('2025-01-20');
+  MockDate.set(TODAY_DATE);
 
   it('should respond with an error response if fetchDecosZaken returns an error', async () => {
     vi.spyOn(decos, 'fetchDecosZaken').mockResolvedValueOnce(
@@ -43,8 +64,8 @@ describe('Notifications', () => {
     const response = await fetchVarenNotifications(authProfileAndToken);
     const errorResponse = {
       content: null,
-      message: 'Error fetching Varen zaken data',
-      status: 'ERROR',
+      message: '[VAREN] Failed dependencies',
+      status: 'DEPENDENCY_ERROR',
     };
     expect(response).toStrictEqual(errorResponse);
   });
@@ -55,11 +76,16 @@ describe('Notifications', () => {
     const zaakOlderThen3Months = {
       ...exploitatieBase,
       dateRequest: '2024-09-01T00:00:00',
+      processed: true,
+      decision: 'Verleend',
     };
 
-    vi.spyOn(decos, 'fetchDecosZaken').mockResolvedValueOnce(
-      apiSuccessResult([zaakRecent, zaakOlderThen3Months])
-    );
+    vi.spyOn(decos, 'fetchDecosZaken')
+      .mockResolvedValueOnce(apiSuccessResult([]))
+      .mockResolvedValueOnce(
+        apiSuccessResult([zaakRecent, zaakOlderThen3Months])
+      )
+      .mockResolvedValueOnce(apiSuccessResult([]));
 
     const { content } = await fetchVarenNotifications(authProfileAndToken);
 
@@ -74,16 +100,13 @@ describe('Notifications', () => {
       id: 'Z-25-0000001',
       caseType: 'Varen registratie reder',
       dateRequest: '2025-01-01T00:00:00',
-      termijnDates: [],
-      statusDates: [],
     } satisfies Partial<VarenRegistratieRederType>;
     const rederRegistratie =
       rederRegistratie_ as unknown as VarenRegistratieRederType;
 
-    vi.spyOn(decos, 'fetchDecosZaken').mockResolvedValueOnce(
-      apiSuccessResult([rederRegistratie])
-    );
-
+    vi.spyOn(decos, 'fetchDecosZaken')
+      .mockResolvedValueOnce(apiSuccessResult([rederRegistratie]))
+      .mockResolvedValue(apiSuccessResult([]));
     const response = await fetchVarenNotifications(authProfileAndToken);
     const successResponse = {
       status: 'OK',
@@ -91,14 +114,14 @@ describe('Notifications', () => {
         notifications: [
           {
             themaID: 'VAREN',
-            themaTitle: 'Passagiers- en beroepsvaart',
+            themaTitle: 'Passagiersvaart',
             id: 'varen-Z-25-0000001-reder-notification',
             datePublished: rederRegistratie.dateRequest,
             title: 'Reder geregistreerd',
             description: 'U heeft zich geregistreerd.',
             link: {
               title: 'Bekijk details',
-              to: '/passagiers-en-beroepsvaart',
+              to: '/varen',
             },
           },
         ],
@@ -110,7 +133,7 @@ describe('Notifications', () => {
   it('should show a notification for every zaak', async () => {
     const zaakInProgress = {
       ...exploitatieBase,
-    } as unknown as VarenVergunningExploitatieType;
+    } as unknown as ZaakVergunningExploitatieType;
 
     const zaakMeerInformatieTermijn = {
       status: 'Meer informatie nodig',
@@ -120,17 +143,20 @@ describe('Notifications', () => {
     const zaakMeerInformatie = {
       ...exploitatieBase,
       termijnDates: [zaakMeerInformatieTermijn],
-    } as unknown as VarenVergunningExploitatieType;
+    } as unknown as ZaakVergunningExploitatieType;
 
     const zaakDecision = {
       ...exploitatieBase,
       processed: true,
       dateDecision: '2025-01-20T00:00:00',
-    } as unknown as VarenVergunningExploitatieType;
+    } as unknown as ZaakVergunningExploitatieType;
 
-    vi.spyOn(decos, 'fetchDecosZaken').mockResolvedValueOnce(
-      apiSuccessResult([zaakInProgress, zaakMeerInformatie, zaakDecision])
-    );
+    vi.spyOn(decos, 'fetchDecosZaken')
+      .mockResolvedValueOnce(apiSuccessResult([]))
+      .mockResolvedValueOnce(
+        apiSuccessResult([zaakInProgress, zaakMeerInformatie, zaakDecision])
+      )
+      .mockResolvedValueOnce(apiSuccessResult([]));
 
     const response = await fetchVarenNotifications(authProfileAndToken);
     const successResponse = {
@@ -139,43 +165,92 @@ describe('Notifications', () => {
         notifications: [
           {
             themaID: 'VAREN',
-            themaTitle: 'Passagiers- en beroepsvaart',
+            themaTitle: 'Passagiersvaart',
             id: 'varen-Z-25-0000001-inbehandeling-notification',
             title: 'Aanvraag Varen vergunning exploitatie in behandeling',
-            description: 'Wij hebben uw aanvraag in behandeling genomen.',
+            description:
+              'Wij hebben uw aanvraag voor vaartuig "boatName" in behandeling genomen.',
             datePublished: zaakInProgress.dateRequest,
             link: {
               title: 'Bekijk details',
-              to: '/passagiers-en-beroepsvaart/vergunning/varen-vergunning-exploitatie/Z-25-0000001',
+              to: '/varen/vergunningen/varen-vergunning-exploitatie/Z-25-0000001',
             },
           },
           {
             themaID: 'VAREN',
-            themaTitle: 'Passagiers- en beroepsvaart',
+            themaTitle: 'Passagiersvaart',
             id: 'varen-Z-25-0000001-meerinformatienodig-notification',
             title:
               'Meer informatie nodig omtrent uw Varen vergunning exploitatie aanvraag',
             description:
-              'Er is meer informatie nodig om de aanvraag verder te kunnen verwerken.',
+              'Wij hebben meer informatie nodig om uw aanvraag voor vaartuig "boatName" verder te kunnen verwerken.',
             datePublished: zaakMeerInformatieTermijn.dateStart,
             link: {
               title: 'Bekijk details',
-              to: '/passagiers-en-beroepsvaart/vergunning/varen-vergunning-exploitatie/Z-25-0000001',
+              to: '/varen/vergunningen/varen-vergunning-exploitatie/Z-25-0000001',
             },
           },
           {
             themaID: 'VAREN',
-            themaTitle: 'Passagiers- en beroepsvaart',
+            themaTitle: 'Passagiersvaart',
             id: 'varen-Z-25-0000001-afgehandeld-notification',
             title: 'Aanvraag Varen vergunning exploitatie afgehandeld',
-            description: 'Wij hebben uw aanvraag afgehandeld.',
+            description:
+              'Wij hebben uw aanvraag voor vaartuig "boatName" afgehandeld.',
             datePublished: zaakDecision.dateDecision,
             link: {
               title: 'Bekijk details',
-              to: '/passagiers-en-beroepsvaart',
+              to: '/varen/vergunningen/varen-vergunning-exploitatie/Z-25-0000001',
             },
           },
         ],
+      },
+    };
+    expect(response).toStrictEqual(successResponse);
+  });
+
+  it('should show a notification for every vergunning', async () => {
+    vi.spyOn(decos, 'fetchDecosZaken')
+      .mockResolvedValueOnce(apiSuccessResult([]))
+      .mockResolvedValueOnce(apiSuccessResult([]))
+      .mockResolvedValueOnce(apiSuccessResult([vergunningContent]));
+
+    const response = await fetchVarenNotifications(authProfileAndToken);
+    const successResponse = {
+      status: 'OK',
+      content: {
+        notifications: [
+          {
+            datePublished: '2025-01-03T00:00:00',
+            description: 'U hebt een vergunning gekregen voor "Titanic".',
+            id: 'varen-Z-25-0000001-10001-vergunning-notification',
+            link: {
+              title: 'Bekijk details',
+              to: '/varen/vergunningen/Z-25-0000001-10001',
+            },
+            themaID: 'VAREN',
+            themaTitle: 'Passagiersvaart',
+            title: 'Varen vergunning exploitatie',
+          },
+        ],
+      },
+    };
+    expect(response).toStrictEqual(successResponse);
+  });
+
+  it('should not show a notification for a vergunning with a start date in the future', async () => {
+    vi.spyOn(decos, 'fetchDecosZaken')
+      .mockResolvedValueOnce(apiSuccessResult([]))
+      .mockResolvedValueOnce(apiSuccessResult([]))
+      .mockResolvedValueOnce(
+        apiSuccessResult([{ ...vergunningContent, dateStart: TOMMORROW_DATE }])
+      );
+
+    const response = await fetchVarenNotifications(authProfileAndToken);
+    const successResponse = {
+      status: 'OK',
+      content: {
+        notifications: [],
       },
     };
     expect(response).toStrictEqual(successResponse);

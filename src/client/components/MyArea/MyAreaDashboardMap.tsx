@@ -6,18 +6,19 @@ import Map from './Map/Map';
 import styles from './MyAreaDashboard.module.scss';
 import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
 import { CustomLatLonMarker, HomeIconMarker } from './MyAreaMarker';
-import { BAGData } from '../../../server/services/bag/bag.types';
+import { BAGLocation } from '../../../server/services/bag/bag.types';
 import { HOOD_ZOOM } from '../../../universal/config/myarea-datasets';
 import { isLoading } from '../../../universal/helpers/api';
 import { getFullAddress } from '../../../universal/helpers/brp';
 import iconUrlCommercialSecondary from '../../assets/icons/map/homeSecondaryCommercial.svg';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
-import { useAppStateGetter } from '../../hooks/useAppState';
+import { useAppStateGetter } from '../../hooks/useAppStateStore';
 
 export function MyAreaDashboardMap() {
   const { MY_LOCATION } = useAppStateGetter();
   const locations = (MY_LOCATION.content || []).filter(
-    (location: BAGData | null): location is BAGData => !!location?.latlng
+    (location: BAGLocation | null): location is BAGLocation =>
+      !!location?.latlng
   );
   const [primaryLocation, ...secondaryLocations] = locations;
   const center: LatLngLiteral | undefined =

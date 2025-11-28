@@ -10,6 +10,7 @@ import { nl } from 'date-fns/locale/nl';
 
 // See https://date-fns.org/v1.30.1/docs/format for more formatting options
 const DEFAULT_DATE_FORMAT = 'dd MMMM yyyy';
+const ISO_DATE_FORMAT = 'yyyy-MM-dd';
 
 export function dateFormat(datestr: string | Date | number, fmt: string) {
   if (!datestr) {
@@ -27,6 +28,10 @@ export function dateFormat(datestr: string | Date | number, fmt: string) {
 
 export function defaultDateFormat(datestr: string | Date | number) {
   return dateFormat(datestr, DEFAULT_DATE_FORMAT);
+}
+
+export function isoDateFormat(datestr: string | Date | number) {
+  return dateFormat(datestr, ISO_DATE_FORMAT);
 }
 
 export function defaultDateTimeFormat(datestr: string | Date | number) {
@@ -77,6 +82,15 @@ export function isDateInPast(
   }
   const date_ = parseISO(date);
   return date_.getTime() <= dateNow.getTime();
+}
+/**
+ * Checks if date is a date in the future, dateNow _is_ included.
+ */
+export function isDateInFuture(
+  date: string,
+  dateNow: string | Date = new Date()
+) {
+  return !isDateInPast(date, dateNow);
 }
 
 export function dateSort<T extends object>(

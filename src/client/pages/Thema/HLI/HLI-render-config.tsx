@@ -3,6 +3,7 @@ import { themaId, routeConfig, featureToggle } from './HLI-thema-config';
 import { HLIDetail } from './HLIDetail';
 import { default as HLIIcon } from './HLIIcon.svg?react';
 import { HLIList } from './HLIList';
+import { HLISpecificatieList } from './HLISpecificatieList';
 import { HLIStadspasDetail } from './HLIStadspasDetail';
 import { HLIThema } from './HLIThema';
 import { isLoading } from '../../../../universal/helpers/api';
@@ -24,7 +25,12 @@ export const HLIRoutes = [
     isActive: featureToggle.hliActive,
   },
   {
-    route: routeConfig.listPage.path,
+    route: routeConfig.specificatieListPage.path,
+    Component: HLISpecificatieList,
+    isActive: featureToggle.hliRegelingEnabledRTM,
+  },
+  {
+    route: routeConfig.regelingenListPage.path,
     Component: HLIList,
     isActive: featureToggle.hliActive,
   },
@@ -42,6 +48,7 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
   id: themaId,
   to: routeConfig.themaPage.path,
   profileTypes: ['private'],
+  redactedScope: 'full',
   isActive(appState: AppState) {
     const hasStadspas =
       !!appState.HLI?.content?.stadspas?.stadspassen?.length &&

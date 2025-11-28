@@ -1,8 +1,13 @@
+import ibantools from 'ibantools';
+
 import { getAfisApiConfig, getFeedEntryProperties } from './afis-helpers';
+import { featureToggle } from './afis-service-config';
 import {
   AfisApiFeedResponseSource,
   AfisBusinessPartnerAddress,
   AfisBusinessPartnerAddressSource,
+  AfisBusinessPartnerBankAccount,
+  AfisBusinessPartnerBankPayload,
   AfisBusinessPartnerDetails,
   AfisBusinessPartnerDetailsSource,
   AfisBusinessPartnerDetailsTransformed,
@@ -10,14 +15,16 @@ import {
   AfisBusinessPartnerEmailSource,
   AfisBusinessPartnerPhone,
   AfisBusinessPartnerPhoneSource,
+  BusinessPartnerId,
+  BusinessPartnerIdPayload,
 } from './afis-types';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
   apiErrorResult,
   ApiResponse_DEPRECATED,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
+  type ApiResponse,
 } from '../../../universal/helpers/api';
 import { getFullAddress } from '../../../universal/helpers/brp';
 import { DataRequestConfig } from '../../config/source-api';
@@ -36,11 +43,15 @@ function transformBusinessPartnerAddressResponse(
     const includeLand = true;
     return {
       id: addressEntry.AddressID,
-      address: getFullAddress(
+      address:
+        typeof addressEntry === 'object' && 'AddressID' in addressEntry
+          ? addressEntry
+          : null,
+      fullAddress: getFullAddress(
         {
           straatnaam: addressEntry.StreetName,
           huisnummer: addressEntry.HouseNumber?.toString() ?? '',
-          huisletter: addressEntry.StreetSuffixName, // ? TODO: check if this is correct
+          huisletter: null, // Not provided by AFIS
           huisnummertoevoeging: addressEntry.HouseNumberSupplementText,
           postcode: addressEntry.PostalCode,
           woonplaatsNaam: addressEntry.CityName,
@@ -55,7 +66,7 @@ function transformBusinessPartnerAddressResponse(
 }
 
 async function fetchBusinessPartnerAddress(
-  businessPartnerId: string
+  businessPartnerId: BusinessPartnerId
 ): Promise<ApiResponse_DEPRECATED<AfisBusinessPartnerAddress | null>> {
   const additionalConfig: DataRequestConfig = {
     params: getRequestParamsFromQueryString(
@@ -80,6 +91,8 @@ function transformBusinessPartnerFullNameResponse(
   if (businessPartnerEntry) {
     const transformedResponse: AfisBusinessPartnerDetails = {
       fullName: businessPartnerEntry.BusinessPartnerFullName ?? null,
+      firstName: businessPartnerEntry.FirstName ?? null,
+      lastName: businessPartnerEntry.LastName ?? null,
     };
 
     return transformedResponse;
@@ -88,7 +101,9 @@ function transformBusinessPartnerFullNameResponse(
   return null;
 }
 
-async function fetchBusinessPartnerFullName(businessPartnerId: string) {
+async function fetchBusinessPartnerFullName(
+  businessPartnerId: BusinessPartnerId
+): Promise<ApiResponse<AfisBusinessPartnerDetails | null>> {
   const additionalConfig: DataRequestConfig = {
     params: getRequestParamsFromQueryString(
       `?$filter=BusinessPartner eq '${businessPartnerId}'&$select=BusinessPartnerFullName`
@@ -125,7 +140,7 @@ async function fetchPhoneNumber(addressId: AfisBusinessPartnerAddress['id']) {
     formatUrl(config) {
       return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber`;
     },
-    postponeFetch: !FeatureToggle.afisBusinesspartnerPhoneActive,
+    postponeFetch: !featureToggle.businesspartnerPhoneActive,
   };
 
   const businessPartnerRequestConfig = await getAfisApiConfig(additionalConfig);
@@ -163,8 +178,9 @@ async function fetchEmail(addressId: AfisBusinessPartnerAddress['id']) {
 
 /** Fetches the business partner details, phonenumber and emailaddress from the AFIS source API and combines then into a single response */
 export async function fetchAfisBusinessPartnerDetails(
-  businessPartnerId: string
-) {
+  payload: BusinessPartnerIdPayload
+): Promise<ApiResponse<AfisBusinessPartnerDetailsTransformed>> {
+  const businessPartnerId: BusinessPartnerId = payload.businessPartnerId;
   const fullNameRequest = fetchBusinessPartnerFullName(businessPartnerId);
   const addressRequest = fetchBusinessPartnerAddress(businessPartnerId);
 
@@ -176,10 +192,20 @@ export async function fetchAfisBusinessPartnerDetails(
   const fullNameResponse = getSettledResult(fullNameResult);
   const addressResponse = getSettledResult(addressResult);
 
+  if (
+    fullNameResponse.status === 'ERROR' ||
+    addressResponse.status === 'ERROR'
+  ) {
+    return apiErrorResult(
+      `Could not get full name or address for business partner ${businessPartnerId}`,
+      null
+    );
+  }
+
   let phoneResponse: ApiResponse_DEPRECATED<AfisBusinessPartnerPhone | null>;
   let emailResponse: ApiResponse_DEPRECATED<AfisBusinessPartnerEmail | null>;
 
-  if (addressResponse.status === 'OK' && addressResponse.content) {
+  if (addressResponse.status === 'OK' && addressResponse.content?.id) {
     const phoneRequest = fetchPhoneNumber(addressResponse.content.id);
     const emailRequest = fetchEmail(addressResponse.content.id);
 
@@ -200,7 +226,7 @@ export async function fetchAfisBusinessPartnerDetails(
   }
 
   const detailsCombined: AfisBusinessPartnerDetailsTransformed = {
-    businessPartnerId: businessPartnerId,
+    businessPartnerId,
     ...addressResponse.content,
     ...fullNameResponse.content,
     ...phoneResponse.content,
@@ -213,6 +239,66 @@ export async function fetchAfisBusinessPartnerDetails(
       email: emailResponse,
       phone: phoneResponse,
       fullName: fullNameResponse,
+      address: addressResponse,
     })
   );
+}
+
+export async function createBusinessPartnerBankAccount(
+  payload: AfisBusinessPartnerBankPayload
+) {
+  if (!ibantools.isValidIBAN(payload.iban)) {
+    throw new Error('Create bank account: Invalid IBAN');
+  }
+
+  const iban = ibantools.extractIBAN(payload.iban);
+
+  // It's unlikely this will happen because of the IBAN validation above.
+  if (!iban.accountNumber) {
+    throw new Error('Create bank account: Invalid IBAN Account Number');
+  }
+
+  const createBankAccountPayload: AfisBusinessPartnerBankAccount = {
+    BusinessPartner: payload.businessPartnerId,
+    // We don't maintain a list of banks so we use the bank identifier as name and number.
+    BankName: iban.bankIdentifier ?? '',
+    BankNumber: iban.bankIdentifier ?? '', // This is not a bankrekeningnummer. Instead it's the number of the bank (id?).
+    SWIFTCode: payload.swiftCode,
+    BankAccountHolderName: payload.senderName,
+    IBAN: payload.iban,
+    BankAccount: iban.accountNumber,
+  };
+
+  const additionalConfig: DataRequestConfig = {
+    method: 'POST',
+    formatUrl(config) {
+      return `${config.url}/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerBank`;
+    },
+    data: createBankAccountPayload,
+  };
+
+  const businessPartnerRequestConfig = await getAfisApiConfig(additionalConfig);
+
+  return requestData<AfisBusinessPartnerBankAccount>(
+    businessPartnerRequestConfig
+  );
+}
+
+export async function fetchCheckIfIBANexists(
+  IBAN: AfisBusinessPartnerBankAccount['IBAN']
+): Promise<ApiResponse<boolean>> {
+  const additionalConfig: DataRequestConfig = {
+    formatUrl(config) {
+      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerBank?$filter=IBAN eq '${IBAN}'`;
+    },
+    transformResponse(
+      response: AfisApiFeedResponseSource<AfisBusinessPartnerBankAccount>
+    ) {
+      return !!getFeedEntryProperties(response).length;
+    },
+  };
+
+  const businessPartnerRequestConfig = await getAfisApiConfig(additionalConfig);
+
+  return requestData<boolean>(businessPartnerRequestConfig);
 }

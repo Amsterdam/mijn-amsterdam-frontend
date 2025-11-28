@@ -1,14 +1,18 @@
 import Mockdate from 'mockdate';
+import z from 'zod';
 
 import {
+  createBFFRouter,
   generateFullApiUrlBFF,
   isProtectedRoute,
   isPublicEndpoint,
   queryParams,
   send404,
   sendBadRequest,
+  sendBadRequestInvalidInput,
   sendMessage,
   sendResponse,
+  sendServiceUnavailable,
   sendUnauthorized,
 } from './route-helpers';
 import { bffApiHost } from '../../testing/setup';
@@ -41,6 +45,30 @@ describe('route-helpers', () => {
 
   beforeEach(() => {
     resMock = ResponseMock.new();
+  });
+
+  describe('createBFFRouter', () => {
+    test('should create a router with the given ID', () => {
+      const router = createBFFRouter({ id: 'test-router' });
+      expect(router.BFF_ID).toBe('test-router');
+      expect(router.stack.length).toBe(0);
+    });
+    test('should skip the router', () => {
+      const router = createBFFRouter({
+        id: 'disabled-router',
+        isEnabled: false,
+      });
+
+      const req = RequestMock.new().get();
+      const res = ResponseMock.new();
+      const next = vi.fn();
+
+      expect(router.stack.length).toBe(1);
+
+      router.stack?.[0]?.handle(req, res, next);
+
+      expect(next).toHaveBeenCalledWith('router');
+    });
   });
 
   describe('sendResponse tests', async () => {
@@ -125,14 +153,60 @@ describe('route-helpers', () => {
     );
   });
 
+  test('sendServiceUnavailable', () => {
+    const resMock = ResponseMock.new();
+    const responseData = apiErrorResult('Service Unavailable', null, 503);
+
+    sendServiceUnavailable(resMock);
+
+    expect(resMock.status).toHaveBeenCalledWith(503);
+    expect(resMock.send).toHaveBeenCalledWith(responseData);
+  });
+
   test('sendBadRequest', () => {
     const resMock = ResponseMock.new();
     const responseData = apiErrorResult('Bad request: No can do!', null, 400);
 
-    sendBadRequest(resMock, 'No can do!', null);
+    sendBadRequest(resMock, 'No can do!');
 
     expect(resMock.status).toHaveBeenCalledWith(400);
     expect(resMock.send).toHaveBeenCalledWith(responseData);
+  });
+
+  describe('sendBadRequestInvalidInput', () => {
+    const resMock = ResponseMock.new();
+
+    test('Without ZOD error', () => {
+      const responseData1 = apiErrorResult(
+        'Bad request: Invalid input',
+        null,
+        400
+      );
+
+      sendBadRequestInvalidInput(resMock, new Error('No can do!'));
+
+      expect(resMock.status).toHaveBeenCalledWith(400);
+      expect(resMock.send).toHaveBeenCalledWith(responseData1);
+    });
+
+    test('With ZOD error', () => {
+      const responseData2 = apiErrorResult(
+        `Bad request: for property 'some.path' with error 'First error' - for property 'other.path' with error 'Second error'`,
+        null,
+        400
+      );
+
+      sendBadRequestInvalidInput(
+        resMock,
+        new z.ZodError([
+          { code: 'custom', message: 'First error', path: ['some.path'] },
+          { code: 'custom', message: 'Second error', path: ['other.path'] },
+        ])
+      );
+
+      expect(resMock.status).toHaveBeenCalledWith(400);
+      expect(resMock.send).toHaveBeenCalledWith(responseData2);
+    });
   });
 
   test('isPublicEndpoint', () => {

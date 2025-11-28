@@ -20,6 +20,7 @@ export function AVGThema() {
     isLoading,
     isError,
     linkListItems,
+    id,
     title,
     routeConfig,
   } = useAVGData();
@@ -45,6 +46,7 @@ export function AVGThema() {
 
   return (
     <ThemaPagina
+      id={id}
       title={title}
       isError={isError}
       isLoading={isLoading}

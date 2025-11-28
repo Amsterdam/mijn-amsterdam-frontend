@@ -2,15 +2,16 @@ import { Heading } from '@amsterdam/design-system-react';
 
 import { categoryMenuItems } from './MainMenu.constants';
 import styles from './MainMenu.module.scss';
+import { getRedactedClass } from '../../helpers/cobrowse';
 import { useSmallScreen } from '../../hooks/media.hook';
-import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
+import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems';
 import { MainHeaderSecondaryLinks } from '../MainHeader/MainHeader';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink';
 
 export const MAIN_MENU_ID = 'main-menu';
 
 export function MainMenu() {
-  const { items } = useThemaMenuItems();
+  const { items } = useActiveThemaMenuItems();
   const isPhoneScreen = useSmallScreen();
 
   return (
@@ -30,7 +31,7 @@ export function MainMenu() {
                 href={thema.to}
                 maVariant="fatNoDefaultUnderline"
                 rel={thema.to.startsWith('http') ? 'noreferrer' : undefined}
-                className={styles.MenuItem}
+                className={`${styles.MenuItem} ${getRedactedClass(thema.id)}`}
               >
                 {thema.title}
               </LinkComponent>

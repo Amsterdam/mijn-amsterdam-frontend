@@ -1,4 +1,4 @@
-import https from 'https';
+import https from 'node:https';
 
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
@@ -8,14 +8,15 @@ import {
   ONE_MINUTE_MS,
   ONE_SECOND_MS,
 } from './app';
-import { featureToggle as featureToggleBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config';
+import { featureToggle as featureToggleAfis } from '../../client/pages/Thema/Afis/Afis-thema-config';
+import { themaConfig as themaConfigBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config';
 import { featureToggle as featureToggleErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
 import { featureToggle as featureToggleHLI } from '../../client/pages/Thema/HLI/HLI-thema-config';
 import { featureToggle as featureToggleJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
-import { PUBLIC_API_URLS } from '../../universal/config/url';
 import { getCert } from '../helpers/cert';
 import { getFromEnv } from '../helpers/env';
+import { getHostNameFromUrl } from '../helpers/source-api-helpers';
 
 const RESET_AD_HOC_DEPENDENCY_REQUEST_CACHE_TTL_TIMEOUT_MS = ONE_HOUR_MS;
 
@@ -104,7 +105,7 @@ const afisFeatureToggle = getFromEnv('BFF_AFIS_FEATURE_TOGGLE_ACTIVE');
 const postponeFetchAfis =
   typeof afisFeatureToggle !== 'undefined'
     ? afisFeatureToggle === 'false'
-    : !FeatureToggle.afisActive;
+    : !featureToggleAfis.AfisActive;
 
 const contactmomentenFeatureToggle = getFromEnv(
   'BFF_CONTACTMOMENTEN_FEATURE_TOGGLE_ACTIVE'
@@ -124,6 +125,7 @@ const ApiConfig_ = {
     postponeFetch: postponeFetchAfis,
     url: `${getFromEnv('BFF_AFIS_API_BASE_URL')}`,
   },
+  POM: { method: 'POST', url: `${getFromEnv('BFF_POM_API_BASE_URL')}` },
   ZORGNED_JZD: {
     method: 'post',
     url: `${getFromEnv('BFF_ZORGNED_API_BASE_URL')}`,
@@ -262,7 +264,7 @@ const ApiConfig_ = {
     },
   },
   BAG: {
-    url: PUBLIC_API_URLS.BAG_ADRESSEERBARE_OBJECTEN,
+    url: 'https://api.data.amsterdam.nl/v1/benkagg/adresseerbareobjecten/',
   },
   ERFPACHT: {
     url: getFromEnv('BFF_ERFPACHT_API_URL'),
@@ -287,7 +289,7 @@ const ApiConfig_ = {
   PARKEREN: {
     url: `${getFromEnv('BFF_PARKEREN_API_BASE_URL')}`,
     headers: {
-      host: new URL(getFromEnv('BFF_PARKEREN_API_BASE_URL') ?? '').hostname,
+      host: getHostNameFromUrl(getFromEnv('BFF_PARKEREN_API_BASE_URL')),
       'X-AUTH-TOKEN': getFromEnv('BFF_PARKEREN_API_TOKEN'),
     },
   },
@@ -295,8 +297,9 @@ const ApiConfig_ = {
   PARKEREN_FRONTOFFICE: {
     url: `${getFromEnv('BFF_PARKEREN_FRONTOFFICE_API_BASE_URL')}`,
     headers: {
-      host: new URL(getFromEnv('BFF_PARKEREN_FRONTOFFICE_API_BASE_URL') ?? '')
-        .hostname,
+      host: getHostNameFromUrl(
+        getFromEnv('BFF_PARKEREN_FRONTOFFICE_API_BASE_URL')
+      ),
     },
   },
   TOERISTISCHE_VERHUUR_REGISTRATIES: {
@@ -323,14 +326,17 @@ const ApiConfig_ = {
       rejectUnauthorized: false, // NOTE: Risk is assessed and tolerable for now because this concerns a request to a trusted source (GH), no sensitive data is involved and no JS code is evaluated.
     }),
   },
-  ENABLEU_2_SMILE: {
+  SMILE: {
     url: `${getFromEnv('BFF_ENABLEU_2_SMILE_ENDPOINT')}`,
     method: 'POST',
+    headers: {
+      apiKey: getFromEnv('BFF_ENABLEU_API_KEY'),
+    },
   },
   LOOD_365: {
     url: `${getFromEnv('BFF_LOOD_API_URL')}`,
     method: 'POST',
-    postponeFetch: !featureToggleBodem.BodemActive,
+    postponeFetch: !themaConfigBodem.featureToggle.themaActive,
   },
   MS_OAUTH: {
     url: `${getFromEnv('BFF_MS_OAUTH_ENDPOINT')}:tenant/oauth2/v2.0/token`,
@@ -352,11 +358,11 @@ const ApiConfig_ = {
   },
 } as const;
 
-export const ApiConfig: Record<SourceApiKey, DataRequestConfig> = ApiConfig_;
+export const ApiConfig: Record<SourceApiName, DataRequestConfig> = ApiConfig_;
 
-export type SourceApiKey = keyof typeof ApiConfig_;
+export type SourceApiName = keyof typeof ApiConfig_;
 
 type ApiUrlObject = string | Partial<Record<ProfileType, string>>;
-type ApiUrlEntry = [apiKey: SourceApiKey, apiUrl: ApiUrlObject];
+type ApiUrlEntry = [apiKey: SourceApiName, apiUrl: ApiUrlObject];
 
 export type ApiUrlEntries = ApiUrlEntry[];

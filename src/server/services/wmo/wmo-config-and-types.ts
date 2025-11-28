@@ -2,11 +2,13 @@ import { parseISO } from 'date-fns';
 
 import {
   GenericDocument,
-  ZaakDetail,
+  ZaakAanvraagDetail,
 } from '../../../universal/types/App.types';
 import {
   BeschikkingsResultaat,
   ProductSoortCode,
+  type ZorgnedAanvraagTransformed,
+  type ZorgnedStatusLineItemsConfig,
 } from '../zorgned/zorgned-types';
 
 export const SINGLE_DOC_TITLE_BESLUIT = 'Brief';
@@ -18,7 +20,7 @@ export const BESCHIKTPRODUCT_RESULTAAT: BeschikkingsResultaat[] = [
 export const DATE_END_NOT_OLDER_THAN = '2018-01-01';
 export const MINIMUM_REQUEST_DATE_FOR_DOCUMENTS = parseISO('2022-01-01'); // After this date documents are WCAG proof.
 
-export interface WMOVoorzieningFrontend extends ZaakDetail {
+export type WMOVoorzieningFrontend = ZaakAanvraagDetail & {
   dateDecision: string;
   dateDecisionFormatted: string;
   decision: string;
@@ -29,7 +31,22 @@ export interface WMOVoorzieningFrontend extends ZaakDetail {
   statusDateFormatted: string;
   supplier: string | null; // Leverancier
   disclaimer?: string;
-}
+};
+
+export type WMOVoorzieningCompact = Pick<
+  ZorgnedAanvraagTransformed,
+  | 'id'
+  | 'titel'
+  | 'beschikkingNummer'
+  | 'productIdentificatie'
+  | 'beschiktProductIdentificatie'
+  | 'datumBesluit'
+  | 'datumBeginLevering'
+  | 'datumEindeLevering'
+  | 'datumOpdrachtLevering'
+> & {
+  productGroup: ZorgnedStatusLineItemsConfig['statusLineItems']['name'];
+};
 
 export const DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH = 'Verzoek:'; // Documents starting with this token correspond to the 'meer informatie' step.
 export const DOCUMENT_TITLE_BESLUIT_STARTS_WITH = 'Besluit:'; // Documents starting with this token correspond to the 'besluit' step.

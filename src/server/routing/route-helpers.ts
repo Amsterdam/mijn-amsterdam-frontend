@@ -1,25 +1,42 @@
 import { HttpStatusCode } from 'axios';
-import type { Request, Response } from 'express';
+import type { Request, Response, NextFunction } from 'express';
+import express from 'express';
 import { generatePath, matchPath } from 'react-router';
+import z from 'zod';
 
 import { PUBLIC_BFF_ENDPOINTS } from './bff-routes';
 import {
   ApiResponse_DEPRECATED,
   apiErrorResult,
 } from '../../universal/helpers/api';
+import type { AuthProfileAndToken } from '../auth/auth-types';
 import { BFF_API_BASE_URL } from '../config/app';
-import express from 'express';
 
 type BFFRouter = express.Router & { BFF_ID: string };
 
-export function createBFFRouter({ id: id }: { id: string }): BFFRouter {
-  const authRouterDevelopment = express.Router() as BFFRouter;
-  authRouterDevelopment.BFF_ID = id;
-  return authRouterDevelopment;
+export type RecordStr2 = Record<string, string>;
+
+export function createBFFRouter({
+  id,
+  isEnabled = true,
+}: {
+  id: string;
+  isEnabled?: boolean;
+}): BFFRouter {
+  const router = express.Router() as BFFRouter;
+  router.BFF_ID = id;
+
+  if (!isEnabled) {
+    router.use((_req: Request, res: Response, next: NextFunction) => {
+      next('router');
+    });
+  }
+
+  return router;
 }
 
 /* eslint-disable @typescript-eslint/no-empty-object-type */
-export type RequestWithQueryParams<T extends Record<string, string>> = Request<
+export type RequestWithQueryParams<T extends RecordStr2> = Request<
   {},
   {},
   {},
@@ -27,10 +44,18 @@ export type RequestWithQueryParams<T extends Record<string, string>> = Request<
 >;
 
 export type RequestWithRouteAndQueryParams<
-  T extends Record<string, string> = Record<string, string>,
-  T2 extends Record<string, string> = Record<string, string>,
+  T extends RecordStr2 = RecordStr2,
+  T2 extends RecordStr2 = RecordStr2,
 > = Request<T, {}, {}, T2>;
 /* eslint-enable @typescript-eslint/no-empty-object-type */
+
+export type ResponseAuthenticated = Response & {
+  locals: {
+    [key: string]: unknown;
+    authProfileAndToken: AuthProfileAndToken;
+    userID: AuthProfileAndToken['profile']['id'];
+  };
+};
 
 export function queryParams<T extends Record<string, any>>(req: Request) {
   return req.query as T;
@@ -54,9 +79,10 @@ export function isProtectedRoute(pathRequested: string) {
  * | params: Optional value to interpolate into the url parameters or a Tuple with query params and or url (path) params.
  * | baseUrl: Value that will be the base of the route (default value: `BFF_API_BASE_URL`)
  */
-type QueryParams = Record<string, string>;
-type PathParams = Record<string, string>;
+type QueryParams = RecordStr2;
+type PathParams = RecordStr2;
 type QueryAndOrPathParams = [QueryParams, PathParams] | [QueryParams];
+
 export function generateFullApiUrlBFF(
   path: string,
   params?: PathParams | QueryAndOrPathParams,
@@ -73,7 +99,7 @@ export function generateFullApiUrlBFF(
 /** Sets the right statuscode and sends a response. */
 export function sendResponse(
   res: Response,
-  apiResponse: ApiResponse_DEPRECATED<any>
+  apiResponse: ApiResponse_DEPRECATED<unknown>
 ) {
   if (apiResponse.status === 'ERROR') {
     res.status(
@@ -86,28 +112,47 @@ export function sendResponse(
   return res.send(apiResponse);
 }
 
-export function sendBadRequest(
-  res: Response,
-  reason: string,
-  content: object | string | null = null
-) {
-  return res
-    .status(HttpStatusCode.BadRequest)
-    .send(
-      apiErrorResult(
-        `Bad request: ${reason}`,
-        content,
-        HttpStatusCode.BadRequest
+export function sendBadRequest(res: Response, reason: string) {
+  return sendResponse(
+    res,
+    apiErrorResult(`Bad request: ${reason}`, null, HttpStatusCode.BadRequest)
+  );
+}
+
+export function sendInternalServerError(res: Response, reason: string) {
+  return sendResponse(
+    res,
+    apiErrorResult(
+      `Internal server error: ${reason}`,
+      null,
+      HttpStatusCode.InternalServerError
+    )
+  );
+}
+
+export function sendBadRequestInvalidInput(res: Response, error: unknown) {
+  let inputValidationError = 'Invalid input';
+
+  if (error instanceof z.ZodError) {
+    inputValidationError = error.issues
+      .map(
+        (e) =>
+          `for property '${e.path.join('.') || '.'}' with error '${e.message}'`
       )
-    );
+      .join(' - ');
+  }
+
+  return sendBadRequest(res, inputValidationError);
 }
 
 export function sendUnauthorized(
   res: Response,
   message: string = 'Unauthorized'
 ) {
-  res.status(HttpStatusCode.Unauthorized);
-  return res.send(apiErrorResult(message, null, HttpStatusCode.Unauthorized));
+  return sendResponse(
+    res,
+    apiErrorResult(message, null, HttpStatusCode.Unauthorized)
+  );
 }
 
 export function send404(res: Response) {
@@ -116,11 +161,23 @@ export function send404(res: Response) {
     apiErrorResult('Not Found', null, HttpStatusCode.NotFound)
   );
 }
+
+export function sendServiceUnavailable(res: Response) {
+  return sendResponse(
+    res,
+    apiErrorResult(
+      'Service Unavailable',
+      null,
+      HttpStatusCode.ServiceUnavailable
+    )
+  );
+}
+
 export function sendMessage(
   res: Response,
   id: string,
   event: string = 'message',
-  data?: any
+  data?: object | string | number | null
 ) {
   const doStringify = typeof data !== 'string';
   const payload = doStringify ? JSON.stringify(data) : data;

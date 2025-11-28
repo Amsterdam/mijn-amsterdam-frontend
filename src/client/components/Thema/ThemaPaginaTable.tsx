@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { ZaakDetail } from '../../../universal/types/App.types';
+import { ZaakAanvraagDetail } from '../../../universal/types/App.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 import { LinkToListPage } from '../LinkToListPage/LinkToListPage';
 import { PageContentCell } from '../Page/Page';
@@ -20,16 +20,18 @@ interface ThemaPaginaTableProps<T> {
   maxItems?: number | -1;
   totalItems?: number;
   textNoContent?: string;
-  subTitle?: ReactNode;
+  contentAfterTheTitle?: ReactNode;
   title?: string;
   listPageLinkLabel?: string;
   listPageLinkTitle?: string;
   zaken: T[];
 }
 
-export default function ThemaPaginaTable<T extends object = ZaakDetail>({
+export default function ThemaPaginaTable<
+  T extends object = ZaakAanvraagDetail,
+>({
   title = '',
-  subTitle = '',
+  contentAfterTheTitle = '',
   zaken,
   className,
   textNoContent,
@@ -51,7 +53,7 @@ export default function ThemaPaginaTable<T extends object = ZaakDetail>({
       <TableV2
         showTHead={!!zaken.length}
         caption={title}
-        subTitle={subTitle}
+        contentAfterTheCaption={contentAfterTheTitle}
         items={hasListPage ? zaken.slice(0, maxItems) : zaken}
         displayProps={displayProps}
         className={className}

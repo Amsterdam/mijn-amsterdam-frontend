@@ -1,4 +1,4 @@
-import assert from 'assert';
+import assert from 'node:assert';
 
 import createDebugger from 'debug';
 import { generatePath } from 'react-router';
@@ -41,10 +41,8 @@ import type {
 } from './decos-types';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import {
-  ApiErrorResponse,
   apiErrorResult,
   ApiResponse,
-  ApiSuccessResponse,
   apiSuccessResult,
   getSettledResult,
 } from '../../../universal/helpers/api';
@@ -187,7 +185,7 @@ async function fetchUserKeys(authProfileAndToken: AuthProfileAndToken) {
 }
 
 async function transformDecosZaakResponse<
-  T extends DecosZaakTransformer<any>,
+  T extends DecosZaakTransformer,
   DZ extends DecosZaakBase = NestedType<T>,
 >(
   decosZaakTransformers: T[],
@@ -239,6 +237,7 @@ async function transformDecosZaakResponse<
   // For example, if we selected only the sourcefield `mark` we'd have a decosZaak with a value for `identifier`..
   let decosZaak: DZ = {
     id: transformedFields.identifier.replaceAll('/', '-'),
+    itemType: decosZaakTransformer.itemType,
     key: decosZaakSource.key,
     title: decosZaakTransformer.title,
     statusDates: [], // Serves as placeholder, values for this property will be added async below.
@@ -369,7 +368,7 @@ export function transformFieldValuePairs<T extends DecosZaakBase>(
 }
 
 async function transformDecosZakenResponse<
-  T extends DecosZaakTransformer<any>,
+  T extends DecosZaakTransformer,
   DZ extends DecosZaakBase = NestedType<T>,
 >(decosZaakTransformers: T[], decosZakenSource: DecosZaakSource[]) {
   const zakenToBeTransformed: [T, DecosZaakSource][] = [];
@@ -409,13 +408,11 @@ async function transformDecosZakenResponse<
     .sort(sortAlpha('identifier', 'desc'));
 }
 
-function getSelectFields(
-  zaakTypeTransformers: DecosZaakTransformer<DecosZaakBase>[]
-) {
+function getSelectFields(zaakTypeTransformers: DecosZaakTransformer[]) {
   const fields = uniqueArray([
     ...SELECT_FIELDS_META,
     ...zaakTypeTransformers.flatMap((zaakTransformer) =>
-      Object.keys(zaakTransformer.transformFields)
+      Object.keys(zaakTransformer.transformFields || [])
         .filter((field) => !zaakTransformer.fetchLinkedItem?.includes(field))
         .concat(zaakTransformer.additionalSelectFields ?? [])
     ),
@@ -426,50 +423,70 @@ function getSelectFields(
 
 async function fetchZakenByUserKey(
   userKey: string,
-  zaakTypeTransformers: DecosZaakTransformer<DecosZaakBase>[] = []
+  zaakTypeTransformers: DecosZaakTransformer[]
 ) {
   assert(
     SELECT_FIELDS_TRANSFORM_BASE[CASE_TYP_FIELD_DECOS] == caseType,
     `getZakenByUserKey expects field ${CASE_TYP_FIELD_DECOS} to be the caseType`
   );
+  const zaakTypeTransformersByItemType = zaakTypeTransformers.reduce<
+    Record<DecosZaakTransformer['itemType'], DecosZaakTransformer[]>
+  >((acc, transformer) => {
+    (acc[transformer.itemType] ||= []).push(transformer);
+    return acc;
+  }, {});
 
-  const fields = getSelectFields(zaakTypeTransformers);
-  const caseTypes = zaakTypeTransformers.map(
-    (transformer) => transformer.caseType
+  const responseSourcePromises = Object.entries(
+    zaakTypeTransformersByItemType
+  ).map(async ([itemType, zaakTransformers]) => {
+    const fields = getSelectFields(zaakTransformers);
+    const caseTypes = zaakTransformers.flatMap(
+      (transformer) => transformer.caseType || []
+    );
+    const caseTypeQuery = caseTypes
+      .map((caseType) => `(${CASE_TYP_FIELD_DECOS} eq '${caseType}')`)
+      .join(' or ');
+
+    const decosUrlParams = new URLSearchParams({
+      top: DECOS_ZAKEN_FETCH_TOP,
+      select: fields,
+      filter: caseTypeQuery,
+    });
+
+    const apiConfig = getApiConfig('DECOS_API', {
+      formatUrl: (config) => {
+        return `${config.url}/items/${userKey}/${itemType}`;
+      },
+      params: Object.fromEntries(decosUrlParams),
+      transformResponse: (responseData: DecosZakenResponse) => {
+        if (!Array.isArray(responseData?.content)) {
+          return [];
+        }
+        return responseData.content.map((c) => ({ ...c, itemType }));
+      },
+    });
+
+    const responseSource = await requestData<DecosZaakSource[]>(apiConfig);
+    debug({
+      [`getZakenByUserKey:${userKey}`]: {
+        caseTypes,
+        count: responseSource.content?.length ?? 0,
+      },
+    });
+    return responseSource;
+  });
+
+  const responseSources = await Promise.all(responseSourcePromises);
+  const firstFailedResponse = responseSources.find(
+    (r) => r?.status === 'ERROR'
   );
-  const caseTypeQuery = caseTypes
-    .map((caseType) => `${CASE_TYP_FIELD_DECOS} eq '${caseType}'`)
-    .join(' or ');
+  if (firstFailedResponse) {
+    return apiErrorResult(firstFailedResponse.message, null);
+  }
 
-  const decosUrlParams = new URLSearchParams({
-    top: DECOS_ZAKEN_FETCH_TOP,
-    select: fields,
-    filter: caseTypeQuery,
-  });
-
-  const apiConfig = getApiConfig('DECOS_API', {
-    formatUrl: (config) => {
-      return `${config.url}/items/${userKey}/folders`;
-    },
-    params: Object.fromEntries(decosUrlParams),
-    transformResponse: (responseData: DecosZakenResponse) => {
-      if (!Array.isArray(responseData?.content)) {
-        return [];
-      }
-      return responseData.content;
-    },
-  });
-
-  const responseSource = await requestData<DecosZaakSource[]>(apiConfig);
-
-  debug({
-    [`getZakenByUserKey:${userKey}`]: {
-      caseTypes,
-      count: responseSource.content?.length ?? 0,
-    },
-  });
-
-  return responseSource;
+  return apiSuccessResult(
+    responseSources.filter((r) => r.status === 'OK').flatMap((r) => r.content)
+  );
 }
 
 export const ZAAK_SUB_TYPE = [
@@ -484,7 +501,7 @@ export async function fetchDecosZaakByKeyFromSourceRaw(
   key: DecosZaakBase['key'],
   selectFields?: string,
   includeProperties: boolean = false,
-  subType?: (typeof ZAAK_SUB_TYPE)[number]
+  itemType?: (typeof ZAAK_SUB_TYPE)[number]
 ) {
   const queryParams = new URLSearchParams({
     properties: includeProperties ? 'true' : 'false',
@@ -493,7 +510,7 @@ export async function fetchDecosZaakByKeyFromSourceRaw(
 
   const apiConfig = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
-      return `${config.url}/items/${key}${subType ? `/${subType}` : ''}`;
+      return `${config.url}/items/${key}${itemType ? `/${itemType}` : ''}`;
     },
     params: Object.fromEntries(queryParams),
   });
@@ -557,7 +574,7 @@ export async function fetchDecosZakenFromSourceRaw(
 
 export async function fetchDecosZakenFromSource(
   authProfileAndToken: AuthProfileAndToken,
-  zaakTypeTransformers: DecosZaakTransformer<DecosZaakBase>[] = []
+  zaakTypeTransformers: DecosZaakTransformer[]
 ) {
   const userKeysResponse = await fetchUserKeys(authProfileAndToken);
 
@@ -586,12 +603,12 @@ export async function fetchDecosZakenFromSource(
 }
 
 export async function fetchDecosZaken<
-  T extends DecosZaakTransformer<any>,
+  T extends DecosZaakTransformer,
   DZ extends DecosZaakBase = NestedType<T>,
 >(
   authProfileAndToken: AuthProfileAndToken,
   zaakTypeTransformers: T[]
-): Promise<ApiSuccessResponse<DZ[]> | ApiErrorResponse<null>> {
+): Promise<ApiResponse<DZ[]>> {
   const zakenSourceResponse = await fetchDecosZakenFromSource(
     authProfileAndToken,
     zaakTypeTransformers
@@ -935,7 +952,7 @@ export function transformDecosZaakFrontend<T extends DecosZaakBase>(
     displayStatus: getDisplayStatus(zaak, steps),
     link: {
       to: generatePath(options.detailPageRoute, {
-        caseType: slug(zaak.caseType, { lower: true }),
+        caseType: slug(zaak.caseType || zaak.itemType, { lower: true }),
         id: zaak.id,
       }),
       title: `Bekijk hoe het met uw aanvraag staat`,
@@ -965,7 +982,7 @@ export const forTesting = {
   filterValidDocument,
   getUserKeys: fetchUserKeys,
   getSelectFields,
-  getZakenByUserKey: fetchZakenByUserKey,
+  fetchZakenByUserKey,
   transformDecosDocumentListResponse,
   transformDecosWorkflowKeysResponse,
   transformDecosZaakResponse,

@@ -4,13 +4,13 @@ import {
   AfisDisclaimer,
   AfisDisclaimerOvergedragenFacturen,
 } from './AfisThema';
-import { useAfisListPageData } from './useAfisThemaData.hook';
-import { AfisFactuurState } from '../../../../server/services/afis/afis-types';
+import { useAfisListPageData } from './useAfisListPageData';
+import { type AfisFactuurStateFrontend } from '../../../../server/services/afis/afis-types';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 import { PageContentCell } from '../../../components/Page/Page';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
-function AfisListPageBody({ state }: { state: AfisFactuurState }) {
+function AfisListPageBody({ state }: { state: AfisFactuurStateFrontend }) {
   switch (state) {
     case 'open':
       return <AfisDisclaimer />;
@@ -22,9 +22,9 @@ function AfisListPageBody({ state }: { state: AfisFactuurState }) {
 }
 
 export function AfisList() {
-  const { state = 'open' } = useParams<{ state: AfisFactuurState }>();
+  const { state = 'open' } = useParams<{ state: AfisFactuurStateFrontend }>();
   const {
-    facturenListResponse,
+    facturen,
     isListPageError,
     isListPageLoading,
     facturenTableConfig,
@@ -32,14 +32,15 @@ export function AfisList() {
     isThemaPaginaLoading,
     routeConfig,
     breadcrumbs,
+    themaId,
   } = useAfisListPageData(state);
   useHTMLDocumentTitle(routeConfig.listPage);
 
   const listPageTableConfig = facturenTableConfig[state];
-  const facturen = facturenListResponse?.facturen ?? [];
 
   return (
     <ListPagePaginated
+      themaId={themaId}
       items={facturen}
       pageContentTop={
         <PageContentCell>

@@ -8,10 +8,10 @@ import {
 import { ErfpachtDetail } from './ErfpachtDetail';
 import { default as ErfpachtIcon } from './ErfpachtIcon.svg?react';
 import { ErfpachtList } from './ErfpachtList';
-import { ErfpachtListFacturen } from './ErfpachtListFacturen';
-import { ErfpachtListOpenFacturen } from './ErfpachtListOpenFacturen';
 import { ErfpachtThema } from './ErfpachtThema';
+import { useErfpachtThemaData } from './useErfpachtThemaData.hook';
 import { default as WoningIcon } from './WoningIcon.svg?react';
+import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { isLoading } from '../../../../universal/helpers/api';
 import { type AppState } from '../../../../universal/types/App.types';
 import {
@@ -20,16 +20,6 @@ import {
 } from '../../../config/thema-types';
 
 export const ErfpachtRoutes = [
-  {
-    route: routeConfig.listPageOpenFacturen.path,
-    Component: ErfpachtListOpenFacturen,
-    isActive: featureToggle.erfpachtActive,
-  },
-  {
-    route: routeConfig.listPageAlleFacturen.path,
-    Component: ErfpachtListFacturen,
-    isActive: featureToggle.erfpachtActive,
-  },
   {
     route: routeConfig.listPage.path,
     Component: ErfpachtList,
@@ -52,6 +42,7 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
   id: themaId,
   to: routeConfig.themaPage.path,
   profileTypes: ['private'],
+  redactedScope: 'none',
   isActive(appState: AppState) {
     const content = appState.ERFPACHT?.content;
     return (
@@ -65,6 +56,20 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
   IconSVG: featureToggle.vveIsActive ? WoningIcon : ErfpachtIcon,
 };
 
+export function useCanonmatigingFooterLink() {
+  const { relatieCode } = useErfpachtThemaData();
+
+  if (!relatieCode) {
+    return null;
+  }
+
+  const baseUrl = `https://canonmatiging${IS_PRODUCTION ? '' : '-acc'}.amsterdam.nl`;
+  return {
+    url: `${baseUrl}/?relatiecode=${relatieCode}`,
+    label: 'Mogelijke terugbetaling bij verhuur',
+  };
+}
+
 export const menuItemZakelijk: ThemaMenuItem<typeof themaId> = {
   title: themaTitle,
   id: themaId,
@@ -75,6 +80,7 @@ export const menuItemZakelijk: ThemaMenuItem<typeof themaId> = {
       : ERFPACHT_ZAKELIJK_ROUTE_DEFAULT;
   },
   profileTypes: ['commercial'],
+  redactedScope: 'none',
   isActive: menuItem.isActive,
   IconSVG: featureToggle.vveIsActive ? WoningIcon : ErfpachtIcon,
 };

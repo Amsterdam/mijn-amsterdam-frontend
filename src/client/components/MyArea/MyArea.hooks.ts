@@ -1,21 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 
 import { useMapInstance } from '@amsterdam/react-maps';
-import axios, { CancelTokenSource } from 'axios';
 import { LatLngBoundsLiteral, LatLngLiteral, LeafletEvent } from 'leaflet';
 import { useLocation } from 'react-router';
-import {
-  atom,
-  selector,
-  useRecoilState,
-  useRecoilValue,
-  useResetRecoilState,
-  useSetRecoilState,
-} from 'recoil';
+import { create } from 'zustand';
 
-import { filterItemCheckboxState } from './LegendPanel/DatasetControlCheckbox';
+import { filterItemCheckboxState } from './LegendPanel/checkbox-helpers';
 import styles from './MyAreaDatasets.module.scss';
-import { BAGData } from '../../../server/services';
+import type { BAGLocation } from '../../../server/services/bag/bag.types';
 import type {
   MaPointFeature,
   MaPolylineFeature,
@@ -34,7 +26,15 @@ import { getFullAddress } from '../../../universal/helpers/brp';
 import { BFFApiUrls } from '../../config/api';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { captureMessage } from '../../helpers/monitoring';
-import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
+import {
+  isAborted,
+  sendGetRequest,
+  sendJSONPostRequest,
+} from '../../hooks/api/useBffApi';
+import {
+  useAppStateGetter,
+  useAppStateReady,
+} from '../../hooks/useAppStateStore';
 
 const NO_DATA_ERROR_RESPONSE = {
   errors: [
@@ -45,52 +45,85 @@ const NO_DATA_ERROR_RESPONSE = {
   ],
 };
 
-const activeDatasetIdsDefaultValue = selector({
-  key: 'activeDatasetIds/Default',
-  get: () => {
-    const queryConfig = getQueryConfig(window.location.search);
-    const defaultValue = queryConfig?.datasetIds?.length
-      ? queryConfig.datasetIds
-      : ACTIVE_DATASET_IDS_INITIAL;
-    return defaultValue;
-  },
-});
-
-const activeDatasetIdsAtom = atom<DatasetId[]>({
-  key: 'activeDatasetIds',
-  default: activeDatasetIdsDefaultValue,
-});
-
-export function useActiveDatasetIds() {
-  return useRecoilState(activeDatasetIdsAtom);
+function getActiveDatasetIdsDefaultValue() {
+  const queryConfig = getQueryConfig(window.location.search);
+  const defaultValue = queryConfig?.datasetIds?.length
+    ? queryConfig.datasetIds
+    : ACTIVE_DATASET_IDS_INITIAL;
+  return defaultValue;
 }
 
-const activeDatasetFiltersDefaultValue = selector({
-  key: 'activeDatasetIdsDefaultValue',
-  get: () => {
-    const queryConfig = getQueryConfig(window.location.search);
-    return queryConfig?.filters || {};
-  },
-});
+type ActiveDatasetIdsStore = {
+  activeDatasetIds: DatasetId[];
+  setActiveDatasetIds: (ids: DatasetId[]) => void;
+  add: (id: DatasetId) => void;
+  remove: (id: DatasetId) => void;
+  reset: () => void;
+};
 
-// The currently active (selected) filter set
-const activeDatasetFiltersAtom = atom<DatasetFilterSelection>({
-  key: 'activeDatasetFilters',
-  default: activeDatasetFiltersDefaultValue,
-});
+export const useActiveDatasetIds = create<ActiveDatasetIdsStore>((set) => ({
+  activeDatasetIds: getActiveDatasetIdsDefaultValue(),
+  setActiveDatasetIds: (ids: DatasetId[]) => set({ activeDatasetIds: ids }),
+  add: (id: DatasetId) =>
+    set((state) => ({
+      activeDatasetIds: [...state.activeDatasetIds, id],
+    })),
+  remove: (id: DatasetId) =>
+    set((state) => ({
+      activeDatasetIds: state.activeDatasetIds.filter((i) => i !== id),
+    })),
+  reset: () => set({ activeDatasetIds: [] }),
+}));
 
-export function useActiveDatasetFilters() {
-  return useRecoilState(activeDatasetFiltersAtom);
+function getActiveDatasetFiltersDefaultValue() {
+  const queryConfig = getQueryConfig(window.location.search);
+  return queryConfig?.filters || {};
 }
 
-// The complete available filter set from server
-const datasetFilterSelectionAtom = atom<DatasetFilterSelection>({
-  key: 'datasetFilterSelection',
-  default: {},
-});
+type ActiveDatasetFiltersStore = {
+  activeDatasetFilters: DatasetFilterSelection;
+  setActiveFilters: (
+    updater:
+      | DatasetFilterSelection
+      | ((state: DatasetFilterSelection) => DatasetFilterSelection)
+  ) => void;
+};
 
-export function useDatasetFilterSelection() {
-  return useRecoilState(datasetFilterSelectionAtom);
+export const useActiveDatasetFilters = create<ActiveDatasetFiltersStore>(
+  (set) => ({
+    activeDatasetFilters: getActiveDatasetFiltersDefaultValue(),
+    setActiveFilters: (
+      updater:
+        | DatasetFilterSelection
+        | ((state: DatasetFilterSelection) => DatasetFilterSelection)
+    ) =>
+      set((state) => ({
+        activeDatasetFilters:
+          typeof updater === 'function'
+            ? updater(state.activeDatasetFilters)
+            : updater,
+      })),
+  })
+);
+
+type DatasetFilterSelectionStore = {
+  filterSelection: DatasetFilterSelection;
+  setFilterSelection: (selection: DatasetFilterSelection) => void;
+};
+
+export const useDatasetFilterSelection = create<DatasetFilterSelectionStore>(
+  (set) => ({
+    filterSelection: {},
+    setFilterSelection: (filterSelection) => set({ filterSelection }),
+  })
+);
+
+function getLoadingFeatureDefaultValue() {
+  const queryConfig = getQueryConfig(window.location.search);
+  const defaultValue = queryConfig?.loadingFeature
+    ? queryConfig?.loadingFeature
+    : null;
+  return defaultValue;
 }
 
 interface LoadingFeature {
@@ -98,87 +131,73 @@ interface LoadingFeature {
   id?: string;
   isError?: boolean;
 }
+type LoadingFeatureStore = {
+  loadingFeature: LoadingFeature | null;
+  setLoadingFeature: (feature: LoadingFeature | null) => void;
+};
 
-const loadingFeatureDefaultValue = selector({
-  key: 'loadingFeature/Default',
-  get: () => {
-    const queryConfig = getQueryConfig(window.location.search);
-    const defaultValue = queryConfig?.loadingFeature
-      ? queryConfig?.loadingFeature
-      : null;
-    return defaultValue;
-  },
-});
+export const useLoadingFeature = create<LoadingFeatureStore>((set) => ({
+  loadingFeature: getLoadingFeatureDefaultValue(),
+  setLoadingFeature: (feature) => set({ loadingFeature: feature }),
+}));
 
-// The state of the feature currently / last indicated to be loaded
-export const loadingFeatureAtom = atom<LoadingFeature | null>({
-  key: 'loadingFeature',
-  default: loadingFeatureDefaultValue,
-});
+type SelectedFeature = { id: string; datasetId: string; [string: string]: any };
+type SelectedFeatureStore = {
+  selectedFeature: SelectedFeature | null;
+  setSelectedFeature: (feature: SelectedFeature | null) => void;
+};
 
-export function useLoadingFeature() {
-  return useRecoilState(loadingFeatureAtom);
-}
-
-type SelectedFeature = unknown;
-
-// The data of the selected loading feature.
-export const selectedFeatureAtom = atom<SelectedFeature>({
-  key: 'selectedFeature',
-  default: null,
-});
-
-export function useSelectedFeature() {
-  return useRecoilState(selectedFeatureAtom);
-}
-
-export function useSelectedFeatureValue() {
-  return useRecoilValue(selectedFeatureAtom);
-}
+export const useSelectedFeature = create<SelectedFeatureStore>((set) => ({
+  selectedFeature: null,
+  setSelectedFeature: (feature) => set({ selectedFeature: feature }),
+}));
 
 export function useSetSelectedFeature() {
-  return useSetRecoilState(selectedFeatureAtom);
+  return useSelectedFeature((state) => state.setSelectedFeature);
 }
 
 export function useFetchPanelFeature() {
   const setSelectedFeature = useSetSelectedFeature();
-  const [loadingFeature, setLoadingFeature] = useLoadingFeature();
+  const { loadingFeature, setLoadingFeature } = useLoadingFeature();
 
   useEffect(() => {
     if (!loadingFeature?.datasetId || !loadingFeature?.id) {
       return;
     }
 
-    const source = axios.CancelToken.source();
+    const source = new AbortController();
     const { datasetId, id } = loadingFeature;
 
-    axios({
-      url: `${BFFApiUrls.MAP_DATASETS}/${datasetId}/${id}`,
-      cancelToken: source.token,
-      withCredentials: true,
-    })
-      .then(({ data: { content: feature } }) => {
-        // Add datasetid to the feature data, used for referencing to other states.
-        setSelectedFeature({ ...feature, id: String(feature.id), datasetId });
+    sendGetRequest<SelectedFeature>(
+      `${BFFApiUrls.MAP_DATASETS}/${datasetId}/${id}`,
+      {
+        signal: source.signal,
+      }
+    )
+      .then(({ content: feature }) => {
+        if (feature) {
+          // Add datasetid to the feature data, used for referencing to other states.
+          setSelectedFeature({ ...feature, id: String(feature.id), datasetId });
+        }
       })
       .catch((error) => {
-        if (!axios.isCancel(error)) {
+        if (!isAborted(error)) {
           setLoadingFeature({ isError: true });
         }
       });
 
     return () => {
-      source.cancel();
+      source.abort();
     };
   }, [loadingFeature, setSelectedFeature, setLoadingFeature]);
 }
 
-const selectedFeatureSelector = styles['Feature--selected'];
+const selectedFeatureStyleSelector = styles['Feature--selected'];
 
 export function useSelectedFeatureCSS(
   features: Array<MaSuperClusterFeature | MaPolylineFeature>
 ) {
-  const [loadingFeature] = useLoadingFeature();
+  const { loadingFeature } = useLoadingFeature();
   const map = useMapInstance();
   const loadingFeatureId = loadingFeature?.id;
 
@@ -190,10 +209,10 @@ export function useSelectedFeatureCSS(
           const element = layer.getElement();
           // Add selected class to marker
           document
-            ?.querySelector(`.${selectedFeatureSelector}`)
-            ?.classList.remove(selectedFeatureSelector);
+            ?.querySelector(`.${selectedFeatureStyleSelector}`)
+            ?.classList.remove(selectedFeatureStyleSelector);
 
-          element.classList.add(selectedFeatureSelector);
+          element.classList.add(selectedFeatureStyleSelector);
           break;
         }
       }
@@ -202,7 +221,7 @@ export function useSelectedFeatureCSS(
 }
 
 export function useOnMarkerClick() {
-  const [, setLoadingFeature] = useLoadingFeature();
+  const { setLoadingFeature } = useLoadingFeature();
 
   return useCallback((event: LeafletEvent) => {
     const isCluster =
@@ -227,7 +246,7 @@ type DatasetResponseContent = {
 };
 
 export function useFetchFeatures() {
-  const abortSignal = useRef<CancelTokenSource>();
+  const abortSignal = useRef<AbortController>();
   const map = useMapInstance();
   return useCallback(
     async (
@@ -235,8 +254,8 @@ export function useFetchFeatures() {
       filters: DatasetFilterSelection | null
     ): Promise<DatasetResponseContent | null> => {
       // Cancel all previous requests, the latest request will represent latest state
-      abortSignal.current?.cancel();
-      const tokenSource = axios.CancelToken.source();
+      abortSignal.current?.abort();
+      const tokenSource = new AbortController();
       abortSignal.current = tokenSource;
 
       const mapBounds = map.getBounds();
@@ -247,22 +266,24 @@ export function useFetchFeatures() {
         mapBounds.getNorth(),
       ];
       const zoom = map.getZoom();
+      const payload = {
+        datasetIds,
+        filters,
+        bbox,
+        zoom,
+      } as const;
+
       try {
-        const response = await axios({
-          url: BFFApiUrls.MAP_DATASETS,
-          data: {
-            datasetIds,
-            filters,
-            bbox,
-            zoom,
-          },
-          method: 'POST',
-          cancelToken: tokenSource.token,
-          withCredentials: true,
-        });
-        return response.data.content;
+        const response = await sendJSONPostRequest<DatasetResponseContent>(
+          BFFApiUrls.MAP_DATASETS,
+          {
+            signal: tokenSource.signal,
+            payload,
+          }
+        );
+        return response.content;
       } catch (error) {
-        if (!axios.isCancel(error)) {
+        if (!isAborted(error)) {
           return NO_DATA_ERROR_RESPONSE;
         }
       }
@@ -310,8 +331,8 @@ function toggleCategory(
 }
 
 export function useControlItemChange() {
-  const [activeDatasetIds, setActiveDatasetIds] = useActiveDatasetIds();
-  const [, setActiveFilters] = useActiveDatasetFilters();
+  const { activeDatasetIds, setActiveDatasetIds } = useActiveDatasetIds();
+  const { setActiveFilters } = useActiveDatasetFilters();
 
   return useCallback(
     (type: 'category' | 'dataset', ids: string[]) => {
@@ -355,7 +376,7 @@ export function useControlItemChange() {
 const IS_FILTER_ENABLED = 1;
 
 export function useFilterControlItemChange() {
-  const [activeFilters, setActiveFilters] = useActiveDatasetFilters();
+  const { activeDatasetFilters, setActiveFilters } = useActiveDatasetFilters();
 
   return useCallback(
     (
@@ -364,13 +385,13 @@ export function useFilterControlItemChange() {
       propertyValue: DatasetPropertyValue
     ) => {
       const { isChecked } = filterItemCheckboxState(
-        activeFilters,
+        activeDatasetFilters,
         datasetId,
         propertyName,
         propertyValue
       );
 
-      const activeFiltersUpdate = { ...activeFilters };
+      const activeFiltersUpdate = { ...activeDatasetFilters };
 
       if (!isChecked && !activeFiltersUpdate[datasetId]) {
         activeFiltersUpdate[datasetId] = {
@@ -404,34 +425,8 @@ export function useFilterControlItemChange() {
       }
       setActiveFilters(activeFiltersUpdate);
     },
-    [activeFilters, setActiveFilters]
+    [activeDatasetFilters, setActiveFilters]
   );
-}
-
-export function useResetMyAreaState() {
-  const resetActiveDatasetIdsAtom = useResetRecoilState(activeDatasetIdsAtom);
-  const resetActiveDatasetFiltersAtom = useResetRecoilState(
-    activeDatasetFiltersAtom
-  );
-  const resetDatasetFilterSelectionAtom = useResetRecoilState(
-    datasetFilterSelectionAtom
-  );
-  const resetLoadingFeatureAtom = useResetRecoilState(loadingFeatureAtom);
-  const resetSelectedFeatureAtom = useResetRecoilState(selectedFeatureAtom);
-
-  return useCallback(() => {
-    resetActiveDatasetIdsAtom();
-    resetActiveDatasetFiltersAtom();
-    resetDatasetFilterSelectionAtom();
-    resetLoadingFeatureAtom();
-    resetSelectedFeatureAtom();
-  }, [
-    resetActiveDatasetIdsAtom,
-    resetActiveDatasetFiltersAtom,
-    resetDatasetFilterSelectionAtom,
-    resetLoadingFeatureAtom,
-    resetSelectedFeatureAtom,
-  ]);
 }
 
 export interface QueryConfig {
@@ -547,13 +542,12 @@ export function useMapLocations(
   const { home: homeLocationMarker, secondary: secondaryLocationMarkers } =
     useMemo(() => {
       const locations = (MY_LOCATION.content || []).filter(
-        (location: BAGData | null): location is BAGData => !!location
+        (location: BAGLocation | null): location is BAGLocation => !!location
       );
       const [primaryLocation, ...secondaryLocations] = locations;
 
       let homeLocationMarker: MapLocationMarker | null = null;
       const secondaryLocationMarkers: MapLocationMarker[] = [];
-
       if (primaryLocation?.latlng && !centerMarker) {
         const latlng = primaryLocation.latlng;
         const label = primaryLocation.address
@@ -597,8 +591,8 @@ export function useMapLocations(
     }
 
     return center;
-    // Disable hook dependencies, the mapOptions only need to be determined once.
     // Using memo here because we don't need the options to cause re-renders of the <Map/> component.
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- mapOptions only need to be determined once; dependencies intentionally omitted to avoid unnecessary re-renders
   }, []);
 
   return {

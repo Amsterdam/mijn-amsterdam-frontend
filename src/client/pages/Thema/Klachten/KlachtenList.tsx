@@ -5,6 +5,7 @@ import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 export function KlachtenList() {
   const {
     klachten,
+    themaId,
     tableConfig,
     breadcrumbs,
     isLoading,
@@ -16,6 +17,7 @@ export function KlachtenList() {
   return (
     <ListPagePaginated
       items={klachten}
+      themaId={themaId}
       title={tableConfig.title}
       appRoute={tableConfig.listPageRoute}
       breadcrumbs={breadcrumbs}

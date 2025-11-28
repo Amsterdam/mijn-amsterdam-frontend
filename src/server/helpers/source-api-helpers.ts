@@ -1,52 +1,23 @@
-import { get } from 'stack-trace';
-
 import { jsonCopy } from '../../universal/helpers/utils';
 import {
   ApiConfig,
   DataRequestConfig,
-  SourceApiKey,
+  SourceApiName,
 } from '../config/source-api';
 
-// To keep the cache key small, we exclude some generic function names.
-const EXCLUDE_GENERIC_FUNCTION_NAMES_FROM_CACHE_KEY = [
-  'all',
-  'map',
-  'allSettled',
-  'processTicksAndRejections',
-  'getApiConfig',
-  'getApiConfigBasedCacheKey',
-];
-// To keep the cache key small, we only take the last 3 function names from the stack trace.
-const SLICE_FUNCTION_NAMES = 3;
-
 function getApiConfigBasedCacheKey(
-  name: SourceApiKey,
+  name: SourceApiName,
   cacheKey_UNSAFE?: string
 ): string | null {
   if (!cacheKey_UNSAFE) {
     return null;
   }
 
-  const trace = get();
-  const traceFiltered = trace
-    .toReversed()
-    .map((frame) => frame.getFunctionName())
-    .filter(
-      (name) =>
-        name && !EXCLUDE_GENERIC_FUNCTION_NAMES_FROM_CACHE_KEY.includes(name)
-    );
-  const stackSimple = traceFiltered
-    .slice(
-      Math.max(0, traceFiltered.length - SLICE_FUNCTION_NAMES),
-      traceFiltered.length
-    )
-    .join('.');
-
-  return `${name}-${stackSimple}-${cacheKey_UNSAFE}`;
+  return `${name}-${cacheKey_UNSAFE}`;
 }
 
 export function getApiConfig(
-  name: SourceApiKey,
+  name: SourceApiName,
   config: DataRequestConfig = {}
 ): Readonly<DataRequestConfig> {
   const apiConfig = ApiConfig[name];
@@ -111,4 +82,12 @@ export function createSessionBasedCacheKey(
   identifier?: string
 ) {
   return `${identifier ? `${identifier}-` : ''}${sessionID}`;
+}
+
+export function getHostNameFromUrl(url?: string): string | null {
+  if (!url) {
+    return null;
+  }
+
+  return new URL(url).hostname;
 }

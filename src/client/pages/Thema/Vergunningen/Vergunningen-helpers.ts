@@ -3,9 +3,9 @@ import type {
   WithTimeRange,
 } from '../../../../server/services/decos/decos-types';
 import { dateTimeFormatYear } from '../../../../universal/helpers/date';
-import type { ZaakDetail } from '../../../../universal/types/App.types';
+import type { ZaakAanvraagDetail } from '../../../../universal/types/App.types';
 
-export type VergunningAanvraag = ZaakDetail & {
+export type VergunningAanvraag = ZaakAanvraagDetail & {
   processed: boolean;
 };
 

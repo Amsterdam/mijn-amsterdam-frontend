@@ -1,13 +1,13 @@
 import { useEffect, useMemo } from 'react';
 
 import { useLocation } from 'react-router';
-import { atom, useRecoilState, useRecoilValue } from 'recoil';
+import { create } from 'zustand';
 
-import { useAppStateGetter, useAppStateReady } from './useAppState';
+import { useAppStateReady } from './useAppStateStore';
 import { useProfileTypeValue } from './useProfileType';
 import { sortAlpha } from '../../universal/helpers/utils';
 import { LinkProps } from '../../universal/types/App.types';
-import { themasByProfileType } from '../config/menuItems';
+import { useThemasByProfileType } from '../config/menuItems';
 import { ThemaMenuItemTransformed } from '../config/thema-types';
 import {
   themaIdBRP,
@@ -19,25 +19,34 @@ export interface ThemasState {
   isLoading: boolean;
 }
 
-export function useThemaMenuItems(): ThemasState {
-  const profileType = useProfileTypeValue();
-  const appState = useAppStateGetter();
-  const isAppStateReady = useAppStateReady();
-  const allThemaItems = themasByProfileType(profileType).sort(
-    sortAlpha('title')
-  );
-  const alwaysFirstThemasIds = [themaIdKVK, themaIdBRP] as string[];
-  const themaItems = [
-    ...allThemaItems.filter(({ id }) => alwaysFirstThemasIds.includes(id)),
-    ...allThemaItems.filter(({ id }) => !alwaysFirstThemasIds.includes(id)),
-  ];
+type withIDTitle = { id: string; title: string };
+const sortAlphaOnTitle = sortAlpha('title');
 
-  const items = useMemo(() => {
-    return themaItems.filter((item) => {
-      // Check to see if Thema has been loaded or if it is directly available
-      return item.isActive ? item.isActive(appState) : item.isAlwaysVisible;
-    });
-  }, [themaItems, appState]);
+export function compareThemas<T extends withIDTitle>(a: T, b: T): 0 | 1 | -1 {
+  // These will be placed on top in the order they are put here.
+  const themaIDsOnTop = [themaIdBRP, themaIdKVK] as string[];
+
+  const aHasPrecedence = themaIDsOnTop.includes(a.id);
+  const bHasPrecedence = themaIDsOnTop.includes(b.id);
+
+  if (aHasPrecedence && bHasPrecedence) {
+    const ia = themaIDsOnTop.indexOf(a.id);
+    const ib = themaIDsOnTop.indexOf(b.id);
+    return ia < ib ? -1 : 1;
+  }
+  if (aHasPrecedence) {
+    return -1;
+  }
+  if (bHasPrecedence) {
+    return 1;
+  }
+  return sortAlphaOnTitle(a, b);
+}
+
+export function useAllThemaMenuItems(): ThemasState {
+  const profileType = useProfileTypeValue();
+  const isAppStateReady = useAppStateReady();
+  const items = useThemasByProfileType(profileType).toSorted(compareThemas);
 
   return {
     items,
@@ -45,8 +54,17 @@ export function useThemaMenuItems(): ThemasState {
   };
 }
 
-export function useThemaMenuItemsByThemaID() {
-  const { items } = useThemaMenuItems();
+export function useActiveThemaMenuItems(): ThemasState {
+  const { items, isLoading } = useAllThemaMenuItems();
+
+  return {
+    items: items.filter((item) => item.isActive),
+    isLoading,
+  };
+}
+
+export function useAllThemaMenuItemsByThemaID() {
+  const { items } = useAllThemaMenuItems();
 
   const themaById = useMemo(
     () =>
@@ -66,7 +84,7 @@ export function useThemaMenuItemsByThemaID() {
 export function useThemaMenuItemByThemaID<ID extends string = string>(
   themaID: ID
 ): ThemaMenuItemTransformed<ID> | null {
-  const itemsById = useThemaMenuItemsByThemaID();
+  const itemsById = useAllThemaMenuItemsByThemaID();
   return itemsById[themaID]
     ? (itemsById[themaID] as ThemaMenuItemTransformed<ID>)
     : null;
@@ -98,18 +116,23 @@ export function useThemaBreadcrumbs<ID extends string = string>(
 
 type PageTypeSetting = 'listpage' | 'none';
 
-const pageTypeSetting = atom<PageTypeSetting>({
-  default: 'none',
-  key: 'pageTypeSetting',
-});
+type PageTypeStore = {
+  pageType: PageTypeSetting;
+  setPageType: (pageType: PageTypeSetting) => void;
+};
+
+export const useMainMenuOpen = create<PageTypeStore>((set) => ({
+  pageType: 'none',
+  setPageType: (pageType: PageTypeSetting) => set({ pageType }),
+}));
 
 export function usePageTypeSetting(pageTypeRequested: PageTypeSetting) {
-  const [pageType, setPageType] = useRecoilState(pageTypeSetting);
+  const { pageType, setPageType } = useMainMenuOpen();
 
   useEffect(() => {
     setPageType(pageTypeRequested);
     return () => {
-      setPageType(() => 'none');
+      setPageType('none');
     };
   }, [pageTypeRequested]);
 
@@ -117,5 +140,5 @@ export function usePageTypeSetting(pageTypeRequested: PageTypeSetting) {
 }
 
 export function usePageTypeSettingValue() {
-  return useRecoilValue(pageTypeSetting);
+  return useMainMenuOpen().pageType;
 }

@@ -2,10 +2,7 @@ import { Paragraph, Link, Heading } from '@amsterdam/design-system-react';
 
 import { useErfpachtThemaData } from './useErfpachtThemaData.hook';
 import { useWonenThemaData } from './useVvEThemaData.hook';
-import {
-  ErfpachtDossierFrontend,
-  ErfpachtDossierFactuurFrontend,
-} from '../../../../server/services/erfpacht/erfpacht-types';
+import { ErfpachtDossierFrontend } from '../../../../server/services/erfpacht/erfpacht-types';
 import { entries } from '../../../../universal/helpers/utils';
 import { MaRouterLink } from '../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../components/Page/Page';
@@ -17,15 +14,14 @@ import { useAfisThemaData } from '../Afis/useAfisThemaData.hook';
 
 export function ErfpachtThema() {
   const {
+    id,
     title,
     isError,
     isLoading,
     linkListItems,
     tableConfig,
     dossiers,
-    openFacturen,
     routeConfig,
-    listPageParamKind,
   } = useErfpachtThemaData();
 
   const wonenData = useWonenThemaData();
@@ -38,37 +34,26 @@ export function ErfpachtThema() {
 
   useHTMLDocumentTitle(routeConfig.themaPage);
 
-  const excludedTables: string[] = [
-    listPageParamKind.alleFacturen,
-    // At the moment this table will show up with items such as 'Factuurinformatie is niet beschikbaar' in az/prod.
-    listPageParamKind.openFacturen,
-  ];
-
   const pageContentTables = tableConfig
-    ? entries(tableConfig)
-        .filter(([kind]) => !excludedTables.includes(kind))
-        .map(([kind, { title, displayProps, listPageRoute, maxItems }]) => {
+    ? entries(tableConfig).map(
+        ([kind, { title, displayProps, listPageRoute, maxItems }]) => {
           return (
-            <ThemaPaginaTable<
-              ErfpachtDossierFrontend | ErfpachtDossierFactuurFrontend
-            >
+            <ThemaPaginaTable<ErfpachtDossierFrontend>
               key={kind}
               title={title}
-              zaken={
-                kind === listPageParamKind.erfpachtDossiers
-                  ? dossiers
-                  : openFacturen
-              }
+              zaken={dossiers}
               displayProps={displayProps}
               maxItems={maxItems}
               listPageRoute={listPageRoute}
             />
           );
-        })
+        }
+      )
     : [];
 
   return (
     <ThemaPagina
+      id={id}
       title={title}
       isLoading={isLoading}
       isError={isError}

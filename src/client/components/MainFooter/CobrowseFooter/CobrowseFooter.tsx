@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react';
 
 import { PageFooter } from '@amsterdam/design-system-react';
 
-import { FeatureToggle } from '../../../../universal/config/feature-toggles';
+import { BFF_API_BASE_URL } from '../../../config/api';
 import { useScript } from '../../../hooks/useScript';
 
+export const LABEL_HULP_SCHERMDELEN = 'Hulp via schermdelen';
 const MAX_WAIT_FOR_COBROWSE_LIVE_MS = 5000;
 declare global {
   interface Window {
-    CobrowseIO?: unknown;
+    CobrowseWidget?: unknown;
   }
 }
 function waitForCobrowseLiveInWindow(window: Window & typeof globalThis) {
@@ -16,7 +17,7 @@ function waitForCobrowseLiveInWindow(window: Window & typeof globalThis) {
   let timeoutReached = false;
   return new Promise(function (resolve, reject) {
     (function waitForFoo() {
-      if (window.CobrowseIO) {
+      if (window.CobrowseWidget) {
         return resolve(true);
       }
       const timeoutMs = 50;
@@ -33,39 +34,49 @@ function waitForCobrowseLiveInWindow(window: Window & typeof globalThis) {
 }
 
 export function CobrowseFooter() {
-  if (MA_APP_MODE === 'unittest' || !FeatureToggle.cobrowseIsActive) {
+  const licenseKey = import.meta.env.REACT_APP_COBROWSE_LICENSE_KEY;
+  if (!licenseKey || MA_APP_MODE === 'unittest') {
     return;
   }
-
-  // Load the external script when it is not loaded from the tagmanager
   const [isCobrowseLoaded] = useScript({
-    src: 'https://omnichanneliv--gat2.sandbox.my.site.com/staticvforcesite/resource/Cobrowse/cobrowseAppNL.bundle.js?v=002',
-    defer: false,
-    async: true,
+    src: `${BFF_API_BASE_URL}/services/screenshare`,
+    defer: true,
+    async: false,
     isEnabled: true,
+    dataset: {
+      licenseKey,
+    },
   });
   const [showCobrowseFooter, setShowCobrowseFooter] = useState(false);
   useEffect(() => {
-    waitForCobrowseLiveInWindow(window).then(() => {
-      setShowCobrowseFooter(true);
-    });
-
+    waitForCobrowseLiveInWindow(window)
+      .then(() => {
+        setShowCobrowseFooter(true);
+      })
+      .catch((e) => {
+        // ignore reject
+      });
+  }, [isCobrowseLoaded]);
+  useEffect(() => {
+    if (!showCobrowseFooter) {
+      return;
+    }
     const head = document.head;
     const link = document.createElement('link');
 
     link.type = 'text/css';
     link.rel = 'stylesheet';
-    link.href = '/css/cobrowse.css';
+    link.href = '/css/cobrowse-widget-2025-08-14.css';
 
     head.appendChild(link);
 
     return () => {
       head.removeChild(link);
     };
-  }, [isCobrowseLoaded]);
+  }, [showCobrowseFooter]);
 
   // MIJN-11933
-  // Setting the id to startCobrowseButton8 (script add eventHandler) is not stable in an SPA
+  // Setting the id to startCobrowseButton (script add eventHandler) is not stable in an SPA
   // The external script also listens for the Shift+6 keydown event to display the modal
   const shift6keysDown = new KeyboardEvent('keydown', {
     key: '6',
@@ -84,7 +95,7 @@ export function CobrowseFooter() {
         onClick={() => document.dispatchEvent(shift6keysDown)}
         href="#"
       >
-        Hulp via schermdelen
+        {LABEL_HULP_SCHERMDELEN}
       </PageFooter.MenuLink>
     )
   );

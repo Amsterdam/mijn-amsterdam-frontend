@@ -1,6 +1,6 @@
 import { render, within } from '@testing-library/react';
 
-import { routeConfig } from './Bodem-thema-config';
+import { themaConfig } from './Bodem-thema-config';
 import { BodemThema } from './BodemThema';
 import { LoodMetingFrontend } from '../../../../server/services/bodem/types';
 import { AppState } from '../../../../universal/types/App.types';
@@ -15,7 +15,7 @@ const metingen = [
     decision: null,
     displayStatus: 'Ontvangen',
     processed: false,
-    kenmerk: 'OL-001478',
+    identifier: 'OL-001478',
     aanvraagNummer: 'AV-001447',
     rapportBeschikbaar: false,
     redenAfwijzing: '',
@@ -55,7 +55,7 @@ const metingen = [
     decision: null,
     displayStatus: 'In behandeling',
     processed: false,
-    kenmerk: 'OL-001478',
+    identifier: 'OL-001478',
     aanvraagNummer: 'AV-001447',
     rapportBeschikbaar: false,
     redenAfwijzing: '',
@@ -98,7 +98,7 @@ const metingen = [
     decision: 'Afgewezen',
     displayStatus: 'Afgewezen',
     processed: true,
-    kenmerk: 'OL-001475',
+    identifier: 'OL-001475',
     aanvraagNummer: 'AV-001446',
     rapportBeschikbaar: false,
     rapportId: '6ec7efd6-cb6f-ed11-9561-0022489fda17',
@@ -142,7 +142,7 @@ const metingen = [
     decision: 'Afgehandeld',
     displayStatus: 'Afgehandeld',
     processed: true,
-    kenmerk: 'OL-001471',
+    identifier: 'OL-001471',
     aanvraagNummer: 'AV-001444',
     rapportBeschikbaar: true,
     rapportId: '87464b90-176f-ed11-9561-0022489fdff7',
@@ -192,8 +192,8 @@ const testState = {
 
 const createComponent = componentCreator({
   component: BodemThema,
-  routeEntry: routeConfig.themaPage.path,
-  routePath: routeConfig.themaPage.path,
+  routeEntry: themaConfig.route.path,
+  routePath: themaConfig.route.path,
 });
 
 describe('Bodem', () => {

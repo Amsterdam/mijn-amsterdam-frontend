@@ -1,0 +1,90 @@
+{
+  "feed": {
+    "count": 10,
+    "entry": [
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "IMandateId": "100001",
+            "SndDebtorId": "AFVAL",
+            "SndId": "8888888888",
+            "LifetimeFrom": "2024-05-01",
+            "LifetimeTo": "9999-05-01",
+            "Status": "1",
+            "SndName1": "Foo",
+            "SndName2": "van der Bar",
+            "SndIban": "NL99AMS1234567890"
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "IMandateId": "100002",
+            "SndDebtorId": "VERGUNNINGEN",
+            "SndId": "8888888888",
+            "LifetimeFrom": "2024-05-01",
+            "LifetimeTo": "9999-05-01",
+            "Status": "1",
+            "SndName1": "Schnizz",
+            "SndName2": "Fizzle",
+            "SndIban": "NL99AMS098765432"
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "PayType": "N",
+            "SndType": "BUS3007",
+            "SndId": "0001500091",
+            "SndPostal": "1102 CW",
+            "SndCountry": "NL",
+            "RefType": "",
+            "RecType": "BUS0002",
+            "RecId": 1000,
+            "RecName1": "Gemeente Amsterdam",
+            "RecPostal": "1011 PN",
+            "RecStreet": "Amstel 1",
+            "RecHouse": "",
+            "RecCity": "Amsterdam",
+            "RecCountry": "NL",
+            "LifetimeFrom": "2025-10-27T00:00:00",
+            "LifetimeTo": "2025-12-31T00:00:00",
+            "SignDate": "2025-10-27T00:00:00",
+            "SignCity": "Amsterdam",
+            "Status": 1,
+            "IMandateId": 100000000080,
+            "SndIban": "NL21RABO0110055004",
+            "SndBic": "RABONL2U",
+            "SndStreet": "Anton de Komplein",
+            "SndHouse": 150,
+            "SndCity": "Amsterdam",
+            "SndName2": "",
+            "SndName1": "G. Braber",
+            "SndDebtorId": "ERFPACHT"
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "IMandateId": "100003",
+            "SndDebtorId": "MARKTZAKEN",
+            "SndId": "8888888888",
+            "LifetimeFrom": "2024-05-01",
+            "LifetimeTo": "2024-12-06",
+            "Status": "1",
+            "SndName1": "Schnizz",
+            "SndName2": "Fizzle",
+            "SndIban": "NL99AMS7777888888"
+          }
+        }
+      }
+    ]
+  }
+}

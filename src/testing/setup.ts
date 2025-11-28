@@ -9,6 +9,23 @@ const ENV_FILE = '.env.local.template';
 const envConfig = dotenv.config({ path: ENV_FILE });
 dotenvExpand.expand(envConfig);
 
+nock.disableNetConnect();
+
+// runs a cleanup after each test case (e.g. clearing jsdom)
+afterEach(() => {
+  nock.cleanAll();
+  cleanup();
+});
+
+afterAll(() => {
+  // Enable http requests.
+  nock.cleanAll();
+  nock.restore();
+  nock.enableNetConnect();
+});
+
+vi.mock('zustand');
+
 // Turn off memoization to make tests more stateless.
 // Often tests pass or fail without a clear reason because of this caching.
 vi.mock('memoizee', async (importOriginal) => {
@@ -49,21 +66,6 @@ vi.mock('../universal/config/feature-toggles.ts', async (importOriginal) => {
     ...featureToggleModule,
     FeatureToggle,
   };
-});
-
-nock.disableNetConnect();
-
-// runs a cleanup after each test case (e.g. clearing jsdom)
-afterEach(() => {
-  nock.cleanAll();
-  cleanup();
-});
-
-afterAll(() => {
-  // Enable http requests.
-  nock.cleanAll();
-  nock.restore();
-  nock.enableNetConnect();
 });
 
 export const bffApiHost = 'http://bff-api-host';
@@ -153,3 +155,11 @@ process.env.BFF_AMSAPP_NONCE = '123456789123456789123456';
 process.env.DEBUG_RESPONSE_DATA = '';
 
 process.env.BFF_CONTACTMOMENTEN_BASE_URL = `${remoteApiHost}/salesforce/contactmomenten`;
+
+process.env.BFF_POM_API_BASE_URL = `${remoteApiHost}/pom`;
+
+process.env.BFF_BENK_BRP_CLIENT_ID = 'test-client-id';
+process.env.BFF_BENK_BRP_CLIENT_SECRET = 'test-client-secret';
+process.env.BFF_BENK_BRP_TENANT = 'test-tenant';
+process.env.BFF_BENK_BRP_APPLICATION_ID = 'test-app-id';
+process.env.BFF_BENK_BRP_API_BASE_URL = `${remoteApiHost}/benk_brp`;

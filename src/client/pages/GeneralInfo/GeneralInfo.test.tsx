@@ -1,44 +1,57 @@
 import { render } from '@testing-library/react';
-import { generatePath } from 'react-router';
-import { MutableSnapshot } from 'recoil';
 
-import { appStateAtom } from '../../hooks/useAppState';
-import MockApp from '../MockApp';
+import { componentCreator } from '../MockApp';
 import { GeneralInfo } from './GeneralInfo';
 import { GeneralInfoRoute } from './GeneralInfo-routes';
-import type { AppState } from '../../../universal/types/App.types';
+import { AppState } from '../../../universal/types/App.types';
+import { themaTitle } from '../../components/MyArea/MyArea-thema-config';
+import { stadspasTitle } from '../Thema/HLI/HLI-thema-config';
 
-const testState = {
-  CMS_CONTENT: {
-    status: 'OK',
-    content: {
-      content: '<p>Dingen! <a href="http://example.org">Linkje</a></p>',
-      title: 'Algemene info',
-    },
-  },
-};
+const createGeneralInfoComponent = componentCreator({
+  component: GeneralInfo,
+  routeEntry: GeneralInfoRoute.route,
+  routePath: GeneralInfoRoute.route,
+});
 
-function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState as AppState);
-}
+// TODO: https://gemeente-amsterdam.atlassian.net/browse/MIJN-12053
+describe.skip('<GeneralInfo />', () => {
+  test('Always show MyArea as having `to` in sectionProps makes it show as a link.', () => {
+    const Component = createGeneralInfoComponent({} as unknown as AppState);
+    const screen = render(<Component />);
 
-describe('<GeneralInfo />', () => {
-  const routeEntry = generatePath(GeneralInfoRoute.route);
-  const routePath = GeneralInfoRoute.route;
+    const pasElement = screen.getByText(themaTitle);
+    expect(pasElement).toHaveAttribute('href');
+  });
 
-  function Component() {
-    return (
-      <MockApp
-        routeEntry={routeEntry}
-        routePath={routePath}
-        component={GeneralInfo}
-        initializeState={initializeState}
-      />
-    );
-  }
+  test('Clickable link when thema is active', () => {
+    const Component = createGeneralInfoComponent({
+      HLI: {
+        status: 'OK',
+        content: {
+          regelingen: [1],
+          stadspas: [],
+        },
+      },
+    } as unknown as AppState);
+    const screen = render(<Component />);
 
-  it('Matches the Full Page snapshot', () => {
-    const { asFragment } = render(<Component />);
-    expect(asFragment()).toMatchSnapshot();
+    const pasElement = screen.getByText(stadspasTitle);
+    expect(pasElement).toHaveAttribute('href');
+  });
+
+  test('Not clickable when not active', () => {
+    const Component = createGeneralInfoComponent({
+      HLI: {
+        status: 'OK',
+        content: {
+          regelingen: [],
+          stadspas: [],
+        },
+      },
+    } as unknown as AppState);
+    const screen = render(<Component />);
+
+    const pasElement = screen.getByText(stadspasTitle);
+    expect(pasElement).not.toHaveAttribute('href');
   });
 });

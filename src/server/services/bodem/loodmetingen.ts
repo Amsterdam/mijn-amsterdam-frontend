@@ -9,11 +9,7 @@ import {
   LoodMetingStatusLowerCase,
   LoodMetingen,
 } from './types';
-import {
-  routeConfig,
-  themaId,
-  themaTitle,
-} from '../../../client/pages/Thema/Bodem/Bodem-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/Bodem/Bodem-thema-config';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -92,9 +88,11 @@ function transformLood365Response(
             id: location.Workorderid,
             url: generateFullApiUrlBFF(
               BffEndpoints.LOODMETING_DOCUMENT_DOWNLOAD,
-              {
-                id: documentIDEncrypted,
-              }
+              [
+                {
+                  id: documentIDEncrypted,
+                },
+              ]
             ),
             datePublished: location.Reportsenton,
           };
@@ -133,13 +131,13 @@ function transformLood365Response(
           decision: decision,
           displayStatus: location.Friendlystatus,
           processed: isProcessed,
-          kenmerk: location.Reference,
+          identifier: location.Reference,
           aanvraagNummer: request.Reference,
           rapportBeschikbaar: location?.Reportavailable ?? false,
           rapportId: location?.Workorderid,
           redenAfwijzing: location?.Rejectionreason,
           link: {
-            to: generatePath(routeConfig.detailPage.path, {
+            to: generatePath(themaConfig.detailPage.route.path, {
               id: location.Reference,
             }),
             title: 'Bekijk loodmeting',
@@ -166,7 +164,7 @@ export async function getLoodApiHeaders() {
 
   const tokenResponse = await fetchAuthTokenHeader(
     {
-      apiKey: 'LOOD_365',
+      sourceApiName: 'LOOD_365',
       tokenValidityMS: 60 * 60 * ONE_SECOND_MS, // 1 hour
     },
     {
@@ -194,7 +192,8 @@ export async function fetchLoodmetingen(
     transformResponse: (responseData) =>
       transformLood365Response(authProfileAndToken.profile.sid, responseData),
     cacheKey_UNSAFE: createSessionBasedCacheKey(
-      authProfileAndToken.profile.sid
+      authProfileAndToken.profile.sid,
+      'loodmetingen'
     ),
   });
 
@@ -256,9 +255,9 @@ function createLoodNotification(meting: LoodMetingFrontend): MyNotification {
     MyNotification,
     'title' | 'description' | 'datePublished'
   > = {
-    themaID: themaId,
-    themaTitle: themaTitle,
-    id: meting.kenmerk,
+    themaID: themaConfig.id,
+    themaTitle: themaConfig.title,
+    id: meting.identifier,
     link: {
       to: meting.link.to,
       title: 'Bekijk details',

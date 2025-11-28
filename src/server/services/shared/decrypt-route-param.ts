@@ -10,16 +10,25 @@ import { logger } from '../../logging';
 import { captureException } from '../monitoring';
 
 export type SessionIDAndROuteParamIdEncrypted = string;
+export type EncryptedPayloadAndSessionID = string;
+
+export type DecryptedPayloadAndSessionID<
+  T extends Record<string, unknown> = Record<string, unknown>,
+> = {
+  sessionID: string;
+  payload: T;
+};
 
 /** Decrypt an encrypted 'sessionid:id' and validate it.
  */
-export function decryptEncryptedRouteParamAndValidateSessionID(
+export function decryptEncryptedRouteParamAndValidateSessionID<
+  T extends string = string,
+>(
   sessionIDAndRouteParamIdEncrypted: SessionIDAndROuteParamIdEncrypted,
   authProfileAndToken: AuthProfileAndToken
 ) {
   let sessionID: SessionID | null = null;
   let id: string | null = null;
-
   try {
     [sessionID, id] = decrypt(sessionIDAndRouteParamIdEncrypted).split(':');
   } catch (error) {
@@ -48,5 +57,49 @@ export function decryptEncryptedRouteParamAndValidateSessionID(
     );
   }
 
-  return apiSuccessResult(id);
+  return apiSuccessResult<T>(id as T);
+}
+
+export function getDecryptedPayload<T extends Record<string, unknown>>(
+  payloadEncrypted: EncryptedPayloadAndSessionID
+) {
+  try {
+    return apiSuccessResult<T>(JSON.parse(decrypt(payloadEncrypted)));
+  } catch (error: unknown) {
+    logger.error(error);
+    captureException(error);
+    return apiErrorResult(
+      'Bad request: failed to process encrypted param',
+      null,
+      HttpStatusCode.BadRequest
+    );
+  }
+}
+
+export function decryptPayloadAndValidateSessionID<
+  T extends Record<string, unknown> = Record<string, unknown>,
+>(
+  payloadEncrypted: EncryptedPayloadAndSessionID,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  const decryptResult = getDecryptedPayload<T>(payloadEncrypted);
+  if (decryptResult.status === 'ERROR') {
+    return decryptResult;
+  }
+  const content = decryptResult.content;
+
+  if (
+    !content ||
+    !content.sessionID ||
+    authProfileAndToken.profile.sid !== content.sessionID
+  ) {
+    logger.debug('Incomplete session validation');
+    return apiErrorResult(
+      'Not authorized: incomplete session validation or missing payload',
+      null,
+      HttpStatusCode.Unauthorized
+    );
+  }
+
+  return decryptResult;
 }

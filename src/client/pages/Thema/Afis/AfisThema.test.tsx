@@ -1,21 +1,19 @@
 import { render, waitFor } from '@testing-library/react';
 import { generatePath } from 'react-router';
-import { MutableSnapshot } from 'recoil';
 
-import { AfisThema } from './AfisThema';
 import { routeConfig } from './Afis-thema-config';
+import { AfisThema } from './AfisThema';
 import {
   AfisBusinessPartnerDetailsTransformed,
-  AfisFacturenByStateResponse,
+  AfisFacturenOverviewResponse,
 } from '../../../../server/services/afis/afis-types';
 import { bffApi } from '../../../../testing/utils';
 import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
 const businessPartnerIdEncrypted = 'xxx-123-xxx';
 
-const mockFacturen: AfisFacturenByStateResponse = {
+const mockFacturen: AfisFacturenOverviewResponse = {
   open: {
     count: 2,
     facturen: [
@@ -68,6 +66,7 @@ const mockFacturen: AfisFacturenByStateResponse = {
         amountPayedFormatted: '',
       },
     ],
+    state: 'open',
   },
   afgehandeld: {
     count: 1,
@@ -97,8 +96,13 @@ const mockFacturen: AfisFacturenByStateResponse = {
         amountPayedFormatted: '',
       },
     ],
+    state: 'open',
   },
-  overgedragen: { count: 0, facturen: [] },
+  overgedragen: {
+    count: 0,
+    facturen: [],
+    state: 'open',
+  },
 };
 
 const testState = {
@@ -118,10 +122,6 @@ const testState = {
     },
   },
 } as AppState;
-
-function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState);
-}
 
 describe('<Afis />', () => {
   const businessPartnerDetails: AfisBusinessPartnerDetailsTransformed = {
@@ -147,7 +147,7 @@ describe('<Afis />', () => {
         routeEntry={routeEntry}
         routePath={routePath}
         component={AfisThema}
-        initializeState={initializeState}
+        state={testState}
       />
     );
   }

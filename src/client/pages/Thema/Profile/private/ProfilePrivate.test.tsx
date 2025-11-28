@@ -1,16 +1,12 @@
 import { render, screen, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MutableSnapshot } from 'recoil';
 import type { PartialDeep } from 'type-fest';
 
 import { MijnGegevensThema } from './ProfilePrivate';
-import type {
-  BRPData,
-  Adres,
-} from '../../../../../server/services/profile/brp.types';
+import type { Adres } from '../../../../../server/services/brp/brp-types';
+import type { BRPData } from '../../../../../server/services/profile/brp.types';
 import { ContactMoment } from '../../../../../server/services/salesforce/contactmomenten.types';
 import { AppState } from '../../../../../universal/types/App.types';
-import { appStateAtom } from '../../../../hooks/useAppState';
 import MockApp from '../../../MockApp';
 import { routeConfig } from '../Profile-thema-config';
 
@@ -22,11 +18,6 @@ const testState = (
   KVK: { status: 'OK', content: null },
   KLANT_CONTACT: { status: 'OK', content: responseSF },
 });
-
-function initializeState(testState: unknown) {
-  return (snapshot: MutableSnapshot) =>
-    snapshot.set(appStateAtom, testState as AppState);
-}
 
 const panelHeadings = [
   'Persoonlijke gegevens',
@@ -49,12 +40,12 @@ describe('<Profile />', () => {
         routeEntry={routeEntry}
         routePath={routeEntry}
         component={MijnGegevensThema}
-        initializeState={initializeState(testState(state))}
+        state={testState(state) as AppState}
       />
     );
   }
 
-  test('Matches the Full Page snapshot', async () => {
+  test('Lives in Mokum + verbintenis: displays all data', async () => {
     render(
       <Component
         state={{
@@ -111,12 +102,42 @@ describe('<Profile />', () => {
     expect(
       screen.getByText('Onjuiste inschrijving melden')
     ).toBeInTheDocument();
+    expect(screen.queryByText('Adres in onderzoek')).not.toBeInTheDocument();
     expect(
-      await screen.queryByText('Adres in onderzoek')
+      screen.queryByText('Vertrokken Onbekend Waarheen')
     ).not.toBeInTheDocument();
-    expect(
-      await screen.queryByText('Vertrokken Onbekend Waarheen')
-    ).not.toBeInTheDocument();
+  });
+
+  test('Lives in Mokum and has no verbintenis: display all data', async () => {
+    render(
+      <Component
+        state={{
+          persoon: { mokum: true },
+          adres: {
+            straatnaam: 'Prachtige Straat',
+            huisnummer: '13',
+            landnaam: 'Nederland',
+            _adresSleutel: 'x',
+          },
+          verbintenis: undefined,
+          ouders: [{ voornamen: 'Hendrik' }, { voornamen: 'Marie' }],
+          kinderen: [{ voornamen: 'Dirkje' }],
+        }}
+      />
+    );
+
+    screen.getByText('Prachtige Straat 13');
+
+    const button = screen.getByTitle('Toon inhoud over Ouders');
+    await userEvent.click(button);
+
+    screen.getByText('Hendrik');
+    screen.getByText('Marie');
+
+    const button2 = screen.getByTitle('Toon inhoud over Kinderen');
+    await userEvent.click(button2);
+
+    screen.getByText('Dirkje');
   });
 
   test('Matches the Full Page snapshot Non-Mokum', async () => {
@@ -125,6 +146,7 @@ describe('<Profile />', () => {
         state={{
           persoon: { mokum: false },
           adres: { landnaam: 'Nederland', _adresSleutel: 'x' },
+          ouders: [{ voornamen: 'Hendrik' }, { voornamen: 'Marie' }],
         }}
       />
     );
@@ -141,6 +163,7 @@ describe('<Profile />', () => {
         expect(await screen.findByText(heading)).not.toBeInTheDocument();
       });
 
+    expect(screen.queryByText('Ouders')).not.toBeInTheDocument();
     expect(
       screen.getByText('Verhuizing naar Amsterdam doorgeven')
     ).toBeInTheDocument();
@@ -241,7 +264,7 @@ describe('<Profile />', () => {
           routeEntry={routeEntry}
           routePath={routeEntry}
           component={MijnGegevensThema}
-          initializeState={initializeState(
+          state={
             testState({ persoon: { mokum: true } }, [
               {
                 datePublished: '2024-05-29 08:02:38',
@@ -271,8 +294,8 @@ describe('<Profile />', () => {
                 referenceNumber: '00002032',
                 themaKanaal: 'Kanaal world',
               },
-            ])
-          )}
+            ]) as AppState
+          }
         />
       );
     }

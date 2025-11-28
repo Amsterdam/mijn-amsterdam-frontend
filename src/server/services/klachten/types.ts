@@ -1,7 +1,8 @@
-import { ZaakDetail } from '../../../universal/types/App.types';
+import { ZaakAanvraagDetail } from '../../../universal/types/App.types';
 import { SmileFieldValue, SmileSourceResponse } from '../smile/smile-types';
 
 export type KlachtFrontend = {
+  identifier: string;
   inbehandelingSinds: string;
   ontvangstDatum: string;
   ontvangstDatumFormatted: string | null;
@@ -9,7 +10,7 @@ export type KlachtFrontend = {
   gewensteOplossing: string | null;
   onderwerp: string | null;
   locatie: string | null;
-} & ZaakDetail;
+} & ZaakAanvraagDetail;
 
 export type SmileKlacht = {
   klacht_inbehandeling: SmileFieldValue;

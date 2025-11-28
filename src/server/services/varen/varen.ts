@@ -1,18 +1,24 @@
 import { generatePath } from 'react-router';
-import slug from 'slugme';
 
 import {
-  DecosVarenZaakVergunning,
   Varen,
   VarenRegistratieRederFrontend,
   VarenRegistratieRederType,
+  VarenVergunningExploitatieType,
+  VarenVergunningFrontend,
   VarenZakenFrontend,
 } from './config-and-types';
-import { decosZaakTransformers } from './decos-zaken';
+import {
+  decosRederZaakTransformers,
+  decosVergunningTransformers,
+  decosZaakTransformers,
+} from './decos-zaken';
 import { getStatusSteps } from './varen-status-steps';
-import { isVergunning } from '../../../client/pages/Thema/Varen/helper';
 import { routeConfig } from '../../../client/pages/Thema/Varen/Varen-thema-config';
-import { apiSuccessResult } from '../../../universal/helpers/api';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+} from '../../../universal/helpers/api';
 import { omit, toDateFormatted } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { fetchDecosZaken } from '../decos/decos-service';
@@ -30,11 +36,12 @@ function transformVarenRederFrontend(
   };
 }
 
-function transformVarenZakenFrontend(
+function transformVarenZaakFrontend(
   authProfileAndToken: AuthProfileAndToken,
-  zaak: Varen
-): VarenZakenFrontend[] {
-  const appRoute = routeConfig.detailPage.path;
+  zaak: Varen,
+  vergunningIdsOfThisReder: Set<VarenVergunningExploitatieType['identifier']>
+): VarenZakenFrontend {
+  const appRoute = routeConfig.detailPageZaak.path;
   const zaakTransformed = transformDecosZaakFrontend(
     authProfileAndToken.profile.sid,
     zaak,
@@ -44,64 +51,84 @@ function transformVarenZakenFrontend(
       getStepsFN: getStatusSteps,
     }
   );
+
   const zaakFrontend: VarenZakenFrontend = {
     ...omit(zaakTransformed, ['vergunningen']),
     vergunning: null,
   };
 
-  if (!zaak.vergunningen || zaak.vergunningen.length === 0) {
-    return [zaakFrontend];
+  // A zaak can link to a vergunning of another reder.
+  // A linked vergunning not in vergunningIdsOfThisReder does not belong to this reder.
+  const vergunningenOfThisReder = zaak.vergunningen?.filter((vergunning) =>
+    vergunningIdsOfThisReder.has(vergunning.identifier)
+  );
+
+  if (!vergunningenOfThisReder || vergunningenOfThisReder.length === 0) {
+    return zaakFrontend;
   }
 
-  const createZaakVergunning = (vergunning: DecosVarenZaakVergunning) => ({
+  return {
     ...zaakFrontend,
-    vergunning,
-    vesselName: vergunning.vesselName || zaak.vesselName, // The vesselName from the vergunning is leading
-  });
+    vergunning: vergunningenOfThisReder[0] ?? null,
+  };
+}
 
-  if (!isVergunning(zaak)) {
-    // If the zaak is not a vergunning, only one vergunning can be attached
-    return [createZaakVergunning(zaak.vergunningen[0])];
-  }
+function transformVarenVergunningFrontend(
+  vergunning: VarenVergunningExploitatieType,
+  zaken: VarenZakenFrontend[]
+): VarenVergunningFrontend {
+  const appRoute = routeConfig.detailPageVergunning.path;
 
-  const zakenFrontend = zaak.vergunningen.map((vergunning) => ({
-    ...createZaakVergunning(vergunning),
-    id: vergunning.id,
+  return {
+    ...omit(vergunning, ['statusDates', 'termijnDates']),
+    dateStartFormatted: toDateFormatted(vergunning.dateStart),
+    dateEndFormatted: toDateFormatted(vergunning.dateEnd),
+    linkedActiveZaakLink:
+      zaken.find(
+        (zaak) =>
+          zaak.vergunning?.id === vergunning.id && zaak.processed === false
+      )?.link || null,
     link: {
       to: generatePath(appRoute, {
-        caseType: slug(zaak.caseType, { lower: true }),
         id: vergunning.id,
       }),
-      title: `Bekijk hoe het met uw aanvraag staat`,
+      title: `Bekijk uw actieve vergunning`,
     },
-  }));
-
-  return zakenFrontend;
+  };
 }
 
 export async function fetchVaren(authProfileAndToken: AuthProfileAndToken) {
-  const response = await fetchDecosZaken(
-    authProfileAndToken,
-    decosZaakTransformers
-  );
+  const [rederRaw, zakenRaw, vergunningenRaw] = await Promise.all([
+    fetchDecosZaken(authProfileAndToken, decosRederZaakTransformers),
+    fetchDecosZaken(authProfileAndToken, decosZaakTransformers),
+    fetchDecosZaken(authProfileAndToken, decosVergunningTransformers),
+  ]);
 
-  if (response.status === 'OK') {
-    const decosZaken = response.content;
-    const reder = decosZaken.find(
-      (zaak) => zaak.caseType === 'Varen registratie reder'
-    );
-    const rederFrontend = transformVarenRederFrontend(reder);
-
-    const zakenFrontend = decosZaken
-      .filter((zaak) => zaak.caseType !== 'Varen registratie reder')
-      .flatMap((zaak) =>
-        transformVarenZakenFrontend(authProfileAndToken, zaak)
-      );
-    return apiSuccessResult({
-      reder: rederFrontend,
-      zaken: zakenFrontend,
-    });
+  if (
+    rederRaw.status !== 'OK' ||
+    zakenRaw.status !== 'OK' ||
+    vergunningenRaw.status !== 'OK'
+  ) {
+    return apiErrorResult('Failed dependencies', null);
   }
 
-  return response;
+  const reder = transformVarenRederFrontend(rederRaw.content[0]);
+  const zaken = zakenRaw.content.flatMap((zaak) =>
+    transformVarenZaakFrontend(
+      authProfileAndToken,
+      zaak,
+      new Set(
+        vergunningenRaw.content.map((vergunning) => vergunning.identifier)
+      )
+    )
+  );
+  const vergunningen = vergunningenRaw.content.flatMap((vergunning) =>
+    transformVarenVergunningFrontend(vergunning, zaken)
+  );
+
+  return apiSuccessResult({
+    reder,
+    zaken,
+    vergunningen,
+  });
 }

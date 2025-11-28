@@ -24,7 +24,10 @@ import {
 } from '../config/source-api';
 import { captureException } from '../services/monitoring';
 
-const debugRequest = createDebugger('source-api-request:request');
+const debugResponse = createDebugger('source-api-request:response');
+const debugResponseError = createDebugger(
+  'source-api-request:response-error-object'
+);
 const debugCacheHit = createDebugger('source-api-request:cache-hit');
 const debugCacheKey = createDebugger('source-api-request:cache-key');
 
@@ -38,25 +41,64 @@ export function isSuccessStatus(statusCode: number): boolean {
   return statusCode >= 200 && statusCode < 300;
 }
 
-function getDebugResponseData(conf: AxiosRequestConfig) {
-  return (responseDataParsed: any) => {
-    debugRequest(
-      {
-        url: conf.url,
-        params: conf.params,
-      },
-      'start:debug response data'
-    );
-    debugRequest(responseDataParsed, 'end:debug response data');
-    return responseDataParsed;
+const debugResponseDataTerms = (
+  process.env.DEBUG_RESPONSE_DATA?.split(',') ?? []
+)
+  .filter(Boolean)
+  .map((term) => term.trim());
+const hasDebugResponseDataTerms = debugResponseDataTerms.length > 0;
+
+if (hasDebugResponseDataTerms) {
+  debugResponse(debugResponseDataTerms, 'debug response data terms');
+}
+
+function isDebugResponseDataMatch(config: AxiosRequestConfig) {
+  return function isDebugResponseDataMatch(term: string) {
+    const hasTermInRequestUrl = !!config.url?.includes(term.trim());
+    const hasTermInRequestParams = config.params
+      ? JSON.stringify(config.params).includes(term.trim())
+      : false;
+    return hasTermInRequestUrl || hasTermInRequestParams;
   };
 }
 
-const debugResponseDataTerms =
-  process.env.DEBUG_RESPONSE_DATA?.split(',') ?? [];
+function addResponseDataDebugging(config: AxiosRequestConfig) {
+  config.transformResponse =
+    config.transformResponse as AxiosResponseTransformer[];
 
-debugRequest(debugResponseDataTerms, 'debug response data terms');
+  const configExcerpt = {
+    method: config.method ?? 'GET',
+    url: config.url,
+    params: config.params,
+  };
 
+  const isDebugResponseDataTermMatch = hasDebugResponseDataTerms
+    ? debugResponseDataTerms.some(isDebugResponseDataMatch(config))
+    : false;
+
+  // Add default transformer if no transformers are defined
+  if (!config.transformResponse) {
+    const transformers: AxiosResponseTransformer[] = [];
+    config.transformResponse = transformers.concat(
+      axios.defaults.transformResponse ?? []
+    );
+  }
+
+  // Add an additional transformer to log the raw response before any other transformers are applied
+  config.transformResponse?.unshift((responseDataRaw, headers, status) => {
+    if (!hasDebugResponseDataTerms || isDebugResponseDataTermMatch) {
+      debugResponse('');
+      debugResponse('------');
+      debugResponse('[CONFIG]: %o', configExcerpt);
+      debugResponse('[RESPONSE DATA]: %s', responseDataRaw);
+      debugResponse('[HEADERS]: %o', headers);
+      debugResponse('[STATUS]: %d', status);
+    }
+    return responseDataRaw;
+  });
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const cache = new memoryCache.Cache<string, any>();
 
 export function deleteCacheEntry(cacheKey: string) {
@@ -98,44 +140,7 @@ export async function requestData<T>(
     );
   }
 
-  const debugResponseData = getDebugResponseData(config);
-  // Log/Debug the untransformed response data
-  if (
-    debugResponseDataTerms.filter(Boolean).some((term) => {
-      const hasTermInRequestUrl = !!config.url?.includes(term.trim());
-      const hasTermInRequestParams = config.params
-        ? JSON.stringify(config.params).includes(term.trim())
-        : false;
-      const isDebugTermMatch = hasTermInRequestUrl || hasTermInRequestParams;
-
-      if (isDebugTermMatch) {
-        debugRequest(
-          {
-            term,
-            hasTermInRequestParams,
-            hasTermInRequestUrl,
-            url: config.url,
-            params: config.params,
-          },
-          'debug response data term match'
-        );
-      }
-
-      return isDebugTermMatch;
-    }) &&
-    !config.transformResponse?.includes(debugResponseData)
-  ) {
-    // Add default transformer if no transformers are defined
-    if (!config.transformResponse) {
-      const transformers: AxiosResponseTransformer[] = [];
-      config.transformResponse = transformers.concat(
-        axios.defaults.transformResponse ?? []
-      );
-    }
-    // Insert the debug transformer after the default transformer
-    // This is important to ensure that the response is parsed before we log it.
-    config.transformResponse.splice(1, 0, debugResponseData);
-  }
+  addResponseDataDebugging(config);
 
   // Shortcut to passing the JWT of the connected OIDC provider along with the request as Bearer token
   // A configured Authorization header passed via { ... headers: { Authorization: 'xxx' }, ... } takes presedence.
@@ -207,10 +212,12 @@ export async function requestData<T>(
     }
 
     return responseData;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     const errorMessage = 'message' in error ? error.message : error.toString();
 
-    debugRequest(error, config.url, 'response error');
+    debugResponse('[ERROR]: %s', errorMessage, config.url);
+    debugResponseError('[ERROR]: %o', error);
 
     captureException(error, {
       properties: {

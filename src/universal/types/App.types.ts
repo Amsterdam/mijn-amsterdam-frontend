@@ -1,8 +1,8 @@
 import { FunctionComponent, ReactNode, SVGProps } from 'react';
 
 import { ServiceID, ServicesType } from '../../server/services/controller';
-import type { ZaakStatus } from '../../server/services/decos/decos-types';
 import { ApiResponse_DEPRECATED } from '../helpers/api';
+import type { SomeOtherString } from '../helpers/types';
 
 export type AppStateBase = {
   [key in ServiceID]: ApiResponse_DEPRECATED<
@@ -11,7 +11,6 @@ export type AppStateBase = {
 };
 
 export type AppState = AppStateBase;
-
 export type AppStateKey = keyof AppState;
 
 // Generic object interface
@@ -67,6 +66,7 @@ export interface MyNotification<ID extends string = string> {
 export interface GenericDocument {
   id: string;
   title: string;
+  filename?: string;
   url: string;
   download?: string;
   external?: boolean;
@@ -75,6 +75,25 @@ export interface GenericDocument {
 }
 
 export type AltDocumentContent = string | ReactNode;
+
+export type ZaakStatus =
+  | 'Ontvangen'
+  | 'In behandeling'
+  | 'Afgehandeld'
+  | 'Ingetrokken'
+  | 'Meer informatie nodig'
+  | 'Einde recht'
+  | 'Verlopen'
+  | SomeOtherString;
+
+export type ZaakDisplayStatus =
+  | ZaakStatus
+  | 'Toegewezen'
+  | 'Afgewezen'
+  | 'Verleend'
+  | 'Ingetrokken'
+  | 'Niet verleend'
+  | 'Onbekend';
 
 export interface StatusLineItem<T extends ZaakStatus = string> {
   id: string;
@@ -89,7 +108,7 @@ export interface StatusLineItem<T extends ZaakStatus = string> {
   actionButtonItems?: LinkProps[];
 }
 
-export interface ZaakDetail<T extends ZaakStatus = string> {
+export interface ZaakAanvraagDetail<T extends ZaakStatus = string> {
   id: string;
   title: string;
   steps: StatusLineItem<T>[];
@@ -98,7 +117,14 @@ export interface ZaakDetail<T extends ZaakStatus = string> {
   displayStatus: string;
 }
 
-export type StatusLine = ZaakDetail;
+export interface ZaakDetail {
+  id: string;
+  title: string;
+  link: LinkProps;
+  about?: string;
+}
+
+export type StatusLine = ZaakAanvraagDetail;
 
 export interface ApiError {
   name: string;

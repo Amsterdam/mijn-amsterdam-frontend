@@ -1,4 +1,5 @@
 import { HttpStatusCode } from 'axios';
+import { firstBy } from 'thenby';
 
 import {
   BeschiktProduct,
@@ -13,7 +14,9 @@ import {
   ZorgnedPerson,
   ZorgnedPersoonsgegevensNAWResponse,
   ZorgnedResponseDataSource,
+  type Beschikking,
   type BSN,
+  type ZorgnedAanvraagSource,
 } from './zorgned-types';
 import {
   apiErrorResult,
@@ -25,7 +28,7 @@ import {
 } from '../../../universal/helpers/api';
 import { getFullName } from '../../../universal/helpers/brp';
 import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
-import { sortByNumber, uniqueArray } from '../../../universal/helpers/utils';
+import { hash, sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
 import { GenericDocument } from '../../../universal/types/App.types';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { isSuccessStatus, requestData } from '../../helpers/source-api-request';
@@ -36,6 +39,7 @@ async function fetchZorgnedByBSN<S, T>(
     path: string;
     transform?: (response: S) => T;
     validateStatus?: (statusCode: number) => boolean;
+    useCache?: boolean;
   }
 ): Promise<ApiResponse<T>> {
   const postBody = {
@@ -47,13 +51,19 @@ async function fetchZorgnedByBSN<S, T>(
   const dataRequestConfig = getApiConfig(options.zorgnedApiConfigKey);
   const url = dataRequestConfig.url + options.path;
 
-  const zorgnedResponse = await requestData<T>({
+  const dataRequestConfig_ = {
     ...dataRequestConfig,
     url,
     data: postBody,
     transformResponse: options.transform,
     validateStatus: options.validateStatus,
-  });
+  };
+
+  if (typeof options.useCache !== 'undefined') {
+    dataRequestConfig_.enableCache = options.useCache;
+  }
+
+  const zorgnedResponse = await requestData<T>(dataRequestConfig_);
 
   return zorgnedResponse;
 }
@@ -71,18 +81,29 @@ function transformDocumenten(documenten: ZorgnedDocument[]) {
       url: '', // NOTE: URL added later (wmo.ts > encryptDocumentIds) because we need an ecrypted id with specific session id.
       datePublished: document.datumDefinitief!, // definitieveDocumenten is filtered by checking the existance of this property.
     };
+    if (document.bestandsnaam) {
+      doc.filename = document.bestandsnaam;
+    }
+
     documents.push(doc);
   }
 
   return documents;
 }
 
+export function getZorgnedAanvraagID(
+  beschikkingNummer: number,
+  aanvraagIdentificatie: string,
+  doHash: boolean = true
+): string {
+  const id = `${beschikkingNummer}-${aanvraagIdentificatie}`;
+  return doHash ? hash(id) : id;
+}
+
 function transformZorgnedAanvraag(
-  id: string,
-  datumAanvraag: string,
-  datumBesluit: string,
-  beschiktProduct: BeschiktProduct,
-  documenten: ZorgnedDocument[]
+  aanvraag: ZorgnedAanvraagSource,
+  beschikking: Beschikking,
+  beschiktProduct: BeschiktProduct
 ): ZorgnedAanvraagTransformed {
   const toegewezenProduct = beschiktProduct.toegewezenProduct;
   const toewijzingen = toegewezenProduct?.toewijzingen ?? [];
@@ -104,27 +125,49 @@ function transformZorgnedAanvraag(
   }
 
   const aanvraagTransformed: ZorgnedAanvraagTransformed = {
-    id,
-    datumAanvraag: datumAanvraag,
+    id: getZorgnedAanvraagID(
+      beschikking.beschikkingNummer,
+      aanvraag.identificatie,
+      false
+    ),
+    prettyID: getZorgnedAanvraagID(
+      beschikking.beschikkingNummer,
+      aanvraag.identificatie,
+      false
+    ),
+    datumAanvraag: aanvraag.datumAanvraag,
     datumBeginLevering: levering?.begindatum ?? null,
-    datumBesluit: datumBesluit,
+    datumBesluit: aanvraag.beschikking.datumAfgifte ?? '', // See bug: MIJN-11809
     datumEindeGeldigheid: toegewezenProduct?.datumEindeGeldigheid ?? null,
     datumEindeLevering: levering?.einddatum ?? null,
     datumIngangGeldigheid: toegewezenProduct?.datumIngangGeldigheid ?? null,
     datumOpdrachtLevering: toewijzing?.datumOpdracht ?? null,
     datumToewijzing: toewijzing?.toewijzingsDatumTijd ?? null,
-    documenten: transformDocumenten(documenten),
+    procesAanvraagOmschrijving: aanvraag.procesAanvraag?.omschrijving ?? null,
+    documenten: transformDocumenten(aanvraag.documenten ?? []),
     isActueel: toegewezenProduct?.actueel ?? false,
     leverancier: toegewezenProduct?.leverancier?.omschrijving ?? '',
     leveringsVorm,
     productsoortCode: productsoortCode,
-    productIdentificatie: productIdentificatie,
+    productIdentificatie,
+    beschiktProductIdentificatie: beschiktProduct.identificatie,
+    beschikkingNummer: aanvraag.beschikking.beschikkingNummer,
     resultaat: beschiktProduct.resultaat,
     titel: beschiktProduct.product.omschrijving ?? '',
     betrokkenen: toegewezenProduct?.betrokkenen ?? [],
   };
 
   return aanvraagTransformed;
+}
+
+export function sortZorgnedAanvragenByDateAndId<T extends object>(
+  aanvragen: T[],
+  dateKey: keyof T,
+  idKey: keyof T
+) {
+  return aanvragen.toSorted(
+    firstBy(dateSort(dateKey, 'desc')).thenBy(sortAlpha(idKey, 'desc'))
+  );
 }
 
 export function transformZorgnedAanvragen(
@@ -141,24 +184,18 @@ export function transformZorgnedAanvragen(
       continue;
     }
 
-    const datumBesluit = beschikking.datumAfgifte ?? ''; // See bug: MIJN-11809
-    const datumAanvraag = aanvraagSource.datumAanvraag;
     const beschikteProducten = beschikking.beschikteProducten;
 
     if (!beschikteProducten) {
       continue;
     }
 
-    const documenten: ZorgnedDocument[] = aanvraagSource.documenten ?? [];
-
     for (const beschiktProduct of beschikteProducten) {
       if (beschiktProduct) {
         const aanvraagTransformed = transformZorgnedAanvraag(
-          aanvraagSource.identificatie,
-          datumAanvraag,
-          datumBesluit,
-          beschiktProduct,
-          documenten
+          aanvraagSource,
+          beschikking,
+          beschiktProduct
         );
 
         if (aanvraagTransformed) {
@@ -168,7 +205,22 @@ export function transformZorgnedAanvragen(
     }
   }
 
-  return aanvragenTransformed.sort(sortByNumber('id', 'desc'));
+  return sortZorgnedAanvragenByDateAndId(
+    aanvragenTransformed,
+    'datumAanvraag',
+    'prettyID'
+  );
+}
+
+export async function fetchAllDocumentsRaw(
+  bsn: BSN,
+  options: ZorgnedAanvragenServiceOptions
+) {
+  return fetchZorgnedByBSN(bsn, {
+    ...options,
+    path: '/documenten',
+    useCache: false,
+  });
 }
 
 export async function fetchAanvragen(
@@ -179,6 +231,17 @@ export async function fetchAanvragen(
     ...options,
     path: '/aanvragen',
     transform: transformZorgnedAanvragen,
+  });
+}
+
+export async function fetchAanvragenRaw(
+  bsn: BSN,
+  options: ZorgnedAanvragenServiceOptions
+) {
+  return fetchZorgnedByBSN(bsn, {
+    ...options,
+    path: '/aanvragen',
+    useCache: false,
   });
 }
 
@@ -197,7 +260,7 @@ export async function fetchAndMergeRelatedPersons(
   );
 
   const relatedPersonsResponse = await fetchRelatedPersons(
-    bsns,
+    [...bsns, bsnAanvrager],
     zorgnedApiConfigKey
   );
 
@@ -341,7 +404,7 @@ export async function fetchRelatedPersons(
   });
 
   const results = await Promise.allSettled(requests);
-  const namesAndDatesOfBirth: ZorgnedPerson[] = [];
+  const persons: ZorgnedPerson[] = [];
 
   for (const result of results) {
     const response = getSettledResult(result);
@@ -355,10 +418,10 @@ export async function fetchRelatedPersons(
         null
       );
     }
-    namesAndDatesOfBirth.push(person);
+    persons.push(person);
   }
 
-  return apiSuccessResult(namesAndDatesOfBirth);
+  return apiSuccessResult(persons);
 }
 
 export async function fetchPersoonsgegevensNAW(

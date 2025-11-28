@@ -1,11 +1,18 @@
+import path from 'path';
+
 import { HttpStatusCode } from 'axios';
 import express, { NextFunction, Request, Response } from 'express';
 import proxy from 'express-http-proxy';
 
 import { BffEndpoints } from './bff-routes';
-import { queryParams, type RequestWithQueryParams } from './route-helpers';
+import {
+  generateFullApiUrlBFF,
+  queryParams,
+  type RequestWithQueryParams,
+} from './route-helpers';
 import { ZAAK_STATUS_ROUTE } from '../../client/pages/ZaakStatus/ZaakStatus-config';
 import { OTAP_ENV } from '../../universal/config/env';
+import { FeatureToggle } from '../../universal/config/feature-toggles';
 import {
   DATASETS,
   getDatasetCategoryId,
@@ -14,6 +21,7 @@ import {
   ApiResponse_DEPRECATED,
   apiSuccessResult,
 } from '../../universal/helpers/api';
+import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config';
 import {
   getAuth,
   getReturnToUrlZaakStatus,
@@ -22,6 +30,7 @@ import {
 import { authRoutes } from '../auth/auth-routes';
 import { RELEASE_VERSION } from '../config/app';
 import { getFromEnv } from '../helpers/env';
+import { getRequestParamsFromQueryString } from '../helpers/source-api-request';
 import {
   fetchDataset,
   loadFeatureDetail,
@@ -121,7 +130,7 @@ router.get(
     const id = req.params.id;
     const datasetCategoryId = getDatasetCategoryId(datasetId);
 
-    let response: ApiResponse_DEPRECATED<any> | null = null;
+    let response: ApiResponse_DEPRECATED<unknown> | null = null;
 
     try {
       if (datasetCategoryId && datasetId && id) {
@@ -151,21 +160,43 @@ router.get(
   }
 );
 
+router.get(BffEndpoints.SCREEN_SHARE, async (_, res) => {
+  const cobrowseIsActiveOverwrite = String(
+    getFromEnv('BFF_COBROWSE_IS_ACTIVE_OVERWRITE', false)
+  ).toLowerCase();
+  const cobrowseIsActive =
+    cobrowseIsActiveOverwrite === 'true' ||
+    (FeatureToggle.cobrowseIsActive && cobrowseIsActiveOverwrite !== 'false');
+  if (!cobrowseIsActive) {
+    return res.status(HttpStatusCode.NoContent).send();
+  }
+
+  res.sendFile(
+    '/cobrowse-widget.js',
+    {
+      root: path.join(__dirname, '../static/screenshare/'),
+      lastModified: true,
+    },
+    (_error) => {
+      if (_error && !res.headersSent) {
+        res.status(HttpStatusCode.NoContent).send();
+      }
+    }
+  );
+});
+
 // /**
 //  * Zaak status endpoint redirects to zaakstatus if authenticated, else redirect to login
 //  */
 router.get(BffEndpoints.ZAAK_STATUS, zaakStatusHandler);
 
-export async function zaakStatusHandler(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
+export async function zaakStatusHandler(req: Request, res: Response) {
   const authProfileAndToken = getAuth(req);
   const params = queryParams<{
     id: string;
     thema: string;
     'auth-type': string;
+    payment?: 'true';
   }>(req);
 
   const redirectUrl = getReturnToUrlZaakStatus(params);
@@ -176,8 +207,16 @@ export async function zaakStatusHandler(
 
   const authType =
     params['auth-type'] === 'eherkenning' ? 'EHERKENNING' : 'DIGID';
-  const loginRoute = authRoutes[`AUTH_LOGIN_${authType}`];
-  const loginRouteWithReturnTo = `${loginRoute}${getZaakStatusQueryParams(params)}&returnTo=${ZAAK_STATUS_ROUTE}`;
+  const loginRouteWithReturnTo = generateFullApiUrlBFF(
+    authRoutes[`AUTH_LOGIN_${authType}`],
+    [
+      {
+        ...getRequestParamsFromQueryString(getZaakStatusQueryParams(params)),
+        returnTo: ZAAK_STATUS_ROUTE,
+      },
+    ]
+  );
+
   return res.redirect(loginRouteWithReturnTo);
 }
 
@@ -198,11 +237,41 @@ router.get(
   }
 );
 
+function stripSetCookieFromResponse(cookieName: string) {
+  return (_req: Request, res: Response, next: NextFunction) => {
+    const originalSetHeader = res.setHeader.bind(res);
+
+    res.setHeader = (
+      name: string,
+      value: number | string | readonly string[]
+    ) => {
+      if (name.toLowerCase() !== 'set-cookie') {
+        return originalSetHeader(name, value);
+      }
+      if (Array.isArray(value)) {
+        const filtered = value.filter(
+          (cookie: string) => !cookie.startsWith(`${cookieName}=`)
+        );
+        return originalSetHeader(name, filtered);
+      } else if (typeof value === 'string') {
+        if (value.startsWith(`${cookieName}=`)) {
+          return res;
+        }
+      }
+      return originalSetHeader(name, value);
+    };
+
+    next();
+  };
+}
 router.all(
   BffEndpoints.TELEMETRY_PROXY,
+  // We exclude this long running endpoint from updating the rolling OIDC_SESSION_COOKIE_NAME cookie,
+  // because this can cause a race condition, setting the cookie after the logout clears it.
+  stripSetCookieFromResponse(OIDC_SESSION_COOKIE_NAME),
   proxy('https://westeurope-5.in.applicationinsights.azure.com', {
     memoizeHost: true,
-    proxyReqPathResolver: function (req) {
+    proxyReqPathResolver(_req) {
       return '/v2/track';
     },
   })
@@ -211,9 +280,9 @@ router.all(
 export const legacyRouter = express.Router();
 
 legacyRouter.get(BffEndpoints.LEGACY_LOGIN_API_LOGIN, (req, res) => {
-  return res.redirect(authRoutes.AUTH_LOGIN_DIGID);
+  return res.redirect(generateFullApiUrlBFF(authRoutes.AUTH_LOGIN_DIGID));
 });
 
 legacyRouter.get(BffEndpoints.LEGACY_LOGIN_API1_LOGIN, (req, res) => {
-  return res.redirect(authRoutes.AUTH_LOGIN_EHERKENNING);
+  return res.redirect(generateFullApiUrlBFF(authRoutes.AUTH_LOGIN_EHERKENNING));
 });

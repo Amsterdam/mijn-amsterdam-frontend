@@ -1,11 +1,9 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
-import { MutableSnapshot } from 'recoil';
 
 import { routeConfig } from './Klachten-thema-config';
 import { KlachtenDetail } from './KlachtenDetail';
 import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
 const testState = {
@@ -55,10 +53,6 @@ const testState = {
   },
 } as AppState;
 
-function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState);
-}
-
 function setupMockComponent(id: string) {
   const routeEntry = generatePath(routeConfig.detailPage.path, {
     id,
@@ -71,7 +65,7 @@ function setupMockComponent(id: string) {
         routeEntry={routeEntry}
         routePath={routePath}
         component={KlachtenDetail}
-        initializeState={initializeState}
+        state={testState}
       />
     );
   };

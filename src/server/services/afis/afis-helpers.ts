@@ -1,5 +1,9 @@
+import { parseISO } from 'date-fns';
+
 import { fetchAfisTokenHeader } from './afis';
+import { EMANDATE_ENDDATE_INDICATOR } from './afis-e-mandates-config';
 import { AfisApiFeedResponseSource } from './afis-types';
+import { toDateFormatted } from '../../../universal/helpers/utils';
 import { DataRequestConfig } from '../../config/source-api';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
@@ -25,7 +29,7 @@ export async function getAfisApiConfig(
   const authHeader =
     getFromEnv('BFF_AFIS_ENABLE_DIRECT_TOKEN_FETCHING') === 'true'
       ? await fetchAfisTokenHeader()
-      : { apiKey: getFromEnv('BFF_ENABLEU_API_KEY_AFIS') };
+      : { apiKey: getFromEnv('BFF_ENABLEU_API_KEY') };
 
   const additionalConfigWithHeader: DataRequestConfig = {
     ...(additionalConfig ?? null),
@@ -35,4 +39,39 @@ export async function getAfisApiConfig(
     },
   };
   return getApiConfig('AFIS', additionalConfigWithHeader);
+}
+
+export function getEmandateValidityDateFormatted(dateValidTo: string | null) {
+  return dateValidTo?.includes(EMANDATE_ENDDATE_INDICATOR)
+    ? 'Doorlopend'
+    : toDateFormatted(dateValidTo);
+}
+
+export function isEmandateActive(dateValidTo: string | null) {
+  if (!dateValidTo) {
+    return false;
+  }
+  // Active if date is in the future.
+  return parseISO(dateValidTo) > new Date();
+}
+
+export const EMANDATE_STATUS = {
+  ON: '1',
+  OFF: '6',
+} as const;
+
+export function getEmandateStatus(dateValidTo: string | null) {
+  return isEmandateActive(dateValidTo)
+    ? EMANDATE_STATUS.ON
+    : EMANDATE_STATUS.OFF;
+}
+
+export function getEmandateDisplayStatus(
+  dateValidTo: string | null,
+  dateValidFromFormatted: string | null
+): string {
+  if (isEmandateActive(dateValidTo)) {
+    return `Actief sinds ${dateValidFromFormatted}`;
+  }
+  return 'Niet actief';
 }

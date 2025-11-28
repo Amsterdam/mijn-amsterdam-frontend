@@ -13,7 +13,11 @@ import {
 } from './should-send-telemetry';
 import { IS_DEVELOPMENT } from '../../universal/config/env';
 import { logger } from '../logging';
-if (!IS_DEVELOPMENT && process.env.NODE_ENV !== 'test') {
+
+if (
+  process.env.APPLICATIONINSIGHTS_CONNECTION_STRING &&
+  process.env.NODE_ENV !== 'test'
+) {
   appInsights
     .setup(process.env.APPLICATIONINSIGHTS_CONNECTION_STRING)
     .setInternalLogging(false)
@@ -59,6 +63,12 @@ if (client) {
   }
 }
 
+export function getContextOperationId(
+  fallbackId: string = 'correlation-id-not-in-context'
+): string | undefined {
+  return appInsights.getCorrelationContext()?.operation.id ?? fallbackId;
+}
+
 export type Severity =
   | 'verbose'
   | 'information'
@@ -90,8 +100,6 @@ export function captureException(error: unknown, properties?: Properties) {
     properties,
     severity,
   };
-
-  logger.error(error);
 
   if (IS_DEVELOPMENT) {
     logger.error(error, 'Capture Exception');

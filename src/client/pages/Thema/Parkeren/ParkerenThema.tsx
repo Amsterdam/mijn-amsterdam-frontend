@@ -13,6 +13,7 @@ import { useProfileTypeValue } from '../../../hooks/useProfileType';
 
 export function ParkerenThema() {
   const {
+    id,
     title,
     tableConfig,
     vergunningen,
@@ -66,6 +67,7 @@ export function ParkerenThema() {
 
   return (
     <ThemaPagina
+      id={id}
       title={title}
       isError={isError}
       isLoading={isLoading}
@@ -83,7 +85,6 @@ function determinePageContentTop(
 ) {
   if (hasMijnParkerenVergunningen) {
     const profileType = useProfileTypeValue();
-
     const profileTypeLabel =
       profileType === 'commercial' ? 'bedrijven' : 'bewoners';
 
@@ -108,7 +109,9 @@ function determinePageContentTop(
     );
   }
   return (
-    <Paragraph>Hieronder ziet u een overzicht van uw vergunningen.</Paragraph>
+    <PageContentCell spanWide={8}>
+      <Paragraph>Hieronder ziet u een overzicht van uw vergunningen.</Paragraph>
+    </PageContentCell>
   );
 }
 

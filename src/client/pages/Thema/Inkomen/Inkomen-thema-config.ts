@@ -48,6 +48,7 @@ export const routeConfig = {
   detailPageTonk: {
     path: '/inkomen/tonk/:version/:id',
     documentTitle: `TONK | ${themaTitle}`,
+    trackingUrl: null,
   },
   detailPageBbz: {
     path: '/inkomen/bbz/:version/:id',
@@ -58,15 +59,18 @@ export const routeConfig = {
     path: '/inkomen/lijst/specificaties/:kind/:page?',
     documentTitle: (params) =>
       `${params?.kind === listPageParamKind.jaaropgaven ? 'Jaaropgaven' : 'Uitkeringsspecificaties'} | ${themaTitle}`,
+    trackingUrl: null,
   },
   listPage: {
     path: '/inkomen/lijst/:kind/:page?',
     documentTitle: (params) =>
       `${params?.kind === listPageParamKind.eerder ? 'Eerdere' : 'Lopende'} aanvragen | ${themaTitle}`,
+    trackingUrl: null,
   },
   themaPage: {
     path: '/inkomen',
     documentTitle: `${themaTitle} | overzicht`,
+    trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
 

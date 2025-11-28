@@ -39,7 +39,6 @@ import {
   fetchSubsidie,
 } from './patroon-c';
 import { fetchSVWI } from './patroon-c/svwi';
-import { fetchBRP } from './profile/brp';
 import { fetchKVK } from './profile/kvk';
 import { fetchProfile } from './profile/profile';
 import { fetchContactmomenten } from './salesforce/contactmomenten';
@@ -56,10 +55,6 @@ import {
   fetchTonk,
   fetchTozo,
 } from './wpi';
-import {
-  featureToggle as featureToggleBrp,
-  themaIdBRP,
-} from '../../client/pages/Thema/Profile/Profile-thema-config';
 
 // Default service call just passing query params as arguments
 function callAuthenticatedService<T>(
@@ -132,9 +127,7 @@ const AFIS = callAuthenticatedService(fetchIsKnownInAFIS);
 const AVG = callAuthenticatedService(fetchAVG);
 const BEZWAREN = callAuthenticatedService(fetchBezwaren);
 const BODEM = callAuthenticatedService(fetchLoodmetingen); // For now bodem only consists of loodmetingen.
-const BRP = callAuthenticatedService(
-  featureToggleBrp[themaIdBRP].benkBrpServiceActive ? fetchBrpV2 : fetchBRP
-);
+const BRP = callAuthenticatedService(fetchBrpV2);
 const ERFPACHT = callAuthenticatedService(fetchErfpacht);
 const HLI = callAuthenticatedService(fetchHLI);
 const HORECA = callAuthenticatedService(fetchHorecaVergunningen);

@@ -10,7 +10,6 @@ import MyAreaPanelContentAfval from './Afval';
 import MyAreaPanelContentBedrijvenInvesteringsZones from './BedrijvenInvesteringsZones';
 import MyAreaPanelContentBekendmaking from './Bekendmaking';
 import { GenericContent } from './GenericBase';
-import MyAreaPanelContentLaadpalen from './Laadpalen';
 import MyAreaPanelContentMeldingenBuurt from './MeldingenBuurt';
 import MyAreaPanelContentParkeren from './Parkeren';
 import MyAreaPanelContentSport from './Sport';
@@ -75,20 +74,13 @@ function MyAreaPanelContentSwitch({
           panelItem={feature}
         />
       );
-    case 'laadpalen':
-      return (
-        <MyAreaPanelContentLaadpalen
-          panelItem={feature}
-          datasetId={feature?.datasetId}
-        />
-      );
   }
   return <GenericContent datasetId={feature?.datasetId} panelItem={feature} />;
 }
 
 export default function MyAreaDetailPanel() {
-  const [selectedFeature] = useSelectedFeature();
-  const [loadingFeature] = useLoadingFeature();
+  const { selectedFeature } = useSelectedFeature();
+  const { loadingFeature } = useLoadingFeature();
 
   if (
     (!selectedFeature ||
@@ -103,7 +95,7 @@ export default function MyAreaDetailPanel() {
     );
   }
 
-  if (loadingFeature?.isError) {
+  if (loadingFeature?.isError || !selectedFeature) {
     return (
       <ErrorAlert>
         Er kan op dit moment geen informatie getoond worden over deze locatie.

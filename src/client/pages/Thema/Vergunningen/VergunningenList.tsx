@@ -11,6 +11,7 @@ export function VergunningenList() {
   }>();
   const {
     vergunningen,
+    id: themaId,
     isLoading,
     isError,
     tableConfig,
@@ -25,6 +26,7 @@ export function VergunningenList() {
   return (
     <ListPagePaginated
       items={vergunningen.filter(filter).sort(sort)}
+      themaId={themaId}
       title={title}
       appRoute={listPageRoute}
       breadcrumbs={breadcrumbs}

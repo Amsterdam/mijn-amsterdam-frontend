@@ -3,6 +3,7 @@ import {
   FailedDependencies,
 } from '../../universal/helpers/api';
 import { ApiError, AppState } from '../../universal/types/App.types';
+import { regelingenTitle } from '../pages/Thema/HLI/HLI-thema-config';
 
 export const BFF_API_BASE_URL = import.meta.env.REACT_APP_BFF_API_URL;
 export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;
@@ -15,9 +16,13 @@ export const BFFApiUrls = {
   SERVICES_SAURON: `${BFF_API_BASE_URL}/services/all`,
   SERVICES_SSE: `${BFF_API_BASE_URL}/services/stream`,
   ERFPACHT_DOSSIER_DETAILS: `${BFF_API_BASE_URL}/services/erfpacht/dossier`,
+  // AFIS
   AFIS_BUSINESSPARTNER: `${BFF_API_BASE_URL}/services/afis/businesspartner`,
-  AFIS_FACTUREN: `${BFF_API_BASE_URL}/services/afis/facturen`,
-};
+  AFIS_EMANDATES: `${BFF_API_BASE_URL}/services/afis/e-mandates`,
+  AFIS_EMANDATES_SIGN_REQUEST_URL: `${BFF_API_BASE_URL}/services/afis/e-mandates/sign-request-url`,
+  AFIS_EMANDATES_DEACTIVATE: `${BFF_API_BASE_URL}/services/afis/e-mandates/deactivate`,
+  AFIS_FACTUREN: `${BFF_API_BASE_URL}/services/afis/facturen/:state`,
+} as const;
 
 // Urls directly used from front-end
 export const LOGIN_URL_DIGID = `${BFF_API_BASE_URL}/auth/digid/login`;
@@ -60,7 +65,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
 
   CMS_CONTENT: 'Uitleg Mijn Amsterdam',
   ERFPACHT: 'Erfpacht',
-  HLI_regelingen: 'Regelingen bij laag inkomen',
+  HLI_regelingen: regelingenTitle,
   HLI_stadspas: 'Stadspas, saldo en transacties',
   HORECA: 'Horeca vergunningen',
   KLACHTEN: 'Ingediende klachten',
@@ -81,7 +86,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   TOERISTISCHE_VERHUUR_vakantieverhuurVergunningen:
     'Uw vergunning vakantieverhuur',
   TOERISTISCHE_VERHUUR: 'Toeristische verhuur + meldingen',
-  VAREN: 'Passagiers- en beroepsvaart',
+  VAREN: 'Passagiersvaart',
 
   VERGUNNINGEN: 'Vergunningen en ontheffingen',
   WMO: 'Zorg en ondersteuning',
@@ -131,16 +136,17 @@ export function createFailedDependenciesError(
 export function getApiErrors(appState: AppState): ApiError[] {
   if (appState) {
     const filteredResponses = Object.entries(appState).filter(
-      ([, apiResponseData]: [string, unknown]) => {
+      ([k, apiResponseData]: [string, unknown]) => {
         return (
-          typeof apiResponseData !== 'object' ||
-          apiResponseData == null ||
-          ('status' in apiResponseData &&
-            (apiResponseData?.status === 'ERROR' ||
-              apiResponseData?.status === 'DEPENDENCY_ERROR' ||
-              (apiResponseData?.status === 'OK' &&
-                'failedDependencies' in apiResponseData &&
-                !!apiResponseData?.failedDependencies)))
+          !['setAppState', 'isReady', 'setIsAppStateReady'].includes(k) &&
+          (typeof apiResponseData !== 'object' ||
+            apiResponseData == null ||
+            ('status' in apiResponseData &&
+              (apiResponseData?.status === 'ERROR' ||
+                apiResponseData?.status === 'DEPENDENCY_ERROR' ||
+                (apiResponseData?.status === 'OK' &&
+                  'failedDependencies' in apiResponseData &&
+                  !!apiResponseData?.failedDependencies))))
         );
       }
     );

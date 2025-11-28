@@ -8,7 +8,7 @@ import {
 import { HorecaVergunningFrontend } from '../../../../server/services/horeca/decos-zaken';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
-import { useAppStateGetter } from '../../../hooks/useAppState';
+import { useAppStateGetter } from '../../../hooks/useAppStateStore';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 
 export function useHorecaThemaData() {
@@ -26,7 +26,8 @@ export function useHorecaThemaData() {
     isError: isError(HORECA),
     linkListItems: LinkListItems,
     tableConfig,
-    themaTitle: themaTitle,
+    themaId,
+    themaTitle,
     breadcrumbs,
     listPageRoute: routeConfig.listPage.path,
     routeConfig,

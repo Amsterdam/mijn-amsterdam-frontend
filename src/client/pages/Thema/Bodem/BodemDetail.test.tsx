@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { routeConfig } from './Bodem-thema-config';
+import { themaConfig } from './Bodem-thema-config';
 import { BodemDetail } from './BodemDetail';
 import { LoodMetingFrontend } from '../../../../server/services/bodem/types';
 import { AppState } from '../../../../universal/types/App.types';
@@ -15,7 +15,7 @@ const metingen: LoodMetingFrontend[] = [
     datumAanvraagFormatted: '2022-12-01T09:53:11Z',
     decision: null,
     displayStatus: 'Ontvangen',
-    kenmerk: 'OL-000001',
+    identifier: 'OL-000001',
     aanvraagNummer: 'AV-001447',
     rapportBeschikbaar: false,
     redenAfwijzing: '',
@@ -64,7 +64,7 @@ const metingen: LoodMetingFrontend[] = [
     datumAfgehandeldFormatted: '15 december 2022',
     decision: 'Afgewezen',
     displayStatus: 'Afgewezen',
-    kenmerk: 'OL-000001',
+    identifier: 'OL-000001',
     aanvraagNummer: 'AV-001446',
     rapportBeschikbaar: false,
     rapportId: '6ec7efd6-cb6f-ed11-9561-0022489fda17',
@@ -110,7 +110,7 @@ const metingen: LoodMetingFrontend[] = [
     datumAfgehandeldFormatted: '28 november 2022',
     decision: 'Afgehandeld',
     displayStatus: 'Afgehandeld',
-    kenmerk: 'OL-000001',
+    identifier: 'OL-000001',
     aanvraagNummer: 'AV-001444',
     rapportBeschikbaar: true,
     rapportId: '87464b90-176f-ed11-9561-0022489fdff7',
@@ -157,10 +157,10 @@ const [metingOntvangen, metingAfgewezen, metingAfgehandeld] = metingen;
 
 const createLoodMeting = componentCreator({
   component: BodemDetail,
-  routeEntry: generatePath(routeConfig.detailPage.path, {
+  routeEntry: generatePath(themaConfig.detailPage.route.path, {
     id: 'OL-000001',
   }),
-  routePath: routeConfig.detailPage.path,
+  routePath: themaConfig.detailPage.route.path,
 });
 const createComponentMetingen = (metingen: LoodMetingFrontend[]) =>
   createLoodMeting({
@@ -247,7 +247,7 @@ describe('LoodMeting', () => {
 
       const errorMessage = screen.getByRole('heading', {
         level: 4,
-        name: 'Foutmelding',
+        name: 'Geen gegevens gevonden',
       });
       expect(errorMessage).toBeInTheDocument();
     });

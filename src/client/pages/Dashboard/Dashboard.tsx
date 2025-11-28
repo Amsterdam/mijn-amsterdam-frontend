@@ -19,10 +19,10 @@ import {
   PageV2,
 } from '../../components/Page/Page';
 import { useSmallScreen } from '../../hooks/media.hook';
-import { useAppStateGetter } from '../../hooks/useAppState';
+import { useAppStateGetter } from '../../hooks/useAppStateStore';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
-import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
+import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems';
 import { myNotificationsMenuItem } from '../MyNotifications/MyNotifications-routes';
 
 const MAX_NOTIFICATIONS_VISIBLE = 6;
@@ -43,7 +43,7 @@ export function Dashboard() {
   const isPhoneScreen = useSmallScreen();
 
   const { items: myThemaItems, isLoading: isMyThemasLoading } =
-    useThemaMenuItems();
+    useActiveThemaMenuItems();
 
   useEffect(() => {
     if (location.search) {
@@ -81,7 +81,7 @@ export function Dashboard() {
                 return (
                   <OrderedList.Item
                     key={`${notification.themaID}-${notification.id}-${index}`}
-                    className="ams-mb-m"
+                    className={`ams-mb-m ${notification.className}`}
                   >
                     <MyNotification
                       notification={notification}

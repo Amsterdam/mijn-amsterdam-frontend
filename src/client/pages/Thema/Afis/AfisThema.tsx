@@ -107,6 +107,7 @@ export function AfisThema() {
     linkListItems,
     belastingenLinkListItem,
     title,
+    themaId,
   } = useAfisThemaData();
   useHTMLDocumentTitle(routeConfig.themaPage);
 
@@ -119,7 +120,7 @@ export function AfisThema() {
       <MaButtonRouterLink
         className="ams-mb-m"
         variant="secondary"
-        href={routeConfig.detailPage.path}
+        href={routeConfig.betaalVoorkeuren.path}
       >
         Betaalvoorkeuren
       </MaButtonRouterLink>
@@ -145,7 +146,7 @@ export function AfisThema() {
       state,
       { title, displayProps, maxItems, listPageLinkLabel, listPageRoute },
     ]) => {
-      const subTitleNode =
+      const contentAfterTheTitle =
         state === 'overgedragen' && !!facturenByState?.[state]?.facturen.length
           ? state === 'overgedragen' && <AfisDisclaimerOvergedragenFacturen />
           : null;
@@ -153,7 +154,7 @@ export function AfisThema() {
         <ThemaPaginaTable<AfisFactuurFrontend>
           key={state}
           title={title}
-          subTitle={subTitleNode}
+          contentAfterTheTitle={contentAfterTheTitle}
           zaken={facturenByState?.[state]?.facturen ?? []}
           displayProps={displayProps}
           maxItems={maxItems}
@@ -167,6 +168,7 @@ export function AfisThema() {
 
   return (
     <ThemaPagina
+      id={themaId}
       title={title}
       isError={isThemaPaginaError}
       isPartialError={isPartialError}

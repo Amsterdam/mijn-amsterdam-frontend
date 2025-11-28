@@ -2,11 +2,12 @@ import { DataTableBijzondereBepalingen } from './DossierDetail/DatalistBijzonder
 import { DatalistGeneral } from './DossierDetail/DatalistGeneral';
 import { DatalistJuridisch } from './DossierDetail/DatalistJuridisch';
 import { DatalistsFinancieel } from './DossierDetail/DatalistsFinancieel';
-import { useDossierDetailData } from './DossierDetail/erfpachtDossierData.hook';
+import { useDossierData as useDossierDetailData } from './DossierDetail/useErfpachtDossierData.hook';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { useAfisThemaData } from '../Afis/useAfisThemaData.hook';
 
 export function ErfpachtDetail() {
   const {
@@ -17,13 +18,15 @@ export function ErfpachtDetail() {
     isLoadingThemaData,
     relatieCode,
     breadcrumbs,
+    themaId,
     title,
     routeConfig,
   } = useDossierDetailData();
+  const afis = useAfisThemaData();
   useHTMLDocumentTitle(routeConfig.detailPage);
-
   return (
     <ThemaDetailPagina
+      themaId={themaId}
       title={title}
       zaak={dossier}
       isError={isError || isErrorThemaData}
@@ -33,24 +36,37 @@ export function ErfpachtDetail() {
           {!!dossier && (
             <>
               <PageContentCell>
-                <DatalistGeneral dossier={dossier} relatieCode={relatieCode} />
+                <DatalistGeneral
+                  dossier={dossier}
+                  relatieCode={relatieCode}
+                  debiteurNummer={afis.businessPartnerId}
+                />
               </PageContentCell>
 
               <PageContentCell>
                 <CollapsiblePanel title={dossier.titelKopJuridisch}>
-                  <DatalistJuridisch dossier={dossier} />
+                  <DatalistJuridisch
+                    dossier={dossier}
+                    debiteurNummer={afis.businessPartnerId}
+                  />
                 </CollapsiblePanel>
               </PageContentCell>
 
               <PageContentCell>
                 <CollapsiblePanel title={dossier.titelKopBijzondereBepalingen}>
-                  <DataTableBijzondereBepalingen dossier={dossier} />
+                  <DataTableBijzondereBepalingen
+                    dossier={dossier}
+                    debiteurNummer={afis.businessPartnerId}
+                  />
                 </CollapsiblePanel>
               </PageContentCell>
 
               <PageContentCell>
                 <CollapsiblePanel title={dossier.titelKopFinancieel}>
-                  <DatalistsFinancieel dossier={dossier} />
+                  <DatalistsFinancieel
+                    dossier={dossier}
+                    debiteurNummer={afis.businessPartnerId}
+                  />
                 </CollapsiblePanel>
               </PageContentCell>
             </>

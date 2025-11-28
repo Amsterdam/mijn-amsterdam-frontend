@@ -111,11 +111,11 @@ export function BezwarenDetail() {
     isLoadingThemaData,
     breadcrumbs,
     statussen,
+    themaId,
     title,
     routeConfig,
   } = useBezwarenDetailData();
   useHTMLDocumentTitle(routeConfig.detailPage);
-
   const pageContentErrorAlert = (
     <>
       We kunnen niet alle gegevens tonen.{' '}
@@ -134,6 +134,7 @@ export function BezwarenDetail() {
 
   return (
     <ThemaDetailPagina
+      themaId={themaId}
       title={title}
       zaak={bezwaar}
       isError={isError || isErrorThemaData}

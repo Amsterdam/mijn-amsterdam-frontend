@@ -2,11 +2,7 @@
   "compilerOptions": {
     "outDir": "build/client",
     "target": "es2015",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ES2021", "ES2023.Array"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -22,12 +18,7 @@
     "downlevelIteration": true,
     "noFallthroughCasesInSwitch": true,
     "importsNotUsedAsValues": "remove",
-    "types": [
-      "vitest/globals"
-    ]
+    "types": ["vitest/globals"]
   },
-  "include": [
-    "src",
-    "public/fonts"
-  ]
+  "include": ["src", "public/fonts"]
 }

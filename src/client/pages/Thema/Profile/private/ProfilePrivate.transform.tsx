@@ -1,10 +1,10 @@
 import { Link } from '@amsterdam/design-system-react';
 
 import styles from './ProfilePrivate.module.scss';
+import type { Persoon } from '../../../../../server/services/brp/brp-types';
+import type { Adres } from '../../../../../server/services/brp/brp-types';
 import type {
   BRPData,
-  Persoon,
-  Adres,
   VerbintenisHistorisch,
 } from '../../../../../server/services/profile/brp.types';
 import { FeatureToggle } from '../../../../../universal/config/feature-toggles';
@@ -277,8 +277,11 @@ export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
         : { Gegevens: 'onbekend' },
   };
 
-  // Exclude below profile data for non-mokum residents.
-  if (brpData.persoon.mokum && brpData.verbintenis) {
+  if (!brpData.persoon.mokum) {
+    return profileData;
+  }
+
+  if (brpData.verbintenis) {
     profileData.verbintenis = {
       ...formatProfileSectionData(
         labelConfig.verbintenis,
@@ -291,52 +294,52 @@ export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
         brpData
       ),
     };
+  }
 
-    /** @deprecated */
-    if (
-      Array.isArray(brpData.verbintenisHistorisch) &&
-      brpData.verbintenisHistorisch.length
-    ) {
-      const verbintenisHistorisch = brpData.verbintenisHistorisch.map(
-        (verbintenis) => {
-          return {
-            ...formatProfileSectionData(
-              labelConfig.verbintenisHistorisch,
-              verbintenis,
-              brpData
-            ),
-            ...formatProfileSectionData(
-              labelConfig.persoonSecundair,
-              verbintenis.persoon,
-              brpData
-            ),
-          };
-        }
-      );
-      profileData.verbintenisHistorisch = verbintenisHistorisch;
-    }
+  /** @deprecated */
+  if (
+    Array.isArray(brpData.verbintenisHistorisch) &&
+    brpData.verbintenisHistorisch.length
+  ) {
+    const verbintenisHistorisch = brpData.verbintenisHistorisch.map(
+      (verbintenis) => {
+        return {
+          ...formatProfileSectionData(
+            labelConfig.verbintenisHistorisch,
+            verbintenis,
+            brpData
+          ),
+          ...formatProfileSectionData(
+            labelConfig.persoonSecundair,
+            verbintenis.persoon,
+            brpData
+          ),
+        };
+      }
+    );
+    profileData.verbintenisHistorisch = verbintenisHistorisch;
+  }
 
-    if (Array.isArray(brpData.kinderen) && brpData.kinderen.length) {
-      profileData.kinderen = brpData.kinderen.map((kind) =>
-        formatProfileSectionData(labelConfig.persoonSecundair, kind, brpData)
-      );
-    }
+  if (Array.isArray(brpData.kinderen) && brpData.kinderen.length) {
+    profileData.kinderen = brpData.kinderen.map((kind) =>
+      formatProfileSectionData(labelConfig.persoonSecundair, kind, brpData)
+    );
+  }
 
-    if (Array.isArray(brpData.ouders) && brpData.ouders.length) {
-      profileData.ouders = brpData.ouders.map((ouder) =>
-        formatProfileSectionData(labelConfig.persoonSecundair, ouder, brpData)
-      );
-    }
+  if (Array.isArray(brpData.ouders) && brpData.ouders.length) {
+    profileData.ouders = brpData.ouders.map((ouder) =>
+      formatProfileSectionData(labelConfig.persoonSecundair, ouder, brpData)
+    );
+  }
 
-    /** @deprecated */
-    if (
-      Array.isArray(brpData.adresHistorisch) &&
-      brpData.adresHistorisch.length
-    ) {
-      profileData.adresHistorisch = brpData.adresHistorisch.map((adres) =>
-        formatProfileSectionData(labelConfig.adres, adres, brpData)
-      );
-    }
+  /** @deprecated */
+  if (
+    Array.isArray(brpData.adresHistorisch) &&
+    brpData.adresHistorisch.length
+  ) {
+    profileData.adresHistorisch = brpData.adresHistorisch.map((adres) =>
+      formatProfileSectionData(labelConfig.adres, adres, brpData)
+    );
   }
 
   return profileData;
@@ -384,28 +387,27 @@ export const panelConfig: PanelConfig<BRPPanelKey, AppState['BRP']> = {
         className: styles['ActionLink--reportIncorrectResidentCount'],
       });
     }
+    const contentAfterTheTitle = isMokum(BRP.content) ? (
+      <>
+        Uw huis verduurzamen? De gemeente biedt subsidies of gratis hulp. Bekijk{' '}
+        <Link rel="noopener noreferrer" href="https://duurzaamwonen.amsterdam/">
+          duurzaamwonen.amsterdam
+        </Link>{' '}
+        voor meer informatie.
+      </>
+    ) : null;
 
     return {
       title: 'Adres',
-      subTitle: (
-        <>
-          Uw huis verduurzamen? De gemeente biedt subsidies of gratis hulp.
-          Bekijk{' '}
-          <Link
-            rel="noopener noreferrer"
-            href="https://duurzaamwonen.amsterdam/"
-          >
-            duurzaamwonen.amsterdam
-          </Link>{' '}
-          voor meer informatie.
-        </>
-      ),
+      contentAfterTheTitle,
       actionLinks,
     };
   },
-  verbintenis: (BRP) => ({
+  verbintenis: (BRP: AppState['BRP']) => ({
     title: featureToggle.BRP.benkBrpServiceActive
-      ? 'Partner'
+      ? BRP.content?.verbintenis?.datumOntbinding
+        ? 'Eerder huwelijk of partnerschap'
+        : 'Partner'
       : 'Burgerlijke staat',
     actionLinks: isMokum(BRP.content)
       ? [

@@ -2,17 +2,18 @@ import { useParams } from 'react-router';
 
 import { useVarenThemaData } from './useVarenThemaData.hook';
 import { ListPageParamKind } from './Varen-thema-config';
-import type { VarenZakenFrontend } from '../../../../server/services/varen/config-and-types';
+import { VarenOnlyShowAanvragenAfterDateDisclaimer } from './VarenThema';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function VarenList() {
-  const { kind = 'lopende-aanvragen', page } = useParams<{
+  const { kind = 'lopende-aanvragen' } = useParams<{
     kind: ListPageParamKind;
-    page: string;
   }>();
   const {
     varenZaken,
+    varenVergunningen,
+    id: themaId,
     tableConfig,
     isLoading,
     isError,
@@ -21,19 +22,22 @@ export function VarenList() {
   } = useVarenThemaData();
   useHTMLDocumentTitle(routeConfig.listPage);
 
-  const { title, displayProps, listPageRoute, filter, sort } =
+  const { title, displayProps, listPageRoute, filter, sort, type } =
     tableConfig[kind];
-  const zaken = varenZaken.filter(filter).sort(sort);
-
+  const varenItems = type === 'vergunning' ? varenVergunningen : varenZaken;
+  const bottomDisclaimer =
+    type === 'zaak' ? VarenOnlyShowAanvragenAfterDateDisclaimer : '';
   return (
-    <ListPagePaginated<VarenZakenFrontend>
-      items={zaken}
+    <ListPagePaginated
+      items={varenItems.filter(filter).sort(sort)}
+      themaId={themaId}
       title={title}
       isLoading={isLoading}
       isError={isError}
       appRoute={listPageRoute}
       breadcrumbs={breadcrumbs}
       displayProps={displayProps}
+      pageContentBottom={bottomDisclaimer}
     />
   );
 }

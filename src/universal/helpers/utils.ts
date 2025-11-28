@@ -130,8 +130,25 @@ export function deepOmitKeys(data: any, omitKeys: string[] = []): any {
   return data;
 }
 
+export function removeEmpty<T extends Record<string, unknown>>(
+  obj: T
+): Partial<T> {
+  return Object.fromEntries(
+    Object.entries(obj).filter(([_, v]) => v !== null)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ) as any;
+}
+
 export function uniqueArray(arr: any[]) {
   return Array.from(new Set(arr));
+}
+
+export function splitBy<T>(
+  list: T[],
+  predicate: (a: T) => boolean
+): [T[], T[]] {
+  const filtered = list.filter((a) => predicate(a));
+  return [list.filter((a) => !filtered.includes(a)), filtered];
 }
 
 export function isRecentNotification(
@@ -141,6 +158,7 @@ export function isRecentNotification(
   const diff = Math.abs(differenceInMonths(new Date(datePublished), dateNow));
   return diff < MONTHS_TO_KEEP_NOTIFICATIONS;
 }
+
 export function toDateFormatted(input: string | Date | number): string;
 export function toDateFormatted(
   input: string | Date | number | null | undefined

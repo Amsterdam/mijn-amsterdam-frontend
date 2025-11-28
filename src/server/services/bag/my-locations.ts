@@ -1,5 +1,5 @@
 import { fetchBAG } from './bag';
-import { BAGData } from './bag.types';
+import { BAGLocation } from './bag.types';
 import {
   DEFAULT_LAT,
   DEFAULT_LNG,
@@ -12,14 +12,14 @@ import {
 } from '../../../universal/helpers/api';
 import { isMokum } from '../../../universal/helpers/brp';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { fetchBRP } from '../profile/brp';
-import type { Adres } from '../profile/brp.types';
+import { fetchBrpV2 } from '../brp/brp';
+import type { Adres } from '../brp/brp-types';
 import { fetchKVK, getKvkAddresses } from '../profile/kvk';
 
 async function fetchPrivate(
   authProfileAndToken: AuthProfileAndToken
-): Promise<ApiResponse_DEPRECATED<BAGData[] | null>> {
-  const BRP = await fetchBRP(authProfileAndToken);
+): Promise<ApiResponse_DEPRECATED<BAGLocation[] | null>> {
+  const BRP = await fetchBrpV2(authProfileAndToken);
 
   if (BRP.status === 'OK') {
     if (isMokum(BRP.content)) {
@@ -34,6 +34,7 @@ async function fetchPrivate(
             },
             address: null,
             bagAddress: null,
+            mokum: true,
             profileType: 'private',
           },
         ]);
@@ -42,11 +43,13 @@ async function fetchPrivate(
         Object.assign(BAGLocation, { profileType: 'private' }),
       ]);
     }
+
     return apiSuccessResult([
       {
         latlng: null,
         address: null,
         bagAddress: null,
+        mokum: false,
         profileType: 'private',
       },
     ]);
@@ -57,10 +60,10 @@ async function fetchPrivate(
 
 async function fetchCommercial(
   authProfileAndToken: AuthProfileAndToken
-): Promise<ApiResponse_DEPRECATED<BAGData[] | null>> {
+): Promise<ApiResponse_DEPRECATED<BAGLocation[] | null>> {
   const KVK = await fetchKVK(authProfileAndToken);
 
-  let MY_LOCATION: ApiResponse_DEPRECATED<BAGData[] | null>;
+  let MY_LOCATION: ApiResponse_DEPRECATED<BAGLocation[] | null>;
 
   if (KVK.status === 'OK') {
     const addresses: Adres[] = getKvkAddresses(KVK.content);
@@ -96,7 +99,7 @@ async function fetchCommercial(
 
 export async function fetchMyLocation(
   authProfileAndToken: AuthProfileAndToken
-): Promise<ApiResponse_DEPRECATED<BAGData[] | null>> {
+): Promise<ApiResponse_DEPRECATED<BAGLocation[] | null>> {
   const commercialResponse = await fetchCommercial(authProfileAndToken);
 
   if (authProfileAndToken.profile.profileType === 'commercial') {
@@ -105,7 +108,7 @@ export async function fetchMyLocation(
 
   const { content: privateAddresses } = await fetchPrivate(authProfileAndToken);
 
-  const locations: BAGData[] = [
+  const locations: BAGLocation[] = [
     ...(privateAddresses || []),
     ...(commercialResponse.content || []),
   ].filter((location) => location !== null);

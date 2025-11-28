@@ -32,7 +32,8 @@ describe('App', () => {
 
   it('Renders pristine App', () => {
     mocks.useSessionApi.mockReturnValue({
-      isPristine: true,
+      isAuthenticated: false,
+      isDirty: false,
     });
 
     const screen = render(<App />);
@@ -40,13 +41,14 @@ describe('App', () => {
   });
 
   it('Renders Landing Page', async () => {
+    bffApi.get('/services/cms/footer').reply(200);
     bffApi
       .get('/services/cms/maintenance-notifications?page=landingspagina')
       .reply(200);
 
     mocks.useSessionApi.mockReturnValue({
-      isPristine: false,
       isAuthenticated: false,
+      isDirty: true,
     });
 
     const screen = render(<App />);
@@ -59,11 +61,11 @@ describe('App', () => {
   });
 
   it('Renders Dashboard', async () => {
+    bffApi.get('/services/cms/footer').reply(200);
     bffApi.get('/services/all').reply(200);
     bffApi.get('/services/search-config').reply(200);
 
     const session = {
-      isPristine: false,
       isAuthenticated: true,
       isDirty: true,
     };

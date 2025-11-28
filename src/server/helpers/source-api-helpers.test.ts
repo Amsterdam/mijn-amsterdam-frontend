@@ -11,11 +11,23 @@ describe('Config', () => {
     const config2 = getApiConfig('ERFPACHT');
 
     expect(config).not.toStrictEqual(config2);
-    // Because we are using a stack trace to generate a cache key, the value can change if the underlying code changes.
-    expect(config.cacheKey_UNSAFE).toBe(
-      'ERFPACHT-runTest.runWithTimeout.Promise-foo'
-    );
+    expect(config.cacheKey_UNSAFE).toBe('ERFPACHT-foo');
 
     expect('Accept' in config2.headers!).toBe(false);
+  });
+  test('getApiConfig with custom headers', () => {
+    const config = getApiConfig('ERFPACHT', {
+      headers: {
+        'X-Custom-Header': 'CustomValue',
+      },
+    });
+    expect(config.headers!['X-Custom-Header']).toBe('CustomValue');
+  });
+  test('getApiConfig without cache key wrapper', () => {
+    const config = getApiConfig('ERFPACHT', {
+      cacheKey_UNSAFE: 'test',
+    });
+
+    expect(config.cacheKey_UNSAFE).toBe('ERFPACHT-test');
   });
 });

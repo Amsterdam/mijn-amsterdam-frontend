@@ -1,25 +1,24 @@
-import { selectorFamily, useRecoilValue } from 'recoil';
+import { useMemo } from 'react';
 
-import { appStateAtom } from './useAppState';
-import { useProfileTypeValue } from './useProfileType';
+import { useAppStateStore } from './useAppStateStore';
 import { WelcomeNotification } from '../config/staticData';
-
-const appStateNotificationsSelector = selectorFamily({
-  key: 'appStateNotifications',
-  get:
-    (profileType: ProfileType) =>
-    ({ get }) => {
-      const appState = get(appStateAtom);
-      const notifications = appState.NOTIFICATIONS.content || [];
-
-      return [...notifications, WelcomeNotification];
-    },
-});
+import { getRedactedClass } from '../helpers/cobrowse';
 
 export function useAppStateNotifications(top?: number) {
-  const profileType = useProfileTypeValue();
-  const notifications = useRecoilValue(
-    appStateNotificationsSelector(profileType)
+  const { isReady, NOTIFICATIONS } = useAppStateStore();
+  const notifications_ = NOTIFICATIONS?.content ?? [];
+  // Merge the WelcomeNotification when AppState is ready.
+  const notifications = useMemo(
+    () =>
+      (isReady ? [...notifications_, WelcomeNotification] : notifications_).map(
+        (n) => ({
+          ...n,
+          className: n.isTip
+            ? getRedactedClass(null, 'content') // Tips can contain information from multiple thema's. Redact by default
+            : getRedactedClass(n.themaID, 'content'),
+        })
+      ),
+    [isReady]
   );
 
   return {

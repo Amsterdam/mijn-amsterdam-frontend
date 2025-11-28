@@ -1,21 +1,15 @@
 import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router';
-import { MutableSnapshot } from 'recoil';
 import { describe, expect, it } from 'vitest';
 
 import { routeConfig, themaTitle } from './Parkeren-thema-config';
 import { ParkerenThema } from './ParkerenThema';
 import { forTesting } from './ParkerenThema';
 import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
 const linkButtonTxt = 'Ga naar Mijn Parkeren';
 const EXTERNAL_PARKEREN_URL = 'https://parkeervergunningen.amsterdam.nl/';
-
-function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState);
-}
 
 const testState = {
   PARKEREN: {
@@ -84,7 +78,7 @@ describe('Parkeren', () => {
         routeEntry={routeEntry}
         routePath={routePath}
         component={ParkerenThema}
-        initializeState={initializeState}
+        state={testState}
       />
     );
   }
@@ -134,7 +128,7 @@ describe('determinePageContentTop', () => {
         routeEntry="/"
         routePath="/"
         component={PageContentTop}
-        initializeState={initializeState}
+        state={testState}
       />
     );
     expect(screen.queryByText(linkButtonTxt)).toBeInTheDocument();

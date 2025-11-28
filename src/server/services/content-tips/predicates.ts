@@ -6,10 +6,11 @@ import {
 
 import type { TipsPredicateFN } from './tip-types';
 import type { AppStateBase } from '../../../universal/types/App.types';
+import type { Kind } from '../brp/brp-types';
 import { isAmsterdamAddress } from '../buurt/helpers';
 import type { HLIRegelingFrontend } from '../hli/hli-regelingen-types';
-import type { IdentiteitsbewijsFrontend, Kind } from '../profile/brp.types';
-import type { BBVergunningFrontend } from '../toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
+import type { IdentiteitsbewijsFrontend } from '../profile/brp.types';
+import type { BBVergunningFrontend } from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types';
 import type { WMOVoorzieningFrontend } from '../wmo/wmo-config-and-types';
 import type { WpiRequestProcess } from '../wpi/wpi-types';
 
@@ -32,7 +33,12 @@ export const hasValidId: TipsPredicateFN = (
   appState,
   today: Date = new Date()
 ) => {
-  const ids = appState.BRP?.content?.identiteitsbewijzen ?? [];
+  const brpContent = appState.BRP?.content;
+  const ids =
+    (brpContent &&
+      'identiteitsbewijzen' in brpContent &&
+      brpContent.identiteitsbewijzen) ||
+    [];
   const validIds = ids.some((idBewijs: IdentiteitsbewijsFrontend) => {
     return today <= new Date(idBewijs.datumAfloop);
   });
@@ -40,11 +46,16 @@ export const hasValidId: TipsPredicateFN = (
 };
 
 // To use an ID for voting it needs an expiration date with a maximum of five years ago.
-export const hasValidIdForVoting: TipsPredicateFN = (appState) => {
-  const DATE_OF_VOTE = new Date('2023-11-20'); // Minus 2 days for request processing.
+export const hasValidIdForVoting: TipsPredicateFN = (
+  appState,
+  date_of_vote?: Date
+) => {
+  const DATE_OF_VOTE = date_of_vote ?? new Date();
+  const DAY = 24 * 60 * 60 * 1000;
+  const DATE_OF_VOTE_MINUS_2_DAYS = new Date(DATE_OF_VOTE.getTime() - 2 * DAY); // for request processing.
   const YEARS = 5;
   const FIVE_YEARS_AGO = new Date(
-    DATE_OF_VOTE.setFullYear(DATE_OF_VOTE.getFullYear() - YEARS)
+    DATE_OF_VOTE_MINUS_2_DAYS.setFullYear(DATE_OF_VOTE.getFullYear() - YEARS)
   );
   return hasValidId(appState, FIVE_YEARS_AGO);
 };

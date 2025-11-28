@@ -1,6 +1,10 @@
 import { ReactNode } from 'react';
 
-import { LinkProps, ZaakDetail } from '../../../universal/types/App.types';
+import {
+  LinkProps,
+  ZaakAanvraagDetail,
+} from '../../../universal/types/App.types';
+import { getRedactedClass } from '../../helpers/cobrowse';
 import ErrorAlert from '../Alert/Alert';
 import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
 import { DetailPageV2, PageContentCell, PageContentV2 } from '../Page/Page';
@@ -16,6 +20,7 @@ const LOADING_BAR_CONFIG_DEFAULT: BarConfig = [
 const ERROR_ALERT_DEFAULT = 'We kunnen op dit moment geen gegevens tonen.';
 
 interface ThemaDetailPaginaProps<T> {
+  themaId: string;
   zaak?: T | null;
   breadcrumbs?: LinkProps[];
   errorAlertContent?: ReactNode;
@@ -31,7 +36,10 @@ interface ThemaDetailPaginaProps<T> {
   showStatusSteps?: boolean;
 }
 
-export default function ThemaDetailPagina<T extends Partial<ZaakDetail>>({
+export default function ThemaDetailPagina<
+  T extends Partial<ZaakAanvraagDetail>,
+>({
+  themaId,
   zaak,
   title = 'Detailpagina',
   breadcrumbs,
@@ -51,15 +59,19 @@ export default function ThemaDetailPagina<T extends Partial<ZaakDetail>>({
     statusItemSteps = [...statusItemSteps];
     statusItemSteps.reverse();
   }
-
   return (
     <DetailPageV2>
-      <PageContentV2>
+      <PageContentV2 className={getRedactedClass(themaId)}>
         <PageHeadingV2 breadcrumbs={breadcrumbs}>{title}</PageHeadingV2>
 
         {!isLoading && (isError || !zaak) && (
           <PageContentCell>
-            <ErrorAlert>{errorAlertContent}</ErrorAlert>
+            <ErrorAlert
+              title={isError ? 'Foutmelding' : 'Geen gegevens gevonden'}
+              severity={isError ? 'error' : 'info'}
+            >
+              {errorAlertContent}
+            </ErrorAlert>
           </PageContentCell>
         )}
 

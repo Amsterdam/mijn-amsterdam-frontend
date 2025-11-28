@@ -1,30 +1,21 @@
-import useSWR from 'swr';
+import { useEffect } from 'react';
 
-import { FIFTEEN_MINUTES_MS } from '../../../../../universal/config/app';
-import { ApiResponse } from '../../../../../universal/helpers/api';
 import { GenericDocument } from '../../../../../universal/types/App.types';
+import { useBffApi } from '../../../../hooks/api/useBffApi';
 
-async function fetchDocuments(url: string) {
-  const res = await fetch(url, { credentials: 'include' });
-
-  if (!res.ok) {
-    throw new Error('An error occurred while fetching the data.');
-  }
-
-  return res.json();
-}
-
-export function useVergunningDocumentList(
-  url?: string,
-  dedupingInterval: number = FIFTEEN_MINUTES_MS
-) {
-  const {
-    data: documentsResponse,
-    isLoading,
-    error,
-  } = useSWR<ApiResponse<GenericDocument[]>>(url, fetchDocuments, {
-    dedupingInterval,
+export function useVergunningDocumentList(url?: string) {
+  const { fetch, isPristine, data, isLoading, isError } = useBffApi<
+    GenericDocument[]
+  >(url, {
+    fetchImmediately: false,
   });
-  const documents = documentsResponse?.content ?? [];
-  return { documents, isLoading, isError: !!error };
+
+  useEffect(() => {
+    if (url && isPristine) {
+      fetch(url);
+    }
+  }, [url, isPristine, fetch]);
+
+  const documents = data?.content ?? [];
+  return { documents, isLoading, isError };
 }

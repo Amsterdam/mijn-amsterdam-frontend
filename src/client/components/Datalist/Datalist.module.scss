@@ -8,6 +8,12 @@
     font-weight: var(--ams-typography-body-text-bold-font-weight);
   }
 
+  @media screen and (max-width: $ams-breakpoint-medium) {
+    :global(.ams-grid) {
+      --ams-grid-row-gap-xl: 0;
+    }
+  }
+
   @media screen and (min-width: $ams-breakpoint-medium) {
     &:last-child {
       // NOTE: If the last description in the DL is wrapped by a wrapped row, this doesn't work.

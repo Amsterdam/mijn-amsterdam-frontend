@@ -7,7 +7,7 @@ import { dateSort } from '../../../universal/helpers/date';
 import { pick } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { SourceApiKey } from '../../config/source-api';
+import { SourceApiName } from '../../config/source-api';
 import {
   createSessionBasedCacheKey,
   getApiConfig,
@@ -45,7 +45,7 @@ type FilterResponse = (
 ) => WpiRequestProcess[];
 
 export interface FetchConfig {
-  apiConfigName: SourceApiKey;
+  apiConfigName: SourceApiName;
   filterResponse: FilterResponse;
   requestCacheKey: string;
 }

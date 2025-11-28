@@ -131,7 +131,24 @@ describe('predicates', () => {
       ])('should return %s for datumAfloop %s', (expected, datumAfloop) => {
         const appState = getMockAppState(datumAfloop);
 
-        expect(hasValidIdForVoting(appState)).toBe(expected);
+        expect(hasValidIdForVoting(appState, new Date('2023-11-20'))).toBe(
+          expected
+        );
+      });
+
+      it.each([
+        [false, '2017-07-24'],
+        [false, '2020-10-26'],
+        [true, '2020-10-27'],
+        [true, '2022-07-24'],
+        [true, '2022-07-25'],
+        [true, '2028-07-24'],
+      ])('should return %s for datumAfloop %s', (expected, datumAfloop) => {
+        const appState = getMockAppState(datumAfloop);
+
+        expect(hasValidIdForVoting(appState, new Date('2025-10-29'))).toBe(
+          expected
+        );
       });
     });
 

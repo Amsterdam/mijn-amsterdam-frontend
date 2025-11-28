@@ -1,14 +1,12 @@
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { generatePath } from 'react-router';
-import { MutableSnapshot } from 'recoil';
 
 import { routeConfig } from './Afis-thema-config';
 import { AfisBetaalVoorkeuren } from './AfisBetaalVoorkeuren';
 import { AfisBusinessPartnerDetailsTransformed } from '../../../../server/services/afis/afis-types';
 import { bffApi } from '../../../../testing/utils';
 import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
 const businessPartnerIdEncrypted = 'xxx-123-xxx';
@@ -30,10 +28,6 @@ const testState = {
   },
 } as AppState;
 
-function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState);
-}
-
 describe('<AfisBetaalVoorkeuren />', () => {
   const businessPartnerDetails: AfisBusinessPartnerDetailsTransformed = {
     businessPartnerId: '515177',
@@ -44,8 +38,16 @@ describe('<AfisBetaalVoorkeuren />', () => {
 
   bffApi
     .get(`/services/afis/businesspartner?id=${businessPartnerIdEncrypted}`)
+    .times(2)
     .reply(200, {
       content: businessPartnerDetails,
+      status: 'OK',
+    });
+
+  bffApi
+    .get(`/services/afis/e-mandates?id=${businessPartnerIdEncrypted}`)
+    .reply(200, {
+      content: [],
       status: 'OK',
     });
 
@@ -60,7 +62,7 @@ describe('<AfisBetaalVoorkeuren />', () => {
       status: 'OK',
     });
 
-  const routePath = routeConfig.detailPage.path;
+  const routePath = routeConfig.betaalVoorkeuren.path;
   const routeEntry = generatePath(routePath);
 
   function Component() {
@@ -69,7 +71,7 @@ describe('<AfisBetaalVoorkeuren />', () => {
         routeEntry={routeEntry}
         routePath={routePath}
         component={AfisBetaalVoorkeuren}
-        initializeState={initializeState}
+        state={testState}
       />
     );
   }
@@ -79,10 +81,11 @@ describe('<AfisBetaalVoorkeuren />', () => {
 
     const screen = render(<Component />);
 
-    const toonKnop = screen.getByText('Toon');
-    expect(toonKnop).toBeInTheDocument();
-
-    await user.click(toonKnop);
+    await waitFor(async () => {
+      const toonKnop = screen.getByText('Toon');
+      expect(toonKnop).toBeInTheDocument();
+      await user.click(toonKnop);
+    });
 
     await waitFor(() => {
       expect(screen.getByText('someone@example.org')).toBeInTheDocument();

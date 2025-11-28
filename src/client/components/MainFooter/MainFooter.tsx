@@ -4,16 +4,35 @@ import {
   LinkList,
   PageFooter,
 } from '@amsterdam/design-system-react';
-import useSWR from 'swr';
 
-import { CobrowseFooter } from './CobrowseFooter/CobrowseFooter';
+import {
+  CobrowseFooter,
+  LABEL_HULP_SCHERMDELEN,
+} from './CobrowseFooter/CobrowseFooter';
 import styles from './MainFooter.module.scss';
 import type {
   CMSFooter,
   CMSFooterSection,
 } from '../../../server/services/cms/cms-content';
-import type { ApiResponse } from '../../../universal/helpers/api';
 import { BFF_API_BASE_URL } from '../../config/api';
+import { useBffApi } from '../../hooks/api/useBffApi';
+import { useCanonmatigingFooterLink } from '../../pages/Thema/Erfpacht/Erfpacht-render-config';
+import { featureToggle } from '../../pages/Thema/Erfpacht/Erfpacht-thema-config';
+
+function useCustomFooterSections(
+  sections: CMSFooterSection[],
+  sectionFinder: (section: CMSFooterSection, index: number) => boolean,
+  customLinks: CMSFooterSection['links']
+) {
+  return sections.map((section, index) => {
+    return {
+      ...section,
+      links: sectionFinder(section, index)
+        ? [...section.links, ...customLinks]
+        : section.links,
+    };
+  });
+}
 
 function FooterBlock({ title, links }: CMSFooterSection) {
   return (
@@ -35,41 +54,47 @@ function FooterBlock({ title, links }: CMSFooterSection) {
 }
 
 export function MainFooter() {
-  const { data: footer } = useSWR<ApiResponse<CMSFooter>>(
-    `${BFF_API_BASE_URL}/services/cms/footer`,
-    async (url) => {
-      const response = await fetch(url);
-      const responseData: ApiResponse<CMSFooter> = await response.json();
-      if (!response.ok || responseData.status !== 'OK') {
-        throw new Error('Failed to fetch footer data');
-      }
-      return responseData;
-    },
-    {
-      revalidateIfStale: false,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    }
+  const { data } = useBffApi<CMSFooter>(
+    `${BFF_API_BASE_URL}/services/cms/footer`
+  );
+
+  const canonmatigingLink = useCanonmatigingFooterLink();
+
+  const customLinks =
+    featureToggle.canonmatigingLinkActive && canonmatigingLink
+      ? [canonmatigingLink]
+      : [];
+
+  const customSections = useCustomFooterSections(
+    data?.content?.sections || [],
+    (_section, index) => index === 0,
+    customLinks
   );
 
   return (
     <PageFooter className={styles.MainFooter}>
       <PageFooter.Spotlight>
         <Grid gapVertical="large" paddingVertical="large">
-          {footer?.content?.sections.map((footerItem) => (
+          {customSections.map((footerItem) => (
             <FooterBlock key={footerItem.title} {...footerItem} />
           ))}
         </Grid>
       </PageFooter.Spotlight>
 
       <PageFooter.Menu>
-        {footer?.content?.bottomLinks.map((link) => {
-          return (
-            <PageFooter.MenuLink key={link.label} href={link.url}>
-              {link.label}
-            </PageFooter.MenuLink>
-          );
-        })}
+        {data?.content?.bottomLinks
+          .filter(
+            (link) =>
+              typeof link.label === 'string' &&
+              link.label.toLowerCase() !== LABEL_HULP_SCHERMDELEN.toLowerCase()
+          )
+          .map((link) => {
+            return (
+              <PageFooter.MenuLink key={link.label} href={link.url}>
+                {link.label}
+              </PageFooter.MenuLink>
+            );
+          })}
         <CobrowseFooter />
       </PageFooter.Menu>
     </PageFooter>

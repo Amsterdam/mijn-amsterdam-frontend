@@ -1,3 +1,5 @@
+import { hash } from '../../universal/helpers/utils';
+
 export const BFF_BASE_PATH = '/api/v1';
 export const BFF_BASE_PATH_PRIVATE = '/private/api/v1';
 
@@ -7,29 +9,19 @@ export const BffEndpoints = {
   SERVICES_ALL: '/services/all',
   SERVICES_TIPS: '/services/tips',
   SERVICES_STREAM: '/services/stream',
-  MAP_DATASETS: '/map/datasets/:datasetId?/:id?',
+  MAP_DATASETS: '/map/datasets{/:datasetId{/:id}}',
   SEARCH_CONFIG: '/services/search-config',
   CMS_FOOTER: '/services/cms/footer',
   CMS_MAINTENANCE_NOTIFICATIONS: '/services/cms/maintenance-notifications',
   CACHE_OVERVIEW: '/admin/cache',
-  LOGIN_STATS: '/admin/visitors/:authMethod?',
+  LOGIN_STATS: '/admin/visitors{/:authMethod}',
   LOGIN_RAW: '/admin/visitors/table',
   STATUS_HEALTH: '/status/health',
   TEST_ACCOUNTS_OVERVIEW: '/admin/user-data-overview',
 
+  SCREEN_SHARE: '/services/screenshare',
+
   TELEMETRY_PROXY: '/services/telemetry/v2/track',
-
-  // AFIS
-  AFIS_BUSINESSPARTNER: '/services/afis/businesspartner',
-  AFIS_FACTUREN:
-    '/services/afis/facturen/:state(open|afgehandeld|overgedragen)',
-  AFIS_DOCUMENT_DOWNLOAD: '/services/afis/facturen/document',
-
-  // Stadspas
-  STADSPAS_TRANSACTIONS:
-    '/services/stadspas/transactions/:transactionsKeyEncrypted?',
-  STADSPAS_BLOCK_PASS: '/services/stadspas/block/:transactionsKeyEncrypted',
-  STADSPAS_UNBLOCK_PASS: '/services/stadspas/unblock/:transactionsKeyEncrypted',
 
   // Decos (Vergunningen, Horeca, Parkeren en Toeristische verhuur)
   DECOS_DOCUMENTS_LIST: `/services/decos/documents`,
@@ -42,16 +34,10 @@ export const BffEndpoints = {
   MKS_AANTAL_BEWONERS: '/service/mks/aantal-bewoners/:addressKeyEncrypted',
 
   // WPI Document download
-  WPI_DOCUMENT_DOWNLOAD: '/services/wpi/document/:id',
-
-  // WMO / Zorgned
-  WMO_DOCUMENT_DOWNLOAD: `/services/wmo/document/:id`,
-
-  // AV / Zorgned
-  HLI_DOCUMENT_DOWNLOAD: `/services/v1/stadspas-en-andere-regelingen/document/:id`,
+  WPI_DOCUMENT_DOWNLOAD: '/services/wpi/document',
 
   // LLV / Zorgned
-  LLV_DOCUMENT_DOWNLOAD: `/services/llv/document/:id`,
+  LLV_DOCUMENT_DOWNLOAD: `/services/llv/document`,
 
   // Legacy login links (still used in other portals)
   LEGACY_LOGIN_API_LOGIN: '/api/login',
@@ -62,39 +48,36 @@ export const BffEndpoints = {
   BEZWAREN_DETAIL: '/services/bezwaren',
 
   // ErfpachtV2
-  ERFPACHT_DOSSIER_DETAILS:
-    '/services/erfpacht/dossier/:dossierNummerUrlParam?',
+  ERFPACHT_DOSSIER_DETAILS: '/services/erfpacht/dossier/:dossierNummerUrlParam',
 
-  // Toeristische verhuur / Bed & Breakfast
-  TOERISTISCHE_VERHUUR_BB_DOCUMENT_DOWNLOAD:
-    '/services/toeristische-verhuur/bed-and-breakfast/document',
-  TOERISTISCHE_VERHUUR_BB_DOCUMENT_LIST:
-    '/services/toeristische-verhuur/bed-and-breakfast/documents/list',
+  // Powerbrowser (ToeristischeVerhuur->Bed&Breakfast)
+  POWERBROWSER_DOCUMENT_DOWNLOAD: `/services/${hash('powerbrowser')}/documents/download`,
 
   // Bodem / loodmetingen
-  LOODMETING_DOCUMENT_DOWNLOAD: '/services/lood/document/:id',
+  LOODMETING_DOCUMENT_DOWNLOAD: '/services/lood/document',
 } as const;
 
 const AMSAPP_BASE = '/services/amsapp';
 
 export const ExternalConsumerEndpoints = {
-  // Publicly accessible
+  // Publicly accessible over the internet
   public: {
     STADSPAS_AMSAPP_LOGIN: `${AMSAPP_BASE}/stadspas/login/:token`,
     STADSPAS_ADMINISTRATIENUMMER: `${AMSAPP_BASE}/stadspas/administratienummer/:token`,
     STADSPAS_APP_LANDING: `${AMSAPP_BASE}/stadspas/app-landing`,
     NOTIFICATIONS_LOGIN: `${AMSAPP_BASE}/notifications/login/:consumerId`,
+    NOTIFICATIONS_APP: `${AMSAPP_BASE}/notifications/app`,
     NOTIFICATIONS_CONSUMER_APP: `${AMSAPP_BASE}/notifications/consumer/:consumerId/app`,
     NOTIFICATIONS_CONSUMER: `${AMSAPP_BASE}/notifications/consumer/:consumerId`,
   },
-  // Privately accessible
+  // Privately accessible over private network
   private: {
-    STADSPAS_PASSEN: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/stadspas/passen/:administratienummerEncrypted`,
-    STADSPAS_DISCOUNT_TRANSACTIONS: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/stadspas/aanbiedingen/transactions/:transactionsKeyEncrypted`,
-    STADSPAS_BUDGET_TRANSACTIONS: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/stadspas/budget/transactions/:transactionsKeyEncrypted`,
-    STADSPAS_BLOCK_PAS: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/stadspas/block/:transactionsKeyEncrypted`,
-    NOTIFICATIONS: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/notifications`,
-    NOTIFICATIONS_JOB: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/job/notifications`,
+    STADSPAS_PASSEN: `${AMSAPP_BASE}/stadspas/passen/:administratienummerEncrypted`,
+    STADSPAS_DISCOUNT_TRANSACTIONS: `${AMSAPP_BASE}/stadspas/aanbiedingen/transactions/:transactionsKeyEncrypted`,
+    STADSPAS_BUDGET_TRANSACTIONS: `${AMSAPP_BASE}/stadspas/budget/transactions/:transactionsKeyEncrypted`,
+    STADSPAS_BLOCK_PAS: `${AMSAPP_BASE}/stadspas/block/:transactionsKeyEncrypted`,
+    NOTIFICATIONS: `${AMSAPP_BASE}/notifications`,
+    NOTIFICATIONS_JOB: `${AMSAPP_BASE}/job/notifications`,
   },
 } as const;
 
@@ -109,7 +92,7 @@ export const PUBLIC_BFF_ENDPOINTS = [
 ] as const;
 
 export const DevelopmentRoutes = {
-  DEV_LOGIN: '/api/v1/auth/:authMethod/login/:user?',
+  DEV_LOGIN: '/auth/:authMethod/login{/:user}',
 } as const;
 
 export const PREDEFINED_REDIRECT_URLS = [

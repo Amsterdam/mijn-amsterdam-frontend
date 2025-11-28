@@ -10,7 +10,7 @@ import {
 import { WMOVoorzieningFrontend } from '../../../../server/services/wmo/wmo-config-and-types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
-import { useAppStateGetter } from '../../../hooks/useAppState';
+import { useAppStateGetter } from '../../../hooks/useAppStateStore';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 
 export function useZorgThemaData() {
@@ -22,11 +22,11 @@ export function useZorgThemaData() {
     true
   );
   const breadcrumbs = useThemaBreadcrumbs(themaId);
-  const title = themaTitle;
 
   return {
+    id: themaId,
+    title: themaTitle,
     voorzieningen,
-    title,
     isLoading: isLoading(WMO),
     isError: isError(WMO),
     tableConfig,

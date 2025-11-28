@@ -12,6 +12,7 @@ export function HLIList() {
     kind: ListPageParamKind;
   }>();
   const {
+    themaId,
     regelingen,
     tableConfig,
     isLoading,
@@ -27,6 +28,7 @@ export function HLIList() {
   return (
     <>
       <ListPagePaginated
+        themaId={themaId}
         items={regelingen.filter(filter).sort(sort)}
         title={title}
         appRoute={listPageRoute}

@@ -11,13 +11,11 @@ import {
   AV_PCVC,
   AV_UPCC,
   PCVERGOEDING,
+  PCVERGOEDING_2026,
+  AV_PCTGBO,
+  AV_PCTGVO,
 } from './status-line-items/regeling-pcvergoeding';
 import { REGELING_PERIODIEK } from './status-line-items/regeling-periodiek';
-import {
-  AV_RTM_DEEL1,
-  AV_RTM_DEEL2,
-  RTM,
-} from './status-line-items/regeling-rtm';
 import { featureToggle } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 
 export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<
@@ -25,28 +23,33 @@ export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<
 >[] = [
   {
     productIdentificatie: [AV_UPCC, AV_PCVC, ...verzilveringCodes],
-    lineItemTransformers: PCVERGOEDING,
+    statusLineItems: { name: 'PCVERGOEDING', transformers: PCVERGOEDING },
   },
   {
-    productIdentificatie: [AV_RTM_DEEL1, AV_RTM_DEEL2],
-    lineItemTransformers: RTM,
-    isDisabled: !featureToggle.hliRegelingEnabledRTM,
+    productIdentificatie: [AV_PCTGBO, AV_PCTGVO],
+    statusLineItems: {
+      name: 'PCVERGOEDING2026',
+      transformers: PCVERGOEDING_2026,
+    },
   },
   {
     productIdentificatie: ['AV-GOV', 'AV-OVM', 'AV-RTM'],
-    lineItemTransformers: REGELING,
+    statusLineItems: { name: 'REGELING', transformers: REGELING },
   },
   {
     productIdentificatie: ['AV-DECLA'],
-    lineItemTransformers: DECLARATIE,
+    statusLineItems: { name: 'DECLARATIE', transformers: DECLARATIE },
   },
   {
-    productIdentificatie: ['AV-IIT', 'AV-KVS', 'AV-SPM', 'AV-TAOV'],
-    lineItemTransformers: REGELING_PERIODIEK,
+    productIdentificatie: ['AV-IIT', 'AV-KVS', 'AV-SPM', 'AV-TAOV', 'AV-RKV'],
+    statusLineItems: {
+      name: 'REGELING_PERIODIEK',
+      transformers: REGELING_PERIODIEK,
+    },
   },
   {
     productIdentificatie: [AV_CZM],
-    lineItemTransformers: REGELING_CZM,
+    statusLineItems: { name: 'REGELING_CZM', transformers: REGELING_CZM },
     isDisabled: !featureToggle.hliRegelingEnabledCZM,
   },
 ];

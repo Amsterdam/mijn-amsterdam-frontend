@@ -3,7 +3,7 @@
 exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="ams-grid"
+    class="ams-grid cobrowse-redacted"
   >
     <div
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
@@ -227,19 +227,19 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
             >
               <th
                 class="ams-table__header-cell"
-                style="width: 25%;"
+                style="width: 15%;"
               >
                 Factuurnummer
               </th>
               <th
                 class="ams-table__header-cell"
-                style="width: 20%;"
+                style="width: 25%;"
               >
                 Afzender
               </th>
               <th
                 class="ams-table__header-cell"
-                style="width: 20%;"
+                style="width: 25%;"
               >
                 Vervaldatum
               </th>
@@ -260,34 +260,12 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
               <td
                 class="ams-table__cell"
               >
-                <span
-                  class="_DocumentLinkWrap_4ce874"
+                <a
+                  class="ams-link _MaLink_10c0a4 _MaRouterLink__no-default-underline-fat_10c0a4"
+                  href="/facturen-en-betalen/factuur/open/F001"
                 >
-                  <a
-                    class="ams-link _DocumentLink_4ce874 _MaLink_10c0a4 _MaRouterLink__no-default-underline_10c0a4"
-                    href="https://download.example.com/F001"
-                  >
-                    <span
-                      class="_DocumentLinkIcon_4ce874"
-                    >
-                      <span
-                        class="ams-icon ams-icon--heading-5"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          focusable="false"
-                          viewBox="0 0 32 32"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M0 27.996h32V32H0zm22.36-13.983 2.83 2.823L16 26.044l-9.19-9.208 2.83-2.823L14 18.377V0h4v18.377z"
-                          />
-                        </svg>
-                      </span>
-                    </span>
-                    factuur F001
-                  </a>
-                </span>
+                  F001
+                </a>
               </td>
               <td
                 class="ams-table__cell"
@@ -318,34 +296,12 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
               <td
                 class="ams-table__cell"
               >
-                <span
-                  class="_DocumentLinkWrap_4ce874"
+                <a
+                  class="ams-link _MaLink_10c0a4 _MaRouterLink__no-default-underline-fat_10c0a4"
+                  href="/facturen-en-betalen/factuur/open/F003"
                 >
-                  <a
-                    class="ams-link _DocumentLink_4ce874 _MaLink_10c0a4 _MaRouterLink__no-default-underline_10c0a4"
-                    href="https://download.example.com/F003"
-                  >
-                    <span
-                      class="_DocumentLinkIcon_4ce874"
-                    >
-                      <span
-                        class="ams-icon ams-icon--heading-5"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          focusable="false"
-                          viewBox="0 0 32 32"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M0 27.996h32V32H0zm22.36-13.983 2.83 2.823L16 26.044l-9.19-9.208 2.83-2.823L14 18.377V0h4v18.377z"
-                          />
-                        </svg>
-                      </span>
-                    </span>
-                    factuur F003
-                  </a>
-                </span>
+                  F003
+                </a>
               </td>
               <td
                 class="ams-table__cell"
@@ -448,34 +404,12 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
               <td
                 class="ams-table__cell"
               >
-                <span
-                  class="_DocumentLinkWrap_4ce874"
+                <a
+                  class="ams-link _MaLink_10c0a4 _MaRouterLink__no-default-underline-fat_10c0a4"
+                  href="/facturen-en-betalen/factuur/afgehandeld/F002"
                 >
-                  <a
-                    class="ams-link _DocumentLink_4ce874 _MaLink_10c0a4 _MaRouterLink__no-default-underline_10c0a4"
-                    href="https://download.example.com/F002"
-                  >
-                    <span
-                      class="_DocumentLinkIcon_4ce874"
-                    >
-                      <span
-                        class="ams-icon ams-icon--heading-5"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          focusable="false"
-                          viewBox="0 0 32 32"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M0 27.996h32V32H0zm22.36-13.983 2.83 2.823L16 26.044l-9.19-9.208 2.83-2.823L14 18.377V0h4v18.377z"
-                          />
-                        </svg>
-                      </span>
-                    </span>
-                    factuur F002
-                  </a>
-                </span>
+                  F002
+                </a>
               </td>
               <td
                 class="ams-table__cell"

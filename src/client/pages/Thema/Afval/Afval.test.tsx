@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import { MutableSnapshot } from 'recoil';
 import type { Mock } from 'vitest';
 
 import { routeConfig } from './Afval-thema-config';
@@ -7,7 +6,6 @@ import { AfvalThemaPagina } from './AfvalThema';
 import { AfvalFractionData } from '../../../../server/services/afval/afval.types';
 import { jsonCopy } from '../../../../universal/helpers/utils';
 import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
 import { useProfileTypeValue } from '../../../hooks/useProfileType';
 import MockApp from '../../MockApp';
 
@@ -153,10 +151,6 @@ const testState = {
 
 vi.mock('../../../hooks/useProfileType');
 
-function initializeState(snapshot: MutableSnapshot, state: any = testState) {
-  snapshot.set(appStateAtom, state);
-}
-
 describe('<AfvalThemaPagina />', () => {
   const routePath = routeConfig.themaPage.path;
 
@@ -166,19 +160,23 @@ describe('<AfvalThemaPagina />', () => {
         routeEntry={routePath}
         routePath={routePath}
         component={AfvalThemaPagina}
-        initializeState={(snapshot) => initializeState(snapshot)}
+        state={testState as unknown as AppState}
       />
     );
   }
 
+  afterEach(() => {
+    (useProfileTypeValue as Mock).mockReset();
+  });
+
   it('Matches the Full Page snapshot', () => {
-    (useProfileTypeValue as Mock).mockReturnValueOnce('private');
+    (useProfileTypeValue as Mock).mockReturnValue('private');
     const { asFragment } = render(<Component />);
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('Renders commercial profile', () => {
-    (useProfileTypeValue as Mock).mockReturnValueOnce('commercial');
+    (useProfileTypeValue as Mock).mockReturnValue('commercial');
 
     render(<Component />);
 
@@ -190,7 +188,7 @@ describe('<AfvalThemaPagina />', () => {
   });
 
   it('Does not show warning concercing bedrijfsafval', () => {
-    (useProfileTypeValue as Mock).mockReturnValueOnce('private');
+    (useProfileTypeValue as Mock).mockReturnValue('private');
 
     const testState2 = jsonCopy(testState);
     testState2.MY_LOCATION.content[1].bagNummeraanduidingId =
@@ -202,7 +200,7 @@ describe('<AfvalThemaPagina />', () => {
           routeEntry={routePath}
           routePath={routePath}
           component={AfvalThemaPagina}
-          initializeState={(snapshot) => initializeState(snapshot, testState2)}
+          state={testState2}
         />
       );
     }
@@ -234,7 +232,7 @@ describe('<AfvalThemaPagina />', () => {
           routeEntry={routePath}
           routePath={routePath}
           component={AfvalThemaPagina}
-          initializeState={(snapshot) => initializeState(snapshot, testState2)}
+          state={testState2}
         />
       );
     }

@@ -17,24 +17,32 @@ import styles from './ProfilePrivate.module.scss';
 import { isLoading, isError } from '../../../../../universal/helpers/api';
 import { MaRouterLink } from '../../../../components/MaLink/MaLink';
 import { ThemaMenuItemTransformed } from '../../../../config/thema-types';
-import { useAppStateGetter } from '../../../../hooks/useAppState';
+import { getRedactedClass } from '../../../../helpers/cobrowse';
+import { useAppStateGetter } from '../../../../hooks/useAppStateStore';
 import {
   useThemaBreadcrumbs,
-  useThemaMenuItems,
+  useActiveThemaMenuItems,
 } from '../../../../hooks/useThemaMenuItems';
 import { routeConfig, themaIdBRP } from '../Profile-thema-config';
 
-function getLinkToThemaPage(
+function getMenuItem(
   onderwerp: string,
   myThemasMenuItems: ThemaMenuItemTransformed[]
 ) {
-  const menuItem = myThemasMenuItems.find(
+  return myThemasMenuItems.find(
     (item) =>
       item.id ===
       mapperContactmomentToMenuItem[
         onderwerp as keyof typeof mapperContactmomentToMenuItem
       ]
   );
+}
+
+function getLinkToThemaPage(
+  onderwerp: string,
+  myThemasMenuItems: ThemaMenuItemTransformed[]
+) {
+  const menuItem = getMenuItem(onderwerp, myThemasMenuItems);
 
   if (!menuItem) {
     return onderwerp;
@@ -68,14 +76,19 @@ function addIcon(type: string) {
 
 export function useContactmomenten() {
   const { KLANT_CONTACT } = useAppStateGetter();
-  const { items: myThemasMenuItems } = useThemaMenuItems();
+  const { items: myThemasMenuItems } = useActiveThemaMenuItems();
   const breadcrumbs = useThemaBreadcrumbs(themaIdBRP);
   const routeParams = useParams();
 
   const contactmomenten: ContactMomentFrontend[] =
-    KLANT_CONTACT.content?.map((contactMomentItem) => {
+    KLANT_CONTACT?.content?.map((contactMomentItem) => {
+      const menuItemId = // getMenuItem can not be used because it is dependend on the user having the thema at the current moment
+        mapperContactmomentToMenuItem[
+          contactMomentItem.subject as keyof typeof mapperContactmomentToMenuItem
+        ] || contactMomentItem.subject;
       return {
         ...contactMomentItem,
+        className: getRedactedClass(menuItemId),
         themaKanaalIcon: addIcon(contactMomentItem.themaKanaal),
         subjectLink: getLinkToThemaPage(
           contactMomentItem.subject,
@@ -86,6 +99,7 @@ export function useContactmomenten() {
 
   return {
     contactmomenten,
+    themaId: themaIdBRP,
     displayProps: contactmomentenDisplayProps,
     isError: isError(KLANT_CONTACT),
     isLoading: isLoading(KLANT_CONTACT),

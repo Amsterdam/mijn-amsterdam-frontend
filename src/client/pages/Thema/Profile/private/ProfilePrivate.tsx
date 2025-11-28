@@ -37,18 +37,13 @@ function ProfilePrivateSectionPanels() {
           {...panelConfig.adres(BRP)}
         />
       )}
-      {!!profileData?.verbintenis && (
-        <ProfileSectionPanel
-          sectionData={profileData.verbintenis}
-          {...panelConfig.verbintenis(BRP)}
-        />
-      )}
-      {!!profileData?.verbintenisHistorisch?.length && (
-        <ProfileSectionPanel
-          sectionData={profileData.verbintenisHistorisch}
-          {...panelConfig.verbintenisHistorisch(BRP)}
-        />
-      )}
+      {!!profileData?.verbintenis &&
+        !BRP.content?.verbintenis?.datumOntbinding && (
+          <ProfileSectionPanel
+            sectionData={profileData.verbintenis}
+            {...panelConfig.verbintenis(BRP)}
+          />
+        )}
       {!!profileData?.kinderen?.length && (
         <ProfileSectionPanel
           sectionData={profileData.kinderen}
@@ -61,6 +56,19 @@ function ProfilePrivateSectionPanels() {
           {...panelConfig.ouders(BRP)}
         />
       )}
+      {!!profileData?.verbintenis &&
+        BRP.content?.verbintenis?.datumOntbinding && (
+          <ProfileSectionPanel
+            sectionData={profileData.verbintenis}
+            {...panelConfig.verbintenis(BRP)}
+          />
+        )}
+      {!!profileData?.verbintenisHistorisch?.length && (
+        <ProfileSectionPanel
+          sectionData={profileData.verbintenisHistorisch}
+          {...panelConfig.verbintenisHistorisch(BRP)}
+        />
+      )}
       {!!profileData?.adresHistorisch?.length && (
         <ProfileSectionPanel
           sectionData={profileData.adresHistorisch}
@@ -70,9 +78,10 @@ function ProfilePrivateSectionPanels() {
       {isMokum(BRP.content) && (
         <PageContentCell>
           <ParagaphSuppressed className="ams-mb-m">
-            Het is helaas niet mogelijk om de gegevens van een levenloos geboren
-            kindje te tonen in Mijn Amsterdam. U kunt deze gegevens wel inzien
-            in{' '}
+            Het is helaas technisch niet mogelijk om de gegevens van een
+            levenloos geboren kindje te tonen in Mijn Amsterdam. Als u het
+            kindje heeft laten registreren bij uw gemeente, kunt u deze gegevens
+            wel inzien op{' '}
             <Link href="https://mijn.overheid.nl" rel="noopener noreferrer">
               MijnOverheid
             </Link>
@@ -91,6 +100,7 @@ function ProfilePrivateSectionPanels() {
 
 export function MijnGegevensThema() {
   const {
+    id,
     title,
     brpContent,
     isLoadingBrp,
@@ -141,6 +151,7 @@ export function MijnGegevensThema() {
 
   return (
     <ThemaPagina
+      id={id}
       title={title}
       isError={isThemaPaginaError}
       isPartialError={isErrorBrp || isErrorContactmomenten}

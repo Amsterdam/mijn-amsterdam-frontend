@@ -26,7 +26,7 @@ function DetailPageContent({ hliRegeling }: DetailPageContentProps) {
 }
 
 export function HLIDetail() {
-  const { regelingen, isError, isLoading, breadcrumbs, routeConfig } =
+  const { regelingen, isError, isLoading, breadcrumbs, routeConfig, themaId } =
     useHliThemaData();
   useHTMLDocumentTitle(routeConfig.detailPage);
   const { id } = useParams<{ id: string }>();
@@ -34,6 +34,7 @@ export function HLIDetail() {
 
   return (
     <ThemaDetailPagina
+      themaId={themaId}
       title={regelingDetail?.title ?? 'Regeling bij laag inkomen'}
       zaak={regelingDetail}
       isError={isError}

@@ -26,13 +26,14 @@ import type {
   BRPData,
   IdentiteitsbewijsFrontend,
 } from '../../../server/services/profile/brp.types';
+import { BBVergunningFrontend } from '../../../server/services/toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types';
 import {
   LVVRegistratie,
   VakantieverhuurVergunningFrontend,
 } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
-import { BBVergunningFrontend } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import {
   VarenRegistratieRederType,
+  VarenVergunningFrontend,
   VarenZakenFrontend,
 } from '../../../server/services/varen/config-and-types';
 import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
@@ -52,7 +53,7 @@ import {
 } from '../../../universal/types/App.types';
 import { featureToggle as featureToggleAVG } from '../../pages/Thema/AVG/AVG-thema-config';
 import { featureToggle as featureToggleBezwaren } from '../../pages/Thema/Bezwaren/Bezwaren-thema-config';
-import { featureToggle as featureToggleBodem } from '../../pages/Thema/Bodem/Bodem-thema-config';
+import { themaConfig as themaConfigBodem } from '../../pages/Thema/Bodem/Bodem-thema-config';
 import { featureToggle as featureToggleHoreca } from '../../pages/Thema/Horeca/Horeca-thema-config';
 import { featureToggle as featureToggleKlachten } from '../../pages/Thema/Klachten/Klachten-thema-config';
 import { featureToggle as featureToggleKrefia } from '../../pages/Thema/Krefia/Krefia-thema-config';
@@ -73,6 +74,11 @@ export interface SearchEntry {
   isEnabled?: boolean;
   trailingIcon?: ReactNode;
 }
+
+export type RemoteApiSearchConfigs = Record<
+  AppStateKey,
+  Partial<Omit<ApiSearchConfig, 'getApiBaseItems' | 'generateKeywords'>>
+>;
 
 export interface ApiSearchConfig {
   stateKey: AppStateKey;
@@ -482,7 +488,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    isEnabled: featureToggleBodem.BodemActive,
+    isEnabled: themaConfigBodem.featureToggle.themaActive,
     stateKey: 'BODEM',
     profileTypes: ['private', 'commercial'],
     displayTitle(item: LoodMetingFrontend) {
@@ -513,13 +519,20 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     getApiBaseItems: (apiContent: {
       reder: VarenRegistratieRederType;
       zaken: VarenZakenFrontend[];
+      vergunningen: VarenVergunningFrontend[];
     }) => {
       const zaken =
         apiContent?.zaken.map((zaak) => ({
           ...zaak,
+          vergunningKenmerk:
+            zaak.vergunningKenmerk || zaak.vergunning?.vergunningKenmerk,
+        })) ?? [];
+      const vergunningen =
+        apiContent?.vergunningen.map((vergunning) => ({
+          ...vergunning,
         })) ?? [];
       if (!apiContent.reder) {
-        return zaken;
+        return [...zaken, ...vergunningen];
       }
       const reder = {
         ...apiContent.reder,
@@ -528,14 +541,24 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
           title: themaTitleVaren,
         },
       };
-      return [reder, ...zaken];
+      return [reder, ...zaken, ...vergunningen];
     },
-    displayTitle: (item: VarenZakenFrontend) => (term: string) => {
-      return displayPath(term, [
-        item.title,
-        item.vesselName ?? item.identifier,
-      ]);
-    },
+    displayTitle:
+      (
+        item:
+          | VarenRegistratieRederType
+          | VarenZakenFrontend
+          | VarenVergunningFrontend
+      ) =>
+      (term: string) => {
+        const vesselName = 'vesselName' in item ? item.vesselName : null;
+        const vergunningKenmerk =
+          ('vergunningKenmerk' in item && item.vergunningKenmerk) || null;
+        return displayPath(term, [
+          item.title,
+          vesselName || vergunningKenmerk || item.identifier,
+        ]);
+      },
     keywordsGeneratedFromProps: [
       'identifier',
       'vesselName',

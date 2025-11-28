@@ -1,30 +1,24 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
-import { MutableSnapshot } from 'recoil';
 
 import { routeConfig } from './Erfpacht-thema-config';
 import { ErfpachtThema } from './ErfpachtThema';
 import ERFPACHT_DOSSIERS from '../../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
 import { transformDossierResponse } from '../../../../server/services/erfpacht/erfpacht';
 import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
 describe('<Erfpacht />', () => {
   const routeEntry = generatePath(routeConfig.themaPage.path);
   const routePath = routeConfig.themaPage.path;
 
-  function Component({
-    initializeState,
-  }: {
-    initializeState: (snapshot: MutableSnapshot) => void;
-  }) {
+  function Component({ state }: { state: Partial<AppState> }) {
     return (
       <MockApp
         routeEntry={routeEntry}
         routePath={routePath}
         component={ErfpachtThema}
-        initializeState={initializeState}
+        state={state}
       />
     );
   }
@@ -56,13 +50,7 @@ describe('<Erfpacht />', () => {
       },
     } as unknown as AppState;
 
-    const screen = render(
-      <Component
-        initializeState={(snapshot) => {
-          snapshot.set(appStateAtom, testState);
-        }}
-      />
-    );
+    const screen = render(<Component state={testState} />);
 
     expect(
       screen.getByText(/Hieronder ziet u de gegevens van uw erfpachtrechten/i)
@@ -99,13 +87,7 @@ describe('<Erfpacht />', () => {
       },
     } as unknown as AppState;
 
-    const screen = render(
-      <Component
-        initializeState={(snapshot) => {
-          snapshot.set(appStateAtom, testState);
-        }}
-      />
-    );
+    const screen = render(<Component state={testState} />);
 
     expect(screen.getByText('Foutmelding')).toBeInTheDocument();
     expect(
@@ -117,9 +99,6 @@ describe('<Erfpacht />', () => {
     expect(screen.queryByText('Erfpachtrechten')).not.toBeInTheDocument();
     expect(
       screen.queryByText('U heeft geen erfpachtrechten.')
-    ).not.toBeInTheDocument();
-    expect(
-      screen.queryByText('U heeft geen openstaande facturen.')
     ).not.toBeInTheDocument();
   });
 
@@ -162,13 +141,7 @@ describe('<Erfpacht />', () => {
       },
     } as unknown as AppState;
 
-    const screen = render(
-      <Component
-        initializeState={(snapshot) => {
-          snapshot.set(appStateAtom, testState);
-        }}
-      />
-    );
+    const screen = render(<Component state={testState} />);
 
     expect(
       screen.getByText(/Hieronder ziet u de gegevens van uw erfpachtrechten/i)

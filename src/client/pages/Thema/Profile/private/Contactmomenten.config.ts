@@ -16,6 +16,7 @@ import { themaId as themaIdZorg } from '../../Zorg/Zorg-thema-config';
 export type ContactMomentFrontend = ContactMoment & {
   themaKanaalIcon: ReactNode;
   subjectLink: ReactNode;
+  className: string;
 };
 
 export const featureToggle = {

@@ -151,8 +151,9 @@ describe('hli-zorgned-service', () => {
             datumEindeGeldigheid: '2032-01-01',
             datumIngangGeldigheid: '2024-08-01',
             titel: 'test',
+            documenten: [],
             productIdentificatie: AV_CZM,
-          } as ZorgnedAanvraagWithRelatedPersonsTransformed,
+          } as unknown as ZorgnedAanvraagWithRelatedPersonsTransformed,
         ],
         status: 'OK',
       });
@@ -166,6 +167,7 @@ describe('hli-zorgned-service', () => {
       content: [
         {
           datumEindeGeldigheid: '2032-01-01',
+          documenten: [],
           datumIngangGeldigheid: '2024-08-01',
           isActueel: true,
           productIdentificatie: 'AV-CZM',
@@ -184,8 +186,9 @@ describe('hli-zorgned-service', () => {
           {
             isActueel: true,
             datumEindeGeldigheid: '2022-01-01',
+            documenten: [],
             titel: 'test',
-          } as ZorgnedAanvraagWithRelatedPersonsTransformed,
+          } as unknown as ZorgnedAanvraagWithRelatedPersonsTransformed,
         ],
         status: 'OK',
       });
@@ -198,6 +201,7 @@ describe('hli-zorgned-service', () => {
       content: [
         {
           datumEindeGeldigheid: '2022-01-01',
+          documenten: [],
           isActueel: false,
           titel: 'test',
         },

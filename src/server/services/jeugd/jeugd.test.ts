@@ -24,6 +24,7 @@ test('Succes Response is formatted correctly', async () => {
     content: [
       {
         id: VOORZIENING_ID,
+        prettyID: VOORZIENING_ID,
         datumAanvraag: '2025-03-27',
         datumBeginLevering: null,
         datumBesluit: '2025-03-27',
@@ -51,6 +52,7 @@ test('Succes Response is formatted correctly', async () => {
       },
       {
         id: '2735835706',
+        prettyID: '2735835706',
         datumAanvraag: '2025-02-20',
         datumBeginLevering: null,
         datumBesluit: '2025-02-20',
@@ -71,6 +73,7 @@ test('Succes Response is formatted correctly', async () => {
       },
       {
         id: '1804759541',
+        prettyID: '1804759541',
         datumAanvraag: '2020-06-12',
         datumBeginLevering: null,
         datumBesluit: '2020-09-11',
@@ -91,6 +94,7 @@ test('Succes Response is formatted correctly', async () => {
       },
       {
         id: '232024340',
+        prettyID: '232024340',
         datumAanvraag: '2019-07-12',
         datumBeginLevering: null,
         datumBesluit: '2019-07-12',
@@ -125,7 +129,7 @@ test('Succes Response is formatted correctly', async () => {
         datePublished: '2025-04-07T09:44:48.697',
         id: 'B3392456',
         title: 'Besluit: toekenning Leerlingenvervoer (AV)',
-        url: 'http://bff-api-host/api/v1/services/llv/document/encrypted-value',
+        url: 'http://bff-api-host/api/v1/services/llv/document?id=encrypted-value',
       },
     ],
     id: '1610585298',

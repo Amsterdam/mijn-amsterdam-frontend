@@ -9,16 +9,19 @@ import {
 } from '@amsterdam/design-system-react';
 import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 
+import { CONTENT_EMPTY } from './helper';
 import { useVarenThemaData } from './useVarenThemaData.hook';
-import { rederRegistratieLink } from './Varen-thema-config';
+import {
+  rederRegistratieLink,
+  SHOW_HISTORICAL_AANVRAGEN_STARTING_FROM_DATE,
+} from './Varen-thema-config';
 import styles from './Varen.module.scss';
-import type {
-  VarenRegistratieRederFrontend,
-  VarenZakenFrontend,
-} from '../../../../server/services/varen/config-and-types';
+import type { VarenRegistratieRederFrontend } from '../../../../server/services/varen/config-and-types';
+import { entries, toDateFormatted } from '../../../../universal/helpers/utils';
 import { Datalist, RowSet } from '../../../components/Datalist/Datalist';
 import { MaButtonLink } from '../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../components/Page/Page';
+import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
@@ -50,6 +53,16 @@ export const VarenDisclaimerRederNotRegistered = (
   </Grid.Cell>
 );
 
+export const VarenOnlyShowAanvragenAfterDateDisclaimer = (
+  <PageContentCell spanWide={8}>
+    <ParagaphSuppressed className="ams-mb-m">
+      Op deze pagina laten we alleen aanvragen zien die na{' '}
+      {toDateFormatted(SHOW_HISTORICAL_AANVRAGEN_STARTING_FROM_DATE)} zijn
+      gedaan.
+    </ParagaphSuppressed>
+  </PageContentCell>
+);
+
 type VarenPageContentRederRegistratieProps = {
   registratie: VarenRegistratieRederFrontend;
 };
@@ -62,33 +75,38 @@ export function VarenPageContentRederRegistratie({
       rows: [
         {
           label: 'Naam aanvrager',
-          content: registratie.company,
+          content: registratie.company || CONTENT_EMPTY,
         },
         {
           label: 'Telefoonnummer',
-          content: registratie.phone,
+          content: registratie.phone || CONTENT_EMPTY,
         },
         {
           label: 'KvK nummer',
-          content: registratie.bsnkvk,
+          content: registratie.bsnkvk || CONTENT_EMPTY,
         },
       ],
     },
     {
       rows: [
         {
-          label: 'Adres',
+          label: registratie.correspondenceAddress
+            ? 'Correspondentieadres'
+            : 'Adres',
           content:
             registratie.correspondenceAddress ||
-            `${registratie.address}${registratie.postalCode ? `, ${registratie.postalCode}` : ''}${registratie.city ? ` ${registratie.city}` : ''}`,
+            [registratie.address, registratie.postalCode, registratie.city]
+              .filter((x) => !!x)
+              .join(', ') ||
+            CONTENT_EMPTY,
         },
         {
           label: 'E-mailadres',
-          content: registratie.email,
+          content: registratie.email || CONTENT_EMPTY,
         },
         {
           label: 'Datum registratie',
-          content: registratie.dateRequestFormatted,
+          content: registratie.dateRequestFormatted || CONTENT_EMPTY,
         },
       ],
     },
@@ -97,7 +115,7 @@ export function VarenPageContentRederRegistratie({
   return (
     <Grid.Cell span="all">
       <Heading level={3} size="level-2">
-        Gegevens Aanvrager
+        Gegevens onderneming
       </Heading>
       <Datalist rows={rows} className={styles.VarenGridWithoutRowGap} />
     </Grid.Cell>
@@ -108,11 +126,13 @@ export function VarenThema() {
   const {
     varenRederRegistratie,
     varenZaken,
+    varenVergunningen,
     tableConfig,
     isLoading,
     isError,
     linkListItems,
     buttonItems,
+    id,
     title,
     routeConfig,
   } = useVarenThemaData();
@@ -137,23 +157,23 @@ export function VarenThema() {
       </PageContentCell>
     ) : null;
 
-  const vergunningenTables = Object.entries(tableConfig).map(
-    ([kind, config]) => {
-      const zaken = varenZaken.filter(config.filter).sort(config.sort);
-      return (
-        <ThemaPaginaTable<VarenZakenFrontend>
-          key={kind}
-          title={config.title}
-          zaken={zaken}
-          displayProps={config.displayProps}
-          className={styles.VarenTableThemaPagina}
-          listPageRoute={config.listPageRoute}
-          listPageLinkLabel={`Alle ${config.title.toLowerCase()}`}
-          maxItems={config.maxItems}
-        />
-      );
-    }
-  );
+  const tables = entries(tableConfig).map(([kind, config]) => {
+    const varenItems =
+      kind === 'actieve-vergunningen' ? varenVergunningen : varenZaken;
+    const items = varenItems.filter(config.filter).sort(config.sort);
+    return (
+      <ThemaPaginaTable
+        key={kind}
+        title={config.title}
+        zaken={items}
+        displayProps={config.displayProps}
+        className={styles.VarenTableThemaPagina}
+        listPageRoute={config.listPageRoute}
+        listPageLinkLabel={`Alle ${config.title.toLowerCase()}`}
+        maxItems={config.maxItems}
+      />
+    );
+  });
 
   const gegevensRegistratieReder = varenRederRegistratie ? (
     <VarenPageContentRederRegistratie registratie={varenRederRegistratie} />
@@ -163,6 +183,7 @@ export function VarenThema() {
 
   return (
     <ThemaPagina
+      id={id}
       title={title}
       isLoading={isLoading}
       isError={isError}
@@ -171,7 +192,8 @@ export function VarenThema() {
       pageContentMain={
         <>
           {gegevensRegistratieReder}
-          {vergunningenTables}
+          {tables}
+          {VarenOnlyShowAanvragenAfterDateDisclaimer}
         </>
       }
       isPartialError={false}

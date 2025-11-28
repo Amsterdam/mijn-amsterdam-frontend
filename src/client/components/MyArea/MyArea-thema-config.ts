@@ -7,7 +7,6 @@ export const featureToggle = {
   meldingenBuurtActive: true,
   wiorDatasetActive: true,
   wiorMeldingen: true,
-  laadpalenActive: false,
   bekendmakingenDatasetActive: false,
   evenementenDatasetActive: false,
   sportDatasetsActive: true,
@@ -19,5 +18,6 @@ export const routeConfig = {
   themaPage: {
     path: '/buurt',
     documentTitle: `${themaTitle} | Mijn Amsterdam`,
+    trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;

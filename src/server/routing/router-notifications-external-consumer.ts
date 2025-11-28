@@ -5,8 +5,12 @@ import { ExternalConsumerEndpoints } from './bff-routes';
 import { apiKeyVerificationHandler } from './route-handlers';
 import { createBFFRouter, generateFullApiUrlBFF } from './route-helpers';
 import { IS_PRODUCTION } from '../../universal/config/env';
+import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { apiErrorResult, apiSuccessResult } from '../../universal/helpers/api';
-import { RETURNTO_NOTIFICATIES_CONSUMER_ID } from '../auth/auth-config';
+import {
+  RETURNTO_AMSAPP_NOTIFICATIES_APP_LANDING,
+  RETURNTO_NOTIFICATIES_CONSUMER_ID,
+} from '../auth/auth-config';
 import { getAuth } from '../auth/auth-helpers';
 import { authRoutes } from '../auth/auth-routes';
 import { AuthProfileAndToken } from '../auth/auth-types';
@@ -30,16 +34,26 @@ const AMSAPP_NOTIFICATIONS_DEEP_LINK = `${AMSAPP_PROTOCOl}notifications`;
 // ==============================
 export const routerPublic = createBFFRouter({
   id: 'external-consumer-public-notifications',
+  isEnabled: FeatureToggle.amsNotificationsIsActive,
 });
 
 routerPublic.get(
   ExternalConsumerEndpoints.public.NOTIFICATIONS_LOGIN,
   async (req: Request<{ consumerId: string }>, res: Response) => {
     return res.redirect(
-      authRoutes.AUTH_LOGIN_DIGID +
-        `?returnTo=${RETURNTO_NOTIFICATIES_CONSUMER_ID}&consumerId=${req.params.consumerId}`
+      generateFullApiUrlBFF(authRoutes.AUTH_LOGIN_DIGID, [
+        {
+          returnTo: RETURNTO_NOTIFICATIES_CONSUMER_ID,
+          consumerId: req.params.consumerId,
+        },
+      ])
     );
   }
+);
+
+routerPublic.get(
+  ExternalConsumerEndpoints.public.NOTIFICATIONS_APP,
+  sendAppLandingResponse
 );
 
 routerPublic.get(
@@ -61,6 +75,7 @@ routerPublic.delete(
 // ======================
 export const routerPrivate = createBFFRouter({
   id: 'external-consumer-private-notifications',
+  isEnabled: FeatureToggle.amsNotificationsIsActive,
 });
 
 // This route will never be enabled in production
@@ -112,11 +127,9 @@ type RenderProps = {
 
 const maFrontendUrl = getFromEnv('MA_FRONTEND_URL')!;
 const nonce = getFromEnv('BFF_AMSAPP_NONCE')!;
-const logoutUrl = `${generateFullApiUrlBFF(
-  authRoutes.AUTH_LOGOUT_DIGID,
-  {},
-  getFromEnv('BFF_OIDC_BASE_URL')
-)}?returnTo=${AMSAPP_NOTIFICATIONS_DEEP_LINK}`;
+const logoutUrl = generateFullApiUrlBFF(authRoutes.AUTH_LOGOUT_DIGID, [
+  { returnTo: RETURNTO_AMSAPP_NOTIFICATIES_APP_LANDING },
+]);
 
 const baseRenderProps = {
   nonce,
@@ -157,6 +170,14 @@ async function sendConsumerIdStatusResponse(
     return res.send(apiErrorResult('Not Found', null, HttpStatusCode.NotFound));
   }
   return res.send(apiSuccessResult(status));
+}
+
+function sendAppLandingResponse(_req: Request, res: Response) {
+  const renderProps: RenderProps = {
+    ...baseRenderProps,
+    promptOpenApp: true,
+  };
+  return res.render('amsapp-open-app', renderProps);
 }
 
 async function sendConsumerIdResponse(

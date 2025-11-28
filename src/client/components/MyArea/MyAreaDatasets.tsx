@@ -43,8 +43,8 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
     []
   );
   const [clusterFeatures, setClusterFeatures] = useState<MaPointFeature[]>([]);
-  const [, setFilterSelection] = useDatasetFilterSelection();
-  const [loadingFeature, setLoadingFeature] = useLoadingFeature();
+  const { setFilterSelection } = useDatasetFilterSelection();
+  const { loadingFeature, setLoadingFeature } = useLoadingFeature();
 
   const [errorResults, setErrorResults] = useState<
     Array<{ id: string; message: string }>
@@ -62,9 +62,10 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
 
   const search = location.search;
   const fetchFeatures = useFetchFeatures();
-  const [activeDatasetIdsState, setActiveDatasetIds] = useActiveDatasetIds();
-  const [activeFilters, setActiveFilterSelection] = useActiveDatasetFilters();
-  const activeDatasetIds = datasetIds || activeDatasetIdsState;
+  const { activeDatasetIds: activeDatasetIds_, setActiveDatasetIds } =
+    useActiveDatasetIds();
+  const { activeDatasetFilters, setActiveFilters } = useActiveDatasetFilters();
+  const activeDatasetIds = datasetIds || activeDatasetIds_;
 
   // Align URL and state. Takes URL as primary source of truth.
   useEffect(() => {
@@ -81,7 +82,9 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
         ? queryConfig?.datasetIds
         : activeDatasetIds;
 
-    const filters = queryConfig?.s ? activeFilters : queryConfig?.filters || {};
+    const filters = queryConfig?.s
+      ? activeDatasetFilters
+      : queryConfig?.filters || {};
 
     const activeFeature = queryConfig?.s
       ? loadingFeature
@@ -91,8 +94,8 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
       setActiveDatasetIds(datasetIds);
     }
 
-    if (!isEqual(filters, activeFilters)) {
-      setActiveFilterSelection(filters);
+    if (!isEqual(filters, activeDatasetFilters)) {
+      setActiveFilters(filters);
     }
 
     if (!isEqual(activeFeature, loadingFeature)) {
@@ -123,7 +126,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
       params.set('bbox', JSON.stringify(bbox));
     }
 
-    // Set the s parameter to indicate the url was constructed. s=1 means the atomState instead of the url is leading in setting the map state.
+    // Set the s parameter to indicate the url was constructed. s=1 means the zustand instead of the url is leading in setting the map state.
     params.set('s', '1');
 
     // Quick escape when url is already correct.
@@ -134,7 +137,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
     const url = `${routeConfig.themaPage.path}?${params}`;
 
     navigate(url);
-  }, [search, activeDatasetIds, activeFilters, loadingFeature]);
+  }, [search, activeDatasetIds, activeDatasetFilters, loadingFeature]);
 
   const fetch = useCallback(
     async (
@@ -194,7 +197,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   const onUpdate = useCallback(
     (event: LeafletEvent) => {
       setFeaturesLoadingDebounced(true);
-      fetchDebounced(activeDatasetIds, activeFilters);
+      fetchDebounced(activeDatasetIds, activeDatasetFilters);
       reflectMapViewUrl(event.target);
     },
     [
@@ -202,7 +205,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
       fetchDebounced,
       setFeaturesLoadingDebounced,
       activeDatasetIds,
-      activeFilters,
+      activeDatasetFilters,
     ]
   );
 
@@ -218,7 +221,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   useEffect(() => {
     if (activeDatasetIds.length) {
       setFeaturesLoadingDebounced(true);
-      fetchDebounced(activeDatasetIds, activeFilters);
+      fetchDebounced(activeDatasetIds, activeDatasetFilters);
     } else {
       // Setting the state to empty arrays results in the removal of markers from the map.
       setClusterFeatures([]);
@@ -231,7 +234,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
     setPolylineFeatures,
     setErrorResults,
     activeDatasetIds,
-    activeFilters,
+    activeDatasetFilters,
     setFeaturesLoadingDebounced,
   ]);
 

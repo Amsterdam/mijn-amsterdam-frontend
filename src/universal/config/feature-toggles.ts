@@ -1,20 +1,10 @@
-import { IS_ACCEPTANCE, IS_OT, IS_PRODUCTION, IS_TEST } from './env';
+import { IS_OT, IS_PRODUCTION, IS_TEST } from './env';
 
 /**
  * @deprecated
  * Use the new thema config in the client instead.
  */
 export const FeatureToggle = {
-  // AFIS
-  afisActive: true,
-  afisEmandatesActive: false,
-  afisBusinesspartnerPhoneActive: false,
-  // We don't filter out the undownloadable facturen for testing purposes.
-  // We want to be able to test immediately and not wait until the evening.
-  afisFilterOutUndownloadableFacturenActive: IS_OT || IS_PRODUCTION,
-  // See also MIJN-10042: Bug where migrated documents "$year < 2025" do not have PDF downloads available.
-  afisMigratedFacturenDownloadActive: !IS_PRODUCTION,
-
   // AVG (Smile)
   avgActive: true,
   // Klachten (Smile)
@@ -25,9 +15,6 @@ export const FeatureToggle = {
 
   // Bezwaren  / Octopus
   bezwarenActive: true,
-
-  // Loodmetingen
-  bodemActive: true,
 
   // Database
   dbSessionsEnabled: true,
@@ -88,9 +75,6 @@ export const FeatureToggle = {
   // B&B Downloads actief
   bbDocumentDownloadsActive: true,
 
-  //Varen (komt uit Decos)
-  varenActive: !IS_PRODUCTION,
-
   vergunningenActive: true,
   decosServiceActive: true,
 
@@ -105,7 +89,7 @@ export const FeatureToggle = {
   amsNotificationsIsActive: !IS_PRODUCTION,
 
   // Cobrowse widget
-  cobrowseIsActive: IS_TEST || IS_ACCEPTANCE,
+  cobrowseIsActive: true,
 
   // Mijn Woning met vve zaak informatie
   vveIsActive: IS_TEST || IS_OT,

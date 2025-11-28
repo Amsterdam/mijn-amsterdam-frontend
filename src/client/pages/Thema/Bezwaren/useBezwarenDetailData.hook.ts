@@ -1,19 +1,15 @@
 import { useParams } from 'react-router';
-import useSWR from 'swr';
 
 import { useBezwarenThemaData } from './useBezwarenThemaData.hook';
 import { BezwaarDetail } from '../../../../server/services/bezwaren/bezwaren';
-import { FIFTEEN_MINUTES_MS } from '../../../../universal/config/app';
-import {
-  ApiSuccessResponse,
-  hasFailedDependency,
-  isError,
-} from '../../../../universal/helpers/api';
+import { hasFailedDependency } from '../../../../universal/helpers/api';
 import { uniqueArray } from '../../../../universal/helpers/utils';
+import { useBffApi } from '../../../hooks/api/useBffApi';
 
 export function useBezwarenDetailData() {
   const {
     bezwaren,
+    themaId,
     routeConfig,
     isError: isErrorThemaData,
     isLoading: isLoadingThemaData,
@@ -23,21 +19,10 @@ export function useBezwarenDetailData() {
 
   const bezwaar = bezwaren.find((b) => b.uuid === uuid) ?? null;
 
-  const {
-    data: bezwaarDetailResponse,
-    isLoading,
-    error,
-  } = useSWR<ApiSuccessResponse<BezwaarDetail>>(
-    bezwaar?.fetchUrl,
-    (url: string) =>
-      fetch(url, { credentials: 'include' }).then((response) =>
-        response.json()
-      ),
+  const url = bezwaar?.fetchUrl;
+  const { data, isLoading, isError } = useBffApi<BezwaarDetail>(url);
+  const bezwaarDetail = data?.content ?? null;
 
-    { dedupingInterval: FIFTEEN_MINUTES_MS }
-  );
-
-  const bezwaarDetail = bezwaarDetailResponse?.content;
   const documents = bezwaarDetail?.documents ?? [];
   const statussen = bezwaarDetail?.statussen ?? [];
 
@@ -45,7 +30,12 @@ export function useBezwarenDetailData() {
     documents.map((d) => d.dossiertype).filter(Boolean)
   ).sort();
 
+  const hasFailedDependencies =
+    hasFailedDependency(data, 'documents') ||
+    hasFailedDependency(data, 'statussen');
+
   return {
+    themaId,
     title: bezwaar?.identificatie ?? 'Bezwaar',
     routeConfig,
     bezwaar,
@@ -56,15 +46,14 @@ export function useBezwarenDetailData() {
     isLoading,
     isLoadingThemaData,
     isErrorThemaData,
-    isError:
-      !!error ||
-      (bezwaarDetailResponse ? isError(bezwaarDetailResponse) : false),
-    dependencyErrors: bezwaarDetailResponse
-      ? {
-          Documenten: hasFailedDependency(bezwaarDetailResponse, 'documents'),
-          Statussen: hasFailedDependency(bezwaarDetailResponse, 'statussen'),
-        }
-      : null,
+    isError: isError || isErrorThemaData || hasFailedDependencies,
+    dependencyErrors:
+      hasFailedDependencies
+        ? {
+            Documenten: hasFailedDependency(data, 'documents'),
+            Statussen: hasFailedDependency(data, 'statussen'),
+          }
+        : null,
     breadcrumbs,
   };
 }

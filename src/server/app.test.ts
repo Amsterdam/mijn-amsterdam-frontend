@@ -29,19 +29,26 @@ describe('app', async () => {
     const appModule = await import('./app');
     const app = appModule.forTesting.app;
     expect(
-      app._router.stack.some((layer: ILayer) =>
+      app.router.stack.some((layer: ILayer) =>
         'BFF_ID' in layer.handle ? layer.handle.BFF_ID === 'router-dev' : false
       )
     ).toBe(true);
     expect(
-      app._router.stack.some((layer: ILayer) =>
+      app.router.stack.some((layer: ILayer) =>
         'BFF_ID' in layer.handle ? layer.handle.BFF_ID === 'router-oidc' : false
       )
     ).toBe(false);
     expect(
-      app._router.stack.some((layer: ILayer) =>
+      app.router.stack.some((layer: ILayer) =>
         'BFF_ID' in layer.handle
           ? layer.handle.BFF_ID === 'router-protected'
+          : false
+      )
+    ).toBe(true);
+    expect(
+      app.router.stack.some((layer: ILayer) =>
+        'BFF_ID' in layer.handle
+          ? layer.handle.BFF_ID === 'router-private-network'
           : false
       )
     ).toBe(true);
@@ -55,19 +62,26 @@ describe('app', async () => {
     const app = appModule.forTesting.app;
 
     expect(
-      app._router.stack.some((layer: ILayer) =>
+      app.router.stack.some((layer: ILayer) =>
         'BFF_ID' in layer.handle ? layer.handle.BFF_ID === 'router-dev' : false
       )
     ).toBe(false);
     expect(
-      app._router.stack.some((layer: ILayer) =>
+      app.router.stack.some((layer: ILayer) =>
         'BFF_ID' in layer.handle ? layer.handle.BFF_ID === 'router-oidc' : false
       )
     ).toBe(true);
     expect(
-      app._router.stack.some((layer: ILayer) =>
+      app.router.stack.some((layer: ILayer) =>
         'BFF_ID' in layer.handle
           ? layer.handle.BFF_ID === 'router-protected'
+          : false
+      )
+    ).toBe(true);
+    expect(
+      app.router.stack.some((layer: ILayer) =>
+        'BFF_ID' in layer.handle
+          ? layer.handle.BFF_ID === 'router-private-network'
           : false
       )
     ).toBe(true);
@@ -76,7 +90,7 @@ describe('app', async () => {
   test('Router protected', async () => {
     const appModule = await import('./app');
     const app = appModule.forTesting.app;
-    const routerProtected = app._router.stack.find((layer: ILayer) => {
+    const routerProtected = app.router.stack.find((layer: ILayer) => {
       return (
         'BFF_ID' in layer.handle && layer.handle.BFF_ID === 'router-protected'
       );
@@ -85,12 +99,12 @@ describe('app', async () => {
     expect(routerProtected).toBeTruthy();
 
     expect(
-      routerProtected.handle.stack.some(
-        (x: object) => 'name' in x && x.name === 'isAuthenticated'
+      app.router.stack.some(
+        (x: object) => 'name' in x && x.name === 'handleIsAuthenticated'
       )
     ).toBe(true);
     expect(
-      routerProtected.handle.stack.some(
+      app.router.stack.some(
         (x: object) => 'name' in x && x.name === 'handleCheckProtectedRoute'
       )
     ).toBe(true);

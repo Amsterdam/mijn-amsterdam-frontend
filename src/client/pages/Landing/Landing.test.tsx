@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 
 import { LandingPage } from './Landing';
 import { bffApi } from '../../../testing/utils';
-import { SessionState, sessionAtom } from '../../hooks/api/useSessionApi';
+import { SessionState } from '../../hooks/api/useSessionApi';
 import MockApp from '../MockApp';
 
 const appState = { isAuthenticated: false } as SessionState;
@@ -19,7 +19,7 @@ describe('<Landing />', () => {
         routeEntry="/"
         routePath="/"
         component={LandingPage}
-        initializeState={(snapshot) => snapshot.set(sessionAtom, appState)}
+        state={appState}
       />
     );
     expect(asFragment()).toMatchSnapshot();

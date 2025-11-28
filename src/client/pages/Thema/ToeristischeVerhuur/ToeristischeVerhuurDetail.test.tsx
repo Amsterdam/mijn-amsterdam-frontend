@@ -1,15 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router';
-import { MutableSnapshot } from 'recoil';
 import { describe, expect } from 'vitest';
 
 import { routeConfig } from './ToeristischeVerhuur-thema-config';
 import { ToeristischeVerhuurDetail } from './ToeristischeVerhuurDetail';
+import { BBVergunningFrontend } from '../../../../server/services/toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types';
 import { VakantieverhuurVergunningFrontend } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
-import { BBVergunningFrontend } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import { bffApi } from '../../../../testing/utils';
 import { AppState } from '../../../../universal/types/App.types';
-import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
 const vakantieverhuurVergunningen: VakantieverhuurVergunningFrontend[] = [
@@ -27,6 +25,7 @@ const vakantieverhuurVergunningen: VakantieverhuurVergunningFrontend[] = [
     dateEndFormatted: '22 augustus 2023',
     decision: 'Verleend',
     identifier: 'Z/123/000007',
+    isVerleend: true,
     steps: [
       {
         id: 'step-1',
@@ -138,14 +137,6 @@ const testState = {
   },
 } as unknown as AppState;
 
-function state(state: AppState) {
-  function initializeState(snapshot: MutableSnapshot) {
-    snapshot.set(appStateAtom, state);
-  }
-
-  return initializeState;
-}
-
 describe('<ToeristischVerhuurDetail />', () => {
   test('Vakantieverhuur vergunning', () => {
     bffApi
@@ -165,7 +156,7 @@ describe('<ToeristischVerhuurDetail />', () => {
           routeEntry={routeEntry}
           routePath={routePath}
           component={ToeristischeVerhuurDetail}
-          initializeState={state(testState)}
+          state={testState}
         />
       );
     }
@@ -197,7 +188,7 @@ describe('<ToeristischVerhuurDetail />', () => {
           routeEntry={routeEntry}
           routePath={routePath}
           component={ToeristischeVerhuurDetail}
-          initializeState={state(testState)}
+          state={testState}
         />
       );
     }

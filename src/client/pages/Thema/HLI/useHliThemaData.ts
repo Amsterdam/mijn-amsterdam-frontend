@@ -5,6 +5,7 @@ import {
   listPageParamKind,
   listPageTitle,
   routeConfig,
+  specificatieTableConfig,
   tableConfig,
   themaId,
 } from './HLI-thema-config';
@@ -16,7 +17,8 @@ import {
   isLoading,
 } from '../../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
-import { useAppStateGetter } from '../../../hooks/useAppState';
+import { useAddDocumentLinkComponents } from '../../../data-transform/useAddDocumentLinks';
+import { useAppStateGetter } from '../../../hooks/useAppStateStore';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 
 export function useHliThemaData() {
@@ -28,6 +30,10 @@ export function useHliThemaData() {
     'title',
     true
   );
+  const specificaties = useAddDocumentLinkComponents(
+    HLI.content?.specificaties ?? []
+  );
+
   const breadcrumbs = useThemaBreadcrumbs(themaId);
   const hasRegelingen = !!regelingen.length;
   const title = getThemaTitle(hasStadspas, hasRegelingen);
@@ -53,12 +59,15 @@ export function useHliThemaData() {
     stadspassen,
     dateExpiryFormatted: HLI.content?.stadspas?.dateExpiryFormatted ?? null,
     regelingen,
+    specificaties,
+    themaId,
     title,
     hasKindtegoed,
     isLoading: isLoading(HLI),
     isError: isError(HLI, false),
     dependencyError,
     tableConfig,
+    specificatieTableConfig,
     listPageTitle,
     listPageParamKind,
     linkListItems: hasKindtegoed

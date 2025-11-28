@@ -1,18 +1,24 @@
 import MockDate from 'mockdate';
 import { Mock } from 'vitest';
 
-import { forTesting } from './hli';
+import {
+  forTesting,
+  getDocumentsFrontend,
+  transformRegelingForFrontend,
+} from './hli';
 import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import { getAuthProfileAndToken } from '../../../testing/utils';
 import {
   apiSuccessResult,
   apiErrorResult,
 } from '../../../universal/helpers/api';
+import * as document from '../../../universal/helpers/document';
 import {
   GenericDocument,
   StatusLineItem,
 } from '../../../universal/types/App.types';
 import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types';
+import { RTM_SPECIFICATIE_TITLE } from './rtm/regeling-rtm';
 
 vi.mock('./hli-zorgned-service', () => ({
   fetchZorgnedAanvragenHLI: vi.fn(),
@@ -122,7 +128,7 @@ describe('HLI', () => {
   test('fetchRegelingen', async () => {
     const authProfileAndToken = getAuthProfileAndToken('private');
 
-    (fetchZorgnedAanvragenHLI as unknown as Mock).mockResolvedValue(
+    (fetchZorgnedAanvragenHLI as unknown as Mock).mockResolvedValueOnce(
       apiSuccessResult([])
     );
 
@@ -130,11 +136,63 @@ describe('HLI', () => {
     expect(result.status).toBe('OK');
     expect(result.content).toEqual([]);
 
-    (fetchZorgnedAanvragenHLI as unknown as Mock).mockResolvedValue(
+    (fetchZorgnedAanvragenHLI as unknown as Mock).mockResolvedValueOnce(
       apiErrorResult('Error fetching aanvragen', null)
     );
 
     const resultError = await forTesting.fetchRegelingen(authProfileAndToken);
+    expect(resultError.status).toBe('ERROR');
+  });
+
+  test('fetchSpecificaties: filters out the correct specificatie documents', async () => {
+    const authProfileAndToken = getAuthProfileAndToken('private');
+
+    (fetchZorgnedAanvragenHLI as unknown as Mock).mockResolvedValueOnce(
+      apiSuccessResult([
+        {
+          titel: 'PC Vergoeding',
+          documenten: [
+            {
+              title: 'PC Vergoeding Specificatie',
+              datePublished: '2024-11-20T18:27:42.367',
+            },
+          ],
+        },
+        {
+          titel: 'Regeling Tegemoetkoming Meerkosten',
+          documenten: [
+            {
+              title: 'AV-RTM Non-Specificatie',
+              datePublished: '2024-11-20T18:27:42.367',
+            },
+            {
+              title: RTM_SPECIFICATIE_TITLE,
+              datePublished: '2024-11-20T18:27:42.367',
+            },
+          ],
+        },
+      ])
+    );
+
+    const result = await forTesting.fetchRTMSpecificaties(authProfileAndToken);
+    expect(result.status).toBe('OK');
+    expect(result.content).toStrictEqual([
+      {
+        category: 'Regeling Tegemoetkoming Meerkosten',
+        datePublished: '2024-11-20T18:27:42.367',
+        datePublishedFormatted: '20 november 2024',
+        id: 'test-encrypted-id',
+        title: RTM_SPECIFICATIE_TITLE,
+        url: 'http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id',
+      },
+    ]);
+
+    (fetchZorgnedAanvragenHLI as unknown as Mock).mockResolvedValueOnce(
+      apiErrorResult('Error fetching aanvragen', null)
+    );
+
+    const resultError =
+      await forTesting.fetchRTMSpecificaties(authProfileAndToken);
     expect(resultError.status).toBe('ERROR');
   });
 
@@ -155,11 +213,11 @@ describe('HLI', () => {
       },
     ];
 
-    const result = forTesting.getDocumentsFrontend(sessionID, documents);
+    const result = getDocumentsFrontend(sessionID, documents);
     expect(result).toHaveLength(2);
     expect(result[0].id).toBe('test-encrypted-id');
     expect(result[0].url).toContain(
-      'http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document/test-encrypted-id'
+      'http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document?id=test-encrypted-id'
     );
   });
 
@@ -167,6 +225,7 @@ describe('HLI', () => {
     const sessionID = 'test-session-id';
     const aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed = {
       id: 'aanvraag1',
+      prettyID: '11231231',
       titel: 'Test Aanvraag',
       isActueel: true,
       datumBesluit: '2023-01-01',
@@ -193,6 +252,10 @@ describe('HLI', () => {
       leverancier: '',
       leveringsVorm: '',
       productsoortCode: '',
+      bsnAanvrager: '123456789',
+      beschiktProductIdentificatie: 'bpi-123',
+      procesAanvraagOmschrijving: null,
+      beschikkingNummer: null,
     };
 
     const statusLineItems: StatusLineItem[] = [
@@ -205,12 +268,12 @@ describe('HLI', () => {
       },
     ];
 
-    const result = await forTesting.transformRegelingForFrontend(
+    const result = transformRegelingForFrontend(
       sessionID,
       aanvraag,
       statusLineItems
     );
-    expect(result.id).toBe('aanvraag1');
+    expect(result.id).toBe('11231231');
     expect(result.title).toBe('Test Aanvraag');
     expect(result.displayStatus).toBe('Toegewezen');
   });
@@ -220,12 +283,15 @@ describe('HLI', () => {
     const aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[] = [
       {
         id: 'aanvraag1',
+        prettyID: '11231231',
+        beschikkingNummer: null,
         titel: 'Test Aanvraag',
         isActueel: true,
         datumBesluit: '2023-01-01',
         datumIngangGeldigheid: '2023-01-01',
         datumEindeGeldigheid: '2023-12-31',
         resultaat: 'toegewezen',
+        procesAanvraagOmschrijving: null,
         documenten: [],
         betrokkenPersonen: [
           {
@@ -247,24 +313,32 @@ describe('HLI', () => {
         leveringsVorm: '',
         productsoortCode: '',
         productIdentificatie: 'AV-UPCC',
+        bsnAanvrager: '123456789',
+        beschiktProductIdentificatie: 'bpi-123',
       },
     ];
     const today = new Date();
     test('With productIdentificatie', async () => {
-      const result = await forTesting.transformRegelingenForFrontend(
-        authProfileAndToken,
+      vi.spyOn(document, 'dedupeDocumentsInDataSets');
+      const profile = authProfileAndToken.profile;
+      const result = forTesting.transformRegelingenForFrontend(
+        profile.sid,
+        { bsn: profile.id },
         aanvragen,
         today
       );
+      expect(document.dedupeDocumentsInDataSets).toHaveBeenCalled();
       expect(result).toHaveLength(1);
-      expect(result[0].id).toBe('aanvraag1');
+      expect(result[0].id).toBe('11231231');
       expect(result[0].title).toBe('Test Aanvraag');
     });
 
     test('Without productIdentificatie', async () => {
       const aanvragen2 = [{ ...aanvragen[0], productIdentificatie: '' }];
-      const result = await forTesting.transformRegelingenForFrontend(
-        authProfileAndToken,
+      const profile = authProfileAndToken.profile;
+      const result = forTesting.transformRegelingenForFrontend(
+        profile.sid,
+        { bsn: profile.id },
         aanvragen2,
         today
       );
@@ -291,6 +365,7 @@ describe('HLI', () => {
         resultaat: 'toegewezen',
         isActueel: true,
         id: '1',
+        prettyID: '1',
         betrokkenen: [],
         datumAanvraag: '',
         datumBeginLevering: null,
@@ -301,6 +376,10 @@ describe('HLI', () => {
         leverancier: '',
         leveringsVorm: '',
         productsoortCode: '',
+        bsnAanvrager: '123456789',
+        beschiktProductIdentificatie: 'bpi-123',
+        procesAanvraagOmschrijving: null,
+        beschikkingNummer: null,
       };
 
       const result = forTesting.transformRegelingTitle(aanvraag);
@@ -317,6 +396,7 @@ describe('HLI', () => {
         resultaat: 'toegewezen',
         isActueel: true,
         id: '2',
+        prettyID: '2',
         betrokkenen: [],
         datumAanvraag: '',
         datumBeginLevering: null,
@@ -327,6 +407,10 @@ describe('HLI', () => {
         leverancier: '',
         leveringsVorm: '',
         productsoortCode: '',
+        bsnAanvrager: '123456789',
+        beschiktProductIdentificatie: 'bpi-123',
+        procesAanvraagOmschrijving: null,
+        beschikkingNummer: null,
       };
 
       const result = forTesting.transformRegelingTitle(aanvraag);
@@ -343,6 +427,7 @@ describe('HLI', () => {
         resultaat: 'toegewezen',
         isActueel: true,
         id: '3',
+        prettyID: '3',
         betrokkenen: [],
         datumAanvraag: '',
         datumBeginLevering: null,
@@ -353,6 +438,10 @@ describe('HLI', () => {
         leverancier: '',
         leveringsVorm: '',
         productsoortCode: '',
+        bsnAanvrager: '123456789',
+        beschiktProductIdentificatie: 'bpi-123',
+        procesAanvraagOmschrijving: null,
+        beschikkingNummer: null,
       };
 
       const result = forTesting.transformRegelingTitle(aanvraag);
@@ -369,6 +458,7 @@ describe('HLI', () => {
         resultaat: 'toegewezen',
         isActueel: true,
         id: '4',
+        prettyID: '4',
         betrokkenen: [],
         datumAanvraag: '',
         datumBeginLevering: null,
@@ -379,6 +469,10 @@ describe('HLI', () => {
         leverancier: '',
         leveringsVorm: '',
         productsoortCode: '',
+        bsnAanvrager: '123456789',
+        beschiktProductIdentificatie: 'bpi-123',
+        procesAanvraagOmschrijving: null,
+        beschikkingNummer: null,
       };
 
       const result = forTesting.transformRegelingTitle(aanvraag);
@@ -395,6 +489,7 @@ describe('HLI', () => {
         resultaat: 'afgewezen',
         isActueel: true,
         id: '4',
+        prettyID: '4',
         betrokkenen: [],
         datumAanvraag: '',
         datumBeginLevering: null,
@@ -405,6 +500,10 @@ describe('HLI', () => {
         leverancier: '',
         leveringsVorm: '',
         productsoortCode: '',
+        bsnAanvrager: '123456789',
+        beschiktProductIdentificatie: 'bpi-123',
+        procesAanvraagOmschrijving: null,
+        beschikkingNummer: null,
       };
 
       const result = forTesting.transformRegelingTitle(aanvraag);

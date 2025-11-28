@@ -7,8 +7,7 @@ import ERFPACHT_ERFPACHTER from '../../../../mocks/fixtures/erfpacht-v2-erfpacht
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
-describe('simple-connect/erfpacht', () => {
-  const REQUEST_ID = 'test-x-789';
+describe('erfpacht', () => {
   const authProfileAndToken: AuthProfileAndToken = getAuthProfileAndToken();
 
   test('fetchErfpacht: null', async () => {

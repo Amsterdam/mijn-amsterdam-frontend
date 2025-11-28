@@ -32,8 +32,14 @@ function JeugdDetailContent({ voorziening }: ContentProps) {
 }
 
 export function JeugdDetail() {
-  const { voorzieningen, isError, isLoading, breadcrumbs, routeConfig } =
-    useJeugdThemaData();
+  const {
+    voorzieningen,
+    id: themaId,
+    isError,
+    isLoading,
+    breadcrumbs,
+    routeConfig,
+  } = useJeugdThemaData();
   useHTMLDocumentTitle(routeConfig.detailPage);
   const { id } = useParams<{
     id: LeerlingenvervoerVoorzieningFrontend['id'];
@@ -42,6 +48,7 @@ export function JeugdDetail() {
 
   return (
     <ThemaDetailPagina<LeerlingenvervoerVoorzieningFrontend>
+      themaId={themaId}
       title={voorziening?.title ?? 'Voorziening'}
       zaak={voorziening}
       isError={isError}

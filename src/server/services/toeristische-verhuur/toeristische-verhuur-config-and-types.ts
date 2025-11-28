@@ -1,4 +1,4 @@
-import { BBVergunningFrontend } from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
+import { BBVergunningFrontend } from './bed-and-breakfast/bed-and-breakfast-types';
 import {
   SELECT_FIELDS_TRANSFORM_BASE,
   dateEnd,
@@ -18,8 +18,6 @@ export const caseTypeToeristischeVerhuur = {
 } as const;
 
 type CaseTypeToeristischeVerhuurKey = keyof typeof caseTypeToeristischeVerhuur;
-export type CaseTypeToeristischeVerhuur =
-  (typeof caseTypeToeristischeVerhuur)[CaseTypeToeristischeVerhuurKey];
 export type GetCaseType<T extends CaseTypeToeristischeVerhuurKey> =
   (typeof caseTypeToeristischeVerhuur)[T];
 
@@ -78,6 +76,7 @@ export type ToeristischeVerhuur = {
 export const VakantieverhuurVergunningaanvraag: DecosZaakTransformer<DecosVakantieverhuurVergunningaanvraag> =
   {
     isActive: true,
+    itemType: 'folders',
     caseType: caseTypeToeristischeVerhuur.VakantieverhuurVergunningaanvraag,
     title: 'Vergunning vakantieverhuur',
     transformFields: {
@@ -111,5 +110,3 @@ export const decosZaakTransformersByCaseType = {
   [VakantieverhuurVergunningaanvraag.caseType]:
     VakantieverhuurVergunningaanvraag,
 };
-
-export const POWERBROWSER_ZAAK_PRODUCT_ID_BB_VERGUNNING = 'Bed en breakfast';

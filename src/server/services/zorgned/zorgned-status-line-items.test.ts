@@ -3,6 +3,7 @@ import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemsConfig,
   ZorgnedStatusLineItemTransformerConfig,
+  type BeschikkingsResultaat,
 } from './zorgned-types';
 import { logger } from '../../logging';
 
@@ -26,12 +27,18 @@ const transformerConfigs = [transformerConfig, transformerConfig2];
 const lineItemsConfig1: ZorgnedStatusLineItemsConfig = {
   leveringsVorm: 'FOO',
   productsoortCodes: ['BAR', 'FOO'],
-  lineItemTransformers: [transformerConfig, transformerConfig2],
+  statusLineItems: {
+    name: 'Test line items 1',
+    transformers: [transformerConfig, transformerConfig2],
+  },
 };
 
 const lineItemsConfig2: ZorgnedStatusLineItemsConfig = {
   productIdentificatie: ['BAR'],
-  lineItemTransformers: [transformerConfig2],
+  statusLineItems: {
+    name: 'Test line items 2',
+    transformers: [transformerConfig2],
+  },
   filter(aanvraag) {
     return aanvraag.betrokkenen?.includes('B');
   },
@@ -42,7 +49,10 @@ const lineItemsConfig3: ZorgnedStatusLineItemsConfig = {
   filter(aanvraag) {
     return aanvraag.betrokkenen?.includes('A');
   },
-  lineItemTransformers: [transformerConfig],
+  statusLineItems: {
+    name: 'Test line items 3',
+    transformers: [transformerConfig],
+  },
 };
 
 const lineItemConfigs = [lineItemsConfig1, lineItemsConfig2, lineItemsConfig3];
@@ -117,7 +127,7 @@ describe('zorgned-status-line-items', () => {
         []
       );
 
-      expect(lineItemTransformers).toBe(undefined);
+      expect(lineItemTransformers).toBe(null);
     });
 
     test('Get transformers: No match for productSoortCode or productIdentificatie', () => {
@@ -131,7 +141,7 @@ describe('zorgned-status-line-items', () => {
         []
       );
 
-      expect(lineItemTransformers).toBe(undefined);
+      expect(lineItemTransformers).toBe(null);
     });
   });
 
@@ -170,7 +180,7 @@ describe('zorgned-status-line-items', () => {
       test('Get line items', () => {
         expect(lineItems).toBe(null);
         expect(logSpy).toHaveBeenCalledWith(
-          `No line item formatters found for Service: WMO, leveringsVorm: NO, productsoortCode: MATCH, productIdentificatie: WORLD`
+          `No line item formatters found for Service: WMO, resultaat: undefined, leveringsVorm: NO, productsoortCode: MATCH, productIdentificatie: WORLD`
         );
       });
     });
@@ -227,7 +237,10 @@ describe('zorgned-status-line-items', () => {
         [
           {
             ...lineItemsConfig1,
-            lineItemTransformers: [transformer1, transformer2],
+            statusLineItems: {
+              name: 'Test line items 4',
+              transformers: [transformer1, transformer2],
+            },
           },
         ],
         aanvraag,
@@ -259,6 +272,48 @@ describe('zorgned-status-line-items', () => {
       test('Get line items length', () => {
         expect(lineItems?.length).toBe(1);
       });
+    });
+
+    describe('Matches line items based on result', () => {
+      const aanvraag = getAanvraagTransformed();
+
+      // @ts-ignore - Ignore possibly missing optional property for testing
+      delete aanvraag.leveringsVorm;
+
+      const transformer1 = getTransformerConfig();
+      const transformer2 = getTransformerConfig();
+
+      test.each([
+        ['afgewezen', 'afgewezen', 2],
+        ['toegewezen', 'afgewezen', undefined],
+        ['afgewezen', 'toegewezen', undefined],
+        ['toegewezen', 'toegewezen', 2],
+        [undefined, 'toegewezen', 2],
+        [undefined, 'afgewezen', 2],
+      ])(
+        'LineItemconfig resultaat: %s, aanvraag resultaat: %s',
+        (resultaatMatch, resultaatAanvraag, expectedLength) => {
+          const lineItems = getStatusLineItems(
+            'WMO',
+            [
+              {
+                resultaat: resultaatMatch as BeschikkingsResultaat,
+                statusLineItems: {
+                  name: 'Test line items 5',
+                  transformers: [transformer1, transformer2],
+                },
+              },
+            ],
+            {
+              ...aanvraag,
+              resultaat: resultaatAanvraag as BeschikkingsResultaat,
+            },
+            [],
+            new Date()
+          );
+          expect(lineItems?.length).toBe(expectedLength);
+        }
+      );
     });
   });
 });

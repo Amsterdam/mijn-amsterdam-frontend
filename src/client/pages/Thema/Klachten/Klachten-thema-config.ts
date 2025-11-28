@@ -22,10 +22,12 @@ export const routeConfig = {
   listPage: {
     path: '/klachten/lijst/:page?',
     documentTitle: `Ingediende klachten | ${themaTitle}`,
+    trackingUrl: null,
   },
   themaPage: {
     path: '/klachten',
     documentTitle: `${themaTitle} | overzicht`,
+    trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
 

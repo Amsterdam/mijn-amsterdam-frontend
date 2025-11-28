@@ -2,7 +2,7 @@ import { useParams } from 'react-router';
 
 import { routeConfig, themaId } from './Inkomen-thema-config';
 import { isError, isLoading } from '../../../../universal/helpers/api';
-import { useAppStateGetter } from '../../../hooks/useAppState';
+import { useAppStateGetter } from '../../../hooks/useAppStateStore';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 
 export function useInkomenDetailData(
@@ -16,6 +16,7 @@ export function useInkomenDetailData(
   const zaak = zaken.find((item) => item.id === id);
 
   return {
+    themaId,
     zaak,
     zaken,
     isLoading: isLoading(STATE),

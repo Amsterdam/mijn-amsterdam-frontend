@@ -12,7 +12,7 @@ import LoadingContent from '../../../components/LoadingContent/LoadingContent';
 import { AddressDisplayAndModal } from '../../../components/LocationModal/LocationModal';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
-import { useAppStateGetter } from '../../../hooks/useAppState';
+import { useAppStateGetter } from '../../../hooks/useAppStateStore';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 import { useVergunningDocumentList } from '../Vergunningen/detail-page-content/useVergunningDocumentsList.hook';
 
@@ -128,8 +128,14 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
 }
 
 export function ToeristischeVerhuurDetail() {
-  const { vergunningen, isError, isLoading, breadcrumbs, routeConfig } =
-    useToeristischeVerhuurThemaData();
+  const {
+    vergunningen,
+    id: themaId,
+    isError,
+    isLoading,
+    breadcrumbs,
+    routeConfig,
+  } = useToeristischeVerhuurThemaData();
   useHTMLDocumentTitle(routeConfig.detailPage);
 
   const { id } = useParams<{ id: string }>();
@@ -153,6 +159,7 @@ export function ToeristischeVerhuurDetail() {
 
   return (
     <ThemaDetailPagina
+      themaId={themaId}
       title={vergunning?.title ?? THEMA_DETAIL_TITLE_DEFAULT}
       zaak={vergunning}
       isError={isError}

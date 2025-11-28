@@ -33,6 +33,7 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_SECOND_MS } from '../../config/app';
 import { DataRequestConfig } from '../../config/source-api';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
+import { getFromEnv } from '../../helpers/env';
 import {
   createSessionBasedCacheKey,
   getApiConfig,
@@ -79,7 +80,7 @@ async function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
 
   const header = {
     'Content-Type': 'application/json',
-    apikey: process.env.BFF_BEZWAREN_APIKEY ?? '',
+    apikey: getFromEnv('BFF_ENABLEU_API_KEY'),
     Authorization: `Bearer ${jwt}`,
   };
 
@@ -376,7 +377,8 @@ export async function fetchBezwaren(authProfileAndToken: AuthProfileAndToken) {
   };
 
   const cacheKeyBase = createSessionBasedCacheKey(
-    authProfileAndToken.profile.sid
+    authProfileAndToken.profile.sid,
+    'bezwaren'
   );
 
   const requestConfig = getApiConfig('BEZWAREN_LIST', {
@@ -458,6 +460,7 @@ export async function fetchBezwarenNotifications(
 }
 
 export type BezwaarDetail = {
+  zaakId: BezwaarFrontend['uuid'];
   statussen: StatusLineItem[] | null;
   documents: BezwaarDocument[] | null;
 };
@@ -488,6 +491,7 @@ export async function fetchBezwaarDetail(
 
   return apiSuccessResult(
     {
+      zaakId,
       statussen: statussen.content,
       documents: documents.content,
     },
