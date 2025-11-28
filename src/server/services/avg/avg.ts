@@ -94,34 +94,36 @@ export async function enrichAvgResponse(
   avgResponse: ApiSuccessResponse<AVGResponse>
 ) {
   const avgIds = avgResponse.content.verzoeken.map((verzoek) => verzoek.id);
+  if (avgIds.length === 0) {
+    return avgResponse;
+  }
   const themasResponse = await fetchAVGRequestThemes(avgIds);
-
-  if (themasResponse.status === 'OK') {
-    const enrichedAvgRequests: AVGRequestFrontend[] = [];
-
-    for (const avgRequest of avgResponse.content.verzoeken) {
-      const themasPerVerzoek = themasResponse.content.verzoeken.filter(
-        (verzoek) => verzoek.avgVerzoekId === avgRequest.id
-      );
-
-      const enrichedAvgRequest = {
-        ...avgRequest,
-        themas: themasPerVerzoek
-          .map((theme) => theme.themaOmschrijving)
-          .filter((theme: string | null): theme is string => theme !== null)
-          .join(', '),
-      };
-
-      enrichedAvgRequests.push(enrichedAvgRequest);
-    }
-
-    return apiSuccessResult({
-      ...avgResponse.content,
-      verzoeken: enrichedAvgRequests,
-    });
+  if (themasResponse.status !== 'OK') {
+    return avgResponse;
   }
 
-  return avgResponse;
+  const enrichedAvgRequests: AVGRequestFrontend[] = [];
+
+  for (const avgRequest of avgResponse.content.verzoeken) {
+    const themasPerVerzoek = themasResponse.content.verzoeken.filter(
+      (verzoek) => verzoek.avgVerzoekId === avgRequest.id
+    );
+
+    const enrichedAvgRequest = {
+      ...avgRequest,
+      themas: themasPerVerzoek
+        .map((theme) => theme.themaOmschrijving)
+        .filter((theme: string | null): theme is string => theme !== null)
+        .join(', '),
+    };
+
+    enrichedAvgRequests.push(enrichedAvgRequest);
+  }
+
+  return apiSuccessResult({
+    ...avgResponse.content,
+    verzoeken: enrichedAvgRequests,
+  });
 }
 
 export function transformAVGResponse(data: SmileAvgResponse): AVGResponse {
