@@ -137,8 +137,14 @@ describe('source-api-request caching', () => {
       createSessionBasedCacheKey(SESSION_ID_1, 'things')
     );
 
-    expect(rs1.content?.[0]).toBe('foo');
-    expect(rs2.content?.[1]).toBe(rs1.content?.[1]);
+    const [responseValue1, encryptedSessionID1] = rs1.content ?? [];
+    const [responseValue2, encryptedSessionID2] = rs2.content ?? [];
+
+    expect(responseValue1).toBe('foo');
+    expect(responseValue2).toBe(responseValue1);
+
+    // Ah yes, the encrpted sessionID is the same as well. Caching works!
+    expect(encryptedSessionID2).toBe(encryptedSessionID1);
 
     const DO_FORCE_RENEW = true;
 
@@ -162,9 +168,15 @@ describe('source-api-request caching', () => {
       createSessionBasedCacheKey(SESSION_ID_1, 'things')
     );
 
-    expect(rs3.content?.[0]).toBe('releasefoo');
-    expect(rs4.content?.[0]).toBe(rs3.content?.[0]);
-    expect(rs5.content?.[0]).toBe('renewedfoo');
+    const [responseValue3, encryptedSessionID3] = rs3.content ?? [];
+    const [responseValue4, encryptedSessionID4] = rs4.content ?? [];
+    const [responseValue5, encryptedSessionID5] = rs5.content ?? [];
+
+    expect(responseValue3).toBe('releasefoo');
+    expect(responseValue4).toBe(responseValue3);
+    expect(encryptedSessionID4).toBe(encryptedSessionID3);
+    expect(responseValue5).toBe('renewedfoo');
+    expect(encryptedSessionID5).not.toBe(encryptedSessionID3);
   });
 
   test("Correct: Doesn't use cache with different sessionID", async () => {
