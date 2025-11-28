@@ -163,12 +163,9 @@ export async function requestData<T>(
   const cacheEntry = cache.get(cacheKey);
   const cacheTimeout = config.cacheTimeout ?? DEFAULT_REQUEST_CACHE_TTL_MS;
 
-  // Do not use cache when cache timeout is set to 0
-  // This way we can force renew the cache for this cache key.
   if (
     config.enableCache &&
     cacheEntry !== null &&
-    // Do not return cache when cache timeout is set to FORCE_RENEW_CACHE
     cacheTimeout !== FORCE_RENEW_CACHE_TTL_MS
   ) {
     debugCacheHit(`Cache hit! ${config.url}`);
