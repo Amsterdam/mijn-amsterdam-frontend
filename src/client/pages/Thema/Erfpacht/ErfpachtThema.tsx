@@ -1,6 +1,7 @@
 import { Paragraph, Link, Heading } from '@amsterdam/design-system-react';
 
 import { useErfpachtThemaData } from './useErfpachtThemaData.hook';
+import { useWonenThemaData } from '../Profile/private/useVvEThemaData.hook';
 import { ErfpachtDossierFrontend } from '../../../../server/services/erfpacht/erfpacht-types';
 import { entries } from '../../../../universal/helpers/utils';
 import { MaRouterLink } from '../../../components/MaLink/MaLink';
@@ -9,6 +10,7 @@ import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 import * as afis from '../Afis/Afis-thema-config';
+import { useAfisThemaData } from '../Afis/useAfisThemaData.hook';
 
 export function ErfpachtThema() {
   const {
@@ -21,6 +23,14 @@ export function ErfpachtThema() {
     dossiers,
     routeConfig,
   } = useErfpachtThemaData();
+
+  const wonenData = useWonenThemaData();
+  const afisData = useAfisThemaData();
+
+  const hasOpenstaandeErfpachtFacturen =
+    !!afisData.facturenByState?.open?.facturen.filter((factuur) =>
+      factuur.afzender.toLowerCase().includes('erfpacht')
+    )?.length;
 
   useHTMLDocumentTitle(routeConfig.themaPage);
 
@@ -72,6 +82,11 @@ export function ErfpachtThema() {
 
           <PageContentCell spanWide={8}>
             <MissingFacturenDescription />
+            <>
+              <Heading size="level-3" level={3}>
+                {wonenData?.wonenData?.name}
+              </Heading>
+            </>
           </PageContentCell>
         </>
       }

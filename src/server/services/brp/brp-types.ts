@@ -166,6 +166,9 @@ export type Adres = {
   begindatumVerblijf: string | null;
   begindatumVerblijfFormatted?: string | null;
   locatiebeschrijving?: string | null;
+  vveNaam?: string | null;
+  wozWaarde?: string | null;
+  aantalBewoners?: number | null;
   /** @deprecated Onderstaande gegevens worden niet meer gebruikt. */
   einddatumVerblijf?: string | null;
   /** @deprecated */
