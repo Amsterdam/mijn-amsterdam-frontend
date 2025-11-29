@@ -27,6 +27,7 @@ import {
   PanelConfig,
   ProfileSectionData,
 } from '../ProfileSectionPanel';
+
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading
  * into the Profile page data.
@@ -120,10 +121,7 @@ delete persoonSecundair.omschrijvingGeslachtsaanduiding;
 delete persoonSecundair.nationaliteiten;
 delete persoonSecundair.indicatieGeheim;
 
-const adres: ProfileLabels<
-  Partial<Adres> & { aantalBewoners: number; wozWaarde: string },
-  AppState['BRP']['content']
-> = {
+const adres: ProfileLabels<Partial<Adres>, AppState['BRP']['content']> = {
   locatiebeschrijving: 'Locatie',
   straatnaam: [
     'Straat',
@@ -134,6 +132,7 @@ const adres: ProfileLabels<
       return adres?.straatnaam ? getFullAddress(adres as Adres) : 'Onbekend';
     },
   ],
+
   woonplaatsNaam: [
     'Plaats',
     (_value, adres) => {
@@ -175,7 +174,29 @@ const adres: ProfileLabels<
       return null;
     },
   ],
-  wozWaarde: 'WOZ-waarde',
+  wozWaarde: [
+    'WOZ-waarde',
+    (value) =>
+      value ? (
+        <>
+          Te vinden op{' '}
+          <Link href={value} target="_blank">
+            WOZ-waardeloket
+          </Link>
+        </>
+      ) : (
+        'test'
+      ),
+  ],
+  vveNaam: [
+    'Vereniging van Eigenaren',
+    (value, _item, brpData) => {
+      if (brpData?.adres?.vveNaam) {
+        return brpData.adres.vveNaam;
+      }
+      return 'Onbekend';
+    },
+  ],
 };
 
 /** @deprecated */

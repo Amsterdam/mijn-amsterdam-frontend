@@ -81,11 +81,11 @@
       "post-pom-emandate-sign-request-status:standard",
       "get-pom-mandate-page:standard",
       "get-salesforce:standard",
-      "get-wonen-vve-details:standard",
       "post-powerbrowser-personen-zaken:standard",
       "post-zorgned-persoonsgegevens:standard",
       "post-zorgned-aanvragen:standard",
-      "post-zorgned-document:standard"
+      "post-zorgned-document:standard",
+      "get-zwd-vve:standard"
     ]
   },
   {
