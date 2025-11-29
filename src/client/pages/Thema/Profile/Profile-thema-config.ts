@@ -30,6 +30,11 @@ export const routeConfig = {
     documentTitle: `${themaTitle.KVK} | Mijn Amsterdam`,
     trackingUrl: null,
   },
+  detailPageVvE: {
+    path: '/persoonlijke-gegevens/vve',
+    documentTitle: `${themaTitle.BRP} | Mijn Amsterdam`,
+    trackingUrl: null,
+  },
   listPageContactmomenten: {
     path: '/contactmomenten/:page?',
     documentTitle: `Alle contactmomenten | ${themaTitle.BRP}`,
