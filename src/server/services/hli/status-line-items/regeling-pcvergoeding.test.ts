@@ -31,18 +31,14 @@ vi.mock(
         ...actual.themaConfig,
         featureToggle: {
           ...actual.themaConfig.featureToggle,
-          regelingen: {
-            ...actual.themaConfig.featureToggle.regelingen,
-            get hli2026PCVergoedingV3Enabled() {
-              return mocks.hli2026PCVergoedingV3Enabled;
-            },
+          get hli2026PCVergoedingV3Enabled() {
+            return mocks.hli2026PCVergoedingV3Enabled;
           },
         },
       },
     };
   }
 );
-
 describe('pcvergoeding', () => {
   describe('isRegelingVanVerzilvering', () => {
     describe('Historic', () => {
