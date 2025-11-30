@@ -13,7 +13,20 @@ import type {
   WithRegelingenListPage,
   WithspecificatieListPage,
   WithdetailPageStadspas,
+  ThemaFeatureToggle,
 } from '../../../config/thema-types';
+
+const isFeatureEnabled = (
+  toggle: ThemaFeatureToggle,
+  parent: string,
+  child: string
+): boolean => {
+  return (
+    (toggle.themaActive ?? true) &&
+    (toggle.parents?.[parent]?.active ?? true) &&
+    (toggle.parents?.[parent]?.children?.[child] ?? true)
+  );
+};
 
 const THEMA_TITLE = 'Stadspas en regelingen bij laag inkomen' as const;
 
@@ -26,72 +39,82 @@ export type HLIThemaConfig = ThemaConfigBase &
 export const themaConfig: HLIThemaConfig = {
   id: 'HLI' as const,
   title: THEMA_TITLE,
+
   featureToggle: {
     themaActive: true,
-    zorgnedAvApiActive: true,
-
-    stadspas: {
-      hliStadspasActive: true,
-      _hliThemaStadspasBlokkerenActive: true,
-      _hliThemaStadspasDeblokkerenActive: true,
-
-      get hliThemaStadspasBlokkerenActive() {
-        return (
-          themaConfig.featureToggle.themaActive &&
-          themaConfig.featureToggle.stadspas.hliStadspasActive &&
-          themaConfig.featureToggle.stadspas._hliThemaStadspasBlokkerenActive
-        );
+    parents: {
+      stadspas: {
+        active: true,
+        children: {
+          hliThemaStadspasBlokkerenActive: true,
+          hliThemaStadspasDeblokkerenActive: true,
+        },
       },
-
-      get hliThemaStadspasDeblokkerenActive() {
-        return (
-          themaConfig.featureToggle.themaActive &&
-          themaConfig.featureToggle.stadspas.hliStadspasActive &&
-          themaConfig.featureToggle.stadspas._hliThemaStadspasDeblokkerenActive
-        );
+      regelingen: {
+        active: true,
+        children: {
+          hliRegelingEnabledCZM: true,
+          hliRegelingEnabledRTM: !IS_PRODUCTION,
+          hli2025PCTegoedCodesEnabled: !IS_PRODUCTION,
+          hli2026PCVergoedingV3Enabled: !IS_PRODUCTION,
+        },
+      },
+      zorgned: {
+        active: true,
       },
     },
+    get hliStadspasActive() {
+      return this.parents?.stadspas?.active ?? false;
+    },
+    get hliThemaStadspasBlokkerenActive() {
+      return isFeatureEnabled(
+        this,
+        'stadspas',
+        'hliThemaStadspasBlokkerenActive'
+      );
+    },
 
-    regelingen: {
-      hliThemaRegelingenActive: true,
-      _hliRegelingEnabledCZM: true,
-      _hliRegelingEnabledRTM: !IS_PRODUCTION,
-      _hli2025PCTegoedCodesEnabled: !IS_PRODUCTION,
-      _hli2026PCVergoedingV3Enabled: !IS_PRODUCTION,
+    get hliThemaStadspasDeblokkerenActive() {
+      return isFeatureEnabled(
+        this,
+        'stadspas',
+        'hliThemaStadspasDeblokkerenActive'
+      );
+    },
 
-      get hliRegelingEnabledCZM() {
-        return (
-          themaConfig.featureToggle.themaActive &&
-          themaConfig.featureToggle.regelingen.hliThemaRegelingenActive &&
-          themaConfig.featureToggle.regelingen._hliRegelingEnabledCZM
-        );
-      },
+    get hliThemaRegelingenActive() {
+      return this.parents?.regelingen?.active ?? false;
+    },
 
-      get hliRegelingEnabledRTM() {
-        return (
-          themaConfig.featureToggle.themaActive &&
-          themaConfig.featureToggle.regelingen.hliThemaRegelingenActive &&
-          themaConfig.featureToggle.regelingen._hliRegelingEnabledRTM
-        );
-      },
+    get hliRegelingEnabledCZM() {
+      return isFeatureEnabled(this, 'regelingen', 'hliRegelingEnabledCZM');
+    },
 
-      get hli2025PCTegoedCodesEnabled() {
-        return (
-          themaConfig.featureToggle.themaActive &&
-          themaConfig.featureToggle.regelingen._hli2025PCTegoedCodesEnabled &&
-          !IS_PRODUCTION
-        );
-      },
+    get hliRegelingEnabledRTM() {
+      return isFeatureEnabled(this, 'regelingen', 'hliRegelingEnabledRTM');
+    },
 
-      get hli2026PCVergoedingV3Enabled() {
-        return (
-          themaConfig.featureToggle.themaActive &&
-          themaConfig.featureToggle.regelingen._hli2026PCVergoedingV3Enabled &&
-          !IS_PRODUCTION
-        );
-      },
+    get hli2025PCTegoedCodesEnabled() {
+      return isFeatureEnabled(
+        this,
+        'regelingen',
+        'hli2025PCTegoedCodesEnabled'
+      );
+    },
+
+    get hli2026PCVergoedingV3Enabled() {
+      return isFeatureEnabled(
+        this,
+        'regelingen',
+        'hli2026PCVergoedingV3Enabled'
+      );
+    },
+
+    get zorgnedAvApiActive() {
+      return this.parents?.zorgned?.active ?? false;
     },
   },
+
   profileTypes: ['private'],
   uitlegPageSections: {
     title: THEMA_TITLE,
@@ -187,8 +210,6 @@ const displayPropsEerdereRegelingen: DisplayProps<HLIRegelingFrontend> = {
 
 type SpecificatieDisplayProps = {
   datePublishedFormatted: ReactNode;
-  // We don't use category just yet, since we only have one type of category at the moment.
-  // This is shown in the title of the specificatie table.
   category: ReactNode;
   documentUrl: ReactNode;
 };
