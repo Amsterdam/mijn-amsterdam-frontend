@@ -30,31 +30,16 @@ export type WithRegelingenListPage = PageConfig<'regelingenListPage'>;
 export type WithspecificatieListPage = PageConfig<'specificatieListPage'>;
 export type WithdetailPageStadspas = PageConfig<'detailPageStadspas'>;
 
-type StadspasToggleGroup = {
-  hliStadspasActive: boolean;
-  _hliThemaStadspasBlokkerenActive: boolean;
-  _hliThemaStadspasDeblokkerenActive: boolean;
-  readonly hliThemaStadspasBlokkerenActive: boolean;
-  readonly hliThemaStadspasDeblokkerenActive: boolean;
-};
-
-type RegelingenToggleGroup = {
-  hliThemaRegelingenActive: boolean;
-  _hliRegelingEnabledCZM: boolean;
-  _hliRegelingEnabledRTM: boolean;
-  _hli2025PCTegoedCodesEnabled: boolean;
-  _hli2026PCVergoedingV3Enabled: boolean;
-  readonly hliRegelingEnabledCZM: boolean;
-  readonly hliRegelingEnabledRTM: boolean;
-  readonly hli2025PCTegoedCodesEnabled: boolean;
-  readonly hli2026PCVergoedingV3Enabled: boolean;
-};
-
 export type ThemaFeatureToggle = {
   themaActive: boolean;
-  stadspas: StadspasToggleGroup;
-  regelingen: RegelingenToggleGroup;
-  zorgnedAvApiActive: boolean;
+  parents?: Record<
+    string,
+    {
+      active: boolean;
+      children?: Record<string, boolean>;
+    }
+  >;
+  [key: string]: unknown;
 };
 
 type RedactedScope = 'full' | 'content' | 'none';
@@ -78,7 +63,6 @@ export interface ThemaMenuItem<ID extends string = string>
   profileTypes: ProfileType[];
   isAlwaysVisible?: boolean;
   hasAppStateValue?: boolean;
-  /** Scope 'content' automatically hides all thema content outside the thema. Content inside the thema should be manually redacted. Add the redacted class to the tag using getRedactedClass('themaId', 'content')  */
   redactedScope: 'full' | 'content' | 'none';
   title:
     | LinkProps['title']
