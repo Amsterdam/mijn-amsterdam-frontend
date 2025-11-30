@@ -374,7 +374,7 @@ function PassBlockedAlert() {
       heading="Deze pas heeft u geblokkeerd, hoe nu verder?"
       severity="warning"
       className={
-        themaConfig.featureToggle.stadspas._hliThemaStadspasDeblokkerenActive
+        themaConfig.featureToggle.hliThemaStadspasDeblokkerenActive
           ? 'ams-mb-l'
           : ''
       }
