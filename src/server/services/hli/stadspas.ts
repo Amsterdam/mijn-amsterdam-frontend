@@ -66,7 +66,7 @@ export async function fetchStadspas(
         },
       };
 
-      if (themaConfig.featureToggle.stadspas._hliThemaStadspasBlokkerenActive) {
+      if (themaConfig.featureToggle.hliThemaStadspasBlokkerenActive) {
         stadspasFrontend.blockPassURL = generateFullApiUrlBFF(
           BffEndpoints.STADSPAS_BLOCK_PASS,
           {
@@ -75,9 +75,7 @@ export async function fetchStadspas(
         );
       }
 
-      if (
-        themaConfig.featureToggle.stadspas._hliThemaStadspasDeblokkerenActive
-      ) {
+      if (themaConfig.featureToggle.hliThemaStadspasDeblokkerenActive) {
         stadspasFrontend.unblockPassURL = generateFullApiUrlBFF(
           BffEndpoints.STADSPAS_UNBLOCK_PASS,
           { transactionsKeyEncrypted }
