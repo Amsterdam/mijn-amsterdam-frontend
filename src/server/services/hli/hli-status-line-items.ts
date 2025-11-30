@@ -30,7 +30,7 @@ export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<
   {
     productIdentificatie: [AV_RTM_DEEL1, AV_RTM_DEEL2],
     statusLineItems: { name: 'RTM', transformers: RTM },
-    isDisabled: !themaConfig.featureToggle.regelingen.hliRegelingEnabledRTM,
+    isDisabled: !themaConfig.featureToggle.hliRegelingEnabledRTM,
   },
   {
     productIdentificatie: ['AV-GOV', 'AV-OVM', 'AV-RTM'],
@@ -50,6 +50,6 @@ export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<
   {
     productIdentificatie: [AV_CZM],
     statusLineItems: { name: 'REGELING_CZM', transformers: REGELING_CZM },
-    isDisabled: !themaConfig.featureToggle.regelingen.hliRegelingEnabledCZM,
+    isDisabled: !themaConfig.featureToggle.hliRegelingEnabledCZM,
   },
 ];

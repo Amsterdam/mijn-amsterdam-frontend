@@ -226,7 +226,7 @@ async function transformRegelingenForFrontend(
 }
 
 async function fetchRegelingen(authProfileAndToken: AuthProfileAndToken) {
-  if (!themaConfig.featureToggle.regelingen.hliThemaRegelingenActive) {
+  if (!themaConfig.featureToggle.hliThemaRegelingenActive) {
     return apiSuccessResult([]);
   }
 
