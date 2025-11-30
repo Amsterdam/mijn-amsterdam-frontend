@@ -22,25 +22,6 @@ export const themaConfig: BodemThemaConfig = {
   title: THEMA_TITLE,
   featureToggle: {
     themaActive: true,
-    stadspas: {
-      hliStadspasActive: false,
-      _hliThemaStadspasBlokkerenActive: false,
-      _hliThemaStadspasDeblokkerenActive: false,
-      hliThemaStadspasBlokkerenActive: false,
-      hliThemaStadspasDeblokkerenActive: false,
-    },
-    regelingen: {
-      hliThemaRegelingenActive: false,
-      _hliRegelingEnabledCZM: false,
-      _hliRegelingEnabledRTM: false,
-      _hli2025PCTegoedCodesEnabled: false,
-      _hli2026PCVergoedingV3Enabled: false,
-      hliRegelingEnabledCZM: false,
-      hliRegelingEnabledRTM: false,
-      hli2025PCTegoedCodesEnabled: false,
-      hli2026PCVergoedingV3Enabled: false,
-    },
-    zorgnedAvApiActive: false,
   },
   profileTypes: ['private', 'commercial'],
   route: {
