@@ -113,8 +113,7 @@ export function HLIThema() {
     </PageContentCell>
   );
 
-  const regelingenTables = themaConfig.featureToggle.regelingen
-    .hliThemaRegelingenActive
+  const regelingenTables = themaConfig.featureToggle.hliThemaRegelingenActive
     ? entries(tableConfig)
         .filter(([kind]) => {
           return kind === listPageParamKind.lopend ? hasAanvragen : true;
