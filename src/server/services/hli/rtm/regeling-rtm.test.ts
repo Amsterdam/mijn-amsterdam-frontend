@@ -72,6 +72,9 @@ function imposeZorgnedAanvraagTransformed(
 
 describe('RTM aanvraag transformation and grouping', () => {
   for (const testInput of aanvragenTestsetInput as RTMTestInput[]) {
+    if (testInput.mockDate) {
+      mockdate.set(testInput.mockDate);
+    }
     const aanvragenTransformed = transformRTMAanvragen(
       'xxxx-session-id-xxxx',
       {
@@ -95,6 +98,10 @@ describe('RTM aanvraag transformation and grouping', () => {
     tstFn(testInput.title, () => {
       expect(aanvragenTransformed).toStrictEqual(testInput.expected);
     });
+
+    if (testInput.mockDate) {
+      mockdate.reset();
+    }
   }
 });
 
