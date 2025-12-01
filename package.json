@@ -95,7 +95,7 @@
     "decimal.js": "^10.6.0",
     "dotenv": "^16.6.1",
     "dotenv-expand": "^11.0.7",
-    "express": "^5.1.0",
+    "express": "^5.2.0",
     "express-basic-auth": "^1.2.1",
     "express-http-proxy": "^2.1.2",
     "express-openid-connect": "2.18.1",
