@@ -1,6 +1,8 @@
-import { fetchBezwaarDetail } from './bezwaren';
+import { fetchBezwaarDetail, fetchBezwaren } from './bezwaren';
+import { zaakFilter, type ZaakFilter } from './bezwaren-service-config';
 import {
   RequestWithQueryParams,
+  sendBadRequestInvalidInput,
   sendResponse,
   type ResponseAuthenticated,
 } from '../../routing/route-helpers';
@@ -27,4 +29,51 @@ export async function handleFetchBezwaarDetail(
 
     return sendResponse(res, response);
   }
+}
+
+export async function handleFetchBezwaarDetailRaw(
+  req: RequestWithQueryParams<{ id: string }>,
+  res: ResponseAuthenticated
+) {
+  const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
+    req.query.id,
+    res.locals.authProfileAndToken
+  );
+
+  if (decryptResult.status === 'ERROR') {
+    return sendResponse(res, decryptResult);
+  }
+
+  if (decryptResult.status === 'OK') {
+    const DO_TRANSFORM = false;
+    const response = await fetchBezwaarDetail(
+      res.locals.authProfileAndToken,
+      decryptResult.content,
+      DO_TRANSFORM
+    );
+
+    return sendResponse(res, response);
+  }
+}
+
+export async function handleFetchBezwarenRaw(
+  req: RequestWithQueryParams<{ sortering: string }>,
+  res: ResponseAuthenticated
+) {
+  const DO_TRANSFORM = false;
+  let filterParams: ZaakFilter | null = null;
+
+  try {
+    filterParams = zaakFilter.parse(req.query);
+  } catch (error) {
+    return sendBadRequestInvalidInput(res, error);
+  }
+
+  return res.send(
+    await fetchBezwaren(
+      res.locals.authProfileAndToken,
+      filterParams,
+      DO_TRANSFORM
+    )
+  );
 }

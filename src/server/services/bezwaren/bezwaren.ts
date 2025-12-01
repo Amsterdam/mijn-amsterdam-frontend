@@ -2,6 +2,11 @@ import * as jose from 'jose';
 import { generatePath } from 'react-router';
 
 import {
+  MAX_PAGE_COUNT,
+  routes,
+  type ZaakFilter,
+} from './bezwaren-service-config';
+import {
   BezwaarFrontend,
   BezwaarDocument,
   BezwaarSourceData,
@@ -39,11 +44,8 @@ import {
   getApiConfig,
 } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
-import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
-
-const MAX_PAGE_COUNT = 10; // Should amount to 10 * 20 (per page) = 200 bezwaren
 
 async function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
   const now = new Date();
@@ -104,7 +106,7 @@ async function fetchMultiple<T>(
 ) {
   const { params } = requestConfigBase;
   let page = params.page;
-  let items: T[] = [];
+  let results: T[] = [];
 
   while (page < maxPageCount) {
     const cacheKey = `${cacheKeyBase}-${page}`;
@@ -118,15 +120,15 @@ async function fetchMultiple<T>(
       return response;
     }
 
-    items = items.concat(response.content.items);
-    if (items.length >= (response.content.count ?? 0)) {
+    results = results.concat(response.content.results);
+    if (results.length >= (response.content.count ?? 0)) {
       break;
     }
 
     page += 1;
   }
 
-  return apiSuccessResult(items);
+  return apiSuccessResult(results);
 }
 
 const EMPTY_UUID = '00000000-0000-0000-0000-000000000000';
@@ -163,18 +165,25 @@ function transformBezwaarStatus(
 
 async function fetchBezwaarStatus(
   authProfileAndToken: AuthProfileAndToken,
-  zaakId: BezwaarFrontend['uuid']
+  zaakId: BezwaarFrontend['uuid'],
+  doTransform: boolean = true
 ) {
   const params = {
     zaak: getZaakUrl(zaakId),
   };
 
-  const requestConfig = getApiConfig('BEZWAREN_STATUS', {
+  const requestConfig_: DataRequestConfig = {
     params,
-    transformResponse: transformBezwaarStatus,
+    transformResponse: doTransform ? transformBezwaarStatus : undefined,
     headers: await getBezwarenApiHeaders(authProfileAndToken),
     cacheKey_UNSAFE: zaakId, // zaakId is a UUID, no need to specify additional uniqueness.
-  });
+  };
+
+  if (!doTransform) {
+    requestConfig_.enableCache = false;
+  }
+
+  const requestConfig = getApiConfig('BEZWAREN_STATUS', requestConfig_);
 
   const statusResponse = await requestData<StatusLineItem[]>(
     requestConfig,
@@ -199,29 +208,33 @@ function transformBezwarenDocumentsResults(
           id: documentIdEncrypted,
           title: bestandsnaam,
           datePublished: verzenddatum,
-          url: generateFullApiUrlBFF(BffEndpoints.BEZWAREN_DOCUMENT_DOWNLOAD, [
-            {
-              id: documentIdEncrypted,
-            },
-          ]),
+          url: generateFullApiUrlBFF(
+            routes.protected.BEZWAREN_DOCUMENT_DOWNLOAD,
+            [
+              {
+                id: documentIdEncrypted,
+              },
+            ]
+          ),
           dossiertype,
         };
       }
     );
     return {
-      items,
+      results: items,
       count: response.count,
     };
   }
   return {
     count: 0,
-    items: [],
+    results: [],
   };
 }
 
 export async function fetchBezwarenDocuments(
   authProfileAndToken: AuthProfileAndToken,
-  zaakId: BezwaarFrontend['uuid']
+  zaakId: BezwaarFrontend['uuid'],
+  doTransform: boolean = true
 ) {
   const params = {
     page: 1,
@@ -233,16 +246,24 @@ export async function fetchBezwarenDocuments(
     zaakId
   );
 
-  const requestConfigBase = getApiConfig('BEZWAREN_DOCUMENTS', {
+  const requestConfig_: DataRequestConfig = {
     params,
-    transformResponse: (responseData) => {
-      return transformBezwarenDocumentsResults(
-        authProfileAndToken.profile.sid,
-        responseData
-      );
-    },
+    transformResponse: doTransform
+      ? (responseData) => {
+          return transformBezwarenDocumentsResults(
+            authProfileAndToken.profile.sid,
+            responseData
+          );
+        }
+      : undefined,
     headers: await getBezwarenApiHeaders(authProfileAndToken),
-  });
+  };
+
+  if (!doTransform) {
+    requestConfig_.enableCache = false;
+  }
+
+  const requestConfigBase = getApiConfig('BEZWAREN_DOCUMENTS', requestConfig_);
 
   const bezwaarDocumentenResponse = await fetchMultiple<BezwaarDocument>(
     cacheKeyBase,
@@ -292,7 +313,7 @@ function transformBezwarenResults(
           id: bezwaarBron.uuid,
           uuid: bezwaarBron.uuid,
 
-          fetchUrl: generateFullApiUrlBFF(BffEndpoints.BEZWAREN_DETAIL, [
+          fetchUrl: generateFullApiUrlBFF(routes.protected.BEZWAREN_DETAIL, [
             { id: idEncrypted },
           ]),
 
@@ -346,13 +367,13 @@ function transformBezwarenResults(
       .filter((bezwaar) => !!bezwaar.identificatie); // Filter bezwaren die nog niet inbehandeling zijn genomen (geen identificatie hebben)
 
     return {
-      items: bezwaren,
+      results: bezwaren,
       count: response.count,
     };
   }
 
   return {
-    items: [],
+    results: [],
     count: 0,
   };
 }
@@ -367,13 +388,18 @@ function sortByBezwaarIdentificatie(
   return identificatie2 - identificatie1;
 }
 
-export async function fetchBezwaren(authProfileAndToken: AuthProfileAndToken) {
+export async function fetchBezwaren(
+  authProfileAndToken: AuthProfileAndToken,
+  filterParams: ZaakFilter | null = null,
+  doTransform: boolean = true
+) {
   const requestBody = JSON.stringify({
     [getIdAttribute(authProfileAndToken)]: authProfileAndToken.profile.id,
   });
 
   const params = {
     page: 1,
+    ...filterParams,
   };
 
   const cacheKeyBase = createSessionBasedCacheKey(
@@ -381,13 +407,24 @@ export async function fetchBezwaren(authProfileAndToken: AuthProfileAndToken) {
     'bezwaren'
   );
 
-  const requestConfig = getApiConfig('BEZWAREN_LIST', {
+  const requestConfig_: DataRequestConfig = {
     data: requestBody,
     params,
-    transformResponse: (responseData) =>
-      transformBezwarenResults(authProfileAndToken.profile.sid, responseData),
+    transformResponse: doTransform
+      ? (responseData) =>
+          transformBezwarenResults(
+            authProfileAndToken.profile.sid,
+            responseData
+          )
+      : undefined,
     headers: await getBezwarenApiHeaders(authProfileAndToken),
-  });
+  };
+
+  if (!doTransform) {
+    requestConfig_.enableCache = false;
+  }
+
+  const requestConfig = getApiConfig('BEZWAREN_LIST', requestConfig_);
 
   const bezwarenResponse = await fetchMultiple<BezwaarFrontend>(
     cacheKeyBase,
@@ -467,13 +504,19 @@ export type BezwaarDetail = {
 
 export async function fetchBezwaarDetail(
   authProfileAndToken: AuthProfileAndToken,
-  zaakId: BezwaarFrontend['uuid']
+  zaakId: BezwaarFrontend['uuid'],
+  doTransform: boolean = true
 ) {
-  const bezwaarStatusRequest = fetchBezwaarStatus(authProfileAndToken, zaakId);
+  const bezwaarStatusRequest = fetchBezwaarStatus(
+    authProfileAndToken,
+    zaakId,
+    doTransform
+  );
 
   const bezwaarDocumentsRequest = fetchBezwarenDocuments(
     authProfileAndToken,
-    zaakId
+    zaakId,
+    doTransform
   );
 
   const [statussenResponse, documentsResponse] = await Promise.allSettled([

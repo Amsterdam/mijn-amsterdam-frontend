@@ -9,7 +9,7 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
       "displayStatus": "Onbekend",
       "documenten": [],
       "einddatum": null,
-      "fetchUrl": "http://bff-api-host/api/v1/services/bezwaren?id=test-encrypted-id",
+      "fetchUrl": "http://bff-api-host/api/v1/services/bezwaren/bezwaar?id=test-encrypted-id",
       "id": "cc117d91-1b00-4bae-bbdd-9ea3a6d6d185",
       "identificatie": "OJ.24.000115.001",
       "link": {
@@ -36,7 +36,7 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
       "displayStatus": "Onbekend",
       "documenten": [],
       "einddatum": null,
-      "fetchUrl": "http://bff-api-host/api/v1/services/bezwaren?id=test-encrypted-id",
+      "fetchUrl": "http://bff-api-host/api/v1/services/bezwaren/bezwaar?id=test-encrypted-id",
       "id": "68cdd171-b4fd-44cc-a4d3-06b77341f20a",
       "identificatie": "BI.24.000093.001",
       "link": {
@@ -63,7 +63,7 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
       "displayStatus": "In behandeling",
       "documenten": [],
       "einddatum": null,
-      "fetchUrl": "http://bff-api-host/api/v1/services/bezwaren?id=test-encrypted-id",
+      "fetchUrl": "http://bff-api-host/api/v1/services/bezwaren/bezwaar?id=test-encrypted-id",
       "id": "9804b064-90a3-43b0-bc7c-924f9939888d",
       "identificatie": "DJ.23.000268.001",
       "link": {
@@ -90,7 +90,7 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
       "displayStatus": "Afgehandeld",
       "documenten": [],
       "einddatum": "2023-01-04",
-      "fetchUrl": "http://bff-api-host/api/v1/services/bezwaren?id=test-encrypted-id",
+      "fetchUrl": "http://bff-api-host/api/v1/services/bezwaren/bezwaar?id=test-encrypted-id",
       "id": "956541b6-7a25-4132-9592-0a509bc7ace0",
       "identificatie": "JB.22.000443.002",
       "link": {
