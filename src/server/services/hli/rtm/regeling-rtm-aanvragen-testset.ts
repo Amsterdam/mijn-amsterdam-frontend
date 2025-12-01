@@ -22,6 +22,7 @@ export type RTMTestInput = {
   only?: boolean;
   aanvragen: RTMAanvraagProps[];
   expected: RTMAanvraagTestResult[];
+  mockDate?: string;
 };
 
 export const RTM1 = 'AV-RTM1';
@@ -576,7 +577,6 @@ export const aanvragenTestsetInput = [
     title: 'Single afgewezen aanvraag',
     bsnLoggedinUser: 'X',
     aanvragen: [aanvraag(RTM1, AFW)],
-    // only: true,
     expected: [
       {
         id: 4288114805,
@@ -609,7 +609,6 @@ export const aanvragenTestsetInput = [
         procesAanvraagOmschrijving: 'Beëindigen RTM',
       }),
     ],
-    // only: true,
     expected: [
       {
         id: 4288114805,
@@ -636,7 +635,6 @@ export const aanvragenTestsetInput = [
         procesAanvraagOmschrijving: 'RTM Herkeuring',
       }),
     ],
-    // only: true,
     expected: [
       {
         id: 4288114805,
@@ -647,8 +645,10 @@ export const aanvragenTestsetInput = [
     ],
   },
   {
-    title: 'RTM voor één jaar, mét einde recht, zonder beëindigingsproces',
+    title:
+      'RTM voor één jaar, mét einde recht, zonder beëindigingsproces - Besluit',
     bsnLoggedinUser: 'A8',
+    mockDate: '2025-10-15',
     aanvragen: [
       aanvraag(RTM2, TOE, ['A8'], {
         beschiktProductIdentificatie: 'A8-1',
@@ -657,13 +657,34 @@ export const aanvragenTestsetInput = [
         procesAanvraagOmschrijving: 'Aanvraag RTM fase 2',
       }),
     ],
-    // only: true,
     expected: [
       {
         id: 4288114805,
         persoon: 'Persoon A8',
         steps: ['Besluit', 'Einde recht'],
         displayStatus: 'Besluit',
+      },
+    ],
+  },
+  {
+    title:
+      'RTM voor één jaar, mét einde recht, zonder beëindigingsproces - Einde recht',
+    bsnLoggedinUser: 'A9',
+    mockDate: '2025-12-01',
+    aanvragen: [
+      aanvraag(RTM2, TOE, ['A9'], {
+        beschiktProductIdentificatie: 'A9-1',
+        datumIngangGeldigheid: '2024-12-01',
+        datumEindeGeldigheid: '2025-11-30',
+        procesAanvraagOmschrijving: 'Aanvraag RTM fase 2',
+      }),
+    ],
+    expected: [
+      {
+        id: 4288114805,
+        persoon: 'Persoon A9',
+        steps: ['Besluit', 'Einde recht'],
+        displayStatus: 'Einde recht',
       },
     ],
   },
