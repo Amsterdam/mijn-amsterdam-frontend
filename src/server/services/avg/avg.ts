@@ -95,33 +95,32 @@ export async function enrichAvgResponse(
 ) {
   const avgIds = avgResponse.content.verzoeken.map((verzoek) => verzoek.id);
   const themasResponse = await fetchAVGRequestThemes(avgIds);
-
-  if (themasResponse.status === 'OK') {
-    const enrichedAvgRequests: AVGRequestFrontend[] = [];
-
-    for (const avgRequest of avgResponse.content.verzoeken) {
-      const themasPerVerzoek = themasResponse.content.verzoeken.filter(
-        (verzoek) => verzoek.avgVerzoekId === avgRequest.id
-      );
-
-      const enrichedAvgRequest = {
-        ...avgRequest,
-        themas: themasPerVerzoek
-          .map((theme) => theme.themaOmschrijving)
-          .filter((theme: string | null): theme is string => theme !== null)
-          .join(', '),
-      };
-
-      enrichedAvgRequests.push(enrichedAvgRequest);
-    }
-
-    return apiSuccessResult({
-      ...avgResponse.content,
-      verzoeken: enrichedAvgRequests,
-    });
+  if (themasResponse.status !== 'OK') {
+    return avgResponse;
   }
 
-  return avgResponse;
+  const enrichedAvgRequests: AVGRequestFrontend[] = [];
+
+  for (const avgRequest of avgResponse.content.verzoeken) {
+    const themasPerVerzoek = themasResponse.content.verzoeken.filter(
+      (verzoek) => verzoek.avgVerzoekId === avgRequest.id
+    );
+
+    const enrichedAvgRequest = {
+      ...avgRequest,
+      themas: themasPerVerzoek
+        .map((theme) => theme.themaOmschrijving)
+        .filter((theme: string | null): theme is string => theme !== null)
+        .join(', '),
+    };
+
+    enrichedAvgRequests.push(enrichedAvgRequest);
+  }
+
+  return apiSuccessResult({
+    ...avgResponse.content,
+    verzoeken: enrichedAvgRequests,
+  });
 }
 
 export function transformAVGResponse(data: SmileAvgResponse): AVGResponse {
@@ -201,7 +200,7 @@ export async function fetchAVG(authProfileAndToken: AuthProfileAndToken) {
     })
   );
 
-  if (response.status === 'OK') {
+  if (response.status === 'OK' && response.content?.verzoeken.length) {
     return enrichAvgResponse(response);
   }
 
