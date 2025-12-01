@@ -40,7 +40,9 @@ export type CMSFeedItem = {
   content: string;
   feedid: string;
 };
-export type OtapEnv = 'tst' | 'acc' | 'prd' | 'dev' | 'unittest';
+export const OtapEnvs = ['tst', 'acc', 'prd', 'dev', 'unittest'] as const;
+export type OtapEnv = (typeof OtapEnvs)[number];
+
 type SeverityLevel = 'error' | 'info' | 'success' | 'warning';
 export type CMSMaintenanceNotification = MyNotification & {
   title: string;

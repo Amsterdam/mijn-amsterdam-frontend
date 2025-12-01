@@ -1,3 +1,4 @@
+import { OtapEnvs } from './cms-types';
 import {
   IS_TEST,
   IS_ACCEPTANCE,
@@ -22,4 +23,5 @@ export const REPLACE_REL_URL_PARTS =
   'storingsmeldingen/alle-meldingen-mijn-amsterdam';
 export const CMS_DATE_REGEX = /(\d{4})(\d{2})(\d{2})/; //20230118
 export const CMS_TIME_REGEX = /(\d{2})(\d{2})/; //2359
-export const CMS_ENV_REGEX = /(tst|acc|prd|dev|unittest)/gi;
+
+export const CMS_ENV_REGEX = new RegExp(`(${OtapEnvs.join('|')})`, 'gi');
