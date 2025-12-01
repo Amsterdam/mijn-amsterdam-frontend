@@ -45,6 +45,7 @@ import {
 } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
+import { trackEvent } from '../monitoring';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 
 async function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
@@ -430,6 +431,17 @@ export async function fetchBezwaren(
     cacheKeyBase,
     requestConfig
   );
+
+  if (bezwarenResponse.status === 'OK' && bezwarenResponse.content?.length) {
+    trackEvent('bezwaren-aantal-per-gebruiker', {
+      lopend: bezwarenResponse.content.filter(
+        (b) => b.displayStatus !== 'Afgehandeld'
+      ).length,
+      afgehandeld: bezwarenResponse.content.filter(
+        (b) => b.displayStatus === 'Afgehandeld'
+      ).length,
+    });
+  }
 
   if (bezwarenResponse.status === 'OK' && doTransform) {
     const bezwarenSorted = bezwarenResponse.content.sort(
