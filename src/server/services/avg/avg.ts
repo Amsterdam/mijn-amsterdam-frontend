@@ -94,9 +94,6 @@ export async function enrichAvgResponse(
   avgResponse: ApiSuccessResponse<AVGResponse>
 ) {
   const avgIds = avgResponse.content.verzoeken.map((verzoek) => verzoek.id);
-  if (avgIds.length === 0) {
-    return avgResponse;
-  }
   const themasResponse = await fetchAVGRequestThemes(avgIds);
   if (themasResponse.status !== 'OK') {
     return avgResponse;
@@ -203,7 +200,7 @@ export async function fetchAVG(authProfileAndToken: AuthProfileAndToken) {
     })
   );
 
-  if (response.status === 'OK') {
+  if (response.status === 'OK' && response.content?.verzoeken.length) {
     return enrichAvgResponse(response);
   }
 
