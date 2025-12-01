@@ -48,6 +48,7 @@ export function ErfpachtThema() {
       isLoading={isLoading}
       isError={isError}
       linkListItems={linkListItems}
+      maintenanceNotificationsPageSlug="erfpacht"
       pageContentTop={
         <>
           <PageContentCell spanWide={8}>
