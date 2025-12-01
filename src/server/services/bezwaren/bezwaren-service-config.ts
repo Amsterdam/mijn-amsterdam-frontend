@@ -18,33 +18,20 @@ export const routes = {
   },
 };
 
+export const fieldSortOptions = [
+  'startdatum',
+  '-startdatum',
+  'einddatum',
+  '-einddatum',
+  'publicatiedatum',
+  '-publicatiedatum',
+  'archiefactiedatum',
+  '-archiefactiedatum',
+] as const;
+
 export const zaakFilter = z.object({
-  ordering: z
-    .enum([
-      'startdatum',
-      '-startdatum',
-      'einddatum',
-      '-einddatum',
-      'publicatiedatum',
-      '-publicatiedatum',
-      'archiefactiedatum',
-      '-archiefactiedatum',
-    ])
-    .optional(),
-  sortering: z
-    .enum([
-      'startdatum',
-      '-startdatum',
-      'einddatum',
-      '-einddatum',
-      'publicatiedatum',
-      '-publicatiedatum',
-      'archiefactiedatum',
-      '-archiefactiedatum',
-    ])
-    .optional(),
-  expand: z.string().optional(), // zaaktype, status, status.statustype, hoofdzaak.status.statustype, hoofdzaak.deelzaken.status.statustype
-  einddatum__isnull: z.boolean().optional(),
+  ordering: z.enum(fieldSortOptions).optional(),
+  sortering: z.enum(fieldSortOptions).optional(),
 });
 
 export type ZaakFilter = z.infer<typeof zaakFilter>;

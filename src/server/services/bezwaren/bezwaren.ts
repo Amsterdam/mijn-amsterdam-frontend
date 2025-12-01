@@ -431,7 +431,7 @@ export async function fetchBezwaren(
     requestConfig
   );
 
-  if (bezwarenResponse.status === 'OK') {
+  if (bezwarenResponse.status === 'OK' && doTransform) {
     const bezwarenSorted = bezwarenResponse.content.sort(
       sortByBezwaarIdentificatie
     );
