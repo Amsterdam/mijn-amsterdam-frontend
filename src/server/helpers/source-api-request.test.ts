@@ -59,7 +59,7 @@ describe('source-api-request caching', () => {
   function fetchThings(
     sessionID: AuthProfile['sid'],
     cacheKey?: string,
-    forceRenew = false
+    cacheTimeout: number = DEFAULT_REQUEST_CACHE_TTL_MS
   ) {
     return requestData<[string, string]>({
       url: `${remoteApiHost}/1`,
@@ -71,9 +71,7 @@ describe('source-api-request caching', () => {
         return [data, value];
       },
       cacheKey_UNSAFE: cacheKey,
-      cacheTimeout: forceRenew
-        ? FORCE_RENEW_CACHE_TTL_MS
-        : DEFAULT_REQUEST_CACHE_TTL_MS,
+      cacheTimeout: cacheTimeout,
       enableCache: true,
     });
   }
@@ -146,12 +144,10 @@ describe('source-api-request caching', () => {
     // Ah yes, the encrpted sessionID is the same as well. Caching works!
     expect(encryptedSessionID2).toBe(encryptedSessionID1);
 
-    const DO_FORCE_RENEW = true;
-
     const rs3 = await fetchThings(
       SESSION_ID_1,
       createSessionBasedCacheKey(SESSION_ID_1, 'things'),
-      DO_FORCE_RENEW
+      FORCE_RENEW_CACHE_TTL_MS
     );
 
     // If we request again within the FORCE_RENEW_CACHE_TTL_MS period, we should get the same cached value.
@@ -177,6 +173,27 @@ describe('source-api-request caching', () => {
     expect(encryptedSessionID4).toBe(encryptedSessionID3);
     expect(responseValue5).toBe('renewedfoo');
     expect(encryptedSessionID5).not.toBe(encryptedSessionID3);
+  });
+
+  test('Does not use cache with values <= 0', async () => {
+    const SESSION_ID_1 = '123';
+
+    remoteApi.get('/1').reply(200, '"foo"');
+    remoteApi.get('/1').reply(200, '"foo-2"');
+
+    const rs = await fetchThings(
+      SESSION_ID_1,
+      createSessionBasedCacheKey(SESSION_ID_1, 'things'),
+      0
+    );
+    const rs2 = await fetchThings(
+      SESSION_ID_1,
+      createSessionBasedCacheKey(SESSION_ID_1, 'things'),
+      0
+    );
+
+    expect(rs.content?.[0]).toBe('foo');
+    expect(rs2.content?.[0]).toBe('foo-2');
   });
 
   test("Correct: Doesn't use cache with different sessionID", async () => {
