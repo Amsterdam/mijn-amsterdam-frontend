@@ -1,7 +1,7 @@
 export {
-  EnlargeIcon as IconEnlarge,
-  MinimiseIcon as IconMinimise,
-  SpinnerIcon as IconSpinner,
+  PlusIcon as IconEnlarge,
+  MinimizeIcon as IconMinimise,
+  ReplayIcon as IconSpinner,
 } from '@amsterdam/design-system-react-icons';
 export { default as IconCheckmark } from './Checkmark.svg?react'; // TODO: Use design system icon
 export { default as IconConnectorTypeCCS } from './map/connector-type-ccs.svg?react';

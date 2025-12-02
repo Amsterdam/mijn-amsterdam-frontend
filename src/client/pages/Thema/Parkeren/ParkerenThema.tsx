@@ -1,5 +1,5 @@
 import { Alert, Icon, Paragraph } from '@amsterdam/design-system-react';
-import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
+import { LinkExternalIcon } from '@amsterdam/design-system-react-icons';
 
 import { useParkerenData } from './useParkerenData.hook';
 import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
@@ -38,7 +38,7 @@ function PageContentTop({
           <Paragraph>
             <MaButtonLink href={parkerenUrlSSO}>
               Ga naar Mijn Parkeren&nbsp;
-              <Icon svg={ExternalLinkIcon} size="heading-5" />
+              <Icon svg={LinkExternalIcon} size="heading-5" />
             </MaButtonLink>
           </Paragraph>
         </Alert>

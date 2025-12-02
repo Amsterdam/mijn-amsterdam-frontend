@@ -1,7 +1,7 @@
-import { MouseEventHandler, ReactNode, useCallback } from 'react';
+import { ReactNode } from 'react';
 
 import { Breadcrumb, Heading, Icon } from '@amsterdam/design-system-react';
-import { ChevronLeftIcon } from '@amsterdam/design-system-react-icons';
+import { ChevronBackwardIcon } from '@amsterdam/design-system-react-icons';
 import { useLocation, useNavigate } from 'react-router';
 
 import styles from './PageHeadingV2.module.scss';
@@ -26,14 +26,6 @@ export function PageHeadingV2({
 }: PageHeadingProps) {
   const location = useLocation();
   const navigate = useNavigate();
-  const goBack: MouseEventHandler<HTMLAnchorElement> = useCallback(
-    (event) => {
-      event.preventDefault();
-      navigate(-1);
-      return;
-    },
-    [location.pathname, navigate]
-  );
 
   return (
     <PageContentCell
@@ -46,10 +38,14 @@ export function PageHeadingV2({
           <MaRouterLink
             className={styles.BackLink}
             maVariant="noDefaultUnderline"
-            onClick={goBack}
+            onClick={(event) => {
+              event.preventDefault();
+              navigate(-1);
+              return;
+            }}
             title="Terug naar de vorige pagina"
           >
-            <Icon size="heading-5" svg={ChevronLeftIcon} />
+            <Icon size="heading-5" svg={ChevronBackwardIcon} />
             {label}
           </MaRouterLink>
         ) : (
