@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, type ReactElement } from 'react';
 
 import { Breadcrumb, Heading, Icon } from '@amsterdam/design-system-react';
 import { ChevronBackwardIcon } from '@amsterdam/design-system-react-icons';
@@ -35,7 +35,7 @@ export type PageBreadcrumbsV2Props = {
   showBacklink?: boolean;
   className?: string;
   label?: string;
-  pageTitle: string;
+  pageTitle: ReactElement | string;
 };
 
 export function PageBreadcrumbsV2({

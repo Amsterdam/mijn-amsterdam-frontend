@@ -8,7 +8,6 @@ import {
 } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
-import styles from './Page.module.scss';
 import type { ThemaMenuItem } from '../../config/thema-types';
 import { getRedactedClass } from '../../helpers/cobrowse';
 import {
@@ -20,7 +19,6 @@ export interface PageProps extends HTMLProps<HTMLDivElement> {
   className?: string;
   children: ReactNode;
   heading: ReactElement | string;
-  isWide?: boolean;
   showBreadcrumbs?: boolean;
   redactedThemaId?: string | null;
   redactedScope?: Required<ThemaMenuItem>['redactedScope'];
@@ -34,7 +32,6 @@ export function PageV2({
   className,
   heading,
   children,
-  isWide = false,
   showBreadcrumbs = true,
   redactedThemaId,
   redactedScope = 'full',
@@ -49,13 +46,7 @@ export function PageV2({
           </PageContentCell>
         </Grid>
       )}
-      <main
-        id="skip-to-id-AppContent"
-        className={classNames(
-          className,
-          !isWide ? styles.PageMA : styles.PageMAWide
-        )}
-      >
+      <main id="skip-to-id-AppContent" className={className}>
         <Grid paddingTop={showBreadcrumbs ? undefined : PADDING_TOP}>
           <PageContentCell startWide={1} spanWide={12}>
             <Heading className="ams-mb-s" level={1}>
