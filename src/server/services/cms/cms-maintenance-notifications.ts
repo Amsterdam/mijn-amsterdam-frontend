@@ -2,99 +2,87 @@ import { isFuture, isPast, parseISO } from 'date-fns';
 
 import { sanitizeCmsContent } from './cms-content';
 import {
+  CMS_MAINTENANCE_NOTIFICATIONS_CACHE_TIMEOUT_MS,
+  CMS_DATE_REGEX,
+  DEFAULT_OTAP_ENV,
+  DEFAULT_SEVERITY,
+  notificationEnvMap,
+  REPLACE_REL_URL_PARTS,
+  CMS_TIME_REGEX,
+  CMS_ENV_REGEX,
+} from './cms-service-config';
+import type {
+  CMSEventData,
+  CMSMaintenanceNotification,
+  OtapEnv,
+  CMSFeedItem,
+  QueryParamsMaintenanceNotifications,
+} from './cms-types';
+import {
   themaId,
   themaTitle,
 } from '../../../client/pages/MyNotifications/MyNotifications-config';
 import {
-  ApiResponse_DEPRECATED,
+  ApiResponse,
   apiSuccessResult,
+  getFailedDependencies,
 } from '../../../universal/helpers/api';
-import { LinkProps, MyNotification } from '../../../universal/types/App.types';
-import { ONE_HOUR_MS } from '../../config/app';
+import { FORCE_RENEW_CACHE_TTL_MS } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 
-interface Tyd {
-  Nam: 'Starttijd' | 'Eindtijd';
-  Tyd: string;
-}
-interface Website {
-  Nam: 'Website';
-  Src: string;
-  Wrd: string;
-}
-interface Dtm {
-  Nam: 'Einddatum' | 'Startdatum';
-  Dtm: string;
-}
-interface MeerInfo {
-  Nam: 'Meer informatie';
-  Src: string;
-}
-interface Omschrijving {
-  Nam: 'Omschrijving';
-  Src: string;
-}
-
-interface CMSEventData {
-  item: {
-    relUrl: string;
-    page: {
-      cluster: {
-        veld: Array<Tyd | Website | Dtm | MeerInfo | Omschrijving>;
-      };
-      title: string;
-      CorDtm: string;
-    };
-  };
-}
-
-interface CMSFeedItem {
-  title: string;
-  content: string;
-  feedid: string;
-}
-
-export interface CMSMaintenanceNotification extends MyNotification {
-  title: string;
-  datePublished: string;
-  dateStart: string;
-  dateEnd: string;
-  timeEnd: string;
-  timeStart: string;
-  description: string;
-  path: string;
-  link?: LinkProps;
+function isOtapEnvMatch(notification: CMSMaintenanceNotification): boolean {
+  return notification.otapEnvs.some((env) => notificationEnvMap[env]);
 }
 
 function transformCMSEventResponse(
   eventData: CMSEventData
 ): CMSMaintenanceNotification {
+  if (!eventData.item?.page) {
+    throw new Error('Invalid CMS event data format');
+  }
+
   const item = {
     title: eventData.item.page.title,
-    path: eventData.item.relUrl.replace(
-      'storingsmeldingen/alle-meldingen-mijn-amsterdam',
-      ''
-    ),
+    path: eventData.item.relUrl.replace(REPLACE_REL_URL_PARTS, ''),
     themaID: themaId,
     themaTitle: themaTitle,
     isAlert: true,
+    severity: DEFAULT_SEVERITY,
     datePublished: new Date().toISOString(),
+    otapEnvs: [DEFAULT_OTAP_ENV],
   } as CMSMaintenanceNotification;
 
   for (const veld of eventData.item.page.cluster.veld) {
     switch (veld.Nam) {
       case 'Startdatum':
-        item.dateStart = veld.Dtm.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
+        item.dateStart = veld.Dtm.replace(CMS_DATE_REGEX, '$1-$2-$3');
         break;
       case 'Einddatum':
-        item.dateEnd = veld.Dtm.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
+        item.dateEnd = veld.Dtm.replace(CMS_DATE_REGEX, '$1-$2-$3');
         break;
       case 'Starttijd':
-        item.timeStart = veld.Tyd.replace(/(\d{2})(\d{2})/, '$1:$2');
+        item.timeStart = veld.Tyd.replace(CMS_TIME_REGEX, '$1:$2');
         break;
       case 'Eindtijd':
-        item.timeEnd = veld.Tyd.replace(/(\d{2})(\d{2})/, '$1:$2');
+        item.timeEnd = veld.Tyd.replace(CMS_TIME_REGEX, '$1:$2');
+        break;
+      case 'Toevoeging':
+        {
+          const otapEnvs = (veld.Wrd.match(CMS_ENV_REGEX)?.map((env) =>
+            env.toLowerCase().trim()
+          ) ?? []) as OtapEnv[];
+
+          item.otapEnvs = otapEnvs.length ? otapEnvs : item.otapEnvs;
+        }
+        break;
+      case 'Locatie':
+        {
+          const severity = veld.Wrd.match(/(error|info|success|warning)/i)?.[0]
+            .toLowerCase()
+            .trim() as CMSMaintenanceNotification['severity'];
+          item.severity = !severity ? DEFAULT_SEVERITY : severity;
+        }
         break;
       case 'Website':
         if (veld.Src && veld.Wrd) {
@@ -105,7 +93,7 @@ function transformCMSEventResponse(
         }
         break;
       case 'Omschrijving':
-        item.description = veld.Src;
+        item.description = sanitizeCmsContent(veld.Src);
         break;
     }
   }
@@ -113,103 +101,85 @@ function transformCMSEventResponse(
   return item;
 }
 
-const CMS_MAINTENANCE_NOTIFICATIONS_CACHE_TIMEOUT_MS = 24 * ONE_HOUR_MS; // 24 hours
+// We use the term Event here because we misuse the CMS Event content type for Maintenance Notifications.
+async function fetchCMSEventData(url: string, forceRenew: boolean) {
+  return requestData<CMSMaintenanceNotification>({
+    url: url + '?Appidt=app-pagetype&reload=true',
+    transformResponse: transformCMSEventResponse,
+    cacheTimeout: forceRenew
+      ? FORCE_RENEW_CACHE_TTL_MS
+      : CMS_MAINTENANCE_NOTIFICATIONS_CACHE_TIMEOUT_MS,
+  });
+}
 
-async function fetchCMSMaintenanceNotifications(): Promise<
-  ApiResponse_DEPRECATED<CMSMaintenanceNotification[]>
-> {
-  function fetchCMSEventData(url: string) {
-    return requestData<CMSMaintenanceNotification>({
-      url: url + '?Appidt=app-pagetype&reload=true',
-      transformResponse: transformCMSEventResponse,
-      cacheTimeout: CMS_MAINTENANCE_NOTIFICATIONS_CACHE_TIMEOUT_MS,
-    });
+async function fetchCMSMaintenanceNotifications(
+  forceRenew: boolean
+): Promise<ApiResponse<CMSMaintenanceNotification[]>> {
+  const requestConfig = getApiConfig('CMS_MAINTENANCE_NOTIFICATIONS', {
+    cacheTimeout: forceRenew
+      ? FORCE_RENEW_CACHE_TTL_MS
+      : CMS_MAINTENANCE_NOTIFICATIONS_CACHE_TIMEOUT_MS,
+  });
+
+  const eventFeedResponse = await requestData<CMSFeedItem[]>(requestConfig);
+
+  if (!eventFeedResponse.content?.length) {
+    return apiSuccessResult([], getFailedDependencies({ eventFeedResponse }));
   }
 
-  const requestConfig = getApiConfig('CMS_MAINTENANCE_NOTIFICATIONS');
-
-  const eventItems = await requestData<CMSFeedItem[]>(requestConfig)
-    .then((apiData) => {
-      if (Array.isArray(apiData.content)) {
-        return Promise.all(
-          apiData.content.map((feedItem) =>
-            fetchCMSEventData(feedItem.feedid).then(
-              (response) => response.content
-            )
-          )
-        );
-      }
-      return [];
-    })
-    .then((notifications) => {
-      return notifications
-        .filter(
-          (notification): notification is CMSMaintenanceNotification =>
-            notification !== null
-        )
-        .map((notification) => {
-          if (notification.description) {
-            notification.description = sanitizeCmsContent(
-              notification.description,
-              {
-                allowedAttributes: { a: [] },
-                allowedTags: [],
-                exclusiveFilter: () => true,
-              }
-            );
-          }
-          return notification;
-        });
-    });
-
-  const eventItemsResponse = apiSuccessResult(
-    eventItems.filter(
-      (eventItem): eventItem is CMSMaintenanceNotification => eventItem !== null
+  const eventItemsResponses = await Promise.all(
+    eventFeedResponse.content.map((feedItem) =>
+      fetchCMSEventData(feedItem.feedid, forceRenew)
     )
   );
 
-  return eventItemsResponse;
+  // We don't perform error handling here. We simply filter out possibly failed requests.
+  // This particular endpoint is not critical for the application to function.
+  // Failed requests are still logged in the requestData function.
+  const notifications = eventItemsResponses
+    .filter((response) => response.content !== null)
+    .map((response) => response.content)
+    .filter((notification) => isOtapEnvMatch(notification));
+
+  return apiSuccessResult(notifications);
 }
 
-export interface QueryParamsMaintenanceNotifications
-  extends Record<string, string | undefined> {
-  page?: string;
-}
-
-export async function fetchMaintenanceNotificationsActual(
+export async function fetchActiveMaintenanceNotifications(
   queryParams: QueryParamsMaintenanceNotifications
 ) {
-  const maintenanceNotifications = await fetchCMSMaintenanceNotifications();
+  const maintenanceNotifications = await fetchCMSMaintenanceNotifications(
+    queryParams.forceRenew === 'true'
+  );
 
   if (!maintenanceNotifications.content?.length) {
     return maintenanceNotifications;
   }
 
-  return apiSuccessResult(
-    maintenanceNotifications.content
-      .filter((notification) =>
-        queryParams?.page ? notification.path === `/${queryParams.page}` : true
-      )
-      .filter((notification) => {
-        const startDateTime = parseISO(
-          notification.dateStart + 'T' + notification.timeStart
-        );
-        const endDateTime = parseISO(
-          notification.dateEnd + 'T' + notification.timeEnd
-        );
-        return isPast(startDateTime) && isFuture(endDateTime);
-      })
-  );
+  const filteredNotifications = maintenanceNotifications.content
+    .filter((notification) =>
+      queryParams?.page ? notification.path === `/${queryParams.page}` : true
+    )
+    .filter((notification) => {
+      const startDateTime = parseISO(
+        notification.dateStart + 'T' + notification.timeStart
+      );
+      const endDateTime = parseISO(
+        notification.dateEnd + 'T' + notification.timeEnd
+      );
+      return isPast(startDateTime) && isFuture(endDateTime);
+    });
+
+  return apiSuccessResult(filteredNotifications);
 }
 
 export async function fetchMaintenanceNotificationsDashboard() {
-  const maintenanceNotifications = await fetchMaintenanceNotificationsActual({
+  return fetchActiveMaintenanceNotifications({
     page: 'dashboard',
   });
-
-  if (!maintenanceNotifications.content?.length) {
-    return maintenanceNotifications;
-  }
-
-  return apiSuccessResult({ notifications: maintenanceNotifications.content });
 }
+
+export const forTesting = {
+  fetchCMSMaintenanceNotifications,
+  transformCMSEventResponse,
+  isOtapEnvMatch,
+};

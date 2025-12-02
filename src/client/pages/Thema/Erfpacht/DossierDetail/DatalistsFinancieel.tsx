@@ -109,11 +109,20 @@ function DatalistToekomstigePeriodes({ dossier }: ErfpachtDatalistProps) {
     ));
 }
 
-export function DatalistsFinancieel({ dossier }: ErfpachtDatalistProps) {
+export function DatalistsFinancieel({
+  dossier,
+  debiteurNummer,
+}: ErfpachtDatalistProps) {
   return (
     <>
-      <DatalistHuidigePeriode dossier={dossier} />
-      <DatalistToekomstigePeriodes dossier={dossier} />
+      <DatalistHuidigePeriode
+        dossier={dossier}
+        debiteurNummer={debiteurNummer}
+      />
+      <DatalistToekomstigePeriodes
+        dossier={dossier}
+        debiteurNummer={debiteurNummer}
+      />
     </>
   );
 }

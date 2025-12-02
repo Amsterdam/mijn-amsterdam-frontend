@@ -44,6 +44,7 @@ export function useAfisThemaData() {
     title: themaTitle,
     belastingenLinkListItem,
     businessPartnerIdEncrypted,
+    businessPartnerId: AFIS.content?.businessPartnerId ?? null,
     facturenByState,
     facturenTableConfig,
     isThemaPaginaError: isError(AFIS, false),
