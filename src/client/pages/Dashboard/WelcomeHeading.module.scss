@@ -1,18 +1,10 @@
 .WelcomeHeading {
   font-size: 48px;
   line-height: 1.2;
-  margin-bottom: 0;
+  margin-bottom: 60px;
+  display: block;
 
   @media screen and (min-width: $ams-breakpoint-medium) {
     font-size: 58px;
-  }
-}
-
-:global(.ams-link) {
-  &.BackLink {
-    display: inline-flex;
-    align-items: center;
-    cursor: pointer;
-    gap: 10px;
   }
 }

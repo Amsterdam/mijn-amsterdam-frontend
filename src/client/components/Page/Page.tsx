@@ -76,8 +76,6 @@ export function PageV2({
   );
 }
 
-export const DetailPageV2 = PageV2;
-
 export function PageContentV2({ children }: PageProps) {
   return <>{children}</>;
 }
