@@ -1,12 +1,13 @@
+import { OAuthVerificationHandler } from './route-handlers';
 import { createBFFRouter } from './route-helpers';
 import { notificationsExternalConsumerRouter } from './router-notifications-external-consumer';
-import { stadspasExternalConsumerRouter } from '../services/hli/router-stadspas-external-consumer';
 import { afisRouter } from '../services/afis/afis-router';
+import { stadspasExternalConsumerRouter } from '../services/hli/router-stadspas-external-consumer';
 import { wmoRouter } from '../services/wmo/wmo-router';
 
 export const router = createBFFRouter({ id: 'router-private-network' });
 
 router.use(notificationsExternalConsumerRouter.private);
-router.use(wmoRouter.private);
+router.use(OAuthVerificationHandler('User'), wmoRouter.private);
 router.use(stadspasExternalConsumerRouter.private);
-router.use(afisRouter.private);
+router.use(OAuthVerificationHandler('User'), afisRouter.private);
