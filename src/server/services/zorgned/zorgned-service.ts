@@ -225,7 +225,12 @@ export async function fetchAllDocumentsRaw(
 
 const FAKE_CASUS_ID = 'casus-id-not-set';
 
-function transformCasusAanvragen(responseData: ZorgnedResponseDataSource) {
+// This function discards aanvragen that belong to the same Casus and consolidates their documents.
+// This means, if we want to work with procesAanvraag features and other functionality that depends on individual aanvragen,
+// we should use fetchAanvragen instead of fetchCasusAanvragen.
+function consolidateCasusAanvragenWithSingleBeschiktProduct(
+  responseData: ZorgnedResponseDataSource
+) {
   const aanvragenSource = responseData?._embedded?.aanvraag ?? [];
   const aanvragenByCasusID = aanvragenSource.reduce(
     (acc, aanvraag) => {
@@ -281,24 +286,14 @@ function transformCasusAanvragen(responseData: ZorgnedResponseDataSource) {
       aanvragen.length > 1
     ) {
       // Get the reference to the designated aanvraag and add the documents.
-      const [id] = beschiktProductIds;
-      const aanvraagWithAddedDocuments = {
+      const aanvraag = {
         ...aanvragenWithBeschiktProduct[0],
         documenten: documenten.toSorted(dateSort('datumDefinitief', 'desc')),
       };
-      casusAanvragen.push(
-        // There can be more than one aanvraag with the same beschikt product id within the same casus.
-        // This happens for example when a beëindingsproces is started that applies to an existing beschikt product.
-        // In this case we have 2 aanvragen with the same beschikt product id. We need to add the same documenten to both aanvragen to be consistent.
-        ...aanvragen.map((aanvraag) => {
-          if (
-            aanvraag.beschikking?.beschikteProducten?.[0]?.identificatie === id
-          ) {
-            return aanvraagWithAddedDocuments;
-          }
-          return aanvraag;
-        })
-      );
+      // There can be more than one aanvraag with the same beschikt product within the same casus.
+      // This happens for example when a beëindingsproces is started that applies to an existing beschikt product.
+      // In this case we have 2 aanvragen with the same beschikt product id. We only want to show the first aanvraag to the user.
+      casusAanvragen.push(aanvraag);
       continue;
     }
 
@@ -317,7 +312,7 @@ export async function fetchCasusAanvragen(
   return fetchZorgnedByBSN(bsn, {
     ...options,
     path: '/aanvragen',
-    transform: transformCasusAanvragen,
+    transform: consolidateCasusAanvragenWithSingleBeschiktProduct,
   });
 }
 
@@ -548,7 +543,7 @@ export const forTesting = {
   transformDocumenten,
   transformZorgnedAanvraag,
   transformZorgnedAanvragen,
-  transformCasusAanvragen,
+  transformCasusAanvragen: consolidateCasusAanvragenWithSingleBeschiktProduct,
   transformZorgnedPersonResponse,
   fetchAanvragen,
   fetchDocument,
