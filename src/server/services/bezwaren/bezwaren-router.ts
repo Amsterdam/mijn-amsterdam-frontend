@@ -27,13 +27,12 @@ attachDocumentDownloadRoute(
 
 if (!IS_PRODUCTION) {
   bezwarenRouterProtected.get(
-    routes.protected.BEZWAREN_RAW,
-    handleFetchBezwarenRaw
-  );
-
-  bezwarenRouterProtected.get(
     routes.protected.BEZWAREN_DETAIL_RAW,
     handleFetchBezwaarDetailRaw
+  );
+  bezwarenRouterProtected.get(
+    routes.protected.BEZWAREN_RAW,
+    handleFetchBezwarenRaw
   );
 }
 
