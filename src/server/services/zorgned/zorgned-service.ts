@@ -543,7 +543,7 @@ export const forTesting = {
   transformDocumenten,
   transformZorgnedAanvraag,
   transformZorgnedAanvragen,
-  transformCasusAanvragen: consolidateCasusAanvragenWithSingleBeschiktProduct,
+  consolidateCasusAanvragenWithSingleBeschiktProduct,
   transformZorgnedPersonResponse,
   fetchAanvragen,
   fetchDocument,

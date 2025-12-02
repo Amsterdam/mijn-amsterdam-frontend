@@ -14,6 +14,7 @@ import {
   ZorgnedPerson,
   ZorgnedPersoonsgegevensNAWResponse,
   ZorgnedResponseDataSource,
+  type BeschiktProduct,
   type ZorgnedAanvraagSource,
   type ZorgnedPersoonSource,
 } from './zorgned-types';
@@ -24,7 +25,6 @@ import {
   apiErrorResult,
   ApiSuccessResponse,
 } from '../../../universal/helpers/api';
-import { jsonCopy } from '../../../universal/helpers/utils';
 import * as request from '../../helpers/source-api-request';
 import { ZORGNED_AV_API_CONFIG_KEY } from '../hli/hli-service-config';
 import { ZORGNED_JZD_API_CONFIG_KEY } from '../wmo/wmo-service-config';
@@ -621,7 +621,18 @@ describe('fetchRelatedPersons', async () => {
     ]);
   });
 
-  describe('transformCasusAanvragen', () => {
+  describe('consolidateCasusAanvragenWithSingleBeschiktProduct', () => {
+    const beschiktProduct = {
+      identificatie: '123-beschikt-product',
+      product: {
+        omschrijving: 'Een geleverde product of dienst',
+        productsoortCode: '',
+        identificatie: undefined,
+      },
+      resultaat: 'toegewezen',
+      toegewezenProduct: null,
+    } as BeschiktProduct;
+
     const aanvragenSource: ZorgnedAanvraagSource[] = [
       {
         identificatie: '123',
@@ -629,18 +640,7 @@ describe('fetchRelatedPersons', async () => {
         datumAanvraag: '2025-01-01',
         beschikking: {
           beschikkingNummer: 456,
-          beschikteProducten: [
-            {
-              identificatie: '123-beschikt-product',
-              product: {
-                omschrijving: 'Een geleverde product of dienst',
-                productsoortCode: '',
-                identificatie: undefined,
-              },
-              resultaat: 'toegewezen',
-              toegewezenProduct: null,
-            },
-          ],
+          beschikteProducten: [beschiktProduct],
         },
         documenten: [
           {
@@ -654,12 +654,31 @@ describe('fetchRelatedPersons', async () => {
         ],
       },
       {
-        identificatie: '456',
+        identificatie: '1234',
         casusIdentificatie: 'casus-123',
         datumAanvraag: '2025-02-01',
+        beschikking: {
+          beschikkingNummer: 456,
+          beschikteProducten: [beschiktProduct],
+        },
         documenten: [
           {
             datumDefinitief: '2025-02-01T00:00:00',
+            documentidentificatie: 'XYZ',
+            omschrijving: 'Besluit: wijziging goedgekeurd',
+            omschrijvingclientportaal: 'Besluit: wijziging goedgekeurd',
+            zaakidentificatie: null,
+            bestandsnaam: 'XYZ.pdf',
+          },
+        ],
+      },
+      {
+        identificatie: '456',
+        casusIdentificatie: 'casus-123',
+        datumAanvraag: '2025-03-01',
+        documenten: [
+          {
+            datumDefinitief: '2025-03-01T00:00:00',
             documentidentificatie: 'DEF',
             omschrijving: 'Verzoek: meer informatie over aanvraag',
             omschrijvingclientportaal: 'Verzoek: meer informatie over aanvraag',
@@ -679,7 +698,10 @@ describe('fetchRelatedPersons', async () => {
     };
 
     it('Adds documents from aanvragen without beschikking within the same casus to the aanvraag with beschiktProduct', () => {
-      const transformed = forTesting.transformCasusAanvragen(responseSource);
+      const transformed =
+        forTesting.consolidateCasusAanvragenWithSingleBeschiktProduct(
+          responseSource
+        );
 
       expect(transformed).toMatchObject([
         {
@@ -687,10 +709,17 @@ describe('fetchRelatedPersons', async () => {
           datumAanvraag: '2025-01-01',
           documenten: [
             {
-              datePublished: '2025-02-01T00:00:00',
+              datePublished: '2025-03-01T00:00:00',
               filename: 'DEF.pdf',
               id: 'DEF',
               title: 'Verzoek: meer informatie over aanvraag',
+              url: '',
+            },
+            {
+              datePublished: '2025-02-01T00:00:00',
+              filename: 'XYZ.pdf',
+              id: 'XYZ',
+              title: 'Besluit: wijziging goedgekeurd',
               url: '',
             },
             {
@@ -708,7 +737,7 @@ describe('fetchRelatedPersons', async () => {
     });
 
     it('does __not__ combine documents if 1 or more aanvragen within same casus have more than 1 beschiktproduct', () => {
-      const responseSource2 = jsonCopy(responseSource);
+      const responseSource2 = structuredClone(responseSource);
       // Add another aanvraag with a different beschikt product in the same casus.
       responseSource2._embedded.aanvraag[0].beschikking.beschikteProducten.push(
         {
@@ -723,24 +752,35 @@ describe('fetchRelatedPersons', async () => {
         }
       );
 
-      const transformed = forTesting.transformCasusAanvragen(responseSource2);
+      const transformed =
+        forTesting.consolidateCasusAanvragenWithSingleBeschiktProduct(
+          responseSource2
+        );
 
       expect(transformed).toMatchObject([
         {
           beschikkingNummer: 456,
+          beschiktProductIdentificatie: '123-beschikt-product',
+          id: '456-123-beschikt-product',
+          documenten: [{ datePublished: '2025-02-01T00:00:00' }],
+        },
+        {
+          beschikkingNummer: 456,
           beschiktProductIdentificatie: '789-beschikt-product',
           id: '456-789-beschikt-product',
+          documenten: [{ datePublished: '2025-01-01T00:00:00' }],
         },
         {
           beschikkingNummer: 456,
           beschiktProductIdentificatie: '123-beschikt-product',
           id: '456-123-beschikt-product',
+          documenten: [{ datePublished: '2025-01-01T00:00:00' }],
         },
       ]);
     });
 
     it('skips combining documents if none of the aanvragen are within the same casus', () => {
-      const responseSource2 = jsonCopy(responseSource);
+      const responseSource2 = structuredClone(responseSource);
       // Add another aanvraag with a different beschikt product in the same casus.
       responseSource2._embedded.aanvraag = [
         responseSource2._embedded.aanvraag[0],
@@ -776,7 +816,10 @@ describe('fetchRelatedPersons', async () => {
           ],
         },
       ];
-      const transformed = forTesting.transformCasusAanvragen(responseSource2);
+      const transformed =
+        forTesting.consolidateCasusAanvragenWithSingleBeschiktProduct(
+          responseSource2
+        );
 
       expect(transformed).toMatchObject([
         {
