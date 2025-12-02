@@ -31,7 +31,7 @@ export function CobrowseFooter() {
       return;
     }
     import('./lib/cobrowse-widget.js').then(({ CobrowseWidget }) => {
-      const redactedViews = [REDACTED_CLASS];
+      const redactedViews = [`.${REDACTED_CLASS}`];
       const widget = new CobrowseWidget(licenseKey, redactedViews);
       setCobrowseWidget(widget);
     });
