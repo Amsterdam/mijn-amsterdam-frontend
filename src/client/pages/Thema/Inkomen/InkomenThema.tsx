@@ -77,6 +77,7 @@ export function InkomenThema() {
         </>
       }
       linkListItems={linkListItems}
+      maintenanceNotificationsPageSlug="inkomen"
     />
   );
 }

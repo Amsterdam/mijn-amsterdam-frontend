@@ -19,6 +19,7 @@ import { getFromEnv } from '../helpers/env';
 import { getHostNameFromUrl } from '../helpers/source-api-helpers';
 
 const RESET_AD_HOC_DEPENDENCY_REQUEST_CACHE_TTL_TIMEOUT_MS = ONE_HOUR_MS;
+export const FORCE_RENEW_CACHE_TTL_MS = 1;
 
 let adHocDependencyRequestCacheTtlMs: undefined | number;
 let resetAdHocDependencyRequestCacheTtlMsTimeout: NodeJS.Timeout | undefined =
@@ -249,7 +250,6 @@ const ApiConfig_ = {
   },
   CMS_MAINTENANCE_NOTIFICATIONS: {
     url: `${getFromEnv('BFF_CMS_BASE_URL')}/storingsmeldingen/alle-meldingen-mijn-amsterdam?new_json=true&reload=true`,
-    cacheTimeout: ONE_HOUR_MS, // 1 hour
   },
   BENK_BRP: {
     url: `${getFromEnv('BFF_BENK_BRP_API_BASE_URL')}`,

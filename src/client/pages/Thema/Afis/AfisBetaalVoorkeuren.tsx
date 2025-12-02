@@ -253,6 +253,7 @@ export function AfisBetaalVoorkeuren() {
       linkListItems={linkListItems}
       pageContentTop={pageContentTop}
       pageContentMain={pageContentMain}
+      maintenanceNotificationsPageSlug="afis"
     />
   );
 }

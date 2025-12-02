@@ -23,7 +23,7 @@ import { fetchBezwaren } from './bezwaren/bezwaren';
 import { fetchLoodmetingen } from './bodem/loodmetingen';
 import { fetchBrp } from './brp/brp';
 import { fetchMijnAmsterdamUitlegPage } from './cms/cms-content';
-import { fetchMaintenanceNotificationsActual } from './cms/cms-maintenance-notifications';
+import { fetchActiveMaintenanceNotifications } from './cms/cms-maintenance-notifications';
 import { fetchErfpacht } from './erfpacht/erfpacht';
 import { fetchHLI } from './hli/hli';
 import { fetchHorecaVergunningen } from './horeca/horeca';
@@ -117,7 +117,7 @@ const CMS_CONTENT = (req: RequestWithQueryParams<{ renewCache?: 'true' }>) => {
   );
 };
 const CMS_MAINTENANCE_NOTIFICATIONS = callPublicService(
-  fetchMaintenanceNotificationsActual
+  fetchActiveMaintenanceNotifications
 );
 
 // Protected services

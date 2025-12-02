@@ -165,3 +165,4 @@ process.env.BFF_BENK_BRP_API_BASE_URL = `${remoteApiHost}/benk_brp`;
 
 process.env.BFF_DATAPUNT_IAM_API_BASE_URL = `${remoteApiHost}/datapunt/iam`;
 process.env.BFF_HR_KVK_API_BASE_URL = `${remoteApiHost}/hr_kvk`;
+process.env.BFF_CMS_BASE_URL = `${remoteApiHost}/cms`;

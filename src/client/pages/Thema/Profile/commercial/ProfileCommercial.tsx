@@ -113,6 +113,7 @@ export function MijnBedrijfsGegevensThema() {
         />
       }
       pageContentMain={<ProfileCommercialSectionPanels />}
+      maintenanceNotificationsPageSlug="kvk"
     />
   );
 }
