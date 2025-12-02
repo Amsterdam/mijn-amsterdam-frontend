@@ -64,7 +64,9 @@ export function PageV2({
           </PageContentCell>
         </Grid>
         <Grid
-          className={getRedactedClass(redactedThemaId, redactedScope)}
+          className={classNames(
+            getRedactedClass(redactedThemaId, redactedScope)
+          )}
           paddingBottom={PADDING_BOTTOM}
         >
           {children}
