@@ -35,7 +35,6 @@ interface ThemaPaginaProps {
   isLoading: boolean;
   maintenanceNotificationsPageSlug?: string;
 }
-
 export default function ThemaPagina({
   id,
   title,
@@ -56,9 +55,7 @@ export default function ThemaPagina({
   return (
     <PageV2 heading={title} breadcrumbs={breadcrumbs} redactedThemaId={id}>
       {maintenanceNotificationsPageSlug && (
-        <PageContentCell>
-          <MaintenanceNotifications page={maintenanceNotificationsPageSlug} />
-        </PageContentCell>
+        <MaintenanceNotifications page={maintenanceNotificationsPageSlug} />
       )}
       {pageContentTop}
       {!!linkListItems.length && (
