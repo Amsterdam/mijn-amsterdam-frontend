@@ -1,4 +1,4 @@
-import { HTMLProps, ReactNode } from 'react';
+import { HTMLProps, ReactNode, type ReactElement } from 'react';
 
 import {
   Grid,
@@ -19,7 +19,7 @@ import {
 export interface PageProps extends HTMLProps<HTMLDivElement> {
   className?: string;
   children: ReactNode;
-  heading: string;
+  heading: ReactElement | string;
   isWide?: boolean;
   showBreadcrumbs?: boolean;
   redactedThemaId?: string | null;
@@ -76,8 +76,6 @@ export function PageV2({
   );
 }
 
-export const TextPageV2 = PageV2;
-export const OverviewPageV2 = PageV2;
 export const DetailPageV2 = PageV2;
 
 export function PageContentV2({ children }: PageProps) {
