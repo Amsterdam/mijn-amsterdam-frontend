@@ -1,7 +1,7 @@
 import { themaId, themaTitle } from './Inkomen-thema-config';
-import { InfoSection } from '../../GeneralInfo/GeneralInfo';
+import { InfoSection_DEPRECATED } from '../../GeneralInfo/GeneralInfo';
 
-export const inkomenSectionProps: InfoSection = {
+export const inkomenSectionProps: InfoSection_DEPRECATED = {
   id: themaId,
   title: themaTitle,
   listItems: [

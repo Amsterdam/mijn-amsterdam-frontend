@@ -146,7 +146,7 @@ export function AfisThema() {
       state,
       { title, displayProps, maxItems, listPageLinkLabel, listPageRoute },
     ]) => {
-      const subTitleNode =
+      const contentAfterTheTitle =
         state === 'overgedragen' && !!facturenByState?.[state]?.facturen.length
           ? state === 'overgedragen' && <AfisDisclaimerOvergedragenFacturen />
           : null;
@@ -154,7 +154,7 @@ export function AfisThema() {
         <ThemaPaginaTable<AfisFactuurFrontend>
           key={state}
           title={title}
-          subTitle={subTitleNode}
+          contentAfterTheTitle={contentAfterTheTitle}
           zaken={facturenByState?.[state]?.facturen ?? []}
           displayProps={displayProps}
           maxItems={maxItems}
@@ -184,6 +184,7 @@ export function AfisThema() {
           {pageContentTables}
         </>
       }
+      maintenanceNotificationsPageSlug="afis"
     />
   );
 }

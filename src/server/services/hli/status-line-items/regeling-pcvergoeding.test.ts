@@ -658,6 +658,7 @@ describe('pcvergoeding', () => {
     const testData = [
       {
         id: '2',
+        prettyID: '2',
         titel: 'Gratis laptop of tablet basis onderwijs',
         productIdentificatie: AV_PCTGBO,
         betrokkenen: ['A'],
@@ -669,6 +670,7 @@ describe('pcvergoeding', () => {
       },
       {
         id: '1',
+        prettyID: '1',
         titel: 'Gratis laptop of tablet voortgezet onderwijs',
         productIdentificatie: AV_PCTGVO,
         betrokkenen: ['A'],

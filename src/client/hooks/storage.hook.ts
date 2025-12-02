@@ -146,9 +146,9 @@ function useWindowStorage(
   return handler;
 }
 
-export function useStorage(
+export function useStorage<T>(
   key: string,
-  initialValue: any,
+  initialValue: T,
   adapter: Storage | MemoryAdapter = localStorage
 ) {
   let val = null;

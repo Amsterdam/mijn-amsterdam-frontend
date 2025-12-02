@@ -1,4 +1,4 @@
-import https from 'https';
+import https from 'node:https';
 
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
@@ -8,6 +8,7 @@ import {
   ONE_MINUTE_MS,
   ONE_SECOND_MS,
 } from './app';
+import { featureToggle as featureToggleAfis } from '../../client/pages/Thema/Afis/Afis-thema-config';
 import { themaConfig as themaConfigBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config';
 import { featureToggle as featureToggleErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
 import { featureToggle as featureToggleHLI } from '../../client/pages/Thema/HLI/HLI-thema-config';
@@ -18,6 +19,7 @@ import { getFromEnv } from '../helpers/env';
 import { getHostNameFromUrl } from '../helpers/source-api-helpers';
 
 const RESET_AD_HOC_DEPENDENCY_REQUEST_CACHE_TTL_TIMEOUT_MS = ONE_HOUR_MS;
+export const FORCE_RENEW_CACHE_TTL_MS = 1;
 
 let adHocDependencyRequestCacheTtlMs: undefined | number;
 let resetAdHocDependencyRequestCacheTtlMsTimeout: NodeJS.Timeout | undefined =
@@ -104,7 +106,7 @@ const afisFeatureToggle = getFromEnv('BFF_AFIS_FEATURE_TOGGLE_ACTIVE');
 const postponeFetchAfis =
   typeof afisFeatureToggle !== 'undefined'
     ? afisFeatureToggle === 'false'
-    : !FeatureToggle.afisActive;
+    : !featureToggleAfis.AfisActive;
 
 const contactmomentenFeatureToggle = getFromEnv(
   'BFF_CONTACTMOMENTEN_FEATURE_TOGGLE_ACTIVE'
@@ -124,6 +126,7 @@ const ApiConfig_ = {
     postponeFetch: postponeFetchAfis,
     url: `${getFromEnv('BFF_AFIS_API_BASE_URL')}`,
   },
+  POM: { method: 'POST', url: `${getFromEnv('BFF_POM_API_BASE_URL')}` },
   ZORGNED_JZD: {
     method: 'post',
     url: `${getFromEnv('BFF_ZORGNED_API_BASE_URL')}`,
@@ -247,7 +250,6 @@ const ApiConfig_ = {
   },
   CMS_MAINTENANCE_NOTIFICATIONS: {
     url: `${getFromEnv('BFF_CMS_BASE_URL')}/storingsmeldingen/alle-meldingen-mijn-amsterdam?new_json=true&reload=true`,
-    cacheTimeout: ONE_HOUR_MS, // 1 hour
   },
   BRP: {
     url: `${getFromEnv('BFF_MKS_API_BASE_URL')}/brp/brp`,

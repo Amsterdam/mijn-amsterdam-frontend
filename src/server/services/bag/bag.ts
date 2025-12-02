@@ -1,4 +1,8 @@
-import { BAGQueryParams, type BAGData, type BAGSourceData } from './bag.types';
+import {
+  BAGQueryParams,
+  type BAGLocation,
+  type BAGSourceData,
+} from './bag.types';
 import {
   apiErrorResult,
   type ApiResponse,
@@ -11,7 +15,7 @@ import type { Adres } from '../brp/brp-types';
 function transformBagResponse(
   sourceAddress: Adres,
   responseData: BAGSourceData
-): BAGData | null {
+): BAGLocation | null {
   const data = responseData._embedded?.adresseerbareobjecten;
   if (!data?.length) {
     return null;
@@ -28,13 +32,14 @@ function transformBagResponse(
     latlng,
     address: sourceAddress,
     bagAddress: firstItem,
+    mokum: firstItem.brkGemeenteNaam === 'Amsterdam',
     bagNummeraanduidingId: firstItem.identificatie,
   };
 }
 
 export async function fetchBAG(
   sourceAddress: Adres | null
-): Promise<ApiResponse<BAGData>> {
+): Promise<ApiResponse<BAGLocation>> {
   if (!sourceAddress?.straatnaam || !sourceAddress.huisnummer) {
     return apiErrorResult('Could not query BAG, no address supplied.', null);
   }
@@ -47,9 +52,9 @@ export async function fetchBAG(
 
   const config = getApiConfig('BAG', {
     params,
-    transformResponse(responseData: BAGSourceData): BAGData | null {
+    transformResponse(responseData: BAGSourceData): BAGLocation | null {
       return transformBagResponse(sourceAddress, responseData);
     },
   });
-  return requestData<BAGData>(config);
+  return requestData<BAGLocation>(config);
 }

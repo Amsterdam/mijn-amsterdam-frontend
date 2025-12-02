@@ -4,9 +4,9 @@ import {
   stadspasTitle,
   themaId,
 } from './HLI-thema-config';
-import { InfoSection } from '../../GeneralInfo/GeneralInfo';
+import { InfoSection_DEPRECATED } from '../../GeneralInfo/GeneralInfo';
 
-export const HLIRegelingenSectionProps: InfoSection = {
+export const HLIRegelingenSectionProps: InfoSection_DEPRECATED = {
   id: themaId,
   title: regelingenTitle,
   listItems: [
@@ -23,7 +23,7 @@ export const HLIRegelingenSectionProps: InfoSection = {
   ],
   active: featureToggle.hliThemaRegelingenActive,
 };
-export const HLIstadspasSectionProps: InfoSection = {
+export const HLIstadspasSectionProps: InfoSection_DEPRECATED = {
   id: themaId,
   title: stadspasTitle,
   listItems: [

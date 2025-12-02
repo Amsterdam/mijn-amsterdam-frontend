@@ -61,6 +61,7 @@ export interface ZorgnedStatusLineItemsConfig<
 export type LeveringsVorm = 'ZIN' | 'PGB' | '' | string;
 export type ProductSoortCode = string;
 export type ProductIdentificatie = string;
+export type CasusIdentificatie = string;
 
 export interface Levering {
   begindatum: string | null;
@@ -77,7 +78,7 @@ interface Leverancier {
   omschrijving: string;
 }
 
-export type BeschikkingsResultaat = 'toegewezen' | 'afgewezen' | null;
+export type BeschikkingsResultaat = 'toegewezen' | 'afgewezen';
 
 export interface ToegewezenProduct {
   actueel: boolean;
@@ -96,7 +97,7 @@ export interface BeschiktProduct {
     productsoortCode: ProductSoortCode;
     identificatie?: ProductIdentificatie;
   };
-  resultaat: BeschikkingsResultaat | null;
+  resultaat: BeschikkingsResultaat;
   toegewezenProduct: ToegewezenProduct | null;
 }
 
@@ -129,6 +130,7 @@ export interface ZorgnedAanvraagSource {
   procesAanvraag?: ZorgnedProcesAanvraag;
   documenten: ZorgnedDocument[];
   identificatie: string;
+  casusIdentificatie: CasusIdentificatie | null;
 }
 
 export type ZorgnedProcesAanvraag = {
@@ -154,6 +156,7 @@ export interface ZorgnedAanvraagTransformed {
   procesAanvraagOmschrijving: string | null;
   documenten: GenericDocument[];
   id: string;
+  prettyID: string;
   isActueel: boolean;
   leverancier: string;
   leveringsVorm: LeveringsVorm;

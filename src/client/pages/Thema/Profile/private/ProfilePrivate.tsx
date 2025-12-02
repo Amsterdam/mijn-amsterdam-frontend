@@ -159,6 +159,7 @@ export function MijnGegevensThema() {
       isLoading={!isThemaPaginaError && isThemaPaginaLoading}
       linkListItems={linkListItems}
       pageContentTop={pageContentTop}
+      maintenanceNotificationsPageSlug="brp"
       pageContentMain={
         <>
           {brpContent?.persoon?.vertrokkenOnbekendWaarheen && (

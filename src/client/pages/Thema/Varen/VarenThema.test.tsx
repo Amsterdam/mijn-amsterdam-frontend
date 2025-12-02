@@ -176,7 +176,7 @@ describe('<Varen />', () => {
     it('Shows the reder data', () => {
       const screen = render(<Component state={getTestState([])} />);
 
-      const gegevensAanvragerTitle = screen.getByText('Gegevens Aanvrager');
+      const gegevensAanvragerTitle = screen.getByText('Gegevens onderneming');
       expect(gegevensAanvragerTitle).toBeInTheDocument();
 
       const naamAanvrager = screen.getByText('Naam aanvrager');

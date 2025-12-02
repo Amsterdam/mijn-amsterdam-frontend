@@ -1,7 +1,7 @@
 import { routeConfig, themaId, themaTitle } from './MyArea-thema-config';
-import { InfoSection } from '../../pages/GeneralInfo/GeneralInfo';
+import { InfoSection_DEPRECATED } from '../../pages/GeneralInfo/GeneralInfo';
 
-export const myAreaSectionProps: InfoSection = {
+export const myAreaSectionProps: InfoSection_DEPRECATED = {
   id: themaId,
   title: themaTitle,
   to: routeConfig.themaPage.path,

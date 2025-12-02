@@ -84,6 +84,7 @@ describe('fetchPrivate', () => {
             lat: 52.3676842478192,
             lng: 4.90022569871861,
           },
+          mokum: true,
           profileType: 'private',
         },
       ],
@@ -105,6 +106,7 @@ describe('fetchPrivate', () => {
         address: null,
         bagAddress: null,
         latlng: null,
+        mokum: false,
         profileType: 'private',
       },
     ]);

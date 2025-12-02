@@ -138,6 +138,11 @@ exports[`With basic request where data returned does not matter > Matches snapsh
         <span
           style="width: 60rem; height: 2rem; margin-bottom: 4rem;"
         />
+        <span
+          class="ams-visually-hidden"
+        >
+          Inhoud wordt opgehaald...
+        </span>
       </span>
     </div>
   </div>

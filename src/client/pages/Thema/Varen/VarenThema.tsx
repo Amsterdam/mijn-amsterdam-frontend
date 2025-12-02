@@ -115,7 +115,7 @@ export function VarenPageContentRederRegistratie({
   return (
     <Grid.Cell span="all">
       <Heading level={3} size="level-2">
-        Gegevens Aanvrager
+        Gegevens onderneming
       </Heading>
       <Datalist rows={rows} className={styles.VarenGridWithoutRowGap} />
     </Grid.Cell>
@@ -189,6 +189,7 @@ export function VarenThema() {
       isError={isError}
       pageContentTop={pageContentTop}
       pageContentTopSecondary={actionButtons}
+      maintenanceNotificationsPageSlug="varen"
       pageContentMain={
         <>
           {gegevensRegistratieReder}

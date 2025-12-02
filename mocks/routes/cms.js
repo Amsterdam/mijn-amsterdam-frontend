@@ -4,8 +4,7 @@ const settings = require('../settings');
 const ALLE_RESPONSE = loadFixtureAndReplaceBaseUrl(
   'cms-maintenance-notifications-alle.json'
 );
-const DASHBOARD_RESPONSE = require('../fixtures/cms-maintenance-notifications-dashboard.json');
-const LANDINGSPAGE_RESPONSE = require('../fixtures/cms-maintenance-notifications-landingspagina.json');
+const DETAIL_RESPONSE = require('../fixtures/cms-maintenance-notifications-item.json');
 const PRODUCTEN_OP_MA = require('../fixtures/cms-producten.json');
 const FOOTER = require('../fixtures/cms-footer.json');
 // The BFF Caches the responses to these requests in root/src/server/cache/
@@ -27,32 +26,23 @@ module.exports = [
   },
   // The first URL will get the endpoint of this one by reading maintenance-notifications-dashboard.json, the property 'feedid' will contain the URL.
   {
-    id: 'get-cms-maintainance-notifications-dashboard',
-    url: `${settings.MOCK_BASE_PATH}/cms/storingsmeldingen/alle-meldingen-mijn-amsterdam/dashboard`,
+    id: 'get-cms-maintainance-notifications-by-page',
+    url: `${settings.MOCK_BASE_PATH}/cms/storingsmeldingen/alle-meldingen-mijn-amsterdam/:page`,
     method: 'GET',
     variants: [
       {
         id: 'standard',
-        type: 'json',
+        type: 'middleware',
         options: {
-          status: 200,
-          body: DASHBOARD_RESPONSE,
-        },
-      },
-    ],
-  },
-  // Same comment as above
-  {
-    id: 'get-cms-maintainance-notifications-landingspagina',
-    url: `${settings.MOCK_BASE_PATH}/cms/storingsmeldingen/alle-meldingen-mijn-amsterdam/landingspagina`,
-    method: 'GET',
-    variants: [
-      {
-        id: 'standard',
-        type: 'json',
-        options: {
-          status: 200,
-          body: LANDINGSPAGE_RESPONSE,
+          middleware: (req, res) => {
+            const { page } = req.params;
+            const r = structuredClone(DETAIL_RESPONSE);
+            r.item.Url = `https://www.amsterdam.nl/storingsmeldingen/alle-meldingen-mijn-amsterdam/${page}/`;
+            r.item.relUrl = `storingsmeldingen/alle-meldingen-mijn-amsterdam/${page}`;
+            r.item.page.Lbl =
+              page.charAt(0).toUpperCase() + page.slice(1).replace(/-/g, ' ');
+            return res.send(r);
+          },
         },
       },
     ],

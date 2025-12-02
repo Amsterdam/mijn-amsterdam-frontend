@@ -23,7 +23,7 @@ import {
 import {
   WMOVoorzieningFrontend,
   type WMOVoorzieningCompact,
-} from './wmo-config-and-types';
+} from './wmo-types';
 import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service';
 import { getLatestStatus, getLatestStatusDate } from '../../helpers/zaken';
 import {
@@ -69,7 +69,7 @@ function transformVoorzieningForFrontend(
   sessionID: SessionID,
   aanvragen: ZorgnedAanvraagTransformed[]
 ): WMOVoorzieningFrontend | null {
-  const id = aanvraag.id;
+  const id = aanvraag.prettyID;
 
   const route = generatePath(routeConfig.detailPage.path, {
     id,

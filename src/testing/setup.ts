@@ -165,10 +165,14 @@ process.env.DEBUG_RESPONSE_DATA = '';
 
 process.env.BFF_CONTACTMOMENTEN_BASE_URL = `${remoteApiHost}/salesforce/contactmomenten`;
 
+process.env.BFF_POM_API_BASE_URL = `${remoteApiHost}/pom`;
+
 process.env.BFF_BENK_BRP_CLIENT_ID = 'test-client-id';
 process.env.BFF_BENK_BRP_CLIENT_SECRET = 'test-client-secret';
 process.env.BFF_BENK_BRP_TENANT = 'test-tenant';
 process.env.BFF_BENK_BRP_APPLICATION_ID = 'test-app-id';
 process.env.BFF_BENK_BRP_API_BASE_URL = `${remoteApiHost}/benk_brp`;
+
+process.env.BFF_CMS_BASE_URL = `${remoteApiHost}/cms`;
 
 process.env.REACT_APP_COBROWSE_LICENSE_KEY = 'test';

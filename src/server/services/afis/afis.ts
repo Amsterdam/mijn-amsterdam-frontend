@@ -8,12 +8,13 @@ import {
 import {
   apiSuccessResult,
   getFailedDependencies,
+  type ApiResponse,
 } from '../../../universal/helpers/api';
 import { omit } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_MINUTE_MS } from '../../config/app';
 import { DataRequestConfig } from '../../config/source-api';
-import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
+import { encryptPayloadAndSessionID } from '../../helpers/encrypt-decrypt';
 import { getFromEnv } from '../../helpers/env';
 import {
   getApiConfig,
@@ -80,10 +81,9 @@ function transformBusinessPartnerisKnownResponse(
     : null;
 
   if (businessPartnerId) {
-    businessPartnerIdEncrypted = encryptSessionIdWithRouteIdParam(
-      sessionID,
-      businessPartnerId
-    );
+    businessPartnerIdEncrypted = encryptPayloadAndSessionID(sessionID, {
+      businessPartnerId,
+    });
   }
 
   const themaResponseContent: Omit<AfisThemaResponse, 'facturen'> = {
@@ -101,7 +101,7 @@ function transformBusinessPartnerisKnownResponse(
 /** Returns if the person logging in, is known in the AFIS source API */
 export async function fetchIsKnownInAFIS(
   authProfileAndToken: AuthProfileAndToken
-) {
+): Promise<ApiResponse<AfisThemaResponse>> {
   const profileIdentifierType =
     authProfileAndToken.profile.profileType === 'commercial' ? 'KVK' : 'BSN';
 
@@ -126,7 +126,7 @@ export async function fetchIsKnownInAFIS(
 
   const dataRequestConfig = await getAfisApiConfig(additionalConfig);
 
-  const response = await requestData<AfisThemaResponse | null>(
+  const response = await requestData<AfisThemaResponse>(
     dataRequestConfig,
     authProfileAndToken
   );
