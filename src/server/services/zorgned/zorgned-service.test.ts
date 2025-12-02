@@ -1,4 +1,5 @@
 import Mockdate from 'mockdate';
+import type nock from 'nock';
 
 import {
   fetchAanvragen,
@@ -13,6 +14,8 @@ import {
   ZorgnedPerson,
   ZorgnedPersoonsgegevensNAWResponse,
   ZorgnedResponseDataSource,
+  type BeschiktProduct,
+  type ZorgnedAanvraagSource,
   type ZorgnedPersoonSource,
 } from './zorgned-types';
 import ZORGNED_JZD_AANVRAGEN from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json';
@@ -143,8 +146,8 @@ describe('zorgned-service', () => {
         datumOpdrachtLevering: null,
         datumToewijzing: null,
         documenten: [],
-        id: '300111429-912837sdfsdf198723',
-        prettyID: '300111429-912837sdfsdf198723',
+        id: '300111429-116841',
+        prettyID: '300111429-116841',
         isActueel: true,
         procesAanvraagOmschrijving: null,
         leverancier: 'Gebr Koenen B.V.',
@@ -208,8 +211,8 @@ describe('zorgned-service', () => {
       mimetype: 'application/pdf',
     },
     '"xxx"',
-  ])('should return error for response %s', async (payload: any) => {
-    remoteApi.post('/zorgned/document').reply(200, payload);
+  ])('should return error for response %s', async (payload) => {
+    remoteApi.post('/zorgned/document').reply(200, payload as nock.Body);
 
     const BSN = '567890';
     const result = await fetchDocument(
@@ -417,8 +420,8 @@ describe('zorgned-service', () => {
             datumOpdrachtLevering: '2024-01-25T17:10:55.2733333',
             datumToewijzing: '2024-01-25T17:10:55.2733333',
             documenten: [],
-            id: '300967777-1126685618',
-            prettyID: '300967777-1126685618',
+            id: '300967777-1',
+            prettyID: '300967777-1',
             isActueel: true,
             leverancier: 'Gebr Koenen B.V.',
             leveringsVorm: 'ZIN',
@@ -616,5 +619,242 @@ describe('fetchRelatedPersons', async () => {
       { id: 'a3', dateDecision: '2023-02-01' },
       { id: 'a1', dateDecision: '2023-01-01' },
     ]);
+  });
+
+  describe('consolidateCasusAanvragenWithSingleBeschiktProduct', () => {
+    const beschiktProduct = {
+      identificatie: '123-beschikt-product',
+      product: {
+        omschrijving: 'Een geleverde product of dienst',
+        productsoortCode: '',
+        identificatie: undefined,
+      },
+      resultaat: 'toegewezen',
+      toegewezenProduct: null,
+    } as BeschiktProduct;
+
+    const aanvragenSource: ZorgnedAanvraagSource[] = [
+      {
+        identificatie: '123',
+        casusIdentificatie: 'casus-123',
+        datumAanvraag: '2025-01-01',
+        beschikking: {
+          beschikkingNummer: 456,
+          beschikteProducten: [beschiktProduct],
+        },
+        documenten: [
+          {
+            datumDefinitief: '2025-01-01T00:00:00',
+            documentidentificatie: 'ABC',
+            omschrijving: 'Besluit: aanvraag goedgekeurd',
+            omschrijvingclientportaal: 'Besluit: aanvraag goedgekeurd',
+            zaakidentificatie: null,
+            bestandsnaam: 'ABC.pdf',
+          },
+        ],
+      },
+      {
+        identificatie: '1234',
+        casusIdentificatie: 'casus-123',
+        datumAanvraag: '2025-02-01',
+        beschikking: {
+          beschikkingNummer: 456,
+          beschikteProducten: [beschiktProduct],
+        },
+        documenten: [
+          {
+            datumDefinitief: '2025-02-01T00:00:00',
+            documentidentificatie: 'XYZ',
+            omschrijving: 'Besluit: wijziging goedgekeurd',
+            omschrijvingclientportaal: 'Besluit: wijziging goedgekeurd',
+            zaakidentificatie: null,
+            bestandsnaam: 'XYZ.pdf',
+          },
+        ],
+      },
+      {
+        identificatie: '456',
+        casusIdentificatie: 'casus-123',
+        datumAanvraag: '2025-03-01',
+        documenten: [
+          {
+            datumDefinitief: '2025-03-01T00:00:00',
+            documentidentificatie: 'DEF',
+            omschrijving: 'Verzoek: meer informatie over aanvraag',
+            omschrijvingclientportaal: 'Verzoek: meer informatie over aanvraag',
+            zaakidentificatie: null,
+            bestandsnaam: 'DEF.pdf',
+          },
+        ],
+        beschikking: {
+          beschikkingNummer: 0,
+          beschikteProducten: [],
+        },
+      },
+    ];
+
+    const responseSource = {
+      _embedded: { aanvraag: aanvragenSource },
+    };
+
+    it('Adds documents from aanvragen without beschikking within the same casus to the aanvraag with beschiktProduct', () => {
+      const transformed =
+        forTesting.consolidateCasusAanvragenWithSingleBeschiktProduct(
+          responseSource
+        );
+
+      expect(transformed).toMatchObject([
+        {
+          beschikkingNummer: 456,
+          datumAanvraag: '2025-01-01',
+          documenten: [
+            {
+              datePublished: '2025-03-01T00:00:00',
+              filename: 'DEF.pdf',
+              id: 'DEF',
+              title: 'Verzoek: meer informatie over aanvraag',
+              url: '',
+            },
+            {
+              datePublished: '2025-02-01T00:00:00',
+              filename: 'XYZ.pdf',
+              id: 'XYZ',
+              title: 'Besluit: wijziging goedgekeurd',
+              url: '',
+            },
+            {
+              datePublished: '2025-01-01T00:00:00',
+              filename: 'ABC.pdf',
+              id: 'ABC',
+              title: 'Besluit: aanvraag goedgekeurd',
+              url: '',
+            },
+          ],
+          id: '456-123-beschikt-product',
+          titel: 'Een geleverde product of dienst',
+        },
+      ]);
+    });
+
+    it('does __not__ combine documents if 1 or more aanvragen within same casus have more than 1 beschiktproduct', () => {
+      const responseSource2 = structuredClone(responseSource);
+      // Add another aanvraag with a different beschikt product in the same casus.
+      responseSource2._embedded.aanvraag[0].beschikking.beschikteProducten.push(
+        {
+          identificatie: '789-beschikt-product',
+          product: {
+            omschrijving: 'Een geleverde product of dienst',
+            productsoortCode: '',
+            identificatie: undefined,
+          },
+          resultaat: 'toegewezen',
+          toegewezenProduct: null,
+        }
+      );
+
+      const transformed =
+        forTesting.consolidateCasusAanvragenWithSingleBeschiktProduct(
+          responseSource2
+        );
+
+      expect(transformed).toMatchObject([
+        {
+          beschikkingNummer: 456,
+          beschiktProductIdentificatie: '123-beschikt-product',
+          id: '456-123-beschikt-product',
+          documenten: [{ datePublished: '2025-02-01T00:00:00' }],
+        },
+        {
+          beschikkingNummer: 456,
+          beschiktProductIdentificatie: '789-beschikt-product',
+          id: '456-789-beschikt-product',
+          documenten: [{ datePublished: '2025-01-01T00:00:00' }],
+        },
+        {
+          beschikkingNummer: 456,
+          beschiktProductIdentificatie: '123-beschikt-product',
+          id: '456-123-beschikt-product',
+          documenten: [{ datePublished: '2025-01-01T00:00:00' }],
+        },
+      ]);
+    });
+
+    it('skips combining documents if none of the aanvragen are within the same casus', () => {
+      const responseSource2 = structuredClone(responseSource);
+      // Add another aanvraag with a different beschikt product in the same casus.
+      responseSource2._embedded.aanvraag = [
+        responseSource2._embedded.aanvraag[0],
+        {
+          identificatie: '789',
+          casusIdentificatie: 'casus-456', // Changed casus ID.
+          datumAanvraag: '2025-05-23',
+          beschikking: {
+            beschikkingNummer: 457,
+            beschikteProducten: [
+              {
+                identificatie: '789-beschikt-product',
+                product: {
+                  omschrijving: 'Een geleverde product of dienst',
+                  productsoortCode: '',
+                  identificatie: undefined,
+                },
+                resultaat: 'toegewezen',
+                toegewezenProduct: null,
+              },
+            ],
+          },
+          documenten: [
+            {
+              datumDefinitief: '2025-05-29T00:00:00',
+              documentidentificatie: 'HIJ',
+              omschrijving: 'Besluit: aanvraag goedgekeurd',
+              omschrijvingclientportaal:
+                'Besluit: aanvraag ander product goedgekeurd',
+              zaakidentificatie: null,
+              bestandsnaam: 'HIJ.pdf',
+            },
+          ],
+        },
+      ];
+      const transformed =
+        forTesting.consolidateCasusAanvragenWithSingleBeschiktProduct(
+          responseSource2
+        );
+
+      expect(transformed).toMatchObject([
+        {
+          beschikkingNummer: 457,
+          beschiktProductIdentificatie: '789-beschikt-product',
+          datumAanvraag: '2025-05-23',
+          documenten: [
+            {
+              datePublished: '2025-05-29T00:00:00',
+              filename: 'HIJ.pdf',
+              id: 'HIJ',
+              title: 'Besluit: aanvraag ander product goedgekeurd',
+              url: '',
+            },
+          ],
+          id: '457-789-beschikt-product',
+          titel: 'Een geleverde product of dienst',
+        },
+        {
+          beschikkingNummer: 456,
+          beschiktProductIdentificatie: '123-beschikt-product',
+          datumAanvraag: '2025-01-01',
+          documenten: [
+            {
+              datePublished: '2025-01-01T00:00:00',
+              filename: 'ABC.pdf',
+              id: 'ABC',
+              title: 'Besluit: aanvraag goedgekeurd',
+              url: '',
+            },
+          ],
+          id: '456-123-beschikt-product',
+          titel: 'Een geleverde product of dienst',
+        },
+      ]);
+    });
   });
 });
