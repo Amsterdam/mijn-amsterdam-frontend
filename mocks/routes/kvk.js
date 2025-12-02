@@ -1,3 +1,4 @@
+const maatschappelijkeactiviteitenEMZ = require('../fixtures/hr-kvk/maatschappelijkeactiviteiten-eenmanszaak.json');
 const maatschappelijkeactiviteiten = require('../fixtures/hr-kvk/maatschappelijkeactiviteiten.json');
 const vestigingen = require('../fixtures/hr-kvk/vestigingen.json');
 const settings = require('../settings.js');
@@ -14,9 +15,7 @@ module.exports = [
         options: {
           privateUser: {
             status: 200,
-            body: {
-              _embedded: { maatschappelijkeactiviteiten: [] },
-            },
+            body: maatschappelijkeactiviteitenEMZ,
           },
           commercialUser: {
             status: 200,
@@ -38,7 +37,9 @@ module.exports = [
           privateUser: {
             status: 200,
             body: {
-              _embedded: { vestigingen: [] },
+              _embedded: {
+                vestigingen: vestigingen._embedded.vestigingen.slice(0, 2),
+              },
             },
           },
           commercialUser: {
