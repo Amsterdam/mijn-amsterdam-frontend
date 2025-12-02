@@ -5,6 +5,7 @@ import {
   handleFetchBezwarenRaw,
 } from './bezwaren-route-handlers';
 import { featureToggle, routes } from './bezwaren-service-config';
+import { IS_PRODUCTION } from '../../../universal/config/env';
 import { createBFFRouter } from '../../routing/route-helpers';
 import { attachDocumentDownloadRoute } from '../shared/document-download-route-handler';
 
@@ -24,15 +25,17 @@ attachDocumentDownloadRoute(
   fetchBezwaarDocument
 );
 
-bezwarenRouterProtected.get(
-  routes.protected.BEZWAREN_RAW,
-  handleFetchBezwarenRaw
-);
+if (!IS_PRODUCTION) {
+  bezwarenRouterProtected.get(
+    routes.protected.BEZWAREN_RAW,
+    handleFetchBezwarenRaw
+  );
 
-bezwarenRouterProtected.get(
-  routes.protected.BEZWAREN_DETAIL_RAW,
-  handleFetchBezwaarDetailRaw
-);
+  bezwarenRouterProtected.get(
+    routes.protected.BEZWAREN_DETAIL_RAW,
+    handleFetchBezwaarDetailRaw
+  );
+}
 
 export const bezwarenRouter = {
   protected: bezwarenRouterProtected,
