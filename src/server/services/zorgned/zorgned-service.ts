@@ -268,7 +268,7 @@ function transformCasusAanvragen(responseData: ZorgnedResponseDataSource) {
       )
     );
 
-    // Take only the aanvragen that have only one beschikt product assigned within the whole Casus.
+    // Take only the aanvragen that have only one beschikt product assigned within the whole Casus. Multiple aanvragen can have the same beschikt product.
     // Consolidate all documents from these aanvragen (regardless of beschiktProduct presence) into a single aanvraag.
     // This ensures that documents related to the same Casus, which might otherwise be hidden, are displayed to the user.
     // This approach is not applicable for aanvragen with multiple beschikte producten within the same Casus,
