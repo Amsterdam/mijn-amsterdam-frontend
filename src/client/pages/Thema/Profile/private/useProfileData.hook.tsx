@@ -1,41 +1,26 @@
 import { useMemo } from 'react';
 
-import { Link } from '@amsterdam/design-system-react';
-
 import { formatBrpProfileData } from './ProfilePrivate.transform';
 import { useAantalBewonersOpAdres } from './useAantalBewonersOpAdres.hook';
-import { FeatureToggle } from '../../../../../universal/config/feature-toggles';
 import { useAppStateGetter } from '../../../../hooks/useAppStateStore';
 import { routeConfig } from '../Profile-thema-config';
-
+import { useWonenThemaData } from './useVvEThemaData.hook';
 export function useProfileData() {
-  const { BRP } = useAppStateGetter();
+  const { BRP, WONEN } = useAppStateGetter();
+  const { wonenData } = useWonenThemaData();
   const residentCount = useAantalBewonersOpAdres(BRP.content);
-
+  // na refresh vd deze file zie is WONEN.content wel true! Maar na refresh pagina niet meer..
   const profileData = useMemo(() => {
-    if (
-      FeatureToggle.residentCountActive &&
-      typeof residentCount === 'number' &&
-      BRP.content?.adres
-    ) {
+    if (BRP.content?.adres && WONEN.content?.name) {
       const brpContent = {
         ...BRP.content,
         adres: {
           ...BRP.content.adres,
+          vveNaam: wonenData?.name,
 
           // Add static and async profile data
           aantalBewoners: residentCount,
-          wozWaarde: (
-            <>
-              Te vinden op{' '}
-              <Link
-                rel="noopener noreferrer"
-                href="https://www.wozwaardeloket.nl/"
-              >
-                WOZ-waardeloket
-              </Link>
-            </>
-          ),
+          wozWaarde: 'https://www.wozwaardeloket.nl/',
         },
       };
       return formatBrpProfileData(brpContent);

@@ -24,10 +24,14 @@ export type VerbintenisHistorisch = Verbintenis & {
 export type BRPDataFromSource = {
   kvkNummer?: string;
   persoon: Persoon;
-  verbintenis?: Verbintenis;
+  verbintenis?: Verbintenis | null;
   kinderen?: Kind[];
   ouders: Partial<Persoon>[];
-  adres: Adres;
+  adres: Adres & {
+    vveNaam?: string | null;
+    wozWaarde?: string | null;
+    aantalBewoners?: number | null;
+  };
   /** @deprecated Deze gegevens worden in de BENK-BRP niet meer voorzien. */
   verbintenisHistorisch?: VerbintenisHistorisch[];
   /** @deprecated */
