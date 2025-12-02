@@ -37,7 +37,7 @@ function useCustomFooterSections(
 function FooterBlock({ title, links }: CMSFooterSection) {
   return (
     <Grid.Cell key={title} span={4}>
-      <Heading color="inverse" level={4} className="ams-mb-s">
+      <Heading color="inverse" level={3} className="ams-mb-s">
         {title}
       </Heading>
       {!!links.length && (

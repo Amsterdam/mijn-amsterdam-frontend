@@ -1,8 +1,5 @@
 import { Button } from '@amsterdam/design-system-react';
-import {
-  BuildingsIcon,
-  HousingIcon,
-} from '@amsterdam/design-system-react-icons';
+import { BuildingsIcon, HouseIcon } from '@amsterdam/design-system-react-icons';
 import { useMapInstance } from '@amsterdam/react-maps';
 import { LatLngLiteral } from 'leaflet';
 
@@ -24,7 +21,7 @@ export default function MyAreaHomeControlButton({
   return (
     <Button
       className={styles.Button}
-      icon={profileType === 'private' ? HousingIcon : BuildingsIcon}
+      icon={profileType === 'private' ? HouseIcon : BuildingsIcon}
       iconOnly
       variant="tertiary"
       onClick={() => {
