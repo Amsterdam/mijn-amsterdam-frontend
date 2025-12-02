@@ -150,7 +150,7 @@ function transformMAC(MACResponseData: MACResponseSource): MACResponse {
   }
 
   const [hoofdactiviteit, ...overigeActiviteiten] = MAC.activiteiten
-    .toSorted((a) => (a.isHoofdactiviteit ? 1 : -1))
+    .toSorted((a) => (a.isHoofdactiviteit ? -1 : 1))
     .map((a) => a.omschrijving);
   const handelsnamen = MAC.handelsnamen
     .toSorted(sortByNumber('volgorde', 'asc'))
