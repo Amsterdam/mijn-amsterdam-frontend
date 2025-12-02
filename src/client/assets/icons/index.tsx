@@ -1,6 +1,6 @@
 export {
   PlusIcon as IconEnlarge,
-  MinimizeIcon as IconMinimise,
+  MinusIcon as IconMinimise,
   ReplayIcon as IconSpinner,
 } from '@amsterdam/design-system-react-icons';
 export { default as IconCheckmark } from './Checkmark.svg?react'; // TODO: Use design system icon

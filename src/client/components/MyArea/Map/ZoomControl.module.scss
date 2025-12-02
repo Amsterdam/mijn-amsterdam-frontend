@@ -3,10 +3,11 @@
   margin-top: 20px;
 }
 
-.Button {
+:global(.ams-button).Button {
+  background-color: red;
   display: flex;
   font-weight: 700;
-  line-height: 20px;
+  // line-height: 20px;
   padding: 0px;
   display: flex;
   -moz-box-align: center;
@@ -17,4 +18,7 @@
   width: 44px;
   background-color: rgb(255, 255, 255);
   box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 0px 2px;
+  :global(.ams-icon) {
+    transform: translateY(6px);
+  }
 }
