@@ -53,7 +53,7 @@
     "@types/connect-pg-simple": "^7.0.3",
     "@types/cookie-parser": "^1.4.10",
     "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.5",
+    "@types/express": "^5.0.6",
     "@types/express-http-proxy": "^1.6.7",
     "@types/express-serve-static-core": "^5.1.0",
     "@types/express-session": "^1.18.2",
@@ -95,7 +95,7 @@
     "decimal.js": "^10.6.0",
     "dotenv": "^16.6.1",
     "dotenv-expand": "^11.0.7",
-    "express": "^5.2.0",
+    "express": "^5.2.1",
     "express-basic-auth": "^1.2.1",
     "express-http-proxy": "^2.1.2",
     "express-openid-connect": "2.18.1",
@@ -125,7 +125,7 @@
     "outdent": "^0.8.0",
     "pg": "^8.16.3",
     "pino": "^9.14.0",
-    "prettier": "^3.6.2",
+    "prettier": "^3.7.3",
     "proj4": "^2.20.2",
     "pug": "^3.0.3",
     "qs": "^6.14.0",
@@ -155,7 +155,7 @@
     "vitest": "^3.2.4",
     "xlsx": "file:vendor/xlsx-0.20.2.tgz",
     "zod": "^4.1.13",
-    "zustand": "^5.0.8"
+    "zustand": "^5.0.9"
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "4.53.3"
