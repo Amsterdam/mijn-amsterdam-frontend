@@ -7,7 +7,8 @@ import { PageFooter } from '@amsterdam/design-system-react';
 import type { CobrowseWidget } from './lib/cobrowse-widget';
 
 import './lib/cobrowse-widget.css';
-import { FeatureToggle } from '../../../../universal/config/feature-toggles';
+import { REDACTED_CLASS } from '../../../helpers/cobrowse';
+import { useIsBffToggleEnabled } from '../../../helpers/env';
 
 export const LABEL_HULP_SCHERMDELEN = 'Hulp via schermdelen';
 declare global {
@@ -21,18 +22,21 @@ export function CobrowseFooter() {
   const [cobrowseWidget, setCobrowseWidget] = useState<CobrowseWidget | null>(
     null
   );
+  const isCobrowseActive = useIsBffToggleEnabled('BFF_COBROWSE_IS_ACTIVE');
   useEffect(() => {
-    if (!FeatureToggle.cobrowseIsActive || !licenseKey) {
+    if (!isCobrowseActive || !licenseKey) {
       return;
     }
     if (cobrowseWidget) {
       return;
     }
     import('./lib/cobrowse-widget.js').then(({ CobrowseWidget }) => {
-      setCobrowseWidget(new CobrowseWidget(licenseKey));
+      const redactedViews = [REDACTED_CLASS];
+      const widget = new CobrowseWidget(licenseKey, redactedViews);
+      setCobrowseWidget(widget);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [licenseKey]);
+  }, [isCobrowseActive]);
 
   return (
     cobrowseWidget && (

@@ -19,6 +19,8 @@ export const BffEndpoints = {
   STATUS_HEALTH: '/status/health',
   TEST_ACCOUNTS_OVERVIEW: '/admin/user-data-overview',
 
+  SERVICES_TOGGLES: '/services/feature-toggles',
+
   TELEMETRY_PROXY: '/services/telemetry/v2/track',
 
   // AFIS

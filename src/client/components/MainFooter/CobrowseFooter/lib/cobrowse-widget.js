@@ -4,6 +4,7 @@
  * Addition:
  * The loading of the cobrowseIO script is delayed until the user needs it (on clicking the schermdelen footer button).
  * The localStorage is used to persist the cobrowse session to allow navigating between pages.
+ * A redactedViews constructor parameter is added to sync the redactedViews class used
  */
 
 const translations = {
@@ -26,10 +27,11 @@ const translations = {
 };
 
 export class CobrowseWidget {
-  constructor(licenseKey, language = 'nl') {
+  constructor(licenseKey, redactedViews, language = 'nl') {
     this.licenseKey = licenseKey;
     this.language = language;
     this.translations = translations;
+    this.redactedViews = redactedViews;
     // If this localStorage value is present, we assume that a recent cobrowse session was initiated
     // and not ended. Therefore we allow cobrowse to be loaded immediately
     const hasCobrowseWidgetSession =
@@ -62,7 +64,7 @@ export class CobrowseWidget {
     const CobrowseIO = await this.loadCobrowseSDK();
     CobrowseIO.license = this.licenseKey;
     if (!CobrowseIO.redactedViews) {
-      CobrowseIO.redactedViews = ['.cobrowse-redacted'];
+      CobrowseIO.redactedViews = this.redactedViews ?? ['.cobrowse-redacted'];
     }
     this.CobrowseIO = CobrowseIO;
     this.originalTitle = document.title;
