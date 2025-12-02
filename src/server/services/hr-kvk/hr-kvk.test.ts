@@ -272,9 +272,9 @@ describe('hr-kvk module', () => {
           datumEindeFormatted: '03 juli 2025',
           handelsnaam: 'Test Company',
           handelsnamen: ['Een andere Handelsnaam', 'Test Handelsnaam'],
-          hoofdactiviteit: 'Overige activiteit',
+          hoofdactiviteit: 'Hoofdactiviteit',
           kvknummer: '12345678',
-          overigeActiviteiten: ['Hoofdactiviteit'],
+          overigeActiviteiten: ['Overige activiteit'],
         },
       });
     });
