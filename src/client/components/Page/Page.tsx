@@ -4,47 +4,69 @@ import {
   Grid,
   GridColumnNumber,
   GridColumnNumbers,
+  Heading,
 } from '@amsterdam/design-system-react';
+import classNames from 'classnames';
+
+import styles from './Page.module.scss';
+import { PageBreadcrumbsV2 } from '../PageHeading/PageHeadingV2';
 
 export interface PageProps extends HTMLProps<HTMLDivElement> {
   className?: string;
   children: ReactNode;
+  heading: string;
+  isWide?: boolean;
+  showBreadcrumbs?: boolean;
 }
 
-export function PageV2({ className, children, id, ...otherProps }: PageProps) {
+const PADDING_TOP = 'large';
+const PADDING_BOTTOM = 'x-large';
+
+export function PageV2({
+  className,
+  heading,
+  children,
+  isWide = false,
+  showBreadcrumbs = true,
+}: PageProps) {
+  return (
+    <>
+      {showBreadcrumbs && (
+        <Grid paddingTop={PADDING_TOP}>
+          <Grid.Cell
+            span={{ narrow: 4, medium: 6, wide: 8 }}
+            start={{ narrow: 1, medium: 1, wide: 2 }}
+          >
+            <PageBreadcrumbsV2 pageTitle={heading} />
+          </Grid.Cell>
+        </Grid>
+      )}
+      <main
+        id="skip-to-id-AppContent"
+        className={classNames(
+          className,
+          !isWide ? styles.PageMA : styles.PageMAWide
+        )}
+      >
+        <Grid paddingTop={showBreadcrumbs ? undefined : PADDING_TOP}>
+          <PageContentCell startWide={1} spanWide={12}>
+            <Heading className="ams-mb-s" level={1}>
+              {heading}
+            </Heading>
+          </PageContentCell>
+        </Grid>
+        <Grid paddingBottom={PADDING_BOTTOM}>{children}</Grid>
+      </main>
+    </>
+  );
+}
+
+export const TextPageV2 = PageV2;
+export const OverviewPageV2 = PageV2;
+export const DetailPageV2 = PageV2;
+
+export function PageContentV2({ children }: PageProps) {
   return <>{children}</>;
-}
-
-export function TextPageV2({ children, className, id }: PageProps) {
-  return (
-    <PageV2 id={id} className={className}>
-      {children}
-    </PageV2>
-  );
-}
-
-export function OverviewPageV2({ children, className, id }: PageProps) {
-  return (
-    <PageV2 id={id} className={className}>
-      {children}
-    </PageV2>
-  );
-}
-
-export function DetailPageV2({ children, className, id }: PageProps) {
-  return (
-    <PageV2 id={id} className={className}>
-      {children}
-    </PageV2>
-  );
-}
-
-export function PageContentV2({ children, className, id }: PageProps) {
-  return (
-    <Grid id={id} className={className}>
-      {children}
-    </Grid>
-  );
 }
 
 type PageContentCellProps = {
