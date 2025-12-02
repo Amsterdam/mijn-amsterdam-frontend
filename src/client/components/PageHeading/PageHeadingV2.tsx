@@ -30,7 +30,7 @@ export function PageHeadingV2({ children }: PageHeadingProps) {
   );
 }
 
-type PageBreadcrumbsV2Props = {
+export type PageBreadcrumbsV2Props = {
   breadcrumbs?: LinkProps[];
   showBacklink?: boolean;
   className?: string;

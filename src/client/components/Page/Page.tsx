@@ -9,7 +9,12 @@ import {
 import classNames from 'classnames';
 
 import styles from './Page.module.scss';
-import { PageBreadcrumbsV2 } from '../PageHeading/PageHeadingV2';
+import type { ThemaMenuItem } from '../../config/thema-types';
+import { getRedactedClass } from '../../helpers/cobrowse';
+import {
+  PageBreadcrumbsV2,
+  type PageBreadcrumbsV2Props,
+} from '../PageHeading/PageHeadingV2';
 
 export interface PageProps extends HTMLProps<HTMLDivElement> {
   className?: string;
@@ -17,6 +22,9 @@ export interface PageProps extends HTMLProps<HTMLDivElement> {
   heading: string;
   isWide?: boolean;
   showBreadcrumbs?: boolean;
+  redactedThemaId?: string | null;
+  redactedScope?: Required<ThemaMenuItem>['redactedScope'];
+  breadcrumbs?: PageBreadcrumbsV2Props['breadcrumbs'];
 }
 
 const PADDING_TOP = 'large';
@@ -28,17 +36,17 @@ export function PageV2({
   children,
   isWide = false,
   showBreadcrumbs = true,
+  redactedThemaId,
+  redactedScope = 'full',
+  breadcrumbs,
 }: PageProps) {
   return (
     <>
       {showBreadcrumbs && (
         <Grid paddingTop={PADDING_TOP}>
-          <Grid.Cell
-            span={{ narrow: 4, medium: 6, wide: 8 }}
-            start={{ narrow: 1, medium: 1, wide: 2 }}
-          >
-            <PageBreadcrumbsV2 pageTitle={heading} />
-          </Grid.Cell>
+          <PageContentCell startWide={1} spanWide={12}>
+            <PageBreadcrumbsV2 breadcrumbs={breadcrumbs} pageTitle={heading} />
+          </PageContentCell>
         </Grid>
       )}
       <main
@@ -55,7 +63,12 @@ export function PageV2({
             </Heading>
           </PageContentCell>
         </Grid>
-        <Grid paddingBottom={PADDING_BOTTOM}>{children}</Grid>
+        <Grid
+          className={getRedactedClass(redactedThemaId, redactedScope)}
+          paddingBottom={PADDING_BOTTOM}
+        >
+          {children}
+        </Grid>
       </main>
     </>
   );
