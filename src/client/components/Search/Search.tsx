@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import {
   Button,
+  Link,
   Heading,
   Paragraph,
   UnorderedList,
@@ -192,6 +193,7 @@ export function Search({
     return () => {
       onFinish('Unmount component');
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -231,6 +233,9 @@ export function Search({
         className
       )}
     >
+      {isPhoneScreen && (
+        <Link onClick={() => onFinish('Zoeken sluiten')}>Zoeken sluiten</Link>
+      )}
       <div ref={resultsRef}>
         <form
           className={styles.Form}

@@ -1,5 +1,9 @@
-.MainHeaderSecondaryLink:hover {
-  --ams-button-tertiary-hover-border-color: transparent;
+.MainHeaderSecondaryLink {
+  --ams-icon-heading-3-line-height: 1;
+  --ams-icon-heading-3-font-size: 28px;
+  &:hover {
+    --ams-button-tertiary-hover-border-color: transparent;
+  }
 }
 
 @media screen and (max-width: $ams-breakpoint-medium) {
@@ -10,31 +14,31 @@
     overflow: hidden;
   }
 
-  :global(
-    .ams-page-header
-      .ams-page-header__navigation
-      .ams-page-header__menu
-      .ams-page-header__mega-menu-button
-      .ams-page-header__mega-menu-button-label
-  ) {
-    display: none;
-  }
-  :global(
-    .ams-page-header
-      .ams-page-header__navigation
-      .ams-page-header__menu
-      .ams-page-header__mega-menu-button
-      .ams-page-header__mega-menu-button-hidden-label
-  ) {
-    display: none;
-  }
+  // :global(
+  //   .ams-page-header
+  //     .ams-page-header__navigation
+  //     .ams-page-header__menu
+  //     .ams-page-header__mega-menu-button
+  //     .ams-page-header__mega-menu-button-label
+  // ) {
+  //   display: none;
+  // }
+  // :global(
+  //   .ams-page-header
+  //     .ams-page-header__navigation
+  //     .ams-page-header__menu
+  //     .ams-page-header__mega-menu-button
+  //     .ams-page-header__mega-menu-button-hidden-label
+  // ) {
+  //   display: none;
+  // }
 
   :global(
     .ams-page-header .ams-page-header__navigation .ams-page-header__menu
   ) {
     position: absolute;
     right: var(--ams-space-l);
-    top: 4px;
+    top: 23px;
     column-gap: 0;
   }
 }
