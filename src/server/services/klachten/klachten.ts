@@ -91,6 +91,14 @@ export function transformKlachtenResponse(
     const ontvangstDatum = smileDateParser(
       klachtSource?.klacht_datumontvangstklacht.value || ''
     );
+    const ontvangstDatumFormatted = ontvangstDatum
+      ? defaultDateFormat(ontvangstDatum)
+      : null;
+    const isClosed = klachtSource.klacht_status.value === 'Gesloten';
+    const dateClosed = klachtSource.klacht_finishedon.value
+      ? klachtSource.klacht_finishedon.value.split(' ')[0]
+      : '';
+    const isSolved = klachtSource.klacht_klachtopgelost.value === 'Ja';
 
     const klacht: KlachtFrontend = {
       id,
@@ -100,9 +108,7 @@ export function transformKlachtenResponse(
         klachtSource?.klacht_inbehandeling.value || ''
       ),
       ontvangstDatum,
-      ontvangstDatumFormatted: ontvangstDatum
-        ? defaultDateFormat(ontvangstDatum)
-        : null,
+      ontvangstDatumFormatted,
       omschrijving: klachtSource?.klacht_omschrijving.value || '',
       gewensteOplossing: klachtSource?.klacht_gewensteoplossing.value,
       onderwerp: klachtSubjectParser(
@@ -116,7 +122,24 @@ export function transformKlachtenResponse(
         title: `Klacht ${id}`,
       },
       displayStatus: 'Ontvangen',
-      steps: [],
+      steps: [
+        {
+          id: 'item-1',
+          status: 'In behandeling',
+          isChecked: true,
+          isActive: klachtSource.klacht_status.value === 'Open',
+          datePublished: ontvangstDatumFormatted ?? '',
+          description: '<p>Uw klacht is in behandeling genomen.</p>',
+        },
+        {
+          id: 'item-2',
+          status: 'Afgehandeld',
+          isChecked: isClosed,
+          isActive: isClosed,
+          datePublished: defaultDateFormat(dateClosed ?? ''),
+          description: getClosedDescription(isClosed, isSolved),
+        },
+      ],
     };
 
     return klacht;
@@ -126,6 +149,22 @@ export function transformKlachtenResponse(
     aantal: data.rowcount,
     klachten,
   };
+}
+
+function getClosedDescription(isClosed: boolean, isSolved: boolean): string {
+  let returnTxt = '';
+
+  if (isClosed) {
+    if (isSolved) {
+      returnTxt = 'De klacht is opgelost en afgesloten.';
+    } else {
+      returnTxt = 'Uw klacht is afgehandeld.';
+    }
+  } else {
+    returnTxt = 'Uw klacht wordt nog afgehandeld.';
+  }
+
+  return `<p>${returnTxt}</p>`;
 }
 
 function createKlachtNotification(klacht: KlachtFrontend): MyNotification {
