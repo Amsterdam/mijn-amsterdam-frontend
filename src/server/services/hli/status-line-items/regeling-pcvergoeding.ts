@@ -98,6 +98,7 @@ function isRegelingVanVerzilvering(
 
   return (
     compareAanvraag.productIdentificatie === avCode &&
+    // We match on all betrokkenen to avoid issues with multiple aanvragen for different children.
     compareAanvraag.betrokkenen.every((id) =>
       aanvraag.betrokkenen.includes(id)
     ) &&
@@ -140,17 +141,24 @@ function filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNie
       return group[0];
     }
     const groupSorted = group.toSorted(sortAlpha('id', 'asc'));
+    // If there are multiple aanvragen with the same beschikkingNummer, we need to filter them.
+    // We keep the aanvraag where the workshop is not followed, and filter out the denied ones for the same productIdentificatie.
     const workshopAanvraagNietGevolgd: ZorgnedAanvraagWithRelatedPersonsTransformed | null =
       groupSorted.find((aanvraag) => isWorkshopNietGevolgd(aanvraag)) ?? null;
 
     const filteredGroup = groupSorted.filter((aanvraag) => {
       switch (true) {
+        // This is the aanvraag we want to keep.
         case aanvraag === workshopAanvraagNietGevolgd:
           return true;
+        // Filters out the aanvraag derived from a redundant beschiktProduct in the same beschikking.
+        // In this case the workshop is not followed, the business sets datumIngangGeldigheid and datumEindeGeldigheid to the same date.
+        // But also adds a denied beschiktproduct for the same productIdentificatie.
         case aanvraag.resultaat === 'afgewezen' &&
           aanvraag.productIdentificatie ===
             workshopAanvraagNietGevolgd?.productIdentificatie:
           return false;
+        // These are all the non-workshop aanvragen, we keep them as well.
         default:
           return true;
       }
@@ -170,17 +178,23 @@ export function filterCombineUpcPcvData(
       aanvragen
     ).toSorted(sortAlpha('id', 'desc'));
   const aanvragenWithDocumentsCombined = aanvragen_.map((aanvraag) => {
+    // Exclude baseRegelingen that have verzilvering
     if (baseRegelingIdWithVerzilvering.includes(aanvraag.id)) {
       return null;
     }
+    // Add documenten to Verzilvering, e.g, (AV_PC{ZIL|TG})
 
     if (
       isVerzilvering(aanvraag) &&
       isAangevraagdVoorRegelingV3ActiefWerd(aanvraag.datumAanvraag)
     ) {
+      // Find first corresponding baseRegeling
       const baseRegeling = aanvragen.find((compareAanvraag) =>
         isRegelingVanVerzilvering(aanvraag, compareAanvraag)
       );
+      // If no baseRegeling is found or already used, this must be an orphaned verzilvering.
+      // This can be the case when a user gets a (UPC|PCV)ZIL and a (UPC|PCV)TG for the same base regeling.
+      // This happened at the end of 2024 when the PCV StadspasTegoed codes were introduced.
       if (
         !baseRegeling ||
         baseRegelingIdWithVerzilvering.includes(baseRegeling.id)
@@ -194,6 +208,8 @@ export function filterCombineUpcPcvData(
       return {
         ...aanvraag,
         titel: baseRegeling.titel,
+        // Use Basis regeling to determine actualiteit en einde geldigheid.
+        // If verzilvering is denied we treat regeling as "niet actueel"
         isActueel:
           aanvraag.resultaat === 'toegewezen'
             ? (baseRegeling?.isActueel ?? aanvraag.isActueel)
@@ -212,6 +228,10 @@ export function filterCombineUpcPcvData(
   );
 }
 
+/** Checks of een Workshop niet gevolgd is.
+ * In Zorgned worden datumIngangGeldigheid en datumEindeGeledigheid gebruikt om aan te geven dat de workshop niet gevolgd is.
+ * Als de workshop niet gevolgd is, zijn de datumIngangGeldigheid en datumEindeGeledigheid gelijk aan elkaar.
+ */
 export function isWorkshopNietGevolgd(
   regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
@@ -246,6 +266,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
       datePublished: getUpcPcvDecisionDate,
       isChecked: () => true,
       isVisible: (regeling) => {
+        // Alleen zichtbaar als regeling is aangevraagd nadat PC regeling v3 actief werd.
         return isPcRegelingV3Active()
           ? isAfter(
               regeling.datumAanvraag,
