@@ -33,7 +33,7 @@ const onderneming: ProfileLabels<Partial<Onderneming>, AppState['KVK']> = {
   handelsnamen: [
     'Overige handelsnamen',
     (handelsnamen) =>
-      handelsnamen?.length ? (
+      handelsnamen?.length && handelsnamen.length > 1 ? (
         <ListExpandable
           className="ams-mb-l"
           expandButtonText="Toon alle handelsnamen"
