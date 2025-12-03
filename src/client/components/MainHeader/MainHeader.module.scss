@@ -14,25 +14,6 @@
     overflow: hidden;
   }
 
-  // :global(
-  //   .ams-page-header
-  //     .ams-page-header__navigation
-  //     .ams-page-header__menu
-  //     .ams-page-header__mega-menu-button
-  //     .ams-page-header__mega-menu-button-label
-  // ) {
-  //   display: none;
-  // }
-  // :global(
-  //   .ams-page-header
-  //     .ams-page-header__navigation
-  //     .ams-page-header__menu
-  //     .ams-page-header__mega-menu-button
-  //     .ams-page-header__mega-menu-button-hidden-label
-  // ) {
-  //   display: none;
-  // }
-
   :global(
     .ams-page-header .ams-page-header__navigation .ams-page-header__menu
   ) {
