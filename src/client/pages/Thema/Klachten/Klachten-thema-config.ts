@@ -3,7 +3,10 @@ import { generatePath } from 'react-router';
 import { KlachtFrontend } from '../../../../server/services/klachten/types';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND } from '../../../config/app';
+import {
+  MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+  MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
+} from '../../../config/app';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
 export const featureToggle = {
@@ -50,9 +53,19 @@ const displayProps: DisplayProps<KlachtFrontend> = {
   },
 };
 
-export const klachtenTableConfig = {
-  title: 'Ingediende klachten',
-  displayProps,
-  maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
-  listPageRoute: generatePath(routeConfig.listPage.path, { page: null }),
-} as const;
+export const klachtenTableConfigs = [
+  {
+    title: 'Lopende klachten',
+    displayProps,
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
+    listPageRoute: generatePath(routeConfig.listPage.path, { page: null }),
+    filter: (klacht: KlachtFrontend) => klacht.isActive,
+  },
+  {
+    title: 'Afgehandelde klachten',
+    displayProps,
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+    listPageRoute: generatePath(routeConfig.listPage.path, { page: null }),
+    filter: (klacht: KlachtFrontend) => !klacht.isActive,
+  },
+] as const;

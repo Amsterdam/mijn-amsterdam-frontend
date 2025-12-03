@@ -36,12 +36,15 @@ function getDataForKlachten(bsn: string, page: number) {
   data.append('function', 'readKlacht');
   const columns = [
     'klacht_id',
+    'klacht_status',
     'klacht_klachtonderwerp',
     'klacht_datumontvangstklacht',
     'klacht_locatieadres',
     'klacht_omschrijving',
     'klacht_gewensteoplossing',
     'klacht_inbehandeling',
+    'klacht_finishedon',
+    'klacht_klachtopgelost',
   ].join(', ');
 
   data.append('columns', columns);
@@ -95,15 +98,16 @@ export function transformKlachtenResponse(
       ? defaultDateFormat(ontvangstDatum)
       : null;
     const isClosed = klachtSource.klacht_status.value === 'Gesloten';
-    const dateClosed = klachtSource.klacht_finishedon.value
-      ? klachtSource.klacht_finishedon.value.split(' ')[0]
-      : '';
+    const dateClosed = smileDateParser(
+      klachtSource.klacht_finishedon.value ?? ''
+    );
     const isSolved = klachtSource.klacht_klachtopgelost.value === 'Ja';
 
     const klacht: KlachtFrontend = {
       id,
       identifier: id,
       title: id,
+      isActive: !isClosed,
       inbehandelingSinds: smileDateParser(
         klachtSource?.klacht_inbehandeling.value || ''
       ),
@@ -128,7 +132,7 @@ export function transformKlachtenResponse(
           status: 'In behandeling',
           isChecked: true,
           isActive: klachtSource.klacht_status.value === 'Open',
-          datePublished: ontvangstDatumFormatted ?? '',
+          datePublished: ontvangstDatum,
           description: '<p>Uw klacht is in behandeling genomen.</p>',
         },
         {
@@ -136,7 +140,7 @@ export function transformKlachtenResponse(
           status: 'Afgehandeld',
           isChecked: isClosed,
           isActive: isClosed,
-          datePublished: defaultDateFormat(dateClosed ?? ''),
+          datePublished: dateClosed,
           description: getClosedDescription(isClosed, isSolved),
         },
       ],

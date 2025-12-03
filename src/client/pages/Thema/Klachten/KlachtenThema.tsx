@@ -20,7 +20,7 @@ export function KlachtenThema() {
   const {
     themaId,
     themaTitle,
-    tableConfig,
+    tableConfigs,
     klachten,
     isLoading,
     isError,
@@ -29,6 +29,19 @@ export function KlachtenThema() {
   } = useKlachtenThemaData();
   useHTMLDocumentTitle(routeConfig.themaPage);
 
+  const tables = tableConfigs.map((conf) => {
+    return (
+      <ThemaPaginaTable<KlachtFrontend>
+        key={conf.title}
+        title={conf.title}
+        listPageRoute={conf.listPageRoute}
+        zaken={klachten.filter(conf.filter)}
+        displayProps={conf.displayProps}
+        maxItems={conf.maxItems}
+      />
+    );
+  });
+
   return (
     <ThemaPagina
       id={themaId}
@@ -36,15 +49,7 @@ export function KlachtenThema() {
       isError={isError}
       isLoading={isLoading}
       pageContentTop={pageContentTop}
-      pageContentMain={
-        <ThemaPaginaTable<KlachtFrontend>
-          title={tableConfig.title}
-          listPageRoute={tableConfig.listPageRoute}
-          zaken={klachten}
-          displayProps={tableConfig.displayProps}
-          maxItems={tableConfig.maxItems}
-        />
-      }
+      pageContentMain={tables}
       linkListItems={linkListItems}
       maintenanceNotificationsPageSlug="klachten"
     />

@@ -2,20 +2,6 @@
   "rowcount": 30,
   "List": [
     {
-      "klacht_inbehandeling": { "value": "06-05-2022 14:37" },
-      "klacht_datumontvangstklacht": { "value": "05-04-2022" },
-      "klacht_omschrijving": {
-        "value": "Dit is de omschrijving van de klacht"
-      },
-      "klacht_gewensteoplossing": { "value": "" },
-      "klacht_klachtonderwerp": { "value": "Test voor decentrale toewijzing" },
-      "klacht_id": { "value": "23054" },
-      "klacht_locatieadres": { "value": "" },
-      "klacht_status": { "value": "Open" },
-      "klacht_finishedon": { "value": "" },
-      "klacht_klachtopgelost": { "value": "" }
-    },
-    {
       "klacht_inbehandeling": { "value": "18-05-2022 13:48" },
       "klacht_datumontvangstklacht": { "value": "05-05-2022" },
       "klacht_omschrijving": {
@@ -40,7 +26,7 @@
       "klacht_id": { "value": "28032" },
       "klacht_locatieadres": { "value": "" },
       "klacht_status": { "value": "Gesloten" },
-      "klacht_finishedon": { "value": "" },
+      "klacht_finishedon": { "value": "15-05-2022 12:00" },
       "klacht_klachtopgelost": { "value": "Ja" }
     },
     {
