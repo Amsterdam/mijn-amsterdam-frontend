@@ -115,7 +115,7 @@ function MainHeaderLinks() {
             {!isPhoneScreen ? label : ''}
             <Icon
               svg={isSearchActive ? CloseIcon : SearchIcon}
-              size="heading-5"
+              size="heading-3"
             />
           </MaLink>
         </li>
