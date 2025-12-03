@@ -18,7 +18,7 @@ import {
   getApiConfig,
 } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
-import { smileDateParser } from '../smile/smile-helpers';
+import { parseSmileDate } from '../smile/smile-helpers';
 import { AuthProfileAndToken } from './../../auth/auth-types';
 import {
   KlachtFrontend,
@@ -88,7 +88,7 @@ export function transformKlachtenResponse(
 
   const klachten = data.List.map((klachtSource) => {
     const id = klachtSource.klacht_id.value || UID.sync(BYTE_LENGTH);
-    const ontvangstDatum = smileDateParser(
+    const ontvangstDatum = parseSmileDate(
       klachtSource?.klacht_datumontvangstklacht.value || ''
     );
     const ontvangstDatumFormatted = ontvangstDatum
@@ -104,7 +104,8 @@ export function transformKlachtenResponse(
       id,
       identifier: id,
       title: id,
-      inbehandelingSinds: smileDateParser(
+      isActive: !isClosed,
+      inbehandelingSinds: parseSmileDate(
         klachtSource?.klacht_inbehandeling.value || ''
       ),
       ontvangstDatum,
@@ -128,7 +129,7 @@ export function transformKlachtenResponse(
           status: 'In behandeling',
           isChecked: true,
           isActive: klachtSource.klacht_status.value === 'Open',
-          datePublished: ontvangstDatumFormatted ?? '',
+          datePublished: parseSmileDate(ontvangstDatum),
           description: '<p>Uw klacht is in behandeling genomen.</p>',
         },
         {
@@ -136,7 +137,7 @@ export function transformKlachtenResponse(
           status: 'Afgehandeld',
           isChecked: isClosed,
           isActive: isClosed,
-          datePublished: defaultDateFormat(dateClosed ?? ''),
+          datePublished: parseSmileDate(dateClosed),
           description: getClosedDescription(isClosed, isSolved),
         },
       ],

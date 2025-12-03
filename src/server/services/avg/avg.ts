@@ -28,7 +28,7 @@ import {
   getApiConfig,
 } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
-import { smileDateParser } from '../smile/smile-helpers';
+import { parseSmileDate } from '../smile/smile-helpers';
 
 const DEFAULT_PAGE_SIZE = 25;
 
@@ -133,7 +133,7 @@ export function transformAVGResponse(data: SmileAvgResponse): AVGResponse {
   const verzoeken = data.List.map((verzoek) => {
     const id = verzoek.avgverzoek_id?.value || '';
     const title = `AVG verzoek ${id}`;
-    const ontvangstDatum = smileDateParser(
+    const ontvangstDatum = parseSmileDate(
       verzoek.avgverzoek_datumbinnenkomst.value || ''
     );
     const request: AVGRequestFrontend = {
@@ -141,7 +141,7 @@ export function transformAVGResponse(data: SmileAvgResponse): AVGResponse {
       identifier: id,
       title,
       displayStatus: verzoek.avgverzoek_statusavgverzoek_alias.value || '',
-      registratieDatum: smileDateParser(
+      registratieDatum: parseSmileDate(
         verzoek.avgverzoek_datuminbehandeling?.value || ''
       ),
       type: verzoek.avgverzoek_typeverzoek.value || '',
@@ -152,13 +152,13 @@ export function transformAVGResponse(data: SmileAvgResponse): AVGResponse {
       ontvangstDatumFormatted: ontvangstDatum
         ? defaultDateFormat(ontvangstDatum)
         : ontvangstDatum,
-      opschortenGestartOp: smileDateParser(
+      opschortenGestartOp: parseSmileDate(
         verzoek.avgverzoek_opschortengestartop?.value || ''
       ),
-      datumInBehandeling: smileDateParser(
+      datumInBehandeling: parseSmileDate(
         verzoek.avgverzoek_datuminbehandeling?.value || ''
       ),
-      datumAfhandeling: smileDateParser(
+      datumAfhandeling: parseSmileDate(
         verzoek.avgverzoek_werkelijkeeinddatum?.value || ''
       ),
       // Is filled later on.

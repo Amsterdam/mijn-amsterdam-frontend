@@ -1,5 +1,5 @@
 import {
-  klachtenTableConfig,
+  klachtenTableConfigs,
   LinkListItems,
   routeConfig,
   themaId,
@@ -28,7 +28,7 @@ export function useKlachtenThemaData() {
     isLoading: isLoading(KLACHTEN),
     isError: isError(KLACHTEN),
     linkListItems: LinkListItems,
-    tableConfig: klachtenTableConfig,
+    tableConfigs: klachtenTableConfigs,
     themaId,
     themaTitle,
     breadcrumbs,
