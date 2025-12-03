@@ -6,7 +6,7 @@
   --ams-alert-content-padding-block: 1px;
   --ams-alert-severity-indicator-padding-block: var(--ams-space-s);
 
-  max-width: calc(var(--ams-page-max-inline-size) - var(--ams-space-xl) * 3);
+  max-width: calc(var(--ams-page-max-inline-size) - var(--ams-space-l) * 2);
   margin: 0 auto;
   background-color: var(--ams-color-background);
   position: relative;
