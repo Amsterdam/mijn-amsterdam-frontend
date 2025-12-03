@@ -87,13 +87,13 @@ function AppAuthenticated() {
   return (
     <>
       <Page className={classNames(styles.App, isBuurt ? styles.AppWide : '')}>
-        <SkipLink href="#skip-to-id-AppContent">Direct naar inhoud</SkipLink>
+        <SkipLink href="#page-main-content">Direct naar inhoud</SkipLink>
         <MainHeader isAuthenticated />
         <ErrorMessages />
         <PrivateRoutes />
       </Page>
       {/** Remove the footer on the Map view for better UX */}
-      {!isBuurt && <MainFooter />}
+      {!isBuurt && <MainFooter id="page-main-footer" />}
     </>
   );
 }

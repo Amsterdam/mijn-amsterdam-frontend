@@ -21,8 +21,8 @@ export type PageHeadingProps = {
 export function PageHeadingV2({ children }: PageHeadingProps) {
   return (
     <PageContentCell startWide={1} spanWide={12}>
-      <div className={styles.PageHeadingInner} id="skip-to-id-AppContent">
-        <Heading className={styles.PageHeading} level={1} size="level-1">
+      <div className={styles.PageHeadingInner} id="page-main-content">
+        <Heading className={styles.PageHeading} level={1}>
           {children}
         </Heading>
       </div>

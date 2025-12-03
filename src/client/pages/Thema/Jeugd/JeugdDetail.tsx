@@ -24,7 +24,6 @@ function JeugdDetailContent({ voorziening }: ContentProps) {
         <DocumentListV2
           documents={voorziening.documents}
           columns={['Brieven', 'Verzenddatum']}
-          className="ams-mb-l"
         />
       )}
     </PageContentCell>
