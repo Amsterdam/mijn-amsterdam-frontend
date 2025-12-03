@@ -43,11 +43,14 @@ describe('Bezwaren', () => {
   describe('fetch bezwaren', () => {
     beforeEach(() => {
       remoteApi
+        // bezwaren list
         .post(`${endpointBase}/_zoek?page=1`)
         .reply(200, bezwarenApiResponse)
+        // documents
         .get((uri) => uri.includes('/enkelvoudiginformatieobjecten'))
         .times(4)
         .reply(200, bezwarenDocumenten)
+        // statussen
         .get((uri) => uri.includes('/statussen'))
         .times(4)
         .reply(200, bezwarenStatus);
@@ -119,13 +122,13 @@ describe('Bezwaren', () => {
     test('fetchMultiple success', async () => {
       remoteApi
         .post(`${endpointBase}/_zoek?page=1`)
-        .reply(200, { count: 75, items: range(1, 20) })
+        .reply(200, { count: 75, results: range(1, 20) })
         .post(`${endpointBase}/_zoek?page=2`)
-        .reply(200, { count: 75, items: range(21, 40) })
+        .reply(200, { count: 75, results: range(21, 40) })
         .post(`${endpointBase}/_zoek?page=3`)
-        .reply(200, { count: 75, items: range(41, 60) })
+        .reply(200, { count: 75, results: range(41, 60) })
         .post(`${endpointBase}/_zoek?page=4`)
-        .reply(200, { count: 75, items: range(61, 75) });
+        .reply(200, { count: 75, results: range(61, 75) });
 
       const response = await forTesting.fetchMultiple('cache-key-zaak-id', {
         url: `${remoteApiHost}${endpointBase}/_zoek`,

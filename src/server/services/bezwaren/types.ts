@@ -116,6 +116,6 @@ export type BezwaarDocument = GenericDocument & {
 };
 
 export interface OctopusApiResponse<T> {
-  items: T[];
+  results: T[];
   count: number;
 }
