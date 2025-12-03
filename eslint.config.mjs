@@ -48,6 +48,7 @@ export default [
           args: 'all',
           argsIgnorePattern: '^_',
           caughtErrorsIgnorePattern: '^_',
+          destructuredArrayIgnorePattern: '^_',
         },
       ],
       'no-magic-numbers': [
