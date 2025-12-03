@@ -6,7 +6,7 @@
   --status-circle-box-width: calc(var(--ams-space-m) * 2);
 
   --status-circle-box-height: calc(var(--status-circle-box-width) / 2);
-  --status-circle-size: var(--ams-heading-4-font-size);
+  --status-circle-size: var(--ams-heading-3-font-size);
   --status-circle-size-active: calc(var(--status-circle-size) * 1.8);
   --status-circle-size-active-inner: calc(
     var(--status-circle-size-active) * 0.8
@@ -124,7 +124,6 @@
 }
 
 :global(.ams-icon).StatusIndicationCheckmark {
-  --ams-icon-heading-5-font-size: 14px;
   svg {
     fill: white;
     position: absolute;

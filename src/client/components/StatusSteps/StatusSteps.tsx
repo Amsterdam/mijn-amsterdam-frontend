@@ -61,7 +61,7 @@ function StatusIndication({ step }: StatusIndicationProps) {
     ariaLabel = 'Status Afgerond';
     content = (
       <Icon
-        size="heading-5"
+        size="heading-4"
         className={styles.StatusIndicationCheckmark}
         aria-label="Status Afgerond"
         svg={CheckMarkIcon}
