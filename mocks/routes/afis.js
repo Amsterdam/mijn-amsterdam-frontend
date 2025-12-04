@@ -260,7 +260,6 @@ module.exports = [
       {
         id: 'standard',
         type: 'json',
-        delay: 5000,
         options: {
           status: 200,
           body: require('../fixtures/afis/document.json'),
@@ -427,7 +426,6 @@ module.exports = [
     id: 'put-afis-emandates',
     url: `${BASE_URL}/ChangeMandate/ZGW_FI_MANDATE_SRV_01/:changeSetParam`,
     method: 'PUT',
-    // delay: 2000,
     variants: [
       {
         id: 'standard',
