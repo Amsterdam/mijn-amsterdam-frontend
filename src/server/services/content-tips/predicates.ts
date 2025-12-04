@@ -9,7 +9,6 @@ import type { AppStateBase } from '../../../universal/types/App.types';
 import type { Kind } from '../brp/brp-types';
 import { isAmsterdamAddress } from '../buurt/helpers';
 import type { HLIRegelingFrontend } from '../hli/hli-regelingen-types';
-import type { IdentiteitsbewijsFrontend } from '../profile/brp.types';
 import type { BBVergunningFrontend } from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types';
 import type { WMOVoorzieningFrontend } from '../wmo/wmo-types';
 import type { WpiRequestProcess } from '../wpi/wpi-types';
@@ -27,37 +26,6 @@ export const is18OrOlder: TipsPredicateFN = (
       : today
   );
   return age >= AGE_18;
-};
-
-export const hasValidId: TipsPredicateFN = (
-  appState,
-  today: Date = new Date()
-) => {
-  const brpContent = appState.BRP?.content;
-  const ids =
-    (brpContent &&
-      'identiteitsbewijzen' in brpContent &&
-      brpContent.identiteitsbewijzen) ||
-    [];
-  const validIds = ids.some((idBewijs: IdentiteitsbewijsFrontend) => {
-    return today <= new Date(idBewijs.datumAfloop);
-  });
-  return validIds;
-};
-
-// To use an ID for voting it needs an expiration date with a maximum of five years ago.
-export const hasValidIdForVoting: TipsPredicateFN = (
-  appState,
-  date_of_vote?: Date
-) => {
-  const DATE_OF_VOTE = date_of_vote ?? new Date();
-  const DAY = 24 * 60 * 60 * 1000;
-  const DATE_OF_VOTE_MINUS_2_DAYS = new Date(DATE_OF_VOTE.getTime() - 2 * DAY); // for request processing.
-  const YEARS = 5;
-  const FIVE_YEARS_AGO = new Date(
-    DATE_OF_VOTE_MINUS_2_DAYS.setFullYear(DATE_OF_VOTE.getFullYear() - YEARS)
-  );
-  return hasValidId(appState, FIVE_YEARS_AGO);
 };
 
 // rule 12
@@ -97,7 +65,8 @@ export const hasValidRecentStadspasRequest: TipsPredicateFN = (
       (aanvraag: HLIRegelingFrontend) => {
         return aanvraag.dateDecision
           ? differenceInYears(today, parseISO(aanvraag.dateDecision)) <= 1 &&
-              aanvraag.decision === 'toegewezen'
+              aanvraag.decision === 'toegewezen' &&
+              aanvraag.title.includes('Stadspas')
           : false;
       }
     );

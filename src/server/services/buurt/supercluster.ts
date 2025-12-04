@@ -17,7 +17,7 @@ async function generateSuperCluster(features: MaPointFeature[]) {
   if (features?.length) {
     const Supercluster = (await import('supercluster')).default;
     const superClusterIndex = new Supercluster({
-      log: true,
+      log: false,
       radius: 40,
       extent: 3000,
       nodeSize: 64,

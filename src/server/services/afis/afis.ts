@@ -21,10 +21,11 @@ import {
   createSessionBasedCacheKey,
 } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
-import { fetchAuthTokenHeader } from '../ms-oauth/oauth-token';
+import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token';
 
 export async function fetchAfisTokenHeader() {
   const tokenHeaderResponse = await fetchAuthTokenHeader(
+    'IAM_MS_OAUTH',
     {
       url: getApiConfig('AFIS').url,
       sourceApiName: 'AFIS',

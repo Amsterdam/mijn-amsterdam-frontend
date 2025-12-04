@@ -1,52 +1,36 @@
-import { useMemo } from 'react';
-
-import { Link } from '@amsterdam/design-system-react';
-
-import { formatBrpProfileData } from './ProfilePrivate.transform';
+import {
+  formatBrpProfileData,
+  type BrpProfileData,
+} from './ProfilePrivate.transform';
 import { useAantalBewonersOpAdres } from './useAantalBewonersOpAdres.hook';
-import { FeatureToggle } from '../../../../../universal/config/feature-toggles';
 import { useAppStateGetter } from '../../../../hooks/useAppStateStore';
 import { routeConfig } from '../Profile-thema-config';
 
 export function useProfileData() {
   const { BRP } = useAppStateGetter();
-  const residentCount = useAantalBewonersOpAdres(BRP.content);
+  const aantalBewoners = useAantalBewonersOpAdres(
+    BRP.content?.fetchUrlAantalBewoners ?? null
+  );
 
-  const profileData = useMemo(() => {
-    if (
-      FeatureToggle.residentCountActive &&
-      typeof residentCount === 'number' &&
-      BRP.content?.adres
-    ) {
-      const brpContent = {
-        ...BRP.content,
-        adres: {
-          ...BRP.content.adres,
+  let profileData: BrpProfileData | null;
 
-          // Add static and async profile data
-          aantalBewoners: residentCount,
-          wozWaarde: (
-            <>
-              Te vinden op{' '}
-              <Link
-                rel="noopener noreferrer"
-                href="https://www.wozwaardeloket.nl/"
-              >
-                WOZ-waardeloket
-              </Link>
-            </>
-          ),
-        },
-      };
-      return formatBrpProfileData(brpContent);
-    }
-    return BRP.content ? formatBrpProfileData(BRP.content) : BRP.content;
-  }, [BRP.content, residentCount]);
+  if (typeof aantalBewoners === 'number' && BRP.content?.adres) {
+    const brpContent = {
+      ...BRP.content,
+      adres: {
+        ...BRP.content.adres,
+        aantalBewoners,
+      },
+    };
+    profileData = formatBrpProfileData(brpContent);
+  } else {
+    profileData = BRP.content ? formatBrpProfileData(BRP.content) : BRP.content;
+  }
 
   return {
     BRP,
     profileData,
-    residentCount,
+    aantalBewoners,
     routeConfig,
   };
 }

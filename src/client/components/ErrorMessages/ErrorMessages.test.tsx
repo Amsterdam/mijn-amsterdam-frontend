@@ -37,9 +37,7 @@ describe('<ErrorMessages />', () => {
 
     render(<Component />);
     await user.click(screen.getByText('Meer informatie'));
-    expect(
-      screen.getByText(/Persoonlijke gegevens, paspoort, ID-kaart/)
-    ).toBeInTheDocument();
+    expect(screen.getByText(/Persoonlijke gegevens/)).toBeInTheDocument();
     expect(
       screen.getByText(/Communicatie met api mislukt./)
     ).toBeInTheDocument();

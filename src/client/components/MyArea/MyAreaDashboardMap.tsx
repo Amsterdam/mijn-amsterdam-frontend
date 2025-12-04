@@ -36,12 +36,13 @@ export function MyAreaDashboardMap() {
       }}
     >
       <BaseLayer />
-      {!!primaryLocation?.address && center && (
+      {!!primaryLocation?.title && center && (
         <HomeIconMarker
           label={
-            primaryLocation?.address
+            primaryLocation.title ||
+            (primaryLocation.address
               ? getFullAddress(primaryLocation.address, true)
-              : ''
+              : '')
           }
           center={center}
           zoom={HOOD_ZOOM}
@@ -51,13 +52,14 @@ export function MyAreaDashboardMap() {
       {!!secondaryLocations?.length &&
         secondaryLocations.map(
           (location) =>
-            !!location?.latlng && (
+            !!location.latlng && (
               <CustomLatLonMarker
-                key={location?.latlng.lat + location?.latlng.lng}
+                key={location.latlng.lat + location.latlng.lng}
                 label={
-                  location?.address
+                  location.title ||
+                  (location.address
                     ? getFullAddress(location.address, true)
-                    : ''
+                    : '')
                 }
                 center={location.latlng}
                 zoom={HOOD_ZOOM}
@@ -65,13 +67,13 @@ export function MyAreaDashboardMap() {
               />
             )
         )}
-      {!primaryLocation?.latlng && isLoading(MY_LOCATION) && (
+      {isLoading(MY_LOCATION) && (
         <MyAreaLoadingIndicator label="Uw adres wordt opgezocht" />
       )}
       {!!secondaryLocations?.length && (
         <FitBounds
           latlngs={locations
-            .map((location) => location?.latlng)
+            .map((location) => location.latlng)
             .filter(
               (latlng: LatLngLiteral | null): latlng is LatLngLiteral =>
                 !!latlng

@@ -6,12 +6,18 @@ export const featureToggle = {
       isEnabled: !IS_PRODUCTION, // for now only enabled in non-prod environments
     },
   },
+  service: {
+    fetchAantalBewonersOpAdres: {
+      isEnabled: !IS_PRODUCTION,
+    },
+  },
 } as const;
 
 export const routes = {
   protected: {
     BRP_PERSONEN_RAW: `/services/brp/personen/raw`,
     BRP_VERBLIJFPLAATSHISTORIE_RAW: `/services/brp/verblijfplaatshistorie/raw`,
+    BRP_AANTAL_BEWONERS_OP_ADRES: '/service/brp/aantal-bewoners',
   },
 } as const;
 

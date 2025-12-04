@@ -2,13 +2,10 @@ import {
   hasBijstandsuitkering,
   hasBnBTransitionRight,
   hasBnBVergunning,
-  hasDutchNationality,
   hasOldestKidBornFrom2016,
   hasStadspasGroeneStip,
   hasToeristicheVerhuurVergunningen,
   hasTozo,
-  hasValidId,
-  hasValidIdForVoting,
   hasValidRecentStadspasRequest,
   hasVerhuurRegistrations,
   is18OrOlder,
@@ -30,10 +27,7 @@ import {
   themaTitle as themaTitleHLI,
 } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import { themaId as themaIdInkomen } from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
-import {
-  featureToggle as featureToggleProfile,
-  themaIdBRP,
-} from '../../../client/pages/Thema/Profile/Profile-thema-config';
+import { themaIdBRP } from '../../../client/pages/Thema/Profile/Profile-thema-config';
 import { themaId as themaIdToeristischeVerhuur } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 
 const DAYS = 90;
@@ -143,32 +137,6 @@ export const contentTips: ContentTipSource[] = [
     },
   },
   {
-    id: 'mijn-27',
-    owner: '',
-    dateActiveStart: '2025-10-16',
-    dateActiveEnd: '2025-10-27',
-    // TODO: Enable if we have access to Identiteitsbewijzen data.
-    active: !featureToggleProfile[themaIdBRP].benkBrpServiceActive,
-    datePublished: '2025-10-17',
-    title: 'Tip: Gratis ID-kaart om te stemmen',
-    themaID: themaIdBRP,
-    profileTypes: ['private'],
-    description:
-      'U heeft een geldige ID-kaart of geldig paspoort nodig om te stemmen. Heeft u een Stadspas met groene stip? Dan kunt u gratis een nieuwe ID-kaart krijgen.',
-    predicates: [
-      not((pred) => hasValidIdForVoting(pred, new Date('2025-10-29'))),
-      is18OrOlder,
-      hasStadspasGroeneStip,
-      hasDutchNationality,
-    ],
-    reason:
-      'U ziet deze tip omdat u een Stadspas hebt en geen geldige ID-kaart of paspoort',
-    link: {
-      title: 'Bekijk de voorwaarden',
-      to: 'https://www.amsterdam.nl/veelgevraagd/gratis-identiteitskaart-aanvragen-d09a6-kp',
-    },
-  },
-  {
     id: 'mijn-16',
     owner: '',
     dateActiveStart: null,
@@ -188,32 +156,6 @@ export const contentTips: ContentTipSource[] = [
     link: {
       title: 'Lees meer in deze nieuwsbrief',
       to: 'https://www.amsterdam.nl/nieuwsbrief/',
-    },
-  },
-  {
-    id: 'mijn-43',
-    owner: '',
-    dateActiveStart: '2023-11-23',
-    dateActiveEnd: null,
-    // TODO: Enable if we have access to Identiteitsbewijzen data.
-    active: !featureToggleProfile[themaIdBRP].benkBrpServiceActive,
-    datePublished: '2023-11-23',
-    title: 'Vraag een gratis ID-kaart aan',
-    themaID: themaIdBRP,
-    profileTypes: ['private'],
-    description:
-      'Uw ID-kaart en/of paspoort zijn niet meer geldig. Met de Stadspas krijgt u gratis een nieuwe ID-kaart.',
-    predicates: [
-      not(hasValidId),
-      is18OrOlder,
-      hasStadspasGroeneStip,
-      hasDutchNationality,
-    ],
-    reason:
-      'U ziet deze tip omdat u een Stadspas hebt en geen geldige ID-kaart of paspoort',
-    link: {
-      title: 'Bekijk de voorwaarden',
-      to: 'https://www.amsterdam.nl/veelgevraagd/gratis-identiteitskaart-aanvragen-d09a6-kp',
     },
   },
   {

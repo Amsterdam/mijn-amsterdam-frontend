@@ -251,10 +251,6 @@ const ApiConfig_ = {
   CMS_MAINTENANCE_NOTIFICATIONS: {
     url: `${getFromEnv('BFF_CMS_BASE_URL')}/storingsmeldingen/alle-meldingen-mijn-amsterdam?new_json=true&reload=true`,
   },
-  BRP: {
-    url: `${getFromEnv('BFF_MKS_API_BASE_URL')}/brp/brp`,
-    passthroughOIDCToken: true,
-  },
   BENK_BRP: {
     url: `${getFromEnv('BFF_BENK_BRP_API_BASE_URL')}`,
     method: 'POST',
@@ -263,8 +259,19 @@ const ApiConfig_ = {
       'X-Task-Description': getFromEnv('BFF_BENK_BRP_X_TASK_DESCRIPTION'),
     },
   },
+  IAM_DATAPUNT: {
+    url: `${getFromEnv('BFF_DATAPUNT_IAM_API_BASE_URL')}`,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  },
+  HR_KVK: {
+    url: `${getFromEnv('BFF_HR_KVK_API_BASE_URL')}`,
+  },
   BAG: {
-    url: 'https://api.data.amsterdam.nl/v1/benkagg/adresseerbareobjecten/',
+    url: `${getFromEnv('BFF_BAG_API_BASE_URL')}`,
+    cacheTimeout: 24 * ONE_HOUR_MS, // 24 hours
   },
   ERFPACHT: {
     url: getFromEnv('BFF_ERFPACHT_API_URL'),
@@ -281,10 +288,6 @@ const ApiConfig_ = {
   AFVAL: {
     url: `https://api.data.amsterdam.nl/v1/afvalwijzer/afvalwijzer/`,
     headers: { 'X-Api-Key': getFromEnv('BFF_DATA_AMSTERDAM_API_KEY ', false) },
-  },
-  KVK: {
-    url: `${getFromEnv('BFF_MKS_API_BASE_URL')}/brp/hr`,
-    passthroughOIDCToken: true,
   },
   PARKEREN: {
     url: `${getFromEnv('BFF_PARKEREN_API_BASE_URL')}`,
@@ -338,7 +341,7 @@ const ApiConfig_ = {
     method: 'POST',
     postponeFetch: !themaConfigBodem.featureToggle.themaActive,
   },
-  MS_OAUTH: {
+  IAM_MS_OAUTH: {
     url: `${getFromEnv('BFF_MS_OAUTH_ENDPOINT')}:tenant/oauth2/v2.0/token`,
     method: 'POST',
   },
@@ -361,3 +364,5 @@ type ApiUrlObject = string | Partial<Record<ProfileType, string>>;
 type ApiUrlEntry = [apiKey: SourceApiName, apiUrl: ApiUrlObject];
 
 export type ApiUrlEntries = ApiUrlEntry[];
+
+export type IAMSourceConfigKey = Extract<SourceApiName, `IAM_${string}`>;

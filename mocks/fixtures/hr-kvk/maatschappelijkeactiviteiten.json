@@ -1,0 +1,288 @@
+{
+  "_embedded": {
+    "maatschappelijkeactiviteiten": [
+      {
+        "_links": {
+          "schema": "https://schemas.data.amsterdam.nl/datasets/hr_kvk/maatschappelijkeactiviteiten/v2",
+          "self": {
+            "href": "https://api.data.amsterdam.nl/v1/hr_kvk/maatschappelijkeactiviteiten/34366966?_format=json",
+            "title": "34366966",
+            "kvknummer": "34366966"
+          },
+          "heeftHrHoofdvestiging": {
+            "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007678460?_format=json",
+            "title": "000007678460",
+            "vestigingsnummer": "000007678460"
+          },
+          "heeftAlsEigenaarHrNnp": {
+            "href": "https://api.data.amsterdam.nl/v1/hr_kvk/nietnatuurlijkepersonen/34366966.NNP?_format=json",
+            "title": "34366966.NNP",
+            "identificatie": "34366966.NNP"
+          },
+          "bezoekHeeftBagNummeraanduiding": null,
+          "bezoekHeeftBagVerblijfsobject": null,
+          "bezoekHeeftBagLigplaats": null,
+          "bezoekHeeftBagStandplaats": null,
+          "postHeeftBagNummeraanduiding": null,
+          "postHeeftBagVerblijfsobject": null,
+          "postHeeftBagLigplaats": null,
+          "postHeeftBagStandplaats": null,
+          "wordtUitgeoefendInCommercieleHrVestigingen": [],
+          "wordtUitgeoefendInNietCommercieleHrVestigingen": []
+        },
+        "kvknummer": "34366966",
+        "datumAanvangMaatschappelijkeActiviteitDatum": "1988-09-05",
+        "datumAanvangMaatschappelijkeActiviteitJaar": 1988,
+        "datumAanvangMaatschappelijkeActiviteitMaand": 9,
+        "datumAanvangMaatschappelijkeActiviteitDag": 5,
+        "datumEindeMaatschappelijkeActiviteitDatum": null,
+        "datumEindeMaatschappelijkeActiviteitJaar": null,
+        "datumEindeMaatschappelijkeActiviteitMaand": null,
+        "datumEindeMaatschappelijkeActiviteitDag": null,
+        "registratieTijdstipMaatschappelijkeActiviteit": null,
+        "naam": "Gemeente Amsterdam",
+        "nonMailing": "Ja",
+        "incidenteelUitlenenArbeidskrachten": "Ja",
+        "heeftHrHoofdvestigingId": "000007678460",
+        "heeftAlsEigenaarHrNpsId": null,
+        "heeftAlsEigenaarHrNnpId": "34366966.NNP",
+        "onderneming": true,
+        "totaalWerkzamePersonen": 1,
+        "voltijdWerkzamePersonen": 1,
+        "deeltijdWerkzamePersonen": 0,
+        "datumAanvangOndernemingDatum": "1993-01-01",
+        "datumAanvangOndernemingJaar": 1993,
+        "datumAanvangOndernemingMaand": 1,
+        "datumAanvangOndernemingDag": 1,
+        "datumEindeOndernemingDatum": null,
+        "datumEindeOndernemingJaar": null,
+        "datumEindeOndernemingMaand": null,
+        "datumEindeOndernemingDag": null,
+        "datumOverdrachtVoortzettingOndernemingDatum": null,
+        "datumOverdrachtVoortzettingOndernemingJaar": null,
+        "datumOverdrachtVoortzettingOndernemingMaand": null,
+        "datumOverdrachtVoortzettingOndernemingDag": null,
+        "overdrachtOfVoortzettingOnderneming": null,
+        "bezoekLocatieAfgeschermd": "Nee",
+        "bezoekLocatieToevoegingAdres": null,
+        "bezoekLocatieVolledigAdres": "Amstel 1\n1011PN Amsterdam",
+        "bezoekLocatieStraatnaam": "Amstel",
+        "bezoekLocatieHuisnummer": 1,
+        "bezoekLocatieHuisletter": null,
+        "bezoekLocatieHuisnummerToevoeging": null,
+        "bezoekLocatiePostcode": "1011PN",
+        "bezoekLocatiePlaats": "Amsterdam",
+        "bezoekLocatieStraatHuisnummerBuitenland": null,
+        "bezoekLocatiePostcodePlaatsBuitenland": null,
+        "bezoekLocatieRegioBuitenland": null,
+        "bezoekLocatieLandBuitenland": null,
+        "bezoekHeeftBagNummeraanduidingId": "0363200012145295",
+        "bezoekHeeftBagVerblijfsobjectId": "0363010012143319",
+        "bezoekHeeftBagLigplaatsId": null,
+        "bezoekHeeftBagStandplaatsId": null,
+        "postLocatieAfgeschermd": "Nee",
+        "postLocatieToevoegingAdres": null,
+        "postLocatieVolledigAdres": "Postbus 202\n1000AE Amsterdam",
+        "postLocatieStraatnaam": null,
+        "postLocatieHuisnummer": null,
+        "postLocatieHuisletter": null,
+        "postLocatieHuisnummerToevoeging": null,
+        "postLocatiePostbusnummer": 202,
+        "postLocatiePostcode": "1000AE",
+        "postLocatiePlaats": "Amsterdam",
+        "postLocatieStraatHuisnummerBuitenland": null,
+        "postLocatiePostcodePlaatsBuitenland": null,
+        "postLocatieRegioBuitenland": null,
+        "postLocatieLandBuitenland": null,
+        "postHeeftBagNummeraanduidingId": null,
+        "postHeeftBagVerblijfsobjectId": null,
+        "postHeeftBagLigplaatsId": null,
+        "postHeeftBagStandplaatsId": null,
+        "activiteiten": [
+          {
+            "sbiCode": "91220",
+            "omschrijving": "Activiteiten met betrekking tot historische locaties en monumenten",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "72200",
+            "omschrijving": "Onderzoek en experimentele ontwikkeling op het gebied van de maatschappij- en geesteswetenschappen",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "93193",
+            "omschrijving": "Organiseren van sportevenementen",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "84300",
+            "omschrijving": "Diensten van Verplichte sociale verzekeringen",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "69202",
+            "omschrijving": "Activiteiten van accountants-administratieconsulenten",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "96301",
+            "omschrijving": "Uitvaartverzorging",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "85510",
+            "omschrijving": "Sport- en recreatieonderwijs",
+            "isHoofdactiviteit": "Ja"
+          },
+          {
+            "sbiCode": "39002",
+            "omschrijving": "Overige sanering en afvalbeheer",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "85202",
+            "omschrijving": "Speciaal basisonderwijs",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "52250",
+            "omschrijving": "Logistieke diensten: vrachtafhandeling",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "38110",
+            "omschrijving": "Inzameling van niet-schadelijk afval",
+            "isHoofdactiviteit": "Ja"
+          }
+        ],
+        "communicatie": [
+          { "toegangscode": "+31", "nummer": "0206241111", "soort": "Telefoon" }
+        ],
+        "emailAdressen": [],
+        "domeinnamen": [
+          { "domeinnaam": "www.amsterdam.nl" },
+          { "domeinnaam": "www.gemeenteraad.amsterdam.nl" },
+          { "domeinnaam": "www.regelgeving.amsterdam.nl" },
+          { "domeinnaam": "www.opdekaart.amsterdam.nl" },
+          { "domeinnaam": "www.sbl.nl" },
+          { "domeinnaam": "www.iamsterdam.com" },
+          { "domeinnaam": "www.hierzijnwij.nu" }
+        ],
+        "handelsnamen": [
+          {
+            "datumAanvang": "1988-09-05",
+            "datumEinde": null,
+            "handelsnaam": "Bestuursdienst Amsterdam",
+            "volgorde": 0
+          },
+          {
+            "datumAanvang": "1988-09-05",
+            "datumEinde": null,
+            "handelsnaam": "stadsdeel Centrum",
+            "volgorde": 1
+          },
+          {
+            "datumAanvang": "1981-01-01",
+            "datumEinde": null,
+            "handelsnaam": "stadsdeel Nieuw West (samenvoeging Slotervaart Geuzenveld en Osdorp)",
+            "volgorde": 2
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "stadsdeel Noord",
+            "volgorde": 3
+          },
+          {
+            "datumAanvang": "2010-01-01",
+            "datumEinde": null,
+            "handelsnaam": "stadsdeel Oost (samenvoeging Zeeburg en Oost-Watergraafsmeer)",
+            "volgorde": 4
+          },
+          {
+            "datumAanvang": "1990-01-01",
+            "datumEinde": null,
+            "handelsnaam": "stadsdeel West (samenvoeging Westerpark, Oud-West, de Baarsjes, Bos en Lommer)",
+            "volgorde": 5
+          },
+          {
+            "datumAanvang": "1990-01-01",
+            "datumEinde": null,
+            "handelsnaam": "stadsdeel Zuid (samenvoeging Zuideramstel en Oud-Zuid)",
+            "volgorde": 6
+          },
+          {
+            "datumAanvang": "2008-07-01",
+            "datumEinde": null,
+            "handelsnaam": "stadsdeel Zuidoost",
+            "volgorde": 7
+          },
+          {
+            "datumAanvang": "1960-01-01",
+            "datumEinde": null,
+            "handelsnaam": "Haven Amsterdam",
+            "volgorde": 8
+          },
+          {
+            "datumAanvang": "1998-10-01",
+            "datumEinde": null,
+            "handelsnaam": "Bedrijf Zuidas",
+            "volgorde": 9
+          },
+          {
+            "datumAanvang": "2005-07-01",
+            "datumEinde": null,
+            "handelsnaam": "ACAM Accountancy en Advies",
+            "volgorde": 10
+          }
+        ]
+      }
+    ],
+    "heeftAlsEigenaarHrNnp": [
+      {
+        "_links": {
+          "schema": "https://schemas.data.amsterdam.nl/datasets/hr_kvk/nietnatuurlijkepersonen/v3",
+          "self": {
+            "href": "https://api.data.amsterdam.nl/v1/hr_kvk/nietnatuurlijkepersonen/34366966.NNP?_format=json",
+            "title": "34366966.NNP",
+            "identificatie": "34366966.NNP"
+          },
+          "heeftHrFunctievervullingen": []
+        },
+        "identificatie": "34366966.NNP",
+        "rsin": "002564440",
+        "datumUitschrijvingDatum": null,
+        "datumUitschrijvingJaar": null,
+        "datumUitschrijvingMaand": null,
+        "datumUitschrijvingDag": null,
+        "surceanceVanBetaling": false,
+        "status": null,
+        "duur": null,
+        "faillissement": false,
+        "naam": "Gemeente Amsterdam",
+        "volledigeNaam": "Gemeente Amsterdam",
+        "ookGenoemd": null,
+        "typePersoon": "Rechtspersoon",
+        "doelRechtsvorm": null,
+        "rechtsvorm": "Publiekrechtelijke Rechtspersoon",
+        "persoonRechtsvorm": "Publiekrechtelijke Rechtspersoon",
+        "uitgebreideRechtsvorm": "Publiekrechtelijke Rechtspersoon: Gemeente",
+        "rol": "Eigenaar",
+        "datumAanvangDatum": null,
+        "datumAanvangJaar": null,
+        "datumAanvangMaand": null,
+        "datumAanvangDag": null,
+        "datumEindeDatum": null,
+        "datumEindeJaar": null,
+        "datumEindeMaand": null,
+        "datumEindeDag": null
+      }
+    ]
+  },
+  "_links": {
+    "self": {
+      "href": "https://api.data.amsterdam.nl/v1/hr_kvk/maatschappelijkeactiviteiten?kvknummer=34366966&_expandScope=heeftAlsEigenaarHrNnp&_format=json"
+    }
+  },
+  "page": { "number": 1, "size": 20 }
+}

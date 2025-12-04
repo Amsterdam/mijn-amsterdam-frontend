@@ -10,6 +10,7 @@ import {
 import { AVGRequestFrontend } from '../../../server/services/avg/types';
 import { BezwaarFrontend } from '../../../server/services/bezwaren/types';
 import { LoodMetingFrontend } from '../../../server/services/bodem/types';
+import type { BrpFrontend } from '../../../server/services/brp/brp-types';
 import type {
   ErfpachtDossiersResponse,
   ErfpachtDossierFrontend,
@@ -22,10 +23,6 @@ import type {
   KrefiaDeepLink,
 } from '../../../server/services/krefia/krefia.types';
 import type { ParkeerVergunningFrontend } from '../../../server/services/parkeren/config-and-types';
-import type {
-  BRPData,
-  IdentiteitsbewijsFrontend,
-} from '../../../server/services/profile/brp.types';
 import { BBVergunningFrontend } from '../../../server/services/toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types';
 import {
   LVVRegistratie,
@@ -409,8 +406,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   getWpiConfig('WPI_AANVRAGEN'),
   {
     stateKey: 'BRP',
-    getApiBaseItems: (apiContent: BRPData) => {
-      const identiteitsBewijzen = apiContent?.identiteitsbewijzen || [];
+    getApiBaseItems: (apiContent: BrpFrontend) => {
       const address = getFullAddress(apiContent.adres, true);
       const name = getFullName(apiContent.persoon);
       const brpDataItems: ApiBaseItem<{ title: string; link: LinkProps }>[] = [
@@ -429,9 +425,9 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
           },
         },
       ];
-      return [...identiteitsBewijzen, ...brpDataItems];
+      return brpDataItems;
     },
-    displayTitle: (item: IdentiteitsbewijsFrontend | ApiBaseItem) => {
+    displayTitle: (item: ApiBaseItem) => {
       return (term: string) =>
         displayPath(term, [capitalizeFirstLetter(item.title)]);
     },
