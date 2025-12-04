@@ -10,12 +10,7 @@ import { isError, isLoading } from '../../../universal/helpers/api';
 import ErrorAlert from '../../components/Alert/Alert';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
 import { MyNotification } from '../../components/MyNotification/MyNotification';
-import {
-  OverviewPageV2,
-  PageContentCell,
-  PageContentV2,
-} from '../../components/Page/Page';
-import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
+import { PageContentCell, PageV2 } from '../../components/Page/Page';
 import { PaginationV2 } from '../../components/Pagination/PaginationV2';
 import { useAppStateGetter } from '../../hooks/useAppStateStore';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
@@ -47,55 +42,52 @@ export function MyNotificationsPage() {
   }, [currentPage, notifications]);
 
   return (
-    <OverviewPageV2>
-      <PageContentV2>
-        <PageHeadingV2>{themaTitle}</PageHeadingV2>
-        <PageContentCell>
-          {isError(NOTIFICATIONS) && (
-            <ErrorAlert className="ams-mb-m">
-              Niet alle berichten kunnen op dit moment worden getoond.
-            </ErrorAlert>
+    <PageV2 heading={themaTitle}>
+      <PageContentCell>
+        {isError(NOTIFICATIONS) && (
+          <ErrorAlert className="ams-mb-m">
+            Niet alle berichten kunnen op dit moment worden getoond.
+          </ErrorAlert>
+        )}
+        {total > PAGE_SIZE && (
+          <PaginationV2
+            className="ams-mb-m"
+            totalCount={total}
+            pageSize={PAGE_SIZE}
+            path={generatePath(MyNotificationsRoute.route)}
+            currentPage={currentPage}
+          />
+        )}
+        <OrderedList markers={false}>
+          {isLoading(NOTIFICATIONS) && (
+            <OrderedList.Item>
+              <LoadingContent />
+            </OrderedList.Item>
           )}
-          {total > PAGE_SIZE && (
-            <PaginationV2
-              className="ams-mb-m"
-              totalCount={total}
-              pageSize={PAGE_SIZE}
-              path={generatePath(MyNotificationsRoute.route)}
-              currentPage={currentPage}
-            />
-          )}
-          <OrderedList markers={false}>
-            {isLoading(NOTIFICATIONS) && (
-              <OrderedList.Item>
-                <LoadingContent />
-              </OrderedList.Item>
-            )}
-            {!isLoading(NOTIFICATIONS) &&
-              notificationsPaginated.map((notification, index) => {
-                return (
-                  <OrderedList.Item
-                    key={`${notification.themaID}-${notification.id}-${index}`}
-                    className={`ams-mb-m ${notification.className}`}
-                  >
-                    <MyNotification
-                      notification={notification}
-                      trackCategory="Dashboard / Actueel"
-                    />
-                  </OrderedList.Item>
-                );
-              })}
-          </OrderedList>
-          {total > PAGE_SIZE && (
-            <PaginationV2
-              totalCount={total}
-              pageSize={PAGE_SIZE}
-              path={generatePath(MyNotificationsRoute.route)}
-              currentPage={currentPage}
-            />
-          )}
-        </PageContentCell>
-      </PageContentV2>
-    </OverviewPageV2>
+          {!isLoading(NOTIFICATIONS) &&
+            notificationsPaginated.map((notification, index) => {
+              return (
+                <OrderedList.Item
+                  key={`${notification.themaID}-${notification.id}-${index}`}
+                  className={`ams-mb-m ${notification.className}`}
+                >
+                  <MyNotification
+                    notification={notification}
+                    trackCategory="Dashboard / Actueel"
+                  />
+                </OrderedList.Item>
+              );
+            })}
+        </OrderedList>
+        {total > PAGE_SIZE && (
+          <PaginationV2
+            totalCount={total}
+            pageSize={PAGE_SIZE}
+            path={generatePath(MyNotificationsRoute.route)}
+            currentPage={currentPage}
+          />
+        )}
+      </PageContentCell>
+    </PageV2>
   );
 }

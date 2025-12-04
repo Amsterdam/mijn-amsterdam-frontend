@@ -260,6 +260,7 @@ module.exports = [
       {
         id: 'standard',
         type: 'json',
+        delay: 5000,
         options: {
           status: 200,
           body: require('../fixtures/afis/document.json'),

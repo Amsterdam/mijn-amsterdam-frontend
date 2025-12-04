@@ -61,7 +61,7 @@ function StatusIndication({ step }: StatusIndicationProps) {
     ariaLabel = 'Status Afgerond';
     content = (
       <Icon
-        size="heading-6"
+        size="heading-4"
         className={styles.StatusIndicationCheckmark}
         aria-label="Status Afgerond"
         svg={CheckMarkIcon}
@@ -101,7 +101,7 @@ export function Steps({ steps, title }: StepsProps) {
             )}
             key={item.id + item.datePublished}
           >
-            <Heading className={styles.StepStatus} level={4}>
+            <Heading className={styles.StepStatus} level={3}>
               <StatusIndication step={item} />
               {item.status}
             </Heading>

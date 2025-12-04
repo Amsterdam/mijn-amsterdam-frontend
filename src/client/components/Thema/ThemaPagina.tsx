@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 
 import { LinkList } from '@amsterdam/design-system-react';
 
+import styles from './ThemaPagina.module.scss';
 import { LinkProps } from '../../../universal/types/App.types';
 import ErrorAlert from '../Alert/Alert';
 import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
@@ -59,7 +60,7 @@ export default function ThemaPagina({
       )}
       {pageContentTop}
       {!!linkListItems.length && (
-        <PageContentCell>
+        <PageContentCell className={styles.PullUp}>
           <LinkList>
             {linkListItems.map(({ to, title }) => (
               <LinkList.Link key={to} rel="noreferrer" href={to}>
