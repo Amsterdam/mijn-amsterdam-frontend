@@ -43,8 +43,7 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
       'RWT',
       'SCO',
       'ORO',
-      // TODO: Uncomment when the following productsoortCodes are available
-      // 'ORW',
+      'ORW',
     ],
     statusLineItems: { name: 'hulpmiddelen', transformers: hulpmiddelen },
   },
@@ -76,13 +75,7 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
   {
     resultaat: 'toegewezen',
     leveringsVorm: '',
-    productsoortCodes: ['MAO'],
-    statusLineItems: { name: 'diensten', transformers: diensten },
-  },
-  {
-    resultaat: 'toegewezen',
-    leveringsVorm: '',
-    productsoortCodes: ['AO2', 'AO5', 'DBS', 'KVB', 'WMH', 'AWBG'],
+    productsoortCodes: ['AO2', 'AO5', 'DBS', 'KVB', 'WMH', 'AWBG', 'MAO'],
     statusLineItems: { name: 'diensten', transformers: diensten },
   },
   {
@@ -133,6 +126,8 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
       'WRA3',
       'WRA4',
       'WRA5',
+      'ORO',
+      'ORW',
     ],
     statusLineItems: { name: 'vergoeding', transformers: vergoeding },
   },
