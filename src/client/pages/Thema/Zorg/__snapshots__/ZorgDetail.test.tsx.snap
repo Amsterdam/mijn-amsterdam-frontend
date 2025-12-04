@@ -3,7 +3,7 @@
 exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishouden (geleverd) 1`] = `
 <DocumentFragment>
   <div
-    class="ams-grid cobrowse-redacted"
+    class="ams-grid redacted"
   >
     <div
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
@@ -259,7 +259,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
 exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishouden (gestopt) 1`] = `
 <DocumentFragment>
   <div
-    class="ams-grid cobrowse-redacted"
+    class="ams-grid redacted"
   >
     <div
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
@@ -547,7 +547,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
 exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishouden (nog niet geleverd) 1`] = `
 <DocumentFragment>
   <div
-    class="ams-grid cobrowse-redacted"
+    class="ams-grid redacted"
   >
     <div
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
@@ -786,7 +786,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
 exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishouden (tijdelijk gestopt) 1`] = `
 <DocumentFragment>
   <div
-    class="ams-grid cobrowse-redacted"
+    class="ams-grid redacted"
   >
     <div
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
@@ -1059,7 +1059,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
 exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `
 <DocumentFragment>
   <div
-    class="ams-grid cobrowse-redacted"
+    class="ams-grid redacted"
   >
     <div
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
