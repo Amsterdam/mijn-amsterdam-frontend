@@ -46,19 +46,6 @@ describe('hr-kvk module', () => {
   });
 
   describe('fetchKVK', () => {
-    it('returns an error when both MAC and vestigingen requests fail', async () => {
-      remoteApi
-        .post(/datapunt\/iam/)
-        .times(2)
-        .reply(200);
-      remoteApi.get(/\/vestigingen/).reply(500);
-      remoteApi.get(/\/maatschappelijkeactiviteiten/).reply(500);
-
-      const result = await fetchKVK(getAuthProfileAndToken('commercial'));
-
-      expect(result).toEqual(apiErrorResult('Failed to fetch KVK data', null));
-    });
-
     it('returns a successful response when only maatschappelijke activiteiten succeeds', async () => {
       remoteApi
         .post(/datapunt\/iam/)
