@@ -44,13 +44,13 @@ export default function GenericBase({
   return (
     <div className={styles.GenericBase}>
       {!!supTitle && (
-        <Heading className={styles.SuperTitle} size="level-4" level={4}>
+        <Heading className={styles.SuperTitle} level={4}>
           {supTitle}
         </Heading>
       )}
       {!!title && (
         <Heading
-          size="level-3"
+          size="level-2"
           level={3}
           className={classnames(
             styles.Title,

@@ -3,10 +3,10 @@ import { memo } from 'react';
 import { Button } from '@amsterdam/design-system-react';
 import { useMapInstance } from '@amsterdam/react-maps';
 
-import styles from './Zoom.module.scss';
+import styles from './ZoomControl.module.scss';
 import { IconEnlarge, IconMinimise } from '../../../assets/icons';
 
-function Zoom() {
+function ZoomControl() {
   const mapInstance = useMapInstance();
 
   const handleZoom = (out = false) => {
@@ -23,7 +23,9 @@ function Zoom() {
           handleZoom();
         }}
         icon={IconEnlarge}
-      />
+      >
+        <span className="ams-visually-hidden">Zoom in op de kaart</span>
+      </Button>
       <Button
         className={styles.Button}
         variant="tertiary"
@@ -32,9 +34,11 @@ function Zoom() {
           handleZoom(true);
         }}
         icon={IconMinimise}
-      />
+      >
+        <span className="ams-visually-hidden">Zoom uit op de kaart</span>
+      </Button>
     </div>
   );
 }
 
-export default memo(Zoom);
+export default memo(ZoomControl);

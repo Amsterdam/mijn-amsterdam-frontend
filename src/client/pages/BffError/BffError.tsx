@@ -3,12 +3,7 @@ import { Paragraph } from '@amsterdam/design-system-react';
 import { BFF500_PAGE_DOCUMENT_TITLE } from './BffError-routes';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
-import {
-  PageContentCell,
-  PageContentV2,
-  TextPageV2,
-} from '../../components/Page/Page';
-import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
+import { PageContentCell, PageV2 } from '../../components/Page/Page';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 
 export function BFF500Error() {
@@ -26,19 +21,16 @@ export function BFF500Error() {
   }
 
   return (
-    <TextPageV2>
-      <PageContentV2 id="skip-to-id-AppContent">
-        <PageHeadingV2>500 - Api Error</PageHeadingV2>
-        <PageContentCell>
-          <Paragraph className="ams-mb-xl">
-            Er is een fout opgetreden in de communicatie met de server.{' '}
-            <MaRouterLink href="/">Ga verder naar home.</MaRouterLink>
-            {!IS_PRODUCTION && (
-              <pre style={{ whiteSpace: 'break-spaces' }}>{stack}</pre>
-            )}
-          </Paragraph>
-        </PageContentCell>
-      </PageContentV2>
-    </TextPageV2>
+    <PageV2 heading="500 - Api Error" showBreadcrumbs={false}>
+      <PageContentCell>
+        <Paragraph className="ams-mb-xl">
+          Er is een fout opgetreden in de communicatie met de server.{' '}
+          <MaRouterLink href="/">Ga verder naar home.</MaRouterLink>
+          {!IS_PRODUCTION && (
+            <pre style={{ whiteSpace: 'break-spaces' }}>{stack}</pre>
+          )}
+        </Paragraph>
+      </PageContentCell>
+    </PageV2>
   );
 }
