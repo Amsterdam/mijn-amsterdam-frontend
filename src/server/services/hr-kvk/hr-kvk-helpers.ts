@@ -50,7 +50,6 @@ export function getVestigingBagIds(
   }
 
   const vestigingenWithBagIds = vestigingen
-    .filter((vestiging) => vestiging.bezoekadres || vestiging.postadres)
     .map((vestiging) => {
       const bagIds = vestigingBagKeys
         .map((key) => vestiging[key] ?? null)
