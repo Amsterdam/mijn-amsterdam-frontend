@@ -27,15 +27,9 @@ import LoadingContent, {
 } from '../../../components/LoadingContent/LoadingContent';
 import { MaRouterLink } from '../../../components/MaLink/MaLink';
 import { Modal } from '../../../components/Modal/Modal';
-import {
-  DetailPageV2,
-  PageContentCell,
-  PageContentV2,
-} from '../../../components/Page/Page';
-import { PageHeadingV2 } from '../../../components/PageHeading/PageHeadingV2';
+import { PageContentCell, PageV2 } from '../../../components/Page/Page';
 import { Spinner } from '../../../components/Spinner/Spinner';
 import { TableV2 } from '../../../components/Table/TableV2';
-import { getRedactedClass } from '../../../helpers/cobrowse';
 import { useBffApi } from '../../../hooks/api/useBffApi';
 import { useSmallScreen } from '../../../hooks/media.hook';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore';
@@ -131,98 +125,99 @@ export function HLIStadspasDetail() {
   const breadcrumbs = useThemaBreadcrumbs(themaId);
 
   return (
-    <DetailPageV2>
-      <PageContentV2 className={getRedactedClass(themaId)}>
-        <PageHeadingV2 breadcrumbs={breadcrumbs}>
+    <PageV2
+      breadcrumbs={breadcrumbs}
+      heading={
+        <>
           Overzicht Stadspas{' '}
           {stadspas?.owner && ` van ${stadspas?.owner.firstname}`}
-        </PageHeadingV2>
-
-        {stadspas ? (
-          <>
-            <PageContentCell>
-              <Datalist rows={[NAME]} />
-              <Paragraph className={styles.StadspasNummerInfo}>
-                Hieronder staat het Stadspasnummer van uw{' '}
-                {stadspas.actief ? 'actieve' : 'geblokkeerde'} pas.
-                <br /> Dit pasnummer staat ook op de achterkant van uw pas.
-              </Paragraph>
-              <Datalist rows={[NUMBER]} />
-              {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
-              {!stadspas.actief && <PassBlockedAlert />}
-              {stadspas.blockPassURL && stadspas.actief && (
-                <BlockStadspas stadspas={stadspas} />
-              )}
-              {stadspas.unblockPassURL && !stadspas.actief && (
-                <UnblockStadspas stadspas={stadspas} />
-              )}
-            </PageContentCell>
-          </>
-        ) : (
+        </>
+      }
+    >
+      {stadspas ? (
+        <>
           <PageContentCell>
-            {isLoadingStadspas && (
-              <LoadingContent barConfig={loadingContentBarConfigDetails} />
-            )}
-            {(isErrorStadspas || (!isLoadingStadspas && noContent)) && (
-              <ErrorAlert>
-                We kunnen op dit moment geen gegevens tonen.{' '}
-                <MaRouterLink href={routeConfig.themaPage.path}>
-                  Naar het overzicht
-                </MaRouterLink>
-              </ErrorAlert>
-            )}
-          </PageContentCell>
-        )}
-        <PageContentCell>
-          <Heading size="level-3" level={3} className="ams-mb-m">
-            Gekregen tegoed
-          </Heading>
-          {isLoadingStadspas && (
-            <LoadingContent barConfig={loadingContentBarConfigList} />
-          )}
-          {!isLoadingStadspas && !!stadspas?.budgets.length && (
-            <TableV2<StadspasBudget>
-              className={styles.Table_budgets}
-              items={stadspas.budgets.toSorted(dateSort('dateEnd', 'asc'))}
-              displayProps={displayPropsBudgets}
-            />
-          )}
-          {!isLoadingStadspas && !stadspas?.budgets.length && (
-            <Paragraph>U heeft (nog) geen tegoed gekregen.</Paragraph>
-          )}
-        </PageContentCell>
-        <PageContentCell>
-          <Heading size="level-3" level={3} className="ams-mb-m">
-            Uw uitgaven
-          </Heading>
-          {(isLoadingTransacties || isLoadingStadspas) && (
-            <LoadingContent barConfig={loadingContentBarConfigList} />
-          )}
-          {!isLoadingStadspas && !isLoadingTransacties && (
-            <Paragraph>
-              {determineUwUitgavenDescription(stadspas, hasTransactions)}
+            <Datalist rows={[NAME]} />
+            <Paragraph className={styles.StadspasNummerInfo}>
+              Hieronder staat het Stadspasnummer van uw{' '}
+              {stadspas.actief ? 'actieve' : 'geblokkeerde'} pas.
+              <br /> Dit pasnummer staat ook op de achterkant van uw pas.
             </Paragraph>
+            <Datalist rows={[NUMBER]} />
+            {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
+            {!stadspas.actief && <PassBlockedAlert />}
+            {stadspas.blockPassURL && stadspas.actief && (
+              <BlockStadspas stadspas={stadspas} />
+            )}
+            {stadspas.unblockPassURL && !stadspas.actief && (
+              <UnblockStadspas stadspas={stadspas} />
+            )}
+          </PageContentCell>
+        </>
+      ) : (
+        <PageContentCell>
+          {isLoadingStadspas && (
+            <LoadingContent barConfig={loadingContentBarConfigDetails} />
+          )}
+          {(isErrorStadspas || (!isLoadingStadspas && noContent)) && (
+            <ErrorAlert>
+              We kunnen op dit moment geen gegevens tonen.{' '}
+              <MaRouterLink href={routeConfig.themaPage.path}>
+                Naar het overzicht
+              </MaRouterLink>
+            </ErrorAlert>
           )}
         </PageContentCell>
-        {!isLoadingTransacties && hasTransactions && (
-          <PageContentCell>
-            <TableV2<StadspasBudgetTransaction>
-              className={
-                showMultiBudgetTransactions
-                  ? styles.Table_transactions__withBudget
-                  : styles.Table_transactions
-              }
-              items={transactions.toSorted(dateSort('datePublished', 'desc'))}
-              displayProps={
-                showMultiBudgetTransactions
-                  ? displayPropsTransactiesWithBudget
-                  : displayPropsTransacties
-              }
-            />
-          </PageContentCell>
+      )}
+      <PageContentCell>
+        <Heading size="level-3" level={3} className="ams-mb-m">
+          Gekregen tegoed
+        </Heading>
+        {isLoadingStadspas && (
+          <LoadingContent barConfig={loadingContentBarConfigList} />
         )}
-      </PageContentV2>
-    </DetailPageV2>
+        {!isLoadingStadspas && !!stadspas?.budgets.length && (
+          <TableV2<StadspasBudget>
+            className={styles.Table_budgets}
+            items={stadspas.budgets.toSorted(dateSort('dateEnd', 'asc'))}
+            displayProps={displayPropsBudgets}
+          />
+        )}
+        {!isLoadingStadspas && !stadspas?.budgets.length && (
+          <Paragraph>U heeft (nog) geen tegoed gekregen.</Paragraph>
+        )}
+      </PageContentCell>
+      <PageContentCell>
+        <Heading size="level-3" level={3} className="ams-mb-m">
+          Uw uitgaven
+        </Heading>
+        {(isLoadingTransacties || isLoadingStadspas) && (
+          <LoadingContent barConfig={loadingContentBarConfigList} />
+        )}
+        {!isLoadingStadspas && !isLoadingTransacties && (
+          <Paragraph>
+            {determineUwUitgavenDescription(stadspas, hasTransactions)}
+          </Paragraph>
+        )}
+      </PageContentCell>
+      {!isLoadingTransacties && hasTransactions && (
+        <PageContentCell>
+          <TableV2<StadspasBudgetTransaction>
+            className={
+              showMultiBudgetTransactions
+                ? styles.Table_transactions__withBudget
+                : styles.Table_transactions
+            }
+            items={transactions.toSorted(dateSort('datePublished', 'desc'))}
+            displayProps={
+              showMultiBudgetTransactions
+                ? displayPropsTransactiesWithBudget
+                : displayPropsTransacties
+            }
+          />
+        </PageContentCell>
+      )}
+    </PageV2>
   );
 }
 

@@ -55,7 +55,7 @@ export function MyThemasPanel({
                   {IconSVG && (
                     <Icon
                       svg={IconSVG}
-                      size="heading-4"
+                      size="heading-2"
                       className={styles.ThemaLinkIcon}
                       square
                     />
