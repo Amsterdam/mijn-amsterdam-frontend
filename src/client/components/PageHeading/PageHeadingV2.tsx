@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, type ReactElement } from 'react';
 
 import { Breadcrumb, Heading, Icon } from '@amsterdam/design-system-react';
 import { ChevronBackwardIcon } from '@amsterdam/design-system-react-icons';
@@ -21,8 +21,8 @@ export type PageHeadingProps = {
 export function PageHeadingV2({ children }: PageHeadingProps) {
   return (
     <PageContentCell startWide={1} spanWide={12}>
-      <div className={styles.PageHeadingInner} id="skip-to-id-AppContent">
-        <Heading className={styles.PageHeading} level={1} size="level-1">
+      <div className={styles.PageHeadingInner} id="page-main-content">
+        <Heading className={styles.PageHeading} level={1}>
           {children}
         </Heading>
       </div>
@@ -30,12 +30,12 @@ export function PageHeadingV2({ children }: PageHeadingProps) {
   );
 }
 
-type PageBreadcrumbsV2Props = {
+export type PageBreadcrumbsV2Props = {
   breadcrumbs?: LinkProps[];
   showBacklink?: boolean;
   className?: string;
   label?: string;
-  pageTitle: string;
+  pageTitle: ReactElement | string;
 };
 
 export function PageBreadcrumbsV2({

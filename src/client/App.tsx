@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 
 import { Paragraph, Page, SkipLink } from '@amsterdam/design-system-react';
 import { PiwikProvider, usePiwik } from '@amsterdam/piwik-tracker-react';
+import classNames from 'classnames';
 import { BrowserRouter, useLocation, useNavigate } from 'react-router';
 
 import styles from './App.module.scss';
@@ -85,14 +86,14 @@ function AppAuthenticated() {
 
   return (
     <>
-      <Page className={styles.App}>
-        <SkipLink href="#skip-to-id-AppContent">Direct naar inhoud</SkipLink>
+      <Page className={classNames(styles.App, isBuurt ? styles.AppWide : '')}>
+        <SkipLink href="#page-main-content">Direct naar inhoud</SkipLink>
         <MainHeader isAuthenticated />
         <ErrorMessages />
         <PrivateRoutes />
       </Page>
       {/** Remove the footer on the Map view for better UX */}
-      {!isBuurt && <MainFooter />}
+      {!isBuurt && <MainFooter id="page-main-footer" />}
     </>
   );
 }

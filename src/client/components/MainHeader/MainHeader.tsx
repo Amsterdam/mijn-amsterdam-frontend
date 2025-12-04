@@ -96,6 +96,12 @@ function MainHeaderLinks() {
   const label = isSearchActive ? 'Zoeken sluiten' : 'Zoeken';
   return (
     <>
+      {!isPhoneScreen && (
+        <MainHeaderSecondaryLinks
+          wrapInListElement
+          linkClassName={`ams-button ams-button--tertiary ${styles.MainHeaderSecondaryLink}`}
+        />
+      )}
       {isDisplayLiveSearch && (
         <li>
           <MaLink
@@ -113,18 +119,9 @@ function MainHeaderLinks() {
             href={SearchPageRoute.route}
           >
             {!isPhoneScreen ? label : ''}
-            <Icon
-              svg={isSearchActive ? CloseIcon : SearchIcon}
-              size="heading-5"
-            />
+            <Icon svg={isSearchActive ? CloseIcon : SearchIcon} />
           </MaLink>
         </li>
-      )}
-      {!isPhoneScreen && (
-        <MainHeaderSecondaryLinks
-          wrapInListElement
-          linkClassName={`ams-button ams-button--tertiary ${styles.MainHeaderSecondaryLink}`}
-        />
       )}
     </>
   );
@@ -222,6 +219,7 @@ export function MainHeader({ isAuthenticated = false }: MainHeaderProps) {
           ) as unknown as string // Hack because brandName is not typed as ReactNode
         }
         menuItems={<>{isAuthenticated && <MainHeaderLinks />}</>}
+        menuButtonText="Menu"
       >
         {isAuthenticated && <MainMenu />}
       </PageHeader>
