@@ -121,7 +121,6 @@ process.env.BFF_CLEOPATRA_API_ENDPOINT = `${remoteApiHost}/cleopatra`;
 process.env.BFF_POWERBROWSER_API_URL = `${remoteApiHost}/powerbrowser`;
 
 // Koppel api base urls
-process.env.BFF_MKS_API_BASE_URL = `${remoteApiHost}`;
 process.env.BFF_KREFIA_API_BASE_URL = `${remoteApiHost}`;
 process.env.BFF_VERGUNNINGEN_API_BASE_URL = `${remoteApiHost}`;
 process.env.BFF_WPI_API_BASE_URL = `${remoteApiHost}`;
@@ -164,4 +163,6 @@ process.env.BFF_BENK_BRP_TENANT = 'test-tenant';
 process.env.BFF_BENK_BRP_APPLICATION_ID = 'test-app-id';
 process.env.BFF_BENK_BRP_API_BASE_URL = `${remoteApiHost}/benk_brp`;
 
+process.env.BFF_DATAPUNT_IAM_API_BASE_URL = `${remoteApiHost}/datapunt/iam`;
+process.env.BFF_HR_KVK_API_BASE_URL = `${remoteApiHost}/hr_kvk`;
 process.env.BFF_CMS_BASE_URL = `${remoteApiHost}/cms`;

@@ -1,7 +1,11 @@
 import qs from 'qs';
 
 import type { ApiResponse } from '../../../universal/helpers/api';
-import type { DataRequestConfig, SourceApiName } from '../../config/source-api';
+import type {
+  DataRequestConfig,
+  IAMSourceConfigKey,
+  SourceApiName,
+} from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 
@@ -35,6 +39,7 @@ type TokenAuthHeader = {
 };
 
 export async function fetchAuthTokenHeader(
+  sourceApiConfigKey: IAMSourceConfigKey,
   requestConfigOptions: TokenRequestConfigOptions,
   authOptions: TokenAuthOptions
 ): Promise<ApiResponse<TokenAuthHeader>> {
@@ -73,7 +78,7 @@ export async function fetchAuthTokenHeader(
     additionalConfig.url = requestConfigOptions.url;
   }
 
-  const dataRequestConfig = getApiConfig('MS_OAUTH', additionalConfig);
+  const dataRequestConfig = getApiConfig(sourceApiConfigKey, additionalConfig);
 
   const tokenHeaderResponse =
     await requestData<TokenAuthHeader>(dataRequestConfig);
