@@ -224,9 +224,9 @@ function getCommunicatie(
   communicatie: VestigingSource['communicatie'],
   soort: 'telefoonnummer' | 'faxnummer'
 ): string[] {
-  return (communicatie
+  return communicatie
     ?.filter((comm) => comm.soort === soort && !!comm.nummer)
-    .map((comm) => comm.nummer?.toString()) ?? []) as string[];
+    .map((comm) => comm.nummer.toString()) as string[];
 }
 
 function transformVestiging(vestigingSource: VestigingSource): Vestiging {
