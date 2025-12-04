@@ -59,7 +59,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
         class="ams-ordered-list ams-ordered-list--no-markers"
       >
         <li
-          class="ams-ordered-list__item ams-mb-m cobrowse-redacted"
+          class="ams-ordered-list__item ams-mb-m redacted"
         >
           <article>
             <header
@@ -110,7 +110,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
           </article>
         </li>
         <li
-          class="ams-ordered-list__item ams-mb-m cobrowse-redacted"
+          class="ams-ordered-list__item ams-mb-m redacted"
         >
           <article>
             <header
@@ -161,7 +161,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
           </article>
         </li>
         <li
-          class="ams-ordered-list__item ams-mb-m cobrowse-redacted"
+          class="ams-ordered-list__item ams-mb-m redacted"
         >
           <article>
             <header
@@ -263,7 +263,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
           </article>
         </li>
         <li
-          class="ams-ordered-list__item ams-mb-m cobrowse-redacted"
+          class="ams-ordered-list__item ams-mb-m redacted"
         >
           <article>
             <header

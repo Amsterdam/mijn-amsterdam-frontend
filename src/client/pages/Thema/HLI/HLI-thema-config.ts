@@ -65,7 +65,7 @@ export const featureToggle = {
   hliThemaStadspasDeblokkerenActive: !IS_PRODUCTION,
   hliThemaRegelingenActive: true,
   hliRegelingEnabledCZM: true,
-  hliRegelingEnabledRTM: !IS_PRODUCTION,
+  hliRegelingEnabledRTM: true,
 } as const;
 
 export const themaId = 'HLI' as const;

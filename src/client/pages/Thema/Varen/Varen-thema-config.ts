@@ -185,10 +185,15 @@ export const exploitatieVergunningAanvragen: LinkProps = {
 export const exploitatieVergunningWijzigenLink: (
   key: string,
   title?: string
-) => LinkProps = (key, title = 'Wijzigen') => ({
-  to: `${formulierenBaseUrl}/VARExploitatievergunningWijzigen.aspx?guid=${key}`,
-  title,
-});
+) => LinkProps = (key, title = 'Wijzigen') => {
+  const queryParam = new URLSearchParams({
+    guid: key,
+  });
+  return {
+    to: `${formulierenBaseUrl}/VARExploitatievergunningWijzigen.aspx?${queryParam}`,
+    title,
+  };
+};
 
 export const rederRegistratieLink: LinkProps = {
   to: `${formulierenBaseUrl}/VARRegistratieReder.aspx`,
