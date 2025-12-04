@@ -12,7 +12,6 @@ const shortEnv: Record<typeof OTAP_ENV, string> = {
 } as const;
 
 export function EnvLabel({ showProfileName }: { showProfileName: boolean }) {
-  return null;
   return ['test', 'development', 'acceptance'].includes(OTAP_ENV) ? (
     <small
       className={classnames(
