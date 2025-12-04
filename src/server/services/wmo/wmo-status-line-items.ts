@@ -99,7 +99,7 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
   {
     resultaat: 'toegewezen',
     leveringsVorm: 'ZIN',
-    productsoortCodes: ['FIN', 'MVV', 'MVW', 'VHK', 'VVD', 'VVK'],
+    productsoortCodes: ['FIN', 'MVV', 'MVW', 'VHK', 'VVD'],
     statusLineItems: { name: 'vergoeding', transformers: vergoeding },
   },
   {
@@ -119,7 +119,6 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
       'SCO',
       'VHK',
       'VVD',
-      'VVK',
       'WRA',
       'WRA1',
       'WRA2',
