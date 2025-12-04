@@ -161,7 +161,7 @@ router.get(BffEndpoints.SERVICES_TOGGLES, async (_, res) => {
       getFromEnv(key, false)?.toLowerCase() ?? `${default_value}`;
     return envValue === 'true';
   };
-  res.send({
+  res.json({
     BFF_COBROWSE_IS_ACTIVE: isToggleEnabled('BFF_COBROWSE_IS_ACTIVE'),
   });
 });

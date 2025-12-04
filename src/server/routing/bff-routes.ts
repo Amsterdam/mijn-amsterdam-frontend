@@ -89,6 +89,7 @@ export const PUBLIC_BFF_ENDPOINTS = [
   BffEndpoints.CMS_MAINTENANCE_NOTIFICATIONS,
   BffEndpoints.CMS_FOOTER,
   BffEndpoints.TELEMETRY_PROXY,
+  BffEndpoints.SERVICES_TOGGLES,
 ] as const;
 
 export const DevelopmentRoutes = {
