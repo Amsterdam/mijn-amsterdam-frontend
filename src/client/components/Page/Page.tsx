@@ -40,13 +40,13 @@ export function PageV2({
   return (
     <>
       {showBreadcrumbs && (
-        <Grid paddingTop={PADDING_TOP}>
+        <Grid id="page-breadcrumbs" paddingTop={PADDING_TOP}>
           <PageContentCell startWide={1} spanWide={12}>
             <PageBreadcrumbsV2 breadcrumbs={breadcrumbs} pageTitle={heading} />
           </PageContentCell>
         </Grid>
       )}
-      <main id="skip-to-id-AppContent" className={className}>
+      <main id="page-main-content" className={className}>
         <Grid paddingTop={showBreadcrumbs ? undefined : PADDING_TOP}>
           <PageContentCell startWide={1} spanWide={12}>
             <Heading className="ams-mb-s" level={1}>
