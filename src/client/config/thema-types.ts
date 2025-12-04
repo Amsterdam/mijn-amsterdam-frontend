@@ -44,8 +44,10 @@ export type InfoSection = {
   listItems: Array<{ text?: string; listItems?: string[] } | string>;
 };
 
-export interface ThemaMenuItem<ID extends string = string>
-  extends Omit<LinkProps, 'title' | 'to' | 'rel'> {
+export interface ThemaMenuItem<ID extends string = string> extends Omit<
+  LinkProps,
+  'title' | 'to' | 'rel'
+> {
   id: ID;
   profileTypes: ProfileType[];
   isAlwaysVisible?: boolean;
@@ -68,8 +70,9 @@ export interface CategoryMenuItem<ID extends string> extends LinkProps {
   profileTypes?: ProfileType[];
 }
 
-export interface ThemaMenuItemTransformed<ID extends string = string>
-  extends Omit<ThemaMenuItem<ID>, 'title' | 'to' | 'isActive'> {
+export interface ThemaMenuItemTransformed<
+  ID extends string = string,
+> extends Omit<ThemaMenuItem<ID>, 'title' | 'to' | 'isActive'> {
   title: string;
   to: string;
   isActive: boolean;
