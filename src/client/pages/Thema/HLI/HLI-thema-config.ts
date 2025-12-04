@@ -7,6 +7,7 @@ import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { dateSort } from '../../../../universal/helpers/date';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
+import { buildFeatureToggle } from '../../../config/buildFeatureToggle';
 import type {
   ThemaConfigBase,
   WithDetailPage,
@@ -15,18 +16,6 @@ import type {
   WithdetailPageStadspas,
   ThemaFeatureToggle,
 } from '../../../config/thema-types';
-
-const isFeatureEnabled = (
-  toggle: ThemaFeatureToggle,
-  parent: string,
-  child: string
-): boolean => {
-  return (
-    (toggle.themaActive ?? true) &&
-    (toggle.parents?.[parent]?.active ?? true) &&
-    (toggle.parents?.[parent]?.children?.[child] ?? true)
-  );
-};
 
 const THEMA_TITLE = 'Stadspas en regelingen bij laag inkomen' as const;
 
@@ -40,7 +29,7 @@ export const themaConfig: HLIThemaConfig = {
   id: 'HLI' as const,
   title: THEMA_TITLE,
 
-  featureToggle: {
+  featureToggle: buildFeatureToggle({
     themaActive: true,
     parents: {
       stadspas: {
@@ -63,57 +52,7 @@ export const themaConfig: HLIThemaConfig = {
         active: true,
       },
     },
-    get hliStadspasActive() {
-      return this.parents?.stadspas?.active ?? false;
-    },
-    get hliThemaStadspasBlokkerenActive() {
-      return isFeatureEnabled(
-        this,
-        'stadspas',
-        'hliThemaStadspasBlokkerenActive'
-      );
-    },
-
-    get hliThemaStadspasDeblokkerenActive() {
-      return isFeatureEnabled(
-        this,
-        'stadspas',
-        'hliThemaStadspasDeblokkerenActive'
-      );
-    },
-
-    get hliThemaRegelingenActive() {
-      return this.parents?.regelingen?.active ?? false;
-    },
-
-    get hliRegelingEnabledCZM() {
-      return isFeatureEnabled(this, 'regelingen', 'hliRegelingEnabledCZM');
-    },
-
-    get hliRegelingEnabledRTM() {
-      return isFeatureEnabled(this, 'regelingen', 'hliRegelingEnabledRTM');
-    },
-
-    get hli2025PCTegoedCodesEnabled() {
-      return isFeatureEnabled(
-        this,
-        'regelingen',
-        'hli2025PCTegoedCodesEnabled'
-      );
-    },
-
-    get hli2026PCVergoedingV3Enabled() {
-      return isFeatureEnabled(
-        this,
-        'regelingen',
-        'hli2026PCVergoedingV3Enabled'
-      );
-    },
-
-    get zorgnedAvApiActive() {
-      return this.parents?.zorgned?.active ?? false;
-    },
-  },
+  } as ThemaFeatureToggle),
 
   profileTypes: ['private'],
   uitlegPageSections: {

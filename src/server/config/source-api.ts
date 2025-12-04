@@ -146,7 +146,7 @@ const ApiConfig_ = {
       cert: getCert('BFF_ZORGNED_AV_CERT'),
       key: getCert('BFF_ZORGNED_AV_KEY'),
     }),
-    postponeFetch: !themaConfig.featureToggle.zorgnedAvApiActive,
+    postponeFetch: !themaConfig.featureToggle.zorgnedActive,
   },
   ZORGNED_LEERLINGENVERVOER: {
     method: 'post',

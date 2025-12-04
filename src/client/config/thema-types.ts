@@ -16,7 +16,7 @@ export type IsThemaVisibleFN = (appState: AppState) => boolean;
 export type ThemaConfigBase = {
   id: string;
   title: string;
-  featureToggle: ThemaFeatureToggle;
+  featureToggle: ThemaFeatureToggle & Record<string, boolean>;
   profileTypes: ProfileType[];
   uitlegPageSections: InfoSection;
   pageLinks: LinkProps[];
@@ -39,7 +39,6 @@ export type ThemaFeatureToggle = {
       children?: Record<string, boolean>;
     }
   >;
-  [key: string]: unknown;
 };
 
 type RedactedScope = 'full' | 'content' | 'none';
