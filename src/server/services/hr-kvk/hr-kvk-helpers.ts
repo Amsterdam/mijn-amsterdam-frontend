@@ -42,6 +42,8 @@ export function getVestigingBagIds(
       !!vestiging.bezoekadres && isAmsterdamAddress(vestiging.bezoekadres)
   );
 
+  // If in the unlikely event there are no bezoekadressen, we fall back to postadres.
+  // It is better to have something than nothing!
   if (!vestigingen.length) {
     vestigingen = kvkData.vestigingen.filter(
       (vestiging) =>
