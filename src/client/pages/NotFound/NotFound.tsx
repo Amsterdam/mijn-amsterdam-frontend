@@ -6,12 +6,7 @@ import { Navigate, useLocation } from 'react-router';
 import { BffEndpoints } from '../../../server/routing/bff-routes';
 import { isPrivateRoute } from '../../App.routes';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
-import {
-  PageContentCell,
-  PageContentV2,
-  TextPageV2,
-} from '../../components/Page/Page';
-import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
+import { PageContentCell, PageV2 } from '../../components/Page/Page';
 import { captureMessage } from '../../helpers/monitoring';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 import { LandingRoute } from '../Landing/Landing-routes';
@@ -33,24 +28,19 @@ export function NotFound() {
   }, [location.pathname]);
 
   return (
-    <TextPageV2>
-      <PageContentV2 id="skip-to-id-AppContent">
-        <PageHeadingV2>Pagina niet gevonden</PageHeadingV2>
-        <PageContentCell>
-          <Paragraph className="ams-paragraph">
-            Sorry, deze pagina bestaat niet (meer).
-          </Paragraph>
-          <Paragraph className="ams-mb-xl">
-            Gebruik de{' '}
-            <MaRouterLink href={SearchPageRoute.route}>
-              zoekfunctie{' '}
-            </MaRouterLink>
-            of ga naar onze{' '}
-            <MaRouterLink href={BffEndpoints.ROOT}>homepagina</MaRouterLink>.
-          </Paragraph>
-        </PageContentCell>
-      </PageContentV2>
-    </TextPageV2>
+    <PageV2 heading="Pagina niet gevonden">
+      <PageContentCell>
+        <Paragraph className="ams-paragraph">
+          Sorry, deze pagina bestaat niet (meer).
+        </Paragraph>
+        <Paragraph className="ams-mb-xl">
+          Gebruik de{' '}
+          <MaRouterLink href={SearchPageRoute.route}>zoekfunctie </MaRouterLink>
+          of ga naar onze{' '}
+          <MaRouterLink href={BffEndpoints.ROOT}>homepagina</MaRouterLink>.
+        </Paragraph>
+      </PageContentCell>
+    </PageV2>
   );
 }
 

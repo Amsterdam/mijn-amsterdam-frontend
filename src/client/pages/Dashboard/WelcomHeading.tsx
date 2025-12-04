@@ -28,5 +28,5 @@ export function WelcomeHeading() {
       break;
   }
 
-  return <h2 className={styles.WelcomeHeading}>{greetingMsg}</h2>;
+  return <span className={styles.WelcomeHeading}>{greetingMsg}</span>;
 }

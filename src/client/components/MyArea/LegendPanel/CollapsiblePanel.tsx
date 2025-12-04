@@ -9,7 +9,7 @@ import {
 import { Button } from '@amsterdam/design-system-react';
 import {
   ChevronDownIcon,
-  ChevronRightIcon,
+  ChevronForwardIcon,
 } from '@amsterdam/design-system-react-icons';
 
 import styles from './PanelComponent.module.scss';
@@ -53,7 +53,7 @@ export function MyAreaCollapsiblePanelHeading({
               ? `Sluit filters voor ${title}`
               : `Open filters voor ${title}`
           }
-          icon={isExpanded(state) ? ChevronDownIcon : ChevronRightIcon}
+          icon={isExpanded(state) ? ChevronDownIcon : ChevronForwardIcon}
           variant="tertiary"
         />
       )}

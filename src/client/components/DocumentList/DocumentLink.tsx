@@ -1,7 +1,10 @@
 import { useCallback, useState } from 'react';
 
 import { Icon } from '@amsterdam/design-system-react';
-import { AlertIcon, DownloadIcon } from '@amsterdam/design-system-react-icons';
+import {
+  WarningIcon,
+  DownloadIcon,
+} from '@amsterdam/design-system-react-icons';
 import classnames from 'classnames';
 
 import styles from './DocumentLink.module.scss';
@@ -115,7 +118,7 @@ export function DocumentLink({
         });
       return false;
     },
-    [document, profileType, isLoading, trackPath, setErrorVisible]
+    [isLoading, document, trackPath, documentTitle, profileType]
   );
 
   return (
@@ -138,7 +141,7 @@ export function DocumentLink({
           {isLoading && <Spinner />}
           {!isLoading && (
             <Icon
-              svg={isErrorVisible ? AlertIcon : DownloadIcon}
+              svg={isErrorVisible ? WarningIcon : DownloadIcon}
               size="heading-5"
             />
           )}

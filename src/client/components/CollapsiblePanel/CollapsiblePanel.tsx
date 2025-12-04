@@ -1,6 +1,7 @@
 import { ReactNode, useState } from 'react';
 
 import { Button, Heading } from '@amsterdam/design-system-react';
+import classNames from 'classnames';
 
 import styles from './CollapsiblePanel.module.scss';
 
@@ -20,8 +21,13 @@ export function CollapsiblePanelHeading({
   buttonLabelCollapsed = 'Toon',
 }: CollapsiblePanelHeadingProps) {
   return (
-    <div className={styles.CollapsiblePanelHeading}>
-      <Heading level={3}>{title}</Heading>
+    <div
+      className={classNames(
+        styles.CollapsiblePanelHeading,
+        !isCollapsed ? 'ams-mb-s' : ''
+      )}
+    >
+      <Heading level={2}>{title}</Heading>
       <Button
         aria-expanded={!isCollapsed}
         variant="tertiary"
@@ -56,9 +62,7 @@ export function CollapsiblePanel({
         toggle={() => toggleCollapsed(!isCollapsed)}
         isCollapsed={isCollapsed}
       />
-      {!isCollapsed && (
-        <div className={styles.CollapsiblePanel}>{children}</div>
-      )}
+      {!isCollapsed && <>{children}</>}
     </>
   );
 }

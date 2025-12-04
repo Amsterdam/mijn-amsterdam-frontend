@@ -63,7 +63,7 @@ export function LegendPanel({ availableHeight }: LegendPanelProps) {
     // Only react on loadingFeature changes. This wil result in re-render which causes the currentPanel state to be up-to-date.
   }, [loadingFeature, isNarrowScreen, setDetailPanelState, isLandscape]);
 
-  // If Detail panel is opened set FiltersPanel to a TIP state and store the State it's in.
+  // If Detail panel is opened, set FiltersPanel to a TIP state and store the State it's in.
   // If Detail panel is closed, restore the Filters panel state to the state it was in.
   useEffect(() => {
     if (detailState !== PanelState.Closed && !prevFilterPanelState.current) {

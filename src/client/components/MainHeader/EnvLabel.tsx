@@ -1,19 +1,25 @@
 import classnames from 'classnames';
 
 import styles from './OtapLabel.module.scss';
-import { OTAP_ENV } from '../../../universal/config/env';
 import { ProfileName } from './ProfileName';
+import { OTAP_ENV } from '../../../universal/config/env';
+
+const shortEnv: Record<typeof OTAP_ENV, string> = {
+  development: 'dev',
+  acceptance: 'acc',
+  test: 'test',
+  production: '',
+} as const;
 
 export function EnvLabel({ showProfileName }: { showProfileName: boolean }) {
   return ['test', 'development', 'acceptance'].includes(OTAP_ENV) ? (
     <small
-      style={{ maxWidth: '300px', overflow: 'hidden' }}
       className={classnames(
         styles['otap-env'],
         styles[`otap-env--${OTAP_ENV}`]
       )}
     >
-      {OTAP_ENV}
+      {shortEnv[OTAP_ENV]}
       {showProfileName && (
         <>
           {' @ '}

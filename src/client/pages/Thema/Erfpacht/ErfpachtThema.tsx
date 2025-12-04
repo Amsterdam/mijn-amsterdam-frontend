@@ -83,9 +83,7 @@ export function ErfpachtThema() {
 function MissingFacturenDescription() {
   return (
     <>
-      <Heading size="level-3" level={3}>
-        Facturen
-      </Heading>
+      <Heading level={3}>Facturen</Heading>
       <Paragraph className="ams-mb-m">
         Facturen vanaf 1 januari 2025 en nog niet betaalde facturen kunt u
         inzien onder{' '}
@@ -101,17 +99,13 @@ function MissingFacturenDescription() {
         </Link>
         .
       </Paragraph>
-      <Heading size="level-4" level={4}>
-        Factuur naar ander adres
-      </Heading>
+      <Heading level={4}>Factuur naar ander adres</Heading>
       <Paragraph className="ams-mb-m">
         Facturen sturen wij altijd naar het adres waar u ingeschreven staat in
         de Basis Registratie Personen (BRP). Het is niet mogelijk dit aan te
         passen.
       </Paragraph>
-      <Heading size="level-4" level={4}>
-        U woont of verhuist naar het buitenland
-      </Heading>
+      <Heading level={4}>U woont of verhuist naar het buitenland</Heading>
       <Paragraph>
         Geef bij een verhuizing naar het buitenland altijd uw nieuwe woonadres
         aan ons door. Stuur daarvoor een e-mail naar{' '}

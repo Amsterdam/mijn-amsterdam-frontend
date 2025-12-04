@@ -17,9 +17,7 @@ export function MainMenu() {
   return (
     <div id={MAIN_MENU_ID} className={styles.MainMenu}>
       <nav className={styles.NavSection}>
-        <Heading level={3} size="level-4">
-          Thema&apos;s
-        </Heading>
+        <Heading level={2}>Thema&apos;s</Heading>
         <div>
           {items.map((thema) => {
             const LinkComponent = thema.to.startsWith('http')
@@ -40,9 +38,7 @@ export function MainMenu() {
         </div>
       </nav>
       <nav className={styles.NavSection}>
-        <Heading level={3} size="level-4">
-          Categorieën
-        </Heading>
+        <Heading level={2}>Categorieën</Heading>
         <div>
           {categoryMenuItems.map((item) => (
             <MaRouterLink

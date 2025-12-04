@@ -92,11 +92,7 @@ export function TableV2<T extends object = ZaakAanvraagDetail>({
   return (
     <>
       {!!caption && (
-        <Heading
-          level={3}
-          size="level-2"
-          className={contentAfterTheCaption ? 'ams-mb-s' : ''}
-        >
+        <Heading level={2} className={contentAfterTheCaption ? 'ams-mb-s' : ''}>
           {caption}
         </Heading>
       )}

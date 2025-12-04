@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 
 import {
-  ExternalLinkIcon,
-  LocationIcon,
+  LinkExternalIcon,
+  MapMarkerIcon,
 } from '@amsterdam/design-system-react-icons';
 import Fuse from 'fuse.js';
 import { matchPath, useLocation } from 'react-router';
@@ -171,7 +171,7 @@ function transformSearchAmsterdamNLresponse(
         description: page.description,
         url: page.url,
         trailingIcon: (
-          <ExternalLinkIcon
+          <LinkExternalIcon
             width="14"
             height="14"
             className={styles.ExternalUrl}
@@ -298,7 +298,7 @@ function createFuseInstanceFromSearchEntries(
       if (searchEntry.url.startsWith(buurtRouteConfig.themaPage.path)) {
         return Object.assign({}, searchEntry, {
           trailingIcon: (
-            <LocationIcon
+            <MapMarkerIcon
               width="14"
               height="14"
               className={styles.ExternalUrl}

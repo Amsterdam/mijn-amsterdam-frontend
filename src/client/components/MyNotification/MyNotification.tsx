@@ -37,7 +37,7 @@ export function MyNotification({
   return (
     <article>
       <header className="ams-mb-s">
-        <Heading level={4}>{notification.title}</Heading>
+        <Heading level={3}>{notification.title}</Heading>
         <div className={styles.MetaInfoSecondary}>
           <em className={styles.ThemaIndication}>
             {notification.themaTitle ?? MIJN_AMSTERDAM}

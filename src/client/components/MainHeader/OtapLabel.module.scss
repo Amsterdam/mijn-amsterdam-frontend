@@ -6,4 +6,7 @@
   display: block;
   position: absolute;
   transform: translateY(-7px);
+  max-width: 190px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

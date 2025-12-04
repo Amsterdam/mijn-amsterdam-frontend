@@ -11,7 +11,7 @@ import {
 
 import { Button } from '@amsterdam/design-system-react';
 import {
-  ChevronRightIcon,
+  ChevronForwardIcon,
   CloseIcon,
 } from '@amsterdam/design-system-react-icons';
 import { animated, AnimatedValue, useSpring } from '@react-spring/web';
@@ -260,7 +260,7 @@ export function PanelComponent({
           aria-expanded={isPanelExpanded}
           aria-label={`${isPanelExpanded ? 'Sluit' : 'Open'} ${id} paneel`}
           onClick={cycleState}
-          icon={isPanelExpanded ? CloseIcon : ChevronRightIcon}
+          icon={isPanelExpanded ? CloseIcon : ChevronForwardIcon}
           variant={isPanelExpanded ? 'tertiary' : 'secondary'}
         >
           {isPanelExpanded ? '' : 'Legenda'}

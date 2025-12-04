@@ -33,6 +33,8 @@
   :global(.ams-link) & {
     display: flex;
     align-items: center;
+    font-size: var(--ams-heading-3-font-size);
+    line-height: var(--ams-heading-3-line-height);
   }
 }
 .ThemaLinkIcon {
