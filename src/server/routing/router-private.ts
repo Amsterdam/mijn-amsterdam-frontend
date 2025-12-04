@@ -8,6 +8,9 @@ import { wmoRouter } from '../services/wmo/wmo-router';
 export const router = createBFFRouter({ id: 'router-private-network' });
 
 router.use(notificationsExternalConsumerRouter.private);
-router.use(OAuthVerificationHandler('User'), wmoRouter.private);
 router.use(stadspasExternalConsumerRouter.private);
-router.use(OAuthVerificationHandler('User'), afisRouter.private);
+router.use(
+  OAuthVerificationHandler('User'),
+  afisRouter.private,
+  wmoRouter.private
+);
