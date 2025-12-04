@@ -62,9 +62,7 @@ export function CollapsiblePanel({
         toggle={() => toggleCollapsed(!isCollapsed)}
         isCollapsed={isCollapsed}
       />
-      {!isCollapsed && (
-        <div className={styles.CollapsiblePanel}>{children}</div>
-      )}
+      {!isCollapsed && <>{children}</>}
     </>
   );
 }
