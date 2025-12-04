@@ -138,20 +138,8 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
     statusLineItems: { name: 'vergoeding', transformers: vergoeding },
   },
   {
+    // Alle leveringsvormen voor AOV
     resultaat: 'toegewezen',
-    leveringsVorm: 'ZIN',
-    productsoortCodes: ['AOV'],
-    statusLineItems: { name: 'AOV', transformers: AOV },
-  },
-  {
-    resultaat: 'toegewezen',
-    leveringsVorm: 'PGB',
-    productsoortCodes: ['AOV'],
-    statusLineItems: { name: 'AOV', transformers: AOV },
-  },
-  {
-    resultaat: 'toegewezen',
-    leveringsVorm: '',
     productsoortCodes: ['AOV'],
     statusLineItems: { name: 'AOV', transformers: AOV },
   },
