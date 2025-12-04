@@ -42,9 +42,7 @@ function ApplicationErrorContent({ error }: { error?: Error }) {
             <strong>Fout:</strong> {error.toString()}
           </Paragraph>
         )}
-        <Heading size="level-4" level={4}>
-          Vragen over Mijn Amsterdam?
-        </Heading>
+        <Heading level={4}>Vragen over Mijn Amsterdam?</Heading>
         <Paragraph className="ams-mb-xl">
           Kijk bij{' '}
           <Link

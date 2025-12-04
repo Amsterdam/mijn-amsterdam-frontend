@@ -41,11 +41,13 @@ export function Dashboard() {
   const { items: myThemaItems, isLoading: isMyThemasLoading } =
     useActiveThemaMenuItems();
 
+  // We only want to run this on mount.
   useEffect(() => {
     if (location.search) {
       navigate(location.pathname, { replace: true });
     }
-  }, [location.pathname, location.search, navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

@@ -1,3 +1,6 @@
+.AppWide {
+  --ams-page-max-inline-size: 100vw;
+}
 .PreLoader {
   height: 100vh;
   width: 100vw;
@@ -6,8 +9,4 @@
   align-items: center;
   padding: 0;
   margin: 0;
-}
-
-:global(.ams-page).App {
-  min-block-size: 0;
 }

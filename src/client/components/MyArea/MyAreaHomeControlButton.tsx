@@ -3,7 +3,7 @@ import { BuildingsIcon, HouseIcon } from '@amsterdam/design-system-react-icons';
 import { useMapInstance } from '@amsterdam/react-maps';
 import { LatLngLiteral } from 'leaflet';
 
-import styles from './Map/Zoom.module.scss';
+import styles from './Map/ZoomControl.module.scss';
 import { HOOD_ZOOM } from '../../../universal/config/myarea-datasets';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 
@@ -12,7 +12,7 @@ interface MyAreaHomeControlButtonProps {
   zoom?: number;
 }
 
-export default function MyAreaHomeControlButton({
+export default function HomeControlButton({
   latlng,
   zoom = HOOD_ZOOM,
 }: MyAreaHomeControlButtonProps) {
@@ -22,11 +22,12 @@ export default function MyAreaHomeControlButton({
     <Button
       className={styles.Button}
       icon={profileType === 'private' ? HouseIcon : BuildingsIcon}
-      iconOnly
       variant="tertiary"
       onClick={() => {
         mapInstance.setView(latlng, zoom);
       }}
-    />
+    >
+      <span className="ams-visually-hidden">Centreer kaart op jouw adres</span>
+    </Button>
   );
 }
