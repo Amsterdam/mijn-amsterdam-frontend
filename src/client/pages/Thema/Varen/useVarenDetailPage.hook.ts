@@ -18,17 +18,15 @@ export function useVarenVergunningDetailPage() {
   } = useVarenThemaData();
   const { id } = useParams<{ id: string }>();
 
-  const hasRegistratieReder = !!varenRederRegistratie;
-
   const vergunning = varenVergunningen.find((item) => item.id === id) ?? null;
-  const buttonItems: ButtonLinkProps[] = vergunning?.id
-    ? [exploitatieVergunningWijzigenLink(vergunning.id)]
+  const buttonItems: ButtonLinkProps[] = vergunning?.identifier
+    ? [exploitatieVergunningWijzigenLink(vergunning.identifier)]
     : [];
 
   return {
     vergunning,
     themaId,
-    hasRegistratieReder,
+    hasRegistratieReder: !!varenRederRegistratie,
     buttonItems,
     isLoading,
     isError,

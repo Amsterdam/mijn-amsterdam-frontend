@@ -49,6 +49,15 @@ vi.mock('../server/helpers/env.ts', async (importOriginal) => {
   };
 });
 
+// Set every BFF Featuretoggle to true.
+vi.mock('../client/helpers/env.ts', async (importOriginal) => {
+  const envModule: object = await importOriginal();
+  return {
+    ...envModule,
+    useIsBffToggleEnabled: (key: string) => true,
+  };
+});
+
 // Set every Featuretoggle to true.
 vi.mock('../universal/config/feature-toggles.ts', async (importOriginal) => {
   const featureToggleModule: {
@@ -166,3 +175,5 @@ process.env.BFF_BENK_BRP_API_BASE_URL = `${remoteApiHost}/benk_brp`;
 process.env.BFF_DATAPUNT_IAM_API_BASE_URL = `${remoteApiHost}/datapunt/iam`;
 process.env.BFF_HR_KVK_API_BASE_URL = `${remoteApiHost}/hr_kvk`;
 process.env.BFF_CMS_BASE_URL = `${remoteApiHost}/cms`;
+
+process.env.REACT_APP_COBROWSE_LICENSE_KEY = 'test';
