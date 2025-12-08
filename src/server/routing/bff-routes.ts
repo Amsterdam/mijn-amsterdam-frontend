@@ -19,7 +19,7 @@ export const BffEndpoints = {
   STATUS_HEALTH: '/status/health',
   TEST_ACCOUNTS_OVERVIEW: '/admin/user-data-overview',
 
-  SCREEN_SHARE: '/services/screenshare',
+  SERVICES_TOGGLES: '/services/feature-toggles',
 
   TELEMETRY_PROXY: '/services/telemetry/v2/track',
 
@@ -89,6 +89,7 @@ export const PUBLIC_BFF_ENDPOINTS = [
   BffEndpoints.CMS_MAINTENANCE_NOTIFICATIONS,
   BffEndpoints.CMS_FOOTER,
   BffEndpoints.TELEMETRY_PROXY,
+  BffEndpoints.SERVICES_TOGGLES,
 ] as const;
 
 export const DevelopmentRoutes = {

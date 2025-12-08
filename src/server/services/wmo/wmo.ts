@@ -23,7 +23,7 @@ import {
 import {
   WMOVoorzieningFrontend,
   type WMOVoorzieningCompact,
-} from './wmo-config-and-types';
+} from './wmo-types';
 import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service';
 import { getLatestStatus, getLatestStatusDate } from '../../helpers/zaken';
 import {

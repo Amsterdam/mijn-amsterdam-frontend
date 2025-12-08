@@ -1,7 +1,7 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 
 import { useZorgThemaData } from './useZorgThemaData';
-import { WMOVoorzieningFrontend } from '../../../../server/services/wmo/wmo-config-and-types';
+import { WMOVoorzieningFrontend } from '../../../../server/services/wmo/wmo-types';
 import { PageContentCell } from '../../../components/Page/Page';
 import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';

@@ -61,6 +61,7 @@ export interface ZorgnedStatusLineItemsConfig<
 export type LeveringsVorm = 'ZIN' | 'PGB' | '' | string;
 export type ProductSoortCode = string;
 export type ProductIdentificatie = string;
+export type CasusIdentificatie = string;
 
 export interface Levering {
   begindatum: string | null;
@@ -129,6 +130,7 @@ export interface ZorgnedAanvraagSource {
   procesAanvraag?: ZorgnedProcesAanvraag;
   documenten: ZorgnedDocument[];
   identificatie: string;
+  casusIdentificatie: CasusIdentificatie | null;
 }
 
 export type ZorgnedProcesAanvraag = {
