@@ -16,7 +16,7 @@ export type IsThemaVisibleFN = (appState: AppState) => boolean;
 export type ThemaConfigBase = {
   id: string;
   title: string;
-  featureToggle: ThemaFeatureToggle;
+  featureToggle: ThemaFeatureToggle & Record<string, boolean>;
   profileTypes: ProfileType[];
   uitlegPageSections: InfoSection;
   pageLinks: LinkProps[];
@@ -29,10 +29,16 @@ export type WithListPage = PageConfig<'listPage'>;
 export type WithRegelingenListPage = PageConfig<'regelingenListPage'>;
 export type WithspecificatieListPage = PageConfig<'specificatieListPage'>;
 export type WithdetailPageStadspas = PageConfig<'detailPageStadspas'>;
-// stadspas of themanamen moeten hier niet voorkomen, speciefieke namen of dingen voor een bepaald thema mogen hier niet voorkomen
-type ThemaFeatureToggle = {
+
+export type ThemaFeatureToggle = {
   themaActive: boolean;
-  [key: string]: boolean;
+  parents?: Record<
+    string,
+    {
+      active: boolean;
+      children?: Record<string, boolean>;
+    }
+  >;
 };
 
 type RedactedScope = 'full' | 'content' | 'none';

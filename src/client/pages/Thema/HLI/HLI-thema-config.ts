@@ -7,12 +7,14 @@ import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { dateSort } from '../../../../universal/helpers/date';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
+import { buildFeatureToggle } from '../../../config/buildFeatureToggle';
 import type {
   ThemaConfigBase,
   WithDetailPage,
   WithRegelingenListPage,
   WithspecificatieListPage,
   WithdetailPageStadspas,
+  ThemaFeatureToggle,
 } from '../../../config/thema-types';
 // stadspas of themanamen moeten hier niet voorkomen
 const THEMA_TITLE = 'Stadspas en regelingen bij laag inkomen' as const;
@@ -26,23 +28,32 @@ export type HLIThemaConfig = ThemaConfigBase &
 export const themaConfig: HLIThemaConfig = {
   id: 'HLI' as const,
   title: THEMA_TITLE,
-  featureToggle: {
+
+  featureToggle: buildFeatureToggle({
     themaActive: true,
-    stadspas: {
-      active: true,
-      blokkerenActive: true,
+    parents: {
+      stadspas: {
+        active: true,
+        children: {
+          hliThemaStadspasBlokkerenActive: true,
+          hliThemaStadspasDeblokkerenActive: true,
+        },
+      },
+      regelingen: {
+        active: true,
+        children: {
+          hliRegelingEnabledCZM: true,
+          hliRegelingEnabledRTM: !IS_PRODUCTION,
+          hli2025PCTegoedCodesEnabled: !IS_PRODUCTION,
+          hli2026PCVergoedingV3Enabled: !IS_PRODUCTION,
+        },
+      },
+      zorgned: {
+        active: true,
+      },
     },
-    hli: {
-      active: true,
-    },
-    get stadspasBlokkeren() {
-      return (
-        this.stadspas.blokkerenActive &&
-        this.stadspas.active &&
-        this.themaActive
-      );
-    },
-  },
+  } as ThemaFeatureToggle),
+
   profileTypes: ['private'],
   uitlegPageSections: {
     title: THEMA_TITLE,
@@ -138,8 +149,6 @@ const displayPropsEerdereRegelingen: DisplayProps<HLIRegelingFrontend> = {
 
 type SpecificatieDisplayProps = {
   datePublishedFormatted: ReactNode;
-  // We don't use category just yet, since we only have one type of category at the moment.
-  // This is shown in the title of the specificatie table.
   category: ReactNode;
   documentUrl: ReactNode;
 };
@@ -157,18 +166,6 @@ export const listPageParamKind = {
 
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
-
-export const featureToggle = {
-  hliStadspasActive: true,
-  zorgnedAvApiActive: true,
-  hliThemaStadspasBlokkerenActive: true,
-  hliThemaStadspasDeblokkerenActive: !IS_PRODUCTION,
-  hliThemaRegelingenActive: true,
-  hliRegelingEnabledCZM: true,
-  hliRegelingEnabledRTM: !IS_PRODUCTION,
-  hli2025PCTegoedCodesEnabled: !IS_PRODUCTION,
-  hli2026PCVergoedingV3Enabled: !IS_PRODUCTION,
-} as const;
 
 export const regelingenTitle = 'Regelingen bij laag inkomen' as const;
 export const stadspasTitle = 'Stadspas' as const;

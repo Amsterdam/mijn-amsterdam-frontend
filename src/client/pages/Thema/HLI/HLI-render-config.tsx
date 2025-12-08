@@ -1,6 +1,6 @@
 // routeconfig en featuretoggle moeten eerst gefixed worden komt omdat hlistadspas nog niet goed in het themaconfig zit dit is opdracht 2 in jira
 import { getThemaTitleWithAppState } from './helpers';
-import { featureToggle, themaConfig } from './HLI-thema-config';
+import { themaConfig } from './HLI-thema-config';
 import { HLIDetail } from './HLIDetail';
 import { default as HLIIcon } from './HLIIcon.svg?react';
 import { HLIList } from './HLIList';
@@ -13,11 +13,12 @@ import type {
   ThemaRenderRouteConfig,
   ThemaMenuItem,
 } from '../../../config/thema-types';
+
 export const HLIRoutes = [
   {
     route: themaConfig.detailPageStadspas.route.path,
     Component: HLIStadspasDetail,
-    isActive: featureToggle.hliStadspasActive,
+    isActive: themaConfig.featureToggle.stadspasActive,
   },
   {
     route: themaConfig.detailPage.route.path,
@@ -27,7 +28,7 @@ export const HLIRoutes = [
   {
     route: themaConfig.specificatieListPage.route.path,
     Component: HLISpecificatieList,
-    isActive: featureToggle.hliRegelingEnabledRTM,
+    isActive: themaConfig.featureToggle.hliRegelingEnabledRTM,
   },
   {
     route: themaConfig.regelingenListPage.route.path,
@@ -52,11 +53,14 @@ export const menuItem: ThemaMenuItem<typeof themaConfig.id> = {
   isActive(appState: AppState) {
     const hasStadspas =
       !!appState.HLI?.content?.stadspas?.stadspassen?.length &&
-      featureToggle.hliStadspasActive;
+      themaConfig.featureToggle.stadspasActive;
+
     const hasRegelingen =
       !!appState.HLI?.content?.regelingen?.length &&
       themaConfig.featureToggle.themaActive;
+
     const isLoadingHLI = isLoading(appState.HLI);
+
     return (
       themaConfig.featureToggle.themaActive &&
       !isLoadingHLI &&

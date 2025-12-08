@@ -10,7 +10,7 @@ import {
 } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router';
 
-import { featureToggle, themaConfig } from './HLI-thema-config';
+import { themaConfig } from './HLI-thema-config';
 import styles from './HLIStadspasDetail.module.scss';
 import { useBlockStadspas, useStadspassen } from './useStadspassen.hook';
 import {
@@ -374,7 +374,9 @@ function PassBlockedAlert() {
       heading="Deze pas heeft u geblokkeerd, hoe nu verder?"
       severity="warning"
       className={
-        featureToggle.hliThemaStadspasDeblokkerenActive ? 'ams-mb-l' : ''
+        themaConfig.featureToggle.hliThemaStadspasDeblokkerenActive
+          ? 'ams-mb-l'
+          : ''
       }
     >
       <Paragraph>

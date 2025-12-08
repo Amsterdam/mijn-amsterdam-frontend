@@ -16,10 +16,7 @@ import {
   isRTMDeel1,
   RTM_STATUS_IN_BEHANDELING,
 } from './status-line-items/regeling-rtm';
-import {
-  featureToggle,
-  themaConfig,
-} from '../../../client/pages/Thema/HLI/HLI-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import {
   ApiResponse,
   apiSuccessResult,
@@ -229,7 +226,7 @@ async function transformRegelingenForFrontend(
 }
 
 async function fetchRegelingen(authProfileAndToken: AuthProfileAndToken) {
-  if (!featureToggle.hliThemaRegelingenActive) {
+  if (!themaConfig.featureToggle.regelingenActive) {
     return apiSuccessResult([]);
   }
 
