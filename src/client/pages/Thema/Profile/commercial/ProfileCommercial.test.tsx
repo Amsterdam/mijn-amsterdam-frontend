@@ -11,6 +11,7 @@ import { routeConfig } from '../Profile-thema-config';
 const responseData: KvkResponseFrontend = {
   eigenaar: {
     naam: 'Hendrika Johanna Theodora Grupstal',
+    rechtsvorm: 'Eenmanszaak',
   },
   mokum: true,
   onderneming: {
@@ -19,7 +20,6 @@ const responseData: KvkResponseFrontend = {
     handelsnamen: ['Ballonenverkoop B.V.'],
     hoofdactiviteit: 'Detailhandel via internet in kleding en mode-artikelen',
     overigeActiviteiten: ['Elektrotechnische bouwinstallatie'],
-    rechtsvorm: 'BeslotenVennootschap',
     handelsnaam: 'Feestwinkel',
     kvknummer: '',
     datumAanvangFormatted: null,
@@ -39,7 +39,7 @@ const responseData: KvkResponseFrontend = {
         straatnaam: 'Laan der Hesperiden',
         woonplaatsNaam: 'Amsterdam',
       }),
-      datumAanvang: { datum: '2020-01-01', dag: null, maand: null, jaar: null },
+      datumAanvang: '2020-01-01',
       datumAanvangFormatted: '1 januari 2020',
       datumEinde: null,
       datumEindeFormatted: null,
@@ -76,7 +76,7 @@ const responseData: KvkResponseFrontend = {
         straatnaam: 'Borchlandweg',
         woonplaatsNaam: 'Amsterdam-Duivendrecht',
       }),
-      datumAanvang: { datum: '2020-05-01', dag: null, maand: null, jaar: null },
+      datumAanvang: '2020-05-01',
       datumAanvangFormatted: '1 mei 2020',
       datumEinde: null,
       datumEindeFormatted: null,
@@ -113,7 +113,7 @@ const responseData: KvkResponseFrontend = {
         straatnaam: 'Arena boulevard',
         woonplaatsNaam: 'Amsterdam',
       }),
-      datumAanvang: { datum: '2020-05-01', dag: null, maand: null, jaar: null },
+      datumAanvang: '2020-05-01',
       datumAanvangFormatted: '1 mei 2020',
       datumEinde: null,
       datumEindeFormatted: null,
@@ -151,7 +151,7 @@ const panelHeadings = [
   'Onderneming',
   'Hoofdvestiging',
   'Eigenaar',
-  'Vestigingen',
+  'Vestigingen (3)',
 ];
 
 describe('<MijnBedrijfsGegevensThema />', () => {
