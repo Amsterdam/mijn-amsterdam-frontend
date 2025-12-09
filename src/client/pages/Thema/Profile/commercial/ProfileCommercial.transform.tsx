@@ -278,7 +278,10 @@ export const panelConfig: PanelConfig<
     actionLinks: [],
   }),
   vestigingen: (KVK) => ({
-    title: KVK.content?.vestigingen?.length !== 1 ? 'Vestigingen' : 'Vestiging',
+    title:
+      KVK.content?.vestigingen?.length !== 1
+        ? `Vestigingen (${KVK.content?.vestigingen?.length})`
+        : 'Vestiging',
     actionLinks: [],
   }),
   eigenaar: () => ({
