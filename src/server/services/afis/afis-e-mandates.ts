@@ -443,6 +443,13 @@ export async function fetchEMandates(
         authProfile.sid,
         payload.businessPartnerId
       ),
+    validateStatus(status) {
+      // Afis api's are wired through a proxy that handles errors poorly. The SAP api responds with a 400 error that is translated to a 500 error by the proxy.
+      return (
+        status === HttpStatusCode.Ok ||
+        status === HttpStatusCode.InternalServerError
+      );
+    },
     /**
      * We do not want to cache this request, because the e-mandates are updated without direct
      * user interaction.
