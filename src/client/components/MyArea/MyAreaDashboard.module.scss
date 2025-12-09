@@ -1,8 +1,9 @@
 .DashboardMapContainer {
   background-color: var(--ams-color-separator);
   min-height: 50rem;
-  margin-top: var(--ams-space-xl);
   position: relative;
+  margin-left: calc(var(--ams-grid-wide-padding-inline) * -1);
+  margin-right: calc(var(--ams-grid-wide-padding-inline) * -1);
 }
 
 .DashboardMap {

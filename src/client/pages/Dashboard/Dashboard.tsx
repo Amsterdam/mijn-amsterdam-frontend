@@ -84,7 +84,11 @@ export function Dashboard() {
           </Heading>
           <MyThemasPanel isLoading={isMyThemasLoading} items={myThemaItems} />
         </PageContentCell>
-        {!isPhoneScreen && <MyAreaDashboard />}
+        {!isPhoneScreen && (
+          <PageContentCell>
+            <MyAreaDashboard />
+          </PageContentCell>
+        )}
       </PageV2>
     </>
   );
