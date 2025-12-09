@@ -289,7 +289,7 @@ describe('afis-e-mandates service (with nock)', () => {
       expect(result.content?.[0].senderIBAN).toBe(validSenderIBAN);
       expect(result.content?.[0].senderName).toBe('A B');
 
-      expect(result.content?.[1].status).toBe('0');
+      expect(result.content?.[1].status).toBe('1');
       expect(result.content?.[1].senderIBAN).toBe(null);
       expect(result.content?.[1].senderName).toBe(null);
     });

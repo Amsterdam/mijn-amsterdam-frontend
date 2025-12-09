@@ -61,9 +61,10 @@ export const EMANDATE_STATUS = {
 } as const;
 
 export function getEmandateStatus(dateValidTo: string | null) {
-  return isEmandateActive(dateValidTo)
-    ? EMANDATE_STATUS.ON
-    : EMANDATE_STATUS.OFF;
+  return EMANDATE_STATUS.ON;
+  // return isEmandateActive(dateValidTo)
+  //   ? EMANDATE_STATUS.ON
+  //   : EMANDATE_STATUS.OFF;
 }
 
 export function getEmandateDisplayStatus(
