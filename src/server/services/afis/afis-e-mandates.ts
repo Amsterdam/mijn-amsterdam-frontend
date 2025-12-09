@@ -1,5 +1,5 @@
 import { HttpStatusCode } from 'axios';
-import { add, isAfter, isSameDay, parseISO, subDays } from 'date-fns';
+import { add, isAfter, parseISO } from 'date-fns';
 import { Request } from 'express';
 import slug from 'slugme';
 import { firstBy } from 'thenby';
@@ -19,10 +19,10 @@ import {
   eMandateReceiver,
 } from './afis-e-mandates-config';
 import {
-  EMANDATE_STATUS,
+  EMANDATE_STATUS_FRONTEND,
   getAfisApiConfig,
   getEmandateDisplayStatus,
-  getEmandateStatus,
+  getEmandateStatusFrontend,
   getEmandateValidityDateFormatted,
   getFeedEntryProperties,
   isEmandateActive,
@@ -203,50 +203,6 @@ async function updateAfisEMandate(
   return requestData<unknown>(config);
 }
 
-function getStatusChangeApiUrl(
-  sessionID: SessionID,
-  afisEMandateSource: AfisEMandateSource
-) {
-  const changeToStatus = isEmandateActive(afisEMandateSource.LifetimeTo)
-    ? EMANDATE_STATUS.OFF
-    : EMANDATE_STATUS.ON;
-
-  const lifetimeTo = parseISO(afisEMandateSource.LifetimeTo);
-  const lifetimeFrom = parseISO(afisEMandateSource.LifetimeFrom);
-  const today = new Date().toISOString();
-
-  const statusChangePayloadData: EMandateStatusChangePayload = {
-    IMandateId: afisEMandateSource.IMandateId.toString(),
-    Status: changeToStatus,
-    LifetimeTo:
-      changeToStatus === EMANDATE_STATUS.OFF
-        ? today
-        : AFIS_EMANDATE_RECURRING_DATE_END,
-  };
-
-  // In the case the e-mandate is active for only one day, we need to set the lifetimeFrom to the day before.
-  // The api does not allow to set the lifetimeTo to the same day as the lifetimeFrom.
-  if (
-    changeToStatus === EMANDATE_STATUS.OFF &&
-    isSameDay(lifetimeFrom, lifetimeTo)
-  ) {
-    statusChangePayloadData.LifetimeFrom = subDays(
-      lifetimeFrom,
-      1
-    ).toISOString();
-  }
-
-  if (changeToStatus === EMANDATE_STATUS.ON) {
-    statusChangePayloadData.LifetimeFrom = today;
-  }
-
-  return generateFullApiUrlBFF(routes.protected.AFIS_EMANDATES_STATUS_CHANGE, [
-    {
-      payload: encryptPayloadAndSessionID(sessionID, statusChangePayloadData),
-    },
-  ]);
-}
-
 function getSignRequestApiUrl(
   sessionID: SessionID,
   businessPartnerId: BusinessPartnerId,
@@ -270,20 +226,18 @@ function getSignRequestApiUrl(
   return url;
 }
 
-function getUpdateApiUrl(
+function getEmandateApiUrl(
+  route: string,
   sessionID: SessionID,
   afisEMandateSource: AfisEMandateSource
 ) {
-  const url = generateFullApiUrlBFF(
-    routes.protected.AFIS_EMANDATES_UPDATE_LIFETIME,
-    [
-      {
-        payload: encryptPayloadAndSessionID(sessionID, {
-          IMandateId: afisEMandateSource.IMandateId.toString(),
-        }),
-      },
-    ]
-  );
+  const url = generateFullApiUrlBFF(route, [
+    {
+      payload: encryptPayloadAndSessionID(sessionID, {
+        IMandateId: afisEMandateSource.IMandateId.toString(),
+      }),
+    },
+  ]);
 
   return url;
 }
@@ -296,11 +250,16 @@ function addEmandateApiUrls(
   afisEMandateSource?: AfisEMandateSource
 ) {
   if (afisEMandateSource?.IMandateId) {
-    eMandate.statusChangeUrl = getStatusChangeApiUrl(
+    eMandate.deactivateUrl = getEmandateApiUrl(
+      routes.protected.AFIS_EMANDATES_DEACTIVATE,
       sessionID,
       afisEMandateSource
     );
-    eMandate.lifetimeUpdateUrl = getUpdateApiUrl(sessionID, afisEMandateSource);
+    eMandate.lifetimeUpdateUrl = getEmandateApiUrl(
+      routes.protected.AFIS_EMANDATES_UPDATE_LIFETIME,
+      sessionID,
+      afisEMandateSource
+    );
   }
 
   eMandate.signRequestUrl = getSignRequestApiUrl(
@@ -339,7 +298,7 @@ function transformEMandateSource(
     dateValidFromFormatted,
     dateValidTo,
     dateValidToFormatted,
-    status: getEmandateStatus(dateValidTo),
+    status: getEmandateStatusFrontend(dateValidTo),
     displayStatus: getEmandateDisplayStatus(
       dateValidTo,
       dateValidFromFormatted
@@ -396,7 +355,7 @@ function transformEMandatesResponse(
     return eMandate;
   }).sort(
     firstBy(function sortByStatus(eMandate: AfisEMandateFrontend) {
-      return eMandate.status === EMANDATE_STATUS.ON ? -1 : 1;
+      return eMandate.status === EMANDATE_STATUS_FRONTEND.ON ? -1 : 1;
     }).thenBy('creditorName')
   );
 }
@@ -577,9 +536,11 @@ function transformEmandateSignRequestStatus(
   };
 }
 
-export async function changeEMandateStatus(
+export async function deactivateEmandate(
   eMandateStatusChangePayload: EMandateStatusChangePayload
 ) {
+  // The PUT endpoint does not reply with data. Only a status.
+  // So we derive the new status from the change payload.
   function transformResponse() {
     const dateValidTo = eMandateStatusChangePayload?.LifetimeTo || null;
     const dateValidToFormatted = getEmandateValidityDateFormatted(dateValidTo);
@@ -589,7 +550,7 @@ export async function changeEMandateStatus(
     return {
       dateValidTo,
       dateValidToFormatted,
-      status: getEmandateStatus(dateValidTo),
+      status: getEmandateStatusFrontend(dateValidTo),
       displayStatus: getEmandateDisplayStatus(
         dateValidTo,
         dateValidFromFormatted
@@ -643,15 +604,14 @@ export async function handleEmandateLifetimeUpdate(
 
 export const forTesting = {
   addEmandateApiUrls,
-  changeEMandateStatus,
+  deactivateEmandate,
   createEMandate: createOrUpdateEMandateFromStatusNotificationPayload,
   createEMandateSignRequestPayload,
   fetchEMandates,
   fetchEmandateSignRequestRedirectUrlFromPaymentProvider,
   getEMandateSourceByCreditor,
   getSignRequestApiUrl,
-  getStatusChangeApiUrl,
-  getUpdateApiUrl,
+  getEmandateApiUrl,
   handleEmandateLifeTimeUpdate: handleEmandateLifetimeUpdate,
   transformEmandateSignRequestStatus,
   transformEMandateSource,

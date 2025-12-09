@@ -55,16 +55,16 @@ export function isEmandateActive(dateValidTo: string | null) {
   return parseISO(dateValidTo) > new Date();
 }
 
-export const EMANDATE_STATUS = {
+export const EMANDATE_STATUS_FRONTEND = {
   ON: '1', // AfisEMandateStatusCodes['1'],
   OFF: '0', // AfisEMandateStatusCodes['0'],
 } as const;
 
-export function getEmandateStatus(dateValidTo: string | null) {
-  return EMANDATE_STATUS.ON;
-  // return isEmandateActive(dateValidTo)
-  //   ? EMANDATE_STATUS.ON
-  //   : EMANDATE_STATUS.OFF;
+export function getEmandateStatusFrontend(dateValidTo: string | null) {
+  // return EMANDATE_STATUS.ON;
+  return isEmandateActive(dateValidTo)
+    ? EMANDATE_STATUS_FRONTEND.ON
+    : EMANDATE_STATUS_FRONTEND.OFF;
 }
 
 export function getEmandateDisplayStatus(

@@ -149,7 +149,7 @@ export function useEmandateApis(eMandate: AfisEMandateFrontend) {
   );
 
   const statusChangeApi = useBffApi<AfisEMandateStatusChangeResponse>(
-    eMandate.statusChangeUrl,
+    eMandate.deactivateUrl,
     {
       fetchImmediately: false,
       sendRequest: async (url) => {

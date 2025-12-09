@@ -4,7 +4,7 @@ import { fetchAfisBusinessPartnerDetails } from './afis-business-partner';
 import { fetchAfisDocument } from './afis-documents';
 import {
   fetchEMandates,
-  changeEMandateStatus,
+  deactivateEmandate,
   handleEmandateLifetimeUpdate,
   fetchEmandateSignRequestRedirectUrlFromPaymentProvider,
 } from './afis-e-mandates';
@@ -91,14 +91,14 @@ attachDocumentDownloadRoute(
    * The status can be only be changed to OFF.
    */
   type QueryPayload = EMandateStatusChangePayload;
-  type ServiceReturnType = ReturnType<typeof changeEMandateStatus>;
+  type ServiceReturnType = ReturnType<typeof deactivateEmandate>;
 
   routerProtected.get(
-    routes.protected.AFIS_EMANDATES_STATUS_CHANGE,
+    routes.protected.AFIS_EMANDATES_DEACTIVATE,
     handleAfisRequestWithEncryptedPayloadQueryParam<
       QueryPayload,
       ServiceReturnType
-    >(changeEMandateStatus)
+    >(deactivateEmandate)
   );
 }
 

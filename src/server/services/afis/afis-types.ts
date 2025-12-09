@@ -387,7 +387,7 @@ export type AfisEMandateFrontend = {
   dateValidToFormatted: string | null;
 
   // Urls to interact with the mandate state
-  statusChangeUrl?: string;
+  deactivateUrl?: string;
   signRequestUrl?: string;
   lifetimeUpdateUrl?: string;
 
@@ -455,7 +455,6 @@ export type EMandateUpdatePayload = {
 };
 
 export type EMandateStatusChangePayload = {
-  Status: AfisEMandateSource['Status'];
   IMandateId: AfisEMandateSource['IMandateId'];
   LifetimeTo: AfisEMandateSource['LifetimeTo'];
   LifetimeFrom?: AfisEMandateSource['LifetimeFrom'];

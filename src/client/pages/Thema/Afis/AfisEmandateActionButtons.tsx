@@ -141,33 +141,32 @@ export function AfisEMandateActionUrls({
         />
       )}
       &nbsp;
-      {eMandate.statusChangeUrl &&
-        eMandate.status === EMANDATE_STATUS_ACTIVE && (
-          <ApiActionButton
-            api={statusChangeApi}
-            fetch={() => statusChangeApi.fetch()}
-            label="Stopzetten"
-            doConfirm
-            confirmationModal={{
-              title: 'Stopzetten E-Mandaat',
-              confirmationText: (
-                <>
-                  <Paragraph className="ams-mb-s">
-                    Weet je zeker dat je dit E-mandaat wilt stopzetten?
-                  </Paragraph>
-                  <Paragraph className="ams-mb-s">
-                    Het E-mandaat wordt dan niet meer gebruikt voor automatische
-                    incasso.
-                  </Paragraph>
-                  <Paragraph className="ams-mb-s">
-                    Je kunt het E-mandaat later opnieuw activeren.
-                  </Paragraph>
-                </>
-              ),
-              confirmLabel: 'Ja, stopzetten',
-            }}
-          />
-        )}
+      {eMandate.deactivateUrl && eMandate.status === EMANDATE_STATUS_ACTIVE && (
+        <ApiActionButton
+          api={statusChangeApi}
+          fetch={() => statusChangeApi.fetch()}
+          label="Stopzetten"
+          doConfirm
+          confirmationModal={{
+            title: 'Stopzetten E-Mandaat',
+            confirmationText: (
+              <>
+                <Paragraph className="ams-mb-s">
+                  Weet je zeker dat je dit E-mandaat wilt stopzetten?
+                </Paragraph>
+                <Paragraph className="ams-mb-s">
+                  Het E-mandaat wordt dan niet meer gebruikt voor automatische
+                  incasso.
+                </Paragraph>
+                <Paragraph className="ams-mb-s">
+                  Je kunt het E-mandaat later opnieuw activeren.
+                </Paragraph>
+              </>
+            ),
+            confirmLabel: 'Ja, stopzetten',
+          }}
+        />
+      )}
     </>
   );
 }

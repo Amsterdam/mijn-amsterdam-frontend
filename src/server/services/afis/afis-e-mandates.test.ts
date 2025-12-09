@@ -4,6 +4,7 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 
 import * as emandates from './afis-e-mandates';
 import { EMandateCreditorsGemeenteAmsterdam } from './afis-e-mandates-config';
+import { routes } from './afis-service-config';
 import type {
   AfisEMandateCreditor,
   AfisEMandateFrontend,
@@ -289,7 +290,7 @@ describe('afis-e-mandates service (with nock)', () => {
       expect(result.content?.[0].senderIBAN).toBe(validSenderIBAN);
       expect(result.content?.[0].senderName).toBe('A B');
 
-      expect(result.content?.[1].status).toBe('1');
+      expect(result.content?.[1].status).toBe('0');
       expect(result.content?.[1].senderIBAN).toBe(null);
       expect(result.content?.[1].senderName).toBe(null);
     });
@@ -399,12 +400,11 @@ describe('afis-e-mandates service (with nock)', () => {
       expect(eMandate).toHaveProperty('signRequestUrl');
     });
 
-    it('changeEMandateStatus updates status', async () => {
+    it('deactivateEmandate updates status', async () => {
       remoteApi.put(/ChangeMandate/).reply(200);
 
-      const result = await emandates.forTesting.changeEMandateStatus({
+      const result = await emandates.forTesting.deactivateEmandate({
         IMandateId: '1',
-        Status: '1',
         LifetimeTo: '9999-12-31T00:00:00',
       });
 
@@ -503,37 +503,9 @@ describe('afis-e-mandates service (with nock)', () => {
       });
     });
 
-    it('getStatusChangeApiUrl generates URL', () => {
-      const url = emandates.forTesting.getStatusChangeApiUrl(
-        authProfile.sid,
-        validSourceMandate
-      );
-      expect(
-        url.startsWith(
-          'http://bff-api-host/api/v1/services/afis/e-mandates/change-status?payload='
-        )
-      ).toBe(true);
-
-      expect(
-        decryptPayloadAndValidateSessionID(
-          new URL(url).searchParams.get('payload')!,
-          { profile: authProfile } as AuthProfileAndToken
-        )
-      ).toStrictEqual({
-        content: {
-          payload: {
-            IMandateId: '1',
-            LifetimeTo: '2025-07-10T12:38:39.542Z',
-            Status: '0',
-          },
-          sessionID: 'sid',
-        },
-        status: 'OK',
-      });
-    });
-
-    it('getUpdateApiUrl generates URL', () => {
-      const url = emandates.forTesting.getUpdateApiUrl(
+    it('getEmandateApiUrl generates URL', () => {
+      const url = emandates.forTesting.getEmandateApiUrl(
+        routes.protected.AFIS_EMANDATES_UPDATE_LIFETIME,
         authProfile.sid,
         validSourceMandate
       );
