@@ -202,7 +202,7 @@ describe('Cobrowse redacted components', () => {
     ])('%s', async (_, component) => {
       await act(() => render(<Component component={component} />));
       const cobrowseElem = document.querySelector(
-        '.ams-grid.redacted'
+        '.mams-content-wrapper.redacted'
       ) as HTMLElement;
       expect(cobrowseElem).toBeInTheDocument();
 

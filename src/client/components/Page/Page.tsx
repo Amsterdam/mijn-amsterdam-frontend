@@ -38,7 +38,12 @@ export function PageV2({
   breadcrumbs,
 }: PageProps) {
   return (
-    <>
+    <div
+      className={classNames(
+        'mams-content-wrapper',
+        getRedactedClass(redactedThemaId, redactedScope)
+      )}
+    >
       {showBreadcrumbs && (
         <Grid id="page-breadcrumbs" paddingTop={PADDING_TOP}>
           <PageContentCell startWide={1} spanWide={12}>
@@ -54,16 +59,9 @@ export function PageV2({
             </Heading>
           </PageContentCell>
         </Grid>
-        <Grid
-          className={classNames(
-            getRedactedClass(redactedThemaId, redactedScope)
-          )}
-          paddingBottom={PADDING_BOTTOM}
-        >
-          {children}
-        </Grid>
+        <Grid paddingBottom={PADDING_BOTTOM}>{children}</Grid>
       </main>
-    </>
+    </div>
   );
 }
 
