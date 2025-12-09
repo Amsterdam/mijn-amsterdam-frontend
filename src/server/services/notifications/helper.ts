@@ -5,28 +5,30 @@ export type Camelize<T extends object> = {
   [K in keyof T as SnakeToCamel<Extract<K, string>>]: T[K];
 };
 
+function camelizeKeys_<U extends Record<string, unknown>>(obj: U): Camelize<U> {
+  const toCamel = (s: string) =>
+    s.replace(/_([a-z])/g, (_, c) => c.toUpperCase());
+
+  return Object.entries(obj).reduce(
+    (acc, [k, v]) => ({
+      ...acc,
+      [toCamel(k)]: v,
+    }),
+    {}
+  ) as Camelize<U>;
+}
+
 export function camelizeKeys<T extends Record<string, unknown>>(
   input: T
 ): Camelize<T>;
 export function camelizeKeys<T extends Record<string, unknown>>(
   input: T[]
 ): Camelize<T>[];
-export function camelizeKeys<T extends Record<string, unknown>>(obj: T | T[]) {
-  const camelize_ = <U extends Record<string, unknown>>(
-    obj: U
-  ): Camelize<U> => {
-    const out: Record<string, unknown> = {};
-    for (const key in obj) {
-      const camelKey = key.replace(/_([a-z])/g, (_, c) => c.toUpperCase());
-      out[camelKey] = obj[key];
-    }
-    return out as Camelize<U>;
-  };
-
-  if (Array.isArray(obj)) {
-    const a = obj.map((v) => camelize_(v));
-    return a;
+export function camelizeKeys<T extends Record<string, unknown>>(
+  input: T | T[]
+) {
+  if (Array.isArray(input)) {
+    return input.map((v) => camelizeKeys_(v));
   }
-
-  return camelize_(obj);
+  return camelizeKeys_(input);
 }
