@@ -1,7 +1,4 @@
-import { useEffect } from 'react';
-
 import { Heading, OrderedList } from '@amsterdam/design-system-react';
-import { useLocation, useNavigate } from 'react-router';
 
 import { DASHBOARD_PAGE_DOCUMENT_TITLE } from './Dashboard-config';
 import styles from './Dashboard.module.scss';
@@ -29,8 +26,6 @@ export function Dashboard() {
   });
 
   const appState = useAppStateGetter();
-  const location = useLocation();
-  const navigate = useNavigate();
   const { NOTIFICATIONS } = appState;
   const { notifications, total } = useAppStateNotifications(
     MAX_NOTIFICATIONS_VISIBLE
@@ -40,14 +35,6 @@ export function Dashboard() {
 
   const { items: myThemaItems, isLoading: isMyThemasLoading } =
     useActiveThemaMenuItems();
-
-  // We only want to run this on mount.
-  useEffect(() => {
-    if (location.search) {
-      navigate(location.pathname, { replace: true });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <>
