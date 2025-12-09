@@ -357,6 +357,7 @@ export type AfisEMandateCreatePayload = Omit<
 export type AfisEMandateUpdatePayload = Partial<AfisEMandateSource>;
 
 export type AfisEMandateStatusCodes = {
+  '0': 'NietActief';
   '1': 'Actief';
   '2': 'Te bevestigen';
   '3': 'Geblokkeerd';

@@ -56,8 +56,8 @@ export function isEmandateActive(dateValidTo: string | null) {
 }
 
 export const EMANDATE_STATUS = {
-  ON: '1',
-  OFF: '0',
+  ON: '1', // AfisEMandateStatusCodes['1'],
+  OFF: '0', // AfisEMandateStatusCodes['0'],
 } as const;
 
 export function getEmandateStatus(dateValidTo: string | null) {
