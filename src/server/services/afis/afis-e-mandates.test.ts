@@ -289,9 +289,20 @@ describe('afis-e-mandates service (with nock)', () => {
       expect(result.content?.[0].senderIBAN).toBe(validSenderIBAN);
       expect(result.content?.[0].senderName).toBe('A B');
 
-      expect(result.content?.[1].status).toBe('6');
+      expect(result.content?.[1].status).toBe('0');
       expect(result.content?.[1].senderIBAN).toBe(null);
       expect(result.content?.[1].senderName).toBe(null);
+    });
+
+    it('handles error response from AFIS', async () => {
+      remoteApi.get(/Mandate_readSet/).reply(500);
+
+      const result = await emandates.fetchEMandates(
+        { businessPartnerId: '123' },
+        authProfile
+      );
+      expect(result.status).toBe('OK');
+      expect(result.content?.length).toBe(0);
     });
   });
 
@@ -513,7 +524,7 @@ describe('afis-e-mandates service (with nock)', () => {
           payload: {
             IMandateId: '1',
             LifetimeTo: '2025-07-10T12:38:39.542Z',
-            Status: '6',
+            Status: '0',
           },
           sessionID: 'sid',
         },

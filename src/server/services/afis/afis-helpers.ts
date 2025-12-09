@@ -57,7 +57,7 @@ export function isEmandateActive(dateValidTo: string | null) {
 
 export const EMANDATE_STATUS = {
   ON: '1',
-  OFF: '6',
+  OFF: '0',
 } as const;
 
 export function getEmandateStatus(dateValidTo: string | null) {
