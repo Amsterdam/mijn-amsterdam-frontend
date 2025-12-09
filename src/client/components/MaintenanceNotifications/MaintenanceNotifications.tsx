@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import styles from './MaintenanceNotifications.module.scss';
 import { parseHTML } from '../../helpers/html-react-parse';
 import { useCmsMaintenanceNotifications } from '../../hooks/api/useCmsMaintenanceNotifications';
+import { PageContentCell } from '../Page/Page';
 
 const DEFAULT_SEVERITY = 'warning';
 const DEFAULT_HEADING = 'Onderhoudsbericht';
@@ -29,7 +30,7 @@ export function MaintenanceNotifications({
   }
 
   return (
-    <>
+    <PageContentCell startWide={1} spanWide={12}>
       {maintenanceNotifications.map((notification, index) => {
         return (
           <Alert
@@ -54,6 +55,6 @@ export function MaintenanceNotifications({
           </Alert>
         );
       })}
-    </>
+    </PageContentCell>
   );
 }
