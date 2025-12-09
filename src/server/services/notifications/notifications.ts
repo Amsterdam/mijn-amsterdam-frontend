@@ -80,16 +80,6 @@ export async function batchFetchNotifications() {
   }));
 }
 
-type KeyOf<T> = Extract<keyof T, string>;
-export const groupBy =
-  <T>(key: KeyOf<T>) =>
-  (acc: Record<string, T[]>, item: T): Record<string, T[]> => {
-    const k = String(item[key]);
-    acc[k] = acc[k] ?? [];
-    acc[k].push(item);
-    return acc;
-  };
-
 async function fetchNotificationsForService(
   profileId: BSN,
   serviceId: SERVICE_ID
