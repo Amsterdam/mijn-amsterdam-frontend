@@ -1,3 +1,4 @@
+import type { ApiResponse } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfile } from '../../auth/auth-types';
 import { notificationServices } from '../tips-and-notifications';
@@ -9,6 +10,10 @@ export type NOTIFICATION_LEAN = Pick<
   MyNotification,
   'id' | 'title' | 'isAlert' | 'isTip'
 > & { datePublished: string | undefined };
+export type SERVICE = {
+  serviceId: SERVICE_ID;
+  dateUpdated: string;
+} & ApiResponse<NOTIFICATION_LEAN[]>;
 
 export type AuthProfileId = {
   profile: Pick<AuthProfile, 'id' | 'profileType'>;

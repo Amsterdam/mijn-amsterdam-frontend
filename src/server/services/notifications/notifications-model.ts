@@ -1,9 +1,5 @@
-import {
-  BSN,
-  CONSUMER_ID,
-  NOTIFICATION_LEAN,
-  SERVICE_ID,
-} from './config-and-types';
+import { BSN, CONSUMER_ID, SERVICE_ID, type SERVICE } from './config-and-types';
+import { camelizeKeys } from './helper';
 import { logger } from '../../logging';
 import { IS_DB_ENABLED } from '../db/config';
 import { db } from '../db/db';
@@ -37,6 +33,7 @@ if (IS_DB_ENABLED) {
   setupTables();
 }
 
+// POSTGRES is case insensitive. We therefore always use snake_case within postgres
 const queries = {
   upsertConsumer: `\
 INSERT INTO ${TABLE_NAME} (profile_id, consumer_ids, service_ids, date_updated) \
@@ -67,27 +64,28 @@ export async function truncate() {
   return query(queries.truncate);
 }
 
-export async function getProfileByConsumer(consumer_id: CONSUMER_ID) {
+export async function getProfileByConsumer(consumerId: CONSUMER_ID) {
   const { queryGET } = await db();
-  return queryGET(queries.getProfileByConsumer, [consumer_id]);
+  return queryGET(queries.getProfileByConsumer, [consumerId]);
 }
 
 export async function upsertConsumer(
-  profile_id: BSN,
-  consumer_id: CONSUMER_ID,
-  service_ids: SERVICE_ID[]
+  profileId: BSN,
+  consumerId: CONSUMER_ID,
+  serviceIds: SERVICE_ID[]
 ) {
   const { query } = await db();
-  return query(queries.upsertConsumer, [profile_id, consumer_id, service_ids]);
+  return query(queries.upsertConsumer, [profileId, consumerId, serviceIds]);
 }
 
 // This should work in one query with a CTE, but it does not delete the row.
-export async function deleteConsumer(consumer_id: CONSUMER_ID) {
+export async function deleteConsumer(consumerId: CONSUMER_ID) {
   const { query, queryALL } = await db();
-  const rows = (await queryALL(queries.deleteConsumer, [consumer_id])) as {
+  const rows = (await queryALL(queries.deleteConsumer, [consumerId])) as {
     profile_id: string;
     consumer_ids: string[];
   }[];
+
   for (const { profile_id, consumer_ids } of rows) {
     if (consumer_ids.length === 0) {
       await query(queries.deleteProfileIfConsumerIdsIsEmpty, [profile_id]);
@@ -96,32 +94,33 @@ export async function deleteConsumer(consumer_id: CONSUMER_ID) {
   return rows.length;
 }
 
-export async function storeNotifications(
-  profile_id: BSN,
-  notifications: NOTIFICATION_LEAN[]
-) {
+export async function storeNotifications(profileId: BSN, services: SERVICE[]) {
   const { query } = await db();
-  return query(queries.updateNotifications, [profile_id, { notifications }]);
+  return query(queries.updateNotifications, [profileId, { services }]);
 }
 
 export async function listProfiles() {
   const { queryALL } = await db();
-  const rows = (await queryALL(queries.getProfiles)) as {
-    profile_id: BSN;
-    consumer_ids: CONSUMER_ID[];
-    service_ids: SERVICE_ID[];
-    date_updated: string;
-    content: { notifications: NOTIFICATION_LEAN[] } | null;
-  }[];
+  const rows = camelizeKeys(
+    (await queryALL(queries.getProfiles)) as {
+      profileId: BSN;
+      consumer_ids: CONSUMER_ID[];
+      service_ids: SERVICE_ID[];
+      date_updated: string;
+      content: { services: SERVICE[] } | null;
+    }[]
+  );
   return rows;
 }
 
 export async function listProfileIds() {
   const { queryALL } = await db();
-  const rows = (await queryALL(queries.getProfileIds)) as {
-    profile_id: BSN;
-    consumer_ids: CONSUMER_ID[];
-    service_ids: SERVICE_ID[];
-  }[];
+  const rows = camelizeKeys(
+    (await queryALL(queries.getProfileIds)) as {
+      profile_id: BSN;
+      consumer_ids: CONSUMER_ID[];
+      service_ids: SERVICE_ID[];
+    }[]
+  );
   return rows;
 }

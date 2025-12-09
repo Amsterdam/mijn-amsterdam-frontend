@@ -3,21 +3,26 @@ import UID from 'uid-safe';
 import {
   listProfileIds,
   upsertConsumer,
-  storeNotifications,
   listProfiles,
   truncate,
   deleteConsumer,
   getProfileByConsumer,
+  storeNotifications,
 } from './notifications-model';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+  type ApiResponse,
+} from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { notificationServices } from '../tips-and-notifications';
 import {
   BSN,
   CONSUMER_ID,
-  NOTIFICATION_LEAN,
   SERVICE_ID,
+  type NOTIFICATION_LEAN,
 } from './config-and-types';
-import { MyNotification } from '../../../universal/types/App.types';
+import type { MyNotification } from '../../../universal/types/App.types';
 
 /**
  * The Notification service allows batch handling of notifications for previously verified consumers
@@ -26,9 +31,9 @@ import { MyNotification } from '../../../universal/types/App.types';
 export async function registerConsumer(
   profileId: BSN,
   consumerId: CONSUMER_ID,
-  service_ids: SERVICE_ID[] = []
+  serviceIds: SERVICE_ID[] = []
 ) {
-  return upsertConsumer(profileId, consumerId, service_ids);
+  return upsertConsumer(profileId, consumerId, serviceIds);
 }
 
 export async function unregisterConsumer(consumerId: CONSUMER_ID) {
@@ -50,29 +55,45 @@ export async function batchDeleteNotifications() {
 export async function batchFetchAndStoreNotifications() {
   const profiles = await listProfileIds();
   for (const profile of profiles) {
-    const promises = profile.service_ids.map(
-      async (service_id) =>
-        await fetchNotificationsForService(profile.profile_id, service_id)
-    );
-    const notifications = (await Promise.all(promises)).flat();
-    await storeNotifications(profile.profile_id, notifications);
+    const promises = profile.serviceIds.map(async (serviceId) => {
+      const notifications = await fetchNotificationsForService(
+        profile.profileId,
+        serviceId
+      );
+      return {
+        ...notifications,
+        serviceId: serviceId,
+        dateUpdated: new Date().toISOString(),
+      };
+    });
+    const responses = await Promise.all(promises);
+    await storeNotifications(profile.profileId, responses);
   }
 }
 
 export async function batchFetchNotifications() {
   const profiles = await listProfiles();
-  return profiles.flatMap((profile) => ({
-    service_ids: profile.service_ids,
-    consumer_ids: profile.consumer_ids,
-    date_updated: profile.date_updated,
-    notifications: profile.content?.notifications || [],
+  return profiles.map((profile) => ({
+    consumerIds: profile.consumerIds,
+    dateUpdated: profile.dateUpdated,
+    services: profile.content?.services || [],
   }));
 }
 
+type KeyOf<T> = Extract<keyof T, string>;
+export const groupBy =
+  <T>(key: KeyOf<T>) =>
+  (acc: Record<string, T[]>, item: T): Record<string, T[]> => {
+    const k = String(item[key]);
+    acc[k] = acc[k] ?? [];
+    acc[k].push(item);
+    return acc;
+  };
+
 async function fetchNotificationsForService(
   profileId: BSN,
-  service_id: SERVICE_ID
-): Promise<NOTIFICATION_LEAN[]> {
+  serviceId: SERVICE_ID
+): Promise<ApiResponse<NOTIFICATION_LEAN[]>> {
   const BYTE_LENGTH = 16;
   const authProfileAndToken: AuthProfileAndToken = {
     // TODO: Update notificationServices to accept a leaner AuthProfileAndToken with only profile.id and profile.profileType
@@ -86,22 +107,25 @@ async function fetchNotificationsForService(
     expiresAtMilliseconds: 1,
   };
 
-  const fetchNotificationsForService = notificationServices.private[service_id];
+  const fetchNotificationsForService = notificationServices.private[serviceId];
   const response = await fetchNotificationsForService(authProfileAndToken);
-  if (response.status !== 'OK' || response.content == null) {
-    return [];
+  if (response.status !== 'OK') {
+    return apiErrorResult('Dependency error', null);
   }
 
-  const notifications = Object.values(response.content)
+  const notifications = Object.values(response.content ?? [])
     .flat()
-    .filter((n) => n != null) as MyNotification[];
-  return notifications.map((notification) => ({
-    id: notification.id,
-    title: notification.title,
-    isTip: notification.isTip,
-    isAlert: notification.isAlert,
-    datePublished: notification.hideDatePublished
-      ? undefined
-      : notification.datePublished,
-  }));
+    .filter((n): n is MyNotification => n != null)
+    .map((notification) => ({
+      id: notification.id,
+      themaId: notification.themaID,
+      title: notification.title,
+      isTip: notification.isTip,
+      isAlert: notification.isAlert,
+      datePublished: notification.hideDatePublished
+        ? undefined
+        : notification.datePublished,
+    }));
+
+  return apiSuccessResult(notifications);
 }
