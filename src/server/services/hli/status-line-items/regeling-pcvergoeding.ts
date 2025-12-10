@@ -4,13 +4,14 @@ import { getBetrokkenKinderenDescription } from './generic';
 import { featureToggle } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { lowercaseFirstLetter } from '../../../../universal/helpers/text';
-import { sortAlpha } from '../../../../universal/helpers/utils';
+import { sortAlpha, splitBy } from '../../../../universal/helpers/utils';
 import {
-  ZorgnedAanvraagTransformed,
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types';
 
+// The following two codes don't exist for the business but we create them to differentiate
+// between 2026 aanvragen and older.
 export const AV_PCTGBO = 'AV-PCTGBO'; // PC Tegoed Basisonderwijs
 export const AV_PCTGVO = 'AV-PCTGVO'; // PC Tegoed Voortgezet Onderwijs
 
@@ -165,13 +166,22 @@ function filterOutRedundantPcVergoedingsAanvragenWhenWorkShopNietGevolgd(
   return PCVergoedingAanvragenFiltered;
 }
 
-export function filterCombineUpcPcvData_pre2026(
+export function filterCombineUpcPcvData(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ): ZorgnedAanvraagWithRelatedPersonsTransformed[] {
   const baseRegelingIdWithVerzilvering: string[] = [];
+  const [aanvragenAfter2026, aanvragenBefore2026] = splitBy(
+    aanvragen,
+    (aanvraag) => {
+      if (!featureToggle.hli2026PCVergoedingCodesActive) {
+        return true;
+      }
+      return isBefore(aanvraag.datumBesluit, DATE_2026_CODES_ACTIVE);
+    }
+  );
   const aanvragen_ =
     filterOutRedundantPcVergoedingsAanvragenWhenWorkShopNietGevolgd(
-      aanvragen
+      aanvragenBefore2026
     ).toSorted(sortAlpha('id', 'desc'));
   const aanvragenWithDocumentsCombined = aanvragen_.map((aanvraag) => {
     // Exclude baseRegelingen that have verzilvering
@@ -210,33 +220,34 @@ export function filterCombineUpcPcvData_pre2026(
             : false,
         datumEindeGeldigheid: baseRegeling?.datumEindeGeldigheid ?? null,
         documenten: [...aanvraag.documenten, ...addedDocs],
-        productsoortCode: featureToggle.hli2026PCVergoedingCodesActive
-          ? translateProductsoortCode(aanvraag)
-          : aanvraag.productsoortCode,
       };
     }
 
     return aanvraag;
   });
 
-  return aanvragenWithDocumentsCombined.filter(
-    (aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed | null) =>
-      aanvraag !== null
-  );
+  return [
+    ...aanvragenWithDocumentsCombined.filter(
+      (aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed | null) =>
+        aanvraag !== null
+    ),
+    ...aanvragenAfter2026.map((aanvraag) =>
+      translatePCProductIdentificatie(aanvraag)
+    ),
+  ];
 }
 
-function translateProductsoortCode(
-  aanvraag: ZorgnedAanvraagTransformed
-): string {
-  if (!isBefore(aanvraag.datumBesluit, DATE_2026_CODES_ACTIVE)) {
-    if (aanvraag.productsoortCode === AV_UPCTG) {
-      return AV_PCTGBO;
-    }
-    if (aanvraag.productsoortCode === AV_PCVTG) {
-      return AV_PCTGVO;
-    }
+export function translatePCProductIdentificatie(
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+): ZorgnedAanvraagWithRelatedPersonsTransformed {
+  let productIdentificatie;
+  if (aanvraag.productIdentificatie === AV_UPCTG) {
+    productIdentificatie = AV_PCTGBO;
   }
-  return aanvraag.productsoortCode;
+  if (aanvraag.productIdentificatie === AV_PCVTG) {
+    productIdentificatie = AV_PCTGVO;
+  }
+  return { ...aanvraag, productIdentificatie };
 }
 
 /** Checks of een Workshop niet gevolgd is.
@@ -367,7 +378,7 @@ export const forTesting = {
   isRegelingVanVerzilvering,
   isVerzilvering,
   isWorkshopNietGevolgd,
-  filterCombineUpcPcvData: filterCombineUpcPcvData_pre2026,
+  filterCombineUpcPcvData: filterCombineUpcPcvData,
   filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNietGevolgd:
     filterOutRedundantPcVergoedingsAanvragenWhenWorkShopNietGevolgd,
 };

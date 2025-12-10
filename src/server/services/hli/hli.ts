@@ -19,7 +19,7 @@ import { fetchStadspas } from './stadspas';
 import {
   isPcAanvraag,
   isWorkshopNietGevolgd,
-  filterCombineUpcPcvData_pre2026,
+  filterCombineUpcPcvData,
 } from './status-line-items/regeling-pcvergoeding';
 import {
   featureToggle,
@@ -180,12 +180,12 @@ function transformRegelingenForFrontend(
     ? transformRTMAanvragen(sessionID, aanvrager, RTMAanvragen)
     : [];
 
-  const [remainingAanvragen_, PCVergoedingAanvragen_pre2026] = splitBy(
+  const [remainingAanvragen_, PCVergoedingAanvragen] = splitBy(
     remainingAanvragen,
     isPcAanvraag
   );
-  const PCVergoedingAanvragenCombined = filterCombineUpcPcvData_pre2026(
-    PCVergoedingAanvragen_pre2026
+  const PCVergoedingAanvragenCombined = filterCombineUpcPcvData(
+    PCVergoedingAanvragen
   );
 
   // RTM aanvragen are already completely transformed to HLIRegelingFrontend and do not need further processing.
