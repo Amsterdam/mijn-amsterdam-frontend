@@ -226,7 +226,7 @@ async function transformRegelingenForFrontend(
 }
 
 async function fetchRegelingen(authProfileAndToken: AuthProfileAndToken) {
-  if (!themaConfig.featureToggle.regelingenActive) {
+  if (!themaConfig.featureToggle.regelingen) {
     return apiSuccessResult([]);
   }
 
