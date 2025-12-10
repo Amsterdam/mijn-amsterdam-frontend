@@ -14,45 +14,32 @@ import type {
   WithRegelingenListPage,
   WithspecificatieListPage,
   WithdetailPageStadspas,
-  ThemaFeatureToggle,
 } from '../../../config/thema-types';
 
 const THEMA_TITLE = 'Stadspas en regelingen bij laag inkomen' as const;
 
-export type HLIThemaConfig = ThemaConfigBase &
-  WithDetailPage &
-  WithdetailPageStadspas &
-  WithRegelingenListPage &
-  WithspecificatieListPage;
-
-export const themaConfig: HLIThemaConfig = {
+export const themaConfig = {
   id: 'HLI' as const,
   title: THEMA_TITLE,
 
   featureToggle: buildFeatureToggle({
-    themaActive: true,
-    parents: {
-      stadspas: {
-        active: true,
-        children: {
-          hliThemaStadspasBlokkerenActive: true,
-          hliThemaStadspasDeblokkerenActive: true,
-        },
-      },
-      regelingen: {
-        active: true,
-        children: {
-          hliRegelingEnabledCZM: true,
-          hliRegelingEnabledRTM: !IS_PRODUCTION,
-          hli2025PCTegoedCodesEnabled: !IS_PRODUCTION,
-          hli2026PCVergoedingV3Enabled: !IS_PRODUCTION,
-        },
-      },
-      zorgned: {
-        active: true,
-      },
+    active: true,
+    stadspas: {
+      active: true,
+      blokkerenActive: true,
+      deblokkerenActive: true,
     },
-  } as ThemaFeatureToggle),
+    regelingen: {
+      active: true,
+      enabledCZM: true,
+      enabledRTM: !IS_PRODUCTION,
+      hli2025PCTegoedCodesEnabled: !IS_PRODUCTION,
+      hli2026PCVergoedingV3Enabled: !IS_PRODUCTION,
+    },
+    zorgned: {
+      active: true,
+    },
+  }),
 
   profileTypes: ['private'],
   uitlegPageSections: {
@@ -120,7 +107,11 @@ export const themaConfig: HLIThemaConfig = {
         `${params?.kind === 'eerdere-en-afgehandelde-regelingen' ? 'Eerdere' : 'Huidige'} regelingen | ${THEMA_TITLE}`,
     },
   },
-} as const;
+} as const satisfies ThemaConfigBase &
+  WithDetailPage &
+  WithdetailPageStadspas &
+  WithRegelingenListPage &
+  WithspecificatieListPage;
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
