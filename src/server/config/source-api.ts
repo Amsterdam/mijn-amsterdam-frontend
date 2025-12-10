@@ -146,7 +146,7 @@ const ApiConfig_ = {
       cert: getCert('BFF_ZORGNED_AV_CERT'),
       key: getCert('BFF_ZORGNED_AV_KEY'),
     }),
-    postponeFetch: !themaConfig.featureToggle.zorgnedActive,
+    postponeFetch: !themaConfig.featureToggle.zorgned,
   },
   ZORGNED_LEERLINGENVERVOER: {
     method: 'post',
@@ -334,7 +334,7 @@ const ApiConfig_ = {
   LOOD_365: {
     url: `${getFromEnv('BFF_LOOD_API_URL')}`,
     method: 'POST',
-    postponeFetch: !themaConfigBodem.featureToggle.themaActive,
+    postponeFetch: !themaConfigBodem.featureToggle.active,
   },
   MS_OAUTH: {
     url: `${getFromEnv('BFF_MS_OAUTH_ENDPOINT')}:tenant/oauth2/v2.0/token`,
