@@ -38,7 +38,9 @@ function transformIsErfpachterResponseSource(
 function getDossierNummerUrlParam(
   dossierNummer: string | undefined
 ): string | null {
-  return dossierNummer ? `E${dossierNummer.split(/E|\//).join('.')}` : null;
+  return dossierNummer
+    ? (dossierNummer.match(/[a-zA-Z]+|[0-9]+/g)?.join('.') ?? dossierNummer)
+    : null;
 }
 
 export function transformErfpachtDossierProperties<
@@ -186,3 +188,7 @@ export async function fetchErfpachtDossiersDetail(
 
   return dossierInfoResponse;
 }
+
+export const forTesting = {
+  getDossierNummerUrlParam,
+};

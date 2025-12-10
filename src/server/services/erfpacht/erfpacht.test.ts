@@ -1,6 +1,10 @@
 import { describe, expect, test } from 'vitest';
 
-import { fetchErfpacht, fetchErfpachtDossiersDetail } from './erfpacht';
+import {
+  fetchErfpacht,
+  fetchErfpachtDossiersDetail,
+  forTesting,
+} from './erfpacht';
 import ERFPACHT_DOSSIERINFO_DETAILS from '../../../../mocks/fixtures/erfpacht-v2-dossierinfo-bsn.json';
 import ERFPACHT_DOSSIERS from '../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
 import ERFPACHT_ERFPACHTER from '../../../../mocks/fixtures/erfpacht-v2-erfpachter.json';
@@ -70,5 +74,14 @@ describe('erfpacht', () => {
         "status": "OK",
       }
     `);
+  });
+
+  test('getDossierNummerUrlParam', () => {
+    const { getDossierNummerUrlParam } = forTesting;
+    expect(getDossierNummerUrlParam('E123/456')).toBe('E.123.456');
+    expect(getDossierNummerUrlParam('E1/2')).toBe('E.1.2');
+    expect(getDossierNummerUrlParam('E1/B/EE/VWW/2')).toBe('E.1.B.EE.VWW.2');
+    expect(getDossierNummerUrlParam('EW/99999/88888')).toBe('EW.99999.88888');
+    expect(getDossierNummerUrlParam(undefined)).toBeNull();
   });
 });
