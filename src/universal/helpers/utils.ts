@@ -143,6 +143,7 @@ export function uniqueArray(arr: any[]) {
   return Array.from(new Set(arr));
 }
 
+/** Split an array by a predicate function and return [remainingItems, predicateSatisfyingItems] */
 export function splitBy<T>(
   list: T[],
   predicate: (a: T) => boolean
