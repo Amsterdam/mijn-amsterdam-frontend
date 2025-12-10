@@ -1,10 +1,12 @@
-import { isSameDay, parseISO } from 'date-fns';
+import { isBefore, isSameDay, parseISO } from 'date-fns';
 
 import { getBetrokkenKinderenDescription } from './generic';
+import { featureToggle } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { lowercaseFirstLetter } from '../../../../universal/helpers/text';
 import { sortAlpha } from '../../../../universal/helpers/utils';
 import {
+  ZorgnedAanvraagTransformed,
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types';
@@ -19,6 +21,8 @@ export const AV_UPCTG = 'AV-UPCTG';
 export const AV_PCVC = 'AV-PCVC';
 export const AV_PCVZIL = 'AV-PCVZIL';
 export const AV_PCVTG = 'AV-PCVTG';
+
+const DATE_2026_CODES_ACTIVE = '2026-01-01';
 
 const avCodes = {
   PC: {
@@ -163,7 +167,7 @@ function filterOutRedundantPcVergoedingsAanvragenWhenWorkShopNietGevolgd(
 
 export function filterCombineUpcPcvData_pre2026(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
-) {
+): ZorgnedAanvraagWithRelatedPersonsTransformed[] {
   const baseRegelingIdWithVerzilvering: string[] = [];
   const aanvragen_ =
     filterOutRedundantPcVergoedingsAanvragenWhenWorkShopNietGevolgd(
@@ -206,6 +210,9 @@ export function filterCombineUpcPcvData_pre2026(
             : false,
         datumEindeGeldigheid: baseRegeling?.datumEindeGeldigheid ?? null,
         documenten: [...aanvraag.documenten, ...addedDocs],
+        productsoortCode: featureToggle.hli2026PCVergoedingCodesActive
+          ? translateProductsoortCode(aanvraag)
+          : aanvraag.productsoortCode,
       };
     }
 
@@ -216,6 +223,20 @@ export function filterCombineUpcPcvData_pre2026(
     (aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed | null) =>
       aanvraag !== null
   );
+}
+
+function translateProductsoortCode(
+  aanvraag: ZorgnedAanvraagTransformed
+): string {
+  if (!isBefore(aanvraag.datumBesluit, DATE_2026_CODES_ACTIVE)) {
+    if (aanvraag.productsoortCode === AV_UPCTG) {
+      return AV_PCTGBO;
+    }
+    if (aanvraag.productsoortCode === AV_PCVTG) {
+      return AV_PCTGVO;
+    }
+  }
+  return aanvraag.productsoortCode;
 }
 
 /** Checks of een Workshop niet gevolgd is.

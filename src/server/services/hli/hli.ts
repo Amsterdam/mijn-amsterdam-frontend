@@ -191,12 +191,11 @@ function transformRegelingenForFrontend(
   // RTM aanvragen are already completely transformed to HLIRegelingFrontend and do not need further processing.
   const regelingenFrontend = [...RTMRegelingenFrontend];
 
-  // The Remaining aanvragen are not transformed to HLIRegelingFrontend yet.
-  const remainingAanvragen__ = remainingAanvragen_.concat(
+  const unprocessedAanvragen = remainingAanvragen_.concat(
     PCVergoedingAanvragenCombined
   );
 
-  for (const aanvraag of remainingAanvragen__) {
+  for (const aanvraag of unprocessedAanvragen) {
     const statusLineItems = getStatusLineItems(
       'HLI',
       hliStatusLineItemsConfig,
