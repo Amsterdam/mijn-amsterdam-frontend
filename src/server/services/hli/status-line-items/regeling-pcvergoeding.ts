@@ -9,16 +9,17 @@ import {
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types';
 
-// The following two codes don't exist for the business but we create them to differentiate
+// The following code does not exist for the business but we create it to differentiate
 // between 2026 aanvragen and older.
+export const MAMS_PC2026 = 'MAMS_PC2026';
 export const AV_PCTGBO = 'AV-PCTGBO'; // PC Tegoed Basisonderwijs
 export const AV_PCTGVO = 'AV-PCTGVO'; // PC Tegoed Voortgezet Onderwijs
 
-export const AV_UPCC = 'AV-UPCC';
+export const AV_UPCC = 'AV-UPCC'; // PC Tegoed Basisonderwijs.
 export const AV_UPCZIL = 'AV-UPCZIL';
 export const AV_UPCTG = 'AV-UPCTG';
 
-export const AV_PCVC = 'AV-PCVC';
+export const AV_PCVC = 'AV-PCVC'; // PC Tegoed Voortgezet Onderwijs.
 export const AV_PCVZIL = 'AV-PCVZIL';
 export const AV_PCVTG = 'AV-PCVTG';
 
@@ -236,11 +237,11 @@ export function translatePCProductIdentificatie(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ): ZorgnedAanvraagWithRelatedPersonsTransformed {
   let productIdentificatie;
-  if (aanvraag.productIdentificatie === AV_UPCTG) {
-    productIdentificatie = AV_PCTGBO;
-  }
-  if (aanvraag.productIdentificatie === AV_PCVTG) {
-    productIdentificatie = AV_PCTGVO;
+  if (
+    aanvraag.productIdentificatie === AV_UPCTG ||
+    aanvraag.productIdentificatie === AV_PCVTG
+  ) {
+    productIdentificatie = MAMS_PC2026;
   }
   return { ...aanvraag, productIdentificatie };
 }
