@@ -5,11 +5,11 @@ import {
   type ConsumerNotifications,
   type NotificationsService,
 } from './config-and-types';
-import { camelizeKeys } from './helper';
 import { isRecord } from '../../../universal/helpers/utils';
 import { logger } from '../../logging';
 import { IS_DB_ENABLED } from '../db/config';
 import { db as db_, type DBAdapter } from '../db/db';
+import { camelizeKeys } from '../db/helper';
 
 // POSTGRES is case insensitive. We therefore always use snake_case within postgres
 // and transform the returned column names to camelCase.
