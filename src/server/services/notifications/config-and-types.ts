@@ -4,23 +4,23 @@ import { AuthProfile } from '../../auth/auth-types';
 import { notificationServices } from '../tips-and-notifications';
 
 export type BSN = AuthProfile['id'];
-export type CONSUMER_ID = string;
-export type SERVICE_ID = keyof typeof notificationServices.private;
+export type ConsumerId = string;
+export type ServiceId = keyof typeof notificationServices.private;
 
 export type ConsumerNotifications = {
   profileId: BSN;
-  consumerIds: CONSUMER_ID[];
-  serviceIds: SERVICE_ID[];
+  consumerIds: ConsumerId[];
+  serviceIds: ServiceId[];
   dateUpdated: string;
-  content: { services: NOTIFICATION_SERVICE[] } | null;
+  content: { services: NotificationsService[] } | null;
 };
 
-export type NOTIFICATION_SERVICE = {
-  serviceId: SERVICE_ID;
+export type NotificationsService = {
+  serviceId: ServiceId;
   dateUpdated: string;
-} & ApiResponse<NOTIFICATION_LEAN[]>;
+} & ApiResponse<NotificationsLean[]>;
 
-export type NOTIFICATION_LEAN = Pick<
+export type NotificationsLean = Pick<
   MyNotification,
   'id' | 'title' | 'isAlert' | 'isTip'
 > & { datePublished: string | undefined };

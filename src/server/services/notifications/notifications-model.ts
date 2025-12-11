@@ -1,9 +1,9 @@
 import {
   BSN,
-  CONSUMER_ID,
-  SERVICE_ID,
+  ConsumerId,
+  ServiceId,
   type ConsumerNotifications,
-  type NOTIFICATION_SERVICE,
+  type NotificationsService,
 } from './config-and-types';
 import { camelizeKeys } from './helper';
 import { isRecord } from '../../../universal/helpers/utils';
@@ -99,21 +99,21 @@ export async function truncate() {
   return db.query(queries.truncate);
 }
 
-export async function getProfileByConsumer(consumerId: CONSUMER_ID) {
+export async function getProfileByConsumer(consumerId: ConsumerId) {
   return db.queryGET(queries.getProfileByConsumer, [consumerId]);
 }
 
 export async function upsertConsumer(
   profileId: BSN,
-  consumerId: CONSUMER_ID,
-  serviceIds: SERVICE_ID[]
+  consumerId: ConsumerId,
+  serviceIds: ServiceId[]
 ) {
   return db.query(queries.upsertConsumer, [profileId, consumerId, serviceIds]);
 }
 
 // This should work in one query with a CTE, but it does not delete the row correctly.
 // Therefore, multiple queries are used
-export async function deleteConsumer(consumerId: CONSUMER_ID) {
+export async function deleteConsumer(consumerId: ConsumerId) {
   const rows = (await db.queryALL(queries.deleteConsumer, [consumerId])) as {
     profile_id: string;
     consumer_ids: string[];
@@ -129,7 +129,7 @@ export async function deleteConsumer(consumerId: CONSUMER_ID) {
 
 export async function storeNotifications(
   profileId: BSN,
-  services: NOTIFICATION_SERVICE[]
+  services: NotificationsService[]
 ) {
   return db.query(queries.updateNotifications, [profileId, { services }]);
 }

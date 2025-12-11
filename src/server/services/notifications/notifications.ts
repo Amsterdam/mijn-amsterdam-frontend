@@ -18,9 +18,9 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { notificationServices } from '../tips-and-notifications';
 import {
   BSN,
-  CONSUMER_ID,
-  SERVICE_ID,
-  type NOTIFICATION_LEAN,
+  ConsumerId,
+  ServiceId,
+  type NotificationsLean,
 } from './config-and-types';
 import type { MyNotification } from '../../../universal/types/App.types';
 
@@ -30,18 +30,18 @@ import type { MyNotification } from '../../../universal/types/App.types';
 
 export async function registerConsumer(
   profileId: BSN,
-  consumerId: CONSUMER_ID,
-  serviceIds: SERVICE_ID[] = []
+  consumerId: ConsumerId,
+  serviceIds: ServiceId[] = []
 ) {
   return upsertConsumer(profileId, consumerId, serviceIds);
 }
 
-export async function unregisterConsumer(consumerId: CONSUMER_ID) {
+export async function unregisterConsumer(consumerId: ConsumerId) {
   const numDeleted = await deleteConsumer(consumerId);
   return numDeleted > 0;
 }
 
-export async function getConsumerStatus(consumerId: CONSUMER_ID) {
+export async function getConsumerStatus(consumerId: ConsumerId) {
   const profile = await getProfileByConsumer(consumerId);
   return {
     isRegistered: profile != null,
@@ -82,8 +82,8 @@ export async function batchFetchNotifications() {
 
 async function fetchNotificationsForService(
   profileId: BSN,
-  serviceId: SERVICE_ID
-): Promise<ApiResponse<NOTIFICATION_LEAN[]>> {
+  serviceId: ServiceId
+): Promise<ApiResponse<NotificationsLean[]>> {
   const BYTE_LENGTH = 16;
   const authProfileAndToken: AuthProfileAndToken = {
     // TODO: Update notificationServices to accept a leaner AuthProfileAndToken with only profile.id and profile.profileType
