@@ -683,7 +683,7 @@ describe('pcvergoeding', () => {
       },
     ] as unknown as ZorgnedAanvraagWithRelatedPersonsTransformed[];
 
-    test('PCRegelingen with AV_PCTGBO or AV_PCTGVO codes are transformed correctly', () => {
+    test('2026 aanvragen are transformed correctly', () => {
       const profile = getAuthProfileAndToken().profile;
       expect(
         forTestingHLI.transformRegelingenForFrontend(
