@@ -1,13 +1,49 @@
-import { BSN, CONSUMER_ID, SERVICE_ID, type SERVICE } from './config-and-types';
+import {
+  BSN,
+  CONSUMER_ID,
+  SERVICE_ID,
+  type ConsumerNotifications,
+  type NOTIFICATION_SERVICE,
+} from './config-and-types';
 import { camelizeKeys } from './helper';
+import { isRecord } from '../../../universal/helpers/utils';
 import { logger } from '../../logging';
 import { IS_DB_ENABLED } from '../db/config';
-import { db } from '../db/db';
+import { db as db_, type DBAdapter } from '../db/db';
 
+// POSTGRES is case insensitive. We therefore always use snake_case within postgres
+// and transform the returned column names to camelCase.
+const db = {
+  // Because the output of query is less predictable.
+  // Only queries that don't expect a return value are allowed
+  query: async function query(
+    ...args: Parameters<DBAdapter['query']>
+  ): Promise<void> {
+    const { query } = await db_();
+    await query(...args);
+  },
+  queryGET: async function queryGET(
+    ...args: Parameters<DBAdapter['queryGET']>
+  ) {
+    const { queryGET } = await db_();
+    const row = await queryGET(...args);
+    if (isRecord(row)) {
+      return camelizeKeys(row);
+    }
+    return row;
+  },
+  queryALL: async function queryALL(
+    ...args: Parameters<DBAdapter['queryALL']>
+  ) {
+    const { queryALL } = await db_();
+    const rows = await queryALL(...args);
+    return rows.map((row) => (isRecord(row) ? camelizeKeys(row) : row));
+  },
+};
+
+// POSTGRES is case insensitive. We therefore always use snake_case within postgres
 const TABLE_NAME = 'bff_notifications';
 async function setupTables() {
-  const { query } = await db();
-
   const createTableQuery = `
     -- Table Definition
     CREATE TABLE IF NOT EXISTS "public"."${TABLE_NAME}" (
@@ -22,7 +58,7 @@ async function setupTables() {
   `;
 
   try {
-    await query(createTableQuery);
+    await db.query(createTableQuery);
     logger.info(`setupTable: ${TABLE_NAME} succeeded.`);
   } catch (error) {
     logger.error(error, `setupTable: ${TABLE_NAME} failed.`);
@@ -60,13 +96,11 @@ RETURNING profile_id, consumer_ids
 };
 
 export async function truncate() {
-  const { query } = await db();
-  return query(queries.truncate);
+  return db.query(queries.truncate);
 }
 
 export async function getProfileByConsumer(consumerId: CONSUMER_ID) {
-  const { queryGET } = await db();
-  return queryGET(queries.getProfileByConsumer, [consumerId]);
+  return db.queryGET(queries.getProfileByConsumer, [consumerId]);
 }
 
 export async function upsertConsumer(
@@ -74,53 +108,45 @@ export async function upsertConsumer(
   consumerId: CONSUMER_ID,
   serviceIds: SERVICE_ID[]
 ) {
-  const { query } = await db();
-  return query(queries.upsertConsumer, [profileId, consumerId, serviceIds]);
+  return db.query(queries.upsertConsumer, [profileId, consumerId, serviceIds]);
 }
 
-// This should work in one query with a CTE, but it does not delete the row.
+// This should work in one query with a CTE, but it does not delete the row correctly.
+// Therefore, multiple queries are used
 export async function deleteConsumer(consumerId: CONSUMER_ID) {
-  const { query, queryALL } = await db();
-  const rows = (await queryALL(queries.deleteConsumer, [consumerId])) as {
+  const rows = (await db.queryALL(queries.deleteConsumer, [consumerId])) as {
     profile_id: string;
     consumer_ids: string[];
   }[];
 
   for (const { profile_id, consumer_ids } of rows) {
     if (consumer_ids.length === 0) {
-      await query(queries.deleteProfileIfConsumerIdsIsEmpty, [profile_id]);
+      await db.query(queries.deleteProfileIfConsumerIdsIsEmpty, [profile_id]);
     }
   }
   return rows.length;
 }
 
-export async function storeNotifications(profileId: BSN, services: SERVICE[]) {
-  const { query } = await db();
-  return query(queries.updateNotifications, [profileId, { services }]);
+export async function storeNotifications(
+  profileId: BSN,
+  services: NOTIFICATION_SERVICE[]
+) {
+  return db.query(queries.updateNotifications, [profileId, { services }]);
 }
 
 export async function listProfiles() {
-  const { queryALL } = await db();
-  const rows = camelizeKeys(
-    (await queryALL(queries.getProfiles)) as {
-      profileId: BSN;
-      consumer_ids: CONSUMER_ID[];
-      service_ids: SERVICE_ID[];
-      date_updated: string;
-      content: { services: SERVICE[] } | null;
-    }[]
-  );
+  const rows = (await db.queryALL(
+    queries.getProfiles
+  )) as ConsumerNotifications[];
+
   return rows;
 }
 
 export async function listProfileIds() {
-  const { queryALL } = await db();
-  const rows = camelizeKeys(
-    (await queryALL(queries.getProfileIds)) as {
-      profile_id: BSN;
-      consumer_ids: CONSUMER_ID[];
-      service_ids: SERVICE_ID[];
-    }[]
-  );
+  const rows = (await db.queryALL(queries.getProfileIds)) as Pick<
+    ConsumerNotifications,
+    'profileId' | 'serviceIds' | 'consumerIds'
+  >[];
+
   return rows;
 }
