@@ -231,6 +231,7 @@ export function filterCombineUpcPcvData(
   ];
 }
 
+/** Translate 2026 codes to uniquely made up ones, so that the line item transformer can identify this `aanvraag`. */
 export function translatePCProductIdentificatie(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ): ZorgnedAanvraagWithRelatedPersonsTransformed {
