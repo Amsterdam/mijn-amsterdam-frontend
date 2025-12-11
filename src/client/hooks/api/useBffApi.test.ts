@@ -39,6 +39,9 @@ describe('useBffApi', () => {
   });
 
   it('should throw error if key is used without url and fetchImmediately is not false', () => {
+    const spy = vi.spyOn(console, 'error');
+    spy.mockImplementation(() => null);
+
     expect(() => renderHook(() => useBffApi('missing-url-key'))).toThrow(
       'When using a cacheKey that is not an URL or path, you must provide a URL in the options parameter or set fetchImmediately to false'
     );
@@ -49,6 +52,8 @@ describe('useBffApi', () => {
       .get('/api/v1/path')
       .reply(200, { foo: 'bar' });
     expect(() => renderHook(() => useBffApi('/api/v1/path'))).not.toThrow();
+
+    spy.mockRestore();
   });
 
   it('should not fetch immediately when fetchImmediately is false', () => {
