@@ -328,8 +328,8 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
         regeling.resultaat === 'toegewezen' &&
         !isWorkshopNietGevolgd(regeling),
       datePublished: '',
-      isChecked: (regeling) => true,
-      isActive: (regeling) => true,
+      isChecked: (_regeling) => true,
+      isActive: (_regeling) => true,
       description: (regeling) => {
         const betrokkenKinderen = getBetrokkenKinderenDescription(regeling);
         return `
