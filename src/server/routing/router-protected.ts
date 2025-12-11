@@ -21,6 +21,7 @@ import {
 import { fetchBezwaarDocument } from '../services/bezwaren/bezwaren';
 import { handleFetchBezwaarDetail } from '../services/bezwaren/bezwaren-route-handlers';
 import { fetchLoodMetingDocument } from '../services/bodem/loodmetingen';
+import { brpRouter } from '../services/brp/brp-router';
 import {
   NOTIFICATIONS,
   loadServicesAll,
@@ -36,12 +37,7 @@ import {
   fetchDecosWorkflows,
 } from '../services/decos/decos-service';
 import { fetchErfpachtDossiersDetail as fetchErfpachtDossiersDetail } from '../services/erfpacht/erfpacht';
-import {
-  fetchZorgnedAVDocument,
-  handleBlockStadspas,
-  handleFetchTransactionsRequest,
-  handleUnblockStadspas,
-} from '../services/hli/hli-route-handlers';
+import { hliRouter } from '../services/hli/hli-router';
 import { fetchZorgnedLLVDocument } from '../services/jeugd/route-handlers';
 import { fetchDocument as fetchBBDocument } from '../services/powerbrowser/powerbrowser-service';
 import { fetchAantalBewoners } from '../services/profile/brp';
@@ -125,7 +121,7 @@ router.get(
 //// BFF Service Api Endpoints /////////////////////
 ////////////////////////////////////////////////////
 
-router.use(wmoRouter.protected);
+router.use(wmoRouter.protected, hliRouter.protected, brpRouter.protected);
 
 // LLV Zorgned Doc download
 attachDocumentDownloadRoute(
@@ -211,18 +207,6 @@ attachDocumentDownloadRoute(
   router,
   BffEndpoints.POWERBROWSER_DOCUMENT_DOWNLOAD,
   fetchBBDocument
-);
-
-// HLI Stadspas transacties
-router.get(BffEndpoints.STADSPAS_TRANSACTIONS, handleFetchTransactionsRequest);
-router.get(BffEndpoints.STADSPAS_BLOCK_PASS, handleBlockStadspas);
-router.get(BffEndpoints.STADSPAS_UNBLOCK_PASS, handleUnblockStadspas);
-
-// HLI Regelingen / doc download
-attachDocumentDownloadRoute(
-  router,
-  BffEndpoints.HLI_DOCUMENT_DOWNLOAD,
-  fetchZorgnedAVDocument
 );
 
 // AFIS facturen en betalen

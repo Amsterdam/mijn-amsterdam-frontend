@@ -63,6 +63,12 @@ const ROUTES = {
       `and IsCleared eq true and (DunningLevel ne '3' or ReverseDocument ne '')`
     );
   },
+  termijnFacturen: (uri: string) => {
+    return isQueryStringIncludedInUri(
+      uri,
+      `and PaymentTerms gt 'B' and SEPAMandate ne '' and IsCleared eq true and (DunningLevel ne '3' or ReverseDocument ne '')`
+    );
+  },
   overgedragenFacturen: (uri: string) => {
     return isQueryStringIncludedInUri(
       uri,
@@ -349,6 +355,7 @@ describe('afis-facturen', async () => {
       NetDueDate: '',
       Paylink: null,
       PostingDate: { '@null': true },
+      AccountingDocumentCreationDate: { '@null': true },
       ProfitCenterName: '',
       SEPAMandate: '',
       PaymentMethod: null,
@@ -358,6 +365,7 @@ describe('afis-facturen', async () => {
     expect(result).toMatchInlineSnapshot(`
       {
         "AccountingDocument": null,
+        "AccountingDocumentCreationDate": null,
         "AccountingDocumentType": "",
         "AmountInBalanceTransacCrcy": "",
         "DocumentReferenceID": "123",
@@ -389,6 +397,7 @@ describe('afis-facturen', async () => {
       Paylink: 'http://example.com/pay',
       PaymentMethod: 'B',
       PostingDate: '2023-11-21T00:00:00',
+      AccountingDocumentCreationDate: '2023-11-21T00:00:00',
       ProfitCenterName: 'Profit Center 1',
       ReverseDocument: '',
       SEPAMandate: '',
@@ -413,6 +422,7 @@ describe('afis-facturen', async () => {
         Paylink: 'http://example.com/pay',
         PaymentMethod: 'X',
         PostingDate: '2023-11-22T00:00:00',
+        AccountingDocumentCreationDate: '2023-11-22T00:00:00',
         ProfitCenterName: 'Profit Center 2',
         ReverseDocument: '',
         SEPAMandate: 'SEPA123',
@@ -431,6 +441,7 @@ describe('afis-facturen', async () => {
         Paylink: '',
         PaymentMethod: 'B',
         PostingDate: '2023-11-22T00:00:00',
+        AccountingDocumentCreationDate: '2023-11-22T00:00:00',
         ProfitCenterName: 'Profit Center 2',
         ReverseDocument: '',
         SEPAMandate: 'SEPA123',
@@ -449,6 +460,7 @@ describe('afis-facturen', async () => {
         Paylink: 'http://example.com/pay',
         PaymentMethod: 'B',
         PostingDate: '2023-11-23T00:00:00',
+        AccountingDocumentCreationDate: '2023-11-23T00:00:00',
         ProfitCenterName: 'Profit Center 3',
         ReverseDocument: '',
         SEPAMandate: '',
@@ -468,6 +480,7 @@ describe('afis-facturen', async () => {
         Paylink: 'http://example.com/pay',
         PaymentMethod: 'B',
         PostingDate: '2023-11-25T00:00:00',
+        AccountingDocumentCreationDate: '2023-11-25T00:00:00',
         ProfitCenterName: 'Profit Center 5',
         ReverseDocument: '',
         SEPAMandate: '',
@@ -486,6 +499,7 @@ describe('afis-facturen', async () => {
         Paylink: null,
         PaymentMethod: 'B',
         PostingDate: '2023-11-26T00:00:00',
+        AccountingDocumentCreationDate: '2023-11-26T00:00:00',
         ProfitCenterName: 'Profit Center 6',
         ReverseDocument: '',
         SEPAMandate: '',
@@ -504,6 +518,7 @@ describe('afis-facturen', async () => {
         Paylink: null,
         PaymentMethod: 'B',
         PostingDate: '2023-11-27T00:00:00',
+        AccountingDocumentCreationDate: '2023-11-27T00:00:00',
         ProfitCenterName: 'Profit Center 7',
         ReverseDocument: '',
         SEPAMandate: '',
@@ -522,6 +537,7 @@ describe('afis-facturen', async () => {
         Paylink: null,
         PaymentMethod: 'B',
         PostingDate: '2023-11-28T00:00:00',
+        AccountingDocumentCreationDate: '2023-11-28T00:00:00',
         ProfitCenterName: 'Profit Center 8',
         ReverseDocument: '123',
         SEPAMandate: '',
@@ -540,6 +556,7 @@ describe('afis-facturen', async () => {
         Paylink: 'http://example.com/pay',
         PaymentMethod: 'B',
         PostingDate: '2023-11-29T00:00:00',
+        AccountingDocumentCreationDate: '2023-11-29T00:00:00',
         ProfitCenterName: 'Profit Center 9',
         ReverseDocument: '',
         SEPAMandate: '',
@@ -558,6 +575,7 @@ describe('afis-facturen', async () => {
         PaymentMethod: 'B',
         Paylink: 'http://example.com/pay',
         PostingDate: '2023-11-30T00:00:00',
+        AccountingDocumentCreationDate: '2023-11-30T00:00:00',
         ProfitCenterName: 'Profit Center 10',
         ReverseDocument: '',
         SEPAMandate: '',
@@ -585,11 +603,13 @@ describe('afis-facturen', async () => {
           const IS_CLEARED = false;
           const statusDescription =
             forTesting.determineFactuurStatusDescription(
-              status as AfisFactuur['status'],
-              '€ 123,40',
-              '€ 210,40',
-              IS_CLEARED,
-              '16 juni 2024'
+              {
+                status,
+                amountPayedFormatted: '€ 123,40',
+                amountOriginalFormatted: '€ 210,40',
+                debtClearingDateFormatted: '16 juni 2024',
+              } as AfisFactuur,
+              IS_CLEARED
             );
           return [status, statusDescription];
         });
@@ -639,11 +659,13 @@ describe('afis-facturen', async () => {
         .map((status) => {
           const statusDescription =
             forTesting.determineFactuurStatusDescription(
-              status as AfisFactuur['status'],
-              '€ 123,40',
-              '€ 210,40',
-              IS_CLEARED,
-              '16 juni 2024'
+              {
+                status,
+                amountPayedFormatted: '€ 123,40',
+                amountOriginalFormatted: '€ 210,40',
+                debtClearingDateFormatted: '16 juni 2024',
+              } as AfisFactuur,
+              IS_CLEARED
             );
           return [status, statusDescription];
         });
@@ -763,6 +785,7 @@ describe('afis-facturen', async () => {
       ProfitCenterName: 'Bedrijf: Ok',
       SEPAMandate: '',
       PostingDate: '2023-11-21T00:00:00',
+      AccountingDocumentCreationDate: '2023-09-21T00:00:00',
       NetDueDate: '2023-12-21T00:00:00',
       AmountInBalanceTransacCrcy: '10.00',
       DocumentReferenceID: '1234567890',
@@ -781,12 +804,80 @@ describe('afis-facturen', async () => {
       },
     });
 
-    test('fetchAfisFacturenOverview', async () => {
-      // remoteApi.get(ROUTES.deelbetalingen).times(3).reply(200, {});
+    test('factuurdatum is derived from AccountingDocumentCreationDate', async () => {
+      remoteApi.get(ROUTES.openstaandeFacturen).reply(200, {
+        feed: {
+          entry: [
+            factuur({
+              PostingDate: '2054-09-21T00:00:00',
+            }),
+          ],
+        },
+      });
 
+      const rs = await fetchAfisFacturen(SESSION_ID, {
+        state: 'open',
+        businessPartnerID: GENERIC_ID,
+      });
+
+      expect(rs.content?.facturen[0].datePublished).toBe(
+        defaultProps.AccountingDocumentCreationDate
+      );
+    });
+
+    test('factuurdatum is derived from PostingDate if AccountingDocumentCreationDate is not present', async () => {
+      remoteApi.get(ROUTES.openstaandeFacturen).reply(200, {
+        feed: {
+          entry: [
+            factuur({
+              PostingDate: '2024-09-21T00:00:00',
+              AccountingDocumentCreationDate: null,
+            }),
+          ],
+        },
+      });
+
+      const rs = await fetchAfisFacturen(SESSION_ID, {
+        state: 'open',
+        businessPartnerID: GENERIC_ID,
+      });
+
+      expect(rs.content?.facturen[0].datePublished).toBe('2024-09-21T00:00:00');
+    });
+
+    test('factuur is filtered out because download not available', async () => {
+      remoteApi.get(ROUTES.openstaandeFacturen).reply(200, {
+        feed: {
+          entry: [
+            factuur({
+              AccountingDocumentCreationDate: '2024-11-01',
+            }),
+            factuur({
+              AccountingDocumentCreationDate: null,
+              PostingDate: '2024-11-01',
+            }),
+          ],
+        },
+      });
+
+      const rs = await fetchAfisFacturen(SESSION_ID, {
+        state: 'open',
+        businessPartnerID: GENERIC_ID,
+      });
+
+      expect(rs.content?.facturen.length).toBe(0);
+    });
+
+    test('fetchAfisFacturenOverview', async () => {
       remoteApi.get(ROUTES.openstaandeFacturen).reply(200, {
         feed: {
           entry: [factuur()],
+        },
+      });
+
+      remoteApi.get(ROUTES.termijnFacturen).reply(200, {
+        feed: {
+          entry: [],
         },
       });
 

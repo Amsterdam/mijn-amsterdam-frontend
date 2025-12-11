@@ -1,5 +1,6 @@
 import { Request } from 'express';
 
+import { ZORGNED_AV_API_CONFIG_KEY } from './hli-service-config';
 import {
   blockStadspas,
   fetchStadspasBudgetTransactions,
@@ -11,7 +12,7 @@ import {
   sendResponse,
   type ResponseAuthenticated,
 } from '../../routing/route-helpers';
-import { fetchDocument } from '../zorgned/zorgned-service';
+import { fetchAanvragenRaw, fetchDocument } from '../zorgned/zorgned-service';
 
 type TransactionKeysEncryptedRequest = Request<{
   transactionsKeyEncrypted: StadspasFrontend['transactionsKeyEncrypted'];
@@ -36,7 +37,7 @@ export async function fetchZorgnedAVDocument(
 ) {
   const response = fetchDocument(
     authProfileAndToken.profile.id,
-    'ZORGNED_AV',
+    ZORGNED_AV_API_CONFIG_KEY,
     documentId
   );
   return response;
@@ -62,6 +63,17 @@ export async function handleUnblockStadspas(
     req.params.transactionsKeyEncrypted,
     res.locals.authProfileAndToken.profile.sid
   );
+
+  return sendResponse(res, response);
+}
+
+export async function fetchZorgnedAVAanvragen(
+  req: Request,
+  res: ResponseAuthenticated
+) {
+  const response = await fetchAanvragenRaw(res.locals.userID, {
+    zorgnedApiConfigKey: ZORGNED_AV_API_CONFIG_KEY,
+  });
 
   return sendResponse(res, response);
 }

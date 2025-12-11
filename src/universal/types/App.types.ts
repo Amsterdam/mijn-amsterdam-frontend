@@ -1,8 +1,8 @@
 import { FunctionComponent, ReactNode, SVGProps } from 'react';
 
 import { ServiceID, ServicesType } from '../../server/services/controller';
-import type { ZaakStatus } from '../../server/services/decos/decos-types';
 import { ApiResponse_DEPRECATED } from '../helpers/api';
+import type { SomeOtherString } from '../helpers/types';
 
 export type AppStateBase = {
   [key in ServiceID]: ApiResponse_DEPRECATED<
@@ -66,6 +66,7 @@ export interface MyNotification<ID extends string = string> {
 export interface GenericDocument {
   id: string;
   title: string;
+  filename?: string;
   url: string;
   download?: string;
   external?: boolean;
@@ -74,6 +75,25 @@ export interface GenericDocument {
 }
 
 export type AltDocumentContent = string | ReactNode;
+
+export type ZaakStatus =
+  | 'Ontvangen'
+  | 'In behandeling'
+  | 'Afgehandeld'
+  | 'Ingetrokken'
+  | 'Meer informatie nodig'
+  | 'Einde recht'
+  | 'Verlopen'
+  | SomeOtherString;
+
+export type ZaakDisplayStatus =
+  | ZaakStatus
+  | 'Toegewezen'
+  | 'Afgewezen'
+  | 'Verleend'
+  | 'Ingetrokken'
+  | 'Niet verleend'
+  | 'Onbekend';
 
 export interface StatusLineItem<T extends ZaakStatus = string> {
   id: string;
