@@ -287,12 +287,12 @@ export const PCVERGOEDING_2026: ZorgnedStatusLineItemTransformerConfig<ZorgnedAa
         const betrokkenKinderen = getBetrokkenKinderenDescription(regeling);
         return `<p>
         ${
-          regeling.resultaat === 'toegewezen' || isVerzilvering(regeling)
+          regeling.resultaat === 'toegewezen'
             ? descriptionDefinitief(regeling)
             : `U krijgt geen ${lowercaseFirstLetter(regeling.titel)} voor uw kind${betrokkenKinderen ? ` ${betrokkenKinderen}` : ''}.`
         }
         </p>
-        ${regeling.resultaat === 'toegewezen' || isVerzilvering(regeling) ? '' : '<p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>'}
+        ${regeling.resultaat === 'toegewezen' ? '' : '<p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>'}
       `;
       },
     },
