@@ -1,7 +1,6 @@
 import { isBefore, isSameDay, parseISO } from 'date-fns';
 
 import { getBetrokkenKinderenDescription } from './generic';
-import { featureToggle } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { lowercaseFirstLetter } from '../../../../universal/helpers/text';
 import { sortAlpha, splitBy } from '../../../../universal/helpers/utils';
@@ -172,12 +171,7 @@ export function filterCombineUpcPcvData(
   const baseRegelingIdWithVerzilvering: string[] = [];
   const [aanvragenAfter2026, aanvragenBefore2026] = splitBy(
     aanvragen,
-    (aanvraag) => {
-      if (!featureToggle.hli2026PCVergoedingCodesActive) {
-        return true;
-      }
-      return isBefore(aanvraag.datumBesluit, DATE_2026_CODES_ACTIVE);
-    }
+    (aanvraag) => isBefore(aanvraag.datumBesluit, DATE_2026_CODES_ACTIVE)
   );
   const aanvragen_ =
     filterOutRedundantPcVergoedingsAanvragenWhenWorkShopNietGevolgd(
