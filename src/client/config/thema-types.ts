@@ -30,9 +30,9 @@ export type WithRegelingenListPage = PageConfig<'regelingenListPage'>;
 export type WithspecificatieListPage = PageConfig<'specificatieListPage'>;
 export type WithdetailPageStadspas = PageConfig<'detailPageStadspas'>;
 
-type ThemaFeatureToggle = {
-  themaActive: boolean;
-  features?: Record<string, boolean>;
+export type ThemaFeatureToggle<T = boolean> = {
+  active: boolean;
+  [key: string]: boolean | ThemaFeatureToggle<T>;
 };
 
 type RedactedScope = 'full' | 'content' | 'none';

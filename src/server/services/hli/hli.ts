@@ -14,14 +14,12 @@ import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import { transformRTMAanvragen, isRTMAanvraag } from './rtm/regeling-rtm';
 import { fetchStadspas } from './stadspas';
 import {
-  isPcAanvraag,
-  isWorkshopNietGevolgd,
-  filterCombineUpcPcvData_pre2026,
-} from './status-line-items/regeling-pcvergoeding';
-import {
-  featureToggle,
-  themaConfig,
-} from '../../../client/pages/Thema/HLI/HLI-thema-config';
+  filterCombineRtmData,
+  isRTMAanvraag,
+  isRTMDeel1,
+  RTM_STATUS_IN_BEHANDELING,
+} from './status-line-items/regeling-rtm';
+import { themaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import {
   ApiResponse,
   apiSuccessResult,
@@ -229,7 +227,7 @@ function transformRegelingenForFrontend(
 }
 
 async function fetchRegelingen(authProfileAndToken: AuthProfileAndToken) {
-  if (!featureToggle.hliThemaRegelingenActive) {
+  if (!themaConfig.featureToggle.regelingen) {
     return apiSuccessResult([]);
   }
 

@@ -16,7 +16,12 @@ import {
   AV_PCTGVO,
 } from './status-line-items/regeling-pcvergoeding';
 import { REGELING_PERIODIEK } from './status-line-items/regeling-periodiek';
-import { featureToggle } from '../../../client/pages/Thema/HLI/HLI-thema-config';
+import {
+  AV_RTM_DEEL1,
+  AV_RTM_DEEL2,
+  RTM,
+} from './status-line-items/regeling-rtm';
+import { themaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 
 export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<
   ZorgnedHLIRegeling | ZorgnedAanvraagWithRelatedPersonsTransformed
@@ -26,11 +31,9 @@ export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<
     statusLineItems: { name: 'PCVERGOEDING', transformers: PCVERGOEDING },
   },
   {
-    productIdentificatie: [AV_PCTGBO, AV_PCTGVO],
-    statusLineItems: {
-      name: 'PCVERGOEDING2026',
-      transformers: PCVERGOEDING_2026,
-    },
+    productIdentificatie: [AV_RTM_DEEL1, AV_RTM_DEEL2],
+    statusLineItems: { name: 'RTM', transformers: RTM },
+    isDisabled: !themaConfig.featureToggle.regelingen.enabledRTM,
   },
   {
     productIdentificatie: ['AV-GOV', 'AV-OVM', 'AV-RTM'],
@@ -50,6 +53,6 @@ export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<
   {
     productIdentificatie: [AV_CZM],
     statusLineItems: { name: 'REGELING_CZM', transformers: REGELING_CZM },
-    isDisabled: !featureToggle.hliRegelingEnabledCZM,
+    isDisabled: !themaConfig.featureToggle.regelingen.enabledCZM,
   },
 ];

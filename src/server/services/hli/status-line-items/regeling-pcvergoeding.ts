@@ -1,6 +1,7 @@
 import { isSameDay, parseISO } from 'date-fns';
 
 import { getBetrokkenKinderenDescription } from './generic';
+import { themaConfig } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { lowercaseFirstLetter } from '../../../../universal/helpers/text';
 import { sortAlpha } from '../../../../universal/helpers/utils';
@@ -9,6 +10,11 @@ import {
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types';
 
+export const PC_REGELING_V3_START_DATE = new Date('2026-01-01');
+
+const isPcRegelingV3Active = () =>
+  themaConfig.featureToggle.regelingen.hli2026PCVergoedingV3Enabled &&
+  isAfter(new Date(), subDays(PC_REGELING_V3_START_DATE, 1));
 export const AV_PCTGBO = 'AV-PCTGBO'; // PC Tegoed Basisonderwijs
 export const AV_PCTGVO = 'AV-PCTGVO'; // PC Tegoed Voortgezet Onderwijs
 
@@ -23,6 +29,13 @@ export const AV_PCVTG = 'AV-PCVTG';
 const avCodes = {
   PC: {
     [AV_PCVZIL]: true,
+    [AV_PCVTG]:
+      themaConfig.featureToggle.regelingen.hli2025PCTegoedCodesEnabled,
+  },
+  UPC: {
+    [AV_UPCZIL]: true,
+    [AV_UPCTG]:
+      themaConfig.featureToggle.regelingen.hli2025PCTegoedCodesEnabled,
     [AV_PCVTG]: true,
   },
   UPC: {
@@ -141,7 +154,6 @@ function filterOutRedundantPcVergoedingsAanvragenWhenWorkShopNietGevolgd(
         // This is the aanvraag we want to keep.
         case aanvraag === workshopAanvraagNietGevolgd:
           return true;
-
         // Filters out the aanvraag derived from a redundant beschiktProduct in the same beschikking.
         // In this case the workshop is not followed, the business sets datumIngangGeldigheid and datumEindeGeldigheid to the same date.
         // But also adds a denied beschiktproduct for the same productIdentificatie.
@@ -149,7 +161,6 @@ function filterOutRedundantPcVergoedingsAanvragenWhenWorkShopNietGevolgd(
           aanvraag.productIdentificatie ===
             workshopAanvraagNietGevolgd?.productIdentificatie:
           return false;
-
         // These are all the non-workshop aanvragen, we keep them as well.
         default:
           return true;
@@ -174,8 +185,12 @@ export function filterCombineUpcPcvData_pre2026(
     if (baseRegelingIdWithVerzilvering.includes(aanvraag.id)) {
       return null;
     }
-
     // Add documenten to Verzilvering, e.g, (AV_PC{ZIL|TG})
+
+    if (
+      isVerzilvering(aanvraag) &&
+      isAangevraagdVoorRegelingV3ActiefWerd(aanvraag.datumAanvraag)
+    ) {
     if (isVerzilvering(aanvraag)) {
       // Find first corresponding baseRegeling
       const baseRegeling = aanvragen.find((compareAanvraag) =>
@@ -192,7 +207,6 @@ export function filterCombineUpcPcvData_pre2026(
       }
 
       baseRegelingIdWithVerzilvering.push(baseRegeling.id);
-
       const addedDocs = baseRegeling?.documenten ?? [];
 
       return {
