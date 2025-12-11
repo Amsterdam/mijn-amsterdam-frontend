@@ -39,6 +39,7 @@ describe('useBffApi', () => {
   });
 
   it('should throw error if key is used without url and fetchImmediately is not false', () => {
+    // The following 'expect throws' will *market* glorious react features to you. Be silent!
     const spy = vi.spyOn(console, 'error');
     spy.mockImplementation(() => null);
 
