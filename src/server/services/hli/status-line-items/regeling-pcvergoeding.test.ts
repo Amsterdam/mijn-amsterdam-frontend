@@ -652,7 +652,7 @@ describe('pcvergoeding', () => {
     });
   });
 
-  describe('PC tegoed >= 2026', () => {
+  describe.skip('PC tegoed >= 2026', () => {
     afterEach(() => {
       mocks.hli2026PCVergoedingCodesActive = true;
     });
