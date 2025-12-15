@@ -48,6 +48,8 @@ paths:
                 $ref: '#/components/schemas/WmoVoorzieningenCompactResponse'
         '500':
           $ref: '#/components/responses/ApplicationErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
         '400':
           $ref: '#/components/responses/BadRequestResponse'
         '401':
@@ -81,6 +83,8 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/AfisApplicationError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
         '400':
           $ref: '#/components/responses/BadRequestResponse'
         '401':
@@ -110,6 +114,12 @@ components:
         'application/json':
           schema:
             $ref: '#/components/schemas/ErrorUnauthorized'
+    ServiceUnavailableResponse:
+      description: Returns Service Unavailable error
+      content:
+        'application/json':
+          schema:
+            $ref: '#/components/schemas/ErrorUnavailable'
     ApplicationErrorResponse:
       description: |
         Returns Application error, any error in code or from failed requests.
@@ -244,6 +254,23 @@ components:
               type: string
               enum:
                 - 'Failed to create E-Mandate from sign request status notification'
+    ErrorUnavailable:
+      type: object
+      properties:
+        content:
+          nullable: true
+        code:
+          type: number
+          enum:
+            - 503
+        status:
+          type: string
+          enum:
+            - 'ERROR'
+        message:
+          type: string
+          enum:
+            - 'Service Unavailable'
     ErrorNotFound:
       type: object
       properties:
@@ -278,6 +305,8 @@ components:
           type: string
           enum:
             - 'Api key ongeldig'
+            - 'Authorisatie header mist'
+            - 'Authorisatie header verkeerd gevormd'
             - 'Unauthorized'
     ErrorBadRequest:
       type: object

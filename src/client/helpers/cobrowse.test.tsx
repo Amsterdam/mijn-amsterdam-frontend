@@ -18,7 +18,7 @@ vi.mock('../config/thema', () => ({
   ],
 }));
 
-const REDACTED_CLASS = 'cobrowse-redacted';
+const REDACTED_CLASS = 'redacted';
 describe('Cobrowse', () => {
   test('if getRedactedClass returns the redacted class on null', async () => {
     expect(getRedactedClass(null)).toBe(REDACTED_CLASS);

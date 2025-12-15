@@ -171,9 +171,7 @@ export function AfisBetaalVoorkeuren() {
       </Paragraph>
       {!featureToggle.afisEMandatesActive && (
         <>
-          <Heading level={3} size="level-5">
-            Via automatische incasso betalen
-          </Heading>
+          <Heading level={4}>Via automatische incasso betalen</Heading>
           <Paragraph className="ams-mb-m">
             Download{' '}
             <Link
@@ -253,6 +251,7 @@ export function AfisBetaalVoorkeuren() {
       linkListItems={linkListItems}
       pageContentTop={pageContentTop}
       pageContentMain={pageContentMain}
+      maintenanceNotificationsPageSlug="afis"
     />
   );
 }

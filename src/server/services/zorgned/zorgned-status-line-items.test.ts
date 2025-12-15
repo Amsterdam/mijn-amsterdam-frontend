@@ -21,6 +21,7 @@ function getTransformerConfig() {
 
 const transformerConfig = getTransformerConfig();
 const transformerConfig2 = getTransformerConfig();
+const transformerConfig4 = getTransformerConfig();
 
 const transformerConfigs = [transformerConfig, transformerConfig2];
 
@@ -55,7 +56,20 @@ const lineItemsConfig3: ZorgnedStatusLineItemsConfig = {
   },
 };
 
-const lineItemConfigs = [lineItemsConfig1, lineItemsConfig2, lineItemsConfig3];
+const lineItemsConfig4: ZorgnedStatusLineItemsConfig = {
+  productsoortCodes: ['NUB'],
+  statusLineItems: {
+    name: 'Test line items 4',
+    transformers: [transformerConfig4],
+  },
+};
+
+const lineItemConfigs = [
+  lineItemsConfig1,
+  lineItemsConfig2,
+  lineItemsConfig3,
+  lineItemsConfig4,
+];
 
 describe('zorgned-status-line-items', () => {
   const logSpy = vi.spyOn(logger, 'error');
@@ -128,6 +142,19 @@ describe('zorgned-status-line-items', () => {
       );
 
       expect(lineItemTransformers).toBe(null);
+    });
+
+    test('Get transformers: Only match productSoortCode', () => {
+      const lineItemTransformers = forTesting.getStatusLineItemTransformers(
+        lineItemConfigs,
+        {
+          leveringsVorm: 'X',
+          productsoortCode: 'NUB',
+        } as ZorgnedAanvraagTransformed,
+        []
+      );
+
+      expect(lineItemTransformers).toStrictEqual([transformerConfig4]);
     });
 
     test('Get transformers: No match for productSoortCode or productIdentificatie', () => {
@@ -277,7 +304,7 @@ describe('zorgned-status-line-items', () => {
     describe('Matches line items based on result', () => {
       const aanvraag = getAanvraagTransformed();
 
-      // @ts-ignore - Ignore possibly missing optional property for testing
+      // @ts-expect-error - Ignore possibly missing optional property for testing
       delete aanvraag.leveringsVorm;
 
       const transformer1 = getTransformerConfig();

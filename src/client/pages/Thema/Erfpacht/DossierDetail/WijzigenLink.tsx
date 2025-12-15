@@ -1,9 +1,9 @@
 import { Link } from '@amsterdam/design-system-react';
 
 export function getMailBody(
+  debiteurNummer: string | null,
   dossierNummer?: string,
-  relatieCode?: string,
-  debiteurNummer?: string
+  relatieCode?: string
 ) {
   return `Dossiernummer: ${dossierNummer ?? '-'}%0D%0ARelatiecode: ${
     relatieCode ?? '-'
@@ -11,7 +11,7 @@ export function getMailBody(
 }
 
 interface WijzigenLinkProps {
-  debiteurNummer?: string;
+  debiteurNummer: string | null;
   dossierNummer?: string;
   email?: string;
   label?: string;
@@ -30,9 +30,9 @@ export function WijzigenLink({
   return (
     <Link
       href={`mailto:${email}?subject=${subject}&body=${getMailBody(
+        debiteurNummer,
         dossierNummer,
-        relatieCode,
-        debiteurNummer
+        relatieCode
       )}`}
       rel="noopener noreferrer"
     >

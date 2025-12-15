@@ -36,8 +36,8 @@ import {
   VarenVergunningFrontend,
   VarenZakenFrontend,
 } from '../../../server/services/varen/config-and-types';
-import { type ZaakFrontendCombined } from '../../../server/services/vergunningen/config-and-types';
-import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
+import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
+import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-types';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
 import { getFullAddress, getFullName } from '../../../universal/helpers/brp';
 import {

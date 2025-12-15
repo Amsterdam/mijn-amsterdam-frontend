@@ -81,6 +81,7 @@ export function JeugdThemaPagina() {
       }
       isError={isError}
       isLoading={isLoading}
+      maintenanceNotificationsPageSlug="jeugd"
     />
   );
 }

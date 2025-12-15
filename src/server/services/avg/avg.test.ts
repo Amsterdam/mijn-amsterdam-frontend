@@ -1,3 +1,4 @@
+import nock from 'nock';
 import { describe, expect, beforeEach, afterEach, vi, it } from 'vitest';
 
 import { fetchAVG, fetchAVGNotifications, transformAVGResponse } from './avg';
@@ -505,6 +506,44 @@ describe('AVG', () => {
         },
         status: 'OK',
       });
+    });
+  });
+
+  describe('enrichAvgResponse', () => {
+    afterEach(() => {
+      nock.cleanAll();
+    });
+    it('should not call readthemaperavgverzoek when there are no avg verzoeken', async () => {
+      remoteApi.post('/smile', /readavgverzoek/gi).reply(200, {
+        rowcount: 0,
+        List: [],
+      });
+
+      const scope = remoteApi
+        .post('/smile', /readthemaperavgverzoek/gi)
+        .reply(200, []);
+
+      await fetchAVG(profileAndToken);
+
+      expect(scope.isDone()).toBeFalsy();
+    });
+
+    it('should call readthemaperavgverzoek when there are avg verzoeken', async () => {
+      remoteApi.post('/smile', /readavgverzoek/gi).reply(200, {
+        rowcount: 1,
+        List: [apiResponse.List[0]],
+      });
+
+      const scope = remoteApi
+        .post('/smile', /readthemaperavgverzoek/gi)
+        .reply(200, {
+          rowcount: 0,
+          List: [],
+        });
+
+      await fetchAVG(profileAndToken);
+
+      expect(scope.isDone()).toBeTruthy();
     });
   });
 });

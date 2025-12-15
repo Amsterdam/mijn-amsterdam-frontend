@@ -57,6 +57,7 @@ export type ResponseAuthenticated = Response & {
   };
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function queryParams<T extends Record<string, any>>(req: Request) {
   return req.query as T;
 }

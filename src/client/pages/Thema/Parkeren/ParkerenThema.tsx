@@ -1,5 +1,5 @@
 import { Alert, Icon, Paragraph } from '@amsterdam/design-system-react';
-import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
+import { LinkExternalIcon } from '@amsterdam/design-system-react-icons';
 
 import { useParkerenData } from './useParkerenData.hook';
 import { DecosZaakFrontend } from '../../../../server/services/vergunningen/config-and-types';
@@ -10,6 +10,47 @@ import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 import { useProfileTypeValue } from '../../../hooks/useProfileType';
+
+type PageContentTopProps = {
+  hasMijnParkerenVergunningen: boolean;
+  parkerenUrlSSO: string;
+  profileType: ProfileType;
+};
+
+function PageContentTop({
+  hasMijnParkerenVergunningen,
+  parkerenUrlSSO,
+  profileType,
+}: PageContentTopProps) {
+  if (hasMijnParkerenVergunningen) {
+    const profileTypeLabel =
+      profileType === 'commercial' ? 'bedrijven' : 'bewoners';
+    return (
+      <PageContentCell spanWide={8}>
+        <Alert
+          heading={`Parkeervergunning voor ${profileTypeLabel}`}
+          headingLevel={4}
+        >
+          <Paragraph>
+            Het inzien, aanvragen of wijzigen van een parkeervergunning voor{' '}
+            {profileTypeLabel} kan via Mijn Parkeren.
+          </Paragraph>
+          <Paragraph>
+            <MaButtonLink href={parkerenUrlSSO}>
+              Ga naar Mijn Parkeren&nbsp;
+              <Icon svg={LinkExternalIcon} size="heading-5" />
+            </MaButtonLink>
+          </Paragraph>
+        </Alert>
+      </PageContentCell>
+    );
+  }
+  return (
+    <PageContentCell spanWide={8}>
+      <Paragraph>Hieronder ziet u een overzicht van uw vergunningen.</Paragraph>
+    </PageContentCell>
+  );
+}
 
 export function ParkerenThema() {
   const {
@@ -44,10 +85,13 @@ export function ParkerenThema() {
       );
     }
   );
-
-  const pageContentTop = determinePageContentTop(
-    hasMijnParkerenVergunningen,
-    parkerenUrlSSO
+  const profileType = useProfileTypeValue();
+  const pageContentTop = (
+    <PageContentTop
+      hasMijnParkerenVergunningen={hasMijnParkerenVergunningen}
+      parkerenUrlSSO={parkerenUrlSSO}
+      profileType={profileType}
+    />
   );
 
   const hasActualGPK = vergunningen.find(
@@ -75,44 +119,9 @@ export function ParkerenThema() {
       linkListItems={linkListItems}
       pageContentMain={tables}
       pageContentBottom={pageContentBottom}
+      maintenanceNotificationsPageSlug="parkeren"
     />
   );
 }
 
-function determinePageContentTop(
-  hasMijnParkerenVergunningen: boolean,
-  parkerenUrlSSO: string
-) {
-  if (hasMijnParkerenVergunningen) {
-    const profileType = useProfileTypeValue();
-    const profileTypeLabel =
-      profileType === 'commercial' ? 'bedrijven' : 'bewoners';
-
-    return (
-      <PageContentCell spanWide={8}>
-        <Alert
-          heading={`Parkeervergunning voor ${profileTypeLabel}`}
-          headingLevel={4}
-        >
-          <Paragraph>
-            Het inzien, aanvragen of wijzigen van een parkeervergunning voor{' '}
-            {profileTypeLabel} kan via Mijn Parkeren.
-          </Paragraph>
-          <Paragraph>
-            <MaButtonLink href={parkerenUrlSSO}>
-              Ga naar Mijn Parkeren&nbsp;
-              <Icon svg={ExternalLinkIcon} size="heading-5" />
-            </MaButtonLink>
-          </Paragraph>
-        </Alert>
-      </PageContentCell>
-    );
-  }
-  return (
-    <PageContentCell spanWide={8}>
-      <Paragraph>Hieronder ziet u een overzicht van uw vergunningen.</Paragraph>
-    </PageContentCell>
-  );
-}
-
-export const forTesting = { determinePageContentTop };
+export const forTesting = { PageContentTop };

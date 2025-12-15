@@ -143,7 +143,6 @@ const routerPrivate = createBFFRouter({
   id: 'afis-router-private',
 });
 
-// TODO: this endpoint should be made available to the EnableU network. Find out if this is possible and how to do it. - https://gemeente-amsterdam.atlassian.net/browse/MIJN-12289
 routerPrivate.post(
   routes.private.AFIS_EMANDATE_SIGN_REQUEST_STATUS_NOTIFY,
   handleAfisEMandateSignRequestStatusNotification

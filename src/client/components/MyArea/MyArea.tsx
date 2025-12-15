@@ -23,7 +23,7 @@ import BaseLayerToggle, {
 } from './Map/BaseLayerToggle';
 import Map from './Map/Map';
 import ViewerContainer from './Map/ViewerContainer';
-import Zoom from './Map/Zoom';
+import ZoomControl from './Map/ZoomControl';
 import { routeConfig } from './MyArea-thema-config';
 import {
   MapLocationMarker,
@@ -222,6 +222,7 @@ export default function MyArea({
                         <MyAreaCustomLocationControlButton
                           zoom={zoom}
                           latlng={customLocationMarker.latlng}
+                          label="Centreer kaart op deze locatie"
                         />
                       )}
                       {!!homeLocationMarker && (
@@ -230,7 +231,7 @@ export default function MyArea({
                           latlng={homeLocationMarker?.latlng}
                         />
                       )}
-                      <Zoom />
+                      <ZoomControl />
                     </>
                   )
                 }
@@ -242,6 +243,7 @@ export default function MyArea({
                         <MyAreaCustomLocationControlButton
                           zoom={zoom}
                           latlng={customLocationMarker.latlng}
+                          label="Centreer kaart op deze locatie"
                         />
                       )}
                       {!!homeLocationMarker && (
@@ -250,7 +252,7 @@ export default function MyArea({
                           latlng={homeLocationMarker?.latlng}
                         />
                       )}
-                      <Zoom />
+                      <ZoomControl />
                     </>
                   )
                 }

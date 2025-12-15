@@ -2,8 +2,8 @@
 
 import { Icon, Link } from '@amsterdam/design-system-react';
 import {
-  ChatBubbleIcon,
-  EmailIcon,
+  SpeechBalloonEllipsisIcon,
+  MailIcon,
   PhoneIcon,
 } from '@amsterdam/design-system-react-icons';
 import { generatePath, useParams } from 'react-router';
@@ -61,8 +61,8 @@ function getLinkToThemaPage(
 function addIcon(type: string) {
   const icons: Record<string, React.FC> = {
     Telefoon: PhoneIcon,
-    Chat: ChatBubbleIcon,
-    Contactformulier: EmailIcon,
+    Chat: SpeechBalloonEllipsisIcon,
+    Contactformulier: MailIcon,
   };
   if (icons[type]) {
     return (
