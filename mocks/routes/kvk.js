@@ -38,7 +38,7 @@ module.exports = [
             status: 200,
             body: {
               _embedded: {
-                vestigingen: vestigingen._embedded.vestigingen.slice(0, 2),
+                vestigingen: vestigingen._embedded.vestigingen.slice(0, 3),
               },
             },
           },

@@ -277,13 +277,22 @@ export const panelConfig: PanelConfig<
     title: 'Hoofdvestiging',
     actionLinks: [],
   }),
-  vestigingen: (KVK) => ({
-    title:
-      KVK.content?.vestigingen?.length !== 1
-        ? `Vestigingen (${KVK.content?.vestigingen?.length})`
-        : 'Vestiging',
-    actionLinks: [],
-  }),
+  vestigingen: (_, profileData) => {
+    const labelPlural = profileData.hoofdVestiging
+      ? 'Nevenvestigingen'
+      : 'Vestigingen';
+    const label =
+      profileData.hoofdVestiging && profileData.vestigingen?.length === 1
+        ? 'Nevenvestiging'
+        : 'Vestiging';
+    return {
+      title:
+        profileData.vestigingen?.length !== 1
+          ? `${labelPlural} (${profileData.vestigingen?.length})`
+          : label,
+      actionLinks: [],
+    };
+  },
   eigenaar: () => ({
     title: 'Eigenaar',
     actionLinks: [],
