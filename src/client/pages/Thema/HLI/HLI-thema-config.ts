@@ -7,7 +7,7 @@ import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { dateSort } from '../../../../universal/helpers/date';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
-import { buildFeatureToggle } from '../../../config/buildFeatureToggle';
+import { getPropagatedToggles } from '../../../config/buildFeatureToggle';
 import type {
   ThemaConfigBase,
   WithDetailPage,
@@ -15,14 +15,14 @@ import type {
   WithspecificatieListPage,
   WithdetailPageStadspas,
 } from '../../../config/thema-types';
-// stadspas of themanamen moeten hier niet voorkomen
+
 const THEMA_TITLE = 'Stadspas en regelingen bij laag inkomen' as const;
 
 export const themaConfig = {
   id: 'HLI' as const,
   title: THEMA_TITLE,
 
-  featureToggle: buildFeatureToggle({
+  featureToggle: getPropagatedToggles({
     active: true,
     stadspas: {
       active: true,
@@ -107,6 +107,7 @@ export const themaConfig = {
         `${params?.kind === 'eerdere-en-afgehandelde-regelingen' ? 'Eerdere' : 'Huidige'} regelingen | ${THEMA_TITLE}`,
     },
   },
+
 } as const satisfies ThemaConfigBase &
   WithDetailPage &
   WithdetailPageStadspas &

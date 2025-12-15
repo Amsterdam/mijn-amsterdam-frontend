@@ -1,24 +1,17 @@
 import type { ThemaFeatureToggle } from './thema-types';
-
-export const buildFeatureToggle = <T extends ThemaFeatureToggle>(
+import { entries } from '../../universal/helpers/utils';
+export const getPropagatedToggles = <T extends ThemaFeatureToggle>(
   obj: T,
-  active = true
+  parentActive = true
 ): T => {
-  if (typeof obj.active === 'boolean') {
-    active = active && obj.active;
-  }
-
-  obj.active = active;
-
-  for (const key in obj) {
-    const value = obj[key];
-
+  const toggles = {} as Record<keyof T, unknown>;
+  parentActive = parentActive && obj.active;
+  for (const [key, value] of entries(obj)) {
     if (typeof value === 'boolean') {
-      obj[key] = (value && active) as typeof value;
-    } else if (value && typeof value === 'object') {
-      buildFeatureToggle(value as ThemaFeatureToggle, active);
+      toggles[key] = value && parentActive;
+    } else {
+      toggles[key] = getPropagatedToggles(value, parentActive);
     }
   }
-
-  return obj;
+  return toggles as T;
 };
