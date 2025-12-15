@@ -428,9 +428,9 @@ export async function fetchAantalBewoners(
     },
     data: {
       type: 'ZoekMetAdresseerbaarObjectIdentificatie',
-      // Only request aNummer to reduce payload. We don't require any other data to be fetched here.
+      // Only request adressering.adresregel3 to reduce payload. We don't require any other data to be fetched here.
       // The response will be used to count the number of personen related to a certain adresseerbaarObject.
-      fields: ['aNummer'],
+      fields: ['adressering.adresregel3'],
       gemeenteVanInschrijving: GEMEENTE_CODE_AMSTERDAM,
       adresseerbaarObjectIdentificatie: bagID,
     },
