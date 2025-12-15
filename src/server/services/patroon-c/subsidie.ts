@@ -83,9 +83,11 @@ async function getConfig(authProfileAndToken: AuthProfileAndToken) {
     transformResponse(
       response: Omit<ApiPatternResponseA, 'url'>
     ): ApiPatternResponseA {
+      const base_url =
+        getFromEnv('BFF_SSO_URL_SUBSIDIES') ?? SUBSIDIES_ROUTE_DEFAULT;
       return {
         ...response,
-        url: `${getFromEnv('BFF_SSO_URL_SUBSIDIES') ?? SUBSIDIES_ROUTE_DEFAULT}?authMethod=${authProfileAndToken.profile.authMethod}`,
+        url: `${base_url}?grant_type=saml&method=${authProfileAndToken.profile.authMethod}&referer_url=${base_url}`,
       };
     },
   });
