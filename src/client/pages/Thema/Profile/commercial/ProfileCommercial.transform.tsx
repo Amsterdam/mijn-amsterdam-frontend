@@ -232,33 +232,23 @@ export function formatKvkProfileData(
   }
 
   if (kvkResponse.vestigingen?.length) {
-    if (kvkResponse.vestigingen?.length === 1) {
-      profileData.vestigingen = kvkResponse.vestigingen.map((vestiging) =>
+    const hoofdVestiging = kvkResponse.vestigingen.find(
+      (vestiging) => vestiging.isHoofdvestiging
+    );
+
+    profileData.hoofdVestiging = hoofdVestiging
+      ? formatProfileSectionData(
+          labelConfig.vestiging,
+          hoofdVestiging,
+          kvkResponse
+        )
+      : undefined;
+
+    profileData.vestigingen = kvkResponse.vestigingen
+      .filter((vestiging) => !vestiging.isHoofdvestiging)
+      .map((vestiging) =>
         formatProfileSectionData(labelConfig.vestiging, vestiging, kvkResponse)
       );
-    } else {
-      const hoofdVestiging = kvkResponse.vestigingen.find(
-        (vestiging) => vestiging.isHoofdvestiging
-      );
-
-      profileData.hoofdVestiging = hoofdVestiging
-        ? formatProfileSectionData(
-            labelConfig.vestiging,
-            hoofdVestiging,
-            kvkResponse
-          )
-        : undefined;
-
-      profileData.vestigingen = kvkResponse.vestigingen
-        .filter((vestiging) => !vestiging.isHoofdvestiging)
-        .map((vestiging) =>
-          formatProfileSectionData(
-            labelConfig.vestiging,
-            vestiging,
-            kvkResponse
-          )
-        );
-    }
   }
 
   return profileData;
