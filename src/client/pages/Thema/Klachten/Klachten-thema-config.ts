@@ -1,6 +1,7 @@
 import { generatePath } from 'react-router';
 
 import { KlachtFrontend } from '../../../../server/services/klachten/types';
+import { dateSort } from '../../../../universal/helpers/date';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import {
@@ -16,6 +17,14 @@ export const featureToggle = {
 export const themaId = 'KLACHTEN' as const;
 export const themaTitle = 'Klachten';
 
+export const listPageParamKind = {
+  lopend: 'lopende-aanvragen',
+  eerder: 'eerdere-aanvragen',
+} as const;
+
+export type ListPageParamKey = keyof typeof listPageParamKind;
+export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
+
 export const routeConfig = {
   detailPage: {
     path: '/klachten/klacht/:id',
@@ -23,8 +32,10 @@ export const routeConfig = {
     documentTitle: `Klachten | ${themaTitle}`,
   },
   listPage: {
-    path: '/klachten/lijst/:page?',
-    documentTitle: `Ingediende klachten | ${themaTitle}`,
+    path: '/klachten/lijst/:kind/:page?',
+    documentTitle: (params) => {
+      return `${params?.kind === listPageParamKind.eerder ? 'Eerdere' : 'Lopende'} aanvragen | ${themaTitle}`;
+    },
     trackingUrl: null,
   },
   themaPage: {
@@ -53,19 +64,27 @@ const displayProps: DisplayProps<KlachtFrontend> = {
   },
 };
 
-export const klachtenTableConfigs = [
-  {
+export const tableConfig = {
+  [listPageParamKind.lopend]: {
     title: 'Lopende klachten',
     displayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
-    listPageRoute: generatePath(routeConfig.listPage.path, { page: null }),
+    listPageRoute: generatePath(routeConfig.listPage.path, {
+      kind: listPageParamKind.lopend,
+      page: null,
+    }),
     filter: (klacht: KlachtFrontend) => klacht.isActive,
+    sort: dateSort<KlachtFrontend>('ontvangstDatum'),
   },
-  {
+  [listPageParamKind.eerder]: {
     title: 'Afgehandelde klachten',
     displayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-    listPageRoute: generatePath(routeConfig.listPage.path, { page: null }),
+    listPageRoute: generatePath(routeConfig.listPage.path, {
+      kind: listPageParamKind.eerder,
+      page: null,
+    }),
     filter: (klacht: KlachtFrontend) => !klacht.isActive,
+    sort: dateSort<KlachtFrontend>('ontvangstDatum'),
   },
-] as const;
+} as const;

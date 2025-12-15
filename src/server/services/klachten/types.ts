@@ -26,9 +26,6 @@ export type SmileKlacht = {
   klacht_klachtopgelost: SmileFieldValue; // '' for unsolved or 'Ja' for solved.
   // Date of last update in 'dd-mm-yyyy hh:mm' format.
   klacht_updatedon: SmileFieldValue;
-  // Date of finishing in 'dd-mm-yyyy hh:mm' format. Is empty before ever being closed.
-  // Not sure if this date changes if we update again.
-  klacht_afgehandeldrichtingklager: SmileFieldValue;
   // Date of completing the klacht in 'dd-mm-yyyy hh:mm' format.
   klacht_finishedon: SmileFieldValue;
   // Date of reopening the klacht after beind closed in 'dd-mm-yyyy hh:mm' format.
@@ -37,14 +34,10 @@ export type SmileKlacht = {
 
 type SmileOpenStatus = 'Open' | 'Gesloten';
 
-// Archiveren maakt een SmileKlacht onzichtbaar bij het bevragen API.
 type SmileDetailedStatus =
   | 'Toewijzen'
-  // Bij neerzette verantwoordelijke afdeling -> 'Beoordelen/Accepteren'
   | 'Beoordelen/Accepteren'
-  // Aangegeven geen klacht -> 'Heropend voor statusverzoek'
-  // Alle taken afgerond -> 'Afgesloten' en 'Gesloten'
-  | 'Heropend voor statusverzoek' // Na afsluiten en heropenen met reden statusverzoek
+  | 'Heropend voor statusverzoek'
   | 'In behandeling'
   | 'Contact opnemen'
   | 'Coördinatie afhandeling'

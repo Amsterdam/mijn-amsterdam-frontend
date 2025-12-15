@@ -3,6 +3,16 @@ const AVG_RESPONSE = require('../fixtures/avg.json');
 const KLACHTEN_RESPONSE = require('../fixtures/klachten.json');
 const settings = require('../settings');
 
+// Set rowcount to a low number to not trigger pagination.
+// Pagination duplicates respones because of our simple implementation.
+for (const responseObj of [
+  AVG_THEMAS_RESPONSE,
+  AVG_RESPONSE,
+  KLACHTEN_RESPONSE,
+]) {
+  responseObj.rowcount = 10;
+}
+
 function isIncomingFormFunction(identifier) {
   return (fields, core) => {
     if (!fields?.function) {
