@@ -7,6 +7,7 @@ import { getFullAddress } from '../../../../../universal/helpers/brp';
 import { AppState } from '../../../../../universal/types/App.types';
 import MockApp from '../../../MockApp';
 import { routeConfig } from '../Profile-thema-config';
+import { forTesting } from './ProfileCommercial.transform';
 
 const responseData: KvkResponseFrontend = {
   eigenaar: {
@@ -151,7 +152,8 @@ const panelHeadings = [
   'Onderneming',
   'Hoofdvestiging',
   'Eigenaar',
-  'Vestigingen (3)',
+  'Hoofdvestiging',
+  'Nevenvestigingen (2)',
 ];
 
 describe('<MijnBedrijfsGegevensThema />', () => {
@@ -191,5 +193,41 @@ describe('<MijnBedrijfsGegevensThema />', () => {
     expect(
       screen.getByText(`${responseData.eigenaar?.naam}`)
     ).toBeInTheDocument();
+  });
+
+  describe('getVestigingLabel', () => {
+    const { gestVestigingLabel } = forTesting;
+
+    test('returns correct label when hoofdVestiging and multiple vestigingen', () => {
+      const label = gestVestigingLabel({
+        hoofdVestiging: {},
+        vestigingen: [{}, {}],
+      });
+      expect(label).toBe('Nevenvestigingen (2)');
+    });
+
+    test('returns correct label when hoofdVestiging and single vestiging', () => {
+      const label = gestVestigingLabel({
+        hoofdVestiging: {},
+        vestigingen: [{}],
+      });
+      expect(label).toBe('Nevenvestiging');
+    });
+
+    test('returns correct label when no hoofdVestiging and multiple vestigingen', () => {
+      const label = gestVestigingLabel({
+        hoofdVestiging: undefined,
+        vestigingen: [{}, {}],
+      });
+      expect(label).toBe('Vestigingen (2)');
+    });
+
+    test('returns correct label when no hoofdVestiging and single vestiging', () => {
+      const label = gestVestigingLabel({
+        hoofdVestiging: undefined,
+        vestigingen: [{}],
+      });
+      expect(label).toBe('Vestiging');
+    });
   });
 });

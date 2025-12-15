@@ -264,6 +264,22 @@ export function formatKvkProfileData(
   return profileData;
 }
 
+function gestVestigingLabel(
+  profileData: ReturnType<typeof formatKvkProfileData>
+) {
+  const labelPlural = profileData.hoofdVestiging
+    ? 'Nevenvestigingen'
+    : 'Vestigingen';
+  const label =
+    profileData.hoofdVestiging && profileData.vestigingen?.length === 1
+      ? 'Nevenvestiging'
+      : 'Vestiging';
+
+  return profileData.vestigingen?.length !== 1
+    ? `${labelPlural} (${profileData.vestigingen?.length})`
+    : label;
+}
+
 export const panelConfig: PanelConfig<
   KVKPanelKey,
   AppState['KVK'],
@@ -278,18 +294,8 @@ export const panelConfig: PanelConfig<
     actionLinks: [],
   }),
   vestigingen: (_, profileData) => {
-    const labelPlural = profileData.hoofdVestiging
-      ? 'Nevenvestigingen'
-      : 'Vestigingen';
-    const label =
-      profileData.hoofdVestiging && profileData.vestigingen?.length === 1
-        ? 'Nevenvestiging'
-        : 'Vestiging';
     return {
-      title:
-        profileData.vestigingen?.length !== 1
-          ? `${labelPlural} (${profileData.vestigingen?.length})`
-          : label,
+      title: gestVestigingLabel(profileData),
       actionLinks: [],
     };
   },
@@ -297,4 +303,8 @@ export const panelConfig: PanelConfig<
     title: 'Eigenaar',
     actionLinks: [],
   }),
+};
+
+export const forTesting = {
+  gestVestigingLabel,
 };
