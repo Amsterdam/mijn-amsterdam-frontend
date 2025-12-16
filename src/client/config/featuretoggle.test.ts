@@ -1,6 +1,6 @@
 import { describe, it } from 'vitest';
 
-import { getPropagatedToggles } from './buildFeatureToggle';
+import { propagateFeatureToggles } from './buildFeatureToggle';
 
 describe('buildFeatureToggle', () => {
   it('does not modify subtoggle state when the parent is true', () => {
@@ -10,7 +10,7 @@ describe('buildFeatureToggle', () => {
         active: false,
       },
     };
-    expect(getPropagatedToggles(toggles)).toStrictEqual({ ...toggles });
+    expect(propagateFeatureToggles(toggles)).toStrictEqual({ ...toggles });
   });
 
   it('propagates negative active values down', () => {
@@ -23,7 +23,7 @@ describe('buildFeatureToggle', () => {
         },
       },
     };
-    expect(getPropagatedToggles(toggles)).toStrictEqual({
+    expect(propagateFeatureToggles(toggles)).toStrictEqual({
       active: false,
       feature: {
         active: false,
@@ -43,7 +43,7 @@ describe('buildFeatureToggle', () => {
         subFeatureB: false,
       },
     };
-    expect(getPropagatedToggles(toggles)).toStrictEqual({
+    expect(propagateFeatureToggles(toggles)).toStrictEqual({
       active: false,
       feature: {
         active: false,
@@ -64,7 +64,7 @@ describe('buildFeatureToggle', () => {
         active: true,
       },
     };
-    expect(getPropagatedToggles(toggles)).toStrictEqual({
+    expect(propagateFeatureToggles(toggles)).toStrictEqual({
       active: true,
       featureA: {
         active: false,
@@ -92,7 +92,7 @@ describe('buildFeatureToggle', () => {
         },
       },
     };
-    expect(getPropagatedToggles(toggles)).toStrictEqual({
+    expect(propagateFeatureToggles(toggles)).toStrictEqual({
       active: true,
       feature: {
         active: true,

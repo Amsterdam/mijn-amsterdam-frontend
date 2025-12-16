@@ -7,7 +7,7 @@ import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { dateSort } from '../../../../universal/helpers/date';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
-import { getPropagatedToggles } from '../../../config/buildFeatureToggle';
+import { propagateFeatureToggles } from '../../../config/buildFeatureToggle';
 import type {
   ThemaConfigBase,
   WithDetailPage,
@@ -22,7 +22,7 @@ export const themaConfig = {
   id: 'HLI' as const,
   title: THEMA_TITLE,
 
-  featureToggle: getPropagatedToggles({
+  featureToggle: propagateFeatureToggles({
     active: true,
     stadspas: {
       active: true,

@@ -1,6 +1,6 @@
 import type { ThemaFeatureToggle } from './thema-types';
 import { entries } from '../../universal/helpers/utils';
-export const getPropagatedToggles = <T extends ThemaFeatureToggle>(
+export const propagateFeatureToggles = <T extends ThemaFeatureToggle>(
   obj: T,
   parentActive = true
 ): T => {
@@ -10,7 +10,7 @@ export const getPropagatedToggles = <T extends ThemaFeatureToggle>(
     if (typeof value === 'boolean') {
       toggles[key] = value && parentActive;
     } else {
-      toggles[key] = getPropagatedToggles(value, parentActive);
+      toggles[key] = propagateFeatureToggles(value, parentActive);
     }
   }
   return toggles as T;
