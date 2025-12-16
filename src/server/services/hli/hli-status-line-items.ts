@@ -11,6 +11,9 @@ import {
   AV_PCVC,
   AV_UPCC,
   PCVERGOEDING,
+  PCVERGOEDING_2026,
+  AV_PCTGBO,
+  AV_PCTGVO,
 } from './status-line-items/regeling-pcvergoeding';
 import { REGELING_PERIODIEK } from './status-line-items/regeling-periodiek';
 import {

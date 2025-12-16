@@ -1,7 +1,12 @@
 import MockDate from 'mockdate';
 import { Mock } from 'vitest';
 
-import { forTesting, RTM_SPECIFICATIE_TITLE } from './hli';
+import {
+  forTesting,
+  getDocumentsFrontend,
+  transformRegelingForFrontend,
+  RTM_SPECIFICATIE_TITLE,
+} from './hli';
 import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import { getAuthProfileAndToken } from '../../../testing/utils';
 import {
@@ -208,7 +213,7 @@ describe('HLI', () => {
       },
     ];
 
-    const result = forTesting.getDocumentsFrontend(sessionID, documents);
+    const result = getDocumentsFrontend(sessionID, documents);
     expect(result).toHaveLength(2);
     expect(result[0].id).toBe('test-encrypted-id');
     expect(result[0].url).toContain(
@@ -220,6 +225,7 @@ describe('HLI', () => {
     const sessionID = 'test-session-id';
     const aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed = {
       id: 'aanvraag1',
+      prettyID: '11231231',
       titel: 'Test Aanvraag',
       isActueel: true,
       datumBesluit: '2023-01-01',
@@ -248,6 +254,7 @@ describe('HLI', () => {
       productsoortCode: '',
       bsnAanvrager: '123456789',
       beschiktProductIdentificatie: 'bpi-123',
+      procesAanvraagOmschrijving: null,
       beschikkingNummer: null,
     };
 
@@ -261,12 +268,12 @@ describe('HLI', () => {
       },
     ];
 
-    const result = await forTesting.transformRegelingForFrontend(
+    const result = transformRegelingForFrontend(
       sessionID,
       aanvraag,
       statusLineItems
     );
-    expect(result.id).toBe('aanvraag1');
+    expect(result.id).toBe('11231231');
     expect(result.title).toBe('Test Aanvraag');
     expect(result.displayStatus).toBe('Toegewezen');
   });
@@ -276,6 +283,7 @@ describe('HLI', () => {
     const aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[] = [
       {
         id: 'aanvraag1',
+        prettyID: '11231231',
         beschikkingNummer: null,
         titel: 'Test Aanvraag',
         isActueel: true,
@@ -283,6 +291,7 @@ describe('HLI', () => {
         datumIngangGeldigheid: '2023-01-01',
         datumEindeGeldigheid: '2023-12-31',
         resultaat: 'toegewezen',
+        procesAanvraagOmschrijving: null,
         documenten: [],
         betrokkenPersonen: [
           {
@@ -311,21 +320,25 @@ describe('HLI', () => {
     const today = new Date();
     test('With productIdentificatie', async () => {
       vi.spyOn(document, 'dedupeDocumentsInDataSets');
-      const result = await forTesting.transformRegelingenForFrontend(
-        authProfileAndToken,
+      const profile = authProfileAndToken.profile;
+      const result = forTesting.transformRegelingenForFrontend(
+        profile.sid,
+        { bsn: profile.id },
         aanvragen,
         today
       );
       expect(document.dedupeDocumentsInDataSets).toHaveBeenCalled();
       expect(result).toHaveLength(1);
-      expect(result[0].id).toBe('aanvraag1');
+      expect(result[0].id).toBe('11231231');
       expect(result[0].title).toBe('Test Aanvraag');
     });
 
     test('Without productIdentificatie', async () => {
       const aanvragen2 = [{ ...aanvragen[0], productIdentificatie: '' }];
-      const result = await forTesting.transformRegelingenForFrontend(
-        authProfileAndToken,
+      const profile = authProfileAndToken.profile;
+      const result = forTesting.transformRegelingenForFrontend(
+        profile.sid,
+        { bsn: profile.id },
         aanvragen2,
         today
       );
@@ -364,6 +377,8 @@ describe('HLI', () => {
         productsoortCode: '',
         bsnAanvrager: '123456789',
         beschiktProductIdentificatie: 'bpi-123',
+        procesAanvraagOmschrijving: null,
+        beschikkingNummer: null,
       };
 
       const result = forTesting.transformRegelingTitle(aanvraag);
@@ -392,6 +407,8 @@ describe('HLI', () => {
         productsoortCode: '',
         bsnAanvrager: '123456789',
         beschiktProductIdentificatie: 'bpi-123',
+        procesAanvraagOmschrijving: null,
+        beschikkingNummer: null,
       };
 
       const result = forTesting.transformRegelingTitle(aanvraag);
@@ -420,6 +437,8 @@ describe('HLI', () => {
         productsoortCode: '',
         bsnAanvrager: '123456789',
         beschiktProductIdentificatie: 'bpi-123',
+        procesAanvraagOmschrijving: null,
+        beschikkingNummer: null,
       };
 
       const result = forTesting.transformRegelingTitle(aanvraag);
@@ -448,6 +467,8 @@ describe('HLI', () => {
         productsoortCode: '',
         bsnAanvrager: '123456789',
         beschiktProductIdentificatie: 'bpi-123',
+        procesAanvraagOmschrijving: null,
+        beschikkingNummer: null,
       };
 
       const result = forTesting.transformRegelingTitle(aanvraag);
@@ -476,6 +497,8 @@ describe('HLI', () => {
         productsoortCode: '',
         bsnAanvrager: '123456789',
         beschiktProductIdentificatie: 'bpi-123',
+        procesAanvraagOmschrijving: null,
+        beschikkingNummer: null,
       };
 
       const result = forTesting.transformRegelingTitle(aanvraag);

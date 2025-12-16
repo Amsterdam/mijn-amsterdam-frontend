@@ -5,6 +5,7 @@ import {
   range,
   isRecentNotification,
   toDateFormatted,
+  splitBy,
 } from './utils';
 describe('Utils.ts', () => {
   it('deepOmitKeys: Should omit keys recursively', () => {
@@ -74,6 +75,17 @@ describe('Utils.ts', () => {
     });
     test('has no date', () => {
       expect(toDateFormatted(null)).toBe(null);
+    });
+  });
+
+  describe('splitBy', () => {
+    const data = [1, 2, 3, 4, 5, 6];
+    const isEven = (n: number) => n % 2 === 0;
+
+    test('splits array into even and odd numbers', () => {
+      const [odds, evens] = splitBy(data, isEven);
+      expect(odds).toEqual([1, 3, 5]);
+      expect(evens).toEqual([2, 4, 6]);
     });
   });
 });

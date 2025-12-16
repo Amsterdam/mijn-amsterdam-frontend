@@ -1,7 +1,7 @@
 import { featureToggle, themaTitle, themaId } from './Jeugd-thema-config';
-import { InfoSection } from '../../GeneralInfo/GeneralInfo';
+import { InfoSection_DEPRECATED } from '../../GeneralInfo/GeneralInfo';
 
-export const JeugdSectionProps: InfoSection = {
+export const JeugdSectionProps: InfoSection_DEPRECATED = {
   id: themaId,
   title: themaTitle,
   listItems: [

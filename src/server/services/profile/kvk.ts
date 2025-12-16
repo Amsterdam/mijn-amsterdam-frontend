@@ -1,4 +1,4 @@
-import type { Adres } from './brp.types';
+import type { Adres } from '../brp/brp-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';

@@ -69,7 +69,7 @@ function transformVoorzieningForFrontend(
   sessionID: SessionID,
   aanvragen: ZorgnedAanvraagTransformed[]
 ): WMOVoorzieningFrontend | null {
-  const id = aanvraag.id;
+  const id = aanvraag.prettyID;
 
   const route = generatePath(routeConfig.detailPage.path, {
     id,

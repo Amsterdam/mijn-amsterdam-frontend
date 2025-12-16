@@ -1,4 +1,4 @@
-import { isAfter, isBefore, isSameDay, parseISO, subDays } from 'date-fns';
+import { isSameDay, parseISO } from 'date-fns';
 
 import { getBetrokkenKinderenDescription } from './generic';
 import { themaConfig } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
@@ -40,12 +40,6 @@ const avCodes = {
 const verzilveringsCodesPC = toVerzilveringCodes(avCodes.PC);
 const verzilveringsCodesUPC = toVerzilveringCodes(avCodes.UPC);
 
-function isAangevraagdVoorRegelingV3ActiefWerd(dateString: string) {
-  return isPcRegelingV3Active()
-    ? isBefore(dateString, PC_REGELING_V3_START_DATE)
-    : true;
-}
-
 export const verzilveringCodes = [
   ...verzilveringsCodesUPC,
   ...verzilveringsCodesPC,
@@ -57,9 +51,15 @@ function toVerzilveringCodes(codes: Record<string, boolean>): string[] {
     .map(([code]) => code);
 }
 
+export function isPcAanvraag(
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+): boolean {
+  return isVerzilvering(aanvraag) || isPcVergoeding(aanvraag);
+}
+
 function isVerzilvering(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-) {
+): boolean {
   return (
     !!aanvraag.productIdentificatie &&
     verzilveringCodes.includes(aanvraag.productIdentificatie)
@@ -68,23 +68,17 @@ function isVerzilvering(
 
 function isPcVergoeding(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-) {
+): boolean {
   return (
     !!aanvraag.productIdentificatie &&
     [AV_PCVC, AV_UPCC].includes(aanvraag.productIdentificatie)
   );
 }
 
-export function isPcVergoedingAanvraag(
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-) {
-  return isVerzilvering(aanvraag) || isPcVergoeding(aanvraag);
-}
-
 function isRegelingVanVerzilvering(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
   compareAanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-) {
+): boolean {
   const aanvraagProductId = aanvraag.productIdentificatie;
   if (!aanvraagProductId) {
     return false;
@@ -122,7 +116,7 @@ function getUpcPcvDecisionDate(
   return aanvraag.datumBesluit;
 }
 
-function filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNietGevolgd(
+function filterOutRedundantPcVergoedingsAanvragenWhenWorkShopNietGevolgd(
   PCVergoedingAanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ) {
   const pcVergoedingAanvragenByBeschikkingNummer = PCVergoedingAanvragen.reduce(
@@ -171,12 +165,12 @@ function filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNie
   return PCVergoedingAanvragenFiltered;
 }
 
-export function filterCombineUpcPcvData(
+export function filterCombineUpcPcvData_pre2026(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ) {
   const baseRegelingIdWithVerzilvering: string[] = [];
   const aanvragen_ =
-    filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNietGevolgd(
+    filterOutRedundantPcVergoedingsAanvragenWhenWorkShopNietGevolgd(
       aanvragen
     ).toSorted(sortAlpha('id', 'desc'));
   const aanvragenWithDocumentsCombined = aanvragen_.map((aanvraag) => {
@@ -260,22 +254,12 @@ function descriptionDefinitief(
   return `<p>Uw kind ${betrokkenKinderen} krijgt een ${titelLower}. Lees in de brief hoe u de ${titelLower} bestelt.</p>
         ${regeling.datumEindeGeldigheid ? `<p>U kunt per ${defaultDateFormat(regeling.datumEindeGeldigheid)} opnieuw een ${titelLower} aanvragen.</p>` : ''}`;
 }
-
-export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWithRelatedPersonsTransformed>[] =
+export const PCVERGOEDING_2026: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWithRelatedPersonsTransformed>[] =
   [
     {
       status: 'Besluit',
       datePublished: getUpcPcvDecisionDate,
       isChecked: () => true,
-      isVisible: (regeling) => {
-        // Alleen zichtbaar als regeling is aangevraagd nadat PC regeling v3 actief werd.
-        return isPcRegelingV3Active()
-          ? isAfter(
-              regeling.datumAanvraag,
-              subDays(PC_REGELING_V3_START_DATE, 1)
-            )
-          : false;
-      },
       isActive: () => true,
       description: (regeling) => {
         const betrokkenKinderen = getBetrokkenKinderenDescription(regeling);
@@ -290,12 +274,15 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
       `;
       },
     },
+  ];
+
+export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWithRelatedPersonsTransformed>[] =
+  [
     {
       status: 'Besluit',
       datePublished: getUpcPcvDecisionDate,
       isChecked: () => true,
-      isVisible: (regeling) =>
-        isAangevraagdVoorRegelingV3ActiefWerd(regeling.datumAanvraag),
+
       isActive: (regeling) =>
         !isVerzilvering(regeling) && regeling.resultaat === 'afgewezen',
       description: (regeling) => {
@@ -315,7 +302,6 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
     {
       status: 'Workshop',
       isVisible: (regeling) =>
-        isAangevraagdVoorRegelingV3ActiefWerd(regeling.datumAanvraag) &&
         !isVerzilvering(regeling) &&
         regeling.resultaat === 'toegewezen' &&
         !isWorkshopNietGevolgd(regeling),
@@ -334,9 +320,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
     {
       status: 'Workshop gevolgd',
       isVisible: (regeling) =>
-        isAangevraagdVoorRegelingV3ActiefWerd(regeling.datumAanvraag) &&
-        isVerzilvering(regeling) &&
-        regeling.resultaat === 'toegewezen',
+        isVerzilvering(regeling) && regeling.resultaat === 'toegewezen',
       datePublished: (regeling) => regeling.datumBesluit,
       isChecked: () => true,
       isActive: () => true,
@@ -344,9 +328,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
     },
     {
       status: 'Workshop niet gevolgd',
-      isVisible: (regeling) =>
-        isAangevraagdVoorRegelingV3ActiefWerd(regeling.datumAanvraag) &&
-        isWorkshopNietGevolgd(regeling),
+      isVisible: (regeling) => isWorkshopNietGevolgd(regeling),
       datePublished: (regeling) => regeling.datumEindeGeldigheid ?? '',
       isChecked: () => true,
       isActive: () => true,
@@ -370,6 +352,7 @@ export const forTesting = {
   isRegelingVanVerzilvering,
   isVerzilvering,
   isWorkshopNietGevolgd,
-  filterCombineUpcPcvData,
-  filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNietGevolgd,
+  filterCombineUpcPcvData: filterCombineUpcPcvData_pre2026,
+  filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNietGevolgd:
+    filterOutRedundantPcVergoedingsAanvragenWhenWorkShopNietGevolgd,
 };

@@ -13,6 +13,318 @@
     "count": 134,
     "entry": [
       {
+        "id": "https://vams-asa-00.gemams.am.loc:44300/sap/opu/odata/sap/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='004')",
+        "title": {
+          "@type": "text",
+          "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='004')"
+        },
+        "updated": "2025-11-06T13:19:10Z",
+        "category": {
+          "@scheme": "http://schemas.microsoft.com/ado/2007/08/dataservices/scheme",
+          "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
+        },
+        "link": {
+          "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='004')",
+          "@rel": "self",
+          "@title": "ZFI_OPERACCTGDOCITEMType"
+        },
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "AccountingDocument": 2500030459,
+            "ClearingDate": {
+              "@null": true
+            },
+            "IsCleared": false,
+            "PaymentTerms": "B003",
+            "PaymentMethod": "E",
+            "DunningBlockingReason": "",
+            "DunningLevel": 0,
+            "ProfitCenterName": "",
+            "SEPAMandate": 100000000080,
+            "PostingDate": "2025-08-27T00:00:00",
+            "NetDueDate": "2025-11-04T00:00:00",
+            "AmountInBalanceTransacCrcy": "100.00",
+            "DocumentReferenceID": "TEAMDATA3",
+            "ReverseDocument": "",
+            "Paylink": ""
+          }
+        }
+      },
+      {
+        "id": "https://vams-asa-00.gemams.am.loc:44300/sap/opu/odata/sap/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='005')",
+        "title": {
+          "@type": "text",
+          "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='005')"
+        },
+        "updated": "2025-11-06T13:19:10Z",
+        "category": {
+          "@scheme": "http://schemas.microsoft.com/ado/2007/08/dataservices/scheme",
+          "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
+        },
+        "link": {
+          "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='005')",
+          "@rel": "self",
+          "@title": "ZFI_OPERACCTGDOCITEMType"
+        },
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "AccountingDocument": 2500030459,
+            "ClearingDate": {
+              "@null": true
+            },
+            "IsCleared": false,
+            "PaymentTerms": "B004",
+            "PaymentMethod": "E",
+            "DunningBlockingReason": "",
+            "DunningLevel": 0,
+            "ProfitCenterName": "",
+            "SEPAMandate": 100000000080,
+            "PostingDate": "2025-08-27T00:00:00",
+            "NetDueDate": "2025-12-27T00:00:00",
+            "AmountInBalanceTransacCrcy": "100.00",
+            "DocumentReferenceID": "TEAMDATA3",
+            "ReverseDocument": "",
+            "Paylink": ""
+          }
+        }
+      },
+      {
+        "id": "https://vams-asa-00.gemams.am.loc:44300/sap/opu/odata/sap/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='006')",
+        "title": {
+          "@type": "text",
+          "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='006')"
+        },
+        "updated": "2025-11-06T13:19:10Z",
+        "category": {
+          "@scheme": "http://schemas.microsoft.com/ado/2007/08/dataservices/scheme",
+          "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
+        },
+        "link": {
+          "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='006')",
+          "@rel": "self",
+          "@title": "ZFI_OPERACCTGDOCITEMType"
+        },
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "AccountingDocument": 2500030459,
+            "ClearingDate": {
+              "@null": true
+            },
+            "IsCleared": false,
+            "PaymentTerms": "B005",
+            "PaymentMethod": "E",
+            "DunningBlockingReason": "",
+            "DunningLevel": 0,
+            "ProfitCenterName": "",
+            "SEPAMandate": 100000000080,
+            "PostingDate": "2025-08-27T00:00:00",
+            "NetDueDate": "2026-01-27T00:00:00",
+            "AmountInBalanceTransacCrcy": "100.00",
+            "DocumentReferenceID": "TEAMDATA3",
+            "ReverseDocument": "",
+            "Paylink": ""
+          }
+        }
+      },
+      {
+        "id": "https://vams-asa-00.gemams.am.loc:44300/sap/opu/odata/sap/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='007')",
+        "title": {
+          "@type": "text",
+          "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='007')"
+        },
+        "updated": "2025-11-06T13:19:10Z",
+        "category": {
+          "@scheme": "http://schemas.microsoft.com/ado/2007/08/dataservices/scheme",
+          "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
+        },
+        "link": {
+          "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='007')",
+          "@rel": "self",
+          "@title": "ZFI_OPERACCTGDOCITEMType"
+        },
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "AccountingDocument": 2500030459,
+            "ClearingDate": {
+              "@null": true
+            },
+            "IsCleared": false,
+            "PaymentTerms": "B006",
+            "PaymentMethod": "E",
+            "DunningBlockingReason": "",
+            "DunningLevel": 0,
+            "ProfitCenterName": "",
+            "SEPAMandate": 100000000080,
+            "PostingDate": "2025-08-27T00:00:00",
+            "NetDueDate": "2026-02-27T00:00:00",
+            "AmountInBalanceTransacCrcy": "100.00",
+            "DocumentReferenceID": "TEAMDATA3",
+            "ReverseDocument": "",
+            "Paylink": ""
+          }
+        }
+      },
+      {
+        "id": "https://vams-asa-00.gemams.am.loc:44300/sap/opu/odata/sap/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='008')",
+        "title": {
+          "@type": "text",
+          "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='008')"
+        },
+        "updated": "2025-11-06T13:19:10Z",
+        "category": {
+          "@scheme": "http://schemas.microsoft.com/ado/2007/08/dataservices/scheme",
+          "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
+        },
+        "link": {
+          "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='008')",
+          "@rel": "self",
+          "@title": "ZFI_OPERACCTGDOCITEMType"
+        },
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "AccountingDocument": 2500030459,
+            "ClearingDate": {
+              "@null": true
+            },
+            "IsCleared": false,
+            "PaymentTerms": "B007",
+            "PaymentMethod": "E",
+            "DunningBlockingReason": "",
+            "DunningLevel": 0,
+            "ProfitCenterName": "",
+            "SEPAMandate": 100000000080,
+            "PostingDate": "2025-08-27T00:00:00",
+            "NetDueDate": "2026-03-27T00:00:00",
+            "AmountInBalanceTransacCrcy": "100.00",
+            "DocumentReferenceID": "TEAMDATA3",
+            "ReverseDocument": "",
+            "Paylink": ""
+          }
+        }
+      },
+      {
+        "id": "https://vams-asa-00.gemams.am.loc:44300/sap/opu/odata/sap/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='009')",
+        "title": {
+          "@type": "text",
+          "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='009')"
+        },
+        "updated": "2025-11-06T13:19:10Z",
+        "category": {
+          "@scheme": "http://schemas.microsoft.com/ado/2007/08/dataservices/scheme",
+          "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
+        },
+        "link": {
+          "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='009')",
+          "@rel": "self",
+          "@title": "ZFI_OPERACCTGDOCITEMType"
+        },
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "AccountingDocument": 2500030459,
+            "ClearingDate": {
+              "@null": true
+            },
+            "IsCleared": false,
+            "PaymentTerms": "B008",
+            "PaymentMethod": "E",
+            "DunningBlockingReason": "",
+            "DunningLevel": 0,
+            "ProfitCenterName": "",
+            "SEPAMandate": 100000000080,
+            "PostingDate": "2025-08-27T00:00:00",
+            "NetDueDate": "2026-04-27T00:00:00",
+            "AmountInBalanceTransacCrcy": "100.00",
+            "DocumentReferenceID": "TEAMDATA3",
+            "ReverseDocument": "",
+            "Paylink": ""
+          }
+        }
+      },
+      {
+        "id": "https://vams-asa-00.gemams.am.loc:44300/sap/opu/odata/sap/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='010')",
+        "title": {
+          "@type": "text",
+          "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='010')"
+        },
+        "updated": "2025-11-06T13:19:10Z",
+        "category": {
+          "@scheme": "http://schemas.microsoft.com/ado/2007/08/dataservices/scheme",
+          "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
+        },
+        "link": {
+          "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='010')",
+          "@rel": "self",
+          "@title": "ZFI_OPERACCTGDOCITEMType"
+        },
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "AccountingDocument": 2500030459,
+            "ClearingDate": {
+              "@null": true
+            },
+            "IsCleared": false,
+            "PaymentTerms": "B009",
+            "PaymentMethod": "E",
+            "DunningBlockingReason": "",
+            "DunningLevel": 0,
+            "ProfitCenterName": "",
+            "SEPAMandate": 100000000080,
+            "PostingDate": "2025-08-27T00:00:00",
+            "NetDueDate": "2026-05-27T00:00:00",
+            "AmountInBalanceTransacCrcy": "100.00",
+            "DocumentReferenceID": "TEAMDATA3",
+            "ReverseDocument": "",
+            "Paylink": ""
+          }
+        }
+      },
+      {
+        "id": "https://vams-asa-00.gemams.am.loc:44300/sap/opu/odata/sap/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='011')",
+        "title": {
+          "@type": "text",
+          "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='011')"
+        },
+        "updated": "2025-11-06T13:19:10Z",
+        "category": {
+          "@scheme": "http://schemas.microsoft.com/ado/2007/08/dataservices/scheme",
+          "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
+        },
+        "link": {
+          "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='011')",
+          "@rel": "self",
+          "@title": "ZFI_OPERACCTGDOCITEMType"
+        },
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "AccountingDocument": 2500030459,
+            "ClearingDate": {
+              "@null": true
+            },
+            "IsCleared": false,
+            "PaymentTerms": "B010",
+            "PaymentMethod": "E",
+            "DunningBlockingReason": "",
+            "DunningLevel": 0,
+            "ProfitCenterName": "",
+            "SEPAMandate": 100000000080,
+            "PostingDate": "2025-08-27T00:00:00",
+            "NetDueDate": "2026-06-27T00:00:00",
+            "AmountInBalanceTransacCrcy": "100.00",
+            "DocumentReferenceID": "TEAMDATA3",
+            "ReverseDocument": "",
+            "Paylink": ""
+          }
+        }
+      },
+      {
         "id": "https:\/\/vams-asa-00.gemams.am.loc:44300\/sap\/opu\/odata\/sap\/ZFI_OPERACCTGDOCITEM_CDS\/ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2024',AccountingDocument='2400012239',AccountingDocumentItem='001')",
         "title": {
           "@type": "text",
@@ -4113,726 +4425,6 @@
             "DocumentReferenceID": "TEST",
             "ReverseDocument": "",
             "Paylink": "https:\/\/betalingen.amsterdam.nl\/pay\/1683572125\/2614d4779c3dde3c75fefda1d0172acbeb23131a"
-          }
-        }
-      },
-      {
-        "id": "https:\/\/vams-asa-00.gemams.am.loc:44300\/sap\/opu\/odata\/sap\/ZFI_OPERACCTGDOCITEM_CDS\/ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='002')",
-        "title": {
-          "@type": "text",
-          "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='002')"
-        },
-        "updated": "2025-10-28T11:23:44Z",
-        "category": {
-          "@scheme": "http:\/\/schemas.microsoft.com\/ado\/2007\/08\/dataservices\/scheme",
-          "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
-        },
-        "link": {
-          "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='002')",
-          "@rel": "self",
-          "@title": "ZFI_OPERACCTGDOCITEMType"
-        },
-        "content": {
-          "@type": "application\/xml",
-          "properties": {
-            "AccountingDocument": 2500030459,
-            "ClearingDate": { "@null": true },
-            "IsCleared": false,
-            "PaymentMethod": "E",
-            "DunningBlockingReason": "",
-            "DunningLevel": 0,
-            "ProfitCenterName": "",
-            "SEPAMandate": 100000000080,
-            "PostingDate": "2025-08-27T00:00:00",
-            "NetDueDate": "2025-09-27T00:00:00",
-            "AmountInBalanceTransacCrcy": "100.00",
-            "DocumentReferenceID": "TEAMDATA3",
-            "ReverseDocument": "",
-            "Paylink": ""
-          }
-        }
-      },
-      {
-        "id": "https:\/\/vams-asa-00.gemams.am.loc:44300\/sap\/opu\/odata\/sap\/ZFI_OPERACCTGDOCITEM_CDS\/ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='003')",
-        "title": {
-          "@type": "text",
-          "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='003')"
-        },
-        "updated": "2025-10-28T11:23:44Z",
-        "category": {
-          "@scheme": "http:\/\/schemas.microsoft.com\/ado\/2007\/08\/dataservices\/scheme",
-          "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
-        },
-        "link": {
-          "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='003')",
-          "@rel": "self",
-          "@title": "ZFI_OPERACCTGDOCITEMType"
-        },
-        "content": {
-          "@type": "application\/xml",
-          "properties": {
-            "AccountingDocument": 2500030459,
-            "ClearingDate": { "@null": true },
-            "IsCleared": false,
-            "PaymentMethod": "E",
-            "DunningBlockingReason": "",
-            "DunningLevel": 0,
-            "ProfitCenterName": "",
-            "SEPAMandate": 100000000080,
-            "PostingDate": "2025-08-27T00:00:00",
-            "NetDueDate": "2025-10-27T00:00:00",
-            "AmountInBalanceTransacCrcy": "100.00",
-            "DocumentReferenceID": "TEAMDATA3",
-            "ReverseDocument": "",
-            "Paylink": ""
-          }
-        }
-      },
-      {
-        "id": "https:\/\/vams-asa-00.gemams.am.loc:44300\/sap\/opu\/odata\/sap\/ZFI_OPERACCTGDOCITEM_CDS\/ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='004')",
-        "title": {
-          "@type": "text",
-          "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='004')"
-        },
-        "updated": "2025-10-28T11:23:44Z",
-        "category": {
-          "@scheme": "http:\/\/schemas.microsoft.com\/ado\/2007\/08\/dataservices\/scheme",
-          "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
-        },
-        "link": {
-          "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='004')",
-          "@rel": "self",
-          "@title": "ZFI_OPERACCTGDOCITEMType"
-        },
-        "content": {
-          "@type": "application\/xml",
-          "properties": {
-            "AccountingDocument": 2500030459,
-            "ClearingDate": { "@null": true },
-            "IsCleared": false,
-            "PaymentMethod": "E",
-            "DunningBlockingReason": "",
-            "DunningLevel": 0,
-            "ProfitCenterName": "",
-            "SEPAMandate": 100000000080,
-            "PostingDate": "2025-08-27T00:00:00",
-            "NetDueDate": "2025-11-27T00:00:00",
-            "AmountInBalanceTransacCrcy": "100.00",
-            "DocumentReferenceID": "TEAMDATA3",
-            "ReverseDocument": "",
-            "Paylink": ""
-          }
-        }
-      },
-      {
-        "id": "https:\/\/vams-asa-00.gemams.am.loc:44300\/sap\/opu\/odata\/sap\/ZFI_OPERACCTGDOCITEM_CDS\/ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030458',AccountingDocumentItem='002')",
-        "title": {
-          "@type": "text",
-          "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030458',AccountingDocumentItem='002')"
-        },
-        "updated": "2025-10-28T11:23:44Z",
-        "category": {
-          "@scheme": "http:\/\/schemas.microsoft.com\/ado\/2007\/08\/dataservices\/scheme",
-          "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
-        },
-        "link": {
-          "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030458',AccountingDocumentItem='002')",
-          "@rel": "self",
-          "@title": "ZFI_OPERACCTGDOCITEMType"
-        },
-        "content": {
-          "@type": "application\/xml",
-          "properties": {
-            "AccountingDocument": 2500030458,
-            "ClearingDate": { "@null": true },
-            "IsCleared": false,
-            "PaymentMethod": "E",
-            "DunningBlockingReason": "",
-            "DunningLevel": 0,
-            "ProfitCenterName": "",
-            "SEPAMandate": 100000000080,
-            "PostingDate": "2025-10-27T00:00:00",
-            "NetDueDate": "2025-11-27T00:00:00",
-            "AmountInBalanceTransacCrcy": "100.00",
-            "DocumentReferenceID": "MIJNAMS",
-            "ReverseDocument": "",
-            "Paylink": ""
-          }
-        }
-      },
-      {
-        "id": "https:\/\/vams-asa-00.gemams.am.loc:44300\/sap\/opu\/odata\/sap\/ZFI_OPERACCTGDOCITEM_CDS\/ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='005')",
-        "title": {
-          "@type": "text",
-          "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='005')"
-        },
-        "updated": "2025-10-28T11:23:44Z",
-        "category": {
-          "@scheme": "http:\/\/schemas.microsoft.com\/ado\/2007\/08\/dataservices\/scheme",
-          "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
-        },
-        "link": {
-          "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='005')",
-          "@rel": "self",
-          "@title": "ZFI_OPERACCTGDOCITEMType"
-        },
-        "content": {
-          "@type": "application\/xml",
-          "properties": {
-            "AccountingDocument": 2500030459,
-            "ClearingDate": { "@null": true },
-            "IsCleared": false,
-            "PaymentMethod": "E",
-            "DunningBlockingReason": "",
-            "DunningLevel": 0,
-            "ProfitCenterName": "",
-            "SEPAMandate": 100000000080,
-            "PostingDate": "2025-08-27T00:00:00",
-            "NetDueDate": "2025-12-27T00:00:00",
-            "AmountInBalanceTransacCrcy": "100.00",
-            "DocumentReferenceID": "TEAMDATA3",
-            "ReverseDocument": "",
-            "Paylink": ""
-          }
-        }
-      },
-      {
-        "id": "https:\/\/vams-asa-00.gemams.am.loc:44300\/sap\/opu\/odata\/sap\/ZFI_OPERACCTGDOCITEM_CDS\/ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030458',AccountingDocumentItem='003')",
-        "title": {
-          "@type": "text",
-          "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030458',AccountingDocumentItem='003')"
-        },
-        "updated": "2025-10-28T11:23:44Z",
-        "category": {
-          "@scheme": "http:\/\/schemas.microsoft.com\/ado\/2007\/08\/dataservices\/scheme",
-          "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
-        },
-        "link": {
-          "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030458',AccountingDocumentItem='003')",
-          "@rel": "self",
-          "@title": "ZFI_OPERACCTGDOCITEMType"
-        },
-        "content": {
-          "@type": "application\/xml",
-          "properties": {
-            "AccountingDocument": 2500030458,
-            "ClearingDate": { "@null": true },
-            "IsCleared": false,
-            "PaymentMethod": "E",
-            "DunningBlockingReason": "",
-            "DunningLevel": 0,
-            "ProfitCenterName": "",
-            "SEPAMandate": 100000000080,
-            "PostingDate": "2025-10-27T00:00:00",
-            "NetDueDate": "2025-12-27T00:00:00",
-            "AmountInBalanceTransacCrcy": "100.00",
-            "DocumentReferenceID": "MIJNAMS",
-            "ReverseDocument": "",
-            "Paylink": ""
-          }
-        }
-      },
-      {
-        "id": "https:\/\/vams-asa-00.gemams.am.loc:44300\/sap\/opu\/odata\/sap\/ZFI_OPERACCTGDOCITEM_CDS\/ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='006')",
-        "title": {
-          "@type": "text",
-          "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='006')"
-        },
-        "updated": "2025-10-28T11:23:44Z",
-        "category": {
-          "@scheme": "http:\/\/schemas.microsoft.com\/ado\/2007\/08\/dataservices\/scheme",
-          "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
-        },
-        "link": {
-          "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='006')",
-          "@rel": "self",
-          "@title": "ZFI_OPERACCTGDOCITEMType"
-        },
-        "content": {
-          "@type": "application\/xml",
-          "properties": {
-            "AccountingDocument": 2500030459,
-            "ClearingDate": { "@null": true },
-            "IsCleared": false,
-            "PaymentMethod": "E",
-            "DunningBlockingReason": "",
-            "DunningLevel": 0,
-            "ProfitCenterName": "",
-            "SEPAMandate": 100000000080,
-            "PostingDate": "2025-08-27T00:00:00",
-            "NetDueDate": "2026-01-27T00:00:00",
-            "AmountInBalanceTransacCrcy": "100.00",
-            "DocumentReferenceID": "TEAMDATA3",
-            "ReverseDocument": "",
-            "Paylink": ""
-          }
-        }
-      },
-      {
-        "id": "https:\/\/vams-asa-00.gemams.am.loc:44300\/sap\/opu\/odata\/sap\/ZFI_OPERACCTGDOCITEM_CDS\/ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030458',AccountingDocumentItem='004')",
-        "title": {
-          "@type": "text",
-          "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030458',AccountingDocumentItem='004')"
-        },
-        "updated": "2025-10-28T11:23:44Z",
-        "category": {
-          "@scheme": "http:\/\/schemas.microsoft.com\/ado\/2007\/08\/dataservices\/scheme",
-          "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
-        },
-        "link": {
-          "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030458',AccountingDocumentItem='004')",
-          "@rel": "self",
-          "@title": "ZFI_OPERACCTGDOCITEMType"
-        },
-        "content": {
-          "@type": "application\/xml",
-          "properties": {
-            "AccountingDocument": 2500030458,
-            "ClearingDate": { "@null": true },
-            "IsCleared": false,
-            "PaymentMethod": "E",
-            "DunningBlockingReason": "",
-            "DunningLevel": 0,
-            "ProfitCenterName": "",
-            "SEPAMandate": 100000000080,
-            "PostingDate": "2025-10-27T00:00:00",
-            "NetDueDate": "2026-01-27T00:00:00",
-            "AmountInBalanceTransacCrcy": "100.00",
-            "DocumentReferenceID": "MIJNAMS",
-            "ReverseDocument": "",
-            "Paylink": ""
-          }
-        }
-      },
-      {
-        "id": "https:\/\/vams-asa-00.gemams.am.loc:44300\/sap\/opu\/odata\/sap\/ZFI_OPERACCTGDOCITEM_CDS\/ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='007')",
-        "title": {
-          "@type": "text",
-          "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='007')"
-        },
-        "updated": "2025-10-28T11:23:44Z",
-        "category": {
-          "@scheme": "http:\/\/schemas.microsoft.com\/ado\/2007\/08\/dataservices\/scheme",
-          "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
-        },
-        "link": {
-          "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='007')",
-          "@rel": "self",
-          "@title": "ZFI_OPERACCTGDOCITEMType"
-        },
-        "content": {
-          "@type": "application\/xml",
-          "properties": {
-            "AccountingDocument": 2500030459,
-            "ClearingDate": { "@null": true },
-            "IsCleared": false,
-            "PaymentMethod": "E",
-            "DunningBlockingReason": "",
-            "DunningLevel": 0,
-            "ProfitCenterName": "",
-            "SEPAMandate": 100000000080,
-            "PostingDate": "2025-08-27T00:00:00",
-            "NetDueDate": "2026-02-27T00:00:00",
-            "AmountInBalanceTransacCrcy": "100.00",
-            "DocumentReferenceID": "TEAMDATA3",
-            "ReverseDocument": "",
-            "Paylink": ""
-          }
-        }
-      },
-      {
-        "id": "https:\/\/vams-asa-00.gemams.am.loc:44300\/sap\/opu\/odata\/sap\/ZFI_OPERACCTGDOCITEM_CDS\/ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030458',AccountingDocumentItem='005')",
-        "title": {
-          "@type": "text",
-          "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030458',AccountingDocumentItem='005')"
-        },
-        "updated": "2025-10-28T11:23:44Z",
-        "category": {
-          "@scheme": "http:\/\/schemas.microsoft.com\/ado\/2007\/08\/dataservices\/scheme",
-          "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
-        },
-        "link": {
-          "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030458',AccountingDocumentItem='005')",
-          "@rel": "self",
-          "@title": "ZFI_OPERACCTGDOCITEMType"
-        },
-        "content": {
-          "@type": "application\/xml",
-          "properties": {
-            "AccountingDocument": 2500030458,
-            "ClearingDate": { "@null": true },
-            "IsCleared": false,
-            "PaymentMethod": "E",
-            "DunningBlockingReason": "",
-            "DunningLevel": 0,
-            "ProfitCenterName": "",
-            "SEPAMandate": 100000000080,
-            "PostingDate": "2025-10-27T00:00:00",
-            "NetDueDate": "2026-02-27T00:00:00",
-            "AmountInBalanceTransacCrcy": "100.00",
-            "DocumentReferenceID": "MIJNAMS",
-            "ReverseDocument": "",
-            "Paylink": ""
-          }
-        }
-      },
-      {
-        "id": "https:\/\/vams-asa-00.gemams.am.loc:44300\/sap\/opu\/odata\/sap\/ZFI_OPERACCTGDOCITEM_CDS\/ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='008')",
-        "title": {
-          "@type": "text",
-          "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='008')"
-        },
-        "updated": "2025-10-28T11:23:44Z",
-        "category": {
-          "@scheme": "http:\/\/schemas.microsoft.com\/ado\/2007\/08\/dataservices\/scheme",
-          "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
-        },
-        "link": {
-          "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='008')",
-          "@rel": "self",
-          "@title": "ZFI_OPERACCTGDOCITEMType"
-        },
-        "content": {
-          "@type": "application\/xml",
-          "properties": {
-            "AccountingDocument": 2500030459,
-            "ClearingDate": { "@null": true },
-            "IsCleared": false,
-            "PaymentMethod": "E",
-            "DunningBlockingReason": "",
-            "DunningLevel": 0,
-            "ProfitCenterName": "",
-            "SEPAMandate": 100000000080,
-            "PostingDate": "2025-08-27T00:00:00",
-            "NetDueDate": "2026-03-27T00:00:00",
-            "AmountInBalanceTransacCrcy": "100.00",
-            "DocumentReferenceID": "TEAMDATA3",
-            "ReverseDocument": "",
-            "Paylink": ""
-          }
-        }
-      },
-      {
-        "id": "https:\/\/vams-asa-00.gemams.am.loc:44300\/sap\/opu\/odata\/sap\/ZFI_OPERACCTGDOCITEM_CDS\/ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030458',AccountingDocumentItem='006')",
-        "title": {
-          "@type": "text",
-          "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030458',AccountingDocumentItem='006')"
-        },
-        "updated": "2025-10-28T11:23:44Z",
-        "category": {
-          "@scheme": "http:\/\/schemas.microsoft.com\/ado\/2007\/08\/dataservices\/scheme",
-          "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
-        },
-        "link": {
-          "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030458',AccountingDocumentItem='006')",
-          "@rel": "self",
-          "@title": "ZFI_OPERACCTGDOCITEMType"
-        },
-        "content": {
-          "@type": "application\/xml",
-          "properties": {
-            "AccountingDocument": 2500030458,
-            "ClearingDate": { "@null": true },
-            "IsCleared": false,
-            "PaymentMethod": "E",
-            "DunningBlockingReason": "",
-            "DunningLevel": 0,
-            "ProfitCenterName": "",
-            "SEPAMandate": 100000000080,
-            "PostingDate": "2025-10-27T00:00:00",
-            "NetDueDate": "2026-03-27T00:00:00",
-            "AmountInBalanceTransacCrcy": "100.00",
-            "DocumentReferenceID": "MIJNAMS",
-            "ReverseDocument": "",
-            "Paylink": ""
-          }
-        }
-      },
-      {
-        "id": "https:\/\/vams-asa-00.gemams.am.loc:44300\/sap\/opu\/odata\/sap\/ZFI_OPERACCTGDOCITEM_CDS\/ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='009')",
-        "title": {
-          "@type": "text",
-          "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='009')"
-        },
-        "updated": "2025-10-28T11:23:44Z",
-        "category": {
-          "@scheme": "http:\/\/schemas.microsoft.com\/ado\/2007\/08\/dataservices\/scheme",
-          "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
-        },
-        "link": {
-          "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='009')",
-          "@rel": "self",
-          "@title": "ZFI_OPERACCTGDOCITEMType"
-        },
-        "content": {
-          "@type": "application\/xml",
-          "properties": {
-            "AccountingDocument": 2500030459,
-            "ClearingDate": { "@null": true },
-            "IsCleared": false,
-            "PaymentMethod": "E",
-            "DunningBlockingReason": "",
-            "DunningLevel": 0,
-            "ProfitCenterName": "",
-            "SEPAMandate": 100000000080,
-            "PostingDate": "2025-08-27T00:00:00",
-            "NetDueDate": "2026-04-27T00:00:00",
-            "AmountInBalanceTransacCrcy": "100.00",
-            "DocumentReferenceID": "TEAMDATA3",
-            "ReverseDocument": "",
-            "Paylink": ""
-          }
-        }
-      },
-      {
-        "id": "https:\/\/vams-asa-00.gemams.am.loc:44300\/sap\/opu\/odata\/sap\/ZFI_OPERACCTGDOCITEM_CDS\/ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030458',AccountingDocumentItem='007')",
-        "title": {
-          "@type": "text",
-          "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030458',AccountingDocumentItem='007')"
-        },
-        "updated": "2025-10-28T11:23:44Z",
-        "category": {
-          "@scheme": "http:\/\/schemas.microsoft.com\/ado\/2007\/08\/dataservices\/scheme",
-          "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
-        },
-        "link": {
-          "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030458',AccountingDocumentItem='007')",
-          "@rel": "self",
-          "@title": "ZFI_OPERACCTGDOCITEMType"
-        },
-        "content": {
-          "@type": "application\/xml",
-          "properties": {
-            "AccountingDocument": 2500030458,
-            "ClearingDate": { "@null": true },
-            "IsCleared": false,
-            "PaymentMethod": "E",
-            "DunningBlockingReason": "",
-            "DunningLevel": 0,
-            "ProfitCenterName": "",
-            "SEPAMandate": 100000000080,
-            "PostingDate": "2025-10-27T00:00:00",
-            "NetDueDate": "2026-04-27T00:00:00",
-            "AmountInBalanceTransacCrcy": "100.00",
-            "DocumentReferenceID": "MIJNAMS",
-            "ReverseDocument": "",
-            "Paylink": ""
-          }
-        }
-      },
-      {
-        "id": "https:\/\/vams-asa-00.gemams.am.loc:44300\/sap\/opu\/odata\/sap\/ZFI_OPERACCTGDOCITEM_CDS\/ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='010')",
-        "title": {
-          "@type": "text",
-          "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='010')"
-        },
-        "updated": "2025-10-28T11:23:44Z",
-        "category": {
-          "@scheme": "http:\/\/schemas.microsoft.com\/ado\/2007\/08\/dataservices\/scheme",
-          "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
-        },
-        "link": {
-          "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='010')",
-          "@rel": "self",
-          "@title": "ZFI_OPERACCTGDOCITEMType"
-        },
-        "content": {
-          "@type": "application\/xml",
-          "properties": {
-            "AccountingDocument": 2500030459,
-            "ClearingDate": { "@null": true },
-            "IsCleared": false,
-            "PaymentMethod": "E",
-            "DunningBlockingReason": "",
-            "DunningLevel": 0,
-            "ProfitCenterName": "",
-            "SEPAMandate": 100000000080,
-            "PostingDate": "2025-08-27T00:00:00",
-            "NetDueDate": "2026-05-27T00:00:00",
-            "AmountInBalanceTransacCrcy": "100.00",
-            "DocumentReferenceID": "TEAMDATA3",
-            "ReverseDocument": "",
-            "Paylink": ""
-          }
-        }
-      },
-      {
-        "id": "https:\/\/vams-asa-00.gemams.am.loc:44300\/sap\/opu\/odata\/sap\/ZFI_OPERACCTGDOCITEM_CDS\/ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030458',AccountingDocumentItem='008')",
-        "title": {
-          "@type": "text",
-          "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030458',AccountingDocumentItem='008')"
-        },
-        "updated": "2025-10-28T11:23:44Z",
-        "category": {
-          "@scheme": "http:\/\/schemas.microsoft.com\/ado\/2007\/08\/dataservices\/scheme",
-          "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
-        },
-        "link": {
-          "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030458',AccountingDocumentItem='008')",
-          "@rel": "self",
-          "@title": "ZFI_OPERACCTGDOCITEMType"
-        },
-        "content": {
-          "@type": "application\/xml",
-          "properties": {
-            "AccountingDocument": 2500030458,
-            "ClearingDate": { "@null": true },
-            "IsCleared": false,
-            "PaymentMethod": "E",
-            "DunningBlockingReason": "",
-            "DunningLevel": 0,
-            "ProfitCenterName": "",
-            "SEPAMandate": 100000000080,
-            "PostingDate": "2025-10-27T00:00:00",
-            "NetDueDate": "2026-05-27T00:00:00",
-            "AmountInBalanceTransacCrcy": "100.00",
-            "DocumentReferenceID": "MIJNAMS",
-            "ReverseDocument": "",
-            "Paylink": ""
-          }
-        }
-      },
-      {
-        "id": "https:\/\/vams-asa-00.gemams.am.loc:44300\/sap\/opu\/odata\/sap\/ZFI_OPERACCTGDOCITEM_CDS\/ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='011')",
-        "title": {
-          "@type": "text",
-          "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='011')"
-        },
-        "updated": "2025-10-28T11:23:44Z",
-        "category": {
-          "@scheme": "http:\/\/schemas.microsoft.com\/ado\/2007\/08\/dataservices\/scheme",
-          "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
-        },
-        "link": {
-          "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030459',AccountingDocumentItem='011')",
-          "@rel": "self",
-          "@title": "ZFI_OPERACCTGDOCITEMType"
-        },
-        "content": {
-          "@type": "application\/xml",
-          "properties": {
-            "AccountingDocument": 2500030459,
-            "ClearingDate": { "@null": true },
-            "IsCleared": false,
-            "PaymentMethod": "E",
-            "DunningBlockingReason": "",
-            "DunningLevel": 0,
-            "ProfitCenterName": "",
-            "SEPAMandate": 100000000080,
-            "PostingDate": "2025-08-27T00:00:00",
-            "NetDueDate": "2026-06-27T00:00:00",
-            "AmountInBalanceTransacCrcy": "100.00",
-            "DocumentReferenceID": "TEAMDATA3",
-            "ReverseDocument": "",
-            "Paylink": ""
-          }
-        }
-      },
-      {
-        "id": "https:\/\/vams-asa-00.gemams.am.loc:44300\/sap\/opu\/odata\/sap\/ZFI_OPERACCTGDOCITEM_CDS\/ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030458',AccountingDocumentItem='009')",
-        "title": {
-          "@type": "text",
-          "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030458',AccountingDocumentItem='009')"
-        },
-        "updated": "2025-10-28T11:23:44Z",
-        "category": {
-          "@scheme": "http:\/\/schemas.microsoft.com\/ado\/2007\/08\/dataservices\/scheme",
-          "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
-        },
-        "link": {
-          "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030458',AccountingDocumentItem='009')",
-          "@rel": "self",
-          "@title": "ZFI_OPERACCTGDOCITEMType"
-        },
-        "content": {
-          "@type": "application\/xml",
-          "properties": {
-            "AccountingDocument": 2500030458,
-            "ClearingDate": { "@null": true },
-            "IsCleared": false,
-            "PaymentMethod": "E",
-            "DunningBlockingReason": "",
-            "DunningLevel": 0,
-            "ProfitCenterName": "",
-            "SEPAMandate": 100000000080,
-            "PostingDate": "2025-10-27T00:00:00",
-            "NetDueDate": "2026-06-27T00:00:00",
-            "AmountInBalanceTransacCrcy": "100.00",
-            "DocumentReferenceID": "MIJNAMS",
-            "ReverseDocument": "",
-            "Paylink": ""
-          }
-        }
-      },
-      {
-        "id": "https:\/\/vams-asa-00.gemams.am.loc:44300\/sap\/opu\/odata\/sap\/ZFI_OPERACCTGDOCITEM_CDS\/ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030458',AccountingDocumentItem='010')",
-        "title": {
-          "@type": "text",
-          "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030458',AccountingDocumentItem='010')"
-        },
-        "updated": "2025-10-28T11:23:44Z",
-        "category": {
-          "@scheme": "http:\/\/schemas.microsoft.com\/ado\/2007\/08\/dataservices\/scheme",
-          "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
-        },
-        "link": {
-          "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030458',AccountingDocumentItem='010')",
-          "@rel": "self",
-          "@title": "ZFI_OPERACCTGDOCITEMType"
-        },
-        "content": {
-          "@type": "application\/xml",
-          "properties": {
-            "AccountingDocument": 2500030458,
-            "ClearingDate": { "@null": true },
-            "IsCleared": false,
-            "PaymentMethod": "E",
-            "DunningBlockingReason": "",
-            "DunningLevel": 0,
-            "ProfitCenterName": "",
-            "SEPAMandate": 100000000080,
-            "PostingDate": "2025-10-27T00:00:00",
-            "NetDueDate": "2026-07-27T00:00:00",
-            "AmountInBalanceTransacCrcy": "100.00",
-            "DocumentReferenceID": "MIJNAMS",
-            "ReverseDocument": "",
-            "Paylink": ""
-          }
-        }
-      },
-      {
-        "id": "https:\/\/vams-asa-00.gemams.am.loc:44300\/sap\/opu\/odata\/sap\/ZFI_OPERACCTGDOCITEM_CDS\/ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030458',AccountingDocumentItem='011')",
-        "title": {
-          "@type": "text",
-          "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030458',AccountingDocumentItem='011')"
-        },
-        "updated": "2025-10-28T11:23:44Z",
-        "category": {
-          "@scheme": "http:\/\/schemas.microsoft.com\/ado\/2007\/08\/dataservices\/scheme",
-          "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
-        },
-        "link": {
-          "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='1000',FiscalYear='2025',AccountingDocument='2500030458',AccountingDocumentItem='011')",
-          "@rel": "self",
-          "@title": "ZFI_OPERACCTGDOCITEMType"
-        },
-        "content": {
-          "@type": "application\/xml",
-          "properties": {
-            "AccountingDocument": 2500030458,
-            "ClearingDate": { "@null": true },
-            "IsCleared": false,
-            "PaymentMethod": "E",
-            "DunningBlockingReason": "",
-            "DunningLevel": 0,
-            "ProfitCenterName": "",
-            "SEPAMandate": 100000000080,
-            "PostingDate": "2025-10-27T00:00:00",
-            "NetDueDate": "2026-08-27T00:00:00",
-            "AmountInBalanceTransacCrcy": "100.00",
-            "DocumentReferenceID": "MIJNAMS",
-            "ReverseDocument": "",
-            "Paylink": ""
           }
         }
       }
