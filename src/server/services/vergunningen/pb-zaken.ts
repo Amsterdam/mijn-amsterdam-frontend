@@ -29,6 +29,7 @@ const LigplaatsvergunningZaakTransformer: PowerBrowserZaakTransformer<Ligplaatsv
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
+    // TODO: MIJN-12348 - Replace with actual document names and add mock data
     transformDoclinks: {
       'Besluiten en vastleggen': ['Besluit Ligplaatsvergunning'],
       [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
@@ -150,6 +151,7 @@ const SplitsingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Splitsing
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
+    // TODO: MIJN-12348 - Replace with actual document names and add mock data
     transformDoclinks: {
       'Besluiten en vastleggen': ['Besluit Omzettingsvergunning'],
       [documentNamesMA.SAMENVATTING]: ['Samenvatting'],

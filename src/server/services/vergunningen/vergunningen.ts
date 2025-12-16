@@ -1,7 +1,6 @@
 import createDebugger from 'debug';
 
 import {
-  caseTypePB,
   caseTypeVergunningen,
   DecosVergunning,
   type PBVergunning,
@@ -92,19 +91,7 @@ const activeTransformersDecos = FeatureToggle.VTHOnPowerbrowserActive
 // TODO: MIJN-12357: Remove after move to Powerbrowser is finalized
 const activeTransformersPB = FeatureToggle.VTHOnPowerbrowserActive
   ? pbZaakTransformers
-  : pbZaakTransformers.filter(
-      (transformer) =>
-        !(
-          [
-            caseTypePB.Omzettingsvergunning,
-            caseTypePB.Onttrekkingsvergunning,
-            caseTypePB.OnttrekkingsvergunningSloop,
-            caseTypePB.Samenvoegingsvergunning,
-            caseTypePB.VormenVanWoonruimte,
-            caseTypePB.Ligplaatsvergunning,
-          ] as string[]
-        ).includes(transformer.caseType)
-    );
+  : [];
 
 export async function fetchVergunningen(
   authProfileAndToken: AuthProfileAndToken,
