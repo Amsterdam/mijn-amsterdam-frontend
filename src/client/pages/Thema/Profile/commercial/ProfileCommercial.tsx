@@ -46,12 +46,6 @@ function ProfileCommercialSectionPanels() {
 
       <PageContentCell spanWide={8}>
         <ParagaphSuppressed className="ams-mb-m">
-          N.B. Mijn Amsterdam toont alleen vestigingen met een adres in een van
-          de volgende 10 gemeentes: Aalsmeer, Amstelveen, Amsterdam, Diemen,
-          Haarlemmermeer, Landsmeer, Oostzaan, Ouder-Amstel, Uithoorn en
-          Zaanstad.
-        </ParagaphSuppressed>
-        <ParagaphSuppressed className="ams-mb-m">
           Heeft u de afgelopen 14 dagen uw KvK-gegevens gewijzigd? Dan kan het
           zijn dat u die wijziging nog niet ziet in Mijn Amsterdam.
         </ParagaphSuppressed>
@@ -78,9 +72,14 @@ function CommercialPageContentTop({
       <PageContentCell spanWide={8}>
         <Paragraph>
           Hier ziet u hoe uw onderneming ingeschreven staat in het
-          Handelsregister van de Kamer van Koophandel. In dat register staan
-          onder meer uw bedrijfsnaam, vestigingsadres en KvK-nummer. De gemeente
-          gebruikt deze gegevens. Het is dus belangrijk dat uw gegevens kloppen.
+          Handelsregister van de Kamer van Koophandel. De gemeente gebuikt deze
+          gegevens. Het is daarom belangrijk dat uw gegevens kloppen.{' '}
+        </Paragraph>
+        <Paragraph>
+          Mijn Amsterdam toont alleen vestigingen met een adres in een van de
+          volgende 10 gemeentes: Amsterdam, Aalsmeer, Amstelveen, Amsterdam,
+          Diemen, Haarlemmermeer, Landsmeer, Oostzaan, Ouder-Amstel, Uithoorn en
+          Zaanstad.
         </Paragraph>
       </PageContentCell>
       {kvkTranslation && (
