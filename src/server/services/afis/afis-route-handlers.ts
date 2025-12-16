@@ -110,13 +110,13 @@ export function handleAfisRequestWithEncryptedPayloadQueryParam<
     const payloadDecrypted = decryptResult.content.payload as QueryPayload;
 
     // Call the service method with the decrypted payload.
-    const statusChangeResponse = await serviceMethod(
+    const serviceMethodResponse = await serviceMethod(
       payloadDecrypted,
       res.locals.authProfileAndToken.profile,
       req
     );
 
-    return sendResponse(res, statusChangeResponse);
+    return sendResponse(res, serviceMethodResponse);
   };
 }
 
