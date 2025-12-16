@@ -103,6 +103,33 @@ export function transformKlachtenResponse(
     );
     const isSolved = klachtSource.klacht_klachtopgelost.value === 'Ja';
 
+    const steps = [
+      {
+        id: '1',
+        status: 'Ontvangen',
+        isChecked: true,
+        isActive: false,
+        datePublished: ontvangstDatum,
+        description: '<p>Uw klacht is ontvangen.</p>',
+      },
+      {
+        id: '2',
+        status: 'In behandeling',
+        isChecked: true,
+        isActive: !isClosed,
+        datePublished: ontvangstDatum,
+        description: '<p>Uw klacht is in behandeling genomen.</p>',
+      },
+      {
+        id: '3',
+        status: 'Afgehandeld',
+        isChecked: isClosed,
+        isActive: isClosed,
+        datePublished: dateClosed,
+        description: getClosedDescription(isClosed, isSolved),
+      },
+    ];
+
     const klacht: KlachtFrontend = {
       id,
       identifier: id,
@@ -113,6 +140,8 @@ export function transformKlachtenResponse(
       ),
       ontvangstDatum,
       ontvangstDatumFormatted,
+      dateClosed,
+      dateClosedFormatted: defaultDateFormat(dateClosed),
       omschrijving: klachtSource?.klacht_omschrijving.value || '',
       gewensteOplossing: klachtSource?.klacht_gewensteoplossing.value,
       onderwerp: klachtSubjectParser(
@@ -125,25 +154,8 @@ export function transformKlachtenResponse(
         }),
         title: `Klacht ${id}`,
       },
-      displayStatus: 'Ontvangen',
-      steps: [
-        {
-          id: 'item-1',
-          status: 'In behandeling',
-          isChecked: true,
-          isActive: klachtSource.klacht_status.value === 'Open',
-          datePublished: ontvangstDatum,
-          description: '<p>Uw klacht is in behandeling genomen.</p>',
-        },
-        {
-          id: 'item-2',
-          status: 'Afgehandeld',
-          isChecked: isClosed,
-          isActive: isClosed,
-          datePublished: dateClosed,
-          description: getClosedDescription(isClosed, isSolved),
-        },
-      ],
+      displayStatus: steps.find((s) => s.isActive)?.status ?? 'In behandeling',
+      steps,
     };
 
     return klacht;
@@ -172,20 +184,34 @@ function getClosedDescription(isClosed: boolean, isSolved: boolean): string {
 }
 
 function createKlachtNotification(klacht: KlachtFrontend): MyNotification {
-  const notification: MyNotification = {
-    themaID: themaId,
-    themaTitle: themaTitle,
-    id: `klacht-${klacht.id}-notification`,
-    title: 'Klacht ontvangen',
-    description: `Wij hebben uw klacht met gemeentelijk zaaknummer ${klacht.title} ontvangen.`,
-    datePublished: klacht.ontvangstDatum,
+  const id = `klacht-${klacht.id}-notification`;
+  const gotoDetailTxt = 'Bekijk details';
+  if (klacht.isActive) {
+    return {
+      id,
+      title: 'Klacht ontvangen',
+      description: `Wij hebben uw klacht met gemeentelijk zaaknummer ${klacht.title} ontvangen.`,
+      datePublished: klacht.ontvangstDatum,
+      link: {
+        to: klacht.link.to,
+        title: gotoDetailTxt,
+      },
+      themaID: themaId,
+      themaTitle: themaTitle,
+    };
+  }
+  return {
+    id,
+    title: 'Klacht afgehandeld',
+    description: `Uw klacht met gemeentelijk zaaknummer ${klacht.id} is afgehandeld. U ontvangt of u heeft hierover bericht gekregen per e-mail of per brief.`,
+    datePublished: klacht.dateClosed,
     link: {
       to: klacht.link.to,
-      title: 'Bekijk details',
+      title: gotoDetailTxt,
     },
+    themaID: themaId,
+    themaTitle: themaTitle,
   };
-
-  return notification;
 }
 
 async function fetchKlachten(

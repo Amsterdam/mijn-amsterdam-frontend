@@ -6,6 +6,8 @@ export type KlachtFrontend = {
   inbehandelingSinds: string;
   ontvangstDatum: string;
   ontvangstDatumFormatted: string | null;
+  dateClosed: string;
+  dateClosedFormatted: string;
   omschrijving: string;
   gewensteOplossing: string | null;
   onderwerp: string | null;
