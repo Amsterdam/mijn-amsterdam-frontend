@@ -3,9 +3,9 @@ import {
   themaId,
   themaTitle,
 } from './Vergunningen-thema-config';
-import { InfoSection } from '../../GeneralInfo/GeneralInfo';
+import { InfoSection_DEPRECATED } from '../../GeneralInfo/GeneralInfo';
 
-export const vergunningensectionProps: InfoSection = {
+export const vergunningensectionProps: InfoSection_DEPRECATED = {
   id: themaId,
   title: themaTitle,
   listItems: [

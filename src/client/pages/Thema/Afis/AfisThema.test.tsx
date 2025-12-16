@@ -5,7 +5,7 @@ import { routeConfig } from './Afis-thema-config';
 import { AfisThema } from './AfisThema';
 import {
   AfisBusinessPartnerDetailsTransformed,
-  AfisFacturenByStateResponse,
+  AfisFacturenOverviewResponse,
 } from '../../../../server/services/afis/afis-types';
 import { bffApi } from '../../../../testing/utils';
 import { AppState } from '../../../../universal/types/App.types';
@@ -13,7 +13,7 @@ import MockApp from '../../MockApp';
 
 const businessPartnerIdEncrypted = 'xxx-123-xxx';
 
-const mockFacturen: AfisFacturenByStateResponse = {
+const mockFacturen: AfisFacturenOverviewResponse = {
   open: {
     count: 2,
     facturen: [
@@ -66,6 +66,7 @@ const mockFacturen: AfisFacturenByStateResponse = {
         amountPayedFormatted: '',
       },
     ],
+    state: 'open',
   },
   afgehandeld: {
     count: 1,
@@ -95,8 +96,13 @@ const mockFacturen: AfisFacturenByStateResponse = {
         amountPayedFormatted: '',
       },
     ],
+    state: 'open',
   },
-  overgedragen: { count: 0, facturen: [] },
+  overgedragen: {
+    count: 0,
+    facturen: [],
+    state: 'open',
+  },
 };
 
 const testState = {

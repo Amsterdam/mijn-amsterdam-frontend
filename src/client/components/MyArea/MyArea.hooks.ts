@@ -7,7 +7,7 @@ import { create } from 'zustand';
 
 import { filterItemCheckboxState } from './LegendPanel/checkbox-helpers';
 import styles from './MyAreaDatasets.module.scss';
-import type { BAGData } from '../../../server/services/bag/bag.types';
+import type { BAGLocation } from '../../../server/services/bag/bag.types';
 import type {
   MaPointFeature,
   MaPolylineFeature,
@@ -542,7 +542,7 @@ export function useMapLocations(
   const { home: homeLocationMarker, secondary: secondaryLocationMarkers } =
     useMemo(() => {
       const locations = (MY_LOCATION.content || []).filter(
-        (location: BAGData | null): location is BAGData => !!location
+        (location: BAGLocation | null): location is BAGLocation => !!location
       );
       const [primaryLocation, ...secondaryLocations] = locations;
 

@@ -1,7 +1,7 @@
 import { featureToggle, themaId, themaTitle } from './Krefia-thema-config';
-import { InfoSection } from '../../GeneralInfo/GeneralInfo';
+import { InfoSection_DEPRECATED } from '../../GeneralInfo/GeneralInfo';
 
-export const krefiaSectionProps: InfoSection = {
+export const krefiaSectionProps: InfoSection_DEPRECATED = {
   id: themaId,
   title: themaTitle,
   listItems: [

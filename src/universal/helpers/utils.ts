@@ -143,6 +143,14 @@ export function uniqueArray(arr: any[]) {
   return Array.from(new Set(arr));
 }
 
+export function splitBy<T>(
+  list: T[],
+  predicate: (a: T) => boolean
+): [T[], T[]] {
+  const filtered = list.filter((a) => predicate(a));
+  return [list.filter((a) => !filtered.includes(a)), filtered];
+}
+
 export function isRecentNotification(
   datePublished: string,
   dateNow: Date = new Date()
@@ -150,6 +158,7 @@ export function isRecentNotification(
   const diff = Math.abs(differenceInMonths(new Date(datePublished), dateNow));
   return diff < MONTHS_TO_KEEP_NOTIFICATIONS;
 }
+
 export function toDateFormatted(input: string | Date | number): string;
 export function toDateFormatted(
   input: string | Date | number | null | undefined

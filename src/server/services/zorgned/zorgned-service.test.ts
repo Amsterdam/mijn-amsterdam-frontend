@@ -6,12 +6,14 @@ import {
   fetchDocument,
   fetchRelatedPersons,
   forTesting,
+  sortZorgnedAanvragenByDateAndId,
 } from './zorgned-service';
 import {
   ZORGNED_GEMEENTE_CODE,
   ZorgnedPerson,
   ZorgnedPersoonsgegevensNAWResponse,
   ZorgnedResponseDataSource,
+  type ZorgnedPersoonSource,
 } from './zorgned-types';
 import ZORGNED_JZD_AANVRAGEN from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json';
 import { remoteApiHost } from '../../../testing/setup';
@@ -21,6 +23,8 @@ import {
   ApiSuccessResponse,
 } from '../../../universal/helpers/api';
 import * as request from '../../helpers/source-api-request';
+import { ZORGNED_AV_API_CONFIG_KEY } from '../hli/hli-service-config';
+import { ZORGNED_JZD_API_CONFIG_KEY } from '../wmo/wmo-service-config';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -54,6 +58,7 @@ describe('zorgned-service', () => {
     expect(
       forTesting.transformDocumenten([
         {
+          bestandsnaam: '',
           documentidentificatie: 'B73199',
           omschrijving: 'WRA beschikking Definitief',
           omschrijvingclientportaal: 'WRA beschikking Definitief',
@@ -73,6 +78,7 @@ describe('zorgned-service', () => {
     expect(
       forTesting.transformDocumenten([
         {
+          bestandsnaam: '',
           documentidentificatie: 'B73199',
           omschrijving: 'WRA beschikking Definitief',
           omschrijvingclientportaal: 'WRA beschikking Definitief',
@@ -84,30 +90,6 @@ describe('zorgned-service', () => {
   });
 
   describe('transformZorgnedAanvragen', () => {
-    const [A, B, C] = ZORGNED_JZD_AANVRAGEN._embedded.aanvraag.filter(
-      (aanvraag) =>
-        ['2703104', '2696493', '2719515'].includes(aanvraag.identificatie)
-    );
-
-    it.each([[[A, B, C]], [[A, C, B]], [[B, A, C]]])(
-      'should always sort DESC',
-      (aanvragenShuffled) => {
-        expect(
-          forTesting
-            .transformZorgnedAanvragen({
-              _embedded: {
-                aanvraag: aanvragenShuffled,
-              },
-            } as ZorgnedResponseDataSource)
-            .map((a) => a.id)
-        ).toStrictEqual([
-          '2719515-1215588',
-          '2703104-1200567',
-          '2696493-1194396',
-        ]);
-      }
-    );
-
     test('should have properties after transform', () => {
       const keys = [
         'beschikkingNummer',
@@ -126,6 +108,8 @@ describe('zorgned-service', () => {
         'isActueel',
         'leverancier',
         'leveringsVorm',
+        'prettyID',
+        'procesAanvraagOmschrijving',
         'productIdentificatie',
         'productsoortCode',
         'resultaat',
@@ -150,7 +134,7 @@ describe('zorgned-service', () => {
         beschikkingNummer: 300111429,
         beschiktProductIdentificatie: '116841',
         betrokkenen: [],
-        datumAanvraag: '2023-04-25',
+        datumAanvraag: '2025-11-25',
         datumBeginLevering: null,
         datumBesluit: '2023-05-17',
         datumEindeGeldigheid: null,
@@ -160,7 +144,9 @@ describe('zorgned-service', () => {
         datumToewijzing: null,
         documenten: [],
         id: '912837sdfsdf198723-116841',
+        prettyID: '912837sdfsdf198723-116841',
         isActueel: true,
+        procesAanvraagOmschrijving: null,
         leverancier: 'Gebr Koenen B.V.',
         leveringsVorm: 'ZIN',
         productIdentificatie: 'WRA',
@@ -184,7 +170,7 @@ describe('zorgned-service', () => {
 
     const BSN = '123456789';
     const result = await fetchAanvragen(BSN, {
-      zorgnedApiConfigKey: 'ZORGNED_JZD',
+      zorgnedApiConfigKey: ZORGNED_JZD_API_CONFIG_KEY,
       requestBodyParams: {
         maxeinddatum: '2018-01-01',
         regeling: 'wmo',
@@ -228,7 +214,7 @@ describe('zorgned-service', () => {
     const BSN = '567890';
     const result = await fetchDocument(
       BSN,
-      'ZORGNED_JZD',
+      ZORGNED_JZD_API_CONFIG_KEY,
       mocks.mockDocumentId
     );
 
@@ -254,7 +240,7 @@ describe('zorgned-service', () => {
 
     const result = await fetchDocument(
       BSN,
-      'ZORGNED_JZD',
+      ZORGNED_JZD_API_CONFIG_KEY,
       mocks.mockDocumentId
     );
 
@@ -388,7 +374,7 @@ describe('zorgned-service', () => {
 
       remoteApi
         .post('/zorgned/persoonsgegevensNAW')
-        .times(2) // Request caching is not enabled in test mode.
+        .times(3) // Request caching is not enabled in test mode.
         .reply(200, {
           persoon: {
             bsn: '9999999999',
@@ -401,7 +387,7 @@ describe('zorgned-service', () => {
         } as ZorgnedPersoonsgegevensNAWResponse);
 
       const result = await fetchAanvragenWithRelatedPersons('9999999999', {
-        zorgnedApiConfigKey: 'ZORGNED_AV',
+        zorgnedApiConfigKey: ZORGNED_AV_API_CONFIG_KEY,
       });
 
       expect(result).toStrictEqual({
@@ -432,9 +418,11 @@ describe('zorgned-service', () => {
             datumToewijzing: '2024-01-25T17:10:55.2733333',
             documenten: [],
             id: '1126685618-1',
+            prettyID: '1126685618-1',
             isActueel: true,
             leverancier: 'Gebr Koenen B.V.',
             leveringsVorm: 'ZIN',
+            procesAanvraagOmschrijving: null,
             productIdentificatie: 'WRA',
             productsoortCode: 'WRA',
             resultaat: 'toegewezen',
@@ -452,7 +440,7 @@ describe('zorgned-service', () => {
       const result = await fetchAanvragenWithRelatedPersons(
         getAuthProfileAndToken().profile.id,
         {
-          zorgnedApiConfigKey: 'ZORGNED_AV',
+          zorgnedApiConfigKey: ZORGNED_AV_API_CONFIG_KEY,
         }
       );
 
@@ -472,7 +460,7 @@ describe('zorgned-service', () => {
       const result = await fetchAanvragenWithRelatedPersons(
         getAuthProfileAndToken().profile.id,
         {
-          zorgnedApiConfigKey: 'ZORGNED_AV',
+          zorgnedApiConfigKey: ZORGNED_AV_API_CONFIG_KEY,
         }
       );
 
@@ -487,9 +475,9 @@ describe('zorgned-service', () => {
 });
 
 describe('fetchRelatedPersons', async () => {
-  type Person = ZorgnedPersoonsgegevensNAWResponse['persoon'];
-
-  function createPerson(person: Partial<Person>): Person {
+  function createPerson(
+    person: Partial<ZorgnedPersoonSource>
+  ): ZorgnedPersoonSource {
     if (person.voornamen) {
       person.roepnaam = person.voornamen;
       person.voorletters = person.voornamen[0];
@@ -532,7 +520,10 @@ describe('fetchRelatedPersons', async () => {
 
     const userIDs = ['1', '2'];
 
-    const response = await fetchRelatedPersons(userIDs, 'ZORGNED_AV');
+    const response = await fetchRelatedPersons(
+      userIDs,
+      ZORGNED_AV_API_CONFIG_KEY
+    );
     expect(response).toStrictEqual(
       apiErrorResult(
         'Something went wrong when retrieving related persons.',
@@ -576,7 +567,10 @@ describe('fetchRelatedPersons', async () => {
 
     const userIDs = ['1', '2'];
 
-    const response = await fetchRelatedPersons(userIDs, 'ZORGNED_AV');
+    const response = await fetchRelatedPersons(
+      userIDs,
+      ZORGNED_AV_API_CONFIG_KEY
+    );
     const expected: ApiSuccessResponse<ZorgnedPerson[]> = {
       content: [
         {
@@ -600,5 +594,27 @@ describe('fetchRelatedPersons', async () => {
     };
 
     expect(response).toStrictEqual(expected);
+  });
+
+  test('sortZorgnedAanvragenByDateAndId', () => {
+    const aanvragen = [
+      { id: 'a1', dateDecision: '2023-01-01' },
+      { id: 'a2', dateDecision: '2023-03-01' },
+      { id: 'a3', dateDecision: '2023-02-01' },
+      { id: 'a4', dateDecision: '2023-03-01' },
+    ];
+
+    const sorted = sortZorgnedAanvragenByDateAndId(
+      aanvragen,
+      'dateDecision',
+      'id'
+    );
+
+    expect(sorted).toEqual([
+      { id: 'a4', dateDecision: '2023-03-01' },
+      { id: 'a2', dateDecision: '2023-03-01' },
+      { id: 'a3', dateDecision: '2023-02-01' },
+      { id: 'a1', dateDecision: '2023-01-01' },
+    ]);
   });
 });
