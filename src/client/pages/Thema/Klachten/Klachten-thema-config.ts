@@ -66,7 +66,7 @@ const displayProps: DisplayProps<KlachtFrontend> = {
 
 export const tableConfig = {
   [listPageParamKind.lopend]: {
-    title: 'Lopende klachten',
+    title: 'Openstaande klachten',
     displayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
     listPageRoute: generatePath(routeConfig.listPage.path, {

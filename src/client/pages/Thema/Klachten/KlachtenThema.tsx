@@ -29,8 +29,6 @@ export function KlachtenThema() {
   } = useKlachtenThemaData();
   useHTMLDocumentTitle(routeConfig.themaPage);
 
-  console.log(klachten.sort((a, b) => (a.id > b.id ? -1 : 1)));
-
   const tables = Object.values(tableConfig).map((conf) => {
     return (
       <ThemaPaginaTable<KlachtFrontend>
