@@ -46,6 +46,12 @@ function ProfileCommercialSectionPanels() {
 
       <PageContentCell spanWide={8}>
         <ParagaphSuppressed className="ams-mb-m">
+          N.B. Mijn Amsterdam toont alleen vestigingen met een adres in een van
+          de volgende 10 gemeentes: Aalsmeer, Amstelveen, Amsterdam, Diemen,
+          Haarlemmermeer, Landsmeer, Oostzaan, Ouder-Amstel, Uithoorn en
+          Zaanstad.
+        </ParagaphSuppressed>
+        <ParagaphSuppressed className="ams-mb-m">
           Heeft u de afgelopen 14 dagen uw KvK-gegevens gewijzigd? Dan kan het
           zijn dat u die wijziging nog niet ziet in Mijn Amsterdam.
         </ParagaphSuppressed>

@@ -9,7 +9,6 @@ import type {
 import type { Onderneming } from '../../../../../server/services/hr-kvk/hr-kvk.types';
 import { AppState } from '../../../../../universal/types/App.types';
 import { ListExpandable } from '../../../../components/ListExpandable/ListExpandable';
-import { ParagaphSuppressed } from '../../../../components/ParagraphSuppressed/ParagraphSuppressed';
 import { PreWrap } from '../../../../components/PreWrap/PreWrap';
 import {
   ProfileLabels,
@@ -288,13 +287,6 @@ export const panelConfig: PanelConfig<
     return {
       title: gestVestigingLabel(profileData),
       actionLinks: [],
-      contentAfterTheTitle: (
-        <ParagaphSuppressed>
-          Wij laten hier alleen vestigingen zien met een adres in de volgende
-          gemeentes: Aalsmeer, Amstelveen, Amsterdam, Diemen, Haarlemmermeer,
-          Landsmeer, Oostzaan, Ouder-Amstel, Uithoorn en Zaanstad.
-        </ParagaphSuppressed>
-      ),
     };
   },
   eigenaar: () => ({
