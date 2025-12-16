@@ -454,8 +454,7 @@ export type EMandateUpdatePayload = {
   IMandateId: AfisEMandateSource['IMandateId'];
 };
 
-export type EMandateStatusChangePayload = {
-  IMandateId: AfisEMandateSource['IMandateId'];
+export type EMandateLifetimeChangePayload = EMandateUpdatePayload & {
   LifetimeTo: AfisEMandateSource['LifetimeTo'];
   LifetimeFrom?: AfisEMandateSource['LifetimeFrom'];
 };

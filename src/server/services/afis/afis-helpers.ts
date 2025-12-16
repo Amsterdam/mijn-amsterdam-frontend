@@ -1,4 +1,5 @@
 import { parseISO } from 'date-fns';
+import createDebugger from 'debug';
 
 import { fetchAfisTokenHeader } from './afis';
 import { EMANDATE_ENDDATE_INDICATOR } from './afis-e-mandates-config';
@@ -76,3 +77,5 @@ export function getEmandateDisplayStatus(
   }
   return 'Niet actief';
 }
+
+export const debugEmandates = createDebugger('afis:emandates');

@@ -110,7 +110,7 @@ export function useAfisEMandatesData() {
     eMandates,
     eMandateTableConfig,
     hasEMandatesError: isError,
-    isLoadingEMandates: isLoading && !isDirty,
+    isLoadingEMandates: isLoading || !isDirty,
     optimisticUpdateContent: (
       eMandateId: string,
       payload: Partial<AfisEMandateFrontend>

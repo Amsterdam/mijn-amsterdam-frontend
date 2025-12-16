@@ -17,8 +17,7 @@ import {
 import { routes } from './afis-service-config';
 import type {
   BusinessPartnerIdPayload,
-  EMandateStatusChangePayload,
-  EMandateUpdatePayload,
+  EMandateLifetimeChangePayload,
   EMandateSignRequestPayload,
 } from './afis-types';
 import { createBFFRouter } from '../../routing/route-helpers';
@@ -90,7 +89,7 @@ attachDocumentDownloadRoute(
    * Change the status of an E-mandate.
    * The status can be only be changed to OFF.
    */
-  type QueryPayload = EMandateStatusChangePayload;
+  type QueryPayload = EMandateLifetimeChangePayload;
   type ServiceReturnType = ReturnType<typeof deactivateEmandate>;
 
   routerProtected.get(
@@ -107,7 +106,7 @@ attachDocumentDownloadRoute(
    * Used for the "Einddatum aanpassen" action.
    * Updates the end date of an E-mandate.
    */
-  type QueryPayload = EMandateUpdatePayload;
+  type QueryPayload = EMandateLifetimeChangePayload;
   type ServiceReturnType = ReturnType<typeof handleEmandateLifetimeUpdate>;
 
   routerProtected.post(

@@ -14,7 +14,6 @@ import {
 } from './afis-types';
 import {
   apiErrorResult,
-  ApiResponse_DEPRECATED,
   apiSuccessResult,
   type ApiResponse,
 } from '../../../universal/helpers/api';
@@ -81,7 +80,7 @@ export async function handleFetchAfisFacturen(
 
 export function handleAfisRequestWithEncryptedPayloadQueryParam<
   QueryPayload extends qs.ParsedQs,
-  ServiceResponse extends Promise<ApiResponse_DEPRECATED<unknown>>,
+  ServiceResponse extends Promise<ApiResponse<unknown>>,
   RouteParams extends ParamsDictionary = ParamsDictionary,
 >(
   serviceMethod: (
