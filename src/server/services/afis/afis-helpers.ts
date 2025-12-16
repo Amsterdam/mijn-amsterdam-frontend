@@ -3,7 +3,7 @@ import { parseISO } from 'date-fns';
 import { fetchAfisTokenHeader } from './afis';
 import { EMANDATE_ENDDATE_INDICATOR } from './afis-e-mandates-config';
 import { AfisApiFeedResponseSource } from './afis-types';
-import { toDateFormatted } from '../../../universal/helpers/utils';
+import { toDateFormatted } from '../../../universal/helpers/date';
 import { DataRequestConfig } from '../../config/source-api';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';

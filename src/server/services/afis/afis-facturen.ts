@@ -23,11 +23,8 @@ import {
   displayAmount,
   capitalizeFirstLetter,
 } from '../../../universal/helpers/text';
-import {
-  entries,
-  toDateFormatted,
-  uniqueArray,
-} from '../../../universal/helpers/utils';
+import { entries, uniqueArray } from '../../../universal/helpers/utils';
+import { toDateFormatted } from '../../../universal/helpers/date';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import {
   getRequestParamsFromQueryString,
@@ -416,8 +413,10 @@ function transformFacturen(
   const facturenTransformed = feedProperties
     .filter((invoiceProperties) => {
       return featureToggle.filterOutUndownloadableFacturenActive
-        ? isDownloadAvailable(invoiceProperties.AccountingDocumentCreationDate ||
-              invoiceProperties.PostingDate)
+        ? isDownloadAvailable(
+            invoiceProperties.AccountingDocumentCreationDate ||
+              invoiceProperties.PostingDate
+          )
         : true;
     })
     .map((invoiceProperties) => {

@@ -46,12 +46,8 @@ import {
   apiSuccessResult,
   getSettledResult,
 } from '../../../universal/helpers/api';
-import {
-  omit,
-  sortAlpha,
-  toDateFormatted,
-  uniqueArray,
-} from '../../../universal/helpers/utils';
+import { omit, sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
+import { toDateFormatted } from '../../../universal/helpers/date';
 import type { StatusLineItem } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
