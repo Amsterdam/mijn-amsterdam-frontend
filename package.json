@@ -25,7 +25,7 @@
     "bff-api:serve-build": "node build-bff/server/app",
     "bff-api:serve-dev": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --inspect\" ts-node --project ./tsconfig.bff.json ./src/bffserver.ts",
     "bff-api:build": "tsc --project ./tsconfig.bff.json",
-    "job:notifications": "ts-node --project ./tsconfig.bff.json ./src/jobs/fetch-notifications-amsapp.ts",
+    "bff-api:job:notifications": "ts-node --project ./tsconfig.bff.json ./src/jobs/fetch-notifications-amsapp.ts",
     "lint": "eslint src --max-warnings 0 --quiet",
     "lint:fix": "eslint src --fix"
   },
