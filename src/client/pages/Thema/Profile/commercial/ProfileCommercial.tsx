@@ -104,8 +104,8 @@ export function MijnBedrijfsGegevensThema() {
     <ThemaPagina
       id={id}
       title={title}
-      isError={isError}
-      isLoading={!isLoading && isError}
+      isError={isError && !isLoading}
+      isLoading={isLoading && !isError}
       linkListItems={linkListItems}
       pageContentTop={
         <CommercialPageContentTop
