@@ -7,7 +7,6 @@ import {
 import {
   ApiResponse_DEPRECATED,
   apiDependencyError,
-  apiErrorResult,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { isMokum } from '../../../universal/helpers/brp';
@@ -65,44 +64,31 @@ async function fetchCommercial(
 ): Promise<ApiResponse_DEPRECATED<BAGLocationExtended[] | null>> {
   const KVK = await fetchKVK(authProfileAndToken);
 
-  let MY_LOCATION: ApiResponse_DEPRECATED<BAGLocationExtended[] | null>;
-
   if (KVK.status === 'OK') {
     const vestigingen = getVestigingBagIds(KVK.content);
 
-    if (vestigingen.length) {
-      const locations = await Promise.all(
-        vestigingen
-          .map((vestiging) =>
-            vestiging.bagIds.map((id) =>
-              fetchBAGByQuery({ identificatie: id }).then((res) => {
-                return res.content
-                  ? {
-                      ...res.content,
-                      profileType: 'commercial' as ProfileType,
-                      title: vestiging.naam,
-                    }
-                  : null;
-              })
-            )
+    const locations = await Promise.all(
+      vestigingen
+        .map((vestiging) =>
+          vestiging.bagIds.map((id) =>
+            fetchBAGByQuery({ identificatie: id }).then((res) => {
+              return res.content
+                ? {
+                    ...res.content,
+                    profileType: 'commercial' as ProfileType,
+                    title: vestiging.naam,
+                  }
+                : null;
+            })
           )
-          .flat()
-      ).then((results) => {
-        return results.filter((location) => location !== null);
-      });
+        )
+        .flat()
+    );
 
-      MY_LOCATION = apiSuccessResult(locations);
-    } else {
-      MY_LOCATION = apiErrorResult(
-        'Could not query BAG: address missing.',
-        null
-      );
-    }
-  } else {
-    MY_LOCATION = apiDependencyError({ KVK });
+    return apiSuccessResult(locations.filter((location) => location !== null));
   }
 
-  return MY_LOCATION;
+  return apiDependencyError({ KVK });
 }
 
 export async function fetchMyLocations(
@@ -114,16 +100,12 @@ export async function fetchMyLocations(
     return commercialResponse;
   }
 
-  const { content: privateAddresses } = await fetchPrivate(authProfileAndToken);
+  const privateResponse = await fetchPrivate(authProfileAndToken);
 
   const locations: BAGLocationExtended[] = [
-    ...(privateAddresses || []),
+    ...(privateResponse.content || []),
     ...(commercialResponse.content || []),
   ].filter((location) => location !== null);
-
-  if (locations.length === 0) {
-    return apiErrorResult('Could not fetch locations.', null);
-  }
 
   return apiSuccessResult(locations);
 }

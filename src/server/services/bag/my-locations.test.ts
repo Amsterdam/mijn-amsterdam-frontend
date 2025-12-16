@@ -296,19 +296,6 @@ describe('fetchCommercial', () => {
     });
   });
 
-  it('should return an error if no commercial vestigingen are found in BAG', async () => {
-    (fetchKVK as Mock).mockResolvedValueOnce(
-      apiSuccessResult({
-        vestigingen: [],
-      })
-    );
-
-    const result = await forTesting.fetchCommercial(authProfileAndToken);
-    expect(result.status === 'ERROR' && result.message).toBe(
-      'Could not query BAG: address missing.'
-    );
-  });
-
   it('should return an error if fetching KVK data fails', async () => {
     (fetchKVK as Mock).mockResolvedValueOnce(
       apiErrorResult('Error fetching KVK data', null)
@@ -452,7 +439,7 @@ describe('fetchMyLocation', () => {
     expect(result.status).toBe('DEPENDENCY_ERROR');
   });
 
-  it('should return an error if no locations found', async () => {
+  it('should return a success response with empty content if ERROR or EMPTY', async () => {
     (fetchKVK as Mock).mockResolvedValueOnce(
       apiSuccessResult({ vestigingen: [] })
     );
@@ -463,9 +450,8 @@ describe('fetchMyLocation', () => {
 
     const result = await fetchMyLocations(authProfileAndTokenPrivate);
     expect(result).toEqual({
-      content: null,
-      message: 'Could not fetch locations.',
-      status: 'ERROR',
+      content: [],
+      status: 'OK',
     });
   });
 });

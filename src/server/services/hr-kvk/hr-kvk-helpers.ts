@@ -39,7 +39,7 @@ export function getVestigingBagIds(
 
   vestigingen = kvkData.vestigingen.filter(
     (vestiging) =>
-      !!vestiging.bezoekadres && isAmsterdamAddress(vestiging.bezoekadres)
+      vestiging.bezoekadres && isAmsterdamAddress(vestiging.bezoekadres)
   );
 
   // If in the unlikely event there are no bezoekadressen, we fall back to postadres.
@@ -47,7 +47,7 @@ export function getVestigingBagIds(
   if (!vestigingen.length) {
     vestigingen = kvkData.vestigingen.filter(
       (vestiging) =>
-        !!vestiging.postadres && isAmsterdamAddress(vestiging.postadres)
+        vestiging.postadres && isAmsterdamAddress(vestiging.postadres)
     );
   }
 
