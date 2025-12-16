@@ -1,7 +1,20 @@
+import dotenv from 'dotenv';
+import dotenvExpand from 'dotenv-expand';
 import memoizee from 'memoizee';
 
-import { captureException } from '../services/monitoring';
+import { IS_DEVELOPMENT } from '../../universal/config/env';
 import { logger } from '../logging';
+import { captureException } from '../services/monitoring';
+
+if (IS_DEVELOPMENT) {
+  const ENV_FILE = '.env.local';
+  // This runs local only and -
+  // we can't load the logger before we loader our environment variables.
+
+  console.debug(`Using local env file ${ENV_FILE}`);
+  const envConfig = dotenv.config({ path: ENV_FILE });
+  dotenvExpand.expand(envConfig);
+}
 
 /** Retrieve an environment variable.
  *
