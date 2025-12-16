@@ -283,7 +283,9 @@ function transformEMandateSource(
   creditor: AfisEMandateCreditor,
   afisEMandateSource?: AfisEMandateSource
 ): Readonly<AfisEMandateFrontend> {
-  const dateValidFrom = afisEMandateSource?.LifetimeFrom || null;
+  const dateValidFrom = afisEMandateSource?.LifetimeFrom
+    ? isoDateFormat(afisEMandateSource.LifetimeFrom)
+    : null;
   const dateValidFromFormatted = toDateFormatted(dateValidFrom);
 
   const dateValidTo = afisEMandateSource?.LifetimeTo

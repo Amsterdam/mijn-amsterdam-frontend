@@ -405,14 +405,13 @@ describe('afis-e-mandates service (with nock)', () => {
 
       const result = await emandates.forTesting.deactivateEmandate({
         IMandateId: '1',
-        LifetimeTo: '9999-12-31T00:00:00',
       });
 
       expect(result.content).toStrictEqual({
-        dateValidTo: '9999-12-31T00:00:00',
-        dateValidToFormatted: 'Doorlopend',
-        displayStatus: 'Actief sinds null',
-        status: '1',
+        dateValidTo: '2025-07-10',
+        dateValidToFormatted: '10 juli 2025',
+        displayStatus: 'Niet actief',
+        status: '0',
       });
     });
 
@@ -562,9 +561,9 @@ describe('afis-e-mandates service (with nock)', () => {
         creditorName: 'Test',
         creditorDescription: undefined,
         creditorIBAN: 'NL35BOOG9343513650',
-        dateValidFrom: '2024-01-01T00:00:00',
+        dateValidFrom: '2024-01-01',
         dateValidFromFormatted: '01 januari 2024',
-        dateValidTo: '9999-12-31T00:00:00',
+        dateValidTo: '9999-12-31',
         dateValidToFormatted: 'Doorlopend',
         displayStatus: 'Actief sinds 01 januari 2024',
         id: 'test',
