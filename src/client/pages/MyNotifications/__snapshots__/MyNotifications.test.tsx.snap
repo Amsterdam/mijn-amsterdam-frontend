@@ -308,7 +308,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
                     class="ams-paragraph ams-mb-m"
                   >
                     
-        De persoonlijke digitale pagina voor burgers en ondernemers bij de
+        De persoonlijke digitale pagina voor burgers en ondernemers in de
         gemeente Amsterdam. Hier ziet u op 1 centrale plek:
       
                   </p>
@@ -329,7 +329,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
                     <li
                       class="ams-unordered-list__item"
                     >
-                      hoe het met uw aanvraag staat; 
+                      hoe het met uw aanvraag staat;
                     </li>
                     
         
