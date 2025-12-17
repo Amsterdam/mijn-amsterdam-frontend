@@ -74,7 +74,7 @@ describe('Klachten', () => {
     expect(res.content?.length).toBe(5);
   });
 
-  test('All possible notification', async () => {
+  test('All possible notification types', async () => {
     const openKlacht = createKlacht({
       klacht_id: { value: '1' },
       klacht_status: { value: 'Open' },
