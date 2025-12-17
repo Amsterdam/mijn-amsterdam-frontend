@@ -15,6 +15,8 @@ export const PC_REGELING_V3_START_DATE = new Date('2026-01-01');
 const isPcRegelingV3Active = () =>
   themaConfig.featureToggle.regelingen.hli2026PCVergoedingV3Enabled &&
   isAfter(new Date(), subDays(PC_REGELING_V3_START_DATE, 1));
+export const AV_PCTGBO = 'AV-PCTGBO'; // PC Tegoed Basisonderwijs
+export const AV_PCTGVO = 'AV-PCTGVO'; // PC Tegoed Voortgezet Onderwijs
 
 export const AV_UPCC = 'AV-UPCC';
 export const AV_UPCZIL = 'AV-UPCZIL';
@@ -34,6 +36,11 @@ const avCodes = {
     [AV_UPCZIL]: true,
     [AV_UPCTG]:
       themaConfig.featureToggle.regelingen.hli2025PCTegoedCodesEnabled,
+    [AV_PCVTG]: true,
+  },
+  UPC: {
+    [AV_UPCZIL]: true,
+    [AV_UPCTG]: true,
   },
 };
 
@@ -184,6 +191,7 @@ export function filterCombineUpcPcvData_pre2026(
       isVerzilvering(aanvraag) &&
       isAangevraagdVoorRegelingV3ActiefWerd(aanvraag.datumAanvraag)
     ) {
+    if (isVerzilvering(aanvraag)) {
       // Find first corresponding baseRegeling
       const baseRegeling = aanvragen.find((compareAanvraag) =>
         isRegelingVanVerzilvering(aanvraag, compareAanvraag)
