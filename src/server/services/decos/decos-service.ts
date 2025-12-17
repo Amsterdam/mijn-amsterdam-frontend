@@ -37,7 +37,6 @@ import type {
   DecosDocumentBlobSource,
   DecosDocumentSource,
   DecosZaakFrontend,
-  WithDateRange,
 } from './decos-types';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import {
@@ -61,6 +60,7 @@ import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureException, captureMessage } from '../monitoring';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
+import type { WithDateRange } from '../vergunningen/config-and-types';
 
 const debug = createDebugger('decos-service');
 

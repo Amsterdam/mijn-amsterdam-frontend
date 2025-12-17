@@ -10,7 +10,7 @@ import {
   fetchDecosZaken,
   transformDecosZaakFrontend,
 } from '../decos/decos-service';
-import { getStatusSteps } from '../vergunningen/vergunningen-status-steps';
+import { getStatusStepsDecos } from '../vergunningen/decos-status-steps';
 
 vi.mock('../decos/decos-service', () => ({
   fetchDecosZaken: vi.fn(),
@@ -46,7 +46,7 @@ describe('parkeren-decos-service', () => {
         expect.objectContaining({
           detailPageRoute: '/parkeren/:caseType/:id',
           includeFetchDocumentsUrl: true,
-          getStepsFN: getStatusSteps,
+          getStepsFN: getStatusStepsDecos,
         })
       );
       expect(transformDecosZaakFrontend).toHaveBeenCalledWith(
@@ -55,7 +55,7 @@ describe('parkeren-decos-service', () => {
         expect.objectContaining({
           detailPageRoute: '/parkeren/:caseType/:id',
           includeFetchDocumentsUrl: true,
-          getStepsFN: getStatusSteps,
+          getStepsFN: getStatusStepsDecos,
         })
       );
     });
