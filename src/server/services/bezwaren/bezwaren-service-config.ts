@@ -1,5 +1,3 @@
-import z from 'zod';
-
 export const featureToggle = {
   router: {
     protected: {
@@ -18,22 +16,5 @@ export const routes = {
   },
 };
 
-export const fieldSortOptions = [
-  'startdatum',
-  '-startdatum',
-  'einddatum',
-  '-einddatum',
-  'publicatiedatum',
-  '-publicatiedatum',
-  'archiefactiedatum',
-  '-archiefactiedatum',
-] as const;
-
-export const zaakFilter = z.object({
-  ordering: z.enum(fieldSortOptions).optional(),
-  sortering: z.enum(fieldSortOptions).optional(),
-});
-
-export type ZaakFilter = z.infer<typeof zaakFilter>;
-
 export const MAX_PAGE_COUNT = 10; // Should amount to 10 * 20 (per page) = 200 bezwaren
+export const EMPTY_UUID = '00000000-0000-0000-0000-000000000000';

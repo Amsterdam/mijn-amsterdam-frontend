@@ -1,11 +1,7 @@
 import * as jose from 'jose';
 import { generatePath } from 'react-router';
 
-import {
-  MAX_PAGE_COUNT,
-  routes,
-  type ZaakFilter,
-} from './bezwaren-service-config';
+import { EMPTY_UUID, MAX_PAGE_COUNT, routes } from './bezwaren-service-config';
 import {
   BezwaarFrontend,
   BezwaarDocument,
@@ -131,8 +127,6 @@ async function fetchMultiple<T>(
 
   return apiSuccessResult(results);
 }
-
-const EMPTY_UUID = '00000000-0000-0000-0000-000000000000';
 
 function transformBezwaarStatus(
   response: BezwarenSourceResponse<BezwaarSourceStatus>
@@ -391,7 +385,6 @@ function sortByBezwaarIdentificatie(
 
 export async function fetchBezwaren(
   authProfileAndToken: AuthProfileAndToken,
-  filterParams: ZaakFilter | null = null,
   doTransform: boolean = true
 ) {
   const requestBody = JSON.stringify({
@@ -400,7 +393,6 @@ export async function fetchBezwaren(
 
   const params = {
     page: 1,
-    ...filterParams,
   };
 
   const cacheKeyBase = createSessionBasedCacheKey(

@@ -1,8 +1,8 @@
+import { Request } from 'express';
+
 import { fetchBezwaarDetail, fetchBezwaren } from './bezwaren';
-import { zaakFilter, type ZaakFilter } from './bezwaren-service-config';
 import {
   RequestWithQueryParams,
-  sendBadRequestInvalidInput,
   sendResponse,
   type ResponseAuthenticated,
 } from '../../routing/route-helpers';
@@ -57,23 +57,11 @@ export async function handleFetchBezwaarDetailRaw(
 }
 
 export async function handleFetchBezwarenRaw(
-  req: RequestWithQueryParams<{ sortering: string }>,
+  _req: Request,
   res: ResponseAuthenticated
 ) {
   const DO_TRANSFORM = false;
-  let filterParams: ZaakFilter | null = null;
-
-  try {
-    filterParams = zaakFilter.parse(req.query);
-  } catch (error) {
-    return sendBadRequestInvalidInput(res, error);
-  }
-
   return res.send(
-    await fetchBezwaren(
-      res.locals.authProfileAndToken,
-      filterParams,
-      DO_TRANSFORM
-    )
+    await fetchBezwaren(res.locals.authProfileAndToken, DO_TRANSFORM)
   );
 }
