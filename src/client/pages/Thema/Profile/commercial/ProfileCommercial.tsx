@@ -70,10 +70,13 @@ function CommercialPageContentTop({
   return (
     <>
       <PageContentCell spanWide={8}>
-        <Paragraph>
+        <Paragraph className="ams-mb-m">
           Hier ziet u hoe uw onderneming ingeschreven staat in het
-          Handelsregister van de Kamer van Koophandel. De gemeente gebuikt deze
-          gegevens. Het is daarom belangrijk dat uw gegevens kloppen.{' '}
+          Handelsregister van de Kamer van Koophandel.
+        </Paragraph>
+        <Paragraph className="ams-mb-m">
+          De gemeente gebuikt deze gegevens. Het is daarom belangrijk dat uw
+          gegevens kloppen.{' '}
         </Paragraph>
         <Paragraph>
           Mijn Amsterdam toont alleen vestigingen met een adres in een van de
