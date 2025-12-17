@@ -38,7 +38,8 @@ export function LandingPage() {
             Welkom op Mijn Amsterdam
           </Heading>
           <Paragraph className="ams-mb-m">
-            Uw Amsterdamse zaken op 1 plek.
+            De persoonlijke en digitale pagina voor burgers en ondernemers in de
+            gemeente Amsterdam.
           </Paragraph>
           <MaintenanceNotifications
             fromApiDirectly={true}
