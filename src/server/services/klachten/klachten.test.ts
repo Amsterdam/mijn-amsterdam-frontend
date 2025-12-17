@@ -84,6 +84,7 @@ describe('Klachten', () => {
       klacht_id: { value: '2' },
       klacht_status: { value: 'Gesloten' },
       klacht_klachtstatus: { value: 'Afgesloten' },
+      klacht_finishedon: { value: '31-12-2026' },
     });
     mockSmileAPI({
       rowcount: 2,
@@ -107,7 +108,7 @@ describe('Klachten', () => {
             title: 'Klacht ontvangen',
           },
           {
-            datePublished: '',
+            datePublished: '2026-12-31T00:00:00.000Z',
             description:
               'Uw klacht met gemeentelijk zaaknummer 2 is afgehandeld. U ontvangt of u heeft hierover bericht gekregen per e-mail of per brief.',
             id: 'klacht-2-notification',
