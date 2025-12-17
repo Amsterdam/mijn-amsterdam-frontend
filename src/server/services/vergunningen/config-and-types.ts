@@ -1,4 +1,3 @@
-import { LinkProps } from '../../../universal/types/App.types';
 import { ZaakStatus } from '../../../universal/types/App.types';
 import type { DecosZaakBase, DecosZaakFrontend } from '../decos/decos-types';
 export type { DecosZaakFrontend } from '../decos/decos-types';
@@ -310,37 +309,3 @@ export type ZaakFrontendCombined<
   : T extends PowerBrowserZaakBase
     ? PowerBrowserZaakFrontend<T>
     : DecosZaakFrontend | PowerBrowserZaakFrontend;
-
-/* ----------------------------------------
-    Notifications
-  ---------------------------------------- */
-export type NotificationProperty =
-  | 'title'
-  | 'description'
-  | 'datePublished'
-  | 'link';
-
-type NotificationPropertyValue = (vergunning: DecosZaakFrontend) => string;
-
-type NotificationLink = (vergunning: DecosZaakFrontend) => LinkProps;
-
-type NotificationLabelsBase = {
-  [key in Exclude<NotificationProperty, 'link'>]: NotificationPropertyValue;
-};
-
-export type NotificationLabels = NotificationLabelsBase & {
-  link: NotificationLink;
-};
-
-export type NotificationTypeKey =
-  | 'statusOntvangen'
-  | 'statusInBehandeling'
-  | 'statusAfgehandeld'
-  | 'verlooptBinnenkort'
-  | 'isVerlopen'
-  | 'isIngetrokken';
-
-export type NotificationLabelByType = Record<
-  NotificationTypeKey,
-  NotificationLabels
->;
