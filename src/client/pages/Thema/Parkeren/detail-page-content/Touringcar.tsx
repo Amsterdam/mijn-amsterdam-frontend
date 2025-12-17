@@ -2,7 +2,7 @@ import type {
   TouringcarDagontheffing,
   TouringcarJaarontheffing,
 } from '../../../../../server/services/parkeren/config-and-types';
-import { VergunningFrontend } from '../../../../../server/services/vergunningen/config-and-types';
+import { DecosZaakFrontend } from '../../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../../components/Datalist/Datalist';
 import {
   commonTransformers,
@@ -14,7 +14,7 @@ import {
 export function Touringcar({
   vergunning,
 }: {
-  vergunning: VergunningFrontend<
+  vergunning: DecosZaakFrontend<
     TouringcarDagontheffing | TouringcarJaarontheffing
   >;
 }) {

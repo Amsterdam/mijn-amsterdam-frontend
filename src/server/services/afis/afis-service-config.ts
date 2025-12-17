@@ -24,7 +24,7 @@ export const routes = {
   protected: {
     AFIS_BUSINESSPARTNER: '/services/afis/businesspartner',
     AFIS_EMANDATES: '/services/afis/e-mandates',
-    AFIS_EMANDATES_STATUS_CHANGE: '/services/afis/e-mandates/change-status',
+    AFIS_EMANDATES_DEACTIVATE: '/services/afis/e-mandates/deactivate',
     AFIS_EMANDATES_SIGN_REQUEST_URL:
       '/services/afis/e-mandates/sign-request-url',
     AFIS_EMANDATES_UPDATE_LIFETIME: '/services/afis/e-mandates/update-lifetime',
