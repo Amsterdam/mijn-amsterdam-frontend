@@ -31,8 +31,7 @@ export function LandingPage() {
     >
       <PageContentCell>
         <Paragraph className="ams-mb-m">
-          De persoonlijke en digitale pagina voor burgers en ondernemers in de
-            gemeente Amsterdam.
+          Uw Amsterdamse zaken op 1 plek.
         </Paragraph>
         <MaintenanceNotifications
           fromApiDirectly={true}
