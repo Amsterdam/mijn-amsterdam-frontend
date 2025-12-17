@@ -11,8 +11,8 @@ router.use(
   notificationsExternalConsumerRouter.private,
   stadspasExternalConsumerRouter.private
 );
+router.use(OAuthVerificationHandler('wmo.voorzieningen'), wmoRouter.private);
 router.use(
-  OAuthVerificationHandler('User'),
-  afisRouter.private,
-  wmoRouter.private
+  OAuthVerificationHandler('afis.e-mandates.sign-request-status-notify'),
+  afisRouter.private
 );
