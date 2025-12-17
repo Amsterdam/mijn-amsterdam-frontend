@@ -13,17 +13,12 @@ import { hliStatusLineItemsConfig } from './hli-status-line-items';
 import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import { transformRTMAanvragen, isRTMAanvraag } from './rtm/regeling-rtm';
 import { fetchStadspas } from './stadspas';
-import {
-  filterCombineRtmData,
-  isRTMAanvraag,
-  isRTMDeel1,
-  RTM_STATUS_IN_BEHANDELING,
-} from './status-line-items/regeling-rtm';
+import { isRTMAanvraag } from './status-line-items/regeling-rtm';
 import { themaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import {
   ApiResponse,
   apiSuccessResult,
-  getFailedDependencies,
+  getFailedDependencies, 
   getSettledResult,
 } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
