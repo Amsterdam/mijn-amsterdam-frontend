@@ -3,7 +3,7 @@ import memoizee from 'memoizee';
 import { IS_DB_ENABLED } from './config';
 import { logger } from '../../logging';
 
-type DBAdapter = {
+export type DBAdapter = {
   id: string;
   query: (query: string, values?: unknown[] | undefined) => Promise<unknown>;
   queryGET: (query: string, values?: unknown[] | undefined) => Promise<unknown>;

@@ -7,7 +7,7 @@ import {
   Link,
   Paragraph,
 } from '@amsterdam/design-system-react';
-import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
+import { LinkExternalIcon } from '@amsterdam/design-system-react-icons';
 
 import { CONTENT_EMPTY } from './helper';
 import { useVarenThemaData } from './useVarenThemaData.hook';
@@ -17,7 +17,8 @@ import {
 } from './Varen-thema-config';
 import styles from './Varen.module.scss';
 import type { VarenRegistratieRederFrontend } from '../../../../server/services/varen/config-and-types';
-import { entries, toDateFormatted } from '../../../../universal/helpers/utils';
+import { entries } from '../../../../universal/helpers/utils';
+import { toDateFormatted } from '../../../../universal/helpers/date';
 import { Datalist, RowSet } from '../../../components/Datalist/Datalist';
 import { MaButtonLink } from '../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../components/Page/Page';
@@ -150,7 +151,7 @@ export function VarenThema() {
               className={styles.VarenButton}
             >
               {title}
-              <Icon svg={ExternalLinkIcon} size="heading-5" />
+              <Icon svg={LinkExternalIcon} size="heading-5" />
             </MaButtonLink>
           ))}
         </ActionGroup>
@@ -189,6 +190,7 @@ export function VarenThema() {
       isError={isError}
       pageContentTop={pageContentTop}
       pageContentTopSecondary={actionButtons}
+      maintenanceNotificationsPageSlug="varen"
       pageContentMain={
         <>
           {gegevensRegistratieReder}

@@ -2,12 +2,12 @@ import { ReactNode } from 'react';
 
 import { LinkList } from '@amsterdam/design-system-react';
 
+import styles from './ThemaPagina.module.scss';
 import { LinkProps } from '../../../universal/types/App.types';
-import { getRedactedClass } from '../../helpers/cobrowse';
 import ErrorAlert from '../Alert/Alert';
 import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
-import { OverviewPageV2, PageContentCell, PageContentV2 } from '../Page/Page';
-import { PageHeadingV2 } from '../PageHeading/PageHeadingV2';
+import { MaintenanceNotifications } from '../MaintenanceNotifications/MaintenanceNotifications';
+import { PageContentCell, PageV2 } from '../Page/Page';
 
 const LOADING_BAR_CONFIG_DEFAULT: BarConfig = [
   ['20rem', '4rem', '4rem'],
@@ -34,8 +34,8 @@ interface ThemaPaginaProps {
   isError: boolean;
   isPartialError?: boolean;
   isLoading: boolean;
+  maintenanceNotificationsPageSlug?: string;
 }
-
 export default function ThemaPagina({
   id,
   title,
@@ -50,45 +50,42 @@ export default function ThemaPagina({
   isError,
   isPartialError,
   isLoading,
+  maintenanceNotificationsPageSlug,
 }: ThemaPaginaProps) {
   const showError = (!isError && isPartialError) || isError;
   return (
-    <OverviewPageV2>
-      <PageContentV2 className={getRedactedClass(id)}>
-        <PageHeadingV2 breadcrumbs={breadcrumbs}>{title}</PageHeadingV2>
-        {pageContentTop}
-        {!!linkListItems.length && (
-          <PageContentCell>
-            <LinkList>
-              {linkListItems.map(({ to, title }) => (
-                <LinkList.Link key={to} rel="noreferrer" href={to}>
-                  {title}
-                </LinkList.Link>
-              ))}
-            </LinkList>
-          </PageContentCell>
-        )}
-
-        {pageContentTopSecondary}
-
-        {showError && (
-          <PageContentCell>
-            <ErrorAlert>
-              {errorAlertContent || ERROR_ALERT_DEFAULT}
-              {/* errorAlertContent could be an emty string, force to show an error. **/}
-            </ErrorAlert>
-          </PageContentCell>
-        )}
-
-        {isLoading && (
-          <PageContentCell>
-            <LoadingContent barConfig={loadingBarConfig} />
-          </PageContentCell>
-        )}
-
-        {!isLoading && !isError && pageContentMain}
-        {pageContentBottom}
-      </PageContentV2>
-    </OverviewPageV2>
+    <PageV2 heading={title} breadcrumbs={breadcrumbs} redactedThemaId={id}>
+      {maintenanceNotificationsPageSlug && (
+        <MaintenanceNotifications page={maintenanceNotificationsPageSlug} />
+      )}
+      {pageContentTop}
+      {!!linkListItems.length && (
+        <PageContentCell className={styles.PullUp}>
+          <LinkList>
+            {linkListItems.map(({ to, title }) => (
+              <LinkList.Link key={to} rel="noreferrer" href={to}>
+                {title}
+              </LinkList.Link>
+            ))}
+          </LinkList>
+        </PageContentCell>
+      )}
+      {pageContentTopSecondary}
+      {showError && (
+        <PageContentCell>
+          <ErrorAlert>
+            {errorAlertContent || ERROR_ALERT_DEFAULT}
+            {/* errorAlertContent could be an emty string, force to show an error. **/}
+          </ErrorAlert>
+        </PageContentCell>
+      )}
+      {isLoading && (
+        <PageContentCell>
+          <LoadingContent barConfig={loadingBarConfig} />
+        </PageContentCell>
+      )}
+      {!isLoading && !isError && pageContentMain}
+      {pageContentBottom}
+    </PageV2>
   );
 }

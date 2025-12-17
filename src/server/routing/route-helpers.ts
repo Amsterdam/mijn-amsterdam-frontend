@@ -57,6 +57,7 @@ export type ResponseAuthenticated = Response & {
   };
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function queryParams<T extends Record<string, any>>(req: Request) {
   return req.query as T;
 }
@@ -82,6 +83,7 @@ export function isProtectedRoute(pathRequested: string) {
 type QueryParams = RecordStr2;
 type PathParams = RecordStr2;
 type QueryAndOrPathParams = [QueryParams, PathParams] | [QueryParams];
+
 export function generateFullApiUrlBFF(
   path: string,
   params?: PathParams | QueryAndOrPathParams,
@@ -98,7 +100,7 @@ export function generateFullApiUrlBFF(
 /** Sets the right statuscode and sends a response. */
 export function sendResponse(
   res: Response,
-  apiResponse: ApiResponse_DEPRECATED<any>
+  apiResponse: ApiResponse_DEPRECATED<unknown>
 ) {
   if (apiResponse.status === 'ERROR') {
     res.status(
@@ -111,27 +113,34 @@ export function sendResponse(
   return res.send(apiResponse);
 }
 
-export function sendBadRequest(
-  res: Response,
-  reason: string,
-  content: object | string | null = null
-) {
-  return res
-    .status(HttpStatusCode.BadRequest)
-    .send(
-      apiErrorResult(
-        `Bad request: ${reason}`,
-        content,
-        HttpStatusCode.BadRequest
-      )
-    );
+export function sendBadRequest(res: Response, reason: string) {
+  return sendResponse(
+    res,
+    apiErrorResult(`Bad request: ${reason}`, null, HttpStatusCode.BadRequest)
+  );
+}
+
+export function sendInternalServerError(res: Response, reason: string) {
+  return sendResponse(
+    res,
+    apiErrorResult(
+      `Internal server error: ${reason}`,
+      null,
+      HttpStatusCode.InternalServerError
+    )
+  );
 }
 
 export function sendBadRequestInvalidInput(res: Response, error: unknown) {
   let inputValidationError = 'Invalid input';
 
   if (error instanceof z.ZodError) {
-    inputValidationError = error.issues.map((e) => e.message).join(', ');
+    inputValidationError = error.issues
+      .map(
+        (e) =>
+          `for property '${e.path.join('.') || '.'}' with error '${e.message}'`
+      )
+      .join(' - ');
   }
 
   return sendBadRequest(res, inputValidationError);
@@ -141,8 +150,10 @@ export function sendUnauthorized(
   res: Response,
   message: string = 'Unauthorized'
 ) {
-  res.status(HttpStatusCode.Unauthorized);
-  return res.send(apiErrorResult(message, null, HttpStatusCode.Unauthorized));
+  return sendResponse(
+    res,
+    apiErrorResult(message, null, HttpStatusCode.Unauthorized)
+  );
 }
 
 export function send404(res: Response) {
@@ -167,7 +178,7 @@ export function sendMessage(
   res: Response,
   id: string,
   event: string = 'message',
-  data?: any
+  data?: object | string | number | null
 ) {
   const doStringify = typeof data !== 'string';
   const payload = doStringify ? JSON.stringify(data) : data;

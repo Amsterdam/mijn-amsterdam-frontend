@@ -13,11 +13,7 @@ import { MaRouterLink } from '../../components/MaLink/MaLink';
 import { MyAreaDashboard } from '../../components/MyArea/MyAreaDashboard';
 import { MyNotification } from '../../components/MyNotification/MyNotification';
 import { MyThemasPanel } from '../../components/MyThemasPanel/MyThemasPanel';
-import {
-  PageContentCell,
-  PageContentV2,
-  PageV2,
-} from '../../components/Page/Page';
+import { PageContentCell, PageV2 } from '../../components/Page/Page';
 import { useSmallScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppStateStore';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
@@ -45,21 +41,24 @@ export function Dashboard() {
   const { items: myThemaItems, isLoading: isMyThemasLoading } =
     useActiveThemaMenuItems();
 
+  // We only want to run this on mount.
   useEffect(() => {
     if (location.search) {
       navigate(location.pathname, { replace: true });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <PageV2 className={styles.Dashboard}>
+    <>
       {!isPhoneScreen && <DashboardHeader />}
-      <PageContentV2 id="skip-to-id-AppContent">
-        <PageContentCell startWide={2} spanWide={10}>
-          <WelcomeHeading />
-        </PageContentCell>
-        <PageContentCell startWide={2} spanWide={5}>
-          <Heading level={2} size="level-3" className="ams-mb-m">
+      <PageV2
+        className={styles.Dashboard}
+        heading={<WelcomeHeading />}
+        showBreadcrumbs={false}
+      >
+        <PageContentCell spanWide={7}>
+          <Heading level={2} className="ams-mb-m">
             Recente berichten{' '}
             {total > notifications.length && (
               <MaRouterLink
@@ -93,13 +92,17 @@ export function Dashboard() {
           </OrderedList>
         </PageContentCell>
         <PageContentCell startWide={8} spanWide={5}>
-          <Heading level={2} size="level-3" className="ams-mb-m">
+          <Heading level={2} className="ams-mb-m">
             Mijn thema&apos;s
           </Heading>
           <MyThemasPanel isLoading={isMyThemasLoading} items={myThemaItems} />
         </PageContentCell>
-      </PageContentV2>
-      {!isPhoneScreen && <MyAreaDashboard />}
-    </PageV2>
+        {!isPhoneScreen && (
+          <PageContentCell>
+            <MyAreaDashboard />
+          </PageContentCell>
+        )}
+      </PageV2>
+    </>
   );
 }

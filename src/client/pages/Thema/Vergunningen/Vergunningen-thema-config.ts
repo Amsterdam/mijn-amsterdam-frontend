@@ -8,19 +8,19 @@ import {
 } from './Vergunningen-helpers';
 import {
   DecosZaakBase,
-  WithDateRange,
+  type DecosZaakFrontend,
 } from '../../../../server/services/decos/decos-types';
-import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
+import { WithDateRange } from '../../../../server/services/vergunningen/config-and-types';
 import { dateSort } from '../../../../universal/helpers/date';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
-type VergunningFrontendDisplayProps = DisplayProps<VergunningFrontend>;
+type VergunningFrontendDisplayProps = DisplayProps<DecosZaakFrontend>;
 
 type VergunningFrontendExpireableDisplayProps = DisplayProps<
-  VergunningFrontend & VergunningFrontend<DecosZaakBase & WithDateRange>
+  DecosZaakFrontend & DecosZaakFrontend<DecosZaakBase & WithDateRange>
 >;
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;

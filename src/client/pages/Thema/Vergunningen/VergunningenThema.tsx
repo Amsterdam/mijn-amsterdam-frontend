@@ -1,7 +1,7 @@
 import { Alert, Paragraph } from '@amsterdam/design-system-react';
 
 import { useVergunningenThemaData } from './useVergunningenThemaData.hook';
-import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
+import { type ZaakFrontendCombined } from '../../../../server/services/vergunningen/config-and-types';
 import { MaRouterLink } from '../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
@@ -47,7 +47,7 @@ export function VergunningenThema() {
       { title, displayProps, filter, sort, listPageRoute, maxItems },
     ]) => {
       return (
-        <ThemaPaginaTable<VergunningFrontend>
+        <ThemaPaginaTable<ZaakFrontendCombined>
           key={kind}
           title={title}
           zaken={vergunningen.filter(filter).sort(sort)}
@@ -68,6 +68,7 @@ export function VergunningenThema() {
       pageContentMain={tables}
       isError={isError}
       isLoading={isLoading}
+      maintenanceNotificationsPageSlug="vergunningen"
     />
   );
 }

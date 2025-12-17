@@ -6,12 +6,14 @@ import { AddressDisplayAndModal } from '../../../../components/LocationModal/Loc
 
 export interface ErfpachtDatalistProps {
   dossier: ErfpachtDossiersDetail;
+  debiteurNummer: string | null;
   relatieCode?: string;
 }
 
 export function DatalistGeneral({
   dossier,
   relatieCode,
+  debiteurNummer,
 }: ErfpachtDatalistProps) {
   const rows = [
     {
@@ -40,7 +42,7 @@ export function DatalistGeneral({
         <ErfpachtersList
           erfpachters={dossier.relaties}
           dossierNummer={dossier.dossierNummer}
-          debiteurNummer={dossier.facturen.debiteurNummer}
+          debiteurNummer={debiteurNummer}
           relatieCode={relatieCode}
         />
       ),

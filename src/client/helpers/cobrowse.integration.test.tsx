@@ -160,12 +160,12 @@ describe('Cobrowse redacted components', () => {
           .parentElement as HTMLElement;
         expect(
           within(MyThemasPanel).getByRole('link', { name: themaTitleBezwaren })
-        ).toHaveClass('cobrowse-redacted');
+        ).toHaveClass('redacted');
         expect(
           within(MyThemasPanel).getByRole('link', {
             name: new RegExp(themaTitleVergunningen, 'i'),
           })
-        ).not.toHaveClass('cobrowse-redacted');
+        ).not.toHaveClass('redacted');
       });
 
       it('Notifications', async () => {
@@ -174,11 +174,11 @@ describe('Cobrowse redacted components', () => {
         const redactedNotification = listItems.find((li) =>
           li.textContent?.includes(themaTitleBezwaren)
         );
-        expect(redactedNotification).toHaveClass('cobrowse-redacted');
+        expect(redactedNotification).toHaveClass('redacted');
         const nonRedactedNotification = listItems.find((li) =>
           li.textContent?.includes(themaTitleVergunningen)
         );
-        expect(nonRedactedNotification).not.toHaveClass('cobrowse-redacted');
+        expect(nonRedactedNotification).not.toHaveClass('redacted');
       });
     });
 
@@ -188,11 +188,11 @@ describe('Cobrowse redacted components', () => {
       const redactedNotification = listItems.find((li) =>
         li.textContent?.includes(themaTitleBezwaren)
       );
-      expect(redactedNotification).toHaveClass('cobrowse-redacted');
+      expect(redactedNotification).toHaveClass('redacted');
       const nonRedactedNotification = listItems.find((li) =>
         li.textContent?.includes(themaTitleVergunningen)
       );
-      expect(nonRedactedNotification).not.toHaveClass('cobrowse-redacted');
+      expect(nonRedactedNotification).not.toHaveClass('redacted');
     });
 
     test.each([
@@ -202,11 +202,11 @@ describe('Cobrowse redacted components', () => {
     ])('%s', async (_, component) => {
       await act(() => render(<Component component={component} />));
       const cobrowseElem = document.querySelector(
-        '.ams-grid.cobrowse-redacted'
+        '.mams-content-wrapper.redacted'
       ) as HTMLElement;
       expect(cobrowseElem).toBeInTheDocument();
 
-      // Make sure the cobrowse-redacted is on the correct element and redacts the page content
+      // Make sure the redacted is on the correct element and redacts the page content
       const cobrowseElemText = cobrowseElem?.innerText;
       const textOnlyInElem = themaTitleBezwaren;
       expect(cobrowseElemText).toContain(textOnlyInElem);
@@ -225,7 +225,7 @@ describe('Cobrowse redacted components', () => {
         const bsnField = screen.getByText(
           testState.BRP.content?.persoon.bsn ?? ''
         );
-        expect(bsnField).toHaveClass('cobrowse-redacted');
+        expect(bsnField).toHaveClass('redacted');
       });
 
       it('Contactmomenten', async () => {
@@ -242,12 +242,12 @@ describe('Cobrowse redacted components', () => {
             name: testState.KLANT_CONTACT.content?.[0].themaKanaal ?? '',
           })
           .closest('tr');
-        expect(contactmomentAfis).toHaveClass('cobrowse-redacted');
+        expect(contactmomentAfis).toHaveClass('redacted');
 
         const contactmomentVergunning = screen
           .getByText(testState.KLANT_CONTACT.content?.[1].subject ?? '')
           .closest('tr');
-        expect(contactmomentVergunning).not.toHaveClass('cobrowse-redacted');
+        expect(contactmomentVergunning).not.toHaveClass('redacted');
       });
     });
     it('ContactmomentenList', async () => {
@@ -259,12 +259,12 @@ describe('Cobrowse redacted components', () => {
           name: testState.KLANT_CONTACT.content?.[0].themaKanaal ?? '',
         })
         .closest('tr');
-      expect(contactmomentAfis).toHaveClass('cobrowse-redacted');
+      expect(contactmomentAfis).toHaveClass('redacted');
 
       const contactmomentVergunning = screen
         .getByText(testState.KLANT_CONTACT.content?.[1].subject ?? '')
         .closest('tr');
-      expect(contactmomentVergunning).not.toHaveClass('cobrowse-redacted');
+      expect(contactmomentVergunning).not.toHaveClass('redacted');
     });
   });
 });

@@ -1,36 +1,60 @@
-import { LinkProps } from '../../../universal/types/App.types';
-import {
-  DecosZaakBase,
-  WithLocation,
-  WithKentekens,
-  WithDateTimeRange,
-  WithDateRange,
-  DecosZaakFrontend,
-} from '../decos/decos-types';
 import { ZaakStatus } from '../../../universal/types/App.types';
+import type { DecosZaakBase, DecosZaakFrontend } from '../decos/decos-types';
+export type { DecosZaakFrontend } from '../decos/decos-types';
+import type {
+  PowerBrowserZaakBase,
+  PowerBrowserZaakFrontend,
+} from '../powerbrowser/powerbrowser-types';
 
 export const NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED = 3;
 export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
 export const MINIMUM_DAYS_FOR_WILL_EXPIRE_NOTIFICATION = 14;
 export const PERCENTAGE_OF_LIFETIME_FOR_WILL_EXPIRE_NOTIFICATION = 0.8;
 
+export type WithLocation = {
+  location: string | null;
+};
+
+export type WithKentekens = {
+  kentekens: string | null;
+};
+
+export type WithDateStart = {
+  dateStart: string | null;
+  dateStartFormatted: string | null;
+};
+
+export type WithDateEnd = {
+  dateEnd: string | null;
+  dateEndFormatted: string | null;
+};
+
+export type WithDateRange = WithDateStart & WithDateEnd;
+
+export type WithTimeRange = {
+  timeStart: string | null;
+  timeEnd: string | null;
+};
+export type WithDateTimeRange = WithDateRange & WithTimeRange; // A list of common readable api attributes
+
 export const caseTypeVergunningen = {
+  // TODO: MIJN-12357: Remove after move to Powerbrowser is finalized
+  Omzettingsvergunning: 'Omzettingsvergunning',
+  Samenvoegingsvergunning: 'Samenvoegingsvergunning',
+  Onttrekkingsvergunning: 'Onttrekkingsvergunning voor ander gebruik',
+  OnttrekkingsvergunningSloop: 'Onttrekkingsvergunning voor sloop',
+  VormenVanWoonruimte: 'Woningvormingsvergunning',
+  VOB: 'VOB',
+
   TVMRVVObject: 'TVM - RVV - Object',
   EvenementMelding: 'Evenement melding',
   EvenementVergunning: 'Evenement vergunning',
-  Omzettingsvergunning: 'Omzettingsvergunning',
   ERVV: 'E-RVV - TVM',
   Flyeren: 'Flyeren-Sampling',
   AanbiedenDiensten: 'Aanbieden van diensten',
   Straatartiesten: 'Straatartiesten',
   NachtwerkOntheffing: 'Nachtwerkontheffing',
   ZwaarVerkeer: 'Zwaar verkeer',
-  Samenvoegingsvergunning: 'Samenvoegingsvergunning',
-  Onttrekkingsvergunning: 'Onttrekkingsvergunning voor ander gebruik',
-  OnttrekkingsvergunningSloop: 'Onttrekkingsvergunning voor sloop',
-  VormenVanWoonruimte: 'Woningvormingsvergunning',
-  Splitsingsvergunning: 'Splitsingsvergunning',
-  VOB: 'VOB',
   RVVHeleStad: 'RVV - Hele stad',
   RVVSloterweg: 'RVV Sloterweg',
   WVOS: 'Werk en vervoer op straat',
@@ -61,12 +85,6 @@ export type EvenementVergunning = DecosZaakBase &
   WithDateTimeRange & {
     caseType: GetCaseType<'EvenementVergunning'>;
     description: string | null;
-  };
-
-export type Omzettingsvergunning = DecosZaakBase &
-  WithLocation & {
-    caseType: GetCaseType<'Omzettingsvergunning'>;
-    dateInBehandeling: string | null;
   };
 
 export type ERVV = DecosZaakBase &
@@ -131,47 +149,6 @@ export type RVVSloterweg = DecosZaakBase &
     status: ZaakStatus & 'Actief';
   };
 
-export type Samenvoegingsvergunning = DecosZaakBase &
-  WithLocation & {
-    caseType: GetCaseType<'Samenvoegingsvergunning'>;
-  };
-
-export type Onttrekkingsvergunning = DecosZaakBase &
-  WithLocation & {
-    caseType: GetCaseType<'Onttrekkingsvergunning'>;
-  };
-
-export type OnttrekkingsvergunningSloop = DecosZaakBase &
-  WithLocation & {
-    caseType: GetCaseType<'OnttrekkingsvergunningSloop'>;
-  };
-
-export type VormenVanWoonruimte = DecosZaakBase &
-  WithLocation & {
-    caseType: GetCaseType<'VormenVanWoonruimte'>;
-  };
-
-export type Splitsingsvergunning = DecosZaakBase &
-  WithLocation & {
-    caseType: GetCaseType<'Splitsingsvergunning'>;
-  };
-
-export type WoningVergunning =
-  | Samenvoegingsvergunning
-  | Onttrekkingsvergunning
-  | OnttrekkingsvergunningSloop
-  | Splitsingsvergunning
-  | VormenVanWoonruimte;
-
-export type Ligplaatsvergunning = DecosZaakBase &
-  WithLocation & {
-    caseType: GetCaseType<'VOB'>;
-    requestKind: string | null;
-    reason: string | null;
-    vesselKind: string | null;
-    vesselName: string | null;
-  };
-
 export type WVOSActiviteit =
   | 'Rijden of een voertuig neerzetten waar dat normaal niet mag'
   | 'Object(en) neerzetten'
@@ -190,57 +167,145 @@ export type WerkzaamhedenEnVervoerOpStraat = DecosZaakBase &
     werkzaamheden: WVOSActiviteit[];
   };
 
+export type LigplaatsvergunningDecos = DecosZaakBase &
+  WithLocation & {
+    caseType: GetCaseType<'VOB'>;
+    requestKind: string | null;
+    reason: string | null;
+    vesselKind: string | null;
+    vesselName: string | null;
+  };
+
+export type OmzettingsvergunningDecos = DecosZaakBase &
+  WithLocation & {
+    caseType: GetCaseType<'Omzettingsvergunning'>;
+    dateInBehandeling: string | null;
+  };
+
+export type SamenvoegingsvergunningDecos = DecosZaakBase &
+  WithLocation & {
+    caseType: GetCaseType<'Samenvoegingsvergunning'>;
+  };
+
+export type OnttrekkingsvergunningDecos = DecosZaakBase &
+  WithLocation & {
+    caseType: GetCaseType<'Onttrekkingsvergunning'>;
+  };
+
+export type OnttrekkingsvergunningSloopDecos = DecosZaakBase &
+  WithLocation & {
+    caseType: GetCaseType<'OnttrekkingsvergunningSloop'>;
+  };
+
+export type VormenVanWoonruimteDecos = DecosZaakBase &
+  WithLocation & {
+    caseType: GetCaseType<'VormenVanWoonruimte'>;
+  };
+
+// TODO: MIJN-12357: Remove after move to Powerbrowser is finalized
+export type WoningVergunningDecos =
+  | SamenvoegingsvergunningDecos
+  | OnttrekkingsvergunningDecos
+  | OnttrekkingsvergunningSloopDecos
+  | VormenVanWoonruimteDecos;
+
+// TODO: MIJN-12357: Remove after move to Powerbrowser is finalized
+type VTHVergunningDecos =
+  | LigplaatsvergunningDecos
+  | OmzettingsvergunningDecos
+  | WoningVergunningDecos;
+
 export type DecosVergunning =
+  | VTHVergunningDecos
   | TVMRVVObject
   | EvenementMelding
   | EvenementVergunning
-  | Omzettingsvergunning
   | ERVV
   | Flyeren
   | AanbiedenDiensten
   | Straatartiesten
   | Nachtwerkontheffing
   | ZwaarVerkeer
-  | Samenvoegingsvergunning
-  | Onttrekkingsvergunning
-  | OnttrekkingsvergunningSloop
-  | VormenVanWoonruimte
-  | Splitsingsvergunning
-  | Ligplaatsvergunning
   | RVVHeleStad
   | RVVSloterweg
   | WerkzaamhedenEnVervoerOpStraat;
 
-export type VergunningFrontend<T extends DecosZaakBase = DecosZaakBase> =
-  DecosZaakFrontend<T>;
+/* ----------------------------------------
+    Powerbrowser
+  ---------------------------------------- */
 
-export type NotificationProperty =
-  | 'title'
-  | 'description'
-  | 'datePublished'
-  | 'link';
+export const caseTypePB = {
+  Ligplaatsvergunning: 'Ligplaatsvergunning',
+  Omzettingsvergunning: 'Omzettingsvergunning',
+  Samenvoegingsvergunning: 'Samenvoegingsvergunning',
+  Onttrekkingsvergunning: 'Onttrekkingsvergunning voor ander gebruik',
+  OnttrekkingsvergunningSloop: 'Onttrekkingsvergunning voor sloop',
+  VormenVanWoonruimte: 'Woningvormingsvergunning',
+  Splitsingsvergunning: 'Splitsingsvergunning',
+} as const;
 
-type NotificationPropertyValue = (vergunning: VergunningFrontend) => string;
+export type CaseTypePBKey = keyof typeof caseTypePB;
+export type CaseTypePB = (typeof caseTypePB)[CaseTypePBKey];
+export type GetCaseTypePB<T extends CaseTypePBKey> = (typeof caseTypePB)[T];
 
-type NotificationLink = (vergunning: VergunningFrontend) => LinkProps;
+export type Ligplaatsvergunning = PowerBrowserZaakBase &
+  WithLocation & {
+    caseType: GetCaseTypePB<'Ligplaatsvergunning'>;
+    requestKind: string | null;
+    reason: string | null;
+    vesselKind: string | null;
+    vesselName: string | null;
+  };
 
-type NotificationLabelsBase = {
-  [key in Exclude<NotificationProperty, 'link'>]: NotificationPropertyValue;
-};
+export type Omzettingsvergunning = PowerBrowserZaakBase &
+  WithLocation & {
+    caseType: GetCaseTypePB<'Omzettingsvergunning'>;
+    dateInBehandeling: string | null;
+  };
 
-export type NotificationLabels = NotificationLabelsBase & {
-  link: NotificationLink;
-};
+export type Samenvoegingsvergunning = PowerBrowserZaakBase &
+  WithLocation & {
+    caseType: GetCaseTypePB<'Samenvoegingsvergunning'>;
+  };
 
-export type NotificationTypeKey =
-  | 'statusOntvangen'
-  | 'statusInBehandeling'
-  | 'statusAfgehandeld'
-  | 'verlooptBinnenkort'
-  | 'isVerlopen'
-  | 'isIngetrokken';
+export type Onttrekkingsvergunning = PowerBrowserZaakBase &
+  WithLocation & {
+    caseType: GetCaseTypePB<'Onttrekkingsvergunning'>;
+  };
 
-export type NotificationLabelByType = Record<
-  NotificationTypeKey,
-  NotificationLabels
->;
+export type OnttrekkingsvergunningSloop = PowerBrowserZaakBase &
+  WithLocation & {
+    caseType: GetCaseTypePB<'OnttrekkingsvergunningSloop'>;
+  };
+
+export type VormenVanWoonruimte = PowerBrowserZaakBase &
+  WithLocation & {
+    caseType: GetCaseTypePB<'VormenVanWoonruimte'>;
+  };
+
+export type Splitsingsvergunning = PowerBrowserZaakBase &
+  WithLocation & {
+    caseType: GetCaseTypePB<'Splitsingsvergunning'>;
+  };
+
+export type WoningVergunning =
+  | Samenvoegingsvergunning
+  | Onttrekkingsvergunning
+  | OnttrekkingsvergunningSloop
+  | Splitsingsvergunning
+  | VormenVanWoonruimte;
+
+export type PBVergunning =
+  | Ligplaatsvergunning
+  | Omzettingsvergunning
+  | WoningVergunning;
+
+export type ZaakFrontendCombined<
+  T extends DecosZaakBase | PowerBrowserZaakBase =
+    | DecosZaakBase
+    | PowerBrowserZaakBase,
+> = T extends DecosZaakBase
+  ? DecosZaakFrontend<T>
+  : T extends PowerBrowserZaakBase
+    ? PowerBrowserZaakFrontend<T>
+    : DecosZaakFrontend | PowerBrowserZaakFrontend;

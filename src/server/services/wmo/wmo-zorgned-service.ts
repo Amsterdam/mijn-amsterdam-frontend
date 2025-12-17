@@ -1,6 +1,9 @@
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { GenericDocument } from '../../../universal/types/App.types';
-import { fetchAanvragen } from '../zorgned/zorgned-service';
+import {
+  fetchAanvragen,
+  fetchCasusAanvragen,
+} from '../zorgned/zorgned-service';
 import { ZorgnedAanvraagTransformed, type BSN } from '../zorgned/zorgned-types';
 import {
   FAKE_DECISION_DOCUMENT_ID,
@@ -10,8 +13,10 @@ import {
 } from './status-line-items/wmo-generic';
 import {
   DATE_END_NOT_OLDER_THAN,
+  featureToggle,
   ZORGNED_JZD_REGELING_IDENTIFICATIE,
-} from './wmo-config-and-types';
+} from './wmo-service-config';
+import { DOCUMENT_TITLE_BESLUIT_STARTS_WITH } from './wmo-service-config';
 import { ZORGNED_JZD_API_CONFIG_KEY } from './wmo-service-config';
 import { PRODUCTS_WITH_DELIVERY } from './wmo-status-line-items';
 
@@ -46,7 +51,7 @@ function getFakeDecisionDocuments(
     return [
       {
         id: FAKE_DECISION_DOCUMENT_ID,
-        title: 'Besluit: mist',
+        title: `${DOCUMENT_TITLE_BESLUIT_STARTS_WITH} mist`,
         datePublished: aanvraagTransformed.datumBesluit,
         url: '',
         isVisible: false,
@@ -100,7 +105,12 @@ export async function fetchZorgnedAanvragenWMO(bsn: BSN) {
     regeling: ZORGNED_JZD_REGELING_IDENTIFICATIE,
   };
 
-  const aanvragenResponse = await fetchAanvragen(bsn, {
+  const fetchZorgnedAanvragen = featureToggle.service.fetchCasusAanvragen
+    .isEnabled
+    ? fetchCasusAanvragen
+    : fetchAanvragen;
+
+  const aanvragenResponse = await fetchZorgnedAanvragen(bsn, {
     zorgnedApiConfigKey: ZORGNED_JZD_API_CONFIG_KEY,
     requestBodyParams,
   });

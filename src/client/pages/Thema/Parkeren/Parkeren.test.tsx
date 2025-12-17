@@ -107,22 +107,29 @@ describe('Parkeren', () => {
   });
 });
 
-describe('determinePageContentTop', () => {
-  function determinePageContentTop(
+describe('PageContentTop', () => {
+  function getPageContentTopComponent(
     hasMijnParkerenVergunningen: boolean,
     parkerenUrlSSO: string
   ) {
     function Component() {
-      return forTesting.determinePageContentTop(
-        hasMijnParkerenVergunningen,
-        parkerenUrlSSO
+      const PageContentTop = forTesting.PageContentTop;
+      return (
+        <PageContentTop
+          hasMijnParkerenVergunningen={hasMijnParkerenVergunningen}
+          parkerenUrlSSO={parkerenUrlSSO}
+          profileType="private"
+        />
       );
     }
     return Component;
   }
 
   test('Renders button with parkeer vergunningen', () => {
-    const PageContentTop = determinePageContentTop(true, EXTERNAL_PARKEREN_URL);
+    const PageContentTop = getPageContentTopComponent(
+      true,
+      EXTERNAL_PARKEREN_URL
+    );
     const screen = render(
       <MockApp
         routeEntry="/"
@@ -135,7 +142,7 @@ describe('determinePageContentTop', () => {
   });
 
   test('Does not render link when only vergunningen from another source then parkeren are present', () => {
-    const PageContentTop = determinePageContentTop(
+    const PageContentTop = getPageContentTopComponent(
       false,
       EXTERNAL_PARKEREN_URL
     );

@@ -7,8 +7,8 @@ import {
   OrderedList,
 } from '@amsterdam/design-system-react';
 import {
-  CheckmarkIcon,
-  ExternalLinkIcon,
+  CheckMarkIcon,
+  LinkExternalIcon,
 } from '@amsterdam/design-system-react-icons';
 import classNames from 'classnames';
 
@@ -61,10 +61,10 @@ function StatusIndication({ step }: StatusIndicationProps) {
     ariaLabel = 'Status Afgerond';
     content = (
       <Icon
-        size="heading-6"
+        size="heading-4"
         className={styles.StatusIndicationCheckmark}
         aria-label="Status Afgerond"
-        svg={CheckmarkIcon}
+        svg={CheckMarkIcon}
       />
     );
   } else if (step.isActive) {
@@ -101,7 +101,7 @@ export function Steps({ steps, title }: StepsProps) {
             )}
             key={item.id + item.datePublished}
           >
-            <Heading className={styles.StepStatus} level={4}>
+            <Heading className={styles.StepStatus} level={3}>
               <StatusIndication step={item} />
               {item.status}
             </Heading>
@@ -119,7 +119,7 @@ export function Steps({ steps, title }: StepsProps) {
                     {item.actionButtonItems.map(({ to, title }) => (
                       <MaButtonLink key={to} href={to} variant="secondary">
                         {title}
-                        <Icon svg={ExternalLinkIcon} size="heading-5" />
+                        <Icon svg={LinkExternalIcon} size="heading-5" />
                       </MaButtonLink>
                     ))}
                   </ActionGroup>

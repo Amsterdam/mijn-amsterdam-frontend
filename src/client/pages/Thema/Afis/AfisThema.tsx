@@ -76,9 +76,7 @@ export function AfisDisclaimerOvergedragenFacturen() {
         en daarmee uw aanspreekpunt. De status van uw factuur vindt u terug bij
         Mijn Belastingen - gemeente Amsterdam.
       </Paragraph>
-      <Heading level={4} size="level-5">
-        Heeft u vragen?
-      </Heading>
+      <Heading level={4}>Heeft u vragen?</Heading>
       <Paragraph>
         Afdeling Incasso & Invordering is van maandag tot en met vrijdag tussen
         08.00 en 18.00 uur bereikbaar op{' '}
@@ -146,7 +144,7 @@ export function AfisThema() {
       state,
       { title, displayProps, maxItems, listPageLinkLabel, listPageRoute },
     ]) => {
-      const subTitleNode =
+      const contentAfterTheTitle =
         state === 'overgedragen' && !!facturenByState?.[state]?.facturen.length
           ? state === 'overgedragen' && <AfisDisclaimerOvergedragenFacturen />
           : null;
@@ -154,7 +152,7 @@ export function AfisThema() {
         <ThemaPaginaTable<AfisFactuurFrontend>
           key={state}
           title={title}
-          subTitle={subTitleNode}
+          contentAfterTheTitle={contentAfterTheTitle}
           zaken={facturenByState?.[state]?.facturen ?? []}
           displayProps={displayProps}
           maxItems={maxItems}
@@ -184,6 +182,7 @@ export function AfisThema() {
           {pageContentTables}
         </>
       }
+      maintenanceNotificationsPageSlug="afis"
     />
   );
 }

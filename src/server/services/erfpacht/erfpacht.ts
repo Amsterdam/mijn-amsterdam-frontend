@@ -8,12 +8,11 @@ import {
   ErfpachtDossiersDetailSource,
   ErfpachtDossierSource,
   ErfpachtDossierPropsFrontend,
-  type ErfpachtDossierFactuurFrontend,
   type ErfpachtDossiersResponseSource,
 } from './erfpacht-types';
 import { routeConfig } from '../../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
 import { defaultDateFormat } from '../../../universal/helpers/date';
-import { jsonCopy, sortAlpha } from '../../../universal/helpers/utils';
+import { sortAlpha } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
@@ -39,18 +38,26 @@ function transformIsErfpachterResponseSource(
 function getDossierNummerUrlParam(
   dossierNummer: string | undefined
 ): string | null {
-  return dossierNummer ? `E${dossierNummer.split(/E|\//).join('.')}` : null;
+  return dossierNummer
+    ? (dossierNummer.match(/[a-zA-Z]+|[0-9]+/g)?.join('.') ?? dossierNummer)
+    : null;
 }
 
 export function transformErfpachtDossierProperties<
-  T extends ErfpachtDossierSource | ErfpachtDossiersDetailSource,
->(dossierSource: T): ErfpachtDossierPropsFrontend<T> {
-  const dossier: T = structuredClone(dossierSource);
+  T extends D | null,
+  D extends ErfpachtDossierSource | ErfpachtDossiersDetailSource,
+>(dossierSource: T): ErfpachtDossierPropsFrontend<D> | null {
+  if (!dossierSource) {
+    return null;
+  }
+
+  const dossier: D = structuredClone(dossierSource);
+
   const dossierNummerUrlParam = getDossierNummerUrlParam(dossier.dossierNummer);
   const title = `${dossier.dossierNummer}: ${dossier.voorkeursadres}`;
 
   // Filter out relaties that we don't want to show in the frontend.
-  if ('relaties' in dossier && !!dossier.relaties) {
+  if ('relaties' in dossier && Array.isArray(dossier.relaties)) {
     dossier.relaties = dossier.relaties.filter(
       (relatie) => relatie.indicatieGeheim === false
     );
@@ -58,6 +65,7 @@ export function transformErfpachtDossierProperties<
 
   if (
     'bijzondereBepalingen' in dossier &&
+    Array.isArray(dossier.bijzondereBepalingen) &&
     dossier.bijzondereBepalingen?.length
   ) {
     dossier.bijzondereBepalingen = dossier.bijzondereBepalingen.map(
@@ -70,34 +78,17 @@ export function transformErfpachtDossierProperties<
     );
   }
 
-  if ('juridisch' in dossier && !!dossier?.juridisch?.ingangsdatum) {
+  if ('juridisch' in dossier && dossier?.juridisch?.ingangsdatum) {
     dossier.juridisch.ingangsdatum = defaultDateFormat(
       dossier.juridisch.ingangsdatum
     );
   }
 
-  if ('eersteUitgifte' in dossier) {
+  if ('eersteUitgifte' in dossier && dossier.eersteUitgifte) {
     dossier.eersteUitgifte = defaultDateFormat(dossier.eersteUitgifte);
   }
 
-  if ('facturen' in dossier && 'facturen' in dossier.facturen) {
-    const facturen: ErfpachtDossierFactuurFrontend[] =
-      dossier.facturen.facturen?.map((factuur) => {
-        const updatedFactuur: ErfpachtDossierFactuurFrontend = {
-          ...factuur,
-          vervalDatum: defaultDateFormat(factuur.vervalDatum),
-          dossierNummerUrlParam: getDossierNummerUrlParam(
-            dossier.dossierNummer
-          ),
-        };
-
-        return updatedFactuur;
-      }) ?? [];
-
-    dossier.facturen.facturen = facturen;
-  }
-
-  const zaak: ErfpachtDossierPropsFrontend<T> = Object.assign(dossier, {
+  const zaak: ErfpachtDossierPropsFrontend<D> = Object.assign(dossier, {
     dossierNummerUrlParam,
     title,
     id: dossierNummerUrlParam ?? dossier.voorkeursadres,
@@ -113,38 +104,30 @@ export function transformErfpachtDossierProperties<
 }
 
 export function transformDossierResponse(
-  responseDataSource: ErfpachtDossiersResponseSource,
+  responseDataSource: ErfpachtDossiersResponseSource | null,
   relatieCode: ErfpachtErpachterResponseSource['relationCode']
 ): ErfpachtDossiersResponse | null {
-  const responseData: ErfpachtDossiersResponse = responseDataSource
-    ? jsonCopy(responseDataSource)
-    : {};
-  const hasDossiers = !!responseData?.dossiers?.dossiers?.length;
-
-  if (!hasDossiers) {
+  if (!responseDataSource?.dossiers?.dossiers?.length) {
     return null;
   }
 
-  responseData.dossiers.dossiers =
-    responseData.dossiers?.dossiers
+  const dossiers =
+    responseDataSource.dossiers.dossiers
       .map((dossier) => {
         return transformErfpachtDossierProperties(dossier);
       })
+      .filter((dossier) => dossier !== null)
       .sort(sortAlpha('voorkeursadres', 'asc')) ?? [];
 
-  if (responseData.openstaandeFacturen) {
-    responseData.openstaandeFacturen.facturen =
-      responseData.openstaandeFacturen?.facturen?.map((factuur) => {
-        return {
-          ...factuur,
-          dossierNummerUrlParam: getDossierNummerUrlParam(factuur.dossierAdres),
-          vervalDatum: defaultDateFormat(factuur.vervalDatum),
-        };
-      }) ?? [];
-  }
-
-  responseData.relatieCode = relatieCode;
-  responseData.isKnown = hasDossiers;
+  const responseData: ErfpachtDossiersResponse = {
+    ...responseDataSource,
+    dossiers: {
+      ...responseDataSource.dossiers,
+      dossiers,
+    },
+    relatieCode: relatieCode,
+    isKnown: true,
+  };
 
   return responseData;
 }
@@ -205,3 +188,7 @@ export async function fetchErfpachtDossiersDetail(
 
   return dossierInfoResponse;
 }
+
+export const forTesting = {
+  getDossierNummerUrlParam,
+};

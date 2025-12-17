@@ -1,0 +1,8 @@
+.PageMA {
+  &:global(.ams-page) {
+    min-block-size: calc(100dvh - var(--padding-bottom));
+  }
+}
+.PageMAWide {
+  --ams-page-max-inline-size: 100vw;
+}

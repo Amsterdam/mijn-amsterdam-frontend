@@ -136,18 +136,12 @@ export async function fetchStadspasSource(
     params: {
       include_balance: true,
     },
-  });
-  return requestData<StadspasDetailSource>({
-    ...dataRequestConfig,
-    // Warning! Setting cacheKey_UNSAFE like this bypasses the transformation by getApiConfigBasedCacheKey in getApiConfig.
-    // Only do this if you are absolutely sure you this cacheKey is unique to the user.
-    // In this case, the passNumber and administratienummer are unique to the user.
-    // NOTE: will not be used if enableCache is false.
     cacheKey_UNSAFE: createStadspasSourceCacheKey(
       passNumber,
       administratienummer
     ),
   });
+  return requestData<StadspasDetailSource>(dataRequestConfig);
 }
 
 function releaseStadspasSourceCache(

@@ -34,12 +34,17 @@ describe('useBffApi', () => {
       data: null,
       errorData: null,
       fetch: expect.any(Function),
+      optimisticUpdateContent: expect.any(Function),
     });
   });
 
   it('should throw error if key is used without url and fetchImmediately is not false', () => {
+    // The following 'expect throws' will *market* glorious react features to you. Be silent!
+    const spy = vi.spyOn(console, 'error');
+    spy.mockImplementation(() => null);
+
     expect(() => renderHook(() => useBffApi('missing-url-key'))).toThrow(
-      'When using a key, you must provide a URL in the options parameter or set fetchImmediately to false'
+      'When using a cacheKey that is not an URL or path, you must provide a URL in the options parameter or set fetchImmediately to false'
     );
     expect(() => renderHook(() => useBffApi('/api/v1'))).toThrow();
     expect(() => renderHook(() => useBffApi('api/v1'))).toThrow();
@@ -48,6 +53,8 @@ describe('useBffApi', () => {
       .get('/api/v1/path')
       .reply(200, { foo: 'bar' });
     expect(() => renderHook(() => useBffApi('/api/v1/path'))).not.toThrow();
+
+    spy.mockRestore();
   });
 
   it('should not fetch immediately when fetchImmediately is false', () => {
@@ -139,6 +146,7 @@ describe('useBffApi', () => {
       data: mockResponse,
       errorData: null,
       fetch: expect.any(Function),
+      optimisticUpdateContent: expect.any(Function),
     });
   });
 
@@ -171,6 +179,7 @@ describe('useBffApi', () => {
       errorData:
         'HTTP Error: Request to http://localhost/test failed with status 500 message: Failed',
       fetch: expect.any(Function),
+      optimisticUpdateContent: expect.any(Function),
     });
   });
 
@@ -213,6 +222,7 @@ describe('useBffApi', () => {
       data: null,
       errorData: 'Unknown error: Stop now!',
       fetch: expect.any(Function),
+      optimisticUpdateContent: expect.any(Function),
     });
   });
 });
@@ -270,7 +280,7 @@ describe('sendJSONPostRequest', () => {
 
     const result = await sendJSONPostRequest<{ foo: string }>(
       'http://localhost/test',
-      { foo: 'bar' }
+      { payload: { foo: 'bar' } }
     );
     expect(result.status).toBe('OK');
     expect(result.content).toEqual({ foo: 'bar' });
@@ -292,7 +302,7 @@ describe('sendFormPostRequest', () => {
 
     const result = await sendFormPostRequest<{ foo: string }>(
       'http://localhost/test',
-      { foo: 'bar' }
+      { payload: { foo: 'bar' } }
     );
     expect(result.status).toBe('OK');
     expect(result.content).toEqual({ foo: 'bar' });

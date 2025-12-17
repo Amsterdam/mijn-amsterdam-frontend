@@ -50,13 +50,15 @@ export type InfoSection = {
   listItems: Array<{ text?: string; listItems?: string[] } | string>;
 };
 
-export interface ThemaMenuItem<ID extends string = string>
-  extends Omit<LinkProps, 'title' | 'to' | 'rel'> {
+export interface ThemaMenuItem<ID extends string = string> extends Omit<
+  LinkProps,
+  'title' | 'to' | 'rel'
+> {
   id: ID;
   profileTypes: ProfileType[];
   isAlwaysVisible?: boolean;
   hasAppStateValue?: boolean;
-  /** Scope 'content' automatically hides all thema content outside the thema. Content inside the thema should be manually redacted. Add the redacted class to the tag using getRedactedClass('themaId', 'content')  */
+  /** Default 'full'. Scope 'content' automatically redacts all thema content outside the thema like contactmomenten or notifications. Content inside the thema should be manually redacted. Add the redacted class to the tag using getRedactedClass('themaId', 'content') */
   redactedScope: 'full' | 'content' | 'none';
   title:
     | LinkProps['title']
@@ -74,8 +76,9 @@ export interface CategoryMenuItem<ID extends string> extends LinkProps {
   profileTypes?: ProfileType[];
 }
 
-export interface ThemaMenuItemTransformed<ID extends string = string>
-  extends Omit<ThemaMenuItem<ID>, 'title' | 'to' | 'isActive'> {
+export interface ThemaMenuItemTransformed<
+  ID extends string = string,
+> extends Omit<ThemaMenuItem<ID>, 'title' | 'to' | 'isActive'> {
   title: string;
   to: string;
   isActive: boolean;

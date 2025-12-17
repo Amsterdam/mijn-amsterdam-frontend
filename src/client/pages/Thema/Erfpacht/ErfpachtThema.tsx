@@ -1,10 +1,7 @@
 import { Paragraph, Link, Heading } from '@amsterdam/design-system-react';
 
 import { useErfpachtThemaData } from './useErfpachtThemaData.hook';
-import {
-  ErfpachtDossierFrontend,
-  ErfpachtDossierFactuurFrontend,
-} from '../../../../server/services/erfpacht/erfpacht-types';
+import { ErfpachtDossierFrontend } from '../../../../server/services/erfpacht/erfpacht-types';
 import { entries } from '../../../../universal/helpers/utils';
 import { MaRouterLink } from '../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../components/Page/Page';
@@ -12,7 +9,6 @@ import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 import * as afis from '../Afis/Afis-thema-config';
-import { useAfisThemaData } from '../Afis/useAfisThemaData.hook';
 
 export function ErfpachtThema() {
   const {
@@ -23,46 +19,26 @@ export function ErfpachtThema() {
     linkListItems,
     tableConfig,
     dossiers,
-    openFacturen,
     routeConfig,
-    listPageParamKind,
   } = useErfpachtThemaData();
-
-  const afisData = useAfisThemaData();
-  const hasOpenstaandeErfpachtFacturen =
-    !!afisData.facturenByState?.open?.facturen.filter((factuur) =>
-      factuur.afzender.toLowerCase().includes('erfpacht')
-    )?.length;
 
   useHTMLDocumentTitle(routeConfig.themaPage);
 
-  const excludedTables: string[] = [
-    listPageParamKind.alleFacturen,
-    // At the moment this table will show up with items such as 'Factuurinformatie is niet beschikbaar' in az/prod.
-    listPageParamKind.openFacturen,
-  ];
-
   const pageContentTables = tableConfig
-    ? entries(tableConfig)
-        .filter(([kind]) => !excludedTables.includes(kind))
-        .map(([kind, { title, displayProps, listPageRoute, maxItems }]) => {
+    ? entries(tableConfig).map(
+        ([kind, { title, displayProps, listPageRoute, maxItems }]) => {
           return (
-            <ThemaPaginaTable<
-              ErfpachtDossierFrontend | ErfpachtDossierFactuurFrontend
-            >
+            <ThemaPaginaTable<ErfpachtDossierFrontend>
               key={kind}
               title={title}
-              zaken={
-                kind === listPageParamKind.erfpachtDossiers
-                  ? dossiers
-                  : openFacturen
-              }
+              zaken={dossiers}
               displayProps={displayProps}
               maxItems={maxItems}
               listPageRoute={listPageRoute}
             />
           );
-        })
+        }
+      )
     : [];
 
   return (
@@ -72,6 +48,7 @@ export function ErfpachtThema() {
       isLoading={isLoading}
       isError={isError}
       linkListItems={linkListItems}
+      maintenanceNotificationsPageSlug="erfpacht"
       pageContentTop={
         <>
           <PageContentCell spanWide={8}>
@@ -106,9 +83,7 @@ export function ErfpachtThema() {
 function MissingFacturenDescription() {
   return (
     <>
-      <Heading size="level-3" level={3}>
-        Facturen
-      </Heading>
+      <Heading level={3}>Facturen</Heading>
       <Paragraph className="ams-mb-m">
         Facturen vanaf 1 januari 2025 en nog niet betaalde facturen kunt u
         inzien onder{' '}
@@ -124,17 +99,13 @@ function MissingFacturenDescription() {
         </Link>
         .
       </Paragraph>
-      <Heading size="level-4" level={4}>
-        Factuur naar ander adres
-      </Heading>
+      <Heading level={4}>Factuur naar ander adres</Heading>
       <Paragraph className="ams-mb-m">
         Facturen sturen wij altijd naar het adres waar u ingeschreven staat in
         de Basis Registratie Personen (BRP). Het is niet mogelijk dit aan te
         passen.
       </Paragraph>
-      <Heading size="level-4" level={4}>
-        U woont of verhuist naar het buitenland
-      </Heading>
+      <Heading level={4}>U woont of verhuist naar het buitenland</Heading>
       <Paragraph>
         Geef bij een verhuizing naar het buitenland altijd uw nieuwe woonadres
         aan ons door. Stuur daarvoor een e-mail naar{' '}

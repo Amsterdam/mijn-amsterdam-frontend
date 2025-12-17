@@ -1,5 +1,3 @@
-import path from 'path';
-
 import { HttpStatusCode } from 'axios';
 import express, { NextFunction, Request, Response } from 'express';
 import proxy from 'express-http-proxy';
@@ -12,7 +10,6 @@ import {
 } from './route-helpers';
 import { ZAAK_STATUS_ROUTE } from '../../client/pages/ZaakStatus/ZaakStatus-config';
 import { OTAP_ENV } from '../../universal/config/env';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
 import {
   DATASETS,
   getDatasetCategoryId,
@@ -39,10 +36,8 @@ import {
 import { getDatasetEndpointConfig } from '../services/buurt/helpers';
 import { loadClusterDatasets } from '../services/buurt/supercluster';
 import { fetchCmsFooter, fetchSearchConfig } from '../services/cms/cms-content';
-import {
-  fetchMaintenanceNotificationsActual,
-  QueryParamsMaintenanceNotifications,
-} from '../services/cms/cms-maintenance-notifications';
+import { fetchActiveMaintenanceNotifications } from '../services/cms/cms-maintenance-notifications';
+import { QueryParamsMaintenanceNotifications } from '../services/cms/cms-types';
 
 export const router = express.Router();
 
@@ -53,7 +48,7 @@ router.get(
   BffEndpoints.CMS_MAINTENANCE_NOTIFICATIONS,
   async (req, res, next) => {
     try {
-      const response = await fetchMaintenanceNotificationsActual(
+      const response = await fetchActiveMaintenanceNotifications(
         queryParams<QueryParamsMaintenanceNotifications>(req)
       );
       return res.json(response);
@@ -130,7 +125,7 @@ router.get(
     const id = req.params.id;
     const datasetCategoryId = getDatasetCategoryId(datasetId);
 
-    let response: ApiResponse_DEPRECATED<any> | null = null;
+    let response: ApiResponse_DEPRECATED<unknown> | null = null;
 
     try {
       if (datasetCategoryId && datasetId && id) {
@@ -160,29 +155,15 @@ router.get(
   }
 );
 
-router.get(BffEndpoints.SCREEN_SHARE, async (_, res) => {
-  const cobrowseIsActiveOverwrite = String(
-    getFromEnv('BFF_COBROWSE_IS_ACTIVE_OVERWRITE', false)
-  ).toLowerCase();
-  const cobrowseIsActive =
-    cobrowseIsActiveOverwrite === 'true' ||
-    (FeatureToggle.cobrowseIsActive && cobrowseIsActiveOverwrite !== 'false');
-  if (!cobrowseIsActive) {
-    return res.status(HttpStatusCode.NoContent).send();
-  }
-
-  res.sendFile(
-    '/cobrowse-widget.js',
-    {
-      root: path.join(__dirname, '../static/screenshare/'),
-      lastModified: true,
-    },
-    (_error) => {
-      if (_error && !res.headersSent) {
-        res.status(HttpStatusCode.NoContent).send();
-      }
-    }
-  );
+router.get(BffEndpoints.SERVICES_TOGGLES, async (_, res) => {
+  const isToggleEnabled = (key: string, default_value: boolean = false) => {
+    const envValue =
+      getFromEnv(key, false)?.toLowerCase() ?? `${default_value}`;
+    return envValue === 'true';
+  };
+  res.json({
+    BFF_COBROWSE_IS_ACTIVE: isToggleEnabled('BFF_COBROWSE_IS_ACTIVE'),
+  });
 });
 
 // /**

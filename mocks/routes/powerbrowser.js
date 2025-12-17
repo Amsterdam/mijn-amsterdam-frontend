@@ -64,10 +64,15 @@ module.exports = [
     variants: [
       {
         id: 'standard',
-        type: 'json',
+        type: 'middleware',
         options: {
-          status: 200,
-          body: BB_ZAKEN,
+          middleware: (req, res, _, __) => {
+            res.send(
+              BB_ZAKEN.filter((zaak) =>
+                req.params.zaakIds.split(',').includes(zaak.id)
+              )
+            );
+          },
         },
       },
     ],
@@ -94,10 +99,11 @@ module.exports = [
     variants: [
       {
         id: 'standard',
-        type: 'json',
+        type: 'middleware',
         options: {
-          status: 200,
-          body: BB_LINK_ZAAK_ADRES,
+          middleware: (req, res) => {
+            return res.send(BB_LINK_ZAAK_ADRES);
+          },
         },
       },
     ],

@@ -3,21 +3,24 @@ import { ERVV } from './detail-page-content/ERVV';
 import { EvenementMelding } from './detail-page-content/EvenementMelding';
 import { EvenementVergunning } from './detail-page-content/EvenementVergunning';
 import { Flyeren } from './detail-page-content/Flyeren';
+import { LigplaatsVergunning } from './detail-page-content/LigplaatsVergunning';
 import { Nachtwerkontheffing } from './detail-page-content/Nachtwerkontheffing';
 import { Omzettingsvergunning } from './detail-page-content/Omzettingsvergunning';
 import { RvvHeleStad } from './detail-page-content/RvvHeleStad';
 import { RvvSloterweg } from './detail-page-content/RvvSloterweg';
 import { TVMRVVObject } from './detail-page-content/TVMRVVObject';
 import { VergunningDetailDocumentsList } from './detail-page-content/VergunningDetailDocumentsList';
-import { VOB } from './detail-page-content/VOB';
 import { Woonvergunningen } from './detail-page-content/Woonvergunningen';
 import { WVOSContent } from './detail-page-content/WVOS';
 import { ZwaarVerkeer } from './detail-page-content/ZwaarVerkeer';
 import { useVergunningenDetailData } from './useVergunningenDetailData.hook';
 import { useVergunningenThemaData } from './useVergunningenThemaData.hook';
+import type { DecosZaakFrontend } from '../../../../server/services/decos/decos-types';
+import type { PowerBrowserZaakFrontend } from '../../../../server/services/powerbrowser/powerbrowser-types';
 import type {
   DecosVergunning,
-  VergunningFrontend,
+  PBVergunning,
+  ZaakFrontendCombined,
 } from '../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
@@ -28,10 +31,15 @@ interface DetailPageContentProps<V> {
   vergunning: V;
 }
 
-// TODO: Implement detailpages per case
-function DetailPageContent<T extends DecosVergunning>({
+function DetailPageContent<T extends DecosVergunning | PBVergunning>({
   vergunning,
-}: DetailPageContentProps<VergunningFrontend<T>>) {
+}: DetailPageContentProps<
+  T extends DecosVergunning
+    ? DecosZaakFrontend<T>
+    : T extends PBVergunning
+      ? PowerBrowserZaakFrontend<T>
+      : never
+>) {
   return (
     <PageContentCell>
       {(function VergunningDetailContent() {
@@ -66,7 +74,9 @@ function DetailPageContent<T extends DecosVergunning>({
           case 'Splitsingsvergunning':
             return <Woonvergunningen vergunning={vergunning} />;
           case 'VOB':
-            return <VOB vergunning={vergunning} />;
+            return <LigplaatsVergunning vergunning={vergunning} />;
+          case 'Ligplaatsvergunning':
+            return <LigplaatsVergunning vergunning={vergunning} />;
           case 'RVV - Hele stad':
             return <RvvHeleStad vergunning={vergunning} />;
           case 'RVV Sloterweg':
@@ -118,7 +128,7 @@ export function VergunningenDetail() {
         vergunning && (
           <>
             <DetailPageContent
-              vergunning={vergunning as VergunningFrontend<DecosVergunning>}
+              vergunning={vergunning as ZaakFrontendCombined<DecosVergunning>}
             />
             <PageContentCell spanWide={8}>
               <VergunningDetailDocumentsList

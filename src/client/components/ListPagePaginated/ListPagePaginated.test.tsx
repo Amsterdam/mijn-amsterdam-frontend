@@ -1,0 +1,165 @@
+import { render, screen } from '@testing-library/react';
+import { MemoryRouter, Route, Routes } from 'react-router';
+import { describe, it, expect } from 'vitest';
+
+import { ListPagePaginated } from './ListPagePaginated';
+import type { DisplayProps } from '../Table/TableV2.types';
+
+type TestItem = {
+  id: number;
+  name: string;
+};
+
+const mockItems: TestItem[] = Array.from({ length: 50 }, (_, i) => ({
+  id: i + 1,
+  name: `Item ${i + 1}`,
+}));
+
+const mockDisplayProps: DisplayProps<TestItem> = {
+  props: {
+    id: 'ID',
+    name: 'Name',
+  },
+};
+
+const renderWithRouter = (ui: React.ReactNode, route: string) => {
+  return render(
+    <MemoryRouter initialEntries={[route]}>
+      <Routes>
+        <Route path="/test/:page?" element={ui} />
+      </Routes>
+    </MemoryRouter>
+  );
+};
+
+describe('ListPagePaginated', () => {
+  it('renders the title and breadcrumbs', () => {
+    renderWithRouter(
+      <ListPagePaginated
+        appRoute="/test"
+        title="Test Title"
+        breadcrumbs={[{ title: 'Themapagina', to: '/thema' }]}
+        displayProps={mockDisplayProps}
+        items={mockItems}
+        isError={false}
+        isLoading={false}
+        themaId="test"
+      />,
+      '/test'
+    );
+
+    expect(
+      screen.getByRole('heading', { name: 'Test Title' })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: 'Test Title' })
+    ).toBeInTheDocument();
+    expect(screen.getByText('Themapagina')).toBeInTheDocument();
+    expect(screen.getByText('Home')).toBeInTheDocument();
+  });
+
+  it('displays a loading state', () => {
+    renderWithRouter(
+      <ListPagePaginated
+        appRoute="/test"
+        title="Test Title"
+        displayProps={mockDisplayProps}
+        items={mockItems}
+        isError={false}
+        isLoading={true}
+        themaId="test"
+      />,
+      '/test'
+    );
+
+    expect(screen.getByText(/Inhoud wordt opgehaald/i)).toBeInTheDocument();
+  });
+
+  it('displays an error message when isError is true', () => {
+    renderWithRouter(
+      <ListPagePaginated
+        appRoute="/test"
+        title="Test Title"
+        displayProps={mockDisplayProps}
+        items={mockItems}
+        isError={true}
+        isLoading={false}
+        errorText="Custom error message"
+        themaId="test"
+      />,
+      '/test'
+    );
+
+    expect(screen.getByText('Custom error message')).toBeInTheDocument();
+  });
+
+  it('displays no items text when there are no items', () => {
+    renderWithRouter(
+      <ListPagePaginated
+        appRoute="/test"
+        title="Test Title"
+        displayProps={mockDisplayProps}
+        items={[] as TestItem[]}
+        isError={false}
+        isLoading={false}
+        noItemsText="No items available"
+        themaId="test"
+      />,
+      '/test'
+    );
+
+    expect(screen.getByText('No items available')).toBeInTheDocument();
+  });
+
+  it('renders paginated items', () => {
+    renderWithRouter(
+      <ListPagePaginated
+        appRoute="/test"
+        title="Test Title"
+        displayProps={mockDisplayProps}
+        items={mockItems}
+        isError={false}
+        isLoading={false}
+        pageSize={10}
+        themaId="test"
+      />,
+      '/test/2'
+    );
+
+    expect(screen.queryByText('Item 10')).not.toBeInTheDocument();
+    expect(screen.getByText('Item 11')).toBeInTheDocument();
+    expect(screen.getByText('Item 20')).toBeInTheDocument();
+    expect(screen.queryByText('Item 21')).not.toBeInTheDocument();
+  });
+
+  it('renders 2 pagination controls when items exceed page size', () => {
+    renderWithRouter(
+      <ListPagePaginated
+        appRoute="/test"
+        title="Test Title"
+        displayProps={mockDisplayProps}
+        items={mockItems}
+        isError={false}
+        isLoading={false}
+        pageSize={10}
+        themaId="test"
+      />,
+      '/test'
+    );
+
+    const numberOfUnselectedPageLinks = 8; // 4 links per pagination component x 2 components
+    const numberOfSelectedPageLinks = 2; // 1 selected link per pagination component x 2 components
+
+    const textOfUnselectedPageLinks = /Ga naar pagina/;
+    const textOfSelectedPageLinks = /Pagina/;
+
+    // We have 2 pagination components on the list page, both with 5 pages.
+    // The first pagination item is selected and has a different text.
+    expect(screen.getAllByText(textOfUnselectedPageLinks)).toHaveLength(
+      numberOfUnselectedPageLinks
+    );
+    expect(screen.getAllByText(textOfSelectedPageLinks)).toHaveLength(
+      numberOfSelectedPageLinks
+    );
+  });
+});

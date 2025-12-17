@@ -1,6 +1,6 @@
 import { generatePath } from 'react-router';
 
-import { WMOVoorzieningFrontend } from '../../../../server/services/wmo/wmo-config-and-types';
+import { WMOVoorzieningFrontend } from '../../../../server/services/wmo/wmo-types';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';

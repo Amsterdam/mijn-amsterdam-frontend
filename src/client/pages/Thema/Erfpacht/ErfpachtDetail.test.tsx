@@ -10,13 +10,17 @@ import {
   transformDossierResponse,
   transformErfpachtDossierProperties,
 } from '../../../../server/services/erfpacht/erfpacht';
+import type {
+  ErfpachtDossiersDetailSource,
+  ErfpachtDossiersResponseSource,
+} from '../../../../server/services/erfpacht/erfpacht-types';
 import { bffApi } from '../../../../testing/utils';
 import { AppState } from '../../../../universal/types/App.types';
 import MockApp from '../../MockApp';
 
 function mockDetailFetch(
   content: unknown = transformErfpachtDossierProperties(
-    ERFPACHT_DOSSIER_DETAIL as any
+    ERFPACHT_DOSSIER_DETAIL as ErfpachtDossiersDetailSource
   ),
   status: 'OK' | 'ERROR' = 'OK'
 ) {
@@ -59,7 +63,7 @@ describe('<Erfpacht/DossierDetail />', () => {
       expect(
         screen.getByRole('heading', { name: 'Erfpachtdossier' })
       ).toBeInTheDocument();
-      expect(screen.getByText('Foutmelding')).toBeInTheDocument();
+      expect(screen.getByText('Geen gegevens gevonden')).toBeInTheDocument();
       expect(
         screen.getByText('We kunnen op dit moment geen gegevens tonen.')
       ).toBeInTheDocument();
@@ -76,11 +80,7 @@ describe('<Erfpacht/DossierDetail />', () => {
         },
       } as AppState;
       const screen = render(<Component state={testState} />);
-      const facturenPage1 = [
-        { factuurNummer: 'A.123123123123' },
-        { factuurNummer: 'B.123123123123' },
-        { factuurNummer: 'C.123123123123' },
-      ];
+
       const dataIsLoadedTarget = 'E123/456';
       await waitFor(() => screen.getByText(dataIsLoadedTarget));
       expect(
@@ -95,14 +95,8 @@ describe('<Erfpacht/DossierDetail />', () => {
       expect(screen.getByText('Financieel')).toBeInTheDocument();
       expect(screen.getByText('Bijzondere Bepalingen')).toBeInTheDocument();
       expect(screen.queryByText('Foutmelding')).not.toBeInTheDocument();
-      for (const factuur of facturenPage1) {
-        expect(
-          screen.queryByText(factuur.factuurNummer)
-        ).not.toBeInTheDocument();
-      }
-      expect(screen.queryAllByText('Toon').length).toBe(3);
-      await userEvent.click(screen.queryAllByText('Toon')[3]);
     });
+
     test('Financien', async () => {
       mockDetailFetch();
       const testState = {
@@ -182,7 +176,10 @@ describe('<Erfpacht/DossierDetail />', () => {
     const testState = {
       ERFPACHT: {
         status: 'OK',
-        content: transformDossierResponse(ERFPACHT_DOSSIERS as any, '999999'),
+        content: transformDossierResponse(
+          ERFPACHT_DOSSIERS as ErfpachtDossiersResponseSource,
+          'xxxx-abc'
+        ),
       },
     } as AppState;
 

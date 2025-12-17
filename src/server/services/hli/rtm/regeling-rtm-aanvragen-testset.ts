@@ -1,4 +1,5 @@
 import { hash } from '../../../../universal/helpers/utils';
+import type { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../../zorgned/zorgned-types';
 
 export type RTMAanvraagProps = {
   productIdentificatie: 'AV-RTM1' | 'AV-RTM';
@@ -21,6 +22,7 @@ export type RTMTestInput = {
   only?: boolean;
   aanvragen: RTMAanvraagProps[];
   expected: RTMAanvraagTestResult[];
+  mockDate?: string;
 };
 
 export const RTM1 = 'AV-RTM1';
@@ -33,19 +35,7 @@ export function aanvraag(
   productIdentificatie: string,
   resultaat: 'toegewezen' | 'afgewezen',
   betrokkenen: string[] = [],
-  otherProps?: {
-    id?: string;
-    prettyID?: string;
-    titel?: string;
-    datumAanvraag?: string;
-    datumBesluit?: string;
-    datumIngangGeldigheid?: string | null;
-    datumEindeGeldigheid?: string | null;
-    documenten?: unknown[];
-    beschiktProductIdentificatie?: string;
-    betrokkenPersonen?: unknown[];
-    productOmschrijving?: string;
-  }
+  otherProps?: Partial<ZorgnedAanvraagWithRelatedPersonsTransformed>
 ) {
   const aanvraag = {
     titel: 'Regeling tegemoetkoming meerkosten',
@@ -587,13 +577,114 @@ export const aanvragenTestsetInput = [
     title: 'Single afgewezen aanvraag',
     bsnLoggedinUser: 'X',
     aanvragen: [aanvraag(RTM1, AFW)],
-    // only: true,
     expected: [
       {
         id: 4288114805,
         persoon: '',
         steps: ['Besluit'],
         displayStatus: 'Afgewezen',
+      },
+    ],
+  },
+  {
+    title: 'Ontvanger aanvraag, wijziging, beïndiging',
+    bsnLoggedinUser: 'A6',
+    aanvragen: [
+      aanvraag(RTM2, TOE, ['A6'], {
+        beschiktProductIdentificatie: 'A6-1',
+        datumIngangGeldigheid: '2024-11-01',
+        datumEindeGeldigheid: '2024-11-30',
+        procesAanvraagOmschrijving: 'Aanvraag RTM fase 2',
+      }),
+      aanvraag(RTM2, TOE, ['A6'], {
+        beschiktProductIdentificatie: 'A6-1',
+        datumIngangGeldigheid: '2024-11-01',
+        datumEindeGeldigheid: '2024-11-30',
+        procesAanvraagOmschrijving: 'RTM Herkeuring',
+      }),
+      aanvraag(RTM2, TOE, ['A6'], {
+        beschiktProductIdentificatie: 'A6-1',
+        datumIngangGeldigheid: '2024-11-01',
+        datumEindeGeldigheid: '2024-11-30',
+        procesAanvraagOmschrijving: 'Beëindigen RTM',
+      }),
+    ],
+    expected: [
+      {
+        id: 4288114805,
+        persoon: 'Persoon A6',
+        steps: ['Besluit', 'Besluit wijziging', 'Einde recht'],
+        displayStatus: 'Einde recht',
+      },
+    ],
+  },
+  {
+    title: 'Ontvanger aanvraag, wijziging',
+    bsnLoggedinUser: 'A7',
+    aanvragen: [
+      aanvraag(RTM2, TOE, ['A7'], {
+        beschiktProductIdentificatie: 'A7-1',
+        datumIngangGeldigheid: '2024-11-01',
+        datumEindeGeldigheid: null,
+        procesAanvraagOmschrijving: 'Aanvraag RTM fase 2',
+      }),
+      aanvraag(RTM2, TOE, ['A7'], {
+        beschiktProductIdentificatie: 'A7-1',
+        datumIngangGeldigheid: '2024-11-01',
+        datumEindeGeldigheid: null,
+        procesAanvraagOmschrijving: 'RTM Herkeuring',
+      }),
+    ],
+    expected: [
+      {
+        id: 4288114805,
+        persoon: 'Persoon A7',
+        steps: ['Besluit', 'Besluit wijziging', 'Einde recht'],
+        displayStatus: 'Besluit wijziging',
+      },
+    ],
+  },
+  {
+    title:
+      'RTM voor één jaar, mét einde recht, zonder beëindigingsproces - Besluit',
+    bsnLoggedinUser: 'A8',
+    mockDate: '2025-10-15',
+    aanvragen: [
+      aanvraag(RTM2, TOE, ['A8'], {
+        beschiktProductIdentificatie: 'A8-1',
+        datumIngangGeldigheid: '2024-12-01',
+        datumEindeGeldigheid: '2025-11-30',
+        procesAanvraagOmschrijving: 'Aanvraag RTM fase 2',
+      }),
+    ],
+    expected: [
+      {
+        id: 4288114805,
+        persoon: 'Persoon A8',
+        steps: ['Besluit', 'Einde recht'],
+        displayStatus: 'Besluit',
+      },
+    ],
+  },
+  {
+    title:
+      'RTM voor één jaar, mét einde recht, zonder beëindigingsproces - Einde recht',
+    bsnLoggedinUser: 'A9',
+    mockDate: '2025-12-01',
+    aanvragen: [
+      aanvraag(RTM2, TOE, ['A9'], {
+        beschiktProductIdentificatie: 'A9-1',
+        datumIngangGeldigheid: '2024-12-01',
+        datumEindeGeldigheid: '2025-11-30',
+        procesAanvraagOmschrijving: 'Aanvraag RTM fase 2',
+      }),
+    ],
+    expected: [
+      {
+        id: 4288114805,
+        persoon: 'Persoon A9',
+        steps: ['Besluit', 'Einde recht'],
+        displayStatus: 'Einde recht',
       },
     ],
   },

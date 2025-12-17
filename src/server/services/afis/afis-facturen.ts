@@ -5,37 +5,7 @@ import slug from 'slugme';
 import { firstBy } from 'thenby';
 
 import { getAfisApiConfig, getFeedEntryProperties } from './afis-helpers';
-import { routeConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import {
-  apiErrorResult,
-  apiSuccessResult,
-  getFailedDependencies,
-  getSettledResult,
-  type ApiResponse,
-} from '../../../universal/helpers/api';
-import {
-  dateSort,
-  defaultDateFormat,
-  isDateInPast,
-} from '../../../universal/helpers/date';
-import {
-  displayAmount,
-  capitalizeFirstLetter,
-} from '../../../universal/helpers/text';
-import {
-  entries,
-  toDateFormatted,
-  uniqueArray,
-} from '../../../universal/helpers/utils';
-import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import {
-  getRequestParamsFromQueryString,
-  requestData,
-} from '../../helpers/source-api-request';
-import { BffEndpoints } from '../../routing/bff-routes';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { captureMessage, trackEvent } from '../monitoring';
+import { featureToggle, routes } from './afis-service-config';
 import type {
   AfisFactuurState,
   AfisFacturenParams,
@@ -50,6 +20,32 @@ import type {
   AfisFacturenOverviewResponse,
   AfisFactuurTermijn,
 } from './afis-types';
+import { routeConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+  getFailedDependencies,
+  getSettledResult,
+  type ApiResponse,
+} from '../../../universal/helpers/api';
+import {
+  dateSort,
+  defaultDateFormat,
+  isDateInPast,
+} from '../../../universal/helpers/date';
+import { toDateFormatted } from '../../../universal/helpers/date';
+import {
+  displayAmount,
+  capitalizeFirstLetter,
+} from '../../../universal/helpers/text';
+import { entries, uniqueArray } from '../../../universal/helpers/utils';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
+import {
+  getRequestParamsFromQueryString,
+  requestData,
+} from '../../helpers/source-api-request';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
+import { captureMessage, trackEvent } from '../monitoring';
 
 const DEFAULT_PROFIT_CENTER_NAME = 'Gemeente Amsterdam';
 const AFIS_MAX_FACTUREN_TOP = 2000;
@@ -271,7 +267,7 @@ function transformFactuur(
   const status = determineFactuurStatus(invoice, amountPayed, hasDeelbetaling);
 
   const documentDownloadLink = factuurDocumentIdEncrypted
-    ? generateFullApiUrlBFF(BffEndpoints.AFIS_DOCUMENT_DOWNLOAD, [
+    ? generateFullApiUrlBFF(routes.protected.AFIS_DOCUMENT_DOWNLOAD, [
         { id: factuurDocumentIdEncrypted },
       ])
     : null;
@@ -416,7 +412,7 @@ function transformFacturen(
   const count = responseData?.feed?.count ?? feedProperties.length;
   const facturenTransformed = feedProperties
     .filter((invoiceProperties) => {
-      return FeatureToggle.afisFilterOutUndownloadableFacturenActive
+      return featureToggle.filterOutUndownloadableFacturenActive
         ? isDownloadAvailable(
             invoiceProperties.AccountingDocumentCreationDate ||
               invoiceProperties.PostingDate
@@ -492,7 +488,7 @@ function determineFactuurStatus(
       (sourceInvoice.DunningLevel == 1 || sourceInvoice.DunningLevel == 2):
       return 'herinnering';
 
-    case FeatureToggle.afisTermijnFacturenActive &&
+    case featureToggle.termijnFacturenActive &&
       !!sourceInvoice.SEPAMandate &&
       sourceInvoice.PaymentMethod !== 'B' &&
       paymentTermsRegex.test(sourceInvoice.PaymentTerms):
@@ -625,7 +621,7 @@ async function fetchAfisOpenFacturenIncludingAfgehandeldeTermijnFacturen(
     return facturenOpenResponse;
   }
 
-  if (!FeatureToggle.afisTermijnFacturenActive) {
+  if (!featureToggle.termijnFacturenActive) {
     return facturenOpenResponse as ApiResponse<AfisFacturenResponse>;
   }
 

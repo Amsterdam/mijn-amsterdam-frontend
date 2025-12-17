@@ -12,11 +12,7 @@ import {
 } from '@amsterdam/design-system-react';
 import type { FallbackProps } from 'react-error-boundary';
 
-import {
-  PageContentCell,
-  PageContentV2,
-  TextPageV2,
-} from '../../components/Page/Page';
+import { PageContentCell, PageV2 } from '../../components/Page/Page';
 import { useUsabilla } from '../../hooks/useUsabilla';
 
 function ApplicationErrorContent({ error }: { error?: Error }) {
@@ -25,10 +21,7 @@ function ApplicationErrorContent({ error }: { error?: Error }) {
   }, []);
 
   return (
-    <>
-      <PageContentCell startWide={1} spanWide={12}>
-        <Heading level={1}>Kritieke applicatie fout</Heading>
-      </PageContentCell>
+    <PageV2 heading="Kritieke applicatie fout" showBreadcrumbs={false}>
       <PageContentCell>
         <Paragraph className="ams-mb-m">
           Excuses, er gaat iets mis. Probeer om de pagina opnieuw te laden. Lukt
@@ -49,9 +42,7 @@ function ApplicationErrorContent({ error }: { error?: Error }) {
             <strong>Fout:</strong> {error.toString()}
           </Paragraph>
         )}
-        <Heading size="level-4" level={4}>
-          Vragen over Mijn Amsterdam?
-        </Heading>
+        <Heading level={4}>Vragen over Mijn Amsterdam?</Heading>
         <Paragraph className="ams-mb-xl">
           Kijk bij{' '}
           <Link
@@ -62,29 +53,22 @@ function ApplicationErrorContent({ error }: { error?: Error }) {
           </Link>
         </Paragraph>
       </PageContentCell>
-    </>
+    </PageV2>
   );
 }
 
 export function ApplicationError({
   error,
-  children,
 }: FallbackProps & { children?: ReactNode }) {
   useUsabilla();
   return (
     <>
       <Page>
-        <TextPageV2>
-          <PageContentV2>
-            <PageContentCell startWide={1} spanWide={12}>
-              <PageHeader
-                brandName="Mijn Amsterdam"
-                logoLink="https://mijn.amsterdam.nl"
-              />
-            </PageContentCell>
-            <ApplicationErrorContent error={error} />
-          </PageContentV2>
-        </TextPageV2>
+        <PageHeader
+          brandName="Mijn Amsterdam"
+          logoLink="https://mijn.amsterdam.nl"
+        />
+        <ApplicationErrorContent error={error} />
       </Page>
       <PageFooter>
         <PageFooter.Spotlight>

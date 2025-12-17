@@ -19,14 +19,9 @@ export const BffEndpoints = {
   STATUS_HEALTH: '/status/health',
   TEST_ACCOUNTS_OVERVIEW: '/admin/user-data-overview',
 
-  SCREEN_SHARE: '/services/screenshare',
+  SERVICES_TOGGLES: '/services/feature-toggles',
 
   TELEMETRY_PROXY: '/services/telemetry/v2/track',
-
-  // AFIS
-  AFIS_BUSINESSPARTNER: '/services/afis/businesspartner',
-  AFIS_FACTUREN: '/services/afis/facturen/:state',
-  AFIS_DOCUMENT_DOWNLOAD: '/services/afis/facturen/document',
 
   // Decos (Vergunningen, Horeca, Parkeren en Toeristische verhuur)
   DECOS_DOCUMENTS_LIST: `/services/decos/documents`,
@@ -65,7 +60,7 @@ export const BffEndpoints = {
 const AMSAPP_BASE = '/services/amsapp';
 
 export const ExternalConsumerEndpoints = {
-  // Publicly accessible
+  // Publicly accessible over the internet
   public: {
     STADSPAS_AMSAPP_LOGIN: `${AMSAPP_BASE}/stadspas/login/:token`,
     STADSPAS_ADMINISTRATIENUMMER: `${AMSAPP_BASE}/stadspas/administratienummer/:token`,
@@ -75,7 +70,7 @@ export const ExternalConsumerEndpoints = {
     NOTIFICATIONS_CONSUMER_APP: `${AMSAPP_BASE}/notifications/consumer/:consumerId/app`,
     NOTIFICATIONS_CONSUMER: `${AMSAPP_BASE}/notifications/consumer/:consumerId`,
   },
-  // Privately accessible
+  // Privately accessible over private network
   private: {
     STADSPAS_PASSEN: `${AMSAPP_BASE}/stadspas/passen/:administratienummerEncrypted`,
     STADSPAS_DISCOUNT_TRANSACTIONS: `${AMSAPP_BASE}/stadspas/aanbiedingen/transactions/:transactionsKeyEncrypted`,
@@ -94,6 +89,7 @@ export const PUBLIC_BFF_ENDPOINTS = [
   BffEndpoints.CMS_MAINTENANCE_NOTIFICATIONS,
   BffEndpoints.CMS_FOOTER,
   BffEndpoints.TELEMETRY_PROXY,
+  BffEndpoints.SERVICES_TOGGLES,
 ] as const;
 
 export const DevelopmentRoutes = {

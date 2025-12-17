@@ -4,11 +4,9 @@ import {
   LinkProps,
   ZaakAanvraagDetail,
 } from '../../../universal/types/App.types';
-import { getRedactedClass } from '../../helpers/cobrowse';
 import ErrorAlert from '../Alert/Alert';
 import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
-import { DetailPageV2, PageContentCell, PageContentV2 } from '../Page/Page';
-import { PageHeadingV2 } from '../PageHeading/PageHeadingV2';
+import { PageContentCell, PageV2 } from '../Page/Page';
 import { Steps } from '../StatusSteps/StatusSteps';
 
 const LOADING_BAR_CONFIG_DEFAULT: BarConfig = [
@@ -59,33 +57,33 @@ export default function ThemaDetailPagina<
     statusItemSteps = [...statusItemSteps];
     statusItemSteps.reverse();
   }
-
   return (
-    <DetailPageV2>
-      <PageContentV2 className={getRedactedClass(themaId)}>
-        <PageHeadingV2 breadcrumbs={breadcrumbs}>{title}</PageHeadingV2>
+    <PageV2 heading={title} breadcrumbs={breadcrumbs} redactedThemaId={themaId}>
+      {!isLoading && (isError || !zaak) && (
+        <PageContentCell>
+          <ErrorAlert
+            title={isError ? 'Foutmelding' : 'Geen gegevens gevonden'}
+            severity={isError ? 'error' : 'info'}
+          >
+            {errorAlertContent}
+          </ErrorAlert>
+        </PageContentCell>
+      )}
 
-        {!isLoading && (isError || !zaak) && (
-          <PageContentCell>
-            <ErrorAlert>{errorAlertContent}</ErrorAlert>
-          </PageContentCell>
-        )}
+      {isLoading && (
+        <PageContentCell>
+          <LoadingContent barConfig={loadingBarConfig} />
+        </PageContentCell>
+      )}
 
-        {isLoading && (
-          <PageContentCell>
-            <LoadingContent barConfig={loadingBarConfig} />
-          </PageContentCell>
-        )}
+      {pageContentMain}
 
-        {pageContentMain}
-
-        {showStatusSteps && zaak && !!statusItemSteps.length && (
-          <PageContentCell startWide={1} spanWide={12}>
-            <Steps title={statusLabel} steps={statusItemSteps} />
-          </PageContentCell>
-        )}
-        {pageContentBottom}
-      </PageContentV2>
-    </DetailPageV2>
+      {showStatusSteps && zaak && !!statusItemSteps.length && (
+        <PageContentCell startWide={1} spanWide={12}>
+          <Steps title={statusLabel} steps={statusItemSteps} />
+        </PageContentCell>
+      )}
+      {pageContentBottom}
+    </PageV2>
   );
 }

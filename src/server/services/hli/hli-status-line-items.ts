@@ -12,8 +12,7 @@ import {
   AV_UPCC,
   PCVERGOEDING,
   PCVERGOEDING_2026,
-  AV_PCTGBO,
-  AV_PCTGVO,
+  MAMS_PC2026,
 } from './status-line-items/regeling-pcvergoeding';
 import { REGELING_PERIODIEK } from './status-line-items/regeling-periodiek';
 import { featureToggle } from '../../../client/pages/Thema/HLI/HLI-thema-config';
@@ -26,7 +25,7 @@ export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<
     statusLineItems: { name: 'PCVERGOEDING', transformers: PCVERGOEDING },
   },
   {
-    productIdentificatie: [AV_PCTGBO, AV_PCTGVO],
+    productIdentificatie: [MAMS_PC2026],
     statusLineItems: {
       name: 'PCVERGOEDING2026',
       transformers: PCVERGOEDING_2026,

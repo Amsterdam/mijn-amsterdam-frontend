@@ -1,3 +1,5 @@
+import { Navigate } from 'react-router';
+
 import { getThemaTitleWithAppState } from './helpers';
 import { featureToggle, themaConfig } from './HLI-thema-config';
 import { HLIDetail } from './HLIDetail';
@@ -37,6 +39,11 @@ export const HLIRoutes = [
     route: themaConfig.route.path,
     Component: HLIThema,
     isActive: themaConfig.featureToggle.themaActive,
+  },
+  {
+    route: '/stadspas',
+    Component: () => <Navigate to={routeConfig.themaPage.path} replace />,
+    isActive: featureToggle.hliActive,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 

@@ -1,4 +1,4 @@
-import assert from 'assert';
+import assert from 'node:assert';
 
 import createDebugger from 'debug';
 import { generatePath } from 'react-router';
@@ -37,7 +37,6 @@ import type {
   DecosDocumentBlobSource,
   DecosDocumentSource,
   DecosZaakFrontend,
-  WithDateRange,
 } from './decos-types';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import {
@@ -46,12 +45,8 @@ import {
   apiSuccessResult,
   getSettledResult,
 } from '../../../universal/helpers/api';
-import {
-  omit,
-  sortAlpha,
-  toDateFormatted,
-  uniqueArray,
-} from '../../../universal/helpers/utils';
+import { omit, sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
+import { toDateFormatted } from '../../../universal/helpers/date';
 import type { StatusLineItem } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
@@ -65,6 +60,7 @@ import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureException, captureMessage } from '../monitoring';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
+import type { WithDateRange } from '../vergunningen/config-and-types';
 
 const debug = createDebugger('decos-service');
 

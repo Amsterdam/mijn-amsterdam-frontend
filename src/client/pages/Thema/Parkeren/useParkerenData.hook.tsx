@@ -6,7 +6,7 @@ import {
   themaTitle,
 } from './Parkeren-thema-config';
 import { DecosParkeerVergunning } from '../../../../server/services/parkeren/config-and-types';
-import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
+import { DecosZaakFrontend } from '../../../../server/services/vergunningen/config-and-types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore';
@@ -17,7 +17,7 @@ export function useParkerenData() {
   const hasMijnParkerenVergunningen = !!PARKEREN.content?.isKnown;
 
   const vergunningen = addLinkElementToProperty<
-    VergunningFrontend<DecosParkeerVergunning>
+    DecosZaakFrontend<DecosParkeerVergunning>
   >(PARKEREN.content?.vergunningen ?? [], 'identifier', true);
 
   const breadcrumbs = useThemaBreadcrumbs(themaId);
