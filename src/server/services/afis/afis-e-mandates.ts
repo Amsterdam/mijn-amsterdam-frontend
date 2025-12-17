@@ -1,5 +1,5 @@
 import { HttpStatusCode } from 'axios';
-import { add, isAfter, isSameDay, parseISO, subDays } from 'date-fns';
+import { add, isAfter, parseISO } from 'date-fns';
 import { Request } from 'express';
 import slug from 'slugme';
 import { firstBy } from 'thenby';
@@ -19,10 +19,11 @@ import {
   eMandateReceiver,
 } from './afis-e-mandates-config';
 import {
-  EMANDATE_STATUS,
+  debugEmandates,
+  EMANDATE_STATUS_FRONTEND,
   getAfisApiConfig,
   getEmandateDisplayStatus,
-  getEmandateStatus,
+  getEmandateStatusFrontend,
   getEmandateValidityDateFormatted,
   getFeedEntryProperties,
   isEmandateActive,
@@ -37,7 +38,6 @@ import {
   type AfisEMandateSource,
   type AfisEMandateCreditor,
   type EMandateSignRequestPayload,
-  type EMandateStatusChangePayload,
   type BusinessPartnerIdPayload,
   type POMSignRequestUrlResponseSource,
   type POMSignRequestStatusResponseSource,
@@ -52,7 +52,6 @@ import {
 import { routeConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config';
 import { IS_AP } from '../../../universal/config/env';
 import { apiErrorResult, ApiResponse } from '../../../universal/helpers/api';
-import { isoDateFormat } from '../../../universal/helpers/date';
 import { AuthProfile } from '../../auth/auth-types';
 import { encryptPayloadAndSessionID } from '../../helpers/encrypt-decrypt';
 import { getFromEnv } from '../../helpers/env';
@@ -61,7 +60,11 @@ import { requestData } from '../../helpers/source-api-request';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureException } from '../monitoring';
 import { routes } from './afis-service-config';
-import { toDateFormatted } from '../../../universal/helpers/utils';
+import {
+  isoDateFormat,
+  isoDateTimeFormatCompact,
+} from '../../../universal/helpers/date';
+import { toDateFormatted } from '../../../universal/helpers/date';
 
 export async function createOrUpdateEMandateFromStatusNotificationPayload(
   payload: EMandateSignRequestPayload & EMandateSignRequestNotificationPayload
@@ -183,6 +186,8 @@ async function createAfisEMandate(payload: AfisEMandateCreatePayload) {
     enableCache: false,
   });
 
+  debugEmandates('Create e-mandate with payload: %o', payload);
+
   return requestData<AfisEMandateSource>(config);
 }
 
@@ -190,61 +195,20 @@ async function updateAfisEMandate(
   payload: AfisEMandateUpdatePayload,
   transform?: (data: unknown) => Partial<AfisEMandateFrontend>
 ) {
+  const { IMandateId, ...payload_ } = payload;
   const config = await getAfisApiConfig({
     method: 'PUT',
-    data: payload,
+    data: payload_,
     enableCache: false,
     formatUrl: ({ url }) => {
-      return `${url}/ChangeMandate/ZGW_FI_MANDATE_SRV_01/Mandate_changeSet(IMandateId='${payload.IMandateId}')`;
+      return `${url}/ChangeMandate/ZGW_FI_MANDATE_SRV_01/Mandate_changeSet(IMandateId='${IMandateId}')`;
     },
     transformResponse: transform,
   });
 
+  debugEmandates('Updating e-mandate with payload: %o', payload);
+
   return requestData<unknown>(config);
-}
-
-function getStatusChangeApiUrl(
-  sessionID: SessionID,
-  afisEMandateSource: AfisEMandateSource
-) {
-  const changeToStatus = isEmandateActive(afisEMandateSource.LifetimeTo)
-    ? EMANDATE_STATUS.OFF
-    : EMANDATE_STATUS.ON;
-
-  const lifetimeTo = parseISO(afisEMandateSource.LifetimeTo);
-  const lifetimeFrom = parseISO(afisEMandateSource.LifetimeFrom);
-  const today = new Date().toISOString();
-
-  const statusChangePayloadData: EMandateStatusChangePayload = {
-    IMandateId: afisEMandateSource.IMandateId.toString(),
-    Status: changeToStatus,
-    LifetimeTo:
-      changeToStatus === EMANDATE_STATUS.OFF
-        ? today
-        : AFIS_EMANDATE_RECURRING_DATE_END,
-  };
-
-  // In the case the e-mandate is active for only one day, we need to set the lifetimeFrom to the day before.
-  // The api does not allow to set the lifetimeTo to the same day as the lifetimeFrom.
-  if (
-    changeToStatus === EMANDATE_STATUS.OFF &&
-    isSameDay(lifetimeFrom, lifetimeTo)
-  ) {
-    statusChangePayloadData.LifetimeFrom = subDays(
-      lifetimeFrom,
-      1
-    ).toISOString();
-  }
-
-  if (changeToStatus === EMANDATE_STATUS.ON) {
-    statusChangePayloadData.LifetimeFrom = today;
-  }
-
-  return generateFullApiUrlBFF(routes.protected.AFIS_EMANDATES_STATUS_CHANGE, [
-    {
-      payload: encryptPayloadAndSessionID(sessionID, statusChangePayloadData),
-    },
-  ]);
 }
 
 function getSignRequestApiUrl(
@@ -270,20 +234,18 @@ function getSignRequestApiUrl(
   return url;
 }
 
-function getUpdateApiUrl(
+function getEmandateApiUrl(
+  route: string,
   sessionID: SessionID,
   afisEMandateSource: AfisEMandateSource
 ) {
-  const url = generateFullApiUrlBFF(
-    routes.protected.AFIS_EMANDATES_UPDATE_LIFETIME,
-    [
-      {
-        payload: encryptPayloadAndSessionID(sessionID, {
-          IMandateId: afisEMandateSource.IMandateId.toString(),
-        }),
-      },
-    ]
-  );
+  const url = generateFullApiUrlBFF(route, [
+    {
+      payload: encryptPayloadAndSessionID(sessionID, {
+        IMandateId: afisEMandateSource.IMandateId.toString(),
+      }),
+    },
+  ]);
 
   return url;
 }
@@ -296,11 +258,16 @@ function addEmandateApiUrls(
   afisEMandateSource?: AfisEMandateSource
 ) {
   if (afisEMandateSource?.IMandateId) {
-    eMandate.statusChangeUrl = getStatusChangeApiUrl(
+    eMandate.deactivateUrl = getEmandateApiUrl(
+      routes.protected.AFIS_EMANDATES_DEACTIVATE,
       sessionID,
       afisEMandateSource
     );
-    eMandate.lifetimeUpdateUrl = getUpdateApiUrl(sessionID, afisEMandateSource);
+    eMandate.lifetimeUpdateUrl = getEmandateApiUrl(
+      routes.protected.AFIS_EMANDATES_UPDATE_LIFETIME,
+      sessionID,
+      afisEMandateSource
+    );
   }
 
   eMandate.signRequestUrl = getSignRequestApiUrl(
@@ -316,10 +283,14 @@ function transformEMandateSource(
   creditor: AfisEMandateCreditor,
   afisEMandateSource?: AfisEMandateSource
 ): Readonly<AfisEMandateFrontend> {
-  const dateValidFrom = afisEMandateSource?.LifetimeFrom || null;
+  const dateValidFrom = afisEMandateSource?.LifetimeFrom
+    ? isoDateFormat(afisEMandateSource.LifetimeFrom)
+    : null;
   const dateValidFromFormatted = toDateFormatted(dateValidFrom);
 
-  const dateValidTo = afisEMandateSource?.LifetimeTo || null;
+  const dateValidTo = afisEMandateSource?.LifetimeTo
+    ? isoDateFormat(afisEMandateSource.LifetimeTo)
+    : null;
   const dateValidToFormatted = getEmandateValidityDateFormatted(dateValidTo);
 
   const isActive = isEmandateActive(dateValidTo);
@@ -339,7 +310,7 @@ function transformEMandateSource(
     dateValidFromFormatted,
     dateValidTo,
     dateValidToFormatted,
-    status: getEmandateStatus(dateValidTo),
+    status: getEmandateStatusFrontend(dateValidTo),
     displayStatus: getEmandateDisplayStatus(
       dateValidTo,
       dateValidFromFormatted
@@ -396,7 +367,7 @@ function transformEMandatesResponse(
     return eMandate;
   }).sort(
     firstBy(function sortByStatus(eMandate: AfisEMandateFrontend) {
-      return eMandate.status === EMANDATE_STATUS.ON ? -1 : 1;
+      return eMandate.status === EMANDATE_STATUS_FRONTEND.ON ? -1 : 1;
     }).thenBy('creditorName')
   );
 }
@@ -443,6 +414,13 @@ export async function fetchEMandates(
         authProfile.sid,
         payload.businessPartnerId
       ),
+    validateStatus(status) {
+      // Afis api's are wired through a proxy that handles errors poorly. The SAP api responds with a 400 error that is translated to a 500 error by the proxy.
+      return (
+        status === HttpStatusCode.Ok ||
+        status === HttpStatusCode.InternalServerError
+      );
+    },
     /**
      * We do not want to cache this request, because the e-mandates are updated without direct
      * user interaction.
@@ -570,26 +548,35 @@ function transformEmandateSignRequestStatus(
   };
 }
 
-export async function changeEMandateStatus(
-  eMandateStatusChangePayload: EMandateStatusChangePayload
+export async function deactivateEmandate(
+  eMandateStatusChangePayload: EMandateUpdatePayload
 ) {
+  const now = new Date();
+  // The PUT endpoint does not reply with data. Only a status.
+  // So we derive the new status from the change payload.
+  const LifetimeTo = isoDateTimeFormatCompact(now);
+
   function transformResponse() {
-    const dateValidTo = eMandateStatusChangePayload?.LifetimeTo || null;
+    const dateValidTo = isoDateFormat(now);
     const dateValidToFormatted = getEmandateValidityDateFormatted(dateValidTo);
-    const dateValidFrom = eMandateStatusChangePayload?.LifetimeFrom || null;
+    const dateValidFrom = null;
     const dateValidFromFormatted =
       getEmandateValidityDateFormatted(dateValidFrom);
     return {
       dateValidTo,
       dateValidToFormatted,
-      status: getEmandateStatus(dateValidTo),
+      status: getEmandateStatusFrontend(dateValidTo),
       displayStatus: getEmandateDisplayStatus(
         dateValidTo,
         dateValidFromFormatted
       ),
     };
   }
-  return updateAfisEMandate(eMandateStatusChangePayload, transformResponse);
+
+  return updateAfisEMandate(
+    { ...eMandateStatusChangePayload, LifetimeTo },
+    transformResponse
+  );
 }
 
 export async function handleEmandateLifetimeUpdate(
@@ -598,10 +585,12 @@ export async function handleEmandateLifetimeUpdate(
   req: Request
 ) {
   const eMandateUploadPayload = z.object({
-    LifetimeTo: z.iso.date().refine((isoDate) => {
-      // The date must not be in the past.
-      return isAfter(parseISO(isoDate), new Date());
-    }),
+    LifetimeTo: z.iso
+      .date()
+      .refine((isoDate) => {
+        return isAfter(parseISO(isoDate), new Date());
+      })
+      .transform((isoDate) => isoDateTimeFormatCompact(isoDate)),
     IMandateId: z.string(),
   });
 
@@ -624,7 +613,9 @@ export async function handleEmandateLifetimeUpdate(
   }
 
   function transformResponse() {
-    const dateValidTo = payload.LifetimeTo || null;
+    const dateValidTo = payload.LifetimeTo
+      ? isoDateFormat(payload.LifetimeTo)
+      : null;
     return {
       dateValidTo,
       dateValidToFormatted: getEmandateValidityDateFormatted(dateValidTo),
@@ -636,15 +627,14 @@ export async function handleEmandateLifetimeUpdate(
 
 export const forTesting = {
   addEmandateApiUrls,
-  changeEMandateStatus,
+  deactivateEmandate,
   createEMandate: createOrUpdateEMandateFromStatusNotificationPayload,
   createEMandateSignRequestPayload,
   fetchEMandates,
   fetchEmandateSignRequestRedirectUrlFromPaymentProvider,
   getEMandateSourceByCreditor,
   getSignRequestApiUrl,
-  getStatusChangeApiUrl,
-  getUpdateApiUrl,
+  getEmandateApiUrl,
   handleEmandateLifeTimeUpdate: handleEmandateLifetimeUpdate,
   transformEmandateSignRequestStatus,
   transformEMandateSource,

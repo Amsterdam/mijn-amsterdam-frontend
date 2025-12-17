@@ -32,7 +32,8 @@ import {
 } from '../../../universal/helpers/api';
 import { dedupeDocumentsInDataSets } from '../../../universal/helpers/document';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
-import { splitBy, toDateFormatted } from '../../../universal/helpers/utils';
+import { splitBy } from '../../../universal/helpers/utils';
+import { toDateFormatted } from '../../../universal/helpers/date';
 import {
   GenericDocument,
   StatusLineItem,

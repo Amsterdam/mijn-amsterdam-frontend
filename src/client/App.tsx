@@ -80,7 +80,8 @@ function AppAuthenticated() {
       clearDeeplinkEntry();
       navigate(redirectAfterLogin);
     }
-  }, [navigate, redirectAfterLogin]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [redirectAfterLogin]);
 
   const isBuurt = location.pathname === buurtRouteConfig.themaPage.path;
 

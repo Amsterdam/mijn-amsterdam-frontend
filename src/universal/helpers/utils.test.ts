@@ -4,9 +4,9 @@ import {
   sortAlpha,
   range,
   isRecentNotification,
-  toDateFormatted,
   splitBy,
 } from './utils';
+import { toDateFormatted } from './date';
 describe('Utils.ts', () => {
   it('deepOmitKeys: Should omit keys recursively', () => {
     const testData = {

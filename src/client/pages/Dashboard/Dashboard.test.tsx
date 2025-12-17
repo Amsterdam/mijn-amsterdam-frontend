@@ -10,7 +10,7 @@ import { themaId } from './Dashboard-config';
 import { DashboardRoute } from './Dashboard-routes';
 import { remoteApiHost } from '../../../testing/setup';
 import { bffApi } from '../../../testing/utils';
-import { toDateFormatted } from '../../../universal/helpers/utils';
+import { toDateFormatted } from '../../../universal/helpers/date';
 
 const testState = {
   BRP: {

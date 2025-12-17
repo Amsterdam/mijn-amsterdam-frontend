@@ -1,6 +1,5 @@
 import { differenceInMonths } from 'date-fns';
 
-import { defaultDateFormat } from './date';
 import { MONTHS_TO_KEEP_NOTIFICATIONS } from '../config/app';
 
 // https://github.com/Microsoft/TypeScript/issues/21826#issuecomment-479851685
@@ -158,18 +157,4 @@ export function isRecentNotification(
 ): boolean {
   const diff = Math.abs(differenceInMonths(new Date(datePublished), dateNow));
   return diff < MONTHS_TO_KEEP_NOTIFICATIONS;
-}
-
-export function toDateFormatted(input: string | Date | number): string;
-export function toDateFormatted(
-  input: string | Date | number | null | undefined
-): string | null;
-// This is not a duplicate, this is the required implementation signature
-export function toDateFormatted(
-  input: string | Date | number | null | undefined
-): string | null {
-  if (input == null) {
-    return null;
-  }
-  return defaultDateFormat(input);
 }

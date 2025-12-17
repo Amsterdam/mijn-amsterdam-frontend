@@ -357,6 +357,7 @@ export type AfisEMandateCreatePayload = Omit<
 export type AfisEMandateUpdatePayload = Partial<AfisEMandateSource>;
 
 export type AfisEMandateStatusCodes = {
+  '0': 'NietActief';
   '1': 'Actief';
   '2': 'Te bevestigen';
   '3': 'Geblokkeerd';
@@ -386,7 +387,7 @@ export type AfisEMandateFrontend = {
   dateValidToFormatted: string | null;
 
   // Urls to interact with the mandate state
-  statusChangeUrl?: string;
+  deactivateUrl?: string;
   signRequestUrl?: string;
   lifetimeUpdateUrl?: string;
 
@@ -453,9 +454,7 @@ export type EMandateUpdatePayload = {
   IMandateId: AfisEMandateSource['IMandateId'];
 };
 
-export type EMandateStatusChangePayload = {
-  Status: AfisEMandateSource['Status'];
-  IMandateId: AfisEMandateSource['IMandateId'];
+export type EMandateLifetimeChangePayload = EMandateUpdatePayload & {
   LifetimeTo: AfisEMandateSource['LifetimeTo'];
   LifetimeFrom?: AfisEMandateSource['LifetimeFrom'];
 };

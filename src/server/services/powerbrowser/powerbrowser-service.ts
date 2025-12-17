@@ -22,11 +22,8 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { dateSort, isDateInPast } from '../../../universal/helpers/date';
-import {
-  entries,
-  omit,
-  toDateFormatted,
-} from '../../../universal/helpers/utils';
+import { entries, omit } from '../../../universal/helpers/utils';
+import { toDateFormatted } from '../../../universal/helpers/date';
 import {
   GenericDocument,
   StatusLineItem,
