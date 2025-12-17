@@ -101,8 +101,6 @@ export function transformKlachtenResponse(
     const dateClosed = smileDateParser(
       klachtSource.klacht_finishedon.value ?? ''
     );
-    const isSolved = klachtSource.klacht_klachtopgelost.value === 'Ja';
-
     const steps = [
       {
         id: '1',
@@ -126,7 +124,7 @@ export function transformKlachtenResponse(
         isChecked: isClosed,
         isActive: isClosed,
         datePublished: dateClosed,
-        description: getClosedDescription(isClosed, isSolved),
+        description: getClosedDescription(isClosed),
       },
     ];
 
@@ -167,15 +165,11 @@ export function transformKlachtenResponse(
   };
 }
 
-function getClosedDescription(isClosed: boolean, isSolved: boolean): string {
+function getClosedDescription(isClosed: boolean): string {
   let returnTxt = '';
 
   if (isClosed) {
-    if (isSolved) {
-      returnTxt = 'De klacht is opgelost en afgesloten.';
-    } else {
-      returnTxt = 'Uw klacht is afgehandeld.';
-    }
+    returnTxt = 'Uw klacht is afgehandeld.';
   } else {
     returnTxt = 'Uw klacht wordt nog afgehandeld.';
   }
