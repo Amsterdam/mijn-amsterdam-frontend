@@ -80,8 +80,8 @@ function CommercialPageContentTop({
         </Paragraph>
         <Paragraph>
           Mijn Amsterdam toont alleen vestigingen met een adres in een van de
-          volgende 10 gemeentes: Amsterdam, Aalsmeer, Amstelveen, Amsterdam,
-          Diemen, Haarlemmermeer, Landsmeer, Oostzaan, Ouder-Amstel, Uithoorn en
+          volgende 10 gemeentes: Amsterdam, Aalsmeer, Amstelveen, Diemen,
+          Haarlemmermeer, Landsmeer, Oostzaan, Ouder-Amstel, Uithoorn en
           Zaanstad.
         </Paragraph>
       </PageContentCell>
