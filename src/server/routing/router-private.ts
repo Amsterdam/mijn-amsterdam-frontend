@@ -2,11 +2,11 @@ import { OAuthVerificationHandler } from './route-handlers';
 import { createBFFRouter } from './route-helpers';
 import { notificationsExternalConsumerRouter } from './router-notifications-external-consumer';
 import { IS_TAP } from '../../universal/config/env';
+import { OAUTH_ROLES } from '../auth/auth-config';
+import { conditional } from '../helpers/middleware';
 import { afisRouter } from '../services/afis/afis-router';
 import { stadspasExternalConsumerRouter } from '../services/hli/router-stadspas-external-consumer';
 import { wmoRouter } from '../services/wmo/wmo-router';
-import { OAUTH_ROLES } from '../auth/auth-config';
-import { conditional } from '../helpers/middleware';
 
 export const router = createBFFRouter({ id: 'router-private-network' });
 
