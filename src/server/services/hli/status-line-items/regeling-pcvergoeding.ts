@@ -1,24 +1,29 @@
-import { isSameDay, parseISO } from 'date-fns';
+import { isBefore, isSameDay, parseISO } from 'date-fns';
 
 import { getBetrokkenKinderenDescription } from './generic';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { lowercaseFirstLetter } from '../../../../universal/helpers/text';
-import { sortAlpha } from '../../../../universal/helpers/utils';
+import { sortAlpha, splitBy } from '../../../../universal/helpers/utils';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types';
 
+// The following code does not exist for the business but we create it to differentiate
+// between 2026 aanvragen and older.
+export const MAMS_PC2026 = 'MAMS_PC2026';
 export const AV_PCTGBO = 'AV-PCTGBO'; // PC Tegoed Basisonderwijs
 export const AV_PCTGVO = 'AV-PCTGVO'; // PC Tegoed Voortgezet Onderwijs
 
-export const AV_UPCC = 'AV-UPCC';
+export const AV_UPCC = 'AV-UPCC'; // PC Tegoed Basisonderwijs.
 export const AV_UPCZIL = 'AV-UPCZIL';
 export const AV_UPCTG = 'AV-UPCTG';
 
-export const AV_PCVC = 'AV-PCVC';
+export const AV_PCVC = 'AV-PCVC'; // PC Tegoed Voortgezet Onderwijs.
 export const AV_PCVZIL = 'AV-PCVZIL';
 export const AV_PCVTG = 'AV-PCVTG';
+
+const DATE_2026_CODES_ACTIVE = '2026-01-01';
 
 const avCodes = {
   PC: {
@@ -161,13 +166,17 @@ function filterOutRedundantPcVergoedingsAanvragenWhenWorkShopNietGevolgd(
   return PCVergoedingAanvragenFiltered;
 }
 
-export function filterCombineUpcPcvData_pre2026(
+export function filterCombineUpcPcvData(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
-) {
+): ZorgnedAanvraagWithRelatedPersonsTransformed[] {
   const baseRegelingIdWithVerzilvering: string[] = [];
+  const [aanvragenAfter2026, aanvragenBefore2026] = splitBy(
+    aanvragen,
+    (aanvraag) => isBefore(aanvraag.datumBesluit, DATE_2026_CODES_ACTIVE)
+  );
   const aanvragen_ =
     filterOutRedundantPcVergoedingsAanvragenWhenWorkShopNietGevolgd(
-      aanvragen
+      aanvragenBefore2026
     ).toSorted(sortAlpha('id', 'desc'));
   const aanvragenWithDocumentsCombined = aanvragen_.map((aanvraag) => {
     // Exclude baseRegelingen that have verzilvering
@@ -212,10 +221,29 @@ export function filterCombineUpcPcvData_pre2026(
     return aanvraag;
   });
 
-  return aanvragenWithDocumentsCombined.filter(
-    (aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed | null) =>
-      aanvraag !== null
-  );
+  return [
+    ...aanvragenWithDocumentsCombined.filter(
+      (aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed | null) =>
+        aanvraag !== null
+    ),
+    ...aanvragenAfter2026.map((aanvraag) =>
+      translatePCProductIdentificatie(aanvraag)
+    ),
+  ];
+}
+
+/** Translate 2026 codes to uniquely made up ones, so that the line item transformer can identify this `aanvraag`. */
+export function translatePCProductIdentificatie(
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+): ZorgnedAanvraagWithRelatedPersonsTransformed {
+  let productIdentificatie;
+  if (
+    aanvraag.productIdentificatie === AV_UPCTG ||
+    aanvraag.productIdentificatie === AV_PCVTG
+  ) {
+    productIdentificatie = MAMS_PC2026;
+  }
+  return { ...aanvraag, productIdentificatie };
 }
 
 /** Checks of een Workshop niet gevolgd is.
@@ -259,12 +287,12 @@ export const PCVERGOEDING_2026: ZorgnedStatusLineItemTransformerConfig<ZorgnedAa
         const betrokkenKinderen = getBetrokkenKinderenDescription(regeling);
         return `<p>
         ${
-          regeling.resultaat === 'toegewezen' || isVerzilvering(regeling)
+          regeling.resultaat === 'toegewezen'
             ? descriptionDefinitief(regeling)
             : `U krijgt geen ${lowercaseFirstLetter(regeling.titel)} voor uw kind${betrokkenKinderen ? ` ${betrokkenKinderen}` : ''}.`
         }
         </p>
-        ${regeling.resultaat === 'toegewezen' || isVerzilvering(regeling) ? '' : '<p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>'}
+        ${regeling.resultaat === 'toegewezen' ? '' : '<p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>'}
       `;
       },
     },
@@ -300,8 +328,8 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
         regeling.resultaat === 'toegewezen' &&
         !isWorkshopNietGevolgd(regeling),
       datePublished: '',
-      isChecked: (regeling) => true,
-      isActive: (regeling) => true,
+      isChecked: (_regeling) => true,
+      isActive: (_regeling) => true,
       description: (regeling) => {
         const betrokkenKinderen = getBetrokkenKinderenDescription(regeling);
         return `
@@ -346,7 +374,7 @@ export const forTesting = {
   isRegelingVanVerzilvering,
   isVerzilvering,
   isWorkshopNietGevolgd,
-  filterCombineUpcPcvData: filterCombineUpcPcvData_pre2026,
+  filterCombineUpcPcvData: filterCombineUpcPcvData,
   filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNietGevolgd:
     filterOutRedundantPcVergoedingsAanvragenWhenWorkShopNietGevolgd,
 };

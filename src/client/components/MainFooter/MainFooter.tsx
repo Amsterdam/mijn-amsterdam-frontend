@@ -37,7 +37,7 @@ function useCustomFooterSections(
 function FooterBlock({ title, links }: CMSFooterSection) {
   return (
     <Grid.Cell key={title} span={4}>
-      <Heading color="inverse" level={4} className="ams-mb-s">
+      <Heading color="inverse" level={3} className="ams-mb-s">
         {title}
       </Heading>
       {!!links.length && (
@@ -53,7 +53,7 @@ function FooterBlock({ title, links }: CMSFooterSection) {
   );
 }
 
-export function MainFooter() {
+export function MainFooter({ id }: { id?: string }) {
   const { data } = useBffApi<CMSFooter>(
     `${BFF_API_BASE_URL}/services/cms/footer`
   );
@@ -72,7 +72,7 @@ export function MainFooter() {
   );
 
   return (
-    <PageFooter className={styles.MainFooter}>
+    <PageFooter id={id} className={styles.MainFooter}>
       <PageFooter.Spotlight>
         <Grid gapVertical="large" paddingVertical="large">
           {customSections.map((footerItem) => (

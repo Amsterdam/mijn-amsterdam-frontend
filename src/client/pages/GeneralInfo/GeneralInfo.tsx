@@ -6,12 +6,7 @@ import {
 
 import { MaLink, MaRouterLink } from '../../components/MaLink/MaLink';
 import { myAreaSectionProps } from '../../components/MyArea/InfoSection';
-import {
-  PageContentCell,
-  PageContentV2,
-  TextPageV2,
-} from '../../components/Page/Page';
-import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
+import { PageContentCell, PageV2 } from '../../components/Page/Page';
 import { ThemaConfigBase, InfoSection } from '../../config/thema-types';
 import { getRedactedClass } from '../../helpers/cobrowse';
 import {
@@ -94,7 +89,7 @@ const sections: InfoSection_DEPRECATED[] = [
   varensectionProps,
 ];
 
-function Section({ title, listItems, href }: SectionProps) {
+function InfoPageSection({ title, listItems, href }: SectionProps) {
   const listItemComponents = listItems.map((item, i) => {
     if (typeof item === 'string') {
       return <UnorderedList.Item key={i}>{item}</UnorderedList.Item>;
@@ -125,10 +120,10 @@ function Section({ title, listItems, href }: SectionProps) {
 
   return (
     <>
-      <Heading level={4} size="level-4" className="ams-mb-s">
+      <Heading level={3} className="ams-mb-s">
         {titleComponent}
       </Heading>
-      <UnorderedList className="ams-mb-xl">{listItemComponents}</UnorderedList>
+      <UnorderedList className="ams-mb-l">{listItemComponents}</UnorderedList>
     </>
   );
 }
@@ -156,7 +151,7 @@ export function GeneralInfo() {
       section.href = section.href || (themaMenuItem && themaMenuItem.to);
 
       return (
-        <Section
+        <InfoPageSection
           key={i}
           title={section.title}
           href={themaMenuItem.isActive ? section.href : undefined}
@@ -165,43 +160,40 @@ export function GeneralInfo() {
       );
     });
   return (
-    <TextPageV2>
-      <PageContentV2 span={8}>
-        <PageHeadingV2>Dit ziet u in Mijn Amsterdam</PageHeadingV2>
-        <PageContentCell>
-          <Paragraph className="ams-mb-m">
-            Welkom op Mijn Amsterdam: dit is uw persoonlijke online portaal bij
-            de gemeente Amsterdam.
-          </Paragraph>
-          <Paragraph className="ams-mb-m">
-            Hier ziet u op 1 centrale plek welke gegevens de gemeente van u
-            heeft vastgelegd. U ziet hier ook wat u bij de gemeente heeft
-            aangevraagd, hoe het met uw aanvraag staat en hoe u kunt doorgeven
-            als er iets niet klopt.
-          </Paragraph>
-          <Paragraph className="ams-mb-m">
-            <b>Let op!</b> Een thema of een product verschijnt alléén als u deze
-            ook heeft afgenomen!
-          </Paragraph>
-          <Paragraph className="ams-mb-xl">
-            Op dit moment kunnen de volgende gegevens getoond worden:
-          </Paragraph>
-          <div className={getRedactedClass()}>{sectionComponents}</div>
-          <Heading level={4} size="level-4" className="ams-mb-s">
-            Vragen over Mijn Amsterdam
-          </Heading>
-          <Paragraph className="ams-mb-m">
-            Kijk bij de{' '}
-            <a
-              href="https://www.amsterdam.nl/contact/mijn-amsterdam/"
-              rel="external"
-            >
-              Mijn Amsterdam - Veelgestelde vragen
-            </a>
-            .
-          </Paragraph>
-        </PageContentCell>
-      </PageContentV2>
-    </TextPageV2>
+    <PageV2 heading="Dit ziet u in Mijn Amsterdam">
+      <PageContentCell>
+        <Paragraph className="ams-mb-m">
+          Welkom op Mijn Amsterdam: dit is uw persoonlijke online portaal bij de
+          gemeente Amsterdam.
+        </Paragraph>
+        <Paragraph className="ams-mb-m">
+          Hier ziet u op 1 centrale plek welke gegevens de gemeente van u heeft
+          vastgelegd. U ziet hier ook wat u bij de gemeente heeft aangevraagd,
+          hoe het met uw aanvraag staat en hoe u kunt doorgeven als er iets niet
+          klopt.
+        </Paragraph>
+        <Paragraph className="ams-mb-m">
+          <strong>Let op!</strong> Een thema of een product verschijnt alléén
+          als u deze ook heeft afgenomen!
+        </Paragraph>
+        <Paragraph className="ams-mb-xl">
+          Op dit moment kunnen de volgende gegevens getoond worden:
+        </Paragraph>
+        <div className={getRedactedClass()}>{sectionComponents}</div>
+        <Heading level={4} className="ams-mb-s">
+          Vragen over Mijn Amsterdam
+        </Heading>
+        <Paragraph className="ams-mb-m">
+          Kijk bij de{' '}
+          <a
+            href="https://www.amsterdam.nl/contact/mijn-amsterdam/"
+            rel="external"
+          >
+            Mijn Amsterdam - Veelgestelde vragen
+          </a>
+          .
+        </Paragraph>
+      </PageContentCell>
+    </PageV2>
   );
 }

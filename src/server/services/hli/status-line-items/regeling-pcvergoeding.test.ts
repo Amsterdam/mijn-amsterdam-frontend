@@ -1,6 +1,4 @@
 import {
-  AV_PCTGBO,
-  AV_PCTGVO,
   AV_PCVC,
   AV_PCVTG,
   AV_PCVZIL,
@@ -15,7 +13,7 @@ import { forTesting as forTestingHLI } from '../hli';
 
 const mocks = vi.hoisted(() => {
   return {
-    hli2026PCVergoedingV3Enabled: true,
+    hli2026PCVergoedingCodesActive: true,
   };
 });
 
@@ -30,8 +28,8 @@ vi.mock(
       ...actual,
       featureToggle: {
         ...actual.featureToggle,
-        get hli2026PCVergoedingV3Enabled() {
-          return mocks.hli2026PCVergoedingV3Enabled;
+        get hli2026PCVergoedingCodesActive() {
+          return mocks.hli2026PCVergoedingCodesActive;
         },
       },
     };
@@ -655,12 +653,15 @@ describe('pcvergoeding', () => {
   });
 
   describe('PC tegoed >= 2026', () => {
+    afterEach(() => {
+      mocks.hli2026PCVergoedingCodesActive = true;
+    });
     const testData = [
       {
         id: '2',
         prettyID: '2',
         titel: 'Gratis laptop of tablet basis onderwijs',
-        productIdentificatie: AV_PCTGBO,
+        productIdentificatie: AV_UPCTG,
         betrokkenen: ['A'],
         datumAanvraag: '2026-01-01',
         datumBesluit: '2026-06-18',
@@ -672,7 +673,7 @@ describe('pcvergoeding', () => {
         id: '1',
         prettyID: '1',
         titel: 'Gratis laptop of tablet voortgezet onderwijs',
-        productIdentificatie: AV_PCTGVO,
+        productIdentificatie: AV_PCVTG,
         betrokkenen: ['A'],
         datumAanvraag: '2026-01-01',
         datumBesluit: '2026-05-18',
@@ -682,10 +683,10 @@ describe('pcvergoeding', () => {
       },
     ] as unknown as ZorgnedAanvraagWithRelatedPersonsTransformed[];
 
-    test('PCRegelingen with AV_PCTGBO ans AV_PCTGVO are transformed correctly', async () => {
+    test('2026 aanvragen are transformed correctly', () => {
       const profile = getAuthProfileAndToken().profile;
       expect(
-        await forTestingHLI.transformRegelingenForFrontend(
+        forTestingHLI.transformRegelingenForFrontend(
           profile.sid,
           { bsn: profile.id },
           testData,

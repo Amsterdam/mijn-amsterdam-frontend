@@ -20,6 +20,7 @@ export const HLIRegelingenSectionProps: InfoSection_DEPRECATED = {
     "Gratis openbaar vervoer voor AOW'ers",
     'Tegemoetkoming aanvullend openbaar vervoer voor ouderen',
     'Tegemoetkoming openbaar vervoer voor mantelzorgers',
+    'Regeling tegemoetkoming meerkosten',
   ],
   active: featureToggle.hliThemaRegelingenActive,
 };
