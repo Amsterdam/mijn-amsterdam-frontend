@@ -18,6 +18,7 @@ import {
 } from '../auth/auth-helpers';
 import { AuthenticatedRequest } from '../auth/auth-types';
 import { getFromEnv } from '../helpers/env';
+import { captureException } from '../services/monitoring';
 
 export function handleCheckProtectedRoute(
   req: Request,
@@ -122,7 +123,9 @@ export function OAuthVerificationHandler(role?: string) {
       return sendServiceUnavailable(res);
     }
     const issuer = `https://sts.windows.net/${tenantId}`;
-    const signingKey = await fetchSigningKey(issuer);
+    const signingKey = await fetchSigningKey(issuer).catch((error) =>
+      captureException(error)
+    );
     if (!signingKey) {
       return sendServiceUnavailable(res);
     }
@@ -135,8 +138,9 @@ export function OAuthVerificationHandler(role?: string) {
         issuer: `${issuer}/`,
         algorithms: ['RS256'],
       },
-      (err, decoded) => {
-        if (err) {
+      (error, decoded) => {
+        if (error) {
+          captureException(error);
           return sendUnauthorized(res);
         }
         const payload = decoded as { roles?: string[] };

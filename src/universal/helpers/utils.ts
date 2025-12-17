@@ -158,3 +158,9 @@ export function isRecentNotification(
   const diff = Math.abs(differenceInMonths(new Date(datePublished), dateNow));
   return diff < MONTHS_TO_KEEP_NOTIFICATIONS;
 }
+
+export function asEnum<T extends readonly string[]>(values: T) {
+  return Object.freeze(
+    Object.fromEntries(values.map((v) => [v, v])) as { [K in T[number]]: K }
+  );
+}
