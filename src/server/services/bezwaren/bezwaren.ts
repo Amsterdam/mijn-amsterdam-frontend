@@ -420,7 +420,11 @@ export async function fetchBezwaren(
     requestConfig
   );
 
-  if (bezwarenResponse.status === 'OK' && bezwarenResponse.content?.length) {
+  if (!doTransform || bezwarenResponse.status !== 'OK') {
+    return bezwarenResponse;
+  }
+
+  if (bezwarenResponse.content?.length) {
     trackEvent('bezwaren-aantal-per-gebruiker', {
       lopend: bezwarenResponse.content.filter(
         (b) => b.displayStatus !== 'Afgehandeld'
@@ -431,15 +435,11 @@ export async function fetchBezwaren(
     });
   }
 
-  if (bezwarenResponse.status === 'OK' && doTransform) {
-    const bezwarenSorted = bezwarenResponse.content.sort(
-      sortByBezwaarIdentificatie
-    );
-    return apiSuccessResult(bezwarenSorted);
-  }
+  const bezwarenSorted = bezwarenResponse.content.sort(
+    sortByBezwaarIdentificatie
+  );
 
-  // Return the likely error response otherwise. This will make sure the front-end knows to show an error message to the user.
-  return bezwarenResponse;
+  return apiSuccessResult(bezwarenSorted);
 }
 
 function createBezwaarNotification(bezwaar: BezwaarFrontend) {
