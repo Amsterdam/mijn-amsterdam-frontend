@@ -237,39 +237,75 @@ components:
           items:
             type: object
             properties:
-              service_ids:
+              consumerIds:
                 type: array
                 items:
                   type: string
-              consumer_ids:
-                type: array
-                items:
-                  type: string
-              date_updated:
+                  default: '123'
+              dateUpdated:
                 type: string
                 format: date-time
-              notifications:
+              services:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                    title:
-                      type: string
-                    datePublished:
-                      type: string
-                      format: date-time
-                    isTip:
-                      type: boolean
-                  required:
-                    - id
-                    - title
-                    - datePublished
-        status:
+                  oneOf:
+                    - $ref: '#/components/schemas/ServiceResultOk'
+                    - $ref: '#/components/schemas/ServiceResultError'
+                  discriminator:
+                    propertyName: status
+                    mapping:
+                      OK: '#/components/schemas/ServiceResultOk'
+                      ERROR: '#/components/schemas/ServiceResultError'
+    ServiceResultBase:
+      type: object
+      properties:
+        serviceId:
           type: string
-          enum:
-            - 'OK'
+        dateUpdated:
+          type: string
+          format: date-time
+    ServiceResultOk:
+      allOf:
+        - $ref: '#/components/schemas/ServiceResultBase'
+        - type: object
+          properties:
+            status:
+              type: string
+              enum:
+                - 'OK'
+            content:
+              type: array
+              items:
+                $ref: '#/components/schemas/ServiceResult'
+    ServiceResultError:
+      allOf:
+        - $ref: '#/components/schemas/ServiceResultBase'
+        - type: object
+          properties:
+            status:
+              type: string
+              enum:
+                - 'ERROR'
+            content:
+              type: object
+              default: null
+            message:
+              type: string
+              default: "DEPENDENCY ERROR"
+    ServiceResult:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        datePublished:
+          type: string
+          format: date-time
+        isTip:
+          type: boolean
+          default: false
+            
     ApiSuccessResponse:
       type: object
       properties:

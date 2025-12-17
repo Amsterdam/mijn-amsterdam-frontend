@@ -18,3 +18,7 @@ export function displayAmount(amount: number) {
 export function splitCapitals(text: string) {
   return text.replace(/([A-Z])/g, ' $1').trim();
 }
+
+export function toCamel(s: string) {
+  return s.replace(/_([a-z])/g, (_, c) => c.toUpperCase());
+}

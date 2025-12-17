@@ -15,10 +15,9 @@
   @include select(Dashboard_Header) {
     display: none;
   }
-  @include select(App_App) {
-    display: none;
-  }
-  @include select('ams-page-footer') {
+  :global(#page-breadcrumbs),
+  :global(#page-main-content),
+  :global(#page-main-footer) {
     display: none;
   }
 }

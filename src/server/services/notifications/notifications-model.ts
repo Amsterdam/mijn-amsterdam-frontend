@@ -1,17 +1,49 @@
 import {
   BSN,
-  CONSUMER_ID,
-  NOTIFICATION_LEAN,
-  SERVICE_ID,
+  ConsumerId,
+  ServiceId,
+  type ConsumerNotifications,
+  type NotificationsService,
 } from './config-and-types';
+import { isRecord } from '../../../universal/helpers/utils';
 import { logger } from '../../logging';
 import { IS_DB_ENABLED } from '../db/config';
-import { db } from '../db/db';
+import { db as db_, type DBAdapter } from '../db/db';
+import { camelizeKeys } from '../db/helper';
 
+// POSTGRES is case insensitive. We therefore always use snake_case within postgres
+// and transform the returned column names to camelCase.
+const db = {
+  // Because the output of query is less predictable.
+  // Only queries that don't expect a return value are allowed
+  query: async function query(
+    ...args: Parameters<DBAdapter['query']>
+  ): Promise<void> {
+    const { query } = await db_();
+    await query(...args);
+  },
+  queryGET: async function queryGET(
+    ...args: Parameters<DBAdapter['queryGET']>
+  ) {
+    const { queryGET } = await db_();
+    const row = await queryGET(...args);
+    if (isRecord(row)) {
+      return camelizeKeys(row);
+    }
+    return row;
+  },
+  queryALL: async function queryALL(
+    ...args: Parameters<DBAdapter['queryALL']>
+  ) {
+    const { queryALL } = await db_();
+    const rows = await queryALL(...args);
+    return rows.map((row) => (isRecord(row) ? camelizeKeys(row) : row));
+  },
+};
+
+// POSTGRES is case insensitive. We therefore always use snake_case within postgres
 const TABLE_NAME = 'bff_notifications';
 async function setupTables() {
-  const { query } = await db();
-
   const createTableQuery = `
     -- Table Definition
     CREATE TABLE IF NOT EXISTS "public"."${TABLE_NAME}" (
@@ -26,7 +58,7 @@ async function setupTables() {
   `;
 
   try {
-    await query(createTableQuery);
+    await db.query(createTableQuery);
     logger.info(`setupTable: ${TABLE_NAME} succeeded.`);
   } catch (error) {
     logger.error(error, `setupTable: ${TABLE_NAME} failed.`);
@@ -37,6 +69,7 @@ if (IS_DB_ENABLED) {
   setupTables();
 }
 
+// POSTGRES is case insensitive. We therefore always use snake_case within postgres
 const queries = {
   upsertConsumer: `\
 INSERT INTO ${TABLE_NAME} (profile_id, consumer_ids, service_ids, date_updated) \
@@ -63,65 +96,57 @@ RETURNING profile_id, consumer_ids
 };
 
 export async function truncate() {
-  const { query } = await db();
-  return query(queries.truncate);
+  return db.query(queries.truncate);
 }
 
-export async function getProfileByConsumer(consumer_id: CONSUMER_ID) {
-  const { queryGET } = await db();
-  return queryGET(queries.getProfileByConsumer, [consumer_id]);
+export async function getProfileByConsumer(consumerId: ConsumerId) {
+  return db.queryGET(queries.getProfileByConsumer, [consumerId]);
 }
 
 export async function upsertConsumer(
-  profile_id: BSN,
-  consumer_id: CONSUMER_ID,
-  service_ids: SERVICE_ID[]
+  profileId: BSN,
+  consumerId: ConsumerId,
+  serviceIds: ServiceId[]
 ) {
-  const { query } = await db();
-  return query(queries.upsertConsumer, [profile_id, consumer_id, service_ids]);
+  return db.query(queries.upsertConsumer, [profileId, consumerId, serviceIds]);
 }
 
-// This should work in one query with a CTE, but it does not delete the row.
-export async function deleteConsumer(consumer_id: CONSUMER_ID) {
-  const { query, queryALL } = await db();
-  const rows = (await queryALL(queries.deleteConsumer, [consumer_id])) as {
+// This should work in one query with a CTE, but it does not delete the row correctly.
+// Therefore, multiple queries are used
+export async function deleteConsumer(consumerId: ConsumerId) {
+  const rows = (await db.queryALL(queries.deleteConsumer, [consumerId])) as {
     profile_id: string;
     consumer_ids: string[];
   }[];
+
   for (const { profile_id, consumer_ids } of rows) {
     if (consumer_ids.length === 0) {
-      await query(queries.deleteProfileIfConsumerIdsIsEmpty, [profile_id]);
+      await db.query(queries.deleteProfileIfConsumerIdsIsEmpty, [profile_id]);
     }
   }
   return rows.length;
 }
 
 export async function storeNotifications(
-  profile_id: BSN,
-  notifications: NOTIFICATION_LEAN[]
+  profileId: BSN,
+  services: NotificationsService[]
 ) {
-  const { query } = await db();
-  return query(queries.updateNotifications, [profile_id, { notifications }]);
+  return db.query(queries.updateNotifications, [profileId, { services }]);
 }
 
 export async function listProfiles() {
-  const { queryALL } = await db();
-  const rows = (await queryALL(queries.getProfiles)) as {
-    profile_id: BSN;
-    consumer_ids: CONSUMER_ID[];
-    service_ids: SERVICE_ID[];
-    date_updated: string;
-    content: { notifications: NOTIFICATION_LEAN[] } | null;
-  }[];
+  const rows = (await db.queryALL(
+    queries.getProfiles
+  )) as ConsumerNotifications[];
+
   return rows;
 }
 
 export async function listProfileIds() {
-  const { queryALL } = await db();
-  const rows = (await queryALL(queries.getProfileIds)) as {
-    profile_id: BSN;
-    consumer_ids: CONSUMER_ID[];
-    service_ids: SERVICE_ID[];
-  }[];
+  const rows = (await db.queryALL(queries.getProfileIds)) as Pick<
+    ConsumerNotifications,
+    'profileId' | 'serviceIds' | 'consumerIds'
+  >[];
+
   return rows;
 }

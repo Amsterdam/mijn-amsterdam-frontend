@@ -175,7 +175,7 @@ export async function requestData<T>(
   }
 
   // Set the cache Deferred
-  if (config.enableCache && cacheKey) {
+  if (config.enableCache && cacheKey && cacheTimeout > 0) {
     // Debug the cache key to check if the cache key is set and uses the custom cache key if provided.
     debugCacheKey(
       `Caching ${config.url}${config.cacheKey_UNSAFE ? ` with custom cachekey ${config.cacheKey_UNSAFE}` : ''}, releases in ${cacheTimeout}ms`
