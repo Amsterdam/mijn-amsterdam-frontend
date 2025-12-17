@@ -403,18 +403,14 @@ export async function fetchBezwaren(
   const requestConfig_: DataRequestConfig = {
     data: requestBody,
     params,
-    transformResponse: doTransform
-      ? (responseData) =>
-          transformBezwarenResults(
-            authProfileAndToken.profile.sid,
-            responseData
-          )
-      : undefined,
+    transformResponse: (responseData) =>
+      transformBezwarenResults(authProfileAndToken.profile.sid, responseData),
     headers: await getBezwarenApiHeaders(authProfileAndToken),
   };
 
   if (!doTransform) {
     requestConfig_.enableCache = false;
+    requestConfig_.transformResponse = undefined;
   }
 
   const requestConfig = getApiConfig('BEZWAREN_LIST', requestConfig_);
