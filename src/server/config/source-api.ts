@@ -126,7 +126,13 @@ const ApiConfig_ = {
     postponeFetch: postponeFetchAfis,
     url: `${getFromEnv('BFF_AFIS_API_BASE_URL')}`,
   },
-  POM: { method: 'POST', url: `${getFromEnv('BFF_POM_API_BASE_URL')}` },
+  POM: {
+    method: 'POST',
+    headers: {
+      apiKey: getFromEnv('BFF_ENABLEU_API_KEY'),
+    },
+    url: `${getFromEnv('BFF_POM_API_BASE_URL')}`,
+  },
   ZORGNED_JZD: {
     method: 'post',
     url: `${getFromEnv('BFF_ZORGNED_API_BASE_URL')}`,

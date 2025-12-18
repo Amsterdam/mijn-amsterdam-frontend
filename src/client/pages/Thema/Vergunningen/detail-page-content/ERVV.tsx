@@ -1,11 +1,11 @@
 import { commonTransformers, getRows } from './fields-config';
 import type {
   ERVV,
-  VergunningFrontend,
+  DecosZaakFrontend,
 } from '../../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../../components/Datalist/Datalist';
 
-export function ERVV({ vergunning }: { vergunning: VergunningFrontend<ERVV> }) {
+export function ERVV({ vergunning }: { vergunning: DecosZaakFrontend<ERVV> }) {
   const rows = getRows(vergunning, [
     commonTransformers.identifier,
     commonTransformers.description,

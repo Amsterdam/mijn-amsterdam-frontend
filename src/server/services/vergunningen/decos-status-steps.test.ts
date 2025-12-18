@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 
 import { RVVSloterweg } from './config-and-types';
-import { getStatusSteps } from './vergunningen-status-steps';
+import { getStatusStepsDecos } from './decos-status-steps';
 import { StatusLineItem } from '../../../universal/types/App.types';
 import { getDisplayStatus } from '../decos/decos-helpers';
 import type { DecosZaakBase } from '../decos/decos-types';
@@ -22,7 +22,7 @@ describe('vergunningen-status-steps', () => {
         isExpired: false,
       } as unknown as RVVSloterweg;
 
-      const steps = getStatusSteps(zaak);
+      const steps = getStatusStepsDecos(zaak);
       expect(steps).toHaveLength(3);
       expect(steps[0]).toHaveProperty('status', 'Ontvangen');
       expect(steps[1]).toHaveProperty('status', 'In behandeling');
@@ -43,7 +43,7 @@ describe('vergunningen-status-steps', () => {
         statusDates: [],
       } as unknown as DecosZaakBase;
 
-      const steps = getStatusSteps(zaak);
+      const steps = getStatusStepsDecos(zaak);
       expect(steps).toStrictEqual([
         {
           datePublished: '2023-01-01',
@@ -100,7 +100,7 @@ describe('vergunningen-status-steps', () => {
         statusDates: [],
       } as unknown as DecosZaakBase;
 
-      const steps = getStatusSteps(zaak);
+      const steps = getStatusStepsDecos(zaak);
       expect(steps).toMatchObject([
         {},
         {},
@@ -131,7 +131,7 @@ describe('vergunningen-status-steps', () => {
         ],
       } as unknown as DecosZaakBase;
 
-      const steps = getStatusSteps(zaak);
+      const steps = getStatusStepsDecos(zaak);
       expect(steps).toStrictEqual([
         {
           datePublished: '2023-01-01',
@@ -175,7 +175,7 @@ describe('vergunningen-status-steps', () => {
         isExpired: true,
       } as unknown as DecosZaakBase;
 
-      const steps = getStatusSteps(zaak);
+      const steps = getStatusStepsDecos(zaak);
       expect(steps).toStrictEqual([
         {
           datePublished: '2023-01-01',

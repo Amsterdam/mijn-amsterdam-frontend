@@ -273,7 +273,7 @@ describe('useEmandateApis', () => {
   const eMandate = {
     id: '1',
     signRequestUrl: `${bffApiHost}/sign-request`,
-    statusChangeUrl: `${bffApiHost}/status-change`,
+    deactivateUrl: `${bffApiHost}/deactivate`,
     lifetimeUpdateUrl: `${bffApiHost}/lifetime-update`,
     creditorName: 'Creditor Name',
     creditorIBAN: 'NL91ABNA0417164300',
@@ -320,7 +320,7 @@ describe('useEmandateApis', () => {
   });
 
   it('should call the correct API for status change and update the emandate with the new status', async () => {
-    bffApi.get(/\/status-change/).reply(200, { content: { status: '0' } });
+    bffApi.get(/\/deactivate/).reply(200, { content: { status: '0' } });
 
     const { result } = renderHook(() => ({
       store: useBffApiStateStore(),
@@ -387,7 +387,7 @@ describe('useEmandateApis', () => {
   });
 
   it('should handle errors correctly', async () => {
-    bffApi.get('/status-change').reply(500);
+    bffApi.get('/deactivate').reply(500);
 
     const { result } = renderHook(() => useEmandateApis(eMandate));
 

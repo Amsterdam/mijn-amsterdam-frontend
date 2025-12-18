@@ -4,14 +4,14 @@ import { commonTransformers, getRows } from './fields-config';
 import {
   AanbiedenDiensten,
   Straatartiesten,
-  VergunningFrontend,
+  type ZaakFrontendCombined,
 } from '../../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../../components/Datalist/Datalist';
 
 export function AanbiedenDienstenEnStraatartiestenContent({
   vergunning,
 }: {
-  vergunning: VergunningFrontend<AanbiedenDiensten | Straatartiesten>;
+  vergunning: ZaakFrontendCombined<AanbiedenDiensten | Straatartiesten>;
 }) {
   const waarvoor = () =>
     vergunning.category

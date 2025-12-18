@@ -246,7 +246,7 @@ interface ToeristischRegistratieItem {
 export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     stateKey: 'VERGUNNINGEN',
-    displayTitle: (vergunning: VergunningFrontend) => (term: string) => {
+    displayTitle: (vergunning: ZaakFrontendCombined) => (term: string) => {
       return displayPath(term, [vergunning.title, vergunning.identifier]);
     },
     keywordsGeneratedFromProps: ['identifier'],

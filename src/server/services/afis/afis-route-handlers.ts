@@ -14,7 +14,6 @@ import {
 } from './afis-types';
 import {
   apiErrorResult,
-  ApiResponse_DEPRECATED,
   apiSuccessResult,
   type ApiResponse,
 } from '../../../universal/helpers/api';
@@ -81,7 +80,7 @@ export async function handleFetchAfisFacturen(
 
 export function handleAfisRequestWithEncryptedPayloadQueryParam<
   QueryPayload extends qs.ParsedQs,
-  ServiceResponse extends Promise<ApiResponse_DEPRECATED<unknown>>,
+  ServiceResponse extends Promise<ApiResponse<unknown>>,
   RouteParams extends ParamsDictionary = ParamsDictionary,
 >(
   serviceMethod: (
@@ -110,13 +109,13 @@ export function handleAfisRequestWithEncryptedPayloadQueryParam<
     const payloadDecrypted = decryptResult.content.payload as QueryPayload;
 
     // Call the service method with the decrypted payload.
-    const statusChangeResponse = await serviceMethod(
+    const serviceMethodResponse = await serviceMethod(
       payloadDecrypted,
       res.locals.authProfileAndToken.profile,
       req
     );
 
-    return sendResponse(res, statusChangeResponse);
+    return sendResponse(res, serviceMethodResponse);
   };
 }
 
