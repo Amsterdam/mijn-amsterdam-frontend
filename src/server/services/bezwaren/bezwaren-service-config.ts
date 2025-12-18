@@ -11,8 +11,6 @@ export const routes = {
     // Bezwaren
     BEZWAREN_DOCUMENT_DOWNLOAD: '/services/bezwaren/document',
     BEZWAREN_DETAIL: '/services/bezwaren/bezwaar',
-    BEZWAREN_DETAIL_RAW: '/services/raw/bezwaren/bezwaar',
-    BEZWAREN_RAW: '/services/raw/bezwaren',
   },
 };
 
