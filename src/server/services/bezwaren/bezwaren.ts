@@ -188,7 +188,7 @@ function transformBezwarenDocumentsResults(
   response: BezwarenSourceResponse<BezwaarSourceDocument>
 ): OctopusApiResponse<BezwaarDocument> {
   if (Array.isArray(response.results)) {
-    const items = response.results.map(
+    const results = response.results.map(
       ({ bestandsnaam, identificatie, dossiertype, verzenddatum }) => {
         const documentIdEncrypted = encryptSessionIdWithRouteIdParam(
           sessionID,
@@ -211,7 +211,7 @@ function transformBezwarenDocumentsResults(
       }
     );
     return {
-      results: items,
+      results,
       count: response.count,
     };
   }
