@@ -15,6 +15,7 @@ import { useDebouncedCallback } from 'use-debounce';
 import { SearchEntry, displayPath } from './search-config';
 import styles from './Search.module.scss';
 import { useSearchIndex } from './useSearch';
+import { getRedactedClass } from '../../helpers/cobrowse';
 import { useSmallScreen } from '../../hooks/media.hook';
 import { useAppStateReady } from '../../hooks/useAppStateStore';
 import { useKeyDown } from '../../hooks/useKey';
@@ -73,6 +74,11 @@ export function ResultSet({
               <LinkComponent
                 maVariant="fatNoUnderline"
                 href={result.url}
+                className={getRedactedClass(
+                  result.themaId,
+                  result.themaId ? 'content' : undefined
+                )}
+                rel="noopener noreferrer"
                 onClick={() =>
                   onClickResult?.(
                     result,

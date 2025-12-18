@@ -74,7 +74,12 @@ export function ListPagePaginated<T extends object = ZaakAanvraagDetail>({
   const total = totalCount ?? items.length;
 
   return (
-    <PageV2 breadcrumbs={breadcrumbs} heading={title} id={themaId}>
+    <PageV2
+      breadcrumbs={breadcrumbs}
+      heading={title}
+      id={themaId}
+      redactedThemaId={themaId}
+    >
       {isError && (
         <PageContentCell>
           <ErrorAlert>{errorText}</ErrorAlert>

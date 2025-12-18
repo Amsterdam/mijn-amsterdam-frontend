@@ -3,7 +3,7 @@
 exports[`<Landing /> > Renders without crashing 1`] = `
 <DocumentFragment>
   <div
-    class="mams-content-wrapper redacted"
+    class="mams-content-wrapper"
   >
     <main
       class="_LandingPageContent_f54033"

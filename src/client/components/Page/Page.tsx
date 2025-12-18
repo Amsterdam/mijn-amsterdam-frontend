@@ -8,8 +8,7 @@ import {
 } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
-import type { ThemaMenuItem } from '../../config/thema-types';
-import { getRedactedClass } from '../../helpers/cobrowse';
+import { getRedactedClass, type ScopeRequested } from '../../helpers/cobrowse';
 import {
   PageBreadcrumbsV2,
   type PageBreadcrumbsV2Props,
@@ -21,7 +20,7 @@ export interface PageProps extends HTMLProps<HTMLDivElement> {
   heading: ReactElement | string;
   showBreadcrumbs?: boolean;
   redactedThemaId?: string | null;
-  redactedScope?: Required<ThemaMenuItem>['redactedScope'];
+  redactedScope?: ScopeRequested;
   breadcrumbs?: PageBreadcrumbsV2Props['breadcrumbs'];
 }
 
@@ -34,7 +33,7 @@ export function PageV2({
   children,
   showBreadcrumbs = true,
   redactedThemaId,
-  redactedScope = 'full',
+  redactedScope,
   breadcrumbs,
 }: PageProps) {
   return (

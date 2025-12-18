@@ -43,6 +43,17 @@
   --ams-typography-hyphenate-limit-chars: 12 6;
 }
 
+.redacted {
+  position: relative;
+  background-color: black;
+}
+a.redacted {
+  &,
+  * {
+    background-color: black;
+  }
+}
+
 *,
 *:before,
 *:after {

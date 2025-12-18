@@ -36,7 +36,6 @@ import {
   VarenVergunningFrontend,
   VarenZakenFrontend,
 } from '../../../server/services/varen/config-and-types';
-import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-types';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
 import { getFullAddress, getFullName } from '../../../universal/helpers/brp';
@@ -51,6 +50,7 @@ import {
   LinkProps,
   StatusLineItem,
 } from '../../../universal/types/App.types';
+import type { ThemaMenuItem } from '../../config/thema-types';
 import { featureToggle as featureToggleAVG } from '../../pages/Thema/AVG/AVG-thema-config';
 import { featureToggle as featureToggleBezwaren } from '../../pages/Thema/Bezwaren/Bezwaren-thema-config';
 import { themaConfig as themaConfigBodem } from '../../pages/Thema/Bodem/Bodem-thema-config';
@@ -67,6 +67,7 @@ import {
 
 export interface SearchEntry {
   url: string;
+  themaId?: ThemaMenuItem['id'];
   displayTitle: ((term: string) => ReactNode) | ReactNode;
   description: string;
   keywords: string[];
