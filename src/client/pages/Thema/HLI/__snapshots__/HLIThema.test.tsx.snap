@@ -3,7 +3,7 @@
 exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="mams-content-wrapper redacted"
+    class="mams-content-wrapper"
   >
     <div
       class="ams-grid ams-grid--padding-top--large"
@@ -131,6 +131,32 @@ exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
                   </svg>
                 </span>
                 Meer informatie over Stadspas
+              </a>
+            </li>
+            <li>
+              <a
+                class="ams-link-list__link"
+                href="https://www.amsterdam.nl/stadspas/kindtegoed/kosten-terugvragen/"
+                rel="noreferrer"
+              >
+                <span
+                  class="ams-icon"
+                  hidden=""
+                >
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      clip-rule="evenodd"
+                      d="M7.911 2.5 17.5 12l-9.589 9.5L6.5 20.102 14.677 12 6.5 3.898z"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                </span>
+                Meer informatie over Kindtegoed declareren
               </a>
             </li>
           </ul>
