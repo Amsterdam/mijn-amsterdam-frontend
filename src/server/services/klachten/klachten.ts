@@ -115,7 +115,6 @@ export function transformKlachtenResponse(
         isChecked: true,
         isActive: !isClosed,
         datePublished: ontvangstDatum,
-        description: '<p>Uw klacht is in behandeling genomen.</p>',
       },
       {
         id: '3',
