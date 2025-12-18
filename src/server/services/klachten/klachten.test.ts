@@ -166,7 +166,6 @@ describe('Klachten', () => {
           steps: [
             {
               datePublished: '2026-12-30T00:00:00.000Z',
-              description: '<p>Uw klacht is ontvangen.</p>',
               id: '1',
               isActive: false,
               isChecked: true,
@@ -174,7 +173,6 @@ describe('Klachten', () => {
             },
             {
               datePublished: '2026-12-30T00:00:00.000Z',
-              description: '<p>Uw klacht is in behandeling genomen.</p>',
               id: '2',
               isActive: true,
               isChecked: true,
@@ -212,7 +210,6 @@ describe('Klachten', () => {
           steps: [
             {
               datePublished: '2026-12-30T00:00:00.000Z',
-              description: '<p>Uw klacht is ontvangen.</p>',
               id: '1',
               isActive: false,
               isChecked: true,
@@ -220,7 +217,6 @@ describe('Klachten', () => {
             },
             {
               datePublished: '2026-12-30T00:00:00.000Z',
-              description: '<p>Uw klacht is in behandeling genomen.</p>',
               id: '2',
               isActive: false,
               isChecked: true,
