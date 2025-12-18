@@ -169,7 +169,7 @@ function getClosedDescription(isClosed: boolean): string {
   let returnTxt = '';
 
   if (isClosed) {
-    returnTxt = 'Uw klacht is afgehandeld.';
+    returnTxt = `Uw klacht is afgehandeld. U ontvangt of u heeft hierover bericht gekregen per e-mail of per brief.`;
   } else {
     returnTxt = 'Uw klacht wordt nog afgehandeld.';
   }

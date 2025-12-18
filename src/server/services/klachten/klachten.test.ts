@@ -228,7 +228,7 @@ describe('Klachten', () => {
             },
             {
               datePublished: '2026-12-31T00:00:00.000Z',
-              description: '<p>Uw klacht is afgehandeld.</p>',
+              description: `<p>Uw klacht is afgehandeld. U ontvangt of u heeft hierover bericht gekregen per e-mail of per brief.</p>`,
               id: '3',
               isActive: true,
               isChecked: true,
