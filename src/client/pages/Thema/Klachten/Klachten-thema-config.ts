@@ -73,7 +73,7 @@ export const tableConfig = {
       kind: listPageParamKind.lopend,
       page: null,
     }),
-    filter: (klacht: KlachtFrontend) => klacht.isActive,
+    filter: (klacht: KlachtFrontend) => klacht.displayStatus !== 'Afgehandeld',
     sort: dateSort<KlachtFrontend>('ontvangstDatum'),
   },
   [listPageParamKind.eerder]: {
@@ -84,7 +84,7 @@ export const tableConfig = {
       kind: listPageParamKind.eerder,
       page: null,
     }),
-    filter: (klacht: KlachtFrontend) => !klacht.isActive,
+    filter: (klacht: KlachtFrontend) => klacht.displayStatus === 'Afgehandeld',
     sort: dateSort<KlachtFrontend>('ontvangstDatum'),
   },
 } as const;

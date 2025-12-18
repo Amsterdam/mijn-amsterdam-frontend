@@ -130,7 +130,6 @@ export function transformKlachtenResponse(
       id,
       identifier: id,
       title: id,
-      isActive: !isClosed,
       inbehandelingSinds: smileDateParser(
         klachtSource?.klacht_inbehandeling.value || ''
       ),
@@ -178,12 +177,12 @@ function getClosedDescription(isClosed: boolean): string {
 function createKlachtNotification(klacht: KlachtFrontend): MyNotification {
   const id = `klacht-${klacht.id}-notification`;
   const gotoDetailTxt = 'Bekijk details';
-  if (klacht.isActive) {
+  if (klacht.displayStatus === 'Afgehandeld') {
     return {
       id,
-      title: 'Klacht ontvangen',
-      description: `Wij hebben uw klacht met gemeentelijk zaaknummer ${klacht.title} ontvangen.`,
-      datePublished: klacht.ontvangstDatum,
+      title: 'Klacht afgehandeld',
+      description: `Uw klacht met gemeentelijk zaaknummer ${klacht.id} is afgehandeld. U ontvangt of u heeft hierover bericht gekregen per e-mail of per brief.`,
+      datePublished: klacht.dateClosed,
       link: {
         to: klacht.link.to,
         title: gotoDetailTxt,
@@ -194,9 +193,9 @@ function createKlachtNotification(klacht: KlachtFrontend): MyNotification {
   }
   return {
     id,
-    title: 'Klacht afgehandeld',
-    description: `Uw klacht met gemeentelijk zaaknummer ${klacht.id} is afgehandeld. U ontvangt of u heeft hierover bericht gekregen per e-mail of per brief.`,
-    datePublished: klacht.dateClosed,
+    title: 'Klacht ontvangen',
+    description: `Wij hebben uw klacht met gemeentelijk zaaknummer ${klacht.title} ontvangen.`,
+    datePublished: klacht.ontvangstDatum,
     link: {
       to: klacht.link.to,
       title: gotoDetailTxt,

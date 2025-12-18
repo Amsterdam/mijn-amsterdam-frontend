@@ -12,7 +12,6 @@ export type KlachtFrontend = {
   gewensteOplossing: string | null;
   onderwerp: string | null;
   locatie: string | null;
-  isActive: boolean;
 } & ZaakAanvraagDetail;
 
 export type SmileKlacht = {

@@ -153,7 +153,6 @@ describe('Klachten', () => {
           id: '1',
           identifier: '1',
           inbehandelingSinds: '2026-12-20T00:00:00.000Z',
-          isActive: true,
           link: {
             title: 'Klacht 1',
             to: '/klachten/klacht/1',
@@ -197,7 +196,6 @@ describe('Klachten', () => {
           id: '2',
           identifier: '2',
           inbehandelingSinds: '2026-12-20T00:00:00.000Z',
-          isActive: false,
           link: {
             title: 'Klacht 2',
             to: '/klachten/klacht/2',
