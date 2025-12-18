@@ -415,7 +415,7 @@ export async function fetchBezwaren(authProfileAndToken: AuthProfileAndToken) {
     });
   }
 
-  const bezwarenSorted = bezwarenResponse.content.sort(
+  const bezwarenSorted = bezwarenResponse.content.toSorted(
     sortByBezwaarIdentificatie
   );
 
