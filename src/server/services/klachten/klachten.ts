@@ -108,7 +108,6 @@ export function transformKlachtenResponse(
         isChecked: true,
         isActive: false,
         datePublished: ontvangstDatum,
-        description: '<p>Uw klacht is ontvangen.</p>',
       },
       {
         id: '2',
