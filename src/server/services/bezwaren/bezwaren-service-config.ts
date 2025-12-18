@@ -8,7 +8,6 @@ export const featureToggle = {
 
 export const routes = {
   protected: {
-    // Bezwaren
     BEZWAREN_DOCUMENT_DOWNLOAD: '/services/bezwaren/document',
     BEZWAREN_DETAIL: '/services/bezwaren/bezwaar',
   },
