@@ -12,7 +12,7 @@ import {
   filterFeaturesinRadius,
   getBboxFromFeatures,
 } from './buurt/helpers';
-import { fetchMyLocation } from './bag/my-locations';
+import { fetchMyLocations } from './bag/my-locations';
 import {
   featureToggle,
   routeConfig,
@@ -62,7 +62,7 @@ export async function fetchWiorNotifications(
       };
     }
   );
-  const MY_LOCATION = await fetchMyLocation(authProfileAndToken);
+  const MY_LOCATION = await fetchMyLocations(authProfileAndToken);
 
   if (
     MY_LOCATION.status === 'OK' &&

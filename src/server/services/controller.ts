@@ -18,15 +18,16 @@ import {
 import { fetchIsKnownInAFIS } from './afis/afis';
 import { fetchAfval, fetchAfvalPunten } from './afval/afval';
 import { fetchAVG } from './avg/avg';
-import { fetchMyLocation } from './bag/my-locations';
+import { fetchMyLocations } from './bag/my-locations';
 import { fetchBezwaren } from './bezwaren/bezwaren';
 import { fetchLoodmetingen } from './bodem/loodmetingen';
-import { fetchBrpV2 } from './brp/brp';
+import { fetchBrp } from './brp/brp';
 import { fetchMijnAmsterdamUitlegPage } from './cms/cms-content';
 import { fetchActiveMaintenanceNotifications } from './cms/cms-maintenance-notifications';
 import { fetchErfpacht } from './erfpacht/erfpacht';
 import { fetchHLI } from './hli/hli';
 import { fetchHorecaVergunningen } from './horeca/horeca';
+import { fetchKVK } from './hr-kvk/hr-kvk';
 import { fetchLeerlingenvervoer } from './jeugd/jeugd';
 import { fetchAllKlachten } from './klachten/klachten';
 import { fetchKrefia } from './krefia/krefia';
@@ -39,8 +40,6 @@ import {
   fetchSubsidie,
 } from './patroon-c';
 import { fetchSVWI } from './patroon-c/svwi';
-import { fetchKVK } from './profile/kvk';
-import { fetchProfile } from './profile/profile';
 import { fetchContactmomenten } from './salesforce/contactmomenten';
 import { fetchNotificationsWithTipsInserted } from './tips-and-notifications';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-verhuur';
@@ -126,7 +125,7 @@ const AFIS = callAuthenticatedService(fetchIsKnownInAFIS);
 const AVG = callAuthenticatedService(fetchAVG);
 const BEZWAREN = callAuthenticatedService(fetchBezwaren);
 const BODEM = callAuthenticatedService(fetchLoodmetingen); // For now bodem only consists of loodmetingen.
-const BRP = callAuthenticatedService(fetchBrpV2);
+const BRP = callAuthenticatedService(fetchBrp);
 const ERFPACHT = callAuthenticatedService(fetchErfpacht);
 const HLI = callAuthenticatedService(fetchHLI);
 const HORECA = callAuthenticatedService(fetchHorecaVergunningen);
@@ -134,7 +133,6 @@ const KLACHTEN = callAuthenticatedService(fetchAllKlachten);
 const KREFIA = callAuthenticatedService(fetchKrefia);
 const KVK = callAuthenticatedService(fetchKVK);
 const PARKEREN = callAuthenticatedService(fetchParkeren);
-const PROFILE = callAuthenticatedService(fetchProfile);
 const SVWI = callAuthenticatedService(fetchSVWI);
 const TOERISTISCHE_VERHUUR = callAuthenticatedService(fetchToeristischeVerhuur);
 const VAREN = callAuthenticatedService(fetchVaren);
@@ -157,7 +155,7 @@ const KLANT_CONTACT = callAuthenticatedService(fetchContactmomenten); // For now
 // Location, address, based services
 const AFVAL = callAuthenticatedService(fetchAfval);
 const AFVALPUNTEN = callAuthenticatedService(fetchAfvalPunten);
-const MY_LOCATION = callAuthenticatedService(fetchMyLocation);
+const MY_LOCATION = callAuthenticatedService(fetchMyLocations);
 
 // Special services that aggregates NOTIFICATIONS from various services
 export const NOTIFICATIONS = async (req: Request) => {
@@ -195,7 +193,6 @@ const SERVICES_INDEX = {
   NOTIFICATIONS,
   OVERTREDINGEN,
   PARKEREN,
-  PROFILE,
   SUBSIDIES,
   SVWI,
   KLANT_CONTACT,
@@ -215,11 +212,11 @@ export type ServicesType = typeof SERVICES_INDEX;
 export type ServiceID = keyof ServicesType;
 export type ServiceMap = { [key in ServiceID]: ServicesType[ServiceID] };
 
-type PrivateServices = Omit<ServicesType, 'PROFILE' | 'VAREN'>;
+type PrivateServices = Omit<ServicesType, 'VAREN'>;
 
 type PrivateServicesAttributeBased = Pick<
   ServiceMap,
-  'CMS_CONTENT' | 'CMS_MAINTENANCE_NOTIFICATIONS' | 'NOTIFICATIONS' | 'PROFILE'
+  'CMS_CONTENT' | 'CMS_MAINTENANCE_NOTIFICATIONS' | 'NOTIFICATIONS'
 >;
 
 type CommercialServices = Pick<
@@ -291,7 +288,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     CMS_CONTENT,
     CMS_MAINTENANCE_NOTIFICATIONS,
     NOTIFICATIONS,
-    PROFILE,
   },
   commercial: {
     AFIS,

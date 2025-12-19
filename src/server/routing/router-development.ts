@@ -152,6 +152,7 @@ authRouterDevelopment.get(
       const renderProps = {
         title: `Selecteer ${authMethod} test account.`,
         list: allUsernames,
+        idLabel: authMethod === 'digid' ? 'Bsn' : 'KvK',
       };
 
       return res.render('select-test-account', renderProps);

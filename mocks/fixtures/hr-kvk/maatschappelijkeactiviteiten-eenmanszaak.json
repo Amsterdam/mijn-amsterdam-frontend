@@ -1,0 +1,258 @@
+{
+  "_embedded": {
+    "maatschappelijkeactiviteiten": [
+      {
+        "_links": {
+          "schema": "https://schemas.data.amsterdam.nl/datasets/hr_kvk/maatschappelijkeactiviteiten/v2",
+          "self": {
+            "href": "https://acc.api.data.amsterdam.nl/v1/hr_kvk/maatschappelijkeactiviteiten/90000021",
+            "title": "90000021",
+            "kvknummer": "90000021"
+          },
+          "heeftHrHoofdvestiging": {
+            "href": "https://acc.api.data.amsterdam.nl/v1/hr_kvk/vestigingen/990000489902",
+            "title": "990000489902",
+            "vestigingsnummer": "990000489902"
+          },
+          "heeftAlsEigenaarHrNps": {
+            "href": "https://acc.api.data.amsterdam.nl/v1/hr_kvk/natuurlijkepersonen/90000021.NPS",
+            "title": "90000021.NPS",
+            "identificatie": "90000021.NPS"
+          },
+          "heeftAlsEigenaarHrNnp": null,
+          "bezoekHeeftBagNummeraanduiding": null,
+          "bezoekHeeftBagVerblijfsobject": null,
+          "bezoekHeeftBagLigplaats": null,
+          "bezoekHeeftBagStandplaats": null,
+          "postHeeftBagNummeraanduiding": null,
+          "postHeeftBagVerblijfsobject": null,
+          "postHeeftBagLigplaats": null,
+          "postHeeftBagStandplaats": null,
+          "wordtUitgeoefendInCommercieleHrVestigingen": [
+            {
+              "href": "https://acc.api.data.amsterdam.nl/v1/hr_kvk/vestigingen/990000085869",
+              "vestigingsnummer": "990000085869",
+              "title": "990000085869"
+            },
+            {
+              "href": "https://acc.api.data.amsterdam.nl/v1/hr_kvk/vestigingen/990000489902",
+              "vestigingsnummer": "990000489902",
+              "title": "990000489902"
+            },
+            {
+              "href": "https://acc.api.data.amsterdam.nl/v1/hr_kvk/vestigingen/990000800482",
+              "vestigingsnummer": "990000800482",
+              "title": "990000800482"
+            }
+          ],
+          "wordtUitgeoefendInNietCommercieleHrVestigingen": []
+        },
+        "kvknummer": "90000021",
+        "datumAanvangMaatschappelijkeActiviteitDatum": "1994-11-18",
+        "datumAanvangMaatschappelijkeActiviteitJaar": 1994,
+        "datumAanvangMaatschappelijkeActiviteitMaand": 11,
+        "datumAanvangMaatschappelijkeActiviteitDag": 18,
+        "datumEindeMaatschappelijkeActiviteitDatum": null,
+        "datumEindeMaatschappelijkeActiviteitJaar": null,
+        "datumEindeMaatschappelijkeActiviteitMaand": null,
+        "datumEindeMaatschappelijkeActiviteitDag": null,
+        "registratieTijdstipMaatschappelijkeActiviteit": null,
+        "naam": "Regional Superfase",
+        "nonMailing": "Nee",
+        "incidenteelUitlenenArbeidskrachten": "Nee",
+        "heeftHrHoofdvestigingId": "990000489902",
+        "heeftAlsEigenaarHrNpsId": "90000021.NPS",
+        "heeftAlsEigenaarHrNnpId": null,
+        "onderneming": true,
+        "totaalWerkzamePersonen": 4,
+        "voltijdWerkzamePersonen": 3,
+        "deeltijdWerkzamePersonen": 1,
+        "datumAanvangOndernemingDatum": "1994-11-18",
+        "datumAanvangOndernemingJaar": 1994,
+        "datumAanvangOndernemingMaand": 11,
+        "datumAanvangOndernemingDag": 18,
+        "datumEindeOndernemingDatum": null,
+        "datumEindeOndernemingJaar": null,
+        "datumEindeOndernemingMaand": null,
+        "datumEindeOndernemingDag": null,
+        "datumOverdrachtVoortzettingOndernemingDatum": null,
+        "datumOverdrachtVoortzettingOndernemingJaar": null,
+        "datumOverdrachtVoortzettingOndernemingMaand": null,
+        "datumOverdrachtVoortzettingOndernemingDag": null,
+        "overdrachtOfVoortzettingOnderneming": null,
+        "bezoekLocatieAfgeschermd": "Nee",
+        "bezoekLocatieToevoegingAdres": null,
+        "bezoekLocatieVolledigAdres": "Kervellaantje 6 2991HC Barendrecht",
+        "bezoekLocatieStraatnaam": "Kervellaantje",
+        "bezoekLocatieHuisnummer": 6,
+        "bezoekLocatieHuisletter": null,
+        "bezoekLocatieHuisnummerToevoeging": null,
+        "bezoekLocatiePostcode": "2991HC",
+        "bezoekLocatiePlaats": "Barendrecht",
+        "bezoekLocatieStraatHuisnummerBuitenland": null,
+        "bezoekLocatiePostcodePlaatsBuitenland": null,
+        "bezoekLocatieRegioBuitenland": null,
+        "bezoekLocatieLandBuitenland": null,
+        "bezoekHeeftBagNummeraanduidingId": null,
+        "bezoekHeeftBagVerblijfsobjectId": null,
+        "bezoekHeeftBagLigplaatsId": null,
+        "bezoekHeeftBagStandplaatsId": null,
+        "postLocatieAfgeschermd": "Nee",
+        "postLocatieToevoegingAdres": null,
+        "postLocatieVolledigAdres": "Kervellaantje 6 2991HC Barendrecht",
+        "postLocatieStraatnaam": "Kervellaantje",
+        "postLocatieHuisnummer": 6,
+        "postLocatieHuisletter": null,
+        "postLocatieHuisnummerToevoeging": null,
+        "postLocatiePostbusnummer": null,
+        "postLocatiePostcode": "2991HC",
+        "postLocatiePlaats": "Barendrecht",
+        "postLocatieStraatHuisnummerBuitenland": null,
+        "postLocatiePostcodePlaatsBuitenland": null,
+        "postLocatieRegioBuitenland": null,
+        "postLocatieLandBuitenland": null,
+        "postHeeftBagNummeraanduidingId": null,
+        "postHeeftBagVerblijfsobjectId": null,
+        "postHeeftBagLigplaatsId": null,
+        "postHeeftBagStandplaatsId": null,
+        "activiteiten": [
+          {
+            "sbiCode": "43120",
+            "omschrijving": "Bouwrijp maken van terreinen",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "43320",
+            "omschrijving": "Bouwtimmeren",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "43330",
+            "omschrijving": "Afwerken van vloeren en wanden",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "43310",
+            "omschrijving": "Stukadoorswerk",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "43340",
+            "omschrijving": "Schilderen en glaszetten",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "43130",
+            "omschrijving": "Proefboren en boren",
+            "isHoofdactiviteit": "Nee"
+          },
+          {
+            "sbiCode": "43110",
+            "omschrijving": "Slopen",
+            "isHoofdactiviteit": "Ja"
+          }
+        ],
+        "handelsnamen": [
+          {
+            "datumAanvang": "2002-05-01",
+            "datumEinde": null,
+            "handelsnaam": "Regional Superfase Eenmanszaak",
+            "volgorde": 0
+          },
+          {
+            "datumAanvang": "1996-03-01",
+            "datumEinde": null,
+            "handelsnaam": "Regional Superfase Eenmanszaak de tweede",
+            "volgorde": 1
+          },
+          {
+            "datumAanvang": "2008-10-01",
+            "datumEinde": null,
+            "handelsnaam": "Regional Superfase Eenmanszaak de derde",
+            "volgorde": 2
+          },
+          {
+            "datumAanvang": "2012-03-22",
+            "datumEinde": null,
+            "handelsnaam": "Regional Superfase Eenmanszaak de vierde",
+            "volgorde": 3
+          },
+          {
+            "datumAanvang": "2012-03-22",
+            "datumEinde": null,
+            "handelsnaam": "Regional Superfase Eenmanszaak de vijfde",
+            "volgorde": 4
+          },
+          {
+            "datumAanvang": "2013-01-01",
+            "datumEinde": null,
+            "handelsnaam": "Regional Superfase Eenmanszaak de zesde",
+            "volgorde": 5
+          }
+        ],
+        "communicatie": [
+          {
+            "toegangscode": "+31",
+            "nummer": "0209999999",
+            "soort": "Telefoon"
+          }
+        ],
+        "emailAdressen": [
+          {
+            "emailAdres": "nepemailadres@kvk.nl"
+          }
+        ],
+        "domeinnamen": []
+      }
+    ],
+    "heeftAlsEigenaarHrNps": [
+      {
+        "_links": {
+          "schema": "https://schemas.data.amsterdam.nl/datasets/hr_kvk/natuurlijkepersonen/v3",
+          "self": {
+            "href": "https://acc.api.data.amsterdam.nl/v1/hr_kvk/natuurlijkepersonen/90000382.NPS",
+            "title": "90000382.NPS",
+            "identificatie": "90000382.NPS"
+          },
+          "heeftHrFunctievervullingen": []
+        },
+        "identificatie": "90000382.NPS",
+        "bsn": "990196045",
+        "voorvoegselGeslachtsnaam": "von",
+        "geslachtsnaam": "Mix",
+        "voornamen": "Keva",
+        "geslachtsaanduiding": "Mannelijk",
+        "volledigeNaam": "Keva Mix",
+        "geboortedatumDatum": "1988-08-12",
+        "geboortedatumJaar": 1988,
+        "geboortedatumMaand": 8,
+        "geboortedatumDag": 12,
+        "geboorteplaats": "Nepplaats",
+        "geboorteland": "Nederland",
+        "overlijdensdatumDatum": null,
+        "overlijdensdatumJaar": null,
+        "overlijdensdatumMaand": null,
+        "overlijdensdatumDag": null,
+        "schuldsanering": false,
+        "surceanceVanBetaling": false,
+        "faillissement": false,
+        "status": null,
+        "duur": null,
+        "beperkingInRechtshandelingDatumAanvang": null,
+        "beperkingInRechtshandelingDatumEinde": null,
+        "beperkingInRechtshandelingSoortCode": null,
+        "beperkingInRechtshandelingSoortOmschrijving": null,
+        "beperkingInRechtshandelingUitspraakAanvangDatum": null,
+        "beperkingInRechtshandelingUitspraakAanvangNaam": null,
+        "beperkingInRechtshandelingUitspraakAanvangPlaats": null,
+        "beperkingInRechtshandelingUitspraakEindeDatum": null,
+        "beperkingInRechtshandelingUitspraakEindeNaam": null,
+        "beperkingInRechtshandelingUitspraakEindePlaats": null,
+        "persoonRechtsvorm": "Eenmanszaak",
+        "uitgebreideRechtsvorm": "Eenmanszaak",
+        "typePersoon": "Natuurlijk persoon",
+        "rol": "Eigenaar"
+      }
+    ]
+  }
+}

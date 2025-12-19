@@ -1,78 +1,106 @@
+import nock from 'nock';
 import { describe, it, expect, vi, Mock } from 'vitest';
 
-import { fetchBAG } from './bag';
-import { fetchMyLocation, forTesting } from './my-locations';
+import type { BAGAdreseerbaarObject } from './bag.types';
+import { fetchMyLocations, forTesting } from './my-locations';
 import { getAuthProfileAndToken } from '../../../testing/utils';
 import {
   apiSuccessResult,
   apiErrorResult,
 } from '../../../universal/helpers/api';
-import { fetchBrpV2 } from '../brp/brp';
-import type { Adres } from '../brp/brp-types';
-import { fetchKVK, getKvkAddresses } from '../profile/kvk';
+import { fetchBrp } from '../brp/brp';
+import { fetchKVK } from '../hr-kvk/hr-kvk';
 
-vi.mock('../brp/brp', () => ({
-  fetchBrpV2: vi.fn(),
-}));
-
-vi.mock('./bag', () => ({
-  fetchBAG: vi.fn(),
-}));
-
-vi.mock('../profile/kvk', async (importOriginal) => ({
+vi.mock('../brp/brp', async (importOriginal) => ({
   ...(await importOriginal()),
-  getKvkAddresses: vi.fn(),
+  fetchBrp: vi.fn(),
+}));
+
+vi.mock('../hr-kvk/hr-kvk', async (importOriginal) => ({
+  ...(await importOriginal()),
   fetchKVK: vi.fn(),
 }));
 
-const adres = { straatnaam: 'address1' } as Adres;
-const adres2 = { straatnaam: 'address2' } as Adres;
+export function setupBagApiNockResponse(
+  reply: number,
+  adresseerbareobjecten: Partial<BAGAdreseerbaarObject>[]
+) {
+  nock('https://api.data.amsterdam.nl')
+    .get(/benkagg\/adresseerbareobjecten/)
+    .reply(reply, {
+      _embedded: {
+        adresseerbareobjecten,
+      },
+    });
+}
 
 describe('fetchPrivate', () => {
   const authProfileAndToken = getAuthProfileAndToken();
 
   it('should return private addresses if fetching BRP data is successful', async () => {
-    (fetchBrpV2 as Mock).mockResolvedValueOnce(
+    (fetchBrp as Mock).mockResolvedValueOnce(
       apiSuccessResult({
         mokum: true,
-        adres,
+        adres: {
+          adresseerbaarObjectIdentificatie: 'a',
+          straatnaam: 'NewStreet',
+          huisnummer: 10,
+        },
       })
     );
 
-    (fetchBAG as Mock).mockResolvedValueOnce(
-      apiSuccessResult({ latlng: { lat: 1, lng: 1 }, address: 'Een adres' })
-    );
+    setupBagApiNockResponse(200, [
+      {
+        identificatie: 'x1',
+        adresseerbaarObjectPuntGeometrieWgs84: {
+          type: 'Point',
+          coordinates: [1, 1],
+        },
+      },
+    ]);
 
     const result = await forTesting.fetchPrivate(authProfileAndToken);
 
-    expect(fetchBAG).toHaveBeenCalledWith(adres);
-
     expect(result.status).toBe('OK');
     expect(result.content).toHaveLength(1);
-    expect(result.content).toEqual([
+    expect(result.content).toStrictEqual([
       {
-        address: 'Een adres',
+        address: {
+          adresseerbaarObjectIdentificatie: 'a',
+          huisnummer: 10,
+          straatnaam: 'NewStreet',
+        },
+        bagAddress: {
+          adresseerbaarObjectPuntGeometrieWgs84: {
+            coordinates: [1, 1],
+            type: 'Point',
+          },
+          identificatie: 'x1',
+        },
+        bagNummeraanduidingId: 'x1',
         latlng: {
           lat: 1,
           lng: 1,
         },
+        mokum: false,
         profileType: 'private',
+        title: 'Thuis',
       },
     ]);
   });
 
   it('should return default location if no BAG location is found', async () => {
-    (fetchBrpV2 as Mock).mockResolvedValueOnce(
+    (fetchBrp as Mock).mockResolvedValueOnce(
       apiSuccessResult({
         mokum: true,
-        adres,
+        adres: {
+          adresseerbaarObjectIdentificatie: 'a',
+          straatnaam: 'NewStreet',
+          huisnummer: 10,
+        },
       })
     );
-
-    (fetchBAG as Mock).mockResolvedValueOnce(
-      apiSuccessResult({ latlng: null, address: null })
-    );
-
+    setupBagApiNockResponse(200, []);
     const result = await forTesting.fetchPrivate(authProfileAndToken);
 
     expect(result).toStrictEqual({
@@ -86,6 +114,7 @@ describe('fetchPrivate', () => {
           },
           mokum: true,
           profileType: 'private',
+          title: 'Amsterdam centrum',
         },
       ],
       status: 'OK',
@@ -93,8 +122,10 @@ describe('fetchPrivate', () => {
   });
 
   it('should return a bare response if BRP data is not a Mokum address', async () => {
-    (fetchBrpV2 as Mock).mockResolvedValueOnce(
-      apiSuccessResult({ mokum: false, adres: null })
+    (fetchBrp as Mock).mockResolvedValueOnce(
+      apiSuccessResult({
+        mokum: false,
+      })
     );
 
     const result = await forTesting.fetchPrivate(authProfileAndToken);
@@ -108,12 +139,13 @@ describe('fetchPrivate', () => {
         latlng: null,
         mokum: false,
         profileType: 'private',
+        title: 'Nergens',
       },
     ]);
   });
 
   it('should return an error if fetching BRP data fails', async () => {
-    (fetchBrpV2 as Mock).mockResolvedValueOnce(
+    (fetchBrp as Mock).mockResolvedValueOnce(
       apiErrorResult('Error fetching BRP data', null)
     );
 
@@ -129,46 +161,139 @@ describe('fetchCommercial', () => {
 
   it('should return commercial addresses if fetching KVK data is successful', async () => {
     (fetchKVK as Mock).mockResolvedValueOnce(
-      apiSuccessResult({ vestigingen: [adres, adres2] })
+      apiSuccessResult({
+        vestigingen: [
+          {
+            naam: 'Hoofdkantoor',
+            bezoekadres: 'Amstel 1 Amsterdam',
+            bezoekHeeftBagNummeraanduidingId: 'x',
+          },
+          {
+            naam: 'Vestiging',
+            bezoekadres: 'Oudezijds voorburgwal 300 Amsterdam',
+            bezoekHeeftBagNummeraanduidingId: 'y',
+          },
+        ],
+      })
     );
 
-    (getKvkAddresses as Mock).mockReturnValueOnce([adres, adres2]);
-
-    (fetchBAG as Mock).mockResolvedValueOnce(
-      apiSuccessResult({ latlng: { lat: 1, lng: 1 }, address: 'Een adres' })
-    );
-    (fetchBAG as Mock).mockResolvedValueOnce(
-      apiSuccessResult({ latlng: { lat: 1, lng: 1 }, address: 'Een 2e adres' })
-    );
+    setupBagApiNockResponse(200, [
+      {
+        identificatie: 'x1',
+        adresseerbaarObjectPuntGeometrieWgs84: {
+          type: 'Point',
+          coordinates: [1, 1],
+        },
+      },
+    ]);
+    setupBagApiNockResponse(200, [
+      {
+        identificatie: 'y',
+        adresseerbaarObjectPuntGeometrieWgs84: {
+          type: 'Point',
+          coordinates: [2, 2],
+        },
+      },
+    ]);
 
     const result = await forTesting.fetchCommercial(authProfileAndToken);
 
-    expect(fetchBAG).toHaveBeenCalledWith(adres);
-    expect(fetchBAG).toHaveBeenCalledWith(adres2);
-
-    expect(result).toMatchInlineSnapshot(`
-      {
-        "content": [
-          {
-            "address": "Een adres",
-            "latlng": {
-              "lat": 1,
-              "lng": 1,
+    expect(result).toStrictEqual({
+      content: [
+        {
+          address: null,
+          bagAddress: {
+            adresseerbaarObjectPuntGeometrieWgs84: {
+              coordinates: [1, 1],
+              type: 'Point',
             },
-            "profileType": "commercial",
+            identificatie: 'x1',
+          },
+          bagNummeraanduidingId: 'x1',
+          latlng: {
+            lat: 1,
+            lng: 1,
+          },
+          mokum: false,
+          profileType: 'commercial',
+          title: 'Hoofdkantoor',
+        },
+        {
+          address: null,
+          bagAddress: {
+            adresseerbaarObjectPuntGeometrieWgs84: {
+              coordinates: [2, 2],
+              type: 'Point',
+            },
+            identificatie: 'y',
+          },
+          bagNummeraanduidingId: 'y',
+          latlng: {
+            lat: 2,
+            lng: 2,
+          },
+          mokum: false,
+          profileType: 'commercial',
+          title: 'Vestiging',
+        },
+      ],
+      status: 'OK',
+    });
+  });
+
+  it('should return only locations for which BAG requests succeed', async () => {
+    (fetchKVK as Mock).mockResolvedValueOnce(
+      apiSuccessResult({
+        vestigingen: [
+          {
+            naam: 'Hoofdkantoor',
+            bezoekadres: 'Amstel 1 Amsterdam',
+            bezoekHeeftBagNummeraanduidingId: 'x',
           },
           {
-            "address": "Een 2e adres",
-            "latlng": {
-              "lat": 1,
-              "lng": 1,
-            },
-            "profileType": "commercial",
+            naam: 'Vestiging',
+            bezoekadres: 'Oudezijds voorburgwal 300 Amsterdam',
+            bezoekHeeftBagNummeraanduidingId: 'y',
           },
         ],
-        "status": "OK",
-      }
-    `);
+      })
+    );
+
+    setupBagApiNockResponse(500, []);
+    setupBagApiNockResponse(200, [
+      {
+        identificatie: 'y',
+        adresseerbaarObjectPuntGeometrieWgs84: {
+          type: 'Point',
+          coordinates: [2, 2],
+        },
+      },
+    ]);
+
+    const result = await forTesting.fetchCommercial(authProfileAndToken);
+    expect(result).toStrictEqual({
+      content: [
+        {
+          address: null,
+          bagAddress: {
+            adresseerbaarObjectPuntGeometrieWgs84: {
+              coordinates: [2, 2],
+              type: 'Point',
+            },
+            identificatie: 'y',
+          },
+          bagNummeraanduidingId: 'y',
+          latlng: {
+            lat: 2,
+            lng: 2,
+          },
+          mokum: false,
+          profileType: 'commercial',
+          title: 'Vestiging',
+        },
+      ],
+      status: 'OK',
+    });
   });
 
   it('should return an error if fetching KVK data fails', async () => {
@@ -186,45 +311,90 @@ describe('fetchMyLocation', () => {
   const authProfileAndTokenCommercial = getAuthProfileAndToken('commercial');
 
   it('should return locations if fetching commercial and private data is successful', async () => {
-    (fetchBrpV2 as Mock).mockResolvedValueOnce(
+    (fetchBrp as Mock).mockResolvedValueOnce(
       apiSuccessResult({
         mokum: true,
-        adres,
+        adres: {
+          adresseerbaarObjectIdentificatie: 'a',
+          straatnaam: 'NewStreet',
+          huisnummer: 10,
+        },
       })
     );
 
-    (fetchBAG as Mock).mockResolvedValueOnce(
-      apiSuccessResult({ latlng: { lat: 1, lng: 1 }, address: 'Een adres' })
-    );
-
-    (fetchBAG as Mock).mockResolvedValueOnce(
-      apiSuccessResult({ latlng: { lat: 2, lng: 2 }, address: 'Een 2e adres' })
-    );
-
     (fetchKVK as Mock).mockResolvedValueOnce(
-      apiSuccessResult({ vestigingen: [adres2] })
+      apiSuccessResult({
+        vestigingen: [
+          {
+            naam: 'Werk',
+            bezoekadres: 'Dam 1 Amsterdam',
+            bezoekHeeftBagNummeraanduidingId: 'x',
+          },
+        ],
+      })
     );
 
-    (getKvkAddresses as Mock).mockReturnValueOnce([adres2]);
+    setupBagApiNockResponse(200, [
+      {
+        identificatie: 'x1',
+        adresseerbaarObjectPuntGeometrieWgs84: {
+          type: 'Point',
+          coordinates: [1, 1],
+        },
+      },
+    ]);
+    setupBagApiNockResponse(200, [
+      {
+        identificatie: 'x2',
+        adresseerbaarObjectPuntGeometrieWgs84: {
+          type: 'Point',
+          coordinates: [2, 2],
+        },
+      },
+    ]);
 
-    const result = await fetchMyLocation(authProfileAndTokenPrivate);
-    expect(result).toEqual({
+    const result = await fetchMyLocations(authProfileAndTokenPrivate);
+    expect(result).toStrictEqual({
       content: [
         {
-          address: 'Een 2e adres',
+          address: {
+            adresseerbaarObjectIdentificatie: 'a',
+            huisnummer: 10,
+            straatnaam: 'NewStreet',
+          },
+          bagAddress: {
+            adresseerbaarObjectPuntGeometrieWgs84: {
+              coordinates: [2, 2],
+              type: 'Point',
+            },
+            identificatie: 'x2',
+          },
+          bagNummeraanduidingId: 'x2',
           latlng: {
             lat: 2,
             lng: 2,
           },
+          mokum: false,
           profileType: 'private',
+          title: 'Thuis',
         },
         {
-          address: 'Een adres',
+          address: null,
+          bagAddress: {
+            adresseerbaarObjectPuntGeometrieWgs84: {
+              coordinates: [1, 1],
+              type: 'Point',
+            },
+            identificatie: 'x1',
+          },
+          bagNummeraanduidingId: 'x1',
           latlng: {
             lat: 1,
             lng: 1,
           },
+          mokum: false,
           profileType: 'commercial',
+          title: 'Werk',
         },
       ],
       status: 'OK',
@@ -232,17 +402,30 @@ describe('fetchMyLocation', () => {
   });
 
   it('should return commercial locations if profile type is commercial', async () => {
-    (fetchBAG as Mock).mockResolvedValueOnce(
-      apiSuccessResult({ latlng: { lat: 2, lng: 2 }, address: 'Een 2e adres' })
-    );
-
     (fetchKVK as Mock).mockResolvedValueOnce(
-      apiSuccessResult({ vestigingen: [adres2] })
+      apiSuccessResult({
+        vestigingen: [
+          {
+            naam: 'Werk',
+            bezoekadres: 'Dam 1 Amsterdam',
+            bezoekHeeftBagNummeraanduidingId: 'x',
+          },
+        ],
+      })
     );
 
-    (getKvkAddresses as Mock).mockReturnValueOnce([adres2]);
+    setupBagApiNockResponse(200, [
+      {
+        identificatie: 'x1',
 
-    const result = await fetchMyLocation(authProfileAndTokenCommercial);
+        adresseerbaarObjectPuntGeometrieWgs84: {
+          type: 'Point',
+          coordinates: [1, 1],
+        },
+      },
+    ]);
+
+    const result = await fetchMyLocations(authProfileAndTokenCommercial);
     expect(result.status).toBe('OK');
     expect(result.content).toHaveLength(1);
   });
@@ -252,24 +435,23 @@ describe('fetchMyLocation', () => {
       apiErrorResult('Oh Oh Server down', null)
     );
 
-    const result = await fetchMyLocation(authProfileAndTokenCommercial);
+    const result = await fetchMyLocations(authProfileAndTokenCommercial);
     expect(result.status).toBe('DEPENDENCY_ERROR');
   });
 
-  it('should return an error if no locations found', async () => {
+  it('should return a success response with empty content if ERROR or EMPTY', async () => {
     (fetchKVK as Mock).mockResolvedValueOnce(
       apiSuccessResult({ vestigingen: [] })
     );
-    (getKvkAddresses as Mock).mockReturnValueOnce([]);
-    (fetchBrpV2 as Mock).mockResolvedValueOnce(
+
+    (fetchBrp as Mock).mockResolvedValueOnce(
       apiErrorResult('Server down!', null)
     );
 
-    const result = await fetchMyLocation(authProfileAndTokenPrivate);
+    const result = await fetchMyLocations(authProfileAndTokenPrivate);
     expect(result).toEqual({
-      content: null,
-      message: 'Could not fetch locations.',
-      status: 'ERROR',
+      content: [],
+      status: 'OK',
     });
   });
 });

@@ -367,7 +367,7 @@ describe('requestData', () => {
     const entries: ApiUrlEntries = [
       ['WPI_AANVRAGEN', 'http://get/foo'],
       [
-        'BRP',
+        'BENK_BRP',
         { private: 'http://get/bar', commercial: 'https://get/bar/commercial' },
       ],
       [
@@ -382,9 +382,9 @@ describe('requestData', () => {
     expect(findApiByRequestUrl(entries, 'http://get/foo')).toBe(
       'WPI_AANVRAGEN'
     );
-    expect(findApiByRequestUrl(entries, 'http://get/bar')).toBe('BRP');
+    expect(findApiByRequestUrl(entries, 'http://get/bar')).toBe('BENK_BRP');
     expect(findApiByRequestUrl(entries, 'http://get/bar/commercial')).toBe(
-      'BRP'
+      'BENK_BRP'
     );
     expect(findApiByRequestUrl(entries, 'http://get/some/thing')).toBe(
       'unknown'
