@@ -181,7 +181,7 @@ function createKlachtNotification(klacht: KlachtFrontend): MyNotification {
     return {
       id,
       title: 'Klacht afgehandeld',
-      description: `Uw klacht met gemeentelijk zaaknummer ${klacht.id} is afgehandeld. U ontvangt of u heeft hierover bericht gekregen per e-mail of per brief.`,
+      description: `Uw klacht met zaaknummer ${klacht.id} is afgehandeld. U ontvangt of u heeft hierover bericht gekregen per e-mail of per brief.`,
       datePublished: klacht.dateClosed,
       link: {
         to: klacht.link.to,
@@ -194,7 +194,7 @@ function createKlachtNotification(klacht: KlachtFrontend): MyNotification {
   return {
     id,
     title: 'Klacht ontvangen',
-    description: `Wij hebben uw klacht met gemeentelijk zaaknummer ${klacht.title} ontvangen.`,
+    description: `Wij hebben uw klacht met zaaknummer ${klacht.title} ontvangen.`,
     datePublished: klacht.ontvangstDatum,
     link: {
       to: klacht.link.to,

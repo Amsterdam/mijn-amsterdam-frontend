@@ -96,8 +96,7 @@ describe('Klachten', () => {
         notifications: [
           {
             datePublished: '2026-12-30T00:00:00.000Z',
-            description:
-              'Wij hebben uw klacht met gemeentelijk zaaknummer 1 ontvangen.',
+            description: 'Wij hebben uw klacht met zaaknummer 1 ontvangen.',
             id: 'klacht-1-notification',
             link: {
               title: 'Bekijk details',
@@ -110,7 +109,7 @@ describe('Klachten', () => {
           {
             datePublished: '2026-12-31T00:00:00.000Z',
             description:
-              'Uw klacht met gemeentelijk zaaknummer 2 is afgehandeld. U ontvangt of u heeft hierover bericht gekregen per e-mail of per brief.',
+              'Uw klacht met zaaknummer 2 is afgehandeld. U ontvangt of u heeft hierover bericht gekregen per e-mail of per brief.',
             id: 'klacht-2-notification',
             link: {
               title: 'Bekijk details',
