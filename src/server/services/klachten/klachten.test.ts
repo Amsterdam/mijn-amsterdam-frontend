@@ -109,7 +109,7 @@ describe('Klachten', () => {
           {
             datePublished: '2026-12-31T00:00:00.000Z',
             description:
-              'Uw klacht met zaaknummer 2 is afgehandeld. U ontvangt of u heeft hierover bericht gekregen per e-mail of per brief.',
+              'Uw klacht met zaaknummer 2 is afgehandeld. U krijgt een antwoord op uw klacht.',
             id: 'klacht-2-notification',
             link: {
               title: 'Bekijk details',
@@ -178,7 +178,7 @@ describe('Klachten', () => {
             },
             {
               datePublished: '',
-              description: '<p>Uw klacht wordt nog afgehandeld.</p>',
+              description: '',
               id: '3',
               isActive: false,
               isChecked: false,
@@ -221,7 +221,7 @@ describe('Klachten', () => {
             },
             {
               datePublished: '2026-12-31T00:00:00.000Z',
-              description: `<p>Uw klacht is afgehandeld. U ontvangt of u heeft hierover bericht gekregen per e-mail of per brief.</p>`,
+              description: `<p>Uw klacht is afgehandeld. U krijgt een antwoord op uw klacht.</p>`,
               id: '3',
               isActive: true,
               isChecked: true,

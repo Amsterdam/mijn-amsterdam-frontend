@@ -122,7 +122,9 @@ export function transformKlachtenResponse(
         isChecked: isClosed,
         isActive: isClosed,
         datePublished: dateClosed,
-        description: getClosedDescription(isClosed),
+        description: isClosed
+          ? `<p>Uw klacht is afgehandeld. U krijgt een antwoord op uw klacht.</p>`
+          : '',
       },
     ];
 
@@ -162,18 +164,6 @@ export function transformKlachtenResponse(
   };
 }
 
-function getClosedDescription(isClosed: boolean): string {
-  let returnTxt = '';
-
-  if (isClosed) {
-    returnTxt = `Uw klacht is afgehandeld. U ontvangt of u heeft hierover bericht gekregen per e-mail of per brief.`;
-  } else {
-    returnTxt = 'Uw klacht wordt nog afgehandeld.';
-  }
-
-  return `<p>${returnTxt}</p>`;
-}
-
 function createKlachtNotification(klacht: KlachtFrontend): MyNotification {
   const id = `klacht-${klacht.id}-notification`;
   const gotoDetailTxt = 'Bekijk details';
@@ -181,7 +171,7 @@ function createKlachtNotification(klacht: KlachtFrontend): MyNotification {
     return {
       id,
       title: 'Klacht afgehandeld',
-      description: `Uw klacht met zaaknummer ${klacht.id} is afgehandeld. U ontvangt of u heeft hierover bericht gekregen per e-mail of per brief.`,
+      description: `Uw klacht met zaaknummer ${klacht.id} is afgehandeld. U krijgt een antwoord op uw klacht.`,
       datePublished: klacht.dateClosed,
       link: {
         to: klacht.link.to,
@@ -194,7 +184,7 @@ function createKlachtNotification(klacht: KlachtFrontend): MyNotification {
   return {
     id,
     title: 'Klacht ontvangen',
-    description: `Wij hebben uw klacht met zaaknummer ${klacht.title} ontvangen.`,
+    description: `Wij hebben uw klacht met zaaknummer ${klacht.id} ontvangen.`,
     datePublished: klacht.ontvangstDatum,
     link: {
       to: klacht.link.to,
