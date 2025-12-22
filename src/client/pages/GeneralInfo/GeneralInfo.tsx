@@ -51,7 +51,7 @@ function createDeprecatedInfoSection(
 ): InfoSection_DEPRECATED {
   return {
     id: themaConfig.id,
-    active: themaConfig.featureToggle.themaActive,
+    active: themaConfig.featureToggle.active,
     title: themaConfig.uitlegPageSections.title,
     listItems: themaConfig.uitlegPageSections.listItems,
   };

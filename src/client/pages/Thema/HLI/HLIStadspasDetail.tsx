@@ -10,7 +10,7 @@ import {
 } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router';
 
-import { featureToggle, routeConfig, themaId } from './HLI-thema-config';
+import { themaConfig } from './HLI-thema-config';
 import styles from './HLIStadspasDetail.module.scss';
 import { useBlockStadspas, useStadspassen } from './useStadspassen.hook';
 import {
@@ -78,7 +78,7 @@ const PHONENUMBERS = {
 export function HLIStadspasDetail() {
   const isPhoneScreen = useSmallScreen();
   const appState = useAppStateGetter();
-  useHTMLDocumentTitle(routeConfig.detailPageStadspas);
+  useHTMLDocumentTitle(themaConfig.detailPageStadspas.route);
 
   const { HLI } = appState;
   const { passNumber } = useParams<{ passNumber: string }>();
@@ -122,11 +122,11 @@ export function HLIStadspasDetail() {
   const showMultiBudgetTransactions =
     !!stadspas?.budgets.length && stadspas.budgets.length > 1 && !isPhoneScreen;
 
-  const breadcrumbs = useThemaBreadcrumbs(themaId);
+  const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
   return (
     <PageV2
-      redactedThemaId={themaId}
+      redactedThemaId={themaConfig.id}
       breadcrumbs={breadcrumbs}
       heading={
         <>
@@ -370,7 +370,7 @@ function PassBlockedAlert() {
       heading="Deze pas heeft u geblokkeerd, hoe nu verder?"
       severity="warning"
       className={
-        featureToggle.hliThemaStadspasDeblokkerenActive ? 'ams-mb-l' : ''
+        themaConfig.featureToggle.stadspas.deblokkerenActive ? 'ams-mb-l' : ''
       }
     >
       <Paragraph>
