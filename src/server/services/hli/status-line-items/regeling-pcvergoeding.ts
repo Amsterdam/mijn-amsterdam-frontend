@@ -4,6 +4,7 @@ import { getBetrokkenKinderenDescription } from './generic';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { lowercaseFirstLetter } from '../../../../universal/helpers/text';
 import { sortAlpha, splitBy } from '../../../../universal/helpers/utils';
+import { getFromEnv } from '../../../helpers/env';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
@@ -12,8 +13,6 @@ import {
 // The following code does not exist for the business but we create it to differentiate
 // between 2026 aanvragen and older.
 export const MAMS_PC2026 = 'MAMS_PC2026';
-export const AV_PCTGBO = 'AV-PCTGBO'; // PC Tegoed Basisonderwijs
-export const AV_PCTGVO = 'AV-PCTGVO'; // PC Tegoed Voortgezet Onderwijs
 
 export const AV_UPCC = 'AV-UPCC'; // PC Tegoed Basisonderwijs.
 export const AV_UPCZIL = 'AV-UPCZIL';
@@ -23,7 +22,8 @@ export const AV_PCVC = 'AV-PCVC'; // PC Tegoed Voortgezet Onderwijs.
 export const AV_PCVZIL = 'AV-PCVZIL';
 export const AV_PCVTG = 'AV-PCVTG';
 
-const DATE_2026_CODES_ACTIVE = '2026-01-01';
+const DATE_PCTEGOED_2026_CODES_ACTIVE =
+  getFromEnv('BFF_DATE_PCTEGOED_2026_CODES_ACTIVE') || '2026-01-01';
 
 const avCodes = {
   PC: {
@@ -172,7 +172,8 @@ export function filterCombineUpcPcvData(
   const baseRegelingIdWithVerzilvering: string[] = [];
   const [aanvragenAfter2026, aanvragenBefore2026] = splitBy(
     aanvragen,
-    (aanvraag) => isBefore(aanvraag.datumBesluit, DATE_2026_CODES_ACTIVE)
+    (aanvraag) =>
+      isBefore(aanvraag.datumBesluit, DATE_PCTEGOED_2026_CODES_ACTIVE)
   );
   const aanvragen_ =
     filterOutRedundantPcVergoedingsAanvragenWhenWorkShopNietGevolgd(
