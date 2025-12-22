@@ -7,7 +7,7 @@ import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { BAGLocation } from '../bag/bag.types';
-import { fetchMyLocation } from '../bag/my-locations';
+import { fetchMyLocations } from '../bag/my-locations';
 
 async function fetchZWDAPI<T>(dataRequestConfigSpecific: DataRequestConfig) {
   const dataRequestConfigBase = getApiConfig(
@@ -35,7 +35,7 @@ export async function fetchVVEData(authProfileAndToken: AuthProfileAndToken) {
     throw new Error('BFF_VVE_API_TOKEN not found');
   }
 
-  const privateBAGResponse = await fetchMyLocation(authProfileAndToken);
+  const privateBAGResponse = await fetchMyLocations(authProfileAndToken);
 
   const privateAddresses: BAGLocation[] = privateBAGResponse.content ?? [];
 
