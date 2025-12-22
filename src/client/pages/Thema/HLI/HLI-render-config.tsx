@@ -43,7 +43,7 @@ export const HLIRoutes = [
   },
   {
     route: '/stadspas',
-    Component: () => <Navigate to={routeConfig.themaPage.path} replace />,
+    Component: () => <Navigate to={themaConfig.route.path} replace />,
     isActive: themaConfig.featureToggle.active,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];

@@ -63,7 +63,7 @@ export const themaConfig = {
       to: 'https://www.amsterdam.nl/stadspas',
     },
   ],
-  redactedScope: 'none',
+  redactedScope: 'full',
   route: {
     path: '/regelingen-bij-laag-inkomen',
     trackingUrl: null,
