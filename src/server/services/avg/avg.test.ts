@@ -427,7 +427,7 @@ describe('AVG', () => {
             {
               datePublished: '2023-03-16T00:00:00.000Z',
               description:
-                'Wij hebben meer informatie nodig om uw AVG verzoek met gemeentelijk zaaknummer 1 in behandeling te nemen. U krijgt een brief of e-mail waarin staat welke informatie wij nodig hebben.',
+                'Wij hebben meer informatie nodig om uw AVG verzoek met zaaknummer 1 in behandeling te nemen. U krijgt een brief of e-mail waarin staat welke informatie wij nodig hebben.',
               id: 'avg-1-notification',
               link: {
                 title: 'Bekijk details',
@@ -440,7 +440,7 @@ describe('AVG', () => {
             {
               datePublished: '2023-03-30T00:00:00.000Z',
               description:
-                'Wij hebben uw AVG verzoek met gemeentelijk zaaknummer 2 in behandeling.',
+                'Wij hebben uw AVG verzoek met zaaknummer 2 in behandeling.',
               id: 'avg-2-notification',
               link: {
                 title: 'Bekijk details',
@@ -453,7 +453,7 @@ describe('AVG', () => {
             {
               datePublished: '2023-03-19T00:00:00.000Z',
               description:
-                'Uw AVG verzoek met gemeentelijk zaaknummer 223 is afgehandeld. U ontvangt of u heeft hierover bericht gekregen per e-mail of per brief.',
+                'Uw AVG verzoek met zaaknummer 223 is afgehandeld. U ontvangt of u heeft hierover bericht gekregen per e-mail of per brief.',
               id: 'avg-223-notification',
               link: {
                 title: 'Bekijk details',
@@ -466,7 +466,7 @@ describe('AVG', () => {
             {
               datePublished: '2023-03-25T00:00:00.000Z',
               description:
-                'Uw AVG verzoek met gemeentelijk zaaknummer 425 is afgehandeld. U ontvangt of u heeft hierover bericht gekregen per e-mail of per brief.',
+                'Uw AVG verzoek met zaaknummer 425 is afgehandeld. U ontvangt of u heeft hierover bericht gekregen per e-mail of per brief.',
               id: 'avg-425-notification',
               link: {
                 title: 'Bekijk details',
@@ -479,7 +479,7 @@ describe('AVG', () => {
             {
               datePublished: '2023-06-03T00:00:00.000Z',
               description:
-                'Wij hebben meer informatie nodig om uw AVG verzoek met gemeentelijk zaaknummer 561 in behandeling te nemen. U krijgt een brief of e-mail waarin staat welke informatie wij nodig hebben.',
+                'Wij hebben meer informatie nodig om uw AVG verzoek met zaaknummer 561 in behandeling te nemen. U krijgt een brief of e-mail waarin staat welke informatie wij nodig hebben.',
               id: 'avg-561-notification',
               link: {
                 title: 'Bekijk details',
@@ -492,7 +492,7 @@ describe('AVG', () => {
             {
               datePublished: '2023-03-18T00:00:00.000Z',
               description:
-                'Wij hebben uw AVG verzoek met gemeentelijk zaaknummer 156 ontvangen.',
+                'Wij hebben uw AVG verzoek met zaaknummer 156 ontvangen.',
               id: 'avg-156-notification',
               link: {
                 title: 'Bekijk details',

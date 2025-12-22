@@ -36,12 +36,15 @@ function getDataForKlachten(bsn: string, page: number) {
   data.append('function', 'readKlacht');
   const columns = [
     'klacht_id',
+    'klacht_status',
     'klacht_klachtonderwerp',
     'klacht_datumontvangstklacht',
     'klacht_locatieadres',
     'klacht_omschrijving',
     'klacht_gewensteoplossing',
     'klacht_inbehandeling',
+    'klacht_finishedon',
+    'klacht_klachtopgelost',
   ].join(', ');
 
   data.append('columns', columns);
@@ -91,6 +94,39 @@ export function transformKlachtenResponse(
     const ontvangstDatum = smileDateParser(
       klachtSource?.klacht_datumontvangstklacht.value || ''
     );
+    const ontvangstDatumFormatted = ontvangstDatum
+      ? defaultDateFormat(ontvangstDatum)
+      : null;
+    const isClosed = klachtSource.klacht_status.value === 'Gesloten';
+    const dateClosed = smileDateParser(
+      klachtSource.klacht_finishedon.value ?? ''
+    );
+    const steps = [
+      {
+        id: '1',
+        status: 'Ontvangen',
+        isChecked: true,
+        isActive: false,
+        datePublished: ontvangstDatum,
+      },
+      {
+        id: '2',
+        status: 'In behandeling',
+        isChecked: true,
+        isActive: !isClosed,
+        datePublished: ontvangstDatum,
+      },
+      {
+        id: '3',
+        status: 'Afgehandeld',
+        isChecked: isClosed,
+        isActive: isClosed,
+        datePublished: dateClosed,
+        description: isClosed
+          ? `<p>Uw klacht is afgehandeld. U krijgt een antwoord op uw klacht.</p>`
+          : '',
+      },
+    ];
 
     const klacht: KlachtFrontend = {
       id,
@@ -100,9 +136,9 @@ export function transformKlachtenResponse(
         klachtSource?.klacht_inbehandeling.value || ''
       ),
       ontvangstDatum,
-      ontvangstDatumFormatted: ontvangstDatum
-        ? defaultDateFormat(ontvangstDatum)
-        : null,
+      ontvangstDatumFormatted,
+      dateClosed,
+      dateClosedFormatted: defaultDateFormat(dateClosed),
       omschrijving: klachtSource?.klacht_omschrijving.value || '',
       gewensteOplossing: klachtSource?.klacht_gewensteoplossing.value,
       onderwerp: klachtSubjectParser(
@@ -115,8 +151,8 @@ export function transformKlachtenResponse(
         }),
         title: `Klacht ${id}`,
       },
-      displayStatus: 'Ontvangen',
-      steps: [],
+      displayStatus: steps.find((s) => s.isActive)?.status ?? 'In behandeling',
+      steps,
     };
 
     return klacht;
@@ -129,20 +165,34 @@ export function transformKlachtenResponse(
 }
 
 function createKlachtNotification(klacht: KlachtFrontend): MyNotification {
-  const notification: MyNotification = {
-    themaID: themaId,
-    themaTitle: themaTitle,
-    id: `klacht-${klacht.id}-notification`,
+  const id = `klacht-${klacht.id}-notification`;
+  const gotoDetailTxt = 'Bekijk details';
+  if (klacht.displayStatus === 'Afgehandeld') {
+    return {
+      id,
+      title: 'Klacht afgehandeld',
+      description: `Uw klacht met zaaknummer ${klacht.id} is afgehandeld. U krijgt een antwoord op uw klacht.`,
+      datePublished: klacht.dateClosed,
+      link: {
+        to: klacht.link.to,
+        title: gotoDetailTxt,
+      },
+      themaID: themaId,
+      themaTitle: themaTitle,
+    };
+  }
+  return {
+    id,
     title: 'Klacht ontvangen',
-    description: `Wij hebben uw klacht met gemeentelijk zaaknummer ${klacht.title} ontvangen.`,
+    description: `Wij hebben uw klacht met zaaknummer ${klacht.id} ontvangen.`,
     datePublished: klacht.ontvangstDatum,
     link: {
       to: klacht.link.to,
-      title: 'Bekijk details',
+      title: gotoDetailTxt,
     },
+    themaID: themaId,
+    themaTitle: themaTitle,
   };
-
-  return notification;
 }
 
 async function fetchKlachten(

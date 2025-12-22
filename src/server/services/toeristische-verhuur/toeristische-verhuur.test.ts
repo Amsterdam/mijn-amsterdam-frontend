@@ -273,7 +273,7 @@ describe('Toeristische verhuur service', () => {
       `Aanvraag ${vakantieverhuurVergunning.title.toLowerCase()} verleend`
     );
     expect(notification3.description).toBe(
-      `Wij hebben uw aanvraag voor een ${vakantieverhuurVergunning.title.toLowerCase()} met gemeentelijk zaaknummer ${
+      `Wij hebben uw aanvraag voor een ${vakantieverhuurVergunning.title.toLowerCase()} met zaaknummer ${
         vakantieverhuurVergunning.identifier
       } verleend.`
     );
@@ -308,7 +308,7 @@ describe('Toeristische verhuur service', () => {
       `Aanvraag vergunning bed & breakfast verleend`
     );
     expect(notification6.description).toBe(
-      `Wij hebben uw aanvraag voor een vergunning bed & breakfast met gemeentelijk zaaknummer ${bbVergunnig.identifier} verleend.`
+      `Wij hebben uw aanvraag voor een vergunning bed & breakfast met zaaknummer ${bbVergunnig.identifier} verleend.`
     );
     expect(notification6.link?.title).toBe('Bekijk uw aanvraag');
 

@@ -83,21 +83,21 @@ export function createNotificationDefault(
         ...baseNotification,
         datePublished,
         title: `Aanvraag ${zaak.title} ontvangen`,
-        description: `Wij hebben uw aanvraag ${zaak.title} met gemeentelijk zaaknummer ${zaak.identifier} ontvangen.`,
+        description: `Wij hebben uw aanvraag ${zaak.title} met zaaknummer ${zaak.identifier} ontvangen.`,
       };
     case 'In behandeling':
       return {
         ...baseNotification,
         datePublished,
         title: `Aanvraag ${zaak.title} in behandeling`,
-        description: `Wij hebben uw aanvraag ${zaak.title} met gemeentelijk zaaknummer ${zaak.identifier} in behandeling genomen.`,
+        description: `Wij hebben uw aanvraag ${zaak.title} met zaaknummer ${zaak.identifier} in behandeling genomen.`,
       };
     case 'Meer informatie nodig':
       return {
         ...baseNotification,
         datePublished,
         title: `Meer informatie omtrent uw aanvraag ${zaak.title}`,
-        description: `Er is meer informatie nodig om uw aanvraag ${zaak.title} met gemeentelijk zaaknummer ${zaak.identifier} verder te kunnen behandelen.`,
+        description: `Er is meer informatie nodig om uw aanvraag ${zaak.title} met zaaknummer ${zaak.identifier} verder te kunnen behandelen.`,
       };
     case 'Ingetrokken':
     case 'Afgehandeld': {
@@ -116,7 +116,7 @@ export function createNotificationDefault(
             zaak.dateEnd
           ).toISOString(),
           title: `Uw ${zaak.title} loopt af`,
-          description: `Uw ${documentType}${zaak.title} met gemeentelijk zaaknummer ${zaak.identifier} loopt binnenkort af, vraag zonodig een nieuwe aan.`,
+          description: `Uw ${documentType}${zaak.title} met zaaknummer ${zaak.identifier} loopt binnenkort af, vraag zonodig een nieuwe aan.`,
         };
       }
 
@@ -125,7 +125,7 @@ export function createNotificationDefault(
         ...baseNotification,
         datePublished,
         title: `Aanvraag ${zaak.title} afgehandeld`,
-        description: `Wij hebben uw aanvraag ${zaak.title} met gemeentelijk zaaknummer ${zaak.identifier} afgehandeld.`,
+        description: `Wij hebben uw aanvraag ${zaak.title} met zaaknummer ${zaak.identifier} afgehandeld.`,
       };
     }
     case 'Verlopen':
@@ -133,7 +133,7 @@ export function createNotificationDefault(
         ...baseNotification,
         datePublished,
         title: `${zaak.title} verlopen`,
-        description: `Uw ${documentType}${zaak.title} met gemeentelijk zaaknummer ${zaak.identifier} is verlopen.`,
+        description: `Uw ${documentType}${zaak.title} met zaaknummer ${zaak.identifier} is verlopen.`,
       };
   }
 

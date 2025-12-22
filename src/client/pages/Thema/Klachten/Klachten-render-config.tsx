@@ -17,8 +17,8 @@ import {
 
 export const KlachtenRoutes = [
   {
-    route: routeConfig.detailPage.path,
-    Component: KlachtenDetail,
+    route: routeConfig.themaPage.path,
+    Component: KlachtenThema,
     isActive: featureToggle.klachtenActive,
   },
   {
@@ -27,8 +27,8 @@ export const KlachtenRoutes = [
     isActive: featureToggle.klachtenActive,
   },
   {
-    route: routeConfig.themaPage.path,
-    Component: KlachtenThema,
+    route: routeConfig.detailPage.path,
+    Component: KlachtenDetail,
     isActive: featureToggle.klachtenActive,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
