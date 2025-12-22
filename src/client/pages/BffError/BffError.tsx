@@ -26,10 +26,10 @@ export function BFF500Error() {
         <Paragraph className="ams-mb-xl">
           Er is een fout opgetreden in de communicatie met de server.{' '}
           <MaRouterLink href="/">Ga verder naar home.</MaRouterLink>
-          {!IS_PRODUCTION && (
-            <pre style={{ whiteSpace: 'break-spaces' }}>{stack}</pre>
-          )}
         </Paragraph>
+        {!IS_PRODUCTION && (
+          <pre style={{ whiteSpace: 'break-spaces' }}>{stack}</pre>
+        )}
       </PageContentCell>
     </PageV2>
   );

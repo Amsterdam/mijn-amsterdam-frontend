@@ -3,7 +3,7 @@
 exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="mams-content-wrapper redacted"
+    class="mams-content-wrapper"
   >
     <div
       class="ams-grid ams-grid--padding-top--large"

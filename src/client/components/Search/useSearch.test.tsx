@@ -187,6 +187,7 @@ describe('Search hooks and helpers', () => {
             "Amstel 1 GPK aanvraag",
             "vergunningsaanvraag",
           ],
+          "themaId": "VERGUNNINGEN",
           "url": "/buurt/vergunningen/detail/1726584505",
         },
         {
@@ -200,6 +201,7 @@ describe('Search hooks and helpers', () => {
             "Ontvangen",
             "vergunningsaanvraag",
           ],
+          "themaId": "VERGUNNINGEN",
           "url": "/vergunningen/detail/1467362160",
         },
         {
@@ -211,6 +213,7 @@ describe('Search hooks and helpers', () => {
             "Afgehandeld",
             "vergunningsaanvraag",
           ],
+          "themaId": "VERGUNNINGEN",
           "url": "/vergunningen/detail/1370220470",
         },
       ]
@@ -276,6 +279,7 @@ describe('Search hooks and helpers', () => {
             "krediet",
             "budgetbeheer",
           ],
+          "themaId": "KREFIA",
           "url": "http://host/bbr/2064866/3",
         },
         {
@@ -290,6 +294,7 @@ describe('Search hooks and helpers', () => {
             "krediet",
             "budgetbeheer",
           ],
+          "themaId": "KREFIA",
           "url": "http://host/pl/2442531/1",
         },
         {
@@ -304,6 +309,7 @@ describe('Search hooks and helpers', () => {
             "krediet",
             "budgetbeheer",
           ],
+          "themaId": "KREFIA",
           "url": "http://host/srv/2442531/2",
         },
       ]

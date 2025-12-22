@@ -126,6 +126,7 @@ export function HLIStadspasDetail() {
 
   return (
     <PageV2
+      redactedThemaId={themaId}
       breadcrumbs={breadcrumbs}
       heading={
         <>

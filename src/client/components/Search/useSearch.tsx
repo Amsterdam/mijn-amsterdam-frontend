@@ -85,6 +85,10 @@ export function generateSearchIndexPageEntry(
     searchEntry.keywords = uniqueArray(searchEntry.keywords.filter((x) => !!x));
   }
 
+  if (apiConfig.stateKey) {
+    searchEntry.themaId = apiConfig.stateKey;
+  }
+
   return searchEntry;
 }
 
