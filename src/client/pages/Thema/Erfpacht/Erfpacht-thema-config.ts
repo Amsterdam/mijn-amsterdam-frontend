@@ -53,9 +53,7 @@ export const featureToggle = {
 };
 
 export const themaId = 'ERFPACHT' as const;
-export const themaTitle = featureToggle.vveIsActive
-  ? 'Woning en Erfpacht'
-  : 'Erfpacht';
+export const themaTitle = 'Erfpacht';
 
 export const ERFPACHT_ZAKELIJK_ROUTE_DEFAULT =
   'https://erfpachtzakelijk.amsterdam.nl';

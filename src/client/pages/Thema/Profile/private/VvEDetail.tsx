@@ -22,21 +22,22 @@ function WonenData({ vve }: WonenDataProps) {
       content: vve?.number_of_apartments ?? '-',
     },
     {
-      label: 'Beschermd stads-/dorpsgezicht',
-      content: vve?.beschermd_stadsdorpsgezicht ?? '-',
-    },
-    {
       label: 'Bouwjaar',
       content: vve?.build_year ?? '-',
     },
     {
-      label: 'Stadsdeel',
-      content: vve?.district ?? '-',
+      label: 'Beschermd stads-/dorpsgezicht',
+      content: vve?.beschermd_stadsdorpsgezicht ?? '-',
     },
-    {
-      label: 'VvE ID',
-      content: vve?.id ?? '-',
-    },
+
+    // {
+    //   label: 'Stadsdeel',
+    //   content: vve?.district ?? '-',
+    // },
+    // {
+    //   label: 'VvE ID
+    //   content: vve?.id ?? '-',
+    // },
     {
       label: 'Prioriteitswijk',
       content: vve?.is_priority_neighborhood ? 'Ja' : 'Nee',
@@ -57,14 +58,14 @@ function WonenData({ vve }: WonenDataProps) {
       label: 'Monumentstatus',
       content: vve?.monument_status ?? '-',
     },
-    {
-      label: 'Buurt',
-      content: vve?.neighborhood ?? '-',
-    },
-    {
-      label: 'Wijk',
-      content: vve?.wijk ?? '-',
-    },
+    // {
+    //   label: 'Buurt',
+    //   content: vve?.neighborhood ?? '-',
+    // },
+    // {
+    //   label: 'Wijk',
+    //   content: vve?.wijk ?? '-',
+    // },
     // {
     //   label: 'Postcode',
     //   content: vve?.zip_code ?? '-',
@@ -82,12 +83,11 @@ export function WonenDetail() {
   const { wonenData, isLoading, isError, breadcrumbs } = useWonenThemaData();
   const { routeConfig } = useProfileData();
   useHTMLDocumentTitle(routeConfig.detailPageVvE);
-
   return (
     <ThemaDetailPagina
       themaId={themaId}
       title={wonenData?.name || 'VvE'}
-      // zaak={wonenData}
+      zaak={{}} // empty object to prevent info block: "Geen gegevens gevonden"
       isError={isError}
       isLoading={isLoading}
       pageContentMain={wonenData && <WonenData vve={wonenData} />}
