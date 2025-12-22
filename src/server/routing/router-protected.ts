@@ -14,8 +14,7 @@ import { IS_PRODUCTION } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { setAdHocDependencyRequestCacheTtlMs } from '../config/source-api';
 import { afisRouter } from '../services/afis/afis-router';
-import { fetchBezwaarDocument } from '../services/bezwaren/bezwaren';
-import { handleFetchBezwaarDetail } from '../services/bezwaren/bezwaren-route-handlers';
+import { bezwarenRouter } from '../services/bezwaren/bezwaren-router';
 import { fetchLoodMetingDocument } from '../services/bodem/loodmetingen';
 import { brpRouter } from '../services/brp/brp-router';
 import {
@@ -120,7 +119,8 @@ router.use(
   wmoRouter.protected,
   hliRouter.protected,
   brpRouter.protected,
-  afisRouter.protected
+  afisRouter.protected,
+  bezwarenRouter.protected
 );
 
 // LLV Zorgned Doc download
@@ -169,15 +169,6 @@ attachDocumentDownloadRoute(
   BffEndpoints.LOODMETING_DOCUMENT_DOWNLOAD,
   fetchLoodMetingDocument
 );
-
-attachDocumentDownloadRoute(
-  router,
-  BffEndpoints.BEZWAREN_DOCUMENT_DOWNLOAD,
-  fetchBezwaarDocument
-);
-
-router.get(BffEndpoints.BEZWAREN_DETAIL, handleFetchBezwaarDetail);
-
 router.get(
   BffEndpoints.ERFPACHT_DOSSIER_DETAILS,
   async (req: Request, res: ResponseAuthenticated) => {

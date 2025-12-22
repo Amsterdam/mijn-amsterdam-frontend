@@ -1,6 +1,7 @@
 import * as jose from 'jose';
 import { generatePath } from 'react-router';
 
+import { EMPTY_UUID, MAX_PAGE_COUNT, routes } from './bezwaren-service-config';
 import {
   BezwaarFrontend,
   BezwaarDocument,
@@ -39,11 +40,9 @@ import {
   getApiConfig,
 } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
-import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
+import { trackEvent } from '../monitoring';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
-
-const MAX_PAGE_COUNT = 5; // Should amount to 5 * 20 (per page) = 100 bezwaren
 
 async function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
   const now = new Date();
@@ -104,7 +103,7 @@ async function fetchMultiple<T>(
 ) {
   const { params } = requestConfigBase;
   let page = params.page;
-  let items: T[] = [];
+  let results: T[] = [];
 
   while (page < maxPageCount) {
     const cacheKey = `${cacheKeyBase}-${page}`;
@@ -118,18 +117,16 @@ async function fetchMultiple<T>(
       return response;
     }
 
-    items = items.concat(response.content.items);
-    if (items.length >= (response.content.count ?? 0)) {
+    results = results.concat(response.content.results);
+    if (results.length >= (response.content.count ?? 0)) {
       break;
     }
 
     page += 1;
   }
 
-  return apiSuccessResult(items);
+  return apiSuccessResult(results);
 }
-
-const EMPTY_UUID = '00000000-0000-0000-0000-000000000000';
 
 function transformBezwaarStatus(
   response: BezwarenSourceResponse<BezwaarSourceStatus>
@@ -169,12 +166,14 @@ async function fetchBezwaarStatus(
     zaak: getZaakUrl(zaakId),
   };
 
-  const requestConfig = getApiConfig('BEZWAREN_STATUS', {
+  const requestConfig_: DataRequestConfig = {
     params,
     transformResponse: transformBezwaarStatus,
     headers: await getBezwarenApiHeaders(authProfileAndToken),
     cacheKey_UNSAFE: zaakId, // zaakId is a UUID, no need to specify additional uniqueness.
-  });
+  };
+
+  const requestConfig = getApiConfig('BEZWAREN_STATUS', requestConfig_);
 
   const statusResponse = await requestData<StatusLineItem[]>(
     requestConfig,
@@ -189,7 +188,7 @@ function transformBezwarenDocumentsResults(
   response: BezwarenSourceResponse<BezwaarSourceDocument>
 ): OctopusApiResponse<BezwaarDocument> {
   if (Array.isArray(response.results)) {
-    const items = response.results.map(
+    const results = response.results.map(
       ({ bestandsnaam, identificatie, dossiertype, verzenddatum }) => {
         const documentIdEncrypted = encryptSessionIdWithRouteIdParam(
           sessionID,
@@ -199,23 +198,26 @@ function transformBezwarenDocumentsResults(
           id: documentIdEncrypted,
           title: bestandsnaam,
           datePublished: verzenddatum,
-          url: generateFullApiUrlBFF(BffEndpoints.BEZWAREN_DOCUMENT_DOWNLOAD, [
-            {
-              id: documentIdEncrypted,
-            },
-          ]),
+          url: generateFullApiUrlBFF(
+            routes.protected.BEZWAREN_DOCUMENT_DOWNLOAD,
+            [
+              {
+                id: documentIdEncrypted,
+              },
+            ]
+          ),
           dossiertype,
         };
       }
     );
     return {
-      items,
+      results,
       count: response.count,
     };
   }
   return {
     count: 0,
-    items: [],
+    results: [],
   };
 }
 
@@ -233,7 +235,7 @@ export async function fetchBezwarenDocuments(
     zaakId
   );
 
-  const requestConfigBase = getApiConfig('BEZWAREN_DOCUMENTS', {
+  const requestConfig_: DataRequestConfig = {
     params,
     transformResponse: (responseData) => {
       return transformBezwarenDocumentsResults(
@@ -242,7 +244,9 @@ export async function fetchBezwarenDocuments(
       );
     },
     headers: await getBezwarenApiHeaders(authProfileAndToken),
-  });
+  };
+
+  const requestConfigBase = getApiConfig('BEZWAREN_DOCUMENTS', requestConfig_);
 
   const bezwaarDocumentenResponse = await fetchMultiple<BezwaarDocument>(
     cacheKeyBase,
@@ -292,7 +296,7 @@ function transformBezwarenResults(
           id: bezwaarBron.uuid,
           uuid: bezwaarBron.uuid,
 
-          fetchUrl: generateFullApiUrlBFF(BffEndpoints.BEZWAREN_DETAIL, [
+          fetchUrl: generateFullApiUrlBFF(routes.protected.BEZWAREN_DETAIL, [
             { id: idEncrypted },
           ]),
 
@@ -346,13 +350,13 @@ function transformBezwarenResults(
       .filter((bezwaar) => !!bezwaar.identificatie); // Filter bezwaren die nog niet inbehandeling zijn genomen (geen identificatie hebben)
 
     return {
-      items: bezwaren,
+      results: bezwaren,
       count: response.count,
     };
   }
 
   return {
-    items: [],
+    results: [],
     count: 0,
   };
 }
@@ -381,28 +385,41 @@ export async function fetchBezwaren(authProfileAndToken: AuthProfileAndToken) {
     'bezwaren'
   );
 
-  const requestConfig = getApiConfig('BEZWAREN_LIST', {
+  const requestConfig_: DataRequestConfig = {
     data: requestBody,
     params,
     transformResponse: (responseData) =>
       transformBezwarenResults(authProfileAndToken.profile.sid, responseData),
     headers: await getBezwarenApiHeaders(authProfileAndToken),
-  });
+  };
+
+  const requestConfig = getApiConfig('BEZWAREN_LIST', requestConfig_);
 
   const bezwarenResponse = await fetchMultiple<BezwaarFrontend>(
     cacheKeyBase,
     requestConfig
   );
 
-  if (bezwarenResponse.status === 'OK') {
-    const bezwarenSorted = bezwarenResponse.content.sort(
-      sortByBezwaarIdentificatie
-    );
-    return apiSuccessResult(bezwarenSorted);
+  if (bezwarenResponse.status !== 'OK') {
+    return bezwarenResponse;
   }
 
-  // Return the likely error response otherwise. This will make sure the front-end knows to show an error message to the user.
-  return bezwarenResponse;
+  if (bezwarenResponse.content?.length) {
+    trackEvent('bezwaren-aantal-per-gebruiker', {
+      lopend: bezwarenResponse.content.filter(
+        (b) => b.displayStatus !== 'Afgehandeld'
+      ).length,
+      afgehandeld: bezwarenResponse.content.filter(
+        (b) => b.displayStatus === 'Afgehandeld'
+      ).length,
+    });
+  }
+
+  const bezwarenSorted = bezwarenResponse.content.toSorted(
+    sortByBezwaarIdentificatie
+  );
+
+  return apiSuccessResult(bezwarenSorted);
 }
 
 function createBezwaarNotification(bezwaar: BezwaarFrontend) {

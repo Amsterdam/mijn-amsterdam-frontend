@@ -40,10 +40,6 @@ export const BffEndpoints = {
   LEGACY_LOGIN_API_LOGIN: '/api/login',
   LEGACY_LOGIN_API1_LOGIN: '/api1/login',
 
-  // Bezwaren
-  BEZWAREN_DOCUMENT_DOWNLOAD: '/services/bezwaren/document',
-  BEZWAREN_DETAIL: '/services/bezwaren',
-
   // ErfpachtV2
   ERFPACHT_DOSSIER_DETAILS: '/services/erfpacht/dossier/:dossierNummerUrlParam',
 
