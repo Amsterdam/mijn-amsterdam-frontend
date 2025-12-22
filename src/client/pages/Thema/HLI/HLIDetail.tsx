@@ -26,9 +26,15 @@ function DetailPageContent({ hliRegeling }: DetailPageContentProps) {
 }
 
 export function HLIDetail() {
-  const { regelingen, isError, isLoading, breadcrumbs, routeConfig, themaId } =
-    useHliThemaData();
-  useHTMLDocumentTitle(routeConfig.detailPage);
+  const {
+    regelingen,
+    isError,
+    isLoading,
+    breadcrumbs,
+    themaId,
+    detailPageConfig,
+  } = useHliThemaData();
+  useHTMLDocumentTitle(detailPageConfig.route);
   const { id } = useParams<{ id: string }>();
   const regelingDetail = regelingen?.find((item) => item.id === id) ?? null;
 

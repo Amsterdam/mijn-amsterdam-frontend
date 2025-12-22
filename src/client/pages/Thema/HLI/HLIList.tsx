@@ -18,9 +18,9 @@ export function HLIList() {
     isLoading,
     isError,
     breadcrumbs,
-    routeConfig,
+    regelingenListPageConfig,
   } = useHliThemaData();
-  useHTMLDocumentTitle(routeConfig.detailPage);
+  useHTMLDocumentTitle(regelingenListPageConfig.route);
 
   const { filter, sort, title, displayProps, listPageRoute } =
     tableConfig[kind];

@@ -95,9 +95,8 @@ export function HLIThema() {
     stadspassen,
     dateExpiryFormatted,
     linkListItems,
-    routeConfig,
   } = useHliThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const hasAanvragen = regelingen.some(
     tableConfig[listPageParamKind.lopend].filter
@@ -112,7 +111,7 @@ export function HLIThema() {
     </PageContentCell>
   );
 
-  const regelingenTables = themaConfig.featureToggle.regelingen
+  const regelingenTables = themaConfig.featureToggle.regelingen.active
     ? entries(tableConfig)
         .filter(([kind]) => {
           return kind === listPageParamKind.lopend ? hasAanvragen : true;

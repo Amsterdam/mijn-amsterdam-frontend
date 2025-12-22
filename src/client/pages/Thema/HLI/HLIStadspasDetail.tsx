@@ -163,7 +163,7 @@ export function HLIStadspasDetail() {
           {(isErrorStadspas || (!isLoadingStadspas && noContent)) && (
             <ErrorAlert>
               We kunnen op dit moment geen gegevens tonen.{' '}
-              <MaRouterLink href={routeConfig.themaPage.path}>
+              <MaRouterLink href={themaConfig.route.path}>
                 Naar het overzicht
               </MaRouterLink>
             </ErrorAlert>

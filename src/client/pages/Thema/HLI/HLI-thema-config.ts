@@ -62,10 +62,6 @@ export const themaConfig = {
       title: 'Meer informatie over Stadspas',
       to: 'https://www.amsterdam.nl/stadspas',
     },
-    {
-      title: 'Meer informatie over Kindtegoed declareren',
-      to: 'https://www.amsterdam.nl/stadspas/kindtegoed/kosten-terugvragen/',
-    },
   ],
   redactedScope: 'none',
   route: {
@@ -112,12 +108,17 @@ export const themaConfig = {
   },
 } as const satisfies HLIThemaConfig;
 
+export const kindTegoedPageLinkItem = {
+  title: 'Meer informatie over Kindtegoed declareren',
+  to: 'https://www.amsterdam.nl/stadspas/kindtegoed/kosten-terugvragen/',
+} as const;
+
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
 const displayPropsHuidigeRegelingen: DisplayProps<HLIRegelingFrontend> = {
   props: {
     detailLinkComponent: 'Regeling',
-    ...(!IS_PRODUCTION && { betrokkenen: 'Ontvangers' }),
+    betrokkenen: 'Ontvangers',
   },
   colWidths: {
     large: ['80%', '20%'],
