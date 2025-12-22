@@ -30,9 +30,9 @@ export type WithRegelingenListPage = PageConfig<'regelingenListPage'>;
 export type WithspecificatieListPage = PageConfig<'specificatieListPage'>;
 export type WithdetailPageStadspas = PageConfig<'detailPageStadspas'>;
 
-type ThemaFeatureToggle = {
-  themaActive: boolean;
-  features?: Record<string, boolean>;
+export type ThemaFeatureToggle<T = boolean> = {
+  active: boolean;
+  [key: string]: boolean | ThemaFeatureToggle<T>;
 };
 
 type RedactedScope = 'full' | 'content' | 'none';
@@ -58,7 +58,7 @@ export interface ThemaMenuItem<ID extends string = string> extends Omit<
   profileTypes: ProfileType[];
   isAlwaysVisible?: boolean;
   hasAppStateValue?: boolean;
-  /** Default 'full'. Scope 'content' automatically redacts all thema content outside the thema like contactmomenten or notifications. Content inside the thema should be manually redacted. Add the redacted class to the tag using getRedactedClass('themaId', 'content') */
+  /** Scope 'content' automatically hides all thema content outside the thema. Content inside the thema should be manually redacted. Add the redacted class to the tag using getRedactedClass('themaId', 'content')  */
   redactedScope: 'full' | 'content' | 'none';
   title:
     | LinkProps['title']

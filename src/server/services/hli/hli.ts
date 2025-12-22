@@ -21,19 +21,16 @@ import {
   isWorkshopNietGevolgd,
   filterCombineUpcPcvData,
 } from './status-line-items/regeling-pcvergoeding';
-import {
-  featureToggle,
-  themaConfig,
-} from '../../../client/pages/Thema/HLI/HLI-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import {
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
 } from '../../../universal/helpers/api';
+import { toDateFormatted } from '../../../universal/helpers/date';
 import { dedupeDocumentsInDataSets } from '../../../universal/helpers/document';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { splitBy } from '../../../universal/helpers/utils';
-import { toDateFormatted } from '../../../universal/helpers/date';
 import {
   GenericDocument,
   StatusLineItem,
@@ -177,7 +174,7 @@ function transformRegelingenForFrontend(
   today: Date
 ): HLIRegelingFrontend[] {
   const [remainingAanvragen, RTMAanvragen] = splitBy(aanvragen, isRTMAanvraag);
-  const RTMRegelingenFrontend = featureToggle.hliRegelingEnabledRTM
+  const RTMRegelingenFrontend = themaConfig.featureToggle.regelingen.enabledRTM
     ? transformRTMAanvragen(sessionID, aanvrager, RTMAanvragen)
     : [];
 
@@ -228,7 +225,7 @@ function transformRegelingenForFrontend(
 }
 
 async function fetchRegelingen(authProfileAndToken: AuthProfileAndToken) {
-  if (!featureToggle.hliThemaRegelingenActive) {
+  if (!themaConfig.featureToggle.regelingen.active) {
     return apiSuccessResult([]);
   }
 

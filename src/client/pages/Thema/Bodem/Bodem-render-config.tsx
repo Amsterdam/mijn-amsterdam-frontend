@@ -14,17 +14,17 @@ export const BodemRoutes = [
   {
     route: themaConfig.detailPage.route.path,
     Component: BodemDetail,
-    isActive: themaConfig.featureToggle.themaActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
     route: themaConfig.listPage.route.path,
     Component: BodemList,
-    isActive: themaConfig.featureToggle.themaActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
     route: themaConfig.route.path,
     Component: BodemThema,
-    isActive: themaConfig.featureToggle.themaActive,
+    isActive: themaConfig.featureToggle.active,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 

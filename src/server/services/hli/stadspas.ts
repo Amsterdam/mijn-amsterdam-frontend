@@ -18,7 +18,6 @@ import {
   type StadspasResponseFrontend,
 } from './stadspas-types';
 import {
-  featureToggle,
   themaConfig,
 } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import {
@@ -69,7 +68,7 @@ export async function fetchStadspas(
         },
       };
 
-      if (featureToggle.hliThemaStadspasBlokkerenActive) {
+      if (themaConfig.featureToggle.stadspas.blokkerenActive) {
         stadspasFrontend.blockPassURL = generateFullApiUrlBFF(
           routes.protected.STADSPAS_BLOCK_PASS,
           {
@@ -78,7 +77,7 @@ export async function fetchStadspas(
         );
       }
 
-      if (featureToggle.hliThemaStadspasDeblokkerenActive) {
+      if (themaConfig.featureToggle.stadspas.deblokkerenActive) {
         stadspasFrontend.unblockPassURL = generateFullApiUrlBFF(
           routes.protected.STADSPAS_UNBLOCK_PASS,
           { transactionsKeyEncrypted }

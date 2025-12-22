@@ -7,6 +7,7 @@ import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { dateSort } from '../../../../universal/helpers/date';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
+import { propagateFeatureToggles } from '../../../config/buildFeatureToggle';
 import type {
   ThemaConfigBase,
   WithDetailPage,
@@ -17,18 +18,29 @@ import type {
 
 const THEMA_TITLE = 'Stadspas en regelingen bij laag inkomen' as const;
 
-export type HLIThemaConfig = ThemaConfigBase &
-  WithDetailPage &
-  WithdetailPageStadspas &
-  WithRegelingenListPage &
-  WithspecificatieListPage;
-
-export const themaConfig: HLIThemaConfig = {
+export const themaConfig = {
   id: 'HLI' as const,
   title: THEMA_TITLE,
-  featureToggle: {
-    themaActive: true,
-  },
+
+  featureToggle: propagateFeatureToggles({
+    active: true,
+    stadspas: {
+      active: true,
+      blokkerenActive: false,
+      deblokkerenActive: false,
+    },
+    regelingen: {
+      active: true,
+      enabledCZM: true,
+      enabledRTM: !IS_PRODUCTION,
+      hli2025PCTegoedCodesEnabled: !IS_PRODUCTION,
+      hli2026PCVergoedingV3Enabled: !IS_PRODUCTION,
+    },
+    zorgned: {
+      active: true,
+    },
+  }),
+
   profileTypes: ['private'],
   uitlegPageSections: {
     title: THEMA_TITLE,
@@ -95,14 +107,18 @@ export const themaConfig: HLIThemaConfig = {
         `${params?.kind === 'eerdere-en-afgehandelde-regelingen' ? 'Eerdere' : 'Huidige'} regelingen | ${THEMA_TITLE}`,
     },
   },
-} as const;
+} as const satisfies ThemaConfigBase &
+  WithDetailPage &
+  WithdetailPageStadspas &
+  WithRegelingenListPage &
+  WithspecificatieListPage;
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
 const displayPropsHuidigeRegelingen: DisplayProps<HLIRegelingFrontend> = {
   props: {
     detailLinkComponent: 'Regeling',
-    betrokkenen: 'Ontvangers',
+    ...(!IS_PRODUCTION && { betrokkenen: 'Ontvangers' }),
   },
   colWidths: {
     large: ['80%', '20%'],
@@ -114,7 +130,7 @@ const displayPropsEerdereRegelingen: DisplayProps<HLIRegelingFrontend> = {
   props: {
     detailLinkComponent: 'Regeling',
     displayStatus: 'Status',
-    betrokkenen: 'Ontvangers',
+    ...(!IS_PRODUCTION && { betrokkenen: 'Ontvangers' }),
   },
   colWidths: {
     large: ['80%', '20%'],
@@ -124,8 +140,6 @@ const displayPropsEerdereRegelingen: DisplayProps<HLIRegelingFrontend> = {
 
 type SpecificatieDisplayProps = {
   datePublishedFormatted: ReactNode;
-  // We don't use category just yet, since we only have one type of category at the moment.
-  // This is shown in the title of the specificatie table.
   category: ReactNode;
   documentUrl: ReactNode;
 };
@@ -143,16 +157,6 @@ export const listPageParamKind = {
 
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
-
-export const featureToggle = {
-  hliStadspasActive: true,
-  zorgnedAvApiActive: true,
-  hliThemaStadspasBlokkerenActive: true,
-  hliThemaStadspasDeblokkerenActive: !IS_PRODUCTION,
-  hliThemaRegelingenActive: true,
-  hliRegelingEnabledCZM: true,
-  hliRegelingEnabledRTM: true,
-} as const;
 
 export const regelingenTitle = 'Regelingen bij laag inkomen' as const;
 export const stadspasTitle = 'Stadspas' as const;

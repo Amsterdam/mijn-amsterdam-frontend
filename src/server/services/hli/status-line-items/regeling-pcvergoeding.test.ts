@@ -1,4 +1,6 @@
 import {
+  AV_PCTGBO,
+  AV_PCTGVO,
   AV_PCVC,
   AV_PCVTG,
   AV_PCVZIL,
@@ -13,7 +15,7 @@ import { forTesting as forTestingHLI } from '../hli';
 
 const mocks = vi.hoisted(() => {
   return {
-    hli2026PCVergoedingCodesActive: true,
+    hli2026PCVergoedingV3Enabled: true,
   };
 });
 
@@ -24,18 +26,21 @@ vi.mock(
       await importActual<
         typeof import('../../../../client/pages/Thema/HLI/HLI-thema-config')
       >();
+
     return {
       ...actual,
-      featureToggle: {
-        ...actual.featureToggle,
-        get hli2026PCVergoedingCodesActive() {
-          return mocks.hli2026PCVergoedingCodesActive;
+      themaConfig: {
+        ...actual.themaConfig,
+        featureToggle: {
+          ...actual.themaConfig.featureToggle,
+          get hli2026PCVergoedingV3Enabled() {
+            return mocks.hli2026PCVergoedingV3Enabled;
+          },
         },
       },
     };
   }
 );
-
 describe('pcvergoeding', () => {
   describe('isRegelingVanVerzilvering', () => {
     describe('Historic', () => {
@@ -653,15 +658,12 @@ describe('pcvergoeding', () => {
   });
 
   describe('PC tegoed >= 2026', () => {
-    afterEach(() => {
-      mocks.hli2026PCVergoedingCodesActive = true;
-    });
     const testData = [
       {
         id: '2',
         prettyID: '2',
         titel: 'Gratis laptop of tablet basis onderwijs',
-        productIdentificatie: AV_UPCTG,
+        productIdentificatie: AV_PCTGBO,
         betrokkenen: ['A'],
         datumAanvraag: '2026-01-01',
         datumBesluit: '2026-06-18',
@@ -673,7 +675,7 @@ describe('pcvergoeding', () => {
         id: '1',
         prettyID: '1',
         titel: 'Gratis laptop of tablet voortgezet onderwijs',
-        productIdentificatie: AV_PCVTG,
+        productIdentificatie: AV_PCTGVO,
         betrokkenen: ['A'],
         datumAanvraag: '2026-01-01',
         datumBesluit: '2026-05-18',
@@ -683,10 +685,10 @@ describe('pcvergoeding', () => {
       },
     ] as unknown as ZorgnedAanvraagWithRelatedPersonsTransformed[];
 
-    test('2026 aanvragen are transformed correctly', () => {
+    test('PCRegelingen with AV_PCTGBO ans AV_PCTGVO are transformed correctly', async () => {
       const profile = getAuthProfileAndToken().profile;
       expect(
-        forTestingHLI.transformRegelingenForFrontend(
+        await forTestingHLI.transformRegelingenForFrontend(
           profile.sid,
           { bsn: profile.id },
           testData,

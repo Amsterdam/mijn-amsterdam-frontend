@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { featureToggle, listPageParamKind } from './HLI-thema-config';
+import { themaConfig, listPageParamKind } from './HLI-thema-config';
 import styles from './HLIThema.module.scss';
 import { useHliThemaData } from './useHliThemaData';
 import {
@@ -113,7 +113,7 @@ export function HLIThema() {
     </PageContentCell>
   );
 
-  const regelingenTables = featureToggle.hliThemaRegelingenActive
+  const regelingenTables = themaConfig.featureToggle.regelingen
     ? entries(tableConfig)
         .filter(([kind]) => {
           return kind === listPageParamKind.lopend ? hasAanvragen : true;

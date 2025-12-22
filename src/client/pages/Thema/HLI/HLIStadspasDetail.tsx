@@ -10,7 +10,7 @@ import {
 } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router';
 
-import { featureToggle, themaConfig } from './HLI-thema-config';
+import { themaConfig } from './HLI-thema-config';
 import styles from './HLIStadspasDetail.module.scss';
 import { useBlockStadspas, useStadspassen } from './useStadspassen.hook';
 import {
@@ -162,7 +162,7 @@ export function HLIStadspasDetail() {
           {(isErrorStadspas || (!isLoadingStadspas && noContent)) && (
             <ErrorAlert>
               We kunnen op dit moment geen gegevens tonen.{' '}
-              <MaRouterLink href={routeConfig.themaPage.path}>
+              <MaRouterLink href={themaConfig.route.path}>
                 Naar het overzicht
               </MaRouterLink>
             </ErrorAlert>
@@ -369,7 +369,7 @@ function PassBlockedAlert() {
       heading="Deze pas heeft u geblokkeerd, hoe nu verder?"
       severity="warning"
       className={
-        featureToggle.hliThemaStadspasDeblokkerenActive ? 'ams-mb-l' : ''
+        themaConfig.featureToggle.stadspas.deblokkerenActive ? 'ams-mb-l' : ''
       }
     >
       <Paragraph>
