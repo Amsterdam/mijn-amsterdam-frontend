@@ -1,6 +1,6 @@
 import { commonTransformers, getRows } from './fields-config';
 import type {
-  VergunningFrontend,
+  DecosZaakFrontend,
   RVVHeleStad,
 } from '../../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../../components/Datalist/Datalist';
@@ -8,7 +8,7 @@ import { Datalist } from '../../../../components/Datalist/Datalist';
 export function RvvHeleStad({
   vergunning,
 }: {
-  vergunning: VergunningFrontend<RVVHeleStad>;
+  vergunning: DecosZaakFrontend<RVVHeleStad>;
 }) {
   const rows = getRows(vergunning, [
     commonTransformers.identifier,

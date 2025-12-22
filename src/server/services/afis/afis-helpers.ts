@@ -1,9 +1,10 @@
 import { parseISO } from 'date-fns';
+import createDebugger from 'debug';
 
 import { fetchAfisTokenHeader } from './afis';
 import { EMANDATE_ENDDATE_INDICATOR } from './afis-e-mandates-config';
 import { AfisApiFeedResponseSource } from './afis-types';
-import { toDateFormatted } from '../../../universal/helpers/utils';
+import { toDateFormatted } from '../../../universal/helpers/date';
 import { DataRequestConfig } from '../../config/source-api';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
@@ -55,15 +56,16 @@ export function isEmandateActive(dateValidTo: string | null) {
   return parseISO(dateValidTo) > new Date();
 }
 
-export const EMANDATE_STATUS = {
-  ON: '1',
-  OFF: '6',
+export const EMANDATE_STATUS_FRONTEND = {
+  ON: '1', // AfisEMandateStatusCodes['1'],
+  OFF: '0', // AfisEMandateStatusCodes['0'],
 } as const;
 
-export function getEmandateStatus(dateValidTo: string | null) {
+export function getEmandateStatusFrontend(dateValidTo: string | null) {
+  // return EMANDATE_STATUS.ON;
   return isEmandateActive(dateValidTo)
-    ? EMANDATE_STATUS.ON
-    : EMANDATE_STATUS.OFF;
+    ? EMANDATE_STATUS_FRONTEND.ON
+    : EMANDATE_STATUS_FRONTEND.OFF;
 }
 
 export function getEmandateDisplayStatus(
@@ -75,3 +77,5 @@ export function getEmandateDisplayStatus(
   }
   return 'Niet actief';
 }
+
+export const debugEmandates = createDebugger('afis:emandates');

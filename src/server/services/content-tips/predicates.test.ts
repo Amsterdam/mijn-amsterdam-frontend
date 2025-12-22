@@ -10,8 +10,6 @@ import {
   hasStadspasGroeneStip,
   hasToeristicheVerhuurVergunningen,
   hasTozo,
-  hasValidId,
-  hasValidIdForVoting,
   hasValidRecentStadspasRequest,
   is18OrOlder,
   isBetweenAges,
@@ -28,7 +26,7 @@ import WPI_AANVRAGEN from '../../../../mocks/fixtures/wpi-aanvragen.json';
 import WPI_E from '../../../../mocks/fixtures/wpi-e-aanvragen.json';
 import { ApiResponse_DEPRECATED } from '../../../universal/helpers/api';
 import { AppState } from '../../../universal/types/App.types';
-import { BRPData } from '../profile/brp.types';
+import type { BrpFrontend } from '../brp/brp-types';
 import { WpiRequestProcess } from '../wpi/wpi-types';
 
 const TONK = {
@@ -71,7 +69,7 @@ describe('predicates', () => {
     describe('is18OrOlder', () => {
       const getMockAppState = (geboortedatum: string) => {
         return {
-          BRP: brpApiResponse<BRPData>({
+          BRP: brpApiResponse<BrpFrontend>({
             persoon: { geboortedatum },
           }),
         } as AppState;
@@ -90,72 +88,10 @@ describe('predicates', () => {
       });
     });
 
-    describe('hasValidId', () => {
-      const getMockAppState = (datumAfloop: string) => {
-        return {
-          BRP: brpApiResponse<BRPData>({
-            identiteitsbewijzen: [{ datumAfloop }],
-          }),
-        } as AppState;
-      };
-
-      it.each([
-        [false, '2002-07-26'],
-        [false, '2022-07-24'],
-        [true, '2022-07-25'],
-        [true, '2022-07-26'],
-        [true, '2028-07-24'],
-      ])('should return %s for datumAfloop %s', (expected, datumAfloop) => {
-        const appState = getMockAppState(datumAfloop);
-
-        expect(hasValidId(appState)).toBe(expected);
-      });
-    });
-
-    describe('hasValidIdForVoting', () => {
-      const getMockAppState = (datumAfloop: string) => {
-        return {
-          BRP: brpApiResponse<BRPData>({
-            identiteitsbewijzen: [{ datumAfloop }],
-          }),
-        } as AppState;
-      };
-
-      it.each([
-        [false, '2002-07-26'],
-        [false, '2017-07-24'],
-        [true, '2018-11-20'],
-        [true, '2022-07-24'],
-        [true, '2022-07-25'],
-        [true, '2028-07-24'],
-      ])('should return %s for datumAfloop %s', (expected, datumAfloop) => {
-        const appState = getMockAppState(datumAfloop);
-
-        expect(hasValidIdForVoting(appState, new Date('2023-11-20'))).toBe(
-          expected
-        );
-      });
-
-      it.each([
-        [false, '2017-07-24'],
-        [false, '2020-10-26'],
-        [true, '2020-10-27'],
-        [true, '2022-07-24'],
-        [true, '2022-07-25'],
-        [true, '2028-07-24'],
-      ])('should return %s for datumAfloop %s', (expected, datumAfloop) => {
-        const appState = getMockAppState(datumAfloop);
-
-        expect(hasValidIdForVoting(appState, new Date('2025-10-29'))).toBe(
-          expected
-        );
-      });
-    });
-
     describe('previouslyLivingInAmsterdam', () => {
       const getMockAppState = (woonplaatsNaam: string) => {
         return {
-          BRP: brpApiResponse<BRPData>({
+          BRP: brpApiResponse<BrpFrontend>({
             adresHistorisch: [{ woonplaatsNaam }],
           }),
         } as AppState;
@@ -177,7 +113,7 @@ describe('predicates', () => {
     describe('isLivingInAmsterdamLessThanNumberOfDays', () => {
       const getMockAppState = (begindatumVerblijf: string) => {
         return {
-          BRP: brpApiResponse<BRPData>({
+          BRP: brpApiResponse<BrpFrontend>({
             adres: { begindatumVerblijf },
           }),
         } as AppState;
@@ -206,7 +142,7 @@ describe('predicates', () => {
         geboortedatumKind2: string
       ) => {
         return {
-          BRP: brpApiResponse<BRPData>({
+          BRP: brpApiResponse<BrpFrontend>({
             kinderen: [
               { geboortedatum: geboortedatumKind1 },
               { geboortedatum: geboortedatumKind2 },
@@ -233,7 +169,7 @@ describe('predicates', () => {
     describe('hasKidsBetweenAges', () => {
       const createMockAppState = (childBirthdates: string[]) => {
         return {
-          BRP: brpApiResponse<BRPData>({
+          BRP: brpApiResponse<BrpFrontend>({
             kinderen: childBirthdates.map((birthdate) => ({
               geboortedatum: birthdate,
             })),
@@ -264,7 +200,7 @@ describe('predicates', () => {
     describe('isBetweenAges', () => {
       const getMockAppState = (geboortedatum: string) => {
         return {
-          BRP: brpApiResponse<BRPData>({
+          BRP: brpApiResponse<BrpFrontend>({
             persoon: { geboortedatum },
           }),
         } as AppState;
@@ -290,7 +226,7 @@ describe('predicates', () => {
         datumOntbindingFormatted?: string;
       }) => {
         return {
-          BRP: brpApiResponse<BRPData>({
+          BRP: brpApiResponse<BrpFrontend>({
             verbintenis,
           }),
         } as AppState;
@@ -318,7 +254,7 @@ describe('predicates', () => {
     describe('hasDutchNationality', () => {
       const getMockAppState = (omschrijving: string) => {
         return {
-          BRP: brpApiResponse<BRPData>({
+          BRP: brpApiResponse<BrpFrontend>({
             persoon: { nationaliteiten: [{ omschrijving }] },
           }),
         } as AppState;
@@ -352,6 +288,7 @@ describe('predicates', () => {
         const aanvraag = {
           decision,
           dateDecision,
+          title: 'Stadspas 2025',
         };
 
         return {

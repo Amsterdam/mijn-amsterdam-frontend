@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import {
   Button,
+  Link,
   Heading,
   Paragraph,
   UnorderedList,
@@ -14,6 +15,7 @@ import { useDebouncedCallback } from 'use-debounce';
 import { SearchEntry, displayPath } from './search-config';
 import styles from './Search.module.scss';
 import { useSearchIndex } from './useSearch';
+import { getRedactedClass } from '../../helpers/cobrowse';
 import { useSmallScreen } from '../../hooks/media.hook';
 import { useAppStateReady } from '../../hooks/useAppStateStore';
 import { useKeyDown } from '../../hooks/useKey';
@@ -50,7 +52,7 @@ export function ResultSet({
   return (
     <div className={styles.ResultSet}>
       {!!title && (
-        <Heading size="level-3" level={3} className="ams-mb-m">
+        <Heading level={3} className="ams-mb-m">
           {title}
         </Heading>
       )}
@@ -72,6 +74,11 @@ export function ResultSet({
               <LinkComponent
                 maVariant="fatNoUnderline"
                 href={result.url}
+                className={getRedactedClass(
+                  result.themaId,
+                  result.themaId ? 'content' : undefined
+                )}
+                rel="noopener noreferrer"
                 onClick={() =>
                   onClickResult?.(
                     result,
@@ -192,6 +199,7 @@ export function Search({
     return () => {
       onFinish('Unmount component');
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -231,6 +239,9 @@ export function Search({
         className
       )}
     >
+      {isPhoneScreen && (
+        <Link onClick={() => onFinish('Zoeken sluiten')}>Zoeken sluiten</Link>
+      )}
       <div ref={resultsRef}>
         <form
           className={styles.Form}

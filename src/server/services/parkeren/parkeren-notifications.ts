@@ -16,7 +16,7 @@ export async function fetchParkeerVergunningenNotifications(
   const VERGUNNINGEN = await fetchDecosParkeerVergunningen(authProfileAndToken);
 
   if (VERGUNNINGEN.status === 'OK') {
-    const notifications = getVergunningNotifications<any>(
+    const notifications = getVergunningNotifications(
       VERGUNNINGEN.content,
       themaId,
       themaTitle

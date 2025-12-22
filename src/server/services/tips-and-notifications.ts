@@ -11,7 +11,7 @@ import { fetchAfisNotifications } from './afis/afis-notifications';
 import { fetchAVGNotifications } from './avg/avg';
 import { fetchBezwarenNotifications } from './bezwaren/bezwaren';
 import { fetchLoodMetingNotifications } from './bodem/loodmetingen';
-import { fetchBrpNotificationsV2 } from './brp/brp-notifications';
+import { fetchBrpNotifications } from './brp/brp-notifications';
 import { sanitizeCmsContent } from './cms/cms-content';
 import { fetchMaintenanceNotificationsDashboard } from './cms/cms-maintenance-notifications';
 import { ServiceResults } from './content-tips/tip-types';
@@ -80,7 +80,7 @@ export const notificationServices = {
     belasting: fetchBelastingNotifications,
     bezwaren: fetchBezwarenNotifications,
     bodem: fetchLoodMetingNotifications,
-    brp: fetchBrpNotificationsV2,
+    brp: fetchBrpNotifications,
     fetchKrefia: fetchKrefiaNotifications,
     fetchSVWI: fetchSVWINotifications,
     fetchWior: fetchWiorNotifications,

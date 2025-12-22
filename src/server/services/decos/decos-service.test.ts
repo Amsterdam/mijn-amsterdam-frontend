@@ -695,7 +695,7 @@ describe('decos-service', () => {
         .query((queryObject) => {
           return (
             queryObject.filter ===
-            `(text45 eq 'Aanbieden van diensten') or (text45 eq 'VOB')`
+            `(text45 eq 'Aanbieden van diensten') or (text45 eq 'Evenement melding')`
           );
         })
         .times(numberOfAddressBooksToSearch)
@@ -705,10 +705,14 @@ describe('decos-service', () => {
 
       const dienstenTransformer =
         decosCaseToZaakTransformers['Aanbieden van diensten'];
-      const vobTransformer = decosCaseToZaakTransformers.VOB;
+      const eventMeldTransformer =
+        decosCaseToZaakTransformers['Evenement melding'];
       const transformers = [
         dienstenTransformer,
-        { ...vobTransformer, additionalSelectFields: ['text45', 'order66'] },
+        {
+          ...eventMeldTransformer,
+          additionalSelectFields: ['text45', 'order66'],
+        },
       ] as DecosZaakTransformer<DecosZaakBase>[];
 
       const responseData = await forTesting.fetchZakenByUserKey(

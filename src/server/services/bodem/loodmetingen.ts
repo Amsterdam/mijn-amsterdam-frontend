@@ -31,8 +31,8 @@ import {
 import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
+import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token';
 import { captureException } from '../monitoring';
-import { fetchAuthTokenHeader } from '../ms-oauth/oauth-token';
 import {
   DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
   DocumentDownloadData,
@@ -163,6 +163,7 @@ export async function getLoodApiHeaders() {
   const url = `${getFromEnv('BFF_LOOD_API_URL')}`;
 
   const tokenResponse = await fetchAuthTokenHeader(
+    'IAM_MS_OAUTH',
     {
       sourceApiName: 'LOOD_365',
       tokenValidityMS: 60 * 60 * ONE_SECOND_MS, // 1 hour

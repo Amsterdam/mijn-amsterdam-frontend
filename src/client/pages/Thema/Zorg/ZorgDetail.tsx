@@ -1,5 +1,5 @@
 import { useZorgDetailData } from './useZorgDetailData.hook';
-import { WMOVoorzieningFrontend } from '../../../../server/services/wmo/wmo-config-and-types';
+import { WMOVoorzieningFrontend } from '../../../../server/services/wmo/wmo-types';
 import ErrorAlert from '../../../components/Alert/Alert';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import DocumentListV2 from '../../../components/DocumentList/DocumentListV2';

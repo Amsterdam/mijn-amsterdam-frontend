@@ -11,6 +11,7 @@ import { nl } from 'date-fns/locale/nl';
 // See https://date-fns.org/v1.30.1/docs/format for more formatting options
 const DEFAULT_DATE_FORMAT = 'dd MMMM yyyy';
 const ISO_DATE_FORMAT = 'yyyy-MM-dd';
+const ISO_DATE_TIME_FORMAT_COMPACT = "yyyy-MM-dd'T'HH:mm:ss";
 
 export function dateFormat(datestr: string | Date | number, fmt: string) {
   if (!datestr) {
@@ -32,6 +33,9 @@ export function defaultDateFormat(datestr: string | Date | number) {
 
 export function isoDateFormat(datestr: string | Date | number) {
   return dateFormat(datestr, ISO_DATE_FORMAT);
+}
+export function isoDateTimeFormatCompact(datestr: string | Date | number) {
+  return dateFormat(datestr, ISO_DATE_TIME_FORMAT_COMPACT);
 }
 
 export function defaultDateTimeFormat(datestr: string | Date | number) {
@@ -159,4 +163,18 @@ export function displayDateRange(dateStart: string, dateEnd: string) {
     )} - ${end.getDate()} ${getMonth(end.getMonth())} ${start.getFullYear()}`;
   }
   return `${defaultDateFormat(dateStart)} - ${defaultDateFormat(dateEnd)}`;
+}
+
+export function toDateFormatted(input: string | Date | number): string;
+export function toDateFormatted(
+  input: string | Date | number | null | undefined
+): string | null;
+// This is not a duplicate, this is the required implementation signature
+export function toDateFormatted(
+  input: string | Date | number | null | undefined
+): string | null {
+  if (input == null) {
+    return null;
+  }
+  return defaultDateFormat(input);
 }

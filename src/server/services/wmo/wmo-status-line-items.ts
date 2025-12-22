@@ -43,8 +43,7 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
       'RWT',
       'SCO',
       'ORO',
-      // TODO: Uncomment when the following productsoortCodes are available
-      // 'ORW',
+      'ORW',
     ],
     statusLineItems: { name: 'hulpmiddelen', transformers: hulpmiddelen },
   },
@@ -76,13 +75,7 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
   {
     resultaat: 'toegewezen',
     leveringsVorm: '',
-    productsoortCodes: ['MAO'],
-    statusLineItems: { name: 'diensten', transformers: diensten },
-  },
-  {
-    resultaat: 'toegewezen',
-    leveringsVorm: '',
-    productsoortCodes: ['AO2', 'AO5', 'DBS', 'KVB', 'WMH', 'AWBG'],
+    productsoortCodes: ['AO2', 'AO5', 'DBS', 'KVB', 'WMH', 'AWBG', 'MAO'],
     statusLineItems: { name: 'diensten', transformers: diensten },
   },
   {
@@ -106,7 +99,7 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
   {
     resultaat: 'toegewezen',
     leveringsVorm: 'ZIN',
-    productsoortCodes: ['FIN', 'MVV', 'MVW', 'VHK', 'VVD', 'VVK'],
+    productsoortCodes: ['FIN', 'MVV', 'MVW', 'VHK', 'VVD'],
     statusLineItems: { name: 'vergoeding', transformers: vergoeding },
   },
   {
@@ -126,13 +119,14 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
       'SCO',
       'VHK',
       'VVD',
-      'VVK',
       'WRA',
       'WRA1',
       'WRA2',
       'WRA3',
       'WRA4',
       'WRA5',
+      'ORO',
+      'ORW',
     ],
     statusLineItems: { name: 'vergoeding', transformers: vergoeding },
   },
@@ -143,20 +137,8 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
     statusLineItems: { name: 'vergoeding', transformers: vergoeding },
   },
   {
+    // Alle leveringsvormen voor AOV
     resultaat: 'toegewezen',
-    leveringsVorm: 'ZIN',
-    productsoortCodes: ['AOV'],
-    statusLineItems: { name: 'AOV', transformers: AOV },
-  },
-  {
-    resultaat: 'toegewezen',
-    leveringsVorm: 'PGB',
-    productsoortCodes: ['AOV'],
-    statusLineItems: { name: 'AOV', transformers: AOV },
-  },
-  {
-    resultaat: 'toegewezen',
-    leveringsVorm: '',
     productsoortCodes: ['AOV'],
     statusLineItems: { name: 'AOV', transformers: AOV },
   },

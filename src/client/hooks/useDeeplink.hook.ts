@@ -33,7 +33,13 @@ export function useSetDeeplinkEntry(excludeQueryParams: string[] = []) {
       }
       setRouteEntry(location.pathname + search);
     }
-  }, [location.pathname, routeEntry, setRouteEntry]);
+  }, [
+    excludeQueryParams,
+    location.pathname,
+    location.search,
+    routeEntry,
+    setRouteEntry,
+  ]);
 }
 
 export function useDeeplinkRedirect() {

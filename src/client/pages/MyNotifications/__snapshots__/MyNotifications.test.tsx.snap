@@ -3,14 +3,14 @@
 exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="ams-grid"
+    class="mams-content-wrapper"
   >
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
+      class="ams-grid ams-grid--padding-top--large"
+      id="page-breadcrumbs"
     >
       <div
-        class="_PageHeadingInner_4650bd"
-        id="skip-to-id-AppContent"
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
       >
         <nav
           class="ams-breadcrumb"
@@ -45,339 +45,355 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
             </li>
           </ol>
         </nav>
-        <h1
-          class="ams-heading ams-heading--1 _PageHeading_4650bd"
-        >
-          Alle berichten
-        </h1>
       </div>
     </div>
-    <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    <main
+      id="page-main-content"
     >
-      <ol
-        class="ams-ordered-list ams-ordered-list--no-markers"
+      <div
+        class="ams-grid"
       >
-        <li
-          class="ams-ordered-list__item ams-mb-m cobrowse-redacted"
+        <div
+          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
         >
-          <article>
-            <header
-              class="ams-mb-s"
-            >
-              <h4
-                class="ams-heading ams-heading--4"
-              >
-                Notification
-              </h4>
-              <div
-                class="_MetaInfoSecondary_577c09"
-              >
-                <em
-                  class="_ThemaIndication_577c09"
-                >
-                  Home
-                </em>
-                 
-                <time
-                  class="_Datum_577c09"
-                  datetime="2020-07-24"
-                >
-                  24 juli 2020
-                </time>
-              </div>
-            </header>
-            <div
-              class="_Body_577c09"
-            >
-              <p
-                class="ams-paragraph ams-mb-s"
-              >
-                Notificatie1
-              </p>
-              <p
-                class="ams-paragraph"
-              >
-                <a
-                  aria-label="Meer informatie over de melding: Notification"
-                  class="ams-link _MaLink_10c0a4"
-                  href="/item-1"
-                >
-                  Linkje!
-                </a>
-              </p>
-            </div>
-          </article>
-        </li>
-        <li
-          class="ams-ordered-list__item ams-mb-m cobrowse-redacted"
+          <h1
+            class="ams-heading ams-heading--1 ams-mb-s"
+          >
+            Alle berichten
+          </h1>
+        </div>
+      </div>
+      <div
+        class="ams-grid ams-grid--padding-bottom--x-large"
+      >
+        <div
+          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
         >
-          <article>
-            <header
-              class="ams-mb-s"
+          <ol
+            class="ams-ordered-list ams-ordered-list--no-markers"
+          >
+            <li
+              class="ams-ordered-list__item ams-mb-m redacted"
             >
-              <h4
-                class="ams-heading ams-heading--4"
-              >
-                Notification
-              </h4>
-              <div
-                class="_MetaInfoSecondary_577c09"
-              >
-                <em
-                  class="_ThemaIndication_577c09"
+              <article>
+                <header
+                  class="ams-mb-s"
                 >
-                  Mijn gegevens
-                </em>
-                 
-                <time
-                  class="_Datum_577c09"
-                  datetime="2020-07-24"
+                  <h3
+                    class="ams-heading ams-heading--3"
+                  >
+                    Notification
+                  </h3>
+                  <div
+                    class="_MetaInfoSecondary_577c09"
+                  >
+                    <em
+                      class="_ThemaIndication_577c09"
+                    >
+                      Home
+                    </em>
+                     
+                    <time
+                      class="_Datum_577c09"
+                      datetime="2020-07-24"
+                    >
+                      24 juli 2020
+                    </time>
+                  </div>
+                </header>
+                <div
+                  class="_Body_577c09"
                 >
-                  24 juli 2020
-                </time>
-              </div>
-            </header>
-            <div
-              class="_Body_577c09"
+                  <p
+                    class="ams-paragraph ams-mb-s"
+                  >
+                    Notificatie1
+                  </p>
+                  <p
+                    class="ams-paragraph"
+                  >
+                    <a
+                      aria-label="Meer informatie over de melding: Notification"
+                      class="ams-link _MaLink_10c0a4"
+                      href="/item-1"
+                    >
+                      Linkje!
+                    </a>
+                  </p>
+                </div>
+              </article>
+            </li>
+            <li
+              class="ams-ordered-list__item ams-mb-m redacted"
             >
-              <p
-                class="ams-paragraph ams-mb-s"
-              >
-                Notificatie2
-              </p>
-              <p
-                class="ams-paragraph"
-              >
-                <a
-                  aria-label="Meer informatie over de melding: Notification"
-                  class="ams-link _MaLink_10c0a4"
-                  href="/item-2"
+              <article>
+                <header
+                  class="ams-mb-s"
                 >
-                  Linkje!
-                </a>
-              </p>
-            </div>
-          </article>
-        </li>
-        <li
-          class="ams-ordered-list__item ams-mb-m cobrowse-redacted"
-        >
-          <article>
-            <header
-              class="ams-mb-s"
+                  <h3
+                    class="ams-heading ams-heading--3"
+                  >
+                    Notification
+                  </h3>
+                  <div
+                    class="_MetaInfoSecondary_577c09"
+                  >
+                    <em
+                      class="_ThemaIndication_577c09"
+                    >
+                      Mijn gegevens
+                    </em>
+                     
+                    <time
+                      class="_Datum_577c09"
+                      datetime="2020-07-24"
+                    >
+                      24 juli 2020
+                    </time>
+                  </div>
+                </header>
+                <div
+                  class="_Body_577c09"
+                >
+                  <p
+                    class="ams-paragraph ams-mb-s"
+                  >
+                    Notificatie2
+                  </p>
+                  <p
+                    class="ams-paragraph"
+                  >
+                    <a
+                      aria-label="Meer informatie over de melding: Notification"
+                      class="ams-link _MaLink_10c0a4"
+                      href="/item-2"
+                    >
+                      Linkje!
+                    </a>
+                  </p>
+                </div>
+              </article>
+            </li>
+            <li
+              class="ams-ordered-list__item ams-mb-m redacted"
             >
-              <h4
-                class="ams-heading ams-heading--4"
-              >
-                Notification
-              </h4>
-              <div
-                class="_MetaInfoSecondary_577c09"
-              >
-                <em
-                  class="_ThemaIndication_577c09"
+              <article>
+                <header
+                  class="ams-mb-s"
                 >
-                  Inkomen
-                </em>
-                 
-                <time
-                  class="_Datum_577c09"
-                  datetime="2020-07-24"
+                  <h3
+                    class="ams-heading ams-heading--3"
+                  >
+                    Notification
+                  </h3>
+                  <div
+                    class="_MetaInfoSecondary_577c09"
+                  >
+                    <em
+                      class="_ThemaIndication_577c09"
+                    >
+                      Inkomen
+                    </em>
+                     
+                    <time
+                      class="_Datum_577c09"
+                      datetime="2020-07-24"
+                    >
+                      24 juli 2020
+                    </time>
+                  </div>
+                </header>
+                <div
+                  class="_Body_577c09"
                 >
-                  24 juli 2020
-                </time>
-              </div>
-            </header>
-            <div
-              class="_Body_577c09"
+                  <p
+                    class="ams-paragraph ams-mb-s"
+                  >
+                    Notificatie3
+                  </p>
+                  <p
+                    class="ams-paragraph"
+                  >
+                    <a
+                      aria-label="Meer informatie over de melding: Notification"
+                      class="ams-link _MaLink_10c0a4"
+                      href="/item-3"
+                    >
+                      Linkje!
+                    </a>
+                  </p>
+                </div>
+              </article>
+            </li>
+            <li
+              class="ams-ordered-list__item ams-mb-m "
             >
-              <p
-                class="ams-paragraph ams-mb-s"
-              >
-                Notificatie3
-              </p>
-              <p
-                class="ams-paragraph"
-              >
-                <a
-                  aria-label="Meer informatie over de melding: Notification"
-                  class="ams-link _MaLink_10c0a4"
-                  href="/item-3"
+              <article>
+                <header
+                  class="ams-mb-s"
                 >
-                  Linkje!
-                </a>
-              </p>
-            </div>
-          </article>
-        </li>
-        <li
-          class="ams-ordered-list__item ams-mb-m "
-        >
-          <article>
-            <header
-              class="ams-mb-s"
+                  <h3
+                    class="ams-heading ams-heading--3"
+                  >
+                    Notification
+                  </h3>
+                  <div
+                    class="_MetaInfoSecondary_577c09"
+                  >
+                    <em
+                      class="_ThemaIndication_577c09"
+                    >
+                      Parkeren
+                    </em>
+                     
+                    <time
+                      class="_Datum_577c09"
+                      datetime="2020-07-24"
+                    >
+                      24 juli 2020
+                    </time>
+                  </div>
+                </header>
+                <div
+                  class="_Body_577c09"
+                >
+                  <p
+                    class="ams-paragraph ams-mb-s"
+                  >
+                    Notificatie4
+                  </p>
+                  <p
+                    class="ams-paragraph"
+                  >
+                    <a
+                      aria-label="Meer informatie over de melding: Notification"
+                      class="ams-link _MaLink_10c0a4"
+                      href="/item-4"
+                    >
+                      Linkje!
+                    </a>
+                  </p>
+                </div>
+              </article>
+            </li>
+            <li
+              class="ams-ordered-list__item ams-mb-m redacted"
             >
-              <h4
-                class="ams-heading ams-heading--4"
-              >
-                Notification
-              </h4>
-              <div
-                class="_MetaInfoSecondary_577c09"
-              >
-                <em
-                  class="_ThemaIndication_577c09"
+              <article>
+                <header
+                  class="ams-mb-s"
                 >
-                  Parkeren
-                </em>
-                 
-                <time
-                  class="_Datum_577c09"
-                  datetime="2020-07-24"
-                >
-                  24 juli 2020
-                </time>
-              </div>
-            </header>
-            <div
-              class="_Body_577c09"
-            >
-              <p
-                class="ams-paragraph ams-mb-s"
-              >
-                Notificatie4
-              </p>
-              <p
-                class="ams-paragraph"
-              >
-                <a
-                  aria-label="Meer informatie over de melding: Notification"
-                  class="ams-link _MaLink_10c0a4"
-                  href="/item-4"
-                >
-                  Linkje!
-                </a>
-              </p>
-            </div>
-          </article>
-        </li>
-        <li
-          class="ams-ordered-list__item ams-mb-m cobrowse-redacted"
-        >
-          <article>
-            <header
-              class="ams-mb-s"
-            >
-              <h4
-                class="ams-heading ams-heading--4"
-              >
-                Welkom op Mijn Amsterdam!
-              </h4>
-              <div
-                class="_MetaInfoSecondary_577c09"
-              >
-                <em
-                  class="_ThemaIndication_577c09"
-                >
-                  Mijn Amsterdam
-                </em>
-                 
-              </div>
-            </header>
-            <div
-              class="_Body_577c09"
-            >
-              
-      
-              <p
-                class="ams-paragraph ams-mb-m"
-              >
-                
-        De persoonlijke digitale pagina voor burgers en ondernemers bij de
-        gemeente Amsterdam. Hier ziet u op 1 centrale plek:
-      
-              </p>
-              
-      
-              <ul
-                class="ams-unordered-list ams-mb-xl"
-              >
-                
-        
-                <li
-                  class="ams-unordered-list__item"
-                >
-                  welke gegevens de gemeente van u heeft vastgelegd; 
-                </li>
-                
-        
-                <li
-                  class="ams-unordered-list__item"
-                >
-                  hoe het met uw aanvraag staat; 
-                </li>
-                
-        
-                <li
-                  class="ams-unordered-list__item"
-                >
-                  hoe u wijzigingen kunt doorgeven als er iets niet klopt;
-                </li>
-                
-        
-                <li
-                  class="ams-unordered-list__item"
+                  <h3
+                    class="ams-heading ams-heading--3"
+                  >
+                    Welkom op Mijn Amsterdam!
+                  </h3>
+                  <div
+                    class="_MetaInfoSecondary_577c09"
+                  >
+                    <em
+                      class="_ThemaIndication_577c09"
+                    >
+                      Mijn Amsterdam
+                    </em>
+                     
+                  </div>
+                </header>
+                <div
+                  class="_Body_577c09"
                 >
                   
+      
+                  <p
+                    class="ams-paragraph ams-mb-m"
+                  >
+                    
+        De persoonlijke digitale pagina voor burgers en ondernemers in de
+        gemeente Amsterdam. Hier ziet u op 1 centrale plek:
+      
+                  </p>
+                  
+      
+                  <ul
+                    class="ams-unordered-list ams-mb-xl"
+                  >
+                    
+        
+                    <li
+                      class="ams-unordered-list__item"
+                    >
+                      welke gegevens de gemeente van u heeft vastgelegd; 
+                    </li>
+                    
+        
+                    <li
+                      class="ams-unordered-list__item"
+                    >
+                      hoe het met uw aanvraag staat;
+                    </li>
+                    
+        
+                    <li
+                      class="ams-unordered-list__item"
+                    >
+                      hoe u wijzigingen kunt doorgeven als er iets niet klopt;
+                    </li>
+                    
+        
+                    <li
+                      class="ams-unordered-list__item"
+                    >
+                      
           informatie over uw buurt op een overzichtelijke
           
-                  <a
-                    class="ams-link _MaLink_10c0a4"
-                    href="/buurt"
+                      <a
+                        class="ams-link _MaLink_10c0a4"
+                        href="/buurt"
+                      >
+                        kaart
+                      </a>
+                      .
+        
+                    </li>
+                    
+      
+                  </ul>
+                  
+      
+                  <p
+                    class="ams-paragraph"
                   >
-                    kaart
-                  </a>
-                  .
+                    
         
-                </li>
-                
-      
-              </ul>
-              
-      
-              <p
-                class="ams-paragraph"
-              >
-                
-        
-                <a
-                  class="ams-link _MaLink_10c0a4"
-                  href="/uitleg"
-                >
-                  Hier
-                </a>
-                 kunt u
+                    <a
+                      class="ams-link _MaLink_10c0a4"
+                      href="/uitleg"
+                    >
+                      Hier
+                    </a>
+                     kunt u
         zien welke gegevens op dit moment getoond kunnen worden. Mijn Amsterdam
         wordt nog verder ontwikkeld en er komt steeds meer informatie bij.
       
-              </p>
-              <p
-                class="ams-paragraph"
-              >
-                <a
-                  aria-label="Meer informatie over de melding: Welkom op Mijn Amsterdam!"
-                  class="ams-link _MaLink_10c0a4"
-                  href="#"
-                >
-                  Laat ons weten wat u ervan vindt
-                </a>
-              </p>
-            </div>
-          </article>
-        </li>
-      </ol>
-    </div>
+                  </p>
+                  <p
+                    class="ams-paragraph"
+                  >
+                    <a
+                      aria-label="Meer informatie over de melding: Welkom op Mijn Amsterdam!"
+                      class="ams-link _MaLink_10c0a4"
+                      href="#"
+                    >
+                      Laat ons weten wat u ervan vindt
+                    </a>
+                  </p>
+                </div>
+              </article>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </main>
   </div>
 </DocumentFragment>
 `;

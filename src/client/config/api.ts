@@ -11,6 +11,7 @@ export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;
 export const BFFApiUrls = {
   MAP_DATASETS_WMS: `${BFF_API_BASE_URL}/map/datasets/wms`,
   MAP_DATASETS: `${BFF_API_BASE_URL}/map/datasets`,
+  SERVICES_TOGGLES: `${BFF_API_BASE_URL}/services/feature-toggles`,
   SEARCH_CONFIGURATION: `${BFF_API_BASE_URL}/services/search-config`,
   SERVICES_CMS_MAINTENANCE_NOTIFICATIONS_URL: `${BFF_API_BASE_URL}/services/cms/maintenance-notifications`,
   SERVICES_SAURON: `${BFF_API_BASE_URL}/services/all`,
@@ -46,8 +47,11 @@ export const ExcludePageViewTrackingUrls = [
  * @deprecated
  */
 export const ErrorNames: Record<string /* ApiStateKey */, string> = {
-  BRP: 'Persoonlijke gegevens, paspoort, ID-kaart',
+  BRP: 'Persoonlijke gegevens',
+  BRP_adresHistorisch: 'Vorige adressen',
   KVK: 'Mijn onderneming',
+  KVK_onderneming: 'Mijn onderneming',
+  KVK_vestigingen: 'Vestigingen van mijn onderneming',
   JEUGD: 'Jeugd: aanvragen en voorzieningen',
   AFIS: 'Facturen en betalen',
   AFIS_facturenoverview: 'Facturen en betalen: Overzicht van facturen',

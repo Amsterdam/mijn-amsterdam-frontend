@@ -1,7 +1,7 @@
 import { commonTransformers, getRows } from './fields-config';
 import type {
   RVVSloterweg,
-  VergunningFrontend,
+  DecosZaakFrontend,
 } from '../../../../../server/services/vergunningen/config-and-types';
 import {
   Datalist,
@@ -12,7 +12,7 @@ import {
 export function RvvSloterweg({
   vergunning,
 }: {
-  vergunning: VergunningFrontend<RVVSloterweg>;
+  vergunning: DecosZaakFrontend<RVVSloterweg>;
 }) {
   const isChangeRequest = vergunning.requestType === 'Wijziging';
 

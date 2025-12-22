@@ -4,7 +4,7 @@ import { fetchAfisBusinessPartnerDetails } from './afis-business-partner';
 import { fetchAfisDocument } from './afis-documents';
 import {
   fetchEMandates,
-  changeEMandateStatus,
+  deactivateEmandate,
   handleEmandateLifetimeUpdate,
   fetchEmandateSignRequestRedirectUrlFromPaymentProvider,
 } from './afis-e-mandates';
@@ -17,8 +17,7 @@ import {
 import { routes } from './afis-service-config';
 import type {
   BusinessPartnerIdPayload,
-  EMandateStatusChangePayload,
-  EMandateUpdatePayload,
+  EMandateLifetimeChangePayload,
   EMandateSignRequestPayload,
 } from './afis-types';
 import { createBFFRouter } from '../../routing/route-helpers';
@@ -90,15 +89,15 @@ attachDocumentDownloadRoute(
    * Change the status of an E-mandate.
    * The status can be only be changed to OFF.
    */
-  type QueryPayload = EMandateStatusChangePayload;
-  type ServiceReturnType = ReturnType<typeof changeEMandateStatus>;
+  type QueryPayload = EMandateLifetimeChangePayload;
+  type ServiceReturnType = ReturnType<typeof deactivateEmandate>;
 
   routerProtected.get(
-    routes.protected.AFIS_EMANDATES_STATUS_CHANGE,
+    routes.protected.AFIS_EMANDATES_DEACTIVATE,
     handleAfisRequestWithEncryptedPayloadQueryParam<
       QueryPayload,
       ServiceReturnType
-    >(changeEMandateStatus)
+    >(deactivateEmandate)
   );
 }
 
@@ -107,7 +106,7 @@ attachDocumentDownloadRoute(
    * Used for the "Einddatum aanpassen" action.
    * Updates the end date of an E-mandate.
    */
-  type QueryPayload = EMandateUpdatePayload;
+  type QueryPayload = EMandateLifetimeChangePayload;
   type ServiceReturnType = ReturnType<typeof handleEmandateLifetimeUpdate>;
 
   routerProtected.post(
@@ -143,7 +142,6 @@ const routerPrivate = createBFFRouter({
   id: 'afis-router-private',
 });
 
-// TODO: this endpoint should be made available to the EnableU network. Find out if this is possible and how to do it. - https://gemeente-amsterdam.atlassian.net/browse/MIJN-12289
 routerPrivate.post(
   routes.private.AFIS_EMANDATE_SIGN_REQUEST_STATUS_NOTIFY,
   handleAfisEMandateSignRequestStatusNotification

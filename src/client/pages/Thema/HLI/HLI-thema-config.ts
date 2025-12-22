@@ -15,7 +15,7 @@ const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 const displayPropsHuidigeRegelingen: DisplayProps<HLIRegelingFrontend> = {
   props: {
     detailLinkComponent: 'Regeling',
-    ...(!IS_PRODUCTION && { betrokkenen: 'Ontvangers' }),
+    betrokkenen: 'Ontvangers',
   },
   colWidths: {
     large: ['80%', '20%'],
@@ -27,7 +27,7 @@ const displayPropsEerdereRegelingen: DisplayProps<HLIRegelingFrontend> = {
   props: {
     detailLinkComponent: 'Regeling',
     displayStatus: 'Status',
-    ...(!IS_PRODUCTION && { betrokkenen: 'Ontvangers' }),
+    betrokkenen: 'Ontvangers',
   },
   colWidths: {
     large: ['80%', '20%'],
@@ -65,7 +65,7 @@ export const featureToggle = {
   hliThemaStadspasDeblokkerenActive: !IS_PRODUCTION,
   hliThemaRegelingenActive: true,
   hliRegelingEnabledCZM: true,
-  hliRegelingEnabledRTM: !IS_PRODUCTION,
+  hliRegelingEnabledRTM: true,
 } as const;
 
 export const themaId = 'HLI' as const;

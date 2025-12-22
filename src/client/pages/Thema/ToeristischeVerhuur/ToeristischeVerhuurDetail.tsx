@@ -4,7 +4,10 @@ import { useParams } from 'react-router';
 import { THEMA_DETAIL_TITLE_DEFAULT } from './ToeristischeVerhuur-thema-config';
 import styles from './ToeristischeVerhuurDetail.module.scss';
 import { useToeristischeVerhuurThemaData } from './useToeristischeVerhuur.hook';
-import { ToeristischeVerhuurVergunning } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
+import {
+  ToeristischeVerhuurVergunning,
+  type VakantieverhuurVergunningFrontend,
+} from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
 import { getFullAddress, getFullName } from '../../../../universal/helpers/brp';
 import { Datalist, Row, RowSet } from '../../../components/Datalist/Datalist';
 import DocumentListV2 from '../../../components/DocumentList/DocumentListV2';
@@ -70,7 +73,7 @@ type DetailPageContentProps = {
 function DetailPageContent({ vergunning }: DetailPageContentProps) {
   const rows: Array<Row | RowSet> = [
     {
-      label: 'Gemeentelijk zaaknummer',
+      label: 'Zaaknummer',
       content: vergunning.identifier,
     },
     {
@@ -143,7 +146,7 @@ export function ToeristischeVerhuurDetail() {
   const isBnBVergunning = vergunning?.title === 'Vergunning bed & breakfast';
   const fetchDocumentsUrl = isBnBVergunning
     ? undefined
-    : vergunning?.fetchDocumentsUrl;
+    : (vergunning as VakantieverhuurVergunningFrontend)?.fetchDocumentsUrl;
 
   let vergunningDocuments = isBnBVergunning ? vergunning.documents : [];
 

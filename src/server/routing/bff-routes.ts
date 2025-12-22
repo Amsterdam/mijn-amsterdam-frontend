@@ -19,7 +19,7 @@ export const BffEndpoints = {
   STATUS_HEALTH: '/status/health',
   TEST_ACCOUNTS_OVERVIEW: '/admin/user-data-overview',
 
-  SCREEN_SHARE: '/services/screenshare',
+  SERVICES_TOGGLES: '/services/feature-toggles',
 
   TELEMETRY_PROXY: '/services/telemetry/v2/track',
 
@@ -30,9 +30,6 @@ export const BffEndpoints = {
   DECOS_ZAAK_BY_KEY_RAW: '/services/decos/zaak-raw',
   DECOS_WORKFLOW_BY_KEY_RAW: '/services/decos/zaak-workflows-raw',
 
-  // MKS bewoners
-  MKS_AANTAL_BEWONERS: '/service/mks/aantal-bewoners/:addressKeyEncrypted',
-
   // WPI Document download
   WPI_DOCUMENT_DOWNLOAD: '/services/wpi/document',
 
@@ -42,10 +39,6 @@ export const BffEndpoints = {
   // Legacy login links (still used in other portals)
   LEGACY_LOGIN_API_LOGIN: '/api/login',
   LEGACY_LOGIN_API1_LOGIN: '/api1/login',
-
-  // Bezwaren
-  BEZWAREN_DOCUMENT_DOWNLOAD: '/services/bezwaren/document',
-  BEZWAREN_DETAIL: '/services/bezwaren',
 
   // ErfpachtV2
   ERFPACHT_DOSSIER_DETAILS: '/services/erfpacht/dossier/:dossierNummerUrlParam',
@@ -89,6 +82,7 @@ export const PUBLIC_BFF_ENDPOINTS = [
   BffEndpoints.CMS_MAINTENANCE_NOTIFICATIONS,
   BffEndpoints.CMS_FOOTER,
   BffEndpoints.TELEMETRY_PROXY,
+  BffEndpoints.SERVICES_TOGGLES,
 ] as const;
 
 export const DevelopmentRoutes = {

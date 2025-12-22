@@ -6,35 +6,6 @@ import { firstBy } from 'thenby';
 
 import { getAfisApiConfig, getFeedEntryProperties } from './afis-helpers';
 import { featureToggle, routes } from './afis-service-config';
-import { routeConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config';
-import {
-  apiErrorResult,
-  apiSuccessResult,
-  getFailedDependencies,
-  getSettledResult,
-  type ApiResponse,
-} from '../../../universal/helpers/api';
-import {
-  dateSort,
-  defaultDateFormat,
-  isDateInPast,
-} from '../../../universal/helpers/date';
-import {
-  displayAmount,
-  capitalizeFirstLetter,
-} from '../../../universal/helpers/text';
-import {
-  entries,
-  toDateFormatted,
-  uniqueArray,
-} from '../../../universal/helpers/utils';
-import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import {
-  getRequestParamsFromQueryString,
-  requestData,
-} from '../../helpers/source-api-request';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { captureMessage, trackEvent } from '../monitoring';
 import type {
   AfisFactuurState,
   AfisFacturenParams,
@@ -49,6 +20,32 @@ import type {
   AfisFacturenOverviewResponse,
   AfisFactuurTermijn,
 } from './afis-types';
+import { routeConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+  getFailedDependencies,
+  getSettledResult,
+  type ApiResponse,
+} from '../../../universal/helpers/api';
+import {
+  dateSort,
+  defaultDateFormat,
+  isDateInPast,
+} from '../../../universal/helpers/date';
+import { toDateFormatted } from '../../../universal/helpers/date';
+import {
+  displayAmount,
+  capitalizeFirstLetter,
+} from '../../../universal/helpers/text';
+import { entries, uniqueArray } from '../../../universal/helpers/utils';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
+import {
+  getRequestParamsFromQueryString,
+  requestData,
+} from '../../helpers/source-api-request';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
+import { captureMessage, trackEvent } from '../monitoring';
 
 const DEFAULT_PROFIT_CENTER_NAME = 'Gemeente Amsterdam';
 const AFIS_MAX_FACTUREN_TOP = 2000;
@@ -416,8 +413,10 @@ function transformFacturen(
   const facturenTransformed = feedProperties
     .filter((invoiceProperties) => {
       return featureToggle.filterOutUndownloadableFacturenActive
-        ? isDownloadAvailable(invoiceProperties.AccountingDocumentCreationDate ||
-              invoiceProperties.PostingDate)
+        ? isDownloadAvailable(
+            invoiceProperties.AccountingDocumentCreationDate ||
+              invoiceProperties.PostingDate
+          )
         : true;
     })
     .map((invoiceProperties) => {

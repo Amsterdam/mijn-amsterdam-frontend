@@ -2,17 +2,6 @@
   "rowcount": 30,
   "List": [
     {
-      "klacht_inbehandeling": { "value": "06-05-2022 14:37" },
-      "klacht_datumontvangstklacht": { "value": "05-04-2022" },
-      "klacht_omschrijving": {
-        "value": "Dit is de omschrijving van de klacht"
-      },
-      "klacht_gewensteoplossing": { "value": "" },
-      "klacht_klachtonderwerp": { "value": "Test voor decentrale toewijzing" },
-      "klacht_id": { "value": "23054" },
-      "klacht_locatieadres": { "value": "" }
-    },
-    {
       "klacht_inbehandeling": { "value": "18-05-2022 13:48" },
       "klacht_datumontvangstklacht": { "value": "05-05-2022" },
       "klacht_omschrijving": {
@@ -21,7 +10,10 @@
       "klacht_gewensteoplossing": { "value": "" },
       "klacht_klachtonderwerp": { "value": "" },
       "klacht_id": { "value": "250566" },
-      "klacht_locatieadres": { "value": "" }
+      "klacht_locatieadres": { "value": "" },
+      "klacht_status": { "value": "Gesloten" },
+      "klacht_finishedon": { "value": "20-05-2022 14:40" },
+      "klacht_klachtopgelost": { "value": "" }
     },
     {
       "klacht_inbehandeling": { "value": "14-06-2022 13:47" },
@@ -32,7 +24,10 @@
       "klacht_gewensteoplossing": { "value": "" },
       "klacht_klachtonderwerp": { "value": "Belastingen" },
       "klacht_id": { "value": "28032" },
-      "klacht_locatieadres": { "value": "" }
+      "klacht_locatieadres": { "value": "" },
+      "klacht_status": { "value": "Gesloten" },
+      "klacht_finishedon": { "value": "15-05-2022 12:00" },
+      "klacht_klachtopgelost": { "value": "Ja" }
     },
     {
       "klacht_inbehandeling": { "value": "14-04-2022 08:35" },
@@ -43,7 +38,10 @@
       "klacht_gewensteoplossing": { "value": "Boosterprik" },
       "klacht_klachtonderwerp": { "value": "Boosterprik" },
       "klacht_id": { "value": "23782" },
-      "klacht_locatieadres": { "value": "RAI" }
+      "klacht_locatieadres": { "value": "RAI" },
+      "klacht_status": { "value": "Open" },
+      "klacht_finishedon": { "value": "" },
+      "klacht_klachtopgelost": { "value": "" }
     },
     {
       "klacht_inbehandeling": { "value": "12-04-2022 15:53" },
@@ -54,7 +52,10 @@
       "klacht_gewensteoplossing": { "value": "" },
       "klacht_klachtonderwerp": { "value": "14 020" },
       "klacht_id": { "value": "43800" },
-      "klacht_locatieadres": { "value": "Weesperplein" }
+      "klacht_locatieadres": { "value": "Weesperplein" },
+      "klacht_status": { "value": "Open" },
+      "klacht_finishedon": { "value": "" },
+      "klacht_klachtopgelost": { "value": "" }
     },
     {
       "klacht_inbehandeling": { "value": "06-05-2022 14:37" },
@@ -65,7 +66,10 @@
       "klacht_gewensteoplossing": { "value": "" },
       "klacht_klachtonderwerp": { "value": "Test voor decentrale toewijzing" },
       "klacht_id": { "value": "230541" },
-      "klacht_locatieadres": { "value": "" }
+      "klacht_locatieadres": { "value": "" },
+      "klacht_status": { "value": "Open" },
+      "klacht_finishedon": { "value": "" },
+      "klacht_klachtopgelost": { "value": "" }
     },
     {
       "klacht_inbehandeling": { "value": "18-05-2022 13:48" },
@@ -76,7 +80,10 @@
       "klacht_gewensteoplossing": { "value": "" },
       "klacht_klachtonderwerp": { "value": "GGD" },
       "klacht_id": { "value": "2505661" },
-      "klacht_locatieadres": { "value": "" }
+      "klacht_locatieadres": { "value": "" },
+      "klacht_status": { "value": "Open" },
+      "klacht_finishedon": { "value": "" },
+      "klacht_klachtopgelost": { "value": "" }
     },
     {
       "klacht_inbehandeling": { "value": "14-06-2022 13:47" },
@@ -87,7 +94,10 @@
       "klacht_gewensteoplossing": { "value": "" },
       "klacht_klachtonderwerp": { "value": "" },
       "klacht_id": { "value": "280321" },
-      "klacht_locatieadres": { "value": "" }
+      "klacht_locatieadres": { "value": "" },
+      "klacht_status": { "value": "Open" },
+      "klacht_finishedon": { "value": "" },
+      "klacht_klachtopgelost": { "value": "" }
     },
     {
       "klacht_inbehandeling": { "value": "14-04-2022 08:35" },
@@ -98,7 +108,10 @@
       "klacht_gewensteoplossing": { "value": "Boosterprik" },
       "klacht_klachtonderwerp": { "value": "Boosterprik" },
       "klacht_id": { "value": "237821" },
-      "klacht_locatieadres": { "value": "RAI" }
+      "klacht_locatieadres": { "value": "RAI" },
+      "klacht_status": { "value": "Open" },
+      "klacht_finishedon": { "value": "" },
+      "klacht_klachtopgelost": { "value": "" }
     },
     {
       "klacht_inbehandeling": { "value": "12-04-2022 15:53" },
@@ -109,7 +122,10 @@
       "klacht_gewensteoplossing": { "value": "" },
       "klacht_klachtonderwerp": { "value": "" },
       "klacht_id": { "value": "438001" },
-      "klacht_locatieadres": { "value": "Weesperplein" }
+      "klacht_locatieadres": { "value": "Weesperplein" },
+      "klacht_status": { "value": "Open" },
+      "klacht_finishedon": { "value": "" },
+      "klacht_klachtopgelost": { "value": "" }
     },
     {
       "klacht_inbehandeling": { "value": "06-05-2022 14:37" },
@@ -120,7 +136,10 @@
       "klacht_gewensteoplossing": { "value": "" },
       "klacht_klachtonderwerp": { "value": "Test voor decentrale toewijzing" },
       "klacht_id": { "value": "2305412" },
-      "klacht_locatieadres": { "value": "" }
+      "klacht_locatieadres": { "value": "" },
+      "klacht_status": { "value": "Open" },
+      "klacht_finishedon": { "value": "" },
+      "klacht_klachtopgelost": { "value": "" }
     },
     {
       "klacht_inbehandeling": { "value": "18-05-2022 13:48" },
@@ -131,7 +150,10 @@
       "klacht_gewensteoplossing": { "value": "" },
       "klacht_klachtonderwerp": { "value": "" },
       "klacht_id": { "value": "2505662" },
-      "klacht_locatieadres": { "value": "" }
+      "klacht_locatieadres": { "value": "" },
+      "klacht_status": { "value": "Open" },
+      "klacht_finishedon": { "value": "" },
+      "klacht_klachtopgelost": { "value": "" }
     },
     {
       "klacht_inbehandeling": { "value": "14-06-2022 13:47" },
@@ -142,7 +164,10 @@
       "klacht_gewensteoplossing": { "value": "" },
       "klacht_klachtonderwerp": { "value": "" },
       "klacht_id": { "value": "280322" },
-      "klacht_locatieadres": { "value": "" }
+      "klacht_locatieadres": { "value": "" },
+      "klacht_status": { "value": "Open" },
+      "klacht_finishedon": { "value": "" },
+      "klacht_klachtopgelost": { "value": "" }
     },
     {
       "klacht_inbehandeling": { "value": "14-04-2022 08:35" },
@@ -153,7 +178,10 @@
       "klacht_gewensteoplossing": { "value": "Boosterprik" },
       "klacht_klachtonderwerp": { "value": "Boosterprik" },
       "klacht_id": { "value": "2378222" },
-      "klacht_locatieadres": { "value": "RAI" }
+      "klacht_locatieadres": { "value": "RAI" },
+      "klacht_status": { "value": "Open" },
+      "klacht_finishedon": { "value": "" },
+      "klacht_klachtopgelost": { "value": "" }
     },
     {
       "klacht_inbehandeling": { "value": "12-04-2022 15:53" },
@@ -164,7 +192,10 @@
       "klacht_gewensteoplossing": { "value": "" },
       "klacht_klachtonderwerp": { "value": "" },
       "klacht_id": { "value": "438002" },
-      "klacht_locatieadres": { "value": "Weesperplein" }
+      "klacht_locatieadres": { "value": "Weesperplein" },
+      "klacht_status": { "value": "Open" },
+      "klacht_finishedon": { "value": "" },
+      "klacht_klachtopgelost": { "value": "" }
     },
     {
       "klacht_inbehandeling": { "value": "06-05-2022 14:37" },
@@ -175,7 +206,10 @@
       "klacht_gewensteoplossing": { "value": "" },
       "klacht_klachtonderwerp": { "value": "Test voor decentrale toewijzing" },
       "klacht_id": { "value": "2305422" },
-      "klacht_locatieadres": { "value": "" }
+      "klacht_locatieadres": { "value": "" },
+      "klacht_status": { "value": "Open" },
+      "klacht_finishedon": { "value": "" },
+      "klacht_klachtopgelost": { "value": "" }
     },
     {
       "klacht_inbehandeling": { "value": "18-05-2022 13:48" },
@@ -186,7 +220,10 @@
       "klacht_gewensteoplossing": { "value": "" },
       "klacht_klachtonderwerp": { "value": "" },
       "klacht_id": { "value": "25056622" },
-      "klacht_locatieadres": { "value": "" }
+      "klacht_locatieadres": { "value": "" },
+      "klacht_status": { "value": "Open" },
+      "klacht_finishedon": { "value": "" },
+      "klacht_klachtopgelost": { "value": "" }
     },
     {
       "klacht_inbehandeling": { "value": "14-06-2022 13:47" },
@@ -197,7 +234,10 @@
       "klacht_gewensteoplossing": { "value": "" },
       "klacht_klachtonderwerp": { "value": "" },
       "klacht_id": { "value": "2803222" },
-      "klacht_locatieadres": { "value": "" }
+      "klacht_locatieadres": { "value": "" },
+      "klacht_status": { "value": "Open" },
+      "klacht_finishedon": { "value": "" },
+      "klacht_klachtopgelost": { "value": "" }
     },
     {
       "klacht_inbehandeling": { "value": "14-04-2022 08:35" },
@@ -208,7 +248,10 @@
       "klacht_gewensteoplossing": { "value": "Boosterprik" },
       "klacht_klachtonderwerp": { "value": "Boosterprik" },
       "klacht_id": { "value": "23782223" },
-      "klacht_locatieadres": { "value": "RAI" }
+      "klacht_locatieadres": { "value": "RAI" },
+      "klacht_status": { "value": "Open" },
+      "klacht_finishedon": { "value": "" },
+      "klacht_klachtopgelost": { "value": "" }
     },
     {
       "klacht_inbehandeling": { "value": "12-04-2022 15:53" },
@@ -219,7 +262,10 @@
       "klacht_gewensteoplossing": { "value": "" },
       "klacht_klachtonderwerp": { "value": "" },
       "klacht_id": { "value": "43800222" },
-      "klacht_locatieadres": { "value": "Weesperplein" }
+      "klacht_locatieadres": { "value": "Weesperplein" },
+      "klacht_status": { "value": "Open" },
+      "klacht_finishedon": { "value": "" },
+      "klacht_klachtopgelost": { "value": "" }
     },
     {
       "klacht_inbehandeling": { "value": "06-05-2022 14:37" },
@@ -230,7 +276,10 @@
       "klacht_gewensteoplossing": { "value": "" },
       "klacht_klachtonderwerp": { "value": "Test voor decentrale toewijzing" },
       "klacht_id": { "value": "2305432" },
-      "klacht_locatieadres": { "value": "" }
+      "klacht_locatieadres": { "value": "" },
+      "klacht_status": { "value": "Open" },
+      "klacht_finishedon": { "value": "" },
+      "klacht_klachtopgelost": { "value": "" }
     },
     {
       "klacht_inbehandeling": { "value": "18-05-2022 13:48" },
@@ -241,7 +290,10 @@
       "klacht_gewensteoplossing": { "value": "" },
       "klacht_klachtonderwerp": { "value": "" },
       "klacht_id": { "value": "2505663" },
-      "klacht_locatieadres": { "value": "" }
+      "klacht_locatieadres": { "value": "" },
+      "klacht_status": { "value": "Open" },
+      "klacht_finishedon": { "value": "" },
+      "klacht_klachtopgelost": { "value": "" }
     },
     {
       "klacht_inbehandeling": { "value": "14-06-2022 13:47" },
@@ -252,7 +304,10 @@
       "klacht_gewensteoplossing": { "value": "" },
       "klacht_klachtonderwerp": { "value": "" },
       "klacht_id": { "value": "280323" },
-      "klacht_locatieadres": { "value": "" }
+      "klacht_locatieadres": { "value": "" },
+      "klacht_status": { "value": "Open" },
+      "klacht_finishedon": { "value": "" },
+      "klacht_klachtopgelost": { "value": "" }
     },
     {
       "klacht_inbehandeling": { "value": "14-04-2022 08:35" },
@@ -263,7 +318,10 @@
       "klacht_gewensteoplossing": { "value": "Boosterprik" },
       "klacht_klachtonderwerp": { "value": "Boosterprik" },
       "klacht_id": { "value": "237823" },
-      "klacht_locatieadres": { "value": "RAI" }
+      "klacht_locatieadres": { "value": "RAI" },
+      "klacht_status": { "value": "Open" },
+      "klacht_finishedon": { "value": "" },
+      "klacht_klachtopgelost": { "value": "" }
     },
     {
       "klacht_inbehandeling": { "value": "12-04-2022 15:53" },
@@ -274,7 +332,10 @@
       "klacht_gewensteoplossing": { "value": "" },
       "klacht_klachtonderwerp": { "value": "" },
       "klacht_id": { "value": "438003" },
-      "klacht_locatieadres": { "value": "Weesperplein" }
+      "klacht_locatieadres": { "value": "Weesperplein" },
+      "klacht_status": { "value": "Open" },
+      "klacht_finishedon": { "value": "" },
+      "klacht_klachtopgelost": { "value": "" }
     },
     {
       "klacht_inbehandeling": { "value": "06-05-2022 14:37" },
@@ -285,7 +346,10 @@
       "klacht_gewensteoplossing": { "value": "" },
       "klacht_klachtonderwerp": { "value": "Test voor decentrale toewijzing" },
       "klacht_id": { "value": "2305443" },
-      "klacht_locatieadres": { "value": "" }
+      "klacht_locatieadres": { "value": "" },
+      "klacht_status": { "value": "Open" },
+      "klacht_finishedon": { "value": "" },
+      "klacht_klachtopgelost": { "value": "" }
     },
     {
       "klacht_inbehandeling": { "value": "18-05-2022 13:48" },
@@ -296,7 +360,10 @@
       "klacht_gewensteoplossing": { "value": "" },
       "klacht_klachtonderwerp": { "value": "" },
       "klacht_id": { "value": "25056643" },
-      "klacht_locatieadres": { "value": "" }
+      "klacht_locatieadres": { "value": "" },
+      "klacht_status": { "value": "Open" },
+      "klacht_finishedon": { "value": "" },
+      "klacht_klachtopgelost": { "value": "" }
     },
     {
       "klacht_inbehandeling": { "value": "14-06-2022 13:47" },
@@ -307,7 +374,10 @@
       "klacht_gewensteoplossing": { "value": "" },
       "klacht_klachtonderwerp": { "value": "" },
       "klacht_id": { "value": "280324" },
-      "klacht_locatieadres": { "value": "" }
+      "klacht_locatieadres": { "value": "" },
+      "klacht_status": { "value": "Open" },
+      "klacht_finishedon": { "value": "" },
+      "klacht_klachtopgelost": { "value": "" }
     },
     {
       "klacht_inbehandeling": { "value": "14-04-2022 08:35" },
@@ -318,7 +388,10 @@
       "klacht_gewensteoplossing": { "value": "Boosterprik" },
       "klacht_klachtonderwerp": { "value": "Boosterprik" },
       "klacht_id": { "value": "237824" },
-      "klacht_locatieadres": { "value": "RAI" }
+      "klacht_locatieadres": { "value": "RAI" },
+      "klacht_status": { "value": "Open" },
+      "klacht_finishedon": { "value": "" },
+      "klacht_klachtopgelost": { "value": "" }
     },
     {
       "klacht_inbehandeling": { "value": "12-04-2022 15:53" },
@@ -329,7 +402,10 @@
       "klacht_gewensteoplossing": { "value": "" },
       "klacht_klachtonderwerp": { "value": "" },
       "klacht_id": { "value": "438004" },
-      "klacht_locatieadres": { "value": "Weesperplein" }
+      "klacht_locatieadres": { "value": "Weesperplein" },
+      "klacht_status": { "value": "Open" },
+      "klacht_finishedon": { "value": "" },
+      "klacht_klachtopgelost": { "value": "" }
     }
   ]
 }

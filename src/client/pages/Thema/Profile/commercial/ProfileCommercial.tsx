@@ -1,4 +1,4 @@
-import { Link, Paragraph } from '@amsterdam/design-system-react';
+import { Alert, Link, Paragraph } from '@amsterdam/design-system-react';
 
 import { panelConfig } from './ProfileCommercial.transform';
 import { useProfileData } from './useProfileData.hook';
@@ -18,73 +18,32 @@ function ProfileCommercialSectionPanels() {
         <ProfileSectionPanel
           sectionData={profileData.onderneming}
           startCollapsed={false}
-          {...panelConfig.onderneming(KVK)}
-        />
-      )}
-
-      {!!KVK.content?.rechtspersonen && profileData?.rechtspersonen && (
-        <ProfileSectionPanel
-          sectionData={profileData.rechtspersonen}
-          startCollapsed={false}
-          {...panelConfig.rechtspersonen(KVK)}
+          {...panelConfig.onderneming(KVK, profileData)}
         />
       )}
 
       {!!profileData?.eigenaar && (
         <ProfileSectionPanel
           sectionData={profileData.eigenaar}
-          startCollapsed={!!KVK.content?.rechtspersonen?.length}
-          {...panelConfig.eigenaar(KVK)}
+          startCollapsed={false}
+          {...panelConfig.eigenaar(KVK, profileData)}
         />
       )}
 
       {profileData?.hoofdVestiging && (
         <ProfileSectionPanel
           sectionData={profileData.hoofdVestiging}
-          {...panelConfig.hoofdVestiging(KVK)}
+          {...panelConfig.hoofdVestiging(KVK, profileData)}
         />
       )}
 
       {!!profileData?.vestigingen?.length && KVK.content?.vestigingen && (
         <ProfileSectionPanel
           sectionData={profileData.vestigingen}
-          {...panelConfig.vestigingen(KVK)}
+          {...panelConfig.vestigingen(KVK, profileData)}
         />
       )}
 
-      {!!KVK.content?.aandeelhouders && profileData?.aandeelhouders && (
-        <ProfileSectionPanel
-          sectionData={profileData.aandeelhouders}
-          {...panelConfig.aandeelhouders(KVK)}
-        />
-      )}
-
-      {!!KVK.content?.gemachtigden && profileData?.gemachtigden && (
-        <ProfileSectionPanel
-          sectionData={profileData.gemachtigden}
-          {...panelConfig.gemachtigden(KVK)}
-        />
-      )}
-
-      {!!KVK.content?.bestuurders && profileData?.bestuurders && (
-        <ProfileSectionPanel
-          sectionData={profileData.bestuurders}
-          {...panelConfig.bestuurders(KVK)}
-        />
-      )}
-      {!!KVK.content?.aansprakelijken && profileData?.aansprakelijken && (
-        <ProfileSectionPanel
-          sectionData={profileData.aansprakelijken}
-          {...panelConfig.aansprakelijken(KVK)}
-        />
-      )}
-      {!!KVK.content?.overigeFunctionarissen &&
-        profileData?.overigeFunctionarissen && (
-          <ProfileSectionPanel
-            sectionData={profileData.overigeFunctionarissen}
-            {...panelConfig.overigeFunctionarissen(KVK)}
-          />
-        )}
       <PageContentCell spanWide={8}>
         <ParagaphSuppressed className="ams-mb-m">
           Heeft u de afgelopen 14 dagen uw KvK-gegevens gewijzigd? Dan kan het
@@ -103,29 +62,66 @@ function ProfileCommercialSectionPanels() {
   );
 }
 
-const pageContentTop = (
-  <PageContentCell spanWide={8}>
-    <Paragraph>
-      Hier ziet u hoe uw onderneming ingeschreven staat in het Handelsregister
-      van de Kamer van Koophandel. In dat register staan onder meer uw
-      bedrijfsnaam, vestigingsadres en KvK-nummer. De gemeente gebruikt deze
-      gegevens. Het is dus belangrijk dat uw gegevens kloppen.
-    </Paragraph>
-  </PageContentCell>
-);
-
+function CommercialPageContentTop({
+  kvkTranslation,
+}: {
+  kvkTranslation?: { from: string; to: string };
+}) {
+  return (
+    <>
+      <PageContentCell spanWide={8}>
+        <Paragraph className="ams-mb-m">
+          Hier ziet u hoe uw onderneming ingeschreven staat in het
+          Handelsregister van de Kamer van Koophandel.
+        </Paragraph>
+        <Paragraph className="ams-mb-m">
+          De gemeente gebuikt deze gegevens. Het is daarom belangrijk dat uw
+          gegevens kloppen.{' '}
+        </Paragraph>
+        <Paragraph>
+          Mijn Amsterdam toont alleen vestigingen met een adres in een van de
+          volgende 10 gemeentes: Amsterdam, Aalsmeer, Amstelveen, Diemen,
+          Haarlemmermeer, Landsmeer, Oostzaan, Ouder-Amstel, Uithoorn en
+          Zaanstad.
+        </Paragraph>
+      </PageContentCell>
+      {kvkTranslation && (
+        <PageContentCell>
+          <Alert heading="Let op! KvK vertaald" headingLevel={1}>
+            <Paragraph>
+              Het EHerkenning test account KvKnummer is vertaald van{' '}
+              {kvkTranslation.from} naar {kvkTranslation.to}.
+            </Paragraph>
+            <Paragraph>
+              Dit betekent dat de bedrijfsgegevens, locatiegegevens op de kaart
+              en andere informatie mogelijk niet overeenkomen met de gegevens
+              gekoppeld aan het KvKnummer ({kvkTranslation.from}) in de
+              bronsystemen.
+            </Paragraph>
+          </Alert>
+        </PageContentCell>
+      )}
+    </>
+  );
+}
 export function MijnBedrijfsGegevensThema() {
-  const { isLoading, isError, linkListItems, id, title } = useProfileData();
+  const { isLoading, isError, linkListItems, id, title, KVK } =
+    useProfileData();
 
   return (
     <ThemaPagina
       id={id}
       title={title}
-      isError={isError}
-      isLoading={!isLoading && isError}
+      isError={isError && !isLoading}
+      isLoading={isLoading && !isError}
       linkListItems={linkListItems}
-      pageContentTop={pageContentTop}
+      pageContentTop={
+        <CommercialPageContentTop
+          kvkTranslation={KVK?.content?.kvkTranslation}
+        />
+      }
       pageContentMain={<ProfileCommercialSectionPanels />}
+      maintenanceNotificationsPageSlug="kvk"
     />
   );
 }

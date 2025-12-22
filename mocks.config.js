@@ -1,8 +1,8 @@
 // For a detailed explanation regarding each configuration property, visit:
 // https://www.mocks-server.org/docs/configuration/how-to-change-settings
 // https://www.mocks-server.org/docs/configuration/options
-const ProfileTypeHandler = require('./mocks/handlers/ProfileTypeHandler.js');
 const IntermediateAPIHandler = require('./mocks/handlers/IntermediateAPIHandler.js');
+const ProfileTypeHandler = require('./mocks/handlers/ProfileTypeHandler.js');
 
 module.exports = {
   // Log level. Can be one of silly, debug, verbose, info, warn or error

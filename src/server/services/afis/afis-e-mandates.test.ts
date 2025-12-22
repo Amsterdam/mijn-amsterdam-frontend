@@ -4,6 +4,7 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 
 import * as emandates from './afis-e-mandates';
 import { EMandateCreditorsGemeenteAmsterdam } from './afis-e-mandates-config';
+import { routes } from './afis-service-config';
 import type {
   AfisEMandateCreditor,
   AfisEMandateFrontend,
@@ -289,9 +290,20 @@ describe('afis-e-mandates service (with nock)', () => {
       expect(result.content?.[0].senderIBAN).toBe(validSenderIBAN);
       expect(result.content?.[0].senderName).toBe('A B');
 
-      expect(result.content?.[1].status).toBe('6');
+      expect(result.content?.[1].status).toBe('0');
       expect(result.content?.[1].senderIBAN).toBe(null);
       expect(result.content?.[1].senderName).toBe(null);
+    });
+
+    it('handles error response from AFIS', async () => {
+      remoteApi.get(/Mandate_readSet/).reply(500);
+
+      const result = await emandates.fetchEMandates(
+        { businessPartnerId: '123' },
+        authProfile
+      );
+      expect(result.status).toBe('OK');
+      expect(result.content?.length).toBe(0);
     });
   });
 
@@ -388,20 +400,18 @@ describe('afis-e-mandates service (with nock)', () => {
       expect(eMandate).toHaveProperty('signRequestUrl');
     });
 
-    it('changeEMandateStatus updates status', async () => {
+    it('deactivateEmandate updates status', async () => {
       remoteApi.put(/ChangeMandate/).reply(200);
 
-      const result = await emandates.forTesting.changeEMandateStatus({
+      const result = await emandates.forTesting.deactivateEmandate({
         IMandateId: '1',
-        Status: '1',
-        LifetimeTo: '9999-12-31T00:00:00',
       });
 
       expect(result.content).toStrictEqual({
-        dateValidTo: '9999-12-31T00:00:00',
-        dateValidToFormatted: 'Doorlopend',
-        displayStatus: 'Actief sinds null',
-        status: '1',
+        dateValidTo: '2025-07-10',
+        dateValidToFormatted: '10 juli 2025',
+        displayStatus: 'Niet actief',
+        status: '0',
       });
     });
 
@@ -492,37 +502,9 @@ describe('afis-e-mandates service (with nock)', () => {
       });
     });
 
-    it('getStatusChangeApiUrl generates URL', () => {
-      const url = emandates.forTesting.getStatusChangeApiUrl(
-        authProfile.sid,
-        validSourceMandate
-      );
-      expect(
-        url.startsWith(
-          'http://bff-api-host/api/v1/services/afis/e-mandates/change-status?payload='
-        )
-      ).toBe(true);
-
-      expect(
-        decryptPayloadAndValidateSessionID(
-          new URL(url).searchParams.get('payload')!,
-          { profile: authProfile } as AuthProfileAndToken
-        )
-      ).toStrictEqual({
-        content: {
-          payload: {
-            IMandateId: '1',
-            LifetimeTo: '2025-07-10T12:38:39.542Z',
-            Status: '6',
-          },
-          sessionID: 'sid',
-        },
-        status: 'OK',
-      });
-    });
-
-    it('getUpdateApiUrl generates URL', () => {
-      const url = emandates.forTesting.getUpdateApiUrl(
+    it('getEmandateApiUrl generates URL', () => {
+      const url = emandates.forTesting.getEmandateApiUrl(
+        routes.protected.AFIS_EMANDATES_UPDATE_LIFETIME,
         authProfile.sid,
         validSourceMandate
       );
@@ -579,9 +561,9 @@ describe('afis-e-mandates service (with nock)', () => {
         creditorName: 'Test',
         creditorDescription: undefined,
         creditorIBAN: 'NL35BOOG9343513650',
-        dateValidFrom: '2024-01-01T00:00:00',
+        dateValidFrom: '2024-01-01',
         dateValidFromFormatted: '01 januari 2024',
-        dateValidTo: '9999-12-31T00:00:00',
+        dateValidTo: '9999-12-31',
         dateValidToFormatted: 'Doorlopend',
         displayStatus: 'Actief sinds 01 januari 2024',
         id: 'test',

@@ -7,12 +7,10 @@ import {
   LinkProps,
   ZaakAanvraagDetail,
 } from '../../../universal/types/App.types';
-import { getRedactedClass } from '../../helpers/cobrowse';
 import { usePageTypeSetting } from '../../hooks/useThemaMenuItems';
 import ErrorAlert from '../Alert/Alert';
 import LoadingContent from '../LoadingContent/LoadingContent';
-import { OverviewPageV2, PageContentCell, PageContentV2 } from '../Page/Page';
-import { PageHeadingV2 } from '../PageHeading/PageHeadingV2';
+import { PageContentCell, PageV2 } from '../Page/Page';
 import { PaginationV2 } from '../Pagination/PaginationV2';
 import { DisplayProps, TableV2 } from '../Table/TableV2';
 
@@ -76,58 +74,60 @@ export function ListPagePaginated<T extends object = ZaakAanvraagDetail>({
   const total = totalCount ?? items.length;
 
   return (
-    <OverviewPageV2>
-      <PageContentV2 className={getRedactedClass(themaId)}>
-        <PageHeadingV2 breadcrumbs={breadcrumbs}>{title}</PageHeadingV2>
-        {isError && (
-          <PageContentCell>
-            <ErrorAlert>{errorText}</ErrorAlert>
-          </PageContentCell>
-        )}
-        {pageContentTop}
+    <PageV2
+      breadcrumbs={breadcrumbs}
+      heading={title}
+      id={themaId}
+      redactedThemaId={themaId}
+    >
+      {isError && (
         <PageContentCell>
-          {isLoading && (
-            <LoadingContent
-              barConfig={[
-                ['100%', '2rem', '2rem'],
-                ['100%', '2rem', '2rem'],
-                ['100%', '2rem', '2rem'],
-              ]}
-            />
-          )}
-          {!isError && (
-            <>
-              {!isLoading && !itemsPaginated.length && !!noItemsText && (
-                <Paragraph>{noItemsText}</Paragraph>
-              )}
-              {items.length > pageSize && (
-                <PaginationV2
-                  totalCount={total}
-                  pageSize={pageSize}
-                  currentPage={currentPage}
-                  path={appRoute}
-                />
-              )}
-              {!isLoading && !!itemsPaginated.length && (
-                <TableV2<T>
-                  items={itemsPaginated}
-                  displayProps={displayProps}
-                  className={tableClassName}
-                />
-              )}
-              {items.length > pageSize && (
-                <PaginationV2
-                  totalCount={total}
-                  pageSize={pageSize}
-                  currentPage={currentPage}
-                  path={appRoute}
-                />
-              )}
-            </>
-          )}
+          <ErrorAlert>{errorText}</ErrorAlert>
         </PageContentCell>
-        {pageContentBottom}
-      </PageContentV2>
-    </OverviewPageV2>
+      )}
+      {pageContentTop}
+      <PageContentCell>
+        {isLoading && (
+          <LoadingContent
+            barConfig={[
+              ['100%', '2rem', '2rem'],
+              ['100%', '2rem', '2rem'],
+              ['100%', '2rem', '2rem'],
+            ]}
+          />
+        )}
+        {!isError && (
+          <>
+            {!isLoading && !itemsPaginated.length && !!noItemsText && (
+              <Paragraph>{noItemsText}</Paragraph>
+            )}
+            {items.length > pageSize && (
+              <PaginationV2
+                totalCount={total}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                path={appRoute}
+              />
+            )}
+            {!isLoading && !!itemsPaginated.length && (
+              <TableV2<T>
+                items={itemsPaginated}
+                displayProps={displayProps}
+                className={tableClassName}
+              />
+            )}
+            {items.length > pageSize && (
+              <PaginationV2
+                totalCount={total}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                path={appRoute}
+              />
+            )}
+          </>
+        )}
+      </PageContentCell>
+      {pageContentBottom}
+    </PageV2>
   );
 }

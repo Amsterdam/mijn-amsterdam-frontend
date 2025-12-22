@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 
 import { Paragraph, Page, SkipLink } from '@amsterdam/design-system-react';
 import { PiwikProvider, usePiwik } from '@amsterdam/piwik-tracker-react';
+import classNames from 'classnames';
 import { BrowserRouter, useLocation, useNavigate } from 'react-router';
 
 import styles from './App.module.scss';
@@ -54,8 +55,8 @@ function AppNotAuthenticated() {
   }
   return (
     <>
-      <MainHeader isAuthenticated={false} />
       <Page className={styles.App}>
+        <MainHeader isAuthenticated={false} />
         <PublicRoutes />
       </Page>
       <MainFooter />
@@ -79,22 +80,21 @@ function AppAuthenticated() {
       clearDeeplinkEntry();
       navigate(redirectAfterLogin);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [redirectAfterLogin]);
 
   const isBuurt = location.pathname === buurtRouteConfig.themaPage.path;
 
   return (
     <>
-      <SkipLink href="#skip-to-id-AppContent">Direct naar inhoud</SkipLink>
-      <MainHeader isAuthenticated />
-      <ErrorMessages />
-      <main>
-        <Page className={!isBuurt ? styles.App : styles.AppWide}>
-          <PrivateRoutes />
-        </Page>
-      </main>
+      <Page className={classNames(styles.App, isBuurt ? styles.AppWide : '')}>
+        <SkipLink href="#page-main-content">Direct naar inhoud</SkipLink>
+        <MainHeader isAuthenticated />
+        <ErrorMessages />
+        <PrivateRoutes />
+      </Page>
       {/** Remove the footer on the Map view for better UX */}
-      {!isBuurt && <MainFooter />}
+      {!isBuurt && <MainFooter id="page-main-footer" />}
     </>
   );
 }

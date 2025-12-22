@@ -19,7 +19,7 @@ import { fetchStadspas } from './stadspas';
 import {
   isPcAanvraag,
   isWorkshopNietGevolgd,
-  filterCombineUpcPcvData_pre2026,
+  filterCombineUpcPcvData,
 } from './status-line-items/regeling-pcvergoeding';
 import {
   featureToggle,
@@ -32,7 +32,8 @@ import {
 } from '../../../universal/helpers/api';
 import { dedupeDocumentsInDataSets } from '../../../universal/helpers/document';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
-import { splitBy, toDateFormatted } from '../../../universal/helpers/utils';
+import { splitBy } from '../../../universal/helpers/utils';
+import { toDateFormatted } from '../../../universal/helpers/date';
 import {
   GenericDocument,
   StatusLineItem,
@@ -180,23 +181,22 @@ function transformRegelingenForFrontend(
     ? transformRTMAanvragen(sessionID, aanvrager, RTMAanvragen)
     : [];
 
-  const [remainingAanvragen_, PCVergoedingAanvragen_pre2026] = splitBy(
+  const [remainingAanvragen_, PCVergoedingAanvragen] = splitBy(
     remainingAanvragen,
     isPcAanvraag
   );
-  const PCVergoedingAanvragenCombined = filterCombineUpcPcvData_pre2026(
-    PCVergoedingAanvragen_pre2026
+  const PCVergoedingAanvragenCombined = filterCombineUpcPcvData(
+    PCVergoedingAanvragen
   );
 
   // RTM aanvragen are already completely transformed to HLIRegelingFrontend and do not need further processing.
   const regelingenFrontend = [...RTMRegelingenFrontend];
 
-  // The Remaining aanvragen are not transformed to HLIRegelingFrontend yet.
-  const remainingAanvragen__ = remainingAanvragen_.concat(
+  const unprocessedAanvragen = remainingAanvragen_.concat(
     PCVergoedingAanvragenCombined
   );
 
-  for (const aanvraag of remainingAanvragen__) {
+  for (const aanvraag of unprocessedAanvragen) {
     const statusLineItems = getStatusLineItems(
       'HLI',
       hliStatusLineItemsConfig,

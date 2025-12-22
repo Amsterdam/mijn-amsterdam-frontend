@@ -1,3 +1,5 @@
+import type { BSN } from '../zorgned/zorgned-types';
+
 type TyperingSource = {
   code: string;
   omschrijving: string;
@@ -129,7 +131,7 @@ type HuwelijkPartnerschapSource = {
   plaats?: TyperingSource;
 };
 
-type PersoonSource = PersoonBasisSource & {
+export type PersoonSource = PersoonBasisSource & {
   aNummer: string;
   geheimhoudingPersoonsgegevens: boolean;
   burgerservicenummer: string;
@@ -148,7 +150,7 @@ type PersoonSource = PersoonBasisSource & {
 
 export type PersonenResponseSource = {
   type: string;
-  personen: PersoonSource[];
+  personen?: PersoonSource[];
 };
 
 export type VerblijfplaatshistorieResponseSource = {
@@ -203,10 +205,6 @@ export type Persoon = PersoonBasis & {
   datumVertrekUitNederlandFormatted?: string | null;
   indicatieGeheim: boolean;
   adresInOnderzoek: '080000' | '089999' | null;
-
-  /** @deprecated Deze gegevens worden niet meer gebruikt. */
-  aanduidingNaamgebruikOmschrijving: string | null;
-  indicatieGeboortedatum?: 'J' | 'M' | 'D' | 'V' | null;
 };
 
 export type Verbintenis = {
@@ -215,11 +213,6 @@ export type Verbintenis = {
   datumSluiting: string | null;
   datumSluitingFormatted?: string | null;
   persoon: PersoonBasis;
-
-  /** @deprecated Deze gegevens worden in de BENK-BRP niet meer gebruikt. */
-  plaatsnaamSluitingOmschrijving?: string | null;
-  soortVerbintenis?: string | null;
-  soortVerbintenisOmschrijving?: string | null;
 };
 
 export type Kind = PersoonBasis;
@@ -227,9 +220,12 @@ export type Ouder = PersoonBasis;
 
 export type BrpFrontend = {
   persoon: Persoon;
+  bsnTranslation?: { from: BSN; to: BSN };
   verbintenis: Verbintenis | null;
   kinderen: Kind[];
   ouders: Ouder[];
   adres: Adres | null;
   adresHistorisch: Adres[];
+  fetchUrlAantalBewoners: string | null;
+  aantalBewoners: number | null;
 };

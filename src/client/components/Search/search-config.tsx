@@ -10,6 +10,7 @@ import {
 import { AVGRequestFrontend } from '../../../server/services/avg/types';
 import { BezwaarFrontend } from '../../../server/services/bezwaren/types';
 import { LoodMetingFrontend } from '../../../server/services/bodem/types';
+import type { BrpFrontend } from '../../../server/services/brp/brp-types';
 import type {
   ErfpachtDossiersResponse,
   ErfpachtDossierFrontend,
@@ -22,10 +23,6 @@ import type {
   KrefiaDeepLink,
 } from '../../../server/services/krefia/krefia.types';
 import type { ParkeerVergunningFrontend } from '../../../server/services/parkeren/config-and-types';
-import type {
-  BRPData,
-  IdentiteitsbewijsFrontend,
-} from '../../../server/services/profile/brp.types';
 import { BBVergunningFrontend } from '../../../server/services/toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types';
 import {
   LVVRegistratie,
@@ -36,8 +33,7 @@ import {
   VarenVergunningFrontend,
   VarenZakenFrontend,
 } from '../../../server/services/varen/config-and-types';
-import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
-import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
+import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-types';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
 import { getFullAddress, getFullName } from '../../../universal/helpers/brp';
 import {
@@ -51,6 +47,7 @@ import {
   LinkProps,
   StatusLineItem,
 } from '../../../universal/types/App.types';
+import type { ThemaMenuItem } from '../../config/thema-types';
 import { featureToggle as featureToggleAVG } from '../../pages/Thema/AVG/AVG-thema-config';
 import { featureToggle as featureToggleBezwaren } from '../../pages/Thema/Bezwaren/Bezwaren-thema-config';
 import { themaConfig as themaConfigBodem } from '../../pages/Thema/Bodem/Bodem-thema-config';
@@ -67,6 +64,7 @@ import {
 
 export interface SearchEntry {
   url: string;
+  themaId?: ThemaMenuItem['id'];
   displayTitle: ((term: string) => ReactNode) | ReactNode;
   description: string;
   keywords: string[];
@@ -249,7 +247,7 @@ interface ToeristischRegistratieItem {
 export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     stateKey: 'VERGUNNINGEN',
-    displayTitle: (vergunning: VergunningFrontend) => (term: string) => {
+    displayTitle: (vergunning: ZaakFrontendCombined) => (term: string) => {
       return displayPath(term, [vergunning.title, vergunning.identifier]);
     },
     keywordsGeneratedFromProps: ['identifier'],
@@ -409,8 +407,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   getWpiConfig('WPI_AANVRAGEN'),
   {
     stateKey: 'BRP',
-    getApiBaseItems: (apiContent: BRPData) => {
-      const identiteitsBewijzen = apiContent?.identiteitsbewijzen || [];
+    getApiBaseItems: (apiContent: BrpFrontend) => {
       const address = getFullAddress(apiContent.adres, true);
       const name = getFullName(apiContent.persoon);
       const brpDataItems: ApiBaseItem<{ title: string; link: LinkProps }>[] = [
@@ -429,9 +426,9 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
           },
         },
       ];
-      return [...identiteitsBewijzen, ...brpDataItems];
+      return brpDataItems;
     },
-    displayTitle: (item: IdentiteitsbewijsFrontend | ApiBaseItem) => {
+    displayTitle: (item: ApiBaseItem) => {
       return (term: string) =>
         displayPath(term, [capitalizeFirstLetter(item.title)]);
     },

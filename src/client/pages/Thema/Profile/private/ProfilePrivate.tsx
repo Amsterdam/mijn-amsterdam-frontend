@@ -1,4 +1,4 @@
-import { Link, Paragraph } from '@amsterdam/design-system-react';
+import { Alert, Link, Paragraph } from '@amsterdam/design-system-react';
 
 import { AdresInOnderzoek } from './AdresInOnderzoek';
 import { ContactMomenten } from './ContactMomenten';
@@ -27,52 +27,46 @@ function ProfilePrivateSectionPanels() {
         <ProfileSectionPanel
           sectionData={profileData.persoon}
           startCollapsed={false}
-          {...panelConfig.persoon(BRP)}
+          {...panelConfig.persoon(BRP, profileData)}
         />
       )}
       {!!profileData?.adres && (
         <ProfileSectionPanel
           sectionData={profileData.adres}
           startCollapsed={false}
-          {...panelConfig.adres(BRP)}
+          {...panelConfig.adres(BRP, profileData)}
         />
       )}
       {!!profileData?.verbintenis &&
         !BRP.content?.verbintenis?.datumOntbinding && (
           <ProfileSectionPanel
             sectionData={profileData.verbintenis}
-            {...panelConfig.verbintenis(BRP)}
+            {...panelConfig.verbintenis(BRP, profileData)}
           />
         )}
       {!!profileData?.kinderen?.length && (
         <ProfileSectionPanel
           sectionData={profileData.kinderen}
-          {...panelConfig.kinderen(BRP)}
+          {...panelConfig.kinderen(BRP, profileData)}
         />
       )}
       {!!profileData?.ouders?.length && (
         <ProfileSectionPanel
           sectionData={profileData.ouders}
-          {...panelConfig.ouders(BRP)}
+          {...panelConfig.ouders(BRP, profileData)}
         />
       )}
       {!!profileData?.verbintenis &&
         BRP.content?.verbintenis?.datumOntbinding && (
           <ProfileSectionPanel
             sectionData={profileData.verbintenis}
-            {...panelConfig.verbintenis(BRP)}
+            {...panelConfig.verbintenis(BRP, profileData)}
           />
         )}
-      {!!profileData?.verbintenisHistorisch?.length && (
-        <ProfileSectionPanel
-          sectionData={profileData.verbintenisHistorisch}
-          {...panelConfig.verbintenisHistorisch(BRP)}
-        />
-      )}
       {!!profileData?.adresHistorisch?.length && (
         <ProfileSectionPanel
           sectionData={profileData.adresHistorisch}
-          {...panelConfig.adresHistorisch(BRP)}
+          {...panelConfig.adresHistorisch(BRP, profileData)}
         />
       )}
       {isMokum(BRP.content) && (
@@ -159,8 +153,26 @@ export function MijnGegevensThema() {
       isLoading={!isThemaPaginaError && isThemaPaginaLoading}
       linkListItems={linkListItems}
       pageContentTop={pageContentTop}
+      maintenanceNotificationsPageSlug="brp"
       pageContentMain={
         <>
+          {brpContent?.bsnTranslation && (
+            <PageContentCell>
+              <Alert heading="Let op! BSN vertaald" headingLevel={1}>
+                <Paragraph>
+                  Het Digid test account BSN is vertaald van{' '}
+                  {brpContent.bsnTranslation.from} naar{' '}
+                  {brpContent.bsnTranslation.to}.
+                </Paragraph>
+                <Paragraph>
+                  Dit betekent dat de persoonlijke gegevens, locatiegegevens op
+                  de kaart en andere informatie mogelijk niet overeenkomen met
+                  de gegevens gekoppeld aan het BSN (
+                  {brpContent.bsnTranslation.from}) in de bronsystemen.
+                </Paragraph>
+              </Alert>
+            </PageContentCell>
+          )}
           {brpContent?.persoon?.vertrokkenOnbekendWaarheen && (
             <PageContentCell>
               <VertrokkenOnbekendWaarheen brpContent={brpContent} />
@@ -176,6 +188,7 @@ export function MijnGegevensThema() {
               <ContactMomenten />
             </PageContentCell>
           )}
+
           <ProfilePrivateSectionPanels />
         </>
       }

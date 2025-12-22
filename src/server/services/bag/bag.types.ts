@@ -39,6 +39,7 @@ export type BAGQueryParams = {
   huisnummer?: string;
   huisletter?: string;
   huisnummertoevoeging?: string;
+  identificatie?: string;
 };
 
 export type BAGLocation = {
@@ -48,4 +49,9 @@ export type BAGLocation = {
   mokum: boolean;
   bagNummeraanduidingId?: string | null;
   profileType?: ProfileType;
+};
+
+export type BAGLocationExtended = BAGLocation & {
+  title: string | null;
+  profileType: ProfileType;
 };

@@ -1,5 +1,3 @@
-const jose = require('jose');
-
 class ProfileTypeHandler {
   static get id() {
     return 'profile-type-handler';
@@ -67,24 +65,8 @@ class ProfileTypeHandler {
 }
 
 function isCommercialUser(req) {
-  const auth = req.headers?.authorization;
-
-  if (!auth?.startsWith('Bearer ')) {
-    return false;
-  }
-
-  const jwtToken = auth.split(' ')[1];
-  const jwtDecoded = jwtToken ? jose.decodeJwt(jwtToken) : jwtToken;
-
-  if (!jwtDecoded) {
-    return false;
-  }
-
-  // Different requests can have different identifiers of being a commercial user.
-  return (
-    jwtDecoded.aud === 'mijnamsterdam1' ||
-    jwtDecoded.role === 'niet_natuurlijk_persoon'
-  );
+  const profileType = req.headers?.['x-cache-key-supplement'];
+  return profileType === 'commercial';
 }
 
 module.exports = ProfileTypeHandler;

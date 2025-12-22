@@ -1,0 +1,121 @@
+{
+  "item": {
+    "ItmIdt": "1203750",
+    "Url": "https://www.amsterdam.nl/storingsmeldingen/alle-meldingen-mijn-amsterdam/dashboard/",
+    "publicatiedatum": "20230222",
+    "resolved": "true",
+    "relUrl": "storingsmeldingen/alle-meldingen-mijn-amsterdam/dashboard",
+    "page": {
+      "lang": "nl",
+      "PagIdt": "965615",
+      "ItmIdt": "1203750",
+      "pagetype": "evenement",
+      "interactive": "0",
+      "Cmp": "1",
+      "CorDtm": "20240118",
+      "title": "Technisch onderhoud",
+      "Lbl": "Dashboard",
+      "cluster": {
+        "PagClsIdt": "15994059",
+        "VlgNum": "0",
+        "Opt": "0",
+        "RepTyp": "1",
+        "DefVlgNum": "0",
+        "Nam": "Inhoud",
+        "veld": [
+          {
+            "Nam": "Toevoeging",
+            "Wrd": "acc|prd|tst|dev"
+          },
+          {
+            "PagVldIdt": "21495489",
+            "VlgNum": "2",
+            "GgvTyp": "21",
+            "Nam": "Omschrijving",
+            "Src": "Wegens een storing is een deel van Mijn Amsterdam op dit moment helaas minder goed beschikbaar. Hier wordt met spoed aan gewerkt. Probeert u het later nogmaals svp. Onze excuses voor het ongemak.",
+            "script": {
+              "type": "text/javascript"
+            },
+            "style": {
+              "resolved": "true"
+            }
+          },
+          {
+            "PagVldIdt": "21495490",
+            "VlgNum": "6",
+            "GgvTyp": "7",
+            "Nam": "Startdatum",
+            "Dtm": "20230118",
+            "script": {
+              "type": "text/javascript"
+            },
+            "style": {
+              "resolved": "true"
+            }
+          },
+          {
+            "PagVldIdt": "21495486",
+            "VlgNum": "7",
+            "GgvTyp": "7",
+            "Nam": "Einddatum",
+            "Dtm": "20440119",
+            "script": {
+              "type": "text/javascript"
+            },
+            "style": {
+              "resolved": "true"
+            }
+          },
+          {
+            "PagVldIdt": "21495485",
+            "VlgNum": "8",
+            "GgvTyp": "15",
+            "Nam": "Starttijd",
+            "Tyd": "1526",
+            "script": {
+              "type": "text/javascript"
+            },
+            "style": {
+              "resolved": "true"
+            }
+          },
+          {
+            "PagVldIdt": "21495488",
+            "VlgNum": "9",
+            "GgvTyp": "15",
+            "Nam": "Eindtijd",
+            "Tyd": "2359",
+            "script": {
+              "type": "text/javascript"
+            },
+            "style": {
+              "resolved": "true"
+            }
+          },
+          {
+            "PagVldIdt": "21495483",
+            "VlgNum": "16",
+            "GgvTyp": "2",
+            "Nam": "Stad",
+            "Wrd": "Amsterdam",
+            "script": {
+              "type": "text/javascript"
+            },
+            "style": {
+              "resolved": "true"
+            }
+          }
+        ]
+      }
+    },
+    "evenement": {
+      "instanties": {
+        "Startdatum": "20240118",
+        "Einddatum": "20240119"
+      }
+    },
+    "spec": {
+      "pagetype": "evenement"
+    }
+  }
+}
