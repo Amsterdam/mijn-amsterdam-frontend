@@ -1,9 +1,10 @@
 import type { ThemaFeatureToggle } from './thema-types';
 import { entries } from '../../universal/helpers/utils';
-export const propagateFeatureToggles = <T extends ThemaFeatureToggle>(
+
+export function propagateFeatureToggles<T extends ThemaFeatureToggle>(
   obj: T,
   parentActive = true
-): T => {
+): T {
   const toggles = {} as Record<keyof T, unknown>;
   parentActive = parentActive && obj.active;
   for (const [key, value] of entries(obj)) {
@@ -14,4 +15,4 @@ export const propagateFeatureToggles = <T extends ThemaFeatureToggle>(
     }
   }
   return toggles as T;
-};
+}
