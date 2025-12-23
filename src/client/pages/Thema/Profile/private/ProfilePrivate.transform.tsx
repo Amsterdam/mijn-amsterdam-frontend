@@ -30,6 +30,7 @@ import {
   PanelConfig,
   ProfileSectionData,
 } from '../ProfileSectionPanel';
+
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading
  * into the Profile page data.
@@ -127,6 +128,7 @@ const adres: ProfileLabels<
       return adres?.straatnaam ? getFullAddress(adres as Adres) : 'Onbekend';
     },
   ],
+
   woonplaatsNaam: [
     'Plaats',
     (_value, adres) => {
@@ -173,6 +175,19 @@ const adres: ProfileLabels<
           </Link>
         </>
       );
+    },
+  ],
+  vveNaam: [
+    'Vereniging van Eigenaren',
+    (value, _item, brpData) => {
+      if (brpData?.adres?.vveNaam) {
+        return (
+          <Link href="/persoonlijke-gegevens/vve" rel="noopener noreferrer">
+            {brpData.adres.vveNaam}
+          </Link>
+        );
+      }
+      return 'Onbekend';
     },
   ],
 };
