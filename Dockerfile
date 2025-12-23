@@ -17,6 +17,7 @@ RUN apt-get update \
   && apt-get autoremove -y \
   && apt-get install -y --no-install-recommends \
   nano \
+  rsync \
   openssh-server
 
 ########################################################################################################################
