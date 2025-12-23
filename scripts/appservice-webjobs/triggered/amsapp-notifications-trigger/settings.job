@@ -1,0 +1,5 @@
+{
+  "schedule": "0 0 1 * * *",
+  "is_singleton": true,
+  "run_mode": "scheduled"
+}

@@ -170,6 +170,9 @@ RUN chmod -R 644 /usr/local/share/ca-certificates/extras/ \
 COPY scripts/docker-entrypoint-bff.sh /usr/local/bin/
 RUN chmod u+x /usr/local/bin/docker-entrypoint-bff.sh
 
+# Webjob scripts
+COPY scripts/webjobs/triggered/* /home/site/wwwroot/App_Data/jobs/triggered
+
 # Copy the built application files to the current image
 COPY --from=build-app-bff /build-space/build-bff /app/build-bff
 COPY --from=build-app-bff /build-space/node_modules /app/node_modules
