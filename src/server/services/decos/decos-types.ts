@@ -6,6 +6,11 @@ import type {
   ZaakStatus,
 } from '../../../universal/types/App.types';
 
+export type {
+  WithLocation,
+  WithDateRange,
+} from '../vergunningen/config-and-types';
+
 type DecosDocumentBase = {
   text39: string;
   text40: string;
@@ -230,32 +235,6 @@ export type ZaakTermijnDate = {
   dateStart: string;
   dateEnd: string;
 };
-
-export type WithLocation = {
-  location: string | null;
-};
-
-export type WithKentekens = {
-  kentekens: string | null;
-};
-
-export type WithDateStart = {
-  dateStart: string | null;
-  dateStartFormatted: string | null;
-};
-
-export type WithDateEnd = {
-  dateEnd: string | null;
-  dateEndFormatted: string | null;
-};
-
-export type WithDateRange = WithDateStart & WithDateEnd;
-
-export type WithTimeRange = {
-  timeStart: string | null;
-  timeEnd: string | null;
-};
-export type WithDateTimeRange = WithDateRange & WithTimeRange; // A list of common readable api attributes
 
 export type DecosZaakFrontend<T extends DecosZaakBase = DecosZaakBase> =
   OmitMapped<T, 'statusDates' | 'termijnDates'> & {

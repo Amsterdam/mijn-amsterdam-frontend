@@ -1,3 +1,5 @@
+import memoizee from 'memoizee';
+
 import { myThemasMenuItems } from '../config/thema';
 import { ThemaMenuItem } from '../config/thema-types';
 import { themaId as themaIdNotificaties } from '../pages/MyNotifications/MyNotifications-config';
@@ -13,27 +15,49 @@ const otherContentRedactedItems = [
   redactedScope: 'content',
 }));
 
-const hasRedactedClass = (
-  themaId: string,
-  scope: Required<ThemaMenuItem>['redactedScope']
-) => {
-  const items = [...otherContentRedactedItems, ...myThemasMenuItems];
-  const themaMenuItem = items.find(
-    (item) => item.id.toUpperCase() === themaId.toUpperCase()
+const getRedactedItemsByID = memoizee(function getRedactedItemsByID() {
+  return Object.fromEntries(
+    [...otherContentRedactedItems, ...myThemasMenuItems].map((item) => {
+      return [item.id.toUpperCase(), item.redactedScope] as const;
+    })
   );
-  const redactedScope = themaMenuItem?.redactedScope;
+});
+
+export type ScopeRequested = Extract<
+  Required<ThemaMenuItem>['redactedScope'],
+  'content' | 'full'
+>;
+
+// Determines if redaction is required based on themaId and/or requested scope.
+// ReactedScope provded by thema config takes precedence over requested scope.
+function isRedactionRequired(
+  themaId?: string | null,
+  scopeRequested?: ScopeRequested
+) {
+  const redactedByID = getRedactedItemsByID();
+  const themaIdUpper = themaId ? themaId.toUpperCase() : undefined;
+  const themaExists = themaIdUpper ? themaIdUpper in redactedByID : false;
+  const redactedScope = themaIdUpper ? redactedByID[themaIdUpper] : undefined;
   return (
-    !themaMenuItem ||
+    // If themaId was passed but thema not found, we consider it fully redacted, for safety.
+    (!redactedScope && themaId && !themaExists) ||
+    // If no themaId was passed, we consider it fully redacted if 'full' redaction is requested.
+    // For example pages without themaId but with the need to redact (GeneralInfo, ZaakStatus).
+    (!themaId && scopeRequested === 'full') ||
+    // Configured redacted scope 'full' overrides everything, even if we only request 'content' redaction.
     redactedScope === 'full' ||
-    (redactedScope === 'content' && scope === 'content')
+    // 'content' redaction is only applied when specifically requested and explicitly configured.
+    (redactedScope === 'content' && scopeRequested === 'content')
   );
-};
+}
+
 export function getRedactedClass(
   themaId?: string | null,
-  scope: Required<ThemaMenuItem>['redactedScope'] = 'full'
+  scopeRequested?: ScopeRequested
 ) {
-  if (themaId && !hasRedactedClass(themaId, scope)) {
-    return '';
+  if (isRedactionRequired(themaId, scopeRequested)) {
+    return REDACTED_CLASS;
   }
-  return REDACTED_CLASS;
+
+  return '';
 }

@@ -635,7 +635,7 @@ export function toBoundLiteral(bounds: LatLngBounds): LatLngBoundsLiteral {
   ];
 }
 
-export function isAmsterdamAddress(address: string | null) {
+export function isAmsterdamAddress(address: string | null): boolean {
   return !!address && /Amsterdam|Weesp/gi.test(address);
 }
 

@@ -14,8 +14,7 @@ import { IS_PRODUCTION } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { setAdHocDependencyRequestCacheTtlMs } from '../config/source-api';
 import { afisRouter } from '../services/afis/afis-router';
-import { fetchBezwaarDocument } from '../services/bezwaren/bezwaren';
-import { handleFetchBezwaarDetail } from '../services/bezwaren/bezwaren-route-handlers';
+import { bezwarenRouter } from '../services/bezwaren/bezwaren-router';
 import { fetchLoodMetingDocument } from '../services/bodem/loodmetingen';
 import { brpRouter } from '../services/brp/brp-router';
 import {
@@ -36,7 +35,6 @@ import { fetchErfpachtDossiersDetail as fetchErfpachtDossiersDetail } from '../s
 import { hliRouter } from '../services/hli/hli-router';
 import { fetchZorgnedLLVDocument } from '../services/jeugd/route-handlers';
 import { fetchDocument as fetchBBDocument } from '../services/powerbrowser/powerbrowser-service';
-import { fetchAantalBewoners } from '../services/profile/brp';
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler';
 import { wmoRouter } from '../services/wmo/wmo-router';
 import { fetchWpiDocument } from '../services/wpi/api-service';
@@ -121,7 +119,8 @@ router.use(
   wmoRouter.protected,
   hliRouter.protected,
   brpRouter.protected,
-  afisRouter.protected
+  afisRouter.protected,
+  bezwarenRouter.protected
 );
 
 // LLV Zorgned Doc download
@@ -129,18 +128,6 @@ attachDocumentDownloadRoute(
   router,
   BffEndpoints.LLV_DOCUMENT_DOWNLOAD,
   fetchZorgnedLLVDocument
-);
-
-router.get(
-  BffEndpoints.MKS_AANTAL_BEWONERS,
-  async (req: Request, res: ResponseAuthenticated) => {
-    const bewonersResponse = await fetchAantalBewoners(
-      res.locals.authProfileAndToken,
-      req.params.addressKeyEncrypted
-    );
-
-    return sendResponse(res, bewonersResponse);
-  }
 );
 
 // Decos (Vergunningen, Horeca, Toeristische verhuur, Parkeren)
@@ -182,15 +169,6 @@ attachDocumentDownloadRoute(
   BffEndpoints.LOODMETING_DOCUMENT_DOWNLOAD,
   fetchLoodMetingDocument
 );
-
-attachDocumentDownloadRoute(
-  router,
-  BffEndpoints.BEZWAREN_DOCUMENT_DOWNLOAD,
-  fetchBezwaarDocument
-);
-
-router.get(BffEndpoints.BEZWAREN_DETAIL, handleFetchBezwaarDetail);
-
 router.get(
   BffEndpoints.ERFPACHT_DOSSIER_DETAILS,
   async (req: Request, res: ResponseAuthenticated) => {

@@ -1,9 +1,4 @@
 import {
-  DecosZaakBase,
-  DecosZaakSource,
-  DecosZaakTransformer,
-} from './decos-types';
-import {
   isWaitingForPaymentConfirmation,
   hasInvalidDecision,
   isScheduledForRemoval,
@@ -13,6 +8,11 @@ import {
   transformBoolean,
   isExpired,
 } from './decos-helpers';
+import {
+  DecosZaakBase,
+  DecosZaakSource,
+  DecosZaakTransformer,
+} from './decos-types';
 import { decosCaseToZaakTransformers } from '../vergunningen/decos-zaken';
 
 describe('decos/helpers', () => {

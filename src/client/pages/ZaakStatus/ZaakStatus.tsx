@@ -205,7 +205,8 @@ export function ZaakStatus() {
   }
 
   return (
-    <PageV2 heading="Status van uw aanvraag">
+    // We redact the full page because we can't know exactly which thema the zaak belongs to.
+    <PageV2 heading="Status van uw aanvraag" redactedScope="full">
       <PageContentCell>
         {/* If we have a state error, show only the error, no links to overview because that has a state error as well. */}
         {pageRoute.unResolvedState === STATE_ERROR && (

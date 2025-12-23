@@ -479,12 +479,12 @@
     ]
   },
   {
-    "id": "126087901",
+    "id": "126087660",
     "fields": [
       {
         "fieldName": "ZAAK_IDENTIFICATIE",
-        "text": "Z2024-WK000186",
-        "fieldValue": "Z2024-WK000186"
+        "text": "Z2024-WK123400",
+        "fieldValue": "Z2024-WK123400"
       },
       {
         "fieldName": "STARTDATUM",
@@ -510,6 +510,285 @@
         "fieldName": "RESULTAAT_ID",
         "text": "Verleend met overgangsrecht",
         "fieldValue": "721"
+      }
+    ]
+  },
+  {
+    "id": "126087901",
+    "fields": [
+      {
+        "fieldName": "ZAAK_IDENTIFICATIE",
+        "text": "Z2024-WK123401",
+        "fieldValue": "Z2024-WK123401"
+      },
+      {
+        "fieldName": "STARTDATUM",
+        "text": "29-05-2024",
+        "fieldValue": "2024-05-28T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "EINDDATUM"
+      },
+      {
+        "fieldName": "INGANGSDATUM",
+        "text": "29-05-2024",
+        "fieldValue": "2024-05-28T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "DATUM_TOT",
+        "text": "01-07-2028",
+        "fieldValue": "2028-06-30T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "RESULTAAT_ID"
+      }
+    ]
+  },
+  {
+    "id": "126087902",
+    "fields": [
+      {
+        "fieldName": "ZAAK_IDENTIFICATIE",
+        "text": "Z2024-WK123402",
+        "fieldValue": "Z2024-WK123402"
+      },
+      {
+        "fieldName": "STARTDATUM",
+        "text": "29-05-2024",
+        "fieldValue": "2024-05-28T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "EINDDATUM"
+      },
+      {
+        "fieldName": "INGANGSDATUM",
+        "text": "29-05-2024",
+        "fieldValue": "2024-05-28T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "DATUM_TOT",
+        "text": "01-07-2028",
+        "fieldValue": "2028-06-30T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "RESULTAAT_ID"
+      }
+    ]
+  },
+  {
+    "id": "126087951",
+    "fields": [
+      {
+        "fieldName": "ZAAK_IDENTIFICATIE",
+        "text": "Z2024-WK123501",
+        "fieldValue": "Z2024-WK123501"
+      },
+      {
+        "fieldName": "STARTDATUM",
+        "text": "29-05-2024",
+        "fieldValue": "2024-05-28T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "EINDDATUM"
+      },
+      {
+        "fieldName": "INGANGSDATUM",
+        "text": "29-05-2024",
+        "fieldValue": "2024-05-28T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "DATUM_TOT",
+        "text": "01-07-2028",
+        "fieldValue": "2028-06-30T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "RESULTAAT_ID"
+      }
+    ]
+  },
+  {
+    "id": "126087952",
+    "fields": [
+      {
+        "fieldName": "ZAAK_IDENTIFICATIE",
+        "text": "Z2024-WK123502",
+        "fieldValue": "Z2024-WK123502"
+      },
+      {
+        "fieldName": "STARTDATUM",
+        "text": "29-05-2024",
+        "fieldValue": "2024-05-28T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "EINDDATUM"
+      },
+      {
+        "fieldName": "INGANGSDATUM",
+        "text": "29-05-2024",
+        "fieldValue": "2024-05-28T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "DATUM_TOT",
+        "text": "01-07-2028",
+        "fieldValue": "2028-06-30T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "RESULTAAT_ID"
+      }
+    ]
+  },
+  {
+    "id": "126087953",
+    "fields": [
+      {
+        "fieldName": "ZAAK_IDENTIFICATIE",
+        "text": "Z2024-WK123503",
+        "fieldValue": "Z2024-WK123503"
+      },
+      {
+        "fieldName": "STARTDATUM",
+        "text": "29-05-2024",
+        "fieldValue": "2024-05-28T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "EINDDATUM"
+      },
+      {
+        "fieldName": "INGANGSDATUM",
+        "text": "29-05-2024",
+        "fieldValue": "2024-05-28T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "DATUM_TOT",
+        "text": "01-07-2028",
+        "fieldValue": "2028-06-30T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "RESULTAAT_ID"
+      }
+    ]
+  },
+  {
+    "id": "126088002",
+    "fields": [
+      {
+        "fieldName": "ZAAK_IDENTIFICATIE",
+        "text": "Z2024-WK123802",
+        "fieldValue": "Z2024-WK123802"
+      },
+      {
+        "fieldName": "STARTDATUM",
+        "text": "29-05-2024",
+        "fieldValue": "2024-05-28T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "EINDDATUM"
+      },
+      {
+        "fieldName": "INGANGSDATUM",
+        "text": "29-05-2024",
+        "fieldValue": "2024-05-28T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "DATUM_TOT",
+        "text": "01-07-2028",
+        "fieldValue": "2028-06-30T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "RESULTAAT_ID"
+      }
+    ]
+  },
+  {
+    "id": "126088003",
+    "fields": [
+      {
+        "fieldName": "ZAAK_IDENTIFICATIE",
+        "text": "Z2024-WK123803",
+        "fieldValue": "Z2024-WK123803"
+      },
+      {
+        "fieldName": "STARTDATUM",
+        "text": "29-05-2024",
+        "fieldValue": "2024-05-28T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "EINDDATUM"
+      },
+      {
+        "fieldName": "INGANGSDATUM",
+        "text": "29-05-2024",
+        "fieldValue": "2024-05-28T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "DATUM_TOT",
+        "text": "01-07-2028",
+        "fieldValue": "2028-06-30T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "RESULTAAT_ID"
+      }
+    ]
+  },
+  {
+    "id": "126088004",
+    "fields": [
+      {
+        "fieldName": "ZAAK_IDENTIFICATIE",
+        "text": "Z2024-WK123804",
+        "fieldValue": "Z2024-WK123804"
+      },
+      {
+        "fieldName": "STARTDATUM",
+        "text": "29-05-2024",
+        "fieldValue": "2024-05-28T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "EINDDATUM"
+      },
+      {
+        "fieldName": "INGANGSDATUM",
+        "text": "29-05-2024",
+        "fieldValue": "2024-05-28T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "DATUM_TOT",
+        "text": "01-07-2028",
+        "fieldValue": "2028-06-30T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "RESULTAAT_ID"
+      }
+    ]
+  },
+  {
+    "id": "126088005",
+    "fields": [
+      {
+        "fieldName": "ZAAK_IDENTIFICATIE",
+        "text": "Z2024-WK123805",
+        "fieldValue": "Z2024-WK123805"
+      },
+      {
+        "fieldName": "STARTDATUM",
+        "text": "29-05-2024",
+        "fieldValue": "2024-05-28T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "EINDDATUM"
+      },
+      {
+        "fieldName": "INGANGSDATUM",
+        "text": "29-05-2024",
+        "fieldValue": "2024-05-28T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "DATUM_TOT",
+        "text": "01-07-2028",
+        "fieldValue": "2028-06-30T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "RESULTAAT_ID"
       }
     ]
   }

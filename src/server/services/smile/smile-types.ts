@@ -1,5 +1,5 @@
-export type SmileFieldValue = {
-  value: string | null;
+export type SmileFieldValue<T = string> = {
+  value: T | null;
 };
 
 export interface SmileSourceResponse<T> {

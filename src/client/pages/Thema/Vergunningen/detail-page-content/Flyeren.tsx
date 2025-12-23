@@ -1,12 +1,12 @@
 import { commonTransformers, getRows } from './fields-config';
+import { DecosZaakBase } from '../../../../../server/services/decos/decos-types';
 import {
-  DecosZaakBase,
   WithDateRange,
   WithDateTimeRange,
-} from '../../../../../server/services/decos/decos-types';
+} from '../../../../../server/services/vergunningen/config-and-types';
 import type {
   Flyeren,
-  VergunningFrontend,
+  DecosZaakFrontend,
 } from '../../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../../components/Datalist/Datalist';
 
@@ -14,7 +14,7 @@ const isSameDate = (vergunning: WithDateRange) =>
   vergunning.dateStart === vergunning.dateEnd || vergunning.dateEnd === null;
 
 export function onFromToExceptSameDate(
-  vergunning: VergunningFrontend<DecosZaakBase & WithDateTimeRange>
+  vergunning: DecosZaakFrontend<DecosZaakBase & WithDateTimeRange>
 ) {
   return vergunning.isVerleend && isSameDate(vergunning)
     ? commonTransformers.onFromTo(vergunning)
@@ -22,7 +22,7 @@ export function onFromToExceptSameDate(
 }
 
 export function dateTimeRangeBetweenIfSameDate(
-  vergunning: VergunningFrontend<DecosZaakBase & WithDateTimeRange>
+  vergunning: DecosZaakFrontend<DecosZaakBase & WithDateTimeRange>
 ) {
   return vergunning.isVerleend && !isSameDate(vergunning)
     ? commonTransformers.dateTimeRangeBetween(vergunning)
@@ -34,7 +34,7 @@ export function dateTimeRangeBetweenIfSameDate(
 export function Flyeren({
   vergunning,
 }: {
-  vergunning: VergunningFrontend<Flyeren>;
+  vergunning: DecosZaakFrontend<Flyeren>;
 }) {
   const rows = getRows(vergunning, [
     commonTransformers.identifier,

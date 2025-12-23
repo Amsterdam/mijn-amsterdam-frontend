@@ -2,7 +2,7 @@ import { Alert, Icon, Paragraph } from '@amsterdam/design-system-react';
 import { LinkExternalIcon } from '@amsterdam/design-system-react-icons';
 
 import { useParkerenData } from './useParkerenData.hook';
-import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
+import { DecosZaakFrontend } from '../../../../server/services/vergunningen/config-and-types';
 import { MaButtonLink } from '../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../components/Page/Page';
 import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed';
@@ -74,7 +74,7 @@ export function ParkerenThema() {
       { title, displayProps, filter, sort, listPageRoute, maxItems },
     ]) => {
       return (
-        <ThemaPaginaTable<VergunningFrontend>
+        <ThemaPaginaTable<DecosZaakFrontend>
           key={kind}
           title={title}
           zaken={vergunningen.filter(filter).sort(sort)}

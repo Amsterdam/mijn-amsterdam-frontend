@@ -6,7 +6,6 @@ import { menuItem as menuItemAVG } from '../pages/Thema/AVG/AVG-render-config';
 import { menuItem as menuItemBelastingen } from '../pages/Thema/Belastingen/Belastingen-render-config';
 import { menuItem as menuItemBezwaren } from '../pages/Thema/Bezwaren/Bezwaren-render-config';
 import { menuItem as menuItemBodem } from '../pages/Thema/Bodem/Bodem-render-config';
-import { menuItem as menuItemBurgerzaken } from '../pages/Thema/Burgerzaken/Burgerzaken-render-config';
 import {
   menuItem as menuItemErfpacht,
   menuItemZakelijk as menuItemErfpachtZakelijk,
@@ -41,7 +40,6 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   menuItemAVG,
   menuItemBezwaren,
   menuItemBodem,
-  menuItemBurgerzaken,
   menuItemErfpacht,
   menuItemErfpachtZakelijk,
   menuItemHLI,

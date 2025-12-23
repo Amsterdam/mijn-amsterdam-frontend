@@ -11,11 +11,12 @@ import {
   DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_FROM,
   DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_TO,
 } from './brp-service-config';
+import type { PersonenResponseSource } from './brp-types';
 import testPersonenResponse from '../../../../mocks/fixtures/brp/test-personen.json';
 import verblijfplaatsenResponse from '../../../../mocks/fixtures/brp/verblijfplaatshistorie.json';
 import { remoteApi } from '../../../testing/utils';
 import * as sourceApi from '../../helpers/source-api-request';
-import { fetchAuthTokenHeader } from '../ms-oauth/oauth-token';
+import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token';
 
 const {
   fetchBenkBrpTokenHeader,
@@ -24,7 +25,15 @@ const {
   translateBSN,
 } = forTesting;
 
-vi.mock('../ms-oauth/oauth-token', () => ({
+vi.mock('../../helpers/encrypt-decrypt', () => {
+  return {
+    encryptSessionIdWithRouteIdParam: () => {
+      return ['test-encrypted-id'];
+    },
+  };
+});
+
+vi.mock('../iam-oauth/oauth-token', () => ({
   fetchAuthTokenHeader: vi.fn(),
 }));
 
@@ -39,8 +48,9 @@ describe('brp.ts', () => {
       fetchBenkBrpTokenHeader();
 
       expect(fetchAuthTokenHeader).toHaveBeenCalledWith(
+        'IAM_MS_OAUTH',
         {
-          sourceApiName: 'BRP',
+          sourceApiName: 'BENK_BRP',
           tokenValidityMS: expect.any(Number),
         },
         {
@@ -112,7 +122,10 @@ describe('brp.ts', () => {
         ],
       };
 
-      const result = transformBenkBrpResponse(responseData.personen[0] as any);
+      const result = transformBenkBrpResponse(
+        'xx-aa',
+        responseData.personen[0] as PersonenResponseSource['personen'][0]
+      );
       expect(result).toHaveProperty('persoon.opgemaakteNaam', 'John Doe');
       expect(result).toHaveProperty('persoon.vertrokkenOnbekendWaarheen', true);
       expect(result).toHaveProperty('persoon.mokum', true);
@@ -159,9 +172,7 @@ describe('brp.ts', () => {
           .post(/\/verblijfplaatshistorie/)
           .reply(200, verblijfplaatsenResponse);
 
-        const response = await fetchBrpByBsnTransformed('test-session-id', [
-          BSN,
-        ]);
+        const response = await fetchBrpByBsnTransformed('test-session-id', BSN);
 
         expect(response).toMatchSnapshot();
         expect(response.status).toBe('OK');
@@ -183,9 +194,7 @@ describe('brp.ts', () => {
           .post(/\/verblijfplaatshistorie/)
           .reply(500, 'Internal Server Error');
 
-        const response = await fetchBrpByBsnTransformed('test-session-id', [
-          BSN,
-        ]);
+        const response = await fetchBrpByBsnTransformed('test-session-id', BSN);
 
         expect(response).toMatchSnapshot();
         expect(response.status).toBe('OK');

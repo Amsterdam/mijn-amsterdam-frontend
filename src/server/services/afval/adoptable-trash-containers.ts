@@ -12,8 +12,8 @@ import {
 } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { fetchMyLocation } from '../bag/my-locations';
-import { fetchBrpV2 } from '../brp/brp';
+import { fetchMyLocations } from '../bag/my-locations';
+import { fetchBrp } from '../brp/brp';
 import { fetchDataset } from '../buurt/buurt';
 import {
   datasetEndpoints,
@@ -42,7 +42,7 @@ const filterQueryParam = encodeURIComponent(JSON.stringify(filters));
 export async function fetchAdoptableTrashContainers(
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const BRP = await fetchBrpV2(authProfileAndToken);
+  const BRP = await fetchBrp(authProfileAndToken);
 
   if (!BRP.content?.persoon?.geboortedatum) {
     return apiDependencyError({ BRP });
@@ -59,7 +59,7 @@ export async function fetchAdoptableTrashContainers(
     });
   }
 
-  const MY_LOCATION = await fetchMyLocation(authProfileAndToken);
+  const MY_LOCATION = await fetchMyLocations(authProfileAndToken);
 
   if (MY_LOCATION.status !== 'OK' || !MY_LOCATION.content?.[0]?.latlng) {
     return apiDependencyError({ MY_LOCATION });

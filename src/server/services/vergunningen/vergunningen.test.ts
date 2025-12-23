@@ -1,23 +1,32 @@
 import { describe, it, expect, vi, type Mock } from 'vitest';
 
 import { DecosVergunning } from './config-and-types';
-import { forTesting } from './vergunningen';
+import { getStatusStepsDecos } from './decos-status-steps';
 import { routeConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config';
 import { getAuthProfileAndToken } from '../../../testing/utils';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
+import { transformDecosZaakFrontend } from '../decos/decos-service';
 import type { DecosZaakBase } from '../decos/decos-types';
-
-const { transformVergunningFrontend } = forTesting;
 
 vi.mock('../../helpers/encrypt-decrypt');
 
-vi.mock('../decos/decos-service', async (importOriginal) => ({
-  ...(await importOriginal()),
-  fetchDecosZaken: vi.fn(),
+vi.mock(
+  '../decos/decos-service',
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async (importOriginal: () => Promise<any>) => ({
+    ...(await importOriginal()),
+    fetchDecosZaken: vi.fn(),
+  })
+);
+
+vi.mock('./decos-status-steps', () => ({
+  getStatusStepsDecos: vi
+    .fn()
+    .mockReturnValue([{ status: 'FooBar', isActive: true }]),
 }));
 
-vi.mock('./vergunningen-status-steps', () => ({
-  getStatusSteps: vi
+vi.mock('./pb-status-steps', () => ({
+  getStatusStepsPB: vi
     .fn()
     .mockReturnValue([{ status: 'FooBar', isActive: true }]),
 }));
@@ -51,11 +60,16 @@ describe('vergunningen', () => {
         isVerleend: false,
       };
 
-      const result = transformVergunningFrontend(
+      const result = transformDecosZaakFrontend<DecosVergunning>(
         authProfileAndToken.profile.sid,
         decosVergunning as DecosVergunning,
-        routeConfig.detailPage.path
+        {
+          detailPageRoute: routeConfig.detailPage.path,
+          includeFetchDocumentsUrl: true,
+          getStepsFN: getStatusStepsDecos,
+        }
       );
+
       expect(result).toStrictEqual({
         itemType: 'folders',
         caseType: 'Case Type 1',

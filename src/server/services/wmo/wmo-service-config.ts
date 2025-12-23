@@ -11,12 +11,12 @@ export const featureToggle = {
   },
   statusLineItems: {
     alleAfgewezenWmoAanvragen: {
-      isEnabled: !IS_PRODUCTION,
+      isEnabled: true,
     },
   },
   service: {
     fetchCasusAanvragen: {
-      isEnabled: !IS_PRODUCTION,
+      isEnabled: true,
     },
   },
 } as const;

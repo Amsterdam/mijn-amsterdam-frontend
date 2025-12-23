@@ -1,7 +1,7 @@
 import MockDate from 'mockdate';
 import { describe, it, expect, vi, Mock } from 'vitest';
 
-import { VergunningFrontend } from './config-and-types';
+import { DecosZaakFrontend } from './config-and-types';
 import { fetchVergunningen } from './vergunningen';
 import {
   createNotificationDefault,
@@ -38,7 +38,7 @@ describe('vergunningen-notifications', () => {
         steps: [
           { status: 'Ontvangen', datePublished: '2023-01-10', isActive: true },
         ],
-      } as unknown as VergunningFrontend;
+      } as unknown as DecosZaakFrontend;
 
       const notification = createNotificationDefault(vergunning, {
         themaID: themaId,
@@ -50,7 +50,7 @@ describe('vergunningen-notifications', () => {
       );
       expect(notification).toHaveProperty(
         'description',
-        'Wij hebben uw aanvraag Test case met gemeentelijk zaaknummer Z/123/456 ontvangen.'
+        'Wij hebben uw aanvraag Test case met zaaknummer Z/123/456 ontvangen.'
       );
       expect(notification).toHaveProperty('datePublished', '2023-01-10');
       expect(notification).toHaveProperty('link', {
@@ -65,7 +65,7 @@ describe('vergunningen-notifications', () => {
         caseType: 'TestCase',
         link: { to: '/test', title: 'Test' },
         steps: [],
-      } as unknown as VergunningFrontend;
+      } as unknown as DecosZaakFrontend;
 
       const notification = createNotificationDefault(vergunning, {
         themaID: themaId,
@@ -161,7 +161,7 @@ describe('vergunningen-notifications', () => {
           ],
           link: { to: '/test', title: 'Test' },
         },
-      ] as unknown as VergunningFrontend[];
+      ] as unknown as DecosZaakFrontend[];
 
       const notifications = getVergunningNotifications(
         vergunningen,
@@ -172,7 +172,7 @@ describe('vergunningen-notifications', () => {
         {
           datePublished: '2025-01-05',
           description:
-            'Wij hebben uw aanvraag Test case met gemeentelijk zaaknummer Z/123/456 ontvangen.',
+            'Wij hebben uw aanvraag Test case met zaaknummer Z/123/456 ontvangen.',
           id: 'vergunning-1-notification',
           link: {
             title: 'Bekijk details',
@@ -185,7 +185,7 @@ describe('vergunningen-notifications', () => {
         {
           datePublished: '2025-01-07',
           description:
-            'Wij hebben uw aanvraag Test case met gemeentelijk zaaknummer Z/888/999 in behandeling genomen.',
+            'Wij hebben uw aanvraag Test case met zaaknummer Z/888/999 in behandeling genomen.',
           id: 'vergunning-2-notification',
           link: {
             title: 'Bekijk details',
@@ -198,7 +198,7 @@ describe('vergunningen-notifications', () => {
         {
           datePublished: '2025-01-08',
           description:
-            'Wij hebben uw aanvraag Test case met gemeentelijk zaaknummer Z/999/000 afgehandeld.',
+            'Wij hebben uw aanvraag Test case met zaaknummer Z/999/000 afgehandeld.',
           id: 'vergunning-3-notification',
           link: {
             title: 'Bekijk details',
@@ -211,7 +211,7 @@ describe('vergunningen-notifications', () => {
         {
           datePublished: '2025-01-09',
           description:
-            'Uw vergunning Test case met gemeentelijk zaaknummer Z/111222/000 is verlopen.',
+            'Uw vergunning Test case met zaaknummer Z/111222/000 is verlopen.',
           id: 'vergunning-4-notification',
           link: {
             title: 'Bekijk details',
@@ -224,7 +224,7 @@ describe('vergunningen-notifications', () => {
         {
           datePublished: '2025-01-08',
           description:
-            'Wij hebben uw aanvraag Test case met gemeentelijk zaaknummer Z/111222/000 afgehandeld.',
+            'Wij hebben uw aanvraag Test case met zaaknummer Z/111222/000 afgehandeld.',
           id: 'vergunning-5-notification',
           link: {
             title: 'Bekijk details',
@@ -242,7 +242,7 @@ describe('vergunningen-notifications', () => {
         {
           steps: [],
         },
-      ] as unknown as VergunningFrontend[];
+      ] as unknown as DecosZaakFrontend[];
 
       const notifications = getVergunningNotifications(
         vergunningen,

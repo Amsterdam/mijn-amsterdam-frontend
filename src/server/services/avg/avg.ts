@@ -272,7 +272,7 @@ function createAVGNotification(verzoek: AVGRequestFrontend) {
     themaTitle: themaTitle,
     id: `avg-${verzoek.id}-notification`,
     title: 'AVG verzoek ontvangen',
-    description: `Wij hebben uw AVG verzoek met gemeentelijk zaaknummer ${verzoek.id} ontvangen.`,
+    description: `Wij hebben uw AVG verzoek met zaaknummer ${verzoek.id} ontvangen.`,
     datePublished: verzoek.ontvangstDatum,
     link: {
       to: verzoek.link.to,
@@ -282,19 +282,19 @@ function createAVGNotification(verzoek: AVGRequestFrontend) {
 
   if (inProgressActive) {
     notification.title = 'AVG verzoek in behandeling';
-    notification.description = `Wij hebben uw AVG verzoek met gemeentelijk zaaknummer ${verzoek.id} in behandeling.`;
+    notification.description = `Wij hebben uw AVG verzoek met zaaknummer ${verzoek.id} in behandeling.`;
     notification.datePublished = verzoek.datumInBehandeling;
   }
 
   if (extraInfoActive) {
     notification.title = 'AVG verzoek meer informatie nodig';
-    notification.description = `Wij hebben meer informatie nodig om uw AVG verzoek met gemeentelijk zaaknummer ${verzoek.id} in behandeling te nemen. U krijgt een brief of e-mail waarin staat welke informatie wij nodig hebben.`;
+    notification.description = `Wij hebben meer informatie nodig om uw AVG verzoek met zaaknummer ${verzoek.id} in behandeling te nemen. U krijgt een brief of e-mail waarin staat welke informatie wij nodig hebben.`;
     notification.datePublished = verzoek.opschortenGestartOp;
   }
 
   if (isDone) {
     notification.title = 'AVG verzoek afgehandeld';
-    notification.description = `Uw AVG verzoek met gemeentelijk zaaknummer ${verzoek.id} is afgehandeld. U ontvangt of u heeft hierover bericht gekregen per e-mail of per brief.`;
+    notification.description = `Uw AVG verzoek met zaaknummer ${verzoek.id} is afgehandeld. U ontvangt of u heeft hierover bericht gekregen per e-mail of per brief.`;
     notification.datePublished = verzoek.datumAfhandeling;
   }
 

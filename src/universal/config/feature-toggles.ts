@@ -34,9 +34,6 @@ export const FeatureToggle = {
   // Horeca vergunningen
   horecaActive: true,
 
-  // ID Bewijzen thema
-  identiteitsbewijzenActive: true,
-
   // BBZ inkomen
   inkomenBBZActive: true,
 
@@ -58,9 +55,6 @@ export const FeatureToggle = {
   // Parkeren
   parkerenActive: true,
   parkerenCheckForProductAndPermitsActive: !IS_PRODUCTION,
-
-  // Mijn Gegegvens -> aantal bewoners op adres.
-  residentCountActive: true,
 
   // Subsidie patroon C
   subsidieActive: true,
@@ -87,4 +81,10 @@ export const FeatureToggle = {
 
   // AmsApp notificaties
   amsNotificationsIsActive: !IS_PRODUCTION,
+
+  // Cobrowse widget
+  cobrowseIsActive: true,
+
+  // VTH vergunningen move from decos to powerbrowser (ligplaats/kameromzettingen/woningvormingen)
+  VTHOnPowerbrowserActive: false,
 } as const;

@@ -20,8 +20,14 @@ vi.mock('../config/thema', () => ({
 
 const REDACTED_CLASS = 'redacted';
 describe('Cobrowse', () => {
-  test('if getRedactedClass returns the redacted class on null', async () => {
-    expect(getRedactedClass(null)).toBe(REDACTED_CLASS);
+  test('if getRedactedClass returns empty string if there is nothing to redact', async () => {
+    expect(getRedactedClass(null)).toBe('');
+  });
+  test("if getRedactedClass returns the redacted class if a requested scope provided is 'full'", async () => {
+    expect(getRedactedClass(null, 'full')).toBe(REDACTED_CLASS);
+  });
+  test("if getRedactedClass returns empty string if 'full' was requested but there is nothing to redact according to the config found for provided themaId", async () => {
+    expect(getRedactedClass('themaID', 'full')).toBe('');
   });
   test('if getRedactedClass returns the redacted class for a non-existent thema', async () => {
     expect(getRedactedClass('somerandomthema')).toBe(REDACTED_CLASS);

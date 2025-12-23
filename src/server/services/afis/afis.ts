@@ -21,12 +21,13 @@ import {
   createSessionBasedCacheKey,
 } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
-import { fetchAuthTokenHeader } from '../ms-oauth/oauth-token';
+import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token';
 
 export async function fetchAfisTokenHeader() {
   const tokenHeaderResponse = await fetchAuthTokenHeader(
+    'IAM_MS_OAUTH',
     {
-      url: getApiConfig('AFIS').url,
+      url: `${getApiConfig('AFIS').url}/OAuthServer`,
       sourceApiName: 'AFIS',
       // eslint-disable-next-line no-magic-numbers
       tokenValidityMS: ONE_MINUTE_MS * 55, // Token is valid for 1 hour, expire it 5 minutes before.

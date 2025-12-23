@@ -1,12 +1,13 @@
 import { useMemo } from 'react';
 
 import { useAppStateStore } from './useAppStateStore';
+import type { MyNotification } from '../../universal/types/App.types';
 import { WelcomeNotification } from '../config/staticData';
 import { getRedactedClass } from '../helpers/cobrowse';
 
 export function useAppStateNotifications(top?: number) {
   const { isReady, NOTIFICATIONS } = useAppStateStore();
-  const notifications_ = NOTIFICATIONS?.content ?? [];
+  const notifications_: MyNotification[] = NOTIFICATIONS?.content ?? [];
   // Merge the WelcomeNotification when AppState is ready.
   const notifications = useMemo(
     () =>

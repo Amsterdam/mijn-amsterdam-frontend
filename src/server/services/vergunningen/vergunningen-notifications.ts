@@ -1,4 +1,4 @@
-import { VergunningFrontend } from './config-and-types';
+import type { ZaakFrontendCombined } from './config-and-types';
 import { fetchVergunningen } from './vergunningen';
 import {
   getLifetimeTriggerDate,
@@ -17,10 +17,9 @@ import { isRecentNotification } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getStatusDate } from '../decos/decos-helpers';
-import type { DecosZaakBase } from '../decos/decos-types';
 
 function getNotificationBase<ID extends string>(
-  vergunning: VergunningFrontend,
+  vergunning: ZaakFrontendCombined,
   themaID: ID,
   themaTitle: string
 ): Pick<MyNotification, 'themaID' | 'themaTitle' | 'id' | 'link'> {
@@ -36,17 +35,14 @@ function getNotificationBase<ID extends string>(
   return notificationBaseProperties;
 }
 
-export type NotificationThemaOptions<ID extends string> = {
-  themaID: ID;
+export type NotificationThemaOptions = {
+  themaID: string;
   themaTitle: string;
 };
 
-export function createNotificationDefault<
-  DZ extends DecosZaakBase,
-  ID extends string = string,
->(
-  zaak: VergunningFrontend<DZ>,
-  themaOptions: NotificationThemaOptions<ID>
+export function createNotificationDefault(
+  zaak: ZaakFrontendCombined,
+  themaOptions: NotificationThemaOptions
 ): MyNotification | null {
   const activeStep = zaak.steps.find((step) => step.isActive);
 
@@ -87,21 +83,21 @@ export function createNotificationDefault<
         ...baseNotification,
         datePublished,
         title: `Aanvraag ${zaak.title} ontvangen`,
-        description: `Wij hebben uw aanvraag ${zaak.title} met gemeentelijk zaaknummer ${zaak.identifier} ontvangen.`,
+        description: `Wij hebben uw aanvraag ${zaak.title} met zaaknummer ${zaak.identifier} ontvangen.`,
       };
     case 'In behandeling':
       return {
         ...baseNotification,
         datePublished,
         title: `Aanvraag ${zaak.title} in behandeling`,
-        description: `Wij hebben uw aanvraag ${zaak.title} met gemeentelijk zaaknummer ${zaak.identifier} in behandeling genomen.`,
+        description: `Wij hebben uw aanvraag ${zaak.title} met zaaknummer ${zaak.identifier} in behandeling genomen.`,
       };
     case 'Meer informatie nodig':
       return {
         ...baseNotification,
         datePublished,
         title: `Meer informatie omtrent uw aanvraag ${zaak.title}`,
-        description: `Er is meer informatie nodig om uw aanvraag ${zaak.title} met gemeentelijk zaaknummer ${zaak.identifier} verder te kunnen behandelen.`,
+        description: `Er is meer informatie nodig om uw aanvraag ${zaak.title} met zaaknummer ${zaak.identifier} verder te kunnen behandelen.`,
       };
     case 'Ingetrokken':
     case 'Afgehandeld': {
@@ -120,7 +116,7 @@ export function createNotificationDefault<
             zaak.dateEnd
           ).toISOString(),
           title: `Uw ${zaak.title} loopt af`,
-          description: `Uw ${documentType}${zaak.title} met gemeentelijk zaaknummer ${zaak.identifier} loopt binnenkort af, vraag zonodig een nieuwe aan.`,
+          description: `Uw ${documentType}${zaak.title} met zaaknummer ${zaak.identifier} loopt binnenkort af, vraag zonodig een nieuwe aan.`,
         };
       }
 
@@ -129,7 +125,7 @@ export function createNotificationDefault<
         ...baseNotification,
         datePublished,
         title: `Aanvraag ${zaak.title} afgehandeld`,
-        description: `Wij hebben uw aanvraag ${zaak.title} met gemeentelijk zaaknummer ${zaak.identifier} afgehandeld.`,
+        description: `Wij hebben uw aanvraag ${zaak.title} met zaaknummer ${zaak.identifier} afgehandeld.`,
       };
     }
     case 'Verlopen':
@@ -137,19 +133,16 @@ export function createNotificationDefault<
         ...baseNotification,
         datePublished,
         title: `${zaak.title} verlopen`,
-        description: `Uw ${documentType}${zaak.title} met gemeentelijk zaaknummer ${zaak.identifier} is verlopen.`,
+        description: `Uw ${documentType}${zaak.title} met zaaknummer ${zaak.identifier} is verlopen.`,
       };
   }
 
   return null;
 }
 
-export function getVergunningNotifications<
-  DZ extends DecosZaakBase,
-  ID extends string = string,
->(
-  vergunningen: VergunningFrontend<DZ>[],
-  themaID: ID,
+export function getVergunningNotifications(
+  vergunningen: ZaakFrontendCombined[],
+  themaID: string,
   themaTitle: string,
   createNotification?: typeof createNotificationDefault
 ): MyNotification[] {
@@ -174,7 +167,7 @@ export async function fetchVergunningenNotifications(
   );
 
   if (VERGUNNINGEN.status === 'OK') {
-    const notifications = getVergunningNotifications<any>(
+    const notifications = getVergunningNotifications(
       VERGUNNINGEN.content,
       themaId,
       themaTitle

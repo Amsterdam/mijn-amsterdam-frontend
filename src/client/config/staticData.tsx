@@ -18,12 +18,12 @@ export const WelcomeNotification: MyNotification = {
   hideDatePublished: true,
   description: `
       <p>
-        De persoonlijke digitale pagina voor burgers en ondernemers bij de
+        De persoonlijke digitale pagina voor burgers en ondernemers in de
         gemeente Amsterdam. Hier ziet u op 1 centrale plek:
       </p>
       <ul>
         <li>welke gegevens de gemeente van u heeft vastgelegd; </li>
-        <li>hoe het met uw aanvraag staat; </li>
+        <li>hoe het met uw aanvraag staat;</li>
         <li>hoe u wijzigingen kunt doorgeven als er iets niet klopt;</li>
         <li>
           informatie over uw buurt op een overzichtelijke

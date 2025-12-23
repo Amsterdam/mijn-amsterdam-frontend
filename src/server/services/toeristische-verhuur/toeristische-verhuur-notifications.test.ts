@@ -66,7 +66,7 @@ describe('fetchToeristischeVerhuurNotifications', () => {
       {
         datePublished: '2025-01-01',
         description:
-          'Wij hebben uw aanvraag voor een vakantie met gemeentelijk zaaknummer 12345 in behandeling.',
+          'Wij hebben uw aanvraag voor een vakantie met zaaknummer 12345 in behandeling.',
         id: 'vergunning-1-notification',
         link: {
           title: 'Bekijk uw aanvraag',
@@ -79,7 +79,7 @@ describe('fetchToeristischeVerhuurNotifications', () => {
       {
         datePublished: '2025-01-01',
         description:
-          'Wij hebben uw aanvraag voor een bed & breakfast met gemeentelijk zaaknummer 67890 in behandeling.',
+          'Wij hebben uw aanvraag voor een bed & breakfast met zaaknummer 67890 in behandeling.',
         id: 'vergunning-2-notification',
         link: {
           title: 'Bekijk uw aanvraag',

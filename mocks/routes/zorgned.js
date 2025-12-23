@@ -21,7 +21,9 @@ module.exports = [
             if (!('x-cache-key-supplement' in req.headers)) {
               return res
                 .status(HttpStatusCode.BadRequest)
-                .send('x-mams-api-user key not found in request headers.');
+                .send(
+                  'x-cache-key-supplement key not found in request headers. This header is required to determine the correct fixture for the response.'
+                );
             }
 
             const apiUser = req.headers['x-cache-key-supplement'];

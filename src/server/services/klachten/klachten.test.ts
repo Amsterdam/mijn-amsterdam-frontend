@@ -1,13 +1,44 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import nock from 'nock';
+import { afterEach, describe, expect, vi } from 'vitest';
 
-import {
-  fetchAllKlachten,
-  fetchKlachtenNotifications,
-  transformKlachtenResponse,
-} from './klachten';
-import apiResponse from '../../../../mocks/fixtures/klachten.json';
+import { fetchAllKlachten, fetchKlachtenNotifications } from './klachten';
+import { SmileKlacht, SmileKlachtenReponse } from './types';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { ApiConfig } from '../../config/source-api';
+
+function createKlacht(props?: Partial<SmileKlacht>): SmileKlacht {
+  return {
+    klacht_inbehandeling: { value: '20-12-2026 12:00' },
+    klacht_datumontvangstklacht: { value: '30-12-2026' },
+    klacht_omschrijving: {
+      value: 'default description',
+    },
+    klacht_gewensteoplossing: { value: '' },
+    klacht_klachtonderwerp: { value: '' },
+    klacht_id: { value: '222222' },
+    klacht_locatieadres: { value: '' },
+    klacht_status: { value: 'open' },
+    klacht_finishedon: { value: '' },
+    klacht_klachtopgelost: { value: '' },
+    ...props,
+  } as unknown as SmileKlacht;
+}
+
+function createDupesWithDifferentIDs(amount: number): SmileKlachtenReponse {
+  const klachten: SmileKlacht[] = [];
+  for (let i = 0; i < amount; i++) {
+    const klacht = createKlacht({ klacht_id: { value: i.toString() } });
+    klachten.push(klacht);
+  }
+  return { rowcount: amount, List: klachten };
+}
+
+function mockSmileAPI(data: SmileKlachtenReponse): nock.Scope {
+  return remoteApi.post('/smile').reply(200, data);
+}
+
+const dupeAmount = 5;
+const defaultMockResponse = createDupesWithDifferentIDs(dupeAmount);
 
 describe('Klachten', () => {
   const profileAndToken = getAuthProfileAndToken();
@@ -18,12 +49,24 @@ describe('Klachten', () => {
     vi.clearAllMocks();
   });
 
-  it('Fetch all not paginated', async () => {
-    const scope = remoteApi.post('/smile').reply(200, {
-      rowcount: 5,
-      List: apiResponse.List.slice(0, 5),
-    });
+  test('Pagination', async () => {
+    const amountOfAPICalls = 2;
+    const rowcount = defaultMockResponse.rowcount * amountOfAPICalls;
+    const scope = mockSmileAPI({
+      rowcount,
+      List: defaultMockResponse.List,
+    })
+      .post('/smile')
+      .reply(200, { rowcount, List: defaultMockResponse.List });
 
+    const res = await fetchAllKlachten(profileAndToken);
+    expect(scope!.isDone()).toBeTruthy();
+    expect(res.status).toBe('OK');
+    expect(res.content?.length).toBe(10);
+  });
+
+  test('Without pagination', async () => {
+    const scope = mockSmileAPI(defaultMockResponse);
     const res = await fetchAllKlachten(profileAndToken);
 
     expect(scope!.isDone()).toBeTruthy();
@@ -31,101 +74,50 @@ describe('Klachten', () => {
     expect(res.content?.length).toBe(5);
   });
 
-  it('Fetch all paginated', async () => {
-    const scope = remoteApi
-      .post('/smile')
-      .reply(200, {
-        rowcount: 10,
-        List: apiResponse.List.slice(0, 5),
-      })
-      .post('/smile')
-      .reply(200, {
-        rowcount: 10,
-        List: apiResponse.List.slice(5, 10),
-      });
-
-    const res = await fetchAllKlachten(profileAndToken);
-
-    expect(scope!.isDone()).toBeTruthy();
-    expect(res.status).toBe('OK');
-    expect(res.content?.length).toBe(10);
-  });
-
-  it('klachtenNotifications: should generate the expected response', async () => {
-    remoteApi.post('/smile').reply(200, {
-      rowcount: 5,
-      List: apiResponse.List.slice(5, 10),
+  test('All possible notification types', async () => {
+    const openKlacht = createKlacht({
+      klacht_id: { value: '1' },
+      klacht_status: { value: 'Open' },
+      klacht_klachtstatus: { value: 'Beoordelen/Accepteren' },
     });
-
+    const closedKlacht = createKlacht({
+      klacht_id: { value: '2' },
+      klacht_status: { value: 'Gesloten' },
+      klacht_klachtstatus: { value: 'Afgesloten' },
+      klacht_finishedon: { value: '31-12-2026' },
+    });
+    mockSmileAPI({
+      rowcount: 2,
+      List: [openKlacht, closedKlacht],
+    });
     const res = await fetchKlachtenNotifications(profileAndToken);
-
     expect(res).toStrictEqual({
       content: {
         notifications: [
           {
-            datePublished: '2022-04-05T00:00:00.000Z',
-            description:
-              'Wij hebben uw klacht met gemeentelijk zaaknummer 230541 ontvangen.',
-            id: 'klacht-230541-notification',
+            datePublished: '2026-12-30T00:00:00.000Z',
+            description: 'Wij hebben uw klacht met zaaknummer 1 ontvangen.',
+            id: 'klacht-1-notification',
             link: {
               title: 'Bekijk details',
-              to: '/klachten/klacht/230541',
+              to: '/klachten/klacht/1',
             },
             themaID: 'KLACHTEN',
             themaTitle: 'Klachten',
             title: 'Klacht ontvangen',
           },
           {
-            datePublished: '2022-05-05T00:00:00.000Z',
+            datePublished: '2026-12-31T00:00:00.000Z',
             description:
-              'Wij hebben uw klacht met gemeentelijk zaaknummer 2505661 ontvangen.',
-            id: 'klacht-2505661-notification',
+              'Uw klacht met zaaknummer 2 is afgehandeld. U krijgt een antwoord op uw klacht.',
+            id: 'klacht-2-notification',
             link: {
               title: 'Bekijk details',
-              to: '/klachten/klacht/2505661',
+              to: '/klachten/klacht/2',
             },
             themaID: 'KLACHTEN',
             themaTitle: 'Klachten',
-            title: 'Klacht ontvangen',
-          },
-          {
-            datePublished: '2022-06-13T00:00:00.000Z',
-            description:
-              'Wij hebben uw klacht met gemeentelijk zaaknummer 280321 ontvangen.',
-            id: 'klacht-280321-notification',
-            link: {
-              title: 'Bekijk details',
-              to: '/klachten/klacht/280321',
-            },
-            themaID: 'KLACHTEN',
-            themaTitle: 'Klachten',
-            title: 'Klacht ontvangen',
-          },
-          {
-            datePublished: '2022-02-13T00:00:00.000Z',
-            description:
-              'Wij hebben uw klacht met gemeentelijk zaaknummer 237821 ontvangen.',
-            id: 'klacht-237821-notification',
-            link: {
-              title: 'Bekijk details',
-              to: '/klachten/klacht/237821',
-            },
-            themaID: 'KLACHTEN',
-            themaTitle: 'Klachten',
-            title: 'Klacht ontvangen',
-          },
-          {
-            datePublished: '2022-01-12T00:00:00.000Z',
-            description:
-              'Wij hebben uw klacht met gemeentelijk zaaknummer 438001 ontvangen.',
-            id: 'klacht-438001-notification',
-            link: {
-              title: 'Bekijk details',
-              to: '/klachten/klacht/438001',
-            },
-            themaID: 'KLACHTEN',
-            themaTitle: 'Klachten',
-            title: 'Klacht ontvangen',
+            title: 'Klacht afgehandeld',
           },
         ],
       },
@@ -133,64 +125,113 @@ describe('Klachten', () => {
     });
   });
 
-  it('should transform the data correctly', () => {
-    remoteApi.post('/smile').reply(200, apiResponse);
-    const res = transformKlachtenResponse(apiResponse);
-    expect(res.klachten.length).toEqual(apiResponse.List.length);
-    expect(res.klachten[2]).toEqual({
-      inbehandelingSinds: '2022-06-14T00:00:00.000Z',
-      ontvangstDatum: '2022-06-13T00:00:00.000Z',
-      ontvangstDatumFormatted: '13 juni 2022',
-      omschrijving: 'Geachte mevrouw, meneer,\r\nEen klacht.',
-      gewensteOplossing: '',
-      onderwerp: 'Belastingen en heffingen',
-      displayStatus: 'Ontvangen',
-      identifier: '28032',
-      id: '28032',
-      title: '28032',
-      locatie: '',
-      steps: [],
-      link: {
-        title: 'Klacht 28032',
-        to: '/klachten/klacht/28032',
-      },
+  test('All possible klachten/statustreinen', async () => {
+    const openKlacht = createKlacht({
+      klacht_id: { value: '1' },
+      klacht_status: { value: 'Open' },
+      klacht_klachtstatus: { value: 'Beoordelen/Accepteren' },
     });
-  });
-
-  it('should return data in expected format', async () => {
-    remoteApi.post('/smile').reply(200, apiResponse);
+    const closedKlacht = createKlacht({
+      klacht_id: { value: '2' },
+      klacht_status: { value: 'Gesloten' },
+      klacht_klachtstatus: { value: 'Afgesloten' },
+      klacht_finishedon: { value: '31-12-2026' },
+    });
+    mockSmileAPI({
+      rowcount: 2,
+      List: [openKlacht, closedKlacht],
+    });
     const res = await fetchAllKlachten(profileAndToken);
-    expect(res.content?.map((klacht) => klacht.id)).toStrictEqual([
-      '23054',
-      '250566',
-      '28032',
-      '23782',
-      '43800',
-      '230541',
-      '2505661',
-      '280321',
-      '237821',
-      '438001',
-      '2305412',
-      '2505662',
-      '280322',
-      '2378222',
-      '438002',
-      '2305422',
-      '25056622',
-      '2803222',
-      '23782223',
-      '43800222',
-      '2305432',
-      '2505663',
-      '280323',
-      '237823',
-      '438003',
-      '2305443',
-      '25056643',
-      '280324',
-      '237824',
-      '438004',
-    ]);
+    expect(res).toStrictEqual({
+      content: [
+        {
+          dateClosed: '',
+          dateClosedFormatted: '',
+          displayStatus: 'In behandeling',
+          gewensteOplossing: '',
+          id: '1',
+          identifier: '1',
+          inbehandelingSinds: '2026-12-20T00:00:00.000Z',
+          link: {
+            title: 'Klacht 1',
+            to: '/klachten/klacht/1',
+          },
+          locatie: '',
+          omschrijving: 'default description',
+          onderwerp: '',
+          ontvangstDatum: '2026-12-30T00:00:00.000Z',
+          ontvangstDatumFormatted: '30 december 2026',
+          steps: [
+            {
+              datePublished: '2026-12-30T00:00:00.000Z',
+              id: '1',
+              isActive: false,
+              isChecked: true,
+              status: 'Ontvangen',
+            },
+            {
+              datePublished: '2026-12-30T00:00:00.000Z',
+              id: '2',
+              isActive: true,
+              isChecked: true,
+              status: 'In behandeling',
+            },
+            {
+              datePublished: '',
+              description: '',
+              id: '3',
+              isActive: false,
+              isChecked: false,
+              status: 'Afgehandeld',
+            },
+          ],
+          title: '1',
+        },
+        {
+          dateClosed: '2026-12-31T00:00:00.000Z',
+          dateClosedFormatted: '31 december 2026',
+          displayStatus: 'Afgehandeld',
+          gewensteOplossing: '',
+          id: '2',
+          identifier: '2',
+          inbehandelingSinds: '2026-12-20T00:00:00.000Z',
+          link: {
+            title: 'Klacht 2',
+            to: '/klachten/klacht/2',
+          },
+          locatie: '',
+          omschrijving: 'default description',
+          onderwerp: '',
+          ontvangstDatum: '2026-12-30T00:00:00.000Z',
+          ontvangstDatumFormatted: '30 december 2026',
+          steps: [
+            {
+              datePublished: '2026-12-30T00:00:00.000Z',
+              id: '1',
+              isActive: false,
+              isChecked: true,
+              status: 'Ontvangen',
+            },
+            {
+              datePublished: '2026-12-30T00:00:00.000Z',
+              id: '2',
+              isActive: false,
+              isChecked: true,
+              status: 'In behandeling',
+            },
+            {
+              datePublished: '2026-12-31T00:00:00.000Z',
+              description: `<p>Uw klacht is afgehandeld. U krijgt een antwoord op uw klacht.</p>`,
+              id: '3',
+              isActive: true,
+              isChecked: true,
+              status: 'Afgehandeld',
+            },
+          ],
+          title: '2',
+        },
+      ],
+      status: 'OK',
+    });
   });
 });

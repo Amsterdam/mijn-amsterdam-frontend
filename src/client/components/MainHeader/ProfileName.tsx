@@ -31,12 +31,11 @@ export function ProfileName({
     if (preferVoornaam && persoon.voornamen) {
       return persoon.voornamen;
     } else if (persoon.opgemaakteNaam) {
-      const parts = persoon.opgemaakteNaam.split(/\./);
-      return `${parts[0].trim()}. ${parts[parts.length - 1].trim()}`;
+      return persoon.opgemaakteNaam;
     } else if (persoon.voornamen) {
       return getFullName(persoon);
     }
-  } else if (KVK.content?.onderneming.handelsnaam) {
+  } else if (KVK.content?.onderneming?.handelsnaam) {
     return KVK.content.onderneming.handelsnaam;
   }
   return fallbackName;

@@ -19,7 +19,6 @@ import { AVGsectionProps } from '../Thema/AVG/InfoSection';
 import { belastingenSectionProps } from '../Thema/Belastingen/InfoSection';
 import { bezwarenSectionProps } from '../Thema/Bezwaren/InfoSection';
 import { themaConfig as bodemThemaConfig } from '../Thema/Bodem/Bodem-thema-config';
-import { burgerzakenSectionProps } from '../Thema/Burgerzaken/InfoSection';
 import { erfpachtSectionProps } from '../Thema/Erfpacht/InfoSection';
 import {
   HLIRegelingenSectionProps,
@@ -66,7 +65,6 @@ export type SectionProps = {
 
 const sections: InfoSection_DEPRECATED[] = [
   profileSectionProps,
-  burgerzakenSectionProps,
   myAreaSectionProps,
   afvalSectionProps,
   belastingenSectionProps,
@@ -162,7 +160,7 @@ export function GeneralInfo() {
       );
     });
   return (
-    <PageV2 heading="Dit ziet u in Mijn Amsterdam">
+    <PageV2 heading="Dit ziet u in Mijn Amsterdam" redactedScope="full">
       <PageContentCell>
         <Paragraph className="ams-mb-m">
           Welkom op Mijn Amsterdam: dit is uw persoonlijke online portaal bij de

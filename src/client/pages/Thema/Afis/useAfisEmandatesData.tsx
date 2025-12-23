@@ -110,7 +110,7 @@ export function useAfisEMandatesData() {
     eMandates,
     eMandateTableConfig,
     hasEMandatesError: isError,
-    isLoadingEMandates: isLoading && !isDirty,
+    isLoadingEMandates: isLoading || !isDirty,
     optimisticUpdateContent: (
       eMandateId: string,
       payload: Partial<AfisEMandateFrontend>
@@ -149,7 +149,7 @@ export function useEmandateApis(eMandate: AfisEMandateFrontend) {
   );
 
   const statusChangeApi = useBffApi<AfisEMandateStatusChangeResponse>(
-    eMandate.statusChangeUrl,
+    eMandate.deactivateUrl,
     {
       fetchImmediately: false,
       sendRequest: async (url) => {

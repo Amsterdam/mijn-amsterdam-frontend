@@ -34,8 +34,7 @@ table
   thead
     tr
       th Naam
-      th Bsn
-      th Mokum
+      th #{idLabel}
   tbody
     each account in list
       tr
@@ -43,4 +42,3 @@ table
           a(href=account.href)
             div(class="test-account-name") #{account.name}
         td #{account.id}
-        td #{account.mokum}

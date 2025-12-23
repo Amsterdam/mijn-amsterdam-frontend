@@ -1,4 +1,5 @@
 import { Heading } from '@amsterdam/design-system-react';
+import classNames from 'classnames';
 
 import { categoryMenuItems } from './MainMenu.constants';
 import styles from './MainMenu.module.scss';
@@ -29,7 +30,10 @@ export function MainMenu() {
                 href={thema.to}
                 maVariant="fatNoDefaultUnderline"
                 rel={thema.to.startsWith('http') ? 'noreferrer' : undefined}
-                className={`${styles.MenuItem} ${getRedactedClass(thema.id)}`}
+                className={classNames(
+                  styles.MenuItem,
+                  getRedactedClass(thema.id)
+                )}
               >
                 {thema.title}
               </LinkComponent>

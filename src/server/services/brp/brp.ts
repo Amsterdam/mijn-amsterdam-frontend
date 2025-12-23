@@ -6,7 +6,9 @@ import {
   LANDCODE_NEDERLAND,
   LANDCODE_ONBEKEND,
   ADRES_IN_ONDERZOEK_A,
+  AANTAL_BEWONERS_NOT_SET,
 } from './brp-config';
+import { featureToggle, routes } from './brp-service-config';
 import {
   DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_FROM,
   DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_TO,
@@ -19,11 +21,12 @@ import {
   type VerblijfplaatshistorieResponseSource,
   type VerblijfplaatsSource,
 } from './brp-types';
-import type { Persoon, PersoonBasis, PersoonBasisSource } from './brp-types';
-import {
-  featureToggle as featureToggleBrp,
-  themaIdBRP,
-} from '../../../client/pages/Thema/Profile/Profile-thema-config';
+import type {
+  Persoon,
+  PersoonBasis,
+  PersoonBasisSource,
+  PersoonSource,
+} from './brp-types';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import {
   apiErrorResult,
@@ -33,12 +36,13 @@ import {
 } from '../../../universal/helpers/api';
 import type { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_HOUR_MS } from '../../config/app';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
+import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token';
 import { getContextOperationId } from '../monitoring';
-import { fetchAuthTokenHeader } from '../ms-oauth/oauth-token';
-import { fetchBRP } from '../profile/brp';
 import { type BSN } from '../zorgned/zorgned-types';
 
 const TOKEN_VALIDITY_PERIOD = 1 * ONE_HOUR_MS;
@@ -46,8 +50,9 @@ const PERCENTAGE_DISTANCE_FROM_EXPIRY = 0.1;
 
 function fetchBenkBrpTokenHeader() {
   return fetchAuthTokenHeader(
+    'IAM_MS_OAUTH',
     {
-      sourceApiName: 'BRP',
+      sourceApiName: 'BENK_BRP',
       tokenValidityMS:
         TOKEN_VALIDITY_PERIOD * (1 - PERCENTAGE_DISTANCE_FROM_EXPIRY),
     },
@@ -116,7 +121,9 @@ function getPersoonBasis(persoon: PersoonBasisSource): PersoonBasis {
 }
 
 function transformBenkBrpResponse(
-  persoon: PersonenResponseSource['personen'][0]
+  sessionID: AuthProfile['sid'],
+  persoon: PersoonSource,
+  bsnTranslation?: { from: BSN; to: BSN }
 ): BrpFrontend {
   let adresInOnderzoek: Persoon['adresInOnderzoek'] | null = null;
   const verblijfplaats = persoon.verblijfplaats;
@@ -140,11 +147,22 @@ function transformBenkBrpResponse(
     adres?.land?.code !== LANDCODE_NEDERLAND &&
     adres?.land?.code !== LANDCODE_ONBEKEND;
 
+  const fetchUrlAantalBewoners =
+    verblijfplaats?.adresseerbaarObjectIdentificatie &&
+    featureToggle.service.fetchAantalBewonersOpAdres.isEnabled
+      ? generateFullApiUrlBFF(routes.protected.BRP_AANTAL_BEWONERS_OP_ADRES, [
+          {
+            id: encryptSessionIdWithRouteIdParam(
+              sessionID,
+              verblijfplaats.adresseerbaarObjectIdentificatie
+            ),
+          },
+        ])
+      : null;
+
   const responseContent: BrpFrontend = {
     persoon: {
       ...getPersoonBasis(persoon),
-      aanduidingNaamgebruikOmschrijving:
-        persoon.naam?.aanduidingNaamgebruik?.omschrijving ?? null,
       bsn: persoon.burgerservicenummer ?? null,
       gemeentenaamInschrijving:
         persoon.gemeenteVanInschrijving?.omschrijving ?? null,
@@ -209,8 +227,18 @@ function transformBenkBrpResponse(
         )
         ?.map((kind) => getPersoonBasis(kind)) ?? [],
     adres: verblijfplaats?.verblijfadres ? getAdres(verblijfplaats) : null,
+    fetchUrlAantalBewoners,
     adresHistorisch: [],
+    aantalBewoners: AANTAL_BEWONERS_NOT_SET,
   };
+
+  if (
+    !IS_PRODUCTION &&
+    bsnTranslation &&
+    bsnTranslation?.from !== bsnTranslation?.to
+  ) {
+    responseContent.bsnTranslation = bsnTranslation;
+  }
 
   return responseContent;
 }
@@ -260,11 +288,11 @@ export async function fetchBrpByBsn(sessionID: AuthProfile['sid'], bsn: BSN[]) {
 
 export async function fetchBrpByBsnTransformed(
   sessionID: AuthProfile['sid'],
-  bsn: BSN[]
+  bsn: BSN
 ): Promise<ApiResponse<BrpFrontend>> {
-  const brpResponse = await fetchBrpByBsn(sessionID, bsn);
+  const brpResponse = await fetchBrpByBsn(sessionID, [bsn]);
 
-  if (brpResponse.status !== 'OK' || !brpResponse.content?.personen.length) {
+  if (brpResponse.status !== 'OK' || !brpResponse.content?.personen?.length) {
     return apiErrorResult(
       brpResponse.status === 'ERROR'
         ? brpResponse.message
@@ -273,14 +301,16 @@ export async function fetchBrpByBsnTransformed(
     );
   }
 
-  const transformedContent = transformBenkBrpResponse(
-    brpResponse.content.personen[0]
-  );
+  const [persoon] = brpResponse.content.personen;
+  const transformedContent = transformBenkBrpResponse(sessionID, persoon, {
+    from: bsn,
+    to: translateBSN(bsn),
+  });
 
   const verblijfplaatshistorieResponse =
     await fetchBrpVerblijfplaatsHistoryByBsnTransformed(
       sessionID,
-      translateBSN(bsn[0]),
+      translateBSN(bsn),
       transformedContent.persoon.geboortedatum,
       transformedContent.adres?.begindatumVerblijf
     );
@@ -368,13 +398,47 @@ export async function fetchBrpVerblijfplaatsHistoryByBsnTransformed(
   return apiSuccessResult(transformedContent);
 }
 
-export async function fetchBrpV2(authProfileAndToken: AuthProfileAndToken) {
-  if (!featureToggleBrp[themaIdBRP].benkBrpServiceActive) {
-    return fetchBRP(authProfileAndToken);
+export async function fetchBrp(authProfileAndToken: AuthProfileAndToken) {
+  return fetchBrpByBsnTransformed(
+    authProfileAndToken.profile.sid,
+    authProfileAndToken.profile.id
+  );
+}
+
+export async function fetchAantalBewoners(
+  sessionID: AuthProfile['sid'],
+  bagID: string
+) {
+  const response = await fetchBenkBrpTokenHeader();
+
+  if (response.status !== 'OK') {
+    return response;
   }
-  return fetchBrpByBsnTransformed(authProfileAndToken.profile.sid, [
-    authProfileAndToken.profile.id,
-  ]);
+
+  const requestConfig = getApiConfig('BENK_BRP', {
+    formatUrl(requestConfig) {
+      return `${requestConfig.url}/personen`;
+    },
+    headers: {
+      ...response.content,
+      'X-Correlation-ID': getContextOperationId(sessionID), // Required for tracing
+    },
+    transformResponse: (responseData: PersonenResponseSource | null) => {
+      return responseData?.personen?.length ?? AANTAL_BEWONERS_NOT_SET;
+    },
+    data: {
+      type: 'ZoekMetAdresseerbaarObjectIdentificatie',
+      // Only request adressering.adresregel3 to reduce payload. We don't require any other data to be fetched here.
+      // The response will be used to count the number of personen related to a certain adresseerbaarObject.
+      fields: ['adressering.adresregel3'],
+      gemeenteVanInschrijving: GEMEENTE_CODE_AMSTERDAM,
+      adresseerbaarObjectIdentificatie: bagID,
+    },
+  });
+
+  const brpBsnResponse = await requestData<number>(requestConfig);
+
+  return brpBsnResponse;
 }
 
 export const forTesting = {
