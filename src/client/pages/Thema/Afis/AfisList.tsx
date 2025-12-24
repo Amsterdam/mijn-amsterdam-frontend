@@ -5,6 +5,7 @@ import {
   AfisDisclaimerOvergedragenFacturen,
 } from './AfisThema';
 import { useAfisListPageData } from './useAfisListPageData';
+import type { AfisFacturenThemaContextParams } from './useAfisThemaData.hook';
 import { type AfisFactuurStateFrontend } from '../../../../server/services/afis/afis-types';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 import { PageContentCell } from '../../../components/Page/Page';
@@ -21,22 +22,26 @@ function AfisListPageBody({ state }: { state: AfisFactuurStateFrontend }) {
   }
 }
 
-export function AfisList() {
+type AfisListProps = {
+  themaContextParams?: AfisFacturenThemaContextParams;
+};
+
+export function AfisList({ themaContextParams }: AfisListProps) {
   const { state = 'open' } = useParams<{ state: AfisFactuurStateFrontend }>();
   const {
     facturen,
     isListPageError,
     isListPageLoading,
-    facturenTableConfig,
+    tableConfig,
     isThemaPaginaError,
     isThemaPaginaLoading,
     routeConfig,
     breadcrumbs,
     themaId,
-  } = useAfisListPageData(state);
-  useHTMLDocumentTitle(routeConfig.listPage);
+  } = useAfisListPageData(state, themaContextParams);
+  useHTMLDocumentTitle(routeConfig);
 
-  const listPageTableConfig = facturenTableConfig[state];
+  const listPageTableConfig = tableConfig[state];
 
   return (
     <ListPagePaginated

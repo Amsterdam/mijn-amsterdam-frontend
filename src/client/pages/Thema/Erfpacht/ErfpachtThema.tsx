@@ -9,6 +9,7 @@ import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 import * as afis from '../Afis/Afis-thema-config';
+import { AfisFacturenTables } from '../Afis/AfisThema';
 
 export function ErfpachtThema() {
   const {
@@ -20,6 +21,7 @@ export function ErfpachtThema() {
     tableConfig,
     dossiers,
     routeConfig,
+    erfpachtFacturenTableConfig,
   } = useErfpachtThemaData();
 
   useHTMLDocumentTitle(routeConfig.themaPage);
@@ -70,7 +72,17 @@ export function ErfpachtThema() {
       pageContentMain={
         <>
           {pageContentTables}
-
+          <AfisFacturenTables
+            factuurFilterFn={(factuur) =>
+              factuur.afzender.toLowerCase().includes('erfpacht')
+            }
+            themaContextParams={{
+              tableConfig: erfpachtFacturenTableConfig,
+              routeConfigDetailPage: routeConfig.detailPageFactuur,
+              routeConfigListPage: routeConfig.listPageFacturen,
+              themaId: id,
+            }}
+          />
           <PageContentCell spanWide={8}>
             <MissingFacturenDescription />
           </PageContentCell>
