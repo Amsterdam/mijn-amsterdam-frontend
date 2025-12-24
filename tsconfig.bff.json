@@ -24,6 +24,7 @@
   ],
   "include": [
     "src/server",
+    "src/jobs",
     "src/universal",
     "src/mijnamsterdam.d.ts"
   ]
