@@ -8,8 +8,12 @@ import {
   UnorderedList,
 } from '@amsterdam/design-system-react';
 
-import { AfisFactuurFrontend } from './Afis-thema-config';
-import { useAfisThemaData } from './useAfisThemaData.hook';
+import { type AfisFactuurFrontend } from './Afis-thema-config';
+import {
+  useAfisFacturenData,
+  useAfisThemaData,
+  type AfisFacturenThemaContextParams,
+} from './useAfisThemaData.hook';
 import { entries } from '../../../../universal/helpers/utils';
 import { MaButtonRouterLink } from '../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../components/Page/Page';
@@ -93,11 +97,55 @@ export function AfisDisclaimerOvergedragenFacturen() {
   );
 }
 
+type FacturenTablesProps = {
+  factuurFilterFn?: (factuur: AfisFactuurFrontend) => boolean;
+  themaContextParams?: AfisFacturenThemaContextParams;
+};
+
+export function AfisFacturenTables({
+  factuurFilterFn,
+  themaContextParams,
+}: FacturenTablesProps) {
+  const { facturenByState, tableConfig } =
+    useAfisFacturenData(themaContextParams);
+  return entries(tableConfig)
+    .map(
+      ([
+        state,
+        { title, displayProps, maxItems, listPageLinkLabel, listPageRoute },
+      ]) => {
+        let facturen = facturenByState?.[state]?.facturen ?? [];
+        if (factuurFilterFn && facturen.length) {
+          facturen = facturen.filter(factuurFilterFn);
+        }
+        if (!facturen.length) {
+          return null;
+        }
+        const contentAfterTheTitle =
+          state === 'overgedragen' && !!facturen.length ? (
+            <AfisDisclaimerOvergedragenFacturen />
+          ) : null;
+        return (
+          <ThemaPaginaTable<AfisFactuurFrontend>
+            key={state}
+            title={title}
+            contentAfterTheTitle={contentAfterTheTitle}
+            zaken={facturen}
+            displayProps={displayProps}
+            maxItems={maxItems}
+            totalItems={facturenByState?.[state]?.count}
+            listPageLinkLabel={listPageLinkLabel}
+            listPageRoute={listPageRoute}
+          />
+        );
+      }
+    )
+    .filter(Boolean);
+}
+
 export function AfisThema() {
   const {
     dependencyErrors,
-    facturenByState,
-    facturenTableConfig,
     isThemaPaginaError,
     isThemaPaginaLoading,
     listPageTitle,
@@ -107,6 +155,7 @@ export function AfisThema() {
     title,
     themaId,
   } = useAfisThemaData();
+
   useHTMLDocumentTitle(routeConfig.themaPage);
 
   const isPartialError = entries(dependencyErrors).some(
@@ -139,31 +188,6 @@ export function AfisThema() {
     </>
   );
 
-  const pageContentTables = entries(facturenTableConfig).map(
-    ([
-      state,
-      { title, displayProps, maxItems, listPageLinkLabel, listPageRoute },
-    ]) => {
-      const contentAfterTheTitle =
-        state === 'overgedragen' && !!facturenByState?.[state]?.facturen.length
-          ? state === 'overgedragen' && <AfisDisclaimerOvergedragenFacturen />
-          : null;
-      return (
-        <ThemaPaginaTable<AfisFactuurFrontend>
-          key={state}
-          title={title}
-          contentAfterTheTitle={contentAfterTheTitle}
-          zaken={facturenByState?.[state]?.facturen ?? []}
-          displayProps={displayProps}
-          maxItems={maxItems}
-          totalItems={facturenByState?.[state]?.count}
-          listPageLinkLabel={listPageLinkLabel}
-          listPageRoute={listPageRoute}
-        />
-      );
-    }
-  );
-
   return (
     <ThemaPagina
       id={themaId}
@@ -179,7 +203,7 @@ export function AfisThema() {
       pageContentMain={
         <>
           {pageContentSecondary}
-          {pageContentTables}
+          <AfisFacturenTables />
         </>
       }
       maintenanceNotificationsPageSlug="afis"

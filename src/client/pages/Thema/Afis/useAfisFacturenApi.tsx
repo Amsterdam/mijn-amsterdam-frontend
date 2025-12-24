@@ -42,7 +42,7 @@ function getInvoiceStatusDescriptionFrontend(factuur: AfisFactuur): ReactNode {
   }
 }
 
-export function getDocumentLink(factuur: AfisFactuur): ReactNode {
+export function getDocumentLink(factuur: AfisFactuurFrontend): ReactNode {
   if (factuur.documentDownloadLink) {
     return (
       <DocumentLink
@@ -60,12 +60,13 @@ export function getDocumentLink(factuur: AfisFactuur): ReactNode {
 
 function transformFactuur(
   factuur: AfisFactuur,
-  state: AfisFactuurStateFrontend
+  state: AfisFactuurStateFrontend,
+  detailPath: string = routeConfig.detailPage.path
 ): AfisFactuurFrontend {
   const factuurNummerEl: ReactNode = (
     <MaRouterLink
       maVariant="fatNoDefaultUnderline"
-      href={generatePath(routeConfig.detailPage.path, {
+      href={generatePath(detailPath, {
         factuurNummer: factuur.factuurNummer,
         state,
       })}
@@ -82,7 +83,8 @@ function transformFactuur(
 }
 
 export function useTransformFacturen(
-  facturenByState: Partial<AfisFacturenOverviewResponse> | null
+  facturenByState: Partial<AfisFacturenOverviewResponse> | null,
+  detailPath?: string
 ): AfisFacturenByStateFrontend | null {
   const facturenByStateTransformed: AfisFacturenByStateFrontend | null =
     useMemo(() => {
@@ -103,14 +105,14 @@ export function useTransformFacturen(
                 ...omit(facturenResponse, ['facturen']),
                 facturen:
                   facturenResponse?.facturen?.map((factuur) =>
-                    transformFactuur(factuur, state)
+                    transformFactuur(factuur, state, detailPath)
                   ) ?? [],
               },
             ])
         );
       }
       return null;
-    }, [facturenByState]);
+    }, [facturenByState, detailPath]);
 
   return facturenByStateTransformed;
 }
@@ -124,7 +126,8 @@ export function useAfisFacturenApi(
   businessPartnerIdEncrypted:
     | AfisThemaResponse['businessPartnerIdEncrypted']
     | undefined,
-  state: AfisFactuurState
+  state: AfisFactuurState,
+  detailPath?: string
 ) {
   const url =
     businessPartnerIdEncrypted && state && state !== 'open'
@@ -145,7 +148,8 @@ export function useAfisFacturenApi(
       ? {
           [facturenResponse.state]: facturenResponse,
         }
-      : null
+      : null,
+    detailPath
   );
 
   return {
