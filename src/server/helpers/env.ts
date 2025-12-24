@@ -1,7 +1,15 @@
+import dotenv from 'dotenv';
+import dotenvExpand from 'dotenv-expand';
 import memoizee from 'memoizee';
 
 import { logger } from '../logging';
 import { captureException } from '../services/monitoring';
+
+export function loadEnvVariables(filePath?: string): void {
+  console.debug(`Using local env file ${filePath}`);
+  const envConfig = dotenv.config({ path: filePath });
+  dotenvExpand.expand(envConfig);
+}
 
 /** Retrieve an environment variable.
  *

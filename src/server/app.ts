@@ -3,8 +3,6 @@
 
 /* tslint:disable:no-implicit-dependencies */
 /* tslint:disable:no-submodule-imports */
-import dotenv from 'dotenv';
-import dotenvExpand from 'dotenv-expand';
 import {
   IS_AP,
   IS_DEVELOPMENT,
@@ -16,10 +14,7 @@ if (IS_DEVELOPMENT) {
   const ENV_FILE = '.env.local';
   // This runs local only and -
   // we can't load the logger before we loader our environment variables.
-  // eslint-disable-next-line no-console
-  console.debug(`Using local env file ${ENV_FILE}`);
-  const envConfig = dotenv.config({ path: ENV_FILE });
-  dotenvExpand.expand(envConfig);
+  loadEnvVariables(ENV_FILE);
 }
 
 // Note: Keep this line after loading in env files or LOG_LEVEL will be undefined.
@@ -62,7 +57,7 @@ import { legacyRouter, router as publicRouter } from './routing/router-public';
 import { stadspasExternalConsumerRouter } from './services/hli/router-stadspas-external-consumer';
 import { captureException } from './services/monitoring';
 
-import { getFromEnv } from './helpers/env';
+import { getFromEnv, loadEnvVariables } from './helpers/env';
 import { notificationsExternalConsumerRouter } from './routing/router-notifications-external-consumer';
 import { router as privateNetworkRouter } from './routing/router-private';
 

@@ -77,11 +77,11 @@ export function apiKeyVerificationHandler(
   res: Response,
   next: NextFunction
 ) {
-  const apiKey = req.headers['x-api-key'] as string;
+  const apiKey = req.headers['x-api-key'] as string | undefined;
 
   const externalKeys: Array<string | undefined> = [
-    process.env.BFF_EXTERNAL_CONSUMER_API_KEY_1,
-    process.env.BFF_EXTERNAL_CONSUMER_API_KEY_2,
+    getFromEnv('BFF_EXTERNAL_CONSUMER_API_KEY_1'),
+    getFromEnv('BFF_EXTERNAL_CONSUMER_API_KEY_2'),
   ];
 
   if (apiKey && externalKeys.includes(apiKey)) {
