@@ -3,22 +3,22 @@ import { generatePath } from 'react-router';
 
 import {
   listPageParamKind,
-  routeConfig,
+  themaConfig,
   tableConfig,
 } from './HLI-thema-config';
 import { HLIThema } from './HLIThema';
 import { stadspasCreator } from './test-helpers';
 import { createHLIState } from './test-helpers';
-import { RTM_SPECIFICATIE_TITLE } from '../../../../server/services/hli/hli';
 import type { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
+import { RTM_SPECIFICATIE_TITLE } from '../../../../server/services/hli/rtm/regeling-rtm';
 import { componentCreator } from '../../MockApp';
 
 const createStadspas = stadspasCreator();
 
 const createHLIComponent = componentCreator({
   component: HLIThema,
-  routeEntry: generatePath(routeConfig.themaPage.path),
-  routePath: routeConfig.themaPage.path,
+  routeEntry: generatePath(themaConfig.route.path),
+  routePath: themaConfig.route.path,
 });
 
 describe('<HLI />', () => {

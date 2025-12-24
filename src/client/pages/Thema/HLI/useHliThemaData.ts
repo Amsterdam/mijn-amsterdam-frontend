@@ -1,13 +1,11 @@
 import { getThemaTitle } from './helpers';
 import {
-  kindTegoedLinkListItem,
-  linkListItems,
+  kindTegoedPageLinkItem,
   listPageParamKind,
   listPageTitle,
-  routeConfig,
   specificatieTableConfig,
   tableConfig,
-  themaId,
+  themaConfig,
 } from './HLI-thema-config';
 import { useStadspassen } from './useStadspassen.hook';
 import type { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
@@ -34,7 +32,7 @@ export function useHliThemaData() {
     HLI.content?.specificaties ?? []
   );
 
-  const breadcrumbs = useThemaBreadcrumbs(themaId);
+  const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
   const hasRegelingen = !!regelingen.length;
   const title = getThemaTitle(hasStadspas, hasRegelingen);
   const hasKindtegoed = stadspassen?.some((stadspas) =>
@@ -60,8 +58,8 @@ export function useHliThemaData() {
     dateExpiryFormatted: HLI.content?.stadspas?.dateExpiryFormatted ?? null,
     regelingen,
     specificaties,
-    themaId,
-    title,
+    themaId: themaConfig.id,
+    title: themaConfig.title,
     hasKindtegoed,
     isLoading: isLoading(HLI),
     isError: isError(HLI, false),
@@ -71,9 +69,13 @@ export function useHliThemaData() {
     listPageTitle,
     listPageParamKind,
     linkListItems: hasKindtegoed
-      ? [...linkListItems, kindTegoedLinkListItem]
-      : linkListItems,
+      ? [...themaConfig.pageLinks, kindTegoedPageLinkItem]
+      : themaConfig.pageLinks,
     breadcrumbs,
-    routeConfig,
+    regelingenListPageConfig: themaConfig.regelingenListPage,
+    specificatieListPageConfig: themaConfig.specificatieListPage,
+    detailPageConfig: themaConfig.detailPage,
+    detailPageStadspasConfig: themaConfig.detailPageStadspas,
+    routeConfig: themaConfig.route,
   };
 }
