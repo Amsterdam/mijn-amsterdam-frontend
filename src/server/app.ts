@@ -9,6 +9,7 @@ import {
   IS_OT,
   IS_PRODUCTION,
 } from '../universal/config/env';
+import { getFromEnv, loadEnvVariables } from './helpers/env';
 
 if (IS_DEVELOPMENT) {
   const ENV_FILE = '.env.local';
@@ -57,7 +58,6 @@ import { legacyRouter, router as publicRouter } from './routing/router-public';
 import { stadspasExternalConsumerRouter } from './services/hli/router-stadspas-external-consumer';
 import { captureException } from './services/monitoring';
 
-import { getFromEnv, loadEnvVariables } from './helpers/env';
 import { notificationsExternalConsumerRouter } from './routing/router-notifications-external-consumer';
 import { router as privateNetworkRouter } from './routing/router-private';
 
@@ -73,7 +73,7 @@ const viewDir = __dirname.split('/').slice(-2, -1);
 
 // Set-up view engine voor SSR
 app.set('view engine', 'pug');
-app.set('views', `./${viewDir}/server/views`);
+app.set('views', `${viewDir}/server/views`);
 
 app.use(
   cors({
