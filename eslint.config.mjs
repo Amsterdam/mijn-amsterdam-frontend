@@ -80,10 +80,4 @@ export default [
       ],
     },
   },
-  {
-    files: ['**/*.test.{ts,tsx}'],
-    rules: {
-      'no-magic-numbers': 'off',
-    },
-  },
 ];
