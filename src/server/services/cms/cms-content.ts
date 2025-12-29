@@ -138,7 +138,6 @@ const config: SearchConfigRemote = {
 };
 */
 
-// eslint-disable-next-line no-magic-numbers
 const SEARCH_CONFIG_CACHE_TIMEOUT_MS = 7 * 24 * ONE_HOUR_MS; // 7 days
 
 export async function fetchSearchConfig() {
