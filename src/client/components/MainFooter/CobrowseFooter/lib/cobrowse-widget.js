@@ -195,7 +195,6 @@ export class CobrowseWidget {
     const description = stopped
       ? this.translations[this.language].session_ended_message
       : this.translations[this.language].help_message;
-    // eslint-disable-next-line no-magic-numbers
     code = code.slice(0, 3) + '-' + code.slice(3);
 
     this.sessionCodeContainer.innerHTML = this.sessionCodeContent(
@@ -218,7 +217,6 @@ export class CobrowseWidget {
         const frame = document.getElementById('cobrowse-frame');
         if (!frame) {
           let code = await this.createSessionCode();
-          // eslint-disable-next-line no-magic-numbers
           code = code.slice(0, 3) + '-' + code.slice(3);
           document.getElementById('sessionCode').innerHTML = code;
           document.getElementById('codeContainer').style.display = 'block';

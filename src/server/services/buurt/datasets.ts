@@ -784,11 +784,8 @@ export function transformHardlooproutesResponse(
   );
 
   const groups = [
-    // eslint-disable-next-line no-magic-numbers
     { label: '0-5 km', range: [0, 6] },
-    // eslint-disable-next-line no-magic-numbers
     { label: '6-10 km', range: [6, 11] },
-    // eslint-disable-next-line no-magic-numbers
     { label: 'Meer dan 10 km', range: [11, Infinity] },
   ];
 
@@ -820,13 +817,11 @@ export function transformWiorApiListResponse(
 
   const dateRanges = [
     { label: 'Lopend', range: [-Infinity, 0] },
-    /* eslint-disable no-magic-numbers */
     { label: 'Binnenkort', range: [0.156, 0.5] },
     { label: '0-1 jaar', range: [0, 1] },
     { label: '1-3 jaar', range: [1, 3] },
     { label: '>3 jaar', range: [3, Infinity] },
     { label: 'Onbekend', range: [] },
-    /* eslint-enable no-magic-numbers */
   ];
 
   for (const feature of features) {

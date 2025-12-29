@@ -68,7 +68,6 @@ app.set('trust proxy', true);
 // Security, disable express header.
 app.disable('x-powered-by');
 
-// eslint-disable-next-line no-magic-numbers
 const viewDir = __dirname.split('/').slice(-2, -1);
 
 // Set-up view engine voor SSR

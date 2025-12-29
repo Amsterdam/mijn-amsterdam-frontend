@@ -37,7 +37,6 @@ export function pointsSpiral(count: number, centerPt: L.Point) {
   let legLength = spiralLengthStart;
 
   for (i; i < legLength; i += 1) {
-    // eslint-disable-next-line no-magic-numbers
     angle += spiralFootSeparation / legLength + i * 0.0005;
     const x = centerPt.x + legLength * Math.cos(angle);
     const y = centerPt.y + legLength * Math.sin(angle);

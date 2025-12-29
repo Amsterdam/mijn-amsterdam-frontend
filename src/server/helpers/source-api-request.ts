@@ -39,7 +39,6 @@ export const axiosRequest = axios.create({
 });
 
 export function isSuccessStatus(statusCode: number): boolean {
-  // eslint-disable-next-line no-magic-numbers
   return statusCode >= 200 && statusCode < 300;
 }
 
