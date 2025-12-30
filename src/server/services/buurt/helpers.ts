@@ -547,7 +547,6 @@ function getDistanceFromLatLonInKm(
 }
 
 function deg2rad(deg: number) {
-  // eslint-disable-next-line no-magic-numbers
   return deg * (Math.PI / 180);
 }
 

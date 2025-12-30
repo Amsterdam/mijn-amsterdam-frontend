@@ -29,7 +29,6 @@ export async function fetchAfisTokenHeader() {
     {
       url: `${getApiConfig('AFIS').url}/OAuthServer`,
       sourceApiName: 'AFIS',
-      // eslint-disable-next-line no-magic-numbers
       tokenValidityMS: ONE_MINUTE_MS * 55, // Token is valid for 1 hour, expire it 5 minutes before.
     },
     {

@@ -95,7 +95,6 @@ export function sortByNumber(key: string, direction: 'asc' | 'desc' = 'asc') {
 
 // https://github.com/darkskyapp/string-hash
 export function hash(str: string) {
-  // eslint-disable-next-line no-magic-numbers
   let hash = 5381,
     i = str.length;
   const BITS = 33;

@@ -75,7 +75,6 @@ export interface DataRequestConfig extends AxiosRequestConfig {
   request?: <T>(requestConfig: DataRequestConfig) => Promise<AxiosResponse<T>>;
 }
 
-/* eslint-disable no-magic-numbers */
 // This means that every request that depends on the response of another will use the cached version of the response for a maximum of the given value.
 const apiCacheTTLMs = parseInt(
   getFromEnv('BFF_REQUEST_CACHE_TTL_MS', false)!,
@@ -85,7 +84,6 @@ export const DEFAULT_REQUEST_CACHE_TTL_MS = isNaN(apiCacheTTLMs)
   ? 5 * ONE_MINUTE_MS // Default is 5 minutes
   : apiCacheTTLMs;
 export const DEFAULT_CANCEL_TIMEOUT_MS = 30 * ONE_SECOND_MS; // This means a request will be aborted after 30 seconds without a response.
-/* eslint-enable no-magic-numbers */
 
 export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = Object.freeze({
   cancelTimeout: DEFAULT_CANCEL_TIMEOUT_MS,
@@ -246,7 +244,6 @@ const ApiConfig_ = {
     },
   },
   CMS_CONTENT_GENERAL_INFO: {
-    // eslint-disable-next-line no-magic-numbers
     cacheTimeout: 4 * ONE_HOUR_MS, // 4 hours
     url: `${getFromEnv('BFF_CMS_BASE_URL')}/mijn-content/artikelen`,
   },

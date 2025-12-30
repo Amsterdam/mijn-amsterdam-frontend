@@ -51,15 +51,6 @@ export default [
           destructuredArrayIgnorePattern: '^_',
         },
       ],
-      'no-magic-numbers': [
-        'error',
-        {
-          ignore: [-1, 0, 1, 2, 24, 60, 1000],
-          ignoreArrayIndexes: true,
-          enforceConst: true,
-          detectObjects: false,
-        },
-      ],
       'no-undef': 'off',
     },
   },
@@ -87,12 +78,6 @@ export default [
           },
         },
       ],
-    },
-  },
-  {
-    files: ['**/*.test.{ts,tsx}'],
-    rules: {
-      'no-magic-numbers': 'off',
     },
   },
 ];
