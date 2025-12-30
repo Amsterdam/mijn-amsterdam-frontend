@@ -1,3 +1,6 @@
+// This file is being used by the setting of local environment variables (load-env.ts).
+// Before adding imports read the disclaimer at the top of said file.
+
 type OtapEnvName = 'development' | 'test' | 'acceptance' | 'production';
 type AppModeName = 'development' | 'unittest' | 'production';
 
