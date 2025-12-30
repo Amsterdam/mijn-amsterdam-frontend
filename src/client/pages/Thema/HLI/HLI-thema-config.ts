@@ -69,16 +69,37 @@ export const themaConfig = {
       to: 'https://www.amsterdam.nl/stadspas',
     },
   ],
-  // TODO MIJN-12294
+  // TODO MIJN-12294 > DONE but what does not work the featuretoggle Regelingen and/or stadspas, then it needs to be coded different
   uitlegPageSections: {
     title: THEMA_TITLE,
     listItems: [
-      'De Stadspas is er voor Amsterdammers met een laag inkomen.',
-      'Met de pas krijg je korting of gratis toegang tot activiteiten.',
-      'Daarnaast zijn er regelingen voor mensen met een laag inkomen.',
+      {
+        text: 'Regelingen:',
+        listItems: [
+          'Collectieve zorgverzekering',
+          'Declaratie Kindtegoed',
+          'Kindtegoed Voorschool',
+          'Reiskostenvergoeding',
+          'Gratis laptop of tablet middelbare school',
+          'Gratis laptop of tablet basisschool',
+          'Individuele inkomenstoeslag',
+          "Gratis openbaar vervoer voor AOW'ers",
+          'Tegemoetkoming aanvullend openbaar vervoer voor ouderen',
+          'Tegemoetkoming openbaar vervoer voor mantelzorgers',
+          'Regeling tegemoetkoming meerkosten',
+        ],
+      },
+      {
+        text: 'Stadspas:',
+        listItems: [
+          'Status aanvraag Stadspas van u of uw gezin',
+          'Het saldo Kindtegoed en/of andere tegoeden en de bestedingen',
+          'Stadspasnummer',
+          'Stadspas blokkeren',
+        ],
+      },
     ],
   },
-
   detailPage: {
     route: {
       path: '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
