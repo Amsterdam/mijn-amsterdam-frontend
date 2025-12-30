@@ -37,7 +37,6 @@ export const themaConfig = {
     regelingen: {
       // BUG: ? When this is false, i expect: 1. Not to see the RTM document on the theme page. 2. Not to see "regelingen bij laag inkomen" in the title
       active: true,
-      //BUG: When false I still see "Collectieve zorgverzekering" on the theme page and also the Detailpage "Collectieve zorgverzekering"
       enabledCZM: false,
       //BUG: ? When this is false, I expect: 1. Not to see the RTM document on the theme page.
       enabledRTM: true,
