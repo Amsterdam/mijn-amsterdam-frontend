@@ -25,7 +25,7 @@ function DetailPageContent({ hliRegeling }: DetailPageContentProps) {
   );
 }
 
-export function HLIDetail() {
+export function HLIRegelingenDetail() {
   const {
     regelingen,
     isError,

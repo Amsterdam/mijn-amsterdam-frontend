@@ -2,9 +2,9 @@ import { Navigate } from 'react-router';
 
 import { getThemaTitleWithAppState } from './helpers';
 import { themaConfig } from './HLI-thema-config';
-import { HLIDetail } from './HLIDetail';
 import { default as HLIIcon } from './HLIIcon.svg?react';
-import { HLIList } from './HLIList';
+import { HLIRegelingenDetail as HLIRegelingenDetail } from './HLIRegelingenDetail';
+import { HLIRegelingenList } from './HLIRegelingenList';
 import { HLISpecificatieList } from './HLISpecificatieList';
 import { HLIStadspasDetail } from './HLIStadspasDetail';
 import { HLIThema } from './HLIThema';
@@ -23,7 +23,7 @@ export const HLIRoutes = [
   },
   {
     route: themaConfig.detailPage.route.path,
-    Component: HLIDetail,
+    Component: HLIRegelingenDetail,
     isActive: themaConfig.featureToggle.active,
   },
   {
@@ -33,7 +33,7 @@ export const HLIRoutes = [
   },
   {
     route: themaConfig.regelingenListPage.route.path,
-    Component: HLIList,
+    Component: HLIRegelingenList,
     isActive: themaConfig.featureToggle.active,
   },
   {

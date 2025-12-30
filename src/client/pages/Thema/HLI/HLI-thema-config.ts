@@ -24,6 +24,7 @@ type HLIThemaConfig = ThemaConfigBase &
 
 export const themaConfig = {
   id: 'HLI' as const,
+  //TODO MIJN-12205
   title: THEMA_TITLE,
 
   featureToggle: propagateFeatureToggles({
@@ -50,14 +51,14 @@ export const themaConfig = {
   }),
 
   profileTypes: ['private'],
-  uitlegPageSections: {
-    title: THEMA_TITLE,
-    listItems: [
-      'De Stadspas is er voor Amsterdammers met een laag inkomen.',
-      'Met de pas krijg je korting of gratis toegang tot activiteiten.',
-      'Daarnaast zijn er regelingen voor mensen met een laag inkomen.',
-    ],
+  route: {
+    path: '/regelingen-bij-laag-inkomen',
+    trackingUrl: null,
+    get documentTitle() {
+      return `${THEMA_TITLE} | Overzicht`;
+    },
   },
+  redactedScope: 'full',
   pageLinks: [
     {
       title: 'Meer informatie over regelingen',
@@ -68,14 +69,16 @@ export const themaConfig = {
       to: 'https://www.amsterdam.nl/stadspas',
     },
   ],
-  redactedScope: 'full',
-  route: {
-    path: '/regelingen-bij-laag-inkomen',
-    trackingUrl: null,
-    get documentTitle() {
-      return `${THEMA_TITLE} | Overzicht`;
-    },
+  // TODO MIJN-12294
+  uitlegPageSections: {
+    title: THEMA_TITLE,
+    listItems: [
+      'De Stadspas is er voor Amsterdammers met een laag inkomen.',
+      'Met de pas krijg je korting of gratis toegang tot activiteiten.',
+      'Daarnaast zijn er regelingen voor mensen met een laag inkomen.',
+    ],
   },
+
   detailPage: {
     route: {
       path: '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',

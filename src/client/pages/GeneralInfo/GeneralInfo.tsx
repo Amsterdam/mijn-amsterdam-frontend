@@ -71,7 +71,7 @@ const sections: InfoSection_DEPRECATED[] = [
   erfpachtSectionProps,
   afisSectionProps,
   inkomenSectionProps,
-  createDeprecatedInfoSection(HLIThemaConfig),
+  //createDeprecatedInfoSection(HLIThemaConfig),
   createDeprecatedInfoSection(HLIThemaConfig),
   zorgSectionProps,
   jeugdSectionProps,
