@@ -69,3 +69,40 @@ export function encryptPayloadAndSessionID<T extends Record<string, unknown>>(
   const [encrptedValue] = encrypt(JSON.stringify(payloadToEncrypt));
   return encrptedValue;
 }
+
+export function encryptDBField(
+  plainText: string,
+  encryptionKey: string | Buffer | undefined = process.env
+    .BFF_GENERAL_ENCRYPTION_KEY
+): Buffer {
+  if (!encryptionKey) {
+    throw new Error('Cannot encrypt, Encryption key not found.');
+  }
+
+  const iv = crypto.randomBytes(IV_BYTE_LENGTH);
+  const cipher = crypto.createCipheriv(ENC_ALGO, encryptionKey, iv);
+  const encrypted = Buffer.concat([cipher.update(plainText), cipher.final()]);
+
+  return Buffer.concat([iv, encrypted]);
+}
+
+export function decryptDBField(
+  encryptedValue: Buffer,
+  encryptionKey: string | undefined = process.env.BFF_GENERAL_ENCRYPTION_KEY
+) {
+  if (!encryptionKey) {
+    throw new Error('Cannot decrypt, Encryption key not found.');
+  }
+
+  const key = Buffer.from(encryptionKey);
+  const iv = Uint8Array.prototype.slice.call(encryptedValue, 0, IV_BYTE_LENGTH);
+  const encryptedData = Uint8Array.prototype.slice.call(
+    encryptedValue,
+    IV_BYTE_LENGTH
+  );
+
+  const decipheriv = crypto.createDecipheriv(ENC_ALGO, key, iv);
+  return (
+    decipheriv.update(encryptedData).toString() + decipheriv.final('utf-8')
+  );
+}

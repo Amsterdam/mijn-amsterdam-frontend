@@ -8,7 +8,7 @@ export type ConsumerId = string;
 export type ServiceId = keyof typeof notificationServices.private;
 
 export type ConsumerNotifications = {
-  profileId: BSN;
+  profileId: Buffer; // With an encrypted BSN.
   consumerIds: ConsumerId[];
   serviceIds: ServiceId[];
   dateUpdated: string;

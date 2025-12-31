@@ -9,6 +9,7 @@ import {
   getProfileByConsumer,
   storeNotifications,
 } from './notifications-model';
+import { decryptDBField } from '../../../server/helpers/encrypt-decrypt';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -29,7 +30,7 @@ import type { MyNotification } from '../../../universal/types/App.types';
  */
 
 export async function registerConsumer(
-  profileId: BSN,
+  profileId: Buffer,
   consumerId: ConsumerId,
   serviceIds: ServiceId[] = []
 ) {
@@ -55,9 +56,10 @@ export async function batchDeleteNotifications() {
 export async function batchFetchAndStoreNotifications() {
   const profiles = await listProfileIds();
   for (const profile of profiles) {
+    const decryptedProfileID = decryptDBField(profile.profileId);
     const promises = profile.serviceIds.map(async (serviceId) => {
       const notifications = await fetchNotificationsForService(
-        profile.profileId,
+        decryptedProfileID,
         serviceId
       );
       return {

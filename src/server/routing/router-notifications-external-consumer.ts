@@ -14,6 +14,7 @@ import {
 import { getAuth } from '../auth/auth-helpers';
 import { authRoutes } from '../auth/auth-routes';
 import { AuthProfileAndToken } from '../auth/auth-types';
+import { encryptDBField } from '../helpers/encrypt-decrypt';
 import { getFromEnv } from '../helpers/env';
 import { getApiConfig } from '../helpers/source-api-helpers';
 import { requestData } from '../helpers/source-api-request';
@@ -197,11 +198,10 @@ async function sendConsumerIdResponse(
   }
 
   try {
-    await registerConsumer(
-      authProfileAndToken?.profile.id,
-      req.params.consumerId,
-      ['belasting']
-    );
+    const encryptedProfileID = encryptDBField(authProfileAndToken?.profile.id);
+    await registerConsumer(encryptedProfileID, req.params.consumerId, [
+      'belasting',
+    ]);
   } catch (error) {
     const apiResponseError = apiResponseErrors.UNKNOWN;
     captureMessage(
