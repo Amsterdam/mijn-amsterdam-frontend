@@ -21,7 +21,7 @@ export const themaConfig: BodemThemaConfig = {
   id: 'BODEM',
   title: THEMA_TITLE,
   featureToggle: {
-    active: false,
+    active: true,
   },
   profileTypes: ['private', 'commercial'],
   route: {

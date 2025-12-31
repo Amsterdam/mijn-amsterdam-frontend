@@ -30,19 +30,22 @@ export const themaConfig = {
   featureToggle: propagateFeatureToggles({
     active: true,
     stadspas: {
-      // // BUG: ? When this is false, i expect: 1. Not to see stadspas products on the themepage 2. Not to see "Stadspas" in the title
+      // BUG: When this is false, I expect:
+      // 1. Not to see stadspas products on the thema page
+      // 2. Not to see "Stadspas" in the title
       active: true,
       blokkerenActive: true,
       deblokkerenActive: !IS_PRODUCTION,
     },
     regelingen: {
-      // BUG: ? When this is false, i expect: 1. Not to see the RTM document on the theme page. 2. Not to see "regelingen bij laag inkomen" in the title
+      //BUG: When this is false, I expect:
+      //1. Not to see the RTM documents on the thema page.
+      //2. Not to see "regelingen bij laag inkomen" in the title
       active: true,
-      enabledCZM: false,
-      //BUG: ? When this is false, I expect: 1. Not to see the RTM document on the theme page.
+      enabledCZM: true,
+      //BUG: When this is false, I expect:
+      //Not to see the RTM document on the thema page.
       enabledRTM: true,
-      // Is this still a product
-      hli2025PCTegoedCodesEnabled: true,
       // I expected all the products of HLI here as a Featuretoggle...
     },
     zorgned: {
