@@ -23,6 +23,7 @@ export const themaConfig: BodemThemaConfig = {
   featureToggle: {
     active: true,
   },
+
   profileTypes: ['private', 'commercial'],
   route: {
     path: '/bodem',

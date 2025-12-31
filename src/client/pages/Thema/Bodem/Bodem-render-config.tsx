@@ -36,7 +36,7 @@ export const menuItem: ThemaMenuItem = {
   redactedScope: themaConfig.redactedScope,
   isActive(appState: AppState) {
     return (
-      themaConfig.featureToggle.themaActive &&
+      themaConfig.featureToggle.active &&
       !isLoading(appState.BODEM) &&
       !!appState.BODEM.content?.length
     );
