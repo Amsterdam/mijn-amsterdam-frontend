@@ -46,6 +46,8 @@ export const themaConfig = {
       //BUG: When this is false, I expect:
       //Not to see the RTM document on the thema page.
       enabledRTM: true,
+      //TODO MIJN-11807: Remove this featuretoggle (not now)
+      hli2025PCTegoedCodesEnabled: true,
       // I expected all the products of HLI here as a Featuretoggle...
     },
     zorgned: {

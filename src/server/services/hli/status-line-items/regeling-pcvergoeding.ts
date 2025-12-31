@@ -1,6 +1,7 @@
 import { isBefore, isSameDay, parseISO } from 'date-fns';
 
 import { getBetrokkenKinderenDescription } from './generic';
+import { themaConfig } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { lowercaseFirstLetter } from '../../../../universal/helpers/text';
 import { sortAlpha, splitBy } from '../../../../universal/helpers/utils';
@@ -30,11 +31,13 @@ export const PC_REGELING_V3_START_DATE = new Date('2026-01-01');
 const avCodes = {
   PC: {
     [AV_PCVZIL]: true,
-    [AV_PCVTG]: true,
+    [AV_PCVTG]:
+      themaConfig.featureToggle.regelingen.hli2025PCTegoedCodesEnabled,
   },
   UPC: {
     [AV_UPCZIL]: true,
-    [AV_UPCTG]: true,
+    [AV_UPCTG]:
+      themaConfig.featureToggle.regelingen.hli2025PCTegoedCodesEnabled,
   },
 };
 
