@@ -14,7 +14,7 @@ import {
 import { getAuth } from '../auth/auth-helpers';
 import { authRoutes } from '../auth/auth-routes';
 import { AuthProfileAndToken } from '../auth/auth-types';
-import { encryptDBField } from '../helpers/encrypt-decrypt';
+import { encrypt } from '../helpers/encrypt-decrypt';
 import { getFromEnv } from '../helpers/env';
 import { getApiConfig } from '../helpers/source-api-helpers';
 import { requestData } from '../helpers/source-api-request';
@@ -198,7 +198,10 @@ async function sendConsumerIdResponse(
   }
 
   try {
-    const encryptedProfileID = encryptDBField(authProfileAndToken?.profile.id);
+    const [encryptedProfileID] = encrypt(authProfileAndToken?.profile.id);
+    console.log(
+      `registerConsumer profileID: ${encryptedProfileID}, type: ${typeof encryptedProfileID}`
+    );
     await registerConsumer(encryptedProfileID, req.params.consumerId, [
       'belasting',
     ]);

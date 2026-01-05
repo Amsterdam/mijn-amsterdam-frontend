@@ -1,4 +1,5 @@
 import {
+  BSN,
   ConsumerId,
   ServiceId,
   type ConsumerNotifications,
@@ -46,7 +47,7 @@ async function setupTables() {
   const createTableQuery = `
     -- Table Definition
     CREATE TABLE IF NOT EXISTS "public"."${TABLE_NAME}" (
-      "profile_id" bytea NOT NULL,
+      "profile_id" varchar(43) NOT NULL,
       "consumer_ids" varchar(100)[] DEFAULT '{}',
       "service_ids" varchar(50)[] DEFAULT '{}',
       "content" JSONB,
@@ -103,7 +104,7 @@ export async function getProfileByConsumer(consumerId: ConsumerId) {
 }
 
 export async function upsertConsumer(
-  profileId: Buffer,
+  profileId: BSN,
   consumerId: ConsumerId,
   serviceIds: ServiceId[]
 ) {
@@ -127,7 +128,7 @@ export async function deleteConsumer(consumerId: ConsumerId) {
 }
 
 export async function storeNotifications(
-  encryptedProfileId: Buffer,
+  encryptedProfileId: BSN,
   services: NotificationsService[]
 ) {
   return db.query(queries.updateNotifications, [
