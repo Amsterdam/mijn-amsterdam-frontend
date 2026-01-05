@@ -28,8 +28,8 @@ const pasBlockedState = createHLIState({
 
 const createHLIStadspasComponent = componentCreator({
   component: HLIStadspasDetail,
-  routePath: themaConfig.detailPageStadspas.route.path,
-  routeEntry: generatePath(themaConfig.detailPageStadspas.route.path, {
+  routePath: themaConfig.stadspasDetailPage.route.path,
+  routeEntry: generatePath(themaConfig.stadspasDetailPage.route.path, {
     passNumber: `${passNumber}`,
   }),
 });
