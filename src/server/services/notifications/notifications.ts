@@ -26,7 +26,7 @@ import type { MyNotification } from '../../../universal/types/App.types';
 
 // Use this message when extra privacy is required.
 const DISCRETE_GENERIC_MESSAGE =
-  'Er staat een bericht voor u klaar op MijnAmsterdam.';
+  'Er staat een bericht voor u klaar op Mijn Amsterdam.';
 
 /**
  * The Notification service allows batch handling of notifications for previously verified consumers
