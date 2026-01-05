@@ -67,7 +67,7 @@ const viewDir = __dirname.split('/').slice(-2, -1);
 
 // Set-up view engine voor SSR
 app.set('view engine', 'pug');
-app.set('views', `${viewDir}/server/views`);
+app.set('views', `src/server/views`);
 
 app.use(
   cors({

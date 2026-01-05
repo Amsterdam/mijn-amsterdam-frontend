@@ -74,8 +74,8 @@ export function useHliThemaData() {
     breadcrumbs,
     regelingenListPageConfig: themaConfig.regelingenListPage,
     specificatieListPageConfig: themaConfig.specificatieListPage,
-    detailPageConfig: themaConfig.detailPage,
-    detailPageStadspasConfig: themaConfig.detailPageStadspas,
+    detailPageConfig: themaConfig.regelingenDetailPage,
+    detailPageStadspasConfig: themaConfig.stadspasDetailPage,
     routeConfig: themaConfig.route,
   };
 }

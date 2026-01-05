@@ -129,7 +129,7 @@ export function transformRegelingForFrontend(
 ) {
   const id = aanvraag.prettyID;
 
-  const route = generatePath(themaConfig.detailPage.route.path, {
+  const route = generatePath(themaConfig.regelingenDetailPage.route.path, {
     id,
     regeling: slug(aanvraag.titel),
   });

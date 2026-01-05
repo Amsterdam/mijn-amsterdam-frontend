@@ -17,9 +17,7 @@ import {
   type PasblokkadeByPasnummer,
   type StadspasResponseFrontend,
 } from './stadspas-types';
-import {
-  themaConfig,
-} from '../../../client/pages/Thema/HLI/HLI-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -61,7 +59,7 @@ export async function fetchStadspas(
         urlTransactions,
         transactionsKeyEncrypted,
         link: {
-          to: generatePath(themaConfig.detailPageStadspas.route.path, {
+          to: generatePath(themaConfig.stadspasDetailPage.route.path, {
             passNumber: `${stadspas.passNumber}`,
           }),
           title: `Stadspas van ${stadspas.owner.firstname}`,

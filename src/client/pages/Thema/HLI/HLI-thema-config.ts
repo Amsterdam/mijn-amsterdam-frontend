@@ -8,17 +8,13 @@ import { dateSort } from '../../../../universal/helpers/date';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 import { propagateFeatureToggles } from '../../../config/buildFeatureToggle';
-import type {
-  PageConfig,
-  ThemaConfigBase,
-  WithDetailPage,
-} from '../../../config/thema-types';
+import type { PageConfig, ThemaConfigBase } from '../../../config/thema-types';
 
 const THEMA_TITLE = 'Stadspas en regelingen bij laag inkomen' as const;
 
 type HLIThemaConfig = ThemaConfigBase &
-  WithDetailPage &
-  PageConfig<'detailPageStadspas'> &
+  PageConfig<'regelingenDetailPage'> &
+  PageConfig<'stadspasDetailPage'> &
   PageConfig<'specificatieListPage'> &
   PageConfig<'regelingenListPage'>;
 
@@ -109,7 +105,7 @@ export const themaConfig = {
       },
     ],
   },
-  detailPage: {
+  regelingenDetailPage: {
     route: {
       path: '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
       trackingUrl: '/regelingen-bij-laag-inkomen/regeling',
@@ -118,7 +114,7 @@ export const themaConfig = {
       },
     },
   },
-  detailPageStadspas: {
+  stadspasDetailPage: {
     route: {
       path: '/regelingen-bij-laag-inkomen/stadspas/:passNumber',
       trackingUrl: '/regelingen-bij-laag-inkomen/stadspas',
