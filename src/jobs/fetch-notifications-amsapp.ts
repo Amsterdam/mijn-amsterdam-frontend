@@ -1,14 +1,5 @@
-/* eslint-disable import/order */
-// eslint-disable-next-line @typescript-eslint/triple-slash-reference
-/// <reference path="../mijnamsterdam.d.ts" />
-
-import { loadEnvVariables } from '../server/helpers/env';
-import { IS_DEVELOPMENT } from '../universal/config/env';
-
-if (IS_DEVELOPMENT) {
-  const ENV_FILE = '.env.local';
-  loadEnvVariables(ENV_FILE);
-}
+// Keep this line at the top.
+import '../server/helpers/load-env';
 
 import { captureException } from '../server/services/monitoring';
 import { batchFetchAndStoreNotifications } from '../server/services/notifications/notifications';

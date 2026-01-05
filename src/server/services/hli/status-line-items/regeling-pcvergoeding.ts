@@ -24,7 +24,7 @@ export const AV_PCVZIL = 'AV-PCVZIL';
 export const AV_PCVTG = 'AV-PCVTG';
 
 const DATE_PCTEGOED_2026_CODES_ACTIVE =
-  getFromEnv('BFF_DATE_PCTEGOED_2026_CODES_ACTIVE') || '2026-01-01';
+  getFromEnv('BFF_DATE_PCTEGOED_2026_CODES_ACTIVE', false) || '2026-01-01';
 
 export const PC_REGELING_V3_START_DATE = new Date('2026-01-01');
 
