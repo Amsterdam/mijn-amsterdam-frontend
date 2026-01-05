@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, Mock } from 'vitest';
+import Mockdate from 'mockdate';
 
 import { forTesting } from './adoptable-trash-containers';
 import { fetchAdoptableTrashContainers } from './adoptable-trash-containers';
@@ -14,6 +15,8 @@ import {
 import { fetchMyLocations } from '../bag/my-locations';
 import { fetchBrp } from '../brp/brp';
 import { fetchDataset } from '../buurt/buurt';
+
+Mockdate.set('2025-01-01');
 
 vi.mock('../brp/brp', () => ({
   fetchBrp: vi.fn(),
