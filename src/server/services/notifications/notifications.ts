@@ -57,7 +57,32 @@ export async function batchFetchAndStoreNotifications() {
   const profiles = await listProfileIds();
   for (const profile of profiles) {
     const decryptedProfileID = decrypt(profile.profileId);
-    const promises = profile.serviceIds.map(async (serviceId) => {
+    // Now temporarily hardcoded al services for the POC.
+    // TODO MIJN-12452: Use profile.serviceIds again.
+    const promises = (
+      [
+        'afis',
+        'milieuzone',
+        'overtredingen',
+        'vergunningen',
+        'horeca',
+        'subsidie',
+        'toeristischeVerhuur',
+        'bodem',
+        'bezwaren',
+        'parkeren',
+        'adoptTrashContainer',
+        'avg',
+        'belasting',
+        'brp',
+        'fetchKrefia',
+        'fetchSVWI',
+        'fetchWior',
+        'fetchWpi',
+        'klachten',
+        'maintenance',
+      ] as ServiceId[]
+    ).map(async (serviceId) => {
       const notifications = await fetchNotificationsForService(
         decryptedProfileID,
         serviceId
