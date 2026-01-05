@@ -113,7 +113,7 @@ async function fetchNotificationsForService(
     .map((notification) => ({
       id: notification.id,
       themaId: notification.themaID,
-      // At the moment this is decided but when we can show more again: use notification.title
+      // If we decide to show the actual notification title, use `notification.title`
       title: DISCRETE_GENERIC_MESSAGE,
       isTip: notification.isTip,
       isAlert: notification.isAlert,
