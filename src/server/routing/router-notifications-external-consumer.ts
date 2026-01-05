@@ -199,9 +199,6 @@ async function sendConsumerIdResponse(
 
   try {
     const [encryptedProfileID] = encrypt(authProfileAndToken?.profile.id);
-    console.log(
-      `registerConsumer profileID: ${encryptedProfileID}, type: ${typeof encryptedProfileID}`
-    );
     await registerConsumer(encryptedProfileID, req.params.consumerId, [
       'belasting',
     ]);
