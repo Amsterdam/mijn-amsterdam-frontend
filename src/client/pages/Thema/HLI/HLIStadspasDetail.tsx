@@ -78,7 +78,7 @@ const PHONENUMBERS = {
 export function HLIStadspasDetail() {
   const isPhoneScreen = useSmallScreen();
   const appState = useAppStateGetter();
-  useHTMLDocumentTitle(themaConfig.detailPageStadspas.route);
+  useHTMLDocumentTitle(themaConfig.stadspasDetailPage.route);
 
   const { HLI } = appState;
   const { passNumber } = useParams<{ passNumber: string }>();
