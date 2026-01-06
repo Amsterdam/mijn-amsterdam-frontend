@@ -199,6 +199,7 @@ export type Persoon = PersoonBasis & {
 };
 
 export type Verbintenis = {
+  soortVerbintenis: string | null;
   datumOntbinding: string | null;
   datumOntbindingFormatted?: string | null;
   datumSluiting: string | null;

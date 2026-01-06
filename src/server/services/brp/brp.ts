@@ -191,6 +191,7 @@ function transformBenkBrpResponse(
     },
     verbintenis: partner
       ? {
+          soortVerbintenis: partner.soortVerbintenis.omschrijving ?? null,
           datumOntbinding: getDatum(
             partner.ontbindingHuwelijkPartnerschap?.datum
           ),
