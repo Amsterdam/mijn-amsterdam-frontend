@@ -14,6 +14,7 @@ import {
 import { getAuth } from '../auth/auth-helpers';
 import { authRoutes } from '../auth/auth-routes';
 import { AuthProfileAndToken } from '../auth/auth-types';
+import { encrypt } from '../helpers/encrypt-decrypt';
 import { getFromEnv } from '../helpers/env';
 import { getApiConfig } from '../helpers/source-api-helpers';
 import { requestData } from '../helpers/source-api-request';
@@ -197,11 +198,29 @@ async function sendConsumerIdResponse(
   }
 
   try {
-    await registerConsumer(
-      authProfileAndToken?.profile.id,
-      req.params.consumerId,
-      ['belasting']
-    );
+    const [encryptedProfileID] = encrypt(authProfileAndToken?.profile.id);
+    await registerConsumer(encryptedProfileID, req.params.consumerId, [
+      'adoptTrashContainer',
+      'afis',
+      'avg',
+      'belasting',
+      'bezwaren',
+      'bodem',
+      'brp',
+      'fetchKrefia',
+      'fetchSVWI',
+      'fetchWior',
+      'fetchWpi',
+      'horeca',
+      'klachten',
+      'maintenance',
+      'milieuzone',
+      'overtredingen',
+      'parkeren',
+      'subsidie',
+      'toeristischeVerhuur',
+      'vergunningen',
+    ]);
   } catch (error) {
     const apiResponseError = apiResponseErrors.UNKNOWN;
     captureMessage(

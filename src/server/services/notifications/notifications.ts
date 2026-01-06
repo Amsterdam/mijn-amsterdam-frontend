@@ -9,6 +9,7 @@ import {
   getProfileByConsumer,
   storeNotifications,
 } from './notifications-model';
+import { decrypt } from '../../../server/helpers/encrypt-decrypt';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -23,6 +24,10 @@ import {
   type NotificationsLean,
 } from './config-and-types';
 import type { MyNotification } from '../../../universal/types/App.types';
+
+// Use this message when extra privacy is required.
+const DISCRETE_GENERIC_MESSAGE =
+  'Er staat een bericht voor u klaar op Mijn Amsterdam.';
 
 /**
  * The Notification service allows batch handling of notifications for previously verified consumers
@@ -55,34 +60,10 @@ export async function batchDeleteNotifications() {
 export async function batchFetchAndStoreNotifications() {
   const profiles = await listProfileIds();
   for (const profile of profiles) {
-    // Now temporarily hardcoded al services for the POC.
-    // TODO MIJN-12452: Use profile.serviceIds again.
-    const promises = (
-      [
-        'afis',
-        'milieuzone',
-        'overtredingen',
-        'vergunningen',
-        'horeca',
-        'subsidie',
-        'toeristischeVerhuur',
-        'bodem',
-        'bezwaren',
-        'parkeren',
-        'adoptTrashContainer',
-        'avg',
-        'belasting',
-        'brp',
-        'fetchKrefia',
-        'fetchSVWI',
-        'fetchWior',
-        'fetchWpi',
-        'klachten',
-        'maintenance',
-      ] as ServiceId[]
-    ).map(async (serviceId) => {
+    const decryptedProfileID = decrypt(profile.profileId);
+    const promises = profile.serviceIds.map(async (serviceId) => {
       const notifications = await fetchNotificationsForService(
-        profile.profileId,
+        decryptedProfileID,
         serviceId
       );
       return {
@@ -134,7 +115,8 @@ async function fetchNotificationsForService(
     .map((notification) => ({
       id: notification.id,
       themaId: notification.themaID,
-      title: notification.title,
+      // If we decide to show the actual notification title, use `notification.title`
+      title: DISCRETE_GENERIC_MESSAGE,
       isTip: notification.isTip,
       isAlert: notification.isAlert,
       datePublished: notification.hideDatePublished
