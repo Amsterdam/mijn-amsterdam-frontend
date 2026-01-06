@@ -3,6 +3,7 @@ import { generatePath } from 'react-router';
 import UID from 'uid-safe';
 
 import {
+    featureToggle,
   routeConfig,
   themaId,
   themaTitle,
@@ -101,7 +102,7 @@ export function transformKlachtenResponse(
     const dateClosed = smileDateParser(
       klachtSource.klacht_finishedon.value ?? ''
     );
-    const steps = [
+    const steps = featureToggle.statustreinAndMeldingenActive ? [
       {
         id: '1',
         status: 'Ontvangen',
@@ -126,7 +127,7 @@ export function transformKlachtenResponse(
           ? `<p>Uw klacht is afgehandeld. U krijgt een antwoord op uw klacht.</p>`
           : '',
       },
-    ];
+    ] : [];
 
     const klacht: KlachtFrontend = {
       id,
@@ -167,7 +168,7 @@ export function transformKlachtenResponse(
 function createKlachtNotification(klacht: KlachtFrontend): MyNotification {
   const id = `klacht-${klacht.id}-notification`;
   const gotoDetailTxt = 'Bekijk details';
-  if (klacht.displayStatus === 'Afgehandeld') {
+  if (featureToggle.statustreinAndMeldingenActive && klacht.displayStatus === 'Afgehandeld') {
     return {
       id,
       title: 'Klacht afgehandeld',
