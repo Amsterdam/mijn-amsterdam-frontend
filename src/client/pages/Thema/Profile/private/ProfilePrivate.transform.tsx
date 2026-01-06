@@ -17,9 +17,7 @@ import type { AppState } from '../../../../../universal/types/App.types';
 import LoadingContent from '../../../../components/LoadingContent/LoadingContent';
 import {
   BRP_LABEL_AANTAL_BEWONERS,
-  featureToggle,
   profileLinks,
-  themaIdBRP,
 } from '../Profile-thema-config';
 import {
   ProfileLabels,
@@ -149,10 +147,7 @@ const adres: ProfileLabels<
   aantalBewoners: [
     BRP_LABEL_AANTAL_BEWONERS,
     (value, _x, BRPContent) => {
-      if (
-        BRPContent?.persoon?.mokum === true &&
-        featureToggle[themaIdBRP].aantalBewonersOpAdresTonenActive
-      ) {
+      if (BRPContent?.persoon?.mokum === true) {
         return value === -1 ? (
           <LoadingContent barConfig={[['2rem', '2rem', '0']]} />
         ) : (
@@ -327,11 +322,9 @@ export const panelConfig: PanelConfig<
     };
   },
   verbintenis: (BRP: AppState['BRP']) => ({
-    title: featureToggle.BRP.benkBrpServiceActive
-      ? BRP.content?.verbintenis?.datumOntbinding
-        ? 'Eerder huwelijk of partnerschap'
-        : 'Partner'
-      : 'Burgerlijke staat',
+    title: BRP.content?.verbintenis?.datumOntbinding
+      ? 'Eerder huwelijk of partnerschap'
+      : 'Partner',
     actionLinks: isMokum(BRP.content)
       ? [
           {
