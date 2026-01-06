@@ -9,6 +9,7 @@ import {
   getProfileByConsumer,
   storeNotifications,
 } from './notifications-model';
+import { decrypt } from '../../../server/helpers/encrypt-decrypt';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -59,34 +60,10 @@ export async function batchDeleteNotifications() {
 export async function batchFetchAndStoreNotifications() {
   const profiles = await listProfileIds();
   for (const profile of profiles) {
-    // Now temporarily hardcoded al services for the POC.
-    // TODO MIJN-12452: Use profile.serviceIds again.
-    const promises = (
-      [
-        'afis',
-        'milieuzone',
-        'overtredingen',
-        'vergunningen',
-        'horeca',
-        'subsidie',
-        'toeristischeVerhuur',
-        'bodem',
-        'bezwaren',
-        'parkeren',
-        'adoptTrashContainer',
-        'avg',
-        'belasting',
-        'brp',
-        'fetchKrefia',
-        'fetchSVWI',
-        'fetchWior',
-        'fetchWpi',
-        'klachten',
-        'maintenance',
-      ] as ServiceId[]
-    ).map(async (serviceId) => {
+    const decryptedProfileID = decrypt(profile.profileId);
+    const promises = profile.serviceIds.map(async (serviceId) => {
       const notifications = await fetchNotificationsForService(
-        profile.profileId,
+        decryptedProfileID,
         serviceId
       );
       return {
