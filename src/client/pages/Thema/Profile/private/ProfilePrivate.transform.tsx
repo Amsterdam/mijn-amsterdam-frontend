@@ -178,6 +178,8 @@ const verbintenis: ProfileLabels<
 > = {
   soortVerbintenis: 'Verbintenis',
   datumSluitingFormatted: 'Geregistreerd op',
+  plaats: 'Plaats',
+  land: 'Land',
   datumOntbinding: [
     'Einddatum',
     (dateValue) => {

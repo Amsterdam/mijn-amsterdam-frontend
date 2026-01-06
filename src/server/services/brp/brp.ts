@@ -192,14 +192,17 @@ function transformBenkBrpResponse(
     verbintenis: partner
       ? {
           soortVerbintenis: partner.soortVerbintenis.omschrijving ?? null,
+          datumSluiting: getDatum(partner.aangaanHuwelijkPartnerschap?.datum),
+          datumSluitingFormatted:
+            partner.aangaanHuwelijkPartnerschap?.datum?.langFormaat ?? null,
+          plaats:
+            partner.aangaanHuwelijkPartnerschap?.plaats?.omschrijving ?? null,
+          land: partner.aangaanHuwelijkPartnerschap?.land?.omschrijving ?? null,
           datumOntbinding: getDatum(
             partner.ontbindingHuwelijkPartnerschap?.datum
           ),
           datumOntbindingFormatted:
             partner.ontbindingHuwelijkPartnerschap?.datum?.langFormaat ?? null,
-          datumSluiting: getDatum(partner.aangaanHuwelijkPartnerschap?.datum),
-          datumSluitingFormatted:
-            partner.aangaanHuwelijkPartnerschap?.datum?.langFormaat ?? null,
           persoon: getPersoonBasis(partner),
         }
       : null,

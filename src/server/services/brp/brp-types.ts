@@ -200,10 +200,12 @@ export type Persoon = PersoonBasis & {
 
 export type Verbintenis = {
   soortVerbintenis: string | null;
-  datumOntbinding: string | null;
-  datumOntbindingFormatted?: string | null;
   datumSluiting: string | null;
   datumSluitingFormatted?: string | null;
+  plaats: string | null;
+  land: string | null;
+  datumOntbinding: string | null;
+  datumOntbindingFormatted?: string | null;
   persoon: PersoonBasis;
 };
 
