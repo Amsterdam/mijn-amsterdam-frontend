@@ -13,7 +13,7 @@ import { IS_PRODUCTION } from '../../../../universal/config/env';
 
 export const featureToggle = {
   klachtenActive: true,
-  statustreinAndMeldingenActive: !IS_PRODUCTION,
+  statustreinAndAfgehandeldeMeldingenActive: !IS_PRODUCTION,
 };
 
 export const themaId = 'KLACHTEN' as const;
@@ -68,14 +68,18 @@ const displayProps: DisplayProps<KlachtFrontend> = {
 
 export const tableConfig = {
   [listPageParamKind.lopend]: {
-    title: featureToggle.statustreinAndMeldingenActive ? 'Openstaande klachten': 'Ingediende klachten',
+    title: featureToggle.statustreinAndAfgehandeldeMeldingenActive
+      ? 'Openstaande klachten'
+      : 'Ingediende klachten',
     displayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
     listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.lopend,
       page: null,
     }),
-    filter: (klacht: KlachtFrontend) => !featureToggle.statustreinAndMeldingenActive || klacht.displayStatus !== 'Afgehandeld',
+    filter: (klacht: KlachtFrontend) =>
+      !featureToggle.statustreinAndAfgehandeldeMeldingenActive ||
+      klacht.displayStatus !== 'Afgehandeld',
     sort: dateSort<KlachtFrontend>('ontvangstDatum'),
   },
   [listPageParamKind.eerder]: {

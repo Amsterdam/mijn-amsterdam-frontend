@@ -42,11 +42,11 @@ export function KlachtenThema() {
       />
     );
   });
-  if (!featureToggle.statustreinAndMeldingenActive) {
+  if (!featureToggle.statustreinAndAfgehandeldeMeldingenActive) {
     tables = tables.filter((table) => {
-      console.log(table)
-      return table.key !== 'Afgehandelde klachten'
-    })
+      console.log(table);
+      return table.key !== 'Afgehandelde klachten';
+    });
   }
 
   return (
