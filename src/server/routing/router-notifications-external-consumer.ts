@@ -200,7 +200,26 @@ async function sendConsumerIdResponse(
   try {
     const [encryptedProfileID] = encrypt(authProfileAndToken?.profile.id);
     await registerConsumer(encryptedProfileID, req.params.consumerId, [
+      'adoptTrashContainer',
+      'afis',
+      'avg',
       'belasting',
+      'bezwaren',
+      'bodem',
+      'brp',
+      'fetchKrefia',
+      'fetchSVWI',
+      'fetchWior',
+      'fetchWpi',
+      'horeca',
+      'klachten',
+      'maintenance',
+      'milieuzone',
+      'overtredingen',
+      'parkeren',
+      'subsidie',
+      'toeristischeVerhuur',
+      'vergunningen',
     ]);
   } catch (error) {
     const apiResponseError = apiResponseErrors.UNKNOWN;
