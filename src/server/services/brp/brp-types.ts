@@ -122,7 +122,7 @@ type OuderSource = PersoonBasisSource;
 type PartnerSource = PersoonBasisSource & {
   aangaanHuwelijkPartnerschap: HuwelijkPartnerschapSource;
   ontbindingHuwelijkPartnerschap: HuwelijkPartnerschapSource;
-  soortVerbintenis: TyperingSource;
+  soortVerbintenis: TyperingSource | null;
 };
 
 type HuwelijkPartnerschapSource = {

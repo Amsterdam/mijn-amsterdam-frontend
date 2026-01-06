@@ -191,7 +191,7 @@ function transformBenkBrpResponse(
     },
     verbintenis: partner
       ? {
-          soortVerbintenis: partner.soortVerbintenis.omschrijving ?? null,
+          soortVerbintenis: partner.soortVerbintenis?.omschrijving ?? null,
           datumSluiting: getDatum(partner.aangaanHuwelijkPartnerschap?.datum),
           datumSluitingFormatted:
             partner.aangaanHuwelijkPartnerschap?.datum?.langFormaat ?? null,
