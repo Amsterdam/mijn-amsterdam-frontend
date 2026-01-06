@@ -25,6 +25,10 @@ import {
 } from './config-and-types';
 import type { MyNotification } from '../../../universal/types/App.types';
 
+// Use this message when extra privacy is required.
+const DISCRETE_GENERIC_MESSAGE =
+  'Er staat een bericht voor u klaar op Mijn Amsterdam.';
+
 /**
  * The Notification service allows batch handling of notifications for previously verified consumers
  */
@@ -136,7 +140,8 @@ async function fetchNotificationsForService(
     .map((notification) => ({
       id: notification.id,
       themaId: notification.themaID,
-      title: notification.title,
+      // If we decide to show the actual notification title, use `notification.title`
+      title: DISCRETE_GENERIC_MESSAGE,
       isTip: notification.isTip,
       isAlert: notification.isAlert,
       datePublished: notification.hideDatePublished
