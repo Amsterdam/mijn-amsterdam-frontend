@@ -176,7 +176,10 @@ const verbintenis: ProfileLabels<
   Partial<Verbintenis>,
   AppState['BRP']['content']
 > = {
+  soortVerbintenis: 'Verbintenis',
   datumSluitingFormatted: 'Geregistreerd op',
+  plaats: 'Plaats',
+  land: 'Land',
   datumOntbinding: [
     'Einddatum',
     (dateValue) => {
