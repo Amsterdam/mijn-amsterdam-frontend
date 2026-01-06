@@ -49,6 +49,7 @@ export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 export const featureToggle = {
   erfpachtActive: true,
   canonmatigingLinkActive: true,
+  afisFacturenTablesActive: !IS_PRODUCTION,
 };
 
 export const themaId = 'ERFPACHT' as const;

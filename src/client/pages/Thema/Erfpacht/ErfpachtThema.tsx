@@ -1,5 +1,6 @@
 import { Paragraph, Link, Heading } from '@amsterdam/design-system-react';
 
+import { featureToggle } from './Erfpacht-thema-config';
 import { useErfpachtThemaData } from './useErfpachtThemaData.hook';
 import { ErfpachtDossierFrontend } from '../../../../server/services/erfpacht/erfpacht-types';
 import { entries } from '../../../../universal/helpers/utils';
@@ -72,17 +73,19 @@ export function ErfpachtThema() {
       pageContentMain={
         <>
           {pageContentTables}
-          <AfisFacturenTables
-            factuurFilterFn={(factuur) =>
-              factuur.afzender.toLowerCase().includes('erfpacht')
-            }
-            themaContextParams={{
-              tableConfig: erfpachtFacturenTableConfig,
-              routeConfigDetailPage: routeConfig.detailPageFactuur,
-              routeConfigListPage: routeConfig.listPageFacturen,
-              themaId: id,
-            }}
-          />
+          {featureToggle.afisFacturenTablesActive && (
+            <AfisFacturenTables
+              factuurFilterFn={(factuur) =>
+                factuur.afzender.toLowerCase().includes('erfpacht')
+              }
+              themaContextParams={{
+                tableConfig: erfpachtFacturenTableConfig,
+                routeConfigDetailPage: routeConfig.detailPageFactuur,
+                routeConfigListPage: routeConfig.listPageFacturen,
+                themaId: id,
+              }}
+            />
+          )}
           <PageContentCell spanWide={8}>
             <MissingFacturenDescription />
           </PageContentCell>
@@ -97,19 +100,39 @@ function MissingFacturenDescription() {
     <>
       <Heading level={3}>Facturen</Heading>
       <Paragraph className="ams-mb-m">
-        Facturen vanaf 1 januari 2025 en nog niet betaalde facturen kunt u
-        inzien onder{' '}
-        <MaRouterLink href={afis.routeConfig.themaPage.path}>
-          {afis.themaTitle}.
-        </MaRouterLink>{' '}
-        Zoekt u een oudere factuur, stuur dan een e-mail naar{' '}
-        <Link
-          rel="noreferrer"
-          href="mailto:debiteurenadministratie@amsterdam.nl"
-        >
-          debiteurenadministratie@amsterdam.nl
-        </Link>
-        .
+        {!featureToggle.afisFacturenTablesActive ? (
+          <>
+            Facturen vanaf 1 januari 2025 en nog niet betaalde facturen kunt u
+            inzien onder{' '}
+            <MaRouterLink href={afis.routeConfig.themaPage.path}>
+              {afis.themaTitle}.
+            </MaRouterLink>{' '}
+            Zoekt u een oudere factuur, stuur dan een e-mail naar{' '}
+            <Link
+              rel="noreferrer"
+              href="mailto:debiteurenadministratie@amsterdam.nl"
+            >
+              debiteurenadministratie@amsterdam.nl
+            </Link>
+            .
+          </>
+        ) : (
+          <>
+            U ziet hier facturen vanaf 1 januari 2025. Staat uw factuur er niet
+            bij? Kijk dan bij{' '}
+            <MaRouterLink href={afis.routeConfig.themaPage.path}>
+              {afis.themaTitle}
+            </MaRouterLink>{' '}
+            of stuur een e-mail naar{' '}
+            <Link
+              rel="noreferrer"
+              href="mailto:debiteurenadministratie@amsterdam.nl"
+            >
+              debiteurenadministratie@amsterdam.nl
+            </Link>
+            .
+          </>
+        )}
       </Paragraph>
       <Heading level={4}>Factuur naar ander adres</Heading>
       <Paragraph className="ams-mb-m">
