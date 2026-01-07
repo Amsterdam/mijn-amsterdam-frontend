@@ -44,7 +44,6 @@ export function KlachtenThema() {
   });
   if (!featureToggle.statustreinAndAfgehandeldeMeldingenActive) {
     tables = tables.filter((table) => {
-      console.log(table);
       return table.key !== 'Afgehandelde klachten';
     });
   }
