@@ -469,16 +469,6 @@ describe('afis-e-mandates service (with nock)', () => {
         concerning: 'Automatische incasso Test',
         debtor_number: '123',
         due_date: '2025-07-11',
-        // first_name: 'John',
-        // invoices: [
-        //   {
-        //     invoice_amount: 1,
-        //     invoice_date: '2025-07-10',
-        //     invoice_description: 'Automatische incasso Test',
-        //     invoice_due_date: '2025-07-11',
-        //     invoice_number: 'EMandaat-ref-2025-07-10',
-        //   },
-        // ],
         last_name: 'Doe',
         payment_modules: ['emandate_recurring'],
         payment_reference: 'ref-123',

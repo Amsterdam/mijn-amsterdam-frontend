@@ -486,15 +486,6 @@ function createEMandateSignRequestPayload(
     return_url: returnUrl,
     cid: null,
     payment_modules: ['emandate_recurring'],
-    // invoices: [
-    //   {
-    //     invoice_number: invoiceNumber,
-    //     invoice_date: invoiceDate,
-    //     invoice_description: concerning,
-    //     invoice_amount: 1,
-    //     invoice_due_date: dueDate,
-    //   },
-    // ],
   };
 }
 
