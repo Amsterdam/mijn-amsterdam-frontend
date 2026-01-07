@@ -9,9 +9,11 @@ import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
 } from '../../../config/app';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
+import { IS_PRODUCTION } from '../../../../universal/config/env';
 
 export const featureToggle = {
   klachtenActive: true,
+  statustreinAndAfgehandeldeMeldingenActive: !IS_PRODUCTION,
 };
 
 export const themaId = 'KLACHTEN' as const;
@@ -66,14 +68,18 @@ const displayProps: DisplayProps<KlachtFrontend> = {
 
 export const tableConfig = {
   [listPageParamKind.lopend]: {
-    title: 'Openstaande klachten',
+    title: featureToggle.statustreinAndAfgehandeldeMeldingenActive
+      ? 'Openstaande klachten'
+      : 'Ingediende klachten',
     displayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
     listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.lopend,
       page: null,
     }),
-    filter: (klacht: KlachtFrontend) => klacht.displayStatus !== 'Afgehandeld',
+    filter: (klacht: KlachtFrontend) =>
+      !featureToggle.statustreinAndAfgehandeldeMeldingenActive ||
+      klacht.displayStatus !== 'Afgehandeld',
     sort: dateSort<KlachtFrontend>('ontvangstDatum'),
   },
   [listPageParamKind.eerder]: {

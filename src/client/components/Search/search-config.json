@@ -232,6 +232,19 @@
       "profileTypes": ["private", "commercial"]
     },
     {
+      "url": "/paspoort-en-id-kaart",
+      "displayTitle": "Paspoort en ID-kaart",
+      "description": "Gegevens over uw Paspoort en/of ID-kaart",
+      "keywords": [
+        "paspoort",
+        "id-kaart",
+        "identiteitskaart",
+        "reisdocument",
+        "id"
+      ],
+      "profileTypes": ["private"]
+    },
+    {
       "url": "/persoonlijke-gegevens",
       "displayTitle": "Persoonlijke gegevens (BRP)",
       "description": "Gegevens uit de BRP. In de Basisregistratie Personen legt de gemeente persoonsgegevens over u vast. Het gaat hier bijvoorbeeld om uw naam, adres, geboortedatum of uw burgerlijke staat.",

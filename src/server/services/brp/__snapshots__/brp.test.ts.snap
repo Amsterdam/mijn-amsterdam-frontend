@@ -115,6 +115,7 @@ exports[`brp.ts > fetchBrpByBsn > Should format response data correctly > Format
       "datumOntbindingFormatted": "5 november 2019",
       "datumSluiting": "2014-08-01",
       "datumSluitingFormatted": "1 augustus 2014",
+      "land": null,
       "persoon": {
         "geboortedatum": "1989-11-12",
         "geboortedatumFormatted": "12 november 1989",
@@ -128,6 +129,8 @@ exports[`brp.ts > fetchBrpByBsn > Should format response data correctly > Format
         "voornamen": null,
         "voorvoegselGeslachtsnaam": null,
       },
+      "plaats": null,
+      "soortVerbintenis": null,
     },
   },
   "status": "OK",
@@ -214,6 +217,7 @@ exports[`brp.ts > fetchBrpByBsn > Should format response data correctly > Format
       "datumOntbindingFormatted": null,
       "datumSluiting": "2002-02-02",
       "datumSluitingFormatted": "2 februari 2002",
+      "land": null,
       "persoon": {
         "geboortedatum": "1970-02-28",
         "geboortedatumFormatted": "28 februari 1970",
@@ -227,6 +231,8 @@ exports[`brp.ts > fetchBrpByBsn > Should format response data correctly > Format
         "voornamen": "Helène",
         "voorvoegselGeslachtsnaam": null,
       },
+      "plaats": null,
+      "soortVerbintenis": null,
     },
   },
   "failedDependencies": {

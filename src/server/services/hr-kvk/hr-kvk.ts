@@ -3,6 +3,7 @@ import {
   getFullDate,
   getPartialDateFormatted,
 } from './hr-kvk-helpers';
+import { featureToggle } from './hr-kvk-service-config';
 import type {
   NatuurlijkPersoon,
   KvkResponseFrontend,
@@ -330,7 +331,14 @@ async function fetchVestigingen(
 
 export async function fetchKVK(
   authProfileAndToken: AuthProfileAndToken
-): Promise<ApiResponse<KvkResponseFrontend>> {
+): Promise<ApiResponse<KvkResponseFrontend | null>> {
+  if (
+    authProfileAndToken.profile.profileType === 'private' &&
+    featureToggle.requestMACForPrivateUsers === false
+  ) {
+    return apiSuccessResult(null);
+  }
+
   const MACRequest = fetchMAC(authProfileAndToken);
   const vestigingenRequest = fetchVestigingen(authProfileAndToken);
   const [vestigingenResponse, MACResponse] = await Promise.allSettled([
