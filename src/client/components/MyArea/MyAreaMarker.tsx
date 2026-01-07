@@ -67,12 +67,12 @@ function MyAreaMarker({
       markerInstance
         .unbindTooltip()
         .bindTooltip(
-          `<div aria-label="Locatiegegevens" class="${
+          `<div aria-label="Locatie marker: ${label}" class="${
             styles.MarkerLabelText
           }">${label.replace(/\n/g, '<br/>')}</div>`,
           {
             className: styles.MarkerLabel,
-            permanent: true,
+            permanent: false,
             offset: [0, MARKER_LABEL_OFFSET],
             direction: 'bottom',
           }
