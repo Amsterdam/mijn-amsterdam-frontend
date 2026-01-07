@@ -506,7 +506,7 @@ export type POMSignRequestUrlPayload = {
   return_url: string;
   cid: null;
   payment_modules: ['emandate_recurring'];
-  invoices: [
+  invoices?: [
     {
       invoice_number: string;
       invoice_date: string;
