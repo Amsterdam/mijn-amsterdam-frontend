@@ -17,7 +17,7 @@ DESTINATION_FOLDER="/home/site/wwwroot/App_Data/jobs/triggered/"
 
 # Check if destination folder exists
 if [ ! -d "$DESTINATION_FOLDER" ]; then
-  echo "Error: Webjobs destination folder '$DESTINATION_FOLDER' does not exist." >&2
+  echo "Warning: Webjobs destination folder '$DESTINATION_FOLDER' does not exist."
 else
   echo "Merging contents into existing Webjobs folder '$DESTINATION_FOLDER'..."
   # https://unix.stackexchange.com/a/149504
