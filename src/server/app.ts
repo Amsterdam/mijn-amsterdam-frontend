@@ -26,6 +26,7 @@ if (debugResponseDataTerms && !debug?.includes('source-api-request:response')) {
   process.env.DEBUG = `source-api-request:response,${process.env.DEBUG ?? ''}`;
 }
 
+import path from 'node:path';
 import { HttpStatusCode } from 'axios';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
@@ -63,11 +64,11 @@ app.set('trust proxy', true);
 // Security, disable express header.
 app.disable('x-powered-by');
 
-const viewDir = __dirname.split('/').slice(-2, -1);
+const viewDir = __dirname.split(path.sep).slice(-2, -1);
 
 // Set-up view engine voor SSR
 app.set('view engine', 'pug');
-app.set('views', `${viewDir}/server/views`);
+app.set('views', path.join(...viewDir, 'server', 'views'));
 
 app.use(
   cors({
