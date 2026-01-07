@@ -463,7 +463,7 @@ describe('afis-e-mandates service (with nock)', () => {
       );
 
       expect(payload).toStrictEqual({
-        batch_name: 'batch-ref-123',
+        batch_name: 'mijnamsterdam-emandates-batch-2025-07-10',
         cid: null,
         company_name: 'Gemeente Amsterdam',
         concerning: 'Automatische incasso Test',

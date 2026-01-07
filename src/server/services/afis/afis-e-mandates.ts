@@ -461,7 +461,7 @@ function createEMandateSignRequestPayload(
 
   // TODO: Moet dit met een gegeven uit AFIS te koppelen zijn? - https://gemeente-amsterdam.atlassian.net/browse/MIJN-12289
   const paymentReference = `${creditor.refId}-${businessPartner.businessPartnerId}`;
-  const idBatch = `batch-${paymentReference}`;
+  const idBatch = `mijnamsterdam-emandates-batch-${isoDateFormat(today)}`;
   const idRequestClient = `${creditor.refId}-${businessPartner.businessPartnerId}-${isoDateString}`;
 
   // Paylinks are valid for 1 day
