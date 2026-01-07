@@ -196,13 +196,12 @@ async function updateAfisEMandate(
   payload: AfisEMandateUpdatePayload,
   transform?: (data: unknown) => Partial<AfisEMandateFrontend>
 ) {
-  const { IMandateId, ...payload_ } = payload;
   const config = await getAfisApiConfig({
     method: 'PUT',
-    data: payload_,
+    data: payload,
     enableCache: false,
     formatUrl: ({ url }) => {
-      return `${url}/ChangeMandate/ZGW_FI_MANDATE_SRV_01/Mandate_changeSet(IMandateId='${IMandateId}')`;
+      return `${url}/ChangeMandate/ZGW_FI_MANDATE_SRV_01/Mandate_changeSet(IMandateId='${payload.IMandateId}')`;
     },
     transformResponse: transform,
   });
