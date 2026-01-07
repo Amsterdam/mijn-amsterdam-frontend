@@ -19,7 +19,7 @@ export type ThemaConfigBase = {
   featureToggle: ThemaFeatureToggle;
   profileTypes: ProfileType[];
   uitlegPageSections: InfoSection;
-  getPageLinks: () => LinkProps[] | LinkProps[];
+  getPageLinks: () => LinkProps[];
   route: ThemaRouteConfig;
   redactedScope: RedactedScope;
 };
