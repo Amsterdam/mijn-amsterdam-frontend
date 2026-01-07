@@ -26,6 +26,7 @@ if (debugResponseDataTerms && !debug?.includes('source-api-request:response')) {
   process.env.DEBUG = `source-api-request:response,${process.env.DEBUG ?? ''}`;
 }
 
+import path from 'node:path';
 import { HttpStatusCode } from 'axios';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
