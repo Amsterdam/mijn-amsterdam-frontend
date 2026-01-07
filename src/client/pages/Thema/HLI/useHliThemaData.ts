@@ -1,6 +1,5 @@
 import { getThemaTitle } from './helpers';
 import {
-  kindTegoedPageLinkItem,
   listPageParamKind,
   listPageTitle,
   specificatieTableConfig,
@@ -59,7 +58,7 @@ export function useHliThemaData() {
     regelingen,
     specificaties,
     themaId: themaConfig.id,
-    title: themaConfig.title,
+    title,
     hasKindtegoed,
     isLoading: isLoading(HLI),
     isError: isError(HLI, false),
@@ -68,9 +67,7 @@ export function useHliThemaData() {
     specificatieTableConfig,
     listPageTitle,
     listPageParamKind,
-    linkListItems: hasKindtegoed
-      ? [...themaConfig.pageLinks, kindTegoedPageLinkItem]
-      : themaConfig.pageLinks,
+    linkListItems: themaConfig.getPageLinks(hasKindtegoed),
     breadcrumbs,
     regelingenListPageConfig: themaConfig.regelingenListPage,
     specificatieListPageConfig: themaConfig.specificatieListPage,
