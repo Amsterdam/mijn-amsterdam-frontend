@@ -270,6 +270,7 @@ describe('afis-e-mandates service (with nock)', () => {
                   SndIban: validSenderIBAN,
                   SndName1: 'A',
                   SndName2: 'B',
+                  Status: '1',
                 },
               },
             },
@@ -293,6 +294,40 @@ describe('afis-e-mandates service (with nock)', () => {
       expect(result.content?.[1].status).toBe('0');
       expect(result.content?.[1].senderIBAN).toBe(null);
       expect(result.content?.[1].senderName).toBe(null);
+    });
+
+    it('transforms status to inactive if mandate is not expired but status is other than 1', async () => {
+      remoteApi.get(/Mandate_readSet/).reply(200, {
+        feed: {
+          entry: [
+            {
+              content: {
+                properties: {
+                  IMandateId: '1',
+                  SndDebtorId: creditor.refId,
+                  LifetimeFrom: '2024-01-01T00:00:00',
+                  LifetimeTo: '9999-12-31T00:00:00',
+                  SndIban: validSenderIBAN,
+                  SndName1: 'A',
+                  SndName2: 'B',
+                  Status: '3',
+                },
+              },
+            },
+          ],
+        },
+      });
+
+      const result = await emandates.fetchEMandates(
+        { businessPartnerId: '123' },
+        authProfile
+      );
+      expect(result.status).toBe('OK');
+      expect(result.content?.length).toBe(
+        EMandateCreditorsGemeenteAmsterdam.length
+      );
+
+      expect(result.content?.[0].status).toBe('0');
     });
 
     it('handles error response from AFIS', async () => {
@@ -437,7 +472,7 @@ describe('afis-e-mandates service (with nock)', () => {
         first_name: 'John',
         invoices: [
           {
-            invoice_amount: 0,
+            invoice_amount: 0.1,
             invoice_date: '2025-07-10',
             invoice_description: 'Automatische incasso Test',
             invoice_due_date: '2025-07-11',
@@ -555,6 +590,7 @@ describe('afis-e-mandates service (with nock)', () => {
           SndIban: validSenderIBAN,
           SndName1: 'John',
           SndName2: 'Doe',
+          Status: '1',
         } as AfisEMandateSource
       );
       expect(result).toMatchObject({

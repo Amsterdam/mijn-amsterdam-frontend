@@ -27,6 +27,7 @@ import {
   getEmandateValidityDateFormatted,
   getFeedEntryProperties,
   isEmandateActive,
+  type EmandateStatusFrontend,
 } from './afis-helpers';
 import {
   type AfisBusinessPartnerDetailsTransformed,
@@ -292,7 +293,8 @@ function transformEMandateSource(
     ? isoDateFormat(afisEMandateSource.LifetimeTo)
     : null;
   const dateValidToFormatted = getEmandateValidityDateFormatted(dateValidTo);
-
+  const currentStatus = (afisEMandateSource?.Status ??
+    EMANDATE_STATUS_FRONTEND.OFF) as EmandateStatusFrontend;
   const isActive = isEmandateActive(dateValidTo);
   const id = slug(creditor.name);
   const eMandate: AfisEMandateFrontend = {
@@ -310,7 +312,7 @@ function transformEMandateSource(
     dateValidFromFormatted,
     dateValidTo,
     dateValidToFormatted,
-    status: getEmandateStatusFrontend(dateValidTo),
+    status: getEmandateStatusFrontend(currentStatus, dateValidTo),
     displayStatus: getEmandateDisplayStatus(
       dateValidTo,
       dateValidFromFormatted
@@ -490,7 +492,7 @@ function createEMandateSignRequestPayload(
         invoice_number: invoiceNumber,
         invoice_date: invoiceDate,
         invoice_description: concerning,
-        invoice_amount: 0,
+        invoice_amount: 0.1,
         invoice_due_date: dueDate,
       },
     ],
@@ -565,7 +567,10 @@ export async function deactivateEmandate(
     return {
       dateValidTo,
       dateValidToFormatted,
-      status: getEmandateStatusFrontend(dateValidTo),
+      status: getEmandateStatusFrontend(
+        EMANDATE_STATUS_FRONTEND.OFF,
+        dateValidTo
+      ),
       displayStatus: getEmandateDisplayStatus(
         dateValidTo,
         dateValidFromFormatted

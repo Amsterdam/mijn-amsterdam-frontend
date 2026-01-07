@@ -511,7 +511,7 @@ export type POMSignRequestUrlPayload = {
       invoice_number: string;
       invoice_date: string;
       invoice_description: string;
-      invoice_amount: 0;
+      invoice_amount: 0.1;
       invoice_due_date: string;
     },
   ];
