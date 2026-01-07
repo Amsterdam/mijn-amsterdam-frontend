@@ -64,16 +64,28 @@ export const themaConfig = {
     },
   },
   redactedScope: 'full',
-  pageLinks: [
-    {
-      title: 'Meer informatie over regelingen',
-      to: 'https://www.amsterdam.nl/werk-inkomen/hulp-bij-laag-inkomen/',
-    },
-    {
-      title: 'Meer informatie over Stadspas',
-      to: 'https://www.amsterdam.nl/stadspas',
-    },
-  ],
+  getPageLinks(hasKindtegoed?: boolean) {
+    const linkItems = [
+      {
+        title: 'Meer informatie over regelingen',
+        to: 'https://www.amsterdam.nl/werk-inkomen/hulp-bij-laag-inkomen/',
+      },
+      {
+        title: 'Meer informatie over Stadspas',
+        to: 'https://www.amsterdam.nl/stadspas',
+      },
+    ];
+    if (hasKindtegoed) {
+      return [
+        ...linkItems,
+        {
+          title: 'Meer informatie over Kindtegoed declareren',
+          to: 'https://www.amsterdam.nl/stadspas/kindtegoed/kosten-terugvragen/',
+        },
+      ];
+    }
+    return linkItems;
+  },
   // TODO MIJN-12294 > DONE but what does not work the featuretoggle Regelingen and/or stadspas, then it needs to be coded different
   uitlegPageSections: {
     title: THEMA_TITLE,
@@ -141,11 +153,6 @@ export const themaConfig = {
     },
   },
 } as const satisfies HLIThemaConfig;
-
-export const kindTegoedPageLinkItem = {
-  title: 'Meer informatie over Kindtegoed declareren',
-  to: 'https://www.amsterdam.nl/stadspas/kindtegoed/kosten-terugvragen/',
-} as const;
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
