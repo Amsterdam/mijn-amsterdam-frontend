@@ -55,6 +55,7 @@ import { captureException } from './services/monitoring';
 import { getFromEnv } from './helpers/env';
 import { notificationsExternalConsumerRouter } from './routing/router-notifications-external-consumer';
 import { router as privateNetworkRouter } from './routing/router-private';
+import path from 'node:path';
 
 const app = express();
 
@@ -63,7 +64,7 @@ app.set('trust proxy', true);
 // Security, disable express header.
 app.disable('x-powered-by');
 
-const viewDir = __dirname.split('/').slice(-2, -1);
+const viewDir = __dirname.split(path.delimiter).slice(-2, -1);
 
 // Set-up view engine voor SSR
 app.set('view engine', 'pug');
