@@ -437,7 +437,7 @@ export async function fetchEMandates(
 function transformEMandatesRedirectUrlResponse(
   responseData: POMSignRequestUrlResponseSource
 ): AfisEMandateSignRequestResponse | null {
-  if (responseData?.mpid) {
+  if (responseData?.paylink) {
     return { redirectUrl: responseData.paylink };
   }
   return null;
