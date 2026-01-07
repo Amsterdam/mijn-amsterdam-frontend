@@ -26,6 +26,7 @@ if (debugResponseDataTerms && !debug?.includes('source-api-request:response')) {
   process.env.DEBUG = `source-api-request:response,${process.env.DEBUG ?? ''}`;
 }
 
+import path from 'node:path';
 import { HttpStatusCode } from 'axios';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
@@ -55,7 +56,6 @@ import { captureException } from './services/monitoring';
 import { getFromEnv } from './helpers/env';
 import { notificationsExternalConsumerRouter } from './routing/router-notifications-external-consumer';
 import { router as privateNetworkRouter } from './routing/router-private';
-import path from 'node:path';
 
 const app = express();
 
