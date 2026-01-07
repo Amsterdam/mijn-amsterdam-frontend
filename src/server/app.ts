@@ -64,11 +64,11 @@ app.set('trust proxy', true);
 // Security, disable express header.
 app.disable('x-powered-by');
 
-const viewDir = __dirname.split(path.delimiter).slice(-2, -1);
+const viewDir = __dirname.split(path.sep).slice(-2, -1);
 
 // Set-up view engine voor SSR
 app.set('view engine', 'pug');
-app.set('views', `${viewDir}/server/views`);
+app.set('views', path.join(...viewDir, 'server', 'views'));
 
 app.use(
   cors({
