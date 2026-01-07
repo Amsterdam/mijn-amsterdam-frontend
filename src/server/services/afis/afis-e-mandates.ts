@@ -492,7 +492,7 @@ function createEMandateSignRequestPayload(
         invoice_number: invoiceNumber,
         invoice_date: invoiceDate,
         invoice_description: concerning,
-        invoice_amount: 0.1,
+        invoice_amount: 1,
         invoice_due_date: dueDate,
       },
     ],

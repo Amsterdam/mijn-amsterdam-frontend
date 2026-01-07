@@ -472,7 +472,7 @@ describe('afis-e-mandates service (with nock)', () => {
         first_name: 'John',
         invoices: [
           {
-            invoice_amount: 0.1,
+            invoice_amount: 1,
             invoice_date: '2025-07-10',
             invoice_description: 'Automatische incasso Test',
             invoice_due_date: '2025-07-11',
