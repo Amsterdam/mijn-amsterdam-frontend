@@ -281,7 +281,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
                   >
                     <a
                       class="ams-link _MaLink_10c0a4 _MaRouterLink__no-default-underline-fat_10c0a4"
-                      href="/facturen-en-betalen"
+                      href="/facturen-en-betalen/factuur/open/F001"
                     >
                       F001
                     </a>
@@ -317,7 +317,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
                   >
                     <a
                       class="ams-link _MaLink_10c0a4 _MaRouterLink__no-default-underline-fat_10c0a4"
-                      href="/facturen-en-betalen"
+                      href="/facturen-en-betalen/factuur/open/F003"
                     >
                       F003
                     </a>
@@ -425,7 +425,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
                   >
                     <a
                       class="ams-link _MaLink_10c0a4 _MaRouterLink__no-default-underline-fat_10c0a4"
-                      href="/facturen-en-betalen"
+                      href="/facturen-en-betalen/factuur/afgehandeld/F002"
                     >
                       F002
                     </a>
