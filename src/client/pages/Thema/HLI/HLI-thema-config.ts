@@ -10,7 +10,7 @@ import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 import { propagateFeatureToggles } from '../../../config/buildFeatureToggle';
 import type { PageConfig, ThemaConfigBase } from '../../../config/thema-types';
 
-const THEMA_TITLE = 'Stadspas en regelingen bij laag inkomen' as const;
+const THEMA_TITLE = 'Stadspas en regelingen bij laag inkomen!!!!!!!' as const;
 
 type HLIThemaConfig = ThemaConfigBase &
   PageConfig<'regelingenDetailPage'> &
