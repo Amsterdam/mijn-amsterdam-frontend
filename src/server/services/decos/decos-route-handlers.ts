@@ -9,9 +9,9 @@ import {
 } from './decos-service';
 import { DecosZaakBase } from './decos-types';
 import {
-  testAccountsDigid,
-  testAccountsEherkenning,
-  TestUserAccount,
+  testAccountDataDigid as testAccountDataDigid,
+  testAccountDataEherkenning as testAccountDataEherkenning,
+  TestUserData,
 } from '../../../universal/config/auth.development';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import { apiSuccessResult } from '../../../universal/helpers/api';
@@ -46,12 +46,9 @@ export async function handleFetchDecosDocumentsList(
   return sendResponse(res, response);
 }
 
-function getUserIdsByUsernames(
-  accounts: TestUserAccount[] | null,
-  username?: string
-) {
-  return accounts
-    ? accounts
+function getUserIds(testUserData: TestUserData | null, username?: string) {
+  return testUserData
+    ? testUserData.accounts
         .filter((account) => !username || account.username === username)
         .map((account) => account.bsn)
     : [];
@@ -113,8 +110,8 @@ export async function fetchZakenByUserIDs(
 
   const userIDsFromEnv =
     req.query.profileType === 'private'
-      ? getUserIdsByUsernames(testAccountsDigid, req.query.username)
-      : getUserIdsByUsernames(testAccountsEherkenning, req.query.username);
+      ? getUserIds(testAccountDataDigid, req.query.username)
+      : getUserIds(testAccountDataEherkenning, req.query.username);
 
   // Only allow fetching zaken for test accounts in non-production environments
   const userIDs =

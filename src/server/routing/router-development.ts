@@ -13,8 +13,8 @@ import {
   type RecordStr2,
 } from './route-helpers';
 import {
-  testAccountsDigid,
-  testAccountsEherkenning,
+  testAccountDataDigid,
+  testAccountDataEherkenning,
 } from '../../universal/config/auth.development';
 import { apiSuccessResult } from '../../universal/helpers/api';
 import {
@@ -112,17 +112,19 @@ authRouterDevelopment.get(
     res: Response
   ) => {
     const authMethod = req.params.authMethod;
-    const testAccounts =
-      authMethod === 'digid' ? testAccountsDigid : testAccountsEherkenning;
+    const testAccountData =
+      authMethod === 'digid'
+        ? testAccountDataDigid
+        : testAccountDataEherkenning;
 
-    if (!testAccounts) {
+    if (!testAccountData) {
       return sendBadRequest(
         res,
-        'Test accounts not available. Check env settings.'
+        'Test account data not available. Check env settings.'
       );
     }
 
-    const testAccounts_ = Object.values(testAccounts).map((testAccount) => {
+    const testAccounts_ = testAccountData.accounts.map((testAccount) => {
       const username = testAccount.username.trim().replace('Provincie-', '');
       const username_ = slug(username);
 
@@ -156,8 +158,8 @@ authRouterDevelopment.get(
     if (!req.params.user && testAccounts_.length > 1) {
       const renderProps = {
         title: `Selecteer ${authMethod} test account.`,
+        tableHeaders: testAccountData.tableHeaders,
         testAccounts: testAccounts_,
-        idLabel: authMethod === 'digid' ? 'Bsn' : 'KvK',
       };
 
       return res.render('select-test-account', renderProps);

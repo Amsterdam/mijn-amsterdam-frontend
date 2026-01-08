@@ -33,11 +33,8 @@ style.
 table
   thead
     tr
-      th Naam
-      th #{idLabel}
-      th Mokum
-      th Digid
-      th Omschrijving
+      each header in tableHeaders
+        th #{header}
   tbody
     each account in testAccounts
       tr

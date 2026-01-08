@@ -6,8 +6,17 @@ export const DEV_USER_ID_DEFAULT =
 
 const FALLBACK_DEV_ACCOUNT = `{"username":"dev","bsn":"${DEV_USER_ID_DEFAULT}","mokum":false,"hasDigid":true,"description":"Atestdescription."}`;
 
-export const testAccountsDigid = getTestAccounts('MA_TEST_ACCOUNTS');
-export const testAccountsEherkenning = getTestAccounts('MA_TEST_ACCOUNTS_EH');
+export const testAccountDataDigid = getTestAccountData('MA_TEST_ACCOUNTS');
+export const testAccountDataEherkenning = getTestAccountData(
+  'MA_TEST_ACCOUNTS_EH'
+);
+
+export type TestUserData = {
+  tableHeaders: TableHeaders;
+  accounts: TestUserAccount[];
+};
+
+type TableHeaders = string[];
 
 export type TestUserAccount = {
   username: string;
@@ -17,11 +26,11 @@ export type TestUserAccount = {
   description: string;
 };
 
-function getTestAccounts(envKey: string): TestUserAccount[] | null {
+function getTestAccountData(envKey: string): TestUserData | null {
   if (IS_PRODUCTION) {
     return null;
   }
   const accounts = getFromEnv(envKey, false) || FALLBACK_DEV_ACCOUNT;
-  const users: TestUserAccount[] = JSON.parse(accounts);
-  return users;
+  const testUserData: TestUserData = JSON.parse(accounts);
+  return testUserData;
 }
