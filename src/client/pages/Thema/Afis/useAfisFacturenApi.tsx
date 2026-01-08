@@ -1,9 +1,6 @@
 import { type ReactNode, useMemo } from 'react';
 
-import { generatePath } from 'react-router';
-
 import {
-  routeConfig,
   type AfisFacturenByStateFrontend,
   type AfisFactuurFrontend,
 } from './Afis-thema-config';
@@ -58,19 +55,9 @@ export function getDocumentLink(factuur: AfisFactuurFrontend): ReactNode {
   return null;
 }
 
-function transformFactuur(
-  factuur: AfisFactuur,
-  state: AfisFactuurStateFrontend,
-  detailPath: string = routeConfig.detailPage.path
-): AfisFactuurFrontend {
+function transformFactuur(factuur: AfisFactuur): AfisFactuurFrontend {
   const factuurNummerEl: ReactNode = (
-    <MaRouterLink
-      maVariant="fatNoDefaultUnderline"
-      href={generatePath(detailPath, {
-        factuurNummer: factuur.factuurNummer,
-        state,
-      })}
-    >
+    <MaRouterLink maVariant="fatNoDefaultUnderline" href={factuur.link.to}>
       {factuur.factuurNummer}
     </MaRouterLink>
   );
@@ -105,7 +92,7 @@ export function useTransformFacturen(
                 ...omit(facturenResponse, ['facturen']),
                 facturen:
                   facturenResponse?.facturen?.map((factuur) =>
-                    transformFactuur(factuur, state, detailPath)
+                    transformFactuur(factuur)
                   ) ?? [],
               },
             ])

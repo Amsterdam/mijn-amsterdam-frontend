@@ -42,11 +42,16 @@ export function AfisList({ themaContextParams }: AfisListProps) {
   useHTMLDocumentTitle(routeConfig);
 
   const listPageTableConfig = tableConfig[state];
+  const facturen_ = themaContextParams?.factuurFilterFn
+    ? facturen.filter((factuur) =>
+        themaContextParams.factuurFilterFn?.(factuur, state)
+      )
+    : facturen;
 
   return (
     <ListPagePaginated
       themaId={themaId}
-      items={facturen}
+      items={facturen_}
       pageContentTop={
         <PageContentCell>
           <AfisListPageBody state={state} />

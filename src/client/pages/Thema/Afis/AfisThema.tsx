@@ -14,7 +14,6 @@ import {
   useAfisThemaData,
   type AfisFacturenThemaContextParams,
 } from './useAfisThemaData.hook';
-import type { AfisFactuurState } from '../../../../server/services/afis/afis-types';
 import { entries } from '../../../../universal/helpers/utils';
 import { MaButtonRouterLink } from '../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../components/Page/Page';
@@ -99,20 +98,16 @@ export function AfisDisclaimerOvergedragenFacturen() {
 }
 
 type FacturenTablesProps = {
-  factuurFilterFn?: (
-    factuur: AfisFactuurFrontend,
-    state?: AfisFactuurState
-  ) => boolean;
   themaContextParams?: AfisFacturenThemaContextParams;
 };
 
 export function AfisFacturenTables({
-  factuurFilterFn,
   themaContextParams,
 }: FacturenTablesProps) {
   const { facturenByState, tableConfig } =
     useAfisFacturenData(themaContextParams);
   return entries(tableConfig)
+    .filter(([state]) => themaContextParams?.states?.includes(state) ?? true)
     .map(
       ([
         state,
@@ -120,14 +115,11 @@ export function AfisFacturenTables({
       ]) => {
         let totalItems = facturenByState?.[state]?.count ?? 0;
         let facturen = facturenByState?.[state]?.facturen ?? [];
-        if (factuurFilterFn && facturen.length) {
+        if (themaContextParams?.factuurFilterFn && facturen.length) {
           facturen = facturen.filter((factuur) =>
-            factuurFilterFn(factuur, state)
+            themaContextParams.factuurFilterFn?.(factuur, state)
           );
           totalItems = facturen.length;
-        }
-        if (!facturen.length) {
-          return null;
         }
         const contentAfterTheTitle =
           state === 'overgedragen' && !!facturen.length ? (

@@ -5,8 +5,10 @@ import {
   themaTitle,
   themaId as themaIdAfis,
   routeConfig,
+  type AfisFactuurFrontend,
 } from './Afis-thema-config';
 import { useTransformFacturen } from './useAfisFacturenApi';
+import type { AfisFactuurState } from '../../../../server/services/afis/afis-types';
 import {
   hasFailedDependency,
   isError,
@@ -29,6 +31,11 @@ export type AfisFacturenThemaContextParams = {
   tableConfig: typeof facturenTableConfig;
   routeConfigListPage: ThemaRouteConfig;
   routeConfigDetailPage: ThemaRouteConfig;
+  states?: Array<keyof typeof facturenTableConfig>;
+  factuurFilterFn?: (
+    factuur: AfisFactuurFrontend,
+    state?: AfisFactuurState
+  ) => boolean;
 };
 
 export function useAfisFacturenData(

@@ -1,6 +1,6 @@
 import { Paragraph, Link, Heading } from '@amsterdam/design-system-react';
 
-import { featureToggle } from './Erfpacht-thema-config';
+import { featureToggle, filterErfpachtFacturen } from './Erfpacht-thema-config';
 import { useErfpachtThemaData } from './useErfpachtThemaData.hook';
 import { ErfpachtDossierFrontend } from '../../../../server/services/erfpacht/erfpacht-types';
 import { entries } from '../../../../universal/helpers/utils';
@@ -75,14 +75,13 @@ export function ErfpachtThema() {
           {pageContentTables}
           {featureToggle.afisFacturenTablesActive && (
             <AfisFacturenTables
-              factuurFilterFn={(factuur) =>
-                factuur.afzender.toLowerCase().includes('erfpacht')
-              }
               themaContextParams={{
                 tableConfig: erfpachtFacturenTableConfig,
                 routeConfigDetailPage: routeConfig.detailPageFactuur,
                 routeConfigListPage: routeConfig.listPageFacturen,
                 themaId: id,
+                states: ['open'],
+                factuurFilterFn: filterErfpachtFacturen,
               }}
             />
           )}
@@ -118,8 +117,8 @@ function MissingFacturenDescription() {
           </>
         ) : (
           <>
-            U ziet hier facturen vanaf 1 januari 2025. Staat uw factuur er niet
-            bij? Kijk dan bij{' '}
+            U ziet hier openstaande facturen vanaf 1 januari 2025. Zoekt u een
+            andere factuur? Kijk dan bij{' '}
             <MaRouterLink href={afis.routeConfig.themaPage.path}>
               {afis.themaTitle}
             </MaRouterLink>{' '}

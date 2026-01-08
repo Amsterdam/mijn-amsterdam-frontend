@@ -117,7 +117,7 @@ function FactuurDetailContent({
 }
 
 type AfisListProps = {
-  themaContextParams?: AfisFacturenThemaContextParams;
+  themaContextParams?: Omit<AfisFacturenThemaContextParams, 'factuurFilterFn'>;
 };
 
 export function AfisFactuur({ themaContextParams }: AfisListProps) {

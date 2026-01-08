@@ -2,6 +2,7 @@ import {
   ERFPACHT_ZAKELIJK_ROUTE_DEFAULT,
   erfpachtFacturenTableConfig,
   featureToggle,
+  filterErfpachtFacturen,
   routeConfig,
   themaId,
   themaTitle,
@@ -46,6 +47,7 @@ export const ErfpachtRoutes = [
           tableConfig: erfpachtFacturenTableConfig,
           routeConfigListPage: routeConfig.listPageFacturen,
           routeConfigDetailPage: routeConfig.detailPageFactuur,
+          factuurFilterFn: filterErfpachtFacturen,
         }}
       />
     ),

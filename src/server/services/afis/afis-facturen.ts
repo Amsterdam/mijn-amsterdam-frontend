@@ -2,6 +2,7 @@ import { subYears } from 'date-fns';
 import { isToday } from 'date-fns/isToday';
 import { parseISO } from 'date-fns/parseISO';
 import Decimal from 'decimal.js';
+import { generatePath } from 'react-router';
 import slug from 'slugme';
 import { firstBy } from 'thenby';
 
@@ -248,6 +249,7 @@ function getInvoiceAmount(
 }
 
 function transformFactuur(
+  state: AfisFactuurState,
   sourceInvoice: XmlNullable<AfisFactuurPropertiesSource>,
   sessionID: SessionID,
   deelbetalingen?: AfisFactuurDeelbetalingen
@@ -314,7 +316,7 @@ function transformFactuur(
     paylink: invoice.Paylink ? invoice.Paylink : null,
     documentDownloadLink,
     link: {
-      to: documentDownloadLink ?? routeConfig.themaPage.path,
+      to: generatePath(routeConfig.detailPage.path, { state, factuurNummer }),
       title: `Factuur ${factuurNummer}`,
     },
   };
@@ -437,7 +439,12 @@ function transformFacturen(
         : true;
     })
     .map((invoiceProperties) => {
-      return transformFactuur(invoiceProperties, sessionID, deelbetalingen);
+      return transformFactuur(
+        state,
+        invoiceProperties,
+        sessionID,
+        deelbetalingen
+      );
     });
 
   return {
