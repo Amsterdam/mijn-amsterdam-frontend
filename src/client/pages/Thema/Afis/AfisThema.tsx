@@ -14,6 +14,7 @@ import {
   useAfisThemaData,
   type AfisFacturenThemaContextParams,
 } from './useAfisThemaData.hook';
+import type { AfisFactuurState } from '../../../../server/services/afis/afis-types';
 import { entries } from '../../../../universal/helpers/utils';
 import { MaButtonRouterLink } from '../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../components/Page/Page';
@@ -98,7 +99,10 @@ export function AfisDisclaimerOvergedragenFacturen() {
 }
 
 type FacturenTablesProps = {
-  factuurFilterFn?: (factuur: AfisFactuurFrontend) => boolean;
+  factuurFilterFn?: (
+    factuur: AfisFactuurFrontend,
+    state?: AfisFactuurState
+  ) => boolean;
   themaContextParams?: AfisFacturenThemaContextParams;
 };
 
@@ -114,9 +118,13 @@ export function AfisFacturenTables({
         state,
         { title, displayProps, maxItems, listPageLinkLabel, listPageRoute },
       ]) => {
+        let totalItems = facturenByState?.[state]?.count ?? 0;
         let facturen = facturenByState?.[state]?.facturen ?? [];
         if (factuurFilterFn && facturen.length) {
-          facturen = facturen.filter(factuurFilterFn);
+          facturen = facturen.filter((factuur) =>
+            factuurFilterFn(factuur, state)
+          );
+          totalItems = facturen.length;
         }
         if (!facturen.length) {
           return null;
@@ -133,7 +141,7 @@ export function AfisFacturenTables({
             zaken={facturen}
             displayProps={displayProps}
             maxItems={maxItems}
-            totalItems={facturenByState?.[state]?.count}
+            totalItems={totalItems}
             listPageLinkLabel={listPageLinkLabel}
             listPageRoute={listPageRoute}
           />

@@ -74,15 +74,6 @@ export function ErfpachtThema() {
         <>
           {pageContentTables}
           {featureToggle.afisFacturenTablesActive && (
-            /**
-             * Let op. Van de gesloten en overgedragen AFIS facturen halen we initieel alleen de gegevens
-             * op van de top 20 facturen het afgelopen jaar. Het zou kunnen dat in deze set AFIS facturen geen erfpachtfacturen zitten.
-             * In dat geval worden er geen facturen getoond in de gesloten of overgedragen tabellen hieronder. Dit is omdat we (nog) geen
-             * mechanisme hebben om specifiek alle erfpachtfacturen op te halen zonder eerst de volledige lijst met facturen op te halen.
-             *
-             * De openstaande facturen zijn wel altijd up-to-date.
-             * Dit is een geaccepteerde beperking voor nu om performance redenen.
-             */
             <AfisFacturenTables
               factuurFilterFn={(factuur) =>
                 factuur.afzender.toLowerCase().includes('erfpacht')

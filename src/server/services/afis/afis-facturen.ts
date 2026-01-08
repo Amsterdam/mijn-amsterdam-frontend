@@ -689,7 +689,7 @@ export async function fetchAfisFacturenOverview(
     excludeAccountingDocumentIds: getTermijnFactuurAccountingDocumentIds(
       facturenOpenResult.content?.facturen ?? []
     ),
-    top: '20',
+    top: '3',
     dateFrom: isoDateTimeFormatCompact(subYears(now, 1)),
     dateTo: isoDateTimeFormatCompact(now),
   });
@@ -697,7 +697,7 @@ export async function fetchAfisFacturenOverview(
   const facturenTransferredRequest = fetchAfisFacturen(sessionID, {
     state: 'overgedragen',
     businessPartnerID: params.businessPartnerID,
-    top: '10',
+    top: '3',
     dateFrom: isoDateTimeFormatCompact(subYears(now, 1)),
     dateTo: isoDateTimeFormatCompact(now),
   });
