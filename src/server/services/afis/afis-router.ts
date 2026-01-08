@@ -14,12 +14,18 @@ import {
   handleFetchAfisFacturen,
   type AfisFacturenRouteParams,
 } from './afis-route-handlers';
-import { routes } from './afis-service-config';
+import {
+  OAUTH_ROLE_AFIS_EMANDATE_SIGN_REQUEST_STATUS_NOTIFY,
+  routes,
+} from './afis-service-config';
 import type {
   BusinessPartnerIdPayload,
   EMandateLifetimeChangePayload,
   EMandateSignRequestPayload,
 } from './afis-types';
+import { IS_TAP } from '../../../universal/config/env';
+import { conditional } from '../../helpers/middleware';
+import { OAuthVerificationHandler } from '../../routing/route-handlers';
 import { createBFFRouter } from '../../routing/route-helpers';
 import { attachDocumentDownloadRoute } from '../shared/document-download-route-handler';
 
@@ -144,6 +150,12 @@ const routerPrivate = createBFFRouter({
 
 routerPrivate.post(
   routes.private.AFIS_EMANDATE_SIGN_REQUEST_STATUS_NOTIFY,
+  conditional(
+    IS_TAP,
+    OAuthVerificationHandler(
+      OAUTH_ROLE_AFIS_EMANDATE_SIGN_REQUEST_STATUS_NOTIFY
+    )
+  ),
   handleAfisEMandateSignRequestStatusNotification
 );
 
