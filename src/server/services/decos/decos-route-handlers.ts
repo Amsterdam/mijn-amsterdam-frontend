@@ -11,6 +11,7 @@ import { DecosZaakBase } from './decos-types';
 import {
   testAccountsDigid,
   testAccountsEherkenning,
+  TestUserAccount,
 } from '../../../universal/config/auth.development';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import { apiSuccessResult } from '../../../universal/helpers/api';
@@ -46,13 +47,13 @@ export async function handleFetchDecosDocumentsList(
 }
 
 function getUserIdsByUsernames(
-  accounts: Record<string, string> | null,
+  accounts: TestUserAccount[] | null,
   username?: string
 ) {
   return accounts
-    ? Object.entries(accounts)
-        .filter(([username_]) => !username || username_ === username)
-        .map(([_username, userID]) => userID)
+    ? accounts
+        .filter((account) => !username || account.username === username)
+        .map((account) => account.bsn)
     : [];
 }
 

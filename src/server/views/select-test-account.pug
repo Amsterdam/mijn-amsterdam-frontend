@@ -35,10 +35,16 @@ table
     tr
       th Naam
       th #{idLabel}
+      th Mokum
+      th Digid
+      th Omschrijving
   tbody
-    each account in list
+    each account in testAccounts
       tr
         td
-          a(href=account.href)
-            div(class="test-account-name") #{account.name}
-        td #{account.id}
+          a(href=account.authLoginRoute)
+            div(class="test-account-name") #{account.username}
+        td #{account.profileId}
+        td #{account.mokum}
+        td #{account.hasDigid}
+        td #{account.description}

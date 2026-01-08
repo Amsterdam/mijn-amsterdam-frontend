@@ -122,43 +122,48 @@ authRouterDevelopment.get(
       );
     }
 
-    const allUsernames = Object.entries(testAccounts).map(([name, id]) => {
-      const name_ = name.trim().replace('Provincie-', '');
-      const user = slug(name_);
-      const href = generateFullApiUrlBFF(
-        `${authMethod === 'digid' ? authRoutes.AUTH_LOGIN_DIGID : authRoutes.AUTH_LOGIN_EHERKENNING}/${user}`,
+    const testAccounts_ = Object.values(testAccounts).map((testAccount) => {
+      const username = testAccount.username.trim().replace('Provincie-', '');
+      const username_ = slug(username);
+
+      const authLoginRoute = generateFullApiUrlBFF(
+        `${authMethod === 'digid' ? authRoutes.AUTH_LOGIN_DIGID : authRoutes.AUTH_LOGIN_EHERKENNING}/${username_}`,
         [req.query as RecordStr2]
       );
 
-      if (!id) {
-        throw new Error(`No id found for test account ${name}`);
+      if (!testAccount.bsn) {
+        throw new Error(`No id found for test account ${testAccount.username}`);
       }
 
       return {
-        user,
-        href,
-        name: name_,
-        mokum: name.startsWith('Provincie') ? 'Nee' : 'Ja',
-        id,
+        ...testAccount,
+        authLoginRoute,
+        username: username_,
+        profileId: testAccount.bsn,
+        mokum:
+          testAccount.mokum || testAccount.username.startsWith('Provincie')
+            ? 'Nee'
+            : 'Ja',
+        hasDigid: testAccount.hasDigid ? 'Ja' : 'Nee',
       };
     });
 
     const user =
       (req.params.user
-        ? allUsernames.find((u) => u.user === req.params.user)
-        : null) ?? allUsernames[0];
+        ? testAccounts_.find((u) => u.username === req.params.user)
+        : null) ?? testAccounts_[0];
 
-    if (!req.params.user && allUsernames.length > 1) {
+    if (!req.params.user && testAccounts_.length > 1) {
       const renderProps = {
         title: `Selecteer ${authMethod} test account.`,
-        list: allUsernames,
+        testAccounts: testAccounts_,
         idLabel: authMethod === 'digid' ? 'Bsn' : 'KvK',
       };
 
       return res.render('select-test-account', renderProps);
     }
 
-    const userId = user.id;
+    const userId = user.bsn;
 
     countLoggedInVisit(userId, authMethod);
 
