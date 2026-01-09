@@ -70,10 +70,5 @@ function getTestAccountData(envKey: string): TestUserData | null {
   const accounts =
     getFromEnv(envKey, false) || JSON.stringify(FALLBACK_TEST_USER_DATA);
   const testUserData: TestUserData = JSON.parse(accounts);
-  testUserData.accounts.forEach((account) => {
-    if (!account.profileId) {
-      throw new Error(`No id found for test account ${account.username}`);
-    }
-  });
   return testUserData;
 }

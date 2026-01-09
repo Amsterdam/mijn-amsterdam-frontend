@@ -125,10 +125,7 @@ authRouterDevelopment.get(
     }
 
     let testAccounts = testAccountData.accounts.map((account) => {
-      let mokum: boolean | undefined;
-      if (account.mokum || account.username.startsWith('Provincie')) {
-        mokum = true;
-      }
+      const mokum = account.username.startsWith('Provincie') || account.mokum;
       let username = account.username.trim().replace('Provincie-', '');
       username = slug(username);
       return { ...account, username, mokum };
@@ -224,9 +221,41 @@ type TableRows = string[][];
 function formatForTable(accountData: TestUserData): [TableHeaders, TableRows] {
   const tableHeaders = accountData.tableHeaders.map((h) => h.displayName);
   const keyOrder: Record<string, number> = {};
-  accountData.tableHeaders.forEach((h, i) => (keyOrder[h.key] = i));
+  accountData.tableHeaders.forEach((th, i) => (keyOrder[th.key] = i));
 
-  const tableRows = accountData.accounts.map((account) => {
+  accountData.accounts.forEach((account) => {
+    if (!account.profileId) {
+      throw new Error(`No id found for test account ${account.username}`);
+    }
+    accountData.tableHeaders.forEach(({ key }) => {
+      if (!Object.keys(account).includes(key)) {
+        throw new Error(
+          `tableHeader with key '${key}' not found in test account with profileId '${account.profileId}'`
+        );
+      }
+    });
+  });
+
+  const missingKeys: string[] = [];
+  Object.keys(accountData.accounts[0]).forEach((key) => {
+    if (
+      !accountData.tableHeaders.some((th) => {
+        return th.key === key;
+      })
+    ) {
+      missingKeys.push(key);
+    }
+  });
+
+  const accounts = accountData.accounts.map((account) => {
+    const entries = Object.entries(account);
+    const withoutMissingKeys = entries.filter(([key]) => {
+      return !missingKeys.includes(key);
+    });
+    return Object.fromEntries(withoutMissingKeys);
+  });
+
+  const tableRows = accounts.map((account) => {
     const sortedEntries = Object.entries(account).toSorted(([keyA], [keyB]) => {
       return keyOrder[keyA] < keyOrder[keyB] ? -1 : 1;
     });
