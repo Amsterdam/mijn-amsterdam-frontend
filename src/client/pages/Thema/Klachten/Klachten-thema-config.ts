@@ -1,6 +1,7 @@
 import { generatePath } from 'react-router';
 
 import { KlachtFrontend } from '../../../../server/services/klachten/types';
+import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { dateSort } from '../../../../universal/helpers/date';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
@@ -9,7 +10,6 @@ import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
 } from '../../../config/app';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
-import { IS_PRODUCTION } from '../../../../universal/config/env';
 
 export const featureToggle = {
   klachtenActive: true,
@@ -47,10 +47,13 @@ export const routeConfig = {
   },
 } as const satisfies ThemaRoutesConfig;
 
+export const KLACHEN_AMSTERDAM_URL_KLACHT_INDIENEN =
+  'https://www.amsterdam.nl/contact/klacht-indienen-gemeente';
+
 export const LinkListItems: LinkProps[] = [
   {
     title: 'Meer informatie over de afhandeling van uw klacht',
-    to: 'https://www.amsterdam.nl/veelgevraagd/klacht-indienen-over-de-gemeente-42fd5#case_%7B9846AD0A-E989-4B5D-A1D3-6D79E34DF1BE%7D',
+    to: KLACHEN_AMSTERDAM_URL_KLACHT_INDIENEN,
   },
 ];
 
