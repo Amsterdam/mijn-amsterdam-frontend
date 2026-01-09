@@ -47,13 +47,13 @@ export const routeConfig = {
   },
 } as const satisfies ThemaRoutesConfig;
 
-export const KLACHEN_AMSTERDAM_URL_KLACHT_INDIENEN =
+export const KLACHTEN_AMSTERDAM_URL_KLACHT_INDIENEN =
   'https://www.amsterdam.nl/contact/klacht-indienen-gemeente';
 
 export const LinkListItems: LinkProps[] = [
   {
     title: 'Meer informatie over de afhandeling van uw klacht',
-    to: KLACHEN_AMSTERDAM_URL_KLACHT_INDIENEN,
+    to: KLACHTEN_AMSTERDAM_URL_KLACHT_INDIENEN,
   },
 ];
 

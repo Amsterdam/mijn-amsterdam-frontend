@@ -4,7 +4,7 @@ import UID from 'uid-safe';
 
 import {
   featureToggle,
-  KLACHEN_AMSTERDAM_URL_KLACHT_INDIENEN,
+  KLACHTEN_AMSTERDAM_URL_KLACHT_INDIENEN,
   routeConfig,
   themaId,
   themaTitle,
@@ -103,7 +103,7 @@ export function transformKlachtenResponse(
     const dateClosed = smileDateParser(
       klachtSource.klacht_finishedon.value ?? ''
     );
-    const url = `<a href="${KLACHEN_AMSTERDAM_URL_KLACHT_INDIENEN}">Meer informatie</a>`;
+    const url = `<a href="${KLACHTEN_AMSTERDAM_URL_KLACHT_INDIENEN}">Meer informatie</a>`;
     const steps = featureToggle.statustreinAndAfgehandeldeMeldingenActive
       ? [
           {
