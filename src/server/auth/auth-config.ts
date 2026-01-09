@@ -8,7 +8,6 @@ import { TokenData } from './auth-types';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { ONE_HOUR_MS, ONE_MINUTE_SECONDS } from '../config/app';
 import { getFromEnv } from '../helpers/env';
-import { asEnum } from '../../universal/helpers/utils';
 
 // Amsterdam App return to url config
 export const RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER =
@@ -153,8 +152,3 @@ export const OIDC_TOKEN_AUD_ATTRIBUTE_VALUE = {
     return oidcConfigDigid.clientID;
   },
 };
-
-export const OAUTH_ROLES = asEnum([
-  'wmo.voorzieningen',
-  'afis.e-mandates.sign-request-status-notify',
-] as const);

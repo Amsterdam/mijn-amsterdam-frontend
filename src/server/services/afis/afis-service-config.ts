@@ -14,6 +14,9 @@ export const featureToggle = {
   filterOutUndownloadableFacturenActive: IS_OT || IS_PRODUCTION,
 } as const;
 
+export const OAUTH_ROLE_AFIS_EMANDATE_SIGN_REQUEST_STATUS_NOTIFY =
+  'afis.e-mandates.sign-request-status-notify' as const;
+
 export const routes = {
   private: {
     // This endpoint is reached over the private network from the EnableU network.
