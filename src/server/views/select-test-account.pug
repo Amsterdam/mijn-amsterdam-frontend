@@ -36,12 +36,7 @@ table
       each header in tableHeaders
         th #{header}
   tbody
-    each account in testAccounts
+    each row in tableRows
       tr
-        td
-          a(href=account.authLoginRoute)
-            div(class="test-account-name") #{account.username}
-        td #{account.profileId}
-        td #{account.mokum}
-        td #{account.hasDigid}
-        td #{account.description}
+        each field in row
+          td !{field}

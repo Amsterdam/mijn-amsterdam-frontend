@@ -10,11 +10,11 @@ import {
   generateFullApiUrlBFF,
   sendBadRequest,
   sendUnauthorized,
-  type RecordStr2,
 } from './route-helpers';
 import {
   testAccountDataDigid,
   testAccountDataEherkenning,
+  TestUserData,
 } from '../../universal/config/auth.development';
 import { apiSuccessResult } from '../../universal/helpers/api';
 import {
@@ -124,55 +124,55 @@ authRouterDevelopment.get(
       );
     }
 
-    const testAccounts_ = testAccountData.accounts.map((testAccount) => {
-      const username = testAccount.username.trim().replace('Provincie-', '');
-      const username_ = slug(username);
-
-      const authLoginRoute = generateFullApiUrlBFF(
-        `${authMethod === 'digid' ? authRoutes.AUTH_LOGIN_DIGID : authRoutes.AUTH_LOGIN_EHERKENNING}/${username_}`,
-        [req.query as RecordStr2]
-      );
-
-      if (!testAccount.bsn) {
-        throw new Error(`No id found for test account ${testAccount.username}`);
+    let testAccounts = testAccountData.accounts.map((account) => {
+      let mokum: boolean | undefined;
+      if (account.mokum || account.username.startsWith('Provincie')) {
+        mokum = true;
       }
-
-      return {
-        ...testAccount,
-        authLoginRoute,
-        username: username_,
-        profileId: testAccount.bsn,
-        mokum:
-          testAccount.mokum || testAccount.username.startsWith('Provincie')
-            ? 'Nee'
-            : 'Ja',
-        hasDigid: testAccount.hasDigid ? 'Ja' : 'Nee',
-      };
+      let username = account.username.trim().replace('Provincie-', '');
+      username = slug(username);
+      return { ...account, username, mokum };
     });
 
     const user =
       (req.params.user
-        ? testAccounts_.find((u) => u.username === req.params.user)
-        : null) ?? testAccounts_[0];
+        ? testAccounts.find((user) => user.username === req.params.user)
+        : null) ?? testAccountData.accounts[0];
 
-    if (!req.params.user && testAccounts_.length > 1) {
+    const authRoute = `${authMethod === 'digid' ? authRoutes.AUTH_LOGIN_DIGID : authRoutes.AUTH_LOGIN_EHERKENNING}`;
+
+    testAccounts = testAccounts.map((account) => {
+      const authLoginRoute = generateFullApiUrlBFF(
+        `${authRoute}/${account.username}`,
+        [req.query as Record<string, string>]
+      );
+      const href = `<a href="${authLoginRoute}">
+                      <div class="test-account-name">${account.username}</div>
+                    </a>`;
+      return { ...account, username: href };
+    });
+
+    const [tableHeaders, tableRows] = formatForTable({
+      ...testAccountData,
+      accounts: testAccounts,
+    } as TestUserData);
+
+    if (!req.params.user && testAccountData.accounts.length > 1) {
       const renderProps = {
         title: `Selecteer ${authMethod} test account.`,
-        tableHeaders: testAccountData.tableHeaders,
-        testAccounts: testAccounts_,
+        tableHeaders,
+        tableRows,
       };
 
       return res.render('select-test-account', renderProps);
     }
 
-    const userId = user.bsn;
-
-    countLoggedInVisit(userId, authMethod);
+    countLoggedInVisit(user.profileId, authMethod);
 
     const SESSION_ID_BYTE_LENGTH = 18;
     const sessionID = UID.sync(SESSION_ID_BYTE_LENGTH);
     const authProfile: AuthProfile = {
-      id: userId,
+      id: user.profileId,
       authMethod,
       profileType: authMethod === 'digid' ? 'private' : 'commercial',
       sid: sessionID,
@@ -217,6 +217,31 @@ authRouterDevelopment.get(
     return res.redirect(redirectUrl);
   }
 );
+
+type TableHeaders = string[];
+type TableRows = string[][];
+
+function formatForTable(accountData: TestUserData): [TableHeaders, TableRows] {
+  const tableHeaders = accountData.tableHeaders.map((h) => h.displayName);
+  const keyOrder: Record<string, number> = {};
+  accountData.tableHeaders.forEach((h, i) => (keyOrder[h.key] = i));
+
+  const tableRows = accountData.accounts.map((account) => {
+    const sortedEntries = Object.entries(account).toSorted(([keyA], [keyB]) => {
+      return keyOrder[keyA] < keyOrder[keyB] ? -1 : 1;
+    });
+
+    const fields = sortedEntries.map(([_, v]) => {
+      if (typeof v === 'boolean') {
+        return v ? 'Ja' : 'Nee';
+      }
+      return v;
+    });
+    return fields;
+  });
+
+  return [tableHeaders, tableRows];
+}
 
 authRouterDevelopment.get(
   [

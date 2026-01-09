@@ -50,7 +50,7 @@ function getUserIds(testUserData: TestUserData | null, username?: string) {
   return testUserData
     ? testUserData.accounts
         .filter((account) => !username || account.username === username)
-        .map((account) => account.bsn)
+        .map((account) => account.profileId)
     : [];
 }
 
