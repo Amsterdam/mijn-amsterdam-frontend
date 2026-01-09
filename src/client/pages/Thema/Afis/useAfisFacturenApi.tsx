@@ -70,8 +70,7 @@ function transformFactuur(factuur: AfisFactuur): AfisFactuurFrontend {
 }
 
 export function useTransformFacturen(
-  facturenByState: Partial<AfisFacturenOverviewResponse> | null,
-  detailPath?: string
+  facturenByState: Partial<AfisFacturenOverviewResponse> | null
 ): AfisFacturenByStateFrontend | null {
   const facturenByStateTransformed: AfisFacturenByStateFrontend | null =
     useMemo(() => {
@@ -99,7 +98,7 @@ export function useTransformFacturen(
         );
       }
       return null;
-    }, [facturenByState, detailPath]);
+    }, [facturenByState]);
 
   return facturenByStateTransformed;
 }
@@ -135,8 +134,7 @@ export function useAfisFacturenApi(
       ? {
           [facturenResponse.state]: facturenResponse,
         }
-      : null,
-    detailPath
+      : null
   );
 
   return {

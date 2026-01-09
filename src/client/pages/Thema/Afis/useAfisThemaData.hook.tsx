@@ -50,10 +50,7 @@ export function useAfisFacturenData(
   const { AFIS } = useAppStateGetter();
   const businessPartnerIdEncrypted =
     AFIS.content?.businessPartnerIdEncrypted ?? null;
-  const facturenByState = useTransformFacturen(
-    AFIS.content?.facturen ?? null,
-    routeConfigDetailPage.path
-  );
+  const facturenByState = useTransformFacturen(AFIS.content?.facturen ?? null);
 
   return {
     isThemaPaginaError: isError(AFIS, false),
