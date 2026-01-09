@@ -1,6 +1,8 @@
+import { subYears } from 'date-fns';
 import { isToday } from 'date-fns/isToday';
 import { parseISO } from 'date-fns/parseISO';
 import Decimal from 'decimal.js';
+import { generatePath } from 'react-router';
 import slug from 'slugme';
 import { firstBy } from 'thenby';
 
@@ -32,6 +34,7 @@ import {
   dateSort,
   defaultDateFormat,
   isDateInPast,
+  isoDateTimeFormatCompact,
 } from '../../../universal/helpers/date';
 import { toDateFormatted } from '../../../universal/helpers/date';
 import {
@@ -128,6 +131,21 @@ function getExcludeAccountingDocumentIdsFilter(params: AfisFacturenParams) {
   return ` and (${docIdFilters})`;
 }
 
+function getDateRangeFilter(params: AfisFacturenParams) {
+  if (!params.dateFrom && !params.dateTo) {
+    return '';
+  }
+
+  let dateFilter = '';
+  if (params.dateFrom) {
+    dateFilter += ` and (AccountingDocumentCreationDate ge datetime'${params.dateFrom}')`;
+  }
+  if (params.dateTo) {
+    dateFilter += ` and (AccountingDocumentCreationDate le datetime'${params.dateTo}')`;
+  }
+  return dateFilter;
+}
+
 function getFactuurRequestQueryParams(
   params: AfisFacturenParams
 ): Record<string, string> {
@@ -151,7 +169,7 @@ function getFactuurRequestQueryParams(
   const top = params.top
     ? Math.min(parseInt(params.top, 10), AFIS_MAX_FACTUREN_TOP)
     : AFIS_MAX_FACTUREN_TOP;
-  const query = `?$inlinecount=allpages&${filters[params.state]}${getAccountingDocumentTypesFilter(params.state)}${getIncludeAccountingDocumentIdsFilter(params)}${getExcludeAccountingDocumentIdsFilter(params)}&${selectFieldsQueryByState[params.state]}&${orderByQueryByState[params.state]}&$top=${top}`;
+  const query = `?$inlinecount=allpages&${filters[params.state]}${getDateRangeFilter(params)}${getAccountingDocumentTypesFilter(params.state)}${getIncludeAccountingDocumentIdsFilter(params)}${getExcludeAccountingDocumentIdsFilter(params)}&${selectFieldsQueryByState[params.state]}&${orderByQueryByState[params.state]}&$top=${top}`;
 
   return getRequestParamsFromQueryString(query);
 }
@@ -231,6 +249,7 @@ function getInvoiceAmount(
 }
 
 function transformFactuur(
+  state: AfisFactuurState,
   sourceInvoice: XmlNullable<AfisFactuurPropertiesSource>,
   sessionID: SessionID,
   deelbetalingen?: AfisFactuurDeelbetalingen
@@ -297,7 +316,7 @@ function transformFactuur(
     paylink: invoice.Paylink ? invoice.Paylink : null,
     documentDownloadLink,
     link: {
-      to: documentDownloadLink ?? routeConfig.themaPage.path,
+      to: generatePath(routeConfig.detailPage.path, { state, factuurNummer }),
       title: `Factuur ${factuurNummer}`,
     },
   };
@@ -420,7 +439,12 @@ function transformFacturen(
         : true;
     })
     .map((invoiceProperties) => {
-      return transformFactuur(invoiceProperties, sessionID, deelbetalingen);
+      return transformFactuur(
+        state,
+        invoiceProperties,
+        sessionID,
+        deelbetalingen
+      );
     });
 
   return {
@@ -665,7 +689,7 @@ export async function fetchAfisFacturenOverview(
     await fetchAfisOpenFacturenIncludingAfgehandeldeTermijnFacturen(sessionID, {
       businessPartnerID: params.businessPartnerID,
     });
-
+  const now = new Date();
   const facturenClosedRequest = fetchAfisFacturen(sessionID, {
     state: 'afgehandeld',
     businessPartnerID: params.businessPartnerID,
@@ -673,12 +697,16 @@ export async function fetchAfisFacturenOverview(
       facturenOpenResult.content?.facturen ?? []
     ),
     top: '3',
+    dateFrom: isoDateTimeFormatCompact(subYears(now, 1)),
+    dateTo: isoDateTimeFormatCompact(now),
   });
 
   const facturenTransferredRequest = fetchAfisFacturen(sessionID, {
     state: 'overgedragen',
     businessPartnerID: params.businessPartnerID,
     top: '3',
+    dateFrom: isoDateTimeFormatCompact(subYears(now, 1)),
+    dateTo: isoDateTimeFormatCompact(now),
   });
 
   const [facturenClosedResponse, facturenTransferredResponse] =
