@@ -357,6 +357,11 @@ const ApiConfig_ = {
       'Content-Type': 'application/json',
     },
   },
+  ZWD_VVE: {
+    url: `${getFromEnv('BFF_VVE_API_BASE_URL')}`,
+    method: 'GET',
+    headers: { Authorization: `Token ${getFromEnv('BFF_VVE_API_TOKEN')}` },
+  },
 } as const;
 
 export const ApiConfig: Record<SourceApiName, DataRequestConfig> = ApiConfig_;
