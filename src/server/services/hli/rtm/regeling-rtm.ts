@@ -649,6 +649,9 @@ export function transformRTMAanvragen(
 export async function fetchRTMSpecificaties(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<HLIRegelingSpecificatieFrontend[]>> {
+  if (!themaConfig.featureToggle.regelingen.active) {
+    return apiSuccessResult([]);
+  }
   const response = await fetchZorgnedAanvragenHLI(
     authProfileAndToken.profile.id
   );
