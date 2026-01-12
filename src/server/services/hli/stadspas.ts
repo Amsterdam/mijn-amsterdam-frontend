@@ -33,6 +33,10 @@ import { routes } from './hli-service-config';
 export async function fetchStadspas(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<StadspasResponseFrontend>> {
+  if (!themaConfig.featureToggle.stadspas.active) {
+    return apiSuccessResult({ stadspassen: [], dateExpiryFormatted: null });
+  }
+
   const stadspasResponse = await fetchStadspassen(
     authProfileAndToken.profile.id
   );

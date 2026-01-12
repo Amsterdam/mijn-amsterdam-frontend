@@ -23,6 +23,7 @@ import {
 } from './status-line-items/regeling-pcvergoeding';
 import { themaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import {
+  ApiResponse,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
@@ -224,7 +225,9 @@ function transformRegelingenForFrontend(
   return dedupeDocumentsInDataSets(regelingenFrontendSorted, 'documents');
 }
 
-async function fetchRegelingen(authProfileAndToken: AuthProfileAndToken) {
+async function fetchRegelingen(
+  authProfileAndToken: AuthProfileAndToken
+): Promise<ApiResponse<HLIRegelingFrontend[]>> {
   if (!themaConfig.featureToggle.regelingen.active) {
     return apiSuccessResult([]);
   }
