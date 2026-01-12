@@ -46,4 +46,9 @@
   text-align: center;
   font-weight: bold;
   width: max-content;
+  max-width: 100px;
+  text-overflow: ellipsis;
+  white-space: wrap;
+  overflow: hidden;
+  display: block;
 }

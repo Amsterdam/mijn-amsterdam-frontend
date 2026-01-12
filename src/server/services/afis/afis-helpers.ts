@@ -61,9 +61,15 @@ export const EMANDATE_STATUS_FRONTEND = {
   OFF: '0', // AfisEMandateStatusCodes['0'],
 } as const;
 
-export function getEmandateStatusFrontend(dateValidTo: string | null) {
-  // return EMANDATE_STATUS.ON;
-  return isEmandateActive(dateValidTo)
+export type EmandateStatusFrontend =
+  (typeof EMANDATE_STATUS_FRONTEND)[keyof typeof EMANDATE_STATUS_FRONTEND];
+
+export function getEmandateStatusFrontend(
+  currentStatus: EmandateStatusFrontend,
+  dateValidTo: string | null
+) {
+  return isEmandateActive(dateValidTo) &&
+    currentStatus === EMANDATE_STATUS_FRONTEND.ON
     ? EMANDATE_STATUS_FRONTEND.ON
     : EMANDATE_STATUS_FRONTEND.OFF;
 }

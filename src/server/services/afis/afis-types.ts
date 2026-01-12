@@ -493,25 +493,25 @@ export type POMSignRequestStatusResponseSource = {
   status_date: string; // e.g 2015-03-01T12:23:44
 };
 export type POMSignRequestUrlPayload = {
-  first_name: string;
+  first_name?: string;
   last_name: string;
   debtor_number: string;
   payment_reference: string;
   concerning: string;
   batch_name: string;
-  request_id: string;
-  company_name: string;
+  request_id?: string;
+  company_name?: string;
   variable1: string;
   due_date: string;
   return_url: string;
   cid: null;
   payment_modules: ['emandate_recurring'];
-  invoices: [
+  invoices?: [
     {
       invoice_number: string;
       invoice_date: string;
       invoice_description: string;
-      invoice_amount: 0;
+      invoice_amount: 1;
       invoice_due_date: string;
     },
   ];

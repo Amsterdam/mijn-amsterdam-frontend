@@ -4,6 +4,7 @@ import UID from 'uid-safe';
 
 import {
   featureToggle,
+  KLACHTEN_AMSTERDAM_URL_KLACHT_INDIENEN,
   routeConfig,
   themaId,
   themaTitle,
@@ -102,6 +103,7 @@ export function transformKlachtenResponse(
     const dateClosed = smileDateParser(
       klachtSource.klacht_finishedon.value ?? ''
     );
+    const url = `<a href="${KLACHTEN_AMSTERDAM_URL_KLACHT_INDIENEN}">Meer informatie</a>`;
     const steps = featureToggle.statustreinAndAfgehandeldeMeldingenActive
       ? [
           {
@@ -125,7 +127,7 @@ export function transformKlachtenResponse(
             isActive: isClosed,
             datePublished: dateClosed,
             description: isClosed
-              ? `<p>Uw klacht is afgehandeld. U krijgt een antwoord op uw klacht.</p>`
+              ? `<p>Uw klacht is afgehandeld. U krijgt een antwoord op uw klacht.</p><p>${url} over de afhandeling van uw klacht.</p>`
               : '',
           },
         ]

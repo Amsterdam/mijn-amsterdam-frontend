@@ -1,14 +1,12 @@
-import { IS_PRODUCTION } from '../../../universal/config/env';
-
 export const featureToggle = {
   router: {
     protected: {
-      isEnabled: !IS_PRODUCTION, // for now only enabled in non-prod environments
+      isEnabled: true,
     },
   },
   service: {
     fetchAantalBewonersOpAdres: {
-      isEnabled: !IS_PRODUCTION,
+      isEnabled: true,
     },
   },
 } as const;
