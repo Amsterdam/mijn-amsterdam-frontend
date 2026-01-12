@@ -11,12 +11,12 @@ import {
 import { featureToggle as featureToggleAfis } from '../../client/pages/Thema/Afis/Afis-thema-config';
 import { themaConfig as themaConfigBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config';
 import { featureToggle as featureToggleErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
-import { themaConfig } from '../../client/pages/Thema/HLI/HLI-thema-config';
 import { featureToggle as featureToggleJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { getCert } from '../helpers/cert';
 import { getFromEnv } from '../helpers/env';
 import { getHostNameFromUrl } from '../helpers/source-api-helpers';
+import { featureToggle } from '../services/hli/hli-service-config';
 
 const RESET_AD_HOC_DEPENDENCY_REQUEST_CACHE_TTL_TIMEOUT_MS = ONE_HOUR_MS;
 export const FORCE_RENEW_CACHE_TTL_MS = 1;
@@ -153,7 +153,7 @@ const ApiConfig_ = {
       cert: getCert('BFF_ZORGNED_AV_CERT'),
       key: getCert('BFF_ZORGNED_AV_KEY'),
     }),
-    postponeFetch: !themaConfig.featureToggle.zorgned.active,
+    postponeFetch: !featureToggle.service.AvActive,
   },
   ZORGNED_LEERLINGENVERVOER: {
     method: 'post',

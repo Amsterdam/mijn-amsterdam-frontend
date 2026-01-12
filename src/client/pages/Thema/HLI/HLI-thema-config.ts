@@ -46,13 +46,6 @@ export const themaConfig = {
       hli2025PCTegoedCodesEnabled: true,
       // I expected all the products of HLI here as a Featuretoggle...
     },
-    zorgned: {
-      //WHY THIS ONE HERE AND BUG:
-      //When its false I expected:
-      //Not to see the thema on the Uitleg page
-      //Not to see the thema's "Onderwijs en jeugd"  en "Zorg en ondersteuning" as theme on the Homepage
-      active: true,
-    },
   }),
 
   profileTypes: ['private'],
