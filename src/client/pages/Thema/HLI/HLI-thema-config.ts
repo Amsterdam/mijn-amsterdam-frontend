@@ -20,31 +20,20 @@ type HLIThemaConfig = ThemaConfigBase &
 
 export const themaConfig = {
   id: 'HLI' as const,
-  //TODO MIJN-12205
   title: THEMA_TITLE,
-
   featureToggle: propagateFeatureToggles({
     active: true,
     stadspas: {
-      // BUG: When this is false, I expect:
-      // 1. Not to see stadspas products on the thema page
-      // 2. Not to see "Stadspas" in the title
       active: true,
       blokkerenActive: true,
       deblokkerenActive: !IS_PRODUCTION,
     },
     regelingen: {
-      //BUG: When this is false, I expect:
-      //1. Not to see the RTM documents on the thema page.
-      //2. Not to see "regelingen bij laag inkomen" in the title
       active: true,
       enabledCZM: true,
-      //BUG: When this is false, I expect:
-      //Not to see the RTM document on the thema page.
       enabledRTM: true,
-      //TODO MIJN-11807: Remove this featuretoggle (not now)
+      // TODO MIJN-11807: Remove this featuretoggle
       hli2025PCTegoedCodesEnabled: true,
-      // I expected all the products of HLI here as a Featuretoggle...
     },
   }),
 
@@ -67,7 +56,6 @@ export const themaConfig = {
       to: 'https://www.amsterdam.nl/stadspas',
     },
   ],
-  // TODO MIJN-12294 > DONE but what does not work the featuretoggle Regelingen and/or stadspas, then it needs to be coded different
   uitlegPageSections: {
     title: THEMA_TITLE,
     listItems: [
