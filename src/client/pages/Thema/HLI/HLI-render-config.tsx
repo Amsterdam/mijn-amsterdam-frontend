@@ -24,7 +24,7 @@ export const HLIRoutes = [
   {
     route: themaConfig.regelingenDetailPage.route.path,
     Component: HLIRegelingenDetail,
-    isActive: themaConfig.featureToggle.active,
+    isActive: themaConfig.featureToggle.regelingen.active,
   },
   {
     route: themaConfig.specificatieListPage.route.path,
@@ -34,7 +34,7 @@ export const HLIRoutes = [
   {
     route: themaConfig.regelingenListPage.route.path,
     Component: HLIRegelingenList,
-    isActive: themaConfig.featureToggle.active,
+    isActive: themaConfig.featureToggle.regelingen.active,
   },
   {
     route: themaConfig.route.path,
