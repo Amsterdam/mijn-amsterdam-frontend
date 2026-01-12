@@ -11,6 +11,8 @@ import { propagateFeatureToggles } from '../../../config/buildFeatureToggle';
 import type { PageConfig, ThemaConfigBase } from '../../../config/thema-types';
 
 const THEMA_TITLE = 'Stadspas en regelingen bij laag inkomen' as const;
+export const regelingenTitle = 'Regelingen bij laag inkomen' as const;
+export const stadspasTitle = 'Stadspas' as const;
 
 type HLIThemaConfig = ThemaConfigBase &
   PageConfig<'regelingenDetailPage'> &
@@ -32,18 +34,13 @@ export const themaConfig = {
       active: true,
       enabledCZM: true,
       enabledRTM: true,
-      // TODO MIJN-11807: Remove this featuretoggle
-      hli2025PCTegoedCodesEnabled: true,
     },
   }),
-
   profileTypes: ['private'],
   route: {
     path: '/regelingen-bij-laag-inkomen',
     trackingUrl: null,
-    get documentTitle() {
-      return `${THEMA_TITLE} | Overzicht`;
-    },
+    documentTitle: `${THEMA_TITLE} | Overzicht`,
   },
   redactedScope: 'full',
   pageLinks: [
@@ -90,27 +87,21 @@ export const themaConfig = {
     route: {
       path: '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
       trackingUrl: '/regelingen-bij-laag-inkomen/regeling',
-      get documentTitle() {
-        return `Regeling | ${THEMA_TITLE}`;
-      },
+      documentTitle: `Regeling | ${THEMA_TITLE}`,
     },
   },
   stadspasDetailPage: {
     route: {
       path: '/regelingen-bij-laag-inkomen/stadspas/:passNumber',
       trackingUrl: '/regelingen-bij-laag-inkomen/stadspas',
-      get documentTitle() {
-        return `Stadspas | ${THEMA_TITLE}`;
-      },
+      documentTitle: `Stadspas | ${THEMA_TITLE}`,
     },
   },
   specificatieListPage: {
     route: {
       path: '/regelingen-bij-laag-inkomen/lijst/specificaties/:page?',
       trackingUrl: null,
-      get documentTitle() {
-        return `Specificaties | ${THEMA_TITLE}`;
-      },
+      documentTitle: `Specificaties | ${THEMA_TITLE}`,
     },
   },
   regelingenListPage: {
@@ -174,9 +165,6 @@ export const listPageParamKind = {
 
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
-
-export const regelingenTitle = 'Regelingen bij laag inkomen' as const;
-export const stadspasTitle = 'Stadspas' as const;
 
 export const listPageTitle = {
   [listPageParamKind.lopend]: 'Aanvragen',
