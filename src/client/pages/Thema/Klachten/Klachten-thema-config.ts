@@ -1,7 +1,6 @@
 import { generatePath } from 'react-router';
 
 import { KlachtFrontend } from '../../../../server/services/klachten/types';
-import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { dateSort } from '../../../../universal/helpers/date';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
@@ -13,7 +12,7 @@ import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
 export const featureToggle = {
   klachtenActive: true,
-  statustreinAndAfgehandeldeMeldingenActive: !IS_PRODUCTION,
+  statustreinAndAfgehandeldeMeldingenActive: true,
 };
 
 export const themaId = 'KLACHTEN' as const;
