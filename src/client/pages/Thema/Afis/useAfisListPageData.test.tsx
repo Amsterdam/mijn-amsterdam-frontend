@@ -24,6 +24,10 @@ describe('useAfisListPageData', () => {
               status: 'openstaand',
               statusDescription: 'Openstaand',
               documentDownloadLink: 'http://example.com/document/open-1.pdf',
+              link: {
+                to: '/facturen-en-betalen/factuur/open/open-1',
+                title: 'Factuur open-1',
+              },
             } as unknown as AfisFactuurFrontend,
           ],
         },
@@ -40,6 +44,10 @@ describe('useAfisListPageData', () => {
         status: 'afgehandeld',
         statusDescription: 'Afgehandeld',
         documentDownloadLink: 'http://example.com/document/afgehandeld-1.pdf',
+        link: {
+          to: '/facturen-en-betalen/factuur/afgehandeld/afgehandeld-1',
+          title: 'Factuur afgehandeld-1',
+        },
       },
     ],
   };
@@ -75,6 +83,10 @@ describe('useAfisListPageData', () => {
           >
             afgehandeld-1
           </MaRouterLink>,
+          "link": {
+            "title": "Factuur afgehandeld-1",
+            "to": "/facturen-en-betalen/factuur/afgehandeld/afgehandeld-1",
+          },
           "status": "afgehandeld",
           "statusDescription": "Afgehandeld",
         },
@@ -99,6 +111,10 @@ describe('useAfisListPageData', () => {
           >
             open-1
           </MaRouterLink>,
+          "link": {
+            "title": "Factuur open-1",
+            "to": "/facturen-en-betalen/factuur/open/open-1",
+          },
           "status": "openstaand",
           "statusDescription": "Openstaand",
         },

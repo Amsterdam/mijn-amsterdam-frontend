@@ -35,7 +35,7 @@ const mockFacturen: AfisFacturenOverviewResponse = {
         documentDownloadLink: 'https://download.example.com/F001',
         factuurDocumentId: '1',
         link: {
-          to: routeConfig.themaPage.path,
+          to: '/facturen-en-betalen/factuur/open/F001',
           title: 'Bekijk uw openstaande facturen',
         },
         amountPayed: '',
@@ -59,7 +59,7 @@ const mockFacturen: AfisFacturenOverviewResponse = {
         documentDownloadLink: 'https://download.example.com/F003',
         factuurDocumentId: '2',
         link: {
-          to: routeConfig.themaPage.path,
+          to: '/facturen-en-betalen/factuur/open/F003',
           title: 'Bekijk uw openstaande facturen',
         },
         amountPayed: '',
@@ -89,7 +89,7 @@ const mockFacturen: AfisFacturenOverviewResponse = {
         documentDownloadLink: 'https://download.example.com/F002',
         factuurDocumentId: '3',
         link: {
-          to: routeConfig.themaPage.path,
+          to: '/facturen-en-betalen/factuur/afgehandeld/F002',
           title: 'Bekijk uw afgehandelde facturen',
         },
         amountPayed: '',

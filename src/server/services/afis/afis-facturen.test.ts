@@ -142,7 +142,7 @@ describe('afis-facturen', async () => {
       id: '1234567890-1234567890-2023-12-21t000000',
       link: {
         title: 'Factuur 1234567890',
-        to: 'http://bff-api-host/api/v1/services/afis/facturen/document?id=xx-encrypted-xx',
+        to: '/facturen-en-betalen/factuur/open/1234567890',
       },
       paylink: 'http://localhost:3100/mocks-server/afis/paylink',
       paymentDueDate: '2023-12-21T00:00:00',
@@ -213,7 +213,7 @@ describe('afis-facturen', async () => {
         "id": "inv-2023-010-inv-2023-010-2023-12-21t000000",
         "link": {
           "title": "Factuur INV-2023-010",
-          "to": "http://bff-api-host/api/v1/services/afis/facturen/document?id=xx-encrypted-xx",
+          "to": "/facturen-en-betalen/factuur/afgehandeld/INV-2023-010",
         },
         "paylink": null,
         "paymentDueDate": "2023-12-21T00:00:00",

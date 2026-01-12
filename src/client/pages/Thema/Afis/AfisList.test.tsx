@@ -37,6 +37,10 @@ const testState = {
               statusDescription: 'Openstaand description',
               paylink: 'https://payment.example.com/F005',
               documentDownloadLink: 'https://download.example.com/F005',
+              link: {
+                to: '/facturen-en-betalen/factuur/open/F005',
+                title: 'Factuur F005',
+              },
             },
           ],
         },
@@ -103,6 +107,10 @@ describe('<AfisFacturen />', () => {
               statusDescription: 'Betaalde description',
               paylink: null,
               documentDownloadLink: 'https://download.example.com/F004',
+              link: {
+                to: '/facturen-en-betalen/factuur/afgehandeld/F001',
+                title: 'Factuur F001',
+              },
             },
           ],
         },

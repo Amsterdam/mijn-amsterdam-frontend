@@ -202,6 +202,8 @@ export type AfisFacturenParams = {
   state: AfisFactuurState;
   businessPartnerID: string;
   top?: string;
+  dateFrom?: string;
+  dateTo?: string;
   includeAccountingDocumentIds?: string[];
   excludeAccountingDocumentIds?: string[];
 };

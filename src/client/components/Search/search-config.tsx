@@ -48,6 +48,7 @@ import {
   StatusLineItem,
 } from '../../../universal/types/App.types';
 import type { ThemaMenuItem } from '../../config/thema-types';
+import type { AfisFactuurFrontend } from '../../pages/Thema/Afis/Afis-thema-config';
 import { featureToggle as featureToggleAVG } from '../../pages/Thema/AVG/AVG-thema-config';
 import { featureToggle as featureToggleBezwaren } from '../../pages/Thema/Bezwaren/Bezwaren-thema-config';
 import { themaConfig as themaConfigBodem } from '../../pages/Thema/Bodem/Bodem-thema-config';
@@ -376,6 +377,12 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     stateKey: 'AFIS',
     profileTypes: ['private', 'commercial'],
+    generateKeywords: (factuur: AfisFactuurFrontend): string[] =>
+      uniqueArray([
+        factuur.factuurNummer,
+        factuur.statusDescription,
+        factuur.afzender,
+      ]),
     getApiBaseItems: (data: AfisThemaResponse) => {
       if (data?.facturen) {
         return Object.values(data.facturen).flatMap(

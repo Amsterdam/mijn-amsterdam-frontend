@@ -1,4 +1,5 @@
 import {
+  erfpachtFacturenTableConfig,
   getTableConfig,
   linkListItems,
   listPageParamKind,
@@ -39,5 +40,6 @@ export function useErfpachtThemaData() {
     listPageParamKind,
     breadcrumbs,
     routeConfig,
+    erfpachtFacturenTableConfig,
   };
 }
