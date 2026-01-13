@@ -20,7 +20,7 @@ import { belastingenSectionProps } from '../Thema/Belastingen/InfoSection';
 import { bezwarenSectionProps } from '../Thema/Bezwaren/InfoSection';
 import { themaConfig as bodemThemaConfig } from '../Thema/Bodem/Bodem-thema-config';
 import { erfpachtSectionProps } from '../Thema/Erfpacht/InfoSection';
-import { themaConfig as HLIThemaConfig } from '../Thema/HLI/HLI-thema-config';
+import { themaConfig as hliThemaConfig } from '../Thema/HLI/HLI-thema-config';
 import { inkomenSectionProps } from '../Thema/Inkomen/InfoSection';
 import { JeugdSectionProps as jeugdSectionProps } from '../Thema/Jeugd/InfoSection';
 import { klachtenSectionProps } from '../Thema/Klachten/InfoSection';
@@ -73,7 +73,7 @@ const sections: InfoSection_DEPRECATED[] = [
   erfpachtSectionProps,
   afisSectionProps,
   inkomenSectionProps,
-  ...createDeprecatedInfoSection(HLIThemaConfig),
+  ...createDeprecatedInfoSection(hliThemaConfig),
   zorgSectionProps,
   jeugdSectionProps,
   subsidiesSectionProps,
