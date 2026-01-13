@@ -23,7 +23,6 @@ export const themaConfig: BodemThemaConfig = {
   featureToggle: {
     active: true,
   },
-
   profileTypes: ['private', 'commercial'],
   route: {
     path: '/bodem',
@@ -39,11 +38,14 @@ export const themaConfig: BodemThemaConfig = {
       to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/bodem/loodcheck-tuin-aanvragen',
     },
   ],
-  uitlegPageSections: {
-    title: THEMA_TITLE,
-    listItems: ["Uw aanvraag voor 'lood in de bodem-check'"],
+  listPage: {
+    route: {
+      path: '/bodem/lijst/lood-meting/:kind/:page?',
+      trackingUrl: null,
+      documentTitle: (params) =>
+        `${params?.kind === listPageKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${THEMA_TITLE}`,
+    },
   },
-
   detailPage: {
     title: 'Lood in bodem-check',
     route: {
@@ -54,14 +56,9 @@ export const themaConfig: BodemThemaConfig = {
       },
     },
   },
-
-  listPage: {
-    route: {
-      path: '/bodem/lijst/lood-meting/:kind/:page?',
-      trackingUrl: null,
-      documentTitle: (params) =>
-        `${params?.kind === listPageKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${THEMA_TITLE}`,
-    },
+  uitlegPageSections: {
+    title: THEMA_TITLE,
+    listItems: ["Uw aanvraag voor 'lood in de bodem-check'"],
   },
 } as const;
 

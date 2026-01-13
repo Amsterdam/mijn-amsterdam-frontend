@@ -53,6 +53,35 @@ export const themaConfig = {
       to: 'https://www.amsterdam.nl/stadspas',
     },
   ],
+  specificatieListPage: {
+    route: {
+      path: '/regelingen-bij-laag-inkomen/lijst/specificaties/:page?',
+      trackingUrl: null,
+      documentTitle: `Specificaties | ${THEMA_TITLE}`,
+    },
+  },
+  regelingenListPage: {
+    route: {
+      path: '/regelingen-bij-laag-inkomen/lijst/:kind/:page?',
+      trackingUrl: null,
+      documentTitle: (params) =>
+        `${params?.kind === 'eerdere-en-afgehandelde-regelingen' ? 'Eerdere' : 'Huidige'} regelingen | ${THEMA_TITLE}`,
+    },
+  },
+  regelingenDetailPage: {
+    route: {
+      path: '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
+      trackingUrl: '/regelingen-bij-laag-inkomen/regeling',
+      documentTitle: `Regeling | ${THEMA_TITLE}`,
+    },
+  },
+  stadspasDetailPage: {
+    route: {
+      path: '/regelingen-bij-laag-inkomen/stadspas/:passNumber',
+      trackingUrl: '/regelingen-bij-laag-inkomen/stadspas',
+      documentTitle: `Stadspas | ${THEMA_TITLE}`,
+    },
+  },
   uitlegPageSections: {
     title: THEMA_TITLE,
     listItems: [
@@ -82,35 +111,6 @@ export const themaConfig = {
         ],
       },
     ],
-  },
-  regelingenDetailPage: {
-    route: {
-      path: '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
-      trackingUrl: '/regelingen-bij-laag-inkomen/regeling',
-      documentTitle: `Regeling | ${THEMA_TITLE}`,
-    },
-  },
-  stadspasDetailPage: {
-    route: {
-      path: '/regelingen-bij-laag-inkomen/stadspas/:passNumber',
-      trackingUrl: '/regelingen-bij-laag-inkomen/stadspas',
-      documentTitle: `Stadspas | ${THEMA_TITLE}`,
-    },
-  },
-  specificatieListPage: {
-    route: {
-      path: '/regelingen-bij-laag-inkomen/lijst/specificaties/:page?',
-      trackingUrl: null,
-      documentTitle: `Specificaties | ${THEMA_TITLE}`,
-    },
-  },
-  regelingenListPage: {
-    route: {
-      path: '/regelingen-bij-laag-inkomen/lijst/:kind/:page?',
-      trackingUrl: null,
-      documentTitle: (params) =>
-        `${params?.kind === 'eerdere-en-afgehandelde-regelingen' ? 'Eerdere' : 'Huidige'} regelingen | ${THEMA_TITLE}`,
-    },
   },
 } as const satisfies HLIThemaConfig;
 
