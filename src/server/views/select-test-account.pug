@@ -33,12 +33,10 @@ style.
 table
   thead
     tr
-      th Naam
-      th #{idLabel}
+      each header in tableHeaders
+        th #{header}
   tbody
-    each account in list
+    each row in tableRows
       tr
-        td
-          a(href=account.href)
-            div(class="test-account-name") #{account.name}
-        td #{account.id}
+        each field in row
+          td !{field}
