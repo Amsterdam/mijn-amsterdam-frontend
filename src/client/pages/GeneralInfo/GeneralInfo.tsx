@@ -20,10 +20,7 @@ import { belastingenSectionProps } from '../Thema/Belastingen/InfoSection';
 import { bezwarenSectionProps } from '../Thema/Bezwaren/InfoSection';
 import { themaConfig as bodemThemaConfig } from '../Thema/Bodem/Bodem-thema-config';
 import { erfpachtSectionProps } from '../Thema/Erfpacht/InfoSection';
-import {
-  HLIRegelingenSectionProps,
-  HLIstadspasSectionProps,
-} from '../Thema/HLI/InfoSection';
+import { themaConfig as hliThemaConfig } from '../Thema/HLI/HLI-thema-config';
 import { inkomenSectionProps } from '../Thema/Inkomen/InfoSection';
 import { JeugdSectionProps as jeugdSectionProps } from '../Thema/Jeugd/InfoSection';
 import { klachtenSectionProps } from '../Thema/Klachten/InfoSection';
@@ -48,13 +45,15 @@ export type InfoSection_DEPRECATED = {
 
 function createDeprecatedInfoSection(
   themaConfig: ThemaConfigBase
-): InfoSection_DEPRECATED {
-  return {
-    id: themaConfig.id,
-    active: themaConfig.featureToggle.themaActive,
-    title: themaConfig.uitlegPageSections.title,
-    listItems: themaConfig.uitlegPageSections.listItems,
-  };
+): InfoSection_DEPRECATED[] {
+  return themaConfig.uitlegPageSections.map((section) => {
+    return {
+      id: themaConfig.id,
+      active: themaConfig.featureToggle.active,
+      title: section.title,
+      listItems: section.listItems,
+    };
+  });
 }
 
 export type SectionProps = {
@@ -74,8 +73,7 @@ const sections: InfoSection_DEPRECATED[] = [
   erfpachtSectionProps,
   afisSectionProps,
   inkomenSectionProps,
-  HLIRegelingenSectionProps,
-  HLIstadspasSectionProps,
+  ...createDeprecatedInfoSection(hliThemaConfig),
   zorgSectionProps,
   jeugdSectionProps,
   subsidiesSectionProps,
@@ -85,7 +83,7 @@ const sections: InfoSection_DEPRECATED[] = [
   milieuzonesectionProps,
   overtredingensectionProps,
   vergunningensectionProps,
-  createDeprecatedInfoSection(bodemThemaConfig),
+  ...createDeprecatedInfoSection(bodemThemaConfig),
   varensectionProps,
 ];
 

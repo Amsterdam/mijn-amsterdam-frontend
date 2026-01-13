@@ -10,9 +10,9 @@ export function HLISpecificatieList() {
     isLoading,
     isError,
     breadcrumbs,
-    routeConfig,
+    specificatieListPageConfig,
   } = useHliThemaData();
-  useHTMLDocumentTitle(routeConfig.specificatieListPage);
+  useHTMLDocumentTitle(specificatieListPageConfig.route);
 
   const { sort, title, displayProps, listPageRoute } = specificatieTableConfig;
 

@@ -21,7 +21,7 @@ import {
   StadspasTransactiesResponseSource,
   StadspasTransactionQueryParams,
 } from './stadspas-types';
-import { featureToggle } from '../../../client/pages/Thema/HLI/HLI-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import {
   ApiResponse,
   ApiSuccessResponse,
@@ -516,7 +516,7 @@ export async function mutateGpassSetPasIsBlockedState(
     formatUrl: ({ url }) => `${url}/rest/sales/v1/togglepas/${passNumber}`,
     headers: getHeaders(administratienummer),
     enableCache: false,
-    postponeFetch: !featureToggle.hliThemaStadspasBlokkerenActive,
+    postponeFetch: !themaConfig.featureToggle.stadspas.blokkerenActive,
     transformResponse: transformPassIsBlockedResponse,
   });
 

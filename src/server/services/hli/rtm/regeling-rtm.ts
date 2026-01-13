@@ -5,7 +5,7 @@ import { generatePath } from 'react-router';
 import slug from 'slugme';
 import { firstBy } from 'thenby';
 
-import { routeConfig } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
+import { themaConfig } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
 import {
   type ApiResponse,
   apiSuccessResult,
@@ -466,7 +466,7 @@ function transformRTMRegelingenFrontend(
     const title = mostRecentAanvraag.titel;
     const betrokkenen = getBetrokkenen(betrokkenenMapStr, aanvragen);
 
-    const route = generatePath(routeConfig.detailPage.path, {
+    const route = generatePath(themaConfig.regelingenDetailPage.route.path, {
       id,
       regeling: slug(title),
     });
@@ -649,6 +649,9 @@ export function transformRTMAanvragen(
 export async function fetchRTMSpecificaties(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<HLIRegelingSpecificatieFrontend[]>> {
+  if (!themaConfig.featureToggle.regelingen.active) {
+    return apiSuccessResult([]);
+  }
   const response = await fetchZorgnedAanvragenHLI(
     authProfileAndToken.profile.id
   );

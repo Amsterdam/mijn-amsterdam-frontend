@@ -4,6 +4,9 @@ export const featureToggle = {
       isEnabled: true,
     },
   },
+  service: {
+    AvActive: true,
+  },
 };
 
 export const routes = {
