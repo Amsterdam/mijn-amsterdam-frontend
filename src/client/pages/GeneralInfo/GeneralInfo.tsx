@@ -45,13 +45,15 @@ export type InfoSection_DEPRECATED = {
 
 function createDeprecatedInfoSection(
   themaConfig: ThemaConfigBase
-): InfoSection_DEPRECATED {
-  return {
-    id: themaConfig.id,
-    active: themaConfig.featureToggle.active,
-    title: themaConfig.uitlegPageSections.title,
-    listItems: themaConfig.uitlegPageSections.listItems,
-  };
+): InfoSection_DEPRECATED[] {
+  return themaConfig.uitlegPageSections.map((section) => {
+    return {
+      id: themaConfig.id,
+      active: themaConfig.featureToggle.active,
+      title: section.title,
+      listItems: section.listItems,
+    };
+  });
 }
 
 export type SectionProps = {
@@ -71,7 +73,7 @@ const sections: InfoSection_DEPRECATED[] = [
   erfpachtSectionProps,
   afisSectionProps,
   inkomenSectionProps,
-  createDeprecatedInfoSection(HLIThemaConfig),
+  ...createDeprecatedInfoSection(HLIThemaConfig),
   zorgSectionProps,
   jeugdSectionProps,
   subsidiesSectionProps,
@@ -81,7 +83,7 @@ const sections: InfoSection_DEPRECATED[] = [
   milieuzonesectionProps,
   overtredingensectionProps,
   vergunningensectionProps,
-  createDeprecatedInfoSection(bodemThemaConfig),
+  ...createDeprecatedInfoSection(bodemThemaConfig),
   varensectionProps,
 ];
 

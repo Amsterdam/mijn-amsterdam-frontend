@@ -56,10 +56,12 @@ export const themaConfig: BodemThemaConfig = {
       },
     },
   },
-  uitlegPageSections: {
-    title: THEMA_TITLE,
-    listItems: ["Uw aanvraag voor 'lood in de bodem-check'"],
-  },
+  uitlegPageSections: [
+    {
+      title: THEMA_TITLE,
+      listItems: ["Uw aanvraag voor 'lood in de bodem-check'"],
+    },
+  ],
 } as const;
 
 export const listPageKind = {

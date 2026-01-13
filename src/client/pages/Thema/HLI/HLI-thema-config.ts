@@ -82,36 +82,33 @@ export const themaConfig = {
       documentTitle: `Stadspas | ${THEMA_TITLE}`,
     },
   },
-  uitlegPageSections: {
-    title: THEMA_TITLE,
-    listItems: [
-      {
-        text: 'Regelingen:',
-        listItems: [
-          'Collectieve zorgverzekering',
-          'Declaratie Kindtegoed',
-          'Kindtegoed Voorschool',
-          'Reiskostenvergoeding',
-          'Gratis laptop of tablet middelbare school',
-          'Gratis laptop of tablet basisschool',
-          'Individuele inkomenstoeslag',
-          "Gratis openbaar vervoer voor AOW'ers",
-          'Tegemoetkoming aanvullend openbaar vervoer voor ouderen',
-          'Tegemoetkoming openbaar vervoer voor mantelzorgers',
-          'Regeling tegemoetkoming meerkosten',
-        ],
-      },
-      {
-        text: 'Stadspas:',
-        listItems: [
-          'Status aanvraag Stadspas van u of uw gezin',
-          'Het saldo Kindtegoed en/of andere tegoeden en de bestedingen',
-          'Stadspasnummer',
-          'Stadspas blokkeren',
-        ],
-      },
-    ],
-  },
+  uitlegPageSections: [
+    {
+      title: regelingenTitle,
+      listItems: [
+        'Collectieve zorgverzekering',
+        'Declaratie Kindtegoed',
+        'Kindtegoed Voorschool',
+        'Reiskostenvergoeding',
+        'Gratis laptop of tablet middelbare school',
+        'Gratis laptop of tablet basisschool',
+        'Individuele inkomenstoeslag',
+        "Gratis openbaar vervoer voor AOW'ers",
+        'Tegemoetkoming aanvullend openbaar vervoer voor ouderen',
+        'Tegemoetkoming openbaar vervoer voor mantelzorgers',
+        'Regeling tegemoetkoming meerkosten',
+      ],
+    },
+    {
+      title: stadspasTitle,
+      listItems: [
+        'Status aanvraag Stadspas van u of uw gezin',
+        'Het saldo Kindtegoed en/of andere tegoeden en de bestedingen',
+        'Stadspasnummer',
+        'Stadspas blokkeren',
+      ],
+    },
+  ],
 } as const satisfies HLIThemaConfig;
 
 export const kindTegoedPageLinkItem = {
