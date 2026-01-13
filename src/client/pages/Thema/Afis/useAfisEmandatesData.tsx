@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Paragraph } from '@amsterdam/design-system-react';
 import isEqual from 'lodash.isequal';
 import { useNavigate, useParams } from 'react-router';
+import { create } from 'zustand';
 
 import { generateApiUrl } from './Afis-helpers';
 import {
@@ -110,7 +111,7 @@ export function useAfisEMandatesData() {
     eMandates,
     eMandateTableConfig,
     hasEMandatesError: isError,
-    isLoadingEMandates: isLoading || !isDirty,
+    isLoadingEMandates: !isDirty, // Show loading only on first load.
     optimisticUpdateContent: (
       eMandateId: string,
       payload: Partial<AfisEMandateFrontend>
@@ -248,6 +249,15 @@ export function useEmandateApis(eMandate: AfisEMandateFrontend) {
   };
 }
 
+const useIbanPendingActivationStore = create<{
+  ibansPendingActivation: string[];
+  setIsPendingActivation: (ibans: string[]) => void;
+}>((set) => ({
+  ibansPendingActivation: [] as string[],
+  setIsPendingActivation: (ibans: string[]) =>
+    set({ ibansPendingActivation: ibans }),
+}));
+
 /**
  * This hook synchronizes the state of pending IBANs with session storage to
  * ensure persistence across page reloads within the same session. It also
@@ -259,9 +269,8 @@ function useIsPendingNotification() {
     ''
   );
 
-  const [ibansPendingActivation, setIsPendingActivation] = useState<string[]>(
-    ibansPendingActivation_.split(',').filter(Boolean)
-  );
+  const { ibansPendingActivation, setIsPendingActivation } =
+    useIbanPendingActivationStore();
 
   const ibansPendingActivationCurrent = ibansPendingActivation.join(',');
 

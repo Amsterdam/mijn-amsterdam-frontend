@@ -4,7 +4,14 @@ import {
   fetchZorgnedJZDDocuments,
   handleVoorzieningenRequest,
 } from './wmo-route-handlers';
-import { featureToggle, routes } from './wmo-service-config';
+import {
+  featureToggle,
+  OAUTH_ROLE_WMO_VOORZIENINGEN,
+  routes,
+} from './wmo-service-config';
+import { IS_TAP } from '../../../universal/config/env';
+import { conditional } from '../../helpers/middleware';
+import { OAuthVerificationHandler } from '../../routing/route-handlers';
 import { createBFFRouter } from '../../routing/route-helpers';
 import { attachDocumentDownloadRoute } from '../shared/document-download-route-handler';
 
@@ -15,6 +22,7 @@ const wmoRouterPrivateNetwork = createBFFRouter({
 
 wmoRouterPrivateNetwork.post(
   routes.private.WMO_VOORZIENINGEN,
+  conditional(IS_TAP, OAuthVerificationHandler(OAUTH_ROLE_WMO_VOORZIENINGEN)),
   handleVoorzieningenRequest
 );
 
