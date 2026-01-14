@@ -59,93 +59,93 @@ import { IS_PRODUCTION } from '../src/universal/config/env';
 import {
   themaId as themaIdInkomen,
   themaTitle as themaTitleInkomen,
-} from '../src/client/pages/Thema/Inkomen/Inkomen-thema-config.ts';
+} from '../src/client/pages/Thema/Inkomen/Inkomen-thema-config';
 import {
   themaIdBRP,
   themaIdKVK,
   themaTitle as profileThemaTitles,
-} from '../src/client/pages/Thema/Profile/Profile-thema-config.ts';
+} from '../src/client/pages/Thema/Profile/Profile-thema-config';
 import {
   themaId as themaIdZorg,
   themaTitle as themaTitleZorg,
-} from '../src/client/pages/Thema/Zorg/Zorg-thema-config.ts';
+} from '../src/client/pages/Thema/Zorg/Zorg-thema-config';
 import {
   themaId as themaIdAfval,
   themaTitle as themaTitleAfval,
-} from '../src/client/pages/Thema/Afval/Afval-thema-config.ts';
+} from '../src/client/pages/Thema/Afval/Afval-thema-config';
 import {
   themaId as themaIdVergunningen,
   themaTitle as themaTitleVergunningen,
-} from '../src/client/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
+} from '../src/client/pages/Thema/Vergunningen/Vergunningen-thema-config';
 import {
   themaId as themaIdErfpacht,
   themaTitle as themaTitleErfpacht,
-} from '../src/client/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
+} from '../src/client/pages/Thema/Erfpacht/Erfpacht-thema-config';
 import {
   themaId as themaIdBezwaren,
   themaTitle as themaTitleBezwaren,
-} from '../src/client/pages/Thema/Bezwaren/Bezwaren-thema-config.ts';
+} from '../src/client/pages/Thema/Bezwaren/Bezwaren-thema-config';
 import {
   themaId as themaIdHoreca,
   themaTitle as themaTitleHoreca,
-} from '../src/client/pages/Thema/Horeca/Horeca-thema-config.ts';
+} from '../src/client/pages/Thema/Horeca/Horeca-thema-config';
 import {
   themaId as themaIdToeristischeVerhuur,
   themaTitle as themaTitleToeristischeVerhuur,
-} from '../src/client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
+} from '../src/client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 import {
   themaId as themaIdAVG,
   themaTitle as themaTitleAVG,
-} from '../src/client/pages/Thema/AVG/AVG-thema-config.ts';
+} from '../src/client/pages/Thema/AVG/AVG-thema-config';
 import {
   themaId as themaIdSvwi,
   themaTitle as themaTitleSvwi,
-} from '../src/client/pages/Thema/Svwi/Svwi-thema-config.ts';
+} from '../src/client/pages/Thema/Svwi/Svwi-thema-config';
 import {
   themaId as themaIdKlachten,
   themaTitle as themaTitleKlachten,
-} from '../src/client/pages/Thema/Klachten/Klachten-thema-config.ts';
+} from '../src/client/pages/Thema/Klachten/Klachten-thema-config';
 import {
   themaId as themaIdKrefia,
   themaTitle as themaTitleKrefia,
-} from '../src/client/pages/Thema/Krefia/Krefia-thema-config.ts';
+} from '../src/client/pages/Thema/Krefia/Krefia-thema-config';
 import {
   themaId as themaIdAfis,
   themaTitle as themaTitleAfis,
-} from '../src/client/pages/Thema/Afis/Afis-thema-config.ts';
+} from '../src/client/pages/Thema/Afis/Afis-thema-config';
 import {
   themaId as themaIdOvertredingen,
   themaTitle as themaTitleOvertredingen,
-} from '../src/client/pages/Thema/Overtredingen/Overtredingen-thema-config.ts';
+} from '../src/client/pages/Thema/Overtredingen/Overtredingen-thema-config';
 import {
   themaId as themaIdVaren,
   themaTitle as themaTitleVaren,
-} from '../src/client/pages/Thema/Varen/Varen-thema-config.ts';
-import { themaConfig as bodemThemaConfig } from '../src/client/pages/Thema/Bodem/Bodem-thema-config.ts';
+} from '../src/client/pages/Thema/Varen/Varen-thema-config';
+import { themaConfig as bodemThemaConfig } from '../src/client/pages/Thema/Bodem/Bodem-thema-config';
 import {
   themaId as themaIdHLI,
   themaTitle as themaTitleHLI,
-} from '../src/client/pages/Thema/HLI/HLI-thema-config.ts';
+} from '../src/client/pages/Thema/HLI/HLI-thema-config';
 import {
   themaId as themaIdJeugd,
   themaTitle as themaTitleJeugd,
-} from '../src/client/pages/Thema/Jeugd/Jeugd-thema-config.ts';
+} from '../src/client/pages/Thema/Jeugd/Jeugd-thema-config';
 import {
   themaId as themaIdParkeren,
   themaTitle as themaTitleParkeren,
-} from '../src/client/pages/Thema/Parkeren/Parkeren-thema-config.ts';
+} from '../src/client/pages/Thema/Parkeren/Parkeren-thema-config';
 import {
   themaId as themaIdBelastingen,
   themaTitle as themaTitleBelastingen,
-} from '../src/client/pages/Thema/Belastingen/Belastingen-thema-config.ts';
+} from '../src/client/pages/Thema/Belastingen/Belastingen-thema-config';
 import {
   themaId as themaIdMilieuzone,
   themaTitle as themaTitleMilieuzone,
-} from '../src/client/pages/Thema/Milieuzone/Milieuzone-thema-config.ts';
+} from '../src/client/pages/Thema/Milieuzone/Milieuzone-thema-config';
 import {
   themaId as themaIdSubsidies,
   themaTitle as themaTitleSubsidies,
-} from '../src/client/pages/Thema/Subsidies/Subsidies-thema-config.ts';
+} from '../src/client/pages/Thema/Subsidies/Subsidies-thema-config';
 
 const { BRP, KVK } = profileThemaTitles;
 
@@ -192,12 +192,12 @@ const themaIDtoTitle: Record<string, string> = themas.reduce(
     acc[id] = title;
     return acc;
   },
-  {}
+  {} as Record<string, string>
 );
 
 const themaIDs = themas.map((menuItem) => menuItem.id);
-const testAccountEntries: any = process.env.MA_TEST_ACCOUNTS.split(',').map(
-  (accountData: any) => {
+const testAccountEntries = process.env.MA_TEST_ACCOUNTS.split(',').map(
+  (accountData) => {
     const keyVal = accountData.split('=');
     return [keyVal[0], keyVal[1]];
   }
@@ -416,7 +416,7 @@ function getAllServiceNames(resultsByUser: ResultsByUser) {
 }
 
 function addAvailableThemas(
-  serviceLabelAcc: object,
+  serviceLabelAcc: Record<string, string>,
   serviceResults: ServiceResults
 ): object {
   Object.keys(serviceResults).forEach((serviceName) => {
@@ -793,7 +793,7 @@ function getAvailableUserThemas(serviceResults: ServiceResults) {
     })
     .map(([themaName]) => themaName);
 
-  const aThemas = {};
+  const aThemas: Record<string, string> = {};
 
   for (let themaID of availableThemas) {
     // Prevent setting a key to undefined if already set.
@@ -874,7 +874,7 @@ function sheetNotifications(resultsByUser: ResultsByUser): SheetData {
       return serviceResults.NOTIFICATIONS.content.map(
         (notification: MyNotification) => {
           const data = { ...notification, username: Username };
-          const row = {};
+          const row: Record<string, string> = {};
           for (const [k, fn] of Object.entries(rowShape)) {
             row[k] = fn(data);
           }
