@@ -50,7 +50,7 @@ import {
   Kind,
   Persoon,
   Verbintenis,
-} from '../src/server/services/profile/brp.types';
+} from '../src/server/services/brp/brp-types';
 import { differenceInYears, parseISO } from 'date-fns';
 
 import { ServiceResults } from '../src/server/services/content-tips/tip-types';
@@ -110,10 +110,6 @@ import {
   themaTitle as themaTitleKrefia,
 } from '../src/client/pages/Thema/Krefia/Krefia-thema-config.ts';
 import {
-  themaId as themaIdBurgerzaken,
-  themaTitle as themaTitleBurgerzaken,
-} from '../src/client/pages/Thema/Burgerzaken/Burgerzaken-thema-config.ts';
-import {
   themaId as themaIdAfis,
   themaTitle as themaTitleAfis,
 } from '../src/client/pages/Thema/Afis/Afis-thema-config.ts';
@@ -125,10 +121,7 @@ import {
   themaId as themaIdVaren,
   themaTitle as themaTitleVaren,
 } from '../src/client/pages/Thema/Varen/Varen-thema-config.ts';
-import {
-  themaId as themaIdBodem,
-  themaTitle as themaTitleBodem,
-} from '../src/client/pages/Thema/Bodem/Bodem-thema-config.ts';
+import { themaConfig as bodemThemaConfig } from '../src/client/pages/Thema/Bodem/Bodem-thema-config.ts';
 import {
   themaId as themaIdHLI,
   themaTitle as themaTitleHLI,
@@ -174,11 +167,10 @@ const themas = [
   { id: themaIdSvwi, title: themaTitleSvwi },
   { id: themaIdKlachten, title: themaTitleKlachten },
   { id: themaIdKrefia, title: themaTitleKrefia },
-  { id: themaIdBurgerzaken, title: themaTitleBurgerzaken },
   { id: themaIdAfis, title: themaTitleAfis },
   { id: themaIdOvertredingen, title: themaTitleOvertredingen },
   { id: themaIdVaren, title: themaTitleVaren },
-  { id: themaIdBodem, title: themaTitleBodem },
+  { id: bodemThemaConfig.id, title: bodemThemaConfig.title },
   { id: themaIdHLI, title: themaTitleHLI },
   { id: themaIdJeugd, title: themaTitleJeugd },
   { id: themaIdParkeren, title: themaTitleParkeren },
@@ -380,7 +372,7 @@ function naam(persoon: Persoon) {
 
 function oudersOfKinderen(
   oudersOfKinderen: Array<Persoon | Kind> | null,
-  serviceResults: ServiceResults
+  _serviceResults: ServiceResults
 ) {
   return oudersOfKinderen?.length
     ? oudersOfKinderen
@@ -517,7 +509,7 @@ function getBRPRows(
 
 type BrpSheetLayout = {
   label: string;
-  extractContentValue: string;
+  extractContentValue: (brpContent: any) => string;
   transform?: (value: any, serviceResults: ServiceResults) => string | null;
   wch?: number;
   hpx?: number;
@@ -615,7 +607,7 @@ const brpSheetLayout: BrpSheetLayout[] = [
   {
     label: 'Leeftijd',
     extractContentValue: (brpContent: any) => brpContent.persoon.geboortedatum,
-    transform: (value: string | null, serviceResults: ServiceResults) => {
+    transform: (value: string | null) => {
       const age =
         value !== null
           ? differenceInYears(new Date(), parseISO(value)) + ''
@@ -667,9 +659,7 @@ const brpSheetLayout: BrpSheetLayout[] = [
       }
       return verbintenis.persoon
         ? `${
-            (verbintenis.soortVerbintenisOmschrijving ||
-              verbintenis.soortVerbintenis) ??
-            ''
+            verbintenis.soortVerbintenis ?? ''
           } met ${relatedUser(verbintenis.persoon as Persoon)}`
         : Object.keys(verbintenis).length
           ? JSON.stringify(verbintenis)
@@ -701,7 +691,7 @@ const brpSheetLayout: BrpSheetLayout[] = [
         .map((verbintenis) => {
           return verbintenis.persoon
             ? `${
-                verbintenis.soortVerbintenisOmschrijving ?? ''
+                verbintenis.soortVerbintenis ?? ''
               } met ${relatedUser(verbintenis.persoon as Persoon)}`
             : Object.keys(verbintenis).length
               ? JSON.stringify(verbintenis)
@@ -714,7 +704,7 @@ const brpSheetLayout: BrpSheetLayout[] = [
   {
     label: 'Voormalige adressen',
     extractContentValue: (brpContent: any) => brpContent.adresHistorisch,
-    transform: (adressen: Adres[], serviceResults: ServiceResults) => {
+    transform: (adressen: Adres[]) => {
       return adressen
         ?.map((adres) => {
           return `${getFullAddress(adres)} ${woonplaatsNaamBuitenAmsterdam(
@@ -804,11 +794,6 @@ function getAvailableUserThemas(serviceResults: ServiceResults) {
     .map(([themaName]) => themaName);
 
   const aThemas = {};
-
-  // Add manually since, BRP is already checked above for thema 'Mijn gegevens'
-  if (serviceResults.BRP.content?.identiteitsbewijzen?.length) {
-    aThemas[themaIdBurgerzaken] = themaTitleBurgerzaken;
-  }
 
   for (let themaID of availableThemas) {
     // Prevent setting a key to undefined if already set.
