@@ -4,7 +4,11 @@ import {
   ErfpachtDossierFrontend,
   ErfpachtDossiersResponse,
 } from '../../../../server/services/erfpacht/erfpacht-types';
-import { IS_PRODUCTION } from '../../../../universal/config/env';
+import {
+  IS_OT,
+  IS_PRODUCTION,
+  IS_TEST,
+} from '../../../../universal/config/env';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
@@ -44,6 +48,7 @@ export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 export const featureToggle = {
   erfpachtActive: true,
+  vveIsActive: IS_OT || IS_TEST,
   canonmatigingLinkActive: true,
 };
 

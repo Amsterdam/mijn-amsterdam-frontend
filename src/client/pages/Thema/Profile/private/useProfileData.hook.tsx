@@ -5,20 +5,24 @@ import {
 import { useAantalBewonersOpAdres } from './useAantalBewonersOpAdres.hook';
 import { useAppStateGetter } from '../../../../hooks/useAppStateStore';
 import { routeConfig } from '../Profile-thema-config';
-
 export function useProfileData() {
-  const { BRP } = useAppStateGetter();
+  const { BRP, WONEN } = useAppStateGetter();
   const aantalBewoners = useAantalBewonersOpAdres(
     BRP.content?.fetchUrlAantalBewoners ?? null
   );
 
   let profileData: BrpProfileData | null;
 
-  if (typeof aantalBewoners === 'number' && BRP.content?.adres) {
+  if (
+    typeof aantalBewoners === 'number' &&
+    BRP.content?.adres &&
+    WONEN.content?.name
+  ) {
     const brpContent = {
       ...BRP.content,
       adres: {
         ...BRP.content.adres,
+        vveNaam: WONEN.content?.name,
         aantalBewoners,
       },
     };
