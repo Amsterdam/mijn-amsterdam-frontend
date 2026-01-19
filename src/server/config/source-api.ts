@@ -16,7 +16,7 @@ import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { getCert } from '../helpers/cert';
 import { getFromEnv } from '../helpers/env';
 import { getHostNameFromUrl } from '../helpers/source-api-helpers';
-import { featureToggle } from '../services/hli/hli-service-config';
+import { featureToggle as featureToggleHLI } from '../services/hli/hli-service-config';
 
 const RESET_AD_HOC_DEPENDENCY_REQUEST_CACHE_TTL_TIMEOUT_MS = ONE_HOUR_MS;
 export const FORCE_RENEW_CACHE_TTL_MS = 1;
@@ -153,7 +153,7 @@ const ApiConfig_ = {
       cert: getCert('BFF_ZORGNED_AV_CERT'),
       key: getCert('BFF_ZORGNED_AV_KEY'),
     }),
-    postponeFetch: !featureToggle.service.AvActive,
+    postponeFetch: !featureToggleHLI.service.AvActive,
   },
   ZORGNED_LEERLINGENVERVOER: {
     method: 'post',
