@@ -143,6 +143,7 @@ export type PersoonSource = PersoonBasisSource & {
   gemeenteVanInschrijving: TyperingSource;
   datumInschrijvingInGemeente: DatumSource;
   adressering: AdresseringSource;
+  opschortingBijhouding?: { datum: DatumSource; reden: TyperingSource };
   kinderen: KindSource[];
   ouders: OuderSource[];
   partners: PartnerSource[];
