@@ -1,10 +1,10 @@
 import { Paragraph, Link, Heading } from '@amsterdam/design-system-react';
 
 import {
-  featureToggle,
   filterErfpachtFacturen,
   mapErfpachtFacturen,
-} from './Erfpacht-thema-config';
+} from './Erfpacht-helpers';
+import { featureToggle } from './Erfpacht-thema-config';
 import { useErfpachtThemaData } from './useErfpachtThemaData.hook';
 import { ErfpachtDossierFrontend } from '../../../../server/services/erfpacht/erfpacht-types';
 import { entries } from '../../../../universal/helpers/utils';
@@ -14,7 +14,7 @@ import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 import * as afis from '../Afis/Afis-thema-config';
-import { AfisFacturenTables } from '../Afis/AfisThema';
+import { AfisFacturenTables } from '../Afis/AfisFacturenTables';
 
 export function ErfpachtThema() {
   const {
