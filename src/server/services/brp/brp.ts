@@ -1,4 +1,4 @@
-import { subYears } from 'date-fns';
+import { isBefore, parseISO, subYears } from 'date-fns';
 
 import {
   ADRES_IN_ONDERZOEK_B,
@@ -419,6 +419,7 @@ export async function fetchAantalBewoners(
     return response;
   }
 
+  const today = new Date();
   const requestConfig = getApiConfig('BENK_BRP', {
     formatUrl(requestConfig) {
       return `${requestConfig.url}/personen`;
@@ -428,7 +429,14 @@ export async function fetchAantalBewoners(
       'X-Correlation-ID': getContextOperationId(sessionID), // Required for tracing
     },
     transformResponse: (responseData: PersonenResponseSource | null) => {
-      return responseData?.personen?.length ?? AANTAL_BEWONERS_NOT_SET;
+      const personenFiltered = responseData?.personen?.filter((persoon) => {
+        const datumOpschortingBijhouding = persoon.opschortingBijhouding?.datum;
+        return datumOpschortingBijhouding &&
+          'datum' in datumOpschortingBijhouding
+          ? !isBefore(parseISO(datumOpschortingBijhouding.datum), today)
+          : true;
+      });
+      return personenFiltered?.length || AANTAL_BEWONERS_NOT_SET;
     },
     data: {
       type: 'ZoekMetAdresseerbaarObjectIdentificatie',
@@ -440,9 +448,7 @@ export async function fetchAantalBewoners(
     },
   });
 
-  const brpBsnResponse = await requestData<number>(requestConfig);
-
-  return brpBsnResponse;
+  return requestData<number>(requestConfig);
 }
 
 export const forTesting = {

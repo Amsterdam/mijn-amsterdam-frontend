@@ -6,7 +6,9 @@ import {
   fetchBrpByBsn,
   fetchBrpByBsnTransformed,
   fetchBrpVerblijfplaatsHistoryByBsn,
+  fetchAantalBewoners,
 } from './brp';
+import { AANTAL_BEWONERS_NOT_SET } from './brp-config';
 import {
   DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_FROM,
   DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_TO,
@@ -60,6 +62,95 @@ describe('brp.ts', () => {
           scope: 'test-app-id/.default',
         }
       );
+    });
+  });
+
+  describe('fetchAantalBewoners', () => {
+    beforeEach(() => {
+      (fetchAuthTokenHeader as Mock).mockResolvedValueOnce({
+        status: 'OK',
+        content: 'xxx',
+      });
+    });
+    it('should return AANTAL_BEWONERS_NOT_SET when response is null', async () => {
+      remoteApi.post(/\/personen/).reply(200, null);
+
+      const response = await fetchAantalBewoners(
+        'test-session-id',
+        'test-bag-id'
+      );
+      expect(response.content).toBe(AANTAL_BEWONERS_NOT_SET);
+    });
+
+    it('should return AANTAL_BEWONERS_NOT_SET when no personen in response', async () => {
+      remoteApi.post(/\/personen/).reply(200, {});
+
+      const response = await fetchAantalBewoners(
+        'test-session-id',
+        'test-bag-id'
+      );
+      expect(response.content).toBe(AANTAL_BEWONERS_NOT_SET);
+    });
+
+    it('should return correct aantal bewoners from response', async () => {
+      const responseData = {
+        personen: [
+          { naam: { volledigeNaam: 'John Doe' } },
+          { naam: { volledigeNaam: 'Jane Smith' } },
+        ],
+      };
+      remoteApi.post(/\/personen/).reply(200, responseData);
+
+      const response = await fetchAantalBewoners(
+        'test-session-id',
+        'test-bag-id'
+      );
+      expect(response.content).toBe(2);
+    });
+
+    it('should filter out personen with opschortingBijhouding datum in the past', async () => {
+      const today = new Date();
+      const pastDate = new Date(today);
+      pastDate.setDate(today.getDate() - 1);
+      const futureDate = new Date(today);
+      futureDate.setDate(today.getDate() + 1);
+
+      const responseData = {
+        personen: [
+          {
+            naam: { volledigeNaam: 'John Doe' },
+            opschortingBijhouding: {
+              datum: {
+                type: 'Datum',
+                datum: pastDate.toISOString().split('T')[0],
+                langFormaat: '',
+              },
+              reden: { code: 'O', omschrijving: 'overlijden' },
+            },
+          },
+          {
+            naam: { volledigeNaam: 'Jane Smith' },
+            opschortingBijhouding: {
+              datum: {
+                type: 'Datum',
+                datum: futureDate.toISOString().split('T')[0],
+                langFormaat: '',
+              },
+              reden: { code: 'O', omschrijving: 'andere-reden' },
+            },
+          },
+          {
+            naam: { volledigeNaam: 'Alice Johnson' },
+          },
+        ],
+      };
+      remoteApi.post(/\/personen/).reply(200, responseData);
+
+      const response = await fetchAantalBewoners(
+        'test-session-id',
+        'test-bag-id'
+      );
+      expect(response.content).toBe(2); // Jane Smith and Alice Johnson
     });
   });
 
