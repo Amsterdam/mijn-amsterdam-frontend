@@ -125,10 +125,9 @@ authRouterDevelopment.get(
     }
 
     let testAccounts = testAccountData.accounts.map((account) => {
-      const mokum = account.username.startsWith('Provincie') || account.mokum;
       let username = account.username.trim().replace('Provincie-', '');
       username = slug(username);
-      return { ...account, username, mokum };
+      return { ...account, username };
     });
 
     const user =
