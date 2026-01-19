@@ -6,15 +6,15 @@ import { AppState } from '../../universal/types/App.types';
 import { useAppStateStore } from '../hooks/useAppStateStore';
 
 interface MockAppProps {
-  routePath: string;
-  routeEntry: string;
+  routePath?: string;
+  routeEntry?: string;
   state?: Partial<AppState>;
   component: ComponentType;
 }
 
 export default function MockApp({
-  routePath,
-  routeEntry,
+  routePath = '/',
+  routeEntry = '/',
   state,
   component,
 }: MockAppProps) {

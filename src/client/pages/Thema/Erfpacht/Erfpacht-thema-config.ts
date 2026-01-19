@@ -11,7 +11,6 @@ import type { ThemaRoutesConfig } from '../../../config/thema-types';
 import {
   getAfisListPageDocumentTitle,
   getFacturenTableConfig,
-  type AfisFactuurFrontend,
 } from '../Afis/Afis-thema-config';
 
 // Themapagina
@@ -127,6 +126,3 @@ export function getTableConfig(erfpachtData: ErfpachtDossiersResponse | null) {
 
   return tableConfig;
 }
-
-export const filterErfpachtFacturen = (factuur: AfisFactuurFrontend) =>
-  factuur.afzender.toLowerCase().includes('erfpacht');
