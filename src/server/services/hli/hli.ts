@@ -7,7 +7,11 @@ import {
   HLIresponseData,
   ZorgnedHLIRegeling,
 } from './hli-regelingen-types';
-import { routes, ZORGNED_AV_API_CONFIG_KEY } from './hli-service-config';
+import {
+  featureToggle,
+  routes,
+  ZORGNED_AV_API_CONFIG_KEY,
+} from './hli-service-config';
 import { hliStatusLineItemsConfig } from './hli-status-line-items';
 import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import {
@@ -175,7 +179,7 @@ function transformRegelingenForFrontend(
   today: Date
 ): HLIRegelingFrontend[] {
   const [remainingAanvragen, RTMAanvragen] = splitBy(aanvragen, isRTMAanvraag);
-  const RTMRegelingenFrontend = themaConfig.featureToggle.regelingen.enabledRTM
+  const RTMRegelingenFrontend = featureToggle.service.enabledRTM
     ? transformRTMAanvragen(sessionID, aanvrager, RTMAanvragen)
     : [];
 

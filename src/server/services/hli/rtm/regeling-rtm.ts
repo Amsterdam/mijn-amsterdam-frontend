@@ -32,6 +32,7 @@ import type {
   HLIRegelingFrontend,
   HLIRegelingSpecificatieFrontend,
 } from '../hli-regelingen-types';
+import { featureToggle } from '../hli-service-config';
 import { fetchZorgnedAanvragenHLI } from '../hli-zorgned-service';
 import { getBesluitDescription } from '../status-line-items/generic';
 
@@ -649,7 +650,7 @@ export function transformRTMAanvragen(
 export async function fetchRTMSpecificaties(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<HLIRegelingSpecificatieFrontend[]>> {
-  if (!themaConfig.featureToggle.regelingen.active) {
+  if (!featureToggle.service.enabledRTM) {
     return apiSuccessResult([]);
   }
   const response = await fetchZorgnedAanvragenHLI(
