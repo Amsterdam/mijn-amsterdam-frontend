@@ -13,7 +13,7 @@ import {
   DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_FROM,
   DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_TO,
 } from './brp-service-config';
-import type { PersonenResponseSource } from './brp-types';
+import type { PersoonSource } from './brp-types';
 import testPersonenResponse from '../../../../mocks/fixtures/brp/test-personen.json';
 import verblijfplaatsenResponse from '../../../../mocks/fixtures/brp/verblijfplaatshistorie.json';
 import { remoteApi } from '../../../testing/utils';
@@ -109,11 +109,8 @@ describe('brp.ts', () => {
     });
 
     it('should filter out personen with opschortingBijhouding datum in the past', async () => {
-      const today = new Date();
-      const pastDate = new Date(today);
-      pastDate.setDate(today.getDate() - 1);
-      const futureDate = new Date(today);
-      futureDate.setDate(today.getDate() + 1);
+      const pastDate = '2020-01-01';
+      const futureDate = '2099-01-01';
 
       const responseData = {
         personen: [
@@ -122,7 +119,7 @@ describe('brp.ts', () => {
             opschortingBijhouding: {
               datum: {
                 type: 'Datum',
-                datum: pastDate.toISOString().split('T')[0],
+                datum: pastDate,
                 langFormaat: '',
               },
               reden: { code: 'O', omschrijving: 'overlijden' },
@@ -133,7 +130,7 @@ describe('brp.ts', () => {
             opschortingBijhouding: {
               datum: {
                 type: 'Datum',
-                datum: futureDate.toISOString().split('T')[0],
+                datum: futureDate,
                 langFormaat: '',
               },
               reden: { code: 'O', omschrijving: 'andere-reden' },
@@ -215,7 +212,7 @@ describe('brp.ts', () => {
 
       const result = transformBenkBrpResponse(
         'xx-aa',
-        responseData.personen[0] as PersonenResponseSource['personen'][0]
+        responseData.personen[0] as PersoonSource
       );
       expect(result).toHaveProperty('persoon.opgemaakteNaam', 'John Doe');
       expect(result).toHaveProperty('persoon.vertrokkenOnbekendWaarheen', true);

@@ -1,4 +1,4 @@
-import { isBefore, parseISO, subYears } from 'date-fns';
+import { isAfter, parseISO, subYears } from 'date-fns';
 
 import {
   ADRES_IN_ONDERZOEK_B,
@@ -433,7 +433,7 @@ export async function fetchAantalBewoners(
         const datumOpschortingBijhouding = persoon.opschortingBijhouding?.datum;
         return datumOpschortingBijhouding &&
           'datum' in datumOpschortingBijhouding
-          ? !isBefore(parseISO(datumOpschortingBijhouding.datum), today)
+          ? isAfter(parseISO(datumOpschortingBijhouding.datum), today)
           : true;
       });
       return personenFiltered?.length || AANTAL_BEWONERS_NOT_SET;
