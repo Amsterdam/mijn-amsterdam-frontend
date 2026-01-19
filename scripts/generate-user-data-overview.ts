@@ -43,6 +43,7 @@ import * as XLSX from 'xlsx';
 import * as fs from 'node:fs';
 import { defaultDateFormat } from '../src/universal/helpers/date';
 import { getFullAddress } from '../src/universal/helpers/brp';
+import { testAccountDataDigid } from '../src/universal/config/auth.development';
 
 import { MyNotification } from '../src/universal/types/App.types';
 import {
@@ -183,8 +184,10 @@ if (IS_PRODUCTION) {
   throw Error('This script cannot be run inside of production.');
 }
 
-if (!process.env.MA_TEST_ACCOUNTS) {
-  throw new Error('MA_TEST_ACCOUNTS env var is empty.');
+if (!testAccountDataDigid) {
+  throw new Error(
+    'testAccountDataDigid is empty. Check if MA_TEST_ACCOUNTS has data.'
+  );
 }
 
 const themaIDtoTitle: Record<string, string> = themas.reduce(
@@ -196,13 +199,9 @@ const themaIDtoTitle: Record<string, string> = themas.reduce(
 );
 
 const themaIDs = themas.map((menuItem) => menuItem.id);
-const testAccountEntries = process.env.MA_TEST_ACCOUNTS.split(',').map(
-  (accountData) => {
-    const keyVal = accountData.split('=');
-    return [keyVal[0], keyVal[1]];
-  }
+const testAccounts = testAccountDataDigid.accounts.map(
+  ({ username, profileId }) => [username, profileId]
 );
-const testAccountNames = testAccountEntries.map(([username]) => username);
 
 XLSX.set_fs(fs);
 // If true then get data extracted out of services from disk.
@@ -326,7 +325,7 @@ async function getServiceResults(): Promise<ResultsByUser> {
 
   const allResults: ResultsByUser = {};
 
-  for (const [username, userId] of testAccountEntries) {
+  for (const [username, profileId] of testAccounts) {
     const loginURL = `${BASE_URL}/auth/digid/login/${username}?redirectUrl=noredirect`;
     try {
       const serviceResults = await fetch(loginURL).then(async (res) => {
@@ -335,13 +334,13 @@ async function getServiceResults(): Promise<ResultsByUser> {
           throw Error(`No Set-Cookie header found for request to ${loginURL}`);
         }
 
-        console.time(`Fetched data for ${username}/${userId}`);
+        console.time(`Fetched data for ${username}/${profileId}`);
         return fetch(`${BASE_URL}/services/all`, {
           headers: {
             Cookie,
           },
         }).then((res) => {
-          console.timeEnd(`Fetched data for ${username}/${userId}`);
+          console.timeEnd(`Fetched data for ${username}/${profileId}`);
           return res.json();
         });
       });
@@ -382,7 +381,7 @@ function oudersOfKinderen(
 }
 
 function relatedUser(persoon: Persoon) {
-  const relatedUsername = testAccountEntries.find(
+  const relatedUsername = testAccounts.find(
     ([, bsn]) => bsn === persoon.bsn
   )?.[0];
   const age = `${
@@ -465,7 +464,7 @@ function sheetBrpBase(resultsByUser: ResultsByUser): SheetData {
       };
     }
   );
-  const rowInfo = createInfoArray(testAccountEntries.length, {
+  const rowInfo = createInfoArray(testAccounts.length, {
     hpx: HPX_DEFAULT,
   });
   const colInfo = [
@@ -723,7 +722,7 @@ const brpSheetLayout: BrpSheetLayout[] = [
 });
 
 function sheetThemas(resultsByUser: ResultsByUser): SheetData {
-  const rowInfo = createInfoArray(testAccountEntries.length, {
+  const rowInfo = createInfoArray(testAccounts.length, {
     hpx: HPX_DEFAULT,
   });
 
@@ -753,7 +752,10 @@ function sheetThemas(resultsByUser: ResultsByUser): SheetData {
     }
   });
 
-  const columnHeaders = ['Themas', ...testAccountNames];
+  const columnHeaders = [
+    'Themas',
+    ...testAccounts.map(([username]) => username),
+  ];
   return {
     title: 'Themas',
     rows: Object.values(rowsMap),
@@ -814,7 +816,7 @@ function sheetServiceErrors(
   resultsByUser: ResultsByUser,
   serviceKeys: string[]
 ): SheetData {
-  const rowInfo = createInfoArray(testAccountEntries.length, {
+  const rowInfo = createInfoArray(testAccounts.length, {
     hpx: HPX_DEFAULT,
   });
 
@@ -851,10 +853,10 @@ function sheetServiceErrors(
   return {
     title: 'Service Errors',
     rows: Object.values(rowsMap),
-    columnHeaders: ['', ...testAccountEntries.map(([username]) => username)],
+    columnHeaders: ['', ...testAccounts.map(([username]) => username)],
     colInfo: [
       { wch: WCH_DEFAULT },
-      ...createInfoArray(testAccountEntries.length, { wch: WCH_DEFAULT }),
+      ...createInfoArray(testAccounts.length, { wch: WCH_DEFAULT }),
     ],
     rowInfo,
   };
