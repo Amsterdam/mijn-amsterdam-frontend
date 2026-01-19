@@ -1,6 +1,10 @@
 import { Paragraph, Link, Heading } from '@amsterdam/design-system-react';
 
-import { featureToggle, filterErfpachtFacturen } from './Erfpacht-thema-config';
+import {
+  featureToggle,
+  filterErfpachtFacturen,
+  mapErfpachtFacturen,
+} from './Erfpacht-thema-config';
 import { useErfpachtThemaData } from './useErfpachtThemaData.hook';
 import { ErfpachtDossierFrontend } from '../../../../server/services/erfpacht/erfpacht-types';
 import { entries } from '../../../../universal/helpers/utils';
@@ -82,6 +86,7 @@ export function ErfpachtThema() {
                 themaId: id,
                 states: ['open'],
                 factuurFilterFn: filterErfpachtFacturen,
+                factuurMapFn: mapErfpachtFacturen,
               }}
             />
           )}

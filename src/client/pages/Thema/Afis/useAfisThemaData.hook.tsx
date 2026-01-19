@@ -36,6 +36,10 @@ export type AfisFacturenThemaContextParams = {
     factuur: AfisFactuurFrontend,
     state?: AfisFactuurState
   ) => boolean;
+  factuurMapFn?: (
+    factuur: AfisFactuurFrontend,
+    state?: AfisFactuurState
+  ) => AfisFactuurFrontend;
 };
 
 export function useAfisFacturenData(

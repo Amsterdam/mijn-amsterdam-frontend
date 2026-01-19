@@ -121,6 +121,12 @@ export function AfisFacturenTables({
           );
           totalItems = facturen.length;
         }
+        if (themaContextParams?.factuurMapFn && facturen.length) {
+          facturen = facturen.map(
+            (factuur) =>
+              themaContextParams.factuurMapFn?.(factuur, state) ?? factuur
+          );
+        }
         const contentAfterTheTitle =
           state === 'overgedragen' && !!facturen.length ? (
             <AfisDisclaimerOvergedragenFacturen />

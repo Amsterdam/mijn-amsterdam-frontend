@@ -1,5 +1,6 @@
 import { generatePath } from 'react-router';
 
+import type { AfisFactuurState } from '../../../../server/services/afis/afis-types';
 import {
   ErfpachtDossierFrontend,
   ErfpachtDossiersResponse,
@@ -13,6 +14,7 @@ import {
   getFacturenTableConfig,
   type AfisFactuurFrontend,
 } from '../Afis/Afis-thema-config';
+import { getFactuurNummerLink } from '../Afis/useAfisFacturenApi';
 
 // Themapagina
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_DOSSIERS = 5;
@@ -130,3 +132,19 @@ export function getTableConfig(erfpachtData: ErfpachtDossiersResponse | null) {
 
 export const filterErfpachtFacturen = (factuur: AfisFactuurFrontend) =>
   factuur.afzender.toLowerCase().includes('erfpacht');
+
+export const mapErfpachtFacturen = (
+  factuur: AfisFactuurFrontend,
+  state: AfisFactuurState = 'open'
+) => {
+  return {
+    ...factuur,
+    factuurNummerEl: getFactuurNummerLink(
+      factuur,
+      generatePath(routeConfig.detailPageFactuur.path, {
+        state,
+        factuurNummer: factuur.factuurNummer,
+      })
+    ),
+  };
+};
