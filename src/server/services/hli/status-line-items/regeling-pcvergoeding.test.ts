@@ -11,6 +11,31 @@ import { getAuthProfileAndToken } from '../../../../testing/utils';
 import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../../zorgned/zorgned-types';
 import { forTesting as forTestingHLI } from '../hli';
 
+const mocks = vi.hoisted(() => {
+  return {
+    hli2026PCVergoedingCodesActive: true,
+  };
+});
+
+vi.mock(
+  '../../../../client/pages/Thema/HLI/HLI-thema-config',
+  async (importActual) => {
+    const actual =
+      await importActual<
+        typeof import('../../../../client/pages/Thema/HLI/HLI-thema-config')
+      >();
+    return {
+      ...actual,
+      featureToggle: {
+        ...actual.featureToggle,
+        get hli2026PCVergoedingCodesActive() {
+          return mocks.hli2026PCVergoedingCodesActive;
+        },
+      },
+    };
+  }
+);
+
 describe('pcvergoeding', () => {
   describe('isRegelingVanVerzilvering', () => {
     describe('Historic', () => {
@@ -628,6 +653,9 @@ describe('pcvergoeding', () => {
   });
 
   describe('PC tegoed >= 2026', () => {
+    afterEach(() => {
+      mocks.hli2026PCVergoedingCodesActive = true;
+    });
     const testData = [
       {
         id: '2',
@@ -655,10 +683,10 @@ describe('pcvergoeding', () => {
       },
     ] as unknown as ZorgnedAanvraagWithRelatedPersonsTransformed[];
 
-    test('PCRegelingen with AV_PCTGBO ans AV_PCTGVO are transformed correctly', async () => {
+    test('2026 aanvragen are transformed correctly', () => {
       const profile = getAuthProfileAndToken().profile;
       expect(
-        await forTestingHLI.transformRegelingenForFrontend(
+        forTestingHLI.transformRegelingenForFrontend(
           profile.sid,
           { bsn: profile.id },
           testData,
