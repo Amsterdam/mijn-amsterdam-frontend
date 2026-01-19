@@ -1,3 +1,4 @@
+import { filterErfpachtFacturen } from './Erfpacht-helpers';
 import {
   ERFPACHT_ZAKELIJK_ROUTE_DEFAULT,
   erfpachtFacturenTableConfig,
@@ -6,7 +7,6 @@ import {
   themaId,
   themaTitle,
 } from './Erfpacht-thema-config';
-import { filterErfpachtFacturen } from './Erfpacht-helpers';
 import { ErfpachtDetail } from './ErfpachtDetail';
 import { default as ErfpachtIcon } from './ErfpachtIcon.svg?react';
 import { ErfpachtList } from './ErfpachtList';
