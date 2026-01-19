@@ -130,21 +130,3 @@ export function getTableConfig(erfpachtData: ErfpachtDossiersResponse | null) {
   return tableConfig;
 }
 
-export const filterErfpachtFacturen = (factuur: AfisFactuurFrontend) =>
-  factuur.afzender.toLowerCase().includes('erfpacht');
-
-export const mapErfpachtFacturen = (
-  factuur: AfisFactuurFrontend,
-  state: AfisFactuurState = 'open'
-) => {
-  return {
-    ...factuur,
-    factuurNummerEl: getFactuurNummerLink(
-      factuur,
-      generatePath(routeConfig.detailPageFactuur.path, {
-        state,
-        factuurNummer: factuur.factuurNummer,
-      })
-    ),
-  };
-};
