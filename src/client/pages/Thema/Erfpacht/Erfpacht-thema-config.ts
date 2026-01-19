@@ -1,6 +1,5 @@
 import { generatePath } from 'react-router';
 
-import type { AfisFactuurState } from '../../../../server/services/afis/afis-types';
 import {
   ErfpachtDossierFrontend,
   ErfpachtDossiersResponse,
@@ -12,9 +11,7 @@ import type { ThemaRoutesConfig } from '../../../config/thema-types';
 import {
   getAfisListPageDocumentTitle,
   getFacturenTableConfig,
-  type AfisFactuurFrontend,
 } from '../Afis/Afis-thema-config';
-import { getFactuurNummerLink } from '../Afis/useAfisFacturenApi';
 
 // Themapagina
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_DOSSIERS = 5;
@@ -129,4 +126,3 @@ export function getTableConfig(erfpachtData: ErfpachtDossiersResponse | null) {
 
   return tableConfig;
 }
-
