@@ -4,11 +4,15 @@ import { useParams } from 'react-router';
 import {
   AfisFactuurFrontend,
   displayPropsTermijnenTable,
+  routeConfig,
 } from './Afis-thema-config';
 import styles from './AfisFactuur.module.scss';
 import { getDocumentLink } from './useAfisFacturenApi';
 import { useAfisListPageData } from './useAfisListPageData';
-import { useAfisThemaData } from './useAfisThemaData.hook';
+import {
+  useAfisFacturenData,
+  type AfisFacturenThemaContextParams,
+} from './useAfisThemaData.hook';
 import type { AfisFactuurStateFrontend } from '../../../../server/services/afis/afis-types';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import LoadingContent from '../../../components/LoadingContent/LoadingContent';
@@ -17,6 +21,7 @@ import { PageContentCell } from '../../../components/Page/Page';
 import { TableV2 } from '../../../components/Table/TableV2';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 
 function getTermijnenTable(factuur: AfisFactuurFrontend) {
   if (!factuur.termijnen || factuur.termijnen.length === 0) {
@@ -41,14 +46,18 @@ function getTermijnenTable(factuur: AfisFactuurFrontend) {
 type FactuurDetailContentProps = {
   factuurNummer: AfisFactuurFrontend['factuurNummer'];
   state: AfisFactuurStateFrontend;
+  themaContextParams?: AfisFacturenThemaContextParams;
 };
 
 function FactuurDetailContent({
   factuurNummer,
   state,
+  themaContextParams,
 }: FactuurDetailContentProps) {
-  const { facturen, routeConfig, isListPageLoading } =
-    useAfisListPageData(state);
+  const { facturen, isListPageLoading } = useAfisListPageData(
+    state,
+    themaContextParams
+  );
 
   const factuur =
     facturen.find((f) => f.factuurNummer === factuurNummer) ?? null;
@@ -107,21 +116,25 @@ function FactuurDetailContent({
   return <Datalist rows={rows} />;
 }
 
-export function AfisFactuur() {
+type AfisListProps = {
+  themaContextParams?: Omit<AfisFacturenThemaContextParams, 'factuurFilterFn'>;
+};
+
+export function AfisFactuur({ themaContextParams }: AfisListProps) {
   const {
-    breadcrumbs,
-    routeConfig,
+    routeConfigDetailPage,
     themaId,
     isThemaPaginaError,
     isThemaPaginaLoading,
-  } = useAfisThemaData();
+  } = useAfisFacturenData(themaContextParams);
+  const breadcrumbs = useThemaBreadcrumbs(themaId);
 
   const { factuurNummer, state } = useParams<{
     factuurNummer: AfisFactuurFrontend['factuurNummer'];
     state: AfisFactuurStateFrontend;
   }>();
 
-  useHTMLDocumentTitle(routeConfig.detailPage);
+  useHTMLDocumentTitle(routeConfigDetailPage);
 
   const title = `Factuurgegevens ${factuurNummer ?? ''}`;
 
@@ -136,7 +149,11 @@ export function AfisFactuur() {
         state &&
         factuurNummer && (
           <PageContentCell>
-            <FactuurDetailContent factuurNummer={factuurNummer} state={state} />
+            <FactuurDetailContent
+              factuurNummer={factuurNummer}
+              state={state}
+              themaContextParams={themaContextParams}
+            />
           </PageContentCell>
         )
       }
