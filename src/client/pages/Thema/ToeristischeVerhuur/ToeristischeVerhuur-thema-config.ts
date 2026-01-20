@@ -7,19 +7,31 @@ import {
 } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
 import { entries } from '../../../../universal/helpers/utils';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
-import type { ThemaRoutesConfig } from '../../../config/thema-types';
+import type {
+  ThemaRoutesConfig,
+  ThemaConfigBase,
+} from '../../../config/thema-types';
 import {
   ListPageParamKind as ListPageParamKindVergunningen,
   listPageParamKind as listPageParamKindVergunningen,
   tableConfig as tableConfigVergunningen,
 } from '../Vergunningen/Vergunningen-thema-config';
 
+type ToeristischeVerhuurThemaConfig = Pick<ThemaConfigBase, 'id' | 'title'>;
+
+const themaTitle = 'Toeristische verhuur';
+
+export const themaConfig: ToeristischeVerhuurThemaConfig = {
+  id: 'TOERISTISCHE_VERHUUR',
+  title: 'Toeristische verhuur',
+};
+
 export const featureToggle = {
   toeristischeVerhuurActive: true,
 };
 
-export const themaId = 'TOERISTISCHE_VERHUUR' as const;
-export const themaTitle = 'Toeristische verhuur';
+//export const themaId = 'TOERISTISCHE_VERHUUR' as const;
+//export const themaTitle = 'Toeristische verhuur';
 
 export const routeConfig = {
   detailPage: {

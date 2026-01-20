@@ -1,8 +1,8 @@
 import {
   featureToggle,
   routeConfig,
-  themaId,
-  themaTitle,
+  themaConfig,
+  //themaId,
 } from './ToeristischeVerhuur-thema-config';
 import { ToeristischeVerhuurDetail } from './ToeristischeVerhuurDetail';
 import { default as ToeristischeVerhuurIcon } from './ToeristischeVerhuurIcon.svg?react';
@@ -33,9 +33,9 @@ export const ToeristischeVerhuurRoutes = [
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
-export const menuItem: ThemaMenuItem<typeof themaId> = {
-  title: themaTitle,
-  id: themaId,
+export const menuItem: ThemaMenuItem = {
+  title: themaConfig.title,
+  id: themaConfig.id,
   to: routeConfig.themaPage.path,
   profileTypes: ['private', 'commercial'],
   redactedScope: 'none',

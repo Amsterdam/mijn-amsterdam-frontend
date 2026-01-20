@@ -25,7 +25,7 @@ import { themaId as themaIdAfval } from '../../../client/pages/Thema/Afval/Afval
 import { themaConfig as hliThemaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import { themaId as themaIdInkomen } from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
 import { themaIdBRP } from '../../../client/pages/Thema/Profile/Profile-thema-config';
-import { themaId as themaIdToeristischeVerhuur } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
+import { themaConfig as ToeristischeVerhuurThemaConfig } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 
 const DAYS = 90;
 
@@ -203,7 +203,7 @@ export const contentTips: ContentTipSource[] = [
     active: true,
     datePublished: '2023-10-15',
     title: 'Tip: Particuliere vakantieverhuur',
-    themaID: themaIdToeristischeVerhuur,
+    themaID: themaConfig.id,
     profileTypes: ['private'],
     description:
       'Bij vakantieverhuur moet u naast het eenmalige registratienummer ook jaarlijks een vergunning bij de gemeente aanvragen. Ook moet u iedere keer dat u de woning verhuurt dit bij ons melden.',
@@ -225,7 +225,7 @@ export const contentTips: ContentTipSource[] = [
     active: true,
     datePublished: '2021-06-15',
     title: 'Tip: Overgangsrecht bij Bed and breakfast',
-    themaID: themaIdToeristischeVerhuur,
+    themaID: ToeristischeVerhuurThemaConfig.id,
     profileTypes: ['private'],
     description:
       'Heeft u uw B&B voor 1 januari 2019 aangevraagd? Dan mag u tot 1 juli 2026 verhuren volgens deze regels.',
@@ -245,7 +245,7 @@ export const contentTips: ContentTipSource[] = [
     active: true,
     datePublished: '2021-06-15',
     title: 'Tip: Bed & breakfast',
-    themaID: themaIdToeristischeVerhuur,
+    themaID: ToeristischeVerhuurThemaConfig.id,
     profileTypes: ['private'],
     description:
       'Vanaf 1 april 2021 moet u naast een vergunning ook een registratienummer aanvragen voor een bed & breakfast.',
