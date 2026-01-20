@@ -42,7 +42,7 @@ export function FeedbackForm1({
             setCharacterCount(e.currentTarget.value.length);
           }}
           maxLength={maxLength}
-          name="feedback"
+          name="kto.feedback"
         />
         <CharacterCount length={characterCount} maxLength={maxLength} />
       </Field>
@@ -52,7 +52,7 @@ export function FeedbackForm1({
           type="email"
           aria-describedby="emailDesc"
           id="email"
-          name="email"
+          name="kto.email"
         />
         <Paragraph size="small">
           Als het nodig is kunnen we contact met u opnemen.

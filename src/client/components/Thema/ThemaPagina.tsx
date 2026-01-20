@@ -3,7 +3,6 @@ import { ReactNode } from 'react';
 import { LinkList } from '@amsterdam/design-system-react';
 
 import styles from './ThemaPagina.module.scss';
-import type { RecordStr2 } from '../../../server/routing/route-helpers';
 import { LinkProps } from '../../../universal/types/App.types';
 import ErrorAlert from '../Alert/Alert';
 import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
@@ -36,7 +35,7 @@ interface ThemaPaginaProps {
   isPartialError?: boolean;
   isLoading: boolean;
   maintenanceNotificationsPageSlug?: string;
-  userFeedbackDetails?: RecordStr2;
+  themaFeedbackDetails?: object;
 }
 export default function ThemaPagina({
   id,
@@ -53,26 +52,27 @@ export default function ThemaPagina({
   isPartialError,
   isLoading,
   maintenanceNotificationsPageSlug,
-  userFeedbackDetails,
+  themaFeedbackDetails,
 }: ThemaPaginaProps) {
   const showError = (!isError && isPartialError) || isError;
-  const themaFeedbackDetails = {
-    id,
-    title,
-    isError: `${isError}`,
-    isLoading: `${isLoading}`,
-  };
+  const themaFeedbackDetails_ = Object.assign(
+    { id, title },
+    themaFeedbackDetails || {}
+  );
+  const userFeedbackDetails = Object.entries(themaFeedbackDetails_).reduce(
+    (details, [key, value]) => {
+      details[`thema.${key}`] = value;
+      return details;
+    },
+    {} as Record<string, unknown>
+  );
   return (
     <PageV2
       heading={title}
       breadcrumbs={breadcrumbs}
       redactedThemaId={id}
       showUserFeedback
-      userFeedbackDetails={
-        userFeedbackDetails
-          ? { ...userFeedbackDetails, ...themaFeedbackDetails }
-          : themaFeedbackDetails
-      }
+      userFeedbackDetails={userFeedbackDetails}
     >
       {maintenanceNotificationsPageSlug && (
         <MaintenanceNotifications page={maintenanceNotificationsPageSlug} />

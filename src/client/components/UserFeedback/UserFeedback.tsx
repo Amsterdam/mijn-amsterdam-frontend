@@ -23,7 +23,7 @@ export function UserFeedback({
   const isRated = !!rated;
 
   function onSubmit_(formData: FormData) {
-    formData.append('rating', rated.toString());
+    formData.append('kto.rating', rated.toString());
     onSubmit(formData);
     setIsSubmitted(true);
   }

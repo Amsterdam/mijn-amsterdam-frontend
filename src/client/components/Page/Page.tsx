@@ -8,7 +8,6 @@ import {
 } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
-import type { RecordStr2 } from '../../../server/routing/route-helpers';
 import { getRedactedClass, type ScopeRequested } from '../../helpers/cobrowse';
 import {
   PageBreadcrumbsV2,
@@ -25,7 +24,7 @@ export interface PageProps extends HTMLProps<HTMLDivElement> {
   redactedScope?: ScopeRequested;
   breadcrumbs?: PageBreadcrumbsV2Props['breadcrumbs'];
   showUserFeedback?: boolean;
-  userFeedbackDetails?: RecordStr2;
+  userFeedbackDetails?: object;
 }
 
 const PADDING_TOP = 'large';

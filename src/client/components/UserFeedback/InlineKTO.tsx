@@ -2,26 +2,63 @@ import { useLocation } from 'react-router';
 
 import { UserFeedback } from './UserFeedback';
 import styles from './UserFeedback.module.scss';
-import type { RecordStr2 } from '../../../server/routing/route-helpers';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems';
+import { useErrorMessages } from '../ErrorMessages/ErrorMessages';
 import { PageContentCell } from '../Page/Page';
 
 type InlineKTOProps = {
-  userFeedbackDetails?: RecordStr2;
+  userFeedbackDetails?: object;
 };
 
 export function InlineKTO({ userFeedbackDetails }: InlineKTOProps) {
+  const { errors } = useErrorMessages();
+  const { items: myThemaItems, isLoading: isMyThemasLoading } =
+    useActiveThemaMenuItems();
   const location = useLocation();
+  const profileType = useProfileTypeValue();
+
+  const browserInfo = {
+    userAgent: navigator.userAgent,
+    language: navigator.language,
+    screenResolution: `${screen.width}x${screen.height}`,
+    windowInnerSize: `${window.innerWidth}x${window.innerHeight}`,
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+  };
+
   function saveFormData(formData: FormData) {
     // const feedback = formData.get('feedback');
     // const email = formData.get('email');
-    formData.append('path', location.pathname);
-    formData.append('title', document.title);
+    formData.append('browser.pathname', location.pathname);
+    formData.append('browser.title', document.title);
+
+    Object.entries(browserInfo).forEach(([key, value]) => {
+      formData.append(`browser.${key}`, value.toString());
+    });
+
     if (userFeedbackDetails) {
       Object.entries(userFeedbackDetails).forEach(([key, value]) => {
-        formData.append(key, value);
+        formData.append(
+          key,
+          typeof value === 'object' ? JSON.stringify(value) : String(value)
+        );
       });
     }
-    console.log('Feedback submitted:', formData);
+
+    if (!isMyThemasLoading) {
+      formData.append(
+        'ma.themas',
+        JSON.stringify(
+          myThemaItems.filter((item) => item.isActive).map((item) => item.title)
+        )
+      );
+      if (errors.length) {
+        formData.append('ma.errors', JSON.stringify(errors));
+      }
+      formData.append('ma.profileType', profileType || 'unknown');
+    }
+
+    console.log('Feedback submitted:', Object.fromEntries(formData.entries()));
     // Here you would typically send the data to your server
   }
 

@@ -64,7 +64,7 @@ export function InkomenThema() {
     }
   );
 
-  const userFeedbackDetails = {
+  const themaPaginaDetails = {
     ...getFeedbackDetailsByTableConfig(zaken, tableConfig),
     ...getFeedbackDetailsByTableConfig(specificaties, {
       specificaties: tableConfigSpecificaties.uitkering,
@@ -89,7 +89,7 @@ export function InkomenThema() {
       }
       linkListItems={linkListItems}
       maintenanceNotificationsPageSlug="inkomen"
-      userFeedbackDetails={userFeedbackDetails}
+      themaFeedbackDetails={themaPaginaDetails}
     />
   );
 }
