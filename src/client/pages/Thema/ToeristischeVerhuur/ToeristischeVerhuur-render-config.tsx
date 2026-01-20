@@ -33,7 +33,7 @@ export const menuItem: ThemaMenuItem = {
   id: themaConfig.id,
   to: themaConfig.route.path,
   profileTypes: themaConfig.profileTypes,
-  redactedScope: 'none',
+  redactedScope: themaConfig.redactedScope,
   isActive(appState: AppState) {
     const { lvvRegistraties, vakantieverhuurVergunningen, bbVergunningen } =
       appState.TOERISTISCHE_VERHUUR?.content ?? {};

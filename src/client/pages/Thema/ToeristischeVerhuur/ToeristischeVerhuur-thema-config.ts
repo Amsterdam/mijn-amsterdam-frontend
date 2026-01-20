@@ -19,7 +19,14 @@ import {
 
 type ToeristischeVerhuurThemaConfig = Pick<
   ThemaConfigBase,
-  'id' | 'title' | 'profileTypes' | 'featureToggle' | 'route'
+  | 'id'
+  | 'title'
+  | 'profileTypes'
+  | 'featureToggle'
+  | 'pageLinks'
+  | 'route'
+  | 'uitlegPageSections'
+  | 'redactedScope'
 >;
 
 const THEMA_TITLE = 'Toeristische verhuur';
@@ -29,6 +36,20 @@ export const themaConfig: ToeristischeVerhuurThemaConfig = {
   title: THEMA_TITLE,
   featureToggle: { active: true }, // TO DO YACINE
   profileTypes: ['private', 'commercial'],
+  pageLinks: [
+    {
+      title: 'Meer informatie over particuliere vakantieverhuur',
+      to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/?vkurl=wonen-leefomgeving%2Fwonen%2Fvakantieverhuur',
+    },
+    {
+      title: 'Meer over toeristenbelasting',
+      to: 'https://www.amsterdam.nl/belastingen/toeristenbelasting/',
+    },
+    {
+      title: 'Vakantieverhuur melden of registratienummer aanvragen',
+      to: 'https://www.toeristischeverhuur.nl/portaal/login',
+    },
+  ],
   route: {
     path: '/toeristische-verhuur',
     get documentTitle() {
@@ -36,6 +57,17 @@ export const themaConfig: ToeristischeVerhuurThemaConfig = {
     },
     trackingUrl: null,
   },
+  uitlegPageSections: [
+    {
+      title: THEMA_TITLE,
+      listItems: [
+        'Uw aanvraag voor een vergunning vakantieverhuur of bed & breakfast',
+        'Uw landelijk registratienummer toeristische verhuur',
+        'Link naar het landelijk portaal om vakantieverhuur door te geven en het aantal nachten verhuur in te zien',
+      ],
+    },
+  ],
+  redactedScope: 'none',
 };
 
 export const routeConfig = {
@@ -51,11 +83,6 @@ export const routeConfig = {
       `${tableConfigVergunningen[(params?.kind as ListPageParamKind) || 'lopende-aanvragen'].title} | ${THEMA_TITLE}`,
     trackingUrl: null,
   },
-  // themaPage: {
-  //   path: '/toeristische-verhuur',
-  //   documentTitle: `${THEMA_TITLE} | overzicht`,
-  //   trackingUrl: null,
-  // },
 } as const satisfies ThemaRoutesConfig;
 
 const DISPLAY_PROPS_HUIDIGE_VERGUNNINGEN: DisplayProps<ToeristischeVerhuurVergunning> =
