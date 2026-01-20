@@ -11,7 +11,6 @@ import {
   isError,
   isLoading,
 } from '../../../../universal/helpers/api';
-import { LinkProps } from '../../../../universal/types/App.types';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
@@ -66,30 +65,30 @@ export function useToeristischeVerhuurThemaData() {
     'lvvRegistraties'
   );
 
-  const linkListItems: LinkProps[] = [
-    {
-      title: 'Meer over toeristenbelasting',
-      to: 'https://www.amsterdam.nl/belastingen/toeristenbelasting/',
-    },
-    {
-      title: 'Vakantieverhuur melden of registratienummer aanvragen',
-      to: 'https://www.toeristischeverhuur.nl/portaal/login',
-    },
-  ];
+  // const linkListItems: LinkProps[] = [
+  //   {
+  //     title: 'Meer over toeristenbelasting',
+  //     to: 'https://www.amsterdam.nl/belastingen/toeristenbelasting/',
+  //   },
+  //   {
+  //     title: 'Vakantieverhuur melden of registratienummer aanvragen',
+  //     to: 'https://www.toeristischeverhuur.nl/portaal/login',
+  //   },
+  // ];
 
-  if (hasVergunningBB && !hasVergunningenVakantieVerhuur) {
-    linkListItems.unshift({
-      title: 'Meer informatie over bed & breakfast',
-      to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/woonruimte-verhuren/vergunning-aanvragen-bed-breakfast/',
-    });
-  }
+  // if (hasVergunningBB && !hasVergunningenVakantieVerhuur) {
+  //   linkListItems.unshift({
+  //     title: 'Meer informatie over bed & breakfast',
+  //     to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/woonruimte-verhuren/vergunning-aanvragen-bed-breakfast/',
+  //   });
+  // }
 
-  if (hasVergunningenVakantieVerhuur) {
-    linkListItems.unshift({
-      title: 'Meer informatie over particuliere vakantieverhuur',
-      to: 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/',
-    });
-  }
+  // if (hasVergunningenVakantieVerhuur) {
+  //   linkListItems.unshift({
+  //     title: 'Meer informatie over particuliere vakantieverhuur',
+  //     to: 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/',
+  //   });
+  // }
 
   const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
@@ -111,7 +110,7 @@ export function useToeristischeVerhuurThemaData() {
     hasVergunningenVakantieVerhuur,
     hasBothVerleend,
     hasVergunningBB,
-    linkListItems,
+    linkListItems: themaConfig.pageLinks,
     breadcrumbs,
     routeConfig,
   };

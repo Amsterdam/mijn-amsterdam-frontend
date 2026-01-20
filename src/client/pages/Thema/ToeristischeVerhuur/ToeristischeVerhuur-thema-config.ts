@@ -17,17 +17,7 @@ import {
   tableConfig as tableConfigVergunningen,
 } from '../Vergunningen/Vergunningen-thema-config';
 
-type ToeristischeVerhuurThemaConfig = Pick<
-  ThemaConfigBase,
-  | 'id'
-  | 'title'
-  | 'profileTypes'
-  | 'featureToggle'
-  | 'pageLinks'
-  | 'route'
-  | 'uitlegPageSections'
-  | 'redactedScope'
->;
+type ToeristischeVerhuurThemaConfig = ThemaConfigBase;
 
 const THEMA_TITLE = 'Toeristische verhuur';
 
@@ -46,8 +36,12 @@ export const themaConfig: ToeristischeVerhuurThemaConfig = {
       to: 'https://www.amsterdam.nl/belastingen/toeristenbelasting/',
     },
     {
-      title: 'Vakantieverhuur melden of registratienummer aanvragen',
+      title: 'Vakantieverhuur melden of registratienummer aanvragen', // TO DO YACINE > deze en die hieronder is afhankelijk  (hasVergunningBB && !hasVergunningenVakantieVerhuur)
       to: 'https://www.toeristischeverhuur.nl/portaal/login',
+    },
+    {
+      title: 'Meer informatie over bed & breakfast',
+      to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/woonruimte-verhuren/vergunning-aanvragen-bed-breakfast/',
     },
   ],
   route: {
