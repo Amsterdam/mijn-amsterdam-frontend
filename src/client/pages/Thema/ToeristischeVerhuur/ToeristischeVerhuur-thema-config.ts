@@ -39,7 +39,7 @@ export const themaConfig: ToeristischeVerhuurThemaConfig = {
   pageLinks: [
     {
       title: 'Meer informatie over particuliere vakantieverhuur',
-      to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/?vkurl=wonen-leefomgeving%2Fwonen%2Fvakantieverhuur',
+      to: 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/',
     },
     {
       title: 'Meer over toeristenbelasting',

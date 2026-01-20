@@ -4,7 +4,7 @@ import { generatePath } from 'react-router';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import {
-  routeConfig,
+  themaConfig,
   themaConfig as ToeristischeVerhuurThemaConfig,
 } from './ToeristischeVerhuur-thema-config';
 import { ToeristischeVerhuurThema } from './ToeristischeVerhuurThema';
@@ -129,8 +129,8 @@ const getTestState = () =>
 const testStateBase = getTestState();
 
 describe('<ToeristischeVerhuurThema />', () => {
-  const routeEntry = generatePath(routeConfig.themaPage.path);
-  const routePath = routeConfig.themaPage.path;
+  const routeEntry = generatePath(themaConfig.route.path);
+  const routePath = themaConfig.route.path;
 
   function Component({ state }: { state: AppState }) {
     return (
