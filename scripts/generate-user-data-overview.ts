@@ -33,12 +33,16 @@
 import '../src/server/helpers/load-env.ts';
 
 import * as XLSX from 'xlsx';
-
 import * as fs from 'node:fs';
 import { defaultDateFormat } from '../src/universal/helpers/date';
 import { getFullAddress } from '../src/universal/helpers/brp';
 import { testAccountDataDigid } from '../src/universal/config/auth.development';
 
+import { differenceInYears, parseISO } from 'date-fns';
+
+import { ServiceResults } from '../src/server/services/content-tips/tip-types';
+import { IS_PRODUCTION } from '../src/universal/config/env';
+import { cleanTestUsername } from '../src/server/auth/auth-helpers-development.ts';
 import { MyNotification } from '../src/universal/types/App.types';
 import {
   Adres,
@@ -46,10 +50,6 @@ import {
   Persoon,
   Verbintenis,
 } from '../src/server/services/brp/brp-types';
-import { differenceInYears, parseISO } from 'date-fns';
-
-import { ServiceResults } from '../src/server/services/content-tips/tip-types';
-import { IS_PRODUCTION } from '../src/universal/config/env';
 
 import {
   themaId as themaIdInkomen,
@@ -138,6 +138,7 @@ import {
   themaId as themaIdSubsidies,
   themaTitle as themaTitleSubsidies,
 } from '../src/client/pages/Thema/Subsidies/Subsidies-thema-config';
+import { auth } from 'express-openid-connect';
 
 const { BRP, KVK } = profileThemaTitles;
 
@@ -317,17 +318,17 @@ async function getServiceResults(): Promise<ResultsByUser> {
   const allResults: ResultsByUser = {};
 
   for (const [username, profileId] of testAccounts) {
-    const loginURL = `${BASE_URL}/auth/digid/login/${username}?redirectUrl=noredirect`;
+    const loginURL = `${BASE_URL}/auth/digid/login/${cleanTestUsername(username).toLowerCase()}?redirectUrl=noredirect`;
     try {
       const loginResponse = await fetch(loginURL);
-      const Cookie = loginResponse.headers.get('Set-Cookie');
-      if (!Cookie) {
+      const cookie = loginResponse.headers.get('set-cookie');
+      if (!cookie) {
         throw Error(`No Set-Cookie header found for request to ${loginURL}`);
       }
       console.time(`Fetched data for ${username}/${profileId}`);
       const servicesAllResponse = await fetch(`${BASE_URL}/services/all`, {
         headers: {
-          Cookie,
+          cookie,
         },
       });
       console.timeEnd(`Fetched data for ${username}/${profileId}`);

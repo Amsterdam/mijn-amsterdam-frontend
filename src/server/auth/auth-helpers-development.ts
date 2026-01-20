@@ -19,6 +19,10 @@ export async function getPrivateKeyForDevelopment() {
   return jose.importJWK(DEV_JWK_PRIVATE);
 }
 
+export function cleanTestUsername(username: string): string {
+  return username.trim().replace('Provincie-', '');
+}
+
 async function signDevelopmentToken_(
   authMethod: AuthProfile['authMethod'],
   userID: string,
