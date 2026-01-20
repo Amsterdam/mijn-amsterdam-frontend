@@ -6,7 +6,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 import {
   useBffApi,
-  sendGetRequest,
+  sendFetchRequest,
   sendJSONPostRequest,
   sendFormPostRequest,
   isAborted,
@@ -240,7 +240,7 @@ describe('sendGetRequest', () => {
       })
     );
 
-    const result = await sendGetRequest<{ foo: string }>(
+    const result = await sendFetchRequest<{ foo: string }>(
       'http://localhost/test'
     );
     expect(result.status).toBe('OK');
@@ -259,7 +259,7 @@ describe('sendGetRequest', () => {
       })
     );
 
-    const result = await sendGetRequest('http://localhost/test');
+    const result = await sendFetchRequest('http://localhost/test');
     expect(result.status).toBe('ERROR');
     expect(result.status === 'ERROR' && result.message).toContain('HTTP Error');
   });
