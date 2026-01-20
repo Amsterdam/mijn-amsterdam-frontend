@@ -2,10 +2,21 @@ import { useLocation } from 'react-router';
 
 import { UserFeedback } from './UserFeedback';
 import styles from './UserFeedback.module.scss';
+import type { RecordStr2 } from '../../../server/routing/route-helpers';
+import { BFFApiUrls } from '../../config/api';
+import { sendFormPostRequest, useBffApi } from '../../hooks/api/useBffApi';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems';
 import { useErrorMessages } from '../ErrorMessages/ErrorMessages';
 import { PageContentCell } from '../Page/Page';
+
+export function useSubmitUserFeedback() {
+  return useBffApi<{ success: boolean }>('user-feedback', {
+    fetchImmediately: false,
+    url: BFFApiUrls.USER_FEEDBACK_SUBMIT,
+    sendRequest: sendFormPostRequest,
+  });
+}
 
 type InlineKTOProps = {
   userFeedbackDetails?: object;
@@ -17,6 +28,11 @@ export function InlineKTO({ userFeedbackDetails }: InlineKTOProps) {
     useActiveThemaMenuItems();
   const location = useLocation();
   const profileType = useProfileTypeValue();
+  const {
+    isError,
+    isLoading,
+    fetch: submitUserFeedback,
+  } = useSubmitUserFeedback();
 
   const browserInfo = {
     userAgent: navigator.userAgent,
@@ -27,39 +43,42 @@ export function InlineKTO({ userFeedbackDetails }: InlineKTOProps) {
   };
 
   function saveFormData(formData: FormData) {
-    // const feedback = formData.get('feedback');
-    // const email = formData.get('email');
-    formData.append('browser.pathname', location.pathname);
-    formData.append('browser.title', document.title);
+    const userFeedbackData: RecordStr2 = {};
 
-    Object.entries(browserInfo).forEach(([key, value]) => {
-      formData.append(`browser.${key}`, value.toString());
+    // User data from the form
+    formData.forEach((value, key) => {
+      userFeedbackData[key] = value.toString();
     });
 
+    // Browser and page data
+    userFeedbackData['browser.pathname'] = location.pathname;
+    userFeedbackData['browser.title'] = document.title;
+
+    Object.entries(browserInfo).forEach(([key, value]) => {
+      userFeedbackData[`browser.${key}`] = value.toString();
+    });
+
+    // Additional user feedback details
     if (userFeedbackDetails) {
       Object.entries(userFeedbackDetails).forEach(([key, value]) => {
-        formData.append(
-          key,
-          typeof value === 'object' ? JSON.stringify(value) : String(value)
-        );
+        userFeedbackData[key] =
+          typeof value === 'object' ? JSON.stringify(value) : String(value);
       });
     }
 
+    // User profile and thema data
     if (!isMyThemasLoading) {
-      formData.append(
-        'ma.themas',
-        JSON.stringify(
-          myThemaItems.filter((item) => item.isActive).map((item) => item.title)
-        )
+      userFeedbackData['ma.themas'] = JSON.stringify(
+        myThemaItems.filter((item) => item.isActive).map((item) => item.title)
       );
       if (errors.length) {
-        formData.append('ma.errors', JSON.stringify(errors));
+        userFeedbackData['ma.errors'] = JSON.stringify(errors);
       }
-      formData.append('ma.profileType', profileType || 'unknown');
+      userFeedbackData['ma.profileType'] = profileType || 'unknown';
     }
 
-    console.log('Feedback submitted:', Object.fromEntries(formData.entries()));
-    // Here you would typically send the data to your server
+    console.log('Feedback submitted:', userFeedbackData);
+    submitUserFeedback({ payload: userFeedbackData });
   }
 
   function savePageRating(rating: number) {

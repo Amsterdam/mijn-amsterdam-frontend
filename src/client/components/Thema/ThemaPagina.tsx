@@ -55,10 +55,11 @@ export default function ThemaPagina({
   themaFeedbackDetails,
 }: ThemaPaginaProps) {
   const showError = (!isError && isPartialError) || isError;
-  const themaFeedbackDetails_ = Object.assign(
-    { id, title },
-    themaFeedbackDetails || {}
-  );
+  const themaFeedbackDetails_ = {
+    id,
+    title,
+    details: themaFeedbackDetails || {},
+  };
   const userFeedbackDetails = Object.entries(themaFeedbackDetails_).reduce(
     (details, [key, value]) => {
       details[`thema.${key}`] = value;
