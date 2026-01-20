@@ -22,11 +22,11 @@ type ToeristischeVerhuurThemaConfig = Pick<
   'id' | 'title' | 'profileTypes' | 'featureToggle'
 >;
 
-const themaTitle = 'Toeristische verhuur';
+const THEMA_TITLE = 'Toeristische verhuur';
 
 export const themaConfig: ToeristischeVerhuurThemaConfig = {
   id: 'TOERISTISCHE_VERHUUR',
-  title: 'Toeristische verhuur',
+  title: THEMA_TITLE,
   featureToggle: { active: true }, // TO DO YACINE
   profileTypes: ['private', 'commercial'],
 };
@@ -36,17 +36,17 @@ export const routeConfig = {
     path: '/toeristische-verhuur/vergunning/:caseType/:id',
     trackingUrl: (params) =>
       `/toeristische-verhuur/vergunning/${params?.caseType ?? ''}`,
-    documentTitle: `Toeristische verhuur | ${themaTitle}`,
+    documentTitle: `Toeristische verhuur | ${THEMA_TITLE}`,
   },
   listPage: {
     path: '/toeristische-verhuur/vergunning/lijst/:kind/:page?',
     documentTitle: (params) =>
-      `${tableConfigVergunningen[(params?.kind as ListPageParamKind) || 'lopende-aanvragen'].title} | ${themaTitle}`,
+      `${tableConfigVergunningen[(params?.kind as ListPageParamKind) || 'lopende-aanvragen'].title} | ${THEMA_TITLE}`,
     trackingUrl: null,
   },
   themaPage: {
     path: '/toeristische-verhuur',
-    documentTitle: `${themaTitle} | overzicht`,
+    documentTitle: `${THEMA_TITLE} | overzicht`,
     trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
