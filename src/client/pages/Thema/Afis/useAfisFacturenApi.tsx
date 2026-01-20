@@ -55,12 +55,22 @@ export function getDocumentLink(factuur: AfisFactuurFrontend): ReactNode {
   return null;
 }
 
-function transformFactuur(factuur: AfisFactuur): AfisFactuurFrontend {
-  const factuurNummerEl: ReactNode = (
-    <MaRouterLink maVariant="fatNoDefaultUnderline" href={factuur.link.to}>
+export function getFactuurNummerLink(
+  factuur: Pick<AfisFactuur, 'factuurNummer' | 'link'>,
+  to?: string
+): ReactNode {
+  return (
+    <MaRouterLink
+      maVariant="fatNoDefaultUnderline"
+      href={to ?? factuur.link.to}
+    >
       {factuur.factuurNummer}
     </MaRouterLink>
   );
+}
+
+function transformFactuur(factuur: AfisFactuur): AfisFactuurFrontend {
+  const factuurNummerEl: ReactNode = getFactuurNummerLink(factuur);
 
   return {
     ...factuur,

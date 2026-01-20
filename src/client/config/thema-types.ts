@@ -18,7 +18,7 @@ export type ThemaConfigBase = {
   title: string;
   featureToggle: ThemaFeatureToggle;
   profileTypes: ProfileType[];
-  uitlegPageSections: InfoSection;
+  uitlegPageSections: InfoSection[];
   pageLinks: LinkProps[];
   route: ThemaRouteConfig;
   redactedScope: RedactedScope;
@@ -27,11 +27,13 @@ export type ThemaConfigBase = {
 export type WithDetailPage = PageConfig<'detailPage'>;
 export type WithListPage = PageConfig<'listPage'>;
 
-type FeatureToggle = Record<string, boolean>;
-type ThemaFeatureToggle = { themaActive: boolean } & FeatureToggle;
+export type ThemaFeatureToggle<T = boolean> = {
+  active: boolean;
+  [key: string]: boolean | ThemaFeatureToggle<T>;
+};
 type RedactedScope = 'full' | 'content' | 'none';
 
-type PageConfig<T extends string> = {
+export type PageConfig<T extends string> = {
   [key in T]: {
     title?: string;
     documentTitle?: string;

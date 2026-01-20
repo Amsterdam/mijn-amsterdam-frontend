@@ -1,8 +1,8 @@
+import { filterErfpachtFacturen } from './Erfpacht-helpers';
 import {
   ERFPACHT_ZAKELIJK_ROUTE_DEFAULT,
   erfpachtFacturenTableConfig,
   featureToggle,
-  filterErfpachtFacturen,
   routeConfig,
   themaId,
   themaTitle,
