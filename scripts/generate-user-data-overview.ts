@@ -117,10 +117,7 @@ import {
   themaTitle as themaTitleVaren,
 } from '../src/client/pages/Thema/Varen/Varen-thema-config';
 import { themaConfig as bodemThemaConfig } from '../src/client/pages/Thema/Bodem/Bodem-thema-config';
-import {
-  themaId as themaIdHLI,
-  themaTitle as themaTitleHLI,
-} from '../src/client/pages/Thema/HLI/HLI-thema-config';
+import { themaConfig as themaConfigHLI } from '../src/client/pages/Thema/HLI/HLI-thema-config';
 import {
   themaId as themaIdJeugd,
   themaTitle as themaTitleJeugd,
@@ -166,7 +163,7 @@ const themas = [
   { id: themaIdOvertredingen, title: themaTitleOvertredingen },
   { id: themaIdVaren, title: themaTitleVaren },
   { id: bodemThemaConfig.id, title: bodemThemaConfig.title },
-  { id: themaIdHLI, title: themaTitleHLI },
+  { id: themaConfigHLI.id, title: themaConfigHLI.title },
   { id: themaIdJeugd, title: themaTitleJeugd },
   { id: themaIdParkeren, title: themaTitleParkeren },
   { id: themaIdBelastingen, title: themaTitleBelastingen },
