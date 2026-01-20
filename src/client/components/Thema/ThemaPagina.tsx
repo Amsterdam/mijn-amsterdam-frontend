@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import { LinkList } from '@amsterdam/design-system-react';
 
 import styles from './ThemaPagina.module.scss';
+import type { RecordStr2 } from '../../../server/routing/route-helpers';
 import { LinkProps } from '../../../universal/types/App.types';
 import ErrorAlert from '../Alert/Alert';
 import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
@@ -35,6 +36,7 @@ interface ThemaPaginaProps {
   isPartialError?: boolean;
   isLoading: boolean;
   maintenanceNotificationsPageSlug?: string;
+  userFeedbackDetails?: RecordStr2;
 }
 export default function ThemaPagina({
   id,
@@ -51,10 +53,27 @@ export default function ThemaPagina({
   isPartialError,
   isLoading,
   maintenanceNotificationsPageSlug,
+  userFeedbackDetails,
 }: ThemaPaginaProps) {
   const showError = (!isError && isPartialError) || isError;
+  const themaFeedbackDetails = {
+    id,
+    title,
+    isError: `${isError}`,
+    isLoading: `${isLoading}`,
+  };
   return (
-    <PageV2 heading={title} breadcrumbs={breadcrumbs} redactedThemaId={id}>
+    <PageV2
+      heading={title}
+      breadcrumbs={breadcrumbs}
+      redactedThemaId={id}
+      showUserFeedback
+      userFeedbackDetails={
+        userFeedbackDetails
+          ? { ...userFeedbackDetails, ...themaFeedbackDetails }
+          : themaFeedbackDetails
+      }
+    >
       {maintenanceNotificationsPageSlug && (
         <MaintenanceNotifications page={maintenanceNotificationsPageSlug} />
       )}

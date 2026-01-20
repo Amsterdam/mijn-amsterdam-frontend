@@ -8,11 +8,13 @@ import {
 } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
+import type { RecordStr2 } from '../../../server/routing/route-helpers';
 import { getRedactedClass, type ScopeRequested } from '../../helpers/cobrowse';
 import {
   PageBreadcrumbsV2,
   type PageBreadcrumbsV2Props,
 } from '../PageHeading/PageHeadingV2';
+import { InlineKTO } from '../UserFeedback/InlineKTO';
 
 export interface PageProps extends HTMLProps<HTMLDivElement> {
   className?: string;
@@ -22,6 +24,8 @@ export interface PageProps extends HTMLProps<HTMLDivElement> {
   redactedThemaId?: string | null;
   redactedScope?: ScopeRequested;
   breadcrumbs?: PageBreadcrumbsV2Props['breadcrumbs'];
+  showUserFeedback?: boolean;
+  userFeedbackDetails?: RecordStr2;
 }
 
 const PADDING_TOP = 'large';
@@ -35,6 +39,8 @@ export function PageV2({
   redactedThemaId,
   redactedScope,
   breadcrumbs,
+  showUserFeedback = false,
+  userFeedbackDetails,
 }: PageProps) {
   return (
     <div
@@ -58,7 +64,12 @@ export function PageV2({
             </Heading>
           </PageContentCell>
         </Grid>
-        <Grid paddingBottom={PADDING_BOTTOM}>{children}</Grid>
+        <Grid paddingBottom={PADDING_BOTTOM}>
+          {children}
+          {showUserFeedback && (
+            <InlineKTO userFeedbackDetails={userFeedbackDetails} />
+          )}
+        </Grid>
       </main>
     </div>
   );

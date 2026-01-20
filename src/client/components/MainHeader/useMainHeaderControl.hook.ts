@@ -104,7 +104,8 @@ export function useMainHeaderControl() {
       event.key === 'z' &&
       !isSearchActive &&
       isDisplayLiveSearch &&
-      !(event.target instanceof HTMLInputElement)
+      !(event.target instanceof HTMLInputElement) &&
+      !(event.target instanceof HTMLTextAreaElement)
     ) {
       setSearchActive(true);
     }

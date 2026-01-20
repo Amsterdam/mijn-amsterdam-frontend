@@ -58,7 +58,12 @@ export default function ThemaDetailPagina<
     statusItemSteps.reverse();
   }
   return (
-    <PageV2 heading={title} breadcrumbs={breadcrumbs} redactedThemaId={themaId}>
+    <PageV2
+      heading={title}
+      breadcrumbs={breadcrumbs}
+      redactedThemaId={themaId}
+      showUserFeedback
+    >
       {!isLoading && (isError || !zaak) && (
         <PageContentCell>
           <ErrorAlert
