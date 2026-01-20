@@ -17,21 +17,19 @@ import {
   tableConfig as tableConfigVergunningen,
 } from '../Vergunningen/Vergunningen-thema-config';
 
-type ToeristischeVerhuurThemaConfig = Pick<ThemaConfigBase, 'id' | 'title'>;
+type ToeristischeVerhuurThemaConfig = Pick<
+  ThemaConfigBase,
+  'id' | 'title' | 'profileTypes' | 'featureToggle'
+>;
 
 const themaTitle = 'Toeristische verhuur';
 
 export const themaConfig: ToeristischeVerhuurThemaConfig = {
   id: 'TOERISTISCHE_VERHUUR',
   title: 'Toeristische verhuur',
+  featureToggle: { active: true }, // TO DO YACINE
+  profileTypes: ['private', 'commercial'],
 };
-
-export const featureToggle = {
-  toeristischeVerhuurActive: true,
-};
-
-//export const themaId = 'TOERISTISCHE_VERHUUR' as const;
-//export const themaTitle = 'Toeristische verhuur';
 
 export const routeConfig = {
   detailPage: {

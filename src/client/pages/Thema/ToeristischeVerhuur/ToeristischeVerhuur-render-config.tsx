@@ -1,9 +1,4 @@
-import {
-  featureToggle,
-  routeConfig,
-  themaConfig,
-  //themaId,
-} from './ToeristischeVerhuur-thema-config';
+import { routeConfig, themaConfig } from './ToeristischeVerhuur-thema-config';
 import { ToeristischeVerhuurDetail } from './ToeristischeVerhuurDetail';
 import { default as ToeristischeVerhuurIcon } from './ToeristischeVerhuurIcon.svg?react';
 import { ToeristischeVerhuurList } from './ToeristischeVerhuurList';
@@ -19,17 +14,17 @@ export const ToeristischeVerhuurRoutes = [
   {
     route: routeConfig.detailPage.path,
     Component: ToeristischeVerhuurDetail,
-    isActive: featureToggle.toeristischeVerhuurActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
     route: routeConfig.listPage.path,
     Component: ToeristischeVerhuurList,
-    isActive: featureToggle.toeristischeVerhuurActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
     route: routeConfig.themaPage.path,
     Component: ToeristischeVerhuurThema,
-    isActive: featureToggle.toeristischeVerhuurActive,
+    isActive: themaConfig.featureToggle.active,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
@@ -37,7 +32,7 @@ export const menuItem: ThemaMenuItem = {
   title: themaConfig.title,
   id: themaConfig.id,
   to: routeConfig.themaPage.path,
-  profileTypes: ['private', 'commercial'],
+  profileTypes: themaConfig.profileTypes,
   redactedScope: 'none',
   isActive(appState: AppState) {
     const { lvvRegistraties, vakantieverhuurVergunningen, bbVergunningen } =

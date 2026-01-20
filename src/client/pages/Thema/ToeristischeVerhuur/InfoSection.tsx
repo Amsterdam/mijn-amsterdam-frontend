@@ -1,4 +1,4 @@
-import { featureToggle, themaConfig } from './ToeristischeVerhuur-thema-config';
+import { themaConfig } from './ToeristischeVerhuur-thema-config';
 import { InfoSection_DEPRECATED } from '../../GeneralInfo/GeneralInfo';
 
 export const toeristischeverhuurSectionProps: InfoSection_DEPRECATED = {
@@ -9,5 +9,5 @@ export const toeristischeverhuurSectionProps: InfoSection_DEPRECATED = {
     'Uw landelijk registratienummer toeristische verhuur',
     'Link naar het landelijk portaal om vakantieverhuur door te geven en het aantal nachten verhuur in te zien',
   ],
-  active: featureToggle.toeristischeVerhuurActive,
+  active: themaConfig.featureToggle.active,
 };
