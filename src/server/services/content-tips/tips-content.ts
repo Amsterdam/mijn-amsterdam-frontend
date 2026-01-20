@@ -203,7 +203,7 @@ export const contentTips: ContentTipSource[] = [
     active: true,
     datePublished: '2023-10-15',
     title: 'Tip: Particuliere vakantieverhuur',
-    themaID: themaConfig.id,
+    themaID: ToeristischeVerhuurThemaConfig.id,
     profileTypes: ['private'],
     description:
       'Bij vakantieverhuur moet u naast het eenmalige registratienummer ook jaarlijks een vergunning bij de gemeente aanvragen. Ook moet u iedere keer dat u de woning verhuurt dit bij ons melden.',

@@ -2,8 +2,7 @@ import {
   listPageTitle,
   tableConfigLVVRegistraties,
   tableConfig,
-  themaId,
-  themaTitle,
+  themaConfig,
   routeConfig,
 } from './ToeristischeVerhuur-thema-config';
 import { ToeristischeVerhuurVergunning } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
@@ -92,13 +91,13 @@ export function useToeristischeVerhuurThemaData() {
     });
   }
 
-  const breadcrumbs = useThemaBreadcrumbs(themaId);
+  const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
   return {
     vergunningen,
     lvvRegistraties,
-    id: themaId,
-    title: themaTitle,
+    id: themaConfig.id,
+    title: themaConfig.title,
     isLoading: isLoading(TOERISTISCHE_VERHUUR),
     isError: isError(TOERISTISCHE_VERHUUR, false),
     hasLVVRegistratiesError,
