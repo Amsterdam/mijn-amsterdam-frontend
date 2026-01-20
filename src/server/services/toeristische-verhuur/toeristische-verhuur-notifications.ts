@@ -136,7 +136,7 @@ function createRegistratieNotification(
     ? vergunning.agreementDate
     : '';
   const cta = 'Bekijk uw overzicht toeristische verhuur';
-  const linkTo = routeConfig.themaPage.path;
+  const linkTo = themaConfig.route.path;
 
   return {
     id: `toeristiche-verhuur-registratie-${vergunning.registrationNumber}-notification`,
