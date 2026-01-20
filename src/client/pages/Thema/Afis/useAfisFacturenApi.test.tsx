@@ -19,6 +19,10 @@ describe('useAfisFacturenApi', () => {
         status: 'afgehandeld',
         statusDescription: 'Afgehandeld',
         documentDownloadLink: 'http://example.com/document/1.pdf',
+        link: {
+          to: '/facturen-en-betalen/factuur/afgehandeld/1',
+          title: 'Factuur 1',
+        },
       },
     ],
   };

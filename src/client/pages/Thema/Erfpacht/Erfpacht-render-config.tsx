@@ -1,6 +1,8 @@
 import {
   ERFPACHT_ZAKELIJK_ROUTE_DEFAULT,
+  erfpachtFacturenTableConfig,
   featureToggle,
+  filterErfpachtFacturen,
   routeConfig,
   themaId,
   themaTitle,
@@ -17,6 +19,8 @@ import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
 } from '../../../config/thema-types';
+import { AfisFactuur } from '../Afis/AfisFactuur';
+import { AfisList } from '../Afis/AfisList';
 
 export const ErfpachtRoutes = [
   {
@@ -32,6 +36,35 @@ export const ErfpachtRoutes = [
   {
     route: routeConfig.themaPage.path,
     Component: ErfpachtThema,
+    isActive: featureToggle.erfpachtActive,
+  },
+  {
+    route: routeConfig.listPageFacturen.path,
+    Component: () => (
+      <AfisList
+        themaContextParams={{
+          themaId,
+          tableConfig: erfpachtFacturenTableConfig,
+          routeConfigListPage: routeConfig.listPageFacturen,
+          routeConfigDetailPage: routeConfig.detailPageFactuur,
+          factuurFilterFn: filterErfpachtFacturen,
+        }}
+      />
+    ),
+    isActive: featureToggle.erfpachtActive,
+  },
+  {
+    route: routeConfig.detailPageFactuur.path,
+    Component: () => (
+      <AfisFactuur
+        themaContextParams={{
+          themaId,
+          tableConfig: erfpachtFacturenTableConfig,
+          routeConfigListPage: routeConfig.listPageFacturen,
+          routeConfigDetailPage: routeConfig.detailPageFactuur,
+        }}
+      />
+    ),
     isActive: featureToggle.erfpachtActive,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];

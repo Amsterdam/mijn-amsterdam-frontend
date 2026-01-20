@@ -133,6 +133,10 @@ describe('<Erfpacht />', () => {
                   statusDescription: 'openstaand',
                   paylink: 'https://payment.example.com/F001',
                   documentDownloadLink: 'https://download.example.com/F001',
+                  link: {
+                    to: '/facturen-en-betalen/factuur/open/F001',
+                    title: 'Factuur F001',
+                  },
                 },
               ],
             },
