@@ -5,8 +5,10 @@ export const featureToggle = {
     },
   },
   service: {
-    enabledAV: true,
+    enabledStadspas: true,
+    enabledRegelingen: true,
     enabledRTM: true,
+    enabledAV: true,
   },
 };
 

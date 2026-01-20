@@ -28,12 +28,12 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureException } from '../monitoring';
-import { routes } from './hli-service-config';
+import { featureToggle, routes } from './hli-service-config';
 
 export async function fetchStadspas(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<StadspasResponseFrontend>> {
-  if (!themaConfig.featureToggle.stadspas.active) {
+  if (!featureToggle.service.enabledStadspas) {
     return apiSuccessResult({ stadspassen: [], dateExpiryFormatted: null });
   }
 

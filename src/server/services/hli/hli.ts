@@ -232,7 +232,7 @@ function transformRegelingenForFrontend(
 async function fetchRegelingen(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<HLIRegelingFrontend[]>> {
-  if (!themaConfig.featureToggle.regelingen.active) {
+  if (!featureToggle.service.enabledRegelingen) {
     return apiSuccessResult([]);
   }
 
