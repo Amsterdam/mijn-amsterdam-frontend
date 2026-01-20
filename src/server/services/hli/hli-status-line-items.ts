@@ -15,7 +15,7 @@ import {
   MAMS_PC2026,
 } from './status-line-items/regeling-pcvergoeding';
 import { REGELING_PERIODIEK } from './status-line-items/regeling-periodiek';
-import { featureToggle } from '../../../client/pages/Thema/HLI/HLI-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 
 export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<
   ZorgnedHLIRegeling | ZorgnedAanvraagWithRelatedPersonsTransformed
@@ -49,6 +49,6 @@ export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<
   {
     productIdentificatie: [AV_CZM],
     statusLineItems: { name: 'REGELING_CZM', transformers: REGELING_CZM },
-    isDisabled: !featureToggle.hliRegelingEnabledCZM,
+    isDisabled: !themaConfig.featureToggle.regelingen.enabledCZM,
   },
 ];

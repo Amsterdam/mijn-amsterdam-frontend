@@ -17,10 +17,7 @@ import {
   type PasblokkadeByPasnummer,
   type StadspasResponseFrontend,
 } from './stadspas-types';
-import {
-  featureToggle,
-  routeConfig,
-} from '../../../client/pages/Thema/HLI/HLI-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -31,11 +28,15 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureException } from '../monitoring';
-import { routes } from './hli-service-config';
+import { featureToggle, routes } from './hli-service-config';
 
 export async function fetchStadspas(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<StadspasResponseFrontend>> {
+  if (!featureToggle.service.enabledStadspas) {
+    return apiSuccessResult({ stadspassen: [], dateExpiryFormatted: null });
+  }
+
   const stadspasResponse = await fetchStadspassen(
     authProfileAndToken.profile.id
   );
@@ -62,14 +63,14 @@ export async function fetchStadspas(
         urlTransactions,
         transactionsKeyEncrypted,
         link: {
-          to: generatePath(routeConfig.detailPageStadspas.path, {
+          to: generatePath(themaConfig.stadspasDetailPage.route.path, {
             passNumber: `${stadspas.passNumber}`,
           }),
           title: `Stadspas van ${stadspas.owner.firstname}`,
         },
       };
 
-      if (featureToggle.hliThemaStadspasBlokkerenActive) {
+      if (themaConfig.featureToggle.stadspas.blokkerenActive) {
         stadspasFrontend.blockPassURL = generateFullApiUrlBFF(
           routes.protected.STADSPAS_BLOCK_PASS,
           {
@@ -78,7 +79,7 @@ export async function fetchStadspas(
         );
       }
 
-      if (featureToggle.hliThemaStadspasDeblokkerenActive) {
+      if (themaConfig.featureToggle.stadspas.deblokkerenActive) {
         stadspasFrontend.unblockPassURL = generateFullApiUrlBFF(
           routes.protected.STADSPAS_UNBLOCK_PASS,
           { transactionsKeyEncrypted }
