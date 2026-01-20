@@ -1,3 +1,4 @@
+import type { SomeOtherString } from '../../universal/helpers/types';
 import { jsonCopy } from '../../universal/helpers/utils';
 import {
   ApiConfig,
@@ -6,7 +7,7 @@ import {
 } from '../config/source-api';
 
 function getApiConfigBasedCacheKey(
-  name: SourceApiName,
+  name: SourceApiName | SomeOtherString,
   cacheKey_UNSAFE?: string
 ): string | null {
   if (!cacheKey_UNSAFE) {
@@ -17,10 +18,12 @@ function getApiConfigBasedCacheKey(
 }
 
 export function getApiConfig(
-  name: SourceApiName,
-  config: DataRequestConfig = {}
+  name: SourceApiName | SomeOtherString,
+  config: DataRequestConfig = {},
+  ...additionalConfigs: DataRequestConfig[]
 ): Readonly<DataRequestConfig> {
-  const apiConfig = ApiConfig[name];
+  const apiConfig =
+    name && name in ApiConfig ? ApiConfig[name as SourceApiName] : {};
 
   // Take of the agent because it cannot be jsonCopied.
   const agent = apiConfig.httpsAgent;
@@ -58,6 +61,7 @@ export function getApiConfig(
   return Object.assign(
     apiConfigCopy,
     config,
+    ...additionalConfigs,
     customUrl ? { url: customUrl } : null,
     { headers },
     cacheKey_UNSAFE ? { cacheKey_UNSAFE } : null
