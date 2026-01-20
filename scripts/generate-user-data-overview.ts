@@ -30,13 +30,7 @@
  */
 
 /* eslint-disable */
-import dotenv from 'dotenv';
-import dotenvExpand from 'dotenv-expand';
-
-const ENV_FILE = '.env.local';
-console.debug(`[UserDataOverview] trying env file ${ENV_FILE}`);
-const envConfig = dotenv.config({ path: ENV_FILE });
-dotenvExpand.expand(envConfig);
+import '../src/server/helpers/load-env.ts';
 
 import * as XLSX from 'xlsx';
 
