@@ -10,10 +10,15 @@ import styles from './UserFeedback.module.scss';
 type UserFeedbackProps = {
   onSubmit: (formData: FormData) => void;
   className?: string;
+  onRate?: (rating: number) => void;
 };
 
-export function UserFeedback({ onSubmit, className }: UserFeedbackProps) {
-  const [rated, onRate] = useState<number>(0);
+export function UserFeedback({
+  onSubmit,
+  onRate,
+  className,
+}: UserFeedbackProps) {
+  const [rated, setRated] = useState<number>(0);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const isRated = !!rated;
 
@@ -23,12 +28,17 @@ export function UserFeedback({ onSubmit, className }: UserFeedbackProps) {
     setIsSubmitted(true);
   }
 
+  function onRate_(rating: number) {
+    setRated(rating);
+    onRate?.(rating);
+  }
+
   return (
     <div className={classNames(styles.UserFeedback, className)}>
       {!isSubmitted && (
         <Rating
           current={rated}
-          onRate={onRate}
+          onRate={onRate_}
           max={5}
           disabled={isSubmitted}
           label="Wat vindt u van deze pagina?"

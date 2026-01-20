@@ -21,6 +21,7 @@ function RateButton({
       onClick={onClick}
       label={`Waardeer Mijn Amsterdam met ${value} sterren`}
       disabled={disabled}
+      size="heading-2"
     />
   );
 }

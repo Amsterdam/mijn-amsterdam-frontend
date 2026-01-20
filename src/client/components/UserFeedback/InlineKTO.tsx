@@ -24,10 +24,20 @@ export function InlineKTO({ userFeedbackDetails }: InlineKTOProps) {
     console.log('Feedback submitted:', formData);
     // Here you would typically send the data to your server
   }
+
+  function savePageRating(rating: number) {
+    console.log('Page rated with:', rating);
+    // Here you would typically send the rating to your server
+  }
+
   return (
     <PageContentCell>
       <div className={styles.centered}>
-        <UserFeedback className="ams-mb-xl" onSubmit={saveFormData} />
+        <UserFeedback
+          className="ams-mb-xl"
+          onSubmit={saveFormData}
+          onRate={savePageRating}
+        />
       </div>
     </PageContentCell>
   );
