@@ -319,23 +319,19 @@ async function getServiceResults(): Promise<ResultsByUser> {
   for (const [username, profileId] of testAccounts) {
     const loginURL = `${BASE_URL}/auth/digid/login/${username}?redirectUrl=noredirect`;
     try {
-      const serviceResults = await fetch(loginURL).then(async (res) => {
-        const Cookie = res.headers.get('Set-Cookie');
-        if (!Cookie) {
-          throw Error(`No Set-Cookie header found for request to ${loginURL}`);
-        }
-
-        console.time(`Fetched data for ${username}/${profileId}`);
-        return fetch(`${BASE_URL}/services/all`, {
-          headers: {
-            Cookie,
-          },
-        }).then((res) => {
-          console.timeEnd(`Fetched data for ${username}/${profileId}`);
-          return res.json();
-        });
+      const loginResponse = await fetch(loginURL);
+      const Cookie = loginResponse.headers.get('Set-Cookie');
+      if (!Cookie) {
+        throw Error(`No Set-Cookie header found for request to ${loginURL}`);
+      }
+      console.time(`Fetched data for ${username}/${profileId}`);
+      const servicesAllResponse = await fetch(`${BASE_URL}/services/all`, {
+        headers: {
+          Cookie,
+        },
       });
-      allResults[username] = serviceResults;
+      console.timeEnd(`Fetched data for ${username}/${profileId}`);
+      allResults[username] = await servicesAllResponse.json();
     } catch (error) {
       console.error(error);
     }
