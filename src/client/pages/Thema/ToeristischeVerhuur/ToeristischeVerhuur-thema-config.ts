@@ -19,7 +19,7 @@ import {
 
 type ToeristischeVerhuurThemaConfig = Pick<
   ThemaConfigBase,
-  'id' | 'title' | 'profileTypes' | 'featureToggle'
+  'id' | 'title' | 'profileTypes' | 'featureToggle' | 'route'
 >;
 
 const THEMA_TITLE = 'Toeristische verhuur';
@@ -29,6 +29,13 @@ export const themaConfig: ToeristischeVerhuurThemaConfig = {
   title: THEMA_TITLE,
   featureToggle: { active: true }, // TO DO YACINE
   profileTypes: ['private', 'commercial'],
+  route: {
+    path: '/toeristische-verhuur',
+    get documentTitle() {
+      return `${THEMA_TITLE} | overzicht`;
+    },
+    trackingUrl: null,
+  },
 };
 
 export const routeConfig = {
@@ -44,11 +51,11 @@ export const routeConfig = {
       `${tableConfigVergunningen[(params?.kind as ListPageParamKind) || 'lopende-aanvragen'].title} | ${THEMA_TITLE}`,
     trackingUrl: null,
   },
-  themaPage: {
-    path: '/toeristische-verhuur',
-    documentTitle: `${THEMA_TITLE} | overzicht`,
-    trackingUrl: null,
-  },
+  // themaPage: {
+  //   path: '/toeristische-verhuur',
+  //   documentTitle: `${THEMA_TITLE} | overzicht`,
+  //   trackingUrl: null,
+  // },
 } as const satisfies ThemaRoutesConfig;
 
 const DISPLAY_PROPS_HUIDIGE_VERGUNNINGEN: DisplayProps<ToeristischeVerhuurVergunning> =

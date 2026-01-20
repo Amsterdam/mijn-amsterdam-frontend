@@ -22,7 +22,7 @@ export const ToeristischeVerhuurRoutes = [
     isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.themaPage.path,
+    route: themaConfig.route.path,
     Component: ToeristischeVerhuurThema,
     isActive: themaConfig.featureToggle.active,
   },
@@ -31,7 +31,7 @@ export const ToeristischeVerhuurRoutes = [
 export const menuItem: ThemaMenuItem = {
   title: themaConfig.title,
   id: themaConfig.id,
-  to: routeConfig.themaPage.path,
+  to: themaConfig.route.path,
   profileTypes: themaConfig.profileTypes,
   redactedScope: 'none',
   isActive(appState: AppState) {

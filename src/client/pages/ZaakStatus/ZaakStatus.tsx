@@ -124,8 +124,8 @@ const pageRouteResolvers: PageRouteResolvers = {
     }
   ),
   toeristischeVerhuur: baseThemaConfig(
-    TOERISTISCHE_VERHUUR.routeConfig.themaPage.path,
-    TOERISTISCHE_VERHUUR.themaId,
+    TOERISTISCHE_VERHUUR.themaConfig.route.path,
+    TOERISTISCHE_VERHUUR.themaId, //TO DO YACINE
     (stateSlice) => {
       const { vakantieverhuurVergunningen = [], bbVergunningen = [] } =
         stateSlice.content ?? {};
@@ -134,7 +134,7 @@ const pageRouteResolvers: PageRouteResolvers = {
   ),
   bodem: baseThemaConfig(
     BODEM.themaConfig.route.path,
-    BODEM.themaConfig.id,
+    BODEM.themaConfig.id, // TO DO YACINE > deze was er ook al en is valt mee te leven kennelijk
     (stateSlice) => {
       return stateSlice.content;
     }
