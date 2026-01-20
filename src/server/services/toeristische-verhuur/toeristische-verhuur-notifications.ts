@@ -32,7 +32,7 @@ export function createToeristischeVerhuurNotification(
     vergunning.dateRequest ??
     '';
   let cta = 'Bekijk uw aanvraag';
-  let linkTo: string = routeConfig.themaPage.path;
+  let linkTo: string = themaConfig.route.path;
 
   if (
     vergunning.title === 'Vergunning bed & breakfast' ||
