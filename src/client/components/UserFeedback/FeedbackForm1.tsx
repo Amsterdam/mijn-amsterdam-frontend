@@ -13,7 +13,6 @@ export function FeedbackForm1({ onSubmit, questions }: FeedbackForm1Props) {
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        console.log('submit feedback form');
         if (onSubmit) {
           const formData = new FormData(event.currentTarget);
           onSubmit(formData);

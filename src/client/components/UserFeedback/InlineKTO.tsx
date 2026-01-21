@@ -31,7 +31,12 @@ export function InlineKTO({ userFeedbackDetails }: InlineKTOProps) {
   const userFeedbackQuestions = appState.KTO?.content?.questions ?? [];
   const surveyVersion = appState.KTO?.content?.version;
 
-  if (!userFeedbackQuestions.length) {
+  if (!userFeedbackQuestions.length || isMyThemasLoading) {
+    console.log(
+      'InlineKTO: No questions configured or myThemas still loading',
+      userFeedbackQuestions.length,
+      isMyThemasLoading
+    );
     return null;
   }
 
