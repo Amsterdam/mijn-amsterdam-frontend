@@ -4,6 +4,7 @@ import { UserFeedback } from './UserFeedback';
 import styles from './UserFeedback.module.scss';
 import { useSubmitUserFeedback } from './useSubmitUserFeedback';
 import type { RecordStr2 } from '../../../server/routing/route-helpers';
+import { BFFApiUrls } from '../../config/api';
 import { useAppStateGetter } from '../../hooks/useAppStateStore';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems';
@@ -28,6 +29,7 @@ export function InlineKTO({ userFeedbackDetails }: InlineKTOProps) {
   const appState = useAppStateGetter();
 
   const userFeedbackQuestions = appState.KTO?.content?.questions ?? [];
+  const surveyVersion = appState.KTO?.content?.version;
 
   if (!userFeedbackQuestions.length) {
     return null;
@@ -69,17 +71,20 @@ export function InlineKTO({ userFeedbackDetails }: InlineKTOProps) {
     }
 
     // User profile and thema data
-    if (!isMyThemasLoading) {
-      payload.ma_themas = JSON.stringify(
-        myThemaItems.filter((item) => item.isActive).map((item) => item.title)
-      );
-      if (errors.length) {
-        payload.ma_errors = JSON.stringify(errors);
-      }
-      payload.ma_profileType = profileType || 'unknown';
+    payload.ma_themas = JSON.stringify(
+      myThemaItems.filter((item) => item.isActive).map((item) => item.title)
+    );
+    if (errors.length) {
+      payload.ma_errors = JSON.stringify(errors);
     }
+    payload.ma_profileType = profileType || 'unknown';
 
-    submitUserFeedback({ payload });
+    const url = new URL(BFFApiUrls.USER_FEEDBACK_SUBMIT);
+    url.searchParams.append('version', surveyVersion?.toString() || 'latest');
+
+    submitUserFeedback(url, {
+      payload,
+    });
   }
 
   function savePageRating(rating: number) {
