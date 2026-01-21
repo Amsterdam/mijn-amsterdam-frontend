@@ -1,3 +1,4 @@
+import type { CamelCasedPropertiesDeep } from 'type-fest';
 import z from 'zod';
 
 type SurveyQuestionChoice = {
@@ -16,7 +17,14 @@ type SurveyQuestion = {
   conditions: SurveyQuestionCondition[];
   question_text: string;
   description: string;
-  question_type: 'text' | 'radio' | 'select' | 'checkbox';
+  question_type:
+    | 'text'
+    | 'radio'
+    | 'select'
+    | 'checkbox'
+    | 'textarea'
+    | 'email'
+    | 'number';
   required: boolean;
   conditions_type: 'and' | 'or';
   default: string;
@@ -25,16 +33,13 @@ type SurveyQuestion = {
   max_characters: number;
 };
 
-export type SurveyResponseLatest = {
-  latest_version: Survey;
-};
-
 export type Survey = {
   questions: SurveyQuestion[];
   version: number;
   created_at: string;
   active_from: string;
 };
+export type SurveyFrontend = CamelCasedPropertiesDeep<Survey>;
 export type SaveUserFeedbackResponse = { success: boolean };
 export type SurveyAnswer = {
   question: number;
@@ -43,24 +48,24 @@ export type SurveyAnswer = {
 export type SurveyEntry = {
   answers: SurveyAnswer[];
   entry_point: string;
-  metadata: string;
+  metadata: object;
 };
 
 export const userFeedbackInput = z.object({
   answers: z.string(),
-  'browser.path': z.string(),
-  'browser.title': z.string(),
-  'browser.userAgent': z.string(),
-  'browser.language': z.string(),
-  'browser.screenResolution': z.string(),
-  'browser.windowInnerSize': z.string(),
-  'browser.timezone': z.string(),
-  'ma.themas': z.string(),
-  'ma.errors': z.string(),
-  'ma.profileType': z.string(),
-  'thema.id': z.string(),
-  'thema.title': z.string(),
-  'thema.details': z.string(),
+  browser_path: z.string(),
+  browser_title: z.string(),
+  browser_userAgent: z.string(),
+  browser_language: z.string(),
+  browser_screenResolution: z.string(),
+  browser_windowInnerSize: z.string(),
+  browser_timezone: z.string(),
+  ma_themas: z.string(),
+  ma_errors: z.string().optional(),
+  ma_profileType: z.string(),
+  thema_id: z.string(),
+  thema_title: z.string(),
+  thema_details: z.string().optional(),
 });
 
 export type UserFeedbackInput = z.infer<typeof userFeedbackInput>;

@@ -1,7 +1,4 @@
-import {
-  fetchLatestUserFeedbackSurvey,
-  saveUserFeedback,
-} from './user-feedback';
+import { fetchUserFeedbackSurvey, saveUserFeedback } from './user-feedback';
 import {
   SURVEY_ID_INLINE_KTO,
   SURVEY_VERSION_INLINE_KTO,
@@ -18,12 +15,10 @@ import {
 } from '../../routing/route-helpers';
 
 export async function handleFetchSurvey(
-  req: RequestWithQueryParams<{ id?: string }>,
+  req: RequestWithQueryParams<{ id?: string; version?: string }>,
   res: ResponseAuthenticated
 ) {
-  const survey = await fetchLatestUserFeedbackSurvey(
-    req.query.id ?? SURVEY_ID_INLINE_KTO
-  );
+  const survey = await fetchUserFeedbackSurvey(req.query.id, req.query.version);
 
   return sendResponse(res, survey);
 }
