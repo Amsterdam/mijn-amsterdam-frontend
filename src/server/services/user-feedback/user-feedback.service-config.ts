@@ -21,9 +21,9 @@ export const sourceApiConfig: DataRequestConfig = {
   url: `${process.env.BFF_AMSAPP_SURVEY_API_BASE_URL}`,
   method: 'POST',
   headers: {
-    'X-Session-Credentials-Key': getFromEnv('BFF_AMSAPP_SURVEY_API_KEY'),
     Accept: 'application/json',
     'Content-Type': 'application/json',
+    'x-api-key': getFromEnv('BFF_AMSAPP_SURVEY_API_KEY'),
   },
 } as const;
 
