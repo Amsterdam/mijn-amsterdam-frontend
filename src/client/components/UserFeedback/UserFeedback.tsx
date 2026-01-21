@@ -37,6 +37,11 @@ export function UserFeedback({
     onRate?.(rating);
   }
 
+  function reset() {
+    setIsSubmitted(false);
+    setRated(0);
+  }
+
   return (
     <div className={classNames(styles.UserFeedback, className)}>
       {!isSubmitted && (
@@ -55,7 +60,7 @@ export function UserFeedback({
             Wij ontwikkelen Mijn Amsterdam voor én met de Amsterdammer. Wij zijn
             daarom erg blij met uw feedback.
           </Paragraph>{' '}
-          <Button variant="secondary" onClick={() => setIsSubmitted(false)}>
+          <Button variant="secondary" onClick={() => reset()}>
             Sluiten
           </Button>
         </>
