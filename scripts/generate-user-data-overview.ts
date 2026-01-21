@@ -210,6 +210,9 @@ if (!TARGET_DIRECTORY) {
 
 const CACHE_PATH = `${TARGET_DIRECTORY}/user-data.json`;
 const BASE_URL = process.env.BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL;
+if (!BASE_URL) {
+  throw new Error(`BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL = ${BASE_URL}`);
+}
 
 // Configuartion for row/columns.
 const HPX_DEFAULT = 22;
