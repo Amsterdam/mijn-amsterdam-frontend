@@ -2,7 +2,7 @@ import {
   VakantieverhuurVergunningFrontend,
   decosZaakTransformers,
 } from './toeristische-verhuur-config-and-types';
-import { routeConfig } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
@@ -27,7 +27,7 @@ export async function fetchVakantieverhuurVergunningen(
           authProfileAndToken.profile.sid,
           zaak,
           {
-            detailPageRoute: routeConfig.detailPage.path,
+            detailPageRoute: themaConfig.detailPage.route.path,
             includeFetchDocumentsUrl: true,
             getStepsFN: getStatusStepsDecos,
           }

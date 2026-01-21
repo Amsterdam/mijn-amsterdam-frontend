@@ -6,10 +6,7 @@ import {
   LVVRegistratie,
   ToeristischeVerhuurVergunning,
 } from './toeristische-verhuur-config-and-types';
-import {
-  routeConfig,
-  themaConfig,
-} from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { dateFormat, isDateInPast } from '../../../universal/helpers/date';
 import { isRecentNotification } from '../../../universal/helpers/utils';
@@ -38,7 +35,7 @@ export function createToeristischeVerhuurNotification(
     vergunning.title === 'Vergunning bed & breakfast' ||
     vergunning.title === 'Vergunning vakantieverhuur'
   ) {
-    const ctaLinkToDetail = generatePath(routeConfig.detailPage.path, {
+    const ctaLinkToDetail = generatePath(themaConfig.detailPage.route.path, {
       id: vergunning.id,
       caseType:
         vergunning.title === 'Vergunning vakantieverhuur'
