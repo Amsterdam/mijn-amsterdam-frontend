@@ -28,20 +28,12 @@ export const themaConfig: ToeristischeVerhuurThemaConfig = {
   profileTypes: ['private', 'commercial'],
   pageLinks: [
     {
-      title: 'Meer informatie over particuliere vakantieverhuur',
-      to: 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/',
-    },
-    {
       title: 'Meer over toeristenbelasting',
       to: 'https://www.amsterdam.nl/belastingen/toeristenbelasting/',
     },
     {
       title: 'Vakantieverhuur melden of registratienummer aanvragen', // TO DO YACINE > deze en die hieronder is afhankelijk  (hasVergunningBB && !hasVergunningenVakantieVerhuur)
       to: 'https://www.toeristischeverhuur.nl/portaal/login',
-    },
-    {
-      title: 'Meer informatie over bed & breakfast',
-      to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/woonruimte-verhuren/vergunning-aanvragen-bed-breakfast/',
     },
   ],
   route: {
@@ -78,6 +70,16 @@ export const routeConfig = {
     trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
+
+export const bbVergunningPageLinkItem = {
+  title: 'Meer informatie over bed & breakfast',
+  to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/woonruimte-verhuren/vergunning-aanvragen-voor-bed-breakfast/',
+} as const;
+
+export const vvVergunningPageLinkItem = {
+  title: 'Meer informatie over particuliere vakantieverhuur',
+  to: 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/',
+} as const;
 
 const DISPLAY_PROPS_HUIDIGE_VERGUNNINGEN: DisplayProps<ToeristischeVerhuurVergunning> =
   {

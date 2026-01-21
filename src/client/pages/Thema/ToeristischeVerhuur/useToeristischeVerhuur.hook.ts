@@ -1,4 +1,6 @@
 import {
+  bbVergunningPageLinkItem,
+  vvVergunningPageLinkItem,
   listPageTitle,
   tableConfigLVVRegistraties,
   tableConfig,
@@ -65,31 +67,6 @@ export function useToeristischeVerhuurThemaData() {
     'lvvRegistraties'
   );
 
-  // const linkListItems: LinkProps[] = [
-  //   {
-  //     title: 'Meer over toeristenbelasting',
-  //     to: 'https://www.amsterdam.nl/belastingen/toeristenbelasting/',
-  //   },
-  //   {
-  //     title: 'Vakantieverhuur melden of registratienummer aanvragen',
-  //     to: 'https://www.toeristischeverhuur.nl/portaal/login',
-  //   },
-  // ];
-
-  // if (hasVergunningBB && !hasVergunningenVakantieVerhuur) {
-  //   linkListItems.unshift({
-  //     title: 'Meer informatie over bed & breakfast',
-  //     to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/woonruimte-verhuren/vergunning-aanvragen-bed-breakfast/',
-  //   });
-  // }
-
-  // if (hasVergunningenVakantieVerhuur) {
-  //   linkListItems.unshift({
-  //     title: 'Meer informatie over particuliere vakantieverhuur',
-  //     to: 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/',
-  //   });
-  // }
-
   const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
   return {
@@ -105,12 +82,16 @@ export function useToeristischeVerhuurThemaData() {
     tableConfigVergunningen: tableConfig,
     tableConfigLVVRegistraties,
     listPageTitle,
+
     hasRegistrations,
     hasPermits,
     hasVergunningenVakantieVerhuur,
     hasBothVerleend,
     hasVergunningBB,
-    linkListItems: themaConfig.pageLinks,
+    linkListItems:
+      hasVergunningBB && !hasVergunningenVakantieVerhuur
+        ? [...themaConfig.pageLinks, bbVergunningPageLinkItem]
+        : [...themaConfig.pageLinks, vvVergunningPageLinkItem], // TO DO YACINE > wanneer ik naar een link ga krijg ik soms op de themapagina ineens 4 links ipv 3 > naar kijken met andere ontwikkelaar
     breadcrumbs,
     routeConfig,
   };
