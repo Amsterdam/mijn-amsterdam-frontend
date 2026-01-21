@@ -49,6 +49,7 @@ import {
   Kind,
   Persoon,
   Verbintenis,
+  BrpFrontend,
 } from '../src/server/services/brp/brp-types';
 
 import {
@@ -232,18 +233,14 @@ async function generateOverview() {
     const serviceNames = getAllServiceNames(resultsByUser);
     const serviceKeys = Object.keys(serviceNames);
 
-    try {
-      addSheets(workbook, [
-        sheetBrpBase(resultsByUser),
-        sheetServiceErrors(resultsByUser, serviceKeys),
-        sheetThemas(resultsByUser),
-        sheetNotifications(resultsByUser),
-        sheetThemaContent(resultsByUser),
-        sheetZaken(resultsByUser),
-      ]);
-    } catch (err) {
-      console.error(`Adding a sheet failed, Error message:\n${err}`);
-    }
+    addSheets(workbook, [
+      sheetBrpBase(resultsByUser),
+      sheetServiceErrors(resultsByUser, serviceKeys),
+      sheetThemas(resultsByUser),
+      sheetNotifications(resultsByUser),
+      sheetThemaContent(resultsByUser),
+      sheetZaken(resultsByUser),
+    ]);
 
     XLSX.writeFile(workbook, fileName, { compression: true });
 
@@ -479,17 +476,19 @@ function getBRPRows(
   paths: any[]
 ): Record<string, string | number> {
   const user = paths.reduce(
-    (acc, { extractContentValue, label, transform }) => {
+    (acc, { label, transform }) => {
       if (!serviceResults.BRP.content) {
         acc[label] = 'No content';
         return acc;
       }
-      let value = null;
-      if (extractContentValue) {
-        value = extractContentValue(serviceResults.BRP.content);
-      }
-      if (transform) {
-        value = transform(value, serviceResults);
+      let value: string;
+      try {
+        value = transform(serviceResults.BRP.content, serviceResults) ?? '';
+      } catch (err) {
+        value = '';
+        console.error(
+          `Error while getting data for label: ${label}, with error message: ${err}`
+        );
       }
       acc[label] = value;
       return acc;
@@ -502,8 +501,10 @@ function getBRPRows(
 
 type BrpSheetLayout = {
   label: string;
-  extractContentValue: (brpContent: any) => string;
-  transform?: (value: any, serviceResults: ServiceResults) => string | null;
+  transform: (
+    brpContent: BrpFrontend,
+    serviceResults: ServiceResults
+  ) => string | undefined | null;
   wch?: number;
   hpx?: number;
 };
@@ -512,52 +513,46 @@ const brpSheetLayout: BrpSheetLayout[] = [
   {
     label: 'BSN',
     wch: WCH_DEFAULT / 2,
-    extractContentValue: (brpContent: any) => brpContent?.persoon.bsn,
+    transform: (brpContent: BrpFrontend) => brpContent?.persoon.bsn,
   },
   {
     label: 'Adres',
-    extractContentValue: (brpContent: any) => brpContent?.adres,
     wch: WCH_DEFAULT,
-    transform: (value: Adres) => {
-      return getFullAddress(value);
+    transform: (brpContent: BrpFrontend) => {
+      return getFullAddress(brpContent?.adres);
     },
   },
   {
     label: 'In onderzoek',
-    extractContentValue: (brpContent: any) =>
-      brpContent?.persoon.adresInOnderzoek,
     wch: WCH_DEFAULT / 2,
-    transform: (inOnderzoek: any) => {
-      return inOnderzoek ? 'In onderzoek' : '';
+    transform: (brpContent: BrpFrontend) => {
+      return brpContent?.persoon.adresInOnderzoek ? 'In onderzoek' : '';
     },
   },
   {
     label: 'VOW',
-    extractContentValue: (brpContent: any) =>
-      brpContent?.persoon?.vertrokkenOnbekendWaarheen,
     wch: WCH_DEFAULT / 3,
-    transform: (vertrokkenOnbekendWaarheen: any) => {
-      return vertrokkenOnbekendWaarheen ? 'VOW' : '';
+    transform: (brpContent: BrpFrontend) => {
+      return brpContent?.persoon?.vertrokkenOnbekendWaarheen ? 'VOW' : '';
     },
   },
   {
     label: 'Geheim',
-    extractContentValue: (brpContent: any) =>
-      brpContent?.persoon.indicatieGeheim,
     wch: WCH_DEFAULT / 2,
-    transform: (indicatieGeheim: boolean) => {
+    transform: (brpContent: BrpFrontend) => {
+      const indicatieGeheim = brpContent?.persoon.indicatieGeheim;
       return indicatieGeheim ? 'Geheim' : '';
     },
   },
   {
     label: 'Voornamen',
-    extractContentValue: (brpContent: any) => brpContent.persoon.voornamen,
+    transform: (brpContent: BrpFrontend) => brpContent.persoon.voornamen,
     wch: 40,
   },
   {
     label: 'Achternaam (Titel)',
-    extractContentValue: (brpContent: any) => brpContent.persoon,
-    transform: (persoon: Persoon) => {
+    transform: (brpContent: BrpFrontend) => {
+      const persoon = brpContent.persoon;
       if (!persoon) {
         return 'onbekend';
       }
@@ -576,8 +571,8 @@ const brpSheetLayout: BrpSheetLayout[] = [
   },
   {
     label: 'Woonplaats',
-    extractContentValue: (brpContent: any) => brpContent.adres.woonplaatsNaam,
-    transform: (woonplaatsnaam: string) => {
+    transform: (brpContent: BrpFrontend) => {
+      const woonplaatsnaam = brpContent.adres?.woonplaatsNaam;
       if (!woonplaatsnaam) {
         return 'Onbekend';
       }
@@ -586,44 +581,44 @@ const brpSheetLayout: BrpSheetLayout[] = [
   },
   {
     label: 'Geboortedatum (Geboorteland)',
-    extractContentValue: (brpContent: any) => brpContent.persoon,
-    transform: (persoon: Persoon) => {
+    transform: (brpContent: BrpFrontend) => {
+      const persoon = brpContent.persoon;
       if (!persoon) {
-        return 'onbekend';
+        return 'Onbekend';
       }
       const { geboortedatum, geboortelandnaam } = persoon;
       return `${
-        geboortedatum !== null ? defaultDateFormat(geboortedatum) : 'onbekend'
-      } ${geboortelandnaam !== 'Nederland' ? `(${geboortelandnaam ?? 'onbekend'})` : ''}`;
+        geboortedatum !== null ? defaultDateFormat(geboortedatum) : 'Onbekend'
+      } ${geboortelandnaam !== 'Nederland' ? `(${geboortelandnaam ?? 'Onbekend'})` : ''}`;
     },
   },
   {
     label: 'Leeftijd',
-    extractContentValue: (brpContent: any) => brpContent.persoon.geboortedatum,
-    transform: (value: string | null) => {
+    transform: (brpContent: BrpFrontend) => {
+      const geboortedatum = brpContent.persoon.geboortedatum;
       const age =
-        value !== null
-          ? differenceInYears(new Date(), parseISO(value)) + ''
+        geboortedatum !== null
+          ? differenceInYears(new Date(), parseISO(geboortedatum)) + ''
           : 'onbekend';
       return age;
     },
   },
   {
     label: 'Geslacht',
-    extractContentValue: (brpContent: any) => brpContent.persoon,
-    transform: (persoon: Persoon) => {
+    transform: (brpContent: BrpFrontend) => {
+      const persoon = brpContent.persoon;
       if (!persoon.omschrijvingGeslachtsaanduiding) {
-        return 'onbekend';
+        return 'Onbekend';
       }
       return persoon.omschrijvingGeslachtsaanduiding;
     },
   },
   {
     label: 'Nationaliteit',
-    extractContentValue: (brpContent: any) => brpContent.persoon,
-    transform: (persoon: Persoon) => {
+    transform: (brpContent: BrpFrontend) => {
+      const persoon = brpContent.persoon;
       if (!persoon.nationaliteiten) {
-        return 'onbekend';
+        return 'Onbekend';
       }
       const nationaleiten = persoon.nationaliteiten
         ?.map(({ omschrijving }) => omschrijving)
@@ -635,8 +630,8 @@ const brpSheetLayout: BrpSheetLayout[] = [
   },
   {
     label: 'Postcode (Woonplaats)',
-    extractContentValue: (brpContent: any) => brpContent.adres.postcode,
-    transform: (postcode: string, serviceResults: ServiceResults) => {
+    transform: (brpContent: BrpFrontend, serviceResults: ServiceResults) => {
+      const postcode = brpContent.adres?.postcode;
       return `${postcode ? postcode : ''} ${woonplaatsNaamBuitenAmsterdam(
         serviceResults.BRP.content?.adres
       )}`;
@@ -644,9 +639,9 @@ const brpSheetLayout: BrpSheetLayout[] = [
   },
   {
     label: 'Verbintenis (Partner)',
-    extractContentValue: (brpContent: any) => brpContent.verbintenis,
     wch: 50,
-    transform: (verbintenis: Verbintenis) => {
+    transform: (brpContent: BrpFrontend) => {
+      const verbintenis = brpContent.verbintenis;
       if (!verbintenis) {
         return '';
       }
@@ -662,42 +657,20 @@ const brpSheetLayout: BrpSheetLayout[] = [
   },
   {
     label: 'Kinderen',
-    extractContentValue: (brpContent: any) => brpContent.kinderen,
+    transform: (brpContent: BrpFrontend, serviceResults: ServiceResults) =>
+      oudersOfKinderen(brpContent.kinderen, serviceResults),
     wch: 60,
-    transform: oudersOfKinderen,
   },
   {
     label: 'Ouders',
-    extractContentValue: (brpContent: any) => brpContent.ouders,
+    transform: (brpContent: BrpFrontend, serviceResults: ServiceResults) =>
+      oudersOfKinderen(brpContent.ouders, serviceResults),
     wch: 60,
-    transform: oudersOfKinderen,
-  },
-  {
-    label: 'Voormalige verbintenis',
-    extractContentValue: (brpContent: any) => brpContent.verbintenisHistorisch,
-    wch: 50,
-    transform: (verbintenisHistorisch: Verbintenis[]) => {
-      if (!verbintenisHistorisch) {
-        return '';
-      }
-      return verbintenisHistorisch
-        .map((verbintenis) => {
-          return verbintenis.persoon
-            ? `${
-                verbintenis.soortVerbintenis ?? ''
-              } met ${relatedUser(verbintenis.persoon as Persoon)}`
-            : Object.keys(verbintenis).length
-              ? JSON.stringify(verbintenis)
-              : '';
-        })
-        .join(', ');
-    },
-    hpx: 30,
   },
   {
     label: 'Voormalige adressen',
-    extractContentValue: (brpContent: any) => brpContent.adresHistorisch,
-    transform: (adressen: Adres[]) => {
+    transform: (brpContent: BrpFrontend) => {
+      const adressen = brpContent.adresHistorisch;
       return adressen
         ?.map((adres) => {
           return `${getFullAddress(adres)} ${woonplaatsNaamBuitenAmsterdam(
