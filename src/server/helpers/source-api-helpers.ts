@@ -17,6 +17,10 @@ function getApiConfigBasedCacheKey(
   return `${name}-${cacheKey_UNSAFE}`;
 }
 
+export function getCustomApiConfig(...configs: DataRequestConfig[]) {
+  return getApiConfig('CUSTOM_API', ...configs);
+}
+
 export function getApiConfig(
   name: SourceApiName | SomeOtherString,
   config: DataRequestConfig = {},

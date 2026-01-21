@@ -25,6 +25,10 @@ type SurveyQuestion = {
   max_characters: number;
 };
 
+export type SurveyResponseLatest = {
+  latest_version: Survey;
+};
+
 export type Survey = {
   questions: SurveyQuestion[];
   version: number;

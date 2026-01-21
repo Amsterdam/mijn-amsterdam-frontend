@@ -28,4 +28,4 @@ export const sourceApiConfig: DataRequestConfig = {
 } as const;
 
 export const SURVEY_ID_INLINE_KTO = 'mams-inline-kto';
-export const SURVEY_VERSION_INLINE_KTO = 'latest';
+export const SURVEY_VERSION_INLINE_KTO = '1';

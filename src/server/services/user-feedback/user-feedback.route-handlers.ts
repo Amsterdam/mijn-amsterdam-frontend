@@ -1,4 +1,7 @@
-import { fetchUserFeedbackSurvey, saveUserFeedback } from './user-feedback';
+import {
+  fetchLatestUserFeedbackSurvey,
+  saveUserFeedback,
+} from './user-feedback';
 import {
   SURVEY_ID_INLINE_KTO,
   SURVEY_VERSION_INLINE_KTO,
@@ -18,7 +21,7 @@ export async function handleFetchSurvey(
   req: RequestWithQueryParams<{ id?: string }>,
   res: ResponseAuthenticated
 ) {
-  const survey = await fetchUserFeedbackSurvey(
+  const survey = await fetchLatestUserFeedbackSurvey(
     req.query.id ?? SURVEY_ID_INLINE_KTO
   );
 
