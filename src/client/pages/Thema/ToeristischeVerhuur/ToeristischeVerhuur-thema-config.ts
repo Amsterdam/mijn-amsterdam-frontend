@@ -27,7 +27,7 @@ const THEMA_TITLE = 'Toeristische verhuur';
 export const themaConfig: ToeristischeVerhuurThemaConfig = {
   id: 'TOERISTISCHE_VERHUUR',
   title: THEMA_TITLE,
-  featureToggle: { active: true }, // TO DO YACINE
+  featureToggle: { active: true }, // TO DO YACINE > werkt helemaal alleen verdwijnt niet van de homepage
   profileTypes: ['private', 'commercial'],
   pageLinks: [
     {
