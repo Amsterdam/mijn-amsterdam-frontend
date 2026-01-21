@@ -63,6 +63,9 @@ export default function ThemaDetailPagina<
       breadcrumbs={breadcrumbs}
       redactedThemaId={themaId}
       showUserFeedback
+      userFeedbackDetails={{
+        pageTitle: `${breadcrumbs?.[0].title ?? themaId} - ${title}`,
+      }}
     >
       {!isLoading && (isError || !zaak) && (
         <PageContentCell>

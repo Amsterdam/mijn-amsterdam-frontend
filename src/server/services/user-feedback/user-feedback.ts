@@ -34,18 +34,18 @@ export async function fetchUserFeedbackSurvey(
 }
 
 function getSurveyEntryPayload(data: UserFeedbackInput): SurveyEntry {
-  const metadata = omit(data, ['browser_path', 'answers']);
-  if (metadata.ma_errors) {
-    metadata.ma_errors = JSON.parse(metadata.ma_errors || 'null');
+  const metadata = omit(data, ['browserPath', 'answers']);
+  if (metadata.maErrors) {
+    metadata.maErrors = JSON.parse(metadata.maErrors || 'null');
   }
-  metadata.ma_themas = JSON.parse(metadata.ma_themas || 'null');
-  if (metadata.thema_details) {
-    metadata.thema_details = JSON.parse(metadata.thema_details || 'null');
+  metadata.maThemas = JSON.parse(metadata.maThemas || 'null');
+  if (metadata.pageDetails) {
+    metadata.pageDetails = JSON.parse(metadata.pageDetails || 'null');
   }
 
   const surveyEntryPayload: SurveyEntry = {
     answers: JSON.parse(data.answers),
-    entry_point: data.browser_path || 'unknown',
+    entry_point: data.browserPath || 'unknown',
     metadata,
   };
 

@@ -100,6 +100,7 @@ export function InlineKTO({ userFeedbackDetails }: InlineKTOProps) {
     <PageContentCell>
       <div className={styles.centered}>
         <UserFeedback
+          notSent={isError && !isLoading}
           className="ams-mb-xl"
           onSubmit={saveFormData}
           onRate={savePageRating}

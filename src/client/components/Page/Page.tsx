@@ -24,7 +24,10 @@ export interface PageProps extends HTMLProps<HTMLDivElement> {
   redactedScope?: ScopeRequested;
   breadcrumbs?: PageBreadcrumbsV2Props['breadcrumbs'];
   showUserFeedback?: boolean;
-  userFeedbackDetails?: object;
+  userFeedbackDetails?: {
+    pageTitle: string;
+    pageDetails?: object;
+  } & object;
 }
 
 const PADDING_TOP = 'large';

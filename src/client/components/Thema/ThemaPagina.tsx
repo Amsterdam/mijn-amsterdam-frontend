@@ -55,18 +55,10 @@ export default function ThemaPagina({
   themaFeedbackDetails,
 }: ThemaPaginaProps) {
   const showError = (!isError && isPartialError) || isError;
-  const themaFeedbackDetails_ = {
-    id,
-    title,
-    details: themaFeedbackDetails || {},
+  const userFeedbackDetails = {
+    pageTitle: title,
+    pageDetails: themaFeedbackDetails || {},
   };
-  const userFeedbackDetails = Object.entries(themaFeedbackDetails_).reduce(
-    (details, [key, value]) => {
-      details[`thema_${key}`] = value;
-      return details;
-    },
-    {} as Record<string, unknown>
-  );
   return (
     <PageV2
       heading={title}

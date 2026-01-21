@@ -53,19 +53,18 @@ export type SurveyEntry = {
 
 export const userFeedbackInput = z.object({
   answers: z.string(),
-  browser_path: z.string(),
-  browser_title: z.string(),
-  browser_userAgent: z.string(),
-  browser_language: z.string(),
-  browser_screenResolution: z.string(),
-  browser_windowInnerSize: z.string(),
-  browser_timezone: z.string(),
-  ma_themas: z.string(),
-  ma_errors: z.string().optional(),
-  ma_profileType: z.string(),
-  thema_id: z.string(),
-  thema_title: z.string(),
-  thema_details: z.string().optional(),
+  browserPath: z.string(),
+  browserTitle: z.string(),
+  browserUserAgent: z.string(),
+  browserLanguage: z.string(),
+  browserScreenResolution: z.string(),
+  browserWindowInnerSize: z.string(),
+  browserTimezone: z.string(),
+  maThemas: z.string(),
+  maErrors: z.string().optional(),
+  maProfileType: z.string(),
+  pageTitle: z.string(),
+  pageDetails: z.string().optional(),
 });
 
 export type UserFeedbackInput = z.infer<typeof userFeedbackInput>;

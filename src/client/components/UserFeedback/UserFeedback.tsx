@@ -1,6 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { Button, Heading, Paragraph } from '@amsterdam/design-system-react';
+import {
+  Alert,
+  Button,
+  Heading,
+  Paragraph,
+} from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
 import { FeedbackForm1 } from './FeedbackForm1';
@@ -13,6 +18,7 @@ type UserFeedbackProps = {
   className?: string;
   onRate?: (rating: number) => void;
   questions: SurveyFrontend['questions'];
+  notSent?: boolean;
 };
 
 export function UserFeedback({
@@ -20,11 +26,18 @@ export function UserFeedback({
   onRate,
   className,
   questions,
+  notSent,
 }: UserFeedbackProps) {
   const [rated, setRated] = useState<number>(0);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const isRated = !!rated;
   const [ratingQuestion, ...otherQuestions] = questions || [];
+
+  useEffect(() => {
+    if (notSent) {
+      setIsSubmitted(false);
+    }
+  }, [notSent]);
 
   function onSubmit_(formData: FormData) {
     formData.append(`${ratingQuestion.id}`, rated.toString());
@@ -44,6 +57,19 @@ export function UserFeedback({
 
   return (
     <div className={classNames(styles.UserFeedback, className)}>
+      {notSent && (
+        <Alert
+          severity="warning"
+          className="ams-mb-m"
+          heading="Verzenden mislukt"
+          headingLevel={2}
+        >
+          <Paragraph className="ams-text-danger ams-mb-m">
+            Er is iets misgegaan bij het verzenden van uw feedback. Probeer het
+            later nogmaals.
+          </Paragraph>
+        </Alert>
+      )}
       {!isSubmitted && (
         <Rating
           current={rated}
