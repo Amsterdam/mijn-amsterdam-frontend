@@ -138,7 +138,6 @@ import {
   themaId as themaIdSubsidies,
   themaTitle as themaTitleSubsidies,
 } from '../src/client/pages/Thema/Subsidies/Subsidies-thema-config';
-import { auth } from 'express-openid-connect';
 
 const { BRP, KVK } = profileThemaTitles;
 
@@ -230,14 +229,18 @@ async function generateOverview() {
     const serviceNames = getAllServiceNames(resultsByUser);
     const serviceKeys = Object.keys(serviceNames);
 
-    addSheets(workbook, [
-      sheetBrpBase(resultsByUser),
-      sheetServiceErrors(resultsByUser, serviceKeys),
-      sheetThemas(resultsByUser),
-      sheetNotifications(resultsByUser),
-      sheetThemaContent(resultsByUser),
-      sheetZaken(resultsByUser),
-    ]);
+    try {
+      addSheets(workbook, [
+        sheetBrpBase(resultsByUser),
+        sheetServiceErrors(resultsByUser, serviceKeys),
+        sheetThemas(resultsByUser),
+        sheetNotifications(resultsByUser),
+        sheetThemaContent(resultsByUser),
+        sheetZaken(resultsByUser),
+      ]);
+    } catch (err) {
+      console.error(`Adding a sheet failed, Error message:\n${err}`);
+    }
 
     XLSX.writeFile(workbook, fileName, { compression: true });
 
