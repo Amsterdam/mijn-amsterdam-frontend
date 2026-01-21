@@ -44,15 +44,12 @@ export function InlineKTO({ userFeedbackDetails }: InlineKTOProps) {
   function saveFormData(formData: FormData) {
     const userFeedbackData: RecordStr2 = {};
 
-    // User data from the form
-    formData.forEach((value, key) => {
-      userFeedbackData.answers = value.toString();
-    });
-
     userFeedbackData.answers = JSON.stringify(
-      Array.from(formData.entries()).map(([key, value]) => {
-        return { question: key, answer: value.toString() };
-      })
+      Array.from(formData.entries())
+        .filter(([_key, value]) => !!value)
+        .map(([key, value]) => {
+          return { question: key, answer: value.toString() };
+        })
     );
 
     // Browser and page data
