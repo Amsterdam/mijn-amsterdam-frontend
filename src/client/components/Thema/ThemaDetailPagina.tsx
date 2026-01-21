@@ -64,7 +64,7 @@ export default function ThemaDetailPagina<
       redactedThemaId={themaId}
       showUserFeedback
       userFeedbackDetails={{
-        pageTitle: `${breadcrumbs?.[0].title ?? themaId} - ${title}`,
+        pageTitle: `${breadcrumbs?.[0]?.title ?? themaId} - ${title}`,
       }}
     >
       {!isLoading && (isError || !zaak) && (
