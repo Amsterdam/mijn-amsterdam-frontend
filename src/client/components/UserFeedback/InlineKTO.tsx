@@ -30,21 +30,13 @@ export function InlineKTO({ userFeedbackDetails }: InlineKTOProps) {
   const userFeedbackQuestions = appState.KTO?.content?.questions ?? [];
 
   if (!userFeedbackQuestions.length) {
-    return 'whoat?';
+    return null;
   }
 
-  const browserInfo = {
-    userAgent: navigator.userAgent,
-    language: navigator.language,
-    screenResolution: `${screen.width}x${screen.height}`,
-    windowInnerSize: `${window.innerWidth}x${window.innerHeight}`,
-    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-  };
-
   function saveFormData(formData: FormData) {
-    const userFeedbackData: RecordStr2 = {};
+    const payload: RecordStr2 = {};
 
-    userFeedbackData.answers = JSON.stringify(
+    payload.answers = JSON.stringify(
       Array.from(formData.entries())
         .filter(([_key, value]) => !!value)
         .map(([key, value]) => {
@@ -53,33 +45,41 @@ export function InlineKTO({ userFeedbackDetails }: InlineKTOProps) {
     );
 
     // Browser and page data
-    userFeedbackData.browser_path = location.pathname;
-    userFeedbackData.browser_title = document.title;
+    payload.browser_path = location.pathname;
+    payload.browser_title = document.title;
+
+    const browserInfo = {
+      userAgent: navigator.userAgent,
+      language: navigator.language,
+      screenResolution: `${screen.width}x${screen.height}`,
+      windowInnerSize: `${window.innerWidth}x${window.innerHeight}`,
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    };
 
     Object.entries(browserInfo).forEach(([key, value]) => {
-      userFeedbackData[`browser_${key}`] = value.toString();
+      payload[`browser_${key}`] = value.toString();
     });
 
     // Additional user feedback details
     if (userFeedbackDetails) {
       Object.entries(userFeedbackDetails).forEach(([key, value]) => {
-        userFeedbackData[key] =
+        payload[key] =
           typeof value === 'object' ? JSON.stringify(value) : String(value);
       });
     }
 
     // User profile and thema data
     if (!isMyThemasLoading) {
-      userFeedbackData.ma_themas = JSON.stringify(
+      payload.ma_themas = JSON.stringify(
         myThemaItems.filter((item) => item.isActive).map((item) => item.title)
       );
       if (errors.length) {
-        userFeedbackData.ma_errors = JSON.stringify(errors);
+        payload.ma_errors = JSON.stringify(errors);
       }
-      userFeedbackData.ma_profileType = profileType || 'unknown';
+      payload.ma_profileType = profileType || 'unknown';
     }
 
-    submitUserFeedback({ payload: userFeedbackData });
+    submitUserFeedback({ payload });
   }
 
   function savePageRating(rating: number) {

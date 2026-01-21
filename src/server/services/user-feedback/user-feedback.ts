@@ -33,11 +33,7 @@ export async function fetchUserFeedbackSurvey(
   return requestData<SurveyFrontend>(requestConfig);
 }
 
-export async function saveUserFeedback(
-  surveyId: string,
-  version: string,
-  data: UserFeedbackInput
-): ApiResponsePromise<SaveUserFeedbackResponse> {
+function getSurveyEntryPayload(data: UserFeedbackInput): SurveyEntry {
   const metadata = omit(data, ['browser_path', 'answers']);
   if (metadata.ma_errors) {
     metadata.ma_errors = JSON.parse(metadata.ma_errors || 'null');
@@ -52,6 +48,16 @@ export async function saveUserFeedback(
     entry_point: data.browser_path || 'unknown',
     metadata,
   };
+
+  return surveyEntryPayload;
+}
+
+export async function saveUserFeedback(
+  surveyId: string,
+  version: string,
+  data: UserFeedbackInput
+): ApiResponsePromise<SaveUserFeedbackResponse> {
+  const surveyEntryPayload = getSurveyEntryPayload(data);
 
   const requestConfig = getCustomApiConfig(sourceApiConfig, {
     formatUrl: ({ url }) => `${url}/${surveyId}/versions/${version}/entries`,
