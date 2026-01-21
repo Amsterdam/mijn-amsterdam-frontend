@@ -429,6 +429,7 @@ export async function fetchAantalBewoners(
       'X-Correlation-ID': getContextOperationId(sessionID), // Required for tracing
     },
     transformResponse: (responseData: PersonenResponseSource | null) => {
+      // This is redundant filtering, as the API should always return the correct data. See also: MIJN-12262
       const personenFiltered = responseData?.personen?.filter((persoon) => {
         const datumOpschortingBijhouding = persoon.opschortingBijhouding?.datum;
         return datumOpschortingBijhouding &&
@@ -440,6 +441,7 @@ export async function fetchAantalBewoners(
     },
     data: {
       type: 'ZoekMetAdresseerbaarObjectIdentificatie',
+      inclusiefOverledenPersonen: false,
       // Only request adressering.adresregel3 to reduce payload. We don't require any other data to be fetched here.
       // The response will be used to count the number of personen related to a certain adresseerbaarObject.
       fields: ['adressering.adresregel3'],
