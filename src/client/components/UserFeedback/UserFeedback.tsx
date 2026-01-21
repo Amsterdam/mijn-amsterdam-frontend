@@ -32,6 +32,7 @@ export function UserFeedback({
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const isRated = !!rated;
   const [ratingQuestion, ...otherQuestions] = questions || [];
+  const [formData, setFormData] = useState<FormData>(new FormData());
 
   useEffect(() => {
     if (notSent) {
@@ -41,6 +42,7 @@ export function UserFeedback({
 
   function onSubmit_(formData: FormData) {
     formData.append(`${ratingQuestion.id}`, rated.toString());
+    setFormData(formData);
     onSubmit(formData);
     setIsSubmitted(true);
   }
@@ -53,6 +55,7 @@ export function UserFeedback({
   function reset() {
     setIsSubmitted(false);
     setRated(0);
+    setFormData(new FormData());
   }
 
   return (
@@ -92,7 +95,11 @@ export function UserFeedback({
         </>
       ) : (
         isRated && (
-          <FeedbackForm1 onSubmit={onSubmit_} questions={otherQuestions} />
+          <FeedbackForm1
+            onSubmit={onSubmit_}
+            questions={otherQuestions}
+            formData={formData}
+          />
         )
       )}
     </div>

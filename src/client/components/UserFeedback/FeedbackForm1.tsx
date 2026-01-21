@@ -6,9 +6,14 @@ import type { SurveyFrontend } from '../../../server/services/user-feedback/user
 type FeedbackForm1Props = {
   onSubmit?: (formData: FormData) => void;
   questions?: SurveyFrontend['questions'];
+  formData?: FormData;
 };
 
-export function FeedbackForm1({ onSubmit, questions }: FeedbackForm1Props) {
+export function FeedbackForm1({
+  onSubmit,
+  questions,
+  formData,
+}: FeedbackForm1Props) {
   return (
     <form
       onSubmit={(event) => {
@@ -20,7 +25,11 @@ export function FeedbackForm1({ onSubmit, questions }: FeedbackForm1Props) {
       }}
     >
       {questions?.map((question) => (
-        <UserFeedbackQuestion key={question.id} question={question} />
+        <UserFeedbackQuestion
+          key={question.id}
+          question={question}
+          value={formData?.get(`${question.id}`) as string}
+        />
       ))}
 
       <Button type="submit" variant="secondary">

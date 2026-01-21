@@ -12,9 +12,13 @@ import type { SurveyFrontend } from '../../../server/services/user-feedback/user
 
 type UserFeedbackQuestionProps = {
   question?: SurveyFrontend['questions'][number];
+  value?: string;
 };
 
-function UserFeedbackFormTextarea({ question }: UserFeedbackQuestionProps) {
+function UserFeedbackFormTextarea({
+  question,
+  value,
+}: UserFeedbackQuestionProps) {
   const [characterCount, setCharacterCount] = useState(0);
   return (
     <>
@@ -27,6 +31,7 @@ function UserFeedbackFormTextarea({ question }: UserFeedbackQuestionProps) {
         }}
         maxLength={question?.maxCharacters}
         name={`${question?.id}`}
+        value={value}
       />
       {!!question?.maxCharacters && (
         <CharacterCount
@@ -38,7 +43,7 @@ function UserFeedbackFormTextarea({ question }: UserFeedbackQuestionProps) {
   );
 }
 
-function UserFeedbackFormEmail({ question }: UserFeedbackQuestionProps) {
+function UserFeedbackFormEmail({ question, value }: UserFeedbackQuestionProps) {
   return (
     <>
       <TextInput
@@ -46,6 +51,7 @@ function UserFeedbackFormEmail({ question }: UserFeedbackQuestionProps) {
         aria-describedby={`question-desc-${question?.id}`}
         id={`question-${question?.id}`}
         name={`${question?.id}`}
+        value={value}
       />
       {!question?.required && (
         <Paragraph size="small">
@@ -56,25 +62,28 @@ function UserFeedbackFormEmail({ question }: UserFeedbackQuestionProps) {
   );
 }
 
-function UserFeedbackFormInput({ question }: UserFeedbackQuestionProps) {
+function UserFeedbackFormInput({ question, value }: UserFeedbackQuestionProps) {
   switch (question?.questionType) {
     // Currently only 'textarea' and 'email' are implemented
     case 'email':
-      return <UserFeedbackFormEmail question={question} />;
+      return <UserFeedbackFormEmail question={question} value={value} />;
     case 'textarea':
-      return <UserFeedbackFormTextarea question={question} />;
+      return <UserFeedbackFormTextarea question={question} value={value} />;
     default:
       return null;
   }
 }
 
-export function UserFeedbackQuestion({ question }: UserFeedbackQuestionProps) {
+export function UserFeedbackQuestion({
+  question,
+  value,
+}: UserFeedbackQuestionProps) {
   return (
     <Field className="ams-mb-m">
       <Paragraph id={`question-desc-${question?.id}`}>
         {question?.questionText}
       </Paragraph>
-      <UserFeedbackFormInput question={question} />
+      <UserFeedbackFormInput question={question} value={value} />
     </Field>
   );
 }

@@ -52,20 +52,13 @@ export function InlineKTO({ userFeedbackDetails }: InlineKTOProps) {
     );
 
     // Browser and page data
-    payload.browser_path = location.pathname;
-    payload.browser_title = document.title;
-
-    const browserInfo = {
-      userAgent: navigator.userAgent,
-      language: navigator.language,
-      screenResolution: `${screen.width}x${screen.height}`,
-      windowInnerSize: `${window.innerWidth}x${window.innerHeight}`,
-      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    };
-
-    Object.entries(browserInfo).forEach(([key, value]) => {
-      payload[`browser_${key}`] = value.toString();
-    });
+    payload.browserPath = location.pathname;
+    payload.browserTitle = document.title;
+    payload.browserUserAgent = navigator.userAgent;
+    payload.browserLanguage = navigator.language;
+    payload.browserScreenResolution = `${screen.width}x${screen.height}`;
+    payload.browserWindowInnerSize = `${window.innerWidth}x${window.innerHeight}`;
+    payload.browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
     // Additional user feedback details
     if (userFeedbackDetails) {
@@ -76,13 +69,13 @@ export function InlineKTO({ userFeedbackDetails }: InlineKTOProps) {
     }
 
     // User profile and thema data
-    payload.ma_themas = JSON.stringify(
+    payload.maThemas = JSON.stringify(
       myThemaItems.filter((item) => item.isActive).map((item) => item.title)
     );
     if (errors.length) {
-      payload.ma_errors = JSON.stringify(errors);
+      payload.maErrors = JSON.stringify(errors);
     }
-    payload.ma_profileType = profileType || 'unknown';
+    payload.maProfileType = profileType || 'unknown';
 
     const url = new URL(BFFApiUrls.USER_FEEDBACK_SUBMIT);
     url.searchParams.append('version', surveyVersion?.toString() || 'latest');
