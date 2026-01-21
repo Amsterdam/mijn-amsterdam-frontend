@@ -2,21 +2,13 @@ import { useLocation } from 'react-router';
 
 import { UserFeedback } from './UserFeedback';
 import styles from './UserFeedback.module.scss';
+import { useSubmitUserFeedback } from './useSubmitUserFeedback';
 import type { RecordStr2 } from '../../../server/routing/route-helpers';
-import { BFFApiUrls } from '../../config/api';
-import { sendFormPostRequest, useBffApi } from '../../hooks/api/useBffApi';
+import { useAppStateGetter } from '../../hooks/useAppStateStore';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems';
 import { useErrorMessages } from '../ErrorMessages/ErrorMessages';
 import { PageContentCell } from '../Page/Page';
-
-export function useSubmitUserFeedback() {
-  return useBffApi<{ success: boolean }>('user-feedback', {
-    fetchImmediately: false,
-    url: BFFApiUrls.USER_FEEDBACK_SUBMIT,
-    sendRequest: sendFormPostRequest,
-  });
-}
 
 type InlineKTOProps = {
   userFeedbackDetails?: object;
@@ -33,6 +25,13 @@ export function InlineKTO({ userFeedbackDetails }: InlineKTOProps) {
     isLoading,
     fetch: submitUserFeedback,
   } = useSubmitUserFeedback();
+  const appState = useAppStateGetter();
+
+  const userFeedbackQuestions = appState.KTO?.content?.questions ?? [];
+
+  if (!userFeedbackQuestions.length) {
+    return 'whoat?';
+  }
 
   const browserInfo = {
     userAgent: navigator.userAgent,
@@ -47,15 +46,21 @@ export function InlineKTO({ userFeedbackDetails }: InlineKTOProps) {
 
     // User data from the form
     formData.forEach((value, key) => {
-      userFeedbackData[key] = value.toString();
+      userFeedbackData.answers = value.toString();
     });
 
+    userFeedbackData.answers = JSON.stringify(
+      Array.from(formData.entries()).map(([key, value]) => {
+        return { question: key, answer: value.toString() };
+      })
+    );
+
     // Browser and page data
-    userFeedbackData['browser.pathname'] = location.pathname;
-    userFeedbackData['browser.title'] = document.title;
+    userFeedbackData.browser_path = location.pathname;
+    userFeedbackData.browser_title = document.title;
 
     Object.entries(browserInfo).forEach(([key, value]) => {
-      userFeedbackData[`browser.${key}`] = value.toString();
+      userFeedbackData[`browser_${key}`] = value.toString();
     });
 
     // Additional user feedback details
@@ -68,22 +73,20 @@ export function InlineKTO({ userFeedbackDetails }: InlineKTOProps) {
 
     // User profile and thema data
     if (!isMyThemasLoading) {
-      userFeedbackData['ma.themas'] = JSON.stringify(
+      userFeedbackData.ma_themas = JSON.stringify(
         myThemaItems.filter((item) => item.isActive).map((item) => item.title)
       );
       if (errors.length) {
-        userFeedbackData['ma.errors'] = JSON.stringify(errors);
+        userFeedbackData.ma_errors = JSON.stringify(errors);
       }
-      userFeedbackData['ma.profileType'] = profileType || 'unknown';
+      userFeedbackData.ma_profileType = profileType || 'unknown';
     }
 
-    console.log('Feedback submitted:', userFeedbackData);
     submitUserFeedback({ payload: userFeedbackData });
   }
 
   function savePageRating(rating: number) {
-    console.log('Page rated with:', rating);
-    // Here you would typically send the rating to your server
+    // Implement if we want to save rating before the form is submitted.
   }
 
   return (
@@ -93,6 +96,7 @@ export function InlineKTO({ userFeedbackDetails }: InlineKTOProps) {
           className="ams-mb-xl"
           onSubmit={saveFormData}
           onRate={savePageRating}
+          questions={userFeedbackQuestions}
         />
       </div>
     </PageContentCell>

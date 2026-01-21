@@ -1,63 +1,29 @@
-import { useState } from 'react';
+import { Button } from '@amsterdam/design-system-react';
 
-import {
-  Button,
-  CharacterCount,
-  Field,
-  Paragraph,
-  TextArea,
-  TextInput,
-} from '@amsterdam/design-system-react';
+import { UserFeedbackQuestion } from './UserFeedbackQuestion';
+import type { SurveyFrontend } from '../../../server/services/user-feedback/user-feedback.types';
 
 type FeedbackForm1Props = {
-  maxLength?: number;
   onSubmit?: (formData: FormData) => void;
+  questions?: SurveyFrontend['questions'];
 };
 
-export function FeedbackForm1({
-  onSubmit,
-  maxLength = 300,
-}: FeedbackForm1Props) {
-  const [characterCount, setCharacterCount] = useState(0);
+export function FeedbackForm1({ onSubmit, questions }: FeedbackForm1Props) {
   return (
     <form
       onSubmit={(event) => {
         event.preventDefault();
+        console.log('submit feedback form');
         if (onSubmit) {
           const formData = new FormData(event.currentTarget);
           onSubmit(formData);
         }
       }}
     >
-      <Field className="ams-mb-m">
-        <Paragraph id="feedbackDesc">
-          Heeft u nog een tip of compliment voor ons?
-        </Paragraph>
-        <TextArea
-          aria-describedby="feedbackDesc"
-          id="feedback"
-          onChange={(e) => {
-            e.stopPropagation();
+      {questions?.map((question) => (
+        <UserFeedbackQuestion key={question.id} question={question} />
+      ))}
 
-            setCharacterCount(e.currentTarget.value.length);
-          }}
-          maxLength={maxLength}
-          name="kto.feedback"
-        />
-        <CharacterCount length={characterCount} maxLength={maxLength} />
-      </Field>
-      <Field className="ams-mb-s">
-        <Paragraph id="emailDesc">Uw e-mailadres (niet verplicht)</Paragraph>
-        <TextInput
-          type="email"
-          aria-describedby="emailDesc"
-          id="email"
-          name="kto.email"
-        />
-        <Paragraph size="small">
-          Als het nodig is kunnen we contact met u opnemen.
-        </Paragraph>
-      </Field>
       <Button type="submit" variant="secondary">
         Verstuur feedback
       </Button>

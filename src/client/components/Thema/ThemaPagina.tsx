@@ -62,7 +62,7 @@ export default function ThemaPagina({
   };
   const userFeedbackDetails = Object.entries(themaFeedbackDetails_).reduce(
     (details, [key, value]) => {
-      details[`thema.${key}`] = value;
+      details[`thema_${key}`] = value;
       return details;
     },
     {} as Record<string, unknown>
