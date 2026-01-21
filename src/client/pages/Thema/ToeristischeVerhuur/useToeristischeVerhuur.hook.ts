@@ -89,8 +89,13 @@ export function useToeristischeVerhuurThemaData() {
     linkListItems:
       hasVergunningBB && !hasVergunningenVakantieVerhuur
         ? [...themaConfig.pageLinks, bbVergunningPageLinkItem]
-        : [...themaConfig.pageLinks, vvVergunningPageLinkItem], // TO DO YACINE > wanneer ik naar een link ga krijg ik soms op de themapagina ineens 4 links ipv 3 > naar kijken met andere ontwikkelaar
-    breadcrumbs,
+        : hasVergunningenVakantieVerhuur && !hasVergunningBB
+          ? [themaConfig.pageLinks, vvVergunningPageLinkItem]
+          : [
+              ...themaConfig.pageLinks,
+              vvVergunningPageLinkItem,
+              bbVergunningPageLinkItem,
+            ],
     listPageConfig: themaConfig.listPage,
     detailPageConfig: themaConfig.detailPage,
   };
