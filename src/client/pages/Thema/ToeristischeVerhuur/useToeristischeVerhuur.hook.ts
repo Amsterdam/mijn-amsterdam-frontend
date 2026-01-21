@@ -89,13 +89,13 @@ export function useToeristischeVerhuurThemaData() {
     linkListItems:
       hasVergunningBB && !hasVergunningenVakantieVerhuur
         ? [...themaConfig.pageLinks, bbVergunningPageLinkItem]
-        : hasVergunningenVakantieVerhuur && !hasVergunningBB
-          ? [themaConfig.pageLinks, vvVergunningPageLinkItem]
-          : [
-              ...themaConfig.pageLinks,
-              vvVergunningPageLinkItem,
-              bbVergunningPageLinkItem,
-            ],
+        : // : hasVergunningenVakantieVerhuur && !hasVergunningBB
+          //   ? [themaConfig.pageLinks, vvVergunningPageLinkItem]
+          [
+            ...themaConfig.pageLinks,
+            vvVergunningPageLinkItem,
+            bbVergunningPageLinkItem,
+          ],
     listPageConfig: themaConfig.listPage,
     detailPageConfig: themaConfig.detailPage,
   };
