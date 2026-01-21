@@ -66,7 +66,7 @@ export function UserFeedback({
         >
           <Paragraph className="ams-text-danger ams-mb-m">
             Er is iets misgegaan bij het verzenden van uw feedback. Probeer het
-            later nogmaals.
+            later nog een keer.
           </Paragraph>
         </Alert>
       )}
