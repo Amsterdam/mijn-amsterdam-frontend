@@ -8,8 +8,9 @@ import {
 import { entries } from '../../../../universal/helpers/utils';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import type {
-  ThemaRoutesConfig,
   ThemaConfigBase,
+  WithDetailPage,
+  WithListPage,
 } from '../../../config/thema-types';
 import {
   ListPageParamKind as ListPageParamKindVergunningen,
@@ -17,7 +18,9 @@ import {
   tableConfig as tableConfigVergunningen,
 } from '../Vergunningen/Vergunningen-thema-config';
 
-type ToeristischeVerhuurThemaConfig = ThemaConfigBase;
+type ToeristischeVerhuurThemaConfig = ThemaConfigBase &
+  WithDetailPage &
+  WithListPage;
 
 const THEMA_TITLE = 'Toeristische verhuur';
 
@@ -54,22 +57,23 @@ export const themaConfig: ToeristischeVerhuurThemaConfig = {
     },
   ],
   redactedScope: 'none',
-};
-
-export const routeConfig = {
   detailPage: {
-    path: '/toeristische-verhuur/vergunning/:caseType/:id',
-    trackingUrl: (params) =>
-      `/toeristische-verhuur/vergunning/${params?.caseType ?? ''}`,
-    documentTitle: `Toeristische verhuur | ${THEMA_TITLE}`,
+    route: {
+      path: '/toeristische-verhuur/vergunning/:caseType/:id',
+      trackingUrl: (params) =>
+        `/toeristische-verhuur/vergunning/${params?.caseType ?? ''}`,
+      documentTitle: `Toeristische verhuur | ${THEMA_TITLE}`,
+    },
   },
   listPage: {
-    path: '/toeristische-verhuur/vergunning/lijst/:kind/:page?',
-    documentTitle: (params) =>
-      `${tableConfigVergunningen[(params?.kind as ListPageParamKind) || 'lopende-aanvragen'].title} | ${THEMA_TITLE}`,
-    trackingUrl: null,
+    route: {
+      path: '/toeristische-verhuur/vergunning/lijst/:kind/:page?',
+      documentTitle: (params) =>
+        `${tableConfigVergunningen[(params?.kind as ListPageParamKind) || 'lopende-aanvragen'].title} | ${THEMA_TITLE}`,
+      trackingUrl: null,
+    },
   },
-} as const satisfies ThemaRoutesConfig;
+};
 
 export const bbVergunningPageLinkItem = {
   title: 'Meer informatie over bed & breakfast',
@@ -125,7 +129,7 @@ export const tableConfig = Object.fromEntries(
         title: listPageTitle[kind],
         filter: (vergunning: ToeristischeVerhuurVergunning) =>
           tableConfig.filter(vergunning),
-        listPageRoute: generatePath(routeConfig.listPage.path, {
+        listPageRoute: generatePath(themaConfig.listPage.route.path, {
           kind,
           page: null,
         }),

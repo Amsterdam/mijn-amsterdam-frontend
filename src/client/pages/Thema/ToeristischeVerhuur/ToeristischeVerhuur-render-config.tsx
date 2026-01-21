@@ -1,4 +1,4 @@
-import { routeConfig, themaConfig } from './ToeristischeVerhuur-thema-config';
+import { themaConfig } from './ToeristischeVerhuur-thema-config';
 import { ToeristischeVerhuurDetail } from './ToeristischeVerhuurDetail';
 import { default as ToeristischeVerhuurIcon } from './ToeristischeVerhuurIcon.svg?react';
 import { ToeristischeVerhuurList } from './ToeristischeVerhuurList';
@@ -12,12 +12,12 @@ import {
 
 export const ToeristischeVerhuurRoutes = [
   {
-    route: routeConfig.detailPage.path,
+    route: themaConfig.detailPage.route.path,
     Component: ToeristischeVerhuurDetail,
     isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.listPage.path,
+    route: themaConfig.listPage.route.path,
     Component: ToeristischeVerhuurList,
     isActive: themaConfig.featureToggle.active,
   },

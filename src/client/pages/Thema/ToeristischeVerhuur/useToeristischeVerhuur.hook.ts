@@ -5,7 +5,6 @@ import {
   tableConfigLVVRegistraties,
   tableConfig,
   themaConfig,
-  routeConfig,
 } from './ToeristischeVerhuur-thema-config';
 import { ToeristischeVerhuurVergunning } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
 import {
@@ -82,7 +81,6 @@ export function useToeristischeVerhuurThemaData() {
     tableConfigVergunningen: tableConfig,
     tableConfigLVVRegistraties,
     listPageTitle,
-
     hasRegistrations,
     hasPermits,
     hasVergunningenVakantieVerhuur,
@@ -93,6 +91,7 @@ export function useToeristischeVerhuurThemaData() {
         ? [...themaConfig.pageLinks, bbVergunningPageLinkItem]
         : [...themaConfig.pageLinks, vvVergunningPageLinkItem], // TO DO YACINE > wanneer ik naar een link ga krijg ik soms op de themapagina ineens 4 links ipv 3 > naar kijken met andere ontwikkelaar
     breadcrumbs,
-    routeConfig,
+    listPageConfig: themaConfig.listPage,
+    detailPageConfig: themaConfig.detailPage,
   };
 }
