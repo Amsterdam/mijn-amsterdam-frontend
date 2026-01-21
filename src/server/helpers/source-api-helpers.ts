@@ -23,51 +23,61 @@ export function getCustomApiConfig(...configs: DataRequestConfig[]) {
 
 export function getApiConfig(
   name: SourceApiName | SomeOtherString,
-  config: DataRequestConfig = {},
-  ...additionalConfigs: DataRequestConfig[]
+  config: Omit<DataRequestConfig, 'httpsAgent'> = {},
+  ...additionalConfigs: Omit<DataRequestConfig, 'httpsAgent'>[]
 ): Readonly<DataRequestConfig> {
-  const apiConfig =
+  const apiConfigBase =
     name && name in ApiConfig ? ApiConfig[name as SourceApiName] : {};
 
   // Take of the agent because it cannot be jsonCopied.
-  const agent = apiConfig.httpsAgent;
-  delete apiConfig.httpsAgent;
+  const agent = apiConfigBase.httpsAgent;
+  delete apiConfigBase.httpsAgent;
 
   // Copy the config to prevent assigning privacy/identity related information across requests
-  const apiConfigCopy = jsonCopy(apiConfig);
+  const apiConfigCopy = jsonCopy(apiConfigBase);
 
   // copy the config and transfer the https agent instance.
   if (agent) {
     // re-assign the agent
-    apiConfig.httpsAgent = agent;
+    apiConfigBase.httpsAgent = agent;
 
     // also assign agent to copy
     apiConfigCopy.httpsAgent = agent;
   }
 
+  const config_ = Object.assign(
+    {},
+    apiConfigCopy,
+    config,
+    ...additionalConfigs
+  );
+
   let customUrl = '';
 
-  if (typeof config.formatUrl === 'function') {
-    customUrl = config.formatUrl(apiConfig);
+  if (typeof config_.formatUrl === 'function') {
+    customUrl = config_.formatUrl(config_);
   }
 
-  const headers = apiConfigCopy.headers ?? {};
+  const headersBase = apiConfigCopy.headers ?? {};
 
-  if (config.headers) {
-    Object.assign(headers, config.headers);
+  let headersMerged = {};
+  if (config_.headers) {
+    headersMerged = Object.assign(
+      headersBase,
+      config.headers,
+      ...additionalConfigs.map((c) => c.headers || {})
+    );
   }
 
   const cacheKey_UNSAFE = getApiConfigBasedCacheKey(
     name,
-    config.cacheKey_UNSAFE
+    config_.cacheKey_UNSAFE
   );
 
   return Object.assign(
-    apiConfigCopy,
-    config,
-    ...additionalConfigs,
+    config_,
     customUrl ? { url: customUrl } : null,
-    { headers },
+    { headers: headersMerged },
     cacheKey_UNSAFE ? { cacheKey_UNSAFE } : null
   );
 }
