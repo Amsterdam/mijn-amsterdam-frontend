@@ -171,7 +171,7 @@ export function sendServiceUnavailable(
   return sendResponse(
     res,
     apiErrorResult(
-      `Service Unavailable ${debugMessageDetails && !IS_PRODUCTION ? `: ${debugMessageDetails}` : ''}`,
+      `Service Unavailable${debugMessageDetails && !IS_PRODUCTION ? `: ${debugMessageDetails}` : ''}`,
       null,
       HttpStatusCode.ServiceUnavailable
     )

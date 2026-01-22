@@ -119,6 +119,7 @@ export function OAuthVerificationHandler(role?: string) {
     const token = authHeader.split(' ')[1]; // Removes bearer/Bearer prefix
     const tenantId = getFromEnv('BFF_OAUTH_TENANT');
     const audience = getFromEnv('BFF_OAUTH_MIJNADAM_CLIENT_ID');
+
     if (!token || !tenantId || !audience) {
       return sendServiceUnavailable(
         res,
@@ -146,12 +147,15 @@ export function OAuthVerificationHandler(role?: string) {
           captureException(error);
           return sendUnauthorized(
             res,
-            `OAuth token verification error: ${error.message}`
+            `Unauthorized: OAuth token verification error: ${error.message}`
           );
         }
         const payload = decoded as { roles?: string[] };
         if (role && !payload.roles?.includes?.(role)) {
-          return sendUnauthorized(res, `OAuth token missing required role`);
+          return sendUnauthorized(
+            res,
+            `Unauthorized: OAuth token missing required role`
+          );
         }
         next();
       }

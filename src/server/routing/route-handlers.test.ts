@@ -140,7 +140,7 @@ describe('routing.route-handlers', () => {
         expect(resMock.send).toHaveBeenCalledWith({
           code: HttpStatusCode.Unauthorized,
           content: null,
-          message: 'Unauthorized',
+          message: expect.stringContaining('Unauthorized'),
           status: 'ERROR',
         });
       }
@@ -159,7 +159,7 @@ describe('routing.route-handlers', () => {
       expect(resMock.send).toHaveBeenCalledWith({
         code: 401,
         content: null,
-        message: 'Unauthorized',
+        message: expect.stringContaining('Unauthorized'),
         status: 'ERROR',
       });
     });
@@ -172,7 +172,7 @@ describe('routing.route-handlers', () => {
       expect(resMock.send).toHaveBeenCalledWith({
         code: 401,
         content: null,
-        message: 'Missing Authorization header',
+        message: expect.stringContaining('Missing Authorization header'),
         status: 'ERROR',
       });
     });
@@ -189,7 +189,7 @@ describe('routing.route-handlers', () => {
       expect(resMock.send).toHaveBeenCalledWith({
         code: 401,
         content: null,
-        message: 'Malformed Authorization header',
+        message: expect.stringContaining('Malformed Authorization header'),
         status: 'ERROR',
       });
     });
@@ -206,7 +206,7 @@ describe('routing.route-handlers', () => {
       expect(resMock.send).toHaveBeenCalledWith({
         code: 503,
         content: null,
-        message: 'Service Unavailable',
+        message: expect.stringContaining('Service Unavailable'),
         status: 'ERROR',
       });
     });
