@@ -83,7 +83,6 @@ describe('routing.route-handlers', () => {
       defaultToken
     );
     beforeAll(() => {
-      vi.stubEnv('BFF_OAUTH_KEY_ID', defaultToken.keyid);
       vi.stubEnv('BFF_OAUTH_TENANT', 'test_tenant');
       vi.stubEnv('BFF_OAUTH_MIJNADAM_CLIENT_ID', defaultToken.audience);
     });
