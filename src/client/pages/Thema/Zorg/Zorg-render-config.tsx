@@ -1,4 +1,4 @@
-import { themaConfig, routeConfig, featureToggle } from './Zorg-thema-config';
+import { themaConfig, routeConfig } from './Zorg-thema-config';
 import { ZorgDetail } from './ZorgDetail';
 import { default as ZorgIcon } from './ZorgIcon.svg?react';
 import { ZorgList } from './ZorgList';
@@ -14,17 +14,17 @@ export const ZorgRoutes = [
   {
     route: routeConfig.detailPage.path,
     Component: ZorgDetail,
-    isActive: featureToggle.zorgActive,
+    isActive: themaConfig.featureToggle.Active,
   },
   {
     route: routeConfig.listPage.path,
     Component: ZorgList,
-    isActive: featureToggle.zorgActive,
+    isActive: themaConfig.featureToggle.Active,
   },
   {
     route: routeConfig.themaPage.path,
     Component: ZorgThema,
-    isActive: featureToggle.zorgActive,
+    isActive: themaConfig.featureToggle.Active,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
@@ -36,7 +36,7 @@ export const menuItem: ThemaMenuItem = {
   profileTypes: ['private'],
   isActive(appState: AppState) {
     return (
-      featureToggle.zorgActive &&
+      themaConfig.featureToggle.active &&
       !isLoading(appState.WMO) &&
       !!appState.WMO.content?.length
     );
