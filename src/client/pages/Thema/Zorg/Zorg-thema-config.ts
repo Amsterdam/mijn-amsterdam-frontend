@@ -12,14 +12,16 @@ import type {
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
-type ZorgThemaConfig = Pick<ThemaConfigBase, 'id' | 'title' | featureToggle>;
+type ZorgThemaConfig = Pick<ThemaConfigBase, 'id' | 'title' | 'featureToggle'>;
 
 const THEMA_TITLE = 'Zorg en ondersteuning';
 
 export const themaConfig: ZorgThemaConfig = {
   id: 'ZORG',
   title: THEMA_TITLE,
-  featureToggle: { Active: true },
+  featureToggle: {
+    active: true,
+  },
 };
 
 export const listPageParamKind = {
