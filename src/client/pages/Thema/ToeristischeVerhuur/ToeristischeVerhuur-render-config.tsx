@@ -42,6 +42,7 @@ export const menuItem: ThemaMenuItem = {
       !!vakantieverhuurVergunningen?.length || !!bbVergunningen?.length;
 
     return (
+      themaConfig.featureToggle.active &&
       !isLoading(appState.TOERISTISCHE_VERHUUR) &&
       (hasRegistraties || hasVergunningen)
     );
