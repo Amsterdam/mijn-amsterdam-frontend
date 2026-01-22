@@ -1,4 +1,5 @@
 import {
+  featureToggle,
   sourceApiConfig,
   SURVEY_ID_INLINE_KTO,
   SURVEY_VERSION_INLINE_KTO,
@@ -29,6 +30,7 @@ export async function fetchUserFeedbackSurvey(
     transformResponse(survey: Survey) {
       return deepCamelizeKeys<Survey>(survey);
     },
+    postponeFetch: !featureToggle.service.fetchSurvey.isEnabled,
   });
   return requestData<SurveyFrontend>(requestConfig);
 }

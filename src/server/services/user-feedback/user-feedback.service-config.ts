@@ -15,6 +15,11 @@ export const featureToggle = {
       isEnabled: !IS_PRODUCTION,
     },
   },
+  service: {
+    fetchSurvey: {
+      isEnabled: getFromEnv('BFF_USER_FEEDBACK_ENABLED') === 'true',
+    },
+  },
 };
 
 export const sourceApiConfig: DataRequestConfig = {
