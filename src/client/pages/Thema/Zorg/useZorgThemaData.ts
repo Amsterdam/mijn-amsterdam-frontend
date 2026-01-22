@@ -1,11 +1,9 @@
 import {
-  linkListItems,
   listPageParamKind,
   listPageTitle,
   routeConfig,
   tableConfig,
-  themaId,
-  themaTitle,
+  themaConfig,
 } from './Zorg-thema-config';
 import { WMOVoorzieningFrontend } from '../../../../server/services/wmo/wmo-types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
@@ -21,18 +19,18 @@ export function useZorgThemaData() {
     'title',
     true
   );
-  const breadcrumbs = useThemaBreadcrumbs(themaId);
+  const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
   return {
-    id: themaId,
-    title: themaTitle,
+    id: themaConfig.id,
+    title: themaConfig.title,
     voorzieningen,
     isLoading: isLoading(WMO),
     isError: isError(WMO),
     tableConfig,
     listPageTitle,
     listPageParamKind,
-    linkListItems,
+    linkListItems: themaConfig.pageLinks,
     breadcrumbs,
     routeConfig,
   };

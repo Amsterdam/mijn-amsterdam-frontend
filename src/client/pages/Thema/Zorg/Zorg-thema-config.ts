@@ -1,7 +1,6 @@
 import { generatePath } from 'react-router';
 
 import { WMOVoorzieningFrontend } from '../../../../server/services/wmo/wmo-types';
-import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 import type {
@@ -12,15 +11,7 @@ import type {
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
-type ZorgThemaConfig = Pick<
-  ThemaConfigBase,
-  | 'id'
-  | 'title'
-  | 'featureToggle'
-  | 'redactedScope'
-  | 'profileTypes'
-  | 'uitlegPageSections'
->;
+type ZorgThemaConfig = ThemaConfigBase;
 
 const THEMA_TITLE = 'Zorg en ondersteuning';
 
@@ -38,6 +29,17 @@ export const themaConfig: ZorgThemaConfig = {
       listItems: ['Uw WMO-regelingen (WMO: wet maatschappelijke ondersteuning'],
     },
   ],
+  pageLinks: [
+    {
+      to: 'https://www.amsterdam.nl/zorg-ondersteuning/',
+      title: 'Lees hier meer over zorg en ondersteuning',
+    },
+  ],
+  route: {
+    path: '/zorg-en-ondersteuning',
+    documentTitle: `${THEMA_TITLE} | overzicht`,
+    trackingUrl: null,
+  },
 };
 
 export const listPageParamKind = {
@@ -55,27 +57,20 @@ export const routeConfig = {
   detailPage: {
     path: '/zorg-en-ondersteuning/voorziening/:id',
     trackingUrl: '/zorg-en-ondersteuning/voorziening',
-    documentTitle: `Voorziening | ${themaTitle}`,
+    documentTitle: `Voorziening | ${THEMA_TITLE}`,
   },
   listPage: {
     path: '/zorg-en-ondersteuning/lijst/:kind/:page?',
     documentTitle: (params) =>
-      `${params?.kind === listPageParamKind.actual ? 'Huidige' : 'Eerdere en afgewezen'} voorzieningen | ${themaTitle}`,
+      `${params?.kind === listPageParamKind.actual ? 'Huidige' : 'Eerdere en afgewezen'} voorzieningen | ${THEMA_TITLE}`,
     trackingUrl: null,
   },
   themaPage: {
     path: '/zorg-en-ondersteuning',
-    documentTitle: `${themaTitle} | overzicht`,
+    documentTitle: `${THEMA_TITLE} | overzicht`,
     trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
-
-export const linkListItems: LinkProps[] = [
-  {
-    to: 'https://www.amsterdam.nl/zorg-ondersteuning/',
-    title: 'Lees hier meer over zorg en ondersteuning',
-  },
-];
 
 const displayProps: DisplayProps<WMOVoorzieningFrontend> = {
   props: {
