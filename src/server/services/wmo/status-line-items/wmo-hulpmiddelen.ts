@@ -144,5 +144,3 @@ export function getHulpmiddelenDisclaimer(
     return config.notActual;
   }
 }
-
-export const forTesting = { isDateMatch };
