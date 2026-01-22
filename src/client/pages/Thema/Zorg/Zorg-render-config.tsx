@@ -14,17 +14,17 @@ export const ZorgRoutes = [
   {
     route: routeConfig.detailPage.path,
     Component: ZorgDetail,
-    isActive: themaConfig.featureToggle.Active,
+    isActive: themaConfig.featureToggle.active,
   },
   {
     route: routeConfig.listPage.path,
     Component: ZorgList,
-    isActive: themaConfig.featureToggle.Active,
+    isActive: themaConfig.featureToggle.active,
   },
   {
     route: routeConfig.themaPage.path,
     Component: ZorgThema,
-    isActive: themaConfig.featureToggle.Active,
+    isActive: themaConfig.featureToggle.active,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
