@@ -150,12 +150,12 @@ export function sendBadRequestInvalidInput(res: Response, error: unknown) {
 export function sendUnauthorized(
   res: Response,
   message: string = 'Unauthorized',
-  debugMessageDetails?: string
+  messageDetails?: string
 ) {
   return sendResponse(
     res,
     apiErrorResult(
-      `${message}${debugMessageDetails && !IS_PRODUCTION ? `: ${debugMessageDetails}` : ''}`,
+      `${message}${messageDetails && !IS_PRODUCTION ? `: ${messageDetails}` : ''}`,
       null,
       HttpStatusCode.Unauthorized
     )
@@ -169,14 +169,11 @@ export function send404(res: Response) {
   );
 }
 
-export function sendServiceUnavailable(
-  res: Response,
-  debugMessageDetails?: string
-) {
+export function sendServiceUnavailable(res: Response, messageDetails?: string) {
   return sendResponse(
     res,
     apiErrorResult(
-      `Service Unavailable${debugMessageDetails && !IS_PRODUCTION ? `: ${debugMessageDetails}` : ''}`,
+      `Service Unavailable${messageDetails && !IS_PRODUCTION ? `: ${messageDetails}` : ''}`,
       null,
       HttpStatusCode.ServiceUnavailable
     )
