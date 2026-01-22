@@ -1,6 +1,7 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 
 import { useZorgThemaData } from './useZorgThemaData';
+import { themaConfig } from './Zorg-thema-config';
 import { WMOVoorzieningFrontend } from '../../../../server/services/wmo/wmo-types';
 import { PageContentCell } from '../../../components/Page/Page';
 import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed';
@@ -35,9 +36,8 @@ export function ZorgThema() {
     title,
     tableConfig,
     linkListItems,
-    routeConfig,
   } = useZorgThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const pageContentTop = (
     <PageContentCell spanWide={8}>
