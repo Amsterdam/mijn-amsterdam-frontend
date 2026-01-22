@@ -55,10 +55,10 @@ export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
  *  So if you have: ingang = 2024-01-31 and einde = 2024-02-01. Then we will -
  *  show a disclaimer text on the actual one and the non actual (einde) one.
  *
- *  @param {string} actual - Disclaimer text for items that are actual.
- *  @param {string} notActual - Disclaimer text for items that are non actual.
- *  @param {string} datumEindeGeldigheid - The date in yyyy-mm-dd format, when the voorziening was wrongfuly ended.
- *  @param {string} datumIngangGeldigheid - The date in yyyy-mm-dd format, when the voorziening is opened again.
+ *  @param actual - Disclaimer text for items that are actual.
+ *  @param notActual - Disclaimer text for items that are non actual.
+ *  @param datumEindeGeldigheid - The date in yyyy-mm-dd format, when the voorziening was wrongfuly ended.
+ *  @param datumIngangGeldigheid - The date in yyyy-mm-dd format, when the voorziening is opened again.
  */
 type HulpmiddelenDisclaimerConfig = {
   actual: string;
