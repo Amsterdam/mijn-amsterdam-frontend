@@ -6,6 +6,7 @@ export const routes = {
   protected: {
     USER_FEEDBACK_SUBMIT: '/user-feedback/collect',
     USER_FEEDBACK_SURVEY: '/user-feedback/survey',
+    USER_FEEDBACK_OVERVIEW: '/user-feedback/overview',
   },
 };
 
@@ -32,5 +33,7 @@ export const sourceApiConfig: DataRequestConfig = {
   },
 } as const;
 
-export const SURVEY_ID_INLINE_KTO = 'mams-inline-kto';
-export const SURVEY_VERSION_INLINE_KTO = '1';
+export const SURVEY_ID_INLINE_KTO =
+  getFromEnv('BFF_USER_FEEDBACK_SURVEY_ID') || 'mams-inline-kto';
+export const SURVEY_VERSION_INLINE_KTO =
+  getFromEnv('BFF_USER_FEEDBACK_SURVEY_VERSION') || '1';

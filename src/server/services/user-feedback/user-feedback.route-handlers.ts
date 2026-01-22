@@ -1,10 +1,15 @@
-import { fetchUserFeedbackSurvey, saveUserFeedback } from './user-feedback';
+import {
+  fetchUserFeedbackSurvey,
+  saveUserFeedback,
+  userFeedbackOverview,
+} from './user-feedback';
 import {
   SURVEY_ID_INLINE_KTO,
   SURVEY_VERSION_INLINE_KTO,
 } from './user-feedback.service-config';
 import {
   userFeedbackInput,
+  type Survey,
   type UserFeedbackInput,
 } from './user-feedback.types';
 import {
@@ -15,7 +20,7 @@ import {
 } from '../../routing/route-helpers';
 
 export async function handleFetchSurvey(
-  req: RequestWithQueryParams<{ id?: string; version?: string }>,
+  req: RequestWithQueryParams<{ id?: Survey['unique_code']; version?: string }>,
   res: ResponseAuthenticated
 ) {
   const survey = await fetchUserFeedbackSurvey(req.query.id, req.query.version);
@@ -23,8 +28,20 @@ export async function handleFetchSurvey(
   return sendResponse(res, survey);
 }
 
+export async function handleFetchSurveyOverview(
+  req: RequestWithQueryParams<{ id?: Survey['unique_code']; version?: string }>,
+  res: ResponseAuthenticated
+) {
+  const surveyOverview = await userFeedbackOverview(
+    req.query.id ?? SURVEY_ID_INLINE_KTO,
+    req.query.version ?? SURVEY_VERSION_INLINE_KTO
+  );
+
+  return sendResponse(res, surveyOverview);
+}
+
 export async function handleUserFeedbackSubmission(
-  req: RequestWithQueryParams<{ id?: string; version?: string }>,
+  req: RequestWithQueryParams<{ id?: Survey['unique_code']; version?: string }>,
   res: ResponseAuthenticated
 ) {
   let userFeedback: UserFeedbackInput;

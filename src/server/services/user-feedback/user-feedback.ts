@@ -7,18 +7,26 @@ import {
 import type {
   SaveUserFeedbackResponse,
   Survey,
-  SurveyEntry,
+  SurveyEntriesResponse,
+  SurveyEntryFrontend,
+  SurveyEntryPayload,
   SurveyFrontend,
+  SurveyOverviewFrontend,
   UserFeedbackInput,
 } from './user-feedback.types';
-import { type ApiResponsePromise } from '../../../universal/helpers/api';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+  getFailedDependencies,
+  type ApiResponsePromise,
+} from '../../../universal/helpers/api';
 import { omit } from '../../../universal/helpers/utils';
 import { getCustomApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { deepCamelizeKeys } from '../db/helper';
 
 export async function fetchUserFeedbackSurvey(
-  surveyId: string = SURVEY_ID_INLINE_KTO,
+  surveyId: Survey['unique_code'] = SURVEY_ID_INLINE_KTO,
   version: string = SURVEY_VERSION_INLINE_KTO
 ): ApiResponsePromise<SurveyFrontend> {
   const requestConfig = getCustomApiConfig(sourceApiConfig, {
@@ -32,10 +40,11 @@ export async function fetchUserFeedbackSurvey(
     },
     postponeFetch: !featureToggle.service.fetchSurvey.isEnabled,
   });
+
   return requestData<SurveyFrontend>(requestConfig);
 }
 
-function getSurveyEntryPayload(data: UserFeedbackInput): SurveyEntry {
+function getSurveyEntryPayload(data: UserFeedbackInput): SurveyEntryPayload {
   const metadata = omit(data, ['browserPath', 'answers']);
   if (metadata.maErrors) {
     metadata.maErrors = JSON.parse(metadata.maErrors || 'null');
@@ -45,7 +54,7 @@ function getSurveyEntryPayload(data: UserFeedbackInput): SurveyEntry {
     metadata.pageDetails = JSON.parse(metadata.pageDetails || 'null');
   }
 
-  const surveyEntryPayload: SurveyEntry = {
+  const surveyEntryPayload: SurveyEntryPayload = {
     answers: JSON.parse(data.answers),
     entry_point: data.browserPath || 'unknown',
     metadata,
@@ -55,7 +64,7 @@ function getSurveyEntryPayload(data: UserFeedbackInput): SurveyEntry {
 }
 
 export async function saveUserFeedback(
-  surveyId: string,
+  surveyId: Survey['unique_code'],
   version: string,
   data: UserFeedbackInput
 ): ApiResponsePromise<SaveUserFeedbackResponse> {
@@ -66,5 +75,71 @@ export async function saveUserFeedback(
     method: 'POST',
     data: surveyEntryPayload,
   });
+
   return requestData<SaveUserFeedbackResponse>(requestConfig);
+}
+
+async function fetchFeedbackSurveyEntries(
+  surveyId: Survey['unique_code']
+): ApiResponsePromise<SurveyEntryFrontend[]> {
+  const requestConfig = getCustomApiConfig(sourceApiConfig, {
+    formatUrl: ({ url }) => `${url}/entries`,
+    method: 'GET',
+    transformResponse(entriesResponse: SurveyEntriesResponse) {
+      const entries = entriesResponse.results.filter((entry) => {
+        return entry.survey_unique_code === surveyId;
+      });
+      return entries.map((entry) => {
+        return {
+          answers: Object.fromEntries(
+            entry.answers.map((answer) => [answer.question, answer.answer])
+          ),
+          dateCreated: entry.created_at,
+          metadata: entry.metadata,
+          entryPoint: entry.entry_point,
+        };
+      });
+    },
+  });
+
+  return requestData<SurveyEntryFrontend[]>(requestConfig);
+}
+
+export async function userFeedbackOverview(
+  surveyId: Survey['unique_code'],
+  version: string
+): ApiResponsePromise<SurveyOverviewFrontend> {
+  const surveyRequest = fetchUserFeedbackSurvey(surveyId, version);
+  const entriesRequest = fetchFeedbackSurveyEntries(surveyId);
+
+  const [surveyResponse, entriesResponse] = await Promise.all([
+    surveyRequest,
+    entriesRequest,
+  ]);
+
+  if (!surveyResponse.content || !entriesResponse.content) {
+    return apiErrorResult(
+      'Failed to fetch user feedback overview data',
+      null,
+      500
+    );
+  }
+
+  const survey = surveyResponse.content;
+  const questionsById = Object.fromEntries(
+    survey.questions.map((survey) => {
+      return [survey.id, survey.questionText];
+    })
+  );
+
+  return apiSuccessResult(
+    {
+      survey: {
+        title: survey.title,
+        questions: questionsById,
+      },
+      entries: entriesResponse.content,
+    },
+    getFailedDependencies({ survey: surveyResponse, entries: entriesResponse })
+  );
 }

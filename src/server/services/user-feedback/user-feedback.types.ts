@@ -38,6 +38,9 @@ export type Survey = {
   version: number;
   created_at: string;
   active_from: string;
+  unique_code: string;
+  title: string;
+  description: string;
 };
 export type SurveyFrontend = Prettify<
   Omit<CamelCasedPropertiesDeep<Survey>, 'questions'>
@@ -59,7 +62,7 @@ export type SurveyAnswer = {
   question: number;
   answer: string;
 };
-export type SurveyEntry = {
+export type SurveyEntryPayload = {
   answers: SurveyAnswer[];
   entry_point: string;
   metadata: object;
@@ -85,4 +88,40 @@ export type UserFeedbackInput = z.infer<typeof userFeedbackInput>;
 
 export type UserFeedback = Omit<UserFeedbackInput, 'answers'> & {
   answers: SurveyAnswer[];
+};
+
+export type SurveyEntry = SurveyEntryPayload & {
+  id: number;
+  survey_unique_code: string;
+  created_at: string;
+  survey_version: 1;
+};
+
+export type SurveyEntriesResponse = {
+  results: SurveyEntry[];
+  count: number;
+  next: string | null;
+  previous: string | null;
+};
+
+export type SurveyAnswerFrontend = {
+  question: string;
+  answer: string;
+};
+
+export type SurveyEntryFrontend = {
+  answers: Record<
+    SurveyAnswerFrontend['question'],
+    SurveyAnswerFrontend['answer']
+  >;
+  dateCreated: string;
+  metadata: object;
+};
+
+export type SurveyOverviewFrontend = {
+  survey: {
+    title: SurveyFrontend['title'];
+    questions: Record<SurveyQuestion['id'], SurveyQuestion['question_text']>;
+  };
+  entries: SurveyEntryFrontend[];
 };
