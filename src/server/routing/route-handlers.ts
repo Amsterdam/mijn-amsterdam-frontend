@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
+import jwt, { type GetPublicKeyOrSecret } from 'jsonwebtoken';
 import jwksClient from 'jwks-rsa';
 import uid from 'uid-safe';
 
@@ -91,18 +91,6 @@ export function apiKeyVerificationHandler(
   return sendUnauthorized(res, 'Api key ongeldig');
 }
 
-async function fetchSigningKey(issuer: string) {
-  const keyId = getFromEnv('BFF_OAUTH_KEY_ID');
-  if (!keyId) {
-    return null;
-  }
-  const client = jwksClient({
-    jwksUri: `${issuer}/discovery/keys`,
-  });
-  const signingKey = await client.getSigningKey();
-  return signingKey.getPublicKey();
-}
-
 export function OAuthVerificationHandler(role?: string) {
   return async function OAuthVerificationHandler(
     req: Request,
@@ -127,16 +115,26 @@ export function OAuthVerificationHandler(role?: string) {
       );
     }
     const issuer = `https://sts.windows.net/${tenantId}`;
-    const signingKey = await fetchSigningKey(issuer).catch((error) =>
-      captureException(error)
-    );
-    if (!signingKey) {
-      return sendServiceUnavailable(res, `Signing key not found`);
-    }
+    const client = jwksClient({
+      jwksUri: `${issuer}/discovery/keys`,
+    });
+
+    const getKey: GetPublicKeyOrSecret = (
+      header: { kid?: string },
+      callback: (err: Error | null, key?: string) => void
+    ) => {
+      client.getSigningKey(header.kid, (err, key) => {
+        if (err || !key) {
+          return callback(err || null);
+        }
+        const signingKey = key.getPublicKey();
+        callback(null, signingKey);
+      });
+    };
 
     jwt.verify(
       token,
-      signingKey,
+      getKey,
       {
         audience,
         issuer: `${issuer}/`,
