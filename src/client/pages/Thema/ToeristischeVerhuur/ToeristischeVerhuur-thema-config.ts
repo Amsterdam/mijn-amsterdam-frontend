@@ -27,7 +27,7 @@ const THEMA_TITLE = 'Toeristische verhuur';
 export const themaConfig: ToeristischeVerhuurThemaConfig = {
   id: 'TOERISTISCHE_VERHUUR',
   title: THEMA_TITLE,
-  featureToggle: { active: true }, // TO DO YACINE > werkt helemaal alleen verdwijnt niet van de homepage
+  featureToggle: { active: true },
   profileTypes: ['private', 'commercial'],
   pageLinks: [
     {
@@ -35,7 +35,7 @@ export const themaConfig: ToeristischeVerhuurThemaConfig = {
       to: 'https://www.amsterdam.nl/belastingen/toeristenbelasting/',
     },
     {
-      title: 'Vakantieverhuur melden of registratienummer aanvragen', // TO DO YACINE > deze en die hieronder is afhankelijk  (hasVergunningBB && !hasVergunningenVakantieVerhuur)
+      title: 'Vakantieverhuur melden of registratienummer aanvragen',
       to: 'https://www.toeristischeverhuur.nl/portaal/login',
     },
   ],
