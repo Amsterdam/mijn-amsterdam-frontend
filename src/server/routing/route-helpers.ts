@@ -5,6 +5,7 @@ import { generatePath, matchPath } from 'react-router';
 import z from 'zod';
 
 import { PUBLIC_BFF_ENDPOINTS } from './bff-routes';
+import { IS_PRODUCTION } from '../../universal/config/env';
 import {
   ApiResponse_DEPRECATED,
   apiErrorResult,
@@ -163,11 +164,14 @@ export function send404(res: Response) {
   );
 }
 
-export function sendServiceUnavailable(res: Response) {
+export function sendServiceUnavailable(
+  res: Response,
+  debugMessageDetails?: string
+) {
   return sendResponse(
     res,
     apiErrorResult(
-      'Service Unavailable',
+      `Service Unavailable ${debugMessageDetails && !IS_PRODUCTION ? `: ${debugMessageDetails}` : ''}`,
       null,
       HttpStatusCode.ServiceUnavailable
     )

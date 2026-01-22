@@ -120,14 +120,17 @@ export function OAuthVerificationHandler(role?: string) {
     const tenantId = getFromEnv('BFF_OAUTH_TENANT');
     const audience = getFromEnv('BFF_OAUTH_MIJNADAM_CLIENT_ID');
     if (!token || !tenantId || !audience) {
-      return sendServiceUnavailable(res);
+      return sendServiceUnavailable(
+        res,
+        `OAuth configuration incomplete - ${!token ? 'token missing from auth header' : ''}${!tenantId ? ' tenantId missing in env' : ''}${!audience ? ' audience missing in env' : ''}`
+      );
     }
     const issuer = `https://sts.windows.net/${tenantId}`;
     const signingKey = await fetchSigningKey(issuer).catch((error) =>
       captureException(error)
     );
     if (!signingKey) {
-      return sendServiceUnavailable(res);
+      return sendServiceUnavailable(res, `Signing key not found`);
     }
 
     jwt.verify(
@@ -141,11 +144,14 @@ export function OAuthVerificationHandler(role?: string) {
       (error, decoded) => {
         if (error) {
           captureException(error);
-          return sendUnauthorized(res);
+          return sendUnauthorized(
+            res,
+            `OAuth token verification error: ${error.message}`
+          );
         }
         const payload = decoded as { roles?: string[] };
         if (role && !payload.roles?.includes?.(role)) {
-          return sendUnauthorized(res);
+          return sendUnauthorized(res, `OAuth token missing required role`);
         }
         next();
       }
