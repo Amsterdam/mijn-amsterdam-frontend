@@ -39,7 +39,21 @@ export type Survey = {
   created_at: string;
   active_from: string;
 };
-export type SurveyFrontend = CamelCasedPropertiesDeep<Survey>;
+export type SurveyFrontend = Prettify<
+  Omit<CamelCasedPropertiesDeep<Survey>, 'questions'>
+> & {
+  questions: CamelCasedPropertiesDeep<
+    Pick<
+      SurveyQuestion,
+      | 'id'
+      | 'max_characters'
+      | 'question_text'
+      | 'question_type'
+      | 'required'
+      | 'description'
+    >
+  >[];
+};
 export type SaveUserFeedbackResponse = { success: boolean };
 export type SurveyAnswer = {
   question: number;
