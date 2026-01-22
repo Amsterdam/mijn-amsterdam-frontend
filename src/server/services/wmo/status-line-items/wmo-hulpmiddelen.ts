@@ -96,10 +96,8 @@ const configs: any = {
     datumIngangGeldigheid: '2024-11-01',
   },
   GBW: {
-    // Huidige voorzieningen
     actual:
       'Het kan zijn dat uw gesloten buitenwagen hieronder “Huidige voorzieningen” een verkeerde startdatum heeft. Kijk voor de juiste startdatum bij eerdere en afgewezen voorzieningen.',
-    // Eerdere en afgewezen voorzieningen
     notActual:
       'Het kan zijn dat uw gesloten buitenwagen ten onrechte bij hieronder "Eerdere en afgewezen voorzieningen" staat. De actieve voorziening staat ook onder "Huidige voorzieningen".',
     datumEindeGeldigheid: '31-12-2025',
