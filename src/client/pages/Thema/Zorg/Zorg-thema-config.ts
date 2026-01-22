@@ -12,7 +12,10 @@ import type {
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
-type ZorgThemaConfig = Pick<ThemaConfigBase, 'id' | 'title' | 'featureToggle'>;
+type ZorgThemaConfig = Pick<
+  ThemaConfigBase,
+  'id' | 'title' | 'featureToggle' | 'redactedScope' | 'profileTypes'
+>;
 
 const THEMA_TITLE = 'Zorg en ondersteuning';
 
@@ -22,6 +25,8 @@ export const themaConfig: ZorgThemaConfig = {
   featureToggle: {
     active: true,
   },
+  redactedScope: 'full',
+  profileTypes: ['private'],
 };
 
 export const listPageParamKind = {
