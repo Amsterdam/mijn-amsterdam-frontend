@@ -22,7 +22,7 @@ export const ZorgRoutes = [
     isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.themaPage.path,
+    route: themaConfig.route.path,
     Component: ZorgThema,
     isActive: themaConfig.featureToggle.active,
   },
@@ -31,7 +31,7 @@ export const ZorgRoutes = [
 export const menuItem: ThemaMenuItem = {
   title: themaConfig.title,
   id: themaConfig.id,
-  to: routeConfig.themaPage.path,
+  to: themaConfig.route.path,
   profileTypes: themaConfig.profileTypes,
   redactedScope: themaConfig.redactedScope,
   isActive(appState: AppState) {

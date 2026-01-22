@@ -65,11 +65,6 @@ export const routeConfig = {
       `${params?.kind === listPageParamKind.actual ? 'Huidige' : 'Eerdere en afgewezen'} voorzieningen | ${THEMA_TITLE}`,
     trackingUrl: null,
   },
-  themaPage: {
-    path: '/zorg-en-ondersteuning',
-    documentTitle: `${THEMA_TITLE} | overzicht`,
-    trackingUrl: null,
-  },
 } as const satisfies ThemaRoutesConfig;
 
 const displayProps: DisplayProps<WMOVoorzieningFrontend> = {
