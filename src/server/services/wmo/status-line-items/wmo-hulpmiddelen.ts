@@ -67,9 +67,11 @@ type HulpmiddelenDisclaimerConfig = {
   datumIngangGeldigheid: string;
 };
 
-const hulpmiddelenDisclaimerConfigs: {
+export type HulpmiddelenDisclaimerConfigs = {
   generic: HulpmiddelenDisclaimerConfig;
-} & Record<ProductSoortCode, HulpmiddelenDisclaimerConfig> = {
+} & Record<ProductSoortCode, HulpmiddelenDisclaimerConfig>;
+
+export const hulpmiddelenDisclaimerConfigs: HulpmiddelenDisclaimerConfigs = {
   generic: {
     actual:
       'Door een fout kan het zijn dat dit hulpmiddel ook bij "Eerdere en afgewezen voorzieningen" staat. Daar vindt u dan het originele besluit met de juiste datums.',
@@ -80,13 +82,31 @@ const hulpmiddelenDisclaimerConfigs: {
   },
   GBW: {
     actual:
-      'Het kan zijn dat uw gesloten buitenwagen hieronder “Huidige voorzieningen” een verkeerde startdatum heeft. Kijk voor de juiste startdatum bij eerdere en afgewezen voorzieningen.',
+      'Het kan zijn dat uw gesloten buitenwagen hieronder "Huidige voorzieningen" een verkeerde startdatum heeft. Kijk voor de juiste startdatum bij eerdere en afgewezen voorzieningen.',
     notActual:
       'Het kan zijn dat uw gesloten buitenwagen ten onrechte bij hieronder "Eerdere en afgewezen voorzieningen" staat. De actieve voorziening staat ook onder "Huidige voorzieningen".',
-    datumEindeGeldigheid: '31-12-2025',
+    datumEindeGeldigheid: '2025-12-31',
     datumIngangGeldigheid: '2026-01-01',
   },
 };
+
+type DateProps = keyof Pick<
+  HulpmiddelenDisclaimerConfig,
+  'datumIngangGeldigheid' | 'datumEindeGeldigheid'
+>;
+
+function isDateMatch(
+  config: HulpmiddelenDisclaimerConfig,
+  aanvraag: ZorgnedAanvraagTransformed,
+  key: DateProps
+): boolean {
+  const datumAanvraag = aanvraag[key];
+
+  return (
+    datumAanvraag === config[key] ||
+    datumAanvraag === hulpmiddelenDisclaimerConfigs.generic[key]
+  );
+}
 
 /**
  * Er zijn een aantal voorzieningen in Zorgned gekopieerd naar nieuwe voorzieningen.
@@ -94,36 +114,35 @@ const hulpmiddelenDisclaimerConfigs: {
  * De nieuwe voorzieningen zijn niet voorzien van een besluit document waardoor de besluit status niet zichtbaar is.
  */
 export function getHulpmiddelenDisclaimer(
+  disclaimerConfigs: HulpmiddelenDisclaimerConfigs,
   detailAanvraag: ZorgnedAanvraagTransformed,
   aanvragen: ZorgnedAanvraagTransformed[]
 ): string | undefined {
   const config =
-    hulpmiddelenDisclaimerConfigs[detailAanvraag.productsoortCode] ??
-    hulpmiddelenDisclaimerConfigs.generic;
+    disclaimerConfigs[detailAanvraag.productsoortCode] ??
+    disclaimerConfigs.generic;
 
-  const hasNietActueelMatch =
-    detailAanvraag.isActueel &&
-    detailAanvraag.datumIngangGeldigheid === config.datumIngangGeldigheid &&
+  if (detailAanvraag.isActueel) {
+    if (
+      isDateMatch(config, detailAanvraag, 'datumIngangGeldigheid') &&
+      aanvragen.some(
+        (aanvraag) =>
+          isDateMatch(config, aanvraag, 'datumEindeGeldigheid') &&
+          !aanvraag.isActueel
+      )
+    ) {
+      return config.actual;
+    }
+  } else if (
+    isDateMatch(config, detailAanvraag, 'datumEindeGeldigheid') &&
     aanvragen.some(
       (aanvraag) =>
-        aanvraag.datumEindeGeldigheid === config.datumEindeGeldigheid &&
-        !aanvraag.isActueel
-    );
-
-  const hasActueelMatch =
-    !detailAanvraag.isActueel &&
-    detailAanvraag.datumEindeGeldigheid === config.datumEindeGeldigheid &&
-    aanvragen.some(
-      (aanvraag) =>
-        aanvraag.datumIngangGeldigheid === config.datumIngangGeldigheid &&
+        isDateMatch(config, aanvraag, 'datumIngangGeldigheid') &&
         aanvraag.isActueel
-    );
-
-  if (hasNietActueelMatch) {
-    return 'Door een fout kan het zijn dat dit hulpmiddel ook bij "Eerdere en afgewezen voorzieningen" staat. Daar vindt u dan het originele besluit met de juiste datums.';
-  } else if (hasActueelMatch) {
-    return 'Door een fout kan het zijn dat dit hulpmiddel ten onrechte bij "Eerdere en afgewezen voorzieningen" staat.';
+    )
+  ) {
+    return config.notActual;
   }
-
-  return undefined;
 }
+
+export const forTesting = { isDateMatch };

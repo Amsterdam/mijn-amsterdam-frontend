@@ -1,6 +1,9 @@
 import { generatePath } from 'react-router';
 
-import { getHulpmiddelenDisclaimer } from './status-line-items/wmo-hulpmiddelen';
+import {
+  getHulpmiddelenDisclaimer,
+  hulpmiddelenDisclaimerConfigs,
+} from './status-line-items/wmo-hulpmiddelen';
 import { routes } from './wmo-service-config';
 import { wmoStatusLineItemsConfig } from './wmo-status-line-items';
 import { routeConfig } from '../../../client/pages/Thema/Zorg/Zorg-thema-config';
@@ -79,7 +82,11 @@ function transformVoorzieningForFrontend(
     steps.find((step) => step.status === 'Besluit genomen')?.datePublished ??
     '';
 
-  const disclaimer = getHulpmiddelenDisclaimer(aanvraag, aanvragen);
+  const disclaimer = getHulpmiddelenDisclaimer(
+    hulpmiddelenDisclaimerConfigs,
+    aanvraag,
+    aanvragen
+  );
 
   const voorzieningFrontend: WMOVoorzieningFrontend = {
     id,
