@@ -99,7 +99,7 @@ async function fetchSigningKey(issuer: string) {
   const client = jwksClient({
     jwksUri: `${issuer}/discovery/keys`,
   });
-  const signingKey = await client.getSigningKey(keyId);
+  const signingKey = await client.getSigningKey();
   return signingKey.getPublicKey();
 }
 
