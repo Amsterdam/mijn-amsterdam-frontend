@@ -49,7 +49,7 @@ export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
 ];
 
 /**
- * Er zijn een aantal voorzieninginen in Zorgned gekopieerd naar nieuwe voorzieningen.
+ * Er zijn een aantal voorzieningen in Zorgned gekopieerd naar nieuwe voorzieningen.
  * De oude voorzieningen zijn afgesloten (einde recht).
  * De nieuwe voorzieningen zijn niet voorzien van een besluit document waardoor de besluit status niet zichtbaar is.
  */
@@ -57,24 +57,23 @@ export function getHulpmiddelenDisclaimer(
   detailAanvraag: ZorgnedAanvraagTransformed,
   aanvragen: ZorgnedAanvraagTransformed[]
 ): string | undefined {
-  const datumEindeGeldigheid = '2024-10-31';
-  const datumIngangGeldigheid = '2024-11-01';
+  const config = configs[detailAanvraag.productsoortCode] ?? configs.generic;
 
   const hasNietActueelMatch =
     detailAanvraag.isActueel &&
-    detailAanvraag.datumIngangGeldigheid === datumIngangGeldigheid &&
+    detailAanvraag.datumIngangGeldigheid === config.datumIngangGeldigheid &&
     aanvragen.some(
       (aanvraag) =>
-        aanvraag.datumEindeGeldigheid === datumEindeGeldigheid &&
+        aanvraag.datumEindeGeldigheid === config.datumEindeGeldigheid &&
         !aanvraag.isActueel
     );
 
   const hasActueelMatch =
     !detailAanvraag.isActueel &&
-    detailAanvraag.datumEindeGeldigheid === datumEindeGeldigheid &&
+    detailAanvraag.datumEindeGeldigheid === config.datumEindeGeldigheid &&
     aanvragen.some(
       (aanvraag) =>
-        aanvraag.datumIngangGeldigheid === datumIngangGeldigheid &&
+        aanvraag.datumIngangGeldigheid === config.datumIngangGeldigheid &&
         aanvraag.isActueel
     );
 
@@ -86,3 +85,24 @@ export function getHulpmiddelenDisclaimer(
 
   return undefined;
 }
+
+const configs: any = {
+  generic: {
+    actual:
+      'Door een fout kan het zijn dat dit hulpmiddel ook bij "Eerdere en afgewezen voorzieningen" staat. Daar vindt u dan het originele besluit met de juiste datums.',
+    notActual:
+      'Door een fout kan het zijn dat dit hulpmiddel ten onrechte bij "Eerdere en afgewezen voorzieningen" staat.',
+    datumEindeGeldigheid: '2024-10-31',
+    datumIngangGeldigheid: '2024-11-01',
+  },
+  GBW: {
+    // Huidige voorzieningen
+    actual:
+      'Het kan zijn dat uw gesloten buitenwagen hieronder “Huidige voorzieningen” een verkeerde startdatum heeft. Kijk voor de juiste startdatum bij eerdere en afgewezen voorzieningen.',
+    // Eerdere en afgewezen voorzieningen
+    notActual:
+      'Het kan zijn dat uw gesloten buitenwagen ten onrechte bij hieronder "Eerdere en afgewezen voorzieningen" staat. De actieve voorziening staat ook onder "Huidige voorzieningen".',
+    datumEindeGeldigheid: '31-12-2025',
+    datumIngangGeldigheid: '2026-01-01',
+  },
+};
