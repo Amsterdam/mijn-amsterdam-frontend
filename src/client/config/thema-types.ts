@@ -21,7 +21,7 @@ export type ThemaConfigBase = {
   uitlegPageSections: InfoSection[];
   pageLinks: LinkProps[];
   route: ThemaRouteConfig;
-  redactedScope: RedactedScope; // see cobrowse.ts
+  redactedScope: RedactedScope;
 };
 
 export type WithDetailPage = PageConfig<'detailPage'>;
