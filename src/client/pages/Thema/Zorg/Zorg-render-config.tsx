@@ -17,7 +17,7 @@ export const ZorgRoutes = [
     isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.listPage.path,
+    route: themaConfig.listPage.route.path,
     Component: ZorgList,
     isActive: themaConfig.featureToggle.active,
   },

@@ -1,7 +1,7 @@
 import { useParams } from 'react-router';
 
 import { useZorgThemaData } from './useZorgThemaData';
-import { ListPageParamKind } from './Zorg-thema-config';
+import { ListPageParamKind, themaConfig } from './Zorg-thema-config';
 import { HistoricItemsMention } from './ZorgThema';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 import { PageContentCell } from '../../../components/Page/Page';
@@ -19,10 +19,9 @@ export function ZorgList() {
     isError,
     listPageParamKind,
     breadcrumbs,
-    routeConfig,
     id,
   } = useZorgThemaData();
-  useHTMLDocumentTitle(routeConfig.listPage);
+  useHTMLDocumentTitle(themaConfig.listPage.route);
 
   const { filter, title, displayProps, listPageRoute } = tableConfig[kind];
 
