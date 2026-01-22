@@ -69,13 +69,6 @@ describe('routing.route-handlers', () => {
     vi.resetAllMocks();
   });
 
-  test('verifyAuthenticated', async () => {});
-
-  describe('apiKeyVerificationHandler', async () => {
-    test('Correct key', () => {});
-    test('Bad key', () => {});
-  });
-
   describe('OAuthVerificationHandler', async () => {
     const defaultToken = {
       algorithm: 'RS256',
@@ -97,6 +90,7 @@ describe('routing.route-handlers', () => {
     beforeEach(() => {
       nock('https://sts.windows.net')
         .get('/test_tenant/discovery/keys')
+        .times(1)
         .reply(200, oauthKeysResponse);
     });
     afterAll(() => {
@@ -194,7 +188,7 @@ describe('routing.route-handlers', () => {
       });
     });
     test('Missing envs returns service unavailable', async () => {
-      vi.stubEnv('BFF_OAUTH_KEY_ID', undefined);
+      vi.stubEnv('BFF_OAUTH_TENANT', undefined);
       const nextMock = vi.fn();
       const resMock = ResponseMock.new();
       const reqMock = RequestMock.new().get();
@@ -211,8 +205,6 @@ describe('routing.route-handlers', () => {
       });
     });
   });
-
-  test('nocache', async () => {});
 
   describe('isAuthenticated', () => {
     test('Is authenticated', async () => {

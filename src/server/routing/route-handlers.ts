@@ -125,39 +125,45 @@ export function OAuthVerificationHandler(role?: string) {
     ) => {
       client.getSigningKey(header.kid, (err, key) => {
         if (err || !key) {
-          return callback(err || null);
+          return callback(err || new Error('Signing key not found'));
         }
         const signingKey = key.getPublicKey();
         callback(null, signingKey);
       });
     };
 
-    jwt.verify(
-      token,
-      getKey,
-      {
-        audience,
-        issuer: `${issuer}/`,
-        algorithms: ['RS256'],
-      },
-      (error, decoded) => {
-        if (error) {
-          captureException(error);
-          return sendUnauthorized(
-            res,
-            `Unauthorized: OAuth token verification error: ${error.message}`
-          );
+    return new Promise((resolve) => {
+      jwt.verify(
+        token,
+        getKey,
+        {
+          audience,
+          issuer: `${issuer}/`,
+          algorithms: ['RS256'],
+        },
+        (error, decoded) => {
+          if (error) {
+            captureException(error);
+            return resolve(
+              sendUnauthorized(
+                res,
+                `Unauthorized: OAuth token verification error: ${error.message}`
+              )
+            );
+          }
+          const payload = decoded as { roles?: string[] };
+          if (role && !payload.roles?.includes?.(role)) {
+            return resolve(
+              sendUnauthorized(
+                res,
+                `Unauthorized: OAuth token missing required role`
+              )
+            );
+          }
+          resolve(next());
         }
-        const payload = decoded as { roles?: string[] };
-        if (role && !payload.roles?.includes?.(role)) {
-          return sendUnauthorized(
-            res,
-            `Unauthorized: OAuth token missing required role`
-          );
-        }
-        next();
-      }
-    );
+      );
+    });
   };
 }
 
