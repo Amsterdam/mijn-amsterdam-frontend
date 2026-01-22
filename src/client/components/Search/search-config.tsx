@@ -56,7 +56,7 @@ import { featureToggle as featureToggleHoreca } from '../../pages/Thema/Horeca/H
 import { featureToggle as featureToggleKlachten } from '../../pages/Thema/Klachten/Klachten-thema-config';
 import { featureToggle as featureToggleKrefia } from '../../pages/Thema/Krefia/Krefia-thema-config';
 import { routeConfig as routeConfigProfile } from '../../pages/Thema/Profile/Profile-thema-config';
-import { themaConfig as routeConfigToeristischeVerhuur } from '../../pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
+import { themaConfig as ToeristischeVerhuurThemaConfig } from '../../pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 import {
   featureToggle as featureToggleVaren,
   routeConfig as routeConfigVaren,
@@ -290,7 +290,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
             title: 'Landelijk registratienummer',
             identifier: registratie.registrationNumber,
             link: {
-              to: routeConfigToeristischeVerhuur.themaPage.path,
+              to: ToeristischeVerhuurThemaConfig.route.path,
               title: 'Landelijk registratienummer',
             },
           };
