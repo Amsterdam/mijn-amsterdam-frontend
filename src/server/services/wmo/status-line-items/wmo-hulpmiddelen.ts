@@ -11,6 +11,7 @@ import {
   MEER_INFORMATIE,
 } from './wmo-generic';
 import {
+  ProductSoortCode,
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types';
@@ -48,6 +49,45 @@ export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
   EINDE_RECHT,
 ];
 
+/** Config for adding or adjusting disclaimers that need to show up when a zorgned voorziening has been wrongfuly closed but then opened again.
+ *
+ *  The dates are to identify which voorzieningen are actually part of what should be one voorziening.
+ *  So if you have: ingang = 2024-01-31 and einde = 2024-02-01. Then we will -
+ *  show a disclaimer text on the actual one and the non actual (einde) one.
+ *
+ *  @param {string} actual - Disclaimer text for items that are actual.
+ *  @param {string} notActual - Disclaimer text for items that are non actual.
+ *  @param {string} datumEindeGeldigheid - The date in yyyy-mm-dd format, when the voorziening was wrongfuly ended.
+ *  @param {string} datumIngangGeldigheid - The date in yyyy-mm-dd format, when the voorziening is opened again.
+ */
+type HulpmiddelenDisclaimerConfig = {
+  actual: string;
+  notActual: string;
+  datumEindeGeldigheid: string;
+  datumIngangGeldigheid: string;
+};
+
+const hulpmiddelenDisclaimerConfigs: {
+  generic: HulpmiddelenDisclaimerConfig;
+} & Record<ProductSoortCode, HulpmiddelenDisclaimerConfig> = {
+  generic: {
+    actual:
+      'Door een fout kan het zijn dat dit hulpmiddel ook bij "Eerdere en afgewezen voorzieningen" staat. Daar vindt u dan het originele besluit met de juiste datums.',
+    notActual:
+      'Door een fout kan het zijn dat dit hulpmiddel ten onrechte bij "Eerdere en afgewezen voorzieningen" staat.',
+    datumEindeGeldigheid: '2024-10-31',
+    datumIngangGeldigheid: '2024-11-01',
+  },
+  GBW: {
+    actual:
+      'Het kan zijn dat uw gesloten buitenwagen hieronder “Huidige voorzieningen” een verkeerde startdatum heeft. Kijk voor de juiste startdatum bij eerdere en afgewezen voorzieningen.',
+    notActual:
+      'Het kan zijn dat uw gesloten buitenwagen ten onrechte bij hieronder "Eerdere en afgewezen voorzieningen" staat. De actieve voorziening staat ook onder "Huidige voorzieningen".',
+    datumEindeGeldigheid: '31-12-2025',
+    datumIngangGeldigheid: '2026-01-01',
+  },
+};
+
 /**
  * Er zijn een aantal voorzieningen in Zorgned gekopieerd naar nieuwe voorzieningen.
  * De oude voorzieningen zijn afgesloten (einde recht).
@@ -57,7 +97,9 @@ export function getHulpmiddelenDisclaimer(
   detailAanvraag: ZorgnedAanvraagTransformed,
   aanvragen: ZorgnedAanvraagTransformed[]
 ): string | undefined {
-  const config = configs[detailAanvraag.productsoortCode] ?? configs.generic;
+  const config =
+    hulpmiddelenDisclaimerConfigs[detailAanvraag.productsoortCode] ??
+    hulpmiddelenDisclaimerConfigs.generic;
 
   const hasNietActueelMatch =
     detailAanvraag.isActueel &&
@@ -85,40 +127,3 @@ export function getHulpmiddelenDisclaimer(
 
   return undefined;
 }
-
-/** Config for adding or adjusting disclaimers that need to show up when a zorgned voorziening has been wrongfuly closed but then opened again.
- *
- *  The dates are to identify which voorzieningen are actually part of what should be one voorziening.
- *  So if you have: ingang = 2024-01-31 and einde = 2024-02-01. Then we will -
- *  show a disclaimer text on the actual one and the non actual (einde) one.
- *
- *  @param {string} actual - Disclaimer text for items that are actual.
- *  @param {string} notActual - Disclaimer text for items that are non actual.
- *  @param {string} datumEindeGeldigheid - The date in yyyy-mm-dd format, when the voorziening was wrongfuly ended.
- *  @param {string} datumIngangGeldigheid - The date in yyyy-mm-dd format, when the voorziening is opened again.
- */
-type Config = {
-  actual: string;
-  notActual: string;
-  datumEindeGeldigheid: string;
-  datumIngangGeldigheid: string;
-};
-
-const configs: Record<string, Config> = {
-  generic: {
-    actual:
-      'Door een fout kan het zijn dat dit hulpmiddel ook bij "Eerdere en afgewezen voorzieningen" staat. Daar vindt u dan het originele besluit met de juiste datums.',
-    notActual:
-      'Door een fout kan het zijn dat dit hulpmiddel ten onrechte bij "Eerdere en afgewezen voorzieningen" staat.',
-    datumEindeGeldigheid: '2024-10-31',
-    datumIngangGeldigheid: '2024-11-01',
-  },
-  GBW: {
-    actual:
-      'Het kan zijn dat uw gesloten buitenwagen hieronder “Huidige voorzieningen” een verkeerde startdatum heeft. Kijk voor de juiste startdatum bij eerdere en afgewezen voorzieningen.',
-    notActual:
-      'Het kan zijn dat uw gesloten buitenwagen ten onrechte bij hieronder "Eerdere en afgewezen voorzieningen" staat. De actieve voorziening staat ook onder "Huidige voorzieningen".',
-    datumEindeGeldigheid: '31-12-2025',
-    datumIngangGeldigheid: '2026-01-01',
-  },
-};
