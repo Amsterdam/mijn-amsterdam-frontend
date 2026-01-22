@@ -1,9 +1,4 @@
-import {
-  routeConfig,
-  themaId,
-  themaTitle,
-  featureToggle,
-} from './Zorg-thema-config';
+import { themaConfig, routeConfig, featureToggle } from './Zorg-thema-config';
 import { ZorgDetail } from './ZorgDetail';
 import { default as ZorgIcon } from './ZorgIcon.svg?react';
 import { ZorgList } from './ZorgList';
@@ -33,9 +28,9 @@ export const ZorgRoutes = [
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
-export const menuItem: ThemaMenuItem<typeof themaId> = {
-  title: themaTitle,
-  id: themaId,
+export const menuItem: ThemaMenuItem = {
+  title: themaConfig.title,
+  id: themaConfig.id,
   to: routeConfig.themaPage.path,
   redactedScope: 'full',
   profileTypes: ['private'],
