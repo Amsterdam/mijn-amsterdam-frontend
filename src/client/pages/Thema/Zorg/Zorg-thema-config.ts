@@ -14,7 +14,12 @@ const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
 type ZorgThemaConfig = Pick<
   ThemaConfigBase,
-  'id' | 'title' | 'featureToggle' | 'redactedScope' | 'profileTypes'
+  | 'id'
+  | 'title'
+  | 'featureToggle'
+  | 'redactedScope'
+  | 'profileTypes'
+  | 'uitlegPageSections'
 >;
 
 const THEMA_TITLE = 'Zorg en ondersteuning';
@@ -27,6 +32,12 @@ export const themaConfig: ZorgThemaConfig = {
   },
   redactedScope: 'full',
   profileTypes: ['private'],
+  uitlegPageSections: [
+    {
+      title: THEMA_TITLE,
+      listItems: ['Uw WMO-regelingen (WMO: wet maatschappelijke ondersteuning'],
+    },
+  ],
 };
 
 export const listPageParamKind = {
