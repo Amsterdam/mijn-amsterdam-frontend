@@ -86,7 +86,25 @@ export function getHulpmiddelenDisclaimer(
   return undefined;
 }
 
-const configs: any = {
+/** Config for adding or adjusting disclaimers that need to show up when a zorgned voorziening has been wrongfuly closed but then opened again.
+ *
+ *  The dates are to identify which voorzieningen are actually part of what should be one voorziening.
+ *  So if you have: ingang = 2024-01-31 and einde = 2024-02-01. Then we will -
+ *  show a disclaimer text on the actual one and the non actual (einde) one.
+ *
+ *  @param {string} actual - Disclaimer text for items that are actual.
+ *  @param {string} notActual - Disclaimer text for items that are non actual.
+ *  @param {string} datumEindeGeldigheid - The date in yyyy-mm-dd format, when the voorziening was wrongfuly ended.
+ *  @param {string} datumIngangGeldigheid - The date in yyyy-mm-dd format, when the voorziening is opened again.
+ */
+type Config = {
+  actual: string;
+  notActual: string;
+  datumEindeGeldigheid: string;
+  datumIngangGeldigheid: string;
+};
+
+const configs: Record<string, Config> = {
   generic: {
     actual:
       'Door een fout kan het zijn dat dit hulpmiddel ook bij "Eerdere en afgewezen voorzieningen" staat. Daar vindt u dan het originele besluit met de juiste datums.',
