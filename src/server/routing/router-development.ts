@@ -27,7 +27,10 @@ import {
   getReturnToUrl,
   hasSessionCookie,
 } from '../auth/auth-helpers';
-import { signDevelopmentToken } from '../auth/auth-helpers-development';
+import {
+  cleanTestUsername,
+  signDevelopmentToken,
+} from '../auth/auth-helpers-development';
 import { authRoutes } from '../auth/auth-routes';
 import {
   AuthProfile,
@@ -125,7 +128,7 @@ authRouterDevelopment.get(
     }
 
     let testAccounts = testAccountData.accounts.map((account) => {
-      let username = account.username.trim().replace('Provincie-', '');
+      let username = cleanTestUsername(account.username);
       username = slug(username);
       return { ...account, username };
     });

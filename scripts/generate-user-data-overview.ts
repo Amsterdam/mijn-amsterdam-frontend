@@ -30,129 +30,115 @@
  */
 
 /* eslint-disable */
-import dotenv from 'dotenv';
-import dotenvExpand from 'dotenv-expand';
-
-const ENV_FILE = '.env.local';
-console.debug(`[UserDataOverview] trying env file ${ENV_FILE}`);
-const envConfig = dotenv.config({ path: ENV_FILE });
-dotenvExpand.expand(envConfig);
+import '../src/server/helpers/load-env.ts';
 
 import * as XLSX from 'xlsx';
-
 import * as fs from 'node:fs';
 import { defaultDateFormat } from '../src/universal/helpers/date';
 import { getFullAddress } from '../src/universal/helpers/brp';
+import { testAccountDataDigid } from '../src/universal/config/auth.development';
 
+import { differenceInYears, parseISO } from 'date-fns';
+
+import { ServiceResults } from '../src/server/services/content-tips/tip-types';
+import { IS_PRODUCTION } from '../src/universal/config/env';
+import { cleanTestUsername } from '../src/server/auth/auth-helpers-development.ts';
 import { MyNotification } from '../src/universal/types/App.types';
 import {
   Adres,
   Kind,
   Persoon,
   Verbintenis,
-} from '../src/server/services/profile/brp.types';
-import { differenceInYears, parseISO } from 'date-fns';
-
-import { ServiceResults } from '../src/server/services/content-tips/tip-types';
-import { IS_PRODUCTION } from '../src/universal/config/env';
+  BrpFrontend,
+} from '../src/server/services/brp/brp-types';
 
 import {
   themaId as themaIdInkomen,
   themaTitle as themaTitleInkomen,
-} from '../src/client/pages/Thema/Inkomen/Inkomen-thema-config.ts';
+} from '../src/client/pages/Thema/Inkomen/Inkomen-thema-config';
 import {
   themaIdBRP,
   themaIdKVK,
   themaTitle as profileThemaTitles,
-} from '../src/client/pages/Thema/Profile/Profile-thema-config.ts';
+} from '../src/client/pages/Thema/Profile/Profile-thema-config';
 import {
   themaId as themaIdZorg,
   themaTitle as themaTitleZorg,
-} from '../src/client/pages/Thema/Zorg/Zorg-thema-config.ts';
+} from '../src/client/pages/Thema/Zorg/Zorg-thema-config';
 import {
   themaId as themaIdAfval,
   themaTitle as themaTitleAfval,
-} from '../src/client/pages/Thema/Afval/Afval-thema-config.ts';
+} from '../src/client/pages/Thema/Afval/Afval-thema-config';
 import {
   themaId as themaIdVergunningen,
   themaTitle as themaTitleVergunningen,
-} from '../src/client/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
+} from '../src/client/pages/Thema/Vergunningen/Vergunningen-thema-config';
 import {
   themaId as themaIdErfpacht,
   themaTitle as themaTitleErfpacht,
-} from '../src/client/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
+} from '../src/client/pages/Thema/Erfpacht/Erfpacht-thema-config';
 import {
   themaId as themaIdBezwaren,
   themaTitle as themaTitleBezwaren,
-} from '../src/client/pages/Thema/Bezwaren/Bezwaren-thema-config.ts';
+} from '../src/client/pages/Thema/Bezwaren/Bezwaren-thema-config';
 import {
   themaId as themaIdHoreca,
   themaTitle as themaTitleHoreca,
-} from '../src/client/pages/Thema/Horeca/Horeca-thema-config.ts';
+} from '../src/client/pages/Thema/Horeca/Horeca-thema-config';
 import {
   themaId as themaIdToeristischeVerhuur,
   themaTitle as themaTitleToeristischeVerhuur,
-} from '../src/client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
+} from '../src/client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 import {
   themaId as themaIdAVG,
   themaTitle as themaTitleAVG,
-} from '../src/client/pages/Thema/AVG/AVG-thema-config.ts';
+} from '../src/client/pages/Thema/AVG/AVG-thema-config';
 import {
   themaId as themaIdSvwi,
   themaTitle as themaTitleSvwi,
-} from '../src/client/pages/Thema/Svwi/Svwi-thema-config.ts';
+} from '../src/client/pages/Thema/Svwi/Svwi-thema-config';
 import {
   themaId as themaIdKlachten,
   themaTitle as themaTitleKlachten,
-} from '../src/client/pages/Thema/Klachten/Klachten-thema-config.ts';
+} from '../src/client/pages/Thema/Klachten/Klachten-thema-config';
 import {
   themaId as themaIdKrefia,
   themaTitle as themaTitleKrefia,
-} from '../src/client/pages/Thema/Krefia/Krefia-thema-config.ts';
-import {
-  themaId as themaIdBurgerzaken,
-  themaTitle as themaTitleBurgerzaken,
-} from '../src/client/pages/Thema/Burgerzaken/Burgerzaken-thema-config.ts';
+} from '../src/client/pages/Thema/Krefia/Krefia-thema-config';
 import {
   themaId as themaIdAfis,
   themaTitle as themaTitleAfis,
-} from '../src/client/pages/Thema/Afis/Afis-thema-config.ts';
+} from '../src/client/pages/Thema/Afis/Afis-thema-config';
 import {
   themaId as themaIdOvertredingen,
   themaTitle as themaTitleOvertredingen,
-} from '../src/client/pages/Thema/Overtredingen/Overtredingen-thema-config.ts';
+} from '../src/client/pages/Thema/Overtredingen/Overtredingen-thema-config';
 import {
   themaId as themaIdVaren,
   themaTitle as themaTitleVaren,
-} from '../src/client/pages/Thema/Varen/Varen-thema-config.ts';
-import {
-  themaId as themaIdBodem,
-  themaTitle as themaTitleBodem,
-} from '../src/client/pages/Thema/Bodem/Bodem-thema-config.ts';
-import {
-  themaId as themaIdHLI,
-  themaTitle as themaTitleHLI,
-} from '../src/client/pages/Thema/HLI/HLI-thema-config.ts';
+} from '../src/client/pages/Thema/Varen/Varen-thema-config';
+import { themaConfig as bodemThemaConfig } from '../src/client/pages/Thema/Bodem/Bodem-thema-config';
+import { themaConfig as themaConfigHLI } from '../src/client/pages/Thema/HLI/HLI-thema-config';
 import {
   themaId as themaIdJeugd,
   themaTitle as themaTitleJeugd,
-} from '../src/client/pages/Thema/Jeugd/Jeugd-thema-config.ts';
+} from '../src/client/pages/Thema/Jeugd/Jeugd-thema-config';
 import {
   themaId as themaIdParkeren,
   themaTitle as themaTitleParkeren,
-} from '../src/client/pages/Thema/Parkeren/Parkeren-thema-config.ts';
+} from '../src/client/pages/Thema/Parkeren/Parkeren-thema-config';
 import {
   themaId as themaIdBelastingen,
   themaTitle as themaTitleBelastingen,
-} from '../src/client/pages/Thema/Belastingen/Belastingen-thema-config.ts';
+} from '../src/client/pages/Thema/Belastingen/Belastingen-thema-config';
 import {
   themaId as themaIdMilieuzone,
   themaTitle as themaTitleMilieuzone,
-} from '../src/client/pages/Thema/Milieuzone/Milieuzone-thema-config.ts';
+} from '../src/client/pages/Thema/Milieuzone/Milieuzone-thema-config';
 import {
   themaId as themaIdSubsidies,
   themaTitle as themaTitleSubsidies,
-} from '../src/client/pages/Thema/Subsidies/Subsidies-thema-config.ts';
+} from '../src/client/pages/Thema/Subsidies/Subsidies-thema-config';
 
 const { BRP, KVK } = profileThemaTitles;
 
@@ -174,12 +160,11 @@ const themas = [
   { id: themaIdSvwi, title: themaTitleSvwi },
   { id: themaIdKlachten, title: themaTitleKlachten },
   { id: themaIdKrefia, title: themaTitleKrefia },
-  { id: themaIdBurgerzaken, title: themaTitleBurgerzaken },
   { id: themaIdAfis, title: themaTitleAfis },
   { id: themaIdOvertredingen, title: themaTitleOvertredingen },
   { id: themaIdVaren, title: themaTitleVaren },
-  { id: themaIdBodem, title: themaTitleBodem },
-  { id: themaIdHLI, title: themaTitleHLI },
+  { id: bodemThemaConfig.id, title: bodemThemaConfig.title },
+  { id: themaConfigHLI.id, title: themaConfigHLI.title },
   { id: themaIdJeugd, title: themaTitleJeugd },
   { id: themaIdParkeren, title: themaTitleParkeren },
   { id: themaIdBelastingen, title: themaTitleBelastingen },
@@ -191,8 +176,10 @@ if (IS_PRODUCTION) {
   throw Error('This script cannot be run inside of production.');
 }
 
-if (!process.env.MA_TEST_ACCOUNTS) {
-  throw new Error('MA_TEST_ACCOUNTS env var is empty.');
+if (!testAccountDataDigid) {
+  throw new Error(
+    'testAccountDataDigid is empty. Check if MA_TEST_ACCOUNTS has data.'
+  );
 }
 
 const themaIDtoTitle: Record<string, string> = themas.reduce(
@@ -200,17 +187,13 @@ const themaIDtoTitle: Record<string, string> = themas.reduce(
     acc[id] = title;
     return acc;
   },
-  {}
+  {} as Record<string, string>
 );
 
 const themaIDs = themas.map((menuItem) => menuItem.id);
-const testAccountEntries: any = process.env.MA_TEST_ACCOUNTS.split(',').map(
-  (accountData: any) => {
-    const keyVal = accountData.split('=');
-    return [keyVal[0], keyVal[1]];
-  }
+const testAccounts = testAccountDataDigid.accounts.map(
+  ({ username, profileId }) => [username, profileId]
 );
-const testAccountNames = testAccountEntries.map(([username]) => username);
 
 XLSX.set_fs(fs);
 // If true then get data extracted out of services from disk.
@@ -228,6 +211,9 @@ if (!TARGET_DIRECTORY) {
 
 const CACHE_PATH = `${TARGET_DIRECTORY}/user-data.json`;
 const BASE_URL = process.env.BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL;
+if (!BASE_URL) {
+  throw new Error(`BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL = ${BASE_URL}`);
+}
 
 // Configuartion for row/columns.
 const HPX_DEFAULT = 22;
@@ -334,26 +320,22 @@ async function getServiceResults(): Promise<ResultsByUser> {
 
   const allResults: ResultsByUser = {};
 
-  for (const [username, userId] of testAccountEntries) {
-    const loginURL = `${BASE_URL}/auth/digid/login/${username}?redirectUrl=noredirect`;
+  for (const [username, profileId] of testAccounts) {
+    const loginURL = `${BASE_URL}/auth/digid/login/${cleanTestUsername(username).toLowerCase()}?redirectUrl=noredirect`;
     try {
-      const serviceResults = await fetch(loginURL).then(async (res) => {
-        const Cookie = res.headers.get('Set-Cookie');
-        if (!Cookie) {
-          throw Error(`No Set-Cookie header found for request to ${loginURL}`);
-        }
-
-        console.time(`Fetched data for ${username}/${userId}`);
-        return fetch(`${BASE_URL}/services/all`, {
-          headers: {
-            Cookie,
-          },
-        }).then((res) => {
-          console.timeEnd(`Fetched data for ${username}/${userId}`);
-          return res.json();
-        });
+      const loginResponse = await fetch(loginURL);
+      const cookie = loginResponse.headers.get('set-cookie');
+      if (!cookie) {
+        throw Error(`No Set-Cookie header found for request to ${loginURL}`);
+      }
+      console.time(`Fetched data for ${username}/${profileId}`);
+      const servicesAllResponse = await fetch(`${BASE_URL}/services/all`, {
+        headers: {
+          cookie,
+        },
       });
-      allResults[username] = serviceResults;
+      console.timeEnd(`Fetched data for ${username}/${profileId}`);
+      allResults[username] = await servicesAllResponse.json();
     } catch (error) {
       console.error(error);
     }
@@ -380,7 +362,7 @@ function naam(persoon: Persoon) {
 
 function oudersOfKinderen(
   oudersOfKinderen: Array<Persoon | Kind> | null,
-  serviceResults: ServiceResults
+  _serviceResults: ServiceResults
 ) {
   return oudersOfKinderen?.length
     ? oudersOfKinderen
@@ -390,7 +372,7 @@ function oudersOfKinderen(
 }
 
 function relatedUser(persoon: Persoon) {
-  const relatedUsername = testAccountEntries.find(
+  const relatedUsername = testAccounts.find(
     ([, bsn]) => bsn === persoon.bsn
   )?.[0];
   const age = `${
@@ -424,7 +406,7 @@ function getAllServiceNames(resultsByUser: ResultsByUser) {
 }
 
 function addAvailableThemas(
-  serviceLabelAcc: object,
+  serviceLabelAcc: Record<string, string>,
   serviceResults: ServiceResults
 ): object {
   Object.keys(serviceResults).forEach((serviceName) => {
@@ -473,7 +455,7 @@ function sheetBrpBase(resultsByUser: ResultsByUser): SheetData {
       };
     }
   );
-  const rowInfo = createInfoArray(testAccountEntries.length, {
+  const rowInfo = createInfoArray(testAccounts.length, {
     hpx: HPX_DEFAULT,
   });
   const colInfo = [
@@ -494,17 +476,19 @@ function getBRPRows(
   paths: any[]
 ): Record<string, string | number> {
   const user = paths.reduce(
-    (acc, { extractContentValue, label, transform }) => {
+    (acc, { label, transform }) => {
       if (!serviceResults.BRP.content) {
         acc[label] = 'No content';
         return acc;
       }
-      let value = null;
-      if (extractContentValue) {
-        value = extractContentValue(serviceResults.BRP.content);
-      }
-      if (transform) {
-        value = transform(value, serviceResults);
+      let value: string;
+      try {
+        value = transform(serviceResults.BRP.content, serviceResults) ?? '';
+      } catch (err) {
+        value = '';
+        console.error(
+          `Error while getting data for label: ${label}, with error message: ${err}`
+        );
       }
       acc[label] = value;
       return acc;
@@ -517,8 +501,10 @@ function getBRPRows(
 
 type BrpSheetLayout = {
   label: string;
-  extractContentValue: string;
-  transform?: (value: any, serviceResults: ServiceResults) => string | null;
+  transform: (
+    brpContent: BrpFrontend,
+    serviceResults: ServiceResults
+  ) => string | undefined | null;
   wch?: number;
   hpx?: number;
 };
@@ -527,52 +513,46 @@ const brpSheetLayout: BrpSheetLayout[] = [
   {
     label: 'BSN',
     wch: WCH_DEFAULT / 2,
-    extractContentValue: (brpContent: any) => brpContent?.persoon.bsn,
+    transform: (brpContent: BrpFrontend) => brpContent?.persoon.bsn,
   },
   {
     label: 'Adres',
-    extractContentValue: (brpContent: any) => brpContent?.adres,
     wch: WCH_DEFAULT,
-    transform: (value: Adres) => {
-      return getFullAddress(value);
+    transform: (brpContent: BrpFrontend) => {
+      return getFullAddress(brpContent?.adres);
     },
   },
   {
     label: 'In onderzoek',
-    extractContentValue: (brpContent: any) =>
-      brpContent?.persoon.adresInOnderzoek,
     wch: WCH_DEFAULT / 2,
-    transform: (inOnderzoek: any) => {
-      return inOnderzoek ? 'In onderzoek' : '';
+    transform: (brpContent: BrpFrontend) => {
+      return brpContent?.persoon.adresInOnderzoek ? 'In onderzoek' : '';
     },
   },
   {
     label: 'VOW',
-    extractContentValue: (brpContent: any) =>
-      brpContent?.persoon?.vertrokkenOnbekendWaarheen,
     wch: WCH_DEFAULT / 3,
-    transform: (vertrokkenOnbekendWaarheen: any) => {
-      return vertrokkenOnbekendWaarheen ? 'VOW' : '';
+    transform: (brpContent: BrpFrontend) => {
+      return brpContent?.persoon?.vertrokkenOnbekendWaarheen ? 'VOW' : '';
     },
   },
   {
     label: 'Geheim',
-    extractContentValue: (brpContent: any) =>
-      brpContent?.persoon.indicatieGeheim,
     wch: WCH_DEFAULT / 2,
-    transform: (indicatieGeheim: boolean) => {
+    transform: (brpContent: BrpFrontend) => {
+      const indicatieGeheim = brpContent?.persoon.indicatieGeheim;
       return indicatieGeheim ? 'Geheim' : '';
     },
   },
   {
     label: 'Voornamen',
-    extractContentValue: (brpContent: any) => brpContent.persoon.voornamen,
+    transform: (brpContent: BrpFrontend) => brpContent.persoon.voornamen,
     wch: 40,
   },
   {
     label: 'Achternaam (Titel)',
-    extractContentValue: (brpContent: any) => brpContent.persoon,
-    transform: (persoon: Persoon) => {
+    transform: (brpContent: BrpFrontend) => {
+      const persoon = brpContent.persoon;
       if (!persoon) {
         return 'onbekend';
       }
@@ -591,8 +571,8 @@ const brpSheetLayout: BrpSheetLayout[] = [
   },
   {
     label: 'Woonplaats',
-    extractContentValue: (brpContent: any) => brpContent.adres.woonplaatsNaam,
-    transform: (woonplaatsnaam: string) => {
+    transform: (brpContent: BrpFrontend) => {
+      const woonplaatsnaam = brpContent.adres?.woonplaatsNaam;
       if (!woonplaatsnaam) {
         return 'Onbekend';
       }
@@ -601,44 +581,44 @@ const brpSheetLayout: BrpSheetLayout[] = [
   },
   {
     label: 'Geboortedatum (Geboorteland)',
-    extractContentValue: (brpContent: any) => brpContent.persoon,
-    transform: (persoon: Persoon) => {
+    transform: (brpContent: BrpFrontend) => {
+      const persoon = brpContent.persoon;
       if (!persoon) {
-        return 'onbekend';
+        return 'Onbekend';
       }
       const { geboortedatum, geboortelandnaam } = persoon;
       return `${
-        geboortedatum !== null ? defaultDateFormat(geboortedatum) : 'onbekend'
-      } ${geboortelandnaam !== 'Nederland' ? `(${geboortelandnaam ?? 'onbekend'})` : ''}`;
+        geboortedatum !== null ? defaultDateFormat(geboortedatum) : 'Onbekend'
+      } ${geboortelandnaam !== 'Nederland' ? `(${geboortelandnaam ?? 'Onbekend'})` : ''}`;
     },
   },
   {
     label: 'Leeftijd',
-    extractContentValue: (brpContent: any) => brpContent.persoon.geboortedatum,
-    transform: (value: string | null, serviceResults: ServiceResults) => {
+    transform: (brpContent: BrpFrontend) => {
+      const geboortedatum = brpContent.persoon.geboortedatum;
       const age =
-        value !== null
-          ? differenceInYears(new Date(), parseISO(value)) + ''
+        geboortedatum !== null
+          ? differenceInYears(new Date(), parseISO(geboortedatum)) + ''
           : 'onbekend';
       return age;
     },
   },
   {
     label: 'Geslacht',
-    extractContentValue: (brpContent: any) => brpContent.persoon,
-    transform: (persoon: Persoon) => {
+    transform: (brpContent: BrpFrontend) => {
+      const persoon = brpContent.persoon;
       if (!persoon.omschrijvingGeslachtsaanduiding) {
-        return 'onbekend';
+        return 'Onbekend';
       }
       return persoon.omschrijvingGeslachtsaanduiding;
     },
   },
   {
     label: 'Nationaliteit',
-    extractContentValue: (brpContent: any) => brpContent.persoon,
-    transform: (persoon: Persoon) => {
+    transform: (brpContent: BrpFrontend) => {
+      const persoon = brpContent.persoon;
       if (!persoon.nationaliteiten) {
-        return 'onbekend';
+        return 'Onbekend';
       }
       const nationaleiten = persoon.nationaliteiten
         ?.map(({ omschrijving }) => omschrijving)
@@ -650,8 +630,8 @@ const brpSheetLayout: BrpSheetLayout[] = [
   },
   {
     label: 'Postcode (Woonplaats)',
-    extractContentValue: (brpContent: any) => brpContent.adres.postcode,
-    transform: (postcode: string, serviceResults: ServiceResults) => {
+    transform: (brpContent: BrpFrontend, serviceResults: ServiceResults) => {
+      const postcode = brpContent.adres?.postcode;
       return `${postcode ? postcode : ''} ${woonplaatsNaamBuitenAmsterdam(
         serviceResults.BRP.content?.adres
       )}`;
@@ -659,17 +639,15 @@ const brpSheetLayout: BrpSheetLayout[] = [
   },
   {
     label: 'Verbintenis (Partner)',
-    extractContentValue: (brpContent: any) => brpContent.verbintenis,
     wch: 50,
-    transform: (verbintenis: Verbintenis) => {
+    transform: (brpContent: BrpFrontend) => {
+      const verbintenis = brpContent.verbintenis;
       if (!verbintenis) {
         return '';
       }
       return verbintenis.persoon
         ? `${
-            (verbintenis.soortVerbintenisOmschrijving ||
-              verbintenis.soortVerbintenis) ??
-            ''
+            verbintenis.soortVerbintenis ?? ''
           } met ${relatedUser(verbintenis.persoon as Persoon)}`
         : Object.keys(verbintenis).length
           ? JSON.stringify(verbintenis)
@@ -679,42 +657,20 @@ const brpSheetLayout: BrpSheetLayout[] = [
   },
   {
     label: 'Kinderen',
-    extractContentValue: (brpContent: any) => brpContent.kinderen,
+    transform: (brpContent: BrpFrontend, serviceResults: ServiceResults) =>
+      oudersOfKinderen(brpContent.kinderen, serviceResults),
     wch: 60,
-    transform: oudersOfKinderen,
   },
   {
     label: 'Ouders',
-    extractContentValue: (brpContent: any) => brpContent.ouders,
+    transform: (brpContent: BrpFrontend, serviceResults: ServiceResults) =>
+      oudersOfKinderen(brpContent.ouders, serviceResults),
     wch: 60,
-    transform: oudersOfKinderen,
-  },
-  {
-    label: 'Voormalige verbintenis',
-    extractContentValue: (brpContent: any) => brpContent.verbintenisHistorisch,
-    wch: 50,
-    transform: (verbintenisHistorisch: Verbintenis[]) => {
-      if (!verbintenisHistorisch) {
-        return '';
-      }
-      return verbintenisHistorisch
-        .map((verbintenis) => {
-          return verbintenis.persoon
-            ? `${
-                verbintenis.soortVerbintenisOmschrijving ?? ''
-              } met ${relatedUser(verbintenis.persoon as Persoon)}`
-            : Object.keys(verbintenis).length
-              ? JSON.stringify(verbintenis)
-              : '';
-        })
-        .join(', ');
-    },
-    hpx: 30,
   },
   {
     label: 'Voormalige adressen',
-    extractContentValue: (brpContent: any) => brpContent.adresHistorisch,
-    transform: (adressen: Adres[], serviceResults: ServiceResults) => {
+    transform: (brpContent: BrpFrontend) => {
+      const adressen = brpContent.adresHistorisch;
       return adressen
         ?.map((adres) => {
           return `${getFullAddress(adres)} ${woonplaatsNaamBuitenAmsterdam(
@@ -733,7 +689,7 @@ const brpSheetLayout: BrpSheetLayout[] = [
 });
 
 function sheetThemas(resultsByUser: ResultsByUser): SheetData {
-  const rowInfo = createInfoArray(testAccountEntries.length, {
+  const rowInfo = createInfoArray(testAccounts.length, {
     hpx: HPX_DEFAULT,
   });
 
@@ -763,7 +719,10 @@ function sheetThemas(resultsByUser: ResultsByUser): SheetData {
     }
   });
 
-  const columnHeaders = ['Themas', ...testAccountNames];
+  const columnHeaders = [
+    'Themas',
+    ...testAccounts.map(([username]) => username),
+  ];
   return {
     title: 'Themas',
     rows: Object.values(rowsMap),
@@ -803,12 +762,7 @@ function getAvailableUserThemas(serviceResults: ServiceResults) {
     })
     .map(([themaName]) => themaName);
 
-  const aThemas = {};
-
-  // Add manually since, BRP is already checked above for thema 'Mijn gegevens'
-  if (serviceResults.BRP.content?.identiteitsbewijzen?.length) {
-    aThemas[themaIdBurgerzaken] = themaTitleBurgerzaken;
-  }
+  const aThemas: Record<string, string> = {};
 
   for (let themaID of availableThemas) {
     // Prevent setting a key to undefined if already set.
@@ -829,7 +783,7 @@ function sheetServiceErrors(
   resultsByUser: ResultsByUser,
   serviceKeys: string[]
 ): SheetData {
-  const rowInfo = createInfoArray(testAccountEntries.length, {
+  const rowInfo = createInfoArray(testAccounts.length, {
     hpx: HPX_DEFAULT,
   });
 
@@ -866,10 +820,10 @@ function sheetServiceErrors(
   return {
     title: 'Service Errors',
     rows: Object.values(rowsMap),
-    columnHeaders: ['', ...testAccountEntries.map(([username]) => username)],
+    columnHeaders: ['', ...testAccounts.map(([username]) => username)],
     colInfo: [
       { wch: WCH_DEFAULT },
-      ...createInfoArray(testAccountEntries.length, { wch: WCH_DEFAULT }),
+      ...createInfoArray(testAccounts.length, { wch: WCH_DEFAULT }),
     ],
     rowInfo,
   };
@@ -889,7 +843,7 @@ function sheetNotifications(resultsByUser: ResultsByUser): SheetData {
       return serviceResults.NOTIFICATIONS.content.map(
         (notification: MyNotification) => {
           const data = { ...notification, username: Username };
-          const row = {};
+          const row: Record<string, string> = {};
           for (const [k, fn] of Object.entries(rowShape)) {
             row[k] = fn(data);
           }
