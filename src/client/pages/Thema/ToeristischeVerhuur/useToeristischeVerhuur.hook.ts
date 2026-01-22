@@ -1,10 +1,10 @@
 import {
-  bbVergunningPageLinkItem,
-  vvVergunningPageLinkItem,
   listPageTitle,
   tableConfigLVVRegistraties,
   tableConfig,
   themaConfig,
+  vvVergunningPageLinkItem,
+  bbVergunningPageLinkItem,
 } from './ToeristischeVerhuur-thema-config';
 import { ToeristischeVerhuurVergunning } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
 import {
@@ -12,6 +12,7 @@ import {
   isError,
   isLoading,
 } from '../../../../universal/helpers/api';
+import { LinkProps } from '../../../../universal/types/App.types';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
@@ -68,6 +69,13 @@ export function useToeristischeVerhuurThemaData() {
 
   const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
+  const extraLinkListItems: LinkProps[] = [];
+  if (hasVergunningenVakantieVerhuur) {
+    extraLinkListItems.push(vvVergunningPageLinkItem);
+  } else if (hasVergunningBB) {
+    extraLinkListItems.push(bbVergunningPageLinkItem);
+  }
+
   return {
     vergunningen,
     lvvRegistraties,
@@ -86,16 +94,7 @@ export function useToeristischeVerhuurThemaData() {
     hasVergunningenVakantieVerhuur,
     hasBothVerleend,
     hasVergunningBB,
-    linkListItems:
-      hasVergunningBB && !hasVergunningenVakantieVerhuur
-        ? [...themaConfig.pageLinks, bbVergunningPageLinkItem]
-        : // : hasVergunningenVakantieVerhuur && !hasVergunningBB
-          //   ? [themaConfig.pageLinks, vvVergunningPageLinkItem]
-          [
-            ...themaConfig.pageLinks,
-            vvVergunningPageLinkItem,
-            bbVergunningPageLinkItem,
-          ],
+    linkListItems: [...extraLinkListItems, ...themaConfig.pageLinks],
     listPageConfig: themaConfig.listPage,
     detailPageConfig: themaConfig.detailPage,
   };
