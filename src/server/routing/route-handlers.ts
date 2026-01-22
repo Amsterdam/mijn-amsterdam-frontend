@@ -147,7 +147,8 @@ export function OAuthVerificationHandler(role?: string) {
             return resolve(
               sendUnauthorized(
                 res,
-                `Unauthorized: OAuth token verification error: ${error.message}`
+                `Unauthorized`,
+                `OAuth token verification error: ${error.message}`
               )
             );
           }
@@ -156,7 +157,8 @@ export function OAuthVerificationHandler(role?: string) {
             return resolve(
               sendUnauthorized(
                 res,
-                `Unauthorized: OAuth token missing required role`
+                `Unauthorized`,
+                `Required role '${role}' not present in token`
               )
             );
           }

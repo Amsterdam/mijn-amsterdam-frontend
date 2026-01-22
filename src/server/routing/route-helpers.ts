@@ -149,11 +149,16 @@ export function sendBadRequestInvalidInput(res: Response, error: unknown) {
 
 export function sendUnauthorized(
   res: Response,
-  message: string = 'Unauthorized'
+  message: string = 'Unauthorized',
+  debugMessageDetails?: string
 ) {
   return sendResponse(
     res,
-    apiErrorResult(message, null, HttpStatusCode.Unauthorized)
+    apiErrorResult(
+      `${message}${debugMessageDetails && !IS_PRODUCTION ? `: ${debugMessageDetails}` : ''}`,
+      null,
+      HttpStatusCode.Unauthorized
+    )
   );
 }
 
