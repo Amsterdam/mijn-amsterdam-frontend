@@ -345,18 +345,6 @@ export function useBffApi<
   });
 }
 
-export const HttpStatusCode = {
-  Ok: 200,
-  Created: 201,
-  Accepted: 202,
-  NoContent: 204,
-  BadRequest: 400,
-  Unauthorized: 401,
-  Forbidden: 403,
-  NotFound: 404,
-  InternalServerError: 500,
-};
-
 export function isAborted(error: unknown): boolean {
   return !!error?.toString().includes('AbortError: The operation was aborted.');
 }

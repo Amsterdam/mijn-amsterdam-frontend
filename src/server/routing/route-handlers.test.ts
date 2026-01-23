@@ -6,7 +6,7 @@ import {
   OAuthVerificationHandler,
   requestID,
 } from './route-handlers';
-import { HttpStatusCode } from '../../client/hooks/api/useBffApi';
+import { HttpStatusCode } from 'axios';
 import {
   getAuthProfileAndToken,
   getReqMockWithOidc,
