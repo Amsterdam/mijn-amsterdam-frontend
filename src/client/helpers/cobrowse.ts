@@ -56,7 +56,7 @@ export function getRedactedClass(
   scopeRequested?: ScopeRequested
 ) {
   if (isRedactionRequired(themaId, scopeRequested)) {
-    return REDACTED_CLASS;
+    return `${REDACTED_CLASS} in-orange-box`;
   }
 
   return '';

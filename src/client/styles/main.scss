@@ -85,3 +85,8 @@ body {
   --ams-grid-wide-padding-inline: 0;
   --ams-grid-padding-inline: 0;
 }
+
+.in-orange-box {
+  outline: solid var(--ams-color-highlight-orange);
+  outline-offset: 5px;
+}
