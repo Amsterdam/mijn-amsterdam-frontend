@@ -18,14 +18,15 @@ import {
   tableConfig as tableConfigVergunningen,
 } from '../Vergunningen/Vergunningen-thema-config';
 
-type ToeristischeVerhuurThemaConfig = ThemaConfigBase &
+type ToeristischeVerhuurThemaConfig = ThemaConfigBase<typeof THEMA_ID> &
   WithDetailPage &
   WithListPage;
 
+const THEMA_ID = 'TOERISTISCHE_VERHUUR';
 const THEMA_TITLE = 'Toeristische verhuur';
 
 export const themaConfig: ToeristischeVerhuurThemaConfig = {
-  id: 'TOERISTISCHE_VERHUUR',
+  id: THEMA_ID,
   title: THEMA_TITLE,
   featureToggle: { active: true },
   profileTypes: ['private', 'commercial'],
