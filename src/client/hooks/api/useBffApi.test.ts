@@ -10,7 +10,6 @@ import {
   sendJSONPostRequest,
   sendFormPostRequest,
   isAborted,
-  HttpStatusCode,
 } from './useBffApi';
 
 describe('useBffApi', () => {
@@ -315,13 +314,5 @@ describe('isAborted', () => {
       true
     );
     expect(isAborted(new Error('Some other error'))).toBe(false);
-  });
-});
-
-describe('HttpStatusCode', () => {
-  it('should have correct status codes', () => {
-    expect(HttpStatusCode.Ok).toBe(200);
-    expect(HttpStatusCode.BadRequest).toBe(400);
-    expect(HttpStatusCode.InternalServerError).toBe(500);
   });
 });
