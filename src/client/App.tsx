@@ -1,6 +1,11 @@
 import { useEffect } from 'react';
 
-import { Paragraph, Page, SkipLink } from '@amsterdam/design-system-react';
+import {
+  Paragraph,
+  Page,
+  SkipLink,
+  Alert,
+} from '@amsterdam/design-system-react';
 import { PiwikProvider, usePiwik } from '@amsterdam/piwik-tracker-react';
 import classNames from 'classnames';
 import { BrowserRouter, useLocation, useNavigate } from 'react-router';
@@ -91,11 +96,26 @@ function AppAuthenticated() {
         <SkipLink href="#page-main-content">Direct naar inhoud</SkipLink>
         <MainHeader isAuthenticated />
         <ErrorMessages />
+        <CobrowseScreenshareDisclaimer />
         <PrivateRoutes />
       </Page>
       {/** Remove the footer on the Map view for better UX */}
       {!isBuurt && <MainFooter id="page-main-footer" />}
     </>
+  );
+}
+
+function CobrowseScreenshareDisclaimer() {
+  return (
+    <Alert
+      className="ams-mb-m"
+      heading="U deelt nu uw scherm met een medewerker van de gemeente Amsterdam."
+      headingLevel={2}
+      severity="warning"
+    >
+      De medewerker kan de onderdelen van uw scherm met een oranje rand niet
+      zien. Dit is om uw privacy te beschermen.
+    </Alert>
   );
 }
 
