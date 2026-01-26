@@ -27,7 +27,9 @@ export const themaConfig: ZorgThemaConfig = {
   uitlegPageSections: [
     {
       title: THEMA_TITLE,
-      listItems: ['Uw WMO-regelingen (WMO: wet maatschappelijke ondersteuning'],
+      listItems: [
+        'Uw WMO-regelingen (WMO: wet maatschappelijke ondersteuning)',
+      ],
     },
   ],
   pageLinks: [
