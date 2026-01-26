@@ -151,7 +151,7 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
 
     SignDate: payload.eMandateSignDate,
     SignCity: eMandateReceiver.RecCity, // TODO: Hoe komen we aan dit gegeven, altijd Amsterdam? - https://gemeente-amsterdam.atlassian.net/browse/MIJN-12289
-    LifetimeFrom: new Date().toISOString(),
+    LifetimeFrom: isoDateTimeFormatCompact(new Date()),
     LifetimeTo: lifetimeTo,
     SndDebtorId: creditor.refId,
   };

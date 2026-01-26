@@ -152,7 +152,7 @@ export async function handleAfisEMandateSignRequestStatusNotification(
     senderIBAN: notificationPayload.iban,
     senderBIC: notificationPayload.bic,
     senderName: notificationPayload.account_owner,
-    eMandateSignDate: `${notificationPayload.event_date}T${notificationPayload.event_time}.00Z`, // ISO 8601 format
+    eMandateSignDate: `${notificationPayload.event_date}T${notificationPayload.event_time}`, // ISO 8601 format
     creditorIBAN: notificationPayload.variable1,
   };
 
