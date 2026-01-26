@@ -28,7 +28,7 @@ export function FeedbackForm1({
         <UserFeedbackQuestion
           key={question.id}
           question={question}
-          value={formData?.get(`${question.id}`) as string}
+          value={(formData?.get(`${question.id}`) as string) ?? undefined}
         />
       ))}
 

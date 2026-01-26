@@ -21,15 +21,16 @@ export function InlineKTO({ userFeedbackDetails }: InlineKTOProps) {
     useActiveThemaMenuItems();
   const location = useLocation();
   const profileType = useProfileTypeValue();
-  const {
-    isError,
-    isLoading,
-    fetch: submitUserFeedback,
-  } = useSubmitUserFeedback();
   const appState = useAppStateGetter();
 
   const userFeedbackQuestions = appState.KTO?.content?.questions ?? [];
   const surveyVersion = appState.KTO?.content?.version;
+
+  const {
+    isError,
+    isLoading,
+    fetch: submitUserFeedback,
+  } = useSubmitUserFeedback(surveyVersion);
 
   if (!userFeedbackQuestions.length || isMyThemasLoading) {
     return null;

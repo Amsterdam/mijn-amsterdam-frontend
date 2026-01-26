@@ -3,10 +3,7 @@ import {
   saveUserFeedback,
   userFeedbackOverview,
 } from './user-feedback';
-import {
-  SURVEY_ID_INLINE_KTO,
-  SURVEY_VERSION_INLINE_KTO,
-} from './user-feedback.service-config';
+import { SURVEY_ID_INLINE_KTO } from './user-feedback.service-config';
 import {
   userFeedbackInput,
   type Survey,
@@ -34,14 +31,14 @@ export async function handleFetchSurveyOverview(
 ) {
   const surveyOverview = await userFeedbackOverview(
     req.query.id ?? SURVEY_ID_INLINE_KTO,
-    req.query.version ?? SURVEY_VERSION_INLINE_KTO
+    req.query.version ?? 'latest'
   );
 
   return sendResponse(res, surveyOverview);
 }
 
 export async function handleUserFeedbackSubmission(
-  req: RequestWithQueryParams<{ id?: Survey['unique_code']; version?: string }>,
+  req: RequestWithQueryParams<{ id?: Survey['unique_code']; version: string }>,
   res: ResponseAuthenticated
 ) {
   let userFeedback: UserFeedbackInput;
@@ -54,7 +51,7 @@ export async function handleUserFeedbackSubmission(
 
   const response = await saveUserFeedback(
     req.query.id ?? SURVEY_ID_INLINE_KTO,
-    req.query.version ?? SURVEY_VERSION_INLINE_KTO,
+    req.query.version,
     userFeedback
   );
 

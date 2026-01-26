@@ -2,7 +2,6 @@ import {
   featureToggle,
   sourceApiConfig,
   SURVEY_ID_INLINE_KTO,
-  SURVEY_VERSION_INLINE_KTO,
 } from './user-feedback.service-config';
 import type {
   SaveUserFeedbackResponse,
@@ -27,7 +26,7 @@ import { deepCamelizeKeys } from '../db/helper';
 
 export async function fetchUserFeedbackSurvey(
   surveyId: Survey['unique_code'] = SURVEY_ID_INLINE_KTO,
-  version: string = SURVEY_VERSION_INLINE_KTO
+  version: string = 'latest'
 ): ApiResponsePromise<SurveyFrontend> {
   const requestConfig = getCustomApiConfig(sourceApiConfig, {
     formatUrl: ({ url }) =>
