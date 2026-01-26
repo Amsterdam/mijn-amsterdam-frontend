@@ -176,7 +176,7 @@ export async function handleAfisEMandateSignRequestStatusNotification(
   const response = isOK
     ? apiSuccessResult('E-Mandate created successfully')
     : apiErrorResult(
-        `Failed to create E-Mandate from sign request status notification wit error ${creationError}`,
+        `Failed to create E-Mandate from sign request status notification with error ${creationError}`,
         null,
         HttpStatusCode.InternalServerError
       );
