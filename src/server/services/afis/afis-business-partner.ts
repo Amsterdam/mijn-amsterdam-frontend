@@ -1,4 +1,4 @@
-import ibantools from 'ibantools';
+import * as ibantools from 'ibantools';
 
 import { getAfisApiConfig, getFeedEntryProperties } from './afis-helpers';
 import { featureToggle } from './afis-service-config';
