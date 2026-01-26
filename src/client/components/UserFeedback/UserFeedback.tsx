@@ -12,6 +12,7 @@ import { FeedbackForm1 } from './FeedbackForm1';
 import { Rating } from './Rating';
 import styles from './UserFeedback.module.scss';
 import type { SurveyFrontend } from '../../../server/services/user-feedback/user-feedback.types';
+import { IS_PRODUCTION } from '../../../universal/config/env';
 
 type UserFeedbackProps = {
   onSubmit: (formData: FormData) => void;
@@ -89,9 +90,13 @@ export function UserFeedback({
             Wij ontwikkelen Mijn Amsterdam voor én met de Amsterdammer. Wij zijn
             daarom erg blij met uw feedback.
           </Paragraph>{' '}
-          <Button variant="secondary" onClick={() => reset()}>
-            Sluiten
-          </Button>
+          {!IS_PRODUCTION && (
+            <Button variant="secondary" onClick={() => reset()}>
+              <span>
+                Nog een keer <small>(test)</small>
+              </span>
+            </Button>
+          )}
         </>
       ) : (
         isRated && (
