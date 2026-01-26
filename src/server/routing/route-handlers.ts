@@ -133,6 +133,9 @@ export function OAuthVerificationHandler(role?: string) {
       header: { kid?: string },
       callback: (err: Error | null, key?: string) => void
     ) => {
+      if (!header.kid) {
+        return callback(new Error('No kid found in token header'));
+      }
       client.getSigningKey(header.kid, (err, key) => {
         if (err || !key) {
           return callback(err || new Error('Signing key not found'));
