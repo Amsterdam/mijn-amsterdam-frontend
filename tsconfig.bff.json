@@ -26,6 +26,7 @@
     "src/server",
     "src/jobs",
     "src/universal",
-    "src/mijnamsterdam.d.ts"
+    "src/mijnamsterdam.d.ts",
+    "scripts/generate-user-data-overview.ts"
   ]
 }
