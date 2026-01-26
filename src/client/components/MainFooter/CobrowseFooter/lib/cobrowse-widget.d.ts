@@ -4,4 +4,5 @@ export class CobrowseWidget {
   CobrowseIO: {
     redactedViews: string[];
   };
+  loadCobrowseSDK: () => any;
 }
