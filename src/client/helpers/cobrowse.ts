@@ -1,5 +1,6 @@
 import memoizee from 'memoizee';
 
+import { isCobrowseScreensharing } from '../components/MainFooter/CobrowseFooter/CobrowseFooter';
 import { myThemasMenuItems } from '../config/thema';
 import { ThemaMenuItem } from '../config/thema-types';
 import { themaId as themaIdNotificaties } from '../pages/MyNotifications/MyNotifications-config';
@@ -55,8 +56,11 @@ export function getRedactedClass(
   themaId?: string | null,
   scopeRequested?: ScopeRequested
 ) {
+  const redactedHighlightClass = isCobrowseScreensharing()
+    ? 'in-orange-box'
+    : '';
   if (isRedactionRequired(themaId, scopeRequested)) {
-    return `${REDACTED_CLASS} in-orange-box`;
+    return `${REDACTED_CLASS} ${redactedHighlightClass}`;
   }
 
   return '';

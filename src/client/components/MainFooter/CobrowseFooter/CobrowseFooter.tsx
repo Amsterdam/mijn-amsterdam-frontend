@@ -9,6 +9,7 @@ import type { CobrowseWidget } from './lib/cobrowse-widget';
 import './lib/cobrowse-widget.css';
 import { REDACTED_CLASS } from '../../../helpers/cobrowse';
 import { useIsBffToggleEnabled } from '../../../helpers/env';
+// import { useIsBffToggleEnabled } from '../../../helpers/env';
 
 export const LABEL_HULP_SCHERMDELEN = 'Hulp via schermdelen';
 declare global {
@@ -17,27 +18,43 @@ declare global {
   }
 }
 
-export function CobrowseFooter() {
-  const licenseKey = import.meta.env.REACT_APP_COBROWSE_LICENSE_KEY;
+const licenseKey = import.meta.env.REACT_APP_COBROWSE_LICENSE_KEY;
+
+export function isCobrowseScreensharing() {
+  return !!document.getElementById('cobrowse-frame');
+}
+
+function useCobrowse() {
   const [cobrowseWidget, setCobrowseWidget] = useState<CobrowseWidget | null>(
     null
   );
-  const isCobrowseActive = useIsBffToggleEnabled('BFF_COBROWSE_IS_ACTIVE');
+  const [CobrowseIO, setCobrowseIO] = useState(null);
+  const isCobrowseEnabled = useIsBffToggleEnabled('BFF_COBROWSE_IS_ACTIVE');
+
   useEffect(() => {
-    if (!isCobrowseActive || !licenseKey) {
+    if (!isCobrowseEnabled || !licenseKey) {
       return;
     }
     if (cobrowseWidget) {
       return;
     }
-    import('./lib/cobrowse-widget.js').then(({ CobrowseWidget }) => {
+    import('./lib/cobrowse-widget.js').then(async ({ CobrowseWidget }) => {
       const redactedViews = [`.${REDACTED_CLASS}`];
       const widget = new CobrowseWidget(licenseKey, redactedViews);
+
+      const CobrowseIO = await widget.loadCobrowseSDK();
+      setCobrowseIO(CobrowseIO);
+
       setCobrowseWidget(widget);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isCobrowseActive]);
+  }, [isCobrowseEnabled]);
 
+  return [cobrowseWidget, CobrowseIO];
+}
+
+export function CobrowseFooter() {
+  const [cobrowseWidget] = useCobrowse();
   return (
     cobrowseWidget && (
       <PageFooter.MenuLink
