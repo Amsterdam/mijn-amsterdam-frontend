@@ -109,9 +109,19 @@ export function OAuthVerificationHandler(role?: string) {
     const audience = getFromEnv('BFF_OAUTH_MIJNADAM_CLIENT_ID');
 
     if (!token || !tenantId || !audience) {
+      const missing: string[] = [];
+      if (!token) {
+        missing.push('token missing from auth header');
+      }
+      if (!tenantId) {
+        missing.push('tenantId missing in env');
+      }
+      if (!audience) {
+        missing.push('audience missing in env');
+      }
       return sendServiceUnavailable(
         res,
-        `OAuth configuration incomplete - ${!token ? 'token missing from auth header' : ''}${!tenantId ? ' tenantId missing in env' : ''}${!audience ? ' audience missing in env' : ''}`
+        `OAuth configuration incomplete - ${missing.join('; ')}`
       );
     }
     const issuer = `https://sts.windows.net/${tenantId}`;
