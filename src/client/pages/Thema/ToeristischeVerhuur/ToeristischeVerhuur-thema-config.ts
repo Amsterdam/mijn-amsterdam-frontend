@@ -24,8 +24,8 @@ type ToeristischeVerhuurThemaConfig = ThemaConfigBase &
 
 const THEMA_TITLE = 'Toeristische verhuur';
 
-export const themaConfig: ToeristischeVerhuurThemaConfig = {
-  id: 'TOERISTISCHE_VERHUUR',
+export const themaConfig = {
+  id: 'TOERISTISCHE_VERHUUR' as const,
   title: THEMA_TITLE,
   featureToggle: { active: true },
   profileTypes: ['private', 'commercial'],
@@ -60,7 +60,7 @@ export const themaConfig: ToeristischeVerhuurThemaConfig = {
   detailPage: {
     route: {
       path: '/toeristische-verhuur/vergunning/:caseType/:id',
-      trackingUrl: (params) =>
+      trackingUrl: (params: { caseType: string }) =>
         `/toeristische-verhuur/vergunning/${params?.caseType ?? ''}`,
       documentTitle: `Toeristische verhuur | ${THEMA_TITLE}`,
     },
@@ -68,7 +68,7 @@ export const themaConfig: ToeristischeVerhuurThemaConfig = {
   listPage: {
     route: {
       path: '/toeristische-verhuur/vergunning/lijst/:kind/:page?',
-      documentTitle: (params) =>
+      documentTitle: (params: { kind: string }) =>
         `${tableConfigVergunningen[(params?.kind as ListPageParamKind) || 'lopende-aanvragen'].title} | ${THEMA_TITLE}`,
       trackingUrl: null,
     },

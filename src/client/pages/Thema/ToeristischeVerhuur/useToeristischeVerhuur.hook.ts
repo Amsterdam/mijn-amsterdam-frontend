@@ -94,6 +94,7 @@ export function useToeristischeVerhuurThemaData() {
     hasVergunningenVakantieVerhuur,
     hasBothVerleend,
     hasVergunningBB,
+    breadcrumbs,
     linkListItems: [...extraLinkListItems, ...themaConfig.pageLinks],
     listPageConfig: themaConfig.listPage,
     detailPageConfig: themaConfig.detailPage,
