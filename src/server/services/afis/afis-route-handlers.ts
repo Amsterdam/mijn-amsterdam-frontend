@@ -12,6 +12,7 @@ import {
   type EMandateSignRequestPayload,
   type POMEMandateSignRequestPayload,
 } from './afis-types';
+import { IS_ACCEPTANCE } from '../../../universal/config/env';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -167,7 +168,14 @@ export async function handleAfisEMandateSignRequestStatusNotification(
     // If the eMandate creation fails, we should log the error and return an error response.
     // This is important because the creation of the eMandate is a crucial part of the sign request process.
     // Without it, the user will not be able to complete their mandate activation.
-    captureException(error);
+    captureException(
+      error,
+      IS_ACCEPTANCE
+        ? {
+            properties: { payload: eMandatePayload },
+          }
+        : undefined
+    );
     creationError = (error as Error).message;
   }
 
