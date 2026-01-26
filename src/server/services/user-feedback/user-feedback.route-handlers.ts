@@ -67,20 +67,6 @@ export async function handleShowSurveyOverview(
     req.query.version ?? 'latest'
   );
 
-  console.log('feedbackOverview:', feedbackOverview);
-
-  // Feedback overview data:
-  /**
-   *
-   * {
-      survey: {
-        title: survey.title,
-        questions: questionsById,
-      },
-      entries: entriesResponse.content,
-    },
-   */
-
   const entries = feedbackOverview.content?.entries || [];
 
   const score = (
