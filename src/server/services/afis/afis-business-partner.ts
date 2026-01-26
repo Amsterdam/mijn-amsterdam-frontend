@@ -272,7 +272,7 @@ export async function createBusinessPartnerBankAccount(
   const additionalConfig: DataRequestConfig = {
     method: 'POST',
     formatUrl(config) {
-      return `${config.url}/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerBank`;
+      return `${config.url}/BusinessPartner/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerBank`;
     },
     data: createBankAccountPayload,
   };
