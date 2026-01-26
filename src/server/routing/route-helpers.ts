@@ -147,6 +147,14 @@ export function sendBadRequestInvalidInput(res: Response, error: unknown) {
   return sendBadRequest(res, inputValidationError);
 }
 
+function appendConditionalDetail(
+  baseMessage: string,
+  detail?: string,
+  shouldAppendDetail: boolean = !IS_PRODUCTION
+) {
+  return `${baseMessage}${detail && shouldAppendDetail ? `: ${detail}` : ''}`;
+}
+
 export function sendUnauthorized(
   res: Response,
   message: string = 'Unauthorized',
@@ -155,7 +163,7 @@ export function sendUnauthorized(
   return sendResponse(
     res,
     apiErrorResult(
-      `${message}${messageDetails && !IS_PRODUCTION ? `: ${messageDetails}` : ''}`,
+      appendConditionalDetail(message, messageDetails),
       null,
       HttpStatusCode.Unauthorized
     )
@@ -173,7 +181,7 @@ export function sendServiceUnavailable(res: Response, messageDetails?: string) {
   return sendResponse(
     res,
     apiErrorResult(
-      `Service Unavailable${messageDetails && !IS_PRODUCTION ? `: ${messageDetails}` : ''}`,
+      appendConditionalDetail('Service Unavailable', messageDetails),
       null,
       HttpStatusCode.ServiceUnavailable
     )
