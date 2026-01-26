@@ -57,3 +57,43 @@ export async function handleUserFeedbackSubmission(
 
   return sendResponse(res, response);
 }
+
+export async function handleShowSurveyOverview(
+  req: RequestWithQueryParams<{ id?: Survey['unique_code']; version?: string }>,
+  res: ResponseAuthenticated
+) {
+  const feedbackOverview = await userFeedbackOverview(
+    req.query.id ?? SURVEY_ID_INLINE_KTO,
+    req.query.version ?? 'latest'
+  );
+
+  console.log('feedbackOverview:', feedbackOverview);
+
+  // Feedback overview data:
+  /**
+   *
+   * {
+      survey: {
+        title: survey.title,
+        questions: questionsById,
+      },
+      entries: entriesResponse.content,
+    },
+   */
+
+  const entries = feedbackOverview.content?.entries || [];
+
+  const score = (
+    entries.reduce((acc, entry) => {
+      if (typeof entry === 'undefined') {
+        return acc;
+      }
+      const rating = entry.answers['3'] || '0';
+      return acc + parseInt(rating, 10);
+    }, 0) / (entries.length || 1)
+  ).toFixed(2);
+
+  return res.render('user-feedback-overview', {
+    feedbackOverview: { ...feedbackOverview.content, score },
+  });
+}

@@ -134,10 +134,12 @@ export async function userFeedbackOverview(
   return apiSuccessResult(
     {
       survey: {
-        title: survey.title,
+        title: survey.title ?? 'Untitled survey',
         questions: questionsById,
       },
-      entries: entriesResponse.content,
+      entries: entriesResponse.content.toSorted((a, b) =>
+        b.dateCreated.localeCompare(a.dateCreated)
+      ),
     },
     getFailedDependencies({ survey: surveyResponse, entries: entriesResponse })
   );

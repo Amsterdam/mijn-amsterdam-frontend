@@ -6,6 +6,7 @@ export const routes = {
   protected: {
     USER_FEEDBACK_SUBMIT: '/user-feedback/collect',
     USER_FEEDBACK_SURVEY: '/user-feedback/survey',
+    USER_FEEDBACK_OVERVIEW_TABLE: '/user-feedback/overview/table',
     USER_FEEDBACK_OVERVIEW: '/user-feedback/overview',
   },
 };

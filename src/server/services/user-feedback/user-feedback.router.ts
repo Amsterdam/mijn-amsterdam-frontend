@@ -3,6 +3,7 @@ import express from 'express';
 import {
   handleFetchSurvey,
   handleFetchSurveyOverview,
+  handleShowSurveyOverview,
   handleUserFeedbackSubmission,
 } from './user-feedback.route-handlers';
 import { featureToggle, routes } from './user-feedback.service-config';
@@ -19,6 +20,12 @@ const userFeedbackRouterProtected = createBFFRouter({
 userFeedbackRouterProtected.get(
   routes.protected.USER_FEEDBACK_SURVEY,
   handleFetchSurvey
+);
+
+userFeedbackRouterProtected.get(
+  routes.protected.USER_FEEDBACK_OVERVIEW_TABLE,
+  conditional(IS_TAP, OAuthVerificationHandler()),
+  handleShowSurveyOverview
 );
 
 userFeedbackRouterProtected.get(
