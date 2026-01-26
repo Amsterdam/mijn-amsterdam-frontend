@@ -156,6 +156,8 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
     SndDebtorId: creditor.refId,
   };
 
+  console.log('E-Mandate create payload', payloadFinal);
+
   const eMandateIdResponse = await fetchEmandateIdByCreditorRefId(
     payload.businessPartnerId,
     creditor.refId
