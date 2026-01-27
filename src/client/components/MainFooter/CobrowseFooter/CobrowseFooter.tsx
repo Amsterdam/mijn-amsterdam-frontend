@@ -28,7 +28,6 @@ function useCobrowse() {
   const [cobrowseWidget, setCobrowseWidget] = useState<CobrowseWidget | null>(
     null
   );
-  const [CobrowseIO, setCobrowseIO] = useState(null);
   const isCobrowseEnabled = useIsBffToggleEnabled('BFF_COBROWSE_IS_ACTIVE');
 
   useEffect(() => {
@@ -38,23 +37,20 @@ function useCobrowse() {
     if (cobrowseWidget) {
       return;
     }
-    import('./lib/cobrowse-widget.js').then(async ({ CobrowseWidget }) => {
+    import('./lib/cobrowse-widget.js').then(({ CobrowseWidget }) => {
       const redactedViews = [`.${REDACTED_CLASS}`];
       const widget = new CobrowseWidget(licenseKey, redactedViews);
-
-      const CobrowseIO = await widget.loadCobrowseSDK();
-      setCobrowseIO(CobrowseIO);
 
       setCobrowseWidget(widget);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCobrowseEnabled]);
 
-  return [cobrowseWidget, CobrowseIO];
+  return cobrowseWidget;
 }
 
 export function CobrowseFooter() {
-  const [cobrowseWidget] = useCobrowse();
+  const cobrowseWidget = useCobrowse();
   return (
     cobrowseWidget && (
       <PageFooter.MenuLink
