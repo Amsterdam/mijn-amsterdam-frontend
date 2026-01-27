@@ -5,6 +5,7 @@ import z from 'zod';
 
 import { createOrUpdateEMandateFromStatusNotificationPayload } from './afis-e-mandates';
 import { fetchAfisFacturenByState } from './afis-facturen';
+import { debugEmandates } from './afis-helpers';
 import {
   AfisFactuurState,
   BusinessPartnerIdPayload,
@@ -188,6 +189,11 @@ export async function handleAfisEMandateSignRequestStatusNotification(
         null,
         HttpStatusCode.InternalServerError
       );
+
+  debugEmandates(
+    `EMandate sign request status notification handled. Success: ${isOK}.`,
+    eMandatePayload
+  );
 
   return sendResponse(res, response);
 }
