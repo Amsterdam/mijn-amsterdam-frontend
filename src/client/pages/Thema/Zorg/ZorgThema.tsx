@@ -35,7 +35,7 @@ export function ZorgThema() {
     id,
     title,
     tableConfig,
-    linkListItems,
+    pageLinks,
   } = useZorgThemaData();
   useHTMLDocumentTitle(themaConfig.route);
 
@@ -82,7 +82,7 @@ export function ZorgThema() {
         id={id}
         title={title}
         pageContentTop={pageContentTop}
-        linkListItems={linkListItems}
+        linkListItems={pageLinks}
         pageContentMain={
           <>
             {tables}
