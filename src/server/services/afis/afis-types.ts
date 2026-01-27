@@ -138,6 +138,7 @@ export type AfisBusinessPartnerBankAccount = {
   BankAccountHolderName: string;
   IBAN: string;
   BankAccount: string;
+  BankCountryKey: string;
 };
 
 export type AfisBusinessPartnerBankPayload = {
@@ -301,8 +302,8 @@ export type AfisEMandateSourceStatic = {
   SndType: string;
   RefType: string;
   RecType: string;
-  RecId: string;
-  Status: string;
+  RecId: number;
+  Status: number;
 };
 
 type EMandateSenderSource = {
@@ -337,7 +338,7 @@ export type AfisEMandateSource = AfisEMandateSourceStatic &
   EMandateReceiverSource &
   EMandateSenderSource & {
     // ID of the mandate in AFIS
-    IMandateId: string;
+    IMandateId: number;
 
     // Mandate
     LifetimeFrom: string;
@@ -353,7 +354,7 @@ export type AfisEMandateCreatePayload = Omit<
   AfisEMandateSource,
   'IMandateId'
 > & {
-  LifetimeTo: '9999-12-31T00:00:00';
+  LifetimeTo: string;
 };
 
 export type AfisEMandateUpdatePayload = Partial<AfisEMandateSource>;
@@ -372,6 +373,7 @@ export type EmandateStatusCode = Prettify<keyof AfisEMandateStatusCodes>;
 
 export type AfisEMandateFrontend = {
   id: string;
+  eMandateIdSource: AfisEMandateSource['IMandateId'] | null;
   creditorName: string;
   creditorIBAN: string;
   creditorDescription?: string;

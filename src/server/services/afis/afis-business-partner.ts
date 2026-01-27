@@ -267,10 +267,12 @@ export async function createBusinessPartnerBankAccount(
     BankAccountHolderName: payload.senderName,
     IBAN: payload.iban,
     BankAccount: iban.accountNumber,
+    BankCountryKey: iban.countryCode ?? '',
   };
 
   const additionalConfig: DataRequestConfig = {
     method: 'POST',
+    responseType: 'text',
     formatUrl(config) {
       return `${config.url}/BusinessPartner/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerBank`;
     },
@@ -285,11 +287,12 @@ export async function createBusinessPartnerBankAccount(
 }
 
 export async function fetchCheckIfIBANexists(
-  IBAN: AfisBusinessPartnerBankAccount['IBAN']
+  IBAN: AfisBusinessPartnerBankAccount['IBAN'],
+  businessPartnerID: BusinessPartnerId
 ): Promise<ApiResponse<boolean>> {
   const additionalConfig: DataRequestConfig = {
     formatUrl(config) {
-      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerBank?$filter=IBAN eq '${IBAN}'`;
+      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerBank?$filter=IBAN eq '${IBAN}' and BusinessPartner eq '${businessPartnerID}'`;
     },
     transformResponse(
       response: AfisApiFeedResponseSource<AfisBusinessPartnerBankAccount>
