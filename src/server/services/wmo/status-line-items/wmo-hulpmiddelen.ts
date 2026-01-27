@@ -52,9 +52,12 @@ export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
 /** Config for adding or adjusting disclaimers that need to show up when a zorgned voorziening has been wrongfuly closed but then opened again.
  *
  *  The dates are to identify which voorzieningen are actually part of what should be one voorziening.
- *  So if you have: ingang = 2024-01-31 and einde = 2024-02-01. Then we will -
- *  show a disclaimer text on the actual one and the non actual (einde) one.
- *  @param codes - List of product codes this config applies to
+ *  So if you have a pair of [end = 2024-02-01, start = 2024-01-31]. Then we will -
+ *  show a disclaimer text on the actual one and the non actual (ended) one.
+ *
+ *  Current implementation does not allow codes to be used in seperate config values.
+ *
+ *  @param codes - List of product codes this config applies to.
  *  @param actual - Disclaimer text for actual items
  *  @param notActual - Disclaimer text for non-actual item
  *  @param datePairs - Pairs of start and end dates in yyyy-hh-dd format
