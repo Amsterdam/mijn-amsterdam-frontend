@@ -58,12 +58,12 @@ export function getApiConfig(
     customUrl = config_.formatUrl(config_);
   }
 
-  const headersBase = apiConfigCopy.headers ?? {};
+  // Merge all headers
+  const headers = apiConfigCopy.headers ?? {};
 
-  let headersMerged = {};
   if (config_.headers) {
-    headersMerged = Object.assign(
-      headersBase,
+    Object.assign(
+      headers,
       config.headers,
       ...additionalConfigs.map((c) => c.headers || {})
     );
@@ -77,7 +77,7 @@ export function getApiConfig(
   return Object.assign(
     config_,
     customUrl ? { url: customUrl } : null,
-    { headers: headersMerged },
+    { headers },
     cacheKey_UNSAFE ? { cacheKey_UNSAFE } : null
   );
 }
