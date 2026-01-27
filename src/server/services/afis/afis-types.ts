@@ -1,5 +1,5 @@
 import Decimal from 'decimal.js';
-import type { SetNonNullableDeep } from 'type-fest';
+import type { SetNonNullableDeep, Stringified } from 'type-fest';
 
 import { LinkProps } from '../../../universal/types/App.types';
 
@@ -302,8 +302,8 @@ export type AfisEMandateSourceStatic = {
   SndType: string;
   RefType: string;
   RecType: string;
-  RecId: number;
-  Status: number;
+  RecId: string;
+  Status: string;
 };
 
 type EMandateSenderSource = {
@@ -357,7 +357,9 @@ export type AfisEMandateCreatePayload = Omit<
   LifetimeTo: string;
 };
 
-export type AfisEMandateUpdatePayload = Partial<AfisEMandateSource>;
+export type AfisEMandateUpdatePayload = Partial<
+  Stringified<AfisEMandateSource>
+>;
 
 export type AfisEMandateStatusCodes = {
   '0': 'NietActief';
@@ -455,7 +457,7 @@ export type EMandateSignRequestStatusPayload = {
 };
 
 export type EMandateUpdatePayload = {
-  IMandateId: AfisEMandateSource['IMandateId'];
+  IMandateId: AfisEMandateUpdatePayload['IMandateId'];
 };
 
 export type EMandateLifetimeChangePayload = EMandateUpdatePayload & {
