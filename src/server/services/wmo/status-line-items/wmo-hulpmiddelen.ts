@@ -119,14 +119,14 @@ function isDateMatch(
  * De nieuwe voorzieningen zijn niet voorzien van een besluit document waardoor de besluit status niet zichtbaar is.
  */
 export function getHulpmiddelenDisclaimer(
-  disclaimerConfigs: HulpmiddelenDisclaimerConfig,
+  disclaimerConfig: HulpmiddelenDisclaimerConfig,
   currentAanvraag: ZorgnedAanvraagTransformed,
   aanvragen: ZorgnedAanvraagTransformed[]
 ): string | undefined {
   const config =
-    disclaimerConfigs.find((cfg) =>
+    disclaimerConfig.find((cfg) =>
       cfg.codes.includes(currentAanvraag.productsoortCode)
-    ) ?? disclaimerConfigs.find((cfg) => !cfg.codes.length);
+    ) ?? disclaimerConfig.find((cfg) => !cfg.codes.length);
 
   if (!config) {
     return undefined;
