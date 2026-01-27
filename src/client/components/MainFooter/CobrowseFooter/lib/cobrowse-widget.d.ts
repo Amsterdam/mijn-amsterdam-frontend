@@ -5,4 +5,6 @@ export class CobrowseWidget {
     redactedViews: string[];
   };
   loadCobrowseSDK: () => any;
+  createCobrowseFrame: () => any;
+  removeCobrowseFrame: () => any;
 }
