@@ -7,7 +7,7 @@ import {
   BBVergunningFrontend,
   BedAndBreakfastType,
 } from './bed-and-breakfast-types';
-import { routeConfig } from '../../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
+import { themaConfig } from '../../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 import {
   ApiResponse,
   apiSuccessResult,
@@ -22,7 +22,7 @@ import {
 const DATE_NEW_REGIME_BB_RULES = '2019-01-01';
 
 function transformBBFrontend(zaak: BedAndBreakfastType): BBVergunningFrontend {
-  const appRoute = routeConfig.detailPage.path;
+  const appRoute = themaConfig.detailPage.route.path;
   const zaakTransformed = transformPBZaakFrontend(zaak, {
     detailPageRoute: appRoute,
     getStepsFN: getStatusSteps,
@@ -30,7 +30,7 @@ function transformBBFrontend(zaak: BedAndBreakfastType): BBVergunningFrontend {
   return {
     ...zaakTransformed,
     link: {
-      to: generatePath(routeConfig.detailPage.path, {
+      to: generatePath(themaConfig.detailPage.route.path, {
         id: zaak.id,
         caseType: 'bed-and-breakfast',
       }),

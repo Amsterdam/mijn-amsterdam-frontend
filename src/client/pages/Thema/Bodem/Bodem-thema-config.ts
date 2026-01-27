@@ -13,12 +13,15 @@ import type {
   WithListPage,
 } from '../../../config/thema-types';
 
-type BodemThemaConfig = ThemaConfigBase & WithDetailPage & WithListPage;
+type BodemThemaConfig = ThemaConfigBase<typeof THEMA_ID> &
+  WithDetailPage &
+  WithListPage;
 
+const THEMA_ID = 'BODEM';
 const THEMA_TITLE = 'Bodem';
 
 export const themaConfig: BodemThemaConfig = {
-  id: 'BODEM',
+  id: THEMA_ID,
   title: THEMA_TITLE,
   featureToggle: {
     active: true,

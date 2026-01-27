@@ -124,8 +124,8 @@ const pageRouteResolvers: PageRouteResolvers = {
     }
   ),
   toeristischeVerhuur: baseThemaConfig(
-    TOERISTISCHE_VERHUUR.routeConfig.themaPage.path,
-    TOERISTISCHE_VERHUUR.themaId,
+    TOERISTISCHE_VERHUUR.themaConfig.route.path,
+    TOERISTISCHE_VERHUUR.themaConfig.id,
     (stateSlice) => {
       const { vakantieverhuurVergunningen = [], bbVergunningen = [] } =
         stateSlice.content ?? {};

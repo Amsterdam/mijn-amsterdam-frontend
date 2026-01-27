@@ -6,11 +6,7 @@ import {
   LVVRegistratie,
   ToeristischeVerhuurVergunning,
 } from './toeristische-verhuur-config-and-types';
-import {
-  routeConfig,
-  themaId,
-  themaTitle,
-} from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { dateFormat, isDateInPast } from '../../../universal/helpers/date';
 import { isRecentNotification } from '../../../universal/helpers/utils';
@@ -33,13 +29,13 @@ export function createToeristischeVerhuurNotification(
     vergunning.dateRequest ??
     '';
   let cta = 'Bekijk uw aanvraag';
-  let linkTo: string = routeConfig.themaPage.path;
+  let linkTo: string = themaConfig.route.path;
 
   if (
     vergunning.title === 'Vergunning bed & breakfast' ||
     vergunning.title === 'Vergunning vakantieverhuur'
   ) {
-    const ctaLinkToDetail = generatePath(routeConfig.detailPage.path, {
+    const ctaLinkToDetail = generatePath(themaConfig.detailPage.route.path, {
       id: vergunning.id,
       caseType:
         vergunning.title === 'Vergunning vakantieverhuur'
@@ -117,8 +113,8 @@ export function createToeristischeVerhuurNotification(
   return {
     id: `vergunning-${vergunning.id}-notification`,
     datePublished,
-    themaID: themaId,
-    themaTitle: themaTitle,
+    themaID: themaConfig.id,
+    themaTitle: themaConfig.title,
     title,
     description,
     link: {
@@ -137,13 +133,13 @@ function createRegistratieNotification(
     ? vergunning.agreementDate
     : '';
   const cta = 'Bekijk uw overzicht toeristische verhuur';
-  const linkTo = routeConfig.themaPage.path;
+  const linkTo = themaConfig.route.path;
 
   return {
     id: `toeristiche-verhuur-registratie-${vergunning.registrationNumber}-notification`,
     datePublished,
-    themaID: themaId,
-    themaTitle: themaTitle,
+    themaID: themaConfig.id,
+    themaTitle: themaConfig.title,
     title,
     description,
     link: {
