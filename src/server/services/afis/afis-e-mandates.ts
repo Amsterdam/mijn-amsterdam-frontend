@@ -158,17 +158,16 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
 
   console.log('E-Mandate create payload', payloadFinal);
 
-  const eMandateIdResponse = await fetchEmandateIdByCreditorRefId(
+  const eMandateResponse = await fetchEmandateByCreditorRefId(
     payload.businessPartnerId,
     creditor.refId
   );
 
-  const response = await (eMandateIdResponse.content
-    ? updateAfisEMandate({
-        ...payloadFinal,
-        IMandateId: eMandateIdResponse.content,
-      })
-    : createAfisEMandate(payloadFinal));
+  // POST also updates existing mandates according to AFIS documentation.
+  const response = await createAfisEMandate({
+    ...eMandateResponse.content,
+    ...payloadFinal,
+  });
 
   if (response.status !== 'OK') {
     throw new Error(
@@ -375,10 +374,10 @@ function transformEMandatesResponse(
   );
 }
 
-export async function fetchEmandateIdByCreditorRefId(
+export async function fetchEmandateByCreditorRefId(
   businessPartnerId: BusinessPartnerId,
   creditorRefID: AfisEMandateCreditor['refId']
-): Promise<ApiResponse<AfisEMandateSource['IMandateId'] | null>> {
+): Promise<ApiResponse<AfisEMandateSource | null>> {
   const config = await getAfisApiConfig({
     formatUrl: ({ url }) => {
       return `${url}/Mandate/ZGW_FI_MANDATE_SRV_01/Mandate_readSet?$filter=SndId eq '${businessPartnerId}'`;
@@ -387,8 +386,9 @@ export async function fetchEmandateIdByCreditorRefId(
       const sourceMandates =
         getFeedEntryProperties<AfisEMandateSource>(responseData);
       return (
-        sourceMandates.find((mandate) => mandate.SndDebtorId === creditorRefID)
-          ?.IMandateId ?? null
+        sourceMandates.find(
+          (mandate) => mandate.SndDebtorId === creditorRefID
+        ) ?? null
       );
     },
 
@@ -400,7 +400,7 @@ export async function fetchEmandateIdByCreditorRefId(
     enableCache: false,
   });
 
-  return requestData<AfisEMandateSource['IMandateId'] | null>(config);
+  return requestData<AfisEMandateSource | null>(config);
 }
 
 export async function fetchEMandates(
