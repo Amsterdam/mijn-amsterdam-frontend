@@ -141,6 +141,9 @@ describe('Transform api items', () => {
       prettyID: '',
     };
 
+    const CODE_A = 'codeA';
+    const CODE_A_DATE_PAIR: [string, string] = ['31-12-2025', '2026-01-01'];
+
     const config: HulpmiddelenDisclaimerConfig = [
       {
         codes: [],
@@ -149,10 +152,10 @@ describe('Transform api items', () => {
         datePairs: [['2024-10-31', '2024-11-01']],
       },
       {
-        codes: ['codeA'],
+        codes: [CODE_A],
         actual: 'codeA actual text',
         notActual: 'codeA notActual text',
-        datePairs: [['31-12-2025', '2026-01-01']],
+        datePairs: [CODE_A_DATE_PAIR],
       },
     ];
 
@@ -230,6 +233,33 @@ describe('Transform api items', () => {
         aanvragen
       );
       expect(result).toBe('actual generic text');
+    });
+
+    it('does not match aanvragen with a different productsoortCode', () => {
+      const currentAanvraag = {
+        ...baseAanvraag,
+        datumIngangGeldigheid: CODE_A_DATE_PAIR[1],
+        isActueel: true,
+        productsoortCode: CODE_A,
+      };
+
+      const aanvragen = [
+        currentAanvraag,
+        {
+          ...baseAanvraag,
+          datumEindeGeldigheid: CODE_A_DATE_PAIR[0],
+          isActueel: false,
+          productsoortCode: 'some other code',
+        },
+      ];
+
+      const result = getHulpmiddelenDisclaimer(
+        config,
+        currentAanvraag,
+        aanvragen
+      );
+
+      expect(result).toBeUndefined();
     });
   });
 
