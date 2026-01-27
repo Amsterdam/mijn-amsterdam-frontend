@@ -173,7 +173,11 @@ export async function handleAfisEMandateSignRequestStatusNotification(
       error,
       IS_ACCEPTANCE
         ? {
-            properties: { payload: eMandatePayload },
+            properties: {
+              payload: eMandatePayload,
+              message:
+                'Failed to create E-Mandate from sign request status notification payload',
+            },
           }
         : undefined
     );
