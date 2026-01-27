@@ -18,7 +18,7 @@ export function useBodemData() {
     items,
     linkListItems: themaConfig.pageLinks,
     breadcrumbs,
-    listPageConfig: themaConfig.listPage,
     detailPageConfig: themaConfig.detailPage,
+    themaConfig,
   };
 }
