@@ -91,40 +91,6 @@ exports[`<Zorg /> > Matches the Full Page snapshot 1`] = `
           </p>
         </div>
         <div
-          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PullUp_125440"
-        >
-          <ul
-            class="ams-link-list"
-          >
-            <li>
-              <a
-                class="ams-link-list__link"
-                href="https://www.amsterdam.nl/zorg-ondersteuning/"
-                rel="noreferrer"
-              >
-                <span
-                  class="ams-icon"
-                  hidden=""
-                >
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      clip-rule="evenodd"
-                      d="M7.911 2.5 17.5 12l-9.589 9.5L6.5 20.102 14.677 12 6.5 3.898z"
-                      fill-rule="evenodd"
-                    />
-                  </svg>
-                </span>
-                Lees hier meer over zorg en ondersteuning
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div
           class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
         >
           <h2
