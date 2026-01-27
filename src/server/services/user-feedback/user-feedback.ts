@@ -126,8 +126,8 @@ export async function userFeedbackOverview(
 
   const survey = surveyResponse.content;
   const questionsById = Object.fromEntries(
-    survey.questions.map((survey) => {
-      return [survey.id, survey.questionText];
+    survey.questions.map((question) => {
+      return [question.id, question.questionText];
     })
   );
 
