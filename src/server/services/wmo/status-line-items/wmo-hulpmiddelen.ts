@@ -54,58 +54,58 @@ export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
  *  The dates are to identify which voorzieningen are actually part of what should be one voorziening.
  *  So if you have: ingang = 2024-01-31 and einde = 2024-02-01. Then we will -
  *  show a disclaimer text on the actual one and the non actual (einde) one.
- *
- *  @param actual - Disclaimer text for items that are actual.
- *  @param notActual - Disclaimer text for items that are non actual.
- *  @param datumEindeGeldigheid - The date in yyyy-mm-dd format, when the voorziening was wrongfuly ended.
- *  @param datumIngangGeldigheid - The date in yyyy-mm-dd format, when the voorziening is opened again.
+ *  @param codes - List of product codes this config applies to
+ *  @param actual - Disclaimer text for actual items
+ *  @param notActual - Disclaimer text for non-actual item
+ *  @param datePairs - Pairs of start and end dates in yyyy-hh-dd format
  */
-type HulpmiddelenDisclaimerConfig = {
+type ConfigValue = {
+  codes: ProductSoortCode[];
   actual: string;
   notActual: string;
-  datumEindeGeldigheid: string;
-  datumIngangGeldigheid: string;
+  datePairs: DatePairs;
 };
 
-export type HulpmiddelenDisclaimerConfigs = {
-  generic: HulpmiddelenDisclaimerConfig;
-} & Record<ProductSoortCode, HulpmiddelenDisclaimerConfig>;
+type DatePairs = [string, string][];
 
-export const hulpmiddelenDisclaimerConfigs: HulpmiddelenDisclaimerConfigs = {
-  generic: {
+export type HulpmiddelenDisclaimerConfig = ConfigValue[];
+
+export const hulpmiddelenDisclaimerConfig: HulpmiddelenDisclaimerConfig = [
+  {
+    // For all other productcodes.
+    codes: [],
     actual:
       'Door een fout kan het zijn dat dit hulpmiddel ook bij "Eerdere en afgewezen voorzieningen" staat. Daar vindt u dan het originele besluit met de juiste datums.',
     notActual:
       'Door een fout kan het zijn dat dit hulpmiddel ten onrechte bij "Eerdere en afgewezen voorzieningen" staat.',
-    datumEindeGeldigheid: '2024-10-31',
-    datumIngangGeldigheid: '2024-11-01',
+    datePairs: [['2024-10-31', '2024-11-01']],
   },
-  GBW: {
+  {
+    codes: ['GBW'],
     actual:
       'Het kan zijn dat uw gesloten buitenwagen hieronder "Huidige voorzieningen" een verkeerde startdatum heeft. Kijk voor de juiste startdatum bij eerdere en afgewezen voorzieningen.',
     notActual:
       'Het kan zijn dat uw gesloten buitenwagen ten onrechte bij hieronder "Eerdere en afgewezen voorzieningen" staat. De actieve voorziening staat ook onder "Huidige voorzieningen".',
-    datumEindeGeldigheid: '2025-12-31',
-    datumIngangGeldigheid: '2026-01-01',
+    datePairs: [['2025-12-31', '2026-01-01']],
   },
-};
-
-type DateProps = keyof Pick<
-  HulpmiddelenDisclaimerConfig,
-  'datumIngangGeldigheid' | 'datumEindeGeldigheid'
->;
+];
 
 function isDateMatch(
-  config: HulpmiddelenDisclaimerConfig,
-  aanvraag: ZorgnedAanvraagTransformed,
-  key: DateProps
+  datePairs: DatePairs,
+  aanvraagDate: string | null,
+  key: keyof Pick<
+    ZorgnedAanvraagTransformed,
+    'datumIngangGeldigheid' | 'datumEindeGeldigheid'
+  >
 ): boolean {
-  const datumAanvraag = aanvraag[key];
-
-  return (
-    datumAanvraag === config[key] ||
-    datumAanvraag === hulpmiddelenDisclaimerConfigs.generic[key]
-  );
+  if (!aanvraagDate) {
+    return false;
+  }
+  return datePairs.some(([endDate, startDate]) => {
+    return key === 'datumEindeGeldigheid'
+      ? aanvraagDate === endDate
+      : aanvraagDate === startDate;
+  });
 }
 
 /**
@@ -114,31 +114,50 @@ function isDateMatch(
  * De nieuwe voorzieningen zijn niet voorzien van een besluit document waardoor de besluit status niet zichtbaar is.
  */
 export function getHulpmiddelenDisclaimer(
-  disclaimerConfigs: HulpmiddelenDisclaimerConfigs,
+  disclaimerConfigs: HulpmiddelenDisclaimerConfig,
   detailAanvraag: ZorgnedAanvraagTransformed,
   aanvragen: ZorgnedAanvraagTransformed[]
 ): string | undefined {
   const config =
-    disclaimerConfigs[detailAanvraag.productsoortCode] ??
-    disclaimerConfigs.generic;
+    disclaimerConfigs.find((cfg) =>
+      cfg.codes.includes(detailAanvraag.productsoortCode)
+    ) ?? disclaimerConfigs.find((cfg) => !cfg.codes.length);
+
+  if (!config) {
+    return undefined;
+  }
 
   if (detailAanvraag.isActueel) {
     if (
-      isDateMatch(config, detailAanvraag, 'datumIngangGeldigheid') &&
+      isDateMatch(
+        config.datePairs,
+        detailAanvraag.datumIngangGeldigheid,
+        'datumIngangGeldigheid'
+      ) &&
       aanvragen.some(
         (aanvraag) =>
-          isDateMatch(config, aanvraag, 'datumEindeGeldigheid') &&
-          !aanvraag.isActueel
+          isDateMatch(
+            config.datePairs,
+            aanvraag.datumEindeGeldigheid,
+            'datumEindeGeldigheid'
+          ) && !aanvraag.isActueel
       )
     ) {
       return config.actual;
     }
   } else if (
-    isDateMatch(config, detailAanvraag, 'datumEindeGeldigheid') &&
+    isDateMatch(
+      config.datePairs,
+      detailAanvraag.datumEindeGeldigheid,
+      'datumEindeGeldigheid'
+    ) &&
     aanvragen.some(
       (aanvraag) =>
-        isDateMatch(config, aanvraag, 'datumIngangGeldigheid') &&
-        aanvraag.isActueel
+        isDateMatch(
+          config.datePairs,
+          aanvraag.datumIngangGeldigheid,
+          'datumIngangGeldigheid'
+        ) && aanvraag.isActueel
     )
   ) {
     return config.notActual;

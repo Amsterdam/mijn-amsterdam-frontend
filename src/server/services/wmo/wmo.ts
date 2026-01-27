@@ -2,7 +2,7 @@ import { generatePath } from 'react-router';
 
 import {
   getHulpmiddelenDisclaimer,
-  hulpmiddelenDisclaimerConfigs,
+  hulpmiddelenDisclaimerConfig as hulpmiddelenDisclaimerConfig,
 } from './status-line-items/wmo-hulpmiddelen';
 import { routes } from './wmo-service-config';
 import { wmoStatusLineItemsConfig } from './wmo-status-line-items';
@@ -83,7 +83,7 @@ function transformVoorzieningForFrontend(
     '';
 
   const disclaimer = getHulpmiddelenDisclaimer(
-    hulpmiddelenDisclaimerConfigs,
+    hulpmiddelenDisclaimerConfig,
     aanvraag,
     aanvragen
   );

@@ -12,7 +12,10 @@ import ZORGNED_AANVRAGEN_WMO from '../../../../mocks/fixtures/zorgned-jzd-aanvra
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { jsonCopy } from '../../../universal/helpers/utils';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types';
-import { getHulpmiddelenDisclaimer } from './status-line-items/wmo-hulpmiddelen';
+import {
+  getHulpmiddelenDisclaimer,
+  HulpmiddelenDisclaimerConfig,
+} from './status-line-items/wmo-hulpmiddelen';
 
 vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => ({
   ...((await importOriginal()) as object),
@@ -138,20 +141,20 @@ describe('Transform api items', () => {
       prettyID: '',
     };
 
-    const config = {
-      generic: {
+    const config: HulpmiddelenDisclaimerConfig = [
+      {
+        codes: [],
         actual: 'actual generic text',
         notActual: 'notActual generic text',
-        datumEindeGeldigheid: '2024-10-31',
-        datumIngangGeldigheid: '2024-11-01',
+        datePairs: [['2024-10-31', '2024-11-01']],
       },
-      codeA: {
+      {
+        codes: ['codeA'],
         actual: 'codeA actual text',
         notActual: 'codeA notActual text',
-        datumEindeGeldigheid: '31-12-2025',
-        datumIngangGeldigheid: '2026-01-01',
+        datePairs: [['31-12-2025', '2026-01-01']],
       },
-    };
+    ];
 
     const baseAanvragen = [baseAanvraag];
 
