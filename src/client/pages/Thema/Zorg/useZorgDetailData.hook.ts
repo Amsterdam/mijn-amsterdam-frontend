@@ -9,7 +9,6 @@ export function useZorgDetailData() {
     isLoading,
     isError,
     breadcrumbs,
-    routeConfig,
     id: themaId,
   } = useZorgThemaData();
   const { id } = useParams<{ id: WMOVoorzieningFrontend['id'] }>();
@@ -22,6 +21,5 @@ export function useZorgDetailData() {
     breadcrumbs,
     isError,
     isLoading,
-    routeConfig,
   };
 }

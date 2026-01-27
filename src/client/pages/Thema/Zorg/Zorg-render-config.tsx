@@ -1,4 +1,4 @@
-import { themaConfig, routeConfig } from './Zorg-thema-config';
+import { themaConfig } from './Zorg-thema-config';
 import { ZorgDetail } from './ZorgDetail';
 import { default as ZorgIcon } from './ZorgIcon.svg?react';
 import { ZorgList } from './ZorgList';
@@ -12,7 +12,7 @@ import {
 
 export const ZorgRoutes = [
   {
-    route: routeConfig.detailPage.path,
+    route: themaConfig.detailPage.route.path,
     Component: ZorgDetail,
     isActive: themaConfig.featureToggle.active,
   },

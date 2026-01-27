@@ -4,15 +4,15 @@ import { WMOVoorzieningFrontend } from '../../../../server/services/wmo/wmo-type
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 import type {
-  ThemaRoutesConfig,
   ThemaConfigBase,
+  WithDetailPage,
   WithListPage,
 } from '../../../config/thema-types';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
-type ZorgThemaConfig = ThemaConfigBase & WithListPage;
+type ZorgThemaConfig = ThemaConfigBase & WithListPage & WithDetailPage;
 
 const THEMA_TITLE = 'Zorg en ondersteuning';
 
@@ -51,6 +51,13 @@ export const themaConfig: ZorgThemaConfig = {
       trackingUrl: null,
     },
   },
+  detailPage: {
+    route: {
+      path: '/zorg-en-ondersteuning/voorziening/:id',
+      trackingUrl: '/zorg-en-ondersteuning/voorziening',
+      documentTitle: `Voorziening | ${THEMA_TITLE}`,
+    },
+  },
 };
 
 export const listPageParamKind = {
@@ -60,17 +67,6 @@ export const listPageParamKind = {
 
 type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
-
-export const themaId = 'ZORG' as const;
-export const themaTitle = 'Zorg en ondersteuning';
-
-export const routeConfig = {
-  detailPage: {
-    path: '/zorg-en-ondersteuning/voorziening/:id',
-    trackingUrl: '/zorg-en-ondersteuning/voorziening',
-    documentTitle: `Voorziening | ${THEMA_TITLE}`,
-  },
-} as const satisfies ThemaRoutesConfig;
 
 const displayProps: DisplayProps<WMOVoorzieningFrontend> = {
   props: {
