@@ -1,7 +1,7 @@
 import { useParams } from 'react-router';
 
 import { useZorgThemaData } from './useZorgThemaData';
-import { ListPageParamKind, themaConfig } from './Zorg-thema-config';
+import { ListPageParamKind } from './Zorg-thema-config';
 import { HistoricItemsMention } from './ZorgThema';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 import { PageContentCell } from '../../../components/Page/Page';
@@ -20,6 +20,7 @@ export function ZorgList() {
     listPageParamKind,
     breadcrumbs,
     id,
+    themaConfig,
   } = useZorgThemaData();
   useHTMLDocumentTitle(themaConfig.listPage.route);
 

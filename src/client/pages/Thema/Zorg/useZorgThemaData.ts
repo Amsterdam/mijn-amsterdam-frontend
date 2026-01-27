@@ -9,7 +9,6 @@ import { isError, isLoading } from '../../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
-import { routeConfig } from '../Afis/Afis-thema-config';
 
 export function useZorgThemaData() {
   const { WMO } = useAppStateGetter();
@@ -30,8 +29,8 @@ export function useZorgThemaData() {
     tableConfig,
     listPageTitle,
     listPageParamKind,
-    linkListItems: themaConfig.pageLinks,
+    pageLinks: themaConfig.pageLinks,
     breadcrumbs,
-    routeConfig,
+    themaConfig,
   };
 }
