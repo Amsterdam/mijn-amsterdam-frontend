@@ -90,13 +90,15 @@ export const hulpmiddelenDisclaimerConfig: HulpmiddelenDisclaimerConfig = [
   },
 ];
 
+type DateKey = keyof Pick<
+  ZorgnedAanvraagTransformed,
+  'datumIngangGeldigheid' | 'datumEindeGeldigheid'
+>;
+
 function isDateMatch(
   datePairs: DatePairs,
   aanvraagDate: string | null,
-  key: keyof Pick<
-    ZorgnedAanvraagTransformed,
-    'datumIngangGeldigheid' | 'datumEindeGeldigheid'
-  >
+  key: DateKey
 ): boolean {
   if (!aanvraagDate) {
     return false;
@@ -115,32 +117,30 @@ function isDateMatch(
  */
 export function getHulpmiddelenDisclaimer(
   disclaimerConfigs: HulpmiddelenDisclaimerConfig,
-  detailAanvraag: ZorgnedAanvraagTransformed,
+  currentAanvraag: ZorgnedAanvraagTransformed,
   aanvragen: ZorgnedAanvraagTransformed[]
 ): string | undefined {
   const config =
     disclaimerConfigs.find((cfg) =>
-      cfg.codes.includes(detailAanvraag.productsoortCode)
+      cfg.codes.includes(currentAanvraag.productsoortCode)
     ) ?? disclaimerConfigs.find((cfg) => !cfg.codes.length);
 
   if (!config) {
     return undefined;
   }
 
-  if (detailAanvraag.isActueel) {
+  if (currentAanvraag.isActueel) {
     if (
       isDateMatch(
         config.datePairs,
-        detailAanvraag.datumIngangGeldigheid,
+        currentAanvraag.datumIngangGeldigheid,
         'datumIngangGeldigheid'
       ) &&
-      aanvragen.some(
-        (aanvraag) =>
-          isDateMatch(
-            config.datePairs,
-            aanvraag.datumEindeGeldigheid,
-            'datumEindeGeldigheid'
-          ) && !aanvraag.isActueel
+      hasAanvraagMatch(
+        config,
+        currentAanvraag,
+        aanvragen,
+        'datumEindeGeldigheid'
       )
     ) {
       return config.actual;
@@ -148,18 +148,31 @@ export function getHulpmiddelenDisclaimer(
   } else if (
     isDateMatch(
       config.datePairs,
-      detailAanvraag.datumEindeGeldigheid,
+      currentAanvraag.datumEindeGeldigheid,
       'datumEindeGeldigheid'
     ) &&
-    aanvragen.some(
-      (aanvraag) =>
-        isDateMatch(
-          config.datePairs,
-          aanvraag.datumIngangGeldigheid,
-          'datumIngangGeldigheid'
-        ) && aanvraag.isActueel
+    hasAanvraagMatch(
+      config,
+      currentAanvraag,
+      aanvragen,
+      'datumIngangGeldigheid'
     )
   ) {
     return config.notActual;
   }
+}
+
+function hasAanvraagMatch(
+  config: ConfigValue,
+  currentAanvraag: ZorgnedAanvraagTransformed,
+  aanvragen: ZorgnedAanvraagTransformed[],
+  key: DateKey
+): boolean {
+  const expectedActueelValue = key === 'datumIngangGeldigheid';
+  return aanvragen.some(
+    (aanvraag) =>
+      aanvraag.productsoortCode === currentAanvraag.productsoortCode &&
+      isDateMatch(config.datePairs, aanvraag[key], key) &&
+      aanvraag.isActueel === expectedActueelValue
+  );
 }
