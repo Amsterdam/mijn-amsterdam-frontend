@@ -72,7 +72,6 @@ export function useHliThemaData() {
       ? [...themaConfig.pageLinks, kindTegoedPageLinkItem]
       : themaConfig.pageLinks,
     breadcrumbs,
-    detailPageConfig: themaConfig.regelingenDetailPage,
     detailPageStadspasConfig: themaConfig.stadspasDetailPage,
     themaConfig,
   };
