@@ -16,6 +16,6 @@ export function useBodemDetailData() {
     isLoading,
     isError,
     breadcrumbs,
-    routeConfig: themaConfig.detailPage.route,
+    routeConfig: themaConfig.detailPage.route, // TO DO YACINE > moet dit zo blijven
   };
 }
