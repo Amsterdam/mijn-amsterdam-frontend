@@ -10,7 +10,7 @@ import {
 } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router';
 
-import { themaConfig } from './HLI-thema-config'; //TO DO YACINE > deze moet eigenlijk weg, maar ik zie hier geen import van useHLIThemaData
+import { themaConfig } from './HLI-thema-config';
 import styles from './HLIStadspasDetail.module.scss';
 import { useBlockStadspas, useStadspassen } from './useStadspassen.hook';
 import {

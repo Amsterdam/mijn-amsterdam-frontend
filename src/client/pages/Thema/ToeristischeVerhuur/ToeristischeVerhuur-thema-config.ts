@@ -24,6 +24,7 @@ type ToeristischeVerhuurThemaConfig = ThemaConfigBase<typeof THEMA_ID> &
 
 const THEMA_ID = 'TOERISTISCHE_VERHUUR';
 const THEMA_TITLE = 'Toeristische verhuur';
+export const THEMA_DETAIL_TITLE_DEFAULT = 'Vergunning toeristische verhuur';
 
 export const themaConfig: ToeristischeVerhuurThemaConfig = {
   id: THEMA_ID,
@@ -143,5 +144,3 @@ export const tableConfigLVVRegistraties = {
   title: 'Registratienummer(s) toeristische verhuur',
   displayProps: DISPLAY_PROPS_LVV_REGISTRATIES,
 } as const;
-
-export const THEMA_DETAIL_TITLE_DEFAULT = 'Vergunning toeristische verhuur'; //To DO YACINE > moet deze niet ergens in de themaConfig worden opgenomen, bijv bij

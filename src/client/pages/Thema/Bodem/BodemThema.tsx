@@ -45,7 +45,7 @@ export function BodemThema() {
         </PageContentCell>
       }
       pageContentMain={tables}
-      linkListItems={pageLinks} // TO DO YACINE > op ThemaPagina > deze wordt door alle thema's gebruikt
+      pageLinks={pageLinks}
       maintenanceNotificationsPageSlug="bodem"
     />
   );

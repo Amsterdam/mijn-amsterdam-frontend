@@ -107,7 +107,7 @@ export function ToeristischeVerhuurThema() {
       id={id}
       title={title}
       pageContentTop={pageContentTop}
-      linkListItems={pageLinks}
+      pageLinks={pageLinks}
       maintenanceNotificationsPageSlug="toeristische-verhuur"
       pageContentMain={
         <>
