@@ -5,6 +5,7 @@ import z from 'zod';
 
 import { createOrUpdateEMandateFromStatusNotificationPayload } from './afis-e-mandates';
 import { fetchAfisFacturenByState } from './afis-facturen';
+import { debugEmandates } from './afis-helpers';
 import {
   AfisFactuurState,
   BusinessPartnerIdPayload,
@@ -12,6 +13,7 @@ import {
   type EMandateSignRequestPayload,
   type POMEMandateSignRequestPayload,
 } from './afis-types';
+import { IS_ACCEPTANCE } from '../../../universal/config/env';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -120,12 +122,13 @@ export function handleAfisRequestWithEncryptedPayloadQueryParam<
 }
 
 const eMandateSignRequestStatusNotificationPayload = z.object({
-  businessPartnerId: z.string(),
-  senderIBAN: z.string(),
-  senderBIC: z.string(),
-  senderName: z.string(),
-  eMandateSignDate: z.iso.datetime(),
-  creditorIBAN: z.string(),
+  debtornumber: z.string(),
+  iban: z.string(),
+  bic: z.string(),
+  account_owner: z.string(),
+  event_date: z.string(),
+  event_time: z.string(),
+  variable1: z.string(),
 });
 
 /**
@@ -136,29 +139,26 @@ export async function handleAfisEMandateSignRequestStatusNotification(
   req: Request,
   res: Response
 ) {
-  const notificationPayload =
-    req.body as Partial<POMEMandateSignRequestPayload> | null;
-
-  let eMandatePayload: EMandateSignRequestPayload &
-    EMandateSignRequestNotificationPayload;
+  const notificationPayload = req.body as POMEMandateSignRequestPayload;
 
   try {
-    eMandatePayload = eMandateSignRequestStatusNotificationPayload.parse({
-      businessPartnerId: notificationPayload?.debtornumber?.toString(),
-      senderIBAN: notificationPayload?.iban,
-      senderBIC: notificationPayload?.bic,
-      senderName: notificationPayload?.account_owner,
-      eMandateSignDate: notificationPayload
-        ? `${notificationPayload?.event_date}T${notificationPayload?.event_time}:00Z`
-        : null, // ISO 8601 format
-      creditorIBAN: notificationPayload?.variable1,
-    });
+    eMandateSignRequestStatusNotificationPayload.parse(notificationPayload);
   } catch (error) {
     return sendBadRequestInvalidInput(res, error);
   }
 
-  let createEmandateResponse: ApiResponse<unknown> | null = null;
+  const eMandatePayload: EMandateSignRequestPayload &
+    EMandateSignRequestNotificationPayload = {
+    businessPartnerId: notificationPayload.debtornumber.toString(),
+    senderIBAN: notificationPayload.iban,
+    senderBIC: notificationPayload.bic,
+    senderName: notificationPayload.account_owner,
+    eMandateSignDate: `${notificationPayload.event_date}T${notificationPayload.event_time}`, // ISO 8601 format
+    creditorIBAN: notificationPayload.variable1,
+  };
 
+  let createEmandateResponse: ApiResponse<unknown> | null = null;
+  let creationError: string | null = null;
   // TODO: Figure out if we can actually create the eMandate from this event. - https://gemeente-amsterdam.atlassian.net/browse/MIJN-12289
   try {
     createEmandateResponse =
@@ -169,7 +169,19 @@ export async function handleAfisEMandateSignRequestStatusNotification(
     // If the eMandate creation fails, we should log the error and return an error response.
     // This is important because the creation of the eMandate is a crucial part of the sign request process.
     // Without it, the user will not be able to complete their mandate activation.
-    captureException(error);
+    captureException(
+      error,
+      IS_ACCEPTANCE
+        ? {
+            properties: {
+              payload: eMandatePayload,
+              message:
+                'Failed to create E-Mandate from sign request status notification payload',
+            },
+          }
+        : undefined
+    );
+    creationError = (error as Error).message;
   }
 
   const isOK = createEmandateResponse !== null;
@@ -177,10 +189,15 @@ export async function handleAfisEMandateSignRequestStatusNotification(
   const response = isOK
     ? apiSuccessResult('E-Mandate created successfully')
     : apiErrorResult(
-        'Failed to create E-Mandate from sign request status notification',
+        `Failed to create E-Mandate from sign request status notification with error ${creationError}`,
         null,
         HttpStatusCode.InternalServerError
       );
+
+  debugEmandates(
+    `EMandate sign request status notification handled. Success: ${isOK}.`,
+    eMandatePayload
+  );
 
   return sendResponse(res, response);
 }

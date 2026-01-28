@@ -1,5 +1,5 @@
 import Decimal from 'decimal.js';
-import type { SetNonNullableDeep } from 'type-fest';
+import type { SetNonNullableDeep, Stringified } from 'type-fest';
 
 import { LinkProps } from '../../../universal/types/App.types';
 
@@ -138,6 +138,7 @@ export type AfisBusinessPartnerBankAccount = {
   BankAccountHolderName: string;
   IBAN: string;
   BankAccount: string;
+  BankCountryKey: string;
 };
 
 export type AfisBusinessPartnerBankPayload = {
@@ -337,7 +338,7 @@ export type AfisEMandateSource = AfisEMandateSourceStatic &
   EMandateReceiverSource &
   EMandateSenderSource & {
     // ID of the mandate in AFIS
-    IMandateId: string;
+    IMandateId: number;
 
     // Mandate
     LifetimeFrom: string;
@@ -353,10 +354,12 @@ export type AfisEMandateCreatePayload = Omit<
   AfisEMandateSource,
   'IMandateId'
 > & {
-  LifetimeTo: '9999-12-31T00:00:00';
+  LifetimeTo: string;
 };
 
-export type AfisEMandateUpdatePayload = Partial<AfisEMandateSource>;
+export type AfisEMandateUpdatePayload = Partial<
+  Stringified<AfisEMandateSource>
+>;
 
 export type AfisEMandateStatusCodes = {
   '0': 'NietActief';
@@ -372,6 +375,7 @@ export type EmandateStatusCode = Prettify<keyof AfisEMandateStatusCodes>;
 
 export type AfisEMandateFrontend = {
   id: string;
+  eMandateIdSource: AfisEMandateSource['IMandateId'] | null;
   creditorName: string;
   creditorIBAN: string;
   creditorDescription?: string;
@@ -453,7 +457,7 @@ export type EMandateSignRequestStatusPayload = {
 };
 
 export type EMandateUpdatePayload = {
-  IMandateId: AfisEMandateSource['IMandateId'];
+  IMandateId: AfisEMandateUpdatePayload['IMandateId'];
 };
 
 export type EMandateLifetimeChangePayload = EMandateUpdatePayload & {
