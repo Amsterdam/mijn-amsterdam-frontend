@@ -105,26 +105,6 @@ export const hulpmiddelenDisclaimerConfig: HulpmiddelenDisclaimerConfig = [
   },
 ];
 
-type DateKey = keyof Pick<
-  ZorgnedAanvraagTransformed,
-  'datumIngangGeldigheid' | 'datumEindeGeldigheid'
->;
-
-function isDateMatch(
-  datePairs: DatePairs,
-  aanvraagDate: string | null,
-  key: DateKey
-): boolean {
-  if (!aanvraagDate) {
-    return false;
-  }
-  return datePairs.some(({ datumEindeGeldigheid, datumIngangGeldigheid }) => {
-    return key === 'datumEindeGeldigheid'
-      ? aanvraagDate === datumEindeGeldigheid
-      : aanvraagDate === datumIngangGeldigheid;
-  });
-}
-
 /**
  * Er zijn een aantal voorzieningen in Zorgned gekopieerd naar nieuwe voorzieningen.
  * De oude voorzieningen zijn afgesloten (einde recht).
@@ -144,37 +124,44 @@ export function getHulpmiddelenDisclaimer(
     return undefined;
   }
 
-  if (currentAanvraag.isActueel) {
-    if (
-      isDateMatch(
-        config.datePairs,
-        currentAanvraag.datumIngangGeldigheid,
-        'datumIngangGeldigheid'
-      ) &&
-      hasAanvraagMatch(
-        config,
-        currentAanvraag,
-        aanvragen,
-        'datumEindeGeldigheid'
-      )
-    ) {
-      return config.actual;
-    }
-  } else if (
-    isDateMatch(
-      config.datePairs,
-      currentAanvraag.datumEindeGeldigheid,
-      'datumEindeGeldigheid'
-    ) &&
-    hasAanvraagMatch(
-      config,
-      currentAanvraag,
-      aanvragen,
-      'datumIngangGeldigheid'
-    )
-  ) {
-    return config.notActual;
+  const isMatch = (
+    dateKey: DateKey,
+    oppositeDateKey: DateKey,
+    disclaimer: string
+  ) => {
+    return isDateMatch(config.datePairs, currentAanvraag[dateKey], dateKey) &&
+      hasAanvraagMatch(config, currentAanvraag, aanvragen, oppositeDateKey)
+      ? disclaimer
+      : undefined;
+  };
+
+  return currentAanvraag.isActueel
+    ? isMatch('datumIngangGeldigheid', 'datumEindeGeldigheid', config.actual)
+    : isMatch(
+        'datumEindeGeldigheid',
+        'datumIngangGeldigheid',
+        config.notActual
+      );
+}
+
+type DateKey = keyof Pick<
+  ZorgnedAanvraagTransformed,
+  'datumIngangGeldigheid' | 'datumEindeGeldigheid'
+>;
+
+function isDateMatch(
+  datePairs: DatePairs,
+  aanvraagDate: string | null,
+  key: DateKey
+): boolean {
+  if (!aanvraagDate) {
+    return false;
   }
+  return datePairs.some(({ datumEindeGeldigheid, datumIngangGeldigheid }) => {
+    return key === 'datumEindeGeldigheid'
+      ? aanvraagDate === datumEindeGeldigheid
+      : aanvraagDate === datumIngangGeldigheid;
+  });
 }
 
 function hasAanvraagMatch(
