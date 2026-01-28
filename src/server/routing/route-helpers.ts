@@ -5,6 +5,7 @@ import { generatePath, matchPath } from 'react-router';
 import z from 'zod';
 
 import { PUBLIC_BFF_ENDPOINTS } from './bff-routes';
+import { IS_PRODUCTION } from '../../universal/config/env';
 import {
   ApiResponse_DEPRECATED,
   apiErrorResult,
@@ -146,13 +147,26 @@ export function sendBadRequestInvalidInput(res: Response, error: unknown) {
   return sendBadRequest(res, inputValidationError);
 }
 
+function appendConditionalDetail(
+  baseMessage: string,
+  detail?: string,
+  shouldAppendDetail: boolean = !IS_PRODUCTION
+) {
+  return `${baseMessage}${detail && shouldAppendDetail ? `: ${detail}` : ''}`;
+}
+
 export function sendUnauthorized(
   res: Response,
-  message: string = 'Unauthorized'
+  message: string = 'Unauthorized',
+  messageDetails?: string
 ) {
   return sendResponse(
     res,
-    apiErrorResult(message, null, HttpStatusCode.Unauthorized)
+    apiErrorResult(
+      appendConditionalDetail(message, messageDetails),
+      null,
+      HttpStatusCode.Unauthorized
+    )
   );
 }
 
@@ -163,11 +177,11 @@ export function send404(res: Response) {
   );
 }
 
-export function sendServiceUnavailable(res: Response) {
+export function sendServiceUnavailable(res: Response, messageDetails?: string) {
   return sendResponse(
     res,
     apiErrorResult(
-      'Service Unavailable',
+      appendConditionalDetail('Service Unavailable', messageDetails),
       null,
       HttpStatusCode.ServiceUnavailable
     )
