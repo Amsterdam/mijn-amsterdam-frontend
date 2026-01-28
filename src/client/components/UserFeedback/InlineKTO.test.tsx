@@ -121,10 +121,6 @@ describe('InlineKTO Component', () => {
       })
     );
 
-    expect(
-      await screen.findByText(
-        'Er is iets misgegaan bij het versturen van uw feedback. Probeer het later nogmaals.'
-      )
-    ).toBeInTheDocument();
+    expect(await screen.findByText('Verzenden mislukt')).toBeInTheDocument();
   });
 });

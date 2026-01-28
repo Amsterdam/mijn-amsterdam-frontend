@@ -31,7 +31,7 @@ function UserFeedbackFormTextarea({
         }}
         maxLength={question?.maxCharacters}
         name={`${question?.id}`}
-        value={value}
+        defaultValue={value}
       />
       {!!question?.maxCharacters && (
         <CharacterCount
@@ -51,7 +51,7 @@ function UserFeedbackFormEmail({ question, value }: UserFeedbackQuestionProps) {
         aria-describedby={`question-desc-${question?.id}`}
         id={`question-${question?.id}`}
         name={`${question?.id}`}
-        value={value}
+        defaultValue={value}
       />
       {!question?.required && (
         <Paragraph size="small">
