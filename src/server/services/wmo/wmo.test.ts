@@ -142,14 +142,22 @@ describe('Transform api items', () => {
     };
 
     const CODE_A = 'codeA';
-    const CODE_A_DATE_PAIR: [string, string] = ['31-12-2025', '2026-01-01'];
+    const CODE_A_DATE_PAIR = {
+      datumEindeGeldigheid: '31-12-2025',
+      datumIngangGeldigheid: '2026-01-01',
+    };
 
     const config: HulpmiddelenDisclaimerConfig = [
       {
         codes: [],
         actual: 'actual generic text',
         notActual: 'notActual generic text',
-        datePairs: [['2024-10-31', '2024-11-01']],
+        datePairs: [
+          {
+            datumEindeGeldigheid: '2024-10-31',
+            datumIngangGeldigheid: '2024-11-01',
+          },
+        ],
       },
       {
         codes: [CODE_A],

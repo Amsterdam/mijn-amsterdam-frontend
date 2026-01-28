@@ -57,10 +57,9 @@ export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
  *
  *  Current implementation does not allow codes to be used in seperate config values.
  *
- *  @param codes - List of product codes this config applies to.
+ *  @param codes - List of productsoortcodes that this config applies to.
  *  @param actual - Disclaimer text for actual items
  *  @param notActual - Disclaimer text for non-actual item
- *  @param datePairs - Pairs of start and end dates in yyyy-hh-dd format
  */
 type ConfigValue = {
   codes: ProductSoortCode[];
@@ -69,7 +68,10 @@ type ConfigValue = {
   datePairs: DatePairs;
 };
 
-type DatePairs = [string, string][];
+type DatePairs = {
+  datumEindeGeldigheid: ZorgnedAanvraagTransformed['datumEindeGeldigheid'];
+  datumIngangGeldigheid: ZorgnedAanvraagTransformed['datumIngangGeldigheid'];
+}[];
 
 export type HulpmiddelenDisclaimerConfig = ConfigValue[];
 
@@ -81,7 +83,12 @@ export const hulpmiddelenDisclaimerConfig: HulpmiddelenDisclaimerConfig = [
       'Door een fout kan het zijn dat dit hulpmiddel ook bij "Eerdere en afgewezen voorzieningen" staat. Daar vindt u dan het originele besluit met de juiste datums.',
     notActual:
       'Door een fout kan het zijn dat dit hulpmiddel ten onrechte bij "Eerdere en afgewezen voorzieningen" staat.',
-    datePairs: [['2024-10-31', '2024-11-01']],
+    datePairs: [
+      {
+        datumEindeGeldigheid: '2024-10-31',
+        datumIngangGeldigheid: '2024-11-01',
+      },
+    ],
   },
   {
     codes: ['GBW'],
@@ -89,7 +96,12 @@ export const hulpmiddelenDisclaimerConfig: HulpmiddelenDisclaimerConfig = [
       'Het kan zijn dat uw gesloten buitenwagen hieronder "Huidige voorzieningen" een verkeerde startdatum heeft. Kijk voor de juiste startdatum bij eerdere en afgewezen voorzieningen.',
     notActual:
       'Het kan zijn dat uw gesloten buitenwagen ten onrechte bij hieronder "Eerdere en afgewezen voorzieningen" staat. De actieve voorziening staat ook onder "Huidige voorzieningen".',
-    datePairs: [['2025-12-31', '2026-01-01']],
+    datePairs: [
+      {
+        datumEindeGeldigheid: '2025-12-31',
+        datumIngangGeldigheid: '2026-01-01',
+      },
+    ],
   },
 ];
 
@@ -106,10 +118,10 @@ function isDateMatch(
   if (!aanvraagDate) {
     return false;
   }
-  return datePairs.some(([endDate, startDate]) => {
+  return datePairs.some(({ datumEindeGeldigheid, datumIngangGeldigheid }) => {
     return key === 'datumEindeGeldigheid'
-      ? aanvraagDate === endDate
-      : aanvraagDate === startDate;
+      ? aanvraagDate === datumEindeGeldigheid
+      : aanvraagDate === datumIngangGeldigheid;
   });
 }
 
