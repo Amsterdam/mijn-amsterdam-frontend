@@ -1,6 +1,7 @@
 import { HttpStatusCode } from 'axios';
 import type { Request, Response, NextFunction } from 'express';
 import express from 'express';
+import type { ParamsDictionary } from 'express-serve-static-core';
 import { generatePath, matchPath } from 'react-router';
 import z from 'zod';
 
@@ -45,8 +46,8 @@ export type RequestWithQueryParams<T extends RecordStr2> = Request<
 >;
 
 export type RequestWithRouteAndQueryParams<
-  T extends RecordStr2 = RecordStr2,
-  T2 extends RecordStr2 = RecordStr2,
+  T extends ParamsDictionary = RecordStr2,
+  T2 extends ParamsDictionary = RecordStr2,
 > = Request<T, {}, {}, T2>;
 /* eslint-enable @typescript-eslint/no-empty-object-type */
 

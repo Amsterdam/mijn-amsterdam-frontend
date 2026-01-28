@@ -36,7 +36,7 @@ function isPostiveInt(str: string) {
 }
 
 type QueryParamsWithEncryptedPayload<
-  QuerParamsAdditional extends RecordStr2 = RecordStr2,
+  QuerParamsAdditional extends ParamsDictionary = RecordStr2,
   K extends string = string,
 > = {
   [key in K]: EncryptedPayloadAndSessionID;

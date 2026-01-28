@@ -42,7 +42,7 @@ import { differenceInYears, parseISO } from 'date-fns';
 
 import { ServiceResults } from '../src/server/services/content-tips/tip-types';
 import { IS_PRODUCTION } from '../src/universal/config/env';
-import { cleanTestUsername } from '../src/server/auth/auth-helpers-development.ts';
+import { cleanTestUsername } from '../src/server/auth/auth-helpers-development';
 import { MyNotification } from '../src/universal/types/App.types';
 import {
   Adres,
