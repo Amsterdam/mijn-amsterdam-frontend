@@ -9,6 +9,7 @@ import {
 import classNames from 'classnames';
 
 import { getRedactedClass, type ScopeRequested } from '../../helpers/cobrowse';
+import { useCobrowseScreenshareStatus } from '../MainFooter/CobrowseFooter/CobrowseFooter';
 import {
   PageBreadcrumbsV2,
   type PageBreadcrumbsV2Props,
@@ -44,11 +45,16 @@ export function PageV2({
   showUserFeedback = false,
   userFeedbackDetails,
 }: PageProps) {
+  const isCobrowseScreensharing = useCobrowseScreenshareStatus();
   return (
     <div
       className={classNames(
         'mams-content-wrapper',
-        getRedactedClass(redactedThemaId, redactedScope)
+        getRedactedClass({
+          themaId: redactedThemaId ?? undefined,
+          scopeRequested: redactedScope,
+          isCobrowseScreensharing,
+        })
       )}
     >
       {showBreadcrumbs && (

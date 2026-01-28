@@ -15,6 +15,7 @@ import {
 } from './Contactmomenten.config';
 import styles from './ProfilePrivate.module.scss';
 import { isLoading, isError } from '../../../../../universal/helpers/api';
+import { useCobrowseScreenshareStatus } from '../../../../components/MainFooter/CobrowseFooter/CobrowseFooter';
 import { MaRouterLink } from '../../../../components/MaLink/MaLink';
 import { ThemaMenuItemTransformed } from '../../../../config/thema-types';
 import { getRedactedClass } from '../../../../helpers/cobrowse';
@@ -77,6 +78,7 @@ function addIcon(type: string) {
 export function useContactmomenten() {
   const { KLANT_CONTACT } = useAppStateGetter();
   const { items: myThemasMenuItems } = useActiveThemaMenuItems();
+  const isCobrowseScreensharing = useCobrowseScreenshareStatus();
   const breadcrumbs = useThemaBreadcrumbs(themaIdBRP);
   const routeParams = useParams();
 
@@ -88,7 +90,10 @@ export function useContactmomenten() {
         ] || contactMomentItem.subject;
       return {
         ...contactMomentItem,
-        className: getRedactedClass(menuItemId),
+        className: getRedactedClass({
+          themaId: menuItemId,
+          isCobrowseScreensharing,
+        }),
         themaKanaalIcon: addIcon(contactMomentItem.themaKanaal),
         subjectLink: getLinkToThemaPage(
           contactMomentItem.subject,

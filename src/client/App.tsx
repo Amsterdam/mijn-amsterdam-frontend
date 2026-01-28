@@ -14,7 +14,9 @@ import styles from './App.module.scss';
 import { PrivateRoutes, PublicRoutes } from './App.routes';
 import { AutoLogoutDialog } from './components/AutoLogoutDialog/AutoLogoutDialog';
 import { ErrorMessages } from './components/ErrorMessages/ErrorMessages';
-import { isCobrowseScreensharing } from './components/MainFooter/CobrowseFooter/CobrowseFooter';
+import {
+  useCobrowseScreenshareStatus,
+} from './components/MainFooter/CobrowseFooter/CobrowseFooter';
 import { MainFooter } from './components/MainFooter/MainFooter';
 import { MainHeader } from './components/MainHeader/MainHeader';
 import { routeConfig as buurtRouteConfig } from './components/MyArea/MyArea-thema-config';
@@ -107,7 +109,8 @@ function AppAuthenticated() {
 }
 
 function CobrowseScreenshareDisclaimer() {
-  if (!isCobrowseScreensharing()) {
+  const isCobrowseScreensharing = useCobrowseScreenshareStatus();
+  if (!isCobrowseScreensharing) {
     return null;
   }
   return (

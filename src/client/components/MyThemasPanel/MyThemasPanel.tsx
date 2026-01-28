@@ -6,6 +6,7 @@ import { ThemaMenuItemTransformed } from '../../config/thema-types';
 import { getRedactedClass } from '../../helpers/cobrowse';
 import { GeneralInfoRoute } from '../../pages/GeneralInfo/GeneralInfo-routes';
 import LoadingContent from '../LoadingContent/LoadingContent';
+import { useCobrowseScreenshareStatus } from '../MainFooter/CobrowseFooter/CobrowseFooter';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink';
 
 type ThemaLinkLoaderProps = {
@@ -36,6 +37,7 @@ export function MyThemasPanel({
   items = [],
   isLoading = true,
 }: MyThemasPanelProps) {
+  const isCobrowseScreensharing = useCobrowseScreenshareStatus();
   return (
     <>
       <UnorderedList
@@ -49,7 +51,11 @@ export function MyThemasPanel({
               <LinkComponent
                 maVariant="fatNoUnderline"
                 href={to}
-                className={getRedactedClass(id)}
+                className={getRedactedClass({
+                  themaId: id,
+                  isCobrowseScreensharing,
+                  className: 'in-orange-box',
+                })}
               >
                 <span className={styles.ThemaLink}>
                   {IconSVG && (

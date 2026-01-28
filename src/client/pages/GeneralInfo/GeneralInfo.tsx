@@ -4,6 +4,7 @@ import {
   UnorderedList,
 } from '@amsterdam/design-system-react';
 
+import { useCobrowseScreenshareStatus } from '../../components/MainFooter/CobrowseFooter/CobrowseFooter';
 import { MaLink, MaRouterLink } from '../../components/MaLink/MaLink';
 import { myAreaSectionProps } from '../../components/MyArea/InfoSection';
 import { PageContentCell, PageV2 } from '../../components/Page/Page';
@@ -139,6 +140,7 @@ function getLinkComponent(href: string) {
 
 export function GeneralInfo() {
   const themaMenuItems = useAllThemaMenuItemsByThemaID();
+  const isCobrowseScreensharing = useCobrowseScreenshareStatus();
   const sectionComponents = sections
     .filter((section) => {
       return section.active && section.id in themaMenuItems;
@@ -184,7 +186,9 @@ export function GeneralInfo() {
         <Paragraph className="ams-mb-xl">
           Op dit moment kunnen de volgende gegevens getoond worden:
         </Paragraph>
-        <div className={getRedactedClass()}>{sectionComponents}</div>
+        <div className={getRedactedClass({ isCobrowseScreensharing })}>
+          {sectionComponents}
+        </div>
         <Heading level={4} className="ams-mb-s">
           Vragen over Mijn Amsterdam
         </Heading>

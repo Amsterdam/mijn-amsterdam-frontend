@@ -9,6 +9,7 @@ import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
 import { getRedactedClass } from '../../../helpers/cobrowse';
 import { useSmallScreen } from '../../../hooks/media.hook';
+import { useCobrowseScreenshareStatus } from '../../../components/MainFooter/CobrowseFooter/CobrowseFooter';
 
 export interface ActionLink {
   title: string;
@@ -56,13 +57,14 @@ function ProfileSectionActionLinks({
 }
 
 function getRows(sectionData: ProfileSectionData) {
+  const isCobrowseScreensharing = useCobrowseScreenshareStatus();
   return Object.entries(sectionData).map(([key, value]) => {
     return {
       label: key,
       content: value,
       isVisible: !!value,
       classNameLabel: styles.Label,
-      classNameContent: `${styles.Content} ${getRedactedClass(themaIdBRP, 'content')}`,
+      classNameContent: `${styles.Content} ${getRedactedClass({ themaId: themaIdBRP, scopeRequested: 'content', isCobrowseScreensharing })}`,
     };
   });
 }

@@ -24,6 +24,25 @@ export function isCobrowseScreensharing() {
   return !!document.getElementById('cobrowse-frame');
 }
 
+export function useCobrowseScreenshareStatus() {
+  const [active, setActive] = useState(isCobrowseScreensharing());
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setActive(isCobrowseScreensharing());
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  return active;
+}
+
 function useCobrowse() {
   const [cobrowseWidget, setCobrowseWidget] = useState<CobrowseWidget | null>(
     null

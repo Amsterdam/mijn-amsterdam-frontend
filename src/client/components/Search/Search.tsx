@@ -20,6 +20,7 @@ import { useSmallScreen } from '../../hooks/media.hook';
 import { useAppStateReady } from '../../hooks/useAppStateStore';
 import { useKeyDown } from '../../hooks/useKey';
 import { SearchPageRoute } from '../../pages/Search/Search-routes';
+import { useCobrowseScreenshareStatus } from '../MainFooter/CobrowseFooter/CobrowseFooter';
 import { MaButtonLink, MaLink, MaRouterLink } from '../MaLink/MaLink';
 import { Spinner } from '../Spinner/Spinner';
 
@@ -49,6 +50,7 @@ export function ResultSet({
   totalResultsCount,
   onClickResult,
 }: ResultSetProps) {
+  const isCobrowseScreensharing = useCobrowseScreenshareStatus();
   return (
     <div className={styles.ResultSet}>
       {!!title && (
@@ -74,10 +76,11 @@ export function ResultSet({
               <LinkComponent
                 maVariant="fatNoUnderline"
                 href={result.url}
-                className={getRedactedClass(
-                  result.themaId,
-                  result.themaId ? 'content' : undefined
-                )}
+                className={getRedactedClass({
+                  themaId: result.themaId,
+                  scopeRequested: result.themaId ? 'content' : undefined,
+                  isCobrowseScreensharing,
+                })}
                 rel="noopener noreferrer"
                 onClick={() =>
                   onClickResult?.(
