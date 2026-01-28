@@ -97,6 +97,5 @@ export function useToeristischeVerhuurThemaData() {
     breadcrumbs,
     pageLinks: [...extraPageLinks, ...themaConfig.pageLinks],
     themaConfig,
-    detailPageConfig: themaConfig.detailPage,
   };
 }
