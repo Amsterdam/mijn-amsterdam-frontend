@@ -60,7 +60,6 @@ export async function fetchUserFeedbackSurvey(
     },
     postponeFetch: !featureToggle.service.fetchSurvey.isEnabled,
   });
-
   return requestData<SurveyFrontend>(requestConfig);
 }
 
