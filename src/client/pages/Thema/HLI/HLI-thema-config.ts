@@ -65,7 +65,7 @@ export const themaConfig = {
       path: '/regelingen-bij-laag-inkomen/lijst/:kind/:page?',
       trackingUrl: null,
       documentTitle: (params) =>
-        `${params?.kind === 'eerdere-en-afgehandelde-regelingen' ? 'Eerdere' : 'Huidige'} regelingen | ${THEMA_TITLE}`,
+        `${params?.kind === 'eerdere-en-afgehandelde-regelingen' ? 'Eerdere' : 'Huidige'} regelingen | ${THEMA_TITLE}`, //TO DO YACINE > ik hier bij Eerdere en Afgewezen > Huisige..? > kan niet testen hoe het op ACC is momenteel..
     },
   },
   regelingenDetailPage: {

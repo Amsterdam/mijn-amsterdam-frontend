@@ -9,15 +9,8 @@ import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function BodemThema() {
-  const {
-    items,
-    tableConfig,
-    isLoading,
-    isError,
-    linkListItems,
-    themaId,
-    title,
-  } = useBodemData();
+  const { items, tableConfig, isLoading, isError, pageLinks, themaId, title } =
+    useBodemData();
   useHTMLDocumentTitle(themaConfig.route);
 
   const tables = Object.entries(tableConfig).map(
@@ -52,7 +45,7 @@ export function BodemThema() {
         </PageContentCell>
       }
       pageContentMain={tables}
-      linkListItems={linkListItems}
+      linkListItems={pageLinks} // TO DO YACINE > op ThemaPagina > deze wordt door alle thema's gebruikt
       maintenanceNotificationsPageSlug="bodem"
     />
   );

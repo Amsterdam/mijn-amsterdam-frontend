@@ -16,9 +16,8 @@ export function useBodemData() {
     isLoading: isLoading(BODEM),
     isError: isError(BODEM),
     items,
-    linkListItems: themaConfig.pageLinks,
+    pageLinks: themaConfig.pageLinks,
     breadcrumbs,
-    listPageConfig: themaConfig.listPage,
-    detailPageConfig: themaConfig.detailPage,
+    themaConfig,
   };
 }
