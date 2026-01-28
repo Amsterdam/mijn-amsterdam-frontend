@@ -10,8 +10,8 @@ describe('User Feedback Functions', () => {
       const mockSurvey = {
         id: 'survey123',
         version: '1',
-        questions: [{ what_ever: 'foo' }],
-        hello_world: 'x',
+        questions: [{ question_text: 'foo' }],
+        unique_code: 'x',
       };
 
       remoteApi
@@ -23,11 +23,11 @@ describe('User Feedback Functions', () => {
 
       expect(result).toStrictEqual({
         content: {
-          helloWorld: 'x',
           id: 'survey123',
+          uniqueCode: 'x',
           questions: [
             {
-              whatEver: 'foo',
+              questionText: 'foo',
             },
           ],
           version: '1',

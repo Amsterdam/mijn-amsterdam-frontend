@@ -36,6 +36,7 @@ export async function fetchUserFeedbackSurvey(
     method: 'GET',
     transformResponse(survey: Survey) {
       const base = pick(deepCamelizeKeys<Survey>(survey), [
+        'id',
         'version',
         'title',
         'description',
