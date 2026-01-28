@@ -28,7 +28,7 @@ export function useAppStateNotifications(top?: number) {
               }),
         })
       ),
-    [isReady]
+    [isReady, isCobrowseScreensharing]
   );
 
   return {
