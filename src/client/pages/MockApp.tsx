@@ -42,7 +42,7 @@ export default function MockApp({
 
 export function componentCreator(conf: {
   component: () => JSX.Element;
-  routeEntry: string;
+  routeEntry?: string;
   routePath: string;
 }) {
   function createComponent(state: Partial<AppState> | Record<string, never>) {

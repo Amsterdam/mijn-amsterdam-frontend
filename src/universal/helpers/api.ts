@@ -60,6 +60,8 @@ export type ApiResponse<T> =
   | ApiSuccessResponse<T>
   | ApiPostponeResponse<null>;
 
+export type ApiResponsePromise<T> = Promise<ApiResponse<T>>;
+
 export function isLoading(apiResponseData: ApiResponse_DEPRECATED<unknown>) {
   // If no responseData was found, assumes it's still loading
   return !!(

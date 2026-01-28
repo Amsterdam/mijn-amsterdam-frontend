@@ -28,7 +28,7 @@ import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { captureMessage } from '../../helpers/monitoring';
 import {
   isAborted,
-  sendGetRequest,
+  sendFetchRequest,
   sendJSONPostRequest,
 } from '../../hooks/api/useBffApi';
 import {
@@ -175,7 +175,7 @@ export function useFetchPanelFeature() {
     const source = new AbortController();
     const { datasetId, id } = loadingFeature;
 
-    sendGetRequest<SelectedFeature>(
+    sendFetchRequest<SelectedFeature>(
       `${BFFApiUrls.MAP_DATASETS}/${datasetId}/${id}`,
       {
         signal: source.signal,

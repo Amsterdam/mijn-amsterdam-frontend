@@ -4,6 +4,7 @@ import basicAuth from 'express-basic-auth';
 import { BffEndpoints } from './bff-routes';
 import { DEFAULT_REQUEST_CONFIG } from '../config/source-api';
 import { cacheOverview } from '../helpers/file-cache';
+import { userFeedbackRouter } from '../services/user-feedback/user-feedback.router';
 import { loginStats, loginStatsTable } from '../services/visitors';
 
 export const adminRouter = express.Router();
@@ -32,4 +33,6 @@ if (process.env.BFF_LOGIN_COUNT_ADMIN_PW) {
       });
     }
   );
+
+  adminRouter.use(userFeedbackRouter.admin);
 }

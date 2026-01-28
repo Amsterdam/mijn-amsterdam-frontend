@@ -107,10 +107,14 @@ export function ErrorMessagesContent({
   );
 }
 
-export function ErrorMessages() {
+export function useErrorMessages() {
   const appState = useAppStateGetter();
   const errors = useMemo(() => getApiErrors(appState), [appState]);
   const hasErrors = !!errors.length;
+  return { errors, hasErrors };
+}
 
+export function ErrorMessages() {
+  const { errors, hasErrors } = useErrorMessages();
   return hasErrors && <ErrorMessagesContent errors={errors} />;
 }

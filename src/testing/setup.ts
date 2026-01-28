@@ -177,3 +177,5 @@ process.env.BFF_HR_KVK_API_BASE_URL = `${remoteApiHost}/hr_kvk`;
 process.env.BFF_CMS_BASE_URL = `${remoteApiHost}/cms`;
 
 process.env.REACT_APP_COBROWSE_LICENSE_KEY = 'test';
+
+process.env.BFF_AMSAPP_SURVEY_API_BASE_URL = `${remoteApiHost}/survey/api/v1/surveys`;

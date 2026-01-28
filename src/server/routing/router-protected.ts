@@ -36,6 +36,7 @@ import { hliRouter } from '../services/hli/hli-router';
 import { fetchZorgnedLLVDocument } from '../services/jeugd/route-handlers';
 import { fetchDocument as fetchBBDocument } from '../services/powerbrowser/powerbrowser-service';
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler';
+import { userFeedbackRouter } from '../services/user-feedback/user-feedback.router';
 import { wmoRouter } from '../services/wmo/wmo-router';
 import { fetchWpiDocument } from '../services/wpi/api-service';
 
@@ -120,7 +121,8 @@ router.use(
   hliRouter.protected,
   brpRouter.protected,
   afisRouter.protected,
-  bezwarenRouter.protected
+  bezwarenRouter.protected,
+  userFeedbackRouter.protected
 );
 
 // LLV Zorgned Doc download

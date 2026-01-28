@@ -8,7 +8,7 @@ export const PRISTINE_APPSTATE: AppState = {
   NOTIFICATIONS: apiPristineResult([]),
 
   VAREN: apiPristineResult(
-    { reder: null, zaken: [] },
+    { reder: null, zaken: [], vergunningen: [] },
     {
       profileTypes: ['commercial'],
     }
@@ -53,6 +53,7 @@ export const PRISTINE_APPSTATE: AppState = {
     {
       stadspas: { stadspassen: [], dateExpiryFormatted: null },
       regelingen: [],
+      specificaties: [],
     },
     {
       profileTypes: ['private'],
@@ -127,6 +128,8 @@ export const PRISTINE_APPSTATE: AppState = {
   }),
 
   BODEM: apiPristineResult(null),
+
+  KTO: apiPristineResult(null),
 };
 
 export const ALL_ERROR_STATE_KEY = 'ALL';
