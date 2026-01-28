@@ -30,10 +30,10 @@ import { overtredingensectionProps } from '../Thema/Overtredingen/InfoSection';
 import { parkerensectionProps } from '../Thema/Parkeren/InfoSection';
 import { profileSectionProps } from '../Thema/Profile/InfoSection';
 import { subsidiesSectionProps } from '../Thema/Subsidies/InfoSection';
-import { toeristischeverhuurSectionProps } from '../Thema/ToeristischeVerhuur/InfoSection';
+import { themaConfig as toeristischeVerhuurThemaConfig } from '../Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 import { varensectionProps } from '../Thema/Varen/infoSection';
 import { vergunningensectionProps } from '../Thema/Vergunningen/InfoSection';
-import { zorgSectionProps } from '../Thema/Zorg/InfoSection';
+import { themaConfig as zorgThemaConfig } from '../Thema/Zorg/Zorg-thema-config';
 
 export type InfoSection_DEPRECATED = {
   id: string;
@@ -74,11 +74,11 @@ const sections: InfoSection_DEPRECATED[] = [
   afisSectionProps,
   inkomenSectionProps,
   ...createDeprecatedInfoSection(hliThemaConfig),
-  zorgSectionProps,
+  ...createDeprecatedInfoSection(zorgThemaConfig),
   jeugdSectionProps,
   subsidiesSectionProps,
   krefiaSectionProps,
-  toeristischeverhuurSectionProps,
+  ...createDeprecatedInfoSection(toeristischeVerhuurThemaConfig),
   parkerensectionProps,
   milieuzonesectionProps,
   overtredingensectionProps,

@@ -3,7 +3,7 @@ import Mockdate from 'mockdate';
 import { generatePath } from 'react-router';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
-import { routeConfig } from './ToeristischeVerhuur-thema-config';
+import { themaConfig } from './ToeristischeVerhuur-thema-config';
 import { ToeristischeVerhuurThema } from './ToeristischeVerhuurThema';
 import type { BBVergunningFrontend } from '../../../../server/services/toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types';
 import type { VakantieverhuurVergunningFrontend } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
@@ -126,8 +126,8 @@ const getTestState = () =>
 const testStateBase = getTestState();
 
 describe('<ToeristischeVerhuurThema />', () => {
-  const routeEntry = generatePath(routeConfig.themaPage.path);
-  const routePath = routeConfig.themaPage.path;
+  const routeEntry = generatePath(themaConfig.route.path);
+  const routePath = themaConfig.route.path;
 
   function Component({ state }: { state: AppState }) {
     return (
@@ -151,7 +151,9 @@ describe('<ToeristischeVerhuurThema />', () => {
   it('Shows page for B&B and Vakantieverhuur permits', () => {
     const screen = render(<Component state={testStateBase} />);
 
-    expect(screen.getAllByText(/Toeristische verhuur/)[0]).toBeInTheDocument();
+    expect(
+      screen.getAllByText(new RegExp(themaConfig.title))[0]
+    ).toBeInTheDocument();
     expect(
       screen.getByText('Meer over toeristenbelasting')
     ).toBeInTheDocument();

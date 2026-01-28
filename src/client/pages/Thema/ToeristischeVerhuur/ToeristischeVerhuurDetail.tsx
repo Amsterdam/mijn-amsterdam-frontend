@@ -137,9 +137,9 @@ export function ToeristischeVerhuurDetail() {
     isError,
     isLoading,
     breadcrumbs,
-    routeConfig,
+    detailPageConfig,
   } = useToeristischeVerhuurThemaData();
-  useHTMLDocumentTitle(routeConfig.detailPage);
+  useHTMLDocumentTitle(detailPageConfig.route);
 
   const { id } = useParams<{ id: string }>();
   const vergunning = vergunningen.find((v) => v.id === id);

@@ -1,5 +1,6 @@
 import { Alert, Link, Paragraph } from '@amsterdam/design-system-react';
 
+import { themaConfig } from './ToeristischeVerhuur-thema-config';
 import {
   BB_VERGUNNING_DISCLAIMER,
   useToeristischeVerhuurThemaData,
@@ -32,9 +33,8 @@ export function ToeristischeVerhuurThema() {
     hasLVVRegistratiesError,
     hasVakantieVerhuurVergunningError,
     linkListItems,
-    routeConfig,
   } = useToeristischeVerhuurThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const errorAlertContent = isError ? (
     <>Wij kunnen nu niet alle gegevens laten zien.</>

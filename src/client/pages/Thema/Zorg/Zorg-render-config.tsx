@@ -1,9 +1,4 @@
-import {
-  routeConfig,
-  themaId,
-  themaTitle,
-  featureToggle,
-} from './Zorg-thema-config';
+import { themaConfig } from './Zorg-thema-config';
 import { ZorgDetail } from './ZorgDetail';
 import { default as ZorgIcon } from './ZorgIcon.svg?react';
 import { ZorgList } from './ZorgList';
@@ -17,31 +12,31 @@ import {
 
 export const ZorgRoutes = [
   {
-    route: routeConfig.detailPage.path,
+    route: themaConfig.detailPage.route.path,
     Component: ZorgDetail,
-    isActive: featureToggle.zorgActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.listPage.path,
+    route: themaConfig.listPage.route.path,
     Component: ZorgList,
-    isActive: featureToggle.zorgActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.themaPage.path,
+    route: themaConfig.route.path,
     Component: ZorgThema,
-    isActive: featureToggle.zorgActive,
+    isActive: themaConfig.featureToggle.active,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
-export const menuItem: ThemaMenuItem<typeof themaId> = {
-  title: themaTitle,
-  id: themaId,
-  to: routeConfig.themaPage.path,
-  redactedScope: 'full',
-  profileTypes: ['private'],
+export const menuItem: ThemaMenuItem = {
+  title: themaConfig.title,
+  id: themaConfig.id,
+  to: themaConfig.route.path,
+  profileTypes: themaConfig.profileTypes,
+  redactedScope: themaConfig.redactedScope,
   isActive(appState: AppState) {
     return (
-      featureToggle.zorgActive &&
+      themaConfig.featureToggle.active &&
       !isLoading(appState.WMO) &&
       !!appState.WMO.content?.length
     );

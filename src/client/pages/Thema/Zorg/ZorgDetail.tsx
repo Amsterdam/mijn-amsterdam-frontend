@@ -1,4 +1,5 @@
 import { useZorgDetailData } from './useZorgDetailData.hook';
+import { themaConfig } from './Zorg-thema-config';
 import { WMOVoorzieningFrontend } from '../../../../server/services/wmo/wmo-types';
 import ErrorAlert from '../../../components/Alert/Alert';
 import { Datalist } from '../../../components/Datalist/Datalist';
@@ -43,16 +44,9 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
 }
 
 export function ZorgDetail() {
-  const {
-    title,
-    voorziening,
-    breadcrumbs,
-    isError,
-    isLoading,
-    routeConfig,
-    themaId,
-  } = useZorgDetailData();
-  useHTMLDocumentTitle(routeConfig.detailPage);
+  const { title, voorziening, breadcrumbs, isError, isLoading, themaId } =
+    useZorgDetailData();
+  useHTMLDocumentTitle(themaConfig.detailPage.route);
 
   return (
     <ThemaDetailPagina

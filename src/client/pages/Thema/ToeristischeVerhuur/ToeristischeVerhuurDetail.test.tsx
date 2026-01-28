@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { describe, expect } from 'vitest';
 
-import { routeConfig } from './ToeristischeVerhuur-thema-config';
+import { themaConfig } from './ToeristischeVerhuur-thema-config';
 import { ToeristischeVerhuurDetail } from './ToeristischeVerhuurDetail';
 import { BBVergunningFrontend } from '../../../../server/services/toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types';
 import { VakantieverhuurVergunningFrontend } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
@@ -145,11 +145,11 @@ describe('<ToeristischVerhuurDetail />', () => {
         content: [],
       });
     const vergunning = vakantieverhuurVergunningen[0];
-    const routeEntry = generatePath(routeConfig.detailPage.path, {
+    const routeEntry = generatePath(themaConfig.detailPage.route.path, {
       id: vergunning.id,
       caseType: 'vakantieverhuur',
     });
-    const routePath = routeConfig.detailPage.path;
+    const routePath = themaConfig.detailPage.route.path;
     function Component() {
       return (
         <MockApp
@@ -177,11 +177,11 @@ describe('<ToeristischVerhuurDetail />', () => {
 
   test('Bed & Breakfast vergunning', () => {
     const vergunning = bbVergunningen[0];
-    const routeEntry = generatePath(routeConfig.detailPage.path, {
+    const routeEntry = generatePath(themaConfig.detailPage.route.path, {
       id: vergunning.id,
       caseType: 'bed-and-breakfast',
     });
-    const routePath = routeConfig.detailPage.path;
+    const routePath = themaConfig.detailPage.route.path;
     function Component() {
       return (
         <MockApp

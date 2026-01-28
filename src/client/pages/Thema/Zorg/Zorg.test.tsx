@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { routeConfig } from './Zorg-thema-config';
+import { themaConfig } from './Zorg-thema-config';
 import { ZorgThema } from './ZorgThema';
 import { AppState } from '../../../../universal/types/App.types';
 import MockApp from '../../MockApp';
@@ -53,8 +53,8 @@ const testState: Pick<AppState, 'WMO'> = {
 };
 
 describe('<Zorg />', () => {
-  const routeEntry = generatePath(routeConfig.themaPage.path);
-  const routePath = routeConfig.themaPage.path;
+  const routeEntry = generatePath(themaConfig.route.path);
+  const routePath = themaConfig.route.path;
 
   function Component() {
     return (

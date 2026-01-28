@@ -3,7 +3,7 @@ import { Mock, vi } from 'vitest';
 
 import { fetchToeristischeVerhuur } from './toeristische-verhuur';
 import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur-notifications';
-import { themaId } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 import { getAuthProfileAndToken } from '../../../testing/utils';
 import { MONTHS_TO_KEEP_NOTIFICATIONS } from '../../../universal/config/app';
 import { apiSuccessResult } from '../../../universal/helpers/api';
@@ -72,7 +72,7 @@ describe('fetchToeristischeVerhuurNotifications', () => {
           title: 'Bekijk uw aanvraag',
           to: '/toeristische-verhuur',
         },
-        themaID: themaId,
+        themaID: themaConfig.id,
         themaTitle: 'Toeristische verhuur',
         title: 'Aanvraag vakantie in behandeling',
       },
@@ -85,7 +85,7 @@ describe('fetchToeristischeVerhuurNotifications', () => {
           title: 'Bekijk uw aanvraag',
           to: '/toeristische-verhuur',
         },
-        themaID: themaId,
+        themaID: themaConfig.id,
         themaTitle: 'Toeristische verhuur',
         title: 'Aanvraag bed & breakfast in behandeling',
       },
@@ -98,7 +98,7 @@ describe('fetchToeristischeVerhuurNotifications', () => {
           title: 'Bekijk uw overzicht toeristische verhuur',
           to: '/toeristische-verhuur',
         },
-        themaID: themaId,
+        themaID: themaConfig.id,
         themaTitle: 'Toeristische verhuur',
         title: 'Aanvraag landelijk registratienummer toeristische verhuur',
       },

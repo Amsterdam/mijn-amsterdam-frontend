@@ -9,8 +9,8 @@ export function useZorgDetailData() {
     isLoading,
     isError,
     breadcrumbs,
-    routeConfig,
     id: themaId,
+    themaConfig,
   } = useZorgThemaData();
   const { id } = useParams<{ id: WMOVoorzieningFrontend['id'] }>();
   const voorziening = voorzieningen.find((item) => item.id === id);
@@ -22,6 +22,6 @@ export function useZorgDetailData() {
     breadcrumbs,
     isError,
     isLoading,
-    routeConfig,
+    detailPageConfig: themaConfig.detailPage,
   };
 }

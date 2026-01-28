@@ -11,7 +11,7 @@ import {
   featureToggle as featureToggleSvwi,
   themaId as themaIdSvwi,
 } from '../../Svwi/Svwi-thema-config';
-import { themaId as themaIdZorg } from '../../Zorg/Zorg-thema-config';
+import { themaConfig } from '../../Zorg/Zorg-thema-config';
 
 export type ContactMomentFrontend = ContactMoment & {
   themaKanaalIcon: ReactNode;
@@ -36,7 +36,7 @@ const SVWIv1ORv2 = featureToggleSvwi.svwiActive ? themaIdSvwi : themaIdInkomen;
 
 export const mapperContactmomentToMenuItem = {
   Parkeren: themaIdParkeren,
-  Zorg: themaIdZorg,
+  Zorg: themaConfig.id,
   'Werk en Inkomen': SVWIv1ORv2,
   Belastingen: themaIdBelastingen,
   Geldzaken: themaIdKrefia,
