@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { themaConfig, listPageParamKind } from './HLI-thema-config';
+import { listPageParamKind } from './HLI-thema-config';
 import styles from './HLIThema.module.scss';
 import { useHliThemaData } from './useHliThemaData';
 import {
@@ -94,7 +94,7 @@ export function HLIThema() {
     dependencyError,
     stadspassen,
     dateExpiryFormatted,
-    linkListItems,
+    themaConfig,
   } = useHliThemaData();
   useHTMLDocumentTitle(themaConfig.route);
 
@@ -141,7 +141,7 @@ export function HLIThema() {
         id={themaId}
         title={title}
         pageContentTop={pageContentTop}
-        linkListItems={linkListItems}
+        linkListItems={themaConfig.pageLinks}
         maintenanceNotificationsPageSlug="stadspas"
         pageContentMain={
           <>
