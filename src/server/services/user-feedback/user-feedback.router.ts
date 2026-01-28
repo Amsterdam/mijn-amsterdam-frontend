@@ -7,9 +7,6 @@ import {
   handleUserFeedbackSubmission,
 } from './user-feedback.route-handlers';
 import { featureToggle, routes } from './user-feedback.service-config';
-import { IS_TAP } from '../../../universal/config/env';
-import { conditional } from '../../helpers/middleware';
-import { OAuthVerificationHandler } from '../../routing/route-handlers';
 import { createBFFRouter } from '../../routing/route-helpers';
 
 const userFeedbackRouterProtected = createBFFRouter({
@@ -22,24 +19,28 @@ userFeedbackRouterProtected.get(
   handleFetchSurvey
 );
 
-userFeedbackRouterProtected.get(
-  routes.protected.USER_FEEDBACK_OVERVIEW_TABLE,
-  conditional(IS_TAP, OAuthVerificationHandler()),
-  handleShowSurveyOverview
-);
-
-userFeedbackRouterProtected.get(
-  routes.protected.USER_FEEDBACK_OVERVIEW,
-  conditional(IS_TAP, OAuthVerificationHandler()),
-  handleFetchSurveyOverview
-);
-
 userFeedbackRouterProtected.post(
   routes.protected.USER_FEEDBACK_SUBMIT,
   express.urlencoded({ extended: true }),
   handleUserFeedbackSubmission
 );
 
+const userFeedbackRouterAdmin = createBFFRouter({
+  id: 'admin-user-feedback-router',
+  isEnabled: featureToggle.router.admin.isEnabled,
+});
+
+userFeedbackRouterAdmin.get(
+  routes.admin.USER_FEEDBACK_OVERVIEW_TABLE,
+  handleShowSurveyOverview
+);
+
+userFeedbackRouterAdmin.get(
+  routes.admin.USER_FEEDBACK_OVERVIEW,
+  handleFetchSurveyOverview
+);
+
 export const userFeedbackRouter = {
   protected: userFeedbackRouterProtected,
+  admin: userFeedbackRouterAdmin,
 };

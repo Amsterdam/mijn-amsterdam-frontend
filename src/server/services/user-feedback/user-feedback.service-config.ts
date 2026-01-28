@@ -6,14 +6,19 @@ export const routes = {
   protected: {
     USER_FEEDBACK_SUBMIT: '/user-feedback/collect',
     USER_FEEDBACK_SURVEY: '/user-feedback/survey',
-    USER_FEEDBACK_OVERVIEW_TABLE: '/user-feedback/overview/table',
-    USER_FEEDBACK_OVERVIEW: '/user-feedback/overview',
+  },
+  admin: {
+    USER_FEEDBACK_OVERVIEW_TABLE: '/admin/user-feedback/overview/table',
+    USER_FEEDBACK_OVERVIEW: '/admin/user-feedback/overview',
   },
 };
 
 export const featureToggle = {
   router: {
     protected: {
+      isEnabled: !IS_PRODUCTION,
+    },
+    admin: {
       isEnabled: !IS_PRODUCTION,
     },
   },
