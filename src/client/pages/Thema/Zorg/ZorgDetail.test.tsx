@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { routeConfig } from './Zorg-thema-config';
+import { themaConfig } from './Zorg-thema-config';
 import { ZorgDetail } from './ZorgDetail';
 import type { AppState } from '../../../../universal/types/App.types';
 import MockApp from '../../MockApp';
@@ -252,10 +252,10 @@ const testState = {
 };
 
 function testDetailPage(id: string, title: string) {
-  const routeEntry = generatePath(routeConfig.detailPage.path, {
+  const routeEntry = generatePath(themaConfig.detailPage.route.path, {
     id,
   });
-  const routePath = routeConfig.detailPage.path;
+  const routePath = themaConfig.detailPage.route.path;
 
   function Component() {
     return (
