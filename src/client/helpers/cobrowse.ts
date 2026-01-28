@@ -1,6 +1,5 @@
 import memoizee from 'memoizee';
 
-import { isCobrowseScreensharing } from '../components/MainFooter/CobrowseFooter/CobrowseFooter';
 import { myThemasMenuItems } from '../config/thema';
 import { ThemaMenuItem } from '../config/thema-types';
 import { themaId as themaIdNotificaties } from '../pages/MyNotifications/MyNotifications-config';
@@ -32,7 +31,7 @@ export type ScopeRequested = Extract<
 // Determines if redaction is required based on themaId and/or requested scope.
 // ReactedScope provded by thema config takes precedence over requested scope.
 function isRedactionRequired(
-  themaId?: string | null,
+  themaId?: string,
   scopeRequested?: ScopeRequested
 ) {
   const redactedByID = getRedactedItemsByID();
@@ -52,15 +51,20 @@ function isRedactionRequired(
   );
 }
 
-export function getRedactedClass(
-  themaId?: string | null,
-  scopeRequested?: ScopeRequested
-) {
-  const redactedHighlightClass = isCobrowseScreensharing()
-    ? 'in-orange-box'
+export function getRedactedClass(opts: {
+  themaId?: string;
+  scopeRequested?: ScopeRequested;
+  isCobrowseScreensharing: boolean;
+  className?: string;
+}) {
+  opts.isCobrowseScreensharing = opts.isCobrowseScreensharing ?? false;
+  opts.className = opts.className ?? 'in-orange-box';
+
+  const redactedHighlightClass = opts.isCobrowseScreensharing
+    ? ` ${opts.className}`
     : '';
-  if (isRedactionRequired(themaId, scopeRequested)) {
-    return `${REDACTED_CLASS} ${redactedHighlightClass}`;
+  if (isRedactionRequired(opts.themaId, opts.scopeRequested)) {
+    return REDACTED_CLASS + redactedHighlightClass;
   }
 
   return '';
