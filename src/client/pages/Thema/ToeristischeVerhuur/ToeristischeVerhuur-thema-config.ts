@@ -144,4 +144,4 @@ export const tableConfigLVVRegistraties = {
   displayProps: DISPLAY_PROPS_LVV_REGISTRATIES,
 } as const;
 
-export const THEMA_DETAIL_TITLE_DEFAULT = 'Vergunning toeristische verhuur';
+export const THEMA_DETAIL_TITLE_DEFAULT = 'Vergunning toeristische verhuur'; //To DO YACINE > moet deze niet ergens in de themaConfig worden opgenomen, bijv bij
