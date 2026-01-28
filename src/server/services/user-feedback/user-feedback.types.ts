@@ -24,6 +24,7 @@ type SurveyQuestion = {
     | 'checkbox'
     | 'textarea'
     | 'email'
+    | 'numeric'
     | 'number';
   required: boolean;
   conditions_type: 'and' | 'or';

@@ -19,7 +19,7 @@ import {
   getFailedDependencies,
   type ApiResponsePromise,
 } from '../../../universal/helpers/api';
-import { omit } from '../../../universal/helpers/utils';
+import { omit, pick } from '../../../universal/helpers/utils';
 import { getCustomApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { deepCamelizeKeys } from '../db/helper';
@@ -35,7 +35,28 @@ export async function fetchUserFeedbackSurvey(
         : `${url}/${surveyId}/versions/${version}`,
     method: 'GET',
     transformResponse(survey: Survey) {
-      return deepCamelizeKeys<Survey>(survey);
+      const base = pick(deepCamelizeKeys<Survey>(survey), [
+        'version',
+        'title',
+        'description',
+        'createdAt',
+        'activeFrom',
+        'uniqueCode',
+      ]);
+
+      return {
+        ...base,
+        questions: survey.questions.map((question) => {
+          return pick(deepCamelizeKeys(question), [
+            'id',
+            'maxCharacters',
+            'questionText',
+            'questionType',
+            'required',
+            'description',
+          ]);
+        }),
+      };
     },
     postponeFetch: !featureToggle.service.fetchSurvey.isEnabled,
   });
