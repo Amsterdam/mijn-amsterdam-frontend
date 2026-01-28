@@ -171,7 +171,10 @@ attachDocumentDownloadRoute(
 );
 router.get(
   BffEndpoints.ERFPACHT_DOSSIER_DETAILS,
-  async (req: Request, res: ResponseAuthenticated) => {
+  async (
+    req: Request<{ dossierNummerUrlParam: string }>,
+    res: ResponseAuthenticated
+  ) => {
     const response = await fetchErfpachtDossiersDetail(
       res.locals.authProfileAndToken,
       req.params.dossierNummerUrlParam
