@@ -1,8 +1,5 @@
 import { IconButton, Paragraph } from '@amsterdam/design-system-react';
 import { StarFillIcon, StarIcon } from '@amsterdam/design-system-react-icons';
-import classNames from 'classnames';
-
-import styles from './UserFeedback.module.scss';
 
 type RateButtonProps = {
   value: number;
@@ -37,7 +34,7 @@ type RatingProps = {
 
 export function Rating({ max, current, onRate, label, disabled }: RatingProps) {
   return (
-    <div className={classNames('ams-mb-s', styles.Rating)}>
+    <div className="ams-mb-s">
       {label && <Paragraph>{label}</Paragraph>}
       {Array.from({ length: max }).map((_, index) => {
         const value = index + 1;
