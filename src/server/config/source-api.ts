@@ -224,7 +224,7 @@ const ApiConfig_ = {
     postponeFetch: !FeatureToggle.decosServiceActive,
     headers: {
       Accept: 'application/itemdata',
-      Authorization: `Basic ${Buffer.from(`${getFromEnv('BFF_DECOS_API_USERNAME')}:${getFromEnv('BFF_DECOS_API_PASSWORD')}`).toString('base64')}`,
+      apiKey: getFromEnv('BFF_ENABLEU_API_KEY'),
       'Content-type': 'application/json; charset=utf-8',
     },
   },
