@@ -1,8 +1,4 @@
-import {
-  routeConfig,
-  themaConfig,
-  featureToggle,
-} from './Klachten-thema-config';
+import { routeConfig, themaConfig } from './Klachten-thema-config';
 import { KlachtenDetail } from './KlachtenDetail';
 import { default as KlachtenIcon } from './KlachtenIcon.svg?react';
 import { KlachtenList } from './KlachtenList';
@@ -18,17 +14,17 @@ export const KlachtenRoutes = [
   {
     route: routeConfig.themaPage.path,
     Component: KlachtenThema,
-    isActive: featureToggle.klachtenActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
     route: routeConfig.listPage.path,
     Component: KlachtenList,
-    isActive: featureToggle.klachtenActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
     route: routeConfig.detailPage.path,
     Component: KlachtenDetail,
-    isActive: featureToggle.klachtenActive,
+    isActive: themaConfig.featureToggle.active,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
@@ -36,11 +32,11 @@ export const menuItem: ThemaMenuItem = {
   title: themaConfig.title,
   id: themaConfig.id,
   to: routeConfig.themaPage.path,
-  profileTypes: ['private'],
-  redactedScope: 'none',
+  profileTypes: themaConfig.profileTypes,
+  redactedScope: themaConfig.redactedScope,
   isActive(appState: AppState) {
     return (
-      featureToggle.klachtenActive &&
+      themaConfig.featureToggle.active &&
       !isLoading(appState.KLACHTEN) &&
       !!appState.KLACHTEN.content?.length
     );

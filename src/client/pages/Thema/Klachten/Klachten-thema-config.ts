@@ -14,18 +14,23 @@ import type {
 } from '../../../config/thema-types';
 
 export const featureToggle = {
-  klachtenActive: true,
-  statustreinAndAfgehandeldeMeldingenActive: true,
+  statustreinAndAfgehandeldeMeldingenActive: true, // TO DO  YACINE deze erut halen?
 };
 
 export const THEMA_ID = 'KLACHTEN';
 export const THEMA_TITLE = 'Klachten';
 
-type KLachtenThemaConfig = Pick<ThemaConfigBase, 'id' | 'title'>;
+type KLachtenThemaConfig = Pick<
+  ThemaConfigBase,
+  'id' | 'title' | 'featureToggle' | 'profileTypes' | 'redactedScope'
+>;
 
 export const themaConfig: KLachtenThemaConfig = {
   id: THEMA_ID,
   title: THEMA_TITLE,
+  featureToggle: { active: true },
+  profileTypes: ['private'],
+  redactedScope: 'none',
 };
 
 export const listPageParamKind = {
