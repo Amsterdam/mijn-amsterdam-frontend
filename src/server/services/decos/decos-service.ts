@@ -915,7 +915,7 @@ export async function fetchDecosDocument(
     ...apiConfigDocument,
     responseType: 'stream',
     headers: {
-      Authorization: apiConfigDocument.headers?.Authorization,
+      apiKey: apiConfigDocument.headers?.apiKey,
       Accept: 'application/octet-stream',
     },
     transformResponse: (documentResponseData) => {
