@@ -1,9 +1,4 @@
-import {
-  tableConfig,
-  LinkListItems,
-  routeConfig,
-  themaConfig,
-} from './Klachten-thema-config';
+import { tableConfig, routeConfig, themaConfig } from './Klachten-thema-config';
 import type { KlachtFrontend } from '../../../../server/services/klachten/types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
@@ -26,7 +21,7 @@ export function useKlachtenThemaData() {
     klachten,
     isLoading: isLoading(KLACHTEN),
     isError: isError(KLACHTEN),
-    linkListItems: LinkListItems,
+    pageLinks: themaConfig.pageLinks,
     tableConfig,
     id: themaConfig.id,
     title: themaConfig.title,

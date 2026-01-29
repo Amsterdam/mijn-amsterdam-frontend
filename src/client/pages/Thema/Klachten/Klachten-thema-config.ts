@@ -2,7 +2,6 @@ import { generatePath } from 'react-router';
 
 import { KlachtFrontend } from '../../../../server/services/klachten/types';
 import { dateSort } from '../../../../universal/helpers/date';
-import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
@@ -19,18 +18,29 @@ export const featureToggle = {
 
 export const THEMA_ID = 'KLACHTEN';
 export const THEMA_TITLE = 'Klachten';
+export const KLACHTEN_AMSTERDAM_URL_KLACHT_INDIENEN =
+  'https://www.amsterdam.nl/contact/klacht-indienen-gemeente';
 
-type KLachtenThemaConfig = Pick<
-  ThemaConfigBase,
-  'id' | 'title' | 'featureToggle' | 'profileTypes' | 'redactedScope' | 'route'
->;
+type KLachtenThemaConfig = ThemaConfigBase;
 
 export const themaConfig: KLachtenThemaConfig = {
   id: THEMA_ID,
   title: THEMA_TITLE,
   featureToggle: { active: true },
   profileTypes: ['private'],
+  uitlegPageSections: [
+    {
+      title: THEMA_TITLE,
+      listItems: ['Uw ingediende klachten'],
+    },
+  ],
   redactedScope: 'none',
+  pageLinks: [
+    {
+      to: KLACHTEN_AMSTERDAM_URL_KLACHT_INDIENEN,
+      title: 'Meer informatie over de afhandeling van uw klacht', // TO DO YACINE ZIe deze niet terug maar een andere
+    },
+  ],
   route: {
     path: '/klachten',
     documentTitle: `${THEMA_TITLE} | overzicht`,
@@ -59,22 +69,7 @@ export const routeConfig = {
     },
     trackingUrl: null,
   },
-  // themaPage: {
-  //   path: '/klachten',
-  //   documentTitle: `${THEMA_TITLE} | overzicht`,
-  //   trackingUrl: null,
-  // },
 } as const satisfies ThemaRoutesConfig;
-
-export const KLACHTEN_AMSTERDAM_URL_KLACHT_INDIENEN =
-  'https://www.amsterdam.nl/contact/klacht-indienen-gemeente';
-
-export const LinkListItems: LinkProps[] = [
-  {
-    title: 'Meer informatie over de afhandeling van uw klacht',
-    to: KLACHTEN_AMSTERDAM_URL_KLACHT_INDIENEN,
-  },
-];
 
 const displayProps: DisplayProps<KlachtFrontend> = {
   props: {

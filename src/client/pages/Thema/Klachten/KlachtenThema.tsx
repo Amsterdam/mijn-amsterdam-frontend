@@ -25,8 +25,8 @@ export function KlachtenThema() {
     klachten,
     isLoading,
     isError,
-    linkListItems,
     themaConfig,
+    pageLinks,
   } = useKlachtenThemaData();
   useHTMLDocumentTitle(themaConfig.route);
 
@@ -56,7 +56,7 @@ export function KlachtenThema() {
       isLoading={isLoading}
       pageContentTop={pageContentTop}
       pageContentMain={tables}
-      linkListItems={linkListItems}
+      linkListItems={pageLinks}
       maintenanceNotificationsPageSlug="klachten"
     />
   );
