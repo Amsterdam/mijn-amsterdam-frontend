@@ -1,9 +1,9 @@
-import { featureToggle, themaId, themaTitle } from './Klachten-thema-config';
+import { featureToggle, themaConfig } from './Klachten-thema-config';
 import { InfoSection_DEPRECATED } from '../../GeneralInfo/GeneralInfo';
 
 export const klachtenSectionProps: InfoSection_DEPRECATED = {
-  id: themaId,
-  title: themaTitle,
+  id: themaConfig.id,
+  title: themaConfig.title,
   listItems: ['Uw ingediende klachten'],
   active: featureToggle.klachtenActive,
 };

@@ -2,8 +2,7 @@ import {
   tableConfig,
   LinkListItems,
   routeConfig,
-  themaId,
-  themaTitle,
+  themaConfig,
 } from './Klachten-thema-config';
 import type { KlachtFrontend } from '../../../../server/services/klachten/types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
@@ -21,7 +20,7 @@ export function useKlachtenThemaData() {
     (klacht) => `Bekijk meer over klacht ${klacht.id}`
   );
 
-  const breadcrumbs = useThemaBreadcrumbs(themaId);
+  const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
   return {
     klachten,
@@ -29,9 +28,10 @@ export function useKlachtenThemaData() {
     isError: isError(KLACHTEN),
     linkListItems: LinkListItems,
     tableConfig,
-    themaId,
-    themaTitle,
+    id: themaConfig.id,
+    title: themaConfig.title,
     breadcrumbs,
     routeConfig,
+    themaConfig,
   };
 }

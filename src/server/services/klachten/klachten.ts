@@ -5,8 +5,7 @@ import UID from 'uid-safe';
 import {
   featureToggle,
   routeConfig,
-  themaId,
-  themaTitle,
+  themaConfig,
 } from '../../../client/pages/Thema/Klachten/Klachten-thema-config';
 import {
   apiDependencyError,
@@ -183,8 +182,8 @@ function createKlachtNotification(klacht: KlachtFrontend): MyNotification {
         to: klacht.link.to,
         title: gotoDetailTxt,
       },
-      themaID: themaId,
-      themaTitle: themaTitle,
+      themaID: themaConfig.id,
+      themaTitle: themaConfig.title,
     };
   }
   return {
@@ -196,8 +195,8 @@ function createKlachtNotification(klacht: KlachtFrontend): MyNotification {
       to: klacht.link.to,
       title: gotoDetailTxt,
     },
-    themaID: themaId,
-    themaTitle: themaTitle,
+    themaID: themaConfig.id,
+    themaTitle: themaConfig.title,
   };
 }
 

@@ -8,15 +8,25 @@ import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
 } from '../../../config/app';
-import type { ThemaRoutesConfig } from '../../../config/thema-types';
+import type {
+  ThemaConfigBase,
+  ThemaRoutesConfig,
+} from '../../../config/thema-types';
 
 export const featureToggle = {
   klachtenActive: true,
   statustreinAndAfgehandeldeMeldingenActive: true,
 };
 
-export const themaId = 'KLACHTEN' as const;
-export const themaTitle = 'Klachten';
+export const THEMA_ID = 'KLACHTEN';
+export const THEMA_TITLE = 'Klachten';
+
+type KLachtenThemaConfig = Pick<ThemaConfigBase, 'id' | 'title'>;
+
+export const themaConfig: KLachtenThemaConfig = {
+  id: THEMA_ID,
+  title: THEMA_TITLE,
+};
 
 export const listPageParamKind = {
   lopend: 'lopende-aanvragen',
@@ -30,18 +40,18 @@ export const routeConfig = {
   detailPage: {
     path: '/klachten/klacht/:id',
     trackingUrl: '/klachten/klacht',
-    documentTitle: `Klachten | ${themaTitle}`,
+    documentTitle: `Klachten | ${THEMA_TITLE}`,
   },
   listPage: {
     path: '/klachten/lijst/:kind/:page?',
     documentTitle: (params) => {
-      return `${params?.kind === listPageParamKind.eerder ? 'Eerdere' : 'Lopende'} aanvragen | ${themaTitle}`;
+      return `${params?.kind === listPageParamKind.eerder ? 'Eerdere' : 'Lopende'} aanvragen | ${THEMA_TITLE}`;
     },
     trackingUrl: null,
   },
   themaPage: {
     path: '/klachten',
-    documentTitle: `${themaTitle} | overzicht`,
+    documentTitle: `${THEMA_TITLE} | overzicht`,
     trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
