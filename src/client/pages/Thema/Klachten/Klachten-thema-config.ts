@@ -22,7 +22,7 @@ export const THEMA_TITLE = 'Klachten';
 
 type KLachtenThemaConfig = Pick<
   ThemaConfigBase,
-  'id' | 'title' | 'featureToggle' | 'profileTypes' | 'redactedScope'
+  'id' | 'title' | 'featureToggle' | 'profileTypes' | 'redactedScope' | 'route'
 >;
 
 export const themaConfig: KLachtenThemaConfig = {
@@ -31,11 +31,16 @@ export const themaConfig: KLachtenThemaConfig = {
   featureToggle: { active: true },
   profileTypes: ['private'],
   redactedScope: 'none',
+  route: {
+    path: '/klachten',
+    documentTitle: `${THEMA_TITLE} | overzicht`,
+    trackingUrl: null,
+  },
 };
 
 export const listPageParamKind = {
-  lopend: 'lopende-aanvragen',
-  eerder: 'eerdere-aanvragen',
+  lopend: 'openstaand',
+  eerder: 'afhandelde',
 } as const;
 
 export type ListPageParamKey = keyof typeof listPageParamKind;
@@ -50,15 +55,15 @@ export const routeConfig = {
   listPage: {
     path: '/klachten/lijst/:kind/:page?',
     documentTitle: (params) => {
-      return `${params?.kind === listPageParamKind.eerder ? 'Eerdere' : 'Lopende'} aanvragen | ${THEMA_TITLE}`;
+      return `${params?.kind === listPageParamKind.eerder ? 'Afgehandelde' : 'Openstaande'} klachten | ${THEMA_TITLE}`;
     },
     trackingUrl: null,
   },
-  themaPage: {
-    path: '/klachten',
-    documentTitle: `${THEMA_TITLE} | overzicht`,
-    trackingUrl: null,
-  },
+  // themaPage: {
+  //   path: '/klachten',
+  //   documentTitle: `${THEMA_TITLE} | overzicht`,
+  //   trackingUrl: null,
+  // },
 } as const satisfies ThemaRoutesConfig;
 
 export const KLACHTEN_AMSTERDAM_URL_KLACHT_INDIENEN =

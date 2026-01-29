@@ -26,9 +26,9 @@ export function KlachtenThema() {
     isLoading,
     isError,
     linkListItems,
-    routeConfig,
+    themaConfig,
   } = useKlachtenThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   let tables = Object.values(tableConfig).map((conf) => {
     return (

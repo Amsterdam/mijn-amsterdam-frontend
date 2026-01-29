@@ -12,7 +12,7 @@ import {
 
 export const KlachtenRoutes = [
   {
-    route: routeConfig.themaPage.path,
+    route: themaConfig.route.path,
     Component: KlachtenThema,
     isActive: themaConfig.featureToggle.active,
   },
@@ -31,7 +31,7 @@ export const KlachtenRoutes = [
 export const menuItem: ThemaMenuItem = {
   title: themaConfig.title,
   id: themaConfig.id,
-  to: routeConfig.themaPage.path,
+  to: themaConfig.route.path,
   profileTypes: themaConfig.profileTypes,
   redactedScope: themaConfig.redactedScope,
   isActive(appState: AppState) {
