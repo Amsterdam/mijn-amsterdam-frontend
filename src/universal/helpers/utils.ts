@@ -83,11 +83,14 @@ export function sortAlpha<T>(
   };
 }
 
-export function sortByNumber(key: string, direction: 'asc' | 'desc' = 'asc') {
-  return (a: Record<string, any>, b: Record<string, any>) => {
+export function sortByNumber<T>(
+  key: keyof T,
+  direction: 'asc' | 'desc' = 'asc'
+) {
+  return (a: T, b: T) => {
     const sortASC = direction === 'asc';
-    const aValue = a[key];
-    const bValue = b[key];
+    const aValue = a[key] as number;
+    const bValue = b[key] as number;
 
     return sortASC ? aValue - bValue : bValue - aValue;
   };

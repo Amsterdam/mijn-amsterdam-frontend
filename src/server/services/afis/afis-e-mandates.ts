@@ -66,6 +66,7 @@ import {
   isoDateTimeFormatCompact,
 } from '../../../universal/helpers/date';
 import { toDateFormatted } from '../../../universal/helpers/date';
+import { sortByNumber } from '../../../universal/helpers/utils';
 
 export async function createOrUpdateEMandateFromStatusNotificationPayload(
   payload: EMandateSignRequestPayload & EMandateSignRequestNotificationPayload
@@ -94,7 +95,10 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
 
   // Check if this bank account exists in the sender's bank account list.
   // If not add it to the list.
-  const bankAccountResponse = await fetchCheckIfIBANexists(senderIBAN);
+  const bankAccountResponse = await fetchCheckIfIBANexists(
+    senderIBAN,
+    payload.businessPartnerId
+  );
   const bankAccountExists = bankAccountResponse.content === true;
 
   if (bankAccountResponse.status !== 'OK') {
@@ -126,7 +130,7 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
   // The user can later adjust this date.
   const lifetimeTo = AFIS_EMANDATE_RECURRING_DATE_END;
 
-  const payloadFinal: AfisEMandateCreatePayload = {
+  const payloadCreateEmandate: AfisEMandateCreatePayload = {
     // Fixed values needed for API (black box)
     ...afisEMandatePostbodyStatic,
 
@@ -135,6 +139,9 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
 
     // Gegevens van de debiteur/afgever van het EMandaat
     SndId: payload.businessPartnerId,
+
+    // SndDebtorId is the reference ID of the creditor for this business partner.
+    SndDebtorId: creditor.refId,
 
     // Gegevens geleverd door Debtor bank via EMandaat request
     SndIban: senderIBAN,
@@ -151,22 +158,13 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
 
     SignDate: payload.eMandateSignDate,
     SignCity: eMandateReceiver.RecCity, // TODO: Hoe komen we aan dit gegeven, altijd Amsterdam? - https://gemeente-amsterdam.atlassian.net/browse/MIJN-12289
-    LifetimeFrom: new Date().toISOString(),
+    LifetimeFrom: isoDateTimeFormatCompact(new Date()),
     LifetimeTo: lifetimeTo,
-    SndDebtorId: creditor.refId,
   };
 
-  const eMandateIdResponse = await fetchEmandateIdByCreditorRefId(
-    payload.businessPartnerId,
-    creditor.refId
-  );
+  debugEmandates('Creating new e-mandate.', payloadCreateEmandate);
 
-  const response = await (eMandateIdResponse.content
-    ? updateAfisEMandate({
-        ...payloadFinal,
-        IMandateId: eMandateIdResponse.content,
-      })
-    : createAfisEMandate(payloadFinal));
+  const response = await createAfisEMandate(payloadCreateEmandate);
 
   if (response.status !== 'OK') {
     throw new Error(
@@ -292,12 +290,13 @@ function transformEMandateSource(
     ? isoDateFormat(afisEMandateSource.LifetimeTo)
     : null;
   const dateValidToFormatted = getEmandateValidityDateFormatted(dateValidTo);
-  const currentStatus = (afisEMandateSource?.Status ??
+  const currentStatus = (afisEMandateSource?.Status.toString() ??
     EMANDATE_STATUS_FRONTEND.OFF) as EmandateStatusFrontend;
   const isActive = isEmandateActive(dateValidTo);
   const id = slug(creditor.name);
   const eMandate: AfisEMandateFrontend = {
     id,
+    eMandateIdSource: afisEMandateSource?.IMandateId ?? null,
     creditorName: creditor.name,
     creditorIBAN: creditor.iban,
     creditorDescription: creditor.description,
@@ -334,10 +333,10 @@ function transformEMandateSource(
 }
 
 function getEMandateSourceByCreditor(
-  sourceMandates: AfisEMandateSource[],
+  sourceMandatesASC: AfisEMandateSource[],
   creditor: AfisEMandateCreditor
 ): AfisEMandateSource | undefined {
-  return sourceMandates.find((eMandateSource) => {
+  return sourceMandatesASC.findLast((eMandateSource) => {
     return eMandateSource.SndDebtorId === creditor.refId;
   });
 }
@@ -350,11 +349,13 @@ function transformEMandatesResponse(
   if (!responseData?.feed?.entry) {
     return [];
   }
-  const sourceMandates = getFeedEntryProperties(responseData);
+  const sourceMandatesASC = getFeedEntryProperties(responseData).toSorted(
+    sortByNumber('IMandateId', 'asc')
+  );
 
   return EMandateCreditorsGemeenteAmsterdam.map((creditor) => {
     const afisEMandateSource = getEMandateSourceByCreditor(
-      sourceMandates,
+      sourceMandatesASC,
       creditor
     );
 
@@ -366,9 +367,11 @@ function transformEMandatesResponse(
     );
 
     return eMandate;
-  }).sort(
+  }).toSorted(
     firstBy(function sortByStatus(eMandate: AfisEMandateFrontend) {
-      return eMandate.status === EMANDATE_STATUS_FRONTEND.ON ? -1 : 1;
+      return eMandate.status.toString() === EMANDATE_STATUS_FRONTEND.ON
+        ? -1
+        : 1;
     }).thenBy('creditorName')
   );
 }
@@ -385,7 +388,9 @@ export async function fetchEmandateIdByCreditorRefId(
       const sourceMandates =
         getFeedEntryProperties<AfisEMandateSource>(responseData);
       return (
-        sourceMandates.find((mandate) => mandate.SndDebtorId === creditorRefID)
+        sourceMandates
+          .toSorted(sortByNumber('IMandateId', 'asc'))
+          .findLast((mandate) => mandate.SndDebtorId === creditorRefID)
           ?.IMandateId ?? null
       );
     },
