@@ -45,8 +45,8 @@ import {
   apiSuccessResult,
   getSettledResult,
 } from '../../../universal/helpers/api';
-import { omit, sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
 import { toDateFormatted } from '../../../universal/helpers/date';
+import { omit, sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
 import type { StatusLineItem } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
@@ -915,7 +915,10 @@ export async function fetchDecosDocument(
     ...apiConfigDocument,
     responseType: 'stream',
     headers: {
-      Authorization: apiConfigDocument.headers?.Authorization,
+      // TODO: MIJN-12466 - Simplify to normal key:value after connection through enableU works
+      ...(apiConfigDocument.headers?.apiKey ? { apiKey: apiConfigDocument.headers?.apiKey } : {}),
+      // TODO: MIJN-12466 - Remove older Authorization after connection through enableU works
+      ...(apiConfigDocument.headers?.Authorization ? { Authorization: apiConfigDocument.headers?.Authorization } : {}),
       Accept: 'application/octet-stream',
     },
     transformResponse: (documentResponseData) => {
