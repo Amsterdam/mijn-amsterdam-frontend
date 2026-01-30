@@ -100,6 +100,9 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = Object.freeze({
   },
 });
 
+// TODO: MIJN-12466 - This allows falling back to previous authentication method easily. Remove after connection through EnableU works
+const isDecosOverEnableUActive = (getFromEnv('BFF_DECOS_API_BASE_URL', false) || '').startsWith('https://enableu')
+
 const afisFeatureToggle = getFromEnv('BFF_AFIS_FEATURE_TOGGLE_ACTIVE');
 const postponeFetchAfis =
   typeof afisFeatureToggle !== 'undefined'
@@ -224,7 +227,8 @@ const ApiConfig_ = {
     postponeFetch: !FeatureToggle.decosServiceActive,
     headers: {
       Accept: 'application/itemdata',
-      apiKey: getFromEnv('BFF_ENABLEU_API_KEY'),
+      ...(isDecosOverEnableUActive ? { apiKey: getFromEnv('BFF_ENABLEU_API_KEY') } : {}),
+      ...(!isDecosOverEnableUActive ? { Authorization: `Basic ${Buffer.from(`${getFromEnv('BFF_DECOS_API_USERNAME')}:${getFromEnv('BFF_DECOS_API_PASSWORD')}`).toString('base64')}`} : {}),
       'Content-type': 'application/json; charset=utf-8',
     },
   },

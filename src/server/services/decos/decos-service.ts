@@ -915,7 +915,10 @@ export async function fetchDecosDocument(
     ...apiConfigDocument,
     responseType: 'stream',
     headers: {
-      apiKey: apiConfigDocument.headers?.apiKey,
+      // TODO: MIJN-12466 - Simplify to normal key:value after connection through enableU works
+      ...(apiConfigDocument.headers?.apiKey ? { apiKey: apiConfigDocument.headers?.apiKey } : {}),
+      // TODO: MIJN-12466 - Remove older Authorization after connection through enableU works
+      ...(apiConfigDocument.headers?.Authorization ? { Authorization: apiConfigDocument.headers?.Authorization } : {}),
       Accept: 'application/octet-stream',
     },
     transformResponse: (documentResponseData) => {
