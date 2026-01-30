@@ -114,7 +114,7 @@ export function MijnBedrijfsGegevensThema() {
       title={title}
       isError={isError && !isLoading}
       isLoading={isLoading && !isError}
-      linkListItems={linkListItems}
+      pageLinks={linkListItems}
       pageContentTop={
         <CommercialPageContentTop
           kvkTranslation={KVK?.content?.kvkTranslation}

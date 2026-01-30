@@ -11,7 +11,7 @@ export function useBodemListPageData() {
     isError,
     tableConfig,
     breadcrumbs,
-    listPageConfig,
+    themaConfig,
   } = useBodemData();
 
   const params = useParams<{ kind: ListPageParamKind }>();
@@ -29,11 +29,11 @@ export function useBodemListPageData() {
     isLoading,
     isError,
     params,
-    listPageRoute: generatePath(listPageConfig.route.path, {
+    listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind,
       page: null,
     }),
     breadcrumbs,
-    routeConfig: listPageConfig.route,
+    listPageConfig: themaConfig.listPage,
   };
 }

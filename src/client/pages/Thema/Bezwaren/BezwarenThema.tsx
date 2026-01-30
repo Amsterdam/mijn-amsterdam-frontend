@@ -59,7 +59,7 @@ export function BezwarenThema() {
       isLoading={isLoading}
       pageContentTop={pageContentTop}
       pageContentMain={tables}
-      linkListItems={linkListItems}
+      pageLinks={linkListItems}
       maintenanceNotificationsPageSlug="bezwaren"
     />
   );

@@ -68,14 +68,10 @@ export function useHliThemaData() {
     specificatieTableConfig,
     listPageTitle,
     listPageParamKind,
-    linkListItems: hasKindtegoed
+    pageLinks: hasKindtegoed
       ? [...themaConfig.pageLinks, kindTegoedPageLinkItem]
       : themaConfig.pageLinks,
     breadcrumbs,
-    regelingenListPageConfig: themaConfig.regelingenListPage,
-    specificatieListPageConfig: themaConfig.specificatieListPage,
-    detailPageConfig: themaConfig.regelingenDetailPage,
-    detailPageStadspasConfig: themaConfig.stadspasDetailPage,
-    routeConfig: themaConfig.route,
+    themaConfig,
   };
 }

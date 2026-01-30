@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 import { useBodemData } from './useBodemData.hook';
 
 export function useBodemDetailData() {
-  const { themaId, items, isLoading, isError, breadcrumbs, detailPageConfig } =
+  const { themaId, items, isLoading, isError, breadcrumbs, themaConfig } =
     useBodemData();
   const { id } = useParams<{ id: string }>();
 
@@ -11,11 +11,11 @@ export function useBodemDetailData() {
 
   return {
     themaId,
-    title: detailPageConfig.title,
+    title: themaConfig.detailPage.title,
     meting,
     isLoading,
     isError,
     breadcrumbs,
-    routeConfig: detailPageConfig.route,
+    routeConfig: themaConfig.detailPage.route,
   };
 }

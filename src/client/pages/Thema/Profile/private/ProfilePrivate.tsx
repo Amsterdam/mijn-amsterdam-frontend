@@ -151,7 +151,7 @@ export function MijnGegevensThema() {
       isPartialError={isErrorBrp || isErrorContactmomenten}
       errorAlertContent={pageContentErrorAlert}
       isLoading={!isThemaPaginaError && isThemaPaginaLoading}
-      linkListItems={linkListItems}
+      pageLinks={linkListItems}
       pageContentTop={pageContentTop}
       maintenanceNotificationsPageSlug="brp"
       pageContentMain={

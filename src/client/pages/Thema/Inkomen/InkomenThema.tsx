@@ -76,7 +76,7 @@ export function InkomenThema() {
           {tablesSpecificaties}
         </>
       }
-      linkListItems={linkListItems}
+      pageLinks={linkListItems}
       maintenanceNotificationsPageSlug="inkomen"
     />
   );

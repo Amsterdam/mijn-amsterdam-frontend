@@ -199,7 +199,7 @@ export function VarenThema() {
         </>
       }
       isPartialError={false}
-      linkListItems={linkListItems}
+      pageLinks={linkListItems}
     />
   );
 }

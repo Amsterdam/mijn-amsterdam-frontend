@@ -54,7 +54,7 @@ export function ErfpachtThema() {
       title={title}
       isLoading={isLoading}
       isError={isError}
-      linkListItems={linkListItems}
+      pageLinks={linkListItems}
       maintenanceNotificationsPageSlug="erfpacht"
       pageContentTop={
         <>

@@ -145,7 +145,7 @@ export function AfisThema() {
       isPartialError={isPartialError}
       errorAlertContent={pageContentErrorAlert}
       isLoading={!isThemaPaginaError && isThemaPaginaLoading}
-      linkListItems={linkListItems}
+      pageLinks={linkListItems}
       pageContentTop={
         <PageContentTop urlNaarBelastingen={belastingenLinkListItem.to} />
       }

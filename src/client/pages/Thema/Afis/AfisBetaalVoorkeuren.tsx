@@ -248,7 +248,7 @@ export function AfisBetaalVoorkeuren() {
       errorAlertContent={errorAlertContent}
       isLoading={isLoadingAllAPis}
       breadcrumbs={breadcrumbs}
-      linkListItems={linkListItems}
+      pageLinks={linkListItems}
       pageContentTop={pageContentTop}
       pageContentMain={pageContentMain}
       maintenanceNotificationsPageSlug="afis"

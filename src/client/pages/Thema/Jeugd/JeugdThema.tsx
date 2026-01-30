@@ -70,7 +70,7 @@ export function JeugdThemaPagina() {
       id={id}
       title={title}
       pageContentTop={pageContentTop}
-      linkListItems={linkListItems}
+      pageLinks={linkListItems}
       pageContentMain={
         <>
           {tables}
