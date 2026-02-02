@@ -25,7 +25,7 @@ import { entries } from '../../../../universal/helpers/utils';
 import { MaRouterLink } from '../../../components/MaLink/MaLink';
 import {
   sendFormPostRequest,
-  sendGetRequest,
+  sendFetchRequest,
   useBffApi,
 } from '../../../hooks/api/useBffApi';
 import { useSmallScreen } from '../../../hooks/media.hook';
@@ -137,7 +137,7 @@ export function useEmandateApis(eMandate: AfisEMandateFrontend) {
     {
       fetchImmediately: false,
       sendRequest: async (url) => {
-        return sendGetRequest<AfisEMandateSignRequestResponse>(url).then(
+        return sendFetchRequest<AfisEMandateSignRequestResponse>(url).then(
           (response) => {
             if (response.content?.redirectUrl) {
               window.location.href = response.content?.redirectUrl;
@@ -154,7 +154,7 @@ export function useEmandateApis(eMandate: AfisEMandateFrontend) {
     {
       fetchImmediately: false,
       sendRequest: async (url) => {
-        return sendGetRequest<AfisEMandateStatusChangeResponse>(url).then(
+        return sendFetchRequest<AfisEMandateStatusChangeResponse>(url).then(
           (response) => {
             if (response.content) {
               optimisticUpdateContent(eMandate.id, response.content);

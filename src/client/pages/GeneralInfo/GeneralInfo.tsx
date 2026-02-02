@@ -158,7 +158,14 @@ export function GeneralInfo() {
       );
     });
   return (
-    <PageV2 heading="Dit ziet u in Mijn Amsterdam" redactedScope="full">
+    <PageV2
+      heading="Dit ziet u in Mijn Amsterdam"
+      redactedScope="full"
+      showUserFeedback
+      userFeedbackDetails={{
+        pageTitle: 'Uitleg',
+      }}
+    >
       <PageContentCell>
         <Paragraph className="ams-mb-m">
           Welkom op Mijn Amsterdam: dit is uw persoonlijke online portaal bij de

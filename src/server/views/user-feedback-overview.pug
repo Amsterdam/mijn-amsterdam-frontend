@@ -1,0 +1,34 @@
+h1=feedbackOverview.survey.title
+
+p Totaal aantal inzendingen: #{feedbackOverview.entries.length}
+p Gemiddeld cijfer #{feedbackOverview.score}
+
+table(border='1', cellpadding='5', cellspacing='0')
+  thead
+    tr
+      th Datum inzending
+      th Entrypoint
+      th Pagina titel
+      each question, id in feedbackOverview.survey.questions
+        th= question
+      th Errors
+      th Thema's
+  tbody
+    each entry in feedbackOverview.entries
+      tr
+        td= entry.dateCreated.toLocaleString('nl-NL', { dateStyle: 'short', timeStyle: 'short' })
+        td= entry.entryPoint
+        td= entry.metadata.browser_title
+        each question, id in feedbackOverview.survey.questions
+          td= entry.answers[id] || '-'
+        td
+          ul
+            each error in entry.metadata.maErrors || []
+              li #{error.name} - #{error.error}
+        td
+          ul
+            each thema in entry.metadata.maThemas || []
+              li #{thema}
+
+
+

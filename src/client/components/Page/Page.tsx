@@ -13,6 +13,7 @@ import {
   PageBreadcrumbsV2,
   type PageBreadcrumbsV2Props,
 } from '../PageHeading/PageHeadingV2';
+import { InlineKTO } from '../UserFeedback/InlineKTO';
 
 export interface PageProps extends HTMLProps<HTMLDivElement> {
   className?: string;
@@ -22,6 +23,11 @@ export interface PageProps extends HTMLProps<HTMLDivElement> {
   redactedThemaId?: string | null;
   redactedScope?: ScopeRequested;
   breadcrumbs?: PageBreadcrumbsV2Props['breadcrumbs'];
+  showUserFeedback?: boolean;
+  userFeedbackDetails?: {
+    pageTitle: string;
+    pageDetails?: object;
+  } & object;
 }
 
 const PADDING_TOP = 'large';
@@ -35,6 +41,8 @@ export function PageV2({
   redactedThemaId,
   redactedScope,
   breadcrumbs,
+  showUserFeedback = false,
+  userFeedbackDetails,
 }: PageProps) {
   return (
     <div
@@ -58,7 +66,12 @@ export function PageV2({
             </Heading>
           </PageContentCell>
         </Grid>
-        <Grid paddingBottom={PADDING_BOTTOM}>{children}</Grid>
+        <Grid paddingBottom={PADDING_BOTTOM}>
+          {children}
+          {showUserFeedback && (
+            <InlineKTO userFeedbackDetails={userFeedbackDetails} />
+          )}
+        </Grid>
       </main>
     </div>
   );

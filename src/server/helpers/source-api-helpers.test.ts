@@ -1,4 +1,4 @@
-import { getApiConfig } from './source-api-helpers';
+import { getApiConfig, getCustomApiConfig } from './source-api-helpers';
 
 describe('Config', () => {
   test('getApiConfig', () => {
@@ -29,5 +29,54 @@ describe('Config', () => {
     });
 
     expect(config.cacheKey_UNSAFE).toBe('ERFPACHT-test');
+  });
+  test('getCustomApiConfig throws when cacheKey_UNSAFE is provided', () => {
+    expect(() =>
+      getCustomApiConfig({
+        cacheKey_UNSAFE: 'should-fail',
+      })
+    ).toThrow('getCustomApiConfig does not accept cacheKey_UNSAFE in configs');
+  });
+  test('getCustomApiConfig works without cacheKey_UNSAFE', () => {
+    const config = getCustomApiConfig({
+      url: 'https://example.com/api',
+      method: 'GET',
+    });
+
+    expect(config.url).toBe('https://example.com/api');
+    expect(config.method).toBe('GET');
+  });
+  test('getCustomApiConfig merges multiple configs', () => {
+    const config = getCustomApiConfig(
+      {
+        url: 'https://example.com/api',
+        method: 'GET',
+      },
+      {
+        headers: {
+          'X-Test-Header': 'TestValue',
+        },
+      }
+    );
+
+    expect(config.url).toBe('https://example.com/api');
+    expect(config.method).toBe('GET');
+    expect(config.headers!['X-Test-Header']).toBe('TestValue');
+  });
+  test('getCustomApiConfig replaces same header value from multiple configs', () => {
+    const config = getCustomApiConfig(
+      {
+        headers: {
+          'X-Test-Header': 'InitialValue',
+        },
+      },
+      {
+        headers: {
+          'X-Test-Header': 'OverriddenValue',
+        },
+      }
+    );
+
+    expect(config.headers!['X-Test-Header']).toBe('OverriddenValue');
   });
 });
