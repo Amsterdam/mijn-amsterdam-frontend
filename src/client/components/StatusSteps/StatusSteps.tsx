@@ -5,12 +5,9 @@ import {
   Heading,
   Icon,
   OrderedList,
+  ProgressList,
 } from '@amsterdam/design-system-react';
-import {
-  CheckMarkIcon,
-  LinkExternalIcon,
-} from '@amsterdam/design-system-react-icons';
-import classNames from 'classnames';
+import { LinkExternalIcon } from '@amsterdam/design-system-react-icons';
 
 import styles from './StatusSteps.module.scss';
 import { defaultDateFormat } from '../../../universal/helpers/date';
@@ -49,35 +46,6 @@ export function StatusStepDocuments({
   );
 }
 
-type StatusIndicationProps = {
-  step: StatusLineItem;
-};
-
-function StatusIndication({ step }: StatusIndicationProps) {
-  let content: ReactNode = '';
-  let ariaLabel: string = 'Toekomstige status';
-
-  if (step.isChecked && !step.isActive) {
-    ariaLabel = 'Status Afgerond';
-    content = (
-      <Icon
-        size="heading-4"
-        className={styles.StatusIndicationCheckmark}
-        aria-label="Status Afgerond"
-        svg={CheckMarkIcon}
-      />
-    );
-  } else if (step.isActive) {
-    ariaLabel = 'Huidige status';
-  }
-
-  return (
-    <span aria-label={ariaLabel} className={styles.StepStatusIndication}>
-      {content}
-    </span>
-  );
-}
-
 type StepsProps = {
   steps: StatusLineItem[];
   title?: string;
@@ -85,26 +53,34 @@ type StepsProps = {
 
 export function Steps({ steps, title }: StepsProps) {
   return (
-    <section className={styles.Steps}>
+    <section>
       {title && (
         <Heading size="level-2" level={3} className="ams-mb-m">
           {title}
         </Heading>
       )}
-      <OrderedList className={styles.StepsList} markers={false}>
+
+      <ProgressList headingLevel={3}>
         {steps.map((item) => (
-          <OrderedList.Item
-            className={classNames(
-              styles.Step,
-              item.isChecked && !item.isActive && styles['Step--checked'],
-              item.isActive && styles['Step--active']
-            )}
-            key={item.id + item.datePublished}
+          <ProgressList.Step
+            key={item.id}
+            heading={item.status}
+            status={
+              item.isActive
+                ? 'current'
+                : item.isChecked
+                  ? 'completed'
+                  : undefined
+            }
+            className={styles.Step}
+            aria-label={
+              item.isChecked && !item.isActive
+                ? 'Status Afgerond'
+                : item.isActive
+                  ? 'Huidige status'
+                  : 'Toekomstige status'
+            }
           >
-            <Heading className={styles.StepStatus} level={3}>
-              <StatusIndication step={item} />
-              {item.status}
-            </Heading>
             <time
               className={styles.StepStatusDate}
               dateTime={item.datePublished}
@@ -132,9 +108,9 @@ export function Steps({ steps, title }: StepsProps) {
                 altDocumentContent={item.altDocumentContent}
               />
             )}
-          </OrderedList.Item>
+          </ProgressList.Step>
         ))}
-      </OrderedList>
+      </ProgressList>
     </section>
   );
 }
