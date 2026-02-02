@@ -2,6 +2,7 @@ import { Icon, UnorderedList } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
 import styles from './MyThemasPanel.module.scss';
+import { IS_DEVELOPMENT } from '../../../universal/config/env';
 import { ThemaMenuItemTransformed } from '../../config/thema-types';
 import { getRedactedClass } from '../../helpers/cobrowse';
 import { GeneralInfoRoute } from '../../pages/GeneralInfo/GeneralInfo-routes';
@@ -50,6 +51,7 @@ export function MyThemasPanel({
                 maVariant="fatNoUnderline"
                 href={to}
                 className={getRedactedClass(id)}
+                data-testid={IS_DEVELOPMENT && title}
               >
                 <span className={styles.ThemaLink}>
                   {IconSVG && (
