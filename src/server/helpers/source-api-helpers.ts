@@ -17,7 +17,15 @@ function getApiConfigBasedCacheKey(
   return `${name}-${cacheKey_UNSAFE}`;
 }
 
-export function getCustomApiConfig(...configs: DataRequestConfig[]) {
+export function getCustomApiConfig(
+  ...configs: Omit<DataRequestConfig, 'cacheKey_UNSAFE'>[]
+) {
+  if (configs.some((c) => 'cacheKey_UNSAFE' in c)) {
+    throw new Error(
+      'getCustomApiConfig does not accept cacheKey_UNSAFE in configs'
+    );
+  }
+  // The name 'CUSTOM_API' is a placeholder and does not correspond to any real API config.
   return getApiConfig('CUSTOM_API', ...configs);
 }
 
