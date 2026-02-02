@@ -64,7 +64,7 @@ export function VergunningenThema() {
       id={id}
       title={title}
       pageContentTop={pageContentTop}
-      linkListItems={linkListItems}
+      pageLinks={linkListItems}
       pageContentMain={tables}
       isError={isError}
       isLoading={isLoading}

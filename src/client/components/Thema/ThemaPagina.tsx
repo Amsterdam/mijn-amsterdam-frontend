@@ -27,7 +27,7 @@ interface ThemaPaginaProps {
   pageContentTop: ReactNode;
   pageContentTopSecondary?: ReactNode;
   pageContentMain: ReactNode;
-  linkListItems: LinkProps[];
+  pageLinks: LinkProps[];
   pageContentBottom?: ReactNode;
   errorAlertContent?: ReactNode;
   loadingBarConfig?: BarConfig;
@@ -42,7 +42,7 @@ export default function ThemaPagina({
   breadcrumbs,
   pageContentTop,
   pageContentTopSecondary,
-  linkListItems = [],
+  pageLinks = [],
   pageContentMain,
   pageContentBottom,
   errorAlertContent,
@@ -59,10 +59,10 @@ export default function ThemaPagina({
         <MaintenanceNotifications page={maintenanceNotificationsPageSlug} />
       )}
       {pageContentTop}
-      {!!linkListItems.length && (
+      {!!pageLinks.length && (
         <PageContentCell className={styles.PullUp}>
           <LinkList>
-            {linkListItems.map(({ to, title }) => (
+            {pageLinks.map(({ to, title }) => (
               <LinkList.Link key={to} rel="noreferrer" href={to}>
                 {title}
               </LinkList.Link>
