@@ -71,7 +71,7 @@ export const themaConfig: ToeristischeVerhuurThemaConfig = {
     route: {
       path: '/toeristische-verhuur/vergunning/lijst/:kind/:page?',
       documentTitle: (params) =>
-        `${tableConfigVergunningen[(params?.kind as ListPageParamKind) || 'lopende-aanvragen'].title} | ${THEMA_TITLE}`,
+        `${tableConfigVergunningen[(params?.kind as ListPageParamKind) || 'lopende-aanvragen'].title} | ${THEMA_TITLE}`, //TO DO MIJN-12229
       trackingUrl: null,
     },
   },

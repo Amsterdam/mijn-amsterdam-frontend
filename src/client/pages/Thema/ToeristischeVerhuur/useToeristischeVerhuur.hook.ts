@@ -1,5 +1,4 @@
 import {
-  listPageTitle,
   tableConfigLVVRegistraties,
   tableConfig,
   themaConfig,
@@ -88,7 +87,7 @@ export function useToeristischeVerhuurThemaData() {
     hasVakantieVerhuurVergunningError,
     tableConfigVergunningen: tableConfig,
     tableConfigLVVRegistraties,
-    listPageTitle,
+    listPageTitle: themaConfig.listPage.route,
     hasRegistrations,
     hasPermits,
     hasVergunningenVakantieVerhuur,
