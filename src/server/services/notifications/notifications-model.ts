@@ -115,13 +115,12 @@ export async function upsertConsumer(
 // Therefore, multiple queries are used
 export async function deleteConsumer(consumerId: ConsumerId) {
   const rows = (await db.queryALL(queries.deleteConsumer, [consumerId])) as {
-    profile_id: string;
-    consumer_ids: string[];
+    profileId: string;
+    consumerIds: string[];
   }[];
-
-  for (const { profile_id, consumer_ids } of rows) {
-    if (consumer_ids.length === 0) {
-      await db.query(queries.deleteProfileIfConsumerIdsIsEmpty, [profile_id]);
+  for (const { profileId, consumerIds } of rows) {
+    if (!consumerIds || consumerIds.length === 0) {
+      await db.query(queries.deleteProfileIfConsumerIdsIsEmpty, [profileId]);
     }
   }
   return rows.length;

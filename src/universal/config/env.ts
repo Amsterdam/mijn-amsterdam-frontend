@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
+/// <reference path="../../mijnamsterdam.d.ts" />
+
 // This file is being used by the setting of local environment variables (load-env.ts).
 // Before adding imports read the disclaimer at the top of said file.
 
