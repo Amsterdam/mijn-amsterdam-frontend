@@ -56,6 +56,10 @@ export function Dashboard() {
         className={styles.Dashboard}
         heading={<WelcomeHeading />}
         showBreadcrumbs={false}
+        showUserFeedback
+        userFeedbackDetails={{
+          pageTitle: 'Dashboard',
+        }}
       >
         <PageContentCell spanWide={7}>
           <Heading level={2} className="ams-mb-m">
