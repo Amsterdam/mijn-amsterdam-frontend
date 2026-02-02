@@ -49,7 +49,6 @@ import { toDateFormatted } from '../../../universal/helpers/date';
 import { omit, sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
 import type { StatusLineItem } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { DataRequestConfig } from '../../config/source-api';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import {
@@ -905,20 +904,12 @@ export async function fetchDecosDocument(
   authProfileAndToken: AuthProfileAndToken,
   documentID: string
 ) {
-  const apiConfigDocument = getApiConfig('DECOS_API', {
+  const config = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
       return `${config.url}/items/${documentID}/content`;
     },
-  });
-
-  const config: DataRequestConfig = {
-    ...apiConfigDocument,
     responseType: 'stream',
     headers: {
-      // TODO: MIJN-12466 - Simplify to normal key:value after connection through enableU works
-      ...(apiConfigDocument.headers?.apiKey ? { apiKey: apiConfigDocument.headers?.apiKey } : {}),
-      // TODO: MIJN-12466 - Remove older Authorization after connection through enableU works
-      ...(apiConfigDocument.headers?.Authorization ? { Authorization: apiConfigDocument.headers?.Authorization } : {}),
       Accept: 'application/octet-stream',
     },
     transformResponse: (documentResponseData) => {
@@ -926,7 +917,7 @@ export async function fetchDecosDocument(
         data: documentResponseData,
       };
     },
-  };
+  });
 
   return requestData<DocumentDownloadData>(config, authProfileAndToken);
 }
