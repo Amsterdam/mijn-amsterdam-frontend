@@ -24,6 +24,7 @@ type ToeristischeVerhuurThemaConfig = ThemaConfigBase<typeof THEMA_ID> &
 
 const THEMA_ID = 'TOERISTISCHE_VERHUUR';
 const THEMA_TITLE = 'Toeristische verhuur';
+export const THEMA_DETAIL_TITLE_DEFAULT = 'Vergunning toeristische verhuur';
 
 export const themaConfig: ToeristischeVerhuurThemaConfig = {
   id: THEMA_ID,
@@ -70,7 +71,7 @@ export const themaConfig: ToeristischeVerhuurThemaConfig = {
     route: {
       path: '/toeristische-verhuur/vergunning/lijst/:kind/:page?',
       documentTitle: (params) =>
-        `${tableConfigVergunningen[(params?.kind as ListPageParamKind) || 'lopende-aanvragen'].title} | ${THEMA_TITLE}`,
+        `${tableConfigVergunningen[(params?.kind as ListPageParamKind) || 'lopende-aanvragen'].title} | ${THEMA_TITLE}`, //TO DO MIJN-12229
       trackingUrl: null,
     },
   },
@@ -143,5 +144,3 @@ export const tableConfigLVVRegistraties = {
   title: 'Registratienummer(s) toeristische verhuur',
   displayProps: DISPLAY_PROPS_LVV_REGISTRATIES,
 } as const;
-
-export const THEMA_DETAIL_TITLE_DEFAULT = 'Vergunning toeristische verhuur';

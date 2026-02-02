@@ -56,7 +56,7 @@ export function KlachtenThema() {
       isLoading={isLoading}
       pageContentTop={pageContentTop}
       pageContentMain={tables}
-      linkListItems={linkListItems}
+      pageLinks={linkListItems}
       maintenanceNotificationsPageSlug="klachten"
     />
   );

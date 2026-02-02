@@ -65,7 +65,7 @@ export const themaConfig = {
       path: '/regelingen-bij-laag-inkomen/lijst/:kind/:page?',
       trackingUrl: null,
       documentTitle: (params) =>
-        `${params?.kind === 'eerdere-en-afgehandelde-regelingen' ? 'Eerdere' : 'Huidige'} regelingen | ${THEMA_TITLE}`,
+        `${params?.kind === 'eerdere-en-afgewezen-regelingen' ? 'Eerdere' : 'Huidige'} regelingen | ${THEMA_TITLE}`,
     },
   },
   regelingenDetailPage: {

@@ -1,5 +1,4 @@
 import {
-  listPageTitle,
   tableConfigLVVRegistraties,
   tableConfig,
   themaConfig,
@@ -69,11 +68,11 @@ export function useToeristischeVerhuurThemaData() {
 
   const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
-  const extraLinkListItems: LinkProps[] = [];
+  const extraPageLinks: LinkProps[] = [];
   if (hasVergunningenVakantieVerhuur) {
-    extraLinkListItems.push(vvVergunningPageLinkItem);
+    extraPageLinks.push(vvVergunningPageLinkItem);
   } else if (hasVergunningBB) {
-    extraLinkListItems.push(bbVergunningPageLinkItem);
+    extraPageLinks.push(bbVergunningPageLinkItem);
   }
 
   return {
@@ -88,15 +87,14 @@ export function useToeristischeVerhuurThemaData() {
     hasVakantieVerhuurVergunningError,
     tableConfigVergunningen: tableConfig,
     tableConfigLVVRegistraties,
-    listPageTitle,
+    listPageTitle: themaConfig.listPage.route,
     hasRegistrations,
     hasPermits,
     hasVergunningenVakantieVerhuur,
     hasBothVerleend,
     hasVergunningBB,
     breadcrumbs,
-    linkListItems: [...extraLinkListItems, ...themaConfig.pageLinks],
-    listPageConfig: themaConfig.listPage,
-    detailPageConfig: themaConfig.detailPage,
+    pageLinks: [...extraPageLinks, ...themaConfig.pageLinks],
+    themaConfig,
   };
 }
