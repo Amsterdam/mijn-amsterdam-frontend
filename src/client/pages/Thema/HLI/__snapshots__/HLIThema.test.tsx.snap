@@ -235,7 +235,11 @@ exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
           <p
             class="ams-paragraph ams-paragraph--small"
           >
-            Het huidige stadspasjaar eindigt op 31 juli 2025.
+            <small
+              class="ams-paragraph__small"
+            >
+              Het huidige stadspasjaar eindigt op 31 juli 2025.
+            </small>
           </p>
         </div>
         <div
