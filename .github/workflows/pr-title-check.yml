@@ -2,7 +2,7 @@
 name: 'PR Title Check'
 permissions:
   contents: read
-  pull-requests: read
+  pull-requests: write
 on:
   pull_request:
     types: [opened, edited, synchronize]
@@ -16,15 +16,45 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const payload = context.payload
-            const prTitle = payload.pull_request.title
+            const pr = payload.pull_request
 
-            // Titel moet beginnen met mijn-xxxx-chore/feature/bug! todo mijn- patroon moet weggehaald worden wanneer de workflows van mijn-7620 gemerged zijn
-            const jiraPattern = /^MIJN-\d+-(CHORE|FEATURE|BUG)/i
+            // Titel moet beginnen met mijn-xxxx-chore
+            const ticketPattern = /^MIJN[\-_ ]\d+[\-_ ](CHORE|FEATURE|BUG)/i
             const dependabotPattern = /^Build\(deps(-dev)?\): bump/
 
-            if (!(jiraPattern.test(prTitle) || dependabotPattern.test(prTitle))) {
+            const hasValidPrefix = (str) => ticketPattern.test(prTitle) || dependabotPattern.test(prTitle)
+
+            let prTitle = pr.title
+            if (!hasValidPrefix(prTitle)) {
+              const branchName = pr.head.ref
+              prTitle = branchName
+            }
+
+            if (!hasValidPrefix(prTitle)) {
               console.log('The PR title does not match JIRA ticket format!')
               core.setFailed('PR title not valid. Please make sure this PR uses the JIRA ticket or dependabot format.')
-            } else {
-              console.log('PR title format is correct.')
+
+              return
+            }
+            console.log('PR title format is correct.')
+
+            if (dependabotPattern.test(prTitle)) {
+              return
+            }
+
+            const [prefix] = prTitle.match(ticketPattern)
+            const normalizedPrefix = prefix.replace(/[\s_]+/g, '-').toUpperCase()
+            const normalizedTitle = prTitle.slice(prefix.length).replace(/^[^a-zA-Z0-9]+/, '').replace(/[-_ ]+/g, ' ')
+
+            const capitalize = (str) => `${str.charAt(0).toUpperCase()}${str.slice(1)}`
+            const prTitleNew = `${normalizedPrefix} - ${capitalize(normalizedTitle)}`
+
+            if (prTitle !== prTitleNew) {
+              await github.rest.pulls.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: pr.number,
+                title: prTitleNew
+              })
+              console.log(`PR title updated from ${prTitle} to ${prTitleNew}.`)
             }
