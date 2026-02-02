@@ -9,7 +9,6 @@ import type { CobrowseWidget } from './lib/cobrowse-widget';
 import './lib/cobrowse-widget.css';
 import { REDACTED_CLASS, useCobrowseStore } from '../../../helpers/cobrowse';
 import { useIsBffToggleEnabled } from '../../../helpers/env';
-// import { useIsBffToggleEnabled } from '../../../helpers/env';
 
 export const LABEL_HULP_SCHERMDELEN = 'Hulp via schermdelen';
 declare global {
@@ -19,29 +18,6 @@ declare global {
 }
 
 const licenseKey = import.meta.env.REACT_APP_COBROWSE_LICENSE_KEY;
-
-export function isCobrowseScreensharing() {
-  return !!document.getElementById('cobrowse-frame');
-}
-
-export function useCobrowseScreenshareStatus() {
-  const [active, setActive] = useState(isCobrowseScreensharing());
-
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      setActive(isCobrowseScreensharing());
-    });
-
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  return active;
-}
 
 function useCobrowse() {
   const [cobrowseWidget, setCobrowseWidget] = useState<CobrowseWidget | null>(

@@ -15,12 +15,14 @@ import { useDebouncedCallback } from 'use-debounce';
 import { SearchEntry, displayPath } from './search-config';
 import styles from './Search.module.scss';
 import { useSearchIndex } from './useSearch';
-import { getRedactedClass } from '../../helpers/cobrowse';
+import {
+  getRedactedClass,
+  useCobrowseScreenshareState,
+} from '../../helpers/cobrowse';
 import { useSmallScreen } from '../../hooks/media.hook';
 import { useAppStateReady } from '../../hooks/useAppStateStore';
 import { useKeyDown } from '../../hooks/useKey';
 import { SearchPageRoute } from '../../pages/Search/Search-routes';
-import { useCobrowseScreenshareStatus } from '../MainFooter/CobrowseFooter/CobrowseFooter';
 import { MaButtonLink, MaLink, MaRouterLink } from '../MaLink/MaLink';
 import { Spinner } from '../Spinner/Spinner';
 
@@ -50,7 +52,7 @@ export function ResultSet({
   totalResultsCount,
   onClickResult,
 }: ResultSetProps) {
-  const isCobrowseScreensharing = useCobrowseScreenshareStatus();
+  const isCobrowseScreensharing = useCobrowseScreenshareState();
   return (
     <div className={styles.ResultSet}>
       {!!title && (

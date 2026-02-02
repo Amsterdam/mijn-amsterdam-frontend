@@ -15,10 +15,12 @@ import {
 } from './Contactmomenten.config';
 import styles from './ProfilePrivate.module.scss';
 import { isLoading, isError } from '../../../../../universal/helpers/api';
-import { useCobrowseScreenshareStatus } from '../../../../components/MainFooter/CobrowseFooter/CobrowseFooter';
 import { MaRouterLink } from '../../../../components/MaLink/MaLink';
 import { ThemaMenuItemTransformed } from '../../../../config/thema-types';
-import { getRedactedClass } from '../../../../helpers/cobrowse';
+import {
+  getRedactedClass,
+  useCobrowseScreenshareState,
+} from '../../../../helpers/cobrowse';
 import { useAppStateGetter } from '../../../../hooks/useAppStateStore';
 import {
   useThemaBreadcrumbs,
@@ -78,7 +80,7 @@ function addIcon(type: string) {
 export function useContactmomenten() {
   const { KLANT_CONTACT } = useAppStateGetter();
   const { items: myThemasMenuItems } = useActiveThemaMenuItems();
-  const isCobrowseScreensharing = useCobrowseScreenshareStatus();
+  const isCobrowseScreensharing = useCobrowseScreenshareState();
   const breadcrumbs = useThemaBreadcrumbs(themaIdBRP);
   const routeParams = useParams();
 

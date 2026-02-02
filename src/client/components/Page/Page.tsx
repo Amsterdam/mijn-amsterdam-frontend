@@ -8,8 +8,11 @@ import {
 } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
-import { getRedactedClass, type ScopeRequested } from '../../helpers/cobrowse';
-import { useCobrowseScreenshareStatus } from '../MainFooter/CobrowseFooter/CobrowseFooter';
+import {
+  getRedactedClass,
+  useCobrowseScreenshareState,
+  type ScopeRequested,
+} from '../../helpers/cobrowse';
 import {
   PageBreadcrumbsV2,
   type PageBreadcrumbsV2Props,
@@ -45,7 +48,7 @@ export function PageV2({
   showUserFeedback = false,
   userFeedbackDetails,
 }: PageProps) {
-  const isCobrowseScreensharing = useCobrowseScreenshareStatus();
+  const isCobrowseScreensharing = useCobrowseScreenshareState();
   return (
     <div
       className={classNames(

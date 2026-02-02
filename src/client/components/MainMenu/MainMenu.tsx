@@ -3,10 +3,12 @@ import classNames from 'classnames';
 
 import { categoryMenuItems } from './MainMenu.constants';
 import styles from './MainMenu.module.scss';
-import { getRedactedClass } from '../../helpers/cobrowse';
+import {
+  getRedactedClass,
+  useCobrowseScreenshareState,
+} from '../../helpers/cobrowse';
 import { useSmallScreen } from '../../hooks/media.hook';
 import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems';
-import { useCobrowseScreenshareStatus } from '../MainFooter/CobrowseFooter/CobrowseFooter';
 import { MainHeaderSecondaryLinks } from '../MainHeader/MainHeader';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink';
 
@@ -15,7 +17,7 @@ export const MAIN_MENU_ID = 'main-menu';
 export function MainMenu() {
   const { items } = useActiveThemaMenuItems();
   const isPhoneScreen = useSmallScreen();
-  const isCobrowseScreensharing = useCobrowseScreenshareStatus();
+  const isCobrowseScreensharing = useCobrowseScreenshareState();
 
   return (
     <div id={MAIN_MENU_ID} className={styles.MainMenu}>

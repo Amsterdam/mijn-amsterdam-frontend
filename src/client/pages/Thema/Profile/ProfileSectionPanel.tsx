@@ -7,9 +7,11 @@ import styles from './ProfileSectionPanel.module.scss';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
-import { getRedactedClass } from '../../../helpers/cobrowse';
+import {
+  getRedactedClass,
+  useCobrowseScreenshareState,
+} from '../../../helpers/cobrowse';
 import { useSmallScreen } from '../../../hooks/media.hook';
-import { useCobrowseScreenshareStatus } from '../../../components/MainFooter/CobrowseFooter/CobrowseFooter';
 
 export interface ActionLink {
   title: string;
@@ -57,7 +59,7 @@ function ProfileSectionActionLinks({
 }
 
 function getRows(sectionData: ProfileSectionData) {
-  const isCobrowseScreensharing = useCobrowseScreenshareStatus();
+  const isCobrowseScreensharing = useCobrowseScreenshareState();
   return Object.entries(sectionData).map(([key, value]) => {
     return {
       label: key,

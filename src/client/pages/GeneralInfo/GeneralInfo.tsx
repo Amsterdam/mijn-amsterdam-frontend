@@ -4,12 +4,14 @@ import {
   UnorderedList,
 } from '@amsterdam/design-system-react';
 
-import { useCobrowseScreenshareStatus } from '../../components/MainFooter/CobrowseFooter/CobrowseFooter';
 import { MaLink, MaRouterLink } from '../../components/MaLink/MaLink';
 import { myAreaSectionProps } from '../../components/MyArea/InfoSection';
 import { PageContentCell, PageV2 } from '../../components/Page/Page';
 import { ThemaConfigBase, InfoSection } from '../../config/thema-types';
-import { getRedactedClass } from '../../helpers/cobrowse';
+import {
+  getRedactedClass,
+  useCobrowseScreenshareState,
+} from '../../helpers/cobrowse';
 import {
   compareThemas,
   useAllThemaMenuItemsByThemaID,
@@ -140,7 +142,7 @@ function getLinkComponent(href: string) {
 
 export function GeneralInfo() {
   const themaMenuItems = useAllThemaMenuItemsByThemaID();
-  const isCobrowseScreensharing = useCobrowseScreenshareStatus();
+  const isCobrowseScreensharing = useCobrowseScreenshareState();
   const sectionComponents = sections
     .filter((section) => {
       return section.active && section.id in themaMenuItems;

@@ -2,14 +2,16 @@ import { useMemo } from 'react';
 
 import { useAppStateStore } from './useAppStateStore';
 import type { MyNotification } from '../../universal/types/App.types';
-import { useCobrowseScreenshareStatus } from '../components/MainFooter/CobrowseFooter/CobrowseFooter';
 import { WelcomeNotification } from '../config/staticData';
-import { getRedactedClass } from '../helpers/cobrowse';
+import {
+  getRedactedClass,
+  useCobrowseScreenshareState,
+} from '../helpers/cobrowse';
 
 export function useAppStateNotifications(top?: number) {
   const { isReady, NOTIFICATIONS } = useAppStateStore();
   const notifications_: MyNotification[] = NOTIFICATIONS?.content ?? [];
-  const isCobrowseScreensharing = useCobrowseScreenshareStatus();
+  const isCobrowseScreensharing = useCobrowseScreenshareState();
   // Merge the WelcomeNotification when AppState is ready.
   const notifications = useMemo(
     () =>

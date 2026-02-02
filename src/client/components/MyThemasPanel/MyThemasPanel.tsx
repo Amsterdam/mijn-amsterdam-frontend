@@ -4,10 +4,12 @@ import classNames from 'classnames';
 import styles from './MyThemasPanel.module.scss';
 import { IS_DEVELOPMENT } from '../../../universal/config/env';
 import { ThemaMenuItemTransformed } from '../../config/thema-types';
-import { getRedactedClass } from '../../helpers/cobrowse';
+import {
+  getRedactedClass,
+  useCobrowseScreenshareState,
+} from '../../helpers/cobrowse';
 import { GeneralInfoRoute } from '../../pages/GeneralInfo/GeneralInfo-routes';
 import LoadingContent from '../LoadingContent/LoadingContent';
-import { useCobrowseScreenshareStatus } from '../MainFooter/CobrowseFooter/CobrowseFooter';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink';
 
 type ThemaLinkLoaderProps = {
@@ -38,7 +40,7 @@ export function MyThemasPanel({
   items = [],
   isLoading = true,
 }: MyThemasPanelProps) {
-  const isCobrowseScreensharing = useCobrowseScreenshareStatus();
+  const isCobrowseScreensharing = useCobrowseScreenshareState();
   return (
     <>
       <UnorderedList
