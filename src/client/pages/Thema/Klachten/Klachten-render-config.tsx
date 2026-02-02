@@ -1,4 +1,4 @@
-import { routeConfig, themaConfig } from './Klachten-thema-config';
+import { themaConfig } from './Klachten-thema-config';
 import { KlachtenDetail } from './KlachtenDetail';
 import { default as KlachtenIcon } from './KlachtenIcon.svg?react';
 import { KlachtenList } from './KlachtenList';
@@ -17,12 +17,12 @@ export const KlachtenRoutes = [
     isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.listPage.path,
+    route: themaConfig.listPage.route.path,
     Component: KlachtenList,
     isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.detailPage.path,
+    route: themaConfig.detailPage.route.path,
     Component: KlachtenDetail,
     isActive: themaConfig.featureToggle.active,
   },

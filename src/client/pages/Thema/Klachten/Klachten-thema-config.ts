@@ -10,6 +10,8 @@ import {
 import type {
   ThemaConfigBase,
   ThemaRoutesConfig,
+  WithDetailPage,
+  WithListPage,
 } from '../../../config/thema-types';
 
 export const featureToggle = {
@@ -21,7 +23,7 @@ export const THEMA_TITLE = 'Klachten';
 export const KLACHTEN_AMSTERDAM_URL_KLACHT_INDIENEN =
   'https://www.amsterdam.nl/contact/klacht-indienen-gemeente';
 
-type KLachtenThemaConfig = ThemaConfigBase;
+type KLachtenThemaConfig = ThemaConfigBase & WithDetailPage & WithListPage;
 
 export const themaConfig: KLachtenThemaConfig = {
   id: THEMA_ID,
@@ -46,6 +48,22 @@ export const themaConfig: KLachtenThemaConfig = {
     documentTitle: `${THEMA_TITLE} | overzicht`,
     trackingUrl: null,
   },
+  detailPage: {
+    route: {
+      path: '/klachten/klacht/:id',
+      trackingUrl: '/klachten/klacht',
+      documentTitle: `Klachten | ${THEMA_TITLE}`,
+    },
+  },
+  listPage: {
+    route: {
+      path: '/klachten/lijst/:kind/:page?',
+      documentTitle: (params) => {
+        return `${params?.kind === listPageParamKind.eerder ? 'Afgehandelde' : 'Openstaande'} klachten | ${THEMA_TITLE}`;
+      },
+      trackingUrl: null,
+    },
+  },
 };
 
 export const listPageParamKind = {
@@ -57,11 +75,6 @@ export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 export const routeConfig = {
-  detailPage: {
-    path: '/klachten/klacht/:id',
-    trackingUrl: '/klachten/klacht',
-    documentTitle: `Klachten | ${THEMA_TITLE}`,
-  },
   listPage: {
     path: '/klachten/lijst/:kind/:page?',
     documentTitle: (params) => {
