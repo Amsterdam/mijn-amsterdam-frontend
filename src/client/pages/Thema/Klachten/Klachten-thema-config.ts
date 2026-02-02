@@ -23,7 +23,9 @@ export const THEMA_TITLE = 'Klachten';
 export const KLACHTEN_AMSTERDAM_URL_KLACHT_INDIENEN =
   'https://www.amsterdam.nl/contact/klacht-indienen-gemeente';
 
-type KLachtenThemaConfig = ThemaConfigBase & WithDetailPage & WithListPage;
+type KLachtenThemaConfig = ThemaConfigBase<typeof THEMA_ID> &
+  WithDetailPage &
+  WithListPage;
 
 export const themaConfig: KLachtenThemaConfig = {
   id: THEMA_ID,
@@ -40,7 +42,7 @@ export const themaConfig: KLachtenThemaConfig = {
   pageLinks: [
     {
       to: KLACHTEN_AMSTERDAM_URL_KLACHT_INDIENEN,
-      title: 'Meer informatie over de afhandeling van uw klacht', // TO DO YACINE ZIe deze niet terug maar een andere
+      title: 'Meer informatie over de afhandeling van uw klacht',
     },
   ],
   route: {

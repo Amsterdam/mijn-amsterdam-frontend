@@ -4,7 +4,6 @@ import UID from 'uid-safe';
 
 import {
   featureToggle,
-  routeConfig,
   themaConfig,
 } from '../../../client/pages/Thema/Klachten/Klachten-thema-config';
 import {
@@ -148,7 +147,7 @@ export function transformKlachtenResponse(
       ),
       locatie: klachtSource?.klacht_locatieadres.value,
       link: {
-        to: generatePath(routeConfig.detailPage.path, {
+        to: generatePath(themaConfig.detailPage.route.path, {
           id,
         }),
         title: `Klacht ${id}`,

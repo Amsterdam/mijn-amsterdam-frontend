@@ -148,7 +148,7 @@ const pageRouteResolvers: PageRouteResolvers = {
   ),
   klachten: baseThemaConfig(
     KLACHTEN.themaConfig.route.path,
-    KLACHTEN.themaConfig.id, // TO DO YACINE met een ontwikkelaar naar kijken
+    KLACHTEN.themaConfig.id,
     (stateSlice) => {
       return stateSlice.content;
     }
