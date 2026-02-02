@@ -4,9 +4,7 @@ import UID from 'uid-safe';
 
 import {
   featureToggle,
-  routeConfig,
-  themaId,
-  themaTitle,
+  themaConfig,
 } from '../../../client/pages/Thema/Klachten/Klachten-thema-config';
 import {
   apiDependencyError,
@@ -102,34 +100,32 @@ export function transformKlachtenResponse(
     const dateClosed = smileDateParser(
       klachtSource.klacht_finishedon.value ?? ''
     );
-    const steps = featureToggle.statustreinAndAfgehandeldeMeldingenActive
-      ? [
-          {
-            id: '1',
-            status: 'Ontvangen',
-            isChecked: true,
-            isActive: false,
-            datePublished: ontvangstDatum,
-          },
-          {
-            id: '2',
-            status: 'In behandeling',
-            isChecked: true,
-            isActive: !isClosed,
-            datePublished: ontvangstDatum,
-          },
-          {
-            id: '3',
-            status: 'Afgehandeld',
-            isChecked: isClosed,
-            isActive: isClosed,
-            datePublished: dateClosed,
-            description: isClosed
-              ? `<p>Uw klacht is afgehandeld. U krijgt een antwoord op uw klacht.</p>`
-              : '',
-          },
-        ]
-      : [];
+    const steps = [
+      {
+        id: '1',
+        status: 'Ontvangen',
+        isChecked: true,
+        isActive: false,
+        datePublished: ontvangstDatum,
+      },
+      {
+        id: '2',
+        status: 'In behandeling',
+        isChecked: true,
+        isActive: !isClosed,
+        datePublished: ontvangstDatum,
+      },
+      {
+        id: '3',
+        status: 'Afgehandeld',
+        isChecked: isClosed,
+        isActive: isClosed,
+        datePublished: dateClosed,
+        description: isClosed
+          ? `<p>Uw klacht is afgehandeld. U krijgt een antwoord op uw klacht.</p>`
+          : '',
+      },
+    ];
 
     const klacht: KlachtFrontend = {
       id,
@@ -149,7 +145,7 @@ export function transformKlachtenResponse(
       ),
       locatie: klachtSource?.klacht_locatieadres.value,
       link: {
-        to: generatePath(routeConfig.detailPage.path, {
+        to: generatePath(themaConfig.detailPage.route.path, {
           id,
         }),
         title: `Klacht ${id}`,
@@ -183,8 +179,8 @@ function createKlachtNotification(klacht: KlachtFrontend): MyNotification {
         to: klacht.link.to,
         title: gotoDetailTxt,
       },
-      themaID: themaId,
-      themaTitle: themaTitle,
+      themaID: themaConfig.id,
+      themaTitle: themaConfig.title,
     };
   }
   return {
@@ -196,8 +192,8 @@ function createKlachtNotification(klacht: KlachtFrontend): MyNotification {
       to: klacht.link.to,
       title: gotoDetailTxt,
     },
-    themaID: themaId,
-    themaTitle: themaTitle,
+    themaID: themaConfig.id,
+    themaTitle: themaConfig.title,
   };
 }
 

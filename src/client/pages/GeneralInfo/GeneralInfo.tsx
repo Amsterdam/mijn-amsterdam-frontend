@@ -23,7 +23,7 @@ import { erfpachtSectionProps } from '../Thema/Erfpacht/InfoSection';
 import { themaConfig as hliThemaConfig } from '../Thema/HLI/HLI-thema-config';
 import { inkomenSectionProps } from '../Thema/Inkomen/InfoSection';
 import { JeugdSectionProps as jeugdSectionProps } from '../Thema/Jeugd/InfoSection';
-import { klachtenSectionProps } from '../Thema/Klachten/InfoSection';
+import { themaConfig as klachtenThemaConfig } from '../Thema/Klachten/Klachten-thema-config';
 import { krefiaSectionProps } from '../Thema/Krefia/InfoSection';
 import { milieuzonesectionProps } from '../Thema/Milieuzone/InfoSection';
 import { overtredingensectionProps } from '../Thema/Overtredingen/InfoSection';
@@ -69,22 +69,22 @@ const sections: InfoSection_DEPRECATED[] = [
   belastingenSectionProps,
   AVGsectionProps,
   bezwarenSectionProps,
-  klachtenSectionProps,
   erfpachtSectionProps,
   afisSectionProps,
   inkomenSectionProps,
-  ...createDeprecatedInfoSection(hliThemaConfig),
-  ...createDeprecatedInfoSection(zorgThemaConfig),
+  vergunningensectionProps,
   jeugdSectionProps,
   subsidiesSectionProps,
   krefiaSectionProps,
-  ...createDeprecatedInfoSection(toeristischeVerhuurThemaConfig),
   parkerensectionProps,
   milieuzonesectionProps,
   overtredingensectionProps,
-  vergunningensectionProps,
-  ...createDeprecatedInfoSection(bodemThemaConfig),
   varensectionProps,
+  ...createDeprecatedInfoSection(bodemThemaConfig),
+  ...createDeprecatedInfoSection(hliThemaConfig),
+  ...createDeprecatedInfoSection(klachtenThemaConfig),
+  ...createDeprecatedInfoSection(toeristischeVerhuurThemaConfig),
+  ...createDeprecatedInfoSection(zorgThemaConfig),
 ];
 
 function InfoPageSection({ title, listItems, href }: SectionProps) {

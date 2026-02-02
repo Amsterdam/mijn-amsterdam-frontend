@@ -11,14 +11,13 @@ export function KlachtenList() {
   }>();
   const {
     klachten,
-    themaId,
     tableConfig,
     breadcrumbs,
     isLoading,
     isError,
-    routeConfig,
+    themaConfig,
   } = useKlachtenThemaData();
-  useHTMLDocumentTitle(routeConfig.listPage);
+  useHTMLDocumentTitle(themaConfig.listPage.route);
 
   const { filter, sort, title, displayProps, listPageRoute } =
     tableConfig[kind];
@@ -26,7 +25,7 @@ export function KlachtenList() {
   return (
     <ListPagePaginated
       items={klachten.filter(filter).sort(sort)}
-      themaId={themaId}
+      themaId={themaConfig.id}
       title={title}
       appRoute={listPageRoute}
       breadcrumbs={breadcrumbs}

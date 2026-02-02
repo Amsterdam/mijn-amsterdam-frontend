@@ -3,6 +3,7 @@ import { afterEach, describe, expect, vi } from 'vitest';
 
 import { fetchAllKlachten, fetchKlachtenNotifications } from './klachten';
 import { SmileKlacht, SmileKlachtenReponse } from './types';
+import { themaConfig } from '../../../client/pages/Thema/Klachten/Klachten-thema-config';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { ApiConfig } from '../../config/source-api';
 
@@ -102,8 +103,8 @@ describe('Klachten', () => {
               title: 'Bekijk details',
               to: '/klachten/klacht/1',
             },
-            themaID: 'KLACHTEN',
-            themaTitle: 'Klachten',
+            themaID: themaConfig.id,
+            themaTitle: themaConfig.title,
             title: 'Klacht ontvangen',
           },
           {
@@ -115,8 +116,8 @@ describe('Klachten', () => {
               title: 'Bekijk details',
               to: '/klachten/klacht/2',
             },
-            themaID: 'KLACHTEN',
-            themaTitle: 'Klachten',
+            themaID: themaConfig.id,
+            themaTitle: themaConfig.title,
             title: 'Klacht afgehandeld',
           },
         ],

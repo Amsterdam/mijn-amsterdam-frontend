@@ -147,8 +147,8 @@ const pageRouteResolvers: PageRouteResolvers = {
     }
   ),
   klachten: baseThemaConfig(
-    KLACHTEN.routeConfig.themaPage.path,
-    KLACHTEN.themaId,
+    KLACHTEN.themaConfig.route.path,
+    KLACHTEN.themaConfig.id,
     (stateSlice) => {
       return stateSlice.content;
     }

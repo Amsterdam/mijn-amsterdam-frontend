@@ -6,7 +6,6 @@ import { PageContentCell } from '../../../components/Page/Page';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
-import { featureToggle } from './Klachten-thema-config';
 
 const pageContentTop = (
   <PageContentCell spanWide={8}>
@@ -19,18 +18,18 @@ const pageContentTop = (
 
 export function KlachtenThema() {
   const {
-    themaId,
-    themaTitle,
+    id,
+    title,
     tableConfig,
     klachten,
     isLoading,
     isError,
-    linkListItems,
-    routeConfig,
+    themaConfig,
+    pageLinks,
   } = useKlachtenThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
-  let tables = Object.values(tableConfig).map((conf) => {
+  const tables = Object.values(tableConfig).map((conf) => {
     return (
       <ThemaPaginaTable<KlachtFrontend>
         key={conf.title}
@@ -42,21 +41,21 @@ export function KlachtenThema() {
       />
     );
   });
-  if (!featureToggle.statustreinAndAfgehandeldeMeldingenActive) {
-    tables = tables.filter((table) => {
-      return table.key !== 'Afgehandelde klachten';
-    });
-  }
+  // if (!featureToggle.statustreinAndAfgehandeldeMeldingenActive) {
+  //   tables = tables.filter((table) => {
+  //     return table.key !== 'Afgehandelde klachten';
+  //   });
+  // }
 
   return (
     <ThemaPagina
-      id={themaId}
-      title={themaTitle}
+      id={id}
+      title={title}
       isError={isError}
       isLoading={isLoading}
       pageContentTop={pageContentTop}
       pageContentMain={tables}
-      pageLinks={linkListItems}
+      pageLinks={pageLinks}
       maintenanceNotificationsPageSlug="klachten"
     />
   );
