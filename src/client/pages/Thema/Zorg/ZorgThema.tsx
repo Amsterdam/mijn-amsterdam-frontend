@@ -82,7 +82,7 @@ export function ZorgThema() {
         id={id}
         title={title}
         pageContentTop={pageContentTop}
-        pageLinks={linkListItems}
+        pageLinks={pageLinks}
         pageContentMain={
           <>
             {tables}
