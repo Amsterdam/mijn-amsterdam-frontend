@@ -100,18 +100,14 @@ const displayProps: DisplayProps<KlachtFrontend> = {
 
 export const tableConfig = {
   [listPageParamKind.lopend]: {
-    title: featureToggle.statustreinAndAfgehandeldeMeldingenActive
-      ? 'Openstaande klachten'
-      : 'Ingediende klachten',
+    title: 'Openstaande klachten',
     displayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
     listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.lopend,
       page: null,
     }),
-    filter: (klacht: KlachtFrontend) =>
-      !featureToggle.statustreinAndAfgehandeldeMeldingenActive ||
-      klacht.displayStatus !== 'Afgehandeld',
+    filter: (klacht: KlachtFrontend) => klacht.displayStatus !== 'Afgehandeld',
     sort: dateSort<KlachtFrontend>('ontvangstDatum'),
   },
   [listPageParamKind.eerder]: {

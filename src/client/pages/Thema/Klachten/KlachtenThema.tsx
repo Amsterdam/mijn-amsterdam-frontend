@@ -1,6 +1,5 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { featureToggle } from './Klachten-thema-config';
 import { useKlachtenThemaData } from './useKlachtenThemaData.hook';
 import { KlachtFrontend } from '../../../../server/services/klachten/types';
 import { PageContentCell } from '../../../components/Page/Page';
@@ -30,7 +29,7 @@ export function KlachtenThema() {
   } = useKlachtenThemaData();
   useHTMLDocumentTitle(themaConfig.route);
 
-  let tables = Object.values(tableConfig).map((conf) => {
+  const tables = Object.values(tableConfig).map((conf) => {
     return (
       <ThemaPaginaTable<KlachtFrontend>
         key={conf.title}
@@ -42,11 +41,11 @@ export function KlachtenThema() {
       />
     );
   });
-  if (!featureToggle.statustreinAndAfgehandeldeMeldingenActive) {
-    tables = tables.filter((table) => {
-      return table.key !== 'Afgehandelde klachten';
-    });
-  }
+  // if (!featureToggle.statustreinAndAfgehandeldeMeldingenActive) {
+  //   tables = tables.filter((table) => {
+  //     return table.key !== 'Afgehandelde klachten';
+  //   });
+  // }
 
   return (
     <ThemaPagina

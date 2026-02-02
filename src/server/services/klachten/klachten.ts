@@ -100,34 +100,32 @@ export function transformKlachtenResponse(
     const dateClosed = smileDateParser(
       klachtSource.klacht_finishedon.value ?? ''
     );
-    const steps = featureToggle.statustreinAndAfgehandeldeMeldingenActive
-      ? [
-          {
-            id: '1',
-            status: 'Ontvangen',
-            isChecked: true,
-            isActive: false,
-            datePublished: ontvangstDatum,
-          },
-          {
-            id: '2',
-            status: 'In behandeling',
-            isChecked: true,
-            isActive: !isClosed,
-            datePublished: ontvangstDatum,
-          },
-          {
-            id: '3',
-            status: 'Afgehandeld',
-            isChecked: isClosed,
-            isActive: isClosed,
-            datePublished: dateClosed,
-            description: isClosed
-              ? `<p>Uw klacht is afgehandeld. U krijgt een antwoord op uw klacht.</p>`
-              : '',
-          },
-        ]
-      : [];
+    const steps = [
+      {
+        id: '1',
+        status: 'Ontvangen',
+        isChecked: true,
+        isActive: false,
+        datePublished: ontvangstDatum,
+      },
+      {
+        id: '2',
+        status: 'In behandeling',
+        isChecked: true,
+        isActive: !isClosed,
+        datePublished: ontvangstDatum,
+      },
+      {
+        id: '3',
+        status: 'Afgehandeld',
+        isChecked: isClosed,
+        isActive: isClosed,
+        datePublished: dateClosed,
+        description: isClosed
+          ? `<p>Uw klacht is afgehandeld. U krijgt een antwoord op uw klacht.</p>`
+          : '',
+      },
+    ];
 
     const klacht: KlachtFrontend = {
       id,
