@@ -14,13 +14,11 @@ import styles from './App.module.scss';
 import { PrivateRoutes, PublicRoutes } from './App.routes';
 import { AutoLogoutDialog } from './components/AutoLogoutDialog/AutoLogoutDialog';
 import { ErrorMessages } from './components/ErrorMessages/ErrorMessages';
-import {
-  useCobrowseScreenshareStatus,
-} from './components/MainFooter/CobrowseFooter/CobrowseFooter';
 import { MainFooter } from './components/MainFooter/MainFooter';
 import { MainHeader } from './components/MainHeader/MainHeader';
 import { routeConfig as buurtRouteConfig } from './components/MyArea/MyArea-thema-config';
 import { loginUrlByAuthMethod } from './config/api';
+import { useCobrowseScreenshareState } from './helpers/cobrowse';
 import { useMonitoring } from './helpers/monitoring';
 import { useAnalytics } from './hooks/analytics.hook';
 import { useSessionApi } from './hooks/api/useSessionApi';
@@ -80,6 +78,7 @@ function AppAuthenticated() {
   const location = useLocation();
   const profileType = useProfileTypeValue();
   const redirectAfterLogin = useDeeplinkRedirect();
+  const isScreensharing = useCobrowseScreenshareState();
 
   useUsabilla(profileType);
 
@@ -99,7 +98,7 @@ function AppAuthenticated() {
         <SkipLink href="#page-main-content">Direct naar inhoud</SkipLink>
         <MainHeader isAuthenticated />
         <ErrorMessages />
-        <CobrowseScreenshareDisclaimer />
+        {isScreensharing && <CobrowseScreenshareDisclaimer />}
         <PrivateRoutes />
       </Page>
       {/** Remove the footer on the Map view for better UX */}
@@ -109,10 +108,6 @@ function AppAuthenticated() {
 }
 
 function CobrowseScreenshareDisclaimer() {
-  const isCobrowseScreensharing = useCobrowseScreenshareStatus();
-  if (!isCobrowseScreensharing) {
-    return null;
-  }
   return (
     <Alert
       className="ams-mb-m"

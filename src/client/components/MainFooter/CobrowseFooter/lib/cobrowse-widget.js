@@ -27,11 +27,12 @@ const translations = {
 };
 
 export class CobrowseWidget {
-  constructor(licenseKey, redactedViews, language = 'nl') {
-    this.licenseKey = licenseKey;
-    this.language = language;
+  constructor(opts) {
+    this.licenseKey = opts.licenseKey;
+    this.language = opts.language;
     this.translations = translations;
-    this.redactedViews = redactedViews;
+    this.redactedViews = opts.redactedViews;
+    this.setIsScreensharing = opts.setIsScreensharing;
     // If this localStorage value is present, we assume that a recent cobrowse session was initiated
     // and not ended. Therefore we allow cobrowse to be loaded immediately
     const hasCobrowseWidgetSession =
@@ -142,6 +143,7 @@ export class CobrowseWidget {
 
   createCobrowseFrame() {
     if (document.getElementById('cobrowse-frame')) return;
+    this.setIsScreensharing(true);
 
     const frame = document.createElement('div');
     frame.id = 'cobrowse-frame';
@@ -152,6 +154,7 @@ export class CobrowseWidget {
     const frame = document.getElementById('cobrowse-frame');
     if (frame) {
       frame.remove();
+      this.setIsScreensharing(false);
     }
   }
 
@@ -294,7 +297,7 @@ export class CobrowseWidget {
     return `
       <div class="modal-background">
           <div class="modal-content">
-          <div class="modal-body-container"> 
+          <div class="modal-body-container">
               <div class="modal-heading"><b>${title}</b></div>
                   <div class="modal-body">${description}</div>
                   ${buttons}

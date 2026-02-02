@@ -1,10 +1,12 @@
 export class CobrowseWidget {
-  constructor(licenseKey: string, redactedViews: string[], language?: 'nl');
+  constructor(opts: {
+    licenseKey: string;
+    redactedViews: string[];
+    language?: 'nl';
+    setIsScreensharing: (boolean) => void;
+  });
   startSession: () => void;
   CobrowseIO: {
     redactedViews: string[];
   };
-  loadCobrowseSDK: () => any;
-  createCobrowseFrame: () => any;
-  removeCobrowseFrame: () => any;
 }

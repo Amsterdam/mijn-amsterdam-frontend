@@ -1,8 +1,29 @@
 import memoizee from 'memoizee';
+import { create } from 'zustand';
 
 import { myThemasMenuItems } from '../config/thema';
 import { ThemaMenuItem } from '../config/thema-types';
 import { themaId as themaIdNotificaties } from '../pages/MyNotifications/MyNotifications-config';
+
+type CobrowseState = {
+  isScreensharing: boolean;
+};
+
+type CobrowseAction = {
+  setIsScreensharing: (
+    isScreensharing: CobrowseState['isScreensharing']
+  ) => void;
+};
+
+export const useCobrowseStore = create<CobrowseState & CobrowseAction>(
+  (set) => ({
+    isScreensharing: false,
+    setIsScreensharing: (isScreensharing) => set(() => ({ isScreensharing })),
+  })
+);
+
+export const useCobrowseScreenshareState = () =>
+  useCobrowseStore((state) => state.isScreensharing);
 
 export const REDACTED_CLASS = 'redacted';
 
