@@ -2,6 +2,7 @@ import { Icon, UnorderedList } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
 import styles from './MyThemasPanel.module.scss';
+import { IS_DEVELOPMENT } from '../../../universal/config/env';
 import { ThemaMenuItemTransformed } from '../../config/thema-types';
 import { getRedactedClass } from '../../helpers/cobrowse';
 import { GeneralInfoRoute } from '../../pages/GeneralInfo/GeneralInfo-routes';
@@ -47,16 +48,16 @@ export function MyThemasPanel({
         {items.map(({ id, to, title, IconSVG }) => {
           const LinkComponent = to.startsWith('http') ? MaLink : MaRouterLink;
           return (
-            <UnorderedList.Item key={id}>
-              <LinkComponent
-                maVariant="fatNoUnderline"
-                href={to}
-                className={getRedactedClass({
-                  themaId: id,
-                  isCobrowseScreensharing,
-                  className: 'in-orange-box',
-                })}
-              >
+            <UnorderedList.Item
+              key={id}
+              // Test matches with link instead of li when looking for the title.
+              data-testid={IS_DEVELOPMENT && title}
+              className={getRedactedClass({
+                themaId: id,
+                isCobrowseScreensharing,
+              })}
+            >
+              <LinkComponent maVariant="fatNoUnderline" href={to}>
                 <span className={styles.ThemaLink}>
                   {IconSVG && (
                     <Icon

@@ -72,15 +72,17 @@ export function ResultSet({
             ? MaLink
             : MaRouterLink;
           return (
-            <UnorderedList.Item key={result.url + index}>
+            <UnorderedList.Item
+              key={result.url + index}
+              className={getRedactedClass({
+                themaId: result.themaId,
+                scopeRequested: result.themaId ? 'content' : undefined,
+                isCobrowseScreensharing,
+              })}
+            >
               <LinkComponent
                 maVariant="fatNoUnderline"
                 href={result.url}
-                className={getRedactedClass({
-                  themaId: result.themaId,
-                  scopeRequested: result.themaId ? 'content' : undefined,
-                  isCobrowseScreensharing,
-                })}
                 rel="noopener noreferrer"
                 onClick={() =>
                   onClickResult?.(

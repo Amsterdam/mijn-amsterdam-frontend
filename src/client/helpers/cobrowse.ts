@@ -76,17 +76,20 @@ export function getRedactedClass(opts: {
   themaId?: string;
   scopeRequested?: ScopeRequested;
   isCobrowseScreensharing: boolean;
-  className?: string;
 }) {
   if (!isRedactionRequired(opts.themaId, opts.scopeRequested)) {
     return '';
   }
   opts.isCobrowseScreensharing = opts.isCobrowseScreensharing ?? false;
-  opts.className = opts.className ?? 'in-orange-box';
 
-  const redactedHighlightClass = opts.isCobrowseScreensharing
-    ? ` ${opts.className}`
-    : '';
+  let redactedHighlightClass = '';
+  if (opts.isCobrowseScreensharing) {
+    if (opts.scopeRequested === 'content') {
+      redactedHighlightClass = ' orange-bg-marker-content';
+    } else {
+      redactedHighlightClass = ' orange-bg-marker-full-page';
+    }
+  }
 
   return REDACTED_CLASS + redactedHighlightClass;
 }

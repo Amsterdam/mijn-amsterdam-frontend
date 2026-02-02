@@ -1,5 +1,5 @@
 import { ComponentType } from '@react-spring/web';
-import { act, render, screen, within } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Mockdate from 'mockdate';
 import { generatePath } from 'react-router';
@@ -156,16 +156,10 @@ describe('Cobrowse redacted components', () => {
     describe('Dashboard', () => {
       it('<MyThemasPanel />', async () => {
         await act(() => render(<Component component={Dashboard} />));
-        const MyThemasPanel = screen.getByText("Mijn thema's")
-          .parentElement as HTMLElement;
-        expect(
-          within(MyThemasPanel).getByRole('link', { name: themaTitleBezwaren })
-        ).toHaveClass('redacted');
-        expect(
-          within(MyThemasPanel).getByRole('link', {
-            name: new RegExp(themaTitleVergunningen, 'i'),
-          })
-        ).not.toHaveClass('redacted');
+        expect(screen.getByTestId(themaTitleBezwaren)).toHaveClass('redacted');
+        expect(screen.getByTestId(themaTitleVergunningen)).not.toHaveClass(
+          'redacted'
+        );
       });
 
       it('Notifications', async () => {
