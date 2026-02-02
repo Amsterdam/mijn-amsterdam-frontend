@@ -1,6 +1,5 @@
 import { Alert, Link, Paragraph } from '@amsterdam/design-system-react';
 
-import { themaConfig } from './ToeristischeVerhuur-thema-config';
 import {
   BB_VERGUNNING_DISCLAIMER,
   useToeristischeVerhuurThemaData,
@@ -32,7 +31,8 @@ export function ToeristischeVerhuurThema() {
     hasBBVergunningError,
     hasLVVRegistratiesError,
     hasVakantieVerhuurVergunningError,
-    linkListItems,
+    pageLinks,
+    themaConfig,
   } = useToeristischeVerhuurThemaData();
   useHTMLDocumentTitle(themaConfig.route);
 
@@ -107,7 +107,7 @@ export function ToeristischeVerhuurThema() {
       id={id}
       title={title}
       pageContentTop={pageContentTop}
-      linkListItems={linkListItems}
+      pageLinks={pageLinks}
       maintenanceNotificationsPageSlug="toeristische-verhuur"
       pageContentMain={
         <>
