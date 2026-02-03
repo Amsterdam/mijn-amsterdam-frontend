@@ -24,7 +24,7 @@ import { useBffApi } from '../../hooks/api/useBffApi';
 import { Modal } from '../Modal/Modal';
 import { MapLocationMarker } from '../MyArea/MyArea.hooks';
 
-export const BAG_ADRESSEERBARE_OBJECTEN_URL =
+const BAG_ADRESSEERBARE_OBJECTEN_URL =
   'https://api.data.amsterdam.nl/v1/benkagg/adresseerbareobjecten/';
 
 function transformBagSearchResultsResponse(
