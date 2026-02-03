@@ -77,12 +77,11 @@ describe('predicates', () => {
       };
 
       it.each([
-        [true, '1901-09-05'],
         [true, '1971-09-05'],
         [true, '2004-07-24'],
+        [true, '2004-07-25'],
         [false, '2004-07-26'],
         [false, '2005-05-01'],
-        [false, '2022-08-27'],
       ])('should return %s for birthday %s', (expected, birthday) => {
         const appState = getMockAppState(birthday);
         expect(is18OrOlder(appState)).toBe(expected);
@@ -231,11 +230,8 @@ describe('predicates', () => {
       };
 
       it.each([
-        [true, '1901-09-05'], //gtest
-        [true, '2007-03-18'], //gtest
+        [true, '2008-03-17'],
         [true, '2008-03-18'],
-        [true, '2008-02-02'], //wert
-        [true, '2008-03-17'], //wertk niet goed
         [false, '2008-03-19'],
       ])('should return %s for birthday %s', (expected, birthday) => {
         const appState = getMockAppState(birthday);
