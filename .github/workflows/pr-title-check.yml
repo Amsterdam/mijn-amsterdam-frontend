@@ -47,7 +47,7 @@ jobs:
             const normalizedTitle = prTitle.slice(prefix.length).replace(/^[^a-zA-Z0-9]+/, '').replace(/[-_ ]+/g, ' ')
 
             const capitalize = (str) => `${str.charAt(0).toUpperCase()}${str.slice(1)}`
-            const prTitleNew = `${normalizedPrefix} - ${capitalize(normalizedTitle)}`
+            const prTitleNew = `${normalizedPrefix}: ${capitalize(normalizedTitle)}`
 
             if (prTitle !== prTitleNew) {
               await github.rest.pulls.update({
