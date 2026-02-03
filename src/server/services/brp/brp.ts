@@ -139,6 +139,8 @@ function transformBenkBrpResponse(
     adresInOnderzoek = ADRES_IN_ONDERZOEK_B;
   }
 
+  const isMokum =
+    persoon.gemeenteVanInschrijving?.code === GEMEENTE_CODE_AMSTERDAM;
   const [partner] = persoon.partners ?? [];
   const adres = verblijfplaats?.verblijfadres ?? null;
   const isVerblijfAdresBuitenland =
@@ -148,6 +150,7 @@ function transformBenkBrpResponse(
     adres?.land?.code !== LANDCODE_ONBEKEND;
 
   const fetchUrlAantalBewoners =
+    isMokum &&
     verblijfplaats?.adresseerbaarObjectIdentificatie &&
     featureToggle.service.fetchAantalBewonersOpAdres.isEnabled
       ? generateFullApiUrlBFF(routes.protected.BRP_AANTAL_BEWONERS_OP_ADRES, [
@@ -176,7 +179,7 @@ function transformBenkBrpResponse(
             omschrijving: n.nationaliteit?.omschrijving ?? '',
           }))
           .filter((n) => !!n.omschrijving) ?? [],
-      mokum: persoon.gemeenteVanInschrijving?.code === GEMEENTE_CODE_AMSTERDAM,
+      mokum: isMokum,
       vertrokkenOnbekendWaarheen:
         verblijfplaats?.type === 'VerblijfplaatsOnbekend',
       datumVertrekUitNederlandFormatted: isVerblijfAdresBuitenland
