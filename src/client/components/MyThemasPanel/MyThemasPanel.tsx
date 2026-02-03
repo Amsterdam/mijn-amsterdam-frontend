@@ -56,6 +56,7 @@ export function MyThemasPanel({
               data-testid={IS_DEVELOPMENT && title}
               className={getRedactedClass({
                 themaId: id,
+                scopeRequested: 'content',
                 isCobrowseScreensharing,
               })}
             >

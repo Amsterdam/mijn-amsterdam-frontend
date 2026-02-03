@@ -17,7 +17,7 @@ type CobrowseAction = {
 
 export const useCobrowseStore = create<CobrowseState & CobrowseAction>(
   (set) => ({
-    isScreensharing: false,
+    isScreensharing: true,
     setIsScreensharing: (isScreensharing) => set(() => ({ isScreensharing })),
   })
 );
@@ -83,12 +83,8 @@ export function getRedactedClass(opts: {
   opts.isCobrowseScreensharing = opts.isCobrowseScreensharing ?? false;
 
   let redactedHighlightClass = '';
-  if (opts.isCobrowseScreensharing) {
-    if (opts.scopeRequested === 'content') {
-      redactedHighlightClass = ' orange-bg-marker-content';
-    } else {
-      redactedHighlightClass = ' orange-bg-marker-full-page';
-    }
+  if (opts.isCobrowseScreensharing && opts.scopeRequested === 'content') {
+    redactedHighlightClass = ' orange-bg-marker';
   }
 
   return REDACTED_CLASS + redactedHighlightClass;

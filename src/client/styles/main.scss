@@ -90,11 +90,8 @@ body {
   --ams-grid-padding-inline: 0;
 }
 
-.orange-bg-marker-content {
-  outline: solid rgba(255, 145, 0, 0.1);
-  background-color: rgba(255, 145, 0, 0.1);
-}
-
-.orange-bg-marker-full-page {
-  background-color: rgba(255, 145, 0, 0.1);
+.orange-bg-marker {
+  color: black;
+  outline: solid var(--ams-color-highlight-orange);
+  background-color: var(--ams-color-highlight-orange);
 }
