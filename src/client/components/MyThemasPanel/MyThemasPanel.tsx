@@ -52,7 +52,6 @@ export function MyThemasPanel({
           return (
             <UnorderedList.Item
               key={id}
-              // Test matches with link instead of li when looking for the title.
               data-testid={IS_DEVELOPMENT && title}
               className={getRedactedClass({
                 themaId: id,
