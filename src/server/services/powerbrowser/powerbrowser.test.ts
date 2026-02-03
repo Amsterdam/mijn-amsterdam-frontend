@@ -681,6 +681,30 @@ describe('Powerbrowser service', () => {
       expect(result.content).toHaveLength(1);
     });
 
+    test('should chunk by 25 zaakIds per request', async () => {
+      const testZaakId = `test-zaak-id`;
+      const _26Zaken = Array.from({ length: 26 }, () => testZaakId);
+      const testZaakResponse = {
+        id: 'test-zaak-id',
+        fields: [
+          { fieldName: 'RESULTAAT_ID', fieldValue: 'Verleend' },
+          { fieldName: 'STARTDATUM', fieldValue: '2023-01-01' },
+        ],
+      };
+      remoteApi
+        .get(
+          `/powerbrowser/record/GFO_ZAKEN/${_26Zaken.slice(0, 25).join(',')}`
+        )
+        .reply(200, [testZaakResponse, testZaakResponse]);
+      remoteApi
+        .get(`/powerbrowser/record/GFO_ZAKEN/${testZaakId}`)
+        .reply(200, [testZaakResponse]);
+
+      const result = await forTesting.fetchZakenByIds(_26Zaken);
+      expect(result.status).toBe('OK');
+      expect(result.content).toHaveLength(3);
+    });
+
     test('should return an error if fetch fails', async () => {
       remoteApi
         .get('/powerbrowser/record/GFO_ZAKEN/test-zaak-id')
