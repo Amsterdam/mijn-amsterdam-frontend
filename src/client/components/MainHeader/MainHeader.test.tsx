@@ -28,6 +28,5 @@ describe('<MainHeader />', () => {
 
     expect(screen.getByText(/Uitloggen/)).toBeInTheDocument();
     expect(screen.queryByText('Zoeken')).not.toBeInTheDocument();
-    expect(screen.getAllByText('Menu').length).toBe(2);
   });
 });

@@ -225,7 +225,7 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
           </dl>
         </div>
         <div
-          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-6-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-6-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _AfvalFractionPanelsGrid_69f4ae"
         >
           <article
             class="_AfvalFractionPanel_69f4ae"
@@ -457,7 +457,7 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
           </article>
         </div>
         <div
-          class="ams-grid__cell ams-grid__cell--span-1 ams-grid__cell--span-1-medium ams-grid__cell--span-6-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-7-wide"
+          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-1-medium ams-grid__cell--span-6-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-7-wide _AfvalFractionPanelsGrid_69f4ae"
         >
           <article
             class="_AfvalFractionPanel_69f4ae"
