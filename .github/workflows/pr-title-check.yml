@@ -1,5 +1,5 @@
 # Taken from: https://levelup.gitconnected.com/enforcing-jira-ticket-formatting-in-github-pr-titles-and-commit-messages-78d9755568df
-name: 'PR Title Check'
+name: 'PR Title Check and Format'
 permissions:
   contents: read
   pull-requests: write
@@ -10,7 +10,7 @@ jobs:
   check-title:
     runs-on: ubuntu-latest
     steps:
-      - name: Check PR title
+      - name: Check and format PR title
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
