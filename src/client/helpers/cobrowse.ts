@@ -17,7 +17,7 @@ type CobrowseAction = {
 
 export const useCobrowseStore = create<CobrowseState & CobrowseAction>(
   (set) => ({
-    isScreensharing: true,
+    isScreensharing: false,
     setIsScreensharing: (isScreensharing) => set(() => ({ isScreensharing })),
   })
 );
