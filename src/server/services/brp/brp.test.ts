@@ -92,6 +92,16 @@ describe('brp.ts', () => {
       expect(response.content).toBe(AANTAL_BEWONERS_NOT_SET);
     });
 
+    it('should return null when server error occurs', async () => {
+      remoteApi.post(/\/personen/).reply(400);
+
+      const response = await fetchAantalBewoners(
+        'test-session-id',
+        'test-bag-id'
+      );
+      expect(response.content).toBe(null);
+    });
+
     it('should return correct aantal bewoners from response', async () => {
       const responseData = {
         personen: [
@@ -217,6 +227,25 @@ describe('brp.ts', () => {
       expect(result).toHaveProperty('persoon.opgemaakteNaam', 'John Doe');
       expect(result).toHaveProperty('persoon.vertrokkenOnbekendWaarheen', true);
       expect(result).toHaveProperty('persoon.mokum', true);
+    });
+
+    it('should set fetchUrlAantalBewoners to null and mokum to false if not mokum', () => {
+      const responseData = {
+        personen: [
+          {
+            naam: { volledigeNaam: 'John Doe' },
+            verblijfplaats: { type: 'VerblijfplaatsOnbekend' },
+            gemeenteVanInschrijving: { code: '9999' },
+          },
+        ],
+      };
+
+      const result = transformBenkBrpResponse(
+        'xx-aa',
+        responseData.personen[0] as PersoonSource
+      );
+      expect(result).toHaveProperty('fetchUrlAantalBewoners', null);
+      expect(result).toHaveProperty('persoon.mokum', false);
     });
   });
 
