@@ -510,7 +510,7 @@ async function fetchZakenByIds(zaakIds: string[]) {
   }
 
   const responses = await Promise.all(
-    _chunk(zaakIds, 25)
+    _chunk(zaakIds, 25) // Endpoint can only handle 25 zaakIds at once
       .map(
         (chunkOfZaakIds) =>
           ({
