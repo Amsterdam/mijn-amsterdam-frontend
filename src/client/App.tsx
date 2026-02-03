@@ -94,7 +94,13 @@ function AppAuthenticated() {
 
   return (
     <>
-      <Page className={classNames(styles.App, isBuurt ? styles.AppWide : '')}>
+      <Page
+        className={classNames(
+          styles.App,
+          isBuurt ? styles.AppWide : '',
+          isScreensharing ? 'is-cobrowse-active' : ''
+        )}
+      >
         <SkipLink href="#page-main-content">Direct naar inhoud</SkipLink>
         <MainHeader isAuthenticated />
         <ErrorMessages />

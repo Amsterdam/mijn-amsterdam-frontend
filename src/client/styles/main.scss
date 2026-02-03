@@ -89,3 +89,11 @@ body {
   --ams-grid-wide-padding-inline: 0;
   --ams-grid-padding-inline: 0;
 }
+
+.is-cobrowse-active {
+  .redacted {
+    color: black;
+    outline: solid var(--ams-color-highlight-orange);
+    background-color: var(--ams-color-highlight-orange);
+  }
+}
