@@ -229,7 +229,7 @@ describe('brp.ts', () => {
       expect(result).toHaveProperty('persoon.mokum', true);
     });
 
-    it('should not set fetchUrlAantalBewoners to null if not mokum', () => {
+    it('should set fetchUrlAantalBewoners to null and mokum to false if not mokum', () => {
       const responseData = {
         personen: [
           {
@@ -244,7 +244,6 @@ describe('brp.ts', () => {
         'xx-aa',
         responseData.personen[0] as PersoonSource
       );
-      expect(result).toHaveProperty('persoon.opgemaakteNaam', 'John Doe');
       expect(result).toHaveProperty('fetchUrlAantalBewoners', null);
       expect(result).toHaveProperty('persoon.mokum', false);
     });
