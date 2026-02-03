@@ -534,7 +534,9 @@ async function fetchZakenByIds(zaakIds: string[]) {
       null
     );
   }
-  return apiSuccessResult(responses.flatMap((r) => r.content));
+  return apiSuccessResult(
+    responses.flatMap((r) => r.content as PBZaakRecord[])
+  );
 }
 
 async function fetchZakenRecords<T extends PowerBrowserZaakTransformer>(
