@@ -2,8 +2,17 @@
   display: none;
 }
 
+.ErrorMessages {
+  padding: var(--ams-space-l);
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    padding: var(--ams-space-l) var(--ams-page-header-medium-padding-inline);
+  }
+  @media screen and (min-width: $ams-breakpoint-wide) {
+    padding: var(--ams-space-l) var(--ams-page-header-wide-padding-inline);
+  }
+}
+
 .MessageBar {
-  --ams-alert-content-padding-block: 1px;
   --ams-alert-severity-indicator-padding-block: var(--ams-space-s);
 
   max-width: calc(var(--ams-page-max-inline-size) - var(--ams-space-xl) * 3);
@@ -11,17 +20,17 @@
   background-color: var(--ams-color-background);
   position: relative;
 
-  :global(.ams-heading) {
-    left: -100vw;
-    position: absolute;
-  }
-
   :global(.ams-icon-button) {
     --ams-icon-heading-4-line-height: 2em;
     position: absolute;
     right: var(--ams-space-m);
     top: 50%;
     transform: translateY(-50%);
+  }
+
+  .MessageBarParagraph {
+    line-height: 1.3rem;
+    margin: 0;
   }
 }
 

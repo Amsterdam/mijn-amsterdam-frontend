@@ -62,8 +62,8 @@ export function Dashboard() {
         }}
       >
         <PageContentCell spanWide={7}>
-          <Heading level={2} className="ams-mb-m">
-            Recente berichten{' '}
+          <Heading level={2} className="ams-mb-l">
+            Recente berichten&nbsp;&nbsp;
             {total > notifications.length && (
               <MaRouterLink
                 className={styles.LinkToNotifications}
@@ -81,10 +81,14 @@ export function Dashboard() {
             )}
             {!isLoading(NOTIFICATIONS) &&
               notifications.map((notification, index) => {
+                // COULD TURN ON FOR LESS CONTENT ON PHONE PORTRAIT
+                // if (isPhoneScreen && index >= 3) {
+                //   return;
+                // }
                 return (
                   <OrderedList.Item
                     key={`${notification.themaID}-${notification.id}-${index}`}
-                    className={`ams-mb-m ${notification.className}`}
+                    className={`ams-mb-l ${notification.className}`}
                   >
                     <MyNotification
                       notification={notification}
@@ -95,8 +99,8 @@ export function Dashboard() {
               })}
           </OrderedList>
         </PageContentCell>
-        <PageContentCell startWide={8} spanWide={5}>
-          <Heading level={2} className="ams-mb-m">
+        <PageContentCell className="ams-mb-l" startWide={8} spanWide={5}>
+          <Heading level={2} className="ams-mb-l">
             Mijn thema&apos;s
           </Heading>
           <MyThemasPanel isLoading={isMyThemasLoading} items={myThemaItems} />

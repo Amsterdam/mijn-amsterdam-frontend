@@ -1,6 +1,9 @@
 .MainHeaderSecondaryLink {
   --ams-icon-heading-3-line-height: 1;
   --ams-icon-heading-3-font-size: 28px;
+  padding-block: var(--ams-page-header-menu-item-padding-block) !important;
+  padding-inline: 0 !important;
+  column-gap: var(--ams-page-header-menu-item-column-gap) !important;
   &:hover {
     --ams-button-tertiary-hover-border-color: transparent;
   }
@@ -20,7 +23,6 @@
     position: absolute;
     right: var(--ams-space-l);
     top: 23px;
-    column-gap: 0;
   }
 }
 
@@ -49,7 +51,10 @@
   width: 100%;
   padding: var(--ams-space-l);
   @media screen and (min-width: $ams-breakpoint-medium) {
-    padding: var(--ams-space-l) 0;
+    padding: var(--ams-space-l) var(--ams-page-header-medium-padding-inline);
+  }
+  @media screen and (min-width: $ams-breakpoint-wide) {
+    padding: var(--ams-space-l) var(--ams-page-header-wide-padding-inline);
   }
 }
 

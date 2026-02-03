@@ -11,6 +11,12 @@
   margin-bottom: 0;
 }
 
+.AfvalFractionPanelsGrid {
+ .AfvalFractionPanel:last-of-type {
+  margin-bottom: 0;
+ }
+}
+
 .AfvalFractionPanel {
   background-color: #efefef;
   margin-bottom: var(--ams-space-xl);

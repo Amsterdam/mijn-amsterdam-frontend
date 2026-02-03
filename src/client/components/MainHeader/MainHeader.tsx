@@ -9,7 +9,7 @@ import { EnvLabel } from './EnvLabel';
 import styles from './MainHeader.module.scss';
 import { useMainHeaderControl } from './useMainHeaderControl.hook';
 import { LOGOUT_URL } from '../../config/api';
-import { useSmallScreen } from '../../hooks/media.hook';
+import { useSmallScreen, useWidescreen } from '../../hooks/media.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { DashboardRoute } from '../../pages/Dashboard/Dashboard-routes';
 import { SearchPageRoute } from '../../pages/Search/Search-routes';
@@ -182,6 +182,7 @@ export function MainHeader({ isAuthenticated = false }: MainHeaderProps) {
   } = useMainHeaderControl();
   const navigate = useNavigate();
   const location = useLocation();
+  const isWideScreen = useWidescreen();
   return (
     <>
       <PageHeader
@@ -219,7 +220,7 @@ export function MainHeader({ isAuthenticated = false }: MainHeaderProps) {
           ) as unknown as string // Hack because brandName is not typed as ReactNode
         }
         menuItems={<>{isAuthenticated && <MainHeaderLinks />}</>}
-        menuButtonText="Menu"
+        menuButtonText={isWideScreen ? "Menu" : ""}
       >
         {isAuthenticated && <MainMenu />}
       </PageHeader>

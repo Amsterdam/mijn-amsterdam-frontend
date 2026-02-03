@@ -46,6 +46,11 @@
 
 .ResultList {
   @include reset-list-style;
+  gap: var(--ams-space-m) !important;
+}
+
+.ResultListItem {
+  line-height: initial;
 }
 
 .ResultsPending {
@@ -54,11 +59,10 @@
   }
 }
 .ResultSet {
-  margin: var(--ams-space-m) 0;
+  margin: var(--ams-space-l) 0;
   @media screen and (min-width: $ams-breakpoint-medium) {
-    margin: var(--ams-space-m);
+    margin: var(--ams-space-l) var(--ams-space-m);
   }
-  margin-bottom: 2rem;
 }
 .ResultSetLink {
   font-weight: normal;
@@ -90,6 +94,7 @@
 
 .DisplayPathSegment {
   margin-right: 0.5rem;
+  line-height: inherit;
 
   &:not(:first-child) {
     color: var(--ams-color-interactive-disabled);
@@ -107,6 +112,7 @@
 
 .Form {
   display: flex;
+  position: relative;
 }
 
 .InputWrap {

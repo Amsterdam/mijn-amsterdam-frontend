@@ -70,7 +70,7 @@ export function ResultSet({
             ? MaLink
             : MaRouterLink;
           return (
-            <UnorderedList.Item key={result.url + index}>
+            <UnorderedList.Item className={styles.ResultListItem} key={result.url + index}>
               <LinkComponent
                 maVariant="fatNoUnderline"
                 href={result.url}
@@ -160,7 +160,7 @@ export function Search({
     [onFinishCallback]
   );
 
-  const SET_TERM_DELAY_MS = 300;
+  const SET_TERM_DELAY_MS = 50;
   const setTermDebounced = useDebouncedCallback((term: string) => {
     setTerm(term);
     setIsTyping(false);
@@ -307,6 +307,7 @@ export function Search({
         {isResultsVisible && (
           <div className={styles.Results}>
             <ResultSet
+              title="Gevonden op Mijn Amsterdam"
               term={term}
               isLoading={isTyping || !isAppStateReady}
               results={resultsMA.slice(0, maxResultCountDisplay / 2) || []}
