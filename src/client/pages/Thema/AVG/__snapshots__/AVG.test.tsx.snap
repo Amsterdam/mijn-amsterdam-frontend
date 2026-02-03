@@ -836,131 +836,168 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
         <div
           class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
         >
-          <section
-            class="_Steps_5b0b8a"
-          >
+          <section>
             <h3
               class="ams-heading ams-heading--2 ams-mb-m"
             >
               Status
             </h3>
             <ol
-              class="ams-ordered-list ams-ordered-list--no-markers _StepsList_5b0b8a"
+              class="ams-progress-list ams-progress-list--heading-3"
             >
               <li
-                class="ams-ordered-list__item _Step_5b0b8a _Step--checked_5b0b8a"
+                aria-label="Status Afgerond"
+                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--completed"
               >
-                <h3
-                  class="ams-heading ams-heading--3 _StepStatus_5b0b8a"
+                <div
+                  class="ams-progress-list__indicator"
                 >
-                  <span
-                    aria-label="Status Afgerond"
-                    class="_StepStatusIndication_5b0b8a"
+                  <div
+                    class="ams-progress-list__marker"
                   >
                     <span
-                      aria-label="Status Afgerond"
-                      class="ams-icon ams-icon--heading-4 _StatusIndicationCheckmark_5b0b8a"
-                      hidden=""
-                    >
-                      <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          clip-rule="evenodd"
-                          d="M8.642 17.032 20.014 4 21.5 5.304 8.677 20 2.5 13.243l1.456-1.338z"
-                          fill-rule="evenodd"
-                        />
-                      </svg>
-                    </span>
-                  </span>
-                  Ontvangen
-                </h3>
-                <time
-                  class="_StepStatusDate_5b0b8a"
-                  datetime="2023-03-18T00:00:00.000Z"
-                >
-                  18 maart 2023
-                </time>
-              </li>
-              <li
-                class="ams-ordered-list__item _Step_5b0b8a _Step--checked_5b0b8a"
-              >
-                <h3
-                  class="ams-heading ams-heading--3 _StepStatus_5b0b8a"
-                >
+                      class="ams-progress-list__marker-shape"
+                    />
+                  </div>
                   <span
-                    aria-label="Status Afgerond"
-                    class="_StepStatusIndication_5b0b8a"
-                  >
-                    <span
-                      aria-label="Status Afgerond"
-                      class="ams-icon ams-icon--heading-4 _StatusIndicationCheckmark_5b0b8a"
-                      hidden=""
-                    >
-                      <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          clip-rule="evenodd"
-                          d="M8.642 17.032 20.014 4 21.5 5.304 8.677 20 2.5 13.243l1.456-1.338z"
-                          fill-rule="evenodd"
-                        />
-                      </svg>
-                    </span>
-                  </span>
-                  In behandeling
-                </h3>
-                <time
-                  class="_StepStatusDate_5b0b8a"
-                  datetime="2023-05-30T00:00:00.000Z"
-                >
-                  30 mei 2023
-                </time>
-              </li>
-              <li
-                class="ams-ordered-list__item _Step_5b0b8a _Step--active_5b0b8a"
-              >
-                <h3
-                  class="ams-heading ams-heading--3 _StepStatus_5b0b8a"
-                >
-                  <span
-                    aria-label="Huidige status"
-                    class="_StepStatusIndication_5b0b8a"
+                    class="ams-progress-list__connector"
                   />
-                  Extra informatie nodig
-                </h3>
-                <time
-                  class="_StepStatusDate_5b0b8a"
-                  datetime="2023-06-03T00:00:00.000Z"
+                </div>
+                <div
+                  class="ams-progress-list__content"
                 >
-                  03 juni 2023
-                </time>
-                <div>
-                  Wij hebben meer informatie nodig om uw verzoek in behandeling te nemen. U krijgt een brief waarin staat welke informatie wij nodig hebben.
+                  <h3
+                    class="ams-heading ams-heading--3 ams-progress-list__heading"
+                  >
+                    Ontvangen
+                  </h3>
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime="2023-03-18T00:00:00.000Z"
+                  >
+                    18 maart 2023
+                  </time>
                 </div>
               </li>
               <li
-                class="ams-ordered-list__item _Step_5b0b8a"
+                aria-label="Status Afgerond"
+                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--completed"
               >
-                <h3
-                  class="ams-heading ams-heading--3 _StepStatus_5b0b8a"
+                <div
+                  class="ams-progress-list__indicator"
                 >
+                  <div
+                    class="ams-progress-list__marker"
+                  >
+                    <span
+                      class="ams-progress-list__marker-shape"
+                    />
+                  </div>
                   <span
-                    aria-label="Toekomstige status"
-                    class="_StepStatusIndication_5b0b8a"
+                    class="ams-progress-list__connector"
                   />
-                  Afgehandeld
-                </h3>
-                <time
-                  class="_StepStatusDate_5b0b8a"
-                  datetime=""
-                />
+                </div>
+                <div
+                  class="ams-progress-list__content"
+                >
+                  <h3
+                    class="ams-heading ams-heading--3 ams-progress-list__heading"
+                  >
+                    In behandeling
+                  </h3>
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime="2023-05-30T00:00:00.000Z"
+                  >
+                    30 mei 2023
+                  </time>
+                </div>
+              </li>
+              <li
+                aria-current="step"
+                aria-label="Huidige status"
+                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--current"
+              >
+                <div
+                  class="ams-progress-list__indicator"
+                >
+                  <div
+                    class="ams-progress-list__marker"
+                  >
+                    <span
+                      class="ams-progress-list__marker-shape"
+                    >
+                      <span
+                        class="ams-icon ams-icon--inverse"
+                        hidden=""
+                      >
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="m13.342 6.673 1.42-1.423L21.5 12l-6.738 6.75-1.42-1.423 4.312-4.32H2.5v-2.013h15.154z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                  </div>
+                  <span
+                    class="ams-progress-list__connector"
+                  />
+                </div>
+                <div
+                  class="ams-progress-list__content"
+                >
+                  <h3
+                    class="ams-heading ams-heading--3 ams-progress-list__heading"
+                  >
+                    Extra informatie nodig
+                  </h3>
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime="2023-06-03T00:00:00.000Z"
+                  >
+                    03 juni 2023
+                  </time>
+                  <div>
+                    Wij hebben meer informatie nodig om uw verzoek in behandeling te nemen. U krijgt een brief waarin staat welke informatie wij nodig hebben.
+                  </div>
+                </div>
+              </li>
+              <li
+                aria-label="Toekomstige status"
+                class="_Step_5b0b8a ams-progress-list__step"
+              >
+                <div
+                  class="ams-progress-list__indicator"
+                >
+                  <div
+                    class="ams-progress-list__marker"
+                  >
+                    <span
+                      class="ams-progress-list__marker-shape"
+                    />
+                  </div>
+                  <span
+                    class="ams-progress-list__connector"
+                  />
+                </div>
+                <div
+                  class="ams-progress-list__content"
+                >
+                  <h3
+                    class="ams-heading ams-heading--3 ams-progress-list__heading"
+                  >
+                    Afgehandeld
+                  </h3>
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime=""
+                  />
+                </div>
               </li>
             </ol>
           </section>
