@@ -38,6 +38,7 @@ export function MainMenu() {
                   styles.MenuItem,
                   getRedactedClass({
                     themaId: thema.id,
+                    scopeRequested: 'content',
                     isCobrowseScreensharing,
                   })
                 )}

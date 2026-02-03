@@ -94,6 +94,7 @@ export function useContactmomenten() {
         ...contactMomentItem,
         className: getRedactedClass({
           themaId: menuItemId,
+          scopeRequested: 'content',
           isCobrowseScreensharing,
         }),
         themaKanaalIcon: addIcon(contactMomentItem.themaKanaal),
