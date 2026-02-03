@@ -219,6 +219,7 @@ export async function requestData<T>(
     captureException(error, {
       properties: {
         message: errorMessage,
+        data: error.response?.data,
       },
     });
 
