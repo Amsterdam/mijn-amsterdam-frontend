@@ -27,6 +27,21 @@ export const is18OrOlder: TipsPredicateFN = (
   );
   return age >= AGE_18;
 };
+// rule 9
+export const is18OrOlderOnElectionDay: TipsPredicateFN = (
+  appState,
+  electionDay: Date = new Date(2026, 2, 18) // 18-03-2026
+) => {
+  const AGE_VERK = 18;
+  const ageVerk = differenceInYears(
+    electionDay,
+    appState.BRP?.content?.persoon.geboortedatum
+      ? parseISO(appState.BRP.content.persoon.geboortedatum)
+      : electionDay
+  );
+
+  return ageVerk >= AGE_VERK;
+};
 
 // rule 12
 export const hasStadspasGroeneStip: TipsPredicateFN = (appState) => {

@@ -12,6 +12,7 @@ import {
   hasTozo,
   hasValidRecentStadspasRequest,
   is18OrOlder,
+  is18OrOlderOnElectionDay,
   isBetweenAges,
   isLivingInAmsterdamLessThanNumberOfDays,
   isMarriedOrLivingTogether,
@@ -217,6 +218,28 @@ describe('predicates', () => {
         [false, '2021-07-26'], // Zero years old but one day away from one year old.
       ])('should return %s for birthday %s', (expected, birthdate) => {
         expect(isBetween1and10(getMockAppState(birthdate))).toBe(expected);
+      });
+    });
+
+    describe('is18OrOlderOnElectionDay', () => {
+      const getMockAppState = (geboortedatum: string) => {
+        return {
+          BRP: brpApiResponse<BrpFrontend>({
+            persoon: { geboortedatum },
+          }),
+        } as AppState;
+      };
+
+      it.each([
+        [true, '1901-09-05'], //gtest
+        [true, '2007-03-18'], //gtest
+        [true, '2008-03-18'],
+        [true, '2008-02-02'], //wert
+        [true, '2008-03-17'], //wertk niet goed
+        [false, '2008-03-19'],
+      ])('should return %s for birthday %s', (expected, birthday) => {
+        const appState = getMockAppState(birthday);
+        expect(is18OrOlderOnElectionDay(appState)).toBe(expected);
       });
     });
 
