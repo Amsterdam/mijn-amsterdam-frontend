@@ -1,3 +1,4 @@
+import _chunk from 'lodash.chunk';
 import memoizee from 'memoizee';
 import { generatePath } from 'react-router';
 import slug from 'slugme';
@@ -23,8 +24,8 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { dateSort, isDateInPast } from '../../../universal/helpers/date';
-import { entries, omit } from '../../../universal/helpers/utils';
 import { toDateFormatted } from '../../../universal/helpers/date';
+import { entries, omit } from '../../../universal/helpers/utils';
 import {
   GenericDocument,
   StatusLineItem,
@@ -507,17 +508,35 @@ async function fetchZakenByIds(zaakIds: string[]) {
   if (zaakIds.length === 0) {
     return apiSuccessResult([]);
   }
-  const requestConfig: DataRequestConfig = {
-    method: 'get',
-    formatUrl({ url }) {
-      return `${url}/record/GFO_ZAKEN/${zaakIds.join(',')}`;
-    },
-    transformResponse(responseData: PBZaakRecord[]) {
-      return responseData ?? [];
-    },
-  };
 
-  return fetchPowerBrowserData<PBZaakRecord[]>(requestConfig);
+  const responses = await Promise.all(
+    _chunk(zaakIds, 25) // Endpoint can only handle 25 zaakIds at once
+      .map(
+        (chunkOfZaakIds) =>
+          ({
+            method: 'get',
+            formatUrl({ url }) {
+              return `${url}/record/GFO_ZAKEN/${chunkOfZaakIds.join(',')}`;
+            },
+            transformResponse(responseData: PBZaakRecord[]) {
+              return responseData ?? [];
+            },
+          }) as DataRequestConfig
+      )
+      .map(async (requestConfig) =>
+        fetchPowerBrowserData<PBZaakRecord[]>(requestConfig)
+      )
+  );
+
+  if (responses.some((r) => r.status !== 'OK')) {
+    return apiErrorResult(
+      'Failed to fetch powerbrowser zaken by zaakIds',
+      null
+    );
+  }
+  return apiSuccessResult(
+    responses.flatMap((r) => r.content as PBZaakRecord[])
+  );
 }
 
 async function fetchZakenRecords<T extends PowerBrowserZaakTransformer>(
