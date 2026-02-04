@@ -46,13 +46,12 @@ export function MyThemasPanel({
         {items.map(({ id, to, title, IconSVG }) => {
           const LinkComponent = to.startsWith('http') ? MaLink : MaRouterLink;
           return (
-            <UnorderedList.Item key={id}>
-              <LinkComponent
-                maVariant="fatNoUnderline"
-                href={to}
-                className={getRedactedClass(id)}
-                data-testid={IS_DEVELOPMENT && title}
-              >
+            <UnorderedList.Item
+              key={id}
+              className={getRedactedClass(id)}
+              data-testid={IS_DEVELOPMENT && title}
+            >
+              <LinkComponent maVariant="fatNoUnderline" href={to}>
                 <span className={styles.ThemaLink}>
                   {IconSVG && (
                     <Icon
