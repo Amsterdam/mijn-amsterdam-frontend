@@ -12,6 +12,7 @@ import {
   shouldSendExceptionData,
 } from './should-send-telemetry';
 import { IS_DEVELOPMENT } from '../../universal/config/env';
+import { getFromEnv } from '../helpers/env';
 import { logger } from '../logging';
 
 if (
@@ -23,7 +24,11 @@ if (
     .setInternalLogging(false)
     .setAutoCollectRequests(true)
     .setSendLiveMetrics(false)
-    .setAutoCollectPerformance(false, false)
+    .setAutoCollectPerformance(
+      getFromEnv('BFF_MONITORING_COLLECT_PERFORMANCE_METRICS') === 'true',
+      getFromEnv('BFF_MONITORING_COLLECT_PERFORMANCE_METRICS_EXTENDED') ===
+        'true'
+    )
     .setAutoCollectExceptions(true)
     .setAutoCollectDependencies(true)
     .start();
