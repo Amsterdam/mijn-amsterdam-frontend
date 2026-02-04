@@ -19,6 +19,7 @@ import {
   hasBudget,
   hasKidsBetweenAges,
   isBetweenAges,
+  is18OrOlderOnElectionDay,
 } from './predicates';
 import { ContentTipSource } from './tip-types';
 import { themaId as themaIdAfval } from '../../../client/pages/Thema/Afval/Afval-thema-config';
@@ -45,6 +46,25 @@ export const contentTips: ContentTipSource[] = [
     link: {
       title: 'Kijk op de kaart',
       to: '/buurt',
+    },
+  },
+  {
+    id: 'mijn-9',
+    active: true,
+    dateActiveStart: null,
+    dateActiveEnd: '2026-03-19',
+    datePublished: '2026-02-03',
+    title: 'Tip: Stembureaus in Amsterdam',
+    profileTypes: ['private'],
+    themaID: themaIdBRP,
+    description:
+      'U kunt alle stembureaus in Amsterdam vinden via de onderstaande link. Om in te zoomen op uw buurt, voert u na het openen van de link uw postcode of adres in.',
+    predicates: [isMokum, is18OrOlderOnElectionDay],
+    reason:
+      'U ziet deze tip omdat u in Amsterdam woont en 18 jaar of ouder bent op de dag van de verkiezingen.',
+    link: {
+      title: 'Kijk voor de stembureaus bij u in de buurt op de kaart',
+      to: 'https://stembureaus.amsterdam.nl/map',
     },
   },
   {
