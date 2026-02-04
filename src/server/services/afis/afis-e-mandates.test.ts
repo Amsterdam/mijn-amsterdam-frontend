@@ -330,7 +330,7 @@ describe('afis-e-mandates service (with nock)', () => {
       expect(result.content?.[0].status).toBe('0');
     });
 
-    it('handles error response from AFIS', async () => {
+    it('handles error response from AFIS, still shows available mandates but all inactive, not regarding api data', async () => {
       remoteApi.get(/Mandate_readSet/).reply(500);
 
       const result = await emandates.fetchEMandates(
@@ -338,7 +338,7 @@ describe('afis-e-mandates service (with nock)', () => {
         authProfile
       );
       expect(result.status).toBe('OK');
-      expect(result.content?.length).toBe(0);
+      expect(result.content?.length).toBe(11);
     });
   });
 
