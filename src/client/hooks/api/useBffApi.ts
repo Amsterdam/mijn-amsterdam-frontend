@@ -345,6 +345,7 @@ export function useBffApi<
   });
 }
 
+// Do not import a whole package like Axios for reduced bundle size.
 export const HttpStatusCode = {
   Ok: 200,
   Created: 201,
