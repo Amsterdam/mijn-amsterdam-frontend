@@ -528,7 +528,7 @@ function determineFactuurStatus(
       return 'gedeeltelijke-betaling';
 
     case sourceInvoice.IsCleared === false:
-      return 'openstaand';
+      return sourceInvoice.Paylink ? 'openstaand' : 'handmatig-betalen';
 
     case sourceInvoice.IsCleared === true:
       return 'betaald';
