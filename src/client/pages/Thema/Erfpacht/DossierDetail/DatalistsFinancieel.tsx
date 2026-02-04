@@ -47,12 +47,11 @@ function DatalistFinancieelPeriode({
         </>
       ),
     },
+    {
+      label: periode.titelAfgekocht,
+      content: periode.afgekocht,
+    },
   ];
-
-  rows.push({
-    label: periode.titelAfgekocht,
-    content: periode.afgekocht,
-  });
 
   if (
     periode.afgekocht === 'Nee' &&
@@ -70,9 +69,7 @@ function DatalistFinancieelPeriode({
       label: titelCanon,
       content: <DatalistCanonsNietAfgekocht canons={periode.canons} />,
     });
-  }
-
-  if (periode.canons?.length && periode.afgekocht === 'Ja') {
+  } else if (periode.canons?.length && periode.afgekocht === 'Ja') {
     rows.push({
       label: titelCanonTenTijdeVanAfkoop,
       content: <DatalistCanonsAfgekocht canons={periode.canons} />,
