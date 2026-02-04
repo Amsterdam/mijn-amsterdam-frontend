@@ -160,7 +160,7 @@ export function Search({
     [onFinishCallback]
   );
 
-  const SET_TERM_DELAY_MS = 50;
+  const SET_TERM_DELAY_MS = 300;
   const setTermDebounced = useDebouncedCallback((term: string) => {
     setTerm(term);
     setIsTyping(false);

@@ -44,9 +44,12 @@
   margin-top: 0;
 }
 
+.SearchBar :global(.ams-unordered-list) {
+  gap: var(--ams-space-m);
+}
+
 .ResultList {
   @include reset-list-style;
-  gap: var(--ams-space-m) !important;
 }
 
 .ResultListItem {

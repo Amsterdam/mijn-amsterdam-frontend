@@ -1,9 +1,15 @@
+:global(.ams-page-header__menu > li > .ams-button) {
+  gap: var(--ams-page-header-menu-item-column-gap);
+}
+
+:global(.ams-page-header__menu > li > .ams-page-header__mega-menu-button) {
+  padding-block: var(--ams-button-padding-block);
+}
+
 .MainHeaderSecondaryLink {
   --ams-icon-heading-3-line-height: 1;
   --ams-icon-heading-3-font-size: 28px;
-  padding-block: var(--ams-page-header-menu-item-padding-block) !important;
   padding-inline: 0 !important;
-  column-gap: var(--ams-page-header-menu-item-column-gap) !important;
   &:hover {
     --ams-button-tertiary-hover-border-color: transparent;
   }

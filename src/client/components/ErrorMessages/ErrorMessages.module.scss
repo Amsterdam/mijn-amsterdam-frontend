@@ -20,6 +20,16 @@
   background-color: var(--ams-color-background);
   position: relative;
 
+  :global(.ams-alert__content) {
+    gap: 0;
+  }
+
+  :global(.ams-heading) {
+    display: none;
+    left: -100vw;
+    position: absolute;
+  }
+
   :global(.ams-icon-button) {
     --ams-icon-heading-4-line-height: 2em;
     position: absolute;
