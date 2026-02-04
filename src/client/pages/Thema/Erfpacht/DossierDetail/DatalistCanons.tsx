@@ -2,15 +2,20 @@ import { useState } from 'react';
 
 import { Button, OrderedList } from '@amsterdam/design-system-react';
 
-import { ErfpachtCanon } from '../../../../../server/services/erfpacht/erfpacht-types';
+import type {
+  ErfpachtCanonAfgekocht,
+  ErfpachtCanonNietAfgekocht,
+} from '../../../../../server/services/erfpacht/erfpacht-types';
 
 const MAX_CANONS_VISIBLE_INITIALLY = 2;
 
-interface DatalistCanonsProps {
-  canons?: ErfpachtCanon[];
-}
+type DatalistCanonsNietAfgekochtProps = {
+  canons?: ErfpachtCanonNietAfgekocht[];
+};
 
-export function DatalistCanons({ canons }: DatalistCanonsProps) {
+export function DatalistCanonsNietAfgekocht({
+  canons,
+}: DatalistCanonsNietAfgekochtProps) {
   const canonLength = canons?.length ?? 0;
   const shouldCollapse = canonLength > MAX_CANONS_VISIBLE_INITIALLY;
   const [isCollapsed, setIsCollapsed] = useState(shouldCollapse);
@@ -46,4 +51,26 @@ export function DatalistCanons({ canons }: DatalistCanonsProps) {
     );
   }
   return '-';
+}
+
+type DatalistCanonsAfgekochtProps = {
+  canons?: ErfpachtCanonAfgekocht[];
+};
+
+export function DatalistCanonsAfgekocht({
+  canons,
+}: DatalistCanonsAfgekochtProps) {
+  return (
+    <>
+      <OrderedList markers={false}>
+        {canons?.map((canon) => {
+          return (
+            <OrderedList.Item key={canon.formattedCanonBedragBijAfkoop}>
+              {canon.formattedCanonBedragBijAfkoop}
+            </OrderedList.Item>
+          );
+        })}
+      </OrderedList>
+    </>
+  );
 }

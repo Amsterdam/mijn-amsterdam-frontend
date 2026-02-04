@@ -1,6 +1,10 @@
 import { Heading, Link } from '@amsterdam/design-system-react';
+import classNames from 'classnames';
 
-import { DatalistCanons } from './DatalistCanons';
+import {
+  DatalistCanonsAfgekocht,
+  DatalistCanonsNietAfgekocht,
+} from './DatalistCanons';
 import { ErfpachtDatalistProps } from './DatalistGeneral';
 import {
   ErfpachtDossierDetailHuidigePeriode,
@@ -17,6 +21,7 @@ interface DatalistFinancieelPeriodeProps<T> {
   titelAlgemeneBepaling: string;
   titelPeriodeVan: string;
   titelCanon: string;
+  titelCanonTenTijdeVanAfkoop: string;
   isHuidigePeriode: boolean;
 }
 
@@ -25,6 +30,7 @@ function DatalistFinancieelPeriode({
   titelAlgemeneBepaling,
   titelPeriodeVan,
   titelCanon,
+  titelCanonTenTijdeVanAfkoop,
   isHuidigePeriode,
 }: DatalistFinancieelPeriodeProps<
   ErfpachtDossierDetailHuidigePeriode | ErfpachtDossierDetailToekomstigePeriode
@@ -43,26 +49,42 @@ function DatalistFinancieelPeriode({
     },
   ];
 
-  if (isHuidigePeriode) {
-    rows.push({
-      label: periode.titelAfgekocht,
-      content: periode.afgekocht,
-    });
-  } else if ('titelBetalenVanaf' in periode && periode.betalenVanaf) {
+  rows.push({
+    label: periode.titelAfgekocht,
+    content: periode.afgekocht,
+  });
+
+  if (
+    periode.afgekocht === 'Nee' &&
+    'titelBetalenVanaf' in periode &&
+    periode.betalenVanaf
+  ) {
     rows.push({
       label: periode.titelBetalenVanaf,
       content: defaultDateFormat(periode.betalenVanaf),
     });
   }
 
-  rows.push({
-    label: titelCanon,
-    content: <DatalistCanons canons={periode.canons} />,
-  });
+  if (periode.canons?.length && periode.afgekocht === 'Nee') {
+    rows.push({
+      label: titelCanon,
+      content: <DatalistCanonsNietAfgekocht canons={periode.canons} />,
+    });
+  }
+
+  if (periode.canons?.length && periode.afgekocht === 'Ja') {
+    rows.push({
+      label: titelCanonTenTijdeVanAfkoop,
+      content: <DatalistCanonsAfgekocht canons={periode.canons} />,
+    });
+  }
 
   return (
     <div className={styles.DataListFinancieelPeriode}>
-      <Heading level={3} size="level-4" className={styles.Section_heading}>
+      <Heading
+        level={3}
+        className={classNames(styles.Section_heading, 'ams-mb-s')}
+      >
         {titelPeriodeVan}:{' '}
         <span className={styles.periodeSamengesteld}>
           {periode.periodeSamengesteld}
@@ -84,6 +106,9 @@ function DatalistHuidigePeriode({ dossier }: ErfpachtDatalistProps) {
           dossier.financieel.huidigePeriode.titelFinancieelPeriodeVan
         }
         titelCanon={dossier.financieel.huidigePeriode.titelFinancieelCanon}
+        titelCanonTenTijdeVanAfkoop={
+          dossier.financieel.huidigePeriode.titelCanonTenTijdeVanAfkoop
+        }
         periode={dossier.financieel.huidigePeriode}
         isHuidigePeriode
       />
@@ -103,6 +128,7 @@ function DatalistToekomstigePeriodes({ dossier }: ErfpachtDatalistProps) {
         }
         titelPeriodeVan={periode.titelFinancieelToekomstigePeriodeVan}
         titelCanon={periode.titelFinancieelToekomstigeCanon}
+        titelCanonTenTijdeVanAfkoop={periode.titelCanonTenTijdeVanAfkoop}
         periode={periode}
         isHuidigePeriode={false}
       />
@@ -126,3 +152,7 @@ export function DatalistsFinancieel({
     </>
   );
 }
+
+export const forTesting = {
+  DatalistFinancieelPeriode,
+};
