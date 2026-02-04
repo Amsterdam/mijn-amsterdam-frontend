@@ -1,17 +1,15 @@
 import { useEffect } from 'react';
 
-import {
-  Paragraph,
-  Page,
-  SkipLink,
-  Alert,
-} from '@amsterdam/design-system-react';
+import { Paragraph, Page, SkipLink } from '@amsterdam/design-system-react';
 import { PiwikProvider, usePiwik } from '@amsterdam/piwik-tracker-react';
 import classNames from 'classnames';
 import { BrowserRouter, useLocation, useNavigate } from 'react-router';
 
 import styles from './App.module.scss';
 import { PrivateRoutes, PublicRoutes } from './App.routes';
+import {
+  CobrowseScreensareAlert,
+} from './components/Alert/CobrowseScreenshareDisclaimer';
 import { AutoLogoutDialog } from './components/AutoLogoutDialog/AutoLogoutDialog';
 import { ErrorMessages } from './components/ErrorMessages/ErrorMessages';
 import { MainFooter } from './components/MainFooter/MainFooter';
@@ -104,7 +102,7 @@ function AppAuthenticated() {
         <SkipLink href="#page-main-content">Direct naar inhoud</SkipLink>
         <MainHeader isAuthenticated />
         <ErrorMessages />
-        {isScreensharing && <CobrowseScreenshareDisclaimer />}
+        {isScreensharing && <CobrowseScreensareAlert />}
         <PrivateRoutes />
       </Page>
       {/** Remove the footer on the Map view for better UX */}
@@ -113,19 +111,6 @@ function AppAuthenticated() {
   );
 }
 
-function CobrowseScreenshareDisclaimer() {
-  return (
-    <Alert
-      className="ams-mb-m"
-      heading="U deelt nu uw scherm met een medewerker van de gemeente Amsterdam."
-      headingLevel={2}
-      severity="warning"
-    >
-      De medewerker kan de onderdelen van uw scherm met een oranje achtergrond
-      niet zien. Dit is om uw privacy te beschermen.
-    </Alert>
-  );
-}
 function AppLanding() {
   const session = useSessionApi();
   const { isAuthenticated, isDirty } = session;
