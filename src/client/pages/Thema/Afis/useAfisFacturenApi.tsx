@@ -34,8 +34,6 @@ function getInvoiceStatusDescriptionFrontend(factuur: AfisFactuur): ReactNode {
           </MaLink>
         </>
       );
-    case factuur.status === 'openstaand' && !factuur.paylink:
-      return 'Openstaand';
     default:
       return factuur.statusDescription;
   }

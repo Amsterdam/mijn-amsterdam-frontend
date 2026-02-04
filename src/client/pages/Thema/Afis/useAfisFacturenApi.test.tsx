@@ -7,6 +7,7 @@ import {
   getDocumentLink,
   useAfisFacturenApi,
 } from './useAfisFacturenApi';
+import type { AfisFactuur } from '../../../../server/services/afis/afis-types';
 import { bffApi } from '../../../../testing/utils';
 
 describe('useAfisFacturenApi', () => {
@@ -63,13 +64,13 @@ describe('useAfisFacturenApi', () => {
       status: 'openstaand',
       statusDescription: 'Test',
       paylink: 'http://example.com/pay',
-    } as AfisFactuurFrontend);
+    } as AfisFactuur);
 
     expect(el).toMatchInlineSnapshot(`
       <React.Fragment>
         <React.Fragment>
           Openstaand
-          : 
+          :
         </React.Fragment>
         <MaLink
           href="http://example.com/pay"
@@ -86,7 +87,7 @@ describe('useAfisFacturenApi', () => {
     const el = forTesting.getInvoiceStatusDescriptionFrontend({
       status: 'openstaand',
       statusDescription: 'Test',
-    } as AfisFactuurFrontend);
+    } as AfisFactuur);
 
     expect(el).toBe('Test');
   });
