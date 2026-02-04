@@ -1,4 +1,3 @@
-import { subYears } from 'date-fns';
 import { isToday } from 'date-fns/isToday';
 import { parseISO } from 'date-fns/parseISO';
 import Decimal from 'decimal.js';
@@ -34,7 +33,6 @@ import {
   dateSort,
   defaultDateFormat,
   isDateInPast,
-  isoDateTimeFormatCompact,
 } from '../../../universal/helpers/date';
 import { toDateFormatted } from '../../../universal/helpers/date';
 import {
@@ -689,7 +687,6 @@ export async function fetchAfisFacturenOverview(
     await fetchAfisOpenFacturenIncludingAfgehandeldeTermijnFacturen(sessionID, {
       businessPartnerID: params.businessPartnerID,
     });
-  const now = new Date();
   const facturenClosedRequest = fetchAfisFacturen(sessionID, {
     state: 'afgehandeld',
     businessPartnerID: params.businessPartnerID,
@@ -697,16 +694,12 @@ export async function fetchAfisFacturenOverview(
       facturenOpenResult.content?.facturen ?? []
     ),
     top: '3',
-    dateFrom: isoDateTimeFormatCompact(subYears(now, 1)),
-    dateTo: isoDateTimeFormatCompact(now),
   });
 
   const facturenTransferredRequest = fetchAfisFacturen(sessionID, {
     state: 'overgedragen',
     businessPartnerID: params.businessPartnerID,
     top: '3',
-    dateFrom: isoDateTimeFormatCompact(subYears(now, 1)),
-    dateTo: isoDateTimeFormatCompact(now),
   });
 
   const [facturenClosedResponse, facturenTransferredResponse] =
