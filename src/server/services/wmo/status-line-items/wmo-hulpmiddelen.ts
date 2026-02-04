@@ -15,6 +15,7 @@ import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types';
+import { featureToggle } from '../wmo-service-config';
 
 export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
   AANVRAAG,
@@ -90,7 +91,10 @@ export const hulpmiddelenDisclaimerConfig: HulpmiddelenDisclaimerConfig = [
       },
     ],
   },
-  {
+];
+
+if (featureToggle.hulpmiddelenDisclaimerCodes.GBW) {
+  hulpmiddelenDisclaimerConfig.push({
     codes: ['GBW'],
     actual:
       'Het kan zijn dat uw gesloten buitenwagen hieronder een verkeerde startdatum heeft. Kijk voor de juiste startdatum bij "Eerdere en afgewezen voorzieningen".',
@@ -102,9 +106,8 @@ export const hulpmiddelenDisclaimerConfig: HulpmiddelenDisclaimerConfig = [
         datumIngangGeldigheid: '2026-01-01',
       },
     ],
-  },
-];
-
+  });
+}
 /**
  * Er zijn een aantal voorzieningen in Zorgned gekopieerd naar nieuwe voorzieningen.
  * De oude voorzieningen zijn afgesloten (einde recht).
