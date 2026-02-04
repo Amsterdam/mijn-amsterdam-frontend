@@ -33,8 +33,6 @@
   }
 }
 
-.DataListFinancieelPeriode {
-  &:first-child {
-    margin-bottom: 3rem;
-  }
+.DataListFinancieelPeriode ~ .DataListFinancieelPeriode {
+  margin-top: 3rem;
 }
