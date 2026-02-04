@@ -121,8 +121,8 @@ function CobrowseScreenshareDisclaimer() {
       headingLevel={2}
       severity="warning"
     >
-      De medewerker kan de onderdelen van uw scherm met een oranje rand niet
-      zien. Dit is om uw privacy te beschermen.
+      De medewerker kan de onderdelen van uw scherm met een oranje achtergrond
+      niet zien. Dit is om uw privacy te beschermen.
     </Alert>
   );
 }
