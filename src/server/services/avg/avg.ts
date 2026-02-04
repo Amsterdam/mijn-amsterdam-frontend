@@ -10,10 +10,8 @@ import {
   SmileAvgThemesResponse,
 } from './types';
 import {
-  featureToggle,
   routeConfig,
-  themaId,
-  themaTitle,
+  themaConfig,
 } from '../../../client/pages/Thema/AVG/AVG-thema-config';
 import {
   ApiSuccessResponse,
@@ -196,7 +194,7 @@ export async function fetchAVG(authProfileAndToken: AuthProfileAndToken) {
         authProfileAndToken.profile.sid,
         'avg'
       ),
-      postponeFetch: !featureToggle.avgActive,
+      postponeFetch: !themaConfig.featureToggle.active,
     })
   );
 
@@ -236,7 +234,7 @@ export async function fetchAVGRequestThemes(
       data,
       headers: data.getHeaders(),
       cacheKey_UNSAFE: avgIds.join(), // These are unique per user.
-      postponeFetch: !featureToggle.avgActive,
+      postponeFetch: !themaConfig.featureToggle.active,
     })
   );
 
@@ -268,8 +266,8 @@ function createAVGNotification(verzoek: AVGRequestFrontend) {
   const inProgressActive = !!verzoek.datumInBehandeling;
 
   const notification: MyNotification = {
-    themaID: themaId,
-    themaTitle: themaTitle,
+    themaID: themaConfig.id,
+    themaTitle: themaConfig.title,
     id: `avg-${verzoek.id}-notification`,
     title: 'AVG verzoek ontvangen',
     description: `Wij hebben uw AVG verzoek met zaaknummer ${verzoek.id} ontvangen.`,
