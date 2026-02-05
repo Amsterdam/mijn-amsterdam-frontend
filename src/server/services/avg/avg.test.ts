@@ -13,7 +13,7 @@ describe('AVG', () => {
     vi.clearAllMocks();
   });
 
-  describe('transformKlachtenResponse', () => {
+  describe('transformAVGResponse', () => {
     beforeEach(() => {
       remoteApi
         .post('/smile', /readavgverzoek/gi)

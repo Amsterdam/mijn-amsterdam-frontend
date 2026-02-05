@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { routeConfig } from './AVG-thema-config';
+import { themaConfig } from './AVG-thema-config';
 import { testState } from './AVGDetail.test';
 import { AVGThema } from './AVGThema';
 import { AVGResponse } from '../../../../server/services/avg/types';
@@ -9,7 +9,7 @@ import { AppState } from '../../../../universal/types/App.types';
 import MockApp from '../../MockApp';
 
 function setupTestComponent(testState: AppState) {
-  const routeEntry = generatePath(routeConfig.themaPage.path);
+  const routeEntry = generatePath(themaConfig.route.path);
 
   return function Component() {
     return (
