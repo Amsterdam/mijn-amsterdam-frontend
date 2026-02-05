@@ -9,10 +9,7 @@ import {
   SmileAvgResponse,
   SmileAvgThemesResponse,
 } from './types';
-import {
-  routeConfig,
-  themaConfig,
-} from '../../../client/pages/Thema/AVG/AVG-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/AVG/AVG-thema-config';
 import {
   ApiSuccessResponse,
   apiDependencyError,
@@ -163,7 +160,7 @@ export function transformAVGResponse(data: SmileAvgResponse): AVGResponse {
       themas: '',
       steps: [],
       link: {
-        to: generatePath(routeConfig.detailPage.path, {
+        to: generatePath(themaConfig.detailPage.route.path, {
           id,
         }),
         title,

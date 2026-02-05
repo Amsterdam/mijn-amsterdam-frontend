@@ -10,6 +10,7 @@ import {
 } from '../../../config/app';
 import {
   ThemaConfigBase,
+  WithDetailPage,
   type ThemaRoutesConfig,
 } from '../../../config/thema-types';
 
@@ -25,10 +26,7 @@ export const featureToggle = {
 const THEMA_ID = 'AVG';
 const THEMA_TITLE = 'AVG persoonsgegevens';
 
-export const themaId = 'AVG' as const;
-export const themaTitle = 'AVG persoonsgegevens';
-
-type AVGThemaConfig = ThemaConfigBase<typeof THEMA_ID>;
+type AVGThemaConfig = ThemaConfigBase<typeof THEMA_ID> & WithDetailPage;
 
 export const themaConfig: AVGThemaConfig = {
   id: THEMA_ID,
@@ -56,14 +54,18 @@ export const themaConfig: AVGThemaConfig = {
     documentTitle: `${THEMA_TITLE} verzoeken | overzicht`,
     trackingUrl: null,
   },
+
+  detailPage: {
+    title: 'AVG verzoek',
+    route: {
+      path: '/avg/verzoek/:id',
+      trackingUrl: '/avg/verzoek',
+      documentTitle: `Avg verzoek | ${THEMA_TITLE}`,
+    },
+  },
 };
 
 export const routeConfig = {
-  detailPage: {
-    path: '/avg/verzoek/:id',
-    trackingUrl: '/avg/verzoek',
-    documentTitle: `Avg verzoek | ${THEMA_TITLE}`,
-  },
   listPage: {
     path: '/avg/lijst/:kind/:page?',
     documentTitle(params) {

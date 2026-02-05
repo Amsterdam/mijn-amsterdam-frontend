@@ -12,7 +12,7 @@ import {
 
 export const AvgRoutes = [
   {
-    route: routeConfig.detailPage.path,
+    route: themaConfig.detailPage.route.path,
     Component: AVGDetail,
     isActive: themaConfig.featureToggle.active,
   },
