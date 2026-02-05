@@ -72,10 +72,13 @@ export function ResultSet({
           return (
             <UnorderedList.Item
               key={result.url + index}
-              className={getRedactedClass(
-                result.themaId,
-                result.themaId ? 'content' : undefined
-              )}
+              className={
+                (getRedactedClass(
+                  result.themaId,
+                  result.themaId ? 'content' : undefined
+                ),
+                styles.ResultListItem)
+              }
             >
               <LinkComponent
                 maVariant="fatNoUnderline"
@@ -309,6 +312,7 @@ export function Search({
         {isResultsVisible && (
           <div className={styles.Results}>
             <ResultSet
+              title="Gevonden op Mijn Amsterdam"
               term={term}
               isLoading={isTyping || !isAppStateReady}
               results={resultsMA.slice(0, maxResultCountDisplay / 2) || []}

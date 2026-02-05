@@ -51,7 +51,7 @@ export function MyNotificationsPage() {
         )}
         {total > PAGE_SIZE && (
           <PaginationV2
-            className="ams-mb-m"
+            className="ams-mb-l"
             totalCount={total}
             pageSize={PAGE_SIZE}
             path={generatePath(MyNotificationsRoute.route)}
@@ -69,7 +69,7 @@ export function MyNotificationsPage() {
               return (
                 <OrderedList.Item
                   key={`${notification.themaID}-${notification.id}-${index}`}
-                  className={`ams-mb-m ${notification.className}`}
+                  className={`ams-mb-l ${notification.className}`}
                 >
                   <MyNotification
                     notification={notification}

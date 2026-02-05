@@ -57,7 +57,7 @@ export function MainMenu() {
         </div>
       </nav>
       {isPhoneScreen && (
-        <nav>
+        <nav className={styles.NavSection}>
           <div>
             <MainHeaderSecondaryLinks
               wrapInListElement={false}

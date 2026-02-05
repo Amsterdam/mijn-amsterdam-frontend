@@ -51,7 +51,7 @@ export function ErrorMessagesContent({
         heading="Let op!"
         headingLevel={2}
       >
-        <Paragraph>
+        <Paragraph className={styles.MessageBarParagraph}>
           {title}{' '}
           <Link
             href="/"

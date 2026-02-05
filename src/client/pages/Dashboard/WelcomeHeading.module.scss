@@ -1,5 +1,7 @@
 .WelcomeHeading {
-  font-size: 48px;
+  hyphens: auto;
+  hyphenate-limit-chars: 1;
+  font-size: 42px;
   line-height: 1.2;
   margin-bottom: 60px;
   display: block;

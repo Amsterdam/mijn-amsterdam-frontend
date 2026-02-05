@@ -1,3 +1,7 @@
+:global(.ams-grid__cell > .ams-grid) {
+  row-gap: 0;
+}
+
 .ProfileSectionPanelGrid {
   position: relative;
 }

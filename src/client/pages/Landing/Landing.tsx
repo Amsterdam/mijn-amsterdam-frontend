@@ -30,13 +30,13 @@ export function LandingPage() {
       showBreadcrumbs={false}
     >
       <PageContentCell>
-        <Paragraph className="ams-mb-m">
+        <Paragraph className="ams-mb-l">
           Uw Amsterdamse zaken op 1 plek.
         </Paragraph>
         <MaintenanceNotifications
           fromApiDirectly={true}
           page="landingspagina"
-          className="ams-mb-m"
+          className="ams-mb-l"
         />
 
         {FeatureToggle.eherkenningActive && (
