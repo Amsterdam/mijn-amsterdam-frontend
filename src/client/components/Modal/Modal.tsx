@@ -149,7 +149,8 @@ export function Modal({
             {title ? <Heading level={3}>{title}</Heading> : <i></i>}
             {showCloseButton && (
               <IconButton
-                label="Sluiten"
+                name="Overlay sluiten"
+                label="Overlay sluiten"
                 svg={CloseIcon}
                 onClick={() => onClose?.()}
               />
