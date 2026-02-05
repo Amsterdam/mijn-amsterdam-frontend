@@ -52,11 +52,7 @@ describe('Modal test', () => {
 
     const close = vi.fn(() => {
       rerender(
-        <Modal
-          isOpen={false}
-          onClose={close}
-          closeButtonLabel="Overlay sluiten"
-        >
+        <Modal isOpen={false} onClose={close}>
           Testje
         </Modal>
       );
@@ -66,12 +62,7 @@ describe('Modal test', () => {
     mocks.onClose = close;
 
     const { rerender } = render(
-      <Modal
-        isOpen={false}
-        onClose={close}
-        title={title}
-        closeButtonLabel="Overlay sluiten"
-      >
+      <Modal isOpen={false} onClose={close} title={title}>
         Testje
       </Modal>
     );
@@ -79,18 +70,17 @@ describe('Modal test', () => {
     expect(screen.queryByText('Testje')).toBeNull();
 
     rerender(
-      <Modal
-        isOpen={true}
-        onClose={close}
-        title={title}
-        closeButtonLabel="Overlay sluiten"
-      >
+      <Modal isOpen={true} onClose={close} title={title}>
         Testje
       </Modal>
     );
     expect(screen.getByText('Testje')).toBeInTheDocument();
 
-    await userEvent.click(screen.getByText('Overlay sluiten'));
+    await userEvent.click(
+      screen.getByRole('button', {
+        name: 'Overlay sluiten',
+      })
+    );
 
     expect(close).toHaveBeenCalled();
     expect(screen.queryByText('Testje')).toBeNull();
