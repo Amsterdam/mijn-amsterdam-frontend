@@ -70,14 +70,19 @@ export function ResultSet({
             ? MaLink
             : MaRouterLink;
           return (
-            <UnorderedList.Item className={styles.ResultListItem} key={result.url + index}>
+            <UnorderedList.Item
+              key={result.url + index}
+              className={
+                (getRedactedClass(
+                  result.themaId,
+                  result.themaId ? 'content' : undefined
+                ),
+                styles.ResultListItem)
+              }
+            >
               <LinkComponent
                 maVariant="fatNoUnderline"
                 href={result.url}
-                className={getRedactedClass(
-                  result.themaId,
-                  result.themaId ? 'content' : undefined
-                )}
                 rel="noopener noreferrer"
                 onClick={() =>
                   onClickResult?.(

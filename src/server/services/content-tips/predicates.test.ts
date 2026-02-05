@@ -12,6 +12,7 @@ import {
   hasTozo,
   hasValidRecentStadspasRequest,
   is18OrOlder,
+  is18OrOlderOnElectionDay,
   isBetweenAges,
   isLivingInAmsterdamLessThanNumberOfDays,
   isMarriedOrLivingTogether,
@@ -76,12 +77,11 @@ describe('predicates', () => {
       };
 
       it.each([
-        [true, '1901-09-05'],
         [true, '1971-09-05'],
         [true, '2004-07-24'],
+        [true, '2004-07-25'],
         [false, '2004-07-26'],
         [false, '2005-05-01'],
-        [false, '2022-08-27'],
       ])('should return %s for birthday %s', (expected, birthday) => {
         const appState = getMockAppState(birthday);
         expect(is18OrOlder(appState)).toBe(expected);
@@ -217,6 +217,25 @@ describe('predicates', () => {
         [false, '2021-07-26'], // Zero years old but one day away from one year old.
       ])('should return %s for birthday %s', (expected, birthdate) => {
         expect(isBetween1and10(getMockAppState(birthdate))).toBe(expected);
+      });
+    });
+
+    describe('is18OrOlderOnElectionDay', () => {
+      const getMockAppState = (geboortedatum: string) => {
+        return {
+          BRP: brpApiResponse<BrpFrontend>({
+            persoon: { geboortedatum },
+          }),
+        } as AppState;
+      };
+
+      it.each([
+        [true, '2008-03-17'],
+        [true, '2008-03-18'],
+        [false, '2008-03-19'],
+      ])('should return %s for birthday %s', (expected, birthday) => {
+        const appState = getMockAppState(birthday);
+        expect(is18OrOlderOnElectionDay(appState)).toBe(expected);
       });
     });
 

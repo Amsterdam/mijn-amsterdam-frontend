@@ -19,7 +19,21 @@ export type ErfpachtErpachterResponse = {
   url?: string;
 };
 
-export type ErfpachtDossierDetailToekomstigePeriode = {
+export type ErfpachtCanonNietAfgekocht = {
+  canonBedrag: string;
+  formattedCanonBedrag: string;
+  canonBeginJaar: string;
+  samengesteld: string;
+};
+
+export type ErfpachtCanonAfgekocht = {
+  canonBedrag: string;
+  canonBeginJaar: '1999';
+  canonBedragBijAfkoop: string;
+  formattedCanonBedragBijAfkoop: string;
+};
+
+type ErfpachtDossierDetailToekomstigePeriodeBase = {
   periodeVan: string;
   titelFinancieelToekomstigePeriodeVan: string;
   periodeTm: string;
@@ -32,18 +46,27 @@ export type ErfpachtDossierDetailToekomstigePeriode = {
   titelAfgekocht: string;
   betalenVanaf: string;
   titelBetalenVanaf: string;
-  canons?: ErfpachtCanon[];
   titelFinancieelToekomstigeCanon: string;
+  titelCanonTenTijdeVanAfkoop: string;
 };
 
-export type ErfpachtCanon = {
-  canonBedrag: string;
-  formattedCanonBedrag: string;
-  canonBeginJaar: string;
-  samengesteld: string;
-};
+type ErfpachtDossierDetailToekomstigePeriodeNietAfgekocht =
+  ErfpachtDossierDetailToekomstigePeriodeBase & {
+    afgekocht: 'Nee';
+    canons?: ErfpachtCanonNietAfgekocht[];
+  };
 
-export type ErfpachtDossierDetailHuidigePeriode = {
+type ErfpachtDossierDetailToekomstigePeriodeAfgekocht =
+  ErfpachtDossierDetailToekomstigePeriodeBase & {
+    afgekocht: 'Ja';
+    canons?: ErfpachtCanonAfgekocht[];
+  };
+
+export type ErfpachtDossierDetailToekomstigePeriode =
+  | ErfpachtDossierDetailToekomstigePeriodeNietAfgekocht
+  | ErfpachtDossierDetailToekomstigePeriodeAfgekocht;
+
+type ErfpachtDossierDetailHuidigePeriodeBase = {
   periodeVan: string;
   titelFinancieelPeriodeVan: string;
   periodeTm: string;
@@ -55,9 +78,25 @@ export type ErfpachtDossierDetailHuidigePeriode = {
   afgekocht: string;
   titelAfgekocht: string;
   titelGeenCanon: string;
-  canons?: ErfpachtCanon[];
   titelFinancieelCanon: string;
+  titelCanonTenTijdeVanAfkoop: string;
 };
+
+type ErfpachtDossierDetailHuidigePeriodeNietAfgekocht =
+  ErfpachtDossierDetailHuidigePeriodeBase & {
+    afgekocht: 'Nee';
+    canons?: ErfpachtCanonNietAfgekocht[];
+  };
+
+type ErfpachtDossierDetailHuidigePeriodeAfgekocht =
+  ErfpachtDossierDetailHuidigePeriodeBase & {
+    afgekocht: 'Ja';
+    canons?: ErfpachtCanonAfgekocht[];
+  };
+
+export type ErfpachtDossierDetailHuidigePeriode =
+  | ErfpachtDossierDetailHuidigePeriodeNietAfgekocht
+  | ErfpachtDossierDetailHuidigePeriodeAfgekocht;
 
 export type ErfpachtDossierDetailKadastraleAanduiding = {
   gemeenteCode: string;

@@ -1,0 +1,147 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DatalistFinancieelPeriode > renders afgekocht canon correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="_DataListFinancieelPeriode_bf227b"
+  >
+    <h3
+      class="ams-heading ams-heading--3 _Section_heading_bf227b ams-mb-s"
+    >
+      Periode Van: 
+      <span
+        class="_periodeSamengesteld_bf227b"
+      >
+        2020-2025
+      </span>
+    </h3>
+    <dl
+      class="_Datalist_240c86"
+    >
+      <dt
+        class="_Datalist__title_240c86"
+      >
+        Algemene Bepaling
+      </dt>
+      <dd
+        class="_Datalist__description_240c86"
+      >
+        <a
+          class="ams-link"
+          href="https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/wat-is-erfpacht/algemene-bepalingen/"
+          rel="noopener noreferrer"
+        >
+          Algemene Bepaling Content
+        </a>
+         - Regime Content
+      </dd>
+      <dt
+        class="_Datalist__title_240c86"
+      >
+        Afgekocht
+      </dt>
+      <dd
+        class="_Datalist__description_240c86"
+      >
+        Ja
+      </dd>
+      <dt
+        class="_Datalist__title_240c86"
+      >
+        Canon Afkoop
+      </dt>
+      <dd
+        class="_Datalist__description_240c86"
+      >
+        <ol
+          class="ams-ordered-list ams-ordered-list--no-markers"
+        >
+          <li
+            class="ams-ordered-list__item"
+          >
+            €5.000
+          </li>
+        </ol>
+      </dd>
+    </dl>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`DatalistFinancieelPeriode > renders niet afgekocht canon correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="_DataListFinancieelPeriode_bf227b"
+  >
+    <h3
+      class="ams-heading ams-heading--3 _Section_heading_bf227b ams-mb-s"
+    >
+      Periode Van: 
+      <span
+        class="_periodeSamengesteld_bf227b"
+      >
+        2025-2030
+      </span>
+    </h3>
+    <dl
+      class="_Datalist_240c86"
+    >
+      <dt
+        class="_Datalist__title_240c86"
+      >
+        Algemene Bepaling
+      </dt>
+      <dd
+        class="_Datalist__description_240c86"
+      >
+        <a
+          class="ams-link"
+          href="https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/wat-is-erfpacht/algemene-bepalingen/"
+          rel="noopener noreferrer"
+        >
+          Algemene Bepaling Content
+        </a>
+         - Regime Content
+      </dd>
+      <dt
+        class="_Datalist__title_240c86"
+      >
+        Afgekocht
+      </dt>
+      <dd
+        class="_Datalist__description_240c86"
+      >
+        Nee
+      </dd>
+      <dt
+        class="_Datalist__title_240c86"
+      >
+        Betalen Vanaf
+      </dt>
+      <dd
+        class="_Datalist__description_240c86"
+      >
+        01 januari 2025
+      </dd>
+      <dt
+        class="_Datalist__title_240c86"
+      >
+        Canon
+      </dt>
+      <dd
+        class="_Datalist__description_240c86"
+      >
+        <ol
+          class="ams-ordered-list ams-ordered-list--no-markers"
+        >
+          <li
+            class="ams-ordered-list__item"
+          >
+            Canon samengesteld
+          </li>
+        </ol>
+      </dd>
+    </dl>
+  </div>
+</DocumentFragment>
+`;

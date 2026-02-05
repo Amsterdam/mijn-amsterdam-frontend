@@ -2,6 +2,7 @@ import { Icon, UnorderedList } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
 import styles from './MyThemasPanel.module.scss';
+import { IS_DEVELOPMENT } from '../../../universal/config/env';
 import { ThemaMenuItemTransformed } from '../../config/thema-types';
 import { getRedactedClass } from '../../helpers/cobrowse';
 import { GeneralInfoRoute } from '../../pages/GeneralInfo/GeneralInfo-routes';
@@ -45,12 +46,12 @@ export function MyThemasPanel({
         {items.map(({ id, to, title, IconSVG }) => {
           const LinkComponent = to.startsWith('http') ? MaLink : MaRouterLink;
           return (
-            <UnorderedList.Item key={id}>
-              <LinkComponent
-                maVariant="fatNoUnderline"
-                href={to}
-                className={getRedactedClass(id)}
-              >
+            <UnorderedList.Item
+              key={id}
+              className={getRedactedClass(id)}
+              data-testid={IS_DEVELOPMENT && title}
+            >
+              <LinkComponent maVariant="fatNoUnderline" href={to}>
                 <span className={styles.ThemaLink}>
                   {IconSVG && (
                     <Icon

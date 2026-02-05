@@ -346,9 +346,6 @@ function transformEMandatesResponse(
   sessionID: SessionID,
   businessPartnerId: BusinessPartnerId
 ): AfisEMandateFrontend[] {
-  if (!responseData?.feed?.entry) {
-    return [];
-  }
   const sourceMandatesASC = getFeedEntryProperties(responseData).toSorted(
     sortByNumber('IMandateId', 'asc')
   );
