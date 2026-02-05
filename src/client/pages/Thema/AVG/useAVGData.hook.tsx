@@ -1,4 +1,4 @@
-import { tableConfig, themaConfig, routeConfig } from './AVG-thema-config';
+import { tableConfig, themaConfig } from './AVG-thema-config';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore';
@@ -25,7 +25,6 @@ export function useAVGData() {
     avgVerzoeken,
     pageLinks: themaConfig.pageLinks,
     breadcrumbs,
-    routeConfig,
     themaConfig,
   };
 }

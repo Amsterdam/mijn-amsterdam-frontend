@@ -14,9 +14,9 @@ export function AVGList() {
     breadcrumbs,
     displayProps,
     listPageRoute,
-    routeConfig,
+    themaConfig,
   } = useAVGListPageData();
-  useHTMLDocumentTitle(routeConfig.listPage);
+  useHTMLDocumentTitle(themaConfig.listPage.route);
 
   return (
     <ListPagePaginated

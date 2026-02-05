@@ -1,4 +1,4 @@
-import { routeConfig, themaConfig } from './AVG-thema-config';
+import { themaConfig } from './AVG-thema-config';
 import { AVGDetail } from './AVGDetail';
 import { default as AvgIcon } from './AvgIcon.svg?react';
 import { AVGList } from './AVGList';
@@ -17,7 +17,7 @@ export const AvgRoutes = [
     isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.listPage.path,
+    route: themaConfig.listPage.route.path,
     Component: AVGList,
     isActive: themaConfig.featureToggle.active,
   },

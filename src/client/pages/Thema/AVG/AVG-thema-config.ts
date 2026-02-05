@@ -11,7 +11,7 @@ import {
 import {
   ThemaConfigBase,
   WithDetailPage,
-  type ThemaRoutesConfig,
+  WithListPage,
 } from '../../../config/thema-types';
 
 const listPageParamKind = {
@@ -26,7 +26,9 @@ export const featureToggle = {
 const THEMA_ID = 'AVG';
 const THEMA_TITLE = 'AVG persoonsgegevens';
 
-type AVGThemaConfig = ThemaConfigBase<typeof THEMA_ID> & WithDetailPage;
+type AVGThemaConfig = ThemaConfigBase<typeof THEMA_ID> &
+  WithDetailPage &
+  WithListPage;
 
 export const themaConfig: AVGThemaConfig = {
   id: THEMA_ID,
@@ -63,18 +65,17 @@ export const themaConfig: AVGThemaConfig = {
       documentTitle: `Avg verzoek | ${THEMA_TITLE}`,
     },
   },
-};
-
-export const routeConfig = {
   listPage: {
-    path: '/avg/lijst/:kind/:page?',
-    documentTitle(params) {
-      const kind = params?.kind as ListPageParamKind;
-      return `${capitalizeFirstLetter(kind === 'lopende-aanvragen' ? 'Lopende' : 'Afgehandelde')} ${THEMA_TITLE} verzoeken | overzicht`;
+    route: {
+      path: '/avg/lijst/:kind/:page?',
+      trackingUrl: null,
+      documentTitle(params) {
+        const kind = params?.kind as ListPageParamKind;
+        return `${capitalizeFirstLetter(kind === 'lopende-aanvragen' ? 'Lopende' : 'Afgehandelde')} ${THEMA_TITLE} verzoeken | overzicht`;
+      },
     },
-    trackingUrl: null,
-  },
-} as const satisfies ThemaRoutesConfig;
+  } as const,
+};
 
 const displayPropsAanvragen: DisplayProps<AVGRequestFrontend> = {
   props: {
@@ -101,7 +102,7 @@ export const tableConfig = {
     title: 'Lopende aanvragen',
     filter: (avgVerzoek: AVGRequestFrontend) => !avgVerzoek.datumAfhandeling,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
-    listPageRoute: generatePath(routeConfig.listPage.path, {
+    listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.inProgress,
       page: null,
     }),
@@ -111,7 +112,7 @@ export const tableConfig = {
     title: 'Afgehandelde aanvragen',
     filter: (avgVerzoek: AVGRequestFrontend) => avgVerzoek.datumAfhandeling,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-    listPageRoute: generatePath(routeConfig.listPage.path, {
+    listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.completed,
       page: null,
     }),
