@@ -1,6 +1,7 @@
-import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 
-import { Dialog } from '@amsterdam/design-system-react';
+import { Button, Heading, IconButton } from '@amsterdam/design-system-react';
+import { CloseIcon } from '@amsterdam/design-system-react-icons';
 import classnames from 'classnames';
 
 import styles from './Modal.module.scss';
@@ -82,7 +83,6 @@ const GIVE_UP_READY_POLLING_AFTER_MS = 5000;
 
 interface ModalProps {
   children: ReactNode;
-  closeButtonLabel?: string;
   actions?: ReactNode;
   className?: string;
   isOpen: boolean | undefined;
@@ -96,9 +96,8 @@ interface ModalProps {
 }
 
 export function Modal({
-  actions,
   children,
-  closeButtonLabel,
+  actions,
   className,
   isOpen = undefined,
   title,
@@ -109,8 +108,6 @@ export function Modal({
   pollingQuerySelector,
   giveUpOnReadyPollingAfterMs = GIVE_UP_READY_POLLING_AFTER_MS,
 }: ModalProps) {
-  const dialogRef = useRef<HTMLDialogElement>(null);
-
   const keyHandler = useCallback(
     (event: KeyboardEvent) => {
       if (!closeOnEscape) {
@@ -126,6 +123,20 @@ export function Modal({
 
   useKeyUp(keyHandler);
 
+  useEffect(() => {
+    console.log('Modal useEffect isOpen', isOpen);
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'; // Disable scrolling
+    } else {
+      document.body.style.overflow = ''; // Reset to default
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   return (
     isOpen && (
       <div className={styles.ModalContainer}>
@@ -133,28 +144,33 @@ export function Modal({
           className={styles.Modal}
           onClick={() => (closeOnClickOutside ? onClose?.() : void 0)}
         />
-        <Dialog
-          ref={dialogRef}
-          id="modal-dialog"
-          onClose={() => onClose?.()}
-          open
-          heading={title ?? ''}
-          closeButtonLabel={closeButtonLabel}
-          footer={actions}
-          className={classnames(
-            styles.Dialog,
-            !showCloseButton && styles.DialogWithoutCloseButton,
-            className
-          )}
-        >
-          {children}
+        <div id="modal-dialog" className={classnames(styles.Dialog, className)}>
+          <div className={styles.DialogHeader}>
+            {title ? <Heading level={3}>{title}</Heading> : <i></i>}
+            {showCloseButton && (
+              <IconButton
+                label="Sluiten"
+                svg={CloseIcon}
+                onClick={() => onClose?.()}
+              />
+            )}
+          </div>
+
+          <div className={styles.DialogContent}>{children}</div>
+
           {pollingQuerySelector && (
             <FocusTrap
               pollingQuerySelector={pollingQuerySelector}
               giveUpOnReadyPollingAfterMs={giveUpOnReadyPollingAfterMs}
             />
           )}
-        </Dialog>
+
+          {actions ?? (
+            <Button variant="primary" onClick={() => onClose?.()}>
+              Sluiten
+            </Button>
+          )}
+        </div>
       </div>
     )
   );

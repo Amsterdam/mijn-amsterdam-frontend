@@ -2,10 +2,14 @@
   cursor: pointer;
 }
 
-.LocationModalInner {
-  --map-container-height: 40rem;
+.LocationModalInner > div {
+  --map-container-height: 20rem;
+  --map-container-height-medium: 26rem;
   height: var(--map-container-height);
-  margin-bottom: 5rem;
+
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    height: var(--map-container-height-medium);
+  }
 }
 
 .Address {

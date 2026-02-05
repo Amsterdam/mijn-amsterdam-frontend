@@ -31,10 +31,42 @@
 .Dialog {
   z-index: z-index(dialog);
   position: fixed;
-}
+  left: 0;
+  bottom: 0;
+  max-height: 90vh;
+  width: 100%;
+  padding: var(--ams-space-l);
+  background: var(--ams-color-background);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ams-space-l);
+  overflow-y: scroll;
 
-.DialogWithoutCloseButton {
-  > header > :global(button.ams-icon-button) {
-    display: none !important;
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    padding: var(--ams-space-l) var(--ams-page-header-medium-padding-inline);
+  }
+  @media screen and (min-width: $ams-breakpoint-wide) {
+    padding: var(--ams-space-l) var(--ams-page-header-wide-padding-inline);
+  }
+
+  .DialogHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .DialogContent {
+    flex: 1;
+  }
+
+  :global(.ams-action-group) {
+    > a {
+      width: 100%;
+    }
+    @media screen and (min-width: $ams-breakpoint-medium) {
+      > a {
+        width: fit-content;
+      }
+    }
   }
 }
