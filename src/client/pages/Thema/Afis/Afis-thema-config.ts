@@ -66,6 +66,17 @@ const MAX_TABLE_ROWS_ON_THEMA_PAGINA_TRANSFERRED =
   MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
+const filterPropsFacturenOpen: any = {
+  search: {
+    afzender: 'Afzender',
+    factuurNummerEl: 'Factuurnummer',
+    statusDescription: 'Status',
+  },
+  order: {
+    paymentDueDateFormatted: 'Vervaldatum',
+  }
+};
+
 const displayPropsFacturenOpen: DisplayProps<AfisFactuurFrontend> = {
   props: {
     factuurNummerEl: 'Factuurnummer',
@@ -135,6 +146,7 @@ type FacturenTableConfigParams = {
     [key in AfisFactuurStateFrontend]?: Partial<{
       title: string;
       displayProps: DisplayProps<AfisFactuurFrontend>;
+      filter: any,
       maxItems: number;
       listPageLinkLabel: string;
       listPageRoute: string;
@@ -149,6 +161,7 @@ export function getFacturenTableConfig(params?: FacturenTableConfigParams) {
     open: {
       title: listPageTitle.open,
       displayProps: displayPropsFacturenOpen,
+      filter: filterPropsFacturenOpen,
       maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_OPEN,
       listPageLinkLabel: 'Alle openstaande facturen',
       listPageRoute: generatePath(listPagePath, {

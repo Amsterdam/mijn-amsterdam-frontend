@@ -1,0 +1,16 @@
+.PaginationContainer {
+  margin: var(--ams-space-s) 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+  .PaginationContainerPageSize {
+    display: flex;
+    align-items: center;
+    gap: var(--ams-space-m);
+  }
+}
+
+.SearchFieldContainer {
+  margin-bottom: var(--ams-space-m);
+}
