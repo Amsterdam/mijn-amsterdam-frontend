@@ -81,10 +81,6 @@ export function Dashboard() {
             )}
             {!isLoading(NOTIFICATIONS) &&
               notifications.map((notification, index) => {
-                // COULD TURN ON FOR LESS CONTENT ON PHONE PORTRAIT
-                // if (isPhoneScreen && index >= 3) {
-                //   return;
-                // }
                 return (
                   <OrderedList.Item
                     key={`${notification.themaID}-${notification.id}-${index}`}
