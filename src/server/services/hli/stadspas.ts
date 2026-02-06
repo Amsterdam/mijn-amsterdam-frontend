@@ -28,12 +28,14 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureException } from '../monitoring';
-import { featureToggle, routes } from './hli-service-config';
+import { routes } from './hli-service-config';
+import { getFeatureManager } from '../../config/azure-appconfiguration';
 
 export async function fetchStadspas(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<StadspasResponseFrontend>> {
-  if (!featureToggle.service.enabledStadspas) {
+  const fm = getFeatureManager();
+  if (!(await fm.isEnabled('HLI.stadspassen'))) {
     return apiSuccessResult({ stadspassen: [], dateExpiryFormatted: null });
   }
 
