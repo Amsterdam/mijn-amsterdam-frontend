@@ -5,7 +5,6 @@ export const featureToggle = {
     },
   },
   service: {
-    enabledStadspas: true,
     enabledRegelingen: true,
     enabledRTM: true,
     enabledAV: true,
