@@ -1,6 +1,8 @@
+import { Paragraph } from '@amsterdam/design-system-react';
+
 import { useProfileData } from './useProfileData.hook';
 import { useWonenThemaData } from './useVvEThemaData.hook';
-import type { VvEDataFrontend } from '../../../../../server/services/wonen/zwd-vve.types';
+import { VvEDataSource } from '../../../../../server/services/wonen/zwd-vve.types';
 import {
   Datalist,
   Row,
@@ -12,82 +14,65 @@ import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle';
 import { themaId } from '../../Afis/Afis-thema-config';
 
 type WonenDataProps = {
-  vve: VvEDataFrontend;
+  vve: VvEDataSource;
 };
 
 function WonenData({ vve }: WonenDataProps) {
   const rows: Array<Row | RowSet> = [
-    {
+    vve?.name !== null && {
+      label: 'Statutaire naam',
+      content: vve?.name,
+    },
+    vve?.number_of_apartments !== null && {
       label: 'Aantal wooneenheden in de VvE',
-      content: vve?.number_of_apartments ?? '-',
+      content: vve?.number_of_apartments,
     },
-    {
+    vve?.build_year !== null && {
       label: 'Bouwjaar',
-      content: vve?.build_year ?? '-',
+      content: vve?.build_year,
     },
-    {
+    vve?.beschermd_stadsdorpsgezicht !== null && {
       label: 'Beschermd stads-/dorpsgezicht',
-      content: vve?.beschermd_stadsdorpsgezicht ?? '-',
+      content: vve?.beschermd_stadsdorpsgezicht,
     },
-
-    // {
-    //   label: 'Stadsdeel',
-    //   content: vve?.district ?? '-',
-    // },
-    // {
-    //   label: 'VvE ID
-    //   content: vve?.id ?? '-',
-    // },
-    {
+    vve?.is_priority_neighborhood !== null && {
       label: 'Prioriteitswijk',
       content: vve?.is_priority_neighborhood ? 'Ja' : 'Nee',
     },
-    {
-      label: 'Kleine VvE',
-      content: vve?.is_small ? 'Ja' : 'Nee',
-    },
-    {
+    vve?.kvk_nummer !== null && {
       label: 'KvK-nummer',
-      content: vve?.kvk_nummer ?? '-',
+      content: vve?.kvk_nummer,
     },
-    {
-      label: 'Ligt in beschermd gebied',
-      content: vve?.ligt_in_beschermd_gebied ?? '-',
-    },
-    {
+    vve?.monument_status !== null && {
       label: 'Monumentstatus',
-      content: vve?.monument_status ?? '-',
+      content: vve?.monument_status,
     },
-    // {
-    //   label: 'Buurt',
-    //   content: vve?.neighborhood ?? '-',
-    // },
-    // {
-    //   label: 'Wijk',
-    //   content: vve?.wijk ?? '-',
-    // },
-    // {
-    //   label: 'Postcode',
-    //   content: vve?.zip_code ?? '-',
-    // },
-  ].filter((row) => !!row.content);
+  ].filter((row) => !!row);
 
   return (
-    <PageContentCell>
-      <Datalist rows={rows} />
-    </PageContentCell>
+    <>
+      <PageContentCell>
+        <Paragraph>
+          Hier ziet u data afkomsting uit de Basisregistratie Adressen en
+          Gebouwen van het kadaster. Deze data kan een week achterlopen.
+        </Paragraph>
+      </PageContentCell>
+      <PageContentCell>
+        <Datalist rows={rows} />
+      </PageContentCell>
+    </>
   );
 }
 
-export function WonenDetail() {
+export function VvEDetail() {
   const { wonenData, isLoading, isError, breadcrumbs } = useWonenThemaData();
   const { routeConfig } = useProfileData();
   useHTMLDocumentTitle(routeConfig.detailPageVvE);
   return (
     <ThemaDetailPagina
       themaId={themaId}
-      title={wonenData?.name || 'VvE'}
-      zaak={{}} // empty object to prevent info block: "Geen gegevens gevonden"
+      title="Vereniging van Eigenaren"
+      zaak={wonenData as VvEDataSource} // empty object to prevent info block: "Geen gegevens gevonden"
       isError={isError}
       isLoading={isLoading}
       pageContentMain={wonenData && <WonenData vve={wonenData} />}

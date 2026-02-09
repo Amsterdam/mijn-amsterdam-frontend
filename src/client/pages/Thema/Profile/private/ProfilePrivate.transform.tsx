@@ -15,10 +15,12 @@ import {
 import { defaultDateFormat } from '../../../../../universal/helpers/date';
 import type { AppState } from '../../../../../universal/types/App.types';
 import LoadingContent from '../../../../components/LoadingContent/LoadingContent';
+import { MaRouterLink } from '../../../../components/MaLink/MaLink';
 import {
   BRP_LABEL_AANTAL_BEWONERS,
   featureToggle,
   profileLinks,
+  routeConfig,
   themaIdBRP,
 } from '../Profile-thema-config';
 import {
@@ -182,9 +184,12 @@ const adres: ProfileLabels<
     (value, _item, brpData) => {
       if (brpData?.adres?.vveNaam) {
         return (
-          <Link href="/persoonlijke-gegevens/vve" rel="noopener noreferrer">
+          <MaRouterLink
+            href={routeConfig.detailPageVvE.path}
+            rel="noopener noreferrer"
+          >
             {brpData.adres.vveNaam}
-          </Link>
+          </MaRouterLink>
         );
       }
       return 'Onbekend';
