@@ -181,7 +181,10 @@ async function startServerBFF() {
     getFromEnv('LOG_THAT_HTTP_HEADERS') === 'true' ||
     getFromEnv('LOG_THAT_HTTP_BODY') === 'true'
   ) {
-    await import('log-that-http');
+    // This logs all data. Doing this in production would be a huge privacy risk
+    if (!IS_PRODUCTION) {
+      await import('log-that-http');
+    }
   }
   const server = app.listen(BFF_PORT, () => {
     logger.info(
