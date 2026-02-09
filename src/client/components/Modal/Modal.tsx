@@ -21,6 +21,14 @@ function FocusTrapInner() {
     'a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled])'
   );
 
+  window.addEventListener('keydown', handleTabKey);
+
+  useEffect(() => {
+    return () => {
+      window.removeEventListener('keydown', handleTabKey);
+    };
+  }, []);
+
   if (!element || !elements) {
     return null;
   }
@@ -51,14 +59,6 @@ function FocusTrapInner() {
       e.preventDefault();
     }
   }
-
-  window.addEventListener('keydown', handleTabKey);
-
-  useEffect(() => {
-    return () => {
-      window.removeEventListener('keydown', handleTabKey);
-    };
-  }, []);
 }
 
 function FocusTrap({
@@ -158,6 +158,7 @@ export function Modal({
             onClose={() => onClose?.()}
             open
             heading={title ?? ''}
+            closeButtonLabel="Overlay sluiten"
             footer={
               actions ?? (
                 <Button variant="primary" onClick={() => onClose?.()}>
