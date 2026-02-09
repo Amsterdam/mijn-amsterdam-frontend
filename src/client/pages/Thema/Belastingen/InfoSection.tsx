@@ -11,7 +11,7 @@ export const belastingenSectionProps: InfoSection_DEPRECATED = {
     'Kwijtschelding aanvragen',
     'Betalingsregeling aanvragen',
     'Aangifte doen',
-    'Parkeerbon betalen',
+    'Parkeerbon (naheffingsaanslag) betalen',
   ],
   active: featureToggle.belastingenActive,
 };
