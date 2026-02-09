@@ -1,11 +1,17 @@
-import { ReactNode, useCallback, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 
-import { Button, Heading, IconButton } from '@amsterdam/design-system-react';
+import {
+  Button,
+  Dialog,
+  Heading,
+  IconButton,
+} from '@amsterdam/design-system-react';
 import { CloseIcon } from '@amsterdam/design-system-react-icons';
 import classnames from 'classnames';
 
 import styles from './Modal.module.scss';
 import { getElementOnPageAsync } from '../../helpers/utils';
+import { useMediumScreen } from '../../hooks/media.hook';
 import { useKeyUp } from '../../hooks/useKey';
 
 function FocusTrapInner() {
@@ -108,6 +114,9 @@ export function Modal({
   pollingQuerySelector,
   giveUpOnReadyPollingAfterMs = GIVE_UP_READY_POLLING_AFTER_MS,
 }: ModalProps) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const isMediumScreen = useMediumScreen();
+
   const keyHandler = useCallback(
     (event: KeyboardEvent) => {
       if (!closeOnEscape) {
@@ -124,14 +133,12 @@ export function Modal({
   useKeyUp(keyHandler);
 
   useEffect(() => {
-    console.log('Modal useEffect isOpen', isOpen);
     if (isOpen) {
-      document.body.style.overflow = 'hidden'; // Disable scrolling
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = ''; // Reset to default
+      document.body.style.overflow = '';
     }
 
-    // Cleanup on unmount
     return () => {
       document.body.style.overflow = '';
     };
@@ -144,34 +151,67 @@ export function Modal({
           className={styles.Modal}
           onClick={() => (closeOnClickOutside ? onClose?.() : void 0)}
         />
-        <div id="modal-dialog" className={classnames(styles.Dialog, className)}>
-          <div className={styles.DialogHeader}>
-            {title ? <Heading level={3}>{title}</Heading> : <i></i>}
-            {showCloseButton && (
-              <IconButton
-                name="Overlay sluiten"
-                label="Overlay sluiten"
-                svg={CloseIcon}
-                onClick={() => onClose?.()}
+        {isMediumScreen ? (
+          <Dialog
+            ref={dialogRef}
+            id="modal-dialog"
+            onClose={() => onClose?.()}
+            open
+            heading={title ?? ''}
+            footer={
+              actions ?? (
+                <Button variant="primary" onClick={() => onClose?.()}>
+                  Sluiten
+                </Button>
+              )
+            }
+            className={classnames(
+              styles.Dialog,
+              !showCloseButton && styles.DialogWithoutCloseButton,
+              className
+            )}
+          >
+            {children}
+            {pollingQuerySelector && (
+              <FocusTrap
+                pollingQuerySelector={pollingQuerySelector}
+                giveUpOnReadyPollingAfterMs={giveUpOnReadyPollingAfterMs}
               />
             )}
+          </Dialog>
+        ) : (
+          <div
+            id="modal-dialog"
+            className={classnames(styles.CustomDialog, className)}
+          >
+            <div className={styles.CustomDialogHeader}>
+              {title ? <Heading level={3}>{title}</Heading> : <i></i>}
+              {showCloseButton && (
+                <IconButton
+                  name="Overlay sluiten"
+                  label="Overlay sluiten"
+                  svg={CloseIcon}
+                  onClick={() => onClose?.()}
+                />
+              )}
+            </div>
+
+            <div className={styles.CustomDialogContent}>{children}</div>
+
+            {pollingQuerySelector && (
+              <FocusTrap
+                pollingQuerySelector={pollingQuerySelector}
+                giveUpOnReadyPollingAfterMs={giveUpOnReadyPollingAfterMs}
+              />
+            )}
+
+            {actions ?? (
+              <Button variant="primary" onClick={() => onClose?.()}>
+                Sluiten
+              </Button>
+            )}
           </div>
-
-          <div className={styles.DialogContent}>{children}</div>
-
-          {pollingQuerySelector && (
-            <FocusTrap
-              pollingQuerySelector={pollingQuerySelector}
-              giveUpOnReadyPollingAfterMs={giveUpOnReadyPollingAfterMs}
-            />
-          )}
-
-          {actions ?? (
-            <Button variant="primary" onClick={() => onClose?.()}>
-              Sluiten
-            </Button>
-          )}
-        </div>
+        )}
       </div>
     )
   );
