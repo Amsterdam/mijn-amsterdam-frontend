@@ -12,7 +12,10 @@ import type {
 } from '../../../../server/services/afis/afis-types';
 import { IS_PRODUCTION } from '../../../../universal/config/env';
 import type { LinkProps } from '../../../../universal/types/App.types';
-import type { DisplayProps } from '../../../components/Table/TableV2.types';
+import type {
+  DisplayProps,
+  FilterProps,
+} from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
@@ -66,15 +69,20 @@ const MAX_TABLE_ROWS_ON_THEMA_PAGINA_TRANSFERRED =
   MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
-const filterPropsFacturenOpen: any = {
+const filterPropsFacturenOpen: FilterProps<AfisFactuurFrontend> = {
   search: {
     afzender: 'Afzender',
-    factuurNummerEl: 'Factuurnummer',
+    factuurNummer: 'Factuurnummer',
+    paymentDueDateFormatted: 'Vervaldatum',
     statusDescription: 'Status',
   },
   order: {
     paymentDueDateFormatted: 'Vervaldatum',
-  }
+  },
+  filter: {
+    afzender: 'Afzender',
+    status: 'Status',
+  },
 };
 
 const displayPropsFacturenOpen: DisplayProps<AfisFactuurFrontend> = {
@@ -146,7 +154,7 @@ type FacturenTableConfigParams = {
     [key in AfisFactuurStateFrontend]?: Partial<{
       title: string;
       displayProps: DisplayProps<AfisFactuurFrontend>;
-      filter: any,
+      filter: FilterProps<AfisFactuurFrontend>;
       maxItems: number;
       listPageLinkLabel: string;
       listPageRoute: string;

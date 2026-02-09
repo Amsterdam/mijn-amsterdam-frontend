@@ -20,11 +20,29 @@ export type DisplayProps<T> =
       colWidths?: TableV2ColWidths;
     };
 
+export type FilterPropsBase<T> = Readonly<{
+  [Property in keyof T]+?: string | number | ReactNode;
+}>;
+
+export type FilterProps<T> = {
+  search?: FilterPropsBase<T>;
+  order?: FilterPropsBase<T>;
+  filter?: FilterPropsBase<T>;
+};
+
+export type FilterOrderProps = {
+  key?: string;
+  direction?: string;
+};
+
 export type ScreenSize = 'small' | 'large';
 export type TableV2ColWidths = Record<ScreenSize, string[]>;
 
 export interface TableV2Props<T> {
   displayProps: DisplayProps<T>;
+  filter?: FilterProps;
+  currentOrder?: FilterOrderProps;
+  onHeaderCellClick?: (key: FilterOrderProps['key']) => void;
   items: T[];
   className?: string;
   showTHead?: boolean;

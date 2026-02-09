@@ -1,16 +1,53 @@
 .PaginationContainer {
   margin: var(--ams-space-s) 0;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  
+  flex-direction: column-reverse;
+  gap: var(--ams-space-s);
+
+  &:last-of-type {
+    flex-direction: column;
+  }
+
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    &:last-of-type {
+      flex-direction: row;
+    }
+  }
+
   .PaginationContainerPageSize {
     display: flex;
     align-items: center;
-    gap: var(--ams-space-m);
+    justify-content: space-between;
+
+    @media screen and (min-width: $ams-breakpoint-medium) {
+      gap: var(--ams-space-m);
+    }
   }
 }
 
-.SearchFieldContainer {
+.SearchAndFilterContainer {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--ams-space-m);
   margin-bottom: var(--ams-space-m);
+
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0;
+
+    > :global(.ams-button) {
+      margin-left: var(--ams-space-m);
+    }
+  }
+
+  > :global(.ams-button) {
+    align-self: flex-end;
+    height: fit-content;
+    width: fit-content;
+  }
 }

@@ -7,8 +7,15 @@ import {
   memo,
 } from 'react';
 
-import { Paragraph, SearchField, Select } from '@amsterdam/design-system-react';
-import { useParams } from 'react-router';
+import {
+  Button,
+  Paragraph,
+  SearchField,
+  Select,
+} from '@amsterdam/design-system-react';
+import isEmpty from 'lodash.isempty';
+import orderBy from 'lodash.orderby';
+import { useNavigate, useParams } from 'react-router';
 
 import styles from './ListPagePaginated.module.scss';
 import {
@@ -20,14 +27,29 @@ import ErrorAlert from '../Alert/Alert';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import { PageContentCell, PageV2 } from '../Page/Page';
 import { PaginationV2 } from '../Pagination/PaginationV2';
-import { DisplayProps, TableV2 } from '../Table/TableV2';
+import {
+  DisplayProps,
+  FilterOrderProps,
+  FilterProps,
+  TableV2,
+} from '../Table/TableV2';
+import { FilterIcon } from '@amsterdam/design-system-react-icons';
 
 const DEFAULT_PAGE_SIZE = 10;
 const BIGGEST_PAGE_SIZE = 100;
+const DEFAULT_CURRENT_ORDER = {
+  key: '',
+  direction: '',
+};
 
 interface PaginationSizeOptions {
   value: number;
   name: string;
+}
+
+interface FilterOptionsProps {
+  key: FilterOrderProps['key'];
+  options: { value: string; selected: boolean }[];
 }
 
 const paginationSizeOptions: PaginationSizeOptions[] = [
@@ -44,7 +66,7 @@ interface ListPagePaginatedProps<T> {
   pageContentTop?: ReactNode;
   pageContentBottom?: ReactNode;
   displayProps: DisplayProps<T>;
-  filter?: any;
+  filter?: FilterProps<T>;
   errorText?: string;
   isError: boolean;
   isLoading: boolean;
@@ -91,7 +113,7 @@ export function ListPagePaginated<T extends object = ZaakAanvraagDetail>({
   pageContentTop,
   pageContentBottom,
   displayProps,
-  filter,
+  filter = {},
   errorText = 'We kunnen op dit moment niet alle gegevens tonen.',
   noItemsText = 'U heeft (nog) geen gegevens op deze pagina.',
   noItemsFilter = 'Geen resultaten gevonden op basis van deze filters.',
@@ -103,9 +125,15 @@ export function ListPagePaginated<T extends object = ZaakAanvraagDetail>({
   title,
   themaId,
 }: ListPagePaginatedProps<T>) {
+  const navigate = useNavigate();
+
   const [itemsToDisplay, setItemsToDisplay] = useState<T[]>([]);
   const [pageSize, setPageSize] = useState<number>(DEFAULT_PAGE_SIZE);
   const [search, setSearch] = useState<string>('');
+  const [currentOrder, setCurrentOrder] = useState<FilterOrderProps>(
+    DEFAULT_CURRENT_ORDER
+  );
+  const [filterOptions, setFilterOptions] = useState<FilterOptionsProps[]>([]);
 
   usePageTypeSetting('listpage');
 
@@ -113,12 +141,9 @@ export function ListPagePaginated<T extends object = ZaakAanvraagDetail>({
     page?: string;
   }>();
 
-  const currentPage = (() => {
-    if (!page) {
-      return 1;
-    }
-    return parseInt(page, 10);
-  })();
+  const [currentPage, setCurrentPage] = useState<number>(
+    parseInt(page, 10) || 1
+  );
 
   const itemsPaginated = useMemo(() => {
     const startIndex = currentPage - 1;
@@ -130,31 +155,90 @@ export function ListPagePaginated<T extends object = ZaakAanvraagDetail>({
   const total = totalCount ?? itemsToDisplay.length;
 
   useEffect(() => {
+    if (!items.length) return;
     setItemsToDisplay(items);
+    getFilterOptions(items);
   }, [items]);
 
   useEffect(() => {
-    if (!search) {
-      setItemsToDisplay(items);
-      return;
+    let filteredItems: T[] = [];
+    if (search) {
+      // filter based on search value
+      filteredItems = items.filter((item) => {
+        return Object.keys(filter.search).some((key) => {
+          const itemValue = item[key as keyof T];
+          return (
+            typeof itemValue === 'string' &&
+            itemValue.toLowerCase().includes(search.toLowerCase())
+          );
+        });
+      });
+    } else {
+      filteredItems = items;
     }
 
-    const filteredItems = items.filter((item) => {
-      return Object.keys(filter.search).some((key) => {
-        const itemValue = item[key as keyof T];
-        return (
-          typeof itemValue === 'string' &&
-          itemValue.toLowerCase().includes(search.toLowerCase())
-        );
-      });
-    });
+    // order by if order has been selected
+    if (currentOrder.key && currentOrder.direction) {
+      filteredItems = orderBy(
+        filteredItems,
+        [orderKeyUnformatted(currentOrder.key)],
+        [currentOrder.direction]
+      );
+    }
 
     setItemsToDisplay(filteredItems);
   }, [search, items]);
 
-  // Memoized callback for setting search
+  useEffect(() => {
+    setCurrentPage(parseInt(page, 10) || 1);
+  }, [page]);
+
+  const orderListBy = (key: FilterOrderProps['key']) => {
+    let direction = '';
+
+    if (currentOrder.direction === '' || currentOrder.key !== key) {
+      direction = 'asc';
+    } else if (currentOrder.direction === 'asc') {
+      direction = 'desc';
+    } else {
+      setCurrentOrder({ key: '', direction: '' });
+      return;
+    }
+
+    const orderedItems = orderBy(
+      itemsToDisplay,
+      [orderKeyUnformatted(key)],
+      [direction]
+    );
+
+    setItemsToDisplay(orderedItems);
+    setCurrentOrder({ key, direction });
+  };
+
+  const getFilterOptions = (items: T[]) => {
+    const filterList = [];
+    for (const key in filter.filter) {
+      const optValues = Array.from(new Set(items.map((x) => x[key])));
+      filterList.push({
+        key,
+        options: optValues.map((x) => ({ value: x, selected: false })),
+      });
+    }
+    setFilterOptions(filterList);
+  };
+
+  const orderKeyUnformatted = (key: FilterOrderProps['key']) => {
+    return key.endsWith('Formatted') ? key.slice(0, -'Formatted'.length) : key;
+  };
+
+  const resetToFirstPage = () => {
+    setCurrentPage(1);
+    navigate('/facturen-en-betalen/facturen/lijst/open/1', { replace: true });
+  };
+
   const handleSearchChange = useCallback((value: string) => {
     setSearch(value);
+    resetToFirstPage();
   }, []);
 
   function ListPagePaginationNode() {
@@ -175,7 +259,10 @@ export function ListPagePaginated<T extends object = ZaakAanvraagDetail>({
           <Select
             name="pagination-size"
             value={pageSize}
-            onChange={(e) => setPageSize(parseInt(e.target.value))}
+            onChange={(e) => {
+              setPageSize(parseInt(e.target.value));
+              resetToFirstPage();
+            }}
           >
             {paginationSizeOptions.map((size) => (
               <Select.Option value={size.value} key={size.name}>
@@ -217,24 +304,47 @@ export function ListPagePaginated<T extends object = ZaakAanvraagDetail>({
               !itemsPaginated.length &&
               !!noItemsText &&
               !items.length && <Paragraph>{noItemsText}</Paragraph>}
-            <ListPageSearchBar
-              search={search}
-              setSearch={handleSearchChange}
-              title={title}
-            />
+
+            {(!isEmpty(filter.search) || !isEmpty(filter.filter)) && (
+              <div className={styles.SearchAndFilterContainer}>
+                {!isEmpty(filter.search) ? (
+                  <ListPageSearchBar
+                    search={search}
+                    setSearch={handleSearchChange}
+                    title={title}
+                  />
+                ) : (
+                  <i></i>
+                )}
+                {!isEmpty(filter.filter) && (
+                  <Button variant="secondary" icon={FilterIcon}>
+                    Filters
+                  </Button>
+                )}
+              </div>
+            )}
+
             {itemsToDisplay.length > DEFAULT_PAGE_SIZE && (
               <ListPagePaginationNode />
             )}
+
             {!isLoading && !!itemsPaginated.length && (
               <TableV2<T>
                 items={itemsPaginated}
                 displayProps={displayProps}
+                filter={filter}
+                currentOrder={currentOrder}
+                onHeaderCellClick={(key: FilterOrderProps['key']) =>
+                  orderListBy(key)
+                }
                 className={tableClassName}
               />
             )}
+
             {itemsToDisplay.length > DEFAULT_PAGE_SIZE && (
               <ListPagePaginationNode />
             )}
+
             {!isLoading && !itemsPaginated.length && !!noItemsText && (
               <Paragraph>{noItemsFilter}</Paragraph>
             )}
