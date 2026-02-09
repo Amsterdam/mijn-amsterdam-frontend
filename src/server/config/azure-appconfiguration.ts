@@ -39,10 +39,11 @@ export async function startAppConfiguration() {
   featureManager = new FeatureManager(
     new ConfigurationMapFeatureFlagProvider(appConfig)
   );
-  while (true) {
-    await appConfig.refresh();
-    await new Promise((resolve) => setTimeout(resolve, REFRESH_INTERVAL_MS));
-  }
+  // RP TODO: dynamicRefreshAppconfiguration?
+  // while (true) {
+  //   await appConfig.refresh();
+  //   await new Promise((resolve) => setTimeout(resolve, REFRESH_INTERVAL_MS));
+  // }
 }
 
 export function getFeatureManager(): FeatureManager {
