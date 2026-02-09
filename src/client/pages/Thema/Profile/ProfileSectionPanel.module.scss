@@ -1,9 +1,12 @@
-:global(.ams-grid__cell > .ams-grid) {
-  row-gap: 0;
-}
+// :global(.ams-grid__cell > .ams-grid) {
+//   row-gap: 0;
+// }
 
 .ProfileSectionPanelGrid {
   position: relative;
+  &:global(.ams-grid) {
+    row-gap: 0;
+  }
 }
 
 .ProfileSection {

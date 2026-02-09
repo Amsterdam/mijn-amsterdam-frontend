@@ -1,4 +1,6 @@
 .SearchBar {
+  --ams-unordered-list-gap: var(--ams-space-m);
+
   position: relative;
   max-width: 24rem;
 
@@ -42,10 +44,6 @@
 
 .NoResults:first-child {
   margin-top: 0;
-}
-
-.SearchBar :global(.ams-unordered-list) {
-  gap: var(--ams-space-m);
 }
 
 .ResultList {

@@ -25,7 +25,7 @@
   }
 
   :global(.ams-heading) {
-    display: none;
+    // display: none;
     left: -100vw;
     position: absolute;
   }
@@ -39,6 +39,7 @@
   }
 
   .MessageBarParagraph {
+    width: calc(100% - 32px); // close to size of the cross icon
     line-height: 1.3rem;
     margin: 0;
   }
