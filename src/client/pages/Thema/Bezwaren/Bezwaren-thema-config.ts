@@ -11,10 +11,6 @@ import type {
   ThemaRoutesConfig,
 } from '../../../config/thema-types';
 
-export const featureToggle = {
-  BezwarenActive: true,
-};
-
 const THEMA_ID = 'BEZWAREN';
 const THEMA_TITLE = 'Bezwaren';
 
@@ -25,12 +21,20 @@ export const links = {
 
 type ThemaConfigBezwaren = Pick<
   ThemaConfigBase,
-  'id' | 'title' | 'profileTypes' | 'redactedScope' | 'pageLinks'
+  | 'id'
+  | 'title'
+  | 'profileTypes'
+  | 'redactedScope'
+  | 'pageLinks'
+  | 'featureToggle'
 >;
 
 export const themaConfig: ThemaConfigBezwaren = {
   id: THEMA_ID,
   title: THEMA_TITLE,
+  featureToggle: {
+    active: true,
+  },
   profileTypes: ['private', 'commercial'],
   redactedScope: 'full',
   pageLinks: [

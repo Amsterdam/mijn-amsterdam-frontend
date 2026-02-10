@@ -1,8 +1,4 @@
-import {
-  routeConfig,
-  themaConfig,
-  featureToggle,
-} from './Bezwaren-thema-config';
+import { routeConfig, themaConfig } from './Bezwaren-thema-config';
 import { BezwarenDetail } from './BezwarenDetail';
 import { default as BezwarenIcon } from './BezwarenIcon.svg?react';
 import { BezwarenList } from './BezwarenList';
@@ -18,17 +14,17 @@ export const BezwarenRoutes = [
   {
     route: routeConfig.detailPage.path,
     Component: BezwarenDetail,
-    isActive: featureToggle.BezwarenActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
     route: routeConfig.listPage.path,
     Component: BezwarenList,
-    isActive: featureToggle.BezwarenActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
     route: routeConfig.themaPage.path,
     Component: BezwarenThema,
-    isActive: featureToggle.BezwarenActive,
+    isActive: themaConfig.featureToggle.active,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
@@ -40,7 +36,7 @@ export const menuItem: ThemaMenuItem = {
   profileTypes: themaConfig.profileTypes,
   isActive(appState: AppState) {
     return (
-      featureToggle.BezwarenActive &&
+      themaConfig.featureToggle.active &&
       !isLoading(appState.BEZWAREN) &&
       !!appState.BEZWAREN.content?.length
     );
