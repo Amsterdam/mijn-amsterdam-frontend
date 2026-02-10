@@ -1,9 +1,4 @@
-import {
-  tableConfig,
-  LinkListItems,
-  routeConfig,
-  themaConfig,
-} from './Bezwaren-thema-config';
+import { tableConfig, routeConfig, themaConfig } from './Bezwaren-thema-config';
 import { BezwaarFrontend } from '../../../../server/services/bezwaren/types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
@@ -25,7 +20,7 @@ export function useBezwarenThemaData() {
     bezwaren,
     isLoading: isLoading(BEZWAREN),
     isError: isError(BEZWAREN),
-    linkListItems: LinkListItems,
+    pageLinks: themaConfig.pageLinks,
     routeConfig,
     tableConfig,
     themaId: themaConfig.id,

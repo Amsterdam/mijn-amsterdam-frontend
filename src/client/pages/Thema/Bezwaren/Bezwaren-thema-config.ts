@@ -1,7 +1,6 @@
 import { generatePath } from 'react-router';
 
 import { BezwaarFrontend } from '../../../../server/services/bezwaren/types';
-import { LinkProps } from '../../../../universal/types/App.types';
 import type { DisplayProps } from '../../../components/Table/TableV2.types';
 import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
@@ -26,7 +25,7 @@ export const links = {
 
 type ThemaConfigBezwaren = Pick<
   ThemaConfigBase,
-  'id' | 'title' | 'profileTypes' | 'redactedScope'
+  'id' | 'title' | 'profileTypes' | 'redactedScope' | 'pageLinks'
 >;
 
 export const themaConfig: ThemaConfigBezwaren = {
@@ -34,6 +33,12 @@ export const themaConfig: ThemaConfigBezwaren = {
   title: THEMA_TITLE,
   profileTypes: ['private', 'commercial'],
   redactedScope: 'full',
+  pageLinks: [
+    {
+      to: 'https://www.amsterdam.nl/veelgevraagd/bezwaar-maken-tegen-een-besluit-van-de-gemeente-amsterdam-e5898',
+      title: 'Meer informatie over Bezwaar maken',
+    },
+  ],
 };
 
 export const routeConfig = {
@@ -54,13 +59,6 @@ export const routeConfig = {
     trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
-
-export const LinkListItems: LinkProps[] = [
-  {
-    title: 'Meer informatie over Bezwaar maken',
-    to: 'https://www.amsterdam.nl/veelgevraagd/bezwaar-maken-tegen-een-besluit-van-de-gemeente-amsterdam-e5898',
-  },
-];
 
 const displayPropsBezwaren: DisplayProps<BezwaarFrontend> = {
   props: {

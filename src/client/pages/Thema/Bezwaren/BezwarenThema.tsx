@@ -21,13 +21,11 @@ const pageContentTop = (
 
 export function BezwarenThema() {
   const {
-    themaId,
-    themaTitle,
     tableConfig,
     bezwaren,
     isLoading,
     isError,
-    linkListItems,
+    themaConfig,
     routeConfig,
   } = useBezwarenThemaData();
   useHTMLDocumentTitle(routeConfig.themaPage);
@@ -53,13 +51,13 @@ export function BezwarenThema() {
 
   return (
     <ThemaPagina
-      title={themaTitle}
-      id={themaId}
+      title={themaConfig.title}
+      id={themaConfig.id}
       isError={isError}
       isLoading={isLoading}
       pageContentTop={pageContentTop}
       pageContentMain={tables}
-      pageLinks={linkListItems}
+      pageLinks={themaConfig.pageLinks}
       maintenanceNotificationsPageSlug="bezwaren"
     />
   );
