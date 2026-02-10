@@ -13,10 +13,7 @@ import {
   OctopusApiResponse,
   kenmerkKey,
 } from './types';
-import {
-  routeConfig,
-  themaConfig,
-} from '../../../client/pages/Thema/Bezwaren/Bezwaren-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/Bezwaren/Bezwaren-thema-config';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -338,7 +335,7 @@ function transformBezwarenResults(
           documenten: [],
           link: {
             title: 'Bekijk details',
-            to: generatePath(routeConfig.detailPage.path, {
+            to: generatePath(themaConfig.detailPage.route.path, {
               uuid: bezwaarBron.uuid,
             }),
           },

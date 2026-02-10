@@ -9,6 +9,7 @@ import {
 import type {
   ThemaConfigBase,
   ThemaRoutesConfig,
+  WithDetailPage,
 } from '../../../config/thema-types';
 
 const THEMA_ID = 'BEZWAREN';
@@ -19,7 +20,7 @@ export const links = {
     'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/BezwaarEnBeroep.aspx',
 };
 
-type ThemaConfigBezwaren = ThemaConfigBase;
+type ThemaConfigBezwaren = ThemaConfigBase & WithDetailPage;
 
 export const themaConfig: ThemaConfigBezwaren = {
   id: THEMA_ID,
@@ -46,14 +47,21 @@ export const themaConfig: ThemaConfigBezwaren = {
     trackingUrl: null,
   },
   redactedScope: 'full',
-};
 
-export const routeConfig = {
   detailPage: {
-    path: '/bezwaren/:uuid',
-    trackingUrl: '/bezwaren/bezwaarfrontend',
-    documentTitle: `Bezwaar | ${THEMA_ID}`,
+    route: {
+      path: '/bezwaren/:uuid',
+      trackingUrl: '/bezwaren/bezwaarfrontend',
+      documentTitle: `Bezwaar | ${THEMA_TITLE}`,
+    },
   },
+} as const;
+export const routeConfig = {
+  // detailPage: {
+  //   path: '/bezwaren/:uuid',
+  //   trackingUrl: '/bezwaren/bezwaarfrontend',
+  //   documentTitle: `Bezwaar | ${THEMA_ID}`,
+  // },
   listPage: {
     path: '/bezwaren/lijst/:kind/:page?',
     documentTitle: (params) =>

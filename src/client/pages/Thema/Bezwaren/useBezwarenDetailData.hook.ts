@@ -54,5 +54,6 @@ export function useBezwarenDetailData() {
         }
       : null,
     breadcrumbs,
+    themaConfig,
   };
 }

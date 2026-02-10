@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { themaConfig } from './Bezwaren-thema-config';
 import styles from './BezwarenDetail.module.scss';
 import { useBezwarenDetailData } from './useBezwarenDetailData.hook';
 import type { BezwaarFrontend } from '../../../../server/services/bezwaren/types';
@@ -115,7 +116,7 @@ export function BezwarenDetail() {
     title,
     routeConfig,
   } = useBezwarenDetailData();
-  useHTMLDocumentTitle(routeConfig.detailPage);
+  useHTMLDocumentTitle(themaConfig.detailPage.route);
   const pageContentErrorAlert = (
     <>
       We kunnen niet alle gegevens tonen.{' '}

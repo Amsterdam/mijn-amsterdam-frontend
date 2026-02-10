@@ -12,7 +12,7 @@ import {
 
 export const BezwarenRoutes = [
   {
-    route: routeConfig.detailPage.path,
+    route: themaConfig.detailPage.route.path,
     Component: BezwarenDetail,
     isActive: themaConfig.featureToggle.active,
   },
