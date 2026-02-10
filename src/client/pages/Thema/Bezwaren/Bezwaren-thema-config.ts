@@ -7,30 +7,40 @@ import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
 } from '../../../config/app';
-import type { ThemaRoutesConfig } from '../../../config/thema-types';
+import type {
+  ThemaConfigBase,
+  ThemaRoutesConfig,
+} from '../../../config/thema-types';
 
 export const featureToggle = {
   BezwarenActive: true,
 };
 
-export const themaId = 'BEZWAREN' as const;
-export const themaTitle = 'Bezwaren';
+const THEMA_ID = 'BEZWAREN';
+const THEMA_TITLE = 'Bezwaren';
+
+type ThemaConfigBezwaren = Pick<ThemaConfigBase, 'id' | 'title'>;
+
+export const themaConfig: ThemaConfigBezwaren = {
+  id: THEMA_ID,
+  title: THEMA_TITLE,
+};
 
 export const routeConfig = {
   detailPage: {
     path: '/bezwaren/:uuid',
     trackingUrl: '/bezwaren/bezwaarfrontend',
-    documentTitle: `Bezwaar | ${themaTitle}`,
+    documentTitle: `Bezwaar | ${THEMA_ID}`,
   },
   listPage: {
     path: '/bezwaren/lijst/:kind/:page?',
     documentTitle: (params) =>
-      `${params?.kind === listPageParamKind.afgehandeld ? 'Afgehandelde' : 'Lopende'} bezwaren | ${themaTitle}`,
+      `${params?.kind === listPageParamKind.afgehandeld ? 'Afgehandelde' : 'Lopende'} bezwaren | ${THEMA_TITLE}`,
     trackingUrl: null,
   },
   themaPage: {
     path: '/bezwaren',
-    documentTitle: `${themaTitle} | overzicht`,
+    documentTitle: `${THEMA_TITLE} | overzicht`,
     trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;

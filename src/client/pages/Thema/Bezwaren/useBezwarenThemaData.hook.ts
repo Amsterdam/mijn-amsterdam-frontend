@@ -2,8 +2,7 @@ import {
   tableConfig,
   LinkListItems,
   routeConfig,
-  themaId,
-  themaTitle,
+  themaConfig,
 } from './Bezwaren-thema-config';
 import { BezwaarFrontend } from '../../../../server/services/bezwaren/types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
@@ -20,7 +19,7 @@ export function useBezwarenThemaData() {
     true
   );
 
-  const breadcrumbs = useThemaBreadcrumbs(themaId);
+  const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
   return {
     bezwaren,
@@ -29,8 +28,9 @@ export function useBezwarenThemaData() {
     linkListItems: LinkListItems,
     routeConfig,
     tableConfig,
-    themaId,
-    themaTitle: themaTitle,
+    themaId: themaConfig.id,
+    themaTitle: themaConfig.title,
     breadcrumbs,
+    themaConfig,
   };
 }

@@ -1,7 +1,6 @@
 import {
   routeConfig,
-  themaId,
-  themaTitle,
+  themaConfig,
   featureToggle,
 } from './Bezwaren-thema-config';
 import { BezwarenDetail } from './BezwarenDetail';
@@ -33,9 +32,9 @@ export const BezwarenRoutes = [
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
-export const menuItem: ThemaMenuItem<typeof themaId> = {
-  title: themaTitle,
-  id: themaId,
+export const menuItem: ThemaMenuItem = {
+  title: themaConfig.title,
+  id: themaConfig.id,
   to: routeConfig.themaPage.path,
   redactedScope: 'full',
   profileTypes: ['private', 'commercial'],

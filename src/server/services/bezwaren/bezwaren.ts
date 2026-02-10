@@ -15,8 +15,7 @@ import {
 } from './types';
 import {
   routeConfig,
-  themaId,
-  themaTitle,
+  themaConfig,
 } from '../../../client/pages/Thema/Bezwaren/Bezwaren-thema-config';
 import {
   apiDependencyError,
@@ -424,8 +423,8 @@ export async function fetchBezwaren(authProfileAndToken: AuthProfileAndToken) {
 
 function createBezwaarNotification(bezwaar: BezwaarFrontend) {
   const notification: MyNotification = {
-    themaID: themaId,
-    themaTitle: themaTitle,
+    themaID: themaConfig.id,
+    themaTitle: themaConfig.title,
     id: bezwaar.identificatie,
     title: 'Bezwaar ontvangen',
     description: `Wij hebben uw bezwaar ${bezwaar.identificatie} ontvangen.`,

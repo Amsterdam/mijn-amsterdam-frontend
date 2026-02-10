@@ -9,11 +9,11 @@ import { useBffApi } from '../../../hooks/api/useBffApi';
 export function useBezwarenDetailData() {
   const {
     bezwaren,
-    themaId,
     routeConfig,
     isError: isErrorThemaData,
     isLoading: isLoadingThemaData,
     breadcrumbs,
+    themaConfig,
   } = useBezwarenThemaData();
   const { uuid } = useParams<{ uuid: string }>();
 
@@ -35,7 +35,7 @@ export function useBezwarenDetailData() {
     hasFailedDependency(data, 'statussen');
 
   return {
-    themaId,
+    themaId: themaConfig.id,
     title: bezwaar?.identificatie ?? 'Bezwaar',
     routeConfig,
     bezwaar,
@@ -47,13 +47,12 @@ export function useBezwarenDetailData() {
     isLoadingThemaData,
     isErrorThemaData,
     isError: isError || isErrorThemaData || hasFailedDependencies,
-    dependencyErrors:
-      hasFailedDependencies
-        ? {
-            Documenten: hasFailedDependency(data, 'documents'),
-            Statussen: hasFailedDependency(data, 'statussen'),
-          }
-        : null,
+    dependencyErrors: hasFailedDependencies
+      ? {
+          Documenten: hasFailedDependency(data, 'documents'),
+          Statussen: hasFailedDependency(data, 'statussen'),
+        }
+      : null,
     breadcrumbs,
   };
 }
