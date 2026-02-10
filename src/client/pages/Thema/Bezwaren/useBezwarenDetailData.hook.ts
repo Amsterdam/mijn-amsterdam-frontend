@@ -9,7 +9,6 @@ import { useBffApi } from '../../../hooks/api/useBffApi';
 export function useBezwarenDetailData() {
   const {
     bezwaren,
-    routeConfig,
     isError: isErrorThemaData,
     isLoading: isLoadingThemaData,
     breadcrumbs,
@@ -37,7 +36,6 @@ export function useBezwarenDetailData() {
   return {
     themaId: themaConfig.id,
     title: bezwaar?.identificatie ?? 'Bezwaar',
-    routeConfig,
     bezwaar,
     bezwaarDetail,
     documents,

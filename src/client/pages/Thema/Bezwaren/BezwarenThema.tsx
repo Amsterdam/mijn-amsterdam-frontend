@@ -20,14 +20,8 @@ const pageContentTop = (
 );
 
 export function BezwarenThema() {
-  const {
-    tableConfig,
-    bezwaren,
-    isLoading,
-    isError,
-    themaConfig,
-    routeConfig,
-  } = useBezwarenThemaData();
+  const { tableConfig, bezwaren, isLoading, isError, themaConfig } =
+    useBezwarenThemaData();
   useHTMLDocumentTitle(themaConfig.route);
 
   const tables = Object.entries(tableConfig).map(

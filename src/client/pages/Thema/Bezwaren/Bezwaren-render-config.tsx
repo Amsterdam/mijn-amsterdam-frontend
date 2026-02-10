@@ -1,4 +1,4 @@
-import { routeConfig, themaConfig } from './Bezwaren-thema-config';
+import { themaConfig } from './Bezwaren-thema-config';
 import { BezwarenDetail } from './BezwarenDetail';
 import { default as BezwarenIcon } from './BezwarenIcon.svg?react';
 import { BezwarenList } from './BezwarenList';
@@ -17,7 +17,7 @@ export const BezwarenRoutes = [
     isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.listPage.path,
+    route: themaConfig.listPage.route.path,
     Component: BezwarenList,
     isActive: themaConfig.featureToggle.active,
   },

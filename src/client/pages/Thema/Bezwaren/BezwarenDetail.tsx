@@ -112,9 +112,7 @@ export function BezwarenDetail() {
     isLoadingThemaData,
     breadcrumbs,
     statussen,
-    themaId,
     title,
-    routeConfig,
   } = useBezwarenDetailData();
   useHTMLDocumentTitle(themaConfig.detailPage.route);
   const pageContentErrorAlert = (
@@ -135,7 +133,7 @@ export function BezwarenDetail() {
 
   return (
     <ThemaDetailPagina
-      themaId={themaId}
+      themaId={themaConfig.id}
       title={title}
       zaak={bezwaar}
       isError={isError || isErrorThemaData}

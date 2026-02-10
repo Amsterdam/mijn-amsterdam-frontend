@@ -8,8 +8,8 @@ import {
 } from '../../../config/app';
 import type {
   ThemaConfigBase,
-  ThemaRoutesConfig,
   WithDetailPage,
+  WithListPage,
 } from '../../../config/thema-types';
 
 const THEMA_ID = 'BEZWAREN';
@@ -20,7 +20,7 @@ export const links = {
     'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/BezwaarEnBeroep.aspx',
 };
 
-type ThemaConfigBezwaren = ThemaConfigBase & WithDetailPage;
+type ThemaConfigBezwaren = ThemaConfigBase & WithDetailPage & WithListPage;
 
 export const themaConfig: ThemaConfigBezwaren = {
   id: THEMA_ID,
@@ -55,20 +55,15 @@ export const themaConfig: ThemaConfigBezwaren = {
       documentTitle: `Bezwaar | ${THEMA_TITLE}`,
     },
   },
-} as const;
-export const routeConfig = {
-  // detailPage: {
-  //   path: '/bezwaren/:uuid',
-  //   trackingUrl: '/bezwaren/bezwaarfrontend',
-  //   documentTitle: `Bezwaar | ${THEMA_ID}`,
-  // },
   listPage: {
-    path: '/bezwaren/lijst/:kind/:page?',
-    documentTitle: (params) =>
-      `${params?.kind === listPageParamKind.afgehandeld ? 'Afgehandelde' : 'Lopende'} bezwaren | ${THEMA_TITLE}`,
-    trackingUrl: null,
+    route: {
+      path: '/bezwaren/lijst/:kind/:page?',
+      documentTitle: (params) =>
+        `${params?.kind === listPageParamKind.afgehandeld ? 'Afgehandelde' : 'Lopende'} bezwaren | ${THEMA_TITLE}`,
+      trackingUrl: null,
+    },
   },
-} as const satisfies ThemaRoutesConfig;
+} as const;
 
 const displayPropsBezwaren: DisplayProps<BezwaarFrontend> = {
   props: {
@@ -99,7 +94,7 @@ export const tableConfig = {
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
     textNoContent:
       'U heeft geen lopende zaken. Het kan zijn dat een ingediend bezwaar nog niet is geregistreerd.',
-    listPageRoute: generatePath(routeConfig.listPage.path, {
+    listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.lopend,
       page: null,
     }),
@@ -111,7 +106,7 @@ export const tableConfig = {
     displayProps: displayPropsBezwaren,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
     textNoContent: 'U heeft nog geen afgehandelde bezwaren.',
-    listPageRoute: generatePath(routeConfig.listPage.path, {
+    listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.afgehandeld,
       page: null,
     }),
