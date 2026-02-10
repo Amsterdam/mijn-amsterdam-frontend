@@ -5,7 +5,6 @@ export const featureToggle = {
     },
   },
   service: {
-    enabledRegelingen: true,
     enabledRTM: true,
     enabledAV: true,
   },

@@ -42,6 +42,7 @@ import {
 } from '../../../universal/types/App.types';
 import type { ZaakDisplayStatus } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import { isEnabled } from '../../config/azure-appconfiguration';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import {
@@ -232,7 +233,7 @@ function transformRegelingenForFrontend(
 async function fetchRegelingen(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<HLIRegelingFrontend[]>> {
-  if (!featureToggle.service.enabledRegelingen) {
+  if (!(await isEnabled('HLI.regelingen'))) {
     return apiSuccessResult([]);
   }
 

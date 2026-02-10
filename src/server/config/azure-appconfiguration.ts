@@ -49,11 +49,12 @@ export async function startAppConfiguration() {
   );
 }
 
-export function getFeatureManager(): FeatureManager {
+/** Get the featureToggle's enabled status. When not found this will return false */
+export async function isEnabled(featureName: string): Promise<boolean> {
   if (!featureManager) {
     throw Error('No featureManager defined, call startAppConfiguration first.');
   }
-  return featureManager;
+  return featureManager.isEnabled(featureName);
 }
 
 async function isEnabledMock(featureName: string): Promise<boolean> {
