@@ -13,10 +13,12 @@ import {
   SearchField,
   Select,
 } from '@amsterdam/design-system-react';
+import { FilterIcon } from '@amsterdam/design-system-react-icons';
 import isEmpty from 'lodash.isempty';
 import orderBy from 'lodash.orderby';
-import { useNavigate, useParams } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
 
+import { FilterModal } from './FilterModal';
 import styles from './ListPagePaginated.module.scss';
 import {
   LinkProps,
@@ -29,11 +31,11 @@ import { PageContentCell, PageV2 } from '../Page/Page';
 import { PaginationV2 } from '../Pagination/PaginationV2';
 import {
   DisplayProps,
-  FilterOrderProps,
-  FilterProps,
+  TableMutationsOrderProps,
+  TableMutations,
   TableV2,
 } from '../Table/TableV2';
-import { FilterIcon } from '@amsterdam/design-system-react-icons';
+import { TableMutationsFilterProps } from '../Table/TableV2.types';
 
 const DEFAULT_PAGE_SIZE = 10;
 const BIGGEST_PAGE_SIZE = 100;
@@ -45,11 +47,6 @@ const DEFAULT_CURRENT_ORDER = {
 interface PaginationSizeOptions {
   value: number;
   name: string;
-}
-
-interface FilterOptionsProps {
-  key: FilterOrderProps['key'];
-  options: { value: string; selected: boolean }[];
 }
 
 const paginationSizeOptions: PaginationSizeOptions[] = [
@@ -66,7 +63,7 @@ interface ListPagePaginatedProps<T> {
   pageContentTop?: ReactNode;
   pageContentBottom?: ReactNode;
   displayProps: DisplayProps<T>;
-  filter?: FilterProps<T>;
+  tableMutations?: TableMutations<T>;
   errorText?: string;
   isError: boolean;
   isLoading: boolean;
@@ -113,7 +110,7 @@ export function ListPagePaginated<T extends object = ZaakAanvraagDetail>({
   pageContentTop,
   pageContentBottom,
   displayProps,
-  filter = {},
+  tableMutations = {},
   errorText = 'We kunnen op dit moment niet alle gegevens tonen.',
   noItemsText = 'U heeft (nog) geen gegevens op deze pagina.',
   noItemsFilter = 'Geen resultaten gevonden op basis van deze filters.',
@@ -125,15 +122,19 @@ export function ListPagePaginated<T extends object = ZaakAanvraagDetail>({
   title,
   themaId,
 }: ListPagePaginatedProps<T>) {
+  const location = useLocation();
   const navigate = useNavigate();
 
   const [itemsToDisplay, setItemsToDisplay] = useState<T[]>([]);
   const [pageSize, setPageSize] = useState<number>(DEFAULT_PAGE_SIZE);
   const [search, setSearch] = useState<string>('');
-  const [currentOrder, setCurrentOrder] = useState<FilterOrderProps>(
+  const [currentOrder, setCurrentOrder] = useState<TableMutationsOrderProps>(
     DEFAULT_CURRENT_ORDER
   );
-  const [filterOptions, setFilterOptions] = useState<FilterOptionsProps[]>([]);
+  const [currentFilters, setCurrentFilters] = useState<
+    TableMutationsFilterProps[]
+  >([]);
+  const [isFilterModalOpen, setFilterModalOpen] = useState(false);
 
   usePageTypeSetting('listpage');
 
@@ -154,46 +155,19 @@ export function ListPagePaginated<T extends object = ZaakAanvraagDetail>({
 
   const total = totalCount ?? itemsToDisplay.length;
 
-  useEffect(() => {
-    if (!items.length) return;
-    setItemsToDisplay(items);
-    getFilterOptions(items);
-  }, [items]);
+  // --
+  // Func
+  // --
 
-  useEffect(() => {
-    let filteredItems: T[] = [];
-    if (search) {
-      // filter based on search value
-      filteredItems = items.filter((item) => {
-        return Object.keys(filter.search).some((key) => {
-          const itemValue = item[key as keyof T];
-          return (
-            typeof itemValue === 'string' &&
-            itemValue.toLowerCase().includes(search.toLowerCase())
-          );
-        });
-      });
-    } else {
-      filteredItems = items;
-    }
+  const orderKeyUnformatted = (key: TableMutationsOrderProps['key']) => {
+    return key.endsWith('Formatted') ? key.slice(0, -'Formatted'.length) : key;
+  };
 
-    // order by if order has been selected
-    if (currentOrder.key && currentOrder.direction) {
-      filteredItems = orderBy(
-        filteredItems,
-        [orderKeyUnformatted(currentOrder.key)],
-        [currentOrder.direction]
-      );
-    }
+  const handleSearchChange = useCallback((value: string) => {
+    setSearch(value);
+  }, []);
 
-    setItemsToDisplay(filteredItems);
-  }, [search, items]);
-
-  useEffect(() => {
-    setCurrentPage(parseInt(page, 10) || 1);
-  }, [page]);
-
-  const orderListBy = (key: FilterOrderProps['key']) => {
+  const handleOrderChange = (key: TableMutationsOrderProps['key']) => {
     let direction = '';
 
     if (currentOrder.direction === '' || currentOrder.key !== key) {
@@ -204,42 +178,102 @@ export function ListPagePaginated<T extends object = ZaakAanvraagDetail>({
       setCurrentOrder({ key: '', direction: '' });
       return;
     }
-
-    const orderedItems = orderBy(
-      itemsToDisplay,
-      [orderKeyUnformatted(key)],
-      [direction]
-    );
-
-    setItemsToDisplay(orderedItems);
     setCurrentOrder({ key, direction });
   };
 
   const getFilterOptions = (items: T[]) => {
-    const filterList = [];
-    for (const key in filter.filter) {
+    const filterList: TableMutationsFilterProps[] = [];
+    for (const key in tableMutations.filter) {
       const optValues = Array.from(new Set(items.map((x) => x[key])));
       filterList.push({
         key,
+        title: tableMutations.filter[key],
         options: optValues.map((x) => ({ value: x, selected: false })),
       });
     }
-    setFilterOptions(filterList);
-  };
-
-  const orderKeyUnformatted = (key: FilterOrderProps['key']) => {
-    return key.endsWith('Formatted') ? key.slice(0, -'Formatted'.length) : key;
+    setCurrentFilters(filterList);
   };
 
   const resetToFirstPage = () => {
     setCurrentPage(1);
-    navigate('/facturen-en-betalen/facturen/lijst/open/1', { replace: true });
+    const currentPath = location.pathname;
+    const newPath = currentPath.replace(/\/\d+$/, '/1');
+    navigate(newPath, { replace: true });
   };
 
-  const handleSearchChange = useCallback((value: string) => {
-    setSearch(value);
-    resetToFirstPage();
-  }, []);
+  // --
+  // UseEffect
+  // --
+
+  useEffect(() => {
+    if (!items.length) return;
+    setItemsToDisplay(items);
+    if (!isEmpty(tableMutations.filter)) {
+      getFilterOptions(items);
+    }
+  }, [items]);
+
+  useEffect(() => {
+    if (isEmpty(tableMutations)) return;
+    let filteredItems = items;
+
+    // search function
+    if (!isEmpty(tableMutations.search)) {
+      if (search) {
+        filteredItems = filteredItems.filter((item) => {
+          return Object.keys(tableMutations.search).some((key) => {
+            const itemValue = item[key as keyof T];
+            return (
+              typeof itemValue === 'string' &&
+              itemValue.toLowerCase().includes(search.toLowerCase())
+            );
+          });
+        });
+      }
+    }
+
+    // filter function
+    if (!isEmpty(tableMutations.filter)) {
+      const hasSelectedOption = currentFilters.some((filter) =>
+        filter.options.some((option) => option.selected)
+      );
+      if (hasSelectedOption) {
+        filteredItems = filteredItems.filter((item) => {
+          return currentFilters.every((filter) => {
+            const selectedOptions = filter.options.filter(
+              (option) => option.selected
+            );
+            if (selectedOptions.length === 0) {
+              return true;
+            }
+            return selectedOptions.some(
+              (option) => item[filter.key] === option.value
+            );
+          });
+        });
+      }
+    }
+
+    // order function
+    if (currentOrder.key && currentOrder.direction) {
+      filteredItems = orderBy(
+        filteredItems,
+        [orderKeyUnformatted(currentOrder.key)],
+        [currentOrder.direction]
+      );
+    }
+
+    setItemsToDisplay(filteredItems);
+    if (currentPage !== 1) {
+      resetToFirstPage();
+    }
+  }, [search, currentOrder, currentFilters]);
+
+  useEffect(() => {
+    setCurrentPage(parseInt(page, 10) || 1);
+  }, [page]);
+
+  // --
 
   function ListPagePaginationNode() {
     return (
@@ -305,9 +339,10 @@ export function ListPagePaginated<T extends object = ZaakAanvraagDetail>({
               !!noItemsText &&
               !items.length && <Paragraph>{noItemsText}</Paragraph>}
 
-            {(!isEmpty(filter.search) || !isEmpty(filter.filter)) && (
+            {(!isEmpty(tableMutations.search) ||
+              !isEmpty(tableMutations.filter)) && (
               <div className={styles.SearchAndFilterContainer}>
-                {!isEmpty(filter.search) ? (
+                {!isEmpty(tableMutations.search) ? (
                   <ListPageSearchBar
                     search={search}
                     setSearch={handleSearchChange}
@@ -316,10 +351,22 @@ export function ListPagePaginated<T extends object = ZaakAanvraagDetail>({
                 ) : (
                   <i></i>
                 )}
-                {!isEmpty(filter.filter) && (
-                  <Button variant="secondary" icon={FilterIcon}>
-                    Filters
-                  </Button>
+                {!isEmpty(tableMutations.filter) && (
+                  <>
+                    <Button
+                      variant="secondary"
+                      icon={FilterIcon}
+                      onClick={() => setFilterModalOpen(true)}
+                    >
+                      Filters
+                    </Button>
+                    <FilterModal
+                      currentFilters={currentFilters}
+                      setCurrentFilters={setCurrentFilters}
+                      isFilterModalOpen={isFilterModalOpen}
+                      onClose={() => setFilterModalOpen(false)}
+                    />
+                  </>
                 )}
               </div>
             )}
@@ -332,10 +379,10 @@ export function ListPagePaginated<T extends object = ZaakAanvraagDetail>({
               <TableV2<T>
                 items={itemsPaginated}
                 displayProps={displayProps}
-                filter={filter}
+                tableMutations={tableMutations}
                 currentOrder={currentOrder}
-                onHeaderCellClick={(key: FilterOrderProps['key']) =>
-                  orderListBy(key)
+                onHeaderCellClick={(key: TableMutationsOrderProps['key']) =>
+                  handleOrderChange(key)
                 }
                 className={tableClassName}
               />

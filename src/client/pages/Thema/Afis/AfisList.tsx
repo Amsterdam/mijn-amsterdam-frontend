@@ -61,7 +61,7 @@ export function AfisList({ themaContextParams }: AfisListProps) {
       appRoute={listPageTableConfig.listPageRoute}
       breadcrumbs={breadcrumbs}
       displayProps={listPageTableConfig.displayProps}
-      filter={listPageTableConfig.filter}
+      tableMutations={listPageTableConfig.tableMutations}
       isLoading={isThemaPaginaLoading || isListPageLoading}
       isError={isThemaPaginaError || isListPageError}
     />

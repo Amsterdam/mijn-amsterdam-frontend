@@ -1,6 +1,11 @@
 import { ReactNode } from 'react';
 
 import { Heading, Icon, Table } from '@amsterdam/design-system-react';
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  ListIcon,
+} from '@amsterdam/design-system-react-icons';
 import classNames from 'classnames';
 import isEmpty from 'lodash.isempty';
 
@@ -18,11 +23,6 @@ import { entries } from '../../../universal/helpers/utils';
 import { ZaakAanvraagDetail } from '../../../universal/types/App.types';
 import { useSmallScreen } from '../../hooks/media.hook';
 import { MaRouterLink } from '../MaLink/MaLink';
-import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  ListIcon,
-} from '@amsterdam/design-system-react-icons';
 
 /**
  * @deprecated These exports should be removed in the future and replaced with import from the types file.
@@ -30,9 +30,14 @@ import {
 export type {
   DisplayProps,
   WithDetailLinkComponent,
-  FilterProps,
-  FilterOrderProps,
+  TableMutations,
+  TableMutationsOrderProps,
 } from './TableV2.types';
+
+const DEFAULT_CURRENT_ORDER = {
+  key: '',
+  direction: '',
+};
 
 export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
   items: T[],
@@ -86,8 +91,8 @@ export function TableV2<T extends object = ZaakAanvraagDetail>({
   contentAfterTheCaption,
   items,
   displayProps,
-  filter = {},
-  currentOrder = {},
+  tableMutations = {},
+  currentOrder = DEFAULT_CURRENT_ORDER,
   onHeaderCellClick = () => {},
   className,
   showTHead = true,
@@ -130,13 +135,13 @@ export function TableV2<T extends object = ZaakAanvraagDetail>({
                           : undefined,
                       }}
                       onClick={() =>
-                        !isEmpty(filter) &&
-                        key in filter.order &&
+                        !isEmpty(tableMutations.order) &&
+                        key in tableMutations.order &&
                         onHeaderCellClick(key)
                       }
                     >
                       {label}
-                      {!isEmpty(currentOrder) && currentOrder.key == key
+                      {!isEmpty(currentOrder.key) && currentOrder.key == key
                         ? currentOrder.direction !== '' && (
                             <Icon
                               svg={
@@ -146,8 +151,10 @@ export function TableV2<T extends object = ZaakAanvraagDetail>({
                               }
                             />
                           )
-                        : !isEmpty(filter) &&
-                          key in filter.order && <Icon svg={ListIcon} />}
+                        : !isEmpty(tableMutations.order) &&
+                          key in tableMutations.order && (
+                            <Icon svg={ListIcon} />
+                          )}
                     </Table.HeaderCell>
                   );
                 }
