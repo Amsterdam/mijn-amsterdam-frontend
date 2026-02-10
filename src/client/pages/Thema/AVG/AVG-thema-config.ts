@@ -18,11 +18,6 @@ const listPageParamKind = {
   inProgress: 'lopende-aanvragen',
   completed: 'afgehandelde-aanvragen',
 } as const;
-
-export const featureToggle = {
-  avgActive: false,
-};
-
 const THEMA_ID = 'AVG';
 const THEMA_TITLE = 'AVG persoonsgegevens';
 

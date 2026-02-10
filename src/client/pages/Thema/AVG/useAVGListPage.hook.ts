@@ -6,7 +6,6 @@ import { useAVGData } from './useAVGData.hook';
 export function useAVGListPageData() {
   const {
     avgVerzoeken,
-    id: themaId,
     isLoading,
     isError,
     tableConfig,
@@ -24,7 +23,6 @@ export function useAVGListPageData() {
     avgVerzoeken,
     filter,
     sort,
-    themaId,
     title,
     displayProps,
     isLoading,

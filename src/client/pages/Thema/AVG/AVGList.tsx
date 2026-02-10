@@ -9,7 +9,6 @@ export function AVGList() {
     isError,
     filter,
     sort,
-    themaId,
     title,
     breadcrumbs,
     displayProps,
@@ -21,7 +20,7 @@ export function AVGList() {
   return (
     <ListPagePaginated
       items={avgVerzoeken.filter(filter).sort(sort)}
-      themaId={themaId}
+      themaId={themaConfig.id}
       title={title}
       appRoute={listPageRoute}
       breadcrumbs={breadcrumbs}

@@ -1,7 +1,6 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-//import { routeConfig } from './AVG-thema-config';
 import { themaConfig } from './AVG-thema-config';
 import { AVGDetail } from './AVGDetail';
 import { AVGRequestFrontend } from '../../../../server/services/avg/types';

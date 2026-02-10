@@ -10,7 +10,6 @@ export function useAVGDetailPage() {
 
   return {
     verzoek,
-    id,
     title: themaConfig.detailPage.title,
     isLoading,
     isError,
