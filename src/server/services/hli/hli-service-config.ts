@@ -4,6 +4,12 @@ export const featureToggle = {
       isEnabled: true,
     },
   },
+  service: {
+    enabledStadspas: true,
+    enabledRegelingen: true,
+    enabledRTM: true,
+    enabledAV: true,
+  },
 };
 
 export const routes = {

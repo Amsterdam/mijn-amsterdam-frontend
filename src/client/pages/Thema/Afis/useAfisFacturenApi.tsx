@@ -1,9 +1,6 @@
 import { type ReactNode, useMemo } from 'react';
 
-import { generatePath } from 'react-router';
-
 import {
-  routeConfig,
   type AfisFacturenByStateFrontend,
   type AfisFactuurFrontend,
 } from './Afis-thema-config';
@@ -42,7 +39,7 @@ function getInvoiceStatusDescriptionFrontend(factuur: AfisFactuur): ReactNode {
   }
 }
 
-export function getDocumentLink(factuur: AfisFactuur): ReactNode {
+export function getDocumentLink(factuur: AfisFactuurFrontend): ReactNode {
   if (factuur.documentDownloadLink) {
     return (
       <DocumentLink
@@ -58,21 +55,22 @@ export function getDocumentLink(factuur: AfisFactuur): ReactNode {
   return null;
 }
 
-function transformFactuur(
-  factuur: AfisFactuur,
-  state: AfisFactuurStateFrontend
-): AfisFactuurFrontend {
-  const factuurNummerEl: ReactNode = (
+export function getFactuurNummerLink(
+  factuur: Pick<AfisFactuur, 'factuurNummer' | 'link'>,
+  to?: string
+): ReactNode {
+  return (
     <MaRouterLink
       maVariant="fatNoDefaultUnderline"
-      href={generatePath(routeConfig.detailPage.path, {
-        factuurNummer: factuur.factuurNummer,
-        state,
-      })}
+      href={to ?? factuur.link.to}
     >
       {factuur.factuurNummer}
     </MaRouterLink>
   );
+}
+
+function transformFactuur(factuur: AfisFactuur): AfisFactuurFrontend {
+  const factuurNummerEl: ReactNode = getFactuurNummerLink(factuur);
 
   return {
     ...factuur,
@@ -103,7 +101,7 @@ export function useTransformFacturen(
                 ...omit(facturenResponse, ['facturen']),
                 facturen:
                   facturenResponse?.facturen?.map((factuur) =>
-                    transformFactuur(factuur, state)
+                    transformFactuur(factuur)
                   ) ?? [],
               },
             ])
@@ -124,7 +122,8 @@ export function useAfisFacturenApi(
   businessPartnerIdEncrypted:
     | AfisThemaResponse['businessPartnerIdEncrypted']
     | undefined,
-  state: AfisFactuurState
+  state: AfisFactuurState,
+  detailPath?: string
 ) {
   const url =
     businessPartnerIdEncrypted && state && state !== 'open'

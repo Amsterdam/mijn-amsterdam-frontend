@@ -120,7 +120,11 @@ router.post(
 
 router.get(
   BffEndpoints.MAP_DATASETS,
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (
+    req: Request<{ datasetId: string; id: string }>,
+    res: Response,
+    next: NextFunction
+  ) => {
     const datasetId = req.params.datasetId;
     const id = req.params.id;
     const datasetCategoryId = getDatasetCategoryId(datasetId);

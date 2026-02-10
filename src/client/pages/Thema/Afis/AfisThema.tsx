@@ -8,13 +8,12 @@ import {
   UnorderedList,
 } from '@amsterdam/design-system-react';
 
-import { AfisFactuurFrontend } from './Afis-thema-config';
+import { AfisFacturenTables } from './AfisFacturenTables';
 import { useAfisThemaData } from './useAfisThemaData.hook';
 import { entries } from '../../../../universal/helpers/utils';
 import { MaButtonRouterLink } from '../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 function PageContentTop({
@@ -96,8 +95,6 @@ export function AfisDisclaimerOvergedragenFacturen() {
 export function AfisThema() {
   const {
     dependencyErrors,
-    facturenByState,
-    facturenTableConfig,
     isThemaPaginaError,
     isThemaPaginaLoading,
     listPageTitle,
@@ -107,6 +104,7 @@ export function AfisThema() {
     title,
     themaId,
   } = useAfisThemaData();
+
   useHTMLDocumentTitle(routeConfig.themaPage);
 
   const isPartialError = entries(dependencyErrors).some(
@@ -139,31 +137,6 @@ export function AfisThema() {
     </>
   );
 
-  const pageContentTables = entries(facturenTableConfig).map(
-    ([
-      state,
-      { title, displayProps, maxItems, listPageLinkLabel, listPageRoute },
-    ]) => {
-      const contentAfterTheTitle =
-        state === 'overgedragen' && !!facturenByState?.[state]?.facturen.length
-          ? state === 'overgedragen' && <AfisDisclaimerOvergedragenFacturen />
-          : null;
-      return (
-        <ThemaPaginaTable<AfisFactuurFrontend>
-          key={state}
-          title={title}
-          contentAfterTheTitle={contentAfterTheTitle}
-          zaken={facturenByState?.[state]?.facturen ?? []}
-          displayProps={displayProps}
-          maxItems={maxItems}
-          totalItems={facturenByState?.[state]?.count}
-          listPageLinkLabel={listPageLinkLabel}
-          listPageRoute={listPageRoute}
-        />
-      );
-    }
-  );
-
   return (
     <ThemaPagina
       id={themaId}
@@ -172,14 +145,14 @@ export function AfisThema() {
       isPartialError={isPartialError}
       errorAlertContent={pageContentErrorAlert}
       isLoading={!isThemaPaginaError && isThemaPaginaLoading}
-      linkListItems={linkListItems}
+      pageLinks={linkListItems}
       pageContentTop={
         <PageContentTop urlNaarBelastingen={belastingenLinkListItem.to} />
       }
       pageContentMain={
         <>
           {pageContentSecondary}
-          {pageContentTables}
+          <AfisFacturenTables />
         </>
       }
       maintenanceNotificationsPageSlug="afis"

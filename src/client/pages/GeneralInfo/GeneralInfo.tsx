@@ -20,23 +20,20 @@ import { belastingenSectionProps } from '../Thema/Belastingen/InfoSection';
 import { bezwarenSectionProps } from '../Thema/Bezwaren/InfoSection';
 import { themaConfig as bodemThemaConfig } from '../Thema/Bodem/Bodem-thema-config';
 import { erfpachtSectionProps } from '../Thema/Erfpacht/InfoSection';
-import {
-  HLIRegelingenSectionProps,
-  HLIstadspasSectionProps,
-} from '../Thema/HLI/InfoSection';
+import { themaConfig as hliThemaConfig } from '../Thema/HLI/HLI-thema-config';
 import { inkomenSectionProps } from '../Thema/Inkomen/InfoSection';
 import { JeugdSectionProps as jeugdSectionProps } from '../Thema/Jeugd/InfoSection';
-import { klachtenSectionProps } from '../Thema/Klachten/InfoSection';
+import { themaConfig as klachtenThemaConfig } from '../Thema/Klachten/Klachten-thema-config';
 import { krefiaSectionProps } from '../Thema/Krefia/InfoSection';
 import { milieuzonesectionProps } from '../Thema/Milieuzone/InfoSection';
 import { overtredingensectionProps } from '../Thema/Overtredingen/InfoSection';
 import { parkerensectionProps } from '../Thema/Parkeren/InfoSection';
 import { profileSectionProps } from '../Thema/Profile/InfoSection';
 import { subsidiesSectionProps } from '../Thema/Subsidies/InfoSection';
-import { toeristischeverhuurSectionProps } from '../Thema/ToeristischeVerhuur/InfoSection';
+import { themaConfig as toeristischeVerhuurThemaConfig } from '../Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 import { varensectionProps } from '../Thema/Varen/infoSection';
 import { vergunningensectionProps } from '../Thema/Vergunningen/InfoSection';
-import { zorgSectionProps } from '../Thema/Zorg/InfoSection';
+import { themaConfig as zorgThemaConfig } from '../Thema/Zorg/Zorg-thema-config';
 
 export type InfoSection_DEPRECATED = {
   id: string;
@@ -48,13 +45,15 @@ export type InfoSection_DEPRECATED = {
 
 function createDeprecatedInfoSection(
   themaConfig: ThemaConfigBase
-): InfoSection_DEPRECATED {
-  return {
-    id: themaConfig.id,
-    active: themaConfig.featureToggle.themaActive,
-    title: themaConfig.uitlegPageSections.title,
-    listItems: themaConfig.uitlegPageSections.listItems,
-  };
+): InfoSection_DEPRECATED[] {
+  return themaConfig.uitlegPageSections.map((section) => {
+    return {
+      id: themaConfig.id,
+      active: themaConfig.featureToggle.active,
+      title: section.title,
+      listItems: section.listItems,
+    };
+  });
 }
 
 export type SectionProps = {
@@ -70,23 +69,22 @@ const sections: InfoSection_DEPRECATED[] = [
   belastingenSectionProps,
   AVGsectionProps,
   bezwarenSectionProps,
-  klachtenSectionProps,
   erfpachtSectionProps,
   afisSectionProps,
   inkomenSectionProps,
-  HLIRegelingenSectionProps,
-  HLIstadspasSectionProps,
-  zorgSectionProps,
+  vergunningensectionProps,
   jeugdSectionProps,
   subsidiesSectionProps,
   krefiaSectionProps,
-  toeristischeverhuurSectionProps,
   parkerensectionProps,
   milieuzonesectionProps,
   overtredingensectionProps,
-  vergunningensectionProps,
-  createDeprecatedInfoSection(bodemThemaConfig),
   varensectionProps,
+  ...createDeprecatedInfoSection(bodemThemaConfig),
+  ...createDeprecatedInfoSection(hliThemaConfig),
+  ...createDeprecatedInfoSection(klachtenThemaConfig),
+  ...createDeprecatedInfoSection(toeristischeVerhuurThemaConfig),
+  ...createDeprecatedInfoSection(zorgThemaConfig),
 ];
 
 function InfoPageSection({ title, listItems, href }: SectionProps) {
@@ -160,7 +158,14 @@ export function GeneralInfo() {
       );
     });
   return (
-    <PageV2 heading="Dit ziet u in Mijn Amsterdam" redactedScope="full">
+    <PageV2
+      heading="Dit ziet u in Mijn Amsterdam"
+      redactedScope="full"
+      showUserFeedback
+      userFeedbackDetails={{
+        pageTitle: 'Uitleg',
+      }}
+    >
       <PageContentCell>
         <Paragraph className="ams-mb-m">
           Welkom op Mijn Amsterdam: dit is uw persoonlijke online portaal bij de

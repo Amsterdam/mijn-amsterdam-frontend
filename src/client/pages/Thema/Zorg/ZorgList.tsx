@@ -19,10 +19,10 @@ export function ZorgList() {
     isError,
     listPageParamKind,
     breadcrumbs,
-    routeConfig,
     id,
+    themaConfig,
   } = useZorgThemaData();
-  useHTMLDocumentTitle(routeConfig.listPage);
+  useHTMLDocumentTitle(themaConfig.listPage.route);
 
   const { filter, title, displayProps, listPageRoute } = tableConfig[kind];
 

@@ -11,12 +11,12 @@ import {
 import { featureToggle as featureToggleAfis } from '../../client/pages/Thema/Afis/Afis-thema-config';
 import { themaConfig as themaConfigBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config';
 import { featureToggle as featureToggleErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
-import { featureToggle as featureToggleHLI } from '../../client/pages/Thema/HLI/HLI-thema-config';
 import { featureToggle as featureToggleJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { getCert } from '../helpers/cert';
 import { getFromEnv } from '../helpers/env';
 import { getHostNameFromUrl } from '../helpers/source-api-helpers';
+import { featureToggle as featureToggleHLI } from '../services/hli/hli-service-config';
 
 const RESET_AD_HOC_DEPENDENCY_REQUEST_CACHE_TTL_TIMEOUT_MS = ONE_HOUR_MS;
 export const FORCE_RENEW_CACHE_TTL_MS = 1;
@@ -75,7 +75,6 @@ export interface DataRequestConfig extends AxiosRequestConfig {
   request?: <T>(requestConfig: DataRequestConfig) => Promise<AxiosResponse<T>>;
 }
 
-/* eslint-disable no-magic-numbers */
 // This means that every request that depends on the response of another will use the cached version of the response for a maximum of the given value.
 const apiCacheTTLMs = parseInt(
   getFromEnv('BFF_REQUEST_CACHE_TTL_MS', false)!,
@@ -85,7 +84,6 @@ export const DEFAULT_REQUEST_CACHE_TTL_MS = isNaN(apiCacheTTLMs)
   ? 5 * ONE_MINUTE_MS // Default is 5 minutes
   : apiCacheTTLMs;
 export const DEFAULT_CANCEL_TIMEOUT_MS = 30 * ONE_SECOND_MS; // This means a request will be aborted after 30 seconds without a response.
-/* eslint-enable no-magic-numbers */
 
 export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = Object.freeze({
   cancelTimeout: DEFAULT_CANCEL_TIMEOUT_MS,
@@ -101,6 +99,9 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = Object.freeze({
     silentJSONParsing: false,
   },
 });
+
+// TODO: MIJN-12466 - This allows falling back to previous authentication method easily. Remove after connection through EnableU works
+const isDecosOverEnableUActive = (getFromEnv('BFF_DECOS_API_BASE_URL', false) || '').startsWith('https://enableu')
 
 const afisFeatureToggle = getFromEnv('BFF_AFIS_FEATURE_TOGGLE_ACTIVE');
 const postponeFetchAfis =
@@ -155,7 +156,7 @@ const ApiConfig_ = {
       cert: getCert('BFF_ZORGNED_AV_CERT'),
       key: getCert('BFF_ZORGNED_AV_KEY'),
     }),
-    postponeFetch: !featureToggleHLI.zorgnedAvApiActive,
+    postponeFetch: !featureToggleHLI.service.enabledAV,
   },
   ZORGNED_LEERLINGENVERVOER: {
     method: 'post',
@@ -226,7 +227,8 @@ const ApiConfig_ = {
     postponeFetch: !FeatureToggle.decosServiceActive,
     headers: {
       Accept: 'application/itemdata',
-      Authorization: `Basic ${Buffer.from(`${getFromEnv('BFF_DECOS_API_USERNAME')}:${getFromEnv('BFF_DECOS_API_PASSWORD')}`).toString('base64')}`,
+      ...(isDecosOverEnableUActive ? { apiKey: getFromEnv('BFF_ENABLEU_API_KEY') } : {}),
+      ...(!isDecosOverEnableUActive ? { Authorization: `Basic ${Buffer.from(`${getFromEnv('BFF_DECOS_API_USERNAME')}:${getFromEnv('BFF_DECOS_API_PASSWORD')}`).toString('base64')}`} : {}),
       'Content-type': 'application/json; charset=utf-8',
     },
   },
@@ -246,7 +248,6 @@ const ApiConfig_ = {
     },
   },
   CMS_CONTENT_GENERAL_INFO: {
-    // eslint-disable-next-line no-magic-numbers
     cacheTimeout: 4 * ONE_HOUR_MS, // 4 hours
     url: `${getFromEnv('BFF_CMS_BASE_URL')}/mijn-content/artikelen`,
   },
@@ -345,7 +346,7 @@ const ApiConfig_ = {
   LOOD_365: {
     url: `${getFromEnv('BFF_LOOD_API_URL')}`,
     method: 'POST',
-    postponeFetch: !themaConfigBodem.featureToggle.themaActive,
+    postponeFetch: !themaConfigBodem.featureToggle.active,
   },
   IAM_MS_OAUTH: {
     url: `${getFromEnv('BFF_MS_OAUTH_ENDPOINT')}:tenant/oauth2/v2.0/token`,

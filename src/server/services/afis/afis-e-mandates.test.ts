@@ -270,6 +270,7 @@ describe('afis-e-mandates service (with nock)', () => {
                   SndIban: validSenderIBAN,
                   SndName1: 'A',
                   SndName2: 'B',
+                  Status: '1',
                 },
               },
             },
@@ -295,7 +296,41 @@ describe('afis-e-mandates service (with nock)', () => {
       expect(result.content?.[1].senderName).toBe(null);
     });
 
-    it('handles error response from AFIS', async () => {
+    it('transforms status to inactive if mandate is not expired but status is other than 1', async () => {
+      remoteApi.get(/Mandate_readSet/).reply(200, {
+        feed: {
+          entry: [
+            {
+              content: {
+                properties: {
+                  IMandateId: '1',
+                  SndDebtorId: creditor.refId,
+                  LifetimeFrom: '2024-01-01T00:00:00',
+                  LifetimeTo: '9999-12-31T00:00:00',
+                  SndIban: validSenderIBAN,
+                  SndName1: 'A',
+                  SndName2: 'B',
+                  Status: '3',
+                },
+              },
+            },
+          ],
+        },
+      });
+
+      const result = await emandates.fetchEMandates(
+        { businessPartnerId: '123' },
+        authProfile
+      );
+      expect(result.status).toBe('OK');
+      expect(result.content?.length).toBe(
+        EMandateCreditorsGemeenteAmsterdam.length
+      );
+
+      expect(result.content?.[0].status).toBe('0');
+    });
+
+    it('handles error response from AFIS, still shows available mandates but all inactive, not regarding api data', async () => {
       remoteApi.get(/Mandate_readSet/).reply(500);
 
       const result = await emandates.fetchEMandates(
@@ -303,7 +338,7 @@ describe('afis-e-mandates service (with nock)', () => {
         authProfile
       );
       expect(result.status).toBe('OK');
-      expect(result.content?.length).toBe(0);
+      expect(result.content?.length).toBe(11);
     });
   });
 
@@ -428,22 +463,12 @@ describe('afis-e-mandates service (with nock)', () => {
       );
 
       expect(payload).toStrictEqual({
-        batch_name: 'batch-ref-123',
+        batch_name: 'mijnamsterdam-emandates-batch-2025-07-10',
         cid: null,
         company_name: 'Gemeente Amsterdam',
         concerning: 'Automatische incasso Test',
         debtor_number: '123',
         due_date: '2025-07-11',
-        first_name: 'John',
-        invoices: [
-          {
-            invoice_amount: 0,
-            invoice_date: '2025-07-10',
-            invoice_description: 'Automatische incasso Test',
-            invoice_due_date: '2025-07-11',
-            invoice_number: 'EMandaat-ref-2025-07-10',
-          },
-        ],
         last_name: 'Doe',
         payment_modules: ['emandate_recurring'],
         payment_reference: 'ref-123',
@@ -555,6 +580,7 @@ describe('afis-e-mandates service (with nock)', () => {
           SndIban: validSenderIBAN,
           SndName1: 'John',
           SndName2: 'Doe',
+          Status: '1',
         } as AfisEMandateSource
       );
       expect(result).toMatchObject({

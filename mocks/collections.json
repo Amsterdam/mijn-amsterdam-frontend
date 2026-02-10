@@ -2,6 +2,8 @@
   {
     "id": "base",
     "routes": [
+      "get-amsapp-survey:standard",
+      "post-amsapp-survey-response:standard",
       "post-amsapp-administratienummer:standard",
       "get-belastingen:standard",
       "get-bezwaren-documenten:standard",

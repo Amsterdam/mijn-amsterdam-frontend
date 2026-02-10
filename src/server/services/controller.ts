@@ -43,6 +43,7 @@ import { fetchSVWI } from './patroon-c/svwi';
 import { fetchContactmomenten } from './salesforce/contactmomenten';
 import { fetchNotificationsWithTipsInserted } from './tips-and-notifications';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-verhuur';
+import { fetchUserFeedbackSurvey } from './user-feedback/user-feedback';
 import { fetchVaren } from './varen/varen';
 import { fetchVergunningen } from './vergunningen/vergunningen';
 import { fetchWmo } from './wmo/wmo';
@@ -145,6 +146,7 @@ const WPI_BBZ = callAuthenticatedService(fetchBbz);
 const WPI_SPECIFICATIES = callAuthenticatedService(fetchSpecificaties);
 const WPI_TONK = callAuthenticatedService(fetchTonk);
 const WPI_TOZO = callAuthenticatedService(fetchTozo);
+const KTO = callAuthenticatedService(() => fetchUserFeedbackSurvey());
 
 // Architectural pattern C. TODO: Make generic services for pattern C.
 const BELASTINGEN = callAuthenticatedService(fetchBelasting);
@@ -210,6 +212,7 @@ const SERVICES_INDEX = {
   WPI_SPECIFICATIES,
   WPI_TONK,
   WPI_TOZO,
+  KTO,
 };
 
 export type ServicesType = typeof SERVICES_INDEX;
@@ -245,6 +248,7 @@ type CommercialServices = Pick<
   | 'VAREN'
   | 'VERGUNNINGEN'
   | 'WONEN'
+  | 'KTO'
 >;
 
 type ServicesByProfileType = {
@@ -289,6 +293,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     WPI_TOZO,
     WONEN,
     JEUGD,
+    KTO,
   },
   'private-attributes': {
     CMS_CONTENT,
@@ -316,6 +321,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     VAREN,
     VERGUNNINGEN,
     WONEN,
+    KTO,
   },
 };
 

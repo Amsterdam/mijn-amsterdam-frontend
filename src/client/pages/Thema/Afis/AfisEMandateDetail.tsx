@@ -5,6 +5,7 @@ import { AfisEMandateActionUrls } from './AfisEmandateActionButtons';
 import { DateAdjust } from './AfisEmandateDateAdjust';
 import { useAfisEMandatesData, useEmandateApis } from './useAfisEmandatesData';
 import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types';
+import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
@@ -56,6 +57,14 @@ function EMandate({ eMandate }: EMandateProps) {
       )}
       <Datalist
         rows={[
+          ...(!IS_PRODUCTION && eMandate.status === EMANDATE_STATUS_ACTIVE
+            ? [
+                {
+                  label: 'AFIS/SAP - ID',
+                  content: eMandate.eMandateIdSource,
+                },
+              ]
+            : []),
           {
             rows: [
               {

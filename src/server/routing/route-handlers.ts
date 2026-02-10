@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
+import jwt, { type GetPublicKeyOrSecret } from 'jsonwebtoken';
 import jwksClient from 'jwks-rsa';
 import uid from 'uid-safe';
 
@@ -77,11 +77,11 @@ export function apiKeyVerificationHandler(
   res: Response,
   next: NextFunction
 ) {
-  const apiKey = req.headers['x-api-key'] as string;
+  const apiKey = req.headers['x-api-key'] as string | undefined;
 
   const externalKeys: Array<string | undefined> = [
-    process.env.BFF_EXTERNAL_CONSUMER_API_KEY_1,
-    process.env.BFF_EXTERNAL_CONSUMER_API_KEY_2,
+    getFromEnv('BFF_EXTERNAL_CONSUMER_API_KEY_1'),
+    getFromEnv('BFF_EXTERNAL_CONSUMER_API_KEY_2'),
   ];
 
   if (apiKey && externalKeys.includes(apiKey)) {
@@ -89,18 +89,6 @@ export function apiKeyVerificationHandler(
   }
 
   return sendUnauthorized(res, 'Api key ongeldig');
-}
-
-async function fetchSigningKey(issuer: string) {
-  const keyId = getFromEnv('BFF_OAUTH_KEY_ID');
-  if (!keyId) {
-    return null;
-  }
-  const client = jwksClient({
-    jwksUri: `${issuer}/discovery/keys`,
-  });
-  const signingKey = await client.getSigningKey(keyId);
-  return signingKey.getPublicKey();
 }
 
 export function OAuthVerificationHandler(role?: string) {
@@ -119,37 +107,78 @@ export function OAuthVerificationHandler(role?: string) {
     const token = authHeader.split(' ')[1]; // Removes bearer/Bearer prefix
     const tenantId = getFromEnv('BFF_OAUTH_TENANT');
     const audience = getFromEnv('BFF_OAUTH_MIJNADAM_CLIENT_ID');
+
     if (!token || !tenantId || !audience) {
-      return sendServiceUnavailable(res);
+      const missing: string[] = [];
+      if (!token) {
+        missing.push('token missing from auth header');
+      }
+      if (!tenantId) {
+        missing.push('tenantId missing in env');
+      }
+      if (!audience) {
+        missing.push('audience missing in env');
+      }
+      return sendServiceUnavailable(
+        res,
+        `OAuth configuration incomplete - ${missing.join('; ')}`
+      );
     }
     const issuer = `https://sts.windows.net/${tenantId}`;
-    const signingKey = await fetchSigningKey(issuer).catch((error) =>
-      captureException(error)
-    );
-    if (!signingKey) {
-      return sendServiceUnavailable(res);
-    }
+    const client = jwksClient({
+      jwksUri: `${issuer}/discovery/keys`,
+    });
 
-    jwt.verify(
-      token,
-      signingKey,
-      {
-        audience,
-        issuer: `${issuer}/`,
-        algorithms: ['RS256'],
-      },
-      (error, decoded) => {
-        if (error) {
-          captureException(error);
-          return sendUnauthorized(res);
-        }
-        const payload = decoded as { roles?: string[] };
-        if (role && !payload.roles?.includes?.(role)) {
-          return sendUnauthorized(res);
-        }
-        next();
+    const getKey: GetPublicKeyOrSecret = (
+      header: { kid?: string },
+      callback: (err: Error | null, key?: string) => void
+    ) => {
+      if (!header.kid) {
+        return callback(new Error('No kid found in token header'));
       }
-    );
+      client.getSigningKey(header.kid, (err, key) => {
+        if (err || !key) {
+          return callback(err || new Error('Signing key not found'));
+        }
+        const signingKey = key.getPublicKey();
+        callback(null, signingKey);
+      });
+    };
+
+    return new Promise((resolve) => {
+      jwt.verify(
+        token,
+        getKey,
+        {
+          audience,
+          issuer: `${issuer}/`,
+          algorithms: ['RS256'],
+        },
+        (error, decoded) => {
+          if (error) {
+            captureException(error);
+            return resolve(
+              sendUnauthorized(
+                res,
+                `Unauthorized`,
+                `OAuth token verification error: ${error.message}`
+              )
+            );
+          }
+          const payload = decoded as { roles?: string[] };
+          if (role && !payload.roles?.includes?.(role)) {
+            return resolve(
+              sendUnauthorized(
+                res,
+                `Unauthorized`,
+                `Required role '${role}' not present in token`
+              )
+            );
+          }
+          resolve(next());
+        }
+      );
+    });
   };
 }
 

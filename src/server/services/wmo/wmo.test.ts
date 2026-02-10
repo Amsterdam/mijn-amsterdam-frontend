@@ -12,7 +12,10 @@ import ZORGNED_AANVRAGEN_WMO from '../../../../mocks/fixtures/zorgned-jzd-aanvra
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { jsonCopy } from '../../../universal/helpers/utils';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types';
-import { getHulpmiddelenDisclaimer } from './status-line-items/wmo-hulpmiddelen';
+import {
+  getHulpmiddelenDisclaimer,
+  HulpmiddelenDisclaimerConfig,
+} from './status-line-items/wmo-hulpmiddelen';
 
 vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => ({
   ...((await importOriginal()) as object),
@@ -134,12 +137,44 @@ describe('Transform api items', () => {
       id: 'test-id',
       beschiktProductIdentificatie: '',
       beschikkingNummer: null,
+      procesAanvraagOmschrijving: null,
+      prettyID: '',
     };
+
+    const CODE_A = 'codeA';
+    const CODE_A_DATE_PAIR = {
+      datumEindeGeldigheid: '31-12-2025',
+      datumIngangGeldigheid: '2026-01-01',
+    };
+
+    const config: HulpmiddelenDisclaimerConfig = [
+      {
+        codes: [],
+        actual: 'actual generic text',
+        notActual: 'notActual generic text',
+        datePairs: [
+          {
+            datumEindeGeldigheid: '2024-10-31',
+            datumIngangGeldigheid: '2024-11-01',
+          },
+        ],
+      },
+      {
+        codes: [CODE_A],
+        actual: 'codeA actual text',
+        notActual: 'codeA notActual text',
+        datePairs: [CODE_A_DATE_PAIR],
+      },
+    ];
 
     const baseAanvragen = [baseAanvraag];
 
     it('should return undefined when no matching conditions', () => {
-      const result = getHulpmiddelenDisclaimer(baseAanvraag, baseAanvragen);
+      const result = getHulpmiddelenDisclaimer(
+        config,
+        baseAanvraag,
+        baseAanvragen
+      );
       expect(result).toBeUndefined();
     });
 
@@ -158,10 +193,8 @@ describe('Transform api items', () => {
         },
       ];
 
-      const result = getHulpmiddelenDisclaimer(aanvraag, aanvragen);
-      expect(result).toBe(
-        'Door een fout kan het zijn dat dit hulpmiddel ten onrechte bij "Eerdere en afgewezen voorzieningen" staat.'
-      );
+      const result = getHulpmiddelenDisclaimer(config, aanvraag, aanvragen);
+      expect(result).toBe('notActual generic text');
     });
 
     it('hasNietActueelMatch', () => {
@@ -180,10 +213,61 @@ describe('Transform api items', () => {
         },
       ];
 
-      const result = getHulpmiddelenDisclaimer(aanvraag, aanvragen);
-      expect(result).toBe(
-        'Door een fout kan het zijn dat dit hulpmiddel ook bij "Eerdere en afgewezen voorzieningen" staat. Daar vindt u dan het originele besluit met de juiste datums.'
+      const result = getHulpmiddelenDisclaimer(config, aanvraag, aanvragen);
+      expect(result).toBe('actual generic text');
+    });
+
+    it('Uses generic config if no config is found', () => {
+      const currentAanvraag = {
+        ...baseAanvraag,
+        productsoortCode: 'Unknown config code',
+        datumIngangGeldigheid: '2024-11-01',
+        isActueel: true,
+      };
+
+      const aanvragen = [
+        currentAanvraag,
+        {
+          ...baseAanvraag,
+          productsoortCode: 'Unknown config code',
+          datumEindeGeldigheid: '2024-10-31',
+          isActueel: false,
+        },
+      ];
+
+      const result = getHulpmiddelenDisclaimer(
+        config,
+        currentAanvraag,
+        aanvragen
       );
+      expect(result).toBe('actual generic text');
+    });
+
+    it('does not match aanvragen with a different productsoortCode', () => {
+      const currentAanvraag = {
+        ...baseAanvraag,
+        datumIngangGeldigheid: CODE_A_DATE_PAIR[1],
+        isActueel: true,
+        productsoortCode: CODE_A,
+      };
+
+      const aanvragen = [
+        currentAanvraag,
+        {
+          ...baseAanvraag,
+          datumEindeGeldigheid: CODE_A_DATE_PAIR[0],
+          isActueel: false,
+          productsoortCode: 'some other code',
+        },
+      ];
+
+      const result = getHulpmiddelenDisclaimer(
+        config,
+        currentAanvraag,
+        aanvragen
+      );
+
+      expect(result).toBeUndefined();
     });
   });
 

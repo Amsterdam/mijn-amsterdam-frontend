@@ -1,4 +1,4 @@
-import { IS_OT, IS_PRODUCTION, IS_TEST } from './env';
+import { IS_ACCEPTANCE, IS_PRODUCTION } from './env';
 
 /**
  * @deprecated
@@ -86,7 +86,7 @@ export const FeatureToggle = {
   cobrowseIsActive: true,
 
   // Mijn Woning met vve zaak informatie
-  vveIsActive: IS_TEST || IS_OT,
+  vveIsActive: !IS_PRODUCTION,
   // VTH vergunningen move from decos to powerbrowser (ligplaats/kameromzettingen/woningvormingen)
-  VTHOnPowerbrowserActive: false,
+  VTHOnPowerbrowserActive: IS_ACCEPTANCE,
 } as const;

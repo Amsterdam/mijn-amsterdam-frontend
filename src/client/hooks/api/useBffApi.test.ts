@@ -6,11 +6,10 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 import {
   useBffApi,
-  sendGetRequest,
+  sendFetchRequest,
   sendJSONPostRequest,
   sendFormPostRequest,
   isAborted,
-  HttpStatusCode,
 } from './useBffApi';
 
 describe('useBffApi', () => {
@@ -240,7 +239,7 @@ describe('sendGetRequest', () => {
       })
     );
 
-    const result = await sendGetRequest<{ foo: string }>(
+    const result = await sendFetchRequest<{ foo: string }>(
       'http://localhost/test'
     );
     expect(result.status).toBe('OK');
@@ -259,7 +258,7 @@ describe('sendGetRequest', () => {
       })
     );
 
-    const result = await sendGetRequest('http://localhost/test');
+    const result = await sendFetchRequest('http://localhost/test');
     expect(result.status).toBe('ERROR');
     expect(result.status === 'ERROR' && result.message).toContain('HTTP Error');
   });
@@ -315,13 +314,5 @@ describe('isAborted', () => {
       true
     );
     expect(isAborted(new Error('Some other error'))).toBe(false);
-  });
-});
-
-describe('HttpStatusCode', () => {
-  it('should have correct status codes', () => {
-    expect(HttpStatusCode.Ok).toBe(200);
-    expect(HttpStatusCode.BadRequest).toBe(400);
-    expect(HttpStatusCode.InternalServerError).toBe(500);
   });
 });

@@ -8,6 +8,7 @@
         "code": "V",
         "omschrijving": "vrouw"
       },
+      "mokum": true,
       "leeftijd": 70,
       "naam": {
         "aanduidingNaamgebruik": {
@@ -49,8 +50,8 @@
         },
         "datum": {
           "type": "Datum",
-          "datum": "1955-06-02",
-          "langFormaat": "2 juni 1955"
+          "datum": "2008-03-17",
+          "langFormaat": "17 maart 2008"
         }
       },
       "verblijfplaats": {

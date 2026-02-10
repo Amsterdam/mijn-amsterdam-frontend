@@ -104,7 +104,7 @@ export async function sendJSONPostRequest<T, P extends RecordStr2 = RecordStr2>(
   );
 }
 
-export async function sendGetRequest<T>(
+export async function sendFetchRequest<T>(
   url: UrlOrString,
   init?: RequestInit
 ): Promise<ApiResponse<T>> {
@@ -198,7 +198,7 @@ export function useBffApi<
 ): BFFApiHook<T | null, P, U> {
   const {
     url,
-    sendRequest = sendGetRequest,
+    sendRequest = sendFetchRequest,
     fetchImmediately = true,
   } = options || {};
 
@@ -345,6 +345,7 @@ export function useBffApi<
   });
 }
 
+// Axios also has these codes but we do not import them for reduced bundle size.
 export const HttpStatusCode = {
   Ok: 200,
   Created: 201,

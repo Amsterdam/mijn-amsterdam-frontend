@@ -27,7 +27,7 @@ interface ThemaPaginaProps {
   pageContentTop: ReactNode;
   pageContentTopSecondary?: ReactNode;
   pageContentMain: ReactNode;
-  linkListItems: LinkProps[];
+  pageLinks: LinkProps[];
   pageContentBottom?: ReactNode;
   errorAlertContent?: ReactNode;
   loadingBarConfig?: BarConfig;
@@ -35,6 +35,7 @@ interface ThemaPaginaProps {
   isPartialError?: boolean;
   isLoading: boolean;
   maintenanceNotificationsPageSlug?: string;
+  themaFeedbackDetails?: object;
 }
 export default function ThemaPagina({
   id,
@@ -42,7 +43,7 @@ export default function ThemaPagina({
   breadcrumbs,
   pageContentTop,
   pageContentTopSecondary,
-  linkListItems = [],
+  pageLinks = [],
   pageContentMain,
   pageContentBottom,
   errorAlertContent,
@@ -51,18 +52,29 @@ export default function ThemaPagina({
   isPartialError,
   isLoading,
   maintenanceNotificationsPageSlug,
+  themaFeedbackDetails,
 }: ThemaPaginaProps) {
   const showError = (!isError && isPartialError) || isError;
+  const userFeedbackDetails = {
+    pageTitle: title,
+    pageDetails: themaFeedbackDetails || {},
+  };
   return (
-    <PageV2 heading={title} breadcrumbs={breadcrumbs} redactedThemaId={id}>
+    <PageV2
+      heading={title}
+      breadcrumbs={breadcrumbs}
+      redactedThemaId={id}
+      showUserFeedback
+      userFeedbackDetails={userFeedbackDetails}
+    >
       {maintenanceNotificationsPageSlug && (
         <MaintenanceNotifications page={maintenanceNotificationsPageSlug} />
       )}
       {pageContentTop}
-      {!!linkListItems.length && (
+      {!!pageLinks.length && (
         <PageContentCell className={styles.PullUp}>
           <LinkList>
-            {linkListItems.map(({ to, title }) => (
+            {pageLinks.map(({ to, title }) => (
               <LinkList.Link key={to} rel="noreferrer" href={to}>
                 {title}
               </LinkList.Link>

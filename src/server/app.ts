@@ -3,24 +3,15 @@
 
 /* tslint:disable:no-implicit-dependencies */
 /* tslint:disable:no-submodule-imports */
-import dotenv from 'dotenv';
-import dotenvExpand from 'dotenv-expand';
+
+// Keep the loading of environment variables at the top.
+import './helpers/load-env';
 import {
   IS_AP,
   IS_DEVELOPMENT,
   IS_OT,
   IS_PRODUCTION,
 } from '../universal/config/env';
-
-if (IS_DEVELOPMENT) {
-  const ENV_FILE = '.env.local';
-  // This runs local only and -
-  // we can't load the logger before we loader our environment variables.
-  // eslint-disable-next-line no-console
-  console.debug(`Using local env file ${ENV_FILE}`);
-  const envConfig = dotenv.config({ path: ENV_FILE });
-  dotenvExpand.expand(envConfig);
-}
 
 // Note: Keep this line after loading in env files or LOG_LEVEL will be undefined.
 import { logger } from './logging';
@@ -35,6 +26,7 @@ if (debugResponseDataTerms && !debug?.includes('source-api-request:response')) {
   process.env.DEBUG = `source-api-request:response,${process.env.DEBUG ?? ''}`;
 }
 
+import path from 'node:path';
 import { HttpStatusCode } from 'axios';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
@@ -61,7 +53,6 @@ import { router as protectedRouter } from './routing/router-protected';
 import { legacyRouter, router as publicRouter } from './routing/router-public';
 import { stadspasExternalConsumerRouter } from './services/hli/router-stadspas-external-consumer';
 import { captureException } from './services/monitoring';
-
 import { getFromEnv } from './helpers/env';
 import { notificationsExternalConsumerRouter } from './routing/router-notifications-external-consumer';
 import { router as privateNetworkRouter } from './routing/router-private';
@@ -73,12 +64,11 @@ app.set('trust proxy', true);
 // Security, disable express header.
 app.disable('x-powered-by');
 
-// eslint-disable-next-line no-magic-numbers
-const viewDir = __dirname.split('/').slice(-2, -1);
+const viewDir = __dirname.split(path.sep).slice(-2, -1);
 
 // Set-up view engine voor SSR
 app.set('view engine', 'pug');
-app.set('views', `./${viewDir}/server/views`);
+app.set('views', path.join(...viewDir, 'server', 'views'));
 
 app.use(
   cors({

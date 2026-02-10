@@ -124,8 +124,8 @@ const pageRouteResolvers: PageRouteResolvers = {
     }
   ),
   toeristischeVerhuur: baseThemaConfig(
-    TOERISTISCHE_VERHUUR.routeConfig.themaPage.path,
-    TOERISTISCHE_VERHUUR.themaId,
+    TOERISTISCHE_VERHUUR.themaConfig.route.path,
+    TOERISTISCHE_VERHUUR.themaConfig.id,
     (stateSlice) => {
       const { vakantieverhuurVergunningen = [], bbVergunningen = [] } =
         stateSlice.content ?? {};
@@ -147,8 +147,8 @@ const pageRouteResolvers: PageRouteResolvers = {
     }
   ),
   klachten: baseThemaConfig(
-    KLACHTEN.routeConfig.themaPage.path,
-    KLACHTEN.themaId,
+    KLACHTEN.themaConfig.route.path,
+    KLACHTEN.themaConfig.id,
     (stateSlice) => {
       return stateSlice.content;
     }
@@ -185,7 +185,10 @@ function useNavigateToPage(queryParams: URLSearchParams) {
 }
 
 export function ZaakStatus() {
-  useHTMLDocumentTitle({ documentTitle: ZAAK_STATUS_PAGE_DOCUMENT_TITLE });
+  useHTMLDocumentTitle({
+    documentTitle: ZAAK_STATUS_PAGE_DOCUMENT_TITLE,
+    trackingUrl: null,
+  });
 
   const appStateReady = useAppStateReady();
   const location = useLocation();

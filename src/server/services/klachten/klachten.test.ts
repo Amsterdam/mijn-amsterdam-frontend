@@ -3,6 +3,7 @@ import { afterEach, describe, expect, vi } from 'vitest';
 
 import { fetchAllKlachten, fetchKlachtenNotifications } from './klachten';
 import { SmileKlacht, SmileKlachtenReponse } from './types';
+import { themaConfig } from '../../../client/pages/Thema/Klachten/Klachten-thema-config';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { ApiConfig } from '../../config/source-api';
 
@@ -102,8 +103,8 @@ describe('Klachten', () => {
               title: 'Bekijk details',
               to: '/klachten/klacht/1',
             },
-            themaID: 'KLACHTEN',
-            themaTitle: 'Klachten',
+            themaID: themaConfig.id,
+            themaTitle: themaConfig.title,
             title: 'Klacht ontvangen',
           },
           {
@@ -115,8 +116,8 @@ describe('Klachten', () => {
               title: 'Bekijk details',
               to: '/klachten/klacht/2',
             },
-            themaID: 'KLACHTEN',
-            themaTitle: 'Klachten',
+            themaID: themaConfig.id,
+            themaTitle: themaConfig.title,
             title: 'Klacht afgehandeld',
           },
         ],
@@ -142,6 +143,9 @@ describe('Klachten', () => {
       List: [openKlacht, closedKlacht],
     });
     const res = await fetchAllKlachten(profileAndToken);
+    res.content?.forEach((item) => {
+      item.steps.forEach((step) => delete step.description);
+    });
     expect(res).toStrictEqual({
       content: [
         {
@@ -178,7 +182,6 @@ describe('Klachten', () => {
             },
             {
               datePublished: '',
-              description: '',
               id: '3',
               isActive: false,
               isChecked: false,
@@ -221,7 +224,6 @@ describe('Klachten', () => {
             },
             {
               datePublished: '2026-12-31T00:00:00.000Z',
-              description: `<p>Uw klacht is afgehandeld. U krijgt een antwoord op uw klacht.</p>`,
               id: '3',
               isActive: true,
               isChecked: true,

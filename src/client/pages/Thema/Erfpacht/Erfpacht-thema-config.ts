@@ -12,6 +12,10 @@ import {
 import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
+import {
+  getAfisListPageDocumentTitle,
+  getFacturenTableConfig,
+} from '../Afis/Afis-thema-config';
 
 // Themapagina
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_DOSSIERS = 5;
@@ -50,6 +54,7 @@ export const featureToggle = {
   erfpachtActive: true,
   vveIsActive: IS_OT || IS_TEST,
   canonmatigingLinkActive: true,
+  afisFacturenTablesActive: !IS_PRODUCTION,
 };
 
 export const themaId = 'ERFPACHT' as const;
@@ -74,7 +79,32 @@ export const routeConfig = {
     documentTitle: `${themaTitle} | overzicht`,
     trackingUrl: null,
   },
+  detailPageFactuur: {
+    path: '/erfpacht/factuur/:state/:factuurNummer',
+    documentTitle: `Factuurgegevens | ${themaTitle}`,
+    trackingUrl: null,
+  },
+  listPageFacturen: {
+    path: '/erfpacht/facturen/lijst/:state/:page?',
+    documentTitle: getAfisListPageDocumentTitle,
+    trackingUrl: null,
+  },
 } as const satisfies ThemaRoutesConfig;
+
+export const erfpachtFacturenTableConfig = getFacturenTableConfig({
+  listPagePath: routeConfig.listPageFacturen.path,
+  mergeConfig: {
+    open: {
+      title: 'Openstaande erfpachtfacturen',
+    },
+    overgedragen: {
+      title: 'Overgedragen erfpachtfacturen',
+    },
+    afgehandeld: {
+      title: 'Afgehandelde erfpachtfacturen',
+    },
+  },
+});
 
 type DisplayPropsDossiers = DisplayProps<ErfpachtDossierFrontend>;
 

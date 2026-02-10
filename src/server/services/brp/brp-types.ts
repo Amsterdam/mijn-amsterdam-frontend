@@ -122,7 +122,7 @@ type OuderSource = PersoonBasisSource;
 type PartnerSource = PersoonBasisSource & {
   aangaanHuwelijkPartnerschap: HuwelijkPartnerschapSource;
   ontbindingHuwelijkPartnerschap: HuwelijkPartnerschapSource;
-  soortVerbintenis: TyperingSource;
+  soortVerbintenis: TyperingSource | null;
 };
 
 type HuwelijkPartnerschapSource = {
@@ -143,6 +143,7 @@ export type PersoonSource = PersoonBasisSource & {
   gemeenteVanInschrijving: TyperingSource;
   datumInschrijvingInGemeente: DatumSource;
   adressering: AdresseringSource;
+  opschortingBijhouding?: { datum: DatumSource; reden: TyperingSource };
   kinderen: KindSource[];
   ouders: OuderSource[];
   partners: PartnerSource[];
@@ -208,10 +209,13 @@ export type Persoon = PersoonBasis & {
 };
 
 export type Verbintenis = {
-  datumOntbinding: string | null;
-  datumOntbindingFormatted?: string | null;
+  soortVerbintenis: string | null;
   datumSluiting: string | null;
   datumSluitingFormatted?: string | null;
+  plaats: string | null;
+  land: string | null;
+  datumOntbinding: string | null;
+  datumOntbindingFormatted?: string | null;
   persoon: PersoonBasis;
 };
 

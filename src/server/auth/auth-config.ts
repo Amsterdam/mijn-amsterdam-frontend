@@ -8,7 +8,6 @@ import { TokenData } from './auth-types';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { ONE_HOUR_MS, ONE_MINUTE_SECONDS } from '../config/app';
 import { getFromEnv } from '../helpers/env';
-import { asEnum } from '../../universal/helpers/utils';
 
 // Amsterdam App return to url config
 export const RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER =
@@ -24,14 +23,12 @@ export const RETURNTO_MAMS_FRONTEND_ROUTE = 'mams-frontend-route';
 export const RETURNTO_MAMS_LANDING_DIGID = 'mams-landing-digid';
 export const RETURNTO_MAMS_LANDING_EHERKENNING = 'mams-landing-eherkenning';
 
-// eslint-disable-next-line no-magic-numbers
 export const OIDC_SESSION_MAX_AGE_SECONDS = ONE_MINUTE_SECONDS * 15; // 15 minutes
 export const OIDC_SESSION_COOKIE_NAME = '__MA-appSession';
 export const OIDC_COOKIE_ENCRYPTION_KEY = `${getFromEnv('BFF_GENERAL_ENCRYPTION_KEY')}`;
 export const OIDC_ID_TOKEN_EXP = '1 hours'; // Arbitrary, MA wants a token to be valid for a maximum of 1 hours.
 export const OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED = true;
 
-// eslint-disable-next-line no-magic-numbers
 export const OIDC_TOKEN_EXP = ONE_HOUR_MS * 3; // The TMA currently has a token expiration time of 3 hours
 
 export const openIdAuth = auth;
@@ -155,8 +152,3 @@ export const OIDC_TOKEN_AUD_ATTRIBUTE_VALUE = {
     return oidcConfigDigid.clientID;
   },
 };
-
-export const OAUTH_ROLES = asEnum([
-  'wmo.voorzieningen',
-  'afis.e-mandates.sign-request-status-notify',
-] as const);

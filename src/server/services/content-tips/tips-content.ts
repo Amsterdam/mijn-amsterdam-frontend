@@ -19,16 +19,14 @@ import {
   hasBudget,
   hasKidsBetweenAges,
   isBetweenAges,
+  is18OrOlderOnElectionDay,
 } from './predicates';
 import { ContentTipSource } from './tip-types';
 import { themaId as themaIdAfval } from '../../../client/pages/Thema/Afval/Afval-thema-config';
-import {
-  themaId as themaIdHLI,
-  themaTitle as themaTitleHLI,
-} from '../../../client/pages/Thema/HLI/HLI-thema-config';
+import { themaConfig as hliThemaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import { themaId as themaIdInkomen } from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
 import { themaIdBRP } from '../../../client/pages/Thema/Profile/Profile-thema-config';
-import { themaId as themaIdToeristischeVerhuur } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
+import { themaConfig as toeristischeVerhuurThemaConfig } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 
 const DAYS = 90;
 
@@ -51,6 +49,25 @@ export const contentTips: ContentTipSource[] = [
     },
   },
   {
+    id: 'mijn-9',
+    active: true,
+    dateActiveStart: null,
+    dateActiveEnd: '2026-03-19',
+    datePublished: '2026-02-03',
+    title: 'Tip: Stembureaus in Amsterdam',
+    profileTypes: ['private'],
+    themaID: themaIdBRP,
+    description:
+      'U kunt alle stembureaus in Amsterdam vinden via de onderstaande link. Om in te zoomen op uw buurt, voert u na het openen van de link uw postcode of adres in.',
+    predicates: [isMokum, is18OrOlderOnElectionDay],
+    reason:
+      'U ziet deze tip omdat u in Amsterdam woont en 18 jaar of ouder bent op de dag van de verkiezingen.',
+    link: {
+      title: 'Kijk voor de stembureaus bij u in de buurt op de kaart',
+      to: 'https://stembureaus.amsterdam.nl/map',
+    },
+  },
+  {
     id: 'mijn-11',
     active: true,
     dateActiveStart: null,
@@ -58,8 +75,8 @@ export const contentTips: ContentTipSource[] = [
     datePublished: '2019-10-22',
     title: 'Tip: Op stap met uw Stadspas',
     profileTypes: ['private'],
-    themaID: themaIdHLI,
-    themaTitle: themaTitleHLI,
+    themaID: hliThemaConfig.id,
+    themaTitle: hliThemaConfig.title,
     description: 'Haalt u alles uit uw Stadspas?',
     reason: 'U ziet deze tip omdat u een Stadspas hebt aangevraagd.',
     predicates: [hasValidRecentStadspasRequest],
@@ -98,8 +115,8 @@ export const contentTips: ContentTipSource[] = [
     active: true,
     datePublished: '2020-11-26',
     title: 'Tip: Sporten met korting',
-    themaID: themaIdHLI,
-    themaTitle: themaTitleHLI,
+    themaID: hliThemaConfig.id,
+    themaTitle: hliThemaConfig.title,
     profileTypes: ['private'],
     description:
       'Met de Stadspas krijgt u maximaal € 300 korting op een sportabonnement voor uw kind.',
@@ -206,7 +223,7 @@ export const contentTips: ContentTipSource[] = [
     active: true,
     datePublished: '2023-10-15',
     title: 'Tip: Particuliere vakantieverhuur',
-    themaID: themaIdToeristischeVerhuur,
+    themaID: toeristischeVerhuurThemaConfig.id,
     profileTypes: ['private'],
     description:
       'Bij vakantieverhuur moet u naast het eenmalige registratienummer ook jaarlijks een vergunning bij de gemeente aanvragen. Ook moet u iedere keer dat u de woning verhuurt dit bij ons melden.',
@@ -228,7 +245,7 @@ export const contentTips: ContentTipSource[] = [
     active: true,
     datePublished: '2021-06-15',
     title: 'Tip: Overgangsrecht bij Bed and breakfast',
-    themaID: themaIdToeristischeVerhuur,
+    themaID: toeristischeVerhuurThemaConfig.id,
     profileTypes: ['private'],
     description:
       'Heeft u uw B&B voor 1 januari 2019 aangevraagd? Dan mag u tot 1 juli 2026 verhuren volgens deze regels.',
@@ -248,7 +265,7 @@ export const contentTips: ContentTipSource[] = [
     active: true,
     datePublished: '2021-06-15',
     title: 'Tip: Bed & breakfast',
-    themaID: themaIdToeristischeVerhuur,
+    themaID: toeristischeVerhuurThemaConfig.id,
     profileTypes: ['private'],
     description:
       'Vanaf 1 april 2021 moet u naast een vergunning ook een registratienummer aanvragen voor een bed & breakfast.',
@@ -348,8 +365,8 @@ export const contentTips: ContentTipSource[] = [
     active: true,
     datePublished: '2025-01-16',
     title: '€300 korting op witgoed',
-    themaID: themaIdHLI,
-    themaTitle: themaTitleHLI,
+    themaID: hliThemaConfig.id,
+    themaTitle: hliThemaConfig.title,
     profileTypes: ['private'],
     description:
       'Met je Stadspas krijg je € 300,- korting op een nieuwe energiezuinige wasmachine of koelkast. Dit helpt je om geld te besparen op je energierekening.',

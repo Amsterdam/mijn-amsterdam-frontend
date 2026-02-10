@@ -7,39 +7,85 @@ import {
 } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
 import { entries } from '../../../../universal/helpers/utils';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
-import type { ThemaRoutesConfig } from '../../../config/thema-types';
+import type {
+  ThemaConfigBase,
+  WithDetailPage,
+  WithListPage,
+} from '../../../config/thema-types';
 import {
   ListPageParamKind as ListPageParamKindVergunningen,
   listPageParamKind as listPageParamKindVergunningen,
   tableConfig as tableConfigVergunningen,
 } from '../Vergunningen/Vergunningen-thema-config';
 
-export const featureToggle = {
-  toeristischeVerhuurActive: true,
-};
+type ToeristischeVerhuurThemaConfig = ThemaConfigBase<typeof THEMA_ID> &
+  WithDetailPage &
+  WithListPage;
 
-export const themaId = 'TOERISTISCHE_VERHUUR' as const;
-export const themaTitle = 'Toeristische verhuur';
+const THEMA_ID = 'TOERISTISCHE_VERHUUR';
+const THEMA_TITLE = 'Toeristische verhuur';
+export const THEMA_DETAIL_TITLE_DEFAULT = 'Vergunning toeristische verhuur';
 
-export const routeConfig = {
+export const themaConfig: ToeristischeVerhuurThemaConfig = {
+  id: THEMA_ID,
+  title: THEMA_TITLE,
+  featureToggle: { active: true },
+  profileTypes: ['private', 'commercial'],
+  pageLinks: [
+    {
+      title: 'Meer over toeristenbelasting',
+      to: 'https://www.amsterdam.nl/belastingen/toeristenbelasting/',
+    },
+    {
+      title: 'Vakantieverhuur melden of registratienummer aanvragen',
+      to: 'https://www.toeristischeverhuur.nl/portaal/login',
+    },
+  ],
+  route: {
+    path: '/toeristische-verhuur',
+    get documentTitle() {
+      return `${THEMA_TITLE} | overzicht`;
+    },
+    trackingUrl: null,
+  },
+  uitlegPageSections: [
+    {
+      title: THEMA_TITLE,
+      listItems: [
+        'Uw aanvraag voor een vergunning vakantieverhuur of bed & breakfast',
+        'Uw landelijk registratienummer toeristische verhuur',
+        'Link naar het landelijk portaal om vakantieverhuur door te geven en het aantal nachten verhuur in te zien',
+      ],
+    },
+  ],
+  redactedScope: 'none',
   detailPage: {
-    path: '/toeristische-verhuur/vergunning/:caseType/:id',
-    trackingUrl: (params) =>
-      `/toeristische-verhuur/vergunning/${params?.caseType ?? ''}`,
-    documentTitle: `Toeristische verhuur | ${themaTitle}`,
+    route: {
+      path: '/toeristische-verhuur/vergunning/:caseType/:id',
+      trackingUrl: (params) =>
+        `/toeristische-verhuur/vergunning/${params?.caseType ?? ''}`,
+      documentTitle: `Toeristische verhuur | ${THEMA_TITLE}`,
+    },
   },
   listPage: {
-    path: '/toeristische-verhuur/vergunning/lijst/:kind/:page?',
-    documentTitle: (params) =>
-      `${tableConfigVergunningen[(params?.kind as ListPageParamKind) || 'lopende-aanvragen'].title} | ${themaTitle}`,
-    trackingUrl: null,
+    route: {
+      path: '/toeristische-verhuur/vergunning/lijst/:kind/:page?',
+      documentTitle: (params) =>
+        `${tableConfigVergunningen[(params?.kind as ListPageParamKind) || 'lopende-aanvragen'].title} | ${THEMA_TITLE}`, //TO DO MIJN-12229
+      trackingUrl: null,
+    },
   },
-  themaPage: {
-    path: '/toeristische-verhuur',
-    documentTitle: `${themaTitle} | overzicht`,
-    trackingUrl: null,
-  },
-} as const satisfies ThemaRoutesConfig;
+};
+
+export const bbVergunningPageLinkItem = {
+  title: 'Meer informatie over bed & breakfast',
+  to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/woonruimte-verhuren/vergunning-aanvragen-voor-bed-breakfast/',
+} as const;
+
+export const vvVergunningPageLinkItem = {
+  title: 'Meer informatie over particuliere vakantieverhuur',
+  to: 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/',
+} as const;
 
 const DISPLAY_PROPS_HUIDIGE_VERGUNNINGEN: DisplayProps<ToeristischeVerhuurVergunning> =
   {
@@ -85,7 +131,7 @@ export const tableConfig = Object.fromEntries(
         title: listPageTitle[kind],
         filter: (vergunning: ToeristischeVerhuurVergunning) =>
           tableConfig.filter(vergunning),
-        listPageRoute: generatePath(routeConfig.listPage.path, {
+        listPageRoute: generatePath(themaConfig.listPage.route.path, {
           kind,
           page: null,
         }),
@@ -98,5 +144,3 @@ export const tableConfigLVVRegistraties = {
   title: 'Registratienummer(s) toeristische verhuur',
   displayProps: DISPLAY_PROPS_LVV_REGISTRATIES,
 } as const;
-
-export const THEMA_DETAIL_TITLE_DEFAULT = 'Vergunning toeristische verhuur';

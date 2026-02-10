@@ -129,39 +129,61 @@ export type AfisFacturenByStateFrontend = {
   [key in AfisFactuurStateFrontend]?: AfisFacturenResponseFrontend;
 };
 
-export const facturenTableConfig = {
-  open: {
-    title: listPageTitle.open,
-    displayProps: displayPropsFacturenOpen,
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_OPEN,
-    listPageLinkLabel: 'Alle openstaande facturen',
-    listPageRoute: generatePath(routeConfig.listPage.path, {
-      state: 'open',
-      page: null,
-    }),
-  },
-  overgedragen: {
-    title: listPageTitle.overgedragen,
-    displayProps: displayPropsFacturenAfgehandeldOfOvergedragen,
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_TRANSFERRED,
-    listPageLinkLabel:
-      'Alle facturen in het incasso- en invorderingstraject van directie Belastingen',
-    listPageRoute: generatePath(routeConfig.listPage.path, {
-      state: 'overgedragen',
-      page: null,
-    }),
-  },
-  afgehandeld: {
-    title: listPageTitle.afgehandeld,
-    displayProps: displayPropsFacturenAfgehandeldOfOvergedragen,
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED,
-    listPageLinkLabel: 'Alle afgehandelde facturen',
-    listPageRoute: generatePath(routeConfig.listPage.path, {
-      state: 'afgehandeld',
-      page: null,
-    }),
-  },
-} as const;
+type FacturenTableConfigParams = {
+  listPagePath?: string;
+  mergeConfig?: {
+    [key in AfisFactuurStateFrontend]?: Partial<{
+      title: string;
+      displayProps: DisplayProps<AfisFactuurFrontend>;
+      maxItems: number;
+      listPageLinkLabel: string;
+      listPageRoute: string;
+    }>;
+  };
+};
+
+export function getFacturenTableConfig(params?: FacturenTableConfigParams) {
+  const { listPagePath = routeConfig.listPage.path, mergeConfig } =
+    params || {};
+  return {
+    open: {
+      title: listPageTitle.open,
+      displayProps: displayPropsFacturenOpen,
+      maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_OPEN,
+      listPageLinkLabel: 'Alle openstaande facturen',
+      listPageRoute: generatePath(listPagePath, {
+        state: 'open',
+        page: null,
+      }),
+      ...mergeConfig?.open,
+    },
+    overgedragen: {
+      title: listPageTitle.overgedragen,
+      displayProps: displayPropsFacturenAfgehandeldOfOvergedragen,
+      maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_TRANSFERRED,
+      listPageLinkLabel:
+        'Alle facturen in het incasso- en invorderingstraject van directie Belastingen',
+      listPageRoute: generatePath(listPagePath, {
+        state: 'overgedragen',
+        page: null,
+      }),
+      ...mergeConfig?.overgedragen,
+    },
+    afgehandeld: {
+      title: listPageTitle.afgehandeld,
+      displayProps: displayPropsFacturenAfgehandeldOfOvergedragen,
+      maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED,
+      listPageLinkLabel: 'Alle afgehandelde facturen',
+      listPageRoute: generatePath(listPagePath, {
+        state: 'afgehandeld',
+        page: null,
+      }),
+      ...mergeConfig?.afgehandeld,
+    },
+  } as const;
+}
+
+export const facturenTableConfig = getFacturenTableConfig();
 
 export const businessPartnerDetailsLabels: DisplayProps<AfisBusinessPartnerDetailsTransformed> =
   {

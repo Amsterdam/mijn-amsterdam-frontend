@@ -18,16 +18,16 @@ const pageContentTop = (
 
 export function KlachtenThema() {
   const {
-    themaId,
-    themaTitle,
+    id,
+    title,
     tableConfig,
     klachten,
     isLoading,
     isError,
-    linkListItems,
-    routeConfig,
+    themaConfig,
+    pageLinks,
   } = useKlachtenThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const tables = Object.values(tableConfig).map((conf) => {
     return (
@@ -41,16 +41,21 @@ export function KlachtenThema() {
       />
     );
   });
+  // if (!featureToggle.statustreinAndAfgehandeldeMeldingenActive) {
+  //   tables = tables.filter((table) => {
+  //     return table.key !== 'Afgehandelde klachten';
+  //   });
+  // }
 
   return (
     <ThemaPagina
-      id={themaId}
-      title={themaTitle}
+      id={id}
+      title={title}
       isError={isError}
       isLoading={isLoading}
       pageContentTop={pageContentTop}
       pageContentMain={tables}
-      linkListItems={linkListItems}
+      pageLinks={pageLinks}
       maintenanceNotificationsPageSlug="klachten"
     />
   );

@@ -7,7 +7,7 @@ import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPag
 import { PageContentCell } from '../../../components/Page/Page';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
-export function HLIList() {
+export function HLIRegelingenList() {
   const { kind = 'huidige-regelingen' } = useParams<{
     kind: ListPageParamKind;
   }>();
@@ -18,9 +18,9 @@ export function HLIList() {
     isLoading,
     isError,
     breadcrumbs,
-    routeConfig,
+    themaConfig,
   } = useHliThemaData();
-  useHTMLDocumentTitle(routeConfig.detailPage);
+  useHTMLDocumentTitle(themaConfig.regelingenListPage.route);
 
   const { filter, sort, title, displayProps, listPageRoute } =
     tableConfig[kind];

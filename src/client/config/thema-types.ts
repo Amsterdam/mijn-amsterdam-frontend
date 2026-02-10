@@ -13,12 +13,12 @@ export type WithPageConfig<K extends string, T extends object = object> = {
 
 export type IsThemaVisibleFN = (appState: AppState) => boolean;
 
-export type ThemaConfigBase = {
-  id: string;
+export type ThemaConfigBase<ID = string> = {
+  id: ID;
   title: string;
   featureToggle: ThemaFeatureToggle;
   profileTypes: ProfileType[];
-  uitlegPageSections: InfoSection;
+  uitlegPageSections: InfoSection[];
   pageLinks: LinkProps[];
   route: ThemaRouteConfig;
   redactedScope: RedactedScope;
@@ -27,11 +27,13 @@ export type ThemaConfigBase = {
 export type WithDetailPage = PageConfig<'detailPage'>;
 export type WithListPage = PageConfig<'listPage'>;
 
-type FeatureToggle = Record<string, boolean>;
-type ThemaFeatureToggle = { themaActive: boolean } & FeatureToggle;
+export type ThemaFeatureToggle<T = boolean> = {
+  active: boolean;
+  [key: string]: boolean | ThemaFeatureToggle<T>;
+};
 type RedactedScope = 'full' | 'content' | 'none';
 
-type PageConfig<T extends string> = {
+export type PageConfig<T extends string> = {
   [key in T]: {
     title?: string;
     documentTitle?: string;
@@ -44,10 +46,8 @@ export type InfoSection = {
   listItems: Array<{ text?: string; listItems?: string[] } | string>;
 };
 
-export interface ThemaMenuItem<ID extends string = string> extends Omit<
-  LinkProps,
-  'title' | 'to' | 'rel'
-> {
+export interface ThemaMenuItem<ID extends string = string>
+  extends Omit<LinkProps, 'title' | 'to' | 'rel'> {
   id: ID;
   profileTypes: ProfileType[];
   isAlwaysVisible?: boolean;
@@ -70,9 +70,8 @@ export interface CategoryMenuItem<ID extends string> extends LinkProps {
   profileTypes?: ProfileType[];
 }
 
-export interface ThemaMenuItemTransformed<
-  ID extends string = string,
-> extends Omit<ThemaMenuItem<ID>, 'title' | 'to' | 'isActive'> {
+export interface ThemaMenuItemTransformed<ID extends string = string>
+  extends Omit<ThemaMenuItem<ID>, 'title' | 'to' | 'isActive'> {
   title: string;
   to: string;
   isActive: boolean;

@@ -9,6 +9,9 @@ export const featureToggle = {
       isEnabled: !IS_PRODUCTION,
     },
   },
+  hulpmiddelenDisclaimerCodes: {
+    GBW: !IS_PRODUCTION,
+  },
   statusLineItems: {
     alleAfgewezenWmoAanvragen: {
       isEnabled: true,
@@ -20,6 +23,8 @@ export const featureToggle = {
     },
   },
 } as const;
+
+export const OAUTH_ROLE_WMO_VOORZIENINGEN = 'wmo.voorzieningen' as const;
 
 export const routes = {
   private: {

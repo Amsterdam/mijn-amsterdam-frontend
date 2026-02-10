@@ -31,10 +31,10 @@ export function ToeristischeVerhuurThema() {
     hasBBVergunningError,
     hasLVVRegistratiesError,
     hasVakantieVerhuurVergunningError,
-    linkListItems,
-    routeConfig,
+    pageLinks,
+    themaConfig,
   } = useToeristischeVerhuurThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const errorAlertContent = isError ? (
     <>Wij kunnen nu niet alle gegevens laten zien.</>
@@ -107,7 +107,7 @@ export function ToeristischeVerhuurThema() {
       id={id}
       title={title}
       pageContentTop={pageContentTop}
-      linkListItems={linkListItems}
+      pageLinks={pageLinks}
       maintenanceNotificationsPageSlug="toeristische-verhuur"
       pageContentMain={
         <>

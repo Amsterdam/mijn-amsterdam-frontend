@@ -3,9 +3,8 @@ import { generatePath } from 'react-router';
 import UID from 'uid-safe';
 
 import {
-  routeConfig,
-  themaId,
-  themaTitle,
+  featureToggle,
+  themaConfig,
 } from '../../../client/pages/Thema/Klachten/Klachten-thema-config';
 import {
   apiDependencyError,
@@ -146,7 +145,7 @@ export function transformKlachtenResponse(
       ),
       locatie: klachtSource?.klacht_locatieadres.value,
       link: {
-        to: generatePath(routeConfig.detailPage.path, {
+        to: generatePath(themaConfig.detailPage.route.path, {
           id,
         }),
         title: `Klacht ${id}`,
@@ -167,7 +166,10 @@ export function transformKlachtenResponse(
 function createKlachtNotification(klacht: KlachtFrontend): MyNotification {
   const id = `klacht-${klacht.id}-notification`;
   const gotoDetailTxt = 'Bekijk details';
-  if (klacht.displayStatus === 'Afgehandeld') {
+  if (
+    featureToggle.statustreinAndAfgehandeldeMeldingenActive &&
+    klacht.displayStatus === 'Afgehandeld'
+  ) {
     return {
       id,
       title: 'Klacht afgehandeld',
@@ -177,8 +179,8 @@ function createKlachtNotification(klacht: KlachtFrontend): MyNotification {
         to: klacht.link.to,
         title: gotoDetailTxt,
       },
-      themaID: themaId,
-      themaTitle: themaTitle,
+      themaID: themaConfig.id,
+      themaTitle: themaConfig.title,
     };
   }
   return {
@@ -190,8 +192,8 @@ function createKlachtNotification(klacht: KlachtFrontend): MyNotification {
       to: klacht.link.to,
       title: gotoDetailTxt,
     },
-    themaID: themaId,
-    themaTitle: themaTitle,
+    themaID: themaConfig.id,
+    themaTitle: themaConfig.title,
   };
 }
 

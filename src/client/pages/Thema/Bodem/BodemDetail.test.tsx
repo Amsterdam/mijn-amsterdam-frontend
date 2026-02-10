@@ -184,7 +184,7 @@ describe('LoodMeting', () => {
 
       const statusOntvangen = screen.getByText('Ontvangen');
       expect(statusOntvangen).toBeInTheDocument();
-      expect(statusOntvangen.firstElementChild).toHaveAttribute(
+      expect(statusOntvangen.parentElement?.parentElement).toHaveAttribute(
         'aria-label',
         'Huidige status'
       );
@@ -205,7 +205,7 @@ describe('LoodMeting', () => {
 
       const statusAfgehandeld = screen.getByText('Afgehandeld');
       expect(statusAfgehandeld).toBeInTheDocument();
-      expect(statusAfgehandeld.firstElementChild).toHaveAttribute(
+      expect(statusAfgehandeld.parentElement?.parentElement).toHaveAttribute(
         'aria-label',
         'Huidige status'
       );
@@ -232,7 +232,7 @@ describe('LoodMeting', () => {
 
       const statusAfgehandeld = screen.getByText('Afgehandeld');
       expect(statusAfgehandeld).toBeInTheDocument();
-      expect(statusAfgehandeld.firstElementChild).toHaveAttribute(
+      expect(statusAfgehandeld.parentElement?.parentElement).toHaveAttribute(
         'aria-label',
         'Huidige status'
       );

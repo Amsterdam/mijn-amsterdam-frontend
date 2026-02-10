@@ -20,7 +20,7 @@ import MockApp from '../../MockApp';
 
 function mockDetailFetch(
   content: unknown = transformErfpachtDossierProperties(
-    ERFPACHT_DOSSIER_DETAIL as ErfpachtDossiersDetailSource
+    ERFPACHT_DOSSIER_DETAIL as unknown as ErfpachtDossiersDetailSource
   ),
   status: 'OK' | 'ERROR' = 'OK'
 ) {

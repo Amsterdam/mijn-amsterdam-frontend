@@ -4,7 +4,7 @@
 ########################################################################################################################
 ########################################################################################################################
 
-FROM node:25.1.0 AS updated-local
+FROM node:25.5.0 AS updated-local
 
 ENV TZ=Europe/Amsterdam
 ENV CI=true
@@ -17,6 +17,7 @@ RUN apt-get update \
   && apt-get autoremove -y \
   && apt-get install -y --no-install-recommends \
   nano \
+  rsync \
   openssh-server
 
 ########################################################################################################################
@@ -169,6 +170,9 @@ RUN chmod -R 644 /usr/local/share/ca-certificates/extras/ \
 # Entrypoint
 COPY scripts/docker-entrypoint-bff.sh /usr/local/bin/
 RUN chmod u+x /usr/local/bin/docker-entrypoint-bff.sh
+
+# Webjob scripts
+COPY scripts/webjobs/triggered /app/jobs/triggered
 
 # Copy the built application files to the current image
 COPY --from=build-app-bff /build-space/build-bff /app/build-bff

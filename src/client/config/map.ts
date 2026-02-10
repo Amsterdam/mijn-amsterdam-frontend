@@ -18,7 +18,6 @@ export function getCrsRd(
   scales: number[] = []
 ): L.CRS {
   for (let i = 0; i <= maxZoom; i++) {
-    // eslint-disable-next-line no-magic-numbers
     scales.push(1 / (zeroScale * 0.5 ** i));
   }
 
@@ -37,23 +36,19 @@ export function getCrsRd(
           return L.latLng(lnglat[1], lnglat[0]);
         },
 
-        // eslint-disable-next-line no-magic-numbers
         bounds: L.bounds([-285401.92, 903401.92], [595401.92, 22598.08]),
 
         proj4def: projDefinition,
       },
-      // eslint-disable-next-line no-magic-numbers
       transformation: new L.Transformation(1, 285401.92, -1, 903401.92),
 
       scale: (zoom: number) => {
         if (scales[zoom]) {
           return scales[zoom];
         }
-        // eslint-disable-next-line no-magic-numbers
         return 1 / (zeroScale * 0.5 ** zoom);
       },
 
-      // eslint-disable-next-line no-magic-numbers
       zoom: (scale: number) => Math.log(1 / scale / zeroScale) / Math.log(0.5),
     },
   };
@@ -70,9 +65,7 @@ export const DEFAULT_MAP_OPTIONS = {
   zoomControl: false,
   attributionControl: true,
   maxBounds: [
-    // eslint-disable-next-line no-magic-numbers
     [52.25168, 4.64034],
-    // eslint-disable-next-line no-magic-numbers
     [52.50536, 5.10737],
   ],
   renderer: L.svg({ padding: 10 }),

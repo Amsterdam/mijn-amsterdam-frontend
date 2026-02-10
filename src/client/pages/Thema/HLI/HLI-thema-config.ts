@@ -5,10 +5,116 @@ import { generatePath } from 'react-router';
 import { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
 import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { dateSort } from '../../../../universal/helpers/date';
-import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
-import type { ThemaRoutesConfig } from '../../../config/thema-types';
+import { propagateFeatureToggles } from '../../../config/buildFeatureToggle';
+import type { PageConfig, ThemaConfigBase } from '../../../config/thema-types';
+
+const THEMA_TITLE = 'Stadspas en regelingen bij laag inkomen' as const;
+export const regelingenTitle = 'Regelingen bij laag inkomen' as const;
+export const stadspasTitle = 'Stadspas' as const;
+
+type HLIThemaConfig = ThemaConfigBase &
+  PageConfig<'regelingenDetailPage'> &
+  PageConfig<'stadspasDetailPage'> &
+  PageConfig<'specificatieListPage'> &
+  PageConfig<'regelingenListPage'>;
+
+export const themaConfig = {
+  id: 'HLI' as const,
+  title: THEMA_TITLE,
+  featureToggle: propagateFeatureToggles({
+    active: true,
+    stadspas: {
+      active: true,
+      blokkerenActive: true,
+      deblokkerenActive: !IS_PRODUCTION,
+    },
+    regelingen: {
+      active: true,
+      enabledCZM: true,
+      enabledRTM: true,
+    },
+  }),
+  profileTypes: ['private'],
+  route: {
+    path: '/regelingen-bij-laag-inkomen',
+    trackingUrl: null,
+    documentTitle: `${THEMA_TITLE} | Overzicht`,
+  },
+  redactedScope: 'full',
+  pageLinks: [
+    {
+      title: 'Meer informatie over regelingen',
+      to: 'https://www.amsterdam.nl/werk-inkomen/hulp-bij-laag-inkomen/',
+    },
+    {
+      title: 'Meer informatie over Stadspas',
+      to: 'https://www.amsterdam.nl/stadspas',
+    },
+  ],
+  specificatieListPage: {
+    route: {
+      path: '/regelingen-bij-laag-inkomen/lijst/specificaties/:page?',
+      trackingUrl: null,
+      documentTitle: `Specificaties | ${THEMA_TITLE}`,
+    },
+  },
+  regelingenListPage: {
+    route: {
+      path: '/regelingen-bij-laag-inkomen/lijst/:kind/:page?',
+      trackingUrl: null,
+      documentTitle: (params) =>
+        `${params?.kind === 'eerdere-en-afgewezen-regelingen' ? 'Eerdere' : 'Huidige'} regelingen | ${THEMA_TITLE}`,
+    },
+  },
+  regelingenDetailPage: {
+    route: {
+      path: '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
+      trackingUrl: '/regelingen-bij-laag-inkomen/regeling',
+      documentTitle: `Regeling | ${THEMA_TITLE}`,
+    },
+  },
+  stadspasDetailPage: {
+    route: {
+      path: '/regelingen-bij-laag-inkomen/stadspas/:passNumber',
+      trackingUrl: '/regelingen-bij-laag-inkomen/stadspas',
+      documentTitle: `Stadspas | ${THEMA_TITLE}`,
+    },
+  },
+  uitlegPageSections: [
+    {
+      title: regelingenTitle,
+      listItems: [
+        'Collectieve zorgverzekering',
+        'Declaratie Kindtegoed',
+        'Kindtegoed Voorschool',
+        'Reiskostenvergoeding',
+        'Gratis laptop of tablet middelbare school',
+        'Gratis laptop of tablet basisschool',
+        'Individuele inkomenstoeslag',
+        "Gratis openbaar vervoer voor AOW'ers",
+        'Tegemoetkoming aanvullend openbaar vervoer voor ouderen',
+        'Tegemoetkoming openbaar vervoer voor mantelzorgers',
+        'Regeling tegemoetkoming meerkosten',
+      ],
+    },
+    {
+      title: stadspasTitle,
+      listItems: [
+        'Status aanvraag Stadspas van u of uw gezin',
+        'Het saldo Kindtegoed en/of andere tegoeden en de bestedingen',
+        'Stadspasnummer',
+        'Stadspas blokkeren',
+      ],
+    },
+  ],
+} as const satisfies HLIThemaConfig;
+
+export const kindTegoedPageLinkItem = {
+  title: 'Meer informatie over Kindtegoed declareren',
+  to: 'https://www.amsterdam.nl/stadspas/kindtegoed/kosten-terugvragen/',
+} as const;
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
@@ -57,75 +163,11 @@ export const listPageParamKind = {
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
-export const featureToggle = {
-  hliActive: true,
-  hliStadspasActive: true,
-  zorgnedAvApiActive: true,
-  hliThemaStadspasBlokkerenActive: true,
-  hliThemaStadspasDeblokkerenActive: !IS_PRODUCTION,
-  hliThemaRegelingenActive: true,
-  hliRegelingEnabledCZM: true,
-  hliRegelingEnabledRTM: true,
-} as const;
-
-export const themaId = 'HLI' as const;
-export const themaTitle = 'Stadspas en regelingen bij laag inkomen' as const;
-export const regelingenTitle = 'Regelingen bij laag inkomen' as const;
-export const stadspasTitle = 'Stadspas' as const;
-
-export const routeConfig = {
-  detailPage: {
-    path: '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
-    trackingUrl: (params) =>
-      generatePath('/regelingen-bij-laag-inkomen/regeling/:regeling', {
-        regeling: params?.regeling ?? '',
-      }),
-    documentTitle: `Regeling | ${themaTitle}`,
-  },
-  detailPageStadspas: {
-    path: '/regelingen-bij-laag-inkomen/stadspas/:passNumber',
-    trackingUrl: '/regelingen-bij-laag-inkomen/stadspas',
-    documentTitle: `Stadspas | ${themaTitle}`,
-  },
-  specificatieListPage: {
-    path: '/regelingen-bij-laag-inkomen/lijst/specificaties/:page?',
-    documentTitle: `Specificaties | ${themaTitle}`,
-    trackingUrl: null,
-  },
-  regelingenListPage: {
-    path: '/regelingen-bij-laag-inkomen/lijst/:kind/:page?',
-    documentTitle: (params) =>
-      `${params?.kind === listPageParamKind.historic ? 'Eerdere' : 'Huidige'} regelingen | ${themaTitle}`,
-    trackingUrl: null,
-  },
-  themaPage: {
-    path: '/regelingen-bij-laag-inkomen',
-    documentTitle: `${themaTitle} | overzicht`,
-    trackingUrl: null,
-  },
-} as const satisfies ThemaRoutesConfig;
-
 export const listPageTitle = {
   [listPageParamKind.lopend]: 'Aanvragen',
   [listPageParamKind.actual]: 'Huidige regelingen',
   [listPageParamKind.historic]: 'Eerdere en afgewezen regelingen',
 } as const;
-
-export const linkListItems: LinkProps[] = [
-  {
-    to: 'https://www.amsterdam.nl/werk-inkomen/hulp-bij-laag-inkomen/',
-    title: 'Meer informatie over regelingen',
-  },
-  {
-    to: 'https://www.amsterdam.nl/stadspas',
-    title: 'Meer informatie over Stadspas',
-  },
-] as const;
-
-export const kindTegoedLinkListItem: LinkProps = {
-  to: 'https://www.amsterdam.nl/stadspas/kindtegoed/kosten-terugvragen/',
-  title: 'Meer informatie over Kindtegoed declareren',
-};
 
 export const tableConfig = {
   [listPageParamKind.lopend]: {
@@ -135,7 +177,7 @@ export const tableConfig = {
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsHuidigeRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-    listPageRoute: generatePath(routeConfig.regelingenListPage.path, {
+    listPageRoute: generatePath(themaConfig.regelingenListPage.route.path, {
       kind: listPageParamKind.lopend,
       page: null,
     }),
@@ -147,7 +189,7 @@ export const tableConfig = {
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsHuidigeRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-    listPageRoute: generatePath(routeConfig.regelingenListPage.path, {
+    listPageRoute: generatePath(themaConfig.regelingenListPage.route.path, {
       kind: listPageParamKind.actual,
       page: null,
     }),
@@ -158,7 +200,7 @@ export const tableConfig = {
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsEerdereRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER,
-    listPageRoute: generatePath(routeConfig.regelingenListPage.path, {
+    listPageRoute: generatePath(themaConfig.regelingenListPage.route.path, {
       kind: listPageParamKind.historic,
       page: null,
     }),
@@ -170,7 +212,7 @@ export const specificatieTableConfig = {
   sort: dateSort('datePublished', 'desc'),
   displayProps: specificatieDisplayProps,
   maxItems: 3,
-  listPageRoute: generatePath(routeConfig.specificatieListPage.path, {
+  listPageRoute: generatePath(themaConfig.specificatieListPage.route.path, {
     page: null,
   }),
 };

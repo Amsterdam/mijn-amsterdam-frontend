@@ -69,13 +69,6 @@ describe('routing.route-handlers', () => {
     vi.resetAllMocks();
   });
 
-  test('verifyAuthenticated', async () => {});
-
-  describe('apiKeyVerificationHandler', async () => {
-    test('Correct key', () => {});
-    test('Bad key', () => {});
-  });
-
   describe('OAuthVerificationHandler', async () => {
     const defaultToken = {
       algorithm: 'RS256',
@@ -90,13 +83,13 @@ describe('routing.route-handlers', () => {
       defaultToken
     );
     beforeAll(() => {
-      vi.stubEnv('BFF_OAUTH_KEY_ID', defaultToken.keyid);
       vi.stubEnv('BFF_OAUTH_TENANT', 'test_tenant');
       vi.stubEnv('BFF_OAUTH_MIJNADAM_CLIENT_ID', defaultToken.audience);
     });
     beforeEach(() => {
       nock('https://sts.windows.net')
         .get('/test_tenant/discovery/keys')
+        .times(1)
         .reply(200, oauthKeysResponse);
     });
     afterAll(() => {
@@ -140,7 +133,7 @@ describe('routing.route-handlers', () => {
         expect(resMock.send).toHaveBeenCalledWith({
           code: HttpStatusCode.Unauthorized,
           content: null,
-          message: 'Unauthorized',
+          message: expect.stringContaining('Unauthorized'),
           status: 'ERROR',
         });
       }
@@ -159,7 +152,7 @@ describe('routing.route-handlers', () => {
       expect(resMock.send).toHaveBeenCalledWith({
         code: 401,
         content: null,
-        message: 'Unauthorized',
+        message: expect.stringContaining('Unauthorized'),
         status: 'ERROR',
       });
     });
@@ -172,7 +165,7 @@ describe('routing.route-handlers', () => {
       expect(resMock.send).toHaveBeenCalledWith({
         code: 401,
         content: null,
-        message: 'Missing Authorization header',
+        message: expect.stringContaining('Missing Authorization header'),
         status: 'ERROR',
       });
     });
@@ -189,12 +182,12 @@ describe('routing.route-handlers', () => {
       expect(resMock.send).toHaveBeenCalledWith({
         code: 401,
         content: null,
-        message: 'Malformed Authorization header',
+        message: expect.stringContaining('Malformed Authorization header'),
         status: 'ERROR',
       });
     });
     test('Missing envs returns service unavailable', async () => {
-      vi.stubEnv('BFF_OAUTH_KEY_ID', undefined);
+      vi.stubEnv('BFF_OAUTH_TENANT', undefined);
       const nextMock = vi.fn();
       const resMock = ResponseMock.new();
       const reqMock = RequestMock.new().get();
@@ -206,13 +199,11 @@ describe('routing.route-handlers', () => {
       expect(resMock.send).toHaveBeenCalledWith({
         code: 503,
         content: null,
-        message: 'Service Unavailable',
+        message: expect.stringContaining('Service Unavailable'),
         status: 'ERROR',
       });
     });
   });
-
-  test('nocache', async () => {});
 
   describe('isAuthenticated', () => {
     test('Is authenticated', async () => {

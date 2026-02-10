@@ -1,4 +1,4 @@
-import { subYears } from 'date-fns';
+import { isAfter, parseISO, subYears } from 'date-fns';
 
 import {
   ADRES_IN_ONDERZOEK_B,
@@ -139,6 +139,8 @@ function transformBenkBrpResponse(
     adresInOnderzoek = ADRES_IN_ONDERZOEK_B;
   }
 
+  const isMokum =
+    persoon.gemeenteVanInschrijving?.code === GEMEENTE_CODE_AMSTERDAM;
   const [partner] = persoon.partners ?? [];
   const adres = verblijfplaats?.verblijfadres ?? null;
   const isVerblijfAdresBuitenland =
@@ -148,6 +150,7 @@ function transformBenkBrpResponse(
     adres?.land?.code !== LANDCODE_ONBEKEND;
 
   const fetchUrlAantalBewoners =
+    isMokum &&
     verblijfplaats?.adresseerbaarObjectIdentificatie &&
     featureToggle.service.fetchAantalBewonersOpAdres.isEnabled
       ? generateFullApiUrlBFF(routes.protected.BRP_AANTAL_BEWONERS_OP_ADRES, [
@@ -176,7 +179,7 @@ function transformBenkBrpResponse(
             omschrijving: n.nationaliteit?.omschrijving ?? '',
           }))
           .filter((n) => !!n.omschrijving) ?? [],
-      mokum: persoon.gemeenteVanInschrijving?.code === GEMEENTE_CODE_AMSTERDAM,
+      mokum: isMokum,
       vertrokkenOnbekendWaarheen:
         verblijfplaats?.type === 'VerblijfplaatsOnbekend',
       datumVertrekUitNederlandFormatted: isVerblijfAdresBuitenland
@@ -191,14 +194,18 @@ function transformBenkBrpResponse(
     },
     verbintenis: partner
       ? {
+          soortVerbintenis: partner.soortVerbintenis?.omschrijving ?? null,
+          datumSluiting: getDatum(partner.aangaanHuwelijkPartnerschap?.datum),
+          datumSluitingFormatted:
+            partner.aangaanHuwelijkPartnerschap?.datum?.langFormaat ?? null,
+          plaats:
+            partner.aangaanHuwelijkPartnerschap?.plaats?.omschrijving ?? null,
+          land: partner.aangaanHuwelijkPartnerschap?.land?.omschrijving ?? null,
           datumOntbinding: getDatum(
             partner.ontbindingHuwelijkPartnerschap?.datum
           ),
           datumOntbindingFormatted:
             partner.ontbindingHuwelijkPartnerschap?.datum?.langFormaat ?? null,
-          datumSluiting: getDatum(partner.aangaanHuwelijkPartnerschap?.datum),
-          datumSluitingFormatted:
-            partner.aangaanHuwelijkPartnerschap?.datum?.langFormaat ?? null,
           persoon: getPersoonBasis(partner),
         }
       : null,
@@ -415,6 +422,7 @@ export async function fetchAantalBewoners(
     return response;
   }
 
+  const today = new Date();
   const requestConfig = getApiConfig('BENK_BRP', {
     formatUrl(requestConfig) {
       return `${requestConfig.url}/personen`;
@@ -424,10 +432,19 @@ export async function fetchAantalBewoners(
       'X-Correlation-ID': getContextOperationId(sessionID), // Required for tracing
     },
     transformResponse: (responseData: PersonenResponseSource | null) => {
-      return responseData?.personen?.length ?? AANTAL_BEWONERS_NOT_SET;
+      // This is redundant filtering, as the API should always return the correct data. See also: MIJN-12262
+      const personenFiltered = responseData?.personen?.filter((persoon) => {
+        const datumOpschortingBijhouding = persoon.opschortingBijhouding?.datum;
+        return datumOpschortingBijhouding &&
+          'datum' in datumOpschortingBijhouding
+          ? isAfter(parseISO(datumOpschortingBijhouding.datum), today)
+          : true;
+      });
+      return personenFiltered?.length || AANTAL_BEWONERS_NOT_SET;
     },
     data: {
       type: 'ZoekMetAdresseerbaarObjectIdentificatie',
+      inclusiefOverledenPersonen: false,
       // Only request adressering.adresregel3 to reduce payload. We don't require any other data to be fetched here.
       // The response will be used to count the number of personen related to a certain adresseerbaarObject.
       fields: ['adressering.adresregel3'],
@@ -436,9 +453,7 @@ export async function fetchAantalBewoners(
     },
   });
 
-  const brpBsnResponse = await requestData<number>(requestConfig);
-
-  return brpBsnResponse;
+  return requestData<number>(requestConfig);
 }
 
 export const forTesting = {

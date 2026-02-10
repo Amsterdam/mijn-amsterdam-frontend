@@ -1,7 +1,11 @@
 import { Paragraph, Link, Heading } from '@amsterdam/design-system-react';
 
+import {
+  filterErfpachtFacturen,
+  mapErfpachtFacturen,
+} from './Erfpacht-helpers';
+import { featureToggle } from './Erfpacht-thema-config';
 import { useErfpachtThemaData } from './useErfpachtThemaData.hook';
-import { useWonenThemaData } from '../Profile/private/useVvEThemaData.hook';
 import { ErfpachtDossierFrontend } from '../../../../server/services/erfpacht/erfpacht-types';
 import { entries } from '../../../../universal/helpers/utils';
 import { MaRouterLink } from '../../../components/MaLink/MaLink';
@@ -10,7 +14,9 @@ import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 import * as afis from '../Afis/Afis-thema-config';
+import { AfisFacturenTables } from '../Afis/AfisFacturenTables';
 import { useAfisThemaData } from '../Afis/useAfisThemaData.hook';
+import { useWonenThemaData } from '../Profile/private/useWonenThemaData.hook';
 
 export function ErfpachtThema() {
   const {
@@ -22,6 +28,7 @@ export function ErfpachtThema() {
     tableConfig,
     dossiers,
     routeConfig,
+    erfpachtFacturenTableConfig,
   } = useErfpachtThemaData();
 
   const wonenData = useWonenThemaData();
@@ -57,7 +64,7 @@ export function ErfpachtThema() {
       title={title}
       isLoading={isLoading}
       isError={isError}
-      linkListItems={linkListItems}
+      pageLinks={linkListItems}
       maintenanceNotificationsPageSlug="erfpacht"
       pageContentTop={
         <>
@@ -80,7 +87,19 @@ export function ErfpachtThema() {
       pageContentMain={
         <>
           {pageContentTables}
-
+          {featureToggle.afisFacturenTablesActive && (
+            <AfisFacturenTables
+              themaContextParams={{
+                tableConfig: erfpachtFacturenTableConfig,
+                routeConfigDetailPage: routeConfig.detailPageFactuur,
+                routeConfigListPage: routeConfig.listPageFacturen,
+                themaId: id,
+                states: ['open'],
+                factuurFilterFn: filterErfpachtFacturen,
+                factuurMapFn: mapErfpachtFacturen,
+              }}
+            />
+          )}
           <PageContentCell spanWide={8}>
             <MissingFacturenDescription />
             <>
@@ -100,19 +119,39 @@ function MissingFacturenDescription() {
     <>
       <Heading level={3}>Facturen</Heading>
       <Paragraph className="ams-mb-m">
-        Facturen vanaf 1 januari 2025 en nog niet betaalde facturen kunt u
-        inzien onder{' '}
-        <MaRouterLink href={afis.routeConfig.themaPage.path}>
-          {afis.themaTitle}.
-        </MaRouterLink>{' '}
-        Zoekt u een oudere factuur, stuur dan een e-mail naar{' '}
-        <Link
-          rel="noreferrer"
-          href="mailto:debiteurenadministratie@amsterdam.nl"
-        >
-          debiteurenadministratie@amsterdam.nl
-        </Link>
-        .
+        {!featureToggle.afisFacturenTablesActive ? (
+          <>
+            Facturen vanaf 1 januari 2025 en nog niet betaalde facturen kunt u
+            inzien onder{' '}
+            <MaRouterLink href={afis.routeConfig.themaPage.path}>
+              {afis.themaTitle}.
+            </MaRouterLink>{' '}
+            Zoekt u een oudere factuur, stuur dan een e-mail naar{' '}
+            <Link
+              rel="noreferrer"
+              href="mailto:debiteurenadministratie@amsterdam.nl"
+            >
+              debiteurenadministratie@amsterdam.nl
+            </Link>
+            .
+          </>
+        ) : (
+          <>
+            U ziet hier openstaande facturen vanaf 1 januari 2025. Zoekt u een
+            andere factuur? Kijk dan bij{' '}
+            <MaRouterLink href={afis.routeConfig.themaPage.path}>
+              {afis.themaTitle}
+            </MaRouterLink>{' '}
+            of stuur een e-mail naar{' '}
+            <Link
+              rel="noreferrer"
+              href="mailto:debiteurenadministratie@amsterdam.nl"
+            >
+              debiteurenadministratie@amsterdam.nl
+            </Link>
+            .
+          </>
+        )}
       </Paragraph>
       <Heading level={4}>Factuur naar ander adres</Heading>
       <Paragraph className="ams-mb-m">

@@ -1,18 +1,16 @@
-version: "3"
-
 services:
   db:
     image: postgres:latest
     container_name: mijnadam_db
     ports:
-      - 5432:5432
+      - 8081:5432
     environment:
       POSTGRES_PASSWORD: "mijnadam"
       POSTGRES_USER: "mijnadam"
       POSTGRES_DB: "mijnadam"
     restart: always
     volumes:
-      - pg_data:/var/lib/postgresql/data
+      - pg_data:/var/lib/postgresql
 
   pgadmin:
     image: dpage/pgadmin4

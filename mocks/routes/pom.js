@@ -38,19 +38,22 @@ module.exports = [
                 url: 'http://localhost:5000/private/api/v1/services/afis/e-mandates/sign-request-status-notify',
                 data: {
                   id_client: '1000',
-                  debtornumber: '123456',
+                  debtornumber: '0001500091',
                   cid: '2345678910',
                   mpid: '1234567890',
                   payment_reference: '123456789',
                   id_request_client: 'test',
                   event_type: 'payment',
-                  amount_total: '45500',
-                  id_bank: 'ABNANL2A',
-                  iban: 'GB33BUKB20201555555555',
+                  amount_total: '0',
+                  id_bank: 'INGBNL2A',
+                  iban: 'NL98INGB0003856625',
                   bic: 'INGBNL2A',
                   account_owner: 'John Doe',
-                  event_date: '2024-01-05',
-                  event_time: '11:27',
+                  event_date: new Date().toISOString().split('T')[0],
+                  event_time: new Date()
+                    .toISOString()
+                    .split('T')[1]
+                    .split('.')[0],
                   variable1: `${creditorIBAN}`,
                 },
                 headers: {

@@ -98,7 +98,10 @@ export async function countLoggedInVisit(
   return query(queries.countLogin, [userIDHashed, authMethod]);
 }
 
-export async function loginStats(req: Request, res: Response) {
+export async function loginStats(
+  req: Request<{ authMethod: AuthMethod }>,
+  res: Response
+) {
   if (!IS_TAP && !tableNameLoginCount) {
     return res.send(
       'Supply database credentials and enable your Datapunt VPN to use this view locally.'

@@ -13,21 +13,24 @@ import type {
   WithListPage,
 } from '../../../config/thema-types';
 
-type BodemThemaConfig = ThemaConfigBase & WithDetailPage & WithListPage;
+type BodemThemaConfig = ThemaConfigBase<typeof THEMA_ID> &
+  WithDetailPage &
+  WithListPage;
 
+const THEMA_ID = 'BODEM';
 const THEMA_TITLE = 'Bodem';
 
 export const themaConfig: BodemThemaConfig = {
-  id: 'BODEM',
+  id: THEMA_ID,
   title: THEMA_TITLE,
   featureToggle: {
-    themaActive: true,
+    active: true,
   },
   profileTypes: ['private', 'commercial'],
   route: {
     path: '/bodem',
     get documentTitle() {
-      return `${themaConfig.title} | Overzicht`;
+      return `${THEMA_TITLE} | Overzicht`;
     },
     trackingUrl: null,
   },
@@ -38,30 +41,30 @@ export const themaConfig: BodemThemaConfig = {
       to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/bodem/loodcheck-tuin-aanvragen',
     },
   ],
-  uitlegPageSections: {
-    title: THEMA_TITLE,
-    listItems: ["Uw aanvraag voor 'lood in de bodem-check'"],
+  listPage: {
+    route: {
+      path: '/bodem/lijst/lood-meting/:kind/:page?',
+      trackingUrl: null,
+      documentTitle: (params) =>
+        `${params?.kind === listPageKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${THEMA_TITLE}`,
+    },
   },
-
   detailPage: {
     title: 'Lood in bodem-check',
     route: {
       path: '/bodem/lood-meting/:id',
       trackingUrl: '/bodem/lood-meting',
       get documentTitle() {
-        return `Lood in de bodem-check | ${themaConfig.title}`;
+        return `Lood in de bodem-check | ${THEMA_TITLE}`;
       },
     },
   },
-
-  listPage: {
-    route: {
-      path: '/bodem/lijst/lood-meting/:kind/:page?',
-      trackingUrl: null,
-      documentTitle: (params) =>
-        `${params?.kind === listPageKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaConfig.title}`,
+  uitlegPageSections: [
+    {
+      title: THEMA_TITLE,
+      listItems: ["Uw aanvraag voor 'lood in de bodem-check'"],
     },
-  },
+  ],
 } as const;
 
 export const listPageKind = {

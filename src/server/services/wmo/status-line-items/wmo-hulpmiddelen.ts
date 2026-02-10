@@ -11,9 +11,11 @@ import {
   MEER_INFORMATIE,
 } from './wmo-generic';
 import {
+  ProductSoortCode,
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types';
+import { featureToggle } from '../wmo-service-config';
 
 export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
   AANVRAAG,
@@ -48,41 +50,134 @@ export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
   EINDE_RECHT,
 ];
 
+/** Config for adding or adjusting disclaimers that need to show up when a zorgned voorziening has been wrongfuly closed but then opened again.
+ *
+ *  The dates are to identify which voorzieningen are actually part of what should be one voorziening.
+ *  So if you have a pair of [end = 2024-02-01, start = 2024-01-31]. Then we will -
+ *  show a disclaimer text on the actual one and the non actual (ended) one.
+ *
+ *  Current implementation does not allow codes to be used in seperate config values.
+ *
+ *  @param codes - List of productsoortcodes that this config applies to.
+ *  @param actual - Disclaimer text for actual items
+ *  @param notActual - Disclaimer text for non-actual item
+ */
+type ConfigValue = {
+  codes: ProductSoortCode[];
+  actual: string;
+  notActual: string;
+  datePairs: DatePairs;
+};
+
+type DatePairs = {
+  datumEindeGeldigheid: ZorgnedAanvraagTransformed['datumEindeGeldigheid'];
+  datumIngangGeldigheid: ZorgnedAanvraagTransformed['datumIngangGeldigheid'];
+}[];
+
+export type HulpmiddelenDisclaimerConfig = ConfigValue[];
+
+export const hulpmiddelenDisclaimerConfig: HulpmiddelenDisclaimerConfig = [
+  {
+    // For all other productcodes.
+    codes: [],
+    actual:
+      'Door een fout kan het zijn dat dit hulpmiddel ook bij "Eerdere en afgewezen voorzieningen" staat. Daar vindt u dan het originele besluit met de juiste datums.',
+    notActual:
+      'Door een fout kan het zijn dat dit hulpmiddel ten onrechte bij "Eerdere en afgewezen voorzieningen" staat.',
+    datePairs: [
+      {
+        datumEindeGeldigheid: '2024-10-31',
+        datumIngangGeldigheid: '2024-11-01',
+      },
+    ],
+  },
+];
+
+if (featureToggle.hulpmiddelenDisclaimerCodes.GBW) {
+  hulpmiddelenDisclaimerConfig.push({
+    codes: ['GBW'],
+    actual:
+      'Het kan zijn dat uw gesloten buitenwagen hieronder een verkeerde startdatum heeft. Kijk voor de juiste startdatum bij "Eerdere en afgewezen voorzieningen".',
+    notActual:
+      'Het kan zijn dat uw gesloten buitenwagen ten onrechte bij "Eerdere en afgewezen voorzieningen" staat. Dit kunt u negeren.',
+    datePairs: [
+      {
+        datumEindeGeldigheid: '2025-12-31',
+        datumIngangGeldigheid: '2026-01-01',
+      },
+    ],
+  });
+}
 /**
- * Er zijn een aantal voorzieninginen in Zorgned gekopieerd naar nieuwe voorzieningen.
+ * Er zijn een aantal voorzieningen in Zorgned gekopieerd naar nieuwe voorzieningen.
  * De oude voorzieningen zijn afgesloten (einde recht).
  * De nieuwe voorzieningen zijn niet voorzien van een besluit document waardoor de besluit status niet zichtbaar is.
  */
 export function getHulpmiddelenDisclaimer(
-  detailAanvraag: ZorgnedAanvraagTransformed,
+  disclaimerConfig: HulpmiddelenDisclaimerConfig,
+  currentAanvraag: ZorgnedAanvraagTransformed,
   aanvragen: ZorgnedAanvraagTransformed[]
 ): string | undefined {
-  const datumEindeGeldigheid = '2024-10-31';
-  const datumIngangGeldigheid = '2024-11-01';
+  const config =
+    disclaimerConfig.find((cfg) =>
+      cfg.codes.includes(currentAanvraag.productsoortCode)
+    ) ?? disclaimerConfig.find((cfg) => !cfg.codes.length);
 
-  const hasNietActueelMatch =
-    detailAanvraag.isActueel &&
-    detailAanvraag.datumIngangGeldigheid === datumIngangGeldigheid &&
-    aanvragen.some(
-      (aanvraag) =>
-        aanvraag.datumEindeGeldigheid === datumEindeGeldigheid &&
-        !aanvraag.isActueel
-    );
-
-  const hasActueelMatch =
-    !detailAanvraag.isActueel &&
-    detailAanvraag.datumEindeGeldigheid === datumEindeGeldigheid &&
-    aanvragen.some(
-      (aanvraag) =>
-        aanvraag.datumIngangGeldigheid === datumIngangGeldigheid &&
-        aanvraag.isActueel
-    );
-
-  if (hasNietActueelMatch) {
-    return 'Door een fout kan het zijn dat dit hulpmiddel ook bij "Eerdere en afgewezen voorzieningen" staat. Daar vindt u dan het originele besluit met de juiste datums.';
-  } else if (hasActueelMatch) {
-    return 'Door een fout kan het zijn dat dit hulpmiddel ten onrechte bij "Eerdere en afgewezen voorzieningen" staat.';
+  if (!config) {
+    return undefined;
   }
 
-  return undefined;
+  const isMatch = (
+    dateKey: DateKey,
+    oppositeDateKey: DateKey,
+    disclaimer: string
+  ) => {
+    return isDateMatch(config.datePairs, currentAanvraag[dateKey], dateKey) &&
+      hasAanvraagMatch(config, currentAanvraag, aanvragen, oppositeDateKey)
+      ? disclaimer
+      : undefined;
+  };
+
+  return currentAanvraag.isActueel
+    ? isMatch('datumIngangGeldigheid', 'datumEindeGeldigheid', config.actual)
+    : isMatch(
+        'datumEindeGeldigheid',
+        'datumIngangGeldigheid',
+        config.notActual
+      );
+}
+
+type DateKey = keyof Pick<
+  ZorgnedAanvraagTransformed,
+  'datumIngangGeldigheid' | 'datumEindeGeldigheid'
+>;
+
+function isDateMatch(
+  datePairs: DatePairs,
+  aanvraagDate: string | null,
+  key: DateKey
+): boolean {
+  if (!aanvraagDate) {
+    return false;
+  }
+  return datePairs.some(({ datumEindeGeldigheid, datumIngangGeldigheid }) => {
+    return key === 'datumEindeGeldigheid'
+      ? aanvraagDate === datumEindeGeldigheid
+      : aanvraagDate === datumIngangGeldigheid;
+  });
+}
+
+function hasAanvraagMatch(
+  config: ConfigValue,
+  currentAanvraag: ZorgnedAanvraagTransformed,
+  aanvragen: ZorgnedAanvraagTransformed[],
+  key: DateKey
+): boolean {
+  const expectedActueelValue = key === 'datumIngangGeldigheid';
+  return aanvragen.some(
+    (aanvraag) =>
+      aanvraag.productsoortCode === currentAanvraag.productsoortCode &&
+      isDateMatch(config.datePairs, aanvraag[key], key) &&
+      aanvraag.isActueel === expectedActueelValue
+  );
 }

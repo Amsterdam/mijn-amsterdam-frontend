@@ -7,7 +7,11 @@ import {
   HLIresponseData,
   ZorgnedHLIRegeling,
 } from './hli-regelingen-types';
-import { routes, ZORGNED_AV_API_CONFIG_KEY } from './hli-service-config';
+import {
+  featureToggle,
+  routes,
+  ZORGNED_AV_API_CONFIG_KEY,
+} from './hli-service-config';
 import { hliStatusLineItemsConfig } from './hli-status-line-items';
 import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import {
@@ -21,19 +25,17 @@ import {
   isWorkshopNietGevolgd,
   filterCombineUpcPcvData,
 } from './status-line-items/regeling-pcvergoeding';
+import { themaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import {
-  featureToggle,
-  routeConfig,
-} from '../../../client/pages/Thema/HLI/HLI-thema-config';
-import {
+  ApiResponse,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
 } from '../../../universal/helpers/api';
+import { toDateFormatted } from '../../../universal/helpers/date';
 import { dedupeDocumentsInDataSets } from '../../../universal/helpers/document';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { splitBy } from '../../../universal/helpers/utils';
-import { toDateFormatted } from '../../../universal/helpers/date';
 import {
   GenericDocument,
   StatusLineItem,
@@ -132,7 +134,7 @@ export function transformRegelingForFrontend(
 ) {
   const id = aanvraag.prettyID;
 
-  const route = generatePath(routeConfig.detailPage.path, {
+  const route = generatePath(themaConfig.regelingenDetailPage.route.path, {
     id,
     regeling: slug(aanvraag.titel),
   });
@@ -177,7 +179,7 @@ function transformRegelingenForFrontend(
   today: Date
 ): HLIRegelingFrontend[] {
   const [remainingAanvragen, RTMAanvragen] = splitBy(aanvragen, isRTMAanvraag);
-  const RTMRegelingenFrontend = featureToggle.hliRegelingEnabledRTM
+  const RTMRegelingenFrontend = featureToggle.service.enabledRTM
     ? transformRTMAanvragen(sessionID, aanvrager, RTMAanvragen)
     : [];
 
@@ -227,8 +229,10 @@ function transformRegelingenForFrontend(
   return dedupeDocumentsInDataSets(regelingenFrontendSorted, 'documents');
 }
 
-async function fetchRegelingen(authProfileAndToken: AuthProfileAndToken) {
-  if (!featureToggle.hliThemaRegelingenActive) {
+async function fetchRegelingen(
+  authProfileAndToken: AuthProfileAndToken
+): Promise<ApiResponse<HLIRegelingFrontend[]>> {
+  if (!featureToggle.service.enabledRegelingen) {
     return apiSuccessResult([]);
   }
 

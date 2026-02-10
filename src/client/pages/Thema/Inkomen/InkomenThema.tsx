@@ -5,6 +5,7 @@ import { useInkomenThemaData } from './useInkomenThemaData.hook';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
+import { getFeedbackDetailsByTableConfig } from '../../../components/UserFeedback/UserFeedback.helpers';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 const pageContentTop = (
@@ -63,6 +64,16 @@ export function InkomenThema() {
     }
   );
 
+  const themaPaginaDetails = {
+    ...getFeedbackDetailsByTableConfig(zaken, tableConfig),
+    ...getFeedbackDetailsByTableConfig(specificaties, {
+      specificaties: tableConfigSpecificaties.uitkering,
+    }),
+    ...getFeedbackDetailsByTableConfig(jaaropgaven, {
+      jaaropgaven: tableConfigSpecificaties.uitkering,
+    }),
+  };
+
   return (
     <ThemaPagina
       id={id}
@@ -76,8 +87,9 @@ export function InkomenThema() {
           {tablesSpecificaties}
         </>
       }
-      linkListItems={linkListItems}
+      pageLinks={linkListItems}
       maintenanceNotificationsPageSlug="inkomen"
+      themaFeedbackDetails={themaPaginaDetails}
     />
   );
 }

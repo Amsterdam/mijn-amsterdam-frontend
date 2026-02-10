@@ -28,6 +28,10 @@ export const is18OrOlder: TipsPredicateFN = (
   return age >= AGE_18;
 };
 
+export const is18OrOlderOnElectionDay: TipsPredicateFN = (appState) => {
+  return is18OrOlder(appState, new Date('2026-03-18'));
+};
+
 // rule 12
 export const hasStadspasGroeneStip: TipsPredicateFN = (appState) => {
   if (appState.HLI?.status === 'OK') {

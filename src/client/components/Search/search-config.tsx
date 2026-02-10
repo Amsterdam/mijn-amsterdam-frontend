@@ -48,6 +48,7 @@ import {
   StatusLineItem,
 } from '../../../universal/types/App.types';
 import type { ThemaMenuItem } from '../../config/thema-types';
+import type { AfisFactuurFrontend } from '../../pages/Thema/Afis/Afis-thema-config';
 import { featureToggle as featureToggleAVG } from '../../pages/Thema/AVG/AVG-thema-config';
 import { featureToggle as featureToggleBezwaren } from '../../pages/Thema/Bezwaren/Bezwaren-thema-config';
 import { themaConfig as themaConfigBodem } from '../../pages/Thema/Bodem/Bodem-thema-config';
@@ -55,7 +56,7 @@ import { featureToggle as featureToggleHoreca } from '../../pages/Thema/Horeca/H
 import { featureToggle as featureToggleKlachten } from '../../pages/Thema/Klachten/Klachten-thema-config';
 import { featureToggle as featureToggleKrefia } from '../../pages/Thema/Krefia/Krefia-thema-config';
 import { routeConfig as routeConfigProfile } from '../../pages/Thema/Profile/Profile-thema-config';
-import { routeConfig as routeConfigToeristischeVerhuur } from '../../pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
+import { themaConfig as toeristischeVerhuurThemaConfig } from '../../pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 import {
   featureToggle as featureToggleVaren,
   routeConfig as routeConfigVaren,
@@ -289,7 +290,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
             title: 'Landelijk registratienummer',
             identifier: registratie.registrationNumber,
             link: {
-              to: routeConfigToeristischeVerhuur.themaPage.path,
+              to: toeristischeVerhuurThemaConfig.route.path,
               title: 'Landelijk registratienummer',
             },
           };
@@ -376,6 +377,12 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     stateKey: 'AFIS',
     profileTypes: ['private', 'commercial'],
+    generateKeywords: (factuur: AfisFactuurFrontend): string[] =>
+      uniqueArray([
+        factuur.factuurNummer,
+        factuur.statusDescription,
+        factuur.afzender,
+      ]),
     getApiBaseItems: (data: AfisThemaResponse) => {
       if (data?.facturen) {
         return Object.values(data.facturen).flatMap(

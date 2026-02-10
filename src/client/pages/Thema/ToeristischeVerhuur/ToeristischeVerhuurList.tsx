@@ -16,9 +16,9 @@ export function ToeristischeVerhuurList() {
     isLoading,
     isError,
     breadcrumbs,
-    routeConfig,
+    themaConfig,
   } = useToeristischeVerhuurThemaData();
-  useHTMLDocumentTitle(routeConfig.listPage);
+  useHTMLDocumentTitle(themaConfig.listPage.route);
 
   const listPageTableConfig = tableConfigVergunningen[kind];
   const { title, filter, sort, listPageRoute, displayProps } =

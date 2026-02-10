@@ -45,7 +45,7 @@ export async function fetchBAG(
   }
 
   const params: BAGQueryParams = {
-    openbareruimteNaam: sourceAddress.straatnaam,
+    openbareruimteNaamNen: sourceAddress.straatnaam,
     huisnummer: sourceAddress.huisnummer,
     huisletter: sourceAddress.huisletter || undefined,
   };

@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { featureToggle, listPageParamKind } from './HLI-thema-config';
+import { listPageParamKind } from './HLI-thema-config';
 import styles from './HLIThema.module.scss';
 import { useHliThemaData } from './useHliThemaData';
 import {
@@ -94,10 +94,9 @@ export function HLIThema() {
     dependencyError,
     stadspassen,
     dateExpiryFormatted,
-    linkListItems,
-    routeConfig,
+    themaConfig,
   } = useHliThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const hasAanvragen = regelingen.some(
     tableConfig[listPageParamKind.lopend].filter
@@ -112,7 +111,7 @@ export function HLIThema() {
     </PageContentCell>
   );
 
-  const regelingenTables = featureToggle.hliThemaRegelingenActive
+  const regelingenTables = themaConfig.featureToggle.regelingen.active
     ? entries(tableConfig)
         .filter(([kind]) => {
           return kind === listPageParamKind.lopend ? hasAanvragen : true;
@@ -142,7 +141,7 @@ export function HLIThema() {
         id={themaId}
         title={title}
         pageContentTop={pageContentTop}
-        linkListItems={linkListItems}
+        pageLinks={themaConfig.pageLinks}
         maintenanceNotificationsPageSlug="stadspas"
         pageContentMain={
           <>

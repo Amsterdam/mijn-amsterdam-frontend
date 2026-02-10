@@ -27,6 +27,7 @@ import {
   getEmandateValidityDateFormatted,
   getFeedEntryProperties,
   isEmandateActive,
+  type EmandateStatusFrontend,
 } from './afis-helpers';
 import {
   type AfisBusinessPartnerDetailsTransformed,
@@ -65,6 +66,7 @@ import {
   isoDateTimeFormatCompact,
 } from '../../../universal/helpers/date';
 import { toDateFormatted } from '../../../universal/helpers/date';
+import { sortByNumber } from '../../../universal/helpers/utils';
 
 export async function createOrUpdateEMandateFromStatusNotificationPayload(
   payload: EMandateSignRequestPayload & EMandateSignRequestNotificationPayload
@@ -93,7 +95,10 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
 
   // Check if this bank account exists in the sender's bank account list.
   // If not add it to the list.
-  const bankAccountResponse = await fetchCheckIfIBANexists(senderIBAN);
+  const bankAccountResponse = await fetchCheckIfIBANexists(
+    senderIBAN,
+    payload.businessPartnerId
+  );
   const bankAccountExists = bankAccountResponse.content === true;
 
   if (bankAccountResponse.status !== 'OK') {
@@ -125,7 +130,7 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
   // The user can later adjust this date.
   const lifetimeTo = AFIS_EMANDATE_RECURRING_DATE_END;
 
-  const payloadFinal: AfisEMandateCreatePayload = {
+  const payloadCreateEmandate: AfisEMandateCreatePayload = {
     // Fixed values needed for API (black box)
     ...afisEMandatePostbodyStatic,
 
@@ -134,6 +139,9 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
 
     // Gegevens van de debiteur/afgever van het EMandaat
     SndId: payload.businessPartnerId,
+
+    // SndDebtorId is the reference ID of the creditor for this business partner.
+    SndDebtorId: creditor.refId,
 
     // Gegevens geleverd door Debtor bank via EMandaat request
     SndIban: senderIBAN,
@@ -150,22 +158,13 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
 
     SignDate: payload.eMandateSignDate,
     SignCity: eMandateReceiver.RecCity, // TODO: Hoe komen we aan dit gegeven, altijd Amsterdam? - https://gemeente-amsterdam.atlassian.net/browse/MIJN-12289
-    LifetimeFrom: new Date().toISOString(),
+    LifetimeFrom: isoDateTimeFormatCompact(new Date()),
     LifetimeTo: lifetimeTo,
-    SndDebtorId: creditor.refId,
   };
 
-  const eMandateIdResponse = await fetchEmandateIdByCreditorRefId(
-    payload.businessPartnerId,
-    creditor.refId
-  );
+  debugEmandates('Creating new e-mandate.', payloadCreateEmandate);
 
-  const response = await (eMandateIdResponse.content
-    ? updateAfisEMandate({
-        ...payloadFinal,
-        IMandateId: eMandateIdResponse.content,
-      })
-    : createAfisEMandate(payloadFinal));
+  const response = await createAfisEMandate(payloadCreateEmandate);
 
   if (response.status !== 'OK') {
     throw new Error(
@@ -195,13 +194,12 @@ async function updateAfisEMandate(
   payload: AfisEMandateUpdatePayload,
   transform?: (data: unknown) => Partial<AfisEMandateFrontend>
 ) {
-  const { IMandateId, ...payload_ } = payload;
   const config = await getAfisApiConfig({
     method: 'PUT',
-    data: payload_,
+    data: payload,
     enableCache: false,
     formatUrl: ({ url }) => {
-      return `${url}/ChangeMandate/ZGW_FI_MANDATE_SRV_01/Mandate_changeSet(IMandateId='${IMandateId}')`;
+      return `${url}/ChangeMandate/ZGW_FI_MANDATE_SRV_01/Mandate_changeSet(IMandateId='${payload.IMandateId}')`;
     },
     transformResponse: transform,
   });
@@ -292,11 +290,13 @@ function transformEMandateSource(
     ? isoDateFormat(afisEMandateSource.LifetimeTo)
     : null;
   const dateValidToFormatted = getEmandateValidityDateFormatted(dateValidTo);
-
+  const currentStatus = (afisEMandateSource?.Status.toString() ??
+    EMANDATE_STATUS_FRONTEND.OFF) as EmandateStatusFrontend;
   const isActive = isEmandateActive(dateValidTo);
   const id = slug(creditor.name);
   const eMandate: AfisEMandateFrontend = {
     id,
+    eMandateIdSource: afisEMandateSource?.IMandateId ?? null,
     creditorName: creditor.name,
     creditorIBAN: creditor.iban,
     creditorDescription: creditor.description,
@@ -310,7 +310,7 @@ function transformEMandateSource(
     dateValidFromFormatted,
     dateValidTo,
     dateValidToFormatted,
-    status: getEmandateStatusFrontend(dateValidTo),
+    status: getEmandateStatusFrontend(currentStatus, dateValidTo),
     displayStatus: getEmandateDisplayStatus(
       dateValidTo,
       dateValidFromFormatted
@@ -333,10 +333,10 @@ function transformEMandateSource(
 }
 
 function getEMandateSourceByCreditor(
-  sourceMandates: AfisEMandateSource[],
+  sourceMandatesASC: AfisEMandateSource[],
   creditor: AfisEMandateCreditor
 ): AfisEMandateSource | undefined {
-  return sourceMandates.find((eMandateSource) => {
+  return sourceMandatesASC.findLast((eMandateSource) => {
     return eMandateSource.SndDebtorId === creditor.refId;
   });
 }
@@ -346,14 +346,13 @@ function transformEMandatesResponse(
   sessionID: SessionID,
   businessPartnerId: BusinessPartnerId
 ): AfisEMandateFrontend[] {
-  if (!responseData?.feed?.entry) {
-    return [];
-  }
-  const sourceMandates = getFeedEntryProperties(responseData);
+  const sourceMandatesASC = getFeedEntryProperties(responseData).toSorted(
+    sortByNumber('IMandateId', 'asc')
+  );
 
   return EMandateCreditorsGemeenteAmsterdam.map((creditor) => {
     const afisEMandateSource = getEMandateSourceByCreditor(
-      sourceMandates,
+      sourceMandatesASC,
       creditor
     );
 
@@ -365,9 +364,11 @@ function transformEMandatesResponse(
     );
 
     return eMandate;
-  }).sort(
+  }).toSorted(
     firstBy(function sortByStatus(eMandate: AfisEMandateFrontend) {
-      return eMandate.status === EMANDATE_STATUS_FRONTEND.ON ? -1 : 1;
+      return eMandate.status.toString() === EMANDATE_STATUS_FRONTEND.ON
+        ? -1
+        : 1;
     }).thenBy('creditorName')
   );
 }
@@ -384,7 +385,9 @@ export async function fetchEmandateIdByCreditorRefId(
       const sourceMandates =
         getFeedEntryProperties<AfisEMandateSource>(responseData);
       return (
-        sourceMandates.find((mandate) => mandate.SndDebtorId === creditorRefID)
+        sourceMandates
+          .toSorted(sortByNumber('IMandateId', 'asc'))
+          .findLast((mandate) => mandate.SndDebtorId === creditorRefID)
           ?.IMandateId ?? null
       );
     },
@@ -435,7 +438,7 @@ export async function fetchEMandates(
 function transformEMandatesRedirectUrlResponse(
   responseData: POMSignRequestUrlResponseSource
 ): AfisEMandateSignRequestResponse | null {
-  if (responseData?.mpid) {
+  if (responseData?.paylink) {
     return { redirectUrl: responseData.paylink };
   }
   return null;
@@ -454,12 +457,12 @@ function createEMandateSignRequestPayload(
 
   const today = new Date();
   const isoDateString = today.toISOString();
-  const invoiceDate = isoDateFormat(today);
-  const invoiceNumber = `EMandaat-${creditor.refId}-${invoiceDate}`;
+  // const invoiceDate = isoDateFormat(today);
+  // const invoiceNumber = `EMandaat-${creditor.refId}-${invoiceDate}`;
 
   // TODO: Moet dit met een gegeven uit AFIS te koppelen zijn? - https://gemeente-amsterdam.atlassian.net/browse/MIJN-12289
   const paymentReference = `${creditor.refId}-${businessPartner.businessPartnerId}`;
-  const idBatch = `batch-${paymentReference}`;
+  const idBatch = `mijnamsterdam-emandates-batch-${isoDateFormat(today)}`;
   const idRequestClient = `${creditor.refId}-${businessPartner.businessPartnerId}-${isoDateString}`;
 
   // Paylinks are valid for 1 day
@@ -472,8 +475,8 @@ function createEMandateSignRequestPayload(
   const concerning = `Automatische incasso ${creditor.name}`;
 
   return {
-    first_name: businessPartner.firstName || 'Naam',
-    last_name: businessPartner.lastName || 'Achternaam',
+    last_name:
+      businessPartner.lastName || businessPartner.fullName || 'Achternaam',
     debtor_number: businessPartner.businessPartnerId,
     payment_reference: paymentReference,
     concerning,
@@ -485,15 +488,6 @@ function createEMandateSignRequestPayload(
     return_url: returnUrl,
     cid: null,
     payment_modules: ['emandate_recurring'],
-    invoices: [
-      {
-        invoice_number: invoiceNumber,
-        invoice_date: invoiceDate,
-        invoice_description: concerning,
-        invoice_amount: 0,
-        invoice_due_date: dueDate,
-      },
-    ],
   };
 }
 
@@ -565,7 +559,10 @@ export async function deactivateEmandate(
     return {
       dateValidTo,
       dateValidToFormatted,
-      status: getEmandateStatusFrontend(dateValidTo),
+      status: getEmandateStatusFrontend(
+        EMANDATE_STATUS_FRONTEND.OFF,
+        dateValidTo
+      ),
       displayStatus: getEmandateDisplayStatus(
         dateValidTo,
         dateValidFromFormatted

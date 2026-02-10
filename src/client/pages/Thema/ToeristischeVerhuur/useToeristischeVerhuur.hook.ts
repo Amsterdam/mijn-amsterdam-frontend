@@ -1,10 +1,9 @@
 import {
-  listPageTitle,
   tableConfigLVVRegistraties,
   tableConfig,
-  themaId,
-  themaTitle,
-  routeConfig,
+  themaConfig,
+  vvVergunningPageLinkItem,
+  bbVergunningPageLinkItem,
 } from './ToeristischeVerhuur-thema-config';
 import { ToeristischeVerhuurVergunning } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
 import {
@@ -67,38 +66,20 @@ export function useToeristischeVerhuurThemaData() {
     'lvvRegistraties'
   );
 
-  const linkListItems: LinkProps[] = [
-    {
-      title: 'Meer over toeristenbelasting',
-      to: 'https://www.amsterdam.nl/belastingen/toeristenbelasting/',
-    },
-    {
-      title: 'Vakantieverhuur melden of registratienummer aanvragen',
-      to: 'https://www.toeristischeverhuur.nl/portaal/login',
-    },
-  ];
+  const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
-  if (hasVergunningBB && !hasVergunningenVakantieVerhuur) {
-    linkListItems.unshift({
-      title: 'Meer informatie over bed & breakfast',
-      to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/woonruimte-verhuren/vergunning-aanvragen-bed-breakfast/',
-    });
-  }
-
+  const extraPageLinks: LinkProps[] = [];
   if (hasVergunningenVakantieVerhuur) {
-    linkListItems.unshift({
-      title: 'Meer informatie over particuliere vakantieverhuur',
-      to: 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/',
-    });
+    extraPageLinks.push(vvVergunningPageLinkItem);
+  } else if (hasVergunningBB) {
+    extraPageLinks.push(bbVergunningPageLinkItem);
   }
-
-  const breadcrumbs = useThemaBreadcrumbs(themaId);
 
   return {
     vergunningen,
     lvvRegistraties,
-    id: themaId,
-    title: themaTitle,
+    id: themaConfig.id,
+    title: themaConfig.title,
     isLoading: isLoading(TOERISTISCHE_VERHUUR),
     isError: isError(TOERISTISCHE_VERHUUR, false),
     hasLVVRegistratiesError,
@@ -106,14 +87,14 @@ export function useToeristischeVerhuurThemaData() {
     hasVakantieVerhuurVergunningError,
     tableConfigVergunningen: tableConfig,
     tableConfigLVVRegistraties,
-    listPageTitle,
+    listPageTitle: themaConfig.listPage.route,
     hasRegistrations,
     hasPermits,
     hasVergunningenVakantieVerhuur,
     hasBothVerleend,
     hasVergunningBB,
-    linkListItems,
     breadcrumbs,
-    routeConfig,
+    pageLinks: [...extraPageLinks, ...themaConfig.pageLinks],
+    themaConfig,
   };
 }

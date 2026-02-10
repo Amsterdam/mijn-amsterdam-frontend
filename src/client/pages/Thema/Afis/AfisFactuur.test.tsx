@@ -12,6 +12,10 @@ const mockFactuur: AfisFactuurFrontend = {
   paymentDueDateFormatted: '2023-10-01',
   afzender: 'Gemeente Amsterdam',
   statusDescription: 'Betaald',
+  link: {
+    to: '/facturen-en-betalen/factuur/open/12345',
+    title: 'Factuur 12345',
+  },
 };
 
 const testState: Record<'AFIS', ApiResponse<AfisThemaResponse>> = {

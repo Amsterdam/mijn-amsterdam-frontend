@@ -97,172 +97,228 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
         <div
           class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
         >
-          <section
-            class="_Steps_5b0b8a"
-          >
+          <section>
             <h3
               class="ams-heading ams-heading--2 ams-mb-m"
             >
               Status
             </h3>
             <ol
-              class="ams-ordered-list ams-ordered-list--no-markers _StepsList_5b0b8a"
+              class="ams-progress-list ams-progress-list--heading-3"
             >
               <li
-                class="ams-ordered-list__item _Step_5b0b8a _Step--checked_5b0b8a"
+                aria-label="Status Afgerond"
+                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--completed"
               >
-                <h3
-                  class="ams-heading ams-heading--3 _StepStatus_5b0b8a"
+                <div
+                  class="ams-progress-list__indicator"
                 >
-                  <span
-                    aria-label="Status Afgerond"
-                    class="_StepStatusIndication_5b0b8a"
+                  <div
+                    class="ams-progress-list__marker"
                   >
                     <span
-                      aria-label="Status Afgerond"
-                      class="ams-icon ams-icon--heading-4 _StatusIndicationCheckmark_5b0b8a"
-                      hidden=""
-                    >
-                      <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          clip-rule="evenodd"
-                          d="M8.642 17.032 20.014 4 21.5 5.304 8.677 20 2.5 13.243l1.456-1.338z"
-                          fill-rule="evenodd"
-                        />
-                      </svg>
-                    </span>
-                  </span>
-                  Besluit
-                </h3>
-                <time
-                  class="_StepStatusDate_5b0b8a"
-                  datetime="2022-01-15"
+                      class="ams-progress-list__marker-shape"
+                    />
+                  </div>
+                  <span
+                    class="ams-progress-list__connector"
+                  />
+                </div>
+                <div
+                  class="ams-progress-list__content"
                 >
-                  15 januari 2022
-                </time>
-                <div>
-                  
-              
-                  <p
-                    class="ams-paragraph"
+                  <h3
+                    class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
+                    Besluit
+                  </h3>
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime="2022-01-15"
+                  >
+                    15 januari 2022
+                  </time>
+                  <div>
                     
+              
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
                 U heeft recht op hulp bij het huishouden (geleverd) per 15 december 2021.
               
-                  </p>
-                  
-              
-                  <p
-                    class="ams-paragraph"
-                  >
+                    </p>
                     
+              
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
                 
                     In de brief leest u ook hoe u bezwaar kunt maken, een klacht
                     kan indienen of 
-                    <u>
-                      hoe u van aanbieder kunt wisselen.
-                    </u>
-                    
+                      <u>
+                        hoe u van aanbieder kunt wisselen.
+                      </u>
+                      
                   
               
-                  </p>
-                  
-            
-                </div>
-                <p
-                  class="ams-paragraph"
-                >
-                  
-            
-                  <strong>
+                    </p>
                     
+            
+                  </div>
+                  <p
+                    class="ams-paragraph"
+                  >
+                    
+            
+                    <strong>
+                      
               U krijgt dit besluit per post.
             
-                  </strong>
-                  
+                    </strong>
+                    
           
-                </p>
+                  </p>
+                </div>
               </li>
               <li
-                class="ams-ordered-list__item _Step_5b0b8a _Step--active_5b0b8a"
+                aria-current="step"
+                aria-label="Huidige status"
+                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--current"
               >
-                <h3
-                  class="ams-heading ams-heading--3 _StepStatus_5b0b8a"
+                <div
+                  class="ams-progress-list__indicator"
                 >
-                  <span
-                    aria-label="Huidige status"
-                    class="_StepStatusIndication_5b0b8a"
-                  />
-                  Levering gestart
-                </h3>
-                <time
-                  class="_StepStatusDate_5b0b8a"
-                  datetime=""
-                />
-                <div>
-                  <p
-                    class="ams-paragraph"
+                  <div
+                    class="ams-progress-list__marker"
                   >
-                    
+                    <span
+                      class="ams-progress-list__marker-shape"
+                    >
+                      <span
+                        class="ams-icon ams-icon--inverse"
+                        hidden=""
+                      >
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="m13.342 6.673 1.42-1.423L21.5 12l-6.738 6.75-1.42-1.423 4.312-4.32H2.5v-2.013h15.154z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                  </div>
+                  <span
+                    class="ams-progress-list__connector"
+                  />
+                </div>
+                <div
+                  class="ams-progress-list__content"
+                >
+                  <h3
+                    class="ams-heading ams-heading--3 ams-progress-list__heading"
+                  >
+                    Levering gestart
+                  </h3>
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime=""
+                  />
+                  <div>
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
             Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (geleverd).
           
-                  </p>
+                    </p>
+                  </div>
                 </div>
               </li>
               <li
-                class="ams-ordered-list__item _Step_5b0b8a"
+                aria-label="Toekomstige status"
+                class="_Step_5b0b8a ams-progress-list__step"
               >
-                <h3
-                  class="ams-heading ams-heading--3 _StepStatus_5b0b8a"
+                <div
+                  class="ams-progress-list__indicator"
                 >
-                  <span
-                    aria-label="Toekomstige status"
-                    class="_StepStatusIndication_5b0b8a"
-                  />
-                  Levering gestopt
-                </h3>
-                <time
-                  class="_StepStatusDate_5b0b8a"
-                  datetime=""
-                />
-                <div>
-                  <p
-                    class="ams-paragraph"
+                  <div
+                    class="ams-progress-list__marker"
                   >
-                    
+                    <span
+                      class="ams-progress-list__marker-shape"
+                    />
+                  </div>
+                  <span
+                    class="ams-progress-list__connector"
+                  />
+                </div>
+                <div
+                  class="ams-progress-list__content"
+                >
+                  <h3
+                    class="ams-heading ams-heading--3 ams-progress-list__heading"
+                  >
+                    Levering gestopt
+                  </h3>
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime=""
+                  />
+                  <div>
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
             Niet van toepassing.
           
-                  </p>
+                    </p>
+                  </div>
                 </div>
               </li>
               <li
-                class="ams-ordered-list__item _Step_5b0b8a"
+                aria-label="Toekomstige status"
+                class="_Step_5b0b8a ams-progress-list__step"
               >
-                <h3
-                  class="ams-heading ams-heading--3 _StepStatus_5b0b8a"
+                <div
+                  class="ams-progress-list__indicator"
                 >
-                  <span
-                    aria-label="Toekomstige status"
-                    class="_StepStatusIndication_5b0b8a"
-                  />
-                  Einde recht
-                </h3>
-                <time
-                  class="_StepStatusDate_5b0b8a"
-                />
-                <div>
-                  <p
-                    class="ams-paragraph"
+                  <div
+                    class="ams-progress-list__marker"
                   >
-                    
+                    <span
+                      class="ams-progress-list__marker-shape"
+                    />
+                  </div>
+                  <span
+                    class="ams-progress-list__connector"
+                  />
+                </div>
+                <div
+                  class="ams-progress-list__content"
+                >
+                  <h3
+                    class="ams-heading ams-heading--3 ams-progress-list__heading"
+                  >
+                    Einde recht
+                  </h3>
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                  />
+                  <div>
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
             Uw recht op hulp bij het huishouden (geleverd) is beëindigd per 
           
-                  </p>
+                    </p>
+                  </div>
                 </div>
               </li>
             </ol>
@@ -371,208 +427,226 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
         <div
           class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
         >
-          <section
-            class="_Steps_5b0b8a"
-          >
+          <section>
             <h3
               class="ams-heading ams-heading--2 ams-mb-m"
             >
               Status
             </h3>
             <ol
-              class="ams-ordered-list ams-ordered-list--no-markers _StepsList_5b0b8a"
+              class="ams-progress-list ams-progress-list--heading-3"
             >
               <li
-                class="ams-ordered-list__item _Step_5b0b8a _Step--checked_5b0b8a"
+                aria-label="Status Afgerond"
+                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--completed"
               >
-                <h3
-                  class="ams-heading ams-heading--3 _StepStatus_5b0b8a"
+                <div
+                  class="ams-progress-list__indicator"
                 >
-                  <span
-                    aria-label="Status Afgerond"
-                    class="_StepStatusIndication_5b0b8a"
+                  <div
+                    class="ams-progress-list__marker"
                   >
                     <span
-                      aria-label="Status Afgerond"
-                      class="ams-icon ams-icon--heading-4 _StatusIndicationCheckmark_5b0b8a"
-                      hidden=""
-                    >
-                      <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          clip-rule="evenodd"
-                          d="M8.642 17.032 20.014 4 21.5 5.304 8.677 20 2.5 13.243l1.456-1.338z"
-                          fill-rule="evenodd"
-                        />
-                      </svg>
-                    </span>
-                  </span>
-                  Besluit
-                </h3>
-                <time
-                  class="_StepStatusDate_5b0b8a"
-                  datetime="2022-01-15"
+                      class="ams-progress-list__marker-shape"
+                    />
+                  </div>
+                  <span
+                    class="ams-progress-list__connector"
+                  />
+                </div>
+                <div
+                  class="ams-progress-list__content"
                 >
-                  15 januari 2022
-                </time>
-                <div>
-                  
-              
-                  <p
-                    class="ams-paragraph"
+                  <h3
+                    class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
+                    Besluit
+                  </h3>
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime="2022-01-15"
+                  >
+                    15 januari 2022
+                  </time>
+                  <div>
                     
+              
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
                 U heeft recht op hulp bij het huishouden (gestopt) per 15 december 2021.
               
-                  </p>
-                  
-              
-                  <p
-                    class="ams-paragraph"
-                  >
+                    </p>
                     
+              
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
                 In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
               indienen.
               
-                  </p>
-                  
-            
-                </div>
-                <p
-                  class="ams-paragraph"
-                >
-                  
-            
-                  <strong>
+                    </p>
                     
+            
+                  </div>
+                  <p
+                    class="ams-paragraph"
+                  >
+                    
+            
+                    <strong>
+                      
               U heeft dit besluit per post ontvangen.
             
-                  </strong>
-                  
-          
-                </p>
-              </li>
-              <li
-                class="ams-ordered-list__item _Step_5b0b8a _Step--checked_5b0b8a"
-              >
-                <h3
-                  class="ams-heading ams-heading--3 _StepStatus_5b0b8a"
-                >
-                  <span
-                    aria-label="Status Afgerond"
-                    class="_StepStatusIndication_5b0b8a"
-                  >
-                    <span
-                      aria-label="Status Afgerond"
-                      class="ams-icon ams-icon--heading-4 _StatusIndicationCheckmark_5b0b8a"
-                      hidden=""
-                    >
-                      <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          clip-rule="evenodd"
-                          d="M8.642 17.032 20.014 4 21.5 5.304 8.677 20 2.5 13.243l1.456-1.338z"
-                          fill-rule="evenodd"
-                        />
-                      </svg>
-                    </span>
-                  </span>
-                  Levering gestart
-                </h3>
-                <time
-                  class="_StepStatusDate_5b0b8a"
-                  datetime=""
-                />
-                <div>
-                  <p
-                    class="ams-paragraph"
-                  >
+                    </strong>
                     
-            Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (gestopt).
           
                   </p>
                 </div>
               </li>
               <li
-                class="ams-ordered-list__item _Step_5b0b8a _Step--checked_5b0b8a"
+                aria-label="Status Afgerond"
+                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--completed"
               >
-                <h3
-                  class="ams-heading ams-heading--3 _StepStatus_5b0b8a"
+                <div
+                  class="ams-progress-list__indicator"
                 >
-                  <span
-                    aria-label="Status Afgerond"
-                    class="_StepStatusIndication_5b0b8a"
+                  <div
+                    class="ams-progress-list__marker"
                   >
                     <span
-                      aria-label="Status Afgerond"
-                      class="ams-icon ams-icon--heading-4 _StatusIndicationCheckmark_5b0b8a"
-                      hidden=""
-                    >
-                      <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          clip-rule="evenodd"
-                          d="M8.642 17.032 20.014 4 21.5 5.304 8.677 20 2.5 13.243l1.456-1.338z"
-                          fill-rule="evenodd"
-                        />
-                      </svg>
-                    </span>
-                  </span>
-                  Levering gestopt
-                </h3>
-                <time
-                  class="_StepStatusDate_5b0b8a"
-                  datetime=""
-                />
-                <div>
-                  <p
-                    class="ams-paragraph"
+                      class="ams-progress-list__marker-shape"
+                    />
+                  </div>
+                  <span
+                    class="ams-progress-list__connector"
+                  />
+                </div>
+                <div
+                  class="ams-progress-list__content"
+                >
+                  <h3
+                    class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
-                    
+                    Levering gestart
+                  </h3>
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime=""
+                  />
+                  <div>
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
+            Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (gestopt).
+          
+                    </p>
+                  </div>
+                </div>
+              </li>
+              <li
+                aria-label="Status Afgerond"
+                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--completed"
+              >
+                <div
+                  class="ams-progress-list__indicator"
+                >
+                  <div
+                    class="ams-progress-list__marker"
+                  >
+                    <span
+                      class="ams-progress-list__marker-shape"
+                    />
+                  </div>
+                  <span
+                    class="ams-progress-list__connector"
+                  />
+                </div>
+                <div
+                  class="ams-progress-list__content"
+                >
+                  <h3
+                    class="ams-heading ams-heading--3 ams-progress-list__heading"
+                  >
+                    Levering gestopt
+                  </h3>
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime=""
+                  />
+                  <div>
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
             Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden (gestopt)
             meer krijgt.
           
-                  </p>
+                    </p>
+                  </div>
                 </div>
               </li>
               <li
-                class="ams-ordered-list__item _Step_5b0b8a _Step--active_5b0b8a"
+                aria-current="step"
+                aria-label="Huidige status"
+                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--current"
               >
-                <h3
-                  class="ams-heading ams-heading--3 _StepStatus_5b0b8a"
+                <div
+                  class="ams-progress-list__indicator"
                 >
-                  <span
-                    aria-label="Huidige status"
-                    class="_StepStatusIndication_5b0b8a"
-                  />
-                  Einde recht
-                </h3>
-                <time
-                  class="_StepStatusDate_5b0b8a"
-                  datetime="2022-01-22"
-                >
-                  22 januari 2022
-                </time>
-                <div>
-                  <p
-                    class="ams-paragraph"
+                  <div
+                    class="ams-progress-list__marker"
                   >
-                    
+                    <span
+                      class="ams-progress-list__marker-shape"
+                    >
+                      <span
+                        class="ams-icon ams-icon--inverse"
+                        hidden=""
+                      >
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="m13.342 6.673 1.42-1.423L21.5 12l-6.738 6.75-1.42-1.423 4.312-4.32H2.5v-2.013h15.154z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                  </div>
+                  <span
+                    class="ams-progress-list__connector"
+                  />
+                </div>
+                <div
+                  class="ams-progress-list__content"
+                >
+                  <h3
+                    class="ams-heading ams-heading--3 ams-progress-list__heading"
+                  >
+                    Einde recht
+                  </h3>
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime="2022-01-22"
+                  >
+                    22 januari 2022
+                  </time>
+                  <div>
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
             Uw recht op hulp bij het huishouden (gestopt) is beëindigd per 22 januari 2022
           
-                  </p>
+                    </p>
+                  </div>
                 </div>
               </li>
             </ol>
@@ -681,153 +755,228 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
         <div
           class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
         >
-          <section
-            class="_Steps_5b0b8a"
-          >
+          <section>
             <h3
               class="ams-heading ams-heading--2 ams-mb-m"
             >
               Status
             </h3>
             <ol
-              class="ams-ordered-list ams-ordered-list--no-markers _StepsList_5b0b8a"
+              class="ams-progress-list ams-progress-list--heading-3"
             >
               <li
-                class="ams-ordered-list__item _Step_5b0b8a _Step--active_5b0b8a"
+                aria-current="step"
+                aria-label="Huidige status"
+                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--current"
               >
-                <h3
-                  class="ams-heading ams-heading--3 _StepStatus_5b0b8a"
+                <div
+                  class="ams-progress-list__indicator"
                 >
-                  <span
-                    aria-label="Huidige status"
-                    class="_StepStatusIndication_5b0b8a"
-                  />
-                  Besluit
-                </h3>
-                <time
-                  class="_StepStatusDate_5b0b8a"
-                  datetime="2022-01-15"
-                >
-                  15 januari 2022
-                </time>
-                <div>
-                  
-              
-                  <p
-                    class="ams-paragraph"
+                  <div
+                    class="ams-progress-list__marker"
                   >
+                    <span
+                      class="ams-progress-list__marker-shape"
+                    >
+                      <span
+                        class="ams-icon ams-icon--inverse"
+                        hidden=""
+                      >
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="m13.342 6.673 1.42-1.423L21.5 12l-6.738 6.75-1.42-1.423 4.312-4.32H2.5v-2.013h15.154z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                  </div>
+                  <span
+                    class="ams-progress-list__connector"
+                  />
+                </div>
+                <div
+                  class="ams-progress-list__content"
+                >
+                  <h3
+                    class="ams-heading ams-heading--3 ams-progress-list__heading"
+                  >
+                    Besluit
+                  </h3>
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime="2022-01-15"
+                  >
+                    15 januari 2022
+                  </time>
+                  <div>
                     
+              
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
                 U heeft recht op hulp bij het huishouden (nog niet geleverd) per 15 januari 2022.
               
-                  </p>
-                  
-              
-                  <p
-                    class="ams-paragraph"
-                  >
+                    </p>
                     
+              
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
                 
                     In de brief leest u ook hoe u bezwaar kunt maken, een klacht
                     kan indienen of 
-                    <u>
-                      hoe u van aanbieder kunt wisselen.
-                    </u>
-                    
+                      <u>
+                        hoe u van aanbieder kunt wisselen.
+                      </u>
+                      
                   
               
-                  </p>
-                  
-            
-                </div>
-                <p
-                  class="ams-paragraph"
-                >
-                  
-            
-                  <strong>
+                    </p>
                     
+            
+                  </div>
+                  <p
+                    class="ams-paragraph"
+                  >
+                    
+            
+                    <strong>
+                      
               U krijgt dit besluit per post.
             
-                  </strong>
-                  
+                    </strong>
+                    
           
-                </p>
+                  </p>
+                </div>
               </li>
               <li
-                class="ams-ordered-list__item _Step_5b0b8a"
+                aria-label="Toekomstige status"
+                class="_Step_5b0b8a ams-progress-list__step"
               >
-                <h3
-                  class="ams-heading ams-heading--3 _StepStatus_5b0b8a"
+                <div
+                  class="ams-progress-list__indicator"
                 >
-                  <span
-                    aria-label="Toekomstige status"
-                    class="_StepStatusIndication_5b0b8a"
-                  />
-                  Levering gestart
-                </h3>
-                <time
-                  class="_StepStatusDate_5b0b8a"
-                  datetime=""
-                />
-                <div>
-                  <p
-                    class="ams-paragraph"
+                  <div
+                    class="ams-progress-list__marker"
                   >
-                    
+                    <span
+                      class="ams-progress-list__marker-shape"
+                    />
+                  </div>
+                  <span
+                    class="ams-progress-list__connector"
+                  />
+                </div>
+                <div
+                  class="ams-progress-list__content"
+                >
+                  <h3
+                    class="ams-heading ams-heading--3 ams-progress-list__heading"
+                  >
+                    Levering gestart
+                  </h3>
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime=""
+                  />
+                  <div>
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
             Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (nog niet geleverd).
           
-                  </p>
+                    </p>
+                  </div>
                 </div>
               </li>
               <li
-                class="ams-ordered-list__item _Step_5b0b8a"
+                aria-label="Toekomstige status"
+                class="_Step_5b0b8a ams-progress-list__step"
               >
-                <h3
-                  class="ams-heading ams-heading--3 _StepStatus_5b0b8a"
+                <div
+                  class="ams-progress-list__indicator"
                 >
-                  <span
-                    aria-label="Toekomstige status"
-                    class="_StepStatusIndication_5b0b8a"
-                  />
-                  Levering gestopt
-                </h3>
-                <time
-                  class="_StepStatusDate_5b0b8a"
-                  datetime=""
-                />
-                <div>
-                  <p
-                    class="ams-paragraph"
+                  <div
+                    class="ams-progress-list__marker"
                   >
-                    
+                    <span
+                      class="ams-progress-list__marker-shape"
+                    />
+                  </div>
+                  <span
+                    class="ams-progress-list__connector"
+                  />
+                </div>
+                <div
+                  class="ams-progress-list__content"
+                >
+                  <h3
+                    class="ams-heading ams-heading--3 ams-progress-list__heading"
+                  >
+                    Levering gestopt
+                  </h3>
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime=""
+                  />
+                  <div>
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
             Niet van toepassing.
           
-                  </p>
+                    </p>
+                  </div>
                 </div>
               </li>
               <li
-                class="ams-ordered-list__item _Step_5b0b8a"
+                aria-label="Toekomstige status"
+                class="_Step_5b0b8a ams-progress-list__step"
               >
-                <h3
-                  class="ams-heading ams-heading--3 _StepStatus_5b0b8a"
+                <div
+                  class="ams-progress-list__indicator"
                 >
-                  <span
-                    aria-label="Toekomstige status"
-                    class="_StepStatusIndication_5b0b8a"
-                  />
-                  Einde recht
-                </h3>
-                <time
-                  class="_StepStatusDate_5b0b8a"
-                />
-                <div>
-                  <p
-                    class="ams-paragraph"
+                  <div
+                    class="ams-progress-list__marker"
                   >
-                    
+                    <span
+                      class="ams-progress-list__marker-shape"
+                    />
+                  </div>
+                  <span
+                    class="ams-progress-list__connector"
+                  />
+                </div>
+                <div
+                  class="ams-progress-list__content"
+                >
+                  <h3
+                    class="ams-heading ams-heading--3 ams-progress-list__heading"
+                  >
+                    Einde recht
+                  </h3>
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                  />
+                  <div>
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
             Uw recht op hulp bij het huishouden (nog niet geleverd) is beëindigd per 
           
-                  </p>
+                    </p>
+                  </div>
                 </div>
               </li>
             </ol>
@@ -936,191 +1085,228 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
         <div
           class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
         >
-          <section
-            class="_Steps_5b0b8a"
-          >
+          <section>
             <h3
               class="ams-heading ams-heading--2 ams-mb-m"
             >
               Status
             </h3>
             <ol
-              class="ams-ordered-list ams-ordered-list--no-markers _StepsList_5b0b8a"
+              class="ams-progress-list ams-progress-list--heading-3"
             >
               <li
-                class="ams-ordered-list__item _Step_5b0b8a _Step--checked_5b0b8a"
+                aria-label="Status Afgerond"
+                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--completed"
               >
-                <h3
-                  class="ams-heading ams-heading--3 _StepStatus_5b0b8a"
+                <div
+                  class="ams-progress-list__indicator"
                 >
-                  <span
-                    aria-label="Status Afgerond"
-                    class="_StepStatusIndication_5b0b8a"
+                  <div
+                    class="ams-progress-list__marker"
                   >
                     <span
-                      aria-label="Status Afgerond"
-                      class="ams-icon ams-icon--heading-4 _StatusIndicationCheckmark_5b0b8a"
-                      hidden=""
-                    >
-                      <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          clip-rule="evenodd"
-                          d="M8.642 17.032 20.014 4 21.5 5.304 8.677 20 2.5 13.243l1.456-1.338z"
-                          fill-rule="evenodd"
-                        />
-                      </svg>
-                    </span>
-                  </span>
-                  Besluit
-                </h3>
-                <time
-                  class="_StepStatusDate_5b0b8a"
-                  datetime="2022-01-15"
+                      class="ams-progress-list__marker-shape"
+                    />
+                  </div>
+                  <span
+                    class="ams-progress-list__connector"
+                  />
+                </div>
+                <div
+                  class="ams-progress-list__content"
                 >
-                  15 januari 2022
-                </time>
-                <div>
-                  
-              
-                  <p
-                    class="ams-paragraph"
+                  <h3
+                    class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
+                    Besluit
+                  </h3>
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime="2022-01-15"
+                  >
+                    15 januari 2022
+                  </time>
+                  <div>
                     
+              
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
                 U heeft recht op hulp bij het huishouden (tijdelijk gestopt) per 15 december 2021.
               
-                  </p>
-                  
-              
-                  <p
-                    class="ams-paragraph"
-                  >
+                    </p>
                     
+              
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
                 
                     In de brief leest u ook hoe u bezwaar kunt maken, een klacht
                     kan indienen of 
-                    <u>
-                      hoe u van aanbieder kunt wisselen.
-                    </u>
-                    
+                      <u>
+                        hoe u van aanbieder kunt wisselen.
+                      </u>
+                      
                   
               
-                  </p>
-                  
-            
-                </div>
-                <p
-                  class="ams-paragraph"
-                >
-                  
-            
-                  <strong>
+                    </p>
                     
+            
+                  </div>
+                  <p
+                    class="ams-paragraph"
+                  >
+                    
+            
+                    <strong>
+                      
               U krijgt dit besluit per post.
             
-                  </strong>
-                  
+                    </strong>
+                    
           
-                </p>
+                  </p>
+                </div>
               </li>
               <li
-                class="ams-ordered-list__item _Step_5b0b8a _Step--checked_5b0b8a"
+                aria-label="Status Afgerond"
+                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--completed"
               >
-                <h3
-                  class="ams-heading ams-heading--3 _StepStatus_5b0b8a"
+                <div
+                  class="ams-progress-list__indicator"
                 >
-                  <span
-                    aria-label="Status Afgerond"
-                    class="_StepStatusIndication_5b0b8a"
+                  <div
+                    class="ams-progress-list__marker"
                   >
                     <span
-                      aria-label="Status Afgerond"
-                      class="ams-icon ams-icon--heading-4 _StatusIndicationCheckmark_5b0b8a"
-                      hidden=""
-                    >
-                      <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          clip-rule="evenodd"
-                          d="M8.642 17.032 20.014 4 21.5 5.304 8.677 20 2.5 13.243l1.456-1.338z"
-                          fill-rule="evenodd"
-                        />
-                      </svg>
-                    </span>
-                  </span>
-                  Levering gestart
-                </h3>
-                <time
-                  class="_StepStatusDate_5b0b8a"
-                  datetime=""
-                />
-                <div>
-                  <p
-                    class="ams-paragraph"
+                      class="ams-progress-list__marker-shape"
+                    />
+                  </div>
+                  <span
+                    class="ams-progress-list__connector"
+                  />
+                </div>
+                <div
+                  class="ams-progress-list__content"
+                >
+                  <h3
+                    class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
-                    
+                    Levering gestart
+                  </h3>
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime=""
+                  />
+                  <div>
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
             Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (tijdelijk gestopt).
           
-                  </p>
+                    </p>
+                  </div>
                 </div>
               </li>
               <li
-                class="ams-ordered-list__item _Step_5b0b8a _Step--active_5b0b8a"
+                aria-current="step"
+                aria-label="Huidige status"
+                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--current"
               >
-                <h3
-                  class="ams-heading ams-heading--3 _StepStatus_5b0b8a"
+                <div
+                  class="ams-progress-list__indicator"
                 >
-                  <span
-                    aria-label="Huidige status"
-                    class="_StepStatusIndication_5b0b8a"
-                  />
-                  Levering gestopt
-                </h3>
-                <time
-                  class="_StepStatusDate_5b0b8a"
-                  datetime=""
-                />
-                <div>
-                  <p
-                    class="ams-paragraph"
+                  <div
+                    class="ams-progress-list__marker"
                   >
-                    
+                    <span
+                      class="ams-progress-list__marker-shape"
+                    >
+                      <span
+                        class="ams-icon ams-icon--inverse"
+                        hidden=""
+                      >
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="m13.342 6.673 1.42-1.423L21.5 12l-6.738 6.75-1.42-1.423 4.312-4.32H2.5v-2.013h15.154z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                  </div>
+                  <span
+                    class="ams-progress-list__connector"
+                  />
+                </div>
+                <div
+                  class="ams-progress-list__content"
+                >
+                  <h3
+                    class="ams-heading ams-heading--3 ams-progress-list__heading"
+                  >
+                    Levering gestopt
+                  </h3>
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime=""
+                  />
+                  <div>
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
             Niet van toepassing.
           
-                  </p>
+                    </p>
+                  </div>
                 </div>
               </li>
               <li
-                class="ams-ordered-list__item _Step_5b0b8a"
+                aria-label="Toekomstige status"
+                class="_Step_5b0b8a ams-progress-list__step"
               >
-                <h3
-                  class="ams-heading ams-heading--3 _StepStatus_5b0b8a"
+                <div
+                  class="ams-progress-list__indicator"
                 >
-                  <span
-                    aria-label="Toekomstige status"
-                    class="_StepStatusIndication_5b0b8a"
-                  />
-                  Einde recht
-                </h3>
-                <time
-                  class="_StepStatusDate_5b0b8a"
-                />
-                <div>
-                  <p
-                    class="ams-paragraph"
+                  <div
+                    class="ams-progress-list__marker"
                   >
-                    
+                    <span
+                      class="ams-progress-list__marker-shape"
+                    />
+                  </div>
+                  <span
+                    class="ams-progress-list__connector"
+                  />
+                </div>
+                <div
+                  class="ams-progress-list__content"
+                >
+                  <h3
+                    class="ams-heading ams-heading--3 ams-progress-list__heading"
+                  >
+                    Einde recht
+                  </h3>
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                  />
+                  <div>
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
             Uw recht op hulp bij het huishouden (tijdelijk gestopt) is beëindigd per 
           
-                  </p>
+                    </p>
+                  </div>
                 </div>
               </li>
             </ol>
@@ -1229,37 +1415,67 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `
         <div
           class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
         >
-          <section
-            class="_Steps_5b0b8a"
-          >
+          <section>
             <h3
               class="ams-heading ams-heading--2 ams-mb-m"
             >
               Status
             </h3>
             <ol
-              class="ams-ordered-list ams-ordered-list--no-markers _StepsList_5b0b8a"
+              class="ams-progress-list ams-progress-list--heading-3"
             >
               <li
-                class="ams-ordered-list__item _Step_5b0b8a _Step--active_5b0b8a"
+                aria-current="step"
+                aria-label="Huidige status"
+                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--current"
               >
-                <h3
-                  class="ams-heading ams-heading--3 _StepStatus_5b0b8a"
+                <div
+                  class="ams-progress-list__indicator"
                 >
+                  <div
+                    class="ams-progress-list__marker"
+                  >
+                    <span
+                      class="ams-progress-list__marker-shape"
+                    >
+                      <span
+                        class="ams-icon ams-icon--inverse"
+                        hidden=""
+                      >
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="m13.342 6.673 1.42-1.423L21.5 12l-6.738 6.75-1.42-1.423 4.312-4.32H2.5v-2.013h15.154z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                  </div>
                   <span
-                    aria-label="Huidige status"
-                    class="_StepStatusIndication_5b0b8a"
+                    class="ams-progress-list__connector"
                   />
-                  Levering gestart
-                </h3>
-                <time
-                  class="_StepStatusDate_5b0b8a"
-                  datetime="2020-07-24"
+                </div>
+                <div
+                  class="ams-progress-list__content"
                 >
-                  24 juli 2020
-                </time>
-                <div>
-                  De levering van uw thuizorg is gestart
+                  <h3
+                    class="ams-heading ams-heading--3 ams-progress-list__heading"
+                  >
+                    Levering gestart
+                  </h3>
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime="2020-07-24"
+                  >
+                    24 juli 2020
+                  </time>
+                  <div>
+                    De levering van uw thuizorg is gestart
+                  </div>
                 </div>
               </li>
             </ol>

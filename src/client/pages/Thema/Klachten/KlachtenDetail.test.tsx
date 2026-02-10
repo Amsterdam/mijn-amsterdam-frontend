@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { routeConfig } from './Klachten-thema-config';
+import { themaConfig } from './Klachten-thema-config';
 import { KlachtenDetail } from './KlachtenDetail';
 import { AppState } from '../../../../universal/types/App.types';
 import MockApp from '../../MockApp';
@@ -54,10 +54,10 @@ const testState = {
 } as AppState;
 
 function setupMockComponent(id: string) {
-  const routeEntry = generatePath(routeConfig.detailPage.path, {
+  const routeEntry = generatePath(themaConfig.detailPage.route.path, {
     id,
   });
-  const routePath = routeConfig.detailPage.path;
+  const routePath = themaConfig.detailPage.route.path;
 
   return function Component() {
     return (
