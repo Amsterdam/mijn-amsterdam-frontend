@@ -19,11 +19,21 @@ export const featureToggle = {
 const THEMA_ID = 'BEZWAREN';
 const THEMA_TITLE = 'Bezwaren';
 
-type ThemaConfigBezwaren = Pick<ThemaConfigBase, 'id' | 'title'>;
+export const links = {
+  BEZWAREN_FORMULIER:
+    'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/BezwaarEnBeroep.aspx',
+};
+
+type ThemaConfigBezwaren = Pick<
+  ThemaConfigBase,
+  'id' | 'title' | 'profileTypes' | 'redactedScope'
+>;
 
 export const themaConfig: ThemaConfigBezwaren = {
   id: THEMA_ID,
   title: THEMA_TITLE,
+  profileTypes: ['private', 'commercial'],
+  redactedScope: 'full',
 };
 
 export const routeConfig = {
@@ -99,8 +109,3 @@ export const tableConfig = {
     }),
   },
 } as const;
-
-export const links = {
-  BEZWAREN_FORMULIER:
-    'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/BezwaarEnBeroep.aspx',
-};
