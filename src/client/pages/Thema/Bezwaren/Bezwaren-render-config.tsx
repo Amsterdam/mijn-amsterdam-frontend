@@ -22,7 +22,7 @@ export const BezwarenRoutes = [
     isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.themaPage.path,
+    route: themaConfig.route.path,
     Component: BezwarenThema,
     isActive: themaConfig.featureToggle.active,
   },
@@ -31,7 +31,7 @@ export const BezwarenRoutes = [
 export const menuItem: ThemaMenuItem = {
   title: themaConfig.title,
   id: themaConfig.id,
-  to: routeConfig.themaPage.path,
+  to: themaConfig.route.path,
   redactedScope: themaConfig.redactedScope,
   profileTypes: themaConfig.profileTypes,
   isActive(appState: AppState) {

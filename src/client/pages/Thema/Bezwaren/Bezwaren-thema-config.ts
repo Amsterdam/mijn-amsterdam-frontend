@@ -19,15 +19,7 @@ export const links = {
     'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/BezwaarEnBeroep.aspx',
 };
 
-type ThemaConfigBezwaren = Pick<
-  ThemaConfigBase,
-  | 'id'
-  | 'title'
-  | 'profileTypes'
-  | 'redactedScope'
-  | 'pageLinks'
-  | 'featureToggle'
->;
+type ThemaConfigBezwaren = ThemaConfigBase;
 
 export const themaConfig: ThemaConfigBezwaren = {
   id: THEMA_ID,
@@ -36,13 +28,24 @@ export const themaConfig: ThemaConfigBezwaren = {
     active: true,
   },
   profileTypes: ['private', 'commercial'],
-  redactedScope: 'full',
+  uitlegPageSections: [
+    {
+      title: THEMA_TITLE,
+      listItems: ['Bezwaren tegen een besluit van de gemeente Amsterdam'],
+    },
+  ],
   pageLinks: [
     {
       to: 'https://www.amsterdam.nl/veelgevraagd/bezwaar-maken-tegen-een-besluit-van-de-gemeente-amsterdam-e5898',
       title: 'Meer informatie over Bezwaar maken',
     },
   ],
+  route: {
+    path: '/bezwaren',
+    documentTitle: `${THEMA_TITLE} | overzicht`,
+    trackingUrl: null,
+  },
+  redactedScope: 'full',
 };
 
 export const routeConfig = {
@@ -55,11 +58,6 @@ export const routeConfig = {
     path: '/bezwaren/lijst/:kind/:page?',
     documentTitle: (params) =>
       `${params?.kind === listPageParamKind.afgehandeld ? 'Afgehandelde' : 'Lopende'} bezwaren | ${THEMA_TITLE}`,
-    trackingUrl: null,
-  },
-  themaPage: {
-    path: '/bezwaren',
-    documentTitle: `${THEMA_TITLE} | overzicht`,
     trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;

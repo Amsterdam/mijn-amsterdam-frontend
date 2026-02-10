@@ -28,7 +28,7 @@ export function BezwarenThema() {
     themaConfig,
     routeConfig,
   } = useBezwarenThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const tables = Object.entries(tableConfig).map(
     ([
