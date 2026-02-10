@@ -20,17 +20,9 @@ const pageContentTop = (
 );
 
 export function BezwarenThema() {
-  const {
-    themaId,
-    themaTitle,
-    tableConfig,
-    bezwaren,
-    isLoading,
-    isError,
-    linkListItems,
-    routeConfig,
-  } = useBezwarenThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  const { tableConfig, bezwaren, isLoading, isError, themaConfig } =
+    useBezwarenThemaData();
+  useHTMLDocumentTitle(themaConfig.route);
 
   const tables = Object.entries(tableConfig).map(
     ([
@@ -53,13 +45,13 @@ export function BezwarenThema() {
 
   return (
     <ThemaPagina
-      title={themaTitle}
-      id={themaId}
+      title={themaConfig.title}
+      id={themaConfig.id}
       isError={isError}
       isLoading={isLoading}
       pageContentTop={pageContentTop}
       pageContentMain={tables}
-      pageLinks={linkListItems}
+      pageLinks={themaConfig.pageLinks}
       maintenanceNotificationsPageSlug="bezwaren"
     />
   );

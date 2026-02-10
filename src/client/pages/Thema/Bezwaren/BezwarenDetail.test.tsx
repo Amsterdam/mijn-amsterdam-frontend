@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { routeConfig } from './Bezwaren-thema-config';
+import { themaConfig } from './Bezwaren-thema-config';
 import { BezwarenDetail } from './BezwarenDetail';
 import type { AppState } from '../../../../universal/types/App.types';
 import MockApp from '../../MockApp';
@@ -93,10 +93,10 @@ const testState = {
 };
 
 function setupTestComponent(id: string) {
-  const routeEntry = generatePath(routeConfig.detailPage.path, {
+  const routeEntry = generatePath(themaConfig.detailPage.route.path, {
     uuid: id,
   });
-  const routePath = routeConfig.detailPage.path;
+  const routePath = themaConfig.detailPage.route.path;
 
   return function Component() {
     return (
