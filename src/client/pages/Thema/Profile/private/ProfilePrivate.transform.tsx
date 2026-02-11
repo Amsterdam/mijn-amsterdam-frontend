@@ -348,11 +348,9 @@ export const panelConfig: PanelConfig<
     };
   },
   verbintenis: (BRP: AppState['BRP']) => ({
-    title: featureToggle.BRP.benkBrpServiceActive
-      ? BRP.content?.verbintenis?.datumOntbinding
-        ? 'Eerder huwelijk of partnerschap'
-        : 'Partner'
-      : 'Burgerlijke staat',
+    title: BRP.content?.verbintenis?.datumOntbinding
+      ? 'Eerder huwelijk of partnerschap'
+      : 'Partner',
     actionLinks: isMokum(BRP.content)
       ? [
           {

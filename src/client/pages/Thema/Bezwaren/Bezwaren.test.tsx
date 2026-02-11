@@ -1,9 +1,9 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { routeConfig } from './Bezwaren-thema-config';
 import { BezwarenThema } from './BezwarenThema';
 import MockApp from '../../MockApp';
+import { themaConfig } from '../Bezwaren/Bezwaren-thema-config';
 
 const testState = {
   BEZWAREN: {
@@ -77,8 +77,8 @@ const testState = {
 };
 
 function setupTestComponent(testState: any) {
-  const routeEntry = generatePath(routeConfig.themaPage.path);
-  const routePath = routeConfig.themaPage.path;
+  const routeEntry = generatePath(themaConfig.route.path);
+  const routePath = themaConfig.route.path;
 
   return function Component() {
     return (
