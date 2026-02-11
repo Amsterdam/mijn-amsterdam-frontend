@@ -1,7 +1,6 @@
 import {
   erfpachtFacturenTableConfig,
   getTableConfig,
-  linkListItems,
   listPageParamKind,
   routeConfig,
   themaConfig,
@@ -34,11 +33,12 @@ export function useErfpachtThemaData() {
     dossiers,
     isLoading: isLoading(ERFPACHT),
     isError: isError(ERFPACHT),
-    linkListItems,
+    pageLinks: themaConfig.pageLinks,
     tableConfig,
     listPageParamKind,
     breadcrumbs,
     routeConfig,
     erfpachtFacturenTableConfig,
+    themaConfig,
   };
 }

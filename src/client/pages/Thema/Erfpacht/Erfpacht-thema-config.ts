@@ -5,7 +5,6 @@ import {
   ErfpachtDossiersResponse,
 } from '../../../../server/services/erfpacht/erfpacht-types';
 import { IS_PRODUCTION } from '../../../../universal/config/env';
-import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { propagateFeatureToggles } from '../../../config/buildFeatureToggle';
 import type {
@@ -33,7 +32,12 @@ export const LINKS = {
 
 type ThemaConfigErfpacht = Pick<
   ThemaConfigBase,
-  'id' | 'title' | 'redactedScope' | 'profileTypes' | 'featureToggle'
+  | 'id'
+  | 'title'
+  | 'redactedScope'
+  | 'profileTypes'
+  | 'featureToggle'
+  | 'pageLinks'
 >;
 
 export const themaConfig: ThemaConfigErfpacht = {
@@ -47,22 +51,21 @@ export const themaConfig: ThemaConfigErfpacht = {
     canonmatigingLinkActive: true,
     afisFacturenTablesActive: !IS_PRODUCTION,
   }),
+  pageLinks: [
+    {
+      to: 'https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/',
+      title: 'Meer informatie over erfpacht in Amsterdam',
+    },
+    {
+      to: LINKS.erfpachtWijzigenForm,
+      title: 'Erfpacht wijzigen',
+    },
+    {
+      to: LINKS.overstappenEewigdurendeErfpacht,
+      title: 'Overstappen erfpachtrecht',
+    },
+  ],
 };
-
-export const linkListItems: LinkProps[] = [
-  {
-    to: 'https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/',
-    title: 'Meer informatie over erfpacht in Amsterdam',
-  },
-  {
-    to: LINKS.erfpachtWijzigenForm,
-    title: 'Erfpacht wijzigen',
-  },
-  {
-    to: LINKS.overstappenEewigdurendeErfpacht,
-    title: 'Overstappen erfpachtrecht',
-  },
-];
 
 export const listPageParamKind = {
   erfpachtDossiers: 'erfpacht-dossiers',

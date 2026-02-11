@@ -4,7 +4,7 @@ import {
   filterErfpachtFacturen,
   mapErfpachtFacturen,
 } from './Erfpacht-helpers';
-import { featureToggle } from './Erfpacht-thema-config';
+import { themaConfig } from './Erfpacht-thema-config';
 import { useErfpachtThemaData } from './useErfpachtThemaData.hook';
 import { ErfpachtDossierFrontend } from '../../../../server/services/erfpacht/erfpacht-types';
 import { entries } from '../../../../universal/helpers/utils';
@@ -22,11 +22,11 @@ export function ErfpachtThema() {
     title,
     isError,
     isLoading,
-    linkListItems,
     tableConfig,
     dossiers,
     routeConfig,
     erfpachtFacturenTableConfig,
+    themaConfig,
   } = useErfpachtThemaData();
 
   useHTMLDocumentTitle(routeConfig.themaPage);
@@ -54,7 +54,7 @@ export function ErfpachtThema() {
       title={title}
       isLoading={isLoading}
       isError={isError}
-      pageLinks={linkListItems}
+      pageLinks={themaConfig.pageLinks}
       maintenanceNotificationsPageSlug="erfpacht"
       pageContentTop={
         <>
@@ -77,7 +77,7 @@ export function ErfpachtThema() {
       pageContentMain={
         <>
           {pageContentTables}
-          {featureToggle.afisFacturenTablesActive && (
+          {themaConfig.featureToggle.afisFacturenTablesActive && (
             <AfisFacturenTables
               themaContextParams={{
                 tableConfig: erfpachtFacturenTableConfig,
@@ -104,7 +104,7 @@ function MissingFacturenDescription() {
     <>
       <Heading level={3}>Facturen</Heading>
       <Paragraph className="ams-mb-m">
-        {!featureToggle.afisFacturenTablesActive ? (
+        {!themaConfig.featureToggle.afisFacturenTablesActive ? (
           <>
             Facturen vanaf 1 januari 2025 en nog niet betaalde facturen kunt u
             inzien onder{' '}
