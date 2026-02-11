@@ -2,7 +2,6 @@ import {
   erfpachtFacturenTableConfig,
   getTableConfig,
   listPageParamKind,
-  routeConfig,
   themaConfig,
 } from './Erfpacht-thema-config';
 import { ErfpachtDossiersResponse } from '../../../../server/services/erfpacht/erfpacht-types';
@@ -37,7 +36,6 @@ export function useErfpachtThemaData() {
     tableConfig,
     listPageParamKind,
     breadcrumbs,
-    routeConfig,
     erfpachtFacturenTableConfig,
     themaConfig,
   };

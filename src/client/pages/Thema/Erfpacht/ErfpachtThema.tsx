@@ -24,7 +24,6 @@ export function ErfpachtThema() {
     isLoading,
     tableConfig,
     dossiers,
-    routeConfig,
     erfpachtFacturenTableConfig,
     themaConfig,
   } = useErfpachtThemaData();
