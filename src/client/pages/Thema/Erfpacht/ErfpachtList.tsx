@@ -11,9 +11,9 @@ export function ErfpachtList() {
     dossiers,
     tableConfig,
     breadcrumbs,
-    routeConfig,
+    themaConfig,
   } = useErfpachtThemaData();
-  useHTMLDocumentTitle(routeConfig.listPage);
+  useHTMLDocumentTitle(themaConfig.listPage.route);
 
   const tableConfigDossiers = tableConfig?.[listPageParamKind.erfpachtDossiers];
   const displayPropsDossiers = tableConfigDossiers?.displayProps ?? {};

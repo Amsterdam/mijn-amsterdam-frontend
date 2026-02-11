@@ -11,6 +11,7 @@ import type {
   ThemaConfigBase,
   ThemaRoutesConfig,
   WithDetailPage,
+  WithListPage,
 } from '../../../config/thema-types';
 import {
   getAfisListPageDocumentTitle,
@@ -31,7 +32,7 @@ export const LINKS = {
   erfpachtWijzigenForm: `https://formulieren${IS_PRODUCTION ? '' : '.acc'}.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/ErfpachtWijzigen.aspx`,
 };
 
-type ThemaConfigErfpacht = ThemaConfigBase & WithDetailPage;
+type ThemaConfigErfpacht = ThemaConfigBase & WithDetailPage & WithListPage;
 
 export const themaConfig: ThemaConfigErfpacht = {
   id: THEMA_ID,
@@ -76,6 +77,13 @@ export const themaConfig: ThemaConfigErfpacht = {
       documentTitle: `Erfpachtdossier | ${THEMA_TITLE}`,
     },
   },
+  listPage: {
+    route: {
+      path: '/erfpacht/dossiers/:page?',
+      documentTitle: `Lijst met dossiers | ${THEMA_TITLE}`,
+      trackingUrl: null,
+    },
+  },
 };
 
 export const listPageParamKind = {
@@ -92,12 +100,6 @@ export const ERFPACHT_ZAKELIJK_ROUTE_DEFAULT =
   'https://erfpachtzakelijk.amsterdam.nl';
 
 export const routeConfig = {
-  listPage: {
-    path: '/erfpacht/dossiers/:page?',
-    documentTitle: `Lijst met dossiers | ${THEMA_TITLE}`,
-    trackingUrl: null,
-  },
-
   detailPageFactuur: {
     path: '/erfpacht/factuur/:state/:factuurNummer',
     documentTitle: `Factuurgegevens | ${THEMA_TITLE}`,
@@ -140,7 +142,7 @@ export function getTableConfig(erfpachtData: ErfpachtDossiersResponse | null) {
   const tableConfig = {
     [listPageParamKind.erfpachtDossiers]: {
       title: titleDossiers ?? 'Erfpachtrechten',
-      listPageRoute: generatePath(routeConfig.listPage.path, {
+      listPageRoute: generatePath(themaConfig.listPage.route.path, {
         page: null,
       }),
       displayProps: displayPropsDossiers,

@@ -22,7 +22,7 @@ import { AfisList } from '../Afis/AfisList';
 
 export const ErfpachtRoutes = [
   {
-    route: routeConfig.listPage.path,
+    route: themaConfig.listPage.route.path,
     Component: ErfpachtList,
     isActive: themaConfig.featureToggle.active,
   },
