@@ -17,6 +17,7 @@ export function useDossierData() {
     breadcrumbs,
     routeConfig,
     id: themaId,
+    themaConfig,
   } = useErfpachtThemaData();
   const url = dossierNummerUrlParam
     ? `${BFFApiUrls.ERFPACHT_DOSSIER_DETAILS}/${dossierNummerUrlParam}`
@@ -36,5 +37,6 @@ export function useDossierData() {
     relatieCode,
     breadcrumbs,
     routeConfig,
+    themaConfig,
   };
 }

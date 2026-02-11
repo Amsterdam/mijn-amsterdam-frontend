@@ -20,10 +20,10 @@ export function ErfpachtDetail() {
     breadcrumbs,
     themaId,
     title,
-    routeConfig,
+    themaConfig,
   } = useDossierDetailData();
   const afis = useAfisThemaData();
-  useHTMLDocumentTitle(routeConfig.detailPage);
+  useHTMLDocumentTitle(themaConfig.detailPage.route);
   return (
     <ThemaDetailPagina
       themaId={themaId}
