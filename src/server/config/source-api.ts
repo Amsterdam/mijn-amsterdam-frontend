@@ -395,9 +395,9 @@ const ApiConfig_ = {
     method: 'POST',
   },
   ZWD_VVE: {
-    url: `${getFromEnv('BFF_VVE_API_BASE_URL')}`,
+    url: `${getFromEnv('BFF_ZWD_API_BASE_URL')}`,
     method: 'GET',
-    headers: { Authorization: `Token ${getFromEnv('BFF_VVE_API_TOKEN')}` },
+    headers: { Authorization: `Token ${getFromEnv('BFF_ZWD_API_TOKEN')}` },
   },
 } as const;
 
