@@ -44,7 +44,7 @@ export const ErfpachtRoutes = [
           themaId: themaConfig.id,
           tableConfig: erfpachtFacturenTableConfig,
           routeConfigListPage: routeConfig.listPageFacturen,
-          routeConfigDetailPage: routeConfig.detailPageFactuur,
+          routeConfigDetailPage: themaConfig.detailPageFactuur.route,
           factuurFilterFn: filterErfpachtFacturen,
         }}
       />
@@ -52,14 +52,14 @@ export const ErfpachtRoutes = [
     isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.detailPageFactuur.path,
+    route: themaConfig.detailPageFactuur.route.path,
     Component: () => (
       <AfisFactuur
         themaContextParams={{
           themaId: themaConfig.id,
           tableConfig: erfpachtFacturenTableConfig,
           routeConfigListPage: routeConfig.listPageFacturen,
-          routeConfigDetailPage: routeConfig.detailPageFactuur,
+          routeConfigDetailPage: themaConfig.detailPageFactuur.route,
         }}
       />
     ),

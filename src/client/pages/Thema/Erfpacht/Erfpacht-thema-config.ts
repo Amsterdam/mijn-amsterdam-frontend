@@ -11,6 +11,7 @@ import type {
   ThemaConfigBase,
   ThemaRoutesConfig,
   WithDetailPage,
+  WithDetailPageFactuur,
   WithListPage,
 } from '../../../config/thema-types';
 import {
@@ -32,15 +33,18 @@ export const LINKS = {
   erfpachtWijzigenForm: `https://formulieren${IS_PRODUCTION ? '' : '.acc'}.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/ErfpachtWijzigen.aspx`,
 };
 
-type ThemaConfigErfpacht = ThemaConfigBase & WithDetailPage & WithListPage;
+type ThemaConfigErfpacht = ThemaConfigBase &
+  WithDetailPage &
+  WithListPage &
+  WithDetailPageFactuur;
 
 export const themaConfig: ThemaConfigErfpacht = {
   id: THEMA_ID,
   title: THEMA_TITLE,
   redactedScope: 'none',
-  profileTypes: ['private'], //TO DO er moet hier nog iets komen voor commercial
+  profileTypes: ['private'], //TO DO Yacine er moet hier nog iets komen voor commercial
   featureToggle: propagateFeatureToggles({
-    // Even goed naar kijken lijkt mij..
+    // TO DO Ontwikkelaars Even goed naar kijken lijkt mij..
     active: true,
     canonmatigingLinkActive: true,
     afisFacturenTablesActive: !IS_PRODUCTION,
@@ -84,6 +88,13 @@ export const themaConfig: ThemaConfigErfpacht = {
       trackingUrl: null,
     },
   },
+  detailPageFactuur: {
+    route: {
+      path: '/erfpacht/factuur/:state/:factuurNummer',
+      documentTitle: `Factuurgegevens | ${THEMA_TITLE}`,
+      trackingUrl: null,
+    },
+  },
 };
 
 export const listPageParamKind = {
@@ -100,11 +111,6 @@ export const ERFPACHT_ZAKELIJK_ROUTE_DEFAULT =
   'https://erfpachtzakelijk.amsterdam.nl';
 
 export const routeConfig = {
-  detailPageFactuur: {
-    path: '/erfpacht/factuur/:state/:factuurNummer',
-    documentTitle: `Factuurgegevens | ${THEMA_TITLE}`,
-    trackingUrl: null,
-  },
   listPageFacturen: {
     path: '/erfpacht/facturen/lijst/:state/:page?',
     documentTitle: getAfisListPageDocumentTitle,

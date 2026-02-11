@@ -81,7 +81,7 @@ export function ErfpachtThema() {
             <AfisFacturenTables
               themaContextParams={{
                 tableConfig: erfpachtFacturenTableConfig,
-                routeConfigDetailPage: routeConfig.detailPageFactuur,
+                routeConfigDetailPage: themaConfig.detailPageFactuur.route,
                 routeConfigListPage: routeConfig.listPageFacturen,
                 themaId: id,
                 states: ['open'],
