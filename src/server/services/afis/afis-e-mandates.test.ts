@@ -476,6 +476,15 @@ describe('afis-e-mandates service (with nock)', () => {
         return_url:
           'http://frontend-host/facturen-en-betalen/betaalvoorkeuren/emandate/test?iban=NL35BOOG9343513650',
         variable1: 'NL21RABO0110055004',
+        invoices: [
+          {
+            invoice_amount: 1,
+            invoice_date: '2025-07-10',
+            invoice_description: 'Automatische incasso Test',
+            invoice_due_date: '2025-07-11',
+            invoice_number: 'EMandaat-ref-2025-07-10',
+          },
+        ],
       });
     });
 
