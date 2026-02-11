@@ -18,8 +18,10 @@ import LoadingContent from '../../../../components/LoadingContent/LoadingContent
 import { MaRouterLink } from '../../../../components/MaLink/MaLink';
 import {
   BRP_LABEL_AANTAL_BEWONERS,
+  featureToggle,
   profileLinks,
   routeConfig,
+  themaIdBRP,
 } from '../Profile-thema-config';
 import {
   ProfileLabels,
@@ -151,7 +153,10 @@ const adres: ProfileLabels<
   aantalBewoners: [
     BRP_LABEL_AANTAL_BEWONERS,
     (value, _x, BRPContent) => {
-      if (BRPContent?.persoon?.mokum === true) {
+      if (
+        BRPContent?.persoon?.mokum === true &&
+        featureToggle[themaIdBRP].aantalBewonersOpAdresTonenActive
+      ) {
         return value === -1 ? (
           <LoadingContent barConfig={[['2rem', '2rem', '0']]} />
         ) : (
@@ -174,10 +179,11 @@ const adres: ProfileLabels<
       );
     },
   ],
+
   vveNaam: [
     'Vereniging van Eigenaren',
     (value, _item, brpData) => {
-      if (brpData?.adres?.vveNaam) {
+      if (brpData?.adres?.vveNaam && featureToggle[themaIdBRP].wonenActive) {
         return (
           <MaRouterLink
             href={routeConfig.detailPageVvE.path}
@@ -187,7 +193,7 @@ const adres: ProfileLabels<
           </MaRouterLink>
         );
       }
-      return 'Onbekend';
+      return null;
     },
   ],
 };
@@ -196,10 +202,7 @@ const verbintenis: ProfileLabels<
   Partial<Verbintenis>,
   AppState['BRP']['content']
 > = {
-  soortVerbintenis: 'Verbintenis',
   datumSluitingFormatted: 'Geregistreerd op',
-  plaats: 'Plaats',
-  land: 'Land',
   datumOntbinding: [
     'Einddatum',
     (dateValue) => {
@@ -345,9 +348,11 @@ export const panelConfig: PanelConfig<
     };
   },
   verbintenis: (BRP: AppState['BRP']) => ({
-    title: BRP.content?.verbintenis?.datumOntbinding
-      ? 'Eerder huwelijk of partnerschap'
-      : 'Partner',
+    title: featureToggle.BRP.benkBrpServiceActive
+      ? BRP.content?.verbintenis?.datumOntbinding
+        ? 'Eerder huwelijk of partnerschap'
+        : 'Partner'
+      : 'Burgerlijke staat',
     actionLinks: isMokum(BRP.content)
       ? [
           {

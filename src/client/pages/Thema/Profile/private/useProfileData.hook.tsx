@@ -13,17 +13,17 @@ export function useProfileData() {
 
   let profileData: BrpProfileData | null;
 
-  if (
-    typeof aantalBewoners === 'number' &&
-    BRP.content?.adres &&
-    WONEN.content?.name
-  ) {
+  if (BRP.content?.adres) {
     const brpContent = {
       ...BRP.content,
       adres: {
         ...BRP.content.adres,
-        vveNaam: WONEN.content?.name,
-        aantalBewoners,
+        vveNaam:
+          typeof WONEN.content?.name === 'string'
+            ? WONEN.content?.name
+            : undefined,
+        aantalBewoners:
+          typeof aantalBewoners === 'number' ? aantalBewoners : undefined,
       },
     };
     profileData = formatBrpProfileData(brpContent);

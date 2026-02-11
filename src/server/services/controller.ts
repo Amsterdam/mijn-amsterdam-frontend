@@ -47,7 +47,7 @@ import { fetchUserFeedbackSurvey } from './user-feedback/user-feedback';
 import { fetchVaren } from './varen/varen';
 import { fetchVergunningen } from './vergunningen/vergunningen';
 import { fetchWmo } from './wmo/wmo';
-import { fetchVVEData } from './wonen/zwd-vve';
+import { fetchVVEData } from './wonen/zwd';
 import {
   fetchBbz,
   fetchBijstandsuitkering,
