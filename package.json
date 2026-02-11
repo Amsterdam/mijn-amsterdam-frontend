@@ -81,7 +81,7 @@
     "@types/uid-safe": "^2.1.5",
     "@vitejs/plugin-react": "^4.7.0",
     "applicationinsights": "2.9.8",
-    "axios": "^1.13.3",
+    "axios": "^1.13.5",
     "classnames": "^2.5.1",
     "compression": "^1.8.1",
     "concurrently": "^9.2.1",
