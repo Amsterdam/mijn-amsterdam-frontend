@@ -9,10 +9,10 @@ import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { propagateFeatureToggles } from '../../../config/buildFeatureToggle';
 import type {
   ThemaConfigBase,
-  ThemaRoutesConfig,
   WithDetailPage,
   WithDetailPageFactuur,
   WithListPage,
+  WithListPageFacturen,
 } from '../../../config/thema-types';
 import {
   getAfisListPageDocumentTitle,
@@ -36,7 +36,8 @@ export const LINKS = {
 type ThemaConfigErfpacht = ThemaConfigBase &
   WithDetailPage &
   WithListPage &
-  WithDetailPageFactuur;
+  WithDetailPageFactuur &
+  WithListPageFacturen;
 
 export const themaConfig: ThemaConfigErfpacht = {
   id: THEMA_ID,
@@ -95,6 +96,13 @@ export const themaConfig: ThemaConfigErfpacht = {
       trackingUrl: null,
     },
   },
+  listPageFacturen: {
+    route: {
+      path: '/erfpacht/facturen/lijst/:state/:page?',
+      documentTitle: getAfisListPageDocumentTitle,
+      trackingUrl: null,
+    },
+  },
 };
 
 export const listPageParamKind = {
@@ -110,16 +118,8 @@ export const themaTitle = 'Erfpacht';
 export const ERFPACHT_ZAKELIJK_ROUTE_DEFAULT =
   'https://erfpachtzakelijk.amsterdam.nl';
 
-export const routeConfig = {
-  listPageFacturen: {
-    path: '/erfpacht/facturen/lijst/:state/:page?',
-    documentTitle: getAfisListPageDocumentTitle,
-    trackingUrl: null,
-  },
-} as const satisfies ThemaRoutesConfig;
-
 export const erfpachtFacturenTableConfig = getFacturenTableConfig({
-  listPagePath: routeConfig.listPageFacturen.path,
+  listPagePath: themaConfig.listPageFacturen.route.path,
   mergeConfig: {
     open: {
       title: 'Openstaande erfpachtfacturen',

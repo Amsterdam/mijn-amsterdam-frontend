@@ -2,7 +2,6 @@ import { filterErfpachtFacturen } from './Erfpacht-helpers';
 import {
   ERFPACHT_ZAKELIJK_ROUTE_DEFAULT,
   erfpachtFacturenTableConfig,
-  routeConfig,
   themaConfig,
 } from './Erfpacht-thema-config';
 import { ErfpachtDetail } from './ErfpachtDetail';
@@ -37,13 +36,13 @@ export const ErfpachtRoutes = [
     isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.listPageFacturen.path,
+    route: themaConfig.listPageFacturen.route.path,
     Component: () => (
       <AfisList
         themaContextParams={{
           themaId: themaConfig.id,
           tableConfig: erfpachtFacturenTableConfig,
-          routeConfigListPage: routeConfig.listPageFacturen,
+          routeConfigListPage: themaConfig.listPageFacturen.route,
           routeConfigDetailPage: themaConfig.detailPageFactuur.route,
           factuurFilterFn: filterErfpachtFacturen,
         }}
@@ -58,7 +57,7 @@ export const ErfpachtRoutes = [
         themaContextParams={{
           themaId: themaConfig.id,
           tableConfig: erfpachtFacturenTableConfig,
-          routeConfigListPage: routeConfig.listPageFacturen,
+          routeConfigListPage: themaConfig.listPageFacturen.route,
           routeConfigDetailPage: themaConfig.detailPageFactuur.route,
         }}
       />
