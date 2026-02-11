@@ -457,8 +457,8 @@ function createEMandateSignRequestPayload(
 
   const today = new Date();
   const isoDateString = today.toISOString();
-  // const invoiceDate = isoDateFormat(today);
-  // const invoiceNumber = `EMandaat-${creditor.refId}-${invoiceDate}`;
+  const invoiceDate = isoDateFormat(today);
+  const invoiceNumber = `EMandaat-${creditor.refId}-${invoiceDate}`;
 
   // TODO: Moet dit met een gegeven uit AFIS te koppelen zijn? - https://gemeente-amsterdam.atlassian.net/browse/MIJN-12289
   const paymentReference = `${creditor.refId}-${businessPartner.businessPartnerId}`;
@@ -488,6 +488,15 @@ function createEMandateSignRequestPayload(
     return_url: returnUrl,
     cid: null,
     payment_modules: ['emandate_recurring'],
+    invoices: [
+      {
+        invoice_number: invoiceNumber,
+        invoice_date: invoiceDate,
+        invoice_description: concerning,
+        invoice_amount: 1,
+        invoice_due_date: dueDate,
+      },
+    ],
   };
 }
 
