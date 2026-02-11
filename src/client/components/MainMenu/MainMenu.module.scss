@@ -23,10 +23,8 @@
   }
 
   @media screen and (min-width: $ams-breakpoint-medium) {
-    padding: var(--ams-space-xl) 0;
-
     &:last-of-type > div {
-      padding-top: var(--ams-space-m);
+      padding-top: var(--ams-space-l);
     }
   }
 

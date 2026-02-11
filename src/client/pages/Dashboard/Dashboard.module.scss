@@ -1,3 +1,11 @@
 .LinkToNotifications {
   --ams-link-font-size: 70%;
 }
+
+:global(body) {
+  @include select(ErrorMessages_MessageBar) {
+    @media screen and (min-width: $ams-breakpoint-medium) {
+      margin-bottom: var(--ams-space-m);
+    }
+  }
+}

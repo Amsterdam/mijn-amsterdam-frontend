@@ -3,12 +3,20 @@
 }
 
 .ErrorMessages {
-  padding: var(--ams-space-l);
+  // Copied from node_modules/@amsterdam/design-system-css/src/components/page-header/page-header.scss
+  padding-inline: var(--ams-page-header-padding-inline);
+
   @media screen and (min-width: $ams-breakpoint-medium) {
-    padding: var(--ams-space-l) var(--ams-page-header-medium-padding-inline);
+    padding-inline: var(--ams-page-header-medium-padding-inline);
   }
+
   @media screen and (min-width: $ams-breakpoint-wide) {
-    padding: var(--ams-space-l) var(--ams-page-header-wide-padding-inline);
+    padding-inline: var(--ams-page-header-wide-padding-inline);
+  }
+  // end of copy
+
+  &.Dismissed {
+    display: none;
   }
 }
 
@@ -25,7 +33,6 @@
   }
 
   :global(.ams-heading) {
-    // display: none;
     left: -100vw;
     position: absolute;
   }
@@ -39,9 +46,8 @@
   }
 
   .MessageBarParagraph {
-    width: calc(100% - 32px); // close to size of the cross icon
+    padding-right: var(--ams-space-xl); // close to size of the cross icon
     line-height: 1.3rem;
-    margin: 0;
   }
 }
 
