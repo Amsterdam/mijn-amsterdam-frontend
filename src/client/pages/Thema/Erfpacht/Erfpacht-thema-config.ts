@@ -7,7 +7,11 @@ import {
 import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
-import type { ThemaRoutesConfig } from '../../../config/thema-types';
+import { propagateFeatureToggles } from '../../../config/buildFeatureToggle';
+import type {
+  ThemaConfigBase,
+  ThemaRoutesConfig,
+} from '../../../config/thema-types';
 import {
   getAfisListPageDocumentTitle,
   getFacturenTableConfig,
@@ -16,12 +20,33 @@ import {
 // Themapagina
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_DOSSIERS = 5;
 
+const THEMA_ID = 'ERFPACHT';
+const THEMA_TITLE = 'Erfpacht';
+
 export const LINKS = {
   algemeneBepalingen:
     'https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/wat-is-erfpacht/algemene-bepalingen/',
   overstappenEewigdurendeErfpacht:
     'https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/overstappen-eeuwigdurende-erfpacht/',
   erfpachtWijzigenForm: `https://formulieren${IS_PRODUCTION ? '' : '.acc'}.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/ErfpachtWijzigen.aspx`,
+};
+
+type ThemaConfigErfpacht = Pick<
+  ThemaConfigBase,
+  'id' | 'title' | 'redactedScope' | 'profileTypes' | 'featureToggle'
+>;
+
+export const themaConfig: ThemaConfigErfpacht = {
+  id: THEMA_ID,
+  title: THEMA_TITLE,
+  redactedScope: 'none',
+  profileTypes: ['private'], //TO DO er moet hier nog iets komen voor commercial
+  featureToggle: propagateFeatureToggles({
+    // Even goed naar kijken lijkt mij..
+    active: true,
+    canonmatigingLinkActive: true,
+    afisFacturenTablesActive: !IS_PRODUCTION,
+  }),
 };
 
 export const linkListItems: LinkProps[] = [
@@ -62,21 +87,21 @@ export const routeConfig = {
   detailPage: {
     path: '/erfpacht/dossier/:dossierNummerUrlParam',
     trackingUrl: '/erfpacht/dossier',
-    documentTitle: `Erfpachtdossier | ${themaTitle}`,
+    documentTitle: `Erfpachtdossier | ${THEMA_TITLE}`,
   },
   listPage: {
     path: '/erfpacht/dossiers/:page?',
-    documentTitle: `Lijst met dossiers | ${themaTitle}`,
+    documentTitle: `Lijst met dossiers | ${THEMA_TITLE}`,
     trackingUrl: null,
   },
   themaPage: {
     path: '/erfpacht',
-    documentTitle: `${themaTitle} | overzicht`,
+    documentTitle: `${THEMA_TITLE} | overzicht`,
     trackingUrl: null,
   },
   detailPageFactuur: {
     path: '/erfpacht/factuur/:state/:factuurNummer',
-    documentTitle: `Factuurgegevens | ${themaTitle}`,
+    documentTitle: `Factuurgegevens | ${THEMA_TITLE}`,
     trackingUrl: null,
   },
   listPageFacturen: {

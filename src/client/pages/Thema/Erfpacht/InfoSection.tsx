@@ -1,9 +1,9 @@
-import { featureToggle, themaId, themaTitle } from './Erfpacht-thema-config';
+import { themaConfig } from './Erfpacht-thema-config';
 import { InfoSection_DEPRECATED } from '../../GeneralInfo/GeneralInfo';
 
 export const erfpachtSectionProps: InfoSection_DEPRECATED = {
-  id: themaId,
-  title: themaTitle,
+  id: themaConfig.id,
+  title: themaConfig.title,
   listItems: ['Overzicht van uw erfpachtgegevens'],
-  active: featureToggle.erfpachtActive,
+  active: themaConfig.featureToggle.active,
 };

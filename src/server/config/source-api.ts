@@ -9,9 +9,11 @@ import {
   ONE_SECOND_MS,
 } from './app';
 import { featureToggle as featureToggleAfis } from '../../client/pages/Thema/Afis/Afis-thema-config';
+import { themaConfig as themaConfigBezwaren } from '../../client/pages/Thema/Bezwaren/Bezwaren-thema-config';
 import { themaConfig as themaConfigBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config';
-import { featureToggle as featureToggleErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
+import { themaConfig as themaConfigErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
 import { featureToggle as featureToggleJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config';
+import { themaConfig as themaConfigToeristischeVerhuur } from '../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 import { IS_DEVELOPMENT } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { getCert } from '../helpers/cert';
@@ -201,19 +203,19 @@ const ApiConfig_ = {
   BEZWAREN_LIST: {
     url: `${getFromEnv('BFF_BEZWAREN_API')}/zgw/v1/zaken/_zoek`,
     method: 'POST',
-    postponeFetch: !FeatureToggle.bezwarenActive,
+    postponeFetch: !themaConfigBezwaren.featureToggle.active,
   },
   BEZWAREN_DOCUMENT: {
     url: `${getFromEnv('BFF_BEZWAREN_API')}/zgw/v1/enkelvoudiginformatieobjecten/:id/download`,
-    postponeFetch: !FeatureToggle.bezwarenActive,
+    postponeFetch: !themaConfigBezwaren.featureToggle.active,
   },
   BEZWAREN_DOCUMENTS: {
     url: `${getFromEnv('BFF_BEZWAREN_API')}/zgw/v1/enkelvoudiginformatieobjecten`,
-    postponeFetch: !FeatureToggle.bezwarenActive,
+    postponeFetch: !themaConfigBezwaren.featureToggle.active,
   },
   BEZWAREN_STATUS: {
     url: `${getFromEnv('BFF_BEZWAREN_API')}/zgw/v1/statussen`,
-    postponeFetch: !FeatureToggle.bezwarenActive,
+    postponeFetch: !themaConfigBezwaren.featureToggle.active,
   },
   BELASTINGEN: {
     url: `${getFromEnv('BFF_BELASTINGEN_ENDPOINT')}`,
@@ -294,7 +296,7 @@ const ApiConfig_ = {
     passthroughOIDCToken: true,
     httpsAgent: new https.Agent(httpsAgentConfigBFF),
     postponeFetch:
-      !featureToggleErfpacht.erfpachtActive ||
+      !themaConfigErfpacht.featureToggle.active ||
       !getFromEnv('BFF_ERFPACHT_API_URL'),
     headers: {
       'X-HERA-REQUESTORIGIN': 'MijnAmsterdam',
@@ -327,7 +329,7 @@ const ApiConfig_ = {
       'X-Api-Key': getFromEnv('BFF_LVV_API_KEY') + '',
       'Content-Type': 'application/json',
     },
-    postponeFetch: !FeatureToggle.toeristischeVerhuurActive,
+    postponeFetch: !themaConfigToeristischeVerhuur.featureToggle.active,
   },
   KREFIA: {
     url: `${getFromEnv('BFF_KREFIA_API_BASE_URL')}/krefia/all`,

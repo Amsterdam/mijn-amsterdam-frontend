@@ -4,8 +4,7 @@ import {
   linkListItems,
   listPageParamKind,
   routeConfig,
-  themaId,
-  themaTitle,
+  themaConfig,
 } from './Erfpacht-thema-config';
 import { ErfpachtDossiersResponse } from '../../../../server/services/erfpacht/erfpacht-types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
@@ -24,12 +23,12 @@ export function useErfpachtThemaData() {
     'voorkeursadres'
   );
 
-  const breadcrumbs = useThemaBreadcrumbs(themaId);
+  const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
   const tableConfig = getTableConfig(erfpachtData);
 
   return {
-    id: themaId,
-    title: themaTitle,
+    id: themaConfig.id,
+    title: themaConfig.title,
     erfpachtData,
     relatieCode: erfpachtData?.relatieCode,
     dossiers,
