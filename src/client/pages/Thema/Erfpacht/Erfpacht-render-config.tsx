@@ -32,7 +32,7 @@ export const ErfpachtRoutes = [
     isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.themaPage.path,
+    route: themaConfig.route.path,
     Component: ErfpachtThema,
     isActive: themaConfig.featureToggle.active,
   },
@@ -70,7 +70,7 @@ export const ErfpachtRoutes = [
 export const menuItem: ThemaMenuItem = {
   title: themaConfig.title,
   id: themaConfig.id,
-  to: routeConfig.themaPage.path,
+  to: themaConfig.route.path,
   profileTypes: themaConfig.profileTypes,
   redactedScope: themaConfig.redactedScope,
   isActive(appState: AppState) {

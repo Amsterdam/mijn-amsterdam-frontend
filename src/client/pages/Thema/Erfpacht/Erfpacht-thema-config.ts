@@ -30,15 +30,7 @@ export const LINKS = {
   erfpachtWijzigenForm: `https://formulieren${IS_PRODUCTION ? '' : '.acc'}.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/ErfpachtWijzigen.aspx`,
 };
 
-type ThemaConfigErfpacht = Pick<
-  ThemaConfigBase,
-  | 'id'
-  | 'title'
-  | 'redactedScope'
-  | 'profileTypes'
-  | 'featureToggle'
-  | 'pageLinks'
->;
+type ThemaConfigErfpacht = ThemaConfigBase;
 
 export const themaConfig: ThemaConfigErfpacht = {
   id: THEMA_ID,
@@ -65,6 +57,17 @@ export const themaConfig: ThemaConfigErfpacht = {
       title: 'Overstappen erfpachtrecht',
     },
   ],
+  uitlegPageSections: [
+    {
+      title: THEMA_TITLE,
+      listItems: ['Overzicht van uw erfpachtgegevens'],
+    },
+  ],
+  route: {
+    path: '/erfpacht',
+    documentTitle: `${THEMA_TITLE} | overzicht`,
+    trackingUrl: null,
+  },
 };
 
 export const listPageParamKind = {
@@ -73,12 +76,6 @@ export const listPageParamKind = {
 
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
-
-export const featureToggle = {
-  erfpachtActive: true,
-  canonmatigingLinkActive: true,
-  afisFacturenTablesActive: !IS_PRODUCTION,
-};
 
 export const themaId = 'ERFPACHT' as const;
 export const themaTitle = 'Erfpacht';
@@ -97,11 +94,7 @@ export const routeConfig = {
     documentTitle: `Lijst met dossiers | ${THEMA_TITLE}`,
     trackingUrl: null,
   },
-  themaPage: {
-    path: '/erfpacht',
-    documentTitle: `${THEMA_TITLE} | overzicht`,
-    trackingUrl: null,
-  },
+
   detailPageFactuur: {
     path: '/erfpacht/factuur/:state/:factuurNummer',
     documentTitle: `Factuurgegevens | ${THEMA_TITLE}`,

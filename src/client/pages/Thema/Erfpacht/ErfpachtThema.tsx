@@ -29,7 +29,7 @@ export function ErfpachtThema() {
     themaConfig,
   } = useErfpachtThemaData();
 
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const pageContentTables = tableConfig
     ? entries(tableConfig).map(
