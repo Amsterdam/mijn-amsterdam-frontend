@@ -78,12 +78,12 @@ interface ListPagePaginatedProps<T> {
 
 const ListPageSearchBar = memo(
   ({
-    search,
-    setSearch,
+    currentSearch,
+    handleChange,
     title,
   }: {
-    search: string;
-    setSearch: (value: string) => void;
+    currentSearch: string;
+    handleChange: (value: string) => void;
     title: string;
   }) => {
     return (
@@ -93,8 +93,8 @@ const ListPageSearchBar = memo(
       >
         <SearchField.Input
           placeholder={`${title} zoeken`}
-          onChange={(e) => setSearch(e.target.value)}
-          value={search}
+          onChange={(e) => handleChange(e.target.value)}
+          value={currentSearch}
         />
         <SearchField.Button />
       </SearchField>
@@ -127,14 +127,16 @@ export function ListPagePaginated<T extends object = ZaakAanvraagDetail>({
 
   const [itemsToDisplay, setItemsToDisplay] = useState<T[]>([]);
   const [pageSize, setPageSize] = useState<number>(DEFAULT_PAGE_SIZE);
-  const [search, setSearch] = useState<string>('');
+  const [isFilterModalOpen, setFilterModalOpen] = useState(false);
+
+  // Table Mutations states
+  const [currentSearch, setCurrentSearch] = useState<string>('');
   const [currentOrder, setCurrentOrder] = useState<TableMutationsOrderProps>(
     DEFAULT_CURRENT_ORDER
   );
   const [currentFilters, setCurrentFilters] = useState<
     TableMutationsFilterProps[]
-  >([]);
-  const [isFilterModalOpen, setFilterModalOpen] = useState(false);
+    >([]);
 
   usePageTypeSetting('listpage');
 
@@ -164,7 +166,7 @@ export function ListPagePaginated<T extends object = ZaakAanvraagDetail>({
   };
 
   const handleSearchChange = useCallback((value: string) => {
-    setSearch(value);
+    setCurrentSearch(value);
   }, []);
 
   const handleOrderChange = (key: TableMutationsOrderProps['key']) => {
@@ -219,13 +221,13 @@ export function ListPagePaginated<T extends object = ZaakAanvraagDetail>({
 
     // search function
     if (!isEmpty(tableMutations.search)) {
-      if (search) {
+      if (currentSearch) {
         filteredItems = filteredItems.filter((item) => {
           return Object.keys(tableMutations.search).some((key) => {
             const itemValue = item[key as keyof T];
             return (
               typeof itemValue === 'string' &&
-              itemValue.toLowerCase().includes(search.toLowerCase())
+              itemValue.toLowerCase().includes(currentSearch.toLowerCase())
             );
           });
         });
@@ -267,7 +269,7 @@ export function ListPagePaginated<T extends object = ZaakAanvraagDetail>({
     if (currentPage !== 1) {
       resetToFirstPage();
     }
-  }, [search, currentOrder, currentFilters]);
+  }, [currentSearch, currentOrder, currentFilters]);
 
   useEffect(() => {
     setCurrentPage(parseInt(page, 10) || 1);
@@ -344,8 +346,8 @@ export function ListPagePaginated<T extends object = ZaakAanvraagDetail>({
               <div className={styles.SearchAndFilterContainer}>
                 {!isEmpty(tableMutations.search) ? (
                   <ListPageSearchBar
-                    search={search}
-                    setSearch={handleSearchChange}
+                    currentSearch={currentSearch}
+                    handleChange={handleSearchChange}
                     title={title}
                   />
                 ) : (
