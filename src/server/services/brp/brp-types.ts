@@ -169,6 +169,9 @@ export type Adres = {
   begindatumVerblijf: string | null;
   begindatumVerblijfFormatted?: string | null;
   locatiebeschrijving?: string | null;
+  vveNaam?: string | null;
+  wozWaarde?: string | null;
+  aantalBewoners?: number | null;
 };
 
 export type PersoonBasis = {

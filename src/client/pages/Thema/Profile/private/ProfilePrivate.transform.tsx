@@ -15,9 +15,13 @@ import {
 import { defaultDateFormat } from '../../../../../universal/helpers/date';
 import type { AppState } from '../../../../../universal/types/App.types';
 import LoadingContent from '../../../../components/LoadingContent/LoadingContent';
+import { MaRouterLink } from '../../../../components/MaLink/MaLink';
 import {
   BRP_LABEL_AANTAL_BEWONERS,
+  featureToggle,
   profileLinks,
+  routeConfig,
+  themaIdBRP,
 } from '../Profile-thema-config';
 import {
   ProfileLabels,
@@ -28,6 +32,7 @@ import {
   PanelConfig,
   ProfileSectionData,
 } from '../ProfileSectionPanel';
+
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading
  * into the Profile page data.
@@ -125,6 +130,7 @@ const adres: ProfileLabels<
       return adres?.straatnaam ? getFullAddress(adres as Adres) : 'Onbekend';
     },
   ],
+
   woonplaatsNaam: [
     'Plaats',
     (_value, adres) => {
@@ -147,7 +153,10 @@ const adres: ProfileLabels<
   aantalBewoners: [
     BRP_LABEL_AANTAL_BEWONERS,
     (value, _x, BRPContent) => {
-      if (BRPContent?.persoon?.mokum === true) {
+      if (
+        BRPContent?.persoon?.mokum === true &&
+        featureToggle[themaIdBRP].aantalBewonersOpAdresTonenActive
+      ) {
         return value === -1 ? (
           <LoadingContent barConfig={[['2rem', '2rem', '0']]} />
         ) : (
@@ -170,16 +179,30 @@ const adres: ProfileLabels<
       );
     },
   ],
+
+  vveNaam: [
+    'Vereniging van Eigenaren',
+    (value, _item, brpData) => {
+      if (brpData?.adres?.vveNaam && featureToggle[themaIdBRP].wonenActive) {
+        return (
+          <MaRouterLink
+            href={routeConfig.detailPageVvE.path}
+            rel="noopener noreferrer"
+          >
+            {brpData.adres.vveNaam}
+          </MaRouterLink>
+        );
+      }
+      return null;
+    },
+  ],
 };
 
 const verbintenis: ProfileLabels<
   Partial<Verbintenis>,
   AppState['BRP']['content']
 > = {
-  soortVerbintenis: 'Verbintenis',
   datumSluitingFormatted: 'Geregistreerd op',
-  plaats: 'Plaats',
-  land: 'Land',
   datumOntbinding: [
     'Einddatum',
     (dateValue) => {

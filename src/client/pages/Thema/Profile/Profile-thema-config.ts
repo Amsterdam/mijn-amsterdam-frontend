@@ -10,6 +10,7 @@ export const featureToggle = {
     get aantalBewonersOpAdresTonenActive() {
       return featureToggle[themaIdBRP].themaActive && !IS_PRODUCTION;
     },
+    wonenActive: !IS_PRODUCTION,
   },
   [themaIdKVK]: {
     themaActive: true,
@@ -30,6 +31,11 @@ export const routeConfig = {
   themaPageKVK: {
     path: '/gegevens-handelsregister',
     documentTitle: `${themaTitle.KVK} | Mijn Amsterdam`,
+    trackingUrl: null,
+  },
+  detailPageVvE: {
+    path: '/persoonlijke-gegevens/vve',
+    documentTitle: `Mijn VvE | Mijn Amsterdam`,
     trackingUrl: null,
   },
   listPageContactmomenten: {

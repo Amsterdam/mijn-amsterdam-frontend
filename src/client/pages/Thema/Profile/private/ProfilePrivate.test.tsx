@@ -8,6 +8,7 @@ import type {
   BrpFrontend,
 } from '../../../../../server/services/brp/brp-types';
 import { ContactMoment } from '../../../../../server/services/salesforce/contactmomenten.types';
+import { VvEDataSource } from '../../../../../server/services/wonen/zwd.types';
 import { bffApiHost } from '../../../../../testing/setup';
 import { bffApi } from '../../../../../testing/utils';
 import { AppState } from '../../../../../universal/types/App.types';
@@ -16,11 +17,13 @@ import { routeConfig } from '../Profile-thema-config';
 
 const testState = (
   responseBRP: BrpFrontend | object = {},
-  responseSF: ContactMoment[] = []
+  responseSF: ContactMoment[] = [],
+  responseZWD?: Pick<VvEDataSource, 'name'>
 ) => ({
   BRP: { status: 'OK', content: responseBRP },
   KVK: { status: 'OK', content: null },
   KLANT_CONTACT: { status: 'OK', content: responseSF },
+  WONEN: { status: 'OK', content: responseZWD },
 });
 
 const panelHeadings = [
@@ -258,6 +261,37 @@ describe('<Profile />', () => {
     expect(screen.getByText('Armeense, Turkse')).toBeInTheDocument();
   });
 
+  test('Shows Vereniging van Eigenaren data', async () => {
+    function Component() {
+      return (
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routeEntry}
+          component={MijnGegevensThema}
+          state={
+            testState(
+              {
+                persoon: { mokum: true },
+                adres: {
+                  straatnaam: 'Mooie Straat',
+                  huisnummer: '1',
+                  landnaam: 'Nederland',
+                },
+              },
+              [],
+              {
+                name: 'VvE Prachtige Straat 13',
+              }
+            ) as unknown as AppState
+          }
+        />
+      );
+    }
+    render(<Component />);
+
+    screen.getByText('VvE Prachtige Straat 13');
+  });
+
   test('Shows max 3 contactmomenten', async () => {
     const user = userEvent.setup();
 
@@ -297,7 +331,7 @@ describe('<Profile />', () => {
                 referenceNumber: '00002032',
                 themaKanaal: 'Kanaal world',
               },
-            ]) as AppState
+            ]) as unknown as AppState
           }
         />
       );
