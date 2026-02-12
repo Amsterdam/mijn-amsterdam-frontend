@@ -172,12 +172,6 @@ export type Adres = {
   vveNaam?: string | null;
   wozWaarde?: string | null;
   aantalBewoners?: number | null;
-  /** @deprecated Onderstaande gegevens worden niet meer gebruikt. */
-  einddatumVerblijf?: string | null;
-  /** @deprecated */
-  mokum?: boolean;
-  /** @deprecated */
-  _adresSleutel?: string;
 };
 
 export type PersoonBasis = {
