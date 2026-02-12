@@ -513,6 +513,8 @@ function createEMandateSignRequestPayload(
     return_url: returnUrl,
     cid: null,
     payment_modules: ['emandate_recurring'],
+    // The Payment provider API cannot handle an E-Mandate request without at least 1 invoice, even if the invoice is not relevant for the E-Mandate.
+    // Therefore we add a dummy invoice with the most basic data possible.
     invoices: [
       {
         invoice_number: invoiceNumber,
