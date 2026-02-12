@@ -80,13 +80,15 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
     throw new Error(`Invalid creditor IBAN: ${payload.creditorIBAN}.`);
   }
 
+  const businessPartnerId = formatBusinessPartnerId(payload.businessPartnerId);
+
   const businessPartnerResponse = await fetchAfisBusinessPartnerDetails({
-    businessPartnerId: payload.businessPartnerId,
+    businessPartnerId,
   });
 
   debugEmandates(
     'Fetched business partner details for businessPartnerId %s with response: %o',
-    payload.businessPartnerId,
+    businessPartnerId,
     businessPartnerResponse
   );
 
@@ -96,8 +98,7 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
     );
   }
 
-  const businessPartnerId = formatBusinessPartnerId(payload.businessPartnerId);
-  const sender = businessPartnerResponse.content;
+  const businessPartnerDetails = businessPartnerResponse.content;
   const senderIBAN = payload.senderIBAN;
   const senderBIC = payload.senderBIC;
 
@@ -171,16 +172,22 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
     SndBic: senderBIC,
 
     // These fields are always the same as BusinessPartnerDetails, not coupled to the bankaccount (IBAN) holder.
-    SndCity: sender.address?.CityName ?? '',
-    SndCountry: sender.address?.Country ?? '',
-    SndHouse: `${sender.address?.HouseNumber ?? ''} ${sender.address?.HouseNumberSupplementText ?? ''}`,
-    SndName1: payload.senderName || sender.firstName || sender.fullName || '',
-    SndName2: sender.lastName ?? '',
-    SndPostal: sender.address?.PostalCode ?? '',
-    SndStreet: sender.address?.StreetName ?? '',
+    SndCity: businessPartnerDetails.address?.CityName ?? '',
+    SndCountry: businessPartnerDetails.address?.Country ?? '',
+    SndHouse: `${businessPartnerDetails.address?.HouseNumber ?? ''} ${businessPartnerDetails.address?.HouseNumberSupplementText ?? ''}`,
+    SndName1:
+      payload.senderName ||
+      businessPartnerDetails.firstName ||
+      businessPartnerDetails.fullName ||
+      '',
+    SndName2: businessPartnerDetails.lastName ?? '',
+    SndPostal: businessPartnerDetails.address?.PostalCode ?? '',
+    SndStreet: businessPartnerDetails.address?.StreetName ?? '',
 
     SignDate: payload.eMandateSignDate,
-    SignCity: eMandateReceiver.RecCity, // TODO: Hoe komen we aan dit gegeven, altijd Amsterdam? - https://gemeente-amsterdam.atlassian.net/browse/MIJN-12289
+    // Dit gegeven is niet beschikbaar in de payload van de sign request status notificatie.
+    // We vullen dit veld daarom met de woonplaats van de gemeente Amsterdam.
+    SignCity: eMandateReceiver.RecCity,
     LifetimeFrom: isoDateTimeFormatCompact(new Date()),
     LifetimeTo: lifetimeTo,
   };

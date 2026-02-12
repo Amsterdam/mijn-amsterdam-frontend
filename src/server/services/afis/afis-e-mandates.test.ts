@@ -51,6 +51,7 @@ const validEMandateFrontend: AfisEMandateFrontend = {
     to: '/mock-link',
     title: 'Mock Link',
   },
+  eMandateIdSource: null,
 };
 
 // Update test data for AfisEMandateCreditor
@@ -63,7 +64,7 @@ const validCreditor: AfisEMandateCreditor = {
 
 // Update test data for AfisEMandateSource
 const validSourceMandate: AfisEMandateSource = {
-  IMandateId: '1',
+  IMandateId: 1,
   LifetimeFrom: '2024-01-01T00:00:00',
   LifetimeTo: '9999-12-31T00:00:00',
   SndIban: validSenderIBAN,
