@@ -15,8 +15,6 @@ import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 import * as afis from '../Afis/Afis-thema-config';
 import { AfisFacturenTables } from '../Afis/AfisFacturenTables';
-import { useAfisThemaData } from '../Afis/useAfisThemaData.hook';
-import { useWonenThemaData } from '../Profile/private/useWonenThemaData.hook';
 
 export function ErfpachtThema() {
   const {
@@ -30,14 +28,6 @@ export function ErfpachtThema() {
     routeConfig,
     erfpachtFacturenTableConfig,
   } = useErfpachtThemaData();
-
-  const wonenData = useWonenThemaData();
-  const afisData = useAfisThemaData();
-
-  const hasOpenstaandeErfpachtFacturen =
-    !!afisData.facturenByState?.open?.facturen.filter((factuur) =>
-      factuur.afzender.toLowerCase().includes('erfpacht')
-    )?.length;
 
   useHTMLDocumentTitle(routeConfig.themaPage);
 
@@ -102,11 +92,6 @@ export function ErfpachtThema() {
           )}
           <PageContentCell spanWide={8}>
             <MissingFacturenDescription />
-            <>
-              <Heading size="level-3" level={3}>
-                {wonenData?.wonenData?.name}
-              </Heading>
-            </>
           </PageContentCell>
         </>
       }

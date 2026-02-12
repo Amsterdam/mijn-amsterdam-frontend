@@ -12,7 +12,6 @@ import { default as ErfpachtIcon } from './ErfpachtIcon.svg?react';
 import { ErfpachtList } from './ErfpachtList';
 import { ErfpachtThema } from './ErfpachtThema';
 import { useErfpachtThemaData } from './useErfpachtThemaData.hook';
-import { default as WoningIcon } from './WoningIcon.svg?react';
 import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { isLoading } from '../../../../universal/helpers/api';
 import { type AppState } from '../../../../universal/types/App.types';
@@ -86,7 +85,7 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
         !!content?.isKnown)
     );
   },
-  IconSVG: featureToggle.vveIsActive ? WoningIcon : ErfpachtIcon,
+  IconSVG: ErfpachtIcon,
 };
 
 export function useCanonmatigingFooterLink() {
@@ -115,5 +114,5 @@ export const menuItemZakelijk: ThemaMenuItem<typeof themaId> = {
   profileTypes: ['commercial'],
   redactedScope: 'none',
   isActive: menuItem.isActive,
-  IconSVG: featureToggle.vveIsActive ? WoningIcon : ErfpachtIcon,
+  IconSVG: ErfpachtIcon,
 };
