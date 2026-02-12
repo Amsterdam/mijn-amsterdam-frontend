@@ -7,12 +7,16 @@ import { BrowserRouter, useLocation, useNavigate } from 'react-router';
 
 import styles from './App.module.scss';
 import { PrivateRoutes, PublicRoutes } from './App.routes';
+import {
+  CobrowseScreensareAlert,
+} from './components/Alert/CobrowseScreenshareDisclaimer';
 import { AutoLogoutDialog } from './components/AutoLogoutDialog/AutoLogoutDialog';
 import { ErrorMessages } from './components/ErrorMessages/ErrorMessages';
 import { MainFooter } from './components/MainFooter/MainFooter';
 import { MainHeader } from './components/MainHeader/MainHeader';
 import { routeConfig as buurtRouteConfig } from './components/MyArea/MyArea-thema-config';
 import { loginUrlByAuthMethod } from './config/api';
+import { useCobrowseScreenshareState } from './helpers/cobrowse';
 import { useMonitoring } from './helpers/monitoring';
 import { useAnalytics } from './hooks/analytics.hook';
 import { useSessionApi } from './hooks/api/useSessionApi';
@@ -72,6 +76,7 @@ function AppAuthenticated() {
   const location = useLocation();
   const profileType = useProfileTypeValue();
   const redirectAfterLogin = useDeeplinkRedirect();
+  const isScreensharing = useCobrowseScreenshareState();
 
   useUsabilla(profileType);
 
@@ -87,10 +92,17 @@ function AppAuthenticated() {
 
   return (
     <>
-      <Page className={classNames(styles.App, isBuurt ? styles.AppWide : '')}>
+      <Page
+        className={classNames(
+          styles.App,
+          isBuurt ? styles.AppWide : '',
+          isScreensharing ? 'is-cobrowse-active' : ''
+        )}
+      >
         <SkipLink href="#page-main-content">Direct naar inhoud</SkipLink>
         <MainHeader isAuthenticated />
         <ErrorMessages />
+        {isScreensharing && <CobrowseScreensareAlert />}
         <PrivateRoutes />
       </Page>
       {/** Remove the footer on the Map view for better UX */}

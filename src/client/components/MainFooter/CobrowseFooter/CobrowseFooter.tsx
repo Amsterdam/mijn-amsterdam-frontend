@@ -7,7 +7,7 @@ import { PageFooter } from '@amsterdam/design-system-react';
 import type { CobrowseWidget } from './lib/cobrowse-widget';
 
 import './lib/cobrowse-widget.css';
-import { REDACTED_CLASS } from '../../../helpers/cobrowse';
+import { REDACTED_CLASS, useCobrowseStore } from '../../../helpers/cobrowse';
 import { useIsBffToggleEnabled } from '../../../helpers/env';
 
 export const LABEL_HULP_SCHERMDELEN = 'Hulp via schermdelen';
@@ -22,9 +22,13 @@ export function CobrowseFooter() {
   const [cobrowseWidget, setCobrowseWidget] = useState<CobrowseWidget | null>(
     null
   );
-  const isCobrowseActive = useIsBffToggleEnabled('BFF_COBROWSE_IS_ACTIVE');
+  const isCobrowseEnabled = useIsBffToggleEnabled('BFF_COBROWSE_IS_ACTIVE');
+  const setIsScreensharing = useCobrowseStore(
+    (state) => state.setIsScreensharing
+  );
+
   useEffect(() => {
-    if (!isCobrowseActive || !licenseKey) {
+    if (!isCobrowseEnabled || !licenseKey) {
       return;
     }
     if (cobrowseWidget) {
@@ -32,11 +36,16 @@ export function CobrowseFooter() {
     }
     import('./lib/cobrowse-widget.js').then(({ CobrowseWidget }) => {
       const redactedViews = [`.${REDACTED_CLASS}`];
-      const widget = new CobrowseWidget(licenseKey, redactedViews);
+      const widget = new CobrowseWidget({
+        licenseKey,
+        redactedViews,
+        language: 'nl',
+        setIsScreensharing,
+      });
       setCobrowseWidget(widget);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isCobrowseActive]);
+  }, [isCobrowseEnabled]);
 
   return (
     cobrowseWidget && (

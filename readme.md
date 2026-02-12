@@ -130,9 +130,10 @@ To log all debug or higher severity levels of logs.
 `export LOG_LEVEL=debug`
 See all log levels at https://getpino.io/#/docs/api?id=loggerlevels-object
 
-To log outgoing request urls, headers or bodies set these to true:
-`export LOG_THAT_HTTP=true` urls
-`export LOG_THAT_HTTP_HEADERS=true` headers
+To log outgoing request urls, headers or bodies for **non-production** environments set these to true:  
+_Production environments are excluded from this type of logging to avoid the risk of accidentally capturing sensitive data_  
+`export LOG_THAT_HTTP=true` urls  
+`export LOG_THAT_HTTP_HEADERS=true` headers  
 `export LOG_THAT_HTTP_BODY=true` body
 
 We also make use of the debug npm packages. For now the following debug settings possible:

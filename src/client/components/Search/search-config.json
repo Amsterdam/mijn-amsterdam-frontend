@@ -506,7 +506,9 @@
         "Bezwaar indienen",
         "Kwijtschelding",
         "Betalingsregeling",
-        "openstaande vorderingen"
+        "openstaande vorderingen",
+        "parkeerbon",
+        "fiscale naheffing"
       ],
       "profileTypes": ["private"]
     },

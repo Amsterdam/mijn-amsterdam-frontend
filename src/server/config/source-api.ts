@@ -12,6 +12,7 @@ import { featureToggle as featureToggleAfis } from '../../client/pages/Thema/Afi
 import { themaConfig as themaConfigBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config';
 import { featureToggle as featureToggleErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
 import { featureToggle as featureToggleJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config';
+import { IS_DEVELOPMENT } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { getCert } from '../helpers/cert';
 import { getFromEnv } from '../helpers/env';
@@ -101,7 +102,9 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = Object.freeze({
 });
 
 // TODO: MIJN-12466 - This allows falling back to previous authentication method easily. Remove after connection through EnableU works
-const isDecosOverEnableUActive = (getFromEnv('BFF_DECOS_API_BASE_URL', false) || '').startsWith('https://enableu')
+const isDecosOverEnableUActive = (
+  getFromEnv('BFF_DECOS_API_BASE_URL', false) || ''
+).startsWith('https://enableu');
 
 const afisFeatureToggle = getFromEnv('BFF_AFIS_FEATURE_TOGGLE_ACTIVE');
 const postponeFetchAfis =
@@ -227,8 +230,14 @@ const ApiConfig_ = {
     postponeFetch: !FeatureToggle.decosServiceActive,
     headers: {
       Accept: 'application/itemdata',
-      ...(isDecosOverEnableUActive ? { apiKey: getFromEnv('BFF_ENABLEU_API_KEY') } : {}),
-      ...(!isDecosOverEnableUActive ? { Authorization: `Basic ${Buffer.from(`${getFromEnv('BFF_DECOS_API_USERNAME')}:${getFromEnv('BFF_DECOS_API_PASSWORD')}`).toString('base64')}`} : {}),
+      ...(isDecosOverEnableUActive
+        ? { apiKey: getFromEnv('BFF_ENABLEU_API_KEY') }
+        : {}),
+      ...(!isDecosOverEnableUActive
+        ? {
+            Authorization: `Basic ${Buffer.from(`${getFromEnv('BFF_DECOS_API_USERNAME')}:${getFromEnv('BFF_DECOS_API_PASSWORD')}`).toString('base64')}`,
+          }
+        : {}),
       'Content-type': 'application/json; charset=utf-8',
     },
   },
@@ -329,9 +338,11 @@ const ApiConfig_ = {
     url: `${getFromEnv('BFF_SISA_API_ENDPOINT')}`,
     postponeFetch: !FeatureToggle.subsidieActive,
   },
-
   SEARCH_CONFIG: {
-    url: 'https://raw.githubusercontent.com/Amsterdam/mijn-amsterdam-frontend/main/src/client/components/Search/search-config.json',
+    url: IS_DEVELOPMENT
+      ? `${getFromEnv('BFF_MOCK_API_BASE_URL', false)}/search-config`
+      : // No re-deployment needed when fetching from our repository.
+        'https://raw.githubusercontent.com/Amsterdam/mijn-amsterdam-frontend/main/src/client/components/Search/search-config.json',
     httpsAgent: new https.Agent({
       rejectUnauthorized: false, // NOTE: Risk is assessed and tolerable for now because this concerns a request to a trusted source (GH), no sensitive data is involved and no JS code is evaluated.
     }),

@@ -12,19 +12,18 @@ export function BezwarenList() {
   const {
     bezwaren,
     tableConfig,
-    routeConfig,
+    themaConfig,
     isLoading,
     isError,
     breadcrumbs,
-    themaId,
   } = useBezwarenThemaData();
   const listPageTableConfig = tableConfig[kind];
-  useHTMLDocumentTitle(routeConfig.listPage);
+  useHTMLDocumentTitle(themaConfig.listPage.route);
 
   return (
     <ListPagePaginated
       items={bezwaren.filter(listPageTableConfig.filter)}
-      themaId={themaId}
+      themaId={themaConfig.id}
       title={listPageTableConfig.title}
       appRoute={listPageTableConfig.listPageRoute}
       breadcrumbs={breadcrumbs}

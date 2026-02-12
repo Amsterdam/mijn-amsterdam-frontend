@@ -1,5 +1,5 @@
 import { ComponentType } from '@react-spring/web';
-import { act, render, screen, within } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Mockdate from 'mockdate';
 import { generatePath } from 'react-router';
@@ -14,10 +14,7 @@ import {
   themaId as themaIdAfis,
   themaTitle as themaTitleAfis,
 } from '../pages/Thema/Afis/Afis-thema-config';
-import {
-  themaId as themaIdBezwaren,
-  themaTitle as themaTitleBezwaren,
-} from '../pages/Thema/Bezwaren/Bezwaren-thema-config';
+import { themaConfig as themaConfigBezwaren } from '../pages/Thema/Bezwaren/Bezwaren-thema-config';
 import { BezwarenDetail } from '../pages/Thema/Bezwaren/BezwarenDetail';
 import { BezwarenList } from '../pages/Thema/Bezwaren/BezwarenList';
 import { BezwarenThema } from '../pages/Thema/Bezwaren/BezwarenThema';
@@ -64,11 +61,11 @@ const testState = {
     content: [
       {
         id: 'Not1',
-        title: `Notification ${themaTitleBezwaren}`,
+        title: `Notification ${themaConfigBezwaren.title}`,
         description: 'Notificatie1',
         datePublished: '2020-07-24',
-        themaID: themaIdBezwaren,
-        themaTitle: themaTitleBezwaren,
+        themaID: themaConfigBezwaren.id,
+        themaTitle: themaConfigBezwaren.title,
         link: {
           to: '/item-1',
           title: 'Linkje!',
@@ -156,23 +153,19 @@ describe('Cobrowse redacted components', () => {
     describe('Dashboard', () => {
       it('<MyThemasPanel />', async () => {
         await act(() => render(<Component component={Dashboard} />));
-        const MyThemasPanel = screen.getByText("Mijn thema's")
-          .parentElement as HTMLElement;
-        expect(
-          within(MyThemasPanel).getByRole('link', { name: themaTitleBezwaren })
-        ).toHaveClass('redacted');
-        expect(
-          within(MyThemasPanel).getByRole('link', {
-            name: new RegExp(themaTitleVergunningen, 'i'),
-          })
-        ).not.toHaveClass('redacted');
+        expect(screen.getByTestId(themaConfigBezwaren.title)).toHaveClass(
+          'redacted'
+        );
+        expect(screen.getByTestId(themaTitleVergunningen)).not.toHaveClass(
+          'redacted'
+        );
       });
 
       it('Notifications', async () => {
         await act(() => render(<Component component={Dashboard} />));
         const listItems = screen.getAllByRole('listitem');
         const redactedNotification = listItems.find((li) =>
-          li.textContent?.includes(themaTitleBezwaren)
+          li.textContent?.includes(themaConfigBezwaren.title)
         );
         expect(redactedNotification).toHaveClass('redacted');
         const nonRedactedNotification = listItems.find((li) =>
@@ -186,7 +179,7 @@ describe('Cobrowse redacted components', () => {
       await act(() => render(<Component component={MyNotificationsPage} />));
       const listItems = screen.getAllByRole('listitem');
       const redactedNotification = listItems.find((li) =>
-        li.textContent?.includes(themaTitleBezwaren)
+        li.textContent?.includes(themaConfigBezwaren.title)
       );
       expect(redactedNotification).toHaveClass('redacted');
       const nonRedactedNotification = listItems.find((li) =>
@@ -208,7 +201,7 @@ describe('Cobrowse redacted components', () => {
 
       // Make sure the redacted is on the correct element and redacts the page content
       const cobrowseElemText = cobrowseElem?.innerText;
-      const textOnlyInElem = themaTitleBezwaren;
+      const textOnlyInElem = themaConfigBezwaren.title;
       expect(cobrowseElemText).toContain(textOnlyInElem);
 
       const fullDocumentText = document.body.innerText;
