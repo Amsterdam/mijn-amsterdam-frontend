@@ -21,6 +21,7 @@ import {
 import {
   debugEmandates,
   EMANDATE_STATUS_FRONTEND,
+  formatBusinessPartnerId,
   getAfisApiConfig,
   getEmandateDisplayStatus,
   getEmandateStatusFrontend,
@@ -95,6 +96,7 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
     );
   }
 
+  const businessPartnerId = formatBusinessPartnerId(payload.businessPartnerId);
   const sender = businessPartnerResponse.content;
   const senderIBAN = payload.senderIBAN;
   const senderBIC = payload.senderBIC;
@@ -103,13 +105,13 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
   // If not add it to the list.
   const bankAccountResponse = await fetchCheckIfIBANexists(
     senderIBAN,
-    payload.businessPartnerId
+    businessPartnerId
   );
   const bankAccountExists = bankAccountResponse.content === true;
 
   debugEmandates(
     'Checked if sender bank account exists for businessPartnerId %s with IBAN %s. Bank account exists: %s. Response: %o',
-    payload.businessPartnerId,
+    businessPartnerId,
     senderIBAN,
     bankAccountExists,
     bankAccountResponse
@@ -123,7 +125,7 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
 
   if (!bankAccountExists) {
     const bankAccountPayload: AfisBusinessPartnerBankPayload = {
-      businessPartnerId: payload.businessPartnerId,
+      businessPartnerId,
       iban: senderIBAN,
       bic: senderBIC,
       swiftCode: senderBIC,
@@ -135,7 +137,7 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
 
     debugEmandates(
       'Created sender bank account for businessPartnerId %s with payload: %o. Response: %o',
-      payload.businessPartnerId,
+      businessPartnerId,
       bankAccountPayload,
       createBankAccountResponse
     );
@@ -159,7 +161,7 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
     ...eMandateReceiver,
 
     // Gegevens van de debiteur/afgever van het EMandaat
-    SndId: payload.businessPartnerId,
+    SndId: businessPartnerId,
 
     // SndDebtorId is the reference ID of the creditor for this business partner.
     SndDebtorId: creditor.refId,

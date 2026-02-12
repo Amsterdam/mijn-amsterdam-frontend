@@ -1,5 +1,5 @@
 import { fetchAfisFacturenOverview } from './afis-facturen';
-import { getAfisApiConfig } from './afis-helpers';
+import { formatBusinessPartnerId, getAfisApiConfig } from './afis-helpers';
 import {
   AfisBusinessPartnerCommercialResponseSource,
   AfisThemaResponse,
@@ -77,7 +77,7 @@ function transformBusinessPartnerisKnownResponse(
   }
 
   businessPartnerId = businessPartnerId
-    ? parseInt(businessPartnerId, 10).toString()
+    ? formatBusinessPartnerId(businessPartnerId)
     : null;
 
   if (businessPartnerId) {
