@@ -174,7 +174,7 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
     SndCity: sender.address?.CityName ?? '',
     SndCountry: sender.address?.Country ?? '',
     SndHouse: `${sender.address?.HouseNumber ?? ''} ${sender.address?.HouseNumberSupplementText ?? ''}`,
-    SndName1: sender.firstName || sender.fullName || '',
+    SndName1: payload.senderName || sender.firstName || sender.fullName || '',
     SndName2: sender.lastName ?? '',
     SndPostal: sender.address?.PostalCode ?? '',
     SndStreet: sender.address?.StreetName ?? '',
