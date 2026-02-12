@@ -83,6 +83,12 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
     businessPartnerId: payload.businessPartnerId,
   });
 
+  debugEmandates(
+    'Fetched business partner details for businessPartnerId %s with response: %o',
+    payload.businessPartnerId,
+    businessPartnerResponse
+  );
+
   if (businessPartnerResponse.status !== 'OK') {
     throw new Error(
       `Error fetching business partner details - ${'message' in businessPartnerResponse ? businessPartnerResponse.message : ''}`
@@ -101,6 +107,14 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
   );
   const bankAccountExists = bankAccountResponse.content === true;
 
+  debugEmandates(
+    'Checked if sender bank account exists for businessPartnerId %s with IBAN %s. Bank account exists: %s. Response: %o',
+    payload.businessPartnerId,
+    senderIBAN,
+    bankAccountExists,
+    bankAccountResponse
+  );
+
   if (bankAccountResponse.status !== 'OK') {
     throw new Error(
       `Error checking if bank account exists - ${'message' in bankAccountResponse ? bankAccountResponse.message : ''}`
@@ -118,6 +132,13 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
 
     const createBankAccountResponse =
       await createBusinessPartnerBankAccount(bankAccountPayload);
+
+    debugEmandates(
+      'Created sender bank account for businessPartnerId %s with payload: %o. Response: %o',
+      payload.businessPartnerId,
+      bankAccountPayload,
+      createBankAccountResponse
+    );
 
     if (createBankAccountResponse.status !== 'OK') {
       throw new Error(
@@ -165,6 +186,8 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
   debugEmandates('Creating new e-mandate.', payloadCreateEmandate);
 
   const response = await createAfisEMandate(payloadCreateEmandate);
+
+  debugEmandates('Create e-mandate response: %o', response);
 
   if (response.status !== 'OK') {
     throw new Error(

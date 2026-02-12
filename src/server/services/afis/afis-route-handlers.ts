@@ -141,6 +141,11 @@ export async function handleAfisEMandateSignRequestStatusNotification(
 ) {
   const notificationPayload = req.body as POMEMandateSignRequestPayload;
 
+  debugEmandates(
+    'Received eMandate sign request status notification with POM payload:',
+    notificationPayload
+  );
+
   try {
     eMandateSignRequestStatusNotificationPayload.parse(notificationPayload);
   } catch (error) {
