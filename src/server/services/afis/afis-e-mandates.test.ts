@@ -15,6 +15,7 @@ import type { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
 import type { DataRequestConfig } from '../../config/source-api';
 import * as sourceApiRequest from '../../helpers/source-api-request';
 import { decryptPayloadAndValidateSessionID } from '../shared/decrypt-route-param';
+
 const authProfile: AuthProfile = {
   sid: 'sid',
   authMethod: 'digid', // Corrected to match the expected literal type
