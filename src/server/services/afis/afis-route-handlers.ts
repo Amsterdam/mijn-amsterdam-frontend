@@ -164,7 +164,7 @@ export async function handleAfisEMandateSignRequestStatusNotification(
 
   let createEmandateResponse: ApiResponse<unknown> | null = null;
   let creationError: string | null = null;
-  // TODO: Figure out if we can actually create the eMandate from this event. - https://gemeente-amsterdam.atlassian.net/browse/MIJN-12289
+
   try {
     createEmandateResponse =
       await createOrUpdateEMandateFromStatusNotificationPayload(

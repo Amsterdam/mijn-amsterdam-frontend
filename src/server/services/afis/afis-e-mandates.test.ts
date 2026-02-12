@@ -12,8 +12,9 @@ import type {
 } from './afis-types';
 import { remoteApi } from '../../../testing/utils';
 import type { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
+import type { DataRequestConfig } from '../../config/source-api';
+import * as sourceApiRequest from '../../helpers/source-api-request';
 import { decryptPayloadAndValidateSessionID } from '../shared/decrypt-route-param';
-
 const authProfile: AuthProfile = {
   sid: 'sid',
   authMethod: 'digid', // Corrected to match the expected literal type
@@ -32,7 +33,7 @@ const validPayload = {
   senderIBAN: validSenderIBAN,
   senderBIC: 'BANKNL2A',
   senderName: 'John Doe',
-  eMandateSignDate: new Date().toISOString(),
+  eMandateSignDate: '2025-07-10T00:00:00.000Z',
 };
 
 const validEMandateFrontend: AfisEMandateFrontend = {
@@ -96,10 +97,11 @@ const validSourceMandate: AfisEMandateSource = {
 
 describe('afis-e-mandates service (with nock)', () => {
   beforeAll(() => {
-    Mockdate.set('2025-07-10T12:38:39.542Z');
+    Mockdate.set('2025-07-10');
   });
   afterAll(() => {
     Mockdate.reset();
+    vi.restoreAllMocks();
   });
   beforeEach(() => {
     nock.cleanAll();
@@ -110,24 +112,29 @@ describe('afis-e-mandates service (with nock)', () => {
 
   describe('createAfisEMandate - Happy scenario', () => {
     it('creates a mandate if all checks pass', async () => {
+      const s = vi.spyOn(sourceApiRequest, 'requestData');
+
       remoteApi.get(/A_BusinessPartner/).reply(200, {
         status: 'OK',
-        content: {
-          address: {},
-          firstName: 'A',
-          lastName: 'B',
-          fullName: 'A B',
-        },
+        content: null,
       });
-      remoteApi.get(/A_BusinessPartnerAddress/).reply(200);
-      remoteApi.get(/A_BusinessPartnerBank/).reply(200, {
+      remoteApi.get(/A_BusinessPartnerAddress/).reply(200, {
         feed: {
           entry: [
             {
               content: {
                 '@type': 'application/xml',
                 properties: {
-                  foo: 'bar',
+                  AddressID: 123123,
+                  CityName: 'Amsterdam',
+                  Country: 'NL',
+                  HouseNumber: 20,
+                  HouseNumberSupplementText: '',
+                  PostalCode: '1011 BB',
+                  Region: '',
+                  StreetName: 'Kwakelstrevenkade',
+                  StreetPrefixName: '',
+                  StreetSuffixName: '',
                 },
               },
             },
@@ -135,12 +142,64 @@ describe('afis-e-mandates service (with nock)', () => {
         },
       });
 
+      // No bankaccount found
+      remoteApi.get(/A_BusinessPartnerBank/).reply(200);
+      // Create bankaccount
+      remoteApi.post(/A_BusinessPartnerBank/).reply(200);
+
       remoteApi.post(/CreateMandate/).reply(200);
 
       const result =
         await emandates.createOrUpdateEMandateFromStatusNotificationPayload(
           validPayload
         );
+
+      const bankCreateData = (s.mock.calls.at(-2)?.at(-1) as DataRequestConfig)
+        .data;
+
+      const emandateCreateData = (
+        s.mock.calls.at(-1)?.at(-1) as DataRequestConfig
+      ).data;
+
+      expect(bankCreateData).toStrictEqual({
+        BankAccount: '9343513650',
+        BankAccountHolderName: 'John Doe',
+        BankCountryKey: 'NL',
+        BankName: 'BOOG',
+        BankNumber: 'BOOG',
+        BusinessPartner: '0000000123',
+        IBAN: 'NL35BOOG9343513650',
+        SWIFTCode: 'BANKNL2A',
+      });
+      expect(emandateCreateData).toStrictEqual({
+        LifetimeFrom: '2025-07-10T02:00:00',
+        LifetimeTo: '9999-12-31T00:00:00',
+        PayType: '',
+        RecCity: 'Amsterdam',
+        RecCountry: 'NL',
+        RecHouse: '1',
+        RecId: '',
+        RecName1: 'Gemeente Amsterdam',
+        RecPostal: '1011 PN',
+        RecStreet: 'Amstel',
+        RecType: '',
+        RefType: '',
+        SignCity: 'Amsterdam',
+        SignDate: '2025-07-10T00:00:00.000Z',
+        SndBic: 'BANKNL2A',
+        SndCity: 'Amsterdam',
+        SndCountry: 'NL',
+        SndDebtorId: 'AFVAL',
+        SndHouse: '20',
+        SndIban: 'NL35BOOG9343513650',
+        SndId: '0000000123',
+        SndName1: 'John Doe',
+        SndName2: '',
+        SndPostal: '1011 BB',
+        SndStreet: 'Kwakelstrevenkade',
+        SndType: '',
+        Status: '',
+      });
       expect(result.status).toBe('OK');
     });
   });
@@ -473,7 +532,7 @@ describe('afis-e-mandates service (with nock)', () => {
         last_name: 'Doe',
         payment_modules: ['emandate_recurring'],
         payment_reference: 'ref-123',
-        request_id: 'ref-123-2025-07-10T12:38:39.542Z',
+        request_id: 'ref-123-2025-07-10T00:00:00.000Z',
         return_url:
           'http://frontend-host/facturen-en-betalen/betaalvoorkeuren/emandate/test?iban=NL35BOOG9343513650',
         variable1: 'NL21RABO0110055004',
@@ -529,7 +588,7 @@ describe('afis-e-mandates service (with nock)', () => {
           payload: {
             creditorIBAN: 'NL21RABO0110055004',
             businessPartnerId: '123',
-            eMandateSignDate: '2025-07-10T12:38:39.542Z',
+            eMandateSignDate: '2025-07-10T00:00:00.000Z',
           },
           sessionID: 'sid',
         },

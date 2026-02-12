@@ -153,6 +153,9 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
   // We start the e-mandate lifetime with an end date far in the future.
   // The user can later adjust this date.
   const lifetimeTo = AFIS_EMANDATE_RECURRING_DATE_END;
+  const houseNumber = businessPartnerDetails.address?.HouseNumber ?? '';
+  const houseNumberSupplement =
+    businessPartnerDetails.address?.HouseNumberSupplementText ?? '';
 
   const payloadCreateEmandate: AfisEMandateCreatePayload = {
     // Fixed values needed for API (black box)
@@ -174,7 +177,7 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
     // These fields are always the same as BusinessPartnerDetails, not coupled to the bankaccount (IBAN) holder.
     SndCity: businessPartnerDetails.address?.CityName ?? '',
     SndCountry: businessPartnerDetails.address?.Country ?? '',
-    SndHouse: `${businessPartnerDetails.address?.HouseNumber ?? ''} ${businessPartnerDetails.address?.HouseNumberSupplementText ?? ''}`,
+    SndHouse: `${houseNumber}${houseNumberSupplement ? ` ${houseNumberSupplement}` : ''}`,
     SndName1:
       payload.senderName ||
       businessPartnerDetails.firstName ||
@@ -492,7 +495,7 @@ function createEMandateSignRequestPayload(
   const invoiceDate = isoDateFormat(today);
   const invoiceNumber = `EMandaat-${creditor.refId}-${invoiceDate}`;
 
-  // TODO: Moet dit met een gegeven uit AFIS te koppelen zijn? - https://gemeente-amsterdam.atlassian.net/browse/MIJN-12289
+  // Required property in the sign request payload to create a unique payment reference for the E-Mandate sign request.
   const paymentReference = `${creditor.refId}-${businessPartner.businessPartnerId}`;
   const idBatch = `mijnamsterdam-emandates-batch-${isoDateFormat(today)}`;
   const idRequestClient = `${creditor.refId}-${businessPartner.businessPartnerId}-${isoDateString}`;
@@ -681,4 +684,5 @@ export const forTesting = {
   transformEMandatesRedirectUrlResponse,
   transformEMandatesResponse,
   updateAfisEMandate,
+  createAfisEMandate,
 };
