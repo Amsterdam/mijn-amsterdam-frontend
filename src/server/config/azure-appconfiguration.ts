@@ -64,8 +64,14 @@ async function isEnabledMock(featureName: FeatureName): Promise<boolean> {
 }
 
 async function updateFeaturNameType(fm: FeatureManager): Promise<void> {
-  const newFeatureNames = await fm.listFeatureNames();
+  // We automaticly keep these up to date so this type is safe to cast
+  const newFeatureNames = (await fm.listFeatureNames()) as FeatureName[];
+  const featureToggleObject = expandFeatureNameFields(newFeatureNames);
+  console.dir(featureToggleObject);
+
   if (!areArraysEqual(newFeatureNames, featureNames as unknown as string[])) {
+    // const featureToggleObject = expandFeatureNameFields(newFeatureNames);
+    // console.dir(featureToggleObject);
     const data = [
       '// This file is generated, do not manually adjust',
       '',
@@ -75,4 +81,35 @@ async function updateFeaturNameType(fm: FeatureManager): Promise<void> {
     ];
     writeFileSync('./src/server/config/featurenames.ts', data.join('\n'));
   }
+}
+
+function expandFeatureNameFields(
+  featureNames: FeatureName[]
+): HieraracleToggles {
+  const featureToggles = {};
+  for (const path of featureNames) {
+    const pathParts = path.split('.');
+    addToggles(featureToggles, pathParts);
+  }
+  return featureToggles;
+}
+
+interface HieraracleToggles {
+  [x: string]: HieraracleToggles | boolean;
+}
+
+function addToggles(obj: HieraracleToggles, keys: string[], i = 0): object {
+  const k = keys[0];
+  if (keys.length <= 1) {
+    obj[k] = false;
+    return obj;
+  }
+  if (!obj[k]) {
+    obj[k] = {};
+  }
+  if (typeof obj[k] === 'boolean') {
+    throw Error(`${k} is already defined`);
+  }
+  const nexti = i + 1;
+  return addToggles(obj[k], keys.slice(nexti), nexti);
 }
