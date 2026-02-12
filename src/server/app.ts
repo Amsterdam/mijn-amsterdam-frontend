@@ -4,8 +4,6 @@
 /* tslint:disable:no-implicit-dependencies */
 /* tslint:disable:no-submodule-imports */
 
-// Keep the loading of environment variables at the top.
-import './helpers/load-env';
 import {
   IS_AP,
   IS_DEVELOPMENT,
@@ -65,7 +63,6 @@ import { router as routerPublicExternalConsumer } from './routing/router-public-
 import { captureException } from './services/monitoring';
 import { getFromEnv } from './helpers/env';
 import { router as privateNetworkRouter } from './routing/router-private';
-import { startAppConfiguration } from './config/azure-appconfiguration';
 
 const app = express();
 
@@ -196,7 +193,6 @@ async function startServerBFF() {
       `Mijn Amsterdam BFF api listening on ${BFF_PORT}... [IS_DEVELOPMENT: ${IS_DEVELOPMENT}]`
     );
   });
-  startAppConfiguration();
 
   server.on('error', (error) => {
     captureException(error, {

@@ -1,4 +1,4 @@
-import '../../server/helpers/load-env';
+import { writeFileSync } from 'fs';
 
 // @ts-expect-error Otherwise required to update module resolver.
 import { load } from '@azure/app-configuration-provider';
@@ -7,15 +7,13 @@ import {
   ConfigurationMapFeatureFlagProvider,
 } from '@microsoft/feature-management';
 
+import { FeatureName, featureNames } from './featurenames';
 import { IS_DEVELOPMENT } from '../../universal/config/env';
-import { createBFFRouter } from '../routing/route-helpers';
+import { areArraysEqual } from '../../universal/helpers/utils';
 
 const REFRESH_INTERVAL_MS = 5000;
 
 const DISABLED_DEVELOPMENT_FEATURES: string[] = [];
-
-const BASE_PATH = '/appconfiguration';
-const REFRESH_ROUTE = `${BASE_PATH}/refresh`;
 
 let featureManager: FeatureManager | undefined;
 // Cannot import type, see ts-expect-error above.
@@ -47,30 +45,34 @@ export async function startAppConfiguration() {
   featureManager = new FeatureManager(
     new ConfigurationMapFeatureFlagProvider(appConfig)
   );
+  // Automatic type updating when new features are added in the Appconfiguration.
+  if (IS_DEVELOPMENT) {
+    updateFeaturNameType(featureManager);
+  }
 }
 
 /** Get the featureToggle's enabled status. When not found this will return false */
-export async function isEnabled(featureName: string): Promise<boolean> {
+export async function isEnabled(featureName: FeatureName): Promise<boolean> {
   if (!featureManager) {
     throw Error('No featureManager defined, call startAppConfiguration first.');
   }
   return featureManager.isEnabled(featureName);
 }
 
-async function isEnabledMock(featureName: string): Promise<boolean> {
+async function isEnabledMock(featureName: FeatureName): Promise<boolean> {
   return !DISABLED_DEVELOPMENT_FEATURES.includes(featureName);
 }
 
-export const appConfigurationRouter = {
-  private: createBFFRouter({
-    id: 'appconfiguration-router-private',
-  }),
-};
-
-appConfigurationRouter.private.get(REFRESH_ROUTE, async (_req, res) => {
-  if (!appConfig) {
-    throw Error('No AppConfig defined, call startAppConfiguration first.');
+async function updateFeaturNameType(fm: FeatureManager): Promise<void> {
+  const newFeatureNames = await fm.listFeatureNames();
+  if (!areArraysEqual(newFeatureNames, featureNames as unknown as string[])) {
+    const data = [
+      '// This file is generated, do not manually adjust',
+      '',
+      `export const featureNames = ${JSON.stringify(newFeatureNames, null, 2)} as const;`,
+      '',
+      'export type FeatureName = (typeof featureNames)[number];',
+    ];
+    writeFileSync('./src/server/config/featurenames.ts', data.join('\n'));
   }
-  appConfig.refresh();
-  res.send('<h1>Refresh Appconfiguration succesful</h1>');
-});
+}
