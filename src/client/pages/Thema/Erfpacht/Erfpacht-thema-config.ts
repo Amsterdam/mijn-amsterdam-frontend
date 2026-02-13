@@ -32,22 +32,23 @@ export const LINKS = {
   erfpachtWijzigenForm: `https://formulieren${IS_PRODUCTION ? '' : '.acc'}.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/ErfpachtWijzigen.aspx`,
 };
 
+type WithDetailPageFactuur = PageConfig<'detailPageFactuur'>;
+type WithListPageFacturen = PageConfig<'listPageFacturen'>;
+
 type ThemaConfigErfpacht = ThemaConfigBase &
   WithDetailPage &
   WithListPage &
   WithDetailPageFactuur &
+  WithListPageFacturen &
+  WithDetailPageFactuur &
   WithListPageFacturen;
-
-type WithDetailPageFactuur = PageConfig<'detailPageFactuur'>;
-type WithListPageFacturen = PageConfig<'listPageFacturen'>;
 
 export const themaConfig: ThemaConfigErfpacht = {
   id: THEMA_ID,
   title: THEMA_TITLE,
   redactedScope: 'none',
-  profileTypes: ['private'], //TO DO Yacine er moet hier nog iets komen voor commercial
+  profileTypes: ['private'], //COMMERCIAL IS IN ERFPACHT-RENDER-CONFIG, BECAUSE HAS ANOTHER MENUITEM
   featureToggle: propagateFeatureToggles({
-    // TO DO Ontwikkelaars Even goed naar kijken lijkt mij..
     active: true,
     canonmatigingLinkActive: true,
     afisFacturenTablesActive: !IS_PRODUCTION,
