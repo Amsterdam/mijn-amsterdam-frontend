@@ -27,10 +27,6 @@ export type ThemaConfigBase<ID = string> = {
 export type WithDetailPage = PageConfig<'detailPage'>;
 export type WithListPage = PageConfig<'listPage'>;
 
-//only for Erfrecht // TO DO Yacine staan deze wel juist of moet ik hier een aparte file voor maken?
-export type WithDetailPageFactuur = PageConfig<'detailPageFactuur'>;
-export type WithListPageFacturen = PageConfig<'listPageFacturen'>;
-
 export type ThemaFeatureToggle<T = boolean> = {
   active: boolean;
   [key: string]: boolean | ThemaFeatureToggle<T>;

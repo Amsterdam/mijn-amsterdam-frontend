@@ -8,11 +8,10 @@ import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { propagateFeatureToggles } from '../../../config/buildFeatureToggle';
 import type {
+  PageConfig,
   ThemaConfigBase,
   WithDetailPage,
-  WithDetailPageFactuur,
   WithListPage,
-  WithListPageFacturen,
 } from '../../../config/thema-types';
 import {
   getAfisListPageDocumentTitle,
@@ -38,6 +37,9 @@ type ThemaConfigErfpacht = ThemaConfigBase &
   WithListPage &
   WithDetailPageFactuur &
   WithListPageFacturen;
+
+type WithDetailPageFactuur = PageConfig<'detailPageFactuur'>;
+type WithListPageFacturen = PageConfig<'listPageFacturen'>;
 
 export const themaConfig: ThemaConfigErfpacht = {
   id: THEMA_ID,
