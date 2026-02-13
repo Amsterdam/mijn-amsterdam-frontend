@@ -49,7 +49,7 @@ import {
 } from '../../../universal/types/App.types';
 import type { ThemaMenuItem } from '../../config/thema-types';
 import type { AfisFactuurFrontend } from '../../pages/Thema/Afis/Afis-thema-config';
-import { featureToggle as featureToggleAVG } from '../../pages/Thema/AVG/AVG-thema-config';
+import { themaConfig as avgThemaConfig } from '../../pages/Thema/AVG/AVG-thema-config';
 import { themaConfig as themaConfigBezwaren } from '../../pages/Thema/Bezwaren/Bezwaren-thema-config';
 import { themaConfig as themaConfigBodem } from '../../pages/Thema/Bodem/Bodem-thema-config';
 import { featureToggle as featureToggleHoreca } from '../../pages/Thema/Horeca/Horeca-thema-config';
@@ -500,7 +500,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    isEnabled: featureToggleAVG.avgActive,
+    isEnabled: avgThemaConfig.featureToggle.active,
     stateKey: 'AVG',
     profileTypes: ['private', 'commercial'],
     displayTitle(item: AVGRequestFrontend) {

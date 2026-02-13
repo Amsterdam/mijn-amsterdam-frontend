@@ -9,19 +9,18 @@ export function AVGList() {
     isError,
     filter,
     sort,
-    themaId,
     title,
     breadcrumbs,
     displayProps,
     listPageRoute,
-    routeConfig,
+    themaConfig,
   } = useAVGListPageData();
-  useHTMLDocumentTitle(routeConfig.listPage);
+  useHTMLDocumentTitle(themaConfig.listPage.route);
 
   return (
     <ListPagePaginated
       items={avgVerzoeken.filter(filter).sort(sort)}
-      themaId={themaId}
+      themaId={themaConfig.id}
       title={title}
       appRoute={listPageRoute}
       breadcrumbs={breadcrumbs}
