@@ -89,7 +89,7 @@ describe('brp.ts', () => {
         'test-bag-id'
       );
 
-      expect(response.content).toBe('> 30');
+      expect(response.content).toBe('Meer dan 30');
     });
 
     it('should return AANTAL_BEWONERS_NOT_SET when response is null', async () => {

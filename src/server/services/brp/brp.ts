@@ -443,7 +443,7 @@ export async function fetchAantalBewoners(
         responseData.status === HttpStatusCode.BadRequest &&
         responseData.code === 'tooManyResults'
       ) {
-        return '> 30';
+        return 'Meer dan 30';
       }
       if (
         'status' in responseData &&
