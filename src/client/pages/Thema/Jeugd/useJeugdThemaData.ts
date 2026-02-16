@@ -25,5 +25,6 @@ export function useJeugdThemaData() {
     listPageTitle,
     listPageParamKind,
     routeConfig,
+    themaConfig,
   };
 }

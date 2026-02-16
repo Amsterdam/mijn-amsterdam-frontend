@@ -16,23 +16,26 @@ const THEMA_ID = 'JEUGD';
 
 const detailRouteBase = '/jeugd/voorziening';
 
-type ThemaConfigBezwaren = Pick<
+type ThemaConfigJeugd = Pick<
   ThemaConfigBase,
-  'id' | 'title' | 'redactedScope' | 'profileTypes'
+  'id' | 'title' | 'redactedScope' | 'profileTypes' | 'route' | 'featureToggle'
 >;
 
-export const themaConfig: ThemaConfigBezwaren = {
+export const themaConfig: ThemaConfigJeugd = {
   id: THEMA_ID,
   title: THEMA_TITLE,
   redactedScope: 'full',
   profileTypes: ['private'],
-};
-export const routeConfig = {
-  themaPage: {
+  route: {
     path: '/jeugd',
     documentTitle: THEMA_TITLE,
     trackingUrl: null,
   },
+  featureToggle: {
+    active: true,
+  },
+};
+export const routeConfig = {
   listPage: {
     path: '/jeugd/lijst/:kind/:page?',
     documentTitle: THEMA_TITLE,

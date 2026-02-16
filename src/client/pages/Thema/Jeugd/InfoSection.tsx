@@ -1,4 +1,4 @@
-import { featureToggle, themaConfig } from './Jeugd-thema-config';
+import { themaConfig } from './Jeugd-thema-config';
 import { InfoSection_DEPRECATED } from '../../GeneralInfo/GeneralInfo';
 
 export const JeugdSectionProps: InfoSection_DEPRECATED = {
@@ -12,5 +12,5 @@ export const JeugdSectionProps: InfoSection_DEPRECATED = {
     'Aangepast individueel vervoer',
     'Aangepast groepsvervoer',
   ],
-  active: featureToggle.leerlingenvervoerActive,
+  active: themaConfig.featureToggle.active,
 };

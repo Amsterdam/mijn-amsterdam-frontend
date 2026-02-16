@@ -9,7 +9,7 @@ import { ThemaMenuItem } from '../../../config/thema-types';
 
 export const JeugdRoutes = [
   {
-    route: routeConfig.themaPage.path,
+    route: themaConfig.route.path,
     Component: JeugdThemaPagina,
     isActive: featureToggle.leerlingenvervoerActive,
   },
@@ -32,11 +32,11 @@ export const menuItem: ThemaMenuItem = {
   profileTypes: themaConfig.profileTypes,
   isActive(appState: AppState) {
     return (
-      featureToggle.leerlingenvervoerActive &&
+      themaConfig.featureToggle.active &&
       !isLoading(appState.JEUGD) &&
       !!appState.JEUGD.content?.length
     );
   },
-  to: routeConfig.themaPage.path,
+  to: themaConfig.route.path,
   IconSVG: JeugdIcon,
 };
