@@ -143,7 +143,10 @@ export async function handleAfisEMandateSignRequestStatusNotification(
 
   debugEmandates(
     'Received eMandate sign request status notification with POM payload:',
-    notificationPayload
+    {
+      ...notificationPayload,
+      iban: `${notificationPayload.iban.slice(0, 2)}****${notificationPayload.iban.slice(-4)}`,
+    }
   );
 
   try {

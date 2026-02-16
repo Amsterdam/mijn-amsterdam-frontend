@@ -188,8 +188,8 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
     SndStreet: businessPartnerDetails.address?.StreetName ?? '',
 
     SignDate: payload.eMandateSignDate,
-    // Dit gegeven is niet beschikbaar in de payload van de sign request status notificatie.
-    // We vullen dit veld daarom met de woonplaats van de gemeente Amsterdam.
+    // This data is not available in the payload of the sign request status notification.
+    // Therefore, we fill this field with the city of the municipality of Amsterdam.
     SignCity: eMandateReceiver.RecCity,
     LifetimeFrom: isoDateTimeFormatCompact(new Date()),
     LifetimeTo: lifetimeTo,

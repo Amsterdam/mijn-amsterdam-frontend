@@ -3,7 +3,10 @@ import createDebugger from 'debug';
 
 import { fetchAfisTokenHeader } from './afis';
 import { EMANDATE_ENDDATE_INDICATOR } from './afis-e-mandates-config';
-import { AfisApiFeedResponseSource } from './afis-types';
+import {
+  AfisApiFeedResponseSource,
+  type BusinessPartnerId,
+} from './afis-types';
 import { toDateFormatted } from '../../../universal/helpers/date';
 import { DataRequestConfig } from '../../config/source-api';
 import { getFromEnv } from '../../helpers/env';
@@ -86,6 +89,8 @@ export function getEmandateDisplayStatus(
 
 export const debugEmandates = createDebugger('afis:emandates');
 
-export function formatBusinessPartnerId(businessPartnerId: string): string {
+export function formatBusinessPartnerId(
+  businessPartnerId: BusinessPartnerId
+): string {
   return businessPartnerId.padStart(10, '0');
 }
