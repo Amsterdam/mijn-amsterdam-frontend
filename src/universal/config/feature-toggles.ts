@@ -29,7 +29,6 @@ export const FeatureToggle = {
 
   // Afval api + Afval thema
   garbageInformationPage: true,
-  adopteerbareAfvalContainerMeldingen: !IS_PRODUCTION,
 
   // Horeca vergunningen
   horecaActive: true,
