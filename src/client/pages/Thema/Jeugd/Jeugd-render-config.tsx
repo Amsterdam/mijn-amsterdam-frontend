@@ -28,8 +28,8 @@ export const JeugdRoutes = [
 export const menuItem: ThemaMenuItem = {
   title: themaConfig.title,
   id: themaConfig.id,
-  redactedScope: 'full',
-  profileTypes: ['private'],
+  redactedScope: themaConfig.redactedScope,
+  profileTypes: themaConfig.profileTypes,
   isActive(appState: AppState) {
     return (
       featureToggle.leerlingenvervoerActive &&

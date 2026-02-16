@@ -16,11 +16,16 @@ const THEMA_ID = 'JEUGD';
 
 const detailRouteBase = '/jeugd/voorziening';
 
-type ThemaConfigBezwaren = Pick<ThemaConfigBase, 'id' | 'title'>;
+type ThemaConfigBezwaren = Pick<
+  ThemaConfigBase,
+  'id' | 'title' | 'redactedScope' | 'profileTypes'
+>;
 
 export const themaConfig: ThemaConfigBezwaren = {
   id: THEMA_ID,
   title: THEMA_TITLE,
+  redactedScope: 'full',
+  profileTypes: ['private'],
 };
 export const routeConfig = {
   themaPage: {
