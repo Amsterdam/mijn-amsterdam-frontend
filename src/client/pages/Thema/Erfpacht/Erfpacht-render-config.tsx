@@ -108,7 +108,7 @@ export const menuItemZakelijk: ThemaMenuItem = {
       ? content.url
       : ERFPACHT_ZAKELIJK_ROUTE_DEFAULT;
   },
-  profileTypes: ['commercial'], //TO DO YACINE hoe doe ik deze in de themaConfig.
+  profileTypes: ['commercial'],
   redactedScope: themaConfig.redactedScope,
   isActive: menuItem.isActive,
   IconSVG: ErfpachtIcon,
