@@ -22,11 +22,13 @@ import {
   type VerblijfplaatsSource,
 } from './brp-types';
 import type {
+  PersonenResponseSourceError,
   Persoon,
   PersoonBasis,
   PersoonBasisSource,
   PersoonSource,
 } from './brp-types';
+import { HttpStatusCode } from '../../../client/hooks/api/useBffApi';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import {
   apiErrorResult,
@@ -39,7 +41,7 @@ import { ONE_HOUR_MS } from '../../config/app';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
+import { isSuccessStatus, requestData } from '../../helpers/source-api-request';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token';
 import { getContextOperationId } from '../monitoring';
@@ -421,7 +423,6 @@ export async function fetchAantalBewoners(
   if (response.status !== 'OK') {
     return response;
   }
-
   const today = new Date();
   const requestConfig = getApiConfig('BENK_BRP', {
     formatUrl(requestConfig) {
@@ -431,17 +432,45 @@ export async function fetchAantalBewoners(
       ...response.content,
       'X-Correlation-ID': getContextOperationId(sessionID), // Required for tracing
     },
-    transformResponse: (responseData: PersonenResponseSource | null) => {
+    transformResponse: (
+      responseData: PersonenResponseSource | PersonenResponseSourceError | null
+    ): string => {
+      if (!responseData) {
+        return `${AANTAL_BEWONERS_NOT_SET}`;
+      }
+      if (
+        'code' in responseData &&
+        responseData.status === HttpStatusCode.BadRequest &&
+        responseData.code === 'tooManyResults'
+      ) {
+        return '> 30';
+      }
+      if (
+        'status' in responseData &&
+        responseData.status === HttpStatusCode.BadRequest
+      ) {
+        throw new Error(
+          `HTTP 400 bad request code: '${responseData.code}' received`
+        );
+      }
       // This is redundant filtering, as the API should always return the correct data. See also: MIJN-12262
-      const personenFiltered = responseData?.personen?.filter((persoon) => {
-        const datumOpschortingBijhouding = persoon.opschortingBijhouding?.datum;
-        return datumOpschortingBijhouding &&
-          'datum' in datumOpschortingBijhouding
-          ? isAfter(parseISO(datumOpschortingBijhouding.datum), today)
-          : true;
-      });
-      return personenFiltered?.length || AANTAL_BEWONERS_NOT_SET;
+      const personenFiltered =
+        ('personen' in responseData &&
+          responseData.personen?.filter((persoon) => {
+            const datumOpschortingBijhouding =
+              persoon.opschortingBijhouding?.datum;
+            return datumOpschortingBijhouding &&
+              'datum' in datumOpschortingBijhouding
+              ? isAfter(parseISO(datumOpschortingBijhouding.datum), today)
+              : true;
+          })) ||
+        [];
+      return `${personenFiltered?.length || AANTAL_BEWONERS_NOT_SET}`;
     },
+    validateStatus: (statusCode) =>
+      // This endpoint returns a 400 bad request when the reponse contains more than 30 objects.
+      // The bad request status is provided in the body and handled in the transformResponse.
+      isSuccessStatus(statusCode) || statusCode === HttpStatusCode.BadRequest,
     data: {
       type: 'ZoekMetAdresseerbaarObjectIdentificatie',
       inclusiefOverledenPersonen: false,
