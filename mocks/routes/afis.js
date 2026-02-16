@@ -40,7 +40,7 @@ module.exports = [
           status: 200,
           body: {
             BSN: 999999999,
-            Zakenpartnernummer: '8888888888',
+            Zakenpartnernummer: '67899',
             Blokkade: 'Nee',
             Afnemers_indicatie: 'Nee',
             Gevonden: 'Ja',

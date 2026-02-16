@@ -1,28 +1,13 @@
 import { describe } from 'vitest';
 
 import { fetchIsKnownInAFIS } from './afis';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
-
-const mocks = vi.hoisted(() => {
-  const MOCK_VALUE_ENCRYPTED = 'xx-encrypted-xx';
-  const MOCK_VALUE_DECRYPTED = 'value-decrypted';
-
-  return {
-    MOCK_VALUE_ENCRYPTED,
-    MOCK_VALUE_DECRYPTED,
-  };
-});
-
-vi.mock('../../helpers/encrypt-decrypt', async (importOriginal) => {
-  const original: object = await importOriginal();
-  return {
-    ...original,
-    encryptPayloadAndSessionID: vi
-      .fn()
-      .mockReturnValue(mocks.MOCK_VALUE_ENCRYPTED),
-    decrypt: vi.fn().mockReturnValue(mocks.MOCK_VALUE_DECRYPTED),
-  };
-});
+import { formatBusinessPartnerId } from './afis-helpers';
+import {
+  getAuthProfileAndToken,
+  remoteApi,
+  TEST_SESSION_ID,
+} from '../../../testing/utils';
+import { decrypt } from '../../helpers/encrypt-decrypt';
 
 const BASE_ROUTE = '/afis/RESTAdapter';
 
@@ -38,14 +23,14 @@ const ROUTES = {
 const RESPONSE_BODIES = {
   BSNFound: {
     BSN: 111111111,
-    Zakenpartnernummer: '4444444444',
+    Zakenpartnernummer: '67899',
     Blokkade: 'Nee',
     Gevonden: 'Ja',
   },
   KVKFound: {
     Record: {
       KVK: 22222222,
-      Zakenpartnernummer: '4444444444',
+      Zakenpartnernummer: '67899',
       Blokkade: 'Nee',
       Gevonden: 'Ja',
     },
@@ -97,7 +82,7 @@ describe('fetchIsKnownInAFIS ', () => {
   const TRANSFORMED_RESPONSES = {
     isKnown: {
       content: {
-        businessPartnerIdEncrypted: mocks.MOCK_VALUE_ENCRYPTED,
+        businessPartnerIdEncrypted: expect.any(String),
         facturen: {
           afgehandeld: {
             count: 0,
@@ -137,6 +122,13 @@ describe('fetchIsKnownInAFIS ', () => {
 
       const response = await fetchIsKnownInAFIS(
         getAuthProfileAndToken('private')
+      );
+      const businessPartnerIdFormatted = formatBusinessPartnerId(
+        RESPONSE_BODIES.BSNFound.Zakenpartnernummer
+      );
+
+      expect(decrypt(response.content?.businessPartnerIdEncrypted ?? '')).toBe(
+        `{"sessionID":"${TEST_SESSION_ID}","payload":{"businessPartnerId":"${businessPartnerIdFormatted}"}}`
       );
 
       expect(response).toStrictEqual(TRANSFORMED_RESPONSES.isKnown);

@@ -3,7 +3,10 @@ import createDebugger from 'debug';
 
 import { fetchAfisTokenHeader } from './afis';
 import { EMANDATE_ENDDATE_INDICATOR } from './afis-e-mandates-config';
-import { AfisApiFeedResponseSource } from './afis-types';
+import {
+  AfisApiFeedResponseSource,
+  type BusinessPartnerId,
+} from './afis-types';
 import { toDateFormatted } from '../../../universal/helpers/date';
 import { DataRequestConfig } from '../../config/source-api';
 import { getFromEnv } from '../../helpers/env';
@@ -84,4 +87,38 @@ export function getEmandateDisplayStatus(
   return 'Niet actief';
 }
 
-export const debugEmandates = createDebugger('afis:emandates');
+const debugEmandates_ = createDebugger('afis:emandates');
+
+export function debugEmandates(...args: Parameters<typeof debugEmandates_>) {
+  const argsRedacted = args.map((arg) => {
+    if (typeof arg === 'object' && arg !== null) {
+      return redactEmandateData(arg);
+    }
+    return arg;
+  });
+  debugEmandates_(...(argsRedacted as Parameters<typeof debugEmandates_>));
+}
+
+export function formatBusinessPartnerId(
+  businessPartnerId: BusinessPartnerId
+): string {
+  return businessPartnerId.padStart(10, '0');
+}
+
+export function redactEmandateData<
+  T extends { iban?: string; SndIban?: string; senderIBAN?: string },
+>(data: T): T {
+  const ibanProps = ['SndIban', 'iban', 'senderIBAN'] as const;
+  return ibanProps.reduce(
+    (acc, prop) => {
+      if (acc[prop]) {
+        return {
+          ...acc,
+          [prop]: `${acc[prop]!.slice(0, 2)}****${acc[prop]!.slice(-4)}`,
+        };
+      }
+      return acc;
+    },
+    { ...data }
+  );
+}
