@@ -85,7 +85,7 @@ async function updateFeaturNameType(fm: FeatureManager): Promise<void> {
 
 function expandFeatureNameFields(
   featureNames: FeatureName[]
-): HieraracleToggles {
+): HierarchicalToggles {
   const featureToggles = {};
   for (const path of featureNames) {
     const pathParts = path.split('.');
@@ -94,11 +94,11 @@ function expandFeatureNameFields(
   return featureToggles;
 }
 
-interface HieraracleToggles {
-  [x: string]: HieraracleToggles | boolean;
+interface HierarchicalToggles {
+  [x: string]: HierarchicalToggles | boolean;
 }
 
-function addToggles(obj: HieraracleToggles, keys: string[], i = 0): object {
+function addToggles(obj: HierarchicalToggles, keys: string[]): object {
   const k = keys[0];
   if (keys.length <= 1) {
     obj[k] = false;
@@ -110,6 +110,5 @@ function addToggles(obj: HieraracleToggles, keys: string[], i = 0): object {
   if (typeof obj[k] === 'boolean') {
     throw Error(`${k} is already defined`);
   }
-  const nexti = i + 1;
-  return addToggles(obj[k], keys.slice(nexti), nexti);
+  return addToggles(obj[k], keys.slice(1));
 }
