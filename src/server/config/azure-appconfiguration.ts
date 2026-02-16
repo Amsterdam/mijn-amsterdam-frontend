@@ -66,49 +66,17 @@ async function isEnabledMock(featureName: FeatureName): Promise<boolean> {
 async function updateFeaturNameType(fm: FeatureManager): Promise<void> {
   // We automaticly keep these up to date so this type is safe to cast
   const newFeatureNames = (await fm.listFeatureNames()) as FeatureName[];
-  const featureToggleObject = expandFeatureNameFields(newFeatureNames);
-  console.dir(featureToggleObject);
 
   if (!areArraysEqual(newFeatureNames, featureNames as unknown as string[])) {
     // const featureToggleObject = expandFeatureNameFields(newFeatureNames);
     // console.dir(featureToggleObject);
-    const data = [
-      '// This file is generated, do not manually adjust',
-      '',
-      `export const featureNames = ${JSON.stringify(newFeatureNames, null, 2)} as const;`,
-      '',
-      'export type FeatureName = (typeof featureNames)[number];',
-    ];
-    writeFileSync('./src/server/config/featurenames.ts', data.join('\n'));
-  }
-}
+    const data = `
+// This file is generated, do not manually adjust
 
-function expandFeatureNameFields(
-  featureNames: FeatureName[]
-): HierarchicalToggles {
-  const featureToggles = {};
-  for (const path of featureNames) {
-    const pathParts = path.split('.');
-    addToggles(featureToggles, pathParts);
-  }
-  return featureToggles;
-}
+export const featureNames = ${JSON.stringify(newFeatureNames, null, 2)} as const;
 
-interface HierarchicalToggles {
-  [x: string]: HierarchicalToggles | boolean;
-}
-
-function addToggles(obj: HierarchicalToggles, keys: string[]): object {
-  const k = keys[0];
-  if (keys.length <= 1) {
-    obj[k] = false;
-    return obj;
+export type FeatureName = (typeof featureNames)[number];
+`;
+    writeFileSync('./src/server/config/featurenames.ts', data);
   }
-  if (!obj[k]) {
-    obj[k] = {};
-  }
-  if (typeof obj[k] === 'boolean') {
-    throw Error(`${k} is already defined`);
-  }
-  return addToggles(obj[k], keys.slice(1));
 }
