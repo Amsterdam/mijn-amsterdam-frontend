@@ -121,7 +121,7 @@ export function useAfisEMandatesData() {
       );
     },
     statusNotification: statusNotificationStorage,
-    title: titleEMandaatPage,
+    title: `${titleEMandaatPage} | ${eMandate?.creditorName ?? ''}`,
     fetchEMandates: () => {
       fetch();
     },
