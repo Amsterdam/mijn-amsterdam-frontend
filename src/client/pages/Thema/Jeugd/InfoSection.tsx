@@ -1,9 +1,9 @@
-import { featureToggle, themaTitle, themaId } from './Jeugd-thema-config';
+import { featureToggle, themaConfig } from './Jeugd-thema-config';
 import { InfoSection_DEPRECATED } from '../../GeneralInfo/GeneralInfo';
 
 export const JeugdSectionProps: InfoSection_DEPRECATED = {
-  id: themaId,
-  title: themaTitle,
+  id: themaConfig.id,
+  title: themaConfig.title,
   listItems: [
     'Openbaar vervoer abonnement',
     'Openbaar vervoer vergoeding',

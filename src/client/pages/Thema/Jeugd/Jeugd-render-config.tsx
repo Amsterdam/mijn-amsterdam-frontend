@@ -1,9 +1,4 @@
-import {
-  routeConfig,
-  themaId,
-  themaTitle,
-  featureToggle,
-} from './Jeugd-thema-config';
+import { routeConfig, themaConfig, featureToggle } from './Jeugd-thema-config';
 import { JeugdDetail } from './JeugdDetail';
 import { default as JeugdIcon } from './JeugdIcon.svg?react';
 import { JeugdList } from './JeugdList';
@@ -30,9 +25,9 @@ export const JeugdRoutes = [
   },
 ];
 
-export const menuItem: ThemaMenuItem<typeof themaId> = {
-  title: themaTitle,
-  id: themaId,
+export const menuItem: ThemaMenuItem = {
+  title: themaConfig.title,
+  id: themaConfig.id,
   redactedScope: 'full',
   profileTypes: ['private'],
   isActive(appState: AppState) {

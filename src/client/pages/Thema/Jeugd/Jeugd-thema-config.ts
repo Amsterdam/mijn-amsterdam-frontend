@@ -3,31 +3,39 @@ import { generatePath } from 'react-router';
 import { LeerlingenvervoerVoorzieningFrontend } from '../../../../server/services/jeugd/jeugd';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
-import { ThemaRoutesConfig } from '../../../config/thema-types';
+import {
+  ThemaConfigBase,
+  ThemaRoutesConfig,
+} from '../../../config/thema-types';
 
 export const featureToggle = {
   leerlingenvervoerActive: true,
 };
-
-export const themaTitle = 'Onderwijs en Jeugd';
-export const themaId = 'JEUGD' as const;
+const THEMA_TITLE = 'Onderwijs en Jeugd';
+const THEMA_ID = 'JEUGD';
 
 const detailRouteBase = '/jeugd/voorziening';
 
+type ThemaConfigBezwaren = Pick<ThemaConfigBase, 'id' | 'title'>;
+
+export const themaConfig: ThemaConfigBezwaren = {
+  id: THEMA_ID,
+  title: THEMA_TITLE,
+};
 export const routeConfig = {
   themaPage: {
     path: '/jeugd',
-    documentTitle: themaTitle,
+    documentTitle: THEMA_TITLE,
     trackingUrl: null,
   },
   listPage: {
     path: '/jeugd/lijst/:kind/:page?',
-    documentTitle: themaTitle,
+    documentTitle: THEMA_TITLE,
     trackingUrl: null,
   },
   detailPage: {
     path: `${detailRouteBase}/:id`,
-    documentTitle: `Voorziening | ${themaTitle}`,
+    documentTitle: `Voorziening | ${THEMA_TITLE}`,
     trackingUrl: detailRouteBase,
   },
 } as const satisfies ThemaRoutesConfig;
