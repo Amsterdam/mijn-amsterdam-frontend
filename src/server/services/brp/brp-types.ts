@@ -154,6 +154,15 @@ export type PersonenResponseSource = {
   personen?: PersoonSource[];
 };
 
+export type PersonenResponseSourceError = {
+  detail?: string;
+  type?: string;
+  title?: string;
+  status: 400;
+  code: string;
+  instance?: string;
+};
+
 export type VerblijfplaatshistorieResponseSource = {
   verblijfplaatsen: VerblijfplaatsSource[];
 };

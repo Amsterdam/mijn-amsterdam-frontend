@@ -50,7 +50,7 @@ describe('<Profile />', () => {
   }
 
   test('Lives in Mokum + verbintenis: displays all data', async () => {
-    bffApi.get('/aantal-bewoners').reply(200, { content: 3, status: 'OK' });
+    bffApi.get('/aantal-bewoners').reply(200, { content: '3', status: 'OK' });
     render(
       <Component
         state={{
