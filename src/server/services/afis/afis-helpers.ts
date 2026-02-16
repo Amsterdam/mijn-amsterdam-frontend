@@ -109,10 +109,16 @@ export function redactEmandateData<
   T extends { iban?: string; SndIban?: string; senderIBAN?: string },
 >(data: T): T {
   const ibanProps = ['SndIban', 'iban', 'senderIBAN'] as const;
-  for (const prop of ibanProps) {
-    if (data[prop]) {
-      data[prop] = `${data[prop].slice(0, 2)}****${data[prop].slice(-4)}`;
-    }
-  }
-  return data;
+  return ibanProps.reduce(
+    (acc, prop) => {
+      if (acc[prop]) {
+        return {
+          ...acc,
+          [prop]: `${acc[prop]!.slice(0, 2)}****${acc[prop]!.slice(-4)}`,
+        };
+      }
+      return acc;
+    },
+    { ...data }
+  );
 }
