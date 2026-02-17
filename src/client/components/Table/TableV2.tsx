@@ -1,7 +1,13 @@
 import { ReactNode } from 'react';
 
-import { Heading, Table } from '@amsterdam/design-system-react';
+import { Heading, Icon, Table } from '@amsterdam/design-system-react';
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  ListIcon,
+} from '@amsterdam/design-system-react-icons';
 import classNames from 'classnames';
+import isEmpty from 'lodash.isempty';
 
 import { getDisplayProps, getDisplayPropsColWidths } from './helpers';
 import styles from './TableV2.module.scss';
@@ -21,7 +27,17 @@ import { MaRouterLink } from '../MaLink/MaLink';
 /**
  * @deprecated These exports should be removed in the future and replaced with import from the types file.
  */
-export type { DisplayProps, WithDetailLinkComponent } from './TableV2.types';
+export type {
+  DisplayProps,
+  WithDetailLinkComponent,
+  TableMutations,
+  TableMutationsOrderProps,
+} from './TableV2.types';
+
+const DEFAULT_CURRENT_ORDER = {
+  key: '',
+  direction: '',
+};
 
 export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
   items: T[],
@@ -75,6 +91,9 @@ export function TableV2<T extends object = ZaakAanvraagDetail>({
   contentAfterTheCaption,
   items,
   displayProps,
+  tableMutations = {},
+  currentOrder = DEFAULT_CURRENT_ORDER,
+  onHeaderCellClick = () => {},
   className,
   showTHead = true,
 }: TableV2Props<T>) {
@@ -115,8 +134,27 @@ export function TableV2<T extends object = ZaakAanvraagDetail>({
                             )
                           : undefined,
                       }}
+                      onClick={() =>
+                        !isEmpty(tableMutations.order) &&
+                        key in tableMutations.order &&
+                        onHeaderCellClick(key)
+                      }
                     >
                       {label}
+                      {!isEmpty(currentOrder.key) && currentOrder.key == key
+                        ? currentOrder.direction !== '' && (
+                            <Icon
+                              svg={
+                                currentOrder.direction === 'asc'
+                                  ? ChevronDownIcon
+                                  : ChevronUpIcon
+                              }
+                            />
+                          )
+                        : !isEmpty(tableMutations.order) &&
+                          key in tableMutations.order && (
+                            <Icon svg={ListIcon} />
+                          )}
                     </Table.HeaderCell>
                   );
                 }

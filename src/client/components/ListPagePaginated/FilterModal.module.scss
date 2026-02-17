@@ -1,0 +1,14 @@
+.FilterModalOption {
+  display: flex;
+  align-items: center;
+  gap: var(--ams-space-m);
+  
+  .FilterModalOptionCheckbox {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--ams-color-text);
+  }
+}

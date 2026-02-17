@@ -20,11 +20,35 @@ export type DisplayProps<T> =
       colWidths?: TableV2ColWidths;
     };
 
+export type TableMutationsBase<T> = Readonly<{
+  [Property in keyof T]+?: string | number | ReactNode;
+}>;
+
+export type TableMutations<T> = {
+  search?: TableMutationsBase<T>;
+  order?: TableMutationsBase<T>;
+  filter?: TableMutationsBase<T>;
+};
+
+export type TableMutationsOrderProps = {
+  key: string;
+  direction: string;
+};
+
+export type TableMutationsFilterProps = {
+  key: string;
+  title: string;
+  options: { value: string; selected: boolean }[];
+};
+
 export type ScreenSize = 'small' | 'large';
 export type TableV2ColWidths = Record<ScreenSize, string[]>;
 
 export interface TableV2Props<T> {
   displayProps: DisplayProps<T>;
+  tableMutations?: TableMutations<T>;
+  currentOrder?: TableMutationsOrderProps;
+  onHeaderCellClick?: (key: TableMutationsOrderProps['key']) => void;
   items: T[];
   className?: string;
   showTHead?: boolean;

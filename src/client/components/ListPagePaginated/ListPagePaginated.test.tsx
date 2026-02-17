@@ -120,7 +120,6 @@ describe('ListPagePaginated', () => {
         items={mockItems}
         isError={false}
         isLoading={false}
-        pageSize={10}
         themaId="test"
       />,
       '/test/2'
@@ -141,7 +140,6 @@ describe('ListPagePaginated', () => {
         items={mockItems}
         isError={false}
         isLoading={false}
-        pageSize={10}
         themaId="test"
       />,
       '/test'

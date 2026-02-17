@@ -12,7 +12,10 @@ import type {
 } from '../../../../server/services/afis/afis-types';
 import { IS_PRODUCTION } from '../../../../universal/config/env';
 import type { LinkProps } from '../../../../universal/types/App.types';
-import type { DisplayProps } from '../../../components/Table/TableV2.types';
+import type {
+  DisplayProps,
+  TableMutations,
+} from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
@@ -65,6 +68,29 @@ const MAX_TABLE_ROWS_ON_THEMA_PAGINA_OPEN = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_TRANSFERRED =
   MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
+
+const tableMutationsFacturenOpen: TableMutations<AfisFactuurFrontend> = {
+  search: {
+    afzender: 'Afzender',
+    factuurNummer: 'Factuurnummer',
+    paymentDueDateFormatted: 'Vervaldatum',
+    statusDescription: 'Status',
+  },
+  order: {
+    paymentDueDateFormatted: 'Vervaldatum',
+  },
+  filter: {
+    afzender: 'Afzender',
+    status: 'Status',
+  },
+};
+
+const tableMutationsFacturenAfgehandeldOfOvergedragen: TableMutations<AfisFactuurFrontend> =
+  {
+    search: {
+      factuurNummer: 'Factuurnummer',
+    },
+  };
 
 const displayPropsFacturenOpen: DisplayProps<AfisFactuurFrontend> = {
   props: {
@@ -135,6 +161,7 @@ type FacturenTableConfigParams = {
     [key in AfisFactuurStateFrontend]?: Partial<{
       title: string;
       displayProps: DisplayProps<AfisFactuurFrontend>;
+      tableMutations: TableMutations<AfisFactuurFrontend>;
       maxItems: number;
       listPageLinkLabel: string;
       listPageRoute: string;
@@ -149,6 +176,7 @@ export function getFacturenTableConfig(params?: FacturenTableConfigParams) {
     open: {
       title: listPageTitle.open,
       displayProps: displayPropsFacturenOpen,
+      tableMutations: tableMutationsFacturenOpen,
       maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_OPEN,
       listPageLinkLabel: 'Alle openstaande facturen',
       listPageRoute: generatePath(listPagePath, {
@@ -172,6 +200,7 @@ export function getFacturenTableConfig(params?: FacturenTableConfigParams) {
     afgehandeld: {
       title: listPageTitle.afgehandeld,
       displayProps: displayPropsFacturenAfgehandeldOfOvergedragen,
+      tableMutations: tableMutationsFacturenAfgehandeldOfOvergedragen,
       maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED,
       listPageLinkLabel: 'Alle afgehandelde facturen',
       listPageRoute: generatePath(listPagePath, {

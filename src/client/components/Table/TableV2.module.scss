@@ -10,6 +10,7 @@
     tr {
       .ams-table__cell,
       .ams-table__header-cell {
+        position: relative;
         hyphens: auto;
         hyphenate-limit-chars: var(--ams-typography-hyphenate-limit-chars);
         &:first-child {
@@ -17,6 +18,16 @@
         }
         &:last-child {
           padding-inline-end: 0 !important;
+        }
+      }
+
+      .ams-table__header-cell {
+        user-select: none;
+
+        .ams-icon {
+          position: absolute;
+          top: 8px;
+          right: 8px;
         }
       }
     }
