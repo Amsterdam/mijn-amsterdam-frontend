@@ -15,16 +15,7 @@ import {
 
 // Note: Keep this line after loading in env files or LOG_LEVEL will be undefined.
 import { logger } from './logging';
-
-const debugResponseDataTerms = process.env.DEBUG_RESPONSE_DATA;
-const debug = process.env.DEBUG;
-
-if (debugResponseDataTerms && !debug?.includes('source-api-request:response')) {
-  logger.info(
-    `Enabling debug for source-api-request:response because DEBUG_RESPONSE_DATA is set (${debugResponseDataTerms})`
-  );
-  process.env.DEBUG = `source-api-request:response,${process.env.DEBUG ?? ''}`;
-}
+import './debug';
 
 import path from 'node:path';
 import { HttpStatusCode } from 'axios';
