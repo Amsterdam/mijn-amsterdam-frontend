@@ -3,46 +3,74 @@ import { generatePath } from 'react-router';
 import { AVGRequestFrontend } from '../../../../server/services/avg/types';
 import { dateSort } from '../../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
-import { LinkProps } from '../../../../universal/types/App.types';
 import { type DisplayProps } from '../../../components/Table/TableV2.types';
 import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
 } from '../../../config/app';
-import { type ThemaRoutesConfig } from '../../../config/thema-types';
+import {
+  ThemaConfigBase,
+  WithDetailPage,
+  WithListPage,
+} from '../../../config/thema-types';
 
 const listPageParamKind = {
   inProgress: 'lopende-aanvragen',
   completed: 'afgehandelde-aanvragen',
 } as const;
+const THEMA_ID = 'AVG';
+const THEMA_TITLE = 'AVG persoonsgegevens';
 
-export const featureToggle = {
-  avgActive: true,
-};
+type AVGThemaConfig = ThemaConfigBase<typeof THEMA_ID> &
+  WithDetailPage &
+  WithListPage;
 
-export const themaId = 'AVG' as const;
-export const themaTitle = 'AVG persoonsgegevens';
+export const themaConfig: AVGThemaConfig = {
+  id: THEMA_ID,
+  title: THEMA_TITLE,
+  featureToggle: {
+    active: true,
+  },
+  profileTypes: ['private', 'commercial'],
+  uitlegPageSections: [
+    {
+      title: THEMA_TITLE,
+      listItems: ['Uw inzage of wijziging persoonsgegevens AVG'],
+    },
+  ],
+  pageLinks: [
+    {
+      title: 'Loket persoonsgegevens gemeente Amsterdam',
+      to: 'https://www.amsterdam.nl/privacy/loket/',
+    },
+  ],
 
-export const routeConfig = {
+  redactedScope: 'none',
+  route: {
+    path: '/avg',
+    documentTitle: `${THEMA_TITLE} verzoeken | overzicht`,
+    trackingUrl: null,
+  },
+
   detailPage: {
-    path: '/avg/verzoek/:id',
-    trackingUrl: '/avg/verzoek',
-    documentTitle: `Avg verzoek | ${themaTitle}`,
+    title: 'AVG verzoek',
+    route: {
+      path: '/avg/verzoek/:id',
+      trackingUrl: '/avg/verzoek',
+      documentTitle: `Avg verzoek | ${THEMA_TITLE}`,
+    },
   },
   listPage: {
-    path: '/avg/lijst/:kind/:page?',
-    documentTitle(params) {
-      const kind = params?.kind as ListPageParamKind;
-      return `${capitalizeFirstLetter(kind === 'lopende-aanvragen' ? 'Lopende' : 'Afgehandelde')} ${themaTitle} verzoeken | overzicht`;
+    route: {
+      path: '/avg/lijst/:kind/:page?',
+      trackingUrl: null,
+      documentTitle(params) {
+        const kind = params?.kind as ListPageParamKind;
+        return `${capitalizeFirstLetter(kind === 'lopende-aanvragen' ? 'Lopende' : 'Afgehandelde')} ${THEMA_TITLE} verzoeken | overzicht`;
+      },
     },
-    trackingUrl: null,
-  },
-  themaPage: {
-    path: '/avg',
-    documentTitle: `${themaTitle} verzoeken | overzicht`,
-    trackingUrl: null,
-  },
-} as const satisfies ThemaRoutesConfig;
+  } as const,
+};
 
 const displayPropsAanvragen: DisplayProps<AVGRequestFrontend> = {
   props: {
@@ -69,7 +97,7 @@ export const tableConfig = {
     title: 'Lopende aanvragen',
     filter: (avgVerzoek: AVGRequestFrontend) => !avgVerzoek.datumAfhandeling,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
-    listPageRoute: generatePath(routeConfig.listPage.path, {
+    listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.inProgress,
       page: null,
     }),
@@ -79,17 +107,10 @@ export const tableConfig = {
     title: 'Afgehandelde aanvragen',
     filter: (avgVerzoek: AVGRequestFrontend) => avgVerzoek.datumAfhandeling,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-    listPageRoute: generatePath(routeConfig.listPage.path, {
+    listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.completed,
       page: null,
     }),
     ...tableConfigBase,
   },
 } as const;
-
-export const linkListItems: LinkProps[] = [
-  {
-    to: 'https://www.amsterdam.nl/privacy/loket/',
-    title: 'Loket persoonsgegevens gemeente Amsterdam',
-  },
-] as const;

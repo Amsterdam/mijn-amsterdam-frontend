@@ -17,7 +17,7 @@ import type {
 import { BFF_API_BASE_URL } from '../../config/api';
 import { useBffApi } from '../../hooks/api/useBffApi';
 import { useCanonmatigingFooterLink } from '../../pages/Thema/Erfpacht/Erfpacht-render-config';
-import { featureToggle } from '../../pages/Thema/Erfpacht/Erfpacht-thema-config';
+import { themaConfig } from '../../pages/Thema/Erfpacht/Erfpacht-thema-config';
 
 function useCustomFooterSections(
   sections: CMSFooterSection[],
@@ -61,7 +61,7 @@ export function MainFooter({ id }: { id?: string }) {
   const canonmatigingLink = useCanonmatigingFooterLink();
 
   const customLinks =
-    featureToggle.canonmatigingLinkActive && canonmatigingLink
+    themaConfig.featureToggle.canonmatigingLinkActive && canonmatigingLink
       ? [canonmatigingLink]
       : [];
 

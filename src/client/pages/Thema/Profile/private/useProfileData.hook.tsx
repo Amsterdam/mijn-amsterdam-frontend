@@ -14,7 +14,7 @@ export function useProfileData() {
 
   let profileData: BrpProfileData | null;
 
-  if (typeof aantalBewoners === 'number' && BRP.content?.adres) {
+  if (typeof aantalBewoners === 'string' && BRP.content?.adres) {
     const brpContent = {
       ...BRP.content,
       adres: {

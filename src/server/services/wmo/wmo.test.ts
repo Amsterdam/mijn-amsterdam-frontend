@@ -2,6 +2,10 @@ import Mockdate from 'mockdate';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 import {
+  getHulpmiddelenDisclaimer,
+  HulpmiddelenDisclaimerConfig,
+} from './status-line-items/wmo-hulpmiddelen';
+import {
   fetchActueleWRAVoorzieningenCompact,
   fetchWmo,
   fetchWmoVoorzieningenCompact,
@@ -12,10 +16,6 @@ import ZORGNED_AANVRAGEN_WMO from '../../../../mocks/fixtures/zorgned-jzd-aanvra
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { jsonCopy } from '../../../universal/helpers/utils';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types';
-import {
-  getHulpmiddelenDisclaimer,
-  HulpmiddelenDisclaimerConfig,
-} from './status-line-items/wmo-hulpmiddelen';
 
 vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => ({
   ...((await importOriginal()) as object),

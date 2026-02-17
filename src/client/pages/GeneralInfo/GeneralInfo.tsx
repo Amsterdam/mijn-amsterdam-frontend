@@ -15,11 +15,11 @@ import {
 } from '../../hooks/useThemaMenuItems';
 import { afisSectionProps } from '../Thema/Afis/InfoSection';
 import { afvalSectionProps } from '../Thema/Afval/InfoSection';
-import { AVGsectionProps } from '../Thema/AVG/InfoSection';
+import { themaConfig as avgThemaConfig } from '../Thema/AVG/AVG-thema-config';
 import { belastingenSectionProps } from '../Thema/Belastingen/InfoSection';
-import { bezwarenSectionProps } from '../Thema/Bezwaren/InfoSection';
+import { themaConfig as bezwarenThemaConfig } from '../Thema/Bezwaren/Bezwaren-thema-config';
 import { themaConfig as bodemThemaConfig } from '../Thema/Bodem/Bodem-thema-config';
-import { erfpachtSectionProps } from '../Thema/Erfpacht/InfoSection';
+import { themaConfig as erfpachtThemaConfig } from '../Thema/Erfpacht/Erfpacht-thema-config';
 import { themaConfig as hliThemaConfig } from '../Thema/HLI/HLI-thema-config';
 import { inkomenSectionProps } from '../Thema/Inkomen/InfoSection';
 import { JeugdSectionProps as jeugdSectionProps } from '../Thema/Jeugd/InfoSection';
@@ -67,9 +67,6 @@ const sections: InfoSection_DEPRECATED[] = [
   myAreaSectionProps,
   afvalSectionProps,
   belastingenSectionProps,
-  AVGsectionProps,
-  bezwarenSectionProps,
-  erfpachtSectionProps,
   afisSectionProps,
   inkomenSectionProps,
   vergunningensectionProps,
@@ -80,7 +77,10 @@ const sections: InfoSection_DEPRECATED[] = [
   milieuzonesectionProps,
   overtredingensectionProps,
   varensectionProps,
+  ...createDeprecatedInfoSection(avgThemaConfig),
+  ...createDeprecatedInfoSection(bezwarenThemaConfig),
   ...createDeprecatedInfoSection(bodemThemaConfig),
+  ...createDeprecatedInfoSection(erfpachtThemaConfig),
   ...createDeprecatedInfoSection(hliThemaConfig),
   ...createDeprecatedInfoSection(klachtenThemaConfig),
   ...createDeprecatedInfoSection(toeristischeVerhuurThemaConfig),

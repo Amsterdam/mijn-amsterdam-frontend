@@ -38,7 +38,7 @@ export function useAfisListPageData(
   const breadcrumbs = useThemaBreadcrumbs(themaId);
 
   return {
-    themaId: themaId,
+    themaId,
     facturen,
     tableConfig,
     isThemaPaginaError,

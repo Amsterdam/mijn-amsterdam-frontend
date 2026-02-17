@@ -19,12 +19,11 @@ export function AVGThema() {
     avgVerzoeken,
     isLoading,
     isError,
-    linkListItems,
     id,
     title,
-    routeConfig,
+    themaConfig,
   } = useAVGData();
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const tables = Object.entries(tableConfig).map(
     ([
@@ -52,7 +51,7 @@ export function AVGThema() {
       isLoading={isLoading}
       pageContentTop={pageContentTop}
       pageContentMain={tables}
-      pageLinks={linkListItems}
+      pageLinks={themaConfig.pageLinks}
       maintenanceNotificationsPageSlug="avg"
     />
   );

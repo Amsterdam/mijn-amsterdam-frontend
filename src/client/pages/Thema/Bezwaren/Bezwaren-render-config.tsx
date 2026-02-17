@@ -1,9 +1,4 @@
-import {
-  routeConfig,
-  themaId,
-  themaTitle,
-  featureToggle,
-} from './Bezwaren-thema-config';
+import { themaConfig } from './Bezwaren-thema-config';
 import { BezwarenDetail } from './BezwarenDetail';
 import { default as BezwarenIcon } from './BezwarenIcon.svg?react';
 import { BezwarenList } from './BezwarenList';
@@ -17,31 +12,31 @@ import {
 
 export const BezwarenRoutes = [
   {
-    route: routeConfig.detailPage.path,
+    route: themaConfig.detailPage.route.path,
     Component: BezwarenDetail,
-    isActive: featureToggle.BezwarenActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.listPage.path,
+    route: themaConfig.listPage.route.path,
     Component: BezwarenList,
-    isActive: featureToggle.BezwarenActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.themaPage.path,
+    route: themaConfig.route.path,
     Component: BezwarenThema,
-    isActive: featureToggle.BezwarenActive,
+    isActive: themaConfig.featureToggle.active,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
-export const menuItem: ThemaMenuItem<typeof themaId> = {
-  title: themaTitle,
-  id: themaId,
-  to: routeConfig.themaPage.path,
-  redactedScope: 'full',
-  profileTypes: ['private', 'commercial'],
+export const menuItem: ThemaMenuItem = {
+  title: themaConfig.title,
+  id: themaConfig.id,
+  to: themaConfig.route.path,
+  redactedScope: themaConfig.redactedScope,
+  profileTypes: themaConfig.profileTypes,
   isActive(appState: AppState) {
     return (
-      featureToggle.BezwarenActive &&
+      themaConfig.featureToggle.active &&
       !isLoading(appState.BEZWAREN) &&
       !!appState.BEZWAREN.content?.length
     );

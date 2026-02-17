@@ -140,8 +140,8 @@ const pageRouteResolvers: PageRouteResolvers = {
     }
   ),
   avg: baseThemaConfig(
-    AVG.routeConfig.themaPage.path,
-    AVG.themaId,
+    AVG.themaConfig.route.path,
+    AVG.themaConfig.id,
     (stateSlice) => {
       return stateSlice.content?.verzoeken ?? null;
     }

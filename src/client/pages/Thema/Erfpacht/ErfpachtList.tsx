@@ -5,15 +5,15 @@ import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function ErfpachtList() {
   const {
-    id: themaId,
+    themaId,
     isLoading,
     isError,
     dossiers,
     tableConfig,
     breadcrumbs,
-    routeConfig,
+    themaConfig,
   } = useErfpachtThemaData();
-  useHTMLDocumentTitle(routeConfig.listPage);
+  useHTMLDocumentTitle(themaConfig.listPage.route);
 
   const tableConfigDossiers = tableConfig?.[listPageParamKind.erfpachtDossiers];
   const displayPropsDossiers = tableConfigDossiers?.displayProps ?? {};

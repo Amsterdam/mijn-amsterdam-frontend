@@ -1,10 +1,4 @@
-import {
-  tableConfig,
-  LinkListItems,
-  routeConfig,
-  themaId,
-  themaTitle,
-} from './Bezwaren-thema-config';
+import { tableConfig, themaConfig } from './Bezwaren-thema-config';
 import { BezwaarFrontend } from '../../../../server/services/bezwaren/types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
@@ -20,17 +14,17 @@ export function useBezwarenThemaData() {
     true
   );
 
-  const breadcrumbs = useThemaBreadcrumbs(themaId);
+  const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
   return {
     bezwaren,
     isLoading: isLoading(BEZWAREN),
     isError: isError(BEZWAREN),
-    linkListItems: LinkListItems,
-    routeConfig,
+    pageLinks: themaConfig.pageLinks,
     tableConfig,
-    themaId,
-    themaTitle: themaTitle,
+    themaId: themaConfig.id,
+    themaTitle: themaConfig.title,
     breadcrumbs,
+    themaConfig,
   };
 }

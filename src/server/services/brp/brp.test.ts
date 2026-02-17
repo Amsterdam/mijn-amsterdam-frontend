@@ -72,6 +72,26 @@ describe('brp.ts', () => {
         content: 'xxx',
       });
     });
+    // {"detail":"Meer dan maximum van 30 zoekresultaten gevonden. Verfijn de zoekopdracht.","type":"https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1","title":"Teveel zoekresultaten.","status":400,"code":"tooManyResults","instance":"/bevragingen/v1/personen"}
+    it('should return >30 when response is 400 - tooManyResults', async () => {
+      remoteApi.post(/\/personen/).reply(400, {
+        detail:
+          'Meer dan maximum van 30 zoekresultaten gevonden. Verfijn de zoekopdracht.',
+        type: 'https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1',
+        title: 'Teveel zoekresultaten.',
+        status: 400,
+        code: 'tooManyResults',
+        instance: '/bevragingen/v1/personen',
+      });
+
+      const response = await fetchAantalBewoners(
+        'test-session-id',
+        'test-bag-id'
+      );
+
+      expect(response.content).toBe('Meer dan 30');
+    });
+
     it('should return AANTAL_BEWONERS_NOT_SET when response is null', async () => {
       remoteApi.post(/\/personen/).reply(200, null);
 
@@ -79,7 +99,7 @@ describe('brp.ts', () => {
         'test-session-id',
         'test-bag-id'
       );
-      expect(response.content).toBe(AANTAL_BEWONERS_NOT_SET);
+      expect(response.content).toBe(`${AANTAL_BEWONERS_NOT_SET}`);
     });
 
     it('should return AANTAL_BEWONERS_NOT_SET when no personen in response', async () => {
@@ -89,11 +109,14 @@ describe('brp.ts', () => {
         'test-session-id',
         'test-bag-id'
       );
-      expect(response.content).toBe(AANTAL_BEWONERS_NOT_SET);
+      expect(response.content).toBe(`${AANTAL_BEWONERS_NOT_SET}`);
     });
 
     it('should return null when server error occurs', async () => {
-      remoteApi.post(/\/personen/).reply(400);
+      remoteApi.post(/\/personen/).reply(400, {
+        status: 400,
+        code: 'someOtherCode',
+      });
 
       const response = await fetchAantalBewoners(
         'test-session-id',
@@ -115,7 +138,7 @@ describe('brp.ts', () => {
         'test-session-id',
         'test-bag-id'
       );
-      expect(response.content).toBe(2);
+      expect(response.content).toBe('2');
     });
 
     it('should filter out personen with opschortingBijhouding datum in the past', async () => {
@@ -157,7 +180,7 @@ describe('brp.ts', () => {
         'test-session-id',
         'test-bag-id'
       );
-      expect(response.content).toBe(2); // Jane Smith and Alice Johnson
+      expect(response.content).toBe('2'); // Jane Smith and Alice Johnson
     });
   });
 

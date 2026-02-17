@@ -141,6 +141,14 @@ export async function handleAfisEMandateSignRequestStatusNotification(
 ) {
   const notificationPayload = req.body as POMEMandateSignRequestPayload;
 
+  debugEmandates(
+    'Received eMandate sign request status notification with POM payload:',
+    {
+      ...notificationPayload,
+      iban: `${notificationPayload.iban.slice(0, 2)}****${notificationPayload.iban.slice(-4)}`,
+    }
+  );
+
   try {
     eMandateSignRequestStatusNotificationPayload.parse(notificationPayload);
   } catch (error) {
@@ -159,7 +167,7 @@ export async function handleAfisEMandateSignRequestStatusNotification(
 
   let createEmandateResponse: ApiResponse<unknown> | null = null;
   let creationError: string | null = null;
-  // TODO: Figure out if we can actually create the eMandate from this event. - https://gemeente-amsterdam.atlassian.net/browse/MIJN-12289
+
   try {
     createEmandateResponse =
       await createOrUpdateEMandateFromStatusNotificationPayload(

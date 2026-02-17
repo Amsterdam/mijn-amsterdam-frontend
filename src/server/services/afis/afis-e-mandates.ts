@@ -21,6 +21,7 @@ import {
 import {
   debugEmandates,
   EMANDATE_STATUS_FRONTEND,
+  formatBusinessPartnerId,
   getAfisApiConfig,
   getEmandateDisplayStatus,
   getEmandateStatusFrontend,
@@ -79,9 +80,17 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
     throw new Error(`Invalid creditor IBAN: ${payload.creditorIBAN}.`);
   }
 
+  const businessPartnerId = formatBusinessPartnerId(payload.businessPartnerId);
+
   const businessPartnerResponse = await fetchAfisBusinessPartnerDetails({
-    businessPartnerId: payload.businessPartnerId,
+    businessPartnerId,
   });
+
+  debugEmandates(
+    'Fetched business partner details for businessPartnerId %s with response: %o',
+    businessPartnerId,
+    businessPartnerResponse
+  );
 
   if (businessPartnerResponse.status !== 'OK') {
     throw new Error(
@@ -89,7 +98,7 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
     );
   }
 
-  const sender = businessPartnerResponse.content;
+  const businessPartnerDetails = businessPartnerResponse.content;
   const senderIBAN = payload.senderIBAN;
   const senderBIC = payload.senderBIC;
 
@@ -97,9 +106,17 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
   // If not add it to the list.
   const bankAccountResponse = await fetchCheckIfIBANexists(
     senderIBAN,
-    payload.businessPartnerId
+    businessPartnerId
   );
   const bankAccountExists = bankAccountResponse.content === true;
+
+  debugEmandates(
+    'Checked if sender bank account exists for businessPartnerId %s with IBAN %s. Bank account exists: %s. Response: %o',
+    businessPartnerId,
+    senderIBAN,
+    bankAccountExists,
+    bankAccountResponse
+  );
 
   if (bankAccountResponse.status !== 'OK') {
     throw new Error(
@@ -109,7 +126,7 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
 
   if (!bankAccountExists) {
     const bankAccountPayload: AfisBusinessPartnerBankPayload = {
-      businessPartnerId: payload.businessPartnerId,
+      businessPartnerId,
       iban: senderIBAN,
       bic: senderBIC,
       swiftCode: senderBIC,
@@ -118,6 +135,13 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
 
     const createBankAccountResponse =
       await createBusinessPartnerBankAccount(bankAccountPayload);
+
+    debugEmandates(
+      'Created sender bank account for businessPartnerId %s with payload: %o. Response: %o',
+      businessPartnerId,
+      bankAccountPayload,
+      createBankAccountResponse
+    );
 
     if (createBankAccountResponse.status !== 'OK') {
       throw new Error(
@@ -129,6 +153,9 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
   // We start the e-mandate lifetime with an end date far in the future.
   // The user can later adjust this date.
   const lifetimeTo = AFIS_EMANDATE_RECURRING_DATE_END;
+  const houseNumber = businessPartnerDetails.address?.HouseNumber ?? '';
+  const houseNumberSupplement =
+    businessPartnerDetails.address?.HouseNumberSupplementText ?? '';
 
   const payloadCreateEmandate: AfisEMandateCreatePayload = {
     // Fixed values needed for API (black box)
@@ -138,7 +165,7 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
     ...eMandateReceiver,
 
     // Gegevens van de debiteur/afgever van het EMandaat
-    SndId: payload.businessPartnerId,
+    SndId: businessPartnerId,
 
     // SndDebtorId is the reference ID of the creditor for this business partner.
     SndDebtorId: creditor.refId,
@@ -148,16 +175,22 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
     SndBic: senderBIC,
 
     // These fields are always the same as BusinessPartnerDetails, not coupled to the bankaccount (IBAN) holder.
-    SndCity: sender.address?.CityName ?? '',
-    SndCountry: sender.address?.Country ?? '',
-    SndHouse: `${sender.address?.HouseNumber ?? ''} ${sender.address?.HouseNumberSupplementText ?? ''}`,
-    SndName1: sender.firstName || sender.fullName || '',
-    SndName2: sender.lastName ?? '',
-    SndPostal: sender.address?.PostalCode ?? '',
-    SndStreet: sender.address?.StreetName ?? '',
+    SndCity: businessPartnerDetails.address?.CityName ?? '',
+    SndCountry: businessPartnerDetails.address?.Country ?? '',
+    SndHouse: `${houseNumber}${houseNumberSupplement ? ` ${houseNumberSupplement}` : ''}`,
+    SndName1:
+      payload.senderName ||
+      businessPartnerDetails.firstName ||
+      businessPartnerDetails.fullName ||
+      '',
+    SndName2: businessPartnerDetails.lastName ?? '',
+    SndPostal: businessPartnerDetails.address?.PostalCode ?? '',
+    SndStreet: businessPartnerDetails.address?.StreetName ?? '',
 
     SignDate: payload.eMandateSignDate,
-    SignCity: eMandateReceiver.RecCity, // TODO: Hoe komen we aan dit gegeven, altijd Amsterdam? - https://gemeente-amsterdam.atlassian.net/browse/MIJN-12289
+    // This data is not available in the payload of the sign request status notification.
+    // Therefore, we fill this field with the city of the municipality of Amsterdam.
+    SignCity: eMandateReceiver.RecCity,
     LifetimeFrom: isoDateTimeFormatCompact(new Date()),
     LifetimeTo: lifetimeTo,
   };
@@ -165,6 +198,8 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
   debugEmandates('Creating new e-mandate.', payloadCreateEmandate);
 
   const response = await createAfisEMandate(payloadCreateEmandate);
+
+  debugEmandates('Create e-mandate response: %o', response);
 
   if (response.status !== 'OK') {
     throw new Error(
@@ -457,10 +492,10 @@ function createEMandateSignRequestPayload(
 
   const today = new Date();
   const isoDateString = today.toISOString();
-  // const invoiceDate = isoDateFormat(today);
-  // const invoiceNumber = `EMandaat-${creditor.refId}-${invoiceDate}`;
+  const invoiceDate = isoDateFormat(today);
+  const invoiceNumber = `EMandaat-${creditor.refId}-${invoiceDate}`;
 
-  // TODO: Moet dit met een gegeven uit AFIS te koppelen zijn? - https://gemeente-amsterdam.atlassian.net/browse/MIJN-12289
+  // Required property in the sign request payload to create a unique payment reference for the E-Mandate sign request.
   const paymentReference = `${creditor.refId}-${businessPartner.businessPartnerId}`;
   const idBatch = `mijnamsterdam-emandates-batch-${isoDateFormat(today)}`;
   const idRequestClient = `${creditor.refId}-${businessPartner.businessPartnerId}-${isoDateString}`;
@@ -488,6 +523,17 @@ function createEMandateSignRequestPayload(
     return_url: returnUrl,
     cid: null,
     payment_modules: ['emandate_recurring'],
+    // The Payment provider API cannot handle an E-Mandate request without at least 1 invoice, even if the invoice is not relevant for the E-Mandate.
+    // Therefore we add a dummy invoice with the most basic data possible.
+    invoices: [
+      {
+        invoice_number: invoiceNumber,
+        invoice_date: invoiceDate,
+        invoice_description: concerning,
+        invoice_amount: 1,
+        invoice_due_date: dueDate,
+      },
+    ],
   };
 }
 
@@ -638,4 +684,5 @@ export const forTesting = {
   transformEMandatesRedirectUrlResponse,
   transformEMandatesResponse,
   updateAfisEMandate,
+  createAfisEMandate,
 };

@@ -112,7 +112,7 @@ delete persoonSecundair.nationaliteiten;
 delete persoonSecundair.indicatieGeheim;
 
 const adres: ProfileLabels<
-  Partial<Adres> & { aantalBewoners: number },
+  Partial<Adres> & { aantalBewoners: string },
   AppState['BRP']['content']
 > = {
   locatiebeschrijving: 'Locatie',
@@ -148,7 +148,7 @@ const adres: ProfileLabels<
     BRP_LABEL_AANTAL_BEWONERS,
     (value, _x, BRPContent) => {
       if (BRPContent?.persoon?.mokum === true) {
-        return value === -1 ? (
+        return value === '-1' ? (
           <LoadingContent barConfig={[['2rem', '2rem', '0']]} />
         ) : (
           value
