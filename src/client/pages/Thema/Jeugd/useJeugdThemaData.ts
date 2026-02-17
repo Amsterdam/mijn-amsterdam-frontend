@@ -1,4 +1,4 @@
-import { routeConfig, tableConfig, themaConfig } from './Jeugd-thema-config';
+import { tableConfig, themaConfig } from './Jeugd-thema-config';
 import { listPageParamKind, listPageTitle } from './Jeugd-thema-config';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
@@ -25,7 +25,6 @@ export function useJeugdThemaData() {
     listPageTitle,
     listPageParamKind,
     pageLinks: themaConfig.pageLinks,
-    routeConfig,
     themaConfig,
   };
 }

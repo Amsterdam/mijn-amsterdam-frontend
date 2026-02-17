@@ -4,7 +4,7 @@ import { LeerlingenvervoerVoorzieningFrontend } from '../../../../server/service
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import {
   ThemaConfigBase,
-  ThemaRoutesConfig,
+  WithDetailPage,
   WithListPage,
 } from '../../../config/thema-types';
 
@@ -13,7 +13,7 @@ const THEMA_ID = 'JEUGD';
 
 const detailRouteBase = '/jeugd/voorziening';
 
-type ThemaConfigJeugd = ThemaConfigBase & WithListPage;
+type ThemaConfigJeugd = ThemaConfigBase & WithListPage & WithDetailPage;
 
 export const themaConfig: ThemaConfigJeugd = {
   id: THEMA_ID,
@@ -54,15 +54,14 @@ export const themaConfig: ThemaConfigJeugd = {
       trackingUrl: null,
     },
   },
-} as const;
-
-export const routeConfig = {
   detailPage: {
-    path: `${detailRouteBase}/:id`,
-    documentTitle: `Voorziening | ${THEMA_TITLE}`,
-    trackingUrl: detailRouteBase,
+    route: {
+      path: `${detailRouteBase}/:id`,
+      documentTitle: `Voorziening | ${THEMA_TITLE}`,
+      trackingUrl: detailRouteBase,
+    },
   },
-} as const satisfies ThemaRoutesConfig;
+} as const;
 
 const displayProps: DisplayProps<LeerlingenvervoerVoorzieningFrontend> = {
   props: {

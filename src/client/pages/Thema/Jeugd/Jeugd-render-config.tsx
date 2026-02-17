@@ -1,4 +1,4 @@
-import { routeConfig, themaConfig } from './Jeugd-thema-config';
+import { themaConfig } from './Jeugd-thema-config';
 import { JeugdDetail } from './JeugdDetail';
 import { default as JeugdIcon } from './JeugdIcon.svg?react';
 import { JeugdList } from './JeugdList';
@@ -14,12 +14,12 @@ export const JeugdRoutes = [
     isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.detailPage.path,
+    route: themaConfig.detailPage.route.path,
     Component: JeugdDetail,
     isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.listPage.path,
+    route: themaConfig.listPage.route.path,
     Component: JeugdList,
     isActive: themaConfig.featureToggle.active,
   },
