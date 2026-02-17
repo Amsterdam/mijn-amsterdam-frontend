@@ -2,10 +2,7 @@ import { filterErfpachtFacturen } from './Erfpacht-helpers';
 import {
   ERFPACHT_ZAKELIJK_ROUTE_DEFAULT,
   erfpachtFacturenTableConfig,
-  featureToggle,
-  routeConfig,
-  themaId,
-  themaTitle,
+  themaConfig,
 } from './Erfpacht-thema-config';
 import { ErfpachtDetail } from './ErfpachtDetail';
 import { default as ErfpachtIcon } from './ErfpachtIcon.svg?react';
@@ -24,61 +21,61 @@ import { AfisList } from '../Afis/AfisList';
 
 export const ErfpachtRoutes = [
   {
-    route: routeConfig.listPage.path,
+    route: themaConfig.listPage.route.path,
     Component: ErfpachtList,
-    isActive: featureToggle.erfpachtActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.detailPage.path,
+    route: themaConfig.detailPage.route.path,
     Component: ErfpachtDetail,
-    isActive: featureToggle.erfpachtActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.themaPage.path,
+    route: themaConfig.route.path,
     Component: ErfpachtThema,
-    isActive: featureToggle.erfpachtActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.listPageFacturen.path,
+    route: themaConfig.listPageFacturen.route.path,
     Component: () => (
       <AfisList
         themaContextParams={{
-          themaId,
+          themaId: themaConfig.id,
           tableConfig: erfpachtFacturenTableConfig,
-          routeConfigListPage: routeConfig.listPageFacturen,
-          routeConfigDetailPage: routeConfig.detailPageFactuur,
+          routeConfigListPage: themaConfig.listPageFacturen.route,
+          routeConfigDetailPage: themaConfig.detailPageFactuur.route,
           factuurFilterFn: filterErfpachtFacturen,
         }}
       />
     ),
-    isActive: featureToggle.erfpachtActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.detailPageFactuur.path,
+    route: themaConfig.detailPageFactuur.route.path,
     Component: () => (
       <AfisFactuur
         themaContextParams={{
-          themaId,
+          themaId: themaConfig.id,
           tableConfig: erfpachtFacturenTableConfig,
-          routeConfigListPage: routeConfig.listPageFacturen,
-          routeConfigDetailPage: routeConfig.detailPageFactuur,
+          routeConfigListPage: themaConfig.listPageFacturen.route,
+          routeConfigDetailPage: themaConfig.detailPageFactuur.route,
         }}
       />
     ),
-    isActive: featureToggle.erfpachtActive,
+    isActive: themaConfig.featureToggle.active,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
-export const menuItem: ThemaMenuItem<typeof themaId> = {
-  title: themaTitle,
-  id: themaId,
-  to: routeConfig.themaPage.path,
-  profileTypes: ['private'],
-  redactedScope: 'none',
+export const menuItem: ThemaMenuItem = {
+  title: themaConfig.title,
+  id: themaConfig.id,
+  to: themaConfig.route.path,
+  profileTypes: themaConfig.profileTypes,
+  redactedScope: themaConfig.redactedScope,
   isActive(appState: AppState) {
     const content = appState.ERFPACHT?.content;
     return (
-      featureToggle.erfpachtActive &&
+      themaConfig.featureToggle.active &&
       !isLoading(appState.ERFPACHT) &&
       content !== null &&
       (('dossiers' in content && !!content.dossiers.dossiers?.length) ||
@@ -102,9 +99,9 @@ export function useCanonmatigingFooterLink() {
   };
 }
 
-export const menuItemZakelijk: ThemaMenuItem<typeof themaId> = {
-  title: themaTitle,
-  id: themaId,
+export const menuItemZakelijk: ThemaMenuItem = {
+  title: themaConfig.title,
+  id: themaConfig.id,
   to: (appState: AppState) => {
     const content = appState.ERFPACHT?.content;
     return content && 'url' in content && content.url
@@ -112,7 +109,7 @@ export const menuItemZakelijk: ThemaMenuItem<typeof themaId> = {
       : ERFPACHT_ZAKELIJK_ROUTE_DEFAULT;
   },
   profileTypes: ['commercial'],
-  redactedScope: 'none',
+  redactedScope: themaConfig.redactedScope,
   isActive: menuItem.isActive,
   IconSVG: ErfpachtIcon,
 };

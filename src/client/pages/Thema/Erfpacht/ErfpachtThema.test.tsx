@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { routeConfig } from './Erfpacht-thema-config';
+import { themaConfig } from './Erfpacht-thema-config';
 import { ErfpachtThema } from './ErfpachtThema';
 import ERFPACHT_DOSSIERS from '../../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
 import { transformDossierResponse } from '../../../../server/services/erfpacht/erfpacht';
@@ -9,8 +9,8 @@ import { AppState } from '../../../../universal/types/App.types';
 import MockApp from '../../MockApp';
 
 describe('<Erfpacht />', () => {
-  const routeEntry = generatePath(routeConfig.themaPage.path);
-  const routePath = routeConfig.themaPage.path;
+  const routeEntry = generatePath(themaConfig.route.path);
+  const routePath = themaConfig.route.path;
 
   function Component({ state }: { state: Partial<AppState> }) {
     return (

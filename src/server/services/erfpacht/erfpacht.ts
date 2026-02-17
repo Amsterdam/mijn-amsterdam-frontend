@@ -10,7 +10,7 @@ import {
   ErfpachtDossierPropsFrontend,
   type ErfpachtDossiersResponseSource,
 } from './erfpacht-types';
-import { routeConfig } from '../../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { sortAlpha } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
@@ -93,7 +93,7 @@ export function transformErfpachtDossierProperties<
     title,
     id: dossierNummerUrlParam ?? dossier.voorkeursadres,
     link: {
-      to: generatePath(routeConfig.detailPage.path, {
+      to: generatePath(themaConfig.detailPage.route.path, {
         dossierNummerUrlParam,
       }),
       title,
