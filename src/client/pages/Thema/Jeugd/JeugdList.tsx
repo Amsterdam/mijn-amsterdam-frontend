@@ -1,6 +1,6 @@
 import { useParams } from 'react-router';
 
-import type { ListPageParamKind } from './Jeugd-thema-config';
+import { themaConfig, type ListPageParamKind } from './Jeugd-thema-config';
 import { useJeugdThemaData } from './useJeugdThemaData';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
@@ -11,14 +11,13 @@ export function JeugdList() {
   }>();
   const {
     voorzieningen,
-    id: themaId,
+    themaId,
     tableConfig,
     isLoading,
     isError,
     breadcrumbs,
-    routeConfig,
   } = useJeugdThemaData();
-  useHTMLDocumentTitle(routeConfig.listPage);
+  useHTMLDocumentTitle(themaConfig.listPage.route);
   const listPageTableConfig = tableConfig[kind];
 
   return (
