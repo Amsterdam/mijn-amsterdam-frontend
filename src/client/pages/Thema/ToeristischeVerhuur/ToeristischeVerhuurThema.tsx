@@ -13,6 +13,7 @@ import { PageContentCell } from '../../../components/Page/Page';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { themaId } from '../Afis/Afis-thema-config';
 
 export function ToeristischeVerhuurThema() {
   const {
@@ -104,7 +105,7 @@ export function ToeristischeVerhuurThema() {
 
   return (
     <ThemaPagina
-      id={id}
+      id={themaId}
       title={title}
       pageContentTop={pageContentTop}
       pageLinks={pageLinks}
