@@ -54,7 +54,7 @@ import { legacyRouter, router as publicRouter } from './routing/router-public';
 import { stadspasExternalConsumerRouter } from './services/hli/router-stadspas-external-consumer';
 import { captureException } from './services/monitoring';
 import { getFromEnv } from './helpers/env';
-import { notificationsExternalConsumerRouter } from './services/notifications/router-notifications-external-consumer';
+import { notificationsExternalConsumerRouter } from './services/notifications/notifications-router';
 import { router as privateNetworkRouter } from './routing/router-private';
 
 const app = express();

@@ -1,12 +1,6 @@
 import UID from 'uid-safe';
 
 import {
-  BSN,
-  ConsumerId,
-  ServiceId,
-  type NotificationsLean,
-} from './config-and-types';
-import {
   listProfileIds,
   upsertConsumer,
   listProfiles,
@@ -15,6 +9,12 @@ import {
   getProfileByConsumer,
   storeNotifications,
 } from './notifications-model';
+import {
+  BSN,
+  ConsumerId,
+  ServiceId,
+  type NotificationsLean,
+} from './notifications-types';
 import { decrypt } from '../../../server/helpers/encrypt-decrypt';
 import {
   apiErrorResult,

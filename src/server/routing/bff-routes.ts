@@ -58,10 +58,6 @@ export const ExternalConsumerEndpoints = {
     STADSPAS_AMSAPP_LOGIN: `${AMSAPP_BASE}/stadspas/login/:token`,
     STADSPAS_ADMINISTRATIENUMMER: `${AMSAPP_BASE}/stadspas/administratienummer/:token`,
     STADSPAS_APP_LANDING: `${AMSAPP_BASE}/stadspas/app-landing`,
-    NOTIFICATIONS_LOGIN: `${AMSAPP_BASE}/notifications/login/:consumerId`,
-    NOTIFICATIONS_APP: `${AMSAPP_BASE}/notifications/app`,
-    NOTIFICATIONS_CONSUMER_APP: `${AMSAPP_BASE}/notifications/consumer/:consumerId/app`,
-    NOTIFICATIONS_CONSUMER: `${AMSAPP_BASE}/notifications/consumer/:consumerId`,
   },
   // Privately accessible over private network
   private: {
@@ -69,8 +65,6 @@ export const ExternalConsumerEndpoints = {
     STADSPAS_DISCOUNT_TRANSACTIONS: `${AMSAPP_BASE}/stadspas/aanbiedingen/transactions/:transactionsKeyEncrypted`,
     STADSPAS_BUDGET_TRANSACTIONS: `${AMSAPP_BASE}/stadspas/budget/transactions/:transactionsKeyEncrypted`,
     STADSPAS_BLOCK_PAS: `${AMSAPP_BASE}/stadspas/block/:transactionsKeyEncrypted`,
-    NOTIFICATIONS: `${AMSAPP_BASE}/notifications`,
-    NOTIFICATIONS_JOB: `${AMSAPP_BASE}/job/notifications`,
   },
 } as const;
 

@@ -4,7 +4,7 @@ import {
   ServiceId,
   type ConsumerNotifications,
   type NotificationsService,
-} from './config-and-types';
+} from './notifications-types';
 import { isRecord } from '../../../universal/helpers/utils';
 import { logger } from '../../logging';
 import { IS_DB_ENABLED } from '../db/config';
