@@ -19,7 +19,7 @@ import { themaConfig as avgThemaConfig } from '../Thema/AVG/AVG-thema-config';
 import { belastingenSectionProps } from '../Thema/Belastingen/InfoSection';
 import { themaConfig as bezwarenThemaConfig } from '../Thema/Bezwaren/Bezwaren-thema-config';
 import { themaConfig as bodemThemaConfig } from '../Thema/Bodem/Bodem-thema-config';
-import { erfpachtSectionProps } from '../Thema/Erfpacht/InfoSection';
+import { themaConfig as erfpachtThemaConfig } from '../Thema/Erfpacht/Erfpacht-thema-config';
 import { themaConfig as hliThemaConfig } from '../Thema/HLI/HLI-thema-config';
 import { inkomenSectionProps } from '../Thema/Inkomen/InfoSection';
 import { themaConfig as jeugdThemaConfig } from '../Thema/Jeugd/Jeugd-thema-config';
@@ -67,7 +67,6 @@ const sections: InfoSection_DEPRECATED[] = [
   myAreaSectionProps,
   afvalSectionProps,
   belastingenSectionProps,
-  erfpachtSectionProps,
   afisSectionProps,
   inkomenSectionProps,
   vergunningensectionProps,
@@ -80,6 +79,7 @@ const sections: InfoSection_DEPRECATED[] = [
   ...createDeprecatedInfoSection(avgThemaConfig),
   ...createDeprecatedInfoSection(bezwarenThemaConfig),
   ...createDeprecatedInfoSection(bodemThemaConfig),
+  ...createDeprecatedInfoSection(erfpachtThemaConfig),
   ...createDeprecatedInfoSection(hliThemaConfig),
   ...createDeprecatedInfoSection(jeugdThemaConfig),
   ...createDeprecatedInfoSection(klachtenThemaConfig),

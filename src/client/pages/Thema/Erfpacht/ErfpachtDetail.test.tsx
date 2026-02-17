@@ -2,7 +2,7 @@ import { render, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { generatePath } from 'react-router';
 
-import { routeConfig } from './Erfpacht-thema-config';
+import { themaConfig } from './Erfpacht-thema-config';
 import { ErfpachtDetail } from './ErfpachtDetail';
 import ERFPACHT_DOSSIER_DETAIL from '../../../../../mocks/fixtures/erfpacht-v2-dossierinfo-bsn.json';
 import ERFPACHT_DOSSIERS from '../../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
@@ -31,10 +31,10 @@ function mockDetailFetch(
 }
 
 describe('<Erfpacht/DossierDetail />', () => {
-  const routeEntry = generatePath(routeConfig.detailPage.path, {
+  const routeEntry = generatePath(themaConfig.detailPage.route.path, {
     dossierNummerUrlParam: 'E.123.123',
   });
-  const routePath = routeConfig.detailPage.path;
+  const routePath = themaConfig.detailPage.route.path;
 
   function Component({ state }: { state: Partial<AppState> }) {
     return (

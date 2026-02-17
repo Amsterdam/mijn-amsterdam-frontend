@@ -121,7 +121,7 @@ export function useAfisEMandatesData() {
       );
     },
     statusNotification: statusNotificationStorage,
-    title: titleEMandaatPage,
+    title: `${titleEMandaatPage} | ${eMandate?.creditorName ?? ''}`,
     fetchEMandates: () => {
       fetch();
     },
@@ -274,6 +274,14 @@ function useIsPendingNotification() {
 
   const ibansPendingActivationCurrent = ibansPendingActivation.join(',');
 
+  // Sync the state from session storage on initial load.
+  useEffect(() => {
+    if (ibansPendingActivation_) {
+      setIsPendingActivation(ibansPendingActivation_.split(','));
+    }
+  }, []);
+
+  // Sync any changes to the pending IBANs state back to session storage.
   useEffect(() => {
     if (ibansPendingActivation_ !== ibansPendingActivationCurrent) {
       setIsPendingActivation_(ibansPendingActivationCurrent);
@@ -349,6 +357,7 @@ export function useEmandateStatusPendingStorage(
       }
     });
 
+    // Update the current state if we have an updated list of pending IBANs.
     if (!isEqual(updatedIbansPendingActivation, ibansPendingActivation)) {
       setIsPendingActivation(updatedIbansPendingActivation);
     }

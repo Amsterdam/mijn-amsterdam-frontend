@@ -10,8 +10,9 @@ import {
 } from './app';
 import { featureToggle as featureToggleAfis } from '../../client/pages/Thema/Afis/Afis-thema-config';
 import { themaConfig as themaConfigBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config';
-import { featureToggle as featureToggleErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
+import { themaConfig as themaConfigErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
 import { themaConfig as themaConfigJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config';
+import { themaConfig as themaConfigToeristischeVerhuur } from '../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 import { IS_DEVELOPMENT } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { getCert } from '../helpers/cert';
@@ -294,7 +295,7 @@ const ApiConfig_ = {
     passthroughOIDCToken: true,
     httpsAgent: new https.Agent(httpsAgentConfigBFF),
     postponeFetch:
-      !featureToggleErfpacht.erfpachtActive ||
+      !themaConfigErfpacht.featureToggle.active ||
       !getFromEnv('BFF_ERFPACHT_API_URL'),
     headers: {
       'X-HERA-REQUESTORIGIN': 'MijnAmsterdam',
@@ -327,7 +328,7 @@ const ApiConfig_ = {
       'X-Api-Key': getFromEnv('BFF_LVV_API_KEY') + '',
       'Content-Type': 'application/json',
     },
-    postponeFetch: !FeatureToggle.toeristischeVerhuurActive,
+    postponeFetch: !themaConfigToeristischeVerhuur.featureToggle.active,
   },
   KREFIA: {
     url: `${getFromEnv('BFF_KREFIA_API_BASE_URL')}/krefia/all`,

@@ -28,6 +28,7 @@ export default [
       'no-console': 'warn',
       'dot-notation': 'error',
       'no-else-return': 'error',
+      'object-shorthand': 'error',
       'react/react-in-jsx-scope': 'off',
       '@typescript-eslint/no-explicit-any': 'error',
       'react/jsx-curly-brace-presence': 'error',

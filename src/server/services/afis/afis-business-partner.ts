@@ -1,6 +1,10 @@
 import * as ibantools from 'ibantools';
 
-import { getAfisApiConfig, getFeedEntryProperties } from './afis-helpers';
+import {
+  formatBusinessPartnerId,
+  getAfisApiConfig,
+  getFeedEntryProperties,
+} from './afis-helpers';
 import { featureToggle } from './afis-service-config';
 import {
   AfisApiFeedResponseSource,
@@ -259,7 +263,7 @@ export async function createBusinessPartnerBankAccount(
   }
 
   const createBankAccountPayload: AfisBusinessPartnerBankAccount = {
-    BusinessPartner: payload.businessPartnerId,
+    BusinessPartner: formatBusinessPartnerId(payload.businessPartnerId),
     // We don't maintain a list of banks so we use the bank identifier as name and number.
     BankName: iban.bankIdentifier ?? '',
     BankNumber: iban.bankIdentifier ?? '', // This is not a bankrekeningnummer. Instead it's the number of the bank (id?).
@@ -272,7 +276,7 @@ export async function createBusinessPartnerBankAccount(
 
   const additionalConfig: DataRequestConfig = {
     method: 'POST',
-    responseType: 'text',
+    responseType: 'text', // AFIS api responds with xml so we prevent axios from trying to parse it as json.
     formatUrl(config) {
       return `${config.url}/BusinessPartner/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerBank`;
     },

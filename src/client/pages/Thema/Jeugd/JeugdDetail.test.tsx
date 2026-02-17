@@ -88,7 +88,7 @@ const basicAppState = {
 
 const createComponent = componentCreator({
   component: JeugdDetail,
-  routeEntry: generatePath(routeConfig.detailPage.path, { id }),
+  routeEntry: generatePath(themaConfig.detailPage.route.path, { id }),
   routePath: themaConfig.detailPage.route.path,
 });
 
