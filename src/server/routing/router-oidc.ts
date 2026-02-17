@@ -10,9 +10,11 @@ import {
   oidcConfigDigid,
   oidcConfigEherkenning,
   openIdAuth,
+} from '../auth/auth-config';
+import {
   RETURNTO_MAMS_LANDING_DIGID,
   RETURNTO_MAMS_LANDING_EHERKENNING,
-} from '../auth/auth-config';
+} from '../auth/auth-returnto-keys';
 import { createBFFRouter } from './route-helpers';
 import {
   createLogoutHandler,

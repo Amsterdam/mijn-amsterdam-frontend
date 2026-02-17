@@ -1,162 +1,34 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 
-import { fetchAdministratienummer } from './hli-zorgned-service';
+import { IS_PRODUCTION } from '../../../../universal/config/env';
+import { apiSuccessResult } from '../../../../universal/helpers/api';
+import { getAuth } from '../../../auth/auth-helpers';
+import type { AuthProfileAndToken } from '../../../auth/auth-types';
+import { encrypt, decrypt } from '../../../helpers/encrypt-decrypt';
+import { requestData } from '../../../helpers/source-api-request';
+import { sendResponse, sendBadRequest } from '../../../routing/route-helpers';
+import { fetchAdministratienummer } from '../../hli/hli-zorgned-service';
 import {
-  blockStadspas,
-  fetchStadspasBudgetTransactions,
   fetchStadspasDiscountTransactions,
-} from './stadspas';
-import { fetchStadspassenByAdministratienummer } from './stadspas-gpass-service';
-import {
+  fetchStadspasBudgetTransactions,
+  blockStadspas,
+} from '../../hli/stadspas';
+import { fetchStadspassenByAdministratienummer } from '../../hli/stadspas-gpass-service';
+import type {
   StadspasAMSAPPFrontend,
-  StadspasBudget,
   TransactionKeysEncryptedWithoutSessionID,
-} from './stadspas-types';
-import { IS_PRODUCTION } from '../../../universal/config/env';
-import { apiSuccessResult } from '../../../universal/helpers/api';
+  StadspasBudget,
+} from '../../hli/stadspas-types';
+import { captureMessage, captureException } from '../../monitoring';
+import { baseRenderProps } from '../amsapp-service-config';
 import {
-  RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
-  RETURNTO_AMSAPP_STADSPAS_APP_LANDING,
-} from '../../auth/auth-config';
-import { getAuth } from '../../auth/auth-helpers';
-import { authRoutes } from '../../auth/auth-routes';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
-import { getFromEnv } from '../../helpers/env';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
-import { ExternalConsumerEndpoints } from '../../routing/bff-routes';
-import { apiKeyVerificationHandler } from '../../routing/route-handlers';
-import {
-  createBFFRouter,
-  generateFullApiUrlBFF,
-  sendBadRequest,
-  sendResponse,
-} from '../../routing/route-helpers';
-import { captureException, captureMessage } from '../monitoring';
+  AMSAPP_STADSPAS_DEEP_LINK_BASE,
+  apiResponseErrors,
+  getAmsAppRequestConfig,
+} from './amsapp-stadspas-service-config';
+import type { ApiError, RenderProps } from '../amsapp-types';
 
-const AMSAPP_PROTOCOl = 'amsterdam://';
-const AMSAPP_STADSPAS_DEEP_LINK = `${AMSAPP_PROTOCOl}stadspas`;
-
-// PUBLIC INTERNET NETWORK ROUTER
-// ==============================
-export const routerInternet = createBFFRouter({
-  id: 'external-consumer-public-stadspas',
-});
-
-routerInternet.get(
-  ExternalConsumerEndpoints.public.STADSPAS_AMSAPP_LOGIN,
-  async (req: Request<{ token: string }>, res: Response) => {
-    return res.redirect(
-      generateFullApiUrlBFF(authRoutes.AUTH_LOGIN_DIGID, [
-        {
-          returnTo: RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
-          'amsapp-session-token': req.params.token,
-        },
-      ])
-    );
-  }
-);
-
-routerInternet.get(
-  ExternalConsumerEndpoints.public.STADSPAS_ADMINISTRATIENUMMER,
-  sendAdministratienummerResponse
-);
-
-routerInternet.get(
-  ExternalConsumerEndpoints.public.STADSPAS_APP_LANDING,
-  sendAppLandingResponse
-);
-
-// PRIVATE NETWORK ROUTER
-// ======================
-export const routerPrivateNetwork = createBFFRouter({
-  id: 'external-consumer-private-network-stadspas',
-});
-
-export const stadspasExternalConsumerRouter = {
-  public: routerInternet,
-  private: routerPrivateNetwork,
-};
-
-routerPrivateNetwork.get(
-  ExternalConsumerEndpoints.private.STADSPAS_PASSEN,
-  apiKeyVerificationHandler,
-  sendStadspassenResponse
-);
-
-routerPrivateNetwork.get(
-  ExternalConsumerEndpoints.private.STADSPAS_DISCOUNT_TRANSACTIONS,
-  apiKeyVerificationHandler,
-  sendDiscountTransactionsResponse
-);
-
-routerPrivateNetwork.get(
-  ExternalConsumerEndpoints.private.STADSPAS_BUDGET_TRANSACTIONS,
-  apiKeyVerificationHandler,
-  sendBudgetTransactionsResponse
-);
-
-routerPrivateNetwork.post(
-  ExternalConsumerEndpoints.private.STADSPAS_BLOCK_PAS,
-  apiKeyVerificationHandler,
-  sendStadspasBlockRequest
-);
-
-type ApiError = {
-  code: string;
-  message: string;
-};
-
-const apiResponseErrors: Record<string, ApiError> = {
-  DIGID_AUTH: { code: '001', message: 'Niet ingelogd met Digid' },
-  ADMINISTRATIENUMMER_RESPONSE_ERROR: {
-    code: '002',
-    message: 'Kon het administratienummer niet ophalen',
-  },
-  ADMINISTRATIENUMMER_NOT_FOUND: {
-    code: '003',
-    message: 'Geen administratienummer gevonden',
-  },
-  AMSAPP_ADMINISTRATIENUMMER_DELIVERY_FAILED: {
-    code: '004',
-    message:
-      'Verzenden van administratienummer naar de Amsterdam app niet gelukt',
-  },
-  ADMINISTRATIENUMMER_FAILED_TO_DECRYPT: {
-    code: '005',
-    message: `Could not decrypt url parameter 'administratienummerEncrypted'.`,
-  },
-  UNKNOWN: {
-    code: '000',
-    message: 'Onbekende fout',
-  },
-} as const;
-
-type RenderProps = {
-  nonce: string;
-  promptOpenApp: boolean;
-  urlToImage: string;
-  urlToCSS: string;
-  error?: ApiError;
-  identifier?: string; // Only included in debug build.
-  appHref?: `${typeof AMSAPP_STADSPAS_DEEP_LINK}/${'gelukt' | 'mislukt'}${string}`;
-};
-
-const maFrontendUrl = getFromEnv('MA_FRONTEND_URL')!;
-const nonce = getFromEnv('BFF_AMSAPP_NONCE')!;
-export const logoutUrl = generateFullApiUrlBFF(authRoutes.AUTH_LOGOUT_DIGID, [
-  { returnTo: RETURNTO_AMSAPP_STADSPAS_APP_LANDING },
-]);
-
-const baseRenderProps = {
-  nonce,
-  urlToImage: `${maFrontendUrl}/img/logo-amsterdam.svg`,
-  urlToCSS: `${maFrontendUrl}/css/amsapp-landing.css`,
-  logoutUrl,
-};
-
-async function sendAdministratienummerResponse(
+export async function handleAdministratienummerExchange(
   req: Request<{ token: string }>,
   res: Response
 ) {
@@ -184,7 +56,7 @@ async function sendAdministratienummerResponse(
         administratienummerResponse.content
       );
 
-      const requestConfig = getApiConfig('AMSAPP', {
+      const requestConfig = getAmsAppRequestConfig({
         data: {
           encrypted_administration_no: administratienummerEncrypted,
           session_token: req.params.token,
@@ -203,7 +75,7 @@ async function sendAdministratienummerResponse(
         const renderProps: RenderProps = {
           ...baseRenderProps,
           promptOpenApp: false,
-          appHref: `${AMSAPP_STADSPAS_DEEP_LINK}/gelukt`,
+          appHref: `${AMSAPP_STADSPAS_DEEP_LINK_BASE}/gelukt`,
           identifier: !IS_PRODUCTION ? administratienummerEncrypted : '',
         };
         return res.render('amsapp-open-app', renderProps);
@@ -235,7 +107,7 @@ async function sendAdministratienummerResponse(
   const renderProps: RenderProps = {
     ...baseRenderProps,
     error: apiResponseError,
-    appHref: `${AMSAPP_STADSPAS_DEEP_LINK}/mislukt?errorMessage=${encodeURIComponent(apiResponseError.message)}&errorCode=${apiResponseError.code}`,
+    appHref: `${AMSAPP_STADSPAS_DEEP_LINK_BASE}/mislukt?errorMessage=${encodeURIComponent(apiResponseError.message)}&errorCode=${apiResponseError.code}`,
     // If the Digid login failed we don't want the user to be redirected to logout. In this case we can open the app directly.
     // If the error is not related to the Digid login, the user must always be redirected to logout. See the amsapp-open-app.pug for logic on how we handle the redirection to logout vs opening the app directly.
     promptOpenApp: apiResponseError.code === apiResponseErrors.DIGID_AUTH.code,
@@ -243,16 +115,14 @@ async function sendAdministratienummerResponse(
 
   return res.render('amsapp-open-app', renderProps);
 }
-
-function sendAppLandingResponse(_req: Request, res: Response) {
+export function sendAppLandingResponse(_req: Request, res: Response) {
   const renderProps: RenderProps = {
     ...baseRenderProps,
     promptOpenApp: true,
   };
   return res.render('amsapp-open-app', renderProps);
 }
-
-async function sendStadspassenResponse(
+export async function sendStadspassenResponse(
   req: Request<{ administratienummerEncrypted: string }>,
   res: Response
 ) {
@@ -298,12 +168,10 @@ async function sendStadspassenResponse(
     `ApiError ${apiResponseError.code} - ${apiResponseError.message}`
   );
 }
-
 type TransactionKeysEncryptedRequest = Request<{
   transactionsKeyEncrypted: TransactionKeysEncryptedWithoutSessionID;
 }>;
-
-async function sendDiscountTransactionsResponse(
+export async function sendDiscountTransactionsResponse(
   req: TransactionKeysEncryptedRequest,
   res: Response
 ) {
@@ -313,14 +181,13 @@ async function sendDiscountTransactionsResponse(
 
   sendResponse(res, response);
 }
-
 /** Sends transformed budget transactions.
  *
  * # Url Params
  *
  *  `transactionsKeyEncrypted`: is available in the response of `sendStadspassenResponse`.
  */
-async function sendBudgetTransactionsResponse(
+export async function sendBudgetTransactionsResponse(
   req: TransactionKeysEncryptedRequest,
   res: Response
 ) {
@@ -331,8 +198,7 @@ async function sendBudgetTransactionsResponse(
 
   return sendResponse(res, response);
 }
-
-async function sendStadspasBlockRequest(
+export async function sendStadspasBlockRequest(
   req: TransactionKeysEncryptedRequest,
   res: Response
 ) {
@@ -341,7 +207,7 @@ async function sendStadspasBlockRequest(
 }
 
 export const forTesting = {
-  sendAdministratienummerResponse,
+  sendAdministratienummerResponse: handleAdministratienummerExchange,
   sendStadspassenResponse,
   sendDiscountTransactionsResponse,
   sendBudgetTransactionsResponse,

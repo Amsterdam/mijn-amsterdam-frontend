@@ -1,6 +1,6 @@
 import { FunctionComponent, ReactNode, SVGProps } from 'react';
 
-import { ServiceID, ServicesType } from '../../server/services/controller';
+import type { ServiceID, ServicesType } from '../../server/services/controller';
 import { ApiResponse_DEPRECATED } from '../helpers/api';
 import type { SomeOtherString } from '../helpers/types';
 

@@ -5,15 +5,17 @@ import { ParsedQs } from 'qs';
 import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_TOKEN_ID_ATTRIBUTE,
+} from './auth-config';
+import {
   RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
   RETURNTO_AMSAPP_STADSPAS_APP_LANDING,
   RETURNTO_MAMS_FRONTEND_ROUTE,
   RETURNTO_MAMS_LANDING_DIGID,
   RETURNTO_MAMS_LANDING_EHERKENNING,
   RETURNTO_NOTIFICATIES_CONSUMER_ID,
-} from './auth-config';
+} from './auth-returnto-keys';
 import { authRoutes } from './auth-routes';
-import {
+import type {
   AuthenticatedRequest,
   AuthProfile,
   AuthProfileAndToken,
@@ -25,10 +27,10 @@ import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { PROFILE_TYPES } from '../../universal/types/App.types';
 import { ONE_SECOND_MS } from '../config/app';
 import { logger } from '../logging';
-import { ExternalConsumerEndpoints } from '../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../routing/route-helpers';
+import { routes as amsappNotificationsRoutes } from '../services/amsapp/notifications/amsapp-notifications-service-config';
+import { routes as amsappStadspasRoutes } from '../services/amsapp/stadspas/amsapp-stadspas-service-config';
 import { captureException } from '../services/monitoring';
-import { routes } from '../services/notifications/notifications-service-config';
 
 export function getReturnToUrl(
   queryParams?: ParsedQs,
@@ -44,7 +46,8 @@ export function getReturnToUrl(
     }
     case RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER:
       return generateFullApiUrlBFF(
-        ExternalConsumerEndpoints.public.STADSPAS_ADMINISTRATIENUMMER,
+        amsappStadspasRoutes.public
+          .STADSPAS_AMSAPP_EXCHANGE_ADMINISTRATIENUMMER,
         {
           token: queryParams['amsapp-session-token'] as string,
         }
@@ -52,12 +55,16 @@ export function getReturnToUrl(
     // This return to url is used for all AmsApp routes that require Digid login/logout.
     case RETURNTO_AMSAPP_STADSPAS_APP_LANDING:
       return generateFullApiUrlBFF(
-        ExternalConsumerEndpoints.public.STADSPAS_APP_LANDING
+        amsappStadspasRoutes.public.STADSPAS_AMSAPP_OPENER
       );
     case RETURNTO_NOTIFICATIES_CONSUMER_ID:
-      return generateFullApiUrlBFF(routes.public.NOTIFICATIONS_CONSUMER_APP, {
-        consumerId: queryParams.consumerId as string,
-      });
+      return generateFullApiUrlBFF(
+        amsappNotificationsRoutes.public
+          .NOTIFICATIONS_CONSUMER_REGISTRATION_ACTION,
+        {
+          consumerId: queryParams.consumerId as string,
+        }
+      );
     case ZAAK_STATUS_ROUTE:
       return getReturnToUrlZaakStatus(queryParams);
     case RETURNTO_MAMS_LANDING_EHERKENNING:

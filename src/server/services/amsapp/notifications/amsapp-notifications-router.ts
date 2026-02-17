@@ -1,26 +1,22 @@
 import { Request, Response } from 'express';
 
 import {
-  sendAppLandingResponse,
-  sendConsumerIdResponse,
-  sendConsumerIdStatusResponse,
-  sendUnregisterConsumerResponse,
-  truncateNotifications,
+  handleRegisterConsumer,
+  handleConsumerRegistrationStatus,
+  handleUnregisterConsumer,
+  handleTruncateNotifications,
   fetchAndStoreNotifications,
-  sendNotificationsResponse,
-} from './notifications-route-handlers';
-import { featureToggle, routes } from './notifications-service-config';
-import { IS_PRODUCTION } from '../../../universal/config/env';
-import { RETURNTO_NOTIFICATIES_CONSUMER_ID } from '../../auth/auth-config';
-import { authRoutes } from '../../auth/auth-routes';
-import { apiKeyVerificationHandler } from '../../routing/route-handlers';
+  handleSendNotificationsResponse,
+} from './amsapp-notifications-route-handlers';
+import { featureToggle, routes } from './amsapp-notifications-service-config';
+import { IS_PRODUCTION } from '../../../../universal/config/env';
+import { RETURNTO_NOTIFICATIES_CONSUMER_ID } from '../../../auth/auth-returnto-keys';
+import { authRoutes } from '../../../auth/auth-routes';
+import { apiKeyVerificationHandler } from '../../../routing/route-handlers';
 import {
   createBFFRouter,
   generateFullApiUrlBFF,
-} from '../../routing/route-helpers';
-
-const AMSAPP_PROTOCOl = 'amsterdam://';
-export const AMSAPP_NOTIFICATIONS_DEEP_LINK = `${AMSAPP_PROTOCOl}mijn-amsterdam`;
+} from '../../../routing/route-helpers';
 
 // PUBLIC INTERNET NETWORK ROUTER
 // ==============================
@@ -30,7 +26,7 @@ export const routerPublic = createBFFRouter({
 });
 
 routerPublic.get(
-  routes.public.NOTIFICATIONS_LOGIN,
+  routes.public.NOTIFICATIONS_CONSUMER_REGISTRATION_LOGIN,
   async (req: Request<{ consumerId: string }>, res: Response) => {
     return res.redirect(
       generateFullApiUrlBFF(authRoutes.AUTH_LOGIN_DIGID, [
@@ -43,21 +39,19 @@ routerPublic.get(
   }
 );
 
-routerPublic.get(routes.public.NOTIFICATIONS_APP, sendAppLandingResponse);
-
 routerPublic.get(
-  routes.public.NOTIFICATIONS_CONSUMER_APP,
-  sendConsumerIdResponse
+  routes.public.NOTIFICATIONS_CONSUMER_REGISTRATION_ACTION,
+  handleRegisterConsumer
 );
 
 routerPublic.get(
-  routes.public.NOTIFICATIONS_CONSUMER,
-  sendConsumerIdStatusResponse
+  routes.public.NOTIFICATIONS_CONSUMER_REGISTRATION_STATUS,
+  handleConsumerRegistrationStatus
 );
 
 routerPublic.delete(
-  routes.public.NOTIFICATIONS_CONSUMER,
-  sendUnregisterConsumerResponse
+  routes.public.NOTIFICATIONS_CONSUMER_REGISTRATION_STATUS,
+  handleUnregisterConsumer
 );
 
 // PRIVATE NETWORK ROUTER
@@ -72,7 +66,7 @@ if (!IS_PRODUCTION) {
   routerPrivate.delete(
     routes.private.NOTIFICATIONS,
     apiKeyVerificationHandler,
-    truncateNotifications
+    handleTruncateNotifications
   );
 }
 
@@ -85,7 +79,7 @@ routerPrivate.post(
 routerPrivate.get(
   routes.private.NOTIFICATIONS,
   apiKeyVerificationHandler,
-  sendNotificationsResponse
+  handleSendNotificationsResponse
 );
 
 export const notificationsExternalConsumerRouter = {

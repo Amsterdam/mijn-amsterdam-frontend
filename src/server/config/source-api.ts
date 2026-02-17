@@ -364,15 +364,6 @@ const ApiConfig_ = {
     url: `${getFromEnv('BFF_MS_OAUTH_ENDPOINT')}:tenant/oauth2/v2.0/token`,
     method: 'POST',
   },
-  AMSAPP: {
-    url: `${process.env.BFF_AMSAPP_ADMINISTRATIENUMMER_DELIVERY_ENDPOINT}`,
-    method: 'POST',
-    headers: {
-      'X-Session-Credentials-Key': getFromEnv('BFF_AMSAPP_API_KEY'),
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-  },
 } as const;
 
 export const ApiConfig: Record<SourceApiName, DataRequestConfig> = ApiConfig_;

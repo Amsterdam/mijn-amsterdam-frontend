@@ -1,15 +1,19 @@
 import { HttpStatusCode } from 'axios';
 
-import { forTesting } from './router-stadspas-external-consumer';
-import * as stadspas from './stadspas';
-import * as gpass from './stadspas-gpass-service';
-import type { Stadspas } from './stadspas-types';
-import { remoteApi, RequestMock, ResponseMock } from '../../../testing/utils';
+import { forTesting } from './amsapp-stadspas-route-handlers';
+import {
+  remoteApi,
+  RequestMock,
+  ResponseMock,
+} from '../../../../testing/utils';
 import {
   apiErrorResult,
   apiSuccessResult,
-} from '../../../universal/helpers/api';
-import { AuthProfile } from '../../auth/auth-types';
+} from '../../../../universal/helpers/api';
+import { AuthProfile } from '../../../auth/auth-types';
+import * as stadspas from '../../hli/stadspas';
+import * as gpass from '../../hli/stadspas-gpass-service';
+import type { Stadspas } from '../../hli/stadspas-types';
 
 vi.mock('../../helpers/encrypt-decrypt', async (requireActual) => {
   return {

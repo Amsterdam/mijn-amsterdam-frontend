@@ -8,9 +8,11 @@ import {
   EH_ATTR_PRIMARY_ID,
   EH_ATTR_PRIMARY_ID_LEGACY,
   OIDC_SESSION_COOKIE_NAME,
+} from './auth-config';
+import {
   RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
   RETURNTO_AMSAPP_STADSPAS_APP_LANDING,
-} from './auth-config';
+} from './auth-returnto-keys';
 import {
   createLogoutHandler,
   getAuthProfile,

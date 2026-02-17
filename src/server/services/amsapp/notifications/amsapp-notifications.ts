@@ -8,25 +8,22 @@ import {
   deleteConsumer,
   getProfileByConsumer,
   storeNotifications,
-} from './notifications-model';
+} from './amsapp-notifications-model';
+import { DISCRETE_GENERIC_MESSAGE } from './amsapp-notifications-service-config';
 import {
   BSN,
   ConsumerId,
   ServiceId,
   type NotificationsLean,
-} from './notifications-types';
+} from './amsapp-notifications-types';
 import {
   apiErrorResult,
   apiSuccessResult,
   type ApiResponse,
-} from '../../../universal/helpers/api';
-import type { MyNotification } from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { notificationServices } from '../tips-and-notifications';
-
-// Use this message when extra privacy is required.
-const DISCRETE_GENERIC_MESSAGE =
-  'Er staat een bericht voor u klaar op Mijn Amsterdam.';
+} from '../../../../universal/helpers/api';
+import type { MyNotification } from '../../../../universal/types/App.types';
+import { AuthProfileAndToken } from '../../../auth/auth-types';
+import { notificationServices } from '../../tips-and-notifications';
 
 /**
  * The Notification service allows batch handling of notifications for previously verified consumers

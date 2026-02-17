@@ -1,8 +1,7 @@
-import type { AMSAPP_NOTIFICATIONS_DEEP_LINK } from './notifications-router';
-import type { ApiResponse } from '../../../universal/helpers/api';
-import { MyNotification } from '../../../universal/types/App.types';
-import { AuthProfile } from '../../auth/auth-types';
-import { notificationServices } from '../tips-and-notifications';
+import type { ApiResponse } from '../../../../universal/helpers/api';
+import { MyNotification } from '../../../../universal/types/App.types';
+import { AuthProfile } from '../../../auth/auth-types';
+import { notificationServices } from '../../tips-and-notifications';
 
 export type BSN = AuthProfile['id'];
 export type ConsumerId = string;
@@ -28,17 +27,4 @@ export type NotificationsLean = Pick<
 
 export type AuthProfileId = {
   profile: Pick<AuthProfile, 'id' | 'profileType'>;
-};
-export type ApiError = {
-  code: string;
-  message: string;
-};
-export type RenderProps = {
-  nonce: string;
-  promptOpenApp: boolean;
-  urlToImage: string;
-  urlToCSS: string;
-  error?: ApiError;
-  identifier?: string; // Only included in debug build.
-  appHref?: `${typeof AMSAPP_NOTIFICATIONS_DEEP_LINK}/${'gelukt' | 'mislukt'}${string}`;
 };

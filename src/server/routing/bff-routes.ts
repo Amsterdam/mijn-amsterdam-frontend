@@ -1,8 +1,5 @@
 import { hash } from '../../universal/helpers/utils';
 
-export const BFF_BASE_PATH = '/api/v1';
-export const BFF_BASE_PATH_PRIVATE = '/private/api/v1';
-
 export const BffEndpoints = {
   ROOT: '/',
   ZAAK_STATUS: '/services/zaak-status',
@@ -50,35 +47,6 @@ export const BffEndpoints = {
   LOODMETING_DOCUMENT_DOWNLOAD: '/services/lood/document',
 } as const;
 
-const AMSAPP_BASE = '/services/amsapp';
-
-export const ExternalConsumerEndpoints = {
-  // Publicly accessible over the internet
-  public: {
-    STADSPAS_AMSAPP_LOGIN: `${AMSAPP_BASE}/stadspas/login/:token`,
-    STADSPAS_ADMINISTRATIENUMMER: `${AMSAPP_BASE}/stadspas/administratienummer/:token`,
-    STADSPAS_APP_LANDING: `${AMSAPP_BASE}/stadspas/app-landing`,
-  },
-  // Privately accessible over private network
-  private: {
-    STADSPAS_PASSEN: `${AMSAPP_BASE}/stadspas/passen/:administratienummerEncrypted`,
-    STADSPAS_DISCOUNT_TRANSACTIONS: `${AMSAPP_BASE}/stadspas/aanbiedingen/transactions/:transactionsKeyEncrypted`,
-    STADSPAS_BUDGET_TRANSACTIONS: `${AMSAPP_BASE}/stadspas/budget/transactions/:transactionsKeyEncrypted`,
-    STADSPAS_BLOCK_PAS: `${AMSAPP_BASE}/stadspas/block/:transactionsKeyEncrypted`,
-  },
-} as const;
-
-// Accessible without authentication
-export const PUBLIC_BFF_ENDPOINTS = [
-  ExternalConsumerEndpoints.public.STADSPAS_AMSAPP_LOGIN,
-  ExternalConsumerEndpoints.public.STADSPAS_ADMINISTRATIENUMMER,
-  BffEndpoints.STATUS_HEALTH,
-  BffEndpoints.CMS_MAINTENANCE_NOTIFICATIONS,
-  BffEndpoints.CMS_FOOTER,
-  BffEndpoints.TELEMETRY_PROXY,
-  BffEndpoints.SERVICES_TOGGLES,
-] as const;
-
 export const DevelopmentRoutes = {
   DEV_LOGIN: '/auth/:authMethod/login{/:user}',
 } as const;
@@ -87,3 +55,6 @@ export const PREDEFINED_REDIRECT_URLS = [
   'noredirect',
   '/api/v1/services/all',
 ] as const;
+
+export const BFF_BASE_PATH = '/api/v1';
+export const BFF_BASE_PATH_PRIVATE = '/private/api/v1';
