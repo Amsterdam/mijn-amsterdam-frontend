@@ -19,6 +19,7 @@ let appConfig: any;
 // Is mutated by the Appconfiguration. Locally this object will have precedence.
 export const featureToggle = {
   ['AFIS.EMandates']: true,
+  ['cobrowse']: false,
 };
 
 export type FeatureToggles = typeof featureToggle;

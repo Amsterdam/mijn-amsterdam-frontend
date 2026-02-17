@@ -49,14 +49,16 @@ vi.mock('../server/helpers/env.ts', async (importOriginal) => {
   };
 });
 
-// Set every BFF Featuretoggle to true.
-vi.mock('../client/helpers/env.ts', async (importOriginal) => {
-  const envModule: object = await importOriginal();
-  return {
-    ...envModule,
-    useIsBffToggleEnabled: (key: string) => true,
-  };
-});
+vi.mock(
+  '../client/hooks/api/useIsFeatureEnabled.ts',
+  async (importOriginal) => {
+    const originalModule: object = await importOriginal();
+    return {
+      ...originalModule,
+      useIsFeatureEnabled: () => true,
+    };
+  }
+);
 
 // Set every Featuretoggle to true.
 vi.mock('../universal/config/feature-toggles.ts', async (importOriginal) => {

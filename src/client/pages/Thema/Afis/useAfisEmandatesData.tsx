@@ -27,7 +27,7 @@ import {
   sendFetchRequest,
   useBffApi,
 } from '../../../hooks/api/useBffApi';
-import { useFeatureToggles } from '../../../hooks/api/useFeatureToggles';
+import { useIsFeatureEnabled } from '../../../hooks/api/useIsFeatureEnabled';
 import { useSmallScreen } from '../../../hooks/media.hook';
 import { useSessionStorage } from '../../../hooks/storage.hook';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
@@ -56,9 +56,8 @@ export function useAfisEMandatesData() {
 
   const { businessPartnerIdEncrypted, themaId } = useAfisThemaData();
 
-  const featureToggle = useFeatureToggles();
+  const isEmandateEnabled = useIsFeatureEnabled('AFIS.EMandates');
   const {
-    isLoading,
     isError,
     isDirty,
     data: eMandatesApiResponse,
@@ -67,7 +66,7 @@ export function useAfisEMandatesData() {
   } = useBffApi<AfisEMandateFrontend[]>(
     generateApiUrl(businessPartnerIdEncrypted, 'AFIS_EMANDATES'),
     {
-      fetchImmediately: featureToggle.afisEMandatesActive,
+      fetchImmediately: isEmandateEnabled,
     }
   );
 

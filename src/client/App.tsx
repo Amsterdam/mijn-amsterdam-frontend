@@ -13,11 +13,11 @@ import { ErrorMessages } from './components/ErrorMessages/ErrorMessages';
 import { MainFooter } from './components/MainFooter/MainFooter';
 import { MainHeader } from './components/MainHeader/MainHeader';
 import { routeConfig as buurtRouteConfig } from './components/MyArea/MyArea-thema-config';
-import { loginUrlByAuthMethod } from './config/api';
+import { BFFApiUrls, loginUrlByAuthMethod } from './config/api';
 import { useCobrowseScreenshareState } from './helpers/cobrowse';
 import { useMonitoring } from './helpers/monitoring';
 import { useAnalytics } from './hooks/analytics.hook';
-import { useFeatureToggles } from './hooks/api/useFeatureToggles';
+import { useBffApi } from './hooks/api/useBffApi';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useAppStateRemote } from './hooks/useAppStateRemote';
 import {
@@ -76,7 +76,7 @@ function AppAuthenticated() {
   const profileType = useProfileTypeValue();
   const redirectAfterLogin = useDeeplinkRedirect();
   // Retrieve featuretoggles in advance so we don't need to wait for this when a user is clicking.
-  useFeatureToggles();
+  useBffApi(BFFApiUrls.FEATURE_TOGGLES);
   const isScreensharing = useCobrowseScreenshareState();
 
   useUsabilla(profileType);
