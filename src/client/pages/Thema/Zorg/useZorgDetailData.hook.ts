@@ -9,7 +9,7 @@ export function useZorgDetailData() {
     isLoading,
     isError,
     breadcrumbs,
-    id: themaId,
+    themaId,
     themaConfig,
   } = useZorgThemaData();
   const { id } = useParams<{ id: WMOVoorzieningFrontend['id'] }>();
