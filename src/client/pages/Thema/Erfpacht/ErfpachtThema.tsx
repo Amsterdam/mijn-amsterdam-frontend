@@ -82,7 +82,7 @@ export function ErfpachtThema() {
                 tableConfig: erfpachtFacturenTableConfig,
                 routeConfigDetailPage: themaConfig.detailPageFactuur.route,
                 routeConfigListPage: themaConfig.listPageFacturen.route,
-                themaId: themaId,
+                themaId,
                 states: ['open'],
                 factuurFilterFn: filterErfpachtFacturen,
                 factuurMapFn: mapErfpachtFacturen,

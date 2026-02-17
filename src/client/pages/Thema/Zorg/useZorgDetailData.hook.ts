@@ -16,7 +16,7 @@ export function useZorgDetailData() {
   const voorziening = voorzieningen.find((item) => item.id === id);
 
   return {
-    themaId: themaId,
+    themaId,
     title: voorziening?.title ?? 'Voorziening',
     voorziening,
     breadcrumbs,
