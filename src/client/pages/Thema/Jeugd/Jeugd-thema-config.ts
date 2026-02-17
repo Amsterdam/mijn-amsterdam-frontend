@@ -5,6 +5,7 @@ import { DisplayProps } from '../../../components/Table/TableV2.types';
 import {
   ThemaConfigBase,
   ThemaRoutesConfig,
+  WithListPage,
 } from '../../../config/thema-types';
 
 const THEMA_TITLE = 'Onderwijs en Jeugd';
@@ -12,7 +13,7 @@ const THEMA_ID = 'JEUGD';
 
 const detailRouteBase = '/jeugd/voorziening';
 
-type ThemaConfigJeugd = ThemaConfigBase;
+type ThemaConfigJeugd = ThemaConfigBase & WithListPage;
 
 export const themaConfig: ThemaConfigJeugd = {
   id: THEMA_ID,
@@ -46,14 +47,16 @@ export const themaConfig: ThemaConfigJeugd = {
       title: 'Lees hier meer over Leerlingenvervoer',
     },
   ],
+  listPage: {
+    route: {
+      path: '/jeugd/lijst/:kind/:page?',
+      documentTitle: THEMA_TITLE,
+      trackingUrl: null,
+    },
+  },
 } as const;
 
 export const routeConfig = {
-  listPage: {
-    path: '/jeugd/lijst/:kind/:page?',
-    documentTitle: THEMA_TITLE,
-    trackingUrl: null,
-  },
   detailPage: {
     path: `${detailRouteBase}/:id`,
     documentTitle: `Voorziening | ${THEMA_TITLE}`,
@@ -92,7 +95,7 @@ export const tableConfig = {
     filter: (regeling: LeerlingenvervoerVoorzieningFrontend) =>
       regeling.isActual,
     displayProps,
-    listPageRoute: generatePath(routeConfig.listPage.path, {
+    listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.actual,
       page: null,
     }),
@@ -103,7 +106,7 @@ export const tableConfig = {
     title: listPageTitle[listPageParamKind.historic],
     filter: (regeling: LeerlingenvervoerVoorzieningFrontend) =>
       !regeling.isActual,
-    listPageRoute: generatePath(routeConfig.listPage.path, {
+    listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.historic,
       page: null,
     }),
