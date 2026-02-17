@@ -7,7 +7,10 @@ import {
   ConfigurationMapFeatureFlagProvider,
 } from '@microsoft/feature-management';
 
-import { FeatureName, featureNames } from './featurenames';
+import {
+  FeatureName as FeatureToggleNames,
+  featureNames,
+} from './featurenames';
 import { IS_DEVELOPMENT } from '../../universal/config/env';
 import { areArraysEqual } from '../../universal/helpers/utils';
 
@@ -19,6 +22,14 @@ let featureManager: FeatureManager | undefined;
 // Cannot import type, see ts-expect-error above.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let appConfig: any;
+
+// Is mutated by the Appconfiguration. Locally this object will have precedence.
+export const featureToggle = {
+  ['AFIS.EMandates']: true,
+};
+
+export type FeatureToggles = typeof featureToggle;
+type FeatureToggleKeys = keyof FeatureToggles;
 
 export async function startAppConfiguration() {
   const connectionString = process.env.APPCONFIGURATION_CONNECTION_STRING;
@@ -45,27 +56,28 @@ export async function startAppConfiguration() {
   featureManager = new FeatureManager(
     new ConfigurationMapFeatureFlagProvider(appConfig)
   );
-  // Automatic type updating when new features are added in the Appconfiguration.
   if (IS_DEVELOPMENT) {
-    updateFeaturNameType(featureManager);
+    // Automatic type updating when new features are added in the Appconfiguration.
+    // RP TODO: delete?
+    // updateFeaturNameType(featureManager);
+  } else {
+    const names =
+      (await featureManager.listFeatureNames()) as FeatureToggleKeys[];
+    for (const name of names) {
+      featureToggle[name] = await featureManager.isEnabled(name);
+    }
   }
 }
 
-/** Get the featureToggle's enabled status. When not found this will return false */
-export async function isEnabled(featureName: FeatureName): Promise<boolean> {
-  if (!featureManager) {
-    throw Error('No featureManager defined, call startAppConfiguration first.');
-  }
-  return featureManager.isEnabled(featureName);
-}
-
-async function isEnabledMock(featureName: FeatureName): Promise<boolean> {
+async function isEnabledMock(
+  featureName: FeatureToggleNames
+): Promise<boolean> {
   return !DISABLED_DEVELOPMENT_FEATURES.includes(featureName);
 }
 
 async function updateFeaturNameType(fm: FeatureManager): Promise<void> {
   // We automaticly keep these up to date so this type is safe to cast
-  const newFeatureNames = (await fm.listFeatureNames()) as FeatureName[];
+  const newFeatureNames = (await fm.listFeatureNames()) as FeatureToggleNames[];
 
   if (!areArraysEqual(newFeatureNames, featureNames as unknown as string[])) {
     // const featureToggleObject = expandFeatureNameFields(newFeatureNames);
@@ -73,9 +85,9 @@ async function updateFeaturNameType(fm: FeatureManager): Promise<void> {
     const data = `
 // This file is generated, do not manually adjust
 
-export const featureNames = ${JSON.stringify(newFeatureNames, null, 2)} as const;
+export const featureToggleNames = ${JSON.stringify(newFeatureNames, null, 2)} as const;
 
-export type FeatureName = (typeof featureNames)[number];
+export type FeatureName = (typeof featureToggleNames)[number];
 `;
     writeFileSync('./src/server/config/featurenames.ts', data);
   }

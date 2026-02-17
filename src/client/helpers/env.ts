@@ -6,6 +6,6 @@ type ToggleConfig = {
 };
 
 export function useIsBffToggleEnabled<T extends string>(env: T): boolean {
-  const bffToggles = useBffApi<ToggleConfig>(BFFApiUrls.SERVICES_TOGGLES);
+  const bffToggles = useBffApi<ToggleConfig>(BFFApiUrls.FEATURE_TOGGLES);
   return bffToggles.data?.content?.[env] === true;
 }
