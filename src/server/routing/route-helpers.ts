@@ -6,13 +6,13 @@ import { generatePath, matchPath } from 'react-router';
 import z from 'zod';
 
 import { PUBLIC_BFF_ENDPOINTS } from './bff-public-endpoints';
-import { BFF_BASE_PATH } from './bff-routes';
 import { IS_PRODUCTION } from '../../universal/config/env';
 import {
   ApiResponse_DEPRECATED,
   apiErrorResult,
 } from '../../universal/helpers/api';
 import type { AuthProfileAndToken } from '../auth/auth-types';
+import { BFF_API_BASE_URL } from '../config/app';
 
 type BFFRouter = express.Router & { BFF_ID: string };
 
@@ -89,7 +89,7 @@ type QueryAndOrPathParams = [QueryParams, PathParams] | [QueryParams];
 export function generateFullApiUrlBFF(
   path: string,
   params?: PathParams | QueryAndOrPathParams,
-  baseUrl: string = BFF_BASE_PATH
+  baseUrl: string = BFF_API_BASE_URL
 ) {
   // QueryParams are only provided when pathParams is a tuple.
   const [queryParams, pathParams] = Array.isArray(params)
