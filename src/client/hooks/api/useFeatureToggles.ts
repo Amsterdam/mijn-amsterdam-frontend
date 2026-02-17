@@ -1,9 +1,11 @@
 import { useBffApi } from './useBffApi';
-import { FeatureToggles } from '../../../server/config/azure-appconfiguration';
+import { type FeatureToggles } from '../../../server/config/azure-appconfiguration';
 import { BFFApiUrls } from '../../config/api';
 
 export function useFeatureToggles() {
-  return useBffApi<FeatureToggles>(BFFApiUrls.FEATURE_TOGGLES, {
-    fetchImmediately: true,
-  });
+  const response = useBffApi<FeatureToggles>(BFFApiUrls.FEATURE_TOGGLES);
+  if (response.isError || !response.data?.content) {
+    return false;
+  }
+  return response.data.content['AFIS.EMandates'];
 }

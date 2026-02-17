@@ -1,5 +1,3 @@
-import { writeFileSync } from 'fs';
-
 // @ts-expect-error Otherwise required to update module resolver.
 import { load } from '@azure/app-configuration-provider';
 import {
@@ -7,12 +5,7 @@ import {
   ConfigurationMapFeatureFlagProvider,
 } from '@microsoft/feature-management';
 
-import {
-  FeatureName as FeatureToggleNames,
-  featureNames,
-} from './featurenames';
 import { IS_DEVELOPMENT } from '../../universal/config/env';
-import { areArraysEqual } from '../../universal/helpers/utils';
 
 const REFRESH_INTERVAL_MS = 5000;
 
@@ -29,7 +22,7 @@ export const featureToggle = {
 };
 
 export type FeatureToggles = typeof featureToggle;
-type FeatureToggleKeys = keyof FeatureToggles;
+export type FeatureToggleKey = keyof FeatureToggles;
 
 export async function startAppConfiguration() {
   const connectionString = process.env.APPCONFIGURATION_CONNECTION_STRING;
@@ -62,33 +55,13 @@ export async function startAppConfiguration() {
     // updateFeaturNameType(featureManager);
   } else {
     const names =
-      (await featureManager.listFeatureNames()) as FeatureToggleKeys[];
+      (await featureManager.listFeatureNames()) as FeatureToggleKey[];
     for (const name of names) {
       featureToggle[name] = await featureManager.isEnabled(name);
     }
   }
 }
 
-async function isEnabledMock(
-  featureName: FeatureToggleNames
-): Promise<boolean> {
+async function isEnabledMock(featureName: FeatureToggleKey): Promise<boolean> {
   return !DISABLED_DEVELOPMENT_FEATURES.includes(featureName);
-}
-
-async function updateFeaturNameType(fm: FeatureManager): Promise<void> {
-  // We automaticly keep these up to date so this type is safe to cast
-  const newFeatureNames = (await fm.listFeatureNames()) as FeatureToggleNames[];
-
-  if (!areArraysEqual(newFeatureNames, featureNames as unknown as string[])) {
-    // const featureToggleObject = expandFeatureNameFields(newFeatureNames);
-    // console.dir(featureToggleObject);
-    const data = `
-// This file is generated, do not manually adjust
-
-export const featureToggleNames = ${JSON.stringify(newFeatureNames, null, 2)} as const;
-
-export type FeatureName = (typeof featureToggleNames)[number];
-`;
-    writeFileSync('./src/server/config/featurenames.ts', data);
-  }
 }

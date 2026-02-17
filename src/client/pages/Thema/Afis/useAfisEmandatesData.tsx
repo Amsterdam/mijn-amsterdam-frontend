@@ -11,7 +11,6 @@ import {
   eMandateTableConfig,
   titleBetaalvoorkeurenPage,
   titleEMandaatPage,
-  featureToggle,
   EMANDATE_STATUS_ACTIVE,
 } from './Afis-thema-config';
 import { useAfisThemaData } from './useAfisThemaData.hook';
@@ -28,6 +27,7 @@ import {
   sendFetchRequest,
   useBffApi,
 } from '../../../hooks/api/useBffApi';
+import { useFeatureToggles } from '../../../hooks/api/useFeatureToggles';
 import { useSmallScreen } from '../../../hooks/media.hook';
 import { useSessionStorage } from '../../../hooks/storage.hook';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
@@ -56,6 +56,7 @@ export function useAfisEMandatesData() {
 
   const { businessPartnerIdEncrypted, themaId } = useAfisThemaData();
 
+  const featureToggle = useFeatureToggles();
   const {
     isLoading,
     isError,

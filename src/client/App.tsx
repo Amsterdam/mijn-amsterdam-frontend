@@ -7,9 +7,7 @@ import { BrowserRouter, useLocation, useNavigate } from 'react-router';
 
 import styles from './App.module.scss';
 import { PrivateRoutes, PublicRoutes } from './App.routes';
-import {
-  CobrowseScreensareAlert,
-} from './components/Alert/CobrowseScreenshareDisclaimer';
+import { CobrowseScreensareAlert } from './components/Alert/CobrowseScreenshareDisclaimer';
 import { AutoLogoutDialog } from './components/AutoLogoutDialog/AutoLogoutDialog';
 import { ErrorMessages } from './components/ErrorMessages/ErrorMessages';
 import { MainFooter } from './components/MainFooter/MainFooter';
@@ -19,6 +17,7 @@ import { loginUrlByAuthMethod } from './config/api';
 import { useCobrowseScreenshareState } from './helpers/cobrowse';
 import { useMonitoring } from './helpers/monitoring';
 import { useAnalytics } from './hooks/analytics.hook';
+import { useFeatureToggles } from './hooks/api/useFeatureToggles';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useAppStateRemote } from './hooks/useAppStateRemote';
 import {
@@ -76,6 +75,8 @@ function AppAuthenticated() {
   const location = useLocation();
   const profileType = useProfileTypeValue();
   const redirectAfterLogin = useDeeplinkRedirect();
+  // Retrieve featuretoggles in advance so we don't need to wait for this when a user is clicking.
+  useFeatureToggles();
   const isScreensharing = useCobrowseScreenshareState();
 
   useUsabilla(profileType);
