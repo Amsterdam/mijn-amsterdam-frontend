@@ -1,6 +1,12 @@
 import UID from 'uid-safe';
 
 import {
+  BSN,
+  ConsumerId,
+  ServiceId,
+  type NotificationsLean,
+} from './config-and-types';
+import {
   listProfileIds,
   upsertConsumer,
   listProfiles,
@@ -15,15 +21,9 @@ import {
   apiSuccessResult,
   type ApiResponse,
 } from '../../../universal/helpers/api';
+import type { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { notificationServices } from '../tips-and-notifications';
-import {
-  BSN,
-  ConsumerId,
-  ServiceId,
-  type NotificationsLean,
-} from './config-and-types';
-import type { MyNotification } from '../../../universal/types/App.types';
 
 // Use this message when extra privacy is required.
 const DISCRETE_GENERIC_MESSAGE =

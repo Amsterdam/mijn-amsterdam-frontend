@@ -1,24 +1,6 @@
 import { HttpStatusCode } from 'axios';
 import { Request, Response } from 'express';
 
-import { ExternalConsumerEndpoints } from './bff-routes';
-import { apiKeyVerificationHandler } from './route-handlers';
-import { createBFFRouter, generateFullApiUrlBFF } from './route-helpers';
-import { IS_PRODUCTION } from '../../universal/config/env';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
-import { apiErrorResult, apiSuccessResult } from '../../universal/helpers/api';
-import {
-  RETURNTO_AMSAPP_NOTIFICATIES_APP_LANDING,
-  RETURNTO_NOTIFICATIES_CONSUMER_ID,
-} from '../auth/auth-config';
-import { getAuth } from '../auth/auth-helpers';
-import { authRoutes } from '../auth/auth-routes';
-import { AuthProfileAndToken } from '../auth/auth-types';
-import { encrypt } from '../helpers/encrypt-decrypt';
-import { getFromEnv } from '../helpers/env';
-import { getApiConfig } from '../helpers/source-api-helpers';
-import { requestData } from '../helpers/source-api-request';
-import { captureMessage } from '../services/monitoring';
 import {
   batchDeleteNotifications,
   batchFetchAndStoreNotifications,
@@ -26,7 +8,31 @@ import {
   getConsumerStatus,
   registerConsumer,
   unregisterConsumer,
-} from '../services/notifications/notifications';
+} from './notifications';
+import { IS_PRODUCTION } from '../../../universal/config/env';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+} from '../../../universal/helpers/api';
+import {
+  RETURNTO_AMSAPP_NOTIFICATIES_APP_LANDING,
+  RETURNTO_NOTIFICATIES_CONSUMER_ID,
+} from '../../auth/auth-config';
+import { getAuth } from '../../auth/auth-helpers';
+import { authRoutes } from '../../auth/auth-routes';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { encrypt } from '../../helpers/encrypt-decrypt';
+import { getFromEnv } from '../../helpers/env';
+import { getApiConfig } from '../../helpers/source-api-helpers';
+import { requestData } from '../../helpers/source-api-request';
+import { ExternalConsumerEndpoints } from '../../routing/bff-routes';
+import { apiKeyVerificationHandler } from '../../routing/route-handlers';
+import {
+  createBFFRouter,
+  generateFullApiUrlBFF,
+} from '../../routing/route-helpers';
+import { captureMessage } from '../monitoring';
 
 const AMSAPP_PROTOCOl = 'amsterdam://';
 const AMSAPP_NOTIFICATIONS_DEEP_LINK = `${AMSAPP_PROTOCOl}mijn-amsterdam`;
