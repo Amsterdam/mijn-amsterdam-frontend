@@ -10,7 +10,7 @@ export const featureToggle = {
     },
   },
   hulpmiddelenDisclaimerCodes: {
-    GBW: !IS_PRODUCTION,
+    GBW: true,
   },
   statusLineItems: {
     alleAfgewezenWmoAanvragen: {
