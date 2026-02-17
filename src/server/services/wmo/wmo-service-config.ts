@@ -9,9 +9,6 @@ export const featureToggle = {
       isEnabled: !IS_PRODUCTION,
     },
   },
-  hulpmiddelenDisclaimerCodes: {
-    GBW: true,
-  },
   statusLineItems: {
     alleAfgewezenWmoAanvragen: {
       isEnabled: true,
