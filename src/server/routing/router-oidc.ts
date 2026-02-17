@@ -1,9 +1,10 @@
 import { Request, RequestHandler, Response } from 'express';
-import { ConfigParams, requiresAuth } from 'express-openid-connect';
 import { NextFunction } from 'express';
+import { ConfigParams, requiresAuth } from 'express-openid-connect';
 
 import { nocache, verifyAuthenticated } from './route-handlers';
 import { generateFullApiUrlBFF, sendUnauthorized } from './route-helpers';
+import { createBFFRouter } from './route-helpers';
 import { apiSuccessResult } from '../../universal/helpers/api';
 import {
   OIDC_SESSION_COOKIE_NAME,
@@ -12,16 +13,15 @@ import {
   openIdAuth,
 } from '../auth/auth-config';
 import {
-  RETURNTO_MAMS_LANDING_DIGID,
-  RETURNTO_MAMS_LANDING_EHERKENNING,
-} from '../auth/auth-returnto-keys';
-import { createBFFRouter } from './route-helpers';
-import {
   createLogoutHandler,
   getAuth,
   getReturnToUrl,
   hasSessionCookie,
 } from '../auth/auth-helpers';
+import {
+  RETURNTO_MAMS_LANDING_DIGID,
+  RETURNTO_MAMS_LANDING_EHERKENNING,
+} from '../auth/auth-returnto-keys';
 import {
   AUTH_BASE_EHERKENNING,
   AUTH_CALLBACK,

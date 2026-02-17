@@ -1,9 +1,9 @@
 import type { SomeOtherString } from '../../universal/helpers/types';
 import { jsonCopy } from '../../universal/helpers/utils';
-import type {
+import {
   ApiConfig,
-  DataRequestConfig,
-  SourceApiName,
+  type DataRequestConfig,
+  type SourceApiName,
 } from '../config/source-api';
 
 function getApiConfigBasedCacheKey(

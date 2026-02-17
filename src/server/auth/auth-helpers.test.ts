@@ -10,16 +10,16 @@ import {
   OIDC_SESSION_COOKIE_NAME,
 } from './auth-config';
 import {
-  RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
-  RETURNTO_AMSAPP_STADSPAS_APP_LANDING,
-} from './auth-returnto-keys';
-import {
   createLogoutHandler,
   getAuthProfile,
   getReturnToUrl,
   hasSessionCookie,
   isSessionCookieName,
 } from './auth-helpers';
+import {
+  RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
+  RETURNTO_AMSAPP_STADSPAS_APP_LANDING,
+} from './auth-returnto-keys';
 import { MaSession, TokenData } from './auth-types';
 import {
   getAuthProfileAndToken,

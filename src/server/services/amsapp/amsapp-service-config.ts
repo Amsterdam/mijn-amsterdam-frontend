@@ -1,4 +1,4 @@
-import { RETURNTO_AMSAPP_STADSPAS_APP_LANDING } from '../../auth/auth-config';
+import { RETURNTO_AMSAPP_STADSPAS_APP_LANDING } from '../../auth/auth-returnto-keys';
 import { authRoutes } from '../../auth/auth-routes';
 import { getFromEnv } from '../../helpers/env';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
