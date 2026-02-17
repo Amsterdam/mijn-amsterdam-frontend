@@ -29,7 +29,7 @@ import {
 } from '../services/notifications/notifications';
 
 const AMSAPP_PROTOCOl = 'amsterdam://';
-const AMSAPP_NOTIFICATIONS_DEEP_LINK = `${AMSAPP_PROTOCOl}notifications`;
+const AMSAPP_NOTIFICATIONS_DEEP_LINK = `${AMSAPP_PROTOCOl}mijn-amsterdam`;
 
 // PUBLIC INTERNET NETWORK ROUTER
 // ==============================
