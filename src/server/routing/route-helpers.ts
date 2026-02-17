@@ -6,6 +6,7 @@ import { generatePath, matchPath } from 'react-router';
 import z from 'zod';
 
 import { PUBLIC_BFF_ENDPOINTS } from './bff-public-endpoints';
+import { BFF_BASE_PATH } from './bff-routes';
 import { IS_PRODUCTION } from '../../universal/config/env';
 import {
   ApiResponse_DEPRECATED,
@@ -88,7 +89,7 @@ type QueryAndOrPathParams = [QueryParams, PathParams] | [QueryParams];
 export function generateFullApiUrlBFF(
   path: string,
   params?: PathParams | QueryAndOrPathParams,
-  baseUrl: string = '/api/v1'
+  baseUrl: string = BFF_BASE_PATH
 ) {
   // QueryParams are only provided when pathParams is a tuple.
   const [queryParams, pathParams] = Array.isArray(params)

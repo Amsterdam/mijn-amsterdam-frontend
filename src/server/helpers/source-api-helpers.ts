@@ -1,6 +1,6 @@
 import type { SomeOtherString } from '../../universal/helpers/types';
 import { jsonCopy } from '../../universal/helpers/utils';
-import {
+import type {
   ApiConfig,
   DataRequestConfig,
   SourceApiName,
