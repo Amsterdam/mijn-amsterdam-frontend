@@ -9,7 +9,6 @@ import {
   ONE_SECOND_MS,
 } from './app';
 import { featureToggle as featureToggleAfis } from '../../client/pages/Thema/Afis/Afis-thema-config';
-import { themaConfig as themaConfigBezwaren } from '../../client/pages/Thema/Bezwaren/Bezwaren-thema-config';
 import { themaConfig as themaConfigBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config';
 import { themaConfig as themaConfigErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
 import { featureToggle as featureToggleJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config';
@@ -203,19 +202,19 @@ const ApiConfig_ = {
   BEZWAREN_LIST: {
     url: `${getFromEnv('BFF_BEZWAREN_API')}/zgw/v1/zaken/_zoek`,
     method: 'POST',
-    postponeFetch: !themaConfigBezwaren.featureToggle.active,
+    postponeFetch: !FeatureToggle.bezwarenActive,
   },
   BEZWAREN_DOCUMENT: {
     url: `${getFromEnv('BFF_BEZWAREN_API')}/zgw/v1/enkelvoudiginformatieobjecten/:id/download`,
-    postponeFetch: !themaConfigBezwaren.featureToggle.active,
+    postponeFetch: !FeatureToggle.bezwarenActive,
   },
   BEZWAREN_DOCUMENTS: {
     url: `${getFromEnv('BFF_BEZWAREN_API')}/zgw/v1/enkelvoudiginformatieobjecten`,
-    postponeFetch: !themaConfigBezwaren.featureToggle.active,
+    postponeFetch: !FeatureToggle.bezwarenActive,
   },
   BEZWAREN_STATUS: {
     url: `${getFromEnv('BFF_BEZWAREN_API')}/zgw/v1/statussen`,
-    postponeFetch: !themaConfigBezwaren.featureToggle.active,
+    postponeFetch: !FeatureToggle.bezwarenActive,
   },
   BELASTINGEN: {
     url: `${getFromEnv('BFF_BELASTINGEN_ENDPOINT')}`,

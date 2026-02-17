@@ -5,7 +5,7 @@ import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function ErfpachtList() {
   const {
-    id: themaId,
+    themaId,
     isLoading,
     isError,
     dossiers,

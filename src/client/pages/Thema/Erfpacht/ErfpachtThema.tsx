@@ -18,7 +18,7 @@ import { AfisFacturenTables } from '../Afis/AfisFacturenTables';
 
 export function ErfpachtThema() {
   const {
-    id,
+    themaId,
     title,
     isError,
     isLoading,
@@ -49,7 +49,7 @@ export function ErfpachtThema() {
 
   return (
     <ThemaPagina
-      id={id}
+      id={themaId}
       title={title}
       isLoading={isLoading}
       isError={isError}
@@ -82,7 +82,7 @@ export function ErfpachtThema() {
                 tableConfig: erfpachtFacturenTableConfig,
                 routeConfigDetailPage: themaConfig.detailPageFactuur.route,
                 routeConfigListPage: themaConfig.listPageFacturen.route,
-                themaId: id,
+                themaId: themaId,
                 states: ['open'],
                 factuurFilterFn: filterErfpachtFacturen,
                 factuurMapFn: mapErfpachtFacturen,

@@ -25,7 +25,7 @@ export function useErfpachtThemaData() {
   const tableConfig = getTableConfig(erfpachtData);
 
   return {
-    id: themaConfig.id,
+    themaId: themaConfig.id,
     title: themaConfig.title,
     erfpachtData,
     relatieCode: erfpachtData?.relatieCode,
