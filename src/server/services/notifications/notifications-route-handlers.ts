@@ -23,7 +23,6 @@ import {
 } from '../../../universal/helpers/api';
 import { getAuth } from '../../auth/auth-helpers';
 import type { AuthProfileAndToken } from '../../auth/auth-types';
-import { encrypt } from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { captureMessage } from '../monitoring';
@@ -45,7 +44,8 @@ function getRenderPropsForApiError(
     error: apiResponseError,
     appHref: `${AMSAPP_NOTIFICATIONS_DEEP_LINK}/mislukt?errorMessage=${encodeURIComponent(apiResponseError.message)}&errorCode=${apiResponseError.code}`,
     identifier: !IS_PRODUCTION ? identifier : '',
-    // No need to redirect to logout as DIGID_AUTH 001 error code means user is not logged in with Digid.
+    // If the Digid login failed we don't want the user to be redirected to logout. In this case we can open the app directly.
+    // If the error is not related to the Digid login, the user must always be redirected to logout. See the amsapp-open-app.pug for logic on how we handle the redirection to logout vs opening the app directly.
     promptOpenApp: apiResponseError.code === apiResponseErrors.DIGID_AUTH.code,
   };
 }
@@ -97,29 +97,32 @@ export async function sendConsumerIdResponse(
   }
 
   try {
-    const [encryptedProfileID] = encrypt(authProfileAndToken?.profile.id);
-    await registerConsumer(encryptedProfileID, req.params.consumerId, [
-      'adoptTrashContainer',
-      'afis',
-      'avg',
-      'belasting',
-      'bezwaren',
-      'bodem',
-      'brp',
-      'fetchKrefia',
-      'fetchSVWI',
-      'fetchWior',
-      'fetchWpi',
-      'horeca',
-      'klachten',
-      'maintenance',
-      'milieuzone',
-      'overtredingen',
-      'parkeren',
-      'subsidie',
-      'toeristischeVerhuur',
-      'vergunningen',
-    ]);
+    await registerConsumer(
+      authProfileAndToken.profile.id,
+      req.params.consumerId,
+      [
+        'adoptTrashContainer',
+        'afis',
+        'avg',
+        'belasting',
+        'bezwaren',
+        'bodem',
+        'brp',
+        'fetchKrefia',
+        'fetchSVWI',
+        'fetchWior',
+        'fetchWpi',
+        'horeca',
+        'klachten',
+        'maintenance',
+        'milieuzone',
+        'overtredingen',
+        'parkeren',
+        'subsidie',
+        'toeristischeVerhuur',
+        'vergunningen',
+      ]
+    );
   } catch (error) {
     const apiResponseError = apiResponseErrors.UNKNOWN;
     captureMessage(
@@ -144,7 +147,8 @@ export async function sendConsumerIdResponse(
     deliveryResponse.status === 'ERROR' ||
     deliveryResponse.content?.detail !== 'Success'
   ) {
-    const apiResponseError = apiResponseErrors.AMSAPP_DELIVERY_FAILED;
+    const apiResponseError =
+      apiResponseErrors.AMSAPP_CONSUMER_ID_DELIVERY_FAILED;
     captureMessage(
       `AMSAPP Notificaties sendConsumerIdResponse: ${apiResponseError.message}`
     );

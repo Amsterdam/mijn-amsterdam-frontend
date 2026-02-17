@@ -1,9 +1,6 @@
 import type { ApiError } from './notifications-types';
 import { IS_PRODUCTION } from '../../../universal/config/env';
-import { RETURNTO_AMSAPP_NOTIFICATIES_APP_LANDING } from '../../auth/auth-config';
-import { authRoutes } from '../../auth/auth-routes';
 import { getFromEnv } from '../../helpers/env';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 
 export const featureToggle = {
   // AmsApp notificaties
@@ -27,7 +24,7 @@ export const routes = {
 
 export const apiResponseErrors: Record<string, ApiError> = {
   DIGID_AUTH: { code: '001', message: 'Niet ingelogd met Digid' },
-  AMSAPP_DELIVERY_FAILED: {
+  AMSAPP_CONSUMER_ID_DELIVERY_FAILED: {
     code: '002',
     message: 'Verzenden van consumerId naar de Amsterdam app niet gelukt',
   },
@@ -40,6 +37,7 @@ export const apiResponseErrors: Record<string, ApiError> = {
 export const maFrontendUrl = getFromEnv('MA_FRONTEND_URL')!;
 
 export const nonce = getFromEnv('BFF_AMSAPP_NONCE')!;
-export const logoutUrl = generateFullApiUrlBFF(authRoutes.AUTH_LOGOUT_DIGID, [
-  { returnTo: RETURNTO_AMSAPP_NOTIFICATIES_APP_LANDING },
-]);
+
+// TODO: This URL is also used in the hli service, should be centralized in a shared config if more services need to use it.
+// This URL has been added to the OIDC allowed logout URLs, so it needs to be generalized.
+export { logoutUrl } from '../hli/router-stadspas-external-consumer';

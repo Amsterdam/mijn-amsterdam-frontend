@@ -118,7 +118,7 @@ const apiResponseErrors: Record<string, ApiError> = {
     code: '003',
     message: 'Geen administratienummer gevonden',
   },
-  AMSAPP_DELIVERY_FAILED: {
+  AMSAPP_ADMINISTRATIENUMMER_DELIVERY_FAILED: {
     code: '004',
     message:
       'Verzenden van administratienummer naar de Amsterdam app niet gelukt',
@@ -145,7 +145,7 @@ type RenderProps = {
 
 const maFrontendUrl = getFromEnv('MA_FRONTEND_URL')!;
 const nonce = getFromEnv('BFF_AMSAPP_NONCE')!;
-const logoutUrl = generateFullApiUrlBFF(authRoutes.AUTH_LOGOUT_DIGID, [
+export const logoutUrl = generateFullApiUrlBFF(authRoutes.AUTH_LOGOUT_DIGID, [
   { returnTo: RETURNTO_AMSAPP_STADSPAS_APP_LANDING },
 ]);
 
@@ -214,7 +214,8 @@ async function sendAdministratienummerResponse(
         deliveryResponse.content?.detail !== 'Success'
       ) {
         // Delivery response error
-        apiResponseError = apiResponseErrors.AMSAPP_DELIVERY_FAILED;
+        apiResponseError =
+          apiResponseErrors.AMSAPP_ADMINISTRATIENUMMER_DELIVERY_FAILED;
       }
     }
 
@@ -235,7 +236,8 @@ async function sendAdministratienummerResponse(
     ...baseRenderProps,
     error: apiResponseError,
     appHref: `${AMSAPP_STADSPAS_DEEP_LINK}/mislukt?errorMessage=${encodeURIComponent(apiResponseError.message)}&errorCode=${apiResponseError.code}`,
-    // No need to redirect to logout as 001 error code means user is not logged in with Digid.
+    // If the Digid login failed we don't want the user to be redirected to logout. In this case we can open the app directly.
+    // If the error is not related to the Digid login, the user must always be redirected to logout. See the amsapp-open-app.pug for logic on how we handle the redirection to logout vs opening the app directly.
     promptOpenApp: apiResponseError.code === apiResponseErrors.DIGID_AUTH.code,
   };
 

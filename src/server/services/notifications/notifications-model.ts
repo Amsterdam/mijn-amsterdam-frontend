@@ -6,6 +6,7 @@ import {
   type NotificationsService,
 } from './notifications-types';
 import { isRecord } from '../../../universal/helpers/utils';
+import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
 import { logger } from '../../logging';
 import { IS_DB_ENABLED } from '../db/config';
 import { db as db_, type DBAdapter } from '../db/db';
@@ -108,7 +109,12 @@ export async function upsertConsumer(
   consumerId: ConsumerId,
   serviceIds: ServiceId[]
 ) {
-  return db.query(queries.upsertConsumer, [profileId, consumerId, serviceIds]);
+  const [encryptedProfileID] = encrypt(profileId);
+  return db.query(queries.upsertConsumer, [
+    encryptedProfileID,
+    consumerId,
+    serviceIds,
+  ]);
 }
 
 // This should work in one query with a CTE, but it does not delete the row correctly.
@@ -127,11 +133,12 @@ export async function deleteConsumer(consumerId: ConsumerId) {
 }
 
 export async function storeNotifications(
-  encryptedProfileId: BSN,
+  profileId: BSN,
   services: NotificationsService[]
 ) {
+  const [encryptedProfileID] = encrypt(profileId);
   return db.query(queries.updateNotifications, [
-    encryptedProfileId,
+    encryptedProfileID,
     { services },
   ]);
 }
@@ -150,5 +157,12 @@ export async function listProfileIds() {
     'profileId' | 'serviceIds' | 'consumerIds'
   >[];
 
-  return rows;
+  return rows.map((row) => {
+    const decryptedProfileID = decrypt(row.profileId);
+    return {
+      profileId: decryptedProfileID,
+      serviceIds: row.serviceIds,
+      consumerIds: row.consumerIds,
+    };
+  });
 }

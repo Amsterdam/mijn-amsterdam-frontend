@@ -15,7 +15,6 @@ import {
   ServiceId,
   type NotificationsLean,
 } from './notifications-types';
-import { decrypt } from '../../../server/helpers/encrypt-decrypt';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -60,10 +59,9 @@ export async function batchDeleteNotifications() {
 export async function batchFetchAndStoreNotifications() {
   const profiles = await listProfileIds();
   for (const profile of profiles) {
-    const decryptedProfileID = decrypt(profile.profileId);
     const promises = profile.serviceIds.map(async (serviceId) => {
       const notifications = await fetchNotificationsForService(
-        decryptedProfileID,
+        profile.profileId,
         serviceId
       );
       return {

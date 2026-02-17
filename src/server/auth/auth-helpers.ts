@@ -5,7 +5,6 @@ import { ParsedQs } from 'qs';
 import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_TOKEN_ID_ATTRIBUTE,
-  RETURNTO_AMSAPP_NOTIFICATIES_APP_LANDING,
   RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
   RETURNTO_AMSAPP_STADSPAS_APP_LANDING,
   RETURNTO_MAMS_FRONTEND_ROUTE,
@@ -29,6 +28,7 @@ import { logger } from '../logging';
 import { ExternalConsumerEndpoints } from '../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../routing/route-helpers';
 import { captureException } from '../services/monitoring';
+import { routes } from '../services/notifications/notifications-service-config';
 
 export function getReturnToUrl(
   queryParams?: ParsedQs,
@@ -49,21 +49,15 @@ export function getReturnToUrl(
           token: queryParams['amsapp-session-token'] as string,
         }
       );
+    // This return to url is used for all AmsApp routes that require Digid login/logout.
     case RETURNTO_AMSAPP_STADSPAS_APP_LANDING:
       return generateFullApiUrlBFF(
         ExternalConsumerEndpoints.public.STADSPAS_APP_LANDING
       );
-    case RETURNTO_AMSAPP_NOTIFICATIES_APP_LANDING:
-      return generateFullApiUrlBFF(
-        ExternalConsumerEndpoints.public.NOTIFICATIONS_APP
-      );
     case RETURNTO_NOTIFICATIES_CONSUMER_ID:
-      return generateFullApiUrlBFF(
-        ExternalConsumerEndpoints.public.NOTIFICATIONS_CONSUMER_APP,
-        {
-          consumerId: queryParams.consumerId as string,
-        }
-      );
+      return generateFullApiUrlBFF(routes.public.NOTIFICATIONS_CONSUMER_APP, {
+        consumerId: queryParams.consumerId as string,
+      });
     case ZAAK_STATUS_ROUTE:
       return getReturnToUrlZaakStatus(queryParams);
     case RETURNTO_MAMS_LANDING_EHERKENNING:
