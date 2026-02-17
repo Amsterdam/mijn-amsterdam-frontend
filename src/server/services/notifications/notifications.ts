@@ -66,7 +66,7 @@ export async function batchFetchAndStoreNotifications() {
       );
       return {
         ...notifications,
-        serviceId: serviceId,
+        serviceId,
         dateUpdated: new Date().toISOString(),
       };
     });
