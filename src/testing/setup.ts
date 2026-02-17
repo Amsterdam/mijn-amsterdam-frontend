@@ -161,6 +161,7 @@ process.env.BFF_BELASTINGEN_ENDPOINT = `${remoteApiHost}/belastingen`;
 process.env.BFF_AMSAPP_ADMINISTRATIENUMMER_DELIVERY_ENDPOINT = `${remoteApiHost}/amsapp/session/credentials`;
 process.env.BFF_AMSAPP_NONCE = '123456789123456789123456';
 process.env.DEBUG_RESPONSE_DATA = '';
+process.env.DEBUG_REQUEST_DATA = '';
 
 process.env.BFF_CONTACTMOMENTEN_BASE_URL = `${remoteApiHost}/salesforce/contactmomenten`;
 

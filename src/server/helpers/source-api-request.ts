@@ -3,14 +3,12 @@ import axios, {
   AxiosResponseHeaders,
   type AxiosResponseTransformer,
 } from 'axios';
-import createDebugger from 'debug';
 import memoryCache from 'memory-cache';
 
 import { Deferred } from './deferred';
 import {
   addRequestDataDebugging,
   addResponseDataDebugging,
-  debugResponse,
 } from './source-api-debug';
 import { getRequestConfigCacheKey } from './source-api-helpers';
 import {
@@ -28,13 +26,13 @@ import {
   DataRequestConfig,
   FORCE_RENEW_CACHE_TTL_MS,
 } from '../config/source-api';
+import {
+  debugCacheHit,
+  debugCacheKey,
+  debugResponse,
+  debugResponseError,
+} from '../debug';
 import { captureException } from '../services/monitoring';
-
-const debugResponseError = createDebugger(
-  'source-api-request:response-error-object'
-);
-const debugCacheHit = createDebugger('source-api-request:cache-hit');
-const debugCacheKey = createDebugger('source-api-request:cache-key');
 
 export const axiosRequest = axios.create({
   responseType: 'json',

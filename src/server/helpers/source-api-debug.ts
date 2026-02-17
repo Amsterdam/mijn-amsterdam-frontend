@@ -78,12 +78,12 @@ function isDebugRequestDataMatch(
     const hasTermInRequestUrl =
       !!urlTerm && config.url?.includes(urlTerm?.trim());
 
-    const paramJsonStr = JSON.stringify(config.params);
+    const paramJsonStr = JSON.stringify(config.params || '');
     const hasTermInRequestParams = !!dataTerms?.some((term) =>
       paramJsonStr.includes(term)
     );
 
-    const dataJsonStr = JSON.stringify(config.data);
+    const dataJsonStr = JSON.stringify(config.data || '');
     const hasTermInRequestData = !!dataTerms?.some((term) =>
       dataJsonStr.includes(term)
     );
@@ -99,15 +99,14 @@ export function addRequestDataDebugging(config: AxiosRequestConfig): void {
     method: config.method ?? 'GET',
     url: config.url,
     params: config.params,
+    data: config.data,
   };
-
   const isDebugRequestDataTermMatch =
     debugRequestDataTerms?.().some(isDebugRequestDataMatch(config)) ?? false;
 
   if (isDebugRequestDataTermMatch) {
     debugRequest('------');
     debugRequest('[CONFIG]: %o', configExcerpt);
-    debugRequest('[REQUEST DATA]: %s', config.data);
   }
 }
 
