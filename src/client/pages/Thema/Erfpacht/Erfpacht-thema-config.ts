@@ -51,7 +51,6 @@ export const themaConfig: ThemaConfigErfpacht = {
   featureToggle: propagateFeatureToggles({
     active: true,
     canonmatigingLinkActive: true,
-    afisFacturenTablesActive: !IS_PRODUCTION,
   }),
   pageLinks: [
     {
