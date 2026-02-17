@@ -1,4 +1,4 @@
-import { routeConfig, themaConfig, featureToggle } from './Jeugd-thema-config';
+import { routeConfig, themaConfig } from './Jeugd-thema-config';
 import { JeugdDetail } from './JeugdDetail';
 import { default as JeugdIcon } from './JeugdIcon.svg?react';
 import { JeugdList } from './JeugdList';
@@ -11,17 +11,17 @@ export const JeugdRoutes = [
   {
     route: themaConfig.route.path,
     Component: JeugdThemaPagina,
-    isActive: featureToggle.leerlingenvervoerActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
     route: routeConfig.detailPage.path,
     Component: JeugdDetail,
-    isActive: featureToggle.leerlingenvervoerActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
     route: routeConfig.listPage.path,
     Component: JeugdList,
-    isActive: featureToggle.leerlingenvervoerActive,
+    isActive: themaConfig.featureToggle.active,
   },
 ];
 

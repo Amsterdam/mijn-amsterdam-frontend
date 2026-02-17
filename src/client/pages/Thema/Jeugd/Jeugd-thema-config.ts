@@ -1,25 +1,18 @@
 import { generatePath } from 'react-router';
 
 import { LeerlingenvervoerVoorzieningFrontend } from '../../../../server/services/jeugd/jeugd';
-import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import {
   ThemaConfigBase,
   ThemaRoutesConfig,
 } from '../../../config/thema-types';
 
-export const featureToggle = {
-  leerlingenvervoerActive: true,
-};
 const THEMA_TITLE = 'Onderwijs en Jeugd';
 const THEMA_ID = 'JEUGD';
 
 const detailRouteBase = '/jeugd/voorziening';
 
-type ThemaConfigJeugd = Pick<
-  ThemaConfigBase,
-  'id' | 'title' | 'redactedScope' | 'profileTypes' | 'route' | 'featureToggle'
->;
+type ThemaConfigJeugd = ThemaConfigBase;
 
 export const themaConfig: ThemaConfigJeugd = {
   id: THEMA_ID,
@@ -34,7 +27,27 @@ export const themaConfig: ThemaConfigJeugd = {
   featureToggle: {
     active: true,
   },
-};
+  uitlegPageSections: [
+    {
+      title: THEMA_TITLE,
+      listItems: [
+        'Openbaar vervoer abonnement',
+        'Openbaar vervoer vergoeding',
+        'Eigen vervoer',
+        'Fietsvergoeding',
+        'Aangepast individueel vervoer',
+        'Aangepast groepsvervoer',
+      ],
+    },
+  ],
+  pageLinks: [
+    {
+      to: 'https://www.amsterdam.nl/onderwijs/leerlingenvervoer/leerlingenvervoer-aanvragen/',
+      title: 'Lees hier meer over Leerlingenvervoer',
+    },
+  ],
+} as const;
+
 export const routeConfig = {
   listPage: {
     path: '/jeugd/lijst/:kind/:page?',
@@ -47,13 +60,6 @@ export const routeConfig = {
     trackingUrl: detailRouteBase,
   },
 } as const satisfies ThemaRoutesConfig;
-
-export const linkListItems: LinkProps[] = [
-  {
-    to: 'https://www.amsterdam.nl/onderwijs/leerlingenvervoer/leerlingenvervoer-aanvragen/',
-    title: 'Lees hier meer over Leerlingenvervoer',
-  },
-];
 
 const displayProps: DisplayProps<LeerlingenvervoerVoorzieningFrontend> = {
   props: {

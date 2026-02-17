@@ -16,7 +16,7 @@ export function useJeugdThemaData() {
 
   return {
     voorzieningen,
-    id: themaConfig.id,
+    themaId: themaConfig.id,
     title: themaConfig.title,
     breadcrumbs: useThemaBreadcrumbs(themaConfig.id),
     isLoading: isLoading(JEUGD),
@@ -24,6 +24,7 @@ export function useJeugdThemaData() {
     tableConfig,
     listPageTitle,
     listPageParamKind,
+    pageLinks: themaConfig.pageLinks,
     routeConfig,
     themaConfig,
   };

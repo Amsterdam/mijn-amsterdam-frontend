@@ -22,7 +22,7 @@ import { themaConfig as bodemThemaConfig } from '../Thema/Bodem/Bodem-thema-conf
 import { erfpachtSectionProps } from '../Thema/Erfpacht/InfoSection';
 import { themaConfig as hliThemaConfig } from '../Thema/HLI/HLI-thema-config';
 import { inkomenSectionProps } from '../Thema/Inkomen/InfoSection';
-import { JeugdSectionProps as jeugdSectionProps } from '../Thema/Jeugd/InfoSection';
+import { themaConfig as jeugdThemaConfig } from '../Thema/Jeugd/Jeugd-thema-config';
 import { themaConfig as klachtenThemaConfig } from '../Thema/Klachten/Klachten-thema-config';
 import { krefiaSectionProps } from '../Thema/Krefia/InfoSection';
 import { milieuzonesectionProps } from '../Thema/Milieuzone/InfoSection';
@@ -71,7 +71,6 @@ const sections: InfoSection_DEPRECATED[] = [
   afisSectionProps,
   inkomenSectionProps,
   vergunningensectionProps,
-  jeugdSectionProps,
   subsidiesSectionProps,
   krefiaSectionProps,
   parkerensectionProps,
@@ -82,6 +81,7 @@ const sections: InfoSection_DEPRECATED[] = [
   ...createDeprecatedInfoSection(bezwarenThemaConfig),
   ...createDeprecatedInfoSection(bodemThemaConfig),
   ...createDeprecatedInfoSection(hliThemaConfig),
+  ...createDeprecatedInfoSection(jeugdThemaConfig),
   ...createDeprecatedInfoSection(klachtenThemaConfig),
   ...createDeprecatedInfoSection(toeristischeVerhuurThemaConfig),
   ...createDeprecatedInfoSection(zorgThemaConfig),
