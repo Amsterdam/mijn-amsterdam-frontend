@@ -23,7 +23,7 @@ export function useKlachtenThemaData() {
     isError: isError(KLACHTEN),
     pageLinks: themaConfig.pageLinks,
     tableConfig,
-    id: themaConfig.id,
+    themaId: themaConfig.id,
     title: themaConfig.title,
     breadcrumbs,
     themaConfig,

@@ -13,6 +13,7 @@ export function useBezwarenDetailData() {
     isLoading: isLoadingThemaData,
     breadcrumbs,
     themaConfig,
+    themaId,
   } = useBezwarenThemaData();
   const { uuid } = useParams<{ uuid: string }>();
 
@@ -34,7 +35,7 @@ export function useBezwarenDetailData() {
     hasFailedDependency(data, 'statussen');
 
   return {
-    themaId: themaConfig.id,
+    themaId,
     title: bezwaar?.identificatie ?? 'Bezwaar',
     bezwaar,
     bezwaarDetail,

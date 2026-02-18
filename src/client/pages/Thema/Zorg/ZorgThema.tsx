@@ -32,7 +32,7 @@ export function ZorgThema() {
     isError,
     isLoading,
     voorzieningen,
-    id,
+    themaId,
     title,
     tableConfig,
     pageLinks,
@@ -79,7 +79,7 @@ export function ZorgThema() {
   return (
     <>
       <ThemaPagina
-        id={id}
+        id={themaId}
         title={title}
         pageContentTop={pageContentTop}
         pageLinks={pageLinks}
