@@ -33,7 +33,7 @@ export function VertrokkenOnbekendWaarheen({
         mogelijk door aan de gemeente.{' '}
         <Link
           aria-label="Meer informatie over de melding `Vertrokken Onbekend Waarheen (VOW)`"
-          href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
+          href="https://www.amsterdam.nl/burgerzaken/verhuizen-inschrijving-briefadres/onderzoek-inschrijving/"
         >
           Meer informatie over onderzoek naar uw inschrijving in de
           Basisregistratie Personen (BRP)
