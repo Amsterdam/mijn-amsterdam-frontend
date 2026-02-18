@@ -24,13 +24,11 @@ export const RETURNTO_MAMS_LANDING_EHERKENNING = 'mams-landing-eherkenning';
 export function getReturnToUrl(
   queryParams?: ParsedQs,
   defaultReturnTo?: string
-) {
-  let defaultReturnTo_ = defaultReturnTo;
-  if (!defaultReturnTo) {
-    defaultReturnTo_ = generateFullApiUrlBFF(
-      authRoutes.AUTH_LOGIN_DIGID_LANDING
-    );
-  }
+): string {
+  const defaultReturnTo_ =
+    defaultReturnTo ??
+    generateFullApiUrlBFF(authRoutes.AUTH_LOGIN_DIGID_LANDING);
+
   switch (queryParams?.returnTo) {
     case RETURNTO_MAMS_FRONTEND_ROUTE: {
       const route = queryParams.route as string;
