@@ -64,13 +64,13 @@ export async function handleAdministratienummerExchange(
       });
 
       // Deliver the token with administratienummer to app.amsterdam.nl
-      const deliveryResponse = await requestData<{ detail: 'Success' }>(
+      const deliveryResponse = await requestData<{ detail?: 'Success' }>(
         requestConfig
       );
 
       if (
         deliveryResponse.status === 'OK' &&
-        deliveryResponse.content.detail === 'Success'
+        deliveryResponse.content?.detail === 'Success'
       ) {
         const renderProps: RenderProps = {
           ...baseRenderProps,
