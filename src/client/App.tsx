@@ -75,8 +75,6 @@ function AppAuthenticated() {
   const location = useLocation();
   const profileType = useProfileTypeValue();
   const redirectAfterLogin = useDeeplinkRedirect();
-  // Retrieve featuretoggles in advance so we don't need to wait for this when a user is clicking.
-  useBffApi(BFFApiUrls.FEATURE_TOGGLES);
   const isScreensharing = useCobrowseScreenshareState();
 
   useUsabilla(profileType);
@@ -88,6 +86,13 @@ function AppAuthenticated() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [redirectAfterLogin]);
+
+  // Retrieve featuretoggles in advance so we don't need to wait for this when a user is clicking around.
+  const featureToggleResponse = useBffApi(BFFApiUrls.FEATURE_TOGGLES);
+  // Prevent router components from loading 'Page not found' pages and then rerendering the right page.
+  if (featureToggleResponse.isLoading) {
+    return null;
+  }
 
   const isBuurt = location.pathname === buurtRouteConfig.themaPage.path;
 

@@ -6,7 +6,6 @@ import {
   Paragraph,
 } from '@amsterdam/design-system-react';
 
-import { featureToggle } from './Afis-thema-config';
 import styles from './AfisBetaalVoorkeuren.module.scss';
 import { EmandateRefetchInterval } from './AfisEMandateDetail';
 import { useAfisBetaalVoorkeurenData } from './useAfisBetaalVoorkeurenData';
@@ -171,7 +170,7 @@ export function AfisBetaalVoorkeuren() {
         </Link>
         .
       </Paragraph>
-      {!featureToggle.afisEMandatesActive && (
+      {!isEmandateEnabled && (
         <>
           <Heading level={4}>Via automatische incasso betalen</Heading>
           <Paragraph className="ams-mb-m">
@@ -207,7 +206,7 @@ export function AfisBetaalVoorkeuren() {
         businesspartner={businesspartnerDetails}
         labels={businessPartnerDetailsLabels}
         isLoading={!!(isLoadingBusinessPartnerDetails || isThemaPaginaLoading)}
-        startCollapsed={featureToggle.afisEMandatesActive}
+        startCollapsed={isEmandateEnabled}
       />
       {!!ibansPendingActivation.length && (
         <EmandateRefetchInterval fetch={fetchEMandates} />

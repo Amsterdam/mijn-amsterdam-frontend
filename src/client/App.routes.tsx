@@ -2,6 +2,7 @@ import { Routes, Route, matchPath } from 'react-router';
 
 import { MyAreaRoutes } from './components/MyArea/MyArea-routes';
 import type { ThemaRenderRouteConfig } from './config/thema-types';
+import { useFeatureToggles } from './hooks/api/useIsFeatureEnabled';
 import { BffErrorRoutes } from './pages/BffError/BffError-routes';
 import { BurgerzakenRoutes } from './pages/Burgerzaken/Burgerzaken-routes';
 import { DashboardRoutes } from './pages/Dashboard/Dashboard-routes';
@@ -76,10 +77,16 @@ const privateRoutes = routeComponents.filter(
 const publicRoutes = routeComponents.filter((config) => config.public === true);
 
 function ApplicationRoutes({ routes }: { routes: ApplicationRouteConfig[] }) {
+  const featureToggles = useFeatureToggles();
   return (
     <Routes>
       {routes
-        .filter(({ isActive }) => isActive !== false)
+        .filter(({ isActive }) => {
+          if (typeof isActive === 'string') {
+            return featureToggles[isActive];
+          }
+          return isActive !== false;
+        })
         .map(({ route, Component, props }) => (
           <Route
             {...(props ? props : {})}

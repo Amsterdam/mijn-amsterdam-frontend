@@ -1,5 +1,6 @@
 import { type Params } from 'react-router';
 
+import { type FeatureToggleKey } from '../../server/config/azure-appconfiguration';
 import { SomeOtherString } from '../../universal/helpers/types';
 import {
   AppState,
@@ -106,5 +107,5 @@ export type PatroonCRoutesConfig = {
 export type ThemaRenderRouteConfig = {
   route: string;
   Component: React.ElementType;
-  isActive?: boolean;
+  isActive?: boolean | FeatureToggleKey;
 };
