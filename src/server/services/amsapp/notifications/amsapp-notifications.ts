@@ -102,7 +102,7 @@ async function fetchNotificationsForService(
   const response = await fetchNotificationsForService(authProfileAndToken);
   if (response.status !== 'OK') {
     return apiErrorResult(
-      `Could not fetch notifications for service ${serviceId}`,
+      `Could not fetch notifications for service ${serviceId} ${response.status === 'ERROR' ? ` - ${response.message}` : ''}`,
       null
     );
   }

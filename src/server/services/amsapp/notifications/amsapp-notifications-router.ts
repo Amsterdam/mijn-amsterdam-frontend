@@ -20,10 +20,11 @@ import {
   generateFullApiUrlBFF,
   sendResponse,
 } from '../../../routing/route-helpers';
+import { captureException } from '../../monitoring';
 
 // PUBLIC INTERNET NETWORK ROUTER
 // ==============================
-export const routerPublic = createBFFRouter({
+const routerPublic = createBFFRouter({
   id: 'external-consumer-public-notifications',
   isEnabled: featureToggle.amsNotificationsIsActive,
 });
@@ -59,7 +60,7 @@ routerPublic.delete(
 
 // PRIVATE NETWORK ROUTER
 // ======================
-export const routerPrivate = createBFFRouter({
+const routerPrivate = createBFFRouter({
   id: 'external-consumer-private-notifications',
   isEnabled: featureToggle.amsNotificationsIsActive,
 });
@@ -70,21 +71,6 @@ if (!IS_PRODUCTION) {
     routes.private.NOTIFICATIONS,
     apiKeyVerificationHandler,
     handleTruncateNotifications
-  );
-  routerPublic.get(
-    routes.public.NOTIFICATIONS_CONSUMER_REGISTRATION_OVERVIEW,
-    async (req: Request, res: Response) => {
-      let overview;
-      try {
-        overview = await getRegistrationOverview();
-      } catch (error) {
-        return sendResponse(
-          res,
-          apiErrorResult('Failed to get registration overview', null, 500)
-        );
-      }
-      return res.send(overview);
-    }
   );
 }
 
@@ -100,7 +86,30 @@ routerPrivate.get(
   handleSendNotificationsResponse
 );
 
-export const notificationsExternalConsumerRouter = {
+const routerAdmin = createBFFRouter({
+  id: 'external-consumer-admin-notifications',
+  isEnabled: featureToggle.amsNotificationsIsActive,
+});
+
+routerPublic.get(
+  routes.admin.NOTIFICATIONS_CONSUMER_REGISTRATION_OVERVIEW,
+  async (req: Request, res: Response) => {
+    let overview;
+    try {
+      overview = await getRegistrationOverview();
+    } catch (error) {
+      captureException(error);
+      return sendResponse(
+        res,
+        apiErrorResult('Failed to get registration overview', null, 500)
+      );
+    }
+    return res.send(overview);
+  }
+);
+
+export const amsappNotificationsRouter = {
   public: routerPublic,
   private: routerPrivate,
+  admin: routerAdmin,
 };

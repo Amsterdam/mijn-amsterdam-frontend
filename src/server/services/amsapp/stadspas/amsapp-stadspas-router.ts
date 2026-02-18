@@ -19,7 +19,7 @@ import {
 
 // PUBLIC INTERNET NETWORK ROUTER
 // ==============================
-export const routerInternet = createBFFRouter({
+const routerInternet = createBFFRouter({
   id: 'external-consumer-public-stadspas',
 });
 
@@ -49,7 +49,7 @@ routerInternet.get(
 
 // PRIVATE NETWORK ROUTER
 // ======================
-export const routerPrivateNetwork = createBFFRouter({
+const routerPrivateNetwork = createBFFRouter({
   id: 'external-consumer-private-network-stadspas',
 });
 
@@ -77,7 +77,7 @@ routerPrivateNetwork.post(
   sendStadspasBlockRequest
 );
 
-export const stadspasRouterExternalConsumer = {
+export const amsappStadspasRouter = {
   public: routerInternet,
   private: routerPrivateNetwork,
 };
