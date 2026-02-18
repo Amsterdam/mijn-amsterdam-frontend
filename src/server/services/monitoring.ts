@@ -66,7 +66,10 @@ if (client) {
 export function getContextOperationId(
   fallbackId: string = 'correlation-id-not-in-context'
 ): string | undefined {
-  return appInsights.getCorrelationContext()?.operation.id ?? fallbackId;
+  return (
+    appInsights.getCorrelationContext()?.operation.id ??
+    `mijn-amsterdam-${fallbackId}`
+  );
 }
 
 export type Severity =
