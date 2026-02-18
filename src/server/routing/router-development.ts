@@ -22,11 +22,8 @@ import {
   OIDC_SESSION_MAX_AGE_SECONDS,
   TOKEN_ID_ATTRIBUTE,
 } from '../auth/auth-config';
-import {
-  getAuth,
-  getReturnToUrl,
-  hasSessionCookie,
-} from '../auth/auth-helpers';
+import { getAuth, hasSessionCookie } from '../auth/auth-helpers';
+import { getReturnToUrl } from '../auth/auth-after-redirect-returnto';
 import {
   cleanTestUsername,
   signDevelopmentToken,

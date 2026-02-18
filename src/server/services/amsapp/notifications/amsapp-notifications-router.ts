@@ -10,7 +10,7 @@ import {
 } from './amsapp-notifications-route-handlers';
 import { featureToggle, routes } from './amsapp-notifications-service-config';
 import { IS_PRODUCTION } from '../../../../universal/config/env';
-import { RETURNTO_NOTIFICATIES_CONSUMER_ID } from '../../../auth/auth-returnto-keys';
+import { RETURNTO_NOTIFICATIES_CONSUMER_ID } from '../../../auth/auth-after-redirect-returnto';
 import { authRoutes } from '../../../auth/auth-routes';
 import { apiKeyVerificationHandler } from '../../../routing/route-handlers';
 import {

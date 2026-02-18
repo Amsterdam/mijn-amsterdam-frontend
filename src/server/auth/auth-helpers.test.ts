@@ -12,14 +12,14 @@ import {
 import {
   createLogoutHandler,
   getAuthProfile,
-  getReturnToUrl,
   hasSessionCookie,
   isSessionCookieName,
 } from './auth-helpers';
+import { getReturnToUrl } from './auth-after-redirect-returnto';
 import {
   RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
   RETURNTO_AMSAPP_STADSPAS_APP_LANDING,
-} from './auth-returnto-keys';
+} from './auth-after-redirect-returnto';
 import { MaSession, TokenData } from './auth-types';
 import {
   getAuthProfileAndToken,

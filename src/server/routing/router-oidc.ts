@@ -15,13 +15,13 @@ import {
 import {
   createLogoutHandler,
   getAuth,
-  getReturnToUrl,
   hasSessionCookie,
 } from '../auth/auth-helpers';
+import { getReturnToUrl } from '../auth/auth-after-redirect-returnto';
 import {
   RETURNTO_MAMS_LANDING_DIGID,
   RETURNTO_MAMS_LANDING_EHERKENNING,
-} from '../auth/auth-returnto-keys';
+} from '../auth/auth-after-redirect-returnto';
 import {
   AUTH_BASE_EHERKENNING,
   AUTH_CALLBACK,

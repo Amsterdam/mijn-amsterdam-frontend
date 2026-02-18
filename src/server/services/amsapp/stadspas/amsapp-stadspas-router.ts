@@ -9,7 +9,7 @@ import {
   sendStadspasBlockRequest,
 } from './amsapp-stadspas-route-handlers';
 import { routes } from './amsapp-stadspas-service-config';
-import { RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER } from '../../../auth/auth-returnto-keys';
+import { RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER } from '../../../auth/auth-after-redirect-returnto';
 import { authRoutes } from '../../../auth/auth-routes';
 import { apiKeyVerificationHandler } from '../../../routing/route-handlers';
 import {
