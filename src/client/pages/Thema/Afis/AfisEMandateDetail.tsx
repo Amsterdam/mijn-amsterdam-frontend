@@ -7,6 +7,7 @@ import { useAfisEMandatesData, useEmandateApis } from './useAfisEmandatesData';
 import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types';
 import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { Datalist } from '../../../components/Datalist/Datalist';
+import { MaButtonLink } from '../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
 import { useInterval } from '../../../hooks/timer.hook';
@@ -124,17 +125,22 @@ function EMandate({ eMandate }: EMandateProps) {
         ]}
       />
       {isPendingActivation(eMandate.creditorIBAN) ? (
-        <Alert
-          headingLevel={4}
-          heading="Status"
-          closeable
-          onClose={() => {
-            removePendingActivation(eMandate.creditorIBAN);
-          }}
-        >
+        <Alert headingLevel={4} heading="Status">
           <Paragraph>
             Wachten op bevestiging van het E-Mandaat voor{' '}
-            {eMandate.creditorName}.{' '}
+            {eMandate.creditorName}. Dit kan enkele minuten duren.
+          </Paragraph>
+          <Paragraph>
+            Zodra de bevestiging is ontvangen, zal het E-Mandaat actief
+            worden.{' '}
+          </Paragraph>
+          <Paragraph>
+            <MaButtonLink
+              variant="secondary"
+              onClick={() => removePendingActivation(eMandate.creditorIBAN)}
+            >
+              Duurt het erg lang? Probeer het opnieuw.
+            </MaButtonLink>
           </Paragraph>
         </Alert>
       ) : (
