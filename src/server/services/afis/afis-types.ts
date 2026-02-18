@@ -139,6 +139,8 @@ export type AfisBusinessPartnerBankAccount = {
   IBAN: string;
   BankAccount: string;
   BankCountryKey: string;
+  CollectionAuthInd: boolean;
+  BankAccountReferenceText: string;
 };
 
 export type AfisBusinessPartnerBankPayload = {
@@ -147,6 +149,7 @@ export type AfisBusinessPartnerBankPayload = {
   bic: string;
   swiftCode: string;
   senderName: string;
+  creditorName?: string;
 };
 
 // Facturen
@@ -525,4 +528,8 @@ export type POMSignRequestUrlPayload = {
 export type AfisEMandateSignRequestStatusResponse = {
   status: string;
   code: POMSignRequestStatusCode;
+};
+export type AfisEMandateBankAccountExistsResponse = {
+  exists: boolean;
+  eMandateCollectionEnabled: boolean;
 };
