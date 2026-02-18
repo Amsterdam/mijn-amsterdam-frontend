@@ -1,8 +1,8 @@
 import { describe, it } from 'vitest';
 
-import { propagateFeatureToggles } from './buildFeatureToggle';
+import { propagateFeatureToggles } from './feature-toggles';
 
-describe('buildFeatureToggle', () => {
+describe('propagateFeatureToggles', () => {
   it('does not modify subtoggle state when the parent is true', () => {
     const toggles = {
       active: true,

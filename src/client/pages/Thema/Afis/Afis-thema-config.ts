@@ -13,10 +13,12 @@ import type {
 import type { LinkProps } from '../../../../universal/types/App.types';
 import type { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
+import { isEnabled } from '../../../config/feature-toggles';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
 export const featureToggle = {
   AfisActive: true,
+  emandatesActive: isEnabled('AFIS.EMandates'),
 };
 
 // E-Mandates are always recurring and have a default date far in the future!

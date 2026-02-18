@@ -1,4 +1,5 @@
 import type { ThemaFeatureToggle } from './thema-types';
+import { type FeatureToggleKey } from '../../server/config/azure-appconfiguration';
 import { entries } from '../../universal/helpers/utils';
 
 export function propagateFeatureToggles<T extends ThemaFeatureToggle>(
@@ -15,4 +16,11 @@ export function propagateFeatureToggles<T extends ThemaFeatureToggle>(
     }
   }
   return toggles as T;
+}
+
+export function isEnabled(featureToggleKey: FeatureToggleKey): boolean {
+  if (!window.MA_FEATURETOGGLES) {
+    return false;
+  }
+  return window.MA_FEATURETOGGLES[featureToggleKey] === true;
 }

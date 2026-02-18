@@ -7,7 +7,7 @@ import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { dateSort } from '../../../../universal/helpers/date';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
-import { propagateFeatureToggles } from '../../../config/buildFeatureToggle';
+import { propagateFeatureToggles } from '../../../config/feature-toggles';
 import type { PageConfig, ThemaConfigBase } from '../../../config/thema-types';
 
 const THEMA_TITLE = 'Stadspas en regelingen bij laag inkomen' as const;

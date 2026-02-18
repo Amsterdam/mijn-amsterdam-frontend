@@ -21,7 +21,7 @@ export const AfisRoutes = [
   {
     route: routeConfig.listPage.path,
     Component: AfisList,
-    isActive: featureToggle.AfisActive,
+    isActive: featureToggle.emandatesActive,
   },
   {
     route: routeConfig.detailPage.path,
@@ -36,7 +36,7 @@ export const AfisRoutes = [
   {
     route: routeConfig.detailPageEMandate.path,
     Component: AfisEMandateDetail,
-    isActive: 'AFIS.EMandates',
+    isActive: featureToggle.emandatesActive,
   },
   {
     route: routeConfig.themaPage.path,
