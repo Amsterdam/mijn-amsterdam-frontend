@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 
+import { getRegistrationOverview } from './amsapp-notifications-model';
 import {
   handleRegisterConsumer,
   handleConsumerRegistrationStatus,
@@ -10,12 +11,14 @@ import {
 } from './amsapp-notifications-route-handlers';
 import { featureToggle, routes } from './amsapp-notifications-service-config';
 import { IS_PRODUCTION } from '../../../../universal/config/env';
+import { apiErrorResult } from '../../../../universal/helpers/api';
 import { RETURNTO_NOTIFICATIES_CONSUMER_ID } from '../../../auth/auth-after-redirect-returnto';
 import { authRoutes } from '../../../auth/auth-routes';
 import { apiKeyVerificationHandler } from '../../../routing/route-handlers';
 import {
   createBFFRouter,
   generateFullApiUrlBFF,
+  sendResponse,
 } from '../../../routing/route-helpers';
 
 // PUBLIC INTERNET NETWORK ROUTER
@@ -67,6 +70,21 @@ if (!IS_PRODUCTION) {
     routes.private.NOTIFICATIONS,
     apiKeyVerificationHandler,
     handleTruncateNotifications
+  );
+  routerPublic.get(
+    routes.public.NOTIFICATIONS_CONSUMER_REGISTRATION_OVERVIEW,
+    async (req: Request, res: Response) => {
+      let overview;
+      try {
+        overview = await getRegistrationOverview();
+      } catch (error) {
+        return sendResponse(
+          res,
+          apiErrorResult('Failed to get registration overview', null, 500)
+        );
+      }
+      return res.send(overview);
+    }
   );
 }
 

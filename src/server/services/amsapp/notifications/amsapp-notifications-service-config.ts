@@ -11,6 +11,7 @@ export const routes = {
     NOTIFICATIONS_CONSUMER_REGISTRATION_LOGIN: `${AMSAPP_BASE_PATH}/notifications/login/:consumerId`,
     NOTIFICATIONS_CONSUMER_REGISTRATION_ACTION: `${AMSAPP_BASE_PATH}/notifications/consumer/:consumerId/app`, // app-landing which opens the App with a deeplink.
     NOTIFICATIONS_CONSUMER_REGISTRATION_STATUS: `${AMSAPP_BASE_PATH}/notifications/consumer/:consumerId`,
+    NOTIFICATIONS_CONSUMER_REGISTRATION_OVERVIEW: `${AMSAPP_BASE_PATH}/notifications/consumer/registrations`,
   },
   private: {
     NOTIFICATIONS: `${AMSAPP_BASE_PATH}/notifications`,

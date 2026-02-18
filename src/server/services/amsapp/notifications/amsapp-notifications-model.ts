@@ -93,6 +93,7 @@ RETURNING profile_id, consumer_ids
   getProfiles: `SELECT * FROM ${TABLE_NAME}`,
   getProfileIds: `SELECT profile_id, consumer_ids, service_ids FROM ${TABLE_NAME}`,
   getProfileByConsumer: `SELECT profile_id FROM ${TABLE_NAME} WHERE $1 = ANY(consumer_ids)`,
+  getRegistrationsOverview: `SELECT * FROM ${TABLE_NAME}`,
   truncate: `TRUNCATE TABLE ${TABLE_NAME}`,
 };
 
@@ -102,6 +103,10 @@ export async function truncate() {
 
 export async function getProfileByConsumer(consumerId: ConsumerId) {
   return db.queryGET(queries.getProfileByConsumer, [consumerId]);
+}
+
+export async function getRegistrationOverview() {
+  return db.queryALL(queries.getRegistrationsOverview);
 }
 
 export async function upsertConsumer(
