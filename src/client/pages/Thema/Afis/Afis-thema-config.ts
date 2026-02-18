@@ -15,6 +15,10 @@ import type { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
+export const featureToggle = {
+  AfisActive: true,
+};
+
 // E-Mandates are always recurring and have a default date far in the future!
 export const EMANDATE_ENDDATE_INDICATOR = '9999';
 
