@@ -8,8 +8,6 @@ import {
 import { GLOBALTHIS_FEATURETOGGLE_KEY } from '../../client/config/feature-toggles';
 import { IS_DEVELOPMENT } from '../../universal/config/env';
 
-const REFRESH_INTERVAL_MS = 5000;
-
 let featureManager: FeatureManager | undefined;
 // Cannot import type, see ts-expect-error above.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -55,8 +53,7 @@ export async function startAppConfiguration() {
     featureFlagOptions: {
       enabled: true,
       refresh: {
-        enabled: true,
-        refreshIntervalInMs: REFRESH_INTERVAL_MS * 2,
+        enabled: false,
       },
     },
   });
