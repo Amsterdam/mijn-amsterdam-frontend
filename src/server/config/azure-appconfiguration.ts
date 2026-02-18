@@ -9,15 +9,13 @@ import { IS_DEVELOPMENT } from '../../universal/config/env';
 
 const REFRESH_INTERVAL_MS = 5000;
 
-const DISABLED_DEVELOPMENT_FEATURES: string[] = [];
-
 let featureManager: FeatureManager | undefined;
 // Cannot import type, see ts-expect-error above.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let appConfig: any;
 
-// Is mutated by the Appconfiguration. Locally this object will have precedence.
-export const featureToggle = {
+// Is mutated by the Appconfiguration. Locally this object will be used as is.
+const featureToggle = {
   ['AFIS.EMandates']: true,
   ['cobrowse']: false,
 };
@@ -25,13 +23,22 @@ export const featureToggle = {
 export type FeatureToggles = typeof featureToggle;
 export type FeatureToggleKey = keyof FeatureToggles;
 
+export function getAllFeatureToggles(): Readonly<FeatureToggles> {
+  return featureToggle;
+}
+
+export function isEnabled(featureToggleKey: FeatureToggleKey): boolean {
+  const enabled = featureToggle[featureToggleKey];
+  if (enabled === undefined) {
+    throw Error(`FeatureToggle '${featureToggleKey}' does not exist`);
+  }
+  return enabled;
+}
+
 export async function startAppConfiguration() {
   const connectionString = process.env.APPCONFIGURATION_CONNECTION_STRING;
   if (!connectionString) {
     if (IS_DEVELOPMENT) {
-      featureManager = {
-        isEnabled: isEnabledMock,
-      } as unknown as FeatureManager;
       return;
     }
     throw Error(
@@ -50,19 +57,8 @@ export async function startAppConfiguration() {
   featureManager = new FeatureManager(
     new ConfigurationMapFeatureFlagProvider(appConfig)
   );
-  if (IS_DEVELOPMENT) {
-    // Automatic type updating when new features are added in the Appconfiguration.
-    // RP TODO: delete?
-    // updateFeaturNameType(featureManager);
-  } else {
-    const names =
-      (await featureManager.listFeatureNames()) as FeatureToggleKey[];
-    for (const name of names) {
-      featureToggle[name] = await featureManager.isEnabled(name);
-    }
+  const names = (await featureManager.listFeatureNames()) as FeatureToggleKey[];
+  for (const name of names) {
+    featureToggle[name] = await featureManager.isEnabled(name);
   }
-}
-
-async function isEnabledMock(featureName: FeatureToggleKey): Promise<boolean> {
-  return !DISABLED_DEVELOPMENT_FEATURES.includes(featureName);
 }
