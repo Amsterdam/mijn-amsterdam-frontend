@@ -1,5 +1,8 @@
 import { hash } from '../../universal/helpers/utils';
 
+export const BFF_BASE_PATH = '/api/v1';
+export const BFF_BASE_PATH_PRIVATE = `/private/api/v1`;
+
 export const BffEndpoints = {
   ROOT: '/',
   ZAAK_STATUS: '/services/zaak-status',
@@ -55,6 +58,3 @@ export const PREDEFINED_REDIRECT_URLS = [
   'noredirect',
   '/api/v1/services/all',
 ] as const;
-
-export const BFF_BASE_PATH = '/api/v1';
-export const BFF_BASE_PATH_PRIVATE = '/private/api/v1';
