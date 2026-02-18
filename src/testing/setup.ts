@@ -49,16 +49,13 @@ vi.mock('../server/helpers/env.ts', async (importOriginal) => {
   };
 });
 
-vi.mock(
-  '../client/hooks/api/useIsFeatureEnabled.ts',
-  async (importOriginal) => {
-    const originalModule: object = await importOriginal();
-    return {
-      ...originalModule,
-      useIsFeatureEnabled: () => true,
-    };
-  }
-);
+vi.mock('../client/config/feature-toggles', async (importOriginal) => {
+  const originalModule: object = await importOriginal();
+  return {
+    ...originalModule,
+    isEnabled: () => true,
+  };
+});
 
 // Set every Featuretoggle to true.
 vi.mock('../universal/config/feature-toggles.ts', async (importOriginal) => {

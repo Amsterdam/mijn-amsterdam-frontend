@@ -13,11 +13,10 @@ import { ErrorMessages } from './components/ErrorMessages/ErrorMessages';
 import { MainFooter } from './components/MainFooter/MainFooter';
 import { MainHeader } from './components/MainHeader/MainHeader';
 import { routeConfig as buurtRouteConfig } from './components/MyArea/MyArea-thema-config';
-import { BFFApiUrls, loginUrlByAuthMethod } from './config/api';
+import { loginUrlByAuthMethod } from './config/api';
 import { useCobrowseScreenshareState } from './helpers/cobrowse';
 import { useMonitoring } from './helpers/monitoring';
 import { useAnalytics } from './hooks/analytics.hook';
-import { useBffApi } from './hooks/api/useBffApi';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useAppStateRemote } from './hooks/useAppStateRemote';
 import {
@@ -86,13 +85,6 @@ function AppAuthenticated() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [redirectAfterLogin]);
-
-  // Retrieve featuretoggles in advance so we don't need to wait for this when a user is clicking around.
-  const featureToggleResponse = useBffApi(BFFApiUrls.FEATURE_TOGGLES);
-  // Prevent router components from loading 'Page not found' pages and then rerendering the right page.
-  if (featureToggleResponse.isLoading) {
-    return null;
-  }
 
   const isBuurt = location.pathname === buurtRouteConfig.themaPage.path;
 

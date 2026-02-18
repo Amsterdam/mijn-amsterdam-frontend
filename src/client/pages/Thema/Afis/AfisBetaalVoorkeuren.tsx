@@ -6,6 +6,7 @@ import {
   Paragraph,
 } from '@amsterdam/design-system-react';
 
+import { featureToggle } from './Afis-thema-config';
 import styles from './AfisBetaalVoorkeuren.module.scss';
 import { EmandateRefetchInterval } from './AfisEMandateDetail';
 import { useAfisBetaalVoorkeurenData } from './useAfisBetaalVoorkeurenData';
@@ -23,7 +24,6 @@ import { PageContentCell } from '../../../components/Page/Page';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
-import { useIsFeatureEnabled } from '../../../hooks/api/useIsFeatureEnabled';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 type AfisBusinessPartnerProps = {
@@ -121,8 +121,7 @@ export function AfisBetaalVoorkeuren() {
     isLoadingBusinessPartnerDetails ||
     isLoadingEMandates;
 
-  const isEmandateEnabled = useIsFeatureEnabled('AFIS.EMandates');
-  const eMandatesTable = isEmandateEnabled && (
+  const eMandatesTable = featureToggle.emandatesActive && (
     <ThemaPaginaTable<AfisEMandateFrontend>
       displayProps={eMandateTableConfig.displayProps}
       maxItems={-1}
@@ -170,7 +169,7 @@ export function AfisBetaalVoorkeuren() {
         </Link>
         .
       </Paragraph>
-      {!isEmandateEnabled && (
+      {!featureToggle.emandatesActive && (
         <>
           <Heading level={4}>Via automatische incasso betalen</Heading>
           <Paragraph className="ams-mb-m">
@@ -206,7 +205,7 @@ export function AfisBetaalVoorkeuren() {
         businesspartner={businesspartnerDetails}
         labels={businessPartnerDetailsLabels}
         isLoading={!!(isLoadingBusinessPartnerDetails || isThemaPaginaLoading)}
-        startCollapsed={isEmandateEnabled}
+        startCollapsed={featureToggle.emandatesActive}
       />
       {!!ibansPendingActivation.length && (
         <EmandateRefetchInterval fetch={fetchEMandates} />

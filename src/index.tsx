@@ -6,18 +6,15 @@ import 'core-js/actual/string/replace-all';
 
 import './client/styles/main.scss';
 import { BFFApiUrls } from './client/config/api';
+import { GLOBALTHIS_FEATURETOGGLE_KEY } from './client/config/feature-toggles';
 import { type FeatureToggles } from './server/config/azure-appconfiguration';
-
-declare global {
-  interface Window {
-    MA_FEATURETOGGLES?: FeatureToggles;
-  }
-}
 
 (async function startApp() {
   const response = await fetch(BFFApiUrls.FEATURE_TOGGLES);
   const featureToggles: FeatureToggles = await response.json();
-  window.MA_FEATURETOGGLES = featureToggles;
+  (
+    globalThis as unknown as { [GLOBALTHIS_FEATURETOGGLE_KEY]: FeatureToggles }
+  ).MA_FEATURETOGGLES = featureToggles;
 
   if (
     /MSIE (\d+\.\d+);/.test(navigator.userAgent) ||

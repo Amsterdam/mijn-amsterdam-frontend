@@ -1,6 +1,11 @@
 import type { ThemaFeatureToggle } from './thema-types';
-import { type FeatureToggleKey } from '../../server/config/azure-appconfiguration';
+import {
+  type FeatureToggles,
+  type FeatureToggleKey,
+} from '../../server/config/azure-appconfiguration';
 import { entries } from '../../universal/helpers/utils';
+
+export const GLOBALTHIS_FEATURETOGGLE_KEY = 'MA_FEATURETOGGLES';
 
 export function propagateFeatureToggles<T extends ThemaFeatureToggle>(
   obj: T,
@@ -19,8 +24,11 @@ export function propagateFeatureToggles<T extends ThemaFeatureToggle>(
 }
 
 export function isEnabled(featureToggleKey: FeatureToggleKey): boolean {
-  if (!window.MA_FEATURETOGGLES) {
+  const g = globalThis as unknown as {
+    [GLOBALTHIS_FEATURETOGGLE_KEY]: FeatureToggles;
+  };
+  if (!g.MA_FEATURETOGGLES) {
     return false;
   }
-  return window.MA_FEATURETOGGLES[featureToggleKey] === true;
+  return g.MA_FEATURETOGGLES[featureToggleKey] === true;
 }

@@ -5,6 +5,7 @@ import {
   ConfigurationMapFeatureFlagProvider,
 } from '@microsoft/feature-management';
 
+import { GLOBALTHIS_FEATURETOGGLE_KEY } from '../../client/config/feature-toggles';
 import { IS_DEVELOPMENT } from '../../universal/config/env';
 
 const REFRESH_INTERVAL_MS = 5000;
@@ -19,6 +20,11 @@ const featureToggle = {
   ['AFIS.EMandates']: true,
   ['cobrowse']: false,
 };
+// Make sure featureToggles imported from *-thema-configs have access.
+const g = globalThis as unknown as {
+  [GLOBALTHIS_FEATURETOGGLE_KEY]: FeatureToggles;
+};
+g[GLOBALTHIS_FEATURETOGGLE_KEY] = featureToggle;
 
 export type FeatureToggles = typeof featureToggle;
 export type FeatureToggleKey = keyof FeatureToggles;
