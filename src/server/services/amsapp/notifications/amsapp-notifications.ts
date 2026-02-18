@@ -101,7 +101,10 @@ async function fetchNotificationsForService(
   const fetchNotificationsForService = notificationServices.private[serviceId];
   const response = await fetchNotificationsForService(authProfileAndToken);
   if (response.status !== 'OK') {
-    return apiErrorResult('Dependency error', null);
+    return apiErrorResult(
+      `Could not fetch notifications for service ${serviceId}`,
+      null
+    );
   }
 
   const notifications = Object.values(response.content ?? [])
