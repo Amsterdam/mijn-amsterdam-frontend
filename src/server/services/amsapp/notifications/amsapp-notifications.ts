@@ -31,10 +31,11 @@ import { notificationServices } from '../../tips-and-notifications';
 
 export async function registerConsumer(
   profileId: BSN,
+  profileName: string,
   consumerId: ConsumerId,
   serviceIds: ServiceId[] = []
 ) {
-  return upsertConsumer(profileId, consumerId, serviceIds);
+  return upsertConsumer(profileId, profileName, consumerId, serviceIds);
 }
 
 export async function unregisterConsumer(consumerId: ConsumerId) {
@@ -78,6 +79,7 @@ export async function batchFetchNotifications() {
     consumerIds: profile.consumerIds,
     dateUpdated: profile.dateUpdated,
     services: profile.content?.services || [],
+    profileName: profile.profileName,
   }));
 }
 

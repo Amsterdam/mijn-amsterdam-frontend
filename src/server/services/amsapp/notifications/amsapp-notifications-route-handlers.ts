@@ -20,6 +20,7 @@ import {
 } from '../../../../universal/helpers/api';
 import { getAuth } from '../../../auth/auth-helpers';
 import type { AuthProfileAndToken } from '../../../auth/auth-types';
+import { fetchBrpByBsn } from '../../brp/brp';
 import { captureMessage } from '../../monitoring';
 import { baseRenderProps } from '../amsapp-service-config';
 import type { ApiError, RenderProps } from '../amsapp-types';
@@ -78,9 +79,25 @@ export async function handleRegisterConsumer(
     );
   }
 
+  let profileName: string = '';
+
+  const brpResponse = await fetchBrpByBsn(
+    authProfileAndToken.profile.id,
+    [authProfileAndToken.profile.id],
+    ['naam']
+  );
+
+  if (brpResponse.status === 'OK' && brpResponse.content?.personen?.length) {
+    const lastname = brpResponse.content.personen[0].naam.voorvoegsel
+      ? `${brpResponse.content.personen[0].naam.voorvoegsel} ${brpResponse.content.personen[0].naam.geslachtsnaam ?? ''}`
+      : (brpResponse.content.personen[0].naam.geslachtsnaam ?? '');
+    profileName = `${brpResponse.content.personen[0].naam.voorletters ?? ''} ${lastname}`;
+  }
+
   try {
     await registerConsumer(
       authProfileAndToken.profile.id,
+      profileName,
       req.params.consumerId,
       [
         'adoptTrashContainer',
