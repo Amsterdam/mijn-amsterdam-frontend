@@ -8,11 +8,6 @@ import {
 import { GLOBALTHIS_FEATURETOGGLE_KEY } from '../../client/config/feature-toggles';
 import { IS_DEVELOPMENT } from '../../universal/config/env';
 
-let featureManager: FeatureManager | undefined;
-// Cannot import type, see ts-expect-error above.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let appConfig: any;
-
 // Is mutated by the Appconfiguration. Locally this object will be used as is.
 const featureToggle = {
   ['AFIS.EMandates']: true,
@@ -49,7 +44,7 @@ export async function startAppConfiguration() {
       'Environment variable APPCONFIGURATION_CONNECTION_STRING is not defined'
     );
   }
-  appConfig = await load(connectionString, {
+  const appConfig = await load(connectionString, {
     featureFlagOptions: {
       enabled: true,
       refresh: {
@@ -57,7 +52,7 @@ export async function startAppConfiguration() {
       },
     },
   });
-  featureManager = new FeatureManager(
+  const featureManager = new FeatureManager(
     new ConfigurationMapFeatureFlagProvider(appConfig)
   );
   const names = (await featureManager.listFeatureNames()) as FeatureToggleKey[];
