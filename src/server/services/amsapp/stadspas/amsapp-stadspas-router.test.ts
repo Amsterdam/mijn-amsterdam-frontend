@@ -15,7 +15,7 @@ import * as stadspas from '../../hli/stadspas';
 import * as gpass from '../../hli/stadspas-gpass-service';
 import type { Stadspas } from '../../hli/stadspas-types';
 
-vi.mock('../../helpers/encrypt-decrypt', async (requireActual) => {
+vi.mock('../../../helpers/encrypt-decrypt', async (requireActual) => {
   return {
     ...((await requireActual()) as object),
     encrypt: () => {
