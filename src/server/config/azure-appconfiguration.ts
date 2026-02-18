@@ -1,4 +1,4 @@
-// @ts-expect-error Otherwise required to update module resolver.
+// @ts-expect-error It is otherwise required to update the module resolver.
 import { load } from '@azure/app-configuration-provider';
 import {
   FeatureManager,
