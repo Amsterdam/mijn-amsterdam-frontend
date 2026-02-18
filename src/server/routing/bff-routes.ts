@@ -1,7 +1,7 @@
 import { hash } from '../../universal/helpers/utils';
 
 export const BFF_BASE_PATH = '/api/v1';
-export const BFF_BASE_PATH_PRIVATE = `/private/api/v1`;
+export const BFF_BASE_PATH_PRIVATE = '/private/api/v1';
 
 export const BffEndpoints = {
   ROOT: '/',
