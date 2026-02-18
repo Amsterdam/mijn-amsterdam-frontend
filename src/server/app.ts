@@ -40,7 +40,6 @@ import {
   BFF_BASE_PATH_PRIVATE,
 } from './routing/bff-routes';
 import {
-  handleCheckProtectedRoute,
   handleIsAuthenticated,
   nocache,
   requestID,
@@ -108,10 +107,10 @@ if (IS_AP && !IS_OT) {
 
 app.use(BFF_BASE_PATH, nocache, routerPublicExternalConsumer);
 
+// Routers mounted at BFF_BASE_PATH all need authentication.
 app.use(
   BFF_BASE_PATH,
   nocache,
-  handleCheckProtectedRoute,
   handleIsAuthenticated,
   protectedRouter,
   adminRouter

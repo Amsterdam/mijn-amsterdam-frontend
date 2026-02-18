@@ -4,7 +4,6 @@ import jwksClient from 'jwks-rsa';
 import uid from 'uid-safe';
 
 import {
-  isProtectedRoute,
   sendServiceUnavailable,
   sendUnauthorized,
   type ResponseAuthenticated,
@@ -19,18 +18,6 @@ import {
 import { AuthenticatedRequest } from '../auth/auth-types';
 import { getFromEnv } from '../helpers/env';
 import { captureException } from '../services/monitoring';
-
-export function handleCheckProtectedRoute(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  // Skip router if we've entered a public route.
-  if (!isProtectedRoute(req.path)) {
-    return next('router');
-  }
-  return next();
-}
 
 export async function handleIsAuthenticated(
   req: Request,

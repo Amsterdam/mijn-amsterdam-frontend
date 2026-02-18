@@ -2,10 +2,9 @@ import { HttpStatusCode } from 'axios';
 import type { Request, Response, NextFunction } from 'express';
 import express from 'express';
 import type { ParamsDictionary } from 'express-serve-static-core';
-import { generatePath, matchPath } from 'react-router';
+import { generatePath } from 'react-router';
 import z from 'zod';
 
-import { PUBLIC_BFF_ENDPOINTS } from './bff-public-endpoints';
 import { IS_PRODUCTION } from '../../universal/config/env';
 import {
   ApiResponse_DEPRECATED,
@@ -62,17 +61,6 @@ export type ResponseAuthenticated = Response & {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function queryParams<T extends Record<string, any>>(req: Request) {
   return req.query as T;
-}
-
-export function isPublicEndpoint(pathRequested: string) {
-  return PUBLIC_BFF_ENDPOINTS.some((pathPublic) => {
-    return !!matchPath(pathPublic, pathRequested);
-  });
-}
-
-export function isProtectedRoute(pathRequested: string) {
-  // NOT A PUBLIC ENDPOINT
-  return !isPublicEndpoint(pathRequested);
 }
 
 /** Helper for prepending a route with a baseUrl and optionally interpolating route parameters.
