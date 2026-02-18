@@ -108,7 +108,7 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
     senderIBAN,
     businessPartnerId
   );
-  const bankAccountExists = bankAccountResponse.content === true;
+  const bankAccountExists = bankAccountResponse.content?.exists === true;
 
   debugEmandates(
     'Checked if sender bank account exists for businessPartnerId %s with IBAN %s. Bank account exists: %s. Response: %o',
@@ -131,6 +131,7 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
       bic: senderBIC,
       swiftCode: senderBIC,
       senderName: payload.senderName,
+      creditorName: creditor.name,
     };
 
     const createBankAccountResponse =
@@ -148,6 +149,12 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
         `Error creating bank account - ${'message' in createBankAccountResponse ? createBankAccountResponse.message : ''}`
       );
     }
+  } else if (
+    bankAccountExists &&
+    !bankAccountResponse.content?.eMandateCollectionEnabled
+  ) {
+    // If the bank account exists but is not yet enabled for e-mandate collection, we update the bank account to enable it for e-mandate collection.
+    // TODO: Is this possible?
   }
 
   // We start the e-mandate lifetime with an end date far in the future.

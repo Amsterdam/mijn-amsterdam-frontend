@@ -21,6 +21,7 @@ import {
   AfisBusinessPartnerPhoneSource,
   BusinessPartnerId,
   BusinessPartnerIdPayload,
+  type AfisEMandateBankAccountExistsResponse,
 } from './afis-types';
 import {
   apiErrorResult,
@@ -272,6 +273,8 @@ export async function createBusinessPartnerBankAccount(
     IBAN: payload.iban,
     BankAccount: iban.accountNumber,
     BankCountryKey: iban.countryCode ?? '',
+    CollectionAuthInd: true,
+    BankAccountReferenceText: `Bankrekening toegevoegd via Mijn Amsterdam voor E-Manaat afdeling ${payload.creditorName ?? 'onbekend'}.`,
   };
 
   const additionalConfig: DataRequestConfig = {
@@ -293,19 +296,26 @@ export async function createBusinessPartnerBankAccount(
 export async function fetchCheckIfIBANexists(
   IBAN: AfisBusinessPartnerBankAccount['IBAN'],
   businessPartnerID: BusinessPartnerId
-): Promise<ApiResponse<boolean>> {
+): Promise<ApiResponse<AfisEMandateBankAccountExistsResponse>> {
   const additionalConfig: DataRequestConfig = {
     formatUrl(config) {
-      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerBank?$filter=IBAN eq '${IBAN}' and BusinessPartner eq '${businessPartnerID}'`;
+      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerBank?$filter=IBAN eq '${IBAN}' and BusinessPartner eq '${businessPartnerID}'&$orderBy=BankIdentification desc`;
     },
     transformResponse(
       response: AfisApiFeedResponseSource<AfisBusinessPartnerBankAccount>
     ) {
-      return !!getFeedEntryProperties(response).length;
+      return {
+        exists: !!getFeedEntryProperties(response).length,
+        eMandateCollectionEnabled: !!getFeedEntryProperties(response).findLast(
+          (entry) => entry.CollectionAuthInd === true
+        ),
+      };
     },
   };
 
   const businessPartnerRequestConfig = await getAfisApiConfig(additionalConfig);
 
-  return requestData<boolean>(businessPartnerRequestConfig);
+  return requestData<AfisEMandateBankAccountExistsResponse>(
+    businessPartnerRequestConfig
+  );
 }
