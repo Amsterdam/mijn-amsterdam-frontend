@@ -21,7 +21,7 @@ export const AfisRoutes = [
   {
     route: routeConfig.listPage.path,
     Component: AfisList,
-    isActive: featureToggle.emandatesActive,
+    isActive: featureToggle.AfisActive,
   },
   {
     route: routeConfig.detailPage.path,
