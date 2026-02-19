@@ -1,6 +1,5 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 
-import { linkListItems } from './Jeugd-thema-config';
 import { useJeugdThemaData } from './useJeugdThemaData';
 import { LeerlingenvervoerVoorzieningFrontend } from '../../../../server/services/jeugd/jeugd';
 import { PageContentCell } from '../../../components/Page/Page';
@@ -29,12 +28,13 @@ export function JeugdThemaPagina() {
     isError,
     isLoading,
     voorzieningen,
-    id,
+    themaId,
     title,
     tableConfig,
-    routeConfig,
+    themaConfig,
+    pageLinks,
   } = useJeugdThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const pageContentTop = (
     <PageContentCell spanWide={8}>
@@ -67,10 +67,10 @@ export function JeugdThemaPagina() {
 
   return (
     <ThemaPagina
-      id={id}
+      id={themaId}
       title={title}
       pageContentTop={pageContentTop}
-      pageLinks={linkListItems}
+      pageLinks={pageLinks}
       pageContentMain={
         <>
           {tables}

@@ -25,7 +25,7 @@ export function ToeristischeVerhuurThema() {
     lvvRegistraties,
     tableConfigVergunningen,
     tableConfigLVVRegistraties,
-    id,
+    themaId,
     title,
     vergunningen,
     hasBBVergunningError,
@@ -104,7 +104,7 @@ export function ToeristischeVerhuurThema() {
 
   return (
     <ThemaPagina
-      id={id}
+      id={themaId}
       title={title}
       pageContentTop={pageContentTop}
       pageLinks={pageLinks}

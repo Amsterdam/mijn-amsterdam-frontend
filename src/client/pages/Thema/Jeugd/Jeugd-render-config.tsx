@@ -1,9 +1,4 @@
-import {
-  routeConfig,
-  themaId,
-  themaTitle,
-  featureToggle,
-} from './Jeugd-thema-config';
+import { themaConfig } from './Jeugd-thema-config';
 import { JeugdDetail } from './JeugdDetail';
 import { default as JeugdIcon } from './JeugdIcon.svg?react';
 import { JeugdList } from './JeugdList';
@@ -14,34 +9,34 @@ import { ThemaMenuItem } from '../../../config/thema-types';
 
 export const JeugdRoutes = [
   {
-    route: routeConfig.themaPage.path,
+    route: themaConfig.route.path,
     Component: JeugdThemaPagina,
-    isActive: featureToggle.leerlingenvervoerActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.detailPage.path,
+    route: themaConfig.detailPage.route.path,
     Component: JeugdDetail,
-    isActive: featureToggle.leerlingenvervoerActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.listPage.path,
+    route: themaConfig.listPage.route.path,
     Component: JeugdList,
-    isActive: featureToggle.leerlingenvervoerActive,
+    isActive: themaConfig.featureToggle.active,
   },
 ];
 
-export const menuItem: ThemaMenuItem<typeof themaId> = {
-  title: themaTitle,
-  id: themaId,
-  redactedScope: 'full',
-  profileTypes: ['private'],
+export const menuItem: ThemaMenuItem = {
+  title: themaConfig.title,
+  id: themaConfig.id,
+  redactedScope: themaConfig.redactedScope,
+  profileTypes: themaConfig.profileTypes,
   isActive(appState: AppState) {
     return (
-      featureToggle.leerlingenvervoerActive &&
+      themaConfig.featureToggle.active &&
       !isLoading(appState.JEUGD) &&
       !!appState.JEUGD.content?.length
     );
   },
-  to: routeConfig.themaPage.path,
+  to: themaConfig.route.path,
   IconSVG: JeugdIcon,
 };

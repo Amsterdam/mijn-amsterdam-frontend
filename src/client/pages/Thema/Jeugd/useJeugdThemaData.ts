@@ -1,9 +1,4 @@
-import {
-  routeConfig,
-  tableConfig,
-  themaId,
-  themaTitle,
-} from './Jeugd-thema-config';
+import { tableConfig, themaConfig } from './Jeugd-thema-config';
 import { listPageParamKind, listPageTitle } from './Jeugd-thema-config';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
@@ -21,14 +16,15 @@ export function useJeugdThemaData() {
 
   return {
     voorzieningen,
-    id: themaId,
-    title: themaTitle,
-    breadcrumbs: useThemaBreadcrumbs(themaId),
+    themaId: themaConfig.id,
+    title: themaConfig.title,
+    breadcrumbs: useThemaBreadcrumbs(themaConfig.id),
     isLoading: isLoading(JEUGD),
     isError: isError(JEUGD),
     tableConfig,
     listPageTitle,
     listPageParamKind,
-    routeConfig,
+    pageLinks: themaConfig.pageLinks,
+    themaConfig,
   };
 }

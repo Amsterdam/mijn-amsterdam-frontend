@@ -11,7 +11,7 @@ export function ToeristischeVerhuurList() {
   }>();
   const {
     vergunningen,
-    id: themaId,
+    themaId,
     tableConfigVergunningen,
     isLoading,
     isError,

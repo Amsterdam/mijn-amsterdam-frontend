@@ -21,7 +21,7 @@ export function useZorgThemaData() {
   const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
   return {
-    id: themaConfig.id,
+    themaId: themaConfig.id,
     title: themaConfig.title,
     voorzieningen,
     isLoading: isLoading(WMO),
