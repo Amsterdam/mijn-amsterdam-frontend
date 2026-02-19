@@ -71,7 +71,7 @@ describe('source-api-request caching', () => {
         return [data, value];
       },
       cacheKey_UNSAFE: cacheKey,
-      cacheTimeout: cacheTimeout,
+      cacheTimeout,
       enableCache: true,
     });
   }

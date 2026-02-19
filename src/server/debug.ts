@@ -1,20 +1,9 @@
-import { logger } from './logging';
+import createDebugger from 'debug';
 
-// DO NOT IMPORT 'debug' package before this setup. It needs process.env.DEBUG to be final
-const debug = process.env.DEBUG;
-
-const debugResponseDataTerms = process.env.DEBUG_RESPONSE_DATA;
-if (debugResponseDataTerms && !debug?.includes('source-api-request:response')) {
-  logger.info(
-    `Enabling debug for source-api-request:response because DEBUG_RESPONSE_DATA is set (${debugResponseDataTerms})`
-  );
-  process.env.DEBUG = `source-api-request:response,${process.env.DEBUG ?? ''}`;
-}
-
-const debugRequestDataTerms = process.env.DEBUG_REQUEST_DATA;
-if (debugRequestDataTerms && !debug?.includes('source-api-request:request')) {
-  logger.info(
-    `Enabling debug for source-api-request:request because DEBUG_REQUEST_DATA is set (${debugRequestDataTerms})`
-  );
-  process.env.DEBUG = `source-api-request:request,${process.env.DEBUG ?? ''}`;
-}
+export const debugRequest = createDebugger('source-api-request:request');
+export const debugResponse = createDebugger('source-api-request:response');
+export const debugResponseError = createDebugger(
+  'source-api-request:response-error-object'
+);
+export const debugCacheHit = createDebugger('source-api-request:cache-hit');
+export const debugCacheKey = createDebugger('source-api-request:cache-key');
