@@ -2,9 +2,13 @@ import axios, {
   type AxiosRequestConfig,
   type AxiosResponseTransformer,
 } from 'axios';
+import createDebugger from 'debug';
 
 import { getFromEnv } from './env';
-import { debugRequest, debugResponse } from '../debug';
+import { logger } from '../logging';
+
+export const debugRequest = createDebugger('source-api-request:request');
+export const debugResponse = createDebugger('source-api-request:response');
 
 const splitIntoTerms = (env: string | undefined) =>
   (env?.split(',') ?? []).filter(Boolean).map((term) => term.trim());
@@ -105,6 +109,7 @@ export function addRequestDataDebugging(config: AxiosRequestConfig): void {
     debugRequestDataTerms?.().some(isDebugRequestDataMatch(config)) ?? false;
 
   if (isDebugRequestDataTermMatch) {
+    logger.error('test');
     debugRequest('------');
     debugRequest('[CONFIG]: %o', configExcerpt);
   }
