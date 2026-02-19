@@ -17,7 +17,7 @@ export const routes = {
     NOTIFICATIONS_JOB: `${AMSAPP_BASE_PATH}/job/notifications`,
   },
   admin: {
-    NOTIFICATIONS_CONSUMER_REGISTRATION_OVERVIEW: `${AMSAPP_BASE_PATH}/admin/notifications/registrations-overview`,
+    NOTIFICATIONS_CONSUMER_REGISTRATION_OVERVIEW: `/admin/notifications/registrations-overview`,
   },
 } as const;
 
