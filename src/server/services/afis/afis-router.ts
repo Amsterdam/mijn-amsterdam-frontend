@@ -5,9 +5,12 @@ import { fetchAfisDocument } from './afis-documents';
 import {
   fetchEMandates,
   deactivateEmandate,
-  handleEmandateLifetimeUpdate,
   fetchEmandateSignRequestRedirectUrlFromPaymentProvider,
 } from './afis-e-mandates';
+import {
+  handleAfisEMandateSignRequestStatus,
+  handleEmandateLifetimeUpdate,
+} from './afis-route-handlers';
 import {
   handleAfisEMandateSignRequestStatusNotification,
   handleAfisRequestWithEncryptedPayloadQueryParam,
@@ -143,6 +146,15 @@ attachDocumentDownloadRoute(
     >(fetchEmandateSignRequestRedirectUrlFromPaymentProvider)
   );
 }
+
+/**
+ * Fetches the E-mandate sign request status from the payment provider.
+ * This is used to check the status of the E-mandate sign request after the user has completed the sign request flow with the payment provider.
+ */
+routerProtected.get(
+  routes.protected.AFIS_EMANDATES_SIGN_REQUEST_STATUS,
+  handleAfisEMandateSignRequestStatus
+);
 
 const routerPrivate = createBFFRouter({
   id: 'afis-router-private',
