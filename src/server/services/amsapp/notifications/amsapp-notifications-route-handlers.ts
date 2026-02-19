@@ -81,11 +81,9 @@ export async function handleRegisterConsumer(
 
   let profileName: string = 'no-name';
 
-  const brpResponse = await fetchBrpByBsn(
-    authProfileAndToken.profile.sid,
-    [authProfileAndToken.profile.id],
-    ['naam']
-  );
+  const brpResponse = await fetchBrpByBsn(authProfileAndToken.profile.sid, [
+    authProfileAndToken.profile.id,
+  ]);
 
   if (brpResponse.status === 'OK' && brpResponse.content?.personen?.length) {
     const lastname = brpResponse.content.personen[0].naam.voorvoegsel
@@ -137,7 +135,7 @@ export async function handleRegisterConsumer(
   const renderProps: RenderProps = {
     ...baseRenderProps,
     appHref: `${AMSAPP_NOTIFICATIONS_DEEP_LINK_BASE}/gelukt`,
-    promptOpenApp: true,
+    promptOpenApp: false, // We want the user to be redirected to logout first.
     identifier: !IS_PRODUCTION ? req.params.consumerId : '',
   };
 
