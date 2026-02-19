@@ -1,5 +1,6 @@
 import { logger } from './logging';
 
+// DO NOT IMPORT 'debug' package before this setup. It needs process.env.DEBUG to be final
 const debug = process.env.DEBUG;
 
 const debugResponseDataTerms = process.env.DEBUG_RESPONSE_DATA;
