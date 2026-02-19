@@ -270,8 +270,7 @@ function translateBSN(bsn: BSN): BSN {
 
 export async function fetchBrpByBsn(
   sessionID: AuthProfile['sid'],
-  bsn: BSN[],
-  fields?: (keyof PersoonSource)[]
+  bsn: BSN[]
 ): Promise<ApiResponse<PersonenResponseSource>> {
   const response = await fetchBenkBrpTokenHeader();
 
@@ -283,10 +282,6 @@ export async function fetchBrpByBsn(
     type: 'RaadpleegMetBurgerservicenummer',
     burgerservicenummer: bsn.map((bsn) => translateBSN(bsn)),
   };
-
-  if (fields?.length) {
-    data.fields = fields;
-  }
 
   const requestConfig = getApiConfig('BENK_BRP', {
     formatUrl(requestConfig) {
