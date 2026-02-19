@@ -272,7 +272,7 @@ export async function fetchBrpByBsn(
   sessionID: AuthProfile['sid'],
   bsn: BSN[],
   fields?: (keyof PersoonSource)[]
-) {
+): Promise<ApiResponse<PersonenResponseSource>> {
   const response = await fetchBenkBrpTokenHeader();
 
   if (response.status !== 'OK') {

@@ -84,8 +84,8 @@ VALUES ($1, $2, ARRAY[$3], $4, now()) \
 ON CONFLICT (profile_id) DO UPDATE \
 SET \
   profile_id = EXCLUDED.profile_id, \
-  profile_name = EXCLUDED.profile_name, \
-  consumer_ids = ( SELECT ARRAY( SELECT DISTINCT unnest(array_append(${TABLE_NAME}.consumer_ids, $2)) ) ), \
+  profile_name = $2, \
+  consumer_ids = ( SELECT ARRAY( SELECT DISTINCT unnest(array_append(${TABLE_NAME}.consumer_ids, $3)) ) ), \
   service_ids = EXCLUDED.service_ids, \
   date_updated = EXCLUDED.date_updated; \
 `,

@@ -79,10 +79,10 @@ export async function handleRegisterConsumer(
     );
   }
 
-  let profileName: string = '';
+  let profileName: string = 'no-name';
 
   const brpResponse = await fetchBrpByBsn(
-    authProfileAndToken.profile.id,
+    authProfileAndToken.profile.sid,
     [authProfileAndToken.profile.id],
     ['naam']
   );
