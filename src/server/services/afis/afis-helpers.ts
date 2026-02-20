@@ -78,10 +78,14 @@ export function getEmandateStatusFrontend(
 }
 
 export function getEmandateDisplayStatus(
+  currentStatus: EmandateStatusFrontend,
   dateValidTo: string | null,
   dateValidFromFormatted: string | null
 ): string {
-  if (isEmandateActive(dateValidTo)) {
+  if (
+    getEmandateStatusFrontend(currentStatus, dateValidTo) ===
+    EMANDATE_STATUS_FRONTEND.ON
+  ) {
     return `Actief sinds ${dateValidFromFormatted}`;
   }
   return 'Niet actief';
