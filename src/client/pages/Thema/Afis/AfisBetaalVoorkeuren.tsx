@@ -99,6 +99,7 @@ export function AfisBetaalVoorkeuren() {
     breadcrumbs,
     routeConfig,
     themaId,
+    belastingenLinkListItem,
   } = useAfisThemaData();
 
   useHTMLDocumentTitle(routeConfig.betaalVoorkeuren);
@@ -145,7 +146,7 @@ export function AfisBetaalVoorkeuren() {
             Een automatische incasso instellen voor de directie Belastingen gaat
             via
             <br />
-            <Link href="https://belastingbalie.amsterdam.nl/digid.info.php">
+            <Link href={belastingenLinkListItem.to}>
               Mijn Belastingen - gemeente Amsterdam
             </Link>
           </Paragraph>
