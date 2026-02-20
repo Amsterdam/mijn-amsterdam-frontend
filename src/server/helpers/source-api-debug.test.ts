@@ -6,7 +6,7 @@ import { forTesting, addRequestDataDebugging } from './source-api-debug';
 
 describe('source-api-debug', () => {
   describe('isDebugRequestDataMatch', () => {
-    it('returns true when the path and terms match', async () => {
+    it('returns true when the path and terms match', () => {
       const fn = forTesting.isDebugRequestDataMatch({
         url: 'https://domain.nl/parent/path',
         params: ['param'],
