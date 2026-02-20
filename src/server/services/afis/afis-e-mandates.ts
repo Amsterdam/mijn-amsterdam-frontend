@@ -617,6 +617,7 @@ export async function fetchEmandateSignRequestStatusFromPaymentProvider(
     formatUrl: ({ url }) => {
       return `${url}/v3/paylinks/${eMandateSignRequestStatusPayload.paylinkId}`;
     },
+    enableCache: false,
     transformResponse: transformEmandateSignRequestStatus,
   });
 
