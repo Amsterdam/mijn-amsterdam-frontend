@@ -612,10 +612,6 @@ function transformEmandateSignRequestStatus(
 export async function fetchEmandateSignRequestStatusFromPaymentProvider(
   eMandateSignRequestStatusPayload: EMandateSignRequestStatusPayload
 ): Promise<ApiResponse<AfisEMandateSignRequestStatusResponse>> {
-  console.log(
-    'eMandateSignRequestStatusPayload::::',
-    eMandateSignRequestStatusPayload
-  );
   const config = await getApiConfig('POM', {
     method: 'GET',
     formatUrl: ({ url }) => {
