@@ -54,7 +54,12 @@ function AfisBusinessPartnerDetails({
           ([key]) => !!businesspartner[key as keyof typeof businesspartner]
         )
         .map(([key, label]) => {
-          const value = businesspartner[key as keyof typeof businesspartner];
+          let value = businesspartner[key as keyof typeof businesspartner];
+
+          if (value && key === 'businessPartnerId') {
+            value = `${parseInt(value, 10)}`;
+          }
+
           return {
             label,
             content: value,
