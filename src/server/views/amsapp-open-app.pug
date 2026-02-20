@@ -24,6 +24,8 @@ html(lang="nl")
       if promptOpenApp
         a(href=appHref id='protocol-link-button') Open Amsterdam App
 
+    //- If we have a logoutUrl and should not prompt the device to open the app, it means we want to redirect the user to the logout route.
+    //- Afther the logout the user will be redirected back to the app landing page, where we can prompt them to open the app.
     if !promptOpenApp && logoutUrl
       script(type='text/javascript' nonce=nonce).
         window.sessionStorage.setItem('amsapphref','#{appHref}');

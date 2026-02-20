@@ -9,20 +9,6 @@ import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { ONE_HOUR_MS, ONE_MINUTE_SECONDS } from '../config/app';
 import { getFromEnv } from '../helpers/env';
 
-// Amsterdam App return to url config
-export const RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER =
-  'amsapp-stadspas-administratienummer';
-export const RETURNTO_AMSAPP_STADSPAS_APP_LANDING = 'amsapp-stadspas-landing';
-export const RETURNTO_AMSAPP_NOTIFICATIES_APP_LANDING =
-  'amsapp-notificaties-landing';
-export const RETURNTO_NOTIFICATIES_CONSUMER_ID = 'notificaties-consumer-id';
-// returnTo key that allow redirecting to a specific frontend route. e.g /api/v1/auth/login/digid?returnTo=mams-frontend-route&route=https://mijn.amsterdam.nl/mams-frontend-route
-export const RETURNTO_MAMS_FRONTEND_ROUTE = 'mams-frontend-route';
-
-// Mijn Amsterdam return to url config
-export const RETURNTO_MAMS_LANDING_DIGID = 'mams-landing-digid';
-export const RETURNTO_MAMS_LANDING_EHERKENNING = 'mams-landing-eherkenning';
-
 export const OIDC_SESSION_MAX_AGE_SECONDS = ONE_MINUTE_SECONDS * 15; // 15 minutes
 export const OIDC_SESSION_COOKIE_NAME = '__MA-appSession';
 export const OIDC_COOKIE_ENCRYPTION_KEY = `${getFromEnv('BFF_GENERAL_ENCRYPTION_KEY')}`;

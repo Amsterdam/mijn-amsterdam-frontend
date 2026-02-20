@@ -50,41 +50,6 @@ export const BffEndpoints = {
   LOODMETING_DOCUMENT_DOWNLOAD: '/services/lood/document',
 } as const;
 
-const AMSAPP_BASE = '/services/amsapp';
-
-export const ExternalConsumerEndpoints = {
-  // Publicly accessible over the internet
-  public: {
-    STADSPAS_AMSAPP_LOGIN: `${AMSAPP_BASE}/stadspas/login/:token`,
-    STADSPAS_ADMINISTRATIENUMMER: `${AMSAPP_BASE}/stadspas/administratienummer/:token`,
-    STADSPAS_APP_LANDING: `${AMSAPP_BASE}/stadspas/app-landing`,
-    NOTIFICATIONS_LOGIN: `${AMSAPP_BASE}/notifications/login/:consumerId`,
-    NOTIFICATIONS_APP: `${AMSAPP_BASE}/notifications/app`,
-    NOTIFICATIONS_CONSUMER_APP: `${AMSAPP_BASE}/notifications/consumer/:consumerId/app`,
-    NOTIFICATIONS_CONSUMER: `${AMSAPP_BASE}/notifications/consumer/:consumerId`,
-  },
-  // Privately accessible over private network
-  private: {
-    STADSPAS_PASSEN: `${AMSAPP_BASE}/stadspas/passen/:administratienummerEncrypted`,
-    STADSPAS_DISCOUNT_TRANSACTIONS: `${AMSAPP_BASE}/stadspas/aanbiedingen/transactions/:transactionsKeyEncrypted`,
-    STADSPAS_BUDGET_TRANSACTIONS: `${AMSAPP_BASE}/stadspas/budget/transactions/:transactionsKeyEncrypted`,
-    STADSPAS_BLOCK_PAS: `${AMSAPP_BASE}/stadspas/block/:transactionsKeyEncrypted`,
-    NOTIFICATIONS: `${AMSAPP_BASE}/notifications`,
-    NOTIFICATIONS_JOB: `${AMSAPP_BASE}/job/notifications`,
-  },
-} as const;
-
-// Accessible without authentication
-export const PUBLIC_BFF_ENDPOINTS = [
-  ExternalConsumerEndpoints.public.STADSPAS_AMSAPP_LOGIN,
-  ExternalConsumerEndpoints.public.STADSPAS_ADMINISTRATIENUMMER,
-  BffEndpoints.STATUS_HEALTH,
-  BffEndpoints.CMS_MAINTENANCE_NOTIFICATIONS,
-  BffEndpoints.CMS_FOOTER,
-  BffEndpoints.TELEMETRY_PROXY,
-  BffEndpoints.SERVICES_TOGGLES,
-] as const;
-
 export const DevelopmentRoutes = {
   DEV_LOGIN: '/auth/:authMethod/login{/:user}',
 } as const;

@@ -109,7 +109,7 @@ function transformStadspasResponse(
       owner: getOwner(pashouder),
       dateEnd: gpassStadspasResonseData.expiry_date,
       dateEndFormatted: defaultDateFormat(gpassStadspasResonseData.expiry_date),
-      budgets: budgets,
+      budgets,
       balance,
       balanceFormatted: `€${displayAmount(balance)}`,
       passNumber: gpassStadspasResonseData.pasnummer,

@@ -485,7 +485,7 @@ function transformZaakRaw<
     title: zaakTransformer.title,
 
     dateRequest: dateReceived,
-    dateDecision: dateDecision,
+    dateDecision,
 
     // The permit is valid from the date we have a decision.
     dateStart: isVerleend && dateDecision ? dateDecision : '',

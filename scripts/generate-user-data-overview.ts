@@ -61,10 +61,7 @@ import {
   themaIdKVK,
   themaTitle as profileThemaTitles,
 } from '../src/client/pages/Thema/Profile/Profile-thema-config';
-import {
-  themaId as themaIdZorg,
-  themaTitle as themaTitleZorg,
-} from '../src/client/pages/Thema/Zorg/Zorg-thema-config';
+import { themaConfig as themaConfigZorg } from '../src/client/pages/Thema/Zorg/Zorg-thema-config';
 import {
   themaId as themaIdAfval,
   themaTitle as themaTitleAfval,
@@ -77,30 +74,18 @@ import {
   themaId as themaIdErfpacht,
   themaTitle as themaTitleErfpacht,
 } from '../src/client/pages/Thema/Erfpacht/Erfpacht-thema-config';
-import {
-  themaId as themaIdBezwaren,
-  themaTitle as themaTitleBezwaren,
-} from '../src/client/pages/Thema/Bezwaren/Bezwaren-thema-config';
+import { themaConfig as themaConfigBezwaren } from '../src/client/pages/Thema/Bezwaren/Bezwaren-thema-config';
 import {
   themaId as themaIdHoreca,
   themaTitle as themaTitleHoreca,
 } from '../src/client/pages/Thema/Horeca/Horeca-thema-config';
-import {
-  themaId as themaIdToeristischeVerhuur,
-  themaTitle as themaTitleToeristischeVerhuur,
-} from '../src/client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
-import {
-  themaId as themaIdAVG,
-  themaTitle as themaTitleAVG,
-} from '../src/client/pages/Thema/AVG/AVG-thema-config';
+import { themaConfig as themaConfigToeristischeVerhuur } from '../src/client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
+import { themaConfig as themaConfigAVG } from '../src/client/pages/Thema/AVG/AVG-thema-config';
 import {
   themaId as themaIdSvwi,
   themaTitle as themaTitleSvwi,
 } from '../src/client/pages/Thema/Svwi/Svwi-thema-config';
-import {
-  themaId as themaIdKlachten,
-  themaTitle as themaTitleKlachten,
-} from '../src/client/pages/Thema/Klachten/Klachten-thema-config';
+import { themaConfig as themaConfigKlachten } from '../src/client/pages/Thema/Klachten/Klachten-thema-config';
 import {
   themaId as themaIdKrefia,
   themaTitle as themaTitleKrefia,
@@ -119,10 +104,7 @@ import {
 } from '../src/client/pages/Thema/Varen/Varen-thema-config';
 import { themaConfig as bodemThemaConfig } from '../src/client/pages/Thema/Bodem/Bodem-thema-config';
 import { themaConfig as themaConfigHLI } from '../src/client/pages/Thema/HLI/HLI-thema-config';
-import {
-  themaId as themaIdJeugd,
-  themaTitle as themaTitleJeugd,
-} from '../src/client/pages/Thema/Jeugd/Jeugd-thema-config';
+import { themaConfig as themaConfigJeugd } from '../src/client/pages/Thema/Jeugd/Jeugd-thema-config';
 import {
   themaId as themaIdParkeren,
   themaTitle as themaTitleParkeren,
@@ -149,23 +131,26 @@ const themas = [
   { id: themaIdKVK, title: KVK },
   { id: 'KLANT_CONTACT', title: 'Contactmomenten' },
   { id: themaIdInkomen, title: themaTitleInkomen },
-  { id: themaIdZorg, title: themaTitleZorg },
+  { id: themaConfigZorg.id, title: themaConfigZorg.title },
   { id: themaIdAfval, title: themaTitleAfval },
   { id: themaIdVergunningen, title: themaTitleVergunningen },
   { id: themaIdErfpacht, title: themaTitleErfpacht },
-  { id: themaIdBezwaren, title: themaTitleBezwaren },
+  { id: themaConfigBezwaren.id, title: themaConfigBezwaren.title },
   { id: themaIdHoreca, title: themaTitleHoreca },
-  { id: themaIdToeristischeVerhuur, title: themaTitleToeristischeVerhuur },
-  { id: themaIdAVG, title: themaTitleAVG },
+  {
+    id: themaConfigToeristischeVerhuur.id,
+    title: themaConfigToeristischeVerhuur.title,
+  },
+  { id: themaConfigAVG.id, title: themaConfigAVG.title },
   { id: themaIdSvwi, title: themaTitleSvwi },
-  { id: themaIdKlachten, title: themaTitleKlachten },
+  { id: themaConfigKlachten.id, title: themaConfigKlachten.title },
   { id: themaIdKrefia, title: themaTitleKrefia },
   { id: themaIdAfis, title: themaTitleAfis },
   { id: themaIdOvertredingen, title: themaTitleOvertredingen },
   { id: themaIdVaren, title: themaTitleVaren },
   { id: bodemThemaConfig.id, title: bodemThemaConfig.title },
   { id: themaConfigHLI.id, title: themaConfigHLI.title },
-  { id: themaIdJeugd, title: themaTitleJeugd },
+  { id: themaConfigJeugd.id, title: themaConfigJeugd.title },
   { id: themaIdParkeren, title: themaTitleParkeren },
   { id: themaIdBelastingen, title: themaTitleBelastingen },
   { id: themaIdMilieuzone, title: themaTitleMilieuzone },

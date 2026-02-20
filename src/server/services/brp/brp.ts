@@ -268,12 +268,20 @@ function translateBSN(bsn: BSN): BSN {
   return translationsMap.get(bsn) ?? bsn;
 }
 
-export async function fetchBrpByBsn(sessionID: AuthProfile['sid'], bsn: BSN[]) {
+export async function fetchBrpByBsn(
+  sessionID: AuthProfile['sid'],
+  bsn: BSN[]
+): Promise<ApiResponse<PersonenResponseSource>> {
   const response = await fetchBenkBrpTokenHeader();
 
   if (response.status !== 'OK') {
     return response;
   }
+
+  const data: Record<string, unknown> = {
+    type: 'RaadpleegMetBurgerservicenummer',
+    burgerservicenummer: bsn.map((bsn) => translateBSN(bsn)),
+  };
 
   const requestConfig = getApiConfig('BENK_BRP', {
     formatUrl(requestConfig) {
@@ -283,10 +291,7 @@ export async function fetchBrpByBsn(sessionID: AuthProfile['sid'], bsn: BSN[]) {
       ...response.content,
       'X-Correlation-ID': getContextOperationId(sessionID), // Required for tracing
     },
-    data: {
-      type: 'RaadpleegMetBurgerservicenummer',
-      burgerservicenummer: bsn.map((bsn) => translateBSN(bsn)),
-    },
+    data,
   });
 
   const brpBsnResponse =

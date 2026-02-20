@@ -35,12 +35,11 @@ import express, { NextFunction, Request, Response } from 'express';
 
 import { BFF_PORT, ONE_MINUTE_SECONDS, ONE_SECOND_MS } from './config/app';
 import {
+  BffEndpoints,
   BFF_BASE_PATH,
   BFF_BASE_PATH_PRIVATE,
-  BffEndpoints,
 } from './routing/bff-routes';
 import {
-  handleCheckProtectedRoute,
   handleIsAuthenticated,
   nocache,
   requestID,
@@ -51,10 +50,9 @@ import { authRouterDevelopment } from './routing/router-development';
 import { oidcRouter } from './routing/router-oidc';
 import { router as protectedRouter } from './routing/router-protected';
 import { legacyRouter, router as publicRouter } from './routing/router-public';
-import { stadspasExternalConsumerRouter } from './services/hli/router-stadspas-external-consumer';
+import { router as routerPublicExternalConsumer } from './routing/router-public-external-consumer';
 import { captureException } from './services/monitoring';
 import { getFromEnv } from './helpers/env';
-import { notificationsExternalConsumerRouter } from './routing/router-notifications-external-consumer';
 import { router as privateNetworkRouter } from './routing/router-private';
 
 const app = express();
@@ -107,17 +105,12 @@ if (IS_AP && !IS_OT) {
   app.use(BFF_BASE_PATH, oidcRouter);
 }
 
-app.use(
-  BFF_BASE_PATH,
-  nocache,
-  stadspasExternalConsumerRouter.public,
-  notificationsExternalConsumerRouter.public
-);
+app.use(BFF_BASE_PATH, nocache, routerPublicExternalConsumer);
 
+// Routers mounted at BFF_BASE_PATH all need authentication.
 app.use(
   BFF_BASE_PATH,
   nocache,
-  handleCheckProtectedRoute,
   handleIsAuthenticated,
   protectedRouter,
   adminRouter

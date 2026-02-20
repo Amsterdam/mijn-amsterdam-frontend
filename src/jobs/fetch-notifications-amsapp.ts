@@ -2,7 +2,7 @@
 import '../server/helpers/load-env';
 
 import { captureException } from '../server/services/monitoring';
-import { batchFetchAndStoreNotifications } from '../server/services/notifications/notifications';
+import { batchFetchAndStoreNotifications } from '../server/services/amsapp/notifications/amsapp-notifications';
 
 async function runJob() {
   try {
