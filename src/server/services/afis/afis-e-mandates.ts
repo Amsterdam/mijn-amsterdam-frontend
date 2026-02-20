@@ -359,6 +359,7 @@ function transformEMandateSource(
     dateValidToFormatted,
     status: getEmandateStatusFrontend(currentStatus, dateValidTo),
     displayStatus: getEmandateDisplayStatus(
+      currentStatus,
       dateValidTo,
       dateValidFromFormatted
     ),
@@ -649,6 +650,7 @@ export async function deactivateEmandate(
         dateValidTo
       ),
       displayStatus: getEmandateDisplayStatus(
+        EMANDATE_STATUS_FRONTEND.OFF,
         dateValidTo,
         dateValidFromFormatted
       ),
