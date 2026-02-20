@@ -29,29 +29,27 @@ describe('source-api-debug', () => {
   });
 
   describe('addRequestDataDebugging', () => {
-    const processEnvOriginal = { ...process.env };
-
     afterEach(() => {
-      process.env = { ...processEnvOriginal };
       vi.restoreAllMocks();
+      vi.unstubAllEnvs();
     });
 
     it('debugs a matching request', () => {
-      process.env.DEBUG_REQUEST_DATA = 'path';
+      vi.stubEnv('DEBUG_REQUEST_DATA', 'path');
       const spy = vi.spyOn(debug, 'debugRequest');
       addRequestDataDebugging({ url: 'path' });
       expect(spy).toHaveBeenCalled();
     });
 
     it('does not debug a non-matching request', () => {
-      process.env.DEBUG_REQUEST_DATA = 'non-path';
+      vi.stubEnv('DEBUG_REQUEST_DATA', 'non-path');
       const spy = vi.spyOn(debug, 'debugRequest');
       addRequestDataDebugging({ url: 'path' });
       expect(spy).not.toHaveBeenCalled();
     });
 
     it('does not debug when DEBUG_REQUEST_DATA is empty', () => {
-      process.env.DEBUG_REQUEST_DATA = '';
+      vi.stubEnv('DEBUG_REQUEST_DATA', '');
       const spy = vi.spyOn(debug, 'debugRequest');
       addRequestDataDebugging({ url: 'path' });
       expect(spy).not.toHaveBeenCalled();
