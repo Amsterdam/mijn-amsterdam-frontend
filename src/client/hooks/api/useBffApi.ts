@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useLayoutEffect } from 'react';
 
 import { create } from 'zustand';
 
@@ -135,9 +135,11 @@ export type BffApiState<D> = {
   isLoading: boolean;
 };
 
-export type BFFApiHook<T, P extends RecordStr2, U = UrlOrString> = BffApiState<
-  ApiResponse<T>
-> & {
+export type BFFApiHook<
+  T,
+  P extends RecordStr2 = RecordStr2,
+  U = UrlOrString,
+> = BffApiState<ApiResponse<T>> & {
   fetch: (
     url?: UrlOrString | RequestInitWithPayload<P>,
     init_?: U extends UrlOrString ? RequestInitWithPayload<P> : never
@@ -195,7 +197,7 @@ export function useBffApi<
 >(
   cacheKey: string | null | undefined,
   options?: BffApiOptions<T, P>
-): BFFApiHook<T | null, P, U> {
+): BFFApiHook<T, P, U> {
   const {
     url,
     sendRequest = sendFetchRequest,
@@ -320,9 +322,10 @@ export function useBffApi<
   ]);
 
   // Fetch data immediately if required.
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (
       cacheKey &&
+      !storeHas(cacheKey) &&
       options?.fetchImmediately !== false &&
       isDirty === false &&
       isLoading === false
@@ -330,6 +333,7 @@ export function useBffApi<
       fetch();
     }
   }, [
+    storeHas,
     options?.fetchImmediately,
     fetch,
     hasKeyInStore,
