@@ -112,4 +112,5 @@ export function addRequestDataDebugging(config: AxiosRequestConfig): void {
 
 export const forTesting = {
   isDebugRequestDataMatch,
+  debugRequest,
 };
