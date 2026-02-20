@@ -37,10 +37,12 @@ function useRedirectUrlApi(
     },
   });
 }
+
 type OptimisticUpdateFunction<T> = (
   eMandateId: string,
   payload: Partial<T>
 ) => void;
+
 function useDeactivateApi(
   eMandate: AfisEMandateFrontend,
   optimisticUpdateContent: OptimisticUpdateFunction<AfisEMandateFrontend>
@@ -59,6 +61,7 @@ function useDeactivateApi(
     },
   });
 }
+
 function useLifetimeUpdateApi(
   eMandate: AfisEMandateFrontend,
   optimisticUpdateContent: OptimisticUpdateFunction<AfisEMandateFrontend>
