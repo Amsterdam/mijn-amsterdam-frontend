@@ -8,12 +8,15 @@ import { trackEvent } from '../helpers/monitoring';
 type ThemaTitleAndId = Pick<ThemaMenuItemTransformed, 'title' | 'id'>;
 
 export function useTrackThemas() {
-  const [storedThemas, setStoredThemas] = useSessionStorage('themas', null);
+  const [storedThemas, setStoredThemas] = useSessionStorage<ThemaTitleAndId[]>(
+    'themas',
+    []
+  );
 
   const themasState = useActiveThemaMenuItems();
 
   useEffect(() => {
-    if (!storedThemas && !themasState.isLoading) {
+    if (storedThemas.length === 0 && !themasState.isLoading) {
       const themaTitlesAndIds: ThemaTitleAndId[] = themasState.items.map(
         (item) => ({
           title: item.title,
