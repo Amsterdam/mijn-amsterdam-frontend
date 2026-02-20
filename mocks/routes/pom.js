@@ -46,7 +46,7 @@ module.exports = [
                   event_type: 'payment',
                   amount_total: '0',
                   id_bank: 'INGBNL2A',
-                  iban: 'NL98INGB0003856625',
+                  iban: 'NL07INGB5373380466',
                   bic: 'INGBNL2A',
                   account_owner: 'John Doe',
                   event_date: new Date().toISOString().split('T')[0],
@@ -81,7 +81,7 @@ module.exports = [
             const mpid = randomUUID();
             return res.send({
               paylink: `${getPomPortaalUrlMock(settings.MOCK_API_BASE_URL)}?returnUrl=${req.body.return_url}`,
-              mpid,
+              paylink_id: mpid,
             });
           },
         },
@@ -89,17 +89,18 @@ module.exports = [
     ],
   },
   {
-    id: 'post-pom-emandate-sign-request-status',
-    url: `${settings.MOCK_BASE_PATH}/pom/paylinks/:mpid`,
+    id: 'get-pom-emandate-sign-request-status',
+    url: `${settings.MOCK_BASE_PATH}/pom/v3/paylinks/:paylinkId`,
     method: 'GET',
     variants: [
       {
         id: 'standard',
         type: 'json',
+        delay: 2000,
         options: {
           status: 200,
           body: {
-            status_code: 900,
+            status: 'paid',
           },
         },
       },

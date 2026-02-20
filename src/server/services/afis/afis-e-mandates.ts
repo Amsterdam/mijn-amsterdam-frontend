@@ -1,9 +1,7 @@
 import { HttpStatusCode } from 'axios';
-import { add, isAfter, parseISO } from 'date-fns';
-import { Request } from 'express';
+import { add } from 'date-fns';
 import slug from 'slugme';
 import { firstBy } from 'thenby';
-import * as z from 'zod/v4';
 
 import {
   createBusinessPartnerBankAccount,
@@ -30,6 +28,8 @@ import {
   isEmandateActive,
   type EmandateStatusFrontend,
 } from './afis-helpers';
+import { handleEmandateLifetimeUpdate } from './afis-route-handlers';
+import { routes } from './afis-service-config';
 import {
   type AfisBusinessPartnerDetailsTransformed,
   type AfisEMandateCreatePayload,
@@ -43,31 +43,32 @@ import {
   type BusinessPartnerIdPayload,
   type POMSignRequestUrlResponseSource,
   type POMSignRequestStatusResponseSource,
-  signRequestStatusCodes,
   type AfisEMandateSignRequestStatusResponse,
   type BusinessPartnerId,
   type EMandateSignRequestNotificationPayload,
   type AfisBusinessPartnerBankPayload,
   type POMSignRequestUrlPayload,
   type EMandateUpdatePayload,
+  type EMandateSignRequestStatusPayload,
 } from './afis-types';
 import { routeConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config';
-import { IS_AP } from '../../../universal/config/env';
+import { IS_DEVELOPMENT } from '../../../universal/config/env';
 import { apiErrorResult, ApiResponse } from '../../../universal/helpers/api';
-import { AuthProfile } from '../../auth/auth-types';
-import { encryptPayloadAndSessionID } from '../../helpers/encrypt-decrypt';
-import { getFromEnv } from '../../helpers/env';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { captureException } from '../monitoring';
-import { routes } from './afis-service-config';
 import {
   isoDateFormat,
   isoDateTimeFormatCompact,
 } from '../../../universal/helpers/date';
 import { toDateFormatted } from '../../../universal/helpers/date';
 import { sortByNumber } from '../../../universal/helpers/utils';
+import { AuthProfile } from '../../auth/auth-types';
+import {
+  encrypt,
+  encryptPayloadAndSessionID,
+} from '../../helpers/encrypt-decrypt';
+import { getFromEnv } from '../../helpers/env';
+import { getApiConfig } from '../../helpers/source-api-helpers';
+import { requestData } from '../../helpers/source-api-request';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 
 export async function createOrUpdateEMandateFromStatusNotificationPayload(
   payload: EMandateSignRequestPayload & EMandateSignRequestNotificationPayload
@@ -108,7 +109,7 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
     senderIBAN,
     businessPartnerId
   );
-  const bankAccountExists = bankAccountResponse.content === true;
+  const bankAccountExists = bankAccountResponse.content?.exists === true;
 
   debugEmandates(
     'Checked if sender bank account exists for businessPartnerId %s with IBAN %s. Bank account exists: %s. Response: %o',
@@ -131,6 +132,7 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
       bic: senderBIC,
       swiftCode: senderBIC,
       senderName: payload.senderName,
+      creditorName: creditor.name,
     };
 
     const createBankAccountResponse =
@@ -148,6 +150,12 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
         `Error creating bank account - ${'message' in createBankAccountResponse ? createBankAccountResponse.message : ''}`
       );
     }
+  } else if (
+    bankAccountExists &&
+    !bankAccountResponse.content?.eMandateCollectionEnabled
+  ) {
+    // If the bank account exists but is not yet enabled for e-mandate collection, we update the bank account to enable it for e-mandate collection.
+    // TODO: Is this possible?
   }
 
   // We start the e-mandate lifetime with an end date far in the future.
@@ -225,7 +233,7 @@ async function createAfisEMandate(payload: AfisEMandateCreatePayload) {
   return requestData<AfisEMandateSource>(config);
 }
 
-async function updateAfisEMandate(
+export async function updateAfisEMandate(
   payload: AfisEMandateUpdatePayload,
   transform?: (data: unknown) => Partial<AfisEMandateFrontend>
 ) {
@@ -308,6 +316,10 @@ function addEmandateApiUrls(
     businessPartnerId,
     creditor
   );
+
+  eMandate.signRequestStatusUrl = generateFullApiUrlBFF(
+    routes.protected.AFIS_EMANDATES_SIGN_REQUEST_STATUS
+  );
 }
 
 function transformEMandateSource(
@@ -347,6 +359,7 @@ function transformEMandateSource(
     dateValidToFormatted,
     status: getEmandateStatusFrontend(currentStatus, dateValidTo),
     displayStatus: getEmandateDisplayStatus(
+      currentStatus,
       dateValidTo,
       dateValidFromFormatted
     ),
@@ -470,15 +483,6 @@ export async function fetchEMandates(
   return requestData<AfisEMandateFrontend[] | null>(config);
 }
 
-function transformEMandatesRedirectUrlResponse(
-  responseData: POMSignRequestUrlResponseSource
-): AfisEMandateSignRequestResponse | null {
-  if (responseData?.paylink) {
-    return { redirectUrl: responseData.paylink };
-  }
-  return null;
-}
-
 function createEMandateSignRequestPayload(
   businessPartner: AfisBusinessPartnerDetailsTransformed,
   creditor: AfisEMandateCreditor,
@@ -486,7 +490,11 @@ function createEMandateSignRequestPayload(
 ): POMSignRequestUrlPayload {
   const returnUrl = generateFullApiUrlBFF(
     routeConfig.detailPageEMandate.path,
-    [{ iban: creditor.iban }, { id: slug(creditor.name) }],
+    [
+      // In development we mock the API responses from the payment provider, for convenience we add the creditor IBAN to the URL so we can determine in the mock API which response to return.
+      IS_DEVELOPMENT ? { iban: creditor.iban } : {},
+      { id: slug(creditor.name) },
+    ],
     getFromEnv('MA_FRONTEND_URL')
   );
 
@@ -537,6 +545,21 @@ function createEMandateSignRequestPayload(
   };
 }
 
+function transformEMandatesRedirectUrlResponse(
+  responseData: POMSignRequestUrlResponseSource
+): AfisEMandateSignRequestResponse | null {
+  if (responseData?.paylink) {
+    const [statusCheckPayload] = encrypt(
+      JSON.stringify({ paylinkId: responseData.paylink_id })
+    );
+    return {
+      redirectUrl: responseData.paylink,
+      statusCheckPayload, // Used to check the status of the sign request after the user has completed the sign request flow with the payment provider.
+    };
+  }
+  return null;
+}
+
 export async function fetchEmandateSignRequestRedirectUrlFromPaymentProvider(
   eMandateSignRequestPayload: EMandateSignRequestPayload
 ) {
@@ -583,9 +606,26 @@ function transformEmandateSignRequestStatus(
   responseDataSource: POMSignRequestStatusResponseSource
 ): AfisEMandateSignRequestStatusResponse {
   return {
-    status: signRequestStatusCodes[responseDataSource.status_code] ?? 'unknown',
-    code: responseDataSource.status_code,
+    status: responseDataSource.status ?? 'unknown',
   };
+}
+
+export async function fetchEmandateSignRequestStatusFromPaymentProvider(
+  eMandateSignRequestStatusPayload: EMandateSignRequestStatusPayload
+): Promise<ApiResponse<AfisEMandateSignRequestStatusResponse>> {
+  const config = await getApiConfig('POM', {
+    method: 'GET',
+    formatUrl: ({ url }) => {
+      return `${url}/v3/paylinks/${eMandateSignRequestStatusPayload.paylinkId}`;
+    },
+    enableCache: false,
+    transformResponse: transformEmandateSignRequestStatus,
+  });
+
+  const eMandateSignUrlResponse =
+    await requestData<AfisEMandateSignRequestStatusResponse>(config);
+
+  return eMandateSignUrlResponse;
 }
 
 export async function deactivateEmandate(
@@ -610,6 +650,7 @@ export async function deactivateEmandate(
         dateValidTo
       ),
       displayStatus: getEmandateDisplayStatus(
+        EMANDATE_STATUS_FRONTEND.OFF,
         dateValidTo,
         dateValidFromFormatted
       ),
@@ -620,52 +661,6 @@ export async function deactivateEmandate(
     { ...eMandateStatusChangePayload, LifetimeTo },
     transformResponse
   );
-}
-
-export async function handleEmandateLifetimeUpdate(
-  eMandateStatusChangePayload: EMandateUpdatePayload,
-  _authProfile: AuthProfile,
-  req: Request
-) {
-  const eMandateUploadPayload = z.object({
-    LifetimeTo: z.iso
-      .date()
-      .refine((isoDate) => {
-        return isAfter(parseISO(isoDate), new Date());
-      })
-      .transform((isoDate) => isoDateTimeFormatCompact(isoDate)),
-    IMandateId: z.string(),
-  });
-
-  let payload: AfisEMandateUpdatePayload;
-
-  try {
-    payload = eMandateUploadPayload.parse({
-      LifetimeTo: req.body.dateValidTo,
-      ...eMandateStatusChangePayload,
-    });
-  } catch (error: unknown) {
-    captureException(error);
-    return apiErrorResult(
-      !IS_AP
-        ? z.prettifyError(error as z.ZodError)
-        : 'Invalid request, failed to parse request body.',
-      null,
-      HttpStatusCode.BadRequest
-    );
-  }
-
-  function transformResponse() {
-    const dateValidTo = payload.LifetimeTo
-      ? isoDateFormat(payload.LifetimeTo)
-      : null;
-    return {
-      dateValidTo,
-      dateValidToFormatted: getEmandateValidityDateFormatted(dateValidTo),
-    };
-  }
-
-  return updateAfisEMandate(payload, transformResponse);
 }
 
 export const forTesting = {

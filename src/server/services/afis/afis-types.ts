@@ -139,6 +139,8 @@ export type AfisBusinessPartnerBankAccount = {
   IBAN: string;
   BankAccount: string;
   BankCountryKey: string;
+  CollectionAuthInd: boolean;
+  BankAccountReferenceText: string;
 };
 
 export type AfisBusinessPartnerBankPayload = {
@@ -147,6 +149,7 @@ export type AfisBusinessPartnerBankPayload = {
   bic: string;
   swiftCode: string;
   senderName: string;
+  creditorName?: string;
 };
 
 // Facturen
@@ -396,6 +399,7 @@ export type AfisEMandateFrontend = {
   deactivateUrl?: string;
   signRequestUrl?: string;
   lifetimeUpdateUrl?: string;
+  signRequestStatusUrl?: string;
 
   link: LinkProps;
 };
@@ -408,6 +412,7 @@ export type AfisEMandateCreditor = {
   description?: string;
 };
 
+// Notification from POM
 export type POMEMandateSignRequestPayload = {
   id_client: number;
   debtornumber: number;
@@ -452,9 +457,7 @@ export type BusinessPartnerIdPayload = {
   businessPartnerId: BusinessPartnerId;
 };
 
-export type EMandateSignRequestStatusPayload = {
-  mpid: string;
-};
+export type EMandateSignRequestStatusPayload = { paylinkId: string };
 
 export type EMandateUpdatePayload = {
   IMandateId: AfisEMandateUpdatePayload['IMandateId'];
@@ -467,6 +470,7 @@ export type EMandateLifetimeChangePayload = EMandateUpdatePayload & {
 
 export type AfisEMandateSignRequestResponse = {
   redirectUrl: string;
+  statusCheckPayload: string; // Encrypted payload to check the status of the sign request
 };
 
 export type AfisEMandateStatusChangeResponse = {
@@ -478,24 +482,24 @@ export type AfisEMandateUpdatePayloadFrontend = SetNonNullableDeep<
   'dateValidTo'
 >;
 
-// POM payment api status codes
-export const signRequestStatusCodes = {
-  101: 'NoResponse', // No reaction to the message
-  500: 'VisitedWebsite', // Customer has clicked on the link
-  700: 'PaymentStarted', // Payment started, but not yet finished
-  701: 'PaymentCanceled', // Payment cancelled by the customer
-  702: 'PaymentFailed', // Payment failed. E.g. insufficient funds
-  703: 'PaymentInvalid', // Payment started, but status not yet known
-  704: 'PaymentExpired', // Payment started, but not completed on time
-  900: 'Paid', // Full amount has been paid
-  998: 'Chargeback', // Payment was reversed by customer
-} as const;
+export type POMSignRequestStatus =
+  | 'no_response' // No reaction to the message
+  | 'visited_website' // Customer has clicked on the link
+  | 'payment_started' // Payment started, but not yet finished
+  | 'payment_canceled' // Payment cancelled by the customer
+  | 'payment_failed' // Payment failed. E.g. insufficient funds
+  | 'payment_invalid' // Payment started, but status not yet known
+  | 'payment_expired' // Payment started, but not completed on time
+  | 'paid' // Full amount has been paid
+  | 'chargeback'; // Payment was reversed by customer
 
-export type POMSignRequestStatusCode = keyof typeof signRequestStatusCodes;
-export type POMSignRequestUrlResponseSource = { paylink: string; mpid: string };
+export type POMSignRequestUrlResponseSource = {
+  paylink: string;
+  paylink_id: string;
+};
 export type POMSignRequestStatusResponseSource = {
-  mpid: number;
-  status_code: POMSignRequestStatusCode;
+  paylink_id: number;
+  status: POMSignRequestStatus;
   status_date: string; // e.g 2015-03-01T12:23:44
 };
 export type POMSignRequestUrlPayload = {
@@ -523,6 +527,9 @@ export type POMSignRequestUrlPayload = {
   ];
 };
 export type AfisEMandateSignRequestStatusResponse = {
-  status: string;
-  code: POMSignRequestStatusCode;
+  status: POMSignRequestStatus;
+};
+export type AfisEMandateBankAccountExistsResponse = {
+  exists: boolean;
+  eMandateCollectionEnabled: boolean;
 };

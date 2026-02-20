@@ -79,12 +79,6 @@ export const EMandateCreditorsGemeenteAmsterdam: AfisEMandateCreditor[] = [
     subId: '11',
     refId: 'VERGUNNINGEN',
   },
-  {
-    name: 'Zwembaden',
-    iban: 'NL10RABO0110077997',
-    subId: '12',
-    refId: '',
-  },
 ];
 
 // E-Mandates are always recurring and have a default date far in the future!
