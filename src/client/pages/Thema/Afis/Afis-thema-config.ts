@@ -194,9 +194,11 @@ export const businessPartnerDetailsLabels: DisplayProps<AfisBusinessPartnerDetai
     fullAddress: 'Adres',
   };
 
-const displayPropsEMandates: DisplayProps<AfisEMandateFrontend> = {
+const displayPropsEMandates: DisplayProps<
+  AfisEMandateFrontend & { displayStatusEl: ReactNode }
+> = {
   detailLinkComponent: 'Afdeling gemeente',
-  displayStatus: 'Status',
+  displayStatusEl: 'Status',
 };
 
 export const eMandateTableConfig = {
@@ -227,3 +229,10 @@ export function getAfisListPageDocumentTitle<T extends Params<string>>(
 }
 
 export const EMANDATE_STATUS_ACTIVE = '1';
+export const EMANDATE_SIGN_REQUEST_FAILED_STATUSES = [
+  'payment_failed',
+  'payment_canceled',
+  'payment_invalid',
+  'payment_expired',
+  'no_response',
+];
