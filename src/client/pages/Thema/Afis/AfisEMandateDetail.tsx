@@ -98,7 +98,6 @@ function EMandate({ eMandate }: EMandateProps) {
               {
                 label: 'Status',
                 content: eMandate.displayStatus,
-                // isVisible: !isPendingActivation(eMandate.creditorIBAN),
               },
               {
                 label: 'Einddatum',
