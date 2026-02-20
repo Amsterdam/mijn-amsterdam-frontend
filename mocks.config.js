@@ -6,7 +6,7 @@ const ProfileTypeHandler = require('./mocks/handlers/ProfileTypeHandler.js');
 
 module.exports = {
   // Log level. Can be one of silly, debug, verbose, info, warn or error
-  log: 'silly',
+  log: 'info',
   config: {
     //allowUnknownArguments: false,
   },
