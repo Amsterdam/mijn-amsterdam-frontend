@@ -31,54 +31,29 @@ describe('source-api-debug', () => {
   describe('addRequestDataDebugging', () => {
     const processEnvOriginal = { ...process.env };
 
-    beforeEach(() => {
-      process.env.DEBUG = undefined;
-    });
-
     afterEach(() => {
       process.env = { ...processEnvOriginal };
       vi.restoreAllMocks();
     });
 
-    it('debugs a matching request', async () => {
+    it('debugs a matching request', () => {
       process.env.DEBUG_REQUEST_DATA = 'path';
       const spy = vi.spyOn(debug, 'debugRequest');
-
-      addRequestDataDebugging({
-        method: 'GET',
-        url: 'path',
-        params: 'param',
-        data: { key: 'value' },
-      });
-
+      addRequestDataDebugging({ url: 'path' });
       expect(spy).toHaveBeenCalled();
     });
 
-    it('does not debug a non-matching request', async () => {
+    it('does not debug a non-matching request', () => {
       process.env.DEBUG_REQUEST_DATA = 'non-path';
       const spy = vi.spyOn(debug, 'debugRequest');
-
-      addRequestDataDebugging({
-        method: 'GET',
-        url: 'path',
-        params: 'param',
-        data: { key: 'value' },
-      });
-
+      addRequestDataDebugging({ url: 'path' });
       expect(spy).not.toHaveBeenCalled();
     });
 
-    it('does not debug when DEBUG_REQUEST_DATA is empty', async () => {
+    it('does not debug when DEBUG_REQUEST_DATA is empty', () => {
       process.env.DEBUG_REQUEST_DATA = '';
       const spy = vi.spyOn(debug, 'debugRequest');
-
-      addRequestDataDebugging({
-        method: 'GET',
-        url: 'path',
-        params: 'param',
-        data: { key: 'value' },
-      });
-
+      addRequestDataDebugging({ url: 'path' });
       expect(spy).not.toHaveBeenCalled();
     });
   });
