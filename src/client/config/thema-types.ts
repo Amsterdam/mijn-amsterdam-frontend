@@ -13,6 +13,17 @@ export type WithPageConfig<K extends string, T extends object = object> = {
 
 export type IsThemaVisibleFN = (appState: AppState) => boolean;
 
+// Thema-configuratie met alle eigenschappen
+export type ThemaConfigPatroonAenB = ThemaConfigBase;
+
+// Thema-configuratie zonder 'pageLinks' en 'route'
+export type ThemaConfigPatroonC = Omit<
+  ThemaConfigBase,
+  'pageLinks' | 'route'
+> & {
+  type: 'withoutLinksAndRoute'; // Discriminated property
+};
+
 export type ThemaConfigBase<ID = string> = {
   id: ID;
   title: string;
