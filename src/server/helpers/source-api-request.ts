@@ -1,20 +1,22 @@
 import axios, {
-  AxiosRequestConfig,
   AxiosResponse,
   AxiosResponseHeaders,
   type AxiosResponseTransformer,
 } from 'axios';
-import createDebugger from 'debug';
 import memoryCache from 'memory-cache';
 
 import { Deferred } from './deferred';
+import {
+  addRequestDataDebugging,
+  addResponseDataDebugging,
+} from './source-api-debug';
 import { getRequestConfigCacheKey } from './source-api-helpers';
 import {
-  ApiErrorResponse,
   ApiSuccessResponse,
   apiErrorResult,
   apiPostponeResult,
   apiSuccessResult,
+  type ApiErrorResponse,
 } from '../../universal/helpers/api';
 import { AuthProfileAndToken } from '../auth/auth-types';
 import {
@@ -24,14 +26,13 @@ import {
   DataRequestConfig,
   FORCE_RENEW_CACHE_TTL_MS,
 } from '../config/source-api';
+import {
+  debugCacheHit,
+  debugCacheKey,
+  debugResponse,
+  debugResponseError,
+} from '../debug';
 import { captureException } from '../services/monitoring';
-
-const debugResponse = createDebugger('source-api-request:response');
-const debugResponseError = createDebugger(
-  'source-api-request:response-error-object'
-);
-const debugCacheHit = createDebugger('source-api-request:cache-hit');
-const debugCacheKey = createDebugger('source-api-request:cache-key');
 
 export const axiosRequest = axios.create({
   responseType: 'json',
@@ -40,63 +41,6 @@ export const axiosRequest = axios.create({
 
 export function isSuccessStatus(statusCode: number): boolean {
   return statusCode >= 200 && statusCode < 300;
-}
-
-const debugResponseDataTerms = (
-  process.env.DEBUG_RESPONSE_DATA?.split(',') ?? []
-)
-  .filter(Boolean)
-  .map((term) => term.trim());
-const hasDebugResponseDataTerms = debugResponseDataTerms.length > 0;
-
-if (hasDebugResponseDataTerms) {
-  debugResponse(debugResponseDataTerms, 'debug response data terms');
-}
-
-function isDebugResponseDataMatch(config: AxiosRequestConfig) {
-  return function isDebugResponseDataMatch(term: string) {
-    const hasTermInRequestUrl = !!config.url?.includes(term.trim());
-    const hasTermInRequestParams = config.params
-      ? JSON.stringify(config.params).includes(term.trim())
-      : false;
-    return hasTermInRequestUrl || hasTermInRequestParams;
-  };
-}
-
-function addResponseDataDebugging(config: AxiosRequestConfig) {
-  config.transformResponse =
-    config.transformResponse as AxiosResponseTransformer[];
-
-  const configExcerpt = {
-    method: config.method ?? 'GET',
-    url: config.url,
-    params: config.params,
-  };
-
-  const isDebugResponseDataTermMatch = hasDebugResponseDataTerms
-    ? debugResponseDataTerms.some(isDebugResponseDataMatch(config))
-    : false;
-
-  // Add default transformer if no transformers are defined
-  if (!config.transformResponse) {
-    const transformers: AxiosResponseTransformer[] = [];
-    config.transformResponse = transformers.concat(
-      axios.defaults.transformResponse ?? []
-    );
-  }
-
-  // Add an additional transformer to log the raw response before any other transformers are applied
-  config.transformResponse?.unshift((responseDataRaw, headers, status) => {
-    if (!hasDebugResponseDataTerms || isDebugResponseDataTermMatch) {
-      debugResponse('');
-      debugResponse('------');
-      debugResponse('[CONFIG]: %o', configExcerpt);
-      debugResponse('[RESPONSE DATA]: %s', responseDataRaw);
-      debugResponse('[HEADERS]: %o', headers);
-      debugResponse('[STATUS]: %d', status);
-    }
-    return responseDataRaw;
-  });
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -142,6 +86,7 @@ export async function requestData<T>(
   }
 
   addResponseDataDebugging(config);
+  addRequestDataDebugging(config);
 
   // Shortcut to passing the JWT of the connected OIDC provider along with the request as Bearer token
   // A configured Authorization header passed via { ... headers: { Authorization: 'xxx' }, ... } takes presedence.

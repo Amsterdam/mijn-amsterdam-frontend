@@ -44,7 +44,7 @@ const mocks = vi.hoisted(() => {
   };
 });
 
-vi.mock('../config/app.ts', async (importOrigModule) => {
+vi.mock('../config/app.ts', async (importOrigModule: () => Promise<[]>) => {
   return {
     ...(await importOrigModule()),
     get BFF_REQUEST_CACHE_ENABLED() {
@@ -71,7 +71,7 @@ describe('source-api-request caching', () => {
         return [data, value];
       },
       cacheKey_UNSAFE: cacheKey,
-      cacheTimeout: cacheTimeout,
+      cacheTimeout,
       enableCache: true,
     });
   }
