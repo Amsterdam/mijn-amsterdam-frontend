@@ -91,7 +91,7 @@ export function useInkomenSpecificatiesListPageData() {
     (category: string) => {
       setSelectedCategory(category);
       navigate(
-        generatePath(routeConfig.listPageSpecificaties.path, {
+        generatePath(themaConfig.listPageSpecificaties.route.path, {
           page: '1',
           kind,
         }),

@@ -24,7 +24,7 @@ export const InkomenRoutes = [
     Component: InkomenDetailTonk,
   },
   {
-    route: routeConfig.listPageSpecificaties.path,
+    route: themaConfig.listPageSpecificaties.route.path,
     Component: InkomenListSpecificaties,
   },
   {

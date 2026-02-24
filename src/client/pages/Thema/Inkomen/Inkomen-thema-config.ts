@@ -10,6 +10,7 @@ import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
 } from '../../../config/app';
 import {
+  PageConfig,
   ThemaConfigBase,
   ThemaRoutesConfig,
   WithListPage,
@@ -18,7 +19,18 @@ import {
 const THEMA_ID = 'INKOMEN';
 const THEMA_TITLE = 'Inkomen';
 
-type InkomenThemaConfig = ThemaConfigBase & WithListPage;
+export const wpiLinks = {
+  BIJSTANDSUITKERING:
+    'https://www.amsterdam.nl/werk-inkomen/bijstandsuitkering/',
+  TOZO: 'https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/', //// TO DO YACINE >dode link
+  TONK: 'https://www.amsterdam.nl/tonk/', // TO DO YACINE >dode link
+  BBZ: 'https://www.amsterdam.nl/ondernemen/ondersteuning/bijstand-lening-aanvragen-ondernemers/',
+};
+
+type WithlistPageSpecificaties = PageConfig<'listPageSpecificaties'>;
+type InkomenThemaConfig = ThemaConfigBase &
+  WithListPage &
+  WithlistPageSpecificaties;
 
 export const themaConfig: InkomenThemaConfig = {
   id: THEMA_ID,
@@ -65,6 +77,14 @@ export const themaConfig: InkomenThemaConfig = {
       trackingUrl: null,
     },
   },
+  listPageSpecificaties: {
+    route: {
+      path: '/inkomen/lijst/specificaties/:kind/:page?',
+      documentTitle: (params) =>
+        `${params?.kind === listPageParamKind.jaaropgaven ? 'Jaaropgaven' : 'Uitkeringsspecificaties'} | ${THEMA_TITLE}`,
+      trackingUrl: null,
+    },
+  },
 };
 
 export const REQUEST_PROCESS_COMPLETED_STATUS_IDS = [
@@ -106,12 +126,6 @@ export const routeConfig = {
     path: '/inkomen/bbz/:version/:id',
     trackingUrl: `/inkomen/bbz`,
     documentTitle: `Bbz | ${THEMA_ID}`,
-  },
-  listPageSpecificaties: {
-    path: '/inkomen/lijst/specificaties/:kind/:page?',
-    documentTitle: (params) =>
-      `${params?.kind === listPageParamKind.jaaropgaven ? 'Jaaropgaven' : 'Uitkeringsspecificaties'} | ${THEMA_TITLE}`,
-    trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
 
@@ -166,14 +180,6 @@ const jaaropgavenTableDisplayProps: DisplayProps<
   },
 };
 
-export const wpiLinks = {
-  BIJSTANDSUITKERING:
-    'https://www.amsterdam.nl/werk-inkomen/bijstandsuitkering/',
-  TOZO: 'https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/',
-  TONK: 'https://www.amsterdam.nl/tonk/',
-  BBZ: 'https://www.amsterdam.nl/ondernemen/ondersteuning/bijstand-lening-aanvragen-ondernemers/',
-};
-
 export const tableConfig = {
   [listPageParamKind.lopend]: {
     title: 'Lopende aanvragen',
@@ -210,7 +216,7 @@ export const tableConfigSpecificaties = {
     title: 'Uitkeringsspecificaties',
     displayProps: specificatiesTableDisplayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-    listPageRoute: generatePath(routeConfig.listPageSpecificaties.path, {
+    listPageRoute: generatePath(themaConfig.listPageSpecificaties.route.path, {
       kind: listPageParamKind.uitkering,
       page: null,
     }),
@@ -219,7 +225,7 @@ export const tableConfigSpecificaties = {
     title: 'Jaaropgaven',
     displayProps: jaaropgavenTableDisplayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-    listPageRoute: generatePath(routeConfig.listPageSpecificaties.path, {
+    listPageRoute: generatePath(themaConfig.listPageSpecificaties.route.path, {
       kind: listPageParamKind.jaaropgaven,
       page: null,
     }),
