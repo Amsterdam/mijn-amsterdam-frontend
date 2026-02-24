@@ -6,7 +6,7 @@ import {
   Paragraph,
 } from '@amsterdam/design-system-react';
 
-import { links, routeConfig, themaConfig } from './Afval-thema-config';
+import { links, themaConfig } from './Afval-thema-config';
 import styles from './Afval.module.scss';
 import type {
   AfvalFractionInformationTransformed,
@@ -195,7 +195,7 @@ function AfvalFractionPanels({ fractions }: AfvalFractionPanelsProps) {
 }
 
 export function AfvalThemaPagina() {
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const { AFVAL, AFVALPUNTEN, MY_LOCATION } = useAppStateGetter();
   const profileType = useProfileTypeValue();
