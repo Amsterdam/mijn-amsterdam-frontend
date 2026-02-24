@@ -25,7 +25,7 @@ import { inkomenSectionProps } from '../Thema/Inkomen/InfoSection';
 import { themaConfig as jeugdThemaConfig } from '../Thema/Jeugd/Jeugd-thema-config';
 import { themaConfig as klachtenThemaConfig } from '../Thema/Klachten/Klachten-thema-config';
 import { krefiaSectionProps } from '../Thema/Krefia/InfoSection';
-import { milieuzonesectionProps } from '../Thema/Milieuzone/InfoSection';
+import { themaConfig as milieuZoneThemaConfig } from '../Thema/Milieuzone/Milieuzone-thema-config';
 import { overtredingensectionProps } from '../Thema/Overtredingen/InfoSection';
 import { parkerensectionProps } from '../Thema/Parkeren/InfoSection';
 import { profileSectionProps } from '../Thema/Profile/InfoSection';
@@ -73,7 +73,7 @@ const sections: InfoSection_DEPRECATED[] = [
   subsidiesSectionProps,
   krefiaSectionProps,
   parkerensectionProps,
-  milieuzonesectionProps,
+
   overtredingensectionProps,
   varensectionProps,
   ...createDeprecatedInfoSection(avgThemaConfig),
@@ -83,6 +83,7 @@ const sections: InfoSection_DEPRECATED[] = [
   ...createDeprecatedInfoSection(hliThemaConfig),
   ...createDeprecatedInfoSection(jeugdThemaConfig),
   ...createDeprecatedInfoSection(klachtenThemaConfig),
+  ...createDeprecatedInfoSection(milieuZoneThemaConfig),
   ...createDeprecatedInfoSection(toeristischeVerhuurThemaConfig),
   ...createDeprecatedInfoSection(zorgThemaConfig),
 ];
