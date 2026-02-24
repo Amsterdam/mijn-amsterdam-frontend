@@ -12,6 +12,7 @@ import { IS_DEVELOPMENT } from '../../universal/config/env';
 const featureToggle = {
   ['AFIS.EMandates']: true,
   ['cobrowse']: false,
+  ['BRP.aantalBewonersOpAdresTonen']: true,
 };
 // Make sure featureToggles imported from *-thema-configs have access.
 const g = globalThis as unknown as {
