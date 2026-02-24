@@ -37,13 +37,13 @@ export const InkomenRoutes = [
     isActive: FeatureToggle.inkomenBBZActive,
   },
   { route: routeConfig.listPage.path, Component: InkomenList },
-  { route: routeConfig.themaPage.path, Component: InkomenThema },
+  { route: themaConfig.route.path, Component: InkomenThema },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
 export const menuItem: ThemaMenuItem = {
   title: themaConfig.title,
   id: themaConfig.id,
-  to: routeConfig.themaPage.path,
+  to: themaConfig.route.path,
   redactedScope: themaConfig.redactedScope,
   profileTypes: themaConfig.profileTypes,
   isActive: isInkomenThemaActive,

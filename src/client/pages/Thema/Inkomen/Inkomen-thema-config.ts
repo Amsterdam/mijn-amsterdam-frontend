@@ -19,23 +19,21 @@ const THEMA_TITLE = 'Inkomen';
 
 type InkomenThemaConfig = Pick<
   ThemaConfigBase,
-  'id' | 'title' | 'pageLinks' | 'redactedScope' | 'profileTypes'
+  'id' | 'title' | 'pageLinks' | 'redactedScope' | 'profileTypes' | 'route'
 >;
 
 export const themaConfig: InkomenThemaConfig = {
   id: THEMA_ID,
   title: THEMA_TITLE,
-  // featureToggle: {
+  // featureToggle: {     /// TO DO YACINE hoe maak ik de featuretoggle?
   //   active: true,
   // },
   profileTypes: ['private'],
-  // route: {
-  //   path: '/bodem',
-  //   get documentTitle() {
-  //     return `${THEMA_TITLE} | Overzicht`;
-  //   },
-  //   trackingUrl: null,
-  // },
+  route: {
+    path: '/inkomen',
+    documentTitle: `${THEMA_TITLE} | overzicht`,
+    trackingUrl: null,
+  },
   redactedScope: 'full',
   pageLinks: [
     {

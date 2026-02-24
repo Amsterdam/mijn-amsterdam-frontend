@@ -3,7 +3,7 @@ import { useMemo, useState, useEffect, useCallback } from 'react';
 import { parseISO } from 'date-fns';
 import { useParams, generatePath, useNavigate } from 'react-router';
 
-import { tableConfigSpecificaties } from './Inkomen-thema-config';
+import { tableConfigSpecificaties, themaConfig } from './Inkomen-thema-config';
 import { useInkomenThemaData } from './useInkomenThemaData.hook';
 
 export function useInkomenSpecificatiesListPageData() {
@@ -128,6 +128,7 @@ export function useInkomenSpecificatiesListPageData() {
     maxDateFilterActive,
     minDate,
     minDateFilterActive,
+    themaConfig,
     noContentMessage: 'Er zijn op dit moment nog geen documenten beschikbaar.',
     params: {
       kind,
@@ -143,7 +144,7 @@ export function useInkomenSpecificatiesListPageData() {
     toggleSearchPanel,
     total,
     breadcrumbs,
-    themaPageRoute: routeConfig.themaPage.path,
+    themaPageRoute: themaConfig.route.path,
     routeConfig,
   };
 }

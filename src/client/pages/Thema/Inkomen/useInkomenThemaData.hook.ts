@@ -6,7 +6,6 @@ import {
   tableConfig,
   themaConfig,
 } from './Inkomen-thema-config';
-import { themaConfig } from './Inkomen-thema-config';
 import { WpiRequestProcess } from '../../../../server/services/wpi/wpi-types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import {
