@@ -10,10 +10,48 @@ import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
 } from '../../../config/app';
-import { ThemaRoutesConfig } from '../../../config/thema-types';
+import {
+  ThemaConfigBase,
+  ThemaRoutesConfig,
+} from '../../../config/thema-types';
 
-export const themaId = 'INKOMEN' as const;
-export const themaTitle = 'Inkomen';
+// export const themaId = 'INKOMEN' as const;
+// export const themaTitle = 'Inkomen';
+
+const THEMA_ID = 'INKOMEN';
+const THEMA_TITLE = 'Inkomen';
+
+type InkomenThemaConfig = Pick<ThemaConfigBase, 'id' | 'title'>;
+
+export const themaConfig: InkomenThemaConfig = {
+  id: THEMA_ID,
+  title: THEMA_TITLE,
+  // featureToggle: {
+  //   active: true,
+  // },
+  // profileTypes: ['private'],
+  // route: {
+  //   path: '/bodem',
+  //   get documentTitle() {
+  //     return `${THEMA_TITLE} | Overzicht`;
+  //   },
+  //   trackingUrl: null,
+  // },
+  // redactedScope: 'none',
+  // pageLinks: [
+  //   {
+  //     title: 'Meer informatie over lood in de bodem.',
+  //     to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/bodem/loodcheck-tuin-aanvragen',
+  //   },
+  // ],
+
+  //  uitlegPageSections: [
+  //   {
+  //     title: THEMA_TITLE,
+  //     listItems: ["Uw aanvraag voor 'lood in de bodem-check'"],
+  //   },
+  // ],
+};
 
 export const REQUEST_PROCESS_COMPLETED_STATUS_IDS = [
   'besluit',
@@ -36,40 +74,40 @@ export const routeConfig = {
   detailPageUitkering: {
     path: '/inkomen/bijstandsuitkering/:id',
     trackingUrl: '/inkomen/bijstandsuitkering',
-    documentTitle: `Bijstandsuitkering | ${themaTitle}`,
+    documentTitle: `Bijstandsuitkering | ${THEMA_TITLE}`,
   },
   detailPageTozo: {
     path: '/inkomen/tozo/:version/:id',
     trackingUrl: (params) => {
       return `/inkomen/tozo/${params?.version}`;
     },
-    documentTitle: `Tozo | ${themaTitle}`,
+    documentTitle: `Tozo | ${THEMA_TITLE}`,
   },
   detailPageTonk: {
     path: '/inkomen/tonk/:version/:id',
-    documentTitle: `TONK | ${themaTitle}`,
+    documentTitle: `TONK | ${THEMA_TITLE}`,
     trackingUrl: null,
   },
   detailPageBbz: {
     path: '/inkomen/bbz/:version/:id',
     trackingUrl: `/inkomen/bbz`,
-    documentTitle: `Bbz | ${themaTitle}`,
+    documentTitle: `Bbz | ${THEMA_ID}`,
   },
   listPageSpecificaties: {
     path: '/inkomen/lijst/specificaties/:kind/:page?',
     documentTitle: (params) =>
-      `${params?.kind === listPageParamKind.jaaropgaven ? 'Jaaropgaven' : 'Uitkeringsspecificaties'} | ${themaTitle}`,
+      `${params?.kind === listPageParamKind.jaaropgaven ? 'Jaaropgaven' : 'Uitkeringsspecificaties'} | ${THEMA_TITLE}`,
     trackingUrl: null,
   },
   listPage: {
     path: '/inkomen/lijst/:kind/:page?',
     documentTitle: (params) =>
-      `${params?.kind === listPageParamKind.eerder ? 'Eerdere' : 'Lopende'} aanvragen | ${themaTitle}`,
+      `${params?.kind === listPageParamKind.eerder ? 'Eerdere' : 'Lopende'} aanvragen | ${THEMA_TITLE}`,
     trackingUrl: null,
   },
   themaPage: {
     path: '/inkomen',
-    documentTitle: `${themaTitle} | overzicht`,
+    documentTitle: `${THEMA_TITLE} | overzicht`,
     trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;

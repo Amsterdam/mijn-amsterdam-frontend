@@ -6,7 +6,7 @@ import { MyNotificationsPage } from './MyNotifications';
 import { MyNotificationsRoute } from './MyNotifications-routes';
 import type { AppState } from '../../../universal/types/App.types';
 import { themaId as themaIdDashboard } from '../Dashboard/Dashboard-config';
-import { themaId as themaIdInkomen } from '../Thema/Inkomen/Inkomen-thema-config';
+import { themaConfig as themaInkomen } from '../Thema/Inkomen/Inkomen-thema-config';
 import { themaId as themaIdParkeren } from '../Thema/Parkeren/Parkeren-thema-config';
 import { themaIdBRP } from '../Thema/Profile/Profile-thema-config';
 
@@ -43,7 +43,7 @@ const testState = {
         title: 'Notification',
         description: 'Notificatie3',
         datePublished: '2020-07-24',
-        themaID: themaIdInkomen,
+        themaID: themaInkomen.id,
         themaTitle: 'Inkomen',
         isAlert: true,
         link: {

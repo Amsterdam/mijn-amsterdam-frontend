@@ -3,7 +3,7 @@
 exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="mams-content-wrapper redacted"
+    class="mams-content-wrapper"
   >
     <div
       class="ams-grid ams-grid--padding-top--large"
@@ -498,7 +498,7 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
 exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="mams-content-wrapper redacted"
+    class="mams-content-wrapper"
   >
     <div
       class="ams-grid ams-grid--padding-top--large"

@@ -12,8 +12,7 @@ import {
 } from './wpi-types';
 import {
   routeConfig,
-  themaId as themaIdInkomen,
-  themaTitle as themaTitleInkomen,
+  themaConfig as themaInkomen,
 } from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
@@ -106,8 +105,8 @@ export function createProcessNotification(
   return {
     id: `${requestProcess.id}-notification`,
     datePublished: statusStep.datePublished,
-    themaID: themaIdInkomen,
-    themaTitle: themaTitleInkomen,
+    themaID: themaInkomen.id,
+    themaTitle: themaInkomen.title,
     title: titleTransform
       ? titleTransform(requestProcess, statusStep)
       : `Update: ${requestProcess.about} aanvraag.`,

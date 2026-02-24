@@ -1,5 +1,5 @@
 import { isInkomenThemaActive } from './Inkomen-helpers';
-import { routeConfig, themaId, themaTitle } from './Inkomen-thema-config';
+import { routeConfig, themaConfig } from './Inkomen-thema-config';
 import { InkomenDetailBbz } from './InkomenDetailBbz';
 import { InkomenDetailTonk } from './InkomenDetailTonk';
 import { InkomenDetailTozo } from './InkomenDetailTozo';
@@ -40,9 +40,9 @@ export const InkomenRoutes = [
   { route: routeConfig.themaPage.path, Component: InkomenThema },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
-export const menuItem: ThemaMenuItem<typeof themaId> = {
-  title: themaTitle,
-  id: themaId,
+export const menuItem: ThemaMenuItem = {
+  title: themaConfig.title,
+  id: themaConfig.id,
   to: routeConfig.themaPage.path,
   redactedScope: 'full',
   profileTypes: ['private'],
