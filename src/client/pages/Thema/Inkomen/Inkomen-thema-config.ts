@@ -4,7 +4,6 @@ import {
   WpiIncomeSpecificationTransformed,
   WpiRequestProcess,
 } from '../../../../server/services/wpi/wpi-types';
-import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
@@ -15,13 +14,10 @@ import {
   ThemaRoutesConfig,
 } from '../../../config/thema-types';
 
-// export const themaId = 'INKOMEN' as const;
-// export const themaTitle = 'Inkomen';
-
 const THEMA_ID = 'INKOMEN';
 const THEMA_TITLE = 'Inkomen';
 
-type InkomenThemaConfig = Pick<ThemaConfigBase, 'id' | 'title'>;
+type InkomenThemaConfig = Pick<ThemaConfigBase, 'id' | 'title' | 'pageLinks'>;
 
 export const themaConfig: InkomenThemaConfig = {
   id: THEMA_ID,
@@ -38,12 +34,16 @@ export const themaConfig: InkomenThemaConfig = {
   //   trackingUrl: null,
   // },
   // redactedScope: 'none',
-  // pageLinks: [
-  //   {
-  //     title: 'Meer informatie over lood in de bodem.',
-  //     to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/bodem/loodcheck-tuin-aanvragen',
-  //   },
-  // ],
+  pageLinks: [
+    {
+      to: 'https://www.amsterdam.nl/werk-inkomen',
+      title: 'Algemene informatie over Werk en Inkomen',
+    },
+    {
+      to: 'https://www.amsterdam.nl/werk-inkomen/contact/',
+      title: 'Contact Werk en Inkomen',
+    },
+  ],
 
   //  uitlegPageSections: [
   //   {
@@ -171,16 +171,16 @@ export const wpiLinks = {
   BBZ: 'https://www.amsterdam.nl/ondernemen/ondersteuning/bijstand-lening-aanvragen-ondernemers/',
 };
 
-export const linkListItems: LinkProps[] = [
-  {
-    to: 'https://www.amsterdam.nl/werk-inkomen',
-    title: 'Algemene informatie over Werk en Inkomen',
-  },
-  {
-    to: 'https://www.amsterdam.nl/werk-inkomen/contact/',
-    title: 'Contact Werk en Inkomen',
-  },
-];
+// export const linkListItems: LinkProps[] = [
+//   {
+//     to: 'https://www.amsterdam.nl/werk-inkomen',
+//     title: 'Algemene informatie over Werk en Inkomen',
+//   },
+//   {
+//     to: 'https://www.amsterdam.nl/werk-inkomen/contact/',
+//     title: 'Contact Werk en Inkomen',
+//   },
+// ];
 
 export const tableConfig = {
   [listPageParamKind.lopend]: {

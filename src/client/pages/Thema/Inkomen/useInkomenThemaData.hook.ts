@@ -6,7 +6,7 @@ import {
   tableConfig,
   themaConfig,
 } from './Inkomen-thema-config';
-import { linkListItems } from './Inkomen-thema-config';
+import { themaConfig } from './Inkomen-thema-config';
 import { WpiRequestProcess } from '../../../../server/services/wpi/wpi-types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import {
@@ -93,7 +93,7 @@ export function useInkomenThemaData() {
     jaaropgaven,
     themaId: themaConfig.id,
     title: themaConfig.title,
-    linkListItems,
+    pageLinks: themaConfig.pageLinks,
     isLoadingWpi,
     isErrorWpi,
     isLoadingWpiSpecificaties,
