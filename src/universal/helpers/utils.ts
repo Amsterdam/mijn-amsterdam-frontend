@@ -144,15 +144,6 @@ export function uniqueArray(arr: any[]) {
   return Array.from(new Set(arr));
 }
 
-export function areArraysEqual<T>(a: T[], b: T[]): boolean {
-  for (let i = 0; i < a.length; i++) {
-    if (a[i] !== b[i]) {
-      return false;
-    }
-  }
-  return true;
-}
-
 /** Split an array by a predicate function and return [remainingItems, predicateSatisfyingItems] */
 export function splitBy<T>(
   list: T[],
