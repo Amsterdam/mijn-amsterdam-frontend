@@ -36,7 +36,7 @@ export const InkomenRoutes = [
     Component: InkomenDetailBbz,
     isActive: FeatureToggle.inkomenBBZActive,
   },
-  { route: routeConfig.listPage.path, Component: InkomenList },
+  { route: themaConfig.listPage.route.path, Component: InkomenList },
   { route: themaConfig.route.path, Component: InkomenThema },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 

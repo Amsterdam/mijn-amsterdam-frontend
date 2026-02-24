@@ -12,12 +12,13 @@ import {
 import {
   ThemaConfigBase,
   ThemaRoutesConfig,
+  WithListPage,
 } from '../../../config/thema-types';
 
 const THEMA_ID = 'INKOMEN';
 const THEMA_TITLE = 'Inkomen';
 
-type InkomenThemaConfig = ThemaConfigBase;
+type InkomenThemaConfig = ThemaConfigBase & WithListPage;
 
 export const themaConfig: InkomenThemaConfig = {
   id: THEMA_ID,
@@ -55,6 +56,15 @@ export const themaConfig: InkomenThemaConfig = {
       ],
     },
   ],
+
+  listPage: {
+    route: {
+      path: '/inkomen/lijst/:kind/:page?',
+      documentTitle: (params) =>
+        `${params?.kind === listPageParamKind.eerder ? 'Eerdere' : 'Lopende'} aanvragen | ${THEMA_TITLE}`,
+      trackingUrl: null,
+    },
+  },
 };
 
 export const REQUEST_PROCESS_COMPLETED_STATUS_IDS = [
@@ -101,12 +111,6 @@ export const routeConfig = {
     path: '/inkomen/lijst/specificaties/:kind/:page?',
     documentTitle: (params) =>
       `${params?.kind === listPageParamKind.jaaropgaven ? 'Jaaropgaven' : 'Uitkeringsspecificaties'} | ${THEMA_TITLE}`,
-    trackingUrl: null,
-  },
-  listPage: {
-    path: '/inkomen/lijst/:kind/:page?',
-    documentTitle: (params) =>
-      `${params?.kind === listPageParamKind.eerder ? 'Eerdere' : 'Lopende'} aanvragen | ${THEMA_TITLE}`,
     trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
@@ -180,7 +184,7 @@ export const tableConfig = {
     },
     displayProps: lopendeAanvragenDisplayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
-    listPageRoute: generatePath(routeConfig.listPage.path, {
+    listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.lopend,
       page: null,
     }),
@@ -194,7 +198,7 @@ export const tableConfig = {
     },
     displayProps: afgehandeldeAanvragenDisplayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-    listPageRoute: generatePath(routeConfig.listPage.path, {
+    listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.eerder,
       page: null,
     }),
