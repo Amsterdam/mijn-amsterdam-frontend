@@ -44,8 +44,8 @@ export const menuItem: ThemaMenuItem = {
   title: themaConfig.title,
   id: themaConfig.id,
   to: routeConfig.themaPage.path,
-  redactedScope: 'full',
-  profileTypes: ['private'],
+  redactedScope: themaConfig.redactedScope,
+  profileTypes: themaConfig.profileTypes,
   isActive: isInkomenThemaActive,
   IconSVG: InkomenIcon,
 };

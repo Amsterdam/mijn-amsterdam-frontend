@@ -17,7 +17,10 @@ import {
 const THEMA_ID = 'INKOMEN';
 const THEMA_TITLE = 'Inkomen';
 
-type InkomenThemaConfig = Pick<ThemaConfigBase, 'id' | 'title' | 'pageLinks'>;
+type InkomenThemaConfig = Pick<
+  ThemaConfigBase,
+  'id' | 'title' | 'pageLinks' | 'redactedScope' | 'profileTypes'
+>;
 
 export const themaConfig: InkomenThemaConfig = {
   id: THEMA_ID,
@@ -25,7 +28,7 @@ export const themaConfig: InkomenThemaConfig = {
   // featureToggle: {
   //   active: true,
   // },
-  // profileTypes: ['private'],
+  profileTypes: ['private'],
   // route: {
   //   path: '/bodem',
   //   get documentTitle() {
@@ -33,7 +36,7 @@ export const themaConfig: InkomenThemaConfig = {
   //   },
   //   trackingUrl: null,
   // },
-  // redactedScope: 'none',
+  redactedScope: 'full',
   pageLinks: [
     {
       to: 'https://www.amsterdam.nl/werk-inkomen',
@@ -170,17 +173,6 @@ export const wpiLinks = {
   TONK: 'https://www.amsterdam.nl/tonk/',
   BBZ: 'https://www.amsterdam.nl/ondernemen/ondersteuning/bijstand-lening-aanvragen-ondernemers/',
 };
-
-// export const linkListItems: LinkProps[] = [
-//   {
-//     to: 'https://www.amsterdam.nl/werk-inkomen',
-//     title: 'Algemene informatie over Werk en Inkomen',
-//   },
-//   {
-//     to: 'https://www.amsterdam.nl/werk-inkomen/contact/',
-//     title: 'Contact Werk en Inkomen',
-//   },
-// ];
 
 export const tableConfig = {
   [listPageParamKind.lopend]: {
