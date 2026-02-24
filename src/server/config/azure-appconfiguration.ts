@@ -11,8 +11,10 @@ import { IS_DEVELOPMENT } from '../../universal/config/env';
 // Is mutated by the Appconfiguration. Locally this object will be used as is.
 const featureToggle = {
   ['AFIS.EMandates']: true,
-  ['cobrowse']: false,
+  ['AMSAPP.notificationService']: true,
   ['BRP.aantalBewonersOpAdresTonen']: true,
+  ['USER_FEEDBACK.fetchSurvey']: true,
+  ['cobrowse']: false,
 };
 // Make sure featureToggles imported from *-thema-configs have access.
 const g = globalThis as unknown as {
