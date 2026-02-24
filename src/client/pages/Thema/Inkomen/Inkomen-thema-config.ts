@@ -30,12 +30,14 @@ export const wpiLinks = {
 type WithlistPageSpecificaties = PageConfig<'listPageSpecificaties'>;
 type WithDetailPageBbz = PageConfig<'detailPageBbz'>;
 type WithDetailPageTonk = PageConfig<'detailPageTonk'>;
+type WithDetailPageTozo = PageConfig<'detailPageTozo'>;
 
 type InkomenThemaConfig = ThemaConfigBase &
   WithListPage &
   WithlistPageSpecificaties &
   WithDetailPageBbz &
-  WithDetailPageTonk;
+  WithDetailPageTonk &
+  WithDetailPageTozo;
 
 export const themaConfig: InkomenThemaConfig = {
   id: THEMA_ID,
@@ -104,6 +106,15 @@ export const themaConfig: InkomenThemaConfig = {
       trackingUrl: null,
     },
   },
+  detailPageTozo: {
+    route: {
+      path: '/inkomen/tozo/:version/:id',
+      trackingUrl: (params) => {
+        return `/inkomen/tozo/${params?.version}`;
+      },
+      documentTitle: `Tozo | ${THEMA_TITLE}`,
+    },
+  },
 };
 
 export const REQUEST_PROCESS_COMPLETED_STATUS_IDS = [
@@ -128,13 +139,6 @@ export const routeConfig = {
     path: '/inkomen/bijstandsuitkering/:id',
     trackingUrl: '/inkomen/bijstandsuitkering',
     documentTitle: `Bijstandsuitkering | ${THEMA_TITLE}`,
-  },
-  detailPageTozo: {
-    path: '/inkomen/tozo/:version/:id',
-    trackingUrl: (params) => {
-      return `/inkomen/tozo/${params?.version}`;
-    },
-    documentTitle: `Tozo | ${THEMA_TITLE}`,
   },
 } as const satisfies ThemaRoutesConfig;
 

@@ -7,9 +7,9 @@ import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function InkomenDetailTozo() {
-  const { isLoading, isError, zaak, breadcrumbs, routeConfig, themaId } =
+  const { isLoading, isError, zaak, breadcrumbs, themaConfig } =
     useInkomenDetailData('WPI_TOZO');
-  useHTMLDocumentTitle(routeConfig.detailPageTozo);
+  useHTMLDocumentTitle(themaConfig.detailPageTozo.route);
 
   const pageContentTop = (
     <PageContentCell spanWide={8}>
@@ -31,7 +31,7 @@ export function InkomenDetailTozo() {
 
   return (
     <ThemaDetailPagina
-      themaId={themaId}
+      themaId={themaConfig.id}
       title={zaak?.title || 'TOZO aanvraag'}
       zaak={zaak}
       isError={isError}

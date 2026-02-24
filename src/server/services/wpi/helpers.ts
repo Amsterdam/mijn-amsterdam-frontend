@@ -177,7 +177,7 @@ export function addLink(requestProcess: WpiRequestProcess) {
     case 'Tozo 4':
     case 'Tozo 5':
       link = {
-        to: generatePath(routeConfig.detailPageTozo.path, {
+        to: generatePath(themaInkomen.detailPageTozo.route.path, {
           id,
           version: requestProcess.about.replace('Tozo ', ''),
         }),

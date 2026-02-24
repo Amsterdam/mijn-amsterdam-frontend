@@ -16,7 +16,7 @@ import {
 
 export const InkomenRoutes = [
   {
-    route: routeConfig.detailPageTozo.path,
+    route: themaConfig.detailPageTozo.route.path,
     Component: InkomenDetailTozo,
   },
   {
