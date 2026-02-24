@@ -27,7 +27,8 @@
     "bff-api:build": "tsc --project ./tsconfig.bff.json",
     "bff-api:job:notifications": "ts-node --project ./tsconfig.bff.json ./src/jobs/fetch-notifications-amsapp.ts",
     "lint": "eslint src --max-warnings 0 --quiet",
-    "lint:fix": "eslint src --fix"
+    "lint:fix": "eslint src --fix",
+    "build-docker": "export SSH_PASSWD='root:docker' && docker buildx build --secret 'id=SSH_PASSWD' -t mams ."
   },
   "browserslist": [
     ">0.2%",
