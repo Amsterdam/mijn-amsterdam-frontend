@@ -29,11 +29,13 @@ export const wpiLinks = {
 
 type WithlistPageSpecificaties = PageConfig<'listPageSpecificaties'>;
 type WithDetailPageBbz = PageConfig<'detailPageBbz'>;
+type WithDetailPageTonk = PageConfig<'detailPageTonk'>;
 
 type InkomenThemaConfig = ThemaConfigBase &
   WithListPage &
   WithlistPageSpecificaties &
-  WithDetailPageBbz;
+  WithDetailPageBbz &
+  WithDetailPageTonk;
 
 export const themaConfig: InkomenThemaConfig = {
   id: THEMA_ID,
@@ -95,6 +97,13 @@ export const themaConfig: InkomenThemaConfig = {
       documentTitle: `Bbz | ${THEMA_ID}`,
     },
   },
+  detailPageTonk: {
+    route: {
+      path: '/inkomen/tonk/:version/:id',
+      documentTitle: `TONK | ${THEMA_TITLE}`,
+      trackingUrl: null,
+    },
+  },
 };
 
 export const REQUEST_PROCESS_COMPLETED_STATUS_IDS = [
@@ -126,11 +135,6 @@ export const routeConfig = {
       return `/inkomen/tozo/${params?.version}`;
     },
     documentTitle: `Tozo | ${THEMA_TITLE}`,
-  },
-  detailPageTonk: {
-    path: '/inkomen/tonk/:version/:id',
-    documentTitle: `TONK | ${THEMA_TITLE}`,
-    trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
 

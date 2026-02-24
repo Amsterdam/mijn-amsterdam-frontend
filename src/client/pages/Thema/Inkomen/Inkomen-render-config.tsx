@@ -20,7 +20,7 @@ export const InkomenRoutes = [
     Component: InkomenDetailTozo,
   },
   {
-    route: routeConfig.detailPageTonk.path,
+    route: themaConfig.detailPageTonk.route.path,
     Component: InkomenDetailTonk,
   },
   {

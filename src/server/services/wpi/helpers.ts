@@ -164,7 +164,7 @@ export function addLink(requestProcess: WpiRequestProcess) {
   switch (requestProcess.about) {
     case 'TONK':
       link = {
-        to: generatePath(routeConfig.detailPageTonk.path, {
+        to: generatePath(themaInkomen.detailPageTonk.route.path, {
           id,
           version: '1',
         }),

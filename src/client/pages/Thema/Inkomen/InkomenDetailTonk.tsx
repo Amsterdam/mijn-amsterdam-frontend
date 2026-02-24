@@ -23,13 +23,13 @@ const pageContentTop = (
 );
 
 export function InkomenDetailTonk() {
-  const { isLoading, isError, zaak, breadcrumbs, routeConfig, themaId } =
+  const { isLoading, isError, zaak, breadcrumbs, themaConfig } =
     useInkomenDetailData('WPI_TONK');
-  useHTMLDocumentTitle(routeConfig.detailPageTonk);
+  useHTMLDocumentTitle(themaConfig.detailPageTonk.route);
 
   return (
     <ThemaDetailPagina
-      themaId={themaId}
+      themaId={themaConfig.id}
       title={zaak?.title || 'TONK aanvraag'}
       zaak={zaak}
       isError={isError}
