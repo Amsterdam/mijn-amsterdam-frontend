@@ -4,6 +4,8 @@
 /* tslint:disable:no-implicit-dependencies */
 /* tslint:disable:no-submodule-imports */
 
+// Keep the loading of environment variables at the top.
+import './helpers/load-env';
 import {
   IS_AP,
   IS_DEVELOPMENT,
