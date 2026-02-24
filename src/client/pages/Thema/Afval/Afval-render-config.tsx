@@ -1,9 +1,4 @@
-import {
-  featureToggle,
-  routeConfig,
-  themaId,
-  themaTitle,
-} from './Afval-thema-config';
+import { featureToggle, routeConfig, themaConfig } from './Afval-thema-config';
 import { default as AfvalIcon } from './AfvalIcon.svg?react';
 import { AfvalThemaPagina } from './AfvalThema';
 import { isLoading } from '../../../../universal/helpers/api';
@@ -21,9 +16,9 @@ export const AfvalRoutes = [
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
-export const menuItem: ThemaMenuItem<typeof themaId> = {
-  title: themaTitle,
-  id: themaId,
+export const menuItem: ThemaMenuItem = {
+  title: themaConfig.title,
+  id: themaConfig.id,
   to: routeConfig.themaPage.path,
   profileTypes: ['private', 'commercial'],
   redactedScope: 'none',

@@ -6,7 +6,7 @@ import {
   Paragraph,
 } from '@amsterdam/design-system-react';
 
-import { links, routeConfig, themaTitle } from './Afval-thema-config';
+import { links, routeConfig, themaConfig } from './Afval-thema-config';
 import styles from './Afval.module.scss';
 import type {
   AfvalFractionInformationTransformed,
@@ -216,7 +216,7 @@ export function AfvalThemaPagina() {
     privateLocation?.bagNummeraanduidingId;
 
   return (
-    <PageV2 heading={themaTitle}>
+    <PageV2 heading={themaConfig.title}>
       <PageContentCell spanWide={8}>
         {profileType === 'private' && (
           <>

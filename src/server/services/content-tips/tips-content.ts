@@ -22,7 +22,7 @@ import {
   is18OrOlderOnElectionDay,
 } from './predicates';
 import { ContentTipSource } from './tip-types';
-import { themaId as themaIdAfval } from '../../../client/pages/Thema/Afval/Afval-thema-config';
+import { themaConfig as themaAfval } from '../../../client/pages/Thema/Afval/Afval-thema-config';
 import { themaConfig as hliThemaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import { themaId as themaIdInkomen } from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
 import { themaIdBRP } from '../../../client/pages/Thema/Profile/Profile-thema-config';
@@ -39,7 +39,7 @@ export const contentTips: ContentTipSource[] = [
     datePublished: '2019-08-18',
     title: 'Tip: Bekijk de afvalpunten in de buurt',
     profileTypes: ['private'],
-    themaID: themaIdAfval,
+    themaID: themaAfval.id,
     description: 'Kijk waar het dichtstbijzijnde Afvalpunt is.',
     predicates: [isLivingInAmsterdamLessThanNumberOfDays(DAYS)],
     reason: 'U ziet deze tip omdat u in Amsterdam woont.',
