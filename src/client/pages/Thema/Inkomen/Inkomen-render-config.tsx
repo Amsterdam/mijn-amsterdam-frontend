@@ -32,7 +32,7 @@ export const InkomenRoutes = [
     Component: InkomenDetailUitkering,
   },
   {
-    route: routeConfig.detailPageBbz.path,
+    route: themaConfig.detailPageBbz.route.path,
     Component: InkomenDetailBbz,
     isActive: FeatureToggle.inkomenBBZActive,
   },

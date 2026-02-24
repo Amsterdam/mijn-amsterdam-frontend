@@ -194,7 +194,7 @@ export function addLink(requestProcess: WpiRequestProcess) {
       break;
     case 'Bbz':
       link = {
-        to: generatePath(routeConfig.detailPageBbz.path, {
+        to: generatePath(themaInkomen.detailPageBbz.route.path, {
           id,
           version: '1',
         }),

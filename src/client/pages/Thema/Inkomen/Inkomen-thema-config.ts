@@ -28,9 +28,12 @@ export const wpiLinks = {
 };
 
 type WithlistPageSpecificaties = PageConfig<'listPageSpecificaties'>;
+type WithDetailPageBbz = PageConfig<'detailPageBbz'>;
+
 type InkomenThemaConfig = ThemaConfigBase &
   WithListPage &
-  WithlistPageSpecificaties;
+  WithlistPageSpecificaties &
+  WithDetailPageBbz;
 
 export const themaConfig: InkomenThemaConfig = {
   id: THEMA_ID,
@@ -85,6 +88,13 @@ export const themaConfig: InkomenThemaConfig = {
       trackingUrl: null,
     },
   },
+  detailPageBbz: {
+    route: {
+      path: '/inkomen/bbz/:version/:id',
+      trackingUrl: `/inkomen/bbz`,
+      documentTitle: `Bbz | ${THEMA_ID}`,
+    },
+  },
 };
 
 export const REQUEST_PROCESS_COMPLETED_STATUS_IDS = [
@@ -121,11 +131,6 @@ export const routeConfig = {
     path: '/inkomen/tonk/:version/:id',
     documentTitle: `TONK | ${THEMA_TITLE}`,
     trackingUrl: null,
-  },
-  detailPageBbz: {
-    path: '/inkomen/bbz/:version/:id',
-    trackingUrl: `/inkomen/bbz`,
-    documentTitle: `Bbz | ${THEMA_ID}`,
   },
 } as const satisfies ThemaRoutesConfig;
 

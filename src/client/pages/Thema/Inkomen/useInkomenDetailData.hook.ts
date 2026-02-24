@@ -23,5 +23,6 @@ export function useInkomenDetailData(
     isError: isError(STATE),
     breadcrumbs,
     routeConfig,
+    themaConfig,
   };
 }
