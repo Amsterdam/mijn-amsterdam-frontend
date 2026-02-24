@@ -16,7 +16,7 @@ const featureToggle = {
   ['USER_FEEDBACK.fetchSurvey']: true,
   ['cobrowse']: false,
 };
-// Make sure featureToggles imported from *-thema-configs have access.
+// Make sure featureToggles imported from frontend *-thema-configs have access.
 const g = globalThis as unknown as {
   [GLOBALTHIS_FEATURETOGGLE_KEY]: FeatureToggles;
 };
