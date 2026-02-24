@@ -21,7 +21,7 @@ import { themaConfig as bezwarenThemaConfig } from '../Thema/Bezwaren/Bezwaren-t
 import { themaConfig as bodemThemaConfig } from '../Thema/Bodem/Bodem-thema-config';
 import { themaConfig as erfpachtThemaConfig } from '../Thema/Erfpacht/Erfpacht-thema-config';
 import { themaConfig as hliThemaConfig } from '../Thema/HLI/HLI-thema-config';
-import { inkomenSectionProps } from '../Thema/Inkomen/InfoSection';
+import { themaConfig as inkomenThemaConfig } from '../Thema/Inkomen/Inkomen-thema-config';
 import { themaConfig as jeugdThemaConfig } from '../Thema/Jeugd/Jeugd-thema-config';
 import { themaConfig as klachtenThemaConfig } from '../Thema/Klachten/Klachten-thema-config';
 import { krefiaSectionProps } from '../Thema/Krefia/InfoSection';
@@ -68,7 +68,6 @@ const sections: InfoSection_DEPRECATED[] = [
   afvalSectionProps,
   belastingenSectionProps,
   afisSectionProps,
-  inkomenSectionProps,
   vergunningensectionProps,
   subsidiesSectionProps,
   krefiaSectionProps,
@@ -81,6 +80,7 @@ const sections: InfoSection_DEPRECATED[] = [
   ...createDeprecatedInfoSection(bodemThemaConfig),
   ...createDeprecatedInfoSection(erfpachtThemaConfig),
   ...createDeprecatedInfoSection(hliThemaConfig),
+  ...createDeprecatedInfoSection(inkomenThemaConfig),
   ...createDeprecatedInfoSection(jeugdThemaConfig),
   ...createDeprecatedInfoSection(klachtenThemaConfig),
   ...createDeprecatedInfoSection(toeristischeVerhuurThemaConfig),

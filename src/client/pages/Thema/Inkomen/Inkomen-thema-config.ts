@@ -17,17 +17,14 @@ import {
 const THEMA_ID = 'INKOMEN';
 const THEMA_TITLE = 'Inkomen';
 
-type InkomenThemaConfig = Pick<
-  ThemaConfigBase,
-  'id' | 'title' | 'pageLinks' | 'redactedScope' | 'profileTypes' | 'route'
->;
+type InkomenThemaConfig = ThemaConfigBase;
 
 export const themaConfig: InkomenThemaConfig = {
   id: THEMA_ID,
   title: THEMA_TITLE,
-  // featureToggle: {     /// TO DO YACINE hoe maak ik de featuretoggle?
-  //   active: true,
-  // },
+  featureToggle: {
+    active: true,
+  },
   profileTypes: ['private'],
   route: {
     path: '/inkomen',
@@ -46,12 +43,18 @@ export const themaConfig: InkomenThemaConfig = {
     },
   ],
 
-  //  uitlegPageSections: [
-  //   {
-  //     title: THEMA_TITLE,
-  //     listItems: ["Uw aanvraag voor 'lood in de bodem-check'"],
-  //   },
-  // ],
+  uitlegPageSections: [
+    {
+      title: THEMA_TITLE,
+      listItems: [
+        'Uw aanvraag voor een bijstandsuitkering of bijstand voor zelfstandigen (Bbz)',
+        'De uitkeringsspecificaties en jaaropgaven van uw bijstandsuitkering of bijstand voor zelfstandigen (Bbz)',
+        'Uw aanvraag voor de Tijdelijke overbruggingsregeling zelfstandig ondernemers (Tozo 1, 2, 3, 4 en 5)',
+        'Uw aanvraag voor de Tijdelijke Ondersteuning Noodzakelijke Kosten (TONK)',
+        'Uw aanvraag voor de Inkomensvoorziening oudere en gedeeltelijk arbeidsongeschikte gewezen zelfstandigen (IOAZ)',
+      ],
+    },
+  ],
 };
 
 export const REQUEST_PROCESS_COMPLETED_STATUS_IDS = [
