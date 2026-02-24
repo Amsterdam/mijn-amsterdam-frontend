@@ -21,8 +21,6 @@ const THEMA_TITLE = 'Inkomen';
 export const wpiLinks = {
   BIJSTANDSUITKERING:
     'https://www.amsterdam.nl/werk-inkomen/bijstandsuitkering/',
-  TOZO: 'https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/', //// TO DO YACINE >dode link
-  TONK: 'https://www.amsterdam.nl/tonk/', // TO DO YACINE >dode link
   BBZ: 'https://www.amsterdam.nl/ondernemen/ondersteuning/bijstand-lening-aanvragen-ondernemers/',
 };
 

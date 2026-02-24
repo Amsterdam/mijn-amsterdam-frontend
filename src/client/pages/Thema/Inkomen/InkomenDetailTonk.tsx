@@ -1,6 +1,5 @@
-import { LinkList, Paragraph } from '@amsterdam/design-system-react';
+import { Paragraph } from '@amsterdam/design-system-react';
 
-import { wpiLinks } from './Inkomen-thema-config';
 import { useInkomenDetailData } from './useInkomenDetailData.hook';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
@@ -14,11 +13,6 @@ const pageContentTop = (
       aanvragen. Het duurt maximaal 3 werkdagen voordat uw documenten over de
       TONK in Mijn Amsterdam staan.
     </Paragraph>
-    <LinkList>
-      <LinkList.Link rel="noreferrer" href={wpiLinks.TONK}>
-        Meer informatie over de TONK
-      </LinkList.Link>
-    </LinkList>
   </PageContentCell>
 );
 
