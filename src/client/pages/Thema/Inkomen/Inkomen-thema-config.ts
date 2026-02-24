@@ -109,11 +109,6 @@ export const routeConfig = {
       `${params?.kind === listPageParamKind.eerder ? 'Eerdere' : 'Lopende'} aanvragen | ${THEMA_TITLE}`,
     trackingUrl: null,
   },
-  themaPage: {
-    path: '/inkomen',
-    documentTitle: `${THEMA_TITLE} | overzicht`,
-    trackingUrl: null,
-  },
 } as const satisfies ThemaRoutesConfig;
 
 const lopendeAanvragenDisplayProps: DisplayProps<WpiRequestProcess> = {
