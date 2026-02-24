@@ -10,10 +10,7 @@ import {
   WpiRequestProcessLabels,
   WpiRequestStatus,
 } from './wpi-types';
-import {
-  routeConfig,
-  themaConfig as themaInkomen,
-} from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
+import { themaConfig as themaInkomen } from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
   GenericDocument,
@@ -186,7 +183,7 @@ export function addLink(requestProcess: WpiRequestProcess) {
       break;
     case 'Bijstandsuitkering':
       link = {
-        to: generatePath(routeConfig.detailPageUitkering.path, {
+        to: generatePath(themaInkomen.detailPageUitkering.route.path, {
           id,
         }),
         title,

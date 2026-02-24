@@ -12,7 +12,6 @@ import {
 import {
   PageConfig,
   ThemaConfigBase,
-  ThemaRoutesConfig,
   WithListPage,
 } from '../../../config/thema-types';
 
@@ -31,13 +30,15 @@ type WithlistPageSpecificaties = PageConfig<'listPageSpecificaties'>;
 type WithDetailPageBbz = PageConfig<'detailPageBbz'>;
 type WithDetailPageTonk = PageConfig<'detailPageTonk'>;
 type WithDetailPageTozo = PageConfig<'detailPageTozo'>;
+type WithDetailPageUitkering = PageConfig<'detailPageUitkering'>;
 
 type InkomenThemaConfig = ThemaConfigBase &
   WithListPage &
   WithlistPageSpecificaties &
   WithDetailPageBbz &
   WithDetailPageTonk &
-  WithDetailPageTozo;
+  WithDetailPageTozo &
+  WithDetailPageUitkering;
 
 export const themaConfig: InkomenThemaConfig = {
   id: THEMA_ID,
@@ -115,6 +116,13 @@ export const themaConfig: InkomenThemaConfig = {
       documentTitle: `Tozo | ${THEMA_TITLE}`,
     },
   },
+  detailPageUitkering: {
+    route: {
+      path: '/inkomen/bijstandsuitkering/:id',
+      trackingUrl: '/inkomen/bijstandsuitkering',
+      documentTitle: `Bijstandsuitkering | ${THEMA_TITLE}`,
+    },
+  },
 };
 
 export const REQUEST_PROCESS_COMPLETED_STATUS_IDS = [
@@ -133,14 +141,6 @@ export const listPageParamKind = {
 
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
-
-export const routeConfig = {
-  detailPageUitkering: {
-    path: '/inkomen/bijstandsuitkering/:id',
-    trackingUrl: '/inkomen/bijstandsuitkering',
-    documentTitle: `Bijstandsuitkering | ${THEMA_TITLE}`,
-  },
-} as const satisfies ThemaRoutesConfig;
 
 const lopendeAanvragenDisplayProps: DisplayProps<WpiRequestProcess> = {
   props: {

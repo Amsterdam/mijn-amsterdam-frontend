@@ -1,5 +1,5 @@
 import { isInkomenThemaActive } from './Inkomen-helpers';
-import { routeConfig, themaConfig } from './Inkomen-thema-config';
+import { themaConfig } from './Inkomen-thema-config';
 import { InkomenDetailBbz } from './InkomenDetailBbz';
 import { InkomenDetailTonk } from './InkomenDetailTonk';
 import { InkomenDetailTozo } from './InkomenDetailTozo';
@@ -28,7 +28,7 @@ export const InkomenRoutes = [
     Component: InkomenListSpecificaties,
   },
   {
-    route: routeConfig.detailPageUitkering.path,
+    route: themaConfig.detailPageUitkering.route.path,
     Component: InkomenDetailUitkering,
   },
   {

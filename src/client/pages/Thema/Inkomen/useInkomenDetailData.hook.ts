@@ -1,6 +1,6 @@
 import { useParams } from 'react-router';
 
-import { routeConfig, themaConfig } from './Inkomen-thema-config'; // TO DO YACINE > deze uit de useInkomenThemaData.hookhalen
+import { themaConfig } from './Inkomen-thema-config'; // TO DO YACINE > deze uit de useInkomenThemaData.hookhalen
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
@@ -22,7 +22,6 @@ export function useInkomenDetailData(
     isLoading: isLoading(STATE),
     isError: isError(STATE),
     breadcrumbs,
-    routeConfig,
     themaConfig,
   };
 }

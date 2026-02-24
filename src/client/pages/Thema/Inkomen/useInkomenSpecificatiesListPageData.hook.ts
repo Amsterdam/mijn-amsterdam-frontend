@@ -15,7 +15,6 @@ export function useInkomenSpecificatiesListPageData() {
     isLoadingWpiSpecificaties,
     listPageParamKind,
     breadcrumbs,
-    routeConfig,
   } = useInkomenThemaData();
 
   const params = useParams<{
@@ -145,6 +144,5 @@ export function useInkomenSpecificatiesListPageData() {
     total,
     breadcrumbs,
     themaPageRoute: themaConfig.route.path,
-    routeConfig,
   };
 }

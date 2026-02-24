@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 
 import {
   listPageParamKind,
-  routeConfig,
   tableConfig,
   themaConfig,
 } from './Inkomen-thema-config';
@@ -101,7 +100,6 @@ export function useInkomenThemaData() {
     tableConfig,
     breadcrumbs,
     listPageRoute: themaConfig.listPage.route.path,
-    routeConfig,
     themaConfig,
   };
 }
