@@ -1,8 +1,5 @@
 import type { ThemaConfigBase } from '../../../config/thema-types';
 
-export const featureToggle = {
-  AfvalActive: true,
-};
 export const links = {
   AFVAL: 'https://www.amsterdam.nl/afval/',
   AFVAL_COMMERCIAL: 'https://www.amsterdam.nl/afval-hergebruik/bedrijfsafval/',
@@ -15,10 +12,7 @@ export const links = {
 const THEMA_ID = 'AFVAL';
 const THEMA_TITLE = 'Afval';
 
-type AfvalThemaConfig = Pick<
-  ThemaConfigBase,
-  'id' | 'title' | 'profileTypes' | 'redactedScope' | 'route' | 'featureToggle'
->;
+type AfvalThemaConfig = ThemaConfigBase;
 
 export const themaConfig: AfvalThemaConfig = {
   id: THEMA_ID,
@@ -33,4 +27,13 @@ export const themaConfig: AfvalThemaConfig = {
   featureToggle: {
     active: true,
   },
+  uitlegPageSections: [
+    {
+      title: THEMA_TITLE,
+      listItems: [
+        'Informatie over afval laten ophalen en wegbrengen in uw buurt',
+      ],
+    },
+  ],
+  pageLinks: [], // TO DO YACINE?> lijkt mij lastig om de links die op de themapag verschijnen hier op te nemen, want zijn anders bij DIGID als bij EHERK
 };
