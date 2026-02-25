@@ -1,4 +1,3 @@
-import { isInkomenThemaActive } from './Inkomen-helpers';
 import { themaConfig } from './Inkomen-thema-config';
 import { InkomenDetailBbz } from './InkomenDetailBbz';
 import { InkomenDetailTonk } from './InkomenDetailTonk';
@@ -9,6 +8,8 @@ import { InkomenList } from './InkomenList';
 import { InkomenListSpecificaties } from './InkomenListSpecificaties';
 import { InkomenThema } from './InkomenThema';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles';
+import { isLoading } from '../../../../universal/helpers/api';
+import { AppState } from '../../../../universal/types/App.types';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
@@ -49,3 +50,33 @@ export const menuItem: ThemaMenuItem = {
   isActive: isInkomenThemaActive, // TO DO YACINE > moet deze ook in de themaConfig worden opgenomen?
   IconSVG: InkomenIcon,
 };
+
+function isInkomenThemaActive(appState: AppState): boolean {
+  const { WPI_AANVRAGEN, WPI_SPECIFICATIES, WPI_TOZO, WPI_TONK, WPI_BBZ } =
+    appState;
+  const { jaaropgaven, uitkeringsspecificaties } =
+    WPI_SPECIFICATIES?.content ?? {};
+  const hasAanvragen = !!WPI_AANVRAGEN?.content?.length;
+  const hasTozo = !!WPI_TOZO?.content?.length;
+  const hasTonk = !!WPI_TONK?.content?.length;
+  const hasBbz = !!WPI_BBZ?.content?.length;
+  const hasJaaropgaven = !!jaaropgaven?.length;
+  const hasUitkeringsspecificaties = !!uitkeringsspecificaties?.length;
+
+  return (
+    themaConfig.featureToggle.active &&
+    !(
+      isLoading(WPI_AANVRAGEN) &&
+      isLoading(WPI_SPECIFICATIES) &&
+      isLoading(WPI_TOZO) &&
+      isLoading(WPI_TONK) &&
+      isLoading(WPI_BBZ)
+    ) &&
+    (hasAanvragen ||
+      hasTozo ||
+      hasTonk ||
+      hasJaaropgaven ||
+      hasBbz ||
+      hasUitkeringsspecificaties)
+  );
+}

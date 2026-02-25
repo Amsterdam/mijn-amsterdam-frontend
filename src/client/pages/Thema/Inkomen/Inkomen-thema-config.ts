@@ -61,7 +61,6 @@ export const themaConfig: InkomenThemaConfig = {
       title: 'Contact Werk en Inkomen',
     },
   ],
-
   uitlegPageSections: [
     {
       title: THEMA_TITLE,
@@ -74,7 +73,6 @@ export const themaConfig: InkomenThemaConfig = {
       ],
     },
   ],
-
   listPage: {
     route: {
       path: '/inkomen/lijst/:kind/:page?',
