@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import slug from 'slugme';
 
-import { routeConfig } from './Horeca-thema-config';
+import { themaConfig } from './Horeca-thema-config';
 import { DOC_API_PATH, vergunning } from './Horeca.test';
 import { HorecaDetail } from './HorecaDetail';
 import { HorecaVergunningFrontend } from '../../../../server/services/horeca/decos-zaken';
@@ -29,13 +29,13 @@ const testState = {
 
 function MockVergunningDetail({ identifier }: { identifier: string }) {
   const vergunning = content.find((v) => v.identifier === identifier);
-  const routeEntry = generatePath(routeConfig.detailPage.path, {
+  const routeEntry = generatePath(themaConfig.detailPage.route.path, {
     caseType: slug(vergunning?.caseType, {
       lower: true,
     }),
     id: vergunning?.id as string,
   });
-  const routePath = routeConfig.detailPage.path;
+  const routePath = themaConfig.detailPage.route.path;
 
   return (
     <MockApp

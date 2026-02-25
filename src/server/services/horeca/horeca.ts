@@ -1,8 +1,5 @@
 import { decosZaakTransformers, HorecaVergunningFrontend } from './decos-zaken';
-import {
-  routeConfig,
-  themaConfig,
-} from '../../../client/pages/Thema/Horeca/Horeca-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/Horeca/Horeca-thema-config';
 import {
   apiSuccessResult,
   apiDependencyError,
@@ -31,7 +28,7 @@ export async function fetchHorecaVergunningen(
         authProfileAndToken.profile.sid,
         zaak,
         {
-          detailPageRoute: routeConfig.detailPage.path,
+          detailPageRoute: themaConfig.detailPage.route.path,
           includeFetchDocumentsUrl: true,
           getStepsFN: getStatusStepsDecos,
         }

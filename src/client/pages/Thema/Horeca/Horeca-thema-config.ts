@@ -5,7 +5,7 @@ import { entries } from '../../../../universal/helpers/utils';
 import { LinkProps } from '../../../../universal/types/App.types';
 import type {
   ThemaConfigBase,
-  ThemaRoutesConfig,
+  WithDetailPage,
   WithListPage,
 } from '../../../config/thema-types';
 import {
@@ -30,7 +30,9 @@ export const featureToggle = {
 const THEMA_ID = 'HORECA';
 const THEMA_TITLE = 'Horeca';
 
-type HorecaThemaConfig = ThemaConfigBase<typeof THEMA_ID> & WithListPage;
+type HorecaThemaConfig = ThemaConfigBase<typeof THEMA_ID> &
+  WithListPage &
+  WithDetailPage;
 
 export const themaConfig: HorecaThemaConfig = {
   id: THEMA_ID,
@@ -45,7 +47,7 @@ export const themaConfig: HorecaThemaConfig = {
     {
       title: THEMA_TITLE,
       listItems: [
-        'Inzien van uw aanvragen voor Horeca en ontheffingen bij gemeente Amsterdam.',
+        'Inzien van uw aanvragen voor Horeca en ontheffingen bij de gemeente Amsterdam.',
       ],
     },
   ],
@@ -62,17 +64,16 @@ export const themaConfig: HorecaThemaConfig = {
       trackingUrl: null,
     },
   },
-};
-
-export const routeConfig = {
   detailPage: {
-    path: '/horeca/:caseType/:id',
-    trackingUrl(params) {
-      return `/horeca/${params?.caseType}`;
+    route: {
+      path: '/horeca/:caseType/:id',
+      trackingUrl(params) {
+        return `/horeca/${params?.caseType}`;
+      },
+      documentTitle: `Horeca | THEMA_TITLE`,
     },
-    documentTitle: `Horeca | THEMA_TITLE`,
   },
-} as const satisfies ThemaRoutesConfig;
+};
 
 const tableConfigTitles = {
   [listPageParamKindVergunningen.inProgress]: 'Lopende aanvragen',

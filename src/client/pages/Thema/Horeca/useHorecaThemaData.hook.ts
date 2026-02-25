@@ -1,9 +1,4 @@
-import {
-  tableConfig,
-  LinkListItems,
-  routeConfig,
-  themaConfig,
-} from './Horeca-thema-config';
+import { tableConfig, themaConfig } from './Horeca-thema-config';
 import { HorecaVergunningFrontend } from '../../../../server/services/horeca/decos-zaken';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
@@ -23,13 +18,11 @@ export function useHorecaThemaData() {
     vergunningen,
     isLoading: isLoading(HORECA),
     isError: isError(HORECA),
-    linkListItems: LinkListItems,
     tableConfig,
     themaId: themaConfig.id,
     themaTitle: themaConfig.title,
     breadcrumbs,
     listPageRoute: themaConfig.listPage.route.path,
-    routeConfig,
     themaConfig,
   };
 }

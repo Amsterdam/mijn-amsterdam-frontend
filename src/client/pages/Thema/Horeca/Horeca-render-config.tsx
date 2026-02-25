@@ -1,4 +1,4 @@
-import { routeConfig, themaConfig } from './Horeca-thema-config';
+import { themaConfig } from './Horeca-thema-config';
 import { HorecaDetail } from './HorecaDetail';
 import { default as HorecaIcon } from './HorecaIcon.svg?react';
 import { HorecaList } from './HorecaList';
@@ -17,7 +17,7 @@ export const HorecaRoutes = [
     isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.detailPage.path,
+    route: themaConfig.detailPage.route.path,
     Component: HorecaDetail,
     isActive: themaConfig.featureToggle.active,
   },

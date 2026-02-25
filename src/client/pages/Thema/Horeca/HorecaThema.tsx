@@ -24,7 +24,6 @@ export function HorecaThema() {
     vergunningen,
     isLoading,
     isError,
-    linkListItems,
     themaConfig,
   } = useHorecaThemaData();
   useHTMLDocumentTitle(themaConfig.route);
@@ -52,7 +51,7 @@ export function HorecaThema() {
       isLoading={isLoading}
       pageContentTop={pageContentTop}
       pageContentMain={tables}
-      pageLinks={linkListItems}
+      pageLinks={themaConfig.pageLinks}
       maintenanceNotificationsPageSlug="horeca"
     />
   );
