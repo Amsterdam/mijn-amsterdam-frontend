@@ -1,7 +1,9 @@
 import { ThemaConfigBase } from '../../../config/thema-types';
 
-export const THEMA_ID = 'MILIEUZONE';
-export const THEMA_TITLE = 'Milieuzone';
+const MILIEUZONE_ROUTE_DEFAULT =
+  'https://ontheffingen.amsterdam.nl/publiek/aanvragen';
+const THEMA_ID = 'MILIEUZONE';
+const THEMA_TITLE = 'Milieuzone';
 
 type MilieuZoneThemaConfig = ThemaConfigBase;
 
@@ -13,7 +15,7 @@ export const themaConfig: MilieuZoneThemaConfig = {
   },
   profileTypes: ['private', 'commercial'],
   route: {
-    path: 'https://ontheffingen.amsterdam.nl/publiek/aanvragen',
+    path: MILIEUZONE_ROUTE_DEFAULT,
 
     trackingUrl: null,
     documentTitle: '',
