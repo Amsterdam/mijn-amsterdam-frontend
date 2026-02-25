@@ -1,6 +1,5 @@
 import { decosZaakTransformers, HorecaVergunningFrontend } from './decos-zaken';
 import {
-  featureToggle,
   routeConfig,
   themaConfig,
 } from '../../../client/pages/Thema/Horeca/Horeca-thema-config';
@@ -50,7 +49,7 @@ export async function fetchHorecaVergunningen(
 export async function fetchHorecaNotifications(
   authProfileAndToken: AuthProfileAndToken
 ) {
-  if (!featureToggle.horecaActive) {
+  if (!themaConfig.featureToggle.active) {
     return apiSuccessResult({
       notifications: [],
     });

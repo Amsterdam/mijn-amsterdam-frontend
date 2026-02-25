@@ -26,17 +26,22 @@ export const featureToggle = {
   horecaActive: true,
 };
 
-// export const themaId = 'HORECA' as const;
-// export const themaTitle = 'Horeca';
-
 const THEMA_ID = 'HORECA';
 const THEMA_TITLE = 'Horeca';
 
-type HorecaThemaConfig = Pick<ThemaConfigBase<typeof THEMA_ID>, 'id' | 'title'>;
+type HorecaThemaConfig = Pick<
+  ThemaConfigBase<typeof THEMA_ID>,
+  'id' | 'title' | 'profileTypes' | 'redactedScope' | 'featureToggle'
+>;
 
 export const themaConfig: HorecaThemaConfig = {
   id: THEMA_ID,
   title: THEMA_TITLE,
+  profileTypes: ['private', 'commercial'],
+  redactedScope: 'none',
+  featureToggle: {
+    active: true,
+  },
 };
 
 export const routeConfig = {

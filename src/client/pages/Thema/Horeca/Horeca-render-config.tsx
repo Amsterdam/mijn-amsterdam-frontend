@@ -1,4 +1,4 @@
-import { routeConfig, themaConfig, featureToggle } from './Horeca-thema-config';
+import { routeConfig, themaConfig } from './Horeca-thema-config';
 import { HorecaDetail } from './HorecaDetail';
 import { default as HorecaIcon } from './HorecaIcon.svg?react';
 import { HorecaList } from './HorecaList';
@@ -14,17 +14,17 @@ export const HorecaRoutes = [
   {
     route: routeConfig.listPage.path,
     Component: HorecaList,
-    isActive: featureToggle.horecaActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
     route: routeConfig.detailPage.path,
     Component: HorecaDetail,
-    isActive: featureToggle.horecaActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
     route: routeConfig.themaPage.path,
     Component: HorecaThema,
-    isActive: featureToggle.horecaActive,
+    isActive: themaConfig.featureToggle.active,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
@@ -36,7 +36,7 @@ export const menuItem: ThemaMenuItem = {
   redactedScope: 'none',
   isActive(appState: AppState) {
     return (
-      featureToggle.horecaActive &&
+      themaConfig.featureToggle.active &&
       !isLoading(appState.HORECA) &&
       !!appState.HORECA.content?.length
     );
