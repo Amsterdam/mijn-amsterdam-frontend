@@ -22,7 +22,7 @@ export const HorecaRoutes = [
     isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.themaPage.path,
+    route: themaConfig.route.path,
     Component: HorecaThema,
     isActive: themaConfig.featureToggle.active,
   },
@@ -31,7 +31,7 @@ export const HorecaRoutes = [
 export const menuItem: ThemaMenuItem = {
   title: themaConfig.title,
   id: themaConfig.id,
-  to: routeConfig.themaPage.path,
+  to: themaConfig.route.path,
   profileTypes: ['private', 'commercial'],
   redactedScope: 'none',
   isActive(appState: AppState) {

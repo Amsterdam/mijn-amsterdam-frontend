@@ -115,10 +115,7 @@ const pageRouteResolvers: PageRouteResolvers = {
     VERGUNNINGEN.routeConfig.themaPage.path,
     VERGUNNINGEN.themaId
   ),
-  horeca: baseThemaConfig(
-    HORECA.routeConfig.themaPage.path,
-    HORECA.themaConfig.id
-  ),
+  horeca: baseThemaConfig(HORECA.themaConfig.route.path, HORECA.themaConfig.id),
   parkeren: baseThemaConfig(
     PARKEREN.routeConfig.themaPage.path,
     PARKEREN.themaId,

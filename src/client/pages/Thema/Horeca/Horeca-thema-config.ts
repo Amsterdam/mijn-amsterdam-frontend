@@ -31,7 +31,7 @@ const THEMA_TITLE = 'Horeca';
 
 type HorecaThemaConfig = Pick<
   ThemaConfigBase<typeof THEMA_ID>,
-  'id' | 'title' | 'profileTypes' | 'redactedScope' | 'featureToggle'
+  'id' | 'title' | 'profileTypes' | 'redactedScope' | 'featureToggle' | 'route'
 >;
 
 export const themaConfig: HorecaThemaConfig = {
@@ -41,6 +41,11 @@ export const themaConfig: HorecaThemaConfig = {
   redactedScope: 'none',
   featureToggle: {
     active: true,
+  },
+  route: {
+    path: '/horeca',
+    documentTitle: `THEMA_TITLE | overzicht`,
+    trackingUrl: null,
   },
 };
 
@@ -56,11 +61,6 @@ export const routeConfig = {
     path: '/horeca/lijst/:kind/:page?',
     documentTitle: (params) =>
       `${tableConfigVergunningen[(params?.kind as ListPageParamKind) || 'lopende-aanvragen'].title} | THEMA_TITLE`,
-    trackingUrl: null,
-  },
-  themaPage: {
-    path: '/horeca',
-    documentTitle: `THEMA_TITLE | overzicht`,
     trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
