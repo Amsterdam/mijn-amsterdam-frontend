@@ -2,8 +2,7 @@ import { decosZaakTransformers, HorecaVergunningFrontend } from './decos-zaken';
 import {
   featureToggle,
   routeConfig,
-  themaId,
-  themaTitle,
+  themaConfig,
 } from '../../../client/pages/Thema/Horeca/Horeca-thema-config';
 import {
   apiSuccessResult,
@@ -15,8 +14,8 @@ import {
   fetchDecosZaken,
   transformDecosZaakFrontend,
 } from '../decos/decos-service';
-import { getVergunningNotifications } from '../vergunningen/vergunningen-notifications';
 import { getStatusStepsDecos } from '../vergunningen/decos-status-steps';
+import { getVergunningNotifications } from '../vergunningen/vergunningen-notifications';
 
 export async function fetchHorecaVergunningen(
   authProfileAndToken: AuthProfileAndToken
@@ -62,8 +61,8 @@ export async function fetchHorecaNotifications(
   if (horecaResponse.status === 'OK') {
     const notifications = getVergunningNotifications(
       horecaResponse.content ?? [],
-      themaId,
-      themaTitle
+      themaConfig.id,
+      themaConfig.title
     );
 
     return apiSuccessResult({

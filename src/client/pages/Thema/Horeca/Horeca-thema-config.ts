@@ -3,7 +3,10 @@ import { generatePath } from 'react-router';
 
 import { entries } from '../../../../universal/helpers/utils';
 import { LinkProps } from '../../../../universal/types/App.types';
-import type { ThemaRoutesConfig } from '../../../config/thema-types';
+import type {
+  ThemaConfigBase,
+  ThemaRoutesConfig,
+} from '../../../config/thema-types';
 import {
   ListPageParamKind as ListPageParamKindVergunningen,
   listPageParamKind as listPageParamKindVergunningen,
@@ -23,8 +26,18 @@ export const featureToggle = {
   horecaActive: true,
 };
 
-export const themaId = 'HORECA' as const;
-export const themaTitle = 'Horeca';
+// export const themaId = 'HORECA' as const;
+// export const themaTitle = 'Horeca';
+
+const THEMA_ID = 'HORECA';
+const THEMA_TITLE = 'Horeca';
+
+type HorecaThemaConfig = Pick<ThemaConfigBase<typeof THEMA_ID>, 'id' | 'title'>;
+
+export const themaConfig: HorecaThemaConfig = {
+  id: THEMA_ID,
+  title: THEMA_TITLE,
+};
 
 export const routeConfig = {
   detailPage: {
@@ -32,17 +45,17 @@ export const routeConfig = {
     trackingUrl(params) {
       return `/horeca/${params?.caseType}`;
     },
-    documentTitle: `Horeca | ${themaTitle}`,
+    documentTitle: `Horeca | THEMA_TITLE`,
   },
   listPage: {
     path: '/horeca/lijst/:kind/:page?',
     documentTitle: (params) =>
-      `${tableConfigVergunningen[(params?.kind as ListPageParamKind) || 'lopende-aanvragen'].title} | ${themaTitle}`,
+      `${tableConfigVergunningen[(params?.kind as ListPageParamKind) || 'lopende-aanvragen'].title} | THEMA_TITLE`,
     trackingUrl: null,
   },
   themaPage: {
     path: '/horeca',
-    documentTitle: `${themaTitle} | overzicht`,
+    documentTitle: `THEMA_TITLE | overzicht`,
     trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;

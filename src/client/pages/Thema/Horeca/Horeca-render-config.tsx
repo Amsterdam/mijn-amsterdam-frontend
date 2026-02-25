@@ -1,9 +1,4 @@
-import {
-  routeConfig,
-  themaId,
-  themaTitle,
-  featureToggle,
-} from './Horeca-thema-config';
+import { routeConfig, themaConfig, featureToggle } from './Horeca-thema-config';
 import { HorecaDetail } from './HorecaDetail';
 import { default as HorecaIcon } from './HorecaIcon.svg?react';
 import { HorecaList } from './HorecaList';
@@ -33,9 +28,9 @@ export const HorecaRoutes = [
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
-export const menuItem: ThemaMenuItem<typeof themaId> = {
-  title: themaTitle,
-  id: themaId,
+export const menuItem: ThemaMenuItem = {
+  title: themaConfig.title,
+  id: themaConfig.id,
   to: routeConfig.themaPage.path,
   profileTypes: ['private', 'commercial'],
   redactedScope: 'none',
