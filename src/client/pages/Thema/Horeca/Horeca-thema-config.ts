@@ -29,10 +29,7 @@ export const featureToggle = {
 const THEMA_ID = 'HORECA';
 const THEMA_TITLE = 'Horeca';
 
-type HorecaThemaConfig = Pick<
-  ThemaConfigBase<typeof THEMA_ID>,
-  'id' | 'title' | 'profileTypes' | 'redactedScope' | 'featureToggle' | 'route'
->;
+type HorecaThemaConfig = ThemaConfigBase<typeof THEMA_ID>;
 
 export const themaConfig: HorecaThemaConfig = {
   id: THEMA_ID,
@@ -47,6 +44,13 @@ export const themaConfig: HorecaThemaConfig = {
     documentTitle: `THEMA_TITLE | overzicht`,
     trackingUrl: null,
   },
+  pageLinks: [],
+  uitlegPageSections: [
+    {
+      title: THEMA_TITLE,
+      listItems: [],
+    },
+  ],
 };
 
 export const routeConfig = {
