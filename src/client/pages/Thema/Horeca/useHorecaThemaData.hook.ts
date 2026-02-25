@@ -28,7 +28,7 @@ export function useHorecaThemaData() {
     themaId: themaConfig.id,
     themaTitle: themaConfig.title,
     breadcrumbs,
-    listPageRoute: routeConfig.listPage.path,
+    listPageRoute: themaConfig.listPage.route.path,
     routeConfig,
     themaConfig,
   };

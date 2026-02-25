@@ -12,7 +12,7 @@ import {
 
 export const HorecaRoutes = [
   {
-    route: routeConfig.listPage.path,
+    route: themaConfig.listPage.route.path,
     Component: HorecaList,
     isActive: themaConfig.featureToggle.active,
   },

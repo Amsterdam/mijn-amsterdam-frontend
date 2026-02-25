@@ -6,6 +6,7 @@ import { LinkProps } from '../../../../universal/types/App.types';
 import type {
   ThemaConfigBase,
   ThemaRoutesConfig,
+  WithListPage,
 } from '../../../config/thema-types';
 import {
   ListPageParamKind as ListPageParamKindVergunningen,
@@ -29,7 +30,7 @@ export const featureToggle = {
 const THEMA_ID = 'HORECA';
 const THEMA_TITLE = 'Horeca';
 
-type HorecaThemaConfig = ThemaConfigBase<typeof THEMA_ID>;
+type HorecaThemaConfig = ThemaConfigBase<typeof THEMA_ID> & WithListPage;
 
 export const themaConfig: HorecaThemaConfig = {
   id: THEMA_ID,
@@ -38,11 +39,6 @@ export const themaConfig: HorecaThemaConfig = {
   redactedScope: 'none',
   featureToggle: {
     active: true,
-  },
-  route: {
-    path: '/horeca',
-    documentTitle: `THEMA_TITLE | overzicht`,
-    trackingUrl: null,
   },
   pageLinks: [],
   uitlegPageSections: [
@@ -53,6 +49,19 @@ export const themaConfig: HorecaThemaConfig = {
       ],
     },
   ],
+  route: {
+    path: '/horeca',
+    documentTitle: `THEMA_TITLE | overzicht`,
+    trackingUrl: null,
+  },
+  listPage: {
+    route: {
+      path: '/horeca/lijst/:kind/:page?',
+      documentTitle: (params) =>
+        `${tableConfigVergunningen[(params?.kind as ListPageParamKind) || 'lopende-aanvragen'].title} | THEMA_TITLE`,
+      trackingUrl: null,
+    },
+  },
 };
 
 export const routeConfig = {
@@ -62,12 +71,6 @@ export const routeConfig = {
       return `/horeca/${params?.caseType}`;
     },
     documentTitle: `Horeca | THEMA_TITLE`,
-  },
-  listPage: {
-    path: '/horeca/lijst/:kind/:page?',
-    documentTitle: (params) =>
-      `${tableConfigVergunningen[(params?.kind as ListPageParamKind) || 'lopende-aanvragen'].title} | THEMA_TITLE`,
-    trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
 
@@ -85,7 +88,7 @@ export const tableConfig = Object.fromEntries(
       {
         ...tableConfig,
         title: tableConfigTitles[kind],
-        listPageRoute: generatePath(routeConfig.listPage.path, {
+        listPageRoute: generatePath(themaConfig.listPage.route.path, {
           kind,
           page: null,
         }),
