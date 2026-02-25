@@ -48,7 +48,9 @@ export const themaConfig: HorecaThemaConfig = {
   uitlegPageSections: [
     {
       title: THEMA_TITLE,
-      listItems: [],
+      listItems: [
+        'Hier ziet u een overzicht van uw aanvragen voor Horeca en ontheffingen bij gemeente Amsterdam.',
+      ],
     },
   ],
 };
