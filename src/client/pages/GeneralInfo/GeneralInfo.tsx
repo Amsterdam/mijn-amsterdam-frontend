@@ -29,7 +29,7 @@ import { themaConfig as milieuZoneThemaConfig } from '../Thema/Milieuzone/Milieu
 import { overtredingensectionProps } from '../Thema/Overtredingen/InfoSection';
 import { parkerensectionProps } from '../Thema/Parkeren/InfoSection';
 import { profileSectionProps } from '../Thema/Profile/InfoSection';
-import { subsidiesSectionProps } from '../Thema/Subsidies/InfoSection';
+import { themaConfig as subsidiesThemaConfig } from '../Thema/Subsidies/Subsidies-thema-config';
 import { themaConfig as toeristischeVerhuurThemaConfig } from '../Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 import { varensectionProps } from '../Thema/Varen/infoSection';
 import { vergunningensectionProps } from '../Thema/Vergunningen/InfoSection';
@@ -70,7 +70,6 @@ const sections: InfoSection_DEPRECATED[] = [
   afisSectionProps,
   inkomenSectionProps,
   vergunningensectionProps,
-  subsidiesSectionProps,
   krefiaSectionProps,
   parkerensectionProps,
 
@@ -84,6 +83,7 @@ const sections: InfoSection_DEPRECATED[] = [
   ...createDeprecatedInfoSection(jeugdThemaConfig),
   ...createDeprecatedInfoSection(klachtenThemaConfig),
   ...createDeprecatedInfoSection(milieuZoneThemaConfig),
+  ...createDeprecatedInfoSection(subsidiesThemaConfig),
   ...createDeprecatedInfoSection(toeristischeVerhuurThemaConfig),
   ...createDeprecatedInfoSection(zorgThemaConfig),
 ];
