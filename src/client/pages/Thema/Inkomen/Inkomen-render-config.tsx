@@ -47,7 +47,7 @@ export const menuItem: ThemaMenuItem = {
   to: themaConfig.route.path,
   redactedScope: themaConfig.redactedScope,
   profileTypes: themaConfig.profileTypes,
-  isActive: isInkomenThemaActive, // TO DO YACINE > moet deze ook in de themaConfig worden opgenomen?
+  isActive: isInkomenThemaActive,
   IconSVG: InkomenIcon,
 };
 
