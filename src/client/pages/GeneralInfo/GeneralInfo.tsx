@@ -65,7 +65,6 @@ export type SectionProps = {
 const sections: InfoSection_DEPRECATED[] = [
   profileSectionProps,
   myAreaSectionProps,
-  belastingenSectionProps,
   inkomenSectionProps,
   vergunningensectionProps,
   krefiaSectionProps,
