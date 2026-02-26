@@ -8,7 +8,6 @@ import { useInkomenThemaData } from './useInkomenThemaData.hook';
 
 export function useInkomenSpecificatiesListPageData() {
   const {
-    id,
     jaaropgaven,
     specificaties,
     isErrorWpiSpecificaties,
@@ -114,7 +113,7 @@ export function useInkomenSpecificatiesListPageData() {
   }
 
   return {
-    themaId: id,
+    themaId: themaConfig.id,
     categoryFilterActive,
     categoryFilterOptions,
     hasCategoryFilters,
