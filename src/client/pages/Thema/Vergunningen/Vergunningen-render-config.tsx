@@ -1,8 +1,7 @@
 import {
   routeConfig,
-  themaId,
-  themaTitle,
   featureToggle,
+  themaConfig,
 } from './Vergunningen-thema-config';
 import { VergunningenDetail } from './VergunningenDetail';
 import { default as VergunningenIcon } from './VergunningenIcon.svg?react';
@@ -33,12 +32,12 @@ export const VergunningenRoutes = [
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
-export const menuItem: ThemaMenuItem<typeof themaId> = {
-  title: themaTitle,
-  id: themaId,
+export const menuItem: ThemaMenuItem = {
+  title: themaConfig.title,
+  id: themaConfig.id,
   to: routeConfig.themaPage.path,
-  profileTypes: ['private', 'commercial'],
-  redactedScope: 'none',
+  profileTypes: themaConfig.profileTypes,
+  redactedScope: themaConfig.redactedScope,
   isActive(appState: AppState) {
     return (
       featureToggle.vergunningenActive &&

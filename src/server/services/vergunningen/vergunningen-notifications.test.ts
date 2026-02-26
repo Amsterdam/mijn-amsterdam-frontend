@@ -8,10 +8,7 @@ import {
   getVergunningNotifications,
   fetchVergunningenNotifications,
 } from './vergunningen-notifications';
-import {
-  themaId,
-  themaTitle,
-} from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config';
 import { getAuthProfileAndToken } from '../../../testing/utils';
 import {
   apiSuccessResult,
@@ -41,8 +38,8 @@ describe('vergunningen-notifications', () => {
       } as unknown as DecosZaakFrontend;
 
       const notification = createNotificationDefault(vergunning, {
-        themaID: themaId,
-        themaTitle,
+        themaID: themaConfig.id,
+        themaTitle: themaConfig.title,
       });
       expect(notification).toHaveProperty(
         'title',
@@ -68,8 +65,8 @@ describe('vergunningen-notifications', () => {
       } as unknown as DecosZaakFrontend;
 
       const notification = createNotificationDefault(vergunning, {
-        themaID: themaId,
-        themaTitle,
+        themaID: themaConfig.id,
+        themaTitle: themaConfig.title,
       });
       expect(notification).toBeNull();
     });
@@ -165,8 +162,8 @@ describe('vergunningen-notifications', () => {
 
       const notifications = getVergunningNotifications(
         vergunningen,
-        themaId,
-        themaTitle
+        themaConfig.id,
+        themaConfig.title
       );
       expect(notifications).toStrictEqual([
         {

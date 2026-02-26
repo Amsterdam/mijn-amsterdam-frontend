@@ -15,7 +15,10 @@ import { dateSort } from '../../../../universal/helpers/date';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
-import type { ThemaRoutesConfig } from '../../../config/thema-types';
+import type {
+  ThemaConfigBase,
+  ThemaRoutesConfig,
+} from '../../../config/thema-types';
 
 type VergunningFrontendDisplayProps = DisplayProps<DecosZaakFrontend>;
 
@@ -81,22 +84,37 @@ export const featureToggle = {
 export const themaId = 'VERGUNNINGEN' as const;
 export const themaTitle = 'Vergunningen en ontheffingen';
 
+const THEMA_ID = 'VERGUNNINGEN';
+const THEMA_TITLE = 'Vergunningen en ontheffingen';
+
+type VergunningenThemaConfig = Pick<
+  ThemaConfigBase,
+  'id' | 'title' | 'profileTypes' | 'redactedScope'
+>;
+
+export const themaConfig: VergunningenThemaConfig = {
+  id: THEMA_ID,
+  title: THEMA_TITLE,
+  profileTypes: ['private', 'commercial'],
+  redactedScope: 'none',
+};
+
 export const routeConfig = {
   detailPage: {
     path: '/vergunningen/:caseType/:id',
     trackingUrl(params) {
       return `/vergunningen/${params?.caseType}`;
     },
-    documentTitle: `Vergunningen | ${themaTitle}`,
+    documentTitle: `Vergunningen | ${THEMA_TITLE}`,
   },
   listPage: {
     path: '/vergunningen/lijst/:kind/:page?',
-    documentTitle: getListPageDocumentTitle(themaTitle),
+    documentTitle: getListPageDocumentTitle(THEMA_TITLE),
     trackingUrl: null,
   },
   themaPage: {
     path: '/vergunningen',
-    documentTitle: `${themaTitle} | overzicht`,
+    documentTitle: `${THEMA_TITLE} | overzicht`,
     trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;

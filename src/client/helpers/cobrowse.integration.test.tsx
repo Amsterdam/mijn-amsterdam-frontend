@@ -21,10 +21,7 @@ import { BezwarenThema } from '../pages/Thema/Bezwaren/BezwarenThema';
 import { mapperContactmomentToMenuItem } from '../pages/Thema/Profile/private/Contactmomenten.config';
 import { ContactmomentenListPage } from '../pages/Thema/Profile/private/ContactmomentenListPage';
 import { MijnGegevensThema } from '../pages/Thema/Profile/private/ProfilePrivate';
-import {
-  themaId as themaIdVergunningen,
-  themaTitle as themaTitleVergunningen,
-} from '../pages/Thema/Vergunningen/Vergunningen-thema-config';
+import { themaConfig as themaVergunningen } from '../pages/Thema/Vergunningen/Vergunningen-thema-config';
 
 const testState = {
   KLANT_CONTACT: {
@@ -37,7 +34,7 @@ const testState = {
         themaKanaal: themaTitleAfis, // We misuse this to keep things together
       },
       {
-        subject: themaIdVergunningen,
+        subject: themaVergunningen.id,
       },
     ],
   },
@@ -73,11 +70,11 @@ const testState = {
       },
       {
         id: 'Not2',
-        title: `Notification ${themaTitleVergunningen}`,
+        title: `Notification ${themaVergunningen.title}`,
         description: 'Notificatie2',
         datePublished: '2021-07-24',
-        themaID: themaIdVergunningen,
-        themaTitle: themaTitleVergunningen,
+        themaID: themaVergunningen.id,
+        themaTitle: themaVergunningen.title,
         link: {
           to: '/item-2',
           title: 'Linkje!',
@@ -156,7 +153,7 @@ describe('Cobrowse redacted components', () => {
         expect(screen.getByTestId(themaConfigBezwaren.title)).toHaveClass(
           'redacted'
         );
-        expect(screen.getByTestId(themaTitleVergunningen)).not.toHaveClass(
+        expect(screen.getByTestId(themaVergunningen.title)).not.toHaveClass(
           'redacted'
         );
       });
@@ -169,7 +166,7 @@ describe('Cobrowse redacted components', () => {
         );
         expect(redactedNotification).toHaveClass('redacted');
         const nonRedactedNotification = listItems.find((li) =>
-          li.textContent?.includes(themaTitleVergunningen)
+          li.textContent?.includes(themaVergunningen.title)
         );
         expect(nonRedactedNotification).not.toHaveClass('redacted');
       });
@@ -183,7 +180,7 @@ describe('Cobrowse redacted components', () => {
       );
       expect(redactedNotification).toHaveClass('redacted');
       const nonRedactedNotification = listItems.find((li) =>
-        li.textContent?.includes(themaTitleVergunningen)
+        li.textContent?.includes(themaVergunningen.title)
       );
       expect(nonRedactedNotification).not.toHaveClass('redacted');
     });

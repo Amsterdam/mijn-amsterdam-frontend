@@ -6,8 +6,7 @@ import {
 } from './vergunningen-helpers';
 import {
   routeConfig,
-  themaId,
-  themaTitle,
+  themaConfig,
 } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config';
 import {
   apiDependencyError,
@@ -24,7 +23,7 @@ function getNotificationBase<ID extends string>(
   themaTitle: string
 ): Pick<MyNotification, 'themaID' | 'themaTitle' | 'id' | 'link'> {
   const notificationBaseProperties = {
-    themaID: themaID,
+    themaID,
     themaTitle,
     id: `vergunning-${vergunning.id}-notification`,
     link: {
@@ -169,8 +168,8 @@ export async function fetchVergunningenNotifications(
   if (VERGUNNINGEN.status === 'OK') {
     const notifications = getVergunningNotifications(
       VERGUNNINGEN.content,
-      themaId,
-      themaTitle
+      themaConfig.id,
+      themaConfig.title
     );
 
     return apiSuccessResult({

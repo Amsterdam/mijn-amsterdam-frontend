@@ -1,13 +1,9 @@
-import {
-  featureToggle,
-  themaId,
-  themaTitle,
-} from './Vergunningen-thema-config';
+import { featureToggle, themaConfig } from './Vergunningen-thema-config';
 import { InfoSection_DEPRECATED } from '../../GeneralInfo/GeneralInfo';
 
 export const vergunningensectionProps: InfoSection_DEPRECATED = {
-  id: themaId,
-  title: themaTitle,
+  id: themaConfig.id,
+  title: themaConfig.title,
   listItems: [
     {
       text: 'Uw aanvraag voor een ontheffing of vergunning voor de volgende activiteiten:',

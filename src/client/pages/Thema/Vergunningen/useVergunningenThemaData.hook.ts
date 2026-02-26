@@ -2,8 +2,7 @@ import {
   linkListItems,
   routeConfig,
   tableConfig,
-  themaId,
-  themaTitle,
+  themaConfig,
 } from './Vergunningen-thema-config';
 import type { ZaakFrontendCombined } from '../../../../server/services/vergunningen/config-and-types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
@@ -19,11 +18,11 @@ export function useVergunningenThemaData() {
     true
   );
   const hasParkeervergunningen = !!PARKEREN.content?.vergunningen?.length;
-  const breadcrumbs = useThemaBreadcrumbs(themaId);
+  const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
   return {
-    id: themaId,
-    title: themaTitle,
+    id: themaConfig.id,
+    title: themaConfig.title,
     vergunningen,
     isLoading: isLoading(VERGUNNINGEN),
     isError: isError(VERGUNNINGEN),
