@@ -127,17 +127,17 @@ function transformCleopatraResponse(
           {
             let themaID:
               | typeof MILIEUZONE.themaId
-              | typeof OVERTREDINGEN.themaId = MILIEUZONE.themaId;
+              | typeof OVERTREDINGEN.themaConfig.id = MILIEUZONE.themaId;
             let themaTitle:
               | typeof MILIEUZONE.themaTitle
-              | typeof OVERTREDINGEN.themaTitle = MILIEUZONE.themaTitle;
+              | typeof OVERTREDINGEN.themaConfig.title = MILIEUZONE.themaTitle;
 
             if (
-              OVERTREDINGEN.featureToggle.overtredingenActive &&
+              OVERTREDINGEN.themaConfig.featureToggle.active &&
               message.thema === 'Overtredingen'
             ) {
-              themaID = OVERTREDINGEN.themaId;
-              themaTitle = OVERTREDINGEN.themaTitle;
+              themaID = OVERTREDINGEN.themaConfig.id;
+              themaTitle = OVERTREDINGEN.themaConfig.title;
             }
 
             notifications.push({
@@ -219,7 +219,7 @@ export async function fetchOvertredingen(
       isKnown: response.content?.isKnownOvertredingen ?? false,
       url:
         getFromEnv('BFF_SSO_URL_OVERTREDINGEN') ??
-        OVERTREDINGEN.OVERTREDINGEN_ROUTE_DEFAULT,
+        OVERTREDINGEN.themaConfig.route.path,
     });
   }
 
@@ -253,5 +253,5 @@ export async function fetchMilieuzoneNotifications(
 export async function fetchOvertredingenNotifications(
   authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchNotifications(authProfileAndToken, OVERTREDINGEN.themaId);
+  return fetchNotifications(authProfileAndToken, OVERTREDINGEN.themaConfig.id);
 }
