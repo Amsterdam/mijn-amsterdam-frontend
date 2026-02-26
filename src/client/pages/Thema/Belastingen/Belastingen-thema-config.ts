@@ -4,9 +4,7 @@ const BELASTINGEN_ROUTE_DEFAULT = 'https://belastingbalie.amsterdam.nl';
 const THEMA_ID = 'BELASTINGEN';
 const THEMA_TITLE = 'Belastingen';
 
-type BelastingenThemaConfig = ThemaConfigBase;
-
-export const themaConfig: BelastingenThemaConfig = {
+export const themaConfig: ThemaConfigBase = {
   id: THEMA_ID,
   title: THEMA_TITLE,
   featureToggle: {
