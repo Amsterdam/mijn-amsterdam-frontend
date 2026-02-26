@@ -6,6 +6,7 @@ import {
   type OnttrekkingsvergunningSloop,
   type Samenvoegingsvergunning,
   type Splitsingsvergunning,
+  type OnttrekkingsvergunningTweedeWoning,
   type VormenVanWoonruimte,
 } from './config-and-types';
 import { SELECT_FIELDS_TRANSFORM_BASE } from '../powerbrowser/powerbrowser-field-transformers';
@@ -20,6 +21,7 @@ export const documentNamesMA = {
   INTREKKING: 'Besluit intrekking',
   MEER_INFORMATIE: 'Verzoek aanvullende gegevens',
   SAMENVATTING: 'Samenvatting aanvraagformulier',
+  BESLUIT: 'Besluiten en vastleggen',
 } as const;
 
 const LigplaatsvergunningZaakTransformer: PowerBrowserZaakTransformer<Ligplaatsvergunning> =
@@ -31,7 +33,8 @@ const LigplaatsvergunningZaakTransformer: PowerBrowserZaakTransformer<Ligplaatsv
     },
     // TODO: MIJN-12348 - Replace with actual document names and add mock data
     transformDoclinks: {
-      'Besluiten en vastleggen': ['Besluit Ligplaatsvergunning'],
+      [documentNamesMA.BESLUIT]: ['Besluit'],
+      [documentNamesMA.MEER_INFORMATIE]: ['Verzoek aanvullende gegevens'],
       [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
     } as const,
   };
@@ -47,10 +50,8 @@ const OmzettingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Omzetting
     },
     transformDoclinks: {
       // TODO: MIJN-12348 - Replace with actual document names and add mock data
-      'Besluiten en vastleggen': [
-        'Besluit Omzettingsvergunning',
-        'Besluit Vergunning voor kamerverhuur',
-      ],
+      [documentNamesMA.BESLUIT]: ['Besluit'],
+      [documentNamesMA.MEER_INFORMATIE]: ['Verzoek aanvullende gegevens'],
       [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
     } as const,
   };
@@ -66,10 +67,8 @@ const SamenvoegingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Samenv
     },
     transformDoclinks: {
       // TODO: MIJN-12348 - Replace with actual document names and add mock data
-      'Besluiten en vastleggen': [
-        'Besluit Samenvoegingsvergunning',
-        'Besluit Vergunning voor samenvoegen',
-      ],
+      [documentNamesMA.BESLUIT]: ['Besluit'],
+      [documentNamesMA.MEER_INFORMATIE]: ['Verzoek aanvullende gegevens'],
       [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
     } as const,
   };
@@ -88,7 +87,8 @@ const OnttrekkingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Onttrek
     },
     transformDoclinks: {
       // TODO: MIJN-12348 - Replace with actual document names and add mock data
-      'Besluiten en vastleggen': ['Besluit Onttrekkingsvergunning'],
+      [documentNamesMA.BESLUIT]: ['Besluit'],
+      [documentNamesMA.MEER_INFORMATIE]: ['Verzoek aanvullende gegevens'],
       [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
     } as const,
   };
@@ -112,10 +112,8 @@ const OnttrekkingsvergunningSloopZaakTransformer: PowerBrowserZaakTransformer<On
     },
     transformDoclinks: {
       // TODO: MIJN-12348 - Replace with actual document names and add mock data
-      'Besluiten en vastleggen': [
-        'Besluit Ontrekkingsvergunning',
-        'Besluit Onttrekkingsvergunning ',
-      ],
+      [documentNamesMA.BESLUIT]: ['Besluit'],
+      [documentNamesMA.MEER_INFORMATIE]: ['Verzoek aanvullende gegevens'],
       [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
     } as const,
   };
@@ -131,10 +129,28 @@ const VormenVanWoonruimteZaakTransformer: PowerBrowserZaakTransformer<VormenVanW
     },
     transformDoclinks: {
       // TODO: MIJN-12348 - Replace with actual document names and add mock data
-      'Besluiten en vastleggen': [
-        'Besluit Woningvormingsvergunning',
-        'Besluit woningvormen',
-      ],
+      [documentNamesMA.BESLUIT]: ['Besluit'],
+      [documentNamesMA.MEER_INFORMATIE]: ['Verzoek aanvullende gegevens'],
+      [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
+    } as const,
+  };
+
+const OnttrekkingsvergunningTweedeWoningZaakTransformer: PowerBrowserZaakTransformer<OnttrekkingsvergunningTweedeWoning> =
+  {
+    caseType: caseTypePB.OnttrekkingsvergunningTweedeWoning,
+    title: 'Voorraadvergunning tweede woning',
+    fetchZaakIdFilter: (pbRecordField) =>
+      hasCaseTypeInFMT_CAPTION(
+        pbRecordField,
+        OnttrekkingsvergunningTweedeWoningZaakTransformer.title
+      ),
+    transformFields: {
+      ...SELECT_FIELDS_TRANSFORM_BASE,
+    },
+    transformDoclinks: {
+      // TODO: MIJN-12348 - Replace with actual document names and add mock data
+      [documentNamesMA.BESLUIT]: ['Besluit'],
+      [documentNamesMA.MEER_INFORMATIE]: ['Verzoek aanvullende gegevens'],
       [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
     } as const,
   };
@@ -153,7 +169,8 @@ const SplitsingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Splitsing
     },
     // TODO: MIJN-12348 - Replace with actual document names and add mock data
     transformDoclinks: {
-      'Besluiten en vastleggen': ['Besluit Omzettingsvergunning'],
+      [documentNamesMA.BESLUIT]: ['Besluit'],
+      [documentNamesMA.MEER_INFORMATIE]: ['Verzoek aanvullende gegevens'],
       [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
     } as const,
   };
@@ -166,6 +183,7 @@ export const pbZaakTransformers = [
   VormenVanWoonruimteZaakTransformer,
   OnttrekkingsvergunningZaakTransformer,
   OnttrekkingsvergunningSloopZaakTransformer,
+  OnttrekkingsvergunningTweedeWoningZaakTransformer,
 ];
 
 export const pbCaseToZaakTransformers = pbZaakTransformers.reduce<

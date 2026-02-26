@@ -6,6 +6,34 @@ const BB_ZAAK_STATUS = require('../fixtures/powerbrowser-bb-zaak-status.json');
 const BB_ZAKEN = require('../fixtures/powerbrowser-bb-zaken.json');
 const settings = require('../settings');
 
+const BB_SEARCH_DOCUMENTS_PROCESSED = {
+  mainTableName: BB_SEARCH_DOCUMENTS.mainTableName,
+  records: BB_SEARCH_DOCUMENTS.records.map((record) => {
+    const minimumValidRecord = [
+      {
+        fieldName: 'STAMCSSTATUS_ID',
+        text: 'definitief',
+        fieldValue: '1000001002',
+      },
+      {
+        fieldName: 'OPENBAARHEID_ID',
+        text: 'openbaar',
+        fieldValue: '1000001001',
+      },
+      {
+        fieldName: 'SOORTDOCUMENT_ID',
+        fieldValue: record.fmtCpn.toLowerCase().includes('besluit')
+          ? '256' // besluit
+          : '1000001015', // aanvraag
+      },
+    ];
+    return {
+      ...record,
+      fields: [...minimumValidRecord, ...record.fields],
+    };
+  }),
+};
+
 module.exports = [
   {
     id: 'post-powerbrowser-token',
@@ -35,8 +63,16 @@ module.exports = [
             if (['MAATSCHAP', 'PERSONEN'].includes(req.body.query.tableName)) {
               return res.send(BB_SEARCH_PERSON);
             }
-
-            return res.send(BB_SEARCH_DOCUMENTS);
+            return res.send({
+              mainTableName: BB_SEARCH_DOCUMENTS_PROCESSED.mainTableName,
+              records: BB_SEARCH_DOCUMENTS_PROCESSED.records.filter((record) =>
+                req.body.query.conditions.some(
+                  (condition) =>
+                    condition.fieldName === 'GFO_ZAKEN_ID' &&
+                    record.forTestingZaakIds?.includes(condition.fieldValue)
+                )
+              ),
+            });
           },
         },
       },

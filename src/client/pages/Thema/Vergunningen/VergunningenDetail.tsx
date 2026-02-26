@@ -71,6 +71,7 @@ function DetailPageContent<T extends DecosVergunning | PBVergunning>({
           case 'Onttrekkingsvergunning voor ander gebruik':
           case 'Onttrekkingsvergunning voor sloop':
           case 'Woningvormingsvergunning':
+          case 'Voorraadvergunning tweede woning':
           case 'Splitsingsvergunning':
             return <Woonvergunningen vergunning={vergunning} />;
           case 'VOB':

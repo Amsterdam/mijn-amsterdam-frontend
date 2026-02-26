@@ -17,6 +17,8 @@ import {
   PowerBrowserZaakFrontend,
   ZaakStatusDate,
   NestedType,
+  type PBDocument,
+  type PBRecord,
 } from './powerbrowser-types';
 import {
   apiErrorResult,
@@ -339,30 +341,46 @@ async function fetchSettledZaakAdres(
   return '';
 }
 
+function convertPBRecordToDict(
+  documentRecord: PBRecord<'DOCLINK', PBDocumentFields[]>
+) {
+  return Object.fromEntries(
+    documentRecord.fields?.map((field) => {
+      return [field.fieldName, field.fieldValue];
+    }) || []
+  ) as PBDocument;
+}
+
+// TODO: Make this dynamic if necessary (controlled by pb-zaken)
+function isValidPBDocument(record: PBDocument) {
+  const isAanvraag = record.SOORTDOCUMENT_ID === '1000001015';
+  const isBesluit = record.SOORTDOCUMENT_ID === '256';
+  const isDefinitief = record.STAMCSSTATUS_ID === '1000001002';
+  const isOpenbaar = record.OPENBAARHEID_ID === '1000001001';
+  const isTrippleFormsCreator = record.CREATOR_ID === '6205';
+
+  const isTrippleFormsAanvraagDocument = isAanvraag && isTrippleFormsCreator;
+
+  const isValid = isDefinitief && isOpenbaar && (isBesluit || isAanvraag);
+  return isValid || isTrippleFormsAanvraagDocument;
+}
+
 function transformPowerbrowserDocLinksResponse(
   sessionID: SessionID,
   documentNamenMA_PB: PowerBrowserZaakTransformer['transformDoclinks'],
   responseData: SearchRequestResponse<'DOCLINK', PBDocumentFields[]>
 ): PowerBrowserZaakBase['documents'] {
-  type PBDocument = {
-    [K in PBDocumentFields['fieldName']]: string;
-  };
   return (responseData.records || [])
-    .map((documentRecord) => {
-      const document = Object.fromEntries(
-        documentRecord.fields.map((field) => {
-          return [field.fieldName, field.fieldValue];
-        })
-      ) as PBDocument;
+    .map(convertPBRecordToDict)
+    .filter(isValidPBDocument)
+    .map((document) => {
       const titleLower = document.OMSCHRIJVING.toLowerCase();
 
       const [docTitleTranslated] =
-        Object.entries(documentNamenMA_PB).find(
-          ([_docTitleMa, docTitlesPB]) => {
-            return docTitlesPB.some((docTitlePb) => {
-              return titleLower.includes(docTitlePb.toLowerCase());
-            });
-          }
+        Object.entries(documentNamenMA_PB).find(([_docTitleMa, docTitlesPB]) =>
+          docTitlesPB.some((docTitlePb) =>
+            titleLower.includes(docTitlePb.toLowerCase())
+          )
         ) ?? [];
 
       if (!docTitleTranslated) {
@@ -404,6 +422,13 @@ async function fetchDocumentsList(
     data: {
       query: {
         tableName: 'DOCLINK',
+        // fieldNames: [
+        //   'FMT_CAPTION',
+        //   'STAMCSSTATUS_ID',
+        //   'OPENBAARHEID_ID',
+        //   'SOORTDOCUMENT_ID',
+        //   'CREATOR_ID',
+        // ],
         conditions: [
           {
             fieldName: 'GFO_ZAKEN_ID',
@@ -413,6 +438,18 @@ async function fetchDocumentsList(
             fieldName: 'EXTENSIE',
             fieldValue: '.pdf',
           },
+          // {
+          //   fieldName: 'SOORTDOCUMENT_ID',
+          //   fieldValue: '256, 1000001015', // Aanvraag, Besluit
+          // },
+          // {
+          //   fieldName: 'OPENBAARHEID_ID',
+          //   fieldValue: '1000001001', // Openbaar
+          // },
+          // {
+          //   fieldName: 'STAMCSSTATUS_ID',
+          //   fieldValue: '1000001002', // Definitief
+          // },
         ],
       },
     },
@@ -485,7 +522,7 @@ function transformZaakRaw<
     title: zaakTransformer.title,
 
     dateRequest: dateReceived,
-    dateDecision: dateDecision,
+    dateDecision,
 
     // The permit is valid from the date we have a decision.
     dateStart: isVerleend && dateDecision ? dateDecision : '',

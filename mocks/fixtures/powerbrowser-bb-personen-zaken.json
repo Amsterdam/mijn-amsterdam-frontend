@@ -260,6 +260,16 @@
           "fieldValue": "Z2024-WK123456 Ontrekkingsvergunning voor sloop 14-10-2025 Intake Vergunningaanvraag behandelen Voorraadvergunning onttrekken voor sloop "
         }
       ]
+    },
+    {
+      "id": "126091830",
+      "fields": [
+        {
+          "fieldName": "FMT_CAPTION",
+          "text": "Z2026-000227 onttrekkingsvergunning voor een tweede woning 18-02-2026 Intake Vergunningaanvraag behandelen Voorraadvergunning tweede woning ",
+          "fieldValue": "Z2026-000227 onttrekkingsvergunning voor een tweede woning 18-02-2026 Intake Vergunningaanvraag behandelen Voorraadvergunning tweede woning "
+        }
+      ]
     }
   ]
 }

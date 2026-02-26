@@ -241,6 +241,7 @@ export const caseTypePB = {
   Onttrekkingsvergunning: 'Onttrekkingsvergunning voor ander gebruik',
   OnttrekkingsvergunningSloop: 'Onttrekkingsvergunning voor sloop',
   VormenVanWoonruimte: 'Woningvormingsvergunning',
+  OnttrekkingsvergunningTweedeWoning: 'Voorraadvergunning tweede woning',
   Splitsingsvergunning: 'Splitsingsvergunning',
 } as const;
 
@@ -283,6 +284,11 @@ export type VormenVanWoonruimte = PowerBrowserZaakBase &
     caseType: GetCaseTypePB<'VormenVanWoonruimte'>;
   };
 
+export type OnttrekkingsvergunningTweedeWoning = PowerBrowserZaakBase &
+  WithLocation & {
+    caseType: GetCaseTypePB<'OnttrekkingsvergunningTweedeWoning'>;
+  };
+
 export type Splitsingsvergunning = PowerBrowserZaakBase &
   WithLocation & {
     caseType: GetCaseTypePB<'Splitsingsvergunning'>;
@@ -293,7 +299,8 @@ export type WoningVergunning =
   | Onttrekkingsvergunning
   | OnttrekkingsvergunningSloop
   | Splitsingsvergunning
-  | VormenVanWoonruimte;
+  | VormenVanWoonruimte
+  | OnttrekkingsvergunningTweedeWoning;
 
 export type PBVergunning =
   | Ligplaatsvergunning

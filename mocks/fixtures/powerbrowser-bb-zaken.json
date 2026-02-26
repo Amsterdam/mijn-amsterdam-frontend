@@ -791,5 +791,48 @@
         "fieldName": "RESULTAAT_ID"
       }
     ]
+  },
+  {
+    "id": "126091830",
+    "fields": [
+      {
+        "fieldName": "ZAAK_IDENTIFICATIE",
+        "text": "Z2026-000227",
+        "fieldValue": "Z2026-000227"
+      },
+      {
+        "fieldName": "ZAAKPRODUCT_ID",
+        "text": "Voorraadvergunning tweede woning",
+        "fieldValue": "10461"
+      },
+      {
+        "fieldName": "OMSCHRIJVING_KORT",
+        "text": "onttrekkingsvergunning voor een tweede woning",
+        "fieldValue": "onttrekkingsvergunning voor een tweede woning"
+      },
+      {
+        "fieldName": "STARTDATUM",
+        "text": "18-02-2026 00:00",
+        "fieldValue": "2026-02-17T23:00:00.0000000Z"
+      },
+      {
+        "fieldName": "EINDDATUM_GEPLAND",
+        "text": "15-04-2026",
+        "fieldValue": "2026-04-14T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "EINDDATUM_UITERLIJK",
+        "text": "14-04-2026",
+        "fieldValue": "2026-04-13T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "INGANGSDATUM",
+        "text": "18-02-2026",
+        "fieldValue": "2026-02-17T23:00:00.0000000Z"
+      },
+      {
+        "fieldName": "RESULTAAT_ID"
+      }
+    ]
   }
 ]

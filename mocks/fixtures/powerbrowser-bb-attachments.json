@@ -5,6 +5,25 @@
       "fmtCpn": "Z2024-WK000245 BB Besluit buiten behandeling stellen D2024-10-000402",
       "mainTableName": "DOCLINK",
       "id": "1189270",
+      "forTestingZaakIds": [
+        "126087660",
+        "126088659",
+        "126088666",
+        "126088676",
+        "12608867799",
+        "126088677",
+        "126088678",
+        "126088679",
+        "126088680",
+        "126088681",
+        "126088682",
+        "126088683",
+        "126088684",
+        "126088685",
+        "126088686",
+        "126088694",
+        "126088696"
+      ],
       "fields": [
         {
           "fieldName": "ID",
@@ -32,6 +51,25 @@
       "fmtCpn": "Z2024-WK000245 BB Besluit buiten behandeling stellen D2024-10-000402",
       "mainTableName": "DOCLINK",
       "id": "1189270",
+      "forTestingZaakIds": [
+        "126087660",
+        "126088659",
+        "126088666",
+        "126088676",
+        "12608867799",
+        "126088677",
+        "126088678",
+        "126088679",
+        "126088680",
+        "126088681",
+        "126088682",
+        "126088683",
+        "126088684",
+        "126088685",
+        "126088686",
+        "126088694",
+        "126088696"
+      ],
       "fields": [
         {
           "fieldName": "ID",
@@ -59,6 +97,25 @@
       "fmtCpn": "1-10-2024_Samenvatting_1064LK41.pdf D2024-10-000036",
       "mainTableName": "DOCLINK",
       "id": "1188904",
+      "forTestingZaakIds": [
+        "126087660",
+        "126088659",
+        "126088666",
+        "126088676",
+        "12608867799",
+        "126088677",
+        "126088678",
+        "126088679",
+        "126088680",
+        "126088681",
+        "126088682",
+        "126088683",
+        "126088684",
+        "126088685",
+        "126088686",
+        "126088694",
+        "126088696"
+      ],
       "fields": [
         {
           "fieldName": "ID",
@@ -86,6 +143,25 @@
       "fmtCpn": "Test document.pdf D2024-10-000035",
       "mainTableName": "DOCLINK",
       "id": "1188903",
+      "forTestingZaakIds": [
+        "126087660",
+        "126088659",
+        "126088666",
+        "126088676",
+        "12608867799",
+        "126088677",
+        "126088678",
+        "126088679",
+        "126088680",
+        "126088681",
+        "126088682",
+        "126088683",
+        "126088684",
+        "126088685",
+        "126088686",
+        "126088694",
+        "126088696"
+      ],
       "fields": [
         {
           "fieldName": "ID",
@@ -113,6 +189,7 @@
       "fmtCpn": "Test document.pdf D2024-10-000041",
       "mainTableName": "DOCLINK",
       "id": "126087902",
+      "forTestingZaakIds": ["126087901"],
       "fields": [
         {
           "fieldName": "ID",
@@ -140,6 +217,7 @@
       "fmtCpn": "Test document.pdf D2024-10-000042",
       "mainTableName": "DOCLINK",
       "id": "126087903",
+      "forTestingZaakIds": ["126087951"],
       "fields": [
         {
           "fieldName": "ID",
@@ -160,6 +238,72 @@
           "fieldName": "DOCUMENTNR",
           "text": "D2024-10-000042",
           "fieldValue": "D2024-10-000042"
+        }
+      ]
+    },
+    {
+      "fmtCpn": "Samenvatting_1064LK41.pdf D2026-01-000001",
+      "mainTableName": "DOCLINK",
+      "id": "126087910",
+      "forTestingZaakIds": ["126091830"],
+      "fields": [
+        {
+          "fieldName": "ID",
+          "text": "126087910",
+          "fieldValue": "126087910"
+        },
+        {
+          "fieldName": "OMSCHRIJVING",
+          "text": "1-01-2026_Samenvatting_1064LK41.pdf",
+          "fieldValue": "1-01-2026_Samenvatting_1064LK41.pdf"
+        },
+        {
+          "fieldName": "CREATEDATE",
+          "text": "01-01-2026 00:00",
+          "fieldValue": "2026-01-01T22:00:00.0000000Z"
+        },
+        {
+          "fieldName": "DOCUMENTNR",
+          "text": "D2026-01-000001",
+          "fieldValue": "D2026-01-000001"
+        }
+      ]
+    },
+    {
+      "fmtCpn": "Z2025-001663 Wonen Besluit D2025-12-000176",
+      "mainTableName": "DOCLINK",
+      "id": "1193153",
+      "forTestingZaakIds": ["126091830"],
+      "fields": [
+        {
+          "fieldName": "SOORTDOCUMENT_ID",
+          "text": "Besluit",
+          "fieldValue": "256"
+        },
+        {
+          "fieldName": "CREATOR_ID",
+          "text": "Naam van Persoon",
+          "fieldValue": "6852"
+        },
+        {
+          "fieldName": "ID",
+          "text": "1193153",
+          "fieldValue": "1193153"
+        },
+        {
+          "fieldName": "OMSCHRIJVING",
+          "text": "Z2025-001663 Wonen Besluit",
+          "fieldValue": "Z2025-001663 Wonen Besluit"
+        },
+        {
+          "fieldName": "DOCUMENTNR",
+          "text": "D2025-12-000176",
+          "fieldValue": "D2025-12-000176"
+        },
+        {
+          "fieldName": "CREATEDATE",
+          "text": "02-01-2026 00:00",
+          "fieldValue": "2026-01-02T22:00:00.0000000Z"
         }
       ]
     }

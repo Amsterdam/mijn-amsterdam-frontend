@@ -21,6 +21,12 @@ import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
 import { powerBrowserZaakTransformers } from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-pb-zaken';
 import { BBVergunningFrontend } from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types';
 
+const validPBAanvraagRecord = [
+  { fieldName: 'SOORTDOCUMENT_ID', fieldValue: '1000001015' },
+  { fieldName: 'STAMCSSTATUS_ID', fieldValue: '1000001002' },
+  { fieldName: 'OPENBAARHEID_ID', fieldValue: '1000001001' },
+];
+
 describe('Powerbrowser service', () => {
   const authProfile: AuthProfile = {
     id: 'test-id',
@@ -205,6 +211,7 @@ describe('Powerbrowser service', () => {
                 {
                   id: 'test-document-id',
                   fields: [
+                    ...validPBAanvraagRecord,
                     {
                       fieldName: 'OMSCHRIJVING',
                       fieldValue: 'DocumentnaamPB',
@@ -536,6 +543,7 @@ describe('Powerbrowser service', () => {
           {
             id: 'test-document-id',
             fields: [
+              ...validPBAanvraagRecord,
               {
                 fieldName: 'OMSCHRIJVING',
                 fieldValue: docNamePB,
@@ -724,6 +732,7 @@ describe('Powerbrowser service', () => {
         records: [
           {
             fields: [
+              ...validPBAanvraagRecord,
               { fieldName: 'ID', fieldValue: 'test-doc-id' },
               {
                 fieldName: 'OMSCHRIJVING',

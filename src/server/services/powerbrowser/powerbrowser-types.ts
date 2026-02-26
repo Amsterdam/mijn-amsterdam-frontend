@@ -57,7 +57,15 @@ export type PBDocumentFields =
   | PBRecordField<'ID'>
   | PBRecordField<'OMSCHRIJVING'>
   | PBRecordField<'CREATEDATE'>
-  | PBRecordField<'DOCUMENTNR'>;
+  | PBRecordField<'DOCUMENTNR'>
+  | PBRecordField<'OPENBAARHEID_ID'>
+  | PBRecordField<'SOORTDOCUMENT_ID'>
+  | PBRecordField<'STAMCSSTATUS_ID'>
+  | PBRecordField<'CREATOR_ID'>;
+
+export type PBDocument = {
+  [K in PBDocumentFields['fieldName']]: string;
+};
 
 export type PBDocumentRecord = PBRecord<'DOCLINK', PBDocumentFields[]>;
 
