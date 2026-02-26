@@ -21,7 +21,7 @@ export const themaConfig: KrefiaThemaConfig = {
     trackingUrl: null,
   },
 
-  pageLinks: [],
+  pageLinks: [], // Unused, but an alternative is used. Later on we dynamically select the right links.
 
   uitlegPageSections: [
     {

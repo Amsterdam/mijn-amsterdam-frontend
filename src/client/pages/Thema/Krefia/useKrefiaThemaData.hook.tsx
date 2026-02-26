@@ -51,6 +51,6 @@ export function useKrefiaThemaData() {
     themaId: themaConfig.id,
     title: themaConfig.title,
     themaConfig,
-    pageLinks: themaConfig.pageLinks,
+    linkListItems,
   };
 }

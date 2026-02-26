@@ -17,7 +17,7 @@ export function KrefiaThema() {
     hasKrefia,
     hasKredietbank,
     tableConfig,
-    pageLinks,
+    linkListItems,
     isError,
     isLoading,
     themaConfig,
@@ -68,7 +68,7 @@ export function KrefiaThema() {
       isLoading={isLoading}
       pageContentTop={pageContentTop}
       pageContentMain={krefiaTables}
-      pageLinks={pageLinks}
+      pageLinks={linkListItems}
       maintenanceNotificationsPageSlug="krefia"
     />
   );
