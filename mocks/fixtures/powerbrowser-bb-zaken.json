@@ -831,7 +831,9 @@
         "fieldValue": "2026-02-17T23:00:00.0000000Z"
       },
       {
-        "fieldName": "RESULTAAT_ID"
+        "fieldName": "RESULTAAT_ID",
+        "text": "Verleend met overgangsrecht",
+        "fieldValue": "721"
       }
     ]
   }

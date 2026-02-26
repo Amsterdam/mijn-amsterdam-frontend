@@ -3,6 +3,11 @@ import memoizee from 'memoizee';
 import { generatePath } from 'react-router';
 import slug from 'slugme';
 
+import {
+  PB_INGETROKKEN_DECISIONS_COMMOM,
+  PB_NIETVERLEEND_DECISIONS_COMMOM,
+  PB_VERLEEND_DECISIONS_COMMOM,
+} from './powerbrowser-field-transformers';
 import { hasCaseTypeInFMT_CAPTION } from './powerbrowser-helpers';
 import {
   PowerBrowserZaakBase,
@@ -216,26 +221,12 @@ function getZaakResultaat(resultaat: PBZaakResultaat | null) {
 
   const resultaatTransformed: PowerBrowserZaakBase['decision'] = resultaat;
 
-  const resultatenVerleend = [
-    'Verleend met overgangsrecht',
-    'Verleend zonder overgangsrecht',
-    'Verleend',
-  ];
-
-  const resultatenNietVerleend = [
-    'Geweigerd op basis van Quotum',
-    'Geweigerd',
-    'Geweigerd met overgangsrecht',
-    'Buiten behandeling',
-  ];
-  const resultatenOverig = ['Ingetrokken'];
-
   switch (true) {
-    case resultatenVerleend.includes(resultaat):
+    case PB_VERLEEND_DECISIONS_COMMOM.includes(resultaat):
       return 'Verleend';
-    case resultatenNietVerleend.includes(resultaat):
+    case PB_NIETVERLEEND_DECISIONS_COMMOM.includes(resultaat):
       return 'Niet verleend';
-    case resultatenOverig.includes(resultaat):
+    case PB_INGETROKKEN_DECISIONS_COMMOM.includes(resultaat):
       return 'Ingetrokken';
   }
 
@@ -422,13 +413,16 @@ async function fetchDocumentsList(
     data: {
       query: {
         tableName: 'DOCLINK',
-        // fieldNames: [
-        //   'FMT_CAPTION',
-        //   'STAMCSSTATUS_ID',
-        //   'OPENBAARHEID_ID',
-        //   'SOORTDOCUMENT_ID',
-        //   'CREATOR_ID',
-        // ],
+        fieldNames: [
+          'ID',
+          'OMSCHRIJVING',
+          'CREATEDATE',
+          'DOCUMENTNR',
+          'STAMCSSTATUS_ID',
+          'OPENBAARHEID_ID',
+          'SOORTDOCUMENT_ID',
+          'CREATOR_ID',
+        ],
         conditions: [
           {
             fieldName: 'GFO_ZAKEN_ID',
@@ -438,18 +432,6 @@ async function fetchDocumentsList(
             fieldName: 'EXTENSIE',
             fieldValue: '.pdf',
           },
-          // {
-          //   fieldName: 'SOORTDOCUMENT_ID',
-          //   fieldValue: '256, 1000001015', // Aanvraag, Besluit
-          // },
-          // {
-          //   fieldName: 'OPENBAARHEID_ID',
-          //   fieldValue: '1000001001', // Openbaar
-          // },
-          // {
-          //   fieldName: 'STAMCSSTATUS_ID',
-          //   fieldValue: '1000001002', // Definitief
-          // },
         ],
       },
     },
