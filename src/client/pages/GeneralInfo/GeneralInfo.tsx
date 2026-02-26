@@ -25,7 +25,7 @@ import { themaConfig as horecaThemaConfig } from '../Thema/Horeca/Horeca-thema-c
 import { inkomenSectionProps } from '../Thema/Inkomen/InfoSection';
 import { themaConfig as jeugdThemaConfig } from '../Thema/Jeugd/Jeugd-thema-config';
 import { themaConfig as klachtenThemaConfig } from '../Thema/Klachten/Klachten-thema-config';
-import { krefiaSectionProps } from '../Thema/Krefia/InfoSection';
+import { themaConfig as krefiaThemaConfig } from '../Thema/Krefia/Krefia-thema-config';
 import { milieuzonesectionProps } from '../Thema/Milieuzone/InfoSection';
 import { overtredingensectionProps } from '../Thema/Overtredingen/InfoSection';
 import { parkerensectionProps } from '../Thema/Parkeren/InfoSection';
@@ -70,7 +70,7 @@ const sections: InfoSection_DEPRECATED[] = [
   afisSectionProps,
   inkomenSectionProps,
   vergunningensectionProps,
-  krefiaSectionProps,
+
   parkerensectionProps,
   milieuzonesectionProps,
   overtredingensectionProps,
@@ -84,6 +84,7 @@ const sections: InfoSection_DEPRECATED[] = [
   ...createDeprecatedInfoSection(horecaThemaConfig),
   ...createDeprecatedInfoSection(jeugdThemaConfig),
   ...createDeprecatedInfoSection(klachtenThemaConfig),
+  ...createDeprecatedInfoSection(krefiaThemaConfig),
   ...createDeprecatedInfoSection(subsidiesThemaConfig),
   ...createDeprecatedInfoSection(toeristischeVerhuurThemaConfig),
   ...createDeprecatedInfoSection(zorgThemaConfig),
