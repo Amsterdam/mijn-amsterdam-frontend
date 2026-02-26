@@ -18,7 +18,6 @@ export function KrefiaThema() {
     hasKredietbank,
     tableConfig,
     pageLinks,
-
     isError,
     isLoading,
     themaConfig,
