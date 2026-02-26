@@ -1,25 +1,20 @@
-import {
-  BELASTINGEN_ROUTE_DEFAULT,
-  themaId,
-  themaTitle,
-  featureToggle,
-} from './Belastingen-thema-config';
+import { themaConfig } from './Belastingen-thema-config';
 import { default as BelastingenIcon } from './BelastingenIcon.svg?react';
 import { isLoading } from '../../../../universal/helpers/api';
 import { type AppState } from '../../../../universal/types/App.types';
 import { type ThemaMenuItem } from '../../../config/thema-types';
 
-export const menuItem: ThemaMenuItem<typeof themaId> = {
-  title: themaTitle,
-  id: themaId,
+export const menuItem: ThemaMenuItem = {
+  title: themaConfig.title,
+  id: themaConfig.id,
   to: (appState: AppState) => {
-    return appState.BELASTINGEN?.content?.url || BELASTINGEN_ROUTE_DEFAULT;
+    return appState.BELASTINGEN?.content?.url || themaConfig.route.path;
   },
-  profileTypes: ['private', 'commercial'],
-  redactedScope: 'none',
+  profileTypes: themaConfig.profileTypes,
+  redactedScope: themaConfig.redactedScope,
   isActive(appState: AppState) {
     return (
-      featureToggle.belastingenActive &&
+      themaConfig.featureToggle.active &&
       !isLoading(appState.BELASTINGEN) &&
       !!appState.BELASTINGEN.content?.isKnown
     );

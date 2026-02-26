@@ -52,7 +52,7 @@ import type { AfisFactuurFrontend } from '../../pages/Thema/Afis/Afis-thema-conf
 import { themaConfig as avgThemaConfig } from '../../pages/Thema/AVG/AVG-thema-config';
 import { themaConfig as themaConfigBezwaren } from '../../pages/Thema/Bezwaren/Bezwaren-thema-config';
 import { themaConfig as themaConfigBodem } from '../../pages/Thema/Bodem/Bodem-thema-config';
-import { featureToggle as featureToggleHoreca } from '../../pages/Thema/Horeca/Horeca-thema-config';
+import { themaConfig as themaConfigHoreca } from '../../pages/Thema/Horeca/Horeca-thema-config';
 import { themaConfig as themaConfigKlachten } from '../../pages/Thema/Klachten/Klachten-thema-config';
 import { themaConfig as themaConfigKrefia } from '../../pages/Thema/Krefia/Krefia-thema-config';
 import { routeConfig as routeConfigProfile } from '../../pages/Thema/Profile/Profile-thema-config';
@@ -508,7 +508,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    isEnabled: featureToggleHoreca.horecaActive,
+    isEnabled: themaConfigHoreca.featureToggle.active,
     stateKey: 'HORECA',
     profileTypes: ['private', 'commercial'],
     displayTitle: (vergunning: HorecaVergunningFrontend) => (term: string) => {

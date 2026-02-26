@@ -16,9 +16,9 @@ export function HorecaList() {
     isLoading,
     isError,
     breadcrumbs,
-    routeConfig,
+    themaConfig,
   } = useHorecaThemaData();
-  useHTMLDocumentTitle(routeConfig.listPage);
+  useHTMLDocumentTitle(themaConfig.listPage.route);
   const listPageTableConfig = tableConfig[kind];
 
   return (
