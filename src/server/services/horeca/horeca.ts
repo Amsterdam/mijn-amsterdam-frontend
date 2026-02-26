@@ -1,10 +1,5 @@
 import { decosZaakTransformers, HorecaVergunningFrontend } from './decos-zaken';
-import {
-  featureToggle,
-  routeConfig,
-  themaId,
-  themaTitle,
-} from '../../../client/pages/Thema/Horeca/Horeca-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/Horeca/Horeca-thema-config';
 import {
   apiSuccessResult,
   apiDependencyError,
@@ -15,8 +10,8 @@ import {
   fetchDecosZaken,
   transformDecosZaakFrontend,
 } from '../decos/decos-service';
-import { getVergunningNotifications } from '../vergunningen/vergunningen-notifications';
 import { getStatusStepsDecos } from '../vergunningen/decos-status-steps';
+import { getVergunningNotifications } from '../vergunningen/vergunningen-notifications';
 
 export async function fetchHorecaVergunningen(
   authProfileAndToken: AuthProfileAndToken
@@ -33,7 +28,7 @@ export async function fetchHorecaVergunningen(
         authProfileAndToken.profile.sid,
         zaak,
         {
-          detailPageRoute: routeConfig.detailPage.path,
+          detailPageRoute: themaConfig.detailPage.route.path,
           includeFetchDocumentsUrl: true,
           getStepsFN: getStatusStepsDecos,
         }
@@ -51,7 +46,7 @@ export async function fetchHorecaVergunningen(
 export async function fetchHorecaNotifications(
   authProfileAndToken: AuthProfileAndToken
 ) {
-  if (!featureToggle.horecaActive) {
+  if (!themaConfig.featureToggle.active) {
     return apiSuccessResult({
       notifications: [],
     });
@@ -62,8 +57,8 @@ export async function fetchHorecaNotifications(
   if (horecaResponse.status === 'OK') {
     const notifications = getVergunningNotifications(
       horecaResponse.content ?? [],
-      themaId,
-      themaTitle
+      themaConfig.id,
+      themaConfig.title
     );
 
     return apiSuccessResult({
