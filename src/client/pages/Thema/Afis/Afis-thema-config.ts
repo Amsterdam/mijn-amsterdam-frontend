@@ -36,7 +36,7 @@ export const routeConfig = {
   detailPage: {
     path: '/facturen-en-betalen/factuur/:state/:factuurNummer',
     documentTitle: `Factuurgegevens | ${themaTitle}`,
-    trackingUrl: null,
+    trackingUrl: '/facturen-en-betalen/factuur/:state',
   },
   betaalVoorkeuren: {
     path: '/facturen-en-betalen/betaalvoorkeuren',
@@ -46,7 +46,7 @@ export const routeConfig = {
   detailPageEMandate: {
     path: '/facturen-en-betalen/betaalvoorkeuren/emandate/:id',
     documentTitle: `E-Mandaat | ${themaTitle}`,
-    trackingUrl: null,
+    trackingUrl: '/facturen-en-betalen/betaalvoorkeuren/emandate',
   },
   listPage: {
     path: '/facturen-en-betalen/facturen/lijst/:state/:page?',
