@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import type { ContactMoment } from '../../../../../server/services/salesforce/contactmomenten.types';
 import type { DisplayProps } from '../../../../components/Table/TableV2.types';
 import { themaId as themaIdAfis } from '../../Afis/Afis-thema-config';
-import { themaId as themaIdBelastingen } from '../../Belastingen/Belastingen-thema-config';
+import { themaConfig as themaBelastingen } from '../../Belastingen/Belastingen-thema-config';
 import { themaConfig as themaInkomen } from '../../Inkomen/Inkomen-thema-config';
 import { themaId as themaIdKrefia } from '../../Krefia/Krefia-thema-config';
 import { themaId as themaIdParkeren } from '../../Parkeren/Parkeren-thema-config';
@@ -38,7 +38,7 @@ export const mapperContactmomentToMenuItem = {
   Parkeren: themaIdParkeren,
   Zorg: themaZorg.id,
   'Werk en Inkomen': SVWIv1ORv2,
-  Belastingen: themaIdBelastingen,
+  Belastingen: themaBelastingen.id,
   Geldzaken: themaIdKrefia,
   Financiën: themaIdAfis,
 } as const;
