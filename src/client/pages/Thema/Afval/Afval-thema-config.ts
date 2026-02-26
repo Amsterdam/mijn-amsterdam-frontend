@@ -35,5 +35,5 @@ export const themaConfig: AfvalThemaConfig = {
       ],
     },
   ],
-  pageLinks: [], // TO DO YACINE?> lijkt mij lastig om de links die op de themapag verschijnen hier op te nemen, want zijn anders bij DIGID als bij EHERK
+  pageLinks: [], // Unused, but an alternative is used. Later on we dynamically select the right links.
 };

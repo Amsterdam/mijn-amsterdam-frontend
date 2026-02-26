@@ -13,6 +13,7 @@ import {
   compareThemas,
   useAllThemaMenuItemsByThemaID,
 } from '../../hooks/useThemaMenuItems';
+import { afisSectionProps } from '../Thema/Afis/InfoSection';
 import { themaConfig as afvalThemaConfig } from '../Thema/Afval/Afval-thema-config';
 import { themaConfig as avgThemaConfig } from '../Thema/AVG/AVG-thema-config';
 import { belastingenSectionProps } from '../Thema/Belastingen/InfoSection';
@@ -72,6 +73,7 @@ const sections: InfoSection_DEPRECATED[] = [
   milieuzonesectionProps,
   overtredingensectionProps,
   varensectionProps,
+  afisSectionProps,
   ...createDeprecatedInfoSection(afvalThemaConfig),
   ...createDeprecatedInfoSection(avgThemaConfig),
   ...createDeprecatedInfoSection(bezwarenThemaConfig),
