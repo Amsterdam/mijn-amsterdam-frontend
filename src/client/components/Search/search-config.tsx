@@ -54,7 +54,7 @@ import { themaConfig as themaConfigBezwaren } from '../../pages/Thema/Bezwaren/B
 import { themaConfig as themaConfigBodem } from '../../pages/Thema/Bodem/Bodem-thema-config';
 import { featureToggle as featureToggleHoreca } from '../../pages/Thema/Horeca/Horeca-thema-config';
 import { themaConfig as themaConfigKlachten } from '../../pages/Thema/Klachten/Klachten-thema-config';
-import { featureToggle as featureToggleKrefia } from '../../pages/Thema/Krefia/Krefia-thema-config';
+import { themaConfig as themaConfigKrefia } from '../../pages/Thema/Krefia/Krefia-thema-config';
 import { routeConfig as routeConfigProfile } from '../../pages/Thema/Profile/Profile-thema-config';
 import { themaConfig as toeristischeVerhuurThemaConfig } from '../../pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 import {
@@ -441,7 +441,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    isEnabled: featureToggleKrefia.krefiaActive,
+    isEnabled: themaConfigKrefia.featureToggle.active,
     stateKey: 'KREFIA',
     getApiBaseItems: (apiContent: Omit<Krefia, 'notificationTriggers'>) => {
       const deepLinks =
