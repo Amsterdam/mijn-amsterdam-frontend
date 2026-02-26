@@ -21,10 +21,7 @@ import {
   useThemaBreadcrumbs,
   useThemaMenuItemByThemaID,
 } from '../../../hooks/useThemaMenuItems';
-import {
-  BELASTINGEN_ROUTE_DEFAULT,
-  themaId as themaIdBelastingen,
-} from '../Belastingen/Belastingen-thema-config';
+import { themaConfig as themaBelastingen } from '../Belastingen/Belastingen-thema-config';
 
 export type AfisFacturenThemaContextParams = {
   themaId: string;
@@ -75,12 +72,12 @@ export function useAfisFacturenData(
 }
 
 export function useAfisThemaData() {
-  const menuItem = useThemaMenuItemByThemaID(themaIdBelastingen);
+  const menuItem = useThemaMenuItemByThemaID(themaBelastingen.id);
   const urlNaarBelastingen = menuItem?.to;
 
   const belastingenLinkListItem: LinkProps = {
     title: 'Belastingen op Mijn Amsterdam',
-    to: urlNaarBelastingen || BELASTINGEN_ROUTE_DEFAULT,
+    to: urlNaarBelastingen || themaBelastingen.route.path,
   };
 
   const breadcrumbs = useThemaBreadcrumbs(themaIdAfis);

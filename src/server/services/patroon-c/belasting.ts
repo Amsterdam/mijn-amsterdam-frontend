@@ -3,11 +3,7 @@ import {
   fetchTipsAndNotifications,
   type ApiPatternResponseA,
 } from './api-service';
-import {
-  BELASTINGEN_ROUTE_DEFAULT,
-  themaId,
-  themaTitle,
-} from '../../../client/pages/Thema/Belastingen/Belastingen-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/Belastingen/Belastingen-thema-config';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
@@ -59,8 +55,8 @@ function transformBelastingResponse(
         case 'M1':
           notifications.push({
             id: `belasting-${message.nummer}`,
-            themaID: themaId,
-            themaTitle: themaTitle,
+            themaID: themaConfig.id,
+            themaTitle: themaConfig.title,
             title: message.titel,
             datePublished: message.datum,
             description: message.omschrijving,
@@ -79,8 +75,8 @@ function transformBelastingResponse(
             description: message.omschrijving,
             tipReason: message.informatie,
             isTip: true,
-            themaID: themaId,
-            themaTitle: themaTitle,
+            themaID: themaConfig.id,
+            themaTitle: themaConfig.title,
             link: {
               title: message.url_naam,
               to: message.url,
@@ -99,7 +95,7 @@ function transformBelastingResponse(
       (profileType === 'commercial'
         ? getFromEnv('BFF_SSO_URL_BELASTINGEN_EHERKENNING')
         : getFromEnv('BFF_SSO_URL_BELASTINGEN_DIGID')) ??
-      BELASTINGEN_ROUTE_DEFAULT,
+      themaConfig.route.path,
   };
 }
 
@@ -129,7 +125,7 @@ export async function fetchBelastingNotifications(
 ) {
   const r = await fetchTipsAndNotifications(
     getConfig(authProfileAndToken),
-    themaId
+    themaConfig.id
   );
 
   return r;
