@@ -5,9 +5,7 @@ const MILIEUZONE_ROUTE_DEFAULT =
 const THEMA_ID = 'MILIEUZONE';
 const THEMA_TITLE = 'Milieuzone';
 
-type MilieuZoneThemaConfig = ThemaConfigBase;
-
-export const themaConfig: MilieuZoneThemaConfig = {
+export const themaConfig: ThemaConfigBase = {
   id: THEMA_ID,
   title: THEMA_TITLE,
   featureToggle: {
