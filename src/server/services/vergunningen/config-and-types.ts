@@ -311,7 +311,8 @@ export type WoningVergunning =
   | OnttrekkingsvergunningTweedeWoning;
 
 export type PBVergunning =
-  | Ligplaatsvergunning
+  | LigplaatsWoonbootvergunning
+  | LigplaatsBedrijfsvaartuigvergunning
   | Omzettingsvergunning
   | WoningVergunning;
 
