@@ -79,9 +79,6 @@ export const FeatureToggle = {
   // Zorg thema actief
   zorgv2ThemapaginaActive: true,
 
-  // AmsApp notificaties
-  amsNotificationsIsActive: !IS_PRODUCTION,
-
   // Cobrowse widget
   cobrowseIsActive: true,
 

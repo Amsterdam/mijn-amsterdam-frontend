@@ -1,7 +1,7 @@
 import { generatePath } from 'react-router';
 
 import { jeugdStatusLineItemsConfig } from './status-line-items';
-import { routeConfig } from '../../../client/pages/Thema/Jeugd/Jeugd-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/Jeugd/Jeugd-thema-config';
 import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
 import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
@@ -42,8 +42,7 @@ export async function fetchLeerlingenvervoer(
   return apiSuccessResult(voorzieningen);
 }
 
-export interface LeerlingenvervoerVoorzieningFrontend
-  extends ZaakAanvraagDetail {
+export interface LeerlingenvervoerVoorzieningFrontend extends ZaakAanvraagDetail {
   dateDecision: string;
   dateDecisionFormatted: string;
   decision: string;
@@ -89,7 +88,7 @@ function transformVoorzieningenForFrontend(
         isActual: aanvraag.isActueel,
         link: {
           title: 'Meer informatie',
-          to: generatePath(routeConfig.detailPage.path, {
+          to: generatePath(themaConfig.detailPage.route.path, {
             id,
           }),
         },

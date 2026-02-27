@@ -251,7 +251,7 @@ function getSignRequestApiUrl(
 ) {
   const signRequestPayload: EMandateSignRequestPayload = {
     creditorIBAN: creditor.iban,
-    businessPartnerId: businessPartnerId,
+    businessPartnerId,
     eMandateSignDate: new Date().toISOString(),
   };
 

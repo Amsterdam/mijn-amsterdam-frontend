@@ -11,7 +11,7 @@ import {
 import { featureToggle as featureToggleAfis } from '../../client/pages/Thema/Afis/Afis-thema-config';
 import { themaConfig as themaConfigBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config';
 import { themaConfig as themaConfigErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
-import { featureToggle as featureToggleJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config';
+import { themaConfig as themaConfigJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config';
 import { themaConfig as themaConfigToeristischeVerhuur } from '../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 import { IS_DEVELOPMENT } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
@@ -174,7 +174,7 @@ const ApiConfig_ = {
       cert: getCert('BFF_ZORGNED_LEERLINGENVERVOER_CERT'),
       key: getCert('BFF_ZORGNED_LEERLINGENVERVOER_KEY'),
     }),
-    postponeFetch: !featureToggleJeugd.leerlingenvervoerActive,
+    postponeFetch: !themaConfigJeugd.featureToggle.active,
   },
   GPASS: {
     url: `${getFromEnv('BFF_GPASS_API_BASE_URL')}`,
@@ -363,15 +363,6 @@ const ApiConfig_ = {
   IAM_MS_OAUTH: {
     url: `${getFromEnv('BFF_MS_OAUTH_ENDPOINT')}:tenant/oauth2/v2.0/token`,
     method: 'POST',
-  },
-  AMSAPP: {
-    url: `${process.env.BFF_AMSAPP_ADMINISTRATIENUMMER_DELIVERY_ENDPOINT}`,
-    method: 'POST',
-    headers: {
-      'X-Session-Credentials-Key': getFromEnv('BFF_AMSAPP_API_KEY'),
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
   },
 } as const;
 

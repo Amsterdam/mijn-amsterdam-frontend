@@ -24,7 +24,7 @@ export function AdresInOnderzoek({ brpContent }: AdresInOnderzoekProps) {
         )}{' '}
         <Link
           rel="noopener noreferrer"
-          href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
+          href="https://www.amsterdam.nl/burgerzaken/verhuizen-inschrijving-briefadres/onderzoek-inschrijving/"
         >
           Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
         </Link>

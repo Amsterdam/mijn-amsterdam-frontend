@@ -1,14 +1,14 @@
 import { createBFFRouter } from './route-helpers';
-import { notificationsExternalConsumerRouter } from './router-notifications-external-consumer';
 import { afisRouter } from '../services/afis/afis-router';
-import { stadspasExternalConsumerRouter } from '../services/hli/router-stadspas-external-consumer';
+import { amsappNotificationsRouter } from '../services/amsapp/notifications/amsapp-notifications-router';
+import { amsappStadspasRouter } from '../services/amsapp/stadspas/amsapp-stadspas-router';
 import { wmoRouter } from '../services/wmo/wmo-router';
 
 export const router = createBFFRouter({ id: 'router-private-network' });
 
 router.use(
-  notificationsExternalConsumerRouter.private,
-  stadspasExternalConsumerRouter.private,
+  amsappNotificationsRouter.private,
+  amsappStadspasRouter.private,
   wmoRouter.private,
   afisRouter.private
 );

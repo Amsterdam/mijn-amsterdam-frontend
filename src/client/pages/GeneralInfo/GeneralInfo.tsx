@@ -16,20 +16,21 @@ import {
 import { afisSectionProps } from '../Thema/Afis/InfoSection';
 import { afvalSectionProps } from '../Thema/Afval/InfoSection';
 import { themaConfig as avgThemaConfig } from '../Thema/AVG/AVG-thema-config';
-import { belastingenSectionProps } from '../Thema/Belastingen/InfoSection';
+import { themaConfig as belastingenThemaConfig } from '../Thema/Belastingen/Belastingen-thema-config';
 import { themaConfig as bezwarenThemaConfig } from '../Thema/Bezwaren/Bezwaren-thema-config';
 import { themaConfig as bodemThemaConfig } from '../Thema/Bodem/Bodem-thema-config';
 import { themaConfig as erfpachtThemaConfig } from '../Thema/Erfpacht/Erfpacht-thema-config';
 import { themaConfig as hliThemaConfig } from '../Thema/HLI/HLI-thema-config';
+import { themaConfig as horecaThemaConfig } from '../Thema/Horeca/Horeca-thema-config';
 import { inkomenSectionProps } from '../Thema/Inkomen/InfoSection';
-import { JeugdSectionProps as jeugdSectionProps } from '../Thema/Jeugd/InfoSection';
+import { themaConfig as jeugdThemaConfig } from '../Thema/Jeugd/Jeugd-thema-config';
 import { themaConfig as klachtenThemaConfig } from '../Thema/Klachten/Klachten-thema-config';
 import { krefiaSectionProps } from '../Thema/Krefia/InfoSection';
 import { milieuzonesectionProps } from '../Thema/Milieuzone/InfoSection';
 import { overtredingensectionProps } from '../Thema/Overtredingen/InfoSection';
 import { parkerensectionProps } from '../Thema/Parkeren/InfoSection';
 import { profileSectionProps } from '../Thema/Profile/InfoSection';
-import { subsidiesSectionProps } from '../Thema/Subsidies/InfoSection';
+import { themaConfig as subsidiesThemaConfig } from '../Thema/Subsidies/Subsidies-thema-config';
 import { themaConfig as toeristischeVerhuurThemaConfig } from '../Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 import { varensectionProps } from '../Thema/Varen/infoSection';
 import { vergunningensectionProps } from '../Thema/Vergunningen/InfoSection';
@@ -66,23 +67,24 @@ const sections: InfoSection_DEPRECATED[] = [
   profileSectionProps,
   myAreaSectionProps,
   afvalSectionProps,
-  belastingenSectionProps,
   afisSectionProps,
   inkomenSectionProps,
   vergunningensectionProps,
-  jeugdSectionProps,
-  subsidiesSectionProps,
   krefiaSectionProps,
   parkerensectionProps,
   milieuzonesectionProps,
   overtredingensectionProps,
   varensectionProps,
   ...createDeprecatedInfoSection(avgThemaConfig),
+  ...createDeprecatedInfoSection(belastingenThemaConfig),
   ...createDeprecatedInfoSection(bezwarenThemaConfig),
   ...createDeprecatedInfoSection(bodemThemaConfig),
   ...createDeprecatedInfoSection(erfpachtThemaConfig),
   ...createDeprecatedInfoSection(hliThemaConfig),
+  ...createDeprecatedInfoSection(horecaThemaConfig),
+  ...createDeprecatedInfoSection(jeugdThemaConfig),
   ...createDeprecatedInfoSection(klachtenThemaConfig),
+  ...createDeprecatedInfoSection(subsidiesThemaConfig),
   ...createDeprecatedInfoSection(toeristischeVerhuurThemaConfig),
   ...createDeprecatedInfoSection(zorgThemaConfig),
 ];

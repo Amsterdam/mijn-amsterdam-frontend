@@ -8,16 +8,18 @@ import {
   EH_ATTR_PRIMARY_ID,
   EH_ATTR_PRIMARY_ID_LEGACY,
   OIDC_SESSION_COOKIE_NAME,
-  RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
-  RETURNTO_AMSAPP_STADSPAS_APP_LANDING,
 } from './auth-config';
 import {
   createLogoutHandler,
   getAuthProfile,
-  getReturnToUrl,
   hasSessionCookie,
   isSessionCookieName,
 } from './auth-helpers';
+import { getReturnToUrl } from './auth-after-redirect-returnto';
+import {
+  RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
+  RETURNTO_AMSAPP_STADSPAS_APP_LANDING,
+} from './auth-after-redirect-returnto';
 import { MaSession, TokenData } from './auth-types';
 import {
   getAuthProfileAndToken,

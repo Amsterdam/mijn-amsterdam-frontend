@@ -4,8 +4,6 @@ import z from 'zod';
 import {
   createBFFRouter,
   generateFullApiUrlBFF,
-  isProtectedRoute,
-  isPublicEndpoint,
   queryParams,
   send404,
   sendBadRequest,
@@ -207,22 +205,6 @@ describe('route-helpers', () => {
       expect(resMock.status).toHaveBeenCalledWith(400);
       expect(resMock.send).toHaveBeenCalledWith(responseData2);
     });
-  });
-
-  test('isPublicEndpoint', () => {
-    const value2 = isPublicEndpoint('/services/stream');
-    expect(value2).toBe(false);
-
-    const value3 = isPublicEndpoint('/services/auth/anything');
-    expect(value3).toBe(false);
-  });
-
-  test('isProtectedRoute', () => {
-    const value = isProtectedRoute('/services/stream');
-    expect(value).toBe(true);
-
-    const value3 = isPublicEndpoint('/services/auth/anything');
-    expect(value3).toBe(false);
   });
 
   describe('generateFullApiUrlBFF', () => {

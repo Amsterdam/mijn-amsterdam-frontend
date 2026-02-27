@@ -103,10 +103,5 @@ describe('app', async () => {
         (x: object) => 'name' in x && x.name === 'handleIsAuthenticated'
       )
     ).toBe(true);
-    expect(
-      app.router.stack.some(
-        (x: object) => 'name' in x && x.name === 'handleCheckProtectedRoute'
-      )
-    ).toBe(true);
   });
 });

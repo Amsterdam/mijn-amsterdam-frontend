@@ -8,26 +8,22 @@ import {
   deleteConsumer,
   getProfileByConsumer,
   storeNotifications,
-} from './notifications-model';
-import { decrypt } from '../../../server/helpers/encrypt-decrypt';
-import {
-  apiErrorResult,
-  apiSuccessResult,
-  type ApiResponse,
-} from '../../../universal/helpers/api';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { notificationServices } from '../tips-and-notifications';
+} from './amsapp-notifications-model';
+import { DISCRETE_GENERIC_MESSAGE } from './amsapp-notifications-service-config';
 import {
   BSN,
   ConsumerId,
   ServiceId,
   type NotificationsLean,
-} from './config-and-types';
-import type { MyNotification } from '../../../universal/types/App.types';
-
-// Use this message when extra privacy is required.
-const DISCRETE_GENERIC_MESSAGE =
-  'Er staat een bericht voor u klaar op Mijn Amsterdam.';
+} from './amsapp-notifications-types';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+  type ApiResponse,
+} from '../../../../universal/helpers/api';
+import type { MyNotification } from '../../../../universal/types/App.types';
+import { AuthProfileAndToken } from '../../../auth/auth-types';
+import { notificationServices } from '../../tips-and-notifications';
 
 /**
  * The Notification service allows batch handling of notifications for previously verified consumers
@@ -35,10 +31,11 @@ const DISCRETE_GENERIC_MESSAGE =
 
 export async function registerConsumer(
   profileId: BSN,
+  profileName: string,
   consumerId: ConsumerId,
   serviceIds: ServiceId[] = []
 ) {
-  return upsertConsumer(profileId, consumerId, serviceIds);
+  return upsertConsumer(profileId, profileName, consumerId, serviceIds);
 }
 
 export async function unregisterConsumer(consumerId: ConsumerId) {
@@ -60,15 +57,14 @@ export async function batchDeleteNotifications() {
 export async function batchFetchAndStoreNotifications() {
   const profiles = await listProfileIds();
   for (const profile of profiles) {
-    const decryptedProfileID = decrypt(profile.profileId);
     const promises = profile.serviceIds.map(async (serviceId) => {
       const notifications = await fetchNotificationsForService(
-        decryptedProfileID,
+        profile.profileId,
         serviceId
       );
       return {
         ...notifications,
-        serviceId: serviceId,
+        serviceId,
         dateUpdated: new Date().toISOString(),
       };
     });
@@ -83,6 +79,7 @@ export async function batchFetchNotifications() {
     consumerIds: profile.consumerIds,
     dateUpdated: profile.dateUpdated,
     services: profile.content?.services || [],
+    profileName: profile.profileName,
   }));
 }
 
@@ -106,7 +103,10 @@ async function fetchNotificationsForService(
   const fetchNotificationsForService = notificationServices.private[serviceId];
   const response = await fetchNotificationsForService(authProfileAndToken);
   if (response.status !== 'OK') {
-    return apiErrorResult('Dependency error', null);
+    return apiErrorResult(
+      `Could not fetch notifications for service ${serviceId} ${response.status === 'ERROR' ? ` - ${response.message}` : ''}`,
+      null
+    );
   }
 
   const notifications = Object.values(response.content ?? [])

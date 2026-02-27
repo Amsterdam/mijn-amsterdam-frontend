@@ -133,7 +133,7 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
 export function ToeristischeVerhuurDetail() {
   const {
     vergunningen,
-    id: themaId,
+    themaId,
     isError,
     isLoading,
     breadcrumbs,

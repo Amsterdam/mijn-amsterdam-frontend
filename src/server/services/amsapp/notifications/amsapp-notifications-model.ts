@@ -4,12 +4,13 @@ import {
   ServiceId,
   type ConsumerNotifications,
   type NotificationsService,
-} from './config-and-types';
-import { isRecord } from '../../../universal/helpers/utils';
-import { logger } from '../../logging';
-import { IS_DB_ENABLED } from '../db/config';
-import { db as db_, type DBAdapter } from '../db/db';
-import { camelizeKeys } from '../db/helper';
+} from './amsapp-notifications-types';
+import { isRecord } from '../../../../universal/helpers/utils';
+import { decrypt, encrypt } from '../../../helpers/encrypt-decrypt';
+import { logger } from '../../../logging';
+import { IS_DB_ENABLED } from '../../db/config';
+import { db as db_, type DBAdapter } from '../../db/db';
+import { camelizeKeys } from '../../db/helper';
 
 // POSTGRES is case insensitive. We therefore always use snake_case within postgres
 // and transform the returned column names to camelCase.
@@ -57,8 +58,14 @@ async function setupTables() {
     );
   `;
 
+  const alterTableQuery1 = `
+        ALTER TABLE IF EXISTS "public"."${TABLE_NAME}"
+        ADD IF NOT EXISTS "profile_name" VARCHAR(200);
+      `;
+
   try {
     await db.query(createTableQuery);
+    await db.query(alterTableQuery1);
     logger.info(`setupTable: ${TABLE_NAME} succeeded.`);
   } catch (error) {
     logger.error(error, `setupTable: ${TABLE_NAME} failed.`);
@@ -72,12 +79,13 @@ if (IS_DB_ENABLED) {
 // POSTGRES is case insensitive. We therefore always use snake_case within postgres
 const queries = {
   upsertConsumer: `\
-INSERT INTO ${TABLE_NAME} (profile_id, consumer_ids, service_ids, date_updated) \
-VALUES ($1, ARRAY[$2], $3, now()) \
+INSERT INTO ${TABLE_NAME} (profile_id, profile_name, consumer_ids, service_ids, date_updated) \
+VALUES ($1, $2, ARRAY[$3], $4, now()) \
 ON CONFLICT (profile_id) DO UPDATE \
 SET \
   profile_id = EXCLUDED.profile_id, \
-  consumer_ids = ( SELECT ARRAY( SELECT DISTINCT unnest(array_append(${TABLE_NAME}.consumer_ids, $2)) ) ), \
+  profile_name = $2, \
+  consumer_ids = ( SELECT ARRAY( SELECT DISTINCT unnest(array_append(${TABLE_NAME}.consumer_ids, $3)) ) ), \
   service_ids = EXCLUDED.service_ids, \
   date_updated = EXCLUDED.date_updated; \
 `,
@@ -90,8 +98,9 @@ RETURNING profile_id, consumer_ids
     `,
   updateNotifications: `UPDATE ${TABLE_NAME} SET content = $2 WHERE profile_id = $1`,
   getProfiles: `SELECT * FROM ${TABLE_NAME}`,
-  getProfileIds: `SELECT profile_id, consumer_ids, service_ids FROM ${TABLE_NAME}`,
+  getProfileIds: `SELECT profile_id, profile_name, consumer_ids, service_ids FROM ${TABLE_NAME}`,
   getProfileByConsumer: `SELECT profile_id FROM ${TABLE_NAME} WHERE $1 = ANY(consumer_ids)`,
+  getRegistrationsOverview: `SELECT * FROM ${TABLE_NAME}`,
   truncate: `TRUNCATE TABLE ${TABLE_NAME}`,
 };
 
@@ -103,12 +112,23 @@ export async function getProfileByConsumer(consumerId: ConsumerId) {
   return db.queryGET(queries.getProfileByConsumer, [consumerId]);
 }
 
+export async function getRegistrationOverview() {
+  return db.queryALL(queries.getRegistrationsOverview);
+}
+
 export async function upsertConsumer(
   profileId: BSN,
+  profileName: string,
   consumerId: ConsumerId,
   serviceIds: ServiceId[]
 ) {
-  return db.query(queries.upsertConsumer, [profileId, consumerId, serviceIds]);
+  const [encryptedProfileID] = encrypt(profileId);
+  return db.query(queries.upsertConsumer, [
+    encryptedProfileID,
+    profileName,
+    consumerId,
+    serviceIds,
+  ]);
 }
 
 // This should work in one query with a CTE, but it does not delete the row correctly.
@@ -127,11 +147,12 @@ export async function deleteConsumer(consumerId: ConsumerId) {
 }
 
 export async function storeNotifications(
-  encryptedProfileId: BSN,
+  profileId: BSN,
   services: NotificationsService[]
 ) {
+  const [encryptedProfileID] = encrypt(profileId);
   return db.query(queries.updateNotifications, [
-    encryptedProfileId,
+    encryptedProfileID,
     { services },
   ]);
 }
@@ -150,5 +171,12 @@ export async function listProfileIds() {
     'profileId' | 'serviceIds' | 'consumerIds'
   >[];
 
-  return rows;
+  return rows.map((row) => {
+    const decryptedProfileID = decrypt(row.profileId);
+    return {
+      profileId: decryptedProfileID,
+      serviceIds: row.serviceIds,
+      consumerIds: row.consumerIds,
+    };
+  });
 }

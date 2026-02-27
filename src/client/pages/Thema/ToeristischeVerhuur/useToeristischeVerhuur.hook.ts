@@ -78,7 +78,7 @@ export function useToeristischeVerhuurThemaData() {
   return {
     vergunningen,
     lvvRegistraties,
-    id: themaConfig.id,
+    themaId: themaConfig.id,
     title: themaConfig.title,
     isLoading: isLoading(TOERISTISCHE_VERHUUR),
     isError: isError(TOERISTISCHE_VERHUUR, false),
