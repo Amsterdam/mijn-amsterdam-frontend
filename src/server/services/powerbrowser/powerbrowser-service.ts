@@ -1,4 +1,3 @@
-import _chunk from 'lodash.chunk';
 import memoizee from 'memoizee';
 import { generatePath } from 'react-router';
 import slug from 'slugme';
@@ -528,41 +527,6 @@ function transformZaakRaw<
   return zaak as PB;
 }
 
-async function fetchZakenByIds(zaakIds: string[]) {
-  if (zaakIds.length === 0) {
-    return apiSuccessResult([]);
-  }
-
-  const responses = await Promise.all(
-    _chunk(zaakIds, 25) // Endpoint can only handle 25 zaakIds at once
-      .map(
-        (chunkOfZaakIds) =>
-          ({
-            method: 'get',
-            formatUrl({ url }) {
-              return `${url}/record/GFO_ZAKEN/${chunkOfZaakIds.join(',')}`;
-            },
-            transformResponse(responseData: PBZaakRecord[]) {
-              return responseData ?? [];
-            },
-          }) as DataRequestConfig
-      )
-      .map(async (requestConfig) =>
-        fetchPowerBrowserData<PBZaakRecord[]>(requestConfig)
-      )
-  );
-
-  if (responses.some((r) => r.status !== 'OK')) {
-    return apiErrorResult(
-      'Failed to fetch powerbrowser zaken by zaakIds',
-      null
-    );
-  }
-  return apiSuccessResult(
-    responses.flatMap((r) => r.content as PBZaakRecord[])
-  );
-}
-
 async function fetchZakenRecords<T extends PowerBrowserZaakTransformer>(
   authProfile: Pick<AuthProfile, 'id' | 'profileType'>,
   zaakTransformers: T[]
@@ -583,12 +547,28 @@ async function fetchZakenRecords<T extends PowerBrowserZaakTransformer>(
     return apiSuccessResult([]);
   }
 
+  const urlParams = new URLSearchParams({
+    fields: [
+      'FMT_CAPTION',
+      'STARTDATUM',
+      'EINDDATUM',
+      'DATUM_TOT',
+      'ZAAK_IDENTIFICATIE',
+      'ZAAKPRODUCT_ID',
+      'ZAAK_SUBPRODUCT_ID',
+      'MUT_DAT',
+      'RESULTAAT_ID',
+    ].join(','),
+    addSearch: 'false',
+  });
+
   const zakenSearchResponse = await fetchPowerBrowserData<
-    SearchRequestResponse<'GFO_ZAKEN'>
+    SearchRequestResponse<'GFO_ZAKEN'>['records']
   >({
     formatUrl({ url }) {
-      return `${url}/Link/${tableOptions.tableName}/GFO_ZAKEN/Table`;
+      return `${url}/Link/${tableOptions.tableName}/GFO_ZAKEN/`;
     },
+    params: Object.fromEntries(urlParams),
     data: idsResponse.content,
   });
 
@@ -597,7 +577,7 @@ async function fetchZakenRecords<T extends PowerBrowserZaakTransformer>(
   }
 
   const zakenIdToZakentransformer = assignTransformerByFilter(
-    zakenSearchResponse.content.records || [],
+    zakenSearchResponse.content || [],
     zaakTransformers.map((t) => {
       const defaultFetchZaakIdFilter = (pbRecordField: PBRecordField<string>) =>
         hasCaseTypeInFMT_CAPTION(pbRecordField, t.caseType as string);
@@ -607,26 +587,20 @@ async function fetchZakenRecords<T extends PowerBrowserZaakTransformer>(
       };
     })
   );
-  const zakenIds = Object.keys(zakenIdToZakentransformer);
-  const zakenResponse = await fetchZakenByIds(zakenIds);
-
-  if (zakenResponse.status !== 'OK') {
-    return zakenResponse;
-  }
 
   return apiSuccessResult(
-    zakenResponse.content
-      .map(
+    zakenSearchResponse.content
+      ?.map(
         (zaak) =>
           [zaak, zakenIdToZakentransformer[zaak.id]] as [PBZaakRecord, T]
       )
-      .filter(([_zaak, transformer]) => !!transformer)
+      .filter(([_zaak, transformer]) => !!transformer) || []
   );
 }
 
 export async function fetchPBZaken<T extends PowerBrowserZaakTransformer>(
   authProfile: AuthProfile,
-  zaakTransformers: T[]
+zaakTransformers: T[]
 ): Promise<ApiResponse<NestedType<T>[]>> {
   const zakenResponse = await fetchZakenRecords(authProfile, zaakTransformers);
 
@@ -697,7 +671,6 @@ export const forTesting = {
   fetchSettledZaakStatusDates,
   fetchZaakStatusDates,
   fetchZakenRecords,
-  fetchZakenByIds,
   fetchDocumentsList,
   fetchSettledZaakDocuments,
   getFieldValue,

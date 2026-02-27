@@ -3,7 +3,6 @@ const BB_PERSONEN_ZAKEN = require('../fixtures/powerbrowser-bb-personen-zaken.js
 const BB_SEARCH_PERSON = require('../fixtures/powerbrowser-bb-search-person.json');
 const BB_LINK_ZAAK_ADRES = require('../fixtures/powerbrowser-bb-zaak-adres.json');
 const BB_ZAAK_STATUS = require('../fixtures/powerbrowser-bb-zaak-status.json');
-const BB_ZAKEN = require('../fixtures/powerbrowser-bb-zaken.json');
 const settings = require('../settings');
 
 const BB_SEARCH_DOCUMENTS_PROCESSED = {
@@ -104,7 +103,7 @@ module.exports = [
         options: {
           middleware: (req, res, _, __) => {
             res.send(
-              BB_ZAKEN.filter((zaak) =>
+              BB_PERSONEN_ZAKEN.filter((zaak) =>
                 req.params.zaakIds.split(',').includes(zaak.id)
               )
             );
@@ -115,7 +114,7 @@ module.exports = [
   },
   {
     id: 'post-powerbrowser-personen-zaken',
-    url: `${settings.MOCK_BASE_PATH}/powerbrowser/Link/:type/GFO_ZAKEN/Table`,
+    url: `${settings.MOCK_BASE_PATH}/powerbrowser/Link/:type/GFO_ZAKEN/`,
     method: 'POST',
     variants: [
       {

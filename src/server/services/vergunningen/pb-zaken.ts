@@ -1,6 +1,5 @@
 import {
   caseTypePB,
-  type Ligplaatsvergunning,
   type Omzettingsvergunning,
   type Onttrekkingsvergunning,
   type OnttrekkingsvergunningSloop,
@@ -8,9 +7,15 @@ import {
   type Splitsingsvergunning,
   type OnttrekkingsvergunningTweedeWoning,
   type VormenVanWoonruimte,
+  type LigplaatsWoonbootvergunning,
+  type LigplaatsBedrijfsvaartuigvergunning,
 } from './config-and-types';
 import { SELECT_FIELDS_TRANSFORM_BASE } from '../powerbrowser/powerbrowser-field-transformers';
-import { hasCaseTypeInFMT_CAPTION } from '../powerbrowser/powerbrowser-helpers';
+import {
+  hasCaseTypeInFMT_CAPTION,
+  hasStringInZAAK_SUBPRODUCT_ID,
+  hasStringInZAAKPRODUCT_ID,
+} from '../powerbrowser/powerbrowser-helpers';
 import { PowerBrowserZaakTransformer } from '../powerbrowser/powerbrowser-types';
 
 export const documentNamesMA = {
@@ -24,10 +29,43 @@ export const documentNamesMA = {
   BESLUIT: 'Besluiten en vastleggen',
 } as const;
 
-const LigplaatsvergunningZaakTransformer: PowerBrowserZaakTransformer<Ligplaatsvergunning> =
+const LigplaatsWoonbootVergunningZaakTransformer: PowerBrowserZaakTransformer<LigplaatsWoonbootvergunning> =
   {
-    caseType: caseTypePB.Ligplaatsvergunning,
-    title: 'Ligplaatsvergunning',
+    caseType: caseTypePB.LigplaatsWoonbootvergunning,
+    title: 'Ligplaatsvergunning woonboot',
+    fetchZaakIdFilter: (pbRecordField) =>
+      hasStringInZAAKPRODUCT_ID(
+        pbRecordField,
+        'Ligplaatsvergunning woonboot'
+      ) ||
+      hasStringInZAAK_SUBPRODUCT_ID(
+        pbRecordField,
+        'Ligplaatsvergunning woonboot'
+      ),
+    transformFields: {
+      ...SELECT_FIELDS_TRANSFORM_BASE,
+    },
+    // TODO: MIJN-12348 - Replace with actual document names and add mock data
+    transformDoclinks: {
+      [documentNamesMA.BESLUIT]: ['Besluit'],
+      [documentNamesMA.MEER_INFORMATIE]: ['Verzoek aanvullende gegevens'],
+      [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
+    } as const,
+  };
+
+const LigplaatsBedrijfsvaartuigVergunningZaakTransformer: PowerBrowserZaakTransformer<LigplaatsBedrijfsvaartuigvergunning> =
+  {
+    caseType: caseTypePB.LigplaatsBedrijfsvaartuigvergunning,
+    title: 'Ligplaatsvergunning bedrijfsvaartuig',
+    fetchZaakIdFilter: (pbRecordField) =>
+      hasStringInZAAKPRODUCT_ID(
+        pbRecordField,
+        'Ligplaatsvergunning bedrijfsvaartuig'
+      ) ||
+      hasStringInZAAK_SUBPRODUCT_ID(
+        pbRecordField,
+        'Ligplaatsvergunning bedrijfsvaartuig'
+      ),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
@@ -177,7 +215,8 @@ const SplitsingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Splitsing
 
 export const pbZaakTransformers = [
   OmzettingsvergunningZaakTransformer,
-  LigplaatsvergunningZaakTransformer,
+  LigplaatsWoonbootVergunningZaakTransformer,
+  LigplaatsBedrijfsvaartuigVergunningZaakTransformer,
   SplitsingsvergunningZaakTransformer,
   SamenvoegingsvergunningZaakTransformer,
   VormenVanWoonruimteZaakTransformer,
