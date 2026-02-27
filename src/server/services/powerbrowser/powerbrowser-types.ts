@@ -77,7 +77,7 @@ export type PBAdresLinkFields = PBRecordField<'FMT_CAPTION'>;
 
 export type PBAdresLinkRecord = PBRecord<'ADRESSEN', PBAdresLinkFields[]>;
 
-export const fieldMap: Record<PBZaakFields['fieldName'], string> = {
+export const fieldMap: Partial<Record<PBZaakFields['fieldName'], string>> = {
   ZAAK_IDENTIFICATIE: 'zaaknummer',
   EINDDATUM: 'dateDecision',
   DATUM_TOT: 'dateEnd',
