@@ -1,8 +1,12 @@
-import _chunk from 'lodash.chunk';
 import memoizee from 'memoizee';
 import { generatePath } from 'react-router';
 import slug from 'slugme';
 
+import {
+  PB_INGETROKKEN_DECISIONS_COMMOM,
+  PB_NIETVERLEEND_DECISIONS_COMMOM,
+  PB_VERLEEND_DECISIONS_COMMOM,
+} from './powerbrowser-field-transformers';
 import { hasCaseTypeInFMT_CAPTION } from './powerbrowser-helpers';
 import {
   PowerBrowserZaakBase,
@@ -17,6 +21,8 @@ import {
   PowerBrowserZaakFrontend,
   ZaakStatusDate,
   NestedType,
+  type PBDocument,
+  type PBRecord,
 } from './powerbrowser-types';
 import {
   apiErrorResult,
@@ -214,26 +220,12 @@ function getZaakResultaat(resultaat: PBZaakResultaat | null) {
 
   const resultaatTransformed: PowerBrowserZaakBase['decision'] = resultaat;
 
-  const resultatenVerleend = [
-    'Verleend met overgangsrecht',
-    'Verleend zonder overgangsrecht',
-    'Verleend',
-  ];
-
-  const resultatenNietVerleend = [
-    'Geweigerd op basis van Quotum',
-    'Geweigerd',
-    'Geweigerd met overgangsrecht',
-    'Buiten behandeling',
-  ];
-  const resultatenOverig = ['Ingetrokken'];
-
   switch (true) {
-    case resultatenVerleend.includes(resultaat):
+    case PB_VERLEEND_DECISIONS_COMMOM.includes(resultaat):
       return 'Verleend';
-    case resultatenNietVerleend.includes(resultaat):
+    case PB_NIETVERLEEND_DECISIONS_COMMOM.includes(resultaat):
       return 'Niet verleend';
-    case resultatenOverig.includes(resultaat):
+    case PB_INGETROKKEN_DECISIONS_COMMOM.includes(resultaat):
       return 'Ingetrokken';
   }
 
@@ -339,30 +331,51 @@ async function fetchSettledZaakAdres(
   return '';
 }
 
+function convertPBRecordToDict(
+  documentRecord: PBRecord<'DOCLINK', PBDocumentFields[]>
+) {
+  return Object.fromEntries(
+    documentRecord.fields?.map((field) => {
+      return [field.fieldName, field.fieldValue];
+    }) || []
+  ) as PBDocument;
+}
+
+// TODO: Make this dynamic if necessary (controlled by pb-zaken)
+function isValidPBDocument(record: PBDocument) {
+  const isAanvraag = record.SOORTDOCUMENT_ID === '1000001015';
+  const isBesluit = record.SOORTDOCUMENT_ID === '256';
+  const isDefinitief = record.STAMCSSTATUS_ID === '1000001002';
+  const isOpenbaar = record.OPENBAARHEID_ID === '1000001001';
+
+  // Trippleforms aanvragen should be showed but often do not have a STAMCSSTATUS_ID or OPENBAARHEID_ID
+  const isTrippleFormsCreator = record.CREATOR_ID === '6205';
+  const isTrippleFormsAanvraagDocument =
+    isAanvraag &&
+    isTrippleFormsCreator &&
+    (isDefinitief || !record.STAMCSSTATUS_ID) &&
+    (isOpenbaar || !record.OPENBAARHEID_ID);
+
+  const isValid = isDefinitief && isOpenbaar && (isBesluit || isAanvraag);
+  return isValid || isTrippleFormsAanvraagDocument;
+}
+
 function transformPowerbrowserDocLinksResponse(
   sessionID: SessionID,
   documentNamenMA_PB: PowerBrowserZaakTransformer['transformDoclinks'],
   responseData: SearchRequestResponse<'DOCLINK', PBDocumentFields[]>
 ): PowerBrowserZaakBase['documents'] {
-  type PBDocument = {
-    [K in PBDocumentFields['fieldName']]: string;
-  };
   return (responseData.records || [])
-    .map((documentRecord) => {
-      const document = Object.fromEntries(
-        documentRecord.fields.map((field) => {
-          return [field.fieldName, field.fieldValue];
-        })
-      ) as PBDocument;
+    .map(convertPBRecordToDict)
+    .filter(isValidPBDocument)
+    .map((document) => {
       const titleLower = document.OMSCHRIJVING.toLowerCase();
 
       const [docTitleTranslated] =
-        Object.entries(documentNamenMA_PB).find(
-          ([_docTitleMa, docTitlesPB]) => {
-            return docTitlesPB.some((docTitlePb) => {
-              return titleLower.includes(docTitlePb.toLowerCase());
-            });
-          }
+        Object.entries(documentNamenMA_PB).find(([_docTitleMa, docTitlesPB]) =>
+          docTitlesPB.some((docTitlePb) =>
+            titleLower.includes(docTitlePb.toLowerCase())
+          )
         ) ?? [];
 
       if (!docTitleTranslated) {
@@ -404,6 +417,16 @@ async function fetchDocumentsList(
     data: {
       query: {
         tableName: 'DOCLINK',
+        fieldNames: [
+          'ID',
+          'OMSCHRIJVING',
+          'CREATEDATE',
+          'DOCUMENTNR',
+          'STAMCSSTATUS_ID',
+          'OPENBAARHEID_ID',
+          'SOORTDOCUMENT_ID',
+          'CREATOR_ID',
+        ],
         conditions: [
           {
             fieldName: 'GFO_ZAKEN_ID',
@@ -504,41 +527,6 @@ function transformZaakRaw<
   return zaak as PB;
 }
 
-async function fetchZakenByIds(zaakIds: string[]) {
-  if (zaakIds.length === 0) {
-    return apiSuccessResult([]);
-  }
-
-  const responses = await Promise.all(
-    _chunk(zaakIds, 25) // Endpoint can only handle 25 zaakIds at once
-      .map(
-        (chunkOfZaakIds) =>
-          ({
-            method: 'get',
-            formatUrl({ url }) {
-              return `${url}/record/GFO_ZAKEN/${chunkOfZaakIds.join(',')}`;
-            },
-            transformResponse(responseData: PBZaakRecord[]) {
-              return responseData ?? [];
-            },
-          }) as DataRequestConfig
-      )
-      .map(async (requestConfig) =>
-        fetchPowerBrowserData<PBZaakRecord[]>(requestConfig)
-      )
-  );
-
-  if (responses.some((r) => r.status !== 'OK')) {
-    return apiErrorResult(
-      'Failed to fetch powerbrowser zaken by zaakIds',
-      null
-    );
-  }
-  return apiSuccessResult(
-    responses.flatMap((r) => r.content as PBZaakRecord[])
-  );
-}
-
 async function fetchZakenRecords<T extends PowerBrowserZaakTransformer>(
   authProfile: Pick<AuthProfile, 'id' | 'profileType'>,
   zaakTransformers: T[]
@@ -559,12 +547,28 @@ async function fetchZakenRecords<T extends PowerBrowserZaakTransformer>(
     return apiSuccessResult([]);
   }
 
+  const urlParams = new URLSearchParams({
+    fields: [
+      'FMT_CAPTION',
+      'STARTDATUM',
+      'EINDDATUM',
+      'DATUM_TOT',
+      'ZAAK_IDENTIFICATIE',
+      'ZAAKPRODUCT_ID',
+      'ZAAK_SUBPRODUCT_ID',
+      'MUT_DAT',
+      'RESULTAAT_ID',
+    ].join(','),
+    addSearch: 'false',
+  });
+
   const zakenSearchResponse = await fetchPowerBrowserData<
-    SearchRequestResponse<'GFO_ZAKEN'>
+    SearchRequestResponse<'GFO_ZAKEN'>['records']
   >({
     formatUrl({ url }) {
-      return `${url}/Link/${tableOptions.tableName}/GFO_ZAKEN/Table`;
+      return `${url}/Link/${tableOptions.tableName}/GFO_ZAKEN/`;
     },
+    params: Object.fromEntries(urlParams),
     data: idsResponse.content,
   });
 
@@ -573,7 +577,7 @@ async function fetchZakenRecords<T extends PowerBrowserZaakTransformer>(
   }
 
   const zakenIdToZakentransformer = assignTransformerByFilter(
-    zakenSearchResponse.content.records || [],
+    zakenSearchResponse.content || [],
     zaakTransformers.map((t) => {
       const defaultFetchZaakIdFilter = (pbRecordField: PBRecordField<string>) =>
         hasCaseTypeInFMT_CAPTION(pbRecordField, t.caseType as string);
@@ -583,26 +587,20 @@ async function fetchZakenRecords<T extends PowerBrowserZaakTransformer>(
       };
     })
   );
-  const zakenIds = Object.keys(zakenIdToZakentransformer);
-  const zakenResponse = await fetchZakenByIds(zakenIds);
-
-  if (zakenResponse.status !== 'OK') {
-    return zakenResponse;
-  }
 
   return apiSuccessResult(
-    zakenResponse.content
-      .map(
+    zakenSearchResponse.content
+      ?.map(
         (zaak) =>
           [zaak, zakenIdToZakentransformer[zaak.id]] as [PBZaakRecord, T]
       )
-      .filter(([_zaak, transformer]) => !!transformer)
+      .filter(([_zaak, transformer]) => !!transformer) || []
   );
 }
 
 export async function fetchPBZaken<T extends PowerBrowserZaakTransformer>(
   authProfile: AuthProfile,
-  zaakTransformers: T[]
+zaakTransformers: T[]
 ): Promise<ApiResponse<NestedType<T>[]>> {
   const zakenResponse = await fetchZakenRecords(authProfile, zaakTransformers);
 
@@ -673,7 +671,6 @@ export const forTesting = {
   fetchSettledZaakStatusDates,
   fetchZaakStatusDates,
   fetchZakenRecords,
-  fetchZakenByIds,
   fetchDocumentsList,
   fetchSettledZaakDocuments,
   getFieldValue,

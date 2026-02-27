@@ -235,12 +235,14 @@ export type DecosVergunning =
   ---------------------------------------- */
 
 export const caseTypePB = {
-  Ligplaatsvergunning: 'Ligplaatsvergunning',
+  LigplaatsWoonbootvergunning: 'Ligplaatsvergunning woonboot',
+  LigplaatsBedrijfsvaartuigvergunning: 'Ligplaatsvergunning bedrijfsvaartuig',
   Omzettingsvergunning: 'Omzettingsvergunning',
   Samenvoegingsvergunning: 'Samenvoegingsvergunning',
   Onttrekkingsvergunning: 'Onttrekkingsvergunning voor ander gebruik',
   OnttrekkingsvergunningSloop: 'Onttrekkingsvergunning voor sloop',
   VormenVanWoonruimte: 'Woningvormingsvergunning',
+  OnttrekkingsvergunningTweedeWoning: 'Voorraadvergunning tweede woning',
   Splitsingsvergunning: 'Splitsingsvergunning',
 } as const;
 
@@ -248,14 +250,21 @@ export type CaseTypePBKey = keyof typeof caseTypePB;
 export type CaseTypePB = (typeof caseTypePB)[CaseTypePBKey];
 export type GetCaseTypePB<T extends CaseTypePBKey> = (typeof caseTypePB)[T];
 
-export type Ligplaatsvergunning = PowerBrowserZaakBase &
+type Ligplaatsvergunning = PowerBrowserZaakBase &
   WithLocation & {
-    caseType: GetCaseTypePB<'Ligplaatsvergunning'>;
     requestKind: string | null;
     reason: string | null;
     vesselKind: string | null;
     vesselName: string | null;
   };
+
+export type LigplaatsWoonbootvergunning = Ligplaatsvergunning & {
+  caseType: GetCaseTypePB<'LigplaatsWoonbootvergunning'>;
+};
+
+export type LigplaatsBedrijfsvaartuigvergunning = Ligplaatsvergunning & {
+  caseType: GetCaseTypePB<'LigplaatsBedrijfsvaartuigvergunning'>;
+};
 
 export type Omzettingsvergunning = PowerBrowserZaakBase &
   WithLocation & {
@@ -283,6 +292,11 @@ export type VormenVanWoonruimte = PowerBrowserZaakBase &
     caseType: GetCaseTypePB<'VormenVanWoonruimte'>;
   };
 
+export type OnttrekkingsvergunningTweedeWoning = PowerBrowserZaakBase &
+  WithLocation & {
+    caseType: GetCaseTypePB<'OnttrekkingsvergunningTweedeWoning'>;
+  };
+
 export type Splitsingsvergunning = PowerBrowserZaakBase &
   WithLocation & {
     caseType: GetCaseTypePB<'Splitsingsvergunning'>;
@@ -293,7 +307,8 @@ export type WoningVergunning =
   | Onttrekkingsvergunning
   | OnttrekkingsvergunningSloop
   | Splitsingsvergunning
-  | VormenVanWoonruimte;
+  | VormenVanWoonruimte
+  | OnttrekkingsvergunningTweedeWoning;
 
 export type PBVergunning =
   | Ligplaatsvergunning

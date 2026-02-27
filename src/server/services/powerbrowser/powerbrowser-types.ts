@@ -49,7 +49,11 @@ export type PBZaakFields =
   | PBRecordField<'STARTDATUM'> // Startdatum van de zaak
   | PBRecordField<'EINDDATUM'> // Afhandeldatum zaak + Startdatum geldigheid vergunning
   | PBRecordField<'DATUM_TOT'> // Einddatum geldigheid vergunning
+  | PBRecordField<'ZAAKPRODUCT_ID'>
+  | PBRecordField<'ZAAK_SUBPRODUCT_ID'>
+  | PBRecordField<'MUT_DAT'>
   | PBRecordField<'RESULTAAT_ID'>;
+// ?fields=FMT_CAPTION,ZAAKPRODUCT_ID,MUT_DAT&offset&max&addSearch=false&enableIntrekProcedureCheck=false
 
 export type PBZaakRecord = PBRecord<'GFO_ZAKEN', PBZaakFields[]>;
 
@@ -57,7 +61,15 @@ export type PBDocumentFields =
   | PBRecordField<'ID'>
   | PBRecordField<'OMSCHRIJVING'>
   | PBRecordField<'CREATEDATE'>
-  | PBRecordField<'DOCUMENTNR'>;
+  | PBRecordField<'DOCUMENTNR'>
+  | PBRecordField<'OPENBAARHEID_ID'>
+  | PBRecordField<'SOORTDOCUMENT_ID'>
+  | PBRecordField<'STAMCSSTATUS_ID'>
+  | PBRecordField<'CREATOR_ID'>;
+
+export type PBDocument = {
+  [K in PBDocumentFields['fieldName']]: string;
+};
 
 export type PBDocumentRecord = PBRecord<'DOCLINK', PBDocumentFields[]>;
 
