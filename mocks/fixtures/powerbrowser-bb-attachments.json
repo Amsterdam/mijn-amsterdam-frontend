@@ -245,7 +245,12 @@
       "fmtCpn": "Samenvatting_1064LK41.pdf D2026-01-000001",
       "mainTableName": "DOCLINK",
       "id": "126087910",
-      "forTestingZaakIds": ["126091830"],
+      "forTestingZaakIds": [
+        "126091830",
+        "-126087903",
+        "126087902",
+        "126087901"
+      ],
       "fields": [
         {
           "fieldName": "ID",
