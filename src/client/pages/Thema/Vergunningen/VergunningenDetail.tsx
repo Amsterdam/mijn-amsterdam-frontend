@@ -75,9 +75,7 @@ function DetailPageContent<T extends DecosVergunning | PBVergunning>({
           case 'Splitsingsvergunning':
             return <Woonvergunningen vergunning={vergunning} />;
           case 'VOB':
-            return <LigplaatsVergunning vergunning={vergunning} />;
           case 'Ligplaatsvergunning woonboot':
-            return <LigplaatsVergunning vergunning={vergunning} />;
           case 'Ligplaatsvergunning bedrijfsvaartuig':
             return <LigplaatsVergunning vergunning={vergunning} />;
           case 'RVV - Hele stad':
@@ -131,13 +129,22 @@ export function VergunningenDetail() {
         vergunning && (
           <>
             <DetailPageContent
-              vergunning={vergunning as ZaakFrontendCombined<DecosVergunning>}
+              vergunning={
+                vergunning as ZaakFrontendCombined<
+                  DecosVergunning | PBVergunning
+                >
+              }
             />
             <PageContentCell spanWide={8}>
               <VergunningDetailDocumentsList
                 isLoading={isLoadingDocuments}
                 isError={isErrorDocuments}
                 documents={documents}
+                vergunning={
+                  vergunning as ZaakFrontendCombined<
+                    DecosVergunning | PBVergunning
+                  >
+                }
               />
             </PageContentCell>
           </>

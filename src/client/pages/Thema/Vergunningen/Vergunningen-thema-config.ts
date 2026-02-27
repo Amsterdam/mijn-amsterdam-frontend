@@ -11,6 +11,7 @@ import {
   type DecosZaakFrontend,
 } from '../../../../server/services/decos/decos-types';
 import { WithDateRange } from '../../../../server/services/vergunningen/config-and-types';
+import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { dateSort } from '../../../../universal/helpers/date';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
@@ -76,6 +77,7 @@ export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 export const featureToggle = {
   vergunningenActive: true,
+  documentOpvragenMail: !IS_PRODUCTION,
 };
 
 export const themaId = 'VERGUNNINGEN' as const;
