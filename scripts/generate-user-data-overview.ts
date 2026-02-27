@@ -48,7 +48,6 @@ import {
   Adres,
   Kind,
   Persoon,
-  Verbintenis,
   BrpFrontend,
 } from '../src/server/services/brp/brp-types';
 
@@ -75,10 +74,7 @@ import {
   themaTitle as themaTitleErfpacht,
 } from '../src/client/pages/Thema/Erfpacht/Erfpacht-thema-config';
 import { themaConfig as themaConfigBezwaren } from '../src/client/pages/Thema/Bezwaren/Bezwaren-thema-config';
-import {
-  themaId as themaIdHoreca,
-  themaTitle as themaTitleHoreca,
-} from '../src/client/pages/Thema/Horeca/Horeca-thema-config';
+import { themaConfig as themaHoreca } from '../src/client/pages/Thema/Horeca/Horeca-thema-config';
 import { themaConfig as themaConfigToeristischeVerhuur } from '../src/client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 import { themaConfig as themaConfigAVG } from '../src/client/pages/Thema/AVG/AVG-thema-config';
 import {
@@ -109,18 +105,12 @@ import {
   themaId as themaIdParkeren,
   themaTitle as themaTitleParkeren,
 } from '../src/client/pages/Thema/Parkeren/Parkeren-thema-config';
-import {
-  themaId as themaIdBelastingen,
-  themaTitle as themaTitleBelastingen,
-} from '../src/client/pages/Thema/Belastingen/Belastingen-thema-config';
+import { themaConfig as themaBelastingen } from '../src/client/pages/Thema/Belastingen/Belastingen-thema-config';
 import {
   themaId as themaIdMilieuzone,
   themaTitle as themaTitleMilieuzone,
 } from '../src/client/pages/Thema/Milieuzone/Milieuzone-thema-config';
-import {
-  themaId as themaIdSubsidies,
-  themaTitle as themaTitleSubsidies,
-} from '../src/client/pages/Thema/Subsidies/Subsidies-thema-config';
+import { themaConfig as themaSubsidies } from '../src/client/pages/Thema/Subsidies/Subsidies-thema-config';
 
 const { BRP, KVK } = profileThemaTitles;
 
@@ -136,7 +126,7 @@ const themas = [
   { id: themaIdVergunningen, title: themaTitleVergunningen },
   { id: themaIdErfpacht, title: themaTitleErfpacht },
   { id: themaConfigBezwaren.id, title: themaConfigBezwaren.title },
-  { id: themaIdHoreca, title: themaTitleHoreca },
+  { id: themaHoreca.id, title: themaHoreca.title },
   {
     id: themaConfigToeristischeVerhuur.id,
     title: themaConfigToeristischeVerhuur.title,
@@ -152,9 +142,9 @@ const themas = [
   { id: themaConfigHLI.id, title: themaConfigHLI.title },
   { id: themaConfigJeugd.id, title: themaConfigJeugd.title },
   { id: themaIdParkeren, title: themaTitleParkeren },
-  { id: themaIdBelastingen, title: themaTitleBelastingen },
+  { id: themaBelastingen.id, title: themaBelastingen.title },
   { id: themaIdMilieuzone, title: themaTitleMilieuzone },
-  { id: themaIdSubsidies, title: themaTitleSubsidies },
+  { id: themaSubsidies.id, title: themaSubsidies.title },
 ];
 
 if (IS_PRODUCTION) {
