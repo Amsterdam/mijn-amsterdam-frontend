@@ -34,33 +34,8 @@ describe('Regressietest fetchBedAndBreakfast personen', () => {
     },
     {
       req: {
-        url: 'https://acc_gemeenteamsterdam_vth.moverheid.nl/api/Link/PERSONEN/GFO_ZAKEN/Table',
+        url: 'https://acc_gemeenteamsterdam_vth.moverheid.nl/api/Link/PERSONEN/GFO_ZAKEN/',
         method: 'POST',
-      },
-      res: {
-        mainTableName: 'GFO_ZAKEN',
-        records: [
-          {
-            fmtCpn:
-              'Z2025-WK000081 BenB aanvragen - Speelmanstraat 5 H 15-04-2025 In behandeling Vergunningaanvraag behandelen Bed en breakfast',
-            mainTableName: 'GFO_ZAKEN',
-            id: '126089897',
-            fields: [
-              {
-                fieldName: 'FMT_CAPTION',
-                text: 'Z2025-WK000081 BenB aanvragen - Speelmanstraat 5 H 15-04-2025 In behandeling Vergunningaanvraag behandelen Bed en breakfast ',
-                fieldValue:
-                  'Z2025-WK000081 BenB aanvragen - Speelmanstraat 5 H 15-04-2025 In behandeling Vergunningaanvraag behandelen Bed en breakfast ',
-              },
-            ],
-          },
-        ],
-      },
-    },
-    {
-      req: {
-        url: 'https://acc_gemeenteamsterdam_vth.moverheid.nl/api/record/GFO_ZAKEN/126089897',
-        method: 'GET',
       },
       res: [
         {
@@ -69,6 +44,12 @@ describe('Regressietest fetchBedAndBreakfast personen', () => {
           mainTableName: 'GFO_ZAKEN',
           id: '126089897',
           fields: [
+            {
+              fieldName: 'FMT_CAPTION',
+              text: 'Z2025-WK000081 BenB aanvragen - Speelmanstraat 5 H 15-04-2025 In behandeling Vergunningaanvraag behandelen Bed en breakfast ',
+              fieldValue:
+                'Z2025-WK000081 BenB aanvragen - Speelmanstraat 5 H 15-04-2025 In behandeling Vergunningaanvraag behandelen Bed en breakfast ',
+            },
             {
               fieldName: 'ZAAK_IDENTIFICATIE',
               text: 'Z2025-WK000081',
@@ -190,6 +171,20 @@ describe('Regressietest fetchBedAndBreakfast personen', () => {
                 text: '1191012',
                 fieldValue: '1191012',
               },
+              {
+                fieldName: 'STAMCSSTATUS_ID',
+                text: 'definitief',
+                fieldValue: '1000001002',
+              },
+              {
+                fieldName: 'OPENBAARHEID_ID',
+                text: 'openbaar',
+                fieldValue: '1000001001',
+              },
+              {
+                fieldName: 'SOORTDOCUMENT_ID',
+                fieldValue: '1000001015',
+              },
             ],
           },
         ],
@@ -262,7 +257,7 @@ describe('Regressietest fetchBedAndBreakfast personen', () => {
         '/powerbrowser/'
       );
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (remoteApi as any)[method](url).reply(200, r.res);
+      (remoteApi as any)[method](url).query(true).reply(200, r.res);
     }
     const authProfileAndToken = getAuthProfileAndToken();
 
@@ -293,33 +288,8 @@ describe('fetchBB fetchBedAndBreakfast maatschap', () => {
     },
     {
       req: {
-        url: 'https://acc_gemeenteamsterdam_vth.moverheid.nl/api/Link/MAATSCHAP/GFO_ZAKEN/Table',
+        url: 'https://acc_gemeenteamsterdam_vth.moverheid.nl/api/Link/MAATSCHAP/GFO_ZAKEN/',
         method: 'POST',
-      },
-      res: {
-        mainTableName: 'GFO_ZAKEN',
-        records: [
-          {
-            fmtCpn:
-              'Z2025-WK000108 BenB aanvragen - Paulus van Hemertstraat 2 2 27-05-2025 Intake Vergunningaanvraag behandelen Bed en breakfast',
-            mainTableName: 'GFO_ZAKEN',
-            id: '987654321',
-            fields: [
-              {
-                fieldName: 'FMT_CAPTION',
-                text: 'Z2025-WK000108 BenB aanvragen - Paulus van Hemertstraat 2 2 27-05-2025 Intake Vergunningaanvraag behandelen Bed en breakfast ',
-                fieldValue:
-                  'Z2025-WK000108 BenB aanvragen - Paulus van Hemertstraat 2 2 27-05-2025 Intake Vergunningaanvraag behandelen Bed en breakfast ',
-              },
-            ],
-          },
-        ],
-      },
-    },
-    {
-      req: {
-        url: 'https://acc_gemeenteamsterdam_vth.moverheid.nl/api/record/GFO_ZAKEN/987654321',
-        method: 'GET',
       },
       res: [
         {
@@ -328,6 +298,12 @@ describe('fetchBB fetchBedAndBreakfast maatschap', () => {
           mainTableName: 'GFO_ZAKEN',
           id: '987654321',
           fields: [
+            {
+              fieldName: 'FMT_CAPTION',
+              text: 'Z2025-WK000108 BenB aanvragen - Paulus van Hemertstraat 2 2 27-05-2025 Intake Vergunningaanvraag behandelen Bed en breakfast ',
+              fieldValue:
+                'Z2025-WK000108 BenB aanvragen - Paulus van Hemertstraat 2 2 27-05-2025 Intake Vergunningaanvraag behandelen Bed en breakfast ',
+            },
             {
               fieldName: 'ZAAK_IDENTIFICATIE',
               text: 'Z2025-WK000108',
@@ -347,6 +323,20 @@ describe('fetchBB fetchBedAndBreakfast maatschap', () => {
               fieldName: 'DATUM_TOT',
               text: '01-07-2028',
               fieldValue: '2028-06-30T22:00:00.0000000Z',
+            },
+            {
+              fieldName: 'STAMCSSTATUS_ID',
+              text: 'definitief',
+              fieldValue: '1000001002',
+            },
+            {
+              fieldName: 'OPENBAARHEID_ID',
+              text: 'openbaar',
+              fieldValue: '1000001001',
+            },
+            {
+              fieldName: 'SOORTDOCUMENT_ID',
+              fieldValue: '1000001015',
             },
           ],
         },
@@ -417,12 +407,25 @@ describe('fetchBB fetchBedAndBreakfast maatschap', () => {
                 text: '1191181',
                 fieldValue: '1191181',
               },
-
               {
                 fieldName: 'FMT_CAPTION',
                 text: '27-5-2025_Samenvatting_1064LK22.pdf D2025-05-000109 ',
                 fieldValue:
                   '27-5-2025_Samenvatting_1064LK22.pdf D2025-05-000109 ',
+              },
+              {
+                fieldName: 'STAMCSSTATUS_ID',
+                text: 'definitief',
+                fieldValue: '1000001002',
+              },
+              {
+                fieldName: 'OPENBAARHEID_ID',
+                text: 'openbaar',
+                fieldValue: '1000001001',
+              },
+              {
+                fieldName: 'SOORTDOCUMENT_ID',
+                fieldValue: '1000001015',
               },
             ],
           },
@@ -497,7 +500,7 @@ describe('fetchBB fetchBedAndBreakfast maatschap', () => {
         '/powerbrowser/'
       );
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (remoteApi as any)[method](url).reply(200, r.res);
+      (remoteApi as any)[method](url).query(true).reply(200, r.res);
     }
     const authProfileAndToken = getAuthProfileAndToken();
     authProfileAndToken.profile.id = '12345678';

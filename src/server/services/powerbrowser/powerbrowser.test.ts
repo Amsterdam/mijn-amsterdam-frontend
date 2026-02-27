@@ -99,22 +99,20 @@ describe('Powerbrowser service', () => {
             return [200, { records: [{ id: 'test-person-id' }] }];
           }
 
-          if (uri.includes('Link/PERSONEN/GFO_ZAKEN/Table')) {
+          if (uri.includes('Link/PERSONEN/GFO_ZAKEN/')) {
             return [
               200,
-              {
-                records: [
-                  {
-                    id: 'test-zaak-id',
-                    fields: [
-                      {
-                        fieldName: 'FMT_CAPTION',
-                        text: 'Z/123/123 aanvraag Bed en breakfast behandelen',
-                      },
-                    ],
-                  },
-                ],
-              },
+              [
+                {
+                  id: 'test-zaak-id',
+                  fields: [
+                    {
+                      fieldName: 'FMT_CAPTION',
+                      text: 'Z/123/123 aanvraag Bed en breakfast behandelen',
+                    },
+                  ],
+                },
+              ],
             ];
           }
 
@@ -669,57 +667,6 @@ describe('Powerbrowser service', () => {
         isExpired: false,
         title: 'Vergunning bed & breakfast',
       });
-    });
-  });
-
-  describe('fetchZakenByIds', () => {
-    test('should fetch zaken by IDs successfully', async () => {
-      remoteApi.get('/powerbrowser/record/GFO_ZAKEN/test-zaak-id').reply(200, [
-        {
-          id: 'test-zaak-id',
-          fields: [
-            { fieldName: 'RESULTAAT_ID', fieldValue: 'Verleend' },
-            { fieldName: 'STARTDATUM', fieldValue: '2023-01-01' },
-          ],
-        },
-      ]);
-
-      const result = await forTesting.fetchZakenByIds(['test-zaak-id']);
-      expect(result.status).toBe('OK');
-      expect(result.content).toHaveLength(1);
-    });
-
-    test('should chunk by 25 zaakIds per request', async () => {
-      const testZaakId = `test-zaak-id`;
-      const _26Zaken = Array.from({ length: 26 }, () => testZaakId);
-      const testZaakResponse = {
-        id: 'test-zaak-id',
-        fields: [
-          { fieldName: 'RESULTAAT_ID', fieldValue: 'Verleend' },
-          { fieldName: 'STARTDATUM', fieldValue: '2023-01-01' },
-        ],
-      };
-      remoteApi
-        .get(
-          `/powerbrowser/record/GFO_ZAKEN/${_26Zaken.slice(0, 25).join(',')}`
-        )
-        .reply(200, [testZaakResponse, testZaakResponse]);
-      remoteApi
-        .get(`/powerbrowser/record/GFO_ZAKEN/${testZaakId}`)
-        .reply(200, [testZaakResponse]);
-
-      const result = await forTesting.fetchZakenByIds(_26Zaken);
-      expect(result.status).toBe('OK');
-      expect(result.content).toHaveLength(3);
-    });
-
-    test('should return an error if fetch fails', async () => {
-      remoteApi
-        .get('/powerbrowser/record/GFO_ZAKEN/test-zaak-id')
-        .reply(500, 'some-error');
-
-      const result = await forTesting.fetchZakenByIds(['test-zaak-id']);
-      expect(result.status).toBe('ERROR');
     });
   });
 

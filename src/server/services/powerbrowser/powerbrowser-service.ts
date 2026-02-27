@@ -600,7 +600,7 @@ async function fetchZakenRecords<T extends PowerBrowserZaakTransformer>(
 
 export async function fetchPBZaken<T extends PowerBrowserZaakTransformer>(
   authProfile: AuthProfile,
-zaakTransformers: T[]
+  zaakTransformers: T[]
 ): Promise<ApiResponse<NestedType<T>[]>> {
   const zakenResponse = await fetchZakenRecords(authProfile, zaakTransformers);
 
@@ -629,6 +629,7 @@ zaakTransformers: T[]
     }
   );
   const zaken = await Promise.all(zakenPromise);
+
   return apiSuccessResult(zaken);
 }
 
