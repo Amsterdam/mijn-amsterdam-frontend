@@ -348,9 +348,14 @@ function isValidPBDocument(record: PBDocument) {
   const isBesluit = record.SOORTDOCUMENT_ID === '256';
   const isDefinitief = record.STAMCSSTATUS_ID === '1000001002';
   const isOpenbaar = record.OPENBAARHEID_ID === '1000001001';
-  const isTrippleFormsCreator = record.CREATOR_ID === '6205';
 
-  const isTrippleFormsAanvraagDocument = isAanvraag && isTrippleFormsCreator;
+  // Trippleforms aanvragen should be showed but often do not have a STAMCSSTATUS_ID or OPENBAARHEID_ID
+  const isTrippleFormsCreator = record.CREATOR_ID === '6205';
+  const isTrippleFormsAanvraagDocument =
+    isAanvraag &&
+    isTrippleFormsCreator &&
+    (isDefinitief || !record.STAMCSSTATUS_ID) &&
+    (isOpenbaar || !record.OPENBAARHEID_ID);
 
   const isValid = isDefinitief && isOpenbaar && (isBesluit || isAanvraag);
   return isValid || isTrippleFormsAanvraagDocument;
