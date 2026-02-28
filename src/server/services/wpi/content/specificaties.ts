@@ -1,9 +1,6 @@
 import { differenceInMonths } from 'date-fns';
 
-import {
-  themaId,
-  themaTitle,
-} from '../../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
+import { themaConfig } from '../../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
 import { IS_PRODUCTION } from '../../../../universal/config/env';
 import {
   dateFormat,
@@ -42,8 +39,8 @@ function transformIncomeSpecificationNotification(
     return {
       id: 'nieuwe-jaaropgave',
       datePublished: item.datePublished,
-      themaID: themaId,
-      themaTitle,
+      themaID: themaConfig.id,
+      themaTitle: themaConfig.title,
       title: 'Nieuwe jaaropgave',
       description: `Uw ${item.title} staat voor u klaar.`,
       link: {
@@ -56,8 +53,8 @@ function transformIncomeSpecificationNotification(
   return {
     id: 'nieuwe-uitkeringsspecificatie',
     datePublished: item.datePublished,
-    themaID: themaId,
-    themaTitle,
+    themaID: themaConfig.id,
+    themaTitle: themaConfig.title,
     title: 'Nieuwe uitkeringsspecificatie',
     description: `Uw uitkeringsspecificatie van ${dateFormat(
       item.datePublished,

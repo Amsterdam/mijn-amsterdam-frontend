@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { generatePath } from 'react-router';
 import { describe, expect, it } from 'vitest';
 
-import { listPageParamKind, routeConfig } from './Inkomen-thema-config';
+import { listPageParamKind, themaConfig } from './Inkomen-thema-config';
 import { InkomenListSpecificaties } from './InkomenListSpecificaties';
 import { transformIncomSpecificationResponse } from '../../../../server/services/wpi/api-service';
 import { WpiIncomeSpecificationResponseData } from '../../../../server/services/wpi/wpi-types';
@@ -82,11 +82,14 @@ const content = transformIncomSpecificationResponse('xxxxxxxxxxxxxxxxxxxxx', {
 });
 
 describe('<InkomenSpecificaties /> Uitkering', () => {
-  const routeEntry = generatePath(routeConfig.listPageSpecificaties.path, {
-    kind: listPageParamKind.uitkering,
-    page: null,
-  });
-  const routePath = routeConfig.listPageSpecificaties.path;
+  const routeEntry = generatePath(
+    themaConfig.listPageSpecificaties.route.path,
+    {
+      kind: listPageParamKind.uitkering,
+      page: null,
+    }
+  );
+  const routePath = themaConfig.listPageSpecificaties.route.path;
 
   function Component() {
     return (
@@ -135,11 +138,14 @@ describe('<InkomenSpecificaties /> Uitkering', () => {
 });
 
 describe('<InkomenSpecificaties /> Jaaropgave', () => {
-  const routeEntry = generatePath(routeConfig.listPageSpecificaties.path, {
-    kind: listPageParamKind.jaaropgaven,
-    page: null,
-  });
-  const routePath = routeConfig.listPageSpecificaties.path;
+  const routeEntry = generatePath(
+    themaConfig.listPageSpecificaties.route.path,
+    {
+      kind: listPageParamKind.jaaropgaven,
+      page: null,
+    }
+  );
+  const routePath = themaConfig.listPageSpecificaties.route.path;
 
   function Component() {
     return (

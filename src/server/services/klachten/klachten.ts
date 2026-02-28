@@ -2,10 +2,7 @@ import FormData from 'form-data';
 import { generatePath } from 'react-router';
 import UID from 'uid-safe';
 
-import {
-  featureToggle,
-  themaConfig,
-} from '../../../client/pages/Thema/Klachten/Klachten-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/Klachten/Klachten-thema-config';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -166,10 +163,7 @@ export function transformKlachtenResponse(
 function createKlachtNotification(klacht: KlachtFrontend): MyNotification {
   const id = `klacht-${klacht.id}-notification`;
   const gotoDetailTxt = 'Bekijk details';
-  if (
-    featureToggle.statustreinAndAfgehandeldeMeldingenActive &&
-    klacht.displayStatus === 'Afgehandeld'
-  ) {
+  if (klacht.displayStatus === 'Afgehandeld') {
     return {
       id,
       title: 'Klacht afgehandeld',
