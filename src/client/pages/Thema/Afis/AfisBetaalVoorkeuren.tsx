@@ -121,7 +121,7 @@ export function AfisBetaalVoorkeuren() {
     isLoadingBusinessPartnerDetails ||
     isLoadingEMandates;
 
-  const eMandatesTable = featureToggle.afisEMandatesActive && (
+  const eMandatesTable = featureToggle.emandatesActive && (
     <ThemaPaginaTable<AfisEMandateFrontend>
       displayProps={eMandateTableConfig.displayProps}
       maxItems={-1}
@@ -169,7 +169,7 @@ export function AfisBetaalVoorkeuren() {
         </Link>
         .
       </Paragraph>
-      {!featureToggle.afisEMandatesActive && (
+      {!featureToggle.emandatesActive && (
         <>
           <Heading level={4}>Via automatische incasso betalen</Heading>
           <Paragraph className="ams-mb-m">
@@ -205,7 +205,7 @@ export function AfisBetaalVoorkeuren() {
         businesspartner={businesspartnerDetails}
         labels={businessPartnerDetailsLabels}
         isLoading={!!(isLoadingBusinessPartnerDetails || isThemaPaginaLoading)}
-        startCollapsed={featureToggle.afisEMandatesActive}
+        startCollapsed={featureToggle.emandatesActive}
       />
       {!!ibansPendingActivation.length && (
         <EmandateRefetchInterval fetch={fetchEMandates} />

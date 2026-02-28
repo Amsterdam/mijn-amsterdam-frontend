@@ -7,9 +7,7 @@ import { BrowserRouter, useLocation, useNavigate } from 'react-router';
 
 import styles from './App.module.scss';
 import { PrivateRoutes, PublicRoutes } from './App.routes';
-import {
-  CobrowseScreensareAlert,
-} from './components/Alert/CobrowseScreenshareDisclaimer';
+import { CobrowseScreenshareAlert } from './components/Alert/CobrowseScreenshareDisclaimer';
 import { AutoLogoutDialog } from './components/AutoLogoutDialog/AutoLogoutDialog';
 import { ErrorMessages } from './components/ErrorMessages/ErrorMessages';
 import { MainFooter } from './components/MainFooter/MainFooter';
@@ -102,7 +100,7 @@ function AppAuthenticated() {
         <SkipLink href="#page-main-content">Direct naar inhoud</SkipLink>
         <MainHeader isAuthenticated />
         <ErrorMessages />
-        {isScreensharing && <CobrowseScreensareAlert />}
+        {isScreensharing && <CobrowseScreenshareAlert />}
         <PrivateRoutes />
       </Page>
       {/** Remove the footer on the Map view for better UX */}

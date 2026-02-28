@@ -1,9 +1,9 @@
-import { IS_PRODUCTION } from '../../../../universal/config/env';
+import { isEnabled } from '../../../config/azure-appconfiguration';
 import { AMSAPP_BASE_PATH } from '../amsapp-service-config';
 
 export const featureToggle = {
   // AmsApp notificaties
-  amsNotificationsIsActive: !IS_PRODUCTION,
+  amsNotificationsIsActive: isEnabled('AMSAPP.notificationService'),
 };
 
 export const routes = {

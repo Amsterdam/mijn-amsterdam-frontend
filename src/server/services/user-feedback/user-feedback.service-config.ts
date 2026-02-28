@@ -1,4 +1,5 @@
 import { IS_PRODUCTION } from '../../../universal/config/env';
+import { isEnabled } from '../../config/azure-appconfiguration';
 import type { DataRequestConfig } from '../../config/source-api';
 import { getFromEnv } from '../../helpers/env';
 
@@ -24,7 +25,7 @@ export const featureToggle = {
   },
   service: {
     fetchSurvey: {
-      isEnabled: getFromEnv('BFF_USER_FEEDBACK_ENABLED') === 'true',
+      isEnabled: isEnabled('USER_FEEDBACK.fetchSurvey'),
     },
   },
 };

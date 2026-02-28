@@ -11,8 +11,8 @@ import {
   eMandateTableConfig,
   titleBetaalvoorkeurenPage,
   titleEMandaatPage,
-  featureToggle,
   EMANDATE_STATUS_ACTIVE,
+  featureToggle,
 } from './Afis-thema-config';
 import { useAfisThemaData } from './useAfisThemaData.hook';
 import type {
@@ -57,7 +57,6 @@ export function useAfisEMandatesData() {
   const { businessPartnerIdEncrypted, themaId } = useAfisThemaData();
 
   const {
-    isLoading,
     isError,
     isDirty,
     data: eMandatesApiResponse,
@@ -66,7 +65,7 @@ export function useAfisEMandatesData() {
   } = useBffApi<AfisEMandateFrontend[]>(
     generateApiUrl(businessPartnerIdEncrypted, 'AFIS_EMANDATES'),
     {
-      fetchImmediately: featureToggle.afisEMandatesActive,
+      fetchImmediately: featureToggle.emandatesActive,
     }
   );
 

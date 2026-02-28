@@ -27,7 +27,8 @@
     "bff-api:build": "tsc --project ./tsconfig.bff.json",
     "bff-api:job:notifications": "ts-node --project ./tsconfig.bff.json ./src/jobs/fetch-notifications-amsapp.ts",
     "lint": "eslint src --max-warnings 0 --quiet",
-    "lint:fix": "eslint src --fix"
+    "lint:fix": "eslint src --fix",
+    "build-docker": "export SSH_PASSWD='root:docker' && docker buildx build --secret 'id=SSH_PASSWD' -t mams ."
   },
   "browserslist": [
     ">0.2%",
@@ -44,8 +45,10 @@
     "@amsterdam/piwik-tracker": "^2.0.3",
     "@amsterdam/piwik-tracker-react": "^2.0.3",
     "@amsterdam/react-maps": "^1.1.1",
+    "@azure/app-configuration-provider": "^2.3.1",
     "@microsoft/applicationinsights-react-js": "^17.3.6",
     "@microsoft/applicationinsights-web": "^3.3.11",
+    "@microsoft/feature-management": "^2.2.0",
     "@react-spring/web": "^9.7.5",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",

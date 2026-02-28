@@ -1,6 +1,6 @@
 import { Alert } from '@amsterdam/design-system-react';
 
-export function CobrowseScreensareAlert() {
+export function CobrowseScreenshareAlert() {
   return (
     <Alert
       className="ams-mb-m"

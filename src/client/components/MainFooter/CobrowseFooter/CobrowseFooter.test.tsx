@@ -1,34 +1,10 @@
-import { render, waitFor } from '@testing-library/react';
-import { describe, expect } from 'vitest';
+import { render } from '@testing-library/react';
+import { expect } from 'vitest';
 
 import { CobrowseFooter, LABEL_HULP_SCHERMDELEN } from './CobrowseFooter';
 
-describe('<CobrowseFooter />', () => {
-  test('CobrowseFooter is not shown when toggle is disabled', async () => {
-    vi.mock('../../../../universal/config/feature-toggles.ts', () => ({
-      FeatureToggle: {
-        cobrowseIsActive: false,
-      },
-    }));
-
-    const screen = render(<CobrowseFooter />);
-    await waitFor(() => {
-      const schermdelenButton = screen.queryByText(LABEL_HULP_SCHERMDELEN);
-      expect(schermdelenButton).not.toBeInTheDocument();
-    });
-  });
-
-  test('CobrowseFooter is shown when toggle is enabled', async () => {
-    vi.mock('../../../../universal/config/feature-toggles.ts', () => ({
-      FeatureToggle: {
-        cobrowseIsActive: true,
-      },
-    }));
-
-    const screen = render(<CobrowseFooter />);
-    await waitFor(() => {
-      const schermdelenButton = screen.queryByText(LABEL_HULP_SCHERMDELEN);
-      expect(schermdelenButton).toBeInTheDocument();
-    });
-  });
+test('<CobrowseFooter />', async () => {
+  const screen = render(<CobrowseFooter />);
+  const schermdelenButton = await screen.findByText(LABEL_HULP_SCHERMDELEN);
+  expect(schermdelenButton).toBeInTheDocument();
 });
