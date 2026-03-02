@@ -24,7 +24,7 @@ import {
 import { ContentTipSource } from './tip-types';
 import { themaId as themaIdAfval } from '../../../client/pages/Thema/Afval/Afval-thema-config';
 import { themaConfig as hliThemaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config';
-import { themaId as themaIdInkomen } from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
+import { themaConfig as inkomenThemaConfig } from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
 import { themaIdBRP } from '../../../client/pages/Thema/Profile/Profile-thema-config';
 import { themaConfig as toeristischeVerhuurThemaConfig } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 
@@ -94,7 +94,7 @@ export const contentTips: ContentTipSource[] = [
     active: true,
     datePublished: '2020-11-25',
     title: 'Tip: Download de 020werkt-app',
-    themaID: themaIdInkomen,
+    themaID: inkomenThemaConfig.id,
     profileTypes: ['private', 'commercial'],
     description:
       'Via de 020werkt-app krijgt u informatie  over werk, inkomen en meedoen in de wijk. De app is gratis, anoniem en makkelijk in gebruik.',
@@ -140,7 +140,7 @@ export const contentTips: ContentTipSource[] = [
     active: true,
     datePublished: '2020-12-20',
     title: 'Tip: Hulp bij geldproblemen',
-    themaID: themaIdInkomen,
+    themaID: inkomenThemaConfig.id,
     profileTypes: ['private', 'commercial'],
     description:
       'Is uw inkomen te laag om alle rekeningen te betalen of heeft u schulden? Meld u aan voor gratis hulp',
@@ -203,7 +203,7 @@ export const contentTips: ContentTipSource[] = [
     active: false,
     datePublished: '2021-02-02',
     title: 'Tip: Breng je basis op orde',
-    themaID: themaIdInkomen,
+    themaID: inkomenThemaConfig.id,
     profileTypes: ['private'],
     description:
       'Met Ping Ping weet je precies wat je moet regelen als je 18 wordt, gaat werken, gaat studeren of op jezelf gaat wonen.',
@@ -284,7 +284,7 @@ export const contentTips: ContentTipSource[] = [
     active: true,
     datePublished: '2021-08-01',
     title: 'Tip: Sportvergoeding voor kinderen',
-    themaID: themaIdInkomen,
+    themaID: inkomenThemaConfig.id,
     profileTypes: ['private'],
     description:
       'Heeft u moeite om sportactiviteiten voor uw kind te betalen? Regel de vergoeding via Stichting SINA (Samen is niet alleen).',
@@ -306,7 +306,7 @@ export const contentTips: ContentTipSource[] = [
     predicates: [hasKidsBetweenAges({ from: 4, to: 11 }), isMokum],
     profileTypes: ['private'],
     isNotification: true,
-    themaID: themaIdInkomen,
+    themaID: inkomenThemaConfig.id,
     description:
       'Kinderen van 4 tot en met 11 jaar kunnen van 22 juli tot en met 30 november gratis reizen met het openbaar vervoer in Amsterdam. Elk kind heeft een ov-chipkaart nodig.',
     reason:
@@ -325,7 +325,7 @@ export const contentTips: ContentTipSource[] = [
     active: true,
     datePublished: '2024-07-01',
     title: 'Gratis openbaar vervoer voor kinderen',
-    themaID: themaIdInkomen,
+    themaID: inkomenThemaConfig.id,
     profileTypes: ['private'],
     description:
       'Amsterdamse kinderen van 4 tot en met 11 jaar kunnen van 20 juli 2024 tot en met 4 januari 2025 gratis reizen met het openbaar vervoer van GVB in Amsterdam. U kunt het gratis reizen voor uw kind vanaf 1 juli 2024 aanvragen.',
@@ -345,7 +345,7 @@ export const contentTips: ContentTipSource[] = [
     active: true,
     datePublished: '2024-07-01',
     title: 'Gratis openbaar vervoer voor kinderen',
-    themaID: themaIdInkomen,
+    themaID: inkomenThemaConfig.id,
     profileTypes: ['private'],
     description:
       'Je kunt van 20 juli 2024 tot en met 4 januari 2025 gratis reizen met het openbaar vervoer van GVB in Amsterdam. Hiervoor heb je een ov-chipkaart nodig. Gratis reizen kun je vanaf 1 juli 2024 aanvragen.',

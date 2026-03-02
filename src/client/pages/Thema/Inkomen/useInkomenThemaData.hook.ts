@@ -2,12 +2,9 @@ import { useMemo } from 'react';
 
 import {
   listPageParamKind,
-  routeConfig,
   tableConfig,
-  themaId,
-  themaTitle,
+  themaConfig,
 } from './Inkomen-thema-config';
-import { linkListItems } from './Inkomen-thema-config';
 import { WpiRequestProcess } from '../../../../server/services/wpi/wpi-types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import {
@@ -35,7 +32,7 @@ export function useInkomenThemaData() {
     WPI_SPECIFICATIES.content?.jaaropgaven ?? []
   );
 
-  const breadcrumbs = useThemaBreadcrumbs(themaId);
+  const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
   const zaken = useMemo(() => {
     if ((!aanvragen.length && !tozo.length) || !tonk.length) {
@@ -92,9 +89,9 @@ export function useInkomenThemaData() {
     zaken,
     specificaties,
     jaaropgaven,
-    id: themaId,
-    title: themaTitle,
-    linkListItems,
+    themaId: themaConfig.id,
+    title: themaConfig.title,
+    pageLinks: themaConfig.pageLinks,
     isLoadingWpi,
     isErrorWpi,
     isLoadingWpiSpecificaties,
@@ -102,7 +99,7 @@ export function useInkomenThemaData() {
     listPageParamKind,
     tableConfig,
     breadcrumbs,
-    listPageRoute: routeConfig.listPage.path,
-    routeConfig,
+    listPageRoute: themaConfig.listPage.route.path,
+    themaConfig,
   };
 }
