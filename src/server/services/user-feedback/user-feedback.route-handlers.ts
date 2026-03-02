@@ -9,6 +9,7 @@ import {
   type Survey,
   type UserFeedbackInput,
 } from './user-feedback.types';
+import { range } from '../../../universal/helpers/utils';
 import {
   sendBadRequestInvalidInput,
   sendResponse,
@@ -90,12 +91,12 @@ export async function handleShowSurveyOverview(
     }, 0) / (entries.length || 1)
   ).toFixed(2);
 
-  const pageLinks = [
-    ...Array(feedbackOverview.content?.pageCount || 1).keys(),
-  ].map((page) => ({
-    page: page + 1,
-    url: `?page=${page + 1}`,
-  }));
+  const pageLinks = range(1, feedbackOverview.content?.pageCount || 1).map(
+    (page) => ({
+      page,
+      url: `?page=${page}`,
+    })
+  );
 
   return res.render('user-feedback-overview', {
     feedbackOverview: {
