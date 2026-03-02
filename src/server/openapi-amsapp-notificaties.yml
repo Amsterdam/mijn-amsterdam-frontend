@@ -76,7 +76,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ConsumerProfile'
+                oneOf:
+                  - $ref: '#/components/schemas/ConsumerRegistered'
+                  - allOf:
+                      - $ref: '#/components/schemas/ConsumerProfile'
+                      - $ref: '#/components/schemas/ConsumerRegistered'
+
         '404':
           description: Consumer not found
           content:
@@ -320,6 +325,11 @@ components:
         dateUpdated:
           type: string
           format: date-time
+    ConsumerRegistered:
+      type: object
+      properties:
+        isRegistered:
+          type: boolean
     ApiSuccessResponse:
       type: object
       properties:
