@@ -57,11 +57,13 @@ const routerPrivate = createBFFRouter({
 
 routerPrivate.get(
   routes.private.NOTIFICATIONS_CONSUMER_REGISTRATION_PROFILE,
+  apiKeyVerificationHandler,
   handleConsumerRegistrationProfile
 );
 
 routerPrivate.delete(
   routes.private.NOTIFICATIONS_CONSUMER_REGISTRATION_PROFILE,
+  apiKeyVerificationHandler,
   handleUnregisterConsumer
 );
 
