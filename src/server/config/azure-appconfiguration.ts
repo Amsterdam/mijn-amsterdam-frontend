@@ -30,11 +30,7 @@ export function getAllFeatureToggles(): Readonly<FeatureToggles> {
 }
 
 export function isEnabled(featureToggleKey: FeatureToggleKey): boolean {
-  const enabled = featureToggle[featureToggleKey];
-  if (enabled === undefined) {
-    throw Error(`FeatureToggle '${featureToggleKey}' does not exist`);
-  }
-  return enabled;
+  return featureToggle[featureToggleKey];
 }
 
 export async function startAppConfiguration() {
