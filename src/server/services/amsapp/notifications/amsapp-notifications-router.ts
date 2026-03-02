@@ -48,22 +48,22 @@ routerPublic.get(
   handleRegisterConsumer
 );
 
-routerPublic.get(
-  routes.public.NOTIFICATIONS_CONSUMER_REGISTRATION_STATUS,
-  handleConsumerRegistrationProfile
-);
-
-routerPublic.delete(
-  routes.public.NOTIFICATIONS_CONSUMER_REGISTRATION_STATUS,
-  handleUnregisterConsumer
-);
-
 // PRIVATE NETWORK ROUTER
 // ======================
 const routerPrivate = createBFFRouter({
   id: 'external-consumer-private-notifications',
   isEnabled: featureToggle.amsNotificationsIsActive,
 });
+
+routerPrivate.get(
+  routes.private.NOTIFICATIONS_CONSUMER_REGISTRATION_PROFILE,
+  handleConsumerRegistrationProfile
+);
+
+routerPrivate.delete(
+  routes.private.NOTIFICATIONS_CONSUMER_REGISTRATION_PROFILE,
+  handleUnregisterConsumer
+);
 
 // This route will never be enabled in production
 if (!IS_PRODUCTION) {
