@@ -2,7 +2,7 @@ import {
   BSN,
   ConsumerId,
   ServiceId,
-  type ConsumerNotifications,
+  type ConsumerProfile,
   type NotificationsService,
 } from './amsapp-notifications-types';
 import { isRecord } from '../../../../universal/helpers/utils';
@@ -99,7 +99,7 @@ RETURNING profile_id, consumer_ids
   updateNotifications: `UPDATE ${TABLE_NAME} SET content = $2 WHERE profile_id = $1`,
   getProfiles: `SELECT * FROM ${TABLE_NAME}`,
   getProfileIds: `SELECT profile_id, profile_name, consumer_ids, service_ids FROM ${TABLE_NAME}`,
-  getProfileByConsumer: `SELECT profile_id FROM ${TABLE_NAME} WHERE $1 = ANY(consumer_ids)`,
+  getProfileByConsumer: `SELECT profile_id, profile_name, service_ids, date_updated FROM ${TABLE_NAME} WHERE $1 = ANY(consumer_ids)`,
   getRegistrationsOverview: `SELECT * FROM ${TABLE_NAME}`,
   truncate: `TRUNCATE TABLE ${TABLE_NAME}`,
 };
@@ -158,22 +158,21 @@ export async function storeNotifications(
 }
 
 export async function listProfiles() {
-  const rows = (await db.queryALL(
-    queries.getProfiles
-  )) as ConsumerNotifications[];
+  const rows = (await db.queryALL(queries.getProfiles)) as ConsumerProfile[];
 
   return rows;
 }
 
 export async function listProfileIds() {
   const rows = (await db.queryALL(queries.getProfileIds)) as Pick<
-    ConsumerNotifications,
-    'profileId' | 'serviceIds' | 'consumerIds'
+    ConsumerProfile,
+    'profileId' | 'profileName' | 'serviceIds' | 'consumerIds'
   >[];
 
   return rows.map((row) => {
     const decryptedProfileID = decrypt(row.profileId);
     return {
+      profileName: row.profileName,
       profileId: decryptedProfileID,
       serviceIds: row.serviceIds,
       consumerIds: row.consumerIds,

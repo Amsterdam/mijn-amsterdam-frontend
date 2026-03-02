@@ -1,5 +1,6 @@
 import Mockdate from 'mockdate';
 
+import { generateFullApiUrlBFF } from './route-helpers';
 import { forTesting } from './router-oidc';
 import { bffApiHost } from '../../testing/setup';
 import {
@@ -15,7 +16,6 @@ import {
 } from '../auth/auth-config';
 import { authRoutes } from '../auth/auth-routes';
 import { getFromEnv } from '../helpers/env';
-import { generateFullApiUrlBFF } from './route-helpers';
 
 const mocks = vi.hoisted(() => {
   const openIdAuthHandlerEH = vi.fn();
@@ -36,7 +36,7 @@ const mocks = vi.hoisted(() => {
   };
 });
 
-describe('router-oids', () => {
+describe('router-oidc', () => {
   beforeAll(() => {
     Mockdate.set('2025-03-27');
   });
