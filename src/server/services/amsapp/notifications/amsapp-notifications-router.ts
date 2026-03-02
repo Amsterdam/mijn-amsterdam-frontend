@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { getRegistrationOverview } from './amsapp-notifications-model';
 import {
   handleRegisterConsumer,
-  handleConsumerRegistrationStatus,
+  handleConsumerRegistrationProfile,
   handleUnregisterConsumer,
   handleTruncateNotifications,
   fetchAndStoreNotifications,
@@ -50,7 +50,7 @@ routerPublic.get(
 
 routerPublic.get(
   routes.public.NOTIFICATIONS_CONSUMER_REGISTRATION_STATUS,
-  handleConsumerRegistrationStatus
+  handleConsumerRegistrationProfile
 );
 
 routerPublic.delete(

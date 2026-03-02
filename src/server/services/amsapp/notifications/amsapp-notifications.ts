@@ -10,11 +10,12 @@ import {
   storeNotifications,
 } from './amsapp-notifications-model';
 import { DISCRETE_GENERIC_MESSAGE } from './amsapp-notifications-service-config';
-import {
+import type {
   BSN,
   ConsumerId,
   ServiceId,
-  type NotificationsLean,
+  ConsumerProfileCompact,
+  NotificationsLean,
 } from './amsapp-notifications-types';
 import {
   apiErrorResult,
@@ -22,7 +23,7 @@ import {
   type ApiResponse,
 } from '../../../../universal/helpers/api';
 import type { MyNotification } from '../../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../../auth/auth-types';
+import type { AuthProfileAndToken } from '../../../auth/auth-types';
 import { notificationServices } from '../../tips-and-notifications';
 
 /**
@@ -43,11 +44,10 @@ export async function unregisterConsumer(consumerId: ConsumerId) {
   return numDeleted > 0;
 }
 
-export async function getConsumerStatus(consumerId: ConsumerId) {
-  const profile = await getProfileByConsumer(consumerId);
-  return {
-    isRegistered: profile != null,
-  };
+export async function getConsumerProfile(consumerId: ConsumerId) {
+  return (await getProfileByConsumer(
+    consumerId
+  )) as ConsumerProfileCompact | null;
 }
 
 export async function batchDeleteNotifications() {

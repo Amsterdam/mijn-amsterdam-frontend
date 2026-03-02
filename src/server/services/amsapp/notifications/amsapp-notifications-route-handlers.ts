@@ -3,7 +3,7 @@ import type { Request, Response } from 'express';
 
 import {
   unregisterConsumer,
-  getConsumerStatus,
+  getConsumerProfile,
   registerConsumer,
   batchFetchAndStoreNotifications,
   batchDeleteNotifications,
@@ -51,15 +51,15 @@ export async function handleUnregisterConsumer(
   return res.send(apiErrorResult('Not Found', null, HttpStatusCode.NotFound));
 }
 
-export async function handleConsumerRegistrationStatus(
+export async function handleConsumerRegistrationProfile(
   req: Request<{ consumerId: string }>,
   res: Response
 ) {
-  const status = await getConsumerStatus(req.params.consumerId);
-  if (!status.isRegistered) {
+  const profile = await getConsumerProfile(req.params.consumerId);
+  if (!profile) {
     return res.send(apiErrorResult('Not Found', null, HttpStatusCode.NotFound));
   }
-  return res.send(apiSuccessResult(status));
+  return res.send(apiSuccessResult(profile));
 }
 
 export async function handleRegisterConsumer(

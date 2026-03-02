@@ -7,7 +7,7 @@ export type BSN = AuthProfile['id'];
 export type ConsumerId = string;
 export type ServiceId = keyof typeof notificationServices.private;
 
-export type ConsumerNotifications = {
+export type ConsumerProfile = {
   profileId: BSN;
   profileName: string;
   consumerIds: ConsumerId[];
@@ -15,6 +15,8 @@ export type ConsumerNotifications = {
   dateUpdated: string;
   content: { services: NotificationsService[] } | null;
 };
+
+export type ConsumerProfileCompact = Omit<ConsumerProfile, 'content'>;
 
 export type NotificationsService = {
   serviceId: ServiceId;
