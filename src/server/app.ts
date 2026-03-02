@@ -65,7 +65,6 @@ import { router as routerPublicExternalConsumer } from './routing/router-public-
 import { captureException } from './services/monitoring';
 import { getFromEnv } from './helpers/env';
 import { router as privateNetworkRouter } from './routing/router-private';
-import { startAppConfiguration } from './config/azure-appconfiguration';
 
 const app = express();
 
@@ -191,10 +190,6 @@ async function startServerBFF() {
       await import('log-that-http');
     }
   }
-
-  // Updates/starts appconfiguration and featuretoggles, this should happen before server start so that -
-  // it is ensured the right data is send on first and subsequent requests.
-  await startAppConfiguration();
 
   const server = app.listen(BFF_PORT, () => {
     logger.info(
