@@ -114,9 +114,6 @@ export const listPageParamKind = {
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
-export const themaId = 'ERFPACHT' as const;
-export const themaTitle = 'Erfpacht';
-
 export const ERFPACHT_ZAKELIJK_ROUTE_DEFAULT =
   'https://erfpachtzakelijk.amsterdam.nl';
 
