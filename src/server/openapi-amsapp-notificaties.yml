@@ -61,9 +61,9 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/ErrorNotFound'
-  /api/v1/services/amsapp/notifications/consumer/{consumerId}:
+  /private/api/v1/services/amsapp/notifications/consumer/{consumerId}:
     get:
-      description: Get consumer exists
+      description: Get consumer profile and registration status. Or if consumer is not registered, return only registration status with false.
       parameters:
         - name: consumerId
           in: path
@@ -72,7 +72,7 @@ paths:
             type: string
       responses:
         '200':
-          description: Current registration status of consumer
+          description: Current registration profile of consumer
           content:
             application/json:
               schema:
@@ -81,7 +81,6 @@ paths:
                   - allOf:
                       - $ref: '#/components/schemas/ConsumerProfile'
                       - $ref: '#/components/schemas/ConsumerRegistered'
-
         '404':
           description: Consumer not found
           content:
