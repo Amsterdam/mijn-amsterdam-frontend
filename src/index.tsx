@@ -31,5 +31,5 @@ import { type FeatureToggles } from './server/config/azure-appconfiguration';
     MA_BUILD_ID ?? '-1'
   );
 
-  await import('./render-root');
+  await import('./client/render-root');
 })();
