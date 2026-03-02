@@ -14,10 +14,6 @@ import type {
   WithListPage,
 } from '../../../config/thema-types';
 
-export const featureToggle = {
-  statustreinAndAfgehandeldeMeldingenActive: true, // TO DO  YACINE deze erut halen?
-};
-
 export const THEMA_ID = 'KLACHTEN';
 export const THEMA_TITLE = 'Klachten';
 export const KLACHTEN_AMSTERDAM_URL_KLACHT_INDIENEN =

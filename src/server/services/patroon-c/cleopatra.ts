@@ -126,11 +126,11 @@ function transformCleopatraResponse(
         case message.categorie === 'M1' || message.categorie === 'F3':
           {
             let themaID:
-              | typeof MILIEUZONE.themaId
-              | typeof OVERTREDINGEN.themaId = MILIEUZONE.themaId;
+              | typeof MILIEUZONE.themaConfig.id
+              | typeof OVERTREDINGEN.themaId = MILIEUZONE.themaConfig.id;
             let themaTitle:
-              | typeof MILIEUZONE.themaTitle
-              | typeof OVERTREDINGEN.themaTitle = MILIEUZONE.themaTitle;
+              | typeof MILIEUZONE.themaConfig.title
+              | typeof OVERTREDINGEN.themaTitle = MILIEUZONE.themaConfig.title;
 
             if (
               OVERTREDINGEN.featureToggle.overtredingenActive &&
@@ -202,7 +202,7 @@ export async function fetchMilieuzone(
       isKnown: response.content?.isKnownMilieuzone ?? false,
       url:
         getFromEnv('BFF_SSO_URL_MILIEUZONE') ??
-        MILIEUZONE.MILIEUZONE_ROUTE_DEFAULT,
+        MILIEUZONE.themaConfig.route.path,
     });
   }
 
@@ -247,7 +247,7 @@ async function fetchNotifications<ID extends string = string>(
 export async function fetchMilieuzoneNotifications(
   authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchNotifications(authProfileAndToken, MILIEUZONE.themaId);
+  return fetchNotifications(authProfileAndToken, MILIEUZONE.themaConfig.id);
 }
 
 export async function fetchOvertredingenNotifications(

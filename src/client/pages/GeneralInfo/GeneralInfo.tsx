@@ -21,11 +21,12 @@ import { themaConfig as bezwarenThemaConfig } from '../Thema/Bezwaren/Bezwaren-t
 import { themaConfig as bodemThemaConfig } from '../Thema/Bodem/Bodem-thema-config';
 import { themaConfig as erfpachtThemaConfig } from '../Thema/Erfpacht/Erfpacht-thema-config';
 import { themaConfig as hliThemaConfig } from '../Thema/HLI/HLI-thema-config';
-import { inkomenSectionProps } from '../Thema/Inkomen/InfoSection';
+import { themaConfig as horecaThemaConfig } from '../Thema/Horeca/Horeca-thema-config';
+import { themaConfig as inkomenThemaConfig } from '../Thema/Inkomen/Inkomen-thema-config';
 import { themaConfig as jeugdThemaConfig } from '../Thema/Jeugd/Jeugd-thema-config';
 import { themaConfig as klachtenThemaConfig } from '../Thema/Klachten/Klachten-thema-config';
-import { krefiaSectionProps } from '../Thema/Krefia/InfoSection';
-import { milieuzonesectionProps } from '../Thema/Milieuzone/InfoSection';
+import { themaConfig as krefiaThemaConfig } from '../Thema/Krefia/Krefia-thema-config';
+import { themaConfig as milieuZoneThemaConfig } from '../Thema/Milieuzone/Milieuzone-thema-config';
 import { overtredingensectionProps } from '../Thema/Overtredingen/InfoSection';
 import { parkerensectionProps } from '../Thema/Parkeren/InfoSection';
 import { profileSectionProps } from '../Thema/Profile/InfoSection';
@@ -65,11 +66,13 @@ export type SectionProps = {
 const sections: InfoSection_DEPRECATED[] = [
   profileSectionProps,
   myAreaSectionProps,
-  inkomenSectionProps,
+
+  afisSectionProps,
+
   vergunningensectionProps,
-  krefiaSectionProps,
+
   parkerensectionProps,
-  milieuzonesectionProps,
+
   overtredingensectionProps,
   varensectionProps,
   afisSectionProps,
@@ -80,8 +83,12 @@ const sections: InfoSection_DEPRECATED[] = [
   ...createDeprecatedInfoSection(bodemThemaConfig),
   ...createDeprecatedInfoSection(erfpachtThemaConfig),
   ...createDeprecatedInfoSection(hliThemaConfig),
+  ...createDeprecatedInfoSection(horecaThemaConfig),
+  ...createDeprecatedInfoSection(inkomenThemaConfig),
   ...createDeprecatedInfoSection(jeugdThemaConfig),
   ...createDeprecatedInfoSection(klachtenThemaConfig),
+  ...createDeprecatedInfoSection(krefiaThemaConfig),
+  ...createDeprecatedInfoSection(milieuZoneThemaConfig),
   ...createDeprecatedInfoSection(subsidiesThemaConfig),
   ...createDeprecatedInfoSection(toeristischeVerhuurThemaConfig),
   ...createDeprecatedInfoSection(zorgThemaConfig),
