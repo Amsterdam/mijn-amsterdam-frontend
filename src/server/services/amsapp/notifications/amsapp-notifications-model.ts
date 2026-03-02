@@ -99,7 +99,7 @@ RETURNING profile_id, consumer_ids
   updateNotifications: `UPDATE ${TABLE_NAME} SET content = $2 WHERE profile_id = $1`,
   getProfiles: `SELECT * FROM ${TABLE_NAME}`,
   getProfileIds: `SELECT profile_id, profile_name, consumer_ids, service_ids FROM ${TABLE_NAME}`,
-  getProfileByConsumer: `SELECT profile_id, profile_name, consumer_ids, service_ids, date_updated FROM ${TABLE_NAME} WHERE $1 = ANY(consumer_ids)`,
+  getProfileByConsumer: `SELECT profile_id, profile_name, service_ids, date_updated FROM ${TABLE_NAME} WHERE $1 = ANY(consumer_ids)`,
   getRegistrationsOverview: `SELECT * FROM ${TABLE_NAME}`,
   truncate: `TRUNCATE TABLE ${TABLE_NAME}`,
 };
