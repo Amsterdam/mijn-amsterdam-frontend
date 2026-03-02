@@ -74,7 +74,7 @@ const sections: InfoSection_DEPRECATED[] = [
   parkerensectionProps,
 
   varensectionProps,
-  afisSectionProps,
+
   ...createDeprecatedInfoSection(afvalThemaConfig),
   ...createDeprecatedInfoSection(avgThemaConfig),
   ...createDeprecatedInfoSection(belastingenThemaConfig),
