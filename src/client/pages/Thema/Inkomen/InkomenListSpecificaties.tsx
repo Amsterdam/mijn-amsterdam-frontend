@@ -41,9 +41,9 @@ export function InkomenListSpecificaties() {
     total,
     breadcrumbs,
     themaPageRoute,
-    routeConfig,
+    themaConfig,
   } = useInkomenSpecificatiesListPageData();
-  useHTMLDocumentTitle(routeConfig.listPageSpecificaties);
+  useHTMLDocumentTitle(themaConfig.listPageSpecificaties.route);
 
   const pageContentMain = (
     <PageContentCell>

@@ -24,10 +24,9 @@ export function HorecaThema() {
     vergunningen,
     isLoading,
     isError,
-    linkListItems,
-    routeConfig,
+    themaConfig,
   } = useHorecaThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const tables = Object.entries(tableConfig).map(
     ([kind, { title, displayProps, filter, listPageRoute, maxItems }]) => {
@@ -52,7 +51,7 @@ export function HorecaThema() {
       isLoading={isLoading}
       pageContentTop={pageContentTop}
       pageContentMain={tables}
-      pageLinks={linkListItems}
+      pageLinks={themaConfig.pageLinks}
       maintenanceNotificationsPageSlug="horeca"
     />
   );

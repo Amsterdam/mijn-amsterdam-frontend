@@ -1,5 +1,6 @@
 import { ThemaConfigBase } from '../../../config/thema-types';
 
+const SUBSIDIES_ROUTE_DEFAULT = 'https://subsidies.amsterdam.nl';
 const THEMA_ID = 'SUBSIDIES';
 const THEMA_TITLE = 'Subsidies';
 
@@ -19,7 +20,7 @@ export const themaConfig: ThemaConfigBase = {
   ],
   pageLinks: [],
   route: {
-    path: 'https://subsidies.amsterdam.nl',
+    path: SUBSIDIES_ROUTE_DEFAULT,
     trackingUrl: null,
     documentTitle: '',
   },

@@ -14,19 +14,20 @@ import {
   useAllThemaMenuItemsByThemaID,
 } from '../../hooks/useThemaMenuItems';
 import { afisSectionProps } from '../Thema/Afis/InfoSection';
-import { afvalSectionProps } from '../Thema/Afval/InfoSection';
+import { themaConfig as afvalThemaConfig } from '../Thema/Afval/Afval-thema-config';
 import { themaConfig as avgThemaConfig } from '../Thema/AVG/AVG-thema-config';
-import { belastingenSectionProps } from '../Thema/Belastingen/InfoSection';
+import { themaConfig as belastingenThemaConfig } from '../Thema/Belastingen/Belastingen-thema-config';
 import { themaConfig as bezwarenThemaConfig } from '../Thema/Bezwaren/Bezwaren-thema-config';
 import { themaConfig as bodemThemaConfig } from '../Thema/Bodem/Bodem-thema-config';
 import { themaConfig as erfpachtThemaConfig } from '../Thema/Erfpacht/Erfpacht-thema-config';
 import { themaConfig as hliThemaConfig } from '../Thema/HLI/HLI-thema-config';
-import { inkomenSectionProps } from '../Thema/Inkomen/InfoSection';
+import { themaConfig as horecaThemaConfig } from '../Thema/Horeca/Horeca-thema-config';
+import { themaConfig as inkomenThemaConfig } from '../Thema/Inkomen/Inkomen-thema-config';
 import { themaConfig as jeugdThemaConfig } from '../Thema/Jeugd/Jeugd-thema-config';
 import { themaConfig as klachtenThemaConfig } from '../Thema/Klachten/Klachten-thema-config';
-import { krefiaSectionProps } from '../Thema/Krefia/InfoSection';
-import { milieuzonesectionProps } from '../Thema/Milieuzone/InfoSection';
-import { overtredingensectionProps } from '../Thema/Overtredingen/InfoSection';
+import { themaConfig as krefiaThemaConfig } from '../Thema/Krefia/Krefia-thema-config';
+import { themaConfig as milieuThemaConfig } from '../Thema/Milieuzone/Milieuzone-thema-config';
+import { themaConfig as overtredingenThemaConfig } from '../Thema/Overtredingen/Overtredingen-thema-config';
 import { parkerensectionProps } from '../Thema/Parkeren/InfoSection';
 import { profileSectionProps } from '../Thema/Profile/InfoSection';
 import { themaConfig as subsidiesThemaConfig } from '../Thema/Subsidies/Subsidies-thema-config';
@@ -65,24 +66,31 @@ export type SectionProps = {
 const sections: InfoSection_DEPRECATED[] = [
   profileSectionProps,
   myAreaSectionProps,
-  afvalSectionProps,
-  belastingenSectionProps,
+
   afisSectionProps,
-  inkomenSectionProps,
+
   vergunningensectionProps,
-  krefiaSectionProps,
+
   parkerensectionProps,
-  milieuzonesectionProps,
-  overtredingensectionProps,
+
   varensectionProps,
+  afisSectionProps,
+  ...createDeprecatedInfoSection(afvalThemaConfig),
   ...createDeprecatedInfoSection(avgThemaConfig),
+  ...createDeprecatedInfoSection(belastingenThemaConfig),
   ...createDeprecatedInfoSection(bezwarenThemaConfig),
   ...createDeprecatedInfoSection(bodemThemaConfig),
   ...createDeprecatedInfoSection(erfpachtThemaConfig),
   ...createDeprecatedInfoSection(hliThemaConfig),
+  ...createDeprecatedInfoSection(horecaThemaConfig),
+  ...createDeprecatedInfoSection(inkomenThemaConfig),
   ...createDeprecatedInfoSection(jeugdThemaConfig),
   ...createDeprecatedInfoSection(klachtenThemaConfig),
+  ...createDeprecatedInfoSection(krefiaThemaConfig),
   ...createDeprecatedInfoSection(subsidiesThemaConfig),
+  ...createDeprecatedInfoSection(milieuThemaConfig),
+  ...createDeprecatedInfoSection(overtredingenThemaConfig),
+
   ...createDeprecatedInfoSection(toeristischeVerhuurThemaConfig),
   ...createDeprecatedInfoSection(zorgThemaConfig),
 ];
