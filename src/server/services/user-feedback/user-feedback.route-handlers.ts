@@ -26,12 +26,17 @@ export async function handleFetchSurvey(
 }
 
 export async function handleFetchSurveyOverview(
-  req: RequestWithQueryParams<{ id?: Survey['unique_code']; version?: string }>,
+  req: RequestWithQueryParams<{
+    id?: Survey['unique_code'];
+    version?: string;
+    page?: string;
+  }>,
   res: ResponseAuthenticated
 ) {
   const surveyOverview = await userFeedbackOverview(
     req.query.id ?? SURVEY_ID_INLINE_KTO,
-    req.query.version ?? 'latest'
+    req.query.version ?? 'latest',
+    parseInt(req.query.page || '1', 10)
   );
 
   return sendResponse(res, surveyOverview);
@@ -59,12 +64,18 @@ export async function handleUserFeedbackSubmission(
 }
 
 export async function handleShowSurveyOverview(
-  req: RequestWithQueryParams<{ id?: Survey['unique_code']; version?: string }>,
+  req: RequestWithQueryParams<{
+    id?: Survey['unique_code'];
+    version?: string;
+    page?: string;
+  }>,
   res: ResponseAuthenticated
 ) {
+  const currentPage = parseInt(req.query.page || '1', 10);
   const feedbackOverview = await userFeedbackOverview(
     req.query.id ?? SURVEY_ID_INLINE_KTO,
-    req.query.version ?? 'latest'
+    req.query.version ?? 'latest',
+    currentPage
   );
 
   const entries = feedbackOverview.content?.entries || [];
@@ -79,7 +90,19 @@ export async function handleShowSurveyOverview(
     }, 0) / (entries.length || 1)
   ).toFixed(2);
 
+  const pageLinks = [
+    ...Array(feedbackOverview.content?.pageCount || 1).keys(),
+  ].map((page) => ({
+    page: page + 1,
+    url: `?page=${page + 1}`,
+  }));
+
   return res.render('user-feedback-overview', {
-    feedbackOverview: { ...feedbackOverview.content, score },
+    feedbackOverview: {
+      ...feedbackOverview.content,
+      score,
+      pageLinks,
+      currentPage,
+    },
   });
 }
