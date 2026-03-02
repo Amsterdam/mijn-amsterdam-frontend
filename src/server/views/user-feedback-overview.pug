@@ -4,7 +4,7 @@ p Totaal aantal inzendingen: #{feedbackOverview.entries.length}
 p Gemiddeld cijfer #{feedbackOverview.score}
 
 if feedbackOverview.pageLinks.length > 1
-  nav.pagination
+  nav
     | Pagina:
     each link in feedbackOverview.pageLinks
       a(href=link.url)
