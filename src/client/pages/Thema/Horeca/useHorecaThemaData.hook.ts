@@ -1,10 +1,4 @@
-import {
-  tableConfig,
-  LinkListItems,
-  themaId,
-  routeConfig,
-  themaTitle,
-} from './Horeca-thema-config';
+import { tableConfig, themaConfig } from './Horeca-thema-config';
 import { HorecaVergunningFrontend } from '../../../../server/services/horeca/decos-zaken';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
@@ -13,7 +7,7 @@ import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 
 export function useHorecaThemaData() {
   const { HORECA } = useAppStateGetter();
-  const breadcrumbs = useThemaBreadcrumbs(themaId);
+  const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
   const vergunningen = addLinkElementToProperty<HorecaVergunningFrontend>(
     HORECA.content ?? [],
     'identifier',
@@ -24,12 +18,11 @@ export function useHorecaThemaData() {
     vergunningen,
     isLoading: isLoading(HORECA),
     isError: isError(HORECA),
-    linkListItems: LinkListItems,
     tableConfig,
-    themaId,
-    themaTitle,
+    themaId: themaConfig.id,
+    themaTitle: themaConfig.title,
     breadcrumbs,
-    listPageRoute: routeConfig.listPage.path,
-    routeConfig,
+    listPageRoute: themaConfig.listPage.route.path,
+    themaConfig,
   };
 }

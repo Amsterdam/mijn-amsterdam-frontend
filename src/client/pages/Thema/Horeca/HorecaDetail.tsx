@@ -43,7 +43,7 @@ export function HorecaDetail() {
     isLoading,
     isError,
     breadcrumbs,
-    routeConfig,
+    themaConfig,
   } = useHorecaThemaData();
   const {
     vergunning,
@@ -52,7 +52,7 @@ export function HorecaDetail() {
     isLoadingDocuments,
     isErrorDocuments,
   } = useVergunningenDetailData<HorecaVergunningFrontend>(vergunningen);
-  useHTMLDocumentTitle(routeConfig.detailPage);
+  useHTMLDocumentTitle(themaConfig.detailPage.route);
 
   return (
     <ThemaDetailPagina

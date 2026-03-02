@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import type { Mock } from 'vitest';
 
-import { routeConfig } from './Afval-thema-config';
+import { themaConfig } from './Afval-thema-config';
 import { AfvalThemaPagina } from './AfvalThema';
 import { AfvalFractionData } from '../../../../server/services/afval/afval.types';
 import { jsonCopy } from '../../../../universal/helpers/utils';
@@ -152,7 +152,7 @@ const testState = {
 vi.mock('../../../hooks/useProfileType');
 
 describe('<AfvalThemaPagina />', () => {
-  const routePath = routeConfig.themaPage.path;
+  const routePath = themaConfig.route.path;
 
   function Component() {
     return (
