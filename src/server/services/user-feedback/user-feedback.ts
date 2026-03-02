@@ -105,6 +105,9 @@ async function fetchFeedbackSurveyEntries(
   const requestConfig = getCustomApiConfig(sourceApiConfig, {
     formatUrl: ({ url }) => `${url}/entries`,
     method: 'GET',
+    params: {
+      page_size: 1000,
+    },
     transformResponse(entriesResponse: SurveyEntriesResponse) {
       const entries = entriesResponse.results.filter((entry) => {
         return entry.survey_unique_code === surveyId;
