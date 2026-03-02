@@ -45,9 +45,10 @@ export async function unregisterConsumer(consumerId: ConsumerId) {
 }
 
 export async function getConsumerProfile(consumerId: ConsumerId) {
-  return (await getProfileByConsumer(
-    consumerId
-  )) as ConsumerProfileCompact | null;
+  const profile = (await getProfileByConsumer(consumerId)) as
+    | (ConsumerProfileCompact & { isRegistered: boolean })
+    | null;
+  return profile ? { ...profile, isRegistered: profile !== null } : null;
 }
 
 export async function batchDeleteNotifications() {

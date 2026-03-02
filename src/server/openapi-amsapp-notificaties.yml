@@ -76,10 +76,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  isRegistered:
-                    type: boolean
+                $ref: '#/components/schemas/ConsumerProfile'
         '404':
           description: Consumer not found
           content:
@@ -291,7 +288,7 @@ components:
               default: null
             message:
               type: string
-              default: "DEPENDENCY ERROR"
+              default: 'DEPENDENCY ERROR'
     ServiceResult:
       type: object
       properties:
@@ -305,7 +302,24 @@ components:
         isTip:
           type: boolean
           default: false
-            
+    ConsumerProfile:
+      type: object
+      properties:
+        profileId:
+          type: string
+        profileName:
+          type: string
+        consumerIds:
+          type: array
+          items:
+            type: string
+        serviceIds:
+          type: array
+          items:
+            type: string
+        dateUpdated:
+          type: string
+          format: date-time
     ApiSuccessResponse:
       type: object
       properties:
