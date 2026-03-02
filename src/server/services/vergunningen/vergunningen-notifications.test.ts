@@ -243,8 +243,8 @@ describe('vergunningen-notifications', () => {
 
       const notifications = getVergunningNotifications(
         vergunningen,
-        themaId,
-        themaTitle
+        themaConfig.id,
+        themaConfig.title
       );
       expect(notifications).toHaveLength(0);
     });
