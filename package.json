@@ -22,7 +22,7 @@
     "bff-api:watch": "nodemon -e ts -w ./src/server -w ./src/universal -w ./.env.local -x pnpm run bff-api:serve-dev",
     "bff-api:test:dirs": "cross-env MA_APP_MODE=unittest vitest --environment=node",
     "bff-api:test": "pnpm run bff-api:test:dirs src/server src/universal",
-    "bff-api:serve-build": "node build-bff/server/app",
+    "bff-api:serve-build": "node build-bff/server/start-app",
     "bff-api:serve-dev": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --inspect\" ts-node --project ./tsconfig.bff.json ./src/bffserver.ts",
     "bff-api:build": "tsc --project ./tsconfig.bff.json",
     "bff-api:job:notifications": "ts-node --project ./tsconfig.bff.json ./src/jobs/fetch-notifications-amsapp.ts",
