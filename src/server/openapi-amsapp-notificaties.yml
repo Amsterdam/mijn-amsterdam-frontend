@@ -313,10 +313,6 @@ components:
           type: string
         profileName:
           type: string
-        consumerIds:
-          type: array
-          items:
-            type: string
         serviceIds:
           type: array
           items:
