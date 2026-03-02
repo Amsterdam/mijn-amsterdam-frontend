@@ -125,4 +125,5 @@ export type SurveyOverviewFrontend = {
     questions: Record<SurveyQuestion['id'], SurveyQuestion['question_text']>;
   };
   entries: SurveyEntryFrontend[];
+  pageCount: number;
 };
