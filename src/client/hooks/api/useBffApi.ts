@@ -237,7 +237,7 @@ export function useBffApi<
     (partialState: Partial<BffApiState<ApiResponse<T | null> | null>>) => {
       if (cacheKey) {
         const state = storeGet<T>(cacheKey);
-        const newState = { ...state, ...partialState };
+        const newState = { ...initialState, ...state, ...partialState };
         storeSet(cacheKey, newState);
       }
     },

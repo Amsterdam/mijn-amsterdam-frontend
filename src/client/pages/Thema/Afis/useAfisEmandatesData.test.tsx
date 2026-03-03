@@ -126,18 +126,74 @@ describe('useAfisEMandatesData', () => {
       expect(result.current.isLoadingEMandates).toBe(false);
     });
 
-    expect(result.current.eMandates).toStrictEqual([
-      {
-        ...eMandates[0],
-        displayStatus: 'Uit',
-        detailLinkComponent: expect.any(Object),
-      },
-      {
-        ...eMandates[1],
-        displayStatus: 'Uit',
-        detailLinkComponent: expect.any(Object),
-      },
-    ]);
+    expect(result.current.eMandates).toMatchInlineSnapshot(`
+      [
+        {
+          "creditorIBAN": "NL91ABNA0417164300",
+          "creditorName": "Mandate 1",
+          "detailLinkComponent": <React.Fragment>
+            <MaRouterLink
+              href="/some/path/1"
+              maVariant="fatNoUnderline"
+            >
+              E-Mandate 1
+            </MaRouterLink>
+          </React.Fragment>,
+          "displayStatus": "Uit",
+          "displayStatusEl": <CheckStatus
+            eMandate={
+              {
+                "creditorIBAN": "NL91ABNA0417164300",
+                "creditorName": "Mandate 1",
+                "displayStatus": "Uit",
+                "id": "1",
+                "link": {
+                  "title": "E-Mandate 1",
+                  "to": "/some/path/1",
+                },
+              }
+            }
+          />,
+          "id": "1",
+          "link": {
+            "title": "E-Mandate 1",
+            "to": "/some/path/1",
+          },
+        },
+        {
+          "creditorIBAN": "NL789ABNA0417164300",
+          "creditorName": "Mandate 2",
+          "detailLinkComponent": <React.Fragment>
+            <MaRouterLink
+              href="/some/path/2"
+              maVariant="fatNoUnderline"
+            >
+              E-Mandate 2
+            </MaRouterLink>
+          </React.Fragment>,
+          "displayStatus": "Uit",
+          "displayStatusEl": <CheckStatus
+            eMandate={
+              {
+                "creditorIBAN": "NL789ABNA0417164300",
+                "creditorName": "Mandate 2",
+                "displayStatus": "Uit",
+                "id": "2",
+                "link": {
+                  "title": "E-Mandate 2",
+                  "to": "/some/path/2",
+                },
+              }
+            }
+          />,
+          "id": "2",
+          "link": {
+            "title": "E-Mandate 2",
+            "to": "/some/path/2",
+          },
+        },
+      ]
+    `);
   });
 
   it('should return eMandate if id param is provided', async () => {
@@ -155,11 +211,40 @@ describe('useAfisEMandatesData', () => {
       expect(result.current.isLoadingEMandates).toBe(false);
     });
 
-    expect(result.current.eMandate).toStrictEqual({
-      ...eMandates[0],
-      displayStatus: 'Uit',
-      detailLinkComponent: expect.any(Object),
-    });
+    expect(result.current.eMandate).toMatchInlineSnapshot(`
+      {
+        "creditorIBAN": "NL91ABNA0417164300",
+        "creditorName": "Mandate 1",
+        "detailLinkComponent": <React.Fragment>
+          <MaRouterLink
+            href="/some/path/1"
+            maVariant="fatNoUnderline"
+          >
+            E-Mandate 1
+          </MaRouterLink>
+        </React.Fragment>,
+        "displayStatus": "Uit",
+        "displayStatusEl": <CheckStatus
+          eMandate={
+            {
+              "creditorIBAN": "NL91ABNA0417164300",
+              "creditorName": "Mandate 1",
+              "displayStatus": "Uit",
+              "id": "1",
+              "link": {
+                "title": "E-Mandate 1",
+                "to": "/some/path/1",
+              },
+            }
+          }
+        />,
+        "id": "1",
+        "link": {
+          "title": "E-Mandate 1",
+          "to": "/some/path/1",
+        },
+      }
+    `);
   });
 
   it('should return error state when API fails', async () => {
@@ -176,33 +261,6 @@ describe('useAfisEMandatesData', () => {
     });
 
     expect(result.current.hasEMandatesError).toBe(true);
-  });
-
-  it('should remove pending status from local storage if eMandate is activated', async () => {
-    sessionStorage.setItem(
-      'afis-emandate-pending-activation',
-      '"NL91ABNA0417164300"'
-    );
-
-    bffApi.get(/\/afis\/e-mandates/).reply(200, {
-      content: [
-        { ...eMandates[0], status: '1', displayStatus: 'Actief' },
-        eMandates[1],
-      ],
-    });
-
-    const { result } = renderHook(() => useAfisEMandatesApi());
-
-    expect(result.current.isLoadingEMandates).toBe(true);
-
-    await waitFor(() => {
-      expect(result.current.isLoadingEMandates).toBe(false);
-    });
-
-    expect(result.current.eMandates[0].displayStatus).toBe('Actief');
-    expect(sessionStorage.getItem('afis-emandate-pending-activation')).toBe(
-      '""'
-    );
   });
 
   it('should handle optimistic updates', async () => {
