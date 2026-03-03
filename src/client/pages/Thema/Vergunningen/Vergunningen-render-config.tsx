@@ -17,7 +17,7 @@ export const VergunningenRoutes = [
     isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.listPage.path,
+    route: themaConfig.listPage.route.path,
     Component: VergunningenList,
     isActive: themaConfig.featureToggle.active,
   },

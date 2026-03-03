@@ -15,10 +15,10 @@ export function VergunningenList() {
     isLoading,
     isError,
     tableConfig,
-    routeConfig,
+    themaConfig,
     breadcrumbs,
   } = useVergunningenThemaData();
-  useHTMLDocumentTitle(routeConfig.listPage);
+  useHTMLDocumentTitle(themaConfig.listPage.route);
 
   const { title, displayProps, filter, sort, listPageRoute } =
     tableConfig[kind] ?? null;
