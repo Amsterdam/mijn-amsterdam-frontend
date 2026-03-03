@@ -1,7 +1,7 @@
 import { screen, render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { routeConfig } from './Horeca-thema-config';
+import { themaConfig } from './Horeca-thema-config';
 import { HorecaThema } from './HorecaThema';
 import { HorecaVergunningFrontend } from '../../../../server/services/horeca/decos-zaken';
 import { bffApiHost } from '../../../../testing/setup';
@@ -75,8 +75,8 @@ const testState = {
 } as unknown as AppState;
 
 describe('<Horeca />', () => {
-  const routeEntry = generatePath(routeConfig.themaPage.path);
-  const routePath = routeConfig.themaPage.path;
+  const routeEntry = generatePath(themaConfig.route.path);
+  const routePath = themaConfig.route.path;
   function Component() {
     return (
       <MockApp

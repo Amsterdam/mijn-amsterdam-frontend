@@ -7,11 +7,7 @@ import {
   fetchTipsAndNotifications,
   type ApiPatternResponseA,
 } from './api-service';
-import {
-  SUBSIDIES_ROUTE_DEFAULT,
-  themaId,
-  themaTitle,
-} from '../../../client/pages/Thema/Subsidies/Subsidies-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/Subsidies/Subsidies-thema-config';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
@@ -48,7 +44,7 @@ function transformSubsidieNotifications(
     const url = `${urlTo.origin}${urlTo.pathname}?${params.toString()}`;
 
     return Object.assign(notification, {
-      themaTitle,
+      themaTitle: themaConfig.title,
       link: {
         ...notification.link,
         to: new URL(url).toString(),
@@ -85,7 +81,7 @@ async function getConfig(authProfileAndToken: AuthProfileAndToken) {
     ): ApiPatternResponseA {
       return {
         ...response,
-        url: `${getFromEnv('BFF_SSO_URL_SUBSIDIES') ?? SUBSIDIES_ROUTE_DEFAULT}?authMethod=${authProfileAndToken.profile.authMethod}`,
+        url: `${getFromEnv('BFF_SSO_URL_SUBSIDIES') ?? themaConfig.route.path}?authMethod=${authProfileAndToken.profile.authMethod}`,
       };
     },
   });
@@ -100,7 +96,7 @@ export async function fetchSubsidieNotifications(
 ) {
   const response = await fetchTipsAndNotifications(
     await getConfig(authProfileAndToken),
-    themaId
+    themaConfig.id
   );
 
   if (response.status === 'OK' && response.content?.notifications) {

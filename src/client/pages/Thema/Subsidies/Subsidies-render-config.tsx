@@ -1,25 +1,20 @@
-import {
-  SUBSIDIES_ROUTE_DEFAULT,
-  themaId,
-  themaTitle,
-  featureToggle,
-} from './Subsidies-thema-config';
+import { themaConfig } from './Subsidies-thema-config';
 import { default as SubsidiesIcon } from './SubsidiesIcon.svg?react';
 import { isLoading } from '../../../../universal/helpers/api';
 import { type AppState } from '../../../../universal/types/App.types';
 import { type ThemaMenuItem } from '../../../config/thema-types';
 
-export const menuItem: ThemaMenuItem<typeof themaId> = {
-  title: themaTitle,
-  id: themaId,
+export const menuItem: ThemaMenuItem = {
+  title: themaConfig.title,
+  id: themaConfig.id,
   to: (appState: AppState) => {
-    return appState.SUBSIDIES?.content?.url || SUBSIDIES_ROUTE_DEFAULT;
+    return appState.SUBSIDIES?.content?.url || themaConfig.route.path;
   },
-  profileTypes: ['private', 'commercial'],
-  redactedScope: 'none',
+  profileTypes: themaConfig.profileTypes,
+  redactedScope: themaConfig.redactedScope,
   isActive(appState: AppState) {
     return (
-      featureToggle.subsidiesActive &&
+      themaConfig.featureToggle.active &&
       !isLoading(appState.SUBSIDIES) &&
       !!appState.SUBSIDIES.content?.isKnown
     );

@@ -1,21 +1,37 @@
 import type { KrefiaDeepLink } from '../../../../server/services/krefia/krefia.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
-import type { ThemaRoutesConfig } from '../../../config/thema-types';
+import type { ThemaConfigBase } from '../../../config/thema-types';
 
-export const featureToggle = {
-  krefiaActive: true,
-};
+const THEMA_ID = 'KREFIA';
+const THEMA_TITLE = 'Kredietbank & FIBU';
 
-export const themaId = 'KREFIA' as const;
-export const themaTitle = 'Kredietbank & FIBU';
+type KrefiaThemaConfig = ThemaConfigBase;
 
-export const routeConfig = {
-  themaPage: {
+export const themaConfig: KrefiaThemaConfig = {
+  id: THEMA_ID,
+  title: THEMA_TITLE,
+  featureToggle: {
+    active: true,
+  },
+  profileTypes: ['private'],
+  redactedScope: 'none',
+  route: {
     path: '/kredietbank-fibu',
-    documentTitle: `${themaTitle} | overzicht`,
+    documentTitle: `THEMA_TITLE | overzicht`,
     trackingUrl: null,
   },
-} as const satisfies ThemaRoutesConfig;
+
+  pageLinks: [], // Unused, but an alternative is used. Later on we dynamically select the right links.
+
+  uitlegPageSections: [
+    {
+      title: THEMA_TITLE,
+      listItems: [
+        'Informatie over ondersteuning door Kredietbank en Budgetbeheer (FIBU)',
+      ],
+    },
+  ],
+};
 
 const displayPropsDeeplink: DisplayProps<KrefiaDeepLink> = {
   displayStatus: 'Status',

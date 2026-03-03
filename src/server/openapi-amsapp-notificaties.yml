@@ -36,7 +36,8 @@ paths:
                 $ref: '#/components/schemas/ErrorNotFound'
   /api/v1/services/amsapp/notifications/consumer/{consumerId}/app:
     get:
-      description: Registers the consumer based on the identity provider's response and communicates the consumerId to the app server
+      description: |
+        Registers the consumer based on the identity provider's response and redirects to an html page with a link to open the Amsterdam App.
       parameters:
         - name: consumerId
           in: path
@@ -61,25 +62,27 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/ErrorNotFound'
-  /api/v1/services/amsapp/notifications/consumer/{consumerId}:
+  /private/api/v1/services/amsapp/notifications/consumer/{consumerId}:
     get:
-      description: Get consumer exists
+      description: Get consumer profile and registration status. Or if consumer is not registered, return only registration status with false.
       parameters:
         - name: consumerId
           in: path
           required: true
           schema:
             type: string
+        - $ref: '#/components/parameters/xApiKeyHeader'
       responses:
         '200':
-          description: Current registration status of consumer
+          description: Current registration profile of consumer
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  isRegistered:
-                    type: boolean
+                oneOf:
+                  - $ref: '#/components/schemas/ConsumerRegistered'
+                  - allOf:
+                      - $ref: '#/components/schemas/ConsumerProfile'
+                      - $ref: '#/components/schemas/ConsumerRegistered'
         '404':
           description: Consumer not found
           content:
@@ -100,6 +103,7 @@ paths:
           required: true
           schema:
             type: string
+        - $ref: '#/components/parameters/xApiKeyHeader'
       responses:
         '200':
           description: Consumer deleted
@@ -291,7 +295,7 @@ components:
               default: null
             message:
               type: string
-              default: "DEPENDENCY ERROR"
+              default: 'DEPENDENCY ERROR'
     ServiceResult:
       type: object
       properties:
@@ -305,7 +309,25 @@ components:
         isTip:
           type: boolean
           default: false
-            
+    ConsumerProfile:
+      type: object
+      properties:
+        profileId:
+          type: string
+        profileName:
+          type: string
+        serviceIds:
+          type: array
+          items:
+            type: string
+        dateUpdated:
+          type: string
+          format: date-time
+    ConsumerRegistered:
+      type: object
+      properties:
+        isRegistered:
+          type: boolean
     ApiSuccessResponse:
       type: object
       properties:

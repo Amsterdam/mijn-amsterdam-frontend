@@ -1,8 +1,27 @@
-export const SUBSIDIES_ROUTE_DEFAULT = 'https://subsidies.amsterdam.nl';
+import { ThemaConfigBase } from '../../../config/thema-types';
 
-export const featureToggle = {
-  subsidiesActive: true,
+const SUBSIDIES_ROUTE_DEFAULT = 'https://subsidies.amsterdam.nl';
+const THEMA_ID = 'SUBSIDIES';
+const THEMA_TITLE = 'Subsidies';
+
+export const themaConfig: ThemaConfigBase = {
+  id: THEMA_ID,
+  title: THEMA_TITLE,
+  redactedScope: 'none',
+  featureToggle: {
+    active: true,
+  },
+  profileTypes: ['private', 'commercial'],
+  uitlegPageSections: [
+    {
+      title: THEMA_TITLE,
+      listItems: ['Uw aanvraag voor een subsidie'],
+    },
+  ],
+  pageLinks: [],
+  route: {
+    path: SUBSIDIES_ROUTE_DEFAULT,
+    trackingUrl: null,
+    documentTitle: '',
+  },
 };
-
-export const themaId = 'SUBSIDIES' as const;
-export const themaTitle = 'Subsidies';
