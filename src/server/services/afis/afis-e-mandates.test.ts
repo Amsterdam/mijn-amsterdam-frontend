@@ -675,7 +675,7 @@ describe('afis-e-mandates service (with nock)', () => {
 
     it('transformEMandatesRedirectUrlResponse transforms response', () => {
       const result = emandates.forTesting.transformEMandatesRedirectUrlResponse(
-        { paylinkId: '123', paylink: 'https://example.com' }
+        { paylink_id: '123', paylink: 'https://example.com' }
       );
       expect(result).toHaveProperty('redirectUrl', 'https://example.com');
     });
