@@ -1,4 +1,17 @@
 services:
+  bff:
+    build:
+      secrets:
+        - SSH_PASSWD
+      context: .
+    ports:
+      - 5000:5000
+    env_file: ".env.local"
+    # This would need some for work plug and play behavior, like the mock server and some db configuration.
+    # But for now to run it all with a bff instance, use:
+    # export BFF_SSH_PASSWD='root:docker!' && docker compose --profile dev up
+    profiles: [dev]
+
   db:
     image: postgres:latest
     container_name: mijnadam_db
@@ -27,6 +40,10 @@ services:
     restart: always
     volumes:
       - pgadmin_data:/var/lib/pgadmin
+
+secrets:
+  SSH_PASSWD:
+    environment: BFF_SSH_PASSWD
 
 volumes:
   pg_data:
