@@ -36,7 +36,8 @@ paths:
                 $ref: '#/components/schemas/ErrorNotFound'
   /api/v1/services/amsapp/notifications/consumer/{consumerId}/app:
     get:
-      description: Registers the consumer based on the identity provider's response and communicates the consumerId to the app server
+      description: |
+        Registers the consumer based on the identity provider's response and redirects to an html page with a link to open the Amsterdam App.
       parameters:
         - name: consumerId
           in: path
@@ -70,6 +71,7 @@ paths:
           required: true
           schema:
             type: string
+        - $ref: '#/components/parameters/xApiKeyHeader'
       responses:
         '200':
           description: Current registration profile of consumer
@@ -101,6 +103,7 @@ paths:
           required: true
           schema:
             type: string
+        - $ref: '#/components/parameters/xApiKeyHeader'
       responses:
         '200':
           description: Consumer deleted
@@ -313,10 +316,6 @@ components:
           type: string
         profileName:
           type: string
-        consumerIds:
-          type: array
-          items:
-            type: string
         serviceIds:
           type: array
           items:
