@@ -234,3 +234,6 @@ export const EMANDATE_SIGN_REQUEST_FAILED_STATUSES = [
   'payment_expired',
   'no_response',
 ];
+
+const ONE_MINUTE_MS = 60000;
+export const AFIS_EMANDATE_LONG_DURATION_THRESHOLD_MS = 10 * ONE_MINUTE_MS;

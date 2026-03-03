@@ -14,7 +14,7 @@ export const streamEndpointQueryParamKeys = {
 
 export const DEFAULT_PROFILE_TYPE = 'private';
 
-const ONE_MINUTE_MS = 60000;
+export const ONE_MINUTE_MS = 60000;
 export const FIFTEEN_MINUTES_MS = 15 * ONE_MINUTE_MS;
 
 /**
