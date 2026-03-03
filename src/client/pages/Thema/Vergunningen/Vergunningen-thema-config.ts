@@ -12,7 +12,6 @@ import {
 } from '../../../../server/services/decos/decos-types';
 import { WithDateRange } from '../../../../server/services/vergunningen/config-and-types';
 import { dateSort } from '../../../../universal/helpers/date';
-import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 import type {
@@ -82,7 +81,13 @@ const THEMA_TITLE = 'Vergunningen en ontheffingen';
 
 type VergunningenThemaConfig = Pick<
   ThemaConfigBase,
-  'id' | 'title' | 'profileTypes' | 'redactedScope' | 'featureToggle' | 'route'
+  | 'id'
+  | 'title'
+  | 'profileTypes'
+  | 'redactedScope'
+  | 'featureToggle'
+  | 'route'
+  | 'pageLinks'
 > & {
   id: typeof THEMA_ID;
 };
@@ -98,6 +103,12 @@ export const themaConfig: VergunningenThemaConfig = {
     documentTitle: `${THEMA_TITLE} | overzicht`,
     trackingUrl: null,
   },
+  pageLinks: [
+    {
+      to: 'https://www.amsterdam.nl/ondernemen/vergunningen/wevos/',
+      title: 'Ontheffing RVV en TVM aanvragen',
+    },
+  ],
 };
 
 export const routeConfig = {
@@ -161,13 +172,6 @@ export const tableConfig = {
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER,
   },
 } as const;
-
-export const linkListItems: LinkProps[] = [
-  {
-    to: 'https://www.amsterdam.nl/ondernemen/vergunningen/wevos/',
-    title: 'Ontheffing RVV en TVM aanvragen',
-  },
-];
 
 export function getListPageDocumentTitle(themaTitle: string) {
   return <T extends Params<string>>(params: T | null): string => {

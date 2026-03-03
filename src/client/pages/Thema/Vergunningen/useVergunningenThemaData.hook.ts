@@ -1,8 +1,4 @@
-import {
-  linkListItems,
-  tableConfig,
-  themaConfig,
-} from './Vergunningen-thema-config';
+import { tableConfig, themaConfig } from './Vergunningen-thema-config';
 import type { ZaakFrontendCombined } from '../../../../server/services/vergunningen/config-and-types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
@@ -26,7 +22,7 @@ export function useVergunningenThemaData() {
     isLoading: isLoading(VERGUNNINGEN),
     isError: isError(VERGUNNINGEN),
     tableConfig,
-    linkListItems,
+    pageLinks: themaConfig.pageLinks,
     breadcrumbs,
     hasParkeervergunningen,
     themaConfig,
