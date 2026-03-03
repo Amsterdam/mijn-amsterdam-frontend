@@ -85,16 +85,20 @@ export function useSignRequestStatusCheck(eMandate: AfisEMandateFrontend) {
     }
   );
 
-  const isPendingActivation = !EMANDATE_SIGN_REQUEST_FAILED_STATUSES.includes(
-    api.data?.content?.status ?? ''
-  );
+  const statusResponse = api.data?.content?.status ?? '';
+
+  const isPendingActivation =
+    api.isDirty &&
+    !!payload &&
+    !EMANDATE_SIGN_REQUEST_FAILED_STATUSES.includes(statusResponse) &&
+    eMandate.status !== EMANDATE_STATUS_ACTIVE;
 
   useEffect(() => {
     if (!payload) {
       return;
     }
     // If the mandate is active or the sign request has failed, we can remove the payload from storage as we no longer need to check the status.
-    if (!isPendingActivation || eMandate.status === EMANDATE_STATUS_ACTIVE) {
+    if (eMandate.status === EMANDATE_STATUS_ACTIVE) {
       payloadStorage.remove(eMandate.id);
     }
   }, [
@@ -108,13 +112,7 @@ export function useSignRequestStatusCheck(eMandate: AfisEMandateFrontend) {
   return {
     ...api,
     payload,
-    isPendingActivation:
-      api.isDirty &&
-      !!payload &&
-      !EMANDATE_SIGN_REQUEST_FAILED_STATUSES.includes(
-        api.data?.content?.status ?? ''
-      ) &&
-      eMandate.status !== EMANDATE_STATUS_ACTIVE,
+    isPendingActivation,
     isRequestingStatusCheck:
       api.isLoading && !!payload && eMandate.status !== EMANDATE_STATUS_ACTIVE,
     isTakingLong: payloadStorage.isTakingLong(eMandate.id),
