@@ -10,10 +10,17 @@ import type {
 } from '../../../../server/services/afis/afis-types';
 import { bffApiHost } from '../../../../testing/setup';
 
+function clearLocalStorage() {
+  window.localStorage.removeItem('afis-emandate-status-check-payload');
+}
+
 describe('useAfisEMandatesSignRequest', () => {
   describe('useSignRequestPayloadStorage', () => {
+    beforeAll(() => {
+      clearLocalStorage();
+    });
     afterEach(() => {
-      window.localStorage.removeItem('afis-emandate-status-check-payload');
+      clearLocalStorage();
     });
 
     it('should add, get and remove payloads correctly', () => {
@@ -182,9 +189,13 @@ describe('useAfisEMandatesSignRequest', () => {
       status: '0',
     } as AfisEMandateFrontend;
 
+    beforeAll(() => {
+      clearLocalStorage();
+    });
+
     afterEach(() => {
       vi.clearAllMocks();
-      window.localStorage.removeItem('afis-emandate-status-check-payload');
+      clearLocalStorage();
     });
 
     it('should not fetch if no payload is present', async () => {
@@ -237,6 +248,8 @@ describe('useAfisEMandatesSignRequest', () => {
     });
 
     it('should remove payload if hook is rendered with EMandate status is ACTIVE', () => {
+      mockFetchOnce();
+
       window.localStorage.setItem(
         'afis-emandate-status-check-payload',
         JSON.stringify([[eMandate.id, 'payload', new Date().toISOString()]])

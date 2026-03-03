@@ -98,15 +98,22 @@ export function useSignRequestStatusCheck(eMandate: AfisEMandateFrontend) {
       return;
     }
     // If the mandate is active or the sign request has failed, we can remove the payload from storage as we no longer need to check the status.
-    if (eMandate.status === EMANDATE_STATUS_ACTIVE) {
-      payloadStorage.remove(eMandate.id);
-    }
+    return () => {
+      if (
+        eMandate.status === EMANDATE_STATUS_ACTIVE ||
+        (statusResponse &&
+          EMANDATE_SIGN_REQUEST_FAILED_STATUSES.includes(statusResponse))
+      ) {
+        payloadStorage.remove(eMandate.id);
+      }
+    };
   }, [
     eMandate.id,
     payloadStorage,
     isPendingActivation,
     eMandate.status,
     payload,
+    statusResponse,
   ]);
 
   return {
