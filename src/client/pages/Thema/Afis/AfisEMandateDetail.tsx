@@ -15,6 +15,7 @@ import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { MaButtonLink } from '../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../components/Page/Page';
+import { Spinner } from '../../../components/Spinner/Spinner';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
@@ -131,7 +132,7 @@ function EMandate({ eMandate }: EMandateProps) {
       />
       {signRequestStatusCheckApi.isRequestingStatusCheck ? (
         <Paragraph>
-          Mijn Amsterdam controleert de status van het E-Mandaat...
+          <Spinner /> Mijn Amsterdam controleert de status van het E-Mandaat...
         </Paragraph>
       ) : signRequestStatusCheckApi.isPendingActivation ? (
         <Alert headingLevel={4} heading="Status">
