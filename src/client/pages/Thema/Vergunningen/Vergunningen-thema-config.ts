@@ -81,16 +81,15 @@ export const featureToggle = {
   vergunningenActive: true,
 };
 
-export const themaId = 'VERGUNNINGEN' as const;
-export const themaTitle = 'Vergunningen en ontheffingen';
-
 const THEMA_ID = 'VERGUNNINGEN';
 const THEMA_TITLE = 'Vergunningen en ontheffingen';
 
 type VergunningenThemaConfig = Pick<
   ThemaConfigBase,
   'id' | 'title' | 'profileTypes' | 'redactedScope'
->;
+> & {
+  id: typeof THEMA_ID;
+};
 
 export const themaConfig: VergunningenThemaConfig = {
   id: THEMA_ID,
