@@ -1,4 +1,4 @@
-import { featureToggle, themaConfig } from './Vergunningen-thema-config';
+import { themaConfig } from './Vergunningen-thema-config';
 import { InfoSection_DEPRECATED } from '../../GeneralInfo/GeneralInfo';
 
 export const vergunningensectionProps: InfoSection_DEPRECATED = {
@@ -33,5 +33,5 @@ export const vergunningensectionProps: InfoSection_DEPRECATED = {
     'Uw aanvraag voor een eigen parkeerplaats voor huisartsen, verloskundigen en consuls',
     'Uw aanvraag voor een vergunning exploitatie horecabedrijf',
   ],
-  active: featureToggle.vergunningenActive,
+  active: themaConfig.featureToggle.active,
 };

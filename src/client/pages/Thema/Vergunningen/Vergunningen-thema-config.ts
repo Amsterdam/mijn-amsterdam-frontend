@@ -77,16 +77,12 @@ export const listPageParamKind = {
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
-export const featureToggle = {
-  vergunningenActive: true,
-};
-
 const THEMA_ID = 'VERGUNNINGEN';
 const THEMA_TITLE = 'Vergunningen en ontheffingen';
 
 type VergunningenThemaConfig = Pick<
   ThemaConfigBase,
-  'id' | 'title' | 'profileTypes' | 'redactedScope'
+  'id' | 'title' | 'profileTypes' | 'redactedScope' | 'featureToggle' | 'route'
 > & {
   id: typeof THEMA_ID;
 };
@@ -96,6 +92,12 @@ export const themaConfig: VergunningenThemaConfig = {
   title: THEMA_TITLE,
   profileTypes: ['private', 'commercial'],
   redactedScope: 'none',
+  featureToggle: { active: true },
+  route: {
+    path: '/vergunningen',
+    documentTitle: `${THEMA_TITLE} | overzicht`,
+    trackingUrl: null,
+  },
 };
 
 export const routeConfig = {
@@ -109,11 +111,6 @@ export const routeConfig = {
   listPage: {
     path: '/vergunningen/lijst/:kind/:page?',
     documentTitle: getListPageDocumentTitle(THEMA_TITLE),
-    trackingUrl: null,
-  },
-  themaPage: {
-    path: '/vergunningen',
-    documentTitle: `${THEMA_TITLE} | overzicht`,
     trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;

@@ -18,10 +18,10 @@ export function VergunningenThema() {
     linkListItems,
     id,
     title,
-    routeConfig,
     hasParkeervergunningen,
+    themaConfig,
   } = useVergunningenThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const pageContentTop = (
     <PageContentCell spanWide={8}>

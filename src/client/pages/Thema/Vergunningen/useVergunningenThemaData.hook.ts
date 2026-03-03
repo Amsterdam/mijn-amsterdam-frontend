@@ -1,6 +1,5 @@
 import {
   linkListItems,
-  routeConfig,
   tableConfig,
   themaConfig,
 } from './Vergunningen-thema-config';
@@ -29,7 +28,7 @@ export function useVergunningenThemaData() {
     tableConfig,
     linkListItems,
     breadcrumbs,
-    routeConfig,
     hasParkeervergunningen,
+    themaConfig,
   };
 }
