@@ -5,6 +5,8 @@
 }
 
 .UserFeedback {
-  width: 100%;
-  max-width: 450px;
+  @media screen and (max-width: $ams-breakpoint-medium) {
+    width: 100%;
+    max-width: 450px;
+  }
 }
