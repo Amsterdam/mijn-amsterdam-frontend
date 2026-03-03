@@ -165,10 +165,13 @@ describe('afis-e-mandates service (with nock)', () => {
       expect(bankCreateData).toStrictEqual({
         BankAccount: '9343513650',
         BankAccountHolderName: 'John Doe',
+        BankAccountReferenceText:
+          'Bankrekening toegevoegd via Mijn Amsterdam voor E-Manaat afdeling Afval.',
         BankCountryKey: 'NL',
         BankName: 'BOOG',
         BankNumber: 'BOOG',
         BusinessPartner: '0000000123',
+        CollectionAuthInd: true,
         IBAN: 'NL35BOOG9343513650',
         SWIFTCode: 'BANKNL2A',
       });
@@ -399,7 +402,9 @@ describe('afis-e-mandates service (with nock)', () => {
         authProfile
       );
       expect(result.status).toBe('OK');
-      expect(result.content?.length).toBe(11);
+      expect(result.content?.length).toBe(
+        EMandateCreditorsGemeenteAmsterdam.length
+      );
     });
   });
 
