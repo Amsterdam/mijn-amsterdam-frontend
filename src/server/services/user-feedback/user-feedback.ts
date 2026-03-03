@@ -111,6 +111,7 @@ async function fetchFeedbackSurveyEntries(
       page_size: PAGE_SIZE,
       page,
     },
+    enableCache: false,
     transformResponse(entriesResponse: SurveyEntriesResponse) {
       const entriesBySurvey = entriesResponse.results.filter((entry) => {
         return entry.survey_unique_code === surveyId;
