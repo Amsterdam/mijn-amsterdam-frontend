@@ -47,5 +47,6 @@ export function useVergunningenDetailData<T extends ZaakFrontendCombined>(
     isLoadingDocuments,
     documents: isPBZaak ? vergunning.documents : documents,
     title: vergunning?.title,
+    themaConfig,
   };
 }
