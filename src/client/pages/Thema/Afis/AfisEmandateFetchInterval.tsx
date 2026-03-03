@@ -1,7 +1,7 @@
 import { useInterval } from '../../../hooks/timer.hook';
 
 // This component is used to refetch the eMandate data at a regular interval,
-const POLLING_INTERVAL_MS = 4000; // 4 seconds
+const POLLING_INTERVAL_MS = 20000; // 20 seconds
 
 export function AfisEmandateRefetchInterval({ fetch }: { fetch: () => void }) {
   useInterval(fetch, POLLING_INTERVAL_MS);
