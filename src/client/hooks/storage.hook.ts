@@ -115,7 +115,6 @@ function useWindowStorage(
     [adapter]
   );
 
-  // const [value, setValue] = useState(getValueFromLocalStorage());
   const { set: setValue, data } = useWindowStateStore();
   const storageType =
     adapter === localStorage ? 'localStorage' : 'sessionStorage';
