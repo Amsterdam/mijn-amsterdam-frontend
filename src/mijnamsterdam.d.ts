@@ -2,8 +2,6 @@
 /// <reference types="vite/client" />
 /// <reference types="vite-plugin-svgr/client" />
 
-import { type FeatureToggles } from './server/config/azure-appconfiguration';
-
 // TODO: Add typings for this function
 declare module 'slugme';
 declare module 'log-that-http';
@@ -65,5 +63,4 @@ declare global {
       BFF_ID: string;
     }
   }
-  var MA_FEATURETOGGLES: FeatureToggles;
 }
