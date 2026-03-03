@@ -68,15 +68,6 @@ const displayPropsEerdereVergunningen: VergunningFrontendDisplayProps = {
   },
 };
 
-export const listPageParamKind = {
-  actual: 'huidige-vergunningen-en-ontheffingen',
-  historic: 'eerdere-vergunningen-en-ontheffingen',
-  inProgress: 'lopende-aanvragen',
-} as const;
-
-export type ListPageParamKey = keyof typeof listPageParamKind;
-export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
-
 const THEMA_ID = 'VERGUNNINGEN';
 const THEMA_TITLE = 'Vergunningen en ontheffingen';
 
@@ -153,6 +144,15 @@ export const themaConfig: VergunningenThemaConfig = {
     },
   },
 };
+
+export const listPageParamKind = {
+  actual: 'huidige-vergunningen-en-ontheffingen',
+  historic: 'eerdere-vergunningen-en-ontheffingen',
+  inProgress: 'lopende-aanvragen',
+} as const;
+
+export type ListPageParamKey = keyof typeof listPageParamKind;
+export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 export const tableConfig = {
   [listPageParamKind.inProgress]: {
