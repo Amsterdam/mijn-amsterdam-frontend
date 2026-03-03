@@ -1,6 +1,6 @@
 import { ParkeerVergunningFrontend } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
-import { routeConfig } from '../../../client/pages/Thema/Parkeren/Parkeren-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/Parkeren/Parkeren-thema-config';
 import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
@@ -24,7 +24,7 @@ export async function fetchDecosParkeerVergunningen(
           authProfileAndToken.profile.sid,
           zaak,
           {
-            detailPageRoute: routeConfig.detailPage.path,
+            detailPageRoute: themaConfig.detailPage.route.path,
             includeFetchDocumentsUrl: true,
             getStepsFN: getStatusStepsDecos,
           }

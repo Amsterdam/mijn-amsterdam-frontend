@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { describe, expect, it } from 'vitest';
 
-import { routeConfig } from './Parkeren-thema-config';
+import { themaConfig } from './Parkeren-thema-config';
 import { ParkerenList } from './ParkerenList';
 import { AppState } from '../../../../universal/types/App.types';
 import MockApp from '../../MockApp';
@@ -66,12 +66,12 @@ const testState = {
 } as unknown as AppState;
 
 describe('ParkerenList', () => {
-  const routeEntry = generatePath(routeConfig.listPage.path, {
+  const routeEntry = generatePath(themaConfig.listPage.route.path, {
     kind: listPageParamKind.inProgress,
     page: null,
   });
 
-  const routePath = routeConfig.listPage.path;
+  const routePath = themaConfig.listPage.route.path;
 
   function Component() {
     return (

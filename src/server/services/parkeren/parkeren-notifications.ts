@@ -1,8 +1,5 @@
 import { fetchDecosParkeerVergunningen } from './parkeren-decos-service';
-import {
-  themaId,
-  themaTitle,
-} from '../../../client/pages/Thema/Parkeren/Parkeren-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/Parkeren/Parkeren-thema-config';
 import {
   apiSuccessResult,
   apiDependencyError,
@@ -18,8 +15,8 @@ export async function fetchParkeerVergunningenNotifications(
   if (VERGUNNINGEN.status === 'OK') {
     const notifications = getVergunningNotifications(
       VERGUNNINGEN.content,
-      themaId,
-      themaTitle
+      themaConfig.id,
+      themaConfig.title
     );
 
     return apiSuccessResult({

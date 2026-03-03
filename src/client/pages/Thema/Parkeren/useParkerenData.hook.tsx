@@ -1,10 +1,4 @@
-import {
-  linkListItems,
-  routeConfig,
-  tableConfig,
-  themaId,
-  themaTitle,
-} from './Parkeren-thema-config';
+import { tableConfig, themaConfig } from './Parkeren-thema-config';
 import { DecosParkeerVergunning } from '../../../../server/services/parkeren/config-and-types';
 import { DecosZaakFrontend } from '../../../../server/services/vergunningen/config-and-types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
@@ -20,11 +14,11 @@ export function useParkerenData() {
     DecosZaakFrontend<DecosParkeerVergunning>
   >(PARKEREN.content?.vergunningen ?? [], 'identifier', true);
 
-  const breadcrumbs = useThemaBreadcrumbs(themaId);
+  const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
   return {
-    id: themaId,
-    title: themaTitle,
+    id: themaConfig.id,
+    title: themaConfig.title,
     tableConfig,
     vergunningen,
     hasMijnParkerenVergunningen,
@@ -32,8 +26,8 @@ export function useParkerenData() {
     isError: isError(PARKEREN),
     parkerenUrlSSO: PARKEREN.content?.url ?? '/',
     isLoadingParkerenUrl: isLoading(PARKEREN),
-    linkListItems,
+    pageLinks: themaConfig.pageLinks,
     breadcrumbs,
-    routeConfig,
+    themaConfig,
   };
 }

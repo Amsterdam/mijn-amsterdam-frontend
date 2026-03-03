@@ -1,11 +1,6 @@
 import { CarIcon } from '@amsterdam/design-system-react-icons';
 
-import {
-  routeConfig,
-  themaId,
-  themaTitle,
-  featureToggle,
-} from './Parkeren-thema-config';
+import { themaConfig } from './Parkeren-thema-config';
 import { ParkerenDetail } from './ParkerenDetail';
 import { ParkerenList } from './ParkerenList';
 import { ParkerenThema } from './ParkerenThema';
@@ -18,40 +13,38 @@ import {
 
 export const ParkerenRoutes = [
   {
-    route: routeConfig.detailPage.path,
+    route: themaConfig.detailPage.route.path,
     Component: ParkerenDetail,
-    isActive: featureToggle.parkerenActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.listPage.path,
+    route: themaConfig.listPage.route.path,
     Component: ParkerenList,
-    isActive: featureToggle.parkerenActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.themaPage.path,
+    route: themaConfig.route.path,
     Component: ParkerenThema,
-    isActive: featureToggle.parkerenActive,
+    isActive: themaConfig.featureToggle.active,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
-export const menuItem: ThemaMenuItem<typeof themaId> = {
-  title: themaTitle,
-  id: themaId,
+export const menuItem: ThemaMenuItem = {
+  title: themaConfig.title,
+  id: themaConfig.id,
   to: (appState: AppState) => {
     const hasDecosParkeerVergunningen =
       !!appState.PARKEREN?.content?.vergunningen?.length;
     const urlExternal = appState.PARKEREN?.content?.url ?? '/';
-    return hasDecosParkeerVergunningen
-      ? routeConfig.themaPage.path
-      : urlExternal;
+    return hasDecosParkeerVergunningen ? themaConfig.route.path : urlExternal;
   },
-  profileTypes: ['private', 'commercial'],
-  redactedScope: 'none',
+  profileTypes: themaConfig.profileTypes,
+  redactedScope: themaConfig.redactedScope,
   isActive(appState: AppState) {
     const hasDecosParkeerVergunningen =
       !!appState.PARKEREN?.content?.vergunningen?.length;
     return (
-      featureToggle.parkerenActive &&
+      themaConfig.featureToggle.active &&
       !isLoading(appState.PARKEREN) &&
       (!!appState.PARKEREN?.content?.isKnown || hasDecosParkeerVergunningen)
     );

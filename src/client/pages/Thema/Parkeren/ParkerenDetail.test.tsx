@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { routeConfig } from './Parkeren-thema-config';
+import { themaConfig } from './Parkeren-thema-config';
 import { ParkerenDetail } from './ParkerenDetail';
 import { ParkeerVergunningFrontend } from '../../../../server/services/parkeren/config-and-types';
 import { bffApiHost } from '../../../../testing/setup';
@@ -64,11 +64,11 @@ function createParkerenState(fields: {
 describe('Kenteken tests', () => {
   const createParkerenDetail = componentCreator({
     component: ParkerenDetail,
-    routeEntry: generatePath(routeConfig.detailPage.path, {
+    routeEntry: generatePath(themaConfig.detailPage.route.path, {
       caseType: 'GPP',
       id: ID,
     }),
-    routePath: routeConfig.detailPage.path,
+    routePath: themaConfig.detailPage.route.path,
   });
 
   const nieuwKentekenLabelName = 'Nieuw kenteken';

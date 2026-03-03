@@ -7,7 +7,7 @@ import { PageContentCell } from '../../../components/Page/Page';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
-import { routeConfig as routeConfigParkeren } from '../Parkeren/Parkeren-thema-config';
+import { themaConfig as routeConfigParkeren } from '../Parkeren/Parkeren-thema-config';
 
 export function VergunningenThema() {
   const {
@@ -18,10 +18,9 @@ export function VergunningenThema() {
     linkListItems,
     id,
     title,
-    routeConfig,
     hasParkeervergunningen,
   } = useVergunningenThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(routeConfigParkeren.route);
 
   const pageContentTop = (
     <PageContentCell spanWide={8}>
@@ -32,7 +31,7 @@ export function VergunningenThema() {
       {hasParkeervergunningen && (
         <Alert heading="Parkeervergunningen?" headingLevel={4}>
           <Paragraph>
-            <MaRouterLink href={routeConfigParkeren.themaPage.path}>
+            <MaRouterLink href={routeConfigParkeren.route.path}>
               Bekijk hier de vergunningen voor parkeren.
             </MaRouterLink>
           </Paragraph>

@@ -62,11 +62,10 @@ export function ParkerenThema() {
     isLoading,
     isError,
     parkerenUrlSSO,
-    linkListItems,
-    routeConfig,
+    themaConfig,
   } = useParkerenData();
 
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const tables = Object.entries(tableConfig).map(
     ([
@@ -116,7 +115,7 @@ export function ParkerenThema() {
       isError={isError}
       isLoading={isLoading}
       pageContentTop={pageContentTop}
-      pageLinks={linkListItems}
+      pageLinks={themaConfig.pageLinks}
       pageContentMain={tables}
       pageContentBottom={pageContentBottom}
       maintenanceNotificationsPageSlug="parkeren"

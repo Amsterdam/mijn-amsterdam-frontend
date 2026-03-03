@@ -6,7 +6,7 @@ import { themaId as themaIdAfis } from '../../Afis/Afis-thema-config';
 import { themaConfig as themaBelastingen } from '../../Belastingen/Belastingen-thema-config';
 import { themaConfig as themaInkomen } from '../../Inkomen/Inkomen-thema-config';
 import { themaConfig as themaKrefia } from '../../Krefia/Krefia-thema-config';
-import { themaId as themaIdParkeren } from '../../Parkeren/Parkeren-thema-config';
+import { themaConfig as themaParkeren } from '../../Parkeren/Parkeren-thema-config';
 import {
   featureToggle as featureToggleSvwi,
   themaId as themaIdSvwi,
@@ -35,7 +35,7 @@ export const contactmomentenDisplayProps: DisplayProps<ContactMomentFrontend> =
 const SVWIv1ORv2 = featureToggleSvwi.svwiActive ? themaIdSvwi : themaInkomen.id;
 
 export const mapperContactmomentToMenuItem = {
-  Parkeren: themaIdParkeren,
+  Parkeren: themaParkeren.id,
   Zorg: themaZorg.id,
   'Werk en Inkomen': SVWIv1ORv2,
   Belastingen: themaBelastingen.id,
