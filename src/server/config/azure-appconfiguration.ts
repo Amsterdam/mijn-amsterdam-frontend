@@ -5,7 +5,6 @@ import {
   ConfigurationMapFeatureFlagProvider,
 } from '@microsoft/feature-management';
 
-import { GLOBALTHIS_FEATURETOGGLE_KEY } from '../../client/config/feature-toggles';
 import { IS_DEVELOPMENT } from '../../universal/config/env';
 
 // Is mutated by the Appconfiguration. Locally this object will be used as is.
@@ -16,11 +15,8 @@ const featureToggle = {
   ['USER_FEEDBACK.fetchSurvey']: true,
   ['cobrowse']: false,
 };
-// Make sure featureToggles imported from frontend *-thema-configs have access.
-const g = globalThis as unknown as {
-  [GLOBALTHIS_FEATURETOGGLE_KEY]: FeatureToggles;
-};
-g[GLOBALTHIS_FEATURETOGGLE_KEY] = featureToggle;
+// globalThis is used to make sure featureToggles imported from frontend *-thema-configs have access.
+globalThis.MA_FEATURETOGGLES = featureToggle;
 
 export type FeatureToggles = typeof featureToggle;
 export type FeatureToggleKey = keyof FeatureToggles;
