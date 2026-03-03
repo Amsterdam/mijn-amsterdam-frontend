@@ -275,7 +275,7 @@ export async function createBusinessPartnerBankAccount(
     BankAccount: iban.accountNumber,
     BankCountryKey: iban.countryCode ?? '',
     CollectionAuthInd: true,
-    BankAccountReferenceText: `Bankrekening toegevoegd via Mijn Amsterdam voor E-Manaat afdeling ${payload.creditorName ?? 'onbekend'}.`,
+    BankAccountReferenceText: `Bankrekening toegevoegd via Mijn Amsterdam voor E-Mandaat afdeling ${payload.creditorName ?? 'onbekend'}.`,
   };
 
   const additionalConfig: DataRequestConfig = {
