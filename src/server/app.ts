@@ -212,7 +212,7 @@ async function startServerBFF() {
 }
 if (
   require.main?.filename.endsWith('bffserver.ts') ||
-  require.main?.filename.endsWith('app.js') ||
+  require.main?.filename.endsWith('app-start.js') ||
   process.versions.bun
 ) {
   startServerBFF();
