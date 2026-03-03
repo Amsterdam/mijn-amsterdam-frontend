@@ -1,4 +1,4 @@
-import { routeConfig, themaConfig } from './Vergunningen-thema-config';
+import { themaConfig } from './Vergunningen-thema-config';
 import { VergunningenDetail } from './VergunningenDetail';
 import { default as VergunningenIcon } from './VergunningenIcon.svg?react';
 import { VergunningenList } from './VergunningenList';
@@ -12,7 +12,7 @@ import {
 
 export const VergunningenRoutes = [
   {
-    route: routeConfig.detailPage.path,
+    route: themaConfig.detailPage.route.path,
     Component: VergunningenDetail,
     isActive: themaConfig.featureToggle.active,
   },

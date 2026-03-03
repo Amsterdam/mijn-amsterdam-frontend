@@ -16,7 +16,7 @@ import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 import type {
   ThemaConfigBase,
-  ThemaRoutesConfig,
+  WithDetailPage,
   WithListPage,
 } from '../../../config/thema-types';
 
@@ -80,7 +80,9 @@ export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 const THEMA_ID = 'VERGUNNINGEN';
 const THEMA_TITLE = 'Vergunningen en ontheffingen';
 
-type VergunningenThemaConfig = ThemaConfigBase<typeof THEMA_ID> & WithListPage;
+type VergunningenThemaConfig = ThemaConfigBase<typeof THEMA_ID> &
+  WithListPage &
+  WithDetailPage;
 
 export const themaConfig: VergunningenThemaConfig = {
   id: THEMA_ID,
@@ -141,17 +143,16 @@ export const themaConfig: VergunningenThemaConfig = {
       trackingUrl: null,
     },
   },
-};
-
-export const routeConfig = {
   detailPage: {
-    path: '/vergunningen/:caseType/:id',
-    trackingUrl(params) {
-      return `/vergunningen/${params?.caseType}`;
+    route: {
+      path: '/vergunningen/:caseType/:id',
+      trackingUrl(params) {
+        return `/vergunningen/${params?.caseType}`;
+      },
+      documentTitle: `Vergunningen | ${THEMA_TITLE}`,
     },
-    documentTitle: `Vergunningen | ${THEMA_TITLE}`,
   },
-} as const satisfies ThemaRoutesConfig;
+};
 
 export const tableConfig = {
   [listPageParamKind.inProgress]: {

@@ -4,10 +4,7 @@ import {
   getLifetimeTriggerDate,
   isExpiryNotificationDue,
 } from './vergunningen-helpers';
-import {
-  routeConfig,
-  themaConfig,
-} from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -162,7 +159,7 @@ export async function fetchVergunningenNotifications(
 ) {
   const VERGUNNINGEN = await fetchVergunningen(
     authProfileAndToken,
-    routeConfig.detailPage.path
+    themaConfig.detailPage.route.path
   );
 
   if (VERGUNNINGEN.status === 'OK') {
