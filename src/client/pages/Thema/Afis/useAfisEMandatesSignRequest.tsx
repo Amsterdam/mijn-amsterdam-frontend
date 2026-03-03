@@ -47,6 +47,9 @@ export function useSignRequestPayloadStorage() {
   };
 }
 
+// If a customer returns to Mijn Amsterdam from the eMandate signing process, we want to check the status of the sign request to see if the mandate has been activated.
+// This is primarily relevant for the cancelled singing flow where we don't receive feedback from the eMandate provider and thus need to check the status to know if the signing was cancelled or
+// if the customer just returned to Mijn Amsterdam before completing the signing process.
 export function useSignRequestStatusCheck(eMandate: AfisEMandateFrontend) {
   const payloadStorage = useSignRequestPayloadStorage();
   const payload = payloadStorage.get(eMandate.id);
