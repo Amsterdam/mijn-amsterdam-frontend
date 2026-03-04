@@ -7,8 +7,12 @@ import { type ThemaMenuItem } from '../../../config/thema-types.ts';
 export const menuItem: ThemaMenuItem = {
   title: themaConfig.title,
   id: themaConfig.id,
-  to: (appState: AppState) => {
-    return appState.BELASTINGEN?.content?.url || themaConfig.route.path;
+  to: (_appState: AppState, profileType?: string) => {
+    const path =
+      profileType === 'commercial'
+        ? '/eherkenning.saml.php?start'
+        : '/digid.saml.php?start';
+    return `${themaConfig.route.path + path}`;
   },
   profileTypes: themaConfig.profileTypes,
   redactedScope: themaConfig.redactedScope,
