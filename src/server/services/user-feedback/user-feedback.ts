@@ -97,6 +97,7 @@ export async function saveUserFeedback(
     formatUrl: ({ url }) => `${url}/${surveyId}/versions/${version}/entries`,
     method: 'POST',
     data: surveyEntryPayload,
+    enableCache: false,
   });
 
   return requestData<SaveUserFeedbackResponse>(requestConfig);
