@@ -178,6 +178,8 @@ export type Adres = {
   begindatumVerblijf: string | null;
   begindatumVerblijfFormatted?: string | null;
   locatiebeschrijving?: string | null;
+  isBewoner: boolean;
+  isBriefadres: boolean;
 };
 
 export type PersoonBasis = {

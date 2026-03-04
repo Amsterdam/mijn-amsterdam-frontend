@@ -100,7 +100,8 @@ function getAdres(verblijfplaats: VerblijfplaatsSource) {
     huisletter: verblijfadres?.huisletter ?? null,
     begindatumVerblijf: getDatum(verblijfplaats?.datumVan) ?? null,
     begindatumVerblijfFormatted: verblijfplaats?.datumVan?.langFormaat ?? null,
-    functieAdres: verblijfplaats?.functieAdres?.omschrijving ?? null,
+    isBewoner: isBewoner(verblijfplaats),
+    isBriefadres: verblijfplaats?.functieAdres?.omschrijving === 'briefadres',
   };
 }
 
@@ -121,6 +122,10 @@ function getPersoonBasis(persoon: PersoonBasisSource): PersoonBasis {
     overlijdensdatum: getDatum(persoon.overlijden?.datum),
     overlijdensdatumFormatted: persoon.overlijden?.datum?.langFormaat ?? null,
   };
+}
+
+function isBewoner(verblijfplaats: VerblijfplaatsSource) {
+  return verblijfplaats?.functieAdres?.omschrijving === 'woonadres';
 }
 
 function transformBenkBrpResponse(
@@ -155,6 +160,7 @@ function transformBenkBrpResponse(
   const fetchUrlAantalIngeschrevenPersonen =
     isMokum &&
     verblijfplaats?.adresseerbaarObjectIdentificatie &&
+    isBewoner(verblijfplaats) &&
     featureToggle.service.fetchAantalIngeschrevenPersonenOpAdres.isEnabled
       ? generateFullApiUrlBFF(
           routes.protected.BRP_AANTAL_INGESCHREVEN_PERSONEN_OP_ADRES,

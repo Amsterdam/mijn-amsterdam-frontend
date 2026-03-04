@@ -147,7 +147,10 @@ const adres: ProfileLabels<
   aantalIngeschrevenPersonen: [
     BRP_LABEL_AANTAL_INGESCHREVEN_PERSONEN,
     (value, _x, BRPContent) => {
-      if (BRPContent?.persoon?.mokum === true) {
+      if (
+        BRPContent?.persoon?.mokum === true &&
+        BRPContent?.adres?.isBewoner === true
+      ) {
         return value === '-1' ? (
           <LoadingContent barConfig={[['2rem', '2rem', '0']]} />
         ) : (
@@ -159,7 +162,10 @@ const adres: ProfileLabels<
   ],
   wozWaarde: [
     'WOZ-waarde',
-    () => {
+    (_value, adres) => {
+      if (!adres?.isBewoner) {
+        return null;
+      }
       return (
         <>
           Te vinden op{' '}
@@ -286,6 +292,8 @@ export const panelConfig: PanelConfig<
     };
   },
   adres: (BRP, profileData) => {
+    const isBewoner = BRP.content?.adres?.isBewoner === true;
+
     const title = isMokum(BRP.content)
       ? 'Verhuizing doorgeven'
       : 'Verhuizing naar Amsterdam doorgeven';
@@ -306,20 +314,25 @@ export const panelConfig: PanelConfig<
         className: styles['ActionLink--reportIncorrectResidentCount'],
       });
     }
-    const contentAfterTheTitle = isMokum(BRP.content) ? (
-      <>
-        <strong>Uw huis verduurzamen?</strong> De gemeente biedt subsidies of
-        gratis hulp.
-        <br /> Bekijk{' '}
-        <Link rel="noopener noreferrer" href="https://duurzaamwonen.amsterdam/">
-          duurzaamwonen.amsterdam
-        </Link>{' '}
-        voor meer informatie.
-      </>
-    ) : null;
+
+    const contentAfterTheTitle =
+      isBewoner && isMokum(BRP.content) ? (
+        <>
+          <strong>Uw huis verduurzamen?</strong> De gemeente biedt subsidies of
+          gratis hulp.
+          <br /> Bekijk{' '}
+          <Link
+            rel="noopener noreferrer"
+            href="https://duurzaamwonen.amsterdam/"
+          >
+            duurzaamwonen.amsterdam
+          </Link>{' '}
+          voor meer informatie.
+        </>
+      ) : null;
 
     return {
-      title: 'Adres',
+      title: BRP?.content?.adres?.isBriefadres ? 'Briefadres' : 'Adres',
       contentAfterTheTitle,
       actionLinks,
     };

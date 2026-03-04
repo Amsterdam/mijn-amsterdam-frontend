@@ -253,22 +253,74 @@ describe('brp.ts', () => {
     });
 
     it('should set fetchUrlAantalIngeschrevenPersonen to null and mokum to false if not mokum', () => {
-      const responseData = {
-        personen: [
-          {
-            naam: { volledigeNaam: 'John Doe' },
-            verblijfplaats: { type: 'VerblijfplaatsOnbekend' },
-            gemeenteVanInschrijving: { code: '9999' },
-          },
-        ],
+      const persoon = {
+        naam: { volledigeNaam: 'John Doe' },
+        verblijfplaats: { type: 'VerblijfplaatsOnbekend' },
+        gemeenteVanInschrijving: { code: '9999' },
       };
 
       const result = transformBenkBrpResponse(
         'xx-aa',
-        responseData.personen[0] as PersoonSource
+        persoon as PersoonSource
       );
       expect(result).toHaveProperty('fetchUrlAantalIngeschrevenPersonen', null);
       expect(result).toHaveProperty('persoon.mokum', false);
+    });
+
+    it('should set fetchUrlAantalIngeschrevenPersonen to null and isBewoner to false if functieAdres is briefadres', () => {
+      const persoon = {
+        naam: { volledigeNaam: 'John Doe' },
+        verblijfplaats: {
+          type: 'Adres',
+          verblijfadres: {
+            officieleStraatnaam: 'Cycladenlaan',
+            korteStraatnaam: 'Cycladenlaan',
+            huisnummer: 2,
+            postcode: '1060LW',
+            woonplaats: 'Amsterdam',
+          },
+          functieAdres: {
+            omschrijving: 'briefadres',
+          },
+        },
+        gemeenteVanInschrijving: { code: '0363' },
+      };
+
+      const result = transformBenkBrpResponse(
+        'xx-aa',
+        persoon as PersoonSource
+      );
+      expect(result).toHaveProperty('fetchUrlAantalIngeschrevenPersonen', null);
+      expect(result).toHaveProperty('adres.isBewoner', false);
+      expect(result).toHaveProperty('adres.isBriefadres', true);
+    });
+
+    it('should set fetchUrlAantalIngeschrevenPersonen and isBewoner to true if functieAdres is woonadres', () => {
+      const persoon = {
+        naam: { volledigeNaam: 'John Doe' },
+        verblijfplaats: {
+          type: 'Adres',
+          verblijfadres: {
+            officieleStraatnaam: 'Cycladenlaan',
+            korteStraatnaam: 'Cycladenlaan',
+            huisnummer: 2,
+            postcode: '1060LW',
+            woonplaats: 'Amsterdam',
+          },
+          functieAdres: {
+            omschrijving: 'woonadres',
+          },
+        },
+        gemeenteVanInschrijving: { code: '0363' },
+      };
+
+      const result = transformBenkBrpResponse(
+        'xx-aa',
+        persoon as PersoonSource
+      );
+      expect(result).toHaveProperty('fetchUrlAantalIngeschrevenPersonen', null);
+      expect(result).toHaveProperty('adres.isBewoner', true);
+      expect(result).toHaveProperty('adres.isBriefadres', false);
     });
   });
 

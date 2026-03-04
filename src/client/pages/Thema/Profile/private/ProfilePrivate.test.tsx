@@ -63,6 +63,8 @@ describe('<Profile />', () => {
             straatnaam: 'Mooie Straat',
             huisnummer: '1',
             landnaam: 'Nederland',
+            isBriefadres: false,
+            isBewoner: true,
           },
           verbintenis: {
             datumSluiting: '2020-01-01',
@@ -104,9 +106,7 @@ describe('<Profile />', () => {
     });
 
     await waitFor(() => {
-      expect(
-        screen.getByText('Aantal ingeschreven personen')
-      ).toBeInTheDocument();
+      expect(screen.getByText('Ingeschreven personen')).toBeInTheDocument();
     });
 
     expect(screen.getByText('Verhuizing doorgeven')).toBeInTheDocument();
@@ -117,6 +117,29 @@ describe('<Profile />', () => {
     expect(
       screen.queryByText('Vertrokken Onbekend Waarheen')
     ).not.toBeInTheDocument();
+  });
+
+  test('Has briefadres if isBriefadres set to true', async () => {
+    render(
+      <Component
+        state={{
+          persoon: { mokum: true },
+          adres: {
+            straatnaam: 'Prachtige Straat',
+            huisnummer: '13',
+            landnaam: 'Nederland',
+            isBriefadres: true,
+          },
+        }}
+      />
+    );
+
+    expect(
+      screen.queryByText('Onjuiste inschrijving melden')
+    ).not.toBeInTheDocument();
+    expect(screen.queryByText('Ingeschreven personen')).not.toBeInTheDocument();
+
+    screen.getByText('Briefadres');
   });
 
   test('Lives in Mokum and has no verbintenis: display all data', async () => {
