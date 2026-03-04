@@ -1,3 +1,4 @@
+import { isEnabled } from '../../config/azure-appconfiguration';
 import type { DataRequestConfig } from '../../config/source-api';
 import { getFromEnv } from '../../helpers/env';
 
@@ -26,7 +27,7 @@ export const featureToggle = {
   },
   service: {
     fetchSurvey: {
-      isEnabled: isUserfeedbackEnabled,
+      isEnabled: isEnabled('USER_FEEDBACK.fetchSurvey'),
     },
   },
 };

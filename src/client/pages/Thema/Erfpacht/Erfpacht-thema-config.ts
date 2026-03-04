@@ -6,7 +6,7 @@ import {
 } from '../../../../server/services/erfpacht/erfpacht-types';
 import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
-import { propagateFeatureToggles } from '../../../config/buildFeatureToggle';
+import { propagateFeatureToggles } from '../../../config/feature-toggles';
 import type {
   PageConfig,
   ThemaConfigBase,
