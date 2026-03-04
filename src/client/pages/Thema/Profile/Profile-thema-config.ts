@@ -48,5 +48,4 @@ export const profileLinks = {
     'https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/',
 };
 
-export const BRP_LABEL_AANTAL_INGESCHREVEN_PERSONEN =
-  'Aantal ingeschreven personen';
+export const BRP_LABEL_AANTAL_INGESCHREVEN_PERSONEN = 'Ingeschreven personen';
