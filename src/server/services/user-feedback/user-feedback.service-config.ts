@@ -1,4 +1,3 @@
-import { IS_PRODUCTION } from '../../../universal/config/env';
 import { isEnabled } from '../../config/azure-appconfiguration';
 import type { DataRequestConfig } from '../../config/source-api';
 import { getFromEnv } from '../../helpers/env';
@@ -14,13 +13,16 @@ export const routes = {
   },
 };
 
+const isUserfeedbackEnabled =
+  getFromEnv('BFF_USER_FEEDBACK_ENABLED') === 'true';
+
 export const featureToggle = {
   router: {
     protected: {
-      isEnabled: !IS_PRODUCTION,
+      isEnabled: isUserfeedbackEnabled,
     },
     admin: {
-      isEnabled: !IS_PRODUCTION,
+      isEnabled: isUserfeedbackEnabled,
     },
   },
   service: {
@@ -42,3 +44,6 @@ export const sourceApiConfig: DataRequestConfig = {
 
 export const SURVEY_ID_INLINE_KTO =
   getFromEnv('BFF_USER_FEEDBACK_SURVEY_ID') || 'mams-inline-kto';
+
+export const SURVEY_VERSION_INLINE_KTO =
+  getFromEnv('BFF_USER_FEEDBACK_SURVEY_VERSION') || 'latest';

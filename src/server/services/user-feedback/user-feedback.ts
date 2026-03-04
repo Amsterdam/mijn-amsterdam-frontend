@@ -2,6 +2,7 @@ import {
   featureToggle,
   sourceApiConfig,
   SURVEY_ID_INLINE_KTO,
+  SURVEY_VERSION_INLINE_KTO,
 } from './user-feedback.service-config';
 import type {
   SaveUserFeedbackResponse,
@@ -26,7 +27,7 @@ import { deepCamelizeKeys } from '../db/helper';
 
 export async function fetchUserFeedbackSurvey(
   surveyId: Survey['unique_code'] = SURVEY_ID_INLINE_KTO,
-  version: string = 'latest'
+  version: string = SURVEY_VERSION_INLINE_KTO
 ): ApiResponsePromise<SurveyFrontend> {
   const requestConfig = getCustomApiConfig(sourceApiConfig, {
     formatUrl: ({ url }) =>
@@ -47,15 +48,17 @@ export async function fetchUserFeedbackSurvey(
 
       return {
         ...base,
-        questions: survey.questions.map((question) => {
-          return pick(deepCamelizeKeys(question), [
-            'id',
-            'maxCharacters',
-            'questionText',
-            'questionType',
-            'required',
-            'description',
-          ]);
+        questions: survey.questions?.map((question) => {
+          return (
+            pick(deepCamelizeKeys(question), [
+              'id',
+              'maxCharacters',
+              'questionText',
+              'questionType',
+              'required',
+              'description',
+            ]) ?? []
+          );
         }),
       };
     },
@@ -94,6 +97,7 @@ export async function saveUserFeedback(
     formatUrl: ({ url }) => `${url}/${surveyId}/versions/${version}/entries`,
     method: 'POST',
     data: surveyEntryPayload,
+    enableCache: false,
   });
 
   return requestData<SaveUserFeedbackResponse>(requestConfig);
