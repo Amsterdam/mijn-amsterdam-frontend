@@ -107,6 +107,7 @@ export async function saveUserFeedback(
 
 async function fetchFeedbackSurveyEntries(
   surveyId: Survey['unique_code'],
+  surveyVersion: string,
   page: number = 1
 ): ApiResponsePromise<{ entries: SurveyEntryFrontend[]; pageCount: number }> {
   const PAGE_SIZE = 100;
@@ -117,6 +118,7 @@ async function fetchFeedbackSurveyEntries(
       page_size: PAGE_SIZE,
       page,
       survey_unique_code: surveyId,
+      survey_version: surveyVersion,
     },
     enableCache: false,
     transformResponse(entriesResponse: SurveyEntriesResponse) {
@@ -153,7 +155,7 @@ export async function userFeedbackOverview(
 ): ApiResponsePromise<SurveyOverviewFrontend> {
   const USE_CACHE = false;
   const surveyRequest = fetchUserFeedbackSurvey(surveyId, version, USE_CACHE);
-  const entriesRequest = fetchFeedbackSurveyEntries(surveyId, page);
+  const entriesRequest = fetchFeedbackSurveyEntries(surveyId, version, page);
 
   const [surveyResponse, entriesResponse] = await Promise.all([
     surveyRequest,
