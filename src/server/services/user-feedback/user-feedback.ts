@@ -116,6 +116,7 @@ async function fetchFeedbackSurveyEntries(
     params: {
       page_size: PAGE_SIZE,
       page,
+      survey_unique_code: surveyId,
     },
     enableCache: false,
     transformResponse(entriesResponse: SurveyEntriesResponse) {
