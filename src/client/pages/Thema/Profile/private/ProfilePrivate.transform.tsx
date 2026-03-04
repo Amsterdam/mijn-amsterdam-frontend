@@ -16,7 +16,7 @@ import { defaultDateFormat } from '../../../../../universal/helpers/date';
 import type { AppState } from '../../../../../universal/types/App.types';
 import LoadingContent from '../../../../components/LoadingContent/LoadingContent';
 import {
-  BRP_LABEL_AANTAL_BEWONERS,
+  BRP_LABEL_AANTAL_INGESCHREVEN_PERSONEN,
   profileLinks,
 } from '../Profile-thema-config';
 import {
@@ -37,8 +37,8 @@ type BRPPanelKey = keyof Omit<
   BrpFrontend,
   | 'notifications'
   | 'kvknummer'
-  | 'fetchUrlAantalBewoners'
-  | 'aantalBewoners'
+  | 'fetchUrlAantalIngeschrevenPersonen'
+  | 'aantalIngeschrevenPersonen'
   | 'bsnTranslation'
 >;
 
@@ -112,7 +112,7 @@ delete persoonSecundair.nationaliteiten;
 delete persoonSecundair.indicatieGeheim;
 
 const adres: ProfileLabels<
-  Partial<Adres> & { aantalBewoners: string },
+  Partial<Adres> & { aantalIngeschrevenPersonen: string },
   AppState['BRP']['content']
 > = {
   locatiebeschrijving: 'Locatie',
@@ -144,8 +144,8 @@ const adres: ProfileLabels<
     (value) => (value ? defaultDateFormat(value) : 'Onbekend'),
   ],
   begindatumVerblijfFormatted: 'Vanaf',
-  aantalBewoners: [
-    BRP_LABEL_AANTAL_BEWONERS,
+  aantalIngeschrevenPersonen: [
+    BRP_LABEL_AANTAL_INGESCHREVEN_PERSONEN,
     (value, _x, BRPContent) => {
       if (BRPContent?.persoon?.mokum === true) {
         return value === '-1' ? (
@@ -298,7 +298,7 @@ export const panelConfig: PanelConfig<
       },
     ];
 
-    if (profileData.adres?.[BRP_LABEL_AANTAL_BEWONERS]) {
+    if (profileData.adres?.[BRP_LABEL_AANTAL_INGESCHREVEN_PERSONEN]) {
       actionLinks.push({
         title: 'Onjuiste inschrijving melden',
         url: profileLinks.CHANGE_RESIDENT_COUNT,

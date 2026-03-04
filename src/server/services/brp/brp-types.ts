@@ -230,6 +230,6 @@ export type BrpFrontend = {
   ouders: Ouder[];
   adres: Adres | null;
   adresHistorisch: Adres[];
-  fetchUrlAantalBewoners: string | null;
-  aantalBewoners: number | null;
+  fetchUrlAantalIngeschrevenPersonen: string | null;
+  aantalIngeschrevenPersonen: number | null;
 };

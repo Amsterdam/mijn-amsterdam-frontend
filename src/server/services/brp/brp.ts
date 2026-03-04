@@ -6,7 +6,7 @@ import {
   LANDCODE_NEDERLAND,
   LANDCODE_ONBEKEND,
   ADRES_IN_ONDERZOEK_A,
-  AANTAL_BEWONERS_NOT_SET,
+  AANTAL_INGESCHREVEN_PERSONEN_NOT_SET,
 } from './brp-config';
 import { featureToggle, routes } from './brp-service-config';
 import {
@@ -100,6 +100,7 @@ function getAdres(verblijfplaats: VerblijfplaatsSource) {
     huisletter: verblijfadres?.huisletter ?? null,
     begindatumVerblijf: getDatum(verblijfplaats?.datumVan) ?? null,
     begindatumVerblijfFormatted: verblijfplaats?.datumVan?.langFormaat ?? null,
+    functieAdres: verblijfplaats?.functieAdres?.omschrijving ?? null,
   };
 }
 
@@ -151,18 +152,21 @@ function transformBenkBrpResponse(
     adres?.land?.code !== LANDCODE_NEDERLAND &&
     adres?.land?.code !== LANDCODE_ONBEKEND;
 
-  const fetchUrlAantalBewoners =
+  const fetchUrlAantalIngeschrevenPersonen =
     isMokum &&
     verblijfplaats?.adresseerbaarObjectIdentificatie &&
-    featureToggle.service.fetchAantalBewonersOpAdres.isEnabled
-      ? generateFullApiUrlBFF(routes.protected.BRP_AANTAL_BEWONERS_OP_ADRES, [
-          {
-            id: encryptSessionIdWithRouteIdParam(
-              sessionID,
-              verblijfplaats.adresseerbaarObjectIdentificatie
-            ),
-          },
-        ])
+    featureToggle.service.fetchAantalIngeschrevenPersonenOpAdres.isEnabled
+      ? generateFullApiUrlBFF(
+          routes.protected.BRP_AANTAL_INGESCHREVEN_PERSONEN_OP_ADRES,
+          [
+            {
+              id: encryptSessionIdWithRouteIdParam(
+                sessionID,
+                verblijfplaats.adresseerbaarObjectIdentificatie
+              ),
+            },
+          ]
+        )
       : null;
 
   const responseContent: BrpFrontend = {
@@ -236,9 +240,9 @@ function transformBenkBrpResponse(
         )
         ?.map((kind) => getPersoonBasis(kind)) ?? [],
     adres: verblijfplaats?.verblijfadres ? getAdres(verblijfplaats) : null,
-    fetchUrlAantalBewoners,
+    fetchUrlAantalIngeschrevenPersonen,
     adresHistorisch: [],
-    aantalBewoners: AANTAL_BEWONERS_NOT_SET,
+    aantalIngeschrevenPersonen: AANTAL_INGESCHREVEN_PERSONEN_NOT_SET,
   };
 
   if (
@@ -419,7 +423,7 @@ export async function fetchBrp(authProfileAndToken: AuthProfileAndToken) {
   );
 }
 
-export async function fetchAantalBewoners(
+export async function fetchAantalIngeschrevenPersonen(
   sessionID: AuthProfile['sid'],
   bagID: string
 ) {
@@ -441,7 +445,7 @@ export async function fetchAantalBewoners(
       responseData: PersonenResponseSource | PersonenResponseSourceError | null
     ): string => {
       if (!responseData) {
-        return `${AANTAL_BEWONERS_NOT_SET}`;
+        return `${AANTAL_INGESCHREVEN_PERSONEN_NOT_SET}`;
       }
       if (
         'code' in responseData &&
@@ -470,7 +474,7 @@ export async function fetchAantalBewoners(
               : true;
           })) ||
         [];
-      return `${personenFiltered?.length || AANTAL_BEWONERS_NOT_SET}`;
+      return `${personenFiltered?.length || AANTAL_INGESCHREVEN_PERSONEN_NOT_SET}`;
     },
     validateStatus: (statusCode) =>
       // This endpoint returns a 400 bad request when the reponse contains more than 30 objects.

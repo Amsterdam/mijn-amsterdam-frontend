@@ -79,7 +79,7 @@ describe('<Profile />', () => {
               geslachtsnaam: 'Mooier',
             },
           ],
-          fetchUrlAantalBewoners: `${bffApiHost}/aantal-bewoners`,
+          fetchUrlAantalIngeschrevenPersonen: `${bffApiHost}/aantal-bewoners`,
         }}
       />
     );
@@ -104,7 +104,9 @@ describe('<Profile />', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText('Aantal bewoners')).toBeInTheDocument();
+      expect(
+        screen.getByText('Aantal ingeschreven personen')
+      ).toBeInTheDocument();
     });
 
     expect(screen.getByText('Verhuizing doorgeven')).toBeInTheDocument();
