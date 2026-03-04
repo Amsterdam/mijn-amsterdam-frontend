@@ -27,7 +27,8 @@ import { deepCamelizeKeys } from '../db/helper';
 
 export async function fetchUserFeedbackSurvey(
   surveyId: Survey['unique_code'] = SURVEY_ID_INLINE_KTO,
-  version: string = SURVEY_VERSION_INLINE_KTO
+  version: string = SURVEY_VERSION_INLINE_KTO,
+  enableCache: boolean = true
 ): ApiResponsePromise<SurveyFrontend> {
   const requestConfig = getCustomApiConfig(sourceApiConfig, {
     formatUrl: ({ url }) =>
@@ -35,6 +36,7 @@ export async function fetchUserFeedbackSurvey(
         ? `${url}/${surveyId}/latest`
         : `${url}/${surveyId}/versions/${version}`,
     method: 'GET',
+    enableCache,
     transformResponse(survey: Survey) {
       const base = pick(deepCamelizeKeys<Survey>(survey), [
         'id',
@@ -148,7 +150,8 @@ export async function userFeedbackOverview(
   version: string,
   page: number = 1
 ): ApiResponsePromise<SurveyOverviewFrontend> {
-  const surveyRequest = fetchUserFeedbackSurvey(surveyId, version);
+  const USE_CACHE = false;
+  const surveyRequest = fetchUserFeedbackSurvey(surveyId, version, USE_CACHE);
   const entriesRequest = fetchFeedbackSurveyEntries(surveyId, page);
 
   const [surveyResponse, entriesResponse] = await Promise.all([
