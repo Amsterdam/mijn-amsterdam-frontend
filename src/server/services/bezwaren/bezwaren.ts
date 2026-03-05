@@ -21,6 +21,7 @@ import {
   getSettledResult,
 } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
+import { transformToLowerBaseChars } from '../../../universal/helpers/text';
 import { isRecentNotification } from '../../../universal/helpers/utils';
 import {
   MyNotification,
@@ -422,8 +423,9 @@ function createBezwaarNotification(bezwaar: BezwaarFrontend) {
   const notification: MyNotification = {
     themaID: themaConfig.id,
     themaTitle: themaConfig.title,
-    id: bezwaar.identificatie,
-    subId: bezwaar.displayStatus,
+    id: transformToLowerBaseChars(
+      `${bezwaar.identificatie}-${bezwaar.displayStatus}`
+    ),
     title: 'Bezwaar ontvangen',
     description: `Wij hebben uw bezwaar ${bezwaar.identificatie} ontvangen.`,
     datePublished: bezwaar.statusdatum ?? bezwaar.startdatum,

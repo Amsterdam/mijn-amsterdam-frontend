@@ -57,18 +57,11 @@ export type MyNotification<ID extends string = string> = {
     callback: () => void;
     title: string;
   };
-} & (
-  | {
-      subId: string;
-      isTip?: false;
-    }
-  | {
-      // TIP notifications
-      tipReason?: string;
-      isTip: true;
-      subId?: string;
-    }
-);
+
+  // TIP notifications
+  tipReason?: string;
+  isTip?: true;
+};
 
 export interface GenericDocument {
   id: string;

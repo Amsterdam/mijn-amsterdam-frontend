@@ -30,7 +30,6 @@ function createVarenRederRegisteredNotification(
   }
   return {
     id: `varen-${zaak.id}-reder-notification`,
-    subId: 'registratie',
     datePublished,
     themaID: themaId,
     themaTitle,
@@ -56,7 +55,6 @@ function createVarenVergunningNotification(
   }
   return {
     id: `varen-${vergunning.id}-vergunning-notification`,
-    subId: 'vergunning',
     datePublished,
     themaID: themaId,
     themaTitle,
@@ -85,8 +83,7 @@ function createVarenNotification(
   });
 
   const baseNotification = {
-    id: `varen-${zaak.id}-notification`,
-    subId: currentStep.status.toLowerCase().split(' ').join(''),
+    id: `varen-${zaak.id}-notification-${currentStep.status.toLowerCase()}`,
     datePublished: currentStep.datePublished,
     themaID: themaId,
     themaTitle,

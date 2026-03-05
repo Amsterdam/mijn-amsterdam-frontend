@@ -15,6 +15,7 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
+import { transformToLowerBaseChars } from '../../../universal/helpers/text';
 import {
   isRecentNotification,
   sortAlpha,
@@ -255,8 +256,9 @@ function createLoodNotification(meting: LoodMetingFrontend): MyNotification {
   const baseNotification = {
     themaID: themaConfig.id,
     themaTitle: themaConfig.title,
-    id: meting.identifier,
-    subId: meting.displayStatus,
+    id: transformToLowerBaseChars(
+      `${meting.identifier}-${meting.displayStatus}`
+    ),
     link: {
       to: meting.link.to,
       title: 'Bekijk details',

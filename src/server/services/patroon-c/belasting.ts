@@ -54,8 +54,7 @@ function transformBelastingResponse(
         // Melding / Notification
         case 'M1':
           notifications.push({
-            id: `belasting-${message.nummer}`,
-            subId: message.datum,
+            id: `belasting-${message.nummer}-${message.datum}`,
             themaID: themaConfig.id,
             themaTitle: themaConfig.title,
             title: message.titel,

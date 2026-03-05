@@ -161,12 +161,11 @@ export function transformKlachtenResponse(
 }
 
 function createKlachtNotification(klacht: KlachtFrontend): MyNotification {
-  const id = `klacht-${klacht.id}-notification`;
+  const id = `klacht-${klacht.id}-notification-${klacht.displayStatus}`;
   const gotoDetailTxt = 'Bekijk details';
 
   const notificationBase = {
     id,
-    subId: klacht.displayStatus,
     link: {
       to: klacht.link.to,
       title: gotoDetailTxt,

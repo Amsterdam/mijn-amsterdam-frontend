@@ -142,8 +142,7 @@ function transformCleopatraResponse(
             }
 
             notifications.push({
-              id: `${themaID}-${message.categorie}`,
-              subId: message.datum,
+              id: `${themaID}-${message.categorie}-${message.nummer}`,
               themaID,
               themaTitle,
               title: message.titel,

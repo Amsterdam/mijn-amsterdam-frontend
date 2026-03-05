@@ -38,8 +38,7 @@ function transformIncomeSpecificationNotification(
 ): MyNotification {
   if (type === 'jaaropgave') {
     return {
-      id: 'nieuwe-jaaropgave',
-      subId: isoDateFormat(item.datePublished),
+      id: `nieuwe-jaaropgave-${isoDateFormat(item.id)}`,
       datePublished: item.datePublished,
       themaID: themaConfig.id,
       themaTitle: themaConfig.title,
@@ -53,8 +52,7 @@ function transformIncomeSpecificationNotification(
     };
   }
   return {
-    id: 'nieuwe-uitkeringsspecificatie',
-    subId: isoDateFormat(item.datePublished),
+    id: `nieuwe-uitkeringsspecificatie-${isoDateFormat(item.id)}`,
     datePublished: item.datePublished,
     themaID: themaConfig.id,
     themaTitle: themaConfig.title,

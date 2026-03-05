@@ -33,7 +33,6 @@ export function transformBRPNotifications(
       isAlert: true,
       hideDatePublished: true,
       id: 'brpAdresInOnderzoek',
-      subId: '',
       title: 'Adres in onderzoek',
       description:
         adresInOnderzoek === ADRES_IN_ONDERZOEK_A
@@ -54,7 +53,6 @@ export function transformBRPNotifications(
       isAlert: true,
       hideDatePublished: true,
       id: 'brpVertrokkenOnbekendWaarheen',
-      subId: '',
       title: 'Vertrokken Onbekend Waarheen (VOW)',
       description: `U staat sinds ${dateLeft} in de Basisregistratie Personen (BRP) geregistreerd als 'vertrokken onbekend waarheen'.`,
       link: {

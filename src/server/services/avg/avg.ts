@@ -16,6 +16,7 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
+import { transformToLowerBaseChars } from '../../../universal/helpers/text';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
@@ -265,8 +266,9 @@ function createAVGNotification(verzoek: AVGRequestFrontend) {
   const notification: MyNotification = {
     themaID: themaConfig.id,
     themaTitle: themaConfig.title,
-    id: `avg-${verzoek.id}-notification`,
-    subId: verzoek.displayStatus,
+    id: transformToLowerBaseChars(
+      `avg-${verzoek.id}-notification-${verzoek.displayStatus}`
+    ),
     title: 'AVG verzoek ontvangen',
     description: `Wij hebben uw AVG verzoek met zaaknummer ${verzoek.id} ontvangen.`,
     datePublished: verzoek.ontvangstDatum,

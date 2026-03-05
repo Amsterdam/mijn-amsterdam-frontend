@@ -23,6 +23,7 @@ export function toCamel(s: string) {
   return s.replace(/_([a-z])/g, (_, c) => c.toUpperCase());
 }
 
-export function removeSpaces(s: string) {
-  return s.replaceAll(' ', '');
+// To use for an id context
+export function transformToLowerBaseChars(input: string): string {
+  return input.toLowerCase().replace(/[^a-z0-9-_:]/g, '');
 }

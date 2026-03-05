@@ -27,8 +27,7 @@ export function getBudgetNotifications(stadspassen: StadspasFrontend[]) {
     description: string,
     stadspasPassNumber?: string
   ): MyNotification => ({
-    id: `stadspas-budget-notification`,
-    subId: BUDGET_NOTIFICATION_DATE_END,
+    id: `stadspas-budget-notification-${BUDGET_NOTIFICATION_DATE_END}`,
     datePublished: dateFormat(new Date(), 'yyyy-MM-dd'),
     themaID: themaConfig.id,
     themaTitle: themaConfig.title,

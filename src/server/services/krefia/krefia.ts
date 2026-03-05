@@ -22,8 +22,7 @@ function createNotification(
 ): MyNotification {
   const isFibu = type === 'fibu';
   return {
-    id: `krefia-${type}-notification`,
-    subId: message.datePublished,
+    id: `krefia-${type}-notification-${message.datePublished}`,
     datePublished: message.datePublished,
     title: isFibu
       ? 'Bericht Budgetbeheer (FIBU)'
