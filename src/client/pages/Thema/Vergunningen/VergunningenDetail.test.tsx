@@ -90,12 +90,15 @@ describe('VergunningDetailPagina', () => {
       isLoading: false,
       isError: false,
       breadcrumbs: [],
-      routeConfig: {
+      themaConfig: {
         detailPage: {
-          path: '/vergunningen/:caseType/:id',
+          route: {
+            path: '/vergunningen/:caseType/:id',
+          },
         },
       },
     });
+
     (useVergunningenDetailData as Mock).mockReturnValue({
       vergunning: mockVergunning,
       title: 'Test Title',
@@ -121,9 +124,11 @@ describe('VergunningDetailPagina', () => {
       vergunningen: [],
       isLoading: false,
       isError: false,
-      routeConfig: {
+      themaConfig: {
         detailPage: {
-          path: '/vergunningen/:caseType/:id',
+          route: {
+            path: '/vergunningen/:caseType/:id',
+          },
         },
       },
       breadcrumbs: [
