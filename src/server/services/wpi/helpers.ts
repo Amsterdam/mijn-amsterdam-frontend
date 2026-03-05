@@ -101,6 +101,7 @@ export function createProcessNotification(
 
   return {
     id: `${requestProcess.id}-notification`,
+    subId: requestProcess.displayStatus,
     datePublished: statusStep.datePublished,
     themaID: themaInkomen.id,
     themaTitle: themaInkomen.title,

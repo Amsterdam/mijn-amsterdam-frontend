@@ -3,8 +3,9 @@ import { differenceInMonths } from 'date-fns';
 import { themaConfig } from '../../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
 import { IS_PRODUCTION } from '../../../../universal/config/env';
 import {
-  dateFormat,
   defaultDateFormat,
+  formatMonthAndYear,
+  isoDateFormat,
 } from '../../../../universal/helpers/date';
 import { MyNotification } from '../../../../universal/types/App.types';
 import { ServiceResults } from '../../content-tips/tip-types';
@@ -38,6 +39,7 @@ function transformIncomeSpecificationNotification(
   if (type === 'jaaropgave') {
     return {
       id: 'nieuwe-jaaropgave',
+      subId: isoDateFormat(item.datePublished),
       datePublished: item.datePublished,
       themaID: themaConfig.id,
       themaTitle: themaConfig.title,
@@ -52,13 +54,13 @@ function transformIncomeSpecificationNotification(
   }
   return {
     id: 'nieuwe-uitkeringsspecificatie',
+    subId: isoDateFormat(item.datePublished),
     datePublished: item.datePublished,
     themaID: themaConfig.id,
     themaTitle: themaConfig.title,
     title: 'Nieuwe uitkeringsspecificatie',
-    description: `Uw uitkeringsspecificatie van ${dateFormat(
-      item.datePublished,
-      'MMMM yyyy'
+    description: `Uw uitkeringsspecificatie van ${formatMonthAndYear(
+      item.datePublished
     )} staat voor u klaar.`,
     link: {
       to: item.url,

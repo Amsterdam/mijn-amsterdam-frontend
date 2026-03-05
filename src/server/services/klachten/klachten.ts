@@ -163,31 +163,31 @@ export function transformKlachtenResponse(
 function createKlachtNotification(klacht: KlachtFrontend): MyNotification {
   const id = `klacht-${klacht.id}-notification`;
   const gotoDetailTxt = 'Bekijk details';
-  if (klacht.displayStatus === 'Afgehandeld') {
-    return {
-      id,
-      title: 'Klacht afgehandeld',
-      description: `Uw klacht met zaaknummer ${klacht.id} is afgehandeld. U krijgt een antwoord op uw klacht.`,
-      datePublished: klacht.dateClosed,
-      link: {
-        to: klacht.link.to,
-        title: gotoDetailTxt,
-      },
-      themaID: themaConfig.id,
-      themaTitle: themaConfig.title,
-    };
-  }
-  return {
+
+  const notificationBase = {
     id,
-    title: 'Klacht ontvangen',
-    description: `Wij hebben uw klacht met zaaknummer ${klacht.id} ontvangen.`,
-    datePublished: klacht.ontvangstDatum,
+    subId: klacht.displayStatus,
     link: {
       to: klacht.link.to,
       title: gotoDetailTxt,
     },
     themaID: themaConfig.id,
     themaTitle: themaConfig.title,
+  };
+
+  if (klacht.displayStatus === 'Afgehandeld') {
+    return {
+      ...notificationBase,
+      title: 'Klacht afgehandeld',
+      description: `Uw klacht met zaaknummer ${klacht.id} is afgehandeld. U krijgt een antwoord op uw klacht.`,
+      datePublished: klacht.dateClosed,
+    };
+  }
+  return {
+    ...notificationBase,
+    title: 'Klacht ontvangen',
+    description: `Wij hebben uw klacht met zaaknummer ${klacht.id} ontvangen.`,
+    datePublished: klacht.ontvangstDatum,
   };
 }
 

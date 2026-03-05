@@ -9,6 +9,7 @@ import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
+import { formatYearISOWeek } from '../../../universal/helpers/date';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { sanitizeStringTemplate } from '../../helpers/text';
@@ -47,13 +48,17 @@ export function createAfisFacturenNotification(
   const cta = 'Bekijk uw openstaande facturen';
   const linkTo = routeConfig.themaPage.path;
 
+  const weeknumber = formatYearISOWeek(new Date());
   return {
     id: `facturen-open-notification`,
+    subId: weeknumber,
     datePublished,
     themaID: themaId,
-    themaTitle: themaTitle,
+    themaTitle,
     title,
     description,
+    hideDatePublished: true,
+    isAlert: true,
     link: {
       to: linkTo,
       title: cta,

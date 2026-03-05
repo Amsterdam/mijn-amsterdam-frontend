@@ -143,7 +143,7 @@ export function transformAVGResponse(data: SmileAvgResponse): AVGResponse {
       toelichting: verzoek.avgverzoek_omschrijvingvanonderwerp?.value || '',
       resultaat:
         verzoek.avgverzoek_typeafhandelingvaststellen_resultaat?.value || '',
-      ontvangstDatum: ontvangstDatum,
+      ontvangstDatum,
       ontvangstDatumFormatted: ontvangstDatum
         ? defaultDateFormat(ontvangstDatum)
         : ontvangstDatum,
@@ -266,6 +266,7 @@ function createAVGNotification(verzoek: AVGRequestFrontend) {
     themaID: themaConfig.id,
     themaTitle: themaConfig.title,
     id: `avg-${verzoek.id}-notification`,
+    subId: verzoek.displayStatus,
     title: 'AVG verzoek ontvangen',
     description: `Wij hebben uw AVG verzoek met zaaknummer ${verzoek.id} ontvangen.`,
     datePublished: verzoek.ontvangstDatum,

@@ -55,6 +55,7 @@ function transformBelastingResponse(
         case 'M1':
           notifications.push({
             id: `belasting-${message.nummer}`,
+            subId: message.datum,
             themaID: themaConfig.id,
             themaTitle: themaConfig.title,
             title: message.titel,

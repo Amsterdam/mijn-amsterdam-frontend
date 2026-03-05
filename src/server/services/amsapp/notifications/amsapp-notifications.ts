@@ -21,6 +21,8 @@ import {
   apiSuccessResult,
   type ApiResponse,
 } from '../../../../universal/helpers/api';
+import { removeSpaces } from '../../../../universal/helpers/text';
+import { hash } from '../../../../universal/helpers/utils';
 import type { MyNotification } from '../../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../../auth/auth-types';
 import { notificationServices } from '../../tips-and-notifications';
@@ -112,17 +114,21 @@ async function fetchNotificationsForService(
   const notifications = Object.values(response.content ?? [])
     .flat()
     .filter((n): n is MyNotification => n != null)
-    .map((notification) => ({
-      id: notification.id,
-      themaId: notification.themaID,
-      // If we decide to show the actual notification title, use `notification.title`
-      title: DISCRETE_GENERIC_MESSAGE,
-      isTip: notification.isTip,
-      isAlert: notification.isAlert,
-      datePublished: notification.hideDatePublished
-        ? undefined
-        : notification.datePublished,
-    }));
+    .map((notification) => {
+      const subIdClean = removeSpaces(notification.subId?.toLowerCase() ?? '');
+      const hashedId = hash(`${notification.id}|${subIdClean}`);
+      return {
+        id: hashedId,
+        themaId: notification.themaID,
+        // If we decide to show the actual notification title, use `notification.title`
+        title: DISCRETE_GENERIC_MESSAGE,
+        isTip: notification.isTip ?? false,
+        isAlert: notification.isAlert ?? false,
+        datePublished: notification.hideDatePublished
+          ? undefined
+          : notification.datePublished,
+      };
+    });
 
   return apiSuccessResult(notifications);
 }

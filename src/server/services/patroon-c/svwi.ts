@@ -34,8 +34,9 @@ type SVWISourceResponseData = {
 function transformNotification(message: SVWIMessageSource): MyNotification {
   return {
     id: message.id,
+    subId: message.ontvangen,
     themaID: themaId,
-    themaTitle: themaTitle,
+    themaTitle,
     title: message.onderwerp,
     datePublished: message.ontvangen,
     description: message.inhoud,

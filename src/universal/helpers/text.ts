@@ -22,3 +22,7 @@ export function splitCapitals(text: string) {
 export function toCamel(s: string) {
   return s.replace(/_([a-z])/g, (_, c) => c.toUpperCase());
 }
+
+export function removeSpaces(s: string) {
+  return s.replaceAll(' ', '');
+}

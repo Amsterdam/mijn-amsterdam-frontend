@@ -423,6 +423,7 @@ function createBezwaarNotification(bezwaar: BezwaarFrontend) {
     themaID: themaConfig.id,
     themaTitle: themaConfig.title,
     id: bezwaar.identificatie,
+    subId: bezwaar.displayStatus,
     title: 'Bezwaar ontvangen',
     description: `Wij hebben uw bezwaar ${bezwaar.identificatie} ontvangen.`,
     datePublished: bezwaar.statusdatum ?? bezwaar.startdatum,

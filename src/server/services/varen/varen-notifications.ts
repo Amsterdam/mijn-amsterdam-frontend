@@ -30,9 +30,10 @@ function createVarenRederRegisteredNotification(
   }
   return {
     id: `varen-${zaak.id}-reder-notification`,
+    subId: 'registratie',
     datePublished,
     themaID: themaId,
-    themaTitle: themaTitle,
+    themaTitle,
     title: `Reder geregistreerd`,
     description: `U heeft zich geregistreerd.`,
     link: {
@@ -55,9 +56,10 @@ function createVarenVergunningNotification(
   }
   return {
     id: `varen-${vergunning.id}-vergunning-notification`,
+    subId: 'vergunning',
     datePublished,
     themaID: themaId,
-    themaTitle: themaTitle,
+    themaTitle,
     title: vergunning.title,
     description: `U hebt een vergunning gekregen voor "${vergunning.vesselName}".`,
     link: {
@@ -82,36 +84,34 @@ function createVarenNotification(
     caseType: slug(zaak.caseType, { lower: true }),
   });
 
-  const baseNotification: Omit<MyNotification, 'id' | 'description' | 'title'> =
-    {
-      datePublished: currentStep.datePublished,
-      themaID: themaId,
-      themaTitle: themaTitle,
-      link: {
-        to: ctaLinkToThemaOrDetail,
-        title: 'Bekijk details',
-      },
-    };
+  const baseNotification = {
+    id: `varen-${zaak.id}-notification`,
+    subId: currentStep.status.toLowerCase().split(' ').join(''),
+    datePublished: currentStep.datePublished,
+    themaID: themaId,
+    themaTitle,
+    link: {
+      to: ctaLinkToThemaOrDetail,
+      title: 'Bekijk details',
+    },
+  } satisfies Partial<MyNotification>;
 
   switch (currentStep.status) {
     case 'Ontvangen':
       return {
         ...baseNotification,
-        id: `varen-${zaak.id}-ontvangen-notification`,
         title: `Aanvraag ${zaak.title} ontvangen`,
         description: `Wij hebben uw aanvraag voor vaartuig "${zaak.vesselName}" ontvangen`,
       };
     case 'In behandeling':
       return {
         ...baseNotification,
-        id: `varen-${zaak.id}-inbehandeling-notification`,
         title: `Aanvraag ${zaak.title} in behandeling`,
         description: `Wij hebben uw aanvraag voor vaartuig "${zaak.vesselName}" in behandeling genomen.`,
       };
     case 'Meer informatie nodig':
       return {
         ...baseNotification,
-        id: `varen-${zaak.id}-meerinformatienodig-notification`,
         title: `Meer informatie nodig omtrent uw ${zaak.title} aanvraag`,
         description: `Wij hebben meer informatie nodig om uw aanvraag voor vaartuig "${zaak.vesselName}" verder te kunnen verwerken.`,
       };
@@ -121,7 +121,6 @@ function createVarenNotification(
       }
       return {
         ...baseNotification,
-        id: `varen-${zaak.id}-afgehandeld-notification`,
         title: `Aanvraag ${zaak.title} afgehandeld`,
         description: `Wij hebben uw aanvraag voor vaartuig "${zaak.vesselName}" afgehandeld.`,
       };
