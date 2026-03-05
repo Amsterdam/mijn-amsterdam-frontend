@@ -53,7 +53,11 @@ import {
 } from './afis-types';
 import { routeConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config';
 import { IS_DEVELOPMENT } from '../../../universal/config/env';
-import { apiErrorResult, ApiResponse } from '../../../universal/helpers/api';
+import {
+  apiErrorResult,
+  ApiResponse,
+  apiSuccessResult,
+} from '../../../universal/helpers/api';
 import {
   isoDateFormat,
   isoDateTimeFormatCompact,
@@ -203,12 +207,19 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
     LifetimeTo: lifetimeTo,
   };
 
-  debugEmandates('Creating new e-mandate.', payloadCreateEmandate);
+  debugEmandates(
+    'Deactivating other active e-mandates for creditor.',
+    payloadCreateEmandate
+  );
+  await disableOtherActiveEMandatesForCreditor(
+    businessPartnerId,
+    creditor.refId
+  );
 
+  debugEmandates('Creating new e-mandate.', payloadCreateEmandate);
   const response = await createAfisEMandate(payloadCreateEmandate);
 
   debugEmandates('Create e-mandate response: %o', response);
-
   if (response.status !== 'OK') {
     throw new Error(
       `Error creating e-mandate - ${'message' in response ? response.message : ''}`
@@ -216,6 +227,28 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
   }
 
   return response;
+}
+
+async function disableOtherActiveEMandatesForCreditor(
+  businessPartnerId: BusinessPartnerId,
+  creditorRefId: AfisEMandateCreditor['refId']
+) {
+  const eMandateIdsResponse = await fetchEmandateIdsByCreditorRefId(
+    businessPartnerId,
+    creditorRefId
+  );
+
+  if (eMandateIdsResponse.status !== 'OK') {
+    return eMandateIdsResponse;
+  }
+  await Promise.all(
+    eMandateIdsResponse.content.map((eMandateId) => {
+      return deactivateEmandate({
+        IMandateId: eMandateId.toString(),
+      });
+    })
+  );
+  return apiSuccessResult({ deactivatedIds: eMandateIdsResponse.content });
 }
 
 async function createAfisEMandate(payload: AfisEMandateCreatePayload) {
@@ -421,10 +454,10 @@ function transformEMandatesResponse(
   );
 }
 
-export async function fetchEmandateIdByCreditorRefId(
+export async function fetchEmandateIdsByCreditorRefId(
   businessPartnerId: BusinessPartnerId,
   creditorRefID: AfisEMandateCreditor['refId']
-): Promise<ApiResponse<AfisEMandateSource['IMandateId'] | null>> {
+): Promise<ApiResponse<AfisEMandateSource['IMandateId'][]>> {
   const config = await getAfisApiConfig({
     formatUrl: ({ url }) => {
       return `${url}/Mandate/ZGW_FI_MANDATE_SRV_01/Mandate_readSet?$filter=SndId eq '${businessPartnerId}'`;
@@ -432,12 +465,10 @@ export async function fetchEmandateIdByCreditorRefId(
     transformResponse: (responseData) => {
       const sourceMandates =
         getFeedEntryProperties<AfisEMandateSource>(responseData);
-      return (
-        sourceMandates
-          .toSorted(sortByNumber('IMandateId', 'asc'))
-          .findLast((mandate) => mandate.SndDebtorId === creditorRefID)
-          ?.IMandateId ?? null
-      );
+      return sourceMandates
+        .toSorted(sortByNumber('IMandateId', 'asc'))
+        .filter((mandate) => mandate.SndDebtorId === creditorRefID)
+        .map((mandate) => mandate.IMandateId);
     },
 
     /**
@@ -448,7 +479,7 @@ export async function fetchEmandateIdByCreditorRefId(
     enableCache: false,
   });
 
-  return requestData<AfisEMandateSource['IMandateId'] | null>(config);
+  return requestData<AfisEMandateSource['IMandateId'][]>(config);
 }
 
 export async function fetchEMandates(
