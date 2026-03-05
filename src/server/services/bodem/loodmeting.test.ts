@@ -154,7 +154,7 @@ describe('Loodmeting', () => {
               datePublished: '2023-07-19T12:16:23Z',
               description:
                 'Uw aanvraag lood in de bodem-check voor Insulindeweg 26 is in behandeling genomen',
-              id: 'OL-001521',
+              id: 'bodem-ol-001521-inbehandeling',
               link: {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001521',
@@ -167,7 +167,7 @@ describe('Loodmeting', () => {
               datePublished: '2023-07-13T11:19:10Z',
               description:
                 'Uw aanvraag lood in de bodem-check voor Insulindeweg 26 is afgewezen.',
-              id: 'OL-001520',
+              id: 'bodem-ol-001520-afgewezen',
               link: {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001520',
@@ -180,7 +180,7 @@ describe('Loodmeting', () => {
               datePublished: '2023-07-19T12:14:20Z',
               description:
                 'Uw aanvraag lood in de bodem-check voor Insulindeweg 26A is afgehandeld.',
-              id: 'OL-001518',
+              id: 'bodem-ol-001518-afgehandeld',
               link: {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001518',
@@ -193,7 +193,7 @@ describe('Loodmeting', () => {
               datePublished: '2023-07-19T12:19:32Z',
               description:
                 'Uw aanvraag lood in de bodem-check voor Insulindeweg 641 is in behandeling genomen',
-              id: 'OL-001525',
+              id: 'bodem-ol-001525-inbehandeling',
               link: {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001525',
@@ -206,7 +206,7 @@ describe('Loodmeting', () => {
               datePublished: '2023-07-18T12:04:57Z',
               description:
                 'Uw aanvraag lood in de bodem-check voor Insulindeweg 641 is afgewezen.',
-              id: 'OL-001529',
+              id: 'bodem-ol-001529-afgewezen',
               link: {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001529',
@@ -219,7 +219,7 @@ describe('Loodmeting', () => {
               datePublished: '2023-07-12T12:53:41Z',
               description:
                 'Uw aanvraag lood in de bodem-check voor Insulindeweg 641 is ontvangen.',
-              id: 'OL-001522',
+              id: 'bodem-ol-001522-ontvangen',
               link: {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001522',
@@ -232,7 +232,7 @@ describe('Loodmeting', () => {
               datePublished: '2023-07-18T11:57:06Z',
               description:
                 'Uw aanvraag lood in de bodem-check voor Javastraat 603 is afgewezen.',
-              id: 'OL-001527',
+              id: 'bodem-ol-001527-afgewezen',
               link: {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001527',
@@ -245,7 +245,7 @@ describe('Loodmeting', () => {
               datePublished: '2023-07-13T11:18:29Z',
               description:
                 'Uw aanvraag lood in de bodem-check voor Maanzicht 5 is in behandeling genomen',
-              id: 'OL-001519',
+              id: 'bodem-ol-001519-inbehandeling',
               link: {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001519',
@@ -258,7 +258,7 @@ describe('Loodmeting', () => {
               datePublished: '2023-07-19T11:17:10Z',
               description:
                 'Uw aanvraag lood in de bodem-check voor p.boorsmastraat 30 is ontvangen.',
-              id: 'OL-001532',
+              id: 'bodem-ol-001532-ontvangen',
               link: {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001532',
@@ -271,7 +271,7 @@ describe('Loodmeting', () => {
               datePublished: '2023-07-19T12:23:22Z',
               description:
                 'Uw aanvraag lood in de bodem-check voor P.Javastraat 603 is in behandeling genomen',
-              id: 'OL-001528',
+              id: 'bodem-ol-001528-inbehandeling',
               link: {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001528',
@@ -284,7 +284,7 @@ describe('Loodmeting', () => {
               datePublished: '2023-07-19T12:20:42Z',
               description:
                 'Uw aanvraag lood in de bodem-check voor Tweede Ceramstraat 1 is afgehandeld.',
-              id: 'OL-001526',
+              id: 'bodem-ol-001526-afgehandeld',
               link: {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001526',
@@ -297,7 +297,7 @@ describe('Loodmeting', () => {
               datePublished: '2023-07-24T06:03:03Z',
               description:
                 'Uw aanvraag lood in de bodem-check voor Wilhelminastraat 90B is ontvangen.',
-              id: 'OL-001534',
+              id: 'bodem-ol-001534-ontvangen',
               link: {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001534',

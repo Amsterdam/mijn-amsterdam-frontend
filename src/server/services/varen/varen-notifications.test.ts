@@ -115,7 +115,7 @@ describe('Notifications', () => {
           {
             themaID: 'VAREN',
             themaTitle: 'Passagiersvaart',
-            id: 'varen-Z-25-0000001-reder-notification',
+            id: 'varen-z-25-0000001-reder-registratie',
             datePublished: rederRegistratie.dateRequest,
             title: 'Reder geregistreerd',
             description: 'U heeft zich geregistreerd.',
@@ -166,7 +166,7 @@ describe('Notifications', () => {
           {
             themaID: 'VAREN',
             themaTitle: 'Passagiersvaart',
-            id: 'varen-Z-25-0000001-inbehandeling-notification',
+            id: 'varen-z-25-0000001-inbehandeling',
             title: 'Aanvraag Varen vergunning exploitatie in behandeling',
             description:
               'Wij hebben uw aanvraag voor vaartuig "boatName" in behandeling genomen.',
@@ -179,7 +179,7 @@ describe('Notifications', () => {
           {
             themaID: 'VAREN',
             themaTitle: 'Passagiersvaart',
-            id: 'varen-Z-25-0000001-meerinformatienodig-notification',
+            id: 'varen-z-25-0000001-meerinformatienodig',
             title:
               'Meer informatie nodig omtrent uw Varen vergunning exploitatie aanvraag',
             description:
@@ -193,7 +193,7 @@ describe('Notifications', () => {
           {
             themaID: 'VAREN',
             themaTitle: 'Passagiersvaart',
-            id: 'varen-Z-25-0000001-afgehandeld-notification',
+            id: 'varen-z-25-0000001-afgehandeld',
             title: 'Aanvraag Varen vergunning exploitatie afgehandeld',
             description:
               'Wij hebben uw aanvraag voor vaartuig "boatName" afgehandeld.',
@@ -223,7 +223,7 @@ describe('Notifications', () => {
           {
             datePublished: '2025-01-03T00:00:00',
             description: 'U hebt een vergunning gekregen voor "Titanic".',
-            id: 'varen-Z-25-0000001-10001-vergunning-notification',
+            id: 'varen-z-25-0000001-10001-vergunning',
             link: {
               title: 'Bekijk details',
               to: '/varen/vergunningen/Z-25-0000001-10001',

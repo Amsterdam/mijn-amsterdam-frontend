@@ -22,6 +22,7 @@ import {
   SmileKlachtenReponse,
 } from './types';
 import { defaultDateFormat } from '../../../universal/helpers/date';
+import { createNotificationId } from '../../../universal/helpers/notification';
 
 const DEFAULT_PAGE_SIZE = 250;
 
@@ -161,7 +162,11 @@ export function transformKlachtenResponse(
 }
 
 function createKlachtNotification(klacht: KlachtFrontend): MyNotification {
-  const id = `klacht-${klacht.id}-notification-${klacht.displayStatus}`;
+  const id = createNotificationId(
+    themaConfig.id,
+    klacht.id,
+    klacht.displayStatus
+  );
   const gotoDetailTxt = 'Bekijk details';
 
   const notificationBase = {

@@ -32,6 +32,7 @@ describe('fetchToeristischeVerhuurNotifications', () => {
             decision: 'Verleend',
             dateEnd: '2025-12-31',
             dateRequest: '2025-01-01',
+            displayStatus: 'Afgehandeld',
             processed: false,
             steps: [],
           },
@@ -42,6 +43,7 @@ describe('fetchToeristischeVerhuurNotifications', () => {
             title: 'Bed & breakfast',
             identifier: '67890',
             decision: 'Verleend',
+            displayStatus: 'Afgehandeld',
             dateEnd: '2025-12-31',
             dateRequest: '2025-01-01',
             processed: false,
@@ -67,7 +69,7 @@ describe('fetchToeristischeVerhuurNotifications', () => {
         datePublished: '2025-01-01',
         description:
           'Wij hebben uw aanvraag voor een vakantie met zaaknummer 12345 in behandeling.',
-        id: 'vergunning-1-notification',
+        id: 'toeristische_verhuur-1-afgehandeld',
         link: {
           title: 'Bekijk uw aanvraag',
           to: '/toeristische-verhuur',
@@ -80,7 +82,7 @@ describe('fetchToeristischeVerhuurNotifications', () => {
         datePublished: '2025-01-01',
         description:
           'Wij hebben uw aanvraag voor een bed & breakfast met zaaknummer 67890 in behandeling.',
-        id: 'vergunning-2-notification',
+        id: 'toeristische_verhuur-2-afgehandeld',
         link: {
           title: 'Bekijk uw aanvraag',
           to: '/toeristische-verhuur',
@@ -93,7 +95,7 @@ describe('fetchToeristischeVerhuurNotifications', () => {
         datePublished: '2025-01-01',
         description:
           'Uw landelijke registratienummer voor toeristische verhuur is toegekend. Uw registratienummer is REG123.',
-        id: 'toeristiche-verhuur-registratie-REG123-notification',
+        id: 'toeristische_verhuur-registratie-reg123',
         link: {
           title: 'Bekijk uw overzicht toeristische verhuur',
           to: '/toeristische-verhuur',
@@ -156,6 +158,7 @@ describe('fetchToeristischeVerhuurNotifications', () => {
             identifier: '12345',
             decision: 'Verleend',
             dateDecision: '2025-02-10',
+            displayStatus: 'Afgehandeld',
             processed: true,
             steps: [],
           },
@@ -164,6 +167,7 @@ describe('fetchToeristischeVerhuurNotifications', () => {
             title: 'Vakantie',
             identifier: '12345',
             decision: 'Verleend',
+            displayStatus: 'Afgehandeld',
             dateDecision: '2024-11-30', // More than 3 months old
             processed: true,
             steps: [],
@@ -175,6 +179,7 @@ describe('fetchToeristischeVerhuurNotifications', () => {
             title: 'Bed & breakfast',
             identifier: '67890',
             decision: 'Verleend',
+            displayStatus: 'Afgehandeld',
             dateDecision: '2025-02-10',
             processed: true,
             steps: [],
@@ -184,6 +189,7 @@ describe('fetchToeristischeVerhuurNotifications', () => {
             title: 'Bed & breakfast',
             identifier: '67890',
             decision: 'Verleend',
+            displayStatus: 'Afgehandeld',
             dateDecision: '2024-11-30', // More than 3 months old
             processed: true,
             steps: [],
@@ -210,9 +216,9 @@ describe('fetchToeristischeVerhuurNotifications', () => {
     expect(result.content.notifications.map((n) => n.id)).toStrictEqual([
       // NOTE: These are the transformed notification ID's related to the mocked response from fetchToeristischeVerhuur.
       // The ID's are generated in the createToeristischeVerhuurNotification and createRegistratieNotification functions.
-      'vergunning-1-notification',
-      'vergunning-2-notification',
-      'toeristiche-verhuur-registratie-REG123-notification',
+      'toeristische_verhuur-1-afgehandeld',
+      'toeristische_verhuur-2-afgehandeld',
+      'toeristische_verhuur-registratie-reg123',
     ]);
   });
 });

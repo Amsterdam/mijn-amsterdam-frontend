@@ -22,8 +22,3 @@ export function splitCapitals(text: string) {
 export function toCamel(s: string) {
   return s.replace(/_([a-z])/g, (_, c) => c.toUpperCase());
 }
-
-// To use for an id context
-export function transformToLowerBaseChars(input: string): string {
-  return input.toLowerCase().replace(/[^a-z0-9-_:]/g, '');
-}

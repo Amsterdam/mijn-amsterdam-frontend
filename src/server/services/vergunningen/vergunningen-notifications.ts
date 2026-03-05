@@ -13,7 +13,7 @@ import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
-import { transformToLowerBaseChars } from '../../../universal/helpers/text';
+import { createNotificationId } from '../../../universal/helpers/notification';
 import { isRecentNotification } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
@@ -27,9 +27,7 @@ function getNotificationBase<ID extends string>(
   const notificationBaseProperties = {
     themaID,
     themaTitle,
-    id: transformToLowerBaseChars(
-      `vergunning-${vergunning.id}-notification-${vergunning.displayStatus}`
-    ),
+    id: createNotificationId(themaID, vergunning.id, vergunning.displayStatus),
     link: {
       to: vergunning.link.to,
       title: 'Bekijk details',

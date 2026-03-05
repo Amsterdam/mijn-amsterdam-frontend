@@ -9,6 +9,7 @@ import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
+import { createNotificationId } from '../../../universal/helpers/notification';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { sanitizeStringTemplate } from '../../helpers/text';
@@ -56,7 +57,7 @@ export function createAfisFacturenNotification(
     });
 
   return {
-    id: `facturen-open-notification-${lastFactuurDate}`,
+    id: createNotificationId(themaId, 'open', lastFactuurDate),
     datePublished,
     themaID: themaId,
     themaTitle,

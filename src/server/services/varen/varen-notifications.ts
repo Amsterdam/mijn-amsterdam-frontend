@@ -17,6 +17,7 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { isDateInFuture } from '../../../universal/helpers/date';
+import { createNotificationId } from '../../../universal/helpers/notification';
 import { isRecentNotification } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
@@ -29,7 +30,7 @@ function createVarenRederRegisteredNotification(
     return null;
   }
   return {
-    id: `varen-${zaak.id}-reder-notification`,
+    id: createNotificationId(themaId, zaak.id, 'reder-registratie'),
     datePublished,
     themaID: themaId,
     themaTitle,
@@ -54,7 +55,7 @@ function createVarenVergunningNotification(
     return null;
   }
   return {
-    id: `varen-${vergunning.id}-vergunning-notification`,
+    id: createNotificationId(themaId, vergunning.id, 'vergunning'),
     datePublished,
     themaID: themaId,
     themaTitle,
@@ -83,7 +84,7 @@ function createVarenNotification(
   });
 
   const baseNotification = {
-    id: `varen-${zaak.id}-notification-${currentStep.status.toLowerCase()}`,
+    id: createNotificationId(themaId, zaak.id, currentStep.status),
     datePublished: currentStep.datePublished,
     themaID: themaId,
     themaTitle,

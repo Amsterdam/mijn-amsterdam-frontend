@@ -164,7 +164,10 @@ describe('vergunningen-notifications', () => {
       ] as unknown as DecosZaakFrontend[];
 
       const notifications = getVergunningNotifications(
-        vergunningen,
+        vergunningen.map((v) => ({
+          ...v,
+          displayStatus: v.steps.at(-1)?.status || '',
+        })),
         themaId,
         themaTitle
       );
@@ -173,7 +176,7 @@ describe('vergunningen-notifications', () => {
           datePublished: '2025-01-05',
           description:
             'Wij hebben uw aanvraag Test case met zaaknummer Z/123/456 ontvangen.',
-          id: 'vergunning-1-notification',
+          id: 'vergunningen-1-ontvangen',
           link: {
             title: 'Bekijk details',
             to: '/test',
@@ -186,7 +189,7 @@ describe('vergunningen-notifications', () => {
           datePublished: '2025-01-07',
           description:
             'Wij hebben uw aanvraag Test case met zaaknummer Z/888/999 in behandeling genomen.',
-          id: 'vergunning-2-notification',
+          id: 'vergunningen-2-inbehandeling',
           link: {
             title: 'Bekijk details',
             to: '/test',
@@ -199,7 +202,7 @@ describe('vergunningen-notifications', () => {
           datePublished: '2025-01-08',
           description:
             'Wij hebben uw aanvraag Test case met zaaknummer Z/999/000 afgehandeld.',
-          id: 'vergunning-3-notification',
+          id: 'vergunningen-3-afgehandeld',
           link: {
             title: 'Bekijk details',
             to: '/test',
@@ -212,7 +215,7 @@ describe('vergunningen-notifications', () => {
           datePublished: '2025-01-09',
           description:
             'Uw vergunning Test case met zaaknummer Z/111222/000 is verlopen.',
-          id: 'vergunning-4-notification',
+          id: 'vergunningen-4-verlopen',
           link: {
             title: 'Bekijk details',
             to: '/test',
@@ -225,7 +228,7 @@ describe('vergunningen-notifications', () => {
           datePublished: '2025-01-08',
           description:
             'Wij hebben uw aanvraag Test case met zaaknummer Z/111222/000 afgehandeld.',
-          id: 'vergunning-5-notification',
+          id: 'vergunningen-5-ingetrokken',
           link: {
             title: 'Bekijk details',
             to: '/test',
