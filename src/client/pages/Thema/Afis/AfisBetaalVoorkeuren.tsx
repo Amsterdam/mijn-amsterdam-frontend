@@ -18,7 +18,6 @@ import {
   type AfisEMandateFrontend,
 } from '../../../../server/services/afis/afis-types';
 import { entries } from '../../../../universal/helpers/utils';
-import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import LoadingContent from '../../../components/LoadingContent/LoadingContent';
 import { PageContentCell } from '../../../components/Page/Page';
@@ -69,23 +68,21 @@ function AfisBusinessPartnerDetails({
 
   return (
     <PageContentCell>
-      <CollapsiblePanel
-        title="Facturatiegegevens"
-        startCollapsed={startCollapsed}
-      >
-        {isLoading && <LoadingContent />}
-        {!isLoading && !!rows.length && (
-          <Grid>
-            <Grid.Cell span={6}>
-              <Datalist
-                className={styles['Datalist--businesspartnerdetails']}
-                rows={rows}
-                rowVariant="horizontal"
-              />
-            </Grid.Cell>
-          </Grid>
-        )}
-      </CollapsiblePanel>
+      <Heading level={3} size="level-2" className="ams-mb-s">
+        Facturatiegegevens
+      </Heading>
+      {isLoading && <LoadingContent />}
+      {!isLoading && !!rows.length && (
+        <Grid>
+          <Grid.Cell span={6}>
+            <Datalist
+              className={styles['Datalist--businesspartnerdetails']}
+              rows={rows}
+              rowVariant="horizontal"
+            />
+          </Grid.Cell>
+        </Grid>
+      )}
     </PageContentCell>
   );
 }
