@@ -5,7 +5,7 @@ import classnames from 'classnames';
 
 import { DASHBOARD_PAGE_DOCUMENT_TITLE } from './Landing-routes';
 import styles from './Landing.module.scss';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import { isEnabled } from '../../config/feature-toggles';
 import { LogoDigiD } from '../../assets/images/LogoDigiD';
 import LogoEherkenning from '../../assets/images/LogoEherkenning';
 import { MaintenanceNotifications } from '../../components/MaintenanceNotifications/MaintenanceNotifications';
@@ -39,7 +39,7 @@ export function LandingPage() {
           className="ams-mb-m"
         />
 
-        {FeatureToggle.eherkenningActive && (
+        {isEnabled('eherkenningActive') && (
           <Heading className="ams-mb-s" level={2}>
             Voor particulieren en eenmanszaken
           </Heading>
@@ -77,7 +77,7 @@ export function LandingPage() {
           </Link>
         </Paragraph>
 
-        {FeatureToggle.eherkenningActive && (
+        {isEnabled('eherkenningActive') && (
           <>
             <Heading className="ams-mb-s" level={2}>
               Voor ondernemers

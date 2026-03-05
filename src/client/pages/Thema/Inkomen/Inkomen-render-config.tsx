@@ -7,7 +7,6 @@ import { default as InkomenIcon } from './InkomenIcon.svg?react';
 import { InkomenList } from './InkomenList';
 import { InkomenListSpecificaties } from './InkomenListSpecificaties';
 import { InkomenThema } from './InkomenThema';
-import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 import { isLoading } from '../../../../universal/helpers/api';
 import { AppState } from '../../../../universal/types/App.types';
 import {
@@ -35,7 +34,6 @@ export const InkomenRoutes = [
   {
     route: themaConfig.detailPageBbz.route.path,
     Component: InkomenDetailBbz,
-    isActive: FeatureToggle.inkomenBBZActive,
   },
   { route: themaConfig.listPage.route.path, Component: InkomenList },
   { route: themaConfig.route.path, Component: InkomenThema },

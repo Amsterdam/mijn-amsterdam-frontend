@@ -3,13 +3,13 @@ import {
   hasPermitsOrPermitRequests,
   fetchSSOURL,
 } from './parkeren-egis-service';
-import { featureToggle } from '../../../client/pages/Thema/Parkeren/Parkeren-thema-config';
 import {
   apiSuccessResult,
   getFailedDependencies,
 } from '../../../universal/helpers/api';
 import { isMokum } from '../../../universal/helpers/brp';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import { isEnabled } from '../../config/azure-appconfiguration';
 import { getFromEnv } from '../../helpers/env';
 import { fetchBrp } from '../brp/brp';
 
@@ -28,7 +28,7 @@ export async function fetchParkeren(authProfileAndToken: AuthProfileAndToken) {
   }
 
   shouldCheckForPermitsOrPermitRequests =
-    featureToggle.parkerenCheckForProductAndPermitsActive &&
+    isEnabled('parkeren.checkForProductAndPermits.active') &&
     shouldCheckForPermitsOrPermitRequests;
 
   let isKnown = true;

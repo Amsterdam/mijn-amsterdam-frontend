@@ -1,7 +1,5 @@
 import { fetchAdoptableTrashContainers } from './afval/adoptable-trash-containers';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
-import {
-  ApiResponse_DEPRECATED,
+import { ApiResponse_DEPRECATED,
   getSettledResult,
 } from '../../universal/helpers/api';
 import { dateSort } from '../../universal/helpers/date';
@@ -36,6 +34,7 @@ import { fetchVergunningenNotifications } from './vergunningen/vergunningen-noti
 import { fetchWiorNotifications } from './wior';
 import { fetchWpiNotifications } from './wpi';
 import { streamEndpointQueryParamKeys } from '../../universal/config/app';
+import { isEnabled } from '../config/azure-appconfiguration';
 import { getFromEnv } from '../helpers/env';
 
 // Every 3rd notification will be a tip if one is available.
@@ -220,7 +219,7 @@ export async function fetchNotificationsWithTipsInserted(
   queryParams?: Record<string, string>
 ) {
   const compareDate =
-    FeatureToggle.passQueryParamsToStreamUrl &&
+    isEnabled('dev.passQueryParamsToStreamUrl') &&
     queryParams?.[streamEndpointQueryParamKeys.tipsCompareDate]
       ? new Date(
           queryParams[streamEndpointQueryParamKeys.tipsCompareDate] as string

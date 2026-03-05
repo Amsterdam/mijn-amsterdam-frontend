@@ -3,7 +3,7 @@ import { Session, SessionStore } from 'express-openid-connect';
 import expressSession from 'express-session';
 import createMemorystore from 'memorystore';
 
-import { FeatureToggle } from '../../universal/config/feature-toggles';
+import { isEnabled } from '../config/azure-appconfiguration';
 import { logger } from '../logging';
 import { IS_DB_ENABLED } from '../services/db/config';
 import { getPool } from '../services/db/postgres';
@@ -18,7 +18,7 @@ export function getSessionStore<T extends typeof expressSession>(
   options: SessionStoreOptions
 ): SessionStore<Session> {
   // Use Postgres Database
-  if (IS_DB_ENABLED && FeatureToggle.dbSessionsEnabled) {
+  if (IS_DB_ENABLED && isEnabled('db.sessions.enabled')) {
     logger.info('Using PG sessions DB');
     const pgSession = connectPGSimple(auth);
     return new pgSession({

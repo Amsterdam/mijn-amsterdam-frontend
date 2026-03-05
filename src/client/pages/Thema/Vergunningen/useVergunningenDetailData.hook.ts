@@ -5,12 +5,13 @@ import { themaId } from './Vergunningen-thema-config';
 import type { PowerBrowserZaakFrontend } from '../../../../server/services/powerbrowser/powerbrowser-types';
 import type { ZaakFrontendCombined } from '../../../../server/services/vergunningen/config-and-types';
 import { pbZaakTransformers } from '../../../../server/services/vergunningen/pb-zaken';
-import { FeatureToggle } from '../../../../universal/config/feature-toggles';
+import { isEnabled } from '../../../config/feature-toggles';
 
 function isPowerBrowserZaak(
   vergunning: ZaakFrontendCombined
 ): vergunning is PowerBrowserZaakFrontend {
-  return FeatureToggle.VTHOnPowerbrowserActive && (
+  return (
+    isEnabled('vth.onPowerbrowser.active') &&
     'title' in vergunning &&
     pbZaakTransformers.map((t) => t.title).includes(vergunning.title)
   );
@@ -42,8 +43,8 @@ export function useVergunningenDetailData<T extends ZaakFrontendCombined>(
   return {
     themaId,
     vergunning,
-    isErrorDocuments: isErrorDocuments,
-    isLoadingDocuments: isLoadingDocuments,
+    isErrorDocuments,
+    isLoadingDocuments,
     documents: isPBZaak ? vergunning.documents : documents,
     title: vergunning?.title,
   };

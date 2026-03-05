@@ -11,7 +11,7 @@ import {
 } from './route-helpers';
 import type { streamEndpointQueryParamKeys } from '../../universal/config/app';
 import { IS_PRODUCTION } from '../../universal/config/env';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
+import { isEnabled } from '../config/azure-appconfiguration';
 import { setAdHocDependencyRequestCacheTtlMs } from '../config/source-api';
 import { afisRouter } from '../services/afis/afis-router';
 import { bezwarenRouter } from '../services/bezwaren/bezwaren-router';
@@ -79,7 +79,7 @@ router.get(
   ) => {
     if (
       'adHocDependencyRequestCacheTtlMs' in req.query &&
-      FeatureToggle.adHocDependencyRequestCacheTtlMs
+      isEnabled('dev.adHocDependencyRequestCacheTtlMs')
     ) {
       let adHocCacheTtlMs = undefined;
 

@@ -5,8 +5,8 @@ import UID from 'uid-safe';
 import { BFF_OIDC_BASE_URL, BFF_OIDC_ISSUER_BASE_URL } from './auth-routes';
 import { getSessionStore } from './auth-session-store';
 import { TokenData } from './auth-types';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { ONE_HOUR_MS, ONE_MINUTE_SECONDS } from '../config/app';
+import { isEnabled } from '../config/azure-appconfiguration';
 import { getFromEnv } from '../helpers/env';
 
 export const OIDC_SESSION_MAX_AGE_SECONDS = ONE_MINUTE_SECONDS * 15; // 15 minutes
@@ -102,7 +102,7 @@ export const DIGID_ATTR_PRIMARY = 'sub';
 
 export const OIDC_TOKEN_ID_ATTRIBUTE = {
   eherkenning: (tokenData: TokenData) => {
-    if (FeatureToggle.ehKetenmachtigingActive) {
+    if (isEnabled('eherkenning.ketenmachtiging.active')) {
       if (
         EH_ATTR_INTERMEDIATE_PRIMARY_ID in tokenData &&
         EH_ATTR_INTERMEDIATE_SECONDARY_ID in tokenData

@@ -57,25 +57,6 @@ vi.mock('../client/config/feature-toggles', async (importOriginal) => {
   };
 });
 
-// Set every Featuretoggle to true.
-vi.mock('../universal/config/feature-toggles.ts', async (importOriginal) => {
-  const featureToggleModule: {
-    FeatureToggle: Record<string, string>;
-  } = await importOriginal();
-
-  const featureTogglesOn = Object.entries(
-    featureToggleModule.FeatureToggle
-  ).map(([keyName]) => {
-    return [keyName, true];
-  });
-  const FeatureToggle = Object.fromEntries(featureTogglesOn);
-
-  return {
-    ...featureToggleModule,
-    FeatureToggle,
-  };
-});
-
 export const bffApiHost = 'http://bff-api-host';
 export const frontentHost = 'http://frontend-host';
 export const remoteApiHost = 'http://remote-api-host';

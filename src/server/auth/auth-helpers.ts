@@ -15,9 +15,9 @@ import type {
   TokenData,
 } from './auth-types';
 import { ZAAK_STATUS_ROUTE } from '../../client/pages/ZaakStatus/ZaakStatus-config';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { PROFILE_TYPES } from '../../universal/types/App.types';
 import { ONE_SECOND_MS } from '../config/app';
+import { isEnabled } from '../config/azure-appconfiguration';
 import { logger } from '../logging';
 import { captureException } from '../services/monitoring';
 
@@ -145,10 +145,10 @@ export function createLogoutHandler(
       return res.oidc.logout({
         returnTo,
         logoutParams: {
-          id_token_hint: !FeatureToggle.oidcLogoutHintActive
+          id_token_hint: !isEnabled('oidc.logoutHint.active')
             ? auth.token
             : null,
-          logout_hint: FeatureToggle.oidcLogoutHintActive
+          logout_hint: isEnabled('oidc.logoutHint.active')
             ? req[OIDC_SESSION_COOKIE_NAME]?.TMASessionID
             : null,
         },

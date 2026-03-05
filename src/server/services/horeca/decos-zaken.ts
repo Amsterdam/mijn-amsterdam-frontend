@@ -1,4 +1,4 @@
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import { isEnabled } from '../../../server/config/azure-appconfiguration';
 import {
   SELECT_FIELDS_TRANSFORM_BASE,
   dateEnd,
@@ -33,7 +33,7 @@ export type HorecaVergunningFrontend =
 
 export const ExploitatieHorecabedrijf: DecosZaakTransformer<DecosZaakExploitatieHorecabedrijf> =
   {
-    isActive: FeatureToggle.horecaActive,
+    isActive: isEnabled('horeca.active'),
     itemType: 'folders',
     caseType: caseTypeHorecaVergunningen.ExploitatieHorecabedrijf,
     title: caseTypeHorecaVergunningen.ExploitatieHorecabedrijf,

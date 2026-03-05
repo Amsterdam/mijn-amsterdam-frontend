@@ -1,6 +1,6 @@
 import { isAfter, isSameDay, parseISO } from 'date-fns';
 
-import { FeatureToggle } from '../../../../universal/config/feature-toggles';
+import { isEnabled } from '../../../../server/config/azure-appconfiguration';
 import {
   defaultDateFormat,
   isDateInPast,
@@ -103,7 +103,7 @@ export function isEindeGeldigheidVerstreken(
 export function isDocumentDecisionDateActive(datumAanvraag: string) {
   return (
     isAfterWCAGValidDocumentsDate(datumAanvraag) &&
-    FeatureToggle.zorgnedDocumentDecisionDateActive
+    isEnabled('zorgned.documentDecisionDate.active')
   );
 }
 
@@ -168,7 +168,7 @@ export function getTransformerConfigBesluit(
     status: 'Besluit genomen',
     datePublished: (aanvraag) => getDecisionDate(aanvraag) ?? '',
     isChecked: (aanvraag) => hasDecision(aanvraag),
-    isActive: isActive,
+    isActive,
     isVisible: (aanvraag) => {
       return (
         getDecisionDocument(aanvraag.documenten)?.id !==

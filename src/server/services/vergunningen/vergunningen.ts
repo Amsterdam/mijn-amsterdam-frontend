@@ -11,7 +11,7 @@ import { decosZaakTransformers } from './decos-zaken';
 import { getStatusStepsPB } from './pb-status-steps';
 import { pbZaakTransformers } from './pb-zaken';
 import { routeConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import { isEnabled } from '../../../server/config/azure-appconfiguration';
 import {
   apiErrorResult,
   ApiResponse,
@@ -72,7 +72,7 @@ function getStatusSteps(vergunning: DecosVergunning): StatusLineItem[] {
 }
 
 // TODO: MIJN-12357: Remove after move to Powerbrowser is finalized
-const activeTransformersDecos = FeatureToggle.VTHOnPowerbrowserActive
+const activeTransformersDecos = isEnabled('vth.onPowerbrowser.active')
   ? decosZaakTransformers.filter(
       (transformer) =>
         !(
@@ -89,7 +89,7 @@ const activeTransformersDecos = FeatureToggle.VTHOnPowerbrowserActive
   : decosZaakTransformers;
 
 // TODO: MIJN-12357: Remove after move to Powerbrowser is finalized
-const activeTransformersPB = FeatureToggle.VTHOnPowerbrowserActive
+const activeTransformersPB = isEnabled('vth.onPowerbrowser.active')
   ? pbZaakTransformers
   : [];
 

@@ -1,5 +1,6 @@
 import { generatePath } from 'react-router';
 
+import { isEnabled } from '../../../../server/config/azure-appconfiguration';
 import {
   WpiIncomeSpecificationTransformed,
   WpiRequestProcess,
@@ -42,7 +43,7 @@ export const themaConfig: InkomenThemaConfig = {
   id: THEMA_ID,
   title: THEMA_TITLE,
   featureToggle: {
-    active: true,
+    active: isEnabled('inkomen.active'),
   },
   profileTypes: ['private'],
   route: {

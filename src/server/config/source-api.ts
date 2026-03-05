@@ -8,13 +8,13 @@ import {
   ONE_MINUTE_MS,
   ONE_SECOND_MS,
 } from './app';
+import { isEnabled } from './azure-appconfiguration';
 import { featureToggle as featureToggleAfis } from '../../client/pages/Thema/Afis/Afis-thema-config';
 import { themaConfig as themaConfigBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config';
 import { themaConfig as themaConfigErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
 import { themaConfig as themaConfigJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config';
 import { themaConfig as themaConfigToeristischeVerhuur } from '../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 import { IS_DEVELOPMENT } from '../../universal/config/env';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { getCert } from '../helpers/cert';
 import { getFromEnv } from '../helpers/env';
 import { getHostNameFromUrl } from '../helpers/source-api-helpers';
@@ -119,7 +119,7 @@ const contactmomentenFeatureToggle = getFromEnv(
 const postponeFetchContactmomenten =
   typeof contactmomentenFeatureToggle !== 'undefined'
     ? contactmomentenFeatureToggle === 'false'
-    : !FeatureToggle.contactmomentenActive;
+    : !isEnabled('contactmomenten.active');
 
 const httpsAgentConfigBFF = {
   cert: getCert('BFF_SERVER_CLIENT_CERT'),
@@ -202,33 +202,33 @@ const ApiConfig_ = {
   BEZWAREN_LIST: {
     url: `${getFromEnv('BFF_BEZWAREN_API')}/zgw/v1/zaken/_zoek`,
     method: 'POST',
-    postponeFetch: !FeatureToggle.bezwarenActive,
+    postponeFetch: !isEnabled('bezwaren.active'),
   },
   BEZWAREN_DOCUMENT: {
     url: `${getFromEnv('BFF_BEZWAREN_API')}/zgw/v1/enkelvoudiginformatieobjecten/:id/download`,
-    postponeFetch: !FeatureToggle.bezwarenActive,
+    postponeFetch: !isEnabled('bezwaren.active'),
   },
   BEZWAREN_DOCUMENTS: {
     url: `${getFromEnv('BFF_BEZWAREN_API')}/zgw/v1/enkelvoudiginformatieobjecten`,
-    postponeFetch: !FeatureToggle.bezwarenActive,
+    postponeFetch: !isEnabled('bezwaren.active'),
   },
   BEZWAREN_STATUS: {
     url: `${getFromEnv('BFF_BEZWAREN_API')}/zgw/v1/statussen`,
-    postponeFetch: !FeatureToggle.bezwarenActive,
+    postponeFetch: !isEnabled('bezwaren.active'),
   },
   BELASTINGEN: {
     url: `${getFromEnv('BFF_BELASTINGEN_ENDPOINT')}`,
-    postponeFetch: !FeatureToggle.belastingApiActive,
+    postponeFetch: !isEnabled('belastingen.api.active'),
   },
   CLEOPATRA: {
     url: `${getFromEnv('BFF_CLEOPATRA_API_ENDPOINT')}`,
-    postponeFetch: !FeatureToggle.cleopatraApiActive,
+    postponeFetch: !isEnabled('milieuzone.cleopatraApi.active'),
     method: 'POST',
     httpsAgent: new https.Agent(httpsAgentConfigBFF),
   },
   DECOS_API: {
     url: `${getFromEnv('BFF_DECOS_API_BASE_URL')}`,
-    postponeFetch: !FeatureToggle.decosServiceActive,
+    postponeFetch: !isEnabled('decos.service.active'),
     headers: {
       Accept: 'application/itemdata',
       ...(isDecosOverEnableUActive
@@ -245,7 +245,7 @@ const ApiConfig_ = {
   POWERBROWSER: {
     method: 'POST',
     url: `${getFromEnv('BFF_POWERBROWSER_API_URL')}`,
-    postponeFetch: !FeatureToggle.powerbrowserActive,
+    postponeFetch: !isEnabled('powerbrowser.active'),
     headers: {
       apiKey: getFromEnv('BFF_ENABLEU_API_KEY'),
     },
@@ -332,12 +332,12 @@ const ApiConfig_ = {
   },
   KREFIA: {
     url: `${getFromEnv('BFF_KREFIA_API_BASE_URL')}/krefia/all`,
-    postponeFetch: !FeatureToggle.krefiaActive,
+    postponeFetch: !isEnabled('krefia.active'),
     passthroughOIDCToken: true,
   },
   SUBSIDIES: {
     url: `${getFromEnv('BFF_SISA_API_ENDPOINT')}`,
-    postponeFetch: !FeatureToggle.subsidieActive,
+    postponeFetch: !isEnabled('subsidie.active'),
   },
   SEARCH_CONFIG: {
     url: IS_DEVELOPMENT

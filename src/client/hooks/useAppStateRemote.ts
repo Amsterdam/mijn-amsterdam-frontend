@@ -4,7 +4,7 @@ import { useAppStateFallbackService } from './useAppStateFallbackServicesAll';
 import { useAppStateStore } from './useAppStateStore';
 import { SSE_CLOSE_MESSAGE, SSE_ERROR_MESSAGE, useSSE } from './useSSE';
 import { streamEndpointQueryParamKeys } from '../../universal/config/app';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
+import { isEnabled } from '../config/feature-toggles';
 import { BFFApiUrls } from '../config/api';
 import { transformSourceData } from '../data-transform/appState';
 
@@ -16,7 +16,7 @@ export function addParamsToStreamEndpoint(
 
   // For testing and development purposes we can pass a set of arbitrary parameters to the BFF.
   // See also: universal/config/app.ts : streamEndpointQueryParamKeys
-  if (FeatureToggle.passQueryParamsToStreamUrl) {
+  if (isEnabled('APP.passQueryParamsToStreamUrl')) {
     const testStreamEndpointUrl = streamEndpointUrl;
     if (searchParams !== '') {
       const locationParams = new URLSearchParams(searchParams);

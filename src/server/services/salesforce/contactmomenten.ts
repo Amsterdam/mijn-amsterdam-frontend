@@ -2,7 +2,7 @@ import {
   ContactMomentenResponseSource,
   ContactMoment,
 } from './contactmomenten.types';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import { isEnabled } from '../../../server/config/azure-appconfiguration';
 import { apiPostponeResult } from '../../../universal/helpers/api';
 import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
 import { AuthProfileAndToken } from '../../auth/auth-types';
@@ -47,7 +47,7 @@ function transformContactmomentenResponse(
 export async function fetchContactmomenten(
   authProfileAndToken: AuthProfileAndToken
 ) {
-  if (!FeatureToggle.contactmomentenActive) {
+  if (!isEnabled('contactmomenten.active')) {
     return apiPostponeResult(null);
   }
 

@@ -2,7 +2,7 @@ import { fetchBedAndBreakfast } from './bed-and-breakfast/bed-and-breakfast';
 import { ToeristischeVerhuur } from './toeristische-verhuur-config-and-types';
 import { fetchRegistraties } from './toeristische-verhuur-lvv-registratie';
 import { fetchVakantieverhuurVergunningen } from './toeristische-verhuur-vakantieverhuur-vergunning';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import { isEnabled } from '../../../server/config/azure-appconfiguration';
 import {
   ApiSuccessResponse,
   apiSuccessResult,
@@ -15,7 +15,7 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 export async function fetchToeristischeVerhuur(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiSuccessResponse<ToeristischeVerhuur>> {
-  if (!FeatureToggle.toeristischeVerhuurActive) {
+  if (!isEnabled('toeristischeVerhuur.active')) {
     return apiSuccessResult({
       vakantieverhuurVergunningen: [],
       bbVergunningen: [],

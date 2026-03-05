@@ -7,7 +7,7 @@ import {
 import { routes } from './wmo-service-config';
 import { wmoStatusLineItemsConfig } from './wmo-status-line-items';
 import { themaConfig } from '../../../client/pages/Thema/Zorg/Zorg-thema-config';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import { isEnabled } from '../../../server/config/azure-appconfiguration';
 import {
   apiSuccessResult,
   type ApiResponse,
@@ -40,7 +40,7 @@ export function getDocuments(
   withDownloadBFFEndpoint: string
 ) {
   if (
-    FeatureToggle.zorgnedDocumentAttachmentsActive &&
+    isEnabled('zorgned.documentAttachments.active') &&
     isAfterWCAGValidDocumentsDate(aanvraagTransformed.datumAanvraag)
   ) {
     return aanvraagTransformed.documenten
