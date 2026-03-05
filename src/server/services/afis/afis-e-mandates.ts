@@ -52,6 +52,7 @@ import {
   type EMandateSignRequestStatusPayload,
 } from './afis-types';
 import { routeConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config';
+import { IS_DEVELOPMENT } from '../../../universal/config/env';
 import { apiErrorResult, ApiResponse } from '../../../universal/helpers/api';
 import {
   isoDateFormat,
@@ -316,8 +317,9 @@ function addEmandateApiUrls(
     creditor
   );
 
-  eMandate.signRequestStatusUrl =
-    routes.protected.AFIS_EMANDATES_SIGN_REQUEST_STATUS;
+  eMandate.signRequestStatusUrl = generateFullApiUrlBFF(
+    routes.protected.AFIS_EMANDATES_SIGN_REQUEST_STATUS
+  );
 }
 
 function transformEMandateSource(
@@ -487,7 +489,11 @@ function createEMandateSignRequestPayload(
 ): POMSignRequestUrlPayload {
   const returnUrl = generateFullApiUrlBFF(
     routeConfig.detailPageEMandate.path,
-    [{ iban: creditor.iban }, { id: slug(creditor.name) }],
+    [
+      // In development we mock the API responses from the payment provider, for convenience we add the creditor IBAN to the URL so we can determine in the mock API which response to return.
+      IS_DEVELOPMENT ? { iban: creditor.iban } : {},
+      { id: slug(creditor.name) },
+    ],
     getFromEnv('MA_FRONTEND_URL')
   );
 
@@ -543,11 +549,11 @@ function transformEMandatesRedirectUrlResponse(
 ): AfisEMandateSignRequestResponse | null {
   if (responseData?.paylink) {
     const [statusCheckPayload] = encrypt(
-      JSON.stringify({ paylinkId: responseData.paylinkId })
+      JSON.stringify({ paylinkId: responseData.paylink_id })
     );
     return {
       redirectUrl: responseData.paylink,
-      statusCheckPayload,
+      statusCheckPayload, // Used to check the status of the sign request after the user has completed the sign request flow with the payment provider.
     };
   }
   return null;
@@ -605,9 +611,13 @@ function transformEmandateSignRequestStatus(
 
 export async function fetchEmandateSignRequestStatusFromPaymentProvider(
   eMandateSignRequestStatusPayload: EMandateSignRequestStatusPayload
-) {
+): Promise<ApiResponse<AfisEMandateSignRequestStatusResponse>> {
+  console.log(
+    'eMandateSignRequestStatusPayload::::',
+    eMandateSignRequestStatusPayload
+  );
   const config = await getApiConfig('POM', {
-    method: 'POST',
+    method: 'GET',
     formatUrl: ({ url }) => {
       return `${url}/v3/paylinks/${eMandateSignRequestStatusPayload.paylinkId}`;
     },
@@ -615,7 +625,7 @@ export async function fetchEmandateSignRequestStatusFromPaymentProvider(
   });
 
   const eMandateSignUrlResponse =
-    await requestData<AfisEMandateSignRequestResponse | null>(config);
+    await requestData<AfisEMandateSignRequestStatusResponse>(config);
 
   return eMandateSignUrlResponse;
 }

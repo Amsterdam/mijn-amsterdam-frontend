@@ -119,8 +119,8 @@ function useWindowStorage(
   const storageType =
     adapter === localStorage ? 'localStorage' : 'sessionStorage';
 
+  // Initialize the state from localStorage on mount
   useEffect(() => {
-    console.log('Initializing storage with key', key);
     const value = getValueFromLocalStorage();
     setValue(storageType, key, value);
   }, []);
