@@ -3,6 +3,7 @@ import { generatePath } from 'react-router';
 
 import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { entries } from '../../../../universal/helpers/utils';
+import { propagateFeatureToggles } from '../../../config/buildFeatureToggle';
 import type {
   ThemaConfigBase,
   WithDetailPage,
@@ -31,11 +32,11 @@ export const themaConfig: ParkerenThemaConfig = {
   title: THEMA_TITLE,
   profileTypes: ['private', 'commercial'],
   redactedScope: 'none',
-  featureToggle: {
+  featureToggle: propagateFeatureToggles({
     active: false,
     parkerenCheckForProductAndPermitsActive: !IS_PRODUCTION,
     parkerenJWETokenCreationActive: !IS_PRODUCTION,
-  },
+  }),
   route: {
     path: '/parkeren',
     documentTitle: `${THEMA_TITLE} | overzicht`,
