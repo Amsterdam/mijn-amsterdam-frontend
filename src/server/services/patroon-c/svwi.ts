@@ -9,6 +9,7 @@ import {
   themaId,
   themaTitle,
 } from '../../../client/pages/Thema/Svwi/Svwi-thema-config';
+import { createNotificationId } from '../../../universal/helpers/notification';
 import type { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getFromEnv } from '../../helpers/env';
@@ -33,7 +34,7 @@ type SVWISourceResponseData = {
 
 function transformNotification(message: SVWIMessageSource): MyNotification {
   return {
-    id: `${message.id}-${message.ontvangen}`,
+    id: createNotificationId(themaId, message.id, message.ontvangen),
     themaID: themaId,
     themaTitle,
     title: message.onderwerp,

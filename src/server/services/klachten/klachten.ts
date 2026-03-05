@@ -162,15 +162,10 @@ export function transformKlachtenResponse(
 }
 
 function createKlachtNotification(klacht: KlachtFrontend): MyNotification {
-  const id = createNotificationId(
-    themaConfig.id,
-    klacht.id,
-    klacht.displayStatus
-  );
   const gotoDetailTxt = 'Bekijk details';
 
   const notificationBase = {
-    id,
+    id: createNotificationId(themaConfig.id, klacht.id, klacht.displayStatus),
     link: {
       to: klacht.link.to,
       title: gotoDetailTxt,

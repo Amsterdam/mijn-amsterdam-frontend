@@ -119,7 +119,7 @@ async function fetchNotificationsForService(
       // If we decide to show the actual notification title, use `notification.title`
       title: DISCRETE_GENERIC_MESSAGE,
       isTip: notification.isTip,
-      isAlert: notification.isAlert ?? false,
+      isAlert: notification.isAlert,
       datePublished: notification.hideDatePublished
         ? undefined
         : notification.datePublished,

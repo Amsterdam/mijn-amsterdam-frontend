@@ -9,6 +9,7 @@ import {
   apiSuccessResult,
   type ApiResponse,
 } from '../../../universal/helpers/api';
+import { createNotificationId } from '../../../universal/helpers/notification';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getCert } from '../../helpers/cert';
@@ -142,7 +143,11 @@ function transformCleopatraResponse(
             }
 
             notifications.push({
-              id: `${themaID}-${message.categorie}-${message.datum}`,
+              id: createNotificationId(
+                themaID,
+                message.categorie,
+                message.datum
+              ),
               themaID,
               themaTitle,
               title: message.titel,

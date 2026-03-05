@@ -5,8 +5,8 @@ import { IS_PRODUCTION } from '../../../../universal/config/env';
 import {
   defaultDateFormat,
   formatMonthAndYear,
-  isoDateFormat,
 } from '../../../../universal/helpers/date';
+import { createNotificationId } from '../../../../universal/helpers/notification';
 import { MyNotification } from '../../../../universal/types/App.types';
 import { ServiceResults } from '../../content-tips/tip-types';
 import { addApiBasePathToDocumentUrls, documentDownloadName } from '../helpers';
@@ -38,7 +38,7 @@ function transformIncomeSpecificationNotification(
 ): MyNotification {
   if (type === 'jaaropgave') {
     return {
-      id: `nieuwe-jaaropgave-${isoDateFormat(item.id)}`,
+      id: createNotificationId(themaConfig.id, 'jaaropgave', item.id),
       datePublished: item.datePublished,
       themaID: themaConfig.id,
       themaTitle: themaConfig.title,
@@ -52,7 +52,7 @@ function transformIncomeSpecificationNotification(
     };
   }
   return {
-    id: `nieuwe-uitkeringsspecificatie-${isoDateFormat(item.id)}`,
+    id: createNotificationId(themaConfig.id, 'uitkeringsspecificatie', item.id),
     datePublished: item.datePublished,
     themaID: themaConfig.id,
     themaTitle: themaConfig.title,
