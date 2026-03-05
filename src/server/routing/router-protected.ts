@@ -74,12 +74,12 @@ router.get(
     req: RequestWithQueryParams<{
       [key in keyof typeof streamEndpointQueryParamKeys]: string;
     }>,
-    res: Response,
+    _res: Response,
     next: NextFunction
   ) => {
     if (
       'adHocDependencyRequestCacheTtlMs' in req.query &&
-      isEnabled('dev.adHocDependencyRequestCacheTtlMs')
+      isEnabled('DEV.adHocDependencyRequestCacheTtlMs')
     ) {
       let adHocCacheTtlMs = undefined;
 

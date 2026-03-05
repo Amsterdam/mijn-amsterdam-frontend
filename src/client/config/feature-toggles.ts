@@ -27,13 +27,16 @@ export function isEnabled(featureToggleKey: FeatureToggleKey): boolean {
   const g = globalThis as unknown as {
     [GLOBALTHIS_FEATURETOGGLE_KEY]: FeatureToggles;
   };
+
   if (!(featureToggleKey in g.MA_FEATURETOGGLES)) {
     console.warn(
       `Feature toggle \x1b[1m\x1b[31m ${featureToggleKey}\x1b[0m is not defined`
     );
   }
+
   if (!g.MA_FEATURETOGGLES) {
     return false;
   }
+
   return g.MA_FEATURETOGGLES[featureToggleKey] === true;
 }

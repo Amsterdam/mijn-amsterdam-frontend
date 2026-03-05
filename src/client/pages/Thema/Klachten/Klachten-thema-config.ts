@@ -7,6 +7,7 @@ import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
 } from '../../../config/app';
+import { isEnabled } from '../../../config/feature-toggles';
 import type {
   ThemaConfigBase,
   ThemaRoutesConfig,
@@ -26,7 +27,7 @@ type KLachtenThemaConfig = ThemaConfigBase<typeof THEMA_ID> &
 export const themaConfig: KLachtenThemaConfig = {
   id: THEMA_ID,
   title: THEMA_TITLE,
-  featureToggle: { active: true },
+  featureToggle: { active: isEnabled('KLACHTEN.active') },
   profileTypes: ['private'],
   uitlegPageSections: [
     {

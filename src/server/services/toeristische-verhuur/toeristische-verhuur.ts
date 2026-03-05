@@ -15,7 +15,7 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 export async function fetchToeristischeVerhuur(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiSuccessResponse<ToeristischeVerhuur>> {
-  if (!isEnabled('toeristischeVerhuur.active')) {
+  if (!isEnabled('TOERISTISCHEVERHUUR.active')) {
     return apiSuccessResult({
       vakantieverhuurVergunningen: [],
       bbVergunningen: [],

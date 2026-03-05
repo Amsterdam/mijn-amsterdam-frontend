@@ -4,6 +4,7 @@ import { generatePath } from 'react-router';
 import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { entries } from '../../../../universal/helpers/utils';
 import { LinkProps } from '../../../../universal/types/App.types';
+import { isEnabled } from '../../../config/feature-toggles';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
 import {
   ListPageParamKind as ListPageParamKindVergunningen,
@@ -11,8 +12,7 @@ import {
 } from '../Vergunningen/Vergunningen-thema-config';
 
 export const featureToggle = {
-  parkerenActive: true,
-  parkerenCheckForProductAndPermitsActive: !IS_PRODUCTION,
+  parkerenActive: isEnabled('PARKEREN.active'),
   parkerenJWETokenCreationActive: !IS_PRODUCTION,
 };
 

@@ -25,7 +25,7 @@ export function CobrowseFooter() {
   const setIsScreensharing = useCobrowseStore(
     (state) => state.setIsScreensharing
   );
-  const isCobrowseEnabled = isEnabled('cobrowse');
+  const isCobrowseEnabled = isEnabled('COBROWSE.active');
   useEffect(() => {
     if (!isCobrowseEnabled || !licenseKey || cobrowseWidget) {
       return;

@@ -102,7 +102,7 @@ export const DIGID_ATTR_PRIMARY = 'sub';
 
 export const OIDC_TOKEN_ID_ATTRIBUTE = {
   eherkenning: (tokenData: TokenData) => {
-    if (isEnabled('eherkenning.ketenmachtiging.active')) {
+    if (isEnabled('EHERKENNING.ketenmachtiging.active')) {
       if (
         EH_ATTR_INTERMEDIATE_PRIMARY_ID in tokenData &&
         EH_ATTR_INTERMEDIATE_SECONDARY_ID in tokenData

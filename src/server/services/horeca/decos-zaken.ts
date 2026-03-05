@@ -33,7 +33,7 @@ export type HorecaVergunningFrontend =
 
 export const ExploitatieHorecabedrijf: DecosZaakTransformer<DecosZaakExploitatieHorecabedrijf> =
   {
-    isActive: isEnabled('horeca.active'),
+    isActive: isEnabled('HORECA.active'),
     itemType: 'folders',
     caseType: caseTypeHorecaVergunningen.ExploitatieHorecabedrijf,
     title: caseTypeHorecaVergunningen.ExploitatieHorecabedrijf,

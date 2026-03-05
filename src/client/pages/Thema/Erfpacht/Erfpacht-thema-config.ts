@@ -6,7 +6,10 @@ import {
 } from '../../../../server/services/erfpacht/erfpacht-types';
 import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
-import { propagateFeatureToggles } from '../../../config/feature-toggles';
+import {
+  isEnabled,
+  propagateFeatureToggles,
+} from '../../../config/feature-toggles';
 import type {
   PageConfig,
   ThemaConfigBase,
@@ -49,8 +52,8 @@ export const themaConfig: ThemaConfigErfpacht = {
   redactedScope: 'none',
   profileTypes: ['private'], //COMMERCIAL IS IN ERFPACHT-RENDER-CONFIG, BECAUSE HAS ANOTHER MENUITEM
   featureToggle: propagateFeatureToggles({
-    active: true,
-    canonmatigingLinkActive: true,
+    active: isEnabled('ERFPACHT.active'),
+    canonmatigingLinkActive: isEnabled('ERFPACHT.canonmatigingLinkActive'),
   }),
   pageLinks: [
     {

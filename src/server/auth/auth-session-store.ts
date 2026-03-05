@@ -18,7 +18,7 @@ export function getSessionStore<T extends typeof expressSession>(
   options: SessionStoreOptions
 ): SessionStore<Session> {
   // Use Postgres Database
-  if (IS_DB_ENABLED && isEnabled('db.sessions.enabled')) {
+  if (IS_DB_ENABLED && isEnabled('DB.sessions.enabled')) {
     logger.info('Using PG sessions DB');
     const pgSession = connectPGSimple(auth);
     return new pgSession({

@@ -1,13 +1,12 @@
-import { FeatureToggle } from './feature-toggles';
+import { IS_PRODUCTION } from './env';
 
 export const MIJN_AMSTERDAM = 'Mijn Amsterdam';
 /**
  * Used for testing and development purposes we can pass a set of arbitrary parameters to the BFF.
- * In conjunction with the FeatureToggle.passQueryParamsToStreamUrl
  * */
 export const streamEndpointQueryParamKeys = {
   tipsCompareDate: 'tipsCompareDate', //For example, tipsCompareDate=2023-01-31 this will change the date that is used to compare with dates being used in the tips controller.
-  ...(FeatureToggle.adHocDependencyRequestCacheTtlMs
+  ...(!IS_PRODUCTION
     ? { adHocDependencyRequestCacheTtlMs: 'adHocDependencyRequestCacheTtlMs' } // Ad hoc setting for default cache ttl of requests to external api's. This will nog override explicitly set cache ttl's.
     : {}),
 } as const;

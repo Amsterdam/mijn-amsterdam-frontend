@@ -6,7 +6,7 @@ export const themaIdBRP = 'BRP' as const;
 
 export const featureToggle = {
   [themaIdBRP]: {
-    themaActive: true,
+    themaActive: isEnabled('BRP.active'),
     get aantalBewonersOpAdresTonenActive() {
       return (
         featureToggle[themaIdBRP].themaActive &&
@@ -15,7 +15,7 @@ export const featureToggle = {
     },
   },
   [themaIdKVK]: {
-    themaActive: true,
+    themaActive: isEnabled('KVK.active'),
   },
 };
 

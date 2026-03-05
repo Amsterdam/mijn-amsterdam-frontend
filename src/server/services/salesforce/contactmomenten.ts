@@ -47,7 +47,7 @@ function transformContactmomentenResponse(
 export async function fetchContactmomenten(
   authProfileAndToken: AuthProfileAndToken
 ) {
-  if (!isEnabled('contactmomenten.active')) {
+  if (!isEnabled('CONTACTMOMENTEN.active')) {
     return apiPostponeResult(null);
   }
 

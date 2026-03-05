@@ -1,3 +1,4 @@
+import { isEnabled } from '../../../config/feature-toggles';
 import { ThemaConfigBase } from '../../../config/thema-types';
 
 const MILIEUZONE_ROUTE_DEFAULT =
@@ -9,7 +10,7 @@ export const themaConfig: ThemaConfigBase = {
   id: THEMA_ID,
   title: THEMA_TITLE,
   featureToggle: {
-    active: true,
+    active: isEnabled('MILIEUZONE.active'),
   },
   profileTypes: ['private', 'commercial'],
   route: {

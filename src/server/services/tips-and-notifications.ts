@@ -1,5 +1,6 @@
 import { fetchAdoptableTrashContainers } from './afval/adoptable-trash-containers';
-import { ApiResponse_DEPRECATED,
+import {
+  ApiResponse_DEPRECATED,
   getSettledResult,
 } from '../../universal/helpers/api';
 import { dateSort } from '../../universal/helpers/date';
@@ -219,7 +220,7 @@ export async function fetchNotificationsWithTipsInserted(
   queryParams?: Record<string, string>
 ) {
   const compareDate =
-    isEnabled('dev.passQueryParamsToStreamUrl') &&
+    isEnabled('DEV.passQueryParamsToStreamUrl') &&
     queryParams?.[streamEndpointQueryParamKeys.tipsCompareDate]
       ? new Date(
           queryParams[streamEndpointQueryParamKeys.tipsCompareDate] as string

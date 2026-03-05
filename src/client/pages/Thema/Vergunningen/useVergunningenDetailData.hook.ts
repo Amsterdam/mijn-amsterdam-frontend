@@ -11,7 +11,7 @@ function isPowerBrowserZaak(
   vergunning: ZaakFrontendCombined
 ): vergunning is PowerBrowserZaakFrontend {
   return (
-    isEnabled('vth.onPowerbrowser.active') &&
+    isEnabled('VTH.onPowerbrowser.active') &&
     'title' in vergunning &&
     pbZaakTransformers.map((t) => t.title).includes(vergunning.title)
   );

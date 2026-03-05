@@ -5,12 +5,12 @@ import classnames from 'classnames';
 
 import { DASHBOARD_PAGE_DOCUMENT_TITLE } from './Landing-routes';
 import styles from './Landing.module.scss';
-import { isEnabled } from '../../config/feature-toggles';
 import { LogoDigiD } from '../../assets/images/LogoDigiD';
 import LogoEherkenning from '../../assets/images/LogoEherkenning';
 import { MaintenanceNotifications } from '../../components/MaintenanceNotifications/MaintenanceNotifications';
 import { PageContentCell, PageV2 } from '../../components/Page/Page';
 import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api';
+import { isEnabled } from '../../config/feature-toggles';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 
 export function LandingPage() {
@@ -39,7 +39,7 @@ export function LandingPage() {
           className="ams-mb-m"
         />
 
-        {isEnabled('eherkenningActive') && (
+        {isEnabled('EHERKENNING.active') && (
           <Heading className="ams-mb-s" level={2}>
             Voor particulieren en eenmanszaken
           </Heading>
@@ -77,7 +77,7 @@ export function LandingPage() {
           </Link>
         </Paragraph>
 
-        {isEnabled('eherkenningActive') && (
+        {isEnabled('EHERKENNING.active') && (
           <>
             <Heading className="ams-mb-s" level={2}>
               Voor ondernemers

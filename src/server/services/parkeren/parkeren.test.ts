@@ -18,7 +18,6 @@ vi.mock(
       ...(await importOriginal()),
       featureToggle: {
         parkerenActive: true,
-        parkerenCheckForProductAndPermitsActive: true,
         parkerenJWETokenCreationActive: mocks.JWETokenCreationActive,
       },
     };

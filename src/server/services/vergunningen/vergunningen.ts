@@ -72,7 +72,7 @@ function getStatusSteps(vergunning: DecosVergunning): StatusLineItem[] {
 }
 
 // TODO: MIJN-12357: Remove after move to Powerbrowser is finalized
-const activeTransformersDecos = isEnabled('vth.onPowerbrowser.active')
+const activeTransformersDecos = isEnabled('VTH.onPowerbrowser.active')
   ? decosZaakTransformers.filter(
       (transformer) =>
         !(
@@ -89,7 +89,7 @@ const activeTransformersDecos = isEnabled('vth.onPowerbrowser.active')
   : decosZaakTransformers;
 
 // TODO: MIJN-12357: Remove after move to Powerbrowser is finalized
-const activeTransformersPB = isEnabled('vth.onPowerbrowser.active')
+const activeTransformersPB = isEnabled('VTH.onPowerbrowser.active')
   ? pbZaakTransformers
   : [];
 

@@ -40,7 +40,7 @@ export function getDocuments(
   withDownloadBFFEndpoint: string
 ) {
   if (
-    isEnabled('zorgned.documentAttachments.active') &&
+    isEnabled('ZORGNED.documentAttachments.active') &&
     isAfterWCAGValidDocumentsDate(aanvraagTransformed.datumAanvraag)
   ) {
     return aanvraagTransformed.documenten

@@ -1,5 +1,6 @@
 import { generatePath } from 'react-router';
 
+import { isEnabled } from '../../../../server/config/azure-appconfiguration';
 import { AVGRequestFrontend } from '../../../../server/services/avg/types';
 import { dateSort } from '../../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
@@ -29,7 +30,7 @@ export const themaConfig: AVGThemaConfig = {
   id: THEMA_ID,
   title: THEMA_TITLE,
   featureToggle: {
-    active: true,
+    active: isEnabled('AVG.active'),
   },
   profileTypes: ['private', 'commercial'],
   uitlegPageSections: [

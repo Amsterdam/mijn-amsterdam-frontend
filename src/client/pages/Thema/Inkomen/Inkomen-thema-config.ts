@@ -43,7 +43,7 @@ export const themaConfig: InkomenThemaConfig = {
   id: THEMA_ID,
   title: THEMA_TITLE,
   featureToggle: {
-    active: isEnabled('inkomen.active'),
+    active: isEnabled('INKOMEN.active'),
   },
   profileTypes: ['private'],
   route: {

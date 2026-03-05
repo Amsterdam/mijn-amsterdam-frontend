@@ -119,7 +119,7 @@ const contactmomentenFeatureToggle = getFromEnv(
 const postponeFetchContactmomenten =
   typeof contactmomentenFeatureToggle !== 'undefined'
     ? contactmomentenFeatureToggle === 'false'
-    : !isEnabled('contactmomenten.active');
+    : !isEnabled('CONTACTMOMENTEN.active');
 
 const httpsAgentConfigBFF = {
   cert: getCert('BFF_SERVER_CLIENT_CERT'),
@@ -202,33 +202,33 @@ const ApiConfig_ = {
   BEZWAREN_LIST: {
     url: `${getFromEnv('BFF_BEZWAREN_API')}/zgw/v1/zaken/_zoek`,
     method: 'POST',
-    postponeFetch: !isEnabled('bezwaren.active'),
+    postponeFetch: !isEnabled('BEZWAREN.active'),
   },
   BEZWAREN_DOCUMENT: {
     url: `${getFromEnv('BFF_BEZWAREN_API')}/zgw/v1/enkelvoudiginformatieobjecten/:id/download`,
-    postponeFetch: !isEnabled('bezwaren.active'),
+    postponeFetch: !isEnabled('BEZWAREN.active'),
   },
   BEZWAREN_DOCUMENTS: {
     url: `${getFromEnv('BFF_BEZWAREN_API')}/zgw/v1/enkelvoudiginformatieobjecten`,
-    postponeFetch: !isEnabled('bezwaren.active'),
+    postponeFetch: !isEnabled('BEZWAREN.active'),
   },
   BEZWAREN_STATUS: {
     url: `${getFromEnv('BFF_BEZWAREN_API')}/zgw/v1/statussen`,
-    postponeFetch: !isEnabled('bezwaren.active'),
+    postponeFetch: !isEnabled('BEZWAREN.active'),
   },
   BELASTINGEN: {
     url: `${getFromEnv('BFF_BELASTINGEN_ENDPOINT')}`,
-    postponeFetch: !isEnabled('belastingen.api.active'),
+    postponeFetch: !isEnabled('BELASTINGEN.api.active'),
   },
   CLEOPATRA: {
     url: `${getFromEnv('BFF_CLEOPATRA_API_ENDPOINT')}`,
-    postponeFetch: !isEnabled('milieuzone.cleopatraApi.active'),
+    postponeFetch: !isEnabled('MILIEUZONE.active'),
     method: 'POST',
     httpsAgent: new https.Agent(httpsAgentConfigBFF),
   },
   DECOS_API: {
     url: `${getFromEnv('BFF_DECOS_API_BASE_URL')}`,
-    postponeFetch: !isEnabled('decos.service.active'),
+    postponeFetch: !isEnabled('DECOS.service.active'),
     headers: {
       Accept: 'application/itemdata',
       ...(isDecosOverEnableUActive
@@ -245,7 +245,7 @@ const ApiConfig_ = {
   POWERBROWSER: {
     method: 'POST',
     url: `${getFromEnv('BFF_POWERBROWSER_API_URL')}`,
-    postponeFetch: !isEnabled('powerbrowser.active'),
+    postponeFetch: !isEnabled('POWERBROWSER.active'),
     headers: {
       apiKey: getFromEnv('BFF_ENABLEU_API_KEY'),
     },
@@ -332,12 +332,12 @@ const ApiConfig_ = {
   },
   KREFIA: {
     url: `${getFromEnv('BFF_KREFIA_API_BASE_URL')}/krefia/all`,
-    postponeFetch: !isEnabled('krefia.active'),
+    postponeFetch: !isEnabled('KREFIA.active'),
     passthroughOIDCToken: true,
   },
   SUBSIDIES: {
     url: `${getFromEnv('BFF_SISA_API_ENDPOINT')}`,
-    postponeFetch: !isEnabled('subsidie.active'),
+    postponeFetch: !isEnabled('SUBSIDIE.active'),
   },
   SEARCH_CONFIG: {
     url: IS_DEVELOPMENT

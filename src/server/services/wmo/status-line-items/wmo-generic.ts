@@ -103,7 +103,7 @@ export function isEindeGeldigheidVerstreken(
 export function isDocumentDecisionDateActive(datumAanvraag: string) {
   return (
     isAfterWCAGValidDocumentsDate(datumAanvraag) &&
-    isEnabled('zorgned.documentDecisionDate.active')
+    isEnabled('ZORGNED.documentDecisionDate.active')
   );
 }
 

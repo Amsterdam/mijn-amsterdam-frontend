@@ -28,7 +28,7 @@ export async function fetchParkeren(authProfileAndToken: AuthProfileAndToken) {
   }
 
   shouldCheckForPermitsOrPermitRequests =
-    isEnabled('parkeren.checkForProductAndPermits.active') &&
+    isEnabled('PARKEREN.checkForProductAndPermits.active') &&
     shouldCheckForPermitsOrPermitRequests;
 
   let isKnown = true;

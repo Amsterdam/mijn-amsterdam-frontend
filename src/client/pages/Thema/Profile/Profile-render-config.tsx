@@ -10,9 +10,9 @@ import {
   themaIdKVK,
 } from './Profile-thema-config';
 import { default as ProfilePrivateIcon } from './ProfilePrivateIcon.svg?react';
-import { isEnabled } from '../../config/feature-toggles';
 import { isLoading } from '../../../../universal/helpers/api';
 import { AppState } from '../../../../universal/types/App.types';
+import { isEnabled } from '../../../config/feature-toggles';
 import { ThemaMenuItem } from '../../../config/thema-types';
 
 export const ProfileRoutes = [
@@ -24,7 +24,7 @@ export const ProfileRoutes = [
   {
     route: routeConfig.listPageContactmomenten.path,
     Component: ContactmomentenListPage,
-    isActive: isEnabled('contactmomentenActive'),
+    isActive: isEnabled('CONTACTMOMENTEN.active'),
   },
 ];
 

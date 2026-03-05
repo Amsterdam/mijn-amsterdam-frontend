@@ -8,7 +8,6 @@ import {
 import { useAppStateStore } from './useAppStateStore';
 import { SSE_ERROR_MESSAGE } from './useSSE';
 import { newEventSourceMock } from '../../testing/EventSourceMock';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
 
 vi.mock('./api/useTipsApi');
 vi.mock('./useProfileType');
@@ -117,11 +116,6 @@ describe('useAppState', () => {
   });
 
   test('addParamsToStreamEndpoint', () => {
-    const origValue = FeatureToggle.passQueryParamsToStreamUrl;
-
-    // @ts-expect-error :: For testing purposes
-    FeatureToggle.passQueryParamsToStreamUrl = false;
-
     expect(addParamsToStreamEndpoint('/foo/bar')).toBe('/foo/bar');
 
     expect(
@@ -131,17 +125,11 @@ describe('useAppState', () => {
       )
     ).toBe('/foo/bar');
 
-    // @ts-expect-error :: For testing purposes
-    FeatureToggle.passQueryParamsToStreamUrl = true;
-
     expect(
       addParamsToStreamEndpoint(
         '/foo/bar',
         '?tipsCompareDate=2021-05-23&fooBar=blap'
       )
     ).toBe('/foo/bar?tipsCompareDate=2021-05-23');
-
-    // @ts-expect-error :: For testing purposes
-    FeatureToggle.passQueryParamsToStreamUrl = origValue;
   });
 });

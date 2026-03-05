@@ -145,10 +145,10 @@ export function createLogoutHandler(
       return res.oidc.logout({
         returnTo,
         logoutParams: {
-          id_token_hint: !isEnabled('oidc.logoutHint.active')
+          id_token_hint: !isEnabled('OIDC.logoutHint.active')
             ? auth.token
             : null,
-          logout_hint: isEnabled('oidc.logoutHint.active')
+          logout_hint: isEnabled('OIDC.logoutHint.active')
             ? req[OIDC_SESSION_COOKIE_NAME]?.TMASessionID
             : null,
         },

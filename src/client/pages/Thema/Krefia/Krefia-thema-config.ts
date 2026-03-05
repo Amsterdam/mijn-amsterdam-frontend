@@ -1,5 +1,6 @@
 import type { KrefiaDeepLink } from '../../../../server/services/krefia/krefia.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
+import { isEnabled } from '../../../config/feature-toggles';
 import type { ThemaConfigBase } from '../../../config/thema-types';
 
 const THEMA_ID = 'KREFIA';
@@ -11,7 +12,7 @@ export const themaConfig: KrefiaThemaConfig = {
   id: THEMA_ID,
   title: THEMA_TITLE,
   featureToggle: {
-    active: true,
+    active: isEnabled('KREFIA.active'),
   },
   profileTypes: ['private'],
   redactedScope: 'none',
