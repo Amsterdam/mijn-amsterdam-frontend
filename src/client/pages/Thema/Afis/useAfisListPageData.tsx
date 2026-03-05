@@ -15,18 +15,13 @@ export function useAfisListPageData(
     themaId,
     tableConfig,
     routeConfigListPage,
-    routeConfigDetailPage,
     businessPartnerIdEncrypted,
     facturenByState,
     isThemaPaginaError,
     isThemaPaginaLoading,
   } = useAfisFacturenData(themaContextParams);
 
-  const api = useAfisFacturenApi(
-    businessPartnerIdEncrypted,
-    state,
-    routeConfigDetailPage.path
-  );
+  const api = useAfisFacturenApi(businessPartnerIdEncrypted, state);
 
   const facturen =
     (state === 'open'

@@ -122,8 +122,7 @@ export function useAfisFacturenApi(
   businessPartnerIdEncrypted:
     | AfisThemaResponse['businessPartnerIdEncrypted']
     | undefined,
-  state: AfisFactuurState,
-  detailPath?: string
+  state: AfisFactuurState
 ) {
   const url =
     businessPartnerIdEncrypted && state && state !== 'open'

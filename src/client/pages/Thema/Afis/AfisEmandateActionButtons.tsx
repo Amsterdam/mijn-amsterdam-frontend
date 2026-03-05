@@ -115,17 +115,17 @@ function ApiActionButton<T>({
   );
 }
 
-type AfisEMandateActionUrlProps = {
+type AfisEMandateActionButtonsProps = {
   eMandate: AfisEMandateFrontend;
   redirectUrlApi: BFFApiHook<AfisEMandateSignRequestResponse>;
-  statusChangeApi: BFFApiHook<AfisEMandateStatusChangeResponse>;
+  deactivateApi: BFFApiHook<AfisEMandateStatusChangeResponse>;
 };
 
-export function AfisEMandateActionUrls({
+export function AfisEMandateActionButtons({
   eMandate,
   redirectUrlApi,
-  statusChangeApi,
-}: AfisEMandateActionUrlProps) {
+  deactivateApi,
+}: AfisEMandateActionButtonsProps) {
   return (
     <>
       {eMandate.signRequestUrl && (
@@ -143,8 +143,8 @@ export function AfisEMandateActionUrls({
       &nbsp;
       {eMandate.deactivateUrl && eMandate.status === EMANDATE_STATUS_ACTIVE && (
         <ApiActionButton
-          api={statusChangeApi}
-          fetch={() => statusChangeApi.fetch()}
+          api={deactivateApi}
+          fetch={() => deactivateApi.fetch()}
           label="Stopzetten"
           doConfirm
           confirmationModal={{

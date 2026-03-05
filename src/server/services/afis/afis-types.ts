@@ -495,7 +495,7 @@ export type POMSignRequestStatus =
 
 export type POMSignRequestUrlResponseSource = {
   paylink: string;
-  paylinkId: string;
+  paylink_id: string;
 };
 export type POMSignRequestStatusResponseSource = {
   paylink_id: number;
