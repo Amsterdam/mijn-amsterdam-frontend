@@ -22,10 +22,31 @@ EXTERNAL_URLS=$(
 )
 
 echo_dead_link() {
-  local status_code=$(curl \
-    --globoff --output /dev/null --silent \
+  # Contains default firefox browser headers, otherwise amsterdam.nl will block the requests.
+  local status_code=$(\
+    curl \
+    --globoff \
+    --output /dev/null \
+    --silent \
     --write-out "%{http_code}\n" \
-    "$url")
+    "$url" \
+    -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:140.0) Gecko/20100101 Firefox/140.0' \
+    -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' \
+    -H 'Accept-Language: en-US,en;q=0.5' \
+    -H 'Accept-Encoding: gzip, deflate, br, zstd' \
+    -H 'Sec-GPC: 1' \
+    -H 'Alt-Used: www.amsterdam.nl' \
+    -H 'Connection: keep-alive' \
+    -H 'Upgrade-Insecure-Requests: 1' \
+    -H 'Sec-Fetch-Dest: document' \
+    -H 'Sec-Fetch-Mode: navigate' \
+    -H 'Sec-Fetch-Site: none' \
+    -H 'Sec-Fetch-User: ?1' \
+    -H 'Priority: u=0, i' \
+    -H 'Pragma: no-cache' \
+    -H 'Cache-Control: no-cache' \
+    -H 'TE: trailers'
+  )
 
   # There are also 000 codes, which can be caused by wrong certs or just an invalid URL.
   # I choose to leave these out since I did not see any problems with these URLS when manually checking in the browser.
