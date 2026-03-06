@@ -40,7 +40,7 @@ export type SVGComponent = FunctionComponent<
   SVGProps<SVGSVGElement> & { title?: string | undefined }
 >;
 
-export type MyNotification<ID extends string = string> = {
+export interface MyNotification<ID extends string = string> {
   themaID: ID;
   themaTitle: string;
   datePublished: string;
@@ -52,16 +52,16 @@ export type MyNotification<ID extends string = string> = {
   subject?: string;
   title: string;
 
+  // TIP notifications
+  tipReason?: string;
+  isTip?: true;
+
   // NOTE: Maybe move this to client?
   customLink?: {
     callback: () => void;
     title: string;
   };
-
-  // TIP notifications
-  tipReason?: string;
-  isTip?: true;
-};
+}
 
 export interface GenericDocument {
   id: string;
