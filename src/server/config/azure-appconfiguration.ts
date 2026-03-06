@@ -15,11 +15,6 @@ const featureToggle = {
   ['USER_FEEDBACK.fetchSurvey']: true,
   ['cobrowse']: false,
 };
-if (!IS_DEVELOPMENT) {
-  for (const key of Object.keys(featureToggle)) {
-    featureToggle[key as FeatureToggleKey] = false;
-  }
-}
 // globalThis is used to make sure featureToggles imported from frontend *-thema-configs have access.
 globalThis.MA_FEATURETOGGLES = featureToggle;
 
