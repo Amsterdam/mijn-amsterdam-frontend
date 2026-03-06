@@ -10,6 +10,7 @@ import {
   apiSuccessResult,
   apiDependencyError,
 } from '../../../universal/helpers/api';
+import { createNotificationId } from '../../../universal/helpers/notification';
 import { omit } from '../../../universal/helpers/utils';
 import type { MyNotification } from '../../../universal/types/App.types';
 import type { AuthProfileAndToken } from '../../auth/auth-types';
@@ -22,7 +23,7 @@ function createNotification(
 ): MyNotification {
   const isFibu = type === 'fibu';
   return {
-    id: `krefia-${type}-notification`,
+    id: createNotificationId(themaConfig.id, type, message.datePublished),
     datePublished: message.datePublished,
     title: isFibu
       ? 'Bericht Budgetbeheer (FIBU)'

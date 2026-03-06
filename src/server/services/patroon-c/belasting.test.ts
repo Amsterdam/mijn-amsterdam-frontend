@@ -92,7 +92,7 @@ describe('simple-connect/belasting', () => {
             datePublished: '2022-05-30T09:00:34Z',
             description:
               'Er staan nog aanslagen open waarvoor u een dwangbevel hebt ontvangen. Deze aanslagen zijn nog niet (geheel) voldaan. Voorkom een bezoek van de deurwaarder aan u. Betaal direct.',
-            id: 'belasting-4',
+            id: 'belastingen-4-2022-05-30t09:00:34z',
             link: {
               title: 'Betaal direct',
               to: 'https://belastingbalie-acc.amsterdam.nl/aanslagen.php',
@@ -107,7 +107,7 @@ describe('simple-connect/belasting', () => {
             datePublished: '2022-05-30T09:00:34Z',
             description:
               'Betaal gemakkelijk de gecombineerde belastingaanslag. Regel vandaag nog uw automatische incasso, dan heeft u er straks geen omkijken meer naar.',
-            id: 'belasting-5',
+            id: 'belastingen-5-2022-05-30t09:00:34z',
             isTip: true,
             link: {
               title: 'Vraag direct aan',

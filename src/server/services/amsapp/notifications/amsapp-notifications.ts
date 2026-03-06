@@ -22,6 +22,7 @@ import {
   apiSuccessResult,
   type ApiResponse,
 } from '../../../../universal/helpers/api';
+import { hash } from '../../../../universal/helpers/utils';
 import type { MyNotification } from '../../../../universal/types/App.types';
 import type { AuthProfileAndToken } from '../../../auth/auth-types';
 import { notificationServices } from '../../tips-and-notifications';
@@ -114,7 +115,7 @@ async function fetchNotificationsForService(
     .flat()
     .filter((n): n is MyNotification => n != null)
     .map((notification) => ({
-      id: notification.id,
+      id: hash(notification.id),
       themaId: notification.themaID,
       // If we decide to show the actual notification title, use `notification.title`
       title: DISCRETE_GENERIC_MESSAGE,

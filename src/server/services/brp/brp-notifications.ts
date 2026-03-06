@@ -17,7 +17,7 @@ import type { AuthProfileAndToken } from '../../auth/auth-types';
 export function transformBRPNotifications(
   data: BrpFrontend,
   compareDate: Date
-) {
+): MyNotification[] {
   const adresInOnderzoek = data?.persoon?.adresInOnderzoek;
   const isOnbekendWaarheen = data?.persoon?.vertrokkenOnbekendWaarheen || false;
   const dateLeft = data?.persoon?.datumVertrekUitNederland
@@ -25,13 +25,13 @@ export function transformBRPNotifications(
     : 'Onbekend';
 
   const notifications: MyNotification[] = [];
-
   if (adresInOnderzoek) {
     notifications.push({
       themaID: themaIdBRP,
       themaTitle: themaTitle.BRP,
       datePublished: compareDate.toISOString(),
       isAlert: true,
+      hideDatePublished: true,
       id: 'brpAdresInOnderzoek',
       title: 'Adres in onderzoek',
       description:
@@ -51,6 +51,7 @@ export function transformBRPNotifications(
       themaTitle: themaTitle.BRP,
       datePublished: compareDate.toISOString(),
       isAlert: true,
+      hideDatePublished: true,
       id: 'brpVertrokkenOnbekendWaarheen',
       title: 'Vertrokken Onbekend Waarheen (VOW)',
       description: `U staat sinds ${dateLeft} in de Basisregistratie Personen (BRP) geregistreerd als 'vertrokken onbekend waarheen'.`,

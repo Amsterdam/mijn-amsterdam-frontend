@@ -102,7 +102,7 @@ describe('Kredietbank & FIBU service', () => {
       content: {
         notifications: [
           {
-            id: 'krefia-fibu-notification',
+            id: 'krefia-fibu-2021-07-14t12:34:17',
             datePublished: '2021-07-14T12:34:17',
             title: 'Bericht Budgetbeheer (FIBU)',
             themaID: 'KREFIA',

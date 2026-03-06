@@ -9,6 +9,7 @@ import {
 import { themaConfig } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { dateFormat, isDateInPast } from '../../../universal/helpers/date';
+import { createNotificationId } from '../../../universal/helpers/notification';
 import { isRecentNotification } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
@@ -111,7 +112,11 @@ export function createToeristischeVerhuurNotification(
   }
 
   return {
-    id: `vergunning-${vergunning.id}-notification`,
+    id: createNotificationId(
+      themaConfig.id,
+      vergunning.id,
+      vergunning.displayStatus
+    ),
     datePublished,
     themaID: themaConfig.id,
     themaTitle: themaConfig.title,
@@ -136,7 +141,11 @@ function createRegistratieNotification(
   const linkTo = themaConfig.route.path;
 
   return {
-    id: `toeristiche-verhuur-registratie-${vergunning.registrationNumber}-notification`,
+    id: createNotificationId(
+      themaConfig.id,
+      `registratie`,
+      vergunning.registrationNumber
+    ),
     datePublished,
     themaID: themaConfig.id,
     themaTitle: themaConfig.title,

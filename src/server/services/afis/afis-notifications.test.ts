@@ -106,7 +106,7 @@ describe('fetchAfisNotifications', () => {
       apiSuccessResult({
         notifications: [
           {
-            id: 'facturen-open-notification',
+            id: 'afis-open-2023-01-01',
             datePublished: '2023-01-01T00:00:00.000Z',
             themaID: themaId,
             themaTitle: 'Facturen en betalen',

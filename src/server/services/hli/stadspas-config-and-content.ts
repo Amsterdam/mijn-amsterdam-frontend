@@ -3,6 +3,7 @@ import { generatePath } from 'react-router';
 import { StadspasFrontend } from './stadspas-types';
 import { themaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import { dateFormat, defaultDateFormat } from '../../../universal/helpers/date';
+import { createNotificationId } from '../../../universal/helpers/notification';
 import { MyNotification } from '../../../universal/types/App.types';
 
 export const GPASS_API_TOKEN = process.env.BFF_GPASS_API_TOKEN;
@@ -27,7 +28,11 @@ export function getBudgetNotifications(stadspassen: StadspasFrontend[]) {
     description: string,
     stadspasPassNumber?: string
   ): MyNotification => ({
-    id: `stadspas-budget-notification`,
+    id: createNotificationId(
+      themaConfig.id,
+      'budget',
+      BUDGET_NOTIFICATION_DATE_END
+    ),
     datePublished: dateFormat(new Date(), 'yyyy-MM-dd'),
     themaID: themaConfig.id,
     themaTitle: themaConfig.title,

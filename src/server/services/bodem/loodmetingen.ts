@@ -15,6 +15,7 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
+import { createNotificationId } from '../../../universal/helpers/notification';
 import {
   isRecentNotification,
   sortAlpha,
@@ -124,11 +125,11 @@ function transformLood365Response(
             ? defaultDateFormat(request.RequestedOn)
             : '',
           datumInbehandeling: location?.Workordercreatedon,
-          datumAfgehandeld: datumAfgehandeld,
+          datumAfgehandeld,
           datumAfgehandeldFormatted: datumAfgehandeld
             ? defaultDateFormat(datumAfgehandeld)
             : '',
-          decision: decision,
+          decision,
           displayStatus: location.Friendlystatus,
           processed: isProcessed,
           identifier: location.Reference,
@@ -252,18 +253,19 @@ export async function fetchLoodMetingNotifications(
 }
 
 function createLoodNotification(meting: LoodMetingFrontend): MyNotification {
-  const baseNotification: Omit<
-    MyNotification,
-    'title' | 'description' | 'datePublished'
-  > = {
+  const baseNotification = {
     themaID: themaConfig.id,
     themaTitle: themaConfig.title,
-    id: meting.identifier,
+    id: createNotificationId(
+      themaConfig.id,
+      meting.identifier,
+      meting.displayStatus
+    ),
     link: {
       to: meting.link.to,
       title: 'Bekijk details',
     },
-  };
+  } satisfies Omit<MyNotification, 'title' | 'description' | 'datePublished'>;
 
   switch (meting.displayStatus.toLowerCase() as LoodMetingStatusLowerCase) {
     case 'in behandeling': {

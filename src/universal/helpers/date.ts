@@ -58,6 +58,10 @@ export function formatYear(datestr: string | Date | number) {
   return dateFormat(datestr, 'yyyy');
 }
 
+export function formatYearISOWeek(datestr: string | Date | number) {
+  return dateFormat(datestr, 'yyyyII');
+}
+
 export function calculateDaysBetweenDates(
   date1: string,
   date2: string

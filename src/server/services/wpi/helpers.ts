@@ -12,6 +12,7 @@ import {
 } from './wpi-types';
 import { themaConfig as themaInkomen } from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
 import { defaultDateFormat } from '../../../universal/helpers/date';
+import { createNotificationId } from '../../../universal/helpers/notification';
 import {
   GenericDocument,
   MyNotification,
@@ -100,7 +101,11 @@ export function createProcessNotification(
   const linkTransform = notificationLabels.link;
 
   return {
-    id: `${requestProcess.id}-notification`,
+    id: createNotificationId(
+      themaInkomen.id,
+      requestProcess.id,
+      requestProcess.displayStatus
+    ),
     datePublished: statusStep.datePublished,
     themaID: themaInkomen.id,
     themaTitle: themaInkomen.title,

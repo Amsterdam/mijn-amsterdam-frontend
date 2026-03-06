@@ -9,6 +9,7 @@ import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
+import { createNotificationId } from '../../../universal/helpers/notification';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { sanitizeStringTemplate } from '../../helpers/text';
@@ -47,11 +48,19 @@ export function createAfisFacturenNotification(
   const cta = 'Bekijk uw openstaande facturen';
   const linkTo = routeConfig.themaPage.path;
 
+  // Determine the newest factuur datePublished to ensure that the notification id is unique over time.
+  // All facturen are used because if the latest open factuur is paid but the others are not, we do not want to change the notification id.
+  const lastFactuurDate = facturen
+    .map((factuur) => factuur.datePublished ?? '')
+    .reduce((latest, factuurDatePublished) => {
+      return factuurDatePublished > latest ? factuurDatePublished : latest;
+    });
+
   return {
-    id: `facturen-open-notification`,
+    id: createNotificationId(themaId, 'open', lastFactuurDate),
     datePublished,
     themaID: themaId,
-    themaTitle: themaTitle,
+    themaTitle,
     title,
     description,
     link: {

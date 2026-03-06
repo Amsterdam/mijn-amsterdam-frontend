@@ -13,6 +13,7 @@ import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
+import { createNotificationId } from '../../../universal/helpers/notification';
 import { isRecentNotification } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
@@ -22,16 +23,16 @@ function getNotificationBase<ID extends string>(
   vergunning: ZaakFrontendCombined,
   themaID: ID,
   themaTitle: string
-): Pick<MyNotification, 'themaID' | 'themaTitle' | 'id' | 'link'> {
+) {
   const notificationBaseProperties = {
-    themaID: themaID,
+    themaID,
     themaTitle,
-    id: `vergunning-${vergunning.id}-notification`,
+    id: createNotificationId(themaID, vergunning.id, vergunning.displayStatus),
     link: {
       to: vergunning.link.to,
       title: 'Bekijk details',
     },
-  };
+  } satisfies Pick<MyNotification, 'themaID' | 'themaTitle' | 'id' | 'link'>;
   return notificationBaseProperties;
 }
 

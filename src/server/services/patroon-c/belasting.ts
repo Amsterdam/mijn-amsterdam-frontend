@@ -4,6 +4,7 @@ import {
   type ApiPatternResponseA,
 } from './api-service';
 import { themaConfig } from '../../../client/pages/Thema/Belastingen/Belastingen-thema-config';
+import { createNotificationId } from '../../../universal/helpers/notification';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
@@ -54,7 +55,11 @@ function transformBelastingResponse(
         // Melding / Notification
         case 'M1':
           notifications.push({
-            id: `belasting-${message.nummer}`,
+            id: createNotificationId(
+              themaConfig.id,
+              String(message.nummer),
+              message.datum
+            ),
             themaID: themaConfig.id,
             themaTitle: themaConfig.title,
             title: message.titel,
@@ -69,7 +74,11 @@ function transformBelastingResponse(
         // Tip
         case 'M2':
           tips.push({
-            id: `belasting-${message.nummer}`,
+            id: createNotificationId(
+              themaConfig.id,
+              String(message.nummer),
+              message.datum
+            ),
             datePublished: message.datum,
             title: message.titel,
             description: message.omschrijving,

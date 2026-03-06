@@ -39,6 +39,7 @@ import { requestData } from '../../helpers/source-api-request';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { trackEvent } from '../monitoring';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
+import { createNotificationId } from '../../../universal/helpers/notification';
 
 async function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
   const now = new Date();
@@ -422,7 +423,11 @@ function createBezwaarNotification(bezwaar: BezwaarFrontend) {
   const notification: MyNotification = {
     themaID: themaConfig.id,
     themaTitle: themaConfig.title,
-    id: bezwaar.identificatie,
+    id: createNotificationId(
+      themaConfig.id,
+      bezwaar.identificatie,
+      bezwaar.displayStatus
+    ),
     title: 'Bezwaar ontvangen',
     description: `Wij hebben uw bezwaar ${bezwaar.identificatie} ontvangen.`,
     datePublished: bezwaar.statusdatum ?? bezwaar.startdatum,
