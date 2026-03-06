@@ -116,7 +116,9 @@ async function fetchNotificationsForService(
     .flat()
     .filter(
       (n): n is MyNotification =>
-        n != null && isDateInFuture(n.datePublished, dateSevenDaysAgo) // Storing seven days of notifications should provide enough buffer to account for any historic issues arising from erros or failing to fetch data from the services
+        n != null &&
+        n.isTip !== true &&
+        isDateInFuture(n.datePublished, dateSevenDaysAgo) // Storing seven days of notifications should provide enough buffer to account for any historic issues arising from erros or failing to fetch data from the services
     )
     .map((notification) => ({
       id: notification.id,
@@ -125,9 +127,7 @@ async function fetchNotificationsForService(
       title: DISCRETE_GENERIC_MESSAGE,
       isTip: notification.isTip,
       isAlert: notification.isAlert,
-      datePublished: notification.hideDatePublished
-        ? undefined
-        : notification.datePublished,
+      datePublished: notification.datePublished,
     }));
 
   return apiSuccessResult(notifications);
