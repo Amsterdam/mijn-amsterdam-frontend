@@ -5,7 +5,10 @@ import {
   getSettledResult,
 } from '../../universal/helpers/api';
 import { dateSort } from '../../universal/helpers/date';
-import type { MyNotification } from '../../universal/types/App.types';
+import {
+  NOTIFICATION_PRIORITY,
+  type MyNotification,
+} from '../../universal/types/App.types';
 import { AuthProfileAndToken } from '../auth/auth-types';
 import { fetchAfisNotifications } from './afis/afis-notifications';
 import { fetchAVGNotifications } from './avg/avg';
@@ -170,6 +173,11 @@ export function sortNotificationsAndInsertTips(
   const sorted = notifications
     .toSorted(dateSort('datePublished', 'desc'))
     // Put the alerts on the top regardless of the publication date
+    .toSorted((a, b) => {
+      const aPriority = a.priority ?? NOTIFICATION_PRIORITY.default;
+      const bPriority = b.priority ?? NOTIFICATION_PRIORITY.default;
+      return aPriority === bPriority ? 0 : aPriority > bPriority ? -1 : 1;
+    })
     .toSorted((a, b) => (a.isAlert === b.isAlert ? 0 : a.isAlert ? -1 : 0));
 
   const notificationsWithoutTips = sorted.filter((n) => !n.isTip);
@@ -262,5 +270,11 @@ export async function fetchNotificationsWithTipsInserted(
   const notificationsWithTipsInserted =
     sortNotificationsAndInsertTips(notifications);
 
-  return notificationsWithTipsInserted;
+  const notificationsWithHiddenDatePublishedRemoved =
+    notificationsWithTipsInserted.map((notification) => ({
+      ...notification,
+      datePublished: '',
+    }));
+
+  return notificationsWithHiddenDatePublishedRemoved;
 }

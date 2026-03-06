@@ -32,7 +32,9 @@ type OverlijdenSource = {
   datum: DatumSource;
 };
 
-type InOnderzoek = Record<string, boolean>;
+type InOnderzoek = Record<string, boolean | DatumSource> & {
+  datumIngangOnderzoek: DatumSource;
+};
 
 export type VerblijfplaatsSource = {
   type:
@@ -205,7 +207,10 @@ export type Persoon = PersoonBasis & {
   datumVertrekUitNederland: string | null;
   datumVertrekUitNederlandFormatted?: string | null;
   indicatieGeheim: boolean;
-  adresInOnderzoek: '080000' | '089999' | null;
+  adresInOnderzoek: {
+    type: '080000' | '089999';
+    datumIngangOnderzoek: string | null;
+  } | null;
 };
 
 export type Verbintenis = {

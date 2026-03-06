@@ -94,7 +94,7 @@ describe('fetchAfisNotifications', () => {
 
   it('should return notifications if fetchIsKnownInAFIS is successful', async () => {
     const facturen: AfisFactuur[] = [
-      createAfisFactuur('1', 'openstaand', '123', '2023-01-01'),
+      createAfisFactuur('1', 'openstaand', '123', '2022-12-31'),
     ];
     (fetchIsKnownInAFIS as Mock).mockResolvedValue({
       status: 'OK',
@@ -107,7 +107,9 @@ describe('fetchAfisNotifications', () => {
         notifications: [
           {
             id: 'facturen-open-notification',
-            datePublished: '2023-01-01T00:00:00.000Z',
+            datePublished: '2022-12-31',
+            hideDatePublished: true,
+            priority: 6,
             themaID: themaId,
             themaTitle: 'Facturen en betalen',
             title: 'Betaal tijdig om extra kosten te voorkomen',

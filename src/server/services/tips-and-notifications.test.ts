@@ -1,7 +1,10 @@
 import { describe, expect } from 'vitest';
 
 import { sortNotificationsAndInsertTips } from './tips-and-notifications';
-import { MyNotification } from '../../universal/types/App.types';
+import {
+  MyNotification,
+  NOTIFICATION_PRIORITY,
+} from '../../universal/types/App.types';
 
 describe('tips-and-notifications', () => {
   test('Should sort notifications by datePublished and insert tips', () => {
@@ -76,5 +79,42 @@ describe('tips-and-notifications', () => {
     expect(sortedNotifications[4].title).toBe('notification 3');
     expect(sortedNotifications[5].title).toBe('tip 1');
     expect(sortedNotifications[6].title).toBe('tip 2');
+  });
+
+  test('Should sort notifications by datePublished and priority', () => {
+    const notifications = [
+      {
+        title: 'tip 0',
+        themaID: 'thema',
+        description: 'description',
+        id: 'id',
+        datePublished: '2021-09-07',
+      },
+      {
+        title: 'notification 4',
+        themaID: 'thema',
+        description: 'description',
+        id: 'id',
+        datePublished: '2021-08-07',
+        priority: NOTIFICATION_PRIORITY.high,
+      },
+      {
+        title: 'notification 1',
+        themaID: 'thema',
+        description: 'description',
+        id: 'id',
+        datePublished: '2021-07-07',
+        priority: NOTIFICATION_PRIORITY.high,
+      },
+    ] as unknown as MyNotification[];
+
+    const sortedNotifications = sortNotificationsAndInsertTips(
+      notifications,
+      false
+    );
+
+    expect(sortedNotifications[0].title).toBe('notification 4');
+    expect(sortedNotifications[1].title).toBe('notification 1');
+    expect(sortedNotifications[2].title).toBe('tip 0');
   });
 });

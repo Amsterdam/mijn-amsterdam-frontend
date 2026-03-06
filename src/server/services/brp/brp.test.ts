@@ -8,7 +8,11 @@ import {
   fetchBrpVerblijfplaatsHistoryByBsn,
   fetchAantalBewoners,
 } from './brp';
-import { AANTAL_BEWONERS_NOT_SET } from './brp-config';
+import {
+  AANTAL_BEWONERS_NOT_SET,
+  ADRES_IN_ONDERZOEK_A,
+  ADRES_IN_ONDERZOEK_B,
+} from './brp-config';
 import {
   DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_FROM,
   DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_TO,
@@ -285,6 +289,55 @@ describe('brp.ts', () => {
       expect(translateBSN('111111111')).toBe('222222222');
 
       process.env.BFF_BENK_BSN_TRANSLATIONS = envValue;
+    });
+  });
+
+  describe('getAdresInOnderzoek', () => {
+    test('if a person is under investigation', () => {
+      const verblijfplaats = {
+        verblijfadres: {
+          inOnderzoek: {
+            datumIngangOnderzoek: {
+              type: 'Datum',
+              datum: '2000-12-01',
+              langFormaat: '01 december 2000',
+            },
+          },
+        },
+        datumVan: {
+          type: 'Datum',
+          datum: '2000-12-02',
+          langFormaat: '02 december 2000',
+        },
+        inOnderzoek: {
+          datumIngangOnderzoek: {
+            type: 'Datum',
+            datum: '2000-12-03',
+            langFormaat: '03 december 2000',
+          },
+        },
+      } as PersoonSource['verblijfplaats'];
+
+      expect(forTesting.getAdresInOnderzoek(verblijfplaats)).toMatchObject({
+        type: ADRES_IN_ONDERZOEK_A,
+        datumIngangOnderzoek: '2000-12-03',
+      });
+
+      expect(
+        forTesting.getAdresInOnderzoek({
+          ...verblijfplaats,
+          indicatieVastgesteldVerblijftNietOpAdres: true,
+        })
+      ).toMatchObject({
+        type: ADRES_IN_ONDERZOEK_B,
+        datumIngangOnderzoek: '2000-12-03',
+      });
+    });
+
+    it('if a person is not under investigation', () => {
+      expect(
+        forTesting.getAdresInOnderzoek({} as PersoonSource['verblijfplaats'])
+      ).toBeNull();
     });
   });
 

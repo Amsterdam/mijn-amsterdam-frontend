@@ -1,7 +1,7 @@
-import { FunctionComponent, ReactNode, SVGProps } from 'react';
+import type { FunctionComponent, ReactNode, SVGProps } from 'react';
 
 import type { ServiceID, ServicesType } from '../../server/services/controller';
-import { ApiResponse_DEPRECATED } from '../helpers/api';
+import type { ApiResponse_DEPRECATED } from '../helpers/api';
 import type { SomeOtherString } from '../helpers/types';
 
 export type AppStateBase = {
@@ -40,6 +40,10 @@ export type SVGComponent = FunctionComponent<
   SVGProps<SVGSVGElement> & { title?: string | undefined }
 >;
 
+export const NOTIFICATION_PRIORITY = {
+  default: 3,
+  high: 6,
+} as const;
 export interface MyNotification<ID extends string = string> {
   themaID: ID;
   themaTitle: string;
@@ -47,6 +51,7 @@ export interface MyNotification<ID extends string = string> {
   description?: string;
   hideDatePublished?: boolean;
   id: string;
+  priority?: (typeof NOTIFICATION_PRIORITY)[keyof typeof NOTIFICATION_PRIORITY];
   isAlert?: boolean;
   link?: LinkProps;
   subject?: string;
