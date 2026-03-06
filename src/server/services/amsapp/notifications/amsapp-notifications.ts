@@ -22,6 +22,7 @@ import {
   apiSuccessResult,
   type ApiResponse,
 } from '../../../../universal/helpers/api';
+import { isDateInFuture } from '../../../../universal/helpers/date';
 import type { MyNotification } from '../../../../universal/types/App.types';
 import type { AuthProfileAndToken } from '../../../auth/auth-types';
 import { notificationServices } from '../../tips-and-notifications';
@@ -110,9 +111,13 @@ async function fetchNotificationsForService(
     );
   }
 
+  const dateSevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
   const notifications = Object.values(response.content ?? [])
     .flat()
-    .filter((n): n is MyNotification => n != null)
+    .filter(
+      (n): n is MyNotification =>
+        n != null && isDateInFuture(n.datePublished, dateSevenDaysAgo) // Storing seven days of notifications should provide enough buffer to account for any historic issues arising from erros or failing to fetch data from the services
+    )
     .map((notification) => ({
       id: notification.id,
       themaId: notification.themaID,
