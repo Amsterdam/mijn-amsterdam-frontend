@@ -183,8 +183,7 @@ describe('afis-e-mandates service (with nock)', () => {
       expect(bankCreateData).toStrictEqual({
         BankAccount: '9343513650',
         BankAccountHolderName: 'John Doe',
-        BankAccountReferenceText:
-          'Bankrekening toegevoegd via Mijn Amsterdam voor E-Mandaat afdeling Afval.',
+        BankAccountReferenceText: 'MA EMandaat Afval',
         BankCountryKey: 'NL',
         BankName: 'BOOG',
         BankNumber: 'BOOG',
