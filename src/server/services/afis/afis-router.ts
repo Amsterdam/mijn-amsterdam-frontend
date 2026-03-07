@@ -55,7 +55,7 @@ attachDocumentDownloadRoute(
     handleAfisRequestWithEncryptedPayloadQueryParam<
       QueryPayload,
       ServiceReturnType
-    >(fetchAfisBusinessPartnerDetails, 'id')
+    >((authProfile) => fetchAfisBusinessPartnerDetails(authProfile), 'id')
   );
 }
 
