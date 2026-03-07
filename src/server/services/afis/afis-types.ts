@@ -486,7 +486,7 @@ export type POMSignRequestStatus =
   | 'no_response' // No reaction to the message
   | 'visited_website' // Customer has clicked on the link
   | 'payment_started' // Payment started, but not yet finished
-  | 'payment_canceled' // Payment cancelled by the customer
+  | 'payment_cancelled' // Payment cancelled by the customer
   | 'payment_failed' // Payment failed. E.g. insufficient funds
   | 'payment_invalid' // Payment started, but status not yet known
   | 'payment_expired' // Payment started, but not completed on time
