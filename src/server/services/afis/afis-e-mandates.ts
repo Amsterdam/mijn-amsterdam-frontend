@@ -211,10 +211,6 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
     LifetimeTo: lifetimeTo,
   };
 
-  debugEmandates(
-    'Deactivating other active e-mandates for creditor.',
-    payloadCreateEmandate
-  );
   await disableOtherActiveEMandatesForCreditor(
     businessPartnerId,
     creditor.refId
@@ -240,6 +236,11 @@ async function disableOtherActiveEMandatesForCreditor(
   const eMandateIdsResponse = await fetchEmandateIdsByCreditorRefId(
     businessPartnerId,
     creditorRefId
+  );
+
+  debugEmandates(
+    'Deactivating other active e-mandates for creditor.',
+    eMandateIdsResponse
   );
 
   if (eMandateIdsResponse.status !== 'OK') {
