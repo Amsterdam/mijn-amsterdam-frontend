@@ -83,9 +83,13 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
 
   const businessPartnerId = formatBusinessPartnerId(payload.businessPartnerId);
 
-  const businessPartnerResponse = await fetchAfisBusinessPartnerDetails({
-    businessPartnerId,
-  });
+  const INCLUDE_PHOTO_AND_EMAIL = false;
+  const businessPartnerResponse = await fetchAfisBusinessPartnerDetails(
+    {
+      businessPartnerId,
+    },
+    INCLUDE_PHOTO_AND_EMAIL
+  );
 
   debugEmandates(
     'Fetched business partner details for businessPartnerId %s with response: %o',
