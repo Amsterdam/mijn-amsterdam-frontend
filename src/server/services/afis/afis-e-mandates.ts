@@ -1,5 +1,5 @@
 import { HttpStatusCode } from 'axios';
-import { add } from 'date-fns';
+import { add, subDays } from 'date-fns';
 import slug from 'slugme';
 import { firstBy } from 'thenby';
 
@@ -670,7 +670,7 @@ export async function deactivateEmandate(
   const now = new Date();
   // The PUT endpoint does not reply with data. Only a status.
   // So we derive the new status from the change payload.
-  const LifetimeTo = isoDateTimeFormatCompact(now);
+  const LifetimeTo = isoDateTimeFormatCompact(subDays(now, 1));
 
   function transformResponse() {
     const dateValidTo = isoDateFormat(now);

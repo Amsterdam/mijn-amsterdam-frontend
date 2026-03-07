@@ -93,8 +93,7 @@ export function useSignRequestStatusCheck(eMandate: AfisEMandateFrontend) {
   const isPendingActivation =
     api.isDirty &&
     !!payload &&
-    EMANDATE_SIGN_REQUEST_SUCCESS_STATUSES.includes(statusResponse) &&
-    eMandate.status !== EMANDATE_STATUS_ACTIVE;
+    EMANDATE_SIGN_REQUEST_SUCCESS_STATUSES.includes(statusResponse);
 
   useEffect(() => {
     if (!payload) {
