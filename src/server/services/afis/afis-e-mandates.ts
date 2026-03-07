@@ -83,12 +83,12 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
 
   const businessPartnerId = formatBusinessPartnerId(payload.businessPartnerId);
 
-  const INCLUDE_PHOTO_AND_EMAIL = false;
+  const INCLUDE_PHONE_AND_EMAIL = false;
   const businessPartnerResponse = await fetchAfisBusinessPartnerDetails(
     {
       businessPartnerId,
     },
-    INCLUDE_PHOTO_AND_EMAIL
+    INCLUDE_PHONE_AND_EMAIL
   );
 
   debugEmandates(
@@ -162,7 +162,7 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
     // TODO: Is this possible?
   }
 
-  // We start the e-mandate lifetime with an end date far in the future.
+  // We start the e-mandate lifetime with an enddate far in the future.
   // The user can later adjust this date.
   const lifetimeTo = AFIS_EMANDATE_RECURRING_DATE_END;
   const houseNumber = businessPartnerDetails.address?.HouseNumber ?? '';
