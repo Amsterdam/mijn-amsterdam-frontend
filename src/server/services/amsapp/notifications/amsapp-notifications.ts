@@ -24,7 +24,10 @@ import {
 } from '../../../../universal/helpers/api';
 import type { MyNotification } from '../../../../universal/types/App.types';
 import type { AuthProfileAndToken } from '../../../auth/auth-types';
-import { notificationServices } from '../../tips-and-notifications';
+import {
+  notificationServices,
+  type NotificationsAndTipsResponse,
+} from '../../tips-and-notifications';
 
 /**
  * The Notification service allows batch handling of notifications for previously verified consumers
@@ -59,9 +62,13 @@ export async function batchFetchAndStoreNotifications() {
   const profiles = await listProfileIds();
   for (const profile of profiles) {
     const promises = profile.serviceIds.map(async (serviceId) => {
-      const notifications = await fetchNotificationsForService(
+      const serviceResponse = await fetchNotificationsForService(
         profile.profileId,
         serviceId
+      );
+      const notifications = transformNotificationsForExternalUse(
+        serviceId,
+        serviceResponse
       );
       return {
         ...notifications,
@@ -87,7 +94,7 @@ export async function batchFetchNotifications() {
 async function fetchNotificationsForService(
   profileId: BSN,
   serviceId: ServiceId
-): Promise<ApiResponse<NotificationsLean[]>> {
+): Promise<NotificationsAndTipsResponse> {
   const BYTE_LENGTH = 16;
   const authProfileAndToken: AuthProfileAndToken = {
     // TODO: Update notificationServices to accept a leaner AuthProfileAndToken with only profile.id and profile.profileType
@@ -102,15 +109,21 @@ async function fetchNotificationsForService(
   };
 
   const fetchNotificationsForService = notificationServices.private[serviceId];
-  const response = await fetchNotificationsForService(authProfileAndToken);
-  if (response.status !== 'OK') {
+  return await fetchNotificationsForService(authProfileAndToken);
+}
+
+function transformNotificationsForExternalUse(
+  serviceId: ServiceId,
+  serviceResponse: NotificationsAndTipsResponse
+): ApiResponse<NotificationsLean[]> {
+  if (serviceResponse.status !== 'OK') {
     return apiErrorResult(
-      `Could not fetch notifications for service ${serviceId} ${response.status === 'ERROR' ? ` - ${response.message}` : ''}`,
+      `Could not fetch notifications for service ${serviceId}}`,
       null
     );
   }
 
-  const notifications = Object.values(response.content ?? [])
+  const notifications = Object.values(serviceResponse.content ?? [])
     .flat()
     .filter((n): n is MyNotification => n != null)
     .map((notification) => ({

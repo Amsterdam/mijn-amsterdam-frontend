@@ -36,7 +36,7 @@ const filters = {
 
 const filterQueryParam = encodeURIComponent(JSON.stringify(filters));
 
-export async function fetchAdoptableTrashContainers(
+export async function fetchAdoptableTrashContainerTips(
   authProfileAndToken: AuthProfileAndToken
 ) {
   const BRP = await fetchBrp(authProfileAndToken);

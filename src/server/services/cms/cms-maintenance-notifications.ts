@@ -46,7 +46,7 @@ function transformCMSEventResponse(
     title: eventData.item.page.title,
     path: eventData.item.relUrl.replace(REPLACE_REL_URL_PARTS, ''),
     themaID: themaId,
-    themaTitle: themaTitle,
+    themaTitle,
     isAlert: true,
     severity: DEFAULT_SEVERITY,
     datePublished: new Date().toISOString(),
@@ -144,6 +144,7 @@ async function fetchCMSMaintenanceNotifications(
   return apiSuccessResult(notifications);
 }
 
+// The maintenance and outage notifications.
 export async function fetchActiveMaintenanceNotifications(
   queryParams: QueryParamsMaintenanceNotifications
 ) {
@@ -172,9 +173,26 @@ export async function fetchActiveMaintenanceNotifications(
   return apiSuccessResult(filteredNotifications);
 }
 
+// The maintenance and outage notifications for the tips and notification list
 export async function fetchMaintenanceNotificationsDashboard() {
-  return fetchActiveMaintenanceNotifications({
+  const dashboardCMSNotifications = await fetchActiveMaintenanceNotifications({
     page: 'dashboard',
+  });
+
+  if (dashboardCMSNotifications.status !== 'OK') {
+    return dashboardCMSNotifications;
+  }
+
+  const tips = dashboardCMSNotifications.content.filter(
+    (notification) => notification.isTip
+  );
+  const notifications = dashboardCMSNotifications.content.filter(
+    (notification) => !notification.isTip
+  );
+
+  return apiSuccessResult({
+    notifications,
+    tips,
   });
 }
 
