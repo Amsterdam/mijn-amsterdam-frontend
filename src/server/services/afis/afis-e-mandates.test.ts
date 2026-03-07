@@ -112,7 +112,7 @@ describe('afis-e-mandates service (with nock)', () => {
   });
 
   describe('createAfisEMandate - Happy scenario', () => {
-    it('creates a mandate if all checks pass', async () => {
+    it('creates an Emandate and Bankdetails', async () => {
       const s = vi.spyOn(sourceApiRequest, 'requestData');
 
       remoteApi.get(/A_BusinessPartner/).reply(200, {
@@ -148,6 +148,9 @@ describe('afis-e-mandates service (with nock)', () => {
       // Create bankaccount
       remoteApi.post(/A_BusinessPartnerBank/).reply(200);
 
+      // Read existing mandates for business partner
+      remoteApi.get(/Mandate_readSet/).reply(200);
+
       remoteApi.post(/CreateMandate/).reply(200);
 
       const result =
@@ -155,7 +158,22 @@ describe('afis-e-mandates service (with nock)', () => {
           validPayload
         );
 
-      const bankCreateData = (s.mock.calls.at(-2)?.at(-1) as DataRequestConfig)
+      expect(s.mock.calls.map((x) => x[0].url)).toStrictEqual([
+        // get business partner details
+        'http://remote-api-host/afis/RESTAdapter/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner',
+        // get business partner address
+        'http://remote-api-host/afis/RESTAdapter/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerAddress',
+        // check if bank account exists
+        "http://remote-api-host/afis/RESTAdapter/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerBank?$filter=IBAN eq 'NL35BOOG9343513650' and BusinessPartner eq '0000000123'&$orderBy=BankIdentification desc",
+        // create bank account
+        'http://remote-api-host/afis/RESTAdapter/BusinessPartner/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerBank',
+        // read existing mandates for business partner
+        "http://remote-api-host/afis/RESTAdapter/Mandate/ZGW_FI_MANDATE_SRV_01/Mandate_readSet?$filter=SndId eq '0000000123'",
+        // create mandate
+        'http://remote-api-host/afis/RESTAdapter/CreateMandate/ZGW_FI_MANDATE_SRV_01/Mandate_createSet',
+      ]);
+
+      const bankCreateData = (s.mock.calls.at(-3)?.at(-1) as DataRequestConfig)
         .data;
 
       const emandateCreateData = (
