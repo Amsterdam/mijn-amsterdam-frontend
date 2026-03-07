@@ -1,6 +1,7 @@
 import * as ibantools from 'ibantools';
 
 import {
+  debugBusinesspartner,
   formatBusinessPartnerId,
   getAfisApiConfig,
   getFeedEntryProperties,
@@ -277,6 +278,12 @@ export async function createBusinessPartnerBankAccount(
     CollectionAuthInd: true,
     BankAccountReferenceText: `Bankrekening toegevoegd via Mijn Amsterdam voor E-Mandaat afdeling ${payload.creditorName ?? 'onbekend'}.`,
   };
+
+  debugBusinesspartner(
+    'Creating bank account for businessPartnerId %s with payload: %o.',
+    payload.businessPartnerId,
+    createBankAccountPayload
+  );
 
   const additionalConfig: DataRequestConfig = {
     method: 'POST',

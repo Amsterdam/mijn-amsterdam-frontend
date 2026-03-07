@@ -93,6 +93,7 @@ export function getEmandateDisplayStatus(
 }
 
 export const debugEmandates = createDebugger('afis:emandates');
+export const debugBusinesspartner = createDebugger('afis:businesspartner');
 
 export function formatBusinessPartnerId(
   businessPartnerId: BusinessPartnerId
