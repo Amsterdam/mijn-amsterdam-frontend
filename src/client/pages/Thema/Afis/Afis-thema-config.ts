@@ -227,13 +227,7 @@ export function getAfisListPageDocumentTitle<T extends Params<string>>(
 }
 
 export const EMANDATE_STATUS_ACTIVE = '1';
-export const EMANDATE_SIGN_REQUEST_FAILED_STATUSES = [
-  'payment_failed',
-  'payment_canceled',
-  'payment_invalid',
-  'payment_expired',
-  'no_response',
-];
+export const EMANDATE_SIGN_REQUEST_SUCCESS_STATUSES = ['payment_started'];
 
 const ONE_MINUTE_MS = 60000;
 export const AFIS_EMANDATE_LONG_DURATION_THRESHOLD_MS = 10 * ONE_MINUTE_MS;
