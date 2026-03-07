@@ -282,7 +282,7 @@ export async function createBusinessPartnerBankAccount(
     BankCountryKey: iban.countryCode ?? '',
     CollectionAuthInd: true,
     BankAccountReferenceText:
-      `MA EMandaat ${payload.creditorName ?? 'onbekend'}.`.slice(0, 20),
+      `MA EMandaat ${payload.creditorName ?? 'onbekend'}`.slice(0, 20),
   };
 
   debugBusinesspartner(
