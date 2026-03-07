@@ -83,28 +83,24 @@ export async function fetchTipsAndNotifications<ID extends string = string>(
   apiConfig: DataRequestConfig = {},
   themaID: ID,
   authProfileAndToken?: AuthProfileAndToken
-): Promise<
-  ApiResponse<Pick<ApiPatternResponseA, 'notifications' | 'tips'> | null>
-> {
+): Promise<ApiResponse<Pick<ApiPatternResponseA, 'notifications' | 'tips'>>> {
   const response = await fetchService(apiConfig, true, authProfileAndToken);
-
-  if (response.status === 'OK') {
-    const responseData: Pick<ApiPatternResponseA, 'notifications' | 'tips'> =
-      {};
-
-    if (response.content?.notifications) {
-      responseData.notifications = transformNotificationsDefault(
-        response.content.notifications,
-        themaID
-      );
-    }
-
-    if (response.content?.tips) {
-      responseData.tips = response.content?.tips;
-    }
-
-    return apiSuccessResult(responseData);
+  if (response.status !== 'OK') {
+    return response;
   }
 
-  return response;
+  const responseData: Pick<ApiPatternResponseA, 'notifications' | 'tips'> = {};
+
+  if (response.content?.notifications) {
+    responseData.notifications = transformNotificationsDefault(
+      response.content.notifications,
+      themaID
+    );
+  }
+
+  if (response.content?.tips) {
+    responseData.tips = response.content?.tips;
+  }
+
+  return apiSuccessResult(responseData);
 }

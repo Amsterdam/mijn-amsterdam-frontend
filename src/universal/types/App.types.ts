@@ -55,6 +55,7 @@ export interface MyNotification<ID extends string = string> {
   // TIP notifications
   tipReason?: string;
   isTip?: true;
+  isNotification?: true;
 
   // NOTE: Maybe move this to client?
   customLink?: {
