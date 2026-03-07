@@ -4,7 +4,7 @@ import { Paragraph } from '@amsterdam/design-system-react';
 
 import {
   AFIS_EMANDATE_LONG_DURATION_THRESHOLD_MS,
-  EMANDATE_SIGN_REQUEST_FAILED_STATUSES,
+  EMANDATE_SIGN_REQUEST_SUCCESS_STATUSES,
   EMANDATE_STATUS_ACTIVE,
 } from './Afis-thema-config';
 import type {
@@ -25,6 +25,8 @@ export function useSignRequestPayloadStorage() {
     'afis-emandate-status-check-payload',
     []
   );
+
+  // TODO: Add effect the cleans up old payloads that are no longer relevant to prevent unnecessary status checks and storage bloat.
 
   function get(
     eMandateId: AfisEMandateFrontend['id'],
@@ -54,6 +56,7 @@ export function useSignRequestPayloadStorage() {
       return get(eMandateId, 1);
     },
     hasPendingStatusChecks(): boolean {
+      //TODO: Also check for age of payload to prevent unnecessary status checks for old payloads.
       return payloads.length > 0;
     },
     isTakingLong(eMandateId: AfisEMandateFrontend['id']): boolean {
@@ -90,7 +93,7 @@ export function useSignRequestStatusCheck(eMandate: AfisEMandateFrontend) {
   const isPendingActivation =
     api.isDirty &&
     !!payload &&
-    !EMANDATE_SIGN_REQUEST_FAILED_STATUSES.includes(statusResponse) &&
+    EMANDATE_SIGN_REQUEST_SUCCESS_STATUSES.includes(statusResponse) &&
     eMandate.status !== EMANDATE_STATUS_ACTIVE;
 
   useEffect(() => {
@@ -102,7 +105,7 @@ export function useSignRequestStatusCheck(eMandate: AfisEMandateFrontend) {
       if (
         eMandate.status === EMANDATE_STATUS_ACTIVE ||
         (statusResponse &&
-          EMANDATE_SIGN_REQUEST_FAILED_STATUSES.includes(statusResponse))
+          !EMANDATE_SIGN_REQUEST_SUCCESS_STATUSES.includes(statusResponse))
       ) {
         payloadStorage.remove(eMandate.id);
       }
