@@ -184,7 +184,8 @@ async function fetchEmail(addressId: AfisBusinessPartnerAddress['id']) {
 
 /** Fetches the business partner details, phonenumber and emailaddress from the AFIS source API and combines then into a single response */
 export async function fetchAfisBusinessPartnerDetails(
-  payload: BusinessPartnerIdPayload
+  payload: BusinessPartnerIdPayload,
+  includePhoneAndEmail = true
 ): Promise<ApiResponse<AfisBusinessPartnerDetailsTransformed>> {
   const businessPartnerId: BusinessPartnerId = payload.businessPartnerId;
   const fullNameRequest = fetchBusinessPartnerFullName(businessPartnerId);
@@ -208,27 +209,31 @@ export async function fetchAfisBusinessPartnerDetails(
     );
   }
 
-  let phoneResponse: ApiResponse_DEPRECATED<AfisBusinessPartnerPhone | null>;
-  let emailResponse: ApiResponse_DEPRECATED<AfisBusinessPartnerEmail | null>;
+  let phoneResponse: ApiResponse_DEPRECATED<AfisBusinessPartnerPhone | null> =
+    apiSuccessResult(null);
+  let emailResponse: ApiResponse_DEPRECATED<AfisBusinessPartnerEmail | null> =
+    apiSuccessResult(null);
 
-  if (addressResponse.status === 'OK' && addressResponse.content?.id) {
-    const phoneRequest = fetchPhoneNumber(addressResponse.content.id);
-    const emailRequest = fetchEmail(addressResponse.content.id);
+  if (includePhoneAndEmail) {
+    if (addressResponse.status === 'OK' && addressResponse.content?.id) {
+      const phoneRequest = fetchPhoneNumber(addressResponse.content.id);
+      const emailRequest = fetchEmail(addressResponse.content.id);
 
-    const [phoneResponseSettled, emailResponseSettled] =
-      await Promise.allSettled([phoneRequest, emailRequest]);
+      const [phoneResponseSettled, emailResponseSettled] =
+        await Promise.allSettled([phoneRequest, emailRequest]);
 
-    phoneResponse = getSettledResult(phoneResponseSettled);
-    emailResponse = getSettledResult(emailResponseSettled);
-  } else {
-    phoneResponse = apiErrorResult(
-      'Could not get phone, missing required query param addressId',
-      null
-    );
-    emailResponse = apiErrorResult(
-      'Could not get email, missing required query param addressId',
-      null
-    );
+      phoneResponse = getSettledResult(phoneResponseSettled);
+      emailResponse = getSettledResult(emailResponseSettled);
+    } else {
+      phoneResponse = apiErrorResult(
+        'Could not get phone, missing required query param addressId',
+        null
+      );
+      emailResponse = apiErrorResult(
+        'Could not get email, missing required query param addressId',
+        null
+      );
+    }
   }
 
   const detailsCombined: AfisBusinessPartnerDetailsTransformed = {
