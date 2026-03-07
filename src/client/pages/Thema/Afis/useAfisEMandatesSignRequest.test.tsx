@@ -170,7 +170,7 @@ describe('useAfisEMandatesSignRequest', () => {
   describe('useSignRequestStatusCheck', () => {
     // Tests for the useAfisEMandatesSignRequest hook would go here, but since it's not fully implemented in the provided code snippet, we will focus on the useSignRequestPayloadStorage tests for now.
     function mockFetchOnce(
-      status: POMSignRequestStatus = 'visited_website',
+      status: POMSignRequestStatus = 'payment_started',
       code: number = 200
     ) {
       return vi.spyOn(window, 'fetch').mockResolvedValueOnce(
@@ -238,7 +238,7 @@ describe('useAfisEMandatesSignRequest', () => {
       await act(async () => {});
       expect(result.current.data).toEqual({
         content: {
-          status: 'visited_website',
+          status: 'payment_started',
         },
         status: 'OK',
       });
@@ -267,8 +267,8 @@ describe('useAfisEMandatesSignRequest', () => {
       );
     });
 
-    it('should fetch status check if payload is present and handle CANCELLED response correctly', async () => {
-      const fetchMock = mockFetchOnce('payment_canceled');
+    it('should fetch status check if payload is present and handle NON SUCCESS response correctly', async () => {
+      const fetchMock = mockFetchOnce('payment_cancelled');
       window.localStorage.setItem(
         'afis-emandate-status-check-payload',
         JSON.stringify([[eMandate.id, 'payload', new Date().toISOString()]])
@@ -286,7 +286,7 @@ describe('useAfisEMandatesSignRequest', () => {
       await act(async () => {});
       expect(result.current.data).toEqual({
         content: {
-          status: 'payment_canceled',
+          status: 'payment_cancelled',
         },
         status: 'OK',
       });
@@ -318,7 +318,7 @@ describe('useAfisEMandatesSignRequest', () => {
       expect(result.current.errorData).toBe('Network error');
       expect(result.current.isDirty).toBe(true);
       expect(result.current.isError).toBe(true);
-      expect(result.current.isPendingActivation).toBe(true);
+      expect(result.current.isPendingActivation).toBe(false);
     });
   });
 });
