@@ -62,7 +62,7 @@ export async function storeNotificationsResponses(
   serviceResponses: Record<ServiceId, NotificationsAndTipsResponse>
 ): Promise<void> {
   const responses = entries(serviceResponses)
-    .filter(([_, response]) => response.status === 'OK')
+    .filter(([_, response]) => response.status === 'OK') // Unsuccessful responses do not contain new notifications
     .map(
       ([serviceId, response]: [ServiceId, NotificationsAndTipsResponse]) => ({
         ...transformNotificationsForExternalUse(serviceId, response),
