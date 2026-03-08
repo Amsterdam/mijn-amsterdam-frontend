@@ -100,12 +100,17 @@ WHERE $1 = ANY (consumer_ids)
 RETURNING profile_id, consumer_ids;
     `,
   updateNotifications: `\
--- This does not yet filter out services not in the serviceIds column, which may be needed later
-UPDATE ${TABLE_NAME}
+UPDATE ${TABLE_NAME} row
 SET date_updated = now(), content = jsonb_set(
   coalesce(content, '{}'::jsonb),
   '{services}',
-  coalesce(content->'services', '{}'::jsonb) || $2
+  coalesce(content->'services', '{}'::jsonb)
+    ||
+    ( -- Only allow services that are in the service_ids column to be updated
+      SELECT coalesce(jsonb_object_agg(key, value), '{}'::jsonb)
+      FROM jsonb_each($2::jsonb)
+      WHERE key = ANY (row.service_ids)
+    )
 )
 WHERE profile_id = $1;
 `,
