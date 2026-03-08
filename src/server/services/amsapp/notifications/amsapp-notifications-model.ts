@@ -46,11 +46,11 @@ const db = {
 };
 
 // POSTGRES is case insensitive. We therefore always use snake_case within postgres
-const TABLE_NAME = 'bff_notifications';
+export const NOTIFICATIONS_TABLE_NAME = 'bff_notifications';
 async function setupTables() {
   const createTableQuery = `
     -- Table Definition
-    CREATE TABLE IF NOT EXISTS "public"."${TABLE_NAME}" (
+    CREATE TABLE IF NOT EXISTS "public"."${NOTIFICATIONS_TABLE_NAME}" (
       "profile_id" varchar(43) NOT NULL,
       "consumer_ids" varchar(100)[] DEFAULT '{}',
       "service_ids" varchar(50)[] DEFAULT '{}',
@@ -62,16 +62,16 @@ async function setupTables() {
   `;
 
   const alterTableQuery1 = `
-        ALTER TABLE IF EXISTS "public"."${TABLE_NAME}"
+        ALTER TABLE IF EXISTS "public"."${NOTIFICATIONS_TABLE_NAME}"
         ADD IF NOT EXISTS "profile_name" VARCHAR(200);
       `;
 
   try {
     await db.query(createTableQuery);
     await db.query(alterTableQuery1);
-    logger.info(`setupTable: ${TABLE_NAME} succeeded.`);
+    logger.info(`setupTable: ${NOTIFICATIONS_TABLE_NAME} succeeded.`);
   } catch (error) {
-    logger.error(error, `setupTable: ${TABLE_NAME} failed.`);
+    logger.error(error, `setupTable: ${NOTIFICATIONS_TABLE_NAME} failed.`);
   }
 }
 
@@ -82,25 +82,25 @@ if (IS_DB_ENABLED) {
 // POSTGRES is case insensitive. We therefore always use snake_case within postgres
 const queries = {
   upsertConsumer: `\
-INSERT INTO ${TABLE_NAME} (profile_id, profile_name, consumer_ids, service_ids, date_updated)
+INSERT INTO ${NOTIFICATIONS_TABLE_NAME} (profile_id, profile_name, consumer_ids, service_ids, date_updated)
 VALUES ($1, $2, ARRAY[$3], $4, now())
 ON CONFLICT (profile_id) DO UPDATE
 SET
   profile_id = EXCLUDED.profile_id,
   profile_name = $2,
-  consumer_ids = ( SELECT ARRAY( SELECT DISTINCT unnest(array_append(${TABLE_NAME}.consumer_ids, $3)) ) ),
+  consumer_ids = ( SELECT ARRAY( SELECT DISTINCT unnest(array_append(${NOTIFICATIONS_TABLE_NAME}.consumer_ids, $3)) ) ),
   service_ids = EXCLUDED.service_ids,
   date_updated = EXCLUDED.date_updated;
 `,
-  deleteProfileIfConsumerIdsIsEmpty: `DELETE FROM ${TABLE_NAME} WHERE consumer_ids = '{}' AND profile_id = $1`,
+  deleteProfileIfConsumerIdsIsEmpty: `DELETE FROM ${NOTIFICATIONS_TABLE_NAME} WHERE consumer_ids = '{}' AND profile_id = $1`,
   deleteConsumer: `\
-UPDATE ${TABLE_NAME}
+UPDATE ${NOTIFICATIONS_TABLE_NAME}
 SET consumer_ids = array_remove(consumer_ids, $1)
 WHERE $1 = ANY (consumer_ids)
 RETURNING profile_id, consumer_ids;
     `,
   updateNotifications: `\
-UPDATE ${TABLE_NAME} row
+UPDATE ${NOTIFICATIONS_TABLE_NAME} row
 SET date_updated = now(), content = jsonb_set(
   coalesce(content, '{}'::jsonb),
   '{services}',
@@ -114,13 +114,13 @@ SET date_updated = now(), content = jsonb_set(
 )
 WHERE profile_id = $1;
 `,
-  getProfilesCount: `SELECT COUNT(*) OVER()::int AS row_count FROM ${TABLE_NAME} `,
-  getProfiles: `SELECT * FROM ${TABLE_NAME} `,
-  getProfileIds: `SELECT profile_id, profile_name, consumer_ids, service_ids FROM ${TABLE_NAME}`,
-  getProfileByConsumer: `SELECT profile_id, profile_name, service_ids, date_updated FROM ${TABLE_NAME} WHERE $1 = ANY(consumer_ids)`,
-  getProfileById: `SELECT profile_id, profile_name, service_ids, date_updated FROM ${TABLE_NAME} WHERE profile_id = $1`,
-  getRegistrationsOverview: `SELECT * FROM ${TABLE_NAME}`,
-  truncate: `TRUNCATE TABLE ${TABLE_NAME}`,
+  getProfilesCount: `SELECT COUNT(*) OVER()::int AS row_count FROM ${NOTIFICATIONS_TABLE_NAME} `,
+  getProfiles: `SELECT * FROM ${NOTIFICATIONS_TABLE_NAME} `,
+  getProfileIds: `SELECT profile_id, profile_name, consumer_ids, service_ids FROM ${NOTIFICATIONS_TABLE_NAME}`,
+  getProfileByConsumer: `SELECT profile_id, profile_name, service_ids, date_updated FROM ${NOTIFICATIONS_TABLE_NAME} WHERE $1 = ANY(consumer_ids)`,
+  getProfileById: `SELECT profile_id, profile_name, service_ids, date_updated FROM ${NOTIFICATIONS_TABLE_NAME} WHERE profile_id = $1`,
+  getRegistrationsOverview: `SELECT * FROM ${NOTIFICATIONS_TABLE_NAME}`,
+  truncate: `TRUNCATE TABLE ${NOTIFICATIONS_TABLE_NAME}`,
 };
 
 export async function truncate() {
