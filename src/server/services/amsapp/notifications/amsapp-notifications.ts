@@ -50,7 +50,11 @@ export async function getConsumerProfile(consumerId: ConsumerId) {
   const profile = (await getProfileByConsumer(consumerId)) as
     | (ConsumerProfileCompact & { isRegistered: boolean })
     | null;
-  return { ...(profile ?? {}), isRegistered: profile !== null };
+
+  if (profile == null) {
+    return { isRegistered: false };
+  }
+  return { ...profile, isRegistered: true };
 }
 
 export async function batchDeleteNotifications() {
