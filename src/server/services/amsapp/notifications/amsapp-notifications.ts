@@ -90,8 +90,12 @@ export async function batchFetchAndStoreNotifications() {
   }
 }
 
-export async function batchFetchNotifications() {
-  const profiles = await listProfiles();
+export async function batchFetchNotifications(options: {
+  dateFrom?: string;
+  offset?: string;
+  limit?: string;
+}) {
+  const profiles = await listProfiles(options);
   return profiles.map((profile) => ({
     consumerIds: profile.consumerIds,
     dateUpdated: profile.dateUpdated,

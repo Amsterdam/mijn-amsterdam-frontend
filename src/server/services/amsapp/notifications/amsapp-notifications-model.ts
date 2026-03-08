@@ -109,7 +109,8 @@ SET date_updated = now(), content = jsonb_set(
 )
 WHERE profile_id = $1;
 `,
-  getProfiles: `SELECT * FROM ${TABLE_NAME}`,
+  getProfilesCount: `SELECT COUNT(*) OVER()::int AS row_count FROM ${TABLE_NAME} `,
+  getProfiles: `SELECT * FROM ${TABLE_NAME} `,
   getProfileIds: `SELECT profile_id, profile_name, consumer_ids, service_ids FROM ${TABLE_NAME}`,
   getProfileByConsumer: `SELECT profile_id, profile_name, service_ids, date_updated FROM ${TABLE_NAME} WHERE $1 = ANY(consumer_ids)`,
   getProfileById: `SELECT profile_id, profile_name, service_ids, date_updated FROM ${TABLE_NAME} WHERE profile_id = $1`,
@@ -179,8 +180,50 @@ export async function storeNotifications(
   ]);
 }
 
-export async function listProfiles() {
-  const rows = (await db.queryALL(queries.getProfiles)) as ConsumerProfile[];
+export async function getProfilesCount(options: {
+  dateFrom?: string;
+}): Promise<number> {
+  const clauses = [];
+  const values = [];
+  if (options.dateFrom) {
+    values.push(options.dateFrom);
+    clauses.push(`WHERE date_updated >= $${values.length}`);
+  }
+
+  const queryWithClauses = `${queries.getProfilesCount} ${clauses.join(' ')}`;
+  const row =
+    ((await db.queryGET(queryWithClauses, values)) as {
+      rowCount: number;
+    }) || null;
+
+  return row?.rowCount ?? 0;
+}
+
+export async function listProfiles(options: {
+  dateFrom?: string;
+  offset?: string;
+  limit?: string;
+}) {
+  const clauses = [];
+  const values = [];
+  if (options.dateFrom) {
+    values.push(options.dateFrom);
+    clauses.push(`WHERE date_updated >= $${values.length}`);
+  }
+  if (options.limit !== undefined) {
+    values.push(options.limit);
+    clauses.push(`LIMIT $${values.length}`);
+  }
+  if (options.offset !== undefined) {
+    values.push(options.offset);
+    clauses.push(`OFFSET $${values.length}`);
+  }
+
+  const queryWithClauses = `${queries.getProfiles} ${clauses.join(' ')}`;
+  const rows = (await db.queryALL(
+    queryWithClauses,
+    values
+  )) as ConsumerProfile[];
 
   return rows;
 }
