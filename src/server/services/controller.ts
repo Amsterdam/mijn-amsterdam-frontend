@@ -17,6 +17,8 @@ import {
 } from '../routing/route-helpers';
 import { fetchIsKnownInAFIS } from './afis/afis';
 import { fetchAfval, fetchAfvalPunten } from './afval/afval';
+import { storeNotificationsResponses } from './amsapp/notifications/amsapp-notifications';
+import { featureToggle } from './amsapp/notifications/amsapp-notifications-service-config';
 import { fetchAVG } from './avg/avg';
 import { fetchMyLocations } from './bag/my-locations';
 import { fetchBezwaren } from './bezwaren/bezwaren';
@@ -46,6 +48,8 @@ import {
   fetchNotificationsAndTipsFromServices,
   getContentTips,
   getTipsAndNotificationsFromApiResults,
+  type NotificationsAndTipsResponse,
+  type notificationServices,
 } from './tips-and-notifications';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-verhuur';
 import { fetchUserFeedbackSurvey } from './user-feedback/user-feedback';
@@ -172,12 +176,27 @@ export const NOTIFICATIONS = async (req: Request) => {
     getServiceResultsForTips(req),
     authProfileAndToken
       ? fetchNotificationsAndTipsFromServices(authProfileAndToken)
-      : [],
+      : {},
   ]);
+
+  if (
+    featureToggle.amsNotificationsIsActive &&
+    authProfileAndToken?.profile.id &&
+    authProfileAndToken.profile.profileType === 'private'
+  ) {
+    // Nothing in this flow depends on this so it does not have to be awaited
+    storeNotificationsResponses(
+      authProfileAndToken.profile.id,
+      notificationsAndTipsResults as Record<
+        keyof (typeof notificationServices)['private'],
+        NotificationsAndTipsResponse
+      >
+    );
+  }
 
   const contentTips = getContentTips(serviceResults, authProfileAndToken);
   const notificationsAndTips = getTipsAndNotificationsFromApiResults(
-    notificationsAndTipsResults
+    Object.values(notificationsAndTipsResults)
   );
 
   const notificationsWithTipsInserted = combineNotificationsWithTipsAndSort(

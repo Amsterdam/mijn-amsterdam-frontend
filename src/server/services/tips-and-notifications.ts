@@ -159,18 +159,25 @@ export async function fetchNotificationsAndTipsFromServices(
   services: NotificationServices = notificationServices[
     authProfileAndToken.profile.profileType
   ]
-): Promise<NotificationsAndTipsResponse[]> {
+): Promise<Record<keyof typeof services, NotificationsAndTipsResponse>> {
   if (authProfileAndToken.profile.profileType === 'private-attributes') {
-    return [];
+    return {};
   }
 
-  const results = await Promise.allSettled(
-    Object.values(services).map((fetchNotifications) =>
-      fetchNotifications(authProfileAndToken)
+  const serviceResults = await Promise.allSettled(
+    Object.entries(services).map(async ([serviceId, fetchNotifications]) =>
+      fetchNotifications(authProfileAndToken).then((result) => [
+        serviceId,
+        result,
+      ])
     )
   );
 
-  return results.map(getSettledResult);
+  const results = serviceResults.map(getSettledResult) as [
+    keyof typeof services,
+    NotificationsAndTipsResponse,
+  ][];
+  return Object.fromEntries(results);
 }
 
 export function sortNotificationsAndInsertTips(

@@ -1,6 +1,7 @@
 import type { Request, Response } from 'express';
 import * as jose from 'jose';
 import { ParsedQs } from 'qs';
+import UID from 'uid-safe';
 
 import { getReturnToUrl } from './auth-after-redirect-returnto';
 import {
@@ -48,6 +49,24 @@ export function getAuthProfile(
     authMethod: maSession.authMethod,
     profileType: maSession.profileType,
   };
+}
+
+export function getFakeAuthProfileAndToken(
+  profileId: AuthProfile['id'],
+  profileType: ProfileType = 'private'
+): AuthProfileAndToken {
+  const BYTE_LENGTH = 16;
+  const authProfileAndToken = {
+    profile: {
+      authMethod: 'digid',
+      profileType,
+      sid: `overridden-${UID.sync(BYTE_LENGTH)}}`,
+      id: profileId,
+    } as const,
+    token: 'notprovided',
+    expiresAtMilliseconds: 1,
+  };
+  return authProfileAndToken;
 }
 
 function getSessionData(req: Request): MaSession | null {
