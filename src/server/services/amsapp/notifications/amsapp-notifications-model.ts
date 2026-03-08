@@ -83,7 +83,7 @@ if (IS_DB_ENABLED) {
 const queries = {
   upsertConsumer: `\
 INSERT INTO ${NOTIFICATIONS_TABLE_NAME} (profile_id, profile_name, consumer_ids, service_ids, date_updated)
-VALUES ($1, $2, ARRAY[$3], $4, now())
+VALUES ($1, $2, ARRAY[$3], $4, $5)
 ON CONFLICT (profile_id) DO UPDATE
 SET
   profile_id = EXCLUDED.profile_id,
@@ -101,7 +101,7 @@ RETURNING profile_id, consumer_ids;
     `,
   updateNotifications: `\
 UPDATE ${NOTIFICATIONS_TABLE_NAME} row
-SET date_updated = now(), content = jsonb_set(
+SET date_updated = $3, content = jsonb_set(
   coalesce(content, '{}'::jsonb),
   '{services}',
   coalesce(content->'services', '{}'::jsonb)
@@ -152,6 +152,7 @@ export async function upsertConsumer(
     profileName,
     consumerId,
     serviceIds,
+    new Date().toISOString(),
   ]);
 }
 
@@ -182,6 +183,7 @@ export async function storeNotifications(
   return db.query(queries.updateNotifications, [
     encryptedProfileID,
     servicesObj,
+    new Date().toISOString(),
   ]);
 }
 
