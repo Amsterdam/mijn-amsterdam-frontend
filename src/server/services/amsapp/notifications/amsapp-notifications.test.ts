@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -30,10 +31,9 @@ const mocks = vi.hoisted(() => {
 });
 
 vi.mock('./amsapp-notifications-model', () => mocks.model);
-vi.mock('../../../auth/auth-helpers', () => mocks.authHelpers);
+vi.mock('./amsapp-notifications-helper', () => mocks.authHelpers);
 vi.mock('../../tips-and-notifications', () => mocks.tipsAndNotifications);
 
-// eslint-disable-next-line import/order
 import {
   getConsumerProfile,
   storeNotificationsResponses,

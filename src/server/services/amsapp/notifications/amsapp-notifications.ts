@@ -1,3 +1,4 @@
+import { getAuthProfileAndTokenWithoutSession } from './amsapp-notifications-helper';
 import {
   listProfileIds,
   upsertConsumer,
@@ -21,7 +22,6 @@ import {
   type ApiResponse,
 } from '../../../../universal/helpers/api';
 import { entries, pick } from '../../../../universal/helpers/utils';
-import { getFakeAuthProfileAndToken } from '../../../auth/auth-helpers';
 import {
   fetchNotificationsAndTipsFromServices,
   notificationServices,
@@ -77,7 +77,9 @@ export async function storeNotificationsResponses(
 export async function batchFetchAndStoreNotifications() {
   const profiles = await listProfileIds();
   for (const profile of profiles) {
-    const authProfileAndToken = getFakeAuthProfileAndToken(profile.profileId);
+    const authProfileAndToken = getAuthProfileAndTokenWithoutSession(
+      profile.profileId
+    );
     const notificationAndTipsResults =
       await fetchNotificationsAndTipsFromServices(
         authProfileAndToken,
