@@ -38,7 +38,6 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
     pool = ctx.pool;
     teardown = ctx.teardown;
 
-    // Ensure table exists (model will set it up on import when DB is enabled)
     await import('./amsapp-notifications-model');
   });
 
