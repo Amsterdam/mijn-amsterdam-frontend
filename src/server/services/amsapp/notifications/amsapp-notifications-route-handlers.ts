@@ -9,6 +9,7 @@ import {
   batchDeleteNotifications,
   batchFetchNotifications,
 } from './amsapp-notifications';
+import { getSevenDaysAgoISOString } from './amsapp-notifications-helper';
 import {
   AMSAPP_NOTIFICATIONS_DEEP_LINK_BASE,
   apiResponseErrors,
@@ -20,10 +21,12 @@ import {
 } from '../../../../universal/helpers/api';
 import { getAuth } from '../../../auth/auth-helpers';
 import type { AuthProfileAndToken } from '../../../auth/auth-types';
+import type { RequestWithQueryParams } from '../../../routing/route-helpers';
 import { fetchBrpByBsn } from '../../brp/brp';
 import { captureMessage } from '../../monitoring';
 import { baseRenderProps } from '../amsapp-service-config';
 import type { ApiError, RenderProps } from '../amsapp-types';
+import { getProfilesCount } from './amsapp-notifications-model';
 
 function getRenderPropsForApiError(
   identifier: string,
@@ -173,11 +176,36 @@ export async function handleTruncateNotifications(req: Request, res: Response) {
 }
 
 export async function handleSendNotificationsResponse(
-  req: Request,
+  req: RequestWithQueryParams<{
+    dateFrom: string;
+    offset: string;
+    limit: string;
+  }>,
   res: Response
 ) {
-  const response = await batchFetchNotifications();
-  return res.send(apiSuccessResult(response));
+  const dateFrom = req.query.dateFrom || getSevenDaysAgoISOString();
+  const offset = req.query.offset || '0';
+  const limit = req.query.limit || '100';
+
+  const rowCount_ = getProfilesCount({
+    dateFrom,
+  });
+  const response_ = batchFetchNotifications({
+    dateFrom,
+    offset,
+    limit,
+  });
+  const [rowCount, response] = await Promise.all([rowCount_, response_]);
+
+  return res.send({
+    ...apiSuccessResult(response),
+    meta: {
+      dateFrom,
+      offset,
+      limit,
+      total: rowCount,
+    },
+  });
 }
 
 export const forTesting = {
