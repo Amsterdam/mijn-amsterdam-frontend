@@ -69,3 +69,33 @@ export function encryptPayloadAndSessionID<T extends Record<string, unknown>>(
   const [encrptedValue] = encrypt(JSON.stringify(payloadToEncrypt));
   return encrptedValue;
 }
+
+const ivDeterministic = Buffer.from(
+  new Uint8Array([
+    106, 103, 46, 206, 223, 66, 129, 190, 17, 187, 155, 124, 114, 122, 161, 159,
+  ])
+);
+// IMPORTANT: DO NOT MERGE TO MAIN WITHOUT VALIDATING SECURITY IMPLICATIONS
+/** IMPORTANT: Never expose these encrypted values in the UI or API. Use the default encrypt function if possible. This function is only for internally used values that need to be deterministic. */
+export function encryptDeterministic(
+  plainText: string,
+  encryptionKey: string | Buffer | undefined = process.env
+    .BFF_DETERMINISTIC_GENERAL_ENCRYPTION_KEY
+): [Base64IvEncryptedValue, EncryptedValue, Iv] {
+  if (!encryptionKey) {
+    throw new Error('Cannot encrypt, Encryption key not found.');
+  }
+
+  const cipher = crypto.createCipheriv(
+    ENC_ALGO,
+    encryptionKey,
+    ivDeterministic
+  );
+  const encrypted = Buffer.concat([cipher.update(plainText), cipher.final()]);
+
+  return [
+    Buffer.concat([ivDeterministic, encrypted]).toString('base64url'),
+    encrypted,
+    ivDeterministic,
+  ];
+}

@@ -1,5 +1,3 @@
-import UID from 'uid-safe';
-
 import {
   listProfileIds,
   upsertConsumer,
@@ -22,9 +20,10 @@ import {
   apiSuccessResult,
   type ApiResponse,
 } from '../../../../universal/helpers/api';
-import type { MyNotification } from '../../../../universal/types/App.types';
-import type { AuthProfileAndToken } from '../../../auth/auth-types';
+import { entries, pick } from '../../../../universal/helpers/utils';
+import { getFakeAuthProfileAndToken } from '../../../auth/auth-helpers';
 import {
+  fetchNotificationsAndTipsFromServices,
   notificationServices,
   type NotificationsAndTipsResponse,
 } from '../../tips-and-notifications';
@@ -58,26 +57,36 @@ export async function batchDeleteNotifications() {
   return truncate();
 }
 
+export async function storeNotificationsResponses(
+  profileId: BSN,
+  serviceResponses: Record<ServiceId, NotificationsAndTipsResponse>
+): Promise<void> {
+  const responses = entries(serviceResponses)
+    .filter(([_, response]) => response.status === 'OK')
+    .map(
+      ([serviceId, response]: [ServiceId, NotificationsAndTipsResponse]) => ({
+        ...transformNotificationsForExternalUse(serviceId, response),
+        serviceId,
+        dateUpdated: new Date().toISOString(),
+      })
+    );
+
+  await storeNotifications(profileId, responses);
+}
+
 export async function batchFetchAndStoreNotifications() {
   const profiles = await listProfileIds();
   for (const profile of profiles) {
-    const promises = profile.serviceIds.map(async (serviceId) => {
-      const serviceResponse = await fetchNotificationsForService(
-        profile.profileId,
-        serviceId
+    const authProfileAndToken = getFakeAuthProfileAndToken(profile.profileId);
+    const notificationAndTipsResults =
+      await fetchNotificationsAndTipsFromServices(
+        authProfileAndToken,
+        pick(notificationServices.private, profile.serviceIds)
       );
-      const notifications = transformNotificationsForExternalUse(
-        serviceId,
-        serviceResponse
-      );
-      return {
-        ...notifications,
-        serviceId,
-        dateUpdated: new Date().toISOString(),
-      };
-    });
-    const responses = await Promise.all(promises);
-    await storeNotifications(profile.profileId, responses);
+    await storeNotificationsResponses(
+      profile.profileId,
+      notificationAndTipsResults
+    );
   }
 }
 
@@ -86,30 +95,9 @@ export async function batchFetchNotifications() {
   return profiles.map((profile) => ({
     consumerIds: profile.consumerIds,
     dateUpdated: profile.dateUpdated,
-    services: profile.content?.services || [],
+    services: profile.content?.services || {},
     profileName: profile.profileName,
   }));
-}
-
-async function fetchNotificationsForService(
-  profileId: BSN,
-  serviceId: ServiceId
-): Promise<NotificationsAndTipsResponse> {
-  const BYTE_LENGTH = 16;
-  const authProfileAndToken: AuthProfileAndToken = {
-    // TODO: Update notificationServices to accept a leaner AuthProfileAndToken with only profile.id and profile.profileType
-    profile: {
-      authMethod: 'digid',
-      profileType: 'private',
-      sid: `overridden-${UID.sync(BYTE_LENGTH)}}`,
-      id: profileId,
-    } as const,
-    token: 'notprovided',
-    expiresAtMilliseconds: 1,
-  };
-
-  const fetchNotificationsForService = notificationServices.private[serviceId];
-  return await fetchNotificationsForService(authProfileAndToken);
 }
 
 function transformNotificationsForExternalUse(
@@ -123,9 +111,10 @@ function transformNotificationsForExternalUse(
     );
   }
 
-  const notifications = Object.values(serviceResponse.content ?? [])
-    .flat()
-    .filter((n): n is MyNotification => n != null)
+  const notifications = Object.values(
+    serviceResponse.content.notifications ?? []
+  )
+    .filter((n) => n !== null && !n.isTip && !!n.datePublished)
     .map((notification) => ({
       id: notification.id,
       themaId: notification.themaID,
@@ -133,9 +122,7 @@ function transformNotificationsForExternalUse(
       title: DISCRETE_GENERIC_MESSAGE,
       isTip: notification.isTip,
       isAlert: notification.isAlert,
-      datePublished: notification.hideDatePublished
-        ? undefined
-        : notification.datePublished,
+      datePublished: notification.datePublished,
     }));
 
   return apiSuccessResult(notifications);

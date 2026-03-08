@@ -6,7 +6,10 @@ import {
   type NotificationsService,
 } from './amsapp-notifications-types';
 import { isRecord } from '../../../../universal/helpers/utils';
-import { decrypt, encrypt } from '../../../helpers/encrypt-decrypt';
+import {
+  decrypt,
+  encryptDeterministic,
+} from '../../../helpers/encrypt-decrypt';
 import { logger } from '../../../logging';
 import { IS_DB_ENABLED } from '../../db/config';
 import { db as db_, type DBAdapter } from '../../db/db';
@@ -79,33 +82,48 @@ if (IS_DB_ENABLED) {
 // POSTGRES is case insensitive. We therefore always use snake_case within postgres
 const queries = {
   upsertConsumer: `\
-INSERT INTO ${TABLE_NAME} (profile_id, profile_name, consumer_ids, service_ids, date_updated) \
-VALUES ($1, $2, ARRAY[$3], $4, now()) \
-ON CONFLICT (profile_id) DO UPDATE \
-SET \
-  profile_id = EXCLUDED.profile_id, \
-  profile_name = $2, \
-  consumer_ids = ( SELECT ARRAY( SELECT DISTINCT unnest(array_append(${TABLE_NAME}.consumer_ids, $3)) ) ), \
-  service_ids = EXCLUDED.service_ids, \
-  date_updated = EXCLUDED.date_updated; \
+INSERT INTO ${TABLE_NAME} (profile_id, profile_name, consumer_ids, service_ids, date_updated)
+VALUES ($1, $2, ARRAY[$3], $4, now())
+ON CONFLICT (profile_id) DO UPDATE
+SET
+  profile_id = EXCLUDED.profile_id,
+  profile_name = $2,
+  consumer_ids = ( SELECT ARRAY( SELECT DISTINCT unnest(array_append(${TABLE_NAME}.consumer_ids, $3)) ) ),
+  service_ids = EXCLUDED.service_ids,
+  date_updated = EXCLUDED.date_updated;
 `,
   deleteProfileIfConsumerIdsIsEmpty: `DELETE FROM ${TABLE_NAME} WHERE consumer_ids = '{}' AND profile_id = $1`,
   deleteConsumer: `\
 UPDATE ${TABLE_NAME}
 SET consumer_ids = array_remove(consumer_ids, $1)
 WHERE $1 = ANY (consumer_ids)
-RETURNING profile_id, consumer_ids
+RETURNING profile_id, consumer_ids;
     `,
-  updateNotifications: `UPDATE ${TABLE_NAME} SET content = $2 WHERE profile_id = $1`,
+  updateNotifications: `\
+-- This does not yet filter out services not in the serviceIds column, which may be needed later
+UPDATE ${TABLE_NAME}
+SET date_updated = now(), content = jsonb_set(
+  coalesce(content, '{}'::jsonb),
+  '{services}',
+  coalesce(content->'services', '{}'::jsonb) || $2
+)
+WHERE profile_id = $1;
+`,
   getProfiles: `SELECT * FROM ${TABLE_NAME}`,
   getProfileIds: `SELECT profile_id, profile_name, consumer_ids, service_ids FROM ${TABLE_NAME}`,
   getProfileByConsumer: `SELECT profile_id, profile_name, service_ids, date_updated FROM ${TABLE_NAME} WHERE $1 = ANY(consumer_ids)`,
+  getProfileById: `SELECT profile_id, profile_name, service_ids, date_updated FROM ${TABLE_NAME} WHERE profile_id = $1`,
   getRegistrationsOverview: `SELECT * FROM ${TABLE_NAME}`,
   truncate: `TRUNCATE TABLE ${TABLE_NAME}`,
 };
 
 export async function truncate() {
   return db.query(queries.truncate);
+}
+
+export async function getProfileById(profileId: BSN) {
+  const [encryptedProfileID] = encryptDeterministic(profileId);
+  return db.queryGET(queries.getProfileById, [encryptedProfileID]);
 }
 
 export async function getProfileByConsumer(consumerId: ConsumerId) {
@@ -122,7 +140,7 @@ export async function upsertConsumer(
   consumerId: ConsumerId,
   serviceIds: ServiceId[]
 ) {
-  const [encryptedProfileID] = encrypt(profileId);
+  const [encryptedProfileID] = encryptDeterministic(profileId);
   return db.query(queries.upsertConsumer, [
     encryptedProfileID,
     profileName,
@@ -150,10 +168,14 @@ export async function storeNotifications(
   profileId: BSN,
   services: NotificationsService[]
 ) {
-  const [encryptedProfileID] = encrypt(profileId);
+  const servicesObj = services.reduce(
+    (acc, service) => ({ ...acc, [service.serviceId]: service }),
+    {}
+  );
+  const [encryptedProfileID] = encryptDeterministic(profileId);
   return db.query(queries.updateNotifications, [
     encryptedProfileID,
-    { services },
+    servicesObj,
   ]);
 }
 
