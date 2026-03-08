@@ -1,6 +1,7 @@
 import { Buffer } from 'node:buffer';
 import crypto from 'node:crypto';
 
+import { IS_PRODUCTION } from '../../universal/config/env';
 import { DecryptedPayloadAndSessionID } from '../services/shared/decrypt-route-param';
 
 type Base64IvEncryptedValue = string;
@@ -76,11 +77,14 @@ const ivDeterministic = Buffer.from(
   ])
 );
 // IMPORTANT: DO NOT MERGE TO MAIN WITHOUT VALIDATING SECURITY IMPLICATIONS
+if (IS_PRODUCTION) {
+  throw new Error('THIS SHOULD NOT BE IN PRODUCTION YET');
+}
 /** IMPORTANT: Never expose these encrypted values in the UI or API. Use the default encrypt function if possible. This function is only for internally used values that need to be deterministic. */
 export function encryptDeterministic(
   plainText: string,
   encryptionKey: string | Buffer | undefined = process.env
-    .BFF_DETERMINISTIC_GENERAL_ENCRYPTION_KEY
+    .BFF_GENERAL_ENCRYPTION_KEY // TODO: Consider using a separate key for deterministic encryption
 ): [Base64IvEncryptedValue, EncryptedValue, Iv] {
   if (!encryptionKey) {
     throw new Error('Cannot encrypt, Encryption key not found.');
