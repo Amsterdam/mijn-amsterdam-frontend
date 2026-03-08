@@ -147,12 +147,15 @@ export async function handleRegisterConsumer(
 
 // This endpoint has a long execution time, making it impractical to await.
 // A success response is send to indicate it has started.
-export function fetchAndStoreNotifications(req: Request, res: Response) {
+export function fetchAndStoreNotifications(_req: Request, res: Response) {
   batchFetchAndStoreNotifications();
   return res.send(apiSuccessResult('success'));
 }
 
-export async function handleTruncateNotifications(req: Request, res: Response) {
+export async function handleTruncateNotifications(
+  _req: Request,
+  res: Response
+) {
   try {
     await batchDeleteNotifications();
   } catch (error) {
