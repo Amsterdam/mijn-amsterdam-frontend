@@ -147,10 +147,7 @@ describe('amsapp-notifications', () => {
       content: [
         {
           id: 'n-1',
-          themaId: 'THEMA',
           title: DISCRETE_GENERIC_MESSAGE,
-          isTip: false,
-          isAlert: true,
           datePublished: '2026-03-06',
         },
       ],
