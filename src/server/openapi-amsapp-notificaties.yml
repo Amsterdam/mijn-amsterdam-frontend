@@ -358,9 +358,6 @@ components:
         datePublished:
           type: string
           format: date-time
-        isTip:
-          type: boolean
-          default: false
     ConsumerProfile:
       type: object
       properties:

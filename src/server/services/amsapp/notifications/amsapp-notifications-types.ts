@@ -28,8 +28,8 @@ export type NotificationsService = {
 
 export type NotificationsLean = Pick<
   MyNotification,
-  'id' | 'title' | 'isAlert' | 'isTip'
-> & { datePublished: string | undefined };
+  'id' | 'title' | 'datePublished'
+>;
 
 export type AuthProfileId = {
   profile: Pick<AuthProfile, 'id' | 'profileType'>;

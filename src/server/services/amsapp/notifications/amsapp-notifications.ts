@@ -65,13 +65,14 @@ export async function storeNotificationsResponses(
   profileId: BSN,
   serviceResponses: Record<ServiceId, NotificationsAndTipsResponse>
 ): Promise<void> {
+  const now = new Date().toISOString();
   const responses = entries(serviceResponses)
     .filter(([_, response]) => response.status === 'OK') // Unsuccessful responses do not contain new notifications
     .map(
       ([serviceId, response]: [ServiceId, NotificationsAndTipsResponse]) => ({
         ...transformNotificationsForExternalUse(serviceId, response),
         serviceId,
-        dateUpdated: new Date().toISOString(),
+        dateUpdated: now,
       })
     );
 
@@ -127,11 +128,8 @@ function transformNotificationsForExternalUse(
     .filter((n) => n !== null && !n.isTip && !!n.datePublished)
     .map((notification) => ({
       id: notification.id,
-      themaId: notification.themaID,
       // If we decide to show the actual notification title, use `notification.title`
       title: DISCRETE_GENERIC_MESSAGE,
-      isTip: notification.isTip,
-      isAlert: notification.isAlert,
       datePublished: notification.datePublished,
     }));
 
