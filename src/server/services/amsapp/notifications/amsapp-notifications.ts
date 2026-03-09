@@ -117,7 +117,7 @@ function transformNotificationsForExternalUse(
 ): ApiResponse<NotificationsLean[]> {
   if (serviceResponse.status !== 'OK') {
     return apiErrorResult(
-      `Could not fetch notifications for service ${serviceId}}`,
+      `Could not fetch notifications for service ${serviceId}`,
       null
     );
   }
