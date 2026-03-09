@@ -165,12 +165,10 @@ export async function fetchNotificationsAndTipsFromServices(
   }
 
   const serviceResults = await Promise.allSettled(
-    Object.entries(services).map(async ([serviceId, fetchNotifications]) =>
-      fetchNotifications(authProfileAndToken).then((result) => [
-        serviceId,
-        result,
-      ])
-    )
+    Object.entries(services).map(async ([serviceId, fetchNotifications]) => {
+      const result = await fetchNotifications(authProfileAndToken);
+      return [serviceId, result];
+    })
   );
 
   const results = serviceResults.map(getSettledResult) as [
