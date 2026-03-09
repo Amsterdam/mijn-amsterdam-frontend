@@ -62,9 +62,9 @@ async function setupTables() {
   `;
 
   const alterTableQuery1 = `
-        ALTER TABLE IF EXISTS "public"."${NOTIFICATIONS_TABLE_NAME}"
-        ADD IF NOT EXISTS "profile_name" VARCHAR(200);
-      `;
+    ALTER TABLE IF EXISTS "public"."${NOTIFICATIONS_TABLE_NAME}"
+    ADD IF NOT EXISTS "profile_name" VARCHAR(200);
+  `;
 
   try {
     await db.query(createTableQuery);
