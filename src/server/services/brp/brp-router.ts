@@ -1,6 +1,6 @@
 import type { Request } from 'express';
 
-import { fetchBrpByBsn } from './brp';
+import { fetchBrpByBsn, fetchBrpVerblijfplaatsHistoryByBsn } from './brp';
 import { fetchAantalIngeschrevenPersonen } from './brp';
 import { featureToggle, routes } from './brp-service-config';
 import { IS_PRODUCTION } from '../../../universal/config/env';
@@ -58,9 +58,10 @@ if (!IS_PRODUCTION) {
     routes.protected.BRP_VERBLIJFPLAATSHISTORIE_RAW,
     async (_req: Request, res: ResponseAuthenticated) => {
       return res.send(
-        await fetchBrpByBsn(res.locals.sessionId, [
-          res.locals.authProfileAndToken.profile.id,
-        ])
+        await fetchBrpVerblijfplaatsHistoryByBsn(
+          res.locals.sessionId,
+          res.locals.authProfileAndToken.profile.id
+        )
       );
     }
   );
