@@ -23,6 +23,8 @@ const MAX_TABLE_ROWS_ON_THEMA_PAGINA_DOSSIERS = 5;
 
 const THEMA_ID = 'ERFPACHT';
 const THEMA_TITLE = 'Erfpacht';
+export const ERFPACHT_ZAKELIJK_ROUTE_DEFAULT =
+  'https://erfpachtzakelijk.amsterdam.nl';
 
 export const LINKS = {
   algemeneBepalingen:
@@ -113,12 +115,6 @@ export const listPageParamKind = {
 
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
-
-export const themaId = 'ERFPACHT' as const;
-export const themaTitle = 'Erfpacht';
-
-export const ERFPACHT_ZAKELIJK_ROUTE_DEFAULT =
-  'https://erfpachtzakelijk.amsterdam.nl';
 
 export const erfpachtFacturenTableConfig = getFacturenTableConfig({
   listPagePath: themaConfig.listPageFacturen.route.path,
