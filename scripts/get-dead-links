@@ -19,8 +19,8 @@ EXTERNAL_URLS=$(
     | sed '/.*w3\.org.*/d' \
     | sed '/http:\/\/localhost*/d' \
     | sed '/http.*\/\/sap:.*/d' \
-    | sed '/.*api\.*/d' \
-    | sed '/{.*}/d' \
+    | sed '/.*api\.*/d' \  # API calls tend to not be accessible because secrets can be necessary.
+    | sed '/{.*}/d' \  # Remove string interpolated links.
     | sed '/.*\.azure\..*/d'
 )
 
