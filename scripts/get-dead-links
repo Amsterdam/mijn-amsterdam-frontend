@@ -12,6 +12,7 @@ if [ "$1" = '--with-status' ] || [ "$1" = '-s' ]; then
 fi
 
 EXTERNAL_URLS=$(
+  # sed filters out urls that we cannot send reliable requests to.
   grep --no-filename -r -P -o --exclude-dir="__snapshots__" --exclude="*test*" \
     "(\\\?[\`\"'])((https?:|www\.).*?)[^\\\]\1" ./src/* 2> /dev/null \
     | sed -E "s/([\`\"'])(.+)\1/\2/" \
@@ -19,8 +20,8 @@ EXTERNAL_URLS=$(
     | sed '/.*w3\.org.*/d' \
     | sed '/http:\/\/localhost*/d' \
     | sed '/http.*\/\/sap:.*/d' \
-    | sed '/.*api\.*/d' \  # API calls tend to not be accessible because secrets can be necessary.
-    | sed '/{.*}/d' \  # Remove string interpolated links.
+    | sed '/.*api\.*/d' \
+    | sed '/{.*}/d' \
     | sed '/.*\.azure\..*/d'
 )
 
