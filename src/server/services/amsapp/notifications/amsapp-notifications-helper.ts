@@ -17,7 +17,7 @@ export function getAuthProfileAndTokenWithoutSession(
     profile: {
       authMethod: 'digid',
       profileType: 'private',
-      sid: `overridden-${UID.sync(BYTE_LENGTH)}}`,
+      sid: `overridden-${UID.sync(BYTE_LENGTH)}`,
       id: profileId,
     } as const,
     token: 'notprovided',
