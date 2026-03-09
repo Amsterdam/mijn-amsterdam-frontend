@@ -295,23 +295,10 @@ components:
     ConsumerNotificationsMeta:
       type: object
       properties:
-        dateFrom:
-          type: string
-          format: date-time
-          description: The effective dateFrom filter applied to the result set
-          example: '2026-03-01T00:00:00.000Z'
-        offset:
-          type: string
-          description: The effective offset applied
-          example: '0'
-        limit:
-          type: string
-          description: The effective limit applied
-          example: '100'
-        total:
+        totalItems:
           type: integer
           minimum: 0
-          description: Total number of consumers matching the dateFrom filter (ignores offset/limit)
+          description: Total number matching the dateFrom filter (ignores offset/limit)
     ServiceResultBase:
       type: object
       properties:
