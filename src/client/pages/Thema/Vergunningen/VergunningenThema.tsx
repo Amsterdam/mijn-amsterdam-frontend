@@ -15,13 +15,13 @@ export function VergunningenThema() {
     isLoading,
     isError,
     tableConfig,
-    linkListItems,
+    pageLinks,
     id,
     title,
-    routeConfig,
     hasParkeervergunningen,
+    themaConfig,
   } = useVergunningenThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const pageContentTop = (
     <PageContentCell spanWide={8}>
@@ -64,7 +64,7 @@ export function VergunningenThema() {
       id={id}
       title={title}
       pageContentTop={pageContentTop}
-      pageLinks={linkListItems}
+      pageLinks={pageLinks}
       pageContentMain={tables}
       isError={isError}
       isLoading={isLoading}

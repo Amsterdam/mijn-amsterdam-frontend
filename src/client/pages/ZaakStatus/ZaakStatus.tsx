@@ -112,8 +112,8 @@ function baseThemaConfig<K extends keyof AppStateBase>(
 
 const pageRouteResolvers: PageRouteResolvers = {
   vergunningen: baseThemaConfig(
-    VERGUNNINGEN.routeConfig.themaPage.path,
-    VERGUNNINGEN.themaId
+    VERGUNNINGEN.themaConfig.route.path,
+    VERGUNNINGEN.themaConfig.id
   ),
   horeca: baseThemaConfig(HORECA.themaConfig.route.path, HORECA.themaConfig.id),
   parkeren: baseThemaConfig(

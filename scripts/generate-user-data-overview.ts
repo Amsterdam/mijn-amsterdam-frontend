@@ -60,10 +60,7 @@ import {
 } from '../src/client/pages/Thema/Profile/Profile-thema-config';
 import { themaConfig as themaConfigZorg } from '../src/client/pages/Thema/Zorg/Zorg-thema-config';
 import { themaConfig as themaAfval } from '../src/client/pages/Thema/Afval/Afval-thema-config';
-import {
-  themaId as themaIdVergunningen,
-  themaTitle as themaTitleVergunningen,
-} from '../src/client/pages/Thema/Vergunningen/Vergunningen-thema-config';
+import { themaConfig as themaVergunningen } from '../src/client/pages/Thema/Vergunningen/Vergunningen-thema-config';
 import {
   themaId as themaIdErfpacht,
   themaTitle as themaTitleErfpacht,
@@ -109,7 +106,7 @@ const themas = [
   { id: themaInkomen.id, title: themaInkomen.title },
   { id: themaConfigZorg.id, title: themaConfigZorg.title },
   { id: themaAfval.id, title: themaAfval.title },
-  { id: themaIdVergunningen, title: themaTitleVergunningen },
+  { id: themaVergunningen.id, title: themaVergunningen.title },
   { id: themaIdErfpacht, title: themaTitleErfpacht },
   { id: themaBezwaren.id, title: themaBezwaren.title },
   { id: themaHoreca.id, title: themaHoreca.title },

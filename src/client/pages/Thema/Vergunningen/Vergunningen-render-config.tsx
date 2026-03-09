@@ -1,9 +1,4 @@
-import {
-  routeConfig,
-  themaId,
-  themaTitle,
-  featureToggle,
-} from './Vergunningen-thema-config';
+import { themaConfig } from './Vergunningen-thema-config';
 import { VergunningenDetail } from './VergunningenDetail';
 import { default as VergunningenIcon } from './VergunningenIcon.svg?react';
 import { VergunningenList } from './VergunningenList';
@@ -17,31 +12,31 @@ import {
 
 export const VergunningenRoutes = [
   {
-    route: routeConfig.detailPage.path,
+    route: themaConfig.detailPage.route.path,
     Component: VergunningenDetail,
-    isActive: featureToggle.vergunningenActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.listPage.path,
+    route: themaConfig.listPage.route.path,
     Component: VergunningenList,
-    isActive: featureToggle.vergunningenActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.themaPage.path,
+    route: themaConfig.route.path,
     Component: VergunningenThema,
-    isActive: featureToggle.vergunningenActive,
+    isActive: themaConfig.featureToggle.active,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
-export const menuItem: ThemaMenuItem<typeof themaId> = {
-  title: themaTitle,
-  id: themaId,
-  to: routeConfig.themaPage.path,
-  profileTypes: ['private', 'commercial'],
-  redactedScope: 'none',
+export const menuItem: ThemaMenuItem = {
+  title: themaConfig.title,
+  id: themaConfig.id,
+  to: themaConfig.route.path,
+  profileTypes: themaConfig.profileTypes,
+  redactedScope: themaConfig.redactedScope,
   isActive(appState: AppState) {
     return (
-      featureToggle.vergunningenActive &&
+      themaConfig.featureToggle.active &&
       !isLoading(appState.VERGUNNINGEN) &&
       !!appState.VERGUNNINGEN.content?.length
     );

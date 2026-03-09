@@ -10,7 +10,7 @@ import { getStatusStepsDecos as getStatusStepsDefault } from './decos-status-ste
 import { decosZaakTransformers } from './decos-zaken';
 import { getStatusStepsPB } from './pb-status-steps';
 import { pbZaakTransformers } from './pb-zaken';
-import { routeConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
   apiErrorResult,
@@ -95,7 +95,7 @@ const activeTransformersPB = FeatureToggle.VTHOnPowerbrowserActive
 
 export async function fetchVergunningen(
   authProfileAndToken: AuthProfileAndToken,
-  appRouteDetailPage: string = routeConfig.detailPage.path
+  appRouteDetailPage: string = themaConfig.detailPage.route.path
 ): Promise<ApiResponse<ZaakFrontendCombined[]>> {
   const requestDecos = fetchDecosZaken(
     authProfileAndToken,
