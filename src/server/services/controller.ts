@@ -192,7 +192,9 @@ export const NOTIFICATIONS = async (req: Request) => {
         keyof (typeof notificationServices)['private'],
         NotificationsAndTipsResponse
       >
-    );
+    ).catch((error) => {
+      captureException(error);
+    });
   }
 
   const contentTips = getContentTips(serviceResults, authProfileAndToken);
