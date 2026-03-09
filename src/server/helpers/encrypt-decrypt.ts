@@ -71,10 +71,6 @@ export function encryptPayloadAndSessionID<T extends Record<string, unknown>>(
   return encrptedValue;
 }
 
-// IMPORTANT: DO NOT MERGE TO MAIN WITHOUT VALIDATING SECURITY IMPLICATIONS
-if (IS_PRODUCTION) {
-  throw new Error('THIS SHOULD NOT BE IN PRODUCTION YET');
-}
 /** IMPORTANT: Never expose these encrypted values in the UI or API. Use the default encrypt function if possible. This function is only for internally used values that need to be deterministic. */
 export function encryptDeterministic(
   plainText: string,
@@ -82,6 +78,11 @@ export function encryptDeterministic(
     .BFF_GENERAL_ENCRYPTION_KEY,
   pepper: string | Buffer | undefined = 'getThisFromEnv' // TODO: Get from process.env.BFF_GENERAL_PEPPER
 ): [Base64IvEncryptedValue, EncryptedValue, Iv] {
+  // IMPORTANT: The security implications are not yet validated and this should not yet be used in production
+  if (IS_PRODUCTION) {
+    throw new Error('THIS SHOULD NOT BE IN PRODUCTION YET');
+  }
+
   if (!encryptionKey) {
     throw new Error('Cannot encrypt, Encryption key not found.');
   }
