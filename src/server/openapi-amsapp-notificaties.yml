@@ -289,16 +289,11 @@ components:
           type: string
           enum:
             - 'OK'
-        meta:
-          $ref: '#/components/schemas/ConsumerNotificationsMeta'
-
-    ConsumerNotificationsMeta:
-      type: object
-      properties:
         totalItems:
           type: integer
           minimum: 0
           description: Total number matching the dateFrom filter (ignores offset/limit)
+
     ServiceResultBase:
       type: object
       properties:
