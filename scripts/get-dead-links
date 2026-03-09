@@ -18,7 +18,10 @@ EXTERNAL_URLS=$(
     | sort --unique \
     | sed '/.*w3\.org.*/d' \
     | sed '/http:\/\/localhost*/d' \
-    | sed '/http.*\/\/sap:.*/d'
+    | sed '/http.*\/\/sap:.*/d' \
+    | sed '/.*api\.*/d' \
+    | sed '/{.*}/d' \
+    | sed '/.*\.azure\..*/d'
 )
 
 echo_dead_link() {
