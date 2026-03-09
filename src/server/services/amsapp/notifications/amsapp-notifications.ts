@@ -99,8 +99,8 @@ export async function batchFetchAndStoreNotifications() {
 
 export async function batchFetchNotifications(options: {
   dateFrom?: string;
-  offset?: string;
-  limit?: string;
+  offset?: number;
+  limit?: number;
 }) {
   const profiles = await listProfiles(options);
   return profiles.map((profile) => ({

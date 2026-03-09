@@ -19,14 +19,15 @@ import {
   apiSuccessResult,
   apiErrorResult,
 } from '../../../../universal/helpers/api';
+import { toDateFormatted } from '../../../../universal/helpers/date';
 import { getAuth } from '../../../auth/auth-helpers';
 import type { AuthProfileAndToken } from '../../../auth/auth-types';
-import type { RequestWithQueryParams } from '../../../routing/route-helpers';
 import { fetchBrpByBsn } from '../../brp/brp';
 import { captureMessage } from '../../monitoring';
 import { baseRenderProps } from '../amsapp-service-config';
 import type { ApiError, RenderProps } from '../amsapp-types';
 import { getProfilesCount } from './amsapp-notifications-model';
+import type { RequestWithQueryParams } from '../../../routing/route-helpers';
 
 function getRenderPropsForApiError(
   identifier: string,
@@ -186,9 +187,26 @@ export async function handleSendNotificationsResponse(
   }>,
   res: Response
 ) {
-  const dateFrom = req.query.dateFrom || getSevenDaysAgoISOString();
-  const offset = req.query.offset || '0';
-  const limit = req.query.limit || '100';
+  let dateFrom = req.query.dateFrom || getSevenDaysAgoISOString();
+  const offset = parseInt(req.query.offset || '0', 10);
+  const limit = parseInt(req.query.limit || '100', 10);
+  try {
+    dateFrom = toDateFormatted(dateFrom);
+  } catch (_) {
+    return res.send(
+      apiErrorResult('Invalid dateFrom', null, HttpStatusCode.BadRequest)
+    );
+  }
+  if (isNaN(offset) || offset < 0) {
+    return res.send(
+      apiErrorResult('Invalid offset', null, HttpStatusCode.BadRequest)
+    );
+  }
+  if (isNaN(limit) || limit <= 0) {
+    return res.send(
+      apiErrorResult('Invalid limit', null, HttpStatusCode.BadRequest)
+    );
+  }
 
   const rowCount_ = getProfilesCount({
     dateFrom,

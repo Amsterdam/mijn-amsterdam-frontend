@@ -208,8 +208,8 @@ export async function getProfilesCount(options: {
 
 export async function listProfiles(options: {
   dateFrom?: string;
-  offset?: string;
-  limit?: string;
+  offset?: number;
+  limit?: number;
 }) {
   const clauses = [];
   const values = [];
