@@ -49,7 +49,7 @@ import {
   getContentTips,
   getTipsAndNotificationsFromApiResults,
   type NotificationsAndTipsResponse,
-  type notificationServices,
+  notificationServices,
 } from './tips-and-notifications';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-verhuur';
 import { fetchUserFeedbackSurvey } from './user-feedback/user-feedback';
