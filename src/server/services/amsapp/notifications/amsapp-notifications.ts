@@ -106,7 +106,7 @@ export async function batchFetchNotifications(options: {
   return profiles.map((profile) => ({
     consumerIds: profile.consumerIds,
     dateUpdated: profile.dateUpdated,
-    services: profile.content?.services || {},
+    services: Object.values(profile.content?.services || {}),
     profileName: profile.profileName,
   }));
 }
