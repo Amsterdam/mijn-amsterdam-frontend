@@ -114,7 +114,7 @@ SET date_updated = $3, content = jsonb_set(
 )
 WHERE profile_id = $1;
 `,
-  getProfilesCount: `SELECT COUNT(*) OVER()::int AS row_count FROM ${NOTIFICATIONS_TABLE_NAME} `,
+  getProfilesCount: `SELECT COUNT(*)::int AS row_count FROM ${NOTIFICATIONS_TABLE_NAME} `,
   getProfiles: `SELECT * FROM ${NOTIFICATIONS_TABLE_NAME} `,
   getProfileIds: `SELECT profile_id, profile_name, consumer_ids, service_ids FROM ${NOTIFICATIONS_TABLE_NAME}`,
   getProfileByConsumer: `SELECT profile_id, profile_name, service_ids, date_updated FROM ${NOTIFICATIONS_TABLE_NAME} WHERE $1 = ANY(consumer_ids)`,

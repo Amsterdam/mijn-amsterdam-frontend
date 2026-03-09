@@ -13,7 +13,7 @@ export type ConsumerProfile = {
   consumerIds: ConsumerId[];
   serviceIds: ServiceId[];
   dateUpdated: string;
-  content: { services: NotificationsService[] } | null;
+  content: { services: Record<ServiceId, NotificationsService> } | null;
 };
 
 export type ConsumerProfileCompact = Omit<

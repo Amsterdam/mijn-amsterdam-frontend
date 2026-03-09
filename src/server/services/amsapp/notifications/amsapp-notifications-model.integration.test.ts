@@ -1,4 +1,12 @@
-import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import {
+  afterAll,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi,
+} from 'vitest';
 
 import { NOTIFICATIONS_TABLE_NAME } from './amsapp-notifications-model';
 import type { BSN, NotificationsService } from './amsapp-notifications-types';
@@ -17,20 +25,24 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
 
   const profileId: BSN = '999999999' as BSN;
 
+  const defaultTime = '2020-01-01T00:00:00.000Z';
+  const defaultTimePlusHour = '2020-01-01T01:00:00.000Z';
+
   const SERVICE_A: NotificationsService = {
     serviceId: 'afis',
-    dateUpdated: '2000-01-01T00:00:00.000Z',
+    dateUpdated: defaultTime,
     status: 'OK',
     content: [],
   };
   const SERVICE_B: NotificationsService = {
     serviceId: 'avg',
-    dateUpdated: '2001-21-21T00:00:00.000Z',
+    dateUpdated: defaultTimePlusHour,
     status: 'OK',
     content: [],
   };
 
   beforeAll(async () => {
+    vi.useFakeTimers();
     const ctx = await setupPgTestDb({
       databaseName,
       envOverrides: { BFF_DB_ENABLED: 'true' },
@@ -41,16 +53,18 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
     await import('./amsapp-notifications-model');
   });
 
-  beforeEach(async () => {
-    await pool.query(`TRUNCATE TABLE ${databaseTable}`);
-  });
-
   afterAll(async () => {
+    vi.useRealTimers();
     try {
       await pool.query(`TRUNCATE TABLE ${databaseTable}`);
     } finally {
       await teardown?.();
     }
+  });
+
+  beforeEach(async () => {
+    await pool.query(`TRUNCATE TABLE ${databaseTable}`);
+    vi.setSystemTime(new Date(defaultTime));
   });
 
   describe('upsertConsumer', () => {
@@ -82,6 +96,41 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
         consumerIds: expect.arrayContaining(['consumer-1', 'consumer-2']),
         serviceIds: [SERVICE_B.serviceId],
       });
+    });
+  });
+
+  describe('getProfilesCount', () => {
+    it('returns the total profile count', async () => {
+      const model = await import('./amsapp-notifications-model');
+
+      await model.upsertConsumer('1', 'Test Person 1', 'consumer-1', [
+        SERVICE_A.serviceId,
+      ]);
+      await model.upsertConsumer('2', 'Test Person 2', 'consumer-2', [
+        SERVICE_A.serviceId,
+      ]);
+
+      const totalItems = await model.getProfilesCount({});
+      expect(totalItems).toBe(2);
+    });
+
+    it('returns the total profile count after dateFrom', async () => {
+      const model = await import('./amsapp-notifications-model');
+
+      vi.setSystemTime(new Date(defaultTime));
+      await model.upsertConsumer('1', 'Test Person 1', 'consumer-1', [
+        SERVICE_A.serviceId,
+      ]);
+
+      vi.setSystemTime(new Date(defaultTimePlusHour));
+      await model.upsertConsumer('2', 'Test Person 2', 'consumer-2', [
+        SERVICE_A.serviceId,
+      ]);
+
+      const totalItems = await model.getProfilesCount({
+        dateFrom: defaultTimePlusHour,
+      });
+      expect(totalItems).toBe(1);
     });
   });
 
