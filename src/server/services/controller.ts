@@ -81,7 +81,8 @@ function callAuthenticatedService<T>(
   };
 }
 
-function callPublicService<T>(fetchService: (...args: never[]) => Promise<T>) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function callPublicService<T>(fetchService: (...args: any[]) => Promise<T>) {
   return async (req: Request) => fetchService(queryParams(req));
 }
 
