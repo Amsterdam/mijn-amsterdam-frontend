@@ -24,5 +24,5 @@ export function useHTMLDocumentTitle(routeConfig: UseHTMLDocumentTitleParams) {
         ? trackingUrl(params)
         : (trackingUrl ?? location.pathname);
     trackPageView(path);
-  }, [documentTitle]);
+  }, [documentTitle, location.pathname, params, trackingUrl]);
 }
