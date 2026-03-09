@@ -248,6 +248,7 @@ async function disableOtherActiveEMandatesForCreditor(
   }
   await Promise.all(
     eMandateIdsResponse.content.map((eMandateId) => {
+      // TODO: filter only active mandates.
       return deactivateEmandate({
         IMandateId: eMandateId.toString(),
       });
