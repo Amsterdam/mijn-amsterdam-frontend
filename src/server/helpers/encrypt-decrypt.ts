@@ -71,11 +71,6 @@ export function encryptPayloadAndSessionID<T extends Record<string, unknown>>(
   return encrptedValue;
 }
 
-const ivDeterministic = Buffer.from(
-  new Uint8Array([
-    106, 103, 46, 206, 223, 66, 129, 190, 17, 187, 155, 124, 114, 122, 161, 159,
-  ])
-);
 // IMPORTANT: DO NOT MERGE TO MAIN WITHOUT VALIDATING SECURITY IMPLICATIONS
 if (IS_PRODUCTION) {
   throw new Error('THIS SHOULD NOT BE IN PRODUCTION YET');
@@ -84,22 +79,24 @@ if (IS_PRODUCTION) {
 export function encryptDeterministic(
   plainText: string,
   encryptionKey: string | Buffer | undefined = process.env
-    .BFF_GENERAL_ENCRYPTION_KEY // TODO: Consider using a separate key for deterministic encryption
+    .BFF_GENERAL_ENCRYPTION_KEY,
+  pepper: string | Buffer | undefined = 'getThisFromEnv' // TODO: Get from process.env.BFF_GENERAL_PEPPER
 ): [Base64IvEncryptedValue, EncryptedValue, Iv] {
   if (!encryptionKey) {
     throw new Error('Cannot encrypt, Encryption key not found.');
   }
+  if (!pepper) {
+    throw new Error('Cannot encrypt, Pepper not found.');
+  }
 
-  const cipher = crypto.createCipheriv(
-    ENC_ALGO,
-    encryptionKey,
-    ivDeterministic
-  );
+  const iv = crypto
+    .createHash('sha256')
+    .update(pepper)
+    .update(plainText)
+    .digest()
+    .subarray(0, IV_BYTE_LENGTH);
+  const cipher = crypto.createCipheriv(ENC_ALGO, encryptionKey, iv);
   const encrypted = Buffer.concat([cipher.update(plainText), cipher.final()]);
 
-  return [
-    Buffer.concat([ivDeterministic, encrypted]).toString('base64url'),
-    encrypted,
-    ivDeterministic,
-  ];
+  return [Buffer.concat([iv, encrypted]).toString('base64url'), encrypted, iv];
 }
