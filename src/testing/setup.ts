@@ -143,6 +143,7 @@ process.env.BFF_SVWI_API_BASE_URL = `${remoteApiHost}`;
 process.env.BFF_SVWI_API_KEY = 'xxx';
 
 process.env.BFF_GENERAL_ENCRYPTION_KEY = 'FaKeKeYtT9jQBEGYCvS?H2rEh3hukwDz';
+process.env.BFF_GENERAL_PEPPER = 'FaKePepperValueForHashing';
 
 process.env.BFF_BEZWAREN_API = `${remoteApiHost}/bezwaren`;
 process.env.BFF_BEZWAREN_USER = 'BEZWAREN_USER';

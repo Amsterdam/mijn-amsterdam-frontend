@@ -1,7 +1,6 @@
 import { Buffer } from 'node:buffer';
 import crypto from 'node:crypto';
 
-import { IS_PRODUCTION } from '../../universal/config/env';
 import { DecryptedPayloadAndSessionID } from '../services/shared/decrypt-route-param';
 
 type Base64IvEncryptedValue = string;
@@ -71,18 +70,13 @@ export function encryptPayloadAndSessionID<T extends Record<string, unknown>>(
   return encrptedValue;
 }
 
-/** IMPORTANT: Never expose these encrypted values in the UI or API. Use the default encrypt function if possible. This function is only for internally used values that need to be deterministic. */
+/** IMPORTANT: Not entirely secure. Strongly prefer the encrypt function. Never expose these encrypted values in the UI or API. This function is only for internally used values that need to be deterministic. */
 export function encryptDeterministic(
   plainText: string,
   encryptionKey: string | Buffer | undefined = process.env
     .BFF_GENERAL_ENCRYPTION_KEY,
-  pepper: string | Buffer | undefined = 'getThisFromEnv' // TODO: Get from process.env.BFF_GENERAL_PEPPER
+  pepper: string | Buffer | undefined = process.env.BFF_GENERAL_PEPPER
 ): [Base64IvEncryptedValue, EncryptedValue, Iv] {
-  // IMPORTANT: The security implications are not yet validated and this should not yet be used in production
-  if (IS_PRODUCTION) {
-    throw new Error('THIS SHOULD NOT BE IN PRODUCTION YET');
-  }
-
   if (!encryptionKey) {
     throw new Error('Cannot encrypt, Encryption key not found.');
   }
