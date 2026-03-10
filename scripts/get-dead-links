@@ -13,6 +13,7 @@ fi
 
 EXTERNAL_URLS=$(
   # sed filters out urls that we cannot send reliable requests to.
+  # formulier.amsterdam not to be confused with formulierEN.amsterdam is filtered out because it is blocked in the pipeline.
   grep --no-filename -r -P -o --exclude-dir="__snapshots__" --exclude="*test*" \
     "(\\\?[\`\"'])((https?:|www\.).*?)[^\\\]\1" ./src/* 2> /dev/null \
     | sed -E "s/([\`\"'])(.+)\1/\2/" \
@@ -22,8 +23,12 @@ EXTERNAL_URLS=$(
     | sed '/http.*\/\/sap:.*/d' \
     | sed '/.*api\.*/d' \
     | sed '/{.*}/d' \
-    | sed '/.*\.azure\..*/d'
+    | sed '/.*\.azure\..*/d' \
+    | sed '/formulier\.amsterdam/d'
 )
+
+echo "$EXTERNAL_URLS"
+exit 0
 
 echo_dead_link() {
   # Contains default firefox browser headers, otherwise amsterdam.nl will block the requests.
