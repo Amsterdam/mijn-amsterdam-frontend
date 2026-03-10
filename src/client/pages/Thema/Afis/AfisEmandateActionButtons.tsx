@@ -117,7 +117,9 @@ function ApiActionButton<T>({
 
 type AfisEMandateActionButtonsProps = {
   eMandate: AfisEMandateFrontend;
-  redirectUrlApi: BFFApiHook<AfisEMandateSignRequestResponse>;
+  redirectUrlApi: BFFApiHook<AfisEMandateSignRequestResponse> & {
+    requestRedirectUrl: (isActive: boolean) => void;
+  };
   deactivateApi: BFFApiHook<AfisEMandateStatusChangeResponse>;
 };
 
@@ -126,17 +128,14 @@ export function AfisEMandateActionButtons({
   redirectUrlApi,
   deactivateApi,
 }: AfisEMandateActionButtonsProps) {
+  const isActive = eMandate.status === EMANDATE_STATUS_ACTIVE;
   return (
     <>
       {eMandate.signRequestUrl && (
         <ApiActionButton
           api={redirectUrlApi}
-          fetch={() => redirectUrlApi.fetch()}
-          label={
-            eMandate.status === EMANDATE_STATUS_ACTIVE
-              ? 'Wijzigen'
-              : 'Activeren'
-          }
+          fetch={() => redirectUrlApi.requestRedirectUrl(isActive)}
+          label={isActive ? 'Rekening wijzigen' : 'Activeren'}
           doConfirm={false}
         />
       )}
