@@ -209,7 +209,7 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
   });
 
   describe('listProfiles', () => {
-    it('is orderded on created_at for offset/limit to work properly', async () => {
+    it('is ordered on created_at for offset/limit to work properly', async () => {
       const model = await import('./amsapp-notifications-model');
 
       const insertQuery = `INSERT INTO ${NOTIFICATIONS_TABLE_NAME} (profile_id, date_created) VALUES ($1, $2)`;
