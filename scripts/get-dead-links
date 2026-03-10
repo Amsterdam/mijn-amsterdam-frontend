@@ -27,9 +27,6 @@ EXTERNAL_URLS=$(
     | sed '/formulier\.amsterdam/d'
 )
 
-echo "$EXTERNAL_URLS"
-exit 0
-
 echo_dead_link() {
   # Contains default firefox browser headers, otherwise amsterdam.nl will block the requests.
   local status_code=$(\
@@ -69,6 +66,8 @@ echo_dead_link() {
 for url in $EXTERNAL_URLS
 do
   echo_dead_link "$url" &
+  # Small delay to make us look less like a robot.
+  sleep 0.2
 done
 
 wait
