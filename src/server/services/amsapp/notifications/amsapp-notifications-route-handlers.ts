@@ -184,7 +184,7 @@ export async function handleTruncateNotifications(
 }
 
 const handleSendNotificationsResponseParams = z.object({
-  dateFrom: z.iso.datetime().optional().default(getSevenDaysAgoISOString()),
+  dateFrom: z.iso.datetime().optional().default(getSevenDaysAgoISOString),
   offset: z.coerce.number().min(0).optional().default(0),
   limit: z.coerce.number().min(1).optional().default(100),
 });
