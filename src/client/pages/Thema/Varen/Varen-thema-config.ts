@@ -15,6 +15,7 @@ import { DisplayProps } from '../../../components/Table/TableV2.types';
 import type {
   ThemaConfigBase,
   ThemaRoutesConfig,
+  WithListPage,
 } from '../../../config/thema-types';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA = 5;
@@ -43,7 +44,7 @@ export const exploitatieVergunningAanvragen: LinkProps = {
   title: 'Exploitatievergunning aanvragen',
 } as const;
 
-type VarenThemaConfig = ThemaConfigBase<typeof THEMA_ID>;
+type VarenThemaConfig = ThemaConfigBase<typeof THEMA_ID> & WithListPage;
 
 export const themaConfig: VarenThemaConfig = {
   id: THEMA_ID,
@@ -85,6 +86,13 @@ export const themaConfig: VarenThemaConfig = {
     documentTitle: `${THEMA_TITLE} | overzicht`,
     trackingUrl: null,
   },
+  listPage: {
+    route: {
+      path: '/varen/vergunningen/lijst/:kind/:page?',
+      documentTitle: getVarenListPageDocumentTitle(THEMA_TITLE),
+      trackingUrl: null,
+    },
+  },
 };
 
 export const routeConfig = {
@@ -101,11 +109,6 @@ export const routeConfig = {
       return `/varen/vergunning/${params?.caseType ?? ''}`;
     },
     documentTitle: getVarenDetailPageDocumentTitle(THEMA_TITLE),
-  },
-  listPage: {
-    path: '/varen/vergunningen/lijst/:kind/:page?',
-    documentTitle: getVarenListPageDocumentTitle(THEMA_TITLE),
-    trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
 
@@ -137,7 +140,7 @@ export const tableConfig: {
     type: 'zaak',
     filter: (zaak) => !zaak.processed,
     sort: dateSort('dateRequest', 'desc'),
-    listPageRoute: generatePath(routeConfig.listPage.path, {
+    listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.inProgress,
       page: null,
     }),
@@ -163,7 +166,7 @@ export const tableConfig: {
       (!vergunning.dateStart || isDateInPast(vergunning.dateStart)) &&
       (!vergunning.dateEnd || isDateInFuture(vergunning.dateEnd)),
     sort: dateSort('dateStart', 'desc'),
-    listPageRoute: generatePath(routeConfig.listPage.path, {
+    listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.actief,
       page: null,
     }),
@@ -190,7 +193,7 @@ export const tableConfig: {
         SHOW_HISTORICAL_AANVRAGEN_STARTING_FROM_DATE
       ),
     sort: dateSort('dateDecision', 'desc'),
-    listPageRoute: generatePath(routeConfig.listPage.path, {
+    listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.historic,
       page: null,
     }),
