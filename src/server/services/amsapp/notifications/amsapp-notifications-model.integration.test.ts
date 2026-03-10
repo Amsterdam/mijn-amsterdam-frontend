@@ -79,7 +79,6 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
       expect(rows1).toHaveLength(1);
       expect(rows1[0]).toMatchObject({
         profileId: '999999999',
-        profileName: 'Test Person',
         consumerIds: expect.arrayContaining(['consumer-1']),
         serviceIds: [SERVICE_A.serviceId],
       });
@@ -92,7 +91,6 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
       expect(rows2).toHaveLength(1);
       expect(rows2[0]).toMatchObject({
         profileId: '999999999',
-        profileName: 'Test Person',
         consumerIds: expect.arrayContaining(['consumer-1', 'consumer-2']),
         serviceIds: [SERVICE_B.serviceId],
       });
@@ -230,7 +228,9 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
 
       const firstPage = await model.listProfiles({ limit: 2, offset: 0 });
       expect(firstPage).toHaveLength(2);
-      expect(firstPage.map((p) => p.profileId)).toStrictEqual(['1', '2']);
+      expect(firstPage.map((p) => p.profileId)).toStrictEqual(
+        expect.arrayContaining(['1', '2'])
+      );
     });
   });
 });

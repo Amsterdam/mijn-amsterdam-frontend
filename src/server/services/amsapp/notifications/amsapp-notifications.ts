@@ -107,7 +107,6 @@ export async function batchFetchNotifications(options: {
     consumerIds: profile.consumerIds,
     dateUpdated: profile.dateUpdated,
     services: Object.values(profile.content?.services || {}),
-    profileName: profile.profileName,
   }));
 }
 
