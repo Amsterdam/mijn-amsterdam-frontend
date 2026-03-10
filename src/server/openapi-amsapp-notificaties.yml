@@ -343,8 +343,6 @@ components:
     ConsumerProfile:
       type: object
       properties:
-        profileId:
-          type: string
         profileName:
           type: string
         serviceIds:
