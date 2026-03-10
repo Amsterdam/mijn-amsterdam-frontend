@@ -14,10 +14,7 @@ import {
   decosZaakTransformers,
 } from './decos-zaken';
 import { getStatusSteps } from './varen-status-steps';
-import {
-  routeConfig,
-  themaConfig,
-} from '../../../client/pages/Thema/Varen/Varen-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/Varen/Varen-thema-config';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -45,7 +42,7 @@ function transformVarenZaakFrontend(
   zaak: Varen,
   vergunningIdsOfThisReder: Set<VarenVergunningExploitatieType['identifier']>
 ): VarenZakenFrontend {
-  const appRoute = routeConfig.detailPageZaak.path;
+  const appRoute = themaConfig.detailPageZaak.route.path;
   const zaakTransformed = transformDecosZaakFrontend(
     authProfileAndToken.profile.sid,
     zaak,

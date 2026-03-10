@@ -15,7 +15,6 @@ import { DisplayProps } from '../../../components/Table/TableV2.types';
 import type {
   PageConfig,
   ThemaConfigBase,
-  ThemaRoutesConfig,
   WithListPage,
 } from '../../../config/thema-types';
 
@@ -46,10 +45,12 @@ export const exploitatieVergunningAanvragen: LinkProps = {
 } as const;
 
 type WithDetailPageVergunning = PageConfig<'detailPageVergunning'>;
+type WithDetailPageZaak = PageConfig<'detailPageZaak'>;
 
 type VarenThemaConfig = ThemaConfigBase<typeof THEMA_ID> &
   WithListPage &
-  WithDetailPageVergunning;
+  WithDetailPageVergunning &
+  WithDetailPageZaak;
 
 export const themaConfig: VarenThemaConfig = {
   id: THEMA_ID,
@@ -107,17 +108,16 @@ export const themaConfig: VarenThemaConfig = {
       documentTitle: getVarenDetailPageDocumentTitle(THEMA_TITLE),
     },
   },
-};
-
-export const routeConfig = {
   detailPageZaak: {
-    path: '/varen/vergunningen/:caseType/:id',
-    trackingUrl(params) {
-      return `/varen/vergunningen/${params?.caseType ?? ''}`;
+    route: {
+      path: '/varen/vergunningen/:caseType/:id',
+      trackingUrl(params) {
+        return `/varen/vergunningen/${params?.caseType ?? ''}`;
+      },
+      documentTitle: getVarenDetailPageDocumentTitle(THEMA_TITLE),
     },
-    documentTitle: getVarenDetailPageDocumentTitle(THEMA_TITLE),
   },
-} as const satisfies ThemaRoutesConfig;
+};
 
 type VarenTableItem = {
   processed: boolean | undefined;

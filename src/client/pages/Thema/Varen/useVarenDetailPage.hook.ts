@@ -3,7 +3,6 @@ import { useParams } from 'react-router';
 import { useVarenThemaData } from './useVarenThemaData.hook';
 import {
   exploitatieVergunningWijzigenLink,
-  routeConfig,
   themaConfig,
 } from './Varen-thema-config';
 import { ButtonLinkProps } from '../../../../universal/types/App.types';
@@ -32,7 +31,6 @@ export function useVarenVergunningDetailPage() {
     isLoading,
     isError,
     breadcrumbs,
-    routeConfig,
     themaConfig,
   };
 }
@@ -63,7 +61,6 @@ export function useVarenZaakDetailPage() {
     isLoading,
     isError,
     breadcrumbs,
-    routeConfig,
     themaConfig,
   };
 }

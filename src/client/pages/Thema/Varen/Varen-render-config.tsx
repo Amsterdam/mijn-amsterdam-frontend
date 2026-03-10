@@ -1,4 +1,4 @@
-import { themaConfig, routeConfig } from './Varen-thema-config';
+import { themaConfig } from './Varen-thema-config';
 import { VarenDetailPageContentExploitatieVergunning } from './VarenDetailVergunningExploitatie';
 import { VarenDetailPageContentExploitatieZaak } from './VarenDetailZaakExploitatie';
 import { default as VarenIcon } from './VarenIcon.svg?react';
@@ -13,7 +13,7 @@ import {
 
 export const VarenRoutes = [
   {
-    route: routeConfig.detailPageZaak.path,
+    route: themaConfig.detailPageZaak.route.path,
     Component: VarenDetailPageContentExploitatieZaak,
     isActive: themaConfig.featureToggle.active,
   },

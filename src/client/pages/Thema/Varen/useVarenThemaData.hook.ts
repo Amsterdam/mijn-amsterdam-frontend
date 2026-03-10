@@ -1,5 +1,5 @@
 import { CONTENT_EMPTY } from './helper';
-import { routeConfig, tableConfig, themaConfig } from './Varen-thema-config';
+import { tableConfig, themaConfig } from './Varen-thema-config';
 import type {
   VarenVergunningFrontend,
   VarenZakenFrontend,
@@ -49,6 +49,5 @@ export function useVarenThemaData() {
     id: themaConfig.id,
     title: themaConfig.title,
     themaConfig,
-    routeConfig,
   };
 }

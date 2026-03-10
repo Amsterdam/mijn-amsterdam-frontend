@@ -7,10 +7,7 @@ import {
   VarenVergunningFrontend,
 } from './config-and-types';
 import { fetchVaren } from './varen';
-import {
-  routeConfig,
-  themaConfig,
-} from '../../../client/pages/Thema/Varen/Varen-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/Varen/Varen-thema-config';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -76,10 +73,13 @@ function createVarenNotification(
     return null;
   }
 
-  const ctaLinkToThemaOrDetail = generatePath(routeConfig.detailPageZaak.path, {
-    id: zaak.id,
-    caseType: slug(zaak.caseType, { lower: true }),
-  });
+  const ctaLinkToThemaOrDetail = generatePath(
+    themaConfig.detailPageZaak.route.path,
+    {
+      id: zaak.id,
+      caseType: slug(zaak.caseType, { lower: true }),
+    }
+  );
 
   const baseNotification: Omit<MyNotification, 'id' | 'description' | 'title'> =
     {
