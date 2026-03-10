@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import { Paragraph } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router';
 
@@ -9,7 +11,10 @@ import {
   titleEMandaatPage,
   featureToggle,
 } from './Afis-thema-config';
-import { CheckStatus } from './useAfisEMandatesSignRequest';
+import {
+  CheckStatus,
+  useSignRequestPayloadStorageCleanup,
+} from './useAfisEMandatesSignRequest';
 import { useAfisThemaData } from './useAfisThemaData.hook';
 import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types';
 import { MaRouterLink } from '../../../components/MaLink/MaLink';
@@ -50,11 +55,16 @@ export function useAfisEMandatesApi() {
   } = useBffApi<AfisEMandateFrontend[]>(
     generateApiUrl(businessPartnerIdEncrypted, 'AFIS_EMANDATES'),
     {
-      fetchImmediately: featureToggle.afisEMandatesActive,
+      fetchImmediately: featureToggle.emandatesActive,
     }
   );
 
-  const EMandatesSource = eMandatesApiResponse?.content ?? [];
+  const EMandatesSource = useMemo(
+    () => eMandatesApiResponse?.content ?? [],
+    [eMandatesApiResponse?.content]
+  );
+
+  useSignRequestPayloadStorageCleanup(EMandatesSource);
 
   const eMandates = EMandatesSource.map((eMandate) => {
     return {

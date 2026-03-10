@@ -212,7 +212,7 @@ export function AfisBetaalVoorkeuren() {
         isLoading={!!(isLoadingBusinessPartnerDetails || isThemaPaginaLoading)}
         startCollapsed={featureToggle.emandatesActive}
       />
-      {payloadStorage.hasPendingStatusChecks() && (
+      {payloadStorage.hasPayloads() && (
         <AfisEmandateRefetchInterval fetch={fetchEMandates} />
       )}
       {eMandatesTable}

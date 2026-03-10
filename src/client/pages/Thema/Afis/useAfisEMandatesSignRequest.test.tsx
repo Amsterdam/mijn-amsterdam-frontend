@@ -28,7 +28,7 @@ describe('useAfisEMandatesSignRequest', () => {
 
       // Initially, there should be no payloads
       expect(result.current.payloads).toEqual([]);
-      expect(result.current.hasPendingStatusChecks()).toBe(false);
+      expect(result.current.hasPayloads()).toBe(false);
 
       // Add a payload
       act(() => {
@@ -36,14 +36,14 @@ describe('useAfisEMandatesSignRequest', () => {
       });
       expect(result.current.payloads.length).toBe(1);
       expect(result.current.getPayload('eMandate1')).toBe('payload1');
-      expect(result.current.hasPendingStatusChecks()).toBe(true);
+      expect(result.current.hasPayloads()).toBe(true);
 
       // Remove the payload
       act(() => {
         result.current.remove('eMandate1');
       });
       expect(result.current.payloads).toEqual([]);
-      expect(result.current.hasPendingStatusChecks()).toBe(false);
+      expect(result.current.hasPayloads()).toBe(false);
     });
 
     it('should correctly identify when a status check is taking long', () => {
@@ -129,19 +129,19 @@ describe('useAfisEMandatesSignRequest', () => {
     it('should correctly identify pending status checks', () => {
       const { result } = renderHook(() => useSignRequestPayloadStorage());
 
-      expect(result.current.hasPendingStatusChecks()).toBe(false);
+      expect(result.current.hasPayloads()).toBe(false);
 
       act(() => {
         result.current.add('eMandate6', 'payload6');
       });
 
-      expect(result.current.hasPendingStatusChecks()).toBe(true);
+      expect(result.current.hasPayloads()).toBe(true);
 
       act(() => {
         result.current.remove('eMandate6');
       });
 
-      expect(result.current.hasPendingStatusChecks()).toBe(false);
+      expect(result.current.hasPayloads()).toBe(false);
     });
 
     it('should correctly identify when a status check is taking long for multiple payloads', () => {

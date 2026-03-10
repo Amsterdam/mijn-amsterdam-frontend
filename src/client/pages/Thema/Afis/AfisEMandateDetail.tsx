@@ -93,25 +93,30 @@ function EMandate({ eMandate }: EMandateProps) {
               },
             ],
           },
-          {
-            rows: [
-              {
-                label: 'Status',
-                content: eMandate.displayStatus,
-              },
-              {
-                label: 'Einddatum',
-                isVisible: eMandate.status === EMANDATE_STATUS_ACTIVE,
-                content: (
-                  <DateAdjust
-                    lifetimeUpdateApi={lifetimeUpdateApi}
-                    eMandate={eMandate}
-                  />
-                ),
-              },
-            ],
-          },
-          ...(eMandate.status === EMANDATE_STATUS_ACTIVE
+          ...(!signRequestStatusCheckApi.isPendingActivation
+            ? [
+                {
+                  rows: [
+                    {
+                      label: 'Status',
+                      content: eMandate.displayStatus,
+                    },
+                    {
+                      label: 'Einddatum',
+                      isVisible: eMandate.status === EMANDATE_STATUS_ACTIVE,
+                      content: (
+                        <DateAdjust
+                          lifetimeUpdateApi={lifetimeUpdateApi}
+                          eMandate={eMandate}
+                        />
+                      ),
+                    },
+                  ],
+                },
+              ]
+            : []),
+          ...(eMandate.status === EMANDATE_STATUS_ACTIVE &&
+          !signRequestStatusCheckApi.isPendingActivation
             ? [
                 {
                   rows: [
@@ -190,7 +195,7 @@ export function AfisEMandateDetail() {
       pageContentMain={
         !!eMandate && (
           <>
-            {payloadStorage.hasPendingStatusChecks() && (
+            {payloadStorage.hasPayloads() && (
               <AfisEmandateRefetchInterval fetch={fetchEMandates} />
             )}
             <EMandate eMandate={eMandate} />
