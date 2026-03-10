@@ -74,7 +74,7 @@ describe('encryptDeterministic', () => {
   });
 
   it('throws when pepper is missing', () => {
-    vi.stubEnv('BFF_GENERAL_PEPPER', '');
+    vi.stubEnv('BFF_GENERAL_HASH_PEPPER', '');
     expect(() => encryptDeterministic(plainText, encryptionKey)).toThrow(
       /Pepper not found/i
     );

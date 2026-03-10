@@ -75,7 +75,7 @@ export function encryptDeterministic(
   plainText: string,
   encryptionKey: string | Buffer | undefined = process.env
     .BFF_GENERAL_ENCRYPTION_KEY,
-  pepper: string | Buffer | undefined = process.env.BFF_GENERAL_PEPPER
+  pepper: string | Buffer | undefined = process.env.BFF_GENERAL_HASH_PEPPER
 ): [Base64IvEncryptedValue, EncryptedValue, Iv] {
   if (!encryptionKey) {
     throw new Error('Cannot encrypt, Encryption key not found.');
