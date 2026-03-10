@@ -19,7 +19,7 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
   let pool: import('pg').Pool;
   let teardown: (() => Promise<void>) | undefined;
 
-  const databaseName = process.env.PGDATABASE || 'mijnadam_test';
+  const databaseName = 'mijnadam_test';
   const tableName = NOTIFICATIONS_TABLE_NAME;
   const databaseTable = `public.${tableName}`;
 
