@@ -43,7 +43,7 @@ export function useVarenThemaData() {
     isError: isError(VAREN),
     varenZaken,
     varenVergunningen,
-    pageLinks: themaConfig.id,
+    pageLinks: themaConfig.pageLinks,
     buttonItems: [],
     breadcrumbs,
     id: themaConfig.id,
