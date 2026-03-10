@@ -537,7 +537,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
       const reder = {
         ...apiContent.reder,
         link: {
-          to: themaConfigKrefia.route.path,
+          to: themaConfigVaren.route.path,
           title: themaConfigVaren.title,
         },
       };
