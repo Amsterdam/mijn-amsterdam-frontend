@@ -66,9 +66,17 @@ async function setupTables() {
     ADD IF NOT EXISTS "profile_name" VARCHAR(200);
   `;
 
+  const alterTableQuery2 = `
+    ALTER TABLE IF EXISTS "public"."${NOTIFICATIONS_TABLE_NAME}"
+    ALTER COLUMN "date_updated" TYPE timestamptz;
+    ALTER TABLE IF EXISTS "public"."${NOTIFICATIONS_TABLE_NAME}"
+    ALTER COLUMN "date_created" TYPE timestamptz;
+  `;
+
   try {
     await db.query(createTableQuery);
     await db.query(alterTableQuery1);
+    await db.query(alterTableQuery2);
     logger.info(`setupTable: ${NOTIFICATIONS_TABLE_NAME} succeeded.`);
   } catch (error) {
     logger.error(error, `setupTable: ${NOTIFICATIONS_TABLE_NAME} failed.`);
@@ -115,7 +123,7 @@ SET date_updated = $3, content = jsonb_set(
 WHERE profile_id = $1;
 `,
   getProfilesCount: `SELECT COUNT(*)::int AS row_count FROM ${NOTIFICATIONS_TABLE_NAME} `,
-  getProfiles: `SELECT * FROM ${NOTIFICATIONS_TABLE_NAME} `,
+  getProfiles: `SELECT * FROM ${NOTIFICATIONS_TABLE_NAME}`,
   getProfileIds: `SELECT profile_id, profile_name, consumer_ids, service_ids FROM ${NOTIFICATIONS_TABLE_NAME}`,
   getProfileByConsumer: `SELECT profile_id, profile_name, service_ids, date_updated FROM ${NOTIFICATIONS_TABLE_NAME} WHERE $1 = ANY(consumer_ids)`,
   getProfileById: `SELECT profile_id, profile_name, service_ids, date_updated FROM ${NOTIFICATIONS_TABLE_NAME} WHERE profile_id = $1`,
@@ -196,6 +204,7 @@ export async function getProfilesCount(options: {
     values.push(options.dateFrom);
     clauses.push(`WHERE date_updated >= $${values.length}`);
   }
+  // clauses.push(`ORDER BY date_created ASC`);
 
   const queryWithClauses = `${queries.getProfilesCount} ${clauses.join(' ')}`;
   const row =
@@ -217,13 +226,15 @@ export async function listProfiles(options: {
     values.push(options.dateFrom);
     clauses.push(`WHERE date_updated >= $${values.length}`);
   }
-  if (options.limit !== undefined) {
-    values.push(options.limit);
-    clauses.push(`LIMIT $${values.length}`);
-  }
+  // clauses.push(`ORDER BY date_created ASC`);
+
   if (options.offset !== undefined) {
     values.push(options.offset);
     clauses.push(`OFFSET $${values.length}`);
+  }
+  if (options.limit !== undefined) {
+    values.push(options.limit);
+    clauses.push(`LIMIT $${values.length}`);
   }
 
   const queryWithClauses = `${queries.getProfiles} ${clauses.join(' ')}`;

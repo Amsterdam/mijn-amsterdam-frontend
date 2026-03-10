@@ -209,4 +209,28 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
       );
     });
   });
+
+  describe('listProfiles', () => {
+    it('is orderded on created_at for offset/limit to work properly', async () => {
+      const model = await import('./amsapp-notifications-model');
+
+      const insertQuery = `INSERT INTO ${NOTIFICATIONS_TABLE_NAME} (profile_id, date_created) VALUES ($1, $2)`;
+      await pool.query(insertQuery, [
+        '1',
+        new Date('2020-01-01T01:00:00.000Z'),
+      ]);
+      await pool.query(insertQuery, [
+        '2',
+        new Date('2020-01-01T00:00:00.000Z'),
+      ]);
+      await pool.query(insertQuery, [
+        '3',
+        new Date('2020-01-01T02:00:00.000Z'),
+      ]);
+
+      const firstPage = await model.listProfiles({ limit: 2, offset: 0 });
+      expect(firstPage).toHaveLength(2);
+      expect(firstPage.map((p) => p.profileId)).toStrictEqual(['1', '2']);
+    });
+  });
 });
