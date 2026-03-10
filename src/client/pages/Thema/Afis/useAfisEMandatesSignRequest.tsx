@@ -14,59 +14,108 @@ import type {
 import { useBffApi } from '../../../hooks/api/useBffApi';
 import { useLocalStorage } from '../../../hooks/storage.hook';
 
-type AfisEmandateStatusCheckTuple = [
-  eMandateId: AfisEMandateFrontend['id'],
-  payload: string,
-  activationDate: string,
-];
+type AfisEmandateStatusCheckPayload = {
+  eMandateId: AfisEMandateFrontend['id'];
+  eMandateIdSource: string;
+  payload: string;
+  activationDate: string;
+  isReplacement: 'true' | 'false';
+};
 
 export function useSignRequestPayloadStorage() {
-  const [payloads, setValue] = useLocalStorage<AfisEmandateStatusCheckTuple[]>(
-    'afis-emandate-status-check-payload',
-    []
-  );
-
-  // TODO: Add effect the cleans up old payloads that are no longer relevant to prevent unnecessary status checks and storage bloat.
+  const [payloads, setValue] = useLocalStorage<
+    AfisEmandateStatusCheckPayload[]
+  >('afis-emandate-status-check-payload', []);
 
   function get(
     eMandateId: AfisEMandateFrontend['id'],
-    index: number
+    property: keyof AfisEmandateStatusCheckPayload
   ): string | null {
-    const tuple = payloads.findLast((p) => p[0] === eMandateId) as
-      | AfisEmandateStatusCheckTuple
-      | undefined;
-    return tuple ? tuple[index] : null;
+    const statusCheck = payloads.findLast(
+      (p) => p.eMandateId === eMandateId
+    ) as AfisEmandateStatusCheckPayload | undefined;
+    return statusCheck ? statusCheck[property] : null;
   }
 
   return {
     payloads,
-    add(eMandateId: AfisEMandateFrontend['id'], payload: string) {
+    add(
+      eMandateId: AfisEMandateFrontend['id'],
+      eMandateIdSource: string,
+      payload: string,
+      isReplacement: boolean = false
+    ) {
       const activationDate = new Date().toISOString();
-      const newPayloads: AfisEmandateStatusCheckTuple[] = [
+      const newPayloads: AfisEmandateStatusCheckPayload[] = [
         ...payloads,
-        [eMandateId, payload, activationDate],
+        {
+          eMandateId,
+          eMandateIdSource,
+          payload,
+          activationDate,
+          isReplacement: isReplacement ? 'true' : 'false',
+        },
       ];
       setValue(newPayloads);
     },
     remove(eMandateId: AfisEMandateFrontend['id']) {
-      const newPayloads = payloads.filter((p) => p[0] !== eMandateId);
+      const newPayloads = payloads.filter((p) => p.eMandateId !== eMandateId);
       setValue(newPayloads);
     },
     getPayload(eMandateId: AfisEMandateFrontend['id']): string | null {
-      return get(eMandateId, 1);
+      return get(eMandateId, 'payload');
     },
-    hasPendingStatusChecks(): boolean {
-      //TODO: Also check for age of payload to prevent unnecessary status checks for old payloads.
+    hasPayloads(): boolean {
       return payloads.length > 0;
     },
     isTakingLong(eMandateId: AfisEMandateFrontend['id']): boolean {
-      const activationDate = get(eMandateId, 2);
+      const activationDate = get(eMandateId, 'activationDate');
       return activationDate
         ? new Date().getTime() - new Date(activationDate).getTime() >
             AFIS_EMANDATE_LONG_DURATION_THRESHOLD_MS
         : false;
     },
+    isReplacement(eMandateId: AfisEMandateFrontend['id']): boolean {
+      const isReplacement = get(eMandateId, 'isReplacement');
+      return isReplacement === 'true';
+    },
+    isReplaced(
+      eMandateId: AfisEMandateFrontend['id'],
+      eMandateIdSource: AfisEMandateFrontend['eMandateIdSource']
+    ): boolean {
+      const lastPayload = payloads.findLast((p) => p.eMandateId === eMandateId);
+
+      return lastPayload
+        ? lastPayload.eMandateIdSource !== eMandateIdSource?.toString()
+        : false;
+    },
   };
+}
+
+export function useSignRequestPayloadStorageCleanup(
+  EMandatesSource: AfisEMandateFrontend[]
+) {
+  const payloadStorage = useSignRequestPayloadStorage();
+
+  useEffect(() => {
+    if (EMandatesSource.length) {
+      const obsoleteStatusCheckIds = EMandatesSource.filter(
+        ({ id, status, eMandateIdSource }) => {
+          if (!payloadStorage.getPayload(id)) {
+            return false;
+          }
+          return payloadStorage.isReplacement(id)
+            ? payloadStorage.isReplaced(id, eMandateIdSource)
+            : status !== '0';
+        }
+      ).map(({ id }) => id);
+
+      obsoleteStatusCheckIds.forEach((id) => {
+        payloadStorage.remove(id);
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [EMandatesSource]);
 }
 
 // If a customer returns to Mijn Amsterdam from the eMandate signing process, we want to check the status of the sign request to see if the mandate has been activated.
@@ -89,41 +138,22 @@ export function useSignRequestStatusCheck(eMandate: AfisEMandateFrontend) {
   );
 
   const statusResponse = api.data?.content?.status ?? '';
+  const isUpdatingEMandateStatus =
+    !!payload && payloadStorage.isReplacement(eMandate.id)
+      ? !payloadStorage.isReplaced(eMandate.id, eMandate.eMandateIdSource)
+      : eMandate.status !== EMANDATE_STATUS_ACTIVE;
 
-  const isPendingActivation =
-    api.isDirty &&
-    !!payload &&
-    EMANDATE_SIGN_REQUEST_SUCCESS_STATUSES.includes(statusResponse);
-
-  useEffect(() => {
-    if (!payload) {
-      return;
-    }
-    // If the mandate is active or the sign request has failed, we can remove the payload from storage as we no longer need to check the status.
-    return () => {
-      if (
-        eMandate.status === EMANDATE_STATUS_ACTIVE ||
-        (statusResponse &&
-          !EMANDATE_SIGN_REQUEST_SUCCESS_STATUSES.includes(statusResponse))
-      ) {
-        payloadStorage.remove(eMandate.id);
-      }
-    };
-  }, [
-    eMandate.id,
-    payloadStorage,
-    isPendingActivation,
-    eMandate.status,
-    payload,
-    statusResponse,
-  ]);
+  const isPendingActivation = api.isLoading
+    ? !!payload
+    : api.isDirty &&
+      isUpdatingEMandateStatus &&
+      EMANDATE_SIGN_REQUEST_SUCCESS_STATUSES.includes(statusResponse);
 
   return {
     ...api,
     payload,
     isPendingActivation,
-    isRequestingStatusCheck:
-      api.isLoading && !!payload && eMandate.status !== EMANDATE_STATUS_ACTIVE,
+    isRequestingStatusCheck: api.isLoading && isUpdatingEMandateStatus,
     isTakingLong: payloadStorage.isTakingLong(eMandate.id),
     cancel: () => {
       payloadStorage.remove(eMandate.id);

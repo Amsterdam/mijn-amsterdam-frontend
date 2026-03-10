@@ -19,23 +19,40 @@ function useRedirectUrlApi(
   eMandate: AfisEMandateFrontend,
   payloadStorage: ReturnType<typeof useSignRequestPayloadStorage>
 ) {
-  return useBffApi<AfisEMandateSignRequestResponse>(eMandate.signRequestUrl, {
-    fetchImmediately: false,
-    sendRequest: async (url) => {
-      return sendFetchRequest<AfisEMandateSignRequestResponse>(url).then(
-        (response) => {
-          if (response.content?.redirectUrl) {
-            payloadStorage.add(
-              eMandate.id,
-              response.content.statusCheckPayload
-            );
-            window.location.href = response.content?.redirectUrl;
+  const api = useBffApi<AfisEMandateSignRequestResponse>(
+    eMandate.signRequestUrl,
+    {
+      fetchImmediately: false,
+      sendRequest: async (url, init) => {
+        return sendFetchRequest<AfisEMandateSignRequestResponse>(url).then(
+          (response) => {
+            if (response.content?.redirectUrl) {
+              payloadStorage.add(
+                eMandate.id,
+                eMandate.eMandateIdSource?.toString() ?? '',
+                response.content.statusCheckPayload,
+                init?.payload?.isReplacement === 'true'
+              );
+              window.location.href = response.content?.redirectUrl;
+            }
+            return response;
           }
-          return response;
-        }
-      );
+        );
+      },
+    }
+  );
+  return {
+    ...api,
+    // Disable the default fetch function to prevent misuse.
+    // We need to pass the isReplacement flag to the sendRequest function, so we define a custom fetch2 function instead.
+    fetch: () => undefined,
+    requestRedirectUrl(isReplacement: boolean = false) {
+      api.fetch(eMandate.signRequestUrl, {
+        // Not a real payload, but we need to pass something to pass the isReplacement flag to the sendRequest function.
+        payload: { isReplacement: isReplacement ? 'true' : 'false' },
+      });
     },
-  });
+  };
 }
 
 type OptimisticUpdateFunction<T> = (
