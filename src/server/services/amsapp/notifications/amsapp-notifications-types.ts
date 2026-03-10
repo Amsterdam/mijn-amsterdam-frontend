@@ -17,7 +17,7 @@ export type ConsumerProfile = {
 
 export type ConsumerProfileCompact = Omit<
   ConsumerProfile,
-  'content' | 'consumerIds'
+  'profileId' | 'content' | 'consumerIds'
 >;
 
 export type NotificationsService = {
