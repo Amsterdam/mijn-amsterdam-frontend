@@ -9,8 +9,7 @@ import {
 import { fetchVaren } from './varen';
 import {
   routeConfig,
-  themaId,
-  themaTitle,
+  themaConfig,
 } from '../../../client/pages/Thema/Varen/Varen-thema-config';
 import {
   apiDependencyError,
@@ -31,12 +30,12 @@ function createVarenRederRegisteredNotification(
   return {
     id: `varen-${zaak.id}-reder-notification`,
     datePublished,
-    themaID: themaId,
-    themaTitle: themaTitle,
+    themaID: themaConfig.id,
+    themaTitle: themaConfig.title,
     title: `Reder geregistreerd`,
     description: `U heeft zich geregistreerd.`,
     link: {
-      to: routeConfig.themaPage.path,
+      to: themaConfig.route.path,
       title: 'Bekijk details',
     },
   };
@@ -56,8 +55,8 @@ function createVarenVergunningNotification(
   return {
     id: `varen-${vergunning.id}-vergunning-notification`,
     datePublished,
-    themaID: themaId,
-    themaTitle: themaTitle,
+    themaID: themaConfig.id,
+    themaTitle: themaConfig.title,
     title: vergunning.title,
     description: `U hebt een vergunning gekregen voor "${vergunning.vesselName}".`,
     link: {
@@ -85,8 +84,8 @@ function createVarenNotification(
   const baseNotification: Omit<MyNotification, 'id' | 'description' | 'title'> =
     {
       datePublished: currentStep.datePublished,
-      themaID: themaId,
-      themaTitle: themaTitle,
+      themaID: themaConfig.id,
+      themaTitle: themaConfig.title,
       link: {
         to: ctaLinkToThemaOrDetail,
         title: 'Bekijk details',
