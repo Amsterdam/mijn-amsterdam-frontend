@@ -78,7 +78,7 @@ export function encryptDeterministic(
     .BFF_GENERAL_ENCRYPTION_KEY,
   pepper: string | Buffer | undefined = process.env.BFF_GENERAL_HASH_PEPPER
 ): [Base64IvEncryptedValue, EncryptedValue, Iv] {
-  if (!IS_PRODUCTION) {
+  if (IS_PRODUCTION) {
     throw new Error(
       'Preliminary implementation. Should not be used in production'
     );
