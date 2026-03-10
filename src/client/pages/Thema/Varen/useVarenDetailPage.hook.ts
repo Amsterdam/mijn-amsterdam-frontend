@@ -4,6 +4,7 @@ import { useVarenThemaData } from './useVarenThemaData.hook';
 import {
   exploitatieVergunningWijzigenLink,
   routeConfig,
+  themaConfig,
 } from './Varen-thema-config';
 import { ButtonLinkProps } from '../../../../universal/types/App.types';
 
@@ -32,6 +33,7 @@ export function useVarenVergunningDetailPage() {
     isError,
     breadcrumbs,
     routeConfig,
+    themaConfig,
   };
 }
 
@@ -62,5 +64,6 @@ export function useVarenZaakDetailPage() {
     isError,
     breadcrumbs,
     routeConfig,
+    themaConfig,
   };
 }

@@ -14,13 +14,16 @@ import {
   decosZaakTransformers,
 } from './decos-zaken';
 import { getStatusSteps } from './varen-status-steps';
-import { routeConfig } from '../../../client/pages/Thema/Varen/Varen-thema-config';
+import {
+  routeConfig,
+  themaConfig,
+} from '../../../client/pages/Thema/Varen/Varen-thema-config';
 import {
   apiErrorResult,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
-import { omit } from '../../../universal/helpers/utils';
 import { toDateFormatted } from '../../../universal/helpers/date';
+import { omit } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { fetchDecosZaken } from '../decos/decos-service';
 import { transformDecosZaakFrontend } from '../decos/decos-service';
@@ -78,7 +81,7 @@ function transformVarenVergunningFrontend(
   vergunning: VarenVergunningExploitatieType,
   zaken: VarenZakenFrontend[]
 ): VarenVergunningFrontend {
-  const appRoute = routeConfig.detailPageVergunning.path;
+  const appRoute = themaConfig.detailPageVergunning.route.path;
 
   return {
     ...omit(vergunning, ['statusDates', 'termijnDates']),

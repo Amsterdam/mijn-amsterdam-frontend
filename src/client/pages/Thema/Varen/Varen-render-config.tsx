@@ -18,7 +18,7 @@ export const VarenRoutes = [
     isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.detailPageVergunning.path,
+    route: themaConfig.detailPageVergunning.route.path,
     Component: VarenDetailPageContentExploitatieVergunning,
     isActive: themaConfig.featureToggle.active,
   },

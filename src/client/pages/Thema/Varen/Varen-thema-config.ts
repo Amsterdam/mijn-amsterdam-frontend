@@ -13,6 +13,7 @@ import {
 import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import type {
+  PageConfig,
   ThemaConfigBase,
   ThemaRoutesConfig,
   WithListPage,
@@ -44,7 +45,11 @@ export const exploitatieVergunningAanvragen: LinkProps = {
   title: 'Exploitatievergunning aanvragen',
 } as const;
 
-type VarenThemaConfig = ThemaConfigBase<typeof THEMA_ID> & WithListPage;
+type WithDetailPageVergunning = PageConfig<'detailPageVergunning'>;
+
+type VarenThemaConfig = ThemaConfigBase<typeof THEMA_ID> &
+  WithListPage &
+  WithDetailPageVergunning;
 
 export const themaConfig: VarenThemaConfig = {
   id: THEMA_ID,
@@ -93,6 +98,15 @@ export const themaConfig: VarenThemaConfig = {
       trackingUrl: null,
     },
   },
+  detailPageVergunning: {
+    route: {
+      path: '/varen/vergunningen/:id',
+      trackingUrl(params) {
+        return `/varen/vergunning/${params?.caseType ?? ''}`;
+      },
+      documentTitle: getVarenDetailPageDocumentTitle(THEMA_TITLE),
+    },
+  },
 };
 
 export const routeConfig = {
@@ -100,13 +114,6 @@ export const routeConfig = {
     path: '/varen/vergunningen/:caseType/:id',
     trackingUrl(params) {
       return `/varen/vergunningen/${params?.caseType ?? ''}`;
-    },
-    documentTitle: getVarenDetailPageDocumentTitle(THEMA_TITLE),
-  },
-  detailPageVergunning: {
-    path: '/varen/vergunningen/:id',
-    trackingUrl(params) {
-      return `/varen/vergunning/${params?.caseType ?? ''}`;
     },
     documentTitle: getVarenDetailPageDocumentTitle(THEMA_TITLE),
   },

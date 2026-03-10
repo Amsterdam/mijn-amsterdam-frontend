@@ -60,7 +60,7 @@ function createVarenVergunningNotification(
     title: vergunning.title,
     description: `U hebt een vergunning gekregen voor "${vergunning.vesselName}".`,
     link: {
-      to: generatePath(routeConfig.detailPageVergunning.path, {
+      to: generatePath(themaConfig.detailPageVergunning.route.path, {
         id: vergunning.id,
       }),
       title: 'Bekijk details',
