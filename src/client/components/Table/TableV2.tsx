@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { Heading, Table } from '@amsterdam/design-system-react';
+import { Heading, Link, Table } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
 import { getDisplayProps, getDisplayPropsColWidths } from './helpers';
@@ -47,15 +47,19 @@ export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
       linkPropertyName = 'detailLinkComponent';
     }
 
+    const title = linkTitle ? linkTitle(item) : `Bekijk meer over ${label}`;
+    const href: string = item[linkName].to;
+    const labelCapitalized = capitalizeFirstLetter(label);
+
     return {
       ...item,
-      [linkPropertyName]: (
-        <MaRouterLink
-          maVariant="fatNoUnderline"
-          title={linkTitle ? linkTitle(item) : `Bekijk meer over ${label}`}
-          href={item[linkName].to}
-        >
-          {capitalizeFirstLetter(label)}
+      [linkPropertyName]: href.startsWith('http') ? (
+        <Link href={href} rel="noopener noreferrer" title={title}>
+          {labelCapitalized}
+        </Link>
+      ) : (
+        <MaRouterLink maVariant="fatNoUnderline" title={title} href={href}>
+          {labelCapitalized}
         </MaRouterLink>
       ),
     };

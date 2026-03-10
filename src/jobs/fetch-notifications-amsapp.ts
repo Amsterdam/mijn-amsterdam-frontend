@@ -1,8 +1,8 @@
 // Keep this line at the top.
 import '../server/helpers/load-env';
 
-import { captureException } from '../server/services/monitoring';
 import { batchFetchAndStoreNotifications } from '../server/services/amsapp/notifications/amsapp-notifications';
+import { captureException } from '../server/services/monitoring';
 
 async function runJob() {
   try {
