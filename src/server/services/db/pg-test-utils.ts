@@ -91,7 +91,7 @@ export async function setupPgTestDb(
     await ensureDatabaseExists({ databaseName, adminDatabaseName });
 
     const postgres = await import('./postgres');
-    // If a previous test ended the pool, or env changed, allow recreation.
+    // If a previous test did not end the pool, or env changed, allow recreation.
     await postgres.endPool();
 
     const pool = postgres.getPool();
