@@ -14,12 +14,6 @@ import {
   tableConfig as tableConfigVergunningen,
 } from '../Vergunningen/Vergunningen-thema-config';
 
-export const featureToggle = {
-  parkerenActive: true,
-  parkerenCheckForProductAndPermitsActive: !IS_PRODUCTION,
-  parkerenJWETokenCreationActive: !IS_PRODUCTION,
-};
-
 const THEMA_ID = 'PARKEREN';
 const THEMA_TITLE = 'Parkeren';
 
@@ -33,7 +27,7 @@ export const themaConfig: ParkerenThemaConfig = {
   profileTypes: ['private', 'commercial'],
   redactedScope: 'none',
   featureToggle: propagateFeatureToggles({
-    active: false,
+    active: true,
     parkerenCheckForProductAndPermitsActive: !IS_PRODUCTION,
     parkerenJWETokenCreationActive: !IS_PRODUCTION,
   }),
@@ -72,32 +66,6 @@ export const themaConfig: ParkerenThemaConfig = {
     },
   },
 };
-
-// export const routeConfig = {
-//   detailPage: {
-//     path: '/parkeren/:caseType/:id',
-//     trackingUrl: '/parkeren/parkeerfrontend',
-//     documentTitle: `Parkeren | ${THEMA_TITLE}`,
-//   },
-//   listPage: {
-//     path: '/parkeren/lijst/:kind/:page?',
-//     documentTitle: (params) =>
-//       `${tableConfigVergunningen[(params?.kind as ListPageParamKind) || 'lopende-aanvragen'].title} | ${themaTitle}`,
-//     trackingUrl: null,
-//   },
-//   themaPage: {
-//     path: '/parkeren',
-//     documentTitle: `${THEMA_TITLE} | overzicht`,
-//     trackingUrl: null,
-//   },
-// } as const satisfies ThemaRoutesConfig;
-
-// export const linkListItems: LinkProps[] = [
-//   {
-//     to: 'https://www.amsterdam.nl/parkeren/parkeervergunning/parkeervergunning-bewoners/',
-//     title: 'Meer over parkeervergunningen',
-//   },
-// ];
 
 export type ListPageParamKind = ListPageParamKindVergunningen;
 
