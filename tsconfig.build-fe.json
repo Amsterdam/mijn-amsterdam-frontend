@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "outDir": "build/client",
     "target": "es2015",
     "lib": ["DOM", "DOM.Iterable", "ES2021", "ES2023.Array"],
     "allowJs": true,
@@ -9,8 +8,8 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    "module": "esnext",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
@@ -18,9 +17,7 @@
     "downlevelIteration": true,
     "noFallthroughCasesInSwitch": true,
     "importsNotUsedAsValues": "remove",
-    "types": ["vitest/globals"],
-    "rewriteRelativeImportExtensions": true,
-    "allowImportingTsExtensions": true
+    "types": ["vitest/globals"]
   },
   "include": ["src", "public/fonts"]
 }

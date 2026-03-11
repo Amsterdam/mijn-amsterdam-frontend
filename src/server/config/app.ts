@@ -1,10 +1,4 @@
-import { dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
-
 import { BFF_BASE_PATH } from '../routing/bff-routes.ts';
-
-export const __filename = fileURLToPath(import.meta.url);
-export const __dirname = dirname(__filename);
 
 export const BFF_REQUEST_CACHE_ENABLED =
   typeof process.env.BFF_REQUEST_CACHE_ENABLED !== 'undefined'
