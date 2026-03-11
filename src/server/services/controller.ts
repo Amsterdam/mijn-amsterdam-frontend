@@ -17,6 +17,8 @@ import {
 } from '../routing/route-helpers';
 import { fetchIsKnownInAFIS } from './afis/afis';
 import { fetchAfval, fetchAfvalPunten } from './afval/afval';
+import { storeNotificationsResponses } from './amsapp/notifications/amsapp-notifications';
+import { featureToggle } from './amsapp/notifications/amsapp-notifications-service-config';
 import { fetchAVG } from './avg/avg';
 import { fetchMyLocations } from './bag/my-locations';
 import { fetchBezwaren } from './bezwaren/bezwaren';
@@ -41,7 +43,14 @@ import {
 } from './patroon-c';
 import { fetchSVWI } from './patroon-c/svwi';
 import { fetchContactmomenten } from './salesforce/contactmomenten';
-import { fetchNotificationsWithTipsInserted } from './tips-and-notifications';
+import {
+  combineNotificationsWithTipsAndSort,
+  fetchNotificationsAndTipsFromServices,
+  getContentTips,
+  getTipsAndNotificationsFromApiResults,
+  type NotificationsAndTipsResponse,
+  notificationServices,
+} from './tips-and-notifications';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-verhuur';
 import { fetchUserFeedbackSurvey } from './user-feedback/user-feedback';
 import { fetchVaren } from './varen/varen';
@@ -59,6 +68,7 @@ import {
 function callAuthenticatedService<T>(
   fetchService: (
     authProfileAndToken: AuthProfileAndToken,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ...args: any[]
   ) => Promise<T>
 ) {
@@ -71,7 +81,8 @@ function callAuthenticatedService<T>(
   };
 }
 
-function callPublicService<T>(fetchService: (...args: any) => Promise<T>) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function callPublicService<T>(fetchService: (...args: any[]) => Promise<T>) {
   return async (req: Request) => fetchService(queryParams(req));
 }
 
@@ -162,12 +173,39 @@ const MY_LOCATION = callAuthenticatedService(fetchMyLocations);
 // Special services that aggregates NOTIFICATIONS from various services
 export const NOTIFICATIONS = async (req: Request) => {
   const authProfileAndToken = getAuth(req);
-  const serviceResults = await getServiceResultsForTips(req);
-  const notificationsWithTipsInserted =
-    await fetchNotificationsWithTipsInserted(
-      serviceResults,
-      authProfileAndToken
-    );
+  const [serviceResults, notificationsAndTipsResults] = await Promise.all([
+    getServiceResultsForTips(req),
+    authProfileAndToken
+      ? fetchNotificationsAndTipsFromServices(authProfileAndToken)
+      : {},
+  ]);
+
+  if (
+    featureToggle.amsNotificationsIsActive &&
+    authProfileAndToken?.profile.id &&
+    authProfileAndToken.profile.profileType === 'private'
+  ) {
+    // Nothing in this flow depends on this so it does not have to be awaited
+    storeNotificationsResponses(
+      authProfileAndToken.profile.id,
+      notificationsAndTipsResults as Record<
+        keyof (typeof notificationServices)['private'],
+        NotificationsAndTipsResponse
+      >
+    ).catch((error) => {
+      captureException(error);
+    });
+  }
+
+  const contentTips = getContentTips(serviceResults, authProfileAndToken);
+  const notificationsAndTips = getTipsAndNotificationsFromApiResults(
+    Object.values(notificationsAndTipsResults)
+  );
+
+  const notificationsWithTipsInserted = combineNotificationsWithTipsAndSort(
+    contentTips,
+    notificationsAndTips
+  );
   return apiSuccessResult(notificationsWithTipsInserted);
 };
 
@@ -341,9 +379,9 @@ export const servicesTipsByProfileType = {
 export function loadServices(
   req: Request,
   serviceMap:
-    | PrivateServices
-    | CommercialServices
-    | PrivateServicesAttributeBased
+    | Partial<PrivateServices>
+    | Partial<CommercialServices>
+    | Partial<PrivateServicesAttributeBased>
 ) {
   return Object.entries(serviceMap).map(([serviceID, fetchService]) => {
     // Return service result as Object like { SERVICE_ID: result }
@@ -421,7 +459,7 @@ async function getServiceResultsForTips(req: Request) {
   if (auth) {
     const servicePromises = loadServices(
       req,
-      getServiceTipsMap(auth.profile.profileType) as any
+      getServiceTipsMap(auth.profile.profileType)
     );
     requestData = (await Promise.allSettled(servicePromises)).reduce(
       (acc, result) => Object.assign(acc, getSettledResult(result)),

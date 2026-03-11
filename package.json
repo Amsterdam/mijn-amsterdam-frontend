@@ -22,6 +22,7 @@
     "bff-api:watch": "nodemon -e ts -w ./src/server -w ./src/universal -w ./.env.local -x pnpm run bff-api:serve-dev",
     "bff-api:test:dirs": "cross-env MA_APP_MODE=unittest vitest --environment=node",
     "bff-api:test": "pnpm run bff-api:test:dirs src/server src/universal",
+    "bff-api:test:db:amsapp-notifications": "cross-env MA_APP_MODE=unittest RUN_DB_TESTS=true BFF_DB_ENABLED=true pnpm run bff-api:test:dirs src/server/services/amsapp/notifications/amsapp-notifications-model.integration.test.ts",
     "bff-api:serve-build": "node build-bff/server/app-start",
     "bff-api:serve-dev": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --inspect\" ts-node --project ./tsconfig.bff.json ./src/bffserver.ts",
     "bff-api:build": "tsc --project ./tsconfig.bff.json",

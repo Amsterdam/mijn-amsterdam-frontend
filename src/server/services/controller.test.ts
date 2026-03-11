@@ -50,6 +50,8 @@ vi.mock('./tips-and-notifications', async () => {
     getTipsAndNotificationsFromApiResults: vi.fn(),
     sortNotifications: vi.fn(),
     fetchServicesNotifications: vi.fn(),
+    combineNotificationsWithTipsAndSort: vi.fn(),
+    fetchNotificationsAndTipsFromServices: vi.fn(),
     fetchTipsAndNotifications: async () => {
       return [mocks.MOCK_SOURCE_TIP];
     },

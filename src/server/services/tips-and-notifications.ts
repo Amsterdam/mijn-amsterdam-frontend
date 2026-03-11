@@ -1,8 +1,9 @@
-import { fetchAdoptableTrashContainers } from './afval/adoptable-trash-containers';
+import { fetchAdoptableTrashContainerTips } from './afval/adoptable-trash-containers';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import {
   ApiResponse_DEPRECATED,
   getSettledResult,
+  type ApiResponse,
 } from '../../universal/helpers/api';
 import { dateSort } from '../../universal/helpers/date';
 import type { MyNotification } from '../../universal/types/App.types';
@@ -45,9 +46,19 @@ const TIP_IDS_DISABLED = (getFromEnv('BFF_TIPS_DISABLED_IDS', false) ?? '')
   .split(',')
   .map((id) => id.trim());
 
+export type NotificationsAndTipsResponse =
+  | ApiResponse<{
+      notifications?: MyNotification[];
+      tips?: MyNotification[];
+    }>
+  | ApiResponse_DEPRECATED<{
+      notifications?: MyNotification[];
+      tips?: MyNotification[];
+    }>;
+
 type FetchNotificationFunction = (
   authProfileAndToken: AuthProfileAndToken
-) => Promise<ApiResponse_DEPRECATED<unknown>>;
+) => Promise<NotificationsAndTipsResponse>;
 
 type NotificationServices = Record<string, FetchNotificationFunction>;
 
@@ -74,7 +85,7 @@ export const notificationServices = {
   },
   'private-attributes': {},
   private: {
-    adoptTrashContainer: fetchAdoptableTrashContainers,
+    adoptTrashContainer: fetchAdoptableTrashContainerTips,
     afis: fetchAfisNotifications,
     avg: fetchAVGNotifications,
     belasting: fetchBelastingNotifications,
@@ -97,8 +108,8 @@ export const notificationServices = {
   },
 } satisfies NotificationServicesByProfileType;
 
-function getTipsAndNotificationsFromApiResults(
-  responses: Array<ApiResponse_DEPRECATED<unknown>>
+export function getTipsAndNotificationsFromApiResults(
+  responses: NotificationsAndTipsResponse[]
 ): MyNotification[] {
   const notifications: MyNotification[] = [];
   const tips: MyNotification[] = [];
@@ -143,23 +154,28 @@ function getTipsAndNotificationsFromApiResults(
 }
 
 // Services can return Source tips and Content tips.
-async function fetchNotificationsAndTipsFromServices(
-  authProfileAndToken: AuthProfileAndToken
-): Promise<MyNotification[]> {
-  if (authProfileAndToken.profile.profileType !== 'private-attributes') {
-    const profileType = authProfileAndToken.profile.profileType;
-    const services: NotificationServices = notificationServices[profileType];
-
-    const results = await Promise.allSettled(
-      Object.values(services).map((fetchNotifications) =>
-        fetchNotifications(authProfileAndToken)
-      )
-    );
-
-    return getTipsAndNotificationsFromApiResults(results.map(getSettledResult));
+export async function fetchNotificationsAndTipsFromServices(
+  authProfileAndToken: AuthProfileAndToken,
+  services: NotificationServices = notificationServices[
+    authProfileAndToken.profile.profileType
+  ]
+): Promise<Record<keyof typeof services, NotificationsAndTipsResponse>> {
+  if (authProfileAndToken.profile.profileType === 'private-attributes') {
+    return {};
   }
 
-  return [];
+  const serviceResults = await Promise.allSettled(
+    Object.entries(services).map(async ([serviceId, fetchNotifications]) => {
+      const result = await fetchNotifications(authProfileAndToken);
+      return [serviceId, result];
+    })
+  );
+
+  const results = serviceResults.map(getSettledResult) as [
+    keyof typeof services,
+    NotificationsAndTipsResponse,
+  ][];
+  return Object.fromEntries(results);
 }
 
 export function sortNotificationsAndInsertTips(
@@ -214,11 +230,11 @@ export function sortNotificationsAndInsertTips(
   return notificationsWithTipsInserted;
 }
 
-export async function fetchNotificationsWithTipsInserted(
+export function getContentTips(
   serviceResults: ServiceResults | null,
   authProfileAndToken: AuthProfileAndToken | null,
   queryParams?: Record<string, string>
-) {
+): MyNotification<string>[] {
   const compareDate =
     FeatureToggle.passQueryParamsToStreamUrl &&
     queryParams?.[streamEndpointQueryParamKeys.tipsCompareDate]
@@ -227,22 +243,23 @@ export async function fetchNotificationsWithTipsInserted(
         )
       : new Date();
 
-  const [contentTips, notificationsTipsAndServices] = await Promise.all([
-    serviceResults
-      ? fetchContentTips(
-          serviceResults,
-          compareDate,
-          authProfileAndToken?.profile.profileType
-        )
-      : [],
-    authProfileAndToken
-      ? fetchNotificationsAndTipsFromServices(authProfileAndToken)
-      : [],
-  ]);
+  const contentTips = serviceResults
+    ? fetchContentTips(
+        serviceResults,
+        compareDate,
+        authProfileAndToken?.profile.profileType
+      )
+    : [];
+  return contentTips;
+}
 
+export function combineNotificationsWithTipsAndSort(
+  contentTips: MyNotification<string>[],
+  notificationsAndTips: MyNotification<string>[] = []
+) {
   const notifications: MyNotification[] = [
     ...contentTips,
-    ...notificationsTipsAndServices,
+    ...notificationsAndTips,
   ]
     .map((notification) => {
       if (notification.isTip) {

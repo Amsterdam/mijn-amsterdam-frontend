@@ -95,7 +95,7 @@ const routerAdmin = createBFFRouter({
 
 routerPublic.get(
   routes.admin.NOTIFICATIONS_CONSUMER_REGISTRATION_OVERVIEW,
-  async (req: Request, res: Response) => {
+  async (_req: Request, res: Response) => {
     let overview;
     try {
       overview = await getRegistrationOverview();
