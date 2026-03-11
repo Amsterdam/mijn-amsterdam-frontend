@@ -32,7 +32,7 @@ function mockCMSRequest() {
 describe('App', () => {
   const appLoadingIndicator = new RegExp('Welkom', 'i');
 
-  it('Renders dirty App', () => {
+  it('Renders dirty App with loading indicator', () => {
     mockFooterRequest();
     mockCMSRequest();
     mocks.useSessionApi.mockReturnValue({
@@ -44,7 +44,7 @@ describe('App', () => {
     expect(screen.queryByText(appLoadingIndicator)).toBeInTheDocument();
   });
 
-  it('Renders pristine App', () => {
+  it('Renders pristine App without loading indicator', () => {
     mockFooterRequest();
     mockCMSRequest();
     mocks.useSessionApi.mockReturnValue({
