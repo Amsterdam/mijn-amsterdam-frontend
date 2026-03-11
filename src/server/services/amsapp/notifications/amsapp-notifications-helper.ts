@@ -4,8 +4,9 @@ import type {
   AuthProfile,
   AuthProfileAndToken,
 } from '../../../auth/auth-types';
+import { ONE_DAY_MS } from '../../../config/app';
 
-const SEVEN_DAYS_IN_MS = 7 * 24 * 60 * 60 * 1000;
+const SEVEN_DAYS_IN_MS = 7 * ONE_DAY_MS;
 export const getSevenDaysAgoISOString = () =>
   new Date(Date.now() - SEVEN_DAYS_IN_MS).toISOString();
 
