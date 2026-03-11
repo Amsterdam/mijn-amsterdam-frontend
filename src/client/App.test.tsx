@@ -35,7 +35,6 @@ describe('App', () => {
   it('Renders dirty App', () => {
     mockFooterRequest();
     mockCMSRequest();
-
     mocks.useSessionApi.mockReturnValue({
       isAuthenticated: false,
       isDirty: true,
@@ -48,7 +47,6 @@ describe('App', () => {
   it('Renders pristine App', () => {
     mockFooterRequest();
     mockCMSRequest();
-
     mocks.useSessionApi.mockReturnValue({
       isAuthenticated: false,
       isDirty: false,
