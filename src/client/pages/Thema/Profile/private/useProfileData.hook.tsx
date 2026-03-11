@@ -2,24 +2,24 @@ import {
   formatBrpProfileData,
   type BrpProfileData,
 } from './ProfilePrivate.transform';
-import { useAantalBewonersOpAdres } from './useAantalBewonersOpAdres.hook';
+import { useIngeschrevenPersonenOpAdres } from './useAantalIngeschrevenPersonen.hook';
 import { useAppStateGetter } from '../../../../hooks/useAppStateStore';
 import { routeConfig } from '../Profile-thema-config';
 
 export function useProfileData() {
   const { BRP } = useAppStateGetter();
-  const aantalBewoners = useAantalBewonersOpAdres(
-    BRP.content?.fetchUrlAantalBewoners ?? null
+  const aantalIngeschrevenPersonen = useIngeschrevenPersonenOpAdres(
+    BRP.content?.fetchUrlAantalIngeschrevenPersonen ?? null
   );
 
   let profileData: BrpProfileData | null;
 
-  if (typeof aantalBewoners === 'string' && BRP.content?.adres) {
+  if (typeof aantalIngeschrevenPersonen === 'string' && BRP.content?.adres) {
     const brpContent = {
       ...BRP.content,
       adres: {
         ...BRP.content.adres,
-        aantalBewoners,
+        aantalIngeschrevenPersonen,
       },
     };
     profileData = formatBrpProfileData(brpContent);
@@ -30,7 +30,7 @@ export function useProfileData() {
   return {
     BRP,
     profileData,
-    aantalBewoners,
+    aantalIngeschrevenPersonen,
     routeConfig,
   };
 }

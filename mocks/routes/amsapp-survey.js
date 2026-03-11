@@ -4,7 +4,7 @@ const settings = require('../settings');
 module.exports = [
   {
     id: 'get-amsapp-survey',
-    url: `${settings.MOCK_BASE_PATH}/amsapp/survey/:id/latest`,
+    url: `${settings.MOCK_BASE_PATH}/amsapp/survey/:id/versions/:version`,
     method: 'GET',
     variants: [
       {

@@ -8,10 +8,7 @@ export const featureToggle = {
   [themaIdBRP]: {
     themaActive: true,
     get aantalBewonersOpAdresTonenActive() {
-      return (
-        featureToggle[themaIdBRP].themaActive &&
-        isEnabled('BRP.aantalBewonersOpAdresTonen')
-      );
+      return featureToggle[themaIdBRP].themaActive && isEnabled('BRP.aantalBewonersOpAdresTonen');
     },
   },
   [themaIdKVK]: {
@@ -51,4 +48,4 @@ export const profileLinks = {
     'https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/',
 };
 
-export const BRP_LABEL_AANTAL_BEWONERS = 'Aantal bewoners';
+export const BRP_LABEL_AANTAL_INGESCHREVEN_PERSONEN = 'Ingeschreven personen';

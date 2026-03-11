@@ -2,7 +2,7 @@ import { describe, it, expect, vi, Mock } from 'vitest';
 import Mockdate from 'mockdate';
 
 import { forTesting } from './adoptable-trash-containers';
-import { fetchAdoptableTrashContainers } from './adoptable-trash-containers';
+import { fetchAdoptableTrashContainerTips } from './adoptable-trash-containers';
 import { getAuthProfileAndToken } from '../../../testing/utils';
 import {
   DEFAULT_LAT,
@@ -62,7 +62,7 @@ describe('fetchAdoptableTrashContainers', () => {
       })
     );
 
-    const result = await fetchAdoptableTrashContainers(authProfileAndToken);
+    const result = await fetchAdoptableTrashContainerTips(authProfileAndToken);
     expect(result.status).toBe('OK');
     expect(result.content?.tips).toHaveLength(1);
   });
@@ -72,7 +72,7 @@ describe('fetchAdoptableTrashContainers', () => {
       apiErrorResult('Error fetching BRP data', null)
     );
 
-    const result = await fetchAdoptableTrashContainers(authProfileAndToken);
+    const result = await fetchAdoptableTrashContainerTips(authProfileAndToken);
     expect(result.status).toBe('DEPENDENCY_ERROR');
   });
 
@@ -82,7 +82,7 @@ describe('fetchAdoptableTrashContainers', () => {
       apiErrorResult('Error fetching BAG location', null)
     );
 
-    const result = await fetchAdoptableTrashContainers(authProfileAndToken);
+    const result = await fetchAdoptableTrashContainerTips(authProfileAndToken);
     expect(result.status).toBe('DEPENDENCY_ERROR');
   });
 
@@ -93,7 +93,7 @@ describe('fetchAdoptableTrashContainers', () => {
       apiErrorResult('Error fetching Map locations dataset', null)
     );
 
-    const result = await fetchAdoptableTrashContainers(authProfileAndToken);
+    const result = await fetchAdoptableTrashContainerTips(authProfileAndToken);
     expect(result.status).toBe('DEPENDENCY_ERROR');
   });
 
@@ -102,7 +102,7 @@ describe('fetchAdoptableTrashContainers', () => {
       apiSuccessResult({ persoon: { geboortedatum: '2010-01-01' } })
     );
 
-    const result = await fetchAdoptableTrashContainers(authProfileAndToken);
+    const result = await fetchAdoptableTrashContainerTips(authProfileAndToken);
     expect(result.status).toBe('OK');
     expect(result.content?.tips).toHaveLength(0);
   });
@@ -129,7 +129,7 @@ describe('fetchAdoptableTrashContainers', () => {
       })
     );
 
-    const result = await fetchAdoptableTrashContainers(authProfileAndToken);
+    const result = await fetchAdoptableTrashContainerTips(authProfileAndToken);
     expect(result.status).toBe('OK');
     expect(result.content?.tips).toHaveLength(0);
   });

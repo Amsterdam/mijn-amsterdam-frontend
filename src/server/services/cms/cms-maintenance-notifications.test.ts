@@ -231,8 +231,8 @@ describe('cms-maintenance-notifications', () => {
 
       const result = await fetchMaintenanceNotificationsDashboard();
 
-      expect(result.content).toHaveLength(1);
-      expect(result.content?.[0].path).toBe('/dashboard');
+      expect(result.content?.notifications).toHaveLength(1);
+      expect(result.content?.notifications[0].path).toBe('/dashboard');
     });
   });
 });

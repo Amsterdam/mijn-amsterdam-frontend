@@ -30,6 +30,22 @@ export function getPool() {
 }
 
 /**
+ * Test utility: closes and resets the singleton pool.
+ *
+ * This is useful for integration tests that need to bring Postgres up/down,
+ * change PG* env vars between suites, or avoid open handles after Vitest.
+ */
+export async function endPool() {
+  if (!pool) {
+    return;
+  }
+
+  const current = pool;
+  pool = null;
+  await current.end();
+}
+
+/**
  * To develop against a working database you should enable the Datapunt VPN and use the credentials for the connection in your env.local file.
  */
 

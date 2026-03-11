@@ -5,6 +5,7 @@ import {
   apiSuccessResult,
 } from '../../universal/helpers/api';
 import { AuthProfileAndToken } from '../auth/auth-types';
+import { fetchMyLocations } from './bag/my-locations';
 import { fetchDataset } from './buurt/buurt';
 import { datasetEndpoints } from './buurt/datasets';
 import {
@@ -12,11 +13,11 @@ import {
   filterFeaturesinRadius,
   getBboxFromFeatures,
 } from './buurt/helpers';
-import { fetchMyLocations } from './bag/my-locations';
 import {
   featureToggle,
   routeConfig,
   themaId,
+  themaTitle,
 } from '../../client/components/MyArea/MyArea-thema-config';
 
 const WITHIN_RADIUS_KM = 1;
@@ -25,6 +26,7 @@ function getNotification(bbox: LatLngBoundsLiteral) {
   return {
     id: `wior-meldingen-notification`,
     datePublished: new Date().toISOString(),
+    themaTitle,
     themaID: themaId,
     title: `Werkzaamheden gepland`,
     description: `Bij u in de buurt zijn binnen enkele maanden meerdaagsewerkzaamheden gepland`,
