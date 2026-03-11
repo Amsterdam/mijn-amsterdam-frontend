@@ -3,7 +3,7 @@ import { generatePath } from 'react-router';
 
 import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { entries } from '../../../../universal/helpers/utils';
-import { propagateFeatureToggles } from '../../../config/buildFeatureToggle';
+import { propagateFeatureToggles } from '../../../config/feature-toggles';
 import type {
   ThemaConfigBase,
   WithDetailPage,
