@@ -69,7 +69,7 @@ import { router as routerPublicExternalConsumer } from './routing/router-public-
 import { captureException } from './services/monitoring.ts';
 import { getFromEnv } from './helpers/env.ts';
 import { router as privateNetworkRouter } from './routing/router-private.ts';
-import { __dirname } from './config/app.ts';
+import { getDirname } from './helpers/dir.ts';
 
 const app = express();
 
@@ -77,7 +77,10 @@ app.set('trust proxy', true);
 
 // Security, disable express header.
 app.disable('x-powered-by');
-const viewDir = __dirname.split(path.sep).slice(-2, -1);
+
+const viewDir = getDirname(import.meta.url)
+  .split(path.sep)
+  .slice(-2, -1);
 
 // Set-up view engine voor SSR
 app.set('view engine', 'pug');
