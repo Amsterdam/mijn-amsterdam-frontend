@@ -105,9 +105,20 @@ function AppAuthenticated() {
 
 function AppLanding() {
   const session = useSessionApi();
-  const { isAuthenticated } = session;
+  const { isAuthenticated, isDirty } = session;
 
   useScrollToTop();
+
+  // We don't want to show the app content until we know whether the user is authenticated or not,
+  // to prevent flashing of the wrong content.
+  // Therefore, we return null while the session is still loading (dirty).
+  if (!isDirty) {
+    return null;
+  }
+  const welcomeLoader = document.getElementById('loader');
+  if (welcomeLoader) {
+    welcomeLoader.remove();
+  }
 
   return isAuthenticated ? (
     <>
