@@ -2,6 +2,7 @@ import {
   featureToggle,
   sourceApiConfig,
   SURVEY_ID_INLINE_KTO,
+  SURVEY_VERSION_INLINE_KTO,
 } from './user-feedback.service-config';
 import type {
   SaveUserFeedbackResponse,
@@ -26,7 +27,8 @@ import { deepCamelizeKeys } from '../db/helper';
 
 export async function fetchUserFeedbackSurvey(
   surveyId: Survey['unique_code'] = SURVEY_ID_INLINE_KTO,
-  version: string = 'latest'
+  version: string = SURVEY_VERSION_INLINE_KTO,
+  enableCache: boolean = true
 ): ApiResponsePromise<SurveyFrontend> {
   const requestConfig = getCustomApiConfig(sourceApiConfig, {
     formatUrl: ({ url }) =>
@@ -34,6 +36,7 @@ export async function fetchUserFeedbackSurvey(
         ? `${url}/${surveyId}/latest`
         : `${url}/${surveyId}/versions/${version}`,
     method: 'GET',
+    enableCache,
     transformResponse(survey: Survey) {
       const base = pick(deepCamelizeKeys<Survey>(survey), [
         'id',
@@ -47,15 +50,17 @@ export async function fetchUserFeedbackSurvey(
 
       return {
         ...base,
-        questions: survey.questions.map((question) => {
-          return pick(deepCamelizeKeys(question), [
-            'id',
-            'maxCharacters',
-            'questionText',
-            'questionType',
-            'required',
-            'description',
-          ]);
+        questions: survey.questions?.map((question) => {
+          return (
+            pick(deepCamelizeKeys(question), [
+              'id',
+              'maxCharacters',
+              'questionText',
+              'questionType',
+              'required',
+              'description',
+            ]) ?? []
+          );
         }),
       };
     },
@@ -94,6 +99,7 @@ export async function saveUserFeedback(
     formatUrl: ({ url }) => `${url}/${surveyId}/versions/${version}/entries`,
     method: 'POST',
     data: surveyEntryPayload,
+    enableCache: false,
   });
 
   return requestData<SaveUserFeedbackResponse>(requestConfig);
@@ -101,6 +107,7 @@ export async function saveUserFeedback(
 
 async function fetchFeedbackSurveyEntries(
   surveyId: Survey['unique_code'],
+  surveyVersion: string,
   page: number = 1
 ): ApiResponsePromise<{ entries: SurveyEntryFrontend[]; pageCount: number }> {
   const PAGE_SIZE = 100;
@@ -110,6 +117,8 @@ async function fetchFeedbackSurveyEntries(
     params: {
       page_size: PAGE_SIZE,
       page,
+      survey_unique_code: surveyId,
+      survey_version: surveyVersion,
     },
     enableCache: false,
     transformResponse(entriesResponse: SurveyEntriesResponse) {
@@ -144,8 +153,9 @@ export async function userFeedbackOverview(
   version: string,
   page: number = 1
 ): ApiResponsePromise<SurveyOverviewFrontend> {
-  const surveyRequest = fetchUserFeedbackSurvey(surveyId, version);
-  const entriesRequest = fetchFeedbackSurveyEntries(surveyId, page);
+  const USE_CACHE = false;
+  const surveyRequest = fetchUserFeedbackSurvey(surveyId, version, USE_CACHE);
+  const entriesRequest = fetchFeedbackSurveyEntries(surveyId, version, page);
 
   const [surveyResponse, entriesResponse] = await Promise.all([
     surveyRequest,

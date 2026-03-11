@@ -2253,10 +2253,10 @@
       "verblijfplaats": {
         "type": "Adres",
         "verblijfadres": {
-          "officieleStraatnaam": "Floraweg",
-          "korteStraatnaam": "Floraweg",
-          "huisnummer": 170,
-          "postcode": "1032ZG",
+          "officieleStraatnaam": "Cycladenlaan",
+          "korteStraatnaam": "Cycladenlaan",
+          "huisnummer": 2,
+          "postcode": "1060LW",
           "woonplaats": "Amsterdam"
         },
         "functieAdres": {

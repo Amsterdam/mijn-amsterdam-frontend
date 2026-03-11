@@ -190,6 +190,7 @@ async function startServerBFF() {
       await import('log-that-http');
     }
   }
+
   const server = app.listen(BFF_PORT, () => {
     logger.info(
       `Mijn Amsterdam BFF api listening on ${BFF_PORT}... [IS_DEVELOPMENT: ${IS_DEVELOPMENT}]`
@@ -211,7 +212,7 @@ async function startServerBFF() {
 }
 if (
   require.main?.filename.endsWith('bffserver.ts') ||
-  require.main?.filename.endsWith('app.js') ||
+  require.main?.filename.endsWith('app-start.js') ||
   process.versions.bun
 ) {
   startServerBFF();

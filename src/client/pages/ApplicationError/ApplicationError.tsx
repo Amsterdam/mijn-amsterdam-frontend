@@ -13,7 +13,6 @@ import {
 import type { FallbackProps } from 'react-error-boundary';
 
 import { PageContentCell, PageV2 } from '../../components/Page/Page';
-import { useUsabilla } from '../../hooks/useUsabilla';
 
 function ApplicationErrorContent({ error }: { error?: Error }) {
   useEffect(() => {
@@ -60,7 +59,6 @@ function ApplicationErrorContent({ error }: { error?: Error }) {
 export function ApplicationError({
   error,
 }: FallbackProps & { children?: ReactNode }) {
-  useUsabilla();
   return (
     <>
       <Page>

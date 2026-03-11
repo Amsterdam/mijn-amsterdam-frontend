@@ -13,6 +13,7 @@ export type ApiSuccessResponse<T> = {
   status: 'OK';
   id?: string;
   failedDependencies?: FailedDependencies;
+  totalItems?: number;
 };
 
 // This state is used for checking if we are expecting data from the api.

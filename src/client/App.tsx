@@ -7,9 +7,7 @@ import { BrowserRouter, useLocation, useNavigate } from 'react-router';
 
 import styles from './App.module.scss';
 import { PrivateRoutes, PublicRoutes } from './App.routes';
-import {
-  CobrowseScreensareAlert,
-} from './components/Alert/CobrowseScreenshareDisclaimer';
+import { CobrowseScreenshareAlert } from './components/Alert/CobrowseScreenshareDisclaimer';
 import { AutoLogoutDialog } from './components/AutoLogoutDialog/AutoLogoutDialog';
 import { ErrorMessages } from './components/ErrorMessages/ErrorMessages';
 import { MainFooter } from './components/MainFooter/MainFooter';
@@ -26,14 +24,11 @@ import {
   useDeeplinkRedirect,
   useSetDeeplinkEntry,
 } from './hooks/useDeeplink.hook';
-import { useProfileTypeValue } from './hooks/useProfileType';
 import { useScrollToTop } from './hooks/useScrollToTop';
 import { useTrackThemas } from './hooks/useTrackThemas.hook';
-import { useUsabilla } from './hooks/useUsabilla';
 
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);
-  useUsabilla();
 
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -74,11 +69,8 @@ function AppAuthenticated() {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const profileType = useProfileTypeValue();
   const redirectAfterLogin = useDeeplinkRedirect();
   const isScreensharing = useCobrowseScreenshareState();
-
-  useUsabilla(profileType);
 
   useEffect(() => {
     if (redirectAfterLogin && redirectAfterLogin !== '/') {
@@ -102,7 +94,7 @@ function AppAuthenticated() {
         <SkipLink href="#page-main-content">Direct naar inhoud</SkipLink>
         <MainHeader isAuthenticated />
         <ErrorMessages />
-        {isScreensharing && <CobrowseScreensareAlert />}
+        {isScreensharing && <CobrowseScreenshareAlert />}
         <PrivateRoutes />
       </Page>
       {/** Remove the footer on the Map view for better UX */}

@@ -15,7 +15,7 @@ export function VergunningenThema() {
     isLoading,
     isError,
     tableConfig,
-    linkListItems,
+    pageLinks,
     id,
     title,
     hasParkeervergunningen,
@@ -63,7 +63,7 @@ export function VergunningenThema() {
       id={id}
       title={title}
       pageContentTop={pageContentTop}
-      pageLinks={linkListItems}
+      pageLinks={pageLinks}
       pageContentMain={tables}
       isError={isError}
       isLoading={isLoading}

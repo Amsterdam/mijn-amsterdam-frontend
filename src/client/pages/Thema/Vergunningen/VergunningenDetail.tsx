@@ -106,7 +106,7 @@ export function VergunningenDetail() {
     isLoading,
     isError,
     breadcrumbs,
-    routeConfig,
+    themaConfig,
   } = useVergunningenThemaData();
   const {
     vergunning,
@@ -115,7 +115,7 @@ export function VergunningenDetail() {
     isLoadingDocuments,
     isErrorDocuments,
   } = useVergunningenDetailData(vergunningen);
-  useHTMLDocumentTitle(routeConfig.detailPage);
+  useHTMLDocumentTitle(themaConfig.detailPage.route);
 
   return (
     <ThemaDetailPagina

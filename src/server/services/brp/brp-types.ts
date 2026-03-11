@@ -178,6 +178,8 @@ export type Adres = {
   begindatumVerblijf: string | null;
   begindatumVerblijfFormatted?: string | null;
   locatiebeschrijving?: string | null;
+  isBewoner: boolean;
+  isBriefadres: boolean;
 };
 
 export type PersoonBasis = {
@@ -230,6 +232,6 @@ export type BrpFrontend = {
   ouders: Ouder[];
   adres: Adres | null;
   adresHistorisch: Adres[];
-  fetchUrlAantalBewoners: string | null;
-  aantalBewoners: number | null;
+  fetchUrlAantalIngeschrevenPersonen: string | null;
+  aantalIngeschrevenPersonen: number | null;
 };
