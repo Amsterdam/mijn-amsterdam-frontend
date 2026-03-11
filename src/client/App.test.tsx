@@ -23,21 +23,39 @@ vi.mock('./hooks/api/useSessionApi', async (importOriginal) => {
   };
 });
 
-describe('App', () => {
+function mockCMSRequest() {
   bffApi
     .get('/services/cms/maintenance-notifications?page=landingspagina')
     .reply(200);
+}
 
-  mockFooterRequest();
+describe('App', () => {
+  const appLoadingIndicator = new RegExp('Welkom', 'i');
+
+  it('Renders dirty App', () => {
+    mockFooterRequest();
+    mockCMSRequest();
+
+    mocks.useSessionApi.mockReturnValue({
+      isAuthenticated: false,
+      isDirty: true,
+    });
+
+    const screen = render(<App />);
+    expect(screen.queryByText(appLoadingIndicator)).toBeInTheDocument();
+  });
 
   it('Renders pristine App', () => {
+    mockFooterRequest();
+    mockCMSRequest();
+
     mocks.useSessionApi.mockReturnValue({
       isAuthenticated: false,
       isDirty: false,
     });
 
     const screen = render(<App />);
-    expect(screen.getByText(/Welkom/i)).toBeInTheDocument();
+    expect(screen.queryByText(appLoadingIndicator)).not.toBeInTheDocument();
   });
 
   it('Renders Landing Page', async () => {
