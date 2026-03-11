@@ -74,7 +74,7 @@ export const themaConfig: VarenThemaConfig = {
     {
       title: THEMA_TITLE,
       listItems: [
-        'Registreren van uw onderneming', // Een string
+        'Registreren van uw onderneming',
         {
           text: 'Inzien en wijzigen van uw vergunning passagiersvaart:',
           listItems: [
