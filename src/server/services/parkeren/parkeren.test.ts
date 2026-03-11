@@ -5,6 +5,13 @@ import { hasPermitsOrPermitRequests } from './parkeren-egis-service';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
+interface ParkerenThemaConfig {
+  [x: string]: any;
+  featureToggles: {
+    parkerenJWETokenCreationActiv: boolean;
+  };
+}
+
 const mocks = vi.hoisted(() => {
   return {
     JWETokenCreationActive: false,
@@ -14,14 +21,10 @@ const mocks = vi.hoisted(() => {
 vi.mock(
   '../../../client/pages/Thema/Parkeren/Parkeren-thema-config.ts',
   async (importOriginal) => {
-    return {
-      ...(await importOriginal()),
-      featureToggle: {
-        parkerenActive: true,
-        parkerenCheckForProductAndPermitsActive: true,
-        parkerenJWETokenCreationActive: mocks.JWETokenCreationActive,
-      },
-    };
+    const module = (await importOriginal()) as ParkerenThemaConfig;
+    module.themaConfig.featureToggle.parkerenJWETokenCreationActive =
+      mocks.JWETokenCreationActive;
+    return module;
   }
 );
 

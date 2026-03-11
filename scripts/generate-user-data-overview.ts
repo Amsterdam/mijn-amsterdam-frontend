@@ -87,10 +87,7 @@ import {
 import { themaConfig as bodemThemaConfig } from '../src/client/pages/Thema/Bodem/Bodem-thema-config';
 import { themaConfig as themaConfigHLI } from '../src/client/pages/Thema/HLI/HLI-thema-config';
 import { themaConfig as themaConfigJeugd } from '../src/client/pages/Thema/Jeugd/Jeugd-thema-config';
-import {
-  themaId as themaIdParkeren,
-  themaTitle as themaTitleParkeren,
-} from '../src/client/pages/Thema/Parkeren/Parkeren-thema-config';
+import { themaConfig as themaParkeren } from '../src/client/pages/Thema/Parkeren/Parkeren-thema-config';
 import { themaConfig as themaBelastingen } from '../src/client/pages/Thema/Belastingen/Belastingen-thema-config';
 import { themaConfig as themaMilieuzone } from '../src/client/pages/Thema/Milieuzone/Milieuzone-thema-config';
 import { themaConfig as themaSubsidies } from '../src/client/pages/Thema/Subsidies/Subsidies-thema-config';
@@ -124,7 +121,7 @@ const themas = [
   { id: bodemThemaConfig.id, title: bodemThemaConfig.title },
   { id: themaConfigHLI.id, title: themaConfigHLI.title },
   { id: themaConfigJeugd.id, title: themaConfigJeugd.title },
-  { id: themaIdParkeren, title: themaTitleParkeren },
+  { id: themaParkeren.id, title: themaParkeren.title },
   { id: themaBelastingen.id, title: themaBelastingen.title },
   { id: themaMilieuzone.id, title: themaMilieuzone.title },
   { id: themaSubsidies.id, title: themaSubsidies.title },

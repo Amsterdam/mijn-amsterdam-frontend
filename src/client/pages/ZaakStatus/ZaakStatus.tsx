@@ -117,8 +117,8 @@ const pageRouteResolvers: PageRouteResolvers = {
   ),
   horeca: baseThemaConfig(HORECA.themaConfig.route.path, HORECA.themaConfig.id),
   parkeren: baseThemaConfig(
-    PARKEREN.routeConfig.themaPage.path,
-    PARKEREN.themaId,
+    PARKEREN.themaConfig.route.path,
+    PARKEREN.themaConfig.id,
     (stateSlice) => {
       return stateSlice.content?.vergunningen ?? null;
     }

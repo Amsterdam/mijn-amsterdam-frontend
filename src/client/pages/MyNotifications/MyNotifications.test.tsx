@@ -7,7 +7,7 @@ import { MyNotificationsRoute } from './MyNotifications-routes';
 import type { AppState } from '../../../universal/types/App.types';
 import { themaId as themaIdDashboard } from '../Dashboard/Dashboard-config';
 import { themaConfig as themaInkomen } from '../Thema/Inkomen/Inkomen-thema-config';
-import { themaId as themaIdParkeren } from '../Thema/Parkeren/Parkeren-thema-config';
+import { themaConfig as themaParkeren } from '../Thema/Parkeren/Parkeren-thema-config';
 import { themaIdBRP } from '../Thema/Profile/Profile-thema-config';
 
 const testState = {
@@ -56,7 +56,7 @@ const testState = {
         title: 'Notification',
         description: 'Notificatie4',
         datePublished: '2020-07-24',
-        themaID: themaIdParkeren,
+        themaID: themaParkeren.id,
         themaTitle: 'Parkeren',
         link: {
           to: '/item-4',

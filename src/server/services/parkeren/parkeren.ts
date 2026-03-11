@@ -3,7 +3,7 @@ import {
   hasPermitsOrPermitRequests,
   fetchSSOURL,
 } from './parkeren-egis-service';
-import { featureToggle } from '../../../client/pages/Thema/Parkeren/Parkeren-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/Parkeren/Parkeren-thema-config';
 import {
   apiSuccessResult,
   getFailedDependencies,
@@ -28,7 +28,7 @@ export async function fetchParkeren(authProfileAndToken: AuthProfileAndToken) {
   }
 
   shouldCheckForPermitsOrPermitRequests =
-    featureToggle.parkerenCheckForProductAndPermitsActive &&
+    themaConfig.featureToggle.parkerenCheckForProductAndPermitsActive &&
     shouldCheckForPermitsOrPermitRequests;
 
   let isKnown = true;

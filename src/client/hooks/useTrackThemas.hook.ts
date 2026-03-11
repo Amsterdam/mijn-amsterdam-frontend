@@ -20,6 +20,7 @@ export function useTrackThemas() {
           id: item.id,
         })
       );
+
       setStoredThemas(themaTitlesAndIds);
       trackEvent('themas-per-sessie', { themas: themaTitlesAndIds });
     }

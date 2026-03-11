@@ -28,7 +28,7 @@ import { themaConfig as klachtenThemaConfig } from '../Thema/Klachten/Klachten-t
 import { themaConfig as krefiaThemaConfig } from '../Thema/Krefia/Krefia-thema-config';
 import { themaConfig as milieuThemaConfig } from '../Thema/Milieuzone/Milieuzone-thema-config';
 import { themaConfig as overtredingenThemaConfig } from '../Thema/Overtredingen/Overtredingen-thema-config';
-import { parkerensectionProps } from '../Thema/Parkeren/InfoSection';
+import { themaConfig as parkerenThemaConfig } from '../Thema/Parkeren/Parkeren-thema-config';
 import { profileSectionProps } from '../Thema/Profile/InfoSection';
 import { themaConfig as subsidiesThemaConfig } from '../Thema/Subsidies/Subsidies-thema-config';
 import { themaConfig as toeristischeVerhuurThemaConfig } from '../Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
@@ -69,8 +69,6 @@ const sections: InfoSection_DEPRECATED[] = [
 
   afisSectionProps,
 
-  parkerensectionProps,
-
   varensectionProps,
   afisSectionProps,
   ...createDeprecatedInfoSection(afvalThemaConfig),
@@ -88,6 +86,8 @@ const sections: InfoSection_DEPRECATED[] = [
   ...createDeprecatedInfoSection(subsidiesThemaConfig),
   ...createDeprecatedInfoSection(milieuThemaConfig),
   ...createDeprecatedInfoSection(overtredingenThemaConfig),
+  ...createDeprecatedInfoSection(parkerenThemaConfig),
+
   ...createDeprecatedInfoSection(toeristischeVerhuurThemaConfig),
   ...createDeprecatedInfoSection(vergunningenThemaConfig),
   ...createDeprecatedInfoSection(zorgThemaConfig),
