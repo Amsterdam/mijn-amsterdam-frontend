@@ -3,9 +3,6 @@
 
 /* tslint:disable:no-implicit-dependencies */
 /* tslint:disable:no-submodule-imports */
-
-// Keep the loading of environment variables at the top.
-import './helpers/load-env';
 import {
   IS_AP,
   IS_DEVELOPMENT,
@@ -13,7 +10,6 @@ import {
   IS_PRODUCTION,
 } from '../universal/config/env';
 
-// Note: Keep this line after loading in env files or LOG_LEVEL will be undefined.
 import { logger } from './logging';
 
 const debug = process.env.DEBUG;
