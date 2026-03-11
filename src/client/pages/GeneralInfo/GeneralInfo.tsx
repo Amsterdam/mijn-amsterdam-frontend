@@ -7,7 +7,7 @@ import {
 import { MaLink, MaRouterLink } from '../../components/MaLink/MaLink.tsx';
 import { myAreaSectionProps } from '../../components/MyArea/InfoSection.tsx';
 import { PageContentCell, PageV2 } from '../../components/Page/Page.tsx';
-import { ThemaConfigBase, InfoSection } from '../../config/thema-types.ts';
+import type { ThemaConfigBase, InfoSection } from '../../config/thema-types.ts';
 import { getRedactedClass } from '../../helpers/cobrowse.ts';
 import {
   compareThemas,

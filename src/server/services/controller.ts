@@ -1,14 +1,14 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 
+import type { ApiResponse_DEPRECATED } from '../../universal/helpers/api.ts';
 import {
   apiErrorResult,
-  ApiResponse_DEPRECATED,
   apiSuccessResult,
   getSettledResult,
 } from '../../universal/helpers/api.ts';
 import { omit } from '../../universal/helpers/utils.ts';
 import { getAuth } from '../auth/auth-helpers.ts';
-import { AuthProfileAndToken } from '../auth/auth-types.ts';
+import type { AuthProfileAndToken } from '../auth/auth-types.ts';
 import { logger } from '../logging.ts';
 import {
   queryParams,
@@ -17,8 +17,8 @@ import {
 } from '../routing/route-helpers.ts';
 import { fetchIsKnownInAFIS } from './afis/afis.ts';
 import { fetchAfval, fetchAfvalPunten } from './afval/afval.ts';
-import { storeNotificationsResponses } from './amsapp/notifications/amsapp-notifications.ts';
 import { featureToggle } from './amsapp/notifications/amsapp-notifications-service-config.ts';
+import { storeNotificationsResponses } from './amsapp/notifications/amsapp-notifications.ts';
 import { fetchAVG } from './avg/avg.ts';
 import { fetchMyLocations } from './bag/my-locations.ts';
 import { fetchBezwaren } from './bezwaren/bezwaren.ts';
@@ -35,21 +35,18 @@ import { fetchAllKlachten } from './klachten/klachten.ts';
 import { fetchKrefia } from './krefia/krefia.ts';
 import { captureException } from './monitoring.ts';
 import { fetchParkeren } from './parkeren/parkeren.ts';
-import {
-  fetchBelasting,
-  fetchMilieuzone,
-  fetchOvertredingen,
-  fetchSubsidie,
-} from './patroon-c';
+import { fetchBelasting } from './patroon-c/belasting.ts';
+import { fetchMilieuzone, fetchOvertredingen } from './patroon-c/cleopatra.ts';
+import { fetchSubsidie } from './patroon-c/subsidie.ts';
 import { fetchSVWI } from './patroon-c/svwi.ts';
 import { fetchContactmomenten } from './salesforce/contactmomenten.ts';
+import type { notificationServices } from './tips-and-notifications.ts';
 import {
   combineNotificationsWithTipsAndSort,
   fetchNotificationsAndTipsFromServices,
   getContentTips,
   getTipsAndNotificationsFromApiResults,
   type NotificationsAndTipsResponse,
-  notificationServices,
 } from './tips-and-notifications.ts';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-verhuur.ts';
 import { fetchUserFeedbackSurvey } from './user-feedback/user-feedback.ts';
@@ -62,7 +59,7 @@ import {
   fetchSpecificaties,
   fetchTonk,
   fetchTozo,
-} from './wpi';
+} from './wpi/api-service.ts';
 
 // Default service call just passing query params as arguments
 function callAuthenticatedService<T>(
@@ -157,8 +154,6 @@ const WPI_SPECIFICATIES = callAuthenticatedService(fetchSpecificaties);
 const WPI_TONK = callAuthenticatedService(fetchTonk);
 const WPI_TOZO = callAuthenticatedService(fetchTozo);
 const KTO = callAuthenticatedService(() => fetchUserFeedbackSurvey());
-
-// Architectural pattern C. TODO: Make generic services for pattern C.
 const BELASTINGEN = callAuthenticatedService(fetchBelasting);
 const MILIEUZONE = callAuthenticatedService(fetchMilieuzone);
 const OVERTREDINGEN = callAuthenticatedService(fetchOvertredingen);
@@ -246,7 +241,7 @@ const SERVICES_INDEX = {
   KTO,
 };
 
-export type ServicesType = typeof SERVICES_INDEX;
+export type ServicesType = Prettify<typeof SERVICES_INDEX>;
 export type ServiceID = keyof ServicesType;
 export type ServiceMap = { [key in ServiceID]: ServicesType[ServiceID] };
 

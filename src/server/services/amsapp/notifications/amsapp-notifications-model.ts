@@ -1,7 +1,8 @@
-import {
+import type {
   BSN,
   ConsumerId,
-  ServiceId,
+  ServiceId} from './amsapp-notifications-types.ts';
+import {
   type ConsumerProfile,
   type NotificationsService,
 } from './amsapp-notifications-types.ts';

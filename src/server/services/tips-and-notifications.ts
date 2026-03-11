@@ -1,7 +1,4 @@
-import { fetchAdoptableTrashContainers } from './afval/adoptable-trash-containers.ts';
 import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
-import type {
-  ApiResponse_DEPRECATED} from '../../universal/helpers/api.ts';
 import {
   type ApiResponse_DEPRECATED,
   getSettledResult,
@@ -40,6 +37,7 @@ import { fetchWpiNotifications } from './wpi/api-service.ts';
 import { streamEndpointQueryParamKeys } from '../../universal/config/app.ts';
 import { entries } from '../../universal/helpers/utils.ts';
 import { getFromEnv } from '../helpers/env.ts';
+import { fetchAdoptableTrashContainerTips } from './afval/adoptable-trash-containers.ts';
 
 // Every 3rd notification will be a tip if one is available.
 const INSERT_TIP_AT_EVERY_NTH_INDEX = 3;
