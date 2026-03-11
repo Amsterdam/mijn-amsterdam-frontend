@@ -4,7 +4,8 @@
     "target": "ES2024",
     "lib": [
       "esnext",
-      "dom"
+      "dom",
+      "dom.iterable"
     ],
     "allowJs": false,
     "skipLibCheck": true,

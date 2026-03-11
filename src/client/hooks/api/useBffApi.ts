@@ -2,7 +2,6 @@ import { useCallback, useEffect } from 'react';
 
 import { create } from 'zustand';
 
-import type { RecordStr2 } from '../../../server/routing/route-helpers.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -13,7 +12,7 @@ import type { SomeOtherString } from '../../../universal/helpers/types.ts';
 type ApiFetchResponse<T> = Promise<ApiResponse<T>>;
 // Extend RequestInit to include a payload property. The body property always takes precedence over payload.
 // E.g: if both body and payload are provided, body will be used.
-type RequestInitWithPayload<P extends RecordStr2 = RecordStr2> = RequestInit & {
+type RequestInitWithPayload<P> = RequestInit & {
   payload?: P;
 };
 
@@ -64,7 +63,7 @@ async function handleResponse<T>(
  * @param init Payload can be a regular object and will be converted to URLSearchParams. The provided body however, takes precedence over payload.
  * @returns
  */
-export async function sendFormPostRequest<T, P extends RecordStr2 = RecordStr2>(
+export async function sendFormPostRequest<T, P = unknown>(
   url: string | URL,
   init?: RequestInitWithPayload<P>
 ): ApiFetchResponse<T> {
@@ -87,7 +86,7 @@ export async function sendFormPostRequest<T, P extends RecordStr2 = RecordStr2>(
  * @param init Payload can be a regular object and will be converted to URLSearchParams. The provided body however, takes precedence over payload.
  * @returns
  */
-export async function sendJSONPostRequest<T, P extends any = any>(
+export async function sendJSONPostRequest<T, P = unknown>(
   url: string | URL,
   init?: RequestInitWithPayload<P>
 ): ApiFetchResponse<T> {
@@ -135,14 +134,10 @@ export type BffApiState<D> = {
   isLoading: boolean;
 };
 
-export type BFFApiHook<
-  T,
-  P extends RecordStr2 = RecordStr2,
-  U = UrlOrString,
-> = BffApiState<ApiResponse<T>> & {
+export type BFFApiHook<T, P = unknown> = BffApiState<ApiResponse<T>> & {
   fetch: (
     url?: UrlOrString | RequestInitWithPayload<P>,
-    init_?: U extends UrlOrString ? RequestInitWithPayload<P> : never
+    init_?: P extends unknown ? RequestInitWithPayload<P> : never
   ) => void;
   optimisticUpdateContent: (content: T) => void;
   isPristine: boolean;
@@ -156,7 +151,7 @@ const initialState: BffApiState<null> = Object.seal({
   isDirty: false,
 });
 
-type BffApiOptions<T, P extends RecordStr2> = {
+type BffApiOptions<T, P> = {
   url?: UrlOrString;
   init?: RequestInitWithPayload<P>;
   fetchImmediately?: boolean;
@@ -190,14 +185,10 @@ export const useBffApiStateStore = create<BFFApiStore>((set, get) => ({
   has: (key) => key in get(),
 }));
 
-export function useBffApi<
-  T,
-  P extends RecordStr2 = RecordStr2,
-  U = UrlOrString,
->(
+export function useBffApi<T, P = unknown>(
   cacheKey: string | null | undefined,
   options?: BffApiOptions<T, P>
-): BFFApiHook<T | null, P, U> {
+): BFFApiHook<T | null, P> {
   const {
     url,
     sendRequest = sendFetchRequest,

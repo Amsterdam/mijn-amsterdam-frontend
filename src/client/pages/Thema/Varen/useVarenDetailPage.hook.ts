@@ -5,7 +5,7 @@ import {
   exploitatieVergunningWijzigenLink,
   themaConfig,
 } from './Varen-thema-config.ts';
-import { ButtonLinkProps } from '../../../../universal/types/App.types.ts';
+import type { ButtonLinkProps } from '../../../../universal/types/App.types.ts';
 
 export function useVarenVergunningDetailPage() {
   const {

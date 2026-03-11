@@ -10,8 +10,8 @@ import {
   isDateInFuture,
   isDateInPast,
 } from '../../../../universal/helpers/date.ts';
-import { LinkProps } from '../../../../universal/types/App.types.ts';
-import { DisplayProps } from '../../../components/Table/TableV2.types.ts';
+import type { LinkProps } from '../../../../universal/types/App.types.ts';
+import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import type {
   PageConfig,
   ThemaConfigBase,

@@ -1,4 +1,4 @@
-import type { ReactElement } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 
 import escapeRegex from 'lodash.escaperegexp';
 
@@ -143,7 +143,7 @@ export const API_SEARCH_CONFIG_DEFAULT: Optional<ApiSearchConfig, 'stateKey'> =
 
 export function displayPath(
   term: string,
-  segments: string[],
+  segments: ReactNode[],
   replaceTerm: boolean = true
 ): ReactElement {
   const termSplitted = term.trim().split(/\s+/g);

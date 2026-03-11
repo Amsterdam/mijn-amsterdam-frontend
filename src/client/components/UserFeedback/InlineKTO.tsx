@@ -38,9 +38,9 @@ export function InlineKTO({ userFeedbackDetails }: InlineKTOProps) {
 
   function saveFormData(formData: FormData) {
     const payload: RecordStr2 = {};
-
+    const entries = Array.from(formData.entries());
     payload.answers = JSON.stringify(
-      Array.from(formData.entries())
+      entries
         .filter(([_key, value]) => !!value)
         .map(([key, value]) => {
           return { question: key, answer: value.toString() };
@@ -81,7 +81,7 @@ export function InlineKTO({ userFeedbackDetails }: InlineKTOProps) {
     });
   }
 
-  function savePageRating(rating: number) {
+  function savePageRating(_rating: number) {
     // Implement if we want to save rating before the form is submitted.
   }
 

@@ -5,14 +5,14 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import { themaConfig } from './Varen-thema-config';
 import { VarenThema } from './VarenThema';
-import {
+import type {
   VarenZakenFrontend,
   VarenRegistratieRederType,
   ZaakVergunningExploitatieType,
   VarenVergunningFrontend,
 } from '../../../../server/services/varen/config-and-types';
 import { jsonCopy } from '../../../../universal/helpers/utils';
-import { AppState } from '../../../../universal/types/App.types';
+import type { AppState } from '../../../../universal/types/App.types';
 import { expectHeaders, getTable } from '../../../helpers/test-utils';
 import MockApp from '../../MockApp';
 
