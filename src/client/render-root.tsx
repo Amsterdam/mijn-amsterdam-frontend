@@ -15,8 +15,3 @@ root.render(
     <AppWrapper />
   </AppInsightsErrorBoundary>
 );
-
-const welcomeLoader = document.getElementById('loader');
-if (welcomeLoader) {
-  welcomeLoader.remove();
-}
