@@ -5,8 +5,8 @@ import 'core-js/actual/array/find-last-index';
 import 'core-js/actual/string/replace-all';
 
 import './client/styles/main.scss';
-import { BFFApiUrls } from './client/config/api';
-import { type FeatureToggles } from './server/config/azure-appconfiguration';
+import { BFFApiUrls } from './client/config/api.ts';
+import { type FeatureToggles } from './server/config/azure-appconfiguration.ts';
 
 (async function startApp() {
   const response = await fetch(BFFApiUrls.FEATURE_TOGGLES);
@@ -28,5 +28,5 @@ import { type FeatureToggles } from './server/config/azure-appconfiguration';
     MA_BUILD_ID ?? '-1'
   );
 
-  await import('./client/render-root');
+  await import('./client/render-root.tsx');
 })();
