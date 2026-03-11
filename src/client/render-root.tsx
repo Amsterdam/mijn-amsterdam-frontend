@@ -15,3 +15,5 @@ root.render(
     <AppWrapper />
   </AppInsightsErrorBoundary>
 );
+
+document.getElementById('initial-page-loader')!.remove();
