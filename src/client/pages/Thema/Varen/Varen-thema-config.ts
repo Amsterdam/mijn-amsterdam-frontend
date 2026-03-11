@@ -12,7 +12,11 @@ import {
 } from '../../../../universal/helpers/date';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
-import type { ThemaRoutesConfig } from '../../../config/thema-types';
+import type {
+  PageConfig,
+  ThemaConfigBase,
+  WithListPage,
+} from '../../../config/thema-types';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_AFGEHANDELD = 3;
@@ -31,39 +35,89 @@ export const listPageParamKind = {
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
-export const featureToggle = {
-  varenActive: true,
-};
+const THEMA_ID = 'VAREN';
+const THEMA_TITLE = 'Passagiersvaart';
 
-export const themaId = 'VAREN' as const;
-export const themaTitle = 'Passagiersvaart' as const;
+const formulierenBaseUrl = `https://formulieren${IS_PRODUCTION ? '' : '.acc'}.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam`;
+export const exploitatieVergunningAanvragen: LinkProps = {
+  to: `${formulierenBaseUrl}/VARExploitatievergunningAanvragen.aspx`,
+  title: 'Exploitatievergunning aanvragen',
+} as const;
 
-export const routeConfig = {
-  detailPageZaak: {
-    path: '/varen/vergunningen/:caseType/:id',
-    trackingUrl(params) {
-      return `/varen/vergunningen/${params?.caseType ?? ''}`;
-    },
-    documentTitle: getVarenDetailPageDocumentTitle(themaTitle),
+type WithDetailPageVergunning = PageConfig<'detailPageVergunning'>;
+type WithDetailPageZaak = PageConfig<'detailPageZaak'>;
+
+type VarenThemaConfig = ThemaConfigBase<typeof THEMA_ID> &
+  WithListPage &
+  WithDetailPageVergunning &
+  WithDetailPageZaak;
+
+export const themaConfig: VarenThemaConfig = {
+  id: THEMA_ID,
+  title: THEMA_TITLE,
+  profileTypes: ['commercial'],
+  redactedScope: 'none',
+  featureToggle: {
+    active: true,
   },
-  detailPageVergunning: {
-    path: '/varen/vergunningen/:id',
-    trackingUrl(params) {
-      return `/varen/vergunning/${params?.caseType ?? ''}`;
+  pageLinks: [
+    {
+      to: 'https://www.amsterdam.nl/ondernemen/vergunning-passagiersvaart-wijzigen',
+      title: 'Meer informatie over passagiersvaart',
     },
-    documentTitle: getVarenDetailPageDocumentTitle(themaTitle),
+    {
+      to: 'https://lokaleregelgeving.overheid.nl/CVDR728175#bijlage_1.',
+      title: 'Legestabel',
+    },
+  ],
+  uitlegPageSections: [
+    {
+      title: THEMA_TITLE,
+      listItems: [
+        'Registreren van uw onderneming',
+        {
+          text: 'Inzien en wijzigen van uw vergunning passagiersvaart:',
+          listItems: [
+            'Vaartuig vervangen door een bestaand vaartuig',
+            'Vaartuig vervangen door een te (ver)bouwen vaartuig',
+            'Exploitatievergunning op naam van een andere onderneming zetten',
+            'Vaartuig een andere naam geven',
+          ],
+        },
+      ],
+    },
+  ],
+  route: {
+    path: '/varen',
+    documentTitle: `${THEMA_TITLE} | overzicht`,
+    trackingUrl: null,
   },
   listPage: {
-    path: '/varen/vergunningen/lijst/:kind/:page?',
-    documentTitle: getVarenListPageDocumentTitle(themaTitle),
-    trackingUrl: null,
+    route: {
+      path: '/varen/vergunningen/lijst/:kind/:page?',
+      documentTitle: getVarenListPageDocumentTitle(THEMA_TITLE),
+      trackingUrl: null,
+    },
   },
-  themaPage: {
-    path: '/varen',
-    documentTitle: `${themaTitle} | overzicht`,
-    trackingUrl: null,
+  detailPageVergunning: {
+    route: {
+      path: '/varen/vergunningen/:id',
+      trackingUrl(params) {
+        return `/varen/vergunning/${params?.caseType ?? ''}`;
+      },
+      documentTitle: getVarenDetailPageDocumentTitle(THEMA_TITLE),
+    },
   },
-} as const satisfies ThemaRoutesConfig;
+  detailPageZaak: {
+    route: {
+      path: '/varen/vergunningen/:caseType/:id',
+      trackingUrl(params) {
+        return `/varen/vergunningen/${params?.caseType ?? ''}`;
+      },
+      documentTitle: getVarenDetailPageDocumentTitle(THEMA_TITLE),
+    },
+  },
+};
 
 type VarenTableItem = {
   processed: boolean | undefined;
@@ -93,7 +147,7 @@ export const tableConfig: {
     type: 'zaak',
     filter: (zaak) => !zaak.processed,
     sort: dateSort('dateRequest', 'desc'),
-    listPageRoute: generatePath(routeConfig.listPage.path, {
+    listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.inProgress,
       page: null,
     }),
@@ -119,7 +173,7 @@ export const tableConfig: {
       (!vergunning.dateStart || isDateInPast(vergunning.dateStart)) &&
       (!vergunning.dateEnd || isDateInFuture(vergunning.dateEnd)),
     sort: dateSort('dateStart', 'desc'),
-    listPageRoute: generatePath(routeConfig.listPage.path, {
+    listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.actief,
       page: null,
     }),
@@ -146,7 +200,7 @@ export const tableConfig: {
         SHOW_HISTORICAL_AANVRAGEN_STARTING_FROM_DATE
       ),
     sort: dateSort('dateDecision', 'desc'),
-    listPageRoute: generatePath(routeConfig.listPage.path, {
+    listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.historic,
       page: null,
     }),
@@ -164,22 +218,6 @@ export const tableConfig: {
     },
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_AFGEHANDELD,
   },
-} as const;
-
-export const varenMeerInformatieLink: LinkProps = {
-  to: 'https://www.amsterdam.nl/ondernemen/vergunning-passagiersvaart-wijzigen',
-  title: 'Meer informatie over passagiersvaart',
-} as const;
-
-export const varenLegesTableLink: LinkProps = {
-  to: 'https://lokaleregelgeving.overheid.nl/CVDR728175#bijlage_1.',
-  title: 'Legestabel',
-} as const;
-
-const formulierenBaseUrl = `https://formulieren${IS_PRODUCTION ? '' : '.acc'}.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam`;
-export const exploitatieVergunningAanvragen: LinkProps = {
-  to: `${formulierenBaseUrl}/VARExploitatievergunningAanvragen.aspx`,
-  title: 'Exploitatievergunning aanvragen',
 } as const;
 
 export const exploitatieVergunningWijzigenLink: (

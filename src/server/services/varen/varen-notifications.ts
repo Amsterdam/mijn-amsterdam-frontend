@@ -7,11 +7,7 @@ import {
   VarenVergunningFrontend,
 } from './config-and-types';
 import { fetchVaren } from './varen';
-import {
-  routeConfig,
-  themaId,
-  themaTitle,
-} from '../../../client/pages/Thema/Varen/Varen-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/Varen/Varen-thema-config';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -31,12 +27,12 @@ function createVarenRederRegisteredNotification(
   return {
     id: `varen-${zaak.id}-reder-notification`,
     datePublished,
-    themaID: themaId,
-    themaTitle: themaTitle,
+    themaID: themaConfig.id,
+    themaTitle: themaConfig.title,
     title: `Reder geregistreerd`,
     description: `U heeft zich geregistreerd.`,
     link: {
-      to: routeConfig.themaPage.path,
+      to: themaConfig.route.path,
       title: 'Bekijk details',
     },
   };
@@ -56,12 +52,12 @@ function createVarenVergunningNotification(
   return {
     id: `varen-${vergunning.id}-vergunning-notification`,
     datePublished,
-    themaID: themaId,
-    themaTitle: themaTitle,
+    themaID: themaConfig.id,
+    themaTitle: themaConfig.title,
     title: vergunning.title,
     description: `U hebt een vergunning gekregen voor "${vergunning.vesselName}".`,
     link: {
-      to: generatePath(routeConfig.detailPageVergunning.path, {
+      to: generatePath(themaConfig.detailPageVergunning.route.path, {
         id: vergunning.id,
       }),
       title: 'Bekijk details',
@@ -77,16 +73,19 @@ function createVarenNotification(
     return null;
   }
 
-  const ctaLinkToThemaOrDetail = generatePath(routeConfig.detailPageZaak.path, {
-    id: zaak.id,
-    caseType: slug(zaak.caseType, { lower: true }),
-  });
+  const ctaLinkToThemaOrDetail = generatePath(
+    themaConfig.detailPageZaak.route.path,
+    {
+      id: zaak.id,
+      caseType: slug(zaak.caseType, { lower: true }),
+    }
+  );
 
   const baseNotification: Omit<MyNotification, 'id' | 'description' | 'title'> =
     {
       datePublished: currentStep.datePublished,
-      themaID: themaId,
-      themaTitle: themaTitle,
+      themaID: themaConfig.id,
+      themaTitle: themaConfig.title,
       link: {
         to: ctaLinkToThemaOrDetail,
         title: 'Bekijk details',

@@ -57,11 +57,7 @@ import { themaConfig as themaConfigKlachten } from '../../pages/Thema/Klachten/K
 import { themaConfig as themaConfigKrefia } from '../../pages/Thema/Krefia/Krefia-thema-config';
 import { routeConfig as routeConfigProfile } from '../../pages/Thema/Profile/Profile-thema-config';
 import { themaConfig as toeristischeVerhuurThemaConfig } from '../../pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
-import {
-  featureToggle as featureToggleVaren,
-  routeConfig as routeConfigVaren,
-  themaTitle as themaTitleVaren,
-} from '../../pages/Thema/Varen/Varen-thema-config';
+import { themaConfig as themaConfigVaren } from '../../pages/Thema/Varen/Varen-thema-config';
 
 export interface SearchEntry {
   url: string;
@@ -517,7 +513,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     keywordsGeneratedFromProps: ['identifier'],
   },
   {
-    isEnabled: featureToggleVaren.varenActive,
+    isEnabled: themaConfigVaren.featureToggle.active,
     stateKey: 'VAREN',
     profileTypes: ['commercial'],
     getApiBaseItems: (apiContent: {
@@ -541,8 +537,8 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
       const reder = {
         ...apiContent.reder,
         link: {
-          to: routeConfigVaren.themaPage.path,
-          title: themaTitleVaren,
+          to: themaConfigVaren.route.path,
+          title: themaConfigVaren.title,
         },
       };
       return [reder, ...zaken, ...vergunningen];

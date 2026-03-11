@@ -17,8 +17,8 @@ import {
 } from './Varen-thema-config';
 import styles from './Varen.module.scss';
 import type { VarenRegistratieRederFrontend } from '../../../../server/services/varen/config-and-types';
-import { entries } from '../../../../universal/helpers/utils';
 import { toDateFormatted } from '../../../../universal/helpers/date';
+import { entries } from '../../../../universal/helpers/utils';
 import { Datalist, RowSet } from '../../../components/Datalist/Datalist';
 import { MaButtonLink } from '../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../components/Page/Page';
@@ -131,13 +131,12 @@ export function VarenThema() {
     tableConfig,
     isLoading,
     isError,
-    linkListItems,
     buttonItems,
     id,
     title,
-    routeConfig,
+    themaConfig,
   } = useVarenThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const actionButtons =
     varenRederRegistratie && buttonItems.length ? (
@@ -199,7 +198,7 @@ export function VarenThema() {
         </>
       }
       isPartialError={false}
-      pageLinks={linkListItems}
+      pageLinks={themaConfig.pageLinks}
     />
   );
 }
