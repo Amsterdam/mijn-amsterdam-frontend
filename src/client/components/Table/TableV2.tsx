@@ -8,11 +8,9 @@ import styles from './TableV2.module.scss';
 import type {
   ObjectWithOptionalLinkAttr,
   TableV2Props,
-  WithDetailLinkComponent} from './TableV2.types.ts';
-import {
-  type ScreenSize,
-  type TableV2ColWidths,
+  WithDetailLinkComponent,
 } from './TableV2.types.ts';
+import { type ScreenSize, type TableV2ColWidths } from './TableV2.types.ts';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
 import { entries } from '../../../universal/helpers/utils.ts';
 import type { ZaakAanvraagDetail } from '../../../universal/types/App.types.ts';
@@ -22,7 +20,7 @@ import { MaRouterLink } from '../MaLink/MaLink.tsx';
 /**
  * @deprecated These exports should be removed in the future and replaced with import from the types file.
  */
-export type { DisplayProps, WithDetailLinkComponent } from './TableV2.types';
+export type { DisplayProps, WithDetailLinkComponent } from './TableV2.types.ts';
 
 export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
   items: T[],

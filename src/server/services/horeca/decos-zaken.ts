@@ -7,11 +7,13 @@ import {
 } from '../decos/decos-field-transformers.ts';
 import type {
   DecosZaakBase,
-  DecosZaakTransformer} from '../decos/decos-types.ts';
-import {
-  type DecosZaakFrontend,
+  DecosZaakTransformer,
 } from '../decos/decos-types.ts';
-import type { WithDateRange, WithLocation } from '../vergunningen/config-and-types.ts';
+import { type DecosZaakFrontend } from '../decos/decos-types.ts';
+import type {
+  WithDateRange,
+  WithLocation,
+} from '../vergunningen/config-and-types.ts';
 
 export const caseTypeHorecaVergunningen = {
   ExploitatieHorecabedrijf: 'Horeca vergunning exploitatie Horecabedrijf',
