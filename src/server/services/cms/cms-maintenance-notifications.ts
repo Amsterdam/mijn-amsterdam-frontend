@@ -183,16 +183,8 @@ export async function fetchMaintenanceNotificationsDashboard() {
     return dashboardCMSNotifications;
   }
 
-  const tips = dashboardCMSNotifications.content.filter(
-    (notification) => notification.isTip
-  );
-  const notifications = dashboardCMSNotifications.content.filter(
-    (notification) => !notification.isTip
-  );
-
   return apiSuccessResult({
-    notifications,
-    tips,
+    notifications: dashboardCMSNotifications.content,
   });
 }
 
