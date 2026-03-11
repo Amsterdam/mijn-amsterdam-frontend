@@ -12,8 +12,8 @@ import classnames from 'classnames';
 import { useNavigate } from 'react-router';
 import { useDebouncedCallback } from 'use-debounce';
 
-import type { SearchEntry} from './search-config';
-import { displayPath } from './search-config';
+import type { SearchEntry } from './search-config.tsx';
+import { displayPath } from './search-config.tsx';
 import styles from './Search.module.scss';
 import { useSearchIndex } from './useSearch.tsx';
 import { getRedactedClass } from '../../helpers/cobrowse.ts';

@@ -15,7 +15,7 @@ import {
   apiSearchConfigs,
   displayPath,
   type RemoteApiSearchConfigs,
-} from './search-config';
+} from './search-config.tsx';
 import styles from './Search.module.scss';
 import {
   apiErrorResult,
@@ -121,8 +121,8 @@ export function generateSearchIndexPageEntries(
   apiSearchConfigs: ApiSearchConfig[]
 ): SearchEntry[] {
   const apiConfigs = apiSearchConfigs.filter((apiConfig) => {
-    const hasProperAppState =
-      !isError(appState[apiConfig.stateKey]) && !!appState[apiConfig.stateKey];
+    const stateSlice = appState[apiConfig.stateKey as keyof AppState];
+    const hasProperAppState = !!stateSlice && !isError(stateSlice);
 
     const isEnabled =
       !!apiConfig && 'isEnabled' in apiConfig ? apiConfig.isEnabled : true;
@@ -135,7 +135,7 @@ export function generateSearchIndexPageEntries(
   });
 
   return apiConfigs.flatMap((apiConfig) => {
-    const apiContent = appState[apiConfig.stateKey]?.content;
+    const apiContent = appState[apiConfig.stateKey as keyof AppState]?.content;
 
     if (!apiContent) {
       return [];

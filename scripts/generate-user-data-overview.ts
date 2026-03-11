@@ -40,15 +40,14 @@ import { testAccountDataDigid } from '../src/universal/config/auth.development.t
 
 import { differenceInYears, parseISO } from 'date-fns';
 
-import { ServiceResults } from '../src/server/services/content-tips/tip-types.ts';
+import type { ServiceResults } from '../src/server/services/content-tips/tip-types.ts';
 import { IS_PRODUCTION } from '../src/universal/config/env.ts';
 import { cleanTestUsername } from '../src/server/auth/auth-helpers-development.ts';
-import { MyNotification } from '../src/universal/types/App.types.ts';
-import {
+import type { MyNotification } from '../src/universal/types/App.types.ts';
+import type {
   Adres,
   Kind,
   Persoon,
-  Verbintenis,
   BrpFrontend,
 } from '../src/server/services/brp/brp-types.ts';
 
