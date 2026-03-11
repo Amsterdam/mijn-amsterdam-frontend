@@ -16,4 +16,7 @@ root.render(
   </AppInsightsErrorBoundary>
 );
 
-document.getElementById('initial-page-loader')!.remove();
+const welcomeLoader = document.getElementById('loader');
+if (welcomeLoader) {
+  welcomeLoader.remove();
+}
