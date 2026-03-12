@@ -137,7 +137,7 @@ export function ToeristischeVerhuurThema() {
                     voor toeristische verhuur aanvragen.{' '}
                     <Link
                       rel="noopener noreferrer"
-                      href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/registratienummer-toeristische-verhuur/"
+                      href="https://www.toeristischeverhuur.nl/"
                     >
                       Meer informatie over het landelijk registratienummer
                       toeristische verhuur

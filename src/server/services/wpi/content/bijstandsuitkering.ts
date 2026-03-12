@@ -8,7 +8,7 @@ export const WpiExternalUrls = {
   BijstandsUitkeringAanvragen:
     'https://www.amsterdam.nl/werk-en-inkomen/bijstandsuitkering/bijstandsuitkering-aanvragen/',
   BetaalDataUitkering:
-    'https://www.amsterdam.nl/werk-en-inkomen/bijstandsuitkering/uitbetaling-bijstandsuitkering/',
+    'https://www.amsterdam.nl/werk-en-inkomen/bijstandsuitkering/uitbetaling-specificatie/',
 };
 
 export const requestProcess: WpiRequestProcessLabels = {

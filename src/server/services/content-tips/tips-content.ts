@@ -8,7 +8,6 @@ import {
   hasTozo,
   hasValidRecentStadspasRequest,
   hasVerhuurRegistrations,
-  is18OrOlder,
   isLivingInAmsterdamLessThanNumberOfDays,
   isMarriedOrLivingTogether,
   isMokum,
@@ -16,7 +15,6 @@ import {
   not,
   or,
   previouslyLivingInAmsterdam,
-  hasBudget,
   hasKidsBetweenAges,
   isBetweenAges,
   is18OrOlderOnElectionDay,
@@ -357,27 +355,7 @@ export const contentTips: ContentTipSource[] = [
       to: 'https://www.amsterdam.nl/verkeer-vervoer/kinderen-gratis-openbaar-vervoer/#h24924a59-2782-410a-b9fd-d56aedabbdf2',
     },
   },
-  {
-    id: 'mijn-59',
-    owner: '',
-    dateActiveStart: '2025-01-01',
-    dateActiveEnd: '2025-03-31',
-    active: true,
-    datePublished: '2025-01-16',
-    title: '€300 korting op witgoed',
-    themaID: hliThemaConfig.id,
-    themaTitle: hliThemaConfig.title,
-    profileTypes: ['private'],
-    description:
-      'Met je Stadspas krijg je € 300,- korting op een nieuwe energiezuinige wasmachine of koelkast. Dit helpt je om geld te besparen op je energierekening.',
-    predicates: [is18OrOlder, hasStadspasGroeneStip, hasBudget('witgoed')],
-    reason:
-      'U ziet deze tip omdat u ouder bent dan 18 jaar en woonachtig bent in Amsterdam en een Stadspas heeft.',
-    link: {
-      title: 'Meer informatie en aanvraagformulier',
-      to: 'https://www.amsterdam.nl/stadspas/stadspasacties/korting-energiezuinige-wasmachine/',
-    },
-  },
+
   {
     id: 'mijn-65',
     owner: '',

@@ -109,7 +109,7 @@ const besluitLabels: WpiRequestStatusLabels = {
       </p>
       ${
         statusStep.productSpecific !== 'lening'
-          ? '<p>Wilt u een wijziging in uw inkomen doorgeven? <a rel="external noopener noreferrer" class="ams-link" href="https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/wijzigingen-doorgeven/">Kijk dan bij \'Wijziging of inkomsten doorgeven\'</a></p>'
+          ? '<p>Wilt u een wijziging in uw inkomen doorgeven? <a rel="external noopener noreferrer" class="ams-link" href="https://www.amsterdam.nl/ondernemen/ondersteuning/wijzigingen-doorgeven-voor-bbz-uitkering/">Kijk dan bij \'Wijziging of inkomsten doorgeven\'</a></p>'
           : ''
       }<p>${LINK_MEER_INFO}</p>`;
 
