@@ -513,6 +513,27 @@
       "profileTypes": ["private"]
     },
     {
+      "url": "https://belastingbalie.amsterdam.nl/digid.saml.php?start",
+      "displayTitle": "Belastingen",
+      "description": "Betalen parkeerbon via belastingen",
+      "keywords": [
+        "parkeerbon",
+        "parkeer bon",
+        "boete betalen",
+        "parkeerboete",
+        "parkeer boete",
+        "bekeuring",
+        "parkeer bekeuring",
+        "parkeerbekeuring",
+        "naheffingsaanslag parkeren",
+        "naheffing parkeren",
+        "boete fout parkeren",
+        "verkeersboete",
+        "verkeersovertreding"
+      ],
+      "profileTypes": ["private"]
+    },
+    {
       "url": "https://mijnsubsidies.amsterdam.nl/loket/",
       "displayTitle": "Subsidies",
       "description": "Een overzicht van uw subsidies.",
