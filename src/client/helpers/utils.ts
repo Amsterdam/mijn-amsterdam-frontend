@@ -1,4 +1,4 @@
-import { KeyboardEvent, MouseEvent } from 'react';
+import type { KeyboardEvent, MouseEvent } from 'react';
 
 // Repeating conditions for accessible keyboard event
 // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type

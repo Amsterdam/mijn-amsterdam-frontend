@@ -1,5 +1,5 @@
-import { getStatusSteps } from './bed-and-breakfast-status-steps';
-import { BBVergunningFrontend } from './bed-and-breakfast-types';
+import { getStatusSteps } from './bed-and-breakfast-status-steps.ts';
+import type { BBVergunningFrontend } from './bed-and-breakfast-types.ts';
 
 describe('transformZaakStatusResponse', () => {
   test('should transform zaak status response correctly', () => {

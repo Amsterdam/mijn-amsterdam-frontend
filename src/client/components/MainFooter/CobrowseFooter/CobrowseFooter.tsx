@@ -4,11 +4,11 @@ import { PageFooter } from '@amsterdam/design-system-react';
 
 // https://github.com/import-js/eslint-plugin-import/issues/2876
 // eslint-disable-next-line import/order
-import type { CobrowseWidget } from './lib/cobrowse-widget';
+import type { CobrowseWidget } from './lib/cobrowse-widget.ts';
 
 import './lib/cobrowse-widget.css';
-import { isEnabled } from '../../../config/feature-toggles';
-import { REDACTED_CLASS, useCobrowseStore } from '../../../helpers/cobrowse';
+import { isEnabled } from '../../../config/feature-toggles.ts';
+import { REDACTED_CLASS, useCobrowseStore } from '../../../helpers/cobrowse.ts';
 
 export const LABEL_HULP_SCHERMDELEN = 'Hulp via schermdelen';
 declare global {

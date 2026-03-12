@@ -1,8 +1,9 @@
-import {
-  Children,
+import type {
   MouseEvent as ReactMouseEvent,
   PropsWithChildren,
-  ReactNode,
+  ReactNode} from 'react';
+import {
+  Children,
   useState,
 } from 'react';
 

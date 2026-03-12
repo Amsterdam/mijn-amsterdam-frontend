@@ -1,28 +1,30 @@
-import { Response } from 'express';
+import type { Response } from 'express';
 
-import { SELECT_FIELDS_TRANSFORM_BASE } from './decos-field-transformers';
+import { SELECT_FIELDS_TRANSFORM_BASE } from './decos-field-transformers.ts';
 import {
   fetchDecosDocumentList,
   fetchDecosZaakByKeyFromSourceRaw,
   fetchDecosZakenFromSourceRaw,
   ZAAK_SUB_TYPE,
-} from './decos-service';
-import { DecosZaakBase } from './decos-types';
+} from './decos-service.ts';
+import type { DecosZaakBase } from './decos-types.ts';
+import type {
+  TestUserData} from '../../../universal/config/auth.development.ts';
 import {
   testAccountDataDigid as testAccountDataDigid,
-  testAccountDataEherkenning as testAccountDataEherkenning,
-  TestUserData,
-} from '../../../universal/config/auth.development';
-import { IS_PRODUCTION } from '../../../universal/config/env';
-import { apiSuccessResult } from '../../../universal/helpers/api';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+  testAccountDataEherkenning as testAccountDataEherkenning
+} from '../../../universal/config/auth.development.ts';
+import { IS_PRODUCTION } from '../../../universal/config/env.ts';
+import { apiSuccessResult } from '../../../universal/helpers/api.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import type {
+  RequestWithQueryParams} from '../../routing/route-helpers.ts';
 import {
-  RequestWithQueryParams,
   sendBadRequest,
   sendResponse,
   type ResponseAuthenticated,
-} from '../../routing/route-helpers';
-import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
+} from '../../routing/route-helpers.ts';
+import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param.ts';
 
 export async function handleFetchDecosDocumentsList(
   req: RequestWithQueryParams<{ id: string }>,

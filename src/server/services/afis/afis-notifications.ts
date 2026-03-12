@@ -1,17 +1,17 @@
-import { fetchIsKnownInAFIS } from './afis';
-import { AfisFactuur, AfisFactuurStatus } from './afis-types';
+import type { AfisFactuur, AfisFactuurStatus } from './afis-types.ts';
+import { fetchIsKnownInAFIS } from './afis.ts';
 import {
   routeConfig,
   themaId,
   themaTitle,
-} from '../../../client/pages/Thema/Afis/Afis-thema-config';
+} from '../../../client/pages/Thema/Afis/Afis-thema-config.ts';
 import {
   apiDependencyError,
   apiSuccessResult,
-} from '../../../universal/helpers/api';
-import { MyNotification } from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { sanitizeStringTemplate } from '../../helpers/text';
+} from '../../../universal/helpers/api.ts';
+import type { MyNotification } from '../../../universal/types/App.types.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { sanitizeStringTemplate } from '../../helpers/text.ts';
 
 const facturenOpen: AfisFactuurStatus[] = [
   'openstaand',
@@ -51,7 +51,7 @@ export function createAfisFacturenNotification(
     id: `facturen-open-notification`,
     datePublished,
     themaID: themaId,
-    themaTitle: themaTitle,
+    themaTitle,
     title,
     description,
     link: {

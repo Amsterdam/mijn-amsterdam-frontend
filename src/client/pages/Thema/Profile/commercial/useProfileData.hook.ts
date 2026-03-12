@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 
-import { formatKvkProfileData } from './ProfileCommercial.transform';
-import { isError, isLoading } from '../../../../../universal/helpers/api';
-import { useAppStateGetter } from '../../../../hooks/useAppStateStore';
-import { routeConfig, themaTitle, themaIdKVK } from '../Profile-thema-config';
+import { formatKvkProfileData } from './ProfileCommercial.transform.tsx';
+import { isError, isLoading } from '../../../../../universal/helpers/api.ts';
+import { useAppStateGetter } from '../../../../hooks/useAppStateStore.ts';
+import { routeConfig, themaTitle, themaIdKVK } from '../Profile-thema-config.ts';
 
 export function useProfileData() {
   const { KVK } = useAppStateGetter();

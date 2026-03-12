@@ -6,14 +6,14 @@ import {
   fetchBezwaren,
   fetchBezwarenNotifications,
   forTesting,
-} from './bezwaren';
-import { BezwaarSourceStatus } from './types';
-import bezwarenDocumenten from '../../../../mocks/fixtures/bezwaren-documents.json';
-import bezwarenStatus from '../../../../mocks/fixtures/bezwaren-status.json';
-import bezwarenApiResponse from '../../../../mocks/fixtures/bezwaren.json';
-import { remoteApiHost } from '../../../testing/setup';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
-import { range } from '../../../universal/helpers/utils';
+} from './bezwaren.ts';
+import type { BezwaarSourceStatus } from './types.ts';
+import bezwarenDocumenten from '../../../../mockserver/main/mocks/fixtures/bezwaren-documents.json' with { type: 'json' };
+import bezwarenStatus from '../../../../mockserver/main/mocks/fixtures/bezwaren-status.json' with { type: 'json' };
+import bezwarenApiResponse from '../../../../mockserver/main/mocks/fixtures/bezwaren.json' with { type: 'json' };
+import { remoteApiHost } from '../../../testing/setup.ts';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import { range } from '../../../universal/helpers/utils.ts';
 
 const endpointBase = '/bezwaren/zgw/v1/zaken';
 

@@ -1,12 +1,12 @@
 import connectPGSimple from 'connect-pg-simple';
-import { Session, SessionStore } from 'express-openid-connect';
-import expressSession from 'express-session';
+import type { Session, SessionStore } from 'express-openid-connect';
+import type expressSession from 'express-session';
 import createMemorystore from 'memorystore';
 
-import { FeatureToggle } from '../../universal/config/feature-toggles';
-import { logger } from '../logging';
-import { IS_DB_ENABLED } from '../services/db/config';
-import { getPool } from '../services/db/postgres';
+import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
+import { logger } from '../logging.ts';
+import { IS_DB_ENABLED } from '../services/db/config.ts';
+import { getPool } from '../services/db/postgres.ts';
 
 type SessionStoreOptions = {
   tableName: string;

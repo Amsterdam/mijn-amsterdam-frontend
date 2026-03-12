@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 import { Alert as DSAlert, Paragraph } from '@amsterdam/design-system-react';
 

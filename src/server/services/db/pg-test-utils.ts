@@ -1,6 +1,6 @@
 import { Pool } from 'pg';
 
-import { pgDbConfig } from './postgres';
+import { pgDbConfig } from './postgres.ts';
 
 type EnvOverrides = Record<string, string | undefined>;
 
@@ -90,7 +90,7 @@ export async function setupPgTestDb(
   try {
     await ensureDatabaseExists({ databaseName, adminDatabaseName });
 
-    const postgres = await import('./postgres');
+    const postgres = await import('./postgres.ts');
     // If a previous test did not end the pool, or env changed, allow recreation.
     await postgres.endPool();
 

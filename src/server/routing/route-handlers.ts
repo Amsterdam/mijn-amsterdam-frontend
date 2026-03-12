@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import type { NextFunction, Request, Response } from 'express';
 import jwt, { type GetPublicKeyOrSecret } from 'jsonwebtoken';
 import jwksClient from 'jwks-rsa';
 import uid from 'uid-safe';
@@ -7,17 +7,17 @@ import {
   sendServiceUnavailable,
   sendUnauthorized,
   type ResponseAuthenticated,
-} from './route-helpers';
-import { apiSuccessResult } from '../../universal/helpers/api';
+} from './route-helpers.ts';
+import { apiSuccessResult } from '../../universal/helpers/api.ts';
 import {
   destroySession,
   getAuth,
   hasSessionCookie,
   isRequestAuthenticated,
-} from '../auth/auth-helpers';
-import { AuthenticatedRequest } from '../auth/auth-types';
-import { getFromEnv } from '../helpers/env';
-import { captureException } from '../services/monitoring';
+} from '../auth/auth-helpers.ts';
+import type { AuthenticatedRequest } from '../auth/auth-types.ts';
+import { getFromEnv } from '../helpers/env.ts';
+import { captureException } from '../services/monitoring.ts';
 
 export async function handleIsAuthenticated(
   req: Request,

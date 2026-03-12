@@ -1,26 +1,25 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 import { renderHook } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
+import * as remoteConfig from './search-config.json' with { type: 'json' };
 import {
   API_SEARCH_CONFIG_DEFAULT,
-  ApiBaseItem,
-  ApiSearchConfig,
   apiSearchConfigs,
   displayPath,
-} from './search-config';
-import * as remoteConfig from './search-config.json';
+} from './search-config.tsx';
+import type { ApiBaseItem, ApiSearchConfig } from './search-config.tsx';
 import {
   generateSearchIndexPageEntries,
   generateSearchIndexPageEntry,
   useSearchIndex,
-} from './useSearch';
-import { DecosZaakFrontend } from '../../../server/services/vergunningen/config-and-types';
-import { bffApi } from '../../../testing/utils';
-import { AppState } from '../../../universal/types/App.types';
-import MockApp from '../../pages/MockApp';
-import { routeConfig } from '../MyArea/MyArea-thema-config';
+} from './useSearch.tsx';
+import type { DecosZaakFrontend } from '../../../server/services/vergunningen/config-and-types.ts';
+import { bffApi } from '../../../testing/utils.ts';
+import type { AppState } from '../../../universal/types/App.types.ts';
+import MockApp from '../../pages/MockApp.tsx';
+import { routeConfig } from '../MyArea/MyArea-thema-config.ts';
 
 export function setupFetchStub(data: any) {
   return function fetchStub(_url: string) {
@@ -177,7 +176,11 @@ describe('Search hooks and helpers', () => {
     expect(pageEntries).toMatchInlineSnapshot(`
       [
         {
-          "description": "Bekijk Europse gehandicaptenparkeerkaart (GPK)",
+          "description": <React.Fragment>
+            \`Bekijk $
+            Europse gehandicaptenparkeerkaart (GPK)
+            \`
+          </React.Fragment>,
           "displayTitle": [Function],
           "keywords": [
             "GPK",
@@ -191,7 +194,11 @@ describe('Search hooks and helpers', () => {
           "url": "/buurt/vergunningen/detail/1726584505",
         },
         {
-          "description": "Bekijk Tijdelijke verkeersmaatregel",
+          "description": <React.Fragment>
+            \`Bekijk $
+            Tijdelijke verkeersmaatregel
+            \`
+          </React.Fragment>,
           "displayTitle": [Function],
           "keywords": [
             "Omzettingsvergunning",
@@ -205,7 +212,11 @@ describe('Search hooks and helpers', () => {
           "url": "/vergunningen/detail/1467362160",
         },
         {
-          "description": "Bekijk Parkeerontheffingen Blauwe zone particulieren",
+          "description": <React.Fragment>
+            \`Bekijk $
+            Parkeerontheffingen Blauwe zone particulieren
+            \`
+          </React.Fragment>,
           "displayTitle": [Function],
           "keywords": [
             "Parkeerontheffingen Blauwe zone particulieren",
@@ -268,7 +279,11 @@ describe('Search hooks and helpers', () => {
     expect(pageEntriesEnabled).toMatchInlineSnapshot(`
       [
         {
-          "description": "Bekijk Beheer uw budget op FiBu",
+          "description": <React.Fragment>
+            \`Bekijk $
+            Beheer uw budget op FiBu
+            \`
+          </React.Fragment>,
           "displayTitle": [Function],
           "keywords": [
             "Beheer uw budget op FiBu",
@@ -283,7 +298,11 @@ describe('Search hooks and helpers', () => {
           "url": "http://host/bbr/2064866/3",
         },
         {
-          "description": "Bekijk Kredietsom €1.689,12 met openstaand termijnbedrag €79,66",
+          "description": <React.Fragment>
+            \`Bekijk $
+            Kredietsom €1.689,12 met openstaand termijnbedrag €79,66
+            \`
+          </React.Fragment>,
           "displayTitle": [Function],
           "keywords": [
             "Kredietsom €1.689,12 met openstaand termijnbedrag €79,66",
@@ -298,7 +317,11 @@ describe('Search hooks and helpers', () => {
           "url": "http://host/pl/2442531/1",
         },
         {
-          "description": "Bekijk Afkoopvoorstellen zijn verstuurd",
+          "description": <React.Fragment>
+            \`Bekijk $
+            Afkoopvoorstellen zijn verstuurd
+            \`
+          </React.Fragment>,
           "displayTitle": [Function],
           "keywords": [
             "Afkoopvoorstellen zijn verstuurd",

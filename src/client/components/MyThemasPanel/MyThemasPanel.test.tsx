@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router';
 
-import { MyThemasPanel } from './MyThemasPanel';
-import type { ThemaMenuItemTransformed } from '../../config/thema-types';
+import { MyThemasPanel } from './MyThemasPanel.tsx';
+import type { ThemaMenuItemTransformed } from '../../config/thema-types.ts';
 
 const items: ThemaMenuItemTransformed[] = [
   {

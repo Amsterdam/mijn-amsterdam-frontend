@@ -1,8 +1,8 @@
-import { RemoteDependencyData } from '@microsoft/applicationinsights-web';
-import {
+import type { RemoteDependencyData } from '@microsoft/applicationinsights-web';
+import type {
   ExceptionData,
   RequestData,
-} from 'applicationinsights/out/Declarations/Contracts';
+} from 'applicationinsights/out/Declarations/Contracts/index.js';
 
 // Example: ["GET /api/users", ...]. This is how a 'name' is represented in telemetry data
 const excludedRequests: string[] = JSON.parse(

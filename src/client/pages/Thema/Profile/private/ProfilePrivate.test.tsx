@@ -1,18 +1,18 @@
 import { render, screen, cleanup, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import type { PartialDeep } from 'type-fest';
 
-import { MijnGegevensThema } from './ProfilePrivate';
+import { MijnGegevensThema } from './ProfilePrivate.tsx';
 import type {
   Adres,
   BrpFrontend,
-} from '../../../../../server/services/brp/brp-types';
-import { ContactMoment } from '../../../../../server/services/salesforce/contactmomenten.types';
-import { bffApiHost } from '../../../../../testing/setup';
-import { bffApi } from '../../../../../testing/utils';
-import { AppState } from '../../../../../universal/types/App.types';
-import MockApp from '../../../MockApp';
-import { routeConfig } from '../Profile-thema-config';
+} from '../../../../../server/services/brp/brp-types.ts';
+import type { ContactMoment } from '../../../../../server/services/salesforce/contactmomenten.types.ts';
+import { bffApiHost } from '../../../../../testing/setup.ts';
+import { bffApi } from '../../../../../testing/utils.ts';
+import type { AppState } from '../../../../../universal/types/App.types.ts';
+import MockApp from '../../../MockApp.tsx';
+import { routeConfig } from '../Profile-thema-config.ts';
 
 const testState = (
   responseBRP: BrpFrontend | object = {},

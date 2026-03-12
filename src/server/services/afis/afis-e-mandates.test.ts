@@ -2,19 +2,19 @@ import Mockdate from 'mockdate';
 import nock from 'nock';
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 
-import * as emandates from './afis-e-mandates';
-import { EMandateCreditorsGemeenteAmsterdam } from './afis-e-mandates-config';
-import { routes } from './afis-service-config';
+import { EMandateCreditorsGemeenteAmsterdam } from './afis-e-mandates-config.ts';
+import * as emandates from './afis-e-mandates.ts';
+import { routes } from './afis-service-config.ts';
 import type {
   AfisEMandateCreditor,
   AfisEMandateFrontend,
   AfisEMandateSource,
-} from './afis-types';
-import { remoteApi } from '../../../testing/utils';
-import type { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
-import type { DataRequestConfig } from '../../config/source-api';
-import * as sourceApiRequest from '../../helpers/source-api-request';
-import { decryptPayloadAndValidateSessionID } from '../shared/decrypt-route-param';
+} from './afis-types.ts';
+import { remoteApi } from '../../../testing/utils.ts';
+import type { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types.ts';
+import type { DataRequestConfig } from '../../config/source-api.ts';
+import * as sourceApiRequest from '../../helpers/source-api-request.ts';
+import { decryptPayloadAndValidateSessionID } from '../shared/decrypt-route-param.ts';
 
 const authProfile: AuthProfile = {
   sid: 'sid',

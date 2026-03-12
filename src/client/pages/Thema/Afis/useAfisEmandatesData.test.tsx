@@ -1,20 +1,22 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { useParams } from 'react-router';
-import { describe, it, vi, expect, Mock } from 'vitest';
+import type { Mock } from 'vitest';
+import { describe, it, vi, expect } from 'vitest';
 
 import {
   useAfisEMandatesData,
   forTesting,
   useEmandateApis,
-} from './useAfisEmandatesData';
+} from './useAfisEmandatesData.tsx';
+import type {
+  EmandateStatusCode} from '../../../../server/services/afis/afis-types.ts';
 import {
-  EmandateStatusCode,
   type AfisEMandateFrontend,
-} from '../../../../server/services/afis/afis-types';
-import { bffApiHost } from '../../../../testing/setup';
-import { bffApi } from '../../../../testing/utils';
-import { useBffApiStateStore } from '../../../hooks/api/useBffApi';
-import { useAppStateGetter } from '../../../hooks/useAppStateStore';
+} from '../../../../server/services/afis/afis-types.ts';
+import { bffApiHost } from '../../../../testing/setup.ts';
+import { bffApi } from '../../../../testing/utils.ts';
+import { useBffApiStateStore } from '../../../hooks/api/useBffApi.ts';
+import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
 
 vi.mock('../../../hooks/useAppStateStore');
 vi.mock('react-router', async (importActual) => {

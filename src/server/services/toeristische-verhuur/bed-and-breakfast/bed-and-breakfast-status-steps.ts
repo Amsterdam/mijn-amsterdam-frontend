@@ -1,8 +1,9 @@
+import type {
+  BedAndBreakfastType} from './bed-and-breakfast-types.ts';
 import {
-  BedAndBreakfastType,
   documentNamesMA,
-} from './bed-and-breakfast-types';
-import { StatusLineItem } from '../../../../universal/types/App.types';
+} from './bed-and-breakfast-types.ts';
+import type { StatusLineItem } from '../../../../universal/types/App.types.ts';
 
 export function getStatusSteps<T extends BedAndBreakfastType>(
   zaak: T

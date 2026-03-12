@@ -9,23 +9,24 @@ import {
 } from '@amsterdam/design-system-react';
 import { LinkExternalIcon } from '@amsterdam/design-system-react-icons';
 
-import { CONTENT_EMPTY } from './helper';
-import { useVarenThemaData } from './useVarenThemaData.hook';
+import { CONTENT_EMPTY } from './helper.ts';
+import { useVarenThemaData } from './useVarenThemaData.hook.ts';
 import {
   rederRegistratieLink,
   SHOW_HISTORICAL_AANVRAGEN_STARTING_FROM_DATE,
-} from './Varen-thema-config';
+} from './Varen-thema-config.ts';
 import styles from './Varen.module.scss';
-import type { VarenRegistratieRederFrontend } from '../../../../server/services/varen/config-and-types';
-import { toDateFormatted } from '../../../../universal/helpers/date';
-import { entries } from '../../../../universal/helpers/utils';
-import { Datalist, RowSet } from '../../../components/Datalist/Datalist';
-import { MaButtonLink } from '../../../components/MaLink/MaLink';
-import { PageContentCell } from '../../../components/Page/Page';
-import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed';
-import ThemaPagina from '../../../components/Thema/ThemaPagina';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import type { VarenRegistratieRederFrontend } from '../../../../server/services/varen/config-and-types.ts';
+import { toDateFormatted } from '../../../../universal/helpers/date.ts';
+import { entries } from '../../../../universal/helpers/utils.ts';
+import type { RowSet } from '../../../components/Datalist/Datalist.tsx';
+import { Datalist } from '../../../components/Datalist/Datalist.tsx';
+import { MaButtonLink } from '../../../components/MaLink/MaLink.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
+import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
+import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 const pageContentTop = (
   <PageContentCell spanWide={8}>

@@ -9,7 +9,7 @@ import dotenvExpand from 'dotenv-expand';
 // Try not to import anything in the following imported file.
 // If you need to do this, then make sure not to import anything that constructs something -
 // that is dependent on environment variables.
-import { IS_DEVELOPMENT } from '../../universal/config/env';
+import { IS_DEVELOPMENT } from '../../universal/config/env.ts';
 
 const LOCAL_ENV_FILE = '.env.local';
 

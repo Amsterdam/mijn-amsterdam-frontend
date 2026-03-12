@@ -1,9 +1,9 @@
-import { tableConfig, themaConfig } from './Klachten-thema-config';
-import type { KlachtFrontend } from '../../../../server/services/klachten/types';
-import { isError, isLoading } from '../../../../universal/helpers/api';
-import { addLinkElementToProperty } from '../../../components/Table/TableV2';
-import { useAppStateGetter } from '../../../hooks/useAppStateStore';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
+import { tableConfig, themaConfig } from './Klachten-thema-config.ts';
+import type { KlachtFrontend } from '../../../../server/services/klachten/types.ts';
+import { isError, isLoading } from '../../../../universal/helpers/api.ts';
+import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
+import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
 export function useKlachtenThemaData() {
   const { KLACHTEN } = useAppStateGetter();

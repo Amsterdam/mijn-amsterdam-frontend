@@ -3,8 +3,8 @@ import axios, {
   type AxiosResponseTransformer,
 } from 'axios';
 
-import { getFromEnv } from './env';
-import { debugRequest, debugResponse } from '../debug';
+import { getFromEnv } from './env.ts';
+import { debugRequest, debugResponse } from '../debug.ts';
 
 function splitIntoTerms(env: string | undefined) {
   return (env?.split(',') ?? []).filter(Boolean).map((term) => term.trim());

@@ -1,27 +1,28 @@
 import { differenceInYears } from 'date-fns';
-import { LatLngBoundsLiteral } from 'leaflet';
+import type { LatLngBoundsLiteral } from 'leaflet';
 
-import { routeConfig as buurtRouteConfig } from '../../../client/components/MyArea/MyArea-thema-config';
-import { themaConfig } from '../../../client/pages/Thema/Afval/Afval-thema-config';
+import { routeConfig as buurtRouteConfig } from '../../../client/components/MyArea/MyArea-thema-config.ts';
+import { themaConfig } from '../../../client/pages/Thema/Afval/Afval-thema-config.ts';
 import {
   apiDependencyError,
   apiSuccessResult,
-} from '../../../universal/helpers/api';
-import { MyNotification } from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { fetchMyLocations } from '../bag/my-locations';
-import { fetchBrp } from '../brp/brp';
-import { fetchDataset } from '../buurt/buurt';
-import {
-  datasetEndpoints,
+} from '../../../universal/helpers/api.ts';
+import type { MyNotification } from '../../../universal/types/App.types.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { fetchMyLocations } from '../bag/my-locations.ts';
+import { fetchBrp } from '../brp/brp.ts';
+import { fetchDataset } from '../buurt/buurt.ts';
+import type {
   DatasetFeatureProperties,
-  MaPointFeature,
-} from '../buurt/datasets';
+  MaPointFeature} from '../buurt/datasets.ts';
+import {
+  datasetEndpoints
+} from '../buurt/datasets.ts';
 import {
   filterDatasetFeatures,
   filterFeaturesinRadius,
   getBboxFromFeatures,
-} from '../buurt/helpers';
+} from '../buurt/helpers.ts';
 
 const ADULT_AGE = 18;
 const LATE_TEEN_AGE = 16;

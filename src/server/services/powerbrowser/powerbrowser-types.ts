@@ -1,10 +1,10 @@
-import { SELECT_FIELDS_TRANSFORM_BASE } from './powerbrowser-field-transformers';
-import { OmitMapped } from '../../../universal/helpers/utils';
-import {
+import type { SELECT_FIELDS_TRANSFORM_BASE } from './powerbrowser-field-transformers.ts';
+import type { OmitMapped } from '../../../universal/helpers/utils.ts';
+import type {
   GenericDocument,
   ZaakAanvraagDetail,
-} from '../../../universal/types/App.types';
-import { AuthProfile } from '../../auth/auth-types';
+} from '../../../universal/types/App.types.ts';
+import type { AuthProfile } from '../../auth/auth-types.ts';
 
 export type NestedType<T> =
   T extends PowerBrowserZaakTransformer<infer R> ? R : never;
@@ -14,7 +14,7 @@ export interface PowerBrowserStatus {
   datum: string;
 }
 
-export type PowerBrowserStatusResponse = PowerBrowserStatus[];
+export type PowerBrowserStatusResponse = PowerBrowserStatus[] | null;
 
 export type FetchPersoonOrMaatschapIdByUidOptions = {
   profileID: AuthProfile['id'];

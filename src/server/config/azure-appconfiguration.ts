@@ -1,11 +1,10 @@
-// @ts-expect-error It is otherwise required to update the module resolver.
 import { load } from '@azure/app-configuration-provider';
 import {
   FeatureManager,
   ConfigurationMapFeatureFlagProvider,
 } from '@microsoft/feature-management';
 
-import { IS_DEVELOPMENT } from '../../universal/config/env';
+import { IS_DEVELOPMENT } from '../../universal/config/env.ts';
 
 // Is mutated by the Appconfiguration. Locally this object will be used as is.
 const featureToggle = {

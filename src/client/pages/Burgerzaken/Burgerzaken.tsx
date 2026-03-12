@@ -1,6 +1,6 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 
-import { PageContentCell, PageV2 } from '../../components/Page/Page';
+import { PageContentCell, PageV2 } from '../../components/Page/Page.tsx';
 
 export function Burgerzaken() {
   return (

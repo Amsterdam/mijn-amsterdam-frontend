@@ -2,9 +2,9 @@ import { useRef, useEffect, useCallback, useState } from 'react';
 
 import { create } from 'zustand';
 
-import { useKeyUp } from '../../hooks/useKey';
-import { MAIN_MENU_ID } from '../MainMenu/MainMenu';
-import { useDisplayLiveSearch, useSearchStore } from '../Search/useSearch';
+import { useKeyUp } from '../../hooks/useKey.ts';
+import { MAIN_MENU_ID } from '../MainMenu/MainMenu.tsx';
+import { useDisplayLiveSearch, useSearchStore } from '../Search/useSearch.tsx';
 
 type MainMenuStore = {
   isMainMenuOpen: boolean;

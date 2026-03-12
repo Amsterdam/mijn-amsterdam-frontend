@@ -1,44 +1,46 @@
 import { HttpStatusCode } from 'axios';
-import express, { NextFunction, Request, Response } from 'express';
+import type { NextFunction, Request, Response } from 'express';
+import express from 'express';
 import proxy from 'express-http-proxy';
 
-import { BffEndpoints } from './bff-routes';
+import { BffEndpoints } from './bff-routes.ts';
 import {
   generateFullApiUrlBFF,
   queryParams,
   type RequestWithQueryParams,
-} from './route-helpers';
-import { ZAAK_STATUS_ROUTE } from '../../client/pages/ZaakStatus/ZaakStatus-config';
-import { OTAP_ENV } from '../../universal/config/env';
+} from './route-helpers.ts';
+import { ZAAK_STATUS_ROUTE } from '../../client/pages/ZaakStatus/ZaakStatus-config.ts';
+import { OTAP_ENV } from '../../universal/config/env.ts';
 import {
   DATASETS,
   getDatasetCategoryId,
-} from '../../universal/config/myarea-datasets';
+} from '../../universal/config/myarea-datasets.ts';
+import type {
+  ApiResponse_DEPRECATED} from '../../universal/helpers/api.ts';
 import {
-  ApiResponse_DEPRECATED,
   apiSuccessResult,
-} from '../../universal/helpers/api';
-import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config';
+} from '../../universal/helpers/api.ts';
+import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config.ts';
 import {
   getAuth,
   getReturnToUrlZaakStatus,
   getZaakStatusQueryParams,
-} from '../auth/auth-helpers';
-import { authRoutes } from '../auth/auth-routes';
-import { RELEASE_VERSION } from '../config/app';
-import { getAllFeatureToggles } from '../config/azure-appconfiguration';
-import { getFromEnv } from '../helpers/env';
-import { getRequestParamsFromQueryString } from '../helpers/source-api-request';
+} from '../auth/auth-helpers.ts';
+import { authRoutes } from '../auth/auth-routes.ts';
+import { RELEASE_VERSION } from '../config/app.ts';
+import { getAllFeatureToggles } from '../config/azure-appconfiguration.ts';
+import { getFromEnv } from '../helpers/env.ts';
+import { getRequestParamsFromQueryString } from '../helpers/source-api-request.ts';
 import {
   fetchDataset,
   loadFeatureDetail,
   loadPolylineFeatures,
-} from '../services/buurt/buurt';
-import { getDatasetEndpointConfig } from '../services/buurt/helpers';
-import { loadClusterDatasets } from '../services/buurt/supercluster';
-import { fetchCmsFooter, fetchSearchConfig } from '../services/cms/cms-content';
-import { fetchActiveMaintenanceNotifications } from '../services/cms/cms-maintenance-notifications';
-import { QueryParamsMaintenanceNotifications } from '../services/cms/cms-types';
+} from '../services/buurt/buurt.ts';
+import { getDatasetEndpointConfig } from '../services/buurt/helpers.ts';
+import { loadClusterDatasets } from '../services/buurt/supercluster.ts';
+import { fetchCmsFooter, fetchSearchConfig } from '../services/cms/cms-content.ts';
+import { fetchActiveMaintenanceNotifications } from '../services/cms/cms-maintenance-notifications.ts';
+import type { QueryParamsMaintenanceNotifications } from '../services/cms/cms-types.ts';
 
 export const router = express.Router();
 

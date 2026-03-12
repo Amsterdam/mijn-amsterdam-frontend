@@ -6,14 +6,14 @@ import {
   Paragraph,
 } from '@amsterdam/design-system-react';
 
-import { links, themaConfig } from './Afval-thema-config';
+import { links, themaConfig } from './Afval-thema-config.ts';
 import styles from './Afval.module.scss';
 import type {
   AfvalFractionInformationTransformed,
   AfvalFractionCode,
-} from '../../../../server/services/afval/afval.types';
-import { isError, isLoading } from '../../../../universal/helpers/api';
-import { getFullAddress } from '../../../../universal/helpers/brp';
+} from '../../../../server/services/afval/afval.types.ts';
+import { isError, isLoading } from '../../../../universal/helpers/api.ts';
+import { getFullAddress } from '../../../../universal/helpers/brp.ts';
 import {
   IconAfvalGft,
   IconAfvalGlas,
@@ -21,18 +21,18 @@ import {
   IconAfvalPapier,
   IconAfvalRest,
   IconAfvalTextiel,
-} from '../../../assets/icons/map';
-import ErrorAlert from '../../../components/Alert/Alert';
-import { Datalist } from '../../../components/Datalist/Datalist';
-import LoadingContent from '../../../components/LoadingContent/LoadingContent';
-import { MaintenanceNotifications } from '../../../components/MaintenanceNotifications/MaintenanceNotifications';
-import { MaButtonLink } from '../../../components/MaLink/MaLink';
-import { routeConfig as buurtRouteConfig } from '../../../components/MyArea/MyArea-thema-config';
-import { PageContentCell, PageV2 } from '../../../components/Page/Page';
-import { parseHTML } from '../../../helpers/html-react-parse';
-import { useAppStateGetter } from '../../../hooks/useAppStateStore';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
-import { useProfileTypeValue } from '../../../hooks/useProfileType';
+} from '../../../assets/icons/map/index.tsx';
+import ErrorAlert from '../../../components/Alert/Alert.tsx';
+import { Datalist } from '../../../components/Datalist/Datalist.tsx';
+import LoadingContent from '../../../components/LoadingContent/LoadingContent.tsx';
+import { MaintenanceNotifications } from '../../../components/MaintenanceNotifications/MaintenanceNotifications.tsx';
+import { MaButtonLink } from '../../../components/MaLink/MaLink.tsx';
+import { routeConfig as buurtRouteConfig } from '../../../components/MyArea/MyArea-thema-config.ts';
+import { PageContentCell, PageV2 } from '../../../components/Page/Page.tsx';
+import { parseHTML } from '../../../helpers/html-react-parse.tsx';
+import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
+import { useProfileTypeValue } from '../../../hooks/useProfileType.ts';
 
 interface InstructionCTAProps {
   fraction: AfvalFractionInformationTransformed;

@@ -1,6 +1,6 @@
 import { isFuture, isPast, parseISO } from 'date-fns';
 
-import { sanitizeCmsContent } from './cms-content';
+import { sanitizeCmsContent } from './cms-content.ts';
 import {
   CMS_MAINTENANCE_NOTIFICATIONS_CACHE_TIMEOUT_MS,
   CMS_DATE_REGEX,
@@ -10,26 +10,27 @@ import {
   REPLACE_REL_URL_PARTS,
   CMS_TIME_REGEX,
   CMS_ENV_REGEX,
-} from './cms-service-config';
+} from './cms-service-config.ts';
 import type {
   CMSEventData,
   CMSMaintenanceNotification,
   OtapEnv,
   CMSFeedItem,
   QueryParamsMaintenanceNotifications,
-} from './cms-types';
+} from './cms-types.ts';
 import {
   themaId,
   themaTitle,
-} from '../../../client/pages/MyNotifications/MyNotifications-config';
+} from '../../../client/pages/MyNotifications/MyNotifications-config.ts';
+import type {
+  ApiResponse} from '../../../universal/helpers/api.ts';
 import {
-  ApiResponse,
   apiSuccessResult,
   getFailedDependencies,
-} from '../../../universal/helpers/api';
-import { FORCE_RENEW_CACHE_TTL_MS } from '../../config/source-api';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
+} from '../../../universal/helpers/api.ts';
+import { FORCE_RENEW_CACHE_TTL_MS } from '../../config/source-api.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
 
 function isOtapEnvMatch(notification: CMSMaintenanceNotification): boolean {
   return notification.otapEnvs.some((env) => notificationEnvMap[env]);

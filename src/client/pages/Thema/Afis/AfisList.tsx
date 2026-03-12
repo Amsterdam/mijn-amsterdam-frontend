@@ -3,13 +3,13 @@ import { useParams } from 'react-router';
 import {
   AfisDisclaimer,
   AfisDisclaimerOvergedragenFacturen,
-} from './AfisThema';
-import { useAfisListPageData } from './useAfisListPageData';
-import type { AfisFacturenThemaContextParams } from './useAfisThemaData.hook';
-import { type AfisFactuurStateFrontend } from '../../../../server/services/afis/afis-types';
-import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
-import { PageContentCell } from '../../../components/Page/Page';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+} from './AfisThema.tsx';
+import { useAfisListPageData } from './useAfisListPageData.tsx';
+import type { AfisFacturenThemaContextParams } from './useAfisThemaData.hook.tsx';
+import { type AfisFactuurStateFrontend } from '../../../../server/services/afis/afis-types.ts';
+import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 function AfisListPageBody({ state }: { state: AfisFactuurStateFrontend }) {
   switch (state) {

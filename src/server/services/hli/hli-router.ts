@@ -4,10 +4,10 @@ import {
   handleBlockStadspas,
   handleFetchTransactionsRequest,
   handleUnblockStadspas,
-} from './hli-route-handlers';
-import { featureToggle, routes } from './hli-service-config';
-import { createBFFRouter } from '../../routing/route-helpers';
-import { attachDocumentDownloadRoute } from '../shared/document-download-route-handler';
+} from './hli-route-handlers.ts';
+import { featureToggle, routes } from './hli-service-config.ts';
+import { createBFFRouter } from '../../routing/route-helpers.ts';
+import { attachDocumentDownloadRoute } from '../shared/document-download-route-handler.ts';
 
 const hliRouterProtected = createBFFRouter({
   id: 'protected-hli',

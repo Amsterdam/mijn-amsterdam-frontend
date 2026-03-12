@@ -1,10 +1,9 @@
 import { HttpStatusCode } from 'axios';
-import { firstBy } from 'thenby';
+import thenBy from 'thenby';
 
-import {
+import type {
   BeschiktProduct,
   LeveringsVorm,
-  ZORGNED_GEMEENTE_CODE,
   ZorgnedAanvraagTransformed,
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedAanvragenServiceOptions,
@@ -14,24 +13,37 @@ import {
   ZorgnedPerson,
   ZorgnedPersoonsgegevensNAWResponse,
   ZorgnedResponseDataSource,
+} from './zorgned-types.ts';
+import {
+  ZORGNED_GEMEENTE_CODE,
   type Beschikking,
   type BSN,
   type ZorgnedAanvraagSource,
-} from './zorgned-types';
+} from './zorgned-types.ts';
+import type { ApiSuccessResponse } from '../../../universal/helpers/api.ts';
 import {
   apiErrorResult,
-  ApiSuccessResponse,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
   type ApiResponse,
-} from '../../../universal/helpers/api';
-import { getFullName } from '../../../universal/helpers/brp';
-import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
-import { hash, sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
-import { GenericDocument } from '../../../universal/types/App.types';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { isSuccessStatus, requestData } from '../../helpers/source-api-request';
+} from '../../../universal/helpers/api.ts';
+import { getFullName } from '../../../universal/helpers/brp.ts';
+import {
+  dateSort,
+  defaultDateFormat,
+} from '../../../universal/helpers/date.ts';
+import {
+  hash,
+  sortAlpha,
+  uniqueArray,
+} from '../../../universal/helpers/utils.ts';
+import type { GenericDocument } from '../../../universal/types/App.types.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import {
+  isSuccessStatus,
+  requestData,
+} from '../../helpers/source-api-request.ts';
 
 async function fetchZorgnedByBSN<S, T>(
   bsn: BSN,
@@ -148,7 +160,7 @@ function transformZorgnedAanvraag(
     isActueel: toegewezenProduct?.actueel ?? false,
     leverancier: toegewezenProduct?.leverancier?.omschrijving ?? '',
     leveringsVorm,
-    productsoortCode: productsoortCode,
+    productsoortCode,
     productIdentificatie,
     beschiktProductIdentificatie: beschiktProduct.identificatie,
     beschikkingNummer: aanvraag.beschikking.beschikkingNummer,
@@ -166,7 +178,7 @@ export function sortZorgnedAanvragenByDateAndId<T extends object>(
   idKey: keyof T
 ) {
   return aanvragen.toSorted(
-    firstBy(dateSort(dateKey, 'desc')).thenBy(sortAlpha(idKey, 'desc'))
+    thenBy.firstBy(dateSort(dateKey, 'desc')).thenBy(sortAlpha(idKey, 'desc'))
   );
 }
 

@@ -1,4 +1,4 @@
-import type { BSN } from '../zorgned/zorgned-types';
+import type { BSN } from '../zorgned/zorgned-types.ts';
 
 type TyperingSource = {
   code: string;

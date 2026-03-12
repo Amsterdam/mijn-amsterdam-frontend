@@ -1,82 +1,79 @@
-import { ReactNode } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 
 import escapeRegex from 'lodash.escaperegexp';
 
 import styles from './Search.module.scss';
-import {
-  AfisThemaResponse,
-  AfisFactuur,
-} from '../../../server/services/afis/afis-types';
-import { AVGRequestFrontend } from '../../../server/services/avg/types';
-import { BezwaarFrontend } from '../../../server/services/bezwaren/types';
-import { LoodMetingFrontend } from '../../../server/services/bodem/types';
-import type { BrpFrontend } from '../../../server/services/brp/brp-types';
+import type { AfisThemaResponse } from '../../../server/services/afis/afis-types.ts';
+import type { AVGRequestFrontend } from '../../../server/services/avg/types.ts';
+import type { BezwaarFrontend } from '../../../server/services/bezwaren/types.ts';
+import type { LoodMetingFrontend } from '../../../server/services/bodem/types.ts';
+import type { BrpFrontend } from '../../../server/services/brp/brp-types.ts';
 import type {
   ErfpachtDossiersResponse,
   ErfpachtDossierFrontend,
-} from '../../../server/services/erfpacht/erfpacht-types';
-import { HLIresponseData } from '../../../server/services/hli/hli-regelingen-types';
-import type { HorecaVergunningFrontend } from '../../../server/services/horeca/decos-zaken';
-import type { KlachtFrontend } from '../../../server/services/klachten/types';
+} from '../../../server/services/erfpacht/erfpacht-types.ts';
+import type { HLIresponseData } from '../../../server/services/hli/hli-regelingen-types.ts';
+import type { HorecaVergunningFrontend } from '../../../server/services/horeca/decos-zaken.ts';
+import type { KlachtFrontend } from '../../../server/services/klachten/types.ts';
 import type {
   Krefia,
   KrefiaDeepLink,
-} from '../../../server/services/krefia/krefia.types';
-import type { ParkeerVergunningFrontend } from '../../../server/services/parkeren/config-and-types';
-import { BBVergunningFrontend } from '../../../server/services/toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types';
-import {
+} from '../../../server/services/krefia/krefia.types.ts';
+import type { ParkeerVergunningFrontend } from '../../../server/services/parkeren/config-and-types.ts';
+import type { BBVergunningFrontend } from '../../../server/services/toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types.ts';
+import type {
   LVVRegistratie,
   VakantieverhuurVergunningFrontend,
-} from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
-import {
+} from '../../../server/services/toeristische-verhuur/toeristische-verhuur.types.ts';
+import type {
   VarenRegistratieRederType,
   VarenVergunningFrontend,
   VarenZakenFrontend,
-} from '../../../server/services/varen/config-and-types';
-import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-types';
-import { ApiSuccessResponse } from '../../../universal/helpers/api';
-import { getFullAddress, getFullName } from '../../../universal/helpers/brp';
+} from '../../../server/services/varen/config-and-types.ts';
+import type { ZaakFrontendCombined } from '../../../server/services/vergunningen/config-and-types.ts';
+import type { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-types.ts';
+import type { ApiSuccessResponse } from '../../../universal/helpers/api.ts';
+import { getFullAddress, getFullName } from '../../../universal/helpers/brp.ts';
 import {
   defaultDateFormat,
   displayDateRange,
-} from '../../../universal/helpers/date';
-import { capitalizeFirstLetter } from '../../../universal/helpers/text';
-import { uniqueArray } from '../../../universal/helpers/utils';
-import {
-  AppStateKey,
+} from '../../../universal/helpers/date.ts';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
+import { uniqueArray } from '../../../universal/helpers/utils.ts';
+import type {
   LinkProps,
   StatusLineItem,
-} from '../../../universal/types/App.types';
-import type { ThemaMenuItem } from '../../config/thema-types';
-import type { AfisFactuurFrontend } from '../../pages/Thema/Afis/Afis-thema-config';
-import { themaConfig as avgThemaConfig } from '../../pages/Thema/AVG/AVG-thema-config';
-import { themaConfig as themaConfigBezwaren } from '../../pages/Thema/Bezwaren/Bezwaren-thema-config';
-import { themaConfig as themaConfigBodem } from '../../pages/Thema/Bodem/Bodem-thema-config';
-import { themaConfig as themaConfigHoreca } from '../../pages/Thema/Horeca/Horeca-thema-config';
-import { themaConfig as themaConfigKlachten } from '../../pages/Thema/Klachten/Klachten-thema-config';
-import { themaConfig as themaConfigKrefia } from '../../pages/Thema/Krefia/Krefia-thema-config';
-import { routeConfig as routeConfigProfile } from '../../pages/Thema/Profile/Profile-thema-config';
-import { themaConfig as toeristischeVerhuurThemaConfig } from '../../pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
-import { themaConfig as themaConfigVaren } from '../../pages/Thema/Varen/Varen-thema-config';
+} from '../../../universal/types/App.types.ts';
+import type { ThemaMenuItem } from '../../config/thema-types.ts';
+import type { AfisFactuurFrontend } from '../../pages/Thema/Afis/Afis-thema-config.ts';
+import { themaConfig as avgThemaConfig } from '../../pages/Thema/AVG/AVG-thema-config.ts';
+import { themaConfig as themaConfigBezwaren } from '../../pages/Thema/Bezwaren/Bezwaren-thema-config.ts';
+import { themaConfig as themaConfigBodem } from '../../pages/Thema/Bodem/Bodem-thema-config.ts';
+import { themaConfig as themaConfigHoreca } from '../../pages/Thema/Horeca/Horeca-thema-config.ts';
+import { themaConfig as themaConfigKlachten } from '../../pages/Thema/Klachten/Klachten-thema-config.ts';
+import { themaConfig as themaConfigKrefia } from '../../pages/Thema/Krefia/Krefia-thema-config.ts';
+import { routeConfig as routeConfigProfile } from '../../pages/Thema/Profile/Profile-thema-config.ts';
+import { themaConfig as toeristischeVerhuurThemaConfig } from '../../pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
+import { themaConfig as themaConfigVaren } from '../../pages/Thema/Varen/Varen-thema-config.ts';
 
 export interface SearchEntry {
   url: string;
   themaId?: ThemaMenuItem['id'];
-  displayTitle: ((term: string) => ReactNode) | ReactNode;
+  displayTitle: ((term: string) => ReactElement) | ReactElement;
   description: string;
   keywords: string[];
   profileTypes?: ProfileType[];
   isEnabled?: boolean;
-  trailingIcon?: ReactNode;
+  trailingIcon?: ReactElement;
 }
 
 export type RemoteApiSearchConfigs = Record<
-  AppStateKey,
+  string,
   Partial<Omit<ApiSearchConfig, 'getApiBaseItems' | 'generateKeywords'>>
 >;
 
 export interface ApiSearchConfig {
-  stateKey: AppStateKey;
+  stateKey: string;
   // Extract searchable items from the api response
   getApiBaseItems: (
     apiContent: ApiSuccessResponse<ApiBaseItem>['content']
@@ -87,8 +84,8 @@ export interface ApiSearchConfig {
   // A description that will be used by Fuse to find matching items and is also displayed as description
   // of the SearchEntry on the Search page for Amsterdam.nl Results.
   description:
-    | ReactNode
-    | ((item: ApiBaseItem, config: ApiSearchConfig) => ReactNode);
+    | ReactElement
+    | ((item: ApiBaseItem, config: ApiSearchConfig) => ReactElement);
 
   // A list of keys of which the values are used for keywords
   keywordsGeneratedFromProps?: string[];
@@ -101,8 +98,8 @@ export interface ApiSearchConfig {
 
   // Return a component that acts as title in the search result list
   displayTitle:
-    | ((item: ApiBaseItem) => ReactNode | ((term: string) => ReactNode))
-    | ReactNode;
+    | ((item: ApiBaseItem) => ReactElement | ((term: string) => ReactElement))
+    | ReactElement;
 
   // The url to link to
   url: string | ((item: ApiBaseItem, config: ApiSearchConfig) => string);
@@ -114,12 +111,7 @@ export interface ApiSearchConfig {
   isEnabled?: boolean;
 }
 
-export type ApiBaseItem<
-  T extends Record<string, unknown> = Record<string, unknown>,
-> = {
-  title: string;
-  link?: LinkProps;
-} & T;
+export type ApiBaseItem = any;
 
 export const API_SEARCH_CONFIG_DEFAULT: Optional<ApiSearchConfig, 'stateKey'> =
   {
@@ -143,43 +135,54 @@ export const API_SEARCH_CONFIG_DEFAULT: Optional<ApiSearchConfig, 'stateKey'> =
     },
     url: (item: ApiBaseItem) => item.link?.to || '/',
     description: (item: ApiBaseItem) => {
-      return `Bekijk ${item.title}`;
+      return <>`Bekijk ${item.title}`</>;
     },
-    profileTypes: ['private'],
+    profileTypes: ['private'] as ProfileType[],
     keywordsGeneratedFromProps: ['title', 'description'],
   };
 
 export function displayPath(
   term: string,
-  segments: string[],
+  segments: ReactNode[],
   replaceTerm: boolean = true
-): ReactNode {
+): ReactElement {
   const termSplitted = term.trim().split(/\s+/g);
   return (
     <>
       <span className={styles.DisplayPath}>
-        {segments.map((segment, i) => {
-          let segmentReplaced = segment;
-          if (replaceTerm) {
-            termSplitted.forEach((termPart) => {
-              const replaced = segmentReplaced?.replace(
-                new RegExp(escapeRegex(termPart), 'ig'),
-                `<em>$&</em>`
-              );
-              if (replaced) {
-                segmentReplaced = replaced;
-              }
-            });
+        {segments.map((segment) => {
+          if (typeof segment !== 'string' || !replaceTerm) {
+            return (
+              <span
+                key={JSON.stringify(segment)}
+                className={styles.DisplayPathSegment}
+              >
+                {segment}
+              </span>
+            );
+          } else if (typeof segment === 'string' && replaceTerm) {
+            let segmentReplaced = segment;
+            if (replaceTerm) {
+              termSplitted.forEach((termPart) => {
+                const replaced = segmentReplaced?.replace(
+                  new RegExp(escapeRegex(termPart), 'ig'),
+                  `<em>$&</em>`
+                );
+                if (replaced) {
+                  segmentReplaced = replaced;
+                }
+              });
+            }
+            return (
+              <span
+                key={segment}
+                className={styles.DisplayPathSegment}
+                dangerouslySetInnerHTML={{
+                  __html: segmentReplaced,
+                }}
+              />
+            );
           }
-          return (
-            <span
-              key={segment}
-              className={styles.DisplayPathSegment}
-              dangerouslySetInnerHTML={{
-                __html: segmentReplaced,
-              }}
-            />
-          );
         })}
       </span>
     </>
@@ -187,7 +190,7 @@ export function displayPath(
 }
 
 const getWpiConfig = (
-  stateKey: AppStateKey
+  stateKey: string
 ): Pick<
   ApiSearchConfig,
   'stateKey' | 'displayTitle' | 'profileTypes' | 'generateKeywords'
@@ -217,12 +220,13 @@ const getWpiConfig = (
       return displayPath(term, segments);
     };
   },
-  profileTypes:
-    stateKey === 'WPI_AANVRAGEN' ? ['private'] : ['private', 'commercial'],
+  profileTypes: (stateKey === 'WPI_AANVRAGEN'
+    ? ['private']
+    : ['private', 'commercial']) as ProfileType[],
 });
 
 export type ApiSearchConfigRemote = Record<
-  AppStateKey,
+  string,
   Pick<
     ApiSearchConfig,
     'keywords' | 'keywordsGeneratedFromProps' | 'description'
@@ -245,7 +249,10 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     stateKey: 'VERGUNNINGEN',
     displayTitle: (vergunning: ZaakFrontendCombined) => (term: string) => {
-      return displayPath(term, [vergunning.title, vergunning.identifier]);
+      return displayPath(term, [
+        vergunning.title,
+        vergunning.identifier as string,
+      ]);
     },
     keywordsGeneratedFromProps: ['identifier'],
   },
@@ -274,7 +281,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   },
   {
     stateKey: 'TOERISTISCHE_VERHUUR',
-    profileTypes: ['private', 'commercial'],
+    profileTypes: ['private', 'commercial'] as ProfileType[],
     getApiBaseItems: (apiContent: {
       lvvRegistraties: LVVRegistratie[];
       vakantieverhuurVergunningen: VakantieverhuurVergunningFrontend[];
@@ -372,7 +379,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   },
   {
     stateKey: 'AFIS',
-    profileTypes: ['private', 'commercial'],
+    profileTypes: ['private', 'commercial'] as ProfileType[],
     generateKeywords: (factuur: AfisFactuurFrontend): string[] =>
       uniqueArray([
         factuur.factuurNummer,
@@ -387,14 +394,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
       }
       return [];
     },
-    displayTitle: (
-      item: ApiBaseItem<
-        Pick<
-          AfisFactuur,
-          'factuurNummer' | 'paymentDueDateFormatted' | 'statusDescription'
-        >
-      >
-    ) => {
+    displayTitle: (item: AfisFactuurFrontend) => {
       return (term: string) => {
         return displayPath(term, [
           `Factuur ${item.factuurNummer}`,
@@ -413,7 +413,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     getApiBaseItems: (apiContent: BrpFrontend) => {
       const address = getFullAddress(apiContent.adres, true);
       const name = getFullName(apiContent.persoon);
-      const brpDataItems: ApiBaseItem<{ title: string; link: LinkProps }>[] = [
+      const brpDataItems = [
         {
           title: name || 'Mijn naam',
           link: {
@@ -457,7 +457,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     isEnabled: themaConfigBezwaren.featureToggle.active,
     stateKey: 'BEZWAREN',
-    profileTypes: ['private', 'commercial'],
+    profileTypes: ['private', 'commercial'] as ProfileType[],
     displayTitle(item: BezwaarFrontend) {
       return (term: string) =>
         displayPath(term, [`Bezwaar ${item.identificatie}`]);
@@ -466,7 +466,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     isEnabled: themaConfigKlachten.featureToggle.active,
     stateKey: 'KLACHTEN',
-    profileTypes: ['private', 'commercial'],
+    profileTypes: ['private', 'commercial'] as ProfileType[],
     displayTitle(item: KlachtFrontend) {
       return (term: string) =>
         displayPath(term, [
@@ -488,9 +488,9 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    isEnabled: themaConfigBodem.featureToggle.themaActive,
+    isEnabled: themaConfigBodem.featureToggle.active,
     stateKey: 'BODEM',
-    profileTypes: ['private', 'commercial'],
+    profileTypes: ['private', 'commercial'] as ProfileType[],
     displayTitle(item: LoodMetingFrontend) {
       return (term: string) => displayPath(term, [item.title, item.adres]);
     },
@@ -498,7 +498,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     isEnabled: avgThemaConfig.featureToggle.active,
     stateKey: 'AVG',
-    profileTypes: ['private', 'commercial'],
+    profileTypes: ['private', 'commercial'] as ProfileType[],
     displayTitle(item: AVGRequestFrontend) {
       return (term: string) => displayPath(term, [item.title]);
     },
@@ -506,7 +506,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     isEnabled: themaConfigHoreca.featureToggle.active,
     stateKey: 'HORECA',
-    profileTypes: ['private', 'commercial'],
+    profileTypes: ['private', 'commercial'] as ProfileType[],
     displayTitle: (vergunning: HorecaVergunningFrontend) => (term: string) => {
       return displayPath(term, [vergunning.title, vergunning.identifier]);
     },
@@ -515,7 +515,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     isEnabled: themaConfigVaren.featureToggle.active,
     stateKey: 'VAREN',
-    profileTypes: ['commercial'],
+    profileTypes: ['commercial'] as ProfileType[],
     getApiBaseItems: (apiContent: {
       reder: VarenRegistratieRederType;
       zaken: VarenZakenFrontend[];

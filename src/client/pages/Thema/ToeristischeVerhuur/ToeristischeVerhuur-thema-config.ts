@@ -1,22 +1,22 @@
 import cloneDeep from 'lodash.clonedeep';
 import { generatePath } from 'react-router';
 
-import {
+import type {
   LVVRegistratie,
   ToeristischeVerhuurVergunning,
-} from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
-import { entries } from '../../../../universal/helpers/utils';
-import { DisplayProps } from '../../../components/Table/TableV2.types';
+} from '../../../../server/services/toeristische-verhuur/toeristische-verhuur.types.ts';
+import { entries } from '../../../../universal/helpers/utils.ts';
+import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import type {
   ThemaConfigBase,
   WithDetailPage,
   WithListPage,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
+import type { ListPageParamKind as ListPageParamKindVergunningen } from '../Vergunningen/Vergunningen-thema-config.ts';
 import {
-  ListPageParamKind as ListPageParamKindVergunningen,
   listPageParamKind as listPageParamKindVergunningen,
   tableConfig as tableConfigVergunningen,
-} from '../Vergunningen/Vergunningen-thema-config';
+} from '../Vergunningen/Vergunningen-thema-config.ts';
 
 type ToeristischeVerhuurThemaConfig = ThemaConfigBase<typeof THEMA_ID> &
   WithDetailPage &
@@ -143,4 +143,7 @@ export const tableConfig = Object.fromEntries(
 export const tableConfigLVVRegistraties = {
   title: 'Registratienummer(s) toeristische verhuur',
   displayProps: DISPLAY_PROPS_LVV_REGISTRATIES,
+} as const;
+export const caseTypeToeristischeVerhuur = {
+  VakantieverhuurVergunningaanvraag: 'Vakantieverhuur vergunningsaanvraag',
 } as const;

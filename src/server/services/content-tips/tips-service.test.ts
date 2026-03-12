@@ -1,4 +1,4 @@
-import { PartialDeep } from 'type-fest';
+import type { PartialDeep } from 'type-fest';
 import {
   afterAll,
   beforeAll,
@@ -9,15 +9,13 @@ import {
   vi,
 } from 'vitest';
 
-import { fetchContentTips, prefixTipNotification } from './tips-service';
-import WPI_E from '../../../../mocks/fixtures/wpi-e-aanvragen.json';
-import {
-  ApiSuccessResponse,
-  apiSuccessResult,
-} from '../../../universal/helpers/api';
-import { MyNotification } from '../../../universal/types/App.types';
-import type { BrpFrontend } from '../brp/brp-types';
-import { WpiRequestProcess } from '../wpi/wpi-types';
+import { fetchContentTips, prefixTipNotification } from './tips-service.ts';
+import WPI_E from '../../../../mockserver/main/mocks/fixtures/wpi-e-aanvragen.json' with { type: 'json' };
+import type { ApiSuccessResponse } from '../../../universal/helpers/api.ts';
+import { apiSuccessResult } from '../../../universal/helpers/api.ts';
+import type { MyNotification } from '../../../universal/types/App.types.ts';
+import type { BrpFrontend } from '../brp/brp-types.ts';
+import type { WpiRequestProcess } from '../wpi/wpi-types.ts';
 
 export function brpApiResponse<T>(
   brpData: PartialDeep<T, { recurseIntoArrays: true }>

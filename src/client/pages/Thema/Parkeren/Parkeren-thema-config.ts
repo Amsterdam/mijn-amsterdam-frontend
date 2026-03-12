@@ -1,14 +1,15 @@
 import cloneDeep from 'lodash.clonedeep';
 import { generatePath } from 'react-router';
 
-import { IS_PRODUCTION } from '../../../../universal/config/env';
-import { entries } from '../../../../universal/helpers/utils';
-import { LinkProps } from '../../../../universal/types/App.types';
-import type { ThemaRoutesConfig } from '../../../config/thema-types';
+import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
+import { entries } from '../../../../universal/helpers/utils.ts';
+import type { LinkProps } from '../../../../universal/types/App.types.ts';
+import type { ThemaRoutesConfig } from '../../../config/thema-types.ts';
+import type {
+  ListPageParamKind as ListPageParamKindVergunningen} from '../Vergunningen/Vergunningen-thema-config.ts';
 import {
-  ListPageParamKind as ListPageParamKindVergunningen,
   tableConfig as tableConfigVergunningen,
-} from '../Vergunningen/Vergunningen-thema-config';
+} from '../Vergunningen/Vergunningen-thema-config.ts';
 
 export const featureToggle = {
   parkerenActive: true,

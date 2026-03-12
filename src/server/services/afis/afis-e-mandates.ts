@@ -1,15 +1,15 @@
 import { HttpStatusCode } from 'axios';
 import { add, isAfter, parseISO } from 'date-fns';
-import { Request } from 'express';
+import type { Request } from 'express';
 import slug from 'slugme';
-import { firstBy } from 'thenby';
+import thenBy from 'thenby';
 import * as z from 'zod/v4';
 
 import {
   createBusinessPartnerBankAccount,
   fetchAfisBusinessPartnerDetails,
   fetchCheckIfIBANexists,
-} from './afis-business-partner';
+} from './afis-business-partner.ts';
 import {
   AFIS_EMANDATE_COMPANY_NAME,
   AFIS_EMANDATE_RECURRING_DATE_END,
@@ -17,7 +17,7 @@ import {
   afisEMandatePostbodyStatic,
   EMandateCreditorsGemeenteAmsterdam,
   eMandateReceiver,
-} from './afis-e-mandates-config';
+} from './afis-e-mandates-config.ts';
 import {
   debugEmandates,
   EMANDATE_STATUS_FRONTEND,
@@ -29,7 +29,7 @@ import {
   getFeedEntryProperties,
   isEmandateActive,
   type EmandateStatusFrontend,
-} from './afis-helpers';
+} from './afis-helpers.ts';
 import {
   type AfisBusinessPartnerDetailsTransformed,
   type AfisEMandateCreatePayload,
@@ -50,24 +50,25 @@ import {
   type AfisBusinessPartnerBankPayload,
   type POMSignRequestUrlPayload,
   type EMandateUpdatePayload,
-} from './afis-types';
-import { routeConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config';
-import { IS_AP } from '../../../universal/config/env';
-import { apiErrorResult, ApiResponse } from '../../../universal/helpers/api';
-import { AuthProfile } from '../../auth/auth-types';
-import { encryptPayloadAndSessionID } from '../../helpers/encrypt-decrypt';
-import { getFromEnv } from '../../helpers/env';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { captureException } from '../monitoring';
-import { routes } from './afis-service-config';
+} from './afis-types.ts';
+import { routeConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config.ts';
+import { IS_AP } from '../../../universal/config/env.ts';
+import type { ApiResponse } from '../../../universal/helpers/api.ts';
+import { apiErrorResult } from '../../../universal/helpers/api.ts';
+import type { AuthProfile } from '../../auth/auth-types.ts';
+import { encryptPayloadAndSessionID } from '../../helpers/encrypt-decrypt.ts';
+import { getFromEnv } from '../../helpers/env.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
+import { captureException } from '../monitoring.ts';
+import { routes } from './afis-service-config.ts';
 import {
   isoDateFormat,
   isoDateTimeFormatCompact,
-} from '../../../universal/helpers/date';
-import { toDateFormatted } from '../../../universal/helpers/date';
-import { sortByNumber } from '../../../universal/helpers/utils';
+} from '../../../universal/helpers/date.ts';
+import { toDateFormatted } from '../../../universal/helpers/date.ts';
+import { sortByNumber } from '../../../universal/helpers/utils.ts';
 
 export async function createOrUpdateEMandateFromStatusNotificationPayload(
   payload: EMandateSignRequestPayload & EMandateSignRequestNotificationPayload
@@ -400,11 +401,13 @@ function transformEMandatesResponse(
 
     return eMandate;
   }).toSorted(
-    firstBy(function sortByStatus(eMandate: AfisEMandateFrontend) {
-      return eMandate.status.toString() === EMANDATE_STATUS_FRONTEND.ON
-        ? -1
-        : 1;
-    }).thenBy('creditorName')
+    thenBy
+      .firstBy(function sortByStatus(eMandate: AfisEMandateFrontend) {
+        return eMandate.status.toString() === EMANDATE_STATUS_FRONTEND.ON
+          ? -1
+          : 1;
+      })
+      .thenBy('creditorName')
   );
 }
 

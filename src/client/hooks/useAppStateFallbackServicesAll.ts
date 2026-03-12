@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 
-import type { AppState } from '../../universal/types/App.types';
-import { createAllErrorState } from '../AppState';
-import { BFFApiUrls } from '../config/api';
-import { transformSourceData } from '../data-transform/appState';
-import { captureMessage } from '../helpers/monitoring';
-import { useBffApi } from './api/useBffApi';
-import { useAppStateStore } from './useAppStateStore';
+import type { AppState } from '../../universal/types/App.types.ts';
+import { createAllErrorState } from '../AppState.ts';
+import { useAppStateStore } from './useAppStateStore.ts';
+import { BFFApiUrls } from '../config/api.ts';
+import { transformSourceData } from '../data-transform/appState.tsx';
+import { captureMessage } from '../helpers/monitoring.ts';
+import { useBffApi } from './api/useBffApi.ts';
 
 interface useAppStateFallbackServiceProps {
   isEnabled: boolean;

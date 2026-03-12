@@ -1,5 +1,6 @@
-import { describe, it, expect, vi, Mock } from 'vitest';
 import Mockdate from 'mockdate';
+import type { Mock } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 
 import { forTesting } from './adoptable-trash-containers';
 import { fetchAdoptableTrashContainerTips } from './adoptable-trash-containers';

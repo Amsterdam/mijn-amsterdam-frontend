@@ -1,7 +1,7 @@
 import { create, type StateCreator } from 'zustand';
 
-import type { AppState } from '../../universal/types/App.types';
-import { PRISTINE_APPSTATE } from '../AppState';
+import type { AppState } from '../../universal/types/App.types.ts';
+import { PRISTINE_APPSTATE } from '../AppState.ts';
 
 type AppStateStore = AppState & {
   setAppState: (appState: Partial<AppState>, isReady?: boolean) => void;

@@ -1,9 +1,9 @@
 import type {
   WithDateEnd,
   WithTimeRange,
-} from '../../../../server/services/vergunningen/config-and-types';
-import { dateTimeFormatYear } from '../../../../universal/helpers/date';
-import type { ZaakAanvraagDetail } from '../../../../universal/types/App.types';
+} from '../../../../server/services/vergunningen/config-and-types.ts';
+import { dateTimeFormatYear } from '../../../../universal/helpers/date.ts';
+import type { ZaakAanvraagDetail } from '../../../../universal/types/App.types.ts';
 
 export type VergunningAanvraag = ZaakAanvraagDetail & {
   processed: boolean;

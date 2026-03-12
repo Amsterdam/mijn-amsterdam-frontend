@@ -1,4 +1,4 @@
-import type { AMSAPP_PROTOCOl } from './amsapp-service-config';
+import type { AMSAPP_PROTOCOl } from './amsapp-service-config.ts';
 
 export type ApiError = {
   code: string;

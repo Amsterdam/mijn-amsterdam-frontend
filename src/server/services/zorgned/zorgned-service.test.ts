@@ -8,26 +8,26 @@ import {
   fetchRelatedPersons,
   forTesting,
   sortZorgnedAanvragenByDateAndId,
-} from './zorgned-service';
-import {
-  ZORGNED_GEMEENTE_CODE,
+} from './zorgned-service.ts';
+import type {
   ZorgnedPerson,
   ZorgnedPersoonsgegevensNAWResponse,
   ZorgnedResponseDataSource,
+} from './zorgned-types.ts';
+import {
+  ZORGNED_GEMEENTE_CODE,
   type BeschiktProduct,
   type ZorgnedAanvraagSource,
   type ZorgnedPersoonSource,
-} from './zorgned-types';
-import ZORGNED_JZD_AANVRAGEN from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json';
-import { remoteApiHost } from '../../../testing/setup';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
-import {
-  apiErrorResult,
-  ApiSuccessResponse,
-} from '../../../universal/helpers/api';
-import * as request from '../../helpers/source-api-request';
-import { ZORGNED_AV_API_CONFIG_KEY } from '../hli/hli-service-config';
-import { ZORGNED_JZD_API_CONFIG_KEY } from '../wmo/wmo-service-config';
+} from './zorgned-types.ts';
+import ZORGNED_JZD_AANVRAGEN from '../../../../mockserver/main/mocks/fixtures/zorgned-jzd-aanvragen.json' with { type: 'json' };
+import { remoteApiHost } from '../../../testing/setup.ts';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import type { ApiSuccessResponse } from '../../../universal/helpers/api.ts';
+import { apiErrorResult } from '../../../universal/helpers/api.ts';
+import * as request from '../../helpers/source-api-request.ts';
+import { ZORGNED_AV_API_CONFIG_KEY } from '../hli/hli-service-config.ts';
+import { ZORGNED_JZD_API_CONFIG_KEY } from '../wmo/wmo-service-config.ts';
 
 const mocks = vi.hoisted(() => {
   return {

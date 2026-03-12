@@ -1,6 +1,6 @@
-import { isEnabled } from '../../config/azure-appconfiguration';
-import type { DataRequestConfig } from '../../config/source-api';
-import { getFromEnv } from '../../helpers/env';
+import { isEnabled } from '../../config/azure-appconfiguration.ts';
+import type { DataRequestConfig } from '../../config/source-api.ts';
+import { getFromEnv } from '../../helpers/env.ts';
 
 export const routes = {
   protected: {

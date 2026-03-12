@@ -2,11 +2,11 @@ import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { describe, expect, it } from 'vitest';
 
-import { routeConfig, themaTitle } from './Parkeren-thema-config';
-import { ParkerenThema } from './ParkerenThema';
-import { forTesting } from './ParkerenThema';
-import { AppState } from '../../../../universal/types/App.types';
-import MockApp from '../../MockApp';
+import { routeConfig, themaTitle } from './Parkeren-thema-config.ts';
+import { ParkerenThema } from './ParkerenThema.tsx';
+import { forTesting } from './ParkerenThema.tsx';
+import type { AppState } from '../../../../universal/types/App.types.ts';
+import MockApp from '../../MockApp.tsx';
 
 const linkButtonTxt = 'Ga naar Mijn Parkeren';
 const EXTERNAL_PARKEREN_URL = 'https://parkeervergunningen.amsterdam.nl/';

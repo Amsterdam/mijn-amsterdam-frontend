@@ -1,4 +1,4 @@
-import { query, queryGET, queryALL } from './fake-db';
+import { query, queryGET, queryALL } from './fake-db.ts';
 
 describe('fake-db', () => {
   it('the methods of module fake-db should return falsy values', async () => {

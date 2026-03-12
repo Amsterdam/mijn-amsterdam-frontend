@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { create } from 'zustand';
 
-import { useSessionStorage } from './storage.hook';
+import { useSessionStorage } from './storage.hook.ts';
 
 const PROFILE_TYPE_STORAGE_KEY = 'profileType';
 

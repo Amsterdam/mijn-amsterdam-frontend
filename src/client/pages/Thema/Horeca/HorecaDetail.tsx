@@ -1,19 +1,21 @@
-import { useHorecaThemaData } from './useHorecaThemaData.hook';
-import {
-  DecosZaakExploitatieHorecabedrijf,
-  HorecaVergunningFrontend,
-} from '../../../../server/services/horeca/decos-zaken';
-import { DecosZaakFrontend } from '../../../../server/services/vergunningen/config-and-types';
-import { Datalist } from '../../../components/Datalist/Datalist';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { useHorecaThemaData } from './useHorecaThemaData.hook.ts';
+import type { DecosZaakExploitatieHorecabedrijf } from '../../../../server/services/horeca/decos-zaken.ts';
+import type {
+  DecosZaakFrontend,
+  WithLocation,
+  ZaakFrontendCombined,
+} from '../../../../server/services/vergunningen/config-and-types.ts';
+import { Datalist } from '../../../components/Datalist/Datalist.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import {
   commonTransformers,
   getRows,
-} from '../Vergunningen/detail-page-content/fields-config';
-import { VergunningDetailDocumentsList } from '../Vergunningen/detail-page-content/VergunningDetailDocumentsList';
-import { useVergunningenDetailData } from '../Vergunningen/useVergunningenDetailData.hook';
+  type VergunningDataListRow,
+} from '../Vergunningen/detail-page-content/fields-config.tsx';
+import { VergunningDetailDocumentsList } from '../Vergunningen/detail-page-content/VergunningDetailDocumentsList.tsx';
+import { useVergunningenDetailData } from '../Vergunningen/useVergunningenDetailData.hook.ts';
 
 type ExploitatieHorecaBedrijfProps = {
   vergunning: DecosZaakFrontend<DecosZaakExploitatieHorecabedrijf>;
@@ -22,14 +24,17 @@ type ExploitatieHorecaBedrijfProps = {
 function ExploitatieHorecaBedrijf({
   vergunning,
 }: ExploitatieHorecaBedrijfProps) {
+  const dateRangeConditional: VergunningDataListRow<
+    ZaakFrontendCombined<DecosZaakExploitatieHorecabedrijf & WithLocation>
+  > = (vergunning) =>
+    vergunning.processed && vergunning.dateEnd && vergunning.dateStart
+      ? commonTransformers.dateRange(vergunning)
+      : null;
+
   const rows = getRows(vergunning, [
     commonTransformers.identifier,
     commonTransformers.location,
-    () =>
-      vergunning.processed && vergunning.dateEnd && vergunning.dateStart
-        ? commonTransformers.dateRange(vergunning)
-        : null,
-    ,
+    dateRangeConditional,
     commonTransformers.decision,
   ]);
 
@@ -51,7 +56,9 @@ export function HorecaDetail() {
     documents,
     isLoadingDocuments,
     isErrorDocuments,
-  } = useVergunningenDetailData<HorecaVergunningFrontend>(vergunningen);
+  } = useVergunningenDetailData<
+    DecosZaakFrontend<DecosZaakExploitatieHorecabedrijf>
+  >(vergunningen);
   useHTMLDocumentTitle(themaConfig.detailPage.route);
 
   return (

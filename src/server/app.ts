@@ -3,14 +3,18 @@
 
 /* tslint:disable:no-implicit-dependencies */
 /* tslint:disable:no-submodule-imports */
+
+// Keep the loading of environment variables at the top.
+import './helpers/load-env.ts';
 import {
   IS_AP,
   IS_DEVELOPMENT,
   IS_OT,
   IS_PRODUCTION,
-} from '../universal/config/env';
+} from '../universal/config/env.ts';
 
-import { logger } from './logging';
+// Note: Keep this line after loading in env files or LOG_LEVEL will be undefined.
+import { logger } from './logging.ts';
 
 const debug = process.env.DEBUG;
 
@@ -31,36 +35,41 @@ if (debugRequestDataTerms && !debug?.includes('source-api-request:request')) {
 }
 
 // DO NOT IMPORT './debug' before modifying process.env.debug. The debug package used will read process.env.debug only once on import.
-import './debug';
+import './debug.ts';
 
 import path from 'node:path';
 import { HttpStatusCode } from 'axios';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import express, { NextFunction, Request, Response } from 'express';
+import type { NextFunction, Request, Response } from 'express';
+import express from 'express';
 
-import { BFF_PORT, ONE_MINUTE_SECONDS, ONE_SECOND_MS } from './config/app';
+import { BFF_PORT, ONE_MINUTE_SECONDS, ONE_SECOND_MS } from './config/app.ts';
 import {
   BffEndpoints,
   BFF_BASE_PATH,
   BFF_BASE_PATH_PRIVATE,
-} from './routing/bff-routes';
+} from './routing/bff-routes.ts';
 import {
   handleIsAuthenticated,
   nocache,
   requestID,
-} from './routing/route-handlers';
-import { generateFullApiUrlBFF, send404 } from './routing/route-helpers';
-import { adminRouter } from './routing/router-admin';
-import { authRouterDevelopment } from './routing/router-development';
-import { oidcRouter } from './routing/router-oidc';
-import { router as protectedRouter } from './routing/router-protected';
-import { legacyRouter, router as publicRouter } from './routing/router-public';
-import { router as routerPublicExternalConsumer } from './routing/router-public-external-consumer';
-import { captureException } from './services/monitoring';
-import { getFromEnv } from './helpers/env';
-import { router as privateNetworkRouter } from './routing/router-private';
+} from './routing/route-handlers.ts';
+import { generateFullApiUrlBFF, send404 } from './routing/route-helpers.ts';
+import { adminRouter } from './routing/router-admin.ts';
+import { authRouterDevelopment } from './routing/router-development.ts';
+import { oidcRouter } from './routing/router-oidc.ts';
+import { router as protectedRouter } from './routing/router-protected.ts';
+import {
+  legacyRouter,
+  router as publicRouter,
+} from './routing/router-public.ts';
+import { router as routerPublicExternalConsumer } from './routing/router-public-external-consumer.ts';
+import { captureException } from './services/monitoring.ts';
+import { getFromEnv } from './helpers/env.ts';
+import { router as privateNetworkRouter } from './routing/router-private.ts';
+import { getDirname } from './helpers/dir.ts';
 
 const app = express();
 
@@ -69,7 +78,9 @@ app.set('trust proxy', true);
 // Security, disable express header.
 app.disable('x-powered-by');
 
-const viewDir = __dirname.split(path.sep).slice(-2, -1);
+const viewDir = getDirname(import.meta.url)
+  .split(path.sep)
+  .slice(-2, -1);
 
 // Set-up view engine voor SSR
 app.set('view engine', 'pug');
@@ -206,9 +217,11 @@ async function startServerBFF() {
   server.keepAliveTimeout = ONE_MINUTE_SECONDS;
   server.headersTimeout = HEADER_TIMEOUT_SECONDS * ONE_SECOND_MS; // This should be bigger than `keepAliveTimeout + your server's expected response time`
 }
+
 if (
-  require.main?.filename.endsWith('bffserver.ts') ||
-  require.main?.filename.endsWith('app-start.js') ||
+  import.meta.main ||
+  // require.main?.filename.endsWith('bffserver.ts') ||
+  // require.main?.filename.endsWith('app-start.js') ||
   process.versions.bun
 ) {
   startServerBFF();

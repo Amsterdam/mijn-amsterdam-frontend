@@ -1,4 +1,4 @@
-import { getAuthProfileAndTokenWithoutSession } from './amsapp-notifications-helper';
+import { getAuthProfileAndTokenWithoutSession } from './amsapp-notifications-helper.ts';
 import {
   listProfileIds,
   upsertConsumer,
@@ -7,26 +7,26 @@ import {
   deleteConsumer,
   getProfileByConsumer,
   storeNotifications,
-} from './amsapp-notifications-model';
-import { DISCRETE_GENERIC_MESSAGE } from './amsapp-notifications-service-config';
+} from './amsapp-notifications-model.ts';
+import { DISCRETE_GENERIC_MESSAGE } from './amsapp-notifications-service-config.ts';
 import type {
   BSN,
   ConsumerId,
   ServiceId,
   ConsumerProfileCompact,
   NotificationsLean,
-} from './amsapp-notifications-types';
+} from './amsapp-notifications-types.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
   type ApiResponse,
-} from '../../../../universal/helpers/api';
-import { entries, pick } from '../../../../universal/helpers/utils';
+} from '../../../../universal/helpers/api.ts';
+import { entries, pick } from '../../../../universal/helpers/utils.ts';
 import {
   fetchNotificationsAndTipsFromServices,
   notificationServices,
   type NotificationsAndTipsResponse,
-} from '../../tips-and-notifications';
+} from '../../tips-and-notifications.ts';
 
 /**
  * The Notification service allows batch handling of notifications for previously verified consumers

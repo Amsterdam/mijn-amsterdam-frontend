@@ -6,27 +6,28 @@ import {
   forTesting,
   fetchDecosTermijnen,
   fetchDecosLinkedField,
-} from './decos-service';
-import {
+} from './decos-service.ts';
+import type {
   DecosDocumentSource,
   DecosZaakSource,
-  DecosZakenResponse,
+  DecosZakenResponse} from './decos-types.ts';
+import {
   type DecosWorkflowResponse,
   type DecosZaakBase,
   type DecosZaakTransformer,
-} from './decos-types';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
-import { jsonCopy, range } from '../../../universal/helpers/utils';
-import * as sourceApiRequest from '../../helpers/source-api-request';
+} from './decos-types.ts';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import { jsonCopy, range } from '../../../universal/helpers/utils.ts';
+import * as sourceApiRequest from '../../helpers/source-api-request.ts';
 import {
   VarenVergunningExploitatie,
   ZaakVergunningExploitatieWijzigingVervanging,
-} from '../varen/decos-zaken';
-import type { WerkzaamhedenEnVervoerOpStraat } from '../vergunningen/config-and-types';
+} from '../varen/decos-zaken.ts';
+import type { WerkzaamhedenEnVervoerOpStraat } from '../vergunningen/config-and-types.ts';
 import {
   decosCaseToZaakTransformers,
   decosZaakTransformers,
-} from '../vergunningen/decos-zaken';
+} from '../vergunningen/decos-zaken.ts';
 
 vi.mock('../../../server/helpers/encrypt-decrypt', async (requireActual) => {
   return {

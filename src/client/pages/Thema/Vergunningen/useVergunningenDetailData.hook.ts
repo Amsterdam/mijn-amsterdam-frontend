@@ -1,11 +1,11 @@
 import { useParams } from 'react-router';
 
-import { useVergunningDocumentList } from './detail-page-content/useVergunningDocumentsList.hook';
-import { themaConfig } from './Vergunningen-thema-config';
-import type { PowerBrowserZaakFrontend } from '../../../../server/services/powerbrowser/powerbrowser-types';
-import type { ZaakFrontendCombined } from '../../../../server/services/vergunningen/config-and-types';
-import { pbZaakTransformers } from '../../../../server/services/vergunningen/pb-zaken';
-import { FeatureToggle } from '../../../../universal/config/feature-toggles';
+import { useVergunningDocumentList } from './detail-page-content/useVergunningDocumentsList.hook.ts';
+import { themaConfig } from './Vergunningen-thema-config.ts';
+import type { PowerBrowserZaakFrontend } from '../../../../server/services/powerbrowser/powerbrowser-types.ts';
+import type { ZaakFrontendCombined } from '../../../../server/services/vergunningen/config-and-types.ts';
+import { pbZaakTransformers } from '../../../../server/services/vergunningen/pb-zaken.ts';
+import { FeatureToggle } from '../../../../universal/config/feature-toggles.ts';
 
 function isPowerBrowserZaak(
   vergunning: ZaakFrontendCombined

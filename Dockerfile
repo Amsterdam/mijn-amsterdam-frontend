@@ -42,7 +42,7 @@ COPY package.json /build-space/
 COPY vite.config.ts /build-space/
 COPY .env.local.template /build-space/
 COPY vendor /build-space/vendor
-COPY mocks/fixtures /build-space/mocks/fixtures
+COPY mockserver/main/mocks/fixtures /build-space/mockserver/main/mocks/fixtures
 COPY __mocks__ /build-space/__mocks__
 
 # Install the dependencies
@@ -50,7 +50,8 @@ RUN pnpm install --frozen-lockfile --prefer-offline --reporter=append-only
 
 # Typescript configs
 COPY tsconfig.json /build-space/
-COPY tsconfig.bff.json /build-space/
+COPY tsconfig.build-fe.json /build-space/
+COPY tsconfig.build-bff.json /build-space/
 
 # Copy source files
 COPY src /build-space/src

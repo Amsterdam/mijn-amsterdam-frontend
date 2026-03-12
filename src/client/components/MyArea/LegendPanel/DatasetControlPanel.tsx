@@ -1,18 +1,18 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import {
+import type {
   DatasetCategory,
   DatasetCategoryId,
   DatasetId,
   DatasetPropertyName,
   DatasetPropertyValue,
-} from '../../../../universal/config/myarea-datasets';
-import { getIcon } from '../dataset-icons';
-import { categoryCheckboxState } from './checkbox-helpers';
-import MyAreaCollapsiblePanel, { CollapsedState } from './CollapsiblePanel';
-import { DatasetControlCheckbox } from './DatasetControlCheckbox';
-import { DatasetPanel } from './DatasetPanel';
-import { PanelList, PanelListItem } from './PanelList';
+} from '../../../../universal/config/myarea-datasets.ts';
+import { getIcon } from '../dataset-icons.tsx';
+import { categoryCheckboxState } from './checkbox-helpers.ts';
+import MyAreaCollapsiblePanel, { CollapsedState } from './CollapsiblePanel.tsx';
+import { DatasetControlCheckbox } from './DatasetControlCheckbox.tsx';
+import { DatasetPanel } from './DatasetPanel.tsx';
+import { PanelList, PanelListItem } from './PanelList.tsx';
 
 export interface DatasetControlPanelProps {
   onControlItemChange: (type: 'category' | 'dataset', ids: string[]) => void;

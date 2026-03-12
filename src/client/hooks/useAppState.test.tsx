@@ -4,11 +4,11 @@ import { afterEach, describe, expect, vi } from 'vitest';
 import {
   addParamsToStreamEndpoint,
   useAppStateRemote,
-} from './useAppStateRemote';
-import { useAppStateStore } from './useAppStateStore';
-import { SSE_ERROR_MESSAGE } from './useSSE';
-import { newEventSourceMock } from '../../testing/EventSourceMock';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
+} from './useAppStateRemote.ts';
+import { useAppStateStore } from './useAppStateStore.ts';
+import { SSE_ERROR_MESSAGE } from './useSSE.ts';
+import { newEventSourceMock } from '../../testing/EventSourceMock.ts';
+import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
 
 vi.mock('./api/useTipsApi');
 vi.mock('./useProfileType');

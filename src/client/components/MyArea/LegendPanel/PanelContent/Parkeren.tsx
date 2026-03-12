@@ -1,4 +1,5 @@
-import GenericBase from './GenericBase';
+import GenericBase from './GenericBase.tsx';
+import type { Unshaped } from '../../../../../universal/types/App.types.ts';
 
 interface MyArePanelContentParkerenProps {
   panelItem: Unshaped;

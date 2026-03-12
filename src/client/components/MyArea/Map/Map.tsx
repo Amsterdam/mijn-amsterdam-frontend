@@ -1,6 +1,7 @@
+import type {
+  MapProps as ReactMapProps} from '@amsterdam/react-maps';
 import {
-  Map as ReactMap,
-  MapProps as ReactMapProps,
+  Map as ReactMap
 } from '@amsterdam/react-maps';
 
 import 'leaflet/dist/leaflet.css';

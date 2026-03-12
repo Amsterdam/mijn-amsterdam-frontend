@@ -1,17 +1,17 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
-import type { ContactMoment } from '../../../../../server/services/salesforce/contactmomenten.types';
-import type { DisplayProps } from '../../../../components/Table/TableV2.types';
-import { themaId as themaIdAfis } from '../../Afis/Afis-thema-config';
-import { themaConfig as themaBelastingen } from '../../Belastingen/Belastingen-thema-config';
-import { themaConfig as themaInkomen } from '../../Inkomen/Inkomen-thema-config';
-import { themaConfig as themaKrefia } from '../../Krefia/Krefia-thema-config';
-import { themaId as themaIdParkeren } from '../../Parkeren/Parkeren-thema-config';
+import type { ContactMoment } from '../../../../../server/services/salesforce/contactmomenten.types.ts';
+import type { DisplayProps } from '../../../../components/Table/TableV2.types.ts';
+import { themaId as themaIdAfis } from '../../Afis/Afis-thema-config.ts';
+import { themaConfig as themaBelastingen } from '../../Belastingen/Belastingen-thema-config.ts';
+import { themaConfig as themaInkomen } from '../../Inkomen/Inkomen-thema-config.ts';
+import { themaConfig as themaKrefia } from '../../Krefia/Krefia-thema-config.ts';
+import { themaId as themaIdParkeren } from '../../Parkeren/Parkeren-thema-config.ts';
 import {
   featureToggle as featureToggleSvwi,
   themaId as themaIdSvwi,
-} from '../../Svwi/Svwi-thema-config';
-import { themaConfig as themaZorg } from '../../Zorg/Zorg-thema-config';
+} from '../../Svwi/Svwi-thema-config.ts';
+import { themaConfig as themaZorg } from '../../Zorg/Zorg-thema-config.ts';
 
 export type ContactMomentFrontend = ContactMoment & {
   themaKanaalIcon: ReactNode;

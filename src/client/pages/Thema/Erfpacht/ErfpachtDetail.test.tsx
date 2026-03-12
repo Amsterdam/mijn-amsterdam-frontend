@@ -1,22 +1,22 @@
 import { render, waitFor, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import { generatePath } from 'react-router';
 
-import { themaConfig } from './Erfpacht-thema-config';
-import { ErfpachtDetail } from './ErfpachtDetail';
-import ERFPACHT_DOSSIER_DETAIL from '../../../../../mocks/fixtures/erfpacht-v2-dossierinfo-bsn.json';
-import ERFPACHT_DOSSIERS from '../../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
-import {
-  transformDossierResponse,
-  transformErfpachtDossierProperties,
-} from '../../../../server/services/erfpacht/erfpacht';
+import { themaConfig } from './Erfpacht-thema-config.ts';
+import { ErfpachtDetail } from './ErfpachtDetail.tsx';
+import ERFPACHT_DOSSIER_DETAIL from '../../../../../mockserver/main/mocks/fixtures/erfpacht-v2-dossierinfo-bsn.json' with { type: 'json' };
+import ERFPACHT_DOSSIERS from '../../../../../mockserver/main/mocks/fixtures/erfpacht-v2-dossiers.json' with { type: 'json' };
 import type {
   ErfpachtDossiersDetailSource,
   ErfpachtDossiersResponseSource,
-} from '../../../../server/services/erfpacht/erfpacht-types';
-import { bffApi } from '../../../../testing/utils';
-import { AppState } from '../../../../universal/types/App.types';
-import MockApp from '../../MockApp';
+} from '../../../../server/services/erfpacht/erfpacht-types.ts';
+import {
+  transformDossierResponse,
+  transformErfpachtDossierProperties,
+} from '../../../../server/services/erfpacht/erfpacht.ts';
+import { bffApi } from '../../../../testing/utils.ts';
+import type { AppState } from '../../../../universal/types/App.types.ts';
+import MockApp from '../../MockApp.tsx';
 
 function mockDetailFetch(
   content: unknown = transformErfpachtDossierProperties(

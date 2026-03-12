@@ -1,9 +1,9 @@
-import { krefiaTableConfig, themaConfig } from './Krefia-thema-config';
-import type { KrefiaDeepLink } from '../../../../server/services/krefia/krefia.types';
-import { isError, isLoading } from '../../../../universal/helpers/api';
-import { LinkProps } from '../../../../universal/types/App.types';
-import { addLinkElementToProperty } from '../../../components/Table/TableV2';
-import { useAppStateGetter } from '../../../hooks/useAppStateStore';
+import { krefiaTableConfig, themaConfig } from './Krefia-thema-config.ts';
+import type { KrefiaDeepLink } from '../../../../server/services/krefia/krefia.types.ts';
+import { isError, isLoading } from '../../../../universal/helpers/api.ts';
+import type { LinkProps } from '../../../../universal/types/App.types.ts';
+import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
+import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
 
 const kredietBankLink: LinkProps = {
   title: 'Meer informatie over Kredietbank Amsterdam',

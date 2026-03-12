@@ -1,4 +1,4 @@
-import { toCamel } from '../../../universal/helpers/text';
+import { toCamel } from '../../../universal/helpers/text.ts';
 
 export type SnakeToCamel<S extends string> =
   S extends `${infer Head}_${infer Tail}`

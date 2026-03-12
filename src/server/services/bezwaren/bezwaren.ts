@@ -1,8 +1,8 @@
 import * as jose from 'jose';
 import { generatePath } from 'react-router';
 
-import { EMPTY_UUID, MAX_PAGE_COUNT, routes } from './bezwaren-service-config';
-import {
+import { EMPTY_UUID, MAX_PAGE_COUNT, routes } from './bezwaren-service-config.ts';
+import type {
   BezwaarFrontend,
   BezwaarDocument,
   BezwaarSourceData,
@@ -12,33 +12,33 @@ import {
   Kenmerk,
   OctopusApiResponse,
   kenmerkKey,
-} from './types';
-import { themaConfig } from '../../../client/pages/Thema/Bezwaren/Bezwaren-thema-config';
+} from './types.ts';
+import { themaConfig } from '../../../client/pages/Thema/Bezwaren/Bezwaren-thema-config.ts';
 import {
   apiDependencyError,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
-} from '../../../universal/helpers/api';
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import { isRecentNotification } from '../../../universal/helpers/utils';
-import {
+} from '../../../universal/helpers/api.ts';
+import { defaultDateFormat } from '../../../universal/helpers/date.ts';
+import { isRecentNotification } from '../../../universal/helpers/utils.ts';
+import type {
   MyNotification,
   StatusLineItem,
-} from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { ONE_SECOND_MS } from '../../config/app';
-import { DataRequestConfig } from '../../config/source-api';
-import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import { getFromEnv } from '../../helpers/env';
+} from '../../../universal/types/App.types.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { ONE_SECOND_MS } from '../../config/app.ts';
+import type { DataRequestConfig } from '../../config/source-api.ts';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt.ts';
+import { getFromEnv } from '../../helpers/env.ts';
 import {
   createSessionBasedCacheKey,
   getApiConfig,
-} from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { trackEvent } from '../monitoring';
-import { DocumentDownloadData } from '../shared/document-download-route-handler';
+} from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
+import { trackEvent } from '../monitoring.ts';
+import type { DocumentDownloadData } from '../shared/document-download-route-handler.ts';
 
 async function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
   const now = new Date();

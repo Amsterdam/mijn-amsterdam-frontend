@@ -1,7 +1,7 @@
-import Decimal from 'decimal.js';
+import type { Decimal } from 'decimal.js';
 import type { SetNonNullableDeep, Stringified } from 'type-fest';
 
-import { LinkProps } from '../../../universal/types/App.types';
+import type { LinkProps } from '../../../universal/types/App.types.ts';
 
 export type XmlNullable<T extends Record<string, unknown>> = {
   [key in keyof T]: { '@null': true } | T[key];

@@ -1,18 +1,18 @@
 import * as appInsights from 'applicationinsights';
 import {
-  ExceptionTelemetry,
+  type ExceptionTelemetry,
+  type Telemetry,
+  type TraceTelemetry,
   SeverityLevel,
-  Telemetry,
-  TraceTelemetry,
-} from 'applicationinsights/out/Declarations/Contracts';
+} from 'applicationinsights/out/Declarations/Contracts/index.js';
 
 import {
   shouldSendRemoteDependencyData,
   shouldSendRequestData,
   shouldSendExceptionData,
-} from './should-send-telemetry';
-import { IS_DEVELOPMENT } from '../../universal/config/env';
-import { logger } from '../logging';
+} from './should-send-telemetry.ts';
+import { IS_DEVELOPMENT } from '../../universal/config/env.ts';
+import { logger } from '../logging.ts';
 
 if (
   process.env.APPLICATIONINSIGHTS_CONNECTION_STRING &&

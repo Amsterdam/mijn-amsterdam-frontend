@@ -1,5 +1,5 @@
-import { hash } from '../../../../universal/helpers/utils';
-import type { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../../zorgned/zorgned-types';
+import { hash } from '../../../../universal/helpers/utils.ts';
+import type { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../../zorgned/zorgned-types.ts';
 
 export type RTMAanvraagProps = {
   productIdentificatie: 'AV-RTM1' | 'AV-RTM';
