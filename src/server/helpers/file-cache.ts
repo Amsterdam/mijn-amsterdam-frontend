@@ -22,7 +22,7 @@ type KeyData<T = unknown> = {
 };
 
 const ONE_MINUTE_MS = ONE_SECOND_MS * 60;
-const EXT = 'flat-cache.json';
+const EXT = 'flat-cache.json' with { type: 'json' };
 export const DEFAULT_CACHE_DIR = path.join(
   getDirname(import.meta.url),
   '../',

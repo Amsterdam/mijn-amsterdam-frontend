@@ -10,7 +10,7 @@ import {
 } from 'vitest';
 
 import { fetchContentTips, prefixTipNotification } from './tips-service.ts';
-import WPI_E from '../../../../mockserver/fixtures/wpi-e-aanvragen.json';
+import WPI_E from '../../../../mockserver/main/mocks/fixtures/wpi-e-aanvragen.json' with { type: 'json' };
 import type { ApiSuccessResponse } from '../../../universal/helpers/api.ts';
 import { apiSuccessResult } from '../../../universal/helpers/api.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';

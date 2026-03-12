@@ -8,9 +8,9 @@ import {
   forTesting,
 } from './bezwaren.ts';
 import type { BezwaarSourceStatus } from './types.ts';
-import bezwarenDocumenten from '../../../../mockserver/fixtures/bezwaren-documents.json';
-import bezwarenStatus from '../../../../mockserver/fixtures/bezwaren-status.json';
-import bezwarenApiResponse from '../../../../mockserver/fixtures/bezwaren.json';
+import bezwarenDocumenten from '../../../../mockserver/main/mocks/fixtures/bezwaren-documents.json' with { type: 'json' };
+import bezwarenStatus from '../../../../mockserver/main/mocks/fixtures/bezwaren-status.json' with { type: 'json' };
+import bezwarenApiResponse from '../../../../mockserver/main/mocks/fixtures/bezwaren.json' with { type: 'json' };
 import { remoteApiHost } from '../../../testing/setup.ts';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 import { range } from '../../../universal/helpers/utils.ts';
