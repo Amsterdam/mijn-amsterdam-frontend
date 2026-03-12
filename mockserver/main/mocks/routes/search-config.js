@@ -1,4 +1,4 @@
-const SEARCH_CONFIG = require('../../src/client/components/Search/search-config.json');
+const SEARCH_CONFIG = require('../../../../src/client/components/Search/search-config.json');
 const settings = require('../settings');
 
 module.exports = [

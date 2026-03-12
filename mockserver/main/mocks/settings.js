@@ -1,5 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
+
 const dotenv = require('dotenv');
 const dotenvExpand = require('dotenv-expand');
 
@@ -16,7 +17,7 @@ const MOCK_ORIGIN = getMockOrigin(ENV_CONFIG);
 const MOCK_API_BASE_URL = MOCK_ORIGIN + MOCK_BASE_PATH;
 
 function loadEnv() {
-  const ENV_FILE = '.env.local';
+  const ENV_FILE = '../../.env.local';
   console.debug(`[mocks server] trying env file ${ENV_FILE}`);
   const envConfig = dotenv.config({ path: ENV_FILE });
 

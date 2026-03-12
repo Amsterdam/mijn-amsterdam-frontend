@@ -4,8 +4,8 @@ import { generatePath } from 'react-router';
 
 import { themaConfig } from './Erfpacht-thema-config.ts';
 import { ErfpachtDetail } from './ErfpachtDetail.tsx';
-import ERFPACHT_DOSSIER_DETAIL from '../../../../../mocks/fixtures/erfpacht-v2-dossierinfo-bsn.json';
-import ERFPACHT_DOSSIERS from '../../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
+import ERFPACHT_DOSSIER_DETAIL from '../../../../../mockserver/fixtures/erfpacht-v2-dossierinfo-bsn.json';
+import ERFPACHT_DOSSIERS from '../../../../../mockserver/fixtures/erfpacht-v2-dossiers.json';
 import type {
   ErfpachtDossiersDetailSource,
   ErfpachtDossiersResponseSource,
