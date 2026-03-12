@@ -173,12 +173,9 @@ export const NOTIFICATIONS = async (req: Request) => {
   const authProfileAndToken = getAuth(req);
   const [serviceResults, notificationsAndTipsResults] = await Promise.all([
     getServiceResultsForTips(req),
-    (authProfileAndToken
+    authProfileAndToken
       ? fetchNotificationsAndTipsFromServices(authProfileAndToken)
-      : {}) as Record<
-      keyof (typeof notificationServices)['private'],
-      NotificationsAndTipsResponse
-    >,
+      : {},
   ]);
 
   if (
