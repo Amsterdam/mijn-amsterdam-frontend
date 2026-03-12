@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "build-bff",
-    "target": "ES2024",
+    "target": "esnext",
     "lib": [
       "esnext",
       "dom",
@@ -25,10 +25,6 @@
     "jsx": "react-jsx",
     "types": ["vitest/globals"]
   },
-  "exclude": [
-    "src/**/*.test.ts",
-    "src/**/*.test.tsx",
-  ],
   "include": [
     "src",
     "scripts/generate-user-data-overview.ts"

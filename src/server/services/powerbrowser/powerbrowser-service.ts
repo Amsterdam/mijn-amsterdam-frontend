@@ -636,6 +636,7 @@ export async function fetchPBZaken<T extends PowerBrowserZaakTransformer>(
     }
   );
   const zaken = await Promise.all(zakenPromise);
+
   return apiSuccessResult(zaken);
 }
 
