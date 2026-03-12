@@ -112,7 +112,7 @@ describe('afis-e-mandates service (with nock)', () => {
   });
 
   describe('createAfisEMandate - Happy scenario', () => {
-    it('creates a mandate if all checks pass', async () => {
+    it('creates an Emandate and Bankdetails', async () => {
       const s = vi.spyOn(sourceApiRequest, 'requestData');
 
       remoteApi.get(/A_BusinessPartner/).reply(200, {
@@ -148,6 +148,9 @@ describe('afis-e-mandates service (with nock)', () => {
       // Create bankaccount
       remoteApi.post(/A_BusinessPartnerBank/).reply(200);
 
+      // Read existing mandates for business partner
+      remoteApi.get(/Mandate_readSet/).reply(200);
+
       remoteApi.post(/CreateMandate/).reply(200);
 
       const result =
@@ -155,7 +158,22 @@ describe('afis-e-mandates service (with nock)', () => {
           validPayload
         );
 
-      const bankCreateData = (s.mock.calls.at(-2)?.at(-1) as DataRequestConfig)
+      expect(s.mock.calls.map((x) => x[0].url)).toStrictEqual([
+        // get business partner details
+        'http://remote-api-host/afis/RESTAdapter/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner',
+        // get business partner address
+        'http://remote-api-host/afis/RESTAdapter/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerAddress',
+        // check if bank account exists
+        "http://remote-api-host/afis/RESTAdapter/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerBank?$filter=IBAN eq 'NL35BOOG9343513650' and BusinessPartner eq '0000000123'&$orderBy=BankIdentification desc",
+        // create bank account
+        'http://remote-api-host/afis/RESTAdapter/BusinessPartner/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerBank',
+        // read existing mandates for business partner
+        "http://remote-api-host/afis/RESTAdapter/Mandate/ZGW_FI_MANDATE_SRV_01/Mandate_readSet?$filter=SndId eq '0000000123'",
+        // create mandate
+        'http://remote-api-host/afis/RESTAdapter/CreateMandate/ZGW_FI_MANDATE_SRV_01/Mandate_createSet',
+      ]);
+
+      const bankCreateData = (s.mock.calls.at(-3)?.at(-1) as DataRequestConfig)
         .data;
 
       const emandateCreateData = (
@@ -165,10 +183,12 @@ describe('afis-e-mandates service (with nock)', () => {
       expect(bankCreateData).toStrictEqual({
         BankAccount: '9343513650',
         BankAccountHolderName: 'John Doe',
+        BankAccountReferenceText: 'MA EMandaat Afval',
         BankCountryKey: 'NL',
         BankName: 'BOOG',
         BankNumber: 'BOOG',
         BusinessPartner: '0000000123',
+        CollectionAuthInd: true,
         IBAN: 'NL35BOOG9343513650',
         SWIFTCode: 'BANKNL2A',
       });
@@ -399,7 +419,9 @@ describe('afis-e-mandates service (with nock)', () => {
         authProfile
       );
       expect(result.status).toBe('OK');
-      expect(result.content?.length).toBe(11);
+      expect(result.content?.length).toBe(
+        EMandateCreditorsGemeenteAmsterdam.length
+      );
     });
   });
 
@@ -444,7 +466,7 @@ describe('afis-e-mandates service (with nock)', () => {
       );
     });
 
-    it('returns null content if provider returns no mpid', async () => {
+    it('returns null content if provider returns no paylinkId', async () => {
       remoteApi.get(/A_BusinessPartner/).reply(200);
       remoteApi.get(/A_BusinessPartnerAddress/).reply(200);
       remoteApi.post(/paylinks/).reply(200);
@@ -458,13 +480,14 @@ describe('afis-e-mandates service (with nock)', () => {
       expect(result.content).toBeNull();
     });
 
-    it('returns redirectUrl and statusCheckUrl if provider returns mpid and paylink', async () => {
+    it('returns redirectUrl and statusCheckUrl if provider returns paylinkId and paylink', async () => {
       remoteApi.get(/A_BusinessPartner/).reply(200);
       remoteApi.get(/A_BusinessPartnerAddress/).reply(200);
 
-      remoteApi
-        .post(/paylinks/)
-        .reply(200, { mpid: 'mpid123', paylink: 'https://pay.example.com' });
+      remoteApi.post(/paylinks/).reply(200, {
+        paylinkId: 'paylinkId123',
+        paylink: 'https://pay.example.com',
+      });
 
       const result =
         await emandates.fetchEmandateSignRequestRedirectUrlFromPaymentProvider({
@@ -625,15 +648,6 @@ describe('afis-e-mandates service (with nock)', () => {
       });
     });
 
-    it('transformEmandateSignRequestStatus transforms status', () => {
-      const result = emandates.forTesting.transformEmandateSignRequestStatus({
-        status_code: 101,
-        mpid: 0,
-        status_date: '',
-      });
-      expect(result.status).toBe('NoResponse');
-    });
-
     it('transformEMandateSource transforms source', () => {
       const result = emandates.forTesting.transformEMandateSource(
         authProfile.sid,
@@ -678,7 +692,7 @@ describe('afis-e-mandates service (with nock)', () => {
 
     it('transformEMandatesRedirectUrlResponse transforms response', () => {
       const result = emandates.forTesting.transformEMandatesRedirectUrlResponse(
-        { mpid: '123', paylink: 'https://example.com' }
+        { paylink_id: '123', paylink: 'https://example.com' }
       );
       expect(result).toHaveProperty('redirectUrl', 'https://example.com');
     });

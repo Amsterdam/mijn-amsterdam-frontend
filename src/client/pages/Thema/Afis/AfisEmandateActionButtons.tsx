@@ -115,36 +115,35 @@ function ApiActionButton<T>({
   );
 }
 
-type AfisEMandateActionUrlProps = {
+type AfisEMandateActionButtonsProps = {
   eMandate: AfisEMandateFrontend;
-  redirectUrlApi: BFFApiHook<AfisEMandateSignRequestResponse>;
-  statusChangeApi: BFFApiHook<AfisEMandateStatusChangeResponse>;
+  redirectUrlApi: BFFApiHook<AfisEMandateSignRequestResponse> & {
+    requestRedirectUrl: (isActive: boolean) => void;
+  };
+  deactivateApi: BFFApiHook<AfisEMandateStatusChangeResponse>;
 };
 
-export function AfisEMandateActionUrls({
+export function AfisEMandateActionButtons({
   eMandate,
   redirectUrlApi,
-  statusChangeApi,
-}: AfisEMandateActionUrlProps) {
+  deactivateApi,
+}: AfisEMandateActionButtonsProps) {
+  const isActive = eMandate.status === EMANDATE_STATUS_ACTIVE;
   return (
     <>
       {eMandate.signRequestUrl && (
         <ApiActionButton
           api={redirectUrlApi}
-          fetch={() => redirectUrlApi.fetch()}
-          label={
-            eMandate.status === EMANDATE_STATUS_ACTIVE
-              ? 'Wijzigen'
-              : 'Activeren'
-          }
+          fetch={() => redirectUrlApi.requestRedirectUrl(isActive)}
+          label={isActive ? 'Rekening wijzigen' : 'Activeren'}
           doConfirm={false}
         />
       )}
       &nbsp;
       {eMandate.deactivateUrl && eMandate.status === EMANDATE_STATUS_ACTIVE && (
         <ApiActionButton
-          api={statusChangeApi}
-          fetch={() => statusChangeApi.fetch()}
+          api={deactivateApi}
+          fetch={() => deactivateApi.fetch()}
           label="Stopzetten"
           doConfirm
           confirmationModal={{

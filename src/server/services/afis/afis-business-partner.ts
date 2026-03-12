@@ -1,6 +1,7 @@
 import * as ibantools from 'ibantools';
 
 import {
+  debugBusinesspartner,
   formatBusinessPartnerId,
   getAfisApiConfig,
   getFeedEntryProperties,
@@ -21,6 +22,7 @@ import {
   AfisBusinessPartnerPhoneSource,
   BusinessPartnerId,
   BusinessPartnerIdPayload,
+  type AfisEMandateBankAccountExistsResponse,
 } from './afis-types';
 import {
   apiErrorResult,
@@ -182,7 +184,8 @@ async function fetchEmail(addressId: AfisBusinessPartnerAddress['id']) {
 
 /** Fetches the business partner details, phonenumber and emailaddress from the AFIS source API and combines then into a single response */
 export async function fetchAfisBusinessPartnerDetails(
-  payload: BusinessPartnerIdPayload
+  payload: BusinessPartnerIdPayload,
+  includePhoneAndEmail = true
 ): Promise<ApiResponse<AfisBusinessPartnerDetailsTransformed>> {
   const businessPartnerId: BusinessPartnerId = payload.businessPartnerId;
   const fullNameRequest = fetchBusinessPartnerFullName(businessPartnerId);
@@ -206,27 +209,31 @@ export async function fetchAfisBusinessPartnerDetails(
     );
   }
 
-  let phoneResponse: ApiResponse_DEPRECATED<AfisBusinessPartnerPhone | null>;
-  let emailResponse: ApiResponse_DEPRECATED<AfisBusinessPartnerEmail | null>;
+  let phoneResponse: ApiResponse_DEPRECATED<AfisBusinessPartnerPhone | null> =
+    apiSuccessResult(null);
+  let emailResponse: ApiResponse_DEPRECATED<AfisBusinessPartnerEmail | null> =
+    apiSuccessResult(null);
 
-  if (addressResponse.status === 'OK' && addressResponse.content?.id) {
-    const phoneRequest = fetchPhoneNumber(addressResponse.content.id);
-    const emailRequest = fetchEmail(addressResponse.content.id);
+  if (includePhoneAndEmail) {
+    if (addressResponse.status === 'OK' && addressResponse.content?.id) {
+      const phoneRequest = fetchPhoneNumber(addressResponse.content.id);
+      const emailRequest = fetchEmail(addressResponse.content.id);
 
-    const [phoneResponseSettled, emailResponseSettled] =
-      await Promise.allSettled([phoneRequest, emailRequest]);
+      const [phoneResponseSettled, emailResponseSettled] =
+        await Promise.allSettled([phoneRequest, emailRequest]);
 
-    phoneResponse = getSettledResult(phoneResponseSettled);
-    emailResponse = getSettledResult(emailResponseSettled);
-  } else {
-    phoneResponse = apiErrorResult(
-      'Could not get phone, missing required query param addressId',
-      null
-    );
-    emailResponse = apiErrorResult(
-      'Could not get email, missing required query param addressId',
-      null
-    );
+      phoneResponse = getSettledResult(phoneResponseSettled);
+      emailResponse = getSettledResult(emailResponseSettled);
+    } else {
+      phoneResponse = apiErrorResult(
+        'Could not get phone, missing required query param addressId',
+        null
+      );
+      emailResponse = apiErrorResult(
+        'Could not get email, missing required query param addressId',
+        null
+      );
+    }
   }
 
   const detailsCombined: AfisBusinessPartnerDetailsTransformed = {
@@ -272,7 +279,16 @@ export async function createBusinessPartnerBankAccount(
     IBAN: payload.iban,
     BankAccount: iban.accountNumber,
     BankCountryKey: iban.countryCode ?? '',
+    CollectionAuthInd: true,
+    BankAccountReferenceText:
+      `MA EMandaat ${payload.creditorName ?? 'onbekend'}`.slice(0, 20),
   };
+
+  debugBusinesspartner(
+    'Creating bank account for businessPartnerId %s with payload: %o.',
+    payload.businessPartnerId,
+    createBankAccountPayload
+  );
 
   const additionalConfig: DataRequestConfig = {
     method: 'POST',
@@ -293,19 +309,26 @@ export async function createBusinessPartnerBankAccount(
 export async function fetchCheckIfIBANexists(
   IBAN: AfisBusinessPartnerBankAccount['IBAN'],
   businessPartnerID: BusinessPartnerId
-): Promise<ApiResponse<boolean>> {
+): Promise<ApiResponse<AfisEMandateBankAccountExistsResponse>> {
   const additionalConfig: DataRequestConfig = {
     formatUrl(config) {
-      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerBank?$filter=IBAN eq '${IBAN}' and BusinessPartner eq '${businessPartnerID}'`;
+      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerBank?$filter=IBAN eq '${IBAN}' and BusinessPartner eq '${businessPartnerID}'&$orderBy=BankIdentification desc`;
     },
     transformResponse(
       response: AfisApiFeedResponseSource<AfisBusinessPartnerBankAccount>
     ) {
-      return !!getFeedEntryProperties(response).length;
+      return {
+        exists: !!getFeedEntryProperties(response).length,
+        eMandateCollectionEnabled: !!getFeedEntryProperties(response).findLast(
+          (entry) => entry.CollectionAuthInd === true
+        ),
+      };
     },
   };
 
   const businessPartnerRequestConfig = await getAfisApiConfig(additionalConfig);
 
-  return requestData<boolean>(businessPartnerRequestConfig);
+  return requestData<AfisEMandateBankAccountExistsResponse>(
+    businessPartnerRequestConfig
+  );
 }

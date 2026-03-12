@@ -343,22 +343,13 @@ module.exports = [
                 properties: {
                   ...eMandateBase.content.properties,
                   ...body,
-                  IMandateId: existingMandate
-                    ? existingMandate.content.properties.IMandateId
-                    : String(parseInt(lastID, 10) + 1),
+                  IMandateId: String(parseInt(lastID, 10) + 1),
                   Status: '1',
                 },
               },
             };
 
-            if (!existingMandate) {
-              eMandates.feed.entry.push(mandate);
-            } else {
-              Object.assign(
-                existingMandate.content.properties,
-                mandate.content.properties
-              );
-            }
+            eMandates.feed.entry.push(mandate);
 
             return res.send(mandate);
           },
