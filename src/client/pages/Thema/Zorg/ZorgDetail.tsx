@@ -36,7 +36,7 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
       {voorziening?.documents.length > 0 && (
         <DocumentListV2
           documents={voorziening.documents}
-          columns={['Brieven', 'Verzenddatum']}
+          columns={['Bestanden', 'Verzenddatum']}
         />
       )}
     </PageContentCell>
