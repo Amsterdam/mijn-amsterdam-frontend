@@ -23,6 +23,7 @@ import {
 import { fetchHorecaNotifications } from './horeca/horeca';
 import { fetchKlachtenNotifications } from './klachten/klachten';
 import { fetchKrefiaNotifications } from './krefia/krefia';
+import { captureException } from './monitoring';
 import { fetchParkeerVergunningenNotifications } from './parkeren/parkeren-notifications';
 import {
   fetchBelastingNotifications,
@@ -37,6 +38,7 @@ import { fetchVergunningenNotifications } from './vergunningen/vergunningen-noti
 import { fetchWiorNotifications } from './wior';
 import { fetchWpiNotifications } from './wpi';
 import { streamEndpointQueryParamKeys } from '../../universal/config/app';
+import { entries } from '../../universal/helpers/utils';
 import { getFromEnv } from '../helpers/env';
 
 // Every 3rd notification will be a tip if one is available.
@@ -165,7 +167,7 @@ export async function fetchNotificationsAndTipsFromServices(
   }
 
   const serviceResults = await Promise.allSettled(
-    Object.entries(services).map(async ([serviceId, fetchNotifications]) => {
+    entries(services).map(async ([serviceId, fetchNotifications]) => {
       const result = await fetchNotifications(authProfileAndToken);
       return [serviceId, result];
     })
@@ -175,7 +177,21 @@ export async function fetchNotificationsAndTipsFromServices(
     keyof typeof services,
     NotificationsAndTipsResponse,
   ][];
-  return Object.fromEntries(results);
+
+  const resultsObject = Object.fromEntries(results);
+
+  // TODO: Remove, this is only needed for debugging
+  for (const [serviceId, result] of entries(resultsObject)) {
+    if (!('content' in result)) {
+      captureException(
+        new Error(
+          `Result for ${serviceId} does not contain content: ${JSON.stringify(result, undefined, 2)}`
+        )
+      );
+    }
+  }
+
+  return resultsObject;
 }
 
 export function sortNotificationsAndInsertTips(
