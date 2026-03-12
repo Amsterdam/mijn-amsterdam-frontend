@@ -4,16 +4,16 @@ import {
   ServiceId,
   type ConsumerProfile,
   type NotificationsService,
-} from './amsapp-notifications-types';
-import { isRecord } from '../../../../universal/helpers/utils';
+} from './amsapp-notifications-types.ts';
+import { isRecord } from '../../../../universal/helpers/utils.ts';
 import {
   decrypt,
   encryptDeterministic,
-} from '../../../helpers/encrypt-decrypt';
-import { logger } from '../../../logging';
-import { IS_DB_ENABLED } from '../../db/config';
-import { db as db_, type DBAdapter } from '../../db/db';
-import { camelizeKeys } from '../../db/helper';
+} from '../../../helpers/encrypt-decrypt.ts';
+import { logger } from '../../../logging.ts';
+import { IS_DB_ENABLED } from '../../db/config.ts';
+import { db as db_, type DBAdapter } from '../../db/db.ts';
+import { camelizeKeys } from '../../db/helper.ts';
 
 // POSTGRES is case insensitive. We therefore always use snake_case within postgres
 // and transform the returned column names to camelCase.

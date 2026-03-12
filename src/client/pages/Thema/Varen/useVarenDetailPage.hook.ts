@@ -1,11 +1,11 @@
 import { useParams } from 'react-router';
 
-import { useVarenThemaData } from './useVarenThemaData.hook';
+import { useVarenThemaData } from './useVarenThemaData.hook.ts';
 import {
   exploitatieVergunningWijzigenLink,
   themaConfig,
-} from './Varen-thema-config';
-import { ButtonLinkProps } from '../../../../universal/types/App.types';
+} from './Varen-thema-config.ts';
+import { ButtonLinkProps } from '../../../../universal/types/App.types.ts';
 
 export function useVarenVergunningDetailPage() {
   const {

@@ -1,6 +1,6 @@
 // Load environment variables first since code afterwards relies on them being available.
-import './helpers/load-env';
-import { startAppConfiguration } from './config/azure-appconfiguration';
+import './helpers/load-env.ts';
+import { startAppConfiguration } from './config/azure-appconfiguration.ts';
 
 (async function startApp() {
   // Updates/starts appconfiguration and featuretoggles, this should happen before server start so that -

@@ -3,20 +3,20 @@ import { generatePath, type Params } from 'react-router';
 import type {
   VarenVergunningFrontend,
   VarenZakenFrontend,
-} from '../../../../server/services/varen/config-and-types';
-import { IS_PRODUCTION } from '../../../../universal/config/env';
+} from '../../../../server/services/varen/config-and-types.ts';
+import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import {
   dateSort,
   isDateInFuture,
   isDateInPast,
-} from '../../../../universal/helpers/date';
-import { LinkProps } from '../../../../universal/types/App.types';
-import { DisplayProps } from '../../../components/Table/TableV2.types';
+} from '../../../../universal/helpers/date.ts';
+import { LinkProps } from '../../../../universal/types/App.types.ts';
+import { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import type {
   PageConfig,
   ThemaConfigBase,
   WithListPage,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_AFGEHANDELD = 3;
