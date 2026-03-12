@@ -4,6 +4,7 @@ import { UserFeedback } from './UserFeedback';
 import styles from './UserFeedback.module.scss';
 import { useSubmitUserFeedback } from './useSubmitUserFeedback';
 import type { RecordStr2 } from '../../../server/routing/route-helpers';
+import { SURVEY_VERSION_INLINE_KTO } from '../../../server/services/user-feedback/user-feedback.service-config';
 import { BFFApiUrls } from '../../config/api';
 import { useAppStateGetter } from '../../hooks/useAppStateStore';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
@@ -74,7 +75,10 @@ export function InlineKTO({ userFeedbackDetails }: InlineKTOProps) {
     payload.maProfileType = profileType || 'unknown';
 
     const url = new URL(BFFApiUrls.USER_FEEDBACK_SUBMIT);
-    url.searchParams.append('version', surveyVersion?.toString() || 'latest');
+    url.searchParams.append(
+      'version',
+      surveyVersion?.toString() || SURVEY_VERSION_INLINE_KTO
+    );
 
     submitUserFeedback(url, {
       payload,
