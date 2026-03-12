@@ -182,12 +182,13 @@ export async function fetchNotificationsAndTipsFromServices(
 
   // TODO: Remove, this is only needed for debugging
   for (const [serviceId, result] of entries(resultsObject)) {
-    if (!('content' in result)) {
+    if (!result || !('content' in result)) {
       captureException(
         new Error(
           `Result for ${serviceId} does not contain content: ${JSON.stringify(result, undefined, 2)}`
         )
       );
+      delete resultsObject[serviceId];
     }
   }
 

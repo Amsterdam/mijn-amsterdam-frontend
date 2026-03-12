@@ -63,11 +63,16 @@ export async function batchDeleteNotifications() {
 
 export async function storeNotificationsResponses(
   profileId: BSN,
-  serviceResponses: Record<ServiceId, NotificationsAndTipsResponse>
+  serviceResponses: Partial<Record<ServiceId, NotificationsAndTipsResponse>>
 ): Promise<void> {
   const now = new Date().toISOString();
   const responses = entries(serviceResponses)
-    .filter(([_, response]) => response.status === 'OK') // Unsuccessful responses do not contain new notifications
+    .filter(
+      (
+        serviceResponse
+      ): serviceResponse is [ServiceId, NotificationsAndTipsResponse] =>
+        (serviceResponse[1] != null && serviceResponse[1].status) === 'OK'
+    ) // Unsuccessful responses do not contain new notifications
     .map(
       ([serviceId, response]: [ServiceId, NotificationsAndTipsResponse]) => ({
         ...transformNotificationsForExternalUse(serviceId, response),
