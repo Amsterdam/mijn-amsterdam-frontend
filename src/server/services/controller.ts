@@ -48,8 +48,6 @@ import {
   fetchNotificationsAndTipsFromServices,
   getContentTips,
   getTipsAndNotificationsFromApiResults,
-  type NotificationsAndTipsResponse,
-  notificationServices,
 } from './tips-and-notifications';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-verhuur';
 import { fetchUserFeedbackSurvey } from './user-feedback/user-feedback';
@@ -175,12 +173,9 @@ export const NOTIFICATIONS = async (req: Request) => {
   const authProfileAndToken = getAuth(req);
   const [serviceResults, notificationsAndTipsResults] = await Promise.all([
     getServiceResultsForTips(req),
-    (authProfileAndToken
+    authProfileAndToken
       ? fetchNotificationsAndTipsFromServices(authProfileAndToken)
-      : {}) as Record<
-      keyof (typeof notificationServices)['private'],
-      NotificationsAndTipsResponse
-    >,
+      : {},
   ]);
 
   if (
