@@ -40,6 +40,16 @@ export default [
         },
       ],
       'import/no-default-export': 'warn',
+      'import/extensions': [
+        'error', // Enforce the rule with "error" severity
+        'ignorePackages', // Do not require extensions for third-party packages
+        {
+          ts: 'always',
+          tsx: 'always',
+          json: 'always',
+          js: 'always',
+        },
+      ],
       'unused-imports/no-unused-imports': 'error',
       '@typescript-eslint/no-require-imports': 'warn',
       '@typescript-eslint/ban-ts-comment': 'warn',

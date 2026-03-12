@@ -1,13 +1,12 @@
-import { SURVEY_ID_INLINE_KTO } from './user-feedback.service-config.ts';
-import {
-  fetchUserFeedbackSurvey,
-  saveUserFeedback,
-  userFeedbackOverview,
-} from './user-feedback';
 import {
   SURVEY_ID_INLINE_KTO,
   SURVEY_VERSION_INLINE_KTO,
 } from './user-feedback.service-config.ts';
+import {
+  fetchUserFeedbackSurvey,
+  saveUserFeedback,
+  userFeedbackOverview,
+} from './user-feedback.ts';
 import {
   userFeedbackInput,
   type Survey,
