@@ -50,7 +50,8 @@ RUN pnpm install --frozen-lockfile --prefer-offline --reporter=append-only
 
 # Typescript configs
 COPY tsconfig.json /build-space/
-COPY tsconfig.bff.json /build-space/
+COPY tsconfig.build-fe.json /build-space/
+COPY tsconfig.build-bff.json /build-space/
 
 # Copy source files
 COPY src /build-space/src
