@@ -1,7 +1,7 @@
 import type { Request } from 'express';
 
 import { fetchBrpByBsn } from './brp';
-import { fetchAantalBewoners } from './brp';
+import { fetchAantalIngeschrevenPersonen } from './brp';
 import { featureToggle, routes } from './brp-service-config';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import {
@@ -18,7 +18,7 @@ export const routerProtected = createBFFRouter({
 });
 
 routerProtected.get(
-  routes.protected.BRP_AANTAL_BEWONERS_OP_ADRES,
+  routes.protected.BRP_AANTAL_INGESCHREVEN_PERSONEN_OP_ADRES,
   async (
     req: RequestWithQueryParams<{ id: string }>,
     res: ResponseAuthenticated
@@ -34,7 +34,7 @@ routerProtected.get(
 
     const bagID = decryptResult.content;
 
-    const response = await fetchAantalBewoners(
+    const response = await fetchAantalIngeschrevenPersonen(
       res.locals.authProfileAndToken.profile.sid,
       bagID
     );

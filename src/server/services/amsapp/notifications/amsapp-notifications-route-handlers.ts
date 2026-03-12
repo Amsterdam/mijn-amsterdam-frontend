@@ -1,5 +1,6 @@
 import { HttpStatusCode } from 'axios';
 import type { Request, Response } from 'express';
+import z from 'zod';
 
 import {
   unregisterConsumer,
@@ -9,6 +10,7 @@ import {
   batchDeleteNotifications,
   batchFetchNotifications,
 } from './amsapp-notifications';
+import { getSevenDaysAgoISOString } from './amsapp-notifications-helper';
 import {
   AMSAPP_NOTIFICATIONS_DEEP_LINK_BASE,
   apiResponseErrors,
@@ -24,6 +26,12 @@ import { fetchBrpByBsn } from '../../brp/brp';
 import { captureMessage } from '../../monitoring';
 import { baseRenderProps } from '../amsapp-service-config';
 import type { ApiError, RenderProps } from '../amsapp-types';
+import { getProfilesCount } from './amsapp-notifications-model';
+import {
+  sendBadRequestInvalidInput,
+  sendResponse,
+  type RequestWithQueryParams,
+} from '../../../routing/route-helpers';
 
 function getRenderPropsForApiError(
   identifier: string,
@@ -144,12 +152,15 @@ export async function handleRegisterConsumer(
 
 // This endpoint has a long execution time, making it impractical to await.
 // A success response is send to indicate it has started.
-export function fetchAndStoreNotifications(req: Request, res: Response) {
+export function fetchAndStoreNotifications(_req: Request, res: Response) {
   batchFetchAndStoreNotifications();
   return res.send(apiSuccessResult('success'));
 }
 
-export async function handleTruncateNotifications(req: Request, res: Response) {
+export async function handleTruncateNotifications(
+  _req: Request,
+  res: Response
+) {
   try {
     await batchDeleteNotifications();
   } catch (error) {
@@ -172,12 +183,40 @@ export async function handleTruncateNotifications(req: Request, res: Response) {
   return res.send(apiSuccessResult('success'));
 }
 
+const handleSendNotificationsResponseParams = z.object({
+  dateFrom: z.iso.datetime().optional().default(getSevenDaysAgoISOString),
+  offset: z.coerce.number().min(0).optional().default(0),
+  limit: z.coerce.number().min(1).optional().default(100),
+});
 export async function handleSendNotificationsResponse(
-  req: Request,
+  req: RequestWithQueryParams<{
+    dateFrom: string;
+    offset: string;
+    limit: string;
+  }>,
   res: Response
 ) {
-  const response = await batchFetchNotifications();
-  return res.send(apiSuccessResult(response));
+  const result = handleSendNotificationsResponseParams.safeParse(req.query);
+  if (!result.success) {
+    return sendBadRequestInvalidInput(res, result.error);
+  }
+
+  const { dateFrom, offset, limit } = result.data;
+
+  const rowCount_ = getProfilesCount({
+    dateFrom,
+  });
+  const response_ = batchFetchNotifications({
+    dateFrom,
+    offset,
+    limit,
+  });
+  const [rowCount, response] = await Promise.all([rowCount_, response_]);
+
+  return sendResponse(res, {
+    ...apiSuccessResult(response),
+    totalItems: rowCount,
+  });
 }
 
 export const forTesting = {

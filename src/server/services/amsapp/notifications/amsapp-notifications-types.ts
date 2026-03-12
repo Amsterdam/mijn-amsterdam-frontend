@@ -9,16 +9,15 @@ export type ServiceId = keyof typeof notificationServices.private;
 
 export type ConsumerProfile = {
   profileId: BSN;
-  profileName: string;
   consumerIds: ConsumerId[];
   serviceIds: ServiceId[];
   dateUpdated: string;
-  content: { services: NotificationsService[] } | null;
+  content: { services: Record<ServiceId, NotificationsService> } | null;
 };
 
 export type ConsumerProfileCompact = Omit<
   ConsumerProfile,
-  'content' | 'consumerIds'
+  'profileId' | 'content' | 'consumerIds'
 >;
 
 export type NotificationsService = {
@@ -28,8 +27,8 @@ export type NotificationsService = {
 
 export type NotificationsLean = Pick<
   MyNotification,
-  'id' | 'title' | 'isAlert' | 'isTip'
-> & { datePublished: string | undefined };
+  'id' | 'title' | 'datePublished'
+>;
 
 export type AuthProfileId = {
   profile: Pick<AuthProfile, 'id' | 'profileType'>;

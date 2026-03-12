@@ -2,7 +2,7 @@ import { describe, it, expect, vi, type Mock } from 'vitest';
 
 import { DecosVergunning } from './config-and-types';
 import { getStatusStepsDecos } from './decos-status-steps';
-import { routeConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config';
 import { getAuthProfileAndToken } from '../../../testing/utils';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { transformDecosZaakFrontend } from '../decos/decos-service';
@@ -64,7 +64,7 @@ describe('vergunningen', () => {
         authProfileAndToken.profile.sid,
         decosVergunning as DecosVergunning,
         {
-          detailPageRoute: routeConfig.detailPage.path,
+          detailPageRoute: themaConfig.detailPage.route.path,
           includeFetchDocumentsUrl: true,
           getStepsFN: getStatusStepsDecos,
         }
