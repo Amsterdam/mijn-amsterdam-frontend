@@ -1,5 +1,5 @@
 import { render, screen, cleanup, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import type { PartialDeep } from 'type-fest';
 
 import { MijnGegevensThema } from './ProfilePrivate.tsx';

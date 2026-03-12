@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import { parseISO } from 'date-fns';
 import { describe, it, expect, vi } from 'vitest';
 

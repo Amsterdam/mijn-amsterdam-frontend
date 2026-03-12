@@ -1,5 +1,5 @@
 import { render, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import { generatePath } from 'react-router';
 
 import { routeConfig } from './Afis-thema-config.ts';

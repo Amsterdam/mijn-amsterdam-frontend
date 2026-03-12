@@ -37,9 +37,7 @@ describe('transformSourceData', () => {
         status: 'OK',
       },
       TEST_STATE_3: {
-        content: {
-          foo: 'bar',
-        },
+        content: null,
         status: 'ERROR',
         message: 'Things went south',
       },
@@ -58,6 +56,7 @@ describe('transformSourceData', () => {
         status: 'OK',
       },
       TEST_STATE_3: {
+        content: null,
         message: 'Things went south',
         status: 'ERROR',
       },
