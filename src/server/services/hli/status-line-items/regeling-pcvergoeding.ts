@@ -1,14 +1,14 @@
 import { isBefore, isSameDay, parseISO } from 'date-fns';
 
-import { getBetrokkenKinderenDescription } from './generic';
-import { defaultDateFormat } from '../../../../universal/helpers/date';
-import { lowercaseFirstLetter } from '../../../../universal/helpers/text';
-import { sortAlpha, splitBy } from '../../../../universal/helpers/utils';
-import { getFromEnv } from '../../../helpers/env';
-import {
+import { getBetrokkenKinderenDescription } from './generic.ts';
+import { defaultDateFormat } from '../../../../universal/helpers/date.ts';
+import { lowercaseFirstLetter } from '../../../../universal/helpers/text.ts';
+import { sortAlpha, splitBy } from '../../../../universal/helpers/utils.ts';
+import { getFromEnv } from '../../../helpers/env.ts';
+import type {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
-} from '../../zorgned/zorgned-types';
+} from '../../zorgned/zorgned-types.ts';
 
 // The following code does not exist for the business but we create it to differentiate
 // between 2026 aanvragen and older.
@@ -375,7 +375,7 @@ export const forTesting = {
   isRegelingVanVerzilvering,
   isVerzilvering,
   isWorkshopNietGevolgd,
-  filterCombineUpcPcvData: filterCombineUpcPcvData,
+  filterCombineUpcPcvData,
   filterOutRedundantPcVergoedingsAanvraagRegelingAanvragenWhenWorkShopNietGevolgd:
     filterOutRedundantPcVergoedingsAanvragenWhenWorkShopNietGevolgd,
 };

@@ -2,9 +2,9 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect } from 'vitest';
 
-import { ErrorMessages } from './ErrorMessages';
-import { AppState } from '../../../universal/types/App.types';
-import MockApp from '../../pages/MockApp';
+import { ErrorMessages } from './ErrorMessages.tsx';
+import type { AppState } from '../../../universal/types/App.types.ts';
+import MockApp from '../../pages/MockApp.tsx';
 
 describe('<ErrorMessages />', () => {
   function Component() {

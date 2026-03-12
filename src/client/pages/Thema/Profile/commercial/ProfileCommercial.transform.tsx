@@ -5,16 +5,17 @@ import type {
   NatuurlijkPersoon,
   NietNatuurlijkPersoon,
   Vestiging,
-} from '../../../../../server/services/hr-kvk/hr-kvk.types';
-import type { Onderneming } from '../../../../../server/services/hr-kvk/hr-kvk.types';
-import { AppState } from '../../../../../universal/types/App.types';
-import { ListExpandable } from '../../../../components/ListExpandable/ListExpandable';
-import { PreWrap } from '../../../../components/PreWrap/PreWrap';
+} from '../../../../../server/services/hr-kvk/hr-kvk.types.ts';
+import type { Onderneming } from '../../../../../server/services/hr-kvk/hr-kvk.types.ts';
+import type { AppState } from '../../../../../universal/types/App.types.ts';
+import { ListExpandable } from '../../../../components/ListExpandable/ListExpandable.tsx';
+import { PreWrap } from '../../../../components/PreWrap/PreWrap.tsx';
+import type {
+  ProfileLabels} from '../profileDataFormatter.ts';
 import {
-  ProfileLabels,
   formatProfileSectionData,
-} from '../profileDataFormatter';
-import { PanelConfig, ProfileSectionData } from '../ProfileSectionPanel';
+} from '../profileDataFormatter.ts';
+import type { PanelConfig, ProfileSectionData } from '../ProfileSectionPanel.tsx';
 
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading

@@ -1,6 +1,6 @@
-import { dashboardMenuItem } from '../../pages/Dashboard/Dashboard-routes';
-import { myNotificationsMenuItem } from '../../pages/MyNotifications/MyNotifications-routes';
-import { menuCategoryItem as buurtMenuItem } from '../MyArea/MyArea-routes';
+import { dashboardMenuItem } from '../../pages/Dashboard/Dashboard-routes.ts';
+import { myNotificationsMenuItem } from '../../pages/MyNotifications/MyNotifications-routes.ts';
+import { menuCategoryItem as buurtMenuItem } from '../MyArea/MyArea-routes.ts';
 
 export const categoryMenuItems = [
   buurtMenuItem,

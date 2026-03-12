@@ -1,44 +1,46 @@
-import {
+import type {
   ApiResponse_DEPRECATED,
-  ApiSuccessResponse,
+  ApiSuccessResponse} from '../../../universal/helpers/api.ts';
+import {
   apiSuccessResult,
-} from '../../../universal/helpers/api';
-import { dateSort } from '../../../universal/helpers/date';
-import { pick } from '../../../universal/helpers/utils';
-import { MyNotification } from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { SourceApiName } from '../../config/source-api';
+} from '../../../universal/helpers/api.ts';
+import { dateSort } from '../../../universal/helpers/date.ts';
+import { pick } from '../../../universal/helpers/utils.ts';
+import type { MyNotification } from '../../../universal/types/App.types.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import type { SourceApiName } from '../../config/source-api.ts';
 import {
   createSessionBasedCacheKey,
   getApiConfig,
-} from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
-import { captureMessage } from '../monitoring';
+} from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
+import { captureMessage } from '../monitoring.ts';
+import type {
+  DocumentDownloadData} from '../shared/document-download-route-handler.ts';
 import {
-  DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
-  DocumentDownloadData,
-} from '../shared/document-download-route-handler';
+  DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE
+} from '../shared/document-download-route-handler.ts';
 import {
   requestProcess as bijstandsuitkeringRequestProcessLabels,
   getNotifications as getBijstandsuitkeringNotifications,
-} from './content/bijstandsuitkering';
+} from './content/bijstandsuitkering.ts';
 import {
   getNotifications as getSpecificatieNotifications,
   transformIncomeSpecificationItem,
-} from './content/specificaties';
+} from './content/specificaties.ts';
 import {
   addLink,
   createProcessNotification,
   getEAanvraagRequestProcessLabels,
   isRequestProcessActual,
   transformRequestProcess,
-} from './helpers';
-import {
+} from './helpers.ts';
+import type {
   WpiIncomeSpecificationResponseData,
   WpiIncomeSpecificationResponseDataTransformed,
   WpiRequestProcess,
   WpiRequestProcessLabels,
-} from './wpi-types';
+} from './wpi-types.ts';
 
 type FilterResponse = (
   response: ApiSuccessResponse<WpiRequestProcess[]>

@@ -1,5 +1,5 @@
-import { featureToggle, themaId, themaTitle } from './Parkeren-thema-config';
-import { InfoSection_DEPRECATED } from '../../GeneralInfo/GeneralInfo';
+import { featureToggle, themaId, themaTitle } from './Parkeren-thema-config.ts';
+import type { InfoSection_DEPRECATED } from '../../GeneralInfo/GeneralInfo.tsx';
 
 export const parkerensectionProps: InfoSection_DEPRECATED = {
   id: themaId,

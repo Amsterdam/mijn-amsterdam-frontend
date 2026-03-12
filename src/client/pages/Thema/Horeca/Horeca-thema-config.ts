@@ -1,18 +1,19 @@
 import cloneDeep from 'lodash.clonedeep';
 import { generatePath } from 'react-router';
 
-import { entries } from '../../../../universal/helpers/utils';
-import { LinkProps } from '../../../../universal/types/App.types';
+import { entries } from '../../../../universal/helpers/utils.ts';
+import type { LinkProps } from '../../../../universal/types/App.types.ts';
 import type {
   ThemaConfigBase,
   WithDetailPage,
   WithListPage,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
+import type {
+  ListPageParamKind as ListPageParamKindVergunningen} from '../Vergunningen/Vergunningen-thema-config.ts';
 import {
-  ListPageParamKind as ListPageParamKindVergunningen,
   listPageParamKind as listPageParamKindVergunningen,
   tableConfig as tableConfigVergunningen,
-} from '../Vergunningen/Vergunningen-thema-config';
+} from '../Vergunningen/Vergunningen-thema-config.ts';
 
 export const LinkListItems: LinkProps[] = [
   // {

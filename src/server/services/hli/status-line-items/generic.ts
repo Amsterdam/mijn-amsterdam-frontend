@@ -1,8 +1,8 @@
-import { defaultDateFormat } from '../../../../universal/helpers/date';
-import {
+import { defaultDateFormat } from '../../../../universal/helpers/date.ts';
+import type {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
-} from '../../zorgned/zorgned-types';
+} from '../../zorgned/zorgned-types.ts';
 
 export function getBetrokkenKinderenDescription(
   regeling: ZorgnedAanvraagWithRelatedPersonsTransformed

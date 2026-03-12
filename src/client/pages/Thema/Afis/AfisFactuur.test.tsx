@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react';
 
-import type { AfisFactuurFrontend } from './Afis-thema-config';
-import { AfisFactuur } from './AfisFactuur';
-import type { AfisThemaResponse } from '../../../../server/services/afis/afis-types';
-import { bffApi } from '../../../../testing/utils';
-import type { ApiResponse } from '../../../../universal/helpers/api';
-import MockApp from '../../MockApp';
+import type { AfisFactuurFrontend } from './Afis-thema-config.ts';
+import { AfisFactuur } from './AfisFactuur.tsx';
+import type { AfisThemaResponse } from '../../../../server/services/afis/afis-types.ts';
+import { bffApi } from '../../../../testing/utils.ts';
+import type { ApiResponse } from '../../../../universal/helpers/api.ts';
+import MockApp from '../../MockApp.tsx';
 
 const mockFactuur: AfisFactuurFrontend = {
   factuurNummer: '12345',

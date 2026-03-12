@@ -1,5 +1,5 @@
-import { isEnabled } from '../../../config/feature-toggles';
-import { ThemaRoutesConfig } from '../../../config/thema-types';
+import { isEnabled } from '../../../config/feature-toggles.ts';
+import type { ThemaRoutesConfig } from '../../../config/thema-types.ts';
 
 export const themaIdKVK = 'KVK' as const;
 export const themaIdBRP = 'BRP' as const;

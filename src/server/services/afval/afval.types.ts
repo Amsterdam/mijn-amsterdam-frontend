@@ -1,6 +1,6 @@
-import { LatLngLiteral } from 'leaflet';
+import type { LatLngLiteral } from 'leaflet';
 
-import { LinkProps } from '../../../universal/types/App.types';
+import type { LinkProps } from '../../../universal/types/App.types.ts';
 
 export type AfvalFractionCode =
   | 'Textiel'

@@ -1,32 +1,32 @@
 import type { Request, Response } from 'express';
 
-import { IS_PRODUCTION } from '../../../../universal/config/env';
-import { apiSuccessResult } from '../../../../universal/helpers/api';
-import { getAuth } from '../../../auth/auth-helpers';
-import type { AuthProfileAndToken } from '../../../auth/auth-types';
-import { encrypt, decrypt } from '../../../helpers/encrypt-decrypt';
-import { requestData } from '../../../helpers/source-api-request';
-import { sendResponse, sendBadRequest } from '../../../routing/route-helpers';
-import { fetchAdministratienummer } from '../../hli/hli-zorgned-service';
-import {
-  fetchStadspasDiscountTransactions,
-  fetchStadspasBudgetTransactions,
-  blockStadspas,
-} from '../../hli/stadspas';
-import { fetchStadspassenByAdministratienummer } from '../../hli/stadspas-gpass-service';
-import type {
-  StadspasAMSAPPFrontend,
-  TransactionKeysEncryptedWithoutSessionID,
-  StadspasBudget,
-} from '../../hli/stadspas-types';
-import { captureMessage, captureException } from '../../monitoring';
-import { baseRenderProps } from '../amsapp-service-config';
 import {
   AMSAPP_STADSPAS_DEEP_LINK_BASE,
   apiResponseErrors,
   getAmsAppRequestConfig,
-} from './amsapp-stadspas-service-config';
-import type { ApiError, RenderProps } from '../amsapp-types';
+} from './amsapp-stadspas-service-config.ts';
+import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
+import { apiSuccessResult } from '../../../../universal/helpers/api.ts';
+import { getAuth } from '../../../auth/auth-helpers.ts';
+import type { AuthProfileAndToken } from '../../../auth/auth-types.ts';
+import { encrypt, decrypt } from '../../../helpers/encrypt-decrypt.ts';
+import { requestData } from '../../../helpers/source-api-request.ts';
+import { sendResponse, sendBadRequest } from '../../../routing/route-helpers.ts';
+import { fetchAdministratienummer } from '../../hli/hli-zorgned-service.ts';
+import { fetchStadspassenByAdministratienummer } from '../../hli/stadspas-gpass-service.ts';
+import type {
+  StadspasAMSAPPFrontend,
+  TransactionKeysEncryptedWithoutSessionID,
+  StadspasBudget,
+} from '../../hli/stadspas-types.ts';
+import {
+  fetchStadspasDiscountTransactions,
+  fetchStadspasBudgetTransactions,
+  blockStadspas,
+} from '../../hli/stadspas.ts';
+import { captureMessage, captureException } from '../../monitoring.ts';
+import { baseRenderProps } from '../amsapp-service-config.ts';
+import type { ApiError, RenderProps } from '../amsapp-types.ts';
 
 export async function handleAdministratienummerExchange(
   req: Request<{ token: string }>,

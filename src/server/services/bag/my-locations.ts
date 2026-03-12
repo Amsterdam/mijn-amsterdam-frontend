@@ -1,19 +1,20 @@
-import { fetchBAG, fetchBAGByQuery } from './bag';
-import { type BAGLocationExtended } from './bag.types';
+import { fetchBAG, fetchBAGByQuery } from './bag.ts';
+import { type BAGLocationExtended } from './bag.types.ts';
 import {
   DEFAULT_LAT,
   DEFAULT_LNG,
-} from '../../../universal/config/myarea-datasets';
+} from '../../../universal/config/myarea-datasets.ts';
+import type {
+  ApiResponse_DEPRECATED} from '../../../universal/helpers/api.ts';
 import {
-  ApiResponse_DEPRECATED,
   apiDependencyError,
   apiSuccessResult,
-} from '../../../universal/helpers/api';
-import { isMokum } from '../../../universal/helpers/brp';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { fetchBrp } from '../brp/brp';
-import { fetchKVK } from '../hr-kvk/hr-kvk';
-import { getVestigingBagIds } from '../hr-kvk/hr-kvk-helpers';
+} from '../../../universal/helpers/api.ts';
+import { isMokum } from '../../../universal/helpers/brp.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { fetchBrp } from '../brp/brp.ts';
+import { getVestigingBagIds } from '../hr-kvk/hr-kvk-helpers.ts';
+import { fetchKVK } from '../hr-kvk/hr-kvk.ts';
 
 async function fetchPrivate(
   authProfileAndToken: AuthProfileAndToken

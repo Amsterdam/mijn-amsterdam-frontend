@@ -1,11 +1,11 @@
-import { themaConfig } from './Jeugd-thema-config';
-import { JeugdDetail } from './JeugdDetail';
+import { themaConfig } from './Jeugd-thema-config.ts';
+import { JeugdDetail } from './JeugdDetail.tsx';
 import { default as JeugdIcon } from './JeugdIcon.svg?react';
-import { JeugdList } from './JeugdList';
-import { JeugdThemaPagina } from './JeugdThema';
-import { isLoading } from '../../../../universal/helpers/api';
-import { AppState } from '../../../../universal/types/App.types';
-import { ThemaMenuItem } from '../../../config/thema-types';
+import { JeugdList } from './JeugdList.tsx';
+import { JeugdThemaPagina } from './JeugdThema.tsx';
+import { isLoading } from '../../../../universal/helpers/api.ts';
+import type { AppState } from '../../../../universal/types/App.types.ts';
+import type { ThemaMenuItem } from '../../../config/thema-types.ts';
 
 export const JeugdRoutes = [
   {

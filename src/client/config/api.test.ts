@@ -2,9 +2,9 @@ import {
   createErrorDisplayData,
   createFailedDependenciesError,
   getApiErrors,
-} from './api';
-import { FailedDependencies } from '../../universal/helpers/api';
-import { AppState } from '../../universal/types/App.types';
+} from './api.ts';
+import type { FailedDependencies } from '../../universal/helpers/api.ts';
+import type { AppState } from '../../universal/types/App.types.ts';
 
 describe('Api utils', () => {
   test('createErrorDisplayData', () => {

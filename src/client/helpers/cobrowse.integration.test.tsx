@@ -1,27 +1,27 @@
-import { ComponentType } from '@react-spring/web';
+import type { ComponentType } from '@react-spring/web';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Mockdate from 'mockdate';
 import { generatePath } from 'react-router';
 import { describe, it } from 'vitest';
 
-import { AppState } from '../../universal/types/App.types';
-import { Dashboard } from '../pages/Dashboard/Dashboard';
-import { DashboardRoute } from '../pages/Dashboard/Dashboard-routes';
-import MockApp from '../pages/MockApp';
-import { MyNotificationsPage } from '../pages/MyNotifications/MyNotifications';
+import type { AppState } from '../../universal/types/App.types.ts';
+import { DashboardRoute } from '../pages/Dashboard/Dashboard-routes.ts';
+import { Dashboard } from '../pages/Dashboard/Dashboard.tsx';
+import MockApp from '../pages/MockApp.tsx';
+import { MyNotificationsPage } from '../pages/MyNotifications/MyNotifications.tsx';
 import {
   themaId as themaIdAfis,
   themaTitle as themaTitleAfis,
-} from '../pages/Thema/Afis/Afis-thema-config';
-import { themaConfig as themaConfigBezwaren } from '../pages/Thema/Bezwaren/Bezwaren-thema-config';
-import { BezwarenDetail } from '../pages/Thema/Bezwaren/BezwarenDetail';
-import { BezwarenList } from '../pages/Thema/Bezwaren/BezwarenList';
-import { BezwarenThema } from '../pages/Thema/Bezwaren/BezwarenThema';
-import { mapperContactmomentToMenuItem } from '../pages/Thema/Profile/private/Contactmomenten.config';
-import { ContactmomentenListPage } from '../pages/Thema/Profile/private/ContactmomentenListPage';
-import { MijnGegevensThema } from '../pages/Thema/Profile/private/ProfilePrivate';
-import { themaConfig as themaVergunningen } from '../pages/Thema/Vergunningen/Vergunningen-thema-config';
+} from '../pages/Thema/Afis/Afis-thema-config.ts';
+import { themaConfig as themaConfigBezwaren } from '../pages/Thema/Bezwaren/Bezwaren-thema-config.ts';
+import { BezwarenDetail } from '../pages/Thema/Bezwaren/BezwarenDetail.tsx';
+import { BezwarenList } from '../pages/Thema/Bezwaren/BezwarenList.tsx';
+import { BezwarenThema } from '../pages/Thema/Bezwaren/BezwarenThema.tsx';
+import { mapperContactmomentToMenuItem } from '../pages/Thema/Profile/private/Contactmomenten.config.ts';
+import { ContactmomentenListPage } from '../pages/Thema/Profile/private/ContactmomentenListPage.tsx';
+import { MijnGegevensThema } from '../pages/Thema/Profile/private/ProfilePrivate.tsx';
+import { themaConfig as themaVergunningen } from '../pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
 
 const testState = {
   KLANT_CONTACT: {

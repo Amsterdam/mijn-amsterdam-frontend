@@ -1,12 +1,12 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { themaConfig } from './Erfpacht-thema-config';
-import { ErfpachtThema } from './ErfpachtThema';
+import { themaConfig } from './Erfpacht-thema-config.ts';
+import { ErfpachtThema } from './ErfpachtThema.tsx';
 import ERFPACHT_DOSSIERS from '../../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
-import { transformDossierResponse } from '../../../../server/services/erfpacht/erfpacht';
-import { AppState } from '../../../../universal/types/App.types';
-import MockApp from '../../MockApp';
+import { transformDossierResponse } from '../../../../server/services/erfpacht/erfpacht.ts';
+import type { AppState } from '../../../../universal/types/App.types.ts';
+import MockApp from '../../MockApp.tsx';
 
 describe('<Erfpacht />', () => {
   const routeEntry = generatePath(themaConfig.route.path);

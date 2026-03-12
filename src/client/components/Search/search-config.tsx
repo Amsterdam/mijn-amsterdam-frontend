@@ -1,63 +1,64 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 import escapeRegex from 'lodash.escaperegexp';
 
 import styles from './Search.module.scss';
-import {
+import type {
   AfisThemaResponse,
   AfisFactuur,
-} from '../../../server/services/afis/afis-types';
-import { AVGRequestFrontend } from '../../../server/services/avg/types';
-import { BezwaarFrontend } from '../../../server/services/bezwaren/types';
-import { LoodMetingFrontend } from '../../../server/services/bodem/types';
-import type { BrpFrontend } from '../../../server/services/brp/brp-types';
+} from '../../../server/services/afis/afis-types.ts';
+import type { AVGRequestFrontend } from '../../../server/services/avg/types.ts';
+import type { BezwaarFrontend } from '../../../server/services/bezwaren/types.ts';
+import type { LoodMetingFrontend } from '../../../server/services/bodem/types.ts';
+import type { BrpFrontend } from '../../../server/services/brp/brp-types.ts';
 import type {
   ErfpachtDossiersResponse,
   ErfpachtDossierFrontend,
-} from '../../../server/services/erfpacht/erfpacht-types';
-import { HLIresponseData } from '../../../server/services/hli/hli-regelingen-types';
-import type { HorecaVergunningFrontend } from '../../../server/services/horeca/decos-zaken';
-import type { KlachtFrontend } from '../../../server/services/klachten/types';
+} from '../../../server/services/erfpacht/erfpacht-types.ts';
+import type { HLIresponseData } from '../../../server/services/hli/hli-regelingen-types.ts';
+import type { HorecaVergunningFrontend } from '../../../server/services/horeca/decos-zaken.ts';
+import type { KlachtFrontend } from '../../../server/services/klachten/types.ts';
 import type {
   Krefia,
   KrefiaDeepLink,
-} from '../../../server/services/krefia/krefia.types';
-import type { ParkeerVergunningFrontend } from '../../../server/services/parkeren/config-and-types';
-import { BBVergunningFrontend } from '../../../server/services/toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types';
-import {
+} from '../../../server/services/krefia/krefia.types.ts';
+import type { ParkeerVergunningFrontend } from '../../../server/services/parkeren/config-and-types.ts';
+import type { BBVergunningFrontend } from '../../../server/services/toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types.ts';
+import type {
   LVVRegistratie,
   VakantieverhuurVergunningFrontend,
-} from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
-import {
+} from '../../../server/services/toeristische-verhuur/toeristische-verhuur.types.ts';
+import type {
   VarenRegistratieRederType,
   VarenVergunningFrontend,
   VarenZakenFrontend,
-} from '../../../server/services/varen/config-and-types';
-import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-types';
-import { ApiSuccessResponse } from '../../../universal/helpers/api';
-import { getFullAddress, getFullName } from '../../../universal/helpers/brp';
+} from '../../../server/services/varen/config-and-types.ts';
+import type { ZaakFrontendCombined } from '../../../server/services/vergunningen/config-and-types.ts';
+import type { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-types.ts';
+import type { ApiSuccessResponse } from '../../../universal/helpers/api.ts';
+import { getFullAddress, getFullName } from '../../../universal/helpers/brp.ts';
 import {
   defaultDateFormat,
   displayDateRange,
-} from '../../../universal/helpers/date';
-import { capitalizeFirstLetter } from '../../../universal/helpers/text';
-import { uniqueArray } from '../../../universal/helpers/utils';
-import {
+} from '../../../universal/helpers/date.ts';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
+import { uniqueArray } from '../../../universal/helpers/utils.ts';
+import type {
   AppStateKey,
   LinkProps,
   StatusLineItem,
-} from '../../../universal/types/App.types';
-import type { ThemaMenuItem } from '../../config/thema-types';
-import type { AfisFactuurFrontend } from '../../pages/Thema/Afis/Afis-thema-config';
-import { themaConfig as avgThemaConfig } from '../../pages/Thema/AVG/AVG-thema-config';
-import { themaConfig as themaConfigBezwaren } from '../../pages/Thema/Bezwaren/Bezwaren-thema-config';
-import { themaConfig as themaConfigBodem } from '../../pages/Thema/Bodem/Bodem-thema-config';
-import { themaConfig as themaConfigHoreca } from '../../pages/Thema/Horeca/Horeca-thema-config';
-import { themaConfig as themaConfigKlachten } from '../../pages/Thema/Klachten/Klachten-thema-config';
-import { themaConfig as themaConfigKrefia } from '../../pages/Thema/Krefia/Krefia-thema-config';
-import { routeConfig as routeConfigProfile } from '../../pages/Thema/Profile/Profile-thema-config';
-import { themaConfig as toeristischeVerhuurThemaConfig } from '../../pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
-import { themaConfig as themaConfigVaren } from '../../pages/Thema/Varen/Varen-thema-config';
+} from '../../../universal/types/App.types.ts';
+import type { ThemaMenuItem } from '../../config/thema-types.ts';
+import type { AfisFactuurFrontend } from '../../pages/Thema/Afis/Afis-thema-config.ts';
+import { themaConfig as avgThemaConfig } from '../../pages/Thema/AVG/AVG-thema-config.ts';
+import { themaConfig as themaConfigBezwaren } from '../../pages/Thema/Bezwaren/Bezwaren-thema-config.ts';
+import { themaConfig as themaConfigBodem } from '../../pages/Thema/Bodem/Bodem-thema-config.ts';
+import { themaConfig as themaConfigHoreca } from '../../pages/Thema/Horeca/Horeca-thema-config.ts';
+import { themaConfig as themaConfigKlachten } from '../../pages/Thema/Klachten/Klachten-thema-config.ts';
+import { themaConfig as themaConfigKrefia } from '../../pages/Thema/Krefia/Krefia-thema-config.ts';
+import { routeConfig as routeConfigProfile } from '../../pages/Thema/Profile/Profile-thema-config.ts';
+import { themaConfig as toeristischeVerhuurThemaConfig } from '../../pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
+import { themaConfig as themaConfigVaren } from '../../pages/Thema/Varen/Varen-thema-config.ts';
 
 export interface SearchEntry {
   url: string;
@@ -76,7 +77,7 @@ export type RemoteApiSearchConfigs = Record<
 >;
 
 export interface ApiSearchConfig {
-  stateKey: AppStateKey;
+  stateKey: string;
   // Extract searchable items from the api response
   getApiBaseItems: (
     apiContent: ApiSuccessResponse<ApiBaseItem>['content']

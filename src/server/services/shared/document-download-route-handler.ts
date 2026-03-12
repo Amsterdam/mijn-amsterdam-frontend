@@ -1,19 +1,20 @@
-import { AxiosResponse } from 'axios';
-import { Router } from 'express';
+import type { AxiosResponse } from 'axios';
+import type { Router } from 'express';
 
-import { decryptEncryptedRouteParamAndValidateSessionID } from './decrypt-route-param';
-import {
+import { decryptEncryptedRouteParamAndValidateSessionID } from './decrypt-route-param.ts';
+import type {
   ApiErrorResponse,
   ApiPostponeResponse,
   ApiSuccessResponse,
-} from '../../../universal/helpers/api';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+} from '../../../universal/helpers/api.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import type {
+  RequestWithRouteAndQueryParams} from '../../routing/route-helpers.ts';
 import {
-  RequestWithRouteAndQueryParams,
   sendResponse,
   type RecordStr2,
   type ResponseAuthenticated,
-} from '../../routing/route-helpers';
+} from '../../routing/route-helpers.ts';
 
 export const DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE = 'application/pdf';
 export const DEFAULT_DOCUMENT_DOWNLOAD_FILENAME = 'zaak-document.pdf';

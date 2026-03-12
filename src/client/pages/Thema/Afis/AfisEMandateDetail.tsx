@@ -1,16 +1,16 @@
 import { Alert, Paragraph } from '@amsterdam/design-system-react';
 
-import { EMANDATE_STATUS_ACTIVE, routeConfig } from './Afis-thema-config';
-import { AfisEMandateActionUrls } from './AfisEmandateActionButtons';
-import { DateAdjust } from './AfisEmandateDateAdjust';
-import { useAfisEMandatesData, useEmandateApis } from './useAfisEmandatesData';
-import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types';
-import { IS_PRODUCTION } from '../../../../universal/config/env';
-import { Datalist } from '../../../components/Datalist/Datalist';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
-import { useInterval } from '../../../hooks/timer.hook';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { EMANDATE_STATUS_ACTIVE, routeConfig } from './Afis-thema-config.ts';
+import { AfisEMandateActionUrls } from './AfisEmandateActionButtons.tsx';
+import { DateAdjust } from './AfisEmandateDateAdjust.tsx';
+import { useAfisEMandatesData, useEmandateApis } from './useAfisEmandatesData.tsx';
+import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types.ts';
+import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
+import { Datalist } from '../../../components/Datalist/Datalist.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
+import { useInterval } from '../../../hooks/timer.hook.ts';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 type EMandateProps = {
   eMandate: AfisEMandateFrontend;

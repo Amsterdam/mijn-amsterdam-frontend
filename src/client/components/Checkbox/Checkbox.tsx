@@ -1,7 +1,8 @@
-import {
+import type {
   ChangeEvent,
+  HTMLAttributes} from 'react';
+import {
   forwardRef,
-  HTMLAttributes,
   useEffect,
   useImperativeHandle,
   useMemo,
@@ -12,7 +13,7 @@ import {
 import classnames from 'classnames';
 
 import styles from './Checkbox.module.scss';
-import { IconCheckmark, IconIndeterminate } from '../../assets/icons';
+import { IconCheckmark, IconIndeterminate } from '../../assets/icons/index.tsx';
 
 type CheckboxProps = {
   checked?: boolean;

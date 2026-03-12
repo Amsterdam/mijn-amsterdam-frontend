@@ -1,13 +1,13 @@
 import { generatePath } from 'react-router';
 
-import { WMOVoorzieningFrontend } from '../../../../server/services/wmo/wmo-types';
-import { DisplayProps } from '../../../components/Table/TableV2.types';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
+import type { WMOVoorzieningFrontend } from '../../../../server/services/wmo/wmo-types.ts';
+import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
+import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
 import type {
   ThemaConfigBase,
   WithDetailPage,
   WithListPage,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;

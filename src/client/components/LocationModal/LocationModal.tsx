@@ -1,28 +1,30 @@
-import { ReactNode, useEffect, useMemo, useState } from 'react';
+import type { ReactNode} from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { Button, Paragraph } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
-import { LatLngLiteral } from 'leaflet';
+import type { LatLngLiteral } from 'leaflet';
 
 import styles from './LocationModal.module.scss';
-import {
+import type {
   BAGAdreseerbaarObject,
   BAGQueryParams,
   BAGSourceData,
-} from '../../../server/services/bag/bag.types';
-import { LOCATION_ZOOM } from '../../../universal/config/myarea-datasets';
+} from '../../../server/services/bag/bag.types.ts';
+import { LOCATION_ZOOM } from '../../../universal/config/myarea-datasets.ts';
+import type {
+  LatLngWithAddress} from '../../../universal/helpers/bag.ts';
 import {
   extractAddressParts,
   getLatLngWithAddress,
   getLatLonByAddress,
-  isLocatedInWeesp,
-  LatLngWithAddress,
-} from '../../../universal/helpers/bag';
-import { BaseLayerType } from '../../components/MyArea/Map/BaseLayerToggle';
-import { MyAreaLoader } from '../../components/MyArea/MyAreaLoader';
-import { useBffApi } from '../../hooks/api/useBffApi';
-import { Modal } from '../Modal/Modal';
-import { MapLocationMarker } from '../MyArea/MyArea.hooks';
+  isLocatedInWeesp
+} from '../../../universal/helpers/bag.ts';
+import { BaseLayerType } from '../../components/MyArea/Map/BaseLayerToggle.tsx';
+import { MyAreaLoader } from '../../components/MyArea/MyAreaLoader.tsx';
+import { useBffApi } from '../../hooks/api/useBffApi.ts';
+import { Modal } from '../Modal/Modal.tsx';
+import type { MapLocationMarker } from '../MyArea/MyArea.hooks.ts';
 
 const BAG_ADRESSEERBARE_OBJECTEN_URL =
   'https://api.data.amsterdam.nl/v1/benkagg/adresseerbareobjecten/';

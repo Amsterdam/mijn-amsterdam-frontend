@@ -1,4 +1,4 @@
-import type { Persoon } from '../../server/services/brp/brp-types';
+import type { Persoon } from '../../server/services/brp/brp-types.ts';
 
 export function getFullName(
   persoon: Pick<

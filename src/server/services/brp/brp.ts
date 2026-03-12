@@ -7,12 +7,12 @@ import {
   LANDCODE_ONBEKEND,
   ADRES_IN_ONDERZOEK_A,
   AANTAL_INGESCHREVEN_PERSONEN_NOT_SET,
-} from './brp-config';
-import { featureToggle, routes } from './brp-service-config';
+} from './brp-config.ts';
+import { featureToggle, routes } from './brp-service-config.ts';
 import {
   DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_FROM,
   DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_TO,
-} from './brp-service-config';
+} from './brp-service-config.ts';
 import {
   type BrpFrontend,
   type PersonenResponseSource,
@@ -20,32 +20,32 @@ import {
   type Adres,
   type VerblijfplaatshistorieResponseSource,
   type VerblijfplaatsSource,
-} from './brp-types';
+} from './brp-types.ts';
 import type {
   PersonenResponseSourceError,
   Persoon,
   PersoonBasis,
   PersoonBasisSource,
   PersoonSource,
-} from './brp-types';
-import { HttpStatusCode } from '../../../client/hooks/api/useBffApi';
-import { IS_PRODUCTION } from '../../../universal/config/env';
+} from './brp-types.ts';
+import { HttpStatusCode } from '../../../client/hooks/api/useBffApi.ts';
+import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
   getFailedDependencies,
   type ApiResponse,
-} from '../../../universal/helpers/api';
-import type { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
-import { ONE_HOUR_MS } from '../../config/app';
-import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import { getFromEnv } from '../../helpers/env';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { isSuccessStatus, requestData } from '../../helpers/source-api-request';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token';
-import { getContextOperationId } from '../monitoring';
-import { type BSN } from '../zorgned/zorgned-types';
+} from '../../../universal/helpers/api.ts';
+import type { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { ONE_HOUR_MS } from '../../config/app.ts';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt.ts';
+import { getFromEnv } from '../../helpers/env.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import { isSuccessStatus, requestData } from '../../helpers/source-api-request.ts';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
+import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token.ts';
+import { getContextOperationId } from '../monitoring.ts';
+import { type BSN } from '../zorgned/zorgned-types.ts';
 
 const TOKEN_VALIDITY_PERIOD = 1 * ONE_HOUR_MS;
 const PERCENTAGE_DISTANCE_FROM_EXPIRY = 0.1;

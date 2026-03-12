@@ -1,6 +1,6 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 
-import { getRegistrationOverview } from './amsapp-notifications-model';
+import { getRegistrationOverview } from './amsapp-notifications-model.ts';
 import {
   handleRegisterConsumer,
   handleConsumerRegistrationProfile,
@@ -8,19 +8,19 @@ import {
   handleTruncateNotifications,
   fetchAndStoreNotifications,
   handleSendNotificationsResponse,
-} from './amsapp-notifications-route-handlers';
-import { featureToggle, routes } from './amsapp-notifications-service-config';
-import { IS_PRODUCTION } from '../../../../universal/config/env';
-import { apiErrorResult } from '../../../../universal/helpers/api';
-import { RETURNTO_NOTIFICATIES_CONSUMER_ID } from '../../../auth/auth-after-redirect-returnto';
-import { authRoutes } from '../../../auth/auth-routes';
-import { apiKeyVerificationHandler } from '../../../routing/route-handlers';
+} from './amsapp-notifications-route-handlers.ts';
+import { featureToggle, routes } from './amsapp-notifications-service-config.ts';
+import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
+import { apiErrorResult } from '../../../../universal/helpers/api.ts';
+import { RETURNTO_NOTIFICATIES_CONSUMER_ID } from '../../../auth/auth-after-redirect-returnto.ts';
+import { authRoutes } from '../../../auth/auth-routes.ts';
+import { apiKeyVerificationHandler } from '../../../routing/route-handlers.ts';
 import {
   createBFFRouter,
   generateFullApiUrlBFF,
   sendResponse,
-} from '../../../routing/route-helpers';
-import { captureException } from '../../monitoring';
+} from '../../../routing/route-helpers.ts';
+import { captureException } from '../../monitoring.ts';
 
 // PUBLIC INTERNET NETWORK ROUTER
 // ==============================

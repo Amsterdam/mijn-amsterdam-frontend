@@ -1,11 +1,11 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 import { renderHook } from '@testing-library/react';
 
-import { useTrackThemas } from './useTrackThemas.hook';
-import { AppState } from '../../universal/types/App.types';
-import { trackEvent } from '../helpers/monitoring';
-import MockApp from '../pages/MockApp';
+import { useTrackThemas } from './useTrackThemas.hook.ts';
+import type { AppState } from '../../universal/types/App.types.ts';
+import { trackEvent } from '../helpers/monitoring.ts';
+import MockApp from '../pages/MockApp.tsx';
 
 vi.mock('../helpers/monitoring', () => ({
   trackEvent: vi.fn(),

@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { expect } from 'vitest';
 
-import { CobrowseFooter, LABEL_HULP_SCHERMDELEN } from './CobrowseFooter';
+import { CobrowseFooter, LABEL_HULP_SCHERMDELEN } from './CobrowseFooter.tsx';
 
 test('<CobrowseFooter />', async () => {
   const screen = render(<CobrowseFooter />);

@@ -5,29 +5,30 @@ import type {
   BrpFrontend,
   Persoon,
   Verbintenis,
-} from '../../../../../server/services/brp/brp-types';
-import type { Adres } from '../../../../../server/services/brp/brp-types';
+} from '../../../../../server/services/brp/brp-types.ts';
+import type { Adres } from '../../../../../server/services/brp/brp-types.ts';
 import {
   getFullAddress,
   hasDutchNationality,
   isMokum,
-} from '../../../../../universal/helpers/brp';
-import { defaultDateFormat } from '../../../../../universal/helpers/date';
-import type { AppState } from '../../../../../universal/types/App.types';
-import LoadingContent from '../../../../components/LoadingContent/LoadingContent';
+} from '../../../../../universal/helpers/brp.ts';
+import { defaultDateFormat } from '../../../../../universal/helpers/date.ts';
+import type { AppState } from '../../../../../universal/types/App.types.ts';
+import LoadingContent from '../../../../components/LoadingContent/LoadingContent.tsx';
 import {
   BRP_LABEL_AANTAL_INGESCHREVEN_PERSONEN,
   profileLinks,
-} from '../Profile-thema-config';
+} from '../Profile-thema-config.ts';
+import type {
+  ProfileLabels} from '../profileDataFormatter.ts';
 import {
-  ProfileLabels,
   formatProfileSectionData,
-} from '../profileDataFormatter';
-import {
+} from '../profileDataFormatter.ts';
+import type {
   ActionLink,
   PanelConfig,
   ProfileSectionData,
-} from '../ProfileSectionPanel';
+} from '../ProfileSectionPanel.tsx';
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading
  * into the Profile page data.

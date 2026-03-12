@@ -1,4 +1,4 @@
-import { Burgerzaken } from './Burgerzaken';
+import { Burgerzaken } from './Burgerzaken.tsx';
 
 export const BurgerzakenRoute = {
   route: '/paspoort-en-id-kaart',

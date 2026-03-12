@@ -1,11 +1,11 @@
-import type { AfisFactuurFrontend } from './Afis-thema-config';
-import { AfisDisclaimerOvergedragenFacturen } from './AfisThema';
+import type { AfisFactuurFrontend } from './Afis-thema-config.ts';
+import { AfisDisclaimerOvergedragenFacturen } from './AfisThema.tsx';
 import {
   type AfisFacturenThemaContextParams,
   useAfisFacturenData,
-} from './useAfisThemaData.hook';
-import { entries } from '../../../../universal/helpers/utils';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
+} from './useAfisThemaData.hook.tsx';
+import { entries } from '../../../../universal/helpers/utils.ts';
+import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
 
 type FacturenTablesProps = {
   themaContextParams?: AfisFacturenThemaContextParams;

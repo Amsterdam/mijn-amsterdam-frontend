@@ -1,17 +1,17 @@
 import { generatePath } from 'react-router';
 
-import { LoodMetingFrontend } from '../../../../server/services/bodem/types';
-import { dateSort } from '../../../../universal/helpers/date';
-import { DisplayProps } from '../../../components/Table/TableV2.types';
+import type { LoodMetingFrontend } from '../../../../server/services/bodem/types.ts';
+import { dateSort } from '../../../../universal/helpers/date.ts';
+import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
-} from '../../../config/app';
+} from '../../../config/app.ts';
 import type {
   ThemaConfigBase,
   WithDetailPage,
   WithListPage,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 
 type BodemThemaConfig = ThemaConfigBase<typeof THEMA_ID> &
   WithDetailPage &

@@ -1,16 +1,16 @@
-import { fetchBedAndBreakfast } from './bed-and-breakfast/bed-and-breakfast';
-import { ToeristischeVerhuur } from './toeristische-verhuur-config-and-types';
-import { fetchRegistraties } from './toeristische-verhuur-lvv-registratie';
-import { fetchVakantieverhuurVergunningen } from './toeristische-verhuur-vakantieverhuur-vergunning';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import { fetchBedAndBreakfast } from './bed-and-breakfast/bed-and-breakfast.ts';
+import type { ToeristischeVerhuur } from './toeristische-verhuur.types.ts';
+import { fetchRegistraties } from './toeristische-verhuur-lvv-registratie.ts';
+import { fetchVakantieverhuurVergunningen } from './toeristische-verhuur-vakantieverhuur-vergunning.ts';
+import { FeatureToggle } from '../../../universal/config/feature-toggles.ts';
+import type { ApiSuccessResponse } from '../../../universal/helpers/api.ts';
 import {
-  ApiSuccessResponse,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
-} from '../../../universal/helpers/api';
-import { dateSort } from '../../../universal/helpers/date';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+} from '../../../universal/helpers/api.ts';
+import { dateSort } from '../../../universal/helpers/date.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 
 export async function fetchToeristischeVerhuur(
   authProfileAndToken: AuthProfileAndToken

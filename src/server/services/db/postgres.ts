@@ -1,7 +1,8 @@
-import { PoolConfig, Pool } from 'pg';
+import type { PoolConfig} from 'pg';
+import { Pool } from 'pg';
 
-import { IS_DEVELOPMENT } from '../../../universal/config/env';
-import { captureException } from '../monitoring';
+import { IS_DEVELOPMENT } from '../../../universal/config/env.ts';
+import { captureException } from '../monitoring.ts';
 
 // Connection params are taken from env variables.
 export const pgDbConfig: PoolConfig = {

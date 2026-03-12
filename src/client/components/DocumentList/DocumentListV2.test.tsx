@@ -1,13 +1,14 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it, vi, Mock } from 'vitest';
+import type { Mock } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
-import DocumentListV2 from './DocumentListV2';
-import { bffApiHost } from '../../../testing/setup';
-import { bffApi } from '../../../testing/utils';
-import { GenericDocument } from '../../../universal/types/App.types';
-import * as Monitoring from '../../helpers/monitoring';
-import { trackDownload } from '../../hooks/analytics.hook';
+import DocumentListV2 from './DocumentListV2.tsx';
+import { bffApiHost } from '../../../testing/setup.ts';
+import { bffApi } from '../../../testing/utils.ts';
+import type { GenericDocument } from '../../../universal/types/App.types.ts';
+import * as Monitoring from '../../helpers/monitoring.ts';
+import { trackDownload } from '../../hooks/analytics.hook.ts';
 
 vi.mock('../../hooks/analytics.hook');
 

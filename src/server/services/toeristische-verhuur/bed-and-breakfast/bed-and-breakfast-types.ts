@@ -1,8 +1,8 @@
-import {
+import type {
   PBZaakCompacted,
   PowerBrowserZaakBase,
   PowerBrowserZaakFrontend,
-} from '../../powerbrowser/powerbrowser-types';
+} from '../../powerbrowser/powerbrowser-types.ts';
 
 export const caseTypeBedAndBreakfast = {
   BedAndBreakfast: 'Bed en breakfast',
@@ -28,6 +28,7 @@ export type BedAndBreakfastType = PowerBrowserZaakBase &
   PBZaakCompacted & {
     caseType: GetCaseType<'BedAndBreakfast'>;
     heeftOvergangsRecht: boolean;
+    location: string | null;
   };
 
 export type BBVergunningFrontend =

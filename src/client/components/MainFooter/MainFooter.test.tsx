@@ -1,9 +1,9 @@
 import { render } from '@testing-library/react';
 import { describe, expect } from 'vitest';
 
-import { MainFooter } from './MainFooter';
-import { bffApi } from '../../../testing/utils';
-import * as Erfpacht from '../../pages/Thema/Erfpacht/useErfpachtThemaData.hook';
+import { MainFooter } from './MainFooter.tsx';
+import { bffApi } from '../../../testing/utils.ts';
+import * as Erfpacht from '../../pages/Thema/Erfpacht/useErfpachtThemaData.hook.ts';
 
 export function mockFooterRequest() {
   bffApi.get('/services/cms/footer').reply(200, {

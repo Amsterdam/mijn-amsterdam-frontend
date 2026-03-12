@@ -1,24 +1,25 @@
 import { differenceInMonths, format } from 'date-fns';
-import { LinkProps, generatePath } from 'react-router';
+import type { LinkProps} from 'react-router';
+import { generatePath } from 'react-router';
 
-import { MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS } from './config';
-import { requestProcess as bbzRequestProcessLabels } from './content/bbz';
-import { requestProcess as tonkRequestProcessLabels } from './content/tonk';
-import { requestProcess as tozoRequestProcessLabels } from './content/tozo';
-import {
+import { MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS } from './config.ts';
+import { requestProcess as bbzRequestProcessLabels } from './content/bbz.ts';
+import { requestProcess as tonkRequestProcessLabels } from './content/tonk.ts';
+import { requestProcess as tozoRequestProcessLabels } from './content/tozo.ts';
+import type {
   WpiRequestProcess,
   WpiRequestProcessLabels,
   WpiRequestStatus,
-} from './wpi-types';
-import { themaConfig as themaInkomen } from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import {
+} from './wpi-types.ts';
+import { themaConfig as themaInkomen } from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config.ts';
+import { defaultDateFormat } from '../../../universal/helpers/date.ts';
+import type {
   GenericDocument,
   MyNotification,
-} from '../../../universal/types/App.types';
-import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import { BffEndpoints } from '../../routing/bff-routes';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
+} from '../../../universal/types/App.types.ts';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt.ts';
+import { BffEndpoints } from '../../routing/bff-routes.ts';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
 
 export function transformRequestProcess(
   sessionID: SessionID,

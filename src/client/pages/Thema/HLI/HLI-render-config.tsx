@@ -1,19 +1,19 @@
 import { Navigate } from 'react-router';
 
-import { getThemaTitleWithAppState } from './helpers';
-import { themaConfig } from './HLI-thema-config';
+import { getThemaTitleWithAppState } from './helpers.ts';
+import { themaConfig } from './HLI-thema-config.ts';
 import { default as HLIIcon } from './HLIIcon.svg?react';
-import { HLIRegelingenDetail as HLIRegelingenDetail } from './HLIRegelingenDetail';
-import { HLIRegelingenList } from './HLIRegelingenList';
-import { HLISpecificatieList } from './HLISpecificatieList';
-import { HLIStadspasDetail } from './HLIStadspasDetail';
-import { HLIThema } from './HLIThema';
-import { isLoading } from '../../../../universal/helpers/api';
-import type { AppState } from '../../../../universal/types/App.types';
+import { HLIRegelingenDetail as HLIRegelingenDetail } from './HLIRegelingenDetail.tsx';
+import { HLIRegelingenList } from './HLIRegelingenList.tsx';
+import { HLISpecificatieList } from './HLISpecificatieList.tsx';
+import { HLIStadspasDetail } from './HLIStadspasDetail.tsx';
+import { HLIThema } from './HLIThema.tsx';
+import { isLoading } from '../../../../universal/helpers/api.ts';
+import type { AppState } from '../../../../universal/types/App.types.ts';
 import type {
   ThemaRenderRouteConfig,
   ThemaMenuItem,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 
 export const HLIRoutes = [
   {

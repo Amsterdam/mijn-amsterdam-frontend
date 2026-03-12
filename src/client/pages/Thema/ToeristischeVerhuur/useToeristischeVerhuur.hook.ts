@@ -4,17 +4,17 @@ import {
   themaConfig,
   vvVergunningPageLinkItem,
   bbVergunningPageLinkItem,
-} from './ToeristischeVerhuur-thema-config';
-import { ToeristischeVerhuurVergunning } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
+} from './ToeristischeVerhuur-thema-config.ts';
+import type { ToeristischeVerhuurVergunning } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur.types.ts';
 import {
   hasFailedDependency,
   isError,
   isLoading,
-} from '../../../../universal/helpers/api';
-import { LinkProps } from '../../../../universal/types/App.types';
-import { addLinkElementToProperty } from '../../../components/Table/TableV2';
-import { useAppStateGetter } from '../../../hooks/useAppStateStore';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
+} from '../../../../universal/helpers/api.ts';
+import type { LinkProps } from '../../../../universal/types/App.types.ts';
+import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
+import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
 export const BB_VERGUNNING_DISCLAIMER =
   'Bed & breakfast vergunningen die vóór 14 mei 2021 zijn aangevraagd kunnen niet worden getoond';

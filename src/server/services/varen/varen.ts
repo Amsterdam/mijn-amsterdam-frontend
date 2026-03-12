@@ -1,13 +1,13 @@
 import { generatePath } from 'react-router';
 
-import {
+import type {
   Varen,
   VarenRegistratieRederFrontend,
   VarenRegistratieRederType,
   VarenVergunningExploitatieType,
   VarenVergunningFrontend,
   VarenZakenFrontend,
-} from './config-and-types';
+} from './config-and-types.ts';
 import {
   decosRederZaakTransformers,
   decosVergunningTransformers,
@@ -18,12 +18,12 @@ import { themaConfig } from '../../../client/pages/Thema/Varen/Varen-thema-confi
 import {
   apiErrorResult,
   apiSuccessResult,
-} from '../../../universal/helpers/api';
-import { toDateFormatted } from '../../../universal/helpers/date';
-import { omit } from '../../../universal/helpers/utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { fetchDecosZaken } from '../decos/decos-service';
-import { transformDecosZaakFrontend } from '../decos/decos-service';
+} from '../../../universal/helpers/api.ts';
+import { toDateFormatted } from '../../../universal/helpers/date.ts';
+import { omit } from '../../../universal/helpers/utils.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { fetchDecosZaken } from '../decos/decos-service.ts';
+import { transformDecosZaakFrontend } from '../decos/decos-service.ts';
 
 function transformVarenRederFrontend(
   zaak: VarenRegistratieRederType | null | undefined

@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 
-import { useAppStateStore } from './useAppStateStore';
-import type { MyNotification } from '../../universal/types/App.types';
-import { WelcomeNotification } from '../config/staticData';
-import { getRedactedClass } from '../helpers/cobrowse';
+import { useAppStateStore } from './useAppStateStore.ts';
+import type { MyNotification } from '../../universal/types/App.types.ts';
+import { WelcomeNotification } from '../config/staticData.tsx';
+import { getRedactedClass } from '../helpers/cobrowse.ts';
 
 export function useAppStateNotifications(top?: number) {
   const { isReady, NOTIFICATIONS } = useAppStateStore();

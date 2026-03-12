@@ -1,6 +1,6 @@
 import { useParams } from 'react-router';
 
-import { useAVGData } from './useAVGData.hook';
+import { useAVGData } from './useAVGData.hook.tsx';
 
 export function useAVGDetailPage() {
   const { id } = useParams<{ id: string }>();

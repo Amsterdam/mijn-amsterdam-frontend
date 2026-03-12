@@ -1,4 +1,4 @@
-import { ThemaConfigBase } from '../../../config/thema-types';
+import type { ThemaConfigBase } from '../../../config/thema-types.ts';
 
 const MILIEUZONE_ROUTE_DEFAULT =
   'https://ontheffingen.amsterdam.nl/publiek/aanvragen';

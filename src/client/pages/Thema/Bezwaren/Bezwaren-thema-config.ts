@@ -1,16 +1,16 @@
 import { generatePath } from 'react-router';
 
-import { BezwaarFrontend } from '../../../../server/services/bezwaren/types';
-import type { DisplayProps } from '../../../components/Table/TableV2.types';
+import type { BezwaarFrontend } from '../../../../server/services/bezwaren/types.ts';
+import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
-} from '../../../config/app';
+} from '../../../config/app.ts';
 import type {
   ThemaConfigBase,
   WithDetailPage,
   WithListPage,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 
 const THEMA_ID = 'BEZWAREN';
 const THEMA_TITLE = 'Bezwaren';

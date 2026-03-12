@@ -1,44 +1,44 @@
 import { HttpStatusCode } from 'axios';
-import { NextFunction, Request, Response } from 'express';
+import type { NextFunction, Request, Response } from 'express';
 
-import { BffEndpoints } from './bff-routes';
+import { BffEndpoints } from './bff-routes.ts';
 import {
   createBFFRouter,
   sendBadRequest,
   sendResponse,
   type RequestWithQueryParams,
   type ResponseAuthenticated,
-} from './route-helpers';
-import type { streamEndpointQueryParamKeys } from '../../universal/config/app';
-import { IS_PRODUCTION } from '../../universal/config/env';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
-import { setAdHocDependencyRequestCacheTtlMs } from '../config/source-api';
-import { afisRouter } from '../services/afis/afis-router';
-import { bezwarenRouter } from '../services/bezwaren/bezwaren-router';
-import { fetchLoodMetingDocument } from '../services/bodem/loodmetingen';
-import { brpRouter } from '../services/brp/brp-router';
+} from './route-helpers.ts';
+import type { streamEndpointQueryParamKeys } from '../../universal/config/app.ts';
+import { IS_PRODUCTION } from '../../universal/config/env.ts';
+import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
+import { setAdHocDependencyRequestCacheTtlMs } from '../config/source-api.ts';
+import { afisRouter } from '../services/afis/afis-router.ts';
+import { bezwarenRouter } from '../services/bezwaren/bezwaren-router.ts';
+import { fetchLoodMetingDocument } from '../services/bodem/loodmetingen.ts';
+import { brpRouter } from '../services/brp/brp-router.ts';
 import {
   NOTIFICATIONS,
   loadServicesAll,
   loadServicesSSE,
-} from '../services/controller';
+} from '../services/controller.ts';
 import {
   handleFetchDecosDocumentsList,
   fetchZaakByKey,
   fetchZakenByUserIDs,
-} from '../services/decos/decos-route-handlers';
+} from '../services/decos/decos-route-handlers.ts';
 import {
   fetchDecosDocument,
   fetchDecosWorkflows,
-} from '../services/decos/decos-service';
-import { fetchErfpachtDossiersDetail as fetchErfpachtDossiersDetail } from '../services/erfpacht/erfpacht';
-import { hliRouter } from '../services/hli/hli-router';
-import { fetchZorgnedLLVDocument } from '../services/jeugd/route-handlers';
-import { fetchDocument as fetchBBDocument } from '../services/powerbrowser/powerbrowser-service';
-import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler';
-import { userFeedbackRouter } from '../services/user-feedback/user-feedback.router';
-import { wmoRouter } from '../services/wmo/wmo-router';
-import { fetchWpiDocument } from '../services/wpi/api-service';
+} from '../services/decos/decos-service.ts';
+import { fetchErfpachtDossiersDetail as fetchErfpachtDossiersDetail } from '../services/erfpacht/erfpacht.ts';
+import { hliRouter } from '../services/hli/hli-router.ts';
+import { fetchZorgnedLLVDocument } from '../services/jeugd/route-handlers.ts';
+import { fetchDocument as fetchBBDocument } from '../services/powerbrowser/powerbrowser-service.ts';
+import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler.ts';
+import { userFeedbackRouter } from '../services/user-feedback/user-feedback.router.ts';
+import { wmoRouter } from '../services/wmo/wmo-router.ts';
+import { fetchWpiDocument } from '../services/wpi/api-service.ts';
 
 export const router = createBFFRouter({ id: 'router-protected' });
 

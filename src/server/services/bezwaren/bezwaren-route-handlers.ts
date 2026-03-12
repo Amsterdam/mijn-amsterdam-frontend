@@ -1,10 +1,11 @@
-import { fetchBezwaarDetail } from './bezwaren';
+import { fetchBezwaarDetail } from './bezwaren.ts';
+import type {
+  RequestWithQueryParams} from '../../routing/route-helpers.ts';
 import {
-  RequestWithQueryParams,
   sendResponse,
   type ResponseAuthenticated,
-} from '../../routing/route-helpers';
-import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
+} from '../../routing/route-helpers.ts';
+import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param.ts';
 
 export async function handleFetchBezwaarDetail(
   req: RequestWithQueryParams<{ id: string }>,

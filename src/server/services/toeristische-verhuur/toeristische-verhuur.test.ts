@@ -1,11 +1,11 @@
 import Mockdate from 'mockdate';
 import { describe, expect, it } from 'vitest';
 
-import { BBVergunningFrontend } from './bed-and-breakfast/bed-and-breakfast-types';
-import { fetchToeristischeVerhuur } from './toeristische-verhuur';
-import { VakantieverhuurVergunningFrontend } from './toeristische-verhuur-config-and-types';
-import { createToeristischeVerhuurNotification } from './toeristische-verhuur-notifications';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
+import type { BBVergunningFrontend } from './bed-and-breakfast/bed-and-breakfast-types.ts';
+import type { VakantieverhuurVergunningFrontend } from './toeristische-verhuur-config-and-types.ts';
+import { createToeristischeVerhuurNotification } from './toeristische-verhuur-notifications.ts';
+import { fetchToeristischeVerhuur } from './toeristische-verhuur.ts';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 
 const REGISTRATIES_DUMMY_RESPONSE_NUMBERS = [
   {

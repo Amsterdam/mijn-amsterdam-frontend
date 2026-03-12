@@ -1,24 +1,24 @@
 import { HttpStatusCode } from 'axios';
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import nock from 'nock';
 import UID from 'uid-safe';
 
-import { bffApiHost, remoteApiHost } from './setup';
+import { bffApiHost, remoteApiHost } from './setup.ts';
 import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
-} from '../server/auth/auth-config';
-import {
+} from '../server/auth/auth-config.ts';
+import type {
   AuthenticatedRequest,
   AuthProfile,
   AuthProfileAndToken,
-} from '../server/auth/auth-types';
+} from '../server/auth/auth-types.ts';
 import type {
   RecordStr2,
   RequestWithRouteAndQueryParams,
   ResponseAuthenticated,
-} from '../server/routing/route-helpers';
-import { createOIDCStub } from '../server/routing/router-development';
+} from '../server/routing/route-helpers.ts';
+import { createOIDCStub } from '../server/routing/router-development.ts';
 
 const defaultReplyHeaders = {
   'access-control-allow-origin': '*',

@@ -1,14 +1,14 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { themaConfig } from './AVG-thema-config';
-import { AVGDetail } from './AVGDetail';
-import { AVGRequestFrontend } from '../../../../server/services/avg/types';
-import {
+import { themaConfig } from './AVG-thema-config.ts';
+import { AVGDetail } from './AVGDetail.tsx';
+import type { AVGRequestFrontend } from '../../../../server/services/avg/types.ts';
+import type {
   AppState,
   StatusLineItem,
-} from '../../../../universal/types/App.types';
-import MockApp from '../../MockApp';
+} from '../../../../universal/types/App.types.ts';
+import MockApp from '../../MockApp.tsx';
 
 const steps: StatusLineItem[] = [
   {

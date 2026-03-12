@@ -1,7 +1,7 @@
 import type {
   MyNotification,
   LinkProps,
-} from '../../../universal/types/App.types';
+} from '../../../universal/types/App.types.ts';
 
 type Tyd = {
   Nam: 'Starttijd' | 'Eindtijd';

@@ -1,8 +1,8 @@
 import { describe, expect, it, vi } from 'vitest';
 
 vi.mock('../debug', () => ({ debugRequest: vi.fn() }));
-import * as debug from '../debug';
-import { forTesting, addRequestDataDebugging } from './source-api-debug';
+import * as debug from '../debug.ts';
+import { forTesting, addRequestDataDebugging } from './source-api-debug.ts';
 
 describe('source-api-debug', () => {
   describe('isDebugRequestDataMatch', () => {

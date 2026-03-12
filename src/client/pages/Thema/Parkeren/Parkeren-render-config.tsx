@@ -5,16 +5,16 @@ import {
   themaId,
   themaTitle,
   featureToggle,
-} from './Parkeren-thema-config';
-import { ParkerenDetail } from './ParkerenDetail';
-import { ParkerenList } from './ParkerenList';
-import { ParkerenThema } from './ParkerenThema';
-import { isLoading } from '../../../../universal/helpers/api';
-import { type AppState } from '../../../../universal/types/App.types';
+} from './Parkeren-thema-config.ts';
+import { ParkerenDetail } from './ParkerenDetail.tsx';
+import { ParkerenList } from './ParkerenList.tsx';
+import { ParkerenThema } from './ParkerenThema.tsx';
+import { isLoading } from '../../../../universal/helpers/api.ts';
+import { type AppState } from '../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 
 export const ParkerenRoutes = [
   {

@@ -1,10 +1,11 @@
-import { describe, it, expect, vi, Mock } from 'vitest';
+import type { Mock } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 
-import { handleFetchDecosDocumentsList } from './decos-route-handlers';
-import { fetchDecosDocumentList } from './decos-service';
-import { RequestMock, ResponseAuthenticatedMock } from '../../../testing/utils';
-import { RequestWithQueryParams } from '../../routing/route-helpers';
-import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
+import { handleFetchDecosDocumentsList } from './decos-route-handlers.ts';
+import { fetchDecosDocumentList } from './decos-service.ts';
+import { RequestMock, ResponseAuthenticatedMock } from '../../../testing/utils.ts';
+import type { RequestWithQueryParams } from '../../routing/route-helpers.ts';
+import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param.ts';
 
 vi.mock('../decos/decos-service');
 vi.mock('../../auth/auth-helpers');

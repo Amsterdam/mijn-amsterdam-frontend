@@ -8,13 +8,13 @@ import {
   UnorderedList,
 } from '@amsterdam/design-system-react';
 
-import { AfisFacturenTables } from './AfisFacturenTables';
-import { useAfisThemaData } from './useAfisThemaData.hook';
-import { entries } from '../../../../universal/helpers/utils';
-import { MaButtonRouterLink } from '../../../components/MaLink/MaLink';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaPagina from '../../../components/Thema/ThemaPagina';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { AfisFacturenTables } from './AfisFacturenTables.tsx';
+import { useAfisThemaData } from './useAfisThemaData.hook.tsx';
+import { entries } from '../../../../universal/helpers/utils.ts';
+import { MaButtonRouterLink } from '../../../components/MaLink/MaLink.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 function PageContentTop({
   urlNaarBelastingen,

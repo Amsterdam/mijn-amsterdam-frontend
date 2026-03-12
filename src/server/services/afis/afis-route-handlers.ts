@@ -1,37 +1,40 @@
 import { HttpStatusCode } from 'axios';
-import { Response, Request } from 'express';
-import { ParamsDictionary } from 'express-serve-static-core';
+import type { Response, Request } from 'express';
+import type { ParamsDictionary } from 'express-serve-static-core';
 import z from 'zod';
 
-import { createOrUpdateEMandateFromStatusNotificationPayload } from './afis-e-mandates';
-import { fetchAfisFacturenByState } from './afis-facturen';
-import { debugEmandates } from './afis-helpers';
-import {
+import { createOrUpdateEMandateFromStatusNotificationPayload } from './afis-e-mandates.ts';
+import { fetchAfisFacturenByState } from './afis-facturen.ts';
+import { debugEmandates } from './afis-helpers.ts';
+import type {
   AfisFactuurState,
-  BusinessPartnerIdPayload,
+  BusinessPartnerIdPayload} from './afis-types.ts';
+import {
   type EMandateSignRequestNotificationPayload,
   type EMandateSignRequestPayload,
   type POMEMandateSignRequestPayload,
-} from './afis-types';
-import { IS_ACCEPTANCE } from '../../../universal/config/env';
+} from './afis-types.ts';
+import { IS_ACCEPTANCE } from '../../../universal/config/env.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
   type ApiResponse,
-} from '../../../universal/helpers/api';
-import { AuthProfile } from '../../auth/auth-types';
+} from '../../../universal/helpers/api.ts';
+import type { AuthProfile } from '../../auth/auth-types.ts';
+import type {
+  RequestWithRouteAndQueryParams} from '../../routing/route-helpers.ts';
 import {
-  RequestWithRouteAndQueryParams,
   sendBadRequestInvalidInput,
   sendResponse,
   type RecordStr2,
   type ResponseAuthenticated,
-} from '../../routing/route-helpers';
-import { captureException } from '../monitoring';
+} from '../../routing/route-helpers.ts';
+import { captureException } from '../monitoring.ts';
+import type {
+  EncryptedPayloadAndSessionID} from '../shared/decrypt-route-param.ts';
 import {
-  decryptPayloadAndValidateSessionID,
-  EncryptedPayloadAndSessionID,
-} from '../shared/decrypt-route-param';
+  decryptPayloadAndValidateSessionID
+} from '../shared/decrypt-route-param.ts';
 
 function isPostiveInt(str: string) {
   return /^\d+$/.test(str);

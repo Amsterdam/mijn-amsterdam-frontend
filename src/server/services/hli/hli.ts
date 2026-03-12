@@ -2,57 +2,59 @@ import { isAfter, parseISO } from 'date-fns';
 import { generatePath } from 'react-router';
 import slug from 'slugme';
 
-import {
+import type {
   HLIRegelingFrontend,
   HLIresponseData,
   ZorgnedHLIRegeling,
-} from './hli-regelingen-types';
+} from './hli-regelingen-types.ts';
 import {
   featureToggle,
   routes,
   ZORGNED_AV_API_CONFIG_KEY,
-} from './hli-service-config';
-import { hliStatusLineItemsConfig } from './hli-status-line-items';
-import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
+} from './hli-service-config.ts';
+import { hliStatusLineItemsConfig } from './hli-status-line-items.ts';
+import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service.ts';
 import {
   transformRTMAanvragen,
   isRTMAanvraag,
   fetchRTMSpecificaties,
-} from './rtm/regeling-rtm';
-import { fetchStadspas } from './stadspas';
+} from './rtm/regeling-rtm.ts';
+import { fetchStadspas } from './stadspas.ts';
 import {
   isPcAanvraag,
   isWorkshopNietGevolgd,
   filterCombineUpcPcvData,
-} from './status-line-items/regeling-pcvergoeding';
-import { themaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config';
+} from './status-line-items/regeling-pcvergoeding.ts';
+import { themaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config.ts';
+import type {
+  ApiResponse} from '../../../universal/helpers/api.ts';
 import {
-  ApiResponse,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
-} from '../../../universal/helpers/api';
-import { toDateFormatted } from '../../../universal/helpers/date';
-import { dedupeDocumentsInDataSets } from '../../../universal/helpers/document';
-import { capitalizeFirstLetter } from '../../../universal/helpers/text';
-import { splitBy } from '../../../universal/helpers/utils';
-import {
+} from '../../../universal/helpers/api.ts';
+import { toDateFormatted } from '../../../universal/helpers/date.ts';
+import { dedupeDocumentsInDataSets } from '../../../universal/helpers/document.ts';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
+import { splitBy } from '../../../universal/helpers/utils.ts';
+import type {
   GenericDocument,
   StatusLineItem,
-} from '../../../universal/types/App.types';
-import type { ZaakDisplayStatus } from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
+} from '../../../universal/types/App.types.ts';
+import type { ZaakDisplayStatus } from '../../../universal/types/App.types.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt.ts';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
 import {
   fetchRelatedPersons,
   sortZorgnedAanvragenByDateAndId,
-} from '../zorgned/zorgned-service';
-import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
+} from '../zorgned/zorgned-service.ts';
+import { getStatusLineItems } from '../zorgned/zorgned-status-line-items.ts';
+import type {
+  ZorgnedAanvraagWithRelatedPersonsTransformed} from '../zorgned/zorgned-types.ts';
 import {
-  ZorgnedAanvraagWithRelatedPersonsTransformed,
   type ZorgnedPerson,
-} from '../zorgned/zorgned-types';
+} from '../zorgned/zorgned-types.ts';
 
 export type GetDisplayStatusFn<
   T extends ZaakDisplayStatus = ZaakDisplayStatus,

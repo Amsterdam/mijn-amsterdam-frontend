@@ -1,15 +1,16 @@
 import nock from 'nock';
-import { describe, it, expect, vi, Mock } from 'vitest';
+import type { Mock } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 
-import type { BAGAdreseerbaarObject } from './bag.types';
-import { fetchMyLocations, forTesting } from './my-locations';
-import { getAuthProfileAndToken } from '../../../testing/utils';
+import type { BAGAdreseerbaarObject } from './bag.types.ts';
+import { fetchMyLocations, forTesting } from './my-locations.ts';
+import { getAuthProfileAndToken } from '../../../testing/utils.ts';
 import {
   apiSuccessResult,
   apiErrorResult,
-} from '../../../universal/helpers/api';
-import { fetchBrp } from '../brp/brp';
-import { fetchKVK } from '../hr-kvk/hr-kvk';
+} from '../../../universal/helpers/api.ts';
+import { fetchBrp } from '../brp/brp.ts';
+import { fetchKVK } from '../hr-kvk/hr-kvk.ts';
 
 vi.mock('../brp/brp', async (importOriginal) => ({
   ...(await importOriginal()),

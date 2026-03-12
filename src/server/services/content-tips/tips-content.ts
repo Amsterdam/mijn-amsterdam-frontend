@@ -18,13 +18,13 @@ import {
   hasKidsBetweenAges,
   isBetweenAges,
   is18OrOlderOnElectionDay,
-} from './predicates';
-import { ContentTipSource } from './tip-types';
-import { themaConfig as themaAfval } from '../../../client/pages/Thema/Afval/Afval-thema-config';
-import { themaConfig as hliThemaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config';
-import { themaConfig as inkomenThemaConfig } from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
-import { themaIdBRP } from '../../../client/pages/Thema/Profile/Profile-thema-config';
-import { themaConfig as toeristischeVerhuurThemaConfig } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
+} from './predicates.ts';
+import type { ContentTipSource } from './tip-types.ts';
+import { themaConfig as themaAfval } from '../../../client/pages/Thema/Afval/Afval-thema-config.ts';
+import { themaConfig as hliThemaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config.ts';
+import { themaConfig as inkomenThemaConfig } from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config.ts';
+import { themaIdBRP } from '../../../client/pages/Thema/Profile/Profile-thema-config.ts';
+import { themaConfig as toeristischeVerhuurThemaConfig } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
 
 const DAYS = 90;
 

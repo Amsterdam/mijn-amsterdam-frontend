@@ -1,8 +1,9 @@
-import { Request, Response } from 'express';
-import { describe, expect, vi, beforeEach, MockInstance } from 'vitest';
+import type { Request, Response } from 'express';
+import type { MockInstance } from 'vitest';
+import { describe, expect, vi, beforeEach } from 'vitest';
 
-import * as wmo from './wmo';
-import { forTesting } from './wmo-router';
+import { forTesting } from './wmo-router.ts';
+import * as wmo from './wmo.ts';
 
 const { handleVoorzieningenRequest } = forTesting;
 

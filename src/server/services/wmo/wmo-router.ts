@@ -3,17 +3,17 @@ import {
   fetchZorgnedJZDDocument,
   fetchZorgnedJZDDocuments,
   handleVoorzieningenRequest,
-} from './wmo-route-handlers';
+} from './wmo-route-handlers.ts';
 import {
   featureToggle,
   OAUTH_ROLE_WMO_VOORZIENINGEN,
   routes,
-} from './wmo-service-config';
-import { IS_TAP } from '../../../universal/config/env';
-import { conditional } from '../../helpers/middleware';
-import { OAuthVerificationHandler } from '../../routing/route-handlers';
-import { createBFFRouter } from '../../routing/route-helpers';
-import { attachDocumentDownloadRoute } from '../shared/document-download-route-handler';
+} from './wmo-service-config.ts';
+import { IS_TAP } from '../../../universal/config/env.ts';
+import { conditional } from '../../helpers/middleware.ts';
+import { OAuthVerificationHandler } from '../../routing/route-handlers.ts';
+import { createBFFRouter } from '../../routing/route-helpers.ts';
+import { attachDocumentDownloadRoute } from '../shared/document-download-route-handler.ts';
 
 const wmoRouterPrivateNetwork = createBFFRouter({
   id: 'external-consumer-private-network-wmo',

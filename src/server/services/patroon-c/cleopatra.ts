@@ -1,23 +1,24 @@
 import jose from 'node-jose';
 
-import { ApiPatternResponseA, fetchService } from './api-service';
-import * as MILIEUZONE from '../../../client/pages/Thema/Milieuzone/Milieuzone-thema-config';
-import * as OVERTREDINGEN from '../../../client/pages/Thema/Overtredingen/Overtredingen-thema-config';
-import { IS_TAP } from '../../../universal/config/env';
+import type { ApiPatternResponseA} from './api-service.ts';
+import { fetchService } from './api-service.ts';
+import * as MILIEUZONE from '../../../client/pages/Thema/Milieuzone/Milieuzone-thema-config.ts';
+import * as OVERTREDINGEN from '../../../client/pages/Thema/Overtredingen/Overtredingen-thema-config.ts';
+import { IS_TAP } from '../../../universal/config/env.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
   type ApiResponse,
-} from '../../../universal/helpers/api';
-import { MyNotification } from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { getCert } from '../../helpers/cert';
-import { getFromEnv } from '../../helpers/env';
+} from '../../../universal/helpers/api.ts';
+import type { MyNotification } from '../../../universal/types/App.types.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { getCert } from '../../helpers/cert.ts';
+import { getFromEnv } from '../../helpers/env.ts';
 import {
   createSessionBasedCacheKey,
   getApiConfig,
-} from '../../helpers/source-api-helpers';
-import { logger } from '../../logging';
+} from '../../helpers/source-api-helpers.ts';
+import { logger } from '../../logging.ts';
 
 const DEV_KEY = {
   kty: 'RSA',

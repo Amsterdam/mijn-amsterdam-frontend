@@ -1,24 +1,24 @@
 import MockDate from 'mockdate';
-import { Mock } from 'vitest';
+import type { Mock } from 'vitest';
 
+import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service.ts';
 import {
   forTesting,
   getDocumentsFrontend,
   transformRegelingForFrontend,
-} from './hli';
-import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
-import { getAuthProfileAndToken } from '../../../testing/utils';
+} from './hli.ts';
+import { getAuthProfileAndToken } from '../../../testing/utils.ts';
 import {
   apiSuccessResult,
   apiErrorResult,
-} from '../../../universal/helpers/api';
-import * as document from '../../../universal/helpers/document';
-import {
+} from '../../../universal/helpers/api.ts';
+import * as document from '../../../universal/helpers/document.ts';
+import type {
   GenericDocument,
   StatusLineItem,
-} from '../../../universal/types/App.types';
-import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types';
-import { RTM_SPECIFICATIE_TITLE } from './rtm/regeling-rtm';
+} from '../../../universal/types/App.types.ts';
+import type { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types.ts';
+import { RTM_SPECIFICATIE_TITLE } from './rtm/regeling-rtm.ts';
 
 vi.mock('./hli-zorgned-service', () => ({
   fetchZorgnedAanvragenHLI: vi.fn(),

@@ -5,7 +5,7 @@ import isEqual from 'lodash.isequal';
 import { useNavigate, useParams } from 'react-router';
 import { create } from 'zustand';
 
-import { generateApiUrl } from './Afis-helpers';
+import { generateApiUrl } from './Afis-helpers.ts';
 import {
   routeConfig,
   eMandateTableConfig,
@@ -13,24 +13,24 @@ import {
   titleEMandaatPage,
   EMANDATE_STATUS_ACTIVE,
   featureToggle,
-} from './Afis-thema-config';
-import { useAfisThemaData } from './useAfisThemaData.hook';
+} from './Afis-thema-config.ts';
+import { useAfisThemaData } from './useAfisThemaData.hook.tsx';
 import type {
   AfisEMandateFrontend,
   AfisEMandateSignRequestResponse,
   AfisEMandateStatusChangeResponse,
   AfisEMandateUpdatePayloadFrontend,
-} from '../../../../server/services/afis/afis-types';
-import { entries } from '../../../../universal/helpers/utils';
-import { MaRouterLink } from '../../../components/MaLink/MaLink';
+} from '../../../../server/services/afis/afis-types.ts';
+import { entries } from '../../../../universal/helpers/utils.ts';
+import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
 import {
   sendFormPostRequest,
   sendFetchRequest,
   useBffApi,
-} from '../../../hooks/api/useBffApi';
-import { useSmallScreen } from '../../../hooks/media.hook';
-import { useSessionStorage } from '../../../hooks/storage.hook';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
+} from '../../../hooks/api/useBffApi.ts';
+import { useSmallScreen } from '../../../hooks/media.hook.ts';
+import { useSessionStorage } from '../../../hooks/storage.hook.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
 function mergePayloadIntoEmandateById(
   id: AfisEMandateFrontend['id'],
