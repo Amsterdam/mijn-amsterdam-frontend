@@ -5,9 +5,9 @@ import {
   fetchErfpachtDossiersDetail,
   forTesting,
 } from './erfpacht.ts';
-import ERFPACHT_DOSSIERINFO_DETAILS from '../../../../mockserver/fixtures/erfpacht-v2-dossierinfo-bsn.json';
-import ERFPACHT_DOSSIERS from '../../../../mockserver/fixtures/erfpacht-v2-dossiers.json';
-import ERFPACHT_ERFPACHTER from '../../../../mockserver/fixtures/erfpacht-v2-erfpachter.json';
+import ERFPACHT_DOSSIERINFO_DETAILS from '../../../../mockserver/main/mocks/fixtures/erfpacht-v2-dossierinfo-bsn.json' with { type: 'json' };
+import ERFPACHT_DOSSIERS from '../../../../mockserver/main/mocks/fixtures/erfpacht-v2-dossiers.json' with { type: 'json' };
+import ERFPACHT_ERFPACHTER from '../../../../mockserver/main/mocks/fixtures/erfpacht-v2-erfpachter.json' with { type: 'json' };
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 

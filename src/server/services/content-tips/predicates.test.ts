@@ -23,8 +23,8 @@ import {
 } from './predicates.ts';
 import type { TipsPredicateFN } from './tip-types.ts';
 import { brpApiResponse } from './tips-service.test.ts';
-import WPI_AANVRAGEN from '../../../../mockserver/fixtures/wpi-aanvragen.json';
-import WPI_E from '../../../../mockserver/fixtures/wpi-e-aanvragen.json';
+import WPI_AANVRAGEN from '../../../../mockserver/main/mocks/fixtures/wpi-aanvragen.json' with { type: 'json' };
+import WPI_E from '../../../../mockserver/main/mocks/fixtures/wpi-e-aanvragen.json' with { type: 'json' };
 import type { ApiResponse_DEPRECATED } from '../../../universal/helpers/api.ts';
 import type { AppState } from '../../../universal/types/App.types.ts';
 import type { BrpFrontend } from '../brp/brp-types.ts';

@@ -14,8 +14,8 @@ import {
   fetchBrpVerblijfplaatsHistoryByBsn,
   fetchAantalIngeschrevenPersonen,
 } from './brp.ts';
-import testPersonenResponse from '../../../../mockserver/fixtures/brp/test-personen.json';
-import verblijfplaatsenResponse from '../../../../mockserver/fixtures/brp/verblijfplaatshistorie.json';
+import testPersonenResponse from '../../../../mockserver/main/mocks/fixtures/brp/test-personen.json' with { type: 'json' };
+import verblijfplaatsenResponse from '../../../../mockserver/main/mocks/fixtures/brp/verblijfplaatshistorie.json' with { type: 'json' };
 import { remoteApi } from '../../../testing/utils.ts';
 import * as sourceApi from '../../helpers/source-api-request.ts';
 import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token.ts';

@@ -13,7 +13,7 @@ import {
   fetchKrefiaNotifications,
   fetchAndTransformKrefia,
 } from './krefia.ts';
-import KrefiaData from '../../../../mockserver/fixtures/krefia.json';
+import KrefiaData from '../../../../mockserver/main/mocks/fixtures/krefia.json' with { type: 'json' };
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 import { omit } from '../../../universal/helpers/utils.ts';
 import { axiosRequest } from '../../helpers/source-api-request.ts';
