@@ -133,7 +133,7 @@ describe('amsapp-notifications', () => {
               title: 'Actual title (should be hidden)',
               isTip: false,
               isAlert: true,
-              datePublished: '2026-03-06',
+              datePublished: '2026-03-06T00:00:00.000Z',
             },
           ],
         },
@@ -163,7 +163,7 @@ describe('amsapp-notifications', () => {
         {
           id: 'n-1',
           title: DISCRETE_GENERIC_MESSAGE,
-          datePublished: '2026-03-06',
+          datePublished: '2026-03-06T00:00:00.000Z',
         },
       ],
     });
