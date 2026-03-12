@@ -34,7 +34,6 @@ function transformBBFrontend(zaak: BedAndBreakfastType): BBVergunningFrontend {
       }),
       title: zaak.title,
     },
-    location: null, // TODO:
     heeftOvergangsRecht: zaak.dateReceived
       ? isBefore(
           new Date(zaak.dateReceived),

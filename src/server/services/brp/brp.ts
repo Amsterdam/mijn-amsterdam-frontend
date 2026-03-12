@@ -1,3 +1,4 @@
+import { HttpStatusCode } from 'axios';
 import { isAfter, parseISO, subYears } from 'date-fns';
 
 import {
@@ -28,7 +29,6 @@ import type {
   PersoonBasisSource,
   PersoonSource,
 } from './brp-types.ts';
-import { HttpStatusCode } from '../../../client/hooks/api/useBffApi.ts';
 import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import {
   apiErrorResult,
@@ -36,12 +36,18 @@ import {
   getFailedDependencies,
   type ApiResponse,
 } from '../../../universal/helpers/api.ts';
-import type { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types.ts';
+import type {
+  AuthProfile,
+  AuthProfileAndToken,
+} from '../../auth/auth-types.ts';
 import { ONE_HOUR_MS } from '../../config/app.ts';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt.ts';
 import { getFromEnv } from '../../helpers/env.ts';
 import { getApiConfig } from '../../helpers/source-api-helpers.ts';
-import { isSuccessStatus, requestData } from '../../helpers/source-api-request.ts';
+import {
+  isSuccessStatus,
+  requestData,
+} from '../../helpers/source-api-request.ts';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
 import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token.ts';
 import { getContextOperationId } from '../monitoring.ts';
