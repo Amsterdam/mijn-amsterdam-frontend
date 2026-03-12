@@ -12,8 +12,8 @@
   "type": "module",
   "scripts": {
     "analyze": "source-map-explorer 'build/assets/*.js'",
-    "mock-server": "mocks-server",
-    "mock-server:serve": "mocks-server --no-plugins.inquirerCli.enabled",
+    "mock-server": "cd mockserver/main && node start.js",
+    "mock-server:serve": "cd mockserver/main && node start.js --no-plugins.inquirerCli.enabled",
     "serve-dev": "concurrently \"pnpm:bff-api:watch\" \"pnpm:start\" \"pnpm:mock-server:serve\"",
     "start": "cross-env MA_APP_MODE=development vite",
     "build": "cross-env MA_APP_MODE=production vite build",

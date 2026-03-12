@@ -10,12 +10,9 @@ import {
 } from 'vitest';
 
 import { fetchContentTips, prefixTipNotification } from './tips-service.ts';
-import WPI_E from '../../../../mocks/fixtures/wpi-e-aanvragen.json';
-import type {
-  ApiSuccessResponse} from '../../../universal/helpers/api.ts';
-import {
-  apiSuccessResult,
-} from '../../../universal/helpers/api.ts';
+import WPI_E from '../../../../mockserver/fixtures/wpi-e-aanvragen.json';
+import type { ApiSuccessResponse } from '../../../universal/helpers/api.ts';
+import { apiSuccessResult } from '../../../universal/helpers/api.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
 import type { BrpFrontend } from '../brp/brp-types.ts';
 import type { WpiRequestProcess } from '../wpi/wpi-types.ts';

@@ -12,21 +12,19 @@ import {
 import type {
   ZorgnedPerson,
   ZorgnedPersoonsgegevensNAWResponse,
-  ZorgnedResponseDataSource} from './zorgned-types.ts';
+  ZorgnedResponseDataSource,
+} from './zorgned-types.ts';
 import {
   ZORGNED_GEMEENTE_CODE,
   type BeschiktProduct,
   type ZorgnedAanvraagSource,
   type ZorgnedPersoonSource,
 } from './zorgned-types.ts';
-import ZORGNED_JZD_AANVRAGEN from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json';
+import ZORGNED_JZD_AANVRAGEN from '../../../../mockserver/fixtures/zorgned-jzd-aanvragen.json';
 import { remoteApiHost } from '../../../testing/setup.ts';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
-import type {
-  ApiSuccessResponse} from '../../../universal/helpers/api.ts';
-import {
-  apiErrorResult
-} from '../../../universal/helpers/api.ts';
+import type { ApiSuccessResponse } from '../../../universal/helpers/api.ts';
+import { apiErrorResult } from '../../../universal/helpers/api.ts';
 import * as request from '../../helpers/source-api-request.ts';
 import { ZORGNED_AV_API_CONFIG_KEY } from '../hli/hli-service-config.ts';
 import { ZORGNED_JZD_API_CONFIG_KEY } from '../wmo/wmo-service-config.ts';

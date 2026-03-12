@@ -1,11 +1,8 @@
 import Mockdate from 'mockdate';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-import type {
-  HulpmiddelenDisclaimerConfig} from './status-line-items/wmo-hulpmiddelen.ts';
-import {
-  getHulpmiddelenDisclaimer
-} from './status-line-items/wmo-hulpmiddelen.ts';
+import type { HulpmiddelenDisclaimerConfig } from './status-line-items/wmo-hulpmiddelen.ts';
+import { getHulpmiddelenDisclaimer } from './status-line-items/wmo-hulpmiddelen.ts';
 import { routes } from './wmo-service-config.ts';
 import {
   fetchActueleWRAVoorzieningenCompact,
@@ -13,7 +10,7 @@ import {
   fetchWmoVoorzieningenCompact,
   forTesting,
 } from './wmo.ts';
-import ZORGNED_AANVRAGEN_WMO from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json';
+import ZORGNED_AANVRAGEN_WMO from '../../../../mockserver/fixtures/zorgned-jzd-aanvragen.json';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 import { jsonCopy } from '../../../universal/helpers/utils.ts';
 import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
