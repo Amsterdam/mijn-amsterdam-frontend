@@ -1,6 +1,7 @@
 import { fetchAdoptableTrashContainerTips } from './afval/adoptable-trash-containers';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import {
+  apiErrorResult,
   ApiResponse_DEPRECATED,
   getSettledResult,
   type ApiResponse,
@@ -168,7 +169,16 @@ export async function fetchNotificationsAndTipsFromServices(
 
   const serviceResults = await Promise.allSettled(
     entries(services).map(async ([serviceId, fetchNotifications]) => {
-      const result = await fetchNotifications(authProfileAndToken);
+      const result = await fetchNotifications(authProfileAndToken).catch(
+        (error) => {
+          captureException(
+            new Error(
+              `Error in fetchNotifications for service ${serviceId}: ${error instanceof Error ? error.message : String(error)}`
+            )
+          );
+          return apiErrorResult(error, null);
+        }
+      );
       return [serviceId, result];
     })
   );
@@ -178,21 +188,7 @@ export async function fetchNotificationsAndTipsFromServices(
     NotificationsAndTipsResponse,
   ][];
 
-  const resultsObject = Object.fromEntries(results);
-
-  // TODO: Remove, this is only needed for debugging
-  for (const [serviceId, result] of entries(resultsObject)) {
-    if (!result || !('content' in result)) {
-      captureException(
-        new Error(
-          `Result for ${serviceId} does not contain content: ${JSON.stringify(result, undefined, 2)}`
-        )
-      );
-      delete resultsObject[serviceId];
-    }
-  }
-
-  return resultsObject;
+  return Object.fromEntries(results);
 }
 
 export function sortNotificationsAndInsertTips(
