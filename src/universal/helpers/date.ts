@@ -29,19 +29,15 @@ export function dateFormat(date: string | Date | number, fmt: string) {
   return String(date);
 }
 
-export function parseDateAndDateTime(date: Date): string;
-export function parseDateAndDateTime(date: string): string | null;
-export function parseDateAndDateTime(date: string | Date): string | null {
-  if (date == null || date === '') {
+export function parseToISO(date: Date): string;
+export function parseToISO(date: string): string | null;
+export function parseToISO(date: string | Date): string | null {
+  if (!date) {
     return null;
   }
 
   if (date instanceof Date) {
     return date.toISOString();
-  }
-
-  if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
-    return date;
   }
 
   const parsedDate = parseISO(date);

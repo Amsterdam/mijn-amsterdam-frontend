@@ -21,7 +21,7 @@ import {
   apiSuccessResult,
   type ApiResponse,
 } from '../../../../universal/helpers/api';
-import { parseDateAndDateTime } from '../../../../universal/helpers/date';
+import { parseToISO } from '../../../../universal/helpers/date';
 import { entries, pick } from '../../../../universal/helpers/utils';
 import {
   fetchNotificationsAndTipsFromServices,
@@ -66,7 +66,7 @@ export async function storeNotificationsResponses(
   profileId: BSN,
   serviceResponses: Record<ServiceId, NotificationsAndTipsResponse>
 ): Promise<void> {
-  const now = parseDateAndDateTime(new Date());
+  const now = parseToISO(new Date());
   const responses = entries(serviceResponses)
     .filter(([_, response]) => response.status === 'OK') // Unsuccessful responses do not contain new notifications
     .map(
@@ -130,7 +130,7 @@ function transformNotificationsForExternalUse(
       id: notification.id,
       // If we decide to show the actual notification title, use `notification.title`
       title: DISCRETE_GENERIC_MESSAGE,
-      datePublished: parseDateAndDateTime(notification.datePublished) ?? '',
+      datePublished: parseToISO(notification.datePublished) ?? '',
     }))
     .filter((n) => !!n.datePublished);
 
