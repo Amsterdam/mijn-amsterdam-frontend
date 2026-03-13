@@ -15,32 +15,41 @@ const DEFAULT_DATE_FORMAT = 'dd MMMM yyyy';
 const ISO_DATE_FORMAT = 'yyyy-MM-dd';
 const ISO_DATE_TIME_FORMAT_COMPACT = "yyyy-MM-dd'T'HH:mm:ss";
 
-export function dateFormat(datestr: string | Date | number, fmt: string) {
-  if (!datestr) {
+export function dateFormat(date: string | Date | number, fmt: string) {
+  if (!date) {
     return '';
   }
   try {
-    const d = typeof datestr === 'string' ? parseISO(datestr) : datestr;
-    return format(d, fmt, { locale: nl });
+    const parsedDate = typeof date === 'string' ? parseISO(date) : date;
+    return format(parsedDate, fmt, { locale: nl });
   } catch (_error) {
-    logger.error(`Could not format date: ${datestr}`);
+    logger.error(`dateFormat: Could not format date: ${date}`);
   }
 
-  return String(datestr);
+  return String(date);
 }
 
-export function parseDateToISO(datestr: string | Date | number) {
-  if (datestr == null || datestr === '') {
-    return '';
+export function parseDateAndDateTime(date: Date): string;
+export function parseDateAndDateTime(date: string): string | null;
+export function parseDateAndDateTime(date: string | Date): string | null {
+  if (date == null || date === '') {
+    return null;
   }
 
-  const date = new Date(datestr);
-  if (Number.isNaN(date.getTime())) {
-    logger.error(`Could not parse date to ISO format:${datestr}`);
-    return '';
+  if (date instanceof Date) {
+    return date.toISOString();
   }
 
-  return date.toISOString();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+    return date;
+  }
+
+  const parsedDate = parseISO(date);
+  if (parsedDate.toString() === 'Invalid Date') {
+    logger.error(`parseDateToISO: Could not parse date: ${date}`);
+    return null;
+  }
+  return parsedDate.toISOString();
 }
 
 export function defaultDateFormat(datestr: string | Date | number) {
