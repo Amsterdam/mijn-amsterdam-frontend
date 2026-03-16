@@ -19,6 +19,7 @@
     "isolatedModules": true,
     "noEmit": false,
     "downlevelIteration": true,
+    "noFallthroughCasesInSwitch": true,
     "verbatimModuleSyntax": true,
     "rewriteRelativeImportExtensions": true,
     "allowImportingTsExtensions": true,
