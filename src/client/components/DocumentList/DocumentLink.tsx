@@ -25,18 +25,15 @@ interface DocumentLinkProps {
 function downloadFile(docDownload: GenericDocument, fileExtension?: string) {
   const link = document.createElement('a');
   link.href = docDownload.url;
-  const downloadName = addFileType(
-    docDownload.download || docDownload.title,
-    fileExtension
-  );
+  const baseUrl = docDownload.download || docDownload.title;
+  const downloadName = fileExtension
+    ? `${baseUrl}.${fileExtension}`
+    : addFileType(baseUrl);
   link.download = downloadName;
   link.click();
 }
 
-function addFileType(url: string, fileExtension?: string) {
-  if (fileExtension) {
-    return `${url}.${fileExtension}`;
-  }
+function addFileType(url: string) {
   const defaultType = 'pdf';
   const splitUrl = url.split('.');
 
