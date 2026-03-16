@@ -1,6 +1,7 @@
 import Mockdate from 'mockdate';
 import type nock from 'nock';
 
+import ZORGNED_JZD_AANVRAGEN from './zorgned-jzd-aanvragen.json';
 import {
   fetchAanvragen,
   fetchAanvragenWithRelatedPersons,
@@ -18,7 +19,6 @@ import {
   type ZorgnedAanvraagSource,
   type ZorgnedPersoonSource,
 } from './zorgned-types';
-import ZORGNED_JZD_AANVRAGEN from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json';
 import { remoteApiHost } from '../../../testing/setup';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import {
