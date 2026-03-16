@@ -88,7 +88,9 @@ export function isAfterWCAGValidDocumentsDate(date: string) {
 export function isCancelled(aanvraag: ZorgnedAanvraagTransformed) {
   // We consider an aanvraag cancelled if the start and end date of the validity are the same.
   // This is based on the data we have, but it is not 100% certain that this will always be the case.
-  return aanvraag.datumIngangGeldigheid === aanvraag.datumEindeGeldigheid;
+  return aanvraag.datumIngangGeldigheid && aanvraag.datumEindeGeldigheid
+    ? aanvraag.datumIngangGeldigheid === aanvraag.datumEindeGeldigheid
+    : false;
 }
 
 export function isEindeGeldigheidVerstreken(

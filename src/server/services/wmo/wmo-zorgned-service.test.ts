@@ -154,20 +154,33 @@ describe('wmo-zorgned-service', () => {
       },
       documenten: [],
     };
+
     const aanvraagCancelled = structuredClone(aanvraagNotCancelled) as any;
     aanvraagCancelled.beschikking.beschikkingsNummer = 'cancelled';
     aanvraagCancelled.beschikking.beschikteProducten[0].toegewezenProduct.datumEindeGeldigheid =
       '2023-05-06';
 
+    const aanvraagNotCancellable = structuredClone(aanvraagNotCancelled) as any;
+    aanvraagNotCancellable.beschikking.beschikkingNummer = 'not-cancellable';
+    aanvraagNotCancellable.beschikking.beschikteProducten[0].toegewezenProduct.datumEindeGeldigheid =
+      null;
+    aanvraagNotCancellable.beschikking.beschikteProducten[0].toegewezenProduct.datumIngangGeldigheid =
+      null;
+
     remoteApi.post('/zorgned/aanvragen').reply(200, {
       _embedded: {
-        aanvraag: [aanvraagCancelled, aanvraagNotCancelled],
+        aanvraag: [
+          aanvraagCancelled,
+          aanvraagNotCancelled,
+          aanvraagNotCancellable,
+        ],
       },
     });
 
     const response = await fetchZorgnedAanvragenWMO('123456789');
 
-    expect(response.content?.length).toBe(1);
+    expect(response.content?.length).toBe(2);
+    expect(response.content?.[1].beschikkingNummer).toBe('not-cancellable');
     expect(response.content?.[0].beschikkingNummer).toBe('not-cancelled');
   });
 
