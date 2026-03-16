@@ -23,6 +23,11 @@ export default defineConfig({
     MA_BUILD_ID: JSON.stringify(process.env.MA_BUILD_ID || '-1'),
     MA_GIT_SHA: JSON.stringify(process.env.MA_GIT_SHA || '-1'),
   },
+  optimizeDeps: {
+    esbuildOptions: {
+      tsconfig: 'tsconfig.build-fe.json',
+    },
+  },
   envPrefix: 'REACT_APP_',
   build: {
     outDir: 'build',
