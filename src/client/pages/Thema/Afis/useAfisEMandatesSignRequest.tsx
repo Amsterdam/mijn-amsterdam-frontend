@@ -58,36 +58,47 @@ export function useSignRequestPayloadStorage() {
       ];
       setValue(newPayloads);
     },
-    remove(eMandateId: AfisEMandateFrontend['id']) {
-      const newPayloads = payloads.filter((p) => p.eMandateId !== eMandateId);
-      setValue(newPayloads);
-    },
-    getPayload(eMandateId: AfisEMandateFrontend['id']): string | null {
-      return get(eMandateId, 'payload');
-    },
     hasPayloads(): boolean {
       return payloads.length > 0;
     },
-    isTakingLong(eMandateId: AfisEMandateFrontend['id']): boolean {
-      const activationDate = get(eMandateId, 'activationDate');
-      return activationDate
-        ? new Date().getTime() - new Date(activationDate).getTime() >
-            AFIS_EMANDATE_LONG_DURATION_THRESHOLD_MS
-        : false;
-    },
-    isReplacement(eMandateId: AfisEMandateFrontend['id']): boolean {
-      const isReplacement = get(eMandateId, 'isReplacement');
-      return isReplacement === 'true';
-    },
-    isReplaced(
-      eMandateId: AfisEMandateFrontend['id'],
-      eMandateIdSource: AfisEMandateFrontend['eMandateIdSource']
-    ): boolean {
-      const lastPayload = payloads.findLast((p) => p.eMandateId === eMandateId);
+    get(eMandateId: AfisEMandateFrontend['id']) {
+      const api = {
+        remove() {
+          const newPayloads = payloads.filter(
+            (p) => p.eMandateId !== eMandateId
+          );
+          setValue(newPayloads);
+        },
+        getPayload(): string | null {
+          return get(eMandateId, 'payload');
+        },
+        isTakingLong(): boolean {
+          const activationDate = get(eMandateId, 'activationDate');
+          return activationDate
+            ? new Date().getTime() - new Date(activationDate).getTime() >
+                AFIS_EMANDATE_LONG_DURATION_THRESHOLD_MS
+            : false;
+        },
+        isReplacement(): boolean {
+          const isReplacement = get(eMandateId, 'isReplacement');
+          return isReplacement === 'true';
+        },
+        isReplaced(
+          eMandateIdSource: AfisEMandateFrontend['eMandateIdSource']
+        ): boolean {
+          const lastPayload = payloads.findLast(
+            (p) => p.eMandateId === eMandateId
+          );
 
-      return lastPayload
-        ? lastPayload.eMandateIdSource !== eMandateIdSource?.toString()
-        : false;
+          return lastPayload
+            ? lastPayload.eMandateIdSource !== eMandateIdSource?.toString()
+            : false;
+        },
+      };
+      if (!api.getPayload()) {
+        return null;
+      }
+      return api;
     },
   };
 }
@@ -101,17 +112,17 @@ export function useSignRequestPayloadStorageCleanup(
     if (EMandatesSource.length) {
       const obsoleteStatusCheckIds = EMandatesSource.filter(
         ({ id, status, eMandateIdSource }) => {
-          if (!payloadStorage.getPayload(id)) {
+          if (!payloadStorage.get(id)?.getPayload()) {
             return false;
           }
-          return payloadStorage.isReplacement(id)
-            ? payloadStorage.isReplaced(id, eMandateIdSource)
+          return payloadStorage.get(id)?.isReplacement()
+            ? payloadStorage.get(id)?.isReplaced(eMandateIdSource)
             : status !== '0';
         }
       ).map(({ id }) => id);
 
       obsoleteStatusCheckIds.forEach((id) => {
-        payloadStorage.remove(id);
+        payloadStorage.get(id)?.remove();
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -123,7 +134,7 @@ export function useSignRequestPayloadStorageCleanup(
 // if the customer just returned to Mijn Amsterdam before completing the signing process.
 export function useSignRequestStatusCheck(eMandate: AfisEMandateFrontend) {
   const payloadStorage = useSignRequestPayloadStorage();
-  const payload = payloadStorage.getPayload(eMandate.id);
+  const payload = payloadStorage.get(eMandate.id)?.getPayload();
 
   // Only perform the status check if there's a payload in storage and the mandate is not active yet (to prevent unnecessary checks after activation).
   const api = useBffApi<AfisEMandateSignRequestStatusResponse>(
@@ -139,8 +150,8 @@ export function useSignRequestStatusCheck(eMandate: AfisEMandateFrontend) {
 
   const statusResponse = api.data?.content?.status ?? '';
   const isUpdatingEMandateStatus =
-    !!payload && payloadStorage.isReplacement(eMandate.id)
-      ? !payloadStorage.isReplaced(eMandate.id, eMandate.eMandateIdSource)
+    !!payload && payloadStorage.get(eMandate.id)?.isReplacement()
+      ? !payloadStorage.get(eMandate.id)?.isReplaced(eMandate.eMandateIdSource)
       : eMandate.status !== EMANDATE_STATUS_ACTIVE;
 
   const isPendingActivation = api.isLoading
@@ -154,9 +165,9 @@ export function useSignRequestStatusCheck(eMandate: AfisEMandateFrontend) {
     payload,
     isPendingActivation,
     isRequestingStatusCheck: api.isLoading && isUpdatingEMandateStatus,
-    isTakingLong: payloadStorage.isTakingLong(eMandate.id),
+    isTakingLong: payloadStorage.get(eMandate.id)?.isTakingLong(),
     cancel: () => {
-      payloadStorage.remove(eMandate.id);
+      payloadStorage.get(eMandate.id)?.remove();
     },
   };
 }
