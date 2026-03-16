@@ -5,6 +5,8 @@ import dotenvExpand from 'dotenv-expand';
 import nock from 'nock';
 import { afterAll, afterEach, vi } from 'vitest';
 
+process.env.TZ = process.env.TZ || 'Europe/Amsterdam';
+
 const ENV_FILE = '.env.local.template';
 const envConfig = dotenv.config({ path: ENV_FILE });
 dotenvExpand.expand(envConfig);
