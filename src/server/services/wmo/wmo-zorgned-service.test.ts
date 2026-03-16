@@ -131,6 +131,46 @@ describe('wmo-zorgned-service', () => {
     `);
   });
 
+  test('Should filter out cancelled aanvragen', async () => {
+    const aanvraagNotCancelled = {
+      identificatie: '123123123',
+      datumAanvraag: '2025-11-25',
+      beschikking: {
+        beschikkingNummer: 'not-cancelled',
+        beschikteProducten: [
+          {
+            identificatie: '116841',
+            product: {
+              productsoortCode: 'WRA',
+              omschrijving: 'woonruimteaanpassing (in behandeling)',
+            },
+            resultaat: 'toegewezen',
+            toegewezenProduct: {
+              datumIngangGeldigheid: '2023-05-06',
+              datumEindeGeldigheid: null,
+            },
+          },
+        ],
+      },
+      documenten: [],
+    };
+    const aanvraagCancelled = structuredClone(aanvraagNotCancelled) as any;
+    aanvraagCancelled.beschikking.beschikkingsNummer = 'cancelled';
+    aanvraagCancelled.beschikking.beschikteProducten[0].toegewezenProduct.datumEindeGeldigheid =
+      '2023-05-06';
+
+    remoteApi.post('/zorgned/aanvragen').reply(200, {
+      _embedded: {
+        aanvraag: [aanvraagCancelled, aanvraagNotCancelled],
+      },
+    });
+
+    const response = await fetchZorgnedAanvragenWMO('123456789');
+
+    expect(response.content?.length).toBe(1);
+    expect(response.content?.[0].beschikkingNummer).toBe('not-cancelled');
+  });
+
   describe('getFakeDecisionDocuments', () => {
     const aanvraagBase = {
       datumAanvraag: '2023-05-05',

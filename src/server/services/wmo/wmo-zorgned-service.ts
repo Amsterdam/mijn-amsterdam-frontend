@@ -8,6 +8,7 @@ import { ZorgnedAanvraagTransformed, type BSN } from '../zorgned/zorgned-types';
 import {
   FAKE_DECISION_DOCUMENT_ID,
   isAfterWCAGValidDocumentsDate,
+  isCancelled,
   isDocumentDecisionDateActive,
   isEindeGeldigheidVerstreken,
 } from './status-line-items/wmo-generic';
@@ -118,6 +119,9 @@ export async function fetchZorgnedAanvragenWMO(bsn: BSN) {
   if (aanvragenResponse.status === 'OK') {
     // Filter the aanvragen that we should show in frontend.
     const aanvragenFiltered = aanvragenResponse.content
+      ?.filter((aanvraagTransformed) => {
+        return !isCancelled(aanvraagTransformed);
+      })
       ?.filter((aanvraagTransformed) => {
         return isAfterWCAGValidDocumentsDate(aanvraagTransformed.datumBesluit)
           ? !!aanvraagTransformed.resultaat

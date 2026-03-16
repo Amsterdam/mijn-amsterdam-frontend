@@ -85,6 +85,12 @@ export function isAfterWCAGValidDocumentsDate(date: string) {
   return isAfter(parseISO(date), MINIMUM_REQUEST_DATE_FOR_DOCUMENTS);
 }
 
+export function isCancelled(aanvraag: ZorgnedAanvraagTransformed) {
+  // We consider an aanvraag cancelled if the start and end date of the validity are the same.
+  // This is based on the data we have, but it is not 100% certain that this will always be the case.
+  return aanvraag.datumIngangGeldigheid === aanvraag.datumEindeGeldigheid;
+}
+
 export function isEindeGeldigheidVerstreken(
   datumEindeGeldigheid: string | null,
   compareDate: Date
@@ -168,7 +174,7 @@ export function getTransformerConfigBesluit(
     status: 'Besluit genomen',
     datePublished: (aanvraag) => getDecisionDate(aanvraag) ?? '',
     isChecked: (aanvraag) => hasDecision(aanvraag),
-    isActive: isActive,
+    isActive,
     isVisible: (aanvraag) => {
       return (
         getDecisionDocument(aanvraag.documenten)?.id !==
