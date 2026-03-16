@@ -3,7 +3,10 @@ import {
   saveUserFeedback,
   userFeedbackOverview,
 } from './user-feedback';
-import { SURVEY_ID_INLINE_KTO } from './user-feedback.service-config';
+import {
+  SURVEY_ID_INLINE_KTO,
+  SURVEY_VERSION_INLINE_KTO,
+} from './user-feedback.service-config';
 import {
   userFeedbackInput,
   type Survey,
@@ -36,7 +39,7 @@ export async function handleFetchSurveyOverview(
 ) {
   const surveyOverview = await userFeedbackOverview(
     req.query.id ?? SURVEY_ID_INLINE_KTO,
-    req.query.version ?? 'latest',
+    req.query.version ?? SURVEY_VERSION_INLINE_KTO,
     parseInt(req.query.page || '1', 10)
   );
 
@@ -75,7 +78,7 @@ export async function handleShowSurveyOverview(
   const currentPage = parseInt(req.query.page || '1', 10);
   const feedbackOverview = await userFeedbackOverview(
     req.query.id ?? SURVEY_ID_INLINE_KTO,
-    req.query.version ?? 'latest',
+    req.query.version ?? SURVEY_VERSION_INLINE_KTO,
     currentPage
   );
 
@@ -86,7 +89,10 @@ export async function handleShowSurveyOverview(
       if (typeof entry === 'undefined') {
         return acc;
       }
-      const rating = entry.answers['3'] || '0';
+      const rating = Object.values(entry.answers)[0] || '0';
+      if (isNaN(parseInt(rating, 10))) {
+        return acc;
+      }
       return acc + parseInt(rating, 10);
     }, 0) / (entries.length || 1)
   ).toFixed(2);

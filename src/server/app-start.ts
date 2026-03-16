@@ -1,3 +1,5 @@
+// Load environment variables first since code afterwards relies on them being available.
+import './helpers/load-env';
 import { startAppConfiguration } from './config/azure-appconfiguration';
 
 (async function startApp() {

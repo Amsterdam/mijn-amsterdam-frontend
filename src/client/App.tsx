@@ -109,13 +109,15 @@ function AppLanding() {
 
   useScrollToTop();
 
-  // If session was previously authenticated we don't want to show the loader again
+  // We don't want to show the app content until we know whether the user is authenticated or not,
+  // to prevent flashing of the wrong content.
+  // Therefore, we return null while the session is still loading (dirty).
   if (!isDirty) {
-    return (
-      <Paragraph className={styles.PreLoader}>
-        Welkom op Mijn Amsterdam
-      </Paragraph>
-    );
+    return null;
+  }
+  const welcomeLoader = document.getElementById('loader');
+  if (welcomeLoader) {
+    welcomeLoader.remove();
   }
 
   return isAuthenticated ? (

@@ -3,7 +3,7 @@ import Mockdate from 'mockdate';
 import { generatePath } from 'react-router';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
-import { routeConfig } from './Varen-thema-config';
+import { themaConfig } from './Varen-thema-config';
 import { VarenThema } from './VarenThema';
 import {
   VarenZakenFrontend,
@@ -103,8 +103,8 @@ const getTestState = (
     },
   });
 
-const routePath = routeConfig.themaPage.path;
-const routeEntry = generatePath(routeConfig.themaPage.path);
+const routePath = themaConfig.route.path;
+const routeEntry = generatePath(themaConfig.route.path);
 
 describe('<Varen />', () => {
   function Component({ state }: { state: AppState }) {

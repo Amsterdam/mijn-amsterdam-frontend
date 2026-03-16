@@ -3,7 +3,7 @@ import Mockdate from 'mockdate';
 import { generatePath } from 'react-router';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
-import { routeConfig } from './Varen-thema-config';
+import { themaConfig } from './Varen-thema-config';
 import { VarenList } from './VarenList';
 import {
   VarenVergunningFrontend,
@@ -65,8 +65,8 @@ describe('<VarenList />', () => {
   function Component({ state }: { state: AppState }) {
     return (
       <MockApp
-        routePath={routeConfig.listPage.path}
-        routeEntry={generatePath(routeConfig.listPage.path, {
+        routePath={themaConfig.listPage.route.path}
+        routeEntry={generatePath(themaConfig.listPage.route.path, {
           kind: 'lopende-aanvragen',
           page: '1',
         })}
@@ -141,8 +141,8 @@ describe('<VarenVergunningList />', () => {
   function Component({ state }: { state: AppState }) {
     return (
       <MockApp
-        routePath={routeConfig.listPage.path}
-        routeEntry={generatePath(routeConfig.listPage.path, {
+        routePath={themaConfig.listPage.route.path}
+        routeEntry={generatePath(themaConfig.listPage.route.path, {
           kind: 'actieve-vergunningen',
           page: '1',
         })}

@@ -1,6 +1,7 @@
 import { fetchAdoptableTrashContainerTips } from './afval/adoptable-trash-containers';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import {
+  apiErrorResult,
   ApiResponse_DEPRECATED,
   getSettledResult,
   type ApiResponse,
@@ -23,6 +24,7 @@ import {
 import { fetchHorecaNotifications } from './horeca/horeca';
 import { fetchKlachtenNotifications } from './klachten/klachten';
 import { fetchKrefiaNotifications } from './krefia/krefia';
+import { captureException } from './monitoring';
 import { fetchParkeerVergunningenNotifications } from './parkeren/parkeren-notifications';
 import {
   fetchBelastingNotifications,
@@ -37,6 +39,7 @@ import { fetchVergunningenNotifications } from './vergunningen/vergunningen-noti
 import { fetchWiorNotifications } from './wior';
 import { fetchWpiNotifications } from './wpi';
 import { streamEndpointQueryParamKeys } from '../../universal/config/app';
+import { entries } from '../../universal/helpers/utils';
 import { getFromEnv } from '../helpers/env';
 
 // Every 3rd notification will be a tip if one is available.
@@ -165,8 +168,17 @@ export async function fetchNotificationsAndTipsFromServices(
   }
 
   const serviceResults = await Promise.allSettled(
-    Object.entries(services).map(async ([serviceId, fetchNotifications]) => {
-      const result = await fetchNotifications(authProfileAndToken);
+    entries(services).map(async ([serviceId, fetchNotifications]) => {
+      const result = await fetchNotifications(authProfileAndToken).catch(
+        (error) => {
+          captureException(
+            new Error(
+              `Error in fetchNotifications for service ${serviceId}: ${error instanceof Error ? error.message : String(error)}`
+            )
+          );
+          return apiErrorResult(error, null);
+        }
+      );
       return [serviceId, result];
     })
   );
@@ -175,6 +187,7 @@ export async function fetchNotificationsAndTipsFromServices(
     keyof typeof services,
     NotificationsAndTipsResponse,
   ][];
+
   return Object.fromEntries(results);
 }
 

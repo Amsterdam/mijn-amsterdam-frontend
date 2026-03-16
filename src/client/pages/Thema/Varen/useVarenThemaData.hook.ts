@@ -1,12 +1,5 @@
 import { CONTENT_EMPTY } from './helper';
-import {
-  tableConfig,
-  varenLegesTableLink,
-  varenMeerInformatieLink,
-  themaTitle,
-  themaId,
-  routeConfig,
-} from './Varen-thema-config';
+import { tableConfig, themaConfig } from './Varen-thema-config';
 import type {
   VarenVergunningFrontend,
   VarenZakenFrontend,
@@ -41,7 +34,7 @@ export function useVarenThemaData() {
     true
   );
 
-  const breadcrumbs = useThemaBreadcrumbs(themaId);
+  const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
   return {
     varenRederRegistratie,
@@ -50,11 +43,11 @@ export function useVarenThemaData() {
     isError: isError(VAREN),
     varenZaken,
     varenVergunningen,
-    linkListItems: [varenMeerInformatieLink, varenLegesTableLink],
+    pageLinks: themaConfig.pageLinks,
     buttonItems: [],
     breadcrumbs,
-    id: themaId,
-    title: themaTitle,
-    routeConfig,
+    id: themaConfig.id,
+    title: themaConfig.title,
+    themaConfig,
   };
 }
