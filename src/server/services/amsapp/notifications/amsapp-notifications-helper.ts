@@ -3,8 +3,8 @@ import UID from 'uid-safe';
 import type {
   AuthProfile,
   AuthProfileAndToken,
-} from '../../../auth/auth-types';
-import { ONE_DAY_MS } from '../../../config/app';
+} from '../../../auth/auth-types.ts';
+import { ONE_DAY_MS } from '../../../config/app.ts';
 
 const SEVEN_DAYS_IN_MS = 7 * ONE_DAY_MS;
 export const getSevenDaysAgoISOString = () =>

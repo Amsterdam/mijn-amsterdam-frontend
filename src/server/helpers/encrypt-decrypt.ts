@@ -1,8 +1,8 @@
 import { Buffer } from 'node:buffer';
 import crypto from 'node:crypto';
 
-import { IS_PRODUCTION } from '../../universal/config/env';
-import { DecryptedPayloadAndSessionID } from '../services/shared/decrypt-route-param';
+import { IS_PRODUCTION } from '../../universal/config/env.ts';
+import { DecryptedPayloadAndSessionID } from '../services/shared/decrypt-route-param.ts';
 
 type Base64IvEncryptedValue = string;
 type EncryptedValue = Buffer;

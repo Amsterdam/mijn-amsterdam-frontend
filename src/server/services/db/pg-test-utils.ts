@@ -1,6 +1,6 @@
 import { Pool } from 'pg';
 
-import { pgDbConfig } from './postgres';
+import { pgDbConfig } from './postgres.ts';
 
 type EnvOverrides = Record<string, string | undefined>;
 

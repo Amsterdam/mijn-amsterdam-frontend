@@ -12,9 +12,9 @@ import {
   decosRederZaakTransformers,
   decosVergunningTransformers,
   decosZaakTransformers,
-} from './decos-zaken';
-import { getStatusSteps } from './varen-status-steps';
-import { themaConfig } from '../../../client/pages/Thema/Varen/Varen-thema-config';
+} from './decos-zaken.ts';
+import { getStatusSteps } from './varen-status-steps.ts';
+import { themaConfig } from '../../../client/pages/Thema/Varen/Varen-thema-config.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
