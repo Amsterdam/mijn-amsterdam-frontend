@@ -5,7 +5,7 @@ import {
   type ConsumerProfile,
   type NotificationsService,
 } from './amsapp-notifications-types';
-import { parseToISO } from '../../../../universal/helpers/date';
+import { toISOString } from '../../../../universal/helpers/date';
 import { isRecord } from '../../../../universal/helpers/utils';
 import {
   decrypt,
@@ -192,7 +192,7 @@ export async function storeNotifications(
   return db.query(queries.updateNotifications, [
     encryptedProfileID,
     servicesObj,
-    parseToISO(new Date()),
+    toISOString(new Date()),
   ]);
 }
 

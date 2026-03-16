@@ -29,9 +29,9 @@ export function dateFormat(date: string | Date | number, fmt: string) {
   return String(date);
 }
 
-export function parseToISO(date: Date): string;
-export function parseToISO(date: string): string | null;
-export function parseToISO(date: string | Date): string | null {
+export function toISOString(date: Date): string;
+export function toISOString(date: string): string | null;
+export function toISOString(date: string | Date): string | null {
   if (!date) {
     return null;
   }
