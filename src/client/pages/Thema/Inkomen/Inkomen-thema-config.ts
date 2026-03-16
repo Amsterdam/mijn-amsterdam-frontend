@@ -93,7 +93,7 @@ export const themaConfig: InkomenThemaConfig = {
     route: {
       path: '/inkomen/bbz/:version/:id',
       trackingUrl: `/inkomen/bbz`,
-      documentTitle: `Bbz | ${THEMA_ID}`,
+      documentTitle: `Bbz | ${THEMA_TITLE}`,
     },
   },
   detailPageTonk: {
