@@ -147,19 +147,16 @@ function useWindowStorage(
 
   const onStorageEvent = useCallback(
     (e: StorageEvent) => {
-      let storageAllowed = true;
       // Check if we can handle the storage event
       try {
         localStorage.key(0);
         sessionStorage.key(0);
-      } catch (error) {
-        storageAllowed = false;
+      } catch (_) {
+        return;
       }
 
-      if (storageAllowed) {
-        if (e.storageArea === adapter && e.key === key) {
-          setValue(storageType, key, e.newValue);
-        }
+      if (e.storageArea === adapter && e.key === key) {
+        setValue(storageType, key, e.newValue);
       }
     },
     [adapter, key, setValue, storageType]
