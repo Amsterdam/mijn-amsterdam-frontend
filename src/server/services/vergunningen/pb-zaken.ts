@@ -45,7 +45,7 @@ const LigplaatsWoonbootVergunningZaakTransformer: PowerBrowserZaakTransformer<Li
   {
     caseType: caseTypePB.LigplaatsWoonbootvergunning,
     title: 'Ligplaatsvergunning woonboot',
-    fetchZaakIdFilter: (pbRecordField) =>
+    fetchZaakFilter: (pbRecordField) =>
       hasStringInZAAKPRODUCT_ID(
         pbRecordField,
         'Ligplaatsvergunning woonboot'
@@ -69,7 +69,7 @@ const LigplaatsBedrijfsvaartuigVergunningZaakTransformer: PowerBrowserZaakTransf
   {
     caseType: caseTypePB.LigplaatsBedrijfsvaartuigvergunning,
     title: 'Ligplaatsvergunning bedrijfsvaartuig',
-    fetchZaakIdFilter: (pbRecordField) =>
+    fetchZaakFilter: (pbRecordField) =>
       hasStringInZAAKPRODUCT_ID(
         pbRecordField,
         'Ligplaatsvergunning bedrijfsvaartuig'
@@ -93,7 +93,7 @@ const OmzettingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Omzetting
   {
     caseType: caseTypePB.Omzettingsvergunning,
     title: 'Vergunning voor kamerverhuur (omzettingsvergunning)',
-    fetchZaakIdFilter: (pbRecordField) =>
+    fetchZaakFilter: (pbRecordField) =>
       hasCaseTypeInFMT_CAPTION(pbRecordField, 'Omzetting kamerverhuur'),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
@@ -110,7 +110,7 @@ const SamenvoegingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Samenv
   {
     caseType: caseTypePB.Samenvoegingsvergunning,
     title: 'Vergunning voor samenvoegen van woonruimten',
-    fetchZaakIdFilter: (pbRecordField) =>
+    fetchZaakFilter: (pbRecordField) =>
       hasCaseTypeInFMT_CAPTION(pbRecordField, 'Vergunning voor samenvoegen'),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
@@ -127,7 +127,7 @@ const OnttrekkingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Onttrek
   {
     caseType: caseTypePB.Onttrekkingsvergunning,
     title: caseTypePB.Onttrekkingsvergunning,
-    fetchZaakIdFilter: (pbRecordField) =>
+    fetchZaakFilter: (pbRecordField) =>
       hasCaseTypeInFMT_CAPTION(
         pbRecordField,
         OnttrekkingsvergunningZaakTransformer.title
@@ -142,7 +142,7 @@ const OnttrekkingsvergunningSloopZaakTransformer: PowerBrowserZaakTransformer<On
   {
     caseType: caseTypePB.OnttrekkingsvergunningSloop,
     title: caseTypePB.OnttrekkingsvergunningSloop,
-    fetchZaakIdFilter: (pbRecordField) =>
+    fetchZaakFilter: (pbRecordField) =>
       // Powerbrowser currently uses a misspelled name, we also check the correct spelling in case this is ever changed
       hasCaseTypeInFMT_CAPTION(
         pbRecordField,
@@ -162,7 +162,7 @@ const VormenVanWoonruimteZaakTransformer: PowerBrowserZaakTransformer<VormenVanW
   {
     caseType: caseTypePB.VormenVanWoonruimte,
     title: 'Vergunning voor woningvorming',
-    fetchZaakIdFilter: (pbRecordField) =>
+    fetchZaakFilter: (pbRecordField) =>
       hasCaseTypeInFMT_CAPTION(pbRecordField, 'Vergunning voor woningvormen'),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
@@ -174,7 +174,7 @@ const OnttrekkingsvergunningTweedeWoningZaakTransformer: PowerBrowserZaakTransfo
   {
     caseType: caseTypePB.OnttrekkingsvergunningTweedeWoning,
     title: 'Voorraadvergunning tweede woning',
-    fetchZaakIdFilter: (pbRecordField) =>
+    fetchZaakFilter: (pbRecordField) =>
       hasCaseTypeInFMT_CAPTION(
         pbRecordField,
         OnttrekkingsvergunningTweedeWoningZaakTransformer.title
@@ -189,7 +189,7 @@ const SplitsingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Splitsing
   {
     caseType: caseTypePB.Splitsingsvergunning,
     title: caseTypePB.Splitsingsvergunning,
-    fetchZaakIdFilter: (pbRecordField) =>
+    fetchZaakFilter: (pbRecordField) =>
       hasCaseTypeInFMT_CAPTION(
         pbRecordField,
         SplitsingsvergunningZaakTransformer.title

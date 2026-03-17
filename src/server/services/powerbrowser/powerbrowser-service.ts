@@ -573,11 +573,11 @@ async function fetchZakenRecords<T extends PowerBrowserZaakTransformer>(
   const zakenIdToZakentransformer = assignTransformerByFilter(
     zakenSearchResponse.content || [],
     zaakTransformers.map((t) => {
-      const defaultFetchZaakIdFilter = (pbRecordField: PBRecordField<string>) =>
+      const defaultFetchZaakFilter = (pbRecordField: PBRecordField<string>) =>
         hasCaseTypeInFMT_CAPTION(pbRecordField, t.caseType as string);
       return {
         zaakTransformer: t,
-        filter: t.fetchZaakIdFilter ?? defaultFetchZaakIdFilter,
+        filter: t.fetchZaakFilter ?? defaultFetchZaakFilter,
       };
     })
   );
