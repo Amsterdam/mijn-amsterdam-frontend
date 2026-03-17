@@ -1,12 +1,13 @@
 import type {
   BSN,
   ConsumerId,
-  ServiceId} from './amsapp-notifications-types.ts';
+  ServiceId,
+} from './amsapp-notifications-types.ts';
 import {
   type ConsumerProfile,
   type NotificationsService,
 } from './amsapp-notifications-types.ts';
-import { toISOString } from '../../../../universal/helpers/date';
+import { toISOString } from '../../../../universal/helpers/date.ts';
 import { isRecord } from '../../../../universal/helpers/utils.ts';
 import {
   decrypt,

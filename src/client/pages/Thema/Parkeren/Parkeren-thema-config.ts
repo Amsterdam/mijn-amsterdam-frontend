@@ -9,10 +9,8 @@ import type {
   WithDetailPage,
   WithListPage,
 } from '../../../config/thema-types.ts';
-import {
-  ListPageParamKind as ListPageParamKindVergunningen,
-  tableConfig as tableConfigVergunningen,
-} from '../Vergunningen/Vergunningen-thema-config.ts';
+import type { ListPageParamKind as ListPageParamKindVergunningen } from '../Vergunningen/Vergunningen-thema-config.ts';
+import { tableConfig as tableConfigVergunningen } from '../Vergunningen/Vergunningen-thema-config.ts';
 
 const THEMA_ID = 'PARKEREN';
 const THEMA_TITLE = 'Parkeren';

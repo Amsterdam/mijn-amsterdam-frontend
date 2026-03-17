@@ -3,6 +3,7 @@ import {
   type ApiResponse_DEPRECATED,
   getSettledResult,
   type ApiResponse,
+  apiErrorResult,
 } from '../../universal/helpers/api.ts';
 import { dateSort } from '../../universal/helpers/date.ts';
 import type { MyNotification } from '../../universal/types/App.types.ts';
@@ -164,7 +165,7 @@ export async function fetchNotificationsAndTipsFromServices(
     return {};
   }
 
-   const serviceResults = await Promise.allSettled(
+  const serviceResults = await Promise.allSettled(
     entries(services).map(async ([serviceId, fetchNotifications]) => {
       const result = await fetchNotifications(authProfileAndToken).catch(
         (error) => {
