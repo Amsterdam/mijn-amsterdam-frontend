@@ -12,7 +12,12 @@ import {
   ChevronForwardIcon,
   CloseIcon,
 } from '@amsterdam/design-system-react-icons';
-import { animated, useSpring } from '@react-spring/web';
+import {
+  animated,
+  useSpring,
+  type AnimatedProps,
+  type SpringValues,
+} from '@react-spring/web';
 import classnames from 'classnames';
 import { useSwipeable } from 'react-swipeable';
 
@@ -41,8 +46,10 @@ const NARROW_PANEL_SPRING_CONFIG = { mass: 0.3, tension: 400 };
 type PanelWideAnimatedProps = PropsWithChildren<{
   width: string;
 }>;
+type PanelProps = AnimatedProps<HTMLProps<HTMLDivElement>>;
+type AnimatedStyle = SpringValues<Record<string, unknown>>;
 
-const Panel = forwardRef<HTMLDivElement, any>(
+const Panel = forwardRef<HTMLDivElement, PanelProps>(
   ({ children, className, ...rest }, ref) => {
     return (
       <animated.div
@@ -84,7 +91,13 @@ const PanelInnerPhone = forwardRef<HTMLDivElement, HTMLProps<HTMLDivElement>>(
 );
 PanelInnerPhone.displayName = 'PanelInnerPhone';
 
-function PanelWide({ children, style }: { children: ReactNode; style: any }) {
+function PanelWide({
+  children,
+  style,
+}: {
+  children: ReactNode;
+  style: AnimatedStyle;
+}) {
   return (
     <Panel className={styles.PanelWide} style={style}>
       {children}
@@ -92,7 +105,7 @@ function PanelWide({ children, style }: { children: ReactNode; style: any }) {
   );
 }
 
-const PanelNarrow = forwardRef<HTMLDivElement, any>(
+const PanelNarrow = forwardRef<HTMLDivElement, PanelProps>(
   ({ children, ...rest }, ref) => {
     return (
       <Panel {...rest} className={styles.PanelNarrow} ref={ref}>
@@ -111,14 +124,14 @@ function PanelWideAnimated({ children, width }: PanelWideAnimatedProps) {
   const anim = useSpring({
     transform: `translate3d(calc(-100% + ${width}), 0, 0)`,
     config: WIDE_PANEL_SPRING_CONFIG,
-  });
+  }) as unknown as AnimatedStyle;
   return <PanelWide style={anim}>{children}</PanelWide>;
 }
 
 type PanelNarrowAnimatedProps = PropsWithChildren<{
   height: string;
-  onSwipedUp: any;
-  onSwipedDown: any;
+  onSwipedUp: () => void;
+  onSwipedDown: () => void;
   id: string;
 }>;
 

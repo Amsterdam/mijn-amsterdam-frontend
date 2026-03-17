@@ -85,7 +85,7 @@ export interface ApiSearchConfig {
   // of the SearchEntry on the Search page for Amsterdam.nl Results.
   description:
     | ReactElement
-    | ((item: ApiBaseItem, config: ApiSearchConfig) => ReactElement);
+    | ((item: ApiBaseItem, config: ApiSearchConfig) => string);
 
   // A list of keys of which the values are used for keywords
   keywordsGeneratedFromProps?: string[];
@@ -111,6 +111,8 @@ export interface ApiSearchConfig {
   isEnabled?: boolean;
 }
 
+// Used any here because the shape of the items can differ greatly between different API's and it's not worth the effort to type them all at the moment.
+// There is a ticket on the backlog to add more specific types for the different API's and remove the any type: MIJN-11547
 export type ApiBaseItem = any;
 
 export const API_SEARCH_CONFIG_DEFAULT: Optional<ApiSearchConfig, 'stateKey'> =
@@ -135,7 +137,7 @@ export const API_SEARCH_CONFIG_DEFAULT: Optional<ApiSearchConfig, 'stateKey'> =
     },
     url: (item: ApiBaseItem) => item.link?.to || '/',
     description: (item: ApiBaseItem) => {
-      return <>`Bekijk ${item.title}`</>;
+      return `Bekijk ${item.title}`;
     },
     profileTypes: ['private'] as ProfileType[],
     keywordsGeneratedFromProps: ['title', 'description'],
@@ -150,11 +152,11 @@ export function displayPath(
   return (
     <>
       <span className={styles.DisplayPath}>
-        {segments.map((segment) => {
+        {segments.map((segment, i) => {
           if (typeof segment !== 'string' || !replaceTerm) {
             return (
               <span
-                key={JSON.stringify(segment)}
+                key={`${i}-${typeof segment === 'string' ? segment : 'node'}`}
                 className={styles.DisplayPathSegment}
               >
                 {segment}
@@ -175,7 +177,7 @@ export function displayPath(
             }
             return (
               <span
-                key={segment}
+                key={`${i}-${segment}`}
                 className={styles.DisplayPathSegment}
                 dangerouslySetInnerHTML={{
                   __html: segmentReplaced,
