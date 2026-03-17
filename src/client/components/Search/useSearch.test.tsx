@@ -176,11 +176,7 @@ describe('Search hooks and helpers', () => {
     expect(pageEntries).toMatchInlineSnapshot(`
       [
         {
-          "description": <React.Fragment>
-            \`Bekijk $
-            Europse gehandicaptenparkeerkaart (GPK)
-            \`
-          </React.Fragment>,
+          "description": "Bekijk Europse gehandicaptenparkeerkaart (GPK)",
           "displayTitle": [Function],
           "keywords": [
             "GPK",
@@ -194,11 +190,7 @@ describe('Search hooks and helpers', () => {
           "url": "/buurt/vergunningen/detail/1726584505",
         },
         {
-          "description": <React.Fragment>
-            \`Bekijk $
-            Tijdelijke verkeersmaatregel
-            \`
-          </React.Fragment>,
+          "description": "Bekijk Tijdelijke verkeersmaatregel",
           "displayTitle": [Function],
           "keywords": [
             "Omzettingsvergunning",
@@ -212,11 +204,7 @@ describe('Search hooks and helpers', () => {
           "url": "/vergunningen/detail/1467362160",
         },
         {
-          "description": <React.Fragment>
-            \`Bekijk $
-            Parkeerontheffingen Blauwe zone particulieren
-            \`
-          </React.Fragment>,
+          "description": "Bekijk Parkeerontheffingen Blauwe zone particulieren",
           "displayTitle": [Function],
           "keywords": [
             "Parkeerontheffingen Blauwe zone particulieren",
@@ -279,11 +267,7 @@ describe('Search hooks and helpers', () => {
     expect(pageEntriesEnabled).toMatchInlineSnapshot(`
       [
         {
-          "description": <React.Fragment>
-            \`Bekijk $
-            Beheer uw budget op FiBu
-            \`
-          </React.Fragment>,
+          "description": "Bekijk Beheer uw budget op FiBu",
           "displayTitle": [Function],
           "keywords": [
             "Beheer uw budget op FiBu",
@@ -298,11 +282,7 @@ describe('Search hooks and helpers', () => {
           "url": "http://host/bbr/2064866/3",
         },
         {
-          "description": <React.Fragment>
-            \`Bekijk $
-            Kredietsom €1.689,12 met openstaand termijnbedrag €79,66
-            \`
-          </React.Fragment>,
+          "description": "Bekijk Kredietsom €1.689,12 met openstaand termijnbedrag €79,66",
           "displayTitle": [Function],
           "keywords": [
             "Kredietsom €1.689,12 met openstaand termijnbedrag €79,66",
@@ -317,11 +297,7 @@ describe('Search hooks and helpers', () => {
           "url": "http://host/pl/2442531/1",
         },
         {
-          "description": <React.Fragment>
-            \`Bekijk $
-            Afkoopvoorstellen zijn verstuurd
-            \`
-          </React.Fragment>,
+          "description": "Bekijk Afkoopvoorstellen zijn verstuurd",
           "displayTitle": [Function],
           "keywords": [
             "Afkoopvoorstellen zijn verstuurd",
