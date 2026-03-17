@@ -15,7 +15,7 @@ export type DBAdapter = {
 
 const db_: () => Promise<DBAdapter> = () => {
   if (!IS_DB_ENABLED) {
-    return import('./fake-db.js').finally(() => {
+    return import('./fake-db.ts').finally(() => {
       logger.info('Using Fake DB');
     });
   }

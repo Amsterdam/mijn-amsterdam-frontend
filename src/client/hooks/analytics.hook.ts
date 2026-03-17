@@ -4,7 +4,7 @@ import type {
   CustomDimension,
   TrackPageViewParams,
   UserOptions,
-} from '@amsterdam/piwik-tracker/lib/types.js';
+} from '@amsterdam/piwik-tracker/lib/types.ts';
 import { createInstance as createPiwikInstance } from '@amsterdam/piwik-tracker-react';
 import memoize from 'memoizee';
 
