@@ -37,10 +37,7 @@ pnpm mock-server
 pnpm bff-api:watch
 ```
 
-## Docker
-
-It is possible to use docker compose. This will run our database and an admin panel to interact with it through a GUI.
-Set `BFF_DB_ENABLED` to `true` if you wish to connect with it, but a DB is not a necessity locally.
+To run our database and an admin panel set `BFF_DB_ENABLED` to `true` and run:
 ```bash
 docker compose up
 ```
