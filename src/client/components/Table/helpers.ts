@@ -1,8 +1,7 @@
 import type {
-  DisplayProps} from './TableV2.types.ts';
-import {
-  type DisplayPropsBase,
-  type TableV2ColWidths,
+  DisplayProps,
+  DisplayPropsBase,
+  TableV2ColWidths,
 } from './TableV2.types.ts';
 
 export function getDisplayProps<T extends DisplayProps<object>>(
