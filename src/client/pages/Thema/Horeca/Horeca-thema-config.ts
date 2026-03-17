@@ -53,14 +53,14 @@ export const themaConfig: HorecaThemaConfig = {
   ],
   route: {
     path: '/horeca',
-    documentTitle: `THEMA_TITLE | overzicht`,
+    documentTitle: `${THEMA_TITLE} | overzicht`,
     trackingUrl: null,
   },
   listPage: {
     route: {
       path: '/horeca/lijst/:kind/:page?',
       documentTitle: (params) =>
-        `${tableConfigVergunningen[(params?.kind as ListPageParamKind) || 'lopende-aanvragen'].title} | THEMA_TITLE`,
+        `${tableConfigVergunningen[(params?.kind as ListPageParamKind) || 'lopende-aanvragen'].title} | ${THEMA_TITLE}`,
       trackingUrl: null,
     },
   },
@@ -70,7 +70,7 @@ export const themaConfig: HorecaThemaConfig = {
       trackingUrl(params) {
         return `/horeca/${params?.caseType}`;
       },
-      documentTitle: `Horeca | THEMA_TITLE`,
+      documentTitle: `Horeca | ${THEMA_TITLE}`,
     },
   },
 };

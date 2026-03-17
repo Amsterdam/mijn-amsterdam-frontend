@@ -47,7 +47,7 @@ describe('User Feedback Route Handlers', () => {
 
     await handleFetchSurveyOverview(req, res);
 
-    expect(userFeedbackOverview).toHaveBeenCalledWith('survey123', 'latest');
+    expect(userFeedbackOverview).toHaveBeenCalledWith('survey123', 'latest', 1);
     expect(res.send).toHaveBeenCalledWith(mockOverview);
   });
 
@@ -81,6 +81,13 @@ describe('User Feedback Route Handlers', () => {
     req.query = { id: 'survey123', version: 'latest' };
     const mockOverview = {
       content: {
+        pageLinks: [
+          {
+            page: 1,
+            url: '?page=1',
+          },
+        ],
+        currentPage: 1,
         entries: [{ answers: { '3': '5' } }, { answers: { '3': '3' } }],
       },
     };
@@ -88,7 +95,7 @@ describe('User Feedback Route Handlers', () => {
 
     await handleShowSurveyOverview(req, res);
 
-    expect(userFeedbackOverview).toHaveBeenCalledWith('survey123', 'latest');
+    expect(userFeedbackOverview).toHaveBeenCalledWith('survey123', 'latest', 1);
     expect(res.render).toHaveBeenCalledWith('user-feedback-overview', {
       feedbackOverview: { ...mockOverview.content, score: '4.00' },
     });

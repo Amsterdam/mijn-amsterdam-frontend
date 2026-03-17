@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import { routeConfig } from './Inkomen-thema-config';
+import { themaConfig } from './Inkomen-thema-config';
 import { InkomenThema } from './InkomenThema';
 import type { AppState } from '../../../../universal/types/App.types';
 import MockApp from '../../MockApp';
@@ -155,7 +155,7 @@ const testState = {
 };
 
 describe('<Inkomen />', () => {
-  const routeEntry = routeConfig.themaPage.path;
+  const routeEntry = themaConfig.route.path;
 
   describe('with items from BBZ, TONK, TOZO', () => {
     function Component() {

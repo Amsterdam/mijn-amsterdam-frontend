@@ -37,12 +37,7 @@ export const WelcomeNotification: MyNotification = {
       </p>`,
   customLink: {
     callback: () => {
-      const usabilla = (window as any).usabilla_live;
-      if (usabilla) {
-        usabilla('click');
-      } else {
-        window.location.href = CONTACT_FORM_URL;
-      }
+      window.location.href = CONTACT_FORM_URL;
     },
     title: 'Laat ons weten wat u ervan vindt',
   },

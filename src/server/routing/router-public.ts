@@ -26,6 +26,7 @@ import {
 } from '../auth/auth-helpers';
 import { authRoutes } from '../auth/auth-routes';
 import { RELEASE_VERSION } from '../config/app';
+import { getAllFeatureToggles } from '../config/azure-appconfiguration';
 import { getFromEnv } from '../helpers/env';
 import { getRequestParamsFromQueryString } from '../helpers/source-api-request';
 import {
@@ -159,15 +160,8 @@ router.get(
   }
 );
 
-router.get(BffEndpoints.SERVICES_TOGGLES, async (_, res) => {
-  const isToggleEnabled = (key: string, default_value: boolean = false) => {
-    const envValue =
-      getFromEnv(key, false)?.toLowerCase() ?? `${default_value}`;
-    return envValue === 'true';
-  };
-  res.json({
-    BFF_COBROWSE_IS_ACTIVE: isToggleEnabled('BFF_COBROWSE_IS_ACTIVE'),
-  });
+router.get(BffEndpoints.FEATURE_TOGGLES, async (_, res) => {
+  res.json(getAllFeatureToggles());
 });
 
 // /**

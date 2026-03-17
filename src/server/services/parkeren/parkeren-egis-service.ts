@@ -7,7 +7,7 @@ import {
   ActivePermitSourceResponse,
   ClientProductDetailsSourceResponse,
 } from './config-and-types';
-import { featureToggle } from '../../../client/pages/Thema/Parkeren/Parkeren-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/Parkeren/Parkeren-thema-config';
 import { ApiResponse } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_HOUR_MS, ONE_SECOND_MS } from '../../config/app';
@@ -125,7 +125,7 @@ export async function hasPermitsOrPermitRequests(
 async function getJWEToken(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<string | null> {
-  if (featureToggle.parkerenJWETokenCreationActive) {
+  if (themaConfig.featureToggle.parkerenJWETokenCreationActive) {
     return createJWEToken(
       authProfileAndToken.profile.profileType,
       authProfileAndToken.profile.id

@@ -2,10 +2,7 @@ import { differenceInYears } from 'date-fns';
 import { LatLngBoundsLiteral } from 'leaflet';
 
 import { routeConfig as buurtRouteConfig } from '../../../client/components/MyArea/MyArea-thema-config';
-import {
-  themaId,
-  themaTitle,
-} from '../../../client/pages/Thema/Afval/Afval-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/Afval/Afval-thema-config';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -39,7 +36,7 @@ const filters = {
 
 const filterQueryParam = encodeURIComponent(JSON.stringify(filters));
 
-export async function fetchAdoptableTrashContainers(
+export async function fetchAdoptableTrashContainerTips(
   authProfileAndToken: AuthProfileAndToken
 ) {
   const BRP = await fetchBrp(authProfileAndToken);
@@ -129,8 +126,8 @@ function buildNotification(
   return {
     id: 'adoptable-trash-container-notification',
     datePublished: new Date().toISOString(),
-    themaID: themaId,
-    themaTitle: themaTitle,
+    themaID: themaConfig.id,
+    themaTitle: themaConfig.title,
     title: 'Adopteer een afvalcontainer',
     isTip: true,
     tipReason:

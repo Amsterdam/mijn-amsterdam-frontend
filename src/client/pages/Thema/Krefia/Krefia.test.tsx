@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { routeConfig } from './Krefia-thema-config';
+import { themaConfig } from './Krefia-thema-config';
 import { KrefiaThema } from './KrefiaThema';
 import KrefiaData from '../../../../../mocks/fixtures/krefia.json';
 import { forTesting } from '../../../../server/services/krefia/krefia';
@@ -19,8 +19,8 @@ const testState = {
 } as unknown as AppState;
 
 describe('<Krefia />', () => {
-  const routeEntry = generatePath(routeConfig.themaPage.path);
-  const routePath = routeConfig.themaPage.path;
+  const routeEntry = generatePath(themaConfig.route.path);
+  const routePath = themaConfig.route.path;
 
   function Component({ state }: { state: AppState }) {
     return (

@@ -1,18 +1,18 @@
-import { IS_PRODUCTION } from '../../../../universal/config/env';
+import { isEnabled } from '../../../config/azure-appconfiguration';
 import { AMSAPP_BASE_PATH } from '../amsapp-service-config';
 
 export const featureToggle = {
   // AmsApp notificaties
-  amsNotificationsIsActive: !IS_PRODUCTION,
+  amsNotificationsIsActive: isEnabled('AMSAPP.notificationService'),
 };
 
 export const routes = {
   public: {
     NOTIFICATIONS_CONSUMER_REGISTRATION_LOGIN: `${AMSAPP_BASE_PATH}/notifications/login/:consumerId`,
     NOTIFICATIONS_CONSUMER_REGISTRATION_ACTION: `${AMSAPP_BASE_PATH}/notifications/consumer/:consumerId/app`, // app-landing which opens the App with a deeplink.
-    NOTIFICATIONS_CONSUMER_REGISTRATION_STATUS: `${AMSAPP_BASE_PATH}/notifications/consumer/:consumerId`,
   },
   private: {
+    NOTIFICATIONS_CONSUMER_REGISTRATION_PROFILE: `${AMSAPP_BASE_PATH}/notifications/consumer/:consumerId`,
     NOTIFICATIONS: `${AMSAPP_BASE_PATH}/notifications`,
     NOTIFICATIONS_JOB: `${AMSAPP_BASE_PATH}/job/notifications`,
   },

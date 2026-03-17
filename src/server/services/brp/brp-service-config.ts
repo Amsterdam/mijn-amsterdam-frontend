@@ -5,7 +5,7 @@ export const featureToggle = {
     },
   },
   service: {
-    fetchAantalBewonersOpAdres: {
+    fetchAantalIngeschrevenPersonenOpAdres: {
       isEnabled: true,
     },
   },
@@ -15,7 +15,8 @@ export const routes = {
   protected: {
     BRP_PERSONEN_RAW: `/services/brp/personen/raw`,
     BRP_VERBLIJFPLAATSHISTORIE_RAW: `/services/brp/verblijfplaatshistorie/raw`,
-    BRP_AANTAL_BEWONERS_OP_ADRES: '/service/brp/aantal-bewoners',
+    BRP_AANTAL_INGESCHREVEN_PERSONEN_OP_ADRES:
+      '/services/brp/aantal-ingeschreven-personen',
   },
 } as const;
 

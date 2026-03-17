@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { getRegistrationOverview } from './amsapp-notifications-model';
 import {
   handleRegisterConsumer,
-  handleConsumerRegistrationStatus,
+  handleConsumerRegistrationProfile,
   handleUnregisterConsumer,
   handleTruncateNotifications,
   fetchAndStoreNotifications,
@@ -48,22 +48,24 @@ routerPublic.get(
   handleRegisterConsumer
 );
 
-routerPublic.get(
-  routes.public.NOTIFICATIONS_CONSUMER_REGISTRATION_STATUS,
-  handleConsumerRegistrationStatus
-);
-
-routerPublic.delete(
-  routes.public.NOTIFICATIONS_CONSUMER_REGISTRATION_STATUS,
-  handleUnregisterConsumer
-);
-
 // PRIVATE NETWORK ROUTER
 // ======================
 const routerPrivate = createBFFRouter({
   id: 'external-consumer-private-notifications',
   isEnabled: featureToggle.amsNotificationsIsActive,
 });
+
+routerPrivate.get(
+  routes.private.NOTIFICATIONS_CONSUMER_REGISTRATION_PROFILE,
+  apiKeyVerificationHandler,
+  handleConsumerRegistrationProfile
+);
+
+routerPrivate.delete(
+  routes.private.NOTIFICATIONS_CONSUMER_REGISTRATION_PROFILE,
+  apiKeyVerificationHandler,
+  handleUnregisterConsumer
+);
 
 // This route will never be enabled in production
 if (!IS_PRODUCTION) {
@@ -93,7 +95,7 @@ const routerAdmin = createBFFRouter({
 
 routerPublic.get(
   routes.admin.NOTIFICATIONS_CONSUMER_REGISTRATION_OVERVIEW,
-  async (req: Request, res: Response) => {
+  async (_req: Request, res: Response) => {
     let overview;
     try {
       overview = await getRegistrationOverview();

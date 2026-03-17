@@ -12,9 +12,9 @@ import {
   forTesting,
 } from './wmo';
 import { routes } from './wmo-service-config';
-import ZORGNED_AANVRAGEN_WMO from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { jsonCopy } from '../../../universal/helpers/utils';
+import ZORGNED_AANVRAGEN_WMO from '../zorgned/zorgned-jzd-aanvragen.json';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types';
 
 vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => ({

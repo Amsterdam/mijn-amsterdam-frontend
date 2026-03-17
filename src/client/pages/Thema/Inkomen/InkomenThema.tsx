@@ -19,7 +19,7 @@ const pageContentTop = (
 
 export function InkomenThema() {
   const {
-    id,
+    themaId,
     title,
     tableConfig,
     zaken,
@@ -27,12 +27,12 @@ export function InkomenThema() {
     isErrorWpi,
     isErrorWpiSpecificaties,
     isLoadingWpiSpecificaties,
-    linkListItems,
+    pageLinks,
     specificaties,
     jaaropgaven,
-    routeConfig,
+    themaConfig,
   } = useInkomenThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const tables = Object.entries(tableConfig).map(
     ([kind, { title, displayProps, filter, listPageRoute, maxItems }]) => {
@@ -76,7 +76,7 @@ export function InkomenThema() {
 
   return (
     <ThemaPagina
-      id={id}
+      id={themaId}
       title={title}
       isError={isErrorWpi || isErrorWpiSpecificaties}
       isLoading={isLoadingWpi || isLoadingWpiSpecificaties}
@@ -87,7 +87,7 @@ export function InkomenThema() {
           {tablesSpecificaties}
         </>
       }
-      pageLinks={linkListItems}
+      pageLinks={pageLinks}
       maintenanceNotificationsPageSlug="inkomen"
       themaFeedbackDetails={themaPaginaDetails}
     />

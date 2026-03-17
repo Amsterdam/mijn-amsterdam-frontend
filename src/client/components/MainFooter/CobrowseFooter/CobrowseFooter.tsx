@@ -7,8 +7,8 @@ import { PageFooter } from '@amsterdam/design-system-react';
 import type { CobrowseWidget } from './lib/cobrowse-widget';
 
 import './lib/cobrowse-widget.css';
+import { isEnabled } from '../../../config/feature-toggles';
 import { REDACTED_CLASS, useCobrowseStore } from '../../../helpers/cobrowse';
-import { useIsBffToggleEnabled } from '../../../helpers/env';
 
 export const LABEL_HULP_SCHERMDELEN = 'Hulp via schermdelen';
 declare global {
@@ -22,16 +22,12 @@ export function CobrowseFooter() {
   const [cobrowseWidget, setCobrowseWidget] = useState<CobrowseWidget | null>(
     null
   );
-  const isCobrowseEnabled = useIsBffToggleEnabled('BFF_COBROWSE_IS_ACTIVE');
   const setIsScreensharing = useCobrowseStore(
     (state) => state.setIsScreensharing
   );
-
+  const isCobrowseEnabled = isEnabled('cobrowse');
   useEffect(() => {
-    if (!isCobrowseEnabled || !licenseKey) {
-      return;
-    }
-    if (cobrowseWidget) {
+    if (!isCobrowseEnabled || !licenseKey || cobrowseWidget) {
       return;
     }
     import('./lib/cobrowse-widget.js').then(({ CobrowseWidget }) => {

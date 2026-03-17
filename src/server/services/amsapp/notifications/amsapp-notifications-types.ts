@@ -7,14 +7,19 @@ export type BSN = AuthProfile['id'];
 export type ConsumerId = string;
 export type ServiceId = keyof typeof notificationServices.private;
 
-export type ConsumerNotifications = {
+export type ConsumerProfile = {
   profileId: BSN;
-  profileName: string;
   consumerIds: ConsumerId[];
   serviceIds: ServiceId[];
   dateUpdated: string;
-  content: { services: NotificationsService[] } | null;
+  lastLoginDate: string | null;
+  content: { services: Record<ServiceId, NotificationsService> } | null;
 };
+
+export type ConsumerProfileCompact = Omit<
+  ConsumerProfile,
+  'profileId' | 'content' | 'consumerIds'
+>;
 
 export type NotificationsService = {
   serviceId: ServiceId;
@@ -23,8 +28,8 @@ export type NotificationsService = {
 
 export type NotificationsLean = Pick<
   MyNotification,
-  'id' | 'title' | 'isAlert' | 'isTip'
-> & { datePublished: string | undefined };
+  'id' | 'title' | 'datePublished'
+>;
 
 export type AuthProfileId = {
   profile: Pick<AuthProfile, 'id' | 'profileType'>;

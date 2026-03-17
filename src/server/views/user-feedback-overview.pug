@@ -3,6 +3,17 @@ h1=feedbackOverview.survey.title
 p Totaal aantal inzendingen: #{feedbackOverview.entries.length}
 p Gemiddeld cijfer #{feedbackOverview.score}
 
+if feedbackOverview.pageLinks.length > 1
+  nav
+    | Pagina:
+    each link in feedbackOverview.pageLinks
+      a(href=link.url)
+        if link.page === feedbackOverview.currentPage
+          strong #{link.page}
+        else
+          | #{link.page}
+      | &nbsp;
+
 table(border='1', cellpadding='5', cellspacing='0')
   thead
     tr

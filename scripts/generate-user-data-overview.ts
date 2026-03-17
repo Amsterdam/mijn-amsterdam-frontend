@@ -51,65 +51,43 @@ import {
   BrpFrontend,
 } from '../src/server/services/brp/brp-types';
 
-import {
-  themaId as themaIdInkomen,
-  themaTitle as themaTitleInkomen,
-} from '../src/client/pages/Thema/Inkomen/Inkomen-thema-config';
+import { themaConfig as themaInkomen } from '../src/client/pages/Thema/Inkomen/Inkomen-thema-config';
 import {
   themaIdBRP,
   themaIdKVK,
   themaTitle as profileThemaTitles,
 } from '../src/client/pages/Thema/Profile/Profile-thema-config';
-import { themaConfig as themaConfigZorg } from '../src/client/pages/Thema/Zorg/Zorg-thema-config';
-import {
-  themaId as themaIdAfval,
-  themaTitle as themaTitleAfval,
-} from '../src/client/pages/Thema/Afval/Afval-thema-config';
-import {
-  themaId as themaIdVergunningen,
-  themaTitle as themaTitleVergunningen,
-} from '../src/client/pages/Thema/Vergunningen/Vergunningen-thema-config';
-import {
-  themaId as themaIdErfpacht,
-  themaTitle as themaTitleErfpacht,
-} from '../src/client/pages/Thema/Erfpacht/Erfpacht-thema-config';
-import { themaConfig as themaConfigBezwaren } from '../src/client/pages/Thema/Bezwaren/Bezwaren-thema-config';
+import { themaConfig as themaZorg } from '../src/client/pages/Thema/Zorg/Zorg-thema-config';
+import { themaConfig as themaAfval } from '../src/client/pages/Thema/Afval/Afval-thema-config';
+import { themaConfig as themaVergunningen } from '../src/client/pages/Thema/Vergunningen/Vergunningen-thema-config';
+import { themaConfig as themaErfpacht } from '../src/client/pages/Thema/Erfpacht/Erfpacht-thema-config';
+import { themaConfig as themaBezwaren } from '../src/client/pages/Thema/Bezwaren/Bezwaren-thema-config';
 import { themaConfig as themaHoreca } from '../src/client/pages/Thema/Horeca/Horeca-thema-config';
-import { themaConfig as themaConfigToeristischeVerhuur } from '../src/client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
-import { themaConfig as themaConfigAVG } from '../src/client/pages/Thema/AVG/AVG-thema-config';
+import { themaConfig as themaToeristischeVerhuur } from '../src/client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
+import { themaConfig as themaAVG } from '../src/client/pages/Thema/AVG/AVG-thema-config';
 import {
   themaId as themaIdSvwi,
   themaTitle as themaTitleSvwi,
 } from '../src/client/pages/Thema/Svwi/Svwi-thema-config';
-import { themaConfig as themaConfigKlachten } from '../src/client/pages/Thema/Klachten/Klachten-thema-config';
-import {
-  themaId as themaIdKrefia,
-  themaTitle as themaTitleKrefia,
-} from '../src/client/pages/Thema/Krefia/Krefia-thema-config';
+import { themaConfig as themaKlachten } from '../src/client/pages/Thema/Klachten/Klachten-thema-config';
+import { themaConfig as themaKrefia } from '../src/client/pages/Thema/Krefia/Krefia-thema-config';
 import {
   themaId as themaIdAfis,
   themaTitle as themaTitleAfis,
 } from '../src/client/pages/Thema/Afis/Afis-thema-config';
-import {
-  themaId as themaIdOvertredingen,
-  themaTitle as themaTitleOvertredingen,
-} from '../src/client/pages/Thema/Overtredingen/Overtredingen-thema-config';
-import {
-  themaId as themaIdVaren,
-  themaTitle as themaTitleVaren,
-} from '../src/client/pages/Thema/Varen/Varen-thema-config';
+import { themaConfig as themaOvertredingen } from '../src/client/pages/Thema/Overtredingen/Overtredingen-thema-config';
+
 import { themaConfig as bodemThemaConfig } from '../src/client/pages/Thema/Bodem/Bodem-thema-config';
 import { themaConfig as themaConfigHLI } from '../src/client/pages/Thema/HLI/HLI-thema-config';
 import { themaConfig as themaConfigJeugd } from '../src/client/pages/Thema/Jeugd/Jeugd-thema-config';
-import {
-  themaId as themaIdParkeren,
-  themaTitle as themaTitleParkeren,
-} from '../src/client/pages/Thema/Parkeren/Parkeren-thema-config';
+import { themaConfig as themaParkeren } from '../src/client/pages/Thema/Parkeren/Parkeren-thema-config';
+import { themaConfig as themaVaren } from '../src/client/pages/Thema/Varen/Varen-thema-config';
+import { themaConfig as themaBodem } from '../src/client/pages/Thema/Bodem/Bodem-thema-config';
+import { themaConfig as themaHLI } from '../src/client/pages/Thema/HLI/HLI-thema-config';
+import { themaConfig as themaJeugd } from '../src/client/pages/Thema/Jeugd/Jeugd-thema-config';
+
 import { themaConfig as themaBelastingen } from '../src/client/pages/Thema/Belastingen/Belastingen-thema-config';
-import {
-  themaId as themaIdMilieuzone,
-  themaTitle as themaTitleMilieuzone,
-} from '../src/client/pages/Thema/Milieuzone/Milieuzone-thema-config';
+import { themaConfig as themaMilieuzone } from '../src/client/pages/Thema/Milieuzone/Milieuzone-thema-config';
 import { themaConfig as themaSubsidies } from '../src/client/pages/Thema/Subsidies/Subsidies-thema-config';
 
 const { BRP, KVK } = profileThemaTitles;
@@ -120,30 +98,35 @@ const themas = [
   { id: themaIdBRP, title: BRP },
   { id: themaIdKVK, title: KVK },
   { id: 'KLANT_CONTACT', title: 'Contactmomenten' },
-  { id: themaIdInkomen, title: themaTitleInkomen },
-  { id: themaConfigZorg.id, title: themaConfigZorg.title },
-  { id: themaIdAfval, title: themaTitleAfval },
-  { id: themaIdVergunningen, title: themaTitleVergunningen },
-  { id: themaIdErfpacht, title: themaTitleErfpacht },
-  { id: themaConfigBezwaren.id, title: themaConfigBezwaren.title },
+  { id: themaInkomen.id, title: themaInkomen.title },
+  { id: themaZorg.id, title: themaZorg.title },
+  { id: themaAfval.id, title: themaAfval.title },
+  { id: themaVergunningen.id, title: themaVergunningen.title },
+  { id: themaErfpacht.id, title: themaErfpacht.title },
+  { id: themaBezwaren.id, title: themaBezwaren.title },
   { id: themaHoreca.id, title: themaHoreca.title },
   {
-    id: themaConfigToeristischeVerhuur.id,
-    title: themaConfigToeristischeVerhuur.title,
+    id: themaToeristischeVerhuur.id,
+    title: themaToeristischeVerhuur.title,
   },
-  { id: themaConfigAVG.id, title: themaConfigAVG.title },
+  { id: themaAVG.id, title: themaAVG.title },
   { id: themaIdSvwi, title: themaTitleSvwi },
-  { id: themaConfigKlachten.id, title: themaConfigKlachten.title },
-  { id: themaIdKrefia, title: themaTitleKrefia },
+  { id: themaKlachten.id, title: themaKlachten.title },
+  { id: themaKrefia.id, title: themaKrefia.title },
   { id: themaIdAfis, title: themaTitleAfis },
-  { id: themaIdOvertredingen, title: themaTitleOvertredingen },
-  { id: themaIdVaren, title: themaTitleVaren },
+  { id: themaOvertredingen.id, title: themaOvertredingen.title },
+
   { id: bodemThemaConfig.id, title: bodemThemaConfig.title },
   { id: themaConfigHLI.id, title: themaConfigHLI.title },
   { id: themaConfigJeugd.id, title: themaConfigJeugd.title },
-  { id: themaIdParkeren, title: themaTitleParkeren },
+  { id: themaParkeren.id, title: themaParkeren.title },
+  { id: themaVaren.id, title: themaVaren.title },
+  { id: themaBodem.id, title: themaBodem.title },
+  { id: themaHLI.id, title: themaHLI.title },
+  { id: themaJeugd.id, title: themaJeugd.title },
+
   { id: themaBelastingen.id, title: themaBelastingen.title },
-  { id: themaIdMilieuzone, title: themaTitleMilieuzone },
+  { id: themaMilieuzone.id, title: themaMilieuzone.title },
   { id: themaSubsidies.id, title: themaSubsidies.title },
 ];
 

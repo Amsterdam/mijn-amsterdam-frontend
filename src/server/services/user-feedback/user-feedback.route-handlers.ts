@@ -3,12 +3,16 @@ import {
   saveUserFeedback,
   userFeedbackOverview,
 } from './user-feedback';
-import { SURVEY_ID_INLINE_KTO } from './user-feedback.service-config';
+import {
+  SURVEY_ID_INLINE_KTO,
+  SURVEY_VERSION_INLINE_KTO,
+} from './user-feedback.service-config';
 import {
   userFeedbackInput,
   type Survey,
   type UserFeedbackInput,
 } from './user-feedback.types';
+import { range } from '../../../universal/helpers/utils';
 import {
   sendBadRequestInvalidInput,
   sendResponse,
@@ -26,12 +30,17 @@ export async function handleFetchSurvey(
 }
 
 export async function handleFetchSurveyOverview(
-  req: RequestWithQueryParams<{ id?: Survey['unique_code']; version?: string }>,
+  req: RequestWithQueryParams<{
+    id?: Survey['unique_code'];
+    version?: string;
+    page?: string;
+  }>,
   res: ResponseAuthenticated
 ) {
   const surveyOverview = await userFeedbackOverview(
     req.query.id ?? SURVEY_ID_INLINE_KTO,
-    req.query.version ?? 'latest'
+    req.query.version ?? SURVEY_VERSION_INLINE_KTO,
+    parseInt(req.query.page || '1', 10)
   );
 
   return sendResponse(res, surveyOverview);
@@ -59,12 +68,18 @@ export async function handleUserFeedbackSubmission(
 }
 
 export async function handleShowSurveyOverview(
-  req: RequestWithQueryParams<{ id?: Survey['unique_code']; version?: string }>,
+  req: RequestWithQueryParams<{
+    id?: Survey['unique_code'];
+    version?: string;
+    page?: string;
+  }>,
   res: ResponseAuthenticated
 ) {
+  const currentPage = parseInt(req.query.page || '1', 10);
   const feedbackOverview = await userFeedbackOverview(
     req.query.id ?? SURVEY_ID_INLINE_KTO,
-    req.query.version ?? 'latest'
+    req.query.version ?? SURVEY_VERSION_INLINE_KTO,
+    currentPage
   );
 
   const entries = feedbackOverview.content?.entries || [];
@@ -74,12 +89,27 @@ export async function handleShowSurveyOverview(
       if (typeof entry === 'undefined') {
         return acc;
       }
-      const rating = entry.answers['3'] || '0';
+      const rating = Object.values(entry.answers)[0] || '0';
+      if (isNaN(parseInt(rating, 10))) {
+        return acc;
+      }
       return acc + parseInt(rating, 10);
     }, 0) / (entries.length || 1)
   ).toFixed(2);
 
+  const pageLinks = range(1, feedbackOverview.content?.pageCount || 1).map(
+    (page) => ({
+      page,
+      url: `?page=${page}`,
+    })
+  );
+
   return res.render('user-feedback-overview', {
-    feedbackOverview: { ...feedbackOverview.content, score },
+    feedbackOverview: {
+      ...feedbackOverview.content,
+      score,
+      pageLinks,
+      currentPage,
+    },
   });
 }

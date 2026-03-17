@@ -28,7 +28,7 @@
                 "identificatie": "WRA",
                 "productCode": null,
                 "productsoortCode": "WRA",
-                "omschrijving": "woonruimteaanpassing (in behandeling)"
+                "omschrijving": "ALLE DOCUMENTEN TEST: woonruimteaanpassing (in behandeling)"
               },
               "productCategorie": {
                 "code": "13",
@@ -66,7 +66,53 @@
             }
           ]
         },
-        "documenten": []
+        "documenten": [
+          {
+            "documentidentificatie": "E1532671",
+            "procesIdentificatie": "3693451",
+            "casusIdentificatie": "2113975",
+            "omschrijving": "beschikking toekenning",
+            "omschrijvingclientportaal": "beschikking toekenning",
+            "datumDefinitief": "2026-03-09T12:15:17",
+            "bestandsnaam": "lege mail.msg"
+          },
+          {
+            "documentidentificatie": "E1532678",
+            "procesIdentificatie": "3693451",
+            "casusIdentificatie": "2113975",
+            "omschrijving": "beschikking",
+            "omschrijvingclientportaal": "beschikking",
+            "datumDefinitief": "2026-03-09T12:16:29",
+            "bestandsnaam": "Leeg document.docx"
+          },
+          {
+            "documentidentificatie": "E1532685",
+            "procesIdentificatie": "3693451",
+            "casusIdentificatie": "2113975",
+            "omschrijving": "bankafschrift",
+            "omschrijvingclientportaal": "bankafschrift",
+            "datumDefinitief": "2026-03-09T12:19:19",
+            "bestandsnaam": "ADW beheer.png"
+          },
+          {
+            "documentidentificatie": "E1532692",
+            "procesIdentificatie": "3693451",
+            "casusIdentificatie": "2113975",
+            "omschrijving": "kopie bankpas",
+            "omschrijvingclientportaal": "kopie bankpas",
+            "datumDefinitief": "2026-03-09T12:23:27",
+            "bestandsnaam": "Schermafbeelding 2024-03-14 191232.jpg"
+          },
+          {
+            "documentidentificatie": "B4072158",
+            "procesIdentificatie": "3693451",
+            "casusIdentificatie": "2113975",
+            "omschrijving": "Opstellen beschikking Hbh Kind",
+            "omschrijvingclientportaal": "Besluit: toekenning Hulp bij de zorg voor uw kind",
+            "datumDefinitief": "2026-02-05T17:22:33.737",
+            "bestandsnaam": "BR4072158.pdf"
+          }
+        ]
       },
       {
         "_links": null,

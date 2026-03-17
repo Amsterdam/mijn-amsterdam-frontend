@@ -126,18 +126,19 @@ function transformCleopatraResponse(
         case message.categorie === 'M1' || message.categorie === 'F3':
           {
             let themaID:
-              | typeof MILIEUZONE.themaId
-              | typeof OVERTREDINGEN.themaId = MILIEUZONE.themaId;
+              | typeof MILIEUZONE.themaConfig.id
+              | typeof OVERTREDINGEN.themaConfig.id = MILIEUZONE.themaConfig.id;
             let themaTitle:
-              | typeof MILIEUZONE.themaTitle
-              | typeof OVERTREDINGEN.themaTitle = MILIEUZONE.themaTitle;
+              | typeof MILIEUZONE.themaConfig.title
+              | typeof OVERTREDINGEN.themaConfig.title =
+              MILIEUZONE.themaConfig.title;
 
             if (
-              OVERTREDINGEN.featureToggle.overtredingenActive &&
+              OVERTREDINGEN.themaConfig.featureToggle.active &&
               message.thema === 'Overtredingen'
             ) {
-              themaID = OVERTREDINGEN.themaId;
-              themaTitle = OVERTREDINGEN.themaTitle;
+              themaID = OVERTREDINGEN.themaConfig.id;
+              themaTitle = OVERTREDINGEN.themaConfig.title;
             }
 
             notifications.push({
@@ -202,7 +203,7 @@ export async function fetchMilieuzone(
       isKnown: response.content?.isKnownMilieuzone ?? false,
       url:
         getFromEnv('BFF_SSO_URL_MILIEUZONE') ??
-        MILIEUZONE.MILIEUZONE_ROUTE_DEFAULT,
+        MILIEUZONE.themaConfig.route.path,
     });
   }
 
@@ -219,7 +220,7 @@ export async function fetchOvertredingen(
       isKnown: response.content?.isKnownOvertredingen ?? false,
       url:
         getFromEnv('BFF_SSO_URL_OVERTREDINGEN') ??
-        OVERTREDINGEN.OVERTREDINGEN_ROUTE_DEFAULT,
+        OVERTREDINGEN.themaConfig.route.path,
     });
   }
 
@@ -247,11 +248,11 @@ async function fetchNotifications<ID extends string = string>(
 export async function fetchMilieuzoneNotifications(
   authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchNotifications(authProfileAndToken, MILIEUZONE.themaId);
+  return fetchNotifications(authProfileAndToken, MILIEUZONE.themaConfig.id);
 }
 
 export async function fetchOvertredingenNotifications(
   authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchNotifications(authProfileAndToken, OVERTREDINGEN.themaId);
+  return fetchNotifications(authProfileAndToken, OVERTREDINGEN.themaConfig.id);
 }

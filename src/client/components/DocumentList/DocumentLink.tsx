@@ -22,10 +22,13 @@ interface DocumentLinkProps {
   trackPath?: (document: GenericDocument) => string;
 }
 
-function downloadFile(docDownload: GenericDocument) {
+function downloadFile(docDownload: GenericDocument, fileExtension?: string) {
   const link = document.createElement('a');
   link.href = docDownload.url;
-  const downloadName = addFileType(docDownload.download || docDownload.title);
+  const baseUrl = docDownload.download || docDownload.title;
+  const downloadName = fileExtension
+    ? `${baseUrl}.${fileExtension}`
+    : addFileType(baseUrl);
   link.download = downloadName;
   link.click();
 }
@@ -51,7 +54,11 @@ export function DocumentLink({
   const [isLoading, setLoading] = useState(false);
   const profileType = useProfileTypeValue();
 
-  const documentTitle = document.title || 'Document';
+  let documentTitle = document.title || 'Bestand';
+  const extension = document.filename?.split('.')[1];
+  if (extension) {
+    documentTitle += `.${extension}`;
+  }
 
   const onClickDocumentLink = useCallback(
     (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -97,10 +104,13 @@ export function DocumentLink({
           } else {
             try {
               const fileUrl = window.URL.createObjectURL(blob);
-              downloadFile({
-                ...document,
-                url: fileUrl,
-              });
+              downloadFile(
+                {
+                  ...document,
+                  url: fileUrl,
+                },
+                extension
+              );
             } catch (_) {
               downloadFile(document);
             }

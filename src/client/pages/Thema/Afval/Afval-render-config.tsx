@@ -1,9 +1,4 @@
-import {
-  featureToggle,
-  routeConfig,
-  themaId,
-  themaTitle,
-} from './Afval-thema-config';
+import { themaConfig } from './Afval-thema-config';
 import { default as AfvalIcon } from './AfvalIcon.svg?react';
 import { AfvalThemaPagina } from './AfvalThema';
 import { isLoading } from '../../../../universal/helpers/api';
@@ -15,21 +10,21 @@ import {
 
 export const AfvalRoutes = [
   {
-    route: routeConfig.themaPage.path,
+    route: themaConfig.route.path,
     Component: AfvalThemaPagina,
-    isActive: featureToggle.AfvalActive,
+    isActive: themaConfig.featureToggle.active,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
-export const menuItem: ThemaMenuItem<typeof themaId> = {
-  title: themaTitle,
-  id: themaId,
-  to: routeConfig.themaPage.path,
-  profileTypes: ['private', 'commercial'],
-  redactedScope: 'none',
+export const menuItem: ThemaMenuItem = {
+  title: themaConfig.title,
+  id: themaConfig.id,
+  to: themaConfig.route.path,
+  profileTypes: themaConfig.profileTypes,
+  redactedScope: themaConfig.redactedScope,
   isActive(appState: AppState) {
     return !!(
-      featureToggle.AfvalActive &&
+      themaConfig.featureToggle.active &&
       !isLoading(appState.AFVAL) &&
       !isLoading(appState.MY_LOCATION) &&
       appState.MY_LOCATION.content?.some((location) => location.mokum) &&

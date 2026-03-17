@@ -10,11 +10,7 @@ import {
   WpiRequestProcessLabels,
   WpiRequestStatus,
 } from './wpi-types';
-import {
-  routeConfig,
-  themaId as themaIdInkomen,
-  themaTitle as themaTitleInkomen,
-} from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
+import { themaConfig as themaInkomen } from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
   GenericDocument,
@@ -106,8 +102,8 @@ export function createProcessNotification(
   return {
     id: `${requestProcess.id}-notification`,
     datePublished: statusStep.datePublished,
-    themaID: themaIdInkomen,
-    themaTitle: themaTitleInkomen,
+    themaID: themaInkomen.id,
+    themaTitle: themaInkomen.title,
     title: titleTransform
       ? titleTransform(requestProcess, statusStep)
       : `Update: ${requestProcess.about} aanvraag.`,
@@ -165,7 +161,7 @@ export function addLink(requestProcess: WpiRequestProcess) {
   switch (requestProcess.about) {
     case 'TONK':
       link = {
-        to: generatePath(routeConfig.detailPageTonk.path, {
+        to: generatePath(themaInkomen.detailPageTonk.route.path, {
           id,
           version: '1',
         }),
@@ -178,7 +174,7 @@ export function addLink(requestProcess: WpiRequestProcess) {
     case 'Tozo 4':
     case 'Tozo 5':
       link = {
-        to: generatePath(routeConfig.detailPageTozo.path, {
+        to: generatePath(themaInkomen.detailPageTozo.route.path, {
           id,
           version: requestProcess.about.replace('Tozo ', ''),
         }),
@@ -187,7 +183,7 @@ export function addLink(requestProcess: WpiRequestProcess) {
       break;
     case 'Bijstandsuitkering':
       link = {
-        to: generatePath(routeConfig.detailPageUitkering.path, {
+        to: generatePath(themaInkomen.detailPageUitkering.route.path, {
           id,
         }),
         title,
@@ -195,7 +191,7 @@ export function addLink(requestProcess: WpiRequestProcess) {
       break;
     case 'Bbz':
       link = {
-        to: generatePath(routeConfig.detailPageBbz.path, {
+        to: generatePath(themaInkomen.detailPageBbz.route.path, {
           id,
           version: '1',
         }),

@@ -10,20 +10,20 @@ export function InkomenList() {
     kind: Exclude<ListPageParamKind, 'jaaropgaven' | 'uitkering'>;
   }>();
   const {
-    id,
+    themaId,
     zaken,
     tableConfig,
     isLoadingWpi,
     isErrorWpi,
     breadcrumbs,
-    routeConfig,
+    themaConfig,
   } = useInkomenThemaData();
-  useHTMLDocumentTitle(routeConfig.listPage);
+  useHTMLDocumentTitle(themaConfig.listPage.route);
   const listPageTableConfig = tableConfig[kind];
 
   return (
     <ListPagePaginated
-      themaId={id}
+      themaId={themaId}
       items={zaken.filter(listPageTableConfig.filter)}
       title={listPageTableConfig.title}
       appRoute={listPageTableConfig.listPageRoute}
