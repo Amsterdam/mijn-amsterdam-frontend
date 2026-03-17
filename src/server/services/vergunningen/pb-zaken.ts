@@ -57,11 +57,6 @@ const LigplaatsWoonbootVergunningZaakTransformer: PowerBrowserZaakTransformer<Li
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    // TODO: MIJN-12348 - Replace with actual document names and add mock data
-    transformDoclinks: {
-      [documentNamesMA.BESLUIT]: ['Besluit'],
-      [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
-    } as const,
     filterValidDocumentPredicate: isValidPBDocumentForVTH,
   };
 
@@ -81,11 +76,6 @@ const LigplaatsBedrijfsvaartuigVergunningZaakTransformer: PowerBrowserZaakTransf
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    // TODO: MIJN-12348 - Replace with actual document names and add mock data
-    transformDoclinks: {
-      [documentNamesMA.BESLUIT]: ['Besluit'],
-      [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
-    } as const,
     filterValidDocumentPredicate: isValidPBDocumentForVTH,
   };
 
@@ -98,11 +88,6 @@ const OmzettingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Omzetting
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    transformDoclinks: {
-      // TODO: MIJN-12348 - Replace with actual document names and add mock data
-      [documentNamesMA.BESLUIT]: ['Besluit'],
-      [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
-    } as const,
     filterValidDocumentPredicate: isValidPBDocumentForVTH,
   };
 
@@ -115,11 +100,6 @@ const SamenvoegingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Samenv
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    transformDoclinks: {
-      // TODO: MIJN-12348 - Replace with actual document names and add mock data
-      [documentNamesMA.BESLUIT]: ['Besluit'],
-      [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
-    } as const,
     filterValidDocumentPredicate: isValidPBDocumentForVTH,
   };
 
