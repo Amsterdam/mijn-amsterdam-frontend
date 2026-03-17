@@ -11,6 +11,7 @@ import {
   type DecosZaakFrontend,
 } from '../../../../server/services/decos/decos-types';
 import { WithDateRange } from '../../../../server/services/vergunningen/config-and-types';
+import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { dateSort } from '../../../../universal/helpers/date';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
@@ -80,7 +81,7 @@ export const themaConfig: VergunningenThemaConfig = {
   title: THEMA_TITLE,
   profileTypes: ['private', 'commercial'],
   redactedScope: 'none',
-  featureToggle: { active: true },
+  featureToggle: { active: true, documentOpvragenMail: !IS_PRODUCTION },
   route: {
     path: '/vergunningen',
     documentTitle: `${THEMA_TITLE} | overzicht`,

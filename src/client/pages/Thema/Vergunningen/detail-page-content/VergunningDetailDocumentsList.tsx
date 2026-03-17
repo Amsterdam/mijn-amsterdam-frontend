@@ -14,7 +14,7 @@ import { Datalist } from '../../../../components/Datalist/Datalist';
 import DocumentListV2 from '../../../../components/DocumentList/DocumentListV2';
 import LoadingContent from '../../../../components/LoadingContent/LoadingContent';
 import { useAppStateGetter } from '../../../../hooks/useAppStateStore';
-import { featureToggle } from '../Vergunningen-thema-config';
+import { themaConfig } from '../Vergunningen-thema-config';
 
 function getMailSubject(
   vergunning: ZaakFrontendCombined<DecosVergunning | PBVergunning>
@@ -64,8 +64,8 @@ export function VergunningDetailDocumentsList({
 
   let mailTo = undefined; // TODO: Pass organisation or email from the backend
   if (
-    vergunning.caseType === 'Ligplaatsvergunning woonboot' ||
-    vergunning.caseType === 'Ligplaatsvergunning bedrijfsvaartuig'
+    vergunning?.caseType === 'Ligplaatsvergunning woonboot' ||
+    vergunning?.caseType === 'Ligplaatsvergunning bedrijfsvaartuig'
   ) {
     mailTo = 'vth@amsterdam.nl';
   }
@@ -94,7 +94,7 @@ export function VergunningDetailDocumentsList({
           },
         ]}
       />
-      {featureToggle.documentOpvragenMail && !!mailTo && (
+      {themaConfig.featureToggle.documentOpvragenMail && !!mailTo && (
         <Paragraph>
           <strong>Ziet u niet het juiste document?</strong> Stuur een mail naar:{' '}
           <Link
