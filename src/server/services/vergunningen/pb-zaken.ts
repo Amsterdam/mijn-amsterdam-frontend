@@ -18,6 +18,18 @@ import {
 } from '../powerbrowser/powerbrowser-helpers';
 import { PowerBrowserZaakTransformer } from '../powerbrowser/powerbrowser-types';
 
+function isValidPBDocumentForVTH(record: {
+  SOORTDOCUMENT_ID: string;
+  STAMCSSTATUS_ID: string;
+}) {
+  const isAanvraag = record.SOORTDOCUMENT_ID === '1000001015';
+  const isBesluit = record.SOORTDOCUMENT_ID === '256';
+  const isDefinitief = record.STAMCSSTATUS_ID === '1000001002';
+
+  const isValid = isDefinitief && (isBesluit || isAanvraag);
+  return isValid;
+}
+
 export const documentNamesMA = {
   TOEKENNING: 'Besluit toekenning',
   VERLENGING: 'Besluit verlenging beslistermijn',
@@ -51,6 +63,7 @@ const LigplaatsWoonbootVergunningZaakTransformer: PowerBrowserZaakTransformer<Li
       [documentNamesMA.MEER_INFORMATIE]: ['Verzoek aanvullende gegevens'],
       [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
     } as const,
+    isValidPBDocument: isValidPBDocumentForVTH,
   };
 
 const LigplaatsBedrijfsvaartuigVergunningZaakTransformer: PowerBrowserZaakTransformer<LigplaatsBedrijfsvaartuigvergunning> =
@@ -75,6 +88,7 @@ const LigplaatsBedrijfsvaartuigVergunningZaakTransformer: PowerBrowserZaakTransf
       [documentNamesMA.MEER_INFORMATIE]: ['Verzoek aanvullende gegevens'],
       [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
     } as const,
+    isValidPBDocument: isValidPBDocumentForVTH,
   };
 
 const OmzettingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Omzettingsvergunning> =
@@ -92,6 +106,7 @@ const OmzettingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Omzetting
       [documentNamesMA.MEER_INFORMATIE]: ['Verzoek aanvullende gegevens'],
       [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
     } as const,
+    isValidPBDocument: isValidPBDocumentForVTH,
   };
 
 const SamenvoegingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Samenvoegingsvergunning> =
@@ -109,6 +124,7 @@ const SamenvoegingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Samenv
       [documentNamesMA.MEER_INFORMATIE]: ['Verzoek aanvullende gegevens'],
       [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
     } as const,
+    isValidPBDocument: isValidPBDocumentForVTH,
   };
 
 const OnttrekkingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Onttrekkingsvergunning> =
@@ -129,6 +145,7 @@ const OnttrekkingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Onttrek
       [documentNamesMA.MEER_INFORMATIE]: ['Verzoek aanvullende gegevens'],
       [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
     } as const,
+    isValidPBDocument: isValidPBDocumentForVTH,
   };
 
 const OnttrekkingsvergunningSloopZaakTransformer: PowerBrowserZaakTransformer<OnttrekkingsvergunningSloop> =
@@ -154,6 +171,7 @@ const OnttrekkingsvergunningSloopZaakTransformer: PowerBrowserZaakTransformer<On
       [documentNamesMA.MEER_INFORMATIE]: ['Verzoek aanvullende gegevens'],
       [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
     } as const,
+    isValidPBDocument: isValidPBDocumentForVTH,
   };
 
 const VormenVanWoonruimteZaakTransformer: PowerBrowserZaakTransformer<VormenVanWoonruimte> =
@@ -171,6 +189,7 @@ const VormenVanWoonruimteZaakTransformer: PowerBrowserZaakTransformer<VormenVanW
       [documentNamesMA.MEER_INFORMATIE]: ['Verzoek aanvullende gegevens'],
       [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
     } as const,
+    isValidPBDocument: isValidPBDocumentForVTH,
   };
 
 const OnttrekkingsvergunningTweedeWoningZaakTransformer: PowerBrowserZaakTransformer<OnttrekkingsvergunningTweedeWoning> =
@@ -191,6 +210,7 @@ const OnttrekkingsvergunningTweedeWoningZaakTransformer: PowerBrowserZaakTransfo
       [documentNamesMA.MEER_INFORMATIE]: ['Verzoek aanvullende gegevens'],
       [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
     } as const,
+    isValidPBDocument: isValidPBDocumentForVTH,
   };
 
 const SplitsingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Splitsingsvergunning> =
@@ -211,6 +231,7 @@ const SplitsingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Splitsing
       [documentNamesMA.MEER_INFORMATIE]: ['Verzoek aanvullende gegevens'],
       [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
     } as const,
+    isValidPBDocument: isValidPBDocumentForVTH,
   };
 
 export const pbZaakTransformers = [

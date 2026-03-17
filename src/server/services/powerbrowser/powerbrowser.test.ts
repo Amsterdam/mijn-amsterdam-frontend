@@ -12,6 +12,7 @@ import type {
   PBDocumentFields,
   PBZaakFields,
   PBZaakRecord,
+  PowerBrowserZaakTransformer,
   SearchRequestResponse,
 } from './powerbrowser-types';
 import { remoteApi } from '../../../testing/utils';
@@ -45,6 +46,11 @@ describe('Powerbrowser service', () => {
     ['DocumentnaamMA']: ['DocumentnaamPB', 'AndersInPBMaarZelfdeInMA'],
     ['NietDocumentnaamMA']: ['NietDocumentnaamPB'],
   };
+
+  const zaakTransformer = {
+    transformDoclinks: documentNamesMA_PB,
+    isValidPBDocument: () => true,
+  } as unknown as PowerBrowserZaakTransformer;
 
   beforeEach(() => {
     remoteApi.post('/powerbrowser/Token').reply(200, 'test-token');
@@ -226,7 +232,7 @@ describe('Powerbrowser service', () => {
 
       const result = await forTesting.fetchDocumentsList(
         authProfileAndToken.profile,
-        documentNamesMA_PB,
+        zaakTransformer,
         zaakId
       );
       expect(result.status).toBe('OK');
@@ -245,7 +251,7 @@ describe('Powerbrowser service', () => {
 
       const result = await forTesting.fetchDocumentsList(
         authProfileAndToken.profile,
-        documentNamesMA_PB,
+        zaakTransformer,
         zaakId
       );
       expect(result.status).toBe('ERROR');
@@ -536,6 +542,10 @@ describe('Powerbrowser service', () => {
       const docNameMA = 'docNaamMA';
       const docNamePB = 'docNaamPB';
       const docNameMA_PB = { [docNameMA]: [docNamePB] };
+      const zaakTransformer = {
+        transformDoclinks: docNameMA_PB,
+        isValidPBDocument: () => true,
+      } as unknown as PowerBrowserZaakTransformer;
       remoteApi.post('/powerbrowser/SearchRequest').reply(200, {
         records: [
           {
@@ -559,7 +569,7 @@ describe('Powerbrowser service', () => {
 
       const result = await forTesting.fetchSettledZaakDocuments(
         authProfile,
-        docNameMA_PB,
+        zaakTransformer,
         zaak
       );
       expect(result).toHaveLength(1);
@@ -577,7 +587,7 @@ describe('Powerbrowser service', () => {
 
       const result = await forTesting.fetchSettledZaakDocuments(
         authProfile,
-        documentNamesMA_PB,
+        zaakTransformer,
         zaak
       );
       expect(result).toHaveLength(0);
@@ -675,6 +685,10 @@ describe('Powerbrowser service', () => {
       const docNameMA = 'docNaamMA';
       const docNamePB = 'docNaamPB';
       const docNameMA_PB = { [docNameMA]: [docNamePB] };
+      const zaakTransformer = {
+        transformDoclinks: docNameMA_PB,
+        isValidPBDocument: () => true,
+      } as unknown as PowerBrowserZaakTransformer;
       const responseData = {
         records: [
           {
@@ -697,7 +711,7 @@ describe('Powerbrowser service', () => {
 
       const result = forTesting.transformPowerbrowserDocLinksResponse(
         'test-session-id',
-        docNameMA_PB,
+        zaakTransformer,
         responseData
       );
       expect(result).toHaveLength(1);

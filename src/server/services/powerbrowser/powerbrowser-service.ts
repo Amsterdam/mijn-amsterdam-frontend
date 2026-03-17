@@ -297,12 +297,15 @@ async function fetchZaakStatusDates(
 
 async function fetchSettledZaakDocuments(
   authProfile: AuthProfile,
-  documentNamenMA_PB: PowerBrowserZaakTransformer['transformDoclinks'],
+  zaakTransformer: Pick<
+    PowerBrowserZaakTransformer,
+    'transformDoclinks' | 'isValidPBDocument'
+  >,
   zaak: Pick<PowerBrowserZaakBase, 'id'>
 ): Promise<GenericDocument[]> {
   const { status, content } = await fetchDocumentsList(
     authProfile,
-    documentNamenMA_PB,
+    zaakTransformer,
     zaak.id
   );
   if (status === 'OK' && content !== null) {
@@ -341,32 +344,26 @@ function convertPBRecordToDict(
   ) as PBDocument;
 }
 
-// TODO: Make this dynamic if necessary (controlled by pb-zaken)
-function isValidPBDocument(record: PBDocument) {
-  const isAanvraag = record.SOORTDOCUMENT_ID === '1000001015';
-  const isBesluit = record.SOORTDOCUMENT_ID === '256';
-  const isDefinitief = record.STAMCSSTATUS_ID === '1000001002';
-
-  const isValid = isDefinitief && (isBesluit || isAanvraag);
-  return isValid;
-}
-
 function transformPowerbrowserDocLinksResponse(
   sessionID: SessionID,
-  documentNamenMA_PB: PowerBrowserZaakTransformer['transformDoclinks'],
+  zaakTransformer: Pick<
+    PowerBrowserZaakTransformer,
+    'transformDoclinks' | 'isValidPBDocument'
+  >,
   responseData: SearchRequestResponse<'DOCLINK', PBDocumentFields[]>
 ): PowerBrowserZaakBase['documents'] {
   return (responseData.records || [])
     .map(convertPBRecordToDict)
-    .filter(isValidPBDocument)
+    .filter(zaakTransformer.isValidPBDocument)
     .map((document) => {
       const titleLower = document.OMSCHRIJVING.toLowerCase();
 
       const [docTitleTranslated] =
-        Object.entries(documentNamenMA_PB).find(([_docTitleMa, docTitlesPB]) =>
-          docTitlesPB.some((docTitlePb) =>
-            titleLower.includes(docTitlePb.toLowerCase())
-          )
+        Object.entries(zaakTransformer.transformDoclinks).find(
+          ([_docTitleMa, docTitlesPB]) =>
+            docTitlesPB.some((docTitlePb) =>
+              titleLower.includes(docTitlePb.toLowerCase())
+            )
         ) ?? [];
 
       if (!docTitleTranslated) {
@@ -397,7 +394,10 @@ function transformPowerbrowserDocLinksResponse(
 
 async function fetchDocumentsList(
   authProfile: AuthProfile,
-  documentNamenMA_PB: PowerBrowserZaakTransformer['transformDoclinks'],
+  zaakTransformer: Pick<
+    PowerBrowserZaakTransformer,
+    'transformDoclinks' | 'isValidPBDocument'
+  >,
   zaakId: PowerBrowserZaakBase['id']
 ): Promise<ApiResponse<PowerBrowserZaakBase['documents']>> {
   const dataRequestConfig: DataRequestConfig = {
@@ -433,7 +433,7 @@ async function fetchDocumentsList(
     transformResponse(responseData) {
       return transformPowerbrowserDocLinksResponse(
         authProfile.sid,
-        documentNamenMA_PB,
+        zaakTransformer,
         responseData
       );
     },
@@ -604,11 +604,7 @@ export async function fetchPBZaken<T extends PowerBrowserZaakTransformer>(
       const zaak = transformZaakRaw(zaakTransformer, zaakRaw);
       const [location, documents, statusDates] = await Promise.all([
         fetchSettledZaakAdres(zaak),
-        fetchSettledZaakDocuments(
-          authProfile,
-          zaakTransformer.transformDoclinks,
-          zaak
-        ),
+        fetchSettledZaakDocuments(authProfile, zaakTransformer, zaak),
         fetchSettledZaakStatusDates(zaak),
       ]);
       return {
