@@ -39,14 +39,14 @@ pnpm bff-api:watch
 
 ## Docker
 
-To prepare running our database with a bff instance outside of the container set `BFF_DB_ENABLED` to `true`.
-This will ensure the BFF will reach out to the database inside the container.
-Then start our database and database admin tool:
+It is possible to use docker compose. This will run our database and an admin panel to interact with it through a GUI.
+Set `BFF_DB_ENABLED` to `true` if you wish to connect with it, but a DB is not a necessity locally.
 ```bash
 docker compose up
 ```
 
 You can also include the BFF, but there is no integration yet with de DB and front-end so this has to be setup when needed.
+It can connect with the front-end with the right env vars, but the mock server is a bigger challenge. So use this for testing the build process and startup.
 ```bash
 BFF_SSH_PASSWD=root:admin docker compose --profile dev up
 ```
