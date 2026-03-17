@@ -42,8 +42,7 @@ To run our database and an admin panel set `BFF_DB_ENABLED` to `true` and run:
 docker compose up
 ```
 
-You can also include the BFF, but there is no integration yet with de DB and front-end so this has to be setup when needed.
-It can connect with the front-end with the right env vars, but the mock server is a bigger challenge. So use this for testing the build process and startup.
+You can also include the BFF (but this does not work properly, see compose file for more info):
 ```bash
 BFF_SSH_PASSWD=root:admin docker compose --profile dev up
 ```
