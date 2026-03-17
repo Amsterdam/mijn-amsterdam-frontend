@@ -274,6 +274,11 @@ components:
               dateUpdated:
                 type: string
                 format: date-time
+              lastLoginDate:
+                type: string
+                format: date-time
+                nullable: true
+                description: Last consumer login timestamp (ISO 8601) or null when unknown/never.
               services:
                 type: array
                 items:
@@ -352,6 +357,11 @@ components:
         dateUpdated:
           type: string
           format: date-time
+        lastLoginDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: Last consumer login timestamp (ISO 8601) or null when unknown/never.
     ConsumerRegistered:
       type: object
       properties:
