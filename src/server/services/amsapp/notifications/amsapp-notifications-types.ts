@@ -12,6 +12,7 @@ export type ConsumerProfile = {
   consumerIds: ConsumerId[];
   serviceIds: ServiceId[];
   dateUpdated: string;
+  lastLoginDate: string | null;
   content: { services: Record<ServiceId, NotificationsService> } | null;
 };
 

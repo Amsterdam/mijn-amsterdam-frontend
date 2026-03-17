@@ -49,9 +49,10 @@ import {
 } from './amsapp-notifications';
 
 describe('amsapp-notifications', () => {
+  const systemTime = new Date('2000-01-01T12:00:00.000Z');
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.setSystemTime(new Date('2000-01-01T12:00:00.000Z'));
+    vi.setSystemTime(systemTime);
   });
 
   afterAll(() => {
@@ -149,15 +150,16 @@ describe('amsapp-notifications', () => {
 
     expect(mocks.model.storeNotifications).toHaveBeenCalledTimes(1);
 
-    const [profileIdArg, servicesArg] = mocks.model.storeNotifications.mock
-      .calls[0] as unknown as [string, any[]];
+    const [profileIdArg, servicesArg, lastLoginDateArg] = mocks.model
+      .storeNotifications.mock.calls[0] as unknown as [string, any[], any];
 
     expect(profileIdArg).toBe('123456789');
     expect(servicesArg).toHaveLength(1);
+    expect(lastLoginDateArg).toBeNull();
 
     expect(servicesArg[0]).toStrictEqual({
       serviceId: 'serviceA',
-      dateUpdated: '2000-01-01T12:00:00.000Z',
+      dateUpdated: systemTime.toISOString(),
       status: 'OK',
       content: [
         {
@@ -182,7 +184,29 @@ describe('amsapp-notifications', () => {
 
     expect(mocks.model.storeNotifications).toHaveBeenCalledWith(
       '123456789',
-      []
+      [],
+      null
+    );
+  });
+
+  it('storeNotificationsResponses updates lastLoginDate when updateLastLoginDate=true', async () => {
+    mocks.model.storeNotifications.mockResolvedValue(undefined);
+
+    await storeNotificationsResponses(
+      '123456789',
+      {
+        serviceA: {
+          status: 'OK',
+          content: { notifications: [] },
+        },
+      } as any,
+      { updateLastLoginDate: true }
+    );
+
+    expect(mocks.model.storeNotifications).toHaveBeenCalledWith(
+      '123456789',
+      expect.any(Array),
+      systemTime.toISOString()
     );
   });
 });
