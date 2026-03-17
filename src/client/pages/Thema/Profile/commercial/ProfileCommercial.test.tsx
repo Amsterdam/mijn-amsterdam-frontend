@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 
 import { forTesting } from './ProfileCommercial.transform.tsx';
 import { MijnBedrijfsGegevensThema } from './ProfileCommercial.tsx';

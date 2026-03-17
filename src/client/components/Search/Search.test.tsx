@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import nock from 'nock';
 import { afterEach, describe, expect, test } from 'vitest';
 
