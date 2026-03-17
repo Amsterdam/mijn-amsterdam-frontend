@@ -356,26 +356,29 @@ function transformPowerbrowserDocLinksResponse(
     .map(convertPBRecordToDict)
     .filter(zaakTransformer.isValidPBDocument)
     .map((document) => {
-      const titleLower = document.OMSCHRIJVING.toLowerCase();
+      let title = document.OMSCHRIJVING;
+      if (zaakTransformer.transformDoclinks) {
+        const [docTitleTranslated] =
+          Object.entries(zaakTransformer.transformDoclinks).find(
+            ([_docTitleMa, docTitlesPB]) =>
+              docTitlesPB.some((docTitlePb) =>
+                document.OMSCHRIJVING.toLowerCase().includes(
+                  docTitlePb.toLowerCase()
+                )
+              )
+          ) ?? [];
 
-      const [docTitleTranslated] =
-        Object.entries(zaakTransformer.transformDoclinks).find(
-          ([_docTitleMa, docTitlesPB]) =>
-            docTitlesPB.some((docTitlePb) =>
-              titleLower.includes(docTitlePb.toLowerCase())
-            )
-        ) ?? [];
+        if (!docTitleTranslated) {
+          return null;
+        }
 
-      if (!docTitleTranslated) {
-        return null;
+        title = docTitleTranslated;
       }
 
       const docIdEncrypted = encryptSessionIdWithRouteIdParam(
         sessionID,
         String(document.ID)
       );
-
-      const title = docTitleTranslated ?? document.OMSCHRIJVING;
 
       return {
         id: docIdEncrypted,
