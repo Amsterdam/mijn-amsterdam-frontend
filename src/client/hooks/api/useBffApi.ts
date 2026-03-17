@@ -137,7 +137,7 @@ export type BffApiState<D> = {
 export type BFFApiHook<T, P = unknown> = BffApiState<ApiResponse<T>> & {
   fetch: (
     url?: UrlOrString | RequestInitWithPayload<P>,
-    init_?: P extends unknown ? RequestInitWithPayload<P> : never
+    init_?: RequestInitWithPayload<P>
   ) => void;
   optimisticUpdateContent: (content: T) => void;
   isPristine: boolean;
