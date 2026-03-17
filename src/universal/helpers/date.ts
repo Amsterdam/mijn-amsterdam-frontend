@@ -8,8 +8,6 @@ import {
 } from 'date-fns';
 import { nl } from 'date-fns/locale/nl';
 
-import { logger } from '../../server/logging';
-
 // See https://date-fns.org/v1.30.1/docs/format for more formatting options
 const DEFAULT_DATE_FORMAT = 'dd MMMM yyyy';
 const ISO_DATE_FORMAT = 'yyyy-MM-dd';
@@ -23,7 +21,8 @@ export function dateFormat(date: string | Date | number, fmt: string) {
     const parsedDate = typeof date === 'string' ? parseISO(date) : date;
     return format(parsedDate, fmt, { locale: nl });
   } catch (_error) {
-    logger.error(`dateFormat: Could not format date: ${date}`);
+    // eslint-disable-next-line no-console
+    console.error(`dateFormat: Could not format date: ${date}`);
   }
 
   return String(date);
@@ -42,7 +41,8 @@ export function toISOString(date: string | Date): string | null {
 
   const parsedDate = parseISO(date);
   if (parsedDate.toString() === 'Invalid Date') {
-    logger.error(`parseDateToISO: Could not parse date: ${date}`);
+    // eslint-disable-next-line no-console
+    console.error(`parseDateToISO: Could not parse date: ${date}`);
     return null;
   }
   return parsedDate.toISOString();

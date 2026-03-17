@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { Paragraph } from '@amsterdam/design-system-react';
 import { Navigate, useLocation } from 'react-router';
 
-import { BffEndpoints } from '../../../server/routing/bff-routes';
 import { isPrivateRoute } from '../../App.routes';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
 import { PageContentCell, PageV2 } from '../../components/Page/Page';
@@ -11,6 +10,7 @@ import { captureMessage } from '../../helpers/monitoring';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 import { LandingRoute } from '../Landing/Landing-routes';
 import { SearchPageRoute } from '../Search/Search-routes';
+import { BFFApiUrls } from '../../config/api';
 
 export function NotFound() {
   useHTMLDocumentTitle({
@@ -37,7 +37,7 @@ export function NotFound() {
           Gebruik de{' '}
           <MaRouterLink href={SearchPageRoute.route}>zoekfunctie </MaRouterLink>
           of ga naar onze{' '}
-          <MaRouterLink href={BffEndpoints.ROOT}>homepagina</MaRouterLink>.
+          <MaRouterLink href={BFFApiUrls.ROOT}>homepagina</MaRouterLink>.
         </Paragraph>
       </PageContentCell>
     </PageV2>
