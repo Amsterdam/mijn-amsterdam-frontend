@@ -8,13 +8,14 @@ import type {
 import { createInstance as createPiwikInstance } from '@amsterdam/piwik-tracker-react';
 import memoize from 'memoizee';
 
+type PiwikTrackerInstance = InstanceType<(typeof PiwikTracker)['default']>;
 // TODO: Import type(s) from @amsterdam/piwik-tracker-react when they are available
 export interface PiwikInstance {
-  trackPageView: PiwikTracker.default['trackPageView'];
-  trackSiteSearch: PiwikTracker.default['trackSiteSearch'];
-  trackLink: PiwikTracker.default['trackLink'];
-  trackDownload: PiwikTracker.default['trackDownload'];
-  pushInstruction: PiwikTracker.default['pushInstruction'];
+  trackPageView: PiwikTrackerInstance['trackPageView'];
+  trackSiteSearch: PiwikTrackerInstance['trackSiteSearch'];
+  trackLink: PiwikTrackerInstance['trackLink'];
+  trackDownload: PiwikTrackerInstance['trackDownload'];
+  pushInstruction: PiwikTrackerInstance['pushInstruction'];
 }
 let PiwikInstance: PiwikInstance;
 
