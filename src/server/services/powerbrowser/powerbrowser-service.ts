@@ -299,7 +299,7 @@ async function fetchSettledZaakDocuments(
   authProfile: AuthProfile,
   zaakTransformer: Pick<
     PowerBrowserZaakTransformer,
-    'transformDoclinks' | 'isValidPBDocument'
+    'transformDoclinks' | 'filterValidDocumentPredicate'
   >,
   zaak: Pick<PowerBrowserZaakBase, 'id'>
 ): Promise<GenericDocument[]> {
@@ -348,13 +348,13 @@ function transformPowerbrowserDocLinksResponse(
   sessionID: SessionID,
   zaakTransformer: Pick<
     PowerBrowserZaakTransformer,
-    'transformDoclinks' | 'isValidPBDocument'
+    'transformDoclinks' | 'filterValidDocumentPredicate'
   >,
   responseData: SearchRequestResponse<'DOCLINK', PBDocumentFields[]>
 ): PowerBrowserZaakBase['documents'] {
   return (responseData.records || [])
     .map(convertPBRecordToDict)
-    .filter(zaakTransformer.isValidPBDocument)
+    .filter(zaakTransformer.filterValidDocumentPredicate)
     .map((document) => {
       let title = document.OMSCHRIJVING;
       if (zaakTransformer.transformDoclinks) {
@@ -399,7 +399,7 @@ async function fetchDocumentsList(
   authProfile: AuthProfile,
   zaakTransformer: Pick<
     PowerBrowserZaakTransformer,
-    'transformDoclinks' | 'isValidPBDocument'
+    'transformDoclinks' | 'filterValidDocumentPredicate'
   >,
   zaakId: PowerBrowserZaakBase['id']
 ): Promise<ApiResponse<PowerBrowserZaakBase['documents']>> {

@@ -62,7 +62,7 @@ const LigplaatsWoonbootVergunningZaakTransformer: PowerBrowserZaakTransformer<Li
       [documentNamesMA.BESLUIT]: ['Besluit'],
       [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
     } as const,
-    isValidPBDocument: isValidPBDocumentForVTH,
+    filterValidDocumentPredicate: isValidPBDocumentForVTH,
   };
 
 const LigplaatsBedrijfsvaartuigVergunningZaakTransformer: PowerBrowserZaakTransformer<LigplaatsBedrijfsvaartuigvergunning> =
@@ -86,7 +86,7 @@ const LigplaatsBedrijfsvaartuigVergunningZaakTransformer: PowerBrowserZaakTransf
       [documentNamesMA.BESLUIT]: ['Besluit'],
       [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
     } as const,
-    isValidPBDocument: isValidPBDocumentForVTH,
+    filterValidDocumentPredicate: isValidPBDocumentForVTH,
   };
 
 const OmzettingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Omzettingsvergunning> =
@@ -103,7 +103,7 @@ const OmzettingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Omzetting
       [documentNamesMA.BESLUIT]: ['Besluit'],
       [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
     } as const,
-    isValidPBDocument: isValidPBDocumentForVTH,
+    filterValidDocumentPredicate: isValidPBDocumentForVTH,
   };
 
 const SamenvoegingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Samenvoegingsvergunning> =
@@ -120,7 +120,7 @@ const SamenvoegingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Samenv
       [documentNamesMA.BESLUIT]: ['Besluit'],
       [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
     } as const,
-    isValidPBDocument: isValidPBDocumentForVTH,
+    filterValidDocumentPredicate: isValidPBDocumentForVTH,
   };
 
 const OnttrekkingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Onttrekkingsvergunning> =
@@ -135,7 +135,7 @@ const OnttrekkingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Onttrek
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    isValidPBDocument: isValidPBDocumentForVTH,
+    filterValidDocumentPredicate: isValidPBDocumentForVTH,
   };
 
 const OnttrekkingsvergunningSloopZaakTransformer: PowerBrowserZaakTransformer<OnttrekkingsvergunningSloop> =
@@ -155,7 +155,7 @@ const OnttrekkingsvergunningSloopZaakTransformer: PowerBrowserZaakTransformer<On
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    isValidPBDocument: isValidPBDocumentForVTH,
+    filterValidDocumentPredicate: isValidPBDocumentForVTH,
   };
 
 const VormenVanWoonruimteZaakTransformer: PowerBrowserZaakTransformer<VormenVanWoonruimte> =
@@ -167,7 +167,7 @@ const VormenVanWoonruimteZaakTransformer: PowerBrowserZaakTransformer<VormenVanW
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    isValidPBDocument: isValidPBDocumentForVTH,
+    filterValidDocumentPredicate: isValidPBDocumentForVTH,
   };
 
 const OnttrekkingsvergunningTweedeWoningZaakTransformer: PowerBrowserZaakTransformer<OnttrekkingsvergunningTweedeWoning> =
@@ -182,7 +182,7 @@ const OnttrekkingsvergunningTweedeWoningZaakTransformer: PowerBrowserZaakTransfo
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    isValidPBDocument: isValidPBDocumentForVTH,
+    filterValidDocumentPredicate: isValidPBDocumentForVTH,
   };
 
 const SplitsingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Splitsingsvergunning> =
@@ -197,7 +197,7 @@ const SplitsingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Splitsing
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    isValidPBDocument: isValidPBDocumentForVTH,
+    filterValidDocumentPredicate: isValidPBDocumentForVTH,
   };
 
 export const pbZaakTransformers = [

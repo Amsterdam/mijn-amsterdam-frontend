@@ -18,7 +18,7 @@ export const BedAndBreakfastZaakTransformer: PowerBrowserZaakTransformer<BedAndB
       ),
     transformFields: SELECT_FIELDS_TRANSFORM_BASE,
     transformDoclinks: documentNamenMA_PB,
-    isValidPBDocument: (_) => true,
+    filterValidDocumentPredicate: (_) => true,
   };
 
 export const powerBrowserZaakTransformers = [BedAndBreakfastZaakTransformer];

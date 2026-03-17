@@ -22,12 +22,6 @@ import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
 import { powerBrowserZaakTransformers } from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-pb-zaken';
 import { BBVergunningFrontend } from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types';
 
-const validPBAanvraagRecord = [
-  { fieldName: 'SOORTDOCUMENT_ID', fieldValue: '1000001015' },
-  { fieldName: 'STAMCSSTATUS_ID', fieldValue: '1000001002' },
-  { fieldName: 'OPENBAARHEID_ID', fieldValue: '1000001001' },
-];
-
 describe('Powerbrowser service', () => {
   const authProfile: AuthProfile = {
     id: 'test-id',
@@ -49,8 +43,8 @@ describe('Powerbrowser service', () => {
 
   const zaakTransformer = {
     transformDoclinks: documentNamesMA_PB,
-    isValidPBDocument: () => true,
-  } as unknown as PowerBrowserZaakTransformer;
+    filterValidDocumentPredicate: (_) => true,
+  } satisfies Partial<PowerBrowserZaakTransformer>;
 
   beforeEach(() => {
     remoteApi.post('/powerbrowser/Token').reply(200, 'test-token');
@@ -215,7 +209,6 @@ describe('Powerbrowser service', () => {
                 {
                   id: 'test-document-id',
                   fields: [
-                    ...validPBAanvraagRecord,
                     {
                       fieldName: 'OMSCHRIJVING',
                       fieldValue: 'DocumentnaamPB',
@@ -544,14 +537,13 @@ describe('Powerbrowser service', () => {
       const docNameMA_PB = { [docNameMA]: [docNamePB] };
       const zaakTransformer = {
         transformDoclinks: docNameMA_PB,
-        isValidPBDocument: () => true,
-      } as unknown as PowerBrowserZaakTransformer;
+        filterValidDocumentPredicate: () => true,
+      } satisfies Partial<PowerBrowserZaakTransformer>;
       remoteApi.post('/powerbrowser/SearchRequest').reply(200, {
         records: [
           {
             id: 'test-document-id',
             fields: [
-              ...validPBAanvraagRecord,
               {
                 fieldName: 'OMSCHRIJVING',
                 fieldValue: docNamePB,
@@ -687,13 +679,12 @@ describe('Powerbrowser service', () => {
       const docNameMA_PB = { [docNameMA]: [docNamePB] };
       const zaakTransformer = {
         transformDoclinks: docNameMA_PB,
-        isValidPBDocument: () => true,
-      } as unknown as PowerBrowserZaakTransformer;
+        filterValidDocumentPredicate: () => true,
+      } satisfies Partial<PowerBrowserZaakTransformer>;
       const responseData = {
         records: [
           {
             fields: [
-              ...validPBAanvraagRecord,
               { fieldName: 'ID', fieldValue: 'test-doc-id' },
               {
                 fieldName: 'OMSCHRIJVING',
