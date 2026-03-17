@@ -5,6 +5,7 @@ import { IS_PRODUCTION } from '../../../universal/config/env';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
 import { PageContentCell, PageV2 } from '../../components/Page/Page';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
+import { logger } from '../../helpers/logging';
 
 export function BFF500Error() {
   useHTMLDocumentTitle({
@@ -17,7 +18,7 @@ export function BFF500Error() {
     stack = !IS_PRODUCTION && JSON.parse(queryParams.get('stack') as string);
   } catch (error) {
     stack = queryParams.get('stack') as string;
-    console.error(error);
+    logger.error(error);
   }
 
   return (

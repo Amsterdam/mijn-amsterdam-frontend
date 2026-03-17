@@ -15,6 +15,7 @@ import {
   LOGOUT_URL,
 } from '../../config/api';
 import { Colors } from '../../config/app';
+import { logger } from '../../helpers/logging';
 import { ONE_SECOND_MS, useLogout } from '../../hooks/api/useSessionApi';
 import { CounterProps, useCounter } from '../../hooks/timer.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
@@ -110,8 +111,7 @@ export function AutoLogoutDialog({
   const [continueButtonIsVisible, setContinueButtonVisibility] = useState(true);
 
   function logtime() {
-    // eslint-disable-next-line no-console
-    console.log(
+    logger.info(
       'Dialog opens in %s seconds, expires in %s seconds at %s',
       formattedTimeFromSeconds(
         getExpiresInSeconds(expiresAtMilliseconds) -

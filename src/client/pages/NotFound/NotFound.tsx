@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { Paragraph } from '@amsterdam/design-system-react';
 import { Navigate, useLocation } from 'react-router';
 
-import { BffEndpoints } from '../../../server/routing/bff-routes';
+import { BffEndpoints } from '../../../universal/routing/bff-routes';
 import { isPrivateRoute } from '../../App.routes';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
 import { PageContentCell, PageV2 } from '../../components/Page/Page';
