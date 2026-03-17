@@ -119,7 +119,7 @@ It's basically an additional development server integrated in the BFF api.
 
 #### Database
 
-Postgres is used. By default the database connection is not used in local development and faked programatically. To develop/test the database locally follow the Docker instructions.
+Postgres is used. By default the database connection is not used in local development and faked programatically.
 
 ### Branch naming + PR
 
