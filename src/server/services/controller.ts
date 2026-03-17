@@ -186,7 +186,8 @@ export const NOTIFICATIONS = async (req: Request) => {
     // Nothing in this flow depends on this so it does not have to be awaited
     storeNotificationsResponses(
       authProfileAndToken.profile.id,
-      notificationsAndTipsResults
+      notificationsAndTipsResults,
+      { updateLastLoginDate: true }
     ).catch((error) => {
       captureException(error);
     });

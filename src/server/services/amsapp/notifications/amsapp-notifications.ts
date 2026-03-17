@@ -64,16 +64,25 @@ export async function batchDeleteNotifications() {
 
 export async function storeNotificationsResponses(
   profileId: BSN,
-  serviceResponses: Partial<Record<ServiceId, NotificationsAndTipsResponse>>
+  serviceResponses: Partial<Record<ServiceId, NotificationsAndTipsResponse>>,
+  options?: {
+    /**
+     * When true, also updates `last_login_date` for the profile.
+     * Use this for user-driven flows (login), not for scheduled batch jobs.
+     */
+    updateLastLoginDate?: boolean;
+  }
 ): Promise<void> {
   const now = toISOString(new Date());
+  const lastLoginDate = options?.updateLastLoginDate ? now : null;
   const responses = entries(serviceResponses)
     .filter(
+      // Unsuccessful responses do not contain new notifications
       (
         serviceResponse
       ): serviceResponse is [ServiceId, NotificationsAndTipsResponse] =>
         (serviceResponse[1] != null && serviceResponse[1].status) === 'OK'
-    ) // Unsuccessful responses do not contain new notifications
+    )
     .map(
       ([serviceId, response]: [ServiceId, NotificationsAndTipsResponse]) => ({
         ...transformNotificationsForExternalUse(serviceId, response),
@@ -82,7 +91,7 @@ export async function storeNotificationsResponses(
       })
     );
 
-  await storeNotifications(profileId, responses);
+  await storeNotifications(profileId, responses, lastLoginDate);
 }
 
 export async function batchFetchAndStoreNotifications() {
