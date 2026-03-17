@@ -1,35 +1,30 @@
-import type {
-  MapProps as ReactMapProps} from '@amsterdam/react-maps';
-import {
-  Map as ReactMap
-} from '@amsterdam/react-maps';
-
+import { type MapProps, Map } from '@amsterdam/react-maps';
 import 'leaflet/dist/leaflet.css';
 import classnames from 'classnames';
 
 import styles from '../MyArea.module.scss';
 
-export interface MapProps extends ReactMapProps {
+export interface MaMapProps extends MapProps {
   fullScreen?: boolean;
   children: any;
   className?: any;
 }
 
-export default function Map({
+export default function MaMap({
   children,
   options,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   fullScreen,
   className,
   ...otherProps
-}: MapProps) {
+}: MaMapProps) {
   return (
-    <ReactMap
+    <Map
       options={options}
       {...otherProps}
       className={classnames(styles.Map, className)}
     >
       {children}
-    </ReactMap>
+    </Map>
   );
 }
