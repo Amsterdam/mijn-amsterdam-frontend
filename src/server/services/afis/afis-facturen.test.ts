@@ -17,8 +17,8 @@ import type {
 } from './afis-types.ts';
 import AFIS_AFGEHANDELDE_FACTUREN from './test-fixtures/afgehandelde-facturen.json' with { type: 'json' };
 import AFIS_OPENSTAAANDE_FACTUREN from './test-fixtures/openstaande-facturen.json' with { type: 'json' };
-import ARC_DOC from '../../../../mockserver/main/mocks/fixtures/afis/arc-doc-id.json' with { type: 'json' };
-import DOCUMENT_DOWNLOAD_RESPONSE from '../../../../mockserver/main/mocks/fixtures/afis/document.json' with { type: 'json' };
+import ARC_DOC from '../../../../mocks/fixtures/afis/arc-doc-id.json' with { type: 'json' };
+import DOCUMENT_DOWNLOAD_RESPONSE from '../../../../mocks/fixtures/afis/document.json' with { type: 'json' };
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 
 const mocks = vi.hoisted(() => {

@@ -10,7 +10,7 @@ import {
   fetchWmoVoorzieningenCompact,
   forTesting,
 } from './wmo.ts';
-import ZORGNED_AANVRAGEN_WMO from '../../../../mockserver/main/mocks/fixtures/zorgned-jzd-aanvragen.json' with { type: 'json' };
+import ZORGNED_AANVRAGEN_WMO from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json' with { type: 'json' };
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 import { jsonCopy } from '../../../universal/helpers/utils.ts';
 import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';

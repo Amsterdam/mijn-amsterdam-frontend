@@ -5,8 +5,8 @@ import {
   fetchLoodMetingNotifications,
   fetchLoodmetingen,
 } from './loodmetingen.ts';
-import document from '../../../../mockserver/main/mocks/fixtures/loodmeting-rapport.json' with { type: 'json' };
-import metingen from '../../../../mockserver/main/mocks/fixtures/loodmetingen.json' with { type: 'json' };
+import document from '../../../../mocks/fixtures/loodmeting-rapport.json' with { type: 'json' };
+import metingen from '../../../../mocks/fixtures/loodmetingen.json' with { type: 'json' };
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 

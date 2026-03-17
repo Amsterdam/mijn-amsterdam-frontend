@@ -20,7 +20,7 @@ import {
   type ZorgnedAanvraagSource,
   type ZorgnedPersoonSource,
 } from './zorgned-types.ts';
-import ZORGNED_JZD_AANVRAGEN from '../../../../mockserver/main/mocks/fixtures/zorgned-jzd-aanvragen.json' with { type: 'json' };
+import ZORGNED_JZD_AANVRAGEN from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json' with { type: 'json' };
 import { remoteApiHost } from '../../../testing/setup.ts';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 import type { ApiSuccessResponse } from '../../../universal/helpers/api.ts';
