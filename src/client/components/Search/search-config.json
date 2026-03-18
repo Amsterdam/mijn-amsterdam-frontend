@@ -489,7 +489,7 @@
       "profileTypes": ["private", "commercial"]
     },
     {
-      "url": "https://belastingbalie.amsterdam.nl/digid.saml.php?start",
+      "url": "https://belastingbalie.amsterdam.nl/",
       "displayTitle": "Belastingen",
       "description": "Een overzicht van de belastingen.",
       "keywords": [
@@ -513,7 +513,7 @@
       "profileTypes": ["private", "commercial"]
     },
     {
-      "url": "https://belastingbalie.amsterdam.nl/digid.saml.php?start",
+      "url": "https://belastingbalie.amsterdam.nl/",
       "displayTitle": "Betalen parkeerbon via belastingen",
       "description": "Betalen parkeerbon via belastingen",
       "keywords": [
