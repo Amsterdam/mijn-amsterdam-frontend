@@ -134,7 +134,7 @@ export function AfisEMandateActionButtons({
       {eMandate.signRequestUrl && (
         <ApiActionButton
           api={redirectUrlApi}
-          fetch={() => redirectUrlApi.requestRedirectUrl(isActive)}
+          fetch={() => redirectUrlApi.fetch(isActive)}
           label={isActive ? 'Rekening wijzigen' : 'Activeren'}
           doConfirm={false}
         />

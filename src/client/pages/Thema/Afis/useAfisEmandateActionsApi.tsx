@@ -9,6 +9,7 @@ import type {
   AfisEMandateUpdatePayloadFrontend,
 } from '../../../../server/services/afis/afis-types';
 import { entries } from '../../../../universal/helpers/utils';
+import { logger } from '../../../helpers/logging';
 import {
   useBffApi,
   sendFetchRequest,
@@ -45,7 +46,11 @@ function useRedirectUrlApi(
     ...api,
     // Disable the default fetch function to prevent misuse.
     // We need to pass the isReplacement flag to the sendRequest function, so we define a custom fetch2 function instead.
-    fetch: () => undefined,
+    fetch: () => {
+      logger.warn(
+        'fetch is disabled for redirectUrlApi. Please use requestRedirectUrl instead.'
+      );
+    },
     requestRedirectUrl(isReplacement: boolean = false) {
       api.fetch(eMandate.signRequestUrl, {
         // Not a real payload, but we need to pass something to pass the isReplacement flag to the sendRequest function.

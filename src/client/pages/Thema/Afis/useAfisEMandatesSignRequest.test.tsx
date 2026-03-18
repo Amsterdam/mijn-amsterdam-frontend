@@ -1,7 +1,9 @@
 import { act, renderHook } from '@testing-library/react';
+import mockdate from 'mockdate';
 
 import {
   useSignRequestPayloadStorage,
+  useSignRequestPayloadStorageCleanup,
   useSignRequestStatusCheck,
 } from './useAfisEMandatesSignRequest';
 import type {
@@ -18,6 +20,7 @@ describe('useAfisEMandatesSignRequest', () => {
   describe('useSignRequestPayloadStorage', () => {
     beforeAll(() => {
       clearLocalStorage();
+      mockdate.set(new Date('2024-06-15'));
     });
     afterEach(() => {
       clearLocalStorage();
@@ -32,15 +35,15 @@ describe('useAfisEMandatesSignRequest', () => {
 
       // Add a payload
       act(() => {
-        result.current.add('eMandate1', 'payload1');
+        result.current.add('eMandate1', '15000001', 'payload1');
       });
       expect(result.current.payloads.length).toBe(1);
-      expect(result.current.getPayload('eMandate1')).toBe('payload1');
+      expect(result.current.get('eMandate1')?.getPayload()).toBe('payload1');
       expect(result.current.hasPayloads()).toBe(true);
 
       // Remove the payload
       act(() => {
-        result.current.remove('eMandate1');
+        result.current.get('eMandate1')?.remove();
       });
       expect(result.current.payloads).toEqual([]);
       expect(result.current.hasPayloads()).toBe(false);
@@ -52,21 +55,21 @@ describe('useAfisEMandatesSignRequest', () => {
       // Add a payload with an activation date in the past
       const pastDate = new Date(Date.now() - 11 * 60 * 1000).toISOString(); // 11 minutes ago
       act(() => {
-        result.current.add('eMandate2', 'payload2');
+        result.current.add('eMandate2', '15000002', 'payload2');
       });
 
       // Manually set the activation date to the past
-      result.current.payloads[0][2] = pastDate;
+      result.current.payloads[0].activationDate = pastDate;
 
-      expect(result.current.isTakingLong('eMandate2')).toBe(true);
+      expect(result.current.get('eMandate2')?.isTakingLong()).toBe(true);
 
       // Update the activation date to now
       const nowDate = new Date().toISOString();
       act(() => {
-        result.current.payloads[0][2] = nowDate;
+        result.current.payloads[0].activationDate = nowDate;
       });
 
-      expect(result.current.isTakingLong('eMandate2')).toBe(false);
+      expect(result.current.get('eMandate2')?.isTakingLong()).toBe(false);
     });
 
     it('should return false for isTakingLong if there is no activation date', () => {
@@ -74,31 +77,33 @@ describe('useAfisEMandatesSignRequest', () => {
 
       // Add a payload without an activation date
       act(() => {
-        result.current.add('eMandate3', 'payload3');
+        result.current.add('eMandate3', '15000003', 'payload3');
       });
 
       // Manually remove the activation date
-      result.current.payloads[0][2] = '';
+      result.current.payloads[0].activationDate = '';
 
-      expect(result.current.isTakingLong('eMandate3')).toBe(false);
+      expect(result.current.get('eMandate3')?.isTakingLong()).toBe(false);
     });
 
     it('should return false for isTakingLong if eMandateId does not exist', () => {
       const { result } = renderHook(() => useSignRequestPayloadStorage());
 
-      expect(result.current.isTakingLong('nonExistentId')).toBe(false);
+      expect(result.current.get('nonExistentId')?.isTakingLong()).toBe(
+        undefined
+      );
     });
 
     it('should return null for getPayload if eMandateId does not exist', () => {
       const { result } = renderHook(() => useSignRequestPayloadStorage());
 
-      expect(result.current.getPayload('nonExistentId')).toBeNull();
+      expect(result.current.get('nonExistentId')?.getPayload()).toBeUndefined();
     });
 
     it('should return null for getPayload if payloads are empty', () => {
       const { result } = renderHook(() => useSignRequestPayloadStorage());
 
-      expect(result.current.getPayload('anyId')).toBeNull();
+      expect(result.current.get('anyId')?.getPayload()).toBeUndefined();
     });
 
     it('should handle multiple payloads correctly', () => {
@@ -106,24 +111,24 @@ describe('useAfisEMandatesSignRequest', () => {
 
       // Add multiple payloads
       act(() => {
-        result.current.add('eMandate4', 'payload4');
+        result.current.add('eMandate4', '15000004', 'payload4');
       });
       act(() => {
-        result.current.add('eMandate5', 'payload5');
+        result.current.add('eMandate5', '15000005', 'payload5');
       });
 
       expect(result.current.payloads.length).toBe(2);
-      expect(result.current.getPayload('eMandate4')).toBe('payload4');
-      expect(result.current.getPayload('eMandate5')).toBe('payload5');
+      expect(result.current.get('eMandate4')?.getPayload()).toBe('payload4');
+      expect(result.current.get('eMandate5')?.getPayload()).toBe('payload5');
 
       // Remove one payload and check the other still exists
       act(() => {
-        result.current.remove('eMandate4');
+        result.current.get('eMandate4')?.remove();
       });
 
       expect(result.current.payloads.length).toBe(1);
-      expect(result.current.getPayload('eMandate4')).toBeNull();
-      expect(result.current.getPayload('eMandate5')).toBe('payload5');
+      expect(result.current.get('eMandate4')?.getPayload()).toBeUndefined();
+      expect(result.current.get('eMandate5')?.getPayload()).toBe('payload5');
     });
 
     it('should correctly identify pending status checks', () => {
@@ -132,13 +137,13 @@ describe('useAfisEMandatesSignRequest', () => {
       expect(result.current.hasPayloads()).toBe(false);
 
       act(() => {
-        result.current.add('eMandate6', 'payload6');
+        result.current.add('eMandate6', '15000006', 'payload6');
       });
 
       expect(result.current.hasPayloads()).toBe(true);
 
       act(() => {
-        result.current.remove('eMandate6');
+        result.current.get('eMandate6')?.remove();
       });
 
       expect(result.current.hasPayloads()).toBe(false);
@@ -152,18 +157,107 @@ describe('useAfisEMandatesSignRequest', () => {
       const nowDate = new Date().toISOString();
 
       act(() => {
-        result.current.add('eMandate7', 'payload7');
+        result.current.add('eMandate7', '15000007', 'payload7');
       });
       act(() => {
-        result.current.add('eMandate8', 'payload8');
+        result.current.add('eMandate8', '15000008', 'payload8');
       });
 
       // Manually set activation dates
-      result.current.payloads[0][2] = pastDate; // eMandate7
-      result.current.payloads[1][2] = nowDate; // eMandate8
+      result.current.payloads[0].activationDate = pastDate; // eMandate7
+      result.current.payloads[1].activationDate = nowDate; // eMandate8
 
-      expect(result.current.isTakingLong('eMandate7')).toBe(true);
-      expect(result.current.isTakingLong('eMandate8')).toBe(false);
+      expect(result.current.get('eMandate7')?.isTakingLong()).toBe(true);
+      expect(result.current.get('eMandate8')?.isTakingLong()).toBe(false);
+    });
+  });
+
+  describe('useSignRequestPayloadStorageCleanup', () => {
+    const eMandate = {
+      id: 'eMandate1',
+      eMandateIdSource: '15000001',
+      signRequestStatusUrl: `${bffApiHost}/status-check`,
+      status: '0',
+    } as unknown as AfisEMandateFrontend;
+
+    it('should cleanup payload if hook is rendered with New EMandate status is ACTIVE', async () => {
+      window.localStorage.setItem(
+        'afis-emandate-status-check-payload',
+        JSON.stringify([
+          {
+            eMandateId: eMandate.id,
+            eMandateIdSource: '15000001',
+            payload: 'payload',
+            activationDate: new Date().toISOString(),
+          },
+        ])
+      );
+      const payloads = localStorage.getItem(
+        'afis-emandate-status-check-payload'
+      );
+      expect(payloads).not.toBeNull();
+      expect(payloads).not.toBe('[]');
+
+      renderHook(() =>
+        useSignRequestPayloadStorageCleanup([{ ...eMandate, status: '1' }])
+      );
+
+      expect(localStorage.getItem('afis-emandate-status-check-payload')).toBe(
+        '[]'
+      );
+    });
+
+    it('should NOT cleanup payload if EMandate is not a replacement and Status is not ACTIVE', async () => {
+      window.localStorage.setItem(
+        'afis-emandate-status-check-payload',
+        JSON.stringify([
+          {
+            eMandateId: eMandate.id,
+            eMandateIdSource: '15000001',
+            payload: 'payload',
+            activationDate: new Date().toISOString(),
+          },
+        ])
+      );
+      const payloads = localStorage.getItem(
+        'afis-emandate-status-check-payload'
+      );
+      expect(payloads).not.toBeNull();
+      expect(payloads).not.toBe('[]');
+
+      renderHook(() => useSignRequestPayloadStorageCleanup([eMandate]));
+
+      expect(localStorage.getItem('afis-emandate-status-check-payload')).toBe(
+        '[{"eMandateId":"eMandate1","eMandateIdSource":"15000001","payload":"payload","activationDate":"2024-06-15T00:00:00.000Z"}]'
+      );
+    });
+
+    it('should cleanup payload if the Emandate has been replaced', async () => {
+      window.localStorage.setItem(
+        'afis-emandate-status-check-payload',
+        JSON.stringify([
+          {
+            eMandateId: eMandate.id,
+            eMandateIdSource: '15000001',
+            payload: 'payload',
+            activationDate: new Date().toISOString(),
+            isReplacement: 'true',
+          },
+        ])
+      );
+      const payloads = localStorage.getItem(
+        'afis-emandate-status-check-payload'
+      );
+      expect(payloads).not.toBeNull();
+      expect(payloads).not.toBe('[]');
+
+      renderHook(() =>
+        useSignRequestPayloadStorageCleanup([{ ...eMandate, status: '1' }])
+      );
+
+      expect(localStorage.getItem('afis-emandate-status-check-payload')).toBe(
+        '[]'
+      );
     });
   });
 
@@ -185,9 +279,10 @@ describe('useAfisEMandatesSignRequest', () => {
 
     const eMandate = {
       id: 'eMandate1',
+      eMandateIdSource: '15000001',
       signRequestStatusUrl: `${bffApiHost}/status-check`,
       status: '0',
-    } as AfisEMandateFrontend;
+    } as unknown as AfisEMandateFrontend;
 
     beforeAll(() => {
       clearLocalStorage();
@@ -213,9 +308,9 @@ describe('useAfisEMandatesSignRequest', () => {
         isPendingActivation: false,
         isPristine: true,
         isRequestingStatusCheck: false,
-        isTakingLong: false,
+        isTakingLong: undefined,
         optimisticUpdateContent: expect.any(Function),
-        payload: null,
+        payload: undefined,
       });
     });
 
@@ -223,7 +318,13 @@ describe('useAfisEMandatesSignRequest', () => {
       const fetchMock = mockFetchOnce();
       window.localStorage.setItem(
         'afis-emandate-status-check-payload',
-        JSON.stringify([[eMandate.id, 'payload', new Date().toISOString()]])
+        JSON.stringify([
+          {
+            eMandateId: eMandate.id,
+            payload: 'payload',
+            activationDate: new Date().toISOString(),
+          },
+        ])
       );
 
       const { result } = renderHook(() => useSignRequestStatusCheck(eMandate));
@@ -247,31 +348,17 @@ describe('useAfisEMandatesSignRequest', () => {
       expect(result.current.isPendingActivation).toBe(true);
     });
 
-    it('should remove payload if hook is rendered with EMandate status is ACTIVE', () => {
-      mockFetchOnce();
-
-      window.localStorage.setItem(
-        'afis-emandate-status-check-payload',
-        JSON.stringify([[eMandate.id, 'payload', new Date().toISOString()]])
-      );
-      const payloads = localStorage.getItem(
-        'afis-emandate-status-check-payload'
-      );
-      expect(payloads).not.toBeNull();
-      expect(payloads).not.toBe('[]');
-
-      renderHook(() => useSignRequestStatusCheck({ ...eMandate, status: '1' }));
-
-      expect(localStorage.getItem('afis-emandate-status-check-payload')).toBe(
-        '[]'
-      );
-    });
-
     it('should fetch status check if payload is present and handle NON SUCCESS response correctly', async () => {
       const fetchMock = mockFetchOnce('payment_cancelled');
       window.localStorage.setItem(
         'afis-emandate-status-check-payload',
-        JSON.stringify([[eMandate.id, 'payload', new Date().toISOString()]])
+        JSON.stringify([
+          {
+            eMandateId: eMandate.id,
+            payload: 'payload',
+            activationDate: new Date().toISOString(),
+          },
+        ])
       );
 
       const { result } = renderHook(() => useSignRequestStatusCheck(eMandate));
@@ -301,7 +388,13 @@ describe('useAfisEMandatesSignRequest', () => {
         .mockRejectedValueOnce(new Error('Network error'));
       window.localStorage.setItem(
         'afis-emandate-status-check-payload',
-        JSON.stringify([[eMandate.id, 'payload', new Date().toISOString()]])
+        JSON.stringify([
+          {
+            eMandateId: eMandate.id,
+            payload: 'payload',
+            activationDate: new Date().toISOString(),
+          },
+        ])
       );
 
       const { result } = renderHook(() => useSignRequestStatusCheck(eMandate));

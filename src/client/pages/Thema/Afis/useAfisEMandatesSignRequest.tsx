@@ -83,6 +83,8 @@ export function useSignRequestPayloadStorage() {
           const isReplacement = get(eMandateId, 'isReplacement');
           return isReplacement === 'true';
         },
+        // If an EMandate  has been replaced it will come back from the API with a different eMandateIdSource,
+        // so we can use that to determine if the payload in storage is for an EMandate that has been replaced.
         isReplaced(
           eMandateIdSource: AfisEMandateFrontend['eMandateIdSource']
         ): boolean {

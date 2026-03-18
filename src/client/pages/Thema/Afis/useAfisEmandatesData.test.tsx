@@ -368,7 +368,7 @@ describe('useEmandateApis', () => {
     const { result } = renderHook(() => useEmandateApis(eMandate));
 
     act(() => {
-      result.current.redirectUrlApi.fetch();
+      result.current.redirectUrlApi.requestRedirectUrl();
     });
 
     await waitFor(() => {
