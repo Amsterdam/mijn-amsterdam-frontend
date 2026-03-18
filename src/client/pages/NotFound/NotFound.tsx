@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { Paragraph } from '@amsterdam/design-system-react';
 import { Navigate, useLocation } from 'react-router';
 
-import { BFFApiUrls } from '../../config/api.ts';
 import { isPrivateRoute } from '../../App.routes.tsx';
 import { MaRouterLink } from '../../components/MaLink/MaLink.tsx';
 import { PageContentCell, PageV2 } from '../../components/Page/Page.tsx';
@@ -37,7 +36,7 @@ export function NotFound() {
           Gebruik de{' '}
           <MaRouterLink href={SearchPageRoute.route}>zoekfunctie </MaRouterLink>
           of ga naar onze{' '}
-          <MaRouterLink href={BFFApiUrls.ROOT}>homepagina</MaRouterLink>.
+          <MaRouterLink href={LandingRoute.route}>homepagina</MaRouterLink>.
         </Paragraph>
       </PageContentCell>
     </PageV2>
