@@ -35,7 +35,7 @@ function getThemaMenuItem(
     to:
       typeof item.to === 'function' ? item.to(appState, profileType) : item.to,
     isActive: !!(item.isActive
-      ? item.isActive(appState)
+      ? item.isActive(appState, profileType)
       : item.isAlwaysVisible),
   };
 }
