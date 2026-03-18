@@ -1,27 +1,28 @@
 import { Alert, Paragraph } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router';
 
+import type {
+  AfisFactuurFrontend} from './Afis-thema-config.ts';
 import {
-  AfisFactuurFrontend,
   displayPropsTermijnenTable,
   routeConfig,
-} from './Afis-thema-config';
+} from './Afis-thema-config.ts';
 import styles from './AfisFactuur.module.scss';
-import { getDocumentLink } from './useAfisFacturenApi';
-import { useAfisListPageData } from './useAfisListPageData';
+import { getDocumentLink } from './useAfisFacturenApi.tsx';
+import { useAfisListPageData } from './useAfisListPageData.tsx';
 import {
   useAfisFacturenData,
   type AfisFacturenThemaContextParams,
-} from './useAfisThemaData.hook';
-import type { AfisFactuurStateFrontend } from '../../../../server/services/afis/afis-types';
-import { Datalist } from '../../../components/Datalist/Datalist';
-import LoadingContent from '../../../components/LoadingContent/LoadingContent';
-import { MaRouterLink } from '../../../components/MaLink/MaLink';
-import { PageContentCell } from '../../../components/Page/Page';
-import { TableV2 } from '../../../components/Table/TableV2';
-import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
+} from './useAfisThemaData.hook.tsx';
+import type { AfisFactuurStateFrontend } from '../../../../server/services/afis/afis-types.ts';
+import { Datalist } from '../../../components/Datalist/Datalist.tsx';
+import LoadingContent from '../../../components/LoadingContent/LoadingContent.tsx';
+import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import { TableV2 } from '../../../components/Table/TableV2.tsx';
+import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
 function getTermijnenTable(factuur: AfisFactuurFrontend) {
   if (!factuur.termijnen || factuur.termijnen.length === 0) {

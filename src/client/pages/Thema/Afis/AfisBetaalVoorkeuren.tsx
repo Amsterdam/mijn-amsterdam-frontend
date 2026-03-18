@@ -6,25 +6,25 @@ import {
   Paragraph,
 } from '@amsterdam/design-system-react';
 
-import { featureToggle } from './Afis-thema-config';
+import { featureToggle } from './Afis-thema-config.ts';
 import styles from './AfisBetaalVoorkeuren.module.scss';
-import { EmandateRefetchInterval } from './AfisEMandateDetail';
-import { useAfisBetaalVoorkeurenData } from './useAfisBetaalVoorkeurenData';
-import { useAfisEMandatesData } from './useAfisEmandatesData';
-import { useAfisThemaData } from './useAfisThemaData.hook';
+import { EmandateRefetchInterval } from './AfisEMandateDetail.tsx';
+import { useAfisBetaalVoorkeurenData } from './useAfisBetaalVoorkeurenData.tsx';
+import { useAfisEMandatesData } from './useAfisEmandatesData.tsx';
+import { useAfisThemaData } from './useAfisThemaData.hook.tsx';
 import {
   type AfisBusinessPartnerDetailsTransformed,
   type AfisEMandateFrontend,
-} from '../../../../server/services/afis/afis-types';
-import { entries } from '../../../../universal/helpers/utils';
-import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
-import { Datalist } from '../../../components/Datalist/Datalist';
-import LoadingContent from '../../../components/LoadingContent/LoadingContent';
-import { PageContentCell } from '../../../components/Page/Page';
-import { DisplayProps } from '../../../components/Table/TableV2.types';
-import ThemaPagina from '../../../components/Thema/ThemaPagina';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+} from '../../../../server/services/afis/afis-types.ts';
+import { entries } from '../../../../universal/helpers/utils.ts';
+import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel.tsx';
+import { Datalist } from '../../../components/Datalist/Datalist.tsx';
+import LoadingContent from '../../../components/LoadingContent/LoadingContent.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
+import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
+import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 type AfisBusinessPartnerProps = {
   businesspartner: Omit<

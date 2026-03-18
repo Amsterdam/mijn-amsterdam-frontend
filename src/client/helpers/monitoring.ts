@@ -1,9 +1,12 @@
 import { ReactPlugin } from '@microsoft/applicationinsights-react-js';
-import { ApplicationInsights } from '@microsoft/applicationinsights-web';
+import {
+  ApplicationInsights,
+  type ITelemetryPlugin,
+} from '@microsoft/applicationinsights-web';
 import { createBrowserHistory } from 'history';
 
-import { IS_DEVELOPMENT } from '../../universal/config/env';
-import { logger } from './logging';
+import { IS_DEVELOPMENT } from '../../universal/config/env.ts';
+import { logger } from './logging.ts';
 
 export type Severity =
   | 'verbose'
@@ -32,7 +35,7 @@ export const reactPlugin = new ReactPlugin();
 const appInsights = new ApplicationInsights({
   config: {
     connectionString: import.meta.env.REACT_APP_MONITORING_CONNECTION_STRING,
-    extensions: [reactPlugin],
+    extensions: [reactPlugin as unknown as ITelemetryPlugin],
     enableAutoRouteTracking: true,
     extensionConfig: {
       [reactPlugin.identifier]: { history: browserHistory },

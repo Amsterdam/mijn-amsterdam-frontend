@@ -1,14 +1,15 @@
-import { ReactNode, type ReactElement } from 'react';
+import type { ReactNode} from 'react';
+import { type ReactElement } from 'react';
 
 import { Breadcrumb, Heading, Icon } from '@amsterdam/design-system-react';
 import { ChevronBackwardIcon } from '@amsterdam/design-system-react-icons';
 import { useLocation, useNavigate } from 'react-router';
 
 import styles from './PageHeadingV2.module.scss';
-import { LinkProps } from '../../../universal/types/App.types';
-import { dashboardMenuItem } from '../../pages/Dashboard/Dashboard-routes';
-import { MaBreadcrumbLink, MaRouterLink } from '../MaLink/MaLink';
-import { PageContentCell } from '../Page/Page';
+import type { LinkProps } from '../../../universal/types/App.types.ts';
+import { dashboardMenuItem } from '../../pages/Dashboard/Dashboard-routes.ts';
+import { MaBreadcrumbLink, MaRouterLink } from '../MaLink/MaLink.tsx';
+import { PageContentCell } from '../Page/Page.tsx';
 
 export type PageHeadingProps = {
   children: ReactNode;

@@ -1,20 +1,21 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import L, {
+import type {
   LatLngLiteral,
   LeafletEventHandlerFn,
   Marker as MarkerType,
   MarkerOptions,
 } from 'leaflet';
+import L from 'leaflet';
 
-import Marker from './Map/Marker';
+import Marker from './Map/Marker.tsx';
 import styles from './MyArea.module.scss';
-import { useMapRef } from './useMap';
-import { LOCATION_ZOOM } from '../../../universal/config/myarea-datasets';
+import { useMapRef } from './useMap.ts';
+import { LOCATION_ZOOM } from '../../../universal/config/myarea-datasets.ts';
 import iconUrl from '../../assets/icons/home.svg';
 import iconUrlCommercial from '../../assets/icons/map/homeCommercial__primary-red.svg';
 import markerIconUrl from '../../assets/icons/map/pin.svg';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
 
 interface MyAreaMarkerProps {
   latlng: LatLngLiteral;

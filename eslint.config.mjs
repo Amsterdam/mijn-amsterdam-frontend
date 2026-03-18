@@ -32,6 +32,7 @@ export default [
       'react/react-in-jsx-scope': 'off',
       '@typescript-eslint/no-explicit-any': 'error',
       'react/jsx-curly-brace-presence': 'error',
+      '@typescript-eslint/consistent-type-imports': 'error',
       'react/function-component-definition': [
         'warn',
         {

@@ -1,16 +1,17 @@
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import { FeatureToggle } from '../../../universal/config/feature-toggles.ts';
 import {
   SELECT_FIELDS_TRANSFORM_BASE,
   dateEnd,
   dateStart,
   location,
-} from '../decos/decos-field-transformers';
-import {
+} from '../decos/decos-field-transformers.ts';
+import type {
   DecosZaakBase,
-  DecosZaakTransformer,
+  DecosZaakTransformer} from '../decos/decos-types.ts';
+import {
   type DecosZaakFrontend,
-} from '../decos/decos-types';
-import { WithDateRange, WithLocation } from '../vergunningen/config-and-types';
+} from '../decos/decos-types.ts';
+import type { WithDateRange, WithLocation } from '../vergunningen/config-and-types.ts';
 
 export const caseTypeHorecaVergunningen = {
   ExploitatieHorecabedrijf: 'Horeca vergunning exploitatie Horecabedrijf',

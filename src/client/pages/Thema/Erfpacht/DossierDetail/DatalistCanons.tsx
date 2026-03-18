@@ -5,7 +5,7 @@ import { Button, OrderedList } from '@amsterdam/design-system-react';
 import type {
   ErfpachtCanonAfgekocht,
   ErfpachtCanonNietAfgekocht,
-} from '../../../../../server/services/erfpacht/erfpacht-types';
+} from '../../../../../server/services/erfpacht/erfpacht-types.ts';
 
 const MAX_CANONS_VISIBLE_INITIALLY = 2;
 

@@ -1,6 +1,6 @@
 import { describe } from 'vitest';
 
-import { getRedactedClass } from './cobrowse';
+import { getRedactedClass } from './cobrowse.ts';
 
 vi.mock('../config/thema', () => ({
   myThemasMenuItems: [

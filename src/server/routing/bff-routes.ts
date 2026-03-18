@@ -1,4 +1,4 @@
-import { hash } from '../../universal/helpers/utils';
+import { hash } from '../../universal/helpers/utils.ts';
 
 export const BFF_BASE_PATH = '/api/v1';
 export const BFF_BASE_PATH_PRIVATE = '/private/api/v1';

@@ -1,12 +1,13 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 import { renderHook } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
+import type {
+  ApiBaseItem,
+  ApiSearchConfig} from './search-config';
 import {
   API_SEARCH_CONFIG_DEFAULT,
-  ApiBaseItem,
-  ApiSearchConfig,
   apiSearchConfigs,
   displayPath,
 } from './search-config';
@@ -15,12 +16,12 @@ import {
   generateSearchIndexPageEntries,
   generateSearchIndexPageEntry,
   useSearchIndex,
-} from './useSearch';
-import { DecosZaakFrontend } from '../../../server/services/vergunningen/config-and-types';
-import { bffApi } from '../../../testing/utils';
-import { AppState } from '../../../universal/types/App.types';
-import MockApp from '../../pages/MockApp';
-import { routeConfig } from '../MyArea/MyArea-thema-config';
+} from './useSearch.tsx';
+import type { DecosZaakFrontend } from '../../../server/services/vergunningen/config-and-types.ts';
+import { bffApi } from '../../../testing/utils.ts';
+import type { AppState } from '../../../universal/types/App.types.ts';
+import MockApp from '../../pages/MockApp.tsx';
+import { routeConfig } from '../MyArea/MyArea-thema-config.ts';
 
 export function setupFetchStub(data: any) {
   return function fetchStub(_url: string) {

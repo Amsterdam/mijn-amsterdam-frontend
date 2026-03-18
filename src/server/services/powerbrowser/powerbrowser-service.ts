@@ -3,8 +3,8 @@ import memoizee from 'memoizee';
 import { generatePath } from 'react-router';
 import slug from 'slugme';
 
-import { hasCaseTypeInFMT_CAPTION } from './powerbrowser-helpers';
-import {
+import { hasCaseTypeInFMT_CAPTION } from './powerbrowser-helpers.ts';
+import type {
   PowerBrowserZaakBase,
   FetchPersoonOrMaatschapIdByUidOptions,
   PBDocumentFields,
@@ -17,32 +17,35 @@ import {
   PowerBrowserZaakFrontend,
   ZaakStatusDate,
   NestedType,
-} from './powerbrowser-types';
+} from './powerbrowser-types.ts';
+import type { ApiResponse } from '../../../universal/helpers/api.ts';
 import {
   apiErrorResult,
-  ApiResponse,
   apiSuccessResult,
-} from '../../../universal/helpers/api';
-import { dateSort, isDateInPast } from '../../../universal/helpers/date';
-import { toDateFormatted } from '../../../universal/helpers/date';
-import { entries, omit } from '../../../universal/helpers/utils';
-import {
+} from '../../../universal/helpers/api.ts';
+import { dateSort, isDateInPast } from '../../../universal/helpers/date.ts';
+import { toDateFormatted } from '../../../universal/helpers/date.ts';
+import { entries, omit } from '../../../universal/helpers/utils.ts';
+import type {
   GenericDocument,
   StatusLineItem,
-} from '../../../universal/types/App.types';
-import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
-import { ONE_HOUR_MS } from '../../config/app';
-import { DataRequestConfig } from '../../config/source-api';
-import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import { getFromEnv } from '../../helpers/env';
+} from '../../../universal/types/App.types.ts';
+import type {
+  AuthProfile,
+  AuthProfileAndToken,
+} from '../../auth/auth-types.ts';
+import { ONE_HOUR_MS } from '../../config/app.ts';
+import type { DataRequestConfig } from '../../config/source-api.ts';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt.ts';
+import { getFromEnv } from '../../helpers/env.ts';
 import {
   createSessionBasedCacheKey,
   getApiConfig,
-} from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
-import { BffEndpoints } from '../../routing/bff-routes';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { DocumentDownloadData } from '../shared/document-download-route-handler';
+} from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
+import { BffEndpoints } from '../../routing/bff-routes.ts';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
+import type { DocumentDownloadData } from '../shared/document-download-route-handler.ts';
 
 const TOKEN_VALIDITY_PERIOD = 24 * ONE_HOUR_MS;
 const PERCENTAGE_DISTANCE_FROM_EXPIRY = 0.1;
@@ -281,10 +284,12 @@ async function fetchZaakStatusDates(
       return `${url}/Report/RunSavedReport`;
     },
     transformResponse(responseData: PowerBrowserStatusResponse) {
-      return responseData.map(({ omschrijving, datum }) => ({
-        status: omschrijving,
-        datePublished: datum ?? null,
-      }));
+      return (
+        responseData?.map(({ omschrijving, datum }) => ({
+          status: omschrijving,
+          datePublished: datum ?? null,
+        })) ?? []
+      );
     },
     data: {
       reportFileName:
@@ -650,7 +655,6 @@ export function transformPBZaakFrontend<T extends PowerBrowserZaakBase>(
     dateDecisionFormatted: toDateFormatted(zaak.dateDecision) || '-',
     dateStartFormatted: toDateFormatted(zaak.dateStart) || '-',
     dateEndFormatted: toDateFormatted(zaak.dateEnd) || '-',
-
     steps: options.getStepsFN?.(zaak) ?? [],
     displayStatus: getDisplayStatus(zaak, steps),
     link: {

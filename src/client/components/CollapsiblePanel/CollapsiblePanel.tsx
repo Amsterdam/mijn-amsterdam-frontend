@@ -1,4 +1,5 @@
-import { ReactNode, useState } from 'react';
+import type { ReactNode} from 'react';
+import { useState } from 'react';
 
 import { Button, Heading } from '@amsterdam/design-system-react';
 import classNames from 'classnames';

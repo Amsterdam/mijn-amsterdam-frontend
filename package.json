@@ -9,6 +9,7 @@
     "node": ">=22.4"
   },
   "license": "Mozilla Public License 2.0",
+  "type": "module",
   "scripts": {
     "analyze": "source-map-explorer 'build/assets/*.js'",
     "mock-server": "mocks-server",
@@ -24,9 +25,9 @@
     "bff-api:test": "pnpm run bff-api:test:dirs src/server src/universal",
     "bff-api:test:db:amsapp-notifications": "cross-env MA_APP_MODE=unittest RUN_DB_TESTS=true BFF_DB_ENABLED=true pnpm run bff-api:test:dirs src/server/services/amsapp/notifications/amsapp-notifications-model.integration.test.ts",
     "bff-api:serve-build": "node build-bff/server/app-start",
-    "bff-api:serve-dev": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --inspect\" ts-node --project ./tsconfig.bff.json ./src/bffserver.ts",
-    "bff-api:build": "tsc --project ./tsconfig.bff.json",
-    "bff-api:job:notifications": "ts-node --project ./tsconfig.bff.json ./src/jobs/fetch-notifications-amsapp.ts",
+    "bff-api:serve-dev": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --inspect\" ts-node ./src/bffserver.ts",
+    "bff-api:build": "tsc",
+    "bff-api:job:notifications": "ts-node ./src/jobs/fetch-notifications-amsapp.ts",
     "lint": "eslint src --max-warnings 0 --quiet",
     "lint:fix": "eslint src --fix"
   },

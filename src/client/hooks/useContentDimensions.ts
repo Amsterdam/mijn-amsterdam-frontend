@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { useComponentSize } from './useComponentSize';
+import { useComponentSize } from './useComponentSize.ts';
 
 export function useContentDimensions(contentRef: React.RefObject<HTMLElement>) {
   const size = useComponentSize(contentRef.current);

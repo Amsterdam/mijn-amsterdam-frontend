@@ -4,8 +4,8 @@ import type {
   DatasetId,
   DatasetPropertyName,
   DatasetPropertyValue,
-} from '../../../../universal/config/myarea-datasets';
-import { filterActiveDatasets } from '../MyArea.hooks';
+} from '../../../../universal/config/myarea-datasets.ts';
+import { filterActiveDatasets } from '../MyArea.hooks.ts';
 
 export function categoryCheckboxState(
   category: DatasetCategory,

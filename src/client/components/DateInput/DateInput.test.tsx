@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { parseISO } from 'date-fns';
 import { describe, it, expect, vi } from 'vitest';
 
-import DateInput from './DateInput';
+import DateInput from './DateInput.tsx';
 
 describe('<DateInput />', () => {
   it('Renders without crashing', () => {

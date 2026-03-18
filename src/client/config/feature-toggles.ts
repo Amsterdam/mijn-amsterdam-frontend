@@ -1,8 +1,8 @@
-import type { ThemaFeatureToggle } from './thema-types';
+import type { ThemaFeatureToggle } from './thema-types.ts';
 import {
   type FeatureToggleKey,
-} from '../../server/config/azure-appconfiguration';
-import { entries } from '../../universal/helpers/utils';
+} from '../../server/config/azure-appconfiguration.ts';
+import { entries } from '../../universal/helpers/utils.ts';
 
 export const GLOBALTHIS_FEATURETOGGLE_KEY = 'MA_FEATURETOGGLES';
 

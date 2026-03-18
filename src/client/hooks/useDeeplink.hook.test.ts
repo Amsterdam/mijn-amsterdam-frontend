@@ -1,9 +1,10 @@
 import { renderHook } from '@testing-library/react';
 import { useLocation } from 'react-router';
-import { describe, it, expect, vi, Mock } from 'vitest';
+import type { Mock } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 
-import { useLocalStorage } from './storage.hook';
-import { useSetDeeplinkEntry } from './useDeeplink.hook';
+import { useLocalStorage } from './storage.hook.ts';
+import { useSetDeeplinkEntry } from './useDeeplink.hook.ts';
 
 vi.mock('react-router', async (importOriginal) => ({
   ...(await importOriginal()),

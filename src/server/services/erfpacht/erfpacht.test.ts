@@ -4,12 +4,12 @@ import {
   fetchErfpacht,
   fetchErfpachtDossiersDetail,
   forTesting,
-} from './erfpacht';
+} from './erfpacht.ts';
 import ERFPACHT_DOSSIERINFO_DETAILS from '../../../../mocks/fixtures/erfpacht-v2-dossierinfo-bsn.json';
 import ERFPACHT_DOSSIERS from '../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
 import ERFPACHT_ERFPACHTER from '../../../../mocks/fixtures/erfpacht-v2-erfpachter.json';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 
 describe('erfpacht', () => {
   const authProfileAndToken: AuthProfileAndToken = getAuthProfileAndToken();

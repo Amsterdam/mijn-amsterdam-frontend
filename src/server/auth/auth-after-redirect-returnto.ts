@@ -1,11 +1,11 @@
 import type { ParsedQs } from 'qs';
 
-import { getReturnToUrlZaakStatus } from './auth-helpers';
-import { authRoutes } from './auth-routes';
-import { ZAAK_STATUS_ROUTE } from '../../client/pages/ZaakStatus/ZaakStatus-config';
-import { generateFullApiUrlBFF } from '../routing/route-helpers';
-import { routes as amsappNotificationsRoutes } from '../services/amsapp/notifications/amsapp-notifications-service-config';
-import { routes as amsappStadspasRoutes } from '../services/amsapp/stadspas/amsapp-stadspas-service-config';
+import { getReturnToUrlZaakStatus } from './auth-helpers.ts';
+import { authRoutes } from './auth-routes.ts';
+import { ZAAK_STATUS_ROUTE } from '../../client/pages/ZaakStatus/ZaakStatus-config.ts';
+import { generateFullApiUrlBFF } from '../routing/route-helpers.ts';
+import { routes as amsappNotificationsRoutes } from '../services/amsapp/notifications/amsapp-notifications-service-config.ts';
+import { routes as amsappStadspasRoutes } from '../services/amsapp/stadspas/amsapp-stadspas-service-config.ts';
 
 // Return-to-key after login for getting the administration number of the stadspas.
 export const RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER =

@@ -1,4 +1,4 @@
-import { IS_OT, IS_PRODUCTION } from '../../../universal/config/env';
+import { IS_OT, IS_PRODUCTION } from '../../../universal/config/env.ts';
 
 export const featureToggle = {
   router: {

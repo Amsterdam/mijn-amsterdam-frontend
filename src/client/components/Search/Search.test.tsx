@@ -3,11 +3,11 @@ import userEvent from '@testing-library/user-event';
 import nock from 'nock';
 import { afterEach, describe, expect, test } from 'vitest';
 
-import { Search } from './Search';
 import * as remoteConfig from './search-config.json';
-import { bffApi } from '../../../testing/utils';
-import { AppState } from '../../../universal/types/App.types';
-import MockApp from '../../pages/MockApp';
+import { Search } from './Search.tsx';
+import { bffApi } from '../../../testing/utils.ts';
+import type { AppState } from '../../../universal/types/App.types.ts';
+import MockApp from '../../pages/MockApp.tsx';
 
 const appStateMock = {
   VERGUNNINGEN: {

@@ -2,10 +2,10 @@ import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect } from 'vitest';
 
-import { InlineKTO } from './InlineKTO';
-import { bffApi } from '../../../testing/utils';
-import type { AppState } from '../../../universal/types/App.types';
-import { componentCreator } from '../../pages/MockApp';
+import { InlineKTO } from './InlineKTO.tsx';
+import { bffApi } from '../../../testing/utils.ts';
+import type { AppState } from '../../../universal/types/App.types.ts';
+import { componentCreator } from '../../pages/MockApp.tsx';
 
 const questions = [
   {

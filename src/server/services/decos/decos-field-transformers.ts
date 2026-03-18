@@ -1,6 +1,6 @@
-import { transformKenteken, translateValue } from './decos-helpers';
-import { DecosFieldTransformerObject } from './decos-types';
-import { WithKentekens } from '../vergunningen/config-and-types';
+import { transformKenteken, translateValue } from './decos-helpers.ts';
+import type { DecosFieldTransformerObject } from './decos-types.ts';
+import type { WithKentekens } from '../vergunningen/config-and-types.ts';
 
 export const MA_DECISION_ZIE_BESLUIT = 'Zie besluit';
 export const MA_DECISION_DEFAULT = MA_DECISION_ZIE_BESLUIT;
@@ -41,7 +41,7 @@ export const SELECT_FIELDS_TRANSFORM_BASE: DecosFieldTransformerObject = {
   [CASE_TYP_FIELD_DECOS]: caseType,
   dfunction: decision,
   mark: identifier,
-  processed: processed,
+  processed,
   date5: dateDecision,
   document_date: dateRequest,
 };

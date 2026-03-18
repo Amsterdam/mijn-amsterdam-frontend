@@ -1,4 +1,4 @@
-import { ThemaConfigBase } from '../../../config/thema-types';
+import type { ThemaConfigBase } from '../../../config/thema-types.ts';
 
 const SUBSIDIES_ROUTE_DEFAULT = 'https://subsidies.amsterdam.nl';
 const THEMA_ID = 'SUBSIDIES';

@@ -1,35 +1,36 @@
-import { Request, RequestHandler, Response } from 'express';
-import { NextFunction } from 'express';
-import { ConfigParams, requiresAuth } from 'express-openid-connect';
+import type { Request, RequestHandler, Response } from 'express';
+import type { NextFunction } from 'express';
+import type { ConfigParams } from 'express-openid-connect';
+import expressOpenIdConnect from 'express-openid-connect';
 
-import { nocache, verifyAuthenticated } from './route-handlers';
-import { generateFullApiUrlBFF, sendUnauthorized } from './route-helpers';
-import { createBFFRouter } from './route-helpers';
-import { apiSuccessResult } from '../../universal/helpers/api';
+import { nocache, verifyAuthenticated } from './route-handlers.ts';
+import { generateFullApiUrlBFF, sendUnauthorized } from './route-helpers.ts';
+import { createBFFRouter } from './route-helpers.ts';
+import { apiSuccessResult } from '../../universal/helpers/api.ts';
+import { getReturnToUrl } from '../auth/auth-after-redirect-returnto.ts';
+import {
+  RETURNTO_MAMS_LANDING_DIGID,
+  RETURNTO_MAMS_LANDING_EHERKENNING,
+} from '../auth/auth-after-redirect-returnto.ts';
 import {
   OIDC_SESSION_COOKIE_NAME,
   oidcConfigDigid,
   oidcConfigEherkenning,
   openIdAuth,
-} from '../auth/auth-config';
+} from '../auth/auth-config.ts';
 import {
   createLogoutHandler,
   getAuth,
   hasSessionCookie,
-} from '../auth/auth-helpers';
-import { getReturnToUrl } from '../auth/auth-after-redirect-returnto';
-import {
-  RETURNTO_MAMS_LANDING_DIGID,
-  RETURNTO_MAMS_LANDING_EHERKENNING,
-} from '../auth/auth-after-redirect-returnto';
+} from '../auth/auth-helpers.ts';
 import {
   AUTH_BASE_EHERKENNING,
   AUTH_CALLBACK,
   authRoutes,
-} from '../auth/auth-routes';
-import { AuthenticatedRequest } from '../auth/auth-types';
-import { getFromEnv } from '../helpers/env';
-import { countLoggedInVisit } from '../services/visitors';
+} from '../auth/auth-routes.ts';
+import type { AuthenticatedRequest } from '../auth/auth-types.ts';
+import { getFromEnv } from '../helpers/env.ts';
+import { countLoggedInVisit } from '../services/visitors.ts';
 
 export const oidcRouter = createBFFRouter({ id: 'router-oidc' });
 
@@ -169,7 +170,7 @@ oidcRouter.get(authRoutes.AUTH_CHECK, authCheckHandler);
 
 oidcRouter.get(
   authRoutes.AUTH_TOKEN_DATA,
-  requiresAuth(),
+  expressOpenIdConnect.requiresAuth(),
   async (req: AuthenticatedRequest, res: Response) => {
     if (hasSessionCookie(req)) {
       const auth = getAuth(req);

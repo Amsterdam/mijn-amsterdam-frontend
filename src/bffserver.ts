@@ -4,4 +4,4 @@
 /// <reference path="./mijnamsterdam.d.ts" />
 
 // Compilation entrypoint
-import './server/app-start';
+import './server/app-start.ts';

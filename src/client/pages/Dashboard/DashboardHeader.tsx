@@ -3,14 +3,14 @@ import { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 
 import styles from './DashboardHeader.module.scss';
-import { isLoading } from '../../../universal/helpers/api';
-import { Search } from '../../components/Search/Search';
-import { useSmallScreen } from '../../hooks/media.hook';
+import { isLoading } from '../../../universal/helpers/api.ts';
+import { Search } from '../../components/Search/Search.tsx';
+import { useSmallScreen } from '../../hooks/media.hook.ts';
 import {
   useAppStateGetter,
   useAppStateReady,
-} from '../../hooks/useAppStateStore';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
+} from '../../hooks/useAppStateStore.ts';
+import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
 
 const STADSDELEN = [
   'buiten-amsterdam',

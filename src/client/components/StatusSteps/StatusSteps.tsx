@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 import {
   ActionGroup,
@@ -10,14 +10,14 @@ import {
 import { LinkExternalIcon } from '@amsterdam/design-system-react-icons';
 
 import styles from './StatusSteps.module.scss';
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import {
+import { defaultDateFormat } from '../../../universal/helpers/date.ts';
+import type {
   GenericDocument,
   StatusLineItem,
-} from '../../../universal/types/App.types';
-import { parseHTML } from '../../helpers/html-react-parse';
-import { DocumentLink } from '../DocumentList/DocumentLink';
-import { MaButtonLink } from '../MaLink/MaLink';
+} from '../../../universal/types/App.types.ts';
+import { parseHTML } from '../../helpers/html-react-parse.tsx';
+import { DocumentLink } from '../DocumentList/DocumentLink.tsx';
+import { MaButtonLink } from '../MaLink/MaLink.tsx';
 
 interface StatusStepDocumentsProps {
   documents?: GenericDocument[];

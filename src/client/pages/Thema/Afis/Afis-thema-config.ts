@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 
 import { generatePath, type Params } from 'react-router';
 
@@ -9,12 +9,12 @@ import type {
   AfisFactuur,
   AfisFactuurStateFrontend,
   AfisFactuurTermijn,
-} from '../../../../server/services/afis/afis-types';
-import type { LinkProps } from '../../../../universal/types/App.types';
-import type { DisplayProps } from '../../../components/Table/TableV2.types';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
-import { isEnabled } from '../../../config/feature-toggles';
-import type { ThemaRoutesConfig } from '../../../config/thema-types';
+} from '../../../../server/services/afis/afis-types.ts';
+import type { LinkProps } from '../../../../universal/types/App.types.ts';
+import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
+import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
+import { isEnabled } from '../../../config/feature-toggles.ts';
+import type { ThemaRoutesConfig } from '../../../config/thema-types.ts';
 
 export const featureToggle = {
   AfisActive: true,

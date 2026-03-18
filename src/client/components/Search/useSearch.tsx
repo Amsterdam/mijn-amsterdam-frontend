@@ -21,20 +21,20 @@ import {
   apiErrorResult,
   apiSuccessResult,
   isError,
-} from '../../../universal/helpers/api';
-import { pick, uniqueArray } from '../../../universal/helpers/utils';
-import { AppState } from '../../../universal/types/App.types';
-import { BFFApiUrls } from '../../config/api';
-import { useBffApi } from '../../hooks/api/useBffApi';
-import { useSmallScreen } from '../../hooks/media.hook';
+} from '../../../universal/helpers/api.ts';
+import { pick, uniqueArray } from '../../../universal/helpers/utils.ts';
+import type { AppState } from '../../../universal/types/App.types.ts';
+import { BFFApiUrls } from '../../config/api.ts';
+import { useBffApi } from '../../hooks/api/useBffApi.ts';
+import { useSmallScreen } from '../../hooks/media.hook.ts';
 import {
   useAppStateGetter,
   useAppStateReady,
-} from '../../hooks/useAppStateStore';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
-import { DashboardRoute } from '../../pages/Dashboard/Dashboard-routes';
-import { SearchPageRoute } from '../../pages/Search/Search-routes';
-import { routeConfig as buurtRouteConfig } from '../MyArea/MyArea-thema-config';
+} from '../../hooks/useAppStateStore.ts';
+import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
+import { DashboardRoute } from '../../pages/Dashboard/Dashboard-routes.ts';
+import { SearchPageRoute } from '../../pages/Search/Search-routes.ts';
+import { routeConfig as buurtRouteConfig } from '../MyArea/MyArea-thema-config.ts';
 
 export function generateSearchIndexPageEntry(
   item: ApiBaseItem,

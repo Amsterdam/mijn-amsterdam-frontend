@@ -1,8 +1,9 @@
 import { render, screen, fireEvent, act } from '@testing-library/react';
-import { describe, it, expect, vi, Mock } from 'vitest';
+import type { Mock } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 
-import { AutoLogoutDialog } from './AutoLogoutDialog';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { AutoLogoutDialog } from './AutoLogoutDialog.tsx';
+import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
 
 const mocks = vi.hoisted(() => {
   return {

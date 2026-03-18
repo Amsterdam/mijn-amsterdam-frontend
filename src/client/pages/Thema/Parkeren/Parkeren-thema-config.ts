@@ -1,18 +1,18 @@
 import cloneDeep from 'lodash.clonedeep';
 import { generatePath } from 'react-router';
 
-import { IS_PRODUCTION } from '../../../../universal/config/env';
-import { entries } from '../../../../universal/helpers/utils';
-import { propagateFeatureToggles } from '../../../config/feature-toggles';
+import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
+import { entries } from '../../../../universal/helpers/utils.ts';
+import { propagateFeatureToggles } from '../../../config/feature-toggles.ts';
 import type {
   ThemaConfigBase,
   WithDetailPage,
   WithListPage,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 import {
   ListPageParamKind as ListPageParamKindVergunningen,
   tableConfig as tableConfigVergunningen,
-} from '../Vergunningen/Vergunningen-thema-config';
+} from '../Vergunningen/Vergunningen-thema-config.ts';
 
 const THEMA_ID = 'PARKEREN';
 const THEMA_TITLE = 'Parkeren';

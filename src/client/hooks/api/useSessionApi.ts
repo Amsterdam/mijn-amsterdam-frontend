@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 
-import { AuthProfile } from '../../../server/auth/auth-types';
-import { AUTH_API_URL, LOGOUT_URL } from '../../config/api';
-import { clearSessionStorage } from '../storage.hook';
-import { clearDeeplinkEntry } from '../useDeeplink.hook';
-import { useProfileType } from '../useProfileType';
-import { useBffApi } from './useBffApi';
+import type { AuthProfile } from '../../../server/auth/auth-types.ts';
+import { AUTH_API_URL, LOGOUT_URL } from '../../config/api.ts';
+import { clearSessionStorage } from '../storage.hook.ts';
+import { clearDeeplinkEntry } from '../useDeeplink.hook.ts';
+import { useProfileType } from '../useProfileType.ts';
+import { useBffApi } from './useBffApi.ts';
 
 export const ONE_SECOND_MS = 1000;
 

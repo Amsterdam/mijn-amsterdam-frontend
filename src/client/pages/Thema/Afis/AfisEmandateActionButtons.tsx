@@ -2,15 +2,15 @@ import { useState, type ReactElement } from 'react';
 
 import { ActionGroup, Button, Paragraph } from '@amsterdam/design-system-react';
 
-import { EMANDATE_STATUS_ACTIVE } from './Afis-thema-config';
+import { EMANDATE_STATUS_ACTIVE } from './Afis-thema-config.ts';
 import type {
   AfisEMandateFrontend,
   AfisEMandateSignRequestResponse,
   AfisEMandateStatusChangeResponse,
-} from '../../../../server/services/afis/afis-types';
-import { Modal } from '../../../components/Modal/Modal';
-import { Spinner } from '../../../components/Spinner/Spinner';
-import type { BFFApiHook } from '../../../hooks/api/useBffApi';
+} from '../../../../server/services/afis/afis-types.ts';
+import { Modal } from '../../../components/Modal/Modal.tsx';
+import { Spinner } from '../../../components/Spinner/Spinner.tsx';
+import type { BFFApiHook } from '../../../hooks/api/useBffApi.ts';
 
 type ActionConfirmationModalProps = {
   confirmationText: ReactElement | string;

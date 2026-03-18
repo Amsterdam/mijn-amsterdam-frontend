@@ -5,8 +5,8 @@ import {
   normalizeDatePropertyNames,
   getPartialDateFormatted,
   getFullDate,
-} from './hr-kvk-helpers';
-import type { KvkResponseFrontend } from './hr-kvk.types';
+} from './hr-kvk-helpers.ts';
+import type { KvkResponseFrontend } from './hr-kvk.types.ts';
 
 describe('hr-kvk-helpers', () => {
   describe('getVestigingBagIds', () => {

@@ -1,20 +1,21 @@
 import { HttpStatusCode } from 'axios';
 
-import { getAfisApiConfig, getFeedEntryProperties } from './afis-helpers';
-import {
+import { getAfisApiConfig, getFeedEntryProperties } from './afis-helpers.ts';
+import type {
   AfisArcDocID,
   AfisDocumentDownloadSource,
   AfisDocumentIDSource,
   AfisFactuur,
-} from './afis-types';
-import { apiErrorResult } from '../../../universal/helpers/api';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { requestData } from '../../helpers/source-api-request';
-import {
-  DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
+} from './afis-types.ts';
+import { apiErrorResult } from '../../../universal/helpers/api.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
+import type {
   DocumentDownloadData,
-  DocumentDownloadResponse,
-} from '../shared/document-download-route-handler';
+  DocumentDownloadResponse} from '../shared/document-download-route-handler.ts';
+import {
+  DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE
+} from '../shared/document-download-route-handler.ts';
 
 export async function fetchAfisDocument(
   _authProfileAndToken: AuthProfileAndToken,

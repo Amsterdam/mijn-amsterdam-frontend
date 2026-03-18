@@ -1,5 +1,5 @@
-import { featureToggle, themaIdBRP, themaTitle } from './Profile-thema-config';
-import { InfoSection_DEPRECATED } from '../../GeneralInfo/GeneralInfo';
+import { featureToggle, themaIdBRP, themaTitle } from './Profile-thema-config.ts';
+import type { InfoSection_DEPRECATED } from '../../GeneralInfo/GeneralInfo.tsx';
 
 export const profileSectionProps: InfoSection_DEPRECATED = {
   id: themaIdBRP,

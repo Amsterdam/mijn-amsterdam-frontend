@@ -1,6 +1,6 @@
-import { ProfileSectionData, Value } from './ProfileSectionPanel';
-import { SomeOtherString } from '../../../../universal/helpers/types';
-import { entries, isRecord } from '../../../../universal/helpers/utils';
+import type { ProfileSectionData, Value } from './ProfileSectionPanel.tsx';
+import type { SomeOtherString } from '../../../../universal/helpers/types.ts';
+import { entries, isRecord } from '../../../../universal/helpers/utils.ts';
 
 type ValueFormatter<V, T, S> = (
   value: V,

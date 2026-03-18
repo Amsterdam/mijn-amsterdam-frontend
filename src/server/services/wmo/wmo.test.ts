@@ -1,21 +1,22 @@
 import Mockdate from 'mockdate';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
+import type {
+  HulpmiddelenDisclaimerConfig} from './status-line-items/wmo-hulpmiddelen.ts';
 import {
-  getHulpmiddelenDisclaimer,
-  HulpmiddelenDisclaimerConfig,
-} from './status-line-items/wmo-hulpmiddelen';
+  getHulpmiddelenDisclaimer
+} from './status-line-items/wmo-hulpmiddelen.ts';
+import { routes } from './wmo-service-config.ts';
 import {
   fetchActueleWRAVoorzieningenCompact,
   fetchWmo,
   fetchWmoVoorzieningenCompact,
   forTesting,
-} from './wmo';
-import { routes } from './wmo-service-config';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
-import { jsonCopy } from '../../../universal/helpers/utils';
-import ZORGNED_AANVRAGEN_WMO from '../zorgned/zorgned-jzd-aanvragen.json';
-import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types';
+} from './wmo.ts';
+import ZORGNED_AANVRAGEN_WMO from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import { jsonCopy } from '../../../universal/helpers/utils.ts';
+import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
 
 vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => ({
   ...((await importOriginal()) as object),

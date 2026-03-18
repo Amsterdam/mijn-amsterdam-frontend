@@ -2,33 +2,34 @@ import { HttpStatusCode } from 'axios';
 import * as date from 'date-fns';
 import { generatePath } from 'react-router';
 
-import { getBudgetNotifications } from './stadspas-config-and-content';
+import { getBudgetNotifications } from './stadspas-config-and-content.ts';
 import {
   fetchGpassBudgetTransactions,
   fetchGpassDiscountTransactions,
   fetchStadspassen,
   getActivePassYearDateRange,
   mutateGpassSetPasIsBlockedState,
-} from './stadspas-gpass-service';
-import {
+} from './stadspas-gpass-service.ts';
+import type {
   StadspasAdministratieNummer,
   StadspasBudget,
-  StadspasFrontend,
+  StadspasFrontend} from './stadspas-types.ts';
+import {
   type PasblokkadeByPasnummer,
   type StadspasResponseFrontend,
-} from './stadspas-types';
-import { themaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config';
+} from './stadspas-types.ts';
+import { themaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
   type ApiResponse,
-} from '../../../universal/helpers/api';
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { captureException } from '../monitoring';
-import { featureToggle, routes } from './hli-service-config';
+} from '../../../universal/helpers/api.ts';
+import { defaultDateFormat } from '../../../universal/helpers/date.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { decrypt, encrypt } from '../../helpers/encrypt-decrypt.ts';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
+import { captureException } from '../monitoring.ts';
+import { featureToggle, routes } from './hli-service-config.ts';
 
 export async function fetchStadspas(
   authProfileAndToken: AuthProfileAndToken

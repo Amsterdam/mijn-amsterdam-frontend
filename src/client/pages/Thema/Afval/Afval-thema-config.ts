@@ -1,4 +1,4 @@
-import type { ThemaConfigBase } from '../../../config/thema-types';
+import type { ThemaConfigBase } from '../../../config/thema-types.ts';
 
 export const links = {
   AFVAL: 'https://www.amsterdam.nl/afval/',

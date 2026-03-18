@@ -1,25 +1,25 @@
 import type { Request, Response } from 'express';
 import * as jose from 'jose';
-import { ParsedQs } from 'qs';
+import type { ParsedQs } from 'qs';
 
-import { getReturnToUrl } from './auth-after-redirect-returnto';
+import { getReturnToUrl } from './auth-after-redirect-returnto.ts';
 import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_TOKEN_ID_ATTRIBUTE,
-} from './auth-config';
+} from './auth-config.ts';
 import type {
   AuthenticatedRequest,
   AuthProfile,
   AuthProfileAndToken,
   MaSession,
   TokenData,
-} from './auth-types';
-import { ZAAK_STATUS_ROUTE } from '../../client/pages/ZaakStatus/ZaakStatus-config';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
-import { PROFILE_TYPES } from '../../universal/types/App.types';
-import { ONE_SECOND_MS } from '../config/app';
-import { logger } from '../logging';
-import { captureException } from '../services/monitoring';
+} from './auth-types.ts';
+import { ZAAK_STATUS_ROUTE } from '../../client/pages/ZaakStatus/ZaakStatus-config.ts';
+import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
+import { PROFILE_TYPES } from '../../universal/types/App.types.ts';
+import { ONE_SECOND_MS } from '../config/app.ts';
+import { logger } from '../logging.ts';
+import { captureException } from '../services/monitoring.ts';
 
 export function getZaakStatusQueryParams(
   queryParams?: ParsedQs

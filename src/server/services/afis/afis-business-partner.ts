@@ -4,9 +4,9 @@ import {
   formatBusinessPartnerId,
   getAfisApiConfig,
   getFeedEntryProperties,
-} from './afis-helpers';
-import { featureToggle } from './afis-service-config';
-import {
+} from './afis-helpers.ts';
+import { featureToggle } from './afis-service-config.ts';
+import type {
   AfisApiFeedResponseSource,
   AfisBusinessPartnerAddress,
   AfisBusinessPartnerAddressSource,
@@ -21,21 +21,22 @@ import {
   AfisBusinessPartnerPhoneSource,
   BusinessPartnerId,
   BusinessPartnerIdPayload,
-} from './afis-types';
+} from './afis-types.ts';
+import type {
+  ApiResponse_DEPRECATED} from '../../../universal/helpers/api.ts';
 import {
   apiErrorResult,
-  ApiResponse_DEPRECATED,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
   type ApiResponse,
-} from '../../../universal/helpers/api';
-import { getFullAddress } from '../../../universal/helpers/brp';
-import { DataRequestConfig } from '../../config/source-api';
+} from '../../../universal/helpers/api.ts';
+import { getFullAddress } from '../../../universal/helpers/brp.ts';
+import type { DataRequestConfig } from '../../config/source-api.ts';
 import {
   getRequestParamsFromQueryString,
   requestData,
-} from '../../helpers/source-api-request';
+} from '../../helpers/source-api-request.ts';
 
 function transformBusinessPartnerAddressResponse(
   response: AfisApiFeedResponseSource<AfisBusinessPartnerAddressSource>

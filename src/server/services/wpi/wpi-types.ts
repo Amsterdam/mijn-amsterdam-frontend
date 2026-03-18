@@ -1,8 +1,8 @@
-import {
+import type {
   LinkProps,
   StatusLineItem,
   ZaakAanvraagDetail,
-} from '../../../universal/types/App.types';
+} from '../../../universal/types/App.types.ts';
 
 export interface WpiRequestStatusDocument {
   id: string;

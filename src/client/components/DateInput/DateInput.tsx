@@ -4,8 +4,8 @@ import classnames from 'classnames';
 import { format, getDaysInMonth, isValid, parseISO } from 'date-fns';
 
 import styles from './DateInput.module.scss';
-import { getMonth } from '../../../universal/helpers/date';
-import { range } from '../../../universal/helpers/utils';
+import { getMonth } from '../../../universal/helpers/date.ts';
+import { range } from '../../../universal/helpers/utils.ts';
 
 const DATE_INPUT_FORMAT = 'yyyy-MM-dd';
 

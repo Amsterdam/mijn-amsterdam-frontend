@@ -1,9 +1,10 @@
+import type {
+  StadspasFrontend} from '../../../../server/services/hli/stadspas-types.ts';
 import {
-  StadspasFrontend,
   type PasblokkadeByPasnummer,
-} from '../../../../server/services/hli/stadspas-types';
-import { useBffApi, useBffApiStateStore } from '../../../hooks/api/useBffApi';
-import { useAppStateGetter } from '../../../hooks/useAppStateStore';
+} from '../../../../server/services/hli/stadspas-types.ts';
+import { useBffApi, useBffApiStateStore } from '../../../hooks/api/useBffApi.ts';
+import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
 
 function getPasBlockedStateKey(passNumber: StadspasFrontend['passNumber']) {
   return `pass-blocked-state-${passNumber}`;

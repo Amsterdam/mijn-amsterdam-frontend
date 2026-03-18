@@ -1,7 +1,7 @@
-import type { DataRequestConfig } from '../../../config/source-api';
-import { getFromEnv } from '../../../helpers/env';
-import { getCustomApiConfig } from '../../../helpers/source-api-helpers';
-import { AMSAPP_BASE_PATH } from '../amsapp-service-config';
+import type { DataRequestConfig } from '../../../config/source-api.ts';
+import { getFromEnv } from '../../../helpers/env.ts';
+import { getCustomApiConfig } from '../../../helpers/source-api-helpers.ts';
+import { AMSAPP_BASE_PATH } from '../amsapp-service-config.ts';
 
 export const apiResponseErrors = {
   DIGID_AUTH: { code: '001', message: 'Niet ingelogd met Digid' },

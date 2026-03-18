@@ -1,4 +1,4 @@
-import {
+import type {
   LatLngBounds,
   LatLngBoundsLiteral,
   LatLngLiteral,
@@ -12,24 +12,25 @@ import type {
   DatasetResponse,
   MaFeature,
   MaPointFeature,
-} from './datasets';
-import { datasetEndpoints } from './datasets';
-import { WFSFeatureSource } from './dso-helpers';
-import {
-  DATASETS,
+} from './datasets.ts';
+import { datasetEndpoints } from './datasets.ts';
+import type { WFSFeatureSource } from './dso-helpers.ts';
+import type {
   DatasetFilterSelection,
   DatasetId,
   DatasetPropertyFilter,
-  DatasetPropertyValueWithCount,
-  getDatasetCategoryId,
-} from '../../../universal/config/myarea-datasets';
+  DatasetPropertyValueWithCount} from '../../../universal/config/myarea-datasets.ts';
 import {
+  DATASETS,
+  getDatasetCategoryId,
+} from '../../../universal/config/myarea-datasets.ts';
+import type {
   ApiErrorResponse,
   ApiResponse_DEPRECATED,
   ApiSuccessResponse,
-} from '../../../universal/helpers/api';
-import { capitalizeFirstLetter } from '../../../universal/helpers/text';
-import { jsonCopy } from '../../../universal/helpers/utils';
+} from '../../../universal/helpers/api.ts';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
+import { jsonCopy } from '../../../universal/helpers/utils.ts';
 
 export function getDatasetEndpointConfig(
   endpointIDs?: string[],

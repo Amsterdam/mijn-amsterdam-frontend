@@ -1,9 +1,10 @@
 import { useParams } from 'react-router';
 
-import { ListPageParamKind, listPageParamKind } from './Klachten-thema-config';
-import { useKlachtenThemaData } from './useKlachtenThemaData.hook';
-import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import type { ListPageParamKind} from './Klachten-thema-config.ts';
+import { listPageParamKind } from './Klachten-thema-config.ts';
+import { useKlachtenThemaData } from './useKlachtenThemaData.hook.ts';
+import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function KlachtenList() {
   const { kind = listPageParamKind.lopend } = useParams<{

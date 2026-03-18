@@ -20,15 +20,15 @@ import {
   not,
   or,
   previouslyLivingInAmsterdam,
-} from './predicates';
-import { TipsPredicateFN } from './tip-types';
-import { brpApiResponse } from './tips-service.test';
+} from './predicates.ts';
+import type { TipsPredicateFN } from './tip-types.ts';
+import { brpApiResponse } from './tips-service.test.ts';
 import WPI_AANVRAGEN from '../../../../mocks/fixtures/wpi-aanvragen.json';
 import WPI_E from '../../../../mocks/fixtures/wpi-e-aanvragen.json';
-import { ApiResponse_DEPRECATED } from '../../../universal/helpers/api';
-import { AppState } from '../../../universal/types/App.types';
-import type { BrpFrontend } from '../brp/brp-types';
-import { WpiRequestProcess } from '../wpi/wpi-types';
+import type { ApiResponse_DEPRECATED } from '../../../universal/helpers/api.ts';
+import type { AppState } from '../../../universal/types/App.types.ts';
+import type { BrpFrontend } from '../brp/brp-types.ts';
+import type { WpiRequestProcess } from '../wpi/wpi-types.ts';
 
 const TONK = {
   content: WPI_E.content.filter((c) => c.about === 'TONK'),

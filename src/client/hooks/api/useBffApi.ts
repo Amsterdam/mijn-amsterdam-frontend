@@ -2,13 +2,13 @@ import { useCallback, useEffect } from 'react';
 
 import { create } from 'zustand';
 
-import type { RecordStr2 } from '../../../server/routing/route-helpers';
+import type { RecordStr2 } from '../../../server/routing/route-helpers.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
   type ApiResponse,
-} from '../../../universal/helpers/api';
-import type { SomeOtherString } from '../../../universal/helpers/types';
+} from '../../../universal/helpers/api.ts';
+import type { SomeOtherString } from '../../../universal/helpers/types.ts';
 
 type ApiFetchResponse<T> = Promise<ApiResponse<T>>;
 // Extend RequestInit to include a payload property. The body property always takes precedence over payload.
@@ -87,7 +87,7 @@ export async function sendFormPostRequest<T, P extends RecordStr2 = RecordStr2>(
  * @param init Payload can be a regular object and will be converted to URLSearchParams. The provided body however, takes precedence over payload.
  * @returns
  */
-export async function sendJSONPostRequest<T, P extends RecordStr2 = RecordStr2>(
+export async function sendJSONPostRequest<T, P extends any = any>(
   url: string | URL,
   init?: RequestInitWithPayload<P>
 ): ApiFetchResponse<T> {
@@ -135,9 +135,11 @@ export type BffApiState<D> = {
   isLoading: boolean;
 };
 
-export type BFFApiHook<T, P extends RecordStr2, U = UrlOrString> = BffApiState<
-  ApiResponse<T>
-> & {
+export type BFFApiHook<
+  T,
+  P extends RecordStr2 = RecordStr2,
+  U = UrlOrString,
+> = BffApiState<ApiResponse<T>> & {
   fetch: (
     url?: UrlOrString | RequestInitWithPayload<P>,
     init_?: U extends UrlOrString ? RequestInitWithPayload<P> : never

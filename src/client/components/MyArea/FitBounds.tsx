@@ -1,7 +1,8 @@
 import { useMemo } from 'react';
 
 import { useMapInstance } from '@amsterdam/react-maps';
-import L, { LatLngLiteral } from 'leaflet';
+import type { LatLngLiteral } from 'leaflet';
+import L from 'leaflet';
 
 interface FitBoundsProps {
   latlngs: LatLngLiteral[];

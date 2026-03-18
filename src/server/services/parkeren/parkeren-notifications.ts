@@ -1,11 +1,13 @@
-import { fetchDecosParkeerVergunningen } from './parkeren-decos-service';
-import { themaConfig } from '../../../client/pages/Thema/Parkeren/Parkeren-thema-config';
+import { fetchDecosParkeerVergunningen } from './parkeren-decos-service.ts';
+import {
+  themaConfig,
+} from '../../../client/pages/Thema/Parkeren/Parkeren-thema-config.ts';
 import {
   apiSuccessResult,
   apiDependencyError,
-} from '../../../universal/helpers/api';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { getVergunningNotifications } from '../vergunningen/vergunningen-notifications';
+} from '../../../universal/helpers/api.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { getVergunningNotifications } from '../vergunningen/vergunningen-notifications.ts';
 
 export async function fetchParkeerVergunningenNotifications(
   authProfileAndToken: AuthProfileAndToken

@@ -1,9 +1,10 @@
 import { renderHook } from '@testing-library/react';
-import { vi, Mock } from 'vitest';
+import type { Mock } from 'vitest';
+import { vi } from 'vitest';
 
-import { useAfisBetaalVoorkeurenData } from './useAfisBetaalVoorkeurenData';
-import type { ApiSuccessResponse } from '../../../../universal/helpers/api';
-import { useBffApi } from '../../../hooks/api/useBffApi';
+import { useAfisBetaalVoorkeurenData } from './useAfisBetaalVoorkeurenData.tsx';
+import type { ApiSuccessResponse } from '../../../../universal/helpers/api.ts';
+import { useBffApi } from '../../../hooks/api/useBffApi.ts';
 
 vi.mock('../../../hooks/api/useBffApi');
 

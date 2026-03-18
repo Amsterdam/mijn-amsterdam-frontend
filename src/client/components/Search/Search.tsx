@@ -12,16 +12,17 @@ import classnames from 'classnames';
 import { useNavigate } from 'react-router';
 import { useDebouncedCallback } from 'use-debounce';
 
-import { SearchEntry, displayPath } from './search-config';
+import type { SearchEntry} from './search-config';
+import { displayPath } from './search-config';
 import styles from './Search.module.scss';
-import { useSearchIndex } from './useSearch';
-import { getRedactedClass } from '../../helpers/cobrowse';
-import { useSmallScreen } from '../../hooks/media.hook';
-import { useAppStateReady } from '../../hooks/useAppStateStore';
-import { useKeyDown } from '../../hooks/useKey';
-import { SearchPageRoute } from '../../pages/Search/Search-routes';
-import { MaButtonLink, MaLink, MaRouterLink } from '../MaLink/MaLink';
-import { Spinner } from '../Spinner/Spinner';
+import { useSearchIndex } from './useSearch.tsx';
+import { getRedactedClass } from '../../helpers/cobrowse.ts';
+import { useSmallScreen } from '../../hooks/media.hook.ts';
+import { useAppStateReady } from '../../hooks/useAppStateStore.ts';
+import { useKeyDown } from '../../hooks/useKey.ts';
+import { SearchPageRoute } from '../../pages/Search/Search-routes.ts';
+import { MaButtonLink, MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
+import { Spinner } from '../Spinner/Spinner.tsx';
 
 interface ResultSetProps {
   results: SearchEntry[];
