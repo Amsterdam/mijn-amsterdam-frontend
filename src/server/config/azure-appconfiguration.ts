@@ -17,7 +17,7 @@ const featureToggle = {
 // globalThis is used to make sure featureToggles imported from frontend *-thema-configs have access.
 globalThis.MA_FEATURETOGGLES = featureToggle;
 
-const skipAppConfiguration = process.env.BFF_SKIP_APPCONFIG;
+const skipAppConfiguration = process.env.BFF_SKIP_APPCONFIG === 'true';
 
 export type FeatureToggles = typeof featureToggle;
 export type FeatureToggleKey = keyof FeatureToggles;

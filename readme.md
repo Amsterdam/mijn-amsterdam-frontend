@@ -38,6 +38,22 @@ pnpm mock-server
 pnpm bff-api:watch
 ```
 
+Verifying the build can be done with the following command:
+
+```bash
+pnpm bff-api:build && BFF_SKIP_APPCONFIG=1 && pnpm bff-api:serve-build
+```
+
+or with docker:
+
+```bash
+pnpm build-docker && pnpm run-docker
+```
+
+Beware that this will only work when all environment variables are set. `.env` files are not loaded automatically in the production build.
+
+
+
 ## Accessibility + Targeted browsers
 
 The Mijn Amsterdam design and development team works hard to ensure mijn.amsterdam.nl is [accessible](https://mijn.amsterdam.nl/toegankelijkheidsverklaring).
