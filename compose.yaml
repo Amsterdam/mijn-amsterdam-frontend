@@ -7,9 +7,7 @@ services:
     ports:
       - 5000:5000
     env_file: ".env.local"
-    # This would need some for work plug and play behavior, like the mock server and some db configuration.
-    # But for now to run it all with a bff instance, use:
-    # export BFF_SSH_PASSWD='root:docker!' && docker compose --profile dev up
+    # This would need some work for plug and play behavior, like the mock server and some db configuration.
     profiles: [dev]
 
   db:

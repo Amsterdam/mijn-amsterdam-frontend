@@ -27,7 +27,6 @@ Put the following commands in your terminal after all dependencies are installed
 
 ```bash
 pnpm serve-dev
-
 ```
 
 It's also possible to run both the mocks server and bff seperately with:
@@ -36,6 +35,16 @@ It's also possible to run both the mocks server and bff seperately with:
 pnpm start
 pnpm mock-server
 pnpm bff-api:watch
+```
+
+To run our database and an admin panel set `BFF_DB_ENABLED` to `true` and run:
+```bash
+docker compose up
+```
+
+You can also include the BFF (but this does not work properly, see compose file for more info):
+```bash
+BFF_SSH_PASSWD=root:admin docker compose --profile dev up
 ```
 
 ## Accessibility + Targeted browsers
@@ -110,7 +119,7 @@ It's basically an additional development server integrated in the BFF api.
 
 #### Database
 
-Postgres is used. By default the database connection is not used in local development and faked programatically. To develop/test the database locally, a dockerized postgress instance can be started by running: `docker compose up` and setting the env `BFF_DB_ENABLED` to `true`
+Postgres is used. By default the database connection is not used in local development and faked programatically.
 
 ### Branch naming + PR
 
