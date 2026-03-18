@@ -1,6 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 import mockdate from 'mockdate';
 
+import { AFIS_EMANDATE_LONG_DURATION_THRESHOLD_MS } from './Afis-thema-config';
 import {
   useSignRequestPayloadStorage,
   useSignRequestPayloadStorageCleanup,
@@ -11,6 +12,7 @@ import type {
   POMSignRequestStatus,
 } from '../../../../server/services/afis/afis-types';
 import { bffApiHost } from '../../../../testing/setup';
+import { ONE_MINUTE_MS } from '../../../../universal/config/app';
 
 function clearLocalStorage() {
   window.localStorage.removeItem('afis-emandate-status-check-payload');
@@ -94,15 +96,21 @@ describe('useAfisEMandatesSignRequest', () => {
       );
     });
 
-    it('should return null for getPayload if eMandateId does not exist', () => {
+    it('should return undefined for getPayload if payloads are empty', () => {
       const { result } = renderHook(() => useSignRequestPayloadStorage());
 
       expect(result.current.get('nonExistentId')?.getPayload()).toBeUndefined();
     });
 
-    it('should return null for getPayload if payloads are empty', () => {
+    it('should return undefined for getPayload if eMandateId does not exist', () => {
       const { result } = renderHook(() => useSignRequestPayloadStorage());
 
+      // Add a payload without an activation date
+      act(() => {
+        result.current.add('eMandate3', '15000003', 'payload3');
+      });
+
+      expect(result.current.payloads?.length).toBe(1);
       expect(result.current.get('anyId')?.getPayload()).toBeUndefined();
     });
 
@@ -153,7 +161,9 @@ describe('useAfisEMandatesSignRequest', () => {
       const { result } = renderHook(() => useSignRequestPayloadStorage());
 
       // Add multiple payloads with different activation dates
-      const pastDate = new Date(Date.now() - 11 * 60 * 1000).toISOString(); // 11 minutes ago
+      const pastDate = new Date(
+        Date.now() - (AFIS_EMANDATE_LONG_DURATION_THRESHOLD_MS + ONE_MINUTE_MS)
+      ).toISOString(); // 11 minutes ago
       const nowDate = new Date().toISOString();
 
       act(() => {
