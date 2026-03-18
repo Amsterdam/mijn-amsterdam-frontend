@@ -218,7 +218,7 @@ async function startServerBFF() {
   server.headersTimeout = HEADER_TIMEOUT_SECONDS * ONE_SECOND_MS; // This should be bigger than `keepAliveTimeout + your server's expected response time`
 }
 
-const scriptName = path.parse(process.argv.at(-1) ?? '').name;
+const scriptName = path.parse(process.argv.at(1) ?? '').name;
 
 if (import.meta.main || scriptName === 'app-start' || process.versions.bun) {
   startServerBFF();
