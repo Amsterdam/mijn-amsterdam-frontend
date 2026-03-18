@@ -219,8 +219,8 @@ export function useBffApi<T, P = unknown>(
   const storeSet = store.set;
   const storeHas = store.has;
   const storeGet = store.get;
-  const isDirty = state?.isDirty === true;
-  const isLoading = state?.isLoading === true;
+  const isDirty = rState?.isDirty === true;
+  const isLoading = rState?.isLoading === true;
 
   const hasKeyInStore = !!cacheKey && storeHas(cacheKey);
 
