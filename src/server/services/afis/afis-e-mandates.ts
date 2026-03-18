@@ -1,9 +1,7 @@
 import { HttpStatusCode } from 'axios';
-import { add, isAfter, parseISO } from 'date-fns';
-import type { Request } from 'express';
+import { add } from 'date-fns';
 import slug from 'slugme';
-import thenBy from 'thenby';
-import * as z from 'zod/v4';
+import { firstBy } from 'thenby';
 
 import {
   createBusinessPartnerBankAccount,
@@ -30,6 +28,8 @@ import {
   isEmandateActive,
   type EmandateStatusFrontend,
 } from './afis-helpers.ts';
+import { handleEmandateLifetimeUpdate } from './afis-route-handlers.ts';
+import { routes } from './afis-service-config.ts';
 import {
   type AfisBusinessPartnerDetailsTransformed,
   type AfisEMandateCreatePayload,
@@ -43,32 +43,31 @@ import {
   type BusinessPartnerIdPayload,
   type POMSignRequestUrlResponseSource,
   type POMSignRequestStatusResponseSource,
-  signRequestStatusCodes,
   type AfisEMandateSignRequestStatusResponse,
   type BusinessPartnerId,
   type EMandateSignRequestNotificationPayload,
   type AfisBusinessPartnerBankPayload,
   type POMSignRequestUrlPayload,
   type EMandateUpdatePayload,
+  type EMandateSignRequestStatusPayload,
 } from './afis-types.ts';
 import { routeConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config.ts';
-import { IS_AP } from '../../../universal/config/env.ts';
-import type { ApiResponse } from '../../../universal/helpers/api.ts';
-import { apiErrorResult } from '../../../universal/helpers/api.ts';
-import type { AuthProfile } from '../../auth/auth-types.ts';
-import { encryptPayloadAndSessionID } from '../../helpers/encrypt-decrypt.ts';
-import { getFromEnv } from '../../helpers/env.ts';
-import { getApiConfig } from '../../helpers/source-api-helpers.ts';
-import { requestData } from '../../helpers/source-api-request.ts';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
-import { captureException } from '../monitoring.ts';
-import { routes } from './afis-service-config.ts';
+import { apiErrorResult, type ApiResponse } from '../../../universal/helpers/api.ts';
 import {
   isoDateFormat,
   isoDateTimeFormatCompact,
 } from '../../../universal/helpers/date.ts';
 import { toDateFormatted } from '../../../universal/helpers/date.ts';
 import { sortByNumber } from '../../../universal/helpers/utils.ts';
+import type { AuthProfile } from '../../auth/auth-types.ts';
+import {
+  encrypt,
+  encryptPayloadAndSessionID,
+} from '../../helpers/encrypt-decrypt.ts';
+import { getFromEnv } from '../../helpers/env.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
 
 export async function createOrUpdateEMandateFromStatusNotificationPayload(
   payload: EMandateSignRequestPayload & EMandateSignRequestNotificationPayload
@@ -233,7 +232,7 @@ async function createAfisEMandate(payload: AfisEMandateCreatePayload) {
   return requestData<AfisEMandateSource>(config);
 }
 
-async function updateAfisEMandate(
+export async function updateAfisEMandate(
   payload: AfisEMandateUpdatePayload,
   transform?: (data: unknown) => Partial<AfisEMandateFrontend>
 ) {
@@ -316,6 +315,9 @@ function addEmandateApiUrls(
     businessPartnerId,
     creditor
   );
+
+  eMandate.signRequestStatusUrl =
+    routes.protected.AFIS_EMANDATES_SIGN_REQUEST_STATUS;
 }
 
 function transformEMandateSource(
@@ -408,13 +410,11 @@ function transformEMandatesResponse(
 
     return eMandate;
   }).toSorted(
-    thenBy
-      .firstBy(function sortByStatus(eMandate: AfisEMandateFrontend) {
-        return eMandate.status.toString() === EMANDATE_STATUS_FRONTEND.ON
-          ? -1
-          : 1;
-      })
-      .thenBy('creditorName')
+    firstBy(function sortByStatus(eMandate: AfisEMandateFrontend) {
+      return eMandate.status.toString() === EMANDATE_STATUS_FRONTEND.ON
+        ? -1
+        : 1;
+    }).thenBy('creditorName')
   );
 }
 
@@ -480,15 +480,6 @@ export async function fetchEMandates(
   return requestData<AfisEMandateFrontend[] | null>(config);
 }
 
-function transformEMandatesRedirectUrlResponse(
-  responseData: POMSignRequestUrlResponseSource
-): AfisEMandateSignRequestResponse | null {
-  if (responseData?.paylink) {
-    return { redirectUrl: responseData.paylink };
-  }
-  return null;
-}
-
 function createEMandateSignRequestPayload(
   businessPartner: AfisBusinessPartnerDetailsTransformed,
   creditor: AfisEMandateCreditor,
@@ -547,6 +538,21 @@ function createEMandateSignRequestPayload(
   };
 }
 
+function transformEMandatesRedirectUrlResponse(
+  responseData: POMSignRequestUrlResponseSource
+): AfisEMandateSignRequestResponse | null {
+  if (responseData?.paylink) {
+    const [statusCheckPayload] = encrypt(
+      JSON.stringify({ paylinkId: responseData.paylinkId })
+    );
+    return {
+      redirectUrl: responseData.paylink,
+      statusCheckPayload,
+    };
+  }
+  return null;
+}
+
 export async function fetchEmandateSignRequestRedirectUrlFromPaymentProvider(
   eMandateSignRequestPayload: EMandateSignRequestPayload
 ) {
@@ -593,9 +599,25 @@ function transformEmandateSignRequestStatus(
   responseDataSource: POMSignRequestStatusResponseSource
 ): AfisEMandateSignRequestStatusResponse {
   return {
-    status: signRequestStatusCodes[responseDataSource.status_code] ?? 'unknown',
-    code: responseDataSource.status_code,
+    status: responseDataSource.status ?? 'unknown',
   };
+}
+
+export async function fetchEmandateSignRequestStatusFromPaymentProvider(
+  eMandateSignRequestStatusPayload: EMandateSignRequestStatusPayload
+) {
+  const config = await getApiConfig('POM', {
+    method: 'POST',
+    formatUrl: ({ url }) => {
+      return `${url}/v3/paylinks/${eMandateSignRequestStatusPayload.paylinkId}`;
+    },
+    transformResponse: transformEmandateSignRequestStatus,
+  });
+
+  const eMandateSignUrlResponse =
+    await requestData<AfisEMandateSignRequestResponse | null>(config);
+
+  return eMandateSignUrlResponse;
 }
 
 export async function deactivateEmandate(
@@ -630,52 +652,6 @@ export async function deactivateEmandate(
     { ...eMandateStatusChangePayload, LifetimeTo },
     transformResponse
   );
-}
-
-export async function handleEmandateLifetimeUpdate(
-  eMandateStatusChangePayload: EMandateUpdatePayload,
-  _authProfile: AuthProfile,
-  req: Request
-) {
-  const eMandateUploadPayload = z.object({
-    LifetimeTo: z.iso
-      .date()
-      .refine((isoDate) => {
-        return isAfter(parseISO(isoDate), new Date());
-      })
-      .transform((isoDate) => isoDateTimeFormatCompact(isoDate)),
-    IMandateId: z.string(),
-  });
-
-  let payload: AfisEMandateUpdatePayload;
-
-  try {
-    payload = eMandateUploadPayload.parse({
-      LifetimeTo: req.body.dateValidTo,
-      ...eMandateStatusChangePayload,
-    });
-  } catch (error: unknown) {
-    captureException(error);
-    return apiErrorResult(
-      !IS_AP
-        ? z.prettifyError(error as z.ZodError)
-        : 'Invalid request, failed to parse request body.',
-      null,
-      HttpStatusCode.BadRequest
-    );
-  }
-
-  function transformResponse() {
-    const dateValidTo = payload.LifetimeTo
-      ? isoDateFormat(payload.LifetimeTo)
-      : null;
-    return {
-      dateValidTo,
-      dateValidToFormatted: getEmandateValidityDateFormatted(dateValidTo),
-    };
-  }
-
-  return updateAfisEMandate(payload, transformResponse);
 }
 
 export const forTesting = {

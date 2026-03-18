@@ -444,7 +444,7 @@ describe('afis-e-mandates service (with nock)', () => {
       );
     });
 
-    it('returns null content if provider returns no mpid', async () => {
+    it('returns null content if provider returns no paylinkId', async () => {
       remoteApi.get(/A_BusinessPartner/).reply(200);
       remoteApi.get(/A_BusinessPartnerAddress/).reply(200);
       remoteApi.post(/paylinks/).reply(200);
@@ -458,13 +458,14 @@ describe('afis-e-mandates service (with nock)', () => {
       expect(result.content).toBeNull();
     });
 
-    it('returns redirectUrl and statusCheckUrl if provider returns mpid and paylink', async () => {
+    it('returns redirectUrl and statusCheckUrl if provider returns paylinkId and paylink', async () => {
       remoteApi.get(/A_BusinessPartner/).reply(200);
       remoteApi.get(/A_BusinessPartnerAddress/).reply(200);
 
-      remoteApi
-        .post(/paylinks/)
-        .reply(200, { mpid: 'mpid123', paylink: 'https://pay.example.com' });
+      remoteApi.post(/paylinks/).reply(200, {
+        paylinkId: 'paylinkId123',
+        paylink: 'https://pay.example.com',
+      });
 
       const result =
         await emandates.fetchEmandateSignRequestRedirectUrlFromPaymentProvider({
@@ -625,15 +626,6 @@ describe('afis-e-mandates service (with nock)', () => {
       });
     });
 
-    it('transformEmandateSignRequestStatus transforms status', () => {
-      const result = emandates.forTesting.transformEmandateSignRequestStatus({
-        status_code: 101,
-        mpid: 0,
-        status_date: '',
-      });
-      expect(result.status).toBe('NoResponse');
-    });
-
     it('transformEMandateSource transforms source', () => {
       const result = emandates.forTesting.transformEMandateSource(
         authProfile.sid,
@@ -678,7 +670,7 @@ describe('afis-e-mandates service (with nock)', () => {
 
     it('transformEMandatesRedirectUrlResponse transforms response', () => {
       const result = emandates.forTesting.transformEMandatesRedirectUrlResponse(
-        { mpid: '123', paylink: 'https://example.com' }
+        { paylinkId: '123', paylink: 'https://example.com' }
       );
       expect(result).toHaveProperty('redirectUrl', 'https://example.com');
     });
