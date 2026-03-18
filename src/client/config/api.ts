@@ -9,8 +9,6 @@ export const BFF_API_BASE_URL = import.meta.env.REACT_APP_BFF_API_URL;
 export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;
 
 export const BFFApiUrls = {
-  ROOT: `${BFF_API_BASE_URL}/`,
-
   MAP_DATASETS_WMS: `${BFF_API_BASE_URL}/map/datasets/wms`,
   MAP_DATASETS: `${BFF_API_BASE_URL}/map/datasets`,
   FEATURE_TOGGLES: `${BFF_API_BASE_URL}/services/feature-toggles`,
