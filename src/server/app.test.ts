@@ -1,4 +1,4 @@
-import { ILayer } from 'express-serve-static-core/index';
+import type { ILayer } from 'express-serve-static-core/index';
 
 const mocks = vi.hoisted(() => {
   return {

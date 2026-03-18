@@ -1,4 +1,4 @@
-import { LandingPage } from './Landing';
+import { LandingPage } from './Landing.tsx';
 
 export const LandingRoute = {
   route: '/',

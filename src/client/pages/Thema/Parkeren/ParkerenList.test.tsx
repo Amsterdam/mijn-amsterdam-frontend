@@ -2,11 +2,11 @@ import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { describe, expect, it } from 'vitest';
 
-import { themaConfig } from './Parkeren-thema-config';
-import { ParkerenList } from './ParkerenList';
-import { AppState } from '../../../../universal/types/App.types';
-import MockApp from '../../MockApp';
-import { listPageParamKind } from '../Vergunningen/Vergunningen-thema-config';
+import { themaConfig } from './Parkeren-thema-config.ts';
+import { ParkerenList } from './ParkerenList.tsx';
+import type { AppState } from '../../../../universal/types/App.types.ts';
+import MockApp from '../../MockApp.tsx';
+import { listPageParamKind } from '../Vergunningen/Vergunningen-thema-config.ts';
 
 const testState = {
   PARKEREN: {

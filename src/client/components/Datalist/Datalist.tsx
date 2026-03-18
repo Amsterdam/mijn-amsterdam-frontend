@@ -1,9 +1,10 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
-import {
-  Grid,
+import type {
   GridColumnNumber,
-  GridColumnNumbers,
+  GridColumnNumbers} from '@amsterdam/design-system-react';
+import {
+  Grid
 } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 

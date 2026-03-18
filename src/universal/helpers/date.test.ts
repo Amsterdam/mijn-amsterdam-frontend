@@ -1,6 +1,6 @@
 import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { toISOString } from './date';
+import { toISOString } from './date.ts';
 
 describe('parseDateToIso', () => {
   const consoleErrorSpy = vi

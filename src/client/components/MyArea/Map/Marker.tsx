@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { Marker as MarkerComponent } from '@amsterdam/react-maps';
-import {
+import type {
   LatLngLiteral,
   LeafletEventHandlerFn,
   Marker as MarkerType,

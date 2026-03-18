@@ -8,7 +8,7 @@ import {
   TextInput,
 } from '@amsterdam/design-system-react';
 
-import type { SurveyFrontend } from '../../../server/services/user-feedback/user-feedback.types';
+import type { SurveyFrontend } from '../../../server/services/user-feedback/user-feedback.types.ts';
 
 type UserFeedbackQuestionProps = {
   question?: SurveyFrontend['questions'][number];

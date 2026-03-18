@@ -1,6 +1,6 @@
 import * as z from 'zod';
 
-import type { BSN } from '../services/zorgned/zorgned-types';
+import type { BSN } from '../services/zorgned/zorgned-types.ts';
 
 // See also: https://github.com/willemverbuyst/bsn-js
 

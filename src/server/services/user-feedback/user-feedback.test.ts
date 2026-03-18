@@ -1,8 +1,8 @@
 import { describe, expect } from 'vitest';
 
-import { fetchUserFeedbackSurvey, saveUserFeedback } from './user-feedback';
-import type { UserFeedbackInput } from './user-feedback.types';
-import { remoteApi } from '../../../testing/utils';
+import { fetchUserFeedbackSurvey, saveUserFeedback } from './user-feedback.ts';
+import type { UserFeedbackInput } from './user-feedback.types.ts';
+import { remoteApi } from '../../../testing/utils.ts';
 
 describe('User Feedback Functions', () => {
   describe('fetchUserFeedbackSurvey', () => {

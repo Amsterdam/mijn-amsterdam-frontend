@@ -1,5 +1,5 @@
-import { APP_MODE, IS_OT } from '../../../universal/config/env';
-import { getFromEnv } from '../../helpers/env';
+import { APP_MODE, IS_OT } from '../../../universal/config/env.ts';
+import { getFromEnv } from '../../helpers/env.ts';
 
 export const IS_DB_ENABLED = getFromEnv('BFF_DB_ENABLED') === 'true';
 

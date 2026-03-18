@@ -1,13 +1,13 @@
 import { render, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import { generatePath } from 'react-router';
 
-import { routeConfig } from './Afis-thema-config';
-import { AfisBetaalVoorkeuren } from './AfisBetaalVoorkeuren';
-import { AfisBusinessPartnerDetailsTransformed } from '../../../../server/services/afis/afis-types';
-import { bffApi } from '../../../../testing/utils';
-import { AppState } from '../../../../universal/types/App.types';
-import MockApp from '../../MockApp';
+import { routeConfig } from './Afis-thema-config.ts';
+import { AfisBetaalVoorkeuren } from './AfisBetaalVoorkeuren.tsx';
+import type { AfisBusinessPartnerDetailsTransformed } from '../../../../server/services/afis/afis-types.ts';
+import { bffApi } from '../../../../testing/utils.ts';
+import type { AppState } from '../../../../universal/types/App.types.ts';
+import MockApp from '../../MockApp.tsx';
 
 const businessPartnerIdEncrypted = 'xxx-123-xxx';
 

@@ -1,7 +1,7 @@
-import { RETURNTO_AMSAPP_STADSPAS_APP_LANDING } from '../../auth/auth-after-redirect-returnto';
-import { authRoutes } from '../../auth/auth-routes';
-import { getFromEnv } from '../../helpers/env';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
+import { RETURNTO_AMSAPP_STADSPAS_APP_LANDING } from '../../auth/auth-after-redirect-returnto.ts';
+import { authRoutes } from '../../auth/auth-routes.ts';
+import { getFromEnv } from '../../helpers/env.ts';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
 
 export const AMSAPP_BASE_PATH = '/services/amsapp';
 export const maFrontendUrl = getFromEnv('MA_FRONTEND_URL')!;

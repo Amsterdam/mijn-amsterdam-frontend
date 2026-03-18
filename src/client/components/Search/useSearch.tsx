@@ -15,26 +15,26 @@ import {
   apiSearchConfigs,
   displayPath,
   type RemoteApiSearchConfigs,
-} from './search-config';
+} from './search-config.tsx';
 import styles from './Search.module.scss';
 import {
   apiErrorResult,
   apiSuccessResult,
   isError,
-} from '../../../universal/helpers/api';
-import { pick, uniqueArray } from '../../../universal/helpers/utils';
-import { AppState } from '../../../universal/types/App.types';
-import { BFFApiUrls } from '../../config/api';
-import { useBffApi } from '../../hooks/api/useBffApi';
-import { useSmallScreen } from '../../hooks/media.hook';
+} from '../../../universal/helpers/api.ts';
+import { pick, uniqueArray } from '../../../universal/helpers/utils.ts';
+import type { AppState } from '../../../universal/types/App.types.ts';
+import { BFFApiUrls } from '../../config/api.ts';
+import { useBffApi } from '../../hooks/api/useBffApi.ts';
+import { useSmallScreen } from '../../hooks/media.hook.ts';
 import {
   useAppStateGetter,
   useAppStateReady,
-} from '../../hooks/useAppStateStore';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
-import { DashboardRoute } from '../../pages/Dashboard/Dashboard-routes';
-import { SearchPageRoute } from '../../pages/Search/Search-routes';
-import { routeConfig as buurtRouteConfig } from '../MyArea/MyArea-thema-config';
+} from '../../hooks/useAppStateStore.ts';
+import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
+import { DashboardRoute } from '../../pages/Dashboard/Dashboard-routes.ts';
+import { SearchPageRoute } from '../../pages/Search/Search-routes.ts';
+import { routeConfig as buurtRouteConfig } from '../MyArea/MyArea-thema-config.ts';
 
 export function generateSearchIndexPageEntry(
   item: ApiBaseItem,
@@ -121,8 +121,8 @@ export function generateSearchIndexPageEntries(
   apiSearchConfigs: ApiSearchConfig[]
 ): SearchEntry[] {
   const apiConfigs = apiSearchConfigs.filter((apiConfig) => {
-    const hasProperAppState =
-      !isError(appState[apiConfig.stateKey]) && !!appState[apiConfig.stateKey];
+    const stateSlice = appState[apiConfig.stateKey as keyof AppState];
+    const hasProperAppState = !!stateSlice && !isError(stateSlice);
 
     const isEnabled =
       !!apiConfig && 'isEnabled' in apiConfig ? apiConfig.isEnabled : true;
@@ -135,7 +135,7 @@ export function generateSearchIndexPageEntries(
   });
 
   return apiConfigs.flatMap((apiConfig) => {
-    const apiContent = appState[apiConfig.stateKey]?.content;
+    const apiContent = appState[apiConfig.stateKey as keyof AppState]?.content;
 
     if (!apiContent) {
       return [];

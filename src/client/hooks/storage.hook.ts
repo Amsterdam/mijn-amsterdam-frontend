@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { Unshaped } from '../../universal/types/App.types';
-import { captureException } from '../helpers/monitoring';
-import { logger } from '../helpers/logging';
+import type { Unshaped } from '../../universal/types/App.types.ts';
+import { captureException } from '../helpers/monitoring.ts';
+import { logger } from '../helpers/logging.ts';
 
 interface LocalStorageHandler {
   value: string | null;

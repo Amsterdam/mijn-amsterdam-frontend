@@ -4,11 +4,11 @@ import {
   fetchActiveMaintenanceNotifications,
   fetchMaintenanceNotificationsDashboard,
   forTesting,
-} from './cms-maintenance-notifications';
-import type { CMSEventData, CMSMaintenanceNotification } from './cms-types';
-import { remoteApiHost } from '../../../testing/setup';
-import { remoteApi } from '../../../testing/utils';
-import { apiSuccessResult } from '../../../universal/helpers/api';
+} from './cms-maintenance-notifications.ts';
+import type { CMSEventData, CMSMaintenanceNotification } from './cms-types.ts';
+import { remoteApiHost } from '../../../testing/setup.ts';
+import { remoteApi } from '../../../testing/utils.ts';
+import { apiSuccessResult } from '../../../universal/helpers/api.ts';
 
 type MockEventDataProps = {
   relUrl: string;

@@ -2,8 +2,8 @@ import {
   regelingenTitle,
   stadspasTitle,
   themaConfig,
-} from './HLI-thema-config';
-import { AppState } from '../../../../universal/types/App.types';
+} from './HLI-thema-config.ts';
+import type { AppState } from '../../../../universal/types/App.types.ts';
 
 export function getThemaTitle(hasStadspas: boolean, hasRegelingen: boolean) {
   switch (true) {

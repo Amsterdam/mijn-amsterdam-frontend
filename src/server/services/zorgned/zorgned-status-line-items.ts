@@ -1,11 +1,12 @@
-import { parseLabelContent } from './zorgned-helpers';
-import {
+import { parseLabelContent } from './zorgned-helpers.ts';
+import type {
   ZorgnedAanvraagTransformed,
-  ZorgnedStatusLineItemsConfig,
+  ZorgnedStatusLineItemsConfig} from './zorgned-types.ts';
+import {
   type ZorgnedStatusLineItemTransformerConfig,
-} from './zorgned-types';
-import { StatusLineItem } from '../../../universal/types/App.types';
-import { logger } from '../../logging';
+} from './zorgned-types.ts';
+import type { StatusLineItem } from '../../../universal/types/App.types.ts';
+import { logger } from '../../logging.ts';
 
 // If a config property for the leveringsVorm, productSoortCodes or productIdentificatie is not found,
 // we set the match to true so the check doesn't influence the selection criteria and returns items by default.

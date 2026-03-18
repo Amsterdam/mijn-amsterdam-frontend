@@ -1,7 +1,7 @@
-import { listPageParamKind } from './Erfpacht-thema-config';
-import { useErfpachtThemaData } from './useErfpachtThemaData.hook';
-import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { listPageParamKind } from './Erfpacht-thema-config.ts';
+import { useErfpachtThemaData } from './useErfpachtThemaData.hook.ts';
+import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function ErfpachtList() {
   const {

@@ -1,9 +1,9 @@
-import { FormEvent, ReactNode } from 'react';
+import type { FormEvent, ReactNode } from 'react';
 
 import classnames from 'classnames';
 
 import styles from './PanelComponent.module.scss';
-import Checkbox from '../../Checkbox/Checkbox';
+import Checkbox from '../../Checkbox/Checkbox.tsx';
 
 interface DatasetControlCheckboxProps {
   id: string;

@@ -1,9 +1,9 @@
-import { WithDateEnd } from './config-and-types';
-import { dateTimeEndFormatted } from '../../../client/pages/Thema/Vergunningen/Vergunningen-helpers';
-import { StatusLineItem } from '../../../universal/types/App.types';
-import { MA_VERLEEND_DECISIONS_COMMOM } from '../decos/decos-field-transformers';
-import { getWorkflowStatusDate } from '../decos/decos-helpers';
-import { DecosZaakBase } from '../decos/decos-types';
+import type { WithDateEnd } from './config-and-types.ts';
+import { dateTimeEndFormatted } from '../../../client/pages/Thema/Vergunningen/Vergunningen-helpers.ts';
+import type { StatusLineItem } from '../../../universal/types/App.types.ts';
+import { MA_VERLEEND_DECISIONS_COMMOM } from '../decos/decos-field-transformers.ts';
+import { getWorkflowStatusDate } from '../decos/decos-helpers.ts';
+import type { DecosZaakBase } from '../decos/decos-types.ts';
 
 export function getStatusStepsDecos<
   DZ extends DecosZaakBase & Partial<WithDateEnd>,
@@ -82,7 +82,7 @@ export function getStatusStepsDecos<
       status: isIngetrokken ? 'Ingetrokken' : 'Verlopen',
       datePublished,
       description,
-      isActive: isActive,
+      isActive,
       isChecked: isActive,
     };
 

@@ -1,20 +1,20 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import z from 'zod';
 
-import { fetchActueleWRAVoorzieningenCompact } from './wmo';
-import { ZORGNED_JZD_API_CONFIG_KEY } from './wmo-service-config';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { ZodValidators } from '../../helpers/validation';
+import { ZORGNED_JZD_API_CONFIG_KEY } from './wmo-service-config.ts';
+import { fetchActueleWRAVoorzieningenCompact } from './wmo.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { ZodValidators } from '../../helpers/validation.ts';
 import {
   sendResponse,
   sendBadRequestInvalidInput,
   type ResponseAuthenticated,
-} from '../../routing/route-helpers';
+} from '../../routing/route-helpers.ts';
 import {
   fetchAanvragenRaw,
   fetchAllDocumentsRaw,
   fetchDocument,
-} from '../zorgned/zorgned-service';
+} from '../zorgned/zorgned-service.ts';
 
 export async function fetchZorgnedJZDDocument(
   authProfileAndToken: AuthProfileAndToken,

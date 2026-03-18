@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import { describe, expect, vi } from 'vitest';
 
-import { MyNotification } from './MyNotification';
+import { MyNotification } from './MyNotification.tsx';
 import type {
   AppState,
   MyNotification as MyNotificationType,
-} from '../../../universal/types/App.types';
-import MockApp from '../../pages/MockApp';
+} from '../../../universal/types/App.types.ts';
+import MockApp from '../../pages/MockApp.tsx';
 
 describe('<MyNotification />', () => {
   const callback = vi.fn();

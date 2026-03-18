@@ -1,9 +1,10 @@
-import { ComponentType, useEffect } from 'react';
+import type { ComponentType} from 'react';
+import { useEffect } from 'react';
 
 import { MemoryRouter, Route, Routes } from 'react-router';
 
-import { AppState } from '../../universal/types/App.types';
-import { useAppStateStore } from '../hooks/useAppStateStore';
+import type { AppState } from '../../universal/types/App.types.ts';
+import { useAppStateStore } from '../hooks/useAppStateStore.ts';
 
 interface MockAppProps {
   routePath?: string;

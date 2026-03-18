@@ -1,24 +1,24 @@
-import { LatLngBoundsLiteral } from 'leaflet';
+import type { LatLngBoundsLiteral } from 'leaflet';
 
 import {
   apiDependencyError,
   apiSuccessResult,
-} from '../../universal/helpers/api';
-import { AuthProfileAndToken } from '../auth/auth-types';
-import { fetchMyLocations } from './bag/my-locations';
-import { fetchDataset } from './buurt/buurt';
-import { datasetEndpoints } from './buurt/datasets';
+} from '../../universal/helpers/api.ts';
+import type { AuthProfileAndToken } from '../auth/auth-types.ts';
+import { fetchMyLocations } from './bag/my-locations.ts';
+import { fetchDataset } from './buurt/buurt.ts';
+import { datasetEndpoints } from './buurt/datasets.ts';
 import {
   filterDatasetFeatures,
   filterFeaturesinRadius,
   getBboxFromFeatures,
-} from './buurt/helpers';
+} from './buurt/helpers.ts';
 import {
   featureToggle,
   routeConfig,
   themaId,
   themaTitle,
-} from '../../client/components/MyArea/MyArea-thema-config';
+} from '../../client/components/MyArea/MyArea-thema-config.ts';
 
 const WITHIN_RADIUS_KM = 1;
 

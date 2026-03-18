@@ -1,14 +1,14 @@
-import { themaConfig } from './Vergunningen-thema-config';
-import { VergunningenDetail } from './VergunningenDetail';
+import { themaConfig } from './Vergunningen-thema-config.ts';
+import { VergunningenDetail } from './VergunningenDetail.tsx';
 import { default as VergunningenIcon } from './VergunningenIcon.svg?react';
-import { VergunningenList } from './VergunningenList';
-import { VergunningenThema } from './VergunningenThema';
-import { isLoading } from '../../../../universal/helpers/api';
-import { type AppState } from '../../../../universal/types/App.types';
+import { VergunningenList } from './VergunningenList.tsx';
+import { VergunningenThema } from './VergunningenThema.tsx';
+import { isLoading } from '../../../../universal/helpers/api.ts';
+import { type AppState } from '../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 
 export const VergunningenRoutes = [
   {

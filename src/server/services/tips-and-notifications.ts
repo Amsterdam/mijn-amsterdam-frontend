@@ -1,46 +1,44 @@
-import { fetchAdoptableTrashContainerTips } from './afval/adoptable-trash-containers';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
+import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
 import {
-  apiErrorResult,
-  ApiResponse_DEPRECATED,
+  type ApiResponse_DEPRECATED,
   getSettledResult,
   type ApiResponse,
-} from '../../universal/helpers/api';
-import { dateSort } from '../../universal/helpers/date';
-import type { MyNotification } from '../../universal/types/App.types';
-import { AuthProfileAndToken } from '../auth/auth-types';
-import { fetchAfisNotifications } from './afis/afis-notifications';
-import { fetchAVGNotifications } from './avg/avg';
-import { fetchBezwarenNotifications } from './bezwaren/bezwaren';
-import { fetchLoodMetingNotifications } from './bodem/loodmetingen';
-import { fetchBrpNotifications } from './brp/brp-notifications';
-import { sanitizeCmsContent } from './cms/cms-content';
-import { fetchMaintenanceNotificationsDashboard } from './cms/cms-maintenance-notifications';
-import { ServiceResults } from './content-tips/tip-types';
+  apiErrorResult,
+} from '../../universal/helpers/api.ts';
+import { dateSort } from '../../universal/helpers/date.ts';
+import type { MyNotification } from '../../universal/types/App.types.ts';
+import type { AuthProfileAndToken } from '../auth/auth-types.ts';
+import { fetchAfisNotifications } from './afis/afis-notifications.ts';
+import { fetchAVGNotifications } from './avg/avg.ts';
+import { fetchBezwarenNotifications } from './bezwaren/bezwaren.ts';
+import { fetchLoodMetingNotifications } from './bodem/loodmetingen.ts';
+import { fetchBrpNotifications } from './brp/brp-notifications.ts';
+import { sanitizeCmsContent } from './cms/cms-content.ts';
+import { fetchMaintenanceNotificationsDashboard } from './cms/cms-maintenance-notifications.ts';
+import type { ServiceResults } from './content-tips/tip-types.ts';
 import {
   fetchContentTips,
   prefixTipNotification,
-} from './content-tips/tips-service';
-import { fetchHorecaNotifications } from './horeca/horeca';
-import { fetchKlachtenNotifications } from './klachten/klachten';
-import { fetchKrefiaNotifications } from './krefia/krefia';
-import { captureException } from './monitoring';
-import { fetchParkeerVergunningenNotifications } from './parkeren/parkeren-notifications';
-import {
-  fetchBelastingNotifications,
-  fetchMilieuzoneNotifications,
-  fetchOvertredingenNotifications,
-  fetchSubsidieNotifications,
-} from './patroon-c';
-import { fetchSVWINotifications } from './patroon-c/svwi';
-import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur/toeristische-verhuur-notifications';
-import { fetchVarenNotifications } from './varen/varen-notifications';
-import { fetchVergunningenNotifications } from './vergunningen/vergunningen-notifications';
-import { fetchWiorNotifications } from './wior';
-import { fetchWpiNotifications } from './wpi';
-import { streamEndpointQueryParamKeys } from '../../universal/config/app';
-import { entries } from '../../universal/helpers/utils';
-import { getFromEnv } from '../helpers/env';
+} from './content-tips/tips-service.ts';
+import { fetchHorecaNotifications } from './horeca/horeca.ts';
+import { fetchKlachtenNotifications } from './klachten/klachten.ts';
+import { fetchKrefiaNotifications } from './krefia/krefia.ts';
+import { captureException } from './monitoring.ts';
+import { fetchParkeerVergunningenNotifications } from './parkeren/parkeren-notifications.ts';
+import { fetchBelastingNotifications } from './patroon-c/belasting.ts';
+import { fetchMilieuzoneNotifications } from './patroon-c/cleopatra.ts';
+import { fetchOvertredingenNotifications } from './patroon-c/cleopatra.ts';
+import { fetchSubsidieNotifications } from './patroon-c/subsidie.ts';
+import { fetchSVWINotifications } from './patroon-c/svwi.ts';
+import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur/toeristische-verhuur-notifications.ts';
+import { fetchVarenNotifications } from './varen/varen-notifications.ts';
+import { fetchVergunningenNotifications } from './vergunningen/vergunningen-notifications.ts';
+import { fetchWiorNotifications } from './wior.ts';
+import { fetchWpiNotifications } from './wpi/api-service.ts';
+import { streamEndpointQueryParamKeys } from '../../universal/config/app.ts';
+import { entries } from '../../universal/helpers/utils.ts';
+import { getFromEnv } from '../helpers/env.ts';
+import { fetchAdoptableTrashContainerTips } from './afval/adoptable-trash-containers.ts';
 
 // Every 3rd notification will be a tip if one is available.
 const INSERT_TIP_AT_EVERY_NTH_INDEX = 3;

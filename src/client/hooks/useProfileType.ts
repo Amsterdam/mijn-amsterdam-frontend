@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 
 import { create } from 'zustand';
 
-import { useSessionStorage } from './storage.hook';
-import { logger } from '../helpers/logging';
+import { useSessionStorage } from './storage.hook.ts';
+import { logger } from '../helpers/logging.ts';
 
 const PROFILE_TYPE_STORAGE_KEY = 'profileType';
 

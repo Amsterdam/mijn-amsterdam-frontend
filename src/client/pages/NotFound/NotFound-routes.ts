@@ -1,4 +1,4 @@
-import { NotFound, RedirectPrivateRoutesToLanding } from './NotFound';
+import { NotFound, RedirectPrivateRoutesToLanding } from './NotFound.tsx';
 
 export const NotFoundRoutes = [
   {

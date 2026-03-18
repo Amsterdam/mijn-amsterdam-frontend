@@ -1,15 +1,10 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { SEARCH_PAGE_DOCUMENT_TITLE } from './Search-routes';
-import {
-  PageContentCell,
-  PageContentV2,
-  PageV2,
-} from '../../components/Page/Page';
-import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
-import { Search } from '../../components/Search/Search';
-import { useAppStateReady } from '../../hooks/useAppStateStore';
-import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
+import { SEARCH_PAGE_DOCUMENT_TITLE } from './Search-routes.ts';
+import { PageContentCell, PageV2 } from '../../components/Page/Page.tsx';
+import { Search } from '../../components/Search/Search.tsx';
+import { useAppStateReady } from '../../hooks/useAppStateStore.ts';
+import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle.ts';
 
 export function SearchPage() {
   useHTMLDocumentTitle({
@@ -21,24 +16,21 @@ export function SearchPage() {
   const isReady = useAppStateReady();
 
   return (
-    <PageV2>
-      <PageContentV2>
-        <PageHeadingV2>Zoeken</PageHeadingV2>
-        <PageContentCell>
-          {isReady ? (
-            <Search
-              autoFocus={true}
-              term={termParam}
-              extendedAMResults={true}
-              typeAhead={false}
-              inPage={true}
-              maxResultCountDisplay={20}
-            />
-          ) : (
-            <Paragraph>Zoeken voorbereiden...</Paragraph>
-          )}
-        </PageContentCell>
-      </PageContentV2>
+    <PageV2 heading="Zoeken">
+      <PageContentCell>
+        {isReady ? (
+          <Search
+            autoFocus={true}
+            term={termParam}
+            extendedAMResults={true}
+            typeAhead={false}
+            inPage={true}
+            maxResultCountDisplay={20}
+          />
+        ) : (
+          <Paragraph>Zoeken voorbereiden...</Paragraph>
+        )}
+      </PageContentCell>
     </PageV2>
   );
 }

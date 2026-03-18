@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { themaConfig } from './Klachten-thema-config';
-import { KlachtenDetail } from './KlachtenDetail';
-import { AppState } from '../../../../universal/types/App.types';
-import MockApp from '../../MockApp';
+import { themaConfig } from './Klachten-thema-config.ts';
+import { KlachtenDetail } from './KlachtenDetail.tsx';
+import type { AppState } from '../../../../universal/types/App.types.ts';
+import MockApp from '../../MockApp.tsx';
 
 const testState = {
   KLACHTEN: {

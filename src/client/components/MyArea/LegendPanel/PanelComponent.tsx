@@ -1,20 +1,23 @@
-import {
+import type {
   ButtonHTMLAttributes,
-  forwardRef,
   HTMLProps,
   MouseEvent,
   PropsWithChildren,
   ReactNode,
-  useEffect,
-  useRef,
 } from 'react';
+import { forwardRef, useEffect, useRef } from 'react';
 
 import { Button } from '@amsterdam/design-system-react';
 import {
   ChevronForwardIcon,
   CloseIcon,
 } from '@amsterdam/design-system-react-icons';
-import { animated, AnimatedValue, useSpring } from '@react-spring/web';
+import {
+  animated,
+  useSpring,
+  type AnimatedProps,
+  type SpringValues,
+} from '@react-spring/web';
 import classnames from 'classnames';
 import { useSwipeable } from 'react-swipeable';
 
@@ -23,8 +26,8 @@ import {
   getPanelSize,
   PanelState,
   type usePanelStateCycle,
-} from './panelCycle';
-import { useWidescreen } from '../../../hooks/media.hook';
+} from './panelCycle.ts';
+import { useWidescreen } from '../../../hooks/media.hook.ts';
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
@@ -43,8 +46,10 @@ const NARROW_PANEL_SPRING_CONFIG = { mass: 0.3, tension: 400 };
 type PanelWideAnimatedProps = PropsWithChildren<{
   width: string;
 }>;
+type PanelProps = AnimatedProps<HTMLProps<HTMLDivElement>>;
+type AnimatedStyle = SpringValues<Record<string, unknown>>;
 
-const Panel = forwardRef<HTMLDivElement, AnimatedValue<any>>(
+const Panel = forwardRef<HTMLDivElement, PanelProps>(
   ({ children, className, ...rest }, ref) => {
     return (
       <animated.div
@@ -57,6 +62,7 @@ const Panel = forwardRef<HTMLDivElement, AnimatedValue<any>>(
     );
   }
 );
+Panel.displayName = 'Panel';
 
 const PanelInner = forwardRef<HTMLDivElement, HTMLProps<HTMLDivElement>>(
   ({ children, className }, ref) => (
@@ -65,6 +71,7 @@ const PanelInner = forwardRef<HTMLDivElement, HTMLProps<HTMLDivElement>>(
     </div>
   )
 );
+PanelInner.displayName = 'PanelInner';
 
 const PanelInnerDesktop = forwardRef<HTMLDivElement, HTMLProps<HTMLDivElement>>(
   ({ children }, ref) => (
@@ -73,6 +80,7 @@ const PanelInnerDesktop = forwardRef<HTMLDivElement, HTMLProps<HTMLDivElement>>(
     </PanelInner>
   )
 );
+PanelInnerDesktop.displayName = 'PanelInnerDesktop';
 
 const PanelInnerPhone = forwardRef<HTMLDivElement, HTMLProps<HTMLDivElement>>(
   ({ children }, ref) => (
@@ -81,11 +89,15 @@ const PanelInnerPhone = forwardRef<HTMLDivElement, HTMLProps<HTMLDivElement>>(
     </PanelInner>
   )
 );
+PanelInnerPhone.displayName = 'PanelInnerPhone';
 
 function PanelWide({
   children,
   style,
-}: { children: ReactNode } & AnimatedValue<any>) {
+}: {
+  children: ReactNode;
+  style: AnimatedStyle;
+}) {
   return (
     <Panel className={styles.PanelWide} style={style}>
       {children}
@@ -93,7 +105,7 @@ function PanelWide({
   );
 }
 
-const PanelNarrow = forwardRef<HTMLDivElement, AnimatedValue<any>>(
+const PanelNarrow = forwardRef<HTMLDivElement, PanelProps>(
   ({ children, ...rest }, ref) => {
     return (
       <Panel {...rest} className={styles.PanelNarrow} ref={ref}>
@@ -102,6 +114,7 @@ const PanelNarrow = forwardRef<HTMLDivElement, AnimatedValue<any>>(
     );
   }
 );
+PanelNarrow.displayName = 'PanelNarrow';
 
 function ToggleButtonPhone({ ...rest }: ButtonProps) {
   return <button {...rest} className={styles.PanelTogglePhone} />;
@@ -111,14 +124,14 @@ function PanelWideAnimated({ children, width }: PanelWideAnimatedProps) {
   const anim = useSpring({
     transform: `translate3d(calc(-100% + ${width}), 0, 0)`,
     config: WIDE_PANEL_SPRING_CONFIG,
-  });
+  }) as unknown as AnimatedStyle;
   return <PanelWide style={anim}>{children}</PanelWide>;
 }
 
 type PanelNarrowAnimatedProps = PropsWithChildren<{
   height: string;
-  onSwipedUp: any;
-  onSwipedDown: any;
+  onSwipedUp: () => void;
+  onSwipedDown: () => void;
   id: string;
 }>;
 
@@ -184,7 +197,7 @@ export function PanelComponent({
   const isPanelExpanded =
     state !== PanelState.Closed && state !== PanelState.Tip; // Consider the Panel at Tip state as not expanded
 
-  const onSwipedUp = (event: any) => {
+  const onSwipedUp = () => {
     // If panel inner is not scrollable or if the panel is scrollable and scrolled to the maximum
     if (
       (ref?.current && ref.current.scrollHeight <= ref.current.clientHeight) ||
@@ -197,7 +210,7 @@ export function PanelComponent({
     }
   };
 
-  const onSwipedDown = (event: any) => {
+  const onSwipedDown = () => {
     // If panel inner is not scrollable or if the panel is scrollable and scrolled to the top
     if (
       (ref?.current && ref.current.scrollHeight <= ref.current.clientHeight) ||

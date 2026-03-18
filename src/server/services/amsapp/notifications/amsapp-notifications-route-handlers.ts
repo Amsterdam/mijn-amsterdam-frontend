@@ -2,6 +2,11 @@ import { HttpStatusCode } from 'axios';
 import type { Request, Response } from 'express';
 import z from 'zod';
 
+import { getSevenDaysAgoISOString } from './amsapp-notifications-helper.ts';
+import {
+  AMSAPP_NOTIFICATIONS_DEEP_LINK_BASE,
+  apiResponseErrors,
+} from './amsapp-notifications-service-config.ts';
 import {
   unregisterConsumer,
   getConsumerProfile,
@@ -9,29 +14,24 @@ import {
   batchFetchAndStoreNotifications,
   batchDeleteNotifications,
   batchFetchNotifications,
-} from './amsapp-notifications';
-import { getSevenDaysAgoISOString } from './amsapp-notifications-helper';
-import {
-  AMSAPP_NOTIFICATIONS_DEEP_LINK_BASE,
-  apiResponseErrors,
-} from './amsapp-notifications-service-config';
-import { IS_PRODUCTION } from '../../../../universal/config/env';
+} from './amsapp-notifications.ts';
+import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import {
   apiSuccessResult,
   apiErrorResult,
-} from '../../../../universal/helpers/api';
-import { getAuth } from '../../../auth/auth-helpers';
-import type { AuthProfileAndToken } from '../../../auth/auth-types';
-import { fetchBrpByBsn } from '../../brp/brp';
-import { captureMessage } from '../../monitoring';
-import { baseRenderProps } from '../amsapp-service-config';
-import type { ApiError, RenderProps } from '../amsapp-types';
-import { getProfilesCount } from './amsapp-notifications-model';
+} from '../../../../universal/helpers/api.ts';
+import { getAuth } from '../../../auth/auth-helpers.ts';
+import type { AuthProfileAndToken } from '../../../auth/auth-types.ts';
 import {
   sendBadRequestInvalidInput,
   sendResponse,
   type RequestWithQueryParams,
-} from '../../../routing/route-helpers';
+} from '../../../routing/route-helpers.ts';
+import { fetchBrpByBsn } from '../../brp/brp.ts';
+import { captureMessage } from '../../monitoring.ts';
+import { baseRenderProps } from '../amsapp-service-config.ts';
+import type { ApiError, RenderProps } from '../amsapp-types.ts';
+import { getProfilesCount } from './amsapp-notifications-model.ts';
 
 function getRenderPropsForApiError(
   identifier: string,

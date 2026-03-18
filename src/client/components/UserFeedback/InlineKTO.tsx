@@ -1,15 +1,15 @@
 import { useLocation } from 'react-router';
 
-import { UserFeedback } from './UserFeedback';
 import styles from './UserFeedback.module.scss';
-import { useSubmitUserFeedback } from './useSubmitUserFeedback';
-import type { RecordStr2 } from '../../../server/routing/route-helpers';
-import { BFFApiUrls } from '../../config/api';
-import { useAppStateGetter } from '../../hooks/useAppStateStore';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
-import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems';
-import { useErrorMessages } from '../ErrorMessages/ErrorMessages';
-import { PageContentCell } from '../Page/Page';
+import { UserFeedback } from './UserFeedback.tsx';
+import { useSubmitUserFeedback } from './useSubmitUserFeedback.ts';
+import type { RecordStr2 } from '../../../server/routing/route-helpers.ts';
+import { BFFApiUrls } from '../../config/api.ts';
+import { useAppStateGetter } from '../../hooks/useAppStateStore.ts';
+import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
+import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems.ts';
+import { useErrorMessages } from '../ErrorMessages/ErrorMessages.tsx';
+import { PageContentCell } from '../Page/Page.tsx';
 
 type InlineKTOProps = {
   userFeedbackDetails?: object;
@@ -38,9 +38,9 @@ export function InlineKTO({ userFeedbackDetails }: InlineKTOProps) {
 
   function saveFormData(formData: FormData) {
     const payload: RecordStr2 = {};
-
+    const entries = Array.from(formData.entries());
     payload.answers = JSON.stringify(
-      Array.from(formData.entries())
+      entries
         .filter(([_key, value]) => !!value)
         .map(([key, value]) => {
           return { question: key, answer: value.toString() };
@@ -81,7 +81,7 @@ export function InlineKTO({ userFeedbackDetails }: InlineKTOProps) {
     });
   }
 
-  function savePageRating(rating: number) {
+  function savePageRating(_rating: number) {
     // Implement if we want to save rating before the form is submitted.
   }
 

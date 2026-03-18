@@ -2,9 +2,9 @@ import * as reactMaps from '@amsterdam/react-maps';
 import { renderHook } from '@testing-library/react';
 import { describe, expect, it, test, vi } from 'vitest';
 
-import { useMapLocations, useSetMapCenterAtLocation } from './MyArea.hooks';
-import type { AppState } from '../../../universal/types/App.types';
-import MockApp from '../../pages/MockApp';
+import { useMapLocations, useSetMapCenterAtLocation } from './MyArea.hooks.ts';
+import type { AppState } from '../../../universal/types/App.types.ts';
+import MockApp from '../../pages/MockApp.tsx';
 
 const mapInstanceMock = {
   setView: vi.fn(),

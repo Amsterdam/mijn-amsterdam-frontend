@@ -1,14 +1,16 @@
-import { Mock, afterEach, describe, expect, it, vi } from 'vitest';
+import type { Mock} from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import * as service from './buurt';
+import * as service from './buurt.ts';
+import type {
+  DatasetConfig,
+  DatasetFeatureProperties,
+  DatasetFeatures} from './datasets.ts';
 import {
   ACCEPT_CRS_4326,
   BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
-  DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
-  DatasetConfig,
-  DatasetFeatureProperties,
-  DatasetFeatures,
-} from './datasets';
+  DEFAULT_TRIES_UNTIL_CONSIDERED_STALE
+} from './datasets.ts';
 import {
   createDynamicFilterConfig,
   datasetApiResult,
@@ -16,18 +18,19 @@ import {
   filterPolylineFeaturesWithinBoundingBox,
   getDatasetEndpointConfig,
   getDynamicDatasetFilters,
-} from './helpers';
+} from './helpers.ts';
+import type {
+  DatasetFilterSelection} from '../../../universal/config/myarea-datasets.ts';
 import {
-  DatasetFilterSelection,
   POLYLINE_GEOMETRY_TYPES,
-} from '../../../universal/config/myarea-datasets';
+} from '../../../universal/config/myarea-datasets.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
-} from '../../../universal/helpers/api';
-import { jsonCopy, omit } from '../../../universal/helpers/utils';
-import FileCache from '../../helpers/file-cache';
-import { requestData } from '../../helpers/source-api-request';
+} from '../../../universal/helpers/api.ts';
+import { jsonCopy, omit } from '../../../universal/helpers/utils.ts';
+import FileCache from '../../helpers/file-cache.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
 
 const DUMMY_DATA_RESPONSE = apiSuccessResult([
   { properties: { foo: 'bar', bar: undefined } },

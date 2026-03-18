@@ -1,24 +1,24 @@
 import {
+  SURVEY_ID_INLINE_KTO,
+  SURVEY_VERSION_INLINE_KTO,
+} from './user-feedback.service-config.ts';
+import {
   fetchUserFeedbackSurvey,
   saveUserFeedback,
   userFeedbackOverview,
-} from './user-feedback';
-import {
-  SURVEY_ID_INLINE_KTO,
-  SURVEY_VERSION_INLINE_KTO,
-} from './user-feedback.service-config';
+} from './user-feedback.ts';
 import {
   userFeedbackInput,
   type Survey,
   type UserFeedbackInput,
-} from './user-feedback.types';
-import { range } from '../../../universal/helpers/utils';
+} from './user-feedback.types.ts';
+import { range } from '../../../universal/helpers/utils.ts';
 import {
   sendBadRequestInvalidInput,
   sendResponse,
   type RequestWithQueryParams,
   type ResponseAuthenticated,
-} from '../../routing/route-helpers';
+} from '../../routing/route-helpers.ts';
 
 export async function handleFetchSurvey(
   req: RequestWithQueryParams<{ id?: Survey['unique_code']; version?: string }>,

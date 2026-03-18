@@ -3,7 +3,7 @@ import { type ReactNode, useMemo } from 'react';
 import {
   type AfisFacturenByStateFrontend,
   type AfisFactuurFrontend,
-} from './Afis-thema-config';
+} from './Afis-thema-config.ts';
 import type {
   AfisThemaResponse,
   AfisFactuurState,
@@ -11,13 +11,13 @@ import type {
   AfisFactuurStateFrontend,
   AfisFacturenOverviewResponse,
   AfisFactuur,
-} from '../../../../server/services/afis/afis-types';
-import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
-import { entries, omit } from '../../../../universal/helpers/utils';
-import { DocumentLink } from '../../../components/DocumentList/DocumentLink';
-import { MaLink, MaRouterLink } from '../../../components/MaLink/MaLink';
-import { generateBffApiUrlWithEncryptedPayloadQuery } from '../../../helpers/api';
-import { useBffApi } from '../../../hooks/api/useBffApi';
+} from '../../../../server/services/afis/afis-types.ts';
+import { capitalizeFirstLetter } from '../../../../universal/helpers/text.ts';
+import { entries, omit } from '../../../../universal/helpers/utils.ts';
+import { DocumentLink } from '../../../components/DocumentList/DocumentLink.tsx';
+import { MaLink, MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
+import { generateBffApiUrlWithEncryptedPayloadQuery } from '../../../helpers/api.ts';
+import { useBffApi } from '../../../hooks/api/useBffApi.ts';
 
 function getInvoiceStatusDescriptionFrontend(factuur: AfisFactuur): ReactNode {
   switch (true) {

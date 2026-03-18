@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
-import { GenericDocument } from '../../universal/types/App.types';
-import { DocumentLink } from '../components/DocumentList/DocumentLink';
+import type { GenericDocument } from '../../universal/types/App.types.ts';
+import { DocumentLink } from '../components/DocumentList/DocumentLink.tsx';
 
 export function useAddDocumentLinkComponents<T extends GenericDocument>(
   specificaties: T[]

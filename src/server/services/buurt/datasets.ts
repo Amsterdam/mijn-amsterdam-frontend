@@ -1,53 +1,57 @@
-import { AxiosResponse, AxiosResponseHeaders } from 'axios';
+import type { AxiosResponse, AxiosResponseHeaders } from 'axios';
 import { differenceInDays, format } from 'date-fns';
 import slug from 'slugme';
-import Supercluster from 'supercluster';
+import type Supercluster from 'supercluster';
 
+import type {
+  DsoApiResponse,
+  WFSApiResponse,
+  WFSFeatureSource,
+} from './dso-helpers.ts';
 import {
   discoverSingleDsoApiEmbeddedResponse,
   dsoApiListUrl,
-  DsoApiResponse,
   getDsoApiEmbeddedResponse,
   transformGenericApiListResponse,
-  WFSApiResponse,
-  WFSFeatureSource,
-} from './dso-helpers';
-import { featureToggle } from '../../../client/components/MyArea/MyArea-thema-config';
-import { Colors } from '../../../universal/config/colors';
-import { IS_PRODUCTION } from '../../../universal/config/env';
-import {
-  DATASETS,
+} from './dso-helpers.ts';
+import { featureToggle } from '../../../client/components/MyArea/MyArea-thema-config.ts';
+import { Colors } from '../../../universal/config/colors.ts';
+import { IS_PRODUCTION } from '../../../universal/config/env.ts';
+import type {
   DatasetCategoryId,
   DatasetId,
   DatasetPropertyFilter,
   DatasetPropertyName,
   DatasetPropertyValue,
   FeatureType,
-} from '../../../universal/config/myarea-datasets';
-import { capitalizeFirstLetter } from '../../../universal/helpers/text';
-import { DAYS_IN_YEAR, ONE_SECOND_MS } from '../../config/app';
-import { DataRequestConfig } from '../../config/source-api';
-import FileCache from '../../helpers/file-cache';
+} from '../../../universal/config/myarea-datasets.ts';
+import { DATASETS } from '../../../universal/config/myarea-datasets.ts';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
+import { DAYS_IN_YEAR, ONE_SECOND_MS } from '../../config/app.ts';
+import type { DataRequestConfig } from '../../config/source-api.ts';
+import type FileCache from '../../helpers/file-cache.ts';
 import {
   axiosRequest,
   getNextUrlFromLinkHeader,
-} from '../../helpers/source-api-request';
+} from '../../helpers/source-api-request.ts';
 
-enum zIndexPane {
-  PARKEERZONES = '650',
-  BEDRIJVENINVESTERINGSZONES = '651',
-  PARKEERZONES_UITZONDERING = '660',
-  HARDLOOPROUTE = '670',
-  WIOR = '671',
-  SPORTPARK = '680',
-  SPORTVELD = '690',
-}
+const zIndexPane = {
+  PARKEERZONES: '650',
+  BEDRIJVENINVESTERINGSZONES: '651',
+  PARKEERZONES_UITZONDERING: '660',
+  HARDLOOPROUTE: '670',
+  WIOR: '671',
+  SPORTPARK: '680',
+  SPORTVELD: '690',
+} as const;
+
+type ZIndexPaneValue = (typeof zIndexPane)[keyof typeof zIndexPane];
 
 export type DatasetFeatureProperties = {
   id: string;
   datasetId: DatasetId;
   color?: string;
-  zIndex?: zIndexPane;
+  zIndex?: ZIndexPaneValue;
   [propertyName: string /*DatasetPropertyName*/]:
     | DatasetPropertyValue
     | unknown;
@@ -130,7 +134,7 @@ export interface DatasetConfig {
   // The type of Feature an api returns. Used for filtering type of dataset configs.
   featureType: FeatureType;
   // Used for polyline layer index so we can place smaller shapes above larger ones.
-  zIndex?: zIndexPane;
+  zIndex?: ZIndexPaneValue;
   // An array of property names we also want to add to the dataset. By default only id and geometry properties are retrieved form the DSO api's. Only used in combination with the dsoApiListUrl() function.
   dsoApiAdditionalStaticFieldNames?: DatasetPropertyName[];
   // NOTE: The ID key also has to be added to the `dsoApiAdditionalStaticFieldNames` array if using the DSO REST API endpoints. The WFS endpoints retrieve all the property names by default so `dsoApiAdditionalStaticFieldNames` can be left empty.

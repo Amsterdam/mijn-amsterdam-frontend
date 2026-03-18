@@ -5,15 +5,15 @@ import {
   handleIsAuthenticated,
   OAuthVerificationHandler,
   requestID,
-} from './route-handlers';
-import { HttpStatusCode } from '../../client/hooks/api/useBffApi';
+} from './route-handlers.ts';
+import { HttpStatusCode } from '../../client/hooks/api/useBffApi.ts';
 import {
   getAuthProfileAndToken,
   getReqMockWithOidc,
   RequestMock,
   ResponseMock,
-} from '../../testing/utils';
-import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config';
+} from '../../testing/utils.ts';
+import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config.ts';
 
 // Dummy private key only used for testing - can not be smaller
 // To generate: openssl genrsa -out private.pem 2048

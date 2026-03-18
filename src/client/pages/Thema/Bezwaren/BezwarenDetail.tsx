@@ -1,17 +1,18 @@
 import React from 'react';
 
-import { themaConfig } from './Bezwaren-thema-config';
+import { themaConfig } from './Bezwaren-thema-config.ts';
 import styles from './BezwarenDetail.module.scss';
-import { useBezwarenDetailData } from './useBezwarenDetailData.hook';
-import type { BezwaarFrontend } from '../../../../server/services/bezwaren/types';
-import { entries } from '../../../../universal/helpers/utils';
-import { Datalist, Row, RowSet } from '../../../components/Datalist/Datalist';
-import DocumentListV2 from '../../../components/DocumentList/DocumentListV2';
-import { PageContentCell } from '../../../components/Page/Page';
-import { Steps } from '../../../components/StatusSteps/StatusSteps';
-import { TextClamp } from '../../../components/TextClamp/TextClamp';
-import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { useBezwarenDetailData } from './useBezwarenDetailData.hook.ts';
+import type { BezwaarFrontend } from '../../../../server/services/bezwaren/types.ts';
+import { entries } from '../../../../universal/helpers/utils.ts';
+import type { Row, RowSet } from '../../../components/Datalist/Datalist.tsx';
+import { Datalist } from '../../../components/Datalist/Datalist.tsx';
+import DocumentListV2 from '../../../components/DocumentList/DocumentListV2.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import { Steps } from '../../../components/StatusSteps/StatusSteps.tsx';
+import { TextClamp } from '../../../components/TextClamp/TextClamp.tsx';
+import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 type BezwaarDetailContentProps = {
   bezwaar: BezwaarFrontend;
