@@ -313,7 +313,7 @@ export function useBffApi<T, P = unknown>(
   ]);
 
   // Fetch data immediately if required.
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (
       cacheKey &&
       options?.fetchImmediately !== false &&
