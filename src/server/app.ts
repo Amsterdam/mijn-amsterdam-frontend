@@ -220,7 +220,7 @@ async function startServerBFF() {
 
 if (
   import.meta.main ||
-  process.argv.at(-1)?.endsWith('server/app-start.ts') ||
+  process.argv.at(-1)?.split('/').at(-1)?.split('.')?.at(0) === 'app-start' ||
   process.versions.bun
 ) {
   startServerBFF();
