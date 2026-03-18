@@ -510,7 +510,7 @@
         "parkeerbon",
         "fiscale naheffing"
       ],
-      "profileTypes": ["private"]
+      "profileTypes": ["private", "commercial"]
     },
     {
       "url": "https://belastingbalie.amsterdam.nl/digid.saml.php?start",
@@ -531,7 +531,7 @@
         "verkeersboete",
         "verkeersovertreding"
       ],
-      "profileTypes": ["private"]
+      "profileTypes": ["private", "commercial"]
     },
     {
       "url": "https://mijnsubsidies.amsterdam.nl/loket/",
