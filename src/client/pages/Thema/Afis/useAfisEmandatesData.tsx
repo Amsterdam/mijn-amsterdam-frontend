@@ -29,7 +29,7 @@ import {
   useBffApi,
 } from '../../../hooks/api/useBffApi.ts';
 import { useSmallScreen } from '../../../hooks/media.hook.ts';
-import { useSessionStorage } from '../../../hooks/storage.hook.ts';
+import { useLocalStorage } from '../../../hooks/storage.hook.ts';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
 function mergePayloadIntoEmandateById(
@@ -263,7 +263,7 @@ const useIbanPendingActivationStore = create<{
  * ensures that changes to the state are reflected in session storage.
  */
 function useIsPendingNotification() {
-  const [ibansPendingActivation_, setIsPendingActivation_] = useSessionStorage(
+  const [ibansPendingActivation_, setIsPendingActivation_] = useLocalStorage(
     'afis-emandate-pending-activation',
     ''
   );

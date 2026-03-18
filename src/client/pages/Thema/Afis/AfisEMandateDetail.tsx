@@ -7,6 +7,7 @@ import { useAfisEMandatesData, useEmandateApis } from './useAfisEmandatesData.ts
 import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types.ts';
 import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import { Datalist } from '../../../components/Datalist/Datalist.tsx';
+import { MaButtonLink } from '../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
 import { useInterval } from '../../../hooks/timer.hook.ts';
@@ -124,17 +125,22 @@ function EMandate({ eMandate }: EMandateProps) {
         ]}
       />
       {isPendingActivation(eMandate.creditorIBAN) ? (
-        <Alert
-          headingLevel={4}
-          heading="Status"
-          closeable
-          onClose={() => {
-            removePendingActivation(eMandate.creditorIBAN);
-          }}
-        >
+        <Alert headingLevel={4} heading="Status">
           <Paragraph>
             Wachten op bevestiging van het E-Mandaat voor{' '}
-            {eMandate.creditorName}.{' '}
+            {eMandate.creditorName}. Dit kan enkele minuten duren.
+          </Paragraph>
+          <Paragraph>
+            Zodra de bevestiging is ontvangen, zal het E-Mandaat actief
+            worden.{' '}
+          </Paragraph>
+          <Paragraph>
+            <MaButtonLink
+              variant="secondary"
+              onClick={() => removePendingActivation(eMandate.creditorIBAN)}
+            >
+              Duurt het erg lang? Probeer het opnieuw.
+            </MaButtonLink>
           </Paragraph>
         </Alert>
       ) : (
