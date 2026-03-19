@@ -1,7 +1,7 @@
 import { HttpStatusCode } from 'axios';
 import { add, subDays } from 'date-fns';
 import slug from 'slugme';
-import { firstBy } from 'thenby';
+import thenBy from 'thenby';
 
 import {
   createBusinessPartnerBankAccount,
@@ -53,7 +53,11 @@ import {
 } from './afis-types.ts';
 import { routeConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config.ts';
 import { IS_DEVELOPMENT } from '../../../universal/config/env.ts';
-import { apiErrorResult, type ApiResponse, apiSuccessResult } from '../../../universal/helpers/api.ts';
+import {
+  apiErrorResult,
+  type ApiResponse,
+  apiSuccessResult,
+} from '../../../universal/helpers/api.ts';
 import {
   isoDateFormat,
   isoDateTimeFormatCompact,
@@ -448,11 +452,13 @@ function transformEMandatesResponse(
 
     return eMandate;
   }).toSorted(
-    firstBy(function sortByStatus(eMandate: AfisEMandateFrontend) {
-      return eMandate.status.toString() === EMANDATE_STATUS_FRONTEND.ON
-        ? -1
-        : 1;
-    }).thenBy('creditorName')
+    thenBy
+      .firstBy(function sortByStatus(eMandate: AfisEMandateFrontend) {
+        return eMandate.status.toString() === EMANDATE_STATUS_FRONTEND.ON
+          ? -1
+          : 1;
+      })
+      .thenBy('creditorName')
   );
 }
 
