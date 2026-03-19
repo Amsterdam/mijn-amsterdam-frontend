@@ -132,7 +132,7 @@ function EMandate({ eMandate }: EMandateProps) {
       />
       {signRequestStatusCheckApi.isRequestingStatusCheck ? (
         <Paragraph>
-          Mijn Amsterdam controleert de status van het E-Mandaat...
+          <Spinner /> Mijn Amsterdam controleert de status van het E-Mandaat...
         </Paragraph>
       ) : signRequestStatusCheckApi.isPendingActivation ? (
         <Alert headingLevel={4} heading="Status">
