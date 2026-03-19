@@ -76,7 +76,13 @@ describe('Kredietbank & FIBU service', () => {
   });
 
   it('Should respond correctly', async () => {
-    remoteApi.get('/krefia/all').times(4).reply(200, KrefiaData);
+    remoteApi
+      .post('/krefia/all', {
+        bsn: 'I.M Mokum',
+      })
+      .matchHeader('x-api-key', 'dev-api-key')
+      .times(4)
+      .reply(200, KrefiaData);
 
     const response = await fetchAndTransformKrefia(authProfileAndToken);
     expect(response).toEqual(KREFIA_DUMMY_RESPONSE);
