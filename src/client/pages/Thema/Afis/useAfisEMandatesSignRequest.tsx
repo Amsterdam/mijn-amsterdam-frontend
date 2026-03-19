@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { Paragraph } from '@amsterdam/design-system-react';
 
 import {
+  AFIS_EMANDATE_LONG_DURATION_THRESHOLD_MS,
   EMANDATE_SIGN_REQUEST_FAILED_STATUSES,
   EMANDATE_STATUS_ACTIVE,
 } from './Afis-thema-config';
@@ -16,6 +17,7 @@ import { useLocalStorage } from '../../../hooks/storage.hook';
 type AfisEmandateStatusCheckTuple = [
   eMandateId: AfisEMandateFrontend['id'],
   payload: string,
+  activationDate: string,
 ];
 
 export function useSignRequestPayloadStorage() {
@@ -24,12 +26,23 @@ export function useSignRequestPayloadStorage() {
     []
   );
 
+  function get(
+    eMandateId: AfisEMandateFrontend['id'],
+    index: number
+  ): string | null {
+    const tuple = payloads.findLast((p) => p[0] === eMandateId) as
+      | AfisEmandateStatusCheckTuple
+      | undefined;
+    return tuple ? tuple[index] : null;
+  }
+
   return {
     payloads,
     add(eMandateId: AfisEMandateFrontend['id'], payload: string) {
+      const activationDate = new Date().toISOString();
       const newPayloads: AfisEmandateStatusCheckTuple[] = [
         ...payloads,
-        [eMandateId, payload],
+        [eMandateId, payload, activationDate],
       ];
       setValue(newPayloads);
     },
@@ -37,12 +50,18 @@ export function useSignRequestPayloadStorage() {
       const newPayloads = payloads.filter((p) => p[0] !== eMandateId);
       setValue(newPayloads);
     },
-    get(eMandateId: AfisEMandateFrontend['id']): string | null {
-      const tuple = payloads.findLast((p) => p[0] === eMandateId);
-      return tuple ? tuple[1] : null;
+    getPayload(eMandateId: AfisEMandateFrontend['id']): string | null {
+      return get(eMandateId, 1);
     },
     hasPendingStatusChecks(): boolean {
       return payloads.length > 0;
+    },
+    isTakingLong(eMandateId: AfisEMandateFrontend['id']): boolean {
+      const activationDate = get(eMandateId, 2);
+      return activationDate
+        ? new Date().getTime() - new Date(activationDate).getTime() >
+            AFIS_EMANDATE_LONG_DURATION_THRESHOLD_MS
+        : false;
     },
   };
 }
@@ -52,7 +71,7 @@ export function useSignRequestPayloadStorage() {
 // if the customer just returned to Mijn Amsterdam before completing the signing process.
 export function useSignRequestStatusCheck(eMandate: AfisEMandateFrontend) {
   const payloadStorage = useSignRequestPayloadStorage();
-  const payload = payloadStorage.get(eMandate.id);
+  const payload = payloadStorage.getPayload(eMandate.id);
 
   // Only perform the status check if there's a payload in storage and the mandate is not active yet (to prevent unnecessary checks after activation).
   const api = useBffApi<AfisEMandateSignRequestStatusResponse>(
@@ -98,6 +117,7 @@ export function useSignRequestStatusCheck(eMandate: AfisEMandateFrontend) {
       eMandate.status !== EMANDATE_STATUS_ACTIVE,
     isRequestingStatusCheck:
       api.isLoading && !!payload && eMandate.status !== EMANDATE_STATUS_ACTIVE,
+    isTakingLong: payloadStorage.isTakingLong(eMandate.id),
     cancel: () => {
       payloadStorage.remove(eMandate.id);
     },

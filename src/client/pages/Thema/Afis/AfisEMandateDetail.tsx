@@ -1,4 +1,4 @@
-import { Alert, Paragraph } from '@amsterdam/design-system-react';
+import { Alert, Button, Paragraph } from '@amsterdam/design-system-react';
 
 import { EMANDATE_STATUS_ACTIVE, routeConfig } from './Afis-thema-config.ts';
 import { AfisEMandateActionButtons } from './AfisEmandateActionButtons.tsx';
@@ -15,8 +15,8 @@ import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import { Datalist } from '../../../components/Datalist/Datalist.tsx';
 import { MaButtonLink } from '../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
+import { Spinner } from '../../../components/Spinner/Spinner';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
-import { useInterval } from '../../../hooks/timer.hook.ts';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 type EMandateProps = {
@@ -144,14 +144,16 @@ function EMandate({ eMandate }: EMandateProps) {
             Zodra de bevestiging is ontvangen, zal het E-Mandaat actief
             worden.{' '}
           </Paragraph>
-          <Paragraph>
-            <MaButtonLink
-              variant="secondary"
-              onClick={() => signRequestStatusCheckApi.cancel()}
-            >
-              Duurt het erg lang? Probeer het opnieuw.
-            </MaButtonLink>
-          </Paragraph>
+          {signRequestStatusCheckApi.isTakingLong && (
+            <Paragraph>
+              <Button
+                variant="secondary"
+                onClick={() => signRequestStatusCheckApi.cancel()}
+              >
+                Duurt het erg lang? Probeer het opnieuw.
+              </Button>
+            </Paragraph>
+          )}
         </Alert>
       ) : (
         <AfisEMandateActionButtons
