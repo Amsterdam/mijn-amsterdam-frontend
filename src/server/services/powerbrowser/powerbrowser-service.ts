@@ -3,11 +3,6 @@ import { generatePath } from 'react-router';
 import slug from 'slugme';
 
 import {
-  PB_INGETROKKEN_DECISIONS_COMMOM,
-  PB_NIETVERLEEND_DECISIONS_COMMOM,
-  PB_VERLEEND_DECISIONS_COMMOM,
-} from './powerbrowser-field-transformers';
-import {
   PowerBrowserZaakBase,
   FetchPersoonOrMaatschapIdByUidOptions,
   PBDocumentFields,
@@ -210,25 +205,6 @@ function getDisplayStatus(
   }
 
   return lastActiveStep ?? 'Ontvangen';
-}
-
-function getZaakResultaat(resultaat: PBZaakResultaat | null) {
-  if (resultaat === null) {
-    return null;
-  }
-
-  const resultaatTransformed: PowerBrowserZaakBase['decision'] = resultaat;
-
-  switch (true) {
-    case PB_VERLEEND_DECISIONS_COMMOM.includes(resultaat):
-      return 'Verleend';
-    case PB_NIETVERLEEND_DECISIONS_COMMOM.includes(resultaat):
-      return 'Niet verleend';
-    case PB_INGETROKKEN_DECISIONS_COMMOM.includes(resultaat):
-      return 'Ingetrokken';
-  }
-
-  return resultaatTransformed;
 }
 
 async function fetchZaakAdres(
@@ -482,19 +458,32 @@ function transformZaakRaw<
   T extends PowerBrowserZaakTransformer,
   PB extends NestedType<T>,
 >(zaakTransformer: T, zaakRaw: PBZaakRecord): PB {
-  const { result, zaaknummer, dateReceived, dateDecision, dateEnd, ...pbZaak } =
-    Object.fromEntries(
-      entries(zaakTransformer.transformFields).map(
-        ([pbFieldName, desiredName]) => {
-          return [desiredName, getFieldValue(pbFieldName, zaakRaw.fields)];
-        }
-      )
-    );
+  const zaakWithTransformedFields = Object.fromEntries(
+    entries(zaakTransformer.transformFields).map(
+      ([pbFieldName, desiredName]) => {
+        return [desiredName, getFieldValue(pbFieldName, zaakRaw.fields)];
+      }
+    )
+  );
 
-  const decision = getZaakResultaat(result as PBZaakResultaat);
-  const isVerleend = zaakTransformer.isVerleend
-    ? zaakTransformer.isVerleend(result as PBZaakResultaat)
-    : decision === 'Verleend';
+  // Use zaakTransformer.transformFieldValues to transform specific field values if needed
+  const zaakWithTransformedFieldValues = Object.fromEntries(
+    entries(zaakTransformer.transformFieldValues ?? {}).map(
+      ([fieldName, transformFn]) => {
+        const valueRef = zaakWithTransformedFields[fieldName] as string;
+        if (!valueRef || transformFn === undefined) {
+          return [fieldName, valueRef];
+        }
+        return [fieldName, transformFn(valueRef)];
+      }
+    )
+  );
+
+  const { result, zaaknummer, dateReceived, dateDecision, dateEnd, ...pbZaak } =
+    { ...zaakWithTransformedFields, ...zaakWithTransformedFieldValues };
+
+  const decision = result;
+  const isVerleend = decision === 'Verleend';
 
   const zaak = {
     id: zaakRaw.id,
@@ -664,7 +653,6 @@ export const forTesting = {
   fetchDocumentsList,
   fetchSettledZaakDocuments,
   getFieldValue,
-  getZaakResultaat,
   getDisplayStatus,
   transformPowerbrowserDocLinksResponse,
   transformZaakRaw,

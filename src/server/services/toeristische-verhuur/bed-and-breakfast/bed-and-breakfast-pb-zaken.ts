@@ -5,22 +5,40 @@ import {
 } from './bed-and-breakfast-types';
 import { SELECT_FIELDS_TRANSFORM_BASE } from '../../powerbrowser/powerbrowser-field-transformers';
 import { hasCaseTypeInFMT_CAPTION } from '../../powerbrowser/powerbrowser-helpers';
-import {
-  PowerBrowserZaakTransformer,
-  type PBZaakResultaat,
-} from '../../powerbrowser/powerbrowser-types';
+import { PowerBrowserZaakTransformer } from '../../powerbrowser/powerbrowser-types';
 
-function isVerleend(resultaat: PBZaakResultaat) {
-  if (!resultaat) {
-    return false;
+export const RESULTATEN_VERLEEND = [
+  'Verleend met overgangsrecht',
+  'Verleend zonder overgangsrecht',
+  'Verleend',
+  'Van rechtswege verleend',
+  'Gedeeltelijk verleend',
+];
+
+export const RESULTATEN_NIET_VERLEEND = [
+  'Geweigerd op basis van Quotum',
+  'Geweigerd',
+  'Geweigerd met overgangsrecht',
+  'Buiten behandeling',
+];
+
+export const RESULTATEN_INGETROKKEN = ['Ingetrokken', 'Vergunning ingetrokken'];
+
+function transformZaakResultaat(resultaat: string | null) {
+  if (resultaat === null) {
+    return null;
   }
-  return [
-    'verleend met overgangsrecht',
-    'verleend zonder overgangsrecht',
-    'verleend',
-    'van rechtswege verleend',
-    'gedeeltelijk verleend',
-  ].includes(resultaat?.toLowerCase() ?? '');
+
+  switch (true) {
+    case RESULTATEN_VERLEEND.includes(resultaat):
+      return 'Verleend';
+    case RESULTATEN_NIET_VERLEEND.includes(resultaat):
+      return 'Niet verleend';
+    case RESULTATEN_INGETROKKEN.includes(resultaat):
+      return 'Ingetrokken';
+  }
+
+  return resultaat;
 }
 
 export const BedAndBreakfastZaakTransformer: PowerBrowserZaakTransformer<BedAndBreakfastType> =
@@ -33,8 +51,10 @@ export const BedAndBreakfastZaakTransformer: PowerBrowserZaakTransformer<BedAndB
         caseTypeBedAndBreakfast.BedAndBreakfast
       ),
     transformFields: SELECT_FIELDS_TRANSFORM_BASE,
+    transformFieldValues: {
+      result: transformZaakResultaat,
+    },
     transformDoclinks: documentNamenMA_PB,
-    isVerleend,
     filterValidDocumentPredicate: (_) => true,
   };
 

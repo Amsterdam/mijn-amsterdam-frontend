@@ -19,8 +19,9 @@ import { remoteApi } from '../../../testing/utils';
 import { StatusLineItem } from '../../../universal/types/App.types';
 import type { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
 import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
-import { powerBrowserZaakTransformers } from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-pb-zaken';
+import { powerBrowserZaakTransformers as powerBrowserZaakTransformersForBB } from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-pb-zaken';
 import { BBVergunningFrontend } from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types';
+import { pbZaakTransformers as pbZaakTransformersForVTH } from '../vergunningen/pb-zaken';
 
 describe('Powerbrowser service', () => {
   const authProfile: AuthProfile = {
@@ -84,7 +85,7 @@ describe('Powerbrowser service', () => {
 
       const result = await fetchPBZaken(
         authProfile,
-        powerBrowserZaakTransformers
+        powerBrowserZaakTransformersForBB
       );
       expect(result.status).toBe('OK');
       expect(result.content).toHaveLength(0);
@@ -128,7 +129,7 @@ describe('Powerbrowser service', () => {
 
       const result = await fetchPBZaken(
         authProfile,
-        powerBrowserZaakTransformers
+        powerBrowserZaakTransformersForBB
       );
       expect(result.status).toBe('OK');
       expect(result.content).toHaveLength(1);
@@ -143,7 +144,7 @@ describe('Powerbrowser service', () => {
 
       const result = await fetchPBZaken(
         authProfile,
-        powerBrowserZaakTransformers
+        powerBrowserZaakTransformersForBB
       );
       expect(result.status).toBe('ERROR');
     });
@@ -164,7 +165,7 @@ describe('Powerbrowser service', () => {
 
       const result = await fetchPBZaken(
         authProfile,
-        powerBrowserZaakTransformers
+        powerBrowserZaakTransformersForBB
       );
       expect(result.status).toBe('ERROR');
     });
@@ -192,7 +193,7 @@ describe('Powerbrowser service', () => {
 
       const result = await fetchPBZaken(
         authProfile,
-        powerBrowserZaakTransformers
+        powerBrowserZaakTransformersForBB
       );
       expect(result.status).toBe('ERROR');
     });
@@ -390,7 +391,7 @@ describe('Powerbrowser service', () => {
 
       const result = await forTesting.fetchZakenRecords(
         authProfile,
-        powerBrowserZaakTransformers
+        powerBrowserZaakTransformersForBB
       );
       expect(result.status).toBe('ERROR');
     });
@@ -423,18 +424,6 @@ describe('Powerbrowser service', () => {
       ] as unknown as PBZaakFields[];
 
       const result = forTesting.getFieldValue('RESULTAAT_ID', fields);
-      expect(result).toBeNull();
-    });
-  });
-
-  describe('getZaakResultaat', () => {
-    test('should return transformed result', () => {
-      const result = forTesting.getZaakResultaat('Verleend');
-      expect(result).toBe('Verleend');
-    });
-
-    test('should return null if result is null', () => {
-      const result = forTesting.getZaakResultaat(null);
       expect(result).toBeNull();
     });
   });
@@ -651,7 +640,7 @@ describe('Powerbrowser service', () => {
       };
 
       const result = forTesting.transformZaakRaw(
-        powerBrowserZaakTransformers[0],
+        powerBrowserZaakTransformersForBB[0],
         zaak
       );
       expect(result).toEqual({
@@ -669,6 +658,93 @@ describe('Powerbrowser service', () => {
         isExpired: false,
         title: 'Vergunning bed & breakfast',
       });
+    });
+
+    test('should transform fields and field values', () => {
+      const genericTransformer = {
+        transformFields: {
+          RESULTAAT_ID: 'result',
+        },
+        transformFieldValues: {
+          result: (value: string) =>
+            value?.toLowerCase().includes('verleend') ? 'Verleend' : value,
+        },
+        filterValidDocumentPredicate: () => true,
+      } as unknown as PowerBrowserZaakTransformer;
+
+      const zaak = {
+        fields: [
+          {
+            fieldName: 'RESULTAAT_ID',
+            fieldValue: '722',
+            text: 'Verleend zonder overgangsrecht',
+          },
+        ],
+      } as PBZaakRecord;
+
+      const result = forTesting.transformZaakRaw(genericTransformer, zaak);
+
+      expect(result.decision).toBe('Verleend');
+      expect(result.isVerleend).toBe(true);
+    });
+
+    test('should apply transformFieldValues for Bed & Breakfast results', () => {
+      const zaak = {
+        fields: [
+          {
+            fieldName: 'RESULTAAT_ID',
+            text: 'Vergunning ingetrokken',
+            fieldValue: '999',
+          },
+        ],
+      } as PBZaakRecord;
+
+      const result = forTesting.transformZaakRaw(
+        powerBrowserZaakTransformersForBB[0],
+        zaak
+      );
+
+      expect(result.decision).toBe('Ingetrokken');
+      expect(result.decision).not.toBe('Vergunning ingetrokken');
+      expect(result.isVerleend).toBe(false);
+    });
+
+    test('should apply transformFieldValues for VTH results', () => {
+      const zaak = {
+        fields: [
+          {
+            fieldName: 'RESULTAAT_ID',
+            text: 'Buiten behandeling gesteld',
+            fieldValue: '888',
+          },
+        ],
+      } as PBZaakRecord;
+
+      const transformer = pbZaakTransformersForVTH[0];
+      const result = forTesting.transformZaakRaw(transformer, zaak);
+
+      expect(result.decision).toBe('Niet verleend');
+      expect(result.decision).not.toBe('Buiten behandeling gesteld');
+      expect(result.isVerleend).toBe(false);
+    });
+
+    test('should apply transformFieldValues for VTH verleend results', () => {
+      const zaak = {
+        fields: [
+          {
+            fieldName: 'RESULTAAT_ID',
+            text: 'Van rechtswege verleend',
+            fieldValue: '777',
+          },
+        ],
+      } as PBZaakRecord;
+
+      const transformer = pbZaakTransformersForVTH[0];
+      const result = forTesting.transformZaakRaw(transformer, zaak);
+
+      expect(result.decision).toBe('Verleend');
+      expect(result.decision).not.toBe('Van rechtswege verleend');
+      expect(result.isVerleend).toBe(true);
     });
   });
 

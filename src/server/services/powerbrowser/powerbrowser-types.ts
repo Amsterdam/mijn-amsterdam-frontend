@@ -143,18 +143,23 @@ type CaseTypeLiteral<T extends PowerBrowserZaakBase> =
       ? unknown
       : never
     : T['caseType'];
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type PowerBrowserZaakTransformer<T extends PowerBrowserZaakBase = any> =
-  {
-    caseType: CaseTypeLiteral<T>;
-    title: string;
-    fetchZaakFilter: (field: PBRecord<'GFO_ZAKEN'>['fields'][0]) => boolean;
-    isVerleend?: (field: PBZaakResultaat) => boolean;
-    transformFields: typeof SELECT_FIELDS_TRANSFORM_BASE &
-      Record<string, string>;
-    transformDoclinks?: Record<string, Readonly<string[]>>;
-    filterValidDocumentPredicate: (record: PBDocument) => boolean;
-  };
+
+export type PowerBrowserZaakTransformer<
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  T extends PowerBrowserZaakBase = any,
+  TF extends typeof SELECT_FIELDS_TRANSFORM_BASE & Record<string, string> =
+    typeof SELECT_FIELDS_TRANSFORM_BASE & Record<string, string>,
+> = {
+  caseType: CaseTypeLiteral<T>;
+  title: string;
+  fetchZaakFilter: (field: PBRecord<'GFO_ZAKEN'>['fields'][0]) => boolean;
+  transformFields: TF;
+  transformFieldValues?: Partial<
+    Record<keyof TF, (value: string | null) => string | null>
+  >;
+  transformDoclinks?: Record<string, Readonly<string[]>>;
+  filterValidDocumentPredicate: (record: PBDocument) => boolean;
+};
 
 export type PowerBrowserZaakFrontend<
   T extends PowerBrowserZaakBase = PowerBrowserZaakBase,

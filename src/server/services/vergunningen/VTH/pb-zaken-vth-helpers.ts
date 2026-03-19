@@ -7,20 +7,37 @@ import type {
   PBRecordField,
 } from '../../powerbrowser/powerbrowser-types';
 
-const resultatenVerleend = [
+const RESULTATEN_VERLEEND = [
   'Gedeeltelijk verleend',
   'Van rechtswege verleend',
   'Vergunning gedeeltelijk ingetrokken',
   'Verleend',
 ];
-const ResultatenValid = [
-  ...resultatenVerleend,
+const RESULTATEN_NIET_VERLEEND = [
   'Aanvraag ingetrokken',
   'Ander bevoegd gezag',
   'Buiten behandeling gesteld',
   'Geweigerd',
   'Vergunningsvrij',
 ];
+const RESULTATEN_VALID = [...RESULTATEN_VERLEEND, ...RESULTATEN_NIET_VERLEEND];
+
+export function transformVTHZaakResult(
+  resultaat: string | null
+): 'Verleend' | 'Niet verleend' | string | null {
+  if (resultaat === null) {
+    return null;
+  }
+
+  switch (true) {
+    case RESULTATEN_VERLEEND.includes(resultaat):
+      return 'Verleend';
+    case RESULTATEN_NIET_VERLEEND.includes(resultaat):
+      return 'Niet verleend';
+  }
+
+  return resultaat;
+}
 
 export function isValidVTHDocument(record: {
   SOORTDOCUMENT_ID: string;
@@ -38,12 +55,12 @@ export function isVTHZaakVerleend(resultaat: PBZaakResultaat) {
   if (!resultaat) {
     return false;
   }
-  return resultatenVerleend.includes(resultaat.toLowerCase());
+  return RESULTATEN_VERLEEND.includes(resultaat.toLowerCase());
 }
 
 export function isValidVTHZaak(record: PBRecordField) {
   return (
     isNotBestuurlijkGevoelig(record) &&
-    isZaakWithValidResultaat(record, ResultatenValid)
+    isZaakWithValidResultaat(record, RESULTATEN_VALID)
   );
 }

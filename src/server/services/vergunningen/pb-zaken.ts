@@ -22,8 +22,8 @@ import {
 } from '../powerbrowser/powerbrowser-types';
 import {
   isValidVTHZaak,
-  isVTHZaakVerleend,
   isValidVTHDocument,
+  transformVTHZaakResult,
 } from './VTH/pb-zaken-vth-helpers';
 
 const LigplaatsWoonbootVergunningZaakTransformer: PowerBrowserZaakTransformer<LigplaatsWoonbootvergunning> =
@@ -44,7 +44,9 @@ const LigplaatsWoonbootVergunningZaakTransformer: PowerBrowserZaakTransformer<Li
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    isVerleend: isVTHZaakVerleend,
+    transformFieldValues: {
+      result: transformVTHZaakResult,
+    },
     filterValidDocumentPredicate: isValidVTHDocument,
   };
 
@@ -61,10 +63,10 @@ const LigplaatsBedrijfsvaartuigVergunningZaakTransformer: PowerBrowserZaakTransf
         pbRecordField,
         'Ligplaatsvergunning bedrijfsvaartuig'
       ),
-    transformFields: {
-      ...SELECT_FIELDS_TRANSFORM_BASE,
+    transformFields: SELECT_FIELDS_TRANSFORM_BASE,
+    transformFieldValues: {
+      result: transformVTHZaakResult,
     },
-    isVerleend: isVTHZaakVerleend,
     filterValidDocumentPredicate: isValidVTHDocument,
   };
 
@@ -77,7 +79,9 @@ const OmzettingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Omzetting
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    isVerleend: isVTHZaakVerleend,
+    transformFieldValues: {
+      result: transformVTHZaakResult,
+    },
     filterValidDocumentPredicate: isValidVTHDocument,
   };
 
@@ -90,7 +94,9 @@ const SamenvoegingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Samenv
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    isVerleend: isVTHZaakVerleend,
+    transformFieldValues: {
+      result: transformVTHZaakResult,
+    },
     filterValidDocumentPredicate: isValidVTHDocument,
   };
 
@@ -106,7 +112,9 @@ const OnttrekkingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Onttrek
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    isVerleend: isVTHZaakVerleend,
+    transformFieldValues: {
+      result: transformVTHZaakResult,
+    },
     filterValidDocumentPredicate: isValidVTHDocument,
   };
 
@@ -127,7 +135,9 @@ const OnttrekkingsvergunningSloopZaakTransformer: PowerBrowserZaakTransformer<On
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    isVerleend: isVTHZaakVerleend,
+    transformFieldValues: {
+      result: transformVTHZaakResult,
+    },
     filterValidDocumentPredicate: isValidVTHDocument,
   };
 
@@ -140,7 +150,9 @@ const VormenVanWoonruimteZaakTransformer: PowerBrowserZaakTransformer<VormenVanW
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    isVerleend: isVTHZaakVerleend,
+    transformFieldValues: {
+      result: transformVTHZaakResult,
+    },
     filterValidDocumentPredicate: isValidVTHDocument,
   };
 
@@ -156,7 +168,9 @@ const OnttrekkingsvergunningTweedeWoningZaakTransformer: PowerBrowserZaakTransfo
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    isVerleend: isVTHZaakVerleend,
+    transformFieldValues: {
+      result: transformVTHZaakResult,
+    },
     filterValidDocumentPredicate: isValidVTHDocument,
   };
 
@@ -172,7 +186,9 @@ const SplitsingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Splitsing
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    isVerleend: isVTHZaakVerleend,
+    transformFieldValues: {
+      result: transformVTHZaakResult,
+    },
     filterValidDocumentPredicate: isValidVTHDocument,
   };
 
