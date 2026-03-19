@@ -39,7 +39,7 @@ import type {
 } from './wpi-types.ts';
 
 type FilterResponse = (
-  response: ApiResponse<WpiRequestProcess[]>
+  response: ApiResponse<(WpiRequestProcess | null)[]>
 ) => WpiRequestProcess[];
 
 export interface FetchConfig {
@@ -64,7 +64,7 @@ function statusLineTransformer(
       properties: {
         about: requestProcess.about,
         title: requestProcess.title,
-        status: requestProcess.statusId,
+        status: requestProcess.steps.findLast((step) => step.isActive)?.status,
       },
     });
 
@@ -110,12 +110,16 @@ export async function fetchRequestProcess(
 export async function fetchBijstandsuitkering(
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const filterResponse: FilterResponse = (response) =>
-    response.content
-      ?.filter(
-        (requestProcess) => requestProcess.about === 'Bijstandsuitkering'
-      )
-      .map((requestProcess) => addLink(requestProcess)) ?? [];
+  const filterResponse: FilterResponse = (response) => {
+    return (
+      response.content
+        ?.filter((requestProcess) => requestProcess !== null)
+        .filter(
+          (requestProcess) => requestProcess?.about === 'Bijstandsuitkering'
+        )
+        .map((requestProcess) => addLink(requestProcess)) ?? []
+    );
+  };
 
   const response = await fetchRequestProcess(
     authProfileAndToken,

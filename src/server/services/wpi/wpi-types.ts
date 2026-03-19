@@ -48,7 +48,6 @@ export interface WpiRequestProcess extends ZaakAanvraagDetail {
   dateEndFormatted: string | null;
   datePublished: string; // Date of latest step
   steps: WpiRequestStatus[];
-  statusId: WpiRequestStatus['id'];
   displayStatus: string;
   decision: string | null;
 }
