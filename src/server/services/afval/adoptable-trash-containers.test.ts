@@ -2,20 +2,20 @@ import Mockdate from 'mockdate';
 import type { Mock } from 'vitest';
 import { describe, it, expect, vi } from 'vitest';
 
-import { forTesting } from './adoptable-trash-containers';
-import { fetchAdoptableTrashContainerTips } from './adoptable-trash-containers';
-import { getAuthProfileAndToken } from '../../../testing/utils';
+import { forTesting } from './adoptable-trash-containers.ts';
+import { fetchAdoptableTrashContainerTips } from './adoptable-trash-containers.ts';
+import { getAuthProfileAndToken } from '../../../testing/utils.ts';
 import {
   DEFAULT_LAT,
   DEFAULT_LNG,
-} from '../../../universal/config/myarea-datasets';
+} from '../../../universal/config/myarea-datasets.ts';
 import {
   apiSuccessResult,
   apiErrorResult,
-} from '../../../universal/helpers/api';
-import { fetchMyLocations } from '../bag/my-locations';
-import { fetchBrp } from '../brp/brp';
-import { fetchDataset } from '../buurt/buurt';
+} from '../../../universal/helpers/api.ts';
+import { fetchMyLocations } from '../bag/my-locations.ts';
+import { fetchBrp } from '../brp/brp.ts';
+import { fetchDataset } from '../buurt/buurt.ts';
 
 Mockdate.set('2025-01-01');
 

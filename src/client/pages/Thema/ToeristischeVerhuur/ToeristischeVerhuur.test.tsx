@@ -6,7 +6,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { themaConfig } from './ToeristischeVerhuur-thema-config.ts';
 import { ToeristischeVerhuurThema } from './ToeristischeVerhuurThema.tsx';
 import type { BBVergunningFrontend } from '../../../../server/services/toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types.ts';
-import type { VakantieverhuurVergunningFrontend } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types.ts';
+import type { VakantieverhuurVergunningFrontend } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur.types.ts';
 import { jsonCopy } from '../../../../universal/helpers/utils.ts';
 import type { AppState } from '../../../../universal/types/App.types.ts';
 import { expectHeaders, getTable } from '../../../helpers/test-utils.ts';

@@ -1,5 +1,4 @@
 import type {
-  PBZaakCompacted,
   PowerBrowserZaakBase,
   PowerBrowserZaakFrontend,
 } from '../../powerbrowser/powerbrowser-types.ts';
@@ -24,12 +23,11 @@ export type BBVergunningZaakResult =
   | string
   | null;
 
-export type BedAndBreakfastType = PowerBrowserZaakBase &
-  PBZaakCompacted & {
-    caseType: GetCaseType<'BedAndBreakfast'>;
-    heeftOvergangsRecht: boolean;
-    location: string | null;
-  };
+export type BedAndBreakfastType = PowerBrowserZaakBase & {
+  caseType: GetCaseType<'BedAndBreakfast'>;
+  heeftOvergangsRecht: boolean;
+  location: string | null;
+};
 
 export type BBVergunningFrontend =
   PowerBrowserZaakFrontend<BedAndBreakfastType>;

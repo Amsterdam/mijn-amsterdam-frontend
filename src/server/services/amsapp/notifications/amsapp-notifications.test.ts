@@ -10,7 +10,7 @@ import {
   vi,
 } from 'vitest';
 
-import { DISCRETE_GENERIC_MESSAGE } from './amsapp-notifications-service-config';
+import { DISCRETE_GENERIC_MESSAGE } from './amsapp-notifications-service-config.ts';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -46,7 +46,7 @@ import {
   getConsumerProfile,
   storeNotificationsResponses,
   unregisterConsumer,
-} from './amsapp-notifications';
+} from './amsapp-notifications.ts';
 
 describe('amsapp-notifications', () => {
   const systemTime = new Date('2000-01-01T12:00:00.000Z');

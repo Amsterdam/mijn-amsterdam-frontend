@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { decrypt, encryptDeterministic } from './encrypt-decrypt';
+import { decrypt, encryptDeterministic } from './encrypt-decrypt.ts';
 
 describe('encryptDeterministic', () => {
   const encryptionKey = Buffer.alloc(32, 0).toString(); // 32 bytes for aes-256-cbc

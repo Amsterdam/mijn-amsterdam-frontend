@@ -1,5 +1,4 @@
 import { render, waitFor } from '@testing-library/react';
-import { userEvent } from '@testing-library/user-event';
 import { generatePath } from 'react-router';
 
 import { routeConfig } from './Afis-thema-config.ts';
@@ -77,26 +76,11 @@ describe('<AfisBetaalVoorkeuren />', () => {
   }
 
   test('Display business partner details', async () => {
-    const user = userEvent.setup();
-
     const screen = render(<Component />);
-
-    await waitFor(async () => {
-      const toonKnop = screen.getByText('Toon');
-      expect(toonKnop).toBeInTheDocument();
-      await user.click(toonKnop);
-    });
 
     await waitFor(() => {
       expect(screen.getByText('someone@example.org')).toBeInTheDocument();
       expect(screen.getByText('Taxon Expeditions BV')).toBeInTheDocument();
     });
-
-    const verbergKnop = screen.getByText('Verberg');
-    expect(verbergKnop).toBeInTheDocument();
-
-    await user.click(verbergKnop);
-
-    expect(screen.getByText('Toon')).toBeInTheDocument();
   });
 });

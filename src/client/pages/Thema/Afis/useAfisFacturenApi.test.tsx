@@ -1,3 +1,4 @@
+/* eslint-disable no-irregular-whitespace */
 import { renderHook, waitFor } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 
@@ -64,14 +65,13 @@ describe('useAfisFacturenApi', () => {
       status: 'openstaand',
       statusDescription: 'Test',
       paylink: 'http://example.com/pay',
+      amountOriginalFormatted: '€100',
     } as AfisFactuur);
 
     expect(el).toMatchInlineSnapshot(`
       <React.Fragment>
-        <React.Fragment>
-          Openstaand
-          : 
-        </React.Fragment>
+        Openstaand
+        : 
         <MaLink
           href="http://example.com/pay"
           maVariant="fatNoUnderline"

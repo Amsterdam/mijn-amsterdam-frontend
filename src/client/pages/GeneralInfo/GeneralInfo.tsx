@@ -28,7 +28,7 @@ import { themaConfig as klachtenThemaConfig } from '../Thema/Klachten/Klachten-t
 import { themaConfig as krefiaThemaConfig } from '../Thema/Krefia/Krefia-thema-config.ts';
 import { themaConfig as milieuThemaConfig } from '../Thema/Milieuzone/Milieuzone-thema-config.ts';
 import { themaConfig as overtredingenThemaConfig } from '../Thema/Overtredingen/Overtredingen-thema-config.ts';
-import { themaConfig as parkerenThemaConfig } from '../Thema/Parkeren/Parkeren-thema-config';
+import { themaConfig as parkerenThemaConfig } from '../Thema/Parkeren/Parkeren-thema-config.ts';
 import { profileSectionProps } from '../Thema/Profile/InfoSection.tsx';
 import { themaConfig as subsidiesThemaConfig } from '../Thema/Subsidies/Subsidies-thema-config.ts';
 import { themaConfig as toeristischeVerhuurThemaConfig } from '../Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';

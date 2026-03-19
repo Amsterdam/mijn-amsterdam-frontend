@@ -6,7 +6,7 @@ import 'core-js/actual/string/replace-all';
 
 import './client/styles/main.scss';
 import { BFFApiUrls } from './client/config/api.ts';
-import { type FeatureToggles } from './server/config/azure-appconfiguration.ts';
+import { type FeatureToggles } from './server/config/feature-toggles.ts';
 
 (async function startApp() {
   const response = await fetch(BFFApiUrls.FEATURE_TOGGLES);

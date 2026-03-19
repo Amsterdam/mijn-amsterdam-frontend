@@ -34,11 +34,8 @@ function transformBBFrontend(zaak: BedAndBreakfastType): BBVergunningFrontend {
       }),
       title: zaak.title,
     },
-    heeftOvergangsRecht: zaak.dateReceived
-      ? isBefore(
-          new Date(zaak.dateReceived),
-          new Date(DATE_NEW_REGIME_BB_RULES)
-        )
+    heeftOvergangsRecht: zaak.dateRequest
+      ? isBefore(new Date(zaak.dateRequest), new Date(DATE_NEW_REGIME_BB_RULES))
       : false,
   };
 }
