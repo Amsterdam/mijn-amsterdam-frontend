@@ -7,7 +7,6 @@ import {
   PB_NIETVERLEEND_DECISIONS_COMMOM,
   PB_VERLEEND_DECISIONS_COMMOM,
 } from './powerbrowser-field-transformers';
-import { hasCaseTypeInFMT_CAPTION } from './powerbrowser-helpers';
 import {
   PowerBrowserZaakBase,
   FetchPersoonOrMaatschapIdByUidOptions,
@@ -493,7 +492,9 @@ function transformZaakRaw<
     );
 
   const decision = getZaakResultaat(result as PBZaakResultaat);
-  const isVerleend = decision === 'Verleend';
+  const isVerleend = zaakTransformer.isVerleend
+    ? zaakTransformer.isVerleend(result as PBZaakResultaat)
+    : decision === 'Verleend';
 
   const zaak = {
     id: zaakRaw.id,
@@ -573,11 +574,9 @@ async function fetchZakenRecords<T extends PowerBrowserZaakTransformer>(
   const zakenIdToZakentransformer = assignTransformerByFilter(
     zakenSearchResponse.content || [],
     zaakTransformers.map((t) => {
-      const defaultFetchZaakFilter = (pbRecordField: PBRecordField<string>) =>
-        hasCaseTypeInFMT_CAPTION(pbRecordField, t.caseType as string);
       return {
         zaakTransformer: t,
-        filter: t.fetchZaakFilter ?? defaultFetchZaakFilter,
+        filter: t.fetchZaakFilter,
       };
     })
   );

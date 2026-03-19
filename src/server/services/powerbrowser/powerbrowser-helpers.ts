@@ -32,3 +32,22 @@ export function hasStringInZAAK_SUBPRODUCT_ID(
     pbRecordField.text?.includes(str)
   );
 }
+
+export function isZaakWithValidResultaat(
+  pbRecordField: PBRecordField<string>,
+  validResultaten: string[]
+) {
+  return (
+    pbRecordField.fieldName === 'RESULTAAT_ID' &&
+    !!pbRecordField.text &&
+    validResultaten.includes(pbRecordField.text)
+  );
+}
+
+export function isNotBestuurlijkGevoelig(pbRecordField: PBRecordField<string>) {
+  return (
+    pbRecordField.fieldName !== 'BESTUURLIJK_GEVOELIG' ||
+    !pbRecordField.fieldValue ||
+    pbRecordField.fieldValue === 'F'
+  );
+}

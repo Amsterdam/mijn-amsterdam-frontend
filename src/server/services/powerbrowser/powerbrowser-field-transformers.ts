@@ -12,6 +12,7 @@ export const PB_VERLEEND_DECISIONS_COMMOM = [
   'Verleend',
   'Van rechtswege verleend',
   'Gedeeltelijk verleend',
+  'Vergunning gedeeltelijk ingetrokken',
 ];
 
 export const PB_NIETVERLEEND_DECISIONS_COMMOM = [

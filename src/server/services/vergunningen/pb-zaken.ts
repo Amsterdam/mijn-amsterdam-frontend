@@ -16,48 +16,36 @@ import {
   hasStringInZAAK_SUBPRODUCT_ID,
   hasStringInZAAKPRODUCT_ID,
 } from '../powerbrowser/powerbrowser-helpers';
-import { PowerBrowserZaakTransformer } from '../powerbrowser/powerbrowser-types';
-
-function isValidPBDocumentForVTH(record: {
-  SOORTDOCUMENT_ID: string;
-  STAMCSSTATUS_ID: string;
-}) {
-  const isAanvraag = record.SOORTDOCUMENT_ID === '1000001015';
-  const isBesluit = record.SOORTDOCUMENT_ID === '256';
-  const isDefinitief = record.STAMCSSTATUS_ID === '1000001002';
-
-  const isValid = isDefinitief && (isBesluit || isAanvraag);
-  return isValid;
-}
-
-export const documentNamesMA = {
-  TOEKENNING: 'Besluit toekenning',
-  VERLENGING: 'Besluit verlenging beslistermijn',
-  WEIGERING: 'Besluit weigering',
-  BUITEN_BEHANDELING: 'Besluit Buiten behandeling',
-  INTREKKING: 'Besluit intrekking',
-  MEER_INFORMATIE: 'Verzoek aanvullende gegevens',
-  SAMENVATTING: 'Samenvatting aanvraagformulier',
-  BESLUIT: 'Besluiten en vastleggen',
-} as const;
+import {
+  PowerBrowserZaakTransformer,
+  type PBRecordField,
+} from '../powerbrowser/powerbrowser-types';
+import {
+  isValidVTHZaak,
+  isVTHZaakVerleend,
+  isValidVTHDocument,
+} from './VTH/pb-zaken-vth-helpers';
 
 const LigplaatsWoonbootVergunningZaakTransformer: PowerBrowserZaakTransformer<LigplaatsWoonbootvergunning> =
   {
     caseType: caseTypePB.LigplaatsWoonbootvergunning,
     title: 'Ligplaatsvergunning woonboot',
-    fetchZaakFilter: (pbRecordField) =>
-      hasStringInZAAKPRODUCT_ID(
+    fetchZaakFilter: (pbRecordField) => {
+      const isOldZaak = hasStringInZAAKPRODUCT_ID(
         pbRecordField,
         'Ligplaatsvergunning woonboot'
-      ) ||
-      hasStringInZAAK_SUBPRODUCT_ID(
+      );
+      const isNewZaak = hasStringInZAAK_SUBPRODUCT_ID(
         pbRecordField,
         'Ligplaatsvergunning woonboot'
-      ),
+      );
+      return (isOldZaak || isNewZaak) && isValidVTHZaak(pbRecordField);
+    },
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    filterValidDocumentPredicate: isValidPBDocumentForVTH,
+    isVerleend: isVTHZaakVerleend,
+    filterValidDocumentPredicate: isValidVTHDocument,
   };
 
 const LigplaatsBedrijfsvaartuigVergunningZaakTransformer: PowerBrowserZaakTransformer<LigplaatsBedrijfsvaartuigvergunning> =
@@ -76,7 +64,8 @@ const LigplaatsBedrijfsvaartuigVergunningZaakTransformer: PowerBrowserZaakTransf
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    filterValidDocumentPredicate: isValidPBDocumentForVTH,
+    isVerleend: isVTHZaakVerleend,
+    filterValidDocumentPredicate: isValidVTHDocument,
   };
 
 const OmzettingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Omzettingsvergunning> =
@@ -88,7 +77,8 @@ const OmzettingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Omzetting
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    filterValidDocumentPredicate: isValidPBDocumentForVTH,
+    isVerleend: isVTHZaakVerleend,
+    filterValidDocumentPredicate: isValidVTHDocument,
   };
 
 const SamenvoegingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Samenvoegingsvergunning> =
@@ -100,7 +90,8 @@ const SamenvoegingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Samenv
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    filterValidDocumentPredicate: isValidPBDocumentForVTH,
+    isVerleend: isVTHZaakVerleend,
+    filterValidDocumentPredicate: isValidVTHDocument,
   };
 
 const OnttrekkingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Onttrekkingsvergunning> =
@@ -115,7 +106,8 @@ const OnttrekkingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Onttrek
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    filterValidDocumentPredicate: isValidPBDocumentForVTH,
+    isVerleend: isVTHZaakVerleend,
+    filterValidDocumentPredicate: isValidVTHDocument,
   };
 
 const OnttrekkingsvergunningSloopZaakTransformer: PowerBrowserZaakTransformer<OnttrekkingsvergunningSloop> =
@@ -135,7 +127,8 @@ const OnttrekkingsvergunningSloopZaakTransformer: PowerBrowserZaakTransformer<On
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    filterValidDocumentPredicate: isValidPBDocumentForVTH,
+    isVerleend: isVTHZaakVerleend,
+    filterValidDocumentPredicate: isValidVTHDocument,
   };
 
 const VormenVanWoonruimteZaakTransformer: PowerBrowserZaakTransformer<VormenVanWoonruimte> =
@@ -147,7 +140,8 @@ const VormenVanWoonruimteZaakTransformer: PowerBrowserZaakTransformer<VormenVanW
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    filterValidDocumentPredicate: isValidPBDocumentForVTH,
+    isVerleend: isVTHZaakVerleend,
+    filterValidDocumentPredicate: isValidVTHDocument,
   };
 
 const OnttrekkingsvergunningTweedeWoningZaakTransformer: PowerBrowserZaakTransformer<OnttrekkingsvergunningTweedeWoning> =
@@ -162,7 +156,8 @@ const OnttrekkingsvergunningTweedeWoningZaakTransformer: PowerBrowserZaakTransfo
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    filterValidDocumentPredicate: isValidPBDocumentForVTH,
+    isVerleend: isVTHZaakVerleend,
+    filterValidDocumentPredicate: isValidVTHDocument,
   };
 
 const SplitsingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Splitsingsvergunning> =
@@ -177,7 +172,8 @@ const SplitsingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Splitsing
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    filterValidDocumentPredicate: isValidPBDocumentForVTH,
+    isVerleend: isVTHZaakVerleend,
+    filterValidDocumentPredicate: isValidVTHDocument,
   };
 
 export const pbZaakTransformers = [
@@ -190,7 +186,11 @@ export const pbZaakTransformers = [
   OnttrekkingsvergunningZaakTransformer,
   OnttrekkingsvergunningSloopZaakTransformer,
   OnttrekkingsvergunningTweedeWoningZaakTransformer,
-];
+].map((t) => ({
+  ...t,
+  fetchZaakFilter: (field: PBRecordField) =>
+    t.fetchZaakFilter?.(field) && isValidVTHZaak(field),
+}));
 
 export const pbCaseToZaakTransformers = pbZaakTransformers.reduce<
   Record<string, PowerBrowserZaakTransformer>

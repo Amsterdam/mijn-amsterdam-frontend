@@ -5,7 +5,23 @@ import {
 } from './bed-and-breakfast-types';
 import { SELECT_FIELDS_TRANSFORM_BASE } from '../../powerbrowser/powerbrowser-field-transformers';
 import { hasCaseTypeInFMT_CAPTION } from '../../powerbrowser/powerbrowser-helpers';
-import { PowerBrowserZaakTransformer } from '../../powerbrowser/powerbrowser-types';
+import {
+  PowerBrowserZaakTransformer,
+  type PBZaakResultaat,
+} from '../../powerbrowser/powerbrowser-types';
+
+function isVerleend(resultaat: PBZaakResultaat) {
+  if (!resultaat) {
+    return false;
+  }
+  return [
+    'verleend met overgangsrecht',
+    'verleend zonder overgangsrecht',
+    'verleend',
+    'van rechtswege verleend',
+    'gedeeltelijk verleend',
+  ].includes(resultaat?.toLowerCase() ?? '');
+}
 
 export const BedAndBreakfastZaakTransformer: PowerBrowserZaakTransformer<BedAndBreakfastType> =
   {
@@ -18,6 +34,7 @@ export const BedAndBreakfastZaakTransformer: PowerBrowserZaakTransformer<BedAndB
       ),
     transformFields: SELECT_FIELDS_TRANSFORM_BASE,
     transformDoclinks: documentNamenMA_PB,
+    isVerleend,
     filterValidDocumentPredicate: (_) => true,
   };
 
