@@ -332,8 +332,11 @@ const ApiConfig_ = {
   },
   KREFIA: {
     url: `${getFromEnv('BFF_KREFIA_API_BASE_URL')}/krefia/all`,
+    method: 'POST',
+    headers: {
+      'x-api-key': getFromEnv('BFF_KREFIA_API_KEY', true),
+    },
     postponeFetch: !FeatureToggle.krefiaActive,
-    passthroughOIDCToken: true,
   },
   SUBSIDIES: {
     url: `${getFromEnv('BFF_SISA_API_ENDPOINT')}`,
