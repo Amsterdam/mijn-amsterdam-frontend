@@ -15,7 +15,7 @@ import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import { Datalist } from '../../../components/Datalist/Datalist.tsx';
 import { MaButtonLink } from '../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
-import { Spinner } from '../../../components/Spinner/Spinner';
+import { Spinner } from '../../../components/Spinner/Spinner.tsx';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 

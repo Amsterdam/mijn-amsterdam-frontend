@@ -1,20 +1,20 @@
 import { useState, useEffect } from 'react';
 
-import { useAfisEMandatesApi } from './useAfisEmandatesApi';
-import { useSignRequestPayloadStorage } from './useAfisEMandatesSignRequest';
+import { useAfisEMandatesApi } from './useAfisEmandatesApi.tsx';
+import { useSignRequestPayloadStorage } from './useAfisEMandatesSignRequest.tsx';
 import type {
   AfisEMandateFrontend,
   AfisEMandateSignRequestResponse,
   AfisEMandateStatusChangeResponse,
   AfisEMandateUpdatePayloadFrontend,
-} from '../../../../server/services/afis/afis-types';
-import { entries } from '../../../../universal/helpers/utils';
-import { logger } from '../../../helpers/logging';
+} from '../../../../server/services/afis/afis-types.ts';
+import { entries } from '../../../../universal/helpers/utils.ts';
+import { logger } from '../../../helpers/logging.ts';
 import {
   useBffApi,
   sendFetchRequest,
   sendFormPostRequest,
-} from '../../../hooks/api/useBffApi';
+} from '../../../hooks/api/useBffApi.ts';
 
 function useRedirectUrlApi(
   eMandate: AfisEMandateFrontend,

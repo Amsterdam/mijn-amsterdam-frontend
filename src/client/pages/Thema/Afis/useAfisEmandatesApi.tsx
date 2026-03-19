@@ -3,24 +3,24 @@ import { useMemo } from 'react';
 import { Paragraph } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router';
 
-import { generateApiUrl } from './Afis-helpers';
+import { generateApiUrl } from './Afis-helpers.ts';
 import {
   routeConfig,
   eMandateTableConfig,
   titleBetaalvoorkeurenPage,
   titleEMandaatPage,
   featureToggle,
-} from './Afis-thema-config';
+} from './Afis-thema-config.ts';
 import {
   CheckStatus,
   useSignRequestPayloadStorageCleanup,
-} from './useAfisEMandatesSignRequest';
-import { useAfisThemaData } from './useAfisThemaData.hook';
-import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types';
-import { MaRouterLink } from '../../../components/MaLink/MaLink';
-import { useBffApi } from '../../../hooks/api/useBffApi';
-import { useSmallScreen } from '../../../hooks/media.hook';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
+} from './useAfisEMandatesSignRequest.tsx';
+import { useAfisThemaData } from './useAfisThemaData.hook.tsx';
+import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types.ts';
+import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
+import { useBffApi } from '../../../hooks/api/useBffApi.ts';
+import { useSmallScreen } from '../../../hooks/media.hook.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
 function mergePayloadIntoEmandateById(
   id: AfisEMandateFrontend['id'],

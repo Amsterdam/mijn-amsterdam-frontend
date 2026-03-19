@@ -6,13 +6,13 @@ import {
   AFIS_EMANDATE_LONG_DURATION_THRESHOLD_MS,
   EMANDATE_SIGN_REQUEST_SUCCESS_STATUSES,
   EMANDATE_STATUS_ACTIVE,
-} from './Afis-thema-config';
+} from './Afis-thema-config.ts';
 import type {
   AfisEMandateFrontend,
   AfisEMandateSignRequestStatusResponse,
-} from '../../../../server/services/afis/afis-types';
-import { useBffApi } from '../../../hooks/api/useBffApi';
-import { useLocalStorage } from '../../../hooks/storage.hook';
+} from '../../../../server/services/afis/afis-types.ts';
+import { useBffApi } from '../../../hooks/api/useBffApi.ts';
+import { useLocalStorage } from '../../../hooks/storage.hook.ts';
 
 type AfisEmandateStatusCheckPayload = {
   eMandateId: AfisEMandateFrontend['id'];

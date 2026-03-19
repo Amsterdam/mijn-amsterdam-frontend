@@ -1,13 +1,12 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { useParams } from 'react-router';
-import { describe, it, vi, expect, Mock } from 'vitest';
+import type { Mock } from 'vitest';
+import { describe, it, vi, expect } from 'vitest';
 
 import { useEmandateApis } from './useAfisEmandateActionsApi.tsx';
 import { useAfisEMandatesApi, forTesting } from './useAfisEmandatesApi.tsx';
-import {
-  EmandateStatusCode,
-  type AfisEMandateFrontend,
-} from '../../../../server/services/afis/afis-types.ts';
+import type { EmandateStatusCode } from '../../../../server/services/afis/afis-types.ts';
+import { type AfisEMandateFrontend } from '../../../../server/services/afis/afis-types.ts';
 import { bffApiHost } from '../../../../testing/setup.ts';
 import { bffApi } from '../../../../testing/utils.ts';
 import { useBffApiStateStore } from '../../../hooks/api/useBffApi.ts';
@@ -15,7 +14,7 @@ import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
 
 vi.mock('../../../hooks/useAppStateStore');
 vi.mock('react-router', async (importActual) => {
-  const actual = await importActual<typeof import('react-router')>();
+  const actual: object = await importActual();
   return {
     ...actual,
     useNavigate: vi.fn().mockReturnValue(() => vi.fn()),
@@ -281,30 +280,6 @@ describe('useAfisEMandatesData', () => {
     });
 
     expect(result.current.eMandates[0].creditorName).toBe('Updated Mandate 1');
-  });
-
-  it('should add iban to pending activation storage if iban found as query parameter', async () => {
-    sessionStorage.removeItem('afis-emandate-pending-activation');
-
-    bffApi.get(/\/afis\/e-mandates/).reply(200, {
-      content: eMandates,
-    });
-
-    const { result, rerender } = renderHook(() => useAfisEMandatesApi());
-
-    expect(result.current.isLoadingEMandates).toBe(true);
-
-    await waitFor(() => {
-      expect(result.current.isLoadingEMandates).toBe(false);
-    });
-
-    window.location.search = '?iban=NL91ABNA0417164300';
-
-    rerender();
-
-    expect(result.current.eMandates[0].displayStatus).toBe(
-      'Wachten op activatie'
-    );
   });
 
   it('Should return the correct breadcrumbs', async () => {

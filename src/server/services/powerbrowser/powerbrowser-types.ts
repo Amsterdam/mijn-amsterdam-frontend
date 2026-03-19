@@ -93,18 +93,6 @@ export type PBZaakResultaat =
   | 'Buiten behandeling'
   | 'Ingetrokken';
 
-export type PBZaakCompacted = {
-  zaaknummer: string | null;
-  displayStatus: string;
-  dateStart: string | null;
-  dateReceived: string | null;
-  dateDecision: string | null;
-  dateEnd: string | null;
-  result: PBZaakResultaat | null;
-  status: PBZaakStatus | null;
-  steps: [];
-};
-
 export type PowerBrowserZaakBase = {
   caseType: string;
   id: string;

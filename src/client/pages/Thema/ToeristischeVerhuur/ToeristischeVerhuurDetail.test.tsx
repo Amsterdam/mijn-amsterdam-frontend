@@ -5,112 +5,118 @@ import { describe, expect } from 'vitest';
 import { themaConfig } from './ToeristischeVerhuur-thema-config.ts';
 import { ToeristischeVerhuurDetail } from './ToeristischeVerhuurDetail.tsx';
 import type { BBVergunningFrontend } from '../../../../server/services/toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types.ts';
-import type { VakantieverhuurVergunningFrontend } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types.ts';
+import type { VakantieverhuurVergunningFrontend } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur.types.ts';
 import { bffApi } from '../../../../testing/utils.ts';
 import type { AppState } from '../../../../universal/types/App.types.ts';
 import MockApp from '../../MockApp.tsx';
 
-const vakantieverhuurVergunningen: VakantieverhuurVergunningFrontend[] = [
-  {
-    id: 'Z-XXX-000007C',
-    key: 'xx',
-    title: 'Vergunning vakantieverhuur',
-    caseType: 'Vakantieverhuur vergunningsaanvraag',
-    dateDecision: '2022-05-12',
-    dateRequest: '2022-08-01',
-    dateRequestFormatted: '01 augustus 2022',
-    dateStart: '2022-08-01',
-    dateStartFormatted: '01 augustus 2022',
-    dateEnd: '2023-08-01',
-    dateEndFormatted: '22 augustus 2023',
-    decision: 'Verleend',
-    identifier: 'Z/123/000007',
-    isVerleend: true,
-    steps: [
-      {
-        id: 'step-1',
-        status: 'Ontvangen',
-        datePublished: '2022-05-10',
-        isActive: false,
-        isChecked: true,
-      },
-      {
-        id: 'step-2',
-        status: 'In behandeling',
-        datePublished: '2022-05-10',
-        isActive: false,
-        isChecked: true,
-      },
-      {
-        id: 'step-3',
-        status: 'Afgehandeld',
-        datePublished: '2022-05-10',
-        description: '',
-        isActive: false,
-        isChecked: true,
-      },
-      {
-        id: 'step-4',
-        status: 'Gewijzigd',
-        datePublished: '2023-08-22',
-        description: 'Uw Vergunning vakantieverhuur is verlopen.',
-        isActive: true,
-        isChecked: true,
-      },
-    ],
-    fetchDocumentsUrl:
-      'http://bff-api-host/api/v1/services/decosjoin/listdocuments/gAAAAABfOl8BFgweMqwmY9tcEAPAxQWJ9SBWhDTQ7AJiil0gZugQ37PC4I3f2fLEwmClmh59sYy3i4olBXM2uMWNzxrigD01Xuf7vL3DFuVp4c8SK_tj6nLLrf4QyGq1SqNESYjPTW_n',
-    link: {
-      to: '/toeristische-verhuur/vergunning/vakantieverhuur/Z-XXX-000007C',
-      title: 'Bekijk hoe het met uw aanvraag staat',
+const vergunning: VakantieverhuurVergunningFrontend = {
+  id: 'Z-XXX-000007C',
+  key: 'xx',
+  itemType: 'vakantieverhuur',
+  title: 'Vergunning vakantieverhuur',
+  caseType: 'Vakantieverhuur vergunningsaanvraag',
+  dateDecision: '2022-05-12',
+  dateRequest: '2022-08-01',
+  dateRequestFormatted: '01 augustus 2022',
+  dateStart: '2022-08-01',
+  dateStartFormatted: '01 augustus 2022',
+  dateEnd: '2023-08-01',
+  dateEndFormatted: '22 augustus 2023',
+  decision: 'Verleend',
+  identifier: 'Z/123/000007',
+  isVerleend: true,
+  steps: [
+    {
+      id: 'step-1',
+      status: 'Ontvangen',
+      datePublished: '2022-05-10',
+      isActive: false,
+      isChecked: true,
     },
-    displayStatus: 'Verleend',
-    processed: true,
-    location: 'Amstel 1',
+    {
+      id: 'step-2',
+      status: 'In behandeling',
+      datePublished: '2022-05-10',
+      isActive: false,
+      isChecked: true,
+    },
+    {
+      id: 'step-3',
+      status: 'Afgehandeld',
+      datePublished: '2022-05-10',
+      description: '',
+      isActive: false,
+      isChecked: true,
+    },
+    {
+      id: 'step-4',
+      status: 'Gewijzigd',
+      datePublished: '2023-08-22',
+      description: 'Uw Vergunning vakantieverhuur is verlopen.',
+      isActive: true,
+      isChecked: true,
+    },
+  ],
+  fetchDocumentsUrl:
+    'http://bff-api-host/api/v1/services/decosjoin/listdocuments/gAAAAABfOl8BFgweMqwmY9tcEAPAxQWJ9SBWhDTQ7AJiil0gZugQ37PC4I3f2fLEwmClmh59sYy3i4olBXM2uMWNzxrigD01Xuf7vL3DFuVp4c8SK_tj6nLLrf4QyGq1SqNESYjPTW_n',
+  link: {
+    to: '/toeristische-verhuur/vergunning/vakantieverhuur/Z-XXX-000007C',
+    title: 'Bekijk hoe het met uw aanvraag staat',
   },
+  displayStatus: 'Verleend',
+  processed: true,
+  location: 'Amstel 1',
+};
+
+const vakantieverhuurVergunningen: VakantieverhuurVergunningFrontend[] = [
+  vergunning,
 ];
 
-const bbVergunningen: BBVergunningFrontend[] = [
-  {
-    dateDecision: '2023-03-22',
-    dateStart: '2023-03-22',
-    dateStartFormatted: '22 maart 2023',
-    dateRequest: '2023-03-22',
-    dateRequestFormatted: '22 maart 2023',
-    dateEnd: '2028-07-01',
-    dateEndFormatted: '01 juli 2028',
-    decision: 'Verleend',
-    heeftOvergangsRecht: true,
-    id: 'Z-23-2130506',
-    identifier: 'Z/23/2130506',
-    link: {
-      to: '/toeristische-verhuur/vergunning/bed-and-breakfast/Z-23-2130506',
-      title: 'Vergunning bed & breakfast',
-    },
+const bbVergunning: BBVergunningFrontend = {
+  isVerleend: true,
+  isExpired: true,
+  caseType: 'Bed en breakfast',
+  dateDecision: '2023-03-22',
+  dateStart: '2023-03-22',
+  dateStartFormatted: '22 maart 2023',
+  dateRequest: '2023-03-22',
+  dateRequestFormatted: '22 maart 2023',
+  dateEnd: '2028-07-01',
+  dateEndFormatted: '01 juli 2028',
+  decision: 'Verleend',
+  heeftOvergangsRecht: true,
+  id: 'Z-23-2130506',
+  identifier: 'Z/23/2130506',
+  link: {
+    to: '/toeristische-verhuur/vergunning/bed-and-breakfast/Z-23-2130506',
     title: 'Vergunning bed & breakfast',
-    steps: [
-      {
-        id: 'step-1',
-        status: 'Ontvangen',
-        datePublished: '13 februari 2023',
-        isActive: false,
-        isChecked: true,
-      },
-      {
-        id: 'step-2',
-        status: 'Afgehandeld',
-        datePublished: '22 maart 2023',
-        description: '',
-        isActive: true,
-        isChecked: true,
-      },
-    ],
-    displayStatus: 'Verleend',
-    location: 'Amstel 1',
-    processed: true,
-    documents: [],
   },
-];
+  title: 'Vergunning bed & breakfast',
+  steps: [
+    {
+      id: 'step-1',
+      status: 'Ontvangen',
+      datePublished: '13 februari 2023',
+      isActive: false,
+      isChecked: true,
+    },
+    {
+      id: 'step-2',
+      status: 'Afgehandeld',
+      datePublished: '22 maart 2023',
+      description: '',
+      isActive: true,
+      isChecked: true,
+    },
+  ],
+  displayStatus: 'Verleend',
+  location: 'Amstel 1',
+  processed: true,
+  documents: [],
+};
+
+const bbVergunningen: BBVergunningFrontend[] = [bbVergunning];
 
 const testState = {
   TOERISTISCHE_VERHUUR: {

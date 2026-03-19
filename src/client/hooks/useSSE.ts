@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState, useRef } from 'react';
-import { logger } from '../helpers/logging';
+import { logger } from '../helpers/logging.ts';
 
 export const SSE_UNLOAD_MESSAGE = 'sse-unload';
 export const SSE_UNMOUNT_MESSAGE = 'sse-unmount';

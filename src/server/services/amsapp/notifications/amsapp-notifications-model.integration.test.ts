@@ -1,3 +1,4 @@
+import type { Pool } from 'pg';
 import {
   afterAll,
   beforeAll,
@@ -8,15 +9,18 @@ import {
   vi,
 } from 'vitest';
 
-import { NOTIFICATIONS_TABLE_NAME } from './amsapp-notifications-model';
-import type { BSN, NotificationsService } from './amsapp-notifications-types';
-import { setupPgTestDb } from '../../db/pg-test-utils';
+import { NOTIFICATIONS_TABLE_NAME } from './amsapp-notifications-model.ts';
+import type {
+  BSN,
+  NotificationsService,
+} from './amsapp-notifications-types.ts';
+import { setupPgTestDb } from '../../db/pg-test-utils.ts';
 
 const RUN_DB_TESTS = process.env.RUN_DB_TESTS === 'true';
 const describePg = RUN_DB_TESTS ? describe : describe.skip;
 
 describePg('amsapp-notifications-model (postgres integration)', () => {
-  let pool: import('pg').Pool;
+  let pool: Pool;
   let teardown: (() => Promise<void>) | undefined;
 
   const databaseName = 'mijnadam_test';
@@ -50,7 +54,7 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
     pool = ctx.pool;
     teardown = ctx.teardown;
 
-    await import('./amsapp-notifications-model');
+    await import('./amsapp-notifications-model.ts');
   });
 
   afterAll(async () => {
@@ -69,7 +73,7 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
 
   describe('upsertConsumer', () => {
     it('inserts/updates consumer_ids and overwrites service_ids', async () => {
-      const model = await import('./amsapp-notifications-model');
+      const model = await import('./amsapp-notifications-model.ts');
 
       await model.upsertConsumer(profileId, 'Test Person', 'consumer-1', [
         SERVICE_A.serviceId,
@@ -99,7 +103,7 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
 
   describe('getProfilesCount', () => {
     it('returns the total profile count', async () => {
-      const model = await import('./amsapp-notifications-model');
+      const model = await import('./amsapp-notifications-model.ts');
 
       await model.upsertConsumer('1', 'Test Person 1', 'consumer-1', [
         SERVICE_A.serviceId,
@@ -113,7 +117,7 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
     });
 
     it('returns the total profile count after dateFrom', async () => {
-      const model = await import('./amsapp-notifications-model');
+      const model = await import('./amsapp-notifications-model.ts');
 
       vi.setSystemTime(new Date(defaultTime));
       await model.upsertConsumer('1', 'Test Person 1', 'consumer-1', [
@@ -134,7 +138,7 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
 
   describe('deleteConsumer', () => {
     it('removes the consumer when there is more than one consumer', async () => {
-      const model = await import('./amsapp-notifications-model');
+      const model = await import('./amsapp-notifications-model.ts');
 
       await model.upsertConsumer(profileId, 'Test Person', 'consumer-1', [
         SERVICE_A.serviceId,
@@ -153,7 +157,7 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
     });
 
     it('removes the row when consumer_ids becomes empty', async () => {
-      const model = await import('./amsapp-notifications-model');
+      const model = await import('./amsapp-notifications-model.ts');
 
       await model.upsertConsumer(profileId, 'Test Person', 'consumer-1', [
         SERVICE_A.serviceId,
@@ -168,7 +172,7 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
 
   describe('storeNotifications', () => {
     it('only updates content.services keys that are allowed by service_ids', async () => {
-      const model = await import('./amsapp-notifications-model');
+      const model = await import('./amsapp-notifications-model.ts');
 
       await model.upsertConsumer(profileId, 'Test Person', 'consumer-1', [
         SERVICE_A.serviceId,
@@ -186,7 +190,7 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
     });
 
     it('adds content.services that were not previously present and does not remove existing ones', async () => {
-      const model = await import('./amsapp-notifications-model');
+      const model = await import('./amsapp-notifications-model.ts');
 
       await model.upsertConsumer(profileId, 'Test Person', 'consumer-1', [
         SERVICE_A.serviceId,
@@ -210,7 +214,7 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
 
   describe('listProfiles', () => {
     it('is ordered on created_at for offset/limit to work properly', async () => {
-      const model = await import('./amsapp-notifications-model');
+      const model = await import('./amsapp-notifications-model.ts');
 
       const insertQuery = `INSERT INTO ${NOTIFICATIONS_TABLE_NAME} (profile_id, date_created) VALUES ($1, $2)`;
       await pool.query(insertQuery, [
