@@ -1,16 +1,11 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { useParams } from 'react-router';
-import type { Mock } from 'vitest';
-import { describe, it, vi, expect } from 'vitest';
+import { describe, it, vi, expect, Mock } from 'vitest';
 
+import { useEmandateApis } from './useAfisEmandateActionsApi.tsx';
+import { useAfisEMandatesApi, forTesting } from './useAfisEmandatesApi.tsx';
 import {
-  useAfisEMandatesData,
-  forTesting,
-  useEmandateApis,
-} from './useAfisEmandatesData.tsx';
-import type {
-  EmandateStatusCode} from '../../../../server/services/afis/afis-types.ts';
-import {
+  EmandateStatusCode,
   type AfisEMandateFrontend,
 } from '../../../../server/services/afis/afis-types.ts';
 import { bffApiHost } from '../../../../testing/setup.ts';
@@ -31,7 +26,7 @@ vi.mock('react-router', async (importActual) => {
 
 describe('updateEmandateById', () => {
   it('should update the correct eMandate by ID', () => {
-    const eMandates = [
+    const eMandates: AfisEMandateFrontend[] = [
       {
         id: '1',
         creditorName: 'Mandate 1',
@@ -45,6 +40,7 @@ describe('updateEmandateById', () => {
         dateValidTo: '2025-12-31',
         dateValidToFormatted: '31-12-2025',
         link: { to: '/details', title: 'Details' },
+        eMandateIdSource: null,
       },
       {
         id: '2',
@@ -59,6 +55,7 @@ describe('updateEmandateById', () => {
         dateValidTo: '2025-12-31',
         dateValidToFormatted: '31-12-2025',
         link: { to: '/details', title: 'Details' },
+        eMandateIdSource: null,
       },
     ];
     const updatedMandates = forTesting.updateEmandateById(
@@ -121,7 +118,7 @@ describe('useAfisEMandatesData', () => {
 
     (useParams as Mock).mockReturnValue({ id: undefined });
 
-    const { result } = renderHook(() => useAfisEMandatesData());
+    const { result } = renderHook(() => useAfisEMandatesApi());
 
     expect(result.current.isLoadingEMandates).toBe(true);
 
@@ -150,7 +147,7 @@ describe('useAfisEMandatesData', () => {
 
     (useParams as Mock).mockReturnValue({ id: '1' });
 
-    const { result } = renderHook(() => useAfisEMandatesData());
+    const { result } = renderHook(() => useAfisEMandatesApi());
 
     expect(result.current.isLoadingEMandates).toBe(true);
 
@@ -170,7 +167,7 @@ describe('useAfisEMandatesData', () => {
 
     (useParams as Mock).mockReturnValue({ id: undefined });
 
-    const { result } = renderHook(() => useAfisEMandatesData());
+    const { result } = renderHook(() => useAfisEMandatesApi());
 
     expect(result.current.isLoadingEMandates).toBe(true);
 
@@ -194,7 +191,7 @@ describe('useAfisEMandatesData', () => {
       ],
     });
 
-    const { result } = renderHook(() => useAfisEMandatesData());
+    const { result } = renderHook(() => useAfisEMandatesApi());
 
     expect(result.current.isLoadingEMandates).toBe(true);
 
@@ -213,7 +210,7 @@ describe('useAfisEMandatesData', () => {
       content: eMandates,
     });
 
-    const { result } = renderHook(() => useAfisEMandatesData());
+    const { result } = renderHook(() => useAfisEMandatesApi());
 
     await waitFor(() => {
       expect(result.current.isLoadingEMandates).toBe(false);
@@ -235,7 +232,7 @@ describe('useAfisEMandatesData', () => {
       content: eMandates,
     });
 
-    const { result, rerender } = renderHook(() => useAfisEMandatesData());
+    const { result, rerender } = renderHook(() => useAfisEMandatesApi());
 
     expect(result.current.isLoadingEMandates).toBe(true);
 
@@ -259,7 +256,7 @@ describe('useAfisEMandatesData', () => {
 
     (useParams as Mock).mockReturnValue({ id: '1' });
 
-    const { result } = renderHook(() => useAfisEMandatesData());
+    const { result } = renderHook(() => useAfisEMandatesApi());
 
     expect(result.current.breadcrumbs).toEqual([
       { to: '/facturen-en-betalen', title: 'Facturen en betalen' },
@@ -272,7 +269,7 @@ describe('useAfisEMandatesData', () => {
 });
 
 describe('useEmandateApis', () => {
-  const eMandate = {
+  const eMandate: AfisEMandateFrontend = {
     id: '1',
     signRequestUrl: `${bffApiHost}/sign-request`,
     deactivateUrl: `${bffApiHost}/deactivate`,
@@ -288,6 +285,7 @@ describe('useEmandateApis', () => {
     dateValidFromFormatted: '01-01-2025',
     dateValidTo: '2025-12-31',
     dateValidToFormatted: '31-12-2025',
+    eMandateIdSource: null,
   };
 
   beforeEach(() => {
@@ -340,14 +338,14 @@ describe('useEmandateApis', () => {
     });
 
     act(() => {
-      result.current.apis.statusChangeApi.fetch();
+      result.current.apis.deactivateApi.fetch();
     });
-    expect(result.current.apis.statusChangeApi.isLoading).toBe(true);
+    expect(result.current.apis.deactivateApi.isLoading).toBe(true);
 
     await waitFor(() => {
-      expect(result.current.apis.statusChangeApi.isLoading).toBe(false);
+      expect(result.current.apis.deactivateApi.isLoading).toBe(false);
     });
-    expect(result.current.apis.lastActiveApi).toBe('statusChangeApi');
+    expect(result.current.apis.lastActiveApi).toBe('deactivateApi');
     expect(getEMandatesStore().data?.content?.[0].status).toBe('0');
   });
 
@@ -394,13 +392,13 @@ describe('useEmandateApis', () => {
     const { result } = renderHook(() => useEmandateApis(eMandate));
 
     act(() => {
-      result.current.statusChangeApi.fetch();
+      result.current.deactivateApi.fetch();
     });
 
     await waitFor(() => {
       expect(result.current.isErrorVisible).toBe(true);
     });
-    expect(result.current.lastActiveApi).toBe('statusChangeApi');
+    expect(result.current.lastActiveApi).toBe('deactivateApi');
   });
 
   it('should hide errors', () => {

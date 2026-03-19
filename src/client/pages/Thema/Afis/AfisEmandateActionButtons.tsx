@@ -3,8 +3,11 @@ import { useState, type ReactElement } from 'react';
 import { ActionGroup, Button, Paragraph } from '@amsterdam/design-system-react';
 
 import { EMANDATE_STATUS_ACTIVE } from './Afis-thema-config.ts';
-import type { useEmandateApis } from './useAfisEmandatesData.tsx';
-import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types.ts';
+import type {
+  AfisEMandateFrontend,
+  AfisEMandateSignRequestResponse,
+  AfisEMandateStatusChangeResponse,
+} from '../../../../server/services/afis/afis-types.ts';
 import { Modal } from '../../../components/Modal/Modal.tsx';
 import { Spinner } from '../../../components/Spinner/Spinner.tsx';
 import type { BFFApiHook } from '../../../hooks/api/useBffApi.ts';
@@ -112,17 +115,17 @@ function ApiActionButton<T>({
   );
 }
 
-type AfisEMandateActionUrlProps = {
+type AfisEMandateActionButtonsProps = {
   eMandate: AfisEMandateFrontend;
-  redirectUrlApi: ReturnType<typeof useEmandateApis>['redirectUrlApi'];
-  statusChangeApi: ReturnType<typeof useEmandateApis>['statusChangeApi'];
+  redirectUrlApi: BFFApiHook<AfisEMandateSignRequestResponse>;
+  deactivateApi: BFFApiHook<AfisEMandateStatusChangeResponse>;
 };
 
-export function AfisEMandateActionUrls({
+export function AfisEMandateActionButtons({
   eMandate,
   redirectUrlApi,
-  statusChangeApi,
-}: AfisEMandateActionUrlProps) {
+  deactivateApi,
+}: AfisEMandateActionButtonsProps) {
   return (
     <>
       {eMandate.signRequestUrl && (
@@ -140,8 +143,8 @@ export function AfisEMandateActionUrls({
       &nbsp;
       {eMandate.deactivateUrl && eMandate.status === EMANDATE_STATUS_ACTIVE && (
         <ApiActionButton
-          api={statusChangeApi}
-          fetch={() => statusChangeApi.fetch()}
+          api={deactivateApi}
+          fetch={() => deactivateApi.fetch()}
           label="Stopzetten"
           doConfirm
           confirmationModal={{

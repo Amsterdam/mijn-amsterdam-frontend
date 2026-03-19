@@ -11,6 +11,7 @@ import styles from './AfisBetaalVoorkeuren.module.scss';
 import { EmandateRefetchInterval } from './AfisEMandateDetail.tsx';
 import { useAfisBetaalVoorkeurenData } from './useAfisBetaalVoorkeurenData.tsx';
 import { useAfisEMandatesData } from './useAfisEmandatesData.tsx';
+import { useSignRequestPayloadStorage } from './useAfisEMandatesSignRequest.tsx';
 import { useAfisThemaData } from './useAfisThemaData.hook.tsx';
 import {
   type AfisBusinessPartnerDetailsTransformed,
@@ -112,9 +113,10 @@ export function AfisBetaalVoorkeuren() {
     eMandateTableConfig,
     hasEMandatesError,
     isLoadingEMandates,
-    statusNotification: { ibansPendingActivation },
     fetchEMandates,
-  } = useAfisEMandatesData();
+  } = useAfisEMandatesApi();
+
+  const payloadStorage = useSignRequestPayloadStorage();
 
   const isLoadingAllAPis =
     isThemaPaginaLoading ||
@@ -207,8 +209,8 @@ export function AfisBetaalVoorkeuren() {
         isLoading={!!(isLoadingBusinessPartnerDetails || isThemaPaginaLoading)}
         startCollapsed={featureToggle.emandatesActive}
       />
-      {!!ibansPendingActivation.length && (
-        <EmandateRefetchInterval fetch={fetchEMandates} />
+      {payloadStorage.hasPendingStatusChecks() && (
+        <AfisEmandateRefetchInterval fetch={fetchEMandates} />
       )}
       {eMandatesTable}
     </>

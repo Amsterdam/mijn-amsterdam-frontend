@@ -1,9 +1,15 @@
 import { Alert, Paragraph } from '@amsterdam/design-system-react';
 
 import { EMANDATE_STATUS_ACTIVE, routeConfig } from './Afis-thema-config.ts';
-import { AfisEMandateActionUrls } from './AfisEmandateActionButtons.tsx';
+import { AfisEMandateActionButtons } from './AfisEmandateActionButtons.tsx';
 import { DateAdjust } from './AfisEmandateDateAdjust.tsx';
-import { useAfisEMandatesData, useEmandateApis } from './useAfisEmandatesData.tsx';
+import { AfisEmandateRefetchInterval } from './AfisEmandateFetchInterval.tsx';
+import { useEmandateApis } from './useAfisEmandateActionsApi.tsx';
+import { useAfisEMandatesApi } from './useAfisEmandatesApi.tsx';
+import {
+  useSignRequestPayloadStorage,
+  useSignRequestStatusCheck,
+} from './useAfisEMandatesSignRequest.tsx';
 import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types.ts';
 import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import { Datalist } from '../../../components/Datalist/Datalist.tsx';
@@ -20,13 +26,14 @@ type EMandateProps = {
 function EMandate({ eMandate }: EMandateProps) {
   const {
     redirectUrlApi,
-    statusChangeApi,
+    deactivateApi,
     lifetimeUpdateApi,
     isErrorVisible,
     hideError,
     lastActiveApi,
-    statusNotification: { removePendingActivation, isPendingActivation },
   } = useEmandateApis(eMandate);
+
+  const signRequestStatusCheckApi = useSignRequestStatusCheck(eMandate);
 
   return (
     <PageContentCell>
@@ -46,7 +53,7 @@ function EMandate({ eMandate }: EMandateProps) {
                 handtekening.
               </>
             )}
-            {lastActiveApi === 'statusChangeApi' && statusChangeApi.isError && (
+            {lastActiveApi === 'deactivateApi' && deactivateApi.isError && (
               <>Er is iets misgegaan bij het stopzetten.</>
             )}
             {lastActiveApi === 'lifetimeUpdateApi' &&
@@ -92,7 +99,7 @@ function EMandate({ eMandate }: EMandateProps) {
               {
                 label: 'Status',
                 content: eMandate.displayStatus,
-                isVisible: !isPendingActivation(eMandate.creditorIBAN),
+                // isVisible: !isPendingActivation(eMandate.creditorIBAN),
               },
               {
                 label: 'Einddatum',
@@ -124,7 +131,11 @@ function EMandate({ eMandate }: EMandateProps) {
             : []),
         ]}
       />
-      {isPendingActivation(eMandate.creditorIBAN) ? (
+      {signRequestStatusCheckApi.isRequestingStatusCheck ? (
+        <Paragraph>
+          Mijn Amsterdam controleert de status van het E-Mandaat...
+        </Paragraph>
+      ) : signRequestStatusCheckApi.isPendingActivation ? (
         <Alert headingLevel={4} heading="Status">
           <Paragraph>
             Wachten op bevestiging van het E-Mandaat voor{' '}
@@ -137,29 +148,21 @@ function EMandate({ eMandate }: EMandateProps) {
           <Paragraph>
             <MaButtonLink
               variant="secondary"
-              onClick={() => removePendingActivation(eMandate.creditorIBAN)}
+              onClick={() => signRequestStatusCheckApi.cancel()}
             >
               Duurt het erg lang? Probeer het opnieuw.
             </MaButtonLink>
           </Paragraph>
         </Alert>
       ) : (
-        <AfisEMandateActionUrls
+        <AfisEMandateActionButtons
           redirectUrlApi={redirectUrlApi}
-          statusChangeApi={statusChangeApi}
+          deactivateApi={deactivateApi}
           eMandate={eMandate}
         />
       )}
     </PageContentCell>
   );
-}
-
-// This component is used to refetch the eMandate data at a regular interval,
-const POLLING_INTERVAL_MS = 4000; // 4 seconds
-
-export function EmandateRefetchInterval({ fetch }: { fetch: () => void }) {
-  useInterval(fetch, POLLING_INTERVAL_MS);
-  return null;
 }
 
 export function AfisEMandateDetail() {
@@ -173,8 +176,9 @@ export function AfisEMandateDetail() {
     hasEMandatesError,
     isLoadingEMandates,
     fetchEMandates,
-    statusNotification: { isPendingActivation },
-  } = useAfisEMandatesData();
+  } = useAfisEMandatesApi();
+
+  const payloadStorage = useSignRequestPayloadStorage();
 
   return (
     <ThemaDetailPagina
@@ -186,8 +190,8 @@ export function AfisEMandateDetail() {
       pageContentMain={
         !!eMandate && (
           <>
-            {isPendingActivation(eMandate.creditorIBAN) && (
-              <EmandateRefetchInterval fetch={fetchEMandates} />
+            {payloadStorage.hasPendingStatusChecks() && (
+              <AfisEmandateRefetchInterval fetch={fetchEMandates} />
             )}
             <EMandate eMandate={eMandate} />
           </>
