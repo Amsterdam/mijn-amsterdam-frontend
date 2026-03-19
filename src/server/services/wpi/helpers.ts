@@ -1,5 +1,5 @@
 import { differenceInMonths, format } from 'date-fns';
-import type { LinkProps} from 'react-router';
+import type { LinkProps } from 'react-router';
 import { generatePath } from 'react-router';
 
 import { MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS } from './config.ts';
@@ -96,6 +96,7 @@ export function createProcessNotification(
   labels: WpiRequestProcessLabels
 ): MyNotification {
   const notificationLabels = labels[statusStep.id].notification;
+
   const titleTransform = notificationLabels.title;
   const descriptionTransform = notificationLabels.description;
   const linkTransform = notificationLabels.link;
@@ -212,8 +213,8 @@ export function addLink(requestProcess: WpiRequestProcess) {
 
 export function getEAanvraagRequestProcessLabels(
   requestProcess: WpiRequestProcess
-): WpiRequestProcessLabels | undefined {
-  let labels: WpiRequestProcessLabels | undefined = undefined;
+): WpiRequestProcessLabels | null {
+  let labels: WpiRequestProcessLabels | null = null;
   switch (requestProcess.about) {
     case 'Tozo 1':
     case 'Tozo 2':
