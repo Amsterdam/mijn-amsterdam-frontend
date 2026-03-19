@@ -1,6 +1,6 @@
 import type {
+  ApiResponse,
   ApiResponse_DEPRECATED,
-  ApiSuccessResponse,
 } from '../../../universal/helpers/api.ts';
 import { apiSuccessResult } from '../../../universal/helpers/api.ts';
 import { dateSort } from '../../../universal/helpers/date.ts';
@@ -39,7 +39,7 @@ import type {
 } from './wpi-types.ts';
 
 type FilterResponse = (
-  response: ApiSuccessResponse<WpiRequestProcess[]>
+  response: ApiResponse<WpiRequestProcess[]>
 ) => WpiRequestProcess[];
 
 export interface FetchConfig {
@@ -55,7 +55,7 @@ function statusLineTransformer(
     requestProcess: WpiRequestProcess
   ) => WpiRequestProcessLabels | undefined
 ): WpiRequestProcess[] {
-  const statusLineRequestProcesses = response?.flatMap((requestProcess) => {
+  const statusLineRequestProcesses = response.flatMap((requestProcess) => {
     const labels = getLabels(requestProcess);
     if (labels) {
       return [transformRequestProcess(sessionID, requestProcess, labels)];
@@ -83,7 +83,7 @@ export async function fetchRequestProcess(
   const apiConfig = getApiConfig(fetchConfig.apiConfigName, {
     cacheKey_UNSAFE: fetchConfig.requestCacheKey,
     transformResponse: [
-      (response: ApiSuccessResponse<WpiRequestProcess[]>) =>
+      (response: ApiResponse<WpiRequestProcess[]>) =>
         Array.isArray(response.content) ? response.content : [],
     ],
   });
@@ -113,9 +113,9 @@ export async function fetchBijstandsuitkering(
   const filterResponse: FilterResponse = (response) =>
     response.content
       ?.filter(
-        (requestProcess) => requestProcess?.about === 'Bijstandsuitkering'
+        (requestProcess) => requestProcess.about === 'Bijstandsuitkering'
       )
-      .map((requestProcess) => addLink(requestProcess));
+      .map((requestProcess) => addLink(requestProcess)) ?? [];
 
   const response = await fetchRequestProcess(
     authProfileAndToken,
@@ -138,7 +138,9 @@ export async function fetchEAanvragen(
   about?: string[]
 ) {
   const filterResponse: FilterResponse = (response) => {
-    return response.content.map((requestProcess) => addLink(requestProcess));
+    return (
+      response.content?.map((requestProcess) => addLink(requestProcess)) ?? []
+    );
   };
 
   const response = await fetchRequestProcess(
@@ -187,7 +189,7 @@ export async function fetchTonk(authProfileAndToken: AuthProfileAndToken) {
 
 export function transformIncomSpecificationResponse(
   sessionID: SessionID,
-  response: ApiSuccessResponse<WpiIncomeSpecificationResponseData>
+  response: ApiResponse<WpiIncomeSpecificationResponseData>
 ) {
   return {
     jaaropgaven:
@@ -236,10 +238,7 @@ export async function fetchWpiNotifications(
       await fetchBijstandsuitkering(authProfileAndToken);
 
     if (status === 'OK' && Array.isArray(content)) {
-      const aanvraagNotifications = getBijstandsuitkeringNotifications(content);
-      if (aanvraagNotifications) {
-        notifications.push(...aanvraagNotifications);
-      }
+      notifications.push(...getBijstandsuitkeringNotifications(content));
     }
   }
 
@@ -247,7 +246,7 @@ export async function fetchWpiNotifications(
   {
     const { status, content } = await fetchEAanvragen(authProfileAndToken);
 
-    if (status === 'OK' && Array.isArray(content)) {
+    if (status === 'OK') {
       const eAanvraagNotifications =
         content
           ?.filter((requestProcess) => {
@@ -265,9 +264,7 @@ export async function fetchWpiNotifications(
             return [];
           }) ?? [];
 
-      if (eAanvraagNotifications) {
-        notifications.push(...eAanvraagNotifications);
-      }
+      notifications.push(...eAanvraagNotifications);
     }
   }
 
@@ -276,11 +273,7 @@ export async function fetchWpiNotifications(
     const { status, content } = await fetchSpecificaties(authProfileAndToken);
 
     if (status === 'OK' && content) {
-      const specificatieNotifications = getSpecificatieNotifications(content);
-
-      if (specificatieNotifications) {
-        notifications.push(...specificatieNotifications);
-      }
+      notifications.push(...getSpecificatieNotifications(content));
     }
   }
 
