@@ -41,6 +41,7 @@ import {
 } from '../../../universal/helpers/text.ts';
 import { entries, uniqueArray } from '../../../universal/helpers/utils.ts';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt.ts';
+import { createSessionBasedCacheKey } from '../../helpers/source-api-helpers.ts';
 import {
   getRequestParamsFromQueryString,
   requestData,
@@ -615,6 +616,7 @@ export async function fetchAfisFacturen(
     formatUrl: ({ url }) => url + AFIS_FACTUUR_REQUEST_API_PATH,
     transformResponse: (responseData) =>
       transformFacturen(params.state, responseData, sessionID, deelbetalingen),
+    cacheKey_UNSAFE: `${createSessionBasedCacheKey(sessionID, 'fetch-afis-facturen')}-${Object.values(params).join('-')}`,
   });
 
   return requestData<AfisFacturenResponse>(config);
