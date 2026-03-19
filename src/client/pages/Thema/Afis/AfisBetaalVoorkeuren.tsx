@@ -8,9 +8,9 @@ import {
 
 import { featureToggle } from './Afis-thema-config.ts';
 import styles from './AfisBetaalVoorkeuren.module.scss';
-import { EmandateRefetchInterval } from './AfisEMandateDetail.tsx';
+import { AfisEmandateRefetchInterval } from './AfisEmandateFetchInterval.tsx';
 import { useAfisBetaalVoorkeurenData } from './useAfisBetaalVoorkeurenData.tsx';
-import { useAfisEMandatesData } from './useAfisEmandatesData.tsx';
+import { useAfisEMandatesApi } from './useAfisEmandatesApi.tsx';
 import { useSignRequestPayloadStorage } from './useAfisEMandatesSignRequest.tsx';
 import { useAfisThemaData } from './useAfisThemaData.hook.tsx';
 import {
@@ -18,7 +18,6 @@ import {
   type AfisEMandateFrontend,
 } from '../../../../server/services/afis/afis-types.ts';
 import { entries } from '../../../../universal/helpers/utils.ts';
-import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel.tsx';
 import { Datalist } from '../../../components/Datalist/Datalist.tsx';
 import LoadingContent from '../../../components/LoadingContent/LoadingContent.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';

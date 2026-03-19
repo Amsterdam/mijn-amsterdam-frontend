@@ -20,14 +20,13 @@ import type {
   AfisBusinessPartnerEmailSource,
   AfisBusinessPartnerPhone,
   AfisBusinessPartnerPhoneSource,
+  AfisEMandateBankAccountExistsResponse,
   BusinessPartnerId,
   BusinessPartnerIdPayload,
 } from './afis-types.ts';
-import type {
-  ApiResponse_DEPRECATED} from '../../../universal/helpers/api.ts';
+import type { ApiResponse_DEPRECATED } from '../../../universal/helpers/api.ts';
 import {
   apiErrorResult,
-  ApiResponse_DEPRECATED,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,

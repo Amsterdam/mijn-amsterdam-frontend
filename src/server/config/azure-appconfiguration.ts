@@ -4,23 +4,14 @@ import {
   ConfigurationMapFeatureFlagProvider,
 } from '@microsoft/feature-management';
 
+import {
+  featureToggle,
+  type FeatureToggleKey,
+  type FeatureToggles,
+} from './feature-toggles.ts';
 import { IS_DEVELOPMENT } from '../../universal/config/env.ts';
 
-// Is mutated by the Appconfiguration. Locally this object will be used as is.
-const featureToggle = {
-  ['AFIS.EMandates']: true,
-  ['AMSAPP.notificationService']: true,
-  ['BRP.aantalBewonersOpAdresTonen']: true,
-  ['USER_FEEDBACK.fetchSurvey']: true,
-  ['cobrowse']: false,
-};
-// globalThis is used to make sure featureToggles imported from frontend *-thema-configs have access.
-globalThis.MA_FEATURETOGGLES = featureToggle;
-
 const skipAppConfiguration = process.env.BFF_SKIP_APPCONFIG === 'true';
-
-export type FeatureToggles = typeof featureToggle;
-export type FeatureToggleKey = keyof FeatureToggles;
 
 export function getAllFeatureToggles(): Readonly<FeatureToggles> {
   return featureToggle;

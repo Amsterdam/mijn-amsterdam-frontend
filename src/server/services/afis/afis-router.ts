@@ -10,7 +10,7 @@ import {
 import {
   handleAfisEMandateSignRequestStatus,
   handleEmandateLifetimeUpdate,
-} from './afis-route-handlers';
+} from './afis-route-handlers.ts';
 import {
   handleAfisEMandateSignRequestStatusNotification,
   handleAfisRequestWithEncryptedPayloadQueryParam,
