@@ -69,23 +69,21 @@ function AfisBusinessPartnerDetails({
 
   return (
     <PageContentCell>
-      <CollapsiblePanel
-        title="Facturatiegegevens"
-        startCollapsed={startCollapsed}
-      >
-        {isLoading && <LoadingContent />}
-        {!isLoading && !!rows.length && (
-          <Grid>
-            <Grid.Cell span={6}>
-              <Datalist
-                className={styles['Datalist--businesspartnerdetails']}
-                rows={rows}
-                rowVariant="horizontal"
-              />
-            </Grid.Cell>
-          </Grid>
-        )}
-      </CollapsiblePanel>
+      <Heading level={3} size="level-2" className="ams-mb-s">
+        Facturatiegegevens
+      </Heading>
+      {isLoading && <LoadingContent />}
+      {!isLoading && !!rows.length && (
+        <Grid>
+          <Grid.Cell span={6}>
+            <Datalist
+              className={styles['Datalist--businesspartnerdetails']}
+              rows={rows}
+              rowVariant="horizontal"
+            />
+          </Grid.Cell>
+        </Grid>
+      )}
     </PageContentCell>
   );
 }
