@@ -43,7 +43,7 @@ export const sourceApiConfig: DataRequestConfig = {
 } as const;
 
 export const SURVEY_ID_INLINE_KTO =
-  getFromEnv('BFF_USER_FEEDBACK_SURVEY_ID') || 'mams-inline-kto';
+  getFromEnv('BFF_USER_FEEDBACK_SURVEY_ID', false) || 'mams-inline-kto';
 
 export const SURVEY_VERSION_INLINE_KTO =
-  getFromEnv('BFF_USER_FEEDBACK_SURVEY_VERSION') || 'latest';
+  getFromEnv('BFF_USER_FEEDBACK_SURVEY_VERSION', false) || 'latest';

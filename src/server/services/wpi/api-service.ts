@@ -1,9 +1,8 @@
 import type {
   ApiResponse_DEPRECATED,
-  ApiSuccessResponse} from '../../../universal/helpers/api.ts';
-import {
-  apiSuccessResult,
+  ApiSuccessResponse,
 } from '../../../universal/helpers/api.ts';
+import { apiSuccessResult } from '../../../universal/helpers/api.ts';
 import { dateSort } from '../../../universal/helpers/date.ts';
 import { pick } from '../../../universal/helpers/utils.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
@@ -15,11 +14,8 @@ import {
 } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
 import { captureMessage } from '../monitoring.ts';
-import type {
-  DocumentDownloadData} from '../shared/document-download-route-handler.ts';
-import {
-  DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE
-} from '../shared/document-download-route-handler.ts';
+import type { DocumentDownloadData } from '../shared/document-download-route-handler.ts';
+import { DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE } from '../shared/document-download-route-handler.ts';
 import {
   requestProcess as bijstandsuitkeringRequestProcessLabels,
   getNotifications as getBijstandsuitkeringNotifications,
@@ -87,7 +83,8 @@ export async function fetchRequestProcess(
   const apiConfig = getApiConfig(fetchConfig.apiConfigName, {
     cacheKey_UNSAFE: fetchConfig.requestCacheKey,
     transformResponse: [
-      (response: ApiSuccessResponse<WpiRequestProcess[]>) => response.content,
+      (response: ApiSuccessResponse<WpiRequestProcess[]>) =>
+        Array.isArray(response.content) ? response.content : [],
     ],
   });
 
@@ -238,13 +235,10 @@ export async function fetchWpiNotifications(
     const { status, content } =
       await fetchBijstandsuitkering(authProfileAndToken);
 
-    if (status === 'OK') {
-      if (content?.length) {
-        const aanvraagNotifications =
-          getBijstandsuitkeringNotifications(content);
-        if (aanvraagNotifications) {
-          notifications.push(...aanvraagNotifications);
-        }
+    if (status === 'OK' && Array.isArray(content)) {
+      const aanvraagNotifications = getBijstandsuitkeringNotifications(content);
+      if (aanvraagNotifications) {
+        notifications.push(...aanvraagNotifications);
       }
     }
   }
@@ -253,9 +247,9 @@ export async function fetchWpiNotifications(
   {
     const { status, content } = await fetchEAanvragen(authProfileAndToken);
 
-    if (status === 'OK') {
-      if (content?.length) {
-        const eAanvraagNotifications = content
+    if (status === 'OK' && Array.isArray(content)) {
+      const eAanvraagNotifications =
+        content
           ?.filter((requestProcess) => {
             return isRequestProcessActual(requestProcess.datePublished, today);
           })
@@ -269,11 +263,10 @@ export async function fetchWpiNotifications(
               return notifications;
             }
             return [];
-          });
+          }) ?? [];
 
-        if (eAanvraagNotifications) {
-          notifications.push(...eAanvraagNotifications);
-        }
+      if (eAanvraagNotifications) {
+        notifications.push(...eAanvraagNotifications);
       }
     }
   }
@@ -282,13 +275,11 @@ export async function fetchWpiNotifications(
   {
     const { status, content } = await fetchSpecificaties(authProfileAndToken);
 
-    if (status === 'OK') {
-      if (content) {
-        const specificatieNotifications = getSpecificatieNotifications(content);
+    if (status === 'OK' && content) {
+      const specificatieNotifications = getSpecificatieNotifications(content);
 
-        if (specificatieNotifications) {
-          notifications.push(...specificatieNotifications);
-        }
+      if (specificatieNotifications) {
+        notifications.push(...specificatieNotifications);
       }
     }
   }
