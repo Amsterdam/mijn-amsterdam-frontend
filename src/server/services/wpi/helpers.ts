@@ -213,8 +213,8 @@ export function addLink(requestProcess: WpiRequestProcess) {
 
 export function getEAanvraagRequestProcessLabels(
   requestProcess: WpiRequestProcess
-): WpiRequestProcessLabels | undefined {
-  let labels: WpiRequestProcessLabels | undefined = undefined;
+): WpiRequestProcessLabels | null {
+  let labels: WpiRequestProcessLabels | null = null;
   switch (requestProcess.about) {
     case 'Tozo 1':
     case 'Tozo 2':

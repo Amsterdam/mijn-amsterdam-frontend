@@ -53,7 +53,7 @@ function statusLineTransformer(
   response: WpiRequestProcess[],
   getLabels: (
     requestProcess: WpiRequestProcess
-  ) => WpiRequestProcessLabels | undefined
+  ) => WpiRequestProcessLabels | null
 ): WpiRequestProcess[] {
   const statusLineRequestProcesses = response.flatMap((requestProcess) => {
     const labels = getLabels(requestProcess);
@@ -77,7 +77,7 @@ export async function fetchRequestProcess(
   authProfileAndToken: AuthProfileAndToken,
   getLabels: (
     requestProcess: WpiRequestProcess
-  ) => WpiRequestProcessLabels | undefined,
+  ) => WpiRequestProcessLabels | null,
   fetchConfig: FetchConfig
 ): Promise<ApiResponse_DEPRECATED<WpiRequestProcess[] | null>> {
   const apiConfig = getApiConfig(fetchConfig.apiConfigName, {
@@ -143,7 +143,9 @@ export async function fetchEAanvragen(
 ) {
   const filterResponse: FilterResponse = (response) => {
     return (
-      response.content?.map((requestProcess) => addLink(requestProcess)) ?? []
+      response.content
+        ?.filter((requestProcess) => requestProcess !== null)
+        .map((requestProcess) => addLink(requestProcess)) ?? []
     );
   };
 

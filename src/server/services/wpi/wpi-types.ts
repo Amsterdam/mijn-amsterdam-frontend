@@ -10,18 +10,14 @@ export interface WpiRequestStatusDocument {
   url: string;
   datePublished: string;
 }
-type WpiRequestStatusStepID =
-  | 'aanvraag'
-  | 'inBehandeling'
-  | 'herstelTermijn'
-  | 'besluit';
+
 export interface WpiRequestStatus extends StatusLineItem {
-  id: WpiRequestStatusStepID;
+  id: string;
   status: string;
   documents: WpiRequestStatusDocument[];
   datePublished: string;
   productSpecific?: 'lening' | 'uitkering';
-  [key: string]: unknown;
+  [key: string]: any;
 }
 
 export interface WpiRequestStatusHerstelTermijn extends WpiRequestStatus {
@@ -66,10 +62,7 @@ export interface WpiRequestStatusLabels {
   };
 }
 
-export type WpiRequestProcessLabels = Record<
-  WpiRequestStatusStepID,
-  WpiRequestStatusLabels
->;
+export type WpiRequestProcessLabels = Record<string, WpiRequestStatusLabels>;
 
 export interface WpiIncomeSpecification {
   datePublished: string;
