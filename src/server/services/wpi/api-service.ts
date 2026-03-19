@@ -284,7 +284,7 @@ export async function fetchWpiNotifications(
     }
   }
 
-  return apiSuccessResult({ notifications });
+  return apiSuccessResult({ notifications: notifications.filter(Boolean) });
 }
 
 export async function fetchWpiDocument(
