@@ -466,7 +466,6 @@ function transformZaakRaw<
     )
   );
 
-  // Use zaakTransformer.transformFieldValues to transform specific field values if needed
   const zaakWithTransformedFieldValues = Object.fromEntries(
     entries(zaakTransformer.transformFieldValues ?? {}).map(
       ([fieldName, transformFn]) => {
