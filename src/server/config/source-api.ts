@@ -184,19 +184,16 @@ const ApiConfig_ = {
     method: 'POST',
     headers: wpiAuthHeader,
     url: `${getFromEnv('BFF_WPI_API_BASE_URL')}/wpi/e-aanvragen`,
-    passthroughOIDCToken: true,
   },
   WPI_AANVRAGEN: {
     method: 'POST',
     headers: wpiAuthHeader,
     url: `${getFromEnv('BFF_WPI_API_BASE_URL')}/wpi/uitkering/aanvragen`,
-    passthroughOIDCToken: true,
   },
   WPI_SPECIFICATIES: {
     method: 'POST',
     headers: wpiAuthHeader,
     url: `${getFromEnv('BFF_WPI_API_BASE_URL')}/wpi/uitkering/specificaties-en-jaaropgaven`,
-    passthroughOIDCToken: true,
   },
   SVWI: {
     url: getFromEnv('BFF_SVWI_API_BASE_URL'),
