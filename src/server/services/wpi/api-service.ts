@@ -316,7 +316,7 @@ export async function fetchWpiDocument(
         ...pick(queryParams ?? {}, ['isBulk', 'isDms']),
         id: documentId,
       },
-      ...wpiAuthHeader,
+      headers: wpiAuthHeader,
       data: createBsnPostBody(authProfileAndToken.profile.id),
       transformResponse: (documentResponseData) => {
         return {
