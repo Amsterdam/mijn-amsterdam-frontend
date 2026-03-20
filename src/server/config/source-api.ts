@@ -19,6 +19,7 @@ import { getCert } from '../helpers/cert.ts';
 import { getFromEnv } from '../helpers/env.ts';
 import { getHostNameFromUrl } from '../helpers/source-api-helpers.ts';
 import { featureToggle as featureToggleHLI } from '../services/hli/hli-service-config.ts';
+import { wpiAuthHeader } from '../services/wpi/api-service.ts';
 
 const RESET_AD_HOC_DEPENDENCY_REQUEST_CACHE_TTL_TIMEOUT_MS = ONE_HOUR_MS;
 export const FORCE_RENEW_CACHE_TTL_MS = 1;
@@ -180,14 +181,20 @@ const ApiConfig_ = {
     url: `${getFromEnv('BFF_GPASS_API_BASE_URL')}`,
   },
   WPI_E_AANVRAGEN: {
+    method: 'POST',
+    headers: wpiAuthHeader,
     url: `${getFromEnv('BFF_WPI_API_BASE_URL')}/wpi/e-aanvragen`,
     passthroughOIDCToken: true,
   },
   WPI_AANVRAGEN: {
+    method: 'POST',
+    headers: wpiAuthHeader,
     url: `${getFromEnv('BFF_WPI_API_BASE_URL')}/wpi/uitkering/aanvragen`,
     passthroughOIDCToken: true,
   },
   WPI_SPECIFICATIES: {
+    method: 'POST',
+    headers: wpiAuthHeader,
     url: `${getFromEnv('BFF_WPI_API_BASE_URL')}/wpi/uitkering/specificaties-en-jaaropgaven`,
     passthroughOIDCToken: true,
   },
