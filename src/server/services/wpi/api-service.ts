@@ -8,6 +8,7 @@ import { pick } from '../../../universal/helpers/utils.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import type { SourceApiName } from '../../config/source-api.ts';
+import { getFromEnv } from '../../helpers/env.ts';
 import {
   createSessionBasedCacheKey,
   getApiConfig,
@@ -48,6 +49,16 @@ export interface FetchConfig {
   requestCacheKey: string;
 }
 
+export const wpiAuthHeader = {
+  'x-api-key': getFromEnv('BFF_WPI_API_KEY', true),
+};
+
+function createBsnPostBody(bsn: string) {
+  return {
+    bsn,
+  };
+}
+
 function statusLineTransformer(
   sessionID: SessionID,
   response: WpiRequestProcess[],
@@ -81,6 +92,7 @@ export async function fetchRequestProcess(
   fetchConfig: FetchConfig
 ): Promise<ApiResponse_DEPRECATED<WpiRequestProcess[] | null>> {
   const apiConfig = getApiConfig(fetchConfig.apiConfigName, {
+    data: createBsnPostBody(authProfileAndToken.profile.id),
     cacheKey_UNSAFE: fetchConfig.requestCacheKey,
     transformResponse: [
       (response: ApiResponse<WpiRequestProcess[]>) =>
@@ -295,15 +307,15 @@ export async function fetchWpiDocument(
 
   return requestData<DocumentDownloadData>(
     {
+      method: 'POST',
       url,
       responseType: 'stream',
       params: {
         ...pick(queryParams ?? {}, ['isBulk', 'isDms']),
         id: documentId,
       },
-      headers: {
-        Authorization: `Bearer ${authProfileAndToken.token}`,
-      },
+      ...wpiAuthHeader,
+      ...createBsnPostBody(authProfileAndToken.profile.id),
       transformResponse: (documentResponseData) => {
         return {
           filename: 'Brief.pdf',
