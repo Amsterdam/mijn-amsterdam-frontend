@@ -323,7 +323,7 @@ export async function fetchWpiDocument(
         id: documentId,
       },
       ...wpiAuthHeader,
-      ...createBsnPostBody(authProfileAndToken.profile.id),
+      data: createBsnPostBody(authProfileAndToken.profile.id),
       transformResponse: (documentResponseData) => {
         return {
           filename: 'Brief.pdf',
