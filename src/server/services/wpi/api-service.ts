@@ -1,25 +1,22 @@
 import type {
   ApiResponse_DEPRECATED,
-  ApiSuccessResponse} from '../../../universal/helpers/api.ts';
-import {
-  apiSuccessResult,
+  ApiSuccessResponse,
 } from '../../../universal/helpers/api.ts';
+import { apiSuccessResult } from '../../../universal/helpers/api.ts';
 import { dateSort } from '../../../universal/helpers/date.ts';
 import { pick } from '../../../universal/helpers/utils.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import type { SourceApiName } from '../../config/source-api.ts';
+import { getFromEnv } from '../../helpers/env.ts';
 import {
   createSessionBasedCacheKey,
   getApiConfig,
 } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
 import { captureMessage } from '../monitoring.ts';
-import type {
-  DocumentDownloadData} from '../shared/document-download-route-handler.ts';
-import {
-  DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE
-} from '../shared/document-download-route-handler.ts';
+import type { DocumentDownloadData } from '../shared/document-download-route-handler.ts';
+import { DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE } from '../shared/document-download-route-handler.ts';
 import {
   requestProcess as bijstandsuitkeringRequestProcessLabels,
   getNotifications as getBijstandsuitkeringNotifications,
@@ -50,6 +47,16 @@ export interface FetchConfig {
   apiConfigName: SourceApiName;
   filterResponse: FilterResponse;
   requestCacheKey: string;
+}
+
+export const wpiAuthHeader = {
+  'x-api-key': getFromEnv('BFF_WPI_API_KEY', true),
+};
+
+function createBsnPostBody(bsn: string) {
+  return {
+    bsn,
+  };
 }
 
 function statusLineTransformer(
@@ -85,6 +92,7 @@ export async function fetchRequestProcess(
   fetchConfig: FetchConfig
 ): Promise<ApiResponse_DEPRECATED<WpiRequestProcess[] | null>> {
   const apiConfig = getApiConfig(fetchConfig.apiConfigName, {
+    data: createBsnPostBody(authProfileAndToken.profile.id),
     cacheKey_UNSAFE: fetchConfig.requestCacheKey,
     transformResponse: [
       (response: ApiSuccessResponse<WpiRequestProcess[]>) => response.content,
@@ -211,15 +219,17 @@ export function transformIncomSpecificationResponse(
 export async function fetchSpecificaties(
   authProfileAndToken: AuthProfileAndToken
 ) {
+  const config = getApiConfig('WPI_SPECIFICATIES', {
+    transformResponse: (responseData) =>
+      transformIncomSpecificationResponse(
+        authProfileAndToken.profile.sid,
+        responseData
+      ),
+    data: createBsnPostBody(authProfileAndToken.profile.sid),
+  });
   const response =
     await requestData<WpiIncomeSpecificationResponseDataTransformed>(
-      getApiConfig('WPI_SPECIFICATIES', {
-        transformResponse: (responseData) =>
-          transformIncomSpecificationResponse(
-            authProfileAndToken.profile.sid,
-            responseData
-          ),
-      }),
+      config,
       authProfileAndToken
     );
 
@@ -305,15 +315,15 @@ export async function fetchWpiDocument(
 
   return requestData<DocumentDownloadData>(
     {
+      method: 'POST',
       url,
       responseType: 'stream',
       params: {
         ...pick(queryParams ?? {}, ['isBulk', 'isDms']),
         id: documentId,
       },
-      headers: {
-        Authorization: `Bearer ${authProfileAndToken.token}`,
-      },
+      headers: wpiAuthHeader,
+      data: createBsnPostBody(authProfileAndToken.profile.id),
       transformResponse: (documentResponseData) => {
         return {
           filename: 'Brief.pdf',
