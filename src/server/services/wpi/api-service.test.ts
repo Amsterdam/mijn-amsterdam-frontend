@@ -1,12 +1,8 @@
 import MockDate from 'mockdate';
 import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 
-import type {
-  FetchConfig} from './api-service.ts';
-import {
-  fetchBijstandsuitkering,
-  fetchRequestProcess,
-} from './api-service.ts';
+import type { FetchConfig } from './api-service.ts';
+import { fetchBijstandsuitkering, fetchRequestProcess } from './api-service.ts';
 import type {
   WpiRequestProcess,
   WpiRequestProcessLabels,
@@ -100,7 +96,7 @@ describe('wpi/app-service', () => {
 
   test('fetchRequestProcess', async () => {
     remoteApi
-      .get('/wpi/uitkering/aanvragen')
+      .post('/wpi/uitkering/aanvragen')
       .reply(200, { status: 'OK', content });
 
     const fetchConfig: FetchConfig = {
@@ -139,7 +135,7 @@ describe('wpi/app-service', () => {
   });
 
   test('fetchRequestProcess-with-error', async () => {
-    remoteApi.get('/wpi/uitkering/aanvragen').reply(500, { content: null });
+    remoteApi.post('/wpi/uitkering/aanvragen').reply(500, { content: null });
 
     const fetchConfig: FetchConfig = {
       apiConfigName: 'WPI_AANVRAGEN',
@@ -185,7 +181,7 @@ describe('wpi/app-service', () => {
     contentBijstandsuitkering.steps[2].dateUserFeedbackExpected =
       '2022-04-27T15:05:52+02:00';
 
-    remoteApi.get('/wpi/uitkering/aanvragen').reply(200, {
+    remoteApi.post('/wpi/uitkering/aanvragen').reply(200, {
       status: 'OK',
       content: [contentBijstandsuitkering, { about: 'FooBar' }, null],
     });
