@@ -228,15 +228,17 @@ export function transformIncomSpecificationResponse(
 export async function fetchSpecificaties(
   authProfileAndToken: AuthProfileAndToken
 ) {
+  const config = getApiConfig('WPI_SPECIFICATIES', {
+    transformResponse: (responseData) =>
+      transformIncomSpecificationResponse(
+        authProfileAndToken.profile.sid,
+        responseData
+      ),
+    data: createBsnPostBody(authProfileAndToken.profile.sid),
+  });
   const response =
     await requestData<WpiIncomeSpecificationResponseDataTransformed>(
-      getApiConfig('WPI_SPECIFICATIES', {
-        transformResponse: (responseData) =>
-          transformIncomSpecificationResponse(
-            authProfileAndToken.profile.sid,
-            responseData
-          ),
-      }),
+      config,
       authProfileAndToken
     );
 
