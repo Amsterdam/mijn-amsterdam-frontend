@@ -1,13 +1,13 @@
-const BB_SEARCH_DOCUMENTS = require('../fixtures/powerbrowser-bb-attachments.json');
-const BB_PERSONEN_ZAKEN = require('../fixtures/powerbrowser-bb-personen-zaken.json');
-const BB_SEARCH_PERSON = require('../fixtures/powerbrowser-bb-search-person.json');
-const BB_LINK_ZAAK_ADRES = require('../fixtures/powerbrowser-bb-zaak-adres.json');
-const BB_ZAAK_STATUS = require('../fixtures/powerbrowser-bb-zaak-status.json');
+const PB_SEARCH_DOCUMENTS = require('../fixtures/powerbrowser-bb-attachments.json');
+const PB_PERSONEN_ZAKEN = require('../fixtures/powerbrowser-bb-personen-zaken.json');
+const PB_SEARCH_PERSON = require('../fixtures/powerbrowser-bb-search-person.json');
+const PB_LINK_ZAAK_ADRES = require('../fixtures/powerbrowser-bb-zaak-adres.json');
+const PB_ZAAK_STATUS = require('../fixtures/powerbrowser-bb-zaak-status.json');
 const settings = require('../settings.cjs');
 
-const BB_SEARCH_DOCUMENTS_PROCESSED = {
-  mainTableName: BB_SEARCH_DOCUMENTS.mainTableName,
-  records: BB_SEARCH_DOCUMENTS.records.map((record) => {
+const PB_SEARCH_DOCUMENTS_PROCESSED = {
+  mainTableName: PB_SEARCH_DOCUMENTS.mainTableName,
+  records: PB_SEARCH_DOCUMENTS.records.map((record) => {
     const minimumValidRecord = [
       {
         fieldName: 'STAMCSSTATUS_ID',
@@ -60,11 +60,11 @@ module.exports = [
         options: {
           middleware: (req, res) => {
             if (['MAATSCHAP', 'PERSONEN'].includes(req.body.query.tableName)) {
-              return res.send(BB_SEARCH_PERSON);
+              return res.send(PB_SEARCH_PERSON);
             }
             return res.send({
-              mainTableName: BB_SEARCH_DOCUMENTS_PROCESSED.mainTableName,
-              records: BB_SEARCH_DOCUMENTS_PROCESSED.records.filter((record) =>
+              mainTableName: PB_SEARCH_DOCUMENTS_PROCESSED.mainTableName,
+              records: PB_SEARCH_DOCUMENTS_PROCESSED.records.filter((record) =>
                 req.body.query.conditions.some(
                   (condition) =>
                     condition.fieldName === 'GFO_ZAKEN_ID' &&
@@ -87,7 +87,7 @@ module.exports = [
         type: 'json',
         options: {
           status: 200,
-          body: BB_ZAAK_STATUS,
+          body: PB_ZAAK_STATUS,
         },
       },
     ],
@@ -103,7 +103,7 @@ module.exports = [
         options: {
           middleware: (req, res, _, __) => {
             res.send(
-              BB_PERSONEN_ZAKEN.filter((zaak) =>
+              PB_PERSONEN_ZAKEN.filter((zaak) =>
                 req.params.zaakIds.split(',').includes(zaak.id)
               )
             );
@@ -122,7 +122,7 @@ module.exports = [
         type: 'json',
         options: {
           status: 200,
-          body: BB_PERSONEN_ZAKEN,
+          body: PB_PERSONEN_ZAKEN,
         },
       },
     ],
@@ -137,7 +137,7 @@ module.exports = [
         type: 'middleware',
         options: {
           middleware: (req, res) => {
-            return res.send(BB_LINK_ZAAK_ADRES);
+            return res.send(PB_LINK_ZAAK_ADRES);
           },
         },
       },
