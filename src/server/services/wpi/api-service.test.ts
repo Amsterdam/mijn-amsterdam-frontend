@@ -1,12 +1,8 @@
 import MockDate from 'mockdate';
 import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 
-import type {
-  FetchConfig} from './api-service.ts';
-import {
-  fetchBijstandsuitkering,
-  fetchRequestProcess,
-} from './api-service.ts';
+import type { FetchConfig } from './api-service.ts';
+import { fetchBijstandsuitkering, fetchRequestProcess } from './api-service.ts';
 import type {
   WpiRequestProcess,
   WpiRequestProcessLabels,
@@ -51,7 +47,6 @@ describe('wpi/app-service', () => {
       dateEnd: '2022-03-01T09:49',
       datePublished: '2022-03-01T09:49',
       dateStart: '2022-01-09T13:22',
-      statusId: 'finish',
       decision: 'toekenning',
       steps: [
         {
@@ -123,7 +118,6 @@ describe('wpi/app-service', () => {
     expect(response.content?.length).toBe(1);
 
     const [statusLine] = response.content || [];
-    expect(statusLine.statusId).toBe('finish');
 
     const [step1, step2, step3] = statusLine.steps;
     expect(step1.status).toBe('Begin van aanvraagproces');
@@ -167,7 +161,6 @@ describe('wpi/app-service', () => {
     const contentBijstandsuitkering = jsonCopy(content[0]);
 
     contentBijstandsuitkering.about = 'Bijstandsuitkering';
-    contentBijstandsuitkering.statusId = 'herstelTermijn';
     contentBijstandsuitkering.decision = null;
 
     delete contentBijstandsuitkering.steps[2].decision;
@@ -196,7 +189,6 @@ describe('wpi/app-service', () => {
     expect(response.content?.length).toBe(1);
 
     const [statusLine] = response.content || [];
-    expect(statusLine.statusId).toBe('herstelTermijn');
     expect(statusLine.link).toMatchInlineSnapshot(`
       {
         "title": "Bekijk uw aanvraag",
