@@ -180,11 +180,6 @@ describe('Regressietest fetchBedAndBreakfast personen', () => {
                 fieldValue: '1000001002',
               },
               {
-                fieldName: 'OPENBAARHEID_ID',
-                text: 'openbaar',
-                fieldValue: '1000001001',
-              },
-              {
                 fieldName: 'SOORTDOCUMENT_ID',
                 fieldValue: '1000001015',
               },
@@ -332,11 +327,6 @@ describe('fetchBB fetchBedAndBreakfast maatschap', () => {
               fieldValue: '1000001002',
             },
             {
-              fieldName: 'OPENBAARHEID_ID',
-              text: 'openbaar',
-              fieldValue: '1000001001',
-            },
-            {
               fieldName: 'SOORTDOCUMENT_ID',
               fieldValue: '1000001015',
             },
@@ -419,11 +409,6 @@ describe('fetchBB fetchBedAndBreakfast maatschap', () => {
                 fieldName: 'STAMCSSTATUS_ID',
                 text: 'definitief',
                 fieldValue: '1000001002',
-              },
-              {
-                fieldName: 'OPENBAARHEID_ID',
-                text: 'openbaar',
-                fieldValue: '1000001001',
               },
               {
                 fieldName: 'SOORTDOCUMENT_ID',

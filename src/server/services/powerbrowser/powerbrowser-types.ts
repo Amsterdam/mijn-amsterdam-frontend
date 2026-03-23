@@ -75,7 +75,6 @@ export type PBDocumentFields =
   | PBRecordField<'OMSCHRIJVING'>
   | PBRecordField<'CREATEDATE'>
   | PBRecordField<'DOCUMENTNR'>
-  | PBRecordField<'OPENBAARHEID_ID'>
   | PBRecordField<'SOORTDOCUMENT_ID'>
   | PBRecordField<'STAMCSSTATUS_ID'>
   | PBRecordField<'CREATOR_ID'>;

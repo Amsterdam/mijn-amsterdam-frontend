@@ -15,11 +15,6 @@ const PB_SEARCH_DOCUMENTS_PROCESSED = {
         fieldValue: '1000001002',
       },
       {
-        fieldName: 'OPENBAARHEID_ID',
-        text: 'openbaar',
-        fieldValue: '1000001001',
-      },
-      {
         fieldName: 'SOORTDOCUMENT_ID',
         fieldValue: record.fmtCpn.toLowerCase().includes('besluit')
           ? '256' // besluit

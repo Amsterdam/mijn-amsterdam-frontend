@@ -419,7 +419,6 @@ async function fetchDocumentsList(
           'CREATEDATE',
           'DOCUMENTNR',
           'STAMCSSTATUS_ID',
-          'OPENBAARHEID_ID',
           'SOORTDOCUMENT_ID',
           'CREATOR_ID',
         ],
