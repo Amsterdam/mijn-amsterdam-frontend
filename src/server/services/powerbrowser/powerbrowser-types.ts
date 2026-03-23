@@ -140,7 +140,7 @@ export type PowerBrowserZaakTransformer<
 > = {
   caseType: CaseTypeLiteral<T>;
   title: string;
-  fetchZaakFilter: (field: PBRecord<'GFO_ZAKEN'>['fields'][0]) => boolean;
+  fetchZaakFilter: (fields: PBRecord<'GFO_ZAKEN'>['fields']) => boolean;
   transformFields: TF;
   transformFieldValues?: Partial<
     Record<keyof TF, (value: string | null) => string | null>

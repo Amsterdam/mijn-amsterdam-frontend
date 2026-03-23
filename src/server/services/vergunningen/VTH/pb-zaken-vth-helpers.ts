@@ -58,9 +58,9 @@ export function isVTHZaakVerleend(resultaat: PBZaakResultaat) {
   return RESULTATEN_VERLEEND.includes(resultaat.toLowerCase());
 }
 
-export function isValidVTHZaak(record: PBRecordField) {
+export function isValidVTHZaak(pbRecordFields: PBRecordField[]) {
   return (
-    isNotBestuurlijkGevoelig(record) &&
-    isZaakWithValidResultaat(record, RESULTATEN_VALID)
+    isNotBestuurlijkGevoelig(pbRecordFields) &&
+    isZaakWithValidResultaat(RESULTATEN_VALID, pbRecordFields)
   );
 }

@@ -159,12 +159,12 @@ type FilterDef<T> = {
 };
 function assignTransformerByFilter<
   T extends { id: string; fields: PBRecordField[] },
->(items: T[], filters: FilterDef<PBRecordField>[]): zaakIdToZaakTransformer {
+>(items: T[], filters: FilterDef<PBRecordField[]>[]): zaakIdToZaakTransformer {
   const result: ReturnType<typeof assignTransformerByFilter> = {};
 
   for (const item of items) {
     for (const { zaakTransformer, filter } of Object.values(filters)) {
-      if (item.fields.some(filter)) {
+      if (filter(item.fields)) {
         result[item.id] = zaakTransformer;
         break;
       }

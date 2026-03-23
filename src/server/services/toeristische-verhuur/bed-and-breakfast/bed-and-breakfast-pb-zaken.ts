@@ -1,5 +1,4 @@
-import type {
-  BedAndBreakfastType} from './bed-and-breakfast-types.ts';
+import type { BedAndBreakfastType } from './bed-and-breakfast-types.ts';
 import {
   caseTypeBedAndBreakfast,
   documentNamenMA_PB,
@@ -46,10 +45,10 @@ export const BedAndBreakfastZaakTransformer: PowerBrowserZaakTransformer<BedAndB
   {
     caseType: 'Bed en breakfast',
     title: 'Vergunning bed & breakfast',
-    fetchZaakFilter: (pbRecordField) =>
+    fetchZaakFilter: (pbRecordFields) =>
       hasCaseTypeInFMT_CAPTION(
-        pbRecordField,
-        caseTypeBedAndBreakfast.BedAndBreakfast
+        caseTypeBedAndBreakfast.BedAndBreakfast,
+        pbRecordFields
       ),
     transformFields: SELECT_FIELDS_TRANSFORM_BASE,
     transformFieldValues: {

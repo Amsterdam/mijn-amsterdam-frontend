@@ -1,53 +1,59 @@
 import type { PBRecordField } from './powerbrowser-types.ts';
 
 export function hasCaseTypeInFMT_CAPTION(
-  pbRecordField: PBRecordField<string>,
-  caseType: string
+  caseType: string,
+  pbRecordFields: PBRecordField<string>[]
 ) {
-  return (
-    pbRecordField.fieldName === 'FMT_CAPTION' &&
-    !!pbRecordField.text &&
-    pbRecordField.text?.includes(caseType)
+  return pbRecordFields.some(
+    (pbRecordField) =>
+      pbRecordField.fieldName === 'FMT_CAPTION' &&
+      !!pbRecordField.text &&
+      pbRecordField.text?.includes(caseType)
   );
 }
 
 export function hasStringInZAAKPRODUCT_ID(
-  pbRecordField: PBRecordField<string>,
-  str: string
+  str: string,
+  pbRecordFields: PBRecordField<string>[]
 ) {
-  return (
-    pbRecordField.fieldName === 'ZAAKPRODUCT_ID' &&
-    !!pbRecordField.text &&
-    pbRecordField.text?.includes(str)
+  return pbRecordFields.some(
+    (pbRecordField) =>
+      pbRecordField.fieldName === 'ZAAKPRODUCT_ID' &&
+      !!pbRecordField.text &&
+      pbRecordField.text?.includes(str)
   );
 }
 
 export function hasStringInZAAK_SUBPRODUCT_ID(
-  pbRecordField: PBRecordField<string>,
-  str: string
+  str: string,
+  pbRecordFields: PBRecordField<string>[]
 ) {
-  return (
-    pbRecordField.fieldName === 'ZAAK_SUBPRODUCT_ID' &&
-    !!pbRecordField.text &&
-    pbRecordField.text?.includes(str)
+  return pbRecordFields.some(
+    (pbRecordField) =>
+      pbRecordField.fieldName === 'ZAAK_SUBPRODUCT_ID' &&
+      !!pbRecordField.text &&
+      pbRecordField.text?.includes(str)
   );
 }
 
 export function isZaakWithValidResultaat(
-  pbRecordField: PBRecordField<string>,
-  validResultaten: string[]
+  validResultaten: string[],
+  pbRecordFields: PBRecordField<string>[]
 ) {
-  return (
-    pbRecordField.fieldName === 'RESULTAAT_ID' &&
-    !!pbRecordField.text &&
-    validResultaten.includes(pbRecordField.text)
+  return pbRecordFields.some(
+    (pbRecordField) =>
+      pbRecordField.fieldName === 'RESULTAAT_ID' &&
+      (!pbRecordField.text || validResultaten.includes(pbRecordField.text))
   );
 }
 
-export function isNotBestuurlijkGevoelig(pbRecordField: PBRecordField<string>) {
-  return (
-    pbRecordField.fieldName !== 'BESTUURLIJK_GEVOELIG' ||
-    !pbRecordField.fieldValue ||
-    pbRecordField.fieldValue === 'F'
+export function isNotBestuurlijkGevoelig(
+  pbRecordFields: PBRecordField<string>[]
+) {
+  return pbRecordFields.every(
+    (pbRecordField) =>
+      pbRecordField.fieldName !== 'BESTUURLIJK_GEVOELIG' ||
+      !pbRecordField.text ||
+      pbRecordField.text === 'Nee'
   );
 }

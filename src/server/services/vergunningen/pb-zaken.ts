@@ -30,14 +30,14 @@ const LigplaatsWoonbootVergunningZaakTransformer: PowerBrowserZaakTransformer<Li
   {
     caseType: caseTypePB.LigplaatsWoonbootvergunning,
     title: 'Ligplaatsvergunning woonboot',
-    fetchZaakFilter: (pbRecordField) =>
+    fetchZaakFilter: (pbRecordFields) =>
       hasStringInZAAKPRODUCT_ID(
-        pbRecordField,
-        'Ligplaatsvergunning woonboot'
+        'Ligplaatsvergunning woonboot',
+        pbRecordFields
       ) ||
       hasStringInZAAK_SUBPRODUCT_ID(
-        pbRecordField,
-        'Ligplaatsvergunning woonboot'
+        'Ligplaatsvergunning woonboot',
+        pbRecordFields
       ),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
@@ -52,14 +52,14 @@ const LigplaatsBedrijfsvaartuigVergunningZaakTransformer: PowerBrowserZaakTransf
   {
     caseType: caseTypePB.LigplaatsBedrijfsvaartuigvergunning,
     title: 'Ligplaatsvergunning bedrijfsvaartuig',
-    fetchZaakFilter: (pbRecordField) =>
+    fetchZaakFilter: (pbRecordFields) =>
       hasStringInZAAKPRODUCT_ID(
-        pbRecordField,
-        'Ligplaatsvergunning bedrijfsvaartuig'
+        'Ligplaatsvergunning bedrijfsvaartuig',
+        pbRecordFields
       ) ||
       hasStringInZAAK_SUBPRODUCT_ID(
-        pbRecordField,
-        'Ligplaatsvergunning bedrijfsvaartuig'
+        'Ligplaatsvergunning bedrijfsvaartuig',
+        pbRecordFields
       ),
     transformFields: SELECT_FIELDS_TRANSFORM_BASE,
     transformFieldValues: {
@@ -72,8 +72,8 @@ const OmzettingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Omzetting
   {
     caseType: caseTypePB.Omzettingsvergunning,
     title: 'Vergunning voor kamerverhuur (omzettingsvergunning)',
-    fetchZaakFilter: (pbRecordField) =>
-      hasCaseTypeInFMT_CAPTION(pbRecordField, 'Omzetting kamerverhuur'),
+    fetchZaakFilter: (pbRecordFields) =>
+      hasCaseTypeInFMT_CAPTION('Omzetting kamerverhuur', pbRecordFields),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
@@ -87,8 +87,8 @@ const SamenvoegingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Samenv
   {
     caseType: caseTypePB.Samenvoegingsvergunning,
     title: 'Vergunning voor samenvoegen van woonruimten',
-    fetchZaakFilter: (pbRecordField) =>
-      hasCaseTypeInFMT_CAPTION(pbRecordField, 'Vergunning voor samenvoegen'),
+    fetchZaakFilter: (pbRecordFields) =>
+      hasCaseTypeInFMT_CAPTION('Vergunning voor samenvoegen', pbRecordFields),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
@@ -102,10 +102,10 @@ const OnttrekkingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Onttrek
   {
     caseType: caseTypePB.Onttrekkingsvergunning,
     title: caseTypePB.Onttrekkingsvergunning,
-    fetchZaakFilter: (pbRecordField) =>
+    fetchZaakFilter: (pbRecordFields) =>
       hasCaseTypeInFMT_CAPTION(
-        pbRecordField,
-        OnttrekkingsvergunningZaakTransformer.title
+        OnttrekkingsvergunningZaakTransformer.title,
+        pbRecordFields
       ),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
@@ -120,15 +120,15 @@ const OnttrekkingsvergunningSloopZaakTransformer: PowerBrowserZaakTransformer<On
   {
     caseType: caseTypePB.OnttrekkingsvergunningSloop,
     title: caseTypePB.OnttrekkingsvergunningSloop,
-    fetchZaakFilter: (pbRecordField) =>
+    fetchZaakFilter: (pbRecordFields) =>
       // Powerbrowser currently uses a misspelled name, we also check the correct spelling in case this is ever changed
       hasCaseTypeInFMT_CAPTION(
-        pbRecordField,
-        OnttrekkingsvergunningZaakTransformer.title
+        OnttrekkingsvergunningZaakTransformer.title,
+        pbRecordFields
       ) ||
       hasCaseTypeInFMT_CAPTION(
-        pbRecordField,
-        'Ontrekkingsvergunning voor sloop'
+        'Ontrekkingsvergunning voor sloop',
+        pbRecordFields
       ),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
@@ -143,8 +143,8 @@ const VormenVanWoonruimteZaakTransformer: PowerBrowserZaakTransformer<VormenVanW
   {
     caseType: caseTypePB.VormenVanWoonruimte,
     title: 'Vergunning voor woningvorming',
-    fetchZaakFilter: (pbRecordField) =>
-      hasCaseTypeInFMT_CAPTION(pbRecordField, 'Vergunning voor woningvormen'),
+    fetchZaakFilter: (pbRecordFields) =>
+      hasCaseTypeInFMT_CAPTION('Vergunning voor woningvormen', pbRecordFields),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
@@ -158,10 +158,10 @@ const OnttrekkingsvergunningTweedeWoningZaakTransformer: PowerBrowserZaakTransfo
   {
     caseType: caseTypePB.OnttrekkingsvergunningTweedeWoning,
     title: 'Voorraadvergunning tweede woning',
-    fetchZaakFilter: (pbRecordField) =>
+    fetchZaakFilter: (pbRecordFields) =>
       hasCaseTypeInFMT_CAPTION(
-        pbRecordField,
-        OnttrekkingsvergunningTweedeWoningZaakTransformer.title
+        OnttrekkingsvergunningTweedeWoningZaakTransformer.title,
+        pbRecordFields
       ),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
@@ -176,10 +176,10 @@ const SplitsingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Splitsing
   {
     caseType: caseTypePB.Splitsingsvergunning,
     title: caseTypePB.Splitsingsvergunning,
-    fetchZaakFilter: (pbRecordField) =>
+    fetchZaakFilter: (pbRecordFields) =>
       hasCaseTypeInFMT_CAPTION(
-        pbRecordField,
-        SplitsingsvergunningZaakTransformer.title
+        SplitsingsvergunningZaakTransformer.title,
+        pbRecordFields
       ),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
@@ -203,8 +203,8 @@ const pbZaakTransformers_ = [
 ];
 export const pbZaakTransformers = pbZaakTransformers_.map((t) => ({
   ...t,
-  fetchZaakFilter: (field: PBRecordField) =>
-    t.fetchZaakFilter(field) && isValidVTHZaak(field),
+  fetchZaakFilter: (pbRecordFields: PBRecordField[]) =>
+    t.fetchZaakFilter(pbRecordFields) && isValidVTHZaak(pbRecordFields),
 })) as typeof pbZaakTransformers_;
 
 export const pbCaseToZaakTransformers = pbZaakTransformers.reduce<
