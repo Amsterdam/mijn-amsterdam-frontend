@@ -3,17 +3,17 @@ import { Paragraph, Link, Heading } from '@amsterdam/design-system-react';
 import {
   filterErfpachtFacturen,
   mapErfpachtFacturen,
-} from './Erfpacht-helpers';
-import { useErfpachtThemaData } from './useErfpachtThemaData.hook';
-import { ErfpachtDossierFrontend } from '../../../../server/services/erfpacht/erfpacht-types';
-import { entries } from '../../../../universal/helpers/utils';
-import { MaRouterLink } from '../../../components/MaLink/MaLink';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaPagina from '../../../components/Thema/ThemaPagina';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
-import * as afis from '../Afis/Afis-thema-config';
-import { AfisFacturenTables } from '../Afis/AfisFacturenTables';
+} from './Erfpacht-helpers.tsx';
+import { useErfpachtThemaData } from './useErfpachtThemaData.hook.ts';
+import type { ErfpachtDossierFrontend } from '../../../../server/services/erfpacht/erfpacht-types.ts';
+import { entries } from '../../../../universal/helpers/utils.ts';
+import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
+import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
+import * as afis from '../Afis/Afis-thema-config.ts';
+import { AfisFacturenTables } from '../Afis/AfisFacturenTables.tsx';
 
 export function ErfpachtThema() {
   const {

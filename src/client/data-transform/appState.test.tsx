@@ -1,7 +1,7 @@
-import { AppState } from '../../universal/types/App.types';
-import { PRISTINE_APPSTATE, createAllErrorState } from '../AppState';
-import { transformSourceData } from './appState';
-import * as Monitoring from '../helpers/monitoring';
+import type { AppState } from '../../universal/types/App.types.ts';
+import { PRISTINE_APPSTATE, createAllErrorState } from '../AppState.ts';
+import { transformSourceData } from './appState.tsx';
+import * as Monitoring from '../helpers/monitoring.ts';
 
 describe('transformSourceData', () => {
   test('transformSourceData', () => {
@@ -37,9 +37,7 @@ describe('transformSourceData', () => {
         status: 'OK',
       },
       TEST_STATE_3: {
-        content: {
-          foo: 'bar',
-        },
+        content: null,
         status: 'ERROR',
         message: 'Things went south',
       },
@@ -58,6 +56,7 @@ describe('transformSourceData', () => {
         status: 'OK',
       },
       TEST_STATE_3: {
+        content: null,
         message: 'Things went south',
         status: 'ERROR',
       },

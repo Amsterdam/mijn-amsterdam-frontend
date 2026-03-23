@@ -1,8 +1,11 @@
-import { FunctionComponent, ReactNode, SVGProps } from 'react';
+import type { FunctionComponent, ReactNode, SVGProps } from 'react';
 
-import type { ServiceID, ServicesType } from '../../server/services/controller';
-import { ApiResponse_DEPRECATED } from '../helpers/api';
-import type { SomeOtherString } from '../helpers/types';
+import type {
+  ServiceID,
+  ServicesType,
+} from '../../server/services/controller.ts';
+import { type ApiResponse_DEPRECATED } from '../helpers/api.ts';
+import type { SomeOtherString } from '../helpers/types.ts';
 
 export type AppStateBase = {
   [key in ServiceID]: ApiResponse_DEPRECATED<

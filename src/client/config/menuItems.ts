@@ -1,7 +1,7 @@
-import { myThemasMenuItems } from './thema';
-import { ThemaMenuItemTransformed, ThemaMenuItem } from './thema-types';
-import type { AppState } from '../../universal/types/App.types';
-import { useAppStateGetter } from '../hooks/useAppStateStore';
+import type { ThemaMenuItemTransformed, ThemaMenuItem } from './thema-types.ts';
+import { myThemasMenuItems } from './thema.ts';
+import type { AppState } from '../../universal/types/App.types.ts';
+import { useAppStateGetter } from '../hooks/useAppStateStore.ts';
 
 export function useThemasByProfileType(
   profileType: ProfileType
@@ -35,7 +35,7 @@ function getThemaMenuItem(
     to:
       typeof item.to === 'function' ? item.to(appState, profileType) : item.to,
     isActive: !!(item.isActive
-      ? item.isActive(appState)
+      ? item.isActive(appState, profileType)
       : item.isAlwaysVisible),
   };
 }

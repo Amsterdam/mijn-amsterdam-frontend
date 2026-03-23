@@ -1,10 +1,11 @@
-import { isValidElement, ReactElement, ReactNode } from 'react';
+import type { ReactElement, ReactNode } from 'react';
+import { isValidElement } from 'react';
 
 import classnames from 'classnames';
 import { renderToStaticMarkup } from 'react-dom/server';
 
 import styles from './Datasets.module.scss';
-import type { MaPointFeature } from '../../../server/services/buurt/datasets';
+import type { MaPointFeature } from '../../../server/services/buurt/datasets.ts';
 import {
   IconAfvalGft,
   IconAfvalGlas,
@@ -44,8 +45,8 @@ import {
   IconWegenVerkeerStraatmeubilair,
   IconWior,
   IconZwembad,
-} from '../../assets/icons/map';
-import { Colors } from '../../config/app';
+} from '../../assets/icons/map/index.tsx';
+import { Colors } from '../../config/app.ts';
 
 const DatasetIcon: React.FC<{
   color?: string;
@@ -382,23 +383,26 @@ export function getIconHtml(feature: MaPointFeature) {
     case 'afvalcontainers':
       childId = getIconChildIdFromValue(
         datasetId,
-        feature.properties.fractie_omschrijving
+        feature.properties.fractie_omschrijving as string
       );
       break;
     case 'openbaresportplek':
       childId = getIconChildIdFromValue(
         datasetId,
-        feature.properties.sportvoorziening
+        feature.properties.sportvoorziening as string
       );
       break;
     case 'parkeerzones':
       childId = getIconChildIdFromValue(
         datasetId,
-        feature.properties.gebiedsnaam
+        feature.properties.gebiedsnaam as string
       );
       break;
     case 'meldingenBuurt':
-      childId = getIconChildIdFromValue(datasetId, feature.properties.category);
+      childId = getIconChildIdFromValue(
+        datasetId,
+        feature.properties.category as string
+      );
       break;
     default:
       childId = datasetId;

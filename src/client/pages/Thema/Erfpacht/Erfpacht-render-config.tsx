@@ -1,23 +1,23 @@
-import { filterErfpachtFacturen } from './Erfpacht-helpers';
+import { filterErfpachtFacturen } from './Erfpacht-helpers.tsx';
 import {
   ERFPACHT_ZAKELIJK_ROUTE_DEFAULT,
   erfpachtFacturenTableConfig,
   themaConfig,
-} from './Erfpacht-thema-config';
-import { ErfpachtDetail } from './ErfpachtDetail';
+} from './Erfpacht-thema-config.ts';
+import { ErfpachtDetail } from './ErfpachtDetail.tsx';
 import { default as ErfpachtIcon } from './ErfpachtIcon.svg?react';
-import { ErfpachtList } from './ErfpachtList';
-import { ErfpachtThema } from './ErfpachtThema';
-import { useErfpachtThemaData } from './useErfpachtThemaData.hook';
-import { IS_PRODUCTION } from '../../../../universal/config/env';
-import { isLoading } from '../../../../universal/helpers/api';
-import { type AppState } from '../../../../universal/types/App.types';
+import { ErfpachtList } from './ErfpachtList.tsx';
+import { ErfpachtThema } from './ErfpachtThema.tsx';
+import { useErfpachtThemaData } from './useErfpachtThemaData.hook.ts';
+import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
+import { isLoading } from '../../../../universal/helpers/api.ts';
+import { type AppState } from '../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
-} from '../../../config/thema-types';
-import { AfisFactuur } from '../Afis/AfisFactuur';
-import { AfisList } from '../Afis/AfisList';
+} from '../../../config/thema-types.ts';
+import { AfisFactuur } from '../Afis/AfisFactuur.tsx';
+import { AfisList } from '../Afis/AfisList.tsx';
 
 export const ErfpachtRoutes = [
   {

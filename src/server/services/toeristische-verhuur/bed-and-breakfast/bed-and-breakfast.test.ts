@@ -1,5 +1,8 @@
-import { fetchBedAndBreakfast } from './bed-and-breakfast';
-import { getAuthProfileAndToken, remoteApi } from '../../../../testing/utils';
+import { fetchBedAndBreakfast } from './bed-and-breakfast.ts';
+import {
+  getAuthProfileAndToken,
+  remoteApi,
+} from '../../../../testing/utils.ts';
 
 vi.mock(
   '../../../../server/helpers/encrypt-decrypt',
@@ -18,7 +21,7 @@ describe('Regressietest fetchBedAndBreakfast personen', () => {
   const PowerBrowserPersonenRequests = [
     {
       req: {
-        url: 'https://acc_gemeenteamsterdam_vth.moverheid.nl/api/SearchRequest',
+        url: `/powerbrowser/SearchRequest`,
         method: 'POST',
       },
       res: {
@@ -34,7 +37,7 @@ describe('Regressietest fetchBedAndBreakfast personen', () => {
     },
     {
       req: {
-        url: 'https://acc_gemeenteamsterdam_vth.moverheid.nl/api/Link/PERSONEN/GFO_ZAKEN/',
+        url: `/powerbrowser/Link/PERSONEN/GFO_ZAKEN/`,
         method: 'POST',
       },
       res: [
@@ -74,7 +77,7 @@ describe('Regressietest fetchBedAndBreakfast personen', () => {
     },
     {
       req: {
-        url: 'https://acc_gemeenteamsterdam_vth.moverheid.nl/api/Link/GFO_ZAKEN/ADRESSEN/Table',
+        url: `/powerbrowser/Link/GFO_ZAKEN/ADRESSEN/Table`,
         method: 'POST',
       },
       res: {
@@ -97,7 +100,7 @@ describe('Regressietest fetchBedAndBreakfast personen', () => {
     },
     {
       req: {
-        url: 'https://acc_gemeenteamsterdam_vth.moverheid.nl/api/Report/RunSavedReport',
+        url: `/powerbrowser/Report/RunSavedReport`,
         method: 'POST',
       },
       res: [
@@ -113,7 +116,7 @@ describe('Regressietest fetchBedAndBreakfast personen', () => {
     },
     {
       req: {
-        url: 'https://acc_gemeenteamsterdam_vth.moverheid.nl/api/SearchRequest',
+        url: `/powerbrowser/SearchRequest`,
         method: 'POST',
       },
       res: {
@@ -249,15 +252,14 @@ describe('Regressietest fetchBedAndBreakfast personen', () => {
     ],
     heeftOvergangsRecht: false,
   };
+
   test('should fetch BB zaken successfully', async () => {
+    // Setup PowerBrowser net request mocks (nock)
     for (const r of PowerBrowserPersonenRequests) {
       const method = r.req.method.toLowerCase();
-      const url = r.req.url.replace(
-        'https://acc_gemeenteamsterdam_vth.moverheid.nl/api/',
-        '/powerbrowser/'
-      );
+      remoteApi.post('/powerbrowser/Token').reply(200);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (remoteApi as any)[method](url).query(true).reply(200, r.res);
+      (remoteApi as any)[method](r.req.url).query(true).reply(200, r.res);
     }
     const authProfileAndToken = getAuthProfileAndToken();
 
@@ -272,7 +274,7 @@ describe('fetchBB fetchBedAndBreakfast maatschap', () => {
   const PowerBrowserMaatschapRequests = [
     {
       req: {
-        url: 'https://acc_gemeenteamsterdam_vth.moverheid.nl/api/SearchRequest',
+        url: `/powerbrowser/SearchRequest`,
         method: 'POST',
       },
       res: {
@@ -288,7 +290,7 @@ describe('fetchBB fetchBedAndBreakfast maatschap', () => {
     },
     {
       req: {
-        url: 'https://acc_gemeenteamsterdam_vth.moverheid.nl/api/Link/MAATSCHAP/GFO_ZAKEN/',
+        url: `/powerbrowser/Link/MAATSCHAP/GFO_ZAKEN/`,
         method: 'POST',
       },
       res: [
@@ -344,7 +346,7 @@ describe('fetchBB fetchBedAndBreakfast maatschap', () => {
     },
     {
       req: {
-        url: 'https://acc_gemeenteamsterdam_vth.moverheid.nl/api/Link/GFO_ZAKEN/ADRESSEN/Table',
+        url: `/powerbrowser/Link/GFO_ZAKEN/ADRESSEN/Table`,
         method: 'POST',
       },
       res: {
@@ -367,7 +369,7 @@ describe('fetchBB fetchBedAndBreakfast maatschap', () => {
     },
     {
       req: {
-        url: 'https://acc_gemeenteamsterdam_vth.moverheid.nl/api/Report/RunSavedReport',
+        url: `/powerbrowser/Report/RunSavedReport`,
         method: 'POST',
       },
       res: [
@@ -379,7 +381,7 @@ describe('fetchBB fetchBedAndBreakfast maatschap', () => {
     },
     {
       req: {
-        url: 'https://acc_gemeenteamsterdam_vth.moverheid.nl/api/SearchRequest',
+        url: `/powerbrowser/SearchRequest`,
         method: 'POST',
       },
       res: {
@@ -495,12 +497,9 @@ describe('fetchBB fetchBedAndBreakfast maatschap', () => {
   test('should fetch BB zaken successfully', async () => {
     for (const r of PowerBrowserMaatschapRequests) {
       const method = r.req.method.toLowerCase();
-      const url = r.req.url.replace(
-        'https://acc_gemeenteamsterdam_vth.moverheid.nl/api/',
-        '/powerbrowser/'
-      );
+      remoteApi.post('/powerbrowser/Token').reply(200);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (remoteApi as any)[method](url).query(true).reply(200, r.res);
+      (remoteApi as any)[method](r.req.url).query(true).reply(200, r.res);
     }
     const authProfileAndToken = getAuthProfileAndToken();
     authProfileAndToken.profile.id = '12345678';

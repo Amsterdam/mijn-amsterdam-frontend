@@ -1,18 +1,19 @@
-import { ZORGNED_AV_API_CONFIG_KEY } from './hli-service-config';
-import { apiSuccessResult } from '../../../universal/helpers/api';
-import { isDateInPast } from '../../../universal/helpers/date';
+import { ZORGNED_AV_API_CONFIG_KEY } from './hli-service-config.ts';
+import { AV_CZM } from './status-line-items/regeling-czm.ts';
+import { apiSuccessResult } from '../../../universal/helpers/api.ts';
+import { isDateInPast } from '../../../universal/helpers/date.ts';
 import {
   fetchAanvragenWithRelatedPersons,
   fetchPersoonsgegevensNAW,
-} from '../zorgned/zorgned-service';
-import {
-  ZORGNED_GEMEENTE_CODE,
+} from '../zorgned/zorgned-service.ts';
+import type {
   ZorgnedAanvraagTransformed,
   ZorgnedAanvraagWithRelatedPersonsTransformed,
-  ZorgnedPersoonsgegevensNAWResponse,
+  ZorgnedPersoonsgegevensNAWResponse} from '../zorgned/zorgned-types.ts';
+import {
+  ZORGNED_GEMEENTE_CODE,
   type BSN,
-} from '../zorgned/zorgned-types';
-import { AV_CZM } from './status-line-items/regeling-czm';
+} from '../zorgned/zorgned-types.ts';
 
 function transformToAdministratienummer(identificatie: number): string {
   const padLength = 10;

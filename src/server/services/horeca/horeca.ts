@@ -1,17 +1,19 @@
-import { decosZaakTransformers, HorecaVergunningFrontend } from './decos-zaken';
-import { themaConfig } from '../../../client/pages/Thema/Horeca/Horeca-thema-config';
+import type { HorecaVergunningFrontend } from './decos-zaken.ts';
+import { decosZaakTransformers } from './decos-zaken.ts';
+import { themaConfig } from '../../../client/pages/Thema/Horeca/Horeca-thema-config.ts';
+import type {
+  ApiResponse} from '../../../universal/helpers/api.ts';
 import {
   apiSuccessResult,
-  apiDependencyError,
-  ApiResponse,
-} from '../../../universal/helpers/api';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+  apiDependencyError
+} from '../../../universal/helpers/api.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import {
   fetchDecosZaken,
   transformDecosZaakFrontend,
-} from '../decos/decos-service';
-import { getStatusStepsDecos } from '../vergunningen/decos-status-steps';
-import { getVergunningNotifications } from '../vergunningen/vergunningen-notifications';
+} from '../decos/decos-service.ts';
+import { getStatusStepsDecos } from '../vergunningen/decos-status-steps.ts';
+import { getVergunningNotifications } from '../vergunningen/vergunningen-notifications.ts';
 
 export async function fetchHorecaVergunningen(
   authProfileAndToken: AuthProfileAndToken

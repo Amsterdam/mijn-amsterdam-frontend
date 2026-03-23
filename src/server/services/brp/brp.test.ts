@@ -1,24 +1,24 @@
 import { describe, it, expect, vi } from 'vitest';
 import type { Mock } from 'vitest';
 
+import { AANTAL_INGESCHREVEN_PERSONEN_NOT_SET } from './brp-config.ts';
+import {
+  DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_FROM,
+  DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_TO,
+} from './brp-service-config.ts';
+import type { PersoonSource } from './brp-types.ts';
 import {
   forTesting,
   fetchBrpByBsn,
   fetchBrpByBsnTransformed,
   fetchBrpVerblijfplaatsHistoryByBsn,
   fetchAantalIngeschrevenPersonen,
-} from './brp';
-import { AANTAL_INGESCHREVEN_PERSONEN_NOT_SET } from './brp-config';
-import {
-  DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_FROM,
-  DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_TO,
-} from './brp-service-config';
-import type { PersoonSource } from './brp-types';
-import testPersonenResponse from '../../../../mocks/fixtures/brp/test-personen.json';
-import verblijfplaatsenResponse from '../../../../mocks/fixtures/brp/verblijfplaatshistorie.json';
-import { remoteApi } from '../../../testing/utils';
-import * as sourceApi from '../../helpers/source-api-request';
-import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token';
+} from './brp.ts';
+import testPersonenResponse from '../../../../mocks/fixtures/brp/test-personen.json' with { type: 'json' };
+import verblijfplaatsenResponse from '../../../../mocks/fixtures/brp/verblijfplaatshistorie.json' with { type: 'json' };
+import { remoteApi } from '../../../testing/utils.ts';
+import * as sourceApi from '../../helpers/source-api-request.ts';
+import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token.ts';
 
 const {
   fetchBenkBrpTokenHeader,

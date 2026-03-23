@@ -1,13 +1,14 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 import { LinkList } from '@amsterdam/design-system-react';
 
 import styles from './ThemaPagina.module.scss';
-import { LinkProps } from '../../../universal/types/App.types';
-import ErrorAlert from '../Alert/Alert';
-import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
-import { MaintenanceNotifications } from '../MaintenanceNotifications/MaintenanceNotifications';
-import { PageContentCell, PageV2 } from '../Page/Page';
+import type { LinkProps } from '../../../universal/types/App.types.ts';
+import ErrorAlert from '../Alert/Alert.tsx';
+import type { BarConfig } from '../LoadingContent/LoadingContent.tsx';
+import LoadingContent from '../LoadingContent/LoadingContent.tsx';
+import { MaintenanceNotifications } from '../MaintenanceNotifications/MaintenanceNotifications.tsx';
+import { PageContentCell, PageV2 } from '../Page/Page.tsx';
 
 const LOADING_BAR_CONFIG_DEFAULT: BarConfig = [
   ['20rem', '4rem', '4rem'],

@@ -1,12 +1,12 @@
 import { isToday } from 'date-fns/isToday';
 import { parseISO } from 'date-fns/parseISO';
-import Decimal from 'decimal.js';
+import { Decimal } from 'decimal.js';
 import { generatePath } from 'react-router';
 import slug from 'slugme';
-import { firstBy } from 'thenby';
+import thenby from 'thenby';
 
-import { getAfisApiConfig, getFeedEntryProperties } from './afis-helpers';
-import { featureToggle, routes } from './afis-service-config';
+import { getAfisApiConfig, getFeedEntryProperties } from './afis-helpers.ts';
+import { featureToggle, routes } from './afis-service-config.ts';
 import type {
   AfisFactuurState,
   AfisFacturenParams,
@@ -20,33 +20,33 @@ import type {
   AfisFacturenResponse,
   AfisFacturenOverviewResponse,
   AfisFactuurTermijn,
-} from './afis-types';
-import { routeConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config';
+} from './afis-types.ts';
+import { routeConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
   type ApiResponse,
-} from '../../../universal/helpers/api';
+} from '../../../universal/helpers/api.ts';
 import {
   dateSort,
   defaultDateFormat,
   isDateInPast,
-} from '../../../universal/helpers/date';
-import { toDateFormatted } from '../../../universal/helpers/date';
+} from '../../../universal/helpers/date.ts';
+import { toDateFormatted } from '../../../universal/helpers/date.ts';
 import {
   displayAmount,
   capitalizeFirstLetter,
-} from '../../../universal/helpers/text';
-import { entries, uniqueArray } from '../../../universal/helpers/utils';
-import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
+} from '../../../universal/helpers/text.ts';
+import { entries, uniqueArray } from '../../../universal/helpers/utils.ts';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt.ts';
 import {
   getRequestParamsFromQueryString,
   requestData,
-} from '../../helpers/source-api-request';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { captureMessage, trackEvent } from '../monitoring';
+} from '../../helpers/source-api-request.ts';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
+import { captureMessage, trackEvent } from '../monitoring.ts';
 
 const DEFAULT_PROFIT_CENTER_NAME = 'Gemeente Amsterdam';
 const AFIS_MAX_FACTUREN_TOP = 2000;
@@ -722,9 +722,10 @@ export async function fetchAfisFacturenOverview(
       count: openFacturenContent?.count ?? 0,
       state: 'open',
       facturen: facturenOpen.sort(
-        firstBy(function (factuur: AfisFactuur) {
-          return factuur.status === 'herinnering' ? -1 : 1;
-        })
+        thenby
+          .firstBy(function (factuur: AfisFactuur) {
+            return factuur.status === 'herinnering' ? -1 : 1;
+          })
           .thenBy(function (factuur: AfisFactuur) {
             return [
               'gedeeltelijke-betaling',

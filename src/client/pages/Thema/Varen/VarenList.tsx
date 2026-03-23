@@ -1,10 +1,10 @@
 import { useParams } from 'react-router';
 
-import { useVarenThemaData } from './useVarenThemaData.hook';
-import { ListPageParamKind } from './Varen-thema-config';
-import { VarenOnlyShowAanvragenAfterDateDisclaimer } from './VarenThema';
-import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { useVarenThemaData } from './useVarenThemaData.hook.ts';
+import type { ListPageParamKind } from './Varen-thema-config.ts';
+import { VarenOnlyShowAanvragenAfterDateDisclaimer } from './VarenThema.tsx';
+import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function VarenList() {
   const { kind = 'lopende-aanvragen' } = useParams<{

@@ -8,22 +8,23 @@ import {
 } from '@amsterdam/design-system-react-icons';
 import { generatePath, useParams } from 'react-router';
 
+import type {
+  ContactMomentFrontend} from './Contactmomenten.config.ts';
 import {
   contactmomentenDisplayProps,
-  ContactMomentFrontend,
   mapperContactmomentToMenuItem,
-} from './Contactmomenten.config';
+} from './Contactmomenten.config.ts';
 import styles from './ProfilePrivate.module.scss';
-import { isLoading, isError } from '../../../../../universal/helpers/api';
-import { MaRouterLink } from '../../../../components/MaLink/MaLink';
-import { ThemaMenuItemTransformed } from '../../../../config/thema-types';
-import { getRedactedClass } from '../../../../helpers/cobrowse';
-import { useAppStateGetter } from '../../../../hooks/useAppStateStore';
+import { isLoading, isError } from '../../../../../universal/helpers/api.ts';
+import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
+import type { ThemaMenuItemTransformed } from '../../../../config/thema-types.ts';
+import { getRedactedClass } from '../../../../helpers/cobrowse.ts';
+import { useAppStateGetter } from '../../../../hooks/useAppStateStore.ts';
 import {
   useThemaBreadcrumbs,
   useActiveThemaMenuItems,
-} from '../../../../hooks/useThemaMenuItems';
-import { routeConfig, themaIdBRP } from '../Profile-thema-config';
+} from '../../../../hooks/useThemaMenuItems.ts';
+import { routeConfig, themaIdBRP } from '../Profile-thema-config.ts';
 
 function getMenuItem(
   onderwerp: string,

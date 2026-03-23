@@ -1,4 +1,4 @@
-import { BFF500Error } from './BffError';
+import { BFF500Error } from './BffError.tsx';
 
 export const BffErrorRoutes = [
   {

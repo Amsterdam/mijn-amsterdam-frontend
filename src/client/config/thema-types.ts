@@ -1,17 +1,20 @@
 import { type Params } from 'react-router';
 
-import { SomeOtherString } from '../../universal/helpers/types';
-import {
+import type { SomeOtherString } from '../../universal/helpers/types.ts';
+import type {
   AppState,
   LinkProps,
   SVGComponent,
-} from '../../universal/types/App.types';
+} from '../../universal/types/App.types.ts';
 
 export type WithPageConfig<K extends string, T extends object = object> = {
   [P in K]: T & { route: ThemaRouteConfig };
 };
 
-export type IsThemaVisibleFN = (appState: AppState) => boolean;
+export type IsThemaVisibleFN = (
+  appState: AppState,
+  profileType?: ProfileType
+) => boolean;
 
 export type ThemaConfigBase<ID = string> = {
   id: ID;

@@ -1,16 +1,17 @@
 import { parseISO } from 'date-fns';
 import createDebugger from 'debug';
 
-import { fetchAfisTokenHeader } from './afis';
-import { EMANDATE_ENDDATE_INDICATOR } from './afis-e-mandates-config';
+import { EMANDATE_ENDDATE_INDICATOR } from './afis-e-mandates-config.ts';
+import type {
+  AfisApiFeedResponseSource} from './afis-types.ts';
 import {
-  AfisApiFeedResponseSource,
   type BusinessPartnerId,
-} from './afis-types';
-import { toDateFormatted } from '../../../universal/helpers/date';
-import { DataRequestConfig } from '../../config/source-api';
-import { getFromEnv } from '../../helpers/env';
-import { getApiConfig } from '../../helpers/source-api-helpers';
+} from './afis-types.ts';
+import { fetchAfisTokenHeader } from './afis.ts';
+import { toDateFormatted } from '../../../universal/helpers/date.ts';
+import type { DataRequestConfig } from '../../config/source-api.ts';
+import { getFromEnv } from '../../helpers/env.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
 
 export function getFeedEntryProperties<T>(
   response: AfisApiFeedResponseSource<T>
@@ -78,47 +79,24 @@ export function getEmandateStatusFrontend(
 }
 
 export function getEmandateDisplayStatus(
+  currentStatus: EmandateStatusFrontend,
   dateValidTo: string | null,
   dateValidFromFormatted: string | null
 ): string {
-  if (isEmandateActive(dateValidTo)) {
+  if (
+    getEmandateStatusFrontend(currentStatus, dateValidTo) ===
+    EMANDATE_STATUS_FRONTEND.ON
+  ) {
     return `Actief sinds ${dateValidFromFormatted}`;
   }
   return 'Niet actief';
 }
 
-const debugEmandates_ = createDebugger('afis:emandates');
-
-export function debugEmandates(...args: Parameters<typeof debugEmandates_>) {
-  const argsRedacted = args.map((arg) => {
-    if (typeof arg === 'object' && arg !== null) {
-      return redactEmandateData(arg);
-    }
-    return arg;
-  });
-  debugEmandates_(...(argsRedacted as Parameters<typeof debugEmandates_>));
-}
+export const debugEmandates = createDebugger('afis:emandates');
+export const debugBusinesspartner = createDebugger('afis:businesspartner');
 
 export function formatBusinessPartnerId(
   businessPartnerId: BusinessPartnerId
 ): string {
   return businessPartnerId.padStart(10, '0');
-}
-
-export function redactEmandateData<
-  T extends { iban?: string; SndIban?: string; senderIBAN?: string },
->(data: T): T {
-  const ibanProps = ['SndIban', 'iban', 'senderIBAN'] as const;
-  return ibanProps.reduce(
-    (acc, prop) => {
-      if (acc[prop]) {
-        return {
-          ...acc,
-          [prop]: `${acc[prop]!.slice(0, 2)}****${acc[prop]!.slice(-4)}`,
-        };
-      }
-      return acc;
-    },
-    { ...data }
-  );
 }

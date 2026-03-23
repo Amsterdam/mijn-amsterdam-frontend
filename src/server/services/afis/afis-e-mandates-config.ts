@@ -1,9 +1,10 @@
-import {
+import type {
   AfisEMandateCreditor,
-  EMandateReceiverSource,
+  EMandateReceiverSource} from './afis-types.ts';
+import {
   type AfisEMandateSourceStatic,
-} from './afis-types';
-import { getFromEnv } from '../../helpers/env';
+} from './afis-types.ts';
+import { getFromEnv } from '../../helpers/env.ts';
 
 // Voor elke afdeling van de gemeente gebruiken we dezelfde gegevens.
 export const eMandateReceiver: EMandateReceiverSource = {
@@ -78,12 +79,6 @@ export const EMandateCreditorsGemeenteAmsterdam: AfisEMandateCreditor[] = [
     iban: 'NL67RABO0110088999',
     subId: '11',
     refId: 'VERGUNNINGEN',
-  },
-  {
-    name: 'Zwembaden',
-    iban: 'NL10RABO0110077997',
-    subId: '12',
-    refId: '',
   },
 ];
 

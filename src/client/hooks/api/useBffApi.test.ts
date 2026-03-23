@@ -10,7 +10,7 @@ import {
   sendJSONPostRequest,
   sendFormPostRequest,
   isAborted,
-} from './useBffApi';
+} from './useBffApi.ts';
 
 describe('useBffApi', () => {
   beforeEach(() => {

@@ -1,21 +1,22 @@
-import { ReactNode, useMemo } from 'react';
+import type { ReactNode} from 'react';
+import { useMemo } from 'react';
 
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { filterItemCheckboxState } from './checkbox-helpers';
-import {
+import { filterItemCheckboxState } from './checkbox-helpers.ts';
+import type {
   DatasetFilterSelection,
   DatasetId,
   DatasetProperty,
   DatasetPropertyName,
   DatasetPropertyValueWithCount,
-} from '../../../../universal/config/myarea-datasets';
-import { sortAlpha } from '../../../../universal/helpers/utils';
-import { getIcon, getIconChildIdFromValue } from '../dataset-icons';
-import { DatasetControlCheckbox } from './DatasetControlCheckbox';
-import { DatasetControlPanelProps } from './DatasetControlPanel';
+} from '../../../../universal/config/myarea-datasets.ts';
+import { sortAlpha } from '../../../../universal/helpers/utils.ts';
+import { getIcon, getIconChildIdFromValue } from '../dataset-icons.tsx';
+import { DatasetControlCheckbox } from './DatasetControlCheckbox.tsx';
+import type { DatasetControlPanelProps } from './DatasetControlPanel.tsx';
 import styles from './PanelComponent.module.scss';
-import { PanelList, PanelListItem } from './PanelList';
+import { PanelList, PanelListItem } from './PanelList.tsx';
 
 interface DatasetPropertyFilterPanelProps {
   datasetId: DatasetId;

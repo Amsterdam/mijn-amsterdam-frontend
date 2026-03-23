@@ -1,19 +1,19 @@
 import { generatePath } from 'react-router';
 
-import {
+import type {
   WpiIncomeSpecificationTransformed,
   WpiRequestProcess,
-} from '../../../../server/services/wpi/wpi-types';
-import { DisplayProps } from '../../../components/Table/TableV2.types';
+} from '../../../../server/services/wpi/wpi-types.ts';
+import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
-} from '../../../config/app';
-import {
+} from '../../../config/app.ts';
+import type {
   PageConfig,
   ThemaConfigBase,
   WithListPage,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 
 const THEMA_ID = 'INKOMEN';
 const THEMA_TITLE = 'Inkomen';

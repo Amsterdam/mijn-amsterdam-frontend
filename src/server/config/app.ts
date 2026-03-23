@@ -1,4 +1,4 @@
-import { BFF_BASE_PATH } from '../routing/bff-routes';
+import { BFF_BASE_PATH } from '../routing/bff-routes.ts';
 
 export const BFF_REQUEST_CACHE_ENABLED =
   typeof process.env.BFF_REQUEST_CACHE_ENABLED !== 'undefined'

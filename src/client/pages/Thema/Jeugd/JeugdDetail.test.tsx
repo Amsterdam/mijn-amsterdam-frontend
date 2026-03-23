@@ -1,10 +1,10 @@
 import { render, within } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { themaConfig } from './Jeugd-thema-config';
-import { JeugdDetail } from './JeugdDetail';
-import { AppState } from '../../../../universal/types/App.types';
-import { componentCreator } from '../../MockApp';
+import { themaConfig } from './Jeugd-thema-config.ts';
+import { JeugdDetail } from './JeugdDetail.tsx';
+import type { AppState } from '../../../../universal/types/App.types.ts';
+import { componentCreator } from '../../MockApp.tsx';
 
 const id = '1610585298';
 

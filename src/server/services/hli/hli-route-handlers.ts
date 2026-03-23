@@ -1,18 +1,18 @@
-import { Request } from 'express';
+import type { Request } from 'express';
 
-import { ZORGNED_AV_API_CONFIG_KEY } from './hli-service-config';
+import { ZORGNED_AV_API_CONFIG_KEY } from './hli-service-config.ts';
+import type { StadspasBudget, StadspasFrontend } from './stadspas-types.ts';
 import {
   blockStadspas,
   fetchStadspasBudgetTransactions,
   unblockStadspas,
-} from './stadspas';
-import { StadspasBudget, StadspasFrontend } from './stadspas-types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+} from './stadspas.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import {
   sendResponse,
   type ResponseAuthenticated,
-} from '../../routing/route-helpers';
-import { fetchAanvragenRaw, fetchDocument } from '../zorgned/zorgned-service';
+} from '../../routing/route-helpers.ts';
+import { fetchAanvragenRaw, fetchDocument } from '../zorgned/zorgned-service.ts';
 
 type TransactionKeysEncryptedRequest = Request<{
   transactionsKeyEncrypted: StadspasFrontend['transactionsKeyEncrypted'];

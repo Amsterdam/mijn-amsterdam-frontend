@@ -1,6 +1,6 @@
-import { OmitMapped } from '../../../universal/helpers/utils';
-import { ZaakDetail } from '../../../universal/types/App.types';
-import { DecosZaakBase, DecosZaakFrontend } from '../decos/decos-types';
+import type { OmitMapped } from '../../../universal/helpers/utils.ts';
+import type { ZaakDetail } from '../../../universal/types/App.types.ts';
+import type { DecosZaakBase, DecosZaakFrontend } from '../decos/decos-types.ts';
 
 export type DecosZaakVarensFieldsSource = {
   mark: string;

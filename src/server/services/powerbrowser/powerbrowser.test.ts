@@ -7,21 +7,24 @@ import {
   fetchPBZaken,
   fetchDocument,
   forTesting,
-} from './powerbrowser-service';
+} from './powerbrowser-service.ts';
 import type {
-  PBDocumentFields,
+  PowerBrowserZaakTransformer,
   PBZaakFields,
   PBZaakRecord,
-  PowerBrowserZaakTransformer,
   SearchRequestResponse,
-} from './powerbrowser-types';
-import { remoteApi } from '../../../testing/utils';
-import { StatusLineItem } from '../../../universal/types/App.types';
-import type { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
-import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
-import { powerBrowserZaakTransformers as powerBrowserZaakTransformersForBB } from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-pb-zaken';
-import { BBVergunningFrontend } from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types';
-import { pbZaakTransformers as pbZaakTransformersForVTH } from '../vergunningen/pb-zaken';
+  PBDocumentFields,
+} from './powerbrowser-types.ts';
+import { remoteApi } from '../../../testing/utils.ts';
+import type { StatusLineItem } from '../../../universal/types/App.types.ts';
+import type {
+  AuthProfile,
+  AuthProfileAndToken,
+} from '../../auth/auth-types.ts';
+import * as encryptDecrypt from '../../helpers/encrypt-decrypt.ts';
+import { powerBrowserZaakTransformers as powerBrowserZaakTransformersForBB } from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-pb-zaken.ts';
+import type { BBVergunningFrontend } from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types.ts';
+import { pbZaakTransformers as pbZaakTransformersForVTH } from '../vergunningen/pb-zaken.ts';
 
 describe('Powerbrowser service', () => {
   const authProfile: AuthProfile = {

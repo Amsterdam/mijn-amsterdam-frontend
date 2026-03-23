@@ -3,36 +3,38 @@ import { generatePath } from 'react-router';
 import {
   getHulpmiddelenDisclaimer,
   hulpmiddelenDisclaimerConfig as hulpmiddelenDisclaimerConfig,
-} from './status-line-items/wmo-hulpmiddelen';
-import { routes } from './wmo-service-config';
-import { wmoStatusLineItemsConfig } from './wmo-status-line-items';
-import { themaConfig } from '../../../client/pages/Thema/Zorg/Zorg-thema-config';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
+} from './status-line-items/wmo-hulpmiddelen.ts';
+import { routes } from './wmo-service-config.ts';
+import { wmoStatusLineItemsConfig } from './wmo-status-line-items.ts';
+import { themaConfig } from '../../../client/pages/Thema/Zorg/Zorg-thema-config.ts';
+import { FeatureToggle } from '../../../universal/config/feature-toggles.ts';
 import {
   apiSuccessResult,
   type ApiResponse,
-} from '../../../universal/helpers/api';
-import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
-import { capitalizeFirstLetter } from '../../../universal/helpers/text';
-import type { StatusLineItem } from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { ZorgnedAanvraagTransformed, type BSN } from '../zorgned/zorgned-types';
+} from '../../../universal/helpers/api.ts';
+import { dateSort, defaultDateFormat } from '../../../universal/helpers/date.ts';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
+import type { StatusLineItem } from '../../../universal/types/App.types.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt.ts';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
+import type { ZorgnedAanvraagTransformed} from '../zorgned/zorgned-types.ts';
+import { type BSN } from '../zorgned/zorgned-types.ts';
 import {
   hasDecision,
   isAfterWCAGValidDocumentsDate,
-} from './status-line-items/wmo-generic';
+} from './status-line-items/wmo-generic.ts';
+import type {
+  WMOVoorzieningFrontend} from './wmo-types.ts';
 import {
-  WMOVoorzieningFrontend,
   type WMOVoorzieningCompact,
-} from './wmo-types';
-import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service';
-import { getLatestStatus, getLatestStatusDate } from '../../helpers/zaken';
+} from './wmo-types.ts';
+import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service.ts';
+import { getLatestStatus, getLatestStatusDate } from '../../helpers/zaken.ts';
 import {
   getStatusLineItems,
   isStatusLineItemTransformerMatch,
-} from '../zorgned/zorgned-status-line-items';
+} from '../zorgned/zorgned-status-line-items.ts';
 
 export function getDocuments(
   sessionID: SessionID,

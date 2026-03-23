@@ -1,11 +1,11 @@
 import {
   isNotBestuurlijkGevoelig,
   isZaakWithValidResultaat,
-} from '../../powerbrowser/powerbrowser-helpers';
+} from '../../powerbrowser/powerbrowser-helpers.ts';
 import type {
   PBZaakResultaat,
   PBRecordField,
-} from '../../powerbrowser/powerbrowser-types';
+} from '../../powerbrowser/powerbrowser-types.ts';
 
 const RESULTATEN_VERLEEND = [
   'Gedeeltelijk verleend',

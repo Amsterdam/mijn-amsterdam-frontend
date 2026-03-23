@@ -1,6 +1,6 @@
 import { useParams } from 'react-router';
 
-import { useBodemData } from './useBodemData.hook';
+import { useBodemData } from './useBodemData.hook.tsx';
 
 export function useBodemDetailData() {
   const { themaId, items, isLoading, isError, breadcrumbs, themaConfig } =

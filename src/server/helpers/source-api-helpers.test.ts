@@ -1,4 +1,4 @@
-import { getApiConfig, getCustomApiConfig } from './source-api-helpers';
+import { getApiConfig, getCustomApiConfig } from './source-api-helpers.ts';
 
 describe('Config', () => {
   test('getApiConfig', () => {

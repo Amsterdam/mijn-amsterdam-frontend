@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { themaConfig } from './Bezwaren-thema-config';
-import { BezwarenDetail } from './BezwarenDetail';
-import type { AppState } from '../../../../universal/types/App.types';
-import MockApp from '../../MockApp';
+import { themaConfig } from './Bezwaren-thema-config.ts';
+import { BezwarenDetail } from './BezwarenDetail.tsx';
+import type { AppState } from '../../../../universal/types/App.types.ts';
+import MockApp from '../../MockApp.tsx';
 
 const testState = {
   BEZWAREN: {

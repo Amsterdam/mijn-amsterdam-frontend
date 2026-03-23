@@ -1,4 +1,4 @@
-import { IS_PRODUCTION } from './env';
+import { IS_PRODUCTION } from './env.ts';
 
 /**
  * @deprecated

@@ -1,7 +1,6 @@
 import Mockdate from 'mockdate';
 import type nock from 'nock';
 
-import ZORGNED_JZD_AANVRAGEN from './zorgned-jzd-aanvragen.json';
 import {
   fetchAanvragen,
   fetchAanvragenWithRelatedPersons,
@@ -9,25 +8,26 @@ import {
   fetchRelatedPersons,
   forTesting,
   sortZorgnedAanvragenByDateAndId,
-} from './zorgned-service';
-import {
-  ZORGNED_GEMEENTE_CODE,
+} from './zorgned-service.ts';
+import type {
   ZorgnedPerson,
   ZorgnedPersoonsgegevensNAWResponse,
   ZorgnedResponseDataSource,
+} from './zorgned-types.ts';
+import {
+  ZORGNED_GEMEENTE_CODE,
   type BeschiktProduct,
   type ZorgnedAanvraagSource,
   type ZorgnedPersoonSource,
-} from './zorgned-types';
-import { remoteApiHost } from '../../../testing/setup';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
-import {
-  apiErrorResult,
-  ApiSuccessResponse,
-} from '../../../universal/helpers/api';
-import * as request from '../../helpers/source-api-request';
-import { ZORGNED_AV_API_CONFIG_KEY } from '../hli/hli-service-config';
-import { ZORGNED_JZD_API_CONFIG_KEY } from '../wmo/wmo-service-config';
+} from './zorgned-types.ts';
+import ZORGNED_JZD_AANVRAGEN from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json' with { type: 'json' };
+import { remoteApiHost } from '../../../testing/setup.ts';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import type { ApiSuccessResponse } from '../../../universal/helpers/api.ts';
+import { apiErrorResult } from '../../../universal/helpers/api.ts';
+import * as request from '../../helpers/source-api-request.ts';
+import { ZORGNED_AV_API_CONFIG_KEY } from '../hli/hli-service-config.ts';
+import { ZORGNED_JZD_API_CONFIG_KEY } from '../wmo/wmo-service-config.ts';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -145,17 +145,53 @@ describe('zorgned-service', () => {
         datumIngangGeldigheid: '2023-05-06',
         datumOpdrachtLevering: null,
         datumToewijzing: null,
-        documenten: [],
+        documenten: [
+          {
+            datePublished: '2026-03-09T12:23:27',
+            filename: 'Schermafbeelding 2024-03-14 191232.jpg',
+            id: 'E1532692',
+            title: 'kopie bankpas',
+            url: '',
+          },
+          {
+            datePublished: '2026-03-09T12:19:19',
+            filename: 'ADW beheer.png',
+            id: 'E1532685',
+            title: 'bankafschrift',
+            url: '',
+          },
+          {
+            datePublished: '2026-03-09T12:16:29',
+            filename: 'Leeg document.docx',
+            id: 'E1532678',
+            title: 'beschikking',
+            url: '',
+          },
+          {
+            datePublished: '2026-03-09T12:15:17',
+            filename: 'lege mail.msg',
+            id: 'E1532671',
+            title: 'beschikking toekenning',
+            url: '',
+          },
+          {
+            datePublished: '2026-02-05T17:22:33.737',
+            filename: 'BR4072158.pdf',
+            id: 'B4072158',
+            title: 'Besluit: toekenning Hulp bij de zorg voor uw kind',
+            url: '',
+          },
+        ],
         id: '300111429-116841',
-        prettyID: '300111429-116841',
         isActueel: true,
-        procesAanvraagOmschrijving: null,
         leverancier: 'Gebr Koenen B.V.',
         leveringsVorm: 'ZIN',
+        prettyID: '300111429-116841',
+        procesAanvraagOmschrijving: null,
         productIdentificatie: 'WRA',
         productsoortCode: 'WRA',
         resultaat: 'toegewezen',
-        titel: 'woonruimteaanpassing (in behandeling)',
+        titel: 'ALLE DOCUMENTEN TEST: woonruimteaanpassing (in behandeling)',
       });
     });
 

@@ -1,42 +1,43 @@
 import { generatePath } from 'react-router';
 
-import { getBodemStatusSteps } from './loodmeting-status-line-items';
-import {
+import { getBodemStatusSteps } from './loodmeting-status-line-items.ts';
+import type {
   Lood365Response,
   LoodMetingDocument,
   LoodMetingFrontend,
   LoodMetingRequestsSource,
   LoodMetingStatusLowerCase,
   LoodMetingen,
-} from './types';
-import { themaConfig } from '../../../client/pages/Thema/Bodem/Bodem-thema-config';
+} from './types.ts';
+import { themaConfig } from '../../../client/pages/Thema/Bodem/Bodem-thema-config.ts';
 import {
   apiDependencyError,
   apiSuccessResult,
-} from '../../../universal/helpers/api';
-import { defaultDateFormat } from '../../../universal/helpers/date';
+} from '../../../universal/helpers/api.ts';
+import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import {
   isRecentNotification,
   sortAlpha,
-} from '../../../universal/helpers/utils';
-import { MyNotification } from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { ONE_SECOND_MS } from '../../config/app';
-import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import { getFromEnv } from '../../helpers/env';
+} from '../../../universal/helpers/utils.ts';
+import type { MyNotification } from '../../../universal/types/App.types.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { ONE_SECOND_MS } from '../../config/app.ts';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt.ts';
+import { getFromEnv } from '../../helpers/env.ts';
 import {
   createSessionBasedCacheKey,
   getApiConfig,
-} from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
-import { BffEndpoints } from '../../routing/bff-routes';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token';
-import { captureException } from '../monitoring';
+} from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
+import { BffEndpoints } from '../../routing/bff-routes.ts';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
+import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token.ts';
+import { captureException } from '../monitoring.ts';
+import type {
+  DocumentDownloadData} from '../shared/document-download-route-handler.ts';
 import {
-  DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
-  DocumentDownloadData,
-} from '../shared/document-download-route-handler';
+  DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE
+} from '../shared/document-download-route-handler.ts';
 
 export function getDataForLood365(authProfileAndToken: AuthProfileAndToken) {
   if (authProfileAndToken.profile.authMethod === 'digid') {
@@ -124,11 +125,11 @@ function transformLood365Response(
             ? defaultDateFormat(request.RequestedOn)
             : '',
           datumInbehandeling: location?.Workordercreatedon,
-          datumAfgehandeld: datumAfgehandeld,
+          datumAfgehandeld,
           datumAfgehandeldFormatted: datumAfgehandeld
             ? defaultDateFormat(datumAfgehandeld)
             : '',
-          decision: decision,
+          decision,
           displayStatus: location.Friendlystatus,
           processed: isProcessed,
           identifier: location.Reference,

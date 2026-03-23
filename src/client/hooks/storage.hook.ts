@@ -1,7 +1,49 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 
-import { Unshaped } from '../../universal/types/App.types';
-import { captureException } from '../helpers/monitoring';
+import { create } from 'zustand/react';
+
+import type { Unshaped } from '../../universal/types/App.types.ts';
+import { captureException } from '../helpers/monitoring.ts';
+import { logger } from '../helpers/logging.ts';
+
+type WindowStateStore = {
+  set: (
+    storageType: 'localStorage' | 'sessionStorage',
+    key: string,
+    state: unknown
+  ) => void;
+  get: (storageType: 'localStorage' | 'sessionStorage', key: string) => unknown;
+  has: (storageType: 'localStorage' | 'sessionStorage', key: string) => boolean;
+  data: {
+    localStorage: Record<string, unknown>;
+    sessionStorage: Record<string, unknown>;
+  };
+};
+
+const useWindowStateStore = create<WindowStateStore>((set, get) => ({
+  data: {
+    localStorage: {},
+    sessionStorage: {},
+  },
+  set: (
+    storageType: 'localStorage' | 'sessionStorage',
+    key: string,
+    state: unknown
+  ) =>
+    set({
+      data: {
+        ...get().data,
+        [storageType]: { ...get().data[storageType], [key]: state },
+      },
+    }),
+  get: (storageType: 'localStorage' | 'sessionStorage', key: string) => {
+    const state = get();
+    const x = state.data[storageType][key];
+    return x;
+  },
+  has: (storageType: 'localStorage' | 'sessionStorage', key: string) =>
+    key in get().data[storageType],
+}));
 
 interface LocalStorageHandler {
   value: string | null;
@@ -45,7 +87,7 @@ const memoryHandler: MemoryAdapter = {
  */
 function useWindowStorage(
   key: string,
-  defaultValue: any = null,
+  defaultValue: string | null = null,
   adapter: Storage
 ) {
   const getValueFromLocalStorage = useCallback(() => {
@@ -73,11 +115,19 @@ function useWindowStorage(
     [adapter]
   );
 
-  const [value, setValue] = useState(getValueFromLocalStorage());
+  const { set: setValue, data } = useWindowStateStore();
+  const storageType =
+    adapter === localStorage ? 'localStorage' : 'sessionStorage';
+
+  // Initialize the state from localStorage on mount
+  useEffect(() => {
+    const value = getValueFromLocalStorage();
+    setValue(storageType, key, value);
+  }, []);
 
   const set = useCallback(
-    (newValue: any) => {
-      setValue(newValue);
+    (newValue: string | null) => {
+      setValue(storageType, key, newValue);
       // Apparently in some cases IE11 throws a SCRIPT5: access denied error which crashes the app.
       // The catch here prevents the crash and reports the error to Monitoring.
       try {
@@ -92,25 +142,25 @@ function useWindowStorage(
         });
       }
     },
-    [key, saveValueToLocalStorage]
+    [key, saveValueToLocalStorage, setValue]
   );
 
-  function onStorageEvent(e: StorageEvent) {
-    let storageAllowed = true;
-    // Check if we can handle the storage event
-    try {
-      localStorage.key(0);
-      sessionStorage.key(0);
-    } catch (error) {
-      storageAllowed = false;
-    }
-
-    if (storageAllowed) {
-      if (e.storageArea === adapter && e.key === key) {
-        setValue(e.newValue);
+  const onStorageEvent = useCallback(
+    (e: StorageEvent) => {
+      // Check if we can handle the storage event
+      try {
+        localStorage.key(0);
+        sessionStorage.key(0);
+      } catch (_) {
+        return;
       }
-    }
-  }
+
+      if (e.storageArea === adapter && e.key === key) {
+        setValue(storageType, key, e.newValue);
+      }
+    },
+    [adapter, key, setValue, storageType]
+  );
 
   function remove() {
     set(null);
@@ -125,7 +175,7 @@ function useWindowStorage(
   try {
     hasLocalStorage = adapter === localStorage;
   } catch (_) {
-    console.error('Error checking for localStorage');
+    logger.error('Error checking for localStorage');
   }
 
   useEffect(() => {
@@ -135,10 +185,12 @@ function useWindowStorage(
         window.removeEventListener('storage', onStorageEvent);
       };
     }
-  });
+  }, [hasLocalStorage, onStorageEvent]);
+
+  const stateStoreValue = data[storageType][key];
 
   const handler: LocalStorageHandler = {
-    value: value === null ? defaultValue : value,
+    value: typeof stateStoreValue === 'string' ? stateStoreValue : defaultValue,
     set,
     remove,
   };
@@ -146,70 +198,64 @@ function useWindowStorage(
   return handler;
 }
 
-export function useStorage<T>(
+function useStorage<T>(
   key: string,
   initialValue: T,
   adapter: Storage | MemoryAdapter = localStorage
-) {
+): [T, (newValue: T) => void] {
   let val = null;
   try {
-    val = initialValue !== null ? JSON.stringify(initialValue) : initialValue;
+    val = JSON.stringify(initialValue);
   } catch (_) {
-    console.error('Error getting localStorage');
+    logger.error('Error getting localStorage');
   }
 
   const { value: item, set: setValue } = useWindowStorage(key, val, adapter);
   const setItem = useCallback(
-    (newValue: string | null) => {
+    (newValue: T) => {
       try {
-        setValue(newValue !== null ? JSON.stringify(newValue) : null);
+        setValue(JSON.stringify(newValue));
       } catch (_) {
-        console.error('Error setting localStorage');
+        logger.error('Error setting localStorage');
       }
     },
     [setValue]
   );
 
   try {
-    return [item !== null ? JSON.parse(item) : item, setItem];
+    return [item !== null ? JSON.parse(item) : initialValue, setItem];
   } catch (e) {
-    return [null, setItem];
+    return [initialValue, setItem];
   }
 }
 
-export function useLocalStorage<Value>(
-  key: string,
-  value: Value | null = null
-) {
+export function useLocalStorage<Value>(key: string, initialValue: Value) {
   let adapter: MemoryAdapter | Storage = memoryHandler;
   try {
     adapter = localStorage || memoryHandler;
   } catch (_) {
-    console.error('Error getting localStorage');
+    logger.error('Error getting localStorage');
   }
 
-  return useStorage(key, value, adapter);
+  return useStorage(key, initialValue, adapter);
 }
 
-export function useSessionStorage<Value>(
-  key: string,
-  value: Value | null = null
-) {
+export function useSessionStorage<Value>(key: string, initialValue: Value) {
   let adapter: MemoryAdapter | Storage = memoryHandler;
   try {
     adapter = sessionStorage || memoryHandler;
   } catch (_) {
-    console.error('Error getting sessionStorage');
+    logger.error('Error getting sessionStorage');
   }
 
-  return useStorage(key, value, adapter);
+  return useStorage(key, initialValue, adapter);
 }
 
 export function clearSessionStorage() {
   try {
     sessionStorage.clear();
   } catch (_) {
-    console.error('Error clearing sessionStorage');
+    logger.error('Error clearing sessionStorage');
   }
 }
 
@@ -217,7 +263,7 @@ export function clearLocalStorage() {
   try {
     localStorage.clear();
   } catch (_) {
-    console.error('Error clearing localStorage');
+    logger.error('Error clearing localStorage');
   }
 }
 
@@ -225,6 +271,6 @@ export function removeLocalStorageKey(key: string) {
   try {
     localStorage.removeItem(key);
   } catch (_) {
-    console.error('Error removing localStorage key');
+    logger.error('Error removing localStorage key');
   }
 }

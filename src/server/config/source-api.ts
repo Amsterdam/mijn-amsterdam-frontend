@@ -1,24 +1,24 @@
 import https from 'node:https';
 
-import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 import {
   BFF_REQUEST_CACHE_ENABLED,
   ONE_HOUR_MS,
   ONE_MINUTE_MS,
   ONE_SECOND_MS,
-} from './app';
-import { featureToggle as featureToggleAfis } from '../../client/pages/Thema/Afis/Afis-thema-config';
-import { themaConfig as themaConfigBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config';
-import { themaConfig as themaConfigErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
-import { themaConfig as themaConfigJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config';
-import { themaConfig as themaConfigToeristischeVerhuur } from '../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
-import { IS_DEVELOPMENT } from '../../universal/config/env';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
-import { getCert } from '../helpers/cert';
-import { getFromEnv } from '../helpers/env';
-import { getHostNameFromUrl } from '../helpers/source-api-helpers';
-import { featureToggle as featureToggleHLI } from '../services/hli/hli-service-config';
+} from './app.ts';
+import { featureToggle as featureToggleAfis } from '../../client/pages/Thema/Afis/Afis-thema-config.ts';
+import { themaConfig as themaConfigBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config.ts';
+import { themaConfig as themaConfigErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
+import { themaConfig as themaConfigJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config.ts';
+import { themaConfig as themaConfigToeristischeVerhuur } from '../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
+import { IS_DEVELOPMENT } from '../../universal/config/env.ts';
+import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
+import { getCert } from '../helpers/cert.ts';
+import { getFromEnv } from '../helpers/env.ts';
+import { getHostNameFromUrl } from '../helpers/source-api-helpers.ts';
+import { featureToggle as featureToggleHLI } from '../services/hli/hli-service-config.ts';
 
 const RESET_AD_HOC_DEPENDENCY_REQUEST_CACHE_TTL_TIMEOUT_MS = ONE_HOUR_MS;
 export const FORCE_RENEW_CACHE_TTL_MS = 1;

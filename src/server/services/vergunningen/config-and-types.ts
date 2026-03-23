@@ -1,10 +1,10 @@
-import { ZaakStatus } from '../../../universal/types/App.types';
-import type { DecosZaakBase, DecosZaakFrontend } from '../decos/decos-types';
-export type { DecosZaakFrontend } from '../decos/decos-types';
+import type { ZaakStatus } from '../../../universal/types/App.types.ts';
+import type { DecosZaakBase, DecosZaakFrontend } from '../decos/decos-types.ts';
+export type { DecosZaakFrontend } from '../decos/decos-types.ts';
 import type {
   PowerBrowserZaakBase,
   PowerBrowserZaakFrontend,
-} from '../powerbrowser/powerbrowser-types';
+} from '../powerbrowser/powerbrowser-types.ts';
 
 export const NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED = 3;
 export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;

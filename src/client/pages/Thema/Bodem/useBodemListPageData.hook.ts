@@ -1,7 +1,7 @@
 import { generatePath, useParams } from 'react-router';
 
-import { ListPageParamKind } from './Bodem-thema-config';
-import { useBodemData } from './useBodemData.hook';
+import type { ListPageParamKind } from './Bodem-thema-config.ts';
+import { useBodemData } from './useBodemData.hook.tsx';
 
 export function useBodemListPageData() {
   const {

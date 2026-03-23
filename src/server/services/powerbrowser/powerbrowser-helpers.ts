@@ -1,4 +1,4 @@
-import type { PBRecordField } from './powerbrowser-types';
+import type { PBRecordField } from './powerbrowser-types.ts';
 
 export function hasCaseTypeInFMT_CAPTION(
   pbRecordField: PBRecordField<string>,

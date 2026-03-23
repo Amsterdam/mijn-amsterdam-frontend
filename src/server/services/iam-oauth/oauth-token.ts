@@ -1,13 +1,13 @@
 import qs from 'qs';
 
-import type { ApiResponse } from '../../../universal/helpers/api';
+import type { ApiResponse } from '../../../universal/helpers/api.ts';
 import type {
   DataRequestConfig,
   IAMSourceConfigKey,
   SourceApiName,
-} from '../../config/source-api';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
+} from '../../config/source-api.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
 
 type TokenRequestConfigOptions = {
   sourceApiName: SourceApiName;

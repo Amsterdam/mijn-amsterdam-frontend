@@ -1,22 +1,20 @@
 import { isBefore } from 'date-fns/isBefore';
 import { generatePath } from 'react-router';
 
-import { powerBrowserZaakTransformers } from './bed-and-breakfast-pb-zaken';
-import { getStatusSteps } from './bed-and-breakfast-status-steps';
-import {
+import { powerBrowserZaakTransformers } from './bed-and-breakfast-pb-zaken.ts';
+import { getStatusSteps } from './bed-and-breakfast-status-steps.ts';
+import type {
   BBVergunningFrontend,
   BedAndBreakfastType,
-} from './bed-and-breakfast-types';
-import { themaConfig } from '../../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
-import {
-  ApiResponse,
-  apiSuccessResult,
-} from '../../../../universal/helpers/api';
-import { AuthProfile } from '../../../auth/auth-types';
+} from './bed-and-breakfast-types.ts';
+import { themaConfig } from '../../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
+import type { ApiResponse } from '../../../../universal/helpers/api.ts';
+import { apiSuccessResult } from '../../../../universal/helpers/api.ts';
+import type { AuthProfile } from '../../../auth/auth-types.ts';
 import {
   fetchPBZaken,
   transformPBZaakFrontend,
-} from '../../powerbrowser/powerbrowser-service';
+} from '../../powerbrowser/powerbrowser-service.ts';
 
 // See also: https://www.amsterdam.nl/wonen-bouwen-verbouwen/woonruimte-verhuren/oude-regels-bed-breakfast/
 const DATE_NEW_REGIME_BB_RULES = '2019-01-01';
@@ -36,11 +34,8 @@ function transformBBFrontend(zaak: BedAndBreakfastType): BBVergunningFrontend {
       }),
       title: zaak.title,
     },
-    heeftOvergangsRecht: zaak.dateReceived
-      ? isBefore(
-          new Date(zaak.dateReceived),
-          new Date(DATE_NEW_REGIME_BB_RULES)
-        )
+    heeftOvergangsRecht: zaak.dateRequest
+      ? isBefore(new Date(zaak.dateRequest), new Date(DATE_NEW_REGIME_BB_RULES))
       : false,
   };
 }

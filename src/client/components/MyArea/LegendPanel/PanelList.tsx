@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 import classnames from 'classnames';
 
@@ -9,14 +9,14 @@ interface PanelListProps {
   className?: string;
 }
 
-export const PanelList = ({ children, className }: PanelListProps) => {
+export function PanelList({ children, className }: PanelListProps) {
   return (
     <ol className={classnames(styles.PanelList, className)}>{children}</ol>
   );
-};
+}
 
-export const PanelListItem = ({ children, className }: PanelListProps) => {
+export function PanelListItem({ children, className }: PanelListProps) {
   return (
     <li className={classnames(styles.PanelListItem, className)}>{children}</li>
   );
-};
+}

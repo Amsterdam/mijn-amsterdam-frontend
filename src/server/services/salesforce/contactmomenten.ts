@@ -1,19 +1,19 @@
-import {
+import type {
   ContactMomentenResponseSource,
   ContactMoment,
-} from './contactmomenten.types';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import { apiPostponeResult } from '../../../universal/helpers/api';
-import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { DataRequestConfig } from '../../config/source-api';
-import { encrypt } from '../../helpers/encrypt-decrypt';
-import { getFromEnv } from '../../helpers/env';
+} from './contactmomenten.types.ts';
+import { FeatureToggle } from '../../../universal/config/feature-toggles.ts';
+import { apiPostponeResult } from '../../../universal/helpers/api.ts';
+import { dateSort, defaultDateFormat } from '../../../universal/helpers/date.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import type { DataRequestConfig } from '../../config/source-api.ts';
+import { encrypt } from '../../helpers/encrypt-decrypt.ts';
+import { getFromEnv } from '../../helpers/env.ts';
 import {
   createSessionBasedCacheKey,
   getApiConfig,
-} from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
+} from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
 
 async function fetchSalesforceData<T>(
   dataRequestConfigSpecific: DataRequestConfig

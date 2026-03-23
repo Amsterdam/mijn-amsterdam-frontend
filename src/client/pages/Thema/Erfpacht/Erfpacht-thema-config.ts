@@ -1,22 +1,22 @@
 import { generatePath } from 'react-router';
 
-import {
+import type {
   ErfpachtDossierFrontend,
   ErfpachtDossiersResponse,
-} from '../../../../server/services/erfpacht/erfpacht-types';
-import { IS_PRODUCTION } from '../../../../universal/config/env';
-import { DisplayProps } from '../../../components/Table/TableV2.types';
-import { propagateFeatureToggles } from '../../../config/feature-toggles';
+} from '../../../../server/services/erfpacht/erfpacht-types.ts';
+import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
+import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
+import { propagateFeatureToggles } from '../../../config/feature-toggles.ts';
 import type {
   PageConfig,
   ThemaConfigBase,
   WithDetailPage,
   WithListPage,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 import {
   getAfisListPageDocumentTitle,
   getFacturenTableConfig,
-} from '../Afis/Afis-thema-config';
+} from '../Afis/Afis-thema-config.ts';
 
 // Themapagina
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_DOSSIERS = 5;

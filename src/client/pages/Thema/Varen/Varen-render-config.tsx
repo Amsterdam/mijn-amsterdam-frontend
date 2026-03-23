@@ -1,15 +1,15 @@
-import { themaConfig } from './Varen-thema-config';
-import { VarenDetailPageContentExploitatieVergunning } from './VarenDetailVergunningExploitatie';
-import { VarenDetailPageContentExploitatieZaak } from './VarenDetailZaakExploitatie';
+import { themaConfig } from './Varen-thema-config.ts';
+import { VarenDetailPageContentExploitatieVergunning } from './VarenDetailVergunningExploitatie.tsx';
+import { VarenDetailPageContentExploitatieZaak } from './VarenDetailZaakExploitatie.tsx';
 import { default as VarenIcon } from './VarenIcon.svg?react';
-import { VarenList } from './VarenList';
-import { VarenThema } from './VarenThema';
-import { isLoading } from '../../../../universal/helpers/api';
-import { type AppState } from '../../../../universal/types/App.types';
+import { VarenList } from './VarenList.tsx';
+import { VarenThema } from './VarenThema.tsx';
+import { isLoading } from '../../../../universal/helpers/api.ts';
+import { type AppState } from '../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 
 export const VarenRoutes = [
   {

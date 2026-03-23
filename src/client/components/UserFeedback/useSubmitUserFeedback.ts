@@ -1,5 +1,5 @@
-import { BFFApiUrls } from '../../config/api';
-import { useBffApi, sendFormPostRequest } from '../../hooks/api/useBffApi';
+import { BFFApiUrls } from '../../config/api.ts';
+import { useBffApi, sendFormPostRequest } from '../../hooks/api/useBffApi.ts';
 
 export function useSubmitUserFeedback(version?: number) {
   const url = new URL(BFFApiUrls.USER_FEEDBACK_SUBMIT);

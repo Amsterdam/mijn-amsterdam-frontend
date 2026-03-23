@@ -1,18 +1,18 @@
-import type { ZaakFrontendCombined } from './config-and-types';
-import { fetchVergunningen } from './vergunningen';
+import type { ZaakFrontendCombined } from './config-and-types.ts';
 import {
   getLifetimeTriggerDate,
   isExpiryNotificationDue,
-} from './vergunningen-helpers';
-import { themaConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config';
+} from './vergunningen-helpers.ts';
+import { fetchVergunningen } from './vergunningen.ts';
+import { themaConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
 import {
   apiDependencyError,
   apiSuccessResult,
-} from '../../../universal/helpers/api';
-import { isRecentNotification } from '../../../universal/helpers/utils';
-import { MyNotification } from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { getStatusDate } from '../decos/decos-helpers';
+} from '../../../universal/helpers/api.ts';
+import { isRecentNotification } from '../../../universal/helpers/utils.ts';
+import type { MyNotification } from '../../../universal/types/App.types.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { getStatusDate } from '../decos/decos-helpers.ts';
 
 function getNotificationBase<ID extends string>(
   vergunning: ZaakFrontendCombined,

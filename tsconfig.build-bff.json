@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig",
+  "compilerOptions": {
+    "outDir": "build-bff"
+  },
+  "include": [
+    "src/server",
+    "src/jobs",
+    "src/universal",
+    "src/global.d.ts",
+    "src/mijnamsterdam.d.ts"
+  ],
+  "exclude": [
+    "**/*.test.ts",
+    "**/*.test.tsx"
+  ]
+}

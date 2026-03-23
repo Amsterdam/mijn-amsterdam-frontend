@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { isValidBSN, ZodValidators } from './validation';
+import { isValidBSN, ZodValidators } from './validation.ts';
 
 describe('isValidBSN', () => {
   it('should return true for valid BSNs', () => {

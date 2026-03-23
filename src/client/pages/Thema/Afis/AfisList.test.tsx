@@ -1,11 +1,11 @@
 import { render, waitFor } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { routeConfig } from './Afis-thema-config';
-import { AfisList } from './AfisList';
-import { bffApi } from '../../../../testing/utils';
-import { AppState } from '../../../../universal/types/App.types';
-import MockApp from '../../MockApp';
+import { routeConfig } from './Afis-thema-config.ts';
+import { AfisList } from './AfisList.tsx';
+import { bffApi } from '../../../../testing/utils.ts';
+import type { AppState } from '../../../../universal/types/App.types.ts';
+import MockApp from '../../MockApp.tsx';
 
 const businessPartnerIdEncrypted = 'yyy-456-yyy';
 const testState = {

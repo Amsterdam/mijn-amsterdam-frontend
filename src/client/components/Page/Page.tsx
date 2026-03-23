@@ -1,19 +1,22 @@
-import { HTMLProps, ReactNode, type ReactElement } from 'react';
+import type { HTMLProps, ReactNode } from 'react';
+import { type ReactElement } from 'react';
 
-import {
-  Grid,
+import type {
   GridColumnNumber,
   GridColumnNumbers,
-  Heading,
 } from '@amsterdam/design-system-react';
+import { Grid, Heading } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
-import { getRedactedClass, type ScopeRequested } from '../../helpers/cobrowse';
+import {
+  getRedactedClass,
+  type ScopeRequested,
+} from '../../helpers/cobrowse.ts';
 import {
   PageBreadcrumbsV2,
   type PageBreadcrumbsV2Props,
-} from '../PageHeading/PageHeadingV2';
-import { InlineKTO } from '../UserFeedback/InlineKTO';
+} from '../PageHeading/PageHeadingV2.tsx';
+import { InlineKTO } from '../UserFeedback/InlineKTO.tsx';
 
 export interface PageProps extends HTMLProps<HTMLDivElement> {
   className?: string;
@@ -75,10 +78,6 @@ export function PageV2({
       </main>
     </div>
   );
-}
-
-export function PageContentV2({ children }: PageProps) {
-  return <>{children}</>;
 }
 
 type PageContentCellProps = {

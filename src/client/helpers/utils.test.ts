@@ -1,4 +1,4 @@
-import { isExternalUrl, isInteralUrl } from './utils';
+import { isExternalUrl, isInteralUrl } from './utils.ts';
 
 describe('utils', () => {
   it('isInternalUrl: Should check if url is external', () => {

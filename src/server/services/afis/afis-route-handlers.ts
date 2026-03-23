@@ -1,37 +1,53 @@
 import { HttpStatusCode } from 'axios';
-import { Response, Request } from 'express';
-import { ParamsDictionary } from 'express-serve-static-core';
+import { isAfter, parseISO } from 'date-fns';
+import type { Response, Request } from 'express';
+import type { ParamsDictionary } from 'express-serve-static-core';
 import z from 'zod';
 
-import { createOrUpdateEMandateFromStatusNotificationPayload } from './afis-e-mandates';
-import { fetchAfisFacturenByState } from './afis-facturen';
-import { debugEmandates } from './afis-helpers';
 import {
-  AfisFactuurState,
-  BusinessPartnerIdPayload,
+  createOrUpdateEMandateFromStatusNotificationPayload,
+  fetchEmandateSignRequestStatusFromPaymentProvider,
+  updateAfisEMandate,
+} from './afis-e-mandates.ts';
+import { fetchAfisFacturenByState } from './afis-facturen.ts';
+import {
+  debugEmandates,
+  getEmandateValidityDateFormatted,
+} from './afis-helpers.ts';
+import {
+  type AfisFactuurState,
+  type BusinessPartnerIdPayload,
+  type AfisEMandateUpdatePayload,
   type EMandateSignRequestNotificationPayload,
   type EMandateSignRequestPayload,
+  type EMandateSignRequestStatusPayload,
+  type EMandateUpdatePayload,
   type POMEMandateSignRequestPayload,
-} from './afis-types';
-import { IS_ACCEPTANCE } from '../../../universal/config/env';
+} from './afis-types.ts';
+import { IS_ACCEPTANCE, IS_AP } from '../../../universal/config/env.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
   type ApiResponse,
-} from '../../../universal/helpers/api';
-import { AuthProfile } from '../../auth/auth-types';
+} from '../../../universal/helpers/api.ts';
 import {
-  RequestWithRouteAndQueryParams,
+  isoDateTimeFormatCompact,
+  isoDateFormat,
+} from '../../../universal/helpers/date.ts';
+import type { AuthProfile } from '../../auth/auth-types.ts';
+import {
+  type RequestWithRouteAndQueryParams,
   sendBadRequestInvalidInput,
   sendResponse,
   type RecordStr2,
   type ResponseAuthenticated,
-} from '../../routing/route-helpers';
-import { captureException } from '../monitoring';
+} from '../../routing/route-helpers.ts';
+import { captureException } from '../monitoring.ts';
 import {
   decryptPayloadAndValidateSessionID,
-  EncryptedPayloadAndSessionID,
-} from '../shared/decrypt-route-param';
+  type EncryptedPayloadAndSessionID,
+  getDecryptedPayload,
+} from '../shared/decrypt-route-param.ts';
 
 function isPostiveInt(str: string) {
   return /^\d+$/.test(str);
@@ -44,7 +60,7 @@ type QueryParamsWithEncryptedPayload<
   [key in K]: EncryptedPayloadAndSessionID;
 } & QuerParamsAdditional;
 
-export type RequestWithEncryptedPayloadParam<
+export type RequestWithEncryptedPayloadQueryParam<
   P extends ParamsDictionary,
   Q extends RecordStr2 = QueryParamsWithEncryptedPayload,
 > = RequestWithRouteAndQueryParams<P, Q>;
@@ -62,7 +78,7 @@ export interface AfisFacturenRouteParams extends ParamsDictionary {
 export async function handleFetchAfisFacturen(
   payload: BusinessPartnerIdPayload,
   authProfile: AuthProfile,
-  req: RequestWithEncryptedPayloadParam<
+  req: RequestWithEncryptedPayloadQueryParam<
     AfisFacturenRouteParams,
     QueryParamsWithEncryptedPayload<{ top?: string }>
   >
@@ -88,13 +104,13 @@ export function handleAfisRequestWithEncryptedPayloadQueryParam<
   serviceMethod: (
     payload: QueryPayload,
     authProfile: AuthProfile,
-    request: RequestWithEncryptedPayloadParam<RouteParams>
+    request: RequestWithEncryptedPayloadQueryParam<RouteParams>
   ) => ServiceResponse,
   payloadParamName: string = 'payload'
 ) {
   // Return the route handler (middleware) that will handle the request.
   return async function handleEMandateApiRequest(
-    req: RequestWithEncryptedPayloadParam<RouteParams>,
+    req: RequestWithEncryptedPayloadQueryParam<RouteParams>,
     res: ResponseAuthenticated
   ) {
     // Get the query parameter value for the encrypted payload.
@@ -119,6 +135,29 @@ export function handleAfisRequestWithEncryptedPayloadQueryParam<
 
     return sendResponse(res, serviceMethodResponse);
   };
+}
+
+export async function handleAfisEMandateSignRequestStatus(
+  req: RequestWithEncryptedPayloadQueryParam<EMandateSignRequestStatusPayload>,
+  res: ResponseAuthenticated
+) {
+  // Get the query parameter value for the encrypted payload.
+  const payloadEncrypted = req.query.statusCheckPayload;
+
+  const decryptResult =
+    getDecryptedPayload<EMandateSignRequestStatusPayload>(payloadEncrypted);
+
+  if (decryptResult.status === 'ERROR') {
+    return sendResponse(res, decryptResult);
+  }
+
+  const payloadDecrypted = decryptResult.content;
+
+  // Call the service method with the decrypted payload.
+  const serviceMethodResponse =
+    await fetchEmandateSignRequestStatusFromPaymentProvider(payloadDecrypted);
+
+  return sendResponse(res, serviceMethodResponse);
 }
 
 const eMandateSignRequestStatusNotificationPayload = z.object({
@@ -208,4 +247,50 @@ export async function handleAfisEMandateSignRequestStatusNotification(
   );
 
   return sendResponse(res, response);
+}
+
+export async function handleEmandateLifetimeUpdate(
+  eMandateStatusChangePayload: EMandateUpdatePayload,
+  _authProfile: AuthProfile,
+  req: Request
+) {
+  const eMandateUploadPayload = z.object({
+    LifetimeTo: z.iso
+      .date()
+      .refine((isoDate) => {
+        return isAfter(parseISO(isoDate), new Date());
+      })
+      .transform((isoDate) => isoDateTimeFormatCompact(isoDate)),
+    IMandateId: z.string(),
+  });
+
+  let payload: AfisEMandateUpdatePayload;
+
+  try {
+    payload = eMandateUploadPayload.parse({
+      LifetimeTo: req.body.dateValidTo,
+      ...eMandateStatusChangePayload,
+    });
+  } catch (error: unknown) {
+    captureException(error);
+    return apiErrorResult(
+      !IS_AP
+        ? z.prettifyError(error as z.ZodError)
+        : 'Invalid request, failed to parse request body.',
+      null,
+      HttpStatusCode.BadRequest
+    );
+  }
+
+  function transformResponse() {
+    const dateValidTo = payload.LifetimeTo
+      ? isoDateFormat(payload.LifetimeTo)
+      : null;
+    return {
+      dateValidTo,
+      dateValidToFormatted: getEmandateValidityDateFormatted(dateValidTo),
+    };
+  }
+
+  return updateAfisEMandate(payload, transformResponse);
 }

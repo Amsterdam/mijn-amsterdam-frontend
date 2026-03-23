@@ -1,4 +1,4 @@
-const LogoEherkenning = () => {
+function LogoEherkenning() {
   return (
     <svg
       width="46px"
@@ -33,6 +33,6 @@ const LogoEherkenning = () => {
       ></polygon>
     </svg>
   );
-};
+}
 
 export default LogoEherkenning;

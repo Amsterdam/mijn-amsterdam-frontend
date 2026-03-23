@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState, useRef } from 'react';
+import { logger } from '../helpers/logging.ts';
 
 export const SSE_UNLOAD_MESSAGE = 'sse-unload';
 export const SSE_UNMOUNT_MESSAGE = 'sse-unmount';
@@ -44,7 +45,7 @@ export function useSSE({ path, eventName, callback, postpone }: useSSEProps) {
   const handleError = useCallback(
     (_error: Event) => {
       // eslint-disable-next-line no-console
-      console.info(
+      logger.info(
         '[SSE] Error connecting, ES ReadyState:',
         es?.readyState,
         'count: ',
@@ -84,7 +85,7 @@ export function useSSE({ path, eventName, callback, postpone }: useSSEProps) {
         messageData = JSON.parse(message.data);
       } catch (_error) {
         // eslint-disable-next-line no-console
-        console.error('[SSE] Parsing sse message data failed.');
+        logger.error('[SSE] Parsing sse message data failed.');
       }
 
       callback(messageData);

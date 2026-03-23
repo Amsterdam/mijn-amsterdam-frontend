@@ -3,38 +3,38 @@ import { isAfter } from 'date-fns/isAfter';
 import { parseISO } from 'date-fns/parseISO';
 import { generatePath } from 'react-router';
 import slug from 'slugme';
-import { firstBy } from 'thenby';
+import thenBy from 'thenby';
 
-import { themaConfig } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
+import { themaConfig } from '../../../../client/pages/Thema/HLI/HLI-thema-config.ts';
 import {
   type ApiResponse,
   apiSuccessResult,
-} from '../../../../universal/helpers/api';
+} from '../../../../universal/helpers/api.ts';
 import {
   dateFormat,
   dateSort,
   defaultDateFormat,
-} from '../../../../universal/helpers/date';
-import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
-import { hash, sortAlpha } from '../../../../universal/helpers/utils';
-import type { StatusLineItem } from '../../../../universal/types/App.types';
+} from '../../../../universal/helpers/date.ts';
+import { capitalizeFirstLetter } from '../../../../universal/helpers/text.ts';
+import { hash, sortAlpha } from '../../../../universal/helpers/utils.ts';
+import type { StatusLineItem } from '../../../../universal/types/App.types.ts';
 import type {
   AuthProfile,
   AuthProfileAndToken,
-} from '../../../auth/auth-types';
+} from '../../../auth/auth-types.ts';
 import type {
   BSN,
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedPerson,
-} from '../../zorgned/zorgned-types';
-import { getDocumentsFrontend } from '../hli';
+} from '../../zorgned/zorgned-types.ts';
 import type {
   HLIRegelingFrontend,
   HLIRegelingSpecificatieFrontend,
-} from '../hli-regelingen-types';
-import { featureToggle } from '../hli-service-config';
-import { fetchZorgnedAanvragenHLI } from '../hli-zorgned-service';
-import { getBesluitDescription } from '../status-line-items/generic';
+} from '../hli-regelingen-types.ts';
+import { featureToggle } from '../hli-service-config.ts';
+import { fetchZorgnedAanvragenHLI } from '../hli-zorgned-service.ts';
+import { getDocumentsFrontend } from '../hli.ts';
+import { getBesluitDescription } from '../status-line-items/generic.ts';
 
 // Titel for RTM Specificatie documents in Zorgned
 export const RTM_SPECIFICATIE_TITLE = 'AV-RTM Specificatie';
@@ -363,7 +363,9 @@ function getSteps(
     })
     .toSorted(
       // sorting by datePublished asc, and by id asc to ensure consistent order for same-date steps
-      firstBy(dateSort('datePublished', 'asc')).thenBy(sortAlpha('id', 'asc'))
+      thenBy
+        .firstBy(dateSort('datePublished', 'asc'))
+        .thenBy(sortAlpha('id', 'asc'))
     );
 
   const mostRecentToegewezenRTM = aanvragen.findLast(

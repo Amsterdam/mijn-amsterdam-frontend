@@ -1,12 +1,12 @@
 import { useCallback, useState } from 'react';
 
-import { useAppStateFallbackService } from './useAppStateFallbackServicesAll';
-import { useAppStateStore } from './useAppStateStore';
-import { SSE_CLOSE_MESSAGE, SSE_ERROR_MESSAGE, useSSE } from './useSSE';
-import { streamEndpointQueryParamKeys } from '../../universal/config/app';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
-import { BFFApiUrls } from '../config/api';
-import { transformSourceData } from '../data-transform/appState';
+import { useAppStateFallbackService } from './useAppStateFallbackServicesAll.ts';
+import { useAppStateStore } from './useAppStateStore.ts';
+import { SSE_CLOSE_MESSAGE, SSE_ERROR_MESSAGE, useSSE } from './useSSE.ts';
+import { streamEndpointQueryParamKeys } from '../../universal/config/app.ts';
+import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
+import { BFFApiUrls } from '../config/api.ts';
+import { transformSourceData } from '../data-transform/appState.tsx';
 
 export function addParamsToStreamEndpoint(
   url: string,

@@ -1,5 +1,5 @@
-import { featureToggle, themaId, themaTitle } from './Afis-thema-config';
-import { InfoSection_DEPRECATED } from '../../GeneralInfo/GeneralInfo';
+import { featureToggle, themaId, themaTitle } from './Afis-thema-config.ts';
+import type { InfoSection_DEPRECATED } from '../../GeneralInfo/GeneralInfo.tsx';
 
 export const afisSectionProps: InfoSection_DEPRECATED = {
   id: themaId,

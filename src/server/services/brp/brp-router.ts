@@ -1,16 +1,16 @@
 import type { Request } from 'express';
 
-import { fetchBrpByBsn } from './brp';
-import { fetchAantalIngeschrevenPersonen } from './brp';
-import { featureToggle, routes } from './brp-service-config';
-import { IS_PRODUCTION } from '../../../universal/config/env';
+import { featureToggle, routes } from './brp-service-config.ts';
+import { fetchBrpByBsn } from './brp.ts';
+import { fetchAantalIngeschrevenPersonen } from './brp.ts';
+import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import {
   createBFFRouter,
   sendResponse,
   type RequestWithQueryParams,
   type ResponseAuthenticated,
-} from '../../routing/route-helpers';
-import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
+} from '../../routing/route-helpers.ts';
+import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param.ts';
 
 export const routerProtected = createBFFRouter({
   id: 'protected-brp',

@@ -1,12 +1,12 @@
 import { generatePath } from 'react-router';
 
-import { LeerlingenvervoerVoorzieningFrontend } from '../../../../server/services/jeugd/jeugd';
-import { DisplayProps } from '../../../components/Table/TableV2.types';
-import {
+import type { LeerlingenvervoerVoorzieningFrontend } from '../../../../server/services/jeugd/jeugd.ts';
+import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
+import type {
   ThemaConfigBase,
   WithDetailPage,
   WithListPage,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 
 const THEMA_TITLE = 'Onderwijs en Jeugd';
 const THEMA_ID = 'JEUGD';

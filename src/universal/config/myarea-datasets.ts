@@ -1,4 +1,4 @@
-import { featureToggle } from '../../client/components/MyArea/MyArea-thema-config';
+import { featureToggle } from '../../client/components/MyArea/MyArea-thema-config.ts';
 
 // Amsterdam center
 export const DEFAULT_LAT: number = 52.3676842478192;

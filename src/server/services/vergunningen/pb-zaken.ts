@@ -7,40 +7,38 @@ import {
   type Splitsingsvergunning,
   type OnttrekkingsvergunningTweedeWoning,
   type VormenVanWoonruimte,
-  type LigplaatsWoonbootvergunning,
   type LigplaatsBedrijfsvaartuigvergunning,
-} from './config-and-types';
-import { SELECT_FIELDS_TRANSFORM_BASE } from '../powerbrowser/powerbrowser-field-transformers';
+  type LigplaatsWoonbootvergunning,
+} from './config-and-types.ts';
+import { SELECT_FIELDS_TRANSFORM_BASE } from '../powerbrowser/powerbrowser-field-transformers.ts';
 import {
   hasCaseTypeInFMT_CAPTION,
   hasStringInZAAK_SUBPRODUCT_ID,
   hasStringInZAAKPRODUCT_ID,
-} from '../powerbrowser/powerbrowser-helpers';
-import {
+} from '../powerbrowser/powerbrowser-helpers.ts';
+import type {
+  PBRecordField,
   PowerBrowserZaakTransformer,
-  type PBRecordField,
-} from '../powerbrowser/powerbrowser-types';
+} from '../powerbrowser/powerbrowser-types.ts';
 import {
   isValidVTHZaak,
-  isValidVTHDocument,
   transformVTHZaakResult,
-} from './VTH/pb-zaken-vth-helpers';
+  isValidVTHDocument,
+} from './VTH/pb-zaken-vth-helpers.ts';
 
 const LigplaatsWoonbootVergunningZaakTransformer: PowerBrowserZaakTransformer<LigplaatsWoonbootvergunning> =
   {
     caseType: caseTypePB.LigplaatsWoonbootvergunning,
     title: 'Ligplaatsvergunning woonboot',
-    fetchZaakFilter: (pbRecordField) => {
-      const isOldZaak = hasStringInZAAKPRODUCT_ID(
+    fetchZaakFilter: (pbRecordField) =>
+      hasStringInZAAKPRODUCT_ID(
         pbRecordField,
         'Ligplaatsvergunning woonboot'
-      );
-      const isNewZaak = hasStringInZAAK_SUBPRODUCT_ID(
+      ) ||
+      hasStringInZAAK_SUBPRODUCT_ID(
         pbRecordField,
         'Ligplaatsvergunning woonboot'
-      );
-      return (isOldZaak || isNewZaak) && isValidVTHZaak(pbRecordField);
-    },
+      ),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
@@ -192,7 +190,7 @@ const SplitsingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Splitsing
     filterValidDocumentPredicate: isValidVTHDocument,
   };
 
-export const pbZaakTransformers = [
+const pbZaakTransformers_ = [
   OmzettingsvergunningZaakTransformer,
   LigplaatsWoonbootVergunningZaakTransformer,
   LigplaatsBedrijfsvaartuigVergunningZaakTransformer,
@@ -202,11 +200,12 @@ export const pbZaakTransformers = [
   OnttrekkingsvergunningZaakTransformer,
   OnttrekkingsvergunningSloopZaakTransformer,
   OnttrekkingsvergunningTweedeWoningZaakTransformer,
-].map((t) => ({
+];
+export const pbZaakTransformers = pbZaakTransformers_.map((t) => ({
   ...t,
   fetchZaakFilter: (field: PBRecordField) =>
-    t.fetchZaakFilter?.(field) && isValidVTHZaak(field),
-}));
+    t.fetchZaakFilter(field) && isValidVTHZaak(field),
+})) as typeof pbZaakTransformers_;
 
 export const pbCaseToZaakTransformers = pbZaakTransformers.reduce<
   Record<string, PowerBrowserZaakTransformer>
