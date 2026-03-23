@@ -153,6 +153,13 @@ export type PowerBrowserZaakTransformer<
   caseType: CaseTypeLiteral<T>;
   title: string;
   fetchZaakFilter: (fields: PBZaakFieldsByName) => boolean;
+  /**
+   * Optional predicate to determine whether a zaak is considered granted.
+   * Runs on the transformed zaak (so you can decide based on the displayed decision).
+   */
+  isVerleend: (
+    zaak: Pick<PowerBrowserZaakBase, 'decision'> & Partial<T>
+  ) => boolean;
   transformFields: TF;
   transformFieldValues?: Partial<
     Record<keyof TF, (value: string | null) => string | null>

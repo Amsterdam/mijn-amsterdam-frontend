@@ -266,7 +266,7 @@ async function fetchZaakAdres(
 }
 
 async function fetchZaakStatusDates(
-  zaak: Pick<PowerBrowserZaakBase, 'id'>
+  zaakId: PowerBrowserZaakBase['id']
 ): Promise<ApiResponse<ZaakStatusDate[] | null>> {
   const statusResponse = await fetchPowerBrowserData<StatusLineItem[]>({
     formatUrl({ url }) {
@@ -288,7 +288,7 @@ async function fetchZaakStatusDates(
           Name: 'GFO_ZAKEN_ID',
           Type: 'String',
           Value: {
-            StringValue: `${zaak.id}`,
+            StringValue: `${zaakId}`,
           },
         },
       ],
@@ -303,12 +303,12 @@ async function fetchSettledZaakDocuments(
     PowerBrowserZaakTransformer,
     'transformDoclinks' | 'filterValidDocumentPredicate'
   >,
-  zaak: Pick<PowerBrowserZaakBase, 'id'>
+  zaakId: PowerBrowserZaakBase['id']
 ): Promise<GenericDocument[]> {
   const { status, content } = await fetchDocumentsList(
     authProfile,
     zaakTransformer,
-    zaak.id
+    zaakId
   );
   if (status === 'OK' && content !== null) {
     return content;
@@ -317,9 +317,9 @@ async function fetchSettledZaakDocuments(
 }
 
 async function fetchSettledZaakStatusDates(
-  zaak: Pick<PowerBrowserZaakBase, 'id'>
+  zaakId: PowerBrowserZaakBase['id']
 ): Promise<ZaakStatusDate[]> {
-  const { status, content } = await fetchZaakStatusDates(zaak);
+  const { status, content } = await fetchZaakStatusDates(zaakId);
   if (status === 'OK' && content !== null) {
     return content;
   }
@@ -327,13 +327,13 @@ async function fetchSettledZaakStatusDates(
 }
 
 async function fetchSettledZaakAdres(
-  zaak: Pick<PowerBrowserZaakBase, 'id'>
-): Promise<string> {
-  const { status, content } = await fetchZaakAdres(zaak.id);
+  zaakId: PowerBrowserZaakBase['id']
+): Promise<string | null> {
+  const { status, content } = await fetchZaakAdres(zaakId);
   if (status === 'OK' && content !== null) {
     return content;
   }
-  return '';
+  return null;
 }
 
 function convertPBRecordToDict(
@@ -483,7 +483,16 @@ export async function fetchDocument(
 function transformZaakRaw<
   T extends PowerBrowserZaakTransformer,
   PB extends NestedType<T>,
->(zaakTransformer: T, zaakRaw: PBZaakRecord): PB {
+>(
+  zaakTransformer: T,
+  input: {
+    zaakRaw: PBZaakRecord;
+    location: string | null;
+    documents: GenericDocument[];
+    statusDates: ZaakStatusDate[];
+  }
+): PB {
+  const { zaakRaw, location, documents, statusDates } = input;
   const zaakWithTransformedFields = Object.fromEntries(
     entries(zaakTransformer.transformFields).map(
       ([pbFieldName, desiredName]) => {
@@ -508,29 +517,40 @@ function transformZaakRaw<
     { ...zaakWithTransformedFields, ...zaakWithTransformedFieldValues };
 
   const decision = result;
-  const isVerleend = decision === 'Verleend';
 
-  const zaak = {
+  const dateDecisionFromStatus = statusDates.find(
+    (sd) => sd.status === 'Gereed'
+  )?.datePublished;
+
+  const zaakBase = {
+    ...pbZaak,
     id: zaakRaw.id,
     identifier: zaaknummer ?? zaakRaw.id,
     caseType: zaakTransformer.caseType,
     title: zaakTransformer.title,
 
     dateRequest: dateReceived,
-    dateDecision,
-
-    // The permit is valid from the date we have a decision.
-    dateStart: isVerleend && dateDecision ? dateDecision : '',
-    dateEnd: isVerleend && dateEnd ? dateEnd : '',
+    dateDecision: dateDecision ?? dateDecisionFromStatus ?? null,
 
     decision,
-    isVerleend,
-    documents: [] as GenericDocument[],
+    isVerleend: false,
+    documents,
+    statusDates,
+    location,
 
     processed: !!decision,
-    isExpired: isExpired(pbZaak.dateEnd, new Date()),
+  };
 
-    ...pbZaak,
+  const isVerleend = zaakTransformer.isVerleend(zaakBase);
+  const zaakDateStart = isVerleend && dateDecision ? dateDecision : '';
+  const zaakDateEnd = isVerleend && dateEnd ? dateEnd : '';
+
+  const zaak = {
+    ...zaakBase,
+    isVerleend,
+    dateStart: zaakDateStart,
+    dateEnd: zaakDateEnd,
+    isExpired: isExpired(zaakDateEnd, new Date()),
   };
 
   return zaak as PB;
@@ -619,18 +639,19 @@ export async function fetchPBZaken<T extends PowerBrowserZaakTransformer>(
 
   const zakenPromise = zakenResponse.content.map(
     async ([zaakRaw, zaakTransformer]) => {
-      const zaak = transformZaakRaw(zaakTransformer, zaakRaw);
+      const zaakId = zaakRaw.id;
       const [location, documents, statusDates] = await Promise.all([
-        fetchSettledZaakAdres(zaak),
-        fetchSettledZaakDocuments(authProfile, zaakTransformer, zaak),
-        fetchSettledZaakStatusDates(zaak),
+        fetchSettledZaakAdres(zaakId),
+        fetchSettledZaakDocuments(authProfile, zaakTransformer, zaakId),
+        fetchSettledZaakStatusDates(zaakId),
       ]);
-      return {
-        ...zaak,
+
+      return transformZaakRaw(zaakTransformer, {
+        zaakRaw,
         location,
         documents,
         statusDates,
-      };
+      });
     }
   );
   const zaken = await Promise.all(zakenPromise);

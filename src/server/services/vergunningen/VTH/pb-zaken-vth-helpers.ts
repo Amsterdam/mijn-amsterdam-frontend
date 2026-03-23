@@ -4,7 +4,7 @@ import {
 } from '../../powerbrowser/powerbrowser-helpers.ts';
 import type { PBZaakFieldsByName } from '../../powerbrowser/powerbrowser-types.ts';
 
-const RESULTATEN_VERLEEND = [
+export const RESULTATEN_VERLEEND = [
   'Gedeeltelijk verleend',
   'Van rechtswege verleend',
   'Vergunning gedeeltelijk ingetrokken',
@@ -34,6 +34,13 @@ export function transformVTHZaakResult(
   }
 
   return resultaat;
+}
+
+export function isVTHZaakVerleend(zaak: { decision: string | null }): boolean {
+  return (
+    typeof zaak.decision === 'string' &&
+    RESULTATEN_VERLEEND.includes(zaak.decision)
+  );
 }
 
 export function isValidVTHDocument(record: {

@@ -22,14 +22,15 @@ import type {
 } from '../powerbrowser/powerbrowser-types.ts';
 import {
   isValidVTHZaak,
-  transformVTHZaakResult,
   isValidVTHDocument,
+  isVTHZaakVerleend,
 } from './VTH/pb-zaken-vth-helpers.ts';
 
 const LigplaatsWoonbootVergunningZaakTransformer: PowerBrowserZaakTransformer<LigplaatsWoonbootvergunning> =
   {
     caseType: caseTypePB.LigplaatsWoonbootvergunning,
     title: 'Ligplaatsvergunning woonboot',
+    isVerleend: isVTHZaakVerleend,
     fetchZaakFilter: (pbZaakFields) =>
       hasStringInZAAKPRODUCT_ID('Ligplaatsvergunning woonboot', pbZaakFields) ||
       hasStringInZAAK_SUBPRODUCT_ID(
@@ -39,9 +40,6 @@ const LigplaatsWoonbootVergunningZaakTransformer: PowerBrowserZaakTransformer<Li
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    transformFieldValues: {
-      result: transformVTHZaakResult,
-    },
     filterValidDocumentPredicate: isValidVTHDocument,
   };
 
@@ -49,6 +47,7 @@ const LigplaatsBedrijfsvaartuigVergunningZaakTransformer: PowerBrowserZaakTransf
   {
     caseType: caseTypePB.LigplaatsBedrijfsvaartuigvergunning,
     title: 'Ligplaatsvergunning bedrijfsvaartuig',
+    isVerleend: isVTHZaakVerleend,
     fetchZaakFilter: (pbZaakFields) =>
       hasStringInZAAKPRODUCT_ID(
         'Ligplaatsvergunning bedrijfsvaartuig',
@@ -59,9 +58,6 @@ const LigplaatsBedrijfsvaartuigVergunningZaakTransformer: PowerBrowserZaakTransf
         pbZaakFields
       ),
     transformFields: SELECT_FIELDS_TRANSFORM_BASE,
-    transformFieldValues: {
-      result: transformVTHZaakResult,
-    },
     filterValidDocumentPredicate: isValidVTHDocument,
   };
 
@@ -69,13 +65,11 @@ const OmzettingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Omzetting
   {
     caseType: caseTypePB.Omzettingsvergunning,
     title: 'Vergunning voor kamerverhuur (omzettingsvergunning)',
+    isVerleend: isVTHZaakVerleend,
     fetchZaakFilter: (pbZaakFields) =>
       hasCaseTypeInFMT_CAPTION('Omzetting kamerverhuur', pbZaakFields),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
-    },
-    transformFieldValues: {
-      result: transformVTHZaakResult,
     },
     filterValidDocumentPredicate: isValidVTHDocument,
   };
@@ -84,13 +78,11 @@ const SamenvoegingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Samenv
   {
     caseType: caseTypePB.Samenvoegingsvergunning,
     title: 'Vergunning voor samenvoegen van woonruimten',
+    isVerleend: isVTHZaakVerleend,
     fetchZaakFilter: (pbZaakFields) =>
       hasCaseTypeInFMT_CAPTION('Vergunning voor samenvoegen', pbZaakFields),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
-    },
-    transformFieldValues: {
-      result: transformVTHZaakResult,
     },
     filterValidDocumentPredicate: isValidVTHDocument,
   };
@@ -99,6 +91,7 @@ const OnttrekkingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Onttrek
   {
     caseType: caseTypePB.Onttrekkingsvergunning,
     title: caseTypePB.Onttrekkingsvergunning,
+    isVerleend: isVTHZaakVerleend,
     fetchZaakFilter: (pbZaakFields) =>
       hasCaseTypeInFMT_CAPTION(
         OnttrekkingsvergunningZaakTransformer.title,
@@ -107,9 +100,6 @@ const OnttrekkingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Onttrek
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    transformFieldValues: {
-      result: transformVTHZaakResult,
-    },
     filterValidDocumentPredicate: isValidVTHDocument,
   };
 
@@ -117,6 +107,7 @@ const OnttrekkingsvergunningSloopZaakTransformer: PowerBrowserZaakTransformer<On
   {
     caseType: caseTypePB.OnttrekkingsvergunningSloop,
     title: caseTypePB.OnttrekkingsvergunningSloop,
+    isVerleend: isVTHZaakVerleend,
     fetchZaakFilter: (pbZaakFields) =>
       // Powerbrowser currently uses a misspelled name, we also check the correct spelling in case this is ever changed
       hasCaseTypeInFMT_CAPTION(
@@ -130,9 +121,6 @@ const OnttrekkingsvergunningSloopZaakTransformer: PowerBrowserZaakTransformer<On
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    transformFieldValues: {
-      result: transformVTHZaakResult,
-    },
     filterValidDocumentPredicate: isValidVTHDocument,
   };
 
@@ -140,13 +128,11 @@ const VormenVanWoonruimteZaakTransformer: PowerBrowserZaakTransformer<VormenVanW
   {
     caseType: caseTypePB.VormenVanWoonruimte,
     title: 'Vergunning voor woningvorming',
+    isVerleend: isVTHZaakVerleend,
     fetchZaakFilter: (pbZaakFields) =>
       hasCaseTypeInFMT_CAPTION('Vergunning voor woningvormen', pbZaakFields),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
-    },
-    transformFieldValues: {
-      result: transformVTHZaakResult,
     },
     filterValidDocumentPredicate: isValidVTHDocument,
   };
@@ -155,6 +141,7 @@ const OnttrekkingsvergunningTweedeWoningZaakTransformer: PowerBrowserZaakTransfo
   {
     caseType: caseTypePB.OnttrekkingsvergunningTweedeWoning,
     title: 'Voorraadvergunning tweede woning',
+    isVerleend: isVTHZaakVerleend,
     fetchZaakFilter: (pbZaakFields) =>
       hasCaseTypeInFMT_CAPTION(
         OnttrekkingsvergunningTweedeWoningZaakTransformer.title,
@@ -163,9 +150,6 @@ const OnttrekkingsvergunningTweedeWoningZaakTransformer: PowerBrowserZaakTransfo
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    transformFieldValues: {
-      result: transformVTHZaakResult,
-    },
     filterValidDocumentPredicate: isValidVTHDocument,
   };
 
@@ -173,6 +157,7 @@ const SplitsingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Splitsing
   {
     caseType: caseTypePB.Splitsingsvergunning,
     title: caseTypePB.Splitsingsvergunning,
+    isVerleend: isVTHZaakVerleend,
     fetchZaakFilter: (pbZaakFields) =>
       hasCaseTypeInFMT_CAPTION(
         SplitsingsvergunningZaakTransformer.title,
@@ -180,9 +165,6 @@ const SplitsingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Splitsing
       ),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
-    },
-    transformFieldValues: {
-      result: transformVTHZaakResult,
     },
     filterValidDocumentPredicate: isValidVTHDocument,
   };

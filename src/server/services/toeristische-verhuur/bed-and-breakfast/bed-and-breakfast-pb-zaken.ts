@@ -45,6 +45,7 @@ export const BedAndBreakfastZaakTransformer: PowerBrowserZaakTransformer<BedAndB
   {
     caseType: 'Bed en breakfast',
     title: 'Vergunning bed & breakfast',
+    isVerleend: (zaak) => zaak.decision === 'Verleend',
     fetchZaakFilter: (pbZaakFields) =>
       hasCaseTypeInFMT_CAPTION(
         caseTypeBedAndBreakfast.BedAndBreakfast,

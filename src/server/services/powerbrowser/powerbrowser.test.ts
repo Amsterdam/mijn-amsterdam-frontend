@@ -564,7 +564,7 @@ describe('Powerbrowser service', () => {
         documents: [],
       } as unknown as BBVergunningFrontend;
 
-      const result = await forTesting.fetchZaakStatusDates(zaak);
+      const result = await forTesting.fetchZaakStatusDates(zaak.id);
       expect(result.status).toBe('OK');
       expect(result.content).toHaveLength(1);
       expect(result.content![0].status).toBe('In behandeling');
@@ -582,7 +582,7 @@ describe('Powerbrowser service', () => {
         dateEnd: null,
       } as unknown as BBVergunningFrontend;
 
-      const result = await forTesting.fetchZaakStatusDates(zaak);
+      const result = await forTesting.fetchZaakStatusDates(zaak.id);
       expect(result.status).toBe('ERROR');
     });
   });
@@ -600,7 +600,7 @@ describe('Powerbrowser service', () => {
         documents: [],
       } as unknown as BBVergunningFrontend;
 
-      const result = await forTesting.fetchSettledZaakStatusDates(zaak);
+      const result = await forTesting.fetchSettledZaakStatusDates(zaak.id);
       expect(result).toHaveLength(1);
       expect(result[0].status).toBe('In behandeling');
       expect(result[0].datePublished).toBe('2023-02-01');
@@ -639,7 +639,7 @@ describe('Powerbrowser service', () => {
       const result = await forTesting.fetchSettledZaakDocuments(
         authProfile,
         zaakTransformer,
-        zaak
+        zaak.id
       );
       expect(result).toHaveLength(1);
       expect(result[0].title).toBe(docNameMA);
@@ -657,7 +657,7 @@ describe('Powerbrowser service', () => {
       const result = await forTesting.fetchSettledZaakDocuments(
         authProfile,
         zaakTransformer,
-        zaak
+        zaak.id
       );
       expect(result).toHaveLength(0);
     });
@@ -679,7 +679,7 @@ describe('Powerbrowser service', () => {
         dateEnd: null,
       } as unknown as BBVergunningFrontend;
 
-      const result = await forTesting.fetchSettledZaakAdres(zaak);
+      const result = await forTesting.fetchSettledZaakAdres(zaak.id);
       expect(result).toBe('Test Address');
     });
   });
@@ -729,7 +729,12 @@ describe('Powerbrowser service', () => {
 
       const result = forTesting.transformZaakRaw(
         powerBrowserZaakTransformersForBB[0],
-        zaak
+        {
+          zaakRaw: zaak,
+          location: null,
+          documents: [],
+          statusDates: [],
+        }
       );
       expect(result).toEqual({
         caseType: 'Bed en breakfast',
@@ -740,10 +745,12 @@ describe('Powerbrowser service', () => {
         decision: 'Verleend',
         isVerleend: true,
         documents: [],
+        statusDates: [],
         id: '126088685',
         identifier: 'Z2024-WK000245',
         processed: true,
         isExpired: false,
+        location: null,
         title: 'Vergunning bed & breakfast',
       });
     });
@@ -757,6 +764,8 @@ describe('Powerbrowser service', () => {
           result: (value: string) =>
             value?.toLowerCase().includes('verleend') ? 'Verleend' : value,
         },
+        isVerleend: (zaak: { decision: string | null }) =>
+          zaak.decision === 'Verleend',
         filterValidDocumentPredicate: () => true,
       } as unknown as PowerBrowserZaakTransformer;
 
@@ -770,7 +779,12 @@ describe('Powerbrowser service', () => {
         ],
       } as PBZaakRecord;
 
-      const result = forTesting.transformZaakRaw(genericTransformer, zaak);
+      const result = forTesting.transformZaakRaw(genericTransformer, {
+        zaakRaw: zaak,
+        location: null,
+        documents: [],
+        statusDates: [],
+      });
 
       expect(result.decision).toBe('Verleend');
       expect(result.isVerleend).toBe(true);
@@ -789,7 +803,12 @@ describe('Powerbrowser service', () => {
 
       const result = forTesting.transformZaakRaw(
         powerBrowserZaakTransformersForBB[0],
-        zaak
+        {
+          zaakRaw: zaak,
+          location: null,
+          documents: [],
+          statusDates: [],
+        }
       );
 
       expect(result.decision).toBe('Ingetrokken');
@@ -797,7 +816,7 @@ describe('Powerbrowser service', () => {
       expect(result.isVerleend).toBe(false);
     });
 
-    test('should apply transformFieldValues for VTH results', () => {
+    test('should keep raw VTH results for decision', () => {
       const zaak = {
         fields: [
           {
@@ -809,14 +828,18 @@ describe('Powerbrowser service', () => {
       } as PBZaakRecord;
 
       const transformer = pbZaakTransformersForVTH[0];
-      const result = forTesting.transformZaakRaw(transformer, zaak);
+      const result = forTesting.transformZaakRaw(transformer, {
+        zaakRaw: zaak,
+        location: null,
+        documents: [],
+        statusDates: [],
+      });
 
-      expect(result.decision).toBe('Niet verleend');
-      expect(result.decision).not.toBe('Buiten behandeling gesteld');
+      expect(result.decision).toBe('Buiten behandeling gesteld');
       expect(result.isVerleend).toBe(false);
     });
 
-    test('should apply transformFieldValues for VTH verleend results', () => {
+    test('should compute isVerleend for raw VTH verleend results', () => {
       const zaak = {
         fields: [
           {
@@ -828,10 +851,14 @@ describe('Powerbrowser service', () => {
       } as PBZaakRecord;
 
       const transformer = pbZaakTransformersForVTH[0];
-      const result = forTesting.transformZaakRaw(transformer, zaak);
+      const result = forTesting.transformZaakRaw(transformer, {
+        zaakRaw: zaak,
+        location: null,
+        documents: [],
+        statusDates: [],
+      });
 
-      expect(result.decision).toBe('Verleend');
-      expect(result.decision).not.toBe('Van rechtswege verleend');
+      expect(result.decision).toBe('Van rechtswege verleend');
       expect(result.isVerleend).toBe(true);
     });
   });
