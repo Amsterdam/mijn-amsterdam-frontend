@@ -2,10 +2,7 @@ import {
   isNotBestuurlijkGevoelig,
   isZaakWithValidResultaat,
 } from '../../powerbrowser/powerbrowser-helpers.ts';
-import type {
-  PBZaakResultaat,
-  PBZaakFieldsByName,
-} from '../../powerbrowser/powerbrowser-types.ts';
+import type { PBZaakFieldsByName } from '../../powerbrowser/powerbrowser-types.ts';
 
 const RESULTATEN_VERLEEND = [
   'Gedeeltelijk verleend',
@@ -49,13 +46,6 @@ export function isValidVTHDocument(record: {
 
   const isValid = isDefinitief && (isBesluit || isAanvraag);
   return isValid;
-}
-
-export function isVTHZaakVerleend(resultaat: PBZaakResultaat) {
-  if (!resultaat) {
-    return false;
-  }
-  return RESULTATEN_VERLEEND.includes(resultaat.toLowerCase());
 }
 
 export function isValidVTHZaak(pbZaakFields: PBZaakFieldsByName) {
