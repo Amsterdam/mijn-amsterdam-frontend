@@ -29,6 +29,14 @@ export type PBRecordField<K extends string = string> = {
   text?: string;
 };
 
+export type PBRecordFieldValue = {
+  text?: string;
+  fieldValue?: string;
+};
+
+export type PBRecordFieldsByName<F extends PBRecordField = PBRecordField> =
+  Partial<Record<F['fieldName'], PBRecordFieldValue>>;
+
 export type PBRecord<T, F extends PBRecordField[] = PBRecordField[]> = {
   fields: F;
   fmtCpn: string;
@@ -45,17 +53,22 @@ export type SearchRequestResponse<
 };
 
 export type PBZaakFields =
+  | PBRecordField<'FMT_CAPTION'>
   | PBRecordField<'ZAAK_IDENTIFICATIE'>
   | PBRecordField<'STARTDATUM'> // Startdatum van de zaak
   | PBRecordField<'EINDDATUM'> // Afhandeldatum zaak + Startdatum geldigheid vergunning
   | PBRecordField<'DATUM_TOT'> // Einddatum geldigheid vergunning
   | PBRecordField<'ZAAKPRODUCT_ID'>
   | PBRecordField<'ZAAK_SUBPRODUCT_ID'>
+  | PBRecordField<'ZAAK_STATUS_ID'>
+  | PBRecordField<'BESTUURLIJK_GEVOELIG'>
   | PBRecordField<'MUT_DAT'>
   | PBRecordField<'RESULTAAT_ID'>;
 // ?fields=FMT_CAPTION,ZAAKPRODUCT_ID,MUT_DAT&offset&max&addSearch=false&enableIntrekProcedureCheck=false
 
 export type PBZaakRecord = PBRecord<'GFO_ZAKEN', PBZaakFields[]>;
+
+export type PBZaakFieldsByName = PBRecordFieldsByName<PBZaakFields>;
 
 export type PBDocumentFields =
   | PBRecordField<'ID'>
@@ -140,7 +153,7 @@ export type PowerBrowserZaakTransformer<
 > = {
   caseType: CaseTypeLiteral<T>;
   title: string;
-  fetchZaakFilter: (fields: PBRecord<'GFO_ZAKEN'>['fields']) => boolean;
+  fetchZaakFilter: (fields: PBZaakFieldsByName) => boolean;
   transformFields: TF;
   transformFieldValues?: Partial<
     Record<keyof TF, (value: string | null) => string | null>

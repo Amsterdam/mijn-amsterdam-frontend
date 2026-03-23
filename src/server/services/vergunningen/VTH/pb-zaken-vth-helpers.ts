@@ -4,7 +4,7 @@ import {
 } from '../../powerbrowser/powerbrowser-helpers.ts';
 import type {
   PBZaakResultaat,
-  PBRecordField,
+  PBZaakFieldsByName,
 } from '../../powerbrowser/powerbrowser-types.ts';
 
 const RESULTATEN_VERLEEND = [
@@ -58,9 +58,9 @@ export function isVTHZaakVerleend(resultaat: PBZaakResultaat) {
   return RESULTATEN_VERLEEND.includes(resultaat.toLowerCase());
 }
 
-export function isValidVTHZaak(pbRecordFields: PBRecordField[]) {
+export function isValidVTHZaak(pbZaakFields: PBZaakFieldsByName) {
   return (
-    isNotBestuurlijkGevoelig(pbRecordFields) &&
-    isZaakWithValidResultaat(RESULTATEN_VALID, pbRecordFields)
+    isNotBestuurlijkGevoelig(pbZaakFields) &&
+    isZaakWithValidResultaat(RESULTATEN_VALID, pbZaakFields)
   );
 }

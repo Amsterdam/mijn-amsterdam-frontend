@@ -7,6 +7,7 @@ import type {
   FetchPersoonOrMaatschapIdByUidOptions,
   PBDocumentFields,
   PBRecordField,
+  PBRecordFieldsByName,
   PBZaakRecord,
   PBZaakResultaat,
   PowerBrowserStatusResponse,
@@ -17,6 +18,7 @@ import type {
   NestedType,
   PBDocument,
   PBRecord,
+  PBZaakFieldsByName,
 } from './powerbrowser-types.ts';
 import type { ApiResponse } from '../../../universal/helpers/api.ts';
 import {
@@ -157,14 +159,31 @@ type FilterDef<T> = {
   zaakTransformer: PowerBrowserZaakTransformer;
   filter: (item: T) => boolean;
 };
+
+function toFieldsByName<F extends PBRecordField>(
+  fields: F[]
+): PBRecordFieldsByName<F> {
+  const result = {} as PBRecordFieldsByName<F>;
+
+  for (const field of fields) {
+    result[field.fieldName as F['fieldName']] = {
+      text: field.text,
+      fieldValue: field.fieldValue,
+    };
+  }
+
+  return result;
+}
+
 function assignTransformerByFilter<
   T extends { id: string; fields: PBRecordField[] },
->(items: T[], filters: FilterDef<PBRecordField[]>[]): zaakIdToZaakTransformer {
+>(items: T[], filters: FilterDef<PBZaakFieldsByName>[]): zaakIdToZaakTransformer {
   const result: ReturnType<typeof assignTransformerByFilter> = {};
 
   for (const item of items) {
+    const fieldsByName = toFieldsByName(item.fields) as PBZaakFieldsByName;
     for (const { zaakTransformer, filter } of Object.values(filters)) {
-      if (filter(item.fields)) {
+      if (filter(fieldsByName)) {
         result[item.id] = zaakTransformer;
         break;
       }
@@ -544,6 +563,7 @@ async function fetchZakenRecords<T extends PowerBrowserZaakTransformer>(
       'ZAAK_IDENTIFICATIE',
       'ZAAKPRODUCT_ID',
       'ZAAK_SUBPRODUCT_ID',
+      'ZAAK_STATUS_ID',
       'MUT_DAT',
       'RESULTAAT_ID',
     ].join(','),
