@@ -6,11 +6,8 @@ import {
   type VergunningAanvraag,
   type VergunningExpirable,
 } from './Vergunningen-helpers.ts';
-import type {
-  DecosZaakBase} from '../../../../server/services/decos/decos-types.ts';
-import {
-  type DecosZaakFrontend,
-} from '../../../../server/services/decos/decos-types.ts';
+import type { DecosZaakBase } from '../../../../server/services/decos/decos-types.ts';
+import { type DecosZaakFrontend } from '../../../../server/services/decos/decos-types.ts';
 import type { WithDateRange } from '../../../../server/services/vergunningen/config-and-types.ts';
 import { dateSort } from '../../../../universal/helpers/date.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
@@ -64,7 +61,7 @@ const displayPropsEerdereVergunningen: VergunningFrontendDisplayProps = {
     displayStatus: 'Status',
   },
   colWidths: {
-    large: ['20%', '45%', '35%'],
+    large: ['20%', '45%', '30%', '0%'],
     small: ['50%', '50%', '0'],
   },
 };
