@@ -1,8 +1,8 @@
-const PB_SEARCH_DOCUMENTS = require('../fixtures/powerbrowser-bb-attachments.json');
-const PB_PERSONEN_ZAKEN = require('../fixtures/powerbrowser-bb-personen-zaken.json');
-const PB_SEARCH_PERSON = require('../fixtures/powerbrowser-bb-search-person.json');
-const PB_LINK_ZAAK_ADRES = require('../fixtures/powerbrowser-bb-zaak-adres.json');
-const PB_ZAAK_STATUS = require('../fixtures/powerbrowser-bb-zaak-status.json');
+const PB_SEARCH_DOCUMENTS = require('../fixtures/powerbrowser-attachments.json');
+const PB_PERSONEN_ZAKEN = require('../fixtures/powerbrowser-personen-zaken.json');
+const PB_SEARCH_PERSON = require('../fixtures/powerbrowser-search-person.json');
+const PB_LINK_ZAAK_ADRES = require('../fixtures/powerbrowser-zaak-adres.json');
+const PB_ZAAK_STATUS = require('../fixtures/powerbrowser-zaak-status.json');
 const settings = require('../settings.cjs');
 
 const PB_SEARCH_DOCUMENTS_PROCESSED = {
