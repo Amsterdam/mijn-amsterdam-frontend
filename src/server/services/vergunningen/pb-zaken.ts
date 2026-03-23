@@ -31,10 +31,7 @@ const LigplaatsWoonbootVergunningZaakTransformer: PowerBrowserZaakTransformer<Li
     caseType: caseTypePB.LigplaatsWoonbootvergunning,
     title: 'Ligplaatsvergunning woonboot',
     fetchZaakFilter: (pbZaakFields) =>
-      hasStringInZAAKPRODUCT_ID(
-        'Ligplaatsvergunning woonboot',
-        pbZaakFields
-      ) ||
+      hasStringInZAAKPRODUCT_ID('Ligplaatsvergunning woonboot', pbZaakFields) ||
       hasStringInZAAK_SUBPRODUCT_ID(
         'Ligplaatsvergunning woonboot',
         pbZaakFields

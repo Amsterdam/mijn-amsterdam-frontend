@@ -177,7 +177,10 @@ function toFieldsByName<F extends PBRecordField>(
 
 function assignTransformerByFilter<
   T extends { id: string; fields: PBRecordField[] },
->(items: T[], filters: FilterDef<PBZaakFieldsByName>[]): zaakIdToZaakTransformer {
+>(
+  items: T[],
+  filters: FilterDef<PBZaakFieldsByName>[]
+): zaakIdToZaakTransformer {
   const result: ReturnType<typeof assignTransformerByFilter> = {};
 
   for (const item of items) {
@@ -564,6 +567,7 @@ async function fetchZakenRecords<T extends PowerBrowserZaakTransformer>(
       'ZAAKPRODUCT_ID',
       'ZAAK_SUBPRODUCT_ID',
       'ZAAK_STATUS_ID',
+      'BESTUURLIJK_GEVOELIG',
       'MUT_DAT',
       'RESULTAAT_ID',
     ].join(','),

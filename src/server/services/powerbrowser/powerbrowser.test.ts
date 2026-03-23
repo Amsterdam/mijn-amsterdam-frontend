@@ -64,22 +64,20 @@ describe('Powerbrowser service', () => {
             return [200, { records: [{ id: 'test-person-id' }] }];
           }
 
-          if (uri.includes('Link/PERSONEN/GFO_ZAKEN/Table')) {
+          if (uri.includes('Link/PERSONEN/GFO_ZAKEN/')) {
             return [
               200,
-              {
-                records: [
-                  {
-                    id: 'test-zaak-id',
-                    fields: [
-                      {
-                        fieldName: 'FMT_CAPTION',
-                        text: 'Een ander type zaak',
-                      },
-                    ],
-                  },
-                ],
-              },
+              [
+                {
+                  id: 'test-zaak-id',
+                  fields: [
+                    {
+                      fieldName: 'FMT_CAPTION',
+                      text: 'Een ander type zaak',
+                    },
+                  ],
+                },
+              ],
             ];
           }
 
@@ -90,6 +88,93 @@ describe('Powerbrowser service', () => {
         authProfile,
         powerBrowserZaakTransformersForBB
       );
+      expect(result.status).toBe('OK');
+      expect(result.content).toHaveLength(0);
+    });
+
+    test('should ignore VTH zaken that are bestuurlijk gevoelig', async () => {
+      remoteApi
+        .post(/\/powerbrowser/)
+        .times(3)
+        .reply((uri) => {
+          if (uri.includes('SearchRequest')) {
+            return [200, { records: [{ id: 'test-person-id' }] }];
+          }
+
+          if (uri.includes('Link/PERSONEN/GFO_ZAKEN/')) {
+            return [
+              200,
+              [
+                {
+                  id: 'test-zaak-id',
+                  fields: [
+                    {
+                      fieldName: 'FMT_CAPTION',
+                      text: 'Z/123/123 Omzetting kamerverhuur',
+                    },
+                    {
+                      fieldName: 'ZAAK_STATUS_ID',
+                      text: 'In behandeling',
+                    },
+                    {
+                      fieldName: 'BESTUURLIJK_GEVOELIG',
+                      fieldValue: 'T',
+                    },
+                  ],
+                },
+              ],
+            ];
+          }
+
+          return [200, null];
+        });
+
+      const result = await fetchPBZaken(authProfile, pbZaakTransformersForVTH);
+
+      expect(result.status).toBe('OK');
+      expect(result.content).toHaveLength(0);
+    });
+
+    test('should ignore VTH zaken with non-valid resultaat', async () => {
+      remoteApi
+        .post(/\/powerbrowser/)
+        .times(3)
+        .reply((uri) => {
+          if (uri.includes('SearchRequest')) {
+            return [200, { records: [{ id: 'test-person-id' }] }];
+          }
+
+          if (uri.includes('Link/PERSONEN/GFO_ZAKEN/')) {
+            return [
+              200,
+              [
+                {
+                  id: 'test-zaak-id',
+                  fields: [
+                    {
+                      fieldName: 'FMT_CAPTION',
+                      text: 'Z/123/123 Omzetting kamerverhuur',
+                    },
+                    {
+                      fieldName: 'ZAAK_STATUS_ID',
+                      text: 'Gereed',
+                    },
+                    {
+                      fieldName: 'RESULTAAT_ID',
+                      text: 'Vergunning niet ingetrokken', // Not a valid resultaat for VTH zaken
+                      fieldValue: '999',
+                    },
+                  ],
+                },
+              ],
+            ];
+          }
+
+          return [200, null];
+        });
+
+      const result = await fetchPBZaken(authProfile, pbZaakTransformersForVTH);
+
       expect(result.status).toBe('OK');
       expect(result.content).toHaveLength(0);
     });
@@ -161,7 +246,7 @@ describe('Powerbrowser service', () => {
             return [200, { records: [{ id: 'test-person-id' }] }];
           }
 
-          if (uri.includes('Link/PERSONEN/GFO_ZAKEN/Table')) {
+          if (uri.includes('Link/PERSONEN/GFO_ZAKEN/')) {
             return [500, 'some-error'];
           }
         });
@@ -182,8 +267,8 @@ describe('Powerbrowser service', () => {
             return [200, { records: [{ id: 'test-person-id' }] }];
           }
 
-          if (uri.includes('Link/PERSONEN/GFO_ZAKEN/Table')) {
-            return [200, { records: [{ id: 'test-zaak-id' }] }];
+          if (uri.includes('Link/PERSONEN/GFO_ZAKEN/')) {
+            return [200, [{ id: 'test-zaak-id' }]];
           }
         });
       remoteApi.get(/\/powerbrowser/).reply((uri) => {
@@ -389,7 +474,7 @@ describe('Powerbrowser service', () => {
   describe('fetchPBZaken', () => {
     test('should return an error if fetch fails', async () => {
       remoteApi
-        .post('/powerbrowser/Link/PERSONEN/GFO_ZAKEN/Table')
+        .post('/powerbrowser/Link/PERSONEN/GFO_ZAKEN/')
         .reply(500, 'some-error');
 
       const result = await forTesting.fetchZakenRecords(
