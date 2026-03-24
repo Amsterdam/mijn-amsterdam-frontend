@@ -27,6 +27,23 @@ import {
   transformVTHZaakResult,
 } from './VTH/pb-zaken-vth-helpers.ts';
 
+const LIGPLAATS_WB_TRANSPORT_FIELDS = [
+  'NAAM_VAARTUIG',
+  'BRANKDMERT',
+  'DIEPGANG',
+  'LENGTE',
+  'BREEDTE',
+  'HOOGTE',
+];
+const SELECT_FIELDS_TRANSFORM_LIGPLAATS = {
+  WB_NAAM_VAARTUIG: 'vesselName',
+  WB_BRANKDMERT: 'vesselKind',
+  WB_DIEPGANG: 'vesselDraft',
+  WB_LENGTE: 'vesselLength',
+  WB_BREEDTE: 'vesselWidth',
+  WB_HOOGTE: 'vesselHeight',
+};
+
 const LigplaatsWoonbootVergunningZaakTransformer: PowerBrowserZaakTransformer<LigplaatsWoonbootvergunning> =
   {
     caseType: caseTypePB.LigplaatsWoonbootvergunning,
@@ -34,14 +51,7 @@ const LigplaatsWoonbootVergunningZaakTransformer: PowerBrowserZaakTransformer<Li
     isVerleend: isVTHZaakVerleend,
     fetchWbTransportFields: {
       prefix: 'WB_',
-      fields: [
-        'NAAM_VAARTUIG',
-        'BRANKDMERT',
-        'DIEPGANG',
-        'LENGTE',
-        'BREEDTE',
-        'HOOGTE',
-      ],
+      fields: LIGPLAATS_WB_TRANSPORT_FIELDS,
     },
     fetchZaakFilter: (pbZaakFields) =>
       hasStringInZAAKPRODUCT_ID('Ligplaatsvergunning woonboot', pbZaakFields) ||
@@ -51,12 +61,7 @@ const LigplaatsWoonbootVergunningZaakTransformer: PowerBrowserZaakTransformer<Li
       ),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
-      WB_NAAM_VAARTUIG: 'vesselName',
-      WB_BRANKDMERT: 'vesselKind',
-      WB_DIEPGANG: 'vesselDraft',
-      WB_LENGTE: 'vesselLength',
-      WB_BREEDTE: 'vesselWidth',
-      WB_HOOGTE: 'vesselHeight',
+      ...SELECT_FIELDS_TRANSFORM_LIGPLAATS,
     },
     transformFieldValues: {
       result: transformVTHZaakResult,
@@ -71,14 +76,7 @@ const LigplaatsBedrijfsvaartuigVergunningZaakTransformer: PowerBrowserZaakTransf
     isVerleend: isVTHZaakVerleend,
     fetchWbTransportFields: {
       prefix: 'WB_',
-      fields: [
-        'NAAM_VAARTUIG',
-        'BRANKDMERT',
-        'DIEPGANG',
-        'LENGTE',
-        'BREEDTE',
-        'HOOGTE',
-      ],
+      fields: LIGPLAATS_WB_TRANSPORT_FIELDS,
     },
     fetchZaakFilter: (pbZaakFields) =>
       hasStringInZAAKPRODUCT_ID(
@@ -91,12 +89,7 @@ const LigplaatsBedrijfsvaartuigVergunningZaakTransformer: PowerBrowserZaakTransf
       ),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
-      WB_NAAM_VAARTUIG: 'vesselName',
-      WB_BRANKDMERT: 'vesselKind',
-      WB_DIEPGANG: 'vesselDraft',
-      WB_LENGTE: 'vesselLength',
-      WB_BREEDTE: 'vesselWidth',
-      WB_HOOGTE: 'vesselHeight',
+      ...SELECT_FIELDS_TRANSFORM_LIGPLAATS,
     },
     transformFieldValues: {
       result: transformVTHZaakResult,
