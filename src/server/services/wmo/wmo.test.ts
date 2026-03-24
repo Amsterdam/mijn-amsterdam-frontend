@@ -5,7 +5,7 @@ import type { HulpmiddelenDisclaimerConfig } from './status-line-items/wmo-hulpm
 import { getHulpmiddelenDisclaimer } from './status-line-items/wmo-hulpmiddelen.ts';
 import { routes } from './wmo-service-config.ts';
 import { fetchVoorzieningenCompact, fetchWmo, forTesting } from './wmo.ts';
-import { fetchWmoVoorzieningenCompact } from './wmo-external-consumer-service.ts';
+import { fetchMaApiVoorzieningen } from './wmo-external-consumer-service.ts';
 import ZORGNED_AANVRAGEN_WMO from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json' with { type: 'json' };
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 import { jsonCopy } from '../../../universal/helpers/utils.ts';
@@ -275,7 +275,7 @@ describe('Transform api items', () => {
     it('should fetch, filter and transform voorzieningen', async () => {
       remoteApi.post('/zorgned/aanvragen').reply(200, ZORGNED_AANVRAGEN_WMO);
 
-      const result = await fetchWmoVoorzieningenCompact(mockBSN, {
+      const result = await fetchMaApiVoorzieningen(mockBSN, {
         maProductgroep: ['WRA', 'hulpmiddelen'],
       });
 

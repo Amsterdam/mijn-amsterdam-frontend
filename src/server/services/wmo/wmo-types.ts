@@ -20,15 +20,15 @@ export type WMOVoorzieningFrontend = ZaakAanvraagDetail & {
   disclaimer?: string;
 };
 
-export type WithActions = {
+export type WithMaApiProps = {
   maCategorie: string[];
   maActies: ('stopzetten' | 'reparatieverzoek')[];
   maProductgroep: string[];
 };
-export type ZorgnedAanvraagTransformedWithActions = ZorgnedAanvraagTransformed &
-  Partial<WithActions>;
+export type ZorgnedAanvraagTransformedWithMaApiProps =
+  ZorgnedAanvraagTransformed & Partial<WithMaApiProps>;
 
-export type ActionAssigFN = (
+export type MaApiPropAssigFN = (
   voorziening: ZorgnedAanvraagTransformed
 ) => boolean;
 export type VoorzieningKey = Exclude<
@@ -37,12 +37,12 @@ export type VoorzieningKey = Exclude<
 >;
 export type VoorzieningValue = ZorgnedAanvraagTransformed[VoorzieningKey];
 
-export type ActionConfig = {
-  assign: Partial<WithActions>;
+export type WmoAapiConfig = {
+  assign: Partial<WithMaApiProps>;
   match: Partial<
     Record<
       VoorzieningKey,
-      VoorzieningValue | VoorzieningValue[] | ActionAssigFN
+      VoorzieningValue | VoorzieningValue[] | MaApiPropAssigFN
     >
   >;
 };

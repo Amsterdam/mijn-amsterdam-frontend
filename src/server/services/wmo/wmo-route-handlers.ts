@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
 
-import { fetchWmoVoorzieningenCompact } from './wmo-external-consumer-service.ts';
+import { fetchMaApiVoorzieningen } from './wmo-external-consumer-service.ts';
 import {
   voorzieningenRequestInput,
   ZORGNED_JZD_API_CONFIG_KEY,
@@ -63,7 +63,7 @@ export async function handleVoorzieningenRequest(req: Request, res: Response) {
   const bsn = validatedRequestBody.bsn;
   const maActies = validatedRequestBody.maActies;
   const maProductgroep = validatedRequestBody.maProductgroep;
-  const response = await fetchWmoVoorzieningenCompact(bsn, {
+  const response = await fetchMaApiVoorzieningen(bsn, {
     maActies,
     maProductgroep,
   });

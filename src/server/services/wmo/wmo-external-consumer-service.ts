@@ -7,8 +7,8 @@ import {
   wmoStatusLineItemsConfig,
 } from './wmo-status-line-items.ts';
 import type {
-  ActionConfig,
-  ZorgnedAanvraagTransformedWithActions,
+  WmoAapiConfig,
+  ZorgnedAanvraagTransformedWithMaApiProps,
 } from './wmo-types.ts';
 import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service.ts';
 import {
@@ -26,7 +26,8 @@ type FetchWmoVoorzieningenApiOptions = {
   maActies: z.infer<typeof voorzieningenRequestInput>['maActies'];
   maProductgroep?: z.infer<typeof voorzieningenRequestInput>['maProductgroep'];
 };
-const wmoActionsConfig: ActionConfig[] = [
+
+const wmoVoorzieningenApiConfig: WmoAapiConfig[] = [
   {
     match: {
       leveringsVorm: 'ZIN',
@@ -79,7 +80,7 @@ const wmoActionsConfig: ActionConfig[] = [
       return {
         match: Object.fromEntries(
           entries(match).filter(([_, value]) => typeof value !== 'undefined')
-        ) as ActionConfig['match'],
+        ) as WmoAapiConfig['match'],
         assign: {
           maProductgroep: [lineItemConfig.productgroep],
         },
@@ -89,7 +90,7 @@ const wmoActionsConfig: ActionConfig[] = [
 
 function isActionConfigMatch(
   voorziening: ZorgnedAanvraagTransformed,
-  actionConfig: (typeof wmoActionsConfig)[number]
+  actionConfig: (typeof wmoVoorzieningenApiConfig)[number]
 ): boolean {
   const matchers = entries(actionConfig.match);
 
@@ -110,12 +111,12 @@ function isActionConfigMatch(
 
 function addActionConfigToVoorziening(
   voorziening: ZorgnedAanvraagTransformed
-): ZorgnedAanvraagTransformedWithActions {
-  const updatedVoorziening: ZorgnedAanvraagTransformedWithActions = {
+): ZorgnedAanvraagTransformedWithMaApiProps {
+  const updatedVoorziening: ZorgnedAanvraagTransformedWithMaApiProps = {
     ...voorziening,
   };
 
-  wmoActionsConfig.forEach((actionConfig) => {
+  wmoVoorzieningenApiConfig.forEach((actionConfig) => {
     if (isActionConfigMatch(voorziening, actionConfig)) {
       entries(actionConfig.assign).forEach(([key, value]) => {
         if (Array.isArray(value)) {
@@ -134,7 +135,7 @@ function addActionConfigToVoorziening(
   return updatedVoorziening;
 }
 
-export async function fetchWmoVoorzieningenCompact(
+export async function fetchMaApiVoorzieningen(
   bsn: BSN,
   options?: FetchWmoVoorzieningenApiOptions
 ): Promise<ApiResponse<ZorgnedAanvraagTransformed[]>> {
@@ -191,7 +192,7 @@ export async function fetchWmoVoorzieningenCompact(
       'maActies',
       'maCategorie',
       'maProductgroep',
-    ] as (keyof ZorgnedAanvraagTransformedWithActions)[];
+    ] as (keyof ZorgnedAanvraagTransformedWithMaApiProps)[];
 
     return apiSuccessResult(
       voorzieningen.map((voorziening) => {
