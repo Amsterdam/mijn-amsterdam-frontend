@@ -10,7 +10,7 @@ module.exports = [
   {
     id: 'get-wpi-aanvragen',
     url: `${settings.MOCK_BASE_PATH}/wpi-koppel-api/wpi/uitkering/aanvragen`,
-    method: 'GET',
+    method: 'POST',
     variants: [
       {
         id: 'standard',
@@ -24,7 +24,7 @@ module.exports = [
   },
   {
     id: 'get-wpi-e-aanvragen',
-    method: 'GET',
+    method: 'POST',
     url: `${settings.MOCK_BASE_PATH}/wpi-koppel-api/wpi/e-aanvragen`,
     variants: [
       {
@@ -40,7 +40,7 @@ module.exports = [
   {
     id: 'get-wpi-specificaties',
     url: `${settings.MOCK_BASE_PATH}/wpi-koppel-api/wpi/uitkering/specificaties-en-jaaropgaven`,
-    method: 'GET',
+    method: 'POST',
     variants: [
       {
         id: 'standard',
@@ -55,7 +55,7 @@ module.exports = [
   {
     id: 'get-wpi-document-download',
     url: `${settings.MOCK_BASE_PATH}/wpi-koppel-api/wpi/document`,
-    method: 'GET',
+    method: 'POST',
     variants: [
       {
         id: 'standard',

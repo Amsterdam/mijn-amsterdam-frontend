@@ -1,25 +1,22 @@
 import type {
+  ApiResponse,
   ApiResponse_DEPRECATED,
-  ApiSuccessResponse} from '../../../universal/helpers/api.ts';
-import {
-  apiSuccessResult,
 } from '../../../universal/helpers/api.ts';
+import { apiSuccessResult } from '../../../universal/helpers/api.ts';
 import { dateSort } from '../../../universal/helpers/date.ts';
 import { pick } from '../../../universal/helpers/utils.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import type { SourceApiName } from '../../config/source-api.ts';
+import { getFromEnv } from '../../helpers/env.ts';
 import {
   createSessionBasedCacheKey,
   getApiConfig,
 } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
 import { captureMessage } from '../monitoring.ts';
-import type {
-  DocumentDownloadData} from '../shared/document-download-route-handler.ts';
-import {
-  DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE
-} from '../shared/document-download-route-handler.ts';
+import type { DocumentDownloadData } from '../shared/document-download-route-handler.ts';
+import { DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE } from '../shared/document-download-route-handler.ts';
 import {
   requestProcess as bijstandsuitkeringRequestProcessLabels,
   getNotifications as getBijstandsuitkeringNotifications,
@@ -43,7 +40,7 @@ import type {
 } from './wpi-types.ts';
 
 type FilterResponse = (
-  response: ApiSuccessResponse<WpiRequestProcess[]>
+  response: ApiResponse<(WpiRequestProcess | null)[]>
 ) => WpiRequestProcess[];
 
 export interface FetchConfig {
@@ -52,14 +49,24 @@ export interface FetchConfig {
   requestCacheKey: string;
 }
 
+export const wpiAuthHeader = {
+  'x-api-key': getFromEnv('BFF_WPI_API_KEY', true),
+};
+
+function createBsnPostBody(bsn: string) {
+  return {
+    bsn,
+  };
+}
+
 function statusLineTransformer(
   sessionID: SessionID,
   response: WpiRequestProcess[],
   getLabels: (
     requestProcess: WpiRequestProcess
-  ) => WpiRequestProcessLabels | undefined
+  ) => WpiRequestProcessLabels | null
 ): WpiRequestProcess[] {
-  const statusLineRequestProcesses = response?.flatMap((requestProcess) => {
+  const statusLineRequestProcesses = response.flatMap((requestProcess) => {
     const labels = getLabels(requestProcess);
     if (labels) {
       return [transformRequestProcess(sessionID, requestProcess, labels)];
@@ -68,7 +75,7 @@ function statusLineTransformer(
       properties: {
         about: requestProcess.about,
         title: requestProcess.title,
-        status: requestProcess.statusId,
+        status: requestProcess.steps.findLast((step) => step.isActive)?.status,
       },
     });
 
@@ -81,13 +88,15 @@ export async function fetchRequestProcess(
   authProfileAndToken: AuthProfileAndToken,
   getLabels: (
     requestProcess: WpiRequestProcess
-  ) => WpiRequestProcessLabels | undefined,
+  ) => WpiRequestProcessLabels | null,
   fetchConfig: FetchConfig
 ): Promise<ApiResponse_DEPRECATED<WpiRequestProcess[] | null>> {
   const apiConfig = getApiConfig(fetchConfig.apiConfigName, {
+    data: createBsnPostBody(authProfileAndToken.profile.id),
     cacheKey_UNSAFE: fetchConfig.requestCacheKey,
     transformResponse: [
-      (response: ApiSuccessResponse<WpiRequestProcess[]>) => response.content,
+      (response: ApiResponse<WpiRequestProcess[]>) =>
+        Array.isArray(response.content) ? response.content : [],
     ],
   });
 
@@ -113,12 +122,16 @@ export async function fetchRequestProcess(
 export async function fetchBijstandsuitkering(
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const filterResponse: FilterResponse = (response) =>
-    response.content
-      ?.filter(
-        (requestProcess) => requestProcess?.about === 'Bijstandsuitkering'
-      )
-      .map((requestProcess) => addLink(requestProcess));
+  const filterResponse: FilterResponse = (response) => {
+    return (
+      response.content
+        ?.filter((requestProcess) => requestProcess !== null)
+        .filter(
+          (requestProcess) => requestProcess?.about === 'Bijstandsuitkering'
+        )
+        .map((requestProcess) => addLink(requestProcess)) ?? []
+    );
+  };
 
   const response = await fetchRequestProcess(
     authProfileAndToken,
@@ -141,7 +154,11 @@ export async function fetchEAanvragen(
   about?: string[]
 ) {
   const filterResponse: FilterResponse = (response) => {
-    return response.content.map((requestProcess) => addLink(requestProcess));
+    return (
+      response.content
+        ?.filter((requestProcess) => requestProcess !== null)
+        .map((requestProcess) => addLink(requestProcess)) ?? []
+    );
   };
 
   const response = await fetchRequestProcess(
@@ -190,7 +207,7 @@ export async function fetchTonk(authProfileAndToken: AuthProfileAndToken) {
 
 export function transformIncomSpecificationResponse(
   sessionID: SessionID,
-  response: ApiSuccessResponse<WpiIncomeSpecificationResponseData>
+  response: ApiResponse<WpiIncomeSpecificationResponseData>
 ) {
   return {
     jaaropgaven:
@@ -211,15 +228,17 @@ export function transformIncomSpecificationResponse(
 export async function fetchSpecificaties(
   authProfileAndToken: AuthProfileAndToken
 ) {
+  const config = getApiConfig('WPI_SPECIFICATIES', {
+    transformResponse: (responseData) =>
+      transformIncomSpecificationResponse(
+        authProfileAndToken.profile.sid,
+        responseData
+      ),
+    data: createBsnPostBody(authProfileAndToken.profile.sid),
+  });
   const response =
     await requestData<WpiIncomeSpecificationResponseDataTransformed>(
-      getApiConfig('WPI_SPECIFICATIES', {
-        transformResponse: (responseData) =>
-          transformIncomSpecificationResponse(
-            authProfileAndToken.profile.sid,
-            responseData
-          ),
-      }),
+      config,
       authProfileAndToken
     );
 
@@ -238,14 +257,8 @@ export async function fetchWpiNotifications(
     const { status, content } =
       await fetchBijstandsuitkering(authProfileAndToken);
 
-    if (status === 'OK') {
-      if (content?.length) {
-        const aanvraagNotifications =
-          getBijstandsuitkeringNotifications(content);
-        if (aanvraagNotifications) {
-          notifications.push(...aanvraagNotifications);
-        }
-      }
+    if (status === 'OK' && Array.isArray(content)) {
+      notifications.push(...getBijstandsuitkeringNotifications(content));
     }
   }
 
@@ -254,8 +267,8 @@ export async function fetchWpiNotifications(
     const { status, content } = await fetchEAanvragen(authProfileAndToken);
 
     if (status === 'OK') {
-      if (content?.length) {
-        const eAanvraagNotifications = content
+      const eAanvraagNotifications =
+        content
           ?.filter((requestProcess) => {
             return isRequestProcessActual(requestProcess.datePublished, today);
           })
@@ -269,12 +282,9 @@ export async function fetchWpiNotifications(
               return notifications;
             }
             return [];
-          });
+          }) ?? [];
 
-        if (eAanvraagNotifications) {
-          notifications.push(...eAanvraagNotifications);
-        }
-      }
+      notifications.push(...eAanvraagNotifications);
     }
   }
 
@@ -282,18 +292,12 @@ export async function fetchWpiNotifications(
   {
     const { status, content } = await fetchSpecificaties(authProfileAndToken);
 
-    if (status === 'OK') {
-      if (content) {
-        const specificatieNotifications = getSpecificatieNotifications(content);
-
-        if (specificatieNotifications) {
-          notifications.push(...specificatieNotifications);
-        }
-      }
+    if (status === 'OK' && content) {
+      notifications.push(...getSpecificatieNotifications(content));
     }
   }
 
-  return apiSuccessResult({ notifications });
+  return apiSuccessResult({ notifications: notifications.filter(Boolean) });
 }
 
 export async function fetchWpiDocument(
@@ -305,15 +309,15 @@ export async function fetchWpiDocument(
 
   return requestData<DocumentDownloadData>(
     {
+      method: 'POST',
       url,
       responseType: 'stream',
       params: {
         ...pick(queryParams ?? {}, ['isBulk', 'isDms']),
         id: documentId,
       },
-      headers: {
-        Authorization: `Bearer ${authProfileAndToken.token}`,
-      },
+      headers: wpiAuthHeader,
+      data: createBsnPostBody(authProfileAndToken.profile.id),
       transformResponse: (documentResponseData) => {
         return {
           filename: 'Brief.pdf',

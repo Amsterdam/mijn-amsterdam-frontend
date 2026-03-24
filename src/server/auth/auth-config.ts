@@ -42,7 +42,7 @@ export const oidcConfigBase: ConfigParams = {
     rollingDuration: OIDC_SESSION_MAX_AGE_SECONDS,
     name: OIDC_SESSION_COOKIE_NAME,
     store:
-      getFromEnv('MA_APP_MODE') !== 'unittest'
+      getFromEnv('MA_APP_MODE', false) !== 'unittest'
         ? getSessionStore(openIdAuth as typeof expressSession, {
             tableName: OIDC_SESSIONS_TABLE_NAME,
             maxAgeSeconds: OIDC_SESSION_MAX_AGE_SECONDS,

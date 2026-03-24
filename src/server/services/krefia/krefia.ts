@@ -78,9 +78,11 @@ export async function fetchAndTransformKrefia(
 ): Promise<ApiResponse<Krefia>> {
   const response = await requestData<Krefia>(
     getApiConfig('KREFIA', {
+      data: {
+        bsn: authProfileAndToken.profile.id,
+      },
       transformResponse: transformKrefiaResponse,
-    }),
-    authProfileAndToken
+    })
   );
 
   return response;
