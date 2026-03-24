@@ -1,37 +1,51 @@
 import {
   isNotBestuurlijkGevoelig,
-  isZaakWithValidLowercasedResultaat,
+  isZaakWithValidResultaat,
 } from '../../powerbrowser/powerbrowser-helpers.ts';
 import type { PBZaakFieldsByName } from '../../powerbrowser/powerbrowser-types.ts';
 
-const RESULTATEN_VERLEEND = [
-  'Gedeeltelijk verleend',
-  'Van rechtswege verleend',
-  'Vergunning gedeeltelijk ingetrokken',
-  'Verleend',
-];
-const RESULTATEN_VERLEEND_LOWERCASE = RESULTATEN_VERLEEND.map((resultaat) =>
-  resultaat.toLowerCase()
-);
-const RESULTATEN_NIET_VERLEEND = [
-  'Aanvraag ingetrokken',
-  'Ander bevoegd gezag',
-  'Buiten behandeling gesteld',
-  'Geweigerd',
-  'Vergunningsvrij',
-];
-const RESULTATEN_NIET_VERLEEND_LOWERCASE = RESULTATEN_NIET_VERLEEND.map(
-  (resultaat) => resultaat.toLowerCase()
-);
-const RESULTATEN_VALID_LOWERCASE = [
-  ...RESULTATEN_VERLEEND_LOWERCASE,
-  ...RESULTATEN_NIET_VERLEEND_LOWERCASE,
-];
+const RESULTATEN_VERLEEND = {
+  'gedeeltelijk verleend': 'Gedeeltelijk verleend',
+  'van rechtswege verleend': 'Van rechtswege verleend',
+  'vergunning gedeeltelijk ingetrokken': 'Vergunning gedeeltelijk ingetrokken',
+  verleend: 'Verleend',
+} as const;
+
+const RESULTATEN_NIET_VERLEEND = {
+  'aanvraag ingetrokken': 'Aanvraag ingetrokken',
+  'ander bevoegd gezag': 'Ander bevoegd gezag',
+  'buiten behandeling gesteld': 'Buiten behandeling gesteld',
+  geweigerd: 'Geweigerd',
+  vergunningsvrij: 'Vergunningsvrij',
+} as const;
+
+const RESULTATEN_VALID = {
+  ...RESULTATEN_VERLEEND,
+  ...RESULTATEN_NIET_VERLEEND,
+} as const;
+
+export function transformVTHZaakResult(
+  resultaat: string | null
+): (typeof RESULTATEN_VALID)[keyof typeof RESULTATEN_VALID] | null {
+  if (resultaat == null) {
+    return null;
+  }
+
+  if (resultaat in Object.keys(RESULTATEN_VALID)) {
+    return RESULTATEN_VALID[resultaat as keyof typeof RESULTATEN_VALID];
+  }
+
+  if (resultaat in Object.values(RESULTATEN_VALID)) {
+    return resultaat as (typeof RESULTATEN_VALID)[keyof typeof RESULTATEN_VALID];
+  }
+
+  return null;
+}
 
 export function isVTHZaakVerleend(zaak: { decision: string | null }): boolean {
+  const verleendValues = Object.values(RESULTATEN_VERLEEND) as string[];
   return (
-    typeof zaak.decision === 'string' &&
-    RESULTATEN_VERLEEND_LOWERCASE.includes(zaak.decision.toLowerCase())
+    typeof zaak.decision === 'string' && verleendValues.includes(zaak.decision)
   );
 }
 
@@ -48,8 +62,13 @@ export function isValidVTHDocument(record: {
 }
 
 export function isValidVTHZaak(pbZaakFields: PBZaakFieldsByName) {
+  // pbZaakFields takes the untranslated fieldValues. Therefore we have to check both keys and values of RESULTATEN_VALID
+  const valid_resultaten = [
+    ...Object.keys(RESULTATEN_VALID),
+    ...Object.values(RESULTATEN_VALID),
+  ];
   return (
     isNotBestuurlijkGevoelig(pbZaakFields) &&
-    isZaakWithValidLowercasedResultaat(RESULTATEN_VALID_LOWERCASE, pbZaakFields)
+    isZaakWithValidResultaat(valid_resultaten, pbZaakFields)
   );
 }

@@ -24,7 +24,7 @@ export function hasStringInZAAK_SUBPRODUCT_ID(
   return !!subProduct && subProduct.includes(str);
 }
 
-export function isZaakWithValidLowercasedResultaat(
+export function isZaakWithValidResultaat(
   validResultaten: string[],
   pbZaakFields: PBZaakFieldsByName
 ) {
@@ -37,7 +37,7 @@ export function isZaakWithValidLowercasedResultaat(
     return false;
   }
 
-  const resultaat = pbZaakFields.RESULTAAT_ID?.text?.toLowerCase();
+  const resultaat = pbZaakFields.RESULTAAT_ID?.text;
   return !resultaat || validResultaten.includes(resultaat);
 }
 
