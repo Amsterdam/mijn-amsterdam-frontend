@@ -59,7 +59,7 @@ describe('handleVoorzieningenRequest', () => {
     expect(res.send).toHaveBeenCalledWith(mockResponse);
   });
 
-  test('should call fetchMaApiVoorzieningen with options when provided', async () => {
+  test('should return bad request when invalid option provided', async () => {
     req.body = {
       bsn: '123456782',
       maActies: ['reparatieverzoek'],
