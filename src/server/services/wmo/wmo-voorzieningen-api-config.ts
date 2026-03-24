@@ -1,7 +1,8 @@
 import { isBefore } from 'date-fns';
 import type z from 'zod';
 
-import type { voorzieningenRequestInput } from './wmo-service-config.ts';
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import { voorzieningenRequestInput } from './wmo-service-config.ts';
 import {
   productGroep,
   wmoStatusLineItemsConfig,
