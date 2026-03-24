@@ -19,6 +19,7 @@ import type {
   PBDocument,
   PBRecord,
   PBZaakFieldsByName,
+  WbTransportConfig,
 } from './powerbrowser-types.ts';
 import type { ApiResponse } from '../../../universal/helpers/api.ts';
 import {
@@ -265,6 +266,41 @@ async function fetchZaakAdres(
   return addressResponse;
 }
 
+function toPrefixedFieldName(prefix: string, fieldName: string): string {
+  return `${prefix}${fieldName}`;
+}
+
+async function fetchZaakWbTransport(
+  zaakId: PBZaakRecord['id'],
+  wbTransportConfig: WbTransportConfig
+): Promise<ApiResponse<PBRecordField[]>> {
+  const { prefix, fields: requestedFieldNames } = wbTransportConfig;
+
+  const urlParams = new URLSearchParams({
+    fields: ['K_MAINID', ...requestedFieldNames].join(','),
+  });
+
+  const response = await fetchPowerBrowserData<PBRecordField[]>({
+    method: 'post',
+    formatUrl({ url }) {
+      return `${url}/Link/GFO_ZAKEN/WB_TRANSPORT/Table`;
+    },
+    params: Object.fromEntries(urlParams),
+    data: [zaakId],
+    transformResponse(
+      data: SearchRequestResponse<'WB_TRANSPORT', PBRecordField[]>
+    ) {
+      const recordFields = data.records?.[0]?.fields ?? [];
+      return recordFields.map((f) => ({
+        ...f,
+        fieldName: toPrefixedFieldName(prefix, f.fieldName),
+      }));
+    },
+  });
+
+  return response;
+}
+
 async function fetchZaakStatusDates(
   zaakId: PowerBrowserZaakBase['id']
 ): Promise<ApiResponse<ZaakStatusDate[] | null>> {
@@ -334,6 +370,27 @@ async function fetchSettledZaakAdres(
     return content;
   }
   return null;
+}
+
+async function fetchSettledZaakWbTransportFields(
+  zaakId: PowerBrowserZaakBase['id'],
+  zaakTransformer: Pick<PowerBrowserZaakTransformer, 'fetchWbTransportFields'>
+): Promise<PBRecordField[]> {
+  const wbTransportConfig = zaakTransformer.fetchWbTransportFields;
+  if (!wbTransportConfig?.fields?.length) {
+    return [];
+  }
+
+  const { status, content } = await fetchZaakWbTransport(
+    zaakId,
+    wbTransportConfig
+  );
+
+  if (status === 'OK' && content !== null) {
+    return content;
+  }
+
+  return [];
 }
 
 function convertPBRecordToDict(
@@ -490,13 +547,21 @@ function transformZaakRaw<
     location: string | null;
     documents: GenericDocument[];
     statusDates: ZaakStatusDate[];
+    wbTransportFields?: PBRecordField[];
   }
 ): PB {
-  const { zaakRaw, location, documents, statusDates } = input;
+  const { zaakRaw, location, documents, statusDates, wbTransportFields } =
+    input;
+
+  const combinedFields = [
+    ...zaakRaw.fields,
+    ...(wbTransportFields?.length ? wbTransportFields : []),
+  ];
+
   const zaakWithTransformedFields = Object.fromEntries(
     entries(zaakTransformer.transformFields).map(
       ([pbFieldName, desiredName]) => {
-        return [desiredName, getFieldValue(pbFieldName, zaakRaw.fields)];
+        return [desiredName, getFieldValue(pbFieldName, combinedFields)];
       }
     )
   );
@@ -640,17 +705,20 @@ export async function fetchPBZaken<T extends PowerBrowserZaakTransformer>(
   const zakenPromise = zakenResponse.content.map(
     async ([zaakRaw, zaakTransformer]) => {
       const zaakId = zaakRaw.id;
-      const [location, documents, statusDates] = await Promise.all([
-        fetchSettledZaakAdres(zaakId),
-        fetchSettledZaakDocuments(authProfile, zaakTransformer, zaakId),
-        fetchSettledZaakStatusDates(zaakId),
-      ]);
+      const [location, documents, statusDates, wbTransportFields] =
+        await Promise.all([
+          fetchSettledZaakAdres(zaakId),
+          fetchSettledZaakDocuments(authProfile, zaakTransformer, zaakId),
+          fetchSettledZaakStatusDates(zaakId),
+          fetchSettledZaakWbTransportFields(zaakId, zaakTransformer),
+        ]);
 
       return transformZaakRaw(zaakTransformer, {
         zaakRaw,
         location,
         documents,
         statusDates,
+        wbTransportFields,
       });
     }
   );
@@ -694,6 +762,8 @@ export const forTesting = {
   fetchPersonenOrMaatschappenIdsByProfileID,
   fetchSettledZaakAdres,
   fetchZaakAdres,
+  fetchZaakWbTransport,
+  fetchSettledZaakWbTransportFields,
   fetchSettledZaakStatusDates,
   fetchZaakStatusDates,
   fetchZakenRecords,
