@@ -31,11 +31,15 @@ export function transformVTHZaakResult(
     return null;
   }
 
-  if (resultaat in Object.keys(RESULTATEN_VALID)) {
-    return RESULTATEN_VALID[resultaat as keyof typeof RESULTATEN_VALID];
+  const translatedResultaat =
+    RESULTATEN_VALID[resultaat as keyof typeof RESULTATEN_VALID];
+  if (translatedResultaat) {
+    return translatedResultaat;
   }
 
-  if (resultaat in Object.values(RESULTATEN_VALID)) {
+  const resultaten = Object.values(RESULTATEN_VALID) as string[];
+  const match = resultaten.includes(resultaat);
+  if (match) {
     return resultaat as (typeof RESULTATEN_VALID)[keyof typeof RESULTATEN_VALID];
   }
 
@@ -61,14 +65,14 @@ export function isValidVTHDocument(record: {
   return isValid;
 }
 
+// pbZaakFields param contains the untranslated fieldValues. Therefore we have to check both keys and values of RESULTATEN_VALID
+const resultatenValidAll = [
+  ...Object.keys(RESULTATEN_VALID),
+  ...Object.values(RESULTATEN_VALID),
+];
 export function isValidVTHZaak(pbZaakFields: PBZaakFieldsByName) {
-  // pbZaakFields takes the untranslated fieldValues. Therefore we have to check both keys and values of RESULTATEN_VALID
-  const valid_resultaten = [
-    ...Object.keys(RESULTATEN_VALID),
-    ...Object.values(RESULTATEN_VALID),
-  ];
   return (
     isNotBestuurlijkGevoelig(pbZaakFields) &&
-    isZaakWithValidResultaat(valid_resultaten, pbZaakFields)
+    isZaakWithValidResultaat(resultatenValidAll, pbZaakFields)
   );
 }
