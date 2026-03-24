@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "build-bff",
-    "rootDir": "/",
+    "rootDir": "./src",
     "target": "esnext",
     "lib": [
       "esnext",
