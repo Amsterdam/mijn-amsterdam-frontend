@@ -21,34 +21,38 @@ export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<
   ZorgnedHLIRegeling | ZorgnedAanvraagWithRelatedPersonsTransformed
 >[] = [
   {
+    productgroep: 'PCVERGOEDING',
     productIdentificatie: [AV_UPCC, AV_PCVC, ...verzilveringCodes],
-    statusLineItems: { name: 'PCVERGOEDING', transformers: PCVERGOEDING },
+    statusLineItems: { transformers: PCVERGOEDING },
   },
   {
+    productgroep: 'PCVERGOEDING2026',
     productIdentificatie: [MAMS_PC2026],
     statusLineItems: {
-      name: 'PCVERGOEDING2026',
       transformers: PCVERGOEDING_2026,
     },
   },
   {
+    productgroep: 'REGELING',
     productIdentificatie: ['AV-GOV', 'AV-OVM', 'AV-RTM'],
-    statusLineItems: { name: 'REGELING', transformers: REGELING },
+    statusLineItems: { transformers: REGELING },
   },
   {
+    productgroep: 'DECLARATIE',
     productIdentificatie: ['AV-DECLA'],
-    statusLineItems: { name: 'DECLARATIE', transformers: DECLARATIE },
+    statusLineItems: { transformers: DECLARATIE },
   },
   {
+    productgroep: 'REGELING_PERIODIEK',
     productIdentificatie: ['AV-IIT', 'AV-KVS', 'AV-SPM', 'AV-TAOV', 'AV-RKV'],
     statusLineItems: {
-      name: 'REGELING_PERIODIEK',
       transformers: REGELING_PERIODIEK,
     },
   },
   {
+    productgroep: 'REGELING_CZM',
     productIdentificatie: [AV_CZM],
-    statusLineItems: { name: 'REGELING_CZM', transformers: REGELING_CZM },
+    statusLineItems: { transformers: REGELING_CZM },
     isDisabled: !themaConfig.featureToggle.regelingen.enabledCZM,
   },
 ];

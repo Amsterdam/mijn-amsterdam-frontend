@@ -1,6 +1,8 @@
 import { parseISO } from 'date-fns';
+import z from 'zod';
 
 import { IS_PRODUCTION } from '../../../universal/config/env.ts';
+import { ZodValidators } from '../../helpers/validation.ts';
 import type { BeschikkingsResultaat } from '../zorgned/zorgned-types.ts';
 
 export const featureToggle = {
@@ -48,3 +50,21 @@ export const BESCHIKTPRODUCT_RESULTAAT: BeschikkingsResultaat[] = [
 ] as const;
 export const DATE_END_NOT_OLDER_THAN = '2018-01-01' as const;
 export const MINIMUM_REQUEST_DATE_FOR_DOCUMENTS = parseISO('2022-01-01'); // After this date documents are WCAG proof.
+
+export const voorzieningenRequestInput = z.object({
+  bsn: ZodValidators.BSN,
+  maActies: z.array(z.enum(['stopzetten', 'reparatieverzoek'])).optional(),
+  maProductgroep: z
+    .array(
+      z.enum([
+        'WRA',
+        'hulpmiddelen',
+        'diensten',
+        'PGB',
+        'vergoeding',
+        'AOV',
+        'Alle afgewezen',
+      ])
+    )
+    .optional(),
+});

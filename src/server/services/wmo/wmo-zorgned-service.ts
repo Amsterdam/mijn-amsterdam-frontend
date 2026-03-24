@@ -1,4 +1,4 @@
-import { apiSuccessResult } from '../../../universal/helpers/api.ts';
+import { apiSuccessResult, type ApiResponse, } from '../../../universal/helpers/api.ts';
 import type { GenericDocument } from '../../../universal/types/App.types.ts';
 import {
   fetchAanvragen,
@@ -101,7 +101,9 @@ export function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
   return isActueel;
 }
 
-export async function fetchZorgnedAanvragenWMO(bsn: BSN) {
+export async function fetchZorgnedAanvragenWMO(
+  bsn: BSN
+): Promise<ApiResponse<ZorgnedAanvraagTransformed[]>> {
   const requestBodyParams = {
     maxeinddatum: DATE_END_NOT_OLDER_THAN,
     regeling: ZORGNED_JZD_REGELING_IDENTIFICATIE,

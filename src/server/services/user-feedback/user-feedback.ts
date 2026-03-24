@@ -21,9 +21,9 @@ import {
   type ApiResponsePromise,
 } from '../../../universal/helpers/api.ts';
 import { omit, pick } from '../../../universal/helpers/utils.ts';
+import camelize from '../../helpers/camelize.ts';
 import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
-import { deepCamelizeKeys } from '../db/helper.ts';
 
 export async function fetchUserFeedbackSurvey(
   surveyId: Survey['unique_code'] = SURVEY_ID_INLINE_KTO,
@@ -38,7 +38,9 @@ export async function fetchUserFeedbackSurvey(
     method: 'GET',
     enableCache,
     transformResponse(survey: Survey) {
-      const base = pick(deepCamelizeKeys<Survey>(survey), [
+      const surveyCamelized = camelize(survey);
+
+      const base = pick(surveyCamelized, [
         'id',
         'version',
         'title',
@@ -52,7 +54,7 @@ export async function fetchUserFeedbackSurvey(
         ...base,
         questions: survey.questions?.map((question) => {
           return (
-            pick(deepCamelizeKeys(question), [
+            pick(camelize(question), [
               'id',
               'maxCharacters',
               'questionText',

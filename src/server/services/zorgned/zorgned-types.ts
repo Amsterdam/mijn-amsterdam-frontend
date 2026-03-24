@@ -48,9 +48,9 @@ export interface ZorgnedStatusLineItemsConfig<
 > {
   leveringsVorm?: LeveringsVorm;
   statusLineItems: {
-    name: string;
     transformers: ZorgnedStatusLineItemTransformerConfig<T>[];
   };
+  productgroep: string;
   productsoortCodes?: ProductSoortCode[];
   productIdentificatie?: ProductIdentificatie[];
   filter?: ZorgnedLineItemsFilter;
@@ -76,6 +76,7 @@ interface Toewijzing {
 
 interface Leverancier {
   omschrijving: string;
+  identificatie: string;
 }
 
 export type BeschikkingsResultaat = 'toegewezen' | 'afgewezen';
@@ -130,6 +131,7 @@ export interface ZorgnedAanvraagSource {
   procesAanvraag?: ZorgnedProcesAanvraag;
   documenten: ZorgnedDocument[];
   identificatie: string;
+  procesIdentificatie: string;
   casusIdentificatie: CasusIdentificatie | null;
 }
 
@@ -157,8 +159,10 @@ export interface ZorgnedAanvraagTransformed {
   documenten: GenericDocument[];
   id: string;
   prettyID: string;
+  procesIdentificatie: string;
   isActueel: boolean;
   leverancier: string;
+  leverancierIdentificatie: string;
   leveringsVorm: LeveringsVorm;
   productsoortCode: ProductSoortCode;
   productIdentificatie?: ProductIdentificatie;
@@ -168,8 +172,7 @@ export interface ZorgnedAanvraagTransformed {
   titel: string;
 }
 
-export interface ZorgnedAanvraagWithRelatedPersonsTransformed
-  extends ZorgnedAanvraagTransformed {
+export interface ZorgnedAanvraagWithRelatedPersonsTransformed extends ZorgnedAanvraagTransformed {
   betrokkenPersonen: ZorgnedPerson[];
   bsnAanvrager: BSN;
 }

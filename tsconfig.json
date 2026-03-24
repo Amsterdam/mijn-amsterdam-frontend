@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "build-bff",
+    "rootDir": "./src",
     "target": "esnext",
     "lib": [
       "esnext",
@@ -18,7 +19,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": false,
-    "downlevelIteration": true,
     "noFallthroughCasesInSwitch": true,
     "verbatimModuleSyntax": true,
     "rewriteRelativeImportExtensions": true,
