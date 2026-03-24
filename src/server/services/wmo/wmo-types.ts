@@ -22,7 +22,7 @@ export type WMOVoorzieningFrontend = ZaakAanvraagDetail & {
 
 export type WithMaApiProps = {
   maCategorie: string[];
-  maActies: ('stopzetten' | 'reparatieverzoek')[];
+  maActies: string[];
   maProductgroep: string[];
 };
 export type ZorgnedAanvraagTransformedWithMaApiProps =

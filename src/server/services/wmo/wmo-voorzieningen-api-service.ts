@@ -87,7 +87,9 @@ export async function fetchMaApiVoorzieningen(
         }
 
         return voorziening?.maActies?.some((action) =>
-          options.maActies?.includes(action)
+          options.maActies?.includes(
+            action as (typeof options.maActies)[number]
+          )
         );
       })
       .filter((voorziening) => {
