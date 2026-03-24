@@ -52,14 +52,16 @@ describe('User Feedback Functions', () => {
   describe('saveUserFeedback', () => {
     const successResponse = { success: true };
 
+    beforeEach(() => {
+      remoteApi
+        .post('/survey/api/v1/surveys/survey123/versions/1/entries')
+        .reply(200, successResponse);
+    });
+
     it('should save user feedback and return a success response', async () => {
       const feedback = {
         answers: JSON.stringify([{ question: 1, answer: 'yes' }]),
       } as unknown as UserFeedbackInput;
-
-      remoteApi
-        .post('/survey/api/v1/surveys/survey123/versions/1/entries')
-        .reply(200, successResponse);
 
       const result = await saveUserFeedback('survey123', '1', feedback);
 
@@ -76,10 +78,6 @@ describe('User Feedback Functions', () => {
           ]),
         } as unknown as UserFeedbackInput;
 
-        remoteApi
-          .post('/survey/api/v1/surveys/survey123/versions/1/entries')
-          .reply(200, successResponse);
-
         await saveUserFeedback('survey123', '1', feedback);
         expect(captureMessage).toHaveBeenCalledWith(logMessage, {
           properties: { hasAnswer: true },
@@ -90,10 +88,6 @@ describe('User Feedback Functions', () => {
         const feedback = {
           answers: JSON.stringify([{ question: 1, answer: '' }]),
         } as unknown as UserFeedbackInput;
-
-        remoteApi
-          .post('/survey/api/v1/surveys/survey123/versions/1/entries')
-          .reply(200, successResponse);
 
         await saveUserFeedback('survey123', '1', feedback);
         expect(captureMessage).not.toHaveBeenCalled();
