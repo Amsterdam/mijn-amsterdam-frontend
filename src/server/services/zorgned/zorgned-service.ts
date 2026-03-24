@@ -147,7 +147,7 @@ function transformZorgnedAanvraag(
       beschiktProduct.identificatie,
       false
     ),
-    procesIdentificatie: aanvraag.procesIdentificatie,
+    procesIdentificatie: aanvraag.procesIdentificatie ?? null,
     datumAanvraag: aanvraag.datumAanvraag,
     datumBeginLevering: levering?.begindatum ?? null,
     datumBesluit: aanvraag.beschikking.datumAfgifte ?? '', // See bug: MIJN-11809
