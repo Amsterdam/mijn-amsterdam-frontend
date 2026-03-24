@@ -66,24 +66,38 @@ describe('User Feedback Functions', () => {
       expect(result).toEqual({ content: { success: true }, status: 'OK' });
     });
 
-    it('log line to azure when a description is passed for alert', async () => {
-      const feedback = {
-        answers: JSON.stringify([
-          { question: 1, answer: 'Ik wil dat FB een alert krijgt!' },
-        ]),
-      } as unknown as UserFeedbackInput;
+    describe('log lines', () => {
+      const logMessage = 'A userfeedback survey has been submitted';
 
-      remoteApi
-        .post('/survey/api/v1/surveys/survey123/versions/1/entries')
-        .reply(200, successResponse);
+      it('With an answer', async () => {
+        const feedback = {
+          answers: JSON.stringify([
+            { question: 1, answer: 'deze website is echt...' },
+          ]),
+        } as unknown as UserFeedbackInput;
 
-      await saveUserFeedback('survey123', '1', feedback);
-      expect(captureMessage).toHaveBeenCalledWith(
-        'A userfeedback survey has been submitted',
-        {
+        remoteApi
+          .post('/survey/api/v1/surveys/survey123/versions/1/entries')
+          .reply(200, successResponse);
+
+        await saveUserFeedback('survey123', '1', feedback);
+        expect(captureMessage).toHaveBeenCalledWith(logMessage, {
           properties: { hasAnswer: true },
-        }
-      );
+        });
+      });
+
+      it('Without an answer', async () => {
+        const feedback = {
+          answers: JSON.stringify([{ question: 1, answer: '' }]),
+        } as unknown as UserFeedbackInput;
+
+        remoteApi
+          .post('/survey/api/v1/surveys/survey123/versions/1/entries')
+          .reply(200, successResponse);
+
+        await saveUserFeedback('survey123', '1', feedback);
+        expect(captureMessage).not.toHaveBeenCalled();
+      });
     });
   });
 });

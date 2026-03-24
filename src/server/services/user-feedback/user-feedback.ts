@@ -97,6 +97,7 @@ export async function saveUserFeedback(
   const surveyEntryPayload = getSurveyEntryPayload(data);
 
   if (surveyEntryPayload.answers.some((answer) => answer.answer.length)) {
+    // This log line is critical for alerting purposes. Modifying the "hasAnswer" property may disrupt alerting.
     captureMessage('A userfeedback survey has been submitted', {
       properties: { hasAnswer: true },
     });
