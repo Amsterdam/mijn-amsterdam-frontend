@@ -10,7 +10,7 @@ import type { WmoAapiConfig } from './wmo-types.ts';
 import { entries } from '../../../universal/helpers/utils.ts';
 
 export type FetchWmoVoorzieningenApiOptions = {
-  maActies: z.infer<typeof voorzieningenRequestInput>['maActies'];
+  maActies?: z.infer<typeof voorzieningenRequestInput>['maActies'];
   maProductgroep?: z.infer<typeof voorzieningenRequestInput>['maProductgroep'];
 };
 

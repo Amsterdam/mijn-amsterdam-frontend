@@ -63,10 +63,14 @@ export async function handleVoorzieningenRequest(req: Request, res: Response) {
   const bsn = validatedRequestBody.bsn;
   const maActies = validatedRequestBody.maActies;
   const maProductgroep = validatedRequestBody.maProductgroep;
-  const response = await fetchMaApiVoorzieningen(bsn, {
-    maActies,
-    maProductgroep,
-  });
+  const options =
+    maActies || maProductgroep
+      ? {
+          ...(maActies ? { maActies } : {}),
+          ...(maProductgroep ? { maProductgroep } : {}),
+        }
+      : undefined;
+  const response = await fetchMaApiVoorzieningen(bsn, options);
 
   return sendResponse(res, response);
 }
