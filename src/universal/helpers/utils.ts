@@ -35,10 +35,10 @@ export const omit = <T extends object, U extends keyof T>(
     {} as OmitMapped<T, U>
   );
 
-export function pick<T extends object>(source: T, keys: string[]) {
+export function pick<T extends object>(source: T, keys: (keyof T)[]) {
   return Object.fromEntries(
     entries(source).filter(([key]) => keys.includes(key))
-  );
+  ) as Pick<T, keyof T>;
 }
 
 export function isRecord(obj: unknown): obj is Record<string, unknown> {

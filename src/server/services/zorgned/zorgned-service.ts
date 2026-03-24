@@ -147,6 +147,7 @@ function transformZorgnedAanvraag(
       beschiktProduct.identificatie,
       false
     ),
+    procesIdentificatie: aanvraag.procesIdentificatie,
     datumAanvraag: aanvraag.datumAanvraag,
     datumBeginLevering: levering?.begindatum ?? null,
     datumBesluit: aanvraag.beschikking.datumAfgifte ?? '', // See bug: MIJN-11809
@@ -159,6 +160,8 @@ function transformZorgnedAanvraag(
     documenten: transformDocumenten(aanvraag.documenten ?? []),
     isActueel: toegewezenProduct?.actueel ?? false,
     leverancier: toegewezenProduct?.leverancier?.omschrijving ?? '',
+    leverancierIdentificatie:
+      toegewezenProduct?.leverancier?.identificatie ?? '',
     leveringsVorm,
     productsoortCode,
     productIdentificatie,

@@ -5,7 +5,6 @@ import type {
 import type {
   ProductSoortCode,
   ZorgnedAanvraagTransformed,
-  ZorgnedStatusLineItemsConfig,
 } from '../zorgned/zorgned-types.ts';
 
 export type WMOVoorzieningFrontend = ZaakAanvraagDetail & {
@@ -21,17 +20,29 @@ export type WMOVoorzieningFrontend = ZaakAanvraagDetail & {
   disclaimer?: string;
 };
 
-export type WMOVoorzieningCompact = Pick<
-  ZorgnedAanvraagTransformed,
-  | 'id'
-  | 'titel'
-  | 'beschikkingNummer'
-  | 'productIdentificatie'
-  | 'beschiktProductIdentificatie'
-  | 'datumBesluit'
-  | 'datumBeginLevering'
-  | 'datumEindeLevering'
-  | 'datumOpdrachtLevering'
-> & {
-  productGroup: ZorgnedStatusLineItemsConfig['statusLineItems']['name'];
+export type WithActions = {
+  maCategorie: string[];
+  maActies: ('stopzetten' | 'reparatieverzoek')[];
+  maProductgroep: string[];
+};
+export type ZorgnedAanvraagTransformedWithActions = ZorgnedAanvraagTransformed &
+  Partial<WithActions>;
+
+export type ActionAssigFN = (
+  voorziening: ZorgnedAanvraagTransformed
+) => boolean;
+export type VoorzieningKey = Exclude<
+  keyof ZorgnedAanvraagTransformed,
+  'link' | 'documenten'
+>;
+export type VoorzieningValue = ZorgnedAanvraagTransformed[VoorzieningKey];
+
+export type ActionConfig = {
+  assign: Partial<WithActions>;
+  match: Partial<
+    Record<
+      VoorzieningKey,
+      VoorzieningValue | VoorzieningValue[] | ActionAssigFN
+    >
+  >;
 };

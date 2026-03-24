@@ -5,7 +5,7 @@ import type { HulpmiddelenDisclaimerConfig } from './status-line-items/wmo-hulpm
 import { getHulpmiddelenDisclaimer } from './status-line-items/wmo-hulpmiddelen.ts';
 import { routes } from './wmo-service-config.ts';
 import {
-  fetchActueleWRAVoorzieningenCompact,
+  fetchVoorzieningenCompact,
   fetchWmo,
   fetchWmoVoorzieningenCompact,
   forTesting,
@@ -280,20 +280,20 @@ describe('Transform api items', () => {
       remoteApi.post('/zorgned/aanvragen').reply(200, ZORGNED_AANVRAGEN_WMO);
 
       const result = await fetchWmoVoorzieningenCompact(mockBSN, {
-        productGroup: ['WRA', 'hulpmiddelen'],
+        maProductgroep: ['WRA', 'hulpmiddelen'],
       });
 
       expect(
         result.content?.every((voorziening) => {
           return (
-            voorziening.productGroup === 'WRA' ||
-            voorziening.productGroup === 'hulpmiddelen'
+            voorziening.maProductgroep === 'WRA' ||
+            voorziening.maProductgroep === 'hulpmiddelen'
           );
         })
       ).toBe(true);
 
       expect(result.content?.[0] && Object.keys(result.content[0])).toEqual([
-        'productGroup',
+        'maProductgroep',
         'titel',
         'id',
         'beschikkingNummer',
@@ -309,11 +309,11 @@ describe('Transform api items', () => {
     it('should fetch and filter actuele WRA voorzieningen', async () => {
       remoteApi.post('/zorgned/aanvragen').reply(200, ZORGNED_AANVRAGEN_WMO);
 
-      const result = await fetchActueleWRAVoorzieningenCompact(mockBSN);
+      const result = await fetchVoorzieningenCompact(mockBSN);
 
       expect(
         result.content?.every((voorziening) => {
-          return voorziening.productGroup === 'WRA';
+          return voorziening.maProductgroep === 'WRA';
         })
       ).toBe(true);
     });
