@@ -190,7 +190,7 @@ components:
               - stopzetten
               - reparatieverzoek
         beschikkingNummer:
-          type: string
+          type: integer
           nullable: true
         productIdentificatie:
           type: string
