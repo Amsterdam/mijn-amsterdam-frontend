@@ -10,6 +10,9 @@ const RESULTATEN_VERLEEND = [
   'Vergunning gedeeltelijk ingetrokken',
   'Verleend',
 ];
+const RESULTATEN_VERLEEND_LOWERCASE = RESULTATEN_VERLEEND.map((resultaat) =>
+  resultaat.toLowerCase()
+);
 const RESULTATEN_NIET_VERLEEND = [
   'Aanvraag ingetrokken',
   'Ander bevoegd gezag',
@@ -17,32 +20,18 @@ const RESULTATEN_NIET_VERLEEND = [
   'Geweigerd',
   'Vergunningsvrij',
 ];
-const RESULTATEN_VALID = [...RESULTATEN_VERLEEND, ...RESULTATEN_NIET_VERLEEND];
-const RESULTATEN_VALID_LOWERCASE = RESULTATEN_VALID.map((resultaat) =>
-  resultaat.toLowerCase()
+const RESULTATEN_NIET_VERLEEND_LOWERCASE = RESULTATEN_NIET_VERLEEND.map(
+  (resultaat) => resultaat.toLowerCase()
 );
-
-export function transformVTHZaakResult(
-  resultaat: string | null
-): 'Verleend' | 'Niet verleend' | string | null {
-  if (resultaat === null) {
-    return null;
-  }
-
-  switch (true) {
-    case RESULTATEN_VERLEEND.includes(resultaat):
-      return 'Verleend';
-    case RESULTATEN_NIET_VERLEEND.includes(resultaat):
-      return 'Niet verleend';
-  }
-
-  return resultaat;
-}
+const RESULTATEN_VALID_LOWERCASE = [
+  ...RESULTATEN_VERLEEND_LOWERCASE,
+  ...RESULTATEN_NIET_VERLEEND_LOWERCASE,
+];
 
 export function isVTHZaakVerleend(zaak: { decision: string | null }): boolean {
   return (
     typeof zaak.decision === 'string' &&
-    RESULTATEN_VERLEEND.includes(zaak.decision)
+    RESULTATEN_VERLEEND_LOWERCASE.includes(zaak.decision.toLowerCase())
   );
 }
 
