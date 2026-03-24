@@ -11,8 +11,8 @@
         },
         {
           "fieldName": "NAAM_VAARTUIG",
-          "text": "Boot",
-          "fieldValue": "Boot"
+          "text": "Bootnaam op wbtransport",
+          "fieldValue": "Bootnaam op wbtransport"
         },
         {
           "fieldName": "DIEPGANG",
