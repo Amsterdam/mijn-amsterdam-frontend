@@ -1,8 +1,10 @@
-import type { ZorgnedAanvraagTransformedWithMaApiProps } from './wmo-types.ts';
-import {
-  wmoVoorzieningenApiConfig,
-  type FetchWmoVoorzieningenApiOptions,
-} from './wmo-voorzieningen-api-config.ts';
+import type {
+  WithMaApiProps,
+  WmoAapiConfig,
+  ZorgnedAanvraagTransformedWithMaApiProps,
+} from './wmo-types.ts';
+import { wmoVoorzieningenApiConfig } from './wmo-voorzieningen-api-config.ts';
+import { type FetchWmoVoorzieningenApiOptions } from './wmo-voorzieningen-api-config.ts';
 import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service.ts';
 import {
   type ApiResponse,
@@ -15,9 +17,9 @@ import type {
   BSN,
 } from '../zorgned/zorgned-types.ts';
 
-function isActionConfigMatch(
-  voorziening: ZorgnedAanvraagTransformed,
-  actionConfig: (typeof wmoVoorzieningenApiConfig)[number]
+function isMaApiPropertyConfigMatch<T extends object>(
+  voorziening: T,
+  actionConfig: WmoAapiConfig<T>
 ): boolean {
   const matchers = entries(actionConfig.match);
 
@@ -36,15 +38,16 @@ function isActionConfigMatch(
   });
 }
 
-function addActionConfigToVoorziening(
-  voorziening: ZorgnedAanvraagTransformed
-): ZorgnedAanvraagTransformedWithMaApiProps {
-  const updatedVoorziening: ZorgnedAanvraagTransformedWithMaApiProps = {
+function addMaApiPropsToVoorziening<T extends object>(
+  apiPropsConfig: WmoAapiConfig<T>[],
+  voorziening: T
+): T & Partial<WithMaApiProps> {
+  const updatedVoorziening: T & Partial<WithMaApiProps> = {
     ...voorziening,
   };
 
-  wmoVoorzieningenApiConfig.forEach((actionConfig) => {
-    if (isActionConfigMatch(voorziening, actionConfig)) {
+  apiPropsConfig.forEach((actionConfig) => {
+    if (isMaApiPropertyConfigMatch(voorziening, actionConfig)) {
       entries(actionConfig.assign).forEach(([key, value]) => {
         if (Array.isArray(value)) {
           // Merge and deduplicate array values if the key already exists in the voorziening, otherwise just assign the value.
@@ -64,14 +67,18 @@ function addActionConfigToVoorziening(
 
 export async function fetchMaApiVoorzieningen(
   bsn: BSN,
-  options?: FetchWmoVoorzieningenApiOptions
+  options?: FetchWmoVoorzieningenApiOptions,
+  maVoorzieningenApiConfig: WmoAapiConfig[] = wmoVoorzieningenApiConfig
 ): Promise<ApiResponse<ZorgnedAanvraagTransformed[]>> {
   const voorzieningenResponse = await fetchZorgnedAanvragenWMO(bsn);
 
   if (voorzieningenResponse.status === 'OK') {
     const voorzieningen = voorzieningenResponse.content
       .map((voorziening) => {
-        return addActionConfigToVoorziening(voorziening);
+        return addMaApiPropsToVoorziening(
+          maVoorzieningenApiConfig,
+          voorziening
+        );
       })
       .filter((voorziening) => {
         // If no actions are specified in the options, we want to include all items, otherwise we filter based on the specified actions.
@@ -130,3 +137,8 @@ export async function fetchMaApiVoorzieningen(
 
   return voorzieningenResponse;
 }
+
+export const forTesting = {
+  isMaApiPropertyConfigMatch,
+  addMaApiPropsToVoorziening,
+};

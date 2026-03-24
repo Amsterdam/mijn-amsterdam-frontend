@@ -28,21 +28,16 @@ export type WithMaApiProps = {
 export type ZorgnedAanvraagTransformedWithMaApiProps =
   ZorgnedAanvraagTransformed & Partial<WithMaApiProps>;
 
-export type MaApiPropAssigFN = (
-  voorziening: ZorgnedAanvraagTransformed
-) => boolean;
-export type VoorzieningKey = Exclude<
-  keyof ZorgnedAanvraagTransformed,
-  'link' | 'documenten'
->;
-export type VoorzieningValue = ZorgnedAanvraagTransformed[VoorzieningKey];
+export type MaApiPropAssigFN<T> = (voorziening: T) => boolean;
+export type VoorzieningKey<T> = Exclude<keyof T, 'link' | 'documenten'>;
+export type VoorzieningValue<T> = T[VoorzieningKey<T>];
 
-export type WmoAapiConfig = {
+export type WmoAapiConfig<T extends object = ZorgnedAanvraagTransformed> = {
   assign: Partial<WithMaApiProps>;
   match: Partial<
     Record<
-      VoorzieningKey,
-      VoorzieningValue | VoorzieningValue[] | MaApiPropAssigFN
+      VoorzieningKey<T>,
+      VoorzieningValue<T> | VoorzieningValue<T>[] | MaApiPropAssigFN<T>
     >
   >;
 };
