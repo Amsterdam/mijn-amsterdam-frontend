@@ -34,7 +34,14 @@ const LigplaatsWoonbootVergunningZaakTransformer: PowerBrowserZaakTransformer<Li
     isVerleend: isVTHZaakVerleend,
     fetchWbTransportFields: {
       prefix: 'WB_',
-      fields: ['NAAM_VAARTUIG', 'DIEPGANG', 'LENGTE', 'BREEDTE', 'HOOGTE'],
+      fields: [
+        'NAAM_VAARTUIG',
+        'BRANKDMERT',
+        'DIEPGANG',
+        'LENGTE',
+        'BREEDTE',
+        'HOOGTE',
+      ],
     },
     fetchZaakFilter: (pbZaakFields) =>
       hasStringInZAAKPRODUCT_ID('Ligplaatsvergunning woonboot', pbZaakFields) ||
