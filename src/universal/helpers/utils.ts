@@ -35,12 +35,12 @@ export const omit = <T extends object, U extends keyof T>(
     {} as OmitMapped<T, U>
   );
 
-export function pick<T, K extends keyof T>(
+export function pick<T extends object, K extends keyof T>(
   source: T,
   keys: readonly K[]
 ): Pick<T, K> {
   return Object.fromEntries(
-    entries(source).filter(([key]) => keys.includes(key))
+    Object.entries(source).filter(([key]) => keys.includes(key as K))
   ) as Pick<T, K>;
 }
 
