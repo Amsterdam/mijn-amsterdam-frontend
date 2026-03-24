@@ -41,7 +41,6 @@ paths:
                 maActies:
                   type: array
                   items:
-                    type: string
                     $ref: '#/components/schemas/WmoVoorziening/properties/maActies'
                   description:
                     Optional list of maActies to filter the voorzieningen on.
@@ -49,7 +48,6 @@ paths:
                 maProductgroep:
                   type: array
                   items:
-                    type: string
                     $ref: '#/components/schemas/WmoVoorziening/properties/maProductgroep'
                   description:
                     Optional list of maProductgroepen to filter the voorzieningen on.
