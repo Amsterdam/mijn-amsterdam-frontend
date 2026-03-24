@@ -80,9 +80,7 @@ import { themaConfig as themaVaren } from '../src/client/pages/Thema/Varen/Varen
 import { themaConfig as themaBodem } from '../src/client/pages/Thema/Bodem/Bodem-thema-config.ts';
 import { themaConfig as themaHLI } from '../src/client/pages/Thema/HLI/HLI-thema-config.ts';
 import { themaConfig as themaJeugd } from '../src/client/pages/Thema/Jeugd/Jeugd-thema-config.ts';
-import {
-  themaConfig as themaParkeren,
-} from '../src/client/pages/Thema/Parkeren/Parkeren-thema-config.ts';
+import { themaConfig as themaParkeren } from '../src/client/pages/Thema/Parkeren/Parkeren-thema-config.ts';
 import { themaConfig as themaBelastingen } from '../src/client/pages/Thema/Belastingen/Belastingen-thema-config.ts';
 import { themaConfig as themaMilieuzone } from '../src/client/pages/Thema/Milieuzone/Milieuzone-thema-config.ts';
 import { themaConfig as themaSubsidies } from '../src/client/pages/Thema/Subsidies/Subsidies-thema-config.ts';
@@ -113,9 +111,9 @@ const themas = [
   { id: themaIdAfis, title: themaTitleAfis },
   { id: themaOvertredingen.id, title: themaOvertredingen.title },
 
-  { id: bodemThemaConfig.id, title: bodemThemaConfig.title },
-  { id: themaConfigHLI.id, title: themaConfigHLI.title },
-  { id: themaConfigJeugd.id, title: themaConfigJeugd.title },
+  { id: themaBodem.id, title: themaBodem.title },
+  { id: themaHLI.id, title: themaHLI.title },
+  { id: themaJeugd.id, title: themaJeugd.title },
   { id: themaParkeren.id, title: themaParkeren.title },
   { id: themaVaren.id, title: themaVaren.title },
   { id: themaBodem.id, title: themaBodem.title },
