@@ -2,9 +2,9 @@ import { Alert, Link, Paragraph } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
 import styles from './MaintenanceNotifications.module.scss';
-import { parseHTML } from '../../helpers/html-react-parse';
-import { useCmsMaintenanceNotifications } from '../../hooks/api/useCmsMaintenanceNotifications';
-import { PageContentCell } from '../Page/Page';
+import { parseHTML } from '../../helpers/html-react-parse.tsx';
+import { useCmsMaintenanceNotifications } from '../../hooks/api/useCmsMaintenanceNotifications.ts';
+import { PageContentCell } from '../Page/Page.tsx';
 
 const DEFAULT_SEVERITY = 'warning';
 const DEFAULT_HEADING = 'Onderhoudsbericht';

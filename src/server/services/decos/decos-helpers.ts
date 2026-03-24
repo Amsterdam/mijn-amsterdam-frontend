@@ -5,19 +5,19 @@ import {
   DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12,
   DECOS_PENDING_REMOVAL_DFUNCTION,
   MA_VERLEEND_DECISIONS_COMMOM,
-} from './decos-field-transformers';
+} from './decos-field-transformers.ts';
 import type {
   DecosZaakTransformer,
   DecosZaakSource,
   DecosZaakBase,
   DecosFieldValue,
-} from './decos-types';
-import { isDateInPast } from '../../../universal/helpers/date';
-import { entries } from '../../../universal/helpers/utils';
-import type { ZaakStatus } from '../../../universal/types/App.types';
-import type { StatusLineItem } from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import type { WithKentekens } from '../vergunningen/config-and-types';
+} from './decos-types.ts';
+import { isDateInPast } from '../../../universal/helpers/date.ts';
+import { entries } from '../../../universal/helpers/utils.ts';
+import type { ZaakStatus } from '../../../universal/types/App.types.ts';
+import type { StatusLineItem } from '../../../universal/types/App.types.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import type { WithKentekens } from '../vergunningen/config-and-types.ts';
 
 // Checks to see if a payment was not processed correctly/completely yet.
 export function isWaitingForPaymentConfirmation(

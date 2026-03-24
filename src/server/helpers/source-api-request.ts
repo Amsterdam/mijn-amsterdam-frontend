@@ -1,38 +1,41 @@
-import axios, {
+import type {
   AxiosResponse,
-  AxiosResponseHeaders,
+  AxiosResponseHeaders} from 'axios';
+import axios, {
   type AxiosResponseTransformer,
 } from 'axios';
 import memoryCache from 'memory-cache';
 
-import { Deferred } from './deferred';
+import { Deferred } from './deferred.ts';
 import {
   addRequestDataDebugging,
   addResponseDataDebugging,
-} from './source-api-debug';
-import { getRequestConfigCacheKey } from './source-api-helpers';
+} from './source-api-debug.ts';
+import { getRequestConfigCacheKey } from './source-api-helpers.ts';
+import type {
+  ApiSuccessResponse} from '../../universal/helpers/api.ts';
 import {
-  ApiSuccessResponse,
   apiErrorResult,
   apiPostponeResult,
   apiSuccessResult,
   type ApiErrorResponse,
-} from '../../universal/helpers/api';
-import { AuthProfileAndToken } from '../auth/auth-types';
-import {
+} from '../../universal/helpers/api.ts';
+import type { AuthProfileAndToken } from '../auth/auth-types.ts';
+import type {
   ApiUrlEntries,
+  DataRequestConfig} from '../config/source-api.ts';
+import {
   DEFAULT_REQUEST_CACHE_TTL_MS,
   DEFAULT_REQUEST_CONFIG,
-  DataRequestConfig,
   FORCE_RENEW_CACHE_TTL_MS,
-} from '../config/source-api';
+} from '../config/source-api.ts';
 import {
   debugCacheHit,
   debugCacheKey,
   debugResponse,
   debugResponseError,
-} from '../debug';
-import { captureException } from '../services/monitoring';
+} from '../debug.ts';
+import { captureException } from '../services/monitoring.ts';
 
 export const axiosRequest = axios.create({
   responseType: 'json',

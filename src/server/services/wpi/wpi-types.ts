@@ -1,8 +1,8 @@
-import {
+import type {
   LinkProps,
   StatusLineItem,
   ZaakAanvraagDetail,
-} from '../../../universal/types/App.types';
+} from '../../../universal/types/App.types.ts';
 
 export interface WpiRequestStatusDocument {
   id: string;
@@ -44,7 +44,6 @@ export interface WpiRequestProcess extends ZaakAanvraagDetail {
   dateEndFormatted: string | null;
   datePublished: string; // Date of latest step
   steps: WpiRequestStatus[];
-  statusId: WpiRequestStatus['id'];
   displayStatus: string;
   decision: string | null;
 }
@@ -63,9 +62,7 @@ export interface WpiRequestStatusLabels {
   };
 }
 
-export interface WpiRequestProcessLabels {
-  [id: string]: WpiRequestStatusLabels;
-}
+export type WpiRequestProcessLabels = Record<string, WpiRequestStatusLabels>;
 
 export interface WpiIncomeSpecification {
   datePublished: string;
@@ -75,17 +72,16 @@ export interface WpiIncomeSpecification {
   url: string;
 }
 
-export interface WpiIncomeSpecificationTransformed
-  extends WpiIncomeSpecification {
+export interface WpiIncomeSpecificationTransformed extends WpiIncomeSpecification {
   datePublishedFormatted: string;
   category: string;
   download: string;
 }
 
-export interface WpiIncomeSpecificationResponseData {
+export type WpiIncomeSpecificationResponseData = {
   jaaropgaven: WpiIncomeSpecification[];
   uitkeringsspecificaties: WpiIncomeSpecification[];
-}
+};
 
 export interface WpiIncomeSpecificationResponseDataTransformed {
   jaaropgaven: WpiIncomeSpecificationTransformed[];

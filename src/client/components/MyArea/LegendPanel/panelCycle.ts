@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react';
 
 import { create } from 'zustand';
 
-import { useLandScape, useWidescreen } from '../../../hooks/media.hook';
+import { useLandScape, useWidescreen } from '../../../hooks/media.hook.ts';
 
 function px(size: number) {
   return size + 'px';

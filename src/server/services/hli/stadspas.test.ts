@@ -1,12 +1,5 @@
 import Mockdate from 'mockdate';
 
-import {
-  blockStadspas,
-  fetchStadspasBudgetTransactions,
-  unblockStadspas,
-  fetchStadspas,
-  fetchStadspasDiscountTransactions,
-} from './stadspas';
 import type {
   StadspasHouderPasSource,
   StadspasHouderSource,
@@ -15,10 +8,17 @@ import type {
   StadspasDiscountTransactionsResponseSource,
   StadspasTransactiesResponseSource,
   StadspasTransactieSource,
-} from './stadspas-types';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
+} from './stadspas-types.ts';
+import {
+  blockStadspas,
+  fetchStadspasBudgetTransactions,
+  unblockStadspas,
+  fetchStadspas,
+  fetchStadspasDiscountTransactions,
+} from './stadspas.ts';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import * as encryptDecrypt from '../../helpers/encrypt-decrypt.ts';
 
 const FAKE_API_KEY = '22222xx22222';
 

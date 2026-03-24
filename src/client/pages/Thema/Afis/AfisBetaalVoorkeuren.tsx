@@ -6,25 +6,25 @@ import {
   Paragraph,
 } from '@amsterdam/design-system-react';
 
-import { featureToggle } from './Afis-thema-config';
+import { featureToggle } from './Afis-thema-config.ts';
 import styles from './AfisBetaalVoorkeuren.module.scss';
-import { EmandateRefetchInterval } from './AfisEMandateDetail';
-import { useAfisBetaalVoorkeurenData } from './useAfisBetaalVoorkeurenData';
-import { useAfisEMandatesData } from './useAfisEmandatesData';
-import { useAfisThemaData } from './useAfisThemaData.hook';
+import { AfisEmandateRefetchInterval } from './AfisEmandateFetchInterval.tsx';
+import { useAfisBetaalVoorkeurenData } from './useAfisBetaalVoorkeurenData.tsx';
+import { useAfisEMandatesApi } from './useAfisEmandatesApi.tsx';
+import { useSignRequestPayloadStorage } from './useAfisEMandatesSignRequest.tsx';
+import { useAfisThemaData } from './useAfisThemaData.hook.tsx';
 import {
   type AfisBusinessPartnerDetailsTransformed,
   type AfisEMandateFrontend,
-} from '../../../../server/services/afis/afis-types';
-import { entries } from '../../../../universal/helpers/utils';
-import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
-import { Datalist } from '../../../components/Datalist/Datalist';
-import LoadingContent from '../../../components/LoadingContent/LoadingContent';
-import { PageContentCell } from '../../../components/Page/Page';
-import { DisplayProps } from '../../../components/Table/TableV2.types';
-import ThemaPagina from '../../../components/Thema/ThemaPagina';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+} from '../../../../server/services/afis/afis-types.ts';
+import { entries } from '../../../../universal/helpers/utils.ts';
+import { Datalist } from '../../../components/Datalist/Datalist.tsx';
+import LoadingContent from '../../../components/LoadingContent/LoadingContent.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
+import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
+import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 type AfisBusinessPartnerProps = {
   businesspartner: Omit<
@@ -53,7 +53,12 @@ function AfisBusinessPartnerDetails({
           ([key]) => !!businesspartner[key as keyof typeof businesspartner]
         )
         .map(([key, label]) => {
-          const value = businesspartner[key as keyof typeof businesspartner];
+          let value = businesspartner[key as keyof typeof businesspartner];
+
+          if (value && key === 'businessPartnerId') {
+            value = `${parseInt(value, 10)}`;
+          }
+
           return {
             label,
             content: value,
@@ -63,23 +68,21 @@ function AfisBusinessPartnerDetails({
 
   return (
     <PageContentCell>
-      <CollapsiblePanel
-        title="Facturatiegegevens"
-        startCollapsed={startCollapsed}
-      >
-        {isLoading && <LoadingContent />}
-        {!isLoading && !!rows.length && (
-          <Grid>
-            <Grid.Cell span={6}>
-              <Datalist
-                className={styles['Datalist--businesspartnerdetails']}
-                rows={rows}
-                rowVariant="horizontal"
-              />
-            </Grid.Cell>
-          </Grid>
-        )}
-      </CollapsiblePanel>
+      <Heading level={3} size="level-2" className="ams-mb-s">
+        Facturatiegegevens
+      </Heading>
+      {isLoading && <LoadingContent />}
+      {!isLoading && !!rows.length && (
+        <Grid>
+          <Grid.Cell span={6}>
+            <Datalist
+              className={styles['Datalist--businesspartnerdetails']}
+              rows={rows}
+              rowVariant="horizontal"
+            />
+          </Grid.Cell>
+        </Grid>
+      )}
     </PageContentCell>
   );
 }
@@ -93,6 +96,7 @@ export function AfisBetaalVoorkeuren() {
     breadcrumbs,
     routeConfig,
     themaId,
+    belastingenLinkListItem,
   } = useAfisThemaData();
 
   useHTMLDocumentTitle(routeConfig.betaalVoorkeuren);
@@ -112,9 +116,10 @@ export function AfisBetaalVoorkeuren() {
     eMandateTableConfig,
     hasEMandatesError,
     isLoadingEMandates,
-    statusNotification: { ibansPendingActivation },
     fetchEMandates,
-  } = useAfisEMandatesData();
+  } = useAfisEMandatesApi();
+
+  const payloadStorage = useSignRequestPayloadStorage();
 
   const isLoadingAllAPis =
     isThemaPaginaLoading ||
@@ -138,7 +143,7 @@ export function AfisBetaalVoorkeuren() {
             Een automatische incasso instellen voor de directie Belastingen gaat
             via
             <br />
-            <Link href="https://belastingbalie.amsterdam.nl/digid.info.php">
+            <Link href={belastingenLinkListItem.to}>
               Mijn Belastingen - gemeente Amsterdam
             </Link>
           </Paragraph>
@@ -207,8 +212,8 @@ export function AfisBetaalVoorkeuren() {
         isLoading={!!(isLoadingBusinessPartnerDetails || isThemaPaginaLoading)}
         startCollapsed={featureToggle.emandatesActive}
       />
-      {!!ibansPendingActivation.length && (
-        <EmandateRefetchInterval fetch={fetchEMandates} />
+      {payloadStorage.hasPayloads() && (
+        <AfisEmandateRefetchInterval fetch={fetchEMandates} />
       )}
       {eMandatesTable}
     </>

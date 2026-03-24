@@ -5,13 +5,13 @@ import type { ParamsDictionary } from 'express-serve-static-core';
 import { generatePath } from 'react-router';
 import z from 'zod';
 
-import { IS_PRODUCTION } from '../../universal/config/env';
+import { IS_PRODUCTION } from '../../universal/config/env.ts';
 import {
-  ApiResponse_DEPRECATED,
+  type ApiResponse_DEPRECATED,
   apiErrorResult,
-} from '../../universal/helpers/api';
-import type { AuthProfileAndToken } from '../auth/auth-types';
-import { BFF_API_BASE_URL } from '../config/app';
+} from '../../universal/helpers/api.ts';
+import type { AuthProfileAndToken } from '../auth/auth-types.ts';
+import { BFF_API_BASE_URL } from '../config/app.ts';
 
 type BFFRouter = express.Router & { BFF_ID: string };
 

@@ -1,6 +1,9 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
-import { Unshaped, type LinkProps } from '../../../universal/types/App.types';
+import type {
+  LinkProps,
+  Unshaped,
+} from '../../../universal/types/App.types.ts';
 
 export type DisplayPropsBase<
   T,

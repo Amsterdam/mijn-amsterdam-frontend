@@ -1,5 +1,5 @@
-import { Request } from 'express';
-import { Session } from 'express-openid-connect';
+import type { Request } from 'express';
+import type { Session } from 'express-openid-connect';
 
 export interface AuthProfile {
   authMethod: 'eherkenning' | 'digid';

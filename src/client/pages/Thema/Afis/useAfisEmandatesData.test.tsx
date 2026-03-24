@@ -1,24 +1,20 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { useParams } from 'react-router';
-import { describe, it, vi, expect, Mock } from 'vitest';
+import type { Mock } from 'vitest';
+import { describe, it, vi, expect } from 'vitest';
 
-import {
-  useAfisEMandatesData,
-  forTesting,
-  useEmandateApis,
-} from './useAfisEmandatesData';
-import {
-  EmandateStatusCode,
-  type AfisEMandateFrontend,
-} from '../../../../server/services/afis/afis-types';
-import { bffApiHost } from '../../../../testing/setup';
-import { bffApi } from '../../../../testing/utils';
-import { useBffApiStateStore } from '../../../hooks/api/useBffApi';
-import { useAppStateGetter } from '../../../hooks/useAppStateStore';
+import { useEmandateApis } from './useAfisEmandateActionsApi.tsx';
+import { useAfisEMandatesApi, forTesting } from './useAfisEmandatesApi.tsx';
+import type { EmandateStatusCode } from '../../../../server/services/afis/afis-types.ts';
+import { type AfisEMandateFrontend } from '../../../../server/services/afis/afis-types.ts';
+import { bffApiHost } from '../../../../testing/setup.ts';
+import { bffApi } from '../../../../testing/utils.ts';
+import { useBffApiStateStore } from '../../../hooks/api/useBffApi.ts';
+import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
 
 vi.mock('../../../hooks/useAppStateStore');
 vi.mock('react-router', async (importActual) => {
-  const actual = await importActual<typeof import('react-router')>();
+  const actual: object = await importActual();
   return {
     ...actual,
     useNavigate: vi.fn().mockReturnValue(() => vi.fn()),
@@ -29,7 +25,7 @@ vi.mock('react-router', async (importActual) => {
 
 describe('updateEmandateById', () => {
   it('should update the correct eMandate by ID', () => {
-    const eMandates = [
+    const eMandates: AfisEMandateFrontend[] = [
       {
         id: '1',
         creditorName: 'Mandate 1',
@@ -43,6 +39,7 @@ describe('updateEmandateById', () => {
         dateValidTo: '2025-12-31',
         dateValidToFormatted: '31-12-2025',
         link: { to: '/details', title: 'Details' },
+        eMandateIdSource: null,
       },
       {
         id: '2',
@@ -57,6 +54,7 @@ describe('updateEmandateById', () => {
         dateValidTo: '2025-12-31',
         dateValidToFormatted: '31-12-2025',
         link: { to: '/details', title: 'Details' },
+        eMandateIdSource: null,
       },
     ];
     const updatedMandates = forTesting.updateEmandateById(
@@ -119,7 +117,7 @@ describe('useAfisEMandatesData', () => {
 
     (useParams as Mock).mockReturnValue({ id: undefined });
 
-    const { result } = renderHook(() => useAfisEMandatesData());
+    const { result } = renderHook(() => useAfisEMandatesApi());
 
     expect(result.current.isLoadingEMandates).toBe(true);
 
@@ -127,18 +125,74 @@ describe('useAfisEMandatesData', () => {
       expect(result.current.isLoadingEMandates).toBe(false);
     });
 
-    expect(result.current.eMandates).toStrictEqual([
-      {
-        ...eMandates[0],
-        displayStatus: 'Uit',
-        detailLinkComponent: expect.any(Object),
-      },
-      {
-        ...eMandates[1],
-        displayStatus: 'Uit',
-        detailLinkComponent: expect.any(Object),
-      },
-    ]);
+    expect(result.current.eMandates).toMatchInlineSnapshot(`
+      [
+        {
+          "creditorIBAN": "NL91ABNA0417164300",
+          "creditorName": "Mandate 1",
+          "detailLinkComponent": <React.Fragment>
+            <MaRouterLink
+              href="/some/path/1"
+              maVariant="fatNoUnderline"
+            >
+              E-Mandate 1
+            </MaRouterLink>
+          </React.Fragment>,
+          "displayStatus": "Uit",
+          "displayStatusEl": <CheckStatus
+            eMandate={
+              {
+                "creditorIBAN": "NL91ABNA0417164300",
+                "creditorName": "Mandate 1",
+                "displayStatus": "Uit",
+                "id": "1",
+                "link": {
+                  "title": "E-Mandate 1",
+                  "to": "/some/path/1",
+                },
+              }
+            }
+          />,
+          "id": "1",
+          "link": {
+            "title": "E-Mandate 1",
+            "to": "/some/path/1",
+          },
+        },
+        {
+          "creditorIBAN": "NL789ABNA0417164300",
+          "creditorName": "Mandate 2",
+          "detailLinkComponent": <React.Fragment>
+            <MaRouterLink
+              href="/some/path/2"
+              maVariant="fatNoUnderline"
+            >
+              E-Mandate 2
+            </MaRouterLink>
+          </React.Fragment>,
+          "displayStatus": "Uit",
+          "displayStatusEl": <CheckStatus
+            eMandate={
+              {
+                "creditorIBAN": "NL789ABNA0417164300",
+                "creditorName": "Mandate 2",
+                "displayStatus": "Uit",
+                "id": "2",
+                "link": {
+                  "title": "E-Mandate 2",
+                  "to": "/some/path/2",
+                },
+              }
+            }
+          />,
+          "id": "2",
+          "link": {
+            "title": "E-Mandate 2",
+            "to": "/some/path/2",
+          },
+        },
+      ]
+    `);
   });
 
   it('should return eMandate if id param is provided', async () => {
@@ -148,7 +202,7 @@ describe('useAfisEMandatesData', () => {
 
     (useParams as Mock).mockReturnValue({ id: '1' });
 
-    const { result } = renderHook(() => useAfisEMandatesData());
+    const { result } = renderHook(() => useAfisEMandatesApi());
 
     expect(result.current.isLoadingEMandates).toBe(true);
 
@@ -156,11 +210,40 @@ describe('useAfisEMandatesData', () => {
       expect(result.current.isLoadingEMandates).toBe(false);
     });
 
-    expect(result.current.eMandate).toStrictEqual({
-      ...eMandates[0],
-      displayStatus: 'Uit',
-      detailLinkComponent: expect.any(Object),
-    });
+    expect(result.current.eMandate).toMatchInlineSnapshot(`
+      {
+        "creditorIBAN": "NL91ABNA0417164300",
+        "creditorName": "Mandate 1",
+        "detailLinkComponent": <React.Fragment>
+          <MaRouterLink
+            href="/some/path/1"
+            maVariant="fatNoUnderline"
+          >
+            E-Mandate 1
+          </MaRouterLink>
+        </React.Fragment>,
+        "displayStatus": "Uit",
+        "displayStatusEl": <CheckStatus
+          eMandate={
+            {
+              "creditorIBAN": "NL91ABNA0417164300",
+              "creditorName": "Mandate 1",
+              "displayStatus": "Uit",
+              "id": "1",
+              "link": {
+                "title": "E-Mandate 1",
+                "to": "/some/path/1",
+              },
+            }
+          }
+        />,
+        "id": "1",
+        "link": {
+          "title": "E-Mandate 1",
+          "to": "/some/path/1",
+        },
+      }
+    `);
   });
 
   it('should return error state when API fails', async () => {
@@ -168,7 +251,7 @@ describe('useAfisEMandatesData', () => {
 
     (useParams as Mock).mockReturnValue({ id: undefined });
 
-    const { result } = renderHook(() => useAfisEMandatesData());
+    const { result } = renderHook(() => useAfisEMandatesApi());
 
     expect(result.current.isLoadingEMandates).toBe(true);
 
@@ -179,39 +262,12 @@ describe('useAfisEMandatesData', () => {
     expect(result.current.hasEMandatesError).toBe(true);
   });
 
-  it('should remove pending status from local storage if eMandate is activated', async () => {
-    sessionStorage.setItem(
-      'afis-emandate-pending-activation',
-      '"NL91ABNA0417164300"'
-    );
-
-    bffApi.get(/\/afis\/e-mandates/).reply(200, {
-      content: [
-        { ...eMandates[0], status: '1', displayStatus: 'Actief' },
-        eMandates[1],
-      ],
-    });
-
-    const { result } = renderHook(() => useAfisEMandatesData());
-
-    expect(result.current.isLoadingEMandates).toBe(true);
-
-    await waitFor(() => {
-      expect(result.current.isLoadingEMandates).toBe(false);
-    });
-
-    expect(result.current.eMandates[0].displayStatus).toBe('Actief');
-    expect(sessionStorage.getItem('afis-emandate-pending-activation')).toBe(
-      '""'
-    );
-  });
-
   it('should handle optimistic updates', async () => {
     bffApi.get(/\/afis\/e-mandates/).reply(200, {
       content: eMandates,
     });
 
-    const { result } = renderHook(() => useAfisEMandatesData());
+    const { result } = renderHook(() => useAfisEMandatesApi());
 
     await waitFor(() => {
       expect(result.current.isLoadingEMandates).toBe(false);
@@ -226,30 +282,6 @@ describe('useAfisEMandatesData', () => {
     expect(result.current.eMandates[0].creditorName).toBe('Updated Mandate 1');
   });
 
-  it('should add iban to pending activation storage if iban found as query parameter', async () => {
-    sessionStorage.removeItem('afis-emandate-pending-activation');
-
-    bffApi.get(/\/afis\/e-mandates/).reply(200, {
-      content: eMandates,
-    });
-
-    const { result, rerender } = renderHook(() => useAfisEMandatesData());
-
-    expect(result.current.isLoadingEMandates).toBe(true);
-
-    await waitFor(() => {
-      expect(result.current.isLoadingEMandates).toBe(false);
-    });
-
-    window.location.search = '?iban=NL91ABNA0417164300';
-
-    rerender();
-
-    expect(result.current.eMandates[0].displayStatus).toBe(
-      'Wachten op activatie'
-    );
-  });
-
   it('Should return the correct breadcrumbs', async () => {
     bffApi.get(/\/afis\/e-mandates/).reply(200, {
       content: eMandates,
@@ -257,7 +289,7 @@ describe('useAfisEMandatesData', () => {
 
     (useParams as Mock).mockReturnValue({ id: '1' });
 
-    const { result } = renderHook(() => useAfisEMandatesData());
+    const { result } = renderHook(() => useAfisEMandatesApi());
 
     expect(result.current.breadcrumbs).toEqual([
       { to: '/facturen-en-betalen', title: 'Facturen en betalen' },
@@ -270,7 +302,7 @@ describe('useAfisEMandatesData', () => {
 });
 
 describe('useEmandateApis', () => {
-  const eMandate = {
+  const eMandate: AfisEMandateFrontend = {
     id: '1',
     signRequestUrl: `${bffApiHost}/sign-request`,
     deactivateUrl: `${bffApiHost}/deactivate`,
@@ -286,6 +318,7 @@ describe('useEmandateApis', () => {
     dateValidFromFormatted: '01-01-2025',
     dateValidTo: '2025-12-31',
     dateValidToFormatted: '31-12-2025',
+    eMandateIdSource: null,
   };
 
   beforeEach(() => {
@@ -310,7 +343,7 @@ describe('useEmandateApis', () => {
     const { result } = renderHook(() => useEmandateApis(eMandate));
 
     act(() => {
-      result.current.redirectUrlApi.fetch();
+      result.current.redirectUrlApi.requestRedirectUrl();
     });
 
     await waitFor(() => {
@@ -338,14 +371,14 @@ describe('useEmandateApis', () => {
     });
 
     act(() => {
-      result.current.apis.statusChangeApi.fetch();
+      result.current.apis.deactivateApi.fetch();
     });
-    expect(result.current.apis.statusChangeApi.isLoading).toBe(true);
+    expect(result.current.apis.deactivateApi.isLoading).toBe(true);
 
     await waitFor(() => {
-      expect(result.current.apis.statusChangeApi.isLoading).toBe(false);
+      expect(result.current.apis.deactivateApi.isLoading).toBe(false);
     });
-    expect(result.current.apis.lastActiveApi).toBe('statusChangeApi');
+    expect(result.current.apis.lastActiveApi).toBe('deactivateApi');
     expect(getEMandatesStore().data?.content?.[0].status).toBe('0');
   });
 
@@ -392,13 +425,13 @@ describe('useEmandateApis', () => {
     const { result } = renderHook(() => useEmandateApis(eMandate));
 
     act(() => {
-      result.current.statusChangeApi.fetch();
+      result.current.deactivateApi.fetch();
     });
 
     await waitFor(() => {
       expect(result.current.isErrorVisible).toBe(true);
     });
-    expect(result.current.lastActiveApi).toBe('statusChangeApi');
+    expect(result.current.lastActiveApi).toBe('deactivateApi');
   });
 
   it('should hide errors', () => {

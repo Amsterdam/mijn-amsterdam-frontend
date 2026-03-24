@@ -47,6 +47,12 @@ You can also include the BFF, but this is a work in progress, meaning connection
 BFF_SSH_PASSWD=root:admin docker compose --profile dev up
 ```
 
+## Verifying the build can be done with the following command:
+
+```bash
+pnpm bff-api:build && BFF_SKIP_APPCONFIG=1 && pnpm bff-api:serve-build
+```
+
 ## Accessibility + Targeted browsers
 
 The Mijn Amsterdam design and development team works hard to ensure mijn.amsterdam.nl is [accessible](https://mijn.amsterdam.nl/toegankelijkheidsverklaring).

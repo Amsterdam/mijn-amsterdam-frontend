@@ -1,18 +1,18 @@
 import { generatePath } from 'react-router';
 
-import { AVGRequestFrontend } from '../../../../server/services/avg/types';
-import { dateSort } from '../../../../universal/helpers/date';
-import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
-import { type DisplayProps } from '../../../components/Table/TableV2.types';
+import type { AVGRequestFrontend } from '../../../../server/services/avg/types.ts';
+import { dateSort } from '../../../../universal/helpers/date.ts';
+import { capitalizeFirstLetter } from '../../../../universal/helpers/text.ts';
+import { type DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
-} from '../../../config/app';
-import {
+} from '../../../config/app.ts';
+import type {
   ThemaConfigBase,
   WithDetailPage,
   WithListPage,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 
 const listPageParamKind = {
   inProgress: 'lopende-aanvragen',

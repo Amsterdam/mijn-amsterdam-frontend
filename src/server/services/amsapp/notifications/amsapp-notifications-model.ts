@@ -1,20 +1,22 @@
-import {
+import type {
   BSN,
   ConsumerId,
   ServiceId,
+} from './amsapp-notifications-types.ts';
+import {
   type ConsumerProfile,
   type NotificationsService,
-} from './amsapp-notifications-types';
-import { toISOString } from '../../../../universal/helpers/date';
-import { isRecord } from '../../../../universal/helpers/utils';
+} from './amsapp-notifications-types.ts';
+import { toISOString } from '../../../../universal/helpers/date.ts';
+import { isRecord } from '../../../../universal/helpers/utils.ts';
 import {
   decrypt,
   encryptDeterministic,
-} from '../../../helpers/encrypt-decrypt';
-import { logger } from '../../../logging';
-import { IS_DB_ENABLED } from '../../db/config';
-import { db as db_, type DBAdapter } from '../../db/db';
-import { camelizeKeys } from '../../db/helper';
+} from '../../../helpers/encrypt-decrypt.ts';
+import { logger } from '../../../logging.ts';
+import { IS_DB_ENABLED } from '../../db/config.ts';
+import { db as db_, type DBAdapter } from '../../db/db.ts';
+import { camelizeKeys } from '../../db/helper.ts';
 
 // POSTGRES is case insensitive. We therefore always use snake_case within postgres
 // and transform the returned column names to camelCase.
@@ -49,7 +51,8 @@ const db = {
 // POSTGRES is case insensitive. We therefore always use snake_case within postgres
 export const NOTIFICATIONS_TABLE_NAME = 'bff_notifications';
 async function setupTables() {
-  const createTableQuery = `
+  const initDBQueries = [
+    `
     -- Table Definition
     CREATE TABLE IF NOT EXISTS "public"."${NOTIFICATIONS_TABLE_NAME}" (
       "profile_id" varchar(43) NOT NULL,
@@ -60,24 +63,27 @@ async function setupTables() {
       "date_created" timestamp NOT NULL DEFAULT now(),
       PRIMARY KEY ("profile_id")
     );
-  `;
-
-  const alterTableQuery1 = `
+  `,
+    `
     ALTER TABLE IF EXISTS "public"."${NOTIFICATIONS_TABLE_NAME}"
     ADD IF NOT EXISTS "profile_name" VARCHAR(200);
-  `;
-
-  const alterTableQuery2 = `
+  `,
+    `
     ALTER TABLE IF EXISTS "public"."${NOTIFICATIONS_TABLE_NAME}"
     ALTER COLUMN "date_updated" TYPE timestamptz;
     ALTER TABLE IF EXISTS "public"."${NOTIFICATIONS_TABLE_NAME}"
     ALTER COLUMN "date_created" TYPE timestamptz;
-  `;
+  `,
+    `
+    ALTER TABLE IF EXISTS "public"."${NOTIFICATIONS_TABLE_NAME}"
+    ADD IF NOT EXISTS "last_login_date" VARCHAR(200);
+  `,
+  ];
 
   try {
-    await db.query(createTableQuery);
-    await db.query(alterTableQuery1);
-    await db.query(alterTableQuery2);
+    for (const query of initDBQueries) {
+      await db.query(query);
+    }
     logger.info(`setupTable: ${NOTIFICATIONS_TABLE_NAME} succeeded.`);
   } catch (error) {
     logger.error(error, `setupTable: ${NOTIFICATIONS_TABLE_NAME} failed.`);
@@ -91,15 +97,16 @@ if (IS_DB_ENABLED) {
 // POSTGRES is case insensitive. We therefore always use snake_case within postgres
 const queries = {
   upsertConsumer: `\
-INSERT INTO ${NOTIFICATIONS_TABLE_NAME} (profile_id, profile_name, consumer_ids, service_ids, date_updated)
-VALUES ($1, $2, ARRAY[$3], $4, $5)
+INSERT INTO ${NOTIFICATIONS_TABLE_NAME} (profile_id, profile_name, consumer_ids, service_ids, date_updated, last_login_date)
+VALUES ($1, $2, ARRAY[$3], $4, $5, $6)
 ON CONFLICT (profile_id) DO UPDATE
 SET
   profile_id = EXCLUDED.profile_id,
   profile_name = $2,
   consumer_ids = ( SELECT ARRAY( SELECT DISTINCT unnest(array_append(${NOTIFICATIONS_TABLE_NAME}.consumer_ids, $3)) ) ),
   service_ids = EXCLUDED.service_ids,
-  date_updated = EXCLUDED.date_updated;
+  date_updated = EXCLUDED.date_updated,
+  last_login_date = EXCLUDED.last_login_date;
 `,
   deleteProfileIfConsumerIdsIsEmpty: `DELETE FROM ${NOTIFICATIONS_TABLE_NAME} WHERE consumer_ids = '{}' AND profile_id = $1`,
   deleteConsumer: `\
@@ -110,24 +117,27 @@ RETURNING profile_id, consumer_ids;
     `,
   updateNotifications: `\
 UPDATE ${NOTIFICATIONS_TABLE_NAME} row
-SET date_updated = $3, content = jsonb_set(
-  coalesce(content, '{}'::jsonb),
-  '{services}',
-  coalesce(content->'services', '{}'::jsonb)
-    ||
-    ( -- Only allow services that are in the service_ids column to be updated
-      SELECT coalesce(jsonb_object_agg(key, value), '{}'::jsonb)
-      FROM jsonb_each($2::jsonb)
-      WHERE key = ANY (row.service_ids)
-    )
-)
+SET
+  date_updated = $3,
+  last_login_date = COALESCE($4, last_login_date),
+  content = jsonb_set(
+    coalesce(content, '{}'::jsonb),
+    '{services}',
+    coalesce(content->'services', '{}'::jsonb)
+      ||
+      ( -- Only allow services that are in the service_ids column to be updated
+        SELECT coalesce(jsonb_object_agg(key, value), '{}'::jsonb)
+        FROM jsonb_each($2::jsonb)
+        WHERE key = ANY (row.service_ids)
+      )
+  )
 WHERE profile_id = $1;
 `,
   getProfilesCount: `SELECT COUNT(*)::int AS row_count FROM ${NOTIFICATIONS_TABLE_NAME} `,
-  getProfiles: `SELECT profile_id, consumer_ids, service_ids, content, date_updated FROM ${NOTIFICATIONS_TABLE_NAME}`,
+  getProfiles: `SELECT profile_id, consumer_ids, service_ids, content, date_updated, last_login_date FROM ${NOTIFICATIONS_TABLE_NAME}`,
   getProfileIds: `SELECT profile_id, consumer_ids, service_ids FROM ${NOTIFICATIONS_TABLE_NAME}`,
-  getProfileByConsumer: `SELECT profile_name, service_ids, date_updated FROM ${NOTIFICATIONS_TABLE_NAME} WHERE $1 = ANY(consumer_ids)`,
-  getProfileById: `SELECT profile_id, profile_name, service_ids, date_updated FROM ${NOTIFICATIONS_TABLE_NAME} WHERE profile_id = $1`,
+  getProfileByConsumer: `SELECT profile_name, service_ids, date_updated, last_login_date FROM ${NOTIFICATIONS_TABLE_NAME} WHERE $1 = ANY(consumer_ids)`,
+  getProfileById: `SELECT profile_id, profile_name, service_ids, date_updated, last_login_date FROM ${NOTIFICATIONS_TABLE_NAME} WHERE profile_id = $1`,
   getRegistrationsOverview: `SELECT * FROM ${NOTIFICATIONS_TABLE_NAME}`,
   truncate: `TRUNCATE TABLE ${NOTIFICATIONS_TABLE_NAME}`,
 };
@@ -156,12 +166,14 @@ export async function upsertConsumer(
   serviceIds: ServiceId[]
 ) {
   const [encryptedProfileID] = encryptDeterministic(profileId);
+  const now = toISOString(new Date());
   return db.query(queries.upsertConsumer, [
     encryptedProfileID,
     profileName,
     consumerId,
     serviceIds,
-    new Date().toISOString(),
+    now,
+    now,
   ]);
 }
 
@@ -182,7 +194,8 @@ export async function deleteConsumer(consumerId: ConsumerId) {
 
 export async function storeNotifications(
   profileId: BSN,
-  services: NotificationsService[]
+  services: NotificationsService[],
+  lastLoginDate: string | null = null
 ) {
   const servicesObj = services.reduce(
     (acc, service) => ({ ...acc, [service.serviceId]: service }),
@@ -193,6 +206,7 @@ export async function storeNotifications(
     encryptedProfileID,
     servicesObj,
     toISOString(new Date()),
+    lastLoginDate,
   ]);
 }
 
@@ -249,7 +263,7 @@ export async function listProfiles(options: {
 export async function listProfileIds() {
   const rows = (await db.queryALL(queries.getProfileIds)) as Pick<
     ConsumerProfile,
-    'profileId' | 'serviceIds' | 'consumerIds'
+    'profileId' | 'serviceIds' | 'consumerIds' | 'lastLoginDate'
   >[];
 
   return rows.map((row) => {

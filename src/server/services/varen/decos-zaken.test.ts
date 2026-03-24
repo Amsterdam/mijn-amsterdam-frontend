@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
-import { ZaakVergunningExploitatieWijzigingVergunningshouderType } from './config-and-types';
-import { ZaakVergunningExploitatieWijzigingVergunningshouder } from './decos-zaken';
-import { DecosZaakSource } from '../decos/decos-types';
+import type { ZaakVergunningExploitatieWijzigingVergunningshouderType } from './config-and-types.ts';
+import { ZaakVergunningExploitatieWijzigingVergunningshouder } from './decos-zaken.ts';
+import type { DecosZaakSource } from '../decos/decos-types.ts';
 
 describe('decosZaken', () => {
   describe('ZaakVergunningExploitatieWijzigingVergunningshouder afterTransform', () => {

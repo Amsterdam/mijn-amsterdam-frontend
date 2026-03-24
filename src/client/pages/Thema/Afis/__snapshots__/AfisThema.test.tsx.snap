@@ -87,7 +87,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
             U ziet hier niet de facturen over Gemeentebelastingen. Deze vindt u terug bij 
             <a
               class="ams-link"
-              href="https://belastingbalie.amsterdam.nl"
+              href="https://belastingbalie.amsterdam.nl/digid.saml.php?start"
               rel="noreferrer"
             >
               Mijn Belastingen
@@ -130,7 +130,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
             <li>
               <a
                 class="ams-link-list__link"
-                href="https://belastingbalie.amsterdam.nl"
+                href="https://belastingbalie.amsterdam.nl/digid.saml.php?start"
                 rel="noreferrer"
               >
                 <span
@@ -299,7 +299,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
                   <td
                     class="ams-table__cell"
                   >
-                    Openstaand: 
+                    Openstaand: 
                     <a
                       class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline-fat_10c0a4"
                       href="https://payment.example.com/F001"
@@ -335,7 +335,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
                   <td
                     class="ams-table__cell"
                   >
-                    Openstaand: 
+                    Openstaand: 
                     <a
                       class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline-fat_10c0a4"
                       href="https://payment.example.com/F003"

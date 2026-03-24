@@ -1,42 +1,44 @@
 import { differenceInSeconds } from 'date-fns';
-import { CookieOptions, Request, Response } from 'express';
-import { AccessToken } from 'express-openid-connect';
+import type { CookieOptions, Request, Response } from 'express';
+import type { AccessToken } from 'express-openid-connect';
 import slug from 'slugme';
 import UID from 'uid-safe';
 
-import { DevelopmentRoutes, PREDEFINED_REDIRECT_URLS } from './bff-routes';
+import { DevelopmentRoutes, PREDEFINED_REDIRECT_URLS } from './bff-routes.ts';
 import {
   createBFFRouter,
   generateFullApiUrlBFF,
   sendBadRequest,
   sendUnauthorized,
-} from './route-helpers';
+} from './route-helpers.ts';
+import type {
+  TestUserData} from '../../universal/config/auth.development.ts';
 import {
   testAccountDataDigid,
-  testAccountDataEherkenning,
-  TestUserData,
-} from '../../universal/config/auth.development';
-import { apiSuccessResult } from '../../universal/helpers/api';
+  testAccountDataEherkenning
+} from '../../universal/config/auth.development.ts';
+import { apiSuccessResult } from '../../universal/helpers/api.ts';
+import { getReturnToUrl } from '../auth/auth-after-redirect-returnto.ts';
 import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
   TOKEN_ID_ATTRIBUTE,
-} from '../auth/auth-config';
-import { getAuth, hasSessionCookie } from '../auth/auth-helpers';
-import { getReturnToUrl } from '../auth/auth-after-redirect-returnto';
+} from '../auth/auth-config.ts';
 import {
   cleanTestUsername,
   signDevelopmentToken,
-} from '../auth/auth-helpers-development';
-import { authRoutes } from '../auth/auth-routes';
-import {
+} from '../auth/auth-helpers-development.ts';
+import { getAuth, hasSessionCookie } from '../auth/auth-helpers.ts';
+import { authRoutes } from '../auth/auth-routes.ts';
+import type {
   AuthProfile,
-  MaSession,
+  MaSession} from '../auth/auth-types.ts';
+import {
   type AuthenticatedRequest,
-} from '../auth/auth-types';
-import { ONE_SECOND_MS } from '../config/app';
-import { getFromEnv } from '../helpers/env';
-import { countLoggedInVisit } from '../services/visitors';
+} from '../auth/auth-types.ts';
+import { ONE_SECOND_MS } from '../config/app.ts';
+import { getFromEnv } from '../helpers/env.ts';
+import { countLoggedInVisit } from '../services/visitors.ts';
 
 export const authRouterDevelopment = createBFFRouter({ id: 'router-dev' });
 

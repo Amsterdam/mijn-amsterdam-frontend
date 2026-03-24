@@ -4,37 +4,37 @@ import {
   UnorderedList,
 } from '@amsterdam/design-system-react';
 
-import { MaLink, MaRouterLink } from '../../components/MaLink/MaLink';
-import { myAreaSectionProps } from '../../components/MyArea/InfoSection';
-import { PageContentCell, PageV2 } from '../../components/Page/Page';
-import { ThemaConfigBase, InfoSection } from '../../config/thema-types';
-import { getRedactedClass } from '../../helpers/cobrowse';
+import { MaLink, MaRouterLink } from '../../components/MaLink/MaLink.tsx';
+import { myAreaSectionProps } from '../../components/MyArea/InfoSection.tsx';
+import { PageContentCell, PageV2 } from '../../components/Page/Page.tsx';
+import type { ThemaConfigBase, InfoSection } from '../../config/thema-types.ts';
+import { getRedactedClass } from '../../helpers/cobrowse.ts';
 import {
   compareThemas,
   useAllThemaMenuItemsByThemaID,
-} from '../../hooks/useThemaMenuItems';
-import { afisSectionProps } from '../Thema/Afis/InfoSection';
-import { themaConfig as afvalThemaConfig } from '../Thema/Afval/Afval-thema-config';
-import { themaConfig as avgThemaConfig } from '../Thema/AVG/AVG-thema-config';
-import { themaConfig as belastingenThemaConfig } from '../Thema/Belastingen/Belastingen-thema-config';
-import { themaConfig as bezwarenThemaConfig } from '../Thema/Bezwaren/Bezwaren-thema-config';
-import { themaConfig as bodemThemaConfig } from '../Thema/Bodem/Bodem-thema-config';
-import { themaConfig as erfpachtThemaConfig } from '../Thema/Erfpacht/Erfpacht-thema-config';
-import { themaConfig as hliThemaConfig } from '../Thema/HLI/HLI-thema-config';
-import { themaConfig as horecaThemaConfig } from '../Thema/Horeca/Horeca-thema-config';
-import { themaConfig as inkomenThemaConfig } from '../Thema/Inkomen/Inkomen-thema-config';
-import { themaConfig as jeugdThemaConfig } from '../Thema/Jeugd/Jeugd-thema-config';
-import { themaConfig as klachtenThemaConfig } from '../Thema/Klachten/Klachten-thema-config';
-import { themaConfig as krefiaThemaConfig } from '../Thema/Krefia/Krefia-thema-config';
-import { themaConfig as milieuThemaConfig } from '../Thema/Milieuzone/Milieuzone-thema-config';
-import { themaConfig as overtredingenThemaConfig } from '../Thema/Overtredingen/Overtredingen-thema-config';
-import { themaConfig as parkerenThemaConfig } from '../Thema/Parkeren/Parkeren-thema-config';
-import { profileSectionProps } from '../Thema/Profile/InfoSection';
-import { themaConfig as subsidiesThemaConfig } from '../Thema/Subsidies/Subsidies-thema-config';
-import { themaConfig as toeristischeVerhuurThemaConfig } from '../Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
-import { themaConfig as varenThemaConfig } from '../Thema/Varen/Varen-thema-config';
-import { themaConfig as vergunningenThemaConfig } from '../Thema/Vergunningen/Vergunningen-thema-config';
-import { themaConfig as zorgThemaConfig } from '../Thema/Zorg/Zorg-thema-config';
+} from '../../hooks/useThemaMenuItems.ts';
+import { afisSectionProps } from '../Thema/Afis/InfoSection.tsx';
+import { themaConfig as afvalThemaConfig } from '../Thema/Afval/Afval-thema-config.ts';
+import { themaConfig as avgThemaConfig } from '../Thema/AVG/AVG-thema-config.ts';
+import { themaConfig as belastingenThemaConfig } from '../Thema/Belastingen/Belastingen-thema-config.ts';
+import { themaConfig as bezwarenThemaConfig } from '../Thema/Bezwaren/Bezwaren-thema-config.ts';
+import { themaConfig as bodemThemaConfig } from '../Thema/Bodem/Bodem-thema-config.ts';
+import { themaConfig as erfpachtThemaConfig } from '../Thema/Erfpacht/Erfpacht-thema-config.ts';
+import { themaConfig as hliThemaConfig } from '../Thema/HLI/HLI-thema-config.ts';
+import { themaConfig as horecaThemaConfig } from '../Thema/Horeca/Horeca-thema-config.ts';
+import { themaConfig as inkomenThemaConfig } from '../Thema/Inkomen/Inkomen-thema-config.ts';
+import { themaConfig as jeugdThemaConfig } from '../Thema/Jeugd/Jeugd-thema-config.ts';
+import { themaConfig as klachtenThemaConfig } from '../Thema/Klachten/Klachten-thema-config.ts';
+import { themaConfig as krefiaThemaConfig } from '../Thema/Krefia/Krefia-thema-config.ts';
+import { themaConfig as milieuThemaConfig } from '../Thema/Milieuzone/Milieuzone-thema-config.ts';
+import { themaConfig as overtredingenThemaConfig } from '../Thema/Overtredingen/Overtredingen-thema-config.ts';
+import { themaConfig as parkerenThemaConfig } from '../Thema/Parkeren/Parkeren-thema-config.ts';
+import { profileSectionProps } from '../Thema/Profile/InfoSection.tsx';
+import { themaConfig as subsidiesThemaConfig } from '../Thema/Subsidies/Subsidies-thema-config.ts';
+import { themaConfig as toeristischeVerhuurThemaConfig } from '../Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
+import { themaConfig as varenThemaConfig } from '../Thema/Varen/Varen-thema-config.ts';
+import { themaConfig as vergunningenThemaConfig } from '../Thema/Vergunningen/Vergunningen-thema-config.ts';
+import { themaConfig as zorgThemaConfig } from '../Thema/Zorg/Zorg-thema-config.ts';
 
 export type InfoSection_DEPRECATED = {
   id: string;

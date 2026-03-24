@@ -5,20 +5,18 @@ import {
   isVergunningExpired,
   type VergunningAanvraag,
   type VergunningExpirable,
-} from './Vergunningen-helpers';
-import {
-  DecosZaakBase,
-  type DecosZaakFrontend,
-} from '../../../../server/services/decos/decos-types';
-import { WithDateRange } from '../../../../server/services/vergunningen/config-and-types';
-import { dateSort } from '../../../../universal/helpers/date';
-import { DisplayProps } from '../../../components/Table/TableV2.types';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
+} from './Vergunningen-helpers.ts';
+import type { DecosZaakBase } from '../../../../server/services/decos/decos-types.ts';
+import { type DecosZaakFrontend } from '../../../../server/services/decos/decos-types.ts';
+import type { WithDateRange } from '../../../../server/services/vergunningen/config-and-types.ts';
+import { dateSort } from '../../../../universal/helpers/date.ts';
+import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
+import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
 import type {
   ThemaConfigBase,
   WithDetailPage,
   WithListPage,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 
 type VergunningFrontendDisplayProps = DisplayProps<DecosZaakFrontend>;
 
@@ -63,7 +61,7 @@ const displayPropsEerdereVergunningen: VergunningFrontendDisplayProps = {
     displayStatus: 'Status',
   },
   colWidths: {
-    large: ['20%', '45%', '35%'],
+    large: ['20%', '45%', '30%', '0%'],
     small: ['50%', '50%', '0'],
   },
 };

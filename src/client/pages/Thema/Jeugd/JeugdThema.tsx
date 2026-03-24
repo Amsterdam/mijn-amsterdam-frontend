@@ -1,16 +1,16 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 
-import { useJeugdThemaData } from './useJeugdThemaData';
-import { LeerlingenvervoerVoorzieningFrontend } from '../../../../server/services/jeugd/jeugd';
-import { PageContentCell } from '../../../components/Page/Page';
-import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed';
-import ThemaPagina from '../../../components/Thema/ThemaPagina';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { useJeugdThemaData } from './useJeugdThemaData.ts';
+import type { LeerlingenvervoerVoorzieningFrontend } from '../../../../server/services/jeugd/jeugd.ts';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
+import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
+import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import {
   WMO_HELPDESK_HREF_TEL_LINK,
   WMO_HELPDESK_PHONENUMBER,
-} from '../Zorg/ZorgThema';
+} from '../Zorg/ZorgThema.tsx';
 
 export function HistoricItemsMention() {
   return (

@@ -1,7 +1,7 @@
 import { render, screen, act } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 
-import { useBffApi } from './useBffApi';
+import { useBffApi } from './useBffApi.ts';
 
 function TestComponent() {
   const api1 = useBffApi('key1', { fetchImmediately: false });

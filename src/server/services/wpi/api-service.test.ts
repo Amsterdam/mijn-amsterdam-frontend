@@ -1,19 +1,16 @@
 import MockDate from 'mockdate';
 import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 
-import {
-  FetchConfig,
-  fetchBijstandsuitkering,
-  fetchRequestProcess,
-} from './api-service';
-import {
+import type { FetchConfig } from './api-service.ts';
+import { fetchBijstandsuitkering, fetchRequestProcess } from './api-service.ts';
+import type {
   WpiRequestProcess,
   WpiRequestProcessLabels,
   WpiRequestStatusLabels,
-} from './wpi-types';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
-import { ApiErrorResponse } from '../../../universal/helpers/api';
-import { jsonCopy } from '../../../universal/helpers/utils';
+} from './wpi-types.ts';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import type { ApiErrorResponse } from '../../../universal/helpers/api.ts';
+import { jsonCopy } from '../../../universal/helpers/utils.ts';
 
 function fakeStepLabels(): WpiRequestStatusLabels {
   return {
@@ -50,7 +47,6 @@ describe('wpi/app-service', () => {
       dateEnd: '2022-03-01T09:49',
       datePublished: '2022-03-01T09:49',
       dateStart: '2022-01-09T13:22',
-      statusId: 'finish',
       decision: 'toekenning',
       steps: [
         {
@@ -99,7 +95,7 @@ describe('wpi/app-service', () => {
 
   test('fetchRequestProcess', async () => {
     remoteApi
-      .get('/wpi/uitkering/aanvragen')
+      .post('/wpi/uitkering/aanvragen')
       .reply(200, { status: 'OK', content });
 
     const fetchConfig: FetchConfig = {
@@ -122,7 +118,6 @@ describe('wpi/app-service', () => {
     expect(response.content?.length).toBe(1);
 
     const [statusLine] = response.content || [];
-    expect(statusLine.statusId).toBe('finish');
 
     const [step1, step2, step3] = statusLine.steps;
     expect(step1.status).toBe('Begin van aanvraagproces');
@@ -138,7 +133,7 @@ describe('wpi/app-service', () => {
   });
 
   test('fetchRequestProcess-with-error', async () => {
-    remoteApi.get('/wpi/uitkering/aanvragen').reply(500, { content: null });
+    remoteApi.post('/wpi/uitkering/aanvragen').reply(500, { content: null });
 
     const fetchConfig: FetchConfig = {
       apiConfigName: 'WPI_AANVRAGEN',
@@ -166,7 +161,6 @@ describe('wpi/app-service', () => {
     const contentBijstandsuitkering = jsonCopy(content[0]);
 
     contentBijstandsuitkering.about = 'Bijstandsuitkering';
-    contentBijstandsuitkering.statusId = 'herstelTermijn';
     contentBijstandsuitkering.decision = null;
 
     delete contentBijstandsuitkering.steps[2].decision;
@@ -184,7 +178,7 @@ describe('wpi/app-service', () => {
     contentBijstandsuitkering.steps[2].dateUserFeedbackExpected =
       '2022-04-27T15:05:52+02:00';
 
-    remoteApi.get('/wpi/uitkering/aanvragen').reply(200, {
+    remoteApi.post('/wpi/uitkering/aanvragen').reply(200, {
       status: 'OK',
       content: [contentBijstandsuitkering, { about: 'FooBar' }, null],
     });
@@ -195,7 +189,6 @@ describe('wpi/app-service', () => {
     expect(response.content?.length).toBe(1);
 
     const [statusLine] = response.content || [];
-    expect(statusLine.statusId).toBe('herstelTermijn');
     expect(statusLine.link).toMatchInlineSnapshot(`
       {
         "title": "Bekijk uw aanvraag",

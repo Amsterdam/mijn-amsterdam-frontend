@@ -3,7 +3,7 @@ import {
   sourceApiConfig,
   SURVEY_ID_INLINE_KTO,
   SURVEY_VERSION_INLINE_KTO,
-} from './user-feedback.service-config';
+} from './user-feedback.service-config.ts';
 import type {
   SaveUserFeedbackResponse,
   Survey,
@@ -13,17 +13,17 @@ import type {
   SurveyFrontend,
   SurveyOverviewFrontend,
   UserFeedbackInput,
-} from './user-feedback.types';
+} from './user-feedback.types.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
   getFailedDependencies,
   type ApiResponsePromise,
-} from '../../../universal/helpers/api';
-import { omit, pick } from '../../../universal/helpers/utils';
-import { getCustomApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
-import { deepCamelizeKeys } from '../db/helper';
+} from '../../../universal/helpers/api.ts';
+import { omit, pick } from '../../../universal/helpers/utils.ts';
+import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
+import { deepCamelizeKeys } from '../db/helper.ts';
 
 export async function fetchUserFeedbackSurvey(
   surveyId: Survey['unique_code'] = SURVEY_ID_INLINE_KTO,

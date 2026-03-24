@@ -1,19 +1,21 @@
-import { default as PiwikTracker } from '@amsterdam/piwik-tracker';
-import {
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import PiwikTracker from '@amsterdam/piwik-tracker';
+import type {
   CustomDimension,
   TrackPageViewParams,
   UserOptions,
-} from '@amsterdam/piwik-tracker/lib/types';
+} from '@amsterdam/piwik-tracker/lib/types.ts';
 import { createInstance as createPiwikInstance } from '@amsterdam/piwik-tracker-react';
 import memoize from 'memoizee';
 
+type PiwikTrackerInstance = InstanceType<(typeof PiwikTracker)['default']>;
 // TODO: Import type(s) from @amsterdam/piwik-tracker-react when they are available
 export interface PiwikInstance {
-  trackPageView: PiwikTracker['trackPageView'];
-  trackSiteSearch: PiwikTracker['trackSiteSearch'];
-  trackLink: PiwikTracker['trackLink'];
-  trackDownload: PiwikTracker['trackDownload'];
-  pushInstruction: PiwikTracker['pushInstruction'];
+  trackPageView: PiwikTrackerInstance['trackPageView'];
+  trackSiteSearch: PiwikTrackerInstance['trackSiteSearch'];
+  trackLink: PiwikTrackerInstance['trackLink'];
+  trackDownload: PiwikTrackerInstance['trackDownload'];
+  pushInstruction: PiwikTrackerInstance['pushInstruction'];
 }
 let PiwikInstance: PiwikInstance;
 

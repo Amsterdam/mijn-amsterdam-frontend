@@ -79,7 +79,7 @@
       "post-powerbrowser-token:standard",
       "get-powerbrowser-zaken:standard",
       "post-pom-emandate-sign-request-url:standard",
-      "post-pom-emandate-sign-request-status:standard",
+      "get-pom-emandate-sign-request-status:standard",
       "get-pom-mandate-page:standard",
       "get-salesforce:standard",
       "post-powerbrowser-personen-zaken:standard",

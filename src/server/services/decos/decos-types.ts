@@ -1,15 +1,15 @@
-import { SomeOtherString } from '../../../universal/helpers/types';
-import { OmitMapped } from '../../../universal/helpers/utils';
+import type { SomeOtherString } from '../../../universal/helpers/types.ts';
+import type { OmitMapped } from '../../../universal/helpers/utils.ts';
 import type {
   GenericDocument,
   ZaakAanvraagDetail,
   ZaakStatus,
-} from '../../../universal/types/App.types';
+} from '../../../universal/types/App.types.ts';
 
 export type {
   WithLocation,
   WithDateRange,
-} from '../vergunningen/config-and-types';
+} from '../vergunningen/config-and-types.ts';
 
 type DecosDocumentBase = {
   text39: string;

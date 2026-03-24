@@ -1,25 +1,17 @@
-// @ts-expect-error It is otherwise required to update the module resolver.
 import { load } from '@azure/app-configuration-provider';
 import {
   FeatureManager,
   ConfigurationMapFeatureFlagProvider,
 } from '@microsoft/feature-management';
 
-import { IS_DEVELOPMENT } from '../../universal/config/env';
+import {
+  featureToggle,
+  type FeatureToggleKey,
+  type FeatureToggles,
+} from './feature-toggles.ts';
+import { IS_DEVELOPMENT } from '../../universal/config/env.ts';
 
-// Is mutated by the Appconfiguration. Locally this object will be used as is.
-const featureToggle = {
-  ['AFIS.EMandates']: true,
-  ['AMSAPP.notificationService']: true,
-  ['BRP.aantalBewonersOpAdresTonen']: true,
-  ['USER_FEEDBACK.fetchSurvey']: true,
-  ['cobrowse']: false,
-};
-// globalThis is used to make sure featureToggles imported from frontend *-thema-configs have access.
-globalThis.MA_FEATURETOGGLES = featureToggle;
-
-export type FeatureToggles = typeof featureToggle;
-export type FeatureToggleKey = keyof FeatureToggles;
+const skipAppConfiguration = process.env.BFF_SKIP_APPCONFIG === 'true';
 
 export function getAllFeatureToggles(): Readonly<FeatureToggles> {
   return featureToggle;
@@ -30,6 +22,9 @@ export function isEnabled(featureToggleKey: FeatureToggleKey): boolean {
 }
 
 export async function startAppConfiguration() {
+  if (skipAppConfiguration) {
+    return;
+  }
   const connectionString = process.env.APPCONFIGURATION_CONNECTION_STRING;
   if (!connectionString) {
     if (IS_DEVELOPMENT) {

@@ -1,7 +1,7 @@
-import type { ApiResponse } from '../../../../universal/helpers/api';
-import { MyNotification } from '../../../../universal/types/App.types';
-import { AuthProfile } from '../../../auth/auth-types';
-import { notificationServices } from '../../tips-and-notifications';
+import type { ApiResponse } from '../../../../universal/helpers/api.ts';
+import type { MyNotification } from '../../../../universal/types/App.types.ts';
+import type { AuthProfile } from '../../../auth/auth-types.ts';
+import type { notificationServices } from '../../tips-and-notifications.ts';
 
 export type BSN = AuthProfile['id'];
 export type ConsumerId = string;
@@ -12,6 +12,7 @@ export type ConsumerProfile = {
   consumerIds: ConsumerId[];
   serviceIds: ServiceId[];
   dateUpdated: string;
+  lastLoginDate: string | null;
   content: { services: Record<ServiceId, NotificationsService> } | null;
 };
 

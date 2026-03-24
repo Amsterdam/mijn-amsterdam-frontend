@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 import { vi, describe, it, expect } from 'vitest';
 
-import { App } from './App';
-import { bffApi } from '../testing/utils';
-import { MIJN_AMSTERDAM } from '../universal/config/app';
-import { mockFooterRequest } from './components/MainFooter/MainFooter.test';
+import { App } from './App.tsx';
+import { bffApi } from '../testing/utils.ts';
+import { MIJN_AMSTERDAM } from '../universal/config/app.ts';
+import { mockFooterRequest } from './components/MainFooter/MainFooter.test.tsx';
 
 const mocks = vi.hoisted(() => {
   return {

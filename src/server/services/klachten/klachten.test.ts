@@ -1,11 +1,11 @@
-import nock from 'nock';
+import type nock from 'nock';
 import { afterEach, describe, expect, vi } from 'vitest';
 
-import { fetchAllKlachten, fetchKlachtenNotifications } from './klachten';
-import { SmileKlacht, SmileKlachtenReponse } from './types';
-import { themaConfig } from '../../../client/pages/Thema/Klachten/Klachten-thema-config';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
-import { ApiConfig } from '../../config/source-api';
+import { fetchAllKlachten, fetchKlachtenNotifications } from './klachten.ts';
+import type { SmileKlacht, SmileKlachtenReponse } from './types.ts';
+import { themaConfig } from '../../../client/pages/Thema/Klachten/Klachten-thema-config.ts';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import { ApiConfig } from '../../config/source-api.ts';
 
 function createKlacht(props?: Partial<SmileKlacht>): SmileKlacht {
   return {

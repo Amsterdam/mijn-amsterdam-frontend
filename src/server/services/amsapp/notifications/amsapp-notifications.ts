@@ -1,4 +1,4 @@
-import { getAuthProfileAndTokenWithoutSession } from './amsapp-notifications-helper';
+import { getAuthProfileAndTokenWithoutSession } from './amsapp-notifications-helper.ts';
 import {
   listProfileIds,
   upsertConsumer,
@@ -7,28 +7,27 @@ import {
   deleteConsumer,
   getProfileByConsumer,
   storeNotifications,
-} from './amsapp-notifications-model';
-import { DISCRETE_GENERIC_MESSAGE } from './amsapp-notifications-service-config';
+} from './amsapp-notifications-model.ts';
+import { DISCRETE_GENERIC_MESSAGE } from './amsapp-notifications-service-config.ts';
 import type {
   BSN,
   ConsumerId,
   ServiceId,
   ConsumerProfileCompact,
   NotificationsLean,
-} from './amsapp-notifications-types';
+} from './amsapp-notifications-types.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
   type ApiResponse,
-} from '../../../../universal/helpers/api';
-import { toISOString } from '../../../../universal/helpers/date';
-import { entries, pick } from '../../../../universal/helpers/utils';
+} from '../../../../universal/helpers/api.ts';
+import { toISOString } from '../../../../universal/helpers/date.ts';
+import { entries, pick } from '../../../../universal/helpers/utils.ts';
 import {
   fetchNotificationsAndTipsFromServices,
   notificationServices,
   type NotificationsAndTipsResponse,
-} from '../../tips-and-notifications';
-
+} from '../../tips-and-notifications.ts';
 /**
  * The Notification service allows batch handling of notifications for previously verified consumers
  */
@@ -64,16 +63,25 @@ export async function batchDeleteNotifications() {
 
 export async function storeNotificationsResponses(
   profileId: BSN,
-  serviceResponses: Partial<Record<ServiceId, NotificationsAndTipsResponse>>
+  serviceResponses: Partial<Record<ServiceId, NotificationsAndTipsResponse>>,
+  options?: {
+    /**
+     * When true, also updates `last_login_date` for the profile.
+     * Use this for user-driven flows (login), not for scheduled batch jobs.
+     */
+    updateLastLoginDate?: boolean;
+  }
 ): Promise<void> {
   const now = toISOString(new Date());
+  const lastLoginDate = options?.updateLastLoginDate ? now : null;
   const responses = entries(serviceResponses)
     .filter(
+      // Unsuccessful responses do not contain new notifications
       (
         serviceResponse
       ): serviceResponse is [ServiceId, NotificationsAndTipsResponse] =>
         (serviceResponse[1] != null && serviceResponse[1].status) === 'OK'
-    ) // Unsuccessful responses do not contain new notifications
+    )
     .map(
       ([serviceId, response]: [ServiceId, NotificationsAndTipsResponse]) => ({
         ...transformNotificationsForExternalUse(serviceId, response),
@@ -82,7 +90,7 @@ export async function storeNotificationsResponses(
       })
     );
 
-  await storeNotifications(profileId, responses);
+  await storeNotifications(profileId, responses, lastLoginDate);
 }
 
 export async function batchFetchAndStoreNotifications() {
@@ -112,6 +120,7 @@ export async function batchFetchNotifications(options: {
   return profiles.map((profile) => ({
     consumerIds: profile.consumerIds,
     dateUpdated: profile.dateUpdated,
+    lastLoginDate: profile.lastLoginDate,
     services: Object.values(profile.content?.services || {}),
   }));
 }

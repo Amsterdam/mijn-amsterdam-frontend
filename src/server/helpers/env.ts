@@ -1,7 +1,7 @@
 import memoizee from 'memoizee';
 
-import { logger } from '../logging';
-import { captureException } from '../services/monitoring';
+import { logger } from '../logging.ts';
+import { captureException } from '../services/monitoring.ts';
 
 /** Retrieve an environment variable.
  *

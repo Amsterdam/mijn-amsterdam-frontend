@@ -1,8 +1,8 @@
 // Keep this line at the top.
-import '../server/helpers/load-env';
+import '../server/helpers/load-env.ts';
 
-import { batchFetchAndStoreNotifications } from '../server/services/amsapp/notifications/amsapp-notifications';
-import { captureException } from '../server/services/monitoring';
+import { batchFetchAndStoreNotifications } from '../server/services/amsapp/notifications/amsapp-notifications.ts';
+import { captureException } from '../server/services/monitoring.ts';
 
 async function runJob() {
   try {

@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 
-import { fetchBelasting, fetchBelastingNotifications } from './belasting';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
+import { fetchBelasting, fetchBelastingNotifications } from './belasting.ts';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 
 const authProfileAndToken = getAuthProfileAndToken();
 

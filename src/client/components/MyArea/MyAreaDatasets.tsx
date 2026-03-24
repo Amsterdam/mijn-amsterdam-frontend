@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { useMapInstance } from '@amsterdam/react-maps';
-import { LeafletEvent, Map } from 'leaflet';
+import type { LeafletEvent, Map } from 'leaflet';
 import isEqual from 'lodash.isequal';
 import { useLocation, useNavigate } from 'react-router';
 import { useDebouncedCallback } from 'use-debounce';
 
-import { routeConfig, themaId } from './MyArea-thema-config';
-import { toBoundLiteral } from './MyArea.helpers';
+import { routeConfig, themaId } from './MyArea-thema-config.ts';
+import { toBoundLiteral } from './MyArea.helpers.ts';
 import {
   getQueryConfig,
   useActiveDatasetFilters,
@@ -17,19 +17,19 @@ import {
   useLoadingFeature,
   useOnMarkerClick,
   useSelectedFeatureCSS,
-} from './MyArea.hooks';
+} from './MyArea.hooks.ts';
 import styles from './MyAreaDatasets.module.scss';
-import { MyAreaPolylineDatasets } from './MyAreaPolylineDatasets';
-import { MaSuperClusterLayer } from './MyAreaSuperCluster';
+import { MyAreaPolylineDatasets } from './MyAreaPolylineDatasets.tsx';
+import { MaSuperClusterLayer } from './MyAreaSuperCluster.tsx';
 import type {
   MaPointFeature,
   MaPolylineFeature,
-} from '../../../server/services/buurt/datasets';
-import {
+} from '../../../server/services/buurt/datasets.ts';
+import type {
   DatasetFilterSelection,
   DatasetId,
-} from '../../../universal/config/myarea-datasets';
-import { ErrorMessagesContent } from '../ErrorMessages/ErrorMessages';
+} from '../../../universal/config/myarea-datasets.ts';
+import { ErrorMessagesContent } from '../ErrorMessages/ErrorMessages.tsx';
 
 interface MyAreaDatasetsProps {
   datasetIds?: DatasetId[];

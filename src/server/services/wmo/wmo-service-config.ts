@@ -1,7 +1,7 @@
 import { parseISO } from 'date-fns';
 
-import { IS_PRODUCTION } from '../../../universal/config/env';
-import type { BeschikkingsResultaat } from '../zorgned/zorgned-types';
+import { IS_PRODUCTION } from '../../../universal/config/env.ts';
+import type { BeschikkingsResultaat } from '../zorgned/zorgned-types.ts';
 
 export const featureToggle = {
   router: {

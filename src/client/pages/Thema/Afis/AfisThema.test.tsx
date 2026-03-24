@@ -1,15 +1,15 @@
 import { render, waitFor } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { routeConfig } from './Afis-thema-config';
-import { AfisThema } from './AfisThema';
-import {
+import { routeConfig } from './Afis-thema-config.ts';
+import { AfisThema } from './AfisThema.tsx';
+import type {
   AfisBusinessPartnerDetailsTransformed,
   AfisFacturenOverviewResponse,
-} from '../../../../server/services/afis/afis-types';
-import { bffApi } from '../../../../testing/utils';
-import { AppState } from '../../../../universal/types/App.types';
-import MockApp from '../../MockApp';
+} from '../../../../server/services/afis/afis-types.ts';
+import { bffApi } from '../../../../testing/utils.ts';
+import type { AppState } from '../../../../universal/types/App.types.ts';
+import MockApp from '../../MockApp.tsx';
 
 const businessPartnerIdEncrypted = 'xxx-123-xxx';
 

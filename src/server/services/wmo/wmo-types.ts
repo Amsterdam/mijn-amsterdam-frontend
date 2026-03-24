@@ -1,12 +1,12 @@
 import type {
   GenericDocument,
   ZaakAanvraagDetail,
-} from '../../../universal/types/App.types';
+} from '../../../universal/types/App.types.ts';
 import type {
   ProductSoortCode,
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemsConfig,
-} from '../zorgned/zorgned-types';
+} from '../zorgned/zorgned-types.ts';
 
 export type WMOVoorzieningFrontend = ZaakAanvraagDetail & {
   dateDecision: string;

@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { Button, OrderedList } from '@amsterdam/design-system-react';
 
 import styles from '../ErfpachtDetail.module.scss';
-import { WijzigenLink } from './WijzigenLink';
-import type { ErfpachtDossiersDetail } from '../../../../../server/services/erfpacht/erfpacht-types';
-import { useMediumScreen } from '../../../../hooks/media.hook';
+import { WijzigenLink } from './WijzigenLink.tsx';
+import type { ErfpachtDossiersDetail } from '../../../../../server/services/erfpacht/erfpacht-types.ts';
+import { useMediumScreen } from '../../../../hooks/media.hook.ts';
 
 const MAX_ERFPACHTERS_VISIBLE_INITIALLY = 3;
 

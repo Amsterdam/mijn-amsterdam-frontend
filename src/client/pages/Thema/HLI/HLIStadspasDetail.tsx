@@ -10,31 +10,32 @@ import {
 } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router';
 
-import { themaConfig } from './HLI-thema-config';
+import { themaConfig } from './HLI-thema-config.ts';
 import styles from './HLIStadspasDetail.module.scss';
-import { useBlockStadspas, useStadspassen } from './useStadspassen.hook';
-import {
+import { useBlockStadspas, useStadspassen } from './useStadspassen.hook.tsx';
+import type {
   StadspasBudget,
   StadspasBudgetTransaction,
   StadspasFrontend,
-} from '../../../../server/services/hli/stadspas-types';
-import { isError, isLoading } from '../../../../universal/helpers/api';
-import { dateSort } from '../../../../universal/helpers/date';
-import ErrorAlert from '../../../components/Alert/Alert';
-import { Datalist } from '../../../components/Datalist/Datalist';
-import LoadingContent, {
+} from '../../../../server/services/hli/stadspas-types.ts';
+import { isError, isLoading } from '../../../../universal/helpers/api.ts';
+import { dateSort } from '../../../../universal/helpers/date.ts';
+import ErrorAlert from '../../../components/Alert/Alert.tsx';
+import { Datalist } from '../../../components/Datalist/Datalist.tsx';
+import type {
   BarConfig,
-} from '../../../components/LoadingContent/LoadingContent';
-import { MaRouterLink } from '../../../components/MaLink/MaLink';
-import { Modal } from '../../../components/Modal/Modal';
-import { PageContentCell, PageV2 } from '../../../components/Page/Page';
-import { Spinner } from '../../../components/Spinner/Spinner';
-import { TableV2 } from '../../../components/Table/TableV2';
-import { useBffApi } from '../../../hooks/api/useBffApi';
-import { useSmallScreen } from '../../../hooks/media.hook';
-import { useAppStateGetter } from '../../../hooks/useAppStateStore';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
+} from '../../../components/LoadingContent/LoadingContent.tsx';
+import LoadingContent from '../../../components/LoadingContent/LoadingContent.tsx';
+import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
+import { Modal } from '../../../components/Modal/Modal.tsx';
+import { PageContentCell, PageV2 } from '../../../components/Page/Page.tsx';
+import { Spinner } from '../../../components/Spinner/Spinner.tsx';
+import { TableV2 } from '../../../components/Table/TableV2.tsx';
+import { useBffApi } from '../../../hooks/api/useBffApi.ts';
+import { useSmallScreen } from '../../../hooks/media.hook.ts';
+import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
 const loadingContentBarConfigDetails: BarConfig = [
   ['10rem', '2rem', '.5rem'],

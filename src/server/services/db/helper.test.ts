@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { camelizeKeys } from './helper';
+import { camelizeKeys } from './helper.ts';
 
 describe('notifications.helper', () => {
   it('should camelize keys', () => {

@@ -1,31 +1,31 @@
-import { AanbiedenDienstenEnStraatartiestenContent } from './detail-page-content/AanbiedenDienstenEnStraatartiesten';
-import { ERVV } from './detail-page-content/ERVV';
-import { EvenementMelding } from './detail-page-content/EvenementMelding';
-import { EvenementVergunning } from './detail-page-content/EvenementVergunning';
-import { Flyeren } from './detail-page-content/Flyeren';
-import { LigplaatsVergunning } from './detail-page-content/LigplaatsVergunning';
-import { Nachtwerkontheffing } from './detail-page-content/Nachtwerkontheffing';
-import { Omzettingsvergunning } from './detail-page-content/Omzettingsvergunning';
-import { RvvHeleStad } from './detail-page-content/RvvHeleStad';
-import { RvvSloterweg } from './detail-page-content/RvvSloterweg';
-import { TVMRVVObject } from './detail-page-content/TVMRVVObject';
-import { VergunningDetailDocumentsList } from './detail-page-content/VergunningDetailDocumentsList';
-import { Woonvergunningen } from './detail-page-content/Woonvergunningen';
-import { WVOSContent } from './detail-page-content/WVOS';
-import { ZwaarVerkeer } from './detail-page-content/ZwaarVerkeer';
-import { useVergunningenDetailData } from './useVergunningenDetailData.hook';
-import { useVergunningenThemaData } from './useVergunningenThemaData.hook';
-import type { DecosZaakFrontend } from '../../../../server/services/decos/decos-types';
-import type { PowerBrowserZaakFrontend } from '../../../../server/services/powerbrowser/powerbrowser-types';
+import { AanbiedenDienstenEnStraatartiestenContent } from './detail-page-content/AanbiedenDienstenEnStraatartiesten.tsx';
+import { ERVV } from './detail-page-content/ERVV.tsx';
+import { EvenementMelding } from './detail-page-content/EvenementMelding.tsx';
+import { EvenementVergunning } from './detail-page-content/EvenementVergunning.tsx';
+import { Flyeren } from './detail-page-content/Flyeren.tsx';
+import { LigplaatsVergunning } from './detail-page-content/LigplaatsVergunning.tsx';
+import { Nachtwerkontheffing } from './detail-page-content/Nachtwerkontheffing.tsx';
+import { Omzettingsvergunning } from './detail-page-content/Omzettingsvergunning.tsx';
+import { RvvHeleStad } from './detail-page-content/RvvHeleStad.tsx';
+import { RvvSloterweg } from './detail-page-content/RvvSloterweg.tsx';
+import { TVMRVVObject } from './detail-page-content/TVMRVVObject.tsx';
+import { VergunningDetailDocumentsList } from './detail-page-content/VergunningDetailDocumentsList.tsx';
+import { Woonvergunningen } from './detail-page-content/Woonvergunningen.tsx';
+import { WVOSContent } from './detail-page-content/WVOS.tsx';
+import { ZwaarVerkeer } from './detail-page-content/ZwaarVerkeer.tsx';
+import { useVergunningenDetailData } from './useVergunningenDetailData.hook.ts';
+import { useVergunningenThemaData } from './useVergunningenThemaData.hook.ts';
+import type { DecosZaakFrontend } from '../../../../server/services/decos/decos-types.ts';
+import type { PowerBrowserZaakFrontend } from '../../../../server/services/powerbrowser/powerbrowser-types.ts';
 import type {
   DecosVergunning,
   PBVergunning,
   ZaakFrontendCombined,
-} from '../../../../server/services/vergunningen/config-and-types';
-import { Datalist } from '../../../components/Datalist/Datalist';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+} from '../../../../server/services/vergunningen/config-and-types.ts';
+import { Datalist } from '../../../components/Datalist/Datalist.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 interface DetailPageContentProps<V> {
   vergunning: V;
@@ -71,11 +71,12 @@ function DetailPageContent<T extends DecosVergunning | PBVergunning>({
           case 'Onttrekkingsvergunning voor ander gebruik':
           case 'Onttrekkingsvergunning voor sloop':
           case 'Woningvormingsvergunning':
+          case 'Voorraadvergunning tweede woning':
           case 'Splitsingsvergunning':
             return <Woonvergunningen vergunning={vergunning} />;
           case 'VOB':
-            return <LigplaatsVergunning vergunning={vergunning} />;
-          case 'Ligplaatsvergunning':
+          case 'Ligplaatsvergunning woonboot':
+          case 'Ligplaatsvergunning bedrijfsvaartuig':
             return <LigplaatsVergunning vergunning={vergunning} />;
           case 'RVV - Hele stad':
             return <RvvHeleStad vergunning={vergunning} />;
@@ -128,13 +129,22 @@ export function VergunningenDetail() {
         vergunning && (
           <>
             <DetailPageContent
-              vergunning={vergunning as ZaakFrontendCombined<DecosVergunning>}
+              vergunning={
+                vergunning as ZaakFrontendCombined<
+                  DecosVergunning | PBVergunning
+                >
+              }
             />
             <PageContentCell spanWide={8}>
               <VergunningDetailDocumentsList
                 isLoading={isLoadingDocuments}
                 isError={isErrorDocuments}
                 documents={documents}
+                vergunning={
+                  vergunning as ZaakFrontendCombined<
+                    DecosVergunning | PBVergunning
+                  >
+                }
               />
             </PageContentCell>
           </>

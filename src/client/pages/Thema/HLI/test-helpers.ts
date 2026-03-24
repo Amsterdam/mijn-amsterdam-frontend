@@ -1,10 +1,10 @@
-import { HLIRegelingSpecificatieFrontend } from '../../../../server/services/hli/hli-regelingen-types';
-import {
+import type { HLIRegelingSpecificatieFrontend } from '../../../../server/services/hli/hli-regelingen-types.ts';
+import type {
   StadspasFrontend,
   StadspasOwner,
-} from '../../../../server/services/hli/stadspas-types';
-import { bffApiHost } from '../../../../testing/setup';
-import { AppState } from '../../../../universal/types/App.types';
+} from '../../../../server/services/hli/stadspas-types.ts';
+import { bffApiHost } from '../../../../testing/setup.ts';
+import type { AppState } from '../../../../universal/types/App.types.ts';
 
 export function createHLIState(withData: {
   status?: string;

@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 
 import { create } from 'zustand';
 
-import { useSessionStorage } from './storage.hook';
+import { useSessionStorage } from './storage.hook.ts';
+import { logger } from '../helpers/logging.ts';
 
 const PROFILE_TYPE_STORAGE_KEY = 'profileType';
 
@@ -16,7 +17,7 @@ try {
     initialProfileType = storageValue;
   }
 } catch (error) {
-  console.info("Can't use profileType session value");
+  logger.info("Can't use profileType session value");
 }
 
 type ProfileTypeStore = {

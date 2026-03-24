@@ -1,33 +1,36 @@
 import express from 'express';
 
-import { fetchAfisBusinessPartnerDetails } from './afis-business-partner';
-import { fetchAfisDocument } from './afis-documents';
+import { fetchAfisBusinessPartnerDetails } from './afis-business-partner.ts';
+import { fetchAfisDocument } from './afis-documents.ts';
 import {
   fetchEMandates,
   deactivateEmandate,
-  handleEmandateLifetimeUpdate,
   fetchEmandateSignRequestRedirectUrlFromPaymentProvider,
-} from './afis-e-mandates';
+} from './afis-e-mandates.ts';
+import {
+  handleAfisEMandateSignRequestStatus,
+  handleEmandateLifetimeUpdate,
+} from './afis-route-handlers.ts';
 import {
   handleAfisEMandateSignRequestStatusNotification,
   handleAfisRequestWithEncryptedPayloadQueryParam,
   handleFetchAfisFacturen,
   type AfisFacturenRouteParams,
-} from './afis-route-handlers';
+} from './afis-route-handlers.ts';
 import {
   OAUTH_ROLE_AFIS_EMANDATE_SIGN_REQUEST_STATUS_NOTIFY,
   routes,
-} from './afis-service-config';
+} from './afis-service-config.ts';
 import type {
   BusinessPartnerIdPayload,
   EMandateLifetimeChangePayload,
   EMandateSignRequestPayload,
-} from './afis-types';
-import { IS_TAP } from '../../../universal/config/env';
-import { conditional } from '../../helpers/middleware';
-import { OAuthVerificationHandler } from '../../routing/route-handlers';
-import { createBFFRouter } from '../../routing/route-helpers';
-import { attachDocumentDownloadRoute } from '../shared/document-download-route-handler';
+} from './afis-types.ts';
+import { IS_TAP } from '../../../universal/config/env.ts';
+import { conditional } from '../../helpers/middleware.ts';
+import { OAuthVerificationHandler } from '../../routing/route-handlers.ts';
+import { createBFFRouter } from '../../routing/route-helpers.ts';
+import { attachDocumentDownloadRoute } from '../shared/document-download-route-handler.ts';
 
 const routerProtected = createBFFRouter({ id: 'afis-router-protected' });
 
@@ -52,7 +55,7 @@ attachDocumentDownloadRoute(
     handleAfisRequestWithEncryptedPayloadQueryParam<
       QueryPayload,
       ServiceReturnType
-    >(fetchAfisBusinessPartnerDetails, 'id')
+    >((authProfile) => fetchAfisBusinessPartnerDetails(authProfile), 'id')
   );
 }
 
@@ -143,6 +146,15 @@ attachDocumentDownloadRoute(
     >(fetchEmandateSignRequestRedirectUrlFromPaymentProvider)
   );
 }
+
+/**
+ * Fetches the E-mandate sign request status from the payment provider.
+ * This is used to check the status of the E-mandate sign request after the user has completed the sign request flow with the payment provider.
+ */
+routerProtected.get(
+  routes.protected.AFIS_EMANDATES_SIGN_REQUEST_STATUS,
+  handleAfisEMandateSignRequestStatus
+);
 
 const routerPrivate = createBFFRouter({
   id: 'afis-router-private',

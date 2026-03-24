@@ -1,14 +1,15 @@
+/* eslint-disable no-irregular-whitespace */
 import { renderHook, waitFor } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 
-import type { AfisFactuurFrontend } from './Afis-thema-config';
+import type { AfisFactuurFrontend } from './Afis-thema-config.ts';
 import {
   forTesting,
   getDocumentLink,
   useAfisFacturenApi,
-} from './useAfisFacturenApi';
-import type { AfisFactuur } from '../../../../server/services/afis/afis-types';
-import { bffApi } from '../../../../testing/utils';
+} from './useAfisFacturenApi.tsx';
+import type { AfisFactuur } from '../../../../server/services/afis/afis-types.ts';
+import { bffApi } from '../../../../testing/utils.ts';
 
 describe('useAfisFacturenApi', () => {
   const mockFacturenResponse = {
@@ -64,14 +65,13 @@ describe('useAfisFacturenApi', () => {
       status: 'openstaand',
       statusDescription: 'Test',
       paylink: 'http://example.com/pay',
+      amountOriginalFormatted: '€100',
     } as AfisFactuur);
 
     expect(el).toMatchInlineSnapshot(`
       <React.Fragment>
-        <React.Fragment>
-          Openstaand
-          : 
-        </React.Fragment>
+        Openstaand
+        : 
         <MaLink
           href="http://example.com/pay"
           maVariant="fatNoUnderline"

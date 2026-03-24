@@ -1,8 +1,12 @@
 import { ReactPlugin } from '@microsoft/applicationinsights-react-js';
-import { ApplicationInsights } from '@microsoft/applicationinsights-web';
+import {
+  ApplicationInsights,
+  type ITelemetryPlugin,
+} from '@microsoft/applicationinsights-web';
 import { createBrowserHistory } from 'history';
 
-import { IS_DEVELOPMENT } from '../../universal/config/env';
+import { IS_DEVELOPMENT } from '../../universal/config/env.ts';
+import { logger } from './logging.ts';
 
 export type Severity =
   | 'verbose'
@@ -31,7 +35,7 @@ export const reactPlugin = new ReactPlugin();
 const appInsights = new ApplicationInsights({
   config: {
     connectionString: import.meta.env.REACT_APP_MONITORING_CONNECTION_STRING,
-    extensions: [reactPlugin],
+    extensions: [reactPlugin as unknown as ITelemetryPlugin],
     enableAutoRouteTracking: true,
     extensionConfig: {
       [reactPlugin.identifier]: { history: browserHistory },
@@ -60,7 +64,7 @@ export function captureException(error: unknown, properties?: Properties) {
 
   if (IS_DEVELOPMENT) {
     if (MA_APP_MODE !== 'unittest') {
-      console.log('Capture exception', payload);
+      logger.info('Capture exception', payload);
     }
   } else {
     appInsights.trackException(payload);
@@ -76,7 +80,7 @@ export function captureMessage(message: string, properties?: Properties) {
 
   if (IS_DEVELOPMENT) {
     if (MA_APP_MODE !== 'unittest') {
-      console.log('Capture message', payload);
+      logger.info('Capture message', payload);
     }
   } else {
     appInsights.trackTrace(payload);
@@ -85,7 +89,7 @@ export function captureMessage(message: string, properties?: Properties) {
 
 export function trackEvent(name: string, properties: Record<string, unknown>) {
   return IS_DEVELOPMENT
-    ? MA_APP_MODE !== 'unittest' && console.log('Track event', name, properties)
+    ? MA_APP_MODE !== 'unittest' && logger.info('Track event', name, properties)
     : appInsights.trackEvent({
         name,
         properties,

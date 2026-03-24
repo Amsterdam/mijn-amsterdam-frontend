@@ -5,9 +5,9 @@ import {
   handleFetchSurveyOverview,
   handleShowSurveyOverview,
   handleUserFeedbackSubmission,
-} from './user-feedback.route-handlers';
-import { featureToggle, routes } from './user-feedback.service-config';
-import { createBFFRouter } from '../../routing/route-helpers';
+} from './user-feedback.route-handlers.ts';
+import { featureToggle, routes } from './user-feedback.service-config.ts';
+import { createBFFRouter } from '../../routing/route-helpers.ts';
 
 const userFeedbackRouterProtected = createBFFRouter({
   id: 'protected-user-feedback-router',

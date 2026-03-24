@@ -1,17 +1,17 @@
-import { fetchDecosParkeerVergunningen } from './parkeren-decos-service';
+import { fetchDecosParkeerVergunningen } from './parkeren-decos-service.ts';
 import {
   hasPermitsOrPermitRequests,
   fetchSSOURL,
-} from './parkeren-egis-service';
-import { themaConfig } from '../../../client/pages/Thema/Parkeren/Parkeren-thema-config';
+} from './parkeren-egis-service.ts';
+import { themaConfig } from '../../../client/pages/Thema/Parkeren/Parkeren-thema-config.ts';
 import {
   apiSuccessResult,
   getFailedDependencies,
-} from '../../../universal/helpers/api';
-import { isMokum } from '../../../universal/helpers/brp';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { getFromEnv } from '../../helpers/env';
-import { fetchBrp } from '../brp/brp';
+} from '../../../universal/helpers/api.ts';
+import { isMokum } from '../../../universal/helpers/brp.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { getFromEnv } from '../../helpers/env.ts';
+import { fetchBrp } from '../brp/brp.ts';
 
 export async function fetchParkeren(authProfileAndToken: AuthProfileAndToken) {
   const isProfileTypePrivate =

@@ -3,14 +3,14 @@ import Mockdate from 'mockdate';
 import { generatePath } from 'react-router';
 import { describe, it } from 'vitest';
 
-import { AppState } from '../../../universal/types/App.types';
-import MockApp from '../MockApp';
-import { Dashboard } from './Dashboard';
-import { themaId } from './Dashboard-config';
-import { DashboardRoute } from './Dashboard-routes';
-import { remoteApiHost } from '../../../testing/setup';
-import { bffApi } from '../../../testing/utils';
-import { toDateFormatted } from '../../../universal/helpers/date';
+import type { AppState } from '../../../universal/types/App.types.ts';
+import MockApp from '../MockApp.tsx';
+import { themaId } from './Dashboard-config.ts';
+import { DashboardRoute } from './Dashboard-routes.ts';
+import { Dashboard } from './Dashboard.tsx';
+import { remoteApiHost } from '../../../testing/setup.ts';
+import { bffApi } from '../../../testing/utils.ts';
+import { toDateFormatted } from '../../../universal/helpers/date.ts';
 
 const testState = {
   BRP: {

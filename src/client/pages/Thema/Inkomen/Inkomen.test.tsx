@@ -1,9 +1,9 @@
 import { render } from '@testing-library/react';
 
-import { themaConfig } from './Inkomen-thema-config';
-import { InkomenThema } from './InkomenThema';
-import type { AppState } from '../../../../universal/types/App.types';
-import MockApp from '../../MockApp';
+import { themaConfig } from './Inkomen-thema-config.ts';
+import { InkomenThema } from './InkomenThema.tsx';
+import type { AppState } from '../../../../universal/types/App.types.ts';
+import MockApp from '../../MockApp.tsx';
 
 const testState = {
   WPI_AANVRAGEN: {
@@ -13,7 +13,6 @@ const testState = {
         title: 'Aanvraag inkomen item',
         datePublished: '2020-07-24',
         dateStart: '2020-07-14',
-        statusId: 'besluit',
         id: 'aanvraag-1',
         steps: [
           {
@@ -27,7 +26,6 @@ const testState = {
         title: 'Aanvraag inkomen item 2',
         datePublished: '2020-07-24',
         dateStart: '2020-07-14',
-        statusId: 'herstelTermijn',
         id: 'aanvraag-2',
         steps: [
           {
@@ -46,7 +44,6 @@ const testState = {
         title: 'Tozo 1 item',
         datePublished: '2020-07-24',
         dateStart: '2020-07-14',
-        statusId: 'besluit',
         id: 'aanvraag-3',
         steps: [
           {
@@ -60,7 +57,6 @@ const testState = {
         title: 'Tozo 2 item',
         datePublished: '2020-07-24',
         dateStart: '2020-07-14',
-        statusId: 'herstelTermijn',
         id: 'aanvraag-4',
         steps: [
           {
@@ -79,7 +75,6 @@ const testState = {
         title: 'Tonk 1 item',
         datePublished: '2020-07-24',
         dateStart: '2020-07-14',
-        statusId: 'besluit',
         id: 'aanvraag-5',
         steps: [
           {
@@ -93,7 +88,6 @@ const testState = {
         title: 'Tonk 2 item',
         datePublished: '2020-07-24',
         dateStart: '2020-07-14',
-        statusId: 'herstelTermijn',
         id: 'aanvraag-6',
         steps: [
           {
@@ -112,7 +106,6 @@ const testState = {
         title: 'Bbz item',
         datePublished: '2022-07-24',
         dateStart: '2022-07-14',
-        statusId: 'besluit',
         id: 'aanvraag-7',
         about: 'Bbz',
         steps: [

@@ -6,15 +6,16 @@ import {
   Link,
 } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
-import parse, {
+import {
   attributesToProps,
   type HTMLReactParserOptions,
   type DOMNode,
   type Element,
   domToReact,
+  htmlToDOM,
 } from 'html-react-parser';
 
-import { MaRouterLink } from '../components/MaLink/MaLink';
+import { MaRouterLink } from '../components/MaLink/MaLink.tsx';
 
 function getNextNonTextNode(
   domNode: Element,
@@ -128,5 +129,5 @@ export function parseHTML(
   if (!html) {
     return null;
   }
-  return parse(html, options);
+  return domToReact(htmlToDOM(html, options.htmlparser2), options);
 }

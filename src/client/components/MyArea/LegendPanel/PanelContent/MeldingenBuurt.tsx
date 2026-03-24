@@ -1,9 +1,10 @@
-import GenericBase from './GenericBase';
-import { DATASETS } from '../../../../../universal/config/myarea-datasets';
-import { dateTimeFormatYear } from '../../../../../universal/helpers/date';
-import { capitalizeFirstLetter } from '../../../../../universal/helpers/text';
-import { Unshaped } from '../../../../../universal/types/App.types';
-import { Datalist, Row } from '../../../Datalist/Datalist';
+import GenericBase from './GenericBase.tsx';
+import { DATASETS } from '../../../../../universal/config/myarea-datasets.ts';
+import { dateTimeFormatYear } from '../../../../../universal/helpers/date.ts';
+import { capitalizeFirstLetter } from '../../../../../universal/helpers/text.ts';
+import type { Unshaped } from '../../../../../universal/types/App.types.ts';
+import type { Row } from '../../../Datalist/Datalist.tsx';
+import { Datalist } from '../../../Datalist/Datalist.tsx';
 
 interface MyArePanelContentMeldingenBuurtProps {
   panelItem: Unshaped;

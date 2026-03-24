@@ -1,57 +1,57 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, type Mock } from 'vitest';
 
-import type { AfisFactuurFrontend } from './Afis-thema-config';
-import { useAfisListPageData } from './useAfisListPageData';
-import { bffApi } from '../../../../testing/utils';
-import { useAppStateGetter } from '../../../hooks/useAppStateStore';
+import type { AfisFactuurFrontend } from './Afis-thema-config.ts';
+import { useAfisListPageData } from './useAfisListPageData.tsx';
+import { bffApi } from '../../../../testing/utils.ts';
+import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
 
 vi.mock('../../../hooks/useAppStateStore');
 vi.mock('../../../hooks/useThemaMenuItems');
 
-describe('useAfisListPageData', () => {
-  const mockAFIS = {
-    content: {
-      businessPartnerIdEncrypted: 'encrypted-id',
-      facturen: {
-        open: {
-          state: 'openstaand',
-          count: 1,
-          facturen: [
-            {
-              factuurNummer: 'open-1',
-              amount: 100,
-              status: 'openstaand',
-              statusDescription: 'Openstaand',
-              documentDownloadLink: 'http://example.com/document/open-1.pdf',
-              link: {
-                to: '/facturen-en-betalen/factuur/open/open-1',
-                title: 'Factuur open-1',
-              },
-            } as unknown as AfisFactuurFrontend,
-          ],
-        },
+const mockAFIS = {
+  content: {
+    businessPartnerIdEncrypted: 'encrypted-id',
+    facturen: {
+      open: {
+        state: 'openstaand',
+        count: 1,
+        facturen: [
+          {
+            factuurNummer: 'open-1',
+            amount: 100,
+            status: 'openstaand',
+            statusDescription: 'Openstaand',
+            documentDownloadLink: 'http://example.com/document/open-1.pdf',
+            link: {
+              to: '/facturen-en-betalen/factuur/open/open-1',
+              title: 'Factuur open-1',
+            },
+          } as unknown as AfisFactuurFrontend,
+        ],
       },
     },
-  };
+  },
+};
 
-  const mockFacturenResponse = {
-    state: 'afgehandeld',
-    facturen: [
-      {
-        factuurNummer: 'afgehandeld-1',
-        amount: 100,
-        status: 'afgehandeld',
-        statusDescription: 'Afgehandeld',
-        documentDownloadLink: 'http://example.com/document/afgehandeld-1.pdf',
-        link: {
-          to: '/facturen-en-betalen/factuur/afgehandeld/afgehandeld-1',
-          title: 'Factuur afgehandeld-1',
-        },
+const mockFacturenResponse = {
+  state: 'afgehandeld',
+  facturen: [
+    {
+      factuurNummer: 'afgehandeld-1',
+      amount: 100,
+      status: 'afgehandeld',
+      statusDescription: 'Afgehandeld',
+      documentDownloadLink: 'http://example.com/document/afgehandeld-1.pdf',
+      link: {
+        to: '/facturen-en-betalen/factuur/afgehandeld/afgehandeld-1',
+        title: 'Factuur afgehandeld-1',
       },
-    ],
-  };
+    },
+  ],
+};
 
+describe('useAfisListPageData', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -66,7 +66,6 @@ describe('useAfisListPageData', () => {
 
     expect(result.current.isListPageLoading).toBe(true);
     expect(result.current.isListPageError).toBe(false);
-
     await waitFor(() => {
       expect(result.current.isListPageLoading).toBe(false);
     });

@@ -1,12 +1,13 @@
 import MockDate from 'mockdate';
-import { Mock, vi } from 'vitest';
+import type { Mock} from 'vitest';
+import { vi } from 'vitest';
 
-import { fetchToeristischeVerhuur } from './toeristische-verhuur';
-import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur-notifications';
-import { themaConfig } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
-import { getAuthProfileAndToken } from '../../../testing/utils';
-import { MONTHS_TO_KEEP_NOTIFICATIONS } from '../../../universal/config/app';
-import { apiSuccessResult } from '../../../universal/helpers/api';
+import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur-notifications.ts';
+import { fetchToeristischeVerhuur } from './toeristische-verhuur.ts';
+import { themaConfig } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
+import { getAuthProfileAndToken } from '../../../testing/utils.ts';
+import { MONTHS_TO_KEEP_NOTIFICATIONS } from '../../../universal/config/app.ts';
+import { apiSuccessResult } from '../../../universal/helpers/api.ts';
 
 vi.mock('./toeristische-verhuur');
 

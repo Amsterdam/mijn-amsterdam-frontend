@@ -1,11 +1,6 @@
 import mockdate from 'mockdate';
 
 import {
-  forTesting,
-  RTM_SPECIFICATIE_TITLE,
-  transformRTMAanvragen,
-} from './regeling-rtm';
-import {
   aanvraag,
   aanvragenTestsetInput,
   RTM1,
@@ -14,11 +9,16 @@ import {
   TOE,
   type RTMAanvraagProps,
   type RTMTestInput,
-} from './regeling-rtm-aanvragen-testset';
+} from './regeling-rtm-aanvragen-testset.ts';
+import {
+  forTesting,
+  RTM_SPECIFICATIE_TITLE,
+  transformRTMAanvragen,
+} from './regeling-rtm.ts';
 import type {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedPerson,
-} from '../../zorgned/zorgned-types';
+} from '../../zorgned/zorgned-types.ts';
 
 vi.mock('../../../helpers/encrypt-decrypt', async (requireActual) => {
   return {

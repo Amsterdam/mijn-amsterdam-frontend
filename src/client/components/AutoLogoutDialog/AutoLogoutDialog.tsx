@@ -1,4 +1,5 @@
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import type { ReactNode} from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { ActionGroup, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
@@ -8,18 +9,20 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
 import styles from './AutoLogoutDialog.module.scss';
-import { formattedTimeFromSeconds } from '../../../universal/helpers/date';
+import { formattedTimeFromSeconds } from '../../../universal/helpers/date.ts';
 import {
   LOGIN_URL_DIGID,
   LOGIN_URL_EHERKENNING,
   LOGOUT_URL,
-} from '../../config/api';
-import { Colors } from '../../config/app';
-import { ONE_SECOND_MS, useLogout } from '../../hooks/api/useSessionApi';
-import { CounterProps, useCounter } from '../../hooks/timer.hook';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
-import { MaButtonLink } from '../MaLink/MaLink';
-import { Modal } from '../Modal/Modal';
+} from '../../config/api.ts';
+import { Colors } from '../../config/app.ts';
+import { logger } from '../../helpers/logging.ts';
+import { ONE_SECOND_MS, useLogout } from '../../hooks/api/useSessionApi.ts';
+import type { CounterProps} from '../../hooks/timer.hook.ts';
+import { useCounter } from '../../hooks/timer.hook.ts';
+import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
+import { MaButtonLink } from '../MaLink/MaLink.tsx';
+import { Modal } from '../Modal/Modal.tsx';
 
 const TITLE = 'Wilt u ingelogd blijven op Mijn Amsterdam?';
 const ONE_MINUTE_SECONDS = 60;
@@ -110,8 +113,7 @@ export function AutoLogoutDialog({
   const [continueButtonIsVisible, setContinueButtonVisibility] = useState(true);
 
   function logtime() {
-    // eslint-disable-next-line no-console
-    console.log(
+     logger.info(
       'Dialog opens in %s seconds, expires in %s seconds at %s',
       formattedTimeFromSeconds(
         getExpiresInSeconds(expiresAtMilliseconds) -

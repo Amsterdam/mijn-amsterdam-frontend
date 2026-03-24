@@ -1,5 +1,5 @@
-import { isEnabled } from '../../../config/azure-appconfiguration';
-import { AMSAPP_BASE_PATH } from '../amsapp-service-config';
+import { isEnabled } from '../../../config/azure-appconfiguration.ts';
+import { AMSAPP_BASE_PATH } from '../amsapp-service-config.ts';
 
 export const featureToggle = {
   // AmsApp notificaties

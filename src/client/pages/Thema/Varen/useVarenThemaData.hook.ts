@@ -1,13 +1,13 @@
-import { CONTENT_EMPTY } from './helper';
-import { tableConfig, themaConfig } from './Varen-thema-config';
+import { CONTENT_EMPTY } from './helper.ts';
+import { tableConfig, themaConfig } from './Varen-thema-config.ts';
 import type {
   VarenVergunningFrontend,
   VarenZakenFrontend,
-} from '../../../../server/services/varen/config-and-types';
-import { isError, isLoading } from '../../../../universal/helpers/api';
-import { addLinkElementToProperty } from '../../../components/Table/TableV2';
-import { useAppStateGetter } from '../../../hooks/useAppStateStore';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
+} from '../../../../server/services/varen/config-and-types.ts';
+import { isError, isLoading } from '../../../../universal/helpers/api.ts';
+import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
+import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
 export function useVarenThemaData() {
   const { VAREN } = useAppStateGetter();

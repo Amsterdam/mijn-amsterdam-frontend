@@ -1,66 +1,65 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 
+import type { ApiResponse_DEPRECATED } from '../../universal/helpers/api.ts';
 import {
   apiErrorResult,
-  ApiResponse_DEPRECATED,
   apiSuccessResult,
   getSettledResult,
-} from '../../universal/helpers/api';
-import { omit } from '../../universal/helpers/utils';
-import { getAuth } from '../auth/auth-helpers';
-import { AuthProfileAndToken } from '../auth/auth-types';
-import { logger } from '../logging';
+} from '../../universal/helpers/api.ts';
+import { omit } from '../../universal/helpers/utils.ts';
+import { getAuth } from '../auth/auth-helpers.ts';
+import type { AuthProfileAndToken } from '../auth/auth-types.ts';
+import { logger } from '../logging.ts';
 import {
   queryParams,
   sendMessage,
   type RequestWithQueryParams,
-} from '../routing/route-helpers';
-import { fetchIsKnownInAFIS } from './afis/afis';
-import { fetchAfval, fetchAfvalPunten } from './afval/afval';
-import { storeNotificationsResponses } from './amsapp/notifications/amsapp-notifications';
-import { featureToggle } from './amsapp/notifications/amsapp-notifications-service-config';
-import { fetchAVG } from './avg/avg';
-import { fetchMyLocations } from './bag/my-locations';
-import { fetchBezwaren } from './bezwaren/bezwaren';
-import { fetchLoodmetingen } from './bodem/loodmetingen';
-import { fetchBrp } from './brp/brp';
-import { fetchMijnAmsterdamUitlegPage } from './cms/cms-content';
-import { fetchActiveMaintenanceNotifications } from './cms/cms-maintenance-notifications';
-import { fetchErfpacht } from './erfpacht/erfpacht';
-import { fetchHLI } from './hli/hli';
-import { fetchHorecaVergunningen } from './horeca/horeca';
-import { fetchKVK } from './hr-kvk/hr-kvk';
-import { fetchLeerlingenvervoer } from './jeugd/jeugd';
-import { fetchAllKlachten } from './klachten/klachten';
-import { fetchKrefia } from './krefia/krefia';
-import { captureException } from './monitoring';
-import { fetchParkeren } from './parkeren/parkeren';
-import {
-  fetchBelasting,
-  fetchMilieuzone,
-  fetchOvertredingen,
-  fetchSubsidie,
-} from './patroon-c';
-import { fetchSVWI } from './patroon-c/svwi';
-import { fetchContactmomenten } from './salesforce/contactmomenten';
+} from '../routing/route-helpers.ts';
+import { fetchIsKnownInAFIS } from './afis/afis.ts';
+import { fetchAfval, fetchAfvalPunten } from './afval/afval.ts';
+import { featureToggle } from './amsapp/notifications/amsapp-notifications-service-config.ts';
+import { storeNotificationsResponses } from './amsapp/notifications/amsapp-notifications.ts';
+import { fetchAVG } from './avg/avg.ts';
+import { fetchMyLocations } from './bag/my-locations.ts';
+import { fetchBezwaren } from './bezwaren/bezwaren.ts';
+import { fetchLoodmetingen } from './bodem/loodmetingen.ts';
+import { fetchBrp } from './brp/brp.ts';
+import { fetchMijnAmsterdamUitlegPage } from './cms/cms-content.ts';
+import { fetchActiveMaintenanceNotifications } from './cms/cms-maintenance-notifications.ts';
+import { fetchErfpacht } from './erfpacht/erfpacht.ts';
+import { fetchHLI } from './hli/hli.ts';
+import { fetchHorecaVergunningen } from './horeca/horeca.ts';
+import { fetchKVK } from './hr-kvk/hr-kvk.ts';
+import { fetchLeerlingenvervoer } from './jeugd/jeugd.ts';
+import { fetchAllKlachten } from './klachten/klachten.ts';
+import { fetchKrefia } from './krefia/krefia.ts';
+import { captureException } from './monitoring.ts';
+import { fetchParkeren } from './parkeren/parkeren.ts';
+import { fetchBelasting } from './patroon-c/belasting.ts';
+import { fetchMilieuzone, fetchOvertredingen } from './patroon-c/cleopatra.ts';
+import { fetchSubsidie } from './patroon-c/subsidie.ts';
+import { fetchSVWI } from './patroon-c/svwi.ts';
+import { fetchContactmomenten } from './salesforce/contactmomenten.ts';
+import type { notificationServices } from './tips-and-notifications.ts';
 import {
   combineNotificationsWithTipsAndSort,
   fetchNotificationsAndTipsFromServices,
   getContentTips,
   getTipsAndNotificationsFromApiResults,
-} from './tips-and-notifications';
-import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-verhuur';
-import { fetchUserFeedbackSurvey } from './user-feedback/user-feedback';
-import { fetchVaren } from './varen/varen';
-import { fetchVergunningen } from './vergunningen/vergunningen';
-import { fetchWmo } from './wmo/wmo';
+  type NotificationsAndTipsResponse,
+} from './tips-and-notifications.ts';
+import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-verhuur.ts';
+import { fetchUserFeedbackSurvey } from './user-feedback/user-feedback.ts';
+import { fetchVaren } from './varen/varen.ts';
+import { fetchVergunningen } from './vergunningen/vergunningen.ts';
+import { fetchWmo } from './wmo/wmo.ts';
 import {
   fetchBbz,
   fetchBijstandsuitkering,
   fetchSpecificaties,
   fetchTonk,
   fetchTozo,
-} from './wpi';
+} from './wpi/api-service.ts';
 
 // Default service call just passing query params as arguments
 function callAuthenticatedService<T>(
@@ -155,8 +154,6 @@ const WPI_SPECIFICATIES = callAuthenticatedService(fetchSpecificaties);
 const WPI_TONK = callAuthenticatedService(fetchTonk);
 const WPI_TOZO = callAuthenticatedService(fetchTozo);
 const KTO = callAuthenticatedService(() => fetchUserFeedbackSurvey());
-
-// Architectural pattern C. TODO: Make generic services for pattern C.
 const BELASTINGEN = callAuthenticatedService(fetchBelasting);
 const MILIEUZONE = callAuthenticatedService(fetchMilieuzone);
 const OVERTREDINGEN = callAuthenticatedService(fetchOvertredingen);
@@ -186,11 +183,13 @@ export const NOTIFICATIONS = async (req: Request) => {
     // Nothing in this flow depends on this so it does not have to be awaited
     storeNotificationsResponses(
       authProfileAndToken.profile.id,
-      notificationsAndTipsResults
+      notificationsAndTipsResults,
+      { updateLastLoginDate: true }
     ).catch((error) => {
       captureException(error);
     });
   }
+
   const contentTips = getContentTips(serviceResults, authProfileAndToken);
   const notificationsAndTips = getTipsAndNotificationsFromApiResults(
     Object.values(notificationsAndTipsResults)
@@ -243,7 +242,7 @@ const SERVICES_INDEX = {
   KTO,
 };
 
-export type ServicesType = typeof SERVICES_INDEX;
+export type ServicesType = Prettify<typeof SERVICES_INDEX>;
 export type ServiceID = keyof ServicesType;
 export type ServiceMap = { [key in ServiceID]: ServicesType[ServiceID] };
 

@@ -1,4 +1,4 @@
-import { IS_OT, IS_PRODUCTION } from '../../../universal/config/env';
+import { IS_OT, IS_PRODUCTION } from '../../../universal/config/env.ts';
 
 export const featureToggle = {
   router: {
@@ -30,6 +30,8 @@ export const routes = {
     AFIS_EMANDATES_DEACTIVATE: '/services/afis/e-mandates/deactivate',
     AFIS_EMANDATES_SIGN_REQUEST_URL:
       '/services/afis/e-mandates/sign-request-url',
+    AFIS_EMANDATES_SIGN_REQUEST_STATUS:
+      '/services/afis/e-mandates/sign-request-status',
     AFIS_EMANDATES_UPDATE_LIFETIME: '/services/afis/e-mandates/update-lifetime',
     AFIS_EMANDATES_SIGN_REQUEST_STATUS_NOTIFICATION:
       '/services/afis/e-mandates/sign-request-notification',

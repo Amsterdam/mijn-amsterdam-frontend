@@ -1,6 +1,6 @@
-import pino, { LoggerOptions } from 'pino';
+import pino from 'pino';
 
-import { IS_DEVELOPMENT } from '../universal/config/env';
+import { IS_DEVELOPMENT } from '../universal/config/env.ts';
 
 const LOG_LEVEL = process.env.LOG_LEVEL;
 
@@ -11,7 +11,7 @@ const transport = IS_DEVELOPMENT
     }
   : undefined;
 
-const options: LoggerOptions = {
+const options: pino.LoggerOptions = {
   enabled: !!LOG_LEVEL,
   level: LOG_LEVEL,
   transport,

@@ -1,10 +1,14 @@
 import nock from 'nock';
 import { describe, expect, beforeEach, afterEach, vi, it } from 'vitest';
 
-import { fetchAVG, fetchAVGNotifications, transformAVGResponse } from './avg';
-import avgThemasResponse from '../../../../mocks/fixtures/avg-themas.json';
-import apiResponse from '../../../../mocks/fixtures/avg.json';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
+import {
+  fetchAVG,
+  fetchAVGNotifications,
+  transformAVGResponse,
+} from './avg.ts';
+import avgThemasResponse from '../../../../mocks/fixtures/avg-themas.json' with { type: 'json' };
+import apiResponse from '../../../../mocks/fixtures/avg.json' with { type: 'json' };
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 
 describe('AVG', () => {
   const profileAndToken = getAuthProfileAndToken();
