@@ -44,11 +44,11 @@ const LigplaatsWoonbootVergunningZaakTransformer: PowerBrowserZaakTransformer<Li
       ),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
-      WB_NAAM_VAARTUIG: 'vaartuigNaam',
-      WB_DIEPGANG: 'diepgang',
-      WB_LENGTE: 'lengte',
-      WB_BREEDTE: 'breedte',
-      WB_HOOGTE: 'hoogte',
+      WB_NAAM_VAARTUIG: 'vesselName',
+      WB_DIEPGANG: 'vesselDraft',
+      WB_LENGTE: 'vesselLength',
+      WB_BREEDTE: 'vesselWidth',
+      WB_HOOGTE: 'vesselHeight',
     },
     transformFieldValues: {
       result: transformVTHZaakResult,
@@ -76,11 +76,11 @@ const LigplaatsBedrijfsvaartuigVergunningZaakTransformer: PowerBrowserZaakTransf
       ),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
-      WB_NAAM_VAARTUIG: 'naamVaartuig',
-      WB_DIEPGANG: 'diepgang',
-      WB_LENGTE: 'lengte',
-      WB_BREEDTE: 'breedte',
-      WB_HOOGTE: 'hoogte',
+      WB_NAAM_VAARTUIG: 'vesselName',
+      WB_DIEPGANG: 'vesselDraft',
+      WB_LENGTE: 'vesselLength',
+      WB_BREEDTE: 'vesselWidth',
+      WB_HOOGTE: 'vesselHeight',
     },
     transformFieldValues: {
       result: transformVTHZaakResult,
