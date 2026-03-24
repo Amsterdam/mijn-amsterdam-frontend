@@ -183,7 +183,7 @@ const besluitLabels: WpiRequestStatusLabels = {
           statusStep
         )}. Bekijk de brief voor meer details.
       </p>
-      ${''}<p>${LINK_MEER_INFO}</p>`;
+      <p>${LINK_MEER_INFO}</p>`;
 
       case 'afwijzing':
         return `<p>
