@@ -1,10 +1,32 @@
-const BB_SEARCH_DOCUMENTS = require('../fixtures/powerbrowser-bb-attachments.json');
-const BB_PERSONEN_ZAKEN = require('../fixtures/powerbrowser-bb-personen-zaken.json');
-const BB_SEARCH_PERSON = require('../fixtures/powerbrowser-bb-search-person.json');
-const BB_LINK_ZAAK_ADRES = require('../fixtures/powerbrowser-bb-zaak-adres.json');
-const BB_ZAAK_STATUS = require('../fixtures/powerbrowser-bb-zaak-status.json');
-const BB_ZAKEN = require('../fixtures/powerbrowser-bb-zaken.json');
+const PB_SEARCH_DOCUMENTS = require('../fixtures/powerbrowser-attachments.json');
+const PB_PERSONEN_ZAKEN = require('../fixtures/powerbrowser-personen-zaken.json');
+const PB_SEARCH_PERSON = require('../fixtures/powerbrowser-search-person.json');
+const PB_LINK_ZAAK_ADRES = require('../fixtures/powerbrowser-zaak-adres.json');
+const PB_ZAAK_STATUS = require('../fixtures/powerbrowser-zaak-status.json');
 const settings = require('../settings.cjs');
+
+const PB_SEARCH_DOCUMENTS_PROCESSED = {
+  mainTableName: PB_SEARCH_DOCUMENTS.mainTableName,
+  records: PB_SEARCH_DOCUMENTS.records.map((record) => {
+    const minimumValidRecord = [
+      {
+        fieldName: 'STAMCSSTATUS_ID',
+        text: 'definitief',
+        fieldValue: '1000001002',
+      },
+      {
+        fieldName: 'SOORTDOCUMENT_ID',
+        fieldValue: record.fmtCpn.toLowerCase().includes('besluit')
+          ? '256' // besluit
+          : '1000001015', // aanvraag
+      },
+    ];
+    return {
+      ...record,
+      fields: [...minimumValidRecord, ...record.fields],
+    };
+  }),
+};
 
 module.exports = [
   {
@@ -33,10 +55,18 @@ module.exports = [
         options: {
           middleware: (req, res) => {
             if (['MAATSCHAP', 'PERSONEN'].includes(req.body.query.tableName)) {
-              return res.send(BB_SEARCH_PERSON);
+              return res.send(PB_SEARCH_PERSON);
             }
-
-            return res.send(BB_SEARCH_DOCUMENTS);
+            return res.send({
+              mainTableName: PB_SEARCH_DOCUMENTS_PROCESSED.mainTableName,
+              records: PB_SEARCH_DOCUMENTS_PROCESSED.records.filter((record) =>
+                req.body.query.conditions.some(
+                  (condition) =>
+                    condition.fieldName === 'GFO_ZAKEN_ID' &&
+                    record.forTestingZaakIds?.includes(condition.fieldValue)
+                )
+              ),
+            });
           },
         },
       },
@@ -52,7 +82,7 @@ module.exports = [
         type: 'json',
         options: {
           status: 200,
-          body: BB_ZAAK_STATUS,
+          body: PB_ZAAK_STATUS,
         },
       },
     ],
@@ -68,7 +98,7 @@ module.exports = [
         options: {
           middleware: (req, res, _, __) => {
             res.send(
-              BB_ZAKEN.filter((zaak) =>
+              PB_PERSONEN_ZAKEN.filter((zaak) =>
                 req.params.zaakIds.split(',').includes(zaak.id)
               )
             );
@@ -79,7 +109,7 @@ module.exports = [
   },
   {
     id: 'post-powerbrowser-personen-zaken',
-    url: `${settings.MOCK_BASE_PATH}/powerbrowser/Link/:type/GFO_ZAKEN/Table`,
+    url: `${settings.MOCK_BASE_PATH}/powerbrowser/Link/:type/GFO_ZAKEN/`,
     method: 'POST',
     variants: [
       {
@@ -87,7 +117,7 @@ module.exports = [
         type: 'json',
         options: {
           status: 200,
-          body: BB_PERSONEN_ZAKEN,
+          body: PB_PERSONEN_ZAKEN,
         },
       },
     ],
@@ -102,7 +132,7 @@ module.exports = [
         type: 'middleware',
         options: {
           middleware: (req, res) => {
-            return res.send(BB_LINK_ZAAK_ADRES);
+            return res.send(PB_LINK_ZAAK_ADRES);
           },
         },
       },
