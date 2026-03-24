@@ -12,10 +12,7 @@ import {
 } from '../../../universal/helpers/api.ts';
 import { dateSort } from '../../../universal/helpers/date.ts';
 import { entries, pick } from '../../../universal/helpers/utils.ts';
-import type {
-  ZorgnedAanvraagTransformed,
-  BSN,
-} from '../zorgned/zorgned-types.ts';
+import type { BSN } from '../zorgned/zorgned-types.ts';
 
 function isMaApiPropertyConfigMatch<T extends object>(
   voorziening: T,
@@ -69,7 +66,7 @@ export async function fetchMaApiVoorzieningen(
   bsn: BSN,
   options?: FetchWmoVoorzieningenApiOptions,
   maVoorzieningenApiConfig: WmoAapiConfig[] = wmoVoorzieningenApiConfig
-): Promise<ApiResponse<ZorgnedAanvraagTransformed[]>> {
+): Promise<ApiResponse<ZorgnedAanvraagTransformedWithMaApiProps[]>> {
   const voorzieningenResponse = await fetchZorgnedAanvragenWMO(bsn);
 
   if (voorzieningenResponse.status === 'OK') {
