@@ -1,6 +1,6 @@
 import type {
   WithMaApiProps,
-  WmoAapiConfig,
+  WmoApiConfig,
   ZorgnedAanvraagTransformedWithMaApiProps,
 } from './wmo-types.ts';
 import { wmoVoorzieningenApiConfig } from './wmo-voorzieningen-api-config.ts';
@@ -16,7 +16,7 @@ import type { BSN } from '../zorgned/zorgned-types.ts';
 
 function isMaApiPropertyConfigMatch<T extends object>(
   voorziening: T,
-  actionConfig: WmoAapiConfig<T>
+  actionConfig: WmoApiConfig<T>
 ): boolean {
   const matchers = entries(actionConfig.match);
 
@@ -36,7 +36,7 @@ function isMaApiPropertyConfigMatch<T extends object>(
 }
 
 function addMaApiPropsToVoorziening<T extends object>(
-  apiPropsConfig: WmoAapiConfig<T>[],
+  apiPropsConfig: WmoApiConfig<T>[],
   voorziening: T
 ): T & Partial<WithMaApiProps> {
   const updatedVoorziening: T & Partial<WithMaApiProps> = {
@@ -65,7 +65,7 @@ function addMaApiPropsToVoorziening<T extends object>(
 export async function fetchMaApiVoorzieningen(
   bsn: BSN,
   options?: FetchWmoVoorzieningenApiOptions,
-  maVoorzieningenApiConfig: WmoAapiConfig[] = wmoVoorzieningenApiConfig
+  maVoorzieningenApiConfig: WmoApiConfig[] = wmoVoorzieningenApiConfig
 ): Promise<ApiResponse<ZorgnedAanvraagTransformedWithMaApiProps[]>> {
   const voorzieningenResponse = await fetchZorgnedAanvragenWMO(bsn);
 

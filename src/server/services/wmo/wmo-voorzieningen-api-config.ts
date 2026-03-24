@@ -7,7 +7,7 @@ import {
   productGroep,
   wmoStatusLineItemsConfig,
 } from './wmo-status-line-items.ts';
-import type { WmoAapiConfig } from './wmo-types.ts';
+import type { WmoApiConfig } from './wmo-types.ts';
 import { entries } from '../../../universal/helpers/utils.ts';
 
 export type FetchWmoVoorzieningenApiOptions = {
@@ -15,7 +15,7 @@ export type FetchWmoVoorzieningenApiOptions = {
   maProductgroep?: z.infer<typeof voorzieningenRequestInput>['maProductgroep'];
 };
 
-export const wmoVoorzieningenApiConfig: WmoAapiConfig[] = [
+export const wmoVoorzieningenApiConfig: WmoApiConfig[] = [
   {
     match: {
       leveringsVorm: 'ZIN',
@@ -68,7 +68,7 @@ export const wmoVoorzieningenApiConfig: WmoAapiConfig[] = [
       return {
         match: Object.fromEntries(
           entries(match).filter(([_, value]) => typeof value !== 'undefined')
-        ) as WmoAapiConfig['match'],
+        ) as WmoApiConfig['match'],
         assign: {
           maProductgroep: [lineItemConfig.productgroep],
         },

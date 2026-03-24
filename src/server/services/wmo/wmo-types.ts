@@ -32,7 +32,7 @@ export type MaApiPropAssignFN<T> = (voorziening: T) => boolean;
 export type VoorzieningKey<T> = Exclude<keyof T, 'link' | 'documenten'>;
 export type VoorzieningValue<T> = T[VoorzieningKey<T>];
 
-export type WmoAapiConfig<T extends object = ZorgnedAanvraagTransformed> = {
+export type WmoApiConfig<T extends object = ZorgnedAanvraagTransformed> = {
   assign: Partial<WithMaApiProps>;
   match: Partial<
     Record<

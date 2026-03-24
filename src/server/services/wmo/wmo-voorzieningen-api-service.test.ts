@@ -1,4 +1,4 @@
-import type { WmoAapiConfig } from './wmo-types.ts';
+import type { WmoApiConfig } from './wmo-types.ts';
 import {
   fetchMaApiVoorzieningen,
   forTesting,
@@ -52,7 +52,7 @@ describe('wmo-voorzieningen-api-service', () => {
         date: new Date('2023-01-01'),
       };
 
-      const actionConfig: WmoAapiConfig<typeof voorziening> = {
+      const actionConfig: WmoApiConfig<typeof voorziening> = {
         match: {
           type: 'example',
           status: 'active',
@@ -93,7 +93,7 @@ describe('wmo-voorzieningen-api-service', () => {
         status: 'active',
       };
 
-      const apiPropsConfig: WmoAapiConfig<typeof voorziening> = {
+      const apiPropsConfig: WmoApiConfig<typeof voorziening> = {
         match: {
           type: 'example',
           status: 'active',
@@ -122,7 +122,7 @@ describe('wmo-voorzieningen-api-service', () => {
         status: 'active',
       };
 
-      const apiPropsConfig1: WmoAapiConfig<typeof voorziening> = {
+      const apiPropsConfig1: WmoApiConfig<typeof voorziening> = {
         match: {
           type: 'example',
           status: 'active',
@@ -132,7 +132,7 @@ describe('wmo-voorzieningen-api-service', () => {
         },
       };
 
-      const apiPropsConfig2: WmoAapiConfig<typeof voorziening> = {
+      const apiPropsConfig2: WmoApiConfig<typeof voorziening> = {
         match: {
           type: 'example',
           status: 'active',
@@ -159,7 +159,7 @@ describe('wmo-voorzieningen-api-service', () => {
         status: 'active',
       };
 
-      const apiPropsConfig: WmoAapiConfig<typeof voorziening> = {
+      const apiPropsConfig: WmoApiConfig<typeof voorziening> = {
         match: {
           type: 'differentExample',
           status: 'inactive',
@@ -183,7 +183,7 @@ describe('wmo-voorzieningen-api-service', () => {
         status: 'active',
       };
 
-      const apiPropsConfig: WmoAapiConfig<typeof voorziening> = {
+      const apiPropsConfig: WmoApiConfig<typeof voorziening> = {
         match: {
           type: 'example',
           status: 'active',
