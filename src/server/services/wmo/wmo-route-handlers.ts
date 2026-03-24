@@ -1,10 +1,10 @@
 import type { Request, Response } from 'express';
 
-import { fetchMaApiVoorzieningen } from './wmo-external-consumer-service.ts';
 import {
   voorzieningenRequestInput,
   ZORGNED_JZD_API_CONFIG_KEY,
 } from './wmo-service-config.ts';
+import { fetchMaApiVoorzieningen } from './wmo-voorzieningen-api-service.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import {
   sendResponse,
