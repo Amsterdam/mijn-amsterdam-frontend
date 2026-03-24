@@ -41,6 +41,7 @@ export async function fetchUserFeedbackSurvey(
       const surveyCamelized = camelize(survey);
 
       const base = pick(surveyCamelized, [
+        'id',
         'version',
         'title',
         'description',

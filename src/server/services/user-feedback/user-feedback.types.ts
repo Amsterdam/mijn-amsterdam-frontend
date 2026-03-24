@@ -35,6 +35,7 @@ type SurveyQuestion = {
 };
 
 export type Survey = {
+  id: string;
   questions?: SurveyQuestion[];
   version: number;
   created_at: string;
