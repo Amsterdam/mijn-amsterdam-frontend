@@ -551,6 +551,61 @@ describe('Powerbrowser service', () => {
     });
   });
 
+  describe('fetchZaakWbTransport', () => {
+    test('should fetch wbtransport fields successfully and prefix field names', async () => {
+      remoteApi
+        .post('/powerbrowser/Link/GFO_ZAKEN/WB_TRANSPORT/Table')
+        .query(true)
+        .reply(200, {
+          records: [
+            {
+              fields: [
+                { fieldName: 'K_MAINID', fieldValue: '123' },
+                { fieldName: 'NAAM_VAARTUIG', fieldValue: 'Test Vessel' },
+              ],
+            },
+          ],
+        });
+
+      const result = await forTesting.fetchZaakWbTransport('test-zaak-id', {
+        prefix: 'WB_',
+        fields: ['NAAM_VAARTUIG'],
+      });
+      expect(result.status).toBe('OK');
+      expect(result.content).toEqual([
+        { fieldName: 'WB_K_MAINID', fieldValue: '123' },
+        { fieldName: 'WB_NAAM_VAARTUIG', fieldValue: 'Test Vessel' },
+      ]);
+    });
+
+    test('should return empty list if no wbtransport fields found', async () => {
+      remoteApi
+        .post('/powerbrowser/Link/GFO_ZAKEN/WB_TRANSPORT/Table')
+        .query(true)
+        .reply(200, { records: [] });
+
+      const result = await forTesting.fetchZaakWbTransport('test-zaak-id', {
+        prefix: 'WB_',
+        fields: ['NAAM_VAARTUIG'],
+      });
+      expect(result.status).toBe('OK');
+      expect(result.content).toEqual([]);
+    });
+
+    test('should return an error if fetch fails', async () => {
+      remoteApi
+        .post('/powerbrowser/Link/GFO_ZAKEN/WB_TRANSPORT/Table')
+        .query(true)
+        .reply(500, 'some-error');
+
+      const result = await forTesting.fetchZaakWbTransport('test-zaak-id', {
+        prefix: 'WB_',
+        fields: ['NAAM_VAARTUIG'],
+      });
+      expect(result.status).toBe('ERROR');
+    });
+  });
+
   describe('fetchZaakStatussen', () => {
     test('should fetch zaak statuses successfully', async () => {
       remoteApi
