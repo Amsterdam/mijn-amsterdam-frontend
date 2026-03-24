@@ -32,6 +32,10 @@ const LigplaatsWoonbootVergunningZaakTransformer: PowerBrowserZaakTransformer<Li
     caseType: caseTypePB.LigplaatsWoonbootvergunning,
     title: 'Ligplaatsvergunning woonboot',
     isVerleend: isVTHZaakVerleend,
+    fetchWbTransportFields: {
+      prefix: 'WB_',
+      fields: ['NAAM_VAARTUIG', 'DIEPGANG', 'LENGTE', 'BREEDTE', 'HOOGTE'],
+    },
     fetchZaakFilter: (pbZaakFields) =>
       hasStringInZAAKPRODUCT_ID('Ligplaatsvergunning woonboot', pbZaakFields) ||
       hasStringInZAAK_SUBPRODUCT_ID(
@@ -40,6 +44,11 @@ const LigplaatsWoonbootVergunningZaakTransformer: PowerBrowserZaakTransformer<Li
       ),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
+      WB_NAAM_VAARTUIG: 'vaartuigNaam',
+      WB_DIEPGANG: 'diepgang',
+      WB_LENGTE: 'lengte',
+      WB_BREEDTE: 'breedte',
+      WB_HOOGTE: 'hoogte',
     },
     transformFieldValues: {
       result: transformVTHZaakResult,
@@ -52,6 +61,10 @@ const LigplaatsBedrijfsvaartuigVergunningZaakTransformer: PowerBrowserZaakTransf
     caseType: caseTypePB.LigplaatsBedrijfsvaartuigvergunning,
     title: 'Ligplaatsvergunning bedrijfsvaartuig',
     isVerleend: isVTHZaakVerleend,
+    fetchWbTransportFields: {
+      prefix: 'WB_',
+      fields: ['NAAM_VAARTUIG', 'DIEPGANG', 'LENGTE', 'BREEDTE', 'HOOGTE'],
+    },
     fetchZaakFilter: (pbZaakFields) =>
       hasStringInZAAKPRODUCT_ID(
         'Ligplaatsvergunning bedrijfsvaartuig',
@@ -61,7 +74,14 @@ const LigplaatsBedrijfsvaartuigVergunningZaakTransformer: PowerBrowserZaakTransf
         'Ligplaatsvergunning bedrijfsvaartuig',
         pbZaakFields
       ),
-    transformFields: SELECT_FIELDS_TRANSFORM_BASE,
+    transformFields: {
+      ...SELECT_FIELDS_TRANSFORM_BASE,
+      WB_NAAM_VAARTUIG: 'naamVaartuig',
+      WB_DIEPGANG: 'diepgang',
+      WB_LENGTE: 'lengte',
+      WB_BREEDTE: 'breedte',
+      WB_HOOGTE: 'hoogte',
+    },
     transformFieldValues: {
       result: transformVTHZaakResult,
     },

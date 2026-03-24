@@ -3,6 +3,7 @@ const PB_PERSONEN_ZAKEN = require('../fixtures/powerbrowser-personen-zaken.json'
 const PB_SEARCH_PERSON = require('../fixtures/powerbrowser-search-person.json');
 const PB_LINK_ZAAK_ADRES = require('../fixtures/powerbrowser-zaak-adres.json');
 const PB_ZAAK_STATUS = require('../fixtures/powerbrowser-zaak-status.json');
+const PB_ZAAK_WBTRANSPORT = require('../fixtures/powerbrowser-zaak-wbtransport.json');
 const settings = require('../settings.cjs');
 
 const PB_SEARCH_DOCUMENTS_PROCESSED = {
@@ -131,8 +132,24 @@ module.exports = [
         id: 'standard',
         type: 'middleware',
         options: {
-          middleware: (req, res) => {
+          middleware: (_req, res) => {
             return res.send(PB_LINK_ZAAK_ADRES);
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'get-powerbrowser-bb-zaak-wb-transport',
+    url: `${settings.MOCK_BASE_PATH}/powerbrowser/Link/GFO_ZAKEN/WB_TRANSPORT/Table`,
+    method: 'POST',
+    variants: [
+      {
+        id: 'standard',
+        type: 'middleware',
+        options: {
+          middleware: (_req, res) => {
+            return res.send(PB_ZAAK_WBTRANSPORT);
           },
         },
       },

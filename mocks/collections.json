@@ -73,6 +73,7 @@
       "get-bank-account:standard",
       "post-bank-account:standard",
       "get-powerbrowser-bb-zaak-adres:standard",
+      "get-powerbrowser-bb-zaak-wb-transport:standard",
       "post-powerbrowser-search-requests:standard",
       "post-powerbrowser-zaak-status:standard",
       "get-powerbrowser-bb-zaak-attachment-download:standard",

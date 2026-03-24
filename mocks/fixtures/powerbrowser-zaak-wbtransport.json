@@ -1,0 +1,40 @@
+{
+  "mainTableName": "WB_TRANSPORT",
+  "records": [
+    {
+      "mainTableName": "WB_TRANSPORT",
+      "fields": [
+        {
+          "fieldName": "K_MAINID",
+          "text": "126090115",
+          "fieldValue": "126090115"
+        },
+        {
+          "fieldName": "NAAM_VAARTUIG",
+          "text": "Boot",
+          "fieldValue": "Boot"
+        },
+        {
+          "fieldName": "DIEPGANG",
+          "text": "221,00",
+          "fieldValue": "221,00"
+        },
+        {
+          "fieldName": "LENGTE",
+          "text": "223,00",
+          "fieldValue": "223,00"
+        },
+        {
+          "fieldName": "BREEDTE",
+          "text": "221,00",
+          "fieldValue": "221,00"
+        },
+        {
+          "fieldName": "HOOGTE",
+          "text": "221,00",
+          "fieldValue": "221,00"
+        }
+      ]
+    }
+  ]
+}
