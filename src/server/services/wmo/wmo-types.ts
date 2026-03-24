@@ -28,7 +28,7 @@ export type WithMaApiProps = {
 export type ZorgnedAanvraagTransformedWithMaApiProps =
   ZorgnedAanvraagTransformed & Partial<WithMaApiProps>;
 
-export type MaApiPropAssigFN<T> = (voorziening: T) => boolean;
+export type MaApiPropAssignFN<T> = (voorziening: T) => boolean;
 export type VoorzieningKey<T> = Exclude<keyof T, 'link' | 'documenten'>;
 export type VoorzieningValue<T> = T[VoorzieningKey<T>];
 
@@ -37,7 +37,7 @@ export type WmoAapiConfig<T extends object = ZorgnedAanvraagTransformed> = {
   match: Partial<
     Record<
       VoorzieningKey<T>,
-      VoorzieningValue<T> | VoorzieningValue<T>[] | MaApiPropAssigFN<T>
+      VoorzieningValue<T> | VoorzieningValue<T>[] | MaApiPropAssignFN<T>
     >
   >;
 };
