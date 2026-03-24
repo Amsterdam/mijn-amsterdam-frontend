@@ -1,10 +1,10 @@
 import {
   isNotBestuurlijkGevoelig,
-  isZaakWithValidResultaat,
+  isZaakWithValidLowercasedResultaat,
 } from '../../powerbrowser/powerbrowser-helpers.ts';
 import type { PBZaakFieldsByName } from '../../powerbrowser/powerbrowser-types.ts';
 
-export const RESULTATEN_VERLEEND = [
+const RESULTATEN_VERLEEND = [
   'Gedeeltelijk verleend',
   'Van rechtswege verleend',
   'Vergunning gedeeltelijk ingetrokken',
@@ -18,6 +18,9 @@ const RESULTATEN_NIET_VERLEEND = [
   'Vergunningsvrij',
 ];
 const RESULTATEN_VALID = [...RESULTATEN_VERLEEND, ...RESULTATEN_NIET_VERLEEND];
+const RESULTATEN_VALID_LOWERCASE = RESULTATEN_VALID.map((resultaat) =>
+  resultaat.toLowerCase()
+);
 
 export function transformVTHZaakResult(
   resultaat: string | null
@@ -58,6 +61,6 @@ export function isValidVTHDocument(record: {
 export function isValidVTHZaak(pbZaakFields: PBZaakFieldsByName) {
   return (
     isNotBestuurlijkGevoelig(pbZaakFields) &&
-    isZaakWithValidResultaat(RESULTATEN_VALID, pbZaakFields)
+    isZaakWithValidLowercasedResultaat(RESULTATEN_VALID_LOWERCASE, pbZaakFields)
   );
 }
