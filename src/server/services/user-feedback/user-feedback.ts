@@ -96,7 +96,10 @@ export async function saveUserFeedback(
 ): ApiResponsePromise<SaveUserFeedbackResponse> {
   const surveyEntryPayload = getSurveyEntryPayload(data);
 
-  if (surveyEntryPayload.answers.some((answer) => answer.answer.length)) {
+  const hasAnswer = surveyEntryPayload.answers.some(
+    (answer) => answer.answer.length
+  );
+  if (hasAnswer) {
     // There is an alert called 'User feedback with a comment detected' -
     // that requires this log line to be able to fire.
     captureMessage('A userfeedback survey has been submitted', {
