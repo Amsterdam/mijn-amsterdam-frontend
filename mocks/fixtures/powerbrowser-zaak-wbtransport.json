@@ -15,6 +15,11 @@
           "fieldValue": "Bootnaam op wbtransport"
         },
         {
+          "fieldName": "BRANKDMERT",
+          "text": "Soort boot",
+          "fieldValue": "Soort boot"
+        },
+        {
           "fieldName": "DIEPGANG",
           "text": "221,00",
           "fieldValue": "221,00"
