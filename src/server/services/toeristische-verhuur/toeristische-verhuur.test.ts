@@ -112,6 +112,7 @@ describe('Toeristische verhuur service', () => {
     expect(
       response.failedDependencies?.vakantieverhuurVergunningen
     ).toStrictEqual({
+      code: 500,
       status: 'ERROR',
       content: null,
       message: 'No can do!',
@@ -133,8 +134,8 @@ describe('Toeristische verhuur service', () => {
     remoteApi.post('/lvv/bsn').reply(200, REGISTRATIES_DUMMY_RESPONSE_NUMBERS);
     remoteApi
       .post((url) => url.includes('/search/books?properties=false&select=key'))
-      .replyWithError('No can do!');
-    remoteApi.get(/lvv/).times(2).replyWithError('blap!');
+      .reply(505, '"No can do!"');
+    remoteApi.get(/lvv/).times(2).reply(401, '"Unauthorized"');
 
     const response = await fetchToeristischeVerhuur(authProfileAndToken);
 
@@ -147,9 +148,10 @@ describe('Toeristische verhuur service', () => {
     expect(
       response.failedDependencies?.vakantieverhuurVergunningen
     ).toStrictEqual({
+      code: 505,
       status: 'ERROR',
       content: null,
-      message: 'No can do!',
+      message: 'Request failed with status code 505',
     });
   });
 

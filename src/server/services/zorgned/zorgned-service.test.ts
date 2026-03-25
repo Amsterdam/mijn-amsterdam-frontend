@@ -126,7 +126,9 @@ describe('zorgned-service', () => {
           ZORGNED_JZD_AANVRAGEN as unknown as ZorgnedResponseDataSource
         )
         .every((a) => {
-          expect(Object.keys(a).sort().join(',')).toMatchInlineSnapshot(`"beschikkingNummer,beschiktProductIdentificatie,betrokkenen,datumAanvraag,datumBeginLevering,datumBesluit,datumEindeGeldigheid,datumEindeLevering,datumIngangGeldigheid,datumOpdrachtLevering,datumToewijzing,documenten,id,isActueel,leverancier,leverancierIdentificatie,leveringsVorm,prettyID,procesAanvraagOmschrijving,procesIdentificatie,productIdentificatie,productsoortCode,resultaat,titel"`);
+          expect(Object.keys(a).sort().join(',')).toMatchInlineSnapshot(
+            `"beschikkingNummer,beschiktProductIdentificatie,betrokkenen,datumAanvraag,datumBeginLevering,datumBesluit,datumEindeGeldigheid,datumEindeLevering,datumIngangGeldigheid,datumOpdrachtLevering,datumToewijzing,documenten,id,isActueel,leverancier,leverancierIdentificatie,leveringsVorm,prettyID,procesAanvraagOmschrijving,procesIdentificatie,productIdentificatie,productsoortCode,resultaat,titel"`
+          );
         });
     });
 
@@ -262,6 +264,7 @@ describe('zorgned-service', () => {
     );
 
     expect(result).toStrictEqual({
+      code: 500,
       content: null,
       message: 'Zorgned document download - no valid response data provided',
       status: 'ERROR',

@@ -10,7 +10,8 @@ import {
 import type {
   DecosDocumentSource,
   DecosZaakSource,
-  DecosZakenResponse} from './decos-types.ts';
+  DecosZakenResponse,
+} from './decos-types.ts';
 import {
   type DecosWorkflowResponse,
   type DecosZaakBase,
@@ -493,6 +494,7 @@ describe('decos-service', () => {
       );
 
       expect(responseData).toStrictEqual({
+        code: 500,
         content: null,
         message: 'Booksearch failed',
         status: 'ERROR',
