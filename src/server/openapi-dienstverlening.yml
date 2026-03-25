@@ -195,6 +195,12 @@ components:
         productIdentificatie:
           type: string
           nullable: true
+        procesIdentificatie:
+          type: string
+          nullable: true
+        procesMeldingIdentificatie:
+          type: string
+          nullable: true
         beschiktProductIdentificatie:
           type: string
           nullable: true
