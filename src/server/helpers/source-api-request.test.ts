@@ -369,7 +369,6 @@ describe('requestData', () => {
       AUTH_PROFILE_AND_TOKEN
     );
 
-    // expect(axiosRequestSpy.mock.calls[0][0].passthroughOIDCToken).toEqual(true);
     expect(axiosRequestSpy.mock.calls[0][0].headers).toStrictEqual({
       Authorization: `Bearer ababababab`,
     });
