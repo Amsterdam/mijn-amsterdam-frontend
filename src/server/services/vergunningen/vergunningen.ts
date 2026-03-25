@@ -1,9 +1,8 @@
 import createDebugger from 'debug';
 
-import type {
-  DecosVergunning} from './config-and-types.ts';
 import {
   caseTypeVergunningen,
+  type DecosVergunning,
   type PBVergunning,
   type ZaakFrontendCombined,
 } from './config-and-types.ts';
@@ -13,8 +12,7 @@ import { getStatusStepsPB } from './pb-status-steps.ts';
 import { pbZaakTransformers } from './pb-zaken.ts';
 import { themaConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
 import { FeatureToggle } from '../../../universal/config/feature-toggles.ts';
-import type {
-  ApiResponse} from '../../../universal/helpers/api.ts';
+import type { ApiResponse } from '../../../universal/helpers/api.ts';
 import {
   apiErrorResult,
   apiSuccessResult,

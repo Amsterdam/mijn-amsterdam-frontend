@@ -5,7 +5,6 @@ import type {
 import type {
   ProductSoortCode,
   ZorgnedAanvraagTransformed,
-  ZorgnedStatusLineItemsConfig,
 } from '../zorgned/zorgned-types.ts';
 
 export type WMOVoorzieningFrontend = ZaakAanvraagDetail & {
@@ -21,17 +20,24 @@ export type WMOVoorzieningFrontend = ZaakAanvraagDetail & {
   disclaimer?: string;
 };
 
-export type WMOVoorzieningCompact = Pick<
-  ZorgnedAanvraagTransformed,
-  | 'id'
-  | 'titel'
-  | 'beschikkingNummer'
-  | 'productIdentificatie'
-  | 'beschiktProductIdentificatie'
-  | 'datumBesluit'
-  | 'datumBeginLevering'
-  | 'datumEindeLevering'
-  | 'datumOpdrachtLevering'
-> & {
-  productGroup: ZorgnedStatusLineItemsConfig['statusLineItems']['name'];
+export type WithMaApiProps = {
+  maCategorie: string[];
+  maActies: string[];
+  maProductgroep: string[];
+};
+export type ZorgnedAanvraagTransformedWithMaApiProps =
+  ZorgnedAanvraagTransformed & Partial<WithMaApiProps>;
+
+export type MaApiPropAssignFN<T> = (voorziening: T) => boolean;
+export type VoorzieningKey<T> = Exclude<keyof T, 'link' | 'documenten'>;
+export type VoorzieningValue<T> = T[VoorzieningKey<T>];
+
+export type WmoApiConfig<T extends object = ZorgnedAanvraagTransformed> = {
+  assign: Partial<WithMaApiProps>;
+  match: Partial<
+    Record<
+      VoorzieningKey<T>,
+      VoorzieningValue<T> | VoorzieningValue<T>[] | MaApiPropAssignFN<T>
+    >
+  >;
 };

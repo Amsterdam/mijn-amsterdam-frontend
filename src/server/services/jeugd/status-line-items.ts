@@ -10,6 +10,7 @@ import type { ZorgnedStatusLineItemsConfig } from '../zorgned/zorgned-types.ts';
 
 export const jeugdStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
   {
+    productgroep: 'leerlingenvervoer',
     productIdentificatie: [
       'LLVFV',
       'LLVOVA',
@@ -19,7 +20,6 @@ export const jeugdStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
       'LLVAVG',
     ],
     statusLineItems: {
-      name: 'leerlingenvervoer',
       transformers: [
         AANVRAAG,
         IN_BEHANDELING,

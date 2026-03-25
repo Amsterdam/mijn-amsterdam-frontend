@@ -11,6 +11,7 @@
   "js/ts.preferences.importModuleSpecifierEnding": "minimal",
   "prettier.printWidth": 120,
   "prettier.singleQuote": true,
+  "js/ts.tsdk.path": "./node_modules/typescript/lib",
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },

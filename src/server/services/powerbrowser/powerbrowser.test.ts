@@ -9,17 +9,22 @@ import {
   forTesting,
 } from './powerbrowser-service.ts';
 import type {
-  PBDocumentFields,
+  PowerBrowserZaakTransformer,
   PBZaakFields,
   PBZaakRecord,
   SearchRequestResponse,
+  PBDocumentFields,
 } from './powerbrowser-types.ts';
 import { remoteApi } from '../../../testing/utils.ts';
 import type { StatusLineItem } from '../../../universal/types/App.types.ts';
-import type { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types.ts';
+import type {
+  AuthProfile,
+  AuthProfileAndToken,
+} from '../../auth/auth-types.ts';
 import * as encryptDecrypt from '../../helpers/encrypt-decrypt.ts';
-import { powerBrowserZaakTransformers } from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-pb-zaken.ts';
+import { powerBrowserZaakTransformers as powerBrowserZaakTransformersForBB } from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-pb-zaken.ts';
 import type { BBVergunningFrontend } from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types.ts';
+import { pbZaakTransformers as pbZaakTransformersForVTH } from '../vergunningen/pb-zaken.ts';
 
 describe('Powerbrowser service', () => {
   const authProfile: AuthProfile = {
@@ -40,6 +45,11 @@ describe('Powerbrowser service', () => {
     ['NietDocumentnaamMA']: ['NietDocumentnaamPB'],
   };
 
+  const zaakTransformer = {
+    transformDoclinks: documentNamesMA_PB,
+    filterValidDocumentPredicate: (_) => true,
+  } satisfies Partial<PowerBrowserZaakTransformer>;
+
   beforeEach(() => {
     remoteApi.post('/powerbrowser/Token').reply(200, 'test-token');
   });
@@ -54,22 +64,20 @@ describe('Powerbrowser service', () => {
             return [200, { records: [{ id: 'test-person-id' }] }];
           }
 
-          if (uri.includes('Link/PERSONEN/GFO_ZAKEN/Table')) {
+          if (uri.includes('Link/PERSONEN/GFO_ZAKEN/')) {
             return [
               200,
-              {
-                records: [
-                  {
-                    id: 'test-zaak-id',
-                    fields: [
-                      {
-                        fieldName: 'FMT_CAPTION',
-                        text: 'Een ander type zaak',
-                      },
-                    ],
-                  },
-                ],
-              },
+              [
+                {
+                  id: 'test-zaak-id',
+                  fields: [
+                    {
+                      fieldName: 'FMT_CAPTION',
+                      text: 'Een ander type zaak',
+                    },
+                  ],
+                },
+              ],
             ];
           }
 
@@ -78,8 +86,95 @@ describe('Powerbrowser service', () => {
 
       const result = await fetchPBZaken(
         authProfile,
-        powerBrowserZaakTransformers
+        powerBrowserZaakTransformersForBB
       );
+      expect(result.status).toBe('OK');
+      expect(result.content).toHaveLength(0);
+    });
+
+    test('should ignore VTH zaken that are bestuurlijk gevoelig', async () => {
+      remoteApi
+        .post(/\/powerbrowser/)
+        .times(3)
+        .reply((uri) => {
+          if (uri.includes('SearchRequest')) {
+            return [200, { records: [{ id: 'test-person-id' }] }];
+          }
+
+          if (uri.includes('Link/PERSONEN/GFO_ZAKEN/')) {
+            return [
+              200,
+              [
+                {
+                  id: 'test-zaak-id',
+                  fields: [
+                    {
+                      fieldName: 'FMT_CAPTION',
+                      text: 'Z/123/123 Omzetting kamerverhuur',
+                    },
+                    {
+                      fieldName: 'ZAAK_STATUS_ID',
+                      text: 'In behandeling',
+                    },
+                    {
+                      fieldName: 'BESTUURLIJK_GEVOELIG',
+                      fieldValue: 'T',
+                    },
+                  ],
+                },
+              ],
+            ];
+          }
+
+          return [200, null];
+        });
+
+      const result = await fetchPBZaken(authProfile, pbZaakTransformersForVTH);
+
+      expect(result.status).toBe('OK');
+      expect(result.content).toHaveLength(0);
+    });
+
+    test('should ignore VTH zaken with non-valid resultaat', async () => {
+      remoteApi
+        .post(/\/powerbrowser/)
+        .times(3)
+        .reply((uri) => {
+          if (uri.includes('SearchRequest')) {
+            return [200, { records: [{ id: 'test-person-id' }] }];
+          }
+
+          if (uri.includes('Link/PERSONEN/GFO_ZAKEN/')) {
+            return [
+              200,
+              [
+                {
+                  id: 'test-zaak-id',
+                  fields: [
+                    {
+                      fieldName: 'FMT_CAPTION',
+                      text: 'Z/123/123 Omzetting kamerverhuur',
+                    },
+                    {
+                      fieldName: 'ZAAK_STATUS_ID',
+                      text: 'Gereed',
+                    },
+                    {
+                      fieldName: 'RESULTAAT_ID',
+                      text: 'Vergunning niet ingetrokken', // Not a valid resultaat for VTH zaken
+                      fieldValue: '999',
+                    },
+                  ],
+                },
+              ],
+            ];
+          }
+
+          return [200, null];
+        });
+
+      const result = await fetchPBZaken(authProfile, pbZaakTransformersForVTH);
+
       expect(result.status).toBe('OK');
       expect(result.content).toHaveLength(0);
     });
@@ -93,22 +188,20 @@ describe('Powerbrowser service', () => {
             return [200, { records: [{ id: 'test-person-id' }] }];
           }
 
-          if (uri.includes('Link/PERSONEN/GFO_ZAKEN/Table')) {
+          if (uri.includes('Link/PERSONEN/GFO_ZAKEN/')) {
             return [
               200,
-              {
-                records: [
-                  {
-                    id: 'test-zaak-id',
-                    fields: [
-                      {
-                        fieldName: 'FMT_CAPTION',
-                        text: 'Z/123/123 aanvraag Bed en breakfast behandelen',
-                      },
-                    ],
-                  },
-                ],
-              },
+              [
+                {
+                  id: 'test-zaak-id',
+                  fields: [
+                    {
+                      fieldName: 'FMT_CAPTION',
+                      text: 'Z/123/123 aanvraag Bed en breakfast behandelen',
+                    },
+                  ],
+                },
+              ],
             ];
           }
 
@@ -124,7 +217,7 @@ describe('Powerbrowser service', () => {
 
       const result = await fetchPBZaken(
         authProfile,
-        powerBrowserZaakTransformers
+        powerBrowserZaakTransformersForBB
       );
       expect(result.status).toBe('OK');
       expect(result.content).toHaveLength(1);
@@ -139,7 +232,7 @@ describe('Powerbrowser service', () => {
 
       const result = await fetchPBZaken(
         authProfile,
-        powerBrowserZaakTransformers
+        powerBrowserZaakTransformersForBB
       );
       expect(result.status).toBe('ERROR');
     });
@@ -153,14 +246,14 @@ describe('Powerbrowser service', () => {
             return [200, { records: [{ id: 'test-person-id' }] }];
           }
 
-          if (uri.includes('Link/PERSONEN/GFO_ZAKEN/Table')) {
+          if (uri.includes('Link/PERSONEN/GFO_ZAKEN/')) {
             return [500, 'some-error'];
           }
         });
 
       const result = await fetchPBZaken(
         authProfile,
-        powerBrowserZaakTransformers
+        powerBrowserZaakTransformersForBB
       );
       expect(result.status).toBe('ERROR');
     });
@@ -174,8 +267,8 @@ describe('Powerbrowser service', () => {
             return [200, { records: [{ id: 'test-person-id' }] }];
           }
 
-          if (uri.includes('Link/PERSONEN/GFO_ZAKEN/Table')) {
-            return [200, { records: [{ id: 'test-zaak-id' }] }];
+          if (uri.includes('Link/PERSONEN/GFO_ZAKEN/')) {
+            return [200, [{ id: 'test-zaak-id' }]];
           }
         });
       remoteApi.get(/\/powerbrowser/).reply((uri) => {
@@ -188,7 +281,7 @@ describe('Powerbrowser service', () => {
 
       const result = await fetchPBZaken(
         authProfile,
-        powerBrowserZaakTransformers
+        powerBrowserZaakTransformersForBB
       );
       expect(result.status).toBe('ERROR');
     });
@@ -221,7 +314,7 @@ describe('Powerbrowser service', () => {
 
       const result = await forTesting.fetchDocumentsList(
         authProfileAndToken.profile,
-        documentNamesMA_PB,
+        zaakTransformer,
         zaakId
       );
       expect(result.status).toBe('OK');
@@ -240,7 +333,7 @@ describe('Powerbrowser service', () => {
 
       const result = await forTesting.fetchDocumentsList(
         authProfileAndToken.profile,
-        documentNamesMA_PB,
+        zaakTransformer,
         zaakId
       );
       expect(result.status).toBe('ERROR');
@@ -381,12 +474,12 @@ describe('Powerbrowser service', () => {
   describe('fetchPBZaken', () => {
     test('should return an error if fetch fails', async () => {
       remoteApi
-        .post('/powerbrowser/Link/PERSONEN/GFO_ZAKEN/Table')
+        .post('/powerbrowser/Link/PERSONEN/GFO_ZAKEN/')
         .reply(500, 'some-error');
 
       const result = await forTesting.fetchZakenRecords(
         authProfile,
-        powerBrowserZaakTransformers
+        powerBrowserZaakTransformersForBB
       );
       expect(result.status).toBe('ERROR');
     });
@@ -419,18 +512,6 @@ describe('Powerbrowser service', () => {
       ] as unknown as PBZaakFields[];
 
       const result = forTesting.getFieldValue('RESULTAAT_ID', fields);
-      expect(result).toBeNull();
-    });
-  });
-
-  describe('getZaakResultaat', () => {
-    test('should return transformed result', () => {
-      const result = forTesting.getZaakResultaat('Verleend');
-      expect(result).toBe('Verleend');
-    });
-
-    test('should return null if result is null', () => {
-      const result = forTesting.getZaakResultaat(null);
       expect(result).toBeNull();
     });
   });
@@ -483,7 +564,7 @@ describe('Powerbrowser service', () => {
         documents: [],
       } as unknown as BBVergunningFrontend;
 
-      const result = await forTesting.fetchZaakStatusDates(zaak);
+      const result = await forTesting.fetchZaakStatusDates(zaak.id);
       expect(result.status).toBe('OK');
       expect(result.content).toHaveLength(1);
       expect(result.content![0].status).toBe('In behandeling');
@@ -501,7 +582,7 @@ describe('Powerbrowser service', () => {
         dateEnd: null,
       } as unknown as BBVergunningFrontend;
 
-      const result = await forTesting.fetchZaakStatusDates(zaak);
+      const result = await forTesting.fetchZaakStatusDates(zaak.id);
       expect(result.status).toBe('ERROR');
     });
   });
@@ -519,7 +600,7 @@ describe('Powerbrowser service', () => {
         documents: [],
       } as unknown as BBVergunningFrontend;
 
-      const result = await forTesting.fetchSettledZaakStatusDates(zaak);
+      const result = await forTesting.fetchSettledZaakStatusDates(zaak.id);
       expect(result).toHaveLength(1);
       expect(result[0].status).toBe('In behandeling');
       expect(result[0].datePublished).toBe('2023-02-01');
@@ -531,6 +612,10 @@ describe('Powerbrowser service', () => {
       const docNameMA = 'docNaamMA';
       const docNamePB = 'docNaamPB';
       const docNameMA_PB = { [docNameMA]: [docNamePB] };
+      const zaakTransformer = {
+        transformDoclinks: docNameMA_PB,
+        filterValidDocumentPredicate: () => true,
+      } satisfies Partial<PowerBrowserZaakTransformer>;
       remoteApi.post('/powerbrowser/SearchRequest').reply(200, {
         records: [
           {
@@ -553,8 +638,8 @@ describe('Powerbrowser service', () => {
 
       const result = await forTesting.fetchSettledZaakDocuments(
         authProfile,
-        docNameMA_PB,
-        zaak
+        zaakTransformer,
+        zaak.id
       );
       expect(result).toHaveLength(1);
       expect(result[0].title).toBe(docNameMA);
@@ -571,8 +656,8 @@ describe('Powerbrowser service', () => {
 
       const result = await forTesting.fetchSettledZaakDocuments(
         authProfile,
-        documentNamesMA_PB,
-        zaak
+        zaakTransformer,
+        zaak.id
       );
       expect(result).toHaveLength(0);
     });
@@ -594,7 +679,7 @@ describe('Powerbrowser service', () => {
         dateEnd: null,
       } as unknown as BBVergunningFrontend;
 
-      const result = await forTesting.fetchSettledZaakAdres(zaak);
+      const result = await forTesting.fetchSettledZaakAdres(zaak.id);
       expect(result).toBe('Test Address');
     });
   });
@@ -643,8 +728,13 @@ describe('Powerbrowser service', () => {
       };
 
       const result = forTesting.transformZaakRaw(
-        powerBrowserZaakTransformers[0],
-        zaak
+        powerBrowserZaakTransformersForBB[0],
+        {
+          zaakRaw: zaak,
+          location: null,
+          documents: [],
+          statusDates: [],
+        }
       );
       expect(result).toEqual({
         caseType: 'Bed en breakfast',
@@ -655,63 +745,121 @@ describe('Powerbrowser service', () => {
         decision: 'Verleend',
         isVerleend: true,
         documents: [],
+        statusDates: [],
         id: '126088685',
         identifier: 'Z2024-WK000245',
         processed: true,
         isExpired: false,
+        location: null,
         title: 'Vergunning bed & breakfast',
       });
     });
-  });
 
-  describe('fetchZakenByIds', () => {
-    test('should fetch zaken by IDs successfully', async () => {
-      remoteApi.get('/powerbrowser/record/GFO_ZAKEN/test-zaak-id').reply(200, [
-        {
-          id: 'test-zaak-id',
-          fields: [
-            { fieldName: 'RESULTAAT_ID', fieldValue: 'Verleend' },
-            { fieldName: 'STARTDATUM', fieldValue: '2023-01-01' },
-          ],
+    test('should transform fields and field values', () => {
+      const genericTransformer = {
+        transformFields: {
+          RESULTAAT_ID: 'result',
         },
-      ]);
+        transformFieldValues: {
+          result: (value: string) =>
+            value?.toLowerCase().includes('verleend') ? 'Verleend' : value,
+        },
+        isVerleend: (zaak: { decision: string | null }) =>
+          zaak.decision === 'Verleend',
+        filterValidDocumentPredicate: () => true,
+      } as unknown as PowerBrowserZaakTransformer;
 
-      const result = await forTesting.fetchZakenByIds(['test-zaak-id']);
-      expect(result.status).toBe('OK');
-      expect(result.content).toHaveLength(1);
-    });
-
-    test('should chunk by 25 zaakIds per request', async () => {
-      const testZaakId = `test-zaak-id`;
-      const _26Zaken = Array.from({ length: 26 }, () => testZaakId);
-      const testZaakResponse = {
-        id: 'test-zaak-id',
+      const zaak = {
         fields: [
-          { fieldName: 'RESULTAAT_ID', fieldValue: 'Verleend' },
-          { fieldName: 'STARTDATUM', fieldValue: '2023-01-01' },
+          {
+            fieldName: 'RESULTAAT_ID',
+            fieldValue: '722',
+            text: 'Verleend zonder overgangsrecht',
+          },
         ],
-      };
-      remoteApi
-        .get(
-          `/powerbrowser/record/GFO_ZAKEN/${_26Zaken.slice(0, 25).join(',')}`
-        )
-        .reply(200, [testZaakResponse, testZaakResponse]);
-      remoteApi
-        .get(`/powerbrowser/record/GFO_ZAKEN/${testZaakId}`)
-        .reply(200, [testZaakResponse]);
+      } as PBZaakRecord;
 
-      const result = await forTesting.fetchZakenByIds(_26Zaken);
-      expect(result.status).toBe('OK');
-      expect(result.content).toHaveLength(3);
+      const result = forTesting.transformZaakRaw(genericTransformer, {
+        zaakRaw: zaak,
+        location: null,
+        documents: [],
+        statusDates: [],
+      });
+
+      expect(result.decision).toBe('Verleend');
+      expect(result.isVerleend).toBe(true);
     });
 
-    test('should return an error if fetch fails', async () => {
-      remoteApi
-        .get('/powerbrowser/record/GFO_ZAKEN/test-zaak-id')
-        .reply(500, 'some-error');
+    test('should apply transformFieldValues for Bed & Breakfast results', () => {
+      const zaak = {
+        fields: [
+          {
+            fieldName: 'RESULTAAT_ID',
+            text: 'Vergunning ingetrokken',
+            fieldValue: '999',
+          },
+        ],
+      } as PBZaakRecord;
 
-      const result = await forTesting.fetchZakenByIds(['test-zaak-id']);
-      expect(result.status).toBe('ERROR');
+      const result = forTesting.transformZaakRaw(
+        powerBrowserZaakTransformersForBB[0],
+        {
+          zaakRaw: zaak,
+          location: null,
+          documents: [],
+          statusDates: [],
+        }
+      );
+
+      expect(result.decision).toBe('Ingetrokken');
+      expect(result.decision).not.toBe('Vergunning ingetrokken');
+      expect(result.isVerleend).toBe(false);
+    });
+
+    test('should keep raw VTH results for decision', () => {
+      const zaak = {
+        fields: [
+          {
+            fieldName: 'RESULTAAT_ID',
+            text: 'Buiten behandeling gesteld',
+            fieldValue: '888',
+          },
+        ],
+      } as PBZaakRecord;
+
+      const transformer = pbZaakTransformersForVTH[0];
+      const result = forTesting.transformZaakRaw(transformer, {
+        zaakRaw: zaak,
+        location: null,
+        documents: [],
+        statusDates: [],
+      });
+
+      expect(result.decision).toBe('Buiten behandeling gesteld');
+      expect(result.isVerleend).toBe(false);
+    });
+
+    test('should compute isVerleend for raw VTH verleend results', () => {
+      const zaak = {
+        fields: [
+          {
+            fieldName: 'RESULTAAT_ID',
+            text: 'Van rechtswege verleend',
+            fieldValue: '777',
+          },
+        ],
+      } as PBZaakRecord;
+
+      const transformer = pbZaakTransformersForVTH[0];
+      const result = forTesting.transformZaakRaw(transformer, {
+        zaakRaw: zaak,
+        location: null,
+        documents: [],
+        statusDates: [],
+      });
+
+      expect(result.decision).toBe('Van rechtswege verleend');
+      expect(result.isVerleend).toBe(true);
     });
   });
 
@@ -720,6 +868,10 @@ describe('Powerbrowser service', () => {
       const docNameMA = 'docNaamMA';
       const docNamePB = 'docNaamPB';
       const docNameMA_PB = { [docNameMA]: [docNamePB] };
+      const zaakTransformer = {
+        transformDoclinks: docNameMA_PB,
+        filterValidDocumentPredicate: () => true,
+      } satisfies Partial<PowerBrowserZaakTransformer>;
       const responseData = {
         records: [
           {
@@ -741,7 +893,7 @@ describe('Powerbrowser service', () => {
 
       const result = forTesting.transformPowerbrowserDocLinksResponse(
         'test-session-id',
-        docNameMA_PB,
+        zaakTransformer,
         responseData
       );
       expect(result).toHaveLength(1);

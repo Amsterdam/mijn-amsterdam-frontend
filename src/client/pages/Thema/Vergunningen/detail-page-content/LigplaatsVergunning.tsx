@@ -1,7 +1,8 @@
 import { commonTransformers, getRows } from './fields-config.tsx';
 import type {
-  Ligplaatsvergunning,
+  LigplaatsBedrijfsvaartuigvergunning,
   LigplaatsvergunningDecos,
+  LigplaatsWoonbootvergunning,
   ZaakFrontendCombined,
 } from '../../../../../server/services/vergunningen/config-and-types.ts';
 import { Datalist } from '../../../../components/Datalist/Datalist.tsx';
@@ -10,7 +11,9 @@ export function LigplaatsVergunning({
   vergunning,
 }: {
   vergunning: ZaakFrontendCombined<
-    Ligplaatsvergunning | LigplaatsvergunningDecos
+    | LigplaatsWoonbootvergunning
+    | LigplaatsBedrijfsvaartuigvergunning
+    | LigplaatsvergunningDecos
   >;
 }) {
   const vesselKind = () =>

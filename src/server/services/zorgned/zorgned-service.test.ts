@@ -110,11 +110,13 @@ describe('zorgned-service', () => {
         'id',
         'isActueel',
         'leverancier',
+        'leverancierIdentificatie',
         'leveringsVorm',
         'prettyID',
         'procesAanvraagOmschrijving',
         'productIdentificatie',
         'productsoortCode',
+        'procesIdentificatie',
         'resultaat',
         'titel',
       ].join(',');
@@ -124,7 +126,7 @@ describe('zorgned-service', () => {
           ZORGNED_JZD_AANVRAGEN as unknown as ZorgnedResponseDataSource
         )
         .every((a) => {
-          expect(Object.keys(a).sort().join(',')).toBe(keys);
+          expect(Object.keys(a).sort().join(',')).toMatchInlineSnapshot(`"beschikkingNummer,beschiktProductIdentificatie,betrokkenen,datumAanvraag,datumBeginLevering,datumBesluit,datumEindeGeldigheid,datumEindeLevering,datumIngangGeldigheid,datumOpdrachtLevering,datumToewijzing,documenten,id,isActueel,leverancier,leverancierIdentificatie,leveringsVorm,prettyID,procesAanvraagOmschrijving,procesIdentificatie,productIdentificatie,productsoortCode,resultaat,titel"`);
         });
     });
 
@@ -185,9 +187,11 @@ describe('zorgned-service', () => {
         id: '300111429-116841',
         isActueel: true,
         leverancier: 'Gebr Koenen B.V.',
+        leverancierIdentificatie: 'LA0994',
         leveringsVorm: 'ZIN',
         prettyID: '300111429-116841',
         procesAanvraagOmschrijving: null,
+        procesIdentificatie: null,
         productIdentificatie: 'WRA',
         productsoortCode: 'WRA',
         resultaat: 'toegewezen',
@@ -460,9 +464,11 @@ describe('zorgned-service', () => {
             prettyID: '300967777-1',
             isActueel: true,
             leverancier: 'Gebr Koenen B.V.',
+            leverancierIdentificatie: '',
             leveringsVorm: 'ZIN',
             procesAanvraagOmschrijving: null,
             productIdentificatie: 'WRA',
+            procesIdentificatie: null,
             productsoortCode: 'WRA',
             resultaat: 'toegewezen',
             titel: 'woonruimteaanpassing (in behandeling)',
