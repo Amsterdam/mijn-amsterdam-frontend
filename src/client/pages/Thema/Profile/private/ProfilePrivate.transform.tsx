@@ -19,11 +19,8 @@ import {
   BRP_LABEL_AANTAL_INGESCHREVEN_PERSONEN,
   profileLinks,
 } from '../Profile-thema-config.ts';
-import type {
-  ProfileLabels} from '../profileDataFormatter.ts';
-import {
-  formatProfileSectionData,
-} from '../profileDataFormatter.ts';
+import type { ProfileLabels } from '../profileDataFormatter.ts';
+import { formatProfileSectionData } from '../profileDataFormatter.ts';
 import type {
   ActionLink,
   PanelConfig,
@@ -46,9 +43,10 @@ type BRPPanelKey = keyof Omit<
 const persoon: ProfileLabels<Partial<Persoon>, AppState['BRP']['content']> = {
   bsn: 'BSN',
   voornamen: 'Voornamen',
+  geslachtsnaam: 'Achternaam',
+  naamgebruik: 'Naamgebruik',
   omschrijvingAdellijkeTitel: 'Titel',
   voorvoegselGeslachtsnaam: 'Voorvoegsel',
-  geslachtsnaam: 'Achternaam',
   omschrijvingGeslachtsaanduiding: 'Geslacht',
   geboortedatumFormatted: 'Geboortedatum',
   overlijdensdatum: [

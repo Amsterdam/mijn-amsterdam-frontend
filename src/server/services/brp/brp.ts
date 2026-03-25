@@ -52,6 +52,7 @@ import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
 import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token.ts';
 import { getContextOperationId } from '../monitoring.ts';
 import { type BSN } from '../zorgned/zorgned-types.ts';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
 
 const TOKEN_VALIDITY_PERIOD = 1 * ONE_HOUR_MS;
 const PERCENTAGE_DISTANCE_FROM_EXPIRY = 0.1;
@@ -112,9 +113,11 @@ function getAdres(verblijfplaats: VerblijfplaatsSource) {
 }
 
 function getPersoonBasis(persoon: PersoonBasisSource): PersoonBasis {
+  const naamgebruik = persoon.naam?.aanduidingNaamgebruik?.omschrijving;
   return {
     voornamen: persoon.naam?.voornamen ?? null,
     geslachtsnaam: persoon.naam?.geslachtsnaam ?? null,
+    naamgebruik: naamgebruik ? capitalizeFirstLetter(naamgebruik) : null,
     omschrijvingAdellijkeTitel:
       persoon.naam?.adellijkeTitelPredicaat?.omschrijving ?? null,
     voorvoegselGeslachtsnaam: persoon.naam?.voorvoegsel ?? null,
