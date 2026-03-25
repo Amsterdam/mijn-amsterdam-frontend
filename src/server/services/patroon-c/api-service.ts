@@ -5,7 +5,10 @@ import {
 import { omit } from '../../../universal/helpers/utils.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
-import type { DataRequestConfig } from '../../config/source-api.ts';
+import type {
+  DataRequestConfig,
+  DataRequestHeaders,
+} from '../../config/source-api.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
 
 export interface ApiPatternResponseA {
@@ -36,7 +39,7 @@ export async function fetchService<T extends ApiPatternResponseA>(
 ): Promise<ApiResponse<T>> {
   function transformResponse(
     data: ApiResponse<ApiPatternResponseA>,
-    headers: DataRequestConfig['headers'] = {},
+    headers: DataRequestHeaders = {},
     status: number
   ) {
     const transformedData = transformApiResponseDefault(data);

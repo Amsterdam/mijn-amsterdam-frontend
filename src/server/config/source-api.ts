@@ -42,9 +42,11 @@ export function setAdHocDependencyRequestCacheTtlMs(
   }, RESET_AD_HOC_DEPENDENCY_REQUEST_CACHE_TTL_TIMEOUT_MS);
 }
 
+export type DataRequestHeaders = Record<string, AxiosHeaderValue | undefined>;
+
 export type DataRequestResponseTransformer<S = any, T = unknown> = (
   data: S,
-  headers: Record<string, undefined | AxiosHeaderValue>,
+  headers: DataRequestHeaders,
   status: number
 ) => T;
 
