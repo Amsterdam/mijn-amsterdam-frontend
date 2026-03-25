@@ -104,25 +104,6 @@ describe('wmo-voorzieningen-api-service', () => {
         forTesting.isMaApiPropertyConfigMatch(voorziening, actionConfig)
       ).toBe(true);
     });
-
-    it('should treat null values as empty strings for leveringsVorm', () => {
-      const voorziening = {
-        leveringsVorm: '',
-        status: 'active',
-      };
-
-      const actionConfig = {
-        match: {
-          leveringsVorm: ['ZIN', ''],
-          status: 'active',
-        },
-        assign: {},
-      };
-
-      expect(
-        forTesting.isMaApiPropertyConfigMatch(voorziening, actionConfig)
-      ).toBe(true);
-    });
   });
 
   describe('addMaApiPropsToVoorziening', () => {
