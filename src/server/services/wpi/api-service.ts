@@ -318,7 +318,7 @@ export async function fetchWpiDocument(
       },
       headers: wpiAuthHeader,
       data: createBsnPostBody(authProfileAndToken.profile.id),
-      transformResponse: (documentResponseData: Buffer) => {
+      transformResponse: (documentResponseData: NodeJS.ReadableStream) => {
         return {
           filename: 'Brief.pdf',
           mimetype: DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
