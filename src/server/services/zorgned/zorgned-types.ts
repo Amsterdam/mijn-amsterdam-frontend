@@ -129,11 +129,21 @@ export interface ZorgnedAanvraagSource {
   datumAanvraag: string;
   // The following field seems to be always defined for RTM type aanvragen.
   procesAanvraag?: ZorgnedProcesAanvraag;
+  procesMelding?: ZorgnedProcesMelding;
   documenten: ZorgnedDocument[];
   identificatie: string;
   procesIdentificatie: string;
   casusIdentificatie: CasusIdentificatie | null;
 }
+
+export type ZorgnedProcesMelding = {
+  identificatie: string;
+  omschrijving: string;
+  datumStart: string;
+  datumAfsluiten: string;
+  redenAfsluiten: { omschrijving: string } | null;
+  omschrijvingAfsluiten: string;
+};
 
 export type ZorgnedProcesAanvraag = {
   identificatie: ZorgnedAanvraagSource['identificatie']; // Is equal to ZorgnedAanvraagSource identificatie
@@ -160,6 +170,7 @@ export interface ZorgnedAanvraagTransformed {
   id: string;
   prettyID: string;
   procesIdentificatie: string;
+  procesMeldingIdentificatie: string | null;
   isActueel: boolean;
   leverancier: string;
   leverancierIdentificatie: string;
