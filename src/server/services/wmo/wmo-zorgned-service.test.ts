@@ -4,11 +4,8 @@ import { fetchZorgnedAanvragenWMO, forTesting } from './wmo-zorgned-service.ts';
 import { remoteApiHost } from '../../../testing/setup.ts';
 import { remoteApi } from '../../../testing/utils.ts';
 import * as request from '../../helpers/source-api-request.ts';
-import type {
-  ZorgnedAanvraagTransformed} from '../zorgned/zorgned-types.ts';
-import {
-  ZORGNED_GEMEENTE_CODE
-} from '../zorgned/zorgned-types.ts';
+import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
+import { ZORGNED_GEMEENTE_CODE } from '../zorgned/zorgned-types.ts';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -242,6 +239,38 @@ describe('wmo-zorgned-service', () => {
           isVisible: true,
           title: 'Besluit: aanvraag goedgekeurd',
           url: '/foo/bar',
+        },
+      ]);
+    });
+    test('combines existing documents with fake document', () => {
+      expect(
+        forTesting.getFakeDecisionDocuments({
+          ...aanvraagBase,
+          datumBeginLevering: '2023-12-10',
+          documenten: [
+            {
+              datePublished: '2023-08-05',
+              id: 'doc1',
+              title: 'Informatie: aanvraag ontvangen',
+              url: '/foo/bar',
+              isVisible: true,
+            },
+          ],
+        } as unknown as ZorgnedAanvraagTransformed)
+      ).toStrictEqual([
+        {
+          datePublished: '2023-08-05',
+          id: 'doc1',
+          title: 'Informatie: aanvraag ontvangen',
+          url: '/foo/bar',
+          isVisible: true,
+        },
+        {
+          datePublished: '2023-08-05',
+          id: 'besluit-document-mist',
+          isVisible: false,
+          title: 'Besluit: mist',
+          url: '',
         },
       ]);
     });

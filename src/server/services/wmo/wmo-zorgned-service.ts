@@ -56,6 +56,7 @@ function getFakeDecisionDocuments(
       aanvraagTransformed.datumEindeLevering)
   ) {
     return [
+      ...aanvraagTransformed.documenten,
       {
         id: FAKE_DECISION_DOCUMENT_ID,
         title: `${DOCUMENT_TITLE_BESLUIT_STARTS_WITH} mist`,
