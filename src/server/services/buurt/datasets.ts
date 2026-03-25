@@ -1,4 +1,8 @@
-import type { AxiosResponse, AxiosResponseHeaders } from 'axios';
+import type {
+  AxiosRequestConfig,
+  AxiosResponse,
+  AxiosResponseHeaders,
+} from 'axios';
 import { differenceInDays, format } from 'date-fns';
 import slug from 'slugme';
 import type Supercluster from 'supercluster';
@@ -431,7 +435,9 @@ export async function fetchMeldingenBuurt(requestConfig: DataRequestConfig) {
   const maxPages = 5;
 
   let nextRequestConfig = { ...requestConfig };
-  let response: AxiosResponse = await axiosRequest.request(nextRequestConfig);
+  let response: AxiosResponse = await axiosRequest.request(
+    nextRequestConfig as AxiosRequestConfig
+  );
   let responseIteration = 0;
   let combinedResponseData: DatasetFeatures = response.data;
 
@@ -456,7 +462,9 @@ export async function fetchMeldingenBuurt(requestConfig: DataRequestConfig) {
         url: nextUrl.toString(),
       };
 
-      response = await axiosRequest.request<DatasetFeatures>(nextRequestConfig);
+      response = await axiosRequest.request<DatasetFeatures>(
+        nextRequestConfig as AxiosRequestConfig
+      );
 
       combinedResponseData = combinedResponseData.concat(response.data);
 

@@ -13,6 +13,7 @@ import {
   apiErrorResult,
   apiPostponeResult,
   apiSuccessResult,
+  type ApiResponse,
 } from '../../universal/helpers/api.ts';
 import { omit } from '../../universal/helpers/utils.ts';
 import type { AuthProfileAndToken } from '../auth/auth-types.ts';
@@ -86,7 +87,7 @@ async function request({
 export async function requestData<T>(
   requestConfig: DataRequestConfig,
   authProfileAndToken?: AuthProfileAndToken
-) {
+): Promise<ApiResponse<T>> {
   const config: DataRequestConfig = {
     ...DEFAULT_REQUEST_CONFIG,
     ...requestConfig,
@@ -181,6 +182,7 @@ export async function requestData<T>(
 
     let code: number = 500;
     let errorMessage: string = '';
+    let stack: string | undefined = undefined;
 
     if (fromAxios) {
       const error = error_ as AxiosError;
@@ -188,18 +190,20 @@ export async function requestData<T>(
       errorMessage = useDescriptiveErrorMessages
         ? `AxiosError in requestData: ${error.message} for URL ${config.url}`
         : error.message;
+      stack = error.stack;
     } else {
       const error = error_ as Error;
       errorMessage = useDescriptiveErrorMessages
         ? `Error in requestData: ${error.message} for URL ${config.url}`
         : error.message;
+      stack = error.stack;
     }
 
     debugResponse('[ERROR]: %s', errorMessage, config.url);
     debugResponseError('[ERROR]: %o', error_);
 
     const e = new Error(errorMessage);
-    e.stack = error_.stack;
+    e.stack = stack;
 
     captureException(e);
 

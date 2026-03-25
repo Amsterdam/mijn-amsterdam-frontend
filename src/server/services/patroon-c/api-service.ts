@@ -1,5 +1,3 @@
-import type { AxiosResponseTransformer } from 'axios';
-
 import {
   apiSuccessResult,
   type ApiResponse,
@@ -17,9 +15,9 @@ export interface ApiPatternResponseA {
   notifications?: MyNotification[];
 }
 
-const transformApiResponseDefault: AxiosResponseTransformer = (
+function transformApiResponseDefault(
   response: ApiResponse<ApiPatternResponseA> | ApiPatternResponseA
-) => {
+) {
   if (
     response !== null &&
     typeof response === 'object' &&
@@ -29,16 +27,24 @@ const transformApiResponseDefault: AxiosResponseTransformer = (
     return response.content;
   }
   return response;
-};
+}
 
 export async function fetchService<T extends ApiPatternResponseA>(
   apiConfig: DataRequestConfig = {},
   includeTipsAndNotifications: boolean = false,
   authProfileAndToken?: AuthProfileAndToken
 ): Promise<ApiResponse<T>> {
-  const transformResponse = [transformApiResponseDefault].concat(
-    apiConfig.transformResponse ?? []
-  );
+  function transformResponse(
+    data: ApiResponse<ApiPatternResponseA>,
+    headers: DataRequestConfig['headers'] = {},
+    status: number
+  ) {
+    const transformedData = transformApiResponseDefault(data);
+    return apiConfig.transformResponse
+      ? apiConfig.transformResponse(transformedData, headers, status)
+      : transformedData;
+  }
+
   const apiConfigMerged: DataRequestConfig = {
     ...apiConfig,
     transformResponse,
