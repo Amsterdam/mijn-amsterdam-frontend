@@ -45,6 +45,45 @@ describe('wmo-voorzieningen-api-service', () => {
       ).toBe(false);
     });
 
+    it('should match different configurations based on property values', () => {
+      const withLeveringsVorm = {
+        productsoortCode: 'ABC',
+        leveringsVorm: 'ZIN',
+      };
+      const actionConfig1 = {
+        match: {
+          productsoortCode: 'ABC',
+          leveringsVorm: 'ZIN',
+        },
+        assign: {},
+      };
+
+      const noLeveringsVorm = {
+        productsoortCode: 'ABC',
+        leveringsVorm: '',
+      };
+      const actionConfig2 = {
+        match: {
+          productsoortCode: 'ABC',
+          leveringsVorm: '',
+        },
+        assign: {},
+      };
+
+      expect(
+        forTesting.isMaApiPropertyConfigMatch(withLeveringsVorm, actionConfig1)
+      ).toBe(true);
+      expect(
+        forTesting.isMaApiPropertyConfigMatch(noLeveringsVorm, actionConfig1)
+      ).toBe(false);
+      expect(
+        forTesting.isMaApiPropertyConfigMatch(withLeveringsVorm, actionConfig2)
+      ).toBe(false);
+      expect(
+        forTesting.isMaApiPropertyConfigMatch(noLeveringsVorm, actionConfig2)
+      ).toBe(true);
+    });
+
     it('should handle function matchers correctly', () => {
       const voorziening = {
         type: 'example',
@@ -68,7 +107,7 @@ describe('wmo-voorzieningen-api-service', () => {
 
     it('should treat null values as empty strings for leveringsVorm', () => {
       const voorziening = {
-        leveringsVorm: null,
+        leveringsVorm: '',
         status: 'active',
       };
 
