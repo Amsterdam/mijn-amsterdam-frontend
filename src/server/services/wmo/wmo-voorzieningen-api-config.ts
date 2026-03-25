@@ -16,6 +16,7 @@ export type FetchWmoVoorzieningenApiOptions = {
 };
 
 export const wmoVoorzieningenApiConfig: WmoApiConfig[] = [
+  // Reparatieverzoek action for WRA products with ZIN leveringsvorm
   {
     match: {
       leveringsVorm: 'ZIN',
@@ -32,6 +33,7 @@ export const wmoVoorzieningenApiConfig: WmoApiConfig[] = [
       maProductgroep: [productGroep.WRA],
     },
   },
+  // Stopzetten actions
   {
     assign: {
       maCategorie: ['D-01'],
@@ -130,7 +132,7 @@ export const wmoVoorzieningenApiConfig: WmoApiConfig[] = [
       productsoortCode: ['WRA4'],
     },
   },
-  // Make all the productgroups available for retrieval via the API, even if no specific actions are assigned to them.
+  // No specific actions assigned, but we still want to make these items available in the API for filtering based on productgroep.
   ...wmoStatusLineItemsConfig
     .filter((lineItemConfig) => {
       return lineItemConfig.isDisabled !== true;
