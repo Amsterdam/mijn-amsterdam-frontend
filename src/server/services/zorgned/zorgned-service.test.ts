@@ -127,7 +127,7 @@ describe('zorgned-service', () => {
         )
         .every((a) => {
           expect(Object.keys(a).sort().join(',')).toMatchInlineSnapshot(
-            `"beschikkingNummer,beschiktProductIdentificatie,betrokkenen,datumAanvraag,datumBeginLevering,datumBesluit,datumEindeGeldigheid,datumEindeLevering,datumIngangGeldigheid,datumOpdrachtLevering,datumToewijzing,documenten,id,isActueel,leverancier,leverancierIdentificatie,leveringsVorm,prettyID,procesAanvraagOmschrijving,procesIdentificatie,productIdentificatie,productsoortCode,resultaat,titel"`
+            `"beschikkingNummer,beschiktProductIdentificatie,betrokkenen,datumAanvraag,datumBeginLevering,datumBesluit,datumEindeGeldigheid,datumEindeLevering,datumIngangGeldigheid,datumOpdrachtLevering,datumToewijzing,documenten,id,isActueel,leverancier,leverancierIdentificatie,leveringsVorm,prettyID,procesAanvraagOmschrijving,procesIdentificatie,procesMeldingIdentificatie,productIdentificatie,productsoortCode,resultaat,titel"`
           );
         });
     });
@@ -198,6 +198,7 @@ describe('zorgned-service', () => {
         productsoortCode: 'WRA',
         resultaat: 'toegewezen',
         titel: 'ALLE DOCUMENTEN TEST: woonruimteaanpassing (in behandeling)',
+        procesMeldingIdentificatie: null,
       });
     });
 
@@ -472,6 +473,7 @@ describe('zorgned-service', () => {
             procesAanvraagOmschrijving: null,
             productIdentificatie: 'WRA',
             procesIdentificatie: null,
+            procesMeldingIdentificatie: null,
             productsoortCode: 'WRA',
             resultaat: 'toegewezen',
             titel: 'woonruimteaanpassing (in behandeling)',

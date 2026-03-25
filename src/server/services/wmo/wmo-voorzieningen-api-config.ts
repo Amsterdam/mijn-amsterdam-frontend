@@ -16,6 +16,7 @@ export type FetchWmoVoorzieningenApiOptions = {
 };
 
 export const wmoVoorzieningenApiConfig: WmoApiConfig[] = [
+  // Reparatieverzoek action for WRA products with ZIN leveringsvorm
   {
     match: {
       leveringsVorm: 'ZIN',
@@ -32,6 +33,7 @@ export const wmoVoorzieningenApiConfig: WmoApiConfig[] = [
       maProductgroep: [productGroep.WRA],
     },
   },
+  // Stopzetten actions
   {
     assign: {
       maCategorie: ['D-01'],
@@ -53,7 +55,84 @@ export const wmoVoorzieningenApiConfig: WmoApiConfig[] = [
       ],
     },
   },
-  // Make all the productgroups available for retrieval via the API, even if no specific actions are assigned to them.
+  {
+    assign: {
+      maCategorie: ['D-02'],
+      maActies: ['stopzetten'],
+    },
+    match: {
+      leveringsVorm: 'PGB',
+      isActueel: true,
+      productsoortCode: ['AAN', 'FIE', 'ROL', 'SCO', 'OVE', 'RWD', 'RWT'],
+    },
+  },
+  {
+    assign: {
+      maCategorie: ['D-03'],
+      maActies: ['stopzetten'],
+    },
+    match: {
+      leveringsVorm: 'ZIN',
+      isActueel: true,
+      productsoortCode: ['WGW', 'WRA', 'WRA2', 'WRA3', 'WRA5', 'OVW'],
+    },
+  },
+  {
+    assign: {
+      maCategorie: ['D-04'],
+      maActies: ['stopzetten'],
+    },
+    match: {
+      leveringsVorm: 'PGB',
+      isActueel: true,
+      productsoortCode: ['WGW', 'WRA', 'WRA2', 'WRA3', 'WRA5', 'OVW', 'WRA1'],
+    },
+  },
+  {
+    assign: {
+      maCategorie: ['D-05'],
+      maActies: ['stopzetten'],
+    },
+    match: {
+      leveringsVorm: '',
+      isActueel: true,
+      productsoortCode: ['WRA1'],
+    },
+  },
+  {
+    assign: {
+      maCategorie: ['D-06'],
+      maActies: ['stopzetten'],
+    },
+    match: {
+      leveringsVorm: '',
+      isActueel: true,
+      productsoortCode: ['FIN', 'MVV', 'VVK'],
+    },
+  },
+  {
+    assign: {
+      maCategorie: ['D-07'],
+      maActies: ['stopzetten'],
+    },
+    match: {
+      leveringsVorm: '',
+      isActueel: true,
+      productsoortCode: ['VHK'],
+    },
+  },
+  {
+    assign: {
+      maCategorie: ['D-08'],
+      maActies: ['stopzetten'],
+    },
+    match: {
+      leveringsVorm: '',
+      isActueel: true,
+      productsoortCode: ['WRA4'],
+    },
+  },
+  // No specific actions assigned, but we still want to make these items available in the API for filtering based on productgroep.
   ...wmoStatusLineItemsConfig
     .filter((lineItemConfig) => {
       return lineItemConfig.isDisabled !== true;

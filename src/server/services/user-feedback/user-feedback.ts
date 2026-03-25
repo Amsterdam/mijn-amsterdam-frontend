@@ -24,6 +24,7 @@ import { omit, pick } from '../../../universal/helpers/utils.ts';
 import camelize from '../../helpers/camelize.ts';
 import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
+import { captureMessage } from '../monitoring.ts';
 
 export async function fetchUserFeedbackSurvey(
   surveyId: Survey['unique_code'] = SURVEY_ID_INLINE_KTO,
@@ -96,6 +97,17 @@ export async function saveUserFeedback(
   data: UserFeedbackInput
 ): ApiResponsePromise<SaveUserFeedbackResponse> {
   const surveyEntryPayload = getSurveyEntryPayload(data);
+
+  const hasAnswer = surveyEntryPayload.answers.some(
+    (answer) => answer.answer.length
+  );
+  if (hasAnswer) {
+    // There is an alert called 'User feedback with a comment detected' -
+    // that requires this log line to be able to fire.
+    captureMessage('A userfeedback survey has been submitted', {
+      properties: { hasAnswer: true },
+    });
+  }
 
   const requestConfig = getCustomApiConfig(sourceApiConfig, {
     formatUrl: ({ url }) => `${url}/${surveyId}/versions/${version}/entries`,

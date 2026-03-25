@@ -26,9 +26,7 @@ function isMaApiPropertyConfigMatch<T extends object>(
     }
 
     if (Array.isArray(value)) {
-      return value.includes(
-        key === 'leveringsVorm' ? (voorziening[key] ?? '') : voorziening[key]
-      ); // Null values are matched as empty strings for Leveringsvorm.
+      return value.includes(voorziening[key]);
     }
 
     return voorziening[key] === value;
@@ -107,6 +105,7 @@ export async function fetchMaApiVoorzieningen(
       'id',
       'titel',
       'procesIdentificatie',
+      'procesMeldingIdentificatie',
       'beschikkingNummer',
       'productIdentificatie',
       'productsoortCode',

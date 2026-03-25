@@ -43,7 +43,7 @@ export function createToeristischeVerhuurNotification(
     });
     const ctaLinkToAanvragen =
       vergunning.title === 'Vergunning bed & breakfast'
-        ? 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/woonruimte-verhuren/vergunning-aanvragen-bed-breakfast/'
+        ? 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/woonruimte-verhuren/vergunning-aanvragen-voor-bed-breakfast/'
         : 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/woonruimte-verhuren/vergunning-vakantieverhuur-voorwaarden/';
 
     linkTo = ctaLinkToDetail;

@@ -134,6 +134,7 @@ describe('Transform api items', () => {
       prettyID: '',
       procesIdentificatie: '',
       leverancierIdentificatie: '',
+      procesMeldingIdentificatie: null,
     };
 
     const CODE_A = 'codeA';
