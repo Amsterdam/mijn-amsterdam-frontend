@@ -64,15 +64,21 @@ export interface RequestConfig<Source, Transformed> {
 
 async function request({
   cancelTimeout,
+  request,
   ...config
-}: AxiosRequestConfig & { cancelTimeout: number }) {
+}: AxiosRequestConfig & {
+  cancelTimeout: number;
+  request?: DataRequestConfig['request'];
+}) {
   const source = axios.CancelToken.source();
   // Request is cancelled after x ms
   const cancelTimeoutId = setTimeout(() => {
     source.cancel('Request to source api timeout.');
   }, cancelTimeout);
 
-  return axiosRequest.request({ ...config, cancelToken: source.token }).then(
+  const doRequest = request || axiosRequest.request;
+
+  return doRequest({ ...config, cancelToken: source.token }).then(
     (response) => {
       clearTimeout(cancelTimeoutId);
       return response;
@@ -155,6 +161,7 @@ export async function requestData<T>(
       : request({
           ...axiosRequestConfig,
           cancelTimeout: config.cancelTimeout ?? DEFAULT_CANCEL_TIMEOUT_MS,
+          request: config.request,
         });
 
   const isServedFromCache = cache.get(cacheKey) === requestPromise;
@@ -173,7 +180,7 @@ export async function requestData<T>(
         return transformer(data, response.headers, response.status);
       }, responseDataTransformed);
     }
-    return apiSuccessResult(responseDataTransformed);
+    return apiSuccessResult(responseDataTransformed as T);
   } catch (error_) {
     // Delete the cache asap, we don't want to serve a cached error response on the next request.
     cache.del(cacheKey);
