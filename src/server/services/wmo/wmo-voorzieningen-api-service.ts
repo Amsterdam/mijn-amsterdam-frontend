@@ -105,6 +105,7 @@ export async function fetchMaApiVoorzieningen(
       'id',
       'titel',
       'procesIdentificatie',
+      'procesMeldingIdentificatie',
       'beschikkingNummer',
       'productIdentificatie',
       'productsoortCode',
