@@ -85,7 +85,7 @@ type DataRequestConfigBase = {
    * It will fire a next request right after the response succeeded, you can merge the response data.
    * Mind you, the cancelTimeout might have to be increased because you'll probably make multiple requests pretending as one.
    */
-  request?: <T>(requestConfig: DataRequestConfig) => Promise<AxiosResponse<T>>;
+  request?: <T>(requestConfig: AxiosRequestConfig) => Promise<AxiosResponse<T>>;
 
   transformResponse?: DataRequestResponseTransformer;
 };

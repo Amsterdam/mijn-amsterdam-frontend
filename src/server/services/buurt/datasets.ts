@@ -431,13 +431,11 @@ export const datasetEndpoints: Record<
 };
 
 // This function retrieves a maximum of 5 `pages` with data from the meldingen api.
-export async function fetchMeldingenBuurt(requestConfig: DataRequestConfig) {
+export async function fetchMeldingenBuurt(requestConfig: AxiosRequestConfig) {
   const maxPages = 5;
 
   let nextRequestConfig = { ...requestConfig };
-  let response: AxiosResponse = await axiosRequest.request(
-    nextRequestConfig as AxiosRequestConfig
-  );
+  let response: AxiosResponse = await axiosRequest.request(nextRequestConfig);
   let responseIteration = 0;
   let combinedResponseData: DatasetFeatures = response.data;
 
@@ -462,9 +460,7 @@ export async function fetchMeldingenBuurt(requestConfig: DataRequestConfig) {
         url: nextUrl.toString(),
       };
 
-      response = await axiosRequest.request<DatasetFeatures>(
-        nextRequestConfig as AxiosRequestConfig
-      );
+      response = await axiosRequest.request<DatasetFeatures>(nextRequestConfig);
 
       combinedResponseData = combinedResponseData.concat(response.data);
 
