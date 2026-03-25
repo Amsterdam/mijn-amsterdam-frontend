@@ -36,6 +36,7 @@ import {
   getFailedDependencies,
   type ApiResponse,
 } from '../../../universal/helpers/api.ts';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
 import type {
   AuthProfile,
   AuthProfileAndToken,
@@ -52,7 +53,6 @@ import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
 import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token.ts';
 import { getContextOperationId } from '../monitoring.ts';
 import { type BSN } from '../zorgned/zorgned-types.ts';
-import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
 
 const TOKEN_VALIDITY_PERIOD = 1 * ONE_HOUR_MS;
 const PERCENTAGE_DISTANCE_FROM_EXPIRY = 0.1;
