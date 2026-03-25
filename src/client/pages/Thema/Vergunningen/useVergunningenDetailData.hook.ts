@@ -1,20 +1,9 @@
 import { useParams } from 'react-router';
 
-import { useVergunningDocumentList } from './detail-page-content/useVergunningDocumentsList.hook';
-import { themaId } from './Vergunningen-thema-config';
-import type { PowerBrowserZaakFrontend } from '../../../../server/services/powerbrowser/powerbrowser-types';
-import type { ZaakFrontendCombined } from '../../../../server/services/vergunningen/config-and-types';
-import { pbZaakTransformers } from '../../../../server/services/vergunningen/pb-zaken';
-import { FeatureToggle } from '../../../../universal/config/feature-toggles';
-
-function isPowerBrowserZaak(
-  vergunning: ZaakFrontendCombined
-): vergunning is PowerBrowserZaakFrontend {
-  return FeatureToggle.VTHOnPowerbrowserActive && (
-    'title' in vergunning &&
-    pbZaakTransformers.map((t) => t.title).includes(vergunning.title)
-  );
-}
+import { useVergunningDocumentList } from './detail-page-content/useVergunningDocumentsList.hook.ts';
+import { themaConfig } from './Vergunningen-thema-config.ts';
+import type { ZaakFrontendCombined } from '../../../../server/services/vergunningen/config-and-types.ts';
+import { logger } from '../../../helpers/logging.ts';
 
 export function useVergunningenDetailData<T extends ZaakFrontendCombined>(
   vergunningen: T[]
@@ -22,29 +11,36 @@ export function useVergunningenDetailData<T extends ZaakFrontendCombined>(
   const { id } = useParams<{ id: ZaakFrontendCombined['id'] }>();
   const vergunning = vergunningen.find((vergunning) => vergunning.id === id);
 
-  const isPBZaak = vergunning && isPowerBrowserZaak(vergunning);
-  const fetchDocumentsUrl = isPBZaak
-    ? undefined
-    : vergunning?.fetchDocumentsUrl;
+  const hasFetchDocumentsUrl = vergunning && 'fetchDocumentsUrl' in vergunning;
+  const fetchDocumentsUrl = hasFetchDocumentsUrl
+    ? vergunning?.fetchDocumentsUrl
+    : undefined;
 
   const {
-    documents,
+    documents: fetchedDocuments,
     isLoading: isLoadingDocuments,
     isError: isErrorDocuments,
   } = useVergunningDocumentList(fetchDocumentsUrl);
 
-  if (!isPBZaak && vergunning?.fetchSourceRaw) {
+  if (hasFetchDocumentsUrl && vergunning?.fetchSourceRaw) {
     // Utility url
-    // eslint-disable-next-line no-console
-    console.info(`Decos data: ${vergunning.fetchSourceRaw}`);
+
+    logger.info(`Decos data: ${vergunning.fetchSourceRaw}`);
   }
 
+  const documents = hasFetchDocumentsUrl
+    ? fetchedDocuments
+    : vergunning && 'documents' in vergunning
+      ? vergunning.documents
+      : [];
+
   return {
-    themaId,
+    themaId: themaConfig.id,
     vergunning,
-    isErrorDocuments: isErrorDocuments,
-    isLoadingDocuments: isLoadingDocuments,
-    documents: isPBZaak ? vergunning.documents : documents,
+    isErrorDocuments,
+    isLoadingDocuments,
+    documents,
     title: vergunning?.title,
+    themaConfig,
   };
 }

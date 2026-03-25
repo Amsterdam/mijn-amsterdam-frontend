@@ -2,7 +2,8 @@ import {
   featureToggle,
   sourceApiConfig,
   SURVEY_ID_INLINE_KTO,
-} from './user-feedback.service-config';
+  SURVEY_VERSION_INLINE_KTO,
+} from './user-feedback.service-config.ts';
 import type {
   SaveUserFeedbackResponse,
   Survey,
@@ -12,21 +13,22 @@ import type {
   SurveyFrontend,
   SurveyOverviewFrontend,
   UserFeedbackInput,
-} from './user-feedback.types';
+} from './user-feedback.types.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
   getFailedDependencies,
   type ApiResponsePromise,
-} from '../../../universal/helpers/api';
-import { omit, pick } from '../../../universal/helpers/utils';
-import { getCustomApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
-import { deepCamelizeKeys } from '../db/helper';
+} from '../../../universal/helpers/api.ts';
+import { omit, pick } from '../../../universal/helpers/utils.ts';
+import camelize from '../../helpers/camelize.ts';
+import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
 
 export async function fetchUserFeedbackSurvey(
   surveyId: Survey['unique_code'] = SURVEY_ID_INLINE_KTO,
-  version: string = 'latest'
+  version: string = SURVEY_VERSION_INLINE_KTO,
+  enableCache: boolean = true
 ): ApiResponsePromise<SurveyFrontend> {
   const requestConfig = getCustomApiConfig(sourceApiConfig, {
     formatUrl: ({ url }) =>
@@ -34,8 +36,11 @@ export async function fetchUserFeedbackSurvey(
         ? `${url}/${surveyId}/latest`
         : `${url}/${surveyId}/versions/${version}`,
     method: 'GET',
+    enableCache,
     transformResponse(survey: Survey) {
-      const base = pick(deepCamelizeKeys<Survey>(survey), [
+      const surveyCamelized = camelize(survey);
+
+      const base = pick(surveyCamelized, [
         'id',
         'version',
         'title',
@@ -47,15 +52,17 @@ export async function fetchUserFeedbackSurvey(
 
       return {
         ...base,
-        questions: survey.questions.map((question) => {
-          return pick(deepCamelizeKeys(question), [
-            'id',
-            'maxCharacters',
-            'questionText',
-            'questionType',
-            'required',
-            'description',
-          ]);
+        questions: survey.questions?.map((question) => {
+          return (
+            pick(camelize(question), [
+              'id',
+              'maxCharacters',
+              'questionText',
+              'questionType',
+              'required',
+              'description',
+            ]) ?? []
+          );
         }),
       };
     },
@@ -94,22 +101,33 @@ export async function saveUserFeedback(
     formatUrl: ({ url }) => `${url}/${surveyId}/versions/${version}/entries`,
     method: 'POST',
     data: surveyEntryPayload,
+    enableCache: false,
   });
 
   return requestData<SaveUserFeedbackResponse>(requestConfig);
 }
 
 async function fetchFeedbackSurveyEntries(
-  surveyId: Survey['unique_code']
-): ApiResponsePromise<SurveyEntryFrontend[]> {
+  surveyId: Survey['unique_code'],
+  surveyVersion: string,
+  page: number = 1
+): ApiResponsePromise<{ entries: SurveyEntryFrontend[]; pageCount: number }> {
+  const PAGE_SIZE = 100;
   const requestConfig = getCustomApiConfig(sourceApiConfig, {
     formatUrl: ({ url }) => `${url}/entries`,
     method: 'GET',
+    params: {
+      page_size: PAGE_SIZE,
+      page,
+      survey_unique_code: surveyId,
+      survey_version: surveyVersion,
+    },
+    enableCache: false,
     transformResponse(entriesResponse: SurveyEntriesResponse) {
-      const entries = entriesResponse.results.filter((entry) => {
+      const entriesBySurvey = entriesResponse.results.filter((entry) => {
         return entry.survey_unique_code === surveyId;
       });
-      return entries.map((entry) => {
+      const entries = entriesBySurvey.map((entry) => {
         return {
           answers: Object.fromEntries(
             entry.answers.map((answer) => [answer.question, answer.answer])
@@ -119,18 +137,27 @@ async function fetchFeedbackSurveyEntries(
           entryPoint: entry.entry_point,
         };
       });
+
+      return {
+        entries,
+        pageCount: Math.ceil(entriesResponse.count / PAGE_SIZE),
+      };
     },
   });
 
-  return requestData<SurveyEntryFrontend[]>(requestConfig);
+  return requestData<{ entries: SurveyEntryFrontend[]; pageCount: number }>(
+    requestConfig
+  );
 }
 
 export async function userFeedbackOverview(
   surveyId: Survey['unique_code'],
-  version: string
+  version: string,
+  page: number = 1
 ): ApiResponsePromise<SurveyOverviewFrontend> {
-  const surveyRequest = fetchUserFeedbackSurvey(surveyId, version);
-  const entriesRequest = fetchFeedbackSurveyEntries(surveyId);
+  const USE_CACHE = false;
+  const surveyRequest = fetchUserFeedbackSurvey(surveyId, version, USE_CACHE);
+  const entriesRequest = fetchFeedbackSurveyEntries(surveyId, version, page);
 
   const [surveyResponse, entriesResponse] = await Promise.all([
     surveyRequest,
@@ -158,10 +185,13 @@ export async function userFeedbackOverview(
         title: survey.title ?? 'Untitled survey',
         questions: questionsById,
       },
-      entries: entriesResponse.content.toSorted((a, b) =>
+      entries: entriesResponse.content.entries.toSorted((a, b) =>
         b.dateCreated.localeCompare(a.dateCreated)
       ),
+      pageCount: entriesResponse.content.pageCount,
     },
-    getFailedDependencies({ survey: surveyResponse, entries: entriesResponse })
+    getFailedDependencies({
+      survey: surveyResponse,
+    })
   );
 }

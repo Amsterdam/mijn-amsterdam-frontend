@@ -1,23 +1,25 @@
 import https from 'node:https';
 
-import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 import {
   BFF_REQUEST_CACHE_ENABLED,
   ONE_HOUR_MS,
   ONE_MINUTE_MS,
   ONE_SECOND_MS,
-} from './app';
-import { featureToggle as featureToggleAfis } from '../../client/pages/Thema/Afis/Afis-thema-config';
-import { themaConfig as themaConfigBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config';
-import { featureToggle as featureToggleErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
-import { featureToggle as featureToggleJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config';
-import { IS_DEVELOPMENT } from '../../universal/config/env';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
-import { getCert } from '../helpers/cert';
-import { getFromEnv } from '../helpers/env';
-import { getHostNameFromUrl } from '../helpers/source-api-helpers';
-import { featureToggle as featureToggleHLI } from '../services/hli/hli-service-config';
+} from './app.ts';
+import { featureToggle as featureToggleAfis } from '../../client/pages/Thema/Afis/Afis-thema-config.ts';
+import { themaConfig as themaConfigBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config.ts';
+import { themaConfig as themaConfigErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
+import { themaConfig as themaConfigJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config.ts';
+import { themaConfig as themaConfigToeristischeVerhuur } from '../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
+import { IS_DEVELOPMENT } from '../../universal/config/env.ts';
+import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
+import { getCert } from '../helpers/cert.ts';
+import { getFromEnv } from '../helpers/env.ts';
+import { getHostNameFromUrl } from '../helpers/source-api-helpers.ts';
+import { featureToggle as featureToggleHLI } from '../services/hli/hli-service-config.ts';
+import { wpiAuthHeader } from '../services/wpi/api-service.ts';
 
 const RESET_AD_HOC_DEPENDENCY_REQUEST_CACHE_TTL_TIMEOUT_MS = ONE_HOUR_MS;
 export const FORCE_RENEW_CACHE_TTL_MS = 1;
@@ -173,22 +175,25 @@ const ApiConfig_ = {
       cert: getCert('BFF_ZORGNED_LEERLINGENVERVOER_CERT'),
       key: getCert('BFF_ZORGNED_LEERLINGENVERVOER_KEY'),
     }),
-    postponeFetch: !featureToggleJeugd.leerlingenvervoerActive,
+    postponeFetch: !themaConfigJeugd.featureToggle.active,
   },
   GPASS: {
     url: `${getFromEnv('BFF_GPASS_API_BASE_URL')}`,
   },
   WPI_E_AANVRAGEN: {
+    method: 'POST',
+    headers: wpiAuthHeader,
     url: `${getFromEnv('BFF_WPI_API_BASE_URL')}/wpi/e-aanvragen`,
-    passthroughOIDCToken: true,
   },
   WPI_AANVRAGEN: {
+    method: 'POST',
+    headers: wpiAuthHeader,
     url: `${getFromEnv('BFF_WPI_API_BASE_URL')}/wpi/uitkering/aanvragen`,
-    passthroughOIDCToken: true,
   },
   WPI_SPECIFICATIES: {
+    method: 'POST',
+    headers: wpiAuthHeader,
     url: `${getFromEnv('BFF_WPI_API_BASE_URL')}/wpi/uitkering/specificaties-en-jaaropgaven`,
-    passthroughOIDCToken: true,
   },
   SVWI: {
     url: getFromEnv('BFF_SVWI_API_BASE_URL'),
@@ -294,7 +299,7 @@ const ApiConfig_ = {
     passthroughOIDCToken: true,
     httpsAgent: new https.Agent(httpsAgentConfigBFF),
     postponeFetch:
-      !featureToggleErfpacht.erfpachtActive ||
+      !themaConfigErfpacht.featureToggle.active ||
       !getFromEnv('BFF_ERFPACHT_API_URL'),
     headers: {
       'X-HERA-REQUESTORIGIN': 'MijnAmsterdam',
@@ -327,12 +332,15 @@ const ApiConfig_ = {
       'X-Api-Key': getFromEnv('BFF_LVV_API_KEY') + '',
       'Content-Type': 'application/json',
     },
-    postponeFetch: !FeatureToggle.toeristischeVerhuurActive,
+    postponeFetch: !themaConfigToeristischeVerhuur.featureToggle.active,
   },
   KREFIA: {
     url: `${getFromEnv('BFF_KREFIA_API_BASE_URL')}/krefia/all`,
+    method: 'POST',
+    headers: {
+      'x-api-key': getFromEnv('BFF_KREFIA_API_KEY', true),
+    },
     postponeFetch: !FeatureToggle.krefiaActive,
-    passthroughOIDCToken: true,
   },
   SUBSIDIES: {
     url: `${getFromEnv('BFF_SISA_API_ENDPOINT')}`,

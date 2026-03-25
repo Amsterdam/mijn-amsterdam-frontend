@@ -1,25 +1,20 @@
-import {
-  MILIEUZONE_ROUTE_DEFAULT,
-  themaId,
-  themaTitle,
-  featureToggle,
-} from './Milieuzone-thema-config';
+import { themaConfig } from './Milieuzone-thema-config.ts';
 import { default as MilieuzoneIcon } from './MilieuzoneIcon.svg?react';
-import { isLoading } from '../../../../universal/helpers/api';
-import { type AppState } from '../../../../universal/types/App.types';
-import { type ThemaMenuItem } from '../../../config/thema-types';
+import { isLoading } from '../../../../universal/helpers/api.ts';
+import { type AppState } from '../../../../universal/types/App.types.ts';
+import { type ThemaMenuItem } from '../../../config/thema-types.ts';
 
-export const menuItem: ThemaMenuItem<typeof themaId> = {
-  title: themaTitle,
-  id: themaId,
+export const menuItem: ThemaMenuItem = {
+  title: themaConfig.title,
+  id: themaConfig.id,
   to: (appState: AppState) => {
-    return appState.MILIEUZONE?.content?.url ?? MILIEUZONE_ROUTE_DEFAULT;
+    return appState.MILIEUZONE?.content?.url ?? themaConfig.route.path;
   },
-  profileTypes: ['private', 'commercial'],
-  redactedScope: 'none',
+  profileTypes: themaConfig.profileTypes,
+  redactedScope: themaConfig.redactedScope,
   isActive(appState: AppState) {
     return (
-      featureToggle.milieuzoneActive &&
+      themaConfig.featureToggle.active &&
       !isLoading(appState.MILIEUZONE) &&
       !!appState.MILIEUZONE?.content?.isKnown
     );

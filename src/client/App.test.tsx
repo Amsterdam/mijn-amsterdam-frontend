@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 import { vi, describe, it, expect } from 'vitest';
 
-import { App } from './App';
-import { bffApi } from '../testing/utils';
-import { MIJN_AMSTERDAM } from '../universal/config/app';
-import { mockFooterRequest } from './components/MainFooter/MainFooter.test';
+import { App } from './App.tsx';
+import { bffApi } from '../testing/utils.ts';
+import { MIJN_AMSTERDAM } from '../universal/config/app.ts';
+import { mockFooterRequest } from './components/MainFooter/MainFooter.test.tsx';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -23,21 +23,37 @@ vi.mock('./hooks/api/useSessionApi', async (importOriginal) => {
   };
 });
 
-describe('App', () => {
+function mockCMSRequest() {
   bffApi
     .get('/services/cms/maintenance-notifications?page=landingspagina')
     .reply(200);
+}
 
-  mockFooterRequest();
+describe('App', () => {
+  const appLoadingIndicator = new RegExp('Welkom', 'i');
 
-  it('Renders pristine App', () => {
+  it('Renders dirty App with loading indicator', () => {
+    mockFooterRequest();
+    mockCMSRequest();
+    mocks.useSessionApi.mockReturnValue({
+      isAuthenticated: false,
+      isDirty: true,
+    });
+
+    const screen = render(<App />);
+    expect(screen.queryByText(appLoadingIndicator)).toBeInTheDocument();
+  });
+
+  it('Renders pristine App without loading indicator', () => {
+    mockFooterRequest();
+    mockCMSRequest();
     mocks.useSessionApi.mockReturnValue({
       isAuthenticated: false,
       isDirty: false,
     });
 
     const screen = render(<App />);
-    expect(screen.getByText(/Welkom/i)).toBeInTheDocument();
+    expect(screen.queryByText(appLoadingIndicator)).not.toBeInTheDocument();
   });
 
   it('Renders Landing Page', async () => {

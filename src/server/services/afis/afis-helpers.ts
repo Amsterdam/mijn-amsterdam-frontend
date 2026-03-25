@@ -1,13 +1,17 @@
 import { parseISO } from 'date-fns';
 import createDebugger from 'debug';
 
-import { fetchAfisTokenHeader } from './afis';
-import { EMANDATE_ENDDATE_INDICATOR } from './afis-e-mandates-config';
-import { AfisApiFeedResponseSource } from './afis-types';
-import { toDateFormatted } from '../../../universal/helpers/date';
-import { DataRequestConfig } from '../../config/source-api';
-import { getFromEnv } from '../../helpers/env';
-import { getApiConfig } from '../../helpers/source-api-helpers';
+import { EMANDATE_ENDDATE_INDICATOR } from './afis-e-mandates-config.ts';
+import type {
+  AfisApiFeedResponseSource} from './afis-types.ts';
+import {
+  type BusinessPartnerId,
+} from './afis-types.ts';
+import { fetchAfisTokenHeader } from './afis.ts';
+import { toDateFormatted } from '../../../universal/helpers/date.ts';
+import type { DataRequestConfig } from '../../config/source-api.ts';
+import { getFromEnv } from '../../helpers/env.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
 
 export function getFeedEntryProperties<T>(
   response: AfisApiFeedResponseSource<T>
@@ -75,13 +79,24 @@ export function getEmandateStatusFrontend(
 }
 
 export function getEmandateDisplayStatus(
+  currentStatus: EmandateStatusFrontend,
   dateValidTo: string | null,
   dateValidFromFormatted: string | null
 ): string {
-  if (isEmandateActive(dateValidTo)) {
+  if (
+    getEmandateStatusFrontend(currentStatus, dateValidTo) ===
+    EMANDATE_STATUS_FRONTEND.ON
+  ) {
     return `Actief sinds ${dateValidFromFormatted}`;
   }
   return 'Niet actief';
 }
 
 export const debugEmandates = createDebugger('afis:emandates');
+export const debugBusinesspartner = createDebugger('afis:businesspartner');
+
+export function formatBusinessPartnerId(
+  businessPartnerId: BusinessPartnerId
+): string {
+  return businessPartnerId.padStart(10, '0');
+}

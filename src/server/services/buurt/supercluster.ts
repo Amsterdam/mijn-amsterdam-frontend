@@ -1,17 +1,18 @@
-import Supercluster, { AnyProps, PointFeature } from 'supercluster';
+import type { AnyProps, PointFeature } from 'supercluster';
+import type Supercluster from 'supercluster';
 
-import { loadDatasetFeatures } from './buurt';
-import { MaFeature, MaPointFeature } from './datasets';
+import { loadDatasetFeatures } from './buurt.ts';
+import type { MaFeature, MaPointFeature } from './datasets.ts';
 import {
   filterAndRefineFeatures,
   filterPointFeaturesWithinBoundingBox,
   getDatasetEndpointConfig,
-} from './helpers';
-import {
+} from './helpers.ts';
+import type {
   DatasetFilterSelection,
   DatasetId,
-} from '../../../universal/config/myarea-datasets';
-import { logger } from '../../logging';
+} from '../../../universal/config/myarea-datasets.ts';
+import { logger } from '../../logging.ts';
 
 async function generateSuperCluster(features: MaPointFeature[]) {
   if (features?.length) {

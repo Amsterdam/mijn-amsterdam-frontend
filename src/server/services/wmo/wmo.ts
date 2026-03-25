@@ -3,36 +3,30 @@ import { generatePath } from 'react-router';
 import {
   getHulpmiddelenDisclaimer,
   hulpmiddelenDisclaimerConfig as hulpmiddelenDisclaimerConfig,
-} from './status-line-items/wmo-hulpmiddelen';
-import { routes } from './wmo-service-config';
-import { wmoStatusLineItemsConfig } from './wmo-status-line-items';
-import { themaConfig } from '../../../client/pages/Thema/Zorg/Zorg-thema-config';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
+} from './status-line-items/wmo-hulpmiddelen.ts';
+import { routes } from './wmo-service-config.ts';
+import { wmoStatusLineItemsConfig } from './wmo-status-line-items.ts';
+import { themaConfig } from '../../../client/pages/Thema/Zorg/Zorg-thema-config.ts';
+import { FeatureToggle } from '../../../universal/config/feature-toggles.ts';
+import { apiSuccessResult } from '../../../universal/helpers/api.ts';
 import {
-  apiSuccessResult,
-  type ApiResponse,
-} from '../../../universal/helpers/api';
-import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
-import { capitalizeFirstLetter } from '../../../universal/helpers/text';
-import type { StatusLineItem } from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { ZorgnedAanvraagTransformed, type BSN } from '../zorgned/zorgned-types';
+  dateSort,
+  defaultDateFormat,
+} from '../../../universal/helpers/date.ts';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
+import type { StatusLineItem } from '../../../universal/types/App.types.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt.ts';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
+import { type ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
 import {
   hasDecision,
   isAfterWCAGValidDocumentsDate,
-} from './status-line-items/wmo-generic';
-import {
-  WMOVoorzieningFrontend,
-  type WMOVoorzieningCompact,
-} from './wmo-types';
-import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service';
-import { getLatestStatus, getLatestStatusDate } from '../../helpers/zaken';
-import {
-  getStatusLineItems,
-  isStatusLineItemTransformerMatch,
-} from '../zorgned/zorgned-status-line-items';
+} from './status-line-items/wmo-generic.ts';
+import { type WMOVoorzieningFrontend } from './wmo-types.ts';
+import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service.ts';
+import { getLatestStatus, getLatestStatusDate } from '../../helpers/zaken.ts';
+import { getStatusLineItems } from '../zorgned/zorgned-status-line-items.ts';
 
 export function getDocuments(
   sessionID: SessionID,
@@ -157,110 +151,6 @@ export async function fetchWmo(authProfileAndToken: AuthProfileAndToken) {
   }
 
   return voorzieningenResponse;
-}
-
-export type FetchWmoVoorzieningFilter = (
-  voorziening: ZorgnedAanvraagTransformed,
-  steps: StatusLineItem[]
-) => boolean;
-
-type FetchWmoVoorzieningenCompactOptions = {
-  productGroup?: string[];
-  filter?: FetchWmoVoorzieningFilter;
-};
-
-export async function fetchWmoVoorzieningenCompact(
-  bsn: BSN,
-  options?: FetchWmoVoorzieningenCompactOptions
-): Promise<ApiResponse<WMOVoorzieningCompact[]>> {
-  const voorzieningenResponse = await fetchZorgnedAanvragenWMO(bsn);
-
-  if (voorzieningenResponse.status === 'OK') {
-    const today = new Date();
-
-    const statusLineItemsConfigsFiltered = wmoStatusLineItemsConfig.filter(
-      (config) =>
-        options?.productGroup
-          ? options.productGroup.includes(config.statusLineItems.name)
-          : true
-    );
-
-    const voorzieningenCompact: WMOVoorzieningCompact[] =
-      voorzieningenResponse.content
-        .map((voorziening, _index, voorzieningen) => {
-          const config = statusLineItemsConfigsFiltered.find(
-            (statusLineItemsConfig) =>
-              isStatusLineItemTransformerMatch(
-                voorziening,
-                voorzieningen,
-                statusLineItemsConfig
-              )
-          );
-
-          if (!config) {
-            return null;
-          }
-
-          const steps = getStatusLineItems(
-            'WMO',
-            [config],
-            voorziening,
-            voorzieningen,
-            today
-          );
-
-          if (!steps) {
-            return null;
-          }
-
-          if (options?.filter && !options.filter(voorziening, steps)) {
-            return null;
-          }
-
-          const voorzieningCompact: WMOVoorzieningCompact = {
-            productGroup: config?.statusLineItems.name,
-            titel: capitalizeFirstLetter(voorziening.titel),
-            id: voorziening.id,
-            beschikkingNummer: voorziening.beschikkingNummer,
-            beschiktProductIdentificatie:
-              voorziening.beschiktProductIdentificatie,
-            productIdentificatie: voorziening.productIdentificatie,
-            datumBesluit: voorziening.datumBesluit,
-            datumBeginLevering: voorziening.datumBeginLevering,
-            datumEindeLevering: voorziening.datumEindeLevering,
-            datumOpdrachtLevering: voorziening.datumOpdrachtLevering,
-          };
-
-          return voorzieningCompact;
-        })
-        .filter((voorziening) => voorziening !== null)
-        .toSorted(dateSort('datumBesluit', 'desc'));
-
-    return apiSuccessResult(voorzieningenCompact);
-  }
-
-  return voorzieningenResponse;
-}
-
-// Specific filter and fetch function for Actuele Uitgevoerde Woonruimte Aanpassingen
-// consumed by Formulier app.
-const WRA_PRODUCT_GROUP = 'WRA';
-const WRA_STEP_STATUS = 'Aanpassing uitgevoerd';
-
-const isActueleUitgevoerdeWoonruimteAanpassing: FetchWmoVoorzieningFilter = (
-  voorziening,
-  steps
-) =>
-  voorziening.isActueel &&
-  steps.some((step) => step.status === WRA_STEP_STATUS && step.isActive);
-
-export function fetchActueleWRAVoorzieningenCompact(
-  bsn: BSN
-): Promise<ApiResponse<WMOVoorzieningCompact[]>> {
-  return fetchWmoVoorzieningenCompact(bsn, {
-    productGroup: [WRA_PRODUCT_GROUP],
-    filter: isActueleUitgevoerdeWoonruimteAanpassing,
-  });
 }
 
 export const forTesting = {

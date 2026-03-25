@@ -1,9 +1,9 @@
-import {
+import type {
   LoodMetingFrontend,
   LoodMetingStatus,
   LoodMetingStatusLowerCase,
-} from '../../../server/services/bodem/types';
-import { StatusLineItem } from '../../../universal/types/App.types';
+} from '../../../server/services/bodem/types.ts';
+import type { StatusLineItem } from '../../../universal/types/App.types.ts';
 
 export function getBodemStatusSteps(
   request: LoodMetingFrontend,

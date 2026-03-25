@@ -12,11 +12,11 @@ import {
   fetchKrefia,
   fetchKrefiaNotifications,
   fetchAndTransformKrefia,
-} from './krefia';
-import KrefiaData from '../../../../mocks/fixtures/krefia.json';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
-import { omit } from '../../../universal/helpers/utils';
-import { axiosRequest } from '../../helpers/source-api-request';
+} from './krefia.ts';
+import KrefiaData from '../../../../mocks/fixtures/krefia.json' with { type: 'json' };
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import { omit } from '../../../universal/helpers/utils.ts';
+import { axiosRequest } from '../../helpers/source-api-request.ts';
 
 describe('Kredietbank & FIBU service', () => {
   const KREFIA_DUMMY_RESPONSE = {
@@ -76,7 +76,13 @@ describe('Kredietbank & FIBU service', () => {
   });
 
   it('Should respond correctly', async () => {
-    remoteApi.get('/krefia/all').times(4).reply(200, KrefiaData);
+    remoteApi
+      .post('/krefia/all', {
+        bsn: 'I.M Mokum',
+      })
+      .matchHeader('x-api-key', 'dev-api-key')
+      .times(4)
+      .reply(200, KrefiaData);
 
     const response = await fetchAndTransformKrefia(authProfileAndToken);
     expect(response).toEqual(KREFIA_DUMMY_RESPONSE);

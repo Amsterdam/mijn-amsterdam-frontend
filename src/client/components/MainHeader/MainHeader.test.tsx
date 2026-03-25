@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router';
 import { describe, expect, it, vi } from 'vitest';
 
-import { MainHeader } from './MainHeader';
+import { MainHeader } from './MainHeader.tsx';
 
 vi.mock('../../hooks/media.hook');
 

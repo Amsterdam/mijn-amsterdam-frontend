@@ -1,13 +1,13 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { routeConfig } from './Parkeren-thema-config';
-import { ParkerenDetail } from './ParkerenDetail';
-import { ParkeerVergunningFrontend } from '../../../../server/services/parkeren/config-and-types';
-import { bffApiHost } from '../../../../testing/setup';
-import { bffApi } from '../../../../testing/utils';
-import { AppState } from '../../../../universal/types/App.types';
-import { componentCreator } from '../../MockApp';
+import { themaConfig } from './Parkeren-thema-config.ts';
+import { ParkerenDetail } from './ParkerenDetail.tsx';
+import type { ParkeerVergunningFrontend } from '../../../../server/services/parkeren/config-and-types.ts';
+import { bffApiHost } from '../../../../testing/setup.ts';
+import { bffApi } from '../../../../testing/utils.ts';
+import type { AppState } from '../../../../universal/types/App.types.ts';
+import { componentCreator } from '../../MockApp.tsx';
 
 const ID = 'Z-24-2233516';
 const ID_WITH_SLASHES = 'Z/24/2233516';
@@ -64,11 +64,11 @@ function createParkerenState(fields: {
 describe('Kenteken tests', () => {
   const createParkerenDetail = componentCreator({
     component: ParkerenDetail,
-    routeEntry: generatePath(routeConfig.detailPage.path, {
+    routeEntry: generatePath(themaConfig.detailPage.route.path, {
       caseType: 'GPP',
       id: ID,
     }),
-    routePath: routeConfig.detailPage.path,
+    routePath: themaConfig.detailPage.route.path,
   });
 
   const nieuwKentekenLabelName = 'Nieuw kenteken';

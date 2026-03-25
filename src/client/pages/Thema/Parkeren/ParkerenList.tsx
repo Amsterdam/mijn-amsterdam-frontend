@@ -1,9 +1,9 @@
 import { useParams } from 'react-router';
 
-import { ListPageParamKind } from './Parkeren-thema-config';
-import { useParkerenData } from './useParkerenData.hook';
-import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import type { ListPageParamKind } from './Parkeren-thema-config.ts';
+import { useParkerenData } from './useParkerenData.hook.tsx';
+import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function ParkerenList() {
   const { kind = 'lopende-aanvragen' } = useParams<{
@@ -12,14 +12,13 @@ export function ParkerenList() {
 
   const {
     vergunningen,
-    id: themaId,
     isLoading,
     isError,
     tableConfig,
     breadcrumbs,
-    routeConfig,
+    themaConfig,
   } = useParkerenData();
-  useHTMLDocumentTitle(routeConfig.listPage);
+  useHTMLDocumentTitle(themaConfig.listPage.route);
 
   const { displayProps, title, filter, sort, listPageRoute } =
     tableConfig[kind];
@@ -27,7 +26,7 @@ export function ParkerenList() {
   return (
     <ListPagePaginated
       items={vergunningen.filter(filter).sort(sort)}
-      themaId={themaId}
+      themaId={themaConfig.id}
       title={title}
       appRoute={listPageRoute}
       breadcrumbs={breadcrumbs}

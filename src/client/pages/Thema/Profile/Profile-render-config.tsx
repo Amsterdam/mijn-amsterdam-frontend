@@ -1,20 +1,19 @@
 import { BuildingsIcon } from '@amsterdam/design-system-react-icons';
 
-import { MijnBedrijfsGegevensThema } from './commercial/ProfileCommercial';
-import { ContactmomentenListPage } from './private/ContactmomentenListPage';
-import { MijnGegevensThema } from './private/ProfilePrivate';
-import { VvEDetail } from './private/VvEDetail';
+import { MijnBedrijfsGegevensThema } from './commercial/ProfileCommercial.tsx';
+import { ContactmomentenListPage } from './private/ContactmomentenListPage.tsx';
+import { MijnGegevensThema } from './private/ProfilePrivate.tsx';
+import { VvEDetail } from './private/VvEDetail.tsx';
 import {
   themaTitle,
   themaIdBRP,
   themaIdKVK,
-  routeConfig,
-} from './Profile-thema-config';
+} from './Profile-thema-config.ts';
 import { default as ProfilePrivateIcon } from './ProfilePrivateIcon.svg?react';
-import { FeatureToggle } from '../../../../universal/config/feature-toggles';
-import { isLoading } from '../../../../universal/helpers/api';
-import { AppState } from '../../../../universal/types/App.types';
-import { ThemaMenuItem } from '../../../config/thema-types';
+import { FeatureToggle } from '../../../../universal/config/feature-toggles.ts';
+import { isLoading } from '../../../../universal/helpers/api.ts';
+import type { AppState } from '../../../../universal/types/App.types.ts';
+import type { ThemaMenuItem } from '../../../config/thema-types.ts';
 
 export const ProfileRoutes = [
   { route: routeConfig.themaPageBRP.path, Component: MijnGegevensThema },

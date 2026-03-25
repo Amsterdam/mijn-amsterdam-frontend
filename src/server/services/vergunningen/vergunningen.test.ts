@@ -1,12 +1,12 @@
 import { describe, it, expect, vi, type Mock } from 'vitest';
 
-import { DecosVergunning } from './config-and-types';
-import { getStatusStepsDecos } from './decos-status-steps';
-import { routeConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config';
-import { getAuthProfileAndToken } from '../../../testing/utils';
-import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import { transformDecosZaakFrontend } from '../decos/decos-service';
-import type { DecosZaakBase } from '../decos/decos-types';
+import type { DecosVergunning } from './config-and-types.ts';
+import { getStatusStepsDecos } from './decos-status-steps.ts';
+import { themaConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
+import { getAuthProfileAndToken } from '../../../testing/utils.ts';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt.ts';
+import { transformDecosZaakFrontend } from '../decos/decos-service.ts';
+import type { DecosZaakBase } from '../decos/decos-types.ts';
 
 vi.mock('../../helpers/encrypt-decrypt');
 
@@ -64,7 +64,7 @@ describe('vergunningen', () => {
         authProfileAndToken.profile.sid,
         decosVergunning as DecosVergunning,
         {
-          detailPageRoute: routeConfig.detailPage.path,
+          detailPageRoute: themaConfig.detailPage.route.path,
           includeFetchDocumentsUrl: true,
           getStepsFN: getStatusStepsDecos,
         }

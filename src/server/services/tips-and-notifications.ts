@@ -1,42 +1,44 @@
-import { fetchAdoptableTrashContainers } from './afval/adoptable-trash-containers';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
+import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
 import {
-  ApiResponse_DEPRECATED,
+  type ApiResponse_DEPRECATED,
   getSettledResult,
-} from '../../universal/helpers/api';
-import { dateSort } from '../../universal/helpers/date';
-import type { MyNotification } from '../../universal/types/App.types';
-import { AuthProfileAndToken } from '../auth/auth-types';
-import { fetchAfisNotifications } from './afis/afis-notifications';
-import { fetchAVGNotifications } from './avg/avg';
-import { fetchBezwarenNotifications } from './bezwaren/bezwaren';
-import { fetchLoodMetingNotifications } from './bodem/loodmetingen';
-import { fetchBrpNotifications } from './brp/brp-notifications';
-import { sanitizeCmsContent } from './cms/cms-content';
-import { fetchMaintenanceNotificationsDashboard } from './cms/cms-maintenance-notifications';
-import { ServiceResults } from './content-tips/tip-types';
+  type ApiResponse,
+  apiErrorResult,
+} from '../../universal/helpers/api.ts';
+import { dateSort } from '../../universal/helpers/date.ts';
+import type { MyNotification } from '../../universal/types/App.types.ts';
+import type { AuthProfileAndToken } from '../auth/auth-types.ts';
+import { fetchAfisNotifications } from './afis/afis-notifications.ts';
+import { fetchAVGNotifications } from './avg/avg.ts';
+import { fetchBezwarenNotifications } from './bezwaren/bezwaren.ts';
+import { fetchLoodMetingNotifications } from './bodem/loodmetingen.ts';
+import { fetchBrpNotifications } from './brp/brp-notifications.ts';
+import { sanitizeCmsContent } from './cms/cms-content.ts';
+import { fetchMaintenanceNotificationsDashboard } from './cms/cms-maintenance-notifications.ts';
+import type { ServiceResults } from './content-tips/tip-types.ts';
 import {
   fetchContentTips,
   prefixTipNotification,
-} from './content-tips/tips-service';
-import { fetchHorecaNotifications } from './horeca/horeca';
-import { fetchKlachtenNotifications } from './klachten/klachten';
-import { fetchKrefiaNotifications } from './krefia/krefia';
-import { fetchParkeerVergunningenNotifications } from './parkeren/parkeren-notifications';
-import {
-  fetchBelastingNotifications,
-  fetchMilieuzoneNotifications,
-  fetchOvertredingenNotifications,
-  fetchSubsidieNotifications,
-} from './patroon-c';
-import { fetchSVWINotifications } from './patroon-c/svwi';
-import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur/toeristische-verhuur-notifications';
-import { fetchVarenNotifications } from './varen/varen-notifications';
-import { fetchVergunningenNotifications } from './vergunningen/vergunningen-notifications';
-import { fetchWiorNotifications } from './wior';
-import { fetchWpiNotifications } from './wpi';
-import { streamEndpointQueryParamKeys } from '../../universal/config/app';
-import { getFromEnv } from '../helpers/env';
+} from './content-tips/tips-service.ts';
+import { fetchHorecaNotifications } from './horeca/horeca.ts';
+import { fetchKlachtenNotifications } from './klachten/klachten.ts';
+import { fetchKrefiaNotifications } from './krefia/krefia.ts';
+import { captureException } from './monitoring.ts';
+import { fetchParkeerVergunningenNotifications } from './parkeren/parkeren-notifications.ts';
+import { fetchBelastingNotifications } from './patroon-c/belasting.ts';
+import { fetchMilieuzoneNotifications } from './patroon-c/cleopatra.ts';
+import { fetchOvertredingenNotifications } from './patroon-c/cleopatra.ts';
+import { fetchSubsidieNotifications } from './patroon-c/subsidie.ts';
+import { fetchSVWINotifications } from './patroon-c/svwi.ts';
+import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur/toeristische-verhuur-notifications.ts';
+import { fetchVarenNotifications } from './varen/varen-notifications.ts';
+import { fetchVergunningenNotifications } from './vergunningen/vergunningen-notifications.ts';
+import { fetchWiorNotifications } from './wior.ts';
+import { fetchWpiNotifications } from './wpi/api-service.ts';
+import { streamEndpointQueryParamKeys } from '../../universal/config/app.ts';
+import { entries } from '../../universal/helpers/utils.ts';
+import { getFromEnv } from '../helpers/env.ts';
+import { fetchAdoptableTrashContainerTips } from './afval/adoptable-trash-containers.ts';
 
 // Every 3rd notification will be a tip if one is available.
 const INSERT_TIP_AT_EVERY_NTH_INDEX = 3;
@@ -45,9 +47,19 @@ const TIP_IDS_DISABLED = (getFromEnv('BFF_TIPS_DISABLED_IDS', false) ?? '')
   .split(',')
   .map((id) => id.trim());
 
+export type NotificationsAndTipsResponse =
+  | ApiResponse<{
+      notifications?: MyNotification[];
+      tips?: MyNotification[];
+    }>
+  | ApiResponse_DEPRECATED<{
+      notifications?: MyNotification[];
+      tips?: MyNotification[];
+    }>;
+
 type FetchNotificationFunction = (
   authProfileAndToken: AuthProfileAndToken
-) => Promise<ApiResponse_DEPRECATED<unknown>>;
+) => Promise<NotificationsAndTipsResponse>;
 
 type NotificationServices = Record<string, FetchNotificationFunction>;
 
@@ -74,7 +86,7 @@ export const notificationServices = {
   },
   'private-attributes': {},
   private: {
-    adoptTrashContainer: fetchAdoptableTrashContainers,
+    adoptTrashContainer: fetchAdoptableTrashContainerTips,
     afis: fetchAfisNotifications,
     avg: fetchAVGNotifications,
     belasting: fetchBelastingNotifications,
@@ -97,8 +109,8 @@ export const notificationServices = {
   },
 } satisfies NotificationServicesByProfileType;
 
-function getTipsAndNotificationsFromApiResults(
-  responses: Array<ApiResponse_DEPRECATED<unknown>>
+export function getTipsAndNotificationsFromApiResults(
+  responses: NotificationsAndTipsResponse[]
 ): MyNotification[] {
   const notifications: MyNotification[] = [];
   const tips: MyNotification[] = [];
@@ -143,23 +155,38 @@ function getTipsAndNotificationsFromApiResults(
 }
 
 // Services can return Source tips and Content tips.
-async function fetchNotificationsAndTipsFromServices(
-  authProfileAndToken: AuthProfileAndToken
-): Promise<MyNotification[]> {
-  if (authProfileAndToken.profile.profileType !== 'private-attributes') {
-    const profileType = authProfileAndToken.profile.profileType;
-    const services: NotificationServices = notificationServices[profileType];
-
-    const results = await Promise.allSettled(
-      Object.values(services).map((fetchNotifications) =>
-        fetchNotifications(authProfileAndToken)
-      )
-    );
-
-    return getTipsAndNotificationsFromApiResults(results.map(getSettledResult));
+export async function fetchNotificationsAndTipsFromServices(
+  authProfileAndToken: AuthProfileAndToken,
+  services: NotificationServices = notificationServices[
+    authProfileAndToken.profile.profileType
+  ]
+): Promise<Record<keyof typeof services, NotificationsAndTipsResponse>> {
+  if (authProfileAndToken.profile.profileType === 'private-attributes') {
+    return {};
   }
 
-  return [];
+  const serviceResults = await Promise.allSettled(
+    entries(services).map(async ([serviceId, fetchNotifications]) => {
+      const result = await fetchNotifications(authProfileAndToken).catch(
+        (error) => {
+          captureException(
+            new Error(
+              `Error in fetchNotifications for service ${serviceId}: ${error instanceof Error ? error.message : String(error)}`
+            )
+          );
+          return apiErrorResult(error, null);
+        }
+      );
+      return [serviceId, result];
+    })
+  );
+
+  const results = serviceResults.map(getSettledResult) as [
+    keyof typeof services,
+    NotificationsAndTipsResponse,
+  ][];
+
+  return Object.fromEntries(results);
 }
 
 export function sortNotificationsAndInsertTips(
@@ -214,11 +241,11 @@ export function sortNotificationsAndInsertTips(
   return notificationsWithTipsInserted;
 }
 
-export async function fetchNotificationsWithTipsInserted(
+export function getContentTips(
   serviceResults: ServiceResults | null,
   authProfileAndToken: AuthProfileAndToken | null,
   queryParams?: Record<string, string>
-) {
+): MyNotification<string>[] {
   const compareDate =
     FeatureToggle.passQueryParamsToStreamUrl &&
     queryParams?.[streamEndpointQueryParamKeys.tipsCompareDate]
@@ -227,22 +254,23 @@ export async function fetchNotificationsWithTipsInserted(
         )
       : new Date();
 
-  const [contentTips, notificationsTipsAndServices] = await Promise.all([
-    serviceResults
-      ? fetchContentTips(
-          serviceResults,
-          compareDate,
-          authProfileAndToken?.profile.profileType
-        )
-      : [],
-    authProfileAndToken
-      ? fetchNotificationsAndTipsFromServices(authProfileAndToken)
-      : [],
-  ]);
+  const contentTips = serviceResults
+    ? fetchContentTips(
+        serviceResults,
+        compareDate,
+        authProfileAndToken?.profile.profileType
+      )
+    : [];
+  return contentTips;
+}
 
+export function combineNotificationsWithTipsAndSort(
+  contentTips: MyNotification<string>[],
+  notificationsAndTips: MyNotification<string>[] = []
+) {
   const notifications: MyNotification[] = [
     ...contentTips,
-    ...notificationsTipsAndServices,
+    ...notificationsAndTips,
   ]
     .map((notification) => {
       if (notification.isTip) {

@@ -5,11 +5,12 @@ import {
   IN_BEHANDELING,
   isDecisionStatusActive,
   MEER_INFORMATIE,
-} from '../wmo/status-line-items/wmo-generic';
-import { ZorgnedStatusLineItemsConfig } from '../zorgned/zorgned-types';
+} from '../wmo/status-line-items/wmo-generic.ts';
+import type { ZorgnedStatusLineItemsConfig } from '../zorgned/zorgned-types.ts';
 
 export const jeugdStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
   {
+    productgroep: 'leerlingenvervoer',
     productIdentificatie: [
       'LLVFV',
       'LLVOVA',
@@ -19,7 +20,6 @@ export const jeugdStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
       'LLVAVG',
     ],
     statusLineItems: {
-      name: 'leerlingenvervoer',
       transformers: [
         AANVRAAG,
         IN_BEHANDELING,

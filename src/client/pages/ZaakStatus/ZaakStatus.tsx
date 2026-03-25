@@ -3,27 +3,27 @@ import { useEffect, useState } from 'react';
 import { Paragraph } from '@amsterdam/design-system-react';
 import { useLocation, useNavigate } from 'react-router';
 
-import { ZAAK_STATUS_PAGE_DOCUMENT_TITLE } from './ZaakStatus-routes';
+import { ZAAK_STATUS_PAGE_DOCUMENT_TITLE } from './ZaakStatus-routes.ts';
 import styles from './ZaakStatus.module.scss';
-import { isError, isLoading } from '../../../universal/helpers/api';
-import { AppStateBase, LinkProps } from '../../../universal/types/App.types';
-import ErrorAlert from '../../components/Alert/Alert';
-import LoadingContent from '../../components/LoadingContent/LoadingContent';
-import { MaRouterLink } from '../../components/MaLink/MaLink';
-import { PageContentCell, PageV2 } from '../../components/Page/Page';
+import { isError, isLoading } from '../../../universal/helpers/api.ts';
+import type { AppStateBase, LinkProps } from '../../../universal/types/App.types.ts';
+import ErrorAlert from '../../components/Alert/Alert.tsx';
+import LoadingContent from '../../components/LoadingContent/LoadingContent.tsx';
+import { MaRouterLink } from '../../components/MaLink/MaLink.tsx';
+import { PageContentCell, PageV2 } from '../../components/Page/Page.tsx';
 import {
   useAppStateGetter,
   useAppStateReady,
-} from '../../hooks/useAppStateStore';
-import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
-import { DashboardRoute } from '../Dashboard/Dashboard-routes';
-import * as AVG from '../Thema/AVG/AVG-thema-config';
-import * as BODEM from '../Thema/Bodem/Bodem-thema-config';
-import * as HORECA from '../Thema/Horeca/Horeca-thema-config';
-import * as KLACHTEN from '../Thema/Klachten/Klachten-thema-config';
-import * as PARKEREN from '../Thema/Parkeren/Parkeren-thema-config';
-import * as TOERISTISCHE_VERHUUR from '../Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
-import * as VERGUNNINGEN from '../Thema/Vergunningen/Vergunningen-thema-config';
+} from '../../hooks/useAppStateStore.ts';
+import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle.ts';
+import { DashboardRoute } from '../Dashboard/Dashboard-routes.ts';
+import * as AVG from '../Thema/AVG/AVG-thema-config.ts';
+import * as BODEM from '../Thema/Bodem/Bodem-thema-config.ts';
+import * as HORECA from '../Thema/Horeca/Horeca-thema-config.ts';
+import * as KLACHTEN from '../Thema/Klachten/Klachten-thema-config.ts';
+import * as PARKEREN from '../Thema/Parkeren/Parkeren-thema-config.ts';
+import * as TOERISTISCHE_VERHUUR from '../Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
+import * as VERGUNNINGEN from '../Thema/Vergunningen/Vergunningen-thema-config.ts';
 
 const ITEM_NOT_FOUND = 'not-found';
 const STATE_ERROR = 'state-error';
@@ -112,13 +112,13 @@ function baseThemaConfig<K extends keyof AppStateBase>(
 
 const pageRouteResolvers: PageRouteResolvers = {
   vergunningen: baseThemaConfig(
-    VERGUNNINGEN.routeConfig.themaPage.path,
-    VERGUNNINGEN.themaId
+    VERGUNNINGEN.themaConfig.route.path,
+    VERGUNNINGEN.themaConfig.id
   ),
-  horeca: baseThemaConfig(HORECA.routeConfig.themaPage.path, HORECA.themaId),
+  horeca: baseThemaConfig(HORECA.themaConfig.route.path, HORECA.themaConfig.id),
   parkeren: baseThemaConfig(
-    PARKEREN.routeConfig.themaPage.path,
-    PARKEREN.themaId,
+    PARKEREN.themaConfig.route.path,
+    PARKEREN.themaConfig.id,
     (stateSlice) => {
       return stateSlice.content?.vergunningen ?? null;
     }
@@ -140,8 +140,8 @@ const pageRouteResolvers: PageRouteResolvers = {
     }
   ),
   avg: baseThemaConfig(
-    AVG.routeConfig.themaPage.path,
-    AVG.themaId,
+    AVG.themaConfig.route.path,
+    AVG.themaConfig.id,
     (stateSlice) => {
       return stateSlice.content?.verzoeken ?? null;
     }

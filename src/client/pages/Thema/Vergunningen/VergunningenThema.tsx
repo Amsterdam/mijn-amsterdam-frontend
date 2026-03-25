@@ -1,13 +1,13 @@
 import { Alert, Paragraph } from '@amsterdam/design-system-react';
 
-import { useVergunningenThemaData } from './useVergunningenThemaData.hook';
-import { type ZaakFrontendCombined } from '../../../../server/services/vergunningen/config-and-types';
-import { MaRouterLink } from '../../../components/MaLink/MaLink';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaPagina from '../../../components/Thema/ThemaPagina';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
-import { routeConfig as routeConfigParkeren } from '../Parkeren/Parkeren-thema-config';
+import { useVergunningenThemaData } from './useVergunningenThemaData.hook.ts';
+import { type ZaakFrontendCombined } from '../../../../server/services/vergunningen/config-and-types.ts';
+import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
+import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
+import { themaConfig } from '../Parkeren/Parkeren-thema-config.ts';
 
 export function VergunningenThema() {
   const {
@@ -15,13 +15,12 @@ export function VergunningenThema() {
     isLoading,
     isError,
     tableConfig,
-    linkListItems,
+    pageLinks,
     id,
     title,
-    routeConfig,
     hasParkeervergunningen,
   } = useVergunningenThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const pageContentTop = (
     <PageContentCell spanWide={8}>
@@ -32,7 +31,7 @@ export function VergunningenThema() {
       {hasParkeervergunningen && (
         <Alert heading="Parkeervergunningen?" headingLevel={4}>
           <Paragraph>
-            <MaRouterLink href={routeConfigParkeren.themaPage.path}>
+            <MaRouterLink href={themaConfig.route.path}>
               Bekijk hier de vergunningen voor parkeren.
             </MaRouterLink>
           </Paragraph>
@@ -64,7 +63,7 @@ export function VergunningenThema() {
       id={id}
       title={title}
       pageContentTop={pageContentTop}
-      pageLinks={linkListItems}
+      pageLinks={pageLinks}
       pageContentMain={tables}
       isError={isError}
       isLoading={isLoading}

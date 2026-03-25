@@ -1,3 +1,4 @@
+import { HttpStatusCode } from 'axios';
 import { isAfter, parseISO, subYears } from 'date-fns';
 
 import {
@@ -6,13 +7,13 @@ import {
   LANDCODE_NEDERLAND,
   LANDCODE_ONBEKEND,
   ADRES_IN_ONDERZOEK_A,
-  AANTAL_BEWONERS_NOT_SET,
-} from './brp-config';
-import { featureToggle, routes } from './brp-service-config';
+  AANTAL_INGESCHREVEN_PERSONEN_NOT_SET,
+} from './brp-config.ts';
+import { featureToggle, routes } from './brp-service-config.ts';
 import {
   DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_FROM,
   DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_TO,
-} from './brp-service-config';
+} from './brp-service-config.ts';
 import {
   type BrpFrontend,
   type PersonenResponseSource,
@@ -20,30 +21,37 @@ import {
   type Adres,
   type VerblijfplaatshistorieResponseSource,
   type VerblijfplaatsSource,
-} from './brp-types';
+} from './brp-types.ts';
 import type {
+  PersonenResponseSourceError,
   Persoon,
   PersoonBasis,
   PersoonBasisSource,
   PersoonSource,
-} from './brp-types';
-import { IS_PRODUCTION } from '../../../universal/config/env';
+} from './brp-types.ts';
+import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
   getFailedDependencies,
   type ApiResponse,
-} from '../../../universal/helpers/api';
-import type { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
-import { ONE_HOUR_MS } from '../../config/app';
-import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import { getFromEnv } from '../../helpers/env';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token';
-import { getContextOperationId } from '../monitoring';
-import { type BSN } from '../zorgned/zorgned-types';
+} from '../../../universal/helpers/api.ts';
+import type {
+  AuthProfile,
+  AuthProfileAndToken,
+} from '../../auth/auth-types.ts';
+import { ONE_HOUR_MS } from '../../config/app.ts';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt.ts';
+import { getFromEnv } from '../../helpers/env.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import {
+  isSuccessStatus,
+  requestData,
+} from '../../helpers/source-api-request.ts';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
+import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token.ts';
+import { getContextOperationId } from '../monitoring.ts';
+import { type BSN } from '../zorgned/zorgned-types.ts';
 
 const TOKEN_VALIDITY_PERIOD = 1 * ONE_HOUR_MS;
 const PERCENTAGE_DISTANCE_FROM_EXPIRY = 0.1;
@@ -98,6 +106,8 @@ function getAdres(verblijfplaats: VerblijfplaatsSource) {
     huisletter: verblijfadres?.huisletter ?? null,
     begindatumVerblijf: getDatum(verblijfplaats?.datumVan) ?? null,
     begindatumVerblijfFormatted: verblijfplaats?.datumVan?.langFormaat ?? null,
+    isBewoner: isBewoner(verblijfplaats),
+    isBriefadres: verblijfplaats?.functieAdres?.omschrijving === 'briefadres',
   };
 }
 
@@ -118,6 +128,10 @@ function getPersoonBasis(persoon: PersoonBasisSource): PersoonBasis {
     overlijdensdatum: getDatum(persoon.overlijden?.datum),
     overlijdensdatumFormatted: persoon.overlijden?.datum?.langFormaat ?? null,
   };
+}
+
+function isBewoner(verblijfplaats: VerblijfplaatsSource) {
+  return verblijfplaats?.functieAdres?.omschrijving === 'woonadres';
 }
 
 function transformBenkBrpResponse(
@@ -149,18 +163,22 @@ function transformBenkBrpResponse(
     adres?.land?.code !== LANDCODE_NEDERLAND &&
     adres?.land?.code !== LANDCODE_ONBEKEND;
 
-  const fetchUrlAantalBewoners =
+  const fetchUrlAantalIngeschrevenPersonen =
     isMokum &&
     verblijfplaats?.adresseerbaarObjectIdentificatie &&
-    featureToggle.service.fetchAantalBewonersOpAdres.isEnabled
-      ? generateFullApiUrlBFF(routes.protected.BRP_AANTAL_BEWONERS_OP_ADRES, [
-          {
-            id: encryptSessionIdWithRouteIdParam(
-              sessionID,
-              verblijfplaats.adresseerbaarObjectIdentificatie
-            ),
-          },
-        ])
+    isBewoner(verblijfplaats) &&
+    featureToggle.service.fetchAantalIngeschrevenPersonenOpAdres.isEnabled
+      ? generateFullApiUrlBFF(
+          routes.protected.BRP_AANTAL_INGESCHREVEN_PERSONEN_OP_ADRES,
+          [
+            {
+              id: encryptSessionIdWithRouteIdParam(
+                sessionID,
+                verblijfplaats.adresseerbaarObjectIdentificatie
+              ),
+            },
+          ]
+        )
       : null;
 
   const responseContent: BrpFrontend = {
@@ -234,9 +252,9 @@ function transformBenkBrpResponse(
         )
         ?.map((kind) => getPersoonBasis(kind)) ?? [],
     adres: verblijfplaats?.verblijfadres ? getAdres(verblijfplaats) : null,
-    fetchUrlAantalBewoners,
+    fetchUrlAantalIngeschrevenPersonen,
     adresHistorisch: [],
-    aantalBewoners: AANTAL_BEWONERS_NOT_SET,
+    aantalIngeschrevenPersonen: AANTAL_INGESCHREVEN_PERSONEN_NOT_SET,
   };
 
   if (
@@ -266,12 +284,20 @@ function translateBSN(bsn: BSN): BSN {
   return translationsMap.get(bsn) ?? bsn;
 }
 
-export async function fetchBrpByBsn(sessionID: AuthProfile['sid'], bsn: BSN[]) {
+export async function fetchBrpByBsn(
+  sessionID: AuthProfile['sid'],
+  bsn: BSN[]
+): Promise<ApiResponse<PersonenResponseSource>> {
   const response = await fetchBenkBrpTokenHeader();
 
   if (response.status !== 'OK') {
     return response;
   }
+
+  const data: Record<string, unknown> = {
+    type: 'RaadpleegMetBurgerservicenummer',
+    burgerservicenummer: bsn.map((bsn) => translateBSN(bsn)),
+  };
 
   const requestConfig = getApiConfig('BENK_BRP', {
     formatUrl(requestConfig) {
@@ -281,10 +307,7 @@ export async function fetchBrpByBsn(sessionID: AuthProfile['sid'], bsn: BSN[]) {
       ...response.content,
       'X-Correlation-ID': getContextOperationId(sessionID), // Required for tracing
     },
-    data: {
-      type: 'RaadpleegMetBurgerservicenummer',
-      burgerservicenummer: bsn.map((bsn) => translateBSN(bsn)),
-    },
+    data,
   });
 
   const brpBsnResponse =
@@ -412,7 +435,7 @@ export async function fetchBrp(authProfileAndToken: AuthProfileAndToken) {
   );
 }
 
-export async function fetchAantalBewoners(
+export async function fetchAantalIngeschrevenPersonen(
   sessionID: AuthProfile['sid'],
   bagID: string
 ) {
@@ -421,7 +444,6 @@ export async function fetchAantalBewoners(
   if (response.status !== 'OK') {
     return response;
   }
-
   const today = new Date();
   const requestConfig = getApiConfig('BENK_BRP', {
     formatUrl(requestConfig) {
@@ -431,17 +453,45 @@ export async function fetchAantalBewoners(
       ...response.content,
       'X-Correlation-ID': getContextOperationId(sessionID), // Required for tracing
     },
-    transformResponse: (responseData: PersonenResponseSource | null) => {
+    transformResponse: (
+      responseData: PersonenResponseSource | PersonenResponseSourceError | null
+    ): string => {
+      if (!responseData) {
+        return `${AANTAL_INGESCHREVEN_PERSONEN_NOT_SET}`;
+      }
+      if (
+        'code' in responseData &&
+        responseData.status === HttpStatusCode.BadRequest &&
+        responseData.code === 'tooManyResults'
+      ) {
+        return 'Meer dan 30';
+      }
+      if (
+        'status' in responseData &&
+        responseData.status === HttpStatusCode.BadRequest
+      ) {
+        throw new Error(
+          `HTTP 400 bad request code: '${responseData.code}' received`
+        );
+      }
       // This is redundant filtering, as the API should always return the correct data. See also: MIJN-12262
-      const personenFiltered = responseData?.personen?.filter((persoon) => {
-        const datumOpschortingBijhouding = persoon.opschortingBijhouding?.datum;
-        return datumOpschortingBijhouding &&
-          'datum' in datumOpschortingBijhouding
-          ? isAfter(parseISO(datumOpschortingBijhouding.datum), today)
-          : true;
-      });
-      return personenFiltered?.length || AANTAL_BEWONERS_NOT_SET;
+      const personenFiltered =
+        ('personen' in responseData &&
+          responseData.personen?.filter((persoon) => {
+            const datumOpschortingBijhouding =
+              persoon.opschortingBijhouding?.datum;
+            return datumOpschortingBijhouding &&
+              'datum' in datumOpschortingBijhouding
+              ? isAfter(parseISO(datumOpschortingBijhouding.datum), today)
+              : true;
+          })) ||
+        [];
+      return `${personenFiltered?.length || AANTAL_INGESCHREVEN_PERSONEN_NOT_SET}`;
     },
+    validateStatus: (statusCode) =>
+      // This endpoint returns a 400 bad request when the reponse contains more than 30 objects.
+      // The bad request status is provided in the body and handled in the transformResponse.
+      isSuccessStatus(statusCode) || statusCode === HttpStatusCode.BadRequest,
     data: {
       type: 'ZoekMetAdresseerbaarObjectIdentificatie',
       inclusiefOverledenPersonen: false,

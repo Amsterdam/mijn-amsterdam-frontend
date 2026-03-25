@@ -1,21 +1,14 @@
 import Mockdate from 'mockdate';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-import {
-  fetchActueleWRAVoorzieningenCompact,
-  fetchWmo,
-  fetchWmoVoorzieningenCompact,
-  forTesting,
-} from './wmo';
-import { routes } from './wmo-service-config';
-import ZORGNED_AANVRAGEN_WMO from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
-import { jsonCopy } from '../../../universal/helpers/utils';
-import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types';
-import {
-  getHulpmiddelenDisclaimer,
-  HulpmiddelenDisclaimerConfig,
-} from './status-line-items/wmo-hulpmiddelen';
+import type { HulpmiddelenDisclaimerConfig } from './status-line-items/wmo-hulpmiddelen.ts';
+import { getHulpmiddelenDisclaimer } from './status-line-items/wmo-hulpmiddelen.ts';
+import { routes } from './wmo-service-config.ts';
+import { fetchWmo, forTesting } from './wmo.ts';
+import ZORGNED_AANVRAGEN_WMO from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json' with { type: 'json' };
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import { jsonCopy } from '../../../universal/helpers/utils.ts';
+import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
 
 vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => ({
   ...((await importOriginal()) as object),
@@ -139,6 +132,8 @@ describe('Transform api items', () => {
       beschikkingNummer: null,
       procesAanvraagOmschrijving: null,
       prettyID: '',
+      procesIdentificatie: '',
+      leverancierIdentificatie: '',
     };
 
     const CODE_A = 'codeA';
@@ -246,7 +241,7 @@ describe('Transform api items', () => {
     it('does not match aanvragen with a different productsoortCode', () => {
       const currentAanvraag = {
         ...baseAanvraag,
-        datumIngangGeldigheid: CODE_A_DATE_PAIR[1],
+        datumIngangGeldigheid: CODE_A_DATE_PAIR.datumIngangGeldigheid,
         isActueel: true,
         productsoortCode: CODE_A,
       };
@@ -255,7 +250,7 @@ describe('Transform api items', () => {
         currentAanvraag,
         {
           ...baseAanvraag,
-          datumEindeGeldigheid: CODE_A_DATE_PAIR[0],
+          datumEindeGeldigheid: CODE_A_DATE_PAIR.datumEindeGeldigheid,
           isActueel: false,
           productsoortCode: 'some other code',
         },
@@ -268,56 +263,6 @@ describe('Transform api items', () => {
       );
 
       expect(result).toBeUndefined();
-    });
-  });
-
-  describe('fetchWmoVoorzieningenCompact', () => {
-    const mockBSN = '123456789';
-
-    beforeEach(() => {
-      vi.clearAllMocks();
-    });
-
-    it('should fetch, filter and transform voorzieningen', async () => {
-      remoteApi.post('/zorgned/aanvragen').reply(200, ZORGNED_AANVRAGEN_WMO);
-
-      const result = await fetchWmoVoorzieningenCompact(mockBSN, {
-        productGroup: ['WRA', 'hulpmiddelen'],
-      });
-
-      expect(
-        result.content?.every((voorziening) => {
-          return (
-            voorziening.productGroup === 'WRA' ||
-            voorziening.productGroup === 'hulpmiddelen'
-          );
-        })
-      ).toBe(true);
-
-      expect(result.content?.[0] && Object.keys(result.content[0])).toEqual([
-        'productGroup',
-        'titel',
-        'id',
-        'beschikkingNummer',
-        'beschiktProductIdentificatie',
-        'productIdentificatie',
-        'datumBesluit',
-        'datumBeginLevering',
-        'datumEindeLevering',
-        'datumOpdrachtLevering',
-      ]);
-    });
-
-    it('should fetch and filter actuele WRA voorzieningen', async () => {
-      remoteApi.post('/zorgned/aanvragen').reply(200, ZORGNED_AANVRAGEN_WMO);
-
-      const result = await fetchActueleWRAVoorzieningenCompact(mockBSN);
-
-      expect(
-        result.content?.every((voorziening) => {
-          return voorziening.productGroup === 'WRA';
-        })
-      ).toBe(true);
     });
   });
 });

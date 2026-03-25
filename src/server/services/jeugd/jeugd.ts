@@ -1,25 +1,26 @@
 import { generatePath } from 'react-router';
 
-import { jeugdStatusLineItemsConfig } from './status-line-items';
-import { routeConfig } from '../../../client/pages/Thema/Jeugd/Jeugd-thema-config';
-import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
-import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
-import { capitalizeFirstLetter } from '../../../universal/helpers/text';
-import {
+import { jeugdStatusLineItemsConfig } from './status-line-items.ts';
+import { themaConfig } from '../../../client/pages/Thema/Jeugd/Jeugd-thema-config.ts';
+import type { ApiResponse} from '../../../universal/helpers/api.ts';
+import { apiSuccessResult } from '../../../universal/helpers/api.ts';
+import { dateSort, defaultDateFormat } from '../../../universal/helpers/date.ts';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
+import type {
   GenericDocument,
   ZaakAanvraagDetail,
-} from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { getLatestStatus, getLatestStatusDate } from '../../helpers/zaken';
-import { BffEndpoints } from '../../routing/bff-routes';
-import { hasDecision } from '../wmo/status-line-items/wmo-generic';
-import { getDocuments } from '../wmo/wmo';
-import { fetchAanvragen } from '../zorgned/zorgned-service';
-import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
-import {
+} from '../../../universal/types/App.types.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { getLatestStatus, getLatestStatusDate } from '../../helpers/zaken.ts';
+import { BffEndpoints } from '../../routing/bff-routes.ts';
+import { hasDecision } from '../wmo/status-line-items/wmo-generic.ts';
+import { getDocuments } from '../wmo/wmo.ts';
+import { fetchAanvragen } from '../zorgned/zorgned-service.ts';
+import { getStatusLineItems } from '../zorgned/zorgned-status-line-items.ts';
+import type {
   ProductSoortCode,
   ZorgnedAanvraagTransformed,
-} from '../zorgned/zorgned-types';
+} from '../zorgned/zorgned-types.ts';
 
 export async function fetchLeerlingenvervoer(
   authProfileAndToken: AuthProfileAndToken
@@ -42,8 +43,7 @@ export async function fetchLeerlingenvervoer(
   return apiSuccessResult(voorzieningen);
 }
 
-export interface LeerlingenvervoerVoorzieningFrontend
-  extends ZaakAanvraagDetail {
+export interface LeerlingenvervoerVoorzieningFrontend extends ZaakAanvraagDetail {
   dateDecision: string;
   dateDecisionFormatted: string;
   decision: string;
@@ -89,7 +89,7 @@ function transformVoorzieningenForFrontend(
         isActual: aanvraag.isActueel,
         link: {
           title: 'Meer informatie',
-          to: generatePath(routeConfig.detailPage.path, {
+          to: generatePath(themaConfig.detailPage.route.path, {
             id,
           }),
         },

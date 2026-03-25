@@ -1,24 +1,24 @@
 import { describe, it, expect, vi } from 'vitest';
 import type { Mock } from 'vitest';
 
+import { AANTAL_INGESCHREVEN_PERSONEN_NOT_SET } from './brp-config.ts';
+import {
+  DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_FROM,
+  DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_TO,
+} from './brp-service-config.ts';
+import type { PersoonSource } from './brp-types.ts';
 import {
   forTesting,
   fetchBrpByBsn,
   fetchBrpByBsnTransformed,
   fetchBrpVerblijfplaatsHistoryByBsn,
-  fetchAantalBewoners,
-} from './brp';
-import { AANTAL_BEWONERS_NOT_SET } from './brp-config';
-import {
-  DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_FROM,
-  DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_TO,
-} from './brp-service-config';
-import type { PersoonSource } from './brp-types';
-import testPersonenResponse from '../../../../mocks/fixtures/brp/test-personen.json';
-import verblijfplaatsenResponse from '../../../../mocks/fixtures/brp/verblijfplaatshistorie.json';
-import { remoteApi } from '../../../testing/utils';
-import * as sourceApi from '../../helpers/source-api-request';
-import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token';
+  fetchAantalIngeschrevenPersonen,
+} from './brp.ts';
+import testPersonenResponse from '../../../../mocks/fixtures/brp/test-personen.json' with { type: 'json' };
+import verblijfplaatsenResponse from '../../../../mocks/fixtures/brp/verblijfplaatshistorie.json' with { type: 'json' };
+import { remoteApi } from '../../../testing/utils.ts';
+import * as sourceApi from '../../helpers/source-api-request.ts';
+import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token.ts';
 
 const {
   fetchBenkBrpTokenHeader,
@@ -65,44 +65,67 @@ describe('brp.ts', () => {
     });
   });
 
-  describe('fetchAantalBewoners', () => {
+  describe('fetchAantalIngeschrevenPersonen', () => {
     beforeEach(() => {
       (fetchAuthTokenHeader as Mock).mockResolvedValueOnce({
         status: 'OK',
         content: 'xxx',
       });
     });
-    it('should return AANTAL_BEWONERS_NOT_SET when response is null', async () => {
-      remoteApi.post(/\/personen/).reply(200, null);
+    // {"detail":"Meer dan maximum van 30 zoekresultaten gevonden. Verfijn de zoekopdracht.","type":"https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1","title":"Teveel zoekresultaten.","status":400,"code":"tooManyResults","instance":"/bevragingen/v1/personen"}
+    it('should return >30 when response is 400 - tooManyResults', async () => {
+      remoteApi.post(/\/personen/).reply(400, {
+        detail:
+          'Meer dan maximum van 30 zoekresultaten gevonden. Verfijn de zoekopdracht.',
+        type: 'https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1',
+        title: 'Teveel zoekresultaten.',
+        status: 400,
+        code: 'tooManyResults',
+        instance: '/bevragingen/v1/personen',
+      });
 
-      const response = await fetchAantalBewoners(
+      const response = await fetchAantalIngeschrevenPersonen(
         'test-session-id',
         'test-bag-id'
       );
-      expect(response.content).toBe(AANTAL_BEWONERS_NOT_SET);
+
+      expect(response.content).toBe('Meer dan 30');
+    });
+
+    it('should return AANTAL_BEWONERS_NOT_SET when response is null', async () => {
+      remoteApi.post(/\/personen/).reply(200, null);
+
+      const response = await fetchAantalIngeschrevenPersonen(
+        'test-session-id',
+        'test-bag-id'
+      );
+      expect(response.content).toBe(`${AANTAL_INGESCHREVEN_PERSONEN_NOT_SET}`);
     });
 
     it('should return AANTAL_BEWONERS_NOT_SET when no personen in response', async () => {
       remoteApi.post(/\/personen/).reply(200, {});
 
-      const response = await fetchAantalBewoners(
+      const response = await fetchAantalIngeschrevenPersonen(
         'test-session-id',
         'test-bag-id'
       );
-      expect(response.content).toBe(AANTAL_BEWONERS_NOT_SET);
+      expect(response.content).toBe(`${AANTAL_INGESCHREVEN_PERSONEN_NOT_SET}`);
     });
 
     it('should return null when server error occurs', async () => {
-      remoteApi.post(/\/personen/).reply(400);
+      remoteApi.post(/\/personen/).reply(400, {
+        status: 400,
+        code: 'someOtherCode',
+      });
 
-      const response = await fetchAantalBewoners(
+      const response = await fetchAantalIngeschrevenPersonen(
         'test-session-id',
         'test-bag-id'
       );
       expect(response.content).toBe(null);
     });
 
-    it('should return correct aantal bewoners from response', async () => {
+    it('should return correct aantal ingeschreven personen from response', async () => {
       const responseData = {
         personen: [
           { naam: { volledigeNaam: 'John Doe' } },
@@ -111,11 +134,11 @@ describe('brp.ts', () => {
       };
       remoteApi.post(/\/personen/).reply(200, responseData);
 
-      const response = await fetchAantalBewoners(
+      const response = await fetchAantalIngeschrevenPersonen(
         'test-session-id',
         'test-bag-id'
       );
-      expect(response.content).toBe(2);
+      expect(response.content).toBe('2');
     });
 
     it('should filter out personen with opschortingBijhouding datum in the past', async () => {
@@ -153,11 +176,11 @@ describe('brp.ts', () => {
       };
       remoteApi.post(/\/personen/).reply(200, responseData);
 
-      const response = await fetchAantalBewoners(
+      const response = await fetchAantalIngeschrevenPersonen(
         'test-session-id',
         'test-bag-id'
       );
-      expect(response.content).toBe(2); // Jane Smith and Alice Johnson
+      expect(response.content).toBe('2'); // Jane Smith and Alice Johnson
     });
   });
 
@@ -229,23 +252,75 @@ describe('brp.ts', () => {
       expect(result).toHaveProperty('persoon.mokum', true);
     });
 
-    it('should set fetchUrlAantalBewoners to null and mokum to false if not mokum', () => {
-      const responseData = {
-        personen: [
-          {
-            naam: { volledigeNaam: 'John Doe' },
-            verblijfplaats: { type: 'VerblijfplaatsOnbekend' },
-            gemeenteVanInschrijving: { code: '9999' },
-          },
-        ],
+    it('should set fetchUrlAantalIngeschrevenPersonen to null and mokum to false if not mokum', () => {
+      const persoon = {
+        naam: { volledigeNaam: 'John Doe' },
+        verblijfplaats: { type: 'VerblijfplaatsOnbekend' },
+        gemeenteVanInschrijving: { code: '9999' },
       };
 
       const result = transformBenkBrpResponse(
         'xx-aa',
-        responseData.personen[0] as PersoonSource
+        persoon as PersoonSource
       );
-      expect(result).toHaveProperty('fetchUrlAantalBewoners', null);
+      expect(result).toHaveProperty('fetchUrlAantalIngeschrevenPersonen', null);
       expect(result).toHaveProperty('persoon.mokum', false);
+    });
+
+    it('should set fetchUrlAantalIngeschrevenPersonen to null and isBewoner to false if functieAdres is briefadres', () => {
+      const persoon = {
+        naam: { volledigeNaam: 'John Doe' },
+        verblijfplaats: {
+          type: 'Adres',
+          verblijfadres: {
+            officieleStraatnaam: 'Cycladenlaan',
+            korteStraatnaam: 'Cycladenlaan',
+            huisnummer: 2,
+            postcode: '1060LW',
+            woonplaats: 'Amsterdam',
+          },
+          functieAdres: {
+            omschrijving: 'briefadres',
+          },
+        },
+        gemeenteVanInschrijving: { code: '0363' },
+      };
+
+      const result = transformBenkBrpResponse(
+        'xx-aa',
+        persoon as PersoonSource
+      );
+      expect(result).toHaveProperty('fetchUrlAantalIngeschrevenPersonen', null);
+      expect(result).toHaveProperty('adres.isBewoner', false);
+      expect(result).toHaveProperty('adres.isBriefadres', true);
+    });
+
+    it('should set fetchUrlAantalIngeschrevenPersonen and isBewoner to true if functieAdres is woonadres', () => {
+      const persoon = {
+        naam: { volledigeNaam: 'John Doe' },
+        verblijfplaats: {
+          type: 'Adres',
+          verblijfadres: {
+            officieleStraatnaam: 'Cycladenlaan',
+            korteStraatnaam: 'Cycladenlaan',
+            huisnummer: 2,
+            postcode: '1060LW',
+            woonplaats: 'Amsterdam',
+          },
+          functieAdres: {
+            omschrijving: 'woonadres',
+          },
+        },
+        gemeenteVanInschrijving: { code: '0363' },
+      };
+
+      const result = transformBenkBrpResponse(
+        'xx-aa',
+        persoon as PersoonSource
+      );
+      expect(result).toHaveProperty('fetchUrlAantalIngeschrevenPersonen', null);
+      expect(result).toHaveProperty('adres.isBewoner', true);
+      expect(result).toHaveProperty('adres.isBriefadres', false);
     });
   });
 

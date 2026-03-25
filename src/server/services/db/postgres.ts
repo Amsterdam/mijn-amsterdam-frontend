@@ -1,7 +1,8 @@
-import { PoolConfig, Pool } from 'pg';
+import type { PoolConfig} from 'pg';
+import { Pool } from 'pg';
 
-import { IS_DEVELOPMENT } from '../../../universal/config/env';
-import { captureException } from '../monitoring';
+import { IS_DEVELOPMENT } from '../../../universal/config/env.ts';
+import { captureException } from '../monitoring.ts';
 
 // Connection params are taken from env variables.
 export const pgDbConfig: PoolConfig = {
@@ -27,6 +28,22 @@ export function getPool() {
   });
 
   return pool;
+}
+
+/**
+ * Test utility: closes and resets the singleton pool.
+ *
+ * This is useful for integration tests that need to bring Postgres up/down,
+ * change PG* env vars between suites, or avoid open handles after Vitest.
+ */
+export async function endPool() {
+  if (!pool) {
+    return;
+  }
+
+  const current = pool;
+  pool = null;
+  await current.end();
 }
 
 /**

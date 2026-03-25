@@ -1,6 +1,6 @@
 import { isFuture, isPast, parseISO } from 'date-fns';
 
-import { sanitizeCmsContent } from './cms-content';
+import { sanitizeCmsContent } from './cms-content.ts';
 import {
   CMS_MAINTENANCE_NOTIFICATIONS_CACHE_TIMEOUT_MS,
   CMS_DATE_REGEX,
@@ -10,26 +10,27 @@ import {
   REPLACE_REL_URL_PARTS,
   CMS_TIME_REGEX,
   CMS_ENV_REGEX,
-} from './cms-service-config';
+} from './cms-service-config.ts';
 import type {
   CMSEventData,
   CMSMaintenanceNotification,
   OtapEnv,
   CMSFeedItem,
   QueryParamsMaintenanceNotifications,
-} from './cms-types';
+} from './cms-types.ts';
 import {
   themaId,
   themaTitle,
-} from '../../../client/pages/MyNotifications/MyNotifications-config';
+} from '../../../client/pages/MyNotifications/MyNotifications-config.ts';
+import type {
+  ApiResponse} from '../../../universal/helpers/api.ts';
 import {
-  ApiResponse,
   apiSuccessResult,
   getFailedDependencies,
-} from '../../../universal/helpers/api';
-import { FORCE_RENEW_CACHE_TTL_MS } from '../../config/source-api';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
+} from '../../../universal/helpers/api.ts';
+import { FORCE_RENEW_CACHE_TTL_MS } from '../../config/source-api.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
 
 function isOtapEnvMatch(notification: CMSMaintenanceNotification): boolean {
   return notification.otapEnvs.some((env) => notificationEnvMap[env]);
@@ -46,7 +47,7 @@ function transformCMSEventResponse(
     title: eventData.item.page.title,
     path: eventData.item.relUrl.replace(REPLACE_REL_URL_PARTS, ''),
     themaID: themaId,
-    themaTitle: themaTitle,
+    themaTitle,
     isAlert: true,
     severity: DEFAULT_SEVERITY,
     datePublished: new Date().toISOString(),
@@ -144,6 +145,7 @@ async function fetchCMSMaintenanceNotifications(
   return apiSuccessResult(notifications);
 }
 
+// The maintenance and outage notifications.
 export async function fetchActiveMaintenanceNotifications(
   queryParams: QueryParamsMaintenanceNotifications
 ) {
@@ -172,9 +174,18 @@ export async function fetchActiveMaintenanceNotifications(
   return apiSuccessResult(filteredNotifications);
 }
 
+// The maintenance and outage notifications for the tips and notification list
 export async function fetchMaintenanceNotificationsDashboard() {
-  return fetchActiveMaintenanceNotifications({
+  const dashboardCMSNotifications = await fetchActiveMaintenanceNotifications({
     page: 'dashboard',
+  });
+
+  if (dashboardCMSNotifications.status !== 'OK') {
+    return dashboardCMSNotifications;
+  }
+
+  return apiSuccessResult({
+    notifications: dashboardCMSNotifications.content,
   });
 }
 

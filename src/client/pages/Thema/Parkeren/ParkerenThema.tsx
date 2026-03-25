@@ -1,15 +1,15 @@
 import { Alert, Icon, Paragraph } from '@amsterdam/design-system-react';
 import { LinkExternalIcon } from '@amsterdam/design-system-react-icons';
 
-import { useParkerenData } from './useParkerenData.hook';
-import { DecosZaakFrontend } from '../../../../server/services/vergunningen/config-and-types';
-import { MaButtonLink } from '../../../components/MaLink/MaLink';
-import { PageContentCell } from '../../../components/Page/Page';
-import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed';
-import ThemaPagina from '../../../components/Thema/ThemaPagina';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
-import { useProfileTypeValue } from '../../../hooks/useProfileType';
+import { useParkerenData } from './useParkerenData.hook.tsx';
+import type { DecosZaakFrontend } from '../../../../server/services/vergunningen/config-and-types.ts';
+import { MaButtonLink } from '../../../components/MaLink/MaLink.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
+import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
+import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
+import { useProfileTypeValue } from '../../../hooks/useProfileType.ts';
 
 type PageContentTopProps = {
   hasMijnParkerenVergunningen: boolean;
@@ -62,11 +62,10 @@ export function ParkerenThema() {
     isLoading,
     isError,
     parkerenUrlSSO,
-    linkListItems,
-    routeConfig,
+    themaConfig,
   } = useParkerenData();
 
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const tables = Object.entries(tableConfig).map(
     ([
@@ -116,7 +115,7 @@ export function ParkerenThema() {
       isError={isError}
       isLoading={isLoading}
       pageContentTop={pageContentTop}
-      pageLinks={linkListItems}
+      pageLinks={themaConfig.pageLinks}
       pageContentMain={tables}
       pageContentBottom={pageContentBottom}
       maintenanceNotificationsPageSlug="parkeren"

@@ -1,14 +1,14 @@
-import { AxiosResponseTransformer } from 'axios';
+import type { AxiosResponseTransformer } from 'axios';
 
 import {
   apiSuccessResult,
   type ApiResponse,
-} from '../../../universal/helpers/api';
-import { omit } from '../../../universal/helpers/utils';
-import { MyNotification } from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { DataRequestConfig } from '../../config/source-api';
-import { requestData } from '../../helpers/source-api-request';
+} from '../../../universal/helpers/api.ts';
+import { omit } from '../../../universal/helpers/utils.ts';
+import type { MyNotification } from '../../../universal/types/App.types.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import type { DataRequestConfig } from '../../config/source-api.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
 
 export interface ApiPatternResponseA {
   tips?: MyNotification[];
@@ -83,28 +83,24 @@ export async function fetchTipsAndNotifications<ID extends string = string>(
   apiConfig: DataRequestConfig = {},
   themaID: ID,
   authProfileAndToken?: AuthProfileAndToken
-): Promise<
-  ApiResponse<Pick<ApiPatternResponseA, 'notifications' | 'tips'> | null>
-> {
+): Promise<ApiResponse<Pick<ApiPatternResponseA, 'notifications' | 'tips'>>> {
   const response = await fetchService(apiConfig, true, authProfileAndToken);
-
-  if (response.status === 'OK') {
-    const responseData: Pick<ApiPatternResponseA, 'notifications' | 'tips'> =
-      {};
-
-    if (response.content?.notifications) {
-      responseData.notifications = transformNotificationsDefault(
-        response.content.notifications,
-        themaID
-      );
-    }
-
-    if (response.content?.tips) {
-      responseData.tips = response.content?.tips;
-    }
-
-    return apiSuccessResult(responseData);
+  if (response.status !== 'OK') {
+    return response;
   }
 
-  return response;
+  const responseData: Pick<ApiPatternResponseA, 'notifications' | 'tips'> = {};
+
+  if (response.content?.notifications) {
+    responseData.notifications = transformNotificationsDefault(
+      response.content.notifications,
+      themaID
+    );
+  }
+
+  if (response.content?.tips) {
+    responseData.tips = response.content?.tips;
+  }
+
+  return apiSuccessResult(responseData);
 }

@@ -4,11 +4,11 @@ import { PageFooter } from '@amsterdam/design-system-react';
 
 // https://github.com/import-js/eslint-plugin-import/issues/2876
 // eslint-disable-next-line import/order
-import type { CobrowseWidget } from './lib/cobrowse-widget';
+import type { CobrowseWidget } from './lib/cobrowse-widget.d.ts';
 
 import './lib/cobrowse-widget.css';
-import { REDACTED_CLASS, useCobrowseStore } from '../../../helpers/cobrowse';
-import { useIsBffToggleEnabled } from '../../../helpers/env';
+import { isEnabled } from '../../../config/feature-toggles.ts';
+import { REDACTED_CLASS, useCobrowseStore } from '../../../helpers/cobrowse.ts';
 
 export const LABEL_HULP_SCHERMDELEN = 'Hulp via schermdelen';
 declare global {
@@ -22,16 +22,12 @@ export function CobrowseFooter() {
   const [cobrowseWidget, setCobrowseWidget] = useState<CobrowseWidget | null>(
     null
   );
-  const isCobrowseEnabled = useIsBffToggleEnabled('BFF_COBROWSE_IS_ACTIVE');
   const setIsScreensharing = useCobrowseStore(
     (state) => state.setIsScreensharing
   );
-
+  const isCobrowseEnabled = isEnabled('cobrowse');
   useEffect(() => {
-    if (!isCobrowseEnabled || !licenseKey) {
-      return;
-    }
-    if (cobrowseWidget) {
+    if (!isCobrowseEnabled || !licenseKey || cobrowseWidget) {
       return;
     }
     import('./lib/cobrowse-widget.js').then(({ CobrowseWidget }) => {

@@ -1,4 +1,4 @@
-import { ILayer } from 'express-serve-static-core/index';
+import type { ILayer } from 'express-serve-static-core/index';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -101,11 +101,6 @@ describe('app', async () => {
     expect(
       app.router.stack.some(
         (x: object) => 'name' in x && x.name === 'handleIsAuthenticated'
-      )
-    ).toBe(true);
-    expect(
-      app.router.stack.some(
-        (x: object) => 'name' in x && x.name === 'handleCheckProtectedRoute'
       )
     ).toBe(true);
   });

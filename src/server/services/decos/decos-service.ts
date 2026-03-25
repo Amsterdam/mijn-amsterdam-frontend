@@ -10,7 +10,7 @@ import {
   MA_DECISION_DEFAULT,
   SELECT_FIELDS_META,
   SELECT_FIELDS_TRANSFORM_BASE,
-} from './decos-field-transformers';
+} from './decos-field-transformers.ts';
 import {
   getDecosZaakTypeFromSource,
   getDisplayStatus,
@@ -18,7 +18,7 @@ import {
   isExcludedFromTransformation,
   isExpired,
   isZaakDecisionVerleend,
-} from './decos-helpers';
+} from './decos-helpers.ts';
 import type {
   AddressBookEntry,
   DecosZaakTransformer,
@@ -37,29 +37,30 @@ import type {
   DecosDocumentBlobSource,
   DecosDocumentSource,
   DecosZaakFrontend,
-} from './decos-types';
-import { IS_PRODUCTION } from '../../../universal/config/env';
+} from './decos-types.ts';
+import { IS_PRODUCTION } from '../../../universal/config/env.ts';
+import type {
+  ApiResponse} from '../../../universal/helpers/api.ts';
 import {
   apiErrorResult,
-  ApiResponse,
   apiSuccessResult,
   getSettledResult,
-} from '../../../universal/helpers/api';
-import { toDateFormatted } from '../../../universal/helpers/date';
-import { omit, sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
-import type { StatusLineItem } from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import { getApiConfig } from '../../helpers/source-api-helpers';
+} from '../../../universal/helpers/api.ts';
+import { toDateFormatted } from '../../../universal/helpers/date.ts';
+import { omit, sortAlpha, uniqueArray } from '../../../universal/helpers/utils.ts';
+import type { StatusLineItem } from '../../../universal/types/App.types.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
 import {
   getRequestParamsFromQueryString,
   requestData,
-} from '../../helpers/source-api-request';
-import { BffEndpoints } from '../../routing/bff-routes';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { captureException, captureMessage } from '../monitoring';
-import { DocumentDownloadData } from '../shared/document-download-route-handler';
-import type { WithDateRange } from '../vergunningen/config-and-types';
+} from '../../helpers/source-api-request.ts';
+import { BffEndpoints } from '../../routing/bff-routes.ts';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
+import { captureException, captureMessage } from '../monitoring.ts';
+import type { DocumentDownloadData } from '../shared/document-download-route-handler.ts';
+import type { WithDateRange } from '../vergunningen/config-and-types.ts';
 
 const debug = createDebugger('decos-service');
 

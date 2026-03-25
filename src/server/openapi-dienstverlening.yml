@@ -27,17 +27,32 @@ paths:
         - bearerAuth: []
         - apimSubscriptionKey: []
       description: |
-        Gets a list of compacted WMO voorzieningen.
+        Gets a list of WMO voorzieningen.
       requestBody:
         required: true
         content:
           application/json:
             schema:
               type: object
+              required: [bsn]
               properties:
                 bsn:
                   type: string
                   description: The BSN of the user to fetch the WMO voorzieningen for.
+                maActies:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/WmoVoorziening/properties/maActies'
+                  description:
+                    Optional list of maActies to filter the voorzieningen on.
+                    Only voorzieningen that have at least one of the specified maActies will be included in the response.
+                maProductgroep:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/WmoVoorziening/properties/maProductgroep'
+                  description:
+                    Optional list of maProductgroepen to filter the voorzieningen on.
+                    Only voorzieningen that have at least one of the specified maProductgroepen will be included in the response.
       responses:
         '200':
           description: |
@@ -45,7 +60,7 @@ paths:
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/WmoVoorzieningenCompactResponse'
+                $ref: '#/components/schemas/WmoVoorzieningenResponse'
         '500':
           $ref: '#/components/responses/ApplicationErrorResponse'
         '503':
@@ -139,34 +154,87 @@ components:
           type: string
           enum:
             - OK
-    WmoVoorzieningenCompactResponse:
+    WmoVoorzieningenResponse:
       type: object
       properties:
         content:
           type: array
           items:
-            $ref: '#/components/schemas/WmoVoorzieningCompact'
+            $ref: '#/components/schemas/WmoVoorziening'
         status:
           type: string
           enum:
             - 'SUCCESS'
-    WmoVoorzieningCompact:
+    WmoVoorziening:
       type: object
       properties:
         id:
           type: string
-        title:
+        titel:
           type: string
-        productGroup:
+        maProductgroep:
           type: string
+          enum:
+            - 'WRA'
+            - 'hulpmiddelen'
+            - 'diensten'
+            - 'PGB'
+            - 'vergoeding'
+            - 'AOV'
+            - 'Alle afgewezen'
+        maActies:
+          type: array
+          items:
+            type: string
+            enum:
+              - stopzetten
+              - reparatieverzoek
         beschikkingNummer:
-          type: string
+          type: integer
+          nullable: true
         productIdentificatie:
           type: string
+          nullable: true
         beschiktProductIdentificatie:
           type: string
+          nullable: true
         datumBesluit:
           type: string
+          nullable: true
+        datumAanvraag:
+          type: string
+        datumBeginLevering:
+          type: string
+          nullable: true
+        datumEindeGeldigheid:
+          type: string
+          nullable: true
+        datumEindeLevering:
+          type: string
+          nullable: true
+        datumIngangGeldigheid:
+          type: string
+          nullable: true
+        datumOpdrachtLevering:
+          type: string
+          nullable: true
+        leverancier:
+          type: string
+          nullable: true
+        leverancierIdentificatie:
+          type: string
+          nullable: true
+        leveringsVorm:
+          type: string
+          nullable: true
+        productsoortCode:
+          type: string
+          nullable: true
+        resultaat:
+          type: string
+          enum:
+            - toegewezen
+            - afgewezen
     AfisStatusNotificationRequestBody:
       type: object
       properties:

@@ -1,28 +1,25 @@
 import { differenceInMonths, format } from 'date-fns';
-import { LinkProps, generatePath } from 'react-router';
+import type { LinkProps } from 'react-router';
+import { generatePath } from 'react-router';
 
-import { MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS } from './config';
-import { requestProcess as bbzRequestProcessLabels } from './content/bbz';
-import { requestProcess as tonkRequestProcessLabels } from './content/tonk';
-import { requestProcess as tozoRequestProcessLabels } from './content/tozo';
-import {
+import { MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS } from './config.ts';
+import { requestProcess as bbzRequestProcessLabels } from './content/bbz.ts';
+import { requestProcess as tonkRequestProcessLabels } from './content/tonk.ts';
+import { requestProcess as tozoRequestProcessLabels } from './content/tozo.ts';
+import type {
   WpiRequestProcess,
   WpiRequestProcessLabels,
   WpiRequestStatus,
-} from './wpi-types';
-import {
-  routeConfig,
-  themaId as themaIdInkomen,
-  themaTitle as themaTitleInkomen,
-} from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import {
+} from './wpi-types.ts';
+import { themaConfig as themaInkomen } from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config.ts';
+import { defaultDateFormat } from '../../../universal/helpers/date.ts';
+import type {
   GenericDocument,
   MyNotification,
-} from '../../../universal/types/App.types';
-import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import { BffEndpoints } from '../../routing/bff-routes';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
+} from '../../../universal/types/App.types.ts';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt.ts';
+import { BffEndpoints } from '../../routing/bff-routes.ts';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
 
 export function transformRequestProcess(
   sessionID: SessionID,
@@ -99,6 +96,7 @@ export function createProcessNotification(
   labels: WpiRequestProcessLabels
 ): MyNotification {
   const notificationLabels = labels[statusStep.id].notification;
+
   const titleTransform = notificationLabels.title;
   const descriptionTransform = notificationLabels.description;
   const linkTransform = notificationLabels.link;
@@ -106,8 +104,8 @@ export function createProcessNotification(
   return {
     id: `${requestProcess.id}-notification`,
     datePublished: statusStep.datePublished,
-    themaID: themaIdInkomen,
-    themaTitle: themaTitleInkomen,
+    themaID: themaInkomen.id,
+    themaTitle: themaInkomen.title,
     title: titleTransform
       ? titleTransform(requestProcess, statusStep)
       : `Update: ${requestProcess.about} aanvraag.`,
@@ -165,7 +163,7 @@ export function addLink(requestProcess: WpiRequestProcess) {
   switch (requestProcess.about) {
     case 'TONK':
       link = {
-        to: generatePath(routeConfig.detailPageTonk.path, {
+        to: generatePath(themaInkomen.detailPageTonk.route.path, {
           id,
           version: '1',
         }),
@@ -178,7 +176,7 @@ export function addLink(requestProcess: WpiRequestProcess) {
     case 'Tozo 4':
     case 'Tozo 5':
       link = {
-        to: generatePath(routeConfig.detailPageTozo.path, {
+        to: generatePath(themaInkomen.detailPageTozo.route.path, {
           id,
           version: requestProcess.about.replace('Tozo ', ''),
         }),
@@ -187,7 +185,7 @@ export function addLink(requestProcess: WpiRequestProcess) {
       break;
     case 'Bijstandsuitkering':
       link = {
-        to: generatePath(routeConfig.detailPageUitkering.path, {
+        to: generatePath(themaInkomen.detailPageUitkering.route.path, {
           id,
         }),
         title,
@@ -195,7 +193,7 @@ export function addLink(requestProcess: WpiRequestProcess) {
       break;
     case 'Bbz':
       link = {
-        to: generatePath(routeConfig.detailPageBbz.path, {
+        to: generatePath(themaInkomen.detailPageBbz.route.path, {
           id,
           version: '1',
         }),
@@ -215,8 +213,8 @@ export function addLink(requestProcess: WpiRequestProcess) {
 
 export function getEAanvraagRequestProcessLabels(
   requestProcess: WpiRequestProcess
-): WpiRequestProcessLabels | undefined {
-  let labels: WpiRequestProcessLabels | undefined = undefined;
+): WpiRequestProcessLabels | null {
+  let labels: WpiRequestProcessLabels | null = null;
   switch (requestProcess.about) {
     case 'Tozo 1':
     case 'Tozo 2':

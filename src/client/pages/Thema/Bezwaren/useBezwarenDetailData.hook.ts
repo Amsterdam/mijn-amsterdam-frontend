@@ -1,10 +1,10 @@
 import { useParams } from 'react-router';
 
-import { useBezwarenThemaData } from './useBezwarenThemaData.hook';
-import { BezwaarDetail } from '../../../../server/services/bezwaren/bezwaren';
-import { hasFailedDependency } from '../../../../universal/helpers/api';
-import { uniqueArray } from '../../../../universal/helpers/utils';
-import { useBffApi } from '../../../hooks/api/useBffApi';
+import { useBezwarenThemaData } from './useBezwarenThemaData.hook.ts';
+import type { BezwaarDetail } from '../../../../server/services/bezwaren/bezwaren.ts';
+import { hasFailedDependency } from '../../../../universal/helpers/api.ts';
+import { uniqueArray } from '../../../../universal/helpers/utils.ts';
+import { useBffApi } from '../../../hooks/api/useBffApi.ts';
 
 export function useBezwarenDetailData() {
   const {
@@ -13,6 +13,7 @@ export function useBezwarenDetailData() {
     isLoading: isLoadingThemaData,
     breadcrumbs,
     themaConfig,
+    themaId,
   } = useBezwarenThemaData();
   const { uuid } = useParams<{ uuid: string }>();
 
@@ -34,7 +35,7 @@ export function useBezwarenDetailData() {
     hasFailedDependency(data, 'statussen');
 
   return {
-    themaId: themaConfig.id,
+    themaId,
     title: bezwaar?.identificatie ?? 'Bezwaar',
     bezwaar,
     bezwaarDetail,

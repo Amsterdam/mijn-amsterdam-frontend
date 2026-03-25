@@ -1,11 +1,11 @@
 import { useParams } from 'react-router';
 
-import { useVarenThemaData } from './useVarenThemaData.hook';
+import { useVarenThemaData } from './useVarenThemaData.hook.ts';
 import {
   exploitatieVergunningWijzigenLink,
-  routeConfig,
-} from './Varen-thema-config';
-import { ButtonLinkProps } from '../../../../universal/types/App.types';
+  themaConfig,
+} from './Varen-thema-config.ts';
+import type { ButtonLinkProps } from '../../../../universal/types/App.types.ts';
 
 export function useVarenVergunningDetailPage() {
   const {
@@ -31,7 +31,7 @@ export function useVarenVergunningDetailPage() {
     isLoading,
     isError,
     breadcrumbs,
-    routeConfig,
+    themaConfig,
   };
 }
 
@@ -61,6 +61,6 @@ export function useVarenZaakDetailPage() {
     isLoading,
     isError,
     breadcrumbs,
-    routeConfig,
+    themaConfig,
   };
 }

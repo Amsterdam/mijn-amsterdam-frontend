@@ -1,16 +1,16 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { useKrefiaThemaData } from './useKrefiaThemaData.hook';
-import type { KrefiaDeepLink } from '../../../../server/services/krefia/krefia.types';
-import { entries } from '../../../../universal/helpers/utils';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaPagina from '../../../components/Thema/ThemaPagina';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { useKrefiaThemaData } from './useKrefiaThemaData.hook.tsx';
+import type { KrefiaDeepLink } from '../../../../server/services/krefia/krefia.types.ts';
+import { entries } from '../../../../universal/helpers/utils.ts';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
+import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function KrefiaThema() {
   const {
-    id,
+    themaId,
     title,
     deepLinks,
     hasFIBU,
@@ -20,9 +20,9 @@ export function KrefiaThema() {
     linkListItems,
     isError,
     isLoading,
-    routeConfig,
+    themaConfig,
   } = useKrefiaThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const pageContentTop = (
     <PageContentCell spanWide={8}>
@@ -62,7 +62,7 @@ export function KrefiaThema() {
 
   return (
     <ThemaPagina
-      id={id}
+      id={themaId}
       title={title}
       isError={isError}
       isLoading={isLoading}

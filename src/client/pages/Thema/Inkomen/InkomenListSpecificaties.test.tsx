@@ -1,15 +1,15 @@
 import { render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import { generatePath } from 'react-router';
 import { describe, expect, it } from 'vitest';
 
-import { listPageParamKind, routeConfig } from './Inkomen-thema-config';
-import { InkomenListSpecificaties } from './InkomenListSpecificaties';
-import { transformIncomSpecificationResponse } from '../../../../server/services/wpi/api-service';
-import { WpiIncomeSpecificationResponseData } from '../../../../server/services/wpi/wpi-types';
-import { dateSort } from '../../../../universal/helpers/date';
-import { AppState } from '../../../../universal/types/App.types';
-import MockApp from '../../MockApp';
+import { listPageParamKind, themaConfig } from './Inkomen-thema-config.ts';
+import { InkomenListSpecificaties } from './InkomenListSpecificaties.tsx';
+import { transformIncomSpecificationResponse } from '../../../../server/services/wpi/api-service.ts';
+import type { WpiIncomeSpecificationResponseData } from '../../../../server/services/wpi/wpi-types.ts';
+import { dateSort } from '../../../../universal/helpers/date.ts';
+import type { AppState } from '../../../../universal/types/App.types.ts';
+import MockApp from '../../MockApp.tsx';
 
 vi.mock('../../../components/DateInput/DateInput', async (importOriginal) => {
   const original = (await importOriginal()) as object;
@@ -82,11 +82,14 @@ const content = transformIncomSpecificationResponse('xxxxxxxxxxxxxxxxxxxxx', {
 });
 
 describe('<InkomenSpecificaties /> Uitkering', () => {
-  const routeEntry = generatePath(routeConfig.listPageSpecificaties.path, {
-    kind: listPageParamKind.uitkering,
-    page: null,
-  });
-  const routePath = routeConfig.listPageSpecificaties.path;
+  const routeEntry = generatePath(
+    themaConfig.listPageSpecificaties.route.path,
+    {
+      kind: listPageParamKind.uitkering,
+      page: null,
+    }
+  );
+  const routePath = themaConfig.listPageSpecificaties.route.path;
 
   function Component() {
     return (
@@ -135,11 +138,14 @@ describe('<InkomenSpecificaties /> Uitkering', () => {
 });
 
 describe('<InkomenSpecificaties /> Jaaropgave', () => {
-  const routeEntry = generatePath(routeConfig.listPageSpecificaties.path, {
-    kind: listPageParamKind.jaaropgaven,
-    page: null,
-  });
-  const routePath = routeConfig.listPageSpecificaties.path;
+  const routeEntry = generatePath(
+    themaConfig.listPageSpecificaties.route.path,
+    {
+      kind: listPageParamKind.jaaropgaven,
+      page: null,
+    }
+  );
+  const routePath = themaConfig.listPageSpecificaties.route.path;
 
   function Component() {
     return (

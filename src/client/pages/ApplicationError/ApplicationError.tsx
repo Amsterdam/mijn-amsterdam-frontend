@@ -1,4 +1,5 @@
-import { ReactNode, useEffect } from 'react';
+import type { ReactNode} from 'react';
+import { useEffect } from 'react';
 
 import {
   PageFooter,
@@ -12,8 +13,7 @@ import {
 } from '@amsterdam/design-system-react';
 import type { FallbackProps } from 'react-error-boundary';
 
-import { PageContentCell, PageV2 } from '../../components/Page/Page';
-import { useUsabilla } from '../../hooks/useUsabilla';
+import { PageContentCell, PageV2 } from '../../components/Page/Page.tsx';
 
 function ApplicationErrorContent({ error }: { error?: Error }) {
   useEffect(() => {
@@ -60,7 +60,6 @@ function ApplicationErrorContent({ error }: { error?: Error }) {
 export function ApplicationError({
   error,
 }: FallbackProps & { children?: ReactNode }) {
-  useUsabilla();
   return (
     <>
       <Page>

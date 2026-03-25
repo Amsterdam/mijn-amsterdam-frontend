@@ -1,4 +1,4 @@
-import type { BSN } from '../zorgned/zorgned-types';
+import type { BSN } from '../zorgned/zorgned-types.ts';
 
 type TyperingSource = {
   code: string;
@@ -154,6 +154,15 @@ export type PersonenResponseSource = {
   personen?: PersoonSource[];
 };
 
+export type PersonenResponseSourceError = {
+  detail?: string;
+  type?: string;
+  title?: string;
+  status: 400;
+  code: string;
+  instance?: string;
+};
+
 export type VerblijfplaatshistorieResponseSource = {
   verblijfplaatsen: VerblijfplaatsSource[];
 };
@@ -171,7 +180,8 @@ export type Adres = {
   locatiebeschrijving?: string | null;
   vveNaam?: string | null;
   wozWaarde?: string | null;
-  aantalBewoners?: number | null;
+  isBewoner: boolean;
+  isBriefadres: boolean;
 };
 
 export type PersoonBasis = {
@@ -224,6 +234,6 @@ export type BrpFrontend = {
   ouders: Ouder[];
   adres: Adres | null;
   adresHistorisch: Adres[];
-  fetchUrlAantalBewoners: string | null;
-  aantalBewoners: number | null;
+  fetchUrlAantalIngeschrevenPersonen: string | null;
+  aantalIngeschrevenPersonen: number | null;
 };

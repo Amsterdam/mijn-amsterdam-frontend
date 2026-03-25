@@ -7,15 +7,15 @@ import type {
   ZaakVergunningExploitatieWijzigingVerbouwingType,
   ZaakVergunningExploitatieWijzigingVergunningshouderType,
   ZaakVergunningExploitatieWijzigingVervangingType,
-} from './config-and-types';
-import { dateSort } from '../../../universal/helpers/date';
+} from './config-and-types.ts';
+import { dateSort } from '../../../universal/helpers/date.ts';
 import {
   dateEnd,
   dateStart,
   SELECT_FIELDS_TRANSFORM_BASE,
-} from '../decos/decos-field-transformers';
-import { transformFieldValuePairs } from '../decos/decos-service';
-import { DecosZaakTransformer } from '../decos/decos-types';
+} from '../decos/decos-field-transformers.ts';
+import { transformFieldValuePairs } from '../decos/decos-service.ts';
+import type { DecosZaakTransformer } from '../decos/decos-types.ts';
 
 const vesselName = { text18: 'vesselName' } as const;
 const vesselLengths = {

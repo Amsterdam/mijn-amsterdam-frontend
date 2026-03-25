@@ -1,9 +1,9 @@
 import mockdate from 'mockdate';
 import { describe, it, expect } from 'vitest';
 
-import { generateApiUrl, getEMandateValidityDate } from './Afis-helpers';
-import { EMANDATE_ENDDATE_INDICATOR } from './Afis-thema-config';
-import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types';
+import { generateApiUrl, getEMandateValidityDate } from './Afis-helpers.ts';
+import { EMANDATE_ENDDATE_INDICATOR } from './Afis-thema-config.ts';
+import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types.ts';
 
 describe('Afis-helpers', () => {
   describe('generateApiUrl', () => {

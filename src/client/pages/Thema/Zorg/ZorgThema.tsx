@@ -1,13 +1,13 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 
-import { useZorgThemaData } from './useZorgThemaData';
-import { themaConfig } from './Zorg-thema-config';
-import { WMOVoorzieningFrontend } from '../../../../server/services/wmo/wmo-types';
-import { PageContentCell } from '../../../components/Page/Page';
-import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed';
-import ThemaPagina from '../../../components/Thema/ThemaPagina';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { useZorgThemaData } from './useZorgThemaData.ts';
+import { themaConfig } from './Zorg-thema-config.ts';
+import type { WMOVoorzieningFrontend } from '../../../../server/services/wmo/wmo-types.ts';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
+import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
+import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export const WMO_HELPDESK_PHONENUMBER = '0800 0643' as const;
 export const WMO_HELPDESK_HREF_TEL_LINK =
@@ -32,7 +32,7 @@ export function ZorgThema() {
     isError,
     isLoading,
     voorzieningen,
-    id,
+    themaId,
     title,
     tableConfig,
     pageLinks,
@@ -79,7 +79,7 @@ export function ZorgThema() {
   return (
     <>
       <ThemaPagina
-        id={id}
+        id={themaId}
         title={title}
         pageContentTop={pageContentTop}
         pageLinks={pageLinks}

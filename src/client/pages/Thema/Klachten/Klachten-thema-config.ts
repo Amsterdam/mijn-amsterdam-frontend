@@ -1,22 +1,18 @@
 import { generatePath } from 'react-router';
 
-import { KlachtFrontend } from '../../../../server/services/klachten/types';
-import { dateSort } from '../../../../universal/helpers/date';
-import { DisplayProps } from '../../../components/Table/TableV2.types';
+import type { KlachtFrontend } from '../../../../server/services/klachten/types.ts';
+import { dateSort } from '../../../../universal/helpers/date.ts';
+import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
-} from '../../../config/app';
+} from '../../../config/app.ts';
 import type {
   ThemaConfigBase,
   ThemaRoutesConfig,
   WithDetailPage,
   WithListPage,
-} from '../../../config/thema-types';
-
-export const featureToggle = {
-  statustreinAndAfgehandeldeMeldingenActive: true, // TO DO  YACINE deze erut halen?
-};
+} from '../../../config/thema-types.ts';
 
 export const THEMA_ID = 'KLACHTEN';
 export const THEMA_TITLE = 'Klachten';

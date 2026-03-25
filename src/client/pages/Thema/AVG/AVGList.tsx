@@ -1,6 +1,6 @@
-import { useAVGListPageData } from './useAVGListPage.hook';
-import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { useAVGListPageData } from './useAVGListPage.hook.ts';
+import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function AVGList() {
   const {
@@ -9,19 +9,18 @@ export function AVGList() {
     isError,
     filter,
     sort,
-    themaId,
     title,
     breadcrumbs,
     displayProps,
     listPageRoute,
-    routeConfig,
+    themaConfig,
   } = useAVGListPageData();
-  useHTMLDocumentTitle(routeConfig.listPage);
+  useHTMLDocumentTitle(themaConfig.listPage.route);
 
   return (
     <ListPagePaginated
       items={avgVerzoeken.filter(filter).sort(sort)}
-      themaId={themaId}
+      themaId={themaConfig.id}
       title={title}
       appRoute={listPageRoute}
       breadcrumbs={breadcrumbs}

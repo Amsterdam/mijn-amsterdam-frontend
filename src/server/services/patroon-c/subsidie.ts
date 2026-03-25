@@ -6,21 +6,17 @@ import {
   fetchService,
   fetchTipsAndNotifications,
   type ApiPatternResponseA,
-} from './api-service';
-import {
-  SUBSIDIES_ROUTE_DEFAULT,
-  themaId,
-  themaTitle,
-} from '../../../client/pages/Thema/Subsidies/Subsidies-thema-config';
-import { apiSuccessResult } from '../../../universal/helpers/api';
-import { MyNotification } from '../../../universal/types/App.types';
-import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
-import { encrypt } from '../../helpers/encrypt-decrypt';
-import { getFromEnv } from '../../helpers/env';
+} from './api-service.ts';
+import { themaConfig } from '../../../client/pages/Thema/Subsidies/Subsidies-thema-config.ts';
+import { apiSuccessResult } from '../../../universal/helpers/api.ts';
+import type { MyNotification } from '../../../universal/types/App.types.ts';
+import type { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { encrypt } from '../../helpers/encrypt-decrypt.ts';
+import { getFromEnv } from '../../helpers/env.ts';
 import {
   createSessionBasedCacheKey,
   getApiConfig,
-} from '../../helpers/source-api-helpers';
+} from '../../helpers/source-api-helpers.ts';
 
 async function getJWT() {
   const secret = new TextEncoder().encode(process.env.BFF_SISA_CLIENT_SECRET);
@@ -48,7 +44,7 @@ function transformSubsidieNotifications(
     const url = `${urlTo.origin}${urlTo.pathname}?${params.toString()}`;
 
     return Object.assign(notification, {
-      themaTitle,
+      themaTitle: themaConfig.title,
       link: {
         ...notification.link,
         to: new URL(url).toString(),
@@ -85,7 +81,7 @@ async function getConfig(authProfileAndToken: AuthProfileAndToken) {
     ): ApiPatternResponseA {
       return {
         ...response,
-        url: `${getFromEnv('BFF_SSO_URL_SUBSIDIES') ?? SUBSIDIES_ROUTE_DEFAULT}?authMethod=${authProfileAndToken.profile.authMethod}`,
+        url: `${getFromEnv('BFF_SSO_URL_SUBSIDIES') ?? themaConfig.route.path}?authMethod=${authProfileAndToken.profile.authMethod}`,
       };
     },
   });
@@ -100,7 +96,7 @@ export async function fetchSubsidieNotifications(
 ) {
   const response = await fetchTipsAndNotifications(
     await getConfig(authProfileAndToken),
-    themaId
+    themaConfig.id
   );
 
   if (response.status === 'OK' && response.content?.notifications) {

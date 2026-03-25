@@ -3,13 +3,15 @@
 exports[`brp.ts > fetchBrpByBsn > Should format response data correctly > Formatting for test BSN 1, with verblijfplaatshistorie 1`] = `
 {
   "content": {
-    "aantalBewoners": -1,
+    "aantalIngeschrevenPersonen": -1,
     "adres": {
       "begindatumVerblijf": "2015-10-01",
       "begindatumVerblijfFormatted": "1 oktober 2015",
       "huisletter": null,
       "huisnummer": "1",
       "huisnummertoevoeging": null,
+      "isBewoner": true,
+      "isBriefadres": false,
       "landnaam": null,
       "locatiebeschrijving": null,
       "postcode": "1102BL",
@@ -23,6 +25,8 @@ exports[`brp.ts > fetchBrpByBsn > Should format response data correctly > Format
         "huisletter": null,
         "huisnummer": "4",
         "huisnummertoevoeging": null,
+        "isBewoner": true,
+        "isBriefadres": false,
         "landnaam": null,
         "locatiebeschrijving": null,
         "postcode": "1098NK",
@@ -35,6 +39,8 @@ exports[`brp.ts > fetchBrpByBsn > Should format response data correctly > Format
         "huisletter": null,
         "huisnummer": "100",
         "huisnummertoevoeging": null,
+        "isBewoner": true,
+        "isBriefadres": false,
         "landnaam": null,
         "locatiebeschrijving": null,
         "postcode": "1011AH",
@@ -42,7 +48,7 @@ exports[`brp.ts > fetchBrpByBsn > Should format response data correctly > Format
         "woonplaatsNaam": null,
       },
     ],
-    "fetchUrlAantalBewoners": "http://bff-api-host/api/v1/service/brp/aantal-bewoners?id=test-encrypted-id",
+    "fetchUrlAantalIngeschrevenPersonen": "http://bff-api-host/api/v1/services/brp/aantal-ingeschreven-personen?id=test-encrypted-id",
     "kinderen": [
       {
         "geboortedatum": "2015-09-01",
@@ -140,13 +146,15 @@ exports[`brp.ts > fetchBrpByBsn > Should format response data correctly > Format
 exports[`brp.ts > fetchBrpByBsn > Should format response data correctly > Formatting for test BSN 2, with verblijfplaatshistorie returning an error 1`] = `
 {
   "content": {
-    "aantalBewoners": -1,
+    "aantalIngeschrevenPersonen": -1,
     "adres": {
       "begindatumVerblijf": "2001-05-01",
       "begindatumVerblijfFormatted": "1 mei 2001",
       "huisletter": null,
       "huisnummer": "650",
       "huisnummertoevoeging": null,
+      "isBewoner": true,
+      "isBriefadres": false,
       "landnaam": null,
       "locatiebeschrijving": null,
       "postcode": "1098XH",
@@ -154,7 +162,7 @@ exports[`brp.ts > fetchBrpByBsn > Should format response data correctly > Format
       "woonplaatsNaam": "Amsterdam",
     },
     "adresHistorisch": [],
-    "fetchUrlAantalBewoners": "http://bff-api-host/api/v1/service/brp/aantal-bewoners?id=test-encrypted-id",
+    "fetchUrlAantalIngeschrevenPersonen": "http://bff-api-host/api/v1/services/brp/aantal-ingeschreven-personen?id=test-encrypted-id",
     "kinderen": [],
     "ouders": [
       {

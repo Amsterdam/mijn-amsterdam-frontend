@@ -1,21 +1,18 @@
 import { differenceInMonths } from 'date-fns';
 
-import {
-  themaId,
-  themaTitle,
-} from '../../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
-import { IS_PRODUCTION } from '../../../../universal/config/env';
+import { themaConfig } from '../../../../client/pages/Thema/Inkomen/Inkomen-thema-config.ts';
+import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import {
   dateFormat,
   defaultDateFormat,
-} from '../../../../universal/helpers/date';
-import { MyNotification } from '../../../../universal/types/App.types';
-import { ServiceResults } from '../../content-tips/tip-types';
-import { addApiBasePathToDocumentUrls, documentDownloadName } from '../helpers';
+} from '../../../../universal/helpers/date.ts';
+import type { MyNotification } from '../../../../universal/types/App.types.ts';
+import type { ServiceResults } from '../../content-tips/tip-types.ts';
+import { addApiBasePathToDocumentUrls, documentDownloadName } from '../helpers.ts';
 import type {
   WpiIncomeSpecification,
   WpiIncomeSpecificationTransformed,
-} from '../wpi-types';
+} from '../wpi-types.ts';
 
 const MONTHS_TO_KEEP_UITKERING_NOTIFICATION = 1;
 const MONTHS_TO_KEEP_JAAROPGAVE_NOTIFICATION = 3;
@@ -42,8 +39,8 @@ function transformIncomeSpecificationNotification(
     return {
       id: 'nieuwe-jaaropgave',
       datePublished: item.datePublished,
-      themaID: themaId,
-      themaTitle,
+      themaID: themaConfig.id,
+      themaTitle: themaConfig.title,
       title: 'Nieuwe jaaropgave',
       description: `Uw ${item.title} staat voor u klaar.`,
       link: {
@@ -56,8 +53,8 @@ function transformIncomeSpecificationNotification(
   return {
     id: 'nieuwe-uitkeringsspecificatie',
     datePublished: item.datePublished,
-    themaID: themaId,
-    themaTitle,
+    themaID: themaConfig.id,
+    themaTitle: themaConfig.title,
     title: 'Nieuwe uitkeringsspecificatie',
     description: `Uw uitkeringsspecificatie van ${dateFormat(
       item.datePublished,

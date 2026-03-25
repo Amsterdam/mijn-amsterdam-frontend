@@ -1,12 +1,12 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { tableConfigSpecificaties } from './Inkomen-thema-config';
-import { useInkomenThemaData } from './useInkomenThemaData.hook';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaPagina from '../../../components/Thema/ThemaPagina';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
-import { getFeedbackDetailsByTableConfig } from '../../../components/UserFeedback/UserFeedback.helpers';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { tableConfigSpecificaties } from './Inkomen-thema-config.ts';
+import { useInkomenThemaData } from './useInkomenThemaData.hook.ts';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
+import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { getFeedbackDetailsByTableConfig } from '../../../components/UserFeedback/UserFeedback.helpers.ts';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 const pageContentTop = (
   <PageContentCell spanWide={8}>
@@ -19,7 +19,7 @@ const pageContentTop = (
 
 export function InkomenThema() {
   const {
-    id,
+    themaId,
     title,
     tableConfig,
     zaken,
@@ -27,12 +27,12 @@ export function InkomenThema() {
     isErrorWpi,
     isErrorWpiSpecificaties,
     isLoadingWpiSpecificaties,
-    linkListItems,
+    pageLinks,
     specificaties,
     jaaropgaven,
-    routeConfig,
+    themaConfig,
   } = useInkomenThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const tables = Object.entries(tableConfig).map(
     ([kind, { title, displayProps, filter, listPageRoute, maxItems }]) => {
@@ -76,7 +76,7 @@ export function InkomenThema() {
 
   return (
     <ThemaPagina
-      id={id}
+      id={themaId}
       title={title}
       isError={isErrorWpi || isErrorWpiSpecificaties}
       isLoading={isLoadingWpi || isLoadingWpiSpecificaties}
@@ -87,7 +87,7 @@ export function InkomenThema() {
           {tablesSpecificaties}
         </>
       }
-      pageLinks={linkListItems}
+      pageLinks={pageLinks}
       maintenanceNotificationsPageSlug="inkomen"
       themaFeedbackDetails={themaPaginaDetails}
     />

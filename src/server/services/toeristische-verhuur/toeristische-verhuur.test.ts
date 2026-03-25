@@ -1,11 +1,11 @@
 import Mockdate from 'mockdate';
 import { describe, expect, it } from 'vitest';
 
-import { BBVergunningFrontend } from './bed-and-breakfast/bed-and-breakfast-types';
-import { fetchToeristischeVerhuur } from './toeristische-verhuur';
-import { VakantieverhuurVergunningFrontend } from './toeristische-verhuur-config-and-types';
-import { createToeristischeVerhuurNotification } from './toeristische-verhuur-notifications';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
+import type { BBVergunningFrontend } from './bed-and-breakfast/bed-and-breakfast-types.ts';
+import { createToeristischeVerhuurNotification } from './toeristische-verhuur-notifications.ts';
+import { fetchToeristischeVerhuur } from './toeristische-verhuur.ts';
+import type { VakantieverhuurVergunningFrontend } from './toeristische-verhuur.types.ts';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 
 const REGISTRATIES_DUMMY_RESPONSE_NUMBERS = [
   {
@@ -164,6 +164,7 @@ describe('Toeristische verhuur service', () => {
       id: 'Z-000-000040',
       processed: true,
       key: 'xx123',
+      itemType: 'vergunning',
       title: 'Vergunning vakantieverhuur',
       caseType: 'Vakantieverhuur vergunningsaanvraag',
       dateDecision: null,
@@ -221,6 +222,7 @@ describe('Toeristische verhuur service', () => {
     };
 
     const bbVergunnig: BBVergunningFrontend = {
+      caseType: 'Bed en breakfast',
       dateDecision: '22 maart 2023',
       dateDecisionFormatted: '22 maart 2023',
       dateRequest: '13 februari 2023',

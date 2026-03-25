@@ -1,20 +1,20 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import {
+import type {
   DatasetCategoryId,
   DatasetControl,
   DatasetId,
-} from '../../../../universal/config/myarea-datasets';
-import { getIcon } from '../dataset-icons';
+} from '../../../../universal/config/myarea-datasets.ts';
+import { getIcon } from '../dataset-icons.tsx';
 import {
   useActiveDatasetFilters,
   useDatasetFilterSelection,
-} from '../MyArea.hooks';
-import { datasetCheckboxState } from './checkbox-helpers';
-import MyAreaCollapsiblePanel, { CollapsedState } from './CollapsiblePanel';
-import { DatasetControlCheckbox } from './DatasetControlCheckbox';
-import { DatasetControlPanelProps } from './DatasetControlPanel';
-import { DatasetPropertyFilterPanel } from './DatasetPropertyFilterPanel';
+} from '../MyArea.hooks.ts';
+import { datasetCheckboxState } from './checkbox-helpers.ts';
+import MyAreaCollapsiblePanel, { CollapsedState } from './CollapsiblePanel.tsx';
+import { DatasetControlCheckbox } from './DatasetControlCheckbox.tsx';
+import type { DatasetControlPanelProps } from './DatasetControlPanel.tsx';
+import { DatasetPropertyFilterPanel } from './DatasetPropertyFilterPanel.tsx';
 
 interface DatasePanelProps {
   categoryId: DatasetCategoryId;

@@ -5,13 +5,13 @@ import {
   listPageParamKind,
   themaConfig,
   tableConfig,
-} from './HLI-thema-config';
-import { HLIThema } from './HLIThema';
-import { stadspasCreator } from './test-helpers';
-import { createHLIState } from './test-helpers';
-import type { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
-import { RTM_SPECIFICATIE_TITLE } from '../../../../server/services/hli/rtm/regeling-rtm';
-import { componentCreator } from '../../MockApp';
+} from './HLI-thema-config.ts';
+import { HLIThema } from './HLIThema.tsx';
+import { stadspasCreator } from './test-helpers.ts';
+import { createHLIState } from './test-helpers.ts';
+import type { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types.ts';
+import { RTM_SPECIFICATIE_TITLE } from '../../../../server/services/hli/rtm/regeling-rtm.ts';
+import { componentCreator } from '../../MockApp.tsx';
 
 const createStadspas = stadspasCreator();
 

@@ -1,40 +1,41 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 
 import { useMapInstance } from '@amsterdam/react-maps';
-import { LatLngBoundsLiteral, LatLngLiteral, LeafletEvent } from 'leaflet';
+import type { LatLngBoundsLiteral, LatLngLiteral, LeafletEvent } from 'leaflet';
 import { useLocation } from 'react-router';
 import { create } from 'zustand';
 
-import { filterItemCheckboxState } from './LegendPanel/checkbox-helpers';
+import { filterItemCheckboxState } from './LegendPanel/checkbox-helpers.ts';
 import styles from './MyAreaDatasets.module.scss';
-import type { BAGLocationExtended } from '../../../server/services/bag/bag.types';
+import type { BAGLocationExtended } from '../../../server/services/bag/bag.types.ts';
 import type {
   MaPointFeature,
   MaPolylineFeature,
   MaSuperClusterFeature,
-} from '../../../server/services/buurt/datasets';
-import {
-  ACTIVE_DATASET_IDS_INITIAL,
+} from '../../../server/services/buurt/datasets.ts';
+import type {
   DatasetFilterSelection,
   DatasetId,
   DatasetPropertyName,
-  DatasetPropertyValue,
+  DatasetPropertyValue} from '../../../universal/config/myarea-datasets.ts';
+import {
+  ACTIVE_DATASET_IDS_INITIAL,
   HOOD_ZOOM,
-} from '../../../universal/config/myarea-datasets';
-import { LatLngWithAddress } from '../../../universal/helpers/bag';
-import { getFullAddress } from '../../../universal/helpers/brp';
-import { BFFApiUrls } from '../../config/api';
-import { DEFAULT_MAP_OPTIONS } from '../../config/map';
-import { captureMessage } from '../../helpers/monitoring';
+} from '../../../universal/config/myarea-datasets.ts';
+import type { LatLngWithAddress } from '../../../universal/helpers/bag.ts';
+import { getFullAddress } from '../../../universal/helpers/brp.ts';
+import { BFFApiUrls } from '../../config/api.ts';
+import { DEFAULT_MAP_OPTIONS } from '../../config/map.ts';
+import { captureMessage } from '../../helpers/monitoring.ts';
 import {
   isAborted,
   sendFetchRequest,
   sendJSONPostRequest,
-} from '../../hooks/api/useBffApi';
+} from '../../hooks/api/useBffApi.ts';
 import {
   useAppStateGetter,
   useAppStateReady,
-} from '../../hooks/useAppStateStore';
+} from '../../hooks/useAppStateStore.ts';
 
 const NO_DATA_ERROR_RESPONSE = {
   errors: [

@@ -5,20 +5,20 @@
 /* tslint:disable:no-submodule-imports */
 
 // Keep the loading of environment variables at the top.
-import './helpers/load-env';
+import './helpers/load-env.ts';
 import {
   IS_AP,
   IS_DEVELOPMENT,
   IS_OT,
   IS_PRODUCTION,
-} from '../universal/config/env';
+} from '../universal/config/env.ts';
 
 // Note: Keep this line after loading in env files or LOG_LEVEL will be undefined.
-import { logger } from './logging';
+import { logger } from './logging.ts';
 
-const debugResponseDataTerms = process.env.DEBUG_RESPONSE_DATA;
 const debug = process.env.DEBUG;
 
+const debugResponseDataTerms = process.env.DEBUG_RESPONSE_DATA;
 if (debugResponseDataTerms && !debug?.includes('source-api-request:response')) {
   logger.info(
     `Enabling debug for source-api-request:response because DEBUG_RESPONSE_DATA is set (${debugResponseDataTerms})`
@@ -26,36 +26,50 @@ if (debugResponseDataTerms && !debug?.includes('source-api-request:response')) {
   process.env.DEBUG = `source-api-request:response,${process.env.DEBUG ?? ''}`;
 }
 
+const debugRequestDataTerms = process.env.DEBUG_REQUEST_DATA;
+if (debugRequestDataTerms && !debug?.includes('source-api-request:request')) {
+  logger.info(
+    `Enabling debug for source-api-request:request because DEBUG_REQUEST_DATA is set (${debugRequestDataTerms})`
+  );
+  process.env.DEBUG = `source-api-request:request,${process.env.DEBUG ?? ''}`;
+}
+
+// DO NOT IMPORT './debug' before modifying process.env.debug. The debug package used will read process.env.debug only once on import.
+import './debug.ts';
+
 import path from 'node:path';
 import { HttpStatusCode } from 'axios';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import express, { NextFunction, Request, Response } from 'express';
+import type { NextFunction, Request, Response } from 'express';
+import express from 'express';
 
-import { BFF_PORT, ONE_MINUTE_SECONDS, ONE_SECOND_MS } from './config/app';
+import { BFF_PORT, ONE_MINUTE_SECONDS, ONE_SECOND_MS } from './config/app.ts';
 import {
+  BffEndpoints,
   BFF_BASE_PATH,
   BFF_BASE_PATH_PRIVATE,
-  BffEndpoints,
-} from './routing/bff-routes';
+} from './routing/bff-routes.ts';
 import {
-  handleCheckProtectedRoute,
   handleIsAuthenticated,
   nocache,
   requestID,
-} from './routing/route-handlers';
-import { generateFullApiUrlBFF, send404 } from './routing/route-helpers';
-import { adminRouter } from './routing/router-admin';
-import { authRouterDevelopment } from './routing/router-development';
-import { oidcRouter } from './routing/router-oidc';
-import { router as protectedRouter } from './routing/router-protected';
-import { legacyRouter, router as publicRouter } from './routing/router-public';
-import { stadspasExternalConsumerRouter } from './services/hli/router-stadspas-external-consumer';
-import { captureException } from './services/monitoring';
-import { getFromEnv } from './helpers/env';
-import { notificationsExternalConsumerRouter } from './routing/router-notifications-external-consumer';
-import { router as privateNetworkRouter } from './routing/router-private';
+} from './routing/route-handlers.ts';
+import { generateFullApiUrlBFF, send404 } from './routing/route-helpers.ts';
+import { adminRouter } from './routing/router-admin.ts';
+import { authRouterDevelopment } from './routing/router-development.ts';
+import { oidcRouter } from './routing/router-oidc.ts';
+import { router as protectedRouter } from './routing/router-protected.ts';
+import {
+  legacyRouter,
+  router as publicRouter,
+} from './routing/router-public.ts';
+import { router as routerPublicExternalConsumer } from './routing/router-public-external-consumer.ts';
+import { captureException } from './services/monitoring.ts';
+import { getFromEnv } from './helpers/env.ts';
+import { router as privateNetworkRouter } from './routing/router-private.ts';
+import { getDirname } from './helpers/dir.ts';
 
 const app = express();
 
@@ -64,7 +78,9 @@ app.set('trust proxy', true);
 // Security, disable express header.
 app.disable('x-powered-by');
 
-const viewDir = __dirname.split(path.sep).slice(-2, -1);
+const viewDir = getDirname(import.meta.url)
+  .split(path.sep)
+  .slice(-2, -1);
 
 // Set-up view engine voor SSR
 app.set('view engine', 'pug');
@@ -107,17 +123,12 @@ if (IS_AP && !IS_OT) {
   app.use(BFF_BASE_PATH, oidcRouter);
 }
 
-app.use(
-  BFF_BASE_PATH,
-  nocache,
-  stadspasExternalConsumerRouter.public,
-  notificationsExternalConsumerRouter.public
-);
+app.use(BFF_BASE_PATH, nocache, routerPublicExternalConsumer);
 
+// Routers mounted at BFF_BASE_PATH all need authentication.
 app.use(
   BFF_BASE_PATH,
   nocache,
-  handleCheckProtectedRoute,
   handleIsAuthenticated,
   protectedRouter,
   adminRouter
@@ -186,6 +197,7 @@ async function startServerBFF() {
       await import('log-that-http');
     }
   }
+
   const server = app.listen(BFF_PORT, () => {
     logger.info(
       `Mijn Amsterdam BFF api listening on ${BFF_PORT}... [IS_DEVELOPMENT: ${IS_DEVELOPMENT}]`
@@ -205,11 +217,10 @@ async function startServerBFF() {
   server.keepAliveTimeout = ONE_MINUTE_SECONDS;
   server.headersTimeout = HEADER_TIMEOUT_SECONDS * ONE_SECOND_MS; // This should be bigger than `keepAliveTimeout + your server's expected response time`
 }
-if (
-  require.main?.filename.endsWith('bffserver.ts') ||
-  require.main?.filename.endsWith('app.js') ||
-  process.versions.bun
-) {
+
+const scriptName = path.parse(process.argv.at(1) ?? '').name;
+
+if (import.meta.main || scriptName === 'app-start' || process.versions.bun) {
   startServerBFF();
 }
 

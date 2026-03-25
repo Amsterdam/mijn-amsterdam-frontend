@@ -1,13 +1,14 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
-import {
+import type {
   LinkProps,
   ZaakAanvraagDetail,
-} from '../../../universal/types/App.types';
-import ErrorAlert from '../Alert/Alert';
-import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
-import { PageContentCell, PageV2 } from '../Page/Page';
-import { Steps } from '../StatusSteps/StatusSteps';
+} from '../../../universal/types/App.types.ts';
+import ErrorAlert from '../Alert/Alert.tsx';
+import type { BarConfig } from '../LoadingContent/LoadingContent.tsx';
+import LoadingContent from '../LoadingContent/LoadingContent.tsx';
+import { PageContentCell, PageV2 } from '../Page/Page.tsx';
+import { Steps } from '../StatusSteps/StatusSteps.tsx';
 
 const LOADING_BAR_CONFIG_DEFAULT: BarConfig = [
   ['30rem', '4rem', '2rem'],

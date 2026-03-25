@@ -1,10 +1,10 @@
-import type { SomeOtherString } from '../../universal/helpers/types';
-import { jsonCopy } from '../../universal/helpers/utils';
+import type { SomeOtherString } from '../../universal/helpers/types.ts';
+import { jsonCopy } from '../../universal/helpers/utils.ts';
 import {
   ApiConfig,
-  DataRequestConfig,
-  SourceApiName,
-} from '../config/source-api';
+  type DataRequestConfig,
+  type SourceApiName,
+} from '../config/source-api.ts';
 
 function getApiConfigBasedCacheKey(
   name: SourceApiName | SomeOtherString,

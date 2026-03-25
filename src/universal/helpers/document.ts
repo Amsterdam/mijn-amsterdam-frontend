@@ -1,4 +1,4 @@
-import { GenericDocument } from '../types/App.types';
+import type { GenericDocument } from '../types/App.types.ts';
 
 type GetDocumentIDFn = (doc: GenericDocument) => string;
 

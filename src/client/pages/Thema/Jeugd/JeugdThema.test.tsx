@@ -1,11 +1,11 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { routeConfig } from './Jeugd-thema-config';
-import { JeugdThemaPagina } from './JeugdThema';
-import { AppState } from '../../../../universal/types/App.types';
-import { expectTableHeaders } from '../../../helpers/test-utils';
-import { componentCreator } from '../../MockApp';
+import { themaConfig } from './Jeugd-thema-config.ts';
+import { JeugdThemaPagina } from './JeugdThema.tsx';
+import type { AppState } from '../../../../universal/types/App.types.ts';
+import { expectTableHeaders } from '../../../helpers/test-utils.ts';
+import { componentCreator } from '../../MockApp.tsx';
 
 const jeugdState: AppState['JEUGD'] = {
   content: [
@@ -197,8 +197,8 @@ const basicAppState = {
 
 const createComponent = componentCreator({
   component: JeugdThemaPagina,
-  routeEntry: generatePath(routeConfig.themaPage.path),
-  routePath: generatePath(routeConfig.themaPage.path),
+  routeEntry: generatePath(themaConfig.route.path),
+  routePath: generatePath(themaConfig.route.path),
 });
 
 test('Static elements', async () => {

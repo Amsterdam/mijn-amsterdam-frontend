@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import classnames from 'classnames';
-import { TileLayerOptions } from 'leaflet';
+import type { TileLayerOptions } from 'leaflet';
 
-import BaseLayer, { MAP_SERVER_ROOT } from './BaseLayer';
+import BaseLayer, { MAP_SERVER_ROOT } from './BaseLayer.tsx';
 import styles from './BaseLayerToggle.module.scss';
 
 export enum BaseLayerType {

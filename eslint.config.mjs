@@ -28,9 +28,11 @@ export default [
       'no-console': 'warn',
       'dot-notation': 'error',
       'no-else-return': 'error',
+      'object-shorthand': 'error',
       'react/react-in-jsx-scope': 'off',
       '@typescript-eslint/no-explicit-any': 'error',
       'react/jsx-curly-brace-presence': 'error',
+      '@typescript-eslint/consistent-type-imports': 'error',
       'react/function-component-definition': [
         'warn',
         {
@@ -38,6 +40,16 @@ export default [
         },
       ],
       'import/no-default-export': 'warn',
+      'import/extensions': [
+        'error', // Enforce the rule with "error" severity
+        'ignorePackages', // Do not require extensions for third-party packages
+        {
+          ts: 'always',
+          tsx: 'always',
+          json: 'always',
+          js: 'always',
+        },
+      ],
       'unused-imports/no-unused-imports': 'error',
       '@typescript-eslint/no-require-imports': 'warn',
       '@typescript-eslint/ban-ts-comment': 'warn',

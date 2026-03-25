@@ -2,17 +2,17 @@ import {
   fetchService,
   fetchTipsAndNotifications,
   type ApiPatternResponseA,
-} from './api-service';
+} from './api-service.ts';
 import {
   featureToggle,
   SVWI_ROUTE_DEFAULT,
   themaId,
   themaTitle,
-} from '../../../client/pages/Thema/Svwi/Svwi-thema-config';
-import type { MyNotification } from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { getFromEnv } from '../../helpers/env';
-import { getApiConfig } from '../../helpers/source-api-helpers';
+} from '../../../client/pages/Thema/Svwi/Svwi-thema-config.ts';
+import type { MyNotification } from '../../../universal/types/App.types.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { getFromEnv } from '../../helpers/env.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
 
 type SVWIMessageSource = {
   id: string;
@@ -35,7 +35,7 @@ function transformNotification(message: SVWIMessageSource): MyNotification {
   return {
     id: message.id,
     themaID: themaId,
-    themaTitle: themaTitle,
+    themaTitle,
     title: message.onderwerp,
     datePublished: message.ontvangen,
     description: message.inhoud,

@@ -1,8 +1,8 @@
-import { defaultDateTimeFormat } from '../../../../universal/helpers/date';
-import { documentDownloadName, productName } from '../helpers';
-import { WpiRequestStatusLabels } from '../wpi-types';
-import { LINK_MEER_INFO } from './tonk';
-import { requestProcess as tozoRequestProcess } from './tozo';
+import { defaultDateTimeFormat } from '../../../../universal/helpers/date.ts';
+import { documentDownloadName, productName } from '../helpers.ts';
+import type { WpiRequestStatusLabels } from '../wpi-types.ts';
+import { LINK_MEER_INFO } from './tonk.ts';
+import { requestProcess as tozoRequestProcess } from './tozo.ts';
 
 const aanvraagLabels: WpiRequestStatusLabels = {
   notification: {
@@ -109,7 +109,7 @@ const besluitLabels: WpiRequestStatusLabels = {
       </p>
       ${
         statusStep.productSpecific !== 'lening'
-          ? '<p>Wilt u een wijziging in uw inkomen doorgeven? <a rel="external noopener noreferrer" class="ams-link" href="https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/wijzigingen-doorgeven/">Kijk dan bij \'Wijziging of inkomsten doorgeven\'</a></p>'
+          ? '<p>Wilt u een wijziging in uw inkomen doorgeven? <a rel="external noopener noreferrer" class="ams-link" href="https://www.amsterdam.nl/ondernemen/ondersteuning/wijzigingen-doorgeven-voor-bbz-uitkering/">Kijk dan bij \'Wijziging of inkomsten doorgeven\'</a></p>'
           : ''
       }<p>${LINK_MEER_INFO}</p>`;
 

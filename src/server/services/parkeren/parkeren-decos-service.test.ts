@@ -1,16 +1,17 @@
-import { describe, it, expect, vi, Mock } from 'vitest';
+import type { Mock } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 
-import { fetchDecosParkeerVergunningen } from './parkeren-decos-service';
-import { getAuthProfileAndToken } from '../../../testing/utils';
+import { fetchDecosParkeerVergunningen } from './parkeren-decos-service.ts';
+import { getAuthProfileAndToken } from '../../../testing/utils.ts';
 import {
   apiSuccessResult,
   apiErrorResult,
-} from '../../../universal/helpers/api';
+} from '../../../universal/helpers/api.ts';
 import {
   fetchDecosZaken,
   transformDecosZaakFrontend,
-} from '../decos/decos-service';
-import { getStatusStepsDecos } from '../vergunningen/decos-status-steps';
+} from '../decos/decos-service.ts';
+import { getStatusStepsDecos } from '../vergunningen/decos-status-steps.ts';
 
 vi.mock('../decos/decos-service', () => ({
   fetchDecosZaken: vi.fn(),

@@ -1,6 +1,6 @@
 import { differenceInMonths } from 'date-fns';
 
-import { MONTHS_TO_KEEP_NOTIFICATIONS } from '../config/app';
+import { MONTHS_TO_KEEP_NOTIFICATIONS } from '../config/app.ts';
 
 // https://github.com/Microsoft/TypeScript/issues/21826#issuecomment-479851685
 export const entries = Object.entries as <T>(
@@ -35,10 +35,13 @@ export const omit = <T extends object, U extends keyof T>(
     {} as OmitMapped<T, U>
   );
 
-export function pick<T extends object>(source: T, keys: string[]) {
+export function pick<T extends object, K extends keyof T>(
+  source: T,
+  keys: readonly K[]
+): Pick<T, K> {
   return Object.fromEntries(
-    entries(source).filter(([key]) => keys.includes(key))
-  );
+    Object.entries(source).filter(([key]) => keys.includes(key as K))
+  ) as Pick<T, K>;
 }
 
 export function isRecord(obj: unknown): obj is Record<string, unknown> {

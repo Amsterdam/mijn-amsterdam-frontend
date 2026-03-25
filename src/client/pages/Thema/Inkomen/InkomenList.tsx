@@ -1,29 +1,29 @@
 import { useParams } from 'react-router';
 
-import { ListPageParamKind } from './Inkomen-thema-config';
-import { useInkomenThemaData } from './useInkomenThemaData.hook';
-import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import type { ListPageParamKind } from './Inkomen-thema-config.ts';
+import { useInkomenThemaData } from './useInkomenThemaData.hook.ts';
+import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function InkomenList() {
   const { kind = 'lopende-aanvragen' } = useParams<{
     kind: Exclude<ListPageParamKind, 'jaaropgaven' | 'uitkering'>;
   }>();
   const {
-    id,
+    themaId,
     zaken,
     tableConfig,
     isLoadingWpi,
     isErrorWpi,
     breadcrumbs,
-    routeConfig,
+    themaConfig,
   } = useInkomenThemaData();
-  useHTMLDocumentTitle(routeConfig.listPage);
+  useHTMLDocumentTitle(themaConfig.listPage.route);
   const listPageTableConfig = tableConfig[kind];
 
   return (
     <ListPagePaginated
-      themaId={id}
+      themaId={themaId}
       items={zaken.filter(listPageTableConfig.filter)}
       title={listPageTableConfig.title}
       appRoute={listPageTableConfig.listPageRoute}

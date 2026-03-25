@@ -2,13 +2,13 @@ import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import slug from 'slugme';
 
-import { routeConfig } from './Horeca-thema-config';
-import { DOC_API_PATH, vergunning } from './Horeca.test';
-import { HorecaDetail } from './HorecaDetail';
-import { HorecaVergunningFrontend } from '../../../../server/services/horeca/decos-zaken';
-import { bffApi } from '../../../../testing/utils';
-import { AppState } from '../../../../universal/types/App.types';
-import MockApp from '../../MockApp';
+import { themaConfig } from './Horeca-thema-config.ts';
+import { DOC_API_PATH, vergunning } from './Horeca.test.tsx';
+import { HorecaDetail } from './HorecaDetail.tsx';
+import type { HorecaVergunningFrontend } from '../../../../server/services/horeca/decos-zaken.ts';
+import { bffApi } from '../../../../testing/utils.ts';
+import type { AppState } from '../../../../universal/types/App.types.ts';
+import MockApp from '../../MockApp.tsx';
 
 const vergunning2: HorecaVergunningFrontend = {
   ...structuredClone(vergunning),
@@ -29,13 +29,13 @@ const testState = {
 
 function MockVergunningDetail({ identifier }: { identifier: string }) {
   const vergunning = content.find((v) => v.identifier === identifier);
-  const routeEntry = generatePath(routeConfig.detailPage.path, {
+  const routeEntry = generatePath(themaConfig.detailPage.route.path, {
     caseType: slug(vergunning?.caseType, {
       lower: true,
     }),
     id: vergunning?.id as string,
   });
-  const routePath = routeConfig.detailPage.path;
+  const routePath = themaConfig.detailPage.route.path;
 
   return (
     <MockApp

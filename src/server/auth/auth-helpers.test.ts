@@ -1,6 +1,11 @@
 import { millisecondsToSeconds } from 'date-fns';
-import { Request } from 'express';
+import type { Request } from 'express';
 
+import { getReturnToUrl } from './auth-after-redirect-returnto.ts';
+import {
+  RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
+  RETURNTO_AMSAPP_STADSPAS_APP_LANDING,
+} from './auth-after-redirect-returnto.ts';
 import {
   DIGID_ATTR_PRIMARY,
   EH_ATTR_INTERMEDIATE_PRIMARY_ID,
@@ -8,23 +13,20 @@ import {
   EH_ATTR_PRIMARY_ID,
   EH_ATTR_PRIMARY_ID_LEGACY,
   OIDC_SESSION_COOKIE_NAME,
-  RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
-  RETURNTO_AMSAPP_STADSPAS_APP_LANDING,
-} from './auth-config';
+} from './auth-config.ts';
 import {
   createLogoutHandler,
   getAuthProfile,
-  getReturnToUrl,
   hasSessionCookie,
   isSessionCookieName,
-} from './auth-helpers';
-import { MaSession, TokenData } from './auth-types';
+} from './auth-helpers.ts';
+import type { MaSession, TokenData } from './auth-types.ts';
 import {
   getAuthProfileAndToken,
   getReqMockWithOidc,
   ResponseMock,
-} from '../../testing/utils';
-import { ONE_MINUTE_SECONDS } from '../config/app';
+} from '../../testing/utils.ts';
+import { ONE_MINUTE_SECONDS } from '../config/app.ts';
 
 describe('auth-helpers', () => {
   test('isSessionCookieName', () => {

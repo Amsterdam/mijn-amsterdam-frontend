@@ -8,12 +8,12 @@ import {
 } from '@amsterdam/design-system-react';
 import { addDays } from 'date-fns';
 
-import { getEMandateValidityDate } from './Afis-helpers';
-import type { useEmandateApis } from './useAfisEmandatesData';
-import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types';
-import { MaRouterLink } from '../../../components/MaLink/MaLink';
-import { Modal } from '../../../components/Modal/Modal';
-import { Spinner } from '../../../components/Spinner/Spinner';
+import { getEMandateValidityDate } from './Afis-helpers.ts';
+import type { useEmandateApis } from './useAfisEmandateActionsApi.tsx';
+import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types.ts';
+import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
+import { Modal } from '../../../components/Modal/Modal.tsx';
+import { Spinner } from '../../../components/Spinner/Spinner.tsx';
 
 type DateAdjustModalProps = {
   eMandate: AfisEMandateFrontend;

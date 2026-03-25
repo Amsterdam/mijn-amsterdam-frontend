@@ -1,35 +1,30 @@
-import {
-  routeConfig,
-  themaId,
-  themaTitle,
-  featureToggle,
-} from './Krefia-thema-config';
+import { themaConfig } from './Krefia-thema-config.ts';
 import { default as KrefiaIcon } from './KrefiaIcon.svg?react';
-import { KrefiaThema } from './KrefiaThema';
-import { isLoading } from '../../../../universal/helpers/api';
-import { type AppState } from '../../../../universal/types/App.types';
+import { KrefiaThema } from './KrefiaThema.tsx';
+import { isLoading } from '../../../../universal/helpers/api.ts';
+import { type AppState } from '../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 
 export const KrefiaRoutes = [
   {
-    route: routeConfig.themaPage.path,
+    route: themaConfig.route.path,
     Component: KrefiaThema,
-    isActive: featureToggle.krefiaActive,
+    isActive: themaConfig.featureToggle.active,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
-export const menuItem: ThemaMenuItem<typeof themaId> = {
-  title: themaTitle,
-  id: themaId,
-  to: routeConfig.themaPage.path,
-  profileTypes: ['private'],
-  redactedScope: 'none',
+export const menuItem: ThemaMenuItem = {
+  title: themaConfig.title,
+  id: themaConfig.id,
+  to: themaConfig.route.path,
+  profileTypes: themaConfig.profileTypes,
+  redactedScope: themaConfig.redactedScope,
   isActive(appState: AppState) {
     return (
-      featureToggle.krefiaActive &&
+      themaConfig.featureToggle.active &&
       !isLoading(appState.KREFIA) &&
       !!appState.KREFIA.content?.deepLinks.length
     );

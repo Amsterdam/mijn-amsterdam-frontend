@@ -1,19 +1,19 @@
 import { render, screen, cleanup, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import type { PartialDeep } from 'type-fest';
 
-import { MijnGegevensThema } from './ProfilePrivate';
+import { MijnGegevensThema } from './ProfilePrivate.tsx';
 import type {
   Adres,
   BrpFrontend,
-} from '../../../../../server/services/brp/brp-types';
-import { ContactMoment } from '../../../../../server/services/salesforce/contactmomenten.types';
-import { VvEDataSource } from '../../../../../server/services/wonen/zwd.types';
-import { bffApiHost } from '../../../../../testing/setup';
-import { bffApi } from '../../../../../testing/utils';
-import { AppState } from '../../../../../universal/types/App.types';
-import MockApp from '../../../MockApp';
-import { routeConfig } from '../Profile-thema-config';
+} from '../../../../../server/services/brp/brp-types.ts';
+import type { ContactMoment } from '../../../../../server/services/salesforce/contactmomenten.types.ts';
+import type { VvEDataSource } from '../../../../../server/services/wonen/zwd.types.ts';
+import { bffApiHost } from '../../../../../testing/setup.ts';
+import { bffApi } from '../../../../../testing/utils.ts';
+import type { AppState } from '../../../../../universal/types/App.types.ts';
+import MockApp from '../../../MockApp.tsx';
+import { routeConfig } from '../Profile-thema-config.ts';
 
 const testState = (
   responseBRP: BrpFrontend | object = {},
@@ -53,7 +53,7 @@ describe('<Profile />', () => {
   }
 
   test('Lives in Mokum + verbintenis: displays all data', async () => {
-    bffApi.get('/aantal-bewoners').reply(200, { content: 3, status: 'OK' });
+    bffApi.get('/aantal-bewoners').reply(200, { content: '3', status: 'OK' });
     render(
       <Component
         state={{
@@ -66,6 +66,8 @@ describe('<Profile />', () => {
             straatnaam: 'Mooie Straat',
             huisnummer: '1',
             landnaam: 'Nederland',
+            isBriefadres: false,
+            isBewoner: true,
           },
           verbintenis: {
             datumSluiting: '2020-01-01',
@@ -82,7 +84,7 @@ describe('<Profile />', () => {
               geslachtsnaam: 'Mooier',
             },
           ],
-          fetchUrlAantalBewoners: `${bffApiHost}/aantal-bewoners`,
+          fetchUrlAantalIngeschrevenPersonen: `${bffApiHost}/aantal-bewoners`,
         }}
       />
     );
@@ -107,7 +109,7 @@ describe('<Profile />', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText('Aantal bewoners')).toBeInTheDocument();
+      expect(screen.getByText('Ingeschreven personen')).toBeInTheDocument();
     });
 
     expect(screen.getByText('Verhuizing doorgeven')).toBeInTheDocument();
@@ -118,6 +120,29 @@ describe('<Profile />', () => {
     expect(
       screen.queryByText('Vertrokken Onbekend Waarheen')
     ).not.toBeInTheDocument();
+  });
+
+  test('Has briefadres if isBriefadres set to true', async () => {
+    render(
+      <Component
+        state={{
+          persoon: { mokum: true },
+          adres: {
+            straatnaam: 'Prachtige Straat',
+            huisnummer: '13',
+            landnaam: 'Nederland',
+            isBriefadres: true,
+          },
+        }}
+      />
+    );
+
+    expect(
+      screen.queryByText('Onjuiste inschrijving melden')
+    ).not.toBeInTheDocument();
+    expect(screen.queryByText('Ingeschreven personen')).not.toBeInTheDocument();
+
+    screen.getByText('Briefadres');
   });
 
   test('Lives in Mokum and has no verbintenis: display all data', async () => {

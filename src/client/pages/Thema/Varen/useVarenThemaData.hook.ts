@@ -1,20 +1,13 @@
-import { CONTENT_EMPTY } from './helper';
-import {
-  tableConfig,
-  varenLegesTableLink,
-  varenMeerInformatieLink,
-  themaTitle,
-  themaId,
-  routeConfig,
-} from './Varen-thema-config';
+import { CONTENT_EMPTY } from './helper.ts';
+import { tableConfig, themaConfig } from './Varen-thema-config.ts';
 import type {
   VarenVergunningFrontend,
   VarenZakenFrontend,
-} from '../../../../server/services/varen/config-and-types';
-import { isError, isLoading } from '../../../../universal/helpers/api';
-import { addLinkElementToProperty } from '../../../components/Table/TableV2';
-import { useAppStateGetter } from '../../../hooks/useAppStateStore';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
+} from '../../../../server/services/varen/config-and-types.ts';
+import { isError, isLoading } from '../../../../universal/helpers/api.ts';
+import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
+import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
 export function useVarenThemaData() {
   const { VAREN } = useAppStateGetter();
@@ -41,7 +34,7 @@ export function useVarenThemaData() {
     true
   );
 
-  const breadcrumbs = useThemaBreadcrumbs(themaId);
+  const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
   return {
     varenRederRegistratie,
@@ -50,11 +43,11 @@ export function useVarenThemaData() {
     isError: isError(VAREN),
     varenZaken,
     varenVergunningen,
-    linkListItems: [varenMeerInformatieLink, varenLegesTableLink],
+    pageLinks: themaConfig.pageLinks,
     buttonItems: [],
     breadcrumbs,
-    id: themaId,
-    title: themaTitle,
-    routeConfig,
+    id: themaConfig.id,
+    title: themaConfig.title,
+    themaConfig,
   };
 }

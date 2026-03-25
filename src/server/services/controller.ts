@@ -1,65 +1,72 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 
+import type { ApiResponse_DEPRECATED } from '../../universal/helpers/api.ts';
 import {
   apiErrorResult,
-  ApiResponse_DEPRECATED,
   apiSuccessResult,
   getSettledResult,
-} from '../../universal/helpers/api';
-import { omit } from '../../universal/helpers/utils';
-import { getAuth } from '../auth/auth-helpers';
-import { AuthProfileAndToken } from '../auth/auth-types';
-import { logger } from '../logging';
+} from '../../universal/helpers/api.ts';
+import { omit } from '../../universal/helpers/utils.ts';
+import { getAuth } from '../auth/auth-helpers.ts';
+import type { AuthProfileAndToken } from '../auth/auth-types.ts';
+import { logger } from '../logging.ts';
 import {
   queryParams,
   sendMessage,
   type RequestWithQueryParams,
-} from '../routing/route-helpers';
-import { fetchIsKnownInAFIS } from './afis/afis';
-import { fetchAfval, fetchAfvalPunten } from './afval/afval';
-import { fetchAVG } from './avg/avg';
-import { fetchMyLocations } from './bag/my-locations';
-import { fetchBezwaren } from './bezwaren/bezwaren';
-import { fetchLoodmetingen } from './bodem/loodmetingen';
-import { fetchBrp } from './brp/brp';
-import { fetchMijnAmsterdamUitlegPage } from './cms/cms-content';
-import { fetchActiveMaintenanceNotifications } from './cms/cms-maintenance-notifications';
-import { fetchErfpacht } from './erfpacht/erfpacht';
-import { fetchHLI } from './hli/hli';
-import { fetchHorecaVergunningen } from './horeca/horeca';
-import { fetchKVK } from './hr-kvk/hr-kvk';
-import { fetchLeerlingenvervoer } from './jeugd/jeugd';
-import { fetchAllKlachten } from './klachten/klachten';
-import { fetchKrefia } from './krefia/krefia';
-import { captureException } from './monitoring';
-import { fetchParkeren } from './parkeren/parkeren';
+} from '../routing/route-helpers.ts';
+import { fetchIsKnownInAFIS } from './afis/afis.ts';
+import { fetchAfval, fetchAfvalPunten } from './afval/afval.ts';
+import { featureToggle } from './amsapp/notifications/amsapp-notifications-service-config.ts';
+import { storeNotificationsResponses } from './amsapp/notifications/amsapp-notifications.ts';
+import { fetchAVG } from './avg/avg.ts';
+import { fetchMyLocations } from './bag/my-locations.ts';
+import { fetchBezwaren } from './bezwaren/bezwaren.ts';
+import { fetchLoodmetingen } from './bodem/loodmetingen.ts';
+import { fetchBrp } from './brp/brp.ts';
+import { fetchMijnAmsterdamUitlegPage } from './cms/cms-content.ts';
+import { fetchActiveMaintenanceNotifications } from './cms/cms-maintenance-notifications.ts';
+import { fetchErfpacht } from './erfpacht/erfpacht.ts';
+import { fetchHLI } from './hli/hli.ts';
+import { fetchHorecaVergunningen } from './horeca/horeca.ts';
+import { fetchKVK } from './hr-kvk/hr-kvk.ts';
+import { fetchLeerlingenvervoer } from './jeugd/jeugd.ts';
+import { fetchAllKlachten } from './klachten/klachten.ts';
+import { fetchKrefia } from './krefia/krefia.ts';
+import { captureException } from './monitoring.ts';
+import { fetchParkeren } from './parkeren/parkeren.ts';
+import { fetchBelasting } from './patroon-c/belasting.ts';
+import { fetchMilieuzone, fetchOvertredingen } from './patroon-c/cleopatra.ts';
+import { fetchSubsidie } from './patroon-c/subsidie.ts';
+import { fetchSVWI } from './patroon-c/svwi.ts';
+import { fetchContactmomenten } from './salesforce/contactmomenten.ts';
+import type { notificationServices } from './tips-and-notifications.ts';
 import {
-  fetchBelasting,
-  fetchMilieuzone,
-  fetchOvertredingen,
-  fetchSubsidie,
-} from './patroon-c';
-import { fetchSVWI } from './patroon-c/svwi';
-import { fetchContactmomenten } from './salesforce/contactmomenten';
-import { fetchNotificationsWithTipsInserted } from './tips-and-notifications';
-import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-verhuur';
-import { fetchUserFeedbackSurvey } from './user-feedback/user-feedback';
-import { fetchVaren } from './varen/varen';
-import { fetchVergunningen } from './vergunningen/vergunningen';
-import { fetchWmo } from './wmo/wmo';
-import { fetchVVEData } from './wonen/zwd';
+  combineNotificationsWithTipsAndSort,
+  fetchNotificationsAndTipsFromServices,
+  getContentTips,
+  getTipsAndNotificationsFromApiResults,
+  type NotificationsAndTipsResponse,
+} from './tips-and-notifications.ts';
+import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-verhuur.ts';
+import { fetchUserFeedbackSurvey } from './user-feedback/user-feedback.ts';
+import { fetchVaren } from './varen/varen.ts';
+import { fetchVergunningen } from './vergunningen/vergunningen.ts';
+import { fetchWmo } from './wmo/wmo.ts';
+import { fetchVVEData } from './wonen/zwd.ts';
 import {
   fetchBbz,
   fetchBijstandsuitkering,
   fetchSpecificaties,
   fetchTonk,
   fetchTozo,
-} from './wpi';
+} from './wpi/api-service.ts';
 
 // Default service call just passing query params as arguments
 function callAuthenticatedService<T>(
   fetchService: (
     authProfileAndToken: AuthProfileAndToken,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ...args: any[]
   ) => Promise<T>
 ) {
@@ -72,7 +79,8 @@ function callAuthenticatedService<T>(
   };
 }
 
-function callPublicService<T>(fetchService: (...args: any) => Promise<T>) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function callPublicService<T>(fetchService: (...args: any[]) => Promise<T>) {
   return async (req: Request) => fetchService(queryParams(req));
 }
 
@@ -147,8 +155,6 @@ const WPI_SPECIFICATIES = callAuthenticatedService(fetchSpecificaties);
 const WPI_TONK = callAuthenticatedService(fetchTonk);
 const WPI_TOZO = callAuthenticatedService(fetchTozo);
 const KTO = callAuthenticatedService(() => fetchUserFeedbackSurvey());
-
-// Architectural pattern C. TODO: Make generic services for pattern C.
 const BELASTINGEN = callAuthenticatedService(fetchBelasting);
 const MILIEUZONE = callAuthenticatedService(fetchMilieuzone);
 const OVERTREDINGEN = callAuthenticatedService(fetchOvertredingen);
@@ -165,12 +171,37 @@ const MY_LOCATION = callAuthenticatedService(fetchMyLocations);
 // Special services that aggregates NOTIFICATIONS from various services
 export const NOTIFICATIONS = async (req: Request) => {
   const authProfileAndToken = getAuth(req);
-  const serviceResults = await getServiceResultsForTips(req);
-  const notificationsWithTipsInserted =
-    await fetchNotificationsWithTipsInserted(
-      serviceResults,
-      authProfileAndToken
-    );
+  const [serviceResults, notificationsAndTipsResults] = await Promise.all([
+    getServiceResultsForTips(req),
+    authProfileAndToken
+      ? fetchNotificationsAndTipsFromServices(authProfileAndToken)
+      : {},
+  ]);
+
+  if (
+    featureToggle.amsNotificationsIsActive &&
+    authProfileAndToken?.profile.id &&
+    authProfileAndToken.profile.profileType === 'private'
+  ) {
+    // Nothing in this flow depends on this so it does not have to be awaited
+    storeNotificationsResponses(
+      authProfileAndToken.profile.id,
+      notificationsAndTipsResults,
+      { updateLastLoginDate: true }
+    ).catch((error) => {
+      captureException(error);
+    });
+  }
+
+  const contentTips = getContentTips(serviceResults, authProfileAndToken);
+  const notificationsAndTips = getTipsAndNotificationsFromApiResults(
+    Object.values(notificationsAndTipsResults)
+  );
+
+  const notificationsWithTipsInserted = combineNotificationsWithTipsAndSort(
+    contentTips,
+    notificationsAndTips
+  );
   return apiSuccessResult(notificationsWithTipsInserted);
 };
 
@@ -215,7 +246,7 @@ const SERVICES_INDEX = {
   KTO,
 };
 
-export type ServicesType = typeof SERVICES_INDEX;
+export type ServicesType = Prettify<typeof SERVICES_INDEX>;
 export type ServiceID = keyof ServicesType;
 export type ServiceMap = { [key in ServiceID]: ServicesType[ServiceID] };
 
@@ -348,9 +379,9 @@ export const servicesTipsByProfileType = {
 export function loadServices(
   req: Request,
   serviceMap:
-    | PrivateServices
-    | CommercialServices
-    | PrivateServicesAttributeBased
+    | Partial<PrivateServices>
+    | Partial<CommercialServices>
+    | Partial<PrivateServicesAttributeBased>
 ) {
   return Object.entries(serviceMap).map(([serviceID, fetchService]) => {
     // Return service result as Object like { SERVICE_ID: result }
@@ -428,7 +459,7 @@ async function getServiceResultsForTips(req: Request) {
   if (auth) {
     const servicePromises = loadServices(
       req,
-      getServiceTipsMap(auth.profile.profileType) as any
+      getServiceTipsMap(auth.profile.profileType)
     );
     requestData = (await Promise.allSettled(servicePromises)).reduce(
       (acc, result) => Object.assign(acc, getSettledResult(result)),

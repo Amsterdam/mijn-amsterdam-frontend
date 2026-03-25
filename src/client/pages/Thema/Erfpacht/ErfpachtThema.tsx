@@ -3,33 +3,31 @@ import { Paragraph, Link, Heading } from '@amsterdam/design-system-react';
 import {
   filterErfpachtFacturen,
   mapErfpachtFacturen,
-} from './Erfpacht-helpers';
-import { featureToggle } from './Erfpacht-thema-config';
-import { useErfpachtThemaData } from './useErfpachtThemaData.hook';
-import { ErfpachtDossierFrontend } from '../../../../server/services/erfpacht/erfpacht-types';
-import { entries } from '../../../../universal/helpers/utils';
-import { MaRouterLink } from '../../../components/MaLink/MaLink';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaPagina from '../../../components/Thema/ThemaPagina';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
-import * as afis from '../Afis/Afis-thema-config';
-import { AfisFacturenTables } from '../Afis/AfisFacturenTables';
+} from './Erfpacht-helpers.tsx';
+import { useErfpachtThemaData } from './useErfpachtThemaData.hook.ts';
+import type { ErfpachtDossierFrontend } from '../../../../server/services/erfpacht/erfpacht-types.ts';
+import { entries } from '../../../../universal/helpers/utils.ts';
+import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
+import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
+import * as afis from '../Afis/Afis-thema-config.ts';
+import { AfisFacturenTables } from '../Afis/AfisFacturenTables.tsx';
 
 export function ErfpachtThema() {
   const {
-    id,
+    themaId,
     title,
     isError,
     isLoading,
-    linkListItems,
     tableConfig,
     dossiers,
-    routeConfig,
     erfpachtFacturenTableConfig,
+    themaConfig,
   } = useErfpachtThemaData();
 
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const pageContentTables = tableConfig
     ? entries(tableConfig).map(
@@ -50,11 +48,11 @@ export function ErfpachtThema() {
 
   return (
     <ThemaPagina
-      id={id}
+      id={themaId}
       title={title}
       isLoading={isLoading}
       isError={isError}
-      pageLinks={linkListItems}
+      pageLinks={themaConfig.pageLinks}
       maintenanceNotificationsPageSlug="erfpacht"
       pageContentTop={
         <>
@@ -77,19 +75,17 @@ export function ErfpachtThema() {
       pageContentMain={
         <>
           {pageContentTables}
-          {featureToggle.afisFacturenTablesActive && (
-            <AfisFacturenTables
-              themaContextParams={{
-                tableConfig: erfpachtFacturenTableConfig,
-                routeConfigDetailPage: routeConfig.detailPageFactuur,
-                routeConfigListPage: routeConfig.listPageFacturen,
-                themaId: id,
-                states: ['open'],
-                factuurFilterFn: filterErfpachtFacturen,
-                factuurMapFn: mapErfpachtFacturen,
-              }}
-            />
-          )}
+          <AfisFacturenTables
+            themaContextParams={{
+              tableConfig: erfpachtFacturenTableConfig,
+              routeConfigDetailPage: themaConfig.detailPageFactuur.route,
+              routeConfigListPage: themaConfig.listPageFacturen.route,
+              themaId,
+              states: ['open'],
+              factuurFilterFn: filterErfpachtFacturen,
+              factuurMapFn: mapErfpachtFacturen,
+            }}
+          />
           <PageContentCell spanWide={8}>
             <MissingFacturenDescription />
           </PageContentCell>
@@ -104,39 +100,19 @@ function MissingFacturenDescription() {
     <>
       <Heading level={3}>Facturen</Heading>
       <Paragraph className="ams-mb-m">
-        {!featureToggle.afisFacturenTablesActive ? (
-          <>
-            Facturen vanaf 1 januari 2025 en nog niet betaalde facturen kunt u
-            inzien onder{' '}
-            <MaRouterLink href={afis.routeConfig.themaPage.path}>
-              {afis.themaTitle}.
-            </MaRouterLink>{' '}
-            Zoekt u een oudere factuur, stuur dan een e-mail naar{' '}
-            <Link
-              rel="noreferrer"
-              href="mailto:debiteurenadministratie@amsterdam.nl"
-            >
-              debiteurenadministratie@amsterdam.nl
-            </Link>
-            .
-          </>
-        ) : (
-          <>
-            U ziet hier openstaande facturen vanaf 1 januari 2025. Zoekt u een
-            andere factuur? Kijk dan bij{' '}
-            <MaRouterLink href={afis.routeConfig.themaPage.path}>
-              {afis.themaTitle}
-            </MaRouterLink>{' '}
-            of stuur een e-mail naar{' '}
-            <Link
-              rel="noreferrer"
-              href="mailto:debiteurenadministratie@amsterdam.nl"
-            >
-              debiteurenadministratie@amsterdam.nl
-            </Link>
-            .
-          </>
-        )}
+        U ziet hier openstaande facturen vanaf 1 januari 2025. Zoekt u een
+        andere factuur? Kijk dan bij{' '}
+        <MaRouterLink href={afis.routeConfig.themaPage.path}>
+          {afis.themaTitle}
+        </MaRouterLink>{' '}
+        of stuur een e-mail naar{' '}
+        <Link
+          rel="noreferrer"
+          href="mailto:debiteurenadministratie@amsterdam.nl"
+        >
+          debiteurenadministratie@amsterdam.nl
+        </Link>
+        .
       </Paragraph>
       <Heading level={4}>Factuur naar ander adres</Heading>
       <Paragraph className="ams-mb-m">

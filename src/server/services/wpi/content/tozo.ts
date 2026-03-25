@@ -1,10 +1,10 @@
 import {
   defaultDateFormat,
   defaultDateTimeFormat,
-} from '../../../../universal/helpers/date';
-import { productName } from '../helpers';
-import { WpiRequestStatusLabels } from '../wpi-types';
-import { LINK_MEER_INFO } from './tonk';
+} from '../../../../universal/helpers/date.ts';
+import { productName } from '../helpers.ts';
+import type { WpiRequestStatusLabels } from '../wpi-types.ts';
+import { LINK_MEER_INFO } from './tonk.ts';
 
 const aanvraagLabels: WpiRequestStatusLabels = {
   notification: {
@@ -183,11 +183,7 @@ const besluitLabels: WpiRequestStatusLabels = {
           statusStep
         )}. Bekijk de brief voor meer details.
       </p>
-      ${
-        statusStep.productSpecific !== 'lening'
-          ? '<p>Wilt u een wijziging in uw inkomen doorgeven? <a rel="external noopener noreferrer" class="ams-link" href="https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/wijzigingen-doorgeven/">Kijk dan bij \'Wijziging of inkomsten doorgeven\'</a></p>'
-          : ''
-      }<p>${LINK_MEER_INFO}</p>`;
+      <p>${LINK_MEER_INFO}</p>`;
 
       case 'afwijzing':
         return `<p>

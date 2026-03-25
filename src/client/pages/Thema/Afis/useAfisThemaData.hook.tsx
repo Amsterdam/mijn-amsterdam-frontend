@@ -6,25 +6,22 @@ import {
   themaId as themaIdAfis,
   routeConfig,
   type AfisFactuurFrontend,
-} from './Afis-thema-config';
-import { useTransformFacturen } from './useAfisFacturenApi';
-import type { AfisFactuurState } from '../../../../server/services/afis/afis-types';
+} from './Afis-thema-config.ts';
+import { useTransformFacturen } from './useAfisFacturenApi.tsx';
+import type { AfisFactuurState } from '../../../../server/services/afis/afis-types.ts';
 import {
   hasFailedDependency,
   isError,
   isLoading,
-} from '../../../../universal/helpers/api';
-import { LinkProps } from '../../../../universal/types/App.types';
-import type { ThemaRouteConfig } from '../../../config/thema-types';
-import { useAppStateGetter } from '../../../hooks/useAppStateStore';
+} from '../../../../universal/helpers/api.ts';
+import type { LinkProps } from '../../../../universal/types/App.types.ts';
+import type { ThemaRouteConfig } from '../../../config/thema-types.ts';
+import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
 import {
   useThemaBreadcrumbs,
   useThemaMenuItemByThemaID,
-} from '../../../hooks/useThemaMenuItems';
-import {
-  BELASTINGEN_ROUTE_DEFAULT,
-  themaId as themaIdBelastingen,
-} from '../Belastingen/Belastingen-thema-config';
+} from '../../../hooks/useThemaMenuItems.ts';
+import { themaConfig as themaBelastingen } from '../Belastingen/Belastingen-thema-config.ts';
 
 export type AfisFacturenThemaContextParams = {
   themaId: string;
@@ -75,12 +72,12 @@ export function useAfisFacturenData(
 }
 
 export function useAfisThemaData() {
-  const menuItem = useThemaMenuItemByThemaID(themaIdBelastingen);
+  const menuItem = useThemaMenuItemByThemaID(themaBelastingen.id);
   const urlNaarBelastingen = menuItem?.to;
 
   const belastingenLinkListItem: LinkProps = {
     title: 'Belastingen op Mijn Amsterdam',
-    to: urlNaarBelastingen || BELASTINGEN_ROUTE_DEFAULT,
+    to: urlNaarBelastingen || themaBelastingen.route.path,
   };
 
   const breadcrumbs = useThemaBreadcrumbs(themaIdAfis);

@@ -1,19 +1,20 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi, Mock } from 'vitest';
+import type { Mock } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 
-import { useVergunningenDetailData } from './useVergunningenDetailData.hook';
-import { useVergunningenThemaData } from './useVergunningenThemaData.hook';
-import { VergunningenDetail, forTesting } from './VergunningenDetail';
-import type { DecosZaakFrontend } from '../../../../server/services/decos/decos-types';
-import type { PowerBrowserZaakFrontend } from '../../../../server/services/powerbrowser/powerbrowser-types';
+import { useVergunningenDetailData } from './useVergunningenDetailData.hook.ts';
+import { useVergunningenThemaData } from './useVergunningenThemaData.hook.ts';
+import { VergunningenDetail, forTesting } from './VergunningenDetail.tsx';
+import type { DecosZaakFrontend } from '../../../../server/services/decos/decos-types.ts';
+import type { PowerBrowserZaakFrontend } from '../../../../server/services/powerbrowser/powerbrowser-types.ts';
 import type {
   DecosVergunning,
   PBVergunning,
   ZaakFrontendCombined,
-} from '../../../../server/services/vergunningen/config-and-types';
-import { decosCaseToZaakTransformers } from '../../../../server/services/vergunningen/decos-zaken';
-import { pbCaseToZaakTransformers } from '../../../../server/services/vergunningen/pb-zaken';
-import { componentCreator } from '../../MockApp';
+} from '../../../../server/services/vergunningen/config-and-types.ts';
+import { decosCaseToZaakTransformers } from '../../../../server/services/vergunningen/decos-zaken.ts';
+import { pbCaseToZaakTransformers } from '../../../../server/services/vergunningen/pb-zaken.ts';
+import { componentCreator } from '../../MockApp.tsx';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -90,12 +91,15 @@ describe('VergunningDetailPagina', () => {
       isLoading: false,
       isError: false,
       breadcrumbs: [],
-      routeConfig: {
+      themaConfig: {
         detailPage: {
-          path: '/vergunningen/:caseType/:id',
+          route: {
+            path: '/vergunningen/:caseType/:id',
+          },
         },
       },
     });
+
     (useVergunningenDetailData as Mock).mockReturnValue({
       vergunning: mockVergunning,
       title: 'Test Title',
@@ -121,9 +125,11 @@ describe('VergunningDetailPagina', () => {
       vergunningen: [],
       isLoading: false,
       isError: false,
-      routeConfig: {
+      themaConfig: {
         detailPage: {
-          path: '/vergunningen/:caseType/:id',
+          route: {
+            path: '/vergunningen/:caseType/:id',
+          },
         },
       },
       breadcrumbs: [

@@ -5,34 +5,31 @@ import type {
   BrpFrontend,
   Persoon,
   Verbintenis,
-} from '../../../../../server/services/brp/brp-types';
-import type { Adres } from '../../../../../server/services/brp/brp-types';
+} from '../../../../../server/services/brp/brp-types.ts';
+import type { Adres } from '../../../../../server/services/brp/brp-types.ts';
 import {
   getFullAddress,
   hasDutchNationality,
   isMokum,
-} from '../../../../../universal/helpers/brp';
-import { defaultDateFormat } from '../../../../../universal/helpers/date';
-import type { AppState } from '../../../../../universal/types/App.types';
-import LoadingContent from '../../../../components/LoadingContent/LoadingContent';
-import { MaRouterLink } from '../../../../components/MaLink/MaLink';
+} from '../../../../../universal/helpers/brp.ts';
+import { defaultDateFormat } from '../../../../../universal/helpers/date.ts';
+import type { AppState } from '../../../../../universal/types/App.types.ts';
+import { MaRouterLink } from '../../../../components/MaLink/MaLink.ts';
+import LoadingContent from '../../../../components/LoadingContent/LoadingContent.tsx';
 import {
-  BRP_LABEL_AANTAL_BEWONERS,
-  featureToggle,
+  BRP_LABEL_AANTAL_INGESCHREVEN_PERSONEN,
   profileLinks,
-  routeConfig,
-  themaIdBRP,
-} from '../Profile-thema-config';
+} from '../Profile-thema-config.ts';
+import type {
+  ProfileLabels} from '../profileDataFormatter.ts';
 import {
-  ProfileLabels,
   formatProfileSectionData,
-} from '../profileDataFormatter';
-import {
+} from '../profileDataFormatter.ts';
+import type {
   ActionLink,
   PanelConfig,
   ProfileSectionData,
-} from '../ProfileSectionPanel';
-
+} from '../ProfileSectionPanel.tsx';
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading
  * into the Profile page data.
@@ -42,8 +39,8 @@ type BRPPanelKey = keyof Omit<
   BrpFrontend,
   | 'notifications'
   | 'kvknummer'
-  | 'fetchUrlAantalBewoners'
-  | 'aantalBewoners'
+  | 'fetchUrlAantalIngeschrevenPersonen'
+  | 'aantalIngeschrevenPersonen'
   | 'bsnTranslation'
 >;
 
@@ -117,7 +114,7 @@ delete persoonSecundair.nationaliteiten;
 delete persoonSecundair.indicatieGeheim;
 
 const adres: ProfileLabels<
-  Partial<Adres> & { aantalBewoners: number },
+  Partial<Adres> & { aantalIngeschrevenPersonen: string },
   AppState['BRP']['content']
 > = {
   locatiebeschrijving: 'Locatie',
@@ -150,14 +147,14 @@ const adres: ProfileLabels<
     (value) => (value ? defaultDateFormat(value) : 'Onbekend'),
   ],
   begindatumVerblijfFormatted: 'Vanaf',
-  aantalBewoners: [
-    BRP_LABEL_AANTAL_BEWONERS,
+  aantalIngeschrevenPersonen: [
+    BRP_LABEL_AANTAL_INGESCHREVEN_PERSONEN,
     (value, _x, BRPContent) => {
       if (
         BRPContent?.persoon?.mokum === true &&
-        featureToggle[themaIdBRP].aantalBewonersOpAdresTonenActive
+        BRPContent?.adres?.isBewoner === true
       ) {
-        return value === -1 ? (
+        return value === '-1' ? (
           <LoadingContent barConfig={[['2rem', '2rem', '0']]} />
         ) : (
           value
@@ -168,7 +165,10 @@ const adres: ProfileLabels<
   ],
   wozWaarde: [
     'WOZ-waarde',
-    () => {
+    (_value, adres) => {
+      if (!adres?.isBewoner) {
+        return null;
+      }
       return (
         <>
           Te vinden op{' '}
@@ -309,6 +309,8 @@ export const panelConfig: PanelConfig<
     };
   },
   adres: (BRP, profileData) => {
+    const isBewoner = BRP.content?.adres?.isBewoner === true;
+
     const title = isMokum(BRP.content)
       ? 'Verhuizing doorgeven'
       : 'Verhuizing naar Amsterdam doorgeven';
@@ -321,7 +323,7 @@ export const panelConfig: PanelConfig<
       },
     ];
 
-    if (profileData.adres?.[BRP_LABEL_AANTAL_BEWONERS]) {
+    if (profileData.adres?.[BRP_LABEL_AANTAL_INGESCHREVEN_PERSONEN]) {
       actionLinks.push({
         title: 'Onjuiste inschrijving melden',
         url: profileLinks.CHANGE_RESIDENT_COUNT,
@@ -329,20 +331,25 @@ export const panelConfig: PanelConfig<
         className: styles['ActionLink--reportIncorrectResidentCount'],
       });
     }
-    const contentAfterTheTitle = isMokum(BRP.content) ? (
-      <>
-        <strong>Uw huis verduurzamen?</strong> De gemeente biedt subsidies of
-        gratis hulp.
-        <br /> Bekijk{' '}
-        <Link rel="noopener noreferrer" href="https://duurzaamwonen.amsterdam/">
-          duurzaamwonen.amsterdam
-        </Link>{' '}
-        voor meer informatie.
-      </>
-    ) : null;
+
+    const contentAfterTheTitle =
+      isBewoner && isMokum(BRP.content) ? (
+        <>
+          <strong>Uw huis verduurzamen?</strong> De gemeente biedt subsidies of
+          gratis hulp.
+          <br /> Bekijk{' '}
+          <Link
+            rel="noopener noreferrer"
+            href="https://duurzaamwonen.amsterdam/"
+          >
+            duurzaamwonen.amsterdam
+          </Link>{' '}
+          voor meer informatie.
+        </>
+      ) : null;
 
     return {
-      title: 'Adres',
+      title: BRP?.content?.adres?.isBriefadres ? 'Briefadres' : 'Adres',
       contentAfterTheTitle,
       actionLinks,
     };

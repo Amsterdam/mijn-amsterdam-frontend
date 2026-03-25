@@ -2,29 +2,26 @@ import FormData from 'form-data';
 import { generatePath } from 'react-router';
 import UID from 'uid-safe';
 
-import {
-  featureToggle,
-  themaConfig,
-} from '../../../client/pages/Thema/Klachten/Klachten-thema-config';
+import { themaConfig } from '../../../client/pages/Thema/Klachten/Klachten-thema-config.ts';
 import {
   apiDependencyError,
   apiSuccessResult,
   type ApiResponse,
-} from '../../../universal/helpers/api';
-import { MyNotification } from '../../../universal/types/App.types';
+} from '../../../universal/helpers/api.ts';
+import type { MyNotification } from '../../../universal/types/App.types.ts';
 import {
   createSessionBasedCacheKey,
   getApiConfig,
-} from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
-import { smileDateParser } from '../smile/smile-helpers';
-import { AuthProfileAndToken } from './../../auth/auth-types';
-import {
+} from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
+import { smileDateParser } from '../smile/smile-helpers.ts';
+import type { AuthProfileAndToken } from './../../auth/auth-types.ts';
+import type {
   KlachtFrontend,
   KlachtenResponse,
   SmileKlachtenReponse,
-} from './types';
-import { defaultDateFormat } from '../../../universal/helpers/date';
+} from './types.ts';
+import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 
 const DEFAULT_PAGE_SIZE = 250;
 
@@ -166,10 +163,7 @@ export function transformKlachtenResponse(
 function createKlachtNotification(klacht: KlachtFrontend): MyNotification {
   const id = `klacht-${klacht.id}-notification`;
   const gotoDetailTxt = 'Bekijk details';
-  if (
-    featureToggle.statustreinAndAfgehandeldeMeldingenActive &&
-    klacht.displayStatus === 'Afgehandeld'
-  ) {
+  if (klacht.displayStatus === 'Afgehandeld') {
     return {
       id,
       title: 'Klacht afgehandeld',

@@ -1,30 +1,27 @@
-import { ComponentType } from '@react-spring/web';
+import type { ComponentType } from '@react-spring/web';
 import { act, render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import Mockdate from 'mockdate';
 import { generatePath } from 'react-router';
 import { describe, it } from 'vitest';
 
-import { AppState } from '../../universal/types/App.types';
-import { Dashboard } from '../pages/Dashboard/Dashboard';
-import { DashboardRoute } from '../pages/Dashboard/Dashboard-routes';
-import MockApp from '../pages/MockApp';
-import { MyNotificationsPage } from '../pages/MyNotifications/MyNotifications';
+import type { AppState } from '../../universal/types/App.types.ts';
+import { DashboardRoute } from '../pages/Dashboard/Dashboard-routes.ts';
+import { Dashboard } from '../pages/Dashboard/Dashboard.tsx';
+import MockApp from '../pages/MockApp.tsx';
+import { MyNotificationsPage } from '../pages/MyNotifications/MyNotifications.tsx';
 import {
   themaId as themaIdAfis,
   themaTitle as themaTitleAfis,
-} from '../pages/Thema/Afis/Afis-thema-config';
-import { themaConfig as themaConfigBezwaren } from '../pages/Thema/Bezwaren/Bezwaren-thema-config';
-import { BezwarenDetail } from '../pages/Thema/Bezwaren/BezwarenDetail';
-import { BezwarenList } from '../pages/Thema/Bezwaren/BezwarenList';
-import { BezwarenThema } from '../pages/Thema/Bezwaren/BezwarenThema';
-import { mapperContactmomentToMenuItem } from '../pages/Thema/Profile/private/Contactmomenten.config';
-import { ContactmomentenListPage } from '../pages/Thema/Profile/private/ContactmomentenListPage';
-import { MijnGegevensThema } from '../pages/Thema/Profile/private/ProfilePrivate';
-import {
-  themaId as themaIdVergunningen,
-  themaTitle as themaTitleVergunningen,
-} from '../pages/Thema/Vergunningen/Vergunningen-thema-config';
+} from '../pages/Thema/Afis/Afis-thema-config.ts';
+import { themaConfig as themaConfigBezwaren } from '../pages/Thema/Bezwaren/Bezwaren-thema-config.ts';
+import { BezwarenDetail } from '../pages/Thema/Bezwaren/BezwarenDetail.tsx';
+import { BezwarenList } from '../pages/Thema/Bezwaren/BezwarenList.tsx';
+import { BezwarenThema } from '../pages/Thema/Bezwaren/BezwarenThema.tsx';
+import { mapperContactmomentToMenuItem } from '../pages/Thema/Profile/private/Contactmomenten.config.ts';
+import { ContactmomentenListPage } from '../pages/Thema/Profile/private/ContactmomentenListPage.tsx';
+import { MijnGegevensThema } from '../pages/Thema/Profile/private/ProfilePrivate.tsx';
+import { themaConfig as themaVergunningen } from '../pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
 
 const testState = {
   KLANT_CONTACT: {
@@ -37,7 +34,7 @@ const testState = {
         themaKanaal: themaTitleAfis, // We misuse this to keep things together
       },
       {
-        subject: themaIdVergunningen,
+        subject: themaVergunningen.id,
       },
     ],
   },
@@ -73,11 +70,11 @@ const testState = {
       },
       {
         id: 'Not2',
-        title: `Notification ${themaTitleVergunningen}`,
+        title: `Notification ${themaVergunningen.title}`,
         description: 'Notificatie2',
         datePublished: '2021-07-24',
-        themaID: themaIdVergunningen,
-        themaTitle: themaTitleVergunningen,
+        themaID: themaVergunningen.id,
+        themaTitle: themaVergunningen.title,
         link: {
           to: '/item-2',
           title: 'Linkje!',
@@ -156,7 +153,7 @@ describe('Cobrowse redacted components', () => {
         expect(screen.getByTestId(themaConfigBezwaren.title)).toHaveClass(
           'redacted'
         );
-        expect(screen.getByTestId(themaTitleVergunningen)).not.toHaveClass(
+        expect(screen.getByTestId(themaVergunningen.title)).not.toHaveClass(
           'redacted'
         );
       });
@@ -169,7 +166,7 @@ describe('Cobrowse redacted components', () => {
         );
         expect(redactedNotification).toHaveClass('redacted');
         const nonRedactedNotification = listItems.find((li) =>
-          li.textContent?.includes(themaTitleVergunningen)
+          li.textContent?.includes(themaVergunningen.title)
         );
         expect(nonRedactedNotification).not.toHaveClass('redacted');
       });
@@ -183,7 +180,7 @@ describe('Cobrowse redacted components', () => {
       );
       expect(redactedNotification).toHaveClass('redacted');
       const nonRedactedNotification = listItems.find((li) =>
-        li.textContent?.includes(themaTitleVergunningen)
+        li.textContent?.includes(themaVergunningen.title)
       );
       expect(nonRedactedNotification).not.toHaveClass('redacted');
     });

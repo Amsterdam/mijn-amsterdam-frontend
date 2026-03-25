@@ -2,15 +2,15 @@ import { useState, type ReactElement } from 'react';
 
 import { ActionGroup, Button, Paragraph } from '@amsterdam/design-system-react';
 
-import { EMANDATE_STATUS_ACTIVE } from './Afis-thema-config';
+import { EMANDATE_STATUS_ACTIVE } from './Afis-thema-config.ts';
 import type {
   AfisEMandateFrontend,
   AfisEMandateSignRequestResponse,
   AfisEMandateStatusChangeResponse,
-} from '../../../../server/services/afis/afis-types';
-import { Modal } from '../../../components/Modal/Modal';
-import { Spinner } from '../../../components/Spinner/Spinner';
-import type { BFFApiHook } from '../../../hooks/api/useBffApi';
+} from '../../../../server/services/afis/afis-types.ts';
+import { Modal } from '../../../components/Modal/Modal.tsx';
+import { Spinner } from '../../../components/Spinner/Spinner.tsx';
+import type { BFFApiHook } from '../../../hooks/api/useBffApi.ts';
 
 type ActionConfirmationModalProps = {
   confirmationText: ReactElement | string;
@@ -115,36 +115,35 @@ function ApiActionButton<T>({
   );
 }
 
-type AfisEMandateActionUrlProps = {
+type AfisEMandateActionButtonsProps = {
   eMandate: AfisEMandateFrontend;
-  redirectUrlApi: BFFApiHook<AfisEMandateSignRequestResponse>;
-  statusChangeApi: BFFApiHook<AfisEMandateStatusChangeResponse>;
+  redirectUrlApi: BFFApiHook<AfisEMandateSignRequestResponse> & {
+    requestRedirectUrl: (isActive: boolean) => void;
+  };
+  deactivateApi: BFFApiHook<AfisEMandateStatusChangeResponse>;
 };
 
-export function AfisEMandateActionUrls({
+export function AfisEMandateActionButtons({
   eMandate,
   redirectUrlApi,
-  statusChangeApi,
-}: AfisEMandateActionUrlProps) {
+  deactivateApi,
+}: AfisEMandateActionButtonsProps) {
+  const isActive = eMandate.status === EMANDATE_STATUS_ACTIVE;
   return (
     <>
       {eMandate.signRequestUrl && (
         <ApiActionButton
           api={redirectUrlApi}
-          fetch={() => redirectUrlApi.fetch()}
-          label={
-            eMandate.status === EMANDATE_STATUS_ACTIVE
-              ? 'Wijzigen'
-              : 'Activeren'
-          }
+          fetch={() => redirectUrlApi.requestRedirectUrl(isActive)}
+          label={isActive ? 'Rekening wijzigen' : 'Activeren'}
           doConfirm={false}
         />
       )}
       &nbsp;
       {eMandate.deactivateUrl && eMandate.status === EMANDATE_STATUS_ACTIVE && (
         <ApiActionButton
-          api={statusChangeApi}
-          fetch={() => statusChangeApi.fetch()}
+          api={deactivateApi}
+          fetch={() => deactivateApi.fetch()}
           label="Stopzetten"
           doConfirm
           confirmationModal={{

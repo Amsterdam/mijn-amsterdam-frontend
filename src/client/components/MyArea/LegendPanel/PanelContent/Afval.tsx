@@ -1,6 +1,6 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 
-import GenericBase from './GenericBase';
+import GenericBase from './GenericBase.tsx';
 
 const afvalUrls: Record<string, string> = {
   rest: 'https://www.milieucentraal.nl/minder-afval/afval-scheiden/restafval',

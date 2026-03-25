@@ -1,11 +1,11 @@
 import { Button } from '@amsterdam/design-system-react';
 import { BuildingsIcon, HouseIcon } from '@amsterdam/design-system-react-icons';
 import { useMapInstance } from '@amsterdam/react-maps';
-import { LatLngLiteral } from 'leaflet';
+import type { LatLngLiteral } from 'leaflet';
 
 import styles from './Map/ZoomControl.module.scss';
-import { HOOD_ZOOM } from '../../../universal/config/myarea-datasets';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { HOOD_ZOOM } from '../../../universal/config/myarea-datasets.ts';
+import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
 
 interface MyAreaHomeControlButtonProps {
   latlng: LatLngLiteral;

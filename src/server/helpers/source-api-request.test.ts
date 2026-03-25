@@ -1,6 +1,7 @@
-import {
+import type {
   Mock,
-  MockInstance,
+  MockInstance} from 'vitest';
+import {
   afterAll,
   afterEach,
   beforeAll,
@@ -12,31 +13,32 @@ import {
   vi,
 } from 'vitest';
 
-import { encrypt } from './encrypt-decrypt';
+import { encrypt } from './encrypt-decrypt.ts';
 import {
   createSessionBasedCacheKey,
   getRequestConfigCacheKey,
-} from './source-api-helpers';
+} from './source-api-helpers.ts';
 import {
   axiosRequest,
   findApiByRequestUrl,
   forTesting,
   requestData,
-} from './source-api-request';
-import { remoteApiHost } from '../../testing/setup';
-import { getAuthProfileAndToken, remoteApi } from '../../testing/utils';
+} from './source-api-request.ts';
+import { remoteApiHost } from '../../testing/setup.ts';
+import { getAuthProfileAndToken, remoteApi } from '../../testing/utils.ts';
 import {
   apiErrorResult,
   apiPostponeResult,
   apiSuccessResult,
-} from '../../universal/helpers/api';
-import type { AuthProfile } from '../auth/auth-types';
+} from '../../universal/helpers/api.ts';
+import type { AuthProfile } from '../auth/auth-types.ts';
+import type {
+  ApiUrlEntries} from '../config/source-api.ts';
 import {
-  ApiUrlEntries,
   DEFAULT_REQUEST_CACHE_TTL_MS,
   FORCE_RENEW_CACHE_TTL_MS,
-} from '../config/source-api';
-import { captureException } from '../services/monitoring';
+} from '../config/source-api.ts';
+import { captureException } from '../services/monitoring.ts';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -44,7 +46,7 @@ const mocks = vi.hoisted(() => {
   };
 });
 
-vi.mock('../config/app.ts', async (importOrigModule) => {
+vi.mock('../config/app.ts', async (importOrigModule: () => Promise<[]>) => {
   return {
     ...(await importOrigModule()),
     get BFF_REQUEST_CACHE_ENABLED() {
@@ -71,7 +73,7 @@ describe('source-api-request caching', () => {
         return [data, value];
       },
       cacheKey_UNSAFE: cacheKey,
-      cacheTimeout: cacheTimeout,
+      cacheTimeout,
       enableCache: true,
     });
   }

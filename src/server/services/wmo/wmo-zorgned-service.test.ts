@@ -1,13 +1,14 @@
 import Mockdate from 'mockdate';
 
-import { fetchZorgnedAanvragenWMO, forTesting } from './wmo-zorgned-service';
-import { remoteApiHost } from '../../../testing/setup';
-import { remoteApi } from '../../../testing/utils';
-import * as request from '../../helpers/source-api-request';
+import { fetchZorgnedAanvragenWMO, forTesting } from './wmo-zorgned-service.ts';
+import { remoteApiHost } from '../../../testing/setup.ts';
+import { remoteApi } from '../../../testing/utils.ts';
+import * as request from '../../helpers/source-api-request.ts';
+import type {
+  ZorgnedAanvraagTransformed} from '../zorgned/zorgned-types.ts';
 import {
-  ZORGNED_GEMEENTE_CODE,
-  ZorgnedAanvraagTransformed,
-} from '../zorgned/zorgned-types';
+  ZORGNED_GEMEENTE_CODE
+} from '../zorgned/zorgned-types.ts';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -129,6 +130,59 @@ describe('wmo-zorgned-service', () => {
         "status": "OK",
       }
     `);
+  });
+
+  test('Should filter out cancelled aanvragen', async () => {
+    const aanvraagNotCancelled = {
+      identificatie: '123123123',
+      datumAanvraag: '2025-11-25',
+      beschikking: {
+        beschikkingNummer: 'not-cancelled',
+        beschikteProducten: [
+          {
+            identificatie: '116841',
+            product: {
+              productsoortCode: 'WRA',
+              omschrijving: 'woonruimteaanpassing (in behandeling)',
+            },
+            resultaat: 'toegewezen',
+            toegewezenProduct: {
+              datumIngangGeldigheid: '2023-05-06',
+              datumEindeGeldigheid: null,
+            },
+          },
+        ],
+      },
+      documenten: [],
+    };
+
+    const aanvraagCancelled = structuredClone(aanvraagNotCancelled) as any;
+    aanvraagCancelled.beschikking.beschikkingsNummer = 'cancelled';
+    aanvraagCancelled.beschikking.beschikteProducten[0].toegewezenProduct.datumEindeGeldigheid =
+      '2023-05-06';
+
+    const aanvraagNotCancellable = structuredClone(aanvraagNotCancelled) as any;
+    aanvraagNotCancellable.beschikking.beschikkingNummer = 'not-cancellable';
+    aanvraagNotCancellable.beschikking.beschikteProducten[0].toegewezenProduct.datumEindeGeldigheid =
+      null;
+    aanvraagNotCancellable.beschikking.beschikteProducten[0].toegewezenProduct.datumIngangGeldigheid =
+      null;
+
+    remoteApi.post('/zorgned/aanvragen').reply(200, {
+      _embedded: {
+        aanvraag: [
+          aanvraagCancelled,
+          aanvraagNotCancelled,
+          aanvraagNotCancellable,
+        ],
+      },
+    });
+
+    const response = await fetchZorgnedAanvragenWMO('123456789');
+
+    expect(response.content?.length).toBe(2);
+    expect(response.content?.[1].beschikkingNummer).toBe('not-cancellable');
+    expect(response.content?.[0].beschikkingNummer).toBe('not-cancelled');
   });
 
   describe('getFakeDecisionDocuments', () => {

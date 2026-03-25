@@ -2,14 +2,11 @@ import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { describe, expect, vi } from 'vitest';
 
-import { forTesting, ZaakStatus } from './ZaakStatus';
-import { ZAAK_STATUS_ROUTE } from './ZaakStatus-config';
-import { AppState } from '../../../universal/types/App.types';
-import MockApp from '../MockApp';
-import {
-  routeConfig as routeConfigVergunningen,
-  themaId as themaIdVergunningen,
-} from '../Thema/Vergunningen/Vergunningen-thema-config';
+import { ZAAK_STATUS_ROUTE } from './ZaakStatus-config.ts';
+import { forTesting, ZaakStatus } from './ZaakStatus.tsx';
+import type { AppState } from '../../../universal/types/App.types.ts';
+import MockApp from '../MockApp.tsx';
+import { themaConfig as themaVergunningen } from '../Thema/Vergunningen/Vergunningen-thema-config.ts';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -177,8 +174,8 @@ describe('ZaakStatus', () => {
 
     it('should return NOT_ABLE_TO_DETERMINE_ROUTE when state is loading', () => {
       const getRoute = baseThemaConfig(
-        routeConfigVergunningen.themaPage.path,
-        themaIdVergunningen
+        themaVergunningen.route.path,
+        themaVergunningen.id
       ).getRoute;
 
       const result = getRoute('Z/000/000001.c', {
@@ -190,8 +187,8 @@ describe('ZaakStatus', () => {
 
     it('should return STATE_ERROR when state is error', () => {
       const getRoute = baseThemaConfig(
-        routeConfigVergunningen.themaPage.path,
-        themaIdVergunningen
+        themaVergunningen.route.path,
+        themaVergunningen.id
       ).getRoute;
 
       const result = getRoute('Z/000/000001.c', {
@@ -203,8 +200,8 @@ describe('ZaakStatus', () => {
 
     it('should return ITEM_NOT_FOUND when zaken array is not found', () => {
       const getRoute = baseThemaConfig(
-        routeConfigVergunningen.themaPage.path,
-        themaIdVergunningen
+        themaVergunningen.route.path,
+        themaVergunningen.id
       ).getRoute;
 
       const result = getRoute('Z/000/000001.c', {
@@ -216,8 +213,8 @@ describe('ZaakStatus', () => {
 
     it('should return the correct route when zaken array contains the identifier', () => {
       const getRoute = baseThemaConfig(
-        routeConfigVergunningen.themaPage.path,
-        themaIdVergunningen
+        themaVergunningen.route.path,
+        themaVergunningen.id
       ).getRoute;
 
       const result = getRoute('Z/000/000001.c', {
@@ -237,8 +234,8 @@ describe('ZaakStatus', () => {
 
     it('should return ITEM_NOT_FOUND when zaken array does not contain the identifier', () => {
       const getRoute = baseThemaConfig(
-        routeConfigVergunningen.themaPage.path,
-        themaIdVergunningen
+        themaVergunningen.route.path,
+        themaVergunningen.id
       ).getRoute;
 
       const result = getRoute('Z/000/000002.c', {
@@ -262,8 +259,8 @@ describe('ZaakStatus', () => {
       };
 
       const getRoute = baseThemaConfig(
-        routeConfigVergunningen.themaPage.path,
-        themaIdVergunningen,
+        themaVergunningen.route.path,
+        themaVergunningen.id,
         customGetZaken
       ).getRoute;
 

@@ -1,7 +1,7 @@
 import { Alert, Link, Paragraph } from '@amsterdam/design-system-react';
 
 import styles from './ProfilePrivate.module.scss';
-import { AppState } from '../../../../../universal/types/App.types';
+import type { AppState } from '../../../../../universal/types/App.types.ts';
 
 type AdresInOnderzoekProps = {
   brpContent: AppState['BRP']['content'];
@@ -24,7 +24,7 @@ export function AdresInOnderzoek({ brpContent }: AdresInOnderzoekProps) {
         )}{' '}
         <Link
           rel="noopener noreferrer"
-          href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
+          href="https://www.amsterdam.nl/burgerzaken/verhuizen-inschrijving-briefadres/onderzoek-inschrijving/"
         >
           Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
         </Link>

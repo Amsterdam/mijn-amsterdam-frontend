@@ -1,10 +1,12 @@
 import { lazy, Suspense } from 'react';
 
-import { MyAreaProps } from './MyArea';
+import type { MyAreaProps } from './MyArea.tsx';
 import styles from './MyAreaLoadingIndicator.module.scss';
 
-export const MyAreaLazy = lazy(() => import('./MyArea'));
-export const MyAreaDashboardLazy = lazy(() => import('./MyAreaDashboardMap'));
+export const MyAreaLazy = lazy(() => import('./MyArea.tsx'));
+export const MyAreaDashboardLazy = lazy(
+  () => import('./MyAreaDashboardMap.tsx')
+);
 
 interface MyAreaLoaderProps extends MyAreaProps {
   isDashboard?: boolean;

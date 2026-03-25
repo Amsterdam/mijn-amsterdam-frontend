@@ -5,6 +5,7 @@ import { createHash } from 'node:crypto';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import svgr from 'vite-plugin-svgr';
+import path from 'node:path';
 
 export default defineConfig({
   server: {
@@ -21,6 +22,11 @@ export default defineConfig({
     ),
     MA_BUILD_ID: JSON.stringify(process.env.MA_BUILD_ID || '-1'),
     MA_GIT_SHA: JSON.stringify(process.env.MA_GIT_SHA || '-1'),
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      tsconfig: 'tsconfig.build-fe.json',
+    },
   },
   envPrefix: 'REACT_APP_',
   build: {
@@ -46,10 +52,6 @@ export default defineConfig({
   },
   plugins: [
     react(),
-    // insert eslint plugin when errors are dealt with
-    // eslint({
-    //   overrideConfigFile: path.resolve(__dirname, 'eslint.config.mjs'),
-    // }),
     // svgr options: https://react-svgr.com/docs/options/
     svgr(),
   ],
@@ -64,7 +66,6 @@ export default defineConfig({
       scopeBehaviour: 'local',
       // Generate correct CSS name that matches the Create React App one. Some Styles depend on these generated class names.
       generateScopedName: function (name, filename) {
-        const path = require('path');
         let file = path.basename(filename);
         file = file.split('.')[0];
         const hashFunc = createHash('md5');

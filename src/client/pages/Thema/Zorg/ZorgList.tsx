@@ -1,11 +1,11 @@
 import { useParams } from 'react-router';
 
-import { useZorgThemaData } from './useZorgThemaData';
-import { ListPageParamKind } from './Zorg-thema-config';
-import { HistoricItemsMention } from './ZorgThema';
-import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
-import { PageContentCell } from '../../../components/Page/Page';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { useZorgThemaData } from './useZorgThemaData.ts';
+import type { ListPageParamKind } from './Zorg-thema-config.ts';
+import { HistoricItemsMention } from './ZorgThema.tsx';
+import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function ZorgList() {
   const { kind = 'huidige-voorzieningen' } = useParams<{
@@ -19,7 +19,7 @@ export function ZorgList() {
     isError,
     listPageParamKind,
     breadcrumbs,
-    id,
+    themaId,
     themaConfig,
   } = useZorgThemaData();
   useHTMLDocumentTitle(themaConfig.listPage.route);
@@ -28,7 +28,7 @@ export function ZorgList() {
 
   return (
     <ListPagePaginated
-      themaId={id}
+      themaId={themaId}
       items={voorzieningen.filter(filter)}
       title={title}
       appRoute={listPageRoute}

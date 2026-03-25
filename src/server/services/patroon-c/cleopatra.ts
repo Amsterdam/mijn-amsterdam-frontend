@@ -1,23 +1,24 @@
 import jose from 'node-jose';
 
-import { ApiPatternResponseA, fetchService } from './api-service';
-import * as MILIEUZONE from '../../../client/pages/Thema/Milieuzone/Milieuzone-thema-config';
-import * as OVERTREDINGEN from '../../../client/pages/Thema/Overtredingen/Overtredingen-thema-config';
-import { IS_TAP } from '../../../universal/config/env';
+import type { ApiPatternResponseA} from './api-service.ts';
+import { fetchService } from './api-service.ts';
+import * as MILIEUZONE from '../../../client/pages/Thema/Milieuzone/Milieuzone-thema-config.ts';
+import * as OVERTREDINGEN from '../../../client/pages/Thema/Overtredingen/Overtredingen-thema-config.ts';
+import { IS_TAP } from '../../../universal/config/env.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
   type ApiResponse,
-} from '../../../universal/helpers/api';
-import { MyNotification } from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { getCert } from '../../helpers/cert';
-import { getFromEnv } from '../../helpers/env';
+} from '../../../universal/helpers/api.ts';
+import type { MyNotification } from '../../../universal/types/App.types.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { getCert } from '../../helpers/cert.ts';
+import { getFromEnv } from '../../helpers/env.ts';
 import {
   createSessionBasedCacheKey,
   getApiConfig,
-} from '../../helpers/source-api-helpers';
-import { logger } from '../../logging';
+} from '../../helpers/source-api-helpers.ts';
+import { logger } from '../../logging.ts';
 
 const DEV_KEY = {
   kty: 'RSA',
@@ -126,18 +127,19 @@ function transformCleopatraResponse(
         case message.categorie === 'M1' || message.categorie === 'F3':
           {
             let themaID:
-              | typeof MILIEUZONE.themaId
-              | typeof OVERTREDINGEN.themaId = MILIEUZONE.themaId;
+              | typeof MILIEUZONE.themaConfig.id
+              | typeof OVERTREDINGEN.themaConfig.id = MILIEUZONE.themaConfig.id;
             let themaTitle:
-              | typeof MILIEUZONE.themaTitle
-              | typeof OVERTREDINGEN.themaTitle = MILIEUZONE.themaTitle;
+              | typeof MILIEUZONE.themaConfig.title
+              | typeof OVERTREDINGEN.themaConfig.title =
+              MILIEUZONE.themaConfig.title;
 
             if (
-              OVERTREDINGEN.featureToggle.overtredingenActive &&
+              OVERTREDINGEN.themaConfig.featureToggle.active &&
               message.thema === 'Overtredingen'
             ) {
-              themaID = OVERTREDINGEN.themaId;
-              themaTitle = OVERTREDINGEN.themaTitle;
+              themaID = OVERTREDINGEN.themaConfig.id;
+              themaTitle = OVERTREDINGEN.themaConfig.title;
             }
 
             notifications.push({
@@ -202,7 +204,7 @@ export async function fetchMilieuzone(
       isKnown: response.content?.isKnownMilieuzone ?? false,
       url:
         getFromEnv('BFF_SSO_URL_MILIEUZONE') ??
-        MILIEUZONE.MILIEUZONE_ROUTE_DEFAULT,
+        MILIEUZONE.themaConfig.route.path,
     });
   }
 
@@ -219,7 +221,7 @@ export async function fetchOvertredingen(
       isKnown: response.content?.isKnownOvertredingen ?? false,
       url:
         getFromEnv('BFF_SSO_URL_OVERTREDINGEN') ??
-        OVERTREDINGEN.OVERTREDINGEN_ROUTE_DEFAULT,
+        OVERTREDINGEN.themaConfig.route.path,
     });
   }
 
@@ -247,11 +249,11 @@ async function fetchNotifications<ID extends string = string>(
 export async function fetchMilieuzoneNotifications(
   authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchNotifications(authProfileAndToken, MILIEUZONE.themaId);
+  return fetchNotifications(authProfileAndToken, MILIEUZONE.themaConfig.id);
 }
 
 export async function fetchOvertredingenNotifications(
   authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchNotifications(authProfileAndToken, OVERTREDINGEN.themaId);
+  return fetchNotifications(authProfileAndToken, OVERTREDINGEN.themaConfig.id);
 }

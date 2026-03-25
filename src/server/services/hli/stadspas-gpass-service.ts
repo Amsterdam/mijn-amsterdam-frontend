@@ -1,9 +1,9 @@
 import { HttpStatusCode } from 'axios';
 import * as date from 'date-fns';
 
-import { fetchAdministratienummer } from './hli-zorgned-service';
-import { GPASS_API_TOKEN } from './stadspas-config-and-content';
-import {
+import { fetchAdministratienummer } from './hli-zorgned-service.ts';
+import { GPASS_API_TOKEN } from './stadspas-config-and-content.ts';
+import type {
   SecurityCode,
   Stadspas,
   StadspasAanbiedingSource,
@@ -20,25 +20,26 @@ import {
   StadspasTransactieSource,
   StadspasTransactiesResponseSource,
   StadspasTransactionQueryParams,
-} from './stadspas-types';
-import { themaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config';
-import {
+} from './stadspas-types.ts';
+import { themaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config.ts';
+import type {
   ApiResponse,
-  ApiSuccessResponse,
+  ApiSuccessResponse} from '../../../universal/helpers/api.ts';
+import {
   apiSuccessResult,
   getSettledResult,
   apiErrorResult,
-} from '../../../universal/helpers/api';
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import { displayAmount } from '../../../universal/helpers/text';
-import { DataRequestConfig } from '../../config/source-api';
-import { getApiConfig } from '../../helpers/source-api-helpers';
+} from '../../../universal/helpers/api.ts';
+import { defaultDateFormat } from '../../../universal/helpers/date.ts';
+import { displayAmount } from '../../../universal/helpers/text.ts';
+import type { DataRequestConfig } from '../../config/source-api.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
 import {
   deleteCacheEntry,
   isSuccessStatus,
   requestData,
-} from '../../helpers/source-api-request';
-import type { BSN } from '../zorgned/zorgned-types';
+} from '../../helpers/source-api-request.ts';
+import type { BSN } from '../zorgned/zorgned-types.ts';
 
 // The first of August is the default yearly activation date for stadspassen.
 // This date is chosen to activate all new passes that are given out by Amsterdam.
@@ -109,7 +110,7 @@ function transformStadspasResponse(
       owner: getOwner(pashouder),
       dateEnd: gpassStadspasResonseData.expiry_date,
       dateEndFormatted: defaultDateFormat(gpassStadspasResonseData.expiry_date),
-      budgets: budgets,
+      budgets,
       balance,
       balanceFormatted: `€${displayAmount(balance)}`,
       passNumber: gpassStadspasResonseData.pasnummer,

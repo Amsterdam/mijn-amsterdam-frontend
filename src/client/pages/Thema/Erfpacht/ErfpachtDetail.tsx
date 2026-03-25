@@ -1,13 +1,13 @@
-import { DataTableBijzondereBepalingen } from './DossierDetail/DatalistBijzondereBepalingen';
-import { DatalistGeneral } from './DossierDetail/DatalistGeneral';
-import { DatalistJuridisch } from './DossierDetail/DatalistJuridisch';
-import { DatalistsFinancieel } from './DossierDetail/DatalistsFinancieel';
-import { useDossierData as useDossierDetailData } from './DossierDetail/useErfpachtDossierData.hook';
-import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
-import { useAfisThemaData } from '../Afis/useAfisThemaData.hook';
+import { DataTableBijzondereBepalingen } from './DossierDetail/DatalistBijzondereBepalingen.tsx';
+import { DatalistGeneral } from './DossierDetail/DatalistGeneral.tsx';
+import { DatalistJuridisch } from './DossierDetail/DatalistJuridisch.tsx';
+import { DatalistsFinancieel } from './DossierDetail/DatalistsFinancieel.tsx';
+import { useDossierData as useDossierDetailData } from './DossierDetail/useErfpachtDossierData.hook.ts';
+import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
+import { useAfisThemaData } from '../Afis/useAfisThemaData.hook.tsx';
 
 export function ErfpachtDetail() {
   const {
@@ -20,10 +20,10 @@ export function ErfpachtDetail() {
     breadcrumbs,
     themaId,
     title,
-    routeConfig,
+    themaConfig,
   } = useDossierDetailData();
   const afis = useAfisThemaData();
-  useHTMLDocumentTitle(routeConfig.detailPage);
+  useHTMLDocumentTitle(themaConfig.detailPage.route);
   return (
     <ThemaDetailPagina
       themaId={themaId}

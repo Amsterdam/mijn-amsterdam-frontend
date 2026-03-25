@@ -1,15 +1,17 @@
-import { Request, Response } from 'express';
-import { describe, expect, vi, beforeEach, MockInstance } from 'vitest';
+import type { Request, Response } from 'express';
+import type { MockInstance } from 'vitest';
+import { describe, expect, vi, beforeEach } from 'vitest';
 
-import * as wmo from './wmo';
-import { forTesting } from './wmo-router';
+import { forTesting } from './wmo-router.ts';
+import * as wmoApiService from './wmo-voorzieningen-api-service.ts';
+import { apiErrorResult } from '../../../universal/helpers/api.ts';
 
 const { handleVoorzieningenRequest } = forTesting;
 
 describe('handleVoorzieningenRequest', () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
-  let fetchActueleWRAVoorzieningenCompact: MockInstance;
+  let fetchMaApiVoorzieningen: MockInstance;
 
   beforeEach(() => {
     req = { body: {} };
@@ -19,10 +21,14 @@ describe('handleVoorzieningenRequest', () => {
       send: vi.fn(),
     };
 
-    fetchActueleWRAVoorzieningenCompact = vi.spyOn(
-      wmo,
-      'fetchActueleWRAVoorzieningenCompact'
+    fetchMaApiVoorzieningen = vi.spyOn(
+      wmoApiService,
+      'fetchMaApiVoorzieningen'
     );
+  });
+
+  afterEach(() => {
+    vi.clearAllMocks();
   });
 
   test('should return bad request for invalid input', async () => {
@@ -38,17 +44,69 @@ describe('handleVoorzieningenRequest', () => {
     });
   });
 
-  test('should call fetchWmoVoorzieningenCompact with correct parameters for valid input', async () => {
+  test('should call fetchMaApiVoorzieningen with correct parameters for valid input', async () => {
     req.body = { bsn: '123456782' };
     const mockResponse = { data: 'mocked data' };
-    fetchActueleWRAVoorzieningenCompact.mockResolvedValue(mockResponse);
+    fetchMaApiVoorzieningen.mockResolvedValue(mockResponse);
 
     await handleVoorzieningenRequest(req as Request, res as Response);
 
-    expect(fetchActueleWRAVoorzieningenCompact).toHaveBeenCalledWith(
-      '123456782'
+    expect(fetchMaApiVoorzieningen).toHaveBeenCalledWith(
+      '123456782',
+      undefined
     );
 
     expect(res.send).toHaveBeenCalledWith(mockResponse);
+  });
+
+  test('should return bad request when invalid option provided', async () => {
+    req.body = {
+      bsn: '123456782',
+      maActies: ['reparatieverzoek'],
+      maProductgroep: ['een-naam'],
+    };
+    const mockResponse = { data: 'mocked data' };
+    fetchMaApiVoorzieningen.mockResolvedValueOnce(mockResponse);
+
+    await handleVoorzieningenRequest(req as Request, res as Response);
+    expect(res.send).toHaveBeenCalledWith({
+      code: 400,
+      content: null,
+      message: expect.stringContaining('Bad request'),
+      status: 'ERROR',
+    });
+
+    expect(fetchMaApiVoorzieningen).not.toHaveBeenCalled();
+  });
+
+  test('should call fetchMaApiVoorzieningen with options when only maActies is provided', async () => {
+    req.body = {
+      bsn: '123456782',
+      maActies: ['reparatieverzoek'],
+    };
+    const mockResponse = { data: 'mocked data' };
+    fetchMaApiVoorzieningen.mockResolvedValueOnce(mockResponse);
+
+    await handleVoorzieningenRequest(req as Request, res as Response);
+
+    expect(fetchMaApiVoorzieningen).toHaveBeenCalledWith('123456782', {
+      maActies: ['reparatieverzoek'],
+    });
+  });
+
+  test('should return error response if fetchMaApiVoorzieningen responds with an error', async () => {
+    req.body = { bsn: '123456782' };
+    fetchMaApiVoorzieningen.mockResolvedValueOnce(
+      apiErrorResult('Something went wrong', null, 500)
+    );
+
+    await handleVoorzieningenRequest(req as Request, res as Response);
+
+    expect(res.send).toHaveBeenCalledWith({
+      code: 500,
+      content: null,
+      message: 'Something went wrong',
+      status: 'ERROR',
+    });
   });
 });

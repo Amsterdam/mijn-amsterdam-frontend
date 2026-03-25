@@ -6,34 +6,29 @@ import classNames from 'classnames';
 import { BrowserRouter, useLocation, useNavigate } from 'react-router';
 
 import styles from './App.module.scss';
-import { PrivateRoutes, PublicRoutes } from './App.routes';
-import {
-  CobrowseScreensareAlert,
-} from './components/Alert/CobrowseScreenshareDisclaimer';
-import { AutoLogoutDialog } from './components/AutoLogoutDialog/AutoLogoutDialog';
-import { ErrorMessages } from './components/ErrorMessages/ErrorMessages';
-import { MainFooter } from './components/MainFooter/MainFooter';
-import { MainHeader } from './components/MainHeader/MainHeader';
-import { routeConfig as buurtRouteConfig } from './components/MyArea/MyArea-thema-config';
-import { loginUrlByAuthMethod } from './config/api';
-import { useCobrowseScreenshareState } from './helpers/cobrowse';
-import { useMonitoring } from './helpers/monitoring';
-import { useAnalytics } from './hooks/analytics.hook';
-import { useSessionApi } from './hooks/api/useSessionApi';
-import { useAppStateRemote } from './hooks/useAppStateRemote';
+import { PrivateRoutes, PublicRoutes } from './App.routes.tsx';
+import { CobrowseScreenshareAlert } from './components/Alert/CobrowseScreenshareDisclaimer.tsx';
+import { AutoLogoutDialog } from './components/AutoLogoutDialog/AutoLogoutDialog.tsx';
+import { ErrorMessages } from './components/ErrorMessages/ErrorMessages.tsx';
+import { MainFooter } from './components/MainFooter/MainFooter.tsx';
+import { MainHeader } from './components/MainHeader/MainHeader.tsx';
+import { routeConfig as buurtRouteConfig } from './components/MyArea/MyArea-thema-config.ts';
+import { loginUrlByAuthMethod } from './config/api.ts';
+import { useCobrowseScreenshareState } from './helpers/cobrowse.ts';
+import { useMonitoring } from './helpers/monitoring.ts';
+import { useAnalytics } from './hooks/analytics.hook.ts';
+import { useSessionApi } from './hooks/api/useSessionApi.ts';
+import { useAppStateRemote } from './hooks/useAppStateRemote.ts';
 import {
   clearDeeplinkEntry,
   useDeeplinkRedirect,
   useSetDeeplinkEntry,
-} from './hooks/useDeeplink.hook';
-import { useProfileTypeValue } from './hooks/useProfileType';
-import { useScrollToTop } from './hooks/useScrollToTop';
-import { useTrackThemas } from './hooks/useTrackThemas.hook';
-import { useUsabilla } from './hooks/useUsabilla';
+} from './hooks/useDeeplink.hook.ts';
+import { useScrollToTop } from './hooks/useScrollToTop.ts';
+import { useTrackThemas } from './hooks/useTrackThemas.hook.ts';
 
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);
-  useUsabilla();
 
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -74,11 +69,8 @@ function AppAuthenticated() {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const profileType = useProfileTypeValue();
   const redirectAfterLogin = useDeeplinkRedirect();
   const isScreensharing = useCobrowseScreenshareState();
-
-  useUsabilla(profileType);
 
   useEffect(() => {
     if (redirectAfterLogin && redirectAfterLogin !== '/') {
@@ -102,7 +94,7 @@ function AppAuthenticated() {
         <SkipLink href="#page-main-content">Direct naar inhoud</SkipLink>
         <MainHeader isAuthenticated />
         <ErrorMessages />
-        {isScreensharing && <CobrowseScreensareAlert />}
+        {isScreensharing && <CobrowseScreenshareAlert />}
         <PrivateRoutes />
       </Page>
       {/** Remove the footer on the Map view for better UX */}
@@ -117,13 +109,15 @@ function AppLanding() {
 
   useScrollToTop();
 
-  // If session was previously authenticated we don't want to show the loader again
+  // We don't want to show the app content until we know whether the user is authenticated or not,
+  // to prevent flashing of the wrong content.
+  // Therefore, we return null while the session is still loading (dirty).
   if (!isDirty) {
-    return (
-      <Paragraph className={styles.PreLoader}>
-        Welkom op Mijn Amsterdam
-      </Paragraph>
-    );
+    return null;
+  }
+  const welcomeLoader = document.getElementById('loader');
+  if (welcomeLoader) {
+    welcomeLoader.remove();
   }
 
   return isAuthenticated ? (

@@ -3,17 +3,17 @@ import Mockdate from 'mockdate';
 import { generatePath } from 'react-router';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
-import { routeConfig } from './Varen-thema-config';
-import { VarenList } from './VarenList';
-import {
+import { themaConfig } from './Varen-thema-config.ts';
+import { VarenList } from './VarenList.tsx';
+import type {
   VarenVergunningFrontend,
   VarenZakenFrontend,
   ZaakVergunningExploitatieType,
-} from '../../../../server/services/varen/config-and-types';
-import { jsonCopy } from '../../../../universal/helpers/utils';
-import { AppState } from '../../../../universal/types/App.types';
-import { expectHeaders } from '../../../helpers/test-utils';
-import MockApp from '../../MockApp';
+} from '../../../../server/services/varen/config-and-types.ts';
+import { jsonCopy } from '../../../../universal/helpers/utils.ts';
+import type { AppState } from '../../../../universal/types/App.types.ts';
+import { expectHeaders } from '../../../helpers/test-utils.ts';
+import MockApp from '../../MockApp.tsx';
 
 type ExploitatieAanvraag = VarenZakenFrontend<ZaakVergunningExploitatieType>;
 const exploitatieInProgress: ExploitatieAanvraag = {
@@ -65,8 +65,8 @@ describe('<VarenList />', () => {
   function Component({ state }: { state: AppState }) {
     return (
       <MockApp
-        routePath={routeConfig.listPage.path}
-        routeEntry={generatePath(routeConfig.listPage.path, {
+        routePath={themaConfig.listPage.route.path}
+        routeEntry={generatePath(themaConfig.listPage.route.path, {
           kind: 'lopende-aanvragen',
           page: '1',
         })}
@@ -141,8 +141,8 @@ describe('<VarenVergunningList />', () => {
   function Component({ state }: { state: AppState }) {
     return (
       <MockApp
-        routePath={routeConfig.listPage.path}
-        routeEntry={generatePath(routeConfig.listPage.path, {
+        routePath={themaConfig.listPage.route.path}
+        routeEntry={generatePath(themaConfig.listPage.route.path, {
           kind: 'actieve-vergunningen',
           page: '1',
         })}

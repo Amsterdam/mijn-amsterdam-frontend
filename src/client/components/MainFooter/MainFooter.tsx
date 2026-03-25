@@ -8,16 +8,16 @@ import {
 import {
   CobrowseFooter,
   LABEL_HULP_SCHERMDELEN,
-} from './CobrowseFooter/CobrowseFooter';
+} from './CobrowseFooter/CobrowseFooter.tsx';
 import styles from './MainFooter.module.scss';
 import type {
   CMSFooter,
   CMSFooterSection,
-} from '../../../server/services/cms/cms-content';
-import { BFF_API_BASE_URL } from '../../config/api';
-import { useBffApi } from '../../hooks/api/useBffApi';
-import { useCanonmatigingFooterLink } from '../../pages/Thema/Erfpacht/Erfpacht-render-config';
-import { featureToggle } from '../../pages/Thema/Erfpacht/Erfpacht-thema-config';
+} from '../../../server/services/cms/cms-content.ts';
+import { BFF_API_BASE_URL } from '../../config/api.ts';
+import { useBffApi } from '../../hooks/api/useBffApi.ts';
+import { useCanonmatigingFooterLink } from '../../pages/Thema/Erfpacht/Erfpacht-render-config.tsx';
+import { themaConfig } from '../../pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
 
 function useCustomFooterSections(
   sections: CMSFooterSection[],
@@ -61,7 +61,7 @@ export function MainFooter({ id }: { id?: string }) {
   const canonmatigingLink = useCanonmatigingFooterLink();
 
   const customLinks =
-    featureToggle.canonmatigingLinkActive && canonmatigingLink
+    themaConfig.featureToggle.canonmatigingLinkActive && canonmatigingLink
       ? [canonmatigingLink]
       : [];
 

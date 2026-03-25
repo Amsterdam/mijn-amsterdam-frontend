@@ -3,16 +3,16 @@ import { Alert, Link, Paragraph } from '@amsterdam/design-system-react';
 import {
   BB_VERGUNNING_DISCLAIMER,
   useToeristischeVerhuurThemaData,
-} from './useToeristischeVerhuur.hook';
-import {
+} from './useToeristischeVerhuur.hook.ts';
+import type {
   LVVRegistratie,
   ToeristischeVerhuurVergunning,
-} from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
-import { entries } from '../../../../universal/helpers/utils';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaPagina from '../../../components/Thema/ThemaPagina';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+} from '../../../../server/services/toeristische-verhuur/toeristische-verhuur.types.ts';
+import { entries } from '../../../../universal/helpers/utils.ts';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
+import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function ToeristischeVerhuurThema() {
   const {
@@ -25,7 +25,7 @@ export function ToeristischeVerhuurThema() {
     lvvRegistraties,
     tableConfigVergunningen,
     tableConfigLVVRegistraties,
-    id,
+    themaId,
     title,
     vergunningen,
     hasBBVergunningError,
@@ -104,7 +104,7 @@ export function ToeristischeVerhuurThema() {
 
   return (
     <ThemaPagina
-      id={id}
+      id={themaId}
       title={title}
       pageContentTop={pageContentTop}
       pageLinks={pageLinks}
@@ -137,7 +137,7 @@ export function ToeristischeVerhuurThema() {
                     voor toeristische verhuur aanvragen.{' '}
                     <Link
                       rel="noopener noreferrer"
-                      href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/registratienummer-toeristische-verhuur/"
+                      href="https://www.toeristischeverhuur.nl/"
                     >
                       Meer informatie over het landelijk registratienummer
                       toeristische verhuur

@@ -1,22 +1,19 @@
-import { decosZaakTransformers, HorecaVergunningFrontend } from './decos-zaken';
-import {
-  featureToggle,
-  routeConfig,
-  themaId,
-  themaTitle,
-} from '../../../client/pages/Thema/Horeca/Horeca-thema-config';
+import type { HorecaVergunningFrontend } from './decos-zaken.ts';
+import { decosZaakTransformers } from './decos-zaken.ts';
+import { themaConfig } from '../../../client/pages/Thema/Horeca/Horeca-thema-config.ts';
+import type {
+  ApiResponse} from '../../../universal/helpers/api.ts';
 import {
   apiSuccessResult,
-  apiDependencyError,
-  ApiResponse,
-} from '../../../universal/helpers/api';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+  apiDependencyError
+} from '../../../universal/helpers/api.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import {
   fetchDecosZaken,
   transformDecosZaakFrontend,
-} from '../decos/decos-service';
-import { getVergunningNotifications } from '../vergunningen/vergunningen-notifications';
-import { getStatusStepsDecos } from '../vergunningen/decos-status-steps';
+} from '../decos/decos-service.ts';
+import { getStatusStepsDecos } from '../vergunningen/decos-status-steps.ts';
+import { getVergunningNotifications } from '../vergunningen/vergunningen-notifications.ts';
 
 export async function fetchHorecaVergunningen(
   authProfileAndToken: AuthProfileAndToken
@@ -33,7 +30,7 @@ export async function fetchHorecaVergunningen(
         authProfileAndToken.profile.sid,
         zaak,
         {
-          detailPageRoute: routeConfig.detailPage.path,
+          detailPageRoute: themaConfig.detailPage.route.path,
           includeFetchDocumentsUrl: true,
           getStepsFN: getStatusStepsDecos,
         }
@@ -51,7 +48,7 @@ export async function fetchHorecaVergunningen(
 export async function fetchHorecaNotifications(
   authProfileAndToken: AuthProfileAndToken
 ) {
-  if (!featureToggle.horecaActive) {
+  if (!themaConfig.featureToggle.active) {
     return apiSuccessResult({
       notifications: [],
     });
@@ -62,8 +59,8 @@ export async function fetchHorecaNotifications(
   if (horecaResponse.status === 'OK') {
     const notifications = getVergunningNotifications(
       horecaResponse.content ?? [],
-      themaId,
-      themaTitle
+      themaConfig.id,
+      themaConfig.title
     );
 
     return apiSuccessResult({

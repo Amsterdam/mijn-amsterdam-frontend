@@ -1,11 +1,13 @@
-import express, { Request, Response } from 'express';
+import type { Request, Response } from 'express';
+import express from 'express';
 import basicAuth from 'express-basic-auth';
 
-import { BffEndpoints } from './bff-routes';
-import { DEFAULT_REQUEST_CONFIG } from '../config/source-api';
-import { cacheOverview } from '../helpers/file-cache';
-import { userFeedbackRouter } from '../services/user-feedback/user-feedback.router';
-import { loginStats, loginStatsTable } from '../services/visitors';
+import { BffEndpoints } from './bff-routes.ts';
+import { DEFAULT_REQUEST_CONFIG } from '../config/source-api.ts';
+import { cacheOverview } from '../helpers/file-cache.ts';
+import { amsappNotificationsRouter } from '../services/amsapp/notifications/amsapp-notifications-router.ts';
+import { userFeedbackRouter } from '../services/user-feedback/user-feedback.router.ts';
+import { loginStats, loginStatsTable } from '../services/visitors.ts';
 
 export const adminRouter = express.Router();
 
@@ -34,5 +36,5 @@ if (process.env.BFF_LOGIN_COUNT_ADMIN_PW) {
     }
   );
 
-  adminRouter.use(userFeedbackRouter.admin);
+  adminRouter.use(userFeedbackRouter.admin, amsappNotificationsRouter.admin);
 }

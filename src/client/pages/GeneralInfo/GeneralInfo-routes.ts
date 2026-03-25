@@ -1,4 +1,4 @@
-import { GeneralInfo } from './GeneralInfo';
+import { GeneralInfo } from './GeneralInfo.tsx';
 
 export const GeneralInfoRoute = { route: '/uitleg', Component: GeneralInfo };
 export const GeneralInfoRoutes = [GeneralInfoRoute];

@@ -2,35 +2,35 @@ import createDebugger from 'debug';
 
 import {
   caseTypeVergunningen,
-  DecosVergunning,
+  type DecosVergunning,
   type PBVergunning,
   type ZaakFrontendCombined,
-} from './config-and-types';
-import { getStatusStepsDecos as getStatusStepsDefault } from './decos-status-steps';
-import { decosZaakTransformers } from './decos-zaken';
-import { getStatusStepsPB } from './pb-status-steps';
-import { pbZaakTransformers } from './pb-zaken';
-import { routeConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
+} from './config-and-types.ts';
+import { getStatusStepsDecos as getStatusStepsDefault } from './decos-status-steps.ts';
+import { decosZaakTransformers } from './decos-zaken.ts';
+import { getStatusStepsPB } from './pb-status-steps.ts';
+import { pbZaakTransformers } from './pb-zaken.ts';
+import { themaConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
+import { FeatureToggle } from '../../../universal/config/feature-toggles.ts';
+import type { ApiResponse } from '../../../universal/helpers/api.ts';
 import {
   apiErrorResult,
-  ApiResponse,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
-} from '../../../universal/helpers/api';
-import type { StatusLineItem } from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+} from '../../../universal/helpers/api.ts';
+import type { StatusLineItem } from '../../../universal/types/App.types.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import {
   fetchDecosZaken,
   transformDecosZaakFrontend,
-} from '../decos/decos-service';
-import type { DecosZaakFrontend } from '../decos/decos-types';
+} from '../decos/decos-service.ts';
+import type { DecosZaakFrontend } from '../decos/decos-types.ts';
 import {
   fetchPBZaken,
   transformPBZaakFrontend,
-} from '../powerbrowser/powerbrowser-service';
-import type { PowerBrowserZaakFrontend } from '../powerbrowser/powerbrowser-types';
+} from '../powerbrowser/powerbrowser-service.ts';
+import type { PowerBrowserZaakFrontend } from '../powerbrowser/powerbrowser-types.ts';
 
 const debugDecos = createDebugger('vergunningen:decos');
 const debugPB = createDebugger('vergunningen:pb');
@@ -95,7 +95,7 @@ const activeTransformersPB = FeatureToggle.VTHOnPowerbrowserActive
 
 export async function fetchVergunningen(
   authProfileAndToken: AuthProfileAndToken,
-  appRouteDetailPage: string = routeConfig.detailPage.path
+  appRouteDetailPage: string = themaConfig.detailPage.route.path
 ): Promise<ApiResponse<ZaakFrontendCombined[]>> {
   const requestDecos = fetchDecosZaken(
     authProfileAndToken,

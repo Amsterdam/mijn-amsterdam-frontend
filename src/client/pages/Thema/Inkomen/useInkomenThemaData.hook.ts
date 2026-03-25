@@ -2,22 +2,19 @@ import { useMemo } from 'react';
 
 import {
   listPageParamKind,
-  routeConfig,
   tableConfig,
-  themaId,
-  themaTitle,
-} from './Inkomen-thema-config';
-import { linkListItems } from './Inkomen-thema-config';
-import { WpiRequestProcess } from '../../../../server/services/wpi/wpi-types';
-import { isError, isLoading } from '../../../../universal/helpers/api';
+  themaConfig,
+} from './Inkomen-thema-config.ts';
+import type { WpiRequestProcess } from '../../../../server/services/wpi/wpi-types.ts';
+import { isError, isLoading } from '../../../../universal/helpers/api.ts';
 import {
   defaultDateFormat,
   dateSort,
-} from '../../../../universal/helpers/date';
-import { addLinkElementToProperty } from '../../../components/Table/TableV2';
-import { useAddDocumentLinkComponents } from '../../../data-transform/useAddDocumentLinks';
-import { useAppStateGetter } from '../../../hooks/useAppStateStore';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
+} from '../../../../universal/helpers/date.ts';
+import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
+import { useAddDocumentLinkComponents } from '../../../data-transform/useAddDocumentLinks.tsx';
+import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
 export function useInkomenThemaData() {
   const { WPI_AANVRAGEN, WPI_SPECIFICATIES, WPI_TOZO, WPI_TONK, WPI_BBZ } =
@@ -35,7 +32,7 @@ export function useInkomenThemaData() {
     WPI_SPECIFICATIES.content?.jaaropgaven ?? []
   );
 
-  const breadcrumbs = useThemaBreadcrumbs(themaId);
+  const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
   const zaken = useMemo(() => {
     if ((!aanvragen.length && !tozo.length) || !tonk.length) {
@@ -92,9 +89,9 @@ export function useInkomenThemaData() {
     zaken,
     specificaties,
     jaaropgaven,
-    id: themaId,
-    title: themaTitle,
-    linkListItems,
+    themaId: themaConfig.id,
+    title: themaConfig.title,
+    pageLinks: themaConfig.pageLinks,
     isLoadingWpi,
     isErrorWpi,
     isLoadingWpiSpecificaties,
@@ -102,7 +99,7 @@ export function useInkomenThemaData() {
     listPageParamKind,
     tableConfig,
     breadcrumbs,
-    listPageRoute: routeConfig.listPage.path,
-    routeConfig,
+    listPageRoute: themaConfig.listPage.route.path,
+    themaConfig,
   };
 }

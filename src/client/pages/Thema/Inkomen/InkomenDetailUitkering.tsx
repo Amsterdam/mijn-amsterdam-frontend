@@ -1,10 +1,10 @@
 import { LinkList, Paragraph } from '@amsterdam/design-system-react';
 
-import { wpiLinks } from './Inkomen-thema-config';
-import { useInkomenDetailData } from './useInkomenDetailData.hook';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { wpiLinks } from './Inkomen-thema-config.ts';
+import { useInkomenDetailData } from './useInkomenDetailData.hook.ts';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 const pageContentTop = (
   <PageContentCell spanWide={8}>
@@ -23,13 +23,13 @@ const pageContentTop = (
 );
 
 export function InkomenDetailUitkering() {
-  const { isLoading, isError, zaak, breadcrumbs, routeConfig, themaId } =
+  const { isLoading, isError, zaak, breadcrumbs, themaConfig } =
     useInkomenDetailData('WPI_AANVRAGEN');
-  useHTMLDocumentTitle(routeConfig.detailPageUitkering);
+  useHTMLDocumentTitle(themaConfig.detailPageUitkering.route);
 
   return (
     <ThemaDetailPagina
-      themaId={themaId}
+      themaId={themaConfig.id}
       title={zaak?.title || 'Aanvraag bijstandsuitkering'}
       zaak={zaak}
       isError={isError}

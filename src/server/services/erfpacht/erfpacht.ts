@@ -1,22 +1,23 @@
 import { generatePath } from 'react-router';
 
-import {
+import type {
   ErfpachtErpachterResponseSource,
   ErfpachtErpachterResponse,
   ErfpachtDossiersResponse,
   ErfpachtDossiersDetail,
   ErfpachtDossiersDetailSource,
   ErfpachtDossierSource,
-  ErfpachtDossierPropsFrontend,
+  ErfpachtDossierPropsFrontend} from './erfpacht-types.ts';
+import {
   type ErfpachtDossiersResponseSource,
-} from './erfpacht-types';
-import { routeConfig } from '../../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import { sortAlpha } from '../../../universal/helpers/utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { getFromEnv } from '../../helpers/env';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
+} from './erfpacht-types.ts';
+import { themaConfig } from '../../../client/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
+import { defaultDateFormat } from '../../../universal/helpers/date.ts';
+import { sortAlpha } from '../../../universal/helpers/utils.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { getFromEnv } from '../../helpers/env.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
 
 function transformIsErfpachterResponseSource(
   responseData: ErfpachtErpachterResponseSource,
@@ -93,7 +94,7 @@ export function transformErfpachtDossierProperties<
     title,
     id: dossierNummerUrlParam ?? dossier.voorkeursadres,
     link: {
-      to: generatePath(routeConfig.detailPage.path, {
+      to: generatePath(themaConfig.detailPage.route.path, {
         dossierNummerUrlParam,
       }),
       title,
@@ -125,7 +126,7 @@ export function transformDossierResponse(
       ...responseDataSource.dossiers,
       dossiers,
     },
-    relatieCode: relatieCode,
+    relatieCode,
     isKnown: true,
   };
 

@@ -1,47 +1,42 @@
-import {
-  routeConfig,
-  featureToggle,
-  themaId,
-  themaTitle,
-} from './AVG-thema-config';
-import { AVGDetail } from './AVGDetail';
+import { themaConfig } from './AVG-thema-config.ts';
+import { AVGDetail } from './AVGDetail.tsx';
 import { default as AvgIcon } from './AvgIcon.svg?react';
-import { AVGList } from './AVGList';
-import { AVGThema } from './AVGThema';
-import { isLoading } from '../../../../universal/helpers/api';
-import { type AppState } from '../../../../universal/types/App.types';
+import { AVGList } from './AVGList.tsx';
+import { AVGThema } from './AVGThema.tsx';
+import { isLoading } from '../../../../universal/helpers/api.ts';
+import { type AppState } from '../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 
 export const AvgRoutes = [
   {
-    route: routeConfig.detailPage.path,
+    route: themaConfig.detailPage.route.path,
     Component: AVGDetail,
-    isActive: featureToggle.avgActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.listPage.path,
+    route: themaConfig.listPage.route.path,
     Component: AVGList,
-    isActive: featureToggle.avgActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.themaPage.path,
+    route: themaConfig.route.path,
     Component: AVGThema,
-    isActive: featureToggle.avgActive,
+    isActive: themaConfig.featureToggle.active,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
-export const menuItem: ThemaMenuItem<typeof themaId> = {
-  title: themaTitle,
-  id: themaId,
-  to: routeConfig.themaPage.path,
-  profileTypes: ['private', 'commercial'],
-  redactedScope: 'none',
+export const menuItem: ThemaMenuItem = {
+  title: themaConfig.title,
+  id: themaConfig.id,
+  to: themaConfig.route.path,
+  profileTypes: themaConfig.profileTypes,
+  redactedScope: themaConfig.redactedScope,
   isActive(appState: AppState) {
     return (
-      featureToggle.avgActive &&
+      themaConfig.featureToggle.active &&
       !isLoading(appState.AVG) &&
       !!appState.AVG?.content?.verzoeken?.length
     );

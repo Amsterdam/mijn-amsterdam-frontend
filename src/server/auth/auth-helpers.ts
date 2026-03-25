@@ -1,79 +1,25 @@
 import type { Request, Response } from 'express';
 import * as jose from 'jose';
-import { ParsedQs } from 'qs';
+import type { ParsedQs } from 'qs';
 
+import { getReturnToUrl } from './auth-after-redirect-returnto.ts';
 import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_TOKEN_ID_ATTRIBUTE,
-  RETURNTO_AMSAPP_NOTIFICATIES_APP_LANDING,
-  RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
-  RETURNTO_AMSAPP_STADSPAS_APP_LANDING,
-  RETURNTO_MAMS_FRONTEND_ROUTE,
-  RETURNTO_MAMS_LANDING_DIGID,
-  RETURNTO_MAMS_LANDING_EHERKENNING,
-  RETURNTO_NOTIFICATIES_CONSUMER_ID,
-} from './auth-config';
-import { authRoutes } from './auth-routes';
-import {
+} from './auth-config.ts';
+import type {
   AuthenticatedRequest,
   AuthProfile,
   AuthProfileAndToken,
   MaSession,
   TokenData,
-} from './auth-types';
-import { ZAAK_STATUS_ROUTE } from '../../client/pages/ZaakStatus/ZaakStatus-config';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
-import { PROFILE_TYPES } from '../../universal/types/App.types';
-import { ONE_SECOND_MS } from '../config/app';
-import { logger } from '../logging';
-import { ExternalConsumerEndpoints } from '../routing/bff-routes';
-import { generateFullApiUrlBFF } from '../routing/route-helpers';
-import { captureException } from '../services/monitoring';
-
-export function getReturnToUrl(
-  queryParams?: ParsedQs,
-  defaultReturnTo: string = generateFullApiUrlBFF(
-    authRoutes.AUTH_LOGIN_DIGID_LANDING
-  )
-) {
-  switch (queryParams?.returnTo) {
-    case RETURNTO_MAMS_FRONTEND_ROUTE: {
-      const route = queryParams.route as string;
-      const redirectUrl = `${process.env.MA_FRONTEND_URL}${route}`;
-      return redirectUrl;
-    }
-    case RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER:
-      return generateFullApiUrlBFF(
-        ExternalConsumerEndpoints.public.STADSPAS_ADMINISTRATIENUMMER,
-        {
-          token: queryParams['amsapp-session-token'] as string,
-        }
-      );
-    case RETURNTO_AMSAPP_STADSPAS_APP_LANDING:
-      return generateFullApiUrlBFF(
-        ExternalConsumerEndpoints.public.STADSPAS_APP_LANDING
-      );
-    case RETURNTO_AMSAPP_NOTIFICATIES_APP_LANDING:
-      return generateFullApiUrlBFF(
-        ExternalConsumerEndpoints.public.NOTIFICATIONS_APP
-      );
-    case RETURNTO_NOTIFICATIES_CONSUMER_ID:
-      return generateFullApiUrlBFF(
-        ExternalConsumerEndpoints.public.NOTIFICATIONS_CONSUMER_APP,
-        {
-          consumerId: queryParams.consumerId as string,
-        }
-      );
-    case ZAAK_STATUS_ROUTE:
-      return getReturnToUrlZaakStatus(queryParams);
-    case RETURNTO_MAMS_LANDING_EHERKENNING:
-      return generateFullApiUrlBFF(authRoutes.AUTH_LOGIN_EHERKENNING_LANDING);
-    case RETURNTO_MAMS_LANDING_DIGID:
-      return generateFullApiUrlBFF(authRoutes.AUTH_LOGIN_DIGID_LANDING);
-    default:
-      return defaultReturnTo;
-  }
-}
+} from './auth-types.ts';
+import { ZAAK_STATUS_ROUTE } from '../../client/pages/ZaakStatus/ZaakStatus-config.ts';
+import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
+import { PROFILE_TYPES } from '../../universal/types/App.types.ts';
+import { ONE_SECOND_MS } from '../config/app.ts';
+import { logger } from '../logging.ts';
+import { captureException } from '../services/monitoring.ts';
 
 export function getZaakStatusQueryParams(
   queryParams?: ParsedQs

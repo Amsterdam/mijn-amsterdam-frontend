@@ -1,21 +1,21 @@
 import Mockdate from 'mockdate';
 
-import { forTesting } from './router-oidc';
-import { bffApiHost } from '../../testing/setup';
+import { generateFullApiUrlBFF } from './route-helpers.ts';
+import { forTesting } from './router-oidc.ts';
+import { bffApiHost } from '../../testing/setup.ts';
 import {
   getAuthProfileAndToken,
   getReqMockWithOidc,
   RequestMock,
   ResponseMock,
-} from '../../testing/utils';
+} from '../../testing/utils.ts';
 import {
   OIDC_SESSION_COOKIE_NAME,
   oidcConfigDigid,
   oidcConfigEherkenning,
-} from '../auth/auth-config';
-import { authRoutes } from '../auth/auth-routes';
-import { getFromEnv } from '../helpers/env';
-import { generateFullApiUrlBFF } from './route-helpers';
+} from '../auth/auth-config.ts';
+import { authRoutes } from '../auth/auth-routes.ts';
+import { getFromEnv } from '../helpers/env.ts';
 
 const mocks = vi.hoisted(() => {
   const openIdAuthHandlerEH = vi.fn();
@@ -36,7 +36,7 @@ const mocks = vi.hoisted(() => {
   };
 });
 
-describe('router-oids', () => {
+describe('router-oidc', () => {
   beforeAll(() => {
     Mockdate.set('2025-03-27');
   });

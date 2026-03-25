@@ -1,17 +1,14 @@
 import {
   erfpachtFacturenTableConfig,
   getTableConfig,
-  linkListItems,
   listPageParamKind,
-  routeConfig,
-  themaId,
-  themaTitle,
-} from './Erfpacht-thema-config';
-import { ErfpachtDossiersResponse } from '../../../../server/services/erfpacht/erfpacht-types';
-import { isError, isLoading } from '../../../../universal/helpers/api';
-import { addLinkElementToProperty } from '../../../components/Table/TableV2';
-import { useAppStateGetter } from '../../../hooks/useAppStateStore';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
+  themaConfig,
+} from './Erfpacht-thema-config.ts';
+import type { ErfpachtDossiersResponse } from '../../../../server/services/erfpacht/erfpacht-types.ts';
+import { isError, isLoading } from '../../../../universal/helpers/api.ts';
+import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
+import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
 export function useErfpachtThemaData() {
   const { ERFPACHT } = useAppStateGetter();
@@ -24,22 +21,22 @@ export function useErfpachtThemaData() {
     'voorkeursadres'
   );
 
-  const breadcrumbs = useThemaBreadcrumbs(themaId);
+  const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
   const tableConfig = getTableConfig(erfpachtData);
 
   return {
-    id: themaId,
-    title: themaTitle,
+    themaId: themaConfig.id,
+    title: themaConfig.title,
     erfpachtData,
     relatieCode: erfpachtData?.relatieCode,
     dossiers,
     isLoading: isLoading(ERFPACHT),
     isError: isError(ERFPACHT),
-    linkListItems,
+    pageLinks: themaConfig.pageLinks,
     tableConfig,
     listPageParamKind,
     breadcrumbs,
-    routeConfig,
     erfpachtFacturenTableConfig,
+    themaConfig,
   };
 }

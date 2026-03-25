@@ -1,9 +1,9 @@
-import {
+import type {
   ApiResponse_DEPRECATED,
   FailedDependencies,
-} from '../../universal/helpers/api';
-import { ApiError, AppState } from '../../universal/types/App.types';
-import { regelingenTitle } from '../pages/Thema/HLI/HLI-thema-config';
+} from '../../universal/helpers/api.ts';
+import type { ApiError, AppState } from '../../universal/types/App.types.ts';
+import { regelingenTitle } from '../pages/Thema/HLI/HLI-thema-config.ts';
 
 export const BFF_API_BASE_URL = import.meta.env.REACT_APP_BFF_API_URL;
 export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;
@@ -11,7 +11,7 @@ export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;
 export const BFFApiUrls = {
   MAP_DATASETS_WMS: `${BFF_API_BASE_URL}/map/datasets/wms`,
   MAP_DATASETS: `${BFF_API_BASE_URL}/map/datasets`,
-  SERVICES_TOGGLES: `${BFF_API_BASE_URL}/services/feature-toggles`,
+  FEATURE_TOGGLES: `${BFF_API_BASE_URL}/services/feature-toggles`,
   SEARCH_CONFIGURATION: `${BFF_API_BASE_URL}/services/search-config`,
   SERVICES_CMS_MAINTENANCE_NOTIFICATIONS_URL: `${BFF_API_BASE_URL}/services/cms/maintenance-notifications`,
   SERVICES_SAURON: `${BFF_API_BASE_URL}/services/all`,

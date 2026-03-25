@@ -1,27 +1,14 @@
-import { auth, ConfigParams } from 'express-openid-connect';
-import expressSession from 'express-session';
+import type { ConfigParams } from 'express-openid-connect';
+import { auth } from 'express-openid-connect';
+import type expressSession from 'express-session';
 import UID from 'uid-safe';
 
-import { BFF_OIDC_BASE_URL, BFF_OIDC_ISSUER_BASE_URL } from './auth-routes';
-import { getSessionStore } from './auth-session-store';
-import { TokenData } from './auth-types';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
-import { ONE_HOUR_MS, ONE_MINUTE_SECONDS } from '../config/app';
-import { getFromEnv } from '../helpers/env';
-
-// Amsterdam App return to url config
-export const RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER =
-  'amsapp-stadspas-administratienummer';
-export const RETURNTO_AMSAPP_STADSPAS_APP_LANDING = 'amsapp-stadspas-landing';
-export const RETURNTO_AMSAPP_NOTIFICATIES_APP_LANDING =
-  'amsapp-notificaties-landing';
-export const RETURNTO_NOTIFICATIES_CONSUMER_ID = 'notificaties-consumer-id';
-// returnTo key that allow redirecting to a specific frontend route. e.g /api/v1/auth/login/digid?returnTo=mams-frontend-route&route=https://mijn.amsterdam.nl/mams-frontend-route
-export const RETURNTO_MAMS_FRONTEND_ROUTE = 'mams-frontend-route';
-
-// Mijn Amsterdam return to url config
-export const RETURNTO_MAMS_LANDING_DIGID = 'mams-landing-digid';
-export const RETURNTO_MAMS_LANDING_EHERKENNING = 'mams-landing-eherkenning';
+import { BFF_OIDC_BASE_URL, BFF_OIDC_ISSUER_BASE_URL } from './auth-routes.ts';
+import { getSessionStore } from './auth-session-store.ts';
+import type { TokenData } from './auth-types.ts';
+import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
+import { ONE_HOUR_MS, ONE_MINUTE_SECONDS } from '../config/app.ts';
+import { getFromEnv } from '../helpers/env.ts';
 
 export const OIDC_SESSION_MAX_AGE_SECONDS = ONE_MINUTE_SECONDS * 15; // 15 minutes
 export const OIDC_SESSION_COOKIE_NAME = '__MA-appSession';
@@ -55,7 +42,7 @@ export const oidcConfigBase: ConfigParams = {
     rollingDuration: OIDC_SESSION_MAX_AGE_SECONDS,
     name: OIDC_SESSION_COOKIE_NAME,
     store:
-      getFromEnv('MA_APP_MODE') !== 'unittest'
+      getFromEnv('MA_APP_MODE', false) !== 'unittest'
         ? getSessionStore(openIdAuth as typeof expressSession, {
             tableName: OIDC_SESSIONS_TABLE_NAME,
             maxAgeSeconds: OIDC_SESSION_MAX_AGE_SECONDS,

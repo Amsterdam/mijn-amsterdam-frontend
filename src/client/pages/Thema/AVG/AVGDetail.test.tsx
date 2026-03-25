@@ -1,14 +1,14 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { routeConfig } from './AVG-thema-config';
-import { AVGDetail } from './AVGDetail';
-import { AVGRequestFrontend } from '../../../../server/services/avg/types';
-import {
+import { themaConfig } from './AVG-thema-config.ts';
+import { AVGDetail } from './AVGDetail.tsx';
+import type { AVGRequestFrontend } from '../../../../server/services/avg/types.ts';
+import type {
   AppState,
   StatusLineItem,
-} from '../../../../universal/types/App.types';
-import MockApp from '../../MockApp';
+} from '../../../../universal/types/App.types.ts';
+import MockApp from '../../MockApp.tsx';
 
 const steps: StatusLineItem[] = [
   {
@@ -104,10 +104,10 @@ export const testState = {
 } as unknown as AppState;
 
 function setupTestComponent(id: string) {
-  const routeEntry = generatePath(routeConfig.detailPage.path, {
+  const routeEntry = generatePath(themaConfig.detailPage.route.path, {
     id,
   });
-  const routePath = routeConfig.detailPage.path;
+  const routePath = themaConfig.detailPage.route.path;
 
   return function Component() {
     return (

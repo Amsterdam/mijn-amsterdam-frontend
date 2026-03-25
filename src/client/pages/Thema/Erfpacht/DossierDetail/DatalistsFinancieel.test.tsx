@@ -1,11 +1,11 @@
 import { render } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 
-import { forTesting } from './DatalistsFinancieel';
+import { forTesting } from './DatalistsFinancieel.tsx';
 import type {
   ErfpachtDossierDetailHuidigePeriode,
   ErfpachtDossierDetailToekomstigePeriode,
-} from '../../../../../server/services/erfpacht/erfpacht-types';
+} from '../../../../../server/services/erfpacht/erfpacht-types.ts';
 
 const { DatalistFinancieelPeriode } = forTesting;
 

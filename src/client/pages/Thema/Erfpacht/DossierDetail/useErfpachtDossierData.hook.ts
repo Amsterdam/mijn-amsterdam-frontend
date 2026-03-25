@@ -1,9 +1,9 @@
 import { useParams } from 'react-router';
 
-import type { ErfpachtDossiersDetail } from '../../../../../server/services/erfpacht/erfpacht-types';
-import { BFFApiUrls } from '../../../../config/api';
-import { useBffApi } from '../../../../hooks/api/useBffApi';
-import { useErfpachtThemaData } from '../useErfpachtThemaData.hook';
+import type { ErfpachtDossiersDetail } from '../../../../../server/services/erfpacht/erfpacht-types.ts';
+import { BFFApiUrls } from '../../../../config/api.ts';
+import { useBffApi } from '../../../../hooks/api/useBffApi.ts';
+import { useErfpachtThemaData } from '../useErfpachtThemaData.hook.ts';
 
 export function useDossierData() {
   const { dossierNummerUrlParam } = useParams<{
@@ -15,8 +15,8 @@ export function useDossierData() {
     isError: isErrorThemaData,
     relatieCode,
     breadcrumbs,
-    routeConfig,
-    id: themaId,
+    themaId,
+    themaConfig,
   } = useErfpachtThemaData();
   const url = dossierNummerUrlParam
     ? `${BFFApiUrls.ERFPACHT_DOSSIER_DETAILS}/${dossierNummerUrlParam}`
@@ -35,6 +35,6 @@ export function useDossierData() {
     isErrorThemaData,
     relatieCode,
     breadcrumbs,
-    routeConfig,
+    themaConfig,
   };
 }

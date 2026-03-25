@@ -1,20 +1,21 @@
-import { Request, Response } from 'express';
-import z from 'zod';
+import type { Request, Response } from 'express';
 
-import { fetchActueleWRAVoorzieningenCompact } from './wmo';
-import { ZORGNED_JZD_API_CONFIG_KEY } from './wmo-service-config';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { ZodValidators } from '../../helpers/validation';
+import {
+  voorzieningenRequestInput,
+  ZORGNED_JZD_API_CONFIG_KEY,
+} from './wmo-service-config.ts';
+import { fetchMaApiVoorzieningen } from './wmo-voorzieningen-api-service.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import {
   sendResponse,
   sendBadRequestInvalidInput,
   type ResponseAuthenticated,
-} from '../../routing/route-helpers';
+} from '../../routing/route-helpers.ts';
 import {
   fetchAanvragenRaw,
   fetchAllDocumentsRaw,
   fetchDocument,
-} from '../zorgned/zorgned-service';
+} from '../zorgned/zorgned-service.ts';
 
 export async function fetchZorgnedJZDDocument(
   authProfileAndToken: AuthProfileAndToken,
@@ -50,10 +51,6 @@ export async function fetchZorgnedJZDAanvragen(
   return sendResponse(res, response);
 }
 
-const voorzieningenRequestInput = z.object({
-  bsn: ZodValidators.BSN,
-});
-
 export async function handleVoorzieningenRequest(req: Request, res: Response) {
   // Validate the request body so we can be sure it has the correct shape and values.
   let validatedRequestBody;
@@ -64,7 +61,16 @@ export async function handleVoorzieningenRequest(req: Request, res: Response) {
   }
 
   const bsn = validatedRequestBody.bsn;
-  const response = await fetchActueleWRAVoorzieningenCompact(bsn);
+  const maActies = validatedRequestBody.maActies;
+  const maProductgroep = validatedRequestBody.maProductgroep;
+  const options =
+    maActies || maProductgroep
+      ? {
+          ...(maActies ? { maActies } : {}),
+          ...(maProductgroep ? { maProductgroep } : {}),
+        }
+      : undefined;
+  const response = await fetchMaApiVoorzieningen(bsn, options);
 
   return sendResponse(res, response);
 }

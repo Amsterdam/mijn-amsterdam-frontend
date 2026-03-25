@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import type { Mock } from 'vitest';
 
-import { routeConfig } from './Afval-thema-config';
-import { AfvalThemaPagina } from './AfvalThema';
-import { AfvalFractionData } from '../../../../server/services/afval/afval.types';
-import { jsonCopy } from '../../../../universal/helpers/utils';
-import { AppState } from '../../../../universal/types/App.types';
-import { useProfileTypeValue } from '../../../hooks/useProfileType';
-import MockApp from '../../MockApp';
+import { themaConfig } from './Afval-thema-config.ts';
+import { AfvalThemaPagina } from './AfvalThema.tsx';
+import type { AfvalFractionData } from '../../../../server/services/afval/afval.types.ts';
+import { jsonCopy } from '../../../../universal/helpers/utils.ts';
+import type { AppState } from '../../../../universal/types/App.types.ts';
+import { useProfileTypeValue } from '../../../hooks/useProfileType.ts';
+import MockApp from '../../MockApp.tsx';
 
 //const { BRP, AFVAL, AFVALPUNTEN, MY_LOCATION } = useAppStateGetter();
 
@@ -152,7 +152,7 @@ const testState = {
 vi.mock('../../../hooks/useProfileType');
 
 describe('<AfvalThemaPagina />', () => {
-  const routePath = routeConfig.themaPage.path;
+  const routePath = themaConfig.route.path;
 
   function Component() {
     return (

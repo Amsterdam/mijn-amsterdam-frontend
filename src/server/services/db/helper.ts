@@ -1,4 +1,4 @@
-import { toCamel } from '../../../universal/helpers/text';
+import { toCamel } from '../../../universal/helpers/text.ts';
 
 export type SnakeToCamel<S extends string> =
   S extends `${infer Head}_${infer Tail}`
@@ -16,17 +16,4 @@ export function camelizeKeys<T extends Record<string, unknown>>(obj: T) {
     }),
     {}
   ) as Camelize<T>;
-}
-
-export function deepCamelizeKeys<T extends Record<string, any>>(obj: T): T {
-  if (Array.isArray(obj)) {
-    return obj.map((item) => deepCamelizeKeys(item)) as unknown as T;
-  } else if (obj && typeof obj === 'object') {
-    const camelizedObj = camelizeKeys(obj);
-    return Object.entries(camelizedObj).reduce((acc, [key, value]) => {
-      acc[key] = deepCamelizeKeys(value);
-      return acc;
-    }, {} as Record<string, any>) as T;
-  }
-  return obj;
 }

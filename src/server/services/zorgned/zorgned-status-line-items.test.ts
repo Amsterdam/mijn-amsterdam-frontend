@@ -1,11 +1,11 @@
-import { forTesting, getStatusLineItems } from './zorgned-status-line-items';
-import {
+import { forTesting, getStatusLineItems } from './zorgned-status-line-items.ts';
+import type {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemsConfig,
   ZorgnedStatusLineItemTransformerConfig,
-  type BeschikkingsResultaat,
-} from './zorgned-types';
-import { logger } from '../../logging';
+} from './zorgned-types.ts';
+import { type BeschikkingsResultaat } from './zorgned-types.ts';
+import { logger } from '../../logging.ts';
 
 function getTransformerConfig() {
   const transformerConfig: ZorgnedStatusLineItemTransformerConfig = {
@@ -28,16 +28,16 @@ const transformerConfigs = [transformerConfig, transformerConfig2];
 const lineItemsConfig1: ZorgnedStatusLineItemsConfig = {
   leveringsVorm: 'FOO',
   productsoortCodes: ['BAR', 'FOO'],
+  productgroep: 'Test line items 1',
   statusLineItems: {
-    name: 'Test line items 1',
     transformers: [transformerConfig, transformerConfig2],
   },
 };
 
 const lineItemsConfig2: ZorgnedStatusLineItemsConfig = {
   productIdentificatie: ['BAR'],
+  productgroep: 'Test line items 2',
   statusLineItems: {
-    name: 'Test line items 2',
     transformers: [transformerConfig2],
   },
   filter(aanvraag) {
@@ -50,16 +50,16 @@ const lineItemsConfig3: ZorgnedStatusLineItemsConfig = {
   filter(aanvraag) {
     return aanvraag.betrokkenen?.includes('A');
   },
+  productgroep: 'Test line items 3',
   statusLineItems: {
-    name: 'Test line items 3',
     transformers: [transformerConfig],
   },
 };
 
 const lineItemsConfig4: ZorgnedStatusLineItemsConfig = {
   productsoortCodes: ['NUB'],
+  productgroep: 'Test line items 4',
   statusLineItems: {
-    name: 'Test line items 4',
     transformers: [transformerConfig4],
   },
 };
@@ -264,8 +264,8 @@ describe('zorgned-status-line-items', () => {
         [
           {
             ...lineItemsConfig1,
+            productgroep: 'Test line items 4',
             statusLineItems: {
-              name: 'Test line items 4',
               transformers: [transformer1, transformer2],
             },
           },
@@ -325,8 +325,8 @@ describe('zorgned-status-line-items', () => {
             [
               {
                 resultaat: resultaatMatch as BeschikkingsResultaat,
+                productgroep: 'Test line items 5',
                 statusLineItems: {
-                  name: 'Test line items 5',
                   transformers: [transformer1, transformer2],
                 },
               },

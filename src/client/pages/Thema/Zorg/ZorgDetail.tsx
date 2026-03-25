@@ -1,12 +1,12 @@
-import { useZorgDetailData } from './useZorgDetailData.hook';
-import { themaConfig } from './Zorg-thema-config';
-import { WMOVoorzieningFrontend } from '../../../../server/services/wmo/wmo-types';
-import ErrorAlert from '../../../components/Alert/Alert';
-import { Datalist } from '../../../components/Datalist/Datalist';
-import DocumentListV2 from '../../../components/DocumentList/DocumentListV2';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { useZorgDetailData } from './useZorgDetailData.hook.ts';
+import { themaConfig } from './Zorg-thema-config.ts';
+import type { WMOVoorzieningFrontend } from '../../../../server/services/wmo/wmo-types.ts';
+import ErrorAlert from '../../../components/Alert/Alert.tsx';
+import { Datalist } from '../../../components/Datalist/Datalist.tsx';
+import DocumentListV2 from '../../../components/DocumentList/DocumentListV2.tsx';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 type WMODetailContentProps = {
   voorziening: WMOVoorzieningFrontend;
@@ -36,7 +36,7 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
       {voorziening?.documents.length > 0 && (
         <DocumentListV2
           documents={voorziening.documents}
-          columns={['Brieven', 'Verzenddatum']}
+          columns={['Bestanden', 'Verzenddatum']}
         />
       )}
     </PageContentCell>

@@ -2,19 +2,20 @@ import { useCallback, useEffect, useMemo } from 'react';
 
 import { useMapInstance } from '@amsterdam/react-maps';
 import classnames from 'classnames';
-import L, {
+import type {
   LatLngLiteral,
   LeafletMouseEvent,
   LeafletMouseEventHandlerFn,
 } from 'leaflet';
+import L from 'leaflet';
 
-import { getIconHtml } from './dataset-icons';
-import { processFeatures } from './MyArea.helpers';
+import { getIconHtml } from './dataset-icons.tsx';
+import { processFeatures } from './MyArea.helpers.ts';
 import styles from './MyAreaDatasets.module.scss';
 import type {
   DatasetFeatureProperties,
   MaSuperClusterFeature,
-} from '../../../server/services/buurt/datasets';
+} from '../../../server/services/buurt/datasets.ts';
 
 const ICON_SIZE = 40;
 const ICON_ANCHOR = 20;

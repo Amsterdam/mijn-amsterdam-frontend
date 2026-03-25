@@ -1,11 +1,11 @@
-import { listPageTitle } from './Afis-thema-config';
-import { useAfisFacturenApi } from './useAfisFacturenApi';
+import { listPageTitle } from './Afis-thema-config.ts';
+import { useAfisFacturenApi } from './useAfisFacturenApi.tsx';
 import {
   useAfisFacturenData,
   type AfisFacturenThemaContextParams,
-} from './useAfisThemaData.hook';
-import type { AfisFactuurStateFrontend } from '../../../../server/services/afis/afis-types';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
+} from './useAfisThemaData.hook.tsx';
+import type { AfisFactuurStateFrontend } from '../../../../server/services/afis/afis-types.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
 export function useAfisListPageData(
   state: AfisFactuurStateFrontend,
@@ -15,18 +15,13 @@ export function useAfisListPageData(
     themaId,
     tableConfig,
     routeConfigListPage,
-    routeConfigDetailPage,
     businessPartnerIdEncrypted,
     facturenByState,
     isThemaPaginaError,
     isThemaPaginaLoading,
   } = useAfisFacturenData(themaContextParams);
 
-  const api = useAfisFacturenApi(
-    businessPartnerIdEncrypted,
-    state,
-    routeConfigDetailPage.path
-  );
+  const api = useAfisFacturenApi(businessPartnerIdEncrypted, state);
 
   const facturen =
     (state === 'open'
@@ -38,7 +33,7 @@ export function useAfisListPageData(
   const breadcrumbs = useThemaBreadcrumbs(themaId);
 
   return {
-    themaId: themaId,
+    themaId,
     facturen,
     tableConfig,
     isThemaPaginaError,

@@ -5,6 +5,8 @@ import dotenvExpand from 'dotenv-expand';
 import nock from 'nock';
 import { afterAll, afterEach, vi } from 'vitest';
 
+process.env.TZ = process.env.TZ || 'Europe/Amsterdam';
+
 const ENV_FILE = '.env.local.template';
 const envConfig = dotenv.config({ path: ENV_FILE });
 dotenvExpand.expand(envConfig);
@@ -49,12 +51,11 @@ vi.mock('../server/helpers/env.ts', async (importOriginal) => {
   };
 });
 
-// Set every BFF Featuretoggle to true.
-vi.mock('../client/helpers/env.ts', async (importOriginal) => {
-  const envModule: object = await importOriginal();
+vi.mock('../client/config/feature-toggles', async (importOriginal) => {
+  const originalModule: object = await importOriginal();
   return {
-    ...envModule,
-    useIsBffToggleEnabled: (key: string) => true,
+    ...originalModule,
+    isEnabled: () => true,
   };
 });
 
@@ -144,6 +145,7 @@ process.env.BFF_SVWI_API_BASE_URL = `${remoteApiHost}`;
 process.env.BFF_SVWI_API_KEY = 'xxx';
 
 process.env.BFF_GENERAL_ENCRYPTION_KEY = 'FaKeKeYtT9jQBEGYCvS?H2rEh3hukwDz';
+process.env.BFF_GENERAL_HASH_PEPPER = 'FaKePepperValueForHashing';
 
 process.env.BFF_BEZWAREN_API = `${remoteApiHost}/bezwaren`;
 process.env.BFF_BEZWAREN_USER = 'BEZWAREN_USER';
@@ -161,6 +163,7 @@ process.env.BFF_BELASTINGEN_ENDPOINT = `${remoteApiHost}/belastingen`;
 process.env.BFF_AMSAPP_ADMINISTRATIENUMMER_DELIVERY_ENDPOINT = `${remoteApiHost}/amsapp/session/credentials`;
 process.env.BFF_AMSAPP_NONCE = '123456789123456789123456';
 process.env.DEBUG_RESPONSE_DATA = '';
+process.env.DEBUG_REQUEST_DATA = '';
 
 process.env.BFF_CONTACTMOMENTEN_BASE_URL = `${remoteApiHost}/salesforce/contactmomenten`;
 

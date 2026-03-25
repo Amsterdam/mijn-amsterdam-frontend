@@ -1,10 +1,10 @@
-import { SELECT_FIELDS_TRANSFORM_BASE } from './powerbrowser-field-transformers';
-import { OmitMapped } from '../../../universal/helpers/utils';
-import {
+import type { SELECT_FIELDS_TRANSFORM_BASE } from './powerbrowser-field-transformers.ts';
+import type { OmitMapped } from '../../../universal/helpers/utils.ts';
+import type {
   GenericDocument,
   ZaakAanvraagDetail,
-} from '../../../universal/types/App.types';
-import { AuthProfile } from '../../auth/auth-types';
+} from '../../../universal/types/App.types.ts';
+import type { AuthProfile } from '../../auth/auth-types.ts';
 
 export type NestedType<T> =
   T extends PowerBrowserZaakTransformer<infer R> ? R : never;
@@ -14,7 +14,7 @@ export interface PowerBrowserStatus {
   datum: string;
 }
 
-export type PowerBrowserStatusResponse = PowerBrowserStatus[];
+export type PowerBrowserStatusResponse = PowerBrowserStatus[] | null;
 
 export type FetchPersoonOrMaatschapIdByUidOptions = {
   profileID: AuthProfile['id'];
@@ -28,6 +28,14 @@ export type PBRecordField<K extends string = string> = {
   fieldValue?: string;
   text?: string;
 };
+
+export type PBRecordFieldValue = {
+  text?: string;
+  fieldValue?: string;
+};
+
+export type PBRecordFieldsByName<F extends PBRecordField = PBRecordField> =
+  Partial<Record<F['fieldName'], PBRecordFieldValue>>;
 
 export type PBRecord<T, F extends PBRecordField[] = PBRecordField[]> = {
   fields: F;
@@ -45,19 +53,35 @@ export type SearchRequestResponse<
 };
 
 export type PBZaakFields =
+  | PBRecordField<'FMT_CAPTION'>
   | PBRecordField<'ZAAK_IDENTIFICATIE'>
   | PBRecordField<'STARTDATUM'> // Startdatum van de zaak
   | PBRecordField<'EINDDATUM'> // Afhandeldatum zaak + Startdatum geldigheid vergunning
   | PBRecordField<'DATUM_TOT'> // Einddatum geldigheid vergunning
+  | PBRecordField<'ZAAKPRODUCT_ID'>
+  | PBRecordField<'ZAAK_SUBPRODUCT_ID'>
+  | PBRecordField<'ZAAK_STATUS_ID'>
+  | PBRecordField<'BESTUURLIJK_GEVOELIG'>
+  | PBRecordField<'MUT_DAT'>
   | PBRecordField<'RESULTAAT_ID'>;
+// ?fields=FMT_CAPTION,ZAAKPRODUCT_ID,MUT_DAT&offset&max&addSearch=false&enableIntrekProcedureCheck=false
 
 export type PBZaakRecord = PBRecord<'GFO_ZAKEN', PBZaakFields[]>;
+
+export type PBZaakFieldsByName = PBRecordFieldsByName<PBZaakFields>;
 
 export type PBDocumentFields =
   | PBRecordField<'ID'>
   | PBRecordField<'OMSCHRIJVING'>
   | PBRecordField<'CREATEDATE'>
-  | PBRecordField<'DOCUMENTNR'>;
+  | PBRecordField<'DOCUMENTNR'>
+  | PBRecordField<'SOORTDOCUMENT_ID'>
+  | PBRecordField<'STAMCSSTATUS_ID'>
+  | PBRecordField<'CREATOR_ID'>;
+
+export type PBDocument = {
+  [K in PBDocumentFields['fieldName']]: string;
+};
 
 export type PBDocumentRecord = PBRecord<'DOCLINK', PBDocumentFields[]>;
 
@@ -65,7 +89,7 @@ export type PBAdresLinkFields = PBRecordField<'FMT_CAPTION'>;
 
 export type PBAdresLinkRecord = PBRecord<'ADRESSEN', PBAdresLinkFields[]>;
 
-export const fieldMap: Record<PBZaakFields['fieldName'], string> = {
+export const fieldMap: Partial<Record<PBZaakFields['fieldName'], string>> = {
   ZAAK_IDENTIFICATIE: 'zaaknummer',
   EINDDATUM: 'dateDecision',
   DATUM_TOT: 'dateEnd',
@@ -93,18 +117,6 @@ export type PBZaakResultaat =
   | 'Buiten behandeling'
   | 'Ingetrokken';
 
-export type PBZaakCompacted = {
-  zaaknummer: string | null;
-  displayStatus: string;
-  dateStart: string | null;
-  dateReceived: string | null;
-  dateDecision: string | null;
-  dateEnd: string | null;
-  result: PBZaakResultaat | null;
-  status: PBZaakStatus | null;
-  steps: [];
-};
-
 export type PowerBrowserZaakBase = {
   caseType: string;
   id: string;
@@ -131,16 +143,26 @@ type CaseTypeLiteral<T extends PowerBrowserZaakBase> =
       ? unknown
       : never
     : T['caseType'];
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type PowerBrowserZaakTransformer<T extends PowerBrowserZaakBase = any> =
-  {
-    caseType: CaseTypeLiteral<T>;
-    title: string;
-    fetchZaakIdFilter?: (field: PBRecord<'GFO_ZAKEN'>['fields'][0]) => boolean;
-    transformFields: typeof SELECT_FIELDS_TRANSFORM_BASE &
-      Record<string, string>;
-    transformDoclinks: Record<string, Readonly<string[]>>;
-  };
+
+export type PowerBrowserZaakTransformer<
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  T extends PowerBrowserZaakBase = any,
+  TF extends typeof SELECT_FIELDS_TRANSFORM_BASE & Record<string, string> =
+    typeof SELECT_FIELDS_TRANSFORM_BASE & Record<string, string>,
+> = {
+  caseType: CaseTypeLiteral<T>;
+  title: string;
+  fetchZaakFilter: (fields: PBZaakFieldsByName) => boolean;
+  isVerleend: (
+    zaak: Pick<PowerBrowserZaakBase, 'decision'> & Partial<T>
+  ) => boolean;
+  transformFields: TF;
+  transformFieldValues?: Partial<
+    Record<keyof TF, (value: string | null) => string | null>
+  >;
+  transformDoclinks?: Record<string, Readonly<string[]>>;
+  filterValidDocumentPredicate: (record: PBDocument) => boolean;
+};
 
 export type PowerBrowserZaakFrontend<
   T extends PowerBrowserZaakBase = PowerBrowserZaakBase,

@@ -3,21 +3,18 @@ import type {
   KrefiaDeepLink,
   KrefiaSourceResponse,
   Krefia,
-} from './krefia.types';
-import {
-  themaId,
-  themaTitle,
-} from '../../../client/pages/Thema/Krefia/Krefia-thema-config';
+} from './krefia.types.ts';
+import { themaConfig } from '../../../client/pages/Thema/Krefia/Krefia-thema-config.ts';
 import {
   type ApiResponse,
   apiSuccessResult,
   apiDependencyError,
-} from '../../../universal/helpers/api';
-import { omit } from '../../../universal/helpers/utils';
-import type { MyNotification } from '../../../universal/types/App.types';
-import type { AuthProfileAndToken } from '../../auth/auth-types';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
+} from '../../../universal/helpers/api.ts';
+import { omit } from '../../../universal/helpers/utils.ts';
+import type { MyNotification } from '../../../universal/types/App.types.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
 
 function createNotification(
   message: NotificationTrigger,
@@ -30,8 +27,8 @@ function createNotification(
     title: isFibu
       ? 'Bericht Budgetbeheer (FIBU)'
       : `Bericht Kredietbank Amsterdam`,
-    themaID: themaId,
-    themaTitle: themaTitle,
+    themaID: themaConfig.id,
+    themaTitle: themaConfig.title,
     description: isFibu
       ? 'Er staan ongelezen berichten voor u klaar van Budgetbeheer (FIBU)'
       : 'Er staan ongelezen berichten voor u klaar van Kredietbank Amsterdam',
@@ -81,9 +78,11 @@ export async function fetchAndTransformKrefia(
 ): Promise<ApiResponse<Krefia>> {
   const response = await requestData<Krefia>(
     getApiConfig('KREFIA', {
+      data: {
+        bsn: authProfileAndToken.profile.id,
+      },
       transformResponse: transformKrefiaResponse,
-    }),
-    authProfileAndToken
+    })
   );
 
   return response;

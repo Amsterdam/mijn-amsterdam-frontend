@@ -1,16 +1,12 @@
 import {
-  linkListItems,
-  routeConfig,
-  tableConfig,
-  themaId,
-  themaTitle,
-} from './Parkeren-thema-config';
-import { DecosParkeerVergunning } from '../../../../server/services/parkeren/config-and-types';
-import { DecosZaakFrontend } from '../../../../server/services/vergunningen/config-and-types';
-import { isError, isLoading } from '../../../../universal/helpers/api';
-import { addLinkElementToProperty } from '../../../components/Table/TableV2';
-import { useAppStateGetter } from '../../../hooks/useAppStateStore';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
+  tableConfig, themaConfig,
+} from './Parkeren-thema-config.ts';
+import type { DecosParkeerVergunning } from '../../../../server/services/parkeren/config-and-types.ts';
+import type { DecosZaakFrontend } from '../../../../server/services/vergunningen/config-and-types.ts';
+import { isError, isLoading } from '../../../../universal/helpers/api.ts';
+import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
+import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
 export function useParkerenData() {
   const { PARKEREN } = useAppStateGetter();
@@ -20,11 +16,11 @@ export function useParkerenData() {
     DecosZaakFrontend<DecosParkeerVergunning>
   >(PARKEREN.content?.vergunningen ?? [], 'identifier', true);
 
-  const breadcrumbs = useThemaBreadcrumbs(themaId);
+  const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
   return {
-    id: themaId,
-    title: themaTitle,
+    id: themaConfig.id,
+    title: themaConfig.title,
     tableConfig,
     vergunningen,
     hasMijnParkerenVergunningen,
@@ -32,8 +28,8 @@ export function useParkerenData() {
     isError: isError(PARKEREN),
     parkerenUrlSSO: PARKEREN.content?.url ?? '/',
     isLoadingParkerenUrl: isLoading(PARKEREN),
-    linkListItems,
+    pageLinks: themaConfig.pageLinks,
     breadcrumbs,
-    routeConfig,
+    themaConfig,
   };
 }

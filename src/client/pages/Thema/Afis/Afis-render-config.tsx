@@ -3,19 +3,19 @@ import {
   themaId,
   themaTitle,
   featureToggle,
-} from './Afis-thema-config';
-import { AfisBetaalVoorkeuren } from './AfisBetaalVoorkeuren';
-import { AfisEMandateDetail } from './AfisEMandateDetail';
-import { AfisFactuur } from './AfisFactuur';
+} from './Afis-thema-config.ts';
+import { AfisBetaalVoorkeuren } from './AfisBetaalVoorkeuren.tsx';
+import { AfisEMandateDetail } from './AfisEMandateDetail.tsx';
+import { AfisFactuur } from './AfisFactuur.tsx';
 import { default as AfisIcon } from './AfisIcon.svg?react';
-import { AfisList } from './AfisList';
-import { AfisThema } from './AfisThema';
-import { isLoading } from '../../../../universal/helpers/api';
-import { type AppState } from '../../../../universal/types/App.types';
+import { AfisList } from './AfisList.tsx';
+import { AfisThema } from './AfisThema.tsx';
+import { isLoading } from '../../../../universal/helpers/api.ts';
+import { type AppState } from '../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
-} from '../../../config/thema-types';
+} from '../../../config/thema-types.ts';
 
 export const AfisRoutes = [
   {
@@ -36,7 +36,7 @@ export const AfisRoutes = [
   {
     route: routeConfig.detailPageEMandate.path,
     Component: AfisEMandateDetail,
-    isActive: featureToggle.afisEMandatesActive,
+    isActive: featureToggle.emandatesActive,
   },
   {
     route: routeConfig.themaPage.path,

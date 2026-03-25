@@ -1,4 +1,4 @@
-import { IS_ACCEPTANCE, IS_PRODUCTION } from './env';
+import { IS_PRODUCTION } from './env.ts';
 
 /**
  * @deprecated
@@ -29,7 +29,6 @@ export const FeatureToggle = {
 
   // Afval api + Afval thema
   garbageInformationPage: true,
-  adopteerbareAfvalContainerMeldingen: !IS_PRODUCTION,
 
   // Horeca vergunningen
   horecaActive: true,
@@ -79,13 +78,10 @@ export const FeatureToggle = {
   // Zorg thema actief
   zorgv2ThemapaginaActive: true,
 
-  // AmsApp notificaties
-  amsNotificationsIsActive: !IS_PRODUCTION,
-
   // Cobrowse widget
   cobrowseIsActive: true,
   // Mijn Woning met vve zaak informatie
   vveIsActive: !IS_PRODUCTION,
   // VTH vergunningen move from decos to powerbrowser (ligplaats/kameromzettingen/woningvormingen)
-  VTHOnPowerbrowserActive: IS_ACCEPTANCE,
+  VTHOnPowerbrowserActive: !IS_PRODUCTION,
 } as const;

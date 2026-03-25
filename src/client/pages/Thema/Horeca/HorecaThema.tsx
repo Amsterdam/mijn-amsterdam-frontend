@@ -1,11 +1,11 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { useHorecaThemaData } from './useHorecaThemaData.hook';
-import { HorecaVergunningFrontend } from '../../../../server/services/horeca/decos-zaken';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaPagina from '../../../components/Thema/ThemaPagina';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { useHorecaThemaData } from './useHorecaThemaData.hook.ts';
+import type { HorecaVergunningFrontend } from '../../../../server/services/horeca/decos-zaken.ts';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
+import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 const pageContentTop = (
   <PageContentCell spanWide={8}>
@@ -24,10 +24,9 @@ export function HorecaThema() {
     vergunningen,
     isLoading,
     isError,
-    linkListItems,
-    routeConfig,
+    themaConfig,
   } = useHorecaThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const tables = Object.entries(tableConfig).map(
     ([kind, { title, displayProps, filter, listPageRoute, maxItems }]) => {
@@ -52,7 +51,7 @@ export function HorecaThema() {
       isLoading={isLoading}
       pageContentTop={pageContentTop}
       pageContentMain={tables}
-      pageLinks={linkListItems}
+      pageLinks={themaConfig.pageLinks}
       maintenanceNotificationsPageSlug="horeca"
     />
   );

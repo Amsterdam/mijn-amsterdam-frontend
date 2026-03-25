@@ -1,11 +1,12 @@
-import {
+import type {
   AfisEMandateCreditor,
-  EMandateReceiverSource,
+  EMandateReceiverSource} from './afis-types.ts';
+import {
   type AfisEMandateSourceStatic,
-} from './afis-types';
-import { getFromEnv } from '../../helpers/env';
+} from './afis-types.ts';
+import { getFromEnv } from '../../helpers/env.ts';
 
-// TODO: Uitvinden of de receiver mogelijk per Creditor kan verschillen - https://gemeente-amsterdam.atlassian.net/browse/MIJN-12289
+// Voor elke afdeling van de gemeente gebruiken we dezelfde gegevens.
 export const eMandateReceiver: EMandateReceiverSource = {
   RecName1: 'Gemeente Amsterdam',
   RecPostal: '1011 PN',
@@ -78,12 +79,6 @@ export const EMandateCreditorsGemeenteAmsterdam: AfisEMandateCreditor[] = [
     iban: 'NL67RABO0110088999',
     subId: '11',
     refId: 'VERGUNNINGEN',
-  },
-  {
-    name: 'Zwembaden',
-    iban: 'NL10RABO0110077997',
-    subId: '12',
-    refId: '',
   },
 ];
 

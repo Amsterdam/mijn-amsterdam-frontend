@@ -36,7 +36,8 @@ paths:
                 $ref: '#/components/schemas/ErrorNotFound'
   /api/v1/services/amsapp/notifications/consumer/{consumerId}/app:
     get:
-      description: Registers the consumer based on the identity provider's response and communicates the consumerId to the app server
+      description: |
+        Registers the consumer based on the identity provider's response and redirects to an html page with a link to open the Amsterdam App.
       parameters:
         - name: consumerId
           in: path
@@ -61,25 +62,27 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/ErrorNotFound'
-  /api/v1/services/amsapp/notifications/consumer/{consumerId}:
+  /private/api/v1/services/amsapp/notifications/consumer/{consumerId}:
     get:
-      description: Get consumer exists
+      description: Get consumer profile and registration status. Or if consumer is not registered, return only registration status with false.
       parameters:
         - name: consumerId
           in: path
           required: true
           schema:
             type: string
+        - $ref: '#/components/parameters/xApiKeyHeader'
       responses:
         '200':
-          description: Current registration status of consumer
+          description: Current registration profile of consumer
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  isRegistered:
-                    type: boolean
+                oneOf:
+                  - $ref: '#/components/schemas/ConsumerRegistered'
+                  - allOf:
+                      - $ref: '#/components/schemas/ConsumerProfile'
+                      - $ref: '#/components/schemas/ConsumerRegistered'
         '404':
           description: Consumer not found
           content:
@@ -100,6 +103,7 @@ paths:
           required: true
           schema:
             type: string
+        - $ref: '#/components/parameters/xApiKeyHeader'
       responses:
         '200':
           description: Consumer deleted
@@ -124,6 +128,31 @@ paths:
         Retrieves all notification data of all consumers.
       parameters:
         - $ref: '#/components/parameters/xApiKeyHeader'
+        - name: dateFrom
+          in: query
+          required: false
+          description: |
+            Only return consumer notification data updated on/after this timestamp (ISO 8601). Defaults to 7 days ago
+          schema:
+            type: string
+            format: date-time
+            example: '2026-03-01T00:00:00.000Z'
+        - name: offset
+          in: query
+          required: false
+          description: Number of consumer records to skip
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+        - name: limit
+          in: query
+          required: false
+          description: Maximum number of consumer records to return
+          schema:
+            type: integer
+            minimum: 1
+            default: 100
       responses:
         '200':
           description: Returns consumer notifications data
@@ -245,6 +274,11 @@ components:
               dateUpdated:
                 type: string
                 format: date-time
+              lastLoginDate:
+                type: string
+                format: date-time
+                nullable: true
+                description: Last consumer login timestamp (ISO 8601) or null when unknown/never.
               services:
                 type: array
                 items:
@@ -256,6 +290,15 @@ components:
                     mapping:
                       OK: '#/components/schemas/ServiceResultOk'
                       ERROR: '#/components/schemas/ServiceResultError'
+        status:
+          type: string
+          enum:
+            - 'OK'
+        totalItems:
+          type: integer
+          minimum: 0
+          description: Total number matching the dateFrom filter (ignores offset/limit)
+
     ServiceResultBase:
       type: object
       properties:
@@ -291,7 +334,7 @@ components:
               default: null
             message:
               type: string
-              default: "DEPENDENCY ERROR"
+              default: 'DEPENDENCY ERROR'
     ServiceResult:
       type: object
       properties:
@@ -302,10 +345,28 @@ components:
         datePublished:
           type: string
           format: date-time
-        isTip:
+    ConsumerProfile:
+      type: object
+      properties:
+        profileName:
+          type: string
+        serviceIds:
+          type: array
+          items:
+            type: string
+        dateUpdated:
+          type: string
+          format: date-time
+        lastLoginDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: Last consumer login timestamp (ISO 8601) or null when unknown/never.
+    ConsumerRegistered:
+      type: object
+      properties:
+        isRegistered:
           type: boolean
-          default: false
-            
     ApiSuccessResponse:
       type: object
       properties:

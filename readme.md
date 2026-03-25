@@ -38,6 +38,22 @@ pnpm mock-server
 pnpm bff-api:watch
 ```
 
+Verifying the build can be done with the following command:
+
+```bash
+pnpm bff-api:build && BFF_SKIP_APPCONFIG=1 && pnpm bff-api:serve-build
+```
+
+or with docker:
+
+```bash
+pnpm build-docker && pnpm run-docker
+```
+
+Beware that this will only work when all environment variables are set. `.env` files are not loaded automatically in the production build.
+
+
+
 ## Accessibility + Targeted browsers
 
 The Mijn Amsterdam design and development team works hard to ensure mijn.amsterdam.nl is [accessible](https://mijn.amsterdam.nl/toegankelijkheidsverklaring).
@@ -145,7 +161,10 @@ Request tooling:`DEBUG=vergunningen,source-api-request:request,source-api-reques
 
 To log response data from incoming responses before any transformation.
 A comma separated list of keywords / pathsegments can be used to log specific requests. For example: zorgned/aanvragen,gpass
-`export DEBUG_RESPONSE_DATA=term1,term2` this setting only works in conjunction with `DEBUG=source-api-request:request` and is turned on or added **automatically** when DEBUG_RESPONSE_DATA is defined.
+`export DEBUG_RESPONSE_DATA=term1,term2` this setting only works in conjunction with `DEBUG=source-api-request:response` and is turned on or added **automatically** when DEBUG_RESPONSE_DATA is defined.
+
+To log request body for outgoing requests. A comma separated list of pathsegments|keywords can be used to log specific requests. For example: personen|ZoekMetAdresseerbaarObjectIdentificatie;keyword2,gpass
+`export DEBUG_REQUEST_DATA=path1|term1,term2`. Keywords match any string in the params or body of the request. This setting only works in conjunction with `DEBUG=source-api-request:request` and is turned on or added **automatically** when DEBUG_REQUEST_DATA is defined.
 
 #### React Autologout timer
 

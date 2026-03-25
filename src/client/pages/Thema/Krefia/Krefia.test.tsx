@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { routeConfig } from './Krefia-thema-config';
-import { KrefiaThema } from './KrefiaThema';
-import KrefiaData from '../../../../../mocks/fixtures/krefia.json';
-import { forTesting } from '../../../../server/services/krefia/krefia';
-import type { KrefiaSourceResponse } from '../../../../server/services/krefia/krefia.types';
-import { AppState } from '../../../../universal/types/App.types';
-import MockApp from '../../MockApp';
+import { themaConfig } from './Krefia-thema-config.ts';
+import { KrefiaThema } from './KrefiaThema.tsx';
+import KrefiaData from '../../../../../mocks/fixtures/krefia.json' with { type: 'json' };
+import { forTesting } from '../../../../server/services/krefia/krefia.ts';
+import type { KrefiaSourceResponse } from '../../../../server/services/krefia/krefia.types.ts';
+import type { AppState } from '../../../../universal/types/App.types.ts';
+import MockApp from '../../MockApp.tsx';
 
 const testState = {
   KREFIA: {
@@ -19,8 +19,8 @@ const testState = {
 } as unknown as AppState;
 
 describe('<Krefia />', () => {
-  const routeEntry = generatePath(routeConfig.themaPage.path);
-  const routePath = routeConfig.themaPage.path;
+  const routeEntry = generatePath(themaConfig.route.path);
+  const routePath = themaConfig.route.path;
 
   function Component({ state }: { state: AppState }) {
     return (

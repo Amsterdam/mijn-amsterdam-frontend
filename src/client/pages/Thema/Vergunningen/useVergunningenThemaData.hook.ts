@@ -1,15 +1,9 @@
-import {
-  linkListItems,
-  routeConfig,
-  tableConfig,
-  themaId,
-  themaTitle,
-} from './Vergunningen-thema-config';
-import type { ZaakFrontendCombined } from '../../../../server/services/vergunningen/config-and-types';
-import { isError, isLoading } from '../../../../universal/helpers/api';
-import { addLinkElementToProperty } from '../../../components/Table/TableV2';
-import { useAppStateGetter } from '../../../hooks/useAppStateStore';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
+import { tableConfig, themaConfig } from './Vergunningen-thema-config.ts';
+import type { ZaakFrontendCombined } from '../../../../server/services/vergunningen/config-and-types.ts';
+import { isError, isLoading } from '../../../../universal/helpers/api.ts';
+import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
+import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
 export function useVergunningenThemaData() {
   const { VERGUNNINGEN, PARKEREN } = useAppStateGetter();
@@ -19,18 +13,18 @@ export function useVergunningenThemaData() {
     true
   );
   const hasParkeervergunningen = !!PARKEREN.content?.vergunningen?.length;
-  const breadcrumbs = useThemaBreadcrumbs(themaId);
+  const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
   return {
-    id: themaId,
-    title: themaTitle,
+    id: themaConfig.id,
+    title: themaConfig.title,
     vergunningen,
     isLoading: isLoading(VERGUNNINGEN),
     isError: isError(VERGUNNINGEN),
     tableConfig,
-    linkListItems,
+    pageLinks: themaConfig.pageLinks,
     breadcrumbs,
-    routeConfig,
     hasParkeervergunningen,
+    themaConfig,
   };
 }

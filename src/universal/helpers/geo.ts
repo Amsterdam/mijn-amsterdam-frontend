@@ -1,4 +1,4 @@
-import { LatLngLiteral, LatLngTuple } from 'leaflet';
+import type { LatLngLiteral, LatLngTuple } from 'leaflet';
 
 /**
  * Calculates the haversine distance between point A, and B.

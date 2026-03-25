@@ -1,12 +1,13 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi, Mock } from 'vitest';
+import type { Mock } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 
-import { AfisFacturenTables } from './AfisFacturenTables';
+import { AfisFacturenTables } from './AfisFacturenTables.tsx';
 import {
   useAfisFacturenData,
   type AfisFacturenThemaContextParams,
-} from './useAfisThemaData.hook';
-import MockApp from '../../MockApp';
+} from './useAfisThemaData.hook.tsx';
+import MockApp from '../../MockApp.tsx';
 
 vi.mock('./useAfisThemaData.hook');
 

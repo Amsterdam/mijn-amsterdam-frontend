@@ -10,11 +10,11 @@ import {
   isDeliveryStopped,
   isEindeGeldigheidVerstreken,
   MEER_INFORMATIE,
-} from './wmo-generic';
-import {
+} from './wmo-generic.ts';
+import type {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemTransformerConfig,
-} from '../../zorgned/zorgned-types';
+} from '../../zorgned/zorgned-types.ts';
 
 function isActive(aanvraag: ZorgnedAanvraagTransformed, today: Date) {
   return (

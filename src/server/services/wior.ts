@@ -1,23 +1,24 @@
-import { LatLngBoundsLiteral } from 'leaflet';
+import type { LatLngBoundsLiteral } from 'leaflet';
 
 import {
   apiDependencyError,
   apiSuccessResult,
-} from '../../universal/helpers/api';
-import { AuthProfileAndToken } from '../auth/auth-types';
-import { fetchDataset } from './buurt/buurt';
-import { datasetEndpoints } from './buurt/datasets';
+} from '../../universal/helpers/api.ts';
+import type { AuthProfileAndToken } from '../auth/auth-types.ts';
+import { fetchMyLocations } from './bag/my-locations.ts';
+import { fetchDataset } from './buurt/buurt.ts';
+import { datasetEndpoints } from './buurt/datasets.ts';
 import {
   filterDatasetFeatures,
   filterFeaturesinRadius,
   getBboxFromFeatures,
-} from './buurt/helpers';
-import { fetchMyLocations } from './bag/my-locations';
+} from './buurt/helpers.ts';
 import {
   featureToggle,
   routeConfig,
   themaId,
-} from '../../client/components/MyArea/MyArea-thema-config';
+  themaTitle,
+} from '../../client/components/MyArea/MyArea-thema-config.ts';
 
 const WITHIN_RADIUS_KM = 1;
 
@@ -25,6 +26,7 @@ function getNotification(bbox: LatLngBoundsLiteral) {
   return {
     id: `wior-meldingen-notification`,
     datePublished: new Date().toISOString(),
+    themaTitle,
     themaID: themaId,
     title: `Werkzaamheden gepland`,
     description: `Bij u in de buurt zijn binnen enkele maanden meerdaagsewerkzaamheden gepland`,

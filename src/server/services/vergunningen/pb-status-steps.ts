@@ -1,7 +1,6 @@
-import { PBVergunning } from './config-and-types';
-import { StatusLineItem } from '../../../universal/types/App.types';
+import type { PBVergunning } from './config-and-types.ts';
+import type { StatusLineItem } from '../../../universal/types/App.types.ts';
 
-// TODO: MIJN-12348 - add correct status steps and logic for all vergunningen product types
 export function getStatusStepsPB<T extends PBVergunning>(
   zaak: T
 ): StatusLineItem[] {
@@ -10,10 +9,7 @@ export function getStatusStepsPB<T extends PBVergunning>(
 
   const datumInBehandeling = getStatusDate('In behandeling') ?? '';
   const dateDecision: string =
-    getStatusDate('Afgehandeld') ??
-    getStatusDate('Gereed') ??
-    zaak.dateDecision ??
-    '';
+    getStatusDate('Gereed') ?? zaak.dateDecision ?? '';
 
   const isVerlopen = zaak.isExpired;
   const hasInBehandeling = !!datumInBehandeling;

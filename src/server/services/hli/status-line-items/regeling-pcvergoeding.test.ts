@@ -6,10 +6,10 @@ import {
   AV_UPCTG,
   AV_UPCZIL,
   forTesting,
-} from './regeling-pcvergoeding';
-import { getAuthProfileAndToken } from '../../../../testing/utils';
-import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../../zorgned/zorgned-types';
-import { forTesting as forTestingHLI } from '../hli';
+} from './regeling-pcvergoeding.ts';
+import { getAuthProfileAndToken } from '../../../../testing/utils.ts';
+import type { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../../zorgned/zorgned-types.ts';
+import { forTesting as forTestingHLI } from '../hli.ts';
 
 const mocks = vi.hoisted(() => {
   return {

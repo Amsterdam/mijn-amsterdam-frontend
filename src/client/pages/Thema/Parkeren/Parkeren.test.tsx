@@ -2,11 +2,11 @@ import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { describe, expect, it } from 'vitest';
 
-import { routeConfig, themaTitle } from './Parkeren-thema-config';
-import { ParkerenThema } from './ParkerenThema';
-import { forTesting } from './ParkerenThema';
-import { AppState } from '../../../../universal/types/App.types';
-import MockApp from '../../MockApp';
+import { themaConfig } from './Parkeren-thema-config.ts';
+import { ParkerenThema } from './ParkerenThema.tsx';
+import { forTesting } from './ParkerenThema.tsx';
+import type { AppState } from '../../../../universal/types/App.types.ts';
+import MockApp from '../../MockApp.tsx';
 
 const linkButtonTxt = 'Ga naar Mijn Parkeren';
 const EXTERNAL_PARKEREN_URL = 'https://parkeervergunningen.amsterdam.nl/';
@@ -69,8 +69,8 @@ const testState = {
 } as unknown as AppState;
 
 describe('Parkeren', () => {
-  const routeEntry = generatePath(routeConfig.themaPage.path);
-  const routePath = routeConfig.themaPage.path;
+  const routeEntry = generatePath(themaConfig.route.path);
+  const routePath = themaConfig.route.path;
 
   function Component() {
     return (
@@ -86,7 +86,7 @@ describe('Parkeren', () => {
   it('should render the component and show the correct title', () => {
     render(<Component />);
 
-    expect(screen.getAllByText(themaTitle)[0]).toBeInTheDocument();
+    expect(screen.getAllByText(themaConfig.title)[0]).toBeInTheDocument();
   });
 
   it('should contain the correct links', () => {

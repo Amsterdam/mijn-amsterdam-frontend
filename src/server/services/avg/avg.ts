@@ -1,34 +1,30 @@
 import FormData from 'form-data';
 import { generatePath } from 'react-router';
 
-import { getAvgStatusLineItems } from './avg-status-line-items';
-import {
+import { getAvgStatusLineItems } from './avg-status-line-items.ts';
+import type {
   AVGRequestFrontend,
   AVGResponse,
   AvgThemesResponse,
   SmileAvgResponse,
   SmileAvgThemesResponse,
-} from './types';
+} from './types.ts';
+import { themaConfig } from '../../../client/pages/Thema/AVG/AVG-thema-config.ts';
+import type {
+  ApiSuccessResponse} from '../../../universal/helpers/api.ts';
 import {
-  featureToggle,
-  routeConfig,
-  themaId,
-  themaTitle,
-} from '../../../client/pages/Thema/AVG/AVG-thema-config';
-import {
-  ApiSuccessResponse,
   apiDependencyError,
   apiSuccessResult,
-} from '../../../universal/helpers/api';
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import { MyNotification } from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+} from '../../../universal/helpers/api.ts';
+import { defaultDateFormat } from '../../../universal/helpers/date.ts';
+import type { MyNotification } from '../../../universal/types/App.types.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import {
   createSessionBasedCacheKey,
   getApiConfig,
-} from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
-import { smileDateParser } from '../smile/smile-helpers';
+} from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
+import { smileDateParser } from '../smile/smile-helpers.ts';
 
 const DEFAULT_PAGE_SIZE = 25;
 
@@ -148,7 +144,7 @@ export function transformAVGResponse(data: SmileAvgResponse): AVGResponse {
       toelichting: verzoek.avgverzoek_omschrijvingvanonderwerp?.value || '',
       resultaat:
         verzoek.avgverzoek_typeafhandelingvaststellen_resultaat?.value || '',
-      ontvangstDatum: ontvangstDatum,
+      ontvangstDatum,
       ontvangstDatumFormatted: ontvangstDatum
         ? defaultDateFormat(ontvangstDatum)
         : ontvangstDatum,
@@ -165,7 +161,7 @@ export function transformAVGResponse(data: SmileAvgResponse): AVGResponse {
       themas: '',
       steps: [],
       link: {
-        to: generatePath(routeConfig.detailPage.path, {
+        to: generatePath(themaConfig.detailPage.route.path, {
           id,
         }),
         title,
@@ -196,7 +192,7 @@ export async function fetchAVG(authProfileAndToken: AuthProfileAndToken) {
         authProfileAndToken.profile.sid,
         'avg'
       ),
-      postponeFetch: !featureToggle.avgActive,
+      postponeFetch: !themaConfig.featureToggle.active,
     })
   );
 
@@ -236,7 +232,7 @@ export async function fetchAVGRequestThemes(
       data,
       headers: data.getHeaders(),
       cacheKey_UNSAFE: avgIds.join(), // These are unique per user.
-      postponeFetch: !featureToggle.avgActive,
+      postponeFetch: !themaConfig.featureToggle.active,
     })
   );
 
@@ -268,8 +264,8 @@ function createAVGNotification(verzoek: AVGRequestFrontend) {
   const inProgressActive = !!verzoek.datumInBehandeling;
 
   const notification: MyNotification = {
-    themaID: themaId,
-    themaTitle: themaTitle,
+    themaID: themaConfig.id,
+    themaTitle: themaConfig.title,
     id: `avg-${verzoek.id}-notification`,
     title: 'AVG verzoek ontvangen',
     description: `Wij hebben uw AVG verzoek met zaaknummer ${verzoek.id} ontvangen.`,

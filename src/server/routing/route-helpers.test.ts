@@ -4,8 +4,6 @@ import z from 'zod';
 import {
   createBFFRouter,
   generateFullApiUrlBFF,
-  isProtectedRoute,
-  isPublicEndpoint,
   queryParams,
   send404,
   sendBadRequest,
@@ -14,14 +12,15 @@ import {
   sendResponse,
   sendServiceUnavailable,
   sendUnauthorized,
-} from './route-helpers';
-import { bffApiHost } from '../../testing/setup';
-import { RequestMock, ResponseMock } from '../../testing/utils';
+} from './route-helpers.ts';
+import { bffApiHost } from '../../testing/setup.ts';
+import { RequestMock, ResponseMock } from '../../testing/utils.ts';
+import type {
+  ApiResponse_DEPRECATED} from '../../universal/helpers/api.ts';
 import {
-  ApiResponse_DEPRECATED,
   apiErrorResult,
-} from '../../universal/helpers/api';
-import { oidcConfigDigid, oidcConfigEherkenning } from '../auth/auth-config';
+} from '../../universal/helpers/api.ts';
+import { oidcConfigDigid, oidcConfigEherkenning } from '../auth/auth-config.ts';
 
 describe('route-helpers', () => {
   const digidClientId = oidcConfigDigid.clientID;
@@ -207,22 +206,6 @@ describe('route-helpers', () => {
       expect(resMock.status).toHaveBeenCalledWith(400);
       expect(resMock.send).toHaveBeenCalledWith(responseData2);
     });
-  });
-
-  test('isPublicEndpoint', () => {
-    const value2 = isPublicEndpoint('/services/stream');
-    expect(value2).toBe(false);
-
-    const value3 = isPublicEndpoint('/services/auth/anything');
-    expect(value3).toBe(false);
-  });
-
-  test('isProtectedRoute', () => {
-    const value = isProtectedRoute('/services/stream');
-    expect(value).toBe(true);
-
-    const value3 = isPublicEndpoint('/services/auth/anything');
-    expect(value3).toBe(false);
   });
 
   describe('generateFullApiUrlBFF', () => {

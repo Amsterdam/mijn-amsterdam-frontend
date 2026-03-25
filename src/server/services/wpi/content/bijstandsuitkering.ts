@@ -1,6 +1,12 @@
-import { defaultDateFormat } from '../../../../universal/helpers/date';
-import { createProcessNotification, isRequestProcessActual } from '../helpers';
-import { WpiRequestProcess, WpiRequestProcessLabels } from '../wpi-types';
+import { defaultDateFormat } from '../../../../universal/helpers/date.ts';
+import {
+  createProcessNotification,
+  isRequestProcessActual,
+} from '../helpers.ts';
+import type {
+  WpiRequestProcess,
+  WpiRequestProcessLabels,
+} from '../wpi-types.ts';
 
 export const WpiExternalUrls = {
   BijstandsUitkeringAanvragenRechtenEnPlichten:
@@ -8,7 +14,7 @@ export const WpiExternalUrls = {
   BijstandsUitkeringAanvragen:
     'https://www.amsterdam.nl/werk-en-inkomen/bijstandsuitkering/bijstandsuitkering-aanvragen/',
   BetaalDataUitkering:
-    'https://www.amsterdam.nl/werk-en-inkomen/bijstandsuitkering/uitbetaling-bijstandsuitkering/',
+    'https://www.amsterdam.nl/werk-en-inkomen/bijstandsuitkering/uitbetaling-specificatie/',
 };
 
 export const requestProcess: WpiRequestProcessLabels = {
@@ -155,7 +161,7 @@ export function getNotifications(
   const today = new Date();
 
   const aanvraagNotifications = bijstandsuitkeringAanvragen
-    ?.filter((aanvraag) => {
+    .filter((aanvraag) => {
       return isRequestProcessActual(aanvraag.datePublished, today);
     })
     .flatMap((aanvraag) =>
@@ -164,5 +170,5 @@ export function getNotifications(
       )
     );
 
-  return aanvraagNotifications || [];
+  return aanvraagNotifications;
 }

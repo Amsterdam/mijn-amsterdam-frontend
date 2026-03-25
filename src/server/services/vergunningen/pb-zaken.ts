@@ -1,172 +1,218 @@
 import {
   caseTypePB,
-  type Ligplaatsvergunning,
   type Omzettingsvergunning,
   type Onttrekkingsvergunning,
   type OnttrekkingsvergunningSloop,
   type Samenvoegingsvergunning,
   type Splitsingsvergunning,
+  type OnttrekkingsvergunningTweedeWoning,
   type VormenVanWoonruimte,
-} from './config-and-types';
-import { SELECT_FIELDS_TRANSFORM_BASE } from '../powerbrowser/powerbrowser-field-transformers';
-import { hasCaseTypeInFMT_CAPTION } from '../powerbrowser/powerbrowser-helpers';
-import { PowerBrowserZaakTransformer } from '../powerbrowser/powerbrowser-types';
+  type LigplaatsBedrijfsvaartuigvergunning,
+  type LigplaatsWoonbootvergunning,
+} from './config-and-types.ts';
+import { SELECT_FIELDS_TRANSFORM_BASE } from '../powerbrowser/powerbrowser-field-transformers.ts';
+import {
+  hasCaseTypeInFMT_CAPTION,
+  hasStringInZAAK_SUBPRODUCT_ID,
+  hasStringInZAAKPRODUCT_ID,
+} from '../powerbrowser/powerbrowser-helpers.ts';
+import type {
+  PBZaakFieldsByName,
+  PowerBrowserZaakTransformer,
+} from '../powerbrowser/powerbrowser-types.ts';
+import {
+  isValidVTHZaak,
+  isValidVTHDocument,
+  isVTHZaakVerleend,
+  transformVTHZaakResult,
+} from './VTH/pb-zaken-vth-helpers.ts';
 
-export const documentNamesMA = {
-  TOEKENNING: 'Besluit toekenning',
-  VERLENGING: 'Besluit verlenging beslistermijn',
-  WEIGERING: 'Besluit weigering',
-  BUITEN_BEHANDELING: 'Besluit Buiten behandeling',
-  INTREKKING: 'Besluit intrekking',
-  MEER_INFORMATIE: 'Verzoek aanvullende gegevens',
-  SAMENVATTING: 'Samenvatting aanvraagformulier',
-} as const;
-
-const LigplaatsvergunningZaakTransformer: PowerBrowserZaakTransformer<Ligplaatsvergunning> =
+const LigplaatsWoonbootVergunningZaakTransformer: PowerBrowserZaakTransformer<LigplaatsWoonbootvergunning> =
   {
-    caseType: caseTypePB.Ligplaatsvergunning,
-    title: 'Ligplaatsvergunning',
+    caseType: caseTypePB.LigplaatsWoonbootvergunning,
+    title: 'Ligplaatsvergunning woonboot',
+    isVerleend: isVTHZaakVerleend,
+    fetchZaakFilter: (pbZaakFields) =>
+      hasStringInZAAKPRODUCT_ID('Ligplaatsvergunning woonboot', pbZaakFields) ||
+      hasStringInZAAK_SUBPRODUCT_ID(
+        'Ligplaatsvergunning woonboot',
+        pbZaakFields
+      ),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    // TODO: MIJN-12348 - Replace with actual document names and add mock data
-    transformDoclinks: {
-      'Besluiten en vastleggen': ['Besluit Ligplaatsvergunning'],
-      [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
-    } as const,
+    transformFieldValues: {
+      result: transformVTHZaakResult,
+    },
+    filterValidDocumentPredicate: isValidVTHDocument,
+  };
+
+const LigplaatsBedrijfsvaartuigVergunningZaakTransformer: PowerBrowserZaakTransformer<LigplaatsBedrijfsvaartuigvergunning> =
+  {
+    caseType: caseTypePB.LigplaatsBedrijfsvaartuigvergunning,
+    title: 'Ligplaatsvergunning bedrijfsvaartuig',
+    isVerleend: isVTHZaakVerleend,
+    fetchZaakFilter: (pbZaakFields) =>
+      hasStringInZAAKPRODUCT_ID(
+        'Ligplaatsvergunning bedrijfsvaartuig',
+        pbZaakFields
+      ) ||
+      hasStringInZAAK_SUBPRODUCT_ID(
+        'Ligplaatsvergunning bedrijfsvaartuig',
+        pbZaakFields
+      ),
+    transformFields: SELECT_FIELDS_TRANSFORM_BASE,
+    transformFieldValues: {
+      result: transformVTHZaakResult,
+    },
+    filterValidDocumentPredicate: isValidVTHDocument,
   };
 
 const OmzettingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Omzettingsvergunning> =
   {
     caseType: caseTypePB.Omzettingsvergunning,
     title: 'Vergunning voor kamerverhuur (omzettingsvergunning)',
-    fetchZaakIdFilter: (pbRecordField) =>
-      hasCaseTypeInFMT_CAPTION(pbRecordField, 'Omzetting kamerverhuur'),
+    isVerleend: isVTHZaakVerleend,
+    fetchZaakFilter: (pbZaakFields) =>
+      hasCaseTypeInFMT_CAPTION('Omzetting kamerverhuur', pbZaakFields),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    transformDoclinks: {
-      // TODO: MIJN-12348 - Replace with actual document names and add mock data
-      'Besluiten en vastleggen': [
-        'Besluit Omzettingsvergunning',
-        'Besluit Vergunning voor kamerverhuur',
-      ],
-      [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
-    } as const,
+    transformFieldValues: {
+      result: transformVTHZaakResult,
+    },
+    filterValidDocumentPredicate: isValidVTHDocument,
   };
 
 const SamenvoegingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Samenvoegingsvergunning> =
   {
     caseType: caseTypePB.Samenvoegingsvergunning,
     title: 'Vergunning voor samenvoegen van woonruimten',
-    fetchZaakIdFilter: (pbRecordField) =>
-      hasCaseTypeInFMT_CAPTION(pbRecordField, 'Vergunning voor samenvoegen'),
+    isVerleend: isVTHZaakVerleend,
+    fetchZaakFilter: (pbZaakFields) =>
+      hasCaseTypeInFMT_CAPTION('Vergunning voor samenvoegen', pbZaakFields),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    transformDoclinks: {
-      // TODO: MIJN-12348 - Replace with actual document names and add mock data
-      'Besluiten en vastleggen': [
-        'Besluit Samenvoegingsvergunning',
-        'Besluit Vergunning voor samenvoegen',
-      ],
-      [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
-    } as const,
+    transformFieldValues: {
+      result: transformVTHZaakResult,
+    },
+    filterValidDocumentPredicate: isValidVTHDocument,
   };
 
 const OnttrekkingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Onttrekkingsvergunning> =
   {
     caseType: caseTypePB.Onttrekkingsvergunning,
     title: caseTypePB.Onttrekkingsvergunning,
-    fetchZaakIdFilter: (pbRecordField) =>
+    isVerleend: isVTHZaakVerleend,
+    fetchZaakFilter: (pbZaakFields) =>
       hasCaseTypeInFMT_CAPTION(
-        pbRecordField,
-        OnttrekkingsvergunningZaakTransformer.title
+        OnttrekkingsvergunningZaakTransformer.title,
+        pbZaakFields
       ),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    transformDoclinks: {
-      // TODO: MIJN-12348 - Replace with actual document names and add mock data
-      'Besluiten en vastleggen': ['Besluit Onttrekkingsvergunning'],
-      [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
-    } as const,
+    transformFieldValues: {
+      result: transformVTHZaakResult,
+    },
+    filterValidDocumentPredicate: isValidVTHDocument,
   };
 
 const OnttrekkingsvergunningSloopZaakTransformer: PowerBrowserZaakTransformer<OnttrekkingsvergunningSloop> =
   {
     caseType: caseTypePB.OnttrekkingsvergunningSloop,
     title: caseTypePB.OnttrekkingsvergunningSloop,
-    fetchZaakIdFilter: (pbRecordField) =>
+    isVerleend: isVTHZaakVerleend,
+    fetchZaakFilter: (pbZaakFields) =>
       // Powerbrowser currently uses a misspelled name, we also check the correct spelling in case this is ever changed
       hasCaseTypeInFMT_CAPTION(
-        pbRecordField,
-        OnttrekkingsvergunningZaakTransformer.title
+        OnttrekkingsvergunningZaakTransformer.title,
+        pbZaakFields
       ) ||
       hasCaseTypeInFMT_CAPTION(
-        pbRecordField,
-        'Ontrekkingsvergunning voor sloop'
+        'Ontrekkingsvergunning voor sloop',
+        pbZaakFields
       ),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    transformDoclinks: {
-      // TODO: MIJN-12348 - Replace with actual document names and add mock data
-      'Besluiten en vastleggen': [
-        'Besluit Ontrekkingsvergunning',
-        'Besluit Onttrekkingsvergunning ',
-      ],
-      [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
-    } as const,
+    transformFieldValues: {
+      result: transformVTHZaakResult,
+    },
+    filterValidDocumentPredicate: isValidVTHDocument,
   };
 
 const VormenVanWoonruimteZaakTransformer: PowerBrowserZaakTransformer<VormenVanWoonruimte> =
   {
     caseType: caseTypePB.VormenVanWoonruimte,
     title: 'Vergunning voor woningvorming',
-    fetchZaakIdFilter: (pbRecordField) =>
-      hasCaseTypeInFMT_CAPTION(pbRecordField, 'Vergunning voor woningvormen'),
+    isVerleend: isVTHZaakVerleend,
+    fetchZaakFilter: (pbZaakFields) =>
+      hasCaseTypeInFMT_CAPTION('Vergunning voor woningvormen', pbZaakFields),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    transformDoclinks: {
-      // TODO: MIJN-12348 - Replace with actual document names and add mock data
-      'Besluiten en vastleggen': [
-        'Besluit Woningvormingsvergunning',
-        'Besluit woningvormen',
-      ],
-      [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
-    } as const,
+    transformFieldValues: {
+      result: transformVTHZaakResult,
+    },
+    filterValidDocumentPredicate: isValidVTHDocument,
+  };
+
+const OnttrekkingsvergunningTweedeWoningZaakTransformer: PowerBrowserZaakTransformer<OnttrekkingsvergunningTweedeWoning> =
+  {
+    caseType: caseTypePB.OnttrekkingsvergunningTweedeWoning,
+    title: 'Voorraadvergunning tweede woning',
+    isVerleend: isVTHZaakVerleend,
+    fetchZaakFilter: (pbZaakFields) =>
+      hasCaseTypeInFMT_CAPTION(
+        OnttrekkingsvergunningTweedeWoningZaakTransformer.title,
+        pbZaakFields
+      ),
+    transformFields: {
+      ...SELECT_FIELDS_TRANSFORM_BASE,
+    },
+    transformFieldValues: {
+      result: transformVTHZaakResult,
+    },
+    filterValidDocumentPredicate: isValidVTHDocument,
   };
 
 const SplitsingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Splitsingsvergunning> =
   {
     caseType: caseTypePB.Splitsingsvergunning,
     title: caseTypePB.Splitsingsvergunning,
-    fetchZaakIdFilter: (pbRecordField) =>
+    isVerleend: isVTHZaakVerleend,
+    fetchZaakFilter: (pbZaakFields) =>
       hasCaseTypeInFMT_CAPTION(
-        pbRecordField,
-        SplitsingsvergunningZaakTransformer.title
+        SplitsingsvergunningZaakTransformer.title,
+        pbZaakFields
       ),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
     },
-    // TODO: MIJN-12348 - Replace with actual document names and add mock data
-    transformDoclinks: {
-      'Besluiten en vastleggen': ['Besluit Omzettingsvergunning'],
-      [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
-    } as const,
+    transformFieldValues: {
+      result: transformVTHZaakResult,
+    },
+    filterValidDocumentPredicate: isValidVTHDocument,
   };
 
-export const pbZaakTransformers = [
+const pbZaakTransformers_ = [
   OmzettingsvergunningZaakTransformer,
-  LigplaatsvergunningZaakTransformer,
+  LigplaatsWoonbootVergunningZaakTransformer,
+  LigplaatsBedrijfsvaartuigVergunningZaakTransformer,
   SplitsingsvergunningZaakTransformer,
   SamenvoegingsvergunningZaakTransformer,
   VormenVanWoonruimteZaakTransformer,
   OnttrekkingsvergunningZaakTransformer,
   OnttrekkingsvergunningSloopZaakTransformer,
+  OnttrekkingsvergunningTweedeWoningZaakTransformer,
 ];
+export const pbZaakTransformers = pbZaakTransformers_.map((t) => ({
+  ...t,
+  fetchZaakFilter: (pbZaakFields: PBZaakFieldsByName) =>
+    t.fetchZaakFilter(pbZaakFields) && isValidVTHZaak(pbZaakFields),
+})) as typeof pbZaakTransformers_;
 
 export const pbCaseToZaakTransformers = pbZaakTransformers.reduce<
   Record<string, PowerBrowserZaakTransformer>
