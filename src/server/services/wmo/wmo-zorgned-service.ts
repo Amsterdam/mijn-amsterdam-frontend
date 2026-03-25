@@ -48,7 +48,6 @@ function getFakeDecisionDocuments(
 ): GenericDocument[] {
   if (
     isDocumentDecisionDateActive(aanvraagTransformed.datumAanvraag) &&
-    // !aanvraagTransformed.documenten.length &&
     !getDecisionDocument(aanvraagTransformed.documenten) &&
     aanvraagTransformed.resultaat === 'toegewezen' &&
     (aanvraagTransformed.datumBeginLevering ||
