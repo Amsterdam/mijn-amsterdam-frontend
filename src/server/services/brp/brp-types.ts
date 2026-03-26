@@ -239,5 +239,5 @@ export type BrpFrontend = {
 };
 
 type AdresFrontend = Adres & {
-  vveNaam: string|undefined;
+  vveNaam?: string|undefined;
 };
