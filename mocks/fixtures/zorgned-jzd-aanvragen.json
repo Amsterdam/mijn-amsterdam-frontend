@@ -3,6 +3,93 @@
   "_embedded": {
     "aanvraag": [
       {
+        "identificatie": "2280949",
+        "procesIdentificatie": "2280949",
+        "casusIdentificatie": "1050320",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2022-07-09"
+        },
+        "datumAanmelding": "2022-07-09",
+        "datumAanvraag": "2022-07-09",
+        "beschikking": {
+          "beschikkingNummer": 357,
+          "datumAfgifte": "2022-08-01",
+          "beschikteProducten": [
+            {
+              "identificatie": "883696",
+              "product": {
+                "identificatie": "740",
+                "productsoortCode": "AOV",
+                "omschrijving": "kamer tot kamer vervoer"
+              },
+              "productCategorie": {
+                "code": "12",
+                "omschrijving": "Vervoervoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2022-08-01",
+                "datumEindeGeldigheid": "2022-10-18",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "AOV001",
+                  "agbcode": "11122288",
+                  "omschrijving": "RMC Amsterdam"
+                },
+                "toewijzingen": [],
+                "betrokkenen": []
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B2349053",
+            "procesIdentificatie": "2280949",
+            "casusIdentificatie": "1050320",
+            "omschrijving": "Migratie Transvision naar RMC",
+            "omschrijvingclientportaal": "Informatie: nieuwe vervoerspas AOV",
+            "datumDefinitief": "2022-07-09T10:32:20.7",
+            "bestandsnaam": "034977CU.pdf"
+          },
+          {
+            "documentidentificatie": "B2356647",
+            "procesIdentificatie": "2280949",
+            "casusIdentificatie": "1050320",
+            "omschrijving": "Informatiebrief fout met reisgenoten op AOV-pas",
+            "omschrijvingclientportaal": "Informatie: onjuiste info op vervoerspas AOV",
+            "datumDefinitief": "2022-07-21T14:19:44.5",
+            "bestandsnaam": "034977CV.pdf"
+          },
+          {
+            "documentidentificatie": "B2364643",
+            "procesIdentificatie": "2280949",
+            "casusIdentificatie": "1050320",
+            "omschrijving": "Correctie foutieve pasjes overstappers AOV",
+            "omschrijvingclientportaal": "Informatie: juiste vervoerspas AOV",
+            "datumDefinitief": "2022-08-10T18:31:09.583",
+            "bestandsnaam": "034977CW.pdf"
+          }
+        ]
+      },
+      {
         "_links": null,
         "identificatie": "912837sdfsdf198723",
         "regeling": {

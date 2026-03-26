@@ -1,13 +1,17 @@
-import { apiSuccessResult, type ApiResponse, } from '../../../universal/helpers/api.ts';
+import {
+  apiSuccessResult,
+  type ApiResponse,
+} from '../../../universal/helpers/api.ts';
 import type { GenericDocument } from '../../../universal/types/App.types.ts';
 import {
   fetchAanvragen,
   fetchCasusAanvragen,
 } from '../zorgned/zorgned-service.ts';
-import type { ZorgnedAanvraagTransformed} from '../zorgned/zorgned-types.ts';
+import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
 import { type BSN } from '../zorgned/zorgned-types.ts';
 import {
   FAKE_DECISION_DOCUMENT_ID,
+  getDecisionDocument,
   isAfterWCAGValidDocumentsDate,
   isCancelled,
   isDocumentDecisionDateActive,
@@ -43,14 +47,15 @@ function getFakeDecisionDocuments(
   aanvraagTransformed: ZorgnedAanvraagTransformed
 ): GenericDocument[] {
   if (
-    !aanvraagTransformed.documenten.length &&
+    isDocumentDecisionDateActive(aanvraagTransformed.datumAanvraag) &&
+    !getDecisionDocument(aanvraagTransformed.documenten) &&
     aanvraagTransformed.resultaat === 'toegewezen' &&
     (aanvraagTransformed.datumBeginLevering ||
       aanvraagTransformed.datumEindeGeldigheid ||
-      aanvraagTransformed.datumEindeLevering) &&
-    isDocumentDecisionDateActive(aanvraagTransformed.datumAanvraag)
+      aanvraagTransformed.datumEindeLevering)
   ) {
     return [
+      ...aanvraagTransformed.documenten,
       {
         id: FAKE_DECISION_DOCUMENT_ID,
         title: `${DOCUMENT_TITLE_BESLUIT_STARTS_WITH} mist`,

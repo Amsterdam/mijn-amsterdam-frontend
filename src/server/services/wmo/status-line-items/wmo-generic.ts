@@ -29,7 +29,7 @@ function getLastDocumentStartsWithTitle(
   );
 }
 
-function getDecisionDocument(documents: GenericDocument[]) {
+export function getDecisionDocument(documents: GenericDocument[]) {
   return getLastDocumentStartsWithTitle(
     documents,
     DOCUMENT_TITLE_BESLUIT_STARTS_WITH
