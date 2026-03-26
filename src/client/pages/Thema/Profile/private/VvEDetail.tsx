@@ -42,7 +42,7 @@ function WonenData({ vve }: WonenDataProps) {
     (vve?.kvk_number !== null ||
       vve?.kvk_number !== undefined ||
       vve?.kvk_number !== '') && {
-      label: 'KvK-number',
+      label: 'KvK nummer',
       content: vve?.kvk_number,
     },
     vve?.monument_status !== null && {
