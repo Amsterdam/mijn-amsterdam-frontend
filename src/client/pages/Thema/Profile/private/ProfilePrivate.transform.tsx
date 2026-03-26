@@ -186,8 +186,6 @@ const adres: ProfileLabels<
   vveNaam: [
     'Vereniging van Eigenaren',
     (value, _item, brpData) => {
-      console.log("_____",brpData?.adres, featureToggle[themaIdBRP].wonenActive)
-      // if (featureToggle[themaIdBRP].wonenActive) {
       if (brpData?.adres?.vveNaam && featureToggle[themaIdBRP].wonenActive) {
         return (
           <MaRouterLink
