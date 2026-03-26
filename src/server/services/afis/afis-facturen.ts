@@ -268,6 +268,7 @@ function transformFactuur(
 
   const deelbetaling = deelbetalingen?.[factuurNummer];
   const hasDeelbetaling = !!deelbetaling;
+  const eMandateId = invoice.SEPAMandate ?? null;
   const amountOriginal = getInvoiceAmount(invoice);
   const amountPayed = getInvoiceAmount(invoice, deelbetaling);
   const amountPayedFormatted = `€ ${amountPayed ? displayAmount(parseFloat(amountPayed.toFixed(2))) : '0,00'}`;
@@ -312,6 +313,7 @@ function transformFactuur(
     status,
     statusDescription: '',
     paylink: invoice.Paylink ? invoice.Paylink : null,
+    eMandateId,
     documentDownloadLink,
     link: {
       to: generatePath(routeConfig.detailPage.path, { state, factuurNummer }),
@@ -372,22 +374,26 @@ function getTermijnStatusDescription(
   return `${term} - ${factuur.amountOriginalFormatted} Gepland`;
 }
 
-function groupTermijnFacturen(facturen: AfisFactuur[]): AfisFactuur[] {
+function combineTermijnFacturen(facturen: AfisFactuur[]): AfisFactuur[] {
   const grouped: { [key: string]: AfisFactuur[] } = {};
 
   for (const factuur of facturen) {
-    const key = `${factuur.factuurNummer}-${factuur.status}`;
+    const key = factuur.factuurNummer;
     if (!grouped[key]) {
       grouped[key] = [];
     }
     grouped[key].push(factuur);
   }
 
-  const facturenGrouped: AfisFactuur[] = [];
+  const facturenUpdated: AfisFactuur[] = [];
 
-  for (const [key, facturen] of Object.entries(grouped)) {
-    if (facturen.length > 1 && key.endsWith('automatische-incasso-termijnen')) {
-      const facturenSorted = facturen.sort(dateSort('paymentDueDate', 'asc'));
+  for (const facturen of Object.values(grouped)) {
+    // Multiple facturen with the same factuurNummer means that these are termijn facturen.
+    // We combine these into one main factuur with the rest as termijnen to be able to display them in a grouped way on the frontend.
+    if (facturen.length > 1) {
+      const facturenSorted = facturen.toSorted(
+        dateSort('paymentDueDate', 'asc')
+      );
 
       const termijnen: AfisFactuurTermijn[] = facturenSorted.map(
         (factuur, index) => {
@@ -406,17 +412,21 @@ function groupTermijnFacturen(facturen: AfisFactuur[]): AfisFactuur[] {
           };
         }
       );
-      facturenGrouped.push({
-        ...facturenSorted.at(-1)!,
+      const lastTermijn = facturenSorted.at(-1)!;
+      facturenUpdated.push({
+        // Add the last factuur as "main" factuur. Assign the rest of the termijn facturen as termijnen to this main factuur.
+        // We do this because the final payment due date should be the last one.
+        ...lastTermijn,
         termijnen,
-        statusDescription: `Factuur in ${termijnen.length} termijnen per automatische incasso.`,
+        statusDescription: `Factuur in ${termijnen.length} termijnen${lastTermijn.eMandateId ? ' per automatische incasso' : ''}.`,
       });
     } else {
-      facturenGrouped.push(...facturen);
+      // These are not termijnen facturen, so we just add them as they are.
+      facturenUpdated.push(...facturen);
     }
   }
 
-  return facturenGrouped;
+  return facturenUpdated;
 }
 
 function transformFacturen(
@@ -481,7 +491,7 @@ function isDownloadAvailable(documentDate: string): boolean {
 }
 
 const DUNNING_BLOCKING_LEVEL_OVERGEDRAGEN_AAN_BELASTINGEN = 3;
-const paymentTermsRegex = /B\d{3}/;
+const paymentTermsRegex = /(B|0)\d{3}/;
 
 function determineFactuurStatus(
   sourceInvoice: AfisFactuurPropertiesSource,
@@ -510,11 +520,11 @@ function determineFactuurStatus(
       (sourceInvoice.DunningLevel == 1 || sourceInvoice.DunningLevel == 2):
       return 'herinnering';
 
+    // Facturen from 2024 don't seem to have a SepaMandate coupled.
     case featureToggle.termijnFacturenActive &&
-      !!sourceInvoice.SEPAMandate &&
       sourceInvoice.PaymentMethod !== 'B' &&
       paymentTermsRegex.test(sourceInvoice.PaymentTerms):
-      return 'automatische-incasso-termijnen';
+      return 'factuur-in-termijnen';
 
     case !!sourceInvoice.SEPAMandate && sourceInvoice.PaymentMethod !== 'B':
       return 'automatische-incasso';
@@ -575,11 +585,18 @@ function determineFactuurStatusDescription(
       return hasDeelbetaling
         ? `Op ${debtClearingDateFormatted} heeft u het gehele bedrag van ${amountOriginal} voldaan.`
         : `${amountOriginal} betaald op ${debtClearingDateFormatted}`;
-    case 'automatische-incasso-termijnen':
-    case 'automatische-incasso':
+    case 'factuur-in-termijnen':
+    case 'automatische-incasso': {
+      if (factuur.eMandateId) {
+        return isCleared
+          ? `${amountOriginal} is door middel van een automatisch incasso op ${debtClearingDateFormatted} van uw rekening afgeschreven.`
+          : `${amountOriginal} wordt automatisch van uw rekening afgeschreven.`;
+      }
       return isCleared
-        ? `${amountOriginal} is door middel van een automatisch incasso op ${debtClearingDateFormatted} van uw rekening afgeschreven.`
-        : `${amountOriginal} wordt automatisch van uw rekening afgeschreven.`;
+        ? `${amountOriginal} betaald op ${debtClearingDateFormatted}`
+        : `Uw factuur is nog niet geheel betaald. Maak het bedrag van de resterende termijn(en) over onder vermelding van de gegevens op uw factuur.`;
+    }
+
     case 'geannuleerd':
       return `${amountOriginal} geannuleerd op ${debtClearingDateFormatted}`;
     case 'overgedragen-aan-belastingen':
@@ -625,7 +642,7 @@ function getTermijnFactuurAccountingDocumentIds(
 ): string[] {
   return uniqueArray(
     facturen
-      .filter((factuur) => factuur.status === 'automatische-incasso-termijnen')
+      .filter((factuur) => 'factuur-in-termijnen' === factuur.status)
       .map((factuur) => factuur.factuurNummer)
   );
 }
@@ -651,6 +668,8 @@ async function fetchAfisOpenFacturenIncludingAfgehandeldeTermijnFacturen(
     facturenOpenResponse.content?.facturen ?? []
   );
 
+  // Fetch the possibly afgehandeld termijn facturen. These are the termijnen of which at least 1 termijn is still open.
+  // We want to include these termijnen in the open facturen overview, so we can show a complete overview of all termijnen of a factuur.
   const possiblyAfgehandeldTermijnenFacturenResponse = await fetchAfisFacturen(
     sessionID,
     {
@@ -660,7 +679,8 @@ async function fetchAfisOpenFacturenIncludingAfgehandeldeTermijnFacturen(
     }
   );
 
-  const openAndTermijnFacturenGrouped = groupTermijnFacturen(
+  // Combine the open facturen with the possibly afgehandeld termijn facturen.
+  const openAndTermijnFacturenCombined = combineTermijnFacturen(
     [
       facturenOpenResponse.content?.facturen ?? [],
       possiblyAfgehandeldTermijnenFacturenResponse.content?.facturen ?? [],
@@ -669,9 +689,9 @@ async function fetchAfisOpenFacturenIncludingAfgehandeldeTermijnFacturen(
 
   return apiSuccessResult(
     {
-      count: openAndTermijnFacturenGrouped.length,
+      count: openAndTermijnFacturenCombined.length,
       state: 'open',
-      facturen: openAndTermijnFacturenGrouped,
+      facturen: openAndTermijnFacturenCombined,
     },
     getFailedDependencies({
       termijnen: possiblyAfgehandeldTermijnenFacturenResponse,
@@ -683,40 +703,53 @@ export async function fetchAfisFacturenOverview(
   sessionID: SessionID,
   params: Omit<AfisFacturenParams, 'state' | 'top'>
 ) {
-  const facturenOpenResult =
+  const openstaandeFacturenResult =
     await fetchAfisOpenFacturenIncludingAfgehandeldeTermijnFacturen(sessionID, {
       businessPartnerID: params.businessPartnerID,
     });
-  const facturenClosedRequest = fetchAfisFacturen(sessionID, {
+  const afgehandeldeFacturenRequest = fetchAfisFacturenByState(sessionID, {
+    ...params,
+    state: 'afgehandeld',
+  });
+  const afgehandeldeFacturenRequest_ = fetchAfisFacturen(sessionID, {
     state: 'afgehandeld',
     businessPartnerID: params.businessPartnerID,
     excludeAccountingDocumentIds: getTermijnFactuurAccountingDocumentIds(
-      facturenOpenResult.content?.facturen ?? []
+      openstaandeFacturenResult.content?.facturen ?? []
     ),
-    top: '3',
+    // Should the top 3 facturen include a termijn factuur, we also want to show the overige termijnen of this factuur. To be able to do this we need to fetch more than 3 + 10 (termijnen) facturen.
+    // This is not an ideal solution but unfortunately there is no way to reliably filter on termijn facturen in the API.
+    // 15 is used because we assume this includes all the termijnen of one possible termijn factuur in the top 3, but this can be adjusted if needed.
+    top: '15',
   });
 
-  const facturenTransferredRequest = fetchAfisFacturen(sessionID, {
+  const overgedragenFacturenRequest = fetchAfisFacturenByState(sessionID, {
+    ...params,
+    state: 'overgedragen',
+  });
+  const overgedragenFacturenRequest_ = fetchAfisFacturen(sessionID, {
     state: 'overgedragen',
     businessPartnerID: params.businessPartnerID,
-    top: '3',
+    top: '15',
   });
 
-  const [facturenClosedResponse, facturenTransferredResponse] =
+  const [afgehandeldeFacturenResponse, overgedragenFacturenResponse] =
     await Promise.allSettled([
-      facturenClosedRequest,
-      facturenTransferredRequest,
+      afgehandeldeFacturenRequest,
+      overgedragenFacturenRequest,
     ]);
 
-  const facturenClosedResult = getSettledResult(facturenClosedResponse);
-  const facturenTransferredResult = getSettledResult(
-    facturenTransferredResponse
+  const afgehandeldeFacturenResult = getSettledResult(
+    afgehandeldeFacturenResponse
+  );
+  const overgedragenFacturenResult = getSettledResult(
+    overgedragenFacturenResponse
   );
 
   let openFacturenContent: AfisFacturenResponse | null =
-    facturenOpenResult.content;
+    openstaandeFacturenResult.content;
 
-  if (facturenOpenResult.status === 'OK') {
+  if (openstaandeFacturenResult.status === 'OK') {
     const facturenOpen = openFacturenContent?.facturen ?? [];
     const openFacturenContentSorted: AfisFacturenResponse = {
       count: openFacturenContent?.count ?? 0,
@@ -743,14 +776,14 @@ export async function fetchAfisFacturenOverview(
 
   const facturenOverview: AfisFacturenOverviewResponse = {
     open: openFacturenContent ?? null,
-    afgehandeld: facturenClosedResult.content ?? null,
-    overgedragen: facturenTransferredResult.content ?? null,
+    afgehandeld: afgehandeldeFacturenResult.content ?? null,
+    overgedragen: overgedragenFacturenResult.content ?? null,
   };
 
   const failedDependencies = getFailedDependencies({
-    open: facturenOpenResult,
-    afgehandeld: facturenClosedResult,
-    overgedragen: facturenTransferredResult,
+    open: openstaandeFacturenResult,
+    afgehandeld: afgehandeldeFacturenResult,
+    overgedragen: overgedragenFacturenResult,
   });
 
   if (
@@ -784,57 +817,58 @@ export async function fetchAfisFacturenOverview(
 
 export async function fetchAfisFacturenByState(
   sessionID: SessionID,
-  params: AfisFacturenParams & { state: AfisFactuurState }
+  params: Omit<AfisFacturenParams, 'state'> & {
+    state: Exclude<AfisFactuurState, 'open'>;
+  }
 ): Promise<ApiResponse<AfisFacturenResponse | null>> {
-  const facturenRequests = [fetchAfisFacturen(sessionID, params)];
+  let excludeAccountingDocumentIds: string[] = [];
 
   if (params.state === 'afgehandeld') {
-    facturenRequests.push(
-      fetchAfisOpenFacturenIncludingAfgehandeldeTermijnFacturen(sessionID, {
-        businessPartnerID: params.businessPartnerID,
-      })
-    );
-  }
+    // We want to exclude afgehandelde termijnen if we still have them in the open facturen. This happens when some termijnen are afgehandeld and some are open.
+    // So we get all open facturen including the afgehandelde termijn facturen and then we can exclude these from the afgehandeld request.
+    const openAndRelatedAfgehandeldeTermijnFacturen =
+      await fetchAfisOpenFacturenIncludingAfgehandeldeTermijnFacturen(
+        sessionID,
+        {
+          businessPartnerID: params.businessPartnerID,
+        }
+      );
 
-  const [facturenResponse, facturenOpenResponse] =
-    await Promise.allSettled(facturenRequests);
-  const facturenResult = getSettledResult(facturenResponse);
-
-  if (facturenResult.status !== 'OK') {
-    return facturenResult;
-  }
-
-  if (facturenOpenResponse) {
-    const facturenOpenResult = getSettledResult(facturenOpenResponse);
-    let excludeAccountingDocumentIdsFromResult: string[] = [];
-
-    if (facturenOpenResult.status === 'OK') {
-      excludeAccountingDocumentIdsFromResult =
-        getTermijnFactuurAccountingDocumentIds(
-          facturenOpenResult.content?.facturen ?? []
-        );
+    if (
+      openAndRelatedAfgehandeldeTermijnFacturen.status === 'OK' &&
+      openAndRelatedAfgehandeldeTermijnFacturen.content
+    ) {
+      excludeAccountingDocumentIds = getTermijnFactuurAccountingDocumentIds(
+        openAndRelatedAfgehandeldeTermijnFacturen.content.facturen
+      );
     }
-
-    const facturenFiltered = facturenResult.content?.facturen.filter(
-      (factuur) =>
-        !excludeAccountingDocumentIdsFromResult.includes(factuur.factuurNummer)
-    );
-
-    const facturenFinal: AfisFacturenResponse = {
-      count: facturenFiltered?.length ?? 0,
-      state: params.state,
-      facturen: facturenFiltered ?? [],
-    };
-
-    return apiSuccessResult(
-      facturenFinal,
-      getFailedDependencies({
-        open: facturenOpenResult,
-      })
-    );
   }
 
-  return facturenResult;
+  const facturenResponse = await fetchAfisFacturen(sessionID, {
+    ...params,
+    excludeAccountingDocumentIds,
+  });
+
+  if (
+    facturenResponse.content !== null &&
+    facturenResponse.status === 'OK' &&
+    ['afgehandeld', 'overgedragen'].includes(params.state)
+  ) {
+    const facturen = combineTermijnFacturen(
+      facturenResponse.content?.facturen ?? []
+    );
+    if (params.state === 'afgehandeld') {
+      facturen.sort(dateSort('debtClearingDate', 'desc'));
+    } else {
+      facturen.sort(dateSort('paymentDueDate', 'asc'));
+    }
+    return apiSuccessResult({
+      ...facturenResponse.content,
+      facturen,
+    });
+  }
+
+  return facturenResponse;
 }
 
 export const forTesting = {
