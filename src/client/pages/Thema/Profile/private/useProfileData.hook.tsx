@@ -20,6 +20,10 @@ export function useProfileData() {
       adres: {
         ...BRP.content.adres,
         aantalIngeschrevenPersonen,
+        vveNaam:
+        typeof WONEN.content?.name === 'string'
+          ? WONEN.content?.name
+          : undefined,
       },
     };
     profileData = formatBrpProfileData(brpContent);

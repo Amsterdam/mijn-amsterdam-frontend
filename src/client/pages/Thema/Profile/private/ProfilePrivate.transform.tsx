@@ -14,11 +14,14 @@ import {
 } from '../../../../../universal/helpers/brp.ts';
 import { defaultDateFormat } from '../../../../../universal/helpers/date.ts';
 import type { AppState } from '../../../../../universal/types/App.types.ts';
-import { MaRouterLink } from '../../../../components/MaLink/MaLink.ts';
+import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
 import LoadingContent from '../../../../components/LoadingContent/LoadingContent.tsx';
 import {
   BRP_LABEL_AANTAL_INGESCHREVEN_PERSONEN,
+  featureToggle,
   profileLinks,
+  routeConfig,
+  themaIdBRP,
 } from '../Profile-thema-config.ts';
 import type {
   ProfileLabels} from '../profileDataFormatter.ts';
@@ -183,6 +186,8 @@ const adres: ProfileLabels<
   vveNaam: [
     'Vereniging van Eigenaren',
     (value, _item, brpData) => {
+      console.log("_____",brpData?.adres, featureToggle[themaIdBRP].wonenActive)
+      // if (featureToggle[themaIdBRP].wonenActive) {
       if (brpData?.adres?.vveNaam && featureToggle[themaIdBRP].wonenActive) {
         return (
           <MaRouterLink

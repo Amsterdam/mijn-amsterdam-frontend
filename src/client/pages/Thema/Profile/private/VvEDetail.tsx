@@ -1,17 +1,17 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { useProfileData } from './useProfileData.hook';
-import { useWonenThemaData } from './useWonenThemaData.hook';
-import { VvEDataSource } from '../../../../../server/services/wonen/zwd.types';
+import { useProfileData } from './useProfileData.hook.tsx';
+import { useWonenThemaData } from './useWonenThemaData.hook.ts';
+import type { VvEDataSource } from '../../../../../server/services/wonen/zwd.types.ts';
 import {
   Datalist,
-  Row,
-  RowSet,
-} from '../../../../components/Datalist/Datalist';
-import { PageContentCell } from '../../../../components/Page/Page';
-import ThemaDetailPagina from '../../../../components/Thema/ThemaDetailPagina';
-import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle';
-import { themaId } from '../../Afis/Afis-thema-config';
+  type Row,
+  type RowSet,
+} from '../../../../components/Datalist/Datalist.tsx';
+import { PageContentCell } from '../../../../components/Page/Page.tsx';
+import ThemaDetailPagina from '../../../../components/Thema/ThemaDetailPagina.tsx';
+import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
+import { themaId } from '../../Afis/Afis-thema-config.ts';
 
 type WonenDataProps = {
   vve: VvEDataSource;
@@ -39,11 +39,11 @@ function WonenData({ vve }: WonenDataProps) {
       label: 'Prioriteitswijk',
       content: vve?.is_priority_neighborhood ? 'Ja' : 'Nee',
     },
-    (vve?.kvk_nummer !== null ||
-      vve?.kvk_nummer !== undefined ||
-      vve?.kvk_nummer !== '') && {
-      label: 'KvK-nummer',
-      content: vve?.kvk_nummer,
+    (vve?.kvk_number !== null ||
+      vve?.kvk_number !== undefined ||
+      vve?.kvk_number !== '') && {
+      label: 'KvK-number',
+      content: vve?.kvk_number,
     },
     vve?.monument_status !== null && {
       label: 'Monumentstatus',

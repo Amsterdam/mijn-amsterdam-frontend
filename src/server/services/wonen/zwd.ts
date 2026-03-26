@@ -1,15 +1,15 @@
-import { VvEDataSource } from './zwd.types';
-import { IS_PRODUCTION } from '../../../universal/config/env';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import { apiPostponeResult } from '../../../universal/helpers/api';
-import { pick } from '../../../universal/helpers/utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { DataRequestConfig } from '../../config/source-api';
-import { getFromEnv } from '../../helpers/env';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
-import { BAGLocation } from '../bag/bag.types';
-import { fetchMyLocations } from '../bag/my-locations';
+import type { VvEDataFrontend, VvEDataSource } from './zwd.types.ts';
+import { IS_PRODUCTION } from '../../../universal/config/env.ts';
+import { FeatureToggle } from '../../../universal/config/feature-toggles.ts';
+import { apiPostponeResult } from '../../../universal/helpers/api.ts';
+import { pick } from '../../../universal/helpers/utils.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import type { DataRequestConfig } from '../../config/source-api.ts';
+import { getFromEnv } from '../../helpers/env.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
+import type { BAGLocation } from '../bag/bag.types.ts';
+import { fetchMyLocations } from '../bag/my-locations.ts';
 
 export function translateVerblijfObject(bagID: BAGID): BAGID {
   const translations = getFromEnv('BFF_BAG_TRANSLATIONS', false);
@@ -54,9 +54,9 @@ export async function fetchVVEData(authProfileAndToken: AuthProfileAndToken) {
   if (!FeatureToggle.vveIsActive) {
     return apiPostponeResult(null);
   }
-
+  
   const privateBAGResponse = await fetchMyLocations(authProfileAndToken);
-
+  
   if (
     privateBAGResponse.status !== 'OK' ||
     !privateBAGResponse.content ||
@@ -64,7 +64,7 @@ export async function fetchVVEData(authProfileAndToken: AuthProfileAndToken) {
   ) {
     throw new Error('BAG id not found in privateBAGResponse');
   }
-
+  
   const privateAddresses: BAGLocation[] = privateBAGResponse.content;
 
   const requestConfig: DataRequestConfig = {
@@ -74,5 +74,5 @@ export async function fetchVVEData(authProfileAndToken: AuthProfileAndToken) {
     transformResponse: transformZwdVvEResponse,
   };
 
-  return fetchZWDAPI<VvEDataSource>(requestConfig);
+  return fetchZWDAPI<VvEDataFrontend>(requestConfig);
 }

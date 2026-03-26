@@ -6,6 +6,7 @@ import { MijnGegevensThema } from './private/ProfilePrivate.tsx';
 import { VvEDetail } from './private/VvEDetail.tsx';
 import {
   themaTitle,
+  routeConfig,
   themaIdBRP,
   themaIdKVK,
 } from './Profile-thema-config.ts';
