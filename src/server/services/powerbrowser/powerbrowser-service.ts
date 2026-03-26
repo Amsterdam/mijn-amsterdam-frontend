@@ -266,10 +266,6 @@ async function fetchZaakAdres(
   return addressResponse;
 }
 
-function toPrefixedFieldName(prefix: string, fieldName: string): string {
-  return `${prefix}${fieldName}`;
-}
-
 async function fetchZaakWbTransport(
   zaakId: PBZaakRecord['id'],
   wbTransportConfig: WbTransportConfig
@@ -290,10 +286,11 @@ async function fetchZaakWbTransport(
     transformResponse(
       data: SearchRequestResponse<'WB_TRANSPORT', PBRecordField[]>
     ) {
+      // We only fetch the wb_transport for a single zaakId. Multiple can be fetched by providing multiple zaakIds, and then the correct wb_transport has to be matched to the correct zaak based on the K_MAINID field which corresponds to the zaakId.
       const recordFields = data.records?.[0]?.fields ?? [];
       return recordFields.map((f) => ({
         ...f,
-        fieldName: toPrefixedFieldName(prefix, f.fieldName),
+        fieldName: `${prefix}${f.fieldName}`,
       }));
     },
   });
