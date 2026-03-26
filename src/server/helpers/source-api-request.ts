@@ -164,7 +164,7 @@ export async function requestData<T>(
           request: config.request,
         });
 
-  const isServedFromCache = cache.get(cacheKey) === requestPromise;
+  const isServedFromCache = cache.get(cacheKey) !== null;
 
   if (shouldUseCache && !isServedFromCache && cacheTimeout > 0) {
     cache.put(cacheKey, requestPromise, cacheTimeout);
