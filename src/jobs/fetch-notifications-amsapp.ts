@@ -11,7 +11,7 @@ async function captureException(error: unknown) {
   });
 }
 
-async function bootstrap() {
+async function runJob() {
   try {
     // Keep this import first so env is loaded before other modules.
     await import('../server/helpers/load-env.ts');
@@ -33,4 +33,4 @@ async function bootstrap() {
   }
 }
 
-bootstrap();
+runJob();
