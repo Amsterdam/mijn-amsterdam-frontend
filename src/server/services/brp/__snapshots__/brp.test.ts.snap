@@ -108,7 +108,7 @@ exports[`brp.ts > fetchBrpByBsn > Should format response data correctly > Format
       "geslachtsnaam": "Akwasi",
       "indicatieGeheim": false,
       "mokum": true,
-      "naamgebruik": "Eigen geslachtsnaam",
+      "naamgebruik": "eigen geslachtsnaam",
       "nationaliteiten": [],
       "omschrijvingAdellijkeTitel": null,
       "omschrijvingBurgerlijkeStaat": "Ongehuwd",
@@ -212,7 +212,7 @@ exports[`brp.ts > fetchBrpByBsn > Should format response data correctly > Format
       "geslachtsnaam": "Roos",
       "indicatieGeheim": false,
       "mokum": true,
-      "naamgebruik": "Eigen geslachtsnaam",
+      "naamgebruik": "eigen geslachtsnaam",
       "nationaliteiten": [
         {
           "omschrijving": "Nederlandse",

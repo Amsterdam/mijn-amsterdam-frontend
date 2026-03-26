@@ -36,7 +36,6 @@ import {
   getFailedDependencies,
   type ApiResponse,
 } from '../../../universal/helpers/api.ts';
-import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
 import type {
   AuthProfile,
   AuthProfileAndToken,
@@ -113,11 +112,10 @@ function getAdres(verblijfplaats: VerblijfplaatsSource) {
 }
 
 function getPersoonBasis(persoon: PersoonBasisSource): PersoonBasis {
-  const naamgebruik = persoon.naam?.aanduidingNaamgebruik?.omschrijving;
   return {
     voornamen: persoon.naam?.voornamen ?? null,
     geslachtsnaam: persoon.naam?.geslachtsnaam ?? null,
-    naamgebruik: naamgebruik ? capitalizeFirstLetter(naamgebruik) : null,
+    naamgebruik: persoon.naam?.aanduidingNaamgebruik?.omschrijving ?? null,
     omschrijvingAdellijkeTitel:
       persoon.naam?.adellijkeTitelPredicaat?.omschrijving ?? null,
     voorvoegselGeslachtsnaam: persoon.naam?.voorvoegsel ?? null,

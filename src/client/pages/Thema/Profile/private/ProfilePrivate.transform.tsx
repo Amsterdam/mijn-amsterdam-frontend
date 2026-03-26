@@ -13,6 +13,7 @@ import {
   isMokum,
 } from '../../../../../universal/helpers/brp.ts';
 import { defaultDateFormat } from '../../../../../universal/helpers/date.ts';
+import { capitalizeFirstLetter } from '../../../../../universal/helpers/text.ts';
 import type { AppState } from '../../../../../universal/types/App.types.ts';
 import LoadingContent from '../../../../components/LoadingContent/LoadingContent.tsx';
 import {
@@ -44,7 +45,11 @@ const persoon: ProfileLabels<Partial<Persoon>, AppState['BRP']['content']> = {
   bsn: 'BSN',
   voornamen: 'Voornamen',
   geslachtsnaam: 'Achternaam',
-  naamgebruik: 'Naamgebruik',
+  naamgebruik: [
+    'Naamgebruik',
+    (naamgebruik) =>
+      naamgebruik ? capitalizeFirstLetter(naamgebruik) : naamgebruik,
+  ],
   omschrijvingAdellijkeTitel: 'Titel',
   voorvoegselGeslachtsnaam: 'Voorvoegsel',
   omschrijvingGeslachtsaanduiding: 'Geslacht',
