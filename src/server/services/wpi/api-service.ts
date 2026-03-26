@@ -94,10 +94,8 @@ export async function fetchRequestProcess(
   const apiConfig = getApiConfig(fetchConfig.apiConfigName, {
     data: createBsnPostBody(authProfileAndToken.profile.id),
     cacheKey_UNSAFE: fetchConfig.requestCacheKey,
-    transformResponse: [
-      (response: ApiResponse<WpiRequestProcess[]>) =>
-        Array.isArray(response.content) ? response.content : [],
-    ],
+    transformResponse: (response: ApiResponse<WpiRequestProcess[]>) =>
+      Array.isArray(response.content) ? response.content : [],
   });
 
   const response = await requestData<WpiRequestProcess[]>(
@@ -229,7 +227,9 @@ export async function fetchSpecificaties(
   authProfileAndToken: AuthProfileAndToken
 ) {
   const config = getApiConfig('WPI_SPECIFICATIES', {
-    transformResponse: (responseData) =>
+    transformResponse: (
+      responseData: ApiResponse<WpiIncomeSpecificationResponseData>
+    ) =>
       transformIncomSpecificationResponse(
         authProfileAndToken.profile.sid,
         responseData
@@ -318,7 +318,7 @@ export async function fetchWpiDocument(
       },
       headers: wpiAuthHeader,
       data: createBsnPostBody(authProfileAndToken.profile.id),
-      transformResponse: (documentResponseData) => {
+      transformResponse: (documentResponseData: NodeJS.ReadableStream) => {
         return {
           filename: 'Brief.pdf',
           mimetype: DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,

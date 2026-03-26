@@ -7,10 +7,9 @@ import type {
   ErfpachtDossiersDetail,
   ErfpachtDossiersDetailSource,
   ErfpachtDossierSource,
-  ErfpachtDossierPropsFrontend} from './erfpacht-types.ts';
-import {
-  type ErfpachtDossiersResponseSource,
+  ErfpachtDossierPropsFrontend,
 } from './erfpacht-types.ts';
+import { type ErfpachtDossiersResponseSource } from './erfpacht-types.ts';
 import { themaConfig } from '../../../client/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import { sortAlpha } from '../../../universal/helpers/utils.ts';
@@ -140,7 +139,7 @@ export async function fetchErfpacht(authProfileAndToken: AuthProfileAndToken) {
     {
       ...config,
       url: `${config.url}/vernise/api/erfpachter`,
-      transformResponse: (responseData) =>
+      transformResponse: (responseData: ErfpachtErpachterResponseSource) =>
         transformIsErfpachterResponseSource(
           responseData,
           authProfileAndToken.profile.profileType
@@ -158,7 +157,7 @@ export async function fetchErfpacht(authProfileAndToken: AuthProfileAndToken) {
       {
         ...config,
         url: `${config.url}/vernise/api/dossierinfo`,
-        transformResponse: (responseData) =>
+        transformResponse: (responseData: ErfpachtDossiersResponseSource) =>
           transformDossierResponse(
             responseData,
             erfpachterResponse.content.relatieCode

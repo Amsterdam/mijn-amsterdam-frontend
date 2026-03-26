@@ -1,5 +1,3 @@
-import type { AxiosResponseTransformer } from 'axios';
-
 import {
   apiSuccessResult,
   type ApiResponse,
@@ -7,7 +5,10 @@ import {
 import { omit } from '../../../universal/helpers/utils.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
-import type { DataRequestConfig } from '../../config/source-api.ts';
+import type {
+  DataRequestConfig,
+  DataRequestHeaders,
+} from '../../config/source-api.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
 
 export interface ApiPatternResponseA {
@@ -17,9 +18,9 @@ export interface ApiPatternResponseA {
   notifications?: MyNotification[];
 }
 
-const transformApiResponseDefault: AxiosResponseTransformer = (
+function transformApiResponseDefault(
   response: ApiResponse<ApiPatternResponseA> | ApiPatternResponseA
-) => {
+) {
   if (
     response !== null &&
     typeof response === 'object' &&
@@ -29,16 +30,24 @@ const transformApiResponseDefault: AxiosResponseTransformer = (
     return response.content;
   }
   return response;
-};
+}
 
 export async function fetchService<T extends ApiPatternResponseA>(
   apiConfig: DataRequestConfig = {},
   includeTipsAndNotifications: boolean = false,
   authProfileAndToken?: AuthProfileAndToken
 ): Promise<ApiResponse<T>> {
-  const transformResponse = [transformApiResponseDefault].concat(
-    apiConfig.transformResponse ?? []
-  );
+  function transformResponse(
+    data: ApiResponse<ApiPatternResponseA>,
+    headers: DataRequestHeaders = {},
+    status: number
+  ) {
+    const transformedData = transformApiResponseDefault(data);
+    return apiConfig.transformResponse
+      ? apiConfig.transformResponse(transformedData, headers, status)
+      : transformedData;
+  }
+
   const apiConfigMerged: DataRequestConfig = {
     ...apiConfig,
     transformResponse,

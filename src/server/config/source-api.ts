@@ -1,6 +1,10 @@
 import https from 'node:https';
 
-import type { AxiosRequestConfig, AxiosResponse } from 'axios';
+import type {
+  AxiosHeaderValue,
+  AxiosRequestConfig,
+  AxiosResponse,
+} from 'axios';
 
 import {
   BFF_REQUEST_CACHE_ENABLED,
@@ -38,7 +42,15 @@ export function setAdHocDependencyRequestCacheTtlMs(
   }, RESET_AD_HOC_DEPENDENCY_REQUEST_CACHE_TTL_TIMEOUT_MS);
 }
 
-export interface DataRequestConfig extends AxiosRequestConfig {
+export type DataRequestHeaders = Record<string, AxiosHeaderValue | undefined>;
+
+export type DataRequestResponseTransformer<S = any, T = unknown> = (
+  data: S,
+  headers: DataRequestHeaders,
+  status: number
+) => T;
+
+type DataRequestConfigBase = {
   cacheTimeout?: number;
   cancelTimeout?: number;
   postponeFetch?: boolean;
@@ -75,8 +87,28 @@ export interface DataRequestConfig extends AxiosRequestConfig {
    * It will fire a next request right after the response succeeded, you can merge the response data.
    * Mind you, the cancelTimeout might have to be increased because you'll probably make multiple requests pretending as one.
    */
-  request?: <T>(requestConfig: DataRequestConfig) => Promise<AxiosResponse<T>>;
-}
+  request?: <T>(requestConfig: AxiosRequestConfig) => Promise<AxiosResponse<T>>;
+
+  transformResponse?: DataRequestResponseTransformer;
+};
+
+export const DATA_REQUEST_CONFIG_BASE_KEYS: (keyof DataRequestConfigBase)[] = [
+  'transformResponse',
+  'cancelTimeout',
+  'enableCache',
+  'postponeFetch',
+  'passthroughOIDCToken',
+  'cacheTimeout',
+  'formatUrl',
+  'cacheKey_UNSAFE',
+  'request',
+];
+
+export type DataRequestConfig = Omit<
+  AxiosRequestConfig,
+  'cancelToken' | 'transformResponse'
+> &
+  DataRequestConfigBase;
 
 // This means that every request that depends on the response of another will use the cached version of the response for a maximum of the given value.
 const apiCacheTTLMs = parseInt(

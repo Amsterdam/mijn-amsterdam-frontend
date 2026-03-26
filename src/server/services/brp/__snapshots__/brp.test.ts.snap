@@ -245,6 +245,7 @@ exports[`brp.ts > fetchBrpByBsn > Should format response data correctly > Format
   },
   "failedDependencies": {
     "adresHistorisch": {
+      "code": 500,
       "content": null,
       "message": "Unexpected token 'I', "Internal S"... is not valid JSON",
       "status": "ERROR",

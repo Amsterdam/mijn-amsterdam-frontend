@@ -1,4 +1,8 @@
-import type { AxiosResponse, AxiosResponseHeaders } from 'axios';
+import type {
+  AxiosRequestConfig,
+  AxiosResponse,
+  AxiosResponseHeaders,
+} from 'axios';
 import { differenceInDays, format } from 'date-fns';
 import slug from 'slugme';
 import type Supercluster from 'supercluster';
@@ -427,7 +431,7 @@ export const datasetEndpoints: Record<
 };
 
 // This function retrieves a maximum of 5 `pages` with data from the meldingen api.
-export async function fetchMeldingenBuurt(requestConfig: DataRequestConfig) {
+export async function fetchMeldingenBuurt(requestConfig: AxiosRequestConfig) {
   const maxPages = 5;
 
   let nextRequestConfig = { ...requestConfig };

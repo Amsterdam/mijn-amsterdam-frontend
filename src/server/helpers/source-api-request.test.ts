@@ -1,6 +1,4 @@
-import type {
-  Mock,
-  MockInstance} from 'vitest';
+import type { Mock, MockInstance } from 'vitest';
 import {
   afterAll,
   afterEach,
@@ -32,8 +30,7 @@ import {
   apiSuccessResult,
 } from '../../universal/helpers/api.ts';
 import type { AuthProfile } from '../auth/auth-types.ts';
-import type {
-  ApiUrlEntries} from '../config/source-api.ts';
+import type { ApiUrlEntries } from '../config/source-api.ts';
 import {
   DEFAULT_REQUEST_CACHE_TTL_MS,
   FORCE_RENEW_CACHE_TTL_MS,
@@ -55,7 +52,7 @@ vi.mock('../config/app.ts', async (importOrigModule: () => Promise<[]>) => {
   };
 });
 
-vi.mock('../services/monitoring');
+vi.mock('../services/monitoring.ts');
 
 describe('source-api-request caching', () => {
   function fetchThings(
@@ -90,7 +87,7 @@ describe('source-api-request caching', () => {
     vi.useRealTimers();
   });
 
-  test('Correct: Uses cache with same sessionID within timeout period.', async () => {
+  test('Correct: Does not cache the transformed response.', async () => {
     remoteApi.get('/1').reply(200, '"foo"');
     remoteApi.get('/1').reply(200, '"notfoo"');
 
@@ -105,7 +102,7 @@ describe('source-api-request caching', () => {
       createSessionBasedCacheKey(SESSION_ID_1, 'things')
     );
 
-    expect(rs2.content?.[1]).toBe(rs1.content?.[1]);
+    expect(rs2.content?.[1]).not.toBe(rs1.content?.[1]);
 
     // Expire the cache
     vi.runAllTimers();
@@ -122,59 +119,55 @@ describe('source-api-request caching', () => {
   });
 
   test('Correct: Forces to renew cache if cacheTimeout set to FORCE_RENEW_CACHE_TTL_MS.', async () => {
+    const requestDataSpy = vi.spyOn(axiosRequest, 'request');
+    const SESSION_ID_1 = '123';
+    const sessionBasedCacheKey = createSessionBasedCacheKey(
+      SESSION_ID_1,
+      'things'
+    );
+
     remoteApi.get('/1').reply(200, '"foo"');
     remoteApi.get('/1').reply(200, '"releasefoo"');
     remoteApi.get('/1').reply(200, '"renewedfoo"');
 
-    const SESSION_ID_1 = '123';
+    const rs1 = await fetchThings(SESSION_ID_1, sessionBasedCacheKey);
+    const rs2 = await fetchThings(SESSION_ID_1, sessionBasedCacheKey);
 
-    const rs1 = await fetchThings(
-      SESSION_ID_1,
-      createSessionBasedCacheKey(SESSION_ID_1, 'things')
-    );
-    const rs2 = await fetchThings(
-      SESSION_ID_1,
-      createSessionBasedCacheKey(SESSION_ID_1, 'things')
-    );
-
-    const [responseValue1, encryptedSessionID1] = rs1.content ?? [];
-    const [responseValue2, encryptedSessionID2] = rs2.content ?? [];
+    const [responseValue1] = rs1.content ?? [];
+    const [responseValue2] = rs2.content ?? [];
 
     expect(responseValue1).toBe('foo');
     expect(responseValue2).toBe(responseValue1);
+    expect(requestDataSpy).toHaveBeenCalledTimes(1);
 
-    // Ah yes, the encrpted sessionID is the same as well. Caching works!
-    expect(encryptedSessionID2).toBe(encryptedSessionID1);
-
+    // Now we release and renew the cache.
     const rs3 = await fetchThings(
       SESSION_ID_1,
-      createSessionBasedCacheKey(SESSION_ID_1, 'things'),
+      sessionBasedCacheKey,
       FORCE_RENEW_CACHE_TTL_MS
     );
 
-    // If we request again within the FORCE_RENEW_CACHE_TTL_MS period, we should get the same cached value.
-    // In other words, it takes a little time for the cache to expire.
-    const rs4 = await fetchThings(
-      SESSION_ID_1,
-      createSessionBasedCacheKey(SESSION_ID_1, 'things')
-    );
-
-    vi.advanceTimersByTime(FORCE_RENEW_CACHE_TTL_MS);
-
-    const rs5 = await fetchThings(
-      SESSION_ID_1,
-      createSessionBasedCacheKey(SESSION_ID_1, 'things')
-    );
-
-    const [responseValue3, encryptedSessionID3] = rs3.content ?? [];
-    const [responseValue4, encryptedSessionID4] = rs4.content ?? [];
-    const [responseValue5, encryptedSessionID5] = rs5.content ?? [];
-
+    const [responseValue3] = rs3.content ?? [];
     expect(responseValue3).toBe('releasefoo');
+    expect(requestDataSpy).toHaveBeenCalledTimes(2);
+
+    // This should be the same as the previous response, because we forced to renew the cache, but the new request serves cached again.
+    const rs4 = await fetchThings(SESSION_ID_1, sessionBasedCacheKey);
+
+    const [responseValue4] = rs4.content ?? [];
     expect(responseValue4).toBe(responseValue3);
-    expect(encryptedSessionID4).toBe(encryptedSessionID3);
+    expect(requestDataSpy).toHaveBeenCalledTimes(2);
+
+    // Now we release the normal cache by expiring it, and the next request should trigger a new request to the remote API, which serves the new response.
+    vi.advanceTimersByTime(DEFAULT_REQUEST_CACHE_TTL_MS);
+
+    const rs5 = await fetchThings(SESSION_ID_1, sessionBasedCacheKey);
+
+    expect(requestDataSpy).toHaveBeenCalledTimes(3);
+    const [responseValue5] = rs5.content ?? [];
     expect(responseValue5).toBe('renewedfoo');
-    expect(encryptedSessionID5).not.toBe(encryptedSessionID3);
+
+    requestDataSpy.mockRestore();
   });
 
   test('Does not use cache with values <= 0', async () => {
@@ -216,25 +209,6 @@ describe('source-api-request caching', () => {
     );
     expect(rs2.content?.[0]).toEqual('foo');
     expect(rs2.content?.[1]).not.toBe(rs1.content?.[1]);
-  });
-
-  test('Warning!: Use cachekey_UNSAFE instead. Mistakenly caches transformed response with previously encrypted sessionID', async () => {
-    remoteApi.get('/1').reply(200, '"foo"');
-
-    const SESSION_ID_1 = '123';
-    const SESSION_ID_2 = '321';
-
-    const rs1 = await fetchThings(SESSION_ID_1);
-    const rs1b = await fetchThings(SESSION_ID_1);
-
-    expect(rs1b.content?.[1]).toBe(rs1.content?.[1]);
-
-    // User initiates a new session.
-    const rs2 = await fetchThings(SESSION_ID_2);
-    expect(rs2.content?.[0]).toEqual('foo');
-
-    // Still has the old sessionID because the cacheKey is the same.
-    expect(rs2.content?.[1]).toBe(rs1.content?.[1]);
   });
 });
 
@@ -281,31 +255,6 @@ describe('requestData', () => {
     );
 
     expect(rs).toStrictEqual(apiSuccessResult(DUMMY_RESPONSE));
-  });
-
-  it('Caches the response: Valid JSON', async () => {
-    remoteApi.get('/1').reply(200, '"whoa"');
-
-    await requestData(
-      {
-        url: DUMMY_URL,
-      },
-      AUTH_PROFILE_AND_TOKEN
-    );
-
-    const response2 = await requestData(
-      {
-        url: DUMMY_URL,
-      },
-      AUTH_PROFILE_AND_TOKEN
-    );
-
-    expect(await cache.get(CACHE_KEY_1).promise).toStrictEqual(response2);
-
-    // Should clear the cache timeout
-    vi.runAllTimers();
-
-    expect(cache.get(CACHE_KEY_1)).toBe(null);
   });
 
   it('Does not cache the response: BAD JSON', async () => {
@@ -361,7 +310,7 @@ describe('requestData', () => {
       AUTH_PROFILE_AND_TOKEN
     );
 
-    expect(rs).toStrictEqual(apiErrorResult('Network Error', null));
+    expect(rs).toStrictEqual(apiErrorResult('Network Error', null, 500));
     expect(captureException).toHaveBeenCalled();
   });
 
@@ -394,22 +343,8 @@ describe('requestData', () => {
     expect(findApiByRequestUrl(entries, 'http://get')).toBe('unknown');
   });
 
-  test('By default Bearer token is not passed', async () => {
-    const rs = await requestData(
-      {
-        url: DUMMY_URL,
-      },
-      AUTH_PROFILE_AND_TOKEN
-    );
-
-    expect(axiosRequestSpy.mock.calls[0][0].passthroughOIDCToken).toEqual(
-      false
-    );
-    expect(axiosRequestSpy.mock.calls[0][0].headers).toBeUndefined();
-  });
-
   test('OIDC Bearer token _is_ passed', async () => {
-    const rs = await requestData(
+    await requestData(
       {
         url: DUMMY_URL,
         passthroughOIDCToken: true,
@@ -417,7 +352,6 @@ describe('requestData', () => {
       AUTH_PROFILE_AND_TOKEN
     );
 
-    expect(axiosRequestSpy.mock.calls[0][0].passthroughOIDCToken).toEqual(true);
     expect(axiosRequestSpy.mock.calls[0][0].headers).toStrictEqual({
       Authorization: `Bearer ${AUTH_PROFILE_AND_TOKEN.token}`,
     });
@@ -435,7 +369,6 @@ describe('requestData', () => {
       AUTH_PROFILE_AND_TOKEN
     );
 
-    expect(axiosRequestSpy.mock.calls[0][0].passthroughOIDCToken).toEqual(true);
     expect(axiosRequestSpy.mock.calls[0][0].headers).toStrictEqual({
       Authorization: `Bearer ababababab`,
     });

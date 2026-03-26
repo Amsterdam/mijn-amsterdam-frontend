@@ -202,6 +202,7 @@ describe('fetchIsKnownInAFIS ', () => {
 
       expect(response).toMatchInlineSnapshot(`
         {
+          "code": 500,
           "content": null,
           "message": "error retrieving doc",
           "status": "ERROR",
