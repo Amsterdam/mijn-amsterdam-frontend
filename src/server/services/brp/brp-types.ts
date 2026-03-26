@@ -190,6 +190,7 @@ export type PersoonBasis = {
   geboortelandnaam: string | null;
   geboorteplaatsnaam: string | null;
   geslachtsnaam: string | null;
+  naamgebruik: string | null;
   omschrijvingAdellijkeTitel: string | null;
   opgemaakteNaam: string | null;
   voornamen: string | null;

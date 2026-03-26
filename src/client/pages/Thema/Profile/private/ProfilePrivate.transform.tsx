@@ -13,17 +13,15 @@ import {
   isMokum,
 } from '../../../../../universal/helpers/brp.ts';
 import { defaultDateFormat } from '../../../../../universal/helpers/date.ts';
+import { capitalizeFirstLetter } from '../../../../../universal/helpers/text.ts';
 import type { AppState } from '../../../../../universal/types/App.types.ts';
 import LoadingContent from '../../../../components/LoadingContent/LoadingContent.tsx';
 import {
   BRP_LABEL_AANTAL_INGESCHREVEN_PERSONEN,
   profileLinks,
 } from '../Profile-thema-config.ts';
-import type {
-  ProfileLabels} from '../profileDataFormatter.ts';
-import {
-  formatProfileSectionData,
-} from '../profileDataFormatter.ts';
+import type { ProfileLabels } from '../profileDataFormatter.ts';
+import { formatProfileSectionData } from '../profileDataFormatter.ts';
 import type {
   ActionLink,
   PanelConfig,
@@ -46,9 +44,14 @@ type BRPPanelKey = keyof Omit<
 const persoon: ProfileLabels<Partial<Persoon>, AppState['BRP']['content']> = {
   bsn: 'BSN',
   voornamen: 'Voornamen',
-  omschrijvingAdellijkeTitel: 'Titel',
-  voorvoegselGeslachtsnaam: 'Voorvoegsel',
   geslachtsnaam: 'Achternaam',
+  voorvoegselGeslachtsnaam: 'Voorvoegsel',
+  naamgebruik: [
+    'Naamgebruik',
+    (naamgebruik) =>
+      naamgebruik ? capitalizeFirstLetter(naamgebruik) : naamgebruik,
+  ],
+  omschrijvingAdellijkeTitel: 'Titel',
   omschrijvingGeslachtsaanduiding: 'Geslacht',
   geboortedatumFormatted: 'Geboortedatum',
   overlijdensdatum: [

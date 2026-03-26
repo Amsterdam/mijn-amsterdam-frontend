@@ -115,6 +115,7 @@ function getPersoonBasis(persoon: PersoonBasisSource): PersoonBasis {
   return {
     voornamen: persoon.naam?.voornamen ?? null,
     geslachtsnaam: persoon.naam?.geslachtsnaam ?? null,
+    naamgebruik: persoon.naam?.aanduidingNaamgebruik?.omschrijving ?? null,
     omschrijvingAdellijkeTitel:
       persoon.naam?.adellijkeTitelPredicaat?.omschrijving ?? null,
     voorvoegselGeslachtsnaam: persoon.naam?.voorvoegsel ?? null,
