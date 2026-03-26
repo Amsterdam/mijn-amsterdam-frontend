@@ -130,11 +130,10 @@ module.exports = [
     variants: [
       {
         id: 'standard',
-        type: 'middleware',
+        type: 'json',
         options: {
-          middleware: (_req, res) => {
-            return res.send(PB_LINK_ZAAK_ADRES);
-          },
+          status: 200,
+          body: PB_LINK_ZAAK_ADRES,
         },
       },
     ],
@@ -146,11 +145,10 @@ module.exports = [
     variants: [
       {
         id: 'standard',
-        type: 'middleware',
+        type: 'json',
         options: {
-          middleware: (_req, res) => {
-            return res.send(PB_ZAAK_WBTRANSPORT);
-          },
+          status: 200,
+          body: PB_ZAAK_WBTRANSPORT,
         },
       },
     ],
