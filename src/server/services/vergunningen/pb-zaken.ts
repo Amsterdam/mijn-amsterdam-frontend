@@ -27,11 +27,32 @@ import {
   transformVTHZaakResult,
 } from './VTH/pb-zaken-vth-helpers.ts';
 
+const LIGPLAATS_WB_TRANSPORT_FIELDS = [
+  'NAAM_VAARTUIG',
+  'BRANKDMERT',
+  'DIEPGANG',
+  'LENGTE',
+  'BREEDTE',
+  'HOOGTE',
+];
+const SELECT_FIELDS_TRANSFORM_LIGPLAATS = {
+  WB_NAAM_VAARTUIG: 'vesselName',
+  WB_BRANKDMERT: 'vesselKind',
+  WB_DIEPGANG: 'vesselDraft',
+  WB_LENGTE: 'vesselLength',
+  WB_BREEDTE: 'vesselWidth',
+  WB_HOOGTE: 'vesselHeight',
+};
+
 const LigplaatsWoonbootVergunningZaakTransformer: PowerBrowserZaakTransformer<LigplaatsWoonbootvergunning> =
   {
     caseType: caseTypePB.LigplaatsWoonbootvergunning,
     title: 'Ligplaatsvergunning woonboot',
     isVerleend: isVTHZaakVerleend,
+    fetchWbTransportFields: {
+      prefix: 'WB_',
+      fields: LIGPLAATS_WB_TRANSPORT_FIELDS,
+    },
     fetchZaakFilter: (pbZaakFields) =>
       hasStringInZAAKPRODUCT_ID('Ligplaatsvergunning woonboot', pbZaakFields) ||
       hasStringInZAAK_SUBPRODUCT_ID(
@@ -40,6 +61,7 @@ const LigplaatsWoonbootVergunningZaakTransformer: PowerBrowserZaakTransformer<Li
       ),
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
+      ...SELECT_FIELDS_TRANSFORM_LIGPLAATS,
     },
     transformFieldValues: {
       result: transformVTHZaakResult,
@@ -52,6 +74,10 @@ const LigplaatsBedrijfsvaartuigVergunningZaakTransformer: PowerBrowserZaakTransf
     caseType: caseTypePB.LigplaatsBedrijfsvaartuigvergunning,
     title: 'Ligplaatsvergunning bedrijfsvaartuig',
     isVerleend: isVTHZaakVerleend,
+    fetchWbTransportFields: {
+      prefix: 'WB_',
+      fields: LIGPLAATS_WB_TRANSPORT_FIELDS,
+    },
     fetchZaakFilter: (pbZaakFields) =>
       hasStringInZAAKPRODUCT_ID(
         'Ligplaatsvergunning bedrijfsvaartuig',
@@ -61,7 +87,10 @@ const LigplaatsBedrijfsvaartuigVergunningZaakTransformer: PowerBrowserZaakTransf
         'Ligplaatsvergunning bedrijfsvaartuig',
         pbZaakFields
       ),
-    transformFields: SELECT_FIELDS_TRANSFORM_BASE,
+    transformFields: {
+      ...SELECT_FIELDS_TRANSFORM_BASE,
+      ...SELECT_FIELDS_TRANSFORM_LIGPLAATS,
+    },
     transformFieldValues: {
       result: transformVTHZaakResult,
     },

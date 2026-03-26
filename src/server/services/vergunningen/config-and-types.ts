@@ -256,6 +256,10 @@ type Ligplaatsvergunning = PowerBrowserZaakBase &
     reason: string | null;
     vesselKind: string | null;
     vesselName: string | null;
+    vesselDraft: string | null;
+    vesselLength: string | null;
+    vesselWidth: string | null;
+    vesselHeight: string | null;
   };
 
 export type LigplaatsWoonbootvergunning = Ligplaatsvergunning & {
