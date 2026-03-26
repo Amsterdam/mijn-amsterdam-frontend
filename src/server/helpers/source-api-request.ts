@@ -8,7 +8,7 @@ import {
   addResponseDataDebugging,
 } from './source-api-debug.ts';
 import { getRequestConfigCacheKey } from './source-api-helpers.ts';
-import { IS_PRODUCTION } from '../../universal/config/env.ts';
+import { APP_MODE, IS_PRODUCTION } from '../../universal/config/env.ts';
 import {
   apiErrorResult,
   apiPostponeResult,
@@ -32,8 +32,7 @@ import {
 import { debugCacheKey, debugResponse, debugResponseError } from '../debug.ts';
 import { captureException } from '../services/monitoring.ts';
 
-const useDescriptiveErrorMessages =
-  !IS_PRODUCTION && MA_APP_MODE !== 'unittest';
+const useDescriptiveErrorMessages = !IS_PRODUCTION && APP_MODE !== 'unittest';
 
 export const axiosRequest = axios.create({
   responseType: 'json',

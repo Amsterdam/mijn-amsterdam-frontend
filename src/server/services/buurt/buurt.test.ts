@@ -1,15 +1,16 @@
-import type { Mock} from 'vitest';
+import type { Mock } from 'vitest';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import * as service from './buurt.ts';
 import type {
   DatasetConfig,
   DatasetFeatureProperties,
-  DatasetFeatures} from './datasets.ts';
+  DatasetFeatures,
+} from './datasets.ts';
 import {
   ACCEPT_CRS_4326,
   BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
-  DEFAULT_TRIES_UNTIL_CONSIDERED_STALE
+  DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
 } from './datasets.ts';
 import {
   createDynamicFilterConfig,
@@ -19,11 +20,8 @@ import {
   getDatasetEndpointConfig,
   getDynamicDatasetFilters,
 } from './helpers.ts';
-import type {
-  DatasetFilterSelection} from '../../../universal/config/myarea-datasets.ts';
-import {
-  POLYLINE_GEOMETRY_TYPES,
-} from '../../../universal/config/myarea-datasets.ts';
+import type { DatasetFilterSelection } from '../../../universal/config/myarea-datasets.ts';
+import { POLYLINE_GEOMETRY_TYPES } from '../../../universal/config/myarea-datasets.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -130,8 +128,9 @@ const DATASET_RESULT_MULTI_WITH_ERRORS = {
 vi.mock('./helpers');
 vi.mock('../../helpers/source-api-request');
 vi.mock('../../helpers/file-cache');
-vi.mock('../../../universal/config/env', () => {
+vi.mock('../../../universal/config/env', async (importOriginal) => {
   return {
+    ...((await importOriginal()) as object),
     IS_AP: true,
     IS_OT: false,
     IS_PRODUCTION: false,
