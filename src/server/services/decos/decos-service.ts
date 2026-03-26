@@ -39,15 +39,18 @@ import type {
   DecosZaakFrontend,
 } from './decos-types.ts';
 import { IS_PRODUCTION } from '../../../universal/config/env.ts';
-import type {
-  ApiResponse} from '../../../universal/helpers/api.ts';
+import type { ApiResponse } from '../../../universal/helpers/api.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
   getSettledResult,
 } from '../../../universal/helpers/api.ts';
 import { toDateFormatted } from '../../../universal/helpers/date.ts';
-import { omit, sortAlpha, uniqueArray } from '../../../universal/helpers/utils.ts';
+import {
+  omit,
+  sortAlpha,
+  uniqueArray,
+} from '../../../universal/helpers/utils.ts';
 import type { StatusLineItem } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt.ts';
@@ -786,7 +789,7 @@ async function fetchIsPdfDocument(documentKey: DecosZaakDocument['key']) {
     transformResponse: (
       responseDataSource: DecosZakenResponse<DecosDocumentBlobSource[]>
     ) => {
-      const lastDoc = responseDataSource.content?.pop();
+      const lastDoc = responseDataSource.content?.at(-1);
       return { isPDF: !!lastDoc?.fields.bol10, key: lastDoc?.key };
     },
   });
