@@ -45,13 +45,13 @@ const persoon: ProfileLabels<Partial<Persoon>, AppState['BRP']['content']> = {
   bsn: 'BSN',
   voornamen: 'Voornamen',
   geslachtsnaam: 'Achternaam',
+  voorvoegselGeslachtsnaam: 'Voorvoegsel',
   naamgebruik: [
     'Naamgebruik',
     (naamgebruik) =>
       naamgebruik ? capitalizeFirstLetter(naamgebruik) : naamgebruik,
   ],
   omschrijvingAdellijkeTitel: 'Titel',
-  voorvoegselGeslachtsnaam: 'Voorvoegsel',
   omschrijvingGeslachtsaanduiding: 'Geslacht',
   geboortedatumFormatted: 'Geboortedatum',
   overlijdensdatum: [
