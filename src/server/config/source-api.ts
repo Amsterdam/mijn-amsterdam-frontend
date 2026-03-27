@@ -403,6 +403,20 @@ const ApiConfig_ = {
     url: `${getFromEnv('BFF_MS_OAUTH_ENDPOINT')}:tenant/oauth2/v2.0/token`,
     method: 'POST',
   },
+  AMSAPP: {
+    url: `${process.env.BFF_AMSAPP_ADMINISTRATIENUMMER_DELIVERY_ENDPOINT}`,
+    method: 'POST',
+    headers: {
+      'X-Session-Credentials-Key': getFromEnv('BFF_AMSAPP_API_KEY'),
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  },
+  ZWD_VVE: {
+    url: `${getFromEnv('BFF_ZWD_API_BASE_URL')}`,
+    method: 'GET',
+    headers: { Authorization: `Token ${getFromEnv('BFF_ZWD_API_TOKEN')}` },
+  },
 } as const;
 
 export const ApiConfig: Record<SourceApiName, DataRequestConfig> = ApiConfig_;

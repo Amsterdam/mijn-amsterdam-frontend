@@ -15,10 +15,14 @@ import {
 import { defaultDateFormat } from '../../../../../universal/helpers/date.ts';
 import { capitalizeFirstLetter } from '../../../../../universal/helpers/text.ts';
 import type { AppState } from '../../../../../universal/types/App.types.ts';
+import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
 import LoadingContent from '../../../../components/LoadingContent/LoadingContent.tsx';
 import {
   BRP_LABEL_AANTAL_INGESCHREVEN_PERSONEN,
+  featureToggle,
   profileLinks,
+  routeConfig,
+  themaIdBRP,
 } from '../Profile-thema-config.ts';
 import type { ProfileLabels } from '../profileDataFormatter.ts';
 import { formatProfileSectionData } from '../profileDataFormatter.ts';
@@ -129,6 +133,7 @@ const adres: ProfileLabels<
       return adres?.straatnaam ? getFullAddress(adres as Adres) : 'Onbekend';
     },
   ],
+
   woonplaatsNaam: [
     'Plaats',
     (_value, adres) => {
@@ -180,16 +185,30 @@ const adres: ProfileLabels<
       );
     },
   ],
+
+  vveNaam: [
+    'Vereniging van Eigenaren',
+    (value, _item, brpData) => {
+      if (brpData?.adres?.vveNaam && featureToggle[themaIdBRP].wonenActive) {
+        return (
+          <MaRouterLink
+            href={routeConfig.detailPageVvE.path}
+            rel="noopener noreferrer"
+          >
+            {brpData.adres.vveNaam}
+          </MaRouterLink>
+        );
+      }
+      return null;
+    },
+  ],
 };
 
 const verbintenis: ProfileLabels<
   Partial<Verbintenis>,
   AppState['BRP']['content']
 > = {
-  soortVerbintenis: 'Verbintenis',
   datumSluitingFormatted: 'Geregistreerd op',
-  plaats: 'Plaats',
-  land: 'Land',
   datumOntbinding: [
     'Einddatum',
     (dateValue) => {

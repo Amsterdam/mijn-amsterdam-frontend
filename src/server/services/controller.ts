@@ -53,6 +53,7 @@ import { fetchUserFeedbackSurvey } from './user-feedback/user-feedback.ts';
 import { fetchVaren } from './varen/varen.ts';
 import { fetchVergunningen } from './vergunningen/vergunningen.ts';
 import { fetchWmo } from './wmo/wmo.ts';
+import { fetchVVEData } from './wonen/zwd.ts';
 import {
   fetchBbz,
   fetchBijstandsuitkering,
@@ -160,6 +161,8 @@ const OVERTREDINGEN = callAuthenticatedService(fetchOvertredingen);
 const SUBSIDIES = callAuthenticatedService(fetchSubsidie);
 const KLANT_CONTACT = callAuthenticatedService(fetchContactmomenten); // For now salesforcre only consists of contactmomenten.
 
+const WONEN = callAuthenticatedService(fetchVVEData);
+
 // Location, address, based services
 const AFVAL = callAuthenticatedService(fetchAfval);
 const AFVALPUNTEN = callAuthenticatedService(fetchAfvalPunten);
@@ -234,6 +237,7 @@ const SERVICES_INDEX = {
   VERGUNNINGEN,
   WMO,
   JEUGD,
+  WONEN,
   WPI_AANVRAGEN,
   WPI_BBZ,
   WPI_SPECIFICATIES,
@@ -274,6 +278,7 @@ type CommercialServices = Pick<
   | 'TOERISTISCHE_VERHUUR'
   | 'VAREN'
   | 'VERGUNNINGEN'
+  | 'WONEN'
   | 'KTO'
 >;
 
@@ -317,6 +322,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     WPI_SPECIFICATIES,
     WPI_TONK,
     WPI_TOZO,
+    WONEN,
     JEUGD,
     KTO,
   },
@@ -345,6 +351,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     TOERISTISCHE_VERHUUR,
     VAREN,
     VERGUNNINGEN,
+    WONEN,
     KTO,
   },
 };

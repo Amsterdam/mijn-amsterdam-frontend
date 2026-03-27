@@ -80,7 +80,8 @@ export const FeatureToggle = {
 
   // Cobrowse widget
   cobrowseIsActive: true,
-
+  // Mijn Woning met vve zaak informatie
+  vveIsActive: !IS_PRODUCTION,
   // VTH vergunningen move from decos to powerbrowser (ligplaats/kameromzettingen/woningvormingen)
   VTHOnPowerbrowserActive: !IS_PRODUCTION,
 } as const;

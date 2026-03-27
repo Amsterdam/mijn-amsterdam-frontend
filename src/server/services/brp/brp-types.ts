@@ -231,8 +231,12 @@ export type BrpFrontend = {
   verbintenis: Verbintenis | null;
   kinderen: Kind[];
   ouders: Ouder[];
-  adres: Adres | null;
+  adres: AdresFrontend | null;
   adresHistorisch: Adres[];
   fetchUrlAantalIngeschrevenPersonen: string | null;
   aantalIngeschrevenPersonen: number | null;
+};
+
+type AdresFrontend = Adres & {
+  vveNaam?: string|undefined;
 };

@@ -1,3 +1,4 @@
+import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import { isEnabled } from '../../../config/feature-toggles.ts';
 import type { ThemaRoutesConfig } from '../../../config/thema-types.ts';
 
@@ -7,6 +8,7 @@ export const themaIdBRP = 'BRP' as const;
 export const featureToggle = {
   [themaIdBRP]: {
     themaActive: true,
+    wonenActive: !IS_PRODUCTION,
     get aantalBewonersOpAdresTonenActive() {
       return featureToggle[themaIdBRP].themaActive && isEnabled('BRP.aantalBewonersOpAdresTonen');
     },
@@ -30,6 +32,11 @@ export const routeConfig = {
   themaPageKVK: {
     path: '/gegevens-handelsregister',
     documentTitle: `${themaTitle.KVK} | Mijn Amsterdam`,
+    trackingUrl: null,
+  },
+  detailPageVvE: {
+    path: '/persoonlijke-gegevens/vve',
+    documentTitle: `Mijn VvE | Mijn Amsterdam`,
     trackingUrl: null,
   },
   listPageContactmomenten: {

@@ -7,7 +7,7 @@ import { useAppStateGetter } from '../../../../hooks/useAppStateStore.ts';
 import { routeConfig } from '../Profile-thema-config.ts';
 
 export function useProfileData() {
-  const { BRP } = useAppStateGetter();
+  const { BRP , WONEN} = useAppStateGetter();
   const aantalIngeschrevenPersonen = useIngeschrevenPersonenOpAdres(
     BRP.content?.fetchUrlAantalIngeschrevenPersonen ?? null
   );
@@ -20,6 +20,10 @@ export function useProfileData() {
       adres: {
         ...BRP.content.adres,
         aantalIngeschrevenPersonen,
+        vveNaam:
+        typeof WONEN.content?.name === 'string'
+          ? WONEN.content?.name
+          : undefined,
       },
     };
     profileData = formatBrpProfileData(brpContent);

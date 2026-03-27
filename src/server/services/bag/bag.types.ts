@@ -12,6 +12,8 @@ export type BAGAdreseerbaarObject = {
   huisnummertoevoeging: string | null;
   postcode: string;
   woonplaatsNaam: string;
+  verblijfsobjectIdentificatie: string | null; // Only used in private profile.
+
   openbareruimteNaam: string; // Also know as straatnaam.
   gebiedenStadsdeelNaam: string | null; // Stadsdeel name, e.g. 'Centrum'.
   brkGemeenteNaam: string; // Municipality name, e.g. 'Amsterdam'.
