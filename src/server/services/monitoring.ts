@@ -30,7 +30,7 @@ if (
 }
 
 const client: appInsights.TelemetryClient | undefined =
-  appInsights.defaultClient;
+  appInsights.default.defaultClient;
 // See also: https://www.npmjs.com/package/applicationinsights
 
 if (client) {
