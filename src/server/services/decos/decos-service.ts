@@ -652,6 +652,13 @@ function transformDecosWorkflowKeysResponse(
   return workflowsResponseData.content?.map((workflow) => workflow.key) ?? [];
 }
 
+function transformIsPdfDocumentResponse(
+  responseDataSource: DecosZakenResponse<DecosDocumentBlobSource[]>
+) {
+  const lastDoc = responseDataSource.content?.at(-1);
+  return { isPDF: !!lastDoc?.fields.bol10, key: lastDoc?.key };
+}
+
 export async function fetchDecosWorkflows(
   zaakID: DecosZaakBase['key'],
   workflowInstanceFilterProperties?: DecosZaakTransformer['fetchWorkflowStatusDatesFor'],
@@ -786,12 +793,7 @@ async function fetchIsPdfDocument(documentKey: DecosZaakDocument['key']) {
     params: getRequestParamsFromQueryString(
       'select=bol10&filter=bol10 eq true'
     ),
-    transformResponse: (
-      responseDataSource: DecosZakenResponse<DecosDocumentBlobSource[]>
-    ) => {
-      const lastDoc = responseDataSource.content?.at(-1);
-      return { isPDF: !!lastDoc?.fields.bol10, key: lastDoc?.key };
-    },
+    transformResponse: transformIsPdfDocumentResponse,
   });
 
   const documentTransformed = await requestData<{
@@ -979,6 +981,7 @@ export const forTesting = {
   fetchZakenByUserKey,
   transformDecosDocumentListResponse,
   transformDecosWorkflowKeysResponse,
+  transformIsPdfDocumentResponse,
   transformDecosZaakResponse,
   transformDecosZakenResponse,
   transformDecosZaakFrontend,
