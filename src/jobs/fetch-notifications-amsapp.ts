@@ -1,22 +1,36 @@
-// Keep this line at the top.
-import '../server/helpers/load-env.ts';
-
-import { batchFetchAndStoreNotifications } from '../server/services/amsapp/notifications/amsapp-notifications.ts';
-import { captureException } from '../server/services/monitoring.ts';
+async function captureException(error: unknown) {
+  const { captureException } = await import('../server/services/monitoring.ts');
+  captureException(error, {
+    properties: {
+      type: 'job',
+      name: 'fetch-notifications-amsapp',
+      message: 'Job fetch-notifications-amsapp failed',
+      severity: 'error',
+    },
+    tags: { type: 'job', context: 'amsapp', service: 'notification' },
+  });
+}
 
 async function runJob() {
   try {
-    await batchFetchAndStoreNotifications();
-  } catch (e) {
-    captureException(e, {
-      properties: {
-        type: 'job',
-        function: 'batchFetchAndStoreNotifications',
-        message: 'Job batchFetchAndStoreNotificiation failed',
-      },
-      tags: { type: 'job', context: 'amsapp', service: 'notification' },
-    });
-    throw e; // Rethrow to make the pipeline fail
+    // Keep this import first so env is loaded before other modules.
+    await import('../server/helpers/load-env.ts');
+
+    const { batchFetchAndStoreNotifications } =
+      (await import('../server/services/amsapp/notifications/amsapp-notifications.ts')) as {
+        batchFetchAndStoreNotifications: () => Promise<void>;
+      };
+
+    try {
+      await batchFetchAndStoreNotifications();
+    } catch (error) {
+      await captureException(error);
+      throw error;
+    }
+  } catch (error) {
+    await captureException(error);
+    throw error;
   }
 }
+
 runJob();
