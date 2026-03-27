@@ -8,6 +8,7 @@ import {
   fetchDecosLinkedField,
 } from './decos-service.ts';
 import type {
+  DecosDocumentBlobSource,
   DecosDocumentSource,
   DecosZaakSource,
   DecosZakenResponse,
@@ -29,6 +30,27 @@ import {
   decosCaseToZaakTransformers,
   decosZaakTransformers,
 } from '../vergunningen/decos-zaken.ts';
+
+describe('decos-service (non-mutation regressions)', () => {
+  test('transformIsPdfDocumentResponse should not mutate content array', () => {
+    const responseDataSource = {
+      content: [
+        { key: 'k1', fields: { bol10: false } },
+        { key: 'k2', fields: { bol10: true } },
+      ],
+    } as unknown as DecosZakenResponse<DecosDocumentBlobSource[]>;
+
+    const responseDataSourceSnapshot = structuredClone(responseDataSource);
+
+    const r1 = forTesting.transformIsPdfDocumentResponse(responseDataSource);
+    const r1Snapshot = structuredClone(r1);
+    const r2 = forTesting.transformIsPdfDocumentResponse(responseDataSource);
+
+    expect(responseDataSource).toEqual(responseDataSourceSnapshot);
+    expect(r1).toEqual(r2);
+    expect(r2).toEqual(r1Snapshot);
+  });
+});
 
 vi.mock('../../../server/helpers/encrypt-decrypt', async (requireActual) => {
   return {

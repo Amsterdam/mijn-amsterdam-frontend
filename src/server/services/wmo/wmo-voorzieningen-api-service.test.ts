@@ -221,6 +221,50 @@ describe('wmo-voorzieningen-api-service', () => {
 
       expect(result).toEqual(voorziening);
     });
+
+    it('should not mutate the input voorziening', () => {
+      const voorziening = {
+        type: 'example',
+        status: 'active',
+        maActies: ['reparatieverzoek'],
+      };
+
+      const apiPropsConfig1: WmoApiConfig<typeof voorziening> = {
+        match: {
+          type: 'example',
+          status: 'active',
+        },
+        assign: {
+          maActies: ['stopzetten'],
+        },
+      };
+
+      const apiPropsConfig2: WmoApiConfig<typeof voorziening> = {
+        match: {
+          type: 'example',
+          status: 'active',
+        },
+        assign: {
+          maActies: ['reparatieverzoek'],
+        },
+      };
+
+      const originalSnapshot = structuredClone(voorziening);
+
+      const r1 = forTesting.addMaApiPropsToVoorziening(
+        [apiPropsConfig1, apiPropsConfig2],
+        voorziening
+      );
+      const r1Snapshot = structuredClone(r1);
+      const r2 = forTesting.addMaApiPropsToVoorziening(
+        [apiPropsConfig1, apiPropsConfig2],
+        voorziening
+      );
+
+      expect(voorziening).toEqual(originalSnapshot);
+      expect(r1).toEqual(r2);
+      expect(r2).toEqual(r1Snapshot);
+    });
   });
 
   describe('fetchMaApiVoorzieningen', () => {
