@@ -21,16 +21,21 @@ async function runJob() {
         batchFetchAndStoreNotifications: () => Promise<void>;
       };
 
+    const { endPool } = await import('../server/services/db/postgres.ts');
+
     try {
       await batchFetchAndStoreNotifications();
     } catch (error) {
       await captureException(error);
       throw error;
+    } finally {
+      await endPool();
     }
   } catch (error) {
     await captureException(error);
     throw error;
   }
+  process.exit(0);
 }
 
-runJob();
+runJob().catch(() => process.exit(1));
