@@ -1,4 +1,4 @@
-import * as appInsights from 'applicationinsights';
+import appInsights from 'applicationinsights';
 import {
   type ExceptionTelemetry,
   type Telemetry,
