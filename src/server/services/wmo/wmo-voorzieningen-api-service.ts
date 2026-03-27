@@ -37,27 +37,25 @@ function addMaApiPropsToVoorziening<T extends object>(
   apiPropsConfig: WmoApiConfig<T>[],
   voorziening: T
 ): T & Partial<WithMaApiProps> {
-  const updatedVoorziening: T & Partial<WithMaApiProps> = {
-    ...voorziening,
-  };
+  const applyAssignments: Partial<WithMaApiProps> = {};
 
   apiPropsConfig.forEach((actionConfig) => {
     if (isMaApiPropertyConfigMatch(voorziening, actionConfig)) {
       entries(actionConfig.assign).forEach(([key, value]) => {
         if (Array.isArray(value)) {
-          // Merge and deduplicate array values if the key already exists in the voorziening, otherwise just assign the value.
-          updatedVoorziening[key] = [
-            ...(updatedVoorziening[key] ?? []),
+          // Merge and deduplicate array values if the key already exists in the new assignments, otherwise just assign the value.
+          applyAssignments[key] = [
+            ...(applyAssignments[key] ?? []),
             ...value,
           ].filter((v, i, arr) => arr.indexOf(v) === i);
         } else if (value !== undefined) {
-          updatedVoorziening[key] = value;
+          applyAssignments[key] = value;
         }
       });
     }
   });
 
-  return updatedVoorziening;
+  return { ...voorziening, ...applyAssignments };
 }
 
 export async function fetchMaApiVoorzieningen(

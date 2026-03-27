@@ -39,15 +39,18 @@ import type {
   DecosZaakFrontend,
 } from './decos-types.ts';
 import { IS_PRODUCTION } from '../../../universal/config/env.ts';
-import type {
-  ApiResponse} from '../../../universal/helpers/api.ts';
+import type { ApiResponse } from '../../../universal/helpers/api.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
   getSettledResult,
 } from '../../../universal/helpers/api.ts';
 import { toDateFormatted } from '../../../universal/helpers/date.ts';
-import { omit, sortAlpha, uniqueArray } from '../../../universal/helpers/utils.ts';
+import {
+  omit,
+  sortAlpha,
+  uniqueArray,
+} from '../../../universal/helpers/utils.ts';
 import type { StatusLineItem } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt.ts';
@@ -649,6 +652,13 @@ function transformDecosWorkflowKeysResponse(
   return workflowsResponseData.content?.map((workflow) => workflow.key) ?? [];
 }
 
+function transformIsPdfDocumentResponse(
+  responseDataSource: DecosZakenResponse<DecosDocumentBlobSource[]>
+) {
+  const lastDoc = responseDataSource.content?.at(-1);
+  return { isPDF: !!lastDoc?.fields.bol10, key: lastDoc?.key };
+}
+
 export async function fetchDecosWorkflows(
   zaakID: DecosZaakBase['key'],
   workflowInstanceFilterProperties?: DecosZaakTransformer['fetchWorkflowStatusDatesFor'],
@@ -783,12 +793,7 @@ async function fetchIsPdfDocument(documentKey: DecosZaakDocument['key']) {
     params: getRequestParamsFromQueryString(
       'select=bol10&filter=bol10 eq true'
     ),
-    transformResponse: (
-      responseDataSource: DecosZakenResponse<DecosDocumentBlobSource[]>
-    ) => {
-      const lastDoc = responseDataSource.content?.pop();
-      return { isPDF: !!lastDoc?.fields.bol10, key: lastDoc?.key };
-    },
+    transformResponse: transformIsPdfDocumentResponse,
   });
 
   const documentTransformed = await requestData<{
@@ -976,6 +981,7 @@ export const forTesting = {
   fetchZakenByUserKey,
   transformDecosDocumentListResponse,
   transformDecosWorkflowKeysResponse,
+  transformIsPdfDocumentResponse,
   transformDecosZaakResponse,
   transformDecosZakenResponse,
   transformDecosZaakFrontend,

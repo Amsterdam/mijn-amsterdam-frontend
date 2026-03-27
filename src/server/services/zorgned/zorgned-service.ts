@@ -119,9 +119,9 @@ function transformZorgnedAanvraag(
 ): ZorgnedAanvraagTransformed {
   const toegewezenProduct = beschiktProduct.toegewezenProduct;
   const toewijzingen = toegewezenProduct?.toewijzingen ?? [];
-  const toewijzing = toewijzingen.pop();
+  const toewijzing = toewijzingen.at(-1);
   const leveringen = toewijzing?.leveringen ?? [];
-  const levering = leveringen.pop();
+  const levering = leveringen.at(-1);
 
   const leveringsVorm =
     (toegewezenProduct?.leveringsvorm?.toUpperCase() as LeveringsVorm) ?? '';

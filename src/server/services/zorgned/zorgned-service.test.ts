@@ -209,6 +209,20 @@ describe('zorgned-service', () => {
         )
       ).toStrictEqual([]);
     });
+
+    test('should not mutate source or result arrays', () => {
+      const response: ZorgnedResponseDataSource =
+        ZORGNED_JZD_AANVRAGEN as unknown as ZorgnedResponseDataSource;
+
+      const responseSnapshot = structuredClone(response);
+
+      const r1 = forTesting.transformZorgnedAanvragen(response);
+      const r1Snapshot = structuredClone(r1);
+      const r2 = forTesting.transformZorgnedAanvragen(response);
+
+      expect(response).toEqual(responseSnapshot);
+      expect(r2).toEqual(r1Snapshot);
+    });
   });
 
   it('should fetch aanvragen', async () => {
