@@ -25,10 +25,12 @@ interface DocumentLinkProps {
 function downloadFile(docDownload: GenericDocument, fileExtension?: string) {
   const link = document.createElement('a');
   link.href = docDownload.url;
-  const baseUrl = docDownload.download || docDownload.title;
-  const downloadName = fileExtension
-    ? `${baseUrl}.${fileExtension}`
-    : addFileType(baseUrl);
+  const name =
+    docDownload.download || docDownload.filename || docDownload.title;
+  const downloadName =
+    fileExtension && !name.endsWith(`.${fileExtension}`)
+      ? `${name}.${fileExtension}`
+      : addFileType(name);
   link.download = downloadName;
   link.click();
 }

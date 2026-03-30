@@ -95,6 +95,7 @@ function transformDocumenten(documenten: ZorgnedDocument[]) {
     };
     if (document.bestandsnaam) {
       doc.filename = document.bestandsnaam;
+      doc.download = document.bestandsnaam;
     }
 
     documents.push(doc);
