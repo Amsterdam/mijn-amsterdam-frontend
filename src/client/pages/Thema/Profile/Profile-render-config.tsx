@@ -28,8 +28,8 @@ export const menuItems: ThemaMenuItem[] = [
     title: themaConfig.BRP.title,
     id: themaConfig.BRP.id,
     to: routeConfig.themaPageBRP.path,
-    profileTypes: ['private'],
-    redactedScope: 'content',
+    profileTypes: themaConfig.BRP.profileTypes,
+    redactedScope: themaConfig.BRP.redactedScope,
     isActive(appState: AppState) {
       return (
         (!isLoading(appState.BRP) && !!appState.BRP.content?.persoon) ||
@@ -43,8 +43,8 @@ export const menuItems: ThemaMenuItem[] = [
     title: themaConfig.KVK.title,
     id: themaConfig.KVK.id,
     to: routeConfig.themaPageKVK.path,
-    redactedScope: 'content',
-    profileTypes: ['commercial', 'private'],
+    redactedScope: themaConfig.KVK.redactedScope,
+    profileTypes: themaConfig.KVK.profileTypes,
     isActive(appState: AppState) {
       return (
         !isLoading(appState.KVK) &&

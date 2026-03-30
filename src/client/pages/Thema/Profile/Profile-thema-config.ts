@@ -6,7 +6,7 @@ import type {
 
 type ProfileThemaConfig<ID = string> = Pick<
   ThemaConfigBase<ID>,
-  'id' | 'title' | 'featureToggle'
+  'id' | 'title' | 'featureToggle' | 'profileTypes' | 'redactedScope'
 >;
 
 const THEMA_ID_BRP = 'BRP' as const;
@@ -30,6 +30,8 @@ export const themaConfig: Record<
         );
       },
     },
+    profileTypes: ['commercial', 'private'],
+    redactedScope: 'content',
   },
   [THEMA_ID_KVK]: {
     id: THEMA_ID_KVK,
@@ -37,6 +39,8 @@ export const themaConfig: Record<
     featureToggle: {
       active: true,
     },
+    profileTypes: ['private'],
+    redactedScope: 'content',
   },
 };
 
