@@ -33,11 +33,7 @@ function getDownloadName(document: GenericDocument) {
   const DOT = '.';
   const DEFAULT_FILE_EXTENSION = 'pdf';
 
-  if (document.download) {
-    return document.download;
-  }
-
-  const name = document.filename || document.title;
+  const name = document.download || document.filename || document.title;
   const downloadName = !name.includes(DOT)
     ? name + DOT + DEFAULT_FILE_EXTENSION
     : name;
