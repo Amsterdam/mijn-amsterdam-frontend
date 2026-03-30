@@ -169,11 +169,11 @@ export async function fetchNotificationsAndTipsFromServices(
     entries(services).map(async ([serviceId, fetchNotifications]) => {
       const result = await fetchNotifications(authProfileAndToken).catch(
         (error) => {
-          captureException(
-            new Error(
-              `Error in fetchNotifications for service ${serviceId}: ${error instanceof Error ? error.message : String(error)}`
-            )
+          const err = new Error(
+            `Error in fetchNotifications for service ${serviceId}: ${error instanceof Error ? error.message : String(error)}`
           );
+          err.stack = error instanceof Error ? error.stack : undefined;
+          captureException(err);
           return apiErrorResult(error, null);
         }
       );
