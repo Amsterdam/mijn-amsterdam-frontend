@@ -18,7 +18,10 @@ import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import { useVergunningDocumentList } from '../Vergunningen/detail-page-content/useVergunningDocumentsList.hook.ts';
 
 function getMailBody(vergunning: ToeristischeVerhuurVergunning) {
-  return `Geachte heer/mevrouw,%0D%0A%0D%0AHierbij verzoek ik u om het [document type] document van de vergunning met zaaknummer ${vergunning.identifier} op te sturen.`;
+  return `\
+Geachte heer/mevrouw,
+
+Hierbij verzoek ik u om het [document type] document van de vergunning met zaaknummer ${vergunning.identifier} op te sturen.`;
 }
 
 function getMailSubject(vergunning: ToeristischeVerhuurVergunning) {

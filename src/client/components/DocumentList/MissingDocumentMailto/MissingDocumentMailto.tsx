@@ -19,7 +19,7 @@ type MissingDocumentMailtoProps = {
 };
 
 export function MissingDocumentMailto({ config }: MissingDocumentMailtoProps) {
-  const SEPARATOR = '%0D%0A';
+  const SEPARATOR = '\r\n';
 
   const appState = useAppStateGetter();
   const fullName = appState.BRP?.content?.persoon
@@ -33,13 +33,19 @@ export function MissingDocumentMailto({ config }: MissingDocumentMailtoProps) {
     ? `${SEPARATOR}${SEPARATOR}Met vriendelijke groet,${SEPARATOR}${SEPARATOR}${fullName}${SEPARATOR}${SEPARATOR}${fullAddress}`
     : '';
 
+  const normalizeNewlines = (value: string) =>
+    value.replace(/\r?\n/g, SEPARATOR);
+
+  const subject = encodeURIComponent(config.subject);
+  const body = encodeURIComponent(
+    normalizeNewlines(`${config.body}${signature}`)
+  );
+  const mailtoWithSubjectAndBody = `mailto:${config.to}?subject=${subject}&body=${body}`;
+
   return (
     <Paragraph>
       <strong>Ziet u niet het juiste document?</strong> Stuur een mail naar:{' '}
-      <Link
-        href={`mailto:${config.to}?subject=${config.subject}&body=${config.body}${signature}`}
-        rel="noreferrer"
-      >
+      <Link href={mailtoWithSubjectAndBody} rel="noreferrer">
         {config.linkText ?? config.to}
       </Link>{' '}
       om uw document op te vragen.

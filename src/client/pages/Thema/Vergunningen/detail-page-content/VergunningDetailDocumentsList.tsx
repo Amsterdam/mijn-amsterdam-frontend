@@ -12,7 +12,10 @@ import LoadingContent from '../../../../components/LoadingContent/LoadingContent
 type GenericVergunning = { identifier: string };
 
 function getMailBody(vergunning: GenericVergunning) {
-  return `Geachte heer/mevrouw,%0D%0A%0D%0AHierbij verzoek ik u om het [document type] document van de vergunning met zaaknummer ${vergunning.identifier} op te sturen.`;
+  return `\
+Geachte heer/mevrouw,
+
+Hierbij verzoek ik u om het [document type] document van de vergunning met zaaknummer ${vergunning.identifier} op te sturen.`;
 }
 
 function getMailSubject(vergunning: GenericVergunning) {
@@ -71,7 +74,11 @@ export function VergunningDetailDocumentsList({
                 <Paragraph>Documenten ophalen is mislukt.</Paragraph>
               )}
               {!isLoading && !!documents.length && (
-                <DocumentListV2 documents={documents} columns={['', '']} />
+                <DocumentListV2
+                  documents={documents}
+                  columns={['', '']}
+                  className={missingDocumentMailto ? 'ams-mb-m' : ''}
+                />
               )}
               {!isLoading && !isError && missingDocumentMailto && (
                 <MissingDocumentMailto config={missingDocumentMailto} />

@@ -216,9 +216,7 @@ describe('<ToeristischVerhuurDetail />', () => {
     ).toBeInTheDocument();
     const link = screen.getByText('bedandbreakfast@amsterdam.nl');
     expect(link.getAttribute('href')).toMatchInlineSnapshot(
-      `
-      "mailto:bedandbreakfast@amsterdam.nl?subject=Z/23/2130506 - Document opvragen&body=Geachte heer/mevrouw,%0D%0A%0D%0AHierbij verzoek ik u om het [document type] document van de vergunning met zaaknummer Z/23/2130506 op te sturen.%0D%0A%0D%0AMet vriendelijke groet,%0D%0A%0D%0ANamen, Enzo Van de Dingerdons%0D%0A%0D%0AAmstel 1%0D%0A1017AB Amsterdam"
-    `
+      `"mailto:bedandbreakfast@amsterdam.nl?subject=Z%2F23%2F2130506%20-%20Document%20opvragen&body=Geachte%20heer%2Fmevrouw%2C%0D%0A%0D%0AHierbij%20verzoek%20ik%20u%20om%20het%20%5Bdocument%20type%5D%20document%20van%20de%20vergunning%20met%20zaaknummer%20Z%2F23%2F2130506%20op%20te%20sturen.%0D%0A%0D%0AMet%20vriendelijke%20groet%2C%0D%0A%0D%0ANamen%2C%20Enzo%20Van%20de%20Dingerdons%0D%0A%0D%0AAmstel%201%0D%0A1017AB%20Amsterdam"`
     );
   });
 });
