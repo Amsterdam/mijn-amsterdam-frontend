@@ -1,0 +1,452 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`<Profile /> > Lives in Mokum + verbintenis: displays all data 1`] = `
+<DocumentFragment>
+  <div
+    class="mams-content-wrapper"
+  >
+    <div
+      class="ams-grid ams-grid--padding-top--large"
+      id="page-breadcrumbs"
+    >
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <nav
+          class="ams-breadcrumb"
+        >
+          <ol
+            class="ams-breadcrumb__list"
+          >
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/"
+              >
+                Home
+              </a>
+            </li>
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/persoonlijke-gegevens"
+                tabindex="-1"
+              >
+                <span
+                  class="ams-visually-hidden"
+                >
+                  Mijn gegevens
+                </span>
+              </a>
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <main
+      id="page-main-content"
+    >
+      <div
+        class="ams-grid"
+      >
+        <div
+          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+        >
+          <h1
+            class="ams-heading ams-heading--1 ams-mb-s"
+          >
+            Mijn gegevens
+          </h1>
+        </div>
+      </div>
+      <div
+        class="ams-grid ams-grid--padding-bottom--x-large"
+      >
+        <div
+          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-8-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+        >
+          <p
+            class="ams-paragraph"
+          >
+            In de Basisregistratie Personen legt de gemeente persoonsgegevens over u vast. Het gaat hier bijvoorbeeld om uw naam, adres, geboortedatum of uw burgerlijke staat. De gemeente gebruikt deze gegevens. Belangrijk dus dat deze gegevens kloppen.
+          </p>
+        </div>
+        <div
+          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+        >
+          <div
+            class="_CollapsiblePanelHeading_b53cc4 ams-mb-s"
+          >
+            <h2
+              class="ams-heading ams-heading--2"
+            >
+              Persoonlijke gegevens
+            </h2>
+            <button
+              aria-expanded="true"
+              class="ams-button ams-button--tertiary"
+              title="Verberg inhoud over Persoonlijke gegevens"
+              type="button"
+            >
+              Verberg
+            </button>
+          </div>
+          <div
+            class="ams-grid _ProfileSectionPanelGrid_013e82"
+          >
+            <div
+              class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-5-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1"
+            >
+              <dl
+                class="_Datalist_240c86 _has-horizontal-rows_240c86 _ProfileSection_013e82"
+              >
+                <dt
+                  class="_Datalist__title_240c86 _Label_013e82"
+                >
+                  Achternaam
+                </dt>
+                <dd
+                  class="_Datalist__description_240c86 _Content_013e82 redacted"
+                >
+                  Mooier
+                </dd>
+                <dt
+                  class="_Datalist__title_240c86 _Label_013e82"
+                >
+                  Naamgebruik
+                </dt>
+                <dd
+                  class="_Datalist__description_240c86 _Content_013e82 redacted"
+                >
+                  eigen geslachtsnaam
+                </dd>
+                <dt
+                  class="_Datalist__title_240c86 _Label_013e82"
+                >
+                  Aanschrijfwijze
+                </dt>
+                <dd
+                  class="_Datalist__description_240c86 _Content_013e82 redacted"
+                >
+                  Mooier, Piet
+                </dd>
+                <dt
+                  class="_Datalist__title_240c86 _Label_013e82"
+                >
+                  Geboorteplaats
+                </dt>
+                <dd
+                  class="_Datalist__description_240c86 _Content_013e82 redacted"
+                >
+                  Neverland
+                </dd>
+                <dt
+                  class="_Datalist__title_240c86 _Label_013e82"
+                >
+                  Geboorteland
+                </dt>
+                <dd
+                  class="_Datalist__description_240c86 _Content_013e82 redacted"
+                >
+                  Onbekend
+                </dd>
+              </dl>
+            </div>
+            <div
+              class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-3-medium ams-grid__cell--span-5-wide ams-grid__cell--start-1 ams-grid__cell--start-6-medium ams-grid__cell--start-8-wide"
+            >
+              <ul
+                class="ams-link-list ams-mb-m"
+              >
+                <li>
+                  <a
+                    class="ams-link-list__link"
+                    href="https://www.amsterdam.nl/burgerzaken/fouten-gegevens-laten-aanpassen/"
+                    rel="noopener noreferrer"
+                  >
+                    <span
+                      class="ams-icon"
+                      hidden=""
+                    >
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          clip-rule="evenodd"
+                          d="M7.911 2.5 17.5 12l-9.589 9.5L6.5 20.102 14.677 12 6.5 3.898z"
+                          fill-rule="evenodd"
+                        />
+                      </svg>
+                    </span>
+                    Inzien of correctie doorgeven
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div
+          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+        >
+          <div
+            class="_CollapsiblePanelHeading_b53cc4 ams-mb-s"
+          >
+            <h2
+              class="ams-heading ams-heading--2"
+            >
+              Adres
+            </h2>
+            <button
+              aria-expanded="true"
+              class="ams-button ams-button--tertiary"
+              title="Verberg inhoud over Adres"
+              type="button"
+            >
+              Verberg
+            </button>
+          </div>
+          <p
+            class="ams-paragraph ams-mb-m"
+          >
+            <strong>
+              Uw huis verduurzamen?
+            </strong>
+             De gemeente biedt subsidies of gratis hulp.
+            <br />
+             Bekijk 
+            <a
+              class="ams-link"
+              href="https://duurzaamwonen.amsterdam/"
+              rel="noopener noreferrer"
+            >
+              duurzaamwonen.amsterdam
+            </a>
+             voor meer informatie.
+          </p>
+          <div
+            class="ams-grid _ProfileSectionPanelGrid_013e82"
+          >
+            <div
+              class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-5-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1"
+            >
+              <dl
+                class="_Datalist_240c86 _has-horizontal-rows_240c86 _ProfileSection_013e82"
+              >
+                <dt
+                  class="_Datalist__title_240c86 _Label_013e82"
+                >
+                  Straat
+                </dt>
+                <dd
+                  class="_Datalist__description_240c86 _Content_013e82 redacted"
+                >
+                  Mooie Straat 1
+                </dd>
+                <dt
+                  class="_Datalist__title_240c86 _Label_013e82"
+                >
+                  Plaats
+                </dt>
+                <dd
+                  class="_Datalist__description_240c86 _Content_013e82 redacted"
+                >
+                   Onbekend
+                </dd>
+                <dt
+                  class="_Datalist__title_240c86 _Label_013e82"
+                >
+                  Vanaf
+                </dt>
+                <dd
+                  class="_Datalist__description_240c86 _Content_013e82 redacted"
+                >
+                  Onbekend
+                </dd>
+                <dt
+                  class="_Datalist__title_240c86 _Label_013e82"
+                >
+                  Ingeschreven personen
+                </dt>
+                <dd
+                  class="_Datalist__description_240c86 _Content_013e82 redacted"
+                >
+                  3
+                </dd>
+                <dt
+                  class="_Datalist__title_240c86 _Label_013e82"
+                >
+                  WOZ-waarde
+                </dt>
+                <dd
+                  class="_Datalist__description_240c86 _Content_013e82 redacted"
+                >
+                  Te vinden op 
+                  <a
+                    class="ams-link"
+                    href="https://www.wozwaardeloket.nl/"
+                    rel="noopener noreferrer"
+                  >
+                    WOZ-waardeloket
+                  </a>
+                </dd>
+              </dl>
+            </div>
+            <div
+              class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-3-medium ams-grid__cell--span-5-wide ams-grid__cell--start-1 ams-grid__cell--start-6-medium ams-grid__cell--start-8-wide"
+            >
+              <ul
+                class="ams-link-list ams-mb-m"
+              >
+                <li>
+                  <a
+                    class="ams-link-list__link"
+                    href="https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/"
+                    rel="noopener noreferrer"
+                  >
+                    <span
+                      class="ams-icon"
+                      hidden=""
+                    >
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          clip-rule="evenodd"
+                          d="M7.911 2.5 17.5 12l-9.589 9.5L6.5 20.102 14.677 12 6.5 3.898z"
+                          fill-rule="evenodd"
+                        />
+                      </svg>
+                    </span>
+                    Verhuizing doorgeven
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="ams-link-list__link _ActionLink--reportIncorrectResidentCount_8ab1b1"
+                    href="https://www.amsterdam.nl/burgerzaken/verhuizen-inschrijving-briefadres/onjuiste-inschrijving-adres-melden/"
+                    rel="noopener noreferrer"
+                  >
+                    <span
+                      class="ams-icon"
+                      hidden=""
+                    >
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          clip-rule="evenodd"
+                          d="M7.911 2.5 17.5 12l-9.589 9.5L6.5 20.102 14.677 12 6.5 3.898z"
+                          fill-rule="evenodd"
+                        />
+                      </svg>
+                    </span>
+                    Onjuiste inschrijving melden
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div
+          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+        >
+          <div
+            class="_CollapsiblePanelHeading_b53cc4"
+          >
+            <h2
+              class="ams-heading ams-heading--2"
+            >
+              Partner
+            </h2>
+            <button
+              aria-expanded="false"
+              class="ams-button ams-button--tertiary"
+              title="Toon inhoud over Partner"
+              type="button"
+            >
+              Toon
+            </button>
+          </div>
+        </div>
+        <div
+          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+        >
+          <div
+            class="_CollapsiblePanelHeading_b53cc4"
+          >
+            <h2
+              class="ams-heading ams-heading--2"
+            >
+              Kinderen
+            </h2>
+            <button
+              aria-expanded="false"
+              class="ams-button ams-button--tertiary"
+              title="Toon inhoud over Kinderen"
+              type="button"
+            >
+              Toon
+            </button>
+          </div>
+        </div>
+        <div
+          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+        >
+          <div
+            class="_CollapsiblePanelHeading_b53cc4"
+          >
+            <h2
+              class="ams-heading ams-heading--2"
+            >
+              Ouders
+            </h2>
+            <button
+              aria-expanded="false"
+              class="ams-button ams-button--tertiary"
+              title="Toon inhoud over Ouders"
+              type="button"
+            >
+              Toon
+            </button>
+          </div>
+        </div>
+        <div
+          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+        >
+          <p
+            class="ams-paragraph ams-mb-m _SuppressedParagraph_c1c87f"
+          >
+            Het is helaas technisch niet mogelijk om de gegevens van een levenloos geboren kindje te tonen in Mijn Amsterdam. Als u het kindje heeft laten registreren bij uw gemeente, kunt u deze gegevens wel inzien op 
+            <a
+              class="ams-link"
+              href="https://mijn.overheid.nl"
+              rel="noopener noreferrer"
+            >
+              MijnOverheid
+            </a>
+            .
+          </p>
+          <p
+            class="ams-paragraph _SuppressedParagraph_c1c87f"
+          >
+            Op deze pagina laten wij uw gegevens zien uit de landelijke en Amsterdamse administratie. Gegevens die bij een andere gemeente zijn geregistreerd worden hier niet getoond.
+          </p>
+        </div>
+      </div>
+    </main>
+  </div>
+</DocumentFragment>
+`;
