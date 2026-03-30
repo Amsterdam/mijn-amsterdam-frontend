@@ -3,12 +3,7 @@ import { BuildingsIcon } from '@amsterdam/design-system-react-icons';
 import { MijnBedrijfsGegevensThema } from './commercial/ProfileCommercial.tsx';
 import { ContactmomentenListPage } from './private/ContactmomentenListPage.tsx';
 import { MijnGegevensThema } from './private/ProfilePrivate.tsx';
-import {
-  routeConfig,
-  themaTitle,
-  themaIdBRP,
-  themaIdKVK,
-} from './Profile-thema-config.ts';
+import { routeConfig, themaConfig } from './Profile-thema-config.ts';
 import { default as ProfilePrivateIcon } from './ProfilePrivateIcon.svg?react';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles.ts';
 import { isLoading } from '../../../../universal/helpers/api.ts';
@@ -28,13 +23,10 @@ export const ProfileRoutes = [
   },
 ];
 
-export const menuItems: [
-  ThemaMenuItem<typeof themaIdBRP>,
-  ThemaMenuItem<typeof themaIdKVK>,
-] = [
+export const menuItems: ThemaMenuItem[] = [
   {
-    title: themaTitle.BRP,
-    id: themaIdBRP,
+    title: themaConfig.BRP.title,
+    id: themaConfig.BRP.id,
     to: routeConfig.themaPageBRP.path,
     profileTypes: ['private'],
     redactedScope: 'content',
@@ -48,8 +40,8 @@ export const menuItems: [
     IconSVG: ProfilePrivateIcon,
   } as const,
   {
-    title: themaTitle.KVK,
-    id: themaIdKVK,
+    title: themaConfig.KVK.title,
+    id: themaConfig.KVK.id,
     to: routeConfig.themaPageKVK.path,
     redactedScope: 'content',
     profileTypes: ['commercial', 'private'],

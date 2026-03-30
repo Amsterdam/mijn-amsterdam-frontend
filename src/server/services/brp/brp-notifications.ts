@@ -2,8 +2,7 @@ import { ADRES_IN_ONDERZOEK_A } from './brp-config.ts';
 import type { BrpFrontend } from './brp-types.ts';
 import { fetchBrpByBsnTransformed } from './brp.ts';
 import {
-  themaIdBRP,
-  themaTitle,
+  themaConfig,
   routeConfig as routeConfigBrp,
 } from '../../../client/pages/Thema/Profile/Profile-thema-config.ts';
 import {
@@ -28,8 +27,8 @@ export function transformBRPNotifications(
 
   if (adresInOnderzoek) {
     notifications.push({
-      themaID: themaIdBRP,
-      themaTitle: themaTitle.BRP,
+      themaID: themaConfig.BRP.id,
+      themaTitle: themaConfig.BRP.title,
       datePublished: compareDate.toISOString(),
       isAlert: true,
       id: 'brpAdresInOnderzoek',
@@ -47,8 +46,8 @@ export function transformBRPNotifications(
 
   if (isOnbekendWaarheen) {
     notifications.push({
-      themaID: themaIdBRP,
-      themaTitle: themaTitle.BRP,
+      themaID: themaConfig.BRP.id,
+      themaTitle: themaConfig.BRP.title,
       datePublished: compareDate.toISOString(),
       isAlert: true,
       id: 'brpVertrokkenOnbekendWaarheen',

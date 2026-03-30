@@ -1,40 +1,59 @@
 import { isEnabled } from '../../../config/feature-toggles.ts';
-import type { ThemaRoutesConfig } from '../../../config/thema-types.ts';
+import type {
+  ThemaConfigBase,
+  ThemaRoutesConfig,
+} from '../../../config/thema-types.ts';
 
-export const themaIdKVK = 'KVK' as const;
-export const themaIdBRP = 'BRP' as const;
+type ProfileThemaConfig<ID = string> = Pick<
+  ThemaConfigBase<ID>,
+  'id' | 'title' | 'featureToggle'
+>;
 
-export const featureToggle = {
-  [themaIdBRP]: {
-    themaActive: true,
-    get aantalBewonersOpAdresTonenActive() {
-      return featureToggle[themaIdBRP].themaActive && isEnabled('BRP.aantalBewonersOpAdresTonen');
+const THEMA_ID_BRP = 'BRP' as const;
+const THEMA_ID_KVK = 'KVK' as const;
+const THEMA_TITLE_BRP = 'Mijn gegevens' as const;
+const THEMA_TITLE_KVK = 'Mijn onderneming' as const;
+
+export const themaConfig: Record<
+  typeof THEMA_ID_BRP | typeof THEMA_ID_KVK,
+  ProfileThemaConfig
+> = {
+  [THEMA_ID_BRP]: {
+    id: THEMA_ID_BRP,
+    title: THEMA_TITLE_BRP,
+    featureToggle: {
+      active: true,
+      get aantalBewonersOpAdresTonenActive() {
+        return (
+          themaConfig[THEMA_ID_BRP].featureToggle.active &&
+          isEnabled('BRP.aantalBewonersOpAdresTonen')
+        );
+      },
     },
   },
-  [themaIdKVK]: {
-    themaActive: true,
+  [THEMA_ID_KVK]: {
+    id: THEMA_ID_KVK,
+    title: THEMA_TITLE_KVK,
+    featureToggle: {
+      active: true,
+    },
   },
 };
-
-export const themaTitle = {
-  [themaIdBRP]: 'Mijn gegevens',
-  [themaIdKVK]: 'Mijn onderneming',
-} as const;
 
 export const routeConfig = {
   themaPageBRP: {
     path: '/persoonlijke-gegevens',
-    documentTitle: `${themaTitle.BRP} | Mijn Amsterdam`,
+    documentTitle: `${THEMA_TITLE_BRP} | Mijn Amsterdam`,
     trackingUrl: null,
   },
   themaPageKVK: {
     path: '/gegevens-handelsregister',
-    documentTitle: `${themaTitle.KVK} | Mijn Amsterdam`,
+    documentTitle: `${THEMA_TITLE_KVK} | Mijn Amsterdam`,
     trackingUrl: null,
   },
   listPageContactmomenten: {
     path: '/contactmomenten/:page?',
-    documentTitle: `Alle contactmomenten | ${themaTitle.BRP}`,
+    documentTitle: `Alle contactmomenten | ${THEMA_TITLE_BRP}`,
     trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;

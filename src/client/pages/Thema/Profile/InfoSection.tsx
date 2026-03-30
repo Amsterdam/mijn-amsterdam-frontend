@@ -1,12 +1,12 @@
-import { featureToggle, themaIdBRP, themaTitle } from './Profile-thema-config.ts';
+import { themaConfig } from './Profile-thema-config.ts';
 import type { InfoSection_DEPRECATED } from '../../GeneralInfo/GeneralInfo.tsx';
 
 export const profileSectionProps: InfoSection_DEPRECATED = {
-  id: themaIdBRP,
-  title: themaTitle[themaIdBRP],
+  id: themaConfig.BRP.id,
+  title: themaConfig.BRP.title,
   listItems: [
     'Uw inschrijving bij de gemeente',
     'Uw contactmomenten met de gemeente',
   ],
-  active: featureToggle[themaIdBRP].themaActive,
+  active: themaConfig.BRP.featureToggle.active,
 };
