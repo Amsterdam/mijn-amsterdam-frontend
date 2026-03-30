@@ -22,27 +22,23 @@ interface DocumentLinkProps {
   trackPath?: (document: GenericDocument) => string;
 }
 
-function downloadFile(docDownload: GenericDocument, fileExtension?: string) {
-  const link = document.createElement('a');
-  link.href = docDownload.url;
-  const baseUrl = docDownload.download || docDownload.title;
-  const downloadName = fileExtension
-    ? `${baseUrl}.${fileExtension}`
-    : addFileType(baseUrl);
-  link.download = downloadName;
+function downloadFile(document: GenericDocument) {
+  const link = window.document.createElement('a');
+  link.href = document.url;
+  link.download = getDownloadName(document);
   link.click();
 }
 
-function addFileType(url: string) {
-  const defaultType = 'pdf';
-  const splitUrl = url.split('.');
+function getDownloadName(document: GenericDocument) {
+  const DOT = '.';
+  const DEFAULT_FILE_EXTENSION = 'pdf';
 
-  // NOTE: if we don't fond a  "." in the url then add a default filetype.
-  if (splitUrl.length === 1) {
-    return `${url}.${defaultType}`;
-  }
+  const name = document.download || document.filename || document.title;
+  const downloadName = !name.includes(DOT)
+    ? name + DOT + DEFAULT_FILE_EXTENSION
+    : name;
 
-  return url;
+  return downloadName;
 }
 
 export function DocumentLink({
@@ -88,8 +84,7 @@ export function DocumentLink({
         .then((blob) => {
           const trackingUrl = trackPath
             ? trackPath(document)
-            : window.location.pathname +
-              addFileType(`/downloads/${document.download || documentTitle}`);
+            : `${window.location.pathname}/downloads/${getDownloadName(document)}`;
 
           const fileType = trackingUrl.split('.').pop();
           trackDownload(documentTitle, fileType, trackingUrl, profileType);
@@ -104,13 +99,10 @@ export function DocumentLink({
           } else {
             try {
               const fileUrl = window.URL.createObjectURL(blob);
-              downloadFile(
-                {
-                  ...document,
-                  url: fileUrl,
-                },
-                extension
-              );
+              downloadFile({
+                ...document,
+                url: fileUrl,
+              });
             } catch (_) {
               downloadFile(document);
             }
@@ -165,3 +157,7 @@ export function DocumentLink({
     </span>
   );
 }
+
+export const forTesting = {
+  getDownloadName,
+};

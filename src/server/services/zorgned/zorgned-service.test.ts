@@ -152,6 +152,7 @@ describe('zorgned-service', () => {
         documenten: [
           {
             datePublished: '2026-03-09T12:23:27',
+            download: 'Schermafbeelding 2024-03-14 191232.jpg',
             filename: 'Schermafbeelding 2024-03-14 191232.jpg',
             id: 'E1532692',
             title: 'kopie bankpas',
@@ -159,6 +160,7 @@ describe('zorgned-service', () => {
           },
           {
             datePublished: '2026-03-09T12:19:19',
+            download: 'ADW beheer.png',
             filename: 'ADW beheer.png',
             id: 'E1532685',
             title: 'bankafschrift',
@@ -166,6 +168,7 @@ describe('zorgned-service', () => {
           },
           {
             datePublished: '2026-03-09T12:16:29',
+            download: 'Leeg document.docx',
             filename: 'Leeg document.docx',
             id: 'E1532678',
             title: 'beschikking',
@@ -173,6 +176,7 @@ describe('zorgned-service', () => {
           },
           {
             datePublished: '2026-03-09T12:15:17',
+            download: 'lege mail.msg',
             filename: 'lege mail.msg',
             id: 'E1532671',
             title: 'beschikking toekenning',
@@ -180,6 +184,7 @@ describe('zorgned-service', () => {
           },
           {
             datePublished: '2026-02-05T17:22:33.737',
+            download: 'BR4072158.pdf',
             filename: 'BR4072158.pdf',
             id: 'B4072158',
             title: 'Besluit: toekenning Hulp bij de zorg voor uw kind',
@@ -713,6 +718,7 @@ describe('fetchRelatedPersons', async () => {
             bestandsnaam: 'ABC.pdf',
           },
         ],
+        procesIdentificatie: '',
       },
       {
         identificatie: '1234',
@@ -732,6 +738,7 @@ describe('fetchRelatedPersons', async () => {
             bestandsnaam: 'XYZ.pdf',
           },
         ],
+        procesIdentificatie: '',
       },
       {
         identificatie: '456',
@@ -751,6 +758,7 @@ describe('fetchRelatedPersons', async () => {
           beschikkingNummer: 0,
           beschikteProducten: [],
         },
+        procesIdentificatie: '',
       },
     ];
 
@@ -771,6 +779,7 @@ describe('fetchRelatedPersons', async () => {
           documenten: [
             {
               datePublished: '2025-03-01T00:00:00',
+              download: 'DEF.pdf',
               filename: 'DEF.pdf',
               id: 'DEF',
               title: 'Verzoek: meer informatie over aanvraag',
@@ -778,6 +787,7 @@ describe('fetchRelatedPersons', async () => {
             },
             {
               datePublished: '2025-02-01T00:00:00',
+              download: 'XYZ.pdf',
               filename: 'XYZ.pdf',
               id: 'XYZ',
               title: 'Besluit: wijziging goedgekeurd',
@@ -785,6 +795,7 @@ describe('fetchRelatedPersons', async () => {
             },
             {
               datePublished: '2025-01-01T00:00:00',
+              download: 'ABC.pdf',
               filename: 'ABC.pdf',
               id: 'ABC',
               title: 'Besluit: aanvraag goedgekeurd',
@@ -875,6 +886,7 @@ describe('fetchRelatedPersons', async () => {
               bestandsnaam: 'HIJ.pdf',
             },
           ],
+          procesIdentificatie: '',
         },
       ];
       const transformed =
@@ -890,6 +902,7 @@ describe('fetchRelatedPersons', async () => {
           documenten: [
             {
               datePublished: '2025-05-29T00:00:00',
+              download: 'HIJ.pdf',
               filename: 'HIJ.pdf',
               id: 'HIJ',
               title: 'Besluit: aanvraag ander product goedgekeurd',
@@ -906,6 +919,7 @@ describe('fetchRelatedPersons', async () => {
           documenten: [
             {
               datePublished: '2025-01-01T00:00:00',
+              download: 'ABC.pdf',
               filename: 'ABC.pdf',
               id: 'ABC',
               title: 'Besluit: aanvraag goedgekeurd',
