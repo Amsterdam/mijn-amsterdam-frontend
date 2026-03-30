@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import { expect, vi } from 'vitest';
 
-import DocumentListV2 from './DocumentListV2.tsx';
+import { DocumentListV2 } from './DocumentListV2.tsx';
 import { bffApiHost } from '../../../testing/setup.ts';
-import { GenericDocument } from '../../../universal/types/App.types.ts';
+import type { GenericDocument } from '../../../universal/types/App.types.ts';
 
 vi.mock('../../hooks/analytics.hook.ts');
 

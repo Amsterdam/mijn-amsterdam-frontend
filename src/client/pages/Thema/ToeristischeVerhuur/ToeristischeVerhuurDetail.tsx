@@ -6,66 +6,26 @@ import styles from './ToeristischeVerhuurDetail.module.scss';
 import { useToeristischeVerhuurThemaData } from './useToeristischeVerhuur.hook.ts';
 import type { ToeristischeVerhuurVergunning } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur.types.ts';
 import { type VakantieverhuurVergunningFrontend } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur.types.ts';
-import {
-  getFullAddress,
-  getFullName,
-} from '../../../../universal/helpers/brp.ts';
 import type { Row, RowSet } from '../../../components/Datalist/Datalist.tsx';
 import { Datalist } from '../../../components/Datalist/Datalist.tsx';
-import DocumentListV2 from '../../../components/DocumentList/DocumentListV2.tsx';
+import { DocumentListV2 } from '../../../components/DocumentList/DocumentListV2.tsx';
+import { MissingDocumentMailto } from '../../../components/DocumentList/MissingDocumentMailto/MissingDocumentMailto.tsx';
 import LoadingContent from '../../../components/LoadingContent/LoadingContent.tsx';
 import { AddressDisplayAndModal } from '../../../components/LocationModal/LocationModal.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
-import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import { useVergunningDocumentList } from '../Vergunningen/detail-page-content/useVergunningDocumentsList.hook.ts';
 
-function getMailBody(
-  vergunning: ToeristischeVerhuurVergunning,
-  fullName: string,
-  fullAddress: string
-) {
-  return `Geachte heer/mevrouw,%0D%0A%0D%0AHierbij verzoek ik u om het [document type] document van de vergunning met zaaknummer ${vergunning.identifier} op te sturen.%0D%0A%0D%0AMet vriendelijke groet,%0D%0A%0D%0A${fullName}%0D%0A%0D%0A${fullAddress}`;
+function getMailBody(vergunning: ToeristischeVerhuurVergunning) {
+  return `\
+Geachte heer/mevrouw,
+
+Hierbij verzoek ik u om het [document type] document van de vergunning met zaaknummer ${vergunning.identifier} op te sturen.`;
 }
 
 function getMailSubject(vergunning: ToeristischeVerhuurVergunning) {
   return `${vergunning.identifier} - Document opvragen`;
-}
-
-function BnBDocumentInfo({
-  vergunning,
-}: {
-  vergunning: ToeristischeVerhuurVergunning;
-}) {
-  const INCLUDE_WOONPLAATS = true;
-  const INCLUDE_LAND = false;
-  const SEPARATOR = '%0D%0A';
-
-  const appState = useAppStateGetter();
-  const fullName = appState.BRP?.content?.persoon
-    ? getFullName(appState.BRP.content.persoon)
-    : '[naam]';
-  const fullAddress = appState.BRP?.content?.adres
-    ? getFullAddress(
-        appState.BRP.content?.adres,
-        INCLUDE_WOONPLAATS,
-        INCLUDE_LAND,
-        SEPARATOR
-      )
-    : '[adres]';
-  return (
-    <Paragraph>
-      <strong>Ziet u niet het juiste document?</strong> Stuur een mail naar:{' '}
-      <Link
-        href={`mailto:bedandbreakfast@amsterdam.nl?subject=${getMailSubject(vergunning)}&body=${getMailBody(vergunning, fullName, fullAddress)}`}
-        rel="noreferrer"
-      >
-        bedandbreakfast@amsterdam.nl
-      </Link>{' '}
-      om uw document op te vragen.
-    </Paragraph>
-  );
 }
 
 type DetailPageContentProps = {
@@ -150,6 +110,16 @@ export function ToeristischeVerhuurDetail() {
     ? undefined
     : (vergunning as VakantieverhuurVergunningFrontend)?.fetchDocumentsUrl;
 
+  const missingDocumentMailto =
+    vergunning && isBnBVergunning
+      ? {
+          to: 'bedandbreakfast@amsterdam.nl',
+          subject: getMailSubject(vergunning),
+          body: getMailBody(vergunning),
+          includeUserSignature: true,
+        }
+      : undefined;
+
   let vergunningDocuments = isBnBVergunning ? vergunning.documents : [];
 
   const {
@@ -192,22 +162,23 @@ export function ToeristischeVerhuurDetail() {
                         {isLoadingDocuments && <LoadingContent />}
                         {!isLoadingDocuments && !isLoading && (
                           <>
-                            {!!vergunningDocuments.length && (
-                              <DocumentListV2
-                                documents={vergunningDocuments}
-                                columns={['', '']}
-                                className={
-                                  vergunning.title ===
-                                  'Vergunning bed & breakfast'
-                                    ? 'ams-mb-m'
-                                    : ''
-                                }
-                              />
-                            )}
+                            <DocumentListV2
+                              documents={vergunningDocuments}
+                              columns={['', '']}
+                              className={
+                                vergunning.title ===
+                                'Vergunning bed & breakfast'
+                                  ? 'ams-mb-m'
+                                  : ''
+                              }
+                            />
                             {vergunning.title ===
-                              'Vergunning bed & breakfast' && (
-                              <BnBDocumentInfo vergunning={vergunning} />
-                            )}
+                              'Vergunning bed & breakfast' &&
+                              missingDocumentMailto && (
+                                <MissingDocumentMailto
+                                  config={missingDocumentMailto}
+                                />
+                              )}
                           </>
                         )}
                       </>
