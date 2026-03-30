@@ -8,7 +8,10 @@ import {
 } from '../../../../universal/helpers/date.ts';
 import type { MyNotification } from '../../../../universal/types/App.types.ts';
 import type { ServiceResults } from '../../content-tips/tip-types.ts';
-import { addApiBasePathToDocumentUrls, documentDownloadName } from '../helpers.ts';
+import {
+  addApiBasePathToDocumentUrls,
+  documentDownloadName,
+} from '../helpers.ts';
 import type {
   WpiIncomeSpecification,
   WpiIncomeSpecificationTransformed,
