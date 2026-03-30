@@ -51,13 +51,15 @@ describe('<Profile />', () => {
 
   test('Lives in Mokum + verbintenis: displays all data', async () => {
     bffApi.get('/aantal-bewoners').reply(200, { content: '3', status: 'OK' });
-    render(
+    const { asFragment } = render(
       <Component
         state={{
           persoon: {
             geslachtsnaam: 'Mooier',
             geboorteplaatsnaam: 'Neverland',
             mokum: true,
+            aanschrijfwijze: 'Mooier, Piet',
+            naamgebruik: 'eigen geslachtsnaam',
           },
           adres: {
             straatnaam: 'Mooie Straat',
@@ -117,6 +119,8 @@ describe('<Profile />', () => {
     expect(
       screen.queryByText('Vertrokken Onbekend Waarheen')
     ).not.toBeInTheDocument();
+
+    expect(asFragment()).toMatchSnapshot();
   });
 
   test('Has briefadres if isBriefadres set to true', async () => {
@@ -218,7 +222,7 @@ describe('<Profile />', () => {
     ).not.toBeInTheDocument();
   });
 
-  test('Matches the Full Page snapshot no address known', async () => {
+  test('Shows gegevens onbekend', async () => {
     render(
       <Component
         state={{ persoon: {}, adres: {} as Adres, adresHistorisch: [] }}
@@ -228,7 +232,7 @@ describe('<Profile />', () => {
     expect(screen.queryByText('onbekend')).toBeInTheDocument();
   });
 
-  test('Matches the Full Page snapshot "Punt adres" in onderzoek', async () => {
+  test('Shows adres in onderzoek', async () => {
     {
       const comp = render(
         <Component state={{ persoon: { adresInOnderzoek: '089999' } }} />
