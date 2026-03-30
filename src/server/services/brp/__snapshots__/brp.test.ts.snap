@@ -96,6 +96,7 @@ exports[`brp.ts > fetchBrpByBsn > Should format response data correctly > Format
       },
     ],
     "persoon": {
+      "aanschrijfwijze": "Akwasi",
       "adresInOnderzoek": null,
       "bsn": "999971074",
       "datumVertrekUitNederland": null,
@@ -200,6 +201,7 @@ exports[`brp.ts > fetchBrpByBsn > Should format response data correctly > Format
       },
     ],
     "persoon": {
+      "aanschrijfwijze": "H.I.G.J. de Roos",
       "adresInOnderzoek": null,
       "bsn": "999990810",
       "datumVertrekUitNederland": null,
