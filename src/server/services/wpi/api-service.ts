@@ -303,7 +303,7 @@ export async function fetchWpiNotifications(
   {
     const { status, content } = await fetchSpecificaties(authProfileAndToken);
 
-    if (status === 'OK' && Array.isArray(content)) {
+    if (status === 'OK' && content) {
       notifications.push(...getSpecificatieNotifications(content));
     }
   }
