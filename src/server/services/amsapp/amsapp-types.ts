@@ -1,4 +1,4 @@
-import type { AMSAPP_PROTOCOl } from './amsapp-service-config.ts';
+import type { AMSAPP_PROTOCOL } from './amsapp-service-config.ts';
 
 export type ApiError = {
   code: string;
@@ -11,5 +11,5 @@ export type RenderProps = {
   urlToCSS: string;
   error?: ApiError;
   identifier?: string; // Only included in debug build.
-  appHref?: `${typeof AMSAPP_PROTOCOl}${'stadspas' | 'mijn-amsterdam'}/${'gelukt' | 'mislukt'}${string}`;
+  appHref?: `${typeof AMSAPP_PROTOCOL}${'stadspas' | 'mijn-amsterdam'}/${'gelukt' | 'mislukt'}${string}`;
 };

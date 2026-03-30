@@ -1,4 +1,4 @@
-import type { PoolConfig} from 'pg';
+import type { PoolConfig } from 'pg';
 import { Pool } from 'pg';
 
 import { IS_DEVELOPMENT } from '../../../universal/config/env.ts';
@@ -31,9 +31,9 @@ export function getPool() {
 }
 
 /**
- * Test utility: closes and resets the singleton pool.
+ * Test/webjob utility: closes and resets the singleton pool.
  *
- * This is useful for integration tests that need to bring Postgres up/down,
+ * This is useful for webjobs and integration tests that need to bring Postgres up/down,
  * change PG* env vars between suites, or avoid open handles after Vitest.
  */
 export async function endPool() {

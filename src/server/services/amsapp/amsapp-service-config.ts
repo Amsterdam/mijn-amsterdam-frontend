@@ -3,7 +3,6 @@ import { authRoutes } from '../../auth/auth-routes.ts';
 import { getFromEnv } from '../../helpers/env.ts';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
 
-export const AMSAPP_BASE_PATH = '/services/amsapp';
 export const maFrontendUrl = getFromEnv('MA_FRONTEND_URL')!;
 
 export const nonce = getFromEnv('BFF_AMSAPP_NONCE')!; // This nonce is whitelisted in the CSP config
@@ -19,4 +18,4 @@ export const baseRenderProps = {
   },
 } as const;
 
-export const AMSAPP_PROTOCOl = 'amsterdam://';
+export const AMSAPP_PROTOCOL = 'amsterdam://';
