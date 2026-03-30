@@ -174,7 +174,7 @@ export async function fetchNotificationsAndTipsFromServices(
           );
           err.stack = error instanceof Error ? error.stack : undefined;
           captureException(err);
-          return apiErrorResult(error, null);
+          return apiErrorResult(err.message, null);
         }
       );
       return [serviceId, result];
