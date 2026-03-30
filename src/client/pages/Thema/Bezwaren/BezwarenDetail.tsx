@@ -7,7 +7,7 @@ import type { BezwaarFrontend } from '../../../../server/services/bezwaren/types
 import { entries } from '../../../../universal/helpers/utils.ts';
 import type { Row, RowSet } from '../../../components/Datalist/Datalist.tsx';
 import { Datalist } from '../../../components/Datalist/Datalist.tsx';
-import DocumentListV2 from '../../../components/DocumentList/DocumentListV2.tsx';
+import { DocumentListV2 } from '../../../components/DocumentList/DocumentListV2.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { Steps } from '../../../components/StatusSteps/StatusSteps.tsx';
 import { TextClamp } from '../../../components/TextClamp/TextClamp.tsx';
