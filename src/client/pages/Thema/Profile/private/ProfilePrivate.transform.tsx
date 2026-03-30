@@ -17,13 +17,10 @@ import type { AppState } from '../../../../../universal/types/App.types.ts';
 import LoadingContent from '../../../../components/LoadingContent/LoadingContent.tsx';
 import {
   BRP_LABEL_AANTAL_INGESCHREVEN_PERSONEN,
-  profileLinks,
+  themaConfig,
 } from '../Profile-thema-config.ts';
-import type {
-  ProfileLabels} from '../profileDataFormatter.ts';
-import {
-  formatProfileSectionData,
-} from '../profileDataFormatter.ts';
+import type { ProfileLabels } from '../profileDataFormatter.ts';
+import { formatProfileSectionData } from '../profileDataFormatter.ts';
 import type {
   ActionLink,
   PanelConfig,
@@ -281,8 +278,8 @@ export const panelConfig: PanelConfig<
 
     if (isMokum(BRP.content)) {
       actionLinks.push({
-        title: 'Inzien of correctie doorgeven',
-        url: profileLinks.CHANGE_PERSONAL_DATA,
+        title: themaConfig.BRP.pageLinks[0].title,
+        url: themaConfig.BRP.pageLinks[0].to,
         external: true,
       });
     }
@@ -302,15 +299,15 @@ export const panelConfig: PanelConfig<
     const actionLinks: ActionLink[] = [
       {
         title,
-        url: profileLinks.REPORT_RELOCATION,
+        url: themaConfig.BRP.pageLinks[2].to,
         external: true,
       },
     ];
 
     if (profileData.adres?.[BRP_LABEL_AANTAL_INGESCHREVEN_PERSONEN]) {
       actionLinks.push({
-        title: 'Onjuiste inschrijving melden',
-        url: profileLinks.CHANGE_RESIDENT_COUNT,
+        title: themaConfig.BRP.pageLinks[1].title,
+        url: themaConfig.BRP.pageLinks[1].to,
         external: true,
         className: styles['ActionLink--reportIncorrectResidentCount'],
       });
@@ -345,8 +342,8 @@ export const panelConfig: PanelConfig<
     actionLinks: isMokum(BRP.content)
       ? [
           {
-            title: 'Inzien of correctie doorgeven',
-            url: profileLinks.CHANGE_PERSONAL_DATA,
+            title: themaConfig.BRP.pageLinks[0].title,
+            url: themaConfig.BRP.pageLinks[0].to,
             external: true,
           },
         ]
@@ -361,8 +358,8 @@ export const panelConfig: PanelConfig<
     actionLinks: isMokum(BRP.content)
       ? [
           {
-            title: 'Inzien of correctie doorgeven',
-            url: profileLinks.CHANGE_PERSONAL_DATA,
+            title: themaConfig.BRP.pageLinks[0].title,
+            url: themaConfig.BRP.pageLinks[0].to,
             external: true,
           },
         ]

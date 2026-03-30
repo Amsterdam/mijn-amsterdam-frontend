@@ -19,7 +19,7 @@ export const ProfileRoutes = [
   {
     route: routeConfig.listPageContactmomenten.path,
     Component: ContactmomentenListPage,
-    isActive: FeatureToggle.contactmomentenActive, // TO DO YH kijken of dit voor de themaconfig al zo was
+    isActive: FeatureToggle.contactmomentenActive,
   },
 ];
 
