@@ -185,19 +185,20 @@ export type Adres = {
 export type PersoonBasis = {
   geboortedatum: string | null;
   geboortedatumFormatted?: string | null;
-  overlijdensdatum?: string | null;
-  overlijdensdatumFormatted?: string | null;
   geboortelandnaam: string | null;
   geboorteplaatsnaam: string | null;
   geslachtsnaam: string | null;
   naamgebruik: string | null;
   omschrijvingAdellijkeTitel: string | null;
   opgemaakteNaam: string | null;
+  overlijdensdatum?: string | null;
+  overlijdensdatumFormatted?: string | null;
   voornamen: string | null;
   voorvoegselGeslachtsnaam: string | null;
 };
 
 export type Persoon = PersoonBasis & {
+  aanschrijfwijze: string | null;
   bsn: string | null;
   gemeentenaamInschrijving: string | null;
   omschrijvingBurgerlijkeStaat: 'Ongehuwd' | null;
