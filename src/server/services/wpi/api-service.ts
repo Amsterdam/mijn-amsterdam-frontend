@@ -175,7 +175,7 @@ export async function fetchEAanvragen(
     }
   );
 
-  if (about && response.status === 'OK' && response.content) {
+  if (about && response.status === 'OK' && Array.isArray(response.content)) {
     return apiSuccessResult(
       response.content.filter((requestProcess) =>
         about.includes(requestProcess.about as string)
@@ -183,7 +183,10 @@ export async function fetchEAanvragen(
     );
   }
 
-  return apiErrorResult('Failed to fetch E-aanvragen', null, response.status);
+  return apiErrorResult(
+    `Failed to fetch ${about?.join(', ')} E-aanvragen`,
+    null
+  );
 }
 
 export async function fetchTozo(authProfileAndToken: AuthProfileAndToken) {
