@@ -22,6 +22,7 @@ import type {
   PBVergunning,
   ZaakFrontendCombined,
 } from '../../../../server/services/vergunningen/config-and-types.ts';
+import { getMissingDocumentsEmailForCaseType } from '../../../../server/services/vergunningen/config-and-types.ts';
 import { Datalist } from '../../../components/Datalist/Datalist.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
@@ -118,6 +119,13 @@ export function VergunningenDetail() {
   } = useVergunningenDetailData(vergunningen);
   useHTMLDocumentTitle(themaConfig.detailPage.route);
 
+  const missingDocumentsEmail = getMissingDocumentsEmailForCaseType(
+    vergunning?.caseType
+  );
+  const missingDocumentMail = missingDocumentsEmail
+    ? { to: missingDocumentsEmail }
+    : undefined;
+
   return (
     <ThemaDetailPagina
       themaId={themaId}
@@ -145,6 +153,7 @@ export function VergunningenDetail() {
                     DecosVergunning | PBVergunning
                   >
                 }
+                missingDocumentMailtoConfig={missingDocumentMail}
               />
             </PageContentCell>
           </>
