@@ -1,7 +1,6 @@
 import { Buffer } from 'node:buffer';
 import crypto from 'node:crypto';
 
-import { IS_PRODUCTION } from '../../universal/config/env.ts';
 import type { DecryptedPayloadAndSessionID } from '../services/shared/decrypt-route-param.ts';
 
 type Base64IvEncryptedValue = string;
@@ -69,35 +68,4 @@ export function encryptPayloadAndSessionID<T extends Record<string, unknown>>(
   };
   const [encrptedValue] = encrypt(JSON.stringify(payloadToEncrypt));
   return encrptedValue;
-}
-
-/** IMPORTANT: Not entirely secure. Strongly prefer the encrypt function. Never expose these encrypted values in the UI or API. This function is only for internally used values that need to be deterministic. */
-export function encryptDeterministic(
-  plainText: string,
-  encryptionKey: string | Buffer | undefined = process.env
-    .BFF_GENERAL_ENCRYPTION_KEY,
-  pepper: string | Buffer | undefined = process.env.BFF_GENERAL_HASH_PEPPER
-): [Base64IvEncryptedValue, EncryptedValue, Iv] {
-  if (IS_PRODUCTION) {
-    throw new Error(
-      'Preliminary implementation. Should not be used in production'
-    );
-  }
-  if (!encryptionKey) {
-    throw new Error('Cannot encrypt, Encryption key not found.');
-  }
-  if (!pepper) {
-    throw new Error('Cannot encrypt, Pepper not found.');
-  }
-
-  const iv = crypto
-    .createHash('sha256')
-    .update(pepper)
-    .update(plainText)
-    .digest()
-    .subarray(0, IV_BYTE_LENGTH);
-  const cipher = crypto.createCipheriv(ENC_ALGO, encryptionKey, iv);
-  const encrypted = Buffer.concat([cipher.update(plainText), cipher.final()]);
-
-  return [Buffer.concat([iv, encrypted]).toString('base64url'), encrypted, iv];
 }

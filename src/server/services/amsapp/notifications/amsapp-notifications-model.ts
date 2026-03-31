@@ -9,10 +9,8 @@ import {
 } from './amsapp-notifications-types.ts';
 import { toISOString } from '../../../../universal/helpers/date.ts';
 import { isRecord } from '../../../../universal/helpers/utils.ts';
-import {
-  decrypt,
-  encryptDeterministic,
-} from '../../../helpers/encrypt-decrypt.ts';
+import { decrypt, encrypt } from '../../../helpers/encrypt-decrypt.ts';
+import { hashWithPepper } from '../../../helpers/hash.ts';
 import { logger } from '../../../logging.ts';
 import { IS_DB_ENABLED } from '../../db/config.ts';
 import { db as db_, type DBAdapter } from '../../db/db.ts';
@@ -50,19 +48,37 @@ const db = {
 
 // POSTGRES is case insensitive. We therefore always use snake_case within postgres
 export const NOTIFICATIONS_TABLE_NAME = 'bff_notifications';
+
+function getRowId(profileId: BSN): string {
+  return hashWithPepper(profileId);
+}
+
+function encryptProfileId(profileId: BSN): string {
+  const [encryptedProfileId] = encrypt(profileId);
+  return encryptedProfileId;
+}
+
 async function setupTables() {
-  const initDBQueries = [
+  const initDBQuery = [
     `
     -- Table Definition
     CREATE TABLE IF NOT EXISTS "public"."${NOTIFICATIONS_TABLE_NAME}" (
+      "id" varchar(64) NOT NULL,
       "profile_id" varchar(43) NOT NULL,
       "consumer_ids" varchar(100)[] DEFAULT '{}',
       "service_ids" varchar(50)[] DEFAULT '{}',
       "content" JSONB,
       "date_updated" timestamp NOT NULL DEFAULT now(),
       "date_created" timestamp NOT NULL DEFAULT now(),
-      PRIMARY KEY ("profile_id")
+      PRIMARY KEY ("id")
     );
+  `,
+  ];
+
+  const alterDBQueries = [
+    `
+    ALTER TABLE IF EXISTS "public"."${NOTIFICATIONS_TABLE_NAME}"
+    ADD COLUMN IF NOT EXISTS "id" VARCHAR(64);
   `,
     `
     ALTER TABLE IF EXISTS "public"."${NOTIFICATIONS_TABLE_NAME}"
@@ -80,10 +96,41 @@ async function setupTables() {
   `,
   ];
 
-  try {
-    for (const query of initDBQueries) {
-      await db.query(query);
+  const backfillIdForExistingRows = async () => {
+    const rows = (await db.queryALL(
+      `SELECT profile_id FROM ${NOTIFICATIONS_TABLE_NAME} WHERE id IS NULL OR id = ''`
+    )) as { profileId: string }[];
+
+    for (const row of rows) {
+      const decryptedProfileId = decrypt(row.profileId);
+      const id = hashWithPepper(decryptedProfileId);
+      await db.query(
+        `UPDATE ${NOTIFICATIONS_TABLE_NAME} SET id = $1 WHERE profile_id = $2`,
+        [id, row.profileId]
+      );
     }
+  };
+
+  const ensurePrimaryKeyOnId = [
+    `ALTER TABLE IF EXISTS "public"."${NOTIFICATIONS_TABLE_NAME}" ALTER COLUMN "id" SET NOT NULL;`,
+    `ALTER TABLE IF EXISTS "public"."${NOTIFICATIONS_TABLE_NAME}" DROP CONSTRAINT IF EXISTS "${NOTIFICATIONS_TABLE_NAME}_pkey";`,
+    `ALTER TABLE IF EXISTS "public"."${NOTIFICATIONS_TABLE_NAME}" ADD CONSTRAINT "${NOTIFICATIONS_TABLE_NAME}_pkey" PRIMARY KEY ("id");`,
+  ];
+
+  const ensureIndexes = [
+    `CREATE INDEX IF NOT EXISTS ${NOTIFICATIONS_TABLE_NAME}_date_created_idx ON ${NOTIFICATIONS_TABLE_NAME} (date_created);`,
+    `CREATE INDEX IF NOT EXISTS ${NOTIFICATIONS_TABLE_NAME}_consumer_ids_gin_idx ON ${NOTIFICATIONS_TABLE_NAME} USING GIN (consumer_ids);`,
+  ];
+
+  try {
+    await db.query(initDBQuery.join('\n'));
+    await db.query(alterDBQueries.join('\n'));
+
+    await backfillIdForExistingRows();
+
+    await db.query(ensurePrimaryKeyOnId.join('\n'));
+    await db.query(ensureIndexes.join('\n'));
+
     logger.info(`setupTable: ${NOTIFICATIONS_TABLE_NAME} succeeded.`);
   } catch (error) {
     logger.error(error, `setupTable: ${NOTIFICATIONS_TABLE_NAME} failed.`);
@@ -97,23 +144,24 @@ if (IS_DB_ENABLED) {
 // POSTGRES is case insensitive. We therefore always use snake_case within postgres
 const queries = {
   upsertConsumer: `\
-INSERT INTO ${NOTIFICATIONS_TABLE_NAME} (profile_id, profile_name, consumer_ids, service_ids, date_updated, last_login_date)
-VALUES ($1, $2, ARRAY[$3], $4, $5, $6)
-ON CONFLICT (profile_id) DO UPDATE
+INSERT INTO ${NOTIFICATIONS_TABLE_NAME} (id, profile_id, profile_name, consumer_ids, service_ids, date_updated, last_login_date)
+VALUES ($1, $2, $3, ARRAY[$4], $5, $6, $7)
+ON CONFLICT (id) DO UPDATE
 SET
+  id = EXCLUDED.id,
   profile_id = EXCLUDED.profile_id,
-  profile_name = $2,
-  consumer_ids = ( SELECT ARRAY( SELECT DISTINCT unnest(array_append(${NOTIFICATIONS_TABLE_NAME}.consumer_ids, $3)) ) ),
+  profile_name = EXCLUDED.profile_name,
+  consumer_ids = ( SELECT ARRAY( SELECT DISTINCT unnest(array_append(${NOTIFICATIONS_TABLE_NAME}.consumer_ids, $4)) ) ),
   service_ids = EXCLUDED.service_ids,
   date_updated = EXCLUDED.date_updated,
   last_login_date = EXCLUDED.last_login_date;
 `,
-  deleteProfileIfConsumerIdsIsEmpty: `DELETE FROM ${NOTIFICATIONS_TABLE_NAME} WHERE consumer_ids = '{}' AND profile_id = $1`,
+  deleteProfileIfConsumerIdsIsEmpty: `DELETE FROM ${NOTIFICATIONS_TABLE_NAME} WHERE consumer_ids = '{}' AND id = $1`,
   deleteConsumer: `\
 UPDATE ${NOTIFICATIONS_TABLE_NAME}
 SET consumer_ids = array_remove(consumer_ids, $1)
 WHERE $1 = ANY (consumer_ids)
-RETURNING profile_id, consumer_ids;
+RETURNING id, consumer_ids;
     `,
   updateNotifications: `\
 UPDATE ${NOTIFICATIONS_TABLE_NAME} row
@@ -131,13 +179,13 @@ SET
         WHERE key = ANY (row.service_ids)
       )
   )
-WHERE profile_id = $1;
+WHERE id = $1;
 `,
   getProfilesCount: `SELECT COUNT(*)::int AS row_count FROM ${NOTIFICATIONS_TABLE_NAME} `,
   getProfiles: `SELECT profile_id, consumer_ids, service_ids, content, date_updated, last_login_date FROM ${NOTIFICATIONS_TABLE_NAME}`,
   getProfileIds: `SELECT profile_id, consumer_ids, service_ids FROM ${NOTIFICATIONS_TABLE_NAME}`,
   getProfileByConsumer: `SELECT profile_name, service_ids, date_updated, last_login_date FROM ${NOTIFICATIONS_TABLE_NAME} WHERE $1 = ANY(consumer_ids)`,
-  getProfileById: `SELECT profile_id, profile_name, service_ids, date_updated, last_login_date FROM ${NOTIFICATIONS_TABLE_NAME} WHERE profile_id = $1`,
+  getProfileById: `SELECT profile_id, profile_name, service_ids, date_updated, last_login_date FROM ${NOTIFICATIONS_TABLE_NAME} WHERE id = $1`,
   getRegistrationsOverview: `SELECT * FROM ${NOTIFICATIONS_TABLE_NAME}`,
   truncate: `TRUNCATE TABLE ${NOTIFICATIONS_TABLE_NAME}`,
 };
@@ -147,8 +195,8 @@ export async function truncate() {
 }
 
 export async function getProfileById(profileId: BSN) {
-  const [encryptedProfileID] = encryptDeterministic(profileId);
-  return db.queryGET(queries.getProfileById, [encryptedProfileID]);
+  const id = getRowId(profileId);
+  return db.queryGET(queries.getProfileById, [id]);
 }
 
 export async function getProfileByConsumer(consumerId: ConsumerId) {
@@ -165,10 +213,12 @@ export async function upsertConsumer(
   consumerId: ConsumerId,
   serviceIds: ServiceId[]
 ) {
-  const [encryptedProfileID] = encryptDeterministic(profileId);
+  const id = getRowId(profileId);
+  const encryptedProfileId = encryptProfileId(profileId);
   const now = toISOString(new Date());
   return db.query(queries.upsertConsumer, [
-    encryptedProfileID,
+    id,
+    encryptedProfileId,
     profileName,
     consumerId,
     serviceIds,
@@ -181,12 +231,12 @@ export async function upsertConsumer(
 // Therefore, multiple queries are used
 export async function deleteConsumer(consumerId: ConsumerId) {
   const rows = (await db.queryALL(queries.deleteConsumer, [consumerId])) as {
-    profileId: string;
+    id: string;
     consumerIds: string[];
   }[];
-  for (const { profileId, consumerIds } of rows) {
+  for (const { id, consumerIds } of rows) {
     if (!consumerIds || consumerIds.length === 0) {
-      await db.query(queries.deleteProfileIfConsumerIdsIsEmpty, [profileId]);
+      await db.query(queries.deleteProfileIfConsumerIdsIsEmpty, [id]);
     }
   }
   return rows.length;
@@ -201,9 +251,9 @@ export async function storeNotifications(
     (acc, service) => ({ ...acc, [service.serviceId]: service }),
     {}
   );
-  const [encryptedProfileID] = encryptDeterministic(profileId);
+  const id = getRowId(profileId);
   return db.query(queries.updateNotifications, [
-    encryptedProfileID,
+    id,
     servicesObj,
     toISOString(new Date()),
     lastLoginDate,
