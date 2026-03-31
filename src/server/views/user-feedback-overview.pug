@@ -1,7 +1,7 @@
 h1=feedbackOverview.survey.title
 
 p Totaal aantal inzendingen: #{feedbackOverview.entries.length}
-p Gemiddeld cijfer #{feedbackOverview.score}
+p Gemiddeld cijfer (op deze pagina) #{feedbackOverview.score}
 
 if feedbackOverview.pageLinks.length > 1
   nav
@@ -17,6 +17,7 @@ if feedbackOverview.pageLinks.length > 1
 table(border='1', cellpadding='5', cellspacing='0')
   thead
     tr
+      th ID
       th Datum inzending
       th Entrypoint
       th Pagina titel
@@ -24,9 +25,13 @@ table(border='1', cellpadding='5', cellspacing='0')
         th= question
       th Errors
       th Thema's
+      th Metadata
   tbody
     each entry in feedbackOverview.entries
       tr
+        td
+          a(id=`entry-${entry.id}` href=`#entry-${entry.id}`)
+            strong #{entry.id}
         td= entry.dateCreated.toLocaleString('nl-NL', { dateStyle: 'short', timeStyle: 'short' })
         td= entry.entryPoint
         td= entry.metadata.browser_title
@@ -40,6 +45,8 @@ table(border='1', cellpadding='5', cellspacing='0')
           ul
             each thema in entry.metadata.maThemas || []
               li #{thema}
+        td
+          pre= JSON.stringify(entry.metadata, null, 2)
 
 
 

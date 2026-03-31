@@ -145,6 +145,7 @@ async function fetchFeedbackSurveyEntries(
       });
       const entries = entriesBySurvey.map((entry) => {
         return {
+          id: entry.id,
           answers: Object.fromEntries(
             entry.answers.map((answer) => [answer.question, answer.answer])
           ),
