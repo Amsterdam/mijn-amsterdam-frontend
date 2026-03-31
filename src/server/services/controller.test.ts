@@ -220,9 +220,13 @@ describe('controller', () => {
     );
 
     expect(mocks.storeNotificationsResponses).toHaveBeenCalledTimes(1);
-    expect(mocks.storeNotificationsResponses).toHaveBeenCalledWith('user-123', {
-      afval: { content: {}, status: 'OK' },
-    });
+    expect(mocks.storeNotificationsResponses).toHaveBeenCalledWith(
+      'user-123',
+      {
+        afval: { content: {}, status: 'OK' },
+      },
+      { updateLastLoginDate: true }
+    );
   });
 });
 
