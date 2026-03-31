@@ -121,23 +121,20 @@ export async function fetchMaApiVoorzieningById(
   const voorzieningenResponse = await fetchZorgnedAanvragenWMO(bsn);
 
   if (voorzieningenResponse.status === 'OK') {
-    const voorzieningen = voorzieningenResponse.content
-      .filter((voorziening) => voorziening.id === id)
-      .map((voorziening) => {
-        return addMaApiPropsToVoorziening(
-          maVoorzieningenApiConfig,
-          voorziening
-        );
-      })
-      .map((voorziening) => {
-        return pick(voorziening, PICK_VOORZIENING_KEYS);
-      });
+    const voorziening = voorzieningenResponse.content.find(
+      (voorziening) => voorziening.id === id
+    );
 
-    if (voorzieningen.length === 0) {
+    if (!voorziening) {
       return apiErrorResult(`No voorziening found with id ${id}`, null, 404);
     }
 
-    return apiSuccessResult(voorzieningen[0]);
+    return apiSuccessResult(
+      pick(
+        addMaApiPropsToVoorziening(maVoorzieningenApiConfig, voorziening),
+        PICK_VOORZIENING_KEYS
+      )
+    );
   }
 
   return voorzieningenResponse;
