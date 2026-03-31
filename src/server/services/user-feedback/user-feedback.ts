@@ -98,9 +98,10 @@ export async function saveUserFeedback(
 ): ApiResponsePromise<SaveUserFeedbackResponse> {
   const surveyEntryPayload = getSurveyEntryPayload(data);
 
-  const hasAnswer = surveyEntryPayload.answers.some(
-    (answer) => answer.answer.length
-  );
+  const hasAnswer = surveyEntryPayload.answers.some((answer) => {
+    // Checks if the answer is not just a number.
+    return isNaN(parseInt(answer.answer, 10));
+  });
 
   const requestConfig = getCustomApiConfig(sourceApiConfig, {
     formatUrl: ({ url }) => `${url}/${surveyId}/versions/${version}/entries`,
@@ -115,7 +116,7 @@ export async function saveUserFeedback(
     // There is an alert called 'User feedback with a comment detected' -
     // that requires this log line to be able to fire.
     captureMessage('A userfeedback survey has been submitted', {
-      properties: { hasAnswer: true },
+      properties: { hasAnswer },
     });
   }
 
