@@ -60,6 +60,14 @@ export type NotificationsAndTipsResponse =
 export type ServiceList = typeof notificationServices.commercial &
   typeof notificationServices.private;
 
+type NotificationServicesListByProfileType = {
+  [ProfileType in AuthProfileAndToken['profile']['profileType']]: Record<
+    string,
+    (
+      authProfileAndToken: AuthProfileAndToken
+    ) => Promise<NotificationsAndTipsResponse>
+  >;
+};
 export const notificationServices = {
   commercial: {
     afis: fetchAfisNotifications,
@@ -99,7 +107,7 @@ export const notificationServices = {
     vergunningen: fetchVergunningenNotifications,
     parkeren: fetchParkeerVergunningenNotifications,
   },
-} as const;
+} as const satisfies NotificationServicesListByProfileType;
 
 export function getTipsAndNotificationsFromApiResults(
   responses: NotificationsAndTipsResponse[]
