@@ -15,14 +15,75 @@ export type FetchWmoVoorzieningenApiOptions = {
   maProductgroep?: z.infer<typeof voorzieningenRequestInput>['maProductgroep'];
 };
 
+// These product.identificatie correspond to WRA products that can be repaired.
+const PRODUCT_IDS_WITH_REPARATIEVERZOEK_ACTION = [
+  '13W10',
+  '13W11',
+  '13W12',
+  '13W14',
+  '13W14',
+  '13W15',
+  '13W18',
+  '13W19',
+  '13W20',
+  '13W21',
+  '13W22',
+  '13W23',
+  '13W24',
+  '13W25',
+  '13W26',
+  '13W27',
+  '13W28',
+  '13W29',
+  '13W30',
+  '13W31',
+  '13W32',
+  '13W34',
+  '13W40',
+  '13W41',
+  '13W42',
+  '13W43',
+  '13W44',
+  '13W46',
+  '13W47',
+  '13W48',
+  '13W50',
+  '13W51',
+  '13W52',
+  '13W54',
+  '13W55',
+  '13W56',
+  '13W57',
+  '13W70',
+  '13W71',
+  '13W73',
+  '13W74',
+  '13W75',
+  '13W76',
+  '13W77',
+  '13W78',
+  '13W79',
+  '13W80',
+  '13W81',
+  '13W82',
+  '13W84',
+  '13W90',
+  '13W91',
+  '13W92',
+  '13W93',
+  '13W94',
+  '13W96',
+];
+
 export const wmoVoorzieningenApiConfig: WmoApiConfig[] = [
   // Reparatieverzoek action for WRA products with ZIN leveringsvorm
   {
     match: {
       leveringsVorm: 'ZIN',
       isActueel: true,
-      productsoortCode: ['ZIN', 'WRA', 'WRA1', 'WRA2', 'WRA3', 'WRA4', 'WRA5'],
       datumEindeLevering: null,
+      productIdentificatie: PRODUCT_IDS_WITH_REPARATIEVERZOEK_ACTION,
+      // Only show reparatieverzoek action for products where the datumBeginLevering is in the past, to prevent showing this action for products that are not yet active.
       datumBeginLevering: (voorziening) =>
         voorziening.datumBeginLevering
           ? isBefore(voorziening.datumBeginLevering, new Date())
