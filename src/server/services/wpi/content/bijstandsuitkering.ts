@@ -162,7 +162,10 @@ export function getNotifications(
 
   const aanvraagNotifications = bijstandsuitkeringAanvragen
     .filter((aanvraag) => {
-      return isRequestProcessActual(aanvraag.datePublished, today);
+      return (
+        !!aanvraag?.datePublished &&
+        isRequestProcessActual(aanvraag.datePublished, today)
+      );
     })
     .flatMap((aanvraag) =>
       aanvraag.steps.map((step) =>

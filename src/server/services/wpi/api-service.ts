@@ -2,7 +2,10 @@ import type {
   ApiResponse,
   ApiResponse_DEPRECATED,
 } from '../../../universal/helpers/api.ts';
-import { apiSuccessResult } from '../../../universal/helpers/api.ts';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+} from '../../../universal/helpers/api.ts';
 import { dateSort } from '../../../universal/helpers/date.ts';
 import { pick } from '../../../universal/helpers/utils.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
@@ -172,7 +175,7 @@ export async function fetchEAanvragen(
     }
   );
 
-  if (about && response.status === 'OK' && response.content) {
+  if (about && response.status === 'OK' && Array.isArray(response.content)) {
     return apiSuccessResult(
       response.content.filter((requestProcess) =>
         about.includes(requestProcess.about as string)
@@ -180,7 +183,10 @@ export async function fetchEAanvragen(
     );
   }
 
-  return response;
+  return apiErrorResult(
+    `Failed to fetch ${about?.join(', ')} E-aanvragen`,
+    null
+  );
 }
 
 export async function fetchTozo(authProfileAndToken: AuthProfileAndToken) {
@@ -210,12 +216,14 @@ export function transformIncomSpecificationResponse(
   return {
     jaaropgaven:
       response.content?.jaaropgaven
+        .filter((jaaropgave) => !!jaaropgave?.datePublished)
         .map((jaaropgave) =>
           transformIncomeSpecificationItem(sessionID, jaaropgave)
         )
         .sort(dateSort('datePublished', 'desc')) ?? [],
     uitkeringsspecificaties:
       response.content?.uitkeringsspecificaties
+        .filter((specification) => !!specification?.datePublished)
         .map((specification) =>
           transformIncomeSpecificationItem(sessionID, specification)
         )
@@ -266,11 +274,14 @@ export async function fetchWpiNotifications(
   {
     const { status, content } = await fetchEAanvragen(authProfileAndToken);
 
-    if (status === 'OK') {
+    if (status === 'OK' && Array.isArray(content)) {
       const eAanvraagNotifications =
         content
           ?.filter((requestProcess) => {
-            return isRequestProcessActual(requestProcess.datePublished, today);
+            return (
+              !!requestProcess?.datePublished &&
+              isRequestProcessActual(requestProcess.datePublished, today)
+            );
           })
           .flatMap((requestProcess) => {
             const labels = getEAanvraagRequestProcessLabels(requestProcess);
