@@ -10,8 +10,7 @@ import { dateSort } from '../../../universal/helpers/date.ts';
 import { pick } from '../../../universal/helpers/utils.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
-import type { SourceApiName } from '../../config/source-api.ts';
-import { getFromEnv } from '../../helpers/env.ts';
+import { wpiAuthHeader, type SourceApiName } from '../../config/source-api.ts';
 import {
   createSessionBasedCacheKey,
   getApiConfig,
@@ -51,10 +50,6 @@ export interface FetchConfig {
   filterResponse: FilterResponse;
   requestCacheKey: string;
 }
-
-export const wpiAuthHeader = {
-  'x-api-key': getFromEnv('BFF_WPI_API_KEY', true),
-};
 
 function createBsnPostBody(bsn: string) {
   return {
