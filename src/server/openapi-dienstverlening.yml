@@ -49,7 +49,7 @@ paths:
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/WmoVoorzieningenResponse'
+                $ref: '#/components/schemas/WmoVoorzieningResponse'
         '500':
           $ref: '#/components/responses/ApplicationErrorResponse'
         '503':
@@ -207,6 +207,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/WmoVoorziening'
+        status:
+          type: string
+          enum:
+            - 'SUCCESS'
+    WmoVoorzieningResponse:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/WmoVoorziening'
         status:
           type: string
           enum:
