@@ -23,7 +23,6 @@ import { getCert } from '../helpers/cert.ts';
 import { getFromEnv } from '../helpers/env.ts';
 import { getHostNameFromUrl } from '../helpers/source-api-helpers.ts';
 import { featureToggle as featureToggleHLI } from '../services/hli/hli-service-config.ts';
-import { wpiAuthHeader } from '../services/wpi/api-service.ts';
 
 const RESET_AD_HOC_DEPENDENCY_REQUEST_CACHE_TTL_TIMEOUT_MS = ONE_HOUR_MS;
 export const FORCE_RENEW_CACHE_TTL_MS = 1;
@@ -157,6 +156,10 @@ const postponeFetchContactmomenten =
 const httpsAgentConfigBFF = {
   cert: getCert('BFF_SERVER_CLIENT_CERT'),
   key: getCert('BFF_SERVER_CLIENT_KEY'),
+};
+
+export const wpiAuthHeader = {
+  'x-api-key': getFromEnv('BFF_WPI_API_KEY', true),
 };
 
 const ApiConfig_ = {
