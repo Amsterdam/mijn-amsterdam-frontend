@@ -268,7 +268,11 @@ describe('wmo-voorzieningen-api-service', () => {
   });
 
   describe('fetch voorzieningen', () => {
-    function getAanvraag(productsoortCode = 'WRA', leveringsvorm = 'ZIN') {
+    function getAanvraag(
+      productsoortCode = 'WRA',
+      leveringsvorm = 'ZIN',
+      datumEindeGeldigheid: string | null = null
+    ) {
       return {
         identificatie: '912837sdfsdf198723',
         datumAanmelding: '2023-04-25',
@@ -285,12 +289,22 @@ describe('wmo-voorzieningen-api-service', () => {
               resultaat: 'toegewezen',
               toegewezenProduct: {
                 datumIngangGeldigheid: '2023-05-06',
-                datumEindeGeldigheid: null,
+                datumEindeGeldigheid,
                 leveringsvorm,
                 leverancier: {
                   identificatie: 'LA0994',
                   omschrijving: 'Gebr Koenen B.V.',
                 },
+                toewijzingen: [
+                  {
+                    leveringen: [
+                      {
+                        begindatum: '2023-05-06',
+                        einddatum: null,
+                      },
+                    ],
+                  },
+                ],
               },
             },
           ],
@@ -337,6 +351,36 @@ describe('wmo-voorzieningen-api-service', () => {
           leverancierIdentificatie: 'LA0994',
           leveringsVorm: 'ZIN',
           productsoortCode: 'WRA',
+        });
+      });
+
+      test('Does not apply assignments to voorzieningen that do not match the isActueel flag', async () => {
+        remoteApi
+          .post('/zorgned/aanvragen')
+          .reply(
+            200,
+            getZorgnedAanvragenResponse([
+              getAanvraag('WRA', 'ZIN', '2023-01-01'),
+            ])
+          );
+
+        const response = await fetchMaApiVoorzieningen('123456789', undefined, [
+          {
+            match: {
+              leveringsVorm: 'ZIN',
+              isActueel: true,
+              productsoortCode: ['WRA'],
+            },
+            assign: {
+              maActies: ['reparatieverzoek'],
+              maProductgroep: ['een-naam'],
+            },
+          },
+        ]);
+
+        expect(response.content?.[0]).not.toMatchObject({
+          maActies: ['reparatieverzoek'],
+          maProductgroep: ['een-naam'],
         });
       });
 

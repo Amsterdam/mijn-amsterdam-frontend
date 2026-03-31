@@ -1,4 +1,3 @@
-import { isBefore } from 'date-fns';
 import type z from 'zod';
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
@@ -18,7 +17,7 @@ export type FetchWmoVoorzieningenApiOptions = Omit<
   'bsn'
 >;
 
-// These product.identificatie correspond to WRA products that can be repaired.
+// These productIdentificaties correspond to WRA products that can be repaired.
 const PRODUCT_IDS_WITH_REPARATIEVERZOEK_ACTION = [
   '13W10',
   '13W11',
@@ -83,13 +82,7 @@ export const wmoVoorzieningenApiConfig: WmoApiConfig[] = [
     match: {
       leveringsVorm: 'ZIN',
       isActueel: true,
-      datumEindeLevering: null,
       productIdentificatie: PRODUCT_IDS_WITH_REPARATIEVERZOEK_ACTION,
-      // Only show reparatieverzoek action for products where the datumBeginLevering is in the past, to prevent showing this action for products that are not yet active.
-      datumBeginLevering: (voorziening) =>
-        voorziening.datumBeginLevering
-          ? isBefore(voorziening.datumBeginLevering, new Date())
-          : false,
     },
     assign: {
       maActies: ['reparatieverzoek'],
