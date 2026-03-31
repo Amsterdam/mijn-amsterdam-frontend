@@ -101,13 +101,6 @@ export async function saveUserFeedback(
   const hasAnswer = surveyEntryPayload.answers.some(
     (answer) => answer.answer.length
   );
-  if (hasAnswer) {
-    // There is an alert called 'User feedback with a comment detected' -
-    // that requires this log line to be able to fire.
-    captureMessage('A userfeedback survey has been submitted', {
-      properties: { hasAnswer: true },
-    });
-  }
 
   const requestConfig = getCustomApiConfig(sourceApiConfig, {
     formatUrl: ({ url }) => `${url}/${surveyId}/versions/${version}/entries`,
@@ -116,7 +109,17 @@ export async function saveUserFeedback(
     enableCache: false,
   });
 
-  return requestData<SaveUserFeedbackResponse>(requestConfig);
+  const response = await requestData<SaveUserFeedbackResponse>(requestConfig);
+
+  if (response.status === 'OK' && hasAnswer) {
+    // There is an alert called 'User feedback with a comment detected' -
+    // that requires this log line to be able to fire.
+    captureMessage('A userfeedback survey has been submitted', {
+      properties: { hasAnswer: true },
+    });
+  }
+
+  return response;
 }
 
 async function fetchFeedbackSurveyEntries(
