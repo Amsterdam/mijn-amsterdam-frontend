@@ -237,7 +237,7 @@ export async function fetchSpecificaties(
         authProfileAndToken.profile.sid,
         responseData
       ),
-    data: createBsnPostBody(authProfileAndToken.profile.sid),
+    data: createBsnPostBody(authProfileAndToken.profile.id),
   });
   const response =
     await requestData<WpiIncomeSpecificationResponseDataTransformed>(
