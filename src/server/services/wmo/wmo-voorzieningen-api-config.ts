@@ -7,13 +7,16 @@ import {
   productGroep,
   wmoStatusLineItemsConfig,
 } from './wmo-status-line-items.ts';
-import type { WmoApiConfig } from './wmo-types.ts';
+import type {
+  WmoApiConfig,
+  ZorgnedAanvraagTransformedWithMaApiProps,
+} from './wmo-types.ts';
 import { entries } from '../../../universal/helpers/utils.ts';
 
-export type FetchWmoVoorzieningenApiOptions = {
-  maActies?: z.infer<typeof voorzieningenRequestInput>['maActies'];
-  maProductgroep?: z.infer<typeof voorzieningenRequestInput>['maProductgroep'];
-};
+export type FetchWmoVoorzieningenApiOptions = Omit<
+  z.infer<typeof voorzieningenRequestInput>,
+  'bsn'
+>;
 
 // These product.identificatie correspond to WRA products that can be repaired.
 const PRODUCT_IDS_WITH_REPARATIEVERZOEK_ACTION = [
@@ -215,3 +218,28 @@ export const wmoVoorzieningenApiConfig: WmoApiConfig[] = [
       };
     }),
 ] as const;
+
+export const PICK_VOORZIENING_KEYS = [
+  'id',
+  'titel',
+  'procesIdentificatie',
+  'procesMeldingIdentificatie',
+  'beschikkingNummer',
+  'productIdentificatie',
+  'productsoortCode',
+  'beschiktProductIdentificatie',
+  'datumAanvraag',
+  'datumBesluit',
+  'datumBeginLevering',
+  'datumEindeLevering',
+  'datumIngangGeldigheid',
+  'datumEindeGeldigheid',
+  'datumOpdrachtLevering',
+  'leverancier',
+  'leverancierIdentificatie',
+  'leveringsVorm',
+  'resultaat',
+  'maActies',
+  'maCategorie',
+  'maProductgroep',
+] as (keyof ZorgnedAanvraagTransformedWithMaApiProps)[];

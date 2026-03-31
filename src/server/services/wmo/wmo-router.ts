@@ -2,6 +2,7 @@ import {
   fetchZorgnedJZDAanvragen,
   fetchZorgnedJZDDocument,
   fetchZorgnedJZDDocuments,
+  handleVoorzieningDetailRequest,
   handleVoorzieningenRequest,
 } from './wmo-route-handlers.ts';
 import {
@@ -20,10 +21,18 @@ const wmoRouterPrivateNetwork = createBFFRouter({
   isEnabled: featureToggle.router.private.isEnabled,
 });
 
+const wmoOauthMiddleware = OAuthVerificationHandler(
+  OAUTH_ROLE_WMO_VOORZIENINGEN
+);
 wmoRouterPrivateNetwork.post(
   routes.private.WMO_VOORZIENINGEN,
-  conditional(IS_TAP, OAuthVerificationHandler(OAUTH_ROLE_WMO_VOORZIENINGEN)),
+  conditional(IS_TAP, wmoOauthMiddleware),
   handleVoorzieningenRequest
+);
+wmoRouterPrivateNetwork.post(
+  routes.private.WMO_VOORZIENINGEN_DETAIL,
+  conditional(IS_TAP, wmoOauthMiddleware),
+  handleVoorzieningDetailRequest
 );
 
 const wmoRouterProtected = createBFFRouter({ id: 'protected-wmo' });
@@ -51,4 +60,5 @@ export const wmoRouter = {
 
 export const forTesting = {
   handleVoorzieningenRequest,
+  handleVoorzieningDetailRequest,
 };

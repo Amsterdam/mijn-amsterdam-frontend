@@ -3,10 +3,14 @@ import type {
   WmoApiConfig,
   ZorgnedAanvraagTransformedWithMaApiProps,
 } from './wmo-types.ts';
-import { wmoVoorzieningenApiConfig } from './wmo-voorzieningen-api-config.ts';
+import {
+  PICK_VOORZIENING_KEYS,
+  wmoVoorzieningenApiConfig,
+} from './wmo-voorzieningen-api-config.ts';
 import { type FetchWmoVoorzieningenApiOptions } from './wmo-voorzieningen-api-config.ts';
 import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service.ts';
 import {
+  apiErrorResult,
   type ApiResponse,
   apiSuccessResult,
 } from '../../../universal/helpers/api.ts';
@@ -99,36 +103,38 @@ export async function fetchMaApiVoorzieningen(
       })
       .toSorted(dateSort('datumBesluit', 'desc'));
 
-    const keys = [
-      'id',
-      'titel',
-      'procesIdentificatie',
-      'procesMeldingIdentificatie',
-      'beschikkingNummer',
-      'productIdentificatie',
-      'productsoortCode',
-      'beschiktProductIdentificatie',
-      'datumAanvraag',
-      'datumBesluit',
-      'datumBeginLevering',
-      'datumEindeLevering',
-      'datumIngangGeldigheid',
-      'datumEindeGeldigheid',
-      'datumOpdrachtLevering',
-      'leverancier',
-      'leverancierIdentificatie',
-      'leveringsVorm',
-      'resultaat',
-      'maActies',
-      'maCategorie',
-      'maProductgroep',
-    ] as (keyof ZorgnedAanvraagTransformedWithMaApiProps)[];
-
     return apiSuccessResult(
       voorzieningen.map((voorziening) => {
-        return pick(voorziening, keys);
+        return pick(voorziening, PICK_VOORZIENING_KEYS);
       })
     );
+  }
+
+  return voorzieningenResponse;
+}
+
+export async function fetchMaApiVoorzieningById(
+  bsn: BSN,
+  id: ZorgnedAanvraagTransformedWithMaApiProps['id'],
+  maVoorzieningenApiConfig: WmoApiConfig[] = wmoVoorzieningenApiConfig
+): Promise<ApiResponse<ZorgnedAanvraagTransformedWithMaApiProps>> {
+  const voorzieningenResponse = await fetchZorgnedAanvragenWMO(bsn);
+
+  if (voorzieningenResponse.status === 'OK') {
+    const voorzieningen = voorzieningenResponse.content
+      .filter((voorziening) => voorziening.id === id)
+      .map((voorziening) => {
+        return addMaApiPropsToVoorziening(
+          maVoorzieningenApiConfig,
+          voorziening
+        );
+      });
+
+    if (voorzieningen.length === 0) {
+      return apiErrorResult(`No voorziening found with id ${id}`, null, 404);
+    }
+
+    return apiSuccessResult(voorzieningen[0]);
   }
 
   return voorzieningenResponse;
@@ -137,4 +143,5 @@ export async function fetchMaApiVoorzieningen(
 export const forTesting = {
   isMaApiPropertyConfigMatch,
   addMaApiPropsToVoorziening,
+  fetchMaApiVoorzieningById,
 };

@@ -21,6 +21,46 @@ paths:
               schema:
                 $ref: '#/components/schemas/HealthyResponse'
 
+  /private/api/v1/services/wmo/voorziening:
+    post:
+      security:
+        - bearerAuth: []
+        - apimSubscriptionKey: []
+      description: |
+        Gets a single WMO voorziening by id.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [bsn, id]
+              properties:
+                bsn:
+                  type: string
+                  description: The BSN of the user to fetch the WMO voorziening for.
+                id:
+                  type: string
+                  description: Id of the voorziening.
+      responses:
+        '200':
+          description: |
+            The requested WMO voorziening
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/WmoVoorzieningenResponse'
+        '500':
+          $ref: '#/components/responses/ApplicationErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+
   /private/api/v1/services/wmo/voorzieningen:
     post:
       security:
@@ -123,6 +163,12 @@ components:
         'application/json':
           schema:
             $ref: '#/components/schemas/ErrorBadRequest'
+    NotFoundResponse:
+      description: Returns not found error
+      content:
+        'application/json':
+          schema:
+            $ref: '#/components/schemas/ErrorNotFound'
     UnauthorizedResponse:
       description: Returns unauthorized error (invalid api key / token)
       content:
