@@ -173,7 +173,7 @@ export const NOTIFICATIONS = async (req: Request) => {
     fetchNotificationsAndTipsFromServices(authProfileAndToken),
   ]);
 
-  // The current flow is independend from storing the notifications. Therefore, we do not await
+  // The current flow is independent from storing the notifications. Therefore, we do not await
   storeNotificationsForAmsAppUsers(
     authProfileAndToken,
     notificationsAndTipsResults
