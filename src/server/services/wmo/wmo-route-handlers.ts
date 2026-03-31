@@ -67,10 +67,10 @@ export async function handleVoorzieningenRequest(req: Request, res: Response) {
 
   const bsn = validatedRequestBody.bsn;
 
-  const response = await fetchMaApiVoorzieningen(
-    bsn,
-    omit(validatedRequestBody, ['bsn'])
-  );
+  const options = omit(validatedRequestBody, ['bsn']);
+  const filters = Object.keys(options).length ? options : undefined;
+
+  const response = await fetchMaApiVoorzieningen(bsn, filters);
 
   return sendResponse(res, response);
 }

@@ -128,6 +128,9 @@ export async function fetchMaApiVoorzieningById(
           maVoorzieningenApiConfig,
           voorziening
         );
+      })
+      .map((voorziening) => {
+        return pick(voorziening, PICK_VOORZIENING_KEYS);
       });
 
     if (voorzieningen.length === 0) {
