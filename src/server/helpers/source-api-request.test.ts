@@ -374,6 +374,46 @@ describe('requestData', () => {
     });
   });
 
+  it('Passthrough OIDC requests must not share cache across users', async () => {
+    const URL = `${remoteApiHost}/erfpacht`;
+
+    const auth1 = getAuthProfileAndToken();
+    auth1.profile.sid = 'SID-1';
+    auth1.token = 'token-user-1';
+
+    const auth2 = getAuthProfileAndToken();
+    auth2.profile.sid = 'SID-2';
+    auth2.token = 'token-user-2';
+
+    remoteApi
+      .get('/erfpacht')
+      .matchHeader('authorization', `Bearer ${auth1.token}`)
+      .reply(200, { user: 'user-1' });
+    remoteApi
+      .get('/erfpacht')
+      .matchHeader('authorization', `Bearer ${auth2.token}`)
+      .reply(200, { user: 'user-2' });
+
+    const requestConfig = {
+      url: URL,
+      method: 'get',
+      passthroughOIDCToken: true,
+      enableCache: true,
+      headers: {
+        'X-HERA-REQUESTORIGIN': 'MijnAmsterdam',
+        apiKey: 'enableu-api-key',
+      },
+    } as const;
+
+    const rs1 = await requestData<{ user: string }>(requestConfig, auth1);
+    const rs2 = await requestData<{ user: string }>(requestConfig, auth2);
+
+    expect(rs1.content?.user).toBe('user-1');
+
+    expect(axiosRequestSpy).toHaveBeenCalledTimes(2);
+    expect(rs2.content?.user).toBe('user-2');
+  });
+
   test('getRequestConfigCacheKey', () => {
     expect(
       getRequestConfigCacheKey({
