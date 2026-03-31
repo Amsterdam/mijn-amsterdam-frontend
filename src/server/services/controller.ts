@@ -375,7 +375,8 @@ async function storeNotificationsForAmsAppUsers(
     );
     await storeNotificationsResponses(
       authProfileAndToken.profile.id,
-      resultsWithoutMaintenanceNotifications
+      resultsWithoutMaintenanceNotifications,
+      { updateLastLoginDate: true }
     ).catch((error) => {
       captureException(error);
     });
