@@ -115,6 +115,19 @@ export async function requestData<T>(
     delete config.transformResponse;
   }
 
+  // Shortcut to passing the JWT of the connected OIDC provider along with the request as Bearer token
+  // A configured Authorization header passed via { ... headers: { Authorization: 'xxx' }, ... } takes precedence.
+  if (config.passthroughOIDCToken && authProfileAndToken?.token) {
+    const headers = config?.headers ?? {};
+    config.headers = Object.assign(
+      {},
+      {
+        Authorization: `Bearer ${authProfileAndToken.token}`,
+      },
+      headers
+    );
+  }
+
   const axiosRequestConfig: AxiosRequestConfig = omit(
     config,
     DATA_REQUEST_CONFIG_BASE_KEYS
@@ -125,18 +138,6 @@ export async function requestData<T>(
   // These calls will be cached along with the original request, but since they only log the data and don't modify it, this should not affect the caching behavior.
   addResponseDataDebugging(axiosRequestConfig);
   addRequestDataDebugging(axiosRequestConfig);
-
-  // Shortcut to passing the JWT of the connected OIDC provider along with the request as Bearer token
-  // A configured Authorization header passed via { ... headers: { Authorization: 'xxx' }, ... } takes presedence.
-  if (config.passthroughOIDCToken && authProfileAndToken?.token) {
-    const headers = axiosRequestConfig?.headers ?? {};
-    axiosRequestConfig.headers = Object.assign(
-      {
-        Authorization: `Bearer ${authProfileAndToken.token}`,
-      },
-      headers
-    );
-  }
 
   // Construct a cache key based on unique properties of a request
   const cacheKey = config.cacheKey_UNSAFE || getRequestConfigCacheKey(config);
