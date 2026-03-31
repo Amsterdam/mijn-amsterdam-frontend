@@ -28,6 +28,7 @@ export const OAUTH_ROLE_WMO_VOORZIENINGEN = 'wmo.voorzieningen' as const;
 export const routes = {
   private: {
     WMO_VOORZIENINGEN: `/services/wmo/voorzieningen`,
+    WMO_VOORZIENINGEN_DETAIL: `/services/wmo/voorziening`,
   },
   protected: {
     WMO_DOCUMENT_DOWNLOAD: `/services/wmo/document`,
@@ -52,7 +53,7 @@ export const DATE_END_NOT_OLDER_THAN = '2018-01-01' as const;
 export const MINIMUM_REQUEST_DATE_FOR_DOCUMENTS = parseISO('2022-01-01'); // After this date documents are WCAG proof.
 
 export const voorzieningenRequestInput = z.object({
-  bsn: ZodValidators.BSN,
+  bsn: ZodValidators.BSN.nonoptional(),
   maActies: z.array(z.enum(['stopzetten', 'reparatieverzoek'])).optional(),
   maProductgroep: z
     .array(
@@ -67,4 +68,9 @@ export const voorzieningenRequestInput = z.object({
       ])
     )
     .optional(),
+});
+
+export const voorzieningDetailRequestInput = z.object({
+  bsn: ZodValidators.BSN.nonoptional(),
+  id: z.string().nonoptional(),
 });
