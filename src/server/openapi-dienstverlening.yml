@@ -415,8 +415,6 @@ components:
             - 'ERROR'
         message:
           type: string
-          enum:
-            - 'Not Found'
     ErrorUnauthorized:
       type: object
       properties:
