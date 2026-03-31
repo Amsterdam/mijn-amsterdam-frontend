@@ -1,7 +1,6 @@
 import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
 import {
   type ApiResponse_DEPRECATED,
-  getSettledResult,
   type ApiResponse,
   apiErrorResult,
 } from '../../universal/helpers/api.ts';
@@ -57,16 +56,8 @@ export type NotificationsAndTipsResponse =
       tips?: MyNotification[];
     }>;
 
-type FetchNotificationFunction = (
-  authProfileAndToken: AuthProfileAndToken
-) => Promise<NotificationsAndTipsResponse>;
-
-type NotificationServices = Record<string, FetchNotificationFunction>;
-
-type NotificationServicesByProfileType = Record<
-  ProfileType,
-  NotificationServices
->;
+export type ServiceList = typeof notificationServices.commercial &
+  typeof notificationServices.private;
 
 export const notificationServices = {
   commercial: {
@@ -107,7 +98,7 @@ export const notificationServices = {
     vergunningen: fetchVergunningenNotifications,
     parkeren: fetchParkeerVergunningenNotifications,
   },
-} satisfies NotificationServicesByProfileType;
+} as const;
 
 export function getTipsAndNotificationsFromApiResults(
   responses: NotificationsAndTipsResponse[]
@@ -154,39 +145,35 @@ export function getTipsAndNotificationsFromApiResults(
   return [...notificationsResult, ...tipsResult];
 }
 
-// Services can return Source tips and Content tips.
 export async function fetchNotificationsAndTipsFromServices(
-  authProfileAndToken: AuthProfileAndToken,
-  services: NotificationServices = notificationServices[
-    authProfileAndToken.profile.profileType
-  ]
-): Promise<Record<keyof typeof services, NotificationsAndTipsResponse>> {
-  if (authProfileAndToken.profile.profileType === 'private-attributes') {
+  authProfileAndToken: AuthProfileAndToken | null,
+  services: Partial<ServiceList> = authProfileAndToken
+    ? notificationServices[authProfileAndToken.profile.profileType]
+    : {}
+): Promise<
+  Partial<Record<keyof typeof services, NotificationsAndTipsResponse>>
+> {
+  if (
+    !authProfileAndToken ||
+    authProfileAndToken.profile.profileType === 'private-attributes'
+  ) {
     return {};
   }
 
-  const serviceResults = await Promise.allSettled(
+  const serviceResults = await Promise.all(
     entries(services).map(async ([serviceId, fetchNotifications]) => {
-      const result = await fetchNotifications(authProfileAndToken).catch(
-        (error) => {
-          const err = new Error(
-            `Error in fetchNotifications for service ${serviceId}: ${error instanceof Error ? error.message : String(error)}`
-          );
-          err.stack = error instanceof Error ? error.stack : undefined;
-          captureException(err);
-          return apiErrorResult(err.message, null);
+      const result = await fetchNotifications!(authProfileAndToken).catch(
+        (error: string | Error) => {
+          const errorMessage = `Error in fetchNotifications for service ${serviceId}: ${error instanceof Error ? error.message : String(error)}`;
+          captureException(new Error(errorMessage));
+          return apiErrorResult(errorMessage, null);
         }
       );
       return [serviceId, result];
     })
   );
 
-  const results = serviceResults.map(getSettledResult) as [
-    keyof typeof services,
-    NotificationsAndTipsResponse,
-  ][];
-
-  return Object.fromEntries(results);
+  return Object.fromEntries(serviceResults);
 }
 
 export function sortNotificationsAndInsertTips(

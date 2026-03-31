@@ -40,13 +40,13 @@ import { fetchMilieuzone, fetchOvertredingen } from './patroon-c/cleopatra.ts';
 import { fetchSubsidie } from './patroon-c/subsidie.ts';
 import { fetchSVWI } from './patroon-c/svwi.ts';
 import { fetchContactmomenten } from './salesforce/contactmomenten.ts';
-import type { notificationServices } from './tips-and-notifications.ts';
 import {
   combineNotificationsWithTipsAndSort,
   fetchNotificationsAndTipsFromServices,
   getContentTips,
   getTipsAndNotificationsFromApiResults,
   type NotificationsAndTipsResponse,
+  type ServiceList,
 } from './tips-and-notifications.ts';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-verhuur.ts';
 import { fetchUserFeedbackSurvey } from './user-feedback/user-feedback.ts';
@@ -170,25 +170,14 @@ export const NOTIFICATIONS = async (req: Request) => {
   const authProfileAndToken = getAuth(req);
   const [serviceResults, notificationsAndTipsResults] = await Promise.all([
     getServiceResultsForTips(req),
-    authProfileAndToken
-      ? fetchNotificationsAndTipsFromServices(authProfileAndToken)
-      : {},
+    fetchNotificationsAndTipsFromServices(authProfileAndToken),
   ]);
 
-  if (
-    featureToggle.amsNotificationsIsActive &&
-    authProfileAndToken?.profile.id &&
-    authProfileAndToken.profile.profileType === 'private'
-  ) {
-    // Nothing in this flow depends on this so it does not have to be awaited
-    storeNotificationsResponses(
-      authProfileAndToken.profile.id,
-      notificationsAndTipsResults,
-      { updateLastLoginDate: true }
-    ).catch((error) => {
-      captureException(error);
-    });
-  }
+  // The current flow is independend from storing the notifications. Therefore, we do not await
+  storeNotificationsForAmsAppUsers(
+    authProfileAndToken,
+    notificationsAndTipsResults
+  );
 
   const contentTips = getContentTips(serviceResults, authProfileAndToken);
   const notificationsAndTips = getTipsAndNotificationsFromApiResults(
@@ -369,6 +358,30 @@ export const servicesTipsByProfileType = {
   ),
 };
 
+async function storeNotificationsForAmsAppUsers(
+  authProfileAndToken: AuthProfileAndToken | null,
+  notificationsAndTipsResults: Partial<
+    Record<keyof ServiceList, NotificationsAndTipsResponse>
+  >
+) {
+  if (
+    featureToggle.amsNotificationsIsActive &&
+    authProfileAndToken?.profile.id &&
+    authProfileAndToken.profile.profileType === 'private'
+  ) {
+    const resultsWithoutMaintenanceNotifications = omit(
+      notificationsAndTipsResults,
+      ['maintenance']
+    );
+    await storeNotificationsResponses(
+      authProfileAndToken.profile.id,
+      resultsWithoutMaintenanceNotifications
+    ).catch((error) => {
+      captureException(error);
+    });
+  }
+}
+
 export function loadServices(
   req: Request,
   serviceMap:
@@ -466,4 +479,5 @@ async function getServiceResultsForTips(req: Request) {
 export const forTesting = {
   CMS_CONTENT,
   getServiceResultsForTips,
+  storeNotificationsForAmsAppUsers,
 };
