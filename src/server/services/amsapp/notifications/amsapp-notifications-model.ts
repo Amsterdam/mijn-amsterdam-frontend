@@ -7,6 +7,7 @@ import {
   type ConsumerProfile,
   type NotificationsService,
 } from './amsapp-notifications-types.ts';
+import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import { toISOString } from '../../../../universal/helpers/date.ts';
 import { isRecord } from '../../../../universal/helpers/utils.ts';
 import { decrypt, encrypt } from '../../../helpers/encrypt-decrypt.ts';
@@ -204,6 +205,10 @@ export async function getProfileByConsumer(consumerId: ConsumerId) {
 }
 
 export async function getRegistrationOverview() {
+  /** Do not use outside non-prod admin routes until a proper access control is implemented and sensitive data is filtered out */
+  if (IS_PRODUCTION) {
+    return [];
+  }
   return db.queryALL(queries.getRegistrationsOverview);
 }
 
