@@ -1,9 +1,8 @@
-import type { CamelCasedProperties, CamelCasedPropertiesDeep } from "type-fest";
+import type { CamelCasedPropertiesDeep } from 'type-fest';
 
 export type ZwedVvEResponseType = {
   '@onformdata.context': string;
 };
-
 
 export type VvEDataSource = {
   beschermd_stadsdorpsgezicht: string | null;
@@ -23,7 +22,22 @@ export type VvEDataSource = {
   wijk: string;
   zip_code: string;
 };
-export type VvEDataFrontend = Prettify<CamelCasedPropertiesDeep<Pick<VvEDataSource, 'name' | 'monument_status' | 'number_of_apartments' | 'kvk_number' | 'district' | 'build_year' | 'is_priority_neighborhood' | 'ligt_in_beschermd_gebied' | 'beschermd_stadsdorpsgezicht' >>>;
+export type VvEDataFrontend = Prettify<
+  CamelCasedPropertiesDeep<
+    Pick<
+      VvEDataSource,
+      | 'name'
+      | 'monument_status'
+      | 'number_of_apartments'
+      | 'kvk_number'
+      | 'district'
+      | 'build_year'
+      | 'is_priority_neighborhood'
+      | 'ligt_in_beschermd_gebied'
+      | 'beschermd_stadsdorpsgezicht'
+    >
+  >
+>;
 
 export type Owner = {
   type:

@@ -8,7 +8,7 @@ import type {
   BrpFrontend,
 } from '../../../../../server/services/brp/brp-types.ts';
 import type { ContactMoment } from '../../../../../server/services/salesforce/contactmomenten.types.ts';
-import { VvEDataSource } from '../../../../../server/services/wonen/zwd.types.ts';
+import type { WonenDataFrontend } from '../../../../../server/services/wonen/wonen.types.ts';
 import { bffApiHost } from '../../../../../testing/setup.ts';
 import { bffApi } from '../../../../../testing/utils.ts';
 import type { AppState } from '../../../../../universal/types/App.types.ts';
@@ -18,7 +18,7 @@ import { routeConfig } from '../Profile-thema-config.ts';
 const testState = (
   responseBRP: BrpFrontend | object = {},
   responseSF: ContactMoment[] = [],
-  responseZWD?: Pick<VvEDataSource, 'name'>
+  responseZWD?: WonenDataFrontend
 ) => ({
   BRP: { status: 'OK', content: responseBRP },
   KVK: { status: 'OK', content: null },
@@ -309,8 +309,8 @@ describe('<Profile />', () => {
               },
               [],
               {
-                name: 'VvE Prachtige Straat 13',
-              }
+                vve: { name: 'VvE Prachtige Straat 13' },
+              } as unknown as WonenDataFrontend
             ) as unknown as AppState
           }
         />
