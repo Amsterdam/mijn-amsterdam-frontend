@@ -86,7 +86,7 @@ export async function handleShowSurveyOverview(
 
   const score = (
     entries.reduce((acc, entry) => {
-      if (typeof entry === 'undefined') {
+      if (!entry) {
         return acc;
       }
       const rating = Object.values(entry.answers)[0] || '0';
