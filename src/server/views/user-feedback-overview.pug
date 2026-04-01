@@ -34,7 +34,7 @@ table(border='1', cellpadding='5', cellspacing='0')
             strong #{entry.id}
         td= entry.dateCreated.toLocaleString('nl-NL', { dateStyle: 'short', timeStyle: 'short' })
         td= entry.entryPoint
-        td= entry.metadata.browser_title
+        td= entry.metadata.browserTitle
         each question, id in feedbackOverview.survey.questions
           td= entry.answers[id] || '-'
         td

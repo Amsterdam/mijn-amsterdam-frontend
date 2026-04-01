@@ -150,7 +150,7 @@ async function fetchFeedbackSurveyEntries(
             entry.answers.map((answer) => [answer.question, answer.answer])
           ),
           dateCreated: entry.created_at,
-          metadata: entry.metadata,
+          metadata: omit(entry.metadata, ['maThemas', 'maErrors', 'pageTitle']),
           entryPoint: entry.entry_point,
         };
       });

@@ -67,7 +67,7 @@ export type SurveyAnswer = {
 export type SurveyEntryPayload = {
   answers: SurveyAnswer[];
   entry_point: string;
-  metadata: object;
+  metadata: Record<string, unknown>;
 };
 
 export const userFeedbackInput = z.object({
