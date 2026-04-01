@@ -13,11 +13,11 @@ import ThemaDetailPagina from '../../../../components/Thema/ThemaDetailPagina.ts
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
 import { themaId } from '../../Afis/Afis-thema-config.ts';
 
-type WonenDataProps = {
+type VveDetailsProps = {
   vve: VvEDataFrontend;
 };
 
-function WonenData({ vve }: WonenDataProps) {
+function VveDetail({ vve }: VveDetailsProps) {
   const rows: Array<Row | RowSet> = [
     {
       label: 'Statutaire naam',
@@ -75,7 +75,7 @@ export function VvEDetail() {
       zaak={{}} // empty object to prevent info block: "Geen gegevens gevonden"
       isError={isError}
       isLoading={isLoading}
-      pageContentMain={vve && <WonenData vve={vve} />}
+      pageContentMain={vve && <VveDetail vve={vve} />}
       breadcrumbs={breadcrumbs}
     />
   );
