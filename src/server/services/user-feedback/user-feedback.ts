@@ -20,6 +20,7 @@ import {
   getFailedDependencies,
   type ApiResponsePromise,
 } from '../../../universal/helpers/api.ts';
+import { defaultDateTimeFormat } from '../../../universal/helpers/date.ts';
 import { omit, pick } from '../../../universal/helpers/utils.ts';
 import camelize from '../../helpers/camelize.ts';
 import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
@@ -149,7 +150,7 @@ async function fetchFeedbackSurveyEntries(
           answers: Object.fromEntries(
             entry.answers.map((answer) => [answer.question, answer.answer])
           ),
-          dateCreated: entry.created_at,
+          dateCreated: defaultDateTimeFormat(entry.created_at),
           metadata: omit(entry.metadata, ['maThemas', 'maErrors', 'pageTitle']),
           entryPoint: entry.entry_point,
         };
