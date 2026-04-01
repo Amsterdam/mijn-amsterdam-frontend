@@ -430,12 +430,5 @@
     "titelResultatenGevonden": " resultaten gevonden",
     "titelGeenResultatenGevonden": "Geen resultaten gevonden",
     "titelFactuurHelpTekstRegel1": "Probeer het opnieuw door een volledig factuurnummer in te voeren. Bijvoorbeeld 15090621."
-  },
-  "id": "dY-eqlTjde4uMVS0iPHhf_9UiIcJ55kW4QPtD89ZuX8",
-  "dossierNummerUrlParam": "E.477.46",
-  "title": "E123/456 - Dit en dat plein 22 H",
-  "link": {
-    "to": "/erfpacht/dossier/E.477.46",
-    "title": "E123/456 - Dit en dat plein 22 H"
   }
 }

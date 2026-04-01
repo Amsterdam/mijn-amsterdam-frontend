@@ -24,8 +24,8 @@ exports[`erfpacht > fetchErfpacht: dossier detail 1`] = `
         "titelOppervlakte": "Oppervlakte",
       },
     ],
+    "dossierId": "E.123.456",
     "dossierNummer": "E123/456",
-    "dossierNummerUrlParam": "E.123.456",
     "eersteUitgifte": "01 januari 1922",
     "facturen": {
       "betaler": "DEBITEUR 186698",
@@ -444,8 +444,8 @@ exports[`erfpacht > fetchErfpacht: dossiers 1`] = `
     "dossiers": {
       "dossiers": [
         {
+          "dossierId": "E.477.48",
           "dossierNummer": "E477/48",
-          "dossierNummerUrlParam": "E.477.48",
           "id": "E.477.48",
           "link": {
             "title": "E477/48: (behorende bij) Dit en dat plein 22 H",
@@ -465,8 +465,8 @@ exports[`erfpacht > fetchErfpacht: dossiers 1`] = `
           "voorkeursadres": "(behorende bij) Dit en dat plein 22 H",
         },
         {
+          "dossierId": "E.7418.35",
           "dossierNummer": "E7418/35",
-          "dossierNummerUrlParam": "E.7418.35",
           "id": "E.7418.35",
           "link": {
             "title": "E7418/35: Cycladenlaan 14",
@@ -486,8 +486,8 @@ exports[`erfpacht > fetchErfpacht: dossiers 1`] = `
           "voorkeursadres": "Cycladenlaan 14",
         },
         {
+          "dossierId": "E.900.33",
           "dossierNummer": "E900/33",
-          "dossierNummerUrlParam": "E.900.33",
           "id": "E.900.33",
           "link": {
             "title": "E900/33: Dit en dat plein 20 H",
@@ -507,8 +507,8 @@ exports[`erfpacht > fetchErfpacht: dossiers 1`] = `
           "voorkeursadres": "Dit en dat plein 20 H",
         },
         {
+          "dossierId": "EW.123.456",
           "dossierNummer": "EW123/456",
-          "dossierNummerUrlParam": "EW.123.456",
           "id": "EW.123.456",
           "link": {
             "title": "EW123/456: Dit en dat plein 22 H",
@@ -528,8 +528,8 @@ exports[`erfpacht > fetchErfpacht: dossiers 1`] = `
           "voorkeursadres": "Dit en dat plein 22 H",
         },
         {
+          "dossierId": "E.6470.243",
           "dossierNummer": "E6470/243",
-          "dossierNummerUrlParam": "E.6470.243",
           "id": "E.6470.243",
           "link": {
             "title": "E6470/243: Valutaboulevard 51",

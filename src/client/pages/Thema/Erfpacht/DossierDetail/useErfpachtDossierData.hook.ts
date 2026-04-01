@@ -6,8 +6,8 @@ import { useBffApi } from '../../../../hooks/api/useBffApi.ts';
 import { useErfpachtThemaData } from '../useErfpachtThemaData.hook.ts';
 
 export function useDossierData() {
-  const { dossierNummerUrlParam } = useParams<{
-    dossierNummerUrlParam: string;
+  const { dossierId } = useParams<{
+    dossierId: string;
   }>();
 
   const {
@@ -18,8 +18,8 @@ export function useDossierData() {
     themaId,
     themaConfig,
   } = useErfpachtThemaData();
-  const url = dossierNummerUrlParam
-    ? `${BFFApiUrls.ERFPACHT_DOSSIER_DETAILS}/${dossierNummerUrlParam}`
+  const url = dossierId
+    ? `${BFFApiUrls.ERFPACHT_DOSSIER_DETAILS}/${dossierId}`
     : undefined;
 
   const { data, isLoading, isError } = useBffApi<ErfpachtDossiersDetail>(url);

@@ -81,7 +81,7 @@ export const themaConfig: ThemaConfigErfpacht = {
   },
   detailPage: {
     route: {
-      path: '/erfpacht/dossier/:dossierNummerUrlParam',
+      path: '/erfpacht/dossier/:dossierId',
       trackingUrl: '/erfpacht/dossier',
       documentTitle: `Erfpachtdossier | ${THEMA_TITLE}`,
     },

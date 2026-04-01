@@ -32,7 +32,7 @@ function mockDetailFetch(
 
 describe('<Erfpacht/DossierDetail />', () => {
   const routeEntry = generatePath(themaConfig.detailPage.route.path, {
-    dossierNummerUrlParam: 'E.123.123',
+    dossierId: 'E.123.123',
   });
   const routePath = themaConfig.detailPage.route.path;
 
