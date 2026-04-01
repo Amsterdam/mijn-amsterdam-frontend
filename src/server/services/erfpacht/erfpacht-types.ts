@@ -162,10 +162,7 @@ export type ErfpachtDossiersDetailSource = {
 
 export type ErfpachtDossierPropsFrontend<
   T extends ErfpachtDossierSource | ErfpachtDossiersDetailSource,
-> = T &
-  Omit<ZaakAanvraagDetail, 'displayStatus' | 'steps'> & {
-    dossierId: string | null;
-  };
+> = T & Omit<ZaakAanvraagDetail, 'displayStatus' | 'steps'>;
 
 export type ErfpachtDossiersDetail =
   ErfpachtDossierPropsFrontend<ErfpachtDossiersDetailSource>;
