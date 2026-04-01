@@ -12,7 +12,7 @@ import { bffApiHost } from '../../../../../testing/setup.ts';
 import { bffApi } from '../../../../../testing/utils.ts';
 import type { AppState } from '../../../../../universal/types/App.types.ts';
 import MockApp from '../../../MockApp.tsx';
-import { routeConfig } from '../Profile-thema-config.ts';
+import { themaConfig } from '../Profile-thema-config.ts';
 
 const testState = (
   responseBRP: BrpFrontend | object = {},
@@ -32,7 +32,7 @@ const panelHeadings = [
 ];
 
 describe('<Profile />', () => {
-  const routeEntry = routeConfig.themaPageBRP.path;
+  const routeEntry = themaConfig.BRP.route.path;
 
   function Component({
     state,
@@ -111,7 +111,7 @@ describe('<Profile />', () => {
 
     expect(screen.getByText('Verhuizing doorgeven')).toBeInTheDocument();
     expect(
-      screen.getByText('Onjuiste inschrijving melden')
+      screen.getByText(themaConfig.BRP.pageLinks[1].title)
     ).toBeInTheDocument();
     expect(screen.queryByText('Adres in onderzoek')).not.toBeInTheDocument();
     expect(
@@ -135,7 +135,7 @@ describe('<Profile />', () => {
     );
 
     expect(
-      screen.queryByText('Onjuiste inschrijving melden')
+      screen.queryByText(themaConfig.BRP.pageLinks[1].title)
     ).not.toBeInTheDocument();
     expect(screen.queryByText('Ingeschreven personen')).not.toBeInTheDocument();
 
@@ -214,7 +214,7 @@ describe('<Profile />', () => {
     );
 
     expect(
-      await screen.queryByText('Onjuiste inschrijving melden')
+      await screen.queryByText(themaConfig.BRP.pageLinks[1].title)
     ).not.toBeInTheDocument();
   });
 

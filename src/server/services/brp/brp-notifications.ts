@@ -1,10 +1,7 @@
 import { ADRES_IN_ONDERZOEK_A } from './brp-config.ts';
 import type { BrpFrontend } from './brp-types.ts';
 import { fetchBrpByBsnTransformed } from './brp.ts';
-import {
-  themaConfig,
-  routeConfig as routeConfigBrp,
-} from '../../../client/pages/Thema/Profile/Profile-thema-config.ts';
+import { themaConfig } from '../../../client/pages/Thema/Profile/Profile-thema-config.ts';
 import {
   apiSuccessResult,
   apiDependencyError,
@@ -38,7 +35,7 @@ export function transformBRPNotifications(
           ? 'Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat.'
           : 'Op dit moment onderzoeken wij op welk adres u nu woont.',
       link: {
-        to: routeConfigBrp.themaPageBRP.path,
+        to: themaConfig.BRP.route.path,
         title: 'Meer informatie',
       },
     });
@@ -54,7 +51,7 @@ export function transformBRPNotifications(
       title: 'Vertrokken Onbekend Waarheen (VOW)',
       description: `U staat sinds ${dateLeft} in de Basisregistratie Personen (BRP) geregistreerd als 'vertrokken onbekend waarheen'.`,
       link: {
-        to: routeConfigBrp.themaPageBRP.path,
+        to: themaConfig.BRP.route.path,
         title: 'Meer informatie',
       },
     });

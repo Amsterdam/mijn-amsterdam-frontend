@@ -4,7 +4,7 @@ import {
 } from './ProfilePrivate.transform.tsx';
 import { useIngeschrevenPersonenOpAdres } from './useAantalIngeschrevenPersonen.hook.ts';
 import { useAppStateGetter } from '../../../../hooks/useAppStateStore.ts';
-import { routeConfig } from '../Profile-thema-config.ts';
+import { themaConfig } from '../Profile-thema-config.ts';
 
 export function useProfileData() {
   const { BRP } = useAppStateGetter();
@@ -31,6 +31,7 @@ export function useProfileData() {
     BRP,
     profileData,
     aantalIngeschrevenPersonen,
-    routeConfig,
+
+    themaConfig,
   };
 }

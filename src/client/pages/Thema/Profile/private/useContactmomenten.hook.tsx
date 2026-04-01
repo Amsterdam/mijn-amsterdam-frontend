@@ -23,7 +23,7 @@ import {
   useThemaBreadcrumbs,
   useActiveThemaMenuItems,
 } from '../../../../hooks/useThemaMenuItems.ts';
-import { routeConfig, themaConfig } from '../Profile-thema-config.ts';
+import { themaConfig } from '../Profile-thema-config.ts';
 
 function getMenuItem(
   onderwerp: string,
@@ -106,8 +106,8 @@ export function useContactmomenten() {
     title: 'Contactmomenten',
     breadcrumbs,
     routeParams,
-    listPageRoute: generatePath(routeConfig.listPageContactmomenten.path, {
+    listPageRoute: generatePath(themaConfig.BRP.contactenPage!.route.path, {
       page: null,
-    }),
+    }), // WEET NIET ZEKER OF EEN CONTACTMOMENTEN PAGE ALTIJD AANWEZIG IS??
   };
 }

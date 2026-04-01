@@ -29,7 +29,7 @@ import { themaConfig as krefiaThemaConfig } from '../Thema/Krefia/Krefia-thema-c
 import { themaConfig as milieuThemaConfig } from '../Thema/Milieuzone/Milieuzone-thema-config.ts';
 import { themaConfig as overtredingenThemaConfig } from '../Thema/Overtredingen/Overtredingen-thema-config.ts';
 import { themaConfig as parkerenThemaConfig } from '../Thema/Parkeren/Parkeren-thema-config.ts';
-import { profileSectionProps } from '../Thema/Profile/InfoSection.tsx';
+import { themaConfig as profileThemaConfig } from '../Thema/Profile/Profile-thema-config.ts';
 import { themaConfig as subsidiesThemaConfig } from '../Thema/Subsidies/Subsidies-thema-config.ts';
 import { themaConfig as toeristischeVerhuurThemaConfig } from '../Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
 import { themaConfig as varenThemaConfig } from '../Thema/Varen/Varen-thema-config.ts';
@@ -64,7 +64,6 @@ export type SectionProps = {
 };
 
 const sections: InfoSection_DEPRECATED[] = [
-  profileSectionProps,
   myAreaSectionProps,
 
   afisSectionProps,
@@ -86,7 +85,7 @@ const sections: InfoSection_DEPRECATED[] = [
   ...createDeprecatedInfoSection(milieuThemaConfig),
   ...createDeprecatedInfoSection(overtredingenThemaConfig),
   ...createDeprecatedInfoSection(parkerenThemaConfig),
-
+  ...createDeprecatedInfoSection(profileThemaConfig.BRP),
   ...createDeprecatedInfoSection(toeristischeVerhuurThemaConfig),
   ...createDeprecatedInfoSection(varenThemaConfig),
   ...createDeprecatedInfoSection(vergunningenThemaConfig),

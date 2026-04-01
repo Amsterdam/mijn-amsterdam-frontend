@@ -1,18 +1,13 @@
 import { isEnabled } from '../../../config/feature-toggles.ts';
 import type {
+  PageConfig,
   ThemaConfigBase,
-  ThemaRoutesConfig,
 } from '../../../config/thema-types.ts';
 
-type ProfileThemaConfig<ID = string> = Pick<
-  ThemaConfigBase<ID>,
-  | 'id'
-  | 'title'
-  | 'featureToggle'
-  | 'profileTypes'
-  | 'redactedScope'
-  | 'pageLinks'
->;
+type WithListPageConcten = PageConfig<'contactenPage'>;
+
+type ProfileThemaConfig<ID = string> = ThemaConfigBase<ID> &
+  Partial<WithListPageConcten>;
 
 const THEMA_ID_BRP = 'BRP' as const;
 const THEMA_ID_KVK = 'KVK' as const;
@@ -56,10 +51,31 @@ export const themaConfig: Record<
         to: CHANGE_RESIDENT_COUNT,
       },
       {
-        title: '',
+        title: 'Verhuizing naar Amsterdam doorgeven',
         to: REPORT_RELOCATION,
       },
     ],
+    uitlegPageSections: [
+      {
+        title: THEMA_TITLE_BRP,
+        listItems: [
+          'Uw inschrijving bij de gemeente',
+          'Uw contactmomenten met de gemeente',
+        ],
+      },
+    ],
+    route: {
+      path: '/persoonlijke-gegevens',
+      documentTitle: `${THEMA_TITLE_BRP} | Mijn Amsterdam`,
+      trackingUrl: null,
+    },
+    contactenPage: {
+      route: {
+        path: '/contactmomenten/:page?',
+        documentTitle: `Alle contactmomenten | ${THEMA_TITLE_BRP}`,
+        trackingUrl: null,
+      },
+    },
   },
   [THEMA_ID_KVK]: {
     id: THEMA_ID_KVK,
@@ -67,28 +83,21 @@ export const themaConfig: Record<
     featureToggle: {
       active: true,
     },
-    profileTypes: ['private'],
+    profileTypes: ['private', 'commercial'],
     redactedScope: 'content',
-    pageLinks: [],
+    pageLinks: [
+      {
+        to: 'https://www.kvk.nl/inschrijven-en-wijzigen/wijziging-doorgeven/',
+        title: 'Geef wijzigingen door aan de Kamer van Koophandel',
+      },
+    ],
+    uitlegPageSections: [], // TO DO now also no text, so maybe in the future?
+    route: {
+      path: '/gegevens-handelsregister',
+      documentTitle: `${THEMA_TITLE_KVK} | Mijn Amsterdam`,
+      trackingUrl: null,
+    },
   },
 };
-
-export const routeConfig = {
-  themaPageBRP: {
-    path: '/persoonlijke-gegevens',
-    documentTitle: `${THEMA_TITLE_BRP} | Mijn Amsterdam`,
-    trackingUrl: null,
-  },
-  themaPageKVK: {
-    path: '/gegevens-handelsregister',
-    documentTitle: `${THEMA_TITLE_KVK} | Mijn Amsterdam`,
-    trackingUrl: null,
-  },
-  listPageContactmomenten: {
-    path: '/contactmomenten/:page?',
-    documentTitle: `Alle contactmomenten | ${THEMA_TITLE_BRP}`,
-    trackingUrl: null,
-  },
-} as const satisfies ThemaRoutesConfig;
 
 export const BRP_LABEL_AANTAL_INGESCHREVEN_PERSONEN = 'Ingeschreven personen';

@@ -20,6 +20,6 @@ export function useProfileThemaData() {
     isLoadingBrp: isLoading(BRP),
     isLoadingContactmomenten,
     hasContactMomenten: !!contactmomenten?.length,
-    linkListItems: [],
+    pageLinks: themaConfig.BRP.pageLinks,
   };
 }
