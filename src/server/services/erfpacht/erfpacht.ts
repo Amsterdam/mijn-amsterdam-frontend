@@ -35,12 +35,10 @@ function transformIsErfpachterResponseSource(
   return response;
 }
 
-function getDossierNummerUrlParam(
-  dossierNummer: string | undefined
-): string | null {
+function getDossierNummerUrlParam(dossierNummer: string): string {
   return dossierNummer
     ? (dossierNummer.match(/[a-zA-Z]+|[0-9]+/g)?.join('.') ?? dossierNummer)
-    : null;
+    : dossierNummer;
 }
 
 export function transformErfpachtDossierProperties<

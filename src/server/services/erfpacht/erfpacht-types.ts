@@ -136,7 +136,7 @@ export type ErfpachtDossierDetailBijzondereBepaling = {
 };
 
 export type ErfpachtDossiersDetailSource = {
-  dossierNummer: string | undefined;
+  dossierNummer: string;
   dossierId: string;
   titelDossierNummer: string;
   eersteUitgifte: string;
