@@ -281,6 +281,11 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
+                    <span
+                      class="ams-visually-hidden"
+                    >
+                      Klaar: 
+                    </span>
                     Ontvangen
                   </h3>
                   <time
@@ -315,6 +320,11 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
+                    <span
+                      class="ams-visually-hidden"
+                    >
+                      Klaar: 
+                    </span>
                     In behandeling
                   </h3>
                   <time
@@ -366,6 +376,11 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
+                    <span
+                      class="ams-visually-hidden"
+                    >
+                      Bezig: 
+                    </span>
                     Extra informatie nodig
                   </h3>
                   <time

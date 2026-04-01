@@ -130,6 +130,11 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
+                    <span
+                      class="ams-visually-hidden"
+                    >
+                      Klaar: 
+                    </span>
                     Besluit
                   </h3>
                   <time
@@ -223,6 +228,11 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
+                    <span
+                      class="ams-visually-hidden"
+                    >
+                      Bezig: 
+                    </span>
                     Levering gestart
                   </h3>
                   <time
@@ -460,6 +470,11 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
+                    <span
+                      class="ams-visually-hidden"
+                    >
+                      Klaar: 
+                    </span>
                     Besluit
                   </h3>
                   <time
@@ -530,6 +545,11 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
+                    <span
+                      class="ams-visually-hidden"
+                    >
+                      Klaar: 
+                    </span>
                     Levering gestart
                   </h3>
                   <time
@@ -571,6 +591,11 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
+                    <span
+                      class="ams-visually-hidden"
+                    >
+                      Klaar: 
+                    </span>
                     Levering gestopt
                   </h3>
                   <time
@@ -630,6 +655,11 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
+                    <span
+                      class="ams-visually-hidden"
+                    >
+                      Bezig: 
+                    </span>
                     Einde recht
                   </h3>
                   <time
@@ -805,6 +835,11 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
+                    <span
+                      class="ams-visually-hidden"
+                    >
+                      Bezig: 
+                    </span>
                     Besluit
                   </h3>
                   <time
@@ -1118,6 +1153,11 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
+                    <span
+                      class="ams-visually-hidden"
+                    >
+                      Klaar: 
+                    </span>
                     Besluit
                   </h3>
                   <time
@@ -1194,6 +1234,11 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
+                    <span
+                      class="ams-visually-hidden"
+                    >
+                      Klaar: 
+                    </span>
                     Levering gestart
                   </h3>
                   <time
@@ -1252,6 +1297,11 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
+                    <span
+                      class="ams-visually-hidden"
+                    >
+                      Bezig: 
+                    </span>
                     Levering gestopt
                   </h3>
                   <time
@@ -1465,6 +1515,11 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
+                    <span
+                      class="ams-visually-hidden"
+                    >
+                      Bezig: 
+                    </span>
                     Levering gestart
                   </h3>
                   <time
