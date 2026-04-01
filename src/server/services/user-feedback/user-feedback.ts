@@ -114,7 +114,7 @@ export async function saveUserFeedback(
   const response = await requestData<SaveUserFeedbackResponse>(requestConfig);
 
   if (response.status === 'OK' && hasAnswer) {
-    // There is an alert called 'User feedback with a comment detected' -
+    // There is an alert called 'KTO Submission' -
     // that requires this log line to be able to fire.
     captureMessage('A userfeedback survey has been submitted', {
       properties: { hasAnswer },
