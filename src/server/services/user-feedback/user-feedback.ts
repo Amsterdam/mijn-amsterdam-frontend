@@ -100,7 +100,7 @@ export async function saveUserFeedback(
 
   const hasAnswer = surveyEntryPayload.answers.some((answer) => {
     // Checks if the answer is not just a number.
-    return isNaN(parseInt(answer.answer, 10));
+    return answer.answer ? isNaN(parseInt(answer.answer, 10)) : false;
   });
 
   const requestConfig = getCustomApiConfig(sourceApiConfig, {
