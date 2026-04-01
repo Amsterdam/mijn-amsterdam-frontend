@@ -8,6 +8,7 @@ import type {
   BrpFrontend,
 } from '../../../../../server/services/brp/brp-types.ts';
 import type { ContactMoment } from '../../../../../server/services/salesforce/contactmomenten.types.ts';
+import { VvEDataSource } from '../../../../../server/services/wonen/zwd.types.ts';
 import { bffApiHost } from '../../../../../testing/setup.ts';
 import { bffApi } from '../../../../../testing/utils.ts';
 import type { AppState } from '../../../../../universal/types/App.types.ts';
@@ -16,11 +17,13 @@ import { routeConfig } from '../Profile-thema-config.ts';
 
 const testState = (
   responseBRP: BrpFrontend | object = {},
-  responseSF: ContactMoment[] = []
+  responseSF: ContactMoment[] = [],
+  responseZWD?: Pick<VvEDataSource, 'name'>
 ) => ({
   BRP: { status: 'OK', content: responseBRP },
   KVK: { status: 'OK', content: null },
   KLANT_CONTACT: { status: 'OK', content: responseSF },
+  WONEN: { status: 'OK', content: responseZWD },
 });
 
 const panelHeadings = [
@@ -285,6 +288,37 @@ describe('<Profile />', () => {
       />
     );
     expect(screen.getByText('Armeense, Turkse')).toBeInTheDocument();
+  });
+
+  test('Shows Vereniging van Eigenaren data', async () => {
+    function Component() {
+      return (
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routeEntry}
+          component={MijnGegevensThema}
+          state={
+            testState(
+              {
+                persoon: { mokum: true },
+                adres: {
+                  straatnaam: 'Mooie Straat',
+                  huisnummer: '1',
+                  landnaam: 'Nederland',
+                },
+              },
+              [],
+              {
+                name: 'VvE Prachtige Straat 13',
+              }
+            ) as unknown as AppState
+          }
+        />
+      );
+    }
+    render(<Component />);
+
+    screen.getByText('VvE Prachtige Straat 13');
   });
 
   test('Shows max 3 contactmomenten', async () => {
