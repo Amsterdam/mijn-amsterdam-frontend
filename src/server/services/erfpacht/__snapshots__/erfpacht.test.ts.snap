@@ -528,12 +528,12 @@ exports[`erfpacht > fetchErfpacht: dossiers 1`] = `
           "voorkeursadres": "Dit en dat plein 22 H",
         },
         {
-          "dossierId": "E.6470.243",
+          "dossierId": "A.B.C.D",
           "dossierNummer": "E6470/243",
-          "id": "E.6470.243",
+          "id": "A.B.C.D",
           "link": {
             "title": "E6470/243: Valutaboulevard 51",
-            "to": "/erfpacht/dossier/E.6470.243",
+            "to": "/erfpacht/dossier/A.B.C.D",
           },
           "titelDossierHelpTekstRegel1": "Probeer het opnieuw met een postcode en huisnummer. Bijvoorbeeld 1072 TW 54.",
           "titelDossierHelpTekstRegel2": "Of probeer een volledig erfpachtdossiernummer in te voeren. Bijvoorbeeld E123/1.",
