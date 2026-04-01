@@ -10,6 +10,7 @@ export const featureToggle = {
     get aantalBewonersOpAdresTonenActive() {
       return featureToggle[themaIdBRP].themaActive && isEnabled('BRP.aantalBewonersOpAdresTonen');
     },
+    wonenActive: !IS_PRODUCTION,
   },
   [themaIdKVK]: {
     themaActive: true,

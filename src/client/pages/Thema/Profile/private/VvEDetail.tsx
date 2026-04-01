@@ -1,8 +1,8 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
 import { useProfileData } from './useProfileData.hook';
-import { useWonenThemaData } from './useVvEThemaData.hook';
-import { VvEDataSource } from '../../../../../server/services/wonen/zwd-vve.types';
+import { useWonenThemaData } from './useWonenThemaData.hook';
+import { VvEDataSource } from '../../../../../server/services/wonen/zwd.types';
 import {
   Datalist,
   Row,
@@ -39,7 +39,9 @@ function WonenData({ vve }: WonenDataProps) {
       label: 'Prioriteitswijk',
       content: vve?.is_priority_neighborhood ? 'Ja' : 'Nee',
     },
-    vve?.kvk_nummer !== null && {
+    (vve?.kvk_nummer !== null ||
+      vve?.kvk_nummer !== undefined ||
+      vve?.kvk_nummer !== '') && {
       label: 'KvK-nummer',
       content: vve?.kvk_nummer,
     },
@@ -72,7 +74,7 @@ export function VvEDetail() {
     <ThemaDetailPagina
       themaId={themaId}
       title="Vereniging van Eigenaren"
-      zaak={wonenData as VvEDataSource} // empty object to prevent info block: "Geen gegevens gevonden"
+      zaak={{}} // empty object to prevent info block: "Geen gegevens gevonden"
       isError={isError}
       isLoading={isLoading}
       pageContentMain={wonenData && <WonenData vve={wonenData} />}

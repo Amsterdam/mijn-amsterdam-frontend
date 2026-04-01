@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 
-import * as zwdVve from './zwd-vve';
+import * as zwdVve from './zwd';
 
 // Mock dependencies if any (adjust as needed)
 // For example, if zwd-vve.ts imports other modules, mock them here

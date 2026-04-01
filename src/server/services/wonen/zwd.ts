@@ -1,4 +1,4 @@
-import { VvEDataSource } from './zwd-vve.types';
+import { VvEDataSource } from './zwd.types';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { apiPostponeResult } from '../../../universal/helpers/api';
@@ -36,7 +36,7 @@ async function fetchZWDAPI<T>(dataRequestConfigSpecific: DataRequestConfig) {
   return requestData<T>(dataRequestConfigBase);
 }
 
-function transformZwedVvEResponse(responseData: VvEDataSource) {
+function transformZwdVvEResponse(responseData: VvEDataSource) {
   return pick(responseData, [
     'name',
     'monument_status',
@@ -71,7 +71,7 @@ export async function fetchVVEData(authProfileAndToken: AuthProfileAndToken) {
     formatUrl({ url }) {
       return `${url}/api/v1/address/${translateVerblijfObject(privateAddresses[0].bagAddress?.verblijfsobjectIdentificatie)}/mijn-amsterdam/`;
     },
-    transformResponse: transformZwedVvEResponse,
+    transformResponse: transformZwdVvEResponse,
   };
 
   return fetchZWDAPI<VvEDataSource>(requestConfig);
