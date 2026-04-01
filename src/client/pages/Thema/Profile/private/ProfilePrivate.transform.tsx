@@ -176,6 +176,15 @@ const adres: ProfileLabels<
       );
     },
   ],
+  vveNaam: [
+    'Vereniging van Eigenaren',
+    (value, _item, brpData) => {
+      if (brpData?.adres?.vveNaam) {
+        return brpData.adres.vveNaam;
+      }
+      return null;
+    },
+  ],
 };
 
 const verbintenis: ProfileLabels<
