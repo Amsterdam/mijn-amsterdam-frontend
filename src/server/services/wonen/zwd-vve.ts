@@ -18,8 +18,6 @@ async function fetchZWDAPI<T>(dataRequestConfigSpecific: DataRequestConfig) {
 }
 
 function transformZwedVvEResponse(responseData: ZwedVvEResponseType) {
-  console.log('____________transformZwedVvEResponse', responseData);
-
   if (responseData) {
     return responseData;
   }
@@ -40,20 +38,12 @@ export async function fetchVVEData(authProfileAndToken: AuthProfileAndToken) {
   const privateBAGResponse = await fetchMyLocation(authProfileAndToken);
 
   const privateAddresses: BAGLocation[] = privateBAGResponse.content ?? [];
-  console.log(
-    '_________________privateAddresses',
-    privateAddresses[0]?.bagAddress?.verblijfsobjectIdentificatie
-  );
 
   const requestConfig: DataRequestConfig = {
     formatUrl({ url }) {
       return `${url}/api/v1/address/${privateAddresses[0].bagAddress?.verblijfsobjectIdentificatie}/homeowner-association/`;
-
     },
     transformResponse: transformZwedVvEResponse,
-    // cacheKey_UNSAFE: createSessionBasedCacheKey(
-    //   authProfileAndToken.profile.sid
-    // ),
   };
 
   return fetchZWDAPI<VvEData>(requestConfig);

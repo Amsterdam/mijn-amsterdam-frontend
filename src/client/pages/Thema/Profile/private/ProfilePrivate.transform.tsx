@@ -181,7 +181,7 @@ const adres: ProfileLabels<
     (value, _item, brpData) => {
       if (brpData?.adres?.vveNaam) {
         return (
-          <Link href="/persoonlijke-gegevens/vve" target="_blank">
+          <Link href="/persoonlijke-gegevens/vve" rel="noopener noreferrer">
             {brpData.adres.vveNaam}
           </Link>
         );
