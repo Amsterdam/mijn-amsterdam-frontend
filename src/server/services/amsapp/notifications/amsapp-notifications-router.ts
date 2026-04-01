@@ -9,7 +9,10 @@ import {
   fetchAndStoreNotifications,
   handleSendNotificationsResponse,
 } from './amsapp-notifications-route-handlers.ts';
-import { featureToggle, routes } from './amsapp-notifications-service-config.ts';
+import {
+  featureToggle,
+  routes,
+} from './amsapp-notifications-service-config.ts';
 import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import { apiErrorResult } from '../../../../universal/helpers/api.ts';
 import { RETURNTO_NOTIFICATIES_CONSUMER_ID } from '../../../auth/auth-after-redirect-returnto.ts';
@@ -93,9 +96,20 @@ const routerAdmin = createBFFRouter({
   isEnabled: featureToggle.amsNotificationsIsActive,
 });
 
-routerPublic.get(
+routerAdmin.get(
   routes.admin.NOTIFICATIONS_CONSUMER_REGISTRATION_OVERVIEW,
   async (_req: Request, res: Response) => {
+    if (IS_PRODUCTION) {
+      return sendResponse(
+        res,
+        apiErrorResult(
+          'Not allowed to access registration overview in production',
+          null,
+          403
+        )
+      );
+    }
+
     let overview;
     try {
       overview = await getRegistrationOverview();

@@ -15,12 +15,8 @@ import {
   forTesting,
   servicesTipsByProfileType,
 } from './controller.ts';
-import type {
-  RequestMock} from '../../testing/utils.ts';
-import {
-  getReqMockWithOidc,
-  ResponseMock,
-} from '../../testing/utils.ts';
+import type { RequestMock } from '../../testing/utils.ts';
+import { getReqMockWithOidc, ResponseMock } from '../../testing/utils.ts';
 import { apiSuccessResult } from '../../universal/helpers/api.ts';
 
 const mocks = vi.hoisted(() => {
@@ -37,6 +33,8 @@ const mocks = vi.hoisted(() => {
       reason: ['Omdat dit een fake tip is.'],
       title: 'Voor fake Amsterdammers',
     },
+    storeNotificationsResponses: vi.fn().mockResolvedValue(undefined),
+    captureException: vi.fn(),
   };
 });
 
@@ -59,6 +57,26 @@ vi.mock('./tips-and-notifications', async () => {
   };
 });
 
+vi.mock('./amsapp/notifications/amsapp-notifications-service-config.ts', () => {
+  return {
+    featureToggle: {
+      amsNotificationsIsActive: true,
+    },
+  };
+});
+
+vi.mock('./amsapp/notifications/amsapp-notifications.ts', () => {
+  return {
+    storeNotificationsResponses: mocks.storeNotificationsResponses,
+  };
+});
+
+vi.mock('./monitoring.ts', () => {
+  return {
+    captureException: mocks.captureException,
+  };
+});
+
 describe('controller', () => {
   const servicesPrivate = servicesTipsByProfileType.private;
   const servicesCommercial = servicesTipsByProfileType.commercial;
@@ -68,6 +86,8 @@ describe('controller', () => {
   });
 
   beforeEach(() => {
+    mocks.storeNotificationsResponses.mockClear();
+
     servicesTipsByProfileType.private = {
       BRP: async () => {
         return {
@@ -179,6 +199,34 @@ describe('controller', () => {
     );
 
     expect(result).toEqual(data);
+  });
+
+  test('storeNotificationsForAmsAppUsers omits maintenance notifications', async () => {
+    const authProfileAndToken = {
+      profile: {
+        id: 'user-123',
+        profileType: 'private',
+      },
+    };
+
+    const notificationsAndTipsResults = {
+      maintenance: { content: {}, status: 'OK' },
+      afval: { content: {}, status: 'OK' },
+    };
+
+    forTesting.storeNotificationsForAmsAppUsers(
+      authProfileAndToken as never,
+      notificationsAndTipsResults as never
+    );
+
+    expect(mocks.storeNotificationsResponses).toHaveBeenCalledTimes(1);
+    expect(mocks.storeNotificationsResponses).toHaveBeenCalledWith(
+      'user-123',
+      {
+        afval: { content: {}, status: 'OK' },
+      },
+      { updateLastLoginDate: true }
+    );
   });
 });
 
