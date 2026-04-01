@@ -21,6 +21,10 @@ export function useProfileData() {
         ...BRP.content.adres,
         vveNaam: WONEN?.content?.vve?.name,
         aantalIngeschrevenPersonen,
+        vveNaam:
+        typeof WONEN.content?.name === 'string'
+          ? WONEN.content?.name
+          : undefined,
       },
     };
     profileData = formatBrpProfileData(brpContent);

@@ -190,7 +190,7 @@ const adres: ProfileLabels<
           </MaRouterLink>
         );
       }
-      return 'Onbekend';
+      return null;
     },
   ],
 };

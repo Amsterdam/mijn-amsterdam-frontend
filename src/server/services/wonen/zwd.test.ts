@@ -2,13 +2,8 @@ import { describe, it, expect, beforeEach } from 'vitest';
 
 import * as zwdVve from './zwd';
 
-// Mock dependencies if any (adjust as needed)
-// For example, if zwd-vve.ts imports other modules, mock them here
-
 describe('zwd-vve service', () => {
-  beforeEach(() => {
-    // Reset mocks or setup before each test if needed
-  });
+
 
   describe('translateBSN', () => {
     it('should return the same BAGId if translations are not set', () => {

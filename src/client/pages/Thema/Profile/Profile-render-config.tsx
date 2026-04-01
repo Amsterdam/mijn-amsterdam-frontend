@@ -7,6 +7,7 @@ import { VvEDetail } from './private/VvEDetail.tsx';
 import {
   routeConfig,
   themaTitle,
+  routeConfig,
   themaIdBRP,
   themaIdKVK,
 } from './Profile-thema-config.ts';

@@ -1,3 +1,4 @@
+import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import { isEnabled } from '../../../config/feature-toggles.ts';
 import type { ThemaRoutesConfig } from '../../../config/thema-types.ts';
 
@@ -7,10 +8,10 @@ export const themaIdBRP = 'BRP' as const;
 export const featureToggle = {
   [themaIdBRP]: {
     themaActive: true,
+    wonenActive: !IS_PRODUCTION,
     get aantalBewonersOpAdresTonenActive() {
       return featureToggle[themaIdBRP].themaActive && isEnabled('BRP.aantalBewonersOpAdresTonen');
     },
-    wonenActive: !IS_PRODUCTION,
   },
   [themaIdKVK]: {
     themaActive: true,

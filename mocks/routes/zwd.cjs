@@ -1,5 +1,5 @@
 const ZWD_VVE = require('../fixtures/zwd-vve.json');
-const settings = require('../settings');
+const settings = require('../settings.cjs');
 
 module.exports = [
   {
