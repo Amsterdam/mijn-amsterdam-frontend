@@ -180,7 +180,11 @@ const adres: ProfileLabels<
     'Vereniging van Eigenaren',
     (value, _item, brpData) => {
       if (brpData?.adres?.vveNaam) {
-        return brpData.adres.vveNaam;
+        return (
+          <Link href="/persoonlijke-gegevens/vve" target="_blank">
+            {brpData.adres.vveNaam}
+          </Link>
+        );
       }
       return null;
     },

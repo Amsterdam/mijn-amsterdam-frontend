@@ -3,6 +3,7 @@ import { BuildingsIcon } from '@amsterdam/design-system-react-icons';
 import { MijnBedrijfsGegevensThema } from './commercial/ProfileCommercial.tsx';
 import { ContactmomentenListPage } from './private/ContactmomentenListPage.tsx';
 import { MijnGegevensThema } from './private/ProfilePrivate.tsx';
+import { WonenDetail } from './private/VvEDetail.tsx';
 import {
   routeConfig,
   themaTitle,
@@ -20,6 +21,10 @@ export const ProfileRoutes = [
   {
     route: routeConfig.themaPageKVK.path,
     Component: MijnBedrijfsGegevensThema,
+  },
+ {
+    route: routeConfig.detailPageVvE.path,
+    Component: WonenDetail,
   },
   {
     route: routeConfig.listPageContactmomenten.path,
