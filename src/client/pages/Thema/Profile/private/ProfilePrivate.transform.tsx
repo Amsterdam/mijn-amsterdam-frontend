@@ -15,6 +15,7 @@ import {
 import { defaultDateFormat } from '../../../../../universal/helpers/date.ts';
 import type { AppState } from '../../../../../universal/types/App.types.ts';
 import LoadingContent from '../../../../components/LoadingContent/LoadingContent.tsx';
+import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
 import {
   BRP_LABEL_AANTAL_INGESCHREVEN_PERSONEN,
   profileLinks,
@@ -181,12 +182,15 @@ const adres: ProfileLabels<
     (value, _item, brpData) => {
       if (brpData?.adres?.vveNaam) {
         return (
-          <Link href="/persoonlijke-gegevens/vve" rel="noopener noreferrer">
+          <MaRouterLink
+            href={routeConfig.detailPageVvE.path}
+            rel="noopener noreferrer"
+          >
             {brpData.adres.vveNaam}
-          </Link>
+          </MaRouterLink>
         );
       }
-      return null;
+      return 'Onbekend';
     },
   ],
 };

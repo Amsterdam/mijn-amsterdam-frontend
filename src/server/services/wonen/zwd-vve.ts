@@ -1,13 +1,32 @@
-import { ZwedVvEResponseType, VvEData } from './zwd-vve.types';
+import { VvEDataSource } from './zwd-vve.types';
+import { IS_PRODUCTION } from '../../../universal/config/env';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { apiPostponeResult } from '../../../universal/helpers/api';
+import { pick } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { BAGLocation } from '../bag/bag.types';
-import { fetchMyLocation } from '../bag/my-locations';
+import { fetchMyLocations } from '../bag/my-locations';
+
+export function translateVerblijfObject(bagID: BAGID): BAGID {
+  const translations = getFromEnv('BFF_BAG_TRANSLATIONS', false);
+  // IS_PRODUCTION is explicitly set to exclude this code from being used in this environment.
+  if (!translations || IS_PRODUCTION || !bagID) {
+    return bagID;
+  }
+
+  const translationsMap = new Map(
+    translations.split(',').map((pair) => pair.split('=')) as Iterable<
+      [string, string]
+    >
+  );
+
+  return translationsMap.get(bagID) ?? bagID;
+}
+type BAGID = string | null | undefined;
 
 async function fetchZWDAPI<T>(dataRequestConfigSpecific: DataRequestConfig) {
   const dataRequestConfigBase = getApiConfig(
@@ -17,34 +36,43 @@ async function fetchZWDAPI<T>(dataRequestConfigSpecific: DataRequestConfig) {
   return requestData<T>(dataRequestConfigBase);
 }
 
-function transformZwedVvEResponse(responseData: ZwedVvEResponseType) {
-  if (responseData) {
-    return responseData;
-  }
-  return [];
+function transformZwedVvEResponse(responseData: VvEDataSource) {
+  return pick(responseData, [
+    'name',
+    'monument_status',
+    'number_of_apartments',
+    'kvk_number',
+    'district',
+    'build_year',
+    'is_priority_neighborhood',
+    'ligt_in_beschermd_gebied',
+    'beschermd_stadsdorpsgezicht',
+  ]) as VvEDataSource;
 }
-//   "message": "HomeownerAssociation with bag ID 0363010000801903 not found."
 
 export async function fetchVVEData(authProfileAndToken: AuthProfileAndToken) {
   if (!FeatureToggle.vveIsActive) {
     return apiPostponeResult(null);
   }
 
-  const base64encodedPK = getFromEnv('BFF_VVE_API_TOKEN');
-  if (!base64encodedPK) {
-    throw new Error('BFF_VVE_API_TOKEN not found');
+  const privateBAGResponse = await fetchMyLocations(authProfileAndToken);
+
+  if (
+    privateBAGResponse.status !== 'OK' ||
+    !privateBAGResponse.content ||
+    privateBAGResponse.content.length === 0
+  ) {
+    throw new Error('BAG id not found in privateBAGResponse');
   }
 
-  const privateBAGResponse = await fetchMyLocation(authProfileAndToken);
-
-  const privateAddresses: BAGLocation[] = privateBAGResponse.content ?? [];
+  const privateAddresses: BAGLocation[] = privateBAGResponse.content;
 
   const requestConfig: DataRequestConfig = {
     formatUrl({ url }) {
-      return `${url}/api/v1/address/${privateAddresses[0].bagAddress?.verblijfsobjectIdentificatie}/homeowner-association/`;
+      return `${url}/api/v1/address/${translateVerblijfObject(privateAddresses[0].bagAddress?.verblijfsobjectIdentificatie)}/mijn-amsterdam/`;
     },
     transformResponse: transformZwedVvEResponse,
   };
 
-  return fetchZWDAPI<VvEData>(requestConfig);
+  return fetchZWDAPI<VvEDataSource>(requestConfig);
 }

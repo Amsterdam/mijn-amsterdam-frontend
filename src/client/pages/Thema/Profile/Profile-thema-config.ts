@@ -34,7 +34,7 @@ export const routeConfig = {
   },
   detailPageVvE: {
     path: '/persoonlijke-gegevens/vve',
-    documentTitle: `${themaTitle.BRP} | Mijn Amsterdam`,
+    documentTitle: `Mijn VvE | Mijn Amsterdam`,
     trackingUrl: null,
   },
   listPageContactmomenten: {
