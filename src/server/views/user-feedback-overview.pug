@@ -32,18 +32,18 @@ table(border='1', cellpadding='5', cellspacing='0')
         td
           a(id=`entry-${entry.id}` href=`#entry-${entry.id}`)
             strong #{entry.id}
-        td= entry.dateCreated.toLocaleString('nl-NL', { dateStyle: 'short', timeStyle: 'short' })
+        td= entry.dateCreatedFormatted
         td= entry.entryPoint
-        td= entry.metadata.browserTitle
+        td= entry.browserTitle
         each question, id in feedbackOverview.survey.questions
           td= entry.answers[id] || '-'
         td
           ul
-            each error in entry.metadata.maErrors || []
+            each error in entry.maErrors || []
               li #{error.name} - #{error.error}
         td
           ul
-            each thema in entry.metadata.maThemas || []
+            each thema in entry.maThemas || []
               li #{thema}
         td
           pre= JSON.stringify(entry.metadata, null, 2)

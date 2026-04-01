@@ -112,12 +112,21 @@ export type SurveyAnswerFrontend = {
 };
 
 export type SurveyEntryFrontend = {
+  id: number;
   answers: Record<
     SurveyAnswerFrontend['question'],
     SurveyAnswerFrontend['answer']
   >;
   dateCreated: string;
-  metadata: object;
+  dateCreatedFormatted: string;
+  maErrors: {
+    name: string;
+    error: string;
+  }[];
+  maThemas: string[];
+  browserTitle: string;
+  metadata: Record<string, unknown>;
+  entryPoint: string;
 };
 
 export type SurveyOverviewFrontend = {

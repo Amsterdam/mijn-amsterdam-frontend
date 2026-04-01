@@ -6,6 +6,7 @@ import {
   range,
   isRecentNotification,
   splitBy,
+  isNumeric,
 } from './utils.ts';
 describe('Utils.ts', () => {
   it('deepOmitKeys: Should omit keys recursively', () => {
@@ -86,6 +87,22 @@ describe('Utils.ts', () => {
       const [odds, evens] = splitBy(data, isEven);
       expect(odds).toEqual([1, 3, 5]);
       expect(evens).toEqual([2, 4, 6]);
+    });
+  });
+
+  describe('isNumeric', () => {
+    test('returns true for numeric strings', () => {
+      expect(isNumeric('123')).toBe(true);
+      expect(isNumeric('-456')).toBe(true);
+    });
+
+    test('returns false for non-numeric strings', () => {
+      expect(isNumeric('abc')).toBe(false);
+      expect(isNumeric('12.34')).toBe(false); // Decimal numbers are not considered numeric in this context
+    });
+
+    test('returns false for empty string', () => {
+      expect(isNumeric('')).toBe(false);
     });
   });
 });

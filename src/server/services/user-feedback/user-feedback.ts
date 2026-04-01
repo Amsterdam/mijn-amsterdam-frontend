@@ -21,7 +21,7 @@ import {
   type ApiResponsePromise,
 } from '../../../universal/helpers/api.ts';
 import { defaultDateTimeFormat } from '../../../universal/helpers/date.ts';
-import { omit, pick } from '../../../universal/helpers/utils.ts';
+import { isNumeric, omit, pick } from '../../../universal/helpers/utils.ts';
 import camelize from '../../helpers/camelize.ts';
 import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
@@ -100,8 +100,12 @@ export async function saveUserFeedback(
   const surveyEntryPayload = getSurveyEntryPayload(data);
 
   const hasAnswer = surveyEntryPayload.answers.some((answer) => {
+    if (!answer.answer) {
+      return false;
+    }
+    const answer_ = answer.answer.trim();
     // Checks if the answer is not just a number.
-    return answer.answer ? isNaN(parseInt(answer.answer, 10)) : false;
+    return answer_ ? !isNumeric(answer_) : false;
   });
 
   const requestConfig = getCustomApiConfig(sourceApiConfig, {
@@ -145,15 +149,25 @@ async function fetchFeedbackSurveyEntries(
         return entry.survey_unique_code === surveyId;
       });
       const entries = entriesBySurvey.map((entry) => {
-        return {
+        const surveyEntryFrontend: SurveyEntryFrontend = {
           id: entry.id,
           answers: Object.fromEntries(
             entry.answers.map((answer) => [answer.question, answer.answer])
           ),
-          dateCreated: defaultDateTimeFormat(entry.created_at),
-          metadata: omit(entry.metadata, ['maThemas', 'maErrors', 'pageTitle']),
+          dateCreated: entry.created_at,
+          dateCreatedFormatted: defaultDateTimeFormat(entry.created_at),
+          maErrors: entry.metadata.maErrors as SurveyEntryFrontend['maErrors'],
+          maThemas: entry.metadata.maThemas as string[],
+          browserTitle: entry.metadata.browserTitle as string,
+          metadata: omit(entry.metadata, [
+            'maThemas',
+            'maErrors',
+            'browserTitle',
+          ]),
           entryPoint: entry.entry_point,
         };
+
+        return surveyEntryFrontend;
       });
 
       return {
