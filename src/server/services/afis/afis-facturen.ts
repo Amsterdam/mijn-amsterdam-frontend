@@ -206,6 +206,7 @@ async function fetchAfisFacturenDeelbetalingen(
     formatUrl: ({ url }) => url + AFIS_FACTUUR_REQUEST_API_PATH,
     transformResponse: transformDeelbetalingenResponse,
   });
+
   return requestData<AfisFactuurDeelbetalingen>(config);
 }
 
@@ -711,26 +712,9 @@ export async function fetchAfisFacturenOverview(
     ...params,
     state: 'afgehandeld',
   });
-  const afgehandeldeFacturenRequest_ = fetchAfisFacturen(sessionID, {
-    state: 'afgehandeld',
-    businessPartnerID: params.businessPartnerID,
-    excludeAccountingDocumentIds: getTermijnFactuurAccountingDocumentIds(
-      openstaandeFacturenResult.content?.facturen ?? []
-    ),
-    // Should the top 3 facturen include a termijn factuur, we also want to show the overige termijnen of this factuur. To be able to do this we need to fetch more than 3 + 10 (termijnen) facturen.
-    // This is not an ideal solution but unfortunately there is no way to reliably filter on termijn facturen in the API.
-    // 15 is used because we assume this includes all the termijnen of one possible termijn factuur in the top 3, but this can be adjusted if needed.
-    top: '15',
-  });
-
   const overgedragenFacturenRequest = fetchAfisFacturenByState(sessionID, {
     ...params,
     state: 'overgedragen',
-  });
-  const overgedragenFacturenRequest_ = fetchAfisFacturen(sessionID, {
-    state: 'overgedragen',
-    businessPartnerID: params.businessPartnerID,
-    top: '15',
   });
 
   const [afgehandeldeFacturenResponse, overgedragenFacturenResponse] =
