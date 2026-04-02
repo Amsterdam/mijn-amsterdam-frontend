@@ -104,7 +104,8 @@ export async function saveUserFeedback(
       return false;
     }
     const answer_ = answer.answer.trim();
-    // Checks if the answer is not just a number.
+    // If the answer is a number, we don't want to count it as an answer for the purpose of firing the 'KTO Submission' alert.
+    // We're not immediately interested in the rating of submissions, but rather answers with meaningful content that are submitted.
     return answer_ ? !isNumeric(answer_) : false;
   });
 
