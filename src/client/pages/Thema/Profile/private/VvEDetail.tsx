@@ -11,7 +11,7 @@ import {
 import { PageContentCell } from '../../../../components/Page/Page.tsx';
 import ThemaDetailPagina from '../../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
-import { themaId } from '../../Afis/Afis-thema-config.ts';
+import { themaIdBRP } from '../Profile-thema-config.ts';
 
 type VveDetailsProps = {
   vve: VvEDataFrontend;
@@ -66,7 +66,7 @@ export function VvEDetail() {
   useHTMLDocumentTitle(routeConfig.detailPageVvE);
   return (
     <ThemaDetailPagina
-      themaId={themaId}
+      themaId={themaIdBRP}
       title="Vereniging van Eigenaren"
       zaak={{}} // empty object to prevent info block: "Geen gegevens gevonden"
       isError={isError}
