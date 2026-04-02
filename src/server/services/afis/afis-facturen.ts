@@ -710,10 +710,16 @@ export async function fetchAfisFacturenOverview(
     });
   const afgehandeldeFacturenRequest = fetchAfisFacturenByState(sessionID, {
     ...params,
+    // Should the top 3 facturen include a termijn factuur, we also want to show the overige termijnen of this factuur.
+    // To be able to do this we need to fetch more than 3 + 10 (termijnen) facturen.
+    // This is not an ideal solution but unfortunately there is no way to reliably filter on termijn facturen in the API.
+    // 15 is used because we assume this includes all the termijnen of one possible termijn factuur in the top 3, but this can be adjusted if needed.
+    top: '15',
     state: 'afgehandeld',
   });
   const overgedragenFacturenRequest = fetchAfisFacturenByState(sessionID, {
     ...params,
+    top: '15',
     state: 'overgedragen',
   });
 
