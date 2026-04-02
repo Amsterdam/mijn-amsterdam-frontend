@@ -24,7 +24,7 @@ export function getVragenOverFactuurText(
       Mist u een factuur of heeft u een vraag over één van uw facturen? Stuur
       een e-mail naar{' '}
       <Link
-        href={`mailto:debiteurenadministratie@amsterdam.nl?subject=${mailSubject}`}
+        href={`mailto:debiteurenadministratie@amsterdam.nl?subject=${encodeURIComponent(mailSubject)}`}
       >
         debiteurenadministratie@amsterdam.nl
       </Link>{' '}

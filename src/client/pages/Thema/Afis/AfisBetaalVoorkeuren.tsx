@@ -168,7 +168,7 @@ export function AfisBetaalVoorkeuren() {
         incasso instellen per afdeling van de gemeente. Wil u uw
         facturatiegegevens wijzigen, stuur dan een email naar{' '}
         <Link
-          href={`mailto:debiteurenadministratie@amsterdam.nl?subject=Facturatiegegevens wijzigen&body=${mailBody}`}
+          href={`mailto:debiteurenadministratie@amsterdam.nl?subject=Facturatiegegevens wijzigen&body=${encodeURIComponent(mailBody)}`}
         >
           debiteurenadministratie@amsterdam.nl
         </Link>
