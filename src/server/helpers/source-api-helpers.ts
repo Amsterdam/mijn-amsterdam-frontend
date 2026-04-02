@@ -20,6 +20,7 @@ function getApiConfigBasedCacheKey(
 export function getCustomApiConfig(
   ...configs: Omit<DataRequestConfig, 'cacheKey_UNSAFE'>[]
 ) {
+  // cacheKey_UNSAFE is not accepted in the configs parameter because it should be generated based on the name of the API config and not be manually set in the individual configs to prevent cache key collisions and ensure consistent cache key generation.
   if (configs.some((c) => 'cacheKey_UNSAFE' in c)) {
     throw new Error(
       'getCustomApiConfig does not accept cacheKey_UNSAFE in configs'
