@@ -1,7 +1,10 @@
 import { featureToggle, ZWDApiReqestConfig } from './wonen-service-config.ts';
 import type { VvEDataFrontend, ZwdVveDataSource } from './zwd.types.ts';
 import { IS_PRODUCTION } from '../../../universal/config/env.ts';
-import { apiPostponeResult } from '../../../universal/helpers/api.ts';
+import {
+  apiErrorResult,
+  apiPostponeResult,
+} from '../../../universal/helpers/api.ts';
 import { pick } from '../../../universal/helpers/utils.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import type { DataRequestConfig } from '../../config/source-api.ts';
@@ -67,16 +70,17 @@ export async function fetchVVEData(authProfileAndToken: AuthProfileAndToken) {
 
   const bagResponse = await service(authProfileAndToken);
 
-  if (bagResponse.status !== 'OK') {
-    // Propagate non-OK status (including dependency errors) from fetchPrivate
-    return bagResponse;
-  }
-  if (!bagResponse.content || bagResponse.content.length === 0) {
-    // No addresses found: treat as a dependency error instead of throwing
-    return {
-      ...bagResponse,
-      status: 'DEPENDENCY_ERROR',
-    };
+  if (
+    bagResponse.status == 'ERROR' ||
+    !bagResponse.content ||
+    bagResponse.content.length === 0
+  ) {
+    return apiErrorResult(
+      bagResponse.status === 'ERROR'
+        ? bagResponse.message
+        : 'No BAG locations found for the user',
+      null
+    );
   }
 
   const bagLocations: BAGLocation[] = bagResponse.content;
@@ -84,8 +88,9 @@ export async function fetchVVEData(authProfileAndToken: AuthProfileAndToken) {
     bagLocations?.[0]?.bagAddress?.verblijfsobjectIdentificatie;
 
   if (!verblijfsobjectIdentificatie) {
-    throw new Error(
-      'BAG verblijfsobjectIdentificatie not found in privateBAGResponse'
+    return apiErrorResult(
+      'No valid BAG verblijfsobjectIdentificatie found for the primary BAG location of the user',
+      null
     );
   }
 
