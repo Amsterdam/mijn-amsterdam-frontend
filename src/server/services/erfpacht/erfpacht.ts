@@ -12,7 +12,7 @@ import type {
 import { type ErfpachtDossiersResponseSource } from './erfpacht-types.ts';
 import { themaConfig } from '../../../client/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
-import { sortAlpha } from '../../../universal/helpers/utils.ts';
+import { jsonCopy, sortAlpha } from '../../../universal/helpers/utils.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { getFromEnv } from '../../helpers/env.ts';
 import { getApiConfig } from '../../helpers/source-api-helpers.ts';
@@ -35,12 +35,10 @@ function transformIsErfpachterResponseSource(
   return response;
 }
 
-function getDossierNummerUrlParam(
-  dossierNummer: string | undefined
-): string | null {
+function getDossierNummerUrlParam(dossierNummer: string): string {
   return dossierNummer
     ? (dossierNummer.match(/[a-zA-Z]+|[0-9]+/g)?.join('.') ?? dossierNummer)
-    : null;
+    : dossierNummer;
 }
 
 export function transformErfpachtDossierProperties<
@@ -51,9 +49,10 @@ export function transformErfpachtDossierProperties<
     return null;
   }
 
-  const dossier: D = structuredClone(dossierSource);
+  const dossier: D = jsonCopy(dossierSource);
 
-  const dossierNummerUrlParam = getDossierNummerUrlParam(dossier.dossierNummer);
+  const dossierId =
+    dossier.dossierId || getDossierNummerUrlParam(dossier.dossierNummer);
   const title = `${dossier.dossierNummer}: ${dossier.voorkeursadres}`;
 
   // Filter out relaties that we don't want to show in the frontend.
@@ -89,12 +88,12 @@ export function transformErfpachtDossierProperties<
   }
 
   const zaak: ErfpachtDossierPropsFrontend<D> = Object.assign(dossier, {
-    dossierNummerUrlParam,
+    dossierId,
     title,
-    id: dossierNummerUrlParam ?? dossier.voorkeursadres,
+    id: dossierId ?? dossier.voorkeursadres,
     link: {
       to: generatePath(themaConfig.detailPage.route.path, {
-        dossierNummerUrlParam,
+        dossierId,
       }),
       title,
     },
@@ -172,14 +171,14 @@ export async function fetchErfpacht(authProfileAndToken: AuthProfileAndToken) {
 
 export async function fetchErfpachtDossiersDetail(
   authProfileAndToken: AuthProfileAndToken,
-  dossierNummerUrlParam: string
+  dossierId: string
 ) {
   const config = getApiConfig('ERFPACHT');
   const dossierInfoResponse = await requestData<ErfpachtDossiersDetail>(
     {
       ...config,
       url: new URL(
-        `${config.url}/vernise/api/dossierinfo/${dossierNummerUrlParam}`
+        `${config.url}/vernise/api/dossierinfo/${dossierId}`
       ).toString(),
       transformResponse: transformErfpachtDossierProperties,
     },
