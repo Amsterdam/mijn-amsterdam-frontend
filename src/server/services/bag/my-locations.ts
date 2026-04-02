@@ -59,7 +59,7 @@ export async function fetchPrivate(
   return apiDependencyError({ BRP });
 }
 
-async function fetchCommercial(
+export async function fetchCommercial(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse_DEPRECATED<BAGLocationExtended[] | null>> {
   const KVK = await fetchKVK(authProfileAndToken);

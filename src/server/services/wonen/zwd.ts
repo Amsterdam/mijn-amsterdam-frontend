@@ -10,7 +10,7 @@ import { getFromEnv } from '../../helpers/env.ts';
 import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
 import type { BAGLocation } from '../bag/bag.types.ts';
-import { fetchPrivate } from '../bag/my-locations.ts';
+import { fetchCommercial, fetchPrivate } from '../bag/my-locations.ts';
 
 export function translateVerblijfObjectId(bagID: BAGID): BAGID {
   const bagIdTranslations = getFromEnv('BFF_BAG_TRANSLATIONS', false);
@@ -60,23 +60,28 @@ export async function fetchVVEData(authProfileAndToken: AuthProfileAndToken) {
     return apiPostponeResult(null);
   }
 
-  const privateResponse = await fetchPrivate(authProfileAndToken);
+  const service =
+    authProfileAndToken.profile.profileType === 'private'
+      ? fetchPrivate
+      : fetchCommercial;
 
-  if (privateResponse.status !== 'OK') {
+  const bagResponse = await service(authProfileAndToken);
+
+  if (bagResponse.status !== 'OK') {
     // Propagate non-OK status (including dependency errors) from fetchPrivate
-    return privateResponse;
+    return bagResponse;
   }
-  if (!privateResponse.content || privateResponse.content.length === 0) {
+  if (!bagResponse.content || bagResponse.content.length === 0) {
     // No addresses found: treat as a dependency error instead of throwing
     return {
-      ...privateResponse,
+      ...bagResponse,
       status: 'DEPENDENCY_ERROR',
     };
   }
 
-  const privateAddresses: BAGLocation[] = privateResponse.content;
+  const bagLocations: BAGLocation[] = bagResponse.content;
   const verblijfsobjectIdentificatie =
-    privateAddresses?.[0]?.bagAddress?.verblijfsobjectIdentificatie;
+    bagLocations?.[0]?.bagAddress?.verblijfsobjectIdentificatie;
 
   if (!verblijfsobjectIdentificatie) {
     throw new Error(
