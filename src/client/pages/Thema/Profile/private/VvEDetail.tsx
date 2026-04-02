@@ -36,12 +36,8 @@ function VveDetail({ vve }: VveDetailsProps) {
       content: vve.beschermdStadsdorpsgezicht,
     },
     {
-      label: 'Prioriteitswijk',
-      content: vve.isPriorityNeighborhood ? 'Ja' : 'Nee',
-    },
-    {
       label: 'KvK nummer',
-      content: vve.kvkNumber || null,
+      content: vve.kvkNummer || null,
     },
     {
       label: 'Monumentstatus',
