@@ -49,7 +49,7 @@ function VveDetail({ vve }: VveDetailsProps) {
     <>
       <PageContentCell spanWide={8}>
         <Paragraph>
-          Hier ziet u data afkomsting uit de Basisregistratie Adressen en
+          Hier ziet u data afkomstig uit de Basisregistratie Adressen en
           Gebouwen van het kadaster. Deze data kan een week achterlopen.
         </Paragraph>
       </PageContentCell>
