@@ -75,7 +75,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
             Hieronder ziet u een overzicht van uw facturen. Mist u een factuur of heeft u een vraag over één van uw facturen? Stuur een e-mail naar 
             <a
               class="ams-link"
-              href="mailto:debiteurenadministratie@amsterdam.nl?subject=Vraag over facturen en betaalvoorkeuren"
+              href="mailto:debiteurenadministratie@amsterdam.nl?subject=Vraag%20over%20facturen%20en%20betaalvoorkeuren"
             >
               debiteurenadministratie@amsterdam.nl
             </a>
