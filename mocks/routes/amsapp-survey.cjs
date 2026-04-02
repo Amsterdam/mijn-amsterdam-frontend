@@ -43,23 +43,41 @@ module.exports = [
         options: {
           status: 200,
           body: {
-            count: 123,
-            next: 'http://api.example.org/accounts/?page=4',
-            previous: 'http://api.example.org/accounts/?page=2',
+            count: 2,
+            next: null,
+            previous: null,
             results: [
               {
-                id: 0,
+                id: 1,
                 answers: [
                   {
-                    question: 0,
+                    question: 1,
                     answer: 'string',
                   },
                 ],
-                survey_unique_code: 'string',
-                created_at: '2026-03-02T11:04:20.365Z',
+                survey_unique_code: 'mams-inline-kto',
+                created_at: '2026-01-21T11:20:25.203572+01:00',
                 entry_point: 'string',
-                metadata: 'string',
-                survey_version: 0,
+                metadata: {
+                  foo: 'bar',
+                },
+                survey_version: 1,
+              },
+              {
+                id: 2,
+                answers: [
+                  {
+                    question: 1,
+                    answer: 'string',
+                  },
+                ],
+                survey_unique_code: 'mams-inline-kto',
+                created_at: '2026-01-21T11:21:29.299760+01:00',
+                entry_point: '/inkomen',
+                metadata: {
+                  'browser.title': 'inkomen',
+                },
+                survey_version: 1,
               },
             ],
           },

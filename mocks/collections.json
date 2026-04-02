@@ -4,6 +4,7 @@
     "routes": [
       "get-amsapp-survey:standard",
       "post-amsapp-survey-response:standard",
+      "get-amsapp-surveys:standard",
       "post-amsapp-administratienummer:standard",
       "get-belastingen:standard",
       "get-bezwaren-documenten:standard",

@@ -82,6 +82,10 @@ export async function handleShowSurveyOverview(
     currentPage
   );
 
+  if (feedbackOverview.status === 'ERROR') {
+    return feedbackOverview;
+  }
+
   const entries = feedbackOverview.content?.entries || [];
 
   const score = (
