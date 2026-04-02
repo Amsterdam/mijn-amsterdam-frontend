@@ -62,12 +62,16 @@ export async function fetchVVEData(authProfileAndToken: AuthProfileAndToken) {
 
   const privateResponse = await fetchPrivate(authProfileAndToken);
 
-  if (
-    privateResponse.status !== 'OK' ||
-    !privateResponse.content ||
-    privateResponse.content.length === 0
-  ) {
-    throw new Error('BAG id not found in privateBAGResponse');
+  if (privateResponse.status !== 'OK') {
+    // Propagate non-OK status (including dependency errors) from fetchPrivate
+    return privateResponse;
+  }
+  if (!privateResponse.content || privateResponse.content.length === 0) {
+    // No addresses found: treat as a dependency error instead of throwing
+    return {
+      ...privateResponse,
+      status: 'DEPENDENCY_ERROR',
+    };
   }
 
   const privateAddresses: BAGLocation[] = privateResponse.content;
