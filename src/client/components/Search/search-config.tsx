@@ -133,7 +133,7 @@ export const API_SEARCH_CONFIG_DEFAULT: Optional<ApiSearchConfig, 'stateKey'> =
       return [];
     },
     displayTitle: (item: ApiBaseItem) => (term: string) => {
-      return displayPath(term, [item.title]);
+      return displayLinkToSearchResult(term, [item.title]);
     },
     url: (item: ApiBaseItem) => item.link?.to || '/',
     description: (item: ApiBaseItem) => {
@@ -143,7 +143,7 @@ export const API_SEARCH_CONFIG_DEFAULT: Optional<ApiSearchConfig, 'stateKey'> =
     keywordsGeneratedFromProps: ['title', 'description'],
   };
 
-export function displayPath(
+export function displayLinkToSearchResult(
   term: string,
   segments: ReactNode[],
   replaceTerm: boolean = true
@@ -219,7 +219,7 @@ const getWpiConfig = (
       ) {
         segments.push(`Besluit ${defaultDateFormat(aanvraag.datePublished)}`);
       }
-      return displayPath(term, segments);
+      return displayLinkToSearchResult(term, segments);
     };
   },
   profileTypes: (stateKey === 'WPI_AANVRAGEN'
@@ -251,7 +251,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     stateKey: 'VERGUNNINGEN',
     displayTitle: (vergunning: ZaakFrontendCombined) => (term: string) => {
-      return displayPath(term, [
+      return displayLinkToSearchResult(term, [
         vergunning.title,
         vergunning.identifier as string,
       ]);
@@ -266,7 +266,10 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
       return apiContent?.vergunningen ?? [];
     },
     displayTitle: (vergunning: ParkeerVergunningFrontend) => (term: string) => {
-      return displayPath(term, [vergunning.title, vergunning.identifier]);
+      return displayLinkToSearchResult(term, [
+        vergunning.title,
+        vergunning.identifier,
+      ]);
     },
     keywordsGeneratedFromProps: ['identifier'],
   },
@@ -278,7 +281,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
       return erfpachtDossiersResponse?.dossiers?.dossiers ?? [];
     },
     displayTitle: (dossier: ErfpachtDossierFrontend) => (term: string) => {
-      return displayPath(term, [dossier.title]);
+      return displayLinkToSearchResult(term, [dossier.title]);
     },
   },
   {
@@ -318,7 +321,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
         ].includes(toeristischVerhuurItem.title)
       ) {
         return (term: string) =>
-          displayPath(term, [
+          displayLinkToSearchResult(term, [
             toeristischVerhuurItem.title,
             displayDateRange(
               toeristischVerhuurItem.dateStart + '',
@@ -327,7 +330,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
           ]);
       }
       return (term: string) => {
-        return displayPath(term, [
+        return displayLinkToSearchResult(term, [
           toeristischVerhuurItem.title,
           toeristischVerhuurItem.identifier,
         ]);
@@ -347,7 +350,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
         if (wmoItem.supplier) {
           segments.push(`door ${wmoItem.supplier}`);
         }
-        return displayPath(term, segments);
+        return displayLinkToSearchResult(term, segments);
       };
     },
   },
@@ -375,7 +378,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
         if (item.statusId === 'besluit') {
           segments.push(`Besluit ${defaultDateFormat(item.datePublished)}`);
         }
-        return displayPath(term, segments);
+        return displayLinkToSearchResult(term, segments);
       };
     },
   },
@@ -398,7 +401,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
     displayTitle: (item: AfisFactuurFrontend) => {
       return (term: string) => {
-        return displayPath(term, [
+        return displayLinkToSearchResult(term, [
           `Factuur ${item.factuurNummer}`,
           item.paymentDueDateFormatted,
           item.statusDescription,
@@ -435,7 +438,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
     displayTitle: (item: ApiBaseItem) => {
       return (term: string) =>
-        displayPath(term, [capitalizeFirstLetter(item.title)]);
+        displayLinkToSearchResult(term, [capitalizeFirstLetter(item.title)]);
     },
   },
   {
@@ -462,7 +465,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     profileTypes: ['private', 'commercial'] as ProfileType[],
     displayTitle(item: BezwaarFrontend) {
       return (term: string) =>
-        displayPath(term, [`Bezwaar ${item.identificatie}`]);
+        displayLinkToSearchResult(term, [`Bezwaar ${item.identificatie}`]);
     },
   },
   {
@@ -471,7 +474,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     profileTypes: ['private', 'commercial'] as ProfileType[],
     displayTitle(item: KlachtFrontend) {
       return (term: string) =>
-        displayPath(term, [
+        displayLinkToSearchResult(term, [
           `Klacht ${item.id}${item.onderwerp ? ` - ${item.onderwerp}` : ''}`,
         ]);
     },
@@ -486,7 +489,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     isEnabled: true,
     stateKey: 'SVWI',
     displayTitle(item: { title: string }) {
-      return (term: string) => displayPath(term, [item.title]);
+      return (term: string) => displayLinkToSearchResult(term, [item.title]);
     },
   },
   {
@@ -494,7 +497,8 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     stateKey: 'BODEM',
     profileTypes: ['private', 'commercial'] as ProfileType[],
     displayTitle(item: LoodMetingFrontend) {
-      return (term: string) => displayPath(term, [item.title, item.adres]);
+      return (term: string) =>
+        displayLinkToSearchResult(term, [item.title, item.adres]);
     },
   },
   {
@@ -502,7 +506,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     stateKey: 'AVG',
     profileTypes: ['private', 'commercial'] as ProfileType[],
     displayTitle(item: AVGRequestFrontend) {
-      return (term: string) => displayPath(term, [item.title]);
+      return (term: string) => displayLinkToSearchResult(term, [item.title]);
     },
   },
   {
@@ -510,7 +514,10 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     stateKey: 'HORECA',
     profileTypes: ['private', 'commercial'] as ProfileType[],
     displayTitle: (vergunning: HorecaVergunningFrontend) => (term: string) => {
-      return displayPath(term, [vergunning.title, vergunning.identifier]);
+      return displayLinkToSearchResult(term, [
+        vergunning.title,
+        vergunning.identifier,
+      ]);
     },
     keywordsGeneratedFromProps: ['identifier'],
   },
@@ -556,7 +563,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
         const vesselName = 'vesselName' in item ? item.vesselName : null;
         const vergunningKenmerk =
           ('vergunningKenmerk' in item && item.vergunningKenmerk) || null;
-        return displayPath(term, [
+        return displayLinkToSearchResult(term, [
           item.title,
           vesselName || vergunningKenmerk || item.identifier,
         ]);
