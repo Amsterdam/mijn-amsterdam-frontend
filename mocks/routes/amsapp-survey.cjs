@@ -75,7 +75,7 @@ module.exports = [
                 created_at: '2026-01-21T11:21:29.299760+01:00',
                 entry_point: '/inkomen',
                 metadata: {
-                  'browser.title': 'inkomen',
+                  browserTitle: 'inkomen',
                 },
                 survey_version: 1,
               },
