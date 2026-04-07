@@ -39,7 +39,7 @@ export const themaConfig: Record<
         );
       },
     },
-    profileTypes: ['commercial', 'private'],
+    profileTypes: ['private'],
     redactedScope: 'content',
     pageLinks: [
       {
