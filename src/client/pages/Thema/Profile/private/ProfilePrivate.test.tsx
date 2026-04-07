@@ -111,7 +111,7 @@ describe('<Profile />', () => {
 
     expect(screen.getByText('Verhuizing doorgeven')).toBeInTheDocument();
     expect(
-      screen.getByText(themaConfig.BRP.pageLinks[1].title)
+      screen.getByText('Onjuiste inschrijving melden')
     ).toBeInTheDocument();
     expect(screen.queryByText('Adres in onderzoek')).not.toBeInTheDocument();
     expect(
@@ -135,7 +135,7 @@ describe('<Profile />', () => {
     );
 
     expect(
-      screen.queryByText(themaConfig.BRP.pageLinks[1].title)
+      screen.queryByText('Onjuiste inschrijving melden')
     ).not.toBeInTheDocument();
     expect(screen.queryByText('Ingeschreven personen')).not.toBeInTheDocument();
 
@@ -214,7 +214,7 @@ describe('<Profile />', () => {
     );
 
     expect(
-      await screen.queryByText(themaConfig.BRP.pageLinks[1].title)
+      await screen.queryByText('Onjuiste inschrijving melden')
     ).not.toBeInTheDocument();
   });
 
