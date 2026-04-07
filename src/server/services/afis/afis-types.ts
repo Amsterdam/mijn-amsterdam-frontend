@@ -189,11 +189,11 @@ export type AfisFactuurState =
   | 'afgehandeld'
   | 'overgedragen'
   | 'deelbetalingen'
-  | 'termijnen';
+  | 'afgehandeldeIncassoTermijnen';
 
 export type AfisFactuurStateFrontend = Exclude<
   AfisFactuurState,
-  'termijnen' | 'deelbetalingen'
+  'afgehandeldeIncassoTermijnen' | 'deelbetalingen'
 >;
 
 export type AfisFacturenResponse = {

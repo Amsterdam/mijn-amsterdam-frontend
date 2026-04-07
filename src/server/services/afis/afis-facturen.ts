@@ -77,7 +77,7 @@ const accountingDocumentTypesByState: Record<
   open: ACCOUNTING_DOCUMENT_TYPES_DEFAULT,
   afgehandeld: ACCOUNTING_DOCUMENT_TYPES_DEFAULT,
   overgedragen: ACCOUNTING_DOCUMENT_TYPES_DEFAULT,
-  termijnen: ACCOUNTING_DOCUMENT_TYPES_DEFAULT,
+  afgehandeldeIncassoTermijnen: ACCOUNTING_DOCUMENT_TYPES_DEFAULT,
   deelbetalingen: ['AB', 'BA'],
 };
 
@@ -87,13 +87,13 @@ const selectFieldsQueryByState: Record<AfisFacturenParams['state'], string> = {
   open: select,
   afgehandeld: select,
   overgedragen: select,
-  termijnen: select,
+  afgehandeldeIncassoTermijnen: select,
   deelbetalingen: '$select=AmountInBalanceTransacCrcy,InvoiceReference',
 };
 
 const orderByQueryByState: Record<AfisFacturenParams['state'], string> = {
   open: '$orderby=NetDueDate asc, PostingDate asc',
-  termijnen: '$orderby=NetDueDate asc, PostingDate asc',
+  afgehandeldeIncassoTermijnen: '$orderby=NetDueDate asc, PostingDate asc',
   afgehandeld: '$orderby=ClearingDate desc',
   overgedragen: '$orderby=ClearingDate desc',
   deelbetalingen: '',
@@ -152,7 +152,7 @@ function getFactuurRequestQueryParams(
     open: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq false`,
 
     // Alle resterende afgehandelde termijnen so we can display a full set of termijnen
-    termijnen: `$filter=Customer eq '${params.businessPartnerID}' and PaymentTerms gt 'B' and SEPAMandate ne '' and IsCleared eq true and (DunningLevel ne '3' or ReverseDocument ne '')`,
+    afgehandeldeIncassoTermijnen: `$filter=Customer eq '${params.businessPartnerID}' and PaymentTerms gt 'B' and SEPAMandate ne '' and IsCleared eq true and (DunningLevel ne '3' or ReverseDocument ne '')`,
 
     // Afgehandeld (ge-incasseerd, betaald, geannuleerd)
     afgehandeld: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq true and (DunningLevel ne '3' or ReverseDocument ne '')`,
@@ -671,10 +671,11 @@ async function fetchAfisOpenFacturenIncludingAfgehandeldeTermijnFacturen(
 
   // Fetch the possibly afgehandeld termijn facturen. These are the termijnen of which at least 1 termijn is still open.
   // We want to include these termijnen in the open facturen overview, so we can show a complete overview of all termijnen of a factuur.
+  // This query does not include termijnen from <= 2024 because these, migrated data, don't have a SEPAMandate coupled.
   const possiblyAfgehandeldTermijnenFacturenResponse = await fetchAfisFacturen(
     sessionID,
     {
-      state: 'termijnen',
+      state: 'afgehandeldeIncassoTermijnen',
       businessPartnerID: params.businessPartnerID,
       includeAccountingDocumentIds,
     }
