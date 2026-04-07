@@ -67,18 +67,26 @@ export function VergunningDetailDocumentsList({
               {isLoading && (
                 <LoadingContent barConfig={[['300px', '30px', '20px']]} />
               )}
-              {!isLoading && !isError && !documents.length && (
-                <Paragraph>Geen document beschikbaar.</Paragraph>
-              )}
-              {isError && !isLoading && (
+              {!isLoading && isError && (
                 <Paragraph>Documenten ophalen is mislukt.</Paragraph>
               )}
-              {!isLoading && !!documents.length && (
-                <DocumentListV2
-                  documents={documents}
-                  columns={['', '']}
-                  className={missingDocumentMailto ? 'ams-mb-m' : ''}
-                />
+              {!isLoading && !isError && (
+                <>
+                  {!documents.length && (
+                    <Paragraph
+                      className={missingDocumentMailto ? 'ams-mb-m' : ''}
+                    >
+                      Geen document beschikbaar.
+                    </Paragraph>
+                  )}
+                  {!!documents.length && (
+                    <DocumentListV2
+                      documents={documents}
+                      columns={['', '']}
+                      className={missingDocumentMailto ? 'ams-mb-m' : ''}
+                    />
+                  )}
+                </>
               )}
               {!isLoading && !isError && missingDocumentMailto && (
                 <MissingDocumentMailto config={missingDocumentMailto} />
