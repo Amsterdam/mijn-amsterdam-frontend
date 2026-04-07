@@ -83,7 +83,7 @@ export async function handleShowSurveyOverview(
   );
 
   if (feedbackOverview.status === 'ERROR') {
-    return feedbackOverview;
+    return sendResponse(res, feedbackOverview);
   }
 
   const entries = feedbackOverview.content?.entries || [];
