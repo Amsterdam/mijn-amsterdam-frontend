@@ -71,7 +71,7 @@ describe('User Feedback Functions', () => {
     describe('log lines', () => {
       const logMessage = 'A userfeedback survey has been submitted';
 
-      it('With an answer', async () => {
+      it('With a non-numeric answer', async () => {
         const feedback = {
           answers: JSON.stringify([
             { question: 1, answer: 'deze website is echt...' },
@@ -84,7 +84,16 @@ describe('User Feedback Functions', () => {
         });
       });
 
-      it('Without an answer', async () => {
+      it('With a numeric answer', async () => {
+        const feedback = {
+          answers: JSON.stringify([{ question: 1, answer: '5' }]),
+        } as unknown as UserFeedbackInput;
+
+        await saveUserFeedback('survey123', '1', feedback);
+        expect(captureMessage).not.toHaveBeenCalled();
+      });
+
+      it('Without any answer', async () => {
         const feedback = {
           answers: JSON.stringify([{ question: 1, answer: '' }]),
         } as unknown as UserFeedbackInput;

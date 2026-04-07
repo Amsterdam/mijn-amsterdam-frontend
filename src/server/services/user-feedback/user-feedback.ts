@@ -157,9 +157,11 @@ async function fetchFeedbackSurveyEntries(
           ),
           dateCreated: entry.created_at,
           dateCreatedFormatted: defaultDateTimeFormat(entry.created_at),
-          maErrors: entry.metadata.maErrors as SurveyEntryFrontend['maErrors'],
-          maThemas: entry.metadata.maThemas as string[],
-          browserTitle: entry.metadata.browserTitle as string,
+          maErrors: (entry.metadata.maErrors ||
+            []) as SurveyEntryFrontend['maErrors'],
+          maThemas: (entry.metadata.maThemas || []) as string[],
+          browserTitle: (entry.metadata.browserTitle ||
+            'Onbekende paginatitel') as string,
           metadata: omit(entry.metadata, [
             'maThemas',
             'maErrors',
