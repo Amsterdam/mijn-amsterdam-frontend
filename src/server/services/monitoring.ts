@@ -11,13 +11,13 @@ import {
   shouldSendRequestData,
   shouldSendExceptionData,
 } from './should-send-telemetry.ts';
-import { IS_DEVELOPMENT } from '../../universal/config/env.ts';
 import { logger } from '../logging.ts';
 
-if (
+const logToApplicationInsights =
   process.env.APPLICATIONINSIGHTS_CONNECTION_STRING &&
-  process.env.NODE_ENV !== 'test'
-) {
+  process.env.NODE_ENV !== 'test';
+
+if (logToApplicationInsights) {
   appInsights
     .setup(process.env.APPLICATIONINSIGHTS_CONNECTION_STRING)
     .setInternalLogging(false)
@@ -104,11 +104,10 @@ export function captureException(error: unknown, properties?: Properties) {
     severity,
   };
 
-  if (IS_DEVELOPMENT) {
+  if (!logToApplicationInsights) {
     logger.error(error, 'Capture Exception');
-  } else {
-    client?.trackException(payload);
   }
+  client?.trackException(payload);
 }
 
 export function captureMessage(message: string, properties?: Properties) {
@@ -122,18 +121,19 @@ export function captureMessage(message: string, properties?: Properties) {
     properties,
   };
 
-  if (IS_DEVELOPMENT) {
+  if (!logToApplicationInsights) {
     logger.debug(payload, 'Capture message');
-  } else {
-    client?.trackTrace(payload);
   }
+  client?.trackTrace(payload);
 }
 
 export function trackEvent(name: string, properties: Record<string, unknown>) {
-  return IS_DEVELOPMENT
-    ? logger.debug({ name, properties }, 'Track event')
-    : client?.trackEvent({
-        name,
-        properties,
-      });
+  if (!logToApplicationInsights) {
+    logger.debug({ name, properties }, 'Track event');
+    return;
+  }
+  client?.trackEvent({
+    name,
+    properties,
+  });
 }
