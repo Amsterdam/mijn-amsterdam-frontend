@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router';
 import { useDebouncedCallback } from 'use-debounce';
 
 import type { SearchEntry } from './search-config.tsx';
-import { displaySegmensSpan } from './search-config.tsx';
+import { displayLinkToSearchResult } from './search-config.tsx';
 import styles from './Search.module.scss';
 import { useSearchIndex } from './useSearch.tsx';
 import { getRedactedClass } from '../../helpers/cobrowse.ts';
@@ -94,7 +94,7 @@ export function ResultSet({
                 {typeof result.displayTitle === 'function'
                   ? result.displayTitle(term)
                   : typeof result.displayTitle === 'string'
-                    ? displaySegmensSpan(term, [result.displayTitle])
+                    ? displayLinkToSearchResult(term, [result.displayTitle])
                     : result.displayTitle}
                 {extendedResults && <Paragraph>{result.description}</Paragraph>}
               </LinkComponent>

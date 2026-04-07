@@ -7,7 +7,7 @@ import * as remoteConfig from './search-config.json' with { type: 'json' };
 import {
   API_SEARCH_CONFIG_DEFAULT,
   apiSearchConfigs,
-  displaySegmensSpan,
+  displayLinkToSearchResult,
 } from './search-config.tsx';
 import type { ApiBaseItem, ApiSearchConfig } from './search-config.tsx';
 import {
@@ -167,7 +167,7 @@ describe('Search hooks and helpers', () => {
           ...API_SEARCH_CONFIG_DEFAULT,
           stateKey: 'VERGUNNINGEN',
           displayTitle: (vergunning: DecosZaakFrontend) => (term: string) => {
-            return displaySegmensSpan(term, [
+            return displayLinkToSearchResult(term, [
               vergunning.title,
               vergunning.identifier,
             ]);
