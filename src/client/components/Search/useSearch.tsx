@@ -170,7 +170,7 @@ function transformSearchAmsterdamNLresponse(
     return responseData.records.page.map((page: AmsterdamSearchResult) => {
       return {
         displayTitle: (term: string) =>
-          displaySegmensSpan(term, [page.title]),
+          displaySegmensSpan(term, [page.title], false),
         keywords: page.sections,
         description: page.description,
         url: page.url,
