@@ -13,7 +13,7 @@ import {
   type ApiSearchConfig,
   type SearchEntry,
   apiSearchConfigs,
-  displayPath,
+  displaySegmensSpan,
   type RemoteApiSearchConfigs,
 } from './search-config.tsx';
 import styles from './Search.module.scss';
@@ -170,7 +170,7 @@ function transformSearchAmsterdamNLresponse(
     return responseData.records.page.map((page: AmsterdamSearchResult) => {
       return {
         displayTitle: (term: string) =>
-          displayPath(term, [page.highlight.title || page.title], false),
+          displaySegmensSpan(term, [page.title]),
         keywords: page.sections,
         description: page.description,
         url: page.url,

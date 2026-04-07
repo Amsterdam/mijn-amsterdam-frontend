@@ -1,18 +1,19 @@
 import type { ReactNode } from 'react';
 
-import { renderHook } from '@testing-library/react';
+import { render, renderHook } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 import * as remoteConfig from './search-config.json' with { type: 'json' };
 import {
   API_SEARCH_CONFIG_DEFAULT,
   apiSearchConfigs,
-  displayPath,
+  displaySegmensSpan,
 } from './search-config.tsx';
 import type { ApiBaseItem, ApiSearchConfig } from './search-config.tsx';
 import {
   generateSearchIndexPageEntries,
   generateSearchIndexPageEntry,
+  sendGetRequest,
   useSearchIndex,
 } from './useSearch.tsx';
 import type { DecosZaakFrontend } from '../../../server/services/vergunningen/config-and-types.ts';
@@ -167,7 +168,10 @@ describe('Search hooks and helpers', () => {
           ...API_SEARCH_CONFIG_DEFAULT,
           stateKey: 'VERGUNNINGEN',
           displayTitle: (vergunning: DecosZaakFrontend) => (term: string) => {
-            return displayPath(term, [vergunning.title, vergunning.identifier]);
+            return displaySegmensSpan(term, [
+              vergunning.title,
+              vergunning.identifier,
+            ]);
           },
           ...apiConfigRemote,
         },
@@ -342,5 +346,44 @@ describe('Search hooks and helpers', () => {
       setTerm: expect.any(Function),
       term: '',
     });
+  });
+
+  test('Amsterdam.nl highlights render <em> tags', async () => {
+    const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue({
+      ok: true,
+      json: () =>
+        Promise.resolve({
+          records: {
+            page: [
+              {
+                title: 'Parkeren in Amsterdam',
+                highlight: { title: '<EM>Parkeren</EM> in Amsterdam' },
+                sections: ['parkeren'],
+                description: 'Beschrijving',
+                url: 'https://www.amsterdam.nl/',
+              },
+            ],
+          },
+        }),
+    } as unknown as Response);
+
+    const response = await sendGetRequest('https://example.test');
+    expect(response.status).toBe('OK');
+    expect(response.content).toHaveLength(1);
+
+    const entry = response.content[0];
+    const title =
+      typeof entry.displayTitle === 'function'
+        ? entry.displayTitle('Parkeren')
+        : entry.displayTitle;
+
+    const { container } = render(<>{title}</>);
+    const em = container.querySelector('em');
+    expect(em?.textContent).toBe('Parkeren');
+
+    // Should not show literal tag text.
+    expect(container.textContent).not.toContain('<EM>');
+
+    fetchMock.mockRestore();
   });
 });
