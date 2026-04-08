@@ -13,11 +13,13 @@ const msalApp = new msal.ConfidentialClientApplication({
   },
 });
 
+const MSAL_AUTH_SCOPES = ['user.read', 'openid', 'profile', 'offline_access'];
+
 export async function handleLogin(req: Request, res: Response) {
   const redirectUrl = await msalApp.getAuthCodeUrl({
     responseMode: 'form_post',
     redirectUri: REDIRECT_URI,
-    scopes: ['user.read'],
+    scopes: MSAL_AUTH_SCOPES,
     // Encode the original URL the user was trying to access so we can redirect them back to it after logging in.
     state: cryptoProvider.base64Encode(
       JSON.stringify({ originalUrl: req.query.originalUrl })
@@ -31,7 +33,7 @@ export async function handleRedirect(req: Request, res: Response) {
   const authResponse = await msalApp.acquireTokenByCode(
     {
       code: req.body.code,
-      scopes: ['user.read'],
+      scopes: MSAL_AUTH_SCOPES,
       redirectUri: REDIRECT_URI,
     },
     req.body
