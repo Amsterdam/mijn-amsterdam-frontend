@@ -2,6 +2,7 @@ import session from 'express-session';
 
 import { createBFFRouter } from './route-helpers.ts';
 import { IS_PRODUCTION } from '../../universal/config/env.ts';
+import { ADMIN_SESSION_COOKIE_NAME } from '../auth/auth-config.ts';
 import { getFromEnv } from '../helpers/env.ts';
 import { isAuthenticatedAdmin } from '../services/admin/admin-route-handlers.ts';
 import { router as adminRouter } from '../services/admin/admin-router.ts';
@@ -21,6 +22,7 @@ router.use(
           secret: getFromEnv('BFF_ADMIN_AUTH_EXPRESS_SESSION_SECRET') ?? '',
           resave: false,
           saveUninitialized: false,
+          name: ADMIN_SESSION_COOKIE_NAME,
           cookie: {
             httpOnly: true,
             secure: IS_PRODUCTION,

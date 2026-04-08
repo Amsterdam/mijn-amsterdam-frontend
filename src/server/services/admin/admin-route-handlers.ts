@@ -1,6 +1,6 @@
 import type { NextFunction, Response, Request } from 'express';
 
-import { routes } from './admin-service-config.ts';
+import { routes as adminRoutesGeneric } from './admin-service-config.ts';
 import type { RequestWithSession } from './admin-types.ts';
 import { apiSuccessResult } from '../../../universal/helpers/api.ts';
 import { DEFAULT_REQUEST_CONFIG } from '../../config/source-api.ts';
@@ -9,6 +9,8 @@ import {
   generateFullApiAdminUrlBFF,
   sendResponse,
 } from '../../routing/route-helpers.ts';
+import { routes as adminRoutesAmsAppNotifications } from '../amsapp/notifications/amsapp-notifications-service-config.ts';
+import { routes as adminRoutesUserFeedback } from '../user-feedback/user-feedback.service-config.ts';
 
 // custom middleware to check auth state
 export function isAuthenticatedAdmin(
@@ -17,7 +19,11 @@ export function isAuthenticatedAdmin(
   next: NextFunction
 ) {
   if (!(req as RequestWithSession).session?.isAuthenticated) {
-    return res.redirect(generateFullApiAdminUrlBFF(routes.public.auth.SIGNIN)); // redirect to sign-in route
+    return res.redirect(
+      generateFullApiAdminUrlBFF(adminRoutesGeneric.public.auth.SIGNIN, [
+        { originalUrl: req.originalUrl },
+      ])
+    ); // redirect to sign-in route
   }
 
   next();
@@ -32,17 +38,28 @@ export async function adminIndexHandler(req: Request, res: Response) {
       isAuthenticated: reqWithSession.session?.isAuthenticated ? true : false,
       username: reqWithSession.session?.account?.username,
       links: {
-        login: generateFullApiAdminUrlBFF(routes.public.auth.SIGNIN),
-        logout: generateFullApiAdminUrlBFF(routes.public.auth.SIGNOUT),
+        login: generateFullApiAdminUrlBFF(
+          adminRoutesGeneric.public.auth.SIGNIN
+        ),
+        logout: generateFullApiAdminUrlBFF(
+          adminRoutesGeneric.public.auth.SIGNOUT
+        ),
         cacheOverview: generateFullApiAdminUrlBFF(
-          routes.protected.CACHE_OVERVIEW
+          adminRoutesGeneric.protected.CACHE_OVERVIEW
         ),
         loginStats: generateFullApiAdminUrlBFF(
-          routes.protected.visitors.STATS,
+          adminRoutesGeneric.protected.visitors.STATS,
           { authMethod: '' }
         ),
         loginStatsTable: generateFullApiAdminUrlBFF(
-          routes.protected.visitors.STATS_TABLE
+          adminRoutesGeneric.protected.visitors.STATS_TABLE
+        ),
+        userFeedback: generateFullApiAdminUrlBFF(
+          adminRoutesUserFeedback.admin.USER_FEEDBACK_OVERVIEW_TABLE
+        ),
+        appRegistratons: generateFullApiAdminUrlBFF(
+          adminRoutesAmsAppNotifications.admin
+            .NOTIFICATIONS_CONSUMER_REGISTRATION_OVERVIEW
         ),
       },
     })

@@ -60,7 +60,7 @@ export const routes = {
       SIGNIN: '/auth/signin',
       SIGNOUT: '/auth/signout',
       ACQUIRE_TOKEN: '/auth/acquireToken',
-      REDIRECT: '/auth/callback',
+      CALLBACK: '/auth/callback',
     },
   },
   protected: {

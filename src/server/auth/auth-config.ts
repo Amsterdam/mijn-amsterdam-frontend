@@ -10,6 +10,8 @@ import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
 import { ONE_HOUR_MS, ONE_MINUTE_SECONDS } from '../config/app.ts';
 import { getFromEnv } from '../helpers/env.ts';
 
+export const ADMIN_SESSION_COOKIE_NAME = '__MA-adminSession';
+
 export const OIDC_SESSION_MAX_AGE_SECONDS = ONE_MINUTE_SECONDS * 15; // 15 minutes
 export const OIDC_SESSION_COOKIE_NAME = '__MA-appSession';
 export const OIDC_COOKIE_ENCRYPTION_KEY = `${getFromEnv('BFF_GENERAL_ENCRYPTION_KEY')}`;
