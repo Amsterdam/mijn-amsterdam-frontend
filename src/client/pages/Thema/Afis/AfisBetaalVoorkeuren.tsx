@@ -94,12 +94,12 @@ export function AfisBetaalVoorkeuren() {
     isThemaPaginaLoading,
     pageLinks,
     breadcrumbs,
-    routeConfig,
+    themaConfig,
     themaId,
     belastingenLinkListItem,
   } = useAfisThemaData();
 
-  useHTMLDocumentTitle(routeConfig.betaalVoorkeuren);
+  useHTMLDocumentTitle(themaConfig.betaalVoorkeuren.route);
 
   const {
     title,

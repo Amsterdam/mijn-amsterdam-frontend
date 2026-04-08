@@ -1,7 +1,7 @@
 import { render, waitFor } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { routeConfig } from './Afis-thema-config.ts';
+import { themaConfig } from './Afis-thema-config.ts';
 import { AfisBetaalVoorkeuren } from './AfisBetaalVoorkeuren.tsx';
 import type { AfisBusinessPartnerDetailsTransformed } from '../../../../server/services/afis/afis-types.ts';
 import { bffApi } from '../../../../testing/utils.ts';
@@ -61,7 +61,7 @@ describe('<AfisBetaalVoorkeuren />', () => {
       status: 'OK',
     });
 
-  const routePath = routeConfig.betaalVoorkeuren.path;
+  const routePath = themaConfig.betaalVoorkeuren.route.path;
   const routeEntry = generatePath(routePath);
 
   function Component() {

@@ -98,7 +98,6 @@ export function AfisThema() {
     isThemaPaginaError,
     isThemaPaginaLoading,
     listPageTitle,
-    routeConfig,
     pageLinks,
     belastingenLinkListItem,
     title,
@@ -117,7 +116,7 @@ export function AfisThema() {
       <MaButtonRouterLink
         className="ams-mb-m"
         variant="secondary"
-        href={routeConfig.betaalVoorkeuren.path}
+        href={themaConfig.betaalVoorkeuren.route.path}
       >
         Betaalvoorkeuren
       </MaButtonRouterLink>

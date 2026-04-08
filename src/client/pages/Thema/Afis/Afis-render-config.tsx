@@ -28,7 +28,7 @@ export const AfisRoutes = [
     isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.betaalVoorkeuren.path,
+    route: themaConfig.betaalVoorkeuren.route.path,
     Component: AfisBetaalVoorkeuren,
     isActive: themaConfig.featureToggle.active,
   },

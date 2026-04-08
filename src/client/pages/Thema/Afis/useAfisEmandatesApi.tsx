@@ -5,7 +5,7 @@ import { useParams } from 'react-router';
 
 import { generateApiUrl } from './Afis-helpers.ts';
 import {
-  routeConfig,
+  themaConfig,
   eMandateTableConfig,
   titleBetaalvoorkeurenPage,
   titleEMandaatPage,
@@ -85,7 +85,10 @@ export function useAfisEMandatesApi() {
 
   const breadcrumbs = [
     ...useThemaBreadcrumbs(themaId),
-    { to: routeConfig.betaalVoorkeuren.path, title: titleBetaalvoorkeurenPage },
+    {
+      to: themaConfig.betaalVoorkeuren.route.path,
+      title: titleBetaalvoorkeurenPage,
+    },
   ];
   const { id } = useParams<{ id: AfisEMandateFrontend['id'] }>();
   const eMandate = eMandates.find((mandate) => mandate.id === id);
