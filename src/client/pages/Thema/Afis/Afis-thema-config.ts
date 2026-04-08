@@ -28,7 +28,7 @@ const THEMA_TITLE = 'Facturen en betalen';
 
 type AfisThemaConfig = Pick<
   ThemaConfigBase<typeof THEMA_ID>,
-  'id' | 'title' | 'redactedScope' | 'profileTypes' | 'pageLinks'
+  'id' | 'title' | 'redactedScope' | 'profileTypes' | 'pageLinks' | 'route'
 >;
 
 export const themaConfig: AfisThemaConfig = {
@@ -42,6 +42,11 @@ export const themaConfig: AfisThemaConfig = {
       title: 'Meer over betalen aan de gemeente',
     },
   ],
+  route: {
+    path: '/facturen-en-betalen',
+    documentTitle: `${THEMA_TITLE} | overzicht`,
+    trackingUrl: null,
+  },
 };
 
 // E-Mandates are always recurring and have a default date far in the future!
@@ -71,11 +76,11 @@ export const routeConfig = {
     documentTitle: getAfisListPageDocumentTitle,
     trackingUrl: null,
   },
-  themaPage: {
-    path: '/facturen-en-betalen',
-    documentTitle: `${THEMA_TITLE} | overzicht`,
-    trackingUrl: null,
-  },
+  // themaPage: {
+  //   path: '/facturen-en-betalen',
+  //   documentTitle: `${THEMA_TITLE} | overzicht`,
+  //   trackingUrl: null,
+  // },
 } as const satisfies ThemaRoutesConfig;
 
 // Themapagina

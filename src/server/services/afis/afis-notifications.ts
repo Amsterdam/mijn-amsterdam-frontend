@@ -1,9 +1,6 @@
 import type { AfisFactuur, AfisFactuurStatus } from './afis-types.ts';
 import { fetchIsKnownInAFIS } from './afis.ts';
-import {
-  routeConfig,
-  themaConfig,
-} from '../../../client/pages/Thema/Afis/Afis-thema-config.ts';
+import { themaConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config.ts';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -44,7 +41,7 @@ export function createAfisFacturenNotification(
 
   const datePublished = new Date().toISOString();
   const cta = 'Bekijk uw openstaande facturen';
-  const linkTo = routeConfig.themaPage.path;
+  const linkTo = themaConfig.route.path;
 
   return {
     id: `facturen-open-notification`,

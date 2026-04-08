@@ -107,5 +107,6 @@ export function useAfisThemaData() {
     routeConfig,
     breadcrumbs,
     dependencyErrors,
+    themaConfig,
   };
 }

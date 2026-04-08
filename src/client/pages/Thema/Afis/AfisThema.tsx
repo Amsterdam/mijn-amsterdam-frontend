@@ -103,9 +103,10 @@ export function AfisThema() {
     belastingenLinkListItem,
     title,
     themaId,
+    themaConfig,
   } = useAfisThemaData();
 
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const isPartialError = entries(dependencyErrors).some(
     ([, hasError]) => hasError

@@ -38,7 +38,7 @@ export const AfisRoutes = [
     isActive: featureToggle.emandatesActive,
   },
   {
-    route: routeConfig.themaPage.path,
+    route: themaConfig.route.path,
     Component: AfisThema,
     isActive: featureToggle.AfisActive,
   },
@@ -47,7 +47,7 @@ export const AfisRoutes = [
 export const menuItem: ThemaMenuItem = {
   title: themaConfig.title,
   id: themaConfig.id,
-  to: routeConfig.themaPage.path,
+  to: themaConfig.route.path,
   redactedScope: themaConfig.redactedScope,
   profileTypes: themaConfig.profileTypes,
   isActive(appState: AppState) {
