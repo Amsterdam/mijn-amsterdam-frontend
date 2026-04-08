@@ -169,3 +169,11 @@ export function asEnum<T extends readonly string[]>(values: T) {
     Object.fromEntries(values.map((v) => [v, v])) as { [K in T[number]]: K }
   );
 }
+
+/**
+ * Returns true if the string represents a whole integer (optional leading minus sign).
+ * Note: this intentionally does not accept decimals or other numeric formats.
+ */
+export function isNumeric(value: string): boolean {
+  return /^-?\d+$/.test(value);
+}
