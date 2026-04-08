@@ -27,11 +27,16 @@ export const featureToggle = {
 const THEMA_ID = 'AFIS';
 const THEMA_TITLE = 'Facturen en betalen';
 
-type AfisThemaConfig = Pick<ThemaConfigBase<typeof THEMA_ID>, 'id' | 'title'>;
+type AfisThemaConfig = Pick<
+  ThemaConfigBase<typeof THEMA_ID>,
+  'id' | 'title' | 'redactedScope' | 'profileTypes'
+>;
 
 export const themaConfig: AfisThemaConfig = {
   id: THEMA_ID,
   title: THEMA_TITLE,
+  redactedScope: 'full',
+  profileTypes: ['private', 'commercial'],
 };
 
 // E-Mandates are always recurring and have a default date far in the future!
