@@ -12,7 +12,7 @@ import {
   ONE_MINUTE_MS,
   ONE_SECOND_MS,
 } from './app.ts';
-import { featureToggle as featureToggleAfis } from '../../client/pages/Thema/Afis/Afis-thema-config.ts';
+import { themaConfig as themaConfigAfis } from '../../client/pages/Thema/Afis/Afis-thema-config.ts';
 import { themaConfig as themaConfigBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config.ts';
 import { themaConfig as themaConfigErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
 import { themaConfig as themaConfigJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config.ts';
@@ -139,11 +139,11 @@ const isDecosOverEnableUActive = (
   getFromEnv('BFF_DECOS_API_BASE_URL', false) || ''
 ).startsWith('https://enableu');
 
-const afisFeatureToggle = getFromEnv('BFF_AFIS_FEATURE_TOGGLE_ACTIVE');
+const afisFeatureToggle = getFromEnv('BFF_AFIS_FEATURE_TOGGLE_ACTIVE'); // TO DO Yacine > waar staat deze voor
 const postponeFetchAfis =
-  typeof afisFeatureToggle !== 'undefined'
-    ? afisFeatureToggle === 'false'
-    : !featureToggleAfis.AfisActive;
+  typeof themaConfigAfis.featureToggle.active !== 'undefined'
+    ? themaConfigAfis.featureToggle.active === false
+    : !themaConfigAfis.featureToggle.active;
 
 const contactmomentenFeatureToggle = getFromEnv(
   'BFF_CONTACTMOMENTEN_FEATURE_TOGGLE_ACTIVE'

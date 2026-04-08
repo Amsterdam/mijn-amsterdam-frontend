@@ -19,17 +19,14 @@ import type {
 } from '../../../config/thema-types.ts';
 
 export const featureToggle = {
-  AfisActive: true,
+  //AfisActive: true,
   emandatesActive: isEnabled('AFIS.EMandates'),
 };
 
 const THEMA_ID = 'AFIS';
 const THEMA_TITLE = 'Facturen en betalen';
 
-type AfisThemaConfig = Pick<
-  ThemaConfigBase<typeof THEMA_ID>,
-  'id' | 'title' | 'redactedScope' | 'profileTypes' | 'pageLinks' | 'route'
->;
+type AfisThemaConfig = ThemaConfigBase<typeof THEMA_ID>;
 
 export const themaConfig: AfisThemaConfig = {
   id: THEMA_ID,
@@ -46,6 +43,15 @@ export const themaConfig: AfisThemaConfig = {
     path: '/facturen-en-betalen',
     documentTitle: `${THEMA_TITLE} | overzicht`,
     trackingUrl: null,
+  },
+  uitlegPageSections: [
+    {
+      title: THEMA_TITLE,
+      listItems: ['Overzicht van facturen', 'Betalen van facturen'],
+    },
+  ],
+  featureToggle: {
+    active: true, // TO Do Yacine > Emandaat nog toevoegen en bij source-api.ts kijken
   },
 };
 
@@ -76,11 +82,6 @@ export const routeConfig = {
     documentTitle: getAfisListPageDocumentTitle,
     trackingUrl: null,
   },
-  // themaPage: {
-  //   path: '/facturen-en-betalen',
-  //   documentTitle: `${THEMA_TITLE} | overzicht`,
-  //   trackingUrl: null,
-  // },
 } as const satisfies ThemaRoutesConfig;
 
 // Themapagina

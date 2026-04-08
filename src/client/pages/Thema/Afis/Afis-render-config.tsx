@@ -20,17 +20,17 @@ export const AfisRoutes = [
   {
     route: routeConfig.listPage.path,
     Component: AfisList,
-    isActive: featureToggle.AfisActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
     route: routeConfig.detailPage.path,
     Component: AfisFactuur,
-    isActive: featureToggle.AfisActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
     route: routeConfig.betaalVoorkeuren.path,
     Component: AfisBetaalVoorkeuren,
-    isActive: featureToggle.AfisActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
     route: routeConfig.detailPageEMandate.path,
@@ -40,7 +40,7 @@ export const AfisRoutes = [
   {
     route: themaConfig.route.path,
     Component: AfisThema,
-    isActive: featureToggle.AfisActive,
+    isActive: themaConfig.featureToggle.active,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
@@ -52,7 +52,7 @@ export const menuItem: ThemaMenuItem = {
   profileTypes: themaConfig.profileTypes,
   isActive(appState: AppState) {
     return (
-      featureToggle.AfisActive &&
+      themaConfig.featureToggle.active &&
       !isLoading(appState.AFIS) &&
       !!appState.AFIS.content?.isKnown
     );
