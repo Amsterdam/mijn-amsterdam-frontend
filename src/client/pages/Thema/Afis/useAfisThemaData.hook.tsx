@@ -2,10 +2,10 @@ import {
   facturenTableConfig,
   listPageTitle,
   linkListItems,
-  themaTitle,
-  themaId as themaIdAfis,
+  themaConfig as themaAfis,
   routeConfig,
   type AfisFactuurFrontend,
+  themaConfig,
 } from './Afis-thema-config.ts';
 import { useTransformFacturen } from './useAfisFacturenApi.tsx';
 import type { AfisFactuurState } from '../../../../server/services/afis/afis-types.ts';
@@ -44,7 +44,7 @@ export function useAfisFacturenData(
 ) {
   const {
     routeConfigDetailPage = routeConfig.detailPage,
-    themaId = themaIdAfis,
+    themaId = themaAfis.id,
     tableConfig = facturenTableConfig,
     routeConfigListPage = routeConfig.listPage,
   } = themaContextParams || {};
@@ -80,7 +80,7 @@ export function useAfisThemaData() {
     to: urlNaarBelastingen || themaBelastingen.route.path,
   };
 
-  const breadcrumbs = useThemaBreadcrumbs(themaIdAfis);
+  const breadcrumbs = useThemaBreadcrumbs(themaAfis.id);
 
   const {
     facturenByState,
@@ -95,7 +95,7 @@ export function useAfisThemaData() {
 
   return {
     themaId,
-    title: themaTitle,
+    title: themaConfig.title,
     belastingenLinkListItem,
     businessPartnerIdEncrypted,
     businessPartnerId,

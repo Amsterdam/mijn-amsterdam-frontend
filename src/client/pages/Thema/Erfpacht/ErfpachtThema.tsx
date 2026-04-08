@@ -103,7 +103,7 @@ function MissingFacturenDescription() {
         U ziet hier openstaande facturen vanaf 1 januari 2025. Zoekt u een
         andere factuur? Kijk dan bij{' '}
         <MaRouterLink href={afis.routeConfig.themaPage.path}>
-          {afis.themaTitle}
+          {afis.themaConfig.title}
         </MaRouterLink>{' '}
         of stuur een e-mail naar{' '}
         <Link

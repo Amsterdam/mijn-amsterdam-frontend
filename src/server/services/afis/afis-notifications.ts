@@ -2,8 +2,7 @@ import type { AfisFactuur, AfisFactuurStatus } from './afis-types.ts';
 import { fetchIsKnownInAFIS } from './afis.ts';
 import {
   routeConfig,
-  themaId,
-  themaTitle,
+  themaConfig,
 } from '../../../client/pages/Thema/Afis/Afis-thema-config.ts';
 import {
   apiDependencyError,
@@ -50,8 +49,8 @@ export function createAfisFacturenNotification(
   return {
     id: `facturen-open-notification`,
     datePublished,
-    themaID: themaId,
-    themaTitle,
+    themaID: themaConfig.id,
+    themaTitle: themaConfig.title,
     title,
     description,
     link: {

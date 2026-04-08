@@ -1,7 +1,6 @@
 import {
   routeConfig,
-  themaId,
-  themaTitle,
+  themaConfig,
   featureToggle,
 } from './Afis-thema-config.ts';
 import { AfisBetaalVoorkeuren } from './AfisBetaalVoorkeuren.tsx';
@@ -45,9 +44,9 @@ export const AfisRoutes = [
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
-export const menuItem: ThemaMenuItem<typeof themaId> = {
-  title: themaTitle,
-  id: themaId,
+export const menuItem: ThemaMenuItem = {
+  title: themaConfig.title,
+  id: themaConfig.id,
   to: routeConfig.themaPage.path,
   redactedScope: 'full',
   profileTypes: ['private', 'commercial'],

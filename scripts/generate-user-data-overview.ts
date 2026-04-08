@@ -71,10 +71,7 @@ import {
 } from '../src/client/pages/Thema/Svwi/Svwi-thema-config.ts';
 import { themaConfig as themaKlachten } from '../src/client/pages/Thema/Klachten/Klachten-thema-config.ts';
 import { themaConfig as themaKrefia } from '../src/client/pages/Thema/Krefia/Krefia-thema-config.ts';
-import {
-  themaId as themaIdAfis,
-  themaTitle as themaTitleAfis,
-} from '../src/client/pages/Thema/Afis/Afis-thema-config.ts';
+import { themaConfig as themaAfis } from '../src/client/pages/Thema/Afis/Afis-thema-config.ts';
 import { themaConfig as themaOvertredingen } from '../src/client/pages/Thema/Overtredingen/Overtredingen-thema-config.ts';
 import { themaConfig as themaVaren } from '../src/client/pages/Thema/Varen/Varen-thema-config.ts';
 import { themaConfig as themaBodem } from '../src/client/pages/Thema/Bodem/Bodem-thema-config.ts';
@@ -108,7 +105,7 @@ const themas = [
   { id: themaIdSvwi, title: themaTitleSvwi },
   { id: themaKlachten.id, title: themaKlachten.title },
   { id: themaKrefia.id, title: themaKrefia.title },
-  { id: themaIdAfis, title: themaTitleAfis },
+  { id: themaAfis.id, title: themaAfis.title },
   { id: themaOvertredingen.id, title: themaOvertredingen.title },
 
   { id: themaBodem.id, title: themaBodem.title },

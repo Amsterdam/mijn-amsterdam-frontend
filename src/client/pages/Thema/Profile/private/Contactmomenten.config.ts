@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 
 import type { ContactMoment } from '../../../../../server/services/salesforce/contactmomenten.types.ts';
 import type { DisplayProps } from '../../../../components/Table/TableV2.types.ts';
-import { themaId as themaIdAfis } from '../../Afis/Afis-thema-config.ts';
+import { themaConfig as themaAfis } from '../../Afis/Afis-thema-config.ts';
 import { themaConfig as themaBelastingen } from '../../Belastingen/Belastingen-thema-config.ts';
 import { themaConfig as themaInkomen } from '../../Inkomen/Inkomen-thema-config.ts';
 import { themaConfig as themaKrefia } from '../../Krefia/Krefia-thema-config.ts';
@@ -40,5 +40,5 @@ export const mapperContactmomentToMenuItem = {
   'Werk en Inkomen': SVWIv1ORv2,
   Belastingen: themaBelastingen.id,
   Geldzaken: themaKrefia.id,
-  Financiën: themaIdAfis,
+  Financiën: themaAfis.id,
 } as const;

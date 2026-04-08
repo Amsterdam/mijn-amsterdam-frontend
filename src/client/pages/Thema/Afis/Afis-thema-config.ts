@@ -14,18 +14,28 @@ import type { LinkProps } from '../../../../universal/types/App.types.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
 import { isEnabled } from '../../../config/feature-toggles.ts';
-import type { ThemaRoutesConfig } from '../../../config/thema-types.ts';
+import type {
+  ThemaConfigBase,
+  ThemaRoutesConfig,
+} from '../../../config/thema-types.ts';
 
 export const featureToggle = {
   AfisActive: true,
   emandatesActive: isEnabled('AFIS.EMandates'),
 };
 
+const THEMA_ID = 'AFIS';
+const THEMA_TITLE = 'Facturen en betalen';
+
+type AfisThemaConfig = Pick<ThemaConfigBase<typeof THEMA_ID>, 'id' | 'title'>;
+
+export const themaConfig: AfisThemaConfig = {
+  id: THEMA_ID,
+  title: THEMA_TITLE,
+};
+
 // E-Mandates are always recurring and have a default date far in the future!
 export const EMANDATE_ENDDATE_INDICATOR = '9999';
-
-export const themaId = 'AFIS' as const;
-export const themaTitle = 'Facturen en betalen';
 
 export const titleBetaalvoorkeurenPage = 'Betaalvoorkeuren';
 export const titleEMandaatPage = 'E-Mandaat';
@@ -33,17 +43,17 @@ export const titleEMandaatPage = 'E-Mandaat';
 export const routeConfig = {
   detailPage: {
     path: '/facturen-en-betalen/factuur/:state/:factuurNummer',
-    documentTitle: `Factuurgegevens | ${themaTitle}`,
+    documentTitle: `Factuurgegevens | ${THEMA_TITLE}`,
     trackingUrl: null,
   },
   betaalVoorkeuren: {
     path: '/facturen-en-betalen/betaalvoorkeuren',
-    documentTitle: `Betaalvoorkeuren | ${themaTitle}`,
+    documentTitle: `Betaalvoorkeuren | ${THEMA_TITLE}`,
     trackingUrl: null,
   },
   detailPageEMandate: {
     path: '/facturen-en-betalen/betaalvoorkeuren/emandate/:id',
-    documentTitle: `E-Mandaat | ${themaTitle}`,
+    documentTitle: `E-Mandaat | ${THEMA_TITLE}`,
     trackingUrl: null,
   },
   listPage: {
@@ -53,7 +63,7 @@ export const routeConfig = {
   },
   themaPage: {
     path: '/facturen-en-betalen',
-    documentTitle: `${themaTitle} | overzicht`,
+    documentTitle: `${THEMA_TITLE} | overzicht`,
     trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
@@ -216,13 +226,13 @@ export function getAfisListPageDocumentTitle<T extends Params<string>>(
 ) {
   switch (params?.state) {
     case 'open':
-      return `Open facturen | ${themaTitle}`;
+      return `Open facturen | ${THEMA_TITLE}`;
     case 'afgehandeld':
-      return `Afgehandelde facturen | ${themaTitle}`;
+      return `Afgehandelde facturen | ${THEMA_TITLE}`;
     case 'overgedragen':
-      return `Overgedragen aan belastingen facturen | ${themaTitle}`;
+      return `Overgedragen aan belastingen facturen | ${THEMA_TITLE}`;
     default:
-      return `Facturen | ${themaTitle}`;
+      return `Facturen | ${THEMA_TITLE}`;
   }
 }
 
