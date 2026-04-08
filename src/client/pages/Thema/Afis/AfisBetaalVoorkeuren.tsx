@@ -92,7 +92,7 @@ export function AfisBetaalVoorkeuren() {
     businessPartnerIdEncrypted,
     isThemaPaginaError,
     isThemaPaginaLoading,
-    linkListItems,
+    pageLinks,
     breadcrumbs,
     routeConfig,
     themaId,
@@ -253,7 +253,7 @@ export function AfisBetaalVoorkeuren() {
       errorAlertContent={errorAlertContent}
       isLoading={isLoadingAllAPis}
       breadcrumbs={breadcrumbs}
-      pageLinks={linkListItems}
+      pageLinks={pageLinks}
       pageContentTop={pageContentTop}
       pageContentMain={pageContentMain}
       maintenanceNotificationsPageSlug="afis"

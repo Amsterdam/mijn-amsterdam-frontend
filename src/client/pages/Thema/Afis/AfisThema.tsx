@@ -99,7 +99,7 @@ export function AfisThema() {
     isThemaPaginaLoading,
     listPageTitle,
     routeConfig,
-    linkListItems,
+    pageLinks,
     belastingenLinkListItem,
     title,
     themaId,
@@ -145,7 +145,7 @@ export function AfisThema() {
       isPartialError={isPartialError}
       errorAlertContent={pageContentErrorAlert}
       isLoading={!isThemaPaginaError && isThemaPaginaLoading}
-      pageLinks={linkListItems}
+      pageLinks={pageLinks}
       pageContentTop={
         <PageContentTop urlNaarBelastingen={belastingenLinkListItem.to} />
       }

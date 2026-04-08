@@ -1,7 +1,6 @@
 import {
   facturenTableConfig,
   listPageTitle,
-  linkListItems,
   themaConfig as themaAfis,
   routeConfig,
   type AfisFactuurFrontend,
@@ -104,7 +103,7 @@ export function useAfisThemaData() {
     isThemaPaginaError,
     isThemaPaginaLoading,
     listPageTitle,
-    linkListItems: [...linkListItems, belastingenLinkListItem],
+    pageLinks: [...themaConfig.pageLinks, belastingenLinkListItem],
     routeConfig,
     breadcrumbs,
     dependencyErrors,

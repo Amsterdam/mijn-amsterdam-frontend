@@ -10,7 +10,6 @@ import type {
   AfisFactuurStateFrontend,
   AfisFactuurTermijn,
 } from '../../../../server/services/afis/afis-types.ts';
-import type { LinkProps } from '../../../../universal/types/App.types.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
 import { isEnabled } from '../../../config/feature-toggles.ts';
@@ -29,7 +28,7 @@ const THEMA_TITLE = 'Facturen en betalen';
 
 type AfisThemaConfig = Pick<
   ThemaConfigBase<typeof THEMA_ID>,
-  'id' | 'title' | 'redactedScope' | 'profileTypes'
+  'id' | 'title' | 'redactedScope' | 'profileTypes' | 'pageLinks'
 >;
 
 export const themaConfig: AfisThemaConfig = {
@@ -37,6 +36,12 @@ export const themaConfig: AfisThemaConfig = {
   title: THEMA_TITLE,
   redactedScope: 'full',
   profileTypes: ['private', 'commercial'],
+  pageLinks: [
+    {
+      to: 'https://www.amsterdam.nl/veelgevraagd/facturen-van-de-gemeente-controleren-gegevens-wijzigen-automatische-incasso-regelen-38caa',
+      title: 'Meer over betalen aan de gemeente',
+    },
+  ],
 };
 
 // E-Mandates are always recurring and have a default date far in the future!
@@ -218,13 +223,6 @@ export const eMandateTableConfig = {
   title: `Automatische incasso's`,
   displayProps: displayPropsEMandates,
 } as const;
-
-export const linkListItems: LinkProps[] = [
-  {
-    to: 'https://www.amsterdam.nl/veelgevraagd/facturen-van-de-gemeente-controleren-gegevens-wijzigen-automatische-incasso-regelen-38caa',
-    title: 'Meer over betalen aan de gemeente',
-  },
-];
 
 export function getAfisListPageDocumentTitle<T extends Params<string>>(
   params: T | null
