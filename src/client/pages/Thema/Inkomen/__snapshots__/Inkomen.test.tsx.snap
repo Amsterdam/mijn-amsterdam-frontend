@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page snapshot 1`] = `
+exports[`<Inkomen /> > with items from BBZ, TONK, TOZO and SPECIFICATIES 1`] = `
 <DocumentFragment>
   <div
     class="mams-content-wrapper redacted"
@@ -180,7 +180,15 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
                 >
                   <td
                     class="ams-table__cell"
-                  />
+                  >
+                    <a
+                      class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline-fat_10c0a4"
+                      href="/aanvraag-2"
+                      title="Bekijk meer over Aanvraag inkomen item 2"
+                    >
+                      Aanvraag inkomen item 2
+                    </a>
+                  </td>
                   <td
                     class="ams-table__cell"
                   />
@@ -193,7 +201,15 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
                 >
                   <td
                     class="ams-table__cell"
-                  />
+                  >
+                    <a
+                      class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline-fat_10c0a4"
+                      href="/aanvraag-4"
+                      title="Bekijk meer over Tozo 2 item"
+                    >
+                      Tozo 2 item
+                    </a>
+                  </td>
                   <td
                     class="ams-table__cell"
                   />
@@ -206,7 +222,15 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
                 >
                   <td
                     class="ams-table__cell"
-                  />
+                  >
+                    <a
+                      class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline-fat_10c0a4"
+                      href="/aanvraag-6"
+                      title="Bekijk meer over Tonk 2 item"
+                    >
+                      Tonk 2 item
+                    </a>
+                  </td>
                   <td
                     class="ams-table__cell"
                   />
@@ -263,7 +287,15 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
                 >
                   <td
                     class="ams-table__cell"
-                  />
+                  >
+                    <a
+                      class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline-fat_10c0a4"
+                      href="/aanvraag-7"
+                      title="Bekijk meer over Bbz item"
+                    >
+                      Bbz item
+                    </a>
+                  </td>
                   <td
                     class="ams-table__cell"
                   />
@@ -276,7 +308,15 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
                 >
                   <td
                     class="ams-table__cell"
-                  />
+                  >
+                    <a
+                      class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline-fat_10c0a4"
+                      href="/aanvraag-1"
+                      title="Bekijk meer over Aanvraag inkomen item"
+                    >
+                      Aanvraag inkomen item
+                    </a>
+                  </td>
                   <td
                     class="ams-table__cell"
                   />
@@ -289,7 +329,15 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
                 >
                   <td
                     class="ams-table__cell"
-                  />
+                  >
+                    <a
+                      class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline-fat_10c0a4"
+                      href="/aanvraag-3"
+                      title="Bekijk meer over Tozo 1 item"
+                    >
+                      Tozo 1 item
+                    </a>
+                  </td>
                   <td
                     class="ams-table__cell"
                   />
@@ -332,13 +380,13 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
                     class="ams-table__header-cell"
                     style="width: 50%;"
                   >
-                    Datum
+                    Regeling
                   </th>
                   <th
                     class="ams-table__header-cell"
                     style="width: 25%;"
                   >
-                    Regeling
+                    Datum
                   </th>
                   <th
                     class="ams-table__header-cell"
@@ -356,12 +404,12 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
                 >
                   <td
                     class="ams-table__cell"
+                  />
+                  <td
+                    class="ams-table__cell"
                   >
                     14 Mei 2020
                   </td>
-                  <td
-                    class="ams-table__cell"
-                  />
                   <td
                     class="ams-table__cell"
                   >
@@ -410,283 +458,6 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
             class="ams-heading ams-heading--2"
           >
             Jaaropgaven
-          </h2>
-          <div
-            class="ams-table"
-          >
-            <table
-              class="ams-table__table _TableV2_1fc147"
-            >
-              <thead
-                class="ams-table__header"
-              >
-                <tr
-                  class="ams-table__row"
-                >
-                  <th
-                    class="ams-table__header-cell"
-                    style="width: 75%;"
-                  >
-                    Datum
-                  </th>
-                  <th
-                    class="ams-table__header-cell"
-                    style="width: 25%;"
-                  >
-                    Document
-                  </th>
-                </tr>
-              </thead>
-              <tbody
-                class="ams-table__body"
-              >
-                <tr
-                  class="ams-table__row"
-                >
-                  <td
-                    class="ams-table__cell"
-                  >
-                    14 Juli 2020
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
-                    <span
-                      class="_DocumentLinkWrap_4ce874"
-                    >
-                      <a
-                        class="ams-link _DocumentLink_4ce874 _MaLink_10c0a4 _MaRouterLink__no-default-underline_10c0a4"
-                        href="/wpi/document/id"
-                      >
-                        <span
-                          class="_DocumentLinkIcon_4ce874"
-                        >
-                          <span
-                            class="ams-icon ams-icon--heading-5"
-                            hidden=""
-                          >
-                            <svg
-                              aria-hidden="true"
-                              focusable="false"
-                              viewBox="0 0 24 24"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.212 9.293l-1.415 1.414 5.207 5.207 5.208-5.207z"
-                              />
-                              <path
-                                d="m21.502 17.207-3.708 3.707a2 2 0 0 1-1.414.586H7.536c-.43 0-1.056-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
-                              />
-                            </svg>
-                          </span>
-                        </span>
-                        PDF
-                      </a>
-                    </span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </main>
-  </div>
-</DocumentFragment>
-`;
-
-exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Page snapshot 1`] = `
-<DocumentFragment>
-  <div
-    class="mams-content-wrapper redacted"
-  >
-    <div
-      class="ams-grid ams-grid--padding-top--large"
-      id="page-breadcrumbs"
-    >
-      <div
-        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-      >
-        <nav
-          class="ams-breadcrumb"
-        >
-          <ol
-            class="ams-breadcrumb__list"
-          >
-            <li
-              class="ams-breadcrumb__item"
-            >
-              <a
-                class="ams-breadcrumb__link"
-                href="/"
-              >
-                Home
-              </a>
-            </li>
-            <li
-              class="ams-breadcrumb__item"
-            >
-              <a
-                class="ams-breadcrumb__link"
-                href="/inkomen"
-                tabindex="-1"
-              >
-                <span
-                  class="ams-visually-hidden"
-                >
-                  Inkomen
-                </span>
-              </a>
-            </li>
-          </ol>
-        </nav>
-      </div>
-    </div>
-    <main
-      id="page-main-content"
-    >
-      <div
-        class="ams-grid"
-      >
-        <div
-          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-        >
-          <h1
-            class="ams-heading ams-heading--1 ams-mb-s"
-          >
-            Inkomen
-          </h1>
-        </div>
-      </div>
-      <div
-        class="ams-grid ams-grid--padding-bottom--x-large"
-      >
-        <div
-          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-8-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-        >
-          <p
-            class="ams-paragraph"
-          >
-            Op deze pagina vindt u informatie over uw uitkering en de ondersteuning die u krijgt omdat u weinig geld hebt.
-          </p>
-        </div>
-        <div
-          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PullUp_125440"
-        >
-          <ul
-            class="ams-link-list"
-          >
-            <li>
-              <a
-                class="ams-link-list__link"
-                href="https://www.amsterdam.nl/werk-inkomen"
-                rel="noreferrer"
-              >
-                <span
-                  class="ams-icon"
-                  hidden=""
-                >
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      clip-rule="evenodd"
-                      d="M7.911 2.5 17.5 12l-9.589 9.5L6.5 20.102 14.677 12 6.5 3.898z"
-                      fill-rule="evenodd"
-                    />
-                  </svg>
-                </span>
-                Algemene informatie over Werk en Inkomen
-              </a>
-            </li>
-            <li>
-              <a
-                class="ams-link-list__link"
-                href="https://www.amsterdam.nl/werk-inkomen/contact/"
-                rel="noreferrer"
-              >
-                <span
-                  class="ams-icon"
-                  hidden=""
-                >
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      clip-rule="evenodd"
-                      d="M7.911 2.5 17.5 12l-9.589 9.5L6.5 20.102 14.677 12 6.5 3.898z"
-                      fill-rule="evenodd"
-                    />
-                  </svg>
-                </span>
-                Contact Werk en Inkomen
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div
-          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-        >
-          <h2
-            class="ams-heading ams-heading--2"
-          >
-            Lopende aanvragen
-          </h2>
-          <div
-            class="ams-table"
-          >
-            <table
-              class="ams-table__table _TableV2_1fc147"
-            >
-              <tbody
-                class="ams-table__body"
-              />
-            </table>
-          </div>
-          <p
-            class="ams-paragraph"
-          >
-            U heeft (nog) geen lopende aanvragen
-          </p>
-        </div>
-        <div
-          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-        >
-          <h2
-            class="ams-heading ams-heading--2"
-          >
-            Eerdere aanvragen
-          </h2>
-          <div
-            class="ams-table"
-          >
-            <table
-              class="ams-table__table _TableV2_1fc147"
-            >
-              <tbody
-                class="ams-table__body"
-              />
-            </table>
-          </div>
-          <p
-            class="ams-paragraph"
-          >
-            U heeft (nog) geen eerdere aanvragen
-          </p>
-        </div>
-        <div
-          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-        >
-          <h2
-            class="ams-heading ams-heading--2"
-          >
-            Uitkeringsspecificaties
           </h2>
           <div
             class="ams-table"
@@ -704,100 +475,11 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
                     class="ams-table__header-cell"
                     style="width: 50%;"
                   >
-                    Datum
+                    Naam
                   </th>
                   <th
                     class="ams-table__header-cell"
                     style="width: 25%;"
-                  >
-                    Regeling
-                  </th>
-                  <th
-                    class="ams-table__header-cell"
-                    style="width: 25%;"
-                  >
-                    Document
-                  </th>
-                </tr>
-              </thead>
-              <tbody
-                class="ams-table__body"
-              >
-                <tr
-                  class="ams-table__row"
-                >
-                  <td
-                    class="ams-table__cell"
-                  >
-                    14 Mei 2020
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  />
-                  <td
-                    class="ams-table__cell"
-                  >
-                    <span
-                      class="_DocumentLinkWrap_4ce874"
-                    >
-                      <a
-                        class="ams-link _DocumentLink_4ce874 _MaLink_10c0a4 _MaRouterLink__no-default-underline_10c0a4"
-                        href="/wpi/document/id"
-                      >
-                        <span
-                          class="_DocumentLinkIcon_4ce874"
-                        >
-                          <span
-                            class="ams-icon ams-icon--heading-5"
-                            hidden=""
-                          >
-                            <svg
-                              aria-hidden="true"
-                              focusable="false"
-                              viewBox="0 0 24 24"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.212 9.293l-1.415 1.414 5.207 5.207 5.208-5.207z"
-                              />
-                              <path
-                                d="m21.502 17.207-3.708 3.707a2 2 0 0 1-1.414.586H7.536c-.43 0-1.056-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
-                              />
-                            </svg>
-                          </span>
-                        </span>
-                        PDF
-                      </a>
-                    </span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div
-          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-        >
-          <h2
-            class="ams-heading ams-heading--2"
-          >
-            Jaaropgaven
-          </h2>
-          <div
-            class="ams-table"
-          >
-            <table
-              class="ams-table__table _TableV2_1fc147"
-            >
-              <thead
-                class="ams-table__header"
-              >
-                <tr
-                  class="ams-table__row"
-                >
-                  <th
-                    class="ams-table__header-cell"
-                    style="width: 75%;"
                   >
                     Datum
                   </th>
@@ -815,6 +497,11 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
                 <tr
                   class="ams-table__row"
                 >
+                  <td
+                    class="ams-table__cell"
+                  >
+                    Jaaropgave 2020
+                  </td>
                   <td
                     class="ams-table__cell"
                   >

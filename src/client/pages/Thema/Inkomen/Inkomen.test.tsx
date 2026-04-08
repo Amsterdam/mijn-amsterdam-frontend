@@ -21,6 +21,9 @@ const testState = {
             datePublished: '2020-07-24',
           },
         ],
+        link: {
+          to: '/aanvraag-1',
+        },
       },
       {
         title: 'Aanvraag inkomen item 2',
@@ -34,6 +37,9 @@ const testState = {
             datePublished: '2020-07-24',
           },
         ],
+        link: {
+          to: '/aanvraag-2',
+        },
       },
     ],
   },
@@ -52,6 +58,9 @@ const testState = {
             datePublished: '2020-07-24',
           },
         ],
+        link: {
+          to: '/aanvraag-3',
+        },
       },
       {
         title: 'Tozo 2 item',
@@ -65,6 +74,9 @@ const testState = {
             datePublished: '2020-07-24',
           },
         ],
+        link: {
+          to: '/aanvraag-4',
+        },
       },
     ],
   },
@@ -83,6 +95,9 @@ const testState = {
             datePublished: '2020-07-24',
           },
         ],
+        link: {
+          to: '/aanvraag-5',
+        },
       },
       {
         title: 'Tonk 2 item',
@@ -96,6 +111,9 @@ const testState = {
             datePublished: '2020-07-24',
           },
         ],
+        link: {
+          to: '/aanvraag-6',
+        },
       },
     ],
   },
@@ -115,6 +133,9 @@ const testState = {
             datePublished: '2022-07-24',
           },
         ],
+        link: {
+          to: '/aanvraag-7',
+        },
       },
     ],
   },
@@ -150,7 +171,7 @@ const testState = {
 describe('<Inkomen />', () => {
   const routeEntry = themaConfig.route.path;
 
-  describe('with items from BBZ, TONK, TOZO', () => {
+  test('with items from BBZ, TONK, TOZO and SPECIFICATIES', () => {
     function Component() {
       return (
         <MockApp
@@ -162,13 +183,11 @@ describe('<Inkomen />', () => {
       );
     }
 
-    it('Matches the Full Page snapshot', () => {
-      const { asFragment } = render(<Component />);
-      expect(asFragment()).toMatchSnapshot();
-    });
+    const { asFragment } = render(<Component />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
-  describe('without items from BBZ, TONK, TOZO', () => {
+  test('without items from BBZ, TONK, TOZO', () => {
     function Component() {
       return (
         <MockApp
@@ -188,9 +207,40 @@ describe('<Inkomen />', () => {
       );
     }
 
-    it('Matches the Full Page snapshot', () => {
-      const { asFragment } = render(<Component />);
-      expect(asFragment()).toMatchSnapshot();
-    });
+    const screen = render(<Component />);
+    expect(screen.queryByText('Aanvraag inkomen item')).not.toBeInTheDocument();
+    expect(
+      screen.queryByText('Aanvraag inkomen item 2')
+    ).not.toBeInTheDocument();
+    expect(screen.queryByText('Tozo 1 item')).not.toBeInTheDocument();
+    expect(screen.getByText('Jaaropgave 2020')).toBeInTheDocument();
+    // Uitkering shows datum only.
+    expect(screen.getByText('14 Mei 2020')).toBeInTheDocument();
+  });
+
+  test('without items from BBZ, TONK, TOZO, but with AANVRAGEN', () => {
+    function Component() {
+      return (
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routeEntry}
+          component={InkomenThema}
+          state={
+            {
+              WPI_SPECIFICATIES: {},
+              WPI_AANVRAGEN: testState.WPI_AANVRAGEN,
+              WPI_TOZO: {},
+              WPI_TONK: {},
+              WPI_BBZ: {},
+            } as unknown as AppState
+          }
+        />
+      );
+    }
+
+    const screen = render(<Component />);
+    expect(screen.getByText('Aanvraag inkomen item')).toBeInTheDocument();
+    expect(screen.getByText('Aanvraag inkomen item 2')).toBeInTheDocument();
+    expect(screen.queryByText('Tozo 1 item')).not.toBeInTheDocument();
   });
 });
