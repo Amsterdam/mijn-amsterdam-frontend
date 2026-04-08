@@ -194,9 +194,7 @@ export async function requestData<T>(
     if (fromAxios) {
       const error = error_ as AxiosError;
       code = error.status ?? error?.response?.status ?? code;
-      errorMessage = useDescriptiveErrorMessages
-        ? `AxiosError in requestData: ${error.message} for URL ${config.url}`
-        : error.message;
+      errorMessage = `AxiosError: Request failed - ${error.message}${useDescriptiveErrorMessages ? ` for URL ${config.url}` : ''}`;
       stack = error.stack;
     } else {
       const error = error_ as Error;
