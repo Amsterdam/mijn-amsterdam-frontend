@@ -16,6 +16,7 @@ import { isEnabled } from '../../../config/feature-toggles.ts';
 import type {
   ThemaConfigBase,
   ThemaRoutesConfig,
+  WithListPage,
 } from '../../../config/thema-types.ts';
 
 export const featureToggle = {
@@ -26,7 +27,7 @@ export const featureToggle = {
 const THEMA_ID = 'AFIS';
 const THEMA_TITLE = 'Facturen en betalen';
 
-type AfisThemaConfig = ThemaConfigBase<typeof THEMA_ID>;
+type AfisThemaConfig = ThemaConfigBase<typeof THEMA_ID> & WithListPage;
 
 export const themaConfig: AfisThemaConfig = {
   id: THEMA_ID,
@@ -53,6 +54,14 @@ export const themaConfig: AfisThemaConfig = {
   featureToggle: {
     active: true, // TO Do Yacine > Emandaat nog toevoegen en bij source-api.ts kijken
   },
+
+  listPage: {
+    route: {
+      path: '/facturen-en-betalen/facturen/lijst/:state/:page?',
+      documentTitle: getAfisListPageDocumentTitle,
+      trackingUrl: null,
+    },
+  },
 };
 
 // E-Mandates are always recurring and have a default date far in the future!
@@ -75,11 +84,6 @@ export const routeConfig = {
   detailPageEMandate: {
     path: '/facturen-en-betalen/betaalvoorkeuren/emandate/:id',
     documentTitle: `E-Mandaat | ${THEMA_TITLE}`,
-    trackingUrl: null,
-  },
-  listPage: {
-    path: '/facturen-en-betalen/facturen/lijst/:state/:page?',
-    documentTitle: getAfisListPageDocumentTitle,
     trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;
@@ -167,7 +171,7 @@ type FacturenTableConfigParams = {
 };
 
 export function getFacturenTableConfig(params?: FacturenTableConfigParams) {
-  const { listPagePath = routeConfig.listPage.path, mergeConfig } =
+  const { listPagePath = themaConfig.listPage.route.path, mergeConfig } =
     params || {};
   return {
     open: {

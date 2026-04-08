@@ -18,7 +18,7 @@ import {
 
 export const AfisRoutes = [
   {
-    route: routeConfig.listPage.path,
+    route: themaConfig.listPage.route.path,
     Component: AfisList,
     isActive: themaConfig.featureToggle.active,
   },

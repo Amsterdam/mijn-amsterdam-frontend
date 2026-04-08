@@ -45,7 +45,7 @@ export function useAfisFacturenData(
     routeConfigDetailPage = routeConfig.detailPage,
     themaId = themaAfis.id,
     tableConfig = facturenTableConfig,
-    routeConfigListPage = routeConfig.listPage,
+    routeConfigListPage = themaConfig.listPage.route,
   } = themaContextParams || {};
   const { AFIS } = useAppStateGetter();
   const businessPartnerIdEncrypted =
