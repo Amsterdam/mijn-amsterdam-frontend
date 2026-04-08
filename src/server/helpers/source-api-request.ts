@@ -63,11 +63,9 @@ export interface RequestConfig<Source, Transformed> {
 
 async function request({
   cancelTimeout,
-  request,
   ...config
 }: AxiosRequestConfig & {
   cancelTimeout: number;
-  request?: DataRequestConfig['request'];
 }) {
   const source = axios.CancelToken.source();
   // Request is cancelled after x ms
@@ -75,9 +73,7 @@ async function request({
     source.cancel('Request to source api timeout.');
   }, cancelTimeout);
 
-  const doRequest = request || axiosRequest.request;
-
-  return doRequest({ ...config, cancelToken: source.token }).then(
+  return axiosRequest.request({ ...config, cancelToken: source.token }).then(
     (response) => {
       clearTimeout(cancelTimeoutId);
       return response;
@@ -161,7 +157,6 @@ export async function requestData<T>(
       : request({
           ...axiosRequestConfig,
           cancelTimeout: config.cancelTimeout ?? DEFAULT_CANCEL_TIMEOUT_MS,
-          request: config.request,
         });
 
   const isServedFromCache = cache.get(cacheKey) !== null;
@@ -235,6 +230,10 @@ export function findApiByRequestUrl(
 }
 
 export function getNextUrlFromLinkHeader(headers: AxiosResponseHeaders) {
+  if (!headers.link?.includes('rel="next"')) {
+    return null;
+  }
+
   // parse link header and get value of rel="next" url
   const links = headers.link.split(',');
   const next = links.find(

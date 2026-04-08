@@ -1,17 +1,17 @@
 import nock from 'nock';
 
-import type {
-  DatasetConfig} from './datasets.ts';
+import type { DatasetConfig } from './datasets.ts';
 import {
   fetchMeldingenBuurt,
   transformHardlooproutesResponse,
   transformMeldingenBuurtResponse,
 } from './datasets.ts';
+import type { DsoApiResponse } from './dso-helpers.ts';
 import { remoteApiHost } from '../../../testing/setup.ts';
 
 describe('Custom dataset tranformations', () => {
   it('Should group distance of hardlooproute', () => {
-    const sourceResponse: any = {
+    const sourceResponse = {
       _embedded: {
         hardlooproute: [
           {
@@ -86,7 +86,7 @@ describe('Custom dataset tranformations', () => {
     const result = transformHardlooproutesResponse(
       'hardlooproute',
       config,
-      sourceResponse
+      sourceResponse as unknown as DsoApiResponse
     );
 
     expect(result).toStrictEqual(transformedFeatures);
@@ -151,24 +151,24 @@ describe('Custom dataset tranformations', () => {
 
     const response = await fetchMeldingenBuurt({
       url: urlPage1,
-      transformResponse: (responseData) => {
+      transformResponse: (responseData, headers) => {
         return transformMeldingenBuurtResponse(
           'mock-dataset',
           datasetConfig,
-          JSON.parse(responseData)
+          responseData,
+          headers
         );
       },
-      request: fetchMeldingenBuurt,
     });
 
-    expect(response.data.length).toBe(3);
-    expect(response.data[0].properties.id).toBe(
+    expect(response.content?.length).toBe(3);
+    expect(response.content?.[0].properties.id).toBe(
       'feature-1-202309110733246954480000'
     );
-    expect(response.data[1].properties.id).toBe(
+    expect(response.content?.[1].properties.id).toBe(
       'feature-2-202309120733246954480000'
     );
-    expect(response.data[2].properties.id).toBe(
+    expect(response.content?.[2].properties.id).toBe(
       'feature-3-202309130733246954480000'
     );
   });
@@ -190,33 +190,36 @@ describe('Custom dataset tranformations', () => {
     const requestData = () =>
       fetchMeldingenBuurt({
         url: urlPage1,
-        transformResponse: (responseData) => {
+        transformResponse: (responseData, headers) => {
           return transformMeldingenBuurtResponse(
             'mock-dataset',
             datasetConfig,
-            responseData ? JSON.parse(responseData) : responseData
+            responseData,
+            headers
           );
         },
-        request: fetchMeldingenBuurt,
       });
 
     api.get(path).reply(200, {});
     const response = await requestData();
-    expect(response.data).toStrictEqual([]);
+
+    expect(response.content).toStrictEqual([]);
 
     api.get(path).replyWithError('not available');
     try {
-      const response2 = await requestData();
-    } catch (error: any) {
-      expect(error.message).toBe('not available');
+      await requestData();
+    } catch (error) {
+      expect((error as Error).message).toBe('not available');
     }
 
     api.get(path).reply(500);
     try {
-      const response3 = await requestData();
-    } catch (error: any) {
-      expect(error.message).toBe('Request failed with status code 500');
-      expect(response.data).toStrictEqual([]);
+      await requestData();
+    } catch (error) {
+      expect((error as Error).message).toBe(
+        'Request failed with status code 500'
+      );
+      expect(response.content).toStrictEqual([]);
     }
   });
 });

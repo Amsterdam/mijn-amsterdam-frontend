@@ -2,12 +2,10 @@ import { IS_TAP } from '../../../universal/config/env.ts';
 import type {
   DatasetFilterSelection,
   DatasetId,
-  DatasetPropertyFilter} from '../../../universal/config/myarea-datasets.ts';
-import {
-  POLYLINE_GEOMETRY_TYPES,
+  DatasetPropertyFilter,
 } from '../../../universal/config/myarea-datasets.ts';
-import type {
-  ApiResponse_DEPRECATED} from '../../../universal/helpers/api.ts';
+import { POLYLINE_GEOMETRY_TYPES } from '../../../universal/config/myarea-datasets.ts';
+import type { ApiResponse_DEPRECATED } from '../../../universal/helpers/api.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -19,17 +17,15 @@ import { captureMessage } from '../monitoring.ts';
 import type {
   DatasetConfig,
   DatasetFeatures,
-  DatasetResponse} from './datasets.ts';
+  DatasetResponse,
+} from './datasets.ts';
 import {
   ACCEPT_CRS_4326,
   BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
-  DEFAULT_API_REQUEST_TIMEOUT
+  DEFAULT_API_REQUEST_TIMEOUT,
 } from './datasets.ts';
-import type {
-  DsoApiResponse} from './dso-helpers.ts';
-import {
-  discoverSingleDsoApiEmbeddedResponse
-} from './dso-helpers.ts';
+import type { DsoApiResponse } from './dso-helpers.ts';
+import { discoverSingleDsoApiEmbeddedResponse } from './dso-helpers.ts';
 import {
   createDynamicFilterConfig,
   datasetApiResult,
@@ -127,12 +123,20 @@ export async function fetchDataset(
 
   if (typeof datasetConfig.transformList === 'function') {
     const transformList = datasetConfig.transformList;
-    requestConfig.transformResponse = (responseData) => {
-      return transformList(datasetId, datasetConfig, responseData);
+    requestConfig.transformResponse = (responseData, headers, status) => {
+      return transformList(
+        datasetId,
+        datasetConfig,
+        responseData,
+        headers,
+        status
+      );
     };
   }
 
-  const response = await requestData<DatasetFeatures>(requestConfig);
+  const response = await (datasetConfig.customListRequestFunction
+    ? datasetConfig.customListRequestFunction(requestConfig)
+    : requestData<DatasetFeatures>(requestConfig));
 
   if (response.status === 'OK') {
     const filterConfig = getDynamicDatasetFilters(datasetId);
@@ -319,10 +323,6 @@ export async function loadFeatureDetail(datasetId: string, id: string) {
         id,
         datasetCache: fileCache,
       });
-  }
-
-  if (config.requestConfig?.request) {
-    requestConfig.request = config.requestConfig.request;
   }
 
   const response = await requestData<DsoApiResponse>(requestConfig);
