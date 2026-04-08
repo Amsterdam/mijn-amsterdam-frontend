@@ -34,33 +34,38 @@ export async function adminIndexHandler(req: Request, res: Response) {
   sendResponse(
     res,
     apiSuccessResult({
-      title: 'Mijn Amsterdam Admin API',
+      title: 'Mijn Amsterdam Admin',
       isAuthenticated: reqWithSession.session?.isAuthenticated ? true : false,
       username: reqWithSession.session?.account?.username,
       links: {
-        login: generateFullApiAdminUrlBFF(
-          adminRoutesGeneric.public.auth.SIGNIN
-        ),
-        logout: generateFullApiAdminUrlBFF(
-          adminRoutesGeneric.public.auth.SIGNOUT
-        ),
-        cacheOverview: generateFullApiAdminUrlBFF(
-          adminRoutesGeneric.protected.CACHE_OVERVIEW
-        ),
-        loginStats: generateFullApiAdminUrlBFF(
-          adminRoutesGeneric.protected.visitors.STATS,
-          { authMethod: '' }
-        ),
-        loginStatsTable: generateFullApiAdminUrlBFF(
-          adminRoutesGeneric.protected.visitors.STATS_TABLE
-        ),
-        userFeedback: generateFullApiAdminUrlBFF(
-          adminRoutesUserFeedback.admin.USER_FEEDBACK_OVERVIEW_TABLE
-        ),
-        appRegistratons: generateFullApiAdminUrlBFF(
-          adminRoutesAmsAppNotifications.admin
-            .NOTIFICATIONS_CONSUMER_REGISTRATION_OVERVIEW
-        ),
+        ...(reqWithSession.session?.isAuthenticated
+          ? {
+              logout: generateFullApiAdminUrlBFF(
+                adminRoutesGeneric.public.auth.SIGNOUT
+              ),
+              cacheOverview: generateFullApiAdminUrlBFF(
+                adminRoutesGeneric.protected.CACHE_OVERVIEW
+              ),
+              loginStats: generateFullApiAdminUrlBFF(
+                adminRoutesGeneric.protected.visitors.STATS,
+                { authMethod: '' }
+              ),
+              loginStatsTable: generateFullApiAdminUrlBFF(
+                adminRoutesGeneric.protected.visitors.STATS_TABLE
+              ),
+              userFeedback: generateFullApiAdminUrlBFF(
+                adminRoutesUserFeedback.admin.USER_FEEDBACK_OVERVIEW_TABLE
+              ),
+              appNotificationsRegistrations: generateFullApiAdminUrlBFF(
+                adminRoutesAmsAppNotifications.admin
+                  .NOTIFICATIONS_CONSUMER_REGISTRATION_OVERVIEW
+              ),
+            }
+          : {
+              login: generateFullApiAdminUrlBFF(
+                adminRoutesGeneric.public.auth.SIGNIN
+              ),
+            }),
       },
     })
   );
