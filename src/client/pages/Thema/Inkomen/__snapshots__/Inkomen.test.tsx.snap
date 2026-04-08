@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<Inkomen /> > with items from BBZ, TONK, TOZO and SPECIFICATIES 1`] = `
+exports[`<Inkomen /> > with items from AANVRAGEN, BBZ, TONK, TOZO and SPECIFICATIES 1`] = `
 <DocumentFragment>
   <div
     class="mams-content-wrapper redacted"

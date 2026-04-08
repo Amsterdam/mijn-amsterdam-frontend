@@ -171,7 +171,7 @@ const testState = {
 describe('<Inkomen />', () => {
   const routeEntry = themaConfig.route.path;
 
-  test('with items from BBZ, TONK, TOZO and SPECIFICATIES', () => {
+  test('with items from AANVRAGEN, BBZ, TONK, TOZO and SPECIFICATIES', () => {
     function Component() {
       return (
         <MockApp
