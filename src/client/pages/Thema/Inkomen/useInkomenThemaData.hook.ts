@@ -20,11 +20,6 @@ export function useInkomenThemaData() {
   const { WPI_AANVRAGEN, WPI_SPECIFICATIES, WPI_TOZO, WPI_TONK, WPI_BBZ } =
     useAppStateGetter();
 
-  const aanvragen = WPI_AANVRAGEN?.content ?? [];
-  const tozo = WPI_TOZO?.content ?? [];
-  const tonk = WPI_TONK?.content ?? [];
-  const bbz = WPI_BBZ?.content ?? [];
-
   const specificaties = useAddDocumentLinkComponents(
     WPI_SPECIFICATIES.content?.uitkeringsspecificaties ?? []
   );
@@ -35,10 +30,10 @@ export function useInkomenThemaData() {
   const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
   const zaken = useMemo(() => {
-    if ((!aanvragen.length && !tozo.length) || !tonk.length) {
-      return [];
-    }
-
+    const aanvragen = WPI_AANVRAGEN?.content ?? [];
+    const tozo = WPI_TOZO?.content ?? [];
+    const tonk = WPI_TONK?.content ?? [];
+    const bbz = WPI_BBZ?.content ?? [];
     const zaken = [
       ...(aanvragen || []),
       ...(tozo || []),
@@ -68,7 +63,12 @@ export function useInkomenThemaData() {
       .sort(dateSort('datePublished', 'desc'));
 
     return addLinkElementToProperty<WpiRequestProcess>(zaken, 'title', true);
-  }, [aanvragen, tozo, tonk, bbz]);
+  }, [
+    WPI_AANVRAGEN.content,
+    WPI_TOZO.content,
+    WPI_TONK.content,
+    WPI_BBZ.content,
+  ]);
 
   const isLoadingWpi =
     isLoading(WPI_AANVRAGEN) ||
