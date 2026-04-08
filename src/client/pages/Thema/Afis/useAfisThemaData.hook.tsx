@@ -2,7 +2,6 @@ import {
   facturenTableConfig,
   listPageTitle,
   themaConfig as themaAfis,
-  routeConfig,
   type AfisFactuurFrontend,
   themaConfig,
 } from './Afis-thema-config.ts';
@@ -104,7 +103,6 @@ export function useAfisThemaData() {
     isThemaPaginaLoading,
     listPageTitle,
     pageLinks: [...themaConfig.pageLinks, belastingenLinkListItem],
-    routeConfig,
     breadcrumbs,
     dependencyErrors,
     themaConfig,

@@ -1,8 +1,4 @@
-import {
-  routeConfig,
-  themaConfig,
-  featureToggle,
-} from './Afis-thema-config.ts';
+import { themaConfig, featureToggle } from './Afis-thema-config.ts';
 import { AfisBetaalVoorkeuren } from './AfisBetaalVoorkeuren.tsx';
 import { AfisEMandateDetail } from './AfisEMandateDetail.tsx';
 import { AfisFactuur } from './AfisFactuur.tsx';
@@ -33,7 +29,7 @@ export const AfisRoutes = [
     isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.detailPageEMandate.path,
+    route: themaConfig.detailPageEMandate.route.path,
     Component: AfisEMandateDetail,
     isActive: featureToggle.emandatesActive,
   },

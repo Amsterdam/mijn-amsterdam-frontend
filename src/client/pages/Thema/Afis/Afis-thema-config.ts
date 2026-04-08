@@ -16,7 +16,6 @@ import { isEnabled } from '../../../config/feature-toggles.ts';
 import type {
   PageConfig,
   ThemaConfigBase,
-  ThemaRoutesConfig,
   WithDetailPage,
   WithListPage,
 } from '../../../config/thema-types.ts';
@@ -30,11 +29,13 @@ const THEMA_ID = 'AFIS';
 const THEMA_TITLE = 'Facturen en betalen';
 
 type WithBetaalVoorkeuren = PageConfig<'betaalVoorkeuren'>;
+type WithEmandaten = PageConfig<'detailPageEMandate'>;
 
 type AfisThemaConfig = ThemaConfigBase<typeof THEMA_ID> &
   WithListPage &
   WithDetailPage &
-  WithBetaalVoorkeuren;
+  WithBetaalVoorkeuren &
+  WithEmandaten;
 
 export const themaConfig: AfisThemaConfig = {
   id: THEMA_ID,
@@ -83,6 +84,13 @@ export const themaConfig: AfisThemaConfig = {
       trackingUrl: null,
     },
   },
+  detailPageEMandate: {
+    route: {
+      path: '/facturen-en-betalen/betaalvoorkeuren/emandate/:id',
+      documentTitle: `E-Mandaat | ${THEMA_TITLE}`,
+      trackingUrl: null,
+    },
+  },
 };
 
 // E-Mandates are always recurring and have a default date far in the future!
@@ -90,14 +98,6 @@ export const EMANDATE_ENDDATE_INDICATOR = '9999';
 
 export const titleBetaalvoorkeurenPage = 'Betaalvoorkeuren';
 export const titleEMandaatPage = 'E-Mandaat';
-
-export const routeConfig = {
-  detailPageEMandate: {
-    path: '/facturen-en-betalen/betaalvoorkeuren/emandate/:id',
-    documentTitle: `E-Mandaat | ${THEMA_TITLE}`,
-    trackingUrl: null,
-  },
-} as const satisfies ThemaRoutesConfig;
 
 // Themapagina
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_OPEN = 5;
