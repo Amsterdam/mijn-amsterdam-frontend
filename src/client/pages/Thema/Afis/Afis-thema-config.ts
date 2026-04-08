@@ -16,6 +16,7 @@ import { isEnabled } from '../../../config/feature-toggles.ts';
 import type {
   ThemaConfigBase,
   ThemaRoutesConfig,
+  WithDetailPage,
   WithListPage,
 } from '../../../config/thema-types.ts';
 
@@ -27,7 +28,9 @@ export const featureToggle = {
 const THEMA_ID = 'AFIS';
 const THEMA_TITLE = 'Facturen en betalen';
 
-type AfisThemaConfig = ThemaConfigBase<typeof THEMA_ID> & WithListPage;
+type AfisThemaConfig = ThemaConfigBase<typeof THEMA_ID> &
+  WithListPage &
+  WithDetailPage;
 
 export const themaConfig: AfisThemaConfig = {
   id: THEMA_ID,
@@ -59,6 +62,13 @@ export const themaConfig: AfisThemaConfig = {
     route: {
       path: '/facturen-en-betalen/facturen/lijst/:state/:page?',
       documentTitle: getAfisListPageDocumentTitle,
+      trackingUrl: null,
+    },
+  },
+  detailPage: {
+    route: {
+      path: '/facturen-en-betalen/factuur/:state/:factuurNummer',
+      documentTitle: `Factuurgegevens | ${THEMA_TITLE}`,
       trackingUrl: null,
     },
   },

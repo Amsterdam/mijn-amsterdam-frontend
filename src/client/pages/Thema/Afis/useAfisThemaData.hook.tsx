@@ -42,7 +42,7 @@ export function useAfisFacturenData(
   themaContextParams?: AfisFacturenThemaContextParams
 ) {
   const {
-    routeConfigDetailPage = routeConfig.detailPage,
+    routeConfigDetailPage = themaConfig.detailPage.route,
     themaId = themaAfis.id,
     tableConfig = facturenTableConfig,
     routeConfigListPage = themaConfig.listPage.route,

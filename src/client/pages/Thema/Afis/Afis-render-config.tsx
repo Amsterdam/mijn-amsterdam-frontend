@@ -23,7 +23,7 @@ export const AfisRoutes = [
     isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.detailPage.path,
+    route: themaConfig.detailPage.route.path,
     Component: AfisFactuur,
     isActive: themaConfig.featureToggle.active,
   },
