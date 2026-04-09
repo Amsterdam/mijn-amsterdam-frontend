@@ -19,7 +19,7 @@ export type MaApiPropMatchFN<T> = (voorziening: T) => boolean;
 export type VoorzieningKey<T> = Exclude<keyof T, 'link' | 'documenten'>;
 export type VoorzieningValue<T> = T[VoorzieningKey<T>];
 
-export type WmoApiConfig<T extends object = ZorgnedAanvraagTransformed> = {
+export type JzdApiConfig<T extends object = ZorgnedAanvraagTransformed> = {
   assign: Prettify<Partial<WithMaApiPropsAssignments<T>>>;
   match: Partial<
     Record<

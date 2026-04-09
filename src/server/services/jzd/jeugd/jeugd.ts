@@ -25,9 +25,9 @@ import type {
   ProductSoortCode,
   ZorgnedAanvraagTransformed,
 } from '../../zorgned/zorgned-types.ts';
+import { routes } from '../jzd-service-config.ts';
 import { hasDecision } from '../wmo/status-line-items/wmo-generic.ts';
 import { getDocuments } from '../wmo/wmo.ts';
-import { routes } from '../jzd-service-config.ts';
 
 export async function fetchZorgnedAanvragenJeugd(
   bsn: BSN

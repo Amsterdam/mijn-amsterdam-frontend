@@ -14,11 +14,14 @@ const mocks = vi.hoisted(() => {
   };
 });
 
-vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => ({
-  ...((await importOriginal()) as object),
-  decrypt: vi.fn().mockReturnValue(`session-id:${mocks.mockDocumentId}`),
-  encrypt: vi.fn().mockReturnValue([mocks.mockDocumentIdEncrypted, 'xx']),
-}));
+vi.mock(
+  '../../../../server/helpers/encrypt-decrypt',
+  async (importOriginal) => ({
+    ...((await importOriginal()) as object),
+    decrypt: vi.fn().mockReturnValue(`session-id:${mocks.mockDocumentId}`),
+    encrypt: vi.fn().mockReturnValue([mocks.mockDocumentIdEncrypted, 'xx']),
+  })
+);
 
 describe('wmo-zorgned-service', () => {
   const requestData = vi.spyOn(request, 'requestData');

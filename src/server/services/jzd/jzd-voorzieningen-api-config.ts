@@ -2,7 +2,7 @@ import type z from 'zod';
 
 import type { voorzieningenRequestInput } from './jzd-service-config.ts';
 import type {
-  WmoApiConfig,
+  JzdApiConfig,
   ZorgnedAanvraagTransformedWithMaApiProps,
 } from './jzd-types.ts';
 import {
@@ -75,7 +75,7 @@ const PRODUCT_IDS_WITH_REPARATIEVERZOEK_ACTION = [
   '13W96',
 ];
 
-export const wmoVoorzieningenApiConfig: WmoApiConfig[] = [
+export const wmoVoorzieningenApiConfig: JzdApiConfig[] = [
   // // // // // // // // // // // // // // // // // // // // // // // // //
   // Reparatieverzoek action for WRA products with ZIN leveringsvorm // // //
   // // // // // // // // // // // // // // // // // // // // // // // // //
@@ -371,7 +371,7 @@ export const wmoVoorzieningenApiConfig: WmoApiConfig[] = [
       return {
         match: Object.fromEntries(
           entries(match).filter(([_, value]) => typeof value !== 'undefined')
-        ) as WmoApiConfig['match'],
+        ) as JzdApiConfig['match'],
         assign: {
           maProductgroep: [lineItemConfig.productgroep],
         },

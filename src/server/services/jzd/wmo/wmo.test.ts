@@ -1,9 +1,9 @@
 import Mockdate from 'mockdate';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
+import { routes } from '../jzd-service-config.ts';
 import type { HulpmiddelenDisclaimerConfig } from './status-line-items/wmo-hulpmiddelen.ts';
 import { getHulpmiddelenDisclaimer } from './status-line-items/wmo-hulpmiddelen.ts';
-import { routes } from './wmo-service-config.ts';
 import { fetchWmo, forTesting } from './wmo.ts';
 import ZORGNED_AANVRAGEN_WMO from '../../../../../mocks/fixtures/zorgned-jzd-aanvragen.json' with { type: 'json' };
 import {
@@ -13,10 +13,15 @@ import {
 import { jsonCopy } from '../../../../universal/helpers/utils.ts';
 import type { ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-types.ts';
 
-vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => ({
-  ...((await importOriginal()) as object),
-  encryptSessionIdWithRouteIdParam: vi.fn().mockReturnValue('123-123-123-123'),
-}));
+vi.mock(
+  '../../../../server/helpers/encrypt-decrypt',
+  async (importOriginal) => ({
+    ...((await importOriginal()) as object),
+    encryptSessionIdWithRouteIdParam: vi
+      .fn()
+      .mockReturnValue('123-123-123-123'),
+  })
+);
 
 describe('Transform api items', () => {
   beforeEach(() => {

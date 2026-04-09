@@ -1,7 +1,7 @@
 import { fetchZorgnedAanvragenJeugd } from './jeugd/jeugd.ts';
 import type {
   WithMaApiProps,
-  WmoApiConfig,
+  JzdApiConfig,
   ZorgnedAanvraagTransformedWithMaApiProps,
 } from './jzd-types.ts';
 import { type FetchWmoVoorzieningenApiOptions } from './jzd-voorzieningen-api-config.ts';
@@ -24,7 +24,7 @@ import type {
 
 function isMaApiPropertyConfigMatch<T extends object>(
   voorziening: T,
-  actionConfig: WmoApiConfig<T>
+  actionConfig: JzdApiConfig<T>
 ): boolean {
   const matchers = entries(actionConfig.match);
 
@@ -42,7 +42,7 @@ function isMaApiPropertyConfigMatch<T extends object>(
 }
 
 function addMaApiPropsToVoorziening<T extends object>(
-  apiPropsConfig: WmoApiConfig<T>[],
+  apiPropsConfig: JzdApiConfig<T>[],
   voorziening: T
 ): T & Partial<WithMaApiProps> {
   const applyAssignments: Partial<WithMaApiProps> = {};
@@ -88,7 +88,7 @@ function serviceErrorResult(
 export async function fetchMaApiVoorzieningen(
   bsn: BSN,
   options?: FetchWmoVoorzieningenApiOptions,
-  maVoorzieningenApiConfig: WmoApiConfig[] = wmoVoorzieningenApiConfig
+  maVoorzieningenApiConfig: JzdApiConfig[] = wmoVoorzieningenApiConfig
 ): Promise<ApiResponse<ZorgnedAanvraagTransformedWithMaApiProps[]>> {
   const wmoVoorzieningenResponse = await fetchZorgnedAanvragenWMO(bsn);
   const jeugdVoorzieningenResponse = await fetchZorgnedAanvragenJeugd(bsn);
@@ -102,6 +102,9 @@ export async function fetchMaApiVoorzieningen(
       jeugdVoorzieningenResponse
     );
   }
+
+  console.log('wmoVoorzieningenResponse', wmoVoorzieningenResponse);
+  console.log('jeugdVoorzieningenResponse', jeugdVoorzieningenResponse);
 
   const responseContentCombined = [
     ...(wmoVoorzieningenResponse.content ?? []),
@@ -146,7 +149,7 @@ export async function fetchMaApiVoorzieningen(
 export async function fetchMaApiVoorzieningById(
   bsn: BSN,
   id: ZorgnedAanvraagTransformedWithMaApiProps['id'],
-  maVoorzieningenApiConfig: WmoApiConfig[] = wmoVoorzieningenApiConfig
+  maVoorzieningenApiConfig: JzdApiConfig[] = wmoVoorzieningenApiConfig
 ): Promise<ApiResponse<ZorgnedAanvraagTransformedWithMaApiProps>> {
   const wmoVoorzieningenResponse = await fetchZorgnedAanvragenWMO(bsn);
   const jeugdVoorzieningenResponse = await fetchZorgnedAanvragenJeugd(bsn);

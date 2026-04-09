@@ -1,3 +1,4 @@
+import type { ZorgnedStatusLineItemsConfig } from '../../zorgned/zorgned-types.ts';
 import {
   AANVRAAG,
   EINDE_RECHT,
@@ -6,7 +7,6 @@ import {
   isDecisionStatusActive,
   MEER_INFORMATIE,
 } from '../wmo/status-line-items/wmo-generic.ts';
-import type { ZorgnedStatusLineItemsConfig } from '../../zorgned/zorgned-types.ts';
 
 export const jeugdStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
   {
