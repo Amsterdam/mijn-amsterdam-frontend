@@ -243,7 +243,11 @@ components:
             type: string
             enum:
               - stopzetten
+              - stopzetten-tijdelijk
+              - stopzetten-niet-via-formulier
               - reparatieverzoek
+        maActieUrls:
+          type: object
         beschikkingNummer:
           type: integer
           nullable: true
