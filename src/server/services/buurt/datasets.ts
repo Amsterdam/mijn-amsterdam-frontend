@@ -469,7 +469,7 @@ export async function fetchMeldingenBuurt(
 
       // Stop fetching next when reaching maxPages.
       if (
-        responseIteration === maxPages || // Safeguard if api response does not supply page parameter correctly
+        responseIteration + 1 >= maxPages || // Safeguard if api response does not supply page parameter correctly
         !response.content.nextUrl ||
         (response.content.nextUrl &&
           nextPage &&
