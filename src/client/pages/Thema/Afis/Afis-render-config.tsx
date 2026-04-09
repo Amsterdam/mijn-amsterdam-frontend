@@ -31,7 +31,7 @@ export const AfisRoutes = [
   {
     route: themaConfig.detailPageEMandate.route.path,
     Component: AfisEMandateDetail,
-    isActive: themaConfig.featureToggle.emandates.active, //TO DO YACINE useAfisEmandatesApi.tsx daar zelfde fout en AfisBetaalVoorkeuren.tsx
+    isActive: themaConfig.featureToggle.emandates.active,
   },
   {
     route: themaConfig.route.path,

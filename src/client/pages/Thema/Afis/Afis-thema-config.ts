@@ -23,11 +23,6 @@ import type {
   WithListPage,
 } from '../../../config/thema-types.ts';
 
-// export const featureToggle = {
-//   //AfisActive: true,
-//   emandatesActive: isEnabled('AFIS.EMandates'),
-// };
-
 const THEMA_ID = 'AFIS';
 const THEMA_TITLE = 'Facturen en betalen';
 
@@ -63,7 +58,7 @@ export const themaConfig = {
     },
   ],
   featureToggle: propagateFeatureToggles({
-    active: true, // TO Do Yacine > Emandaat nog toevoegen en bij source-api.ts kijken
+    active: true,
     emandates: { active: isEnabled('AFIS.EMandates') },
   }),
 
