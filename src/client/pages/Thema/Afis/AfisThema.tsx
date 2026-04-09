@@ -16,6 +16,24 @@ import { PageContentCell } from '../../../components/Page/Page.tsx';
 import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
+export function getVragenOverFactuurText(
+  mailSubject: string = 'Vraag over facturen en betaalvoorkeuren'
+) {
+  return (
+    <>
+      Mist u een factuur of heeft u een vraag over één van uw facturen? Stuur
+      een e-mail naar{' '}
+      <Link
+        href={`mailto:debiteurenadministratie@amsterdam.nl?subject=${encodeURIComponent(mailSubject)}`}
+      >
+        debiteurenadministratie@amsterdam.nl
+      </Link>{' '}
+      met de details van de factuur, zoals het factuurnummer of andere relevante
+      informatie, zodat zij u verder kunnen helpen.
+    </>
+  );
+}
+
 function PageContentTop({
   urlNaarBelastingen,
 }: {
@@ -24,13 +42,8 @@ function PageContentTop({
   return (
     <PageContentCell spanWide={8}>
       <Paragraph className="ams-mb-m">
-        Hieronder ziet u een overzicht van uw facturen. Mist u een factuur of
-        heeft u een vraag over één van uw facturen? Stuur een e-mail naar{' '}
-        <Link href="mailto:debiteurenadministratie@amsterdam.nl?subject=Vraag over facturen en betaalvoorkeuren">
-          debiteurenadministratie@amsterdam.nl
-        </Link>{' '}
-        met de details van de factuur, zoals het factuurnummer of andere
-        relevante informatie, zodat zij u verder kunnen helpen.
+        Hieronder ziet u een overzicht van uw facturen.{' '}
+        {getVragenOverFactuurText()}
       </Paragraph>
       <Paragraph>
         U ziet hier niet de facturen over Gemeentebelastingen. Deze vindt u

@@ -189,11 +189,11 @@ export type AfisFactuurState =
   | 'afgehandeld'
   | 'overgedragen'
   | 'deelbetalingen'
-  | 'termijnen';
+  | 'afgehandeldeIncassoTermijnen';
 
 export type AfisFactuurStateFrontend = Exclude<
   AfisFactuurState,
-  'termijnen' | 'deelbetalingen'
+  'afgehandeldeIncassoTermijnen' | 'deelbetalingen'
 >;
 
 export type AfisFacturenResponse = {
@@ -237,6 +237,7 @@ export type AfisFactuur = {
   amountPayedFormatted: string;
   amountOriginal: string;
   amountOriginalFormatted: string;
+  eMandateId: string | null;
   factuurNummer: string;
   factuurDocumentId: string;
   status: AfisFactuurStatus;
@@ -250,7 +251,7 @@ export type AfisFactuur = {
 export type AfisFactuurStatus =
   | 'openstaand'
   | 'automatische-incasso'
-  | 'automatische-incasso-termijnen'
+  | 'factuur-in-termijnen'
   | 'in-dispuut'
   | 'gedeeltelijke-betaling'
   | 'handmatig-betalen'
