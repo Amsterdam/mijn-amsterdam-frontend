@@ -3,7 +3,7 @@ import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
 export type WithMaApiProps = {
   maCategorie: string[];
   maActies: string[];
-  maProductgroep: string[];
+  maProductgroep: string;
   maActieUrls: Record<string, string>;
 };
 type WithMaApiPropsAssignments<T> = {

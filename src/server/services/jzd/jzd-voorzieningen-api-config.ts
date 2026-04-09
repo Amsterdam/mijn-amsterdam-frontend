@@ -89,7 +89,7 @@ export const wmoVoorzieningenApiConfig: JzdApiConfig[] = [
     },
     assign: {
       maActies: ['reparatieverzoek'],
-      maProductgroep: [productGroep.WRA],
+      maProductgroep: productGroep.WRA,
     },
   },
   // // // // // // // // // //
@@ -375,7 +375,7 @@ export const wmoVoorzieningenApiConfig: JzdApiConfig[] = [
           entries(match).filter(([_, value]) => typeof value !== 'undefined')
         ) as JzdApiConfig['match'],
         assign: {
-          maProductgroep: [lineItemConfig.productgroep],
+          maProductgroep: lineItemConfig.productgroep,
         },
       };
     }),
