@@ -268,7 +268,6 @@ type CommercialServices = Pick<
   | 'VAREN'
   | 'VERGUNNINGEN'
   | 'KTO'
-  | 'WONEN'
 >;
 
 type ServicesByProfileType = {
@@ -341,7 +340,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     VAREN,
     VERGUNNINGEN,
     KTO,
-    WONEN,
   },
 };
 
