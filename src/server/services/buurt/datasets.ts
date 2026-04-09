@@ -452,8 +452,13 @@ export async function fetchMeldingenBuurt(
   let responseIteration = 0;
   let combinedFeatures: DatasetFeatures = response.content?.features ?? [];
 
+  const errorResult = apiErrorResult(
+    'Failed to fetch meldingen buurt data',
+    null
+  );
+
   if (response.status !== 'OK') {
-    return apiErrorResult('Failed to fetch meldingen buurt data', null);
+    return errorResult;
   }
 
   while (true) {
@@ -479,6 +484,10 @@ export async function fetchMeldingenBuurt(
       };
 
       response = await requestData<MeldingenResponse>(nextRequestConfig);
+
+      if (response.status !== 'OK') {
+        return errorResult;
+      }
 
       combinedFeatures = combinedFeatures.concat(
         response.content?.features ?? []

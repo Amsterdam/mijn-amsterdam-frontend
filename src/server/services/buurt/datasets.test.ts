@@ -173,6 +173,44 @@ describe('Custom dataset tranformations', () => {
     );
   });
 
+  test('fetchMeldingenBuurt:partial-error', async () => {
+    const baseUrl = 'https://api.meldingen.amsterdam.nl';
+    const api = nock(baseUrl);
+
+    api.get('/signals/v1/public/signals/geography').reply(
+      200,
+      {
+        features: [],
+      },
+      {
+        link: `<${baseUrl}/signals/v1/public/signals/geography?geopage=2>; rel="next"`,
+      }
+    );
+    api.get('/signals/v1/public/signals/geography?geopage=2').reply(500);
+
+    const datasetConfig = {
+      idKeyList: 'ma_melding_id',
+    } as DatasetConfig;
+
+    const response = await fetchMeldingenBuurt({
+      url: `${baseUrl}/signals/v1/public/signals/geography`,
+      transformResponse: (responseData, headers) => {
+        return transformMeldingenBuurtResponse(
+          'mock-dataset',
+          datasetConfig,
+          responseData,
+          headers
+        );
+      },
+    });
+
+    expect(response).toStrictEqual({
+      content: null,
+      message: 'Failed to fetch meldingen buurt data',
+      status: 'ERROR',
+    });
+  });
+
   test('fetchMeldingenBuurt:error', async () => {
     const baseUrl =
       'https://api.meldingen.amsterdam.nl/signals/v1/public/signals';
@@ -206,20 +244,18 @@ describe('Custom dataset tranformations', () => {
     expect(response.content).toStrictEqual([]);
 
     api.get(path).replyWithError('not available');
-    try {
-      await requestData();
-    } catch (error) {
-      expect((error as Error).message).toBe('not available');
-    }
+    expect(await requestData()).toStrictEqual({
+      content: null,
+      message: 'Failed to fetch meldingen buurt data',
+      status: 'ERROR',
+    });
 
     api.get(path).reply(500);
-    try {
-      await requestData();
-    } catch (error) {
-      expect((error as Error).message).toBe(
-        'Request failed with status code 500'
-      );
-      expect(response.content).toStrictEqual([]);
-    }
+
+    expect(await requestData()).toStrictEqual({
+      content: null,
+      message: 'Failed to fetch meldingen buurt data',
+      status: 'ERROR',
+    });
   });
 });
