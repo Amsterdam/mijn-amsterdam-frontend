@@ -139,10 +139,10 @@ const isDecosOverEnableUActive = (
   getFromEnv('BFF_DECOS_API_BASE_URL', false) || ''
 ).startsWith('https://enableu');
 
-const afisFeatureToggle = getFromEnv('BFF_AFIS_FEATURE_TOGGLE_ACTIVE'); // TO DO Yacine > waar staat deze voor
+const afisFeatureToggle = getFromEnv('BFF_AFIS_FEATURE_TOGGLE_ACTIVE');
 const postponeFetchAfis =
-  typeof themaConfigAfis.featureToggle.active !== 'undefined'
-    ? themaConfigAfis.featureToggle.active === false
+  typeof afisFeatureToggle !== 'undefined'
+    ? afisFeatureToggle === 'false'
     : !themaConfigAfis.featureToggle.active;
 
 const contactmomentenFeatureToggle = getFromEnv(

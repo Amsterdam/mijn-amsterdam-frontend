@@ -12,7 +12,10 @@ import type {
 } from '../../../../server/services/afis/afis-types.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
-import { isEnabled } from '../../../config/feature-toggles.ts';
+import {
+  isEnabled,
+  propagateFeatureToggles,
+} from '../../../config/feature-toggles.ts';
 import type {
   PageConfig,
   ThemaConfigBase,
@@ -20,10 +23,10 @@ import type {
   WithListPage,
 } from '../../../config/thema-types.ts';
 
-export const featureToggle = {
-  //AfisActive: true,
-  emandatesActive: isEnabled('AFIS.EMandates'),
-};
+// export const featureToggle = {
+//   //AfisActive: true,
+//   emandatesActive: isEnabled('AFIS.EMandates'),
+// };
 
 const THEMA_ID = 'AFIS';
 const THEMA_TITLE = 'Facturen en betalen';
@@ -37,7 +40,7 @@ type AfisThemaConfig = ThemaConfigBase<typeof THEMA_ID> &
   WithBetaalVoorkeuren &
   WithEmandaten;
 
-export const themaConfig: AfisThemaConfig = {
+export const themaConfig = {
   id: THEMA_ID,
   title: THEMA_TITLE,
   redactedScope: 'full',
@@ -59,9 +62,10 @@ export const themaConfig: AfisThemaConfig = {
       listItems: ['Overzicht van facturen', 'Betalen van facturen'],
     },
   ],
-  featureToggle: {
+  featureToggle: propagateFeatureToggles({
     active: true, // TO Do Yacine > Emandaat nog toevoegen en bij source-api.ts kijken
-  },
+    emandates: { active: isEnabled('AFIS.EMandates') },
+  }),
 
   listPage: {
     route: {
@@ -91,7 +95,7 @@ export const themaConfig: AfisThemaConfig = {
       trackingUrl: null,
     },
   },
-};
+} as const satisfies AfisThemaConfig;
 
 // E-Mandates are always recurring and have a default date far in the future!
 export const EMANDATE_ENDDATE_INDICATOR = '9999';

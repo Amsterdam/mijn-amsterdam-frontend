@@ -9,7 +9,6 @@ import {
   eMandateTableConfig,
   titleBetaalvoorkeurenPage,
   titleEMandaatPage,
-  featureToggle,
 } from './Afis-thema-config.ts';
 import {
   CheckStatus,
@@ -55,7 +54,7 @@ export function useAfisEMandatesApi() {
   } = useBffApi<AfisEMandateFrontend[]>(
     generateApiUrl(businessPartnerIdEncrypted, 'AFIS_EMANDATES'),
     {
-      fetchImmediately: featureToggle.emandatesActive,
+      fetchImmediately: themaConfig.featureToggle.emandates.active,
     }
   );
 
