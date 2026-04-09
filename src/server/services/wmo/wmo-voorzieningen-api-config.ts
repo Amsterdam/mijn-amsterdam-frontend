@@ -122,6 +122,12 @@ export const wmoVoorzieningenApiConfig: WmoApiConfig[] = [
     assign: {
       maCategorie: ['B-WMO'],
       maActies: ['stopzetten-niet-via-formulier'],
+      maActieUrls: (voorziening) => {
+        return {
+          'stopzetten-niet-via-formulier':
+            'https://www.amsterdam.nl/stopzetten-wmo-voorziening',
+        };
+      },
     },
     match: {
       leveringsVorm: '',
@@ -389,4 +395,5 @@ export const PICK_VOORZIENING_KEYS = [
   'maActies',
   'maCategorie',
   'maProductgroep',
+  'maActieUrls',
 ] as (keyof ZorgnedAanvraagTransformedWithMaApiProps)[];

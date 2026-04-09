@@ -46,14 +46,18 @@ function addMaApiPropsToVoorziening<T extends object>(
   apiPropsConfig.forEach((actionConfig) => {
     if (isMaApiPropertyConfigMatch(voorziening, actionConfig)) {
       entries(actionConfig.assign).forEach(([key, value]) => {
-        if (Array.isArray(value)) {
+        let value_ = value;
+        if (typeof value == 'function') {
+          value_ = value(voorziening, key);
+        }
+        if (Array.isArray(value_)) {
           // Merge and deduplicate array values if the key already exists in the new assignments, otherwise just assign the value.
           applyAssignments[key] = [
             ...(applyAssignments[key] ?? []),
-            ...value,
+            ...value_,
           ].filter((v, i, arr) => arr.indexOf(v) === i);
-        } else if (value !== undefined) {
-          applyAssignments[key] = value;
+        } else if (value_ !== undefined) {
+          applyAssignments[key] = value_;
         }
       });
     }
