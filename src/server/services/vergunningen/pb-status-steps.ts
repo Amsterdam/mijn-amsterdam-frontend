@@ -7,7 +7,7 @@ export function getStatusStepsPB<T extends PBVergunning>(
   const getStatusDate = (status: string) =>
     zaak.statusDates?.find((sd) => sd.status === status)?.datePublished ?? null;
 
-  const datumInBehandeling = getStatusDate('In behandeling') ?? '';
+  const datumInBehandeling = getStatusDate('Inhoudelijk behandelen') ?? '';
   const dateDecision: string =
     getStatusDate('Gereed') ?? zaak.dateDecision ?? '';
 
@@ -38,26 +38,26 @@ export function getStatusStepsPB<T extends PBVergunning>(
   const statusAfgehandeld: StatusLineItem = {
     id: 'step-3',
     status: 'Afgehandeld',
-    datePublished: dateDecision,
+    datePublished: hasDecision ? dateDecision : '',
     description: '',
     documents: [],
     isActive: !isVerlopen && hasDecision,
     isChecked: hasDecision,
   };
 
-  const statusVerlopen: StatusLineItem = {
-    id: 'step-4',
-    status: 'Verlopen',
-    datePublished: zaak.dateEnd ?? '',
-    description: '',
-    documents: [],
-    isActive: true,
-    isChecked: true,
-  };
-
   const steps: StatusLineItem[] = [];
   steps.push(statusOntvangen, statusInBehandeling, statusAfgehandeld);
+
   if (isVerlopen) {
+    const statusVerlopen: StatusLineItem = {
+      id: 'step-4',
+      status: 'Verlopen',
+      datePublished: zaak.dateEnd ?? '',
+      description: '',
+      documents: [],
+      isActive: true,
+      isChecked: true,
+    };
     steps.push(statusVerlopen);
   }
   return steps;
