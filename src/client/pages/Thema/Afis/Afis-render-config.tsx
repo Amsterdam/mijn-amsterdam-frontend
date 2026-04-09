@@ -1,4 +1,4 @@
-import { themaConfig, featureToggle } from './Afis-thema-config.ts';
+import { themaConfig } from './Afis-thema-config.ts';
 import { AfisBetaalVoorkeuren } from './AfisBetaalVoorkeuren.tsx';
 import { AfisEMandateDetail } from './AfisEMandateDetail.tsx';
 import { AfisFactuur } from './AfisFactuur.tsx';
@@ -31,7 +31,7 @@ export const AfisRoutes = [
   {
     route: themaConfig.detailPageEMandate.route.path,
     Component: AfisEMandateDetail,
-    isActive: featureToggle.emandatesActive,
+    isActive: themaConfig.featureToggle.emandates.active, //TO DO YACINE useAfisEmandatesApi.tsx daar zelfde fout en AfisBetaalVoorkeuren.tsx
   },
   {
     route: themaConfig.route.path,
