@@ -4,8 +4,7 @@ import type {
   DatasetFeatures,
   MaFeature,
 } from './datasets.ts';
-import type {
-  LatLngPositions} from './helpers.ts';
+import type { LatLngPositions } from './helpers.ts';
 import {
   createFeaturePropertiesFromPropertyFilterConfig,
   getFeaturePolylineColor,
@@ -14,10 +13,9 @@ import {
 } from './helpers.ts';
 import type {
   DatasetId,
-  FeatureType} from '../../../universal/config/myarea-datasets.ts';
-import {
-  POLYLINE_GEOMETRY_TYPES,
+  FeatureType,
 } from '../../../universal/config/myarea-datasets.ts';
+import { POLYLINE_GEOMETRY_TYPES } from '../../../universal/config/myarea-datasets.ts';
 
 const DEFAULT_PAGE_SIZE = 1000;
 
@@ -83,6 +81,14 @@ export function discoverSingleDsoApiEmbeddedResponse<T = WFSFeatureSource>(
     : undefined;
   // Blindly assume there is an array with 1 result
   return embeddedKey ? responseData._embedded[embeddedKey][0] : null;
+}
+
+export function transformGenericApiListResponse_(
+  datasetId: DatasetId,
+  config: DatasetConfig,
+  responseData: WFSApiResponse | DsoApiResponse
+) {
+  return transformGenericApiListResponse(datasetId, config, responseData);
 }
 
 // Can handle DSO api and WFS api responses
