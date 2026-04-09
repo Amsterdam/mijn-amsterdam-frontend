@@ -50,6 +50,7 @@ import {
   BffEndpoints,
   BFF_BASE_PATH,
   BFF_BASE_PATH_PRIVATE,
+  BFF_BASE_PATH_ADMIN,
 } from './routing/bff-routes.ts';
 import {
   handleIsAuthenticated,
@@ -57,19 +58,19 @@ import {
   requestID,
 } from './routing/route-handlers.ts';
 import { generateFullApiUrlBFF, send404 } from './routing/route-helpers.ts';
-import { adminRouter } from './routing/router-admin.ts';
-import { authRouterDevelopment } from './routing/router-development.ts';
-import { oidcRouter } from './routing/router-oidc.ts';
-import { router as protectedRouter } from './routing/router-protected.ts';
+import { authRouterDevelopment } from './routing/app-router-development.ts';
+import { oidcRouter } from './routing/app-router-oidc.ts';
+import { router as protectedRouter } from './routing/app-router-protected.ts';
 import {
   legacyRouter,
   router as publicRouter,
-} from './routing/router-public.ts';
-import { router as routerPublicExternalConsumer } from './routing/router-public-external-consumer.ts';
+} from './routing/app-router-public.ts';
+import { router as routerPublicExternalConsumer } from './routing/app-router-public-external-consumer.ts';
 import { captureException } from './services/monitoring.ts';
 import { getFromEnv } from './helpers/env.ts';
-import { router as privateNetworkRouter } from './routing/router-private.ts';
+import { router as privateNetworkRouter } from './routing/app-router-private.ts';
 import { getDirname } from './helpers/dir.ts';
+import { router as adminRouter } from './routing/app-router-admin.ts';
 
 const app = express();
 
@@ -125,14 +126,12 @@ if (IS_AP && !IS_OT) {
 
 app.use(BFF_BASE_PATH, nocache, routerPublicExternalConsumer);
 
+// Routes mounted at BFF_BASE_PATH_ADMIN are for the admin panel.
+// These routes require authentication but are separate from the other protected routes, and have their own authentication middleware defined in router-admin.ts
+app.use(BFF_BASE_PATH_ADMIN, nocache, adminRouter);
+
 // Routers mounted at BFF_BASE_PATH all need authentication.
-app.use(
-  BFF_BASE_PATH,
-  nocache,
-  handleIsAuthenticated,
-  protectedRouter,
-  adminRouter
-);
+app.use(BFF_BASE_PATH, nocache, handleIsAuthenticated, protectedRouter);
 
 /////////////////////////////////////////////////////////////////////////
 ///// These routes are not protected by TMA/OIDC system, but
@@ -145,6 +144,13 @@ app.use(BFF_BASE_PATH_PRIVATE, nocache, privateNetworkRouter);
 // Redirects to /api/v1
 app.get(BffEndpoints.ROOT, (_req, res) => {
   return res.redirect(generateFullApiUrlBFF(BffEndpoints.ROOT));
+});
+
+app.use((_req: Request, res: Response) => {
+  if (!res.headersSent) {
+    return send404(res);
+  }
+  return res.end();
 });
 
 // Optional fallthrough error handler
@@ -168,13 +174,6 @@ app.use(function onError(
     );
   }
   return res.redirect(`${redirectUrl}`);
-});
-
-app.use((_req: Request, res: Response) => {
-  if (!res.headersSent) {
-    return send404(res);
-  }
-  return res.end();
 });
 
 // Logs all Incoming requests

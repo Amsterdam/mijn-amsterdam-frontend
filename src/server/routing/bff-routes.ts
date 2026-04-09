@@ -2,6 +2,7 @@ import { hash } from '../../universal/helpers/utils.ts';
 
 export const BFF_BASE_PATH = '/api/v1';
 export const BFF_BASE_PATH_PRIVATE = '/private/api/v1';
+export const BFF_BASE_PATH_ADMIN = '/api/v1/admin';
 
 export const BffEndpoints = {
   ROOT: '/',
@@ -13,11 +14,7 @@ export const BffEndpoints = {
   SEARCH_CONFIG: '/services/search-config',
   CMS_FOOTER: '/services/cms/footer',
   CMS_MAINTENANCE_NOTIFICATIONS: '/services/cms/maintenance-notifications',
-  CACHE_OVERVIEW: '/admin/cache',
-  LOGIN_STATS: '/admin/visitors{/:authMethod}',
-  LOGIN_RAW: '/admin/visitors/table',
   STATUS_HEALTH: '/status/health',
-  TEST_ACCOUNTS_OVERVIEW: '/admin/user-data-overview',
 
   FEATURE_TOGGLES: '/services/feature-toggles',
 
