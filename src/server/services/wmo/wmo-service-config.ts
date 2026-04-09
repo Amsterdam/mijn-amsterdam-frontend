@@ -54,7 +54,16 @@ export const MINIMUM_REQUEST_DATE_FOR_DOCUMENTS = parseISO('2022-01-01'); // Aft
 
 export const voorzieningenRequestInput = z.object({
   bsn: ZodValidators.BSN.nonoptional(),
-  maActies: z.array(z.enum(['stopzetten', 'reparatieverzoek'])).optional(),
+  maActies: z
+    .array(
+      z.enum([
+        'reparatieverzoek',
+        'stopzetten',
+        'stopzetten-tijdelijk',
+        'stopzetten-niet-via-formulier',
+      ])
+    )
+    .optional(),
   maProductgroep: z
     .array(
       z.enum([

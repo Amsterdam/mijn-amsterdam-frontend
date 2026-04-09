@@ -77,7 +77,9 @@ const PRODUCT_IDS_WITH_REPARATIEVERZOEK_ACTION = [
 ];
 
 export const wmoVoorzieningenApiConfig: WmoApiConfig[] = [
-  // Reparatieverzoek action for WRA products with ZIN leveringsvorm
+  // // // // // // // // // // // // // // // // // // // // // // // // //
+  // Reparatieverzoek action for WRA products with ZIN leveringsvorm // // //
+  // // // // // // // // // // // // // // // // // // // // // // // // //
   {
     match: {
       leveringsVorm: 'ZIN',
@@ -89,7 +91,128 @@ export const wmoVoorzieningenApiConfig: WmoApiConfig[] = [
       maProductgroep: [productGroep.WRA],
     },
   },
-  // Stopzetten actions
+  // // // // // // // // // //
+  // Stopzetten actions // // //
+  // // // // // // // // // //
+
+  /////////////////////////////
+  // Leerlingenvervoer ////////
+  /////////////////////////////
+  {
+    assign: {
+      maCategorie: ['A-LLV'],
+      maActies: ['stopzetten', 'stopzetten-tijdelijk'],
+    },
+    match: {
+      isActueel: true,
+      productIdentificatie: [
+        'LLVFV',
+        'LLVOVA',
+        'LLVOVV',
+        'LLVEV',
+        'LLVAV',
+        'LLVAVG',
+      ],
+    },
+  },
+  //////////////////////////////////////////////////////
+  // Stopzetten via content pagina verwijzingen ////////
+  //////////////////////////////////////////////////////
+  {
+    assign: {
+      maCategorie: ['B-WMO'],
+      maActies: ['stopzetten-niet-via-formulier'],
+    },
+    match: {
+      leveringsVorm: '',
+      isActueel: true,
+      productsoortCode: [
+        'AO1',
+        'AO2',
+        'AO3',
+        'AO4',
+        'AO5',
+        'AO6',
+        'AO7',
+        'AO8',
+        'AWBG',
+        'BSW',
+        'DBA',
+        'DBH',
+        'DBL',
+        'DBS',
+        'DT',
+        'KVB',
+        'LGO',
+        'MAO',
+        'WMH',
+      ],
+    },
+  },
+  /////////////////////////////
+  // PGB HBH //////////////////
+  /////////////////////////////
+  {
+    assign: {
+      maCategorie: ['C-01'],
+      maActies: ['stopzetten'],
+    },
+    match: {
+      leveringsVorm: 'PGB',
+      isActueel: true,
+      productsoortCode: ['WMH'],
+    },
+  },
+  /////////////////////////////
+  // Pgb DB/LO/BV/AIO /////////
+  /////////////////////////////
+  {
+    assign: {
+      maCategorie: ['C-02'],
+      maActies: ['stopzetten'],
+    },
+    match: {
+      leveringsVorm: 'PGB',
+      isActueel: true,
+      productsoortCode: [
+        'AO1',
+        'AO2',
+        'AO3',
+        'AO4',
+        'AO5',
+        'AO6',
+        'AO7',
+        'AO8',
+        'AWBG',
+        'BSW',
+        'DBA',
+        'DBH',
+        'DBL',
+        'DBS',
+        'DT',
+        'KVB',
+        'LGO',
+        'MAO',
+      ],
+    },
+  },
+  /////////////////////////////////////////
+  // PGB Vervoer naar dagbesteding ////////
+  /////////////////////////////////////////
+  {
+    assign: {
+      maCategorie: ['C-03'],
+      maActies: ['stopzetten', 'stopzetten-tijdelijk'],
+    },
+    match: {
+      leveringsVorm: 'PGB',
+      isActueel: true,
+      productsoortCode: ['VVD'],
+    },
+  },
+  /////////////////////////////
+  // Hulpmiddelen (ZIN) ///////
+  /////////////////////////////
   {
     assign: {
       maCategorie: ['D-01'],
@@ -111,6 +234,9 @@ export const wmoVoorzieningenApiConfig: WmoApiConfig[] = [
       ],
     },
   },
+  /////////////////////////////
+  // Hulpmiddelen (PGB) ///////
+  /////////////////////////////
   {
     assign: {
       maCategorie: ['D-02'],
@@ -122,6 +248,9 @@ export const wmoVoorzieningenApiConfig: WmoApiConfig[] = [
       productsoortCode: ['AAN', 'FIE', 'ROL', 'SCO', 'OVE', 'RWD', 'RWT'],
     },
   },
+  ////////////////////////////////////////
+  // Woonruimte aanpassingen (ZIN) ///////
+  ////////////////////////////////////////
   {
     assign: {
       maCategorie: ['D-03'],
@@ -133,6 +262,9 @@ export const wmoVoorzieningenApiConfig: WmoApiConfig[] = [
       productsoortCode: ['WGW', 'WRA', 'WRA2', 'WRA3', 'WRA5', 'OVW'],
     },
   },
+  //////////////////////////////////////////////////////
+  // Woonruimte aanpassingen en trapliften (PGB) ///////
+  //////////////////////////////////////////////////////
   {
     assign: {
       maCategorie: ['D-04'],
@@ -144,51 +276,74 @@ export const wmoVoorzieningenApiConfig: WmoApiConfig[] = [
       productsoortCode: ['WGW', 'WRA', 'WRA2', 'WRA3', 'WRA5', 'OVW', 'WRA1'],
     },
   },
+  /////////////////////
+  // Trapliften ///////
+  /////////////////////
   {
     assign: {
       maCategorie: ['D-05'],
       maActies: ['stopzetten'],
     },
     match: {
-      leveringsVorm: '',
       isActueel: true,
       productsoortCode: ['WRA1'],
     },
   },
+  /////////////////////////
+  // Vervoerskosten ///////
+  /////////////////////////
   {
     assign: {
       maCategorie: ['D-06'],
       maActies: ['stopzetten'],
     },
     match: {
-      leveringsVorm: '',
       isActueel: true,
       productsoortCode: ['FIN', 'MVV', 'VVK'],
     },
   },
+  //////////////////////////////////
+  // Verhuiskostenvergoeding ///////
+  //////////////////////////////////
   {
     assign: {
       maCategorie: ['D-07'],
-      maActies: ['stopzetten'],
+      maActies: ['stopzetten-niet-via-formulier'],
     },
     match: {
-      leveringsVorm: '',
       isActueel: true,
       productsoortCode: ['VHK'],
     },
   },
+  /////////////////////
+  // Oplaadpunt ///////
+  /////////////////////
   {
     assign: {
       maCategorie: ['D-08'],
       maActies: ['stopzetten'],
     },
     match: {
-      leveringsVorm: '',
       isActueel: true,
       productsoortCode: ['WRA4'],
     },
   },
+  //////////////////////////////////////////
+  // AOV aanvullend openbaar vervoer ///////
+  //////////////////////////////////////////
+  {
+    assign: {
+      maCategorie: ['E-01'],
+      maActies: ['stopzetten'],
+    },
+    match: {
+      isActueel: true,
+      productsoortCode: ['AOV'],
+    },
+  },
+  // // // // // // // // // // // // // // // // // // // // // // // // //
   // No specific actions assigned, but we still want to make these items available in the API for filtering based on productgroep.
+  // // // // // // // // // // // // // // // // // // // // // // // // //
   ...wmoStatusLineItemsConfig
     .filter((lineItemConfig) => {
       return lineItemConfig.isDisabled !== true;
