@@ -464,7 +464,7 @@ export async function fetchMeldingenBuurt(
   while (true) {
     if (response.content?.nextUrl) {
       const nextPage = new URL(response.content.nextUrl).searchParams.get(
-        'page'
+        'geopage'
       );
 
       // Stop fetching next when reaching maxPages.
