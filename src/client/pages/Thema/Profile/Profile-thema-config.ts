@@ -4,10 +4,10 @@ import type {
   ThemaConfigBase,
 } from '../../../config/thema-types.ts';
 
-type WithListPageConcten = PageConfig<'contactenPage'>;
+type WithListPageContacten = PageConfig<'contactenPage'>;
 
 type ProfileThemaConfig<ID = string> = ThemaConfigBase<ID> &
-  Partial<WithListPageConcten>;
+  Partial<WithListPageContacten>;
 
 const THEMA_ID_BRP = 'BRP' as const;
 const THEMA_ID_KVK = 'KVK' as const;

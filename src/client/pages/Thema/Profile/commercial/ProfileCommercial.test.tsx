@@ -157,7 +157,7 @@ const panelHeadings = [
 ];
 
 describe('<MijnBedrijfsGegevensThema />', () => {
-  const routeEntry = themaConfig.BRP.route.path;
+  const routeEntry = themaConfig.KVK.route.path;
 
   function Component() {
     return (
