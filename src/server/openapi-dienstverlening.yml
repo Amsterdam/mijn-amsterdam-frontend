@@ -21,13 +21,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/HealthyResponse'
 
-  /private/api/v1/services/wmo/voorziening:
+  /private/api/v1/services/jzd/voorziening:
     post:
       security:
         - bearerAuth: []
         - apimSubscriptionKey: []
       description: |
-        Gets a single WMO voorziening by id.
+        Gets a single JZD voorziening by id.
       requestBody:
         required: true
         content:
@@ -38,18 +38,18 @@ paths:
               properties:
                 bsn:
                   type: string
-                  description: The BSN of the user to fetch the WMO voorziening for.
+                  description: The BSN of the user to fetch the JZD voorziening for.
                 id:
                   type: string
                   description: Id of the voorziening.
       responses:
         '200':
           description: |
-            The requested WMO voorziening
+            The requested JZD voorziening
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/WmoVoorzieningResponse'
+                $ref: '#/components/schemas/JzdVoorzieningResponse'
         '500':
           $ref: '#/components/responses/ApplicationErrorResponse'
         '503':
@@ -61,13 +61,13 @@ paths:
         '401':
           $ref: '#/components/responses/UnauthorizedResponse'
 
-  /private/api/v1/services/wmo/voorzieningen:
+  /private/api/v1/services/jzd/voorzieningen:
     post:
       security:
         - bearerAuth: []
         - apimSubscriptionKey: []
       description: |
-        Gets a list of WMO voorzieningen.
+        Gets a list of JZD voorzieningen.
       requestBody:
         required: true
         content:
@@ -78,29 +78,29 @@ paths:
               properties:
                 bsn:
                   type: string
-                  description: The BSN of the user to fetch the WMO voorzieningen for.
+                  description: The BSN of the user to fetch the JZD voorzieningen for.
                 maActies:
                   type: array
                   items:
-                    $ref: '#/components/schemas/WmoVoorziening/properties/maActies'
+                    $ref: '#/components/schemas/JzdVoorziening/properties/maActies'
                   description:
                     Optional list of maActies to filter the voorzieningen on.
                     Only voorzieningen that have at least one of the specified maActies will be included in the response.
                 maProductgroep:
                   type: array
                   items:
-                    $ref: '#/components/schemas/WmoVoorziening/properties/maProductgroep'
+                    $ref: '#/components/schemas/JzdVoorziening/properties/maProductgroep'
                   description:
                     Optional list of maProductgroepen to filter the voorzieningen on.
                     Only voorzieningen that have at least one of the specified maProductgroepen will be included in the response.
       responses:
         '200':
           description: |
-            A list of huidige toegewezen WMO voorzieningen sorted by datumBesluit desc.
+            A list of huidige toegewezen JZD voorzieningen sorted by datumBesluit desc.
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/WmoVoorzieningenResponse'
+                $ref: '#/components/schemas/JzdVoorzieningenResponse'
         '500':
           $ref: '#/components/responses/ApplicationErrorResponse'
         '503':
@@ -200,27 +200,27 @@ components:
           type: string
           enum:
             - OK
-    WmoVoorzieningenResponse:
+    JzdVoorzieningenResponse:
       type: object
       properties:
         content:
           type: array
           items:
-            $ref: '#/components/schemas/WmoVoorziening'
+            $ref: '#/components/schemas/JzdVoorziening'
         status:
           type: string
           enum:
             - 'SUCCESS'
-    WmoVoorzieningResponse:
+    JzdVoorzieningResponse:
       type: object
       properties:
         content:
-          $ref: '#/components/schemas/WmoVoorziening'
+          $ref: '#/components/schemas/JzdVoorziening'
         status:
           type: string
           enum:
             - 'SUCCESS'
-    WmoVoorziening:
+    JzdVoorziening:
       type: object
       properties:
         id:

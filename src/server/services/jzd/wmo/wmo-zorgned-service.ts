@@ -1,14 +1,4 @@
-import {
-  apiSuccessResult,
-  type ApiResponse,
-} from '../../../universal/helpers/api.ts';
-import type { GenericDocument } from '../../../universal/types/App.types.ts';
-import {
-  fetchAanvragen,
-  fetchCasusAanvragen,
-} from '../zorgned/zorgned-service.ts';
-import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
-import { type BSN } from '../zorgned/zorgned-types.ts';
+import { featureToggle } from '../wmo-service-config.ts';
 import {
   FAKE_DECISION_DOCUMENT_ID,
   getDecisionDocument,
@@ -19,12 +9,22 @@ import {
 } from './status-line-items/wmo-generic.ts';
 import {
   DATE_END_NOT_OLDER_THAN,
-  featureToggle,
+  DOCUMENT_TITLE_BESLUIT_STARTS_WITH,
+  ZORGNED_JZD_API_CONFIG_KEY,
   ZORGNED_JZD_REGELING_IDENTIFICATIE,
-} from './wmo-service-config.ts';
-import { DOCUMENT_TITLE_BESLUIT_STARTS_WITH } from './wmo-service-config.ts';
-import { ZORGNED_JZD_API_CONFIG_KEY } from './wmo-service-config.ts';
+} from './wmo-config.ts';
 import { PRODUCTS_WITH_DELIVERY } from './wmo-status-line-items.ts';
+import {
+  apiSuccessResult,
+  type ApiResponse,
+} from '../../../../universal/helpers/api.ts';
+import type { GenericDocument } from '../../../../universal/types/App.types.ts';
+import {
+  fetchAanvragen,
+  fetchCasusAanvragen,
+} from '../../zorgned/zorgned-service.ts';
+import type { ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-types.ts';
+import { type BSN } from '../../zorgned/zorgned-types.ts';
 
 function isProductWithDelivery(
   wmoProduct: Pick<

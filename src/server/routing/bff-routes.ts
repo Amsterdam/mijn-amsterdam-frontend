@@ -33,9 +33,6 @@ export const BffEndpoints = {
   // WPI Document download
   WPI_DOCUMENT_DOWNLOAD: '/services/wpi/document',
 
-  // LLV / Zorgned
-  LLV_DOCUMENT_DOWNLOAD: `/services/llv/document`,
-
   // Legacy login links (still used in other portals)
   LEGACY_LOGIN_API_LOGIN: '/api/login',
   LEGACY_LOGIN_API1_LOGIN: '/api1/login',

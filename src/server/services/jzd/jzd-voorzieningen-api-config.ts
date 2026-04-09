@@ -1,15 +1,14 @@
 import type z from 'zod';
 
-// eslint-disable-next-line @typescript-eslint/consistent-type-imports
-import { voorzieningenRequestInput } from './wmo-service-config.ts';
-import {
-  productGroep,
-  wmoStatusLineItemsConfig,
-} from './wmo-status-line-items.ts';
 import type {
   WmoApiConfig,
   ZorgnedAanvraagTransformedWithMaApiProps,
-} from './wmo-types.ts';
+} from './jzd-types.ts';
+import {
+  productGroep,
+  wmoStatusLineItemsConfig,
+} from './wmo/wmo-status-line-items.ts';
+import type { voorzieningenRequestInput } from './wmo-service-config.ts';
 import { entries } from '../../../universal/helpers/utils.ts';
 
 export type FetchWmoVoorzieningenApiOptions = Omit<

@@ -1,8 +1,8 @@
-import type { WmoApiConfig } from './wmo-types.ts';
+import type { WmoApiConfig } from './jzd-types.ts';
 import {
   fetchMaApiVoorzieningen,
   forTesting,
-} from './wmo-voorzieningen-api-service.ts';
+} from './jzd-voorzieningen-api-service.ts';
 import { remoteApi } from '../../../testing/utils.ts';
 
 describe('wmo-voorzieningen-api-service', () => {

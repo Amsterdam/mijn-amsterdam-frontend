@@ -31,7 +31,7 @@ import type {
   VarenZakenFrontend,
 } from '../../../server/services/varen/config-and-types.ts';
 import type { ZaakFrontendCombined } from '../../../server/services/vergunningen/config-and-types.ts';
-import type { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-types.ts';
+import type { WMOVoorzieningFrontend } from '../../../server/services/jzd/wmo/wmo-types.ts';
 import type { ApiSuccessResponse } from '../../../universal/helpers/api.ts';
 import { getFullAddress, getFullName } from '../../../universal/helpers/brp.ts';
 import {

@@ -14,7 +14,7 @@ import {
 import type {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemTransformerConfig,
-} from '../../zorgned/zorgned-types.ts';
+} from '../../../zorgned/zorgned-types.ts';
 
 function isActive(aanvraag: ZorgnedAanvraagTransformed, today: Date) {
   return (

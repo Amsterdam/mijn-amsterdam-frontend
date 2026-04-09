@@ -6,7 +6,7 @@ import {
   isDecisionStatusActive,
   MEER_INFORMATIE,
 } from './wmo-generic.ts';
-import type { ZorgnedStatusLineItemTransformerConfig } from '../../zorgned/zorgned-types.ts';
+import type { ZorgnedStatusLineItemTransformerConfig } from '../../../zorgned/zorgned-types.ts';
 
 export const vergoeding: ZorgnedStatusLineItemTransformerConfig[] = [
   AANVRAAG,

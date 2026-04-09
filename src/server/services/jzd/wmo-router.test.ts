@@ -4,7 +4,7 @@ import { describe, expect, vi, beforeEach } from 'vitest';
 
 import { forTesting } from './wmo-router.ts';
 import * as wmoApiService from './wmo-voorzieningen-api-service.ts';
-import { apiErrorResult } from '../../../universal/helpers/api.ts';
+import { apiErrorResult } from '../../../../universal/helpers/api.ts';
 
 const { handleVoorzieningenRequest } = forTesting;
 

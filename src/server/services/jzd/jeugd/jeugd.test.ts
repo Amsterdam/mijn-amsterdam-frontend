@@ -2,9 +2,9 @@ import Mockdate from 'mockdate';
 import type { Mock } from 'vitest';
 
 import { fetchLeerlingenvervoer } from './jeugd.ts';
-import { getAuthProfileAndToken } from '../../../testing/utils.ts';
-import { apiErrorResult } from '../../../universal/helpers/api.ts';
-import { fetchAanvragen } from '../zorgned/zorgned-service.ts';
+import { getAuthProfileAndToken } from '../../../../testing/utils.ts';
+import { apiErrorResult } from '../../../../universal/helpers/api.ts';
+import { fetchAanvragen } from '../../zorgned/zorgned-service.ts';
 
 const AUTH_PROFILE_AND_TOKEN = getAuthProfileAndToken();
 const VOORZIENING_ID = '1610585298';
