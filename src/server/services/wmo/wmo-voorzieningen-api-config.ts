@@ -122,7 +122,8 @@ export const wmoVoorzieningenApiConfig: WmoApiConfig[] = [
     assign: {
       maCategorie: ['B-WMO'],
       maActies: ['stopzetten-niet-via-formulier'],
-      maActieUrls: (voorziening) => {
+      maActieUrls: () => {
+        // TODO: possibly return different URLs based on the specific productgroep or other properties of the voorziening.
         return {
           'stopzetten-niet-via-formulier':
             'https://www.amsterdam.nl/stopzetten-wmo-voorziening',
@@ -315,6 +316,13 @@ export const wmoVoorzieningenApiConfig: WmoApiConfig[] = [
     assign: {
       maCategorie: ['D-07'],
       maActies: ['stopzetten-niet-via-formulier'],
+      maActieUrls: () => {
+        // TODO: possibly return different URLs based on the specific productgroep or other properties of the voorziening.
+        return {
+          'stopzetten-niet-via-formulier':
+            'https://www.amsterdam.nl/stopzetten-wmo-voorziening',
+        };
+      },
     },
     match: {
       isActueel: true,
