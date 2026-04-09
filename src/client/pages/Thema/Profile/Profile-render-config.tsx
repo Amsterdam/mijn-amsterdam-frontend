@@ -16,11 +16,15 @@ export const ProfileRoutes = [
     route: themaConfig.KVK.route.path,
     Component: MijnBedrijfsGegevensThema,
   },
-  {
-    route: themaConfig.BRP.contactenPage?.route.path,
-    Component: ContactmomentenListPage,
-    isActive: FeatureToggle.contactmomentenActive,
-  },
+  ...(themaConfig.BRP.contactenPage
+    ? [
+        {
+          route: themaConfig.BRP.contactenPage.route.path,
+          Component: ContactmomentenListPage,
+          isActive: FeatureToggle.contactmomentenActive,
+        },
+      ]
+    : []),
 ];
 
 export const menuItems: ThemaMenuItem[] = [

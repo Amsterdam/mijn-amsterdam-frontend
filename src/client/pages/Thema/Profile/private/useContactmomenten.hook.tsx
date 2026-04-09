@@ -106,8 +106,8 @@ export function useContactmomenten() {
     title: 'Contactmomenten',
     breadcrumbs,
     routeParams,
-    listPageRoute: generatePath(themaConfig.BRP.contactenPage!.route.path, {
-      page: null,
-    }), // WEET NIET ZEKER OF EEN CONTACTMOMENTEN PAGE ALTIJD AANWEZIG IS??
+    listPageRoute: themaConfig.BRP.contactenPage
+      ? generatePath(themaConfig.BRP.contactenPage.route.path, { page: null })
+      : null,
   };
 }
