@@ -6,7 +6,7 @@ export type WithMaApiProps = {
   maProductgroep: string;
   maActieUrls: Record<string, string>;
 };
-type WithMaApiPropsAssignments<T> = {
+export type WithMaApiPropsAssignments<T> = {
   [Key in keyof WithMaApiProps]:
     | WithMaApiProps[Key]
     | MaApiPropAssignFN<T, Key, WithMaApiProps[Key]>;

@@ -1,8 +1,11 @@
+import type { Entries } from 'type-fest';
+
 import { fetchZorgnedAanvragenJeugd } from './jeugd/jeugd.ts';
 import type {
   WithMaApiProps,
   JzdApiConfig,
   ZorgnedAanvraagTransformedWithMaApiProps,
+  WithMaApiPropsAssignments,
 } from './jzd-types.ts';
 import { type FetchWmoVoorzieningenApiOptions } from './jzd-voorzieningen-api-config.ts';
 import {
@@ -41,7 +44,7 @@ function isMaApiPropertyConfigMatch<T extends object>(
   });
 }
 
-function addMaApiPropsToVoorziening<T extends object>(
+function addMaApiPropsToVoorziening<T extends ZorgnedAanvraagTransformed>(
   apiPropsConfig: JzdApiConfig<T>[],
   voorziening: T
 ): T & Partial<WithMaApiProps> {
@@ -49,19 +52,24 @@ function addMaApiPropsToVoorziening<T extends object>(
 
   apiPropsConfig.forEach((actionConfig) => {
     if (isMaApiPropertyConfigMatch(voorziening, actionConfig)) {
-      entries(actionConfig.assign).forEach(([key, value]) => {
+      (
+        Object.entries(actionConfig.assign) as Entries<
+          WithMaApiPropsAssignments<ZorgnedAanvraagTransformed>
+        >
+      ).forEach(([key, value]) => {
         let value_ = value;
         if (typeof value == 'function') {
-          value_ = value(voorziening, key);
+          value_ = value(voorziening, key as never); // The "as never" is needed to satisfy the type checker, because the type of key is a string, but we know that it will always be a valid key of WithMaApiProps.
         }
         if (Array.isArray(value_)) {
           // Merge and deduplicate array values if the key already exists in the new assignments, otherwise just assign the value.
-          applyAssignments[key] = [
-            ...(applyAssignments[key] ?? []),
+          const existingValue = (applyAssignments[key] ?? []) as string[];
+          (applyAssignments[key] as string[]) = [
+            ...existingValue,
             ...value_,
           ].filter((v, i, arr) => arr.indexOf(v) === i);
-        } else if (value_ !== undefined) {
-          applyAssignments[key] = value_;
+        } else if (value_ !== undefined && typeof value_ !== 'function') {
+          (applyAssignments[key] as string | Record<string, string>) = value_;
         }
       });
     }
