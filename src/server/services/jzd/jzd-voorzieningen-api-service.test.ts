@@ -488,7 +488,7 @@ describe('jzd-voorzieningen-api-service', () => {
 
         expect(response.content).toMatchObject({
           maActies: ['stopzetten'],
-          maProductgroep: ['WRA'],
+          maProductgroep: 'WRA',
           leverancier: 'Gebr Koenen B.V.',
           leverancierIdentificatie: 'LA0994',
           leveringsVorm: 'ZIN',
