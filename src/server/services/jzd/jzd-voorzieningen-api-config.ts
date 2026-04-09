@@ -1,5 +1,6 @@
 import type z from 'zod';
 
+import type { voorzieningenRequestInput } from './jzd-service-config.ts';
 import type {
   WmoApiConfig,
   ZorgnedAanvraagTransformedWithMaApiProps,
@@ -8,7 +9,6 @@ import {
   productGroep,
   wmoStatusLineItemsConfig,
 } from './wmo/wmo-status-line-items.ts';
-import type { voorzieningenRequestInput } from './wmo-service-config.ts';
 import { entries } from '../../../universal/helpers/utils.ts';
 
 export type FetchWmoVoorzieningenApiOptions = Omit<

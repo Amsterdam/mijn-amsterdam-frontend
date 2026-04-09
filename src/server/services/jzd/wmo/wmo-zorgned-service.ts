@@ -1,4 +1,4 @@
-import { featureToggle } from '../wmo-service-config.ts';
+import { featureToggle } from '../jzd-service-config.ts';
 import {
   FAKE_DECISION_DOCUMENT_ID,
   getDecisionDocument,

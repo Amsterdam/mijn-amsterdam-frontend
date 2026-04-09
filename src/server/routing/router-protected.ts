@@ -33,7 +33,7 @@ import {
 } from '../services/decos/decos-service.ts';
 import { fetchErfpachtDossiersDetail as fetchErfpachtDossiersDetail } from '../services/erfpacht/erfpacht.ts';
 import { hliRouter } from '../services/hli/hli-router.ts';
-import { jzdRouter } from '../services/jzd/wmo-router.ts';
+import { jzdRouter } from '../services/jzd/jzd-router.ts';
 import { fetchDocument as fetchBBDocument } from '../services/powerbrowser/powerbrowser-service.ts';
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler.ts';
 import { userFeedbackRouter } from '../services/user-feedback/user-feedback.router.ts';

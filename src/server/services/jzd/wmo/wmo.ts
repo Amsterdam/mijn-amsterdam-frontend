@@ -1,6 +1,6 @@
 import { generatePath } from 'react-router';
 
-import { routes } from '../wmo-service-config.ts';
+import { routes } from '../jzd-service-config.ts';
 import {
   hasDecision,
   isAfterWCAGValidDocumentsDate,

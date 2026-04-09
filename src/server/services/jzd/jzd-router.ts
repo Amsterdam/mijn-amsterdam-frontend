@@ -1,21 +1,21 @@
 import {
-  fetchZorgnedJZDAanvragen,
-  fetchZorgnedJZDDocument,
-  fetchZorgnedJZDDocuments,
+  fetchZorgnedAanvragenWMO,
+  fetchZorgnedDocumentWMO,
+  fetchZorgnedDocumentsWMO,
   handleVoorzieningDetailRequest,
   handleVoorzieningenRequest,
-} from './wmo-route-handlers.ts';
+} from './jzd-route-handlers.ts';
 import {
   featureToggle,
   OAUTH_ROLE_JZD_VOORZIENINGEN,
   routes,
-} from './wmo-service-config.ts';
+} from './jzd-service-config.ts';
 import { IS_TAP } from '../../../universal/config/env.ts';
 import { conditional } from '../../helpers/middleware.ts';
 import { OAuthVerificationHandler } from '../../routing/route-handlers.ts';
 import { createBFFRouter } from '../../routing/route-helpers.ts';
 import { attachDocumentDownloadRoute } from '../shared/document-download-route-handler.ts';
-import { fetchZorgnedLLVDocument } from './jeugd/route-handlers.ts';
+import { fetchZorgnedDocumentLLV } from './jeugd/route-handlers.ts';
 
 const jzdRouterPrivateNetwork = createBFFRouter({
   id: 'external-consumer-private-network-jzd',
@@ -37,28 +37,28 @@ jzdRouterPrivateNetwork.post(
 );
 
 const jzdRouterProtected = createBFFRouter({ id: 'protected-jzd' });
-// JEUGD/LLV
+
 // LLV Zorgned Doc download
 attachDocumentDownloadRoute(
   jzdRouterProtected,
   routes.protected.LLV_DOCUMENT_DOWNLOAD,
-  fetchZorgnedLLVDocument
+  fetchZorgnedDocumentLLV
 );
 
 // WMO Zorgned Doc download
 attachDocumentDownloadRoute(
   jzdRouterProtected,
   routes.protected.WMO_DOCUMENT_DOWNLOAD,
-  fetchZorgnedJZDDocument
+  fetchZorgnedDocumentWMO
 );
 
 jzdRouterProtected.get(
   routes.protected.WMO_AANVRAGEN_RAW,
-  fetchZorgnedJZDAanvragen
+  fetchZorgnedAanvragenWMO
 );
 jzdRouterProtected.get(
   routes.protected.WMO_DOCUMENTS_LIST_RAW,
-  fetchZorgnedJZDDocuments
+  fetchZorgnedDocumentsWMO
 );
 
 export const jzdRouter = {

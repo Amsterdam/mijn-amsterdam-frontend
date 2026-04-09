@@ -2,7 +2,7 @@ import type { Request, Response } from 'express';
 import type { MockInstance } from 'vitest';
 import { describe, expect, vi, beforeEach } from 'vitest';
 
-import { forTesting } from './wmo-router.ts';
+import { forTesting } from './jzd-router.ts';
 import * as wmoApiService from './wmo-voorzieningen-api-service.ts';
 import { apiErrorResult } from '../../../../universal/helpers/api.ts';
 
