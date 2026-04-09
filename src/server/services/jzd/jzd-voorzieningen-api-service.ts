@@ -103,9 +103,6 @@ export async function fetchMaApiVoorzieningen(
     );
   }
 
-  console.log('wmoVoorzieningenResponse', wmoVoorzieningenResponse);
-  console.log('jeugdVoorzieningenResponse', jeugdVoorzieningenResponse);
-
   const responseContentCombined = [
     ...(wmoVoorzieningenResponse.content ?? []),
     ...(jeugdVoorzieningenResponse.content ?? []),
