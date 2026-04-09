@@ -1,4 +1,4 @@
-import { Paragraph } from '@amsterdam/design-system-react';
+import { Link, Paragraph } from '@amsterdam/design-system-react';
 
 import { useProfileData } from './useProfileData.hook.tsx';
 import { useWonenThemaData } from './useWonenThemaData.hook.ts';
@@ -49,8 +49,15 @@ function VveDetail({ vve }: VveDetailsProps) {
     <>
       <PageContentCell spanWide={8}>
         <Paragraph>
-          Hier ziet u data afkomstig uit de Basisregistratie Adressen en
-          Gebouwen van het kadaster. Deze data kan een week achterlopen.
+          Hieronder staan de gegevens van uw Vereniging van Eigenaren (VvE)
+          zoals wij die hebben. Geef aan ons door als gegevens niet kloppen. Op
+          <Link
+            href="https://www.amsterdam.nl/stelselpedia/terugmelden/"
+            rel="noopener noreferrer"
+          >
+            Terugmelden op basisgegevens en stelselrelaties
+          </Link>{' '}
+          leest u hoe u dit doet.
         </Paragraph>
       </PageContentCell>
       <PageContentCell>
