@@ -186,7 +186,7 @@ export function MainHeader({ isAuthenticated = false }: MainHeaderProps) {
     <>
       <PageHeader
         ref={ref}
-        className={classNames(AmsMainMenuClassname)}
+        className={classNames(AmsMainMenuClassname, styles.MainHeader)}
         logoLink={DashboardRoute.route}
         logoAccessibleName="Logo van de gemeente Amsterdam"
         logoLinkTitle="Ga naar de homepage van Mijn Amsterdam"
@@ -218,7 +218,7 @@ export function MainHeader({ isAuthenticated = false }: MainHeaderProps) {
             </>
           ) as unknown as string // Hack because brandName is not typed as ReactNode
         }
-        menuItems={<>{isAuthenticated && <MainHeaderLinks />}</>}
+        menuItems={isAuthenticated && <MainHeaderLinks />}
         menuButtonText="Menu"
       >
         {isAuthenticated && <MainMenu />}
