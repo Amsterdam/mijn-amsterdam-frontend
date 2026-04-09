@@ -1,7 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports -- VSCODE insists on adding the type keywordt before import here, and it causes no issues.
 import z from 'zod';
 
-import type { voorzieningenRequestInput } from './jzd-service-config.ts';
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import { voorzieningenRequestInput } from './jzd-service-config.ts';
 import type {
   JzdApiConfig,
   ZorgnedAanvraagTransformedWithMaApiProps,
