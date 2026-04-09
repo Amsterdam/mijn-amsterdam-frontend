@@ -4,6 +4,7 @@ import {
   forTesting,
 } from './jzd-voorzieningen-api-service.ts';
 import { remoteApi } from '../../../testing/utils.ts';
+import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
 
 describe('jzd-voorzieningen-api-service', () => {
   describe('isMaApiPropertyConfigMatch', () => {
@@ -111,18 +112,18 @@ describe('jzd-voorzieningen-api-service', () => {
       const voorziening = {
         type: 'example',
         status: 'active',
-      };
+      } as unknown as ZorgnedAanvraagTransformed;
 
-      const apiPropsConfig: JzdApiConfig<typeof voorziening> = {
+      const apiPropsConfig = {
         match: {
           type: 'example',
           status: 'active',
         },
         assign: {
           maActies: ['reparatieverzoek'],
-          maProductgroep: ['WRA'],
+          maProductgroep: 'WRA',
         },
-      };
+      } as JzdApiConfig<ZorgnedAanvraagTransformed>;
 
       const result = forTesting.addMaApiPropsToVoorziening(
         [apiPropsConfig],
@@ -132,7 +133,7 @@ describe('jzd-voorzieningen-api-service', () => {
       expect(result).toEqual({
         ...voorziening,
         maActies: ['reparatieverzoek'],
-        maProductgroep: ['WRA'],
+        maProductgroep: 'WRA',
       });
     });
 
@@ -140,9 +141,9 @@ describe('jzd-voorzieningen-api-service', () => {
       const voorziening = {
         type: 'example',
         status: 'active',
-      };
+      } as unknown as ZorgnedAanvraagTransformed;
 
-      const apiPropsConfig1: JzdApiConfig<typeof voorziening> = {
+      const apiPropsConfig1 = {
         match: {
           type: 'example',
           status: 'active',
@@ -150,9 +151,9 @@ describe('jzd-voorzieningen-api-service', () => {
         assign: {
           maActies: ['reparatieverzoek'],
         },
-      };
+      } as JzdApiConfig<ZorgnedAanvraagTransformed>;
 
-      const apiPropsConfig2: JzdApiConfig<typeof voorziening> = {
+      const apiPropsConfig2 = {
         match: {
           type: 'example',
           status: 'active',
@@ -160,7 +161,7 @@ describe('jzd-voorzieningen-api-service', () => {
         assign: {
           maActies: ['stopzetten'],
         },
-      };
+      } as JzdApiConfig<ZorgnedAanvraagTransformed>;
 
       const result = forTesting.addMaApiPropsToVoorziening(
         [apiPropsConfig1, apiPropsConfig2],
@@ -177,7 +178,7 @@ describe('jzd-voorzieningen-api-service', () => {
       const voorziening = {
         type: 'example',
         status: 'active',
-      };
+      } as unknown as ZorgnedAanvraagTransformed;
 
       const apiPropsConfig: JzdApiConfig<typeof voorziening> = {
         match: {
@@ -187,7 +188,7 @@ describe('jzd-voorzieningen-api-service', () => {
         assign: {
           maActies: ['reparatieverzoek'],
         },
-      };
+      } as JzdApiConfig<ZorgnedAanvraagTransformed>;
 
       const result = forTesting.addMaApiPropsToVoorziening(
         [apiPropsConfig],
@@ -201,7 +202,7 @@ describe('jzd-voorzieningen-api-service', () => {
       const voorziening = {
         type: 'example',
         status: 'active',
-      };
+      } as unknown as ZorgnedAanvraagTransformed;
 
       const apiPropsConfig: JzdApiConfig<typeof voorziening> = {
         match: {
@@ -212,7 +213,7 @@ describe('jzd-voorzieningen-api-service', () => {
           maActies: undefined,
           maProductgroep: undefined,
         },
-      };
+      } as JzdApiConfig<ZorgnedAanvraagTransformed>;
 
       const result = forTesting.addMaApiPropsToVoorziening(
         [apiPropsConfig],
@@ -227,9 +228,9 @@ describe('jzd-voorzieningen-api-service', () => {
         type: 'example',
         status: 'active',
         maActies: ['reparatieverzoek'],
-      };
+      } as unknown as ZorgnedAanvraagTransformed;
 
-      const apiPropsConfig1: JzdApiConfig<typeof voorziening> = {
+      const apiPropsConfig1 = {
         match: {
           type: 'example',
           status: 'active',
@@ -237,9 +238,9 @@ describe('jzd-voorzieningen-api-service', () => {
         assign: {
           maActies: ['stopzetten'],
         },
-      };
+      } as JzdApiConfig<ZorgnedAanvraagTransformed>;
 
-      const apiPropsConfig2: JzdApiConfig<typeof voorziening> = {
+      const apiPropsConfig2 = {
         match: {
           type: 'example',
           status: 'active',
@@ -247,7 +248,7 @@ describe('jzd-voorzieningen-api-service', () => {
         assign: {
           maActies: ['reparatieverzoek'],
         },
-      };
+      } as JzdApiConfig<ZorgnedAanvraagTransformed>;
 
       const originalSnapshot = structuredClone(voorziening);
 
@@ -346,14 +347,14 @@ describe('jzd-voorzieningen-api-service', () => {
             },
             assign: {
               maActies: ['stopzetten-tijdelijk'],
-              maProductgroep: ['een-naam'],
+              maProductgroep: 'een-naam',
             },
           },
         ]);
 
         expect(response.content?.[0]).toMatchObject({
           maActies: ['stopzetten-tijdelijk'],
-          maProductgroep: ['een-naam'],
+          maProductgroep: 'een-naam',
           leverancier: 'Gebr Koenen B.V.',
           leverancierIdentificatie: 'LA0994',
           leveringsVorm: 'ZIN',
@@ -382,14 +383,14 @@ describe('jzd-voorzieningen-api-service', () => {
             },
             assign: {
               maActies: ['reparatieverzoek'],
-              maProductgroep: ['een-naam'],
+              maProductgroep: 'een-naam',
             },
           },
         ]);
 
         expect(response.content?.[0]).not.toMatchObject({
           maActies: ['reparatieverzoek'],
-          maProductgroep: ['een-naam'],
+          maProductgroep: 'een-naam',
         });
       });
 
@@ -418,7 +419,7 @@ describe('jzd-voorzieningen-api-service', () => {
               },
               assign: {
                 maActies: ['reparatieverzoek'],
-                maProductgroep: ['een-naam'],
+                maProductgroep: 'een-naam',
               },
             },
           ]
@@ -452,7 +453,7 @@ describe('jzd-voorzieningen-api-service', () => {
               },
               assign: {
                 maActies: ['reparatieverzoek'],
-                maProductgroep: ['een-naam'],
+                maProductgroep: 'een-naam',
               },
             },
           ]

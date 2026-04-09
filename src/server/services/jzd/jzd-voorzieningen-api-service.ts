@@ -52,26 +52,27 @@ function addMaApiPropsToVoorziening<T extends ZorgnedAanvraagTransformed>(
 
   apiPropsConfig.forEach((actionConfig) => {
     if (isMaApiPropertyConfigMatch(voorziening, actionConfig)) {
-      (
-        Object.entries(actionConfig.assign) as Entries<
-          WithMaApiPropsAssignments<ZorgnedAanvraagTransformed>
-        >
-      ).forEach(([key, value]) => {
-        let value_ = value;
-        if (typeof value == 'function') {
-          value_ = value(voorziening, key as never); // The "as never" is needed to satisfy the type checker, because the type of key is a string, but we know that it will always be a valid key of WithMaApiProps.
+      type _Entries = Entries<
+        WithMaApiPropsAssignments<ZorgnedAanvraagTransformed>
+      >;
+      (Object.entries(actionConfig.assign) as _Entries).forEach(
+        ([key, value]) => {
+          let value_ = value;
+          if (typeof value == 'function') {
+            value_ = value(voorziening, key as never); // The "as never" is needed to satisfy the type checker, because the type of key is a string, but we know that it will always be a valid key of WithMaApiProps.
+          }
+          if (Array.isArray(value_)) {
+            // Merge and deduplicate array values if the key already exists in the new assignments, otherwise just assign the value.
+            const existingValue = (applyAssignments[key] ?? []) as string[];
+            (applyAssignments[key] as string[]) = [
+              ...existingValue,
+              ...value_,
+            ].filter((v, i, arr) => arr.indexOf(v) === i);
+          } else if (value_ !== undefined && typeof value_ !== 'function') {
+            (applyAssignments[key] as string | Record<string, string>) = value_;
+          }
         }
-        if (Array.isArray(value_)) {
-          // Merge and deduplicate array values if the key already exists in the new assignments, otherwise just assign the value.
-          const existingValue = (applyAssignments[key] ?? []) as string[];
-          (applyAssignments[key] as string[]) = [
-            ...existingValue,
-            ...value_,
-          ].filter((v, i, arr) => arr.indexOf(v) === i);
-        } else if (value_ !== undefined && typeof value_ !== 'function') {
-          (applyAssignments[key] as string | Record<string, string>) = value_;
-        }
-      });
+      );
     }
   });
 
@@ -136,11 +137,11 @@ export async function fetchMaApiVoorzieningen(
         return true;
       }
 
-      return voorziening?.maProductgroep?.some((productgroep) =>
-        options.maProductgroep?.includes(
-          productgroep as (typeof options.maProductgroep)[number]
-        )
-      );
+      return voorziening?.maProductgroep
+        ? options.maProductgroep?.includes(
+            voorziening.maProductgroep as (typeof options.maProductgroep)[number]
+          )
+        : false;
     })
     .toSorted(dateSort('datumBesluit', 'desc'));
 
