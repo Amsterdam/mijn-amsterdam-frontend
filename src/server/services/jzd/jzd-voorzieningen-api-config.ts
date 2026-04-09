@@ -1,4 +1,5 @@
-import type z from 'zod';
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import z from 'zod';
 
 import type { voorzieningenRequestInput } from './jzd-service-config.ts';
 import type {
