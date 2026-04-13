@@ -25,6 +25,9 @@ export const PRISTINE_APPSTATE: AppState = {
       profileTypes: ['private', 'commercial'],
     }
   ),
+  WONEN: apiPristineResult(null, {
+    profileTypes: ['private'],
+  }),
   WPI_SPECIFICATIES: apiPristineResult(
     {
       jaaropgaven: [],

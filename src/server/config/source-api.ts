@@ -394,6 +394,11 @@ const ApiConfig_ = {
     url: `${getFromEnv('BFF_MS_OAUTH_ENDPOINT')}:tenant/oauth2/v2.0/token`,
     method: 'POST',
   },
+  ZWD_VVE: {
+    url: `${getFromEnv('BFF_VVE_API_BASE_URL')}`,
+    method: 'GET',
+    headers: { Authorization: `Token ${getFromEnv('BFF_VVE_API_TOKEN')}` },
+  },
 } as const;
 
 export const ApiConfig: Record<SourceApiName, DataRequestConfig> = ApiConfig_;
