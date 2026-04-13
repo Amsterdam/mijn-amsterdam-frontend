@@ -54,7 +54,7 @@ export const themaConfig: Record<
         trackingUrl: null,
       },
     },
-  },
+  } satisfies ProfileThemaConfig<typeof THEMA_ID_BRP>,
   [THEMA_ID_KVK]: {
     id: THEMA_ID_KVK,
     title: THEMA_TITLE_KVK,
@@ -75,8 +75,8 @@ export const themaConfig: Record<
       documentTitle: `${THEMA_TITLE_KVK} | Mijn Amsterdam`,
       trackingUrl: null,
     },
-  },
-};
+  } satisfies ProfileThemaConfig<typeof THEMA_ID_KVK>,
+} as const;
 
 export const profileLinks = {
   CHANGE_PERSONAL_DATA:

@@ -106,8 +106,11 @@ export function useContactmomenten() {
     title: 'Contactmomenten',
     breadcrumbs,
     routeParams,
-    listPageRoute: themaConfig.BRP.contactenPage
-      ? generatePath(themaConfig.BRP.contactenPage.route.path, { page: null })
-      : null,
+    listPageRoute: generatePath(
+      themaConfig.BRP.contactenPage?.route.path ?? '',
+      {
+        page: null,
+      }
+    ),
   };
 }

@@ -16,7 +16,7 @@ export const ProfileRoutes = [
     route: themaConfig.KVK.route.path,
     Component: MijnBedrijfsGegevensThema,
   },
-  ...(themaConfig.BRP.contactenPage
+  ...(themaConfig.BRP.contactenPage?.route.path
     ? [
         {
           route: themaConfig.BRP.contactenPage.route.path,
