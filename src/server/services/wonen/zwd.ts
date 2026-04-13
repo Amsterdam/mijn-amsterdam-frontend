@@ -12,13 +12,13 @@ import camelize from '../../helpers/camelize.ts';
 import { getFromEnv } from '../../helpers/env.ts';
 import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
-import type { BAGLocation } from '../bag/bag.types.ts';
+import type { BAGID, BAGLocation } from '../bag/bag.types.ts';
 import { fetchCommercial, fetchPrivate } from '../bag/my-locations.ts';
 
 export function translateVerblijfObjectId(bagID: BAGID): BAGID {
   const bagIdTranslations = getFromEnv('BFF_BAG_TRANSLATIONS', false);
   // IS_PRODUCTION is explicitly set to exclude this code from being used in this environment.
-  if (!bagIdTranslations || IS_PRODUCTION || !bagID) {
+  if (!bagIdTranslations || IS_PRODUCTION) {
     return bagID;
   }
 
@@ -30,7 +30,6 @@ export function translateVerblijfObjectId(bagID: BAGID): BAGID {
 
   return translationsMap.get(bagID) ?? bagID;
 }
-type BAGID = string | null | undefined;
 
 async function fetchZWDAPI<T>(dataRequestConfigSpecific: DataRequestConfig) {
   const dataRequestConfigBase = getCustomApiConfig(

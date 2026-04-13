@@ -49,8 +49,8 @@ function VveDetail({ vve }: VveDetailsProps) {
     <>
       <PageContentCell spanWide={8}>
         <Paragraph>
-          Hieronder staan de gegevens van uw Vereniging van Eigenaren (VvE)
-          zoals wij die hebben. Geef aan ons door als gegevens niet kloppen. Op
+          Hieronder staan de gegevens van uw Vereniging van Eigenaren (VvE){' '}
+          zoals wij die hebben. Geef aan ons door als gegevens niet kloppen. Op{' '}
           <Link
             href="https://www.amsterdam.nl/stelselpedia/terugmelden/"
             rel="noopener noreferrer"
