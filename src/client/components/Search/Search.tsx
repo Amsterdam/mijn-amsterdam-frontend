@@ -252,7 +252,7 @@ export function Search({
             e.preventDefault();
             if (term) {
               navigate(
-                `${SearchPageRoute.route}?${new URLSearchParams(`term=${searchBarRef.current?.value || ''}`)}`
+                `${SearchPageRoute.route}?${new URLSearchParams({ term: searchBarRef.current?.value || '' }).toString()}`
               );
               setResultsVisible(true);
             }
