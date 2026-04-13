@@ -14,16 +14,13 @@ const THEMA_ID_KVK = 'KVK' as const;
 const THEMA_TITLE_BRP = 'Mijn gegevens' as const;
 const THEMA_TITLE_KVK = 'Mijn onderneming' as const;
 
-export const themaConfig: Record<
-  typeof THEMA_ID_BRP | typeof THEMA_ID_KVK,
-  ProfileThemaConfig
-> = {
+export const themaConfig = {
   [THEMA_ID_BRP]: {
     id: THEMA_ID_BRP,
     title: THEMA_TITLE_BRP,
     featureToggle: {
       active: true,
-      get aantalBewonersOpAdresTonenActive() {
+      get aantalBewonersOpAdresTonenActive(): boolean {
         return (
           themaConfig[THEMA_ID_BRP].featureToggle.active &&
           isEnabled('BRP.aantalBewonersOpAdresTonen')

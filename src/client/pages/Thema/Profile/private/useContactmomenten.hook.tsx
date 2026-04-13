@@ -6,7 +6,7 @@ import {
   MailIcon,
   PhoneIcon,
 } from '@amsterdam/design-system-react-icons';
-import { generatePath, useParams } from 'react-router';
+import { useParams } from 'react-router';
 
 import type { ContactMomentFrontend } from './Contactmomenten.config.ts';
 import {
@@ -106,11 +106,6 @@ export function useContactmomenten() {
     title: 'Contactmomenten',
     breadcrumbs,
     routeParams,
-    listPageRoute: generatePath(
-      themaConfig.BRP.contactenPage?.route.path ?? '',
-      {
-        page: null,
-      }
-    ),
+    listPageRoute: themaConfig.BRP.contactenPage.route.path,
   };
 }
