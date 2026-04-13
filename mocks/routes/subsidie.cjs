@@ -1,5 +1,5 @@
-const settings = require('../settings.cjs');
 const SUBSIDIE_RESPONSE = require('../fixtures/subsidie.json');
+const settings = require('../settings.cjs');
 
 module.exports = [
   {

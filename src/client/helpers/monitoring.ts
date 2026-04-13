@@ -5,8 +5,8 @@ import {
 } from '@microsoft/applicationinsights-web';
 import { createBrowserHistory } from 'history';
 
-import { IS_DEVELOPMENT } from '../../universal/config/env.ts';
 import { logger } from './logging.ts';
+import { IS_DEVELOPMENT } from '../../universal/config/env.ts';
 
 export type Severity =
   | 'verbose'
