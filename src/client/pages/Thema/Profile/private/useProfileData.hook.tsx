@@ -14,11 +14,11 @@ export function useProfileData() {
 
   let profileData: BrpProfileData | null;
 
-  if (
-    (WONEN.content?.vve?.name ||
-      typeof aantalIngeschrevenPersonen === 'string') &&
-    BRP.content?.adres
-  ) {
+  if (!BRP.content) {
+    profileData = null;
+  } else if (!BRP.content.adres) {
+    profileData = formatBrpProfileData(BRP.content);
+  } else {
     const brpContent = {
       ...BRP.content,
       adres: {
@@ -28,8 +28,6 @@ export function useProfileData() {
       },
     };
     profileData = formatBrpProfileData(brpContent);
-  } else {
-    profileData = BRP.content ? formatBrpProfileData(BRP.content) : BRP.content;
   }
 
   return {
