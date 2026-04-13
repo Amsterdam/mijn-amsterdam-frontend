@@ -399,4 +399,27 @@ describe('<Profile />', () => {
     expect(screen.getByText('Nederlandse')).toBeInTheDocument();
     expect(screen.queryByText('Armeense, Turkse')).toBeNull();
   });
+
+  test('Displays page without address', () => {
+    render(
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routeEntry}
+        component={MijnGegevensThema}
+        state={
+          {
+            BRP: { content: { adres: null, persoon: { voornamen: 'Jan' } } },
+            WONEN: {
+              content: { vve: { name: 'VvE Prachtige Straat 13' } },
+            },
+            KLANT_CONTACT: { content: [] },
+          } as unknown as AppState
+        }
+      />
+    );
+    expect(screen.getByText('Jan')).toBeInTheDocument();
+    expect(
+      screen.queryByText('VvE Prachtige Straat 13')
+    ).not.toBeInTheDocument();
+  });
 });
