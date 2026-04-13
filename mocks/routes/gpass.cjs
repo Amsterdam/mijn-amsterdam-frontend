@@ -13,7 +13,7 @@ function createPas({
 }) {
   return {
     id: `123-${pasnummer}`,
-    pasnummer: pasnummer,
+    pasnummer,
     pasnummer_volledig: `60643660${pasnummer}`,
     categorie: 'Minima stadspas',
     categorie_code: 'M',

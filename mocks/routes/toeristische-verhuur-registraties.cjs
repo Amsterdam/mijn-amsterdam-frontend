@@ -1,6 +1,6 @@
-const settings = require('../settings.cjs');
 const BSN_RESPONSE = require('../fixtures/registraties-toeristische-verhuur-bsn.json');
 const NORMAL_RESPONSE = require('../fixtures/registraties-toeristische-verhuur.json');
+const settings = require('../settings.cjs');
 
 module.exports = [
   {

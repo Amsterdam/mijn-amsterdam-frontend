@@ -31,6 +31,7 @@ import { fetchHLI } from './hli/hli.ts';
 import { fetchHorecaVergunningen } from './horeca/horeca.ts';
 import { fetchKVK } from './hr-kvk/hr-kvk.ts';
 import { fetchLeerlingenvervoer } from './jzd/jeugd/jeugd.ts';
+import { fetchWmo } from './jzd/wmo/wmo.ts';
 import { fetchAllKlachten } from './klachten/klachten.ts';
 import { fetchKrefia } from './krefia/krefia.ts';
 import { captureException } from './monitoring.ts';
@@ -52,7 +53,6 @@ import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-ve
 import { fetchUserFeedbackSurvey } from './user-feedback/user-feedback.ts';
 import { fetchVaren } from './varen/varen.ts';
 import { fetchVergunningen } from './vergunningen/vergunningen.ts';
-import { fetchWmo } from './jzd/wmo/wmo.ts';
 import {
   fetchBbz,
   fetchBijstandsuitkering,

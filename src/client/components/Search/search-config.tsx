@@ -14,6 +14,7 @@ import type {
 } from '../../../server/services/erfpacht/erfpacht-types.ts';
 import type { HLIresponseData } from '../../../server/services/hli/hli-regelingen-types.ts';
 import type { HorecaVergunningFrontend } from '../../../server/services/horeca/decos-zaken.ts';
+import type { WMOVoorzieningFrontend } from '../../../server/services/jzd/wmo/wmo-types.ts';
 import type { KlachtFrontend } from '../../../server/services/klachten/types.ts';
 import type {
   Krefia,
@@ -31,7 +32,6 @@ import type {
   VarenZakenFrontend,
 } from '../../../server/services/varen/config-and-types.ts';
 import type { ZaakFrontendCombined } from '../../../server/services/vergunningen/config-and-types.ts';
-import type { WMOVoorzieningFrontend } from '../../../server/services/jzd/wmo/wmo-types.ts';
 import type { ApiSuccessResponse } from '../../../universal/helpers/api.ts';
 import { getFullAddress, getFullName } from '../../../universal/helpers/brp.ts';
 import {
