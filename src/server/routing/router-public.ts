@@ -1,4 +1,4 @@
-import { HttpStatusCode } from 'axios';
+import axios, { HttpStatusCode } from 'axios';
 import type { NextFunction, Request, Response } from 'express';
 import express from 'express';
 import proxy from 'express-http-proxy';
@@ -10,13 +10,12 @@ import {
   type RequestWithQueryParams,
 } from './route-helpers.ts';
 import { ZAAK_STATUS_ROUTE } from '../../client/pages/ZaakStatus/ZaakStatus-config.ts';
-import { OTAP_ENV } from '../../universal/config/env.ts';
+import { IS_PRODUCTION, OTAP_ENV } from '../../universal/config/env.ts';
 import {
   DATASETS,
   getDatasetCategoryId,
 } from '../../universal/config/myarea-datasets.ts';
-import type {
-  ApiResponse_DEPRECATED} from '../../universal/helpers/api.ts';
+import type { ApiResponse_DEPRECATED } from '../../universal/helpers/api.ts';
 import {
   apiSuccessResult,
 } from '../../universal/helpers/api.ts';
@@ -30,7 +29,9 @@ import { authRoutes } from '../auth/auth-routes.ts';
 import { RELEASE_VERSION } from '../config/app.ts';
 import { getAllFeatureToggles } from '../config/azure-appconfiguration.ts';
 import { getFromEnv } from '../helpers/env.ts';
-import { getRequestParamsFromQueryString } from '../helpers/source-api-request.ts';
+import {
+  getRequestParamsFromQueryString,
+} from '../helpers/source-api-request.ts';
 import {
   fetchDataset,
   loadFeatureDetail,
@@ -38,7 +39,10 @@ import {
 } from '../services/buurt/buurt.ts';
 import { getDatasetEndpointConfig } from '../services/buurt/helpers.ts';
 import { loadClusterDatasets } from '../services/buurt/supercluster.ts';
-import { fetchCmsFooter, fetchSearchConfig } from '../services/cms/cms-content.ts';
+import {
+  fetchCmsFooter,
+  fetchSearchConfig,
+} from '../services/cms/cms-content.ts';
 import { fetchActiveMaintenanceNotifications } from '../services/cms/cms-maintenance-notifications.ts';
 import type { QueryParamsMaintenanceNotifications } from '../services/cms/cms-types.ts';
 
@@ -257,6 +261,43 @@ router.all(
     },
   })
 );
+
+if (!IS_PRODUCTION) {
+  const PROXY_API_KEY = getFromEnv('MA_DEV_API_KEY', false);
+
+  router.all(BffEndpoints.PROXY, async (req, res) => {
+    const apiKeyName = 'x-ma-dev-api-key';
+    const apiKey = req.headers[apiKeyName];
+    delete req.headers[apiKeyName];
+    if (apiKey !== PROXY_API_KEY) {
+      return res
+        .status(HttpStatusCode.Unauthorized)
+        .send(`Invalid or missing header '${apiKeyName}'`);
+    }
+
+    const urlHeaderName = 'x-ma-proxy-url';
+    const url = req.headers[urlHeaderName];
+    delete req.headers[urlHeaderName];
+    if (!url || typeof url !== 'string') {
+      return res
+        .status(HttpStatusCode.BadRequest)
+        .send(
+          `Url to send request to was not found in header: '${urlHeaderName}'`
+        );
+    }
+
+    // RP TODO: add x-ma-api-config to select a api-config?
+
+    const targetResponse = await axios({
+      method: req.method,
+      url,
+      headers: req.headers,
+      data: req.body,
+    });
+
+    return res.status(targetResponse.status).send(targetResponse.data);
+  });
+}
 
 export const legacyRouter = express.Router();
 

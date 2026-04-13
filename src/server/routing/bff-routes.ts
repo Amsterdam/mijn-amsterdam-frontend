@@ -18,6 +18,7 @@ export const BffEndpoints = {
   LOGIN_RAW: '/admin/visitors/table',
   STATUS_HEALTH: '/status/health',
   TEST_ACCOUNTS_OVERVIEW: '/admin/user-data-overview',
+  PROXY: '/proxy',
 
   FEATURE_TOGGLES: '/services/feature-toggles',
 
