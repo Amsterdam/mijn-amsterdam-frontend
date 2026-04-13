@@ -9,7 +9,10 @@ import {
 } from '../../../universal/helpers/api.ts';
 import { pick } from '../../../universal/helpers/utils.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
-import type { DataRequestConfig } from '../../config/source-api.ts';
+import type {
+  DataRequestConfig,
+  DataRequestHeaders,
+} from '../../config/source-api.ts';
 import camelize from '../../helpers/camelize.ts';
 import { getFromEnv } from '../../helpers/env.ts';
 import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
@@ -45,8 +48,15 @@ async function fetchZWDAPI<T>(dataRequestConfigSpecific: DataRequestConfig) {
 }
 
 function transformZwdVvEResponse(
-  responseData: ZwdVveDataSource
-): VvEDataFrontend {
+  responseData: ZwdVveDataSource,
+  _headers: DataRequestHeaders,
+  status: number
+): VvEDataFrontend | null {
+  if (status === HttpStatusCode.NotFound) {
+    // Return null if the record is not found, this is handled as a valid case in the frontend.
+    return null;
+  }
+
   const responseDataPicked = pick(responseData, [
     'name',
     'bag_id',
