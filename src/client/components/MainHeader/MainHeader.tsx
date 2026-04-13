@@ -186,7 +186,7 @@ export function MainHeader({ isAuthenticated = false }: MainHeaderProps) {
     <>
       <PageHeader
         ref={ref}
-        className={classNames(AmsMainMenuClassname, styles.MainHeader)}
+        className={AmsMainMenuClassname}
         logoLink={DashboardRoute.route}
         logoAccessibleName="Logo van de gemeente Amsterdam"
         logoLinkTitle="Ga naar de homepage van Mijn Amsterdam"
