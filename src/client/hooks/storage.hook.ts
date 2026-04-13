@@ -3,8 +3,8 @@ import { useCallback, useEffect } from 'react';
 import { create } from 'zustand/react';
 
 import type { Unshaped } from '../../universal/types/App.types.ts';
-import { captureException } from '../helpers/monitoring.ts';
 import { logger } from '../helpers/logging.ts';
+import { captureException } from '../helpers/monitoring.ts';
 
 type WindowStateStore = {
   set: (

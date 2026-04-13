@@ -1,7 +1,7 @@
-import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
-import { fetchDocument } from '../zorgned/zorgned-service.ts';
+import type { AuthProfileAndToken } from '../../../auth/auth-types.ts';
+import { fetchDocument } from '../../zorgned/zorgned-service.ts';
 
-export async function fetchZorgnedLLVDocument(
+export async function fetchZorgnedDocumentLLV(
   authProfileAndToken: AuthProfileAndToken,
   documentId: string
 ) {

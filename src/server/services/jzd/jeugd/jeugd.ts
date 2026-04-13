@@ -1,35 +1,47 @@
 import { generatePath } from 'react-router';
 
 import { jeugdStatusLineItemsConfig } from './status-line-items.ts';
-import { themaConfig } from '../../../client/pages/Thema/Jeugd/Jeugd-thema-config.ts';
-import type { ApiResponse} from '../../../universal/helpers/api.ts';
-import { apiSuccessResult } from '../../../universal/helpers/api.ts';
-import { dateSort, defaultDateFormat } from '../../../universal/helpers/date.ts';
-import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
+import { themaConfig } from '../../../../client/pages/Thema/Jeugd/Jeugd-thema-config.ts';
+import type { ApiResponse } from '../../../../universal/helpers/api.ts';
+import { apiSuccessResult } from '../../../../universal/helpers/api.ts';
+import {
+  dateSort,
+  defaultDateFormat,
+} from '../../../../universal/helpers/date.ts';
+import { capitalizeFirstLetter } from '../../../../universal/helpers/text.ts';
 import type {
   GenericDocument,
   ZaakAanvraagDetail,
-} from '../../../universal/types/App.types.ts';
-import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
-import { getLatestStatus, getLatestStatusDate } from '../../helpers/zaken.ts';
-import { BffEndpoints } from '../../routing/bff-routes.ts';
-import { hasDecision } from '../wmo/status-line-items/wmo-generic.ts';
-import { getDocuments } from '../wmo/wmo.ts';
-import { fetchAanvragen } from '../zorgned/zorgned-service.ts';
-import { getStatusLineItems } from '../zorgned/zorgned-status-line-items.ts';
+} from '../../../../universal/types/App.types.ts';
+import type { AuthProfileAndToken } from '../../../auth/auth-types.ts';
+import {
+  getLatestStatus,
+  getLatestStatusDate,
+} from '../../../helpers/zaken.ts';
+import { fetchAanvragen } from '../../zorgned/zorgned-service.ts';
+import { getStatusLineItems } from '../../zorgned/zorgned-status-line-items.ts';
 import type {
+  BSN,
   ProductSoortCode,
   ZorgnedAanvraagTransformed,
-} from '../zorgned/zorgned-types.ts';
+} from '../../zorgned/zorgned-types.ts';
+import { routes } from '../jzd-service-config.ts';
+import { hasDecision } from '../wmo/status-line-items/wmo-generic.ts';
+import { getDocuments } from '../wmo/wmo.ts';
+
+export async function fetchZorgnedAanvragenJeugd(
+  bsn: BSN
+): Promise<ApiResponse<ZorgnedAanvraagTransformed[]>> {
+  return fetchAanvragen(bsn, {
+    zorgnedApiConfigKey: 'ZORGNED_LEERLINGENVERVOER',
+  });
+}
 
 export async function fetchLeerlingenvervoer(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<LeerlingenvervoerVoorzieningFrontend[]>> {
-  const aanvragenResponse = await fetchAanvragen(
-    authProfileAndToken.profile.id,
-    {
-      zorgnedApiConfigKey: 'ZORGNED_LEERLINGENVERVOER',
-    }
+  const aanvragenResponse = await fetchZorgnedAanvragenJeugd(
+    authProfileAndToken.profile.id
   );
   if (aanvragenResponse.status !== 'OK') {
     return aanvragenResponse;
@@ -107,7 +119,7 @@ function transformVoorzieningenForFrontend(
         documents: getDocuments(
           sessionID,
           aanvraag,
-          BffEndpoints.LLV_DOCUMENT_DOWNLOAD
+          routes.protected.LLV_DOCUMENT_DOWNLOAD
         ),
         displayStatus: getLatestStatus(
           lineItems

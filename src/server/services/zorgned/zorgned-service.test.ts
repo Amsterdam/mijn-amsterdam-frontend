@@ -27,7 +27,7 @@ import type { ApiSuccessResponse } from '../../../universal/helpers/api.ts';
 import { apiErrorResult } from '../../../universal/helpers/api.ts';
 import * as request from '../../helpers/source-api-request.ts';
 import { ZORGNED_AV_API_CONFIG_KEY } from '../hli/hli-service-config.ts';
-import { ZORGNED_JZD_API_CONFIG_KEY } from '../wmo/wmo-service-config.ts';
+import { ZORGNED_JZD_API_CONFIG_KEY } from '../jzd/wmo/wmo-config.ts';
 
 const mocks = vi.hoisted(() => {
   return {

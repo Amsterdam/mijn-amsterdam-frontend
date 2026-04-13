@@ -1,4 +1,5 @@
 const { register } = require('module');
+
 const settings = require('../settings.cjs');
 
 module.exports = [

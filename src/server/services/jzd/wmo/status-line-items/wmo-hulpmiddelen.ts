@@ -14,7 +14,7 @@ import type {
   ProductSoortCode,
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemTransformerConfig,
-} from '../../zorgned/zorgned-types.ts';
+} from '../../../zorgned/zorgned-types.ts';
 
 export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
   AANVRAAG,

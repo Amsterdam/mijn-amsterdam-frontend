@@ -1,11 +1,12 @@
-import type { WmoApiConfig } from './wmo-types.ts';
+import type { JzdApiConfig } from './jzd-types.ts';
 import {
   fetchMaApiVoorzieningen,
   forTesting,
-} from './wmo-voorzieningen-api-service.ts';
+} from './jzd-voorzieningen-api-service.ts';
 import { remoteApi } from '../../../testing/utils.ts';
+import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
 
-describe('wmo-voorzieningen-api-service', () => {
+describe('jzd-voorzieningen-api-service', () => {
   describe('isMaApiPropertyConfigMatch', () => {
     it('should return true when all matchers match the voorziening', () => {
       const voorziening = {
@@ -91,7 +92,7 @@ describe('wmo-voorzieningen-api-service', () => {
         date: new Date('2023-01-01'),
       };
 
-      const actionConfig: WmoApiConfig<typeof voorziening> = {
+      const actionConfig: JzdApiConfig<typeof voorziening> = {
         match: {
           type: 'example',
           status: 'active',
@@ -111,18 +112,18 @@ describe('wmo-voorzieningen-api-service', () => {
       const voorziening = {
         type: 'example',
         status: 'active',
-      };
+      } as unknown as ZorgnedAanvraagTransformed;
 
-      const apiPropsConfig: WmoApiConfig<typeof voorziening> = {
+      const apiPropsConfig = {
         match: {
           type: 'example',
           status: 'active',
         },
         assign: {
           maActies: ['reparatieverzoek'],
-          maProductgroep: ['WRA'],
+          maProductgroep: 'WRA',
         },
-      };
+      } as JzdApiConfig<ZorgnedAanvraagTransformed>;
 
       const result = forTesting.addMaApiPropsToVoorziening(
         [apiPropsConfig],
@@ -132,7 +133,7 @@ describe('wmo-voorzieningen-api-service', () => {
       expect(result).toEqual({
         ...voorziening,
         maActies: ['reparatieverzoek'],
-        maProductgroep: ['WRA'],
+        maProductgroep: 'WRA',
       });
     });
 
@@ -140,9 +141,9 @@ describe('wmo-voorzieningen-api-service', () => {
       const voorziening = {
         type: 'example',
         status: 'active',
-      };
+      } as unknown as ZorgnedAanvraagTransformed;
 
-      const apiPropsConfig1: WmoApiConfig<typeof voorziening> = {
+      const apiPropsConfig1 = {
         match: {
           type: 'example',
           status: 'active',
@@ -150,9 +151,9 @@ describe('wmo-voorzieningen-api-service', () => {
         assign: {
           maActies: ['reparatieverzoek'],
         },
-      };
+      } as JzdApiConfig<ZorgnedAanvraagTransformed>;
 
-      const apiPropsConfig2: WmoApiConfig<typeof voorziening> = {
+      const apiPropsConfig2 = {
         match: {
           type: 'example',
           status: 'active',
@@ -160,7 +161,7 @@ describe('wmo-voorzieningen-api-service', () => {
         assign: {
           maActies: ['stopzetten'],
         },
-      };
+      } as JzdApiConfig<ZorgnedAanvraagTransformed>;
 
       const result = forTesting.addMaApiPropsToVoorziening(
         [apiPropsConfig1, apiPropsConfig2],
@@ -177,9 +178,9 @@ describe('wmo-voorzieningen-api-service', () => {
       const voorziening = {
         type: 'example',
         status: 'active',
-      };
+      } as unknown as ZorgnedAanvraagTransformed;
 
-      const apiPropsConfig: WmoApiConfig<typeof voorziening> = {
+      const apiPropsConfig: JzdApiConfig<typeof voorziening> = {
         match: {
           type: 'differentExample',
           status: 'inactive',
@@ -187,7 +188,7 @@ describe('wmo-voorzieningen-api-service', () => {
         assign: {
           maActies: ['reparatieverzoek'],
         },
-      };
+      } as JzdApiConfig<ZorgnedAanvraagTransformed>;
 
       const result = forTesting.addMaApiPropsToVoorziening(
         [apiPropsConfig],
@@ -201,9 +202,9 @@ describe('wmo-voorzieningen-api-service', () => {
       const voorziening = {
         type: 'example',
         status: 'active',
-      };
+      } as unknown as ZorgnedAanvraagTransformed;
 
-      const apiPropsConfig: WmoApiConfig<typeof voorziening> = {
+      const apiPropsConfig: JzdApiConfig<typeof voorziening> = {
         match: {
           type: 'example',
           status: 'active',
@@ -212,7 +213,7 @@ describe('wmo-voorzieningen-api-service', () => {
           maActies: undefined,
           maProductgroep: undefined,
         },
-      };
+      } as JzdApiConfig<ZorgnedAanvraagTransformed>;
 
       const result = forTesting.addMaApiPropsToVoorziening(
         [apiPropsConfig],
@@ -227,9 +228,9 @@ describe('wmo-voorzieningen-api-service', () => {
         type: 'example',
         status: 'active',
         maActies: ['reparatieverzoek'],
-      };
+      } as unknown as ZorgnedAanvraagTransformed;
 
-      const apiPropsConfig1: WmoApiConfig<typeof voorziening> = {
+      const apiPropsConfig1 = {
         match: {
           type: 'example',
           status: 'active',
@@ -237,9 +238,9 @@ describe('wmo-voorzieningen-api-service', () => {
         assign: {
           maActies: ['stopzetten'],
         },
-      };
+      } as JzdApiConfig<ZorgnedAanvraagTransformed>;
 
-      const apiPropsConfig2: WmoApiConfig<typeof voorziening> = {
+      const apiPropsConfig2 = {
         match: {
           type: 'example',
           status: 'active',
@@ -247,7 +248,7 @@ describe('wmo-voorzieningen-api-service', () => {
         assign: {
           maActies: ['reparatieverzoek'],
         },
-      };
+      } as JzdApiConfig<ZorgnedAanvraagTransformed>;
 
       const originalSnapshot = structuredClone(voorziening);
 
@@ -269,8 +270,9 @@ describe('wmo-voorzieningen-api-service', () => {
 
   describe('fetch voorzieningen', () => {
     function getAanvraag(
-      productsoortCode = 'WRA',
-      leveringsvorm = 'ZIN',
+      productsoortCode: string = 'WRA',
+      leveringsvorm: string = 'ZIN',
+      identificatie: string | null = null,
       datumEindeGeldigheid: string | null = null
     ) {
       return {
@@ -285,6 +287,7 @@ describe('wmo-voorzieningen-api-service', () => {
               identificatie: '116841',
               product: {
                 productsoortCode,
+                identificatie,
               },
               resultaat: 'toegewezen',
               toegewezenProduct: {
@@ -295,6 +298,7 @@ describe('wmo-voorzieningen-api-service', () => {
                   identificatie: 'LA0994',
                   omschrijving: 'Gebr Koenen B.V.',
                 },
+                actueel: true,
                 toewijzingen: [
                   {
                     leveringen: [
@@ -325,32 +329,37 @@ describe('wmo-voorzieningen-api-service', () => {
 
     describe('fetchMaApiVoorzieningen', () => {
       test('should fetch voorzieningen and add MA API props based on config', async () => {
+        remoteApi.post('/zorgned/aanvragen').reply(200);
         remoteApi
           .post('/zorgned/aanvragen')
-          .reply(200, getZorgnedAanvragenResponse([getAanvraag()]));
+          .reply(
+            200,
+            getZorgnedAanvragenResponse([
+              getAanvraag('LLV', 'ZIN', 'LLVAVG', null),
+            ])
+          );
 
         const response = await fetchMaApiVoorzieningen('123456789', undefined, [
           {
             match: {
-              leveringsVorm: 'ZIN',
               isActueel: true,
-              productsoortCode: ['WRA'],
-              datumEindeLevering: null,
+              productIdentificatie: ['LLVAVG'],
             },
             assign: {
-              maActies: ['reparatieverzoek'],
-              maProductgroep: ['een-naam'],
+              maActies: ['stopzetten-tijdelijk'],
+              maProductgroep: 'een-naam',
             },
           },
         ]);
 
         expect(response.content?.[0]).toMatchObject({
-          maActies: ['reparatieverzoek'],
-          maProductgroep: ['een-naam'],
+          maActies: ['stopzetten-tijdelijk'],
+          maProductgroep: 'een-naam',
           leverancier: 'Gebr Koenen B.V.',
           leverancierIdentificatie: 'LA0994',
           leveringsVorm: 'ZIN',
-          productsoortCode: 'WRA',
+          productsoortCode: 'LLV',
+          productIdentificatie: 'LLVAVG',
         });
       });
 
@@ -360,9 +369,10 @@ describe('wmo-voorzieningen-api-service', () => {
           .reply(
             200,
             getZorgnedAanvragenResponse([
-              getAanvraag('WRA', 'ZIN', '2023-01-01'),
+              getAanvraag('WRA', 'ZIN', null, '2023-01-01'),
             ])
           );
+        remoteApi.post('/zorgned/aanvragen').reply(200);
 
         const response = await fetchMaApiVoorzieningen('123456789', undefined, [
           {
@@ -373,14 +383,14 @@ describe('wmo-voorzieningen-api-service', () => {
             },
             assign: {
               maActies: ['reparatieverzoek'],
-              maProductgroep: ['een-naam'],
+              maProductgroep: 'een-naam',
             },
           },
         ]);
 
         expect(response.content?.[0]).not.toMatchObject({
           maActies: ['reparatieverzoek'],
-          maProductgroep: ['een-naam'],
+          maProductgroep: 'een-naam',
         });
       });
 
@@ -391,6 +401,7 @@ describe('wmo-voorzieningen-api-service', () => {
             200,
             getZorgnedAanvragenResponse([getAanvraag(), getAanvraag('ABC')])
           );
+        remoteApi.post('/zorgned/aanvragen').reply(200);
 
         const response = await fetchMaApiVoorzieningen(
           '123456789',
@@ -408,7 +419,7 @@ describe('wmo-voorzieningen-api-service', () => {
               },
               assign: {
                 maActies: ['reparatieverzoek'],
-                maProductgroep: ['een-naam'],
+                maProductgroep: 'een-naam',
               },
             },
           ]
@@ -425,6 +436,7 @@ describe('wmo-voorzieningen-api-service', () => {
             200,
             getZorgnedAanvragenResponse([getAanvraag(), getAanvraag('ABC')])
           );
+        remoteApi.post('/zorgned/aanvragen').reply(200);
 
         const response = await fetchMaApiVoorzieningen(
           '123456789',
@@ -441,7 +453,7 @@ describe('wmo-voorzieningen-api-service', () => {
               },
               assign: {
                 maActies: ['reparatieverzoek'],
-                maProductgroep: ['een-naam'],
+                maProductgroep: 'een-naam',
               },
             },
           ]
@@ -468,6 +480,7 @@ describe('wmo-voorzieningen-api-service', () => {
         remoteApi
           .post('/zorgned/aanvragen')
           .reply(200, getZorgnedAanvragenResponse([aanvraag]));
+        remoteApi.post('/zorgned/aanvragen').reply(200);
 
         const response = await forTesting.fetchMaApiVoorzieningById(
           '123456789',
@@ -476,7 +489,7 @@ describe('wmo-voorzieningen-api-service', () => {
 
         expect(response.content).toMatchObject({
           maActies: ['stopzetten'],
-          maProductgroep: ['WRA'],
+          maProductgroep: 'WRA',
           leverancier: 'Gebr Koenen B.V.',
           leverancierIdentificatie: 'LA0994',
           leveringsVorm: 'ZIN',
@@ -489,6 +502,7 @@ describe('wmo-voorzieningen-api-service', () => {
         remoteApi
           .post('/zorgned/aanvragen')
           .reply(200, getZorgnedAanvragenResponse([aanvraag]));
+        remoteApi.post('/zorgned/aanvragen').reply(200);
 
         const response = await forTesting.fetchMaApiVoorzieningById(
           '123456789',

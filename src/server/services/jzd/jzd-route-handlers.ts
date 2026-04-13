@@ -3,12 +3,12 @@ import type { Request, Response } from 'express';
 import {
   voorzieningDetailRequestInput,
   voorzieningenRequestInput,
-  ZORGNED_JZD_API_CONFIG_KEY,
-} from './wmo-service-config.ts';
+} from './jzd-service-config.ts';
 import {
   fetchMaApiVoorzieningById,
   fetchMaApiVoorzieningen,
-} from './wmo-voorzieningen-api-service.ts';
+} from './jzd-voorzieningen-api-service.ts';
+import { ZORGNED_JZD_API_CONFIG_KEY } from './wmo/wmo-config.ts';
 import { omit } from '../../../universal/helpers/utils.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import {
@@ -22,7 +22,7 @@ import {
   fetchDocument,
 } from '../zorgned/zorgned-service.ts';
 
-export async function fetchZorgnedJZDDocument(
+export async function fetchZorgnedDocumentWMO(
   authProfileAndToken: AuthProfileAndToken,
   documentId: string
 ) {
@@ -34,7 +34,7 @@ export async function fetchZorgnedJZDDocument(
   return response;
 }
 
-export async function fetchZorgnedJZDDocuments(
+export async function fetchZorgnedDocumentsWMO(
   req: Request,
   res: ResponseAuthenticated
 ) {
@@ -45,7 +45,7 @@ export async function fetchZorgnedJZDDocuments(
   return sendResponse(res, response);
 }
 
-export async function fetchZorgnedJZDAanvragen(
+export async function fetchZorgnedAanvragenWMO(
   req: Request,
   res: ResponseAuthenticated
 ) {
@@ -96,3 +96,8 @@ export async function handleVoorzieningDetailRequest(
 
   return sendResponse(res, response);
 }
+
+export const forTesting = {
+  handleVoorzieningenRequest,
+  handleVoorzieningDetailRequest,
+};
