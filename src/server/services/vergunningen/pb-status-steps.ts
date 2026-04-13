@@ -7,7 +7,7 @@ export function getStatusStepsPB<T extends PBVergunning>(
   const getStatusDate = (status: string) =>
     zaak.statusDates?.find((sd) => sd.status === status)?.datePublished ?? null;
 
-  const datumInBehandeling = getStatusDate('Inhoudelijk behandelen') ?? '';
+  const datumInBehandeling = getStatusDate('In behandeling') ?? '';
   const dateDecision: string =
     getStatusDate('Gereed') ?? zaak.dateDecision ?? '';
 
