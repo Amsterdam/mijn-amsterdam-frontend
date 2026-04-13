@@ -7,8 +7,12 @@ export const themaIdBRP = 'BRP' as const;
 export const featureToggle = {
   [themaIdBRP]: {
     themaActive: true,
+    wonenActive: isEnabled('WONEN.vve'),
     get aantalBewonersOpAdresTonenActive() {
-      return featureToggle[themaIdBRP].themaActive && isEnabled('BRP.aantalBewonersOpAdresTonen');
+      return (
+        featureToggle[themaIdBRP].themaActive &&
+        isEnabled('BRP.aantalBewonersOpAdresTonen')
+      );
     },
   },
   [themaIdKVK]: {
@@ -30,6 +34,11 @@ export const routeConfig = {
   themaPageKVK: {
     path: '/gegevens-handelsregister',
     documentTitle: `${themaTitle.KVK} | Mijn Amsterdam`,
+    trackingUrl: null,
+  },
+  detailPageVvE: {
+    path: '/persoonlijke-gegevens/vve',
+    documentTitle: `Mijn VvE | Mijn Amsterdam`,
     trackingUrl: null,
   },
   listPageContactmomenten: {

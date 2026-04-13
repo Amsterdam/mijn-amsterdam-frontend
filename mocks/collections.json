@@ -88,7 +88,8 @@
       "post-zorgned-persoonsgegevens:standard",
       "post-zorgned-aanvragen:standard",
       "post-zorgned-document:standard",
-      "get-search-config:standard"
+      "get-search-config:standard",
+      "get-zwd-vve:standard"
     ]
   },
   {
