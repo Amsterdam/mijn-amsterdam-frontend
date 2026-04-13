@@ -4,13 +4,13 @@ export type ZwedVvEResponseType = {
   '@onformdata.context': string;
 };
 
-export type ZwdActivationTeam = {
+export type ZwdActivationTeamSource = {
   type: string;
   subject: string;
   meeting_date: string; // ISO date (YYYY-MM-DD)
 };
 
-export type ZwdHomeownerAssociation = {
+export type ZwdHomeownerAssociationSource = {
   id: number;
   name: string;
   district: string;
@@ -18,13 +18,13 @@ export type ZwdHomeownerAssociation = {
   number_of_apartments: number;
 };
 
-export type ZwdCase = {
-  activation_team: ZwdActivationTeam;
+export type ZwdCaseSource = {
+  activation_team: ZwdActivationTeamSource;
   advice_type: string;
   application_type: string;
   created: string; // ISO datetime
   end_date: string; // ISO date
-  homeowner_association: ZwdHomeownerAssociation;
+  homeowner_association: ZwdHomeownerAssociationSource;
   id: number;
   legacy_id: string;
   prefixed_dossier_id: string;
@@ -46,7 +46,7 @@ export type ZwdVveDataSource = {
   number_of_apartments: number;
   wijk: string;
   zip_code: string;
-  cases: ZwdCase[];
+  cases: ZwdCaseSource[];
 };
 
 export type VvEDataFrontend = Prettify<
@@ -65,13 +65,3 @@ export type VvEDataFrontend = Prettify<
     >
   >
 >;
-
-export type Owner = {
-  type:
-    | 'Natuurlijk persoon'
-    | 'Vereniging van eigenaren'
-    | 'Onderneming'
-    | 'Onbekend';
-  name: string | null;
-  number_of_apartments: number;
-};
