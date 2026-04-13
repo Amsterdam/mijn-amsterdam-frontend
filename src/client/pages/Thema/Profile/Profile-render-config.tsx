@@ -7,9 +7,9 @@ import { VvEDetail } from './private/VvEDetail.tsx';
 import {
   routeConfig,
   themaTitle,
-  routeConfig,
   themaIdBRP,
   themaIdKVK,
+  featureToggle,
 } from './Profile-thema-config.ts';
 import { default as ProfilePrivateIcon } from './ProfilePrivateIcon.svg?react';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles.ts';
@@ -23,9 +23,10 @@ export const ProfileRoutes = [
     route: routeConfig.themaPageKVK.path,
     Component: MijnBedrijfsGegevensThema,
   },
- {
+  {
     route: routeConfig.detailPageVvE.path,
     Component: VvEDetail,
+    isActive: featureToggle[themaIdBRP].wonenActive,
   },
   {
     route: routeConfig.listPageContactmomenten.path,

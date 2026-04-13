@@ -5,13 +5,13 @@ import { themaIdBRP as themaId, themaTitle } from '../Profile-thema-config.ts';
 
 export function useWonenThemaData() {
   const { WONEN } = useAppStateGetter();
-  const wonenData = WONEN.content;
+  const vve = WONEN.content?.vve;
 
   const breadcrumbs = useThemaBreadcrumbs(themaId);
 
   return {
     title: themaTitle,
-    wonenData,
+    vve,
     isLoading: isLoading(WONEN),
     isError: isError(WONEN),
     breadcrumbs,

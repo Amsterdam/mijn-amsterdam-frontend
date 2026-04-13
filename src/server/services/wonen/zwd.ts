@@ -1,8 +1,11 @@
+import { featureToggle } from './wonen-service-config.ts';
 import type { VvEDataFrontend, VvEDataSource } from './zwd.types.ts';
 import { IS_PRODUCTION } from '../../../universal/config/env.ts';
+import { apiPostponeResult } from '../../../universal/helpers/api.ts';
 import { pick } from '../../../universal/helpers/utils.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import type { DataRequestConfig } from '../../config/source-api.ts';
+import camelize from '../../helpers/camelize.ts';
 import { getFromEnv } from '../../helpers/env.ts';
 import { getApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
@@ -34,8 +37,8 @@ async function fetchZWDAPI<T>(dataRequestConfigSpecific: DataRequestConfig) {
   return requestData<T>(dataRequestConfigBase);
 }
 
-function transformZwdVvEResponse(responseData: VvEDataSource) {
-  return pick(responseData, [
+function transformZwdVvEResponse(responseData: VvEDataSource): VvEDataFrontend {
+  const responseDataPicked = pick(responseData, [
     'name',
     'monument_status',
     'number_of_apartments',
@@ -45,10 +48,16 @@ function transformZwdVvEResponse(responseData: VvEDataSource) {
     'is_priority_neighborhood',
     'ligt_in_beschermd_gebied',
     'beschermd_stadsdorpsgezicht',
-  ]) as VvEDataSource;
+  ]);
+  const camelizedData: VvEDataFrontend = camelize(responseDataPicked);
+  return camelizedData;
 }
 
 export async function fetchVVEData(authProfileAndToken: AuthProfileAndToken) {
+  if (!featureToggle.service.fetchWonen.isEnabled) {
+    return apiPostponeResult(null);
+  }
+
   const privateResponse = await fetchPrivate(authProfileAndToken);
 
   if (

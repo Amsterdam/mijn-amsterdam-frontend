@@ -289,6 +289,21 @@
       "profileTypes": ["private"]
     },
     {
+      "url": "/persoonlijke-gegevens",
+      "displayTitle": "Mijn VVE naam",
+      "description": "Informatie over uw VvE.",
+      "keywords": [
+        "VvE",
+        "naam",
+        "vereniging",
+        "eigenaarsvereniging",
+        "eigenaren",
+        "woning",
+        "appartement"
+      ],
+      "profileTypes": ["private"]
+    },
+    {
       "url": "/gegevens-handelsregister",
       "displayTitle": "Gegevens handelsregister",
       "description": "Hier ziet u hoe uw onderneming ingeschreven staat in het Handelsregister van de Kamer van Koophandel. In dat register staan onder meer uw bedrijfsnaam, vestigingsadres en KvK-nummer.",

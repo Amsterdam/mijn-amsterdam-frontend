@@ -54,6 +54,7 @@ import { fetchVaren } from './varen/varen.ts';
 import { fetchVergunningen } from './vergunningen/vergunningen.ts';
 import { fetchVVEData } from './wonen/zwd-vve.ts';
 import { fetchWmo } from './wmo/wmo.ts';
+
 import {
   fetchBbz,
   fetchBijstandsuitkering,
@@ -160,8 +161,7 @@ const MILIEUZONE = callAuthenticatedService(fetchMilieuzone);
 const OVERTREDINGEN = callAuthenticatedService(fetchOvertredingen);
 const SUBSIDIES = callAuthenticatedService(fetchSubsidie);
 const KLANT_CONTACT = callAuthenticatedService(fetchContactmomenten); // For now salesforcre only consists of contactmomenten.
-
-const WONEN = callAuthenticatedService(fetchVVEData);
+const WONEN = callAuthenticatedService(fetchWonen);
 
 // Location, address, based services
 const AFVAL = callAuthenticatedService(fetchAfval);

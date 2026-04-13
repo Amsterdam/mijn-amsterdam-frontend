@@ -2,7 +2,7 @@ import { Paragraph } from '@amsterdam/design-system-react';
 
 import { useProfileData } from './useProfileData.hook.tsx';
 import { useWonenThemaData } from './useWonenThemaData.hook.ts';
-import type { VvEDataSource } from '../../../../../server/services/wonen/zwd.types.ts';
+import type { VvEDataFrontend } from '../../../../../server/services/wonen/zwd.types.ts';
 import {
   Datalist,
   type Row,
@@ -14,46 +14,44 @@ import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts'
 import { themaId } from '../../Afis/Afis-thema-config.ts';
 
 type WonenDataProps = {
-  vve: VvEDataSource;
+  vve: VvEDataFrontend;
 };
 
 function WonenData({ vve }: WonenDataProps) {
   const rows: Array<Row | RowSet> = [
-    vve?.name !== null && {
+    {
       label: 'Statutaire naam',
-      content: vve?.name,
+      content: vve.name,
     },
-    vve?.number_of_apartments !== null && {
+    {
       label: 'Aantal wooneenheden in de VvE',
-      content: vve?.number_of_apartments,
+      content: vve.numberOfApartments,
     },
-    vve?.build_year !== null && {
+    {
       label: 'Bouwjaar',
-      content: vve?.build_year,
+      content: vve.buildYear,
     },
-    vve?.beschermd_stadsdorpsgezicht !== null && {
+    {
       label: 'Beschermd stads-/dorpsgezicht',
-      content: vve?.beschermd_stadsdorpsgezicht,
+      content: vve.beschermdStadsdorpsgezicht,
     },
-    vve?.is_priority_neighborhood !== null && {
+    {
       label: 'Prioriteitswijk',
-      content: vve?.is_priority_neighborhood ? 'Ja' : 'Nee',
+      content: vve.isPriorityNeighborhood ? 'Ja' : 'Nee',
     },
-    (vve?.kvk_number !== null ||
-      vve?.kvk_number !== undefined ||
-      vve?.kvk_number !== '') && {
+    {
       label: 'KvK nummer',
-      content: vve?.kvk_number,
+      content: vve.kvkNumber || null,
     },
-    vve?.monument_status !== null && {
+    {
       label: 'Monumentstatus',
-      content: vve?.monument_status,
+      content: vve.monumentStatus ? 'Ja' : 'Nee',
     },
-  ].filter((row) => !!row);
+  ].filter((row) => !!row.content);
 
   return (
     <>
-      <PageContentCell>
+      <PageContentCell spanWide={8}>
         <Paragraph>
           Hier ziet u data afkomsting uit de Basisregistratie Adressen en
           Gebouwen van het kadaster. Deze data kan een week achterlopen.
@@ -67,7 +65,7 @@ function WonenData({ vve }: WonenDataProps) {
 }
 
 export function VvEDetail() {
-  const { wonenData, isLoading, isError, breadcrumbs } = useWonenThemaData();
+  const { vve, isLoading, isError, breadcrumbs } = useWonenThemaData();
   const { routeConfig } = useProfileData();
   useHTMLDocumentTitle(routeConfig.detailPageVvE);
   return (
@@ -77,7 +75,7 @@ export function VvEDetail() {
       zaak={{}} // empty object to prevent info block: "Geen gegevens gevonden"
       isError={isError}
       isLoading={isLoading}
-      pageContentMain={wonenData && <WonenData vve={wonenData} />}
+      pageContentMain={vve && <WonenData vve={vve} />}
       breadcrumbs={breadcrumbs}
     />
   );

@@ -19,6 +19,7 @@ import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
 import {
   BRP_LABEL_AANTAL_INGESCHREVEN_PERSONEN,
   profileLinks,
+  routeConfig,
 } from '../Profile-thema-config.ts';
 import type { ProfileLabels } from '../profileDataFormatter.ts';
 import { formatProfileSectionData } from '../profileDataFormatter.ts';
@@ -113,7 +114,7 @@ delete persoonSecundair.nationaliteiten;
 delete persoonSecundair.indicatieGeheim;
 
 const adres: ProfileLabels<
-  Partial<Adres> & { aantalIngeschrevenPersonen: string },
+  Partial<Adres> & { aantalIngeschrevenPersonen: string; vveNaam?: string },
   AppState['BRP']['content']
 > = {
   locatiebeschrijving: 'Locatie',
@@ -179,14 +180,14 @@ const adres: ProfileLabels<
   ],
   vveNaam: [
     'Vereniging van Eigenaren',
-    (value, _item, brpData) => {
-      if (brpData?.adres?.vveNaam) {
+    (_value, adres) => {
+      if (adres?.vveNaam) {
         return (
           <MaRouterLink
             href={routeConfig.detailPageVvE.path}
             rel="noopener noreferrer"
           >
-            {brpData.adres.vveNaam}
+            {adres.vveNaam}
           </MaRouterLink>
         );
       }
