@@ -13,8 +13,16 @@ exports[`AVGDetail > No result > Matches the Full Page snapshot 1`] = `
         class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
       >
         <nav
+          aria-labelledby=":r0:"
           class="ams-breadcrumb"
         >
+          <h2
+            aria-hidden="true"
+            class="ams-visually-hidden"
+            id=":r0:"
+          >
+            Kruimelpad
+          </h2>
           <ol
             class="ams-breadcrumb__list"
           >
@@ -144,8 +152,16 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
         class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
       >
         <nav
+          aria-labelledby=":r1:"
           class="ams-breadcrumb"
         >
+          <h2
+            aria-hidden="true"
+            class="ams-visually-hidden"
+            id=":r1:"
+          >
+            Kruimelpad
+          </h2>
           <ol
             class="ams-breadcrumb__list"
           >
@@ -259,7 +275,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
             >
               <li
                 aria-label="Status Afgerond"
-                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--completed"
+                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--collapsed ams-progress-list__step--completed"
               >
                 <div
                   class="ams-progress-list__indicator"
@@ -281,24 +297,53 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
-                    <span
-                      class="ams-visually-hidden"
+                    <button
+                      aria-controls=":r2:"
+                      aria-expanded="false"
+                      class="ams-progress-list__button"
+                      type="button"
                     >
-                      Klaar: 
-                    </span>
-                    Ontvangen
+                      <span
+                        class="ams-icon ams-icon--heading-3 ams-progress-list__icon"
+                        hidden=""
+                      >
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            clip-rule="evenodd"
+                            d="M2.5 7.911 12 17.5l9.5-9.589L20.102 6.5 12 14.677 3.898 6.5z"
+                            fill-rule="evenodd"
+                          />
+                        </svg>
+                      </span>
+                      <span
+                        class="ams-visually-hidden"
+                      >
+                        Klaar: 
+                      </span>
+                      Ontvangen
+                    </button>
                   </h3>
-                  <time
-                    class="_StepStatusDate_5b0b8a"
-                    datetime="2023-03-18T00:00:00.000Z"
+                  <div
+                    class="ams-progress-list__panel"
+                    id=":r2:"
                   >
-                    18 maart 2023
-                  </time>
+                    <time
+                      class="_StepStatusDate_5b0b8a"
+                      datetime="2023-03-18T00:00:00.000Z"
+                    >
+                      18 maart 2023
+                    </time>
+                  </div>
                 </div>
               </li>
               <li
                 aria-label="Status Afgerond"
-                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--completed"
+                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--collapsed ams-progress-list__step--completed"
               >
                 <div
                   class="ams-progress-list__indicator"
@@ -320,19 +365,48 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
-                    <span
-                      class="ams-visually-hidden"
+                    <button
+                      aria-controls=":r3:"
+                      aria-expanded="false"
+                      class="ams-progress-list__button"
+                      type="button"
                     >
-                      Klaar: 
-                    </span>
-                    In behandeling
+                      <span
+                        class="ams-icon ams-icon--heading-3 ams-progress-list__icon"
+                        hidden=""
+                      >
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            clip-rule="evenodd"
+                            d="M2.5 7.911 12 17.5l9.5-9.589L20.102 6.5 12 14.677 3.898 6.5z"
+                            fill-rule="evenodd"
+                          />
+                        </svg>
+                      </span>
+                      <span
+                        class="ams-visually-hidden"
+                      >
+                        Klaar: 
+                      </span>
+                      In behandeling
+                    </button>
                   </h3>
-                  <time
-                    class="_StepStatusDate_5b0b8a"
-                    datetime="2023-05-30T00:00:00.000Z"
+                  <div
+                    class="ams-progress-list__panel"
+                    id=":r3:"
                   >
-                    30 mei 2023
-                  </time>
+                    <time
+                      class="_StepStatusDate_5b0b8a"
+                      datetime="2023-05-30T00:00:00.000Z"
+                    >
+                      30 mei 2023
+                    </time>
+                  </div>
                 </div>
               </li>
               <li
@@ -376,21 +450,50 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
-                    <span
-                      class="ams-visually-hidden"
+                    <button
+                      aria-controls=":r4:"
+                      aria-expanded="true"
+                      class="ams-progress-list__button"
+                      type="button"
                     >
-                      Bezig: 
-                    </span>
-                    Extra informatie nodig
+                      <span
+                        class="ams-icon ams-icon--heading-3 ams-progress-list__icon"
+                        hidden=""
+                      >
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            clip-rule="evenodd"
+                            d="M2.5 7.911 12 17.5l9.5-9.589L20.102 6.5 12 14.677 3.898 6.5z"
+                            fill-rule="evenodd"
+                          />
+                        </svg>
+                      </span>
+                      <span
+                        class="ams-visually-hidden"
+                      >
+                        Bezig: 
+                      </span>
+                      Extra informatie nodig
+                    </button>
                   </h3>
-                  <time
-                    class="_StepStatusDate_5b0b8a"
-                    datetime="2023-06-03T00:00:00.000Z"
+                  <div
+                    class="ams-progress-list__panel"
+                    id=":r4:"
                   >
-                    03 juni 2023
-                  </time>
-                  <div>
-                    Wij hebben meer informatie nodig om uw verzoek in behandeling te nemen. U krijgt een brief waarin staat welke informatie wij nodig hebben.
+                    <time
+                      class="_StepStatusDate_5b0b8a"
+                      datetime="2023-06-03T00:00:00.000Z"
+                    >
+                      03 juni 2023
+                    </time>
+                    <div>
+                      Wij hebben meer informatie nodig om uw verzoek in behandeling te nemen. U krijgt een brief waarin staat welke informatie wij nodig hebben.
+                    </div>
                   </div>
                 </div>
               </li>
@@ -418,12 +521,41 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
-                    Afgehandeld
+                    <button
+                      aria-controls=":r5:"
+                      aria-expanded="true"
+                      class="ams-progress-list__button"
+                      type="button"
+                    >
+                      <span
+                        class="ams-icon ams-icon--heading-3 ams-progress-list__icon"
+                        hidden=""
+                      >
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            clip-rule="evenodd"
+                            d="M2.5 7.911 12 17.5l9.5-9.589L20.102 6.5 12 14.677 3.898 6.5z"
+                            fill-rule="evenodd"
+                          />
+                        </svg>
+                      </span>
+                      Afgehandeld
+                    </button>
                   </h3>
-                  <time
-                    class="_StepStatusDate_5b0b8a"
-                    datetime=""
-                  />
+                  <div
+                    class="ams-progress-list__panel"
+                    id=":r5:"
+                  >
+                    <time
+                      class="_StepStatusDate_5b0b8a"
+                      datetime=""
+                    />
+                  </div>
                 </div>
               </li>
             </ol>

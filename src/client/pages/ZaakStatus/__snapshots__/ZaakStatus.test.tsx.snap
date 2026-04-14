@@ -13,8 +13,16 @@ exports[`ZaakStatus > No query params passed 1`] = `
         class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
       >
         <nav
+          aria-labelledby=":r0:"
           class="ams-breadcrumb"
         >
+          <h2
+            aria-hidden="true"
+            class="ams-visually-hidden"
+            id=":r0:"
+          >
+            Kruimelpad
+          </h2>
           <ol
             class="ams-breadcrumb__list"
           >
@@ -99,8 +107,16 @@ exports[`ZaakStatus > should show error alert 1`] = `
         class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
       >
         <nav
+          aria-labelledby=":r1:"
           class="ams-breadcrumb"
         >
+          <h2
+            aria-hidden="true"
+            class="ams-visually-hidden"
+            id=":r1:"
+          >
+            Kruimelpad
+          </h2>
           <ol
             class="ams-breadcrumb__list"
           >
@@ -230,8 +246,16 @@ exports[`ZaakStatus > should show not found message 1`] = `
         class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
       >
         <nav
+          aria-labelledby=":r2:"
           class="ams-breadcrumb"
         >
+          <h2
+            aria-hidden="true"
+            class="ams-visually-hidden"
+            id=":r2:"
+          >
+            Kruimelpad
+          </h2>
           <ol
             class="ams-breadcrumb__list"
           >
@@ -321,8 +345,16 @@ exports[`ZaakStatus > should show wachten op betaling 1`] = `
         class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
       >
         <nav
+          aria-labelledby=":r3:"
           class="ams-breadcrumb"
         >
+          <h2
+            aria-hidden="true"
+            class="ams-visually-hidden"
+            id=":r3:"
+          >
+            Kruimelpad
+          </h2>
           <ol
             class="ams-breadcrumb__list"
           >

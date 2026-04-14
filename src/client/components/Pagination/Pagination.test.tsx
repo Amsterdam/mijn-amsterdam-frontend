@@ -30,15 +30,13 @@ describe('<Pagination />', () => {
         path="/thema/lijst"
       />
     );
-    expect(screen.getAllByText('Pagina 1')[0]).toBeInTheDocument();
+    expect(screen.getByText('Pagina')).toBeInTheDocument();
     expect(
-      screen
-        .getAllByText('Pagina 1')[0]
-        .parentElement?.getAttribute('aria-current')
+      screen.getByText('Pagina').parentElement?.getAttribute('aria-current')
     ).toBe('page');
-    expect(screen.getAllByText('Ga naar pagina 2')[0]).toBeInTheDocument();
+    expect(screen.getAllByText('Ga naar pagina')[0]).toBeInTheDocument();
 
-    await user.click(screen.getAllByText('Ga naar pagina 2')[0]);
+    await user.click(screen.getAllByText('Ga naar pagina')[0]);
     expect(mocks.navigate).toHaveBeenCalledWith('/thema/lijst/2');
 
     rerender(
@@ -49,10 +47,10 @@ describe('<Pagination />', () => {
         path="/thema/lijst"
       />
     );
-    expect(screen.getAllByText('Pagina 2')[0]).toBeInTheDocument();
+    expect(screen.getAllByText('Pagina')[0]).toBeInTheDocument();
     expect(
       screen
-        .getAllByText('Pagina 2')[0]
+        .getAllByText('Pagina')[0]
         .parentElement?.getAttribute('aria-current')
     ).toBe('page');
   });
