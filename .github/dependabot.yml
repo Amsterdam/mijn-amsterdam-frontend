@@ -23,6 +23,15 @@ updates:
       - dependency-name: 'express-openid-connect'
         versions:
           - '> 2.18.1'
+      - dependency-name: '@amsterdam/design-system-react'
+        versions:
+          - '> 3.2.1'
+      - dependency-name: '@amsterdam/design-system-css'
+        versions:
+          - '> 3.2.1'
+      - dependency-name: '@amsterdam/design-system-assets'
+        versions:
+          - '> 2.1.0'
     groups:
       production-dependencies:
         dependency-type: 'production'
