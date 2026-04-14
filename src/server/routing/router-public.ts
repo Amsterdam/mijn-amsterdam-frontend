@@ -1,4 +1,4 @@
-import axios, { AxiosError, HttpStatusCode } from 'axios';
+import axios, { HttpStatusCode, type AxiosResponse } from 'axios';
 import type { NextFunction, Request, Response } from 'express';
 import express from 'express';
 import proxy from 'express-http-proxy';
@@ -28,6 +28,7 @@ import { RELEASE_VERSION } from '../config/app.ts';
 import { getAllFeatureToggles } from '../config/azure-appconfiguration.ts';
 import { getFromEnv } from '../helpers/env.ts';
 import { getRequestParamsFromQueryString } from '../helpers/source-api-request.ts';
+import { logger } from '../logging.ts';
 import {
   fetchDataset,
   loadFeatureDetail,
@@ -287,22 +288,28 @@ if (!IS_PRODUCTION) {
       method: req.method,
       headers: req.headers,
       data: req.body,
+      // We want to be as close as possible to the actual response so do not parse.
       transformResponse: (res) => res,
     })
-      .then((targetResponse) => {
-        return res.send(targetResponse.data);
+      .then((incomingResponse) => {
+        sendProxyResponse(incomingResponse, res);
       })
       .catch((err) => {
         if (err.response) {
-          console.log(err.response);
-          return res.send(err.response);
+          sendProxyResponse(err.response, res);
         } else if (err.request) {
-          console.error(err.request);
+          res.status(0).send(`Request send to ${url} but no response recieved`);
         } else {
-          console.error(err);
+          logger.error(err);
         }
       });
   });
+}
+
+function sendProxyResponse(incoming: AxiosResponse, outgoing: Response): void {
+  outgoing
+    .setHeaders(new Map(Object.entries(incoming.headers)))
+    .status(incoming.status);
 }
 
 export const legacyRouter = express.Router();
