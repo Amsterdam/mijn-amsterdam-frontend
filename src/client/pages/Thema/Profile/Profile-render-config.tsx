@@ -19,9 +19,9 @@ export const ProfileRoutes = [
   ...(themaConfig.BRP.contactenPage?.route.path
     ? [
         {
-          route: routeConfig.detailPageVvE.path,
-          Component: VvEDetail,
-          isActive: featureToggle[themaIdBRP].wonenActive,
+          route: themaConfig.BRP.wonenVvEPage.route.path,
+          Component: VvEDetail, //TO DO Yacine > achterhalen in de main waar dit naar toe gaat.
+          isActive: themaConfig.BRP.featureToggle.wonenActive,
         },
         {
           route: themaConfig.BRP.contactenPage.route.path,
