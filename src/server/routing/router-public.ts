@@ -1,3 +1,5 @@
+import type { IncomingHttpHeaders } from 'http';
+
 import axios, { HttpStatusCode, type AxiosResponse } from 'axios';
 import type { NextFunction, Request, Response } from 'express';
 import express from 'express';
@@ -263,9 +265,9 @@ if (!IS_PRODUCTION) {
   const PROXY_API_KEY = getFromEnv('MA_DEV_API_KEY', false);
 
   router.all(BffEndpoints.PROXY, async (req, res) => {
+    // This proxy route aims to closely mimic the server's behavior, making it appear as though the server itself initiated these requests.
     const apiKeyName = 'x-ma-dev-api-key';
     const apiKey = req.headers[apiKeyName];
-    delete req.headers[apiKeyName];
     if (apiKey !== PROXY_API_KEY) {
       return res
         .status(HttpStatusCode.Unauthorized)
@@ -274,7 +276,6 @@ if (!IS_PRODUCTION) {
 
     const urlHeaderName = 'x-ma-proxy-url';
     const url = req.headers[urlHeaderName];
-    delete req.headers[urlHeaderName];
     if (!url || typeof url !== 'string') {
       return res
         .status(HttpStatusCode.BadRequest)
@@ -286,9 +287,9 @@ if (!IS_PRODUCTION) {
     axios({
       url,
       method: req.method,
-      headers: req.headers,
+      headers: stripHeadersStartingWith(req.headers, ['x-ma-', 'x-ms-']),
       data: req.body,
-      // We want to be as close as possible to the actual response so do not parse.
+      // Prevent parsing of responses.
       transformResponse: (res) => res,
     })
       .then((incomingResponse) => {
@@ -304,6 +305,21 @@ if (!IS_PRODUCTION) {
         }
       });
   });
+}
+
+function stripHeadersStartingWith(
+  headers: IncomingHttpHeaders,
+  disallowedHeaders: string[]
+): IncomingHttpHeaders {
+  const clean = Object.entries(headers).filter(([name]) => {
+    for (const disallowedHeader of disallowedHeaders) {
+      if (name.startsWith(disallowedHeader)) {
+        return false;
+      }
+    }
+    return true;
+  });
+  return Object.fromEntries(clean);
 }
 
 function sendProxyResponse(incoming: AxiosResponse, outgoing: Response): void {
