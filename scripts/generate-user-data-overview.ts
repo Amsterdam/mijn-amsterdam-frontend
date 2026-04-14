@@ -251,7 +251,11 @@ function sheetZaken(resultsByUser: ResultsByUser): SheetData {
   };
 }
 
-function unpackZaken(content: object): object[] {
+type WithIdentifier = { identifier: string };
+
+function unpackZaken(
+  content: WithIdentifier[] | Record<string, WithIdentifier[] | unknown>
+): WithIdentifier[] {
   if (Array.isArray(content) && content.some((v) => !!v.identifier)) {
     return content;
   }
