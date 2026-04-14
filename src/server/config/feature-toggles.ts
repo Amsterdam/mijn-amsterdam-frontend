@@ -8,6 +8,7 @@ export const featureToggle = {
   ['USER_FEEDBACK.fetchSurvey']: true,
   ['cobrowse']: false,
   ['WONEN.vve']: !IS_PRODUCTION,
+  ['VERGUNNINGEN.VTHOnPowerbrowserActive']: !IS_PRODUCTION,
 };
 // globalThis is used to make sure featureToggles imported from frontend *-thema-configs have access.
 globalThis.MA_FEATURETOGGLES = featureToggle;
