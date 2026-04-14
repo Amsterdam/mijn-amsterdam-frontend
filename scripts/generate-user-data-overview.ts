@@ -255,14 +255,10 @@ function unpackZaken(content: object): object[] {
   if (Array.isArray(content) && content.some((v) => !!v.identifier)) {
     return content;
   }
-  const arrays = Object.values(content).filter((v) => Array.isArray(v));
-  if (arrays) {
-    return arrays.flat();
-  }
-  if (!(typeof content !== 'object')) {
-    return [];
-  }
-  return unpackZaken(Object.values(content));
+  return Object.values(content)
+    .filter((v) => Array.isArray(v))
+    .map((v) => unpackZaken(v))
+    .flat();
 }
 
 async function getServiceResults(): Promise<ResultsByUser> {
