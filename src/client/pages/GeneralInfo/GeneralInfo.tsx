@@ -165,7 +165,7 @@ export function GeneralInfo() {
     });
   return (
     <PageV2
-      heading="Dit ziet u in Mijn Amsterdam"
+      heading="Dit kunt u zien in Mijn Amsterdam"
       redactedScope="full"
       showUserFeedback
       userFeedbackDetails={{

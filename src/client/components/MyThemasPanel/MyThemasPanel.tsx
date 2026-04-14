@@ -76,7 +76,7 @@ export function MyThemasPanel({
         )}
       </UnorderedList>
       <MaRouterLink href={GeneralInfoRoute.route}>
-        Dit ziet u in Mijn Amsterdam
+        Dit kunt u zien in Mijn Amsterdam
       </MaRouterLink>
     </>
   );
