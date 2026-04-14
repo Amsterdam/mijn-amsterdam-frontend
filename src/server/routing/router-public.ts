@@ -300,7 +300,11 @@ if (!IS_PRODUCTION) {
         if (err.response) {
           sendProxyResponse(err.response, res);
         } else if (err.request) {
-          res.status(0).send(`Request send to ${url} but no response recieved`);
+          res
+            .status(400)
+            .send(
+              `Proxy: Request send to ${url} but no response has been recieved`
+            );
         } else {
           logger.error(err);
         }
