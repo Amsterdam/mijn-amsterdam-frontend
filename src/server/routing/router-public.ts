@@ -16,9 +16,7 @@ import {
   getDatasetCategoryId,
 } from '../../universal/config/myarea-datasets.ts';
 import type { ApiResponse_DEPRECATED } from '../../universal/helpers/api.ts';
-import {
-  apiSuccessResult,
-} from '../../universal/helpers/api.ts';
+import { apiSuccessResult } from '../../universal/helpers/api.ts';
 import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config.ts';
 import {
   getAuth,
@@ -29,9 +27,7 @@ import { authRoutes } from '../auth/auth-routes.ts';
 import { RELEASE_VERSION } from '../config/app.ts';
 import { getAllFeatureToggles } from '../config/azure-appconfiguration.ts';
 import { getFromEnv } from '../helpers/env.ts';
-import {
-  getRequestParamsFromQueryString,
-} from '../helpers/source-api-request.ts';
+import { getRequestParamsFromQueryString } from '../helpers/source-api-request.ts';
 import {
   fetchDataset,
   loadFeatureDetail,
@@ -286,11 +282,9 @@ if (!IS_PRODUCTION) {
         );
     }
 
-    // RP TODO: add x-ma-api-config to select a api-config?
-
     const targetResponse = await axios({
-      method: req.method,
       url,
+      method: req.method,
       headers: req.headers,
       data: req.body,
     });
