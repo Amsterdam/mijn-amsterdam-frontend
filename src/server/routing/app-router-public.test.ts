@@ -1,4 +1,4 @@
-import { zaakStatusHandler } from './router-public.ts';
+import { zaakStatusHandler } from './app-router-public.ts';
 import { bffApiHost } from '../../testing/setup.ts';
 import { RequestMock, ResponseMock } from '../../testing/utils.ts';
 

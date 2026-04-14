@@ -1,7 +1,7 @@
 import Mockdate from 'mockdate';
 
 import { generateFullApiUrlBFF } from './route-helpers.ts';
-import { forTesting } from './router-oidc.ts';
+import { forTesting } from './app-router-oidc.ts';
 import { bffApiHost } from '../../testing/setup.ts';
 import {
   getAuthProfileAndToken,

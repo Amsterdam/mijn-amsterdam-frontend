@@ -18,7 +18,7 @@ import type {
   RequestWithRouteAndQueryParams,
   ResponseAuthenticated,
 } from '../server/routing/route-helpers.ts';
-import { createOIDCStub } from '../server/routing/router-development.ts';
+import { createOIDCStub } from '../server/routing/app-router-development.ts';
 
 const defaultReplyHeaders = {
   'access-control-allow-origin': '*',

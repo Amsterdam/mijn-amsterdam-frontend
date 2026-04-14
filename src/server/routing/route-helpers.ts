@@ -11,7 +11,7 @@ import {
   apiErrorResult,
 } from '../../universal/helpers/api.ts';
 import type { AuthProfileAndToken } from '../auth/auth-types.ts';
-import { BFF_API_BASE_URL } from '../config/app.ts';
+import { BFF_API_ADMIN_BASE_URL, BFF_API_BASE_URL } from '../config/app.ts';
 
 type BFFRouter = express.Router & { BFF_ID: string };
 
@@ -85,6 +85,13 @@ export function generateFullApiUrlBFF(
     : [undefined, params];
   const query = queryParams ? `?${new URLSearchParams(queryParams)}` : '';
   return `${baseUrl}${generatePath(path, pathParams)}${query}`;
+}
+
+export function generateFullApiAdminUrlBFF(
+  path: string,
+  params?: PathParams | QueryAndOrPathParams
+) {
+  return generateFullApiUrlBFF(path, params, BFF_API_ADMIN_BASE_URL);
 }
 
 /** Sets the right statuscode and sends a response. */
