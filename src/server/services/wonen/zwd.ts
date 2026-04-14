@@ -1,3 +1,5 @@
+import { HttpStatusCode } from 'axios';
+
 import { featureToggle, ZWDApiReqestConfig } from './wonen-service-config.ts';
 import type { VvEDataFrontend, ZwdVveDataSource } from './zwd.types.ts';
 import { IS_PRODUCTION } from '../../../universal/config/env.ts';
@@ -7,11 +9,17 @@ import {
 } from '../../../universal/helpers/api.ts';
 import { pick } from '../../../universal/helpers/utils.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
-import type { DataRequestConfig } from '../../config/source-api.ts';
+import type {
+  DataRequestConfig,
+  DataRequestHeaders,
+} from '../../config/source-api.ts';
 import camelize from '../../helpers/camelize.ts';
 import { getFromEnv } from '../../helpers/env.ts';
 import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
-import { requestData } from '../../helpers/source-api-request.ts';
+import {
+  isSuccessStatus,
+  requestData,
+} from '../../helpers/source-api-request.ts';
 import type { BAGID, BAGLocation } from '../bag/bag.types.ts';
 import { fetchCommercial, fetchPrivate } from '../bag/my-locations.ts';
 
@@ -40,8 +48,15 @@ async function fetchZWDAPI<T>(dataRequestConfigSpecific: DataRequestConfig) {
 }
 
 function transformZwdVvEResponse(
-  responseData: ZwdVveDataSource
-): VvEDataFrontend {
+  responseData: ZwdVveDataSource,
+  _headers: DataRequestHeaders,
+  status: number
+): VvEDataFrontend | null {
+  if (status === HttpStatusCode.NotFound) {
+    // Return null if the record is not found, this is handled as a valid case in the frontend.
+    return null;
+  }
+
   const responseDataPicked = pick(responseData, [
     'name',
     'bag_id',
@@ -98,6 +113,13 @@ export async function fetchVVEData(authProfileAndToken: AuthProfileAndToken) {
       return `${url}/api/v1/address/${translateVerblijfObjectId(verblijfsobjectIdentificatie)}/mijn-amsterdam/`;
     },
     transformResponse: transformZwdVvEResponse,
+    validateStatus(status) {
+      return (
+        isSuccessStatus(status) ||
+        // 404 means there is no record available in the ZWD api for the requested verblijfsobjectIdentificatie.
+        status === HttpStatusCode.NotFound
+      );
+    },
   };
 
   return fetchZWDAPI<VvEDataFrontend>(requestConfig);

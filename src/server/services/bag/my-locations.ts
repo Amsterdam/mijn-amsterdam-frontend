@@ -23,7 +23,6 @@ export async function fetchPrivate(
   if (BRP.status === 'OK') {
     if (isMokum(BRP.content)) {
       const BAGLocation = (await fetchBAG(BRP.content.adres))?.content;
-
       if (!BAGLocation?.latlng) {
         return apiSuccessResult([
           {
