@@ -1,4 +1,4 @@
-import axios, { HttpStatusCode } from 'axios';
+import axios, { AxiosError, HttpStatusCode } from 'axios';
 import type { NextFunction, Request, Response } from 'express';
 import express from 'express';
 import proxy from 'express-http-proxy';
@@ -282,14 +282,26 @@ if (!IS_PRODUCTION) {
         );
     }
 
-    const targetResponse = await axios({
+    axios({
       url,
       method: req.method,
       headers: req.headers,
       data: req.body,
-    });
-
-    return res.status(targetResponse.status).send(targetResponse.data);
+      transformResponse: (res) => res,
+    })
+      .then((targetResponse) => {
+        return res.send(targetResponse.data);
+      })
+      .catch((err) => {
+        if (err.response) {
+          console.log(err.response);
+          return res.send(err.response);
+        } else if (err.request) {
+          console.error(err.request);
+        } else {
+          console.error(err);
+        }
+      });
   });
 }
 
