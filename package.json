@@ -42,7 +42,7 @@
     "@amsterdam/design-system-css": "3.2.1",
     "@amsterdam/design-system-react": "3.2.1",
     "@amsterdam/design-system-react-icons": "^2.0.0",
-    "@amsterdam/design-system-tokens": "^3.3.0",
+    "@amsterdam/design-system-tokens": "3.3.0",
     "@amsterdam/piwik-tracker": "^2.0.3",
     "@amsterdam/piwik-tracker-react": "^2.0.3",
     "@amsterdam/react-maps": "^1.1.1",

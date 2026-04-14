@@ -32,6 +32,9 @@ updates:
       - dependency-name: '@amsterdam/design-system-assets'
         versions:
           - '> 2.1.0'
+      - dependency-name: '@amsterdam/design-system-tokens'
+        versions:
+          - '> 3.3.0'
     groups:
       production-dependencies:
         dependency-type: 'production'
