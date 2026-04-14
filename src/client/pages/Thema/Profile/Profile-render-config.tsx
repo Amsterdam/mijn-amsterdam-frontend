@@ -3,6 +3,7 @@ import { BuildingsIcon } from '@amsterdam/design-system-react-icons';
 import { MijnBedrijfsGegevensThema } from './commercial/ProfileCommercial.tsx';
 import { ContactmomentenListPage } from './private/ContactmomentenListPage.tsx';
 import { MijnGegevensThema } from './private/ProfilePrivate.tsx';
+import { VvEDetail } from './private/VvEDetail.tsx';
 import { themaConfig } from './Profile-thema-config.ts';
 import { default as ProfilePrivateIcon } from './ProfilePrivateIcon.svg?react';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles.ts';
@@ -19,8 +20,8 @@ export const ProfileRoutes = [
   ...(themaConfig.BRP.contactenPage?.route.path
     ? [
         {
-          route: themaConfig.BRP.wonenVvEPage.route.path,
-          Component: VvEDetail, //TO DO Yacine > achterhalen in de main waar dit naar toe gaat.
+          route: themaConfig.BRP.detailVvEPage.route.path,
+          Component: VvEDetail,
           isActive: themaConfig.BRP.featureToggle.wonenActive,
         },
         {

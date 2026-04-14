@@ -11,7 +11,6 @@ import {
 import { PageContentCell } from '../../../../components/Page/Page.tsx';
 import ThemaDetailPagina from '../../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
-import { themaIdBRP } from '../Profile-thema-config.ts';
 
 type VveDetailsProps = {
   vve: VvEDataFrontend;
@@ -69,11 +68,11 @@ function VveDetail({ vve }: VveDetailsProps) {
 
 export function VvEDetail() {
   const { vve, isLoading, isError, breadcrumbs } = useWonenThemaData();
-  const { routeConfig } = useProfileData();
-  useHTMLDocumentTitle(routeConfig.detailPageVvE);
+  const { themaConfig } = useProfileData();
+  useHTMLDocumentTitle(themaConfig.BRP.detailVvEPage.route);
   return (
     <ThemaDetailPagina
-      themaId={themaIdBRP}
+      themaId={themaConfig.BRP.id}
       title="Vereniging van Eigenaren"
       zaak={{}} // empty object to prevent info block: "Geen gegevens gevonden"
       isError={isError}
