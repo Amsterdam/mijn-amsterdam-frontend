@@ -1,16 +1,18 @@
 import { differenceInMonths } from 'date-fns';
 
 import { themaConfig } from '../../../../client/pages/Thema/Inkomen/Inkomen-thema-config.ts';
-import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import {
   dateFormat,
   defaultDateFormat,
 } from '../../../../universal/helpers/date.ts';
 import type { MyNotification } from '../../../../universal/types/App.types.ts';
-import type { ServiceResults } from '../../content-tips/tip-types.ts';
-import { addApiBasePathToDocumentUrls, documentDownloadName } from '../helpers.ts';
+import {
+  addApiBasePathToDocumentUrls,
+  documentDownloadName,
+} from '../helpers.ts';
 import type {
   WpiIncomeSpecification,
+  WpiIncomeSpecificationResponseDataTransformed,
   WpiIncomeSpecificationTransformed,
 } from '../wpi-types.ts';
 
@@ -69,23 +71,26 @@ function transformIncomeSpecificationNotification(
 }
 
 export function getNotifications(
-  specificatiesContent: ServiceResults['WPI_SPECIFICATIES']['content']
+  specificatiesContent: WpiIncomeSpecificationResponseDataTransformed
 ) {
   const notifications: MyNotification[] = [];
 
-  if (!specificatiesContent) {
+  if (
+    !specificatiesContent?.jaaropgaven?.length &&
+    !specificatiesContent?.uitkeringsspecificaties?.length
+  ) {
     return notifications;
   }
 
   const { jaaropgaven, uitkeringsspecificaties } = specificatiesContent;
 
-  const isActualJaaropgave =
-    !IS_PRODUCTION ||
-    isNotificationActual(
-      'jaaropgave',
-      jaaropgaven[0].datePublished,
-      new Date()
-    );
+  const isActualJaaropgave = jaaropgaven[0]
+    ? isNotificationActual(
+        'jaaropgave',
+        jaaropgaven[0].datePublished,
+        new Date()
+      )
+    : false;
 
   if (jaaropgaven.length && isActualJaaropgave) {
     // Only the latest Jaaropgave gets a notification.
@@ -94,13 +99,13 @@ export function getNotifications(
     );
   }
 
-  const isActualUitkering =
-    !IS_PRODUCTION ||
-    isNotificationActual(
-      'uitkering',
-      uitkeringsspecificaties[0].datePublished,
-      new Date()
-    );
+  const isActualUitkering = uitkeringsspecificaties[0]
+    ? isNotificationActual(
+        'uitkering',
+        uitkeringsspecificaties[0].datePublished,
+        new Date()
+      )
+    : false;
 
   if (uitkeringsspecificaties.length && isActualUitkering) {
     // Only the latest Uitkeringspecificatie gets a notification.

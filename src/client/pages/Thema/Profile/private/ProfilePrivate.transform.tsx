@@ -15,9 +15,11 @@ import {
 import { defaultDateFormat } from '../../../../../universal/helpers/date.ts';
 import type { AppState } from '../../../../../universal/types/App.types.ts';
 import LoadingContent from '../../../../components/LoadingContent/LoadingContent.tsx';
+import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
 import {
   BRP_LABEL_AANTAL_INGESCHREVEN_PERSONEN,
   profileLinks,
+  routeConfig,
 } from '../Profile-thema-config.ts';
 import type { ProfileLabels } from '../profileDataFormatter.ts';
 import { formatProfileSectionData } from '../profileDataFormatter.ts';
@@ -43,9 +45,11 @@ type BRPPanelKey = keyof Omit<
 const persoon: ProfileLabels<Partial<Persoon>, AppState['BRP']['content']> = {
   bsn: 'BSN',
   voornamen: 'Voornamen',
-  omschrijvingAdellijkeTitel: 'Titel',
-  voorvoegselGeslachtsnaam: 'Voorvoegsel',
   geslachtsnaam: 'Achternaam',
+  voorvoegselGeslachtsnaam: 'Voorvoegsel',
+  naamgebruik: 'Naamgebruik',
+  aanschrijfwijze: 'Aanschrijfwijze',
+  omschrijvingAdellijkeTitel: 'Titel',
   omschrijvingGeslachtsaanduiding: 'Geslacht',
   geboortedatumFormatted: 'Geboortedatum',
   overlijdensdatum: [
@@ -110,7 +114,7 @@ delete persoonSecundair.nationaliteiten;
 delete persoonSecundair.indicatieGeheim;
 
 const adres: ProfileLabels<
-  Partial<Adres> & { aantalIngeschrevenPersonen: string },
+  Partial<Adres> & { aantalIngeschrevenPersonen: string; vveNaam?: string },
   AppState['BRP']['content']
 > = {
   locatiebeschrijving: 'Locatie',
@@ -172,6 +176,22 @@ const adres: ProfileLabels<
           </Link>
         </>
       );
+    },
+  ],
+  vveNaam: [
+    'Vereniging van Eigenaren',
+    (_value, adres) => {
+      if (adres?.vveNaam) {
+        return (
+          <MaRouterLink
+            href={routeConfig.detailPageVvE.path}
+            rel="noopener noreferrer"
+          >
+            {adres.vveNaam}
+          </MaRouterLink>
+        );
+      }
+      return null;
     },
   ],
 };

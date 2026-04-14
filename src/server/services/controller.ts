@@ -30,7 +30,8 @@ import { fetchErfpacht } from './erfpacht/erfpacht.ts';
 import { fetchHLI } from './hli/hli.ts';
 import { fetchHorecaVergunningen } from './horeca/horeca.ts';
 import { fetchKVK } from './hr-kvk/hr-kvk.ts';
-import { fetchLeerlingenvervoer } from './jeugd/jeugd.ts';
+import { fetchLeerlingenvervoer } from './jzd/jeugd/jeugd.ts';
+import { fetchWmo } from './jzd/wmo/wmo.ts';
 import { fetchAllKlachten } from './klachten/klachten.ts';
 import { fetchKrefia } from './krefia/krefia.ts';
 import { captureException } from './monitoring.ts';
@@ -40,19 +41,19 @@ import { fetchMilieuzone, fetchOvertredingen } from './patroon-c/cleopatra.ts';
 import { fetchSubsidie } from './patroon-c/subsidie.ts';
 import { fetchSVWI } from './patroon-c/svwi.ts';
 import { fetchContactmomenten } from './salesforce/contactmomenten.ts';
-import type { notificationServices } from './tips-and-notifications.ts';
 import {
   combineNotificationsWithTipsAndSort,
   fetchNotificationsAndTipsFromServices,
   getContentTips,
   getTipsAndNotificationsFromApiResults,
   type NotificationsAndTipsResponse,
+  type ServiceList,
 } from './tips-and-notifications.ts';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-verhuur.ts';
 import { fetchUserFeedbackSurvey } from './user-feedback/user-feedback.ts';
 import { fetchVaren } from './varen/varen.ts';
 import { fetchVergunningen } from './vergunningen/vergunningen.ts';
-import { fetchWmo } from './wmo/wmo.ts';
+import { fetchWonen } from './wonen/wonen.ts';
 import {
   fetchBbz,
   fetchBijstandsuitkering,
@@ -159,6 +160,7 @@ const MILIEUZONE = callAuthenticatedService(fetchMilieuzone);
 const OVERTREDINGEN = callAuthenticatedService(fetchOvertredingen);
 const SUBSIDIES = callAuthenticatedService(fetchSubsidie);
 const KLANT_CONTACT = callAuthenticatedService(fetchContactmomenten); // For now salesforcre only consists of contactmomenten.
+const WONEN = callAuthenticatedService(fetchWonen);
 
 // Location, address, based services
 const AFVAL = callAuthenticatedService(fetchAfval);
@@ -170,25 +172,14 @@ export const NOTIFICATIONS = async (req: Request) => {
   const authProfileAndToken = getAuth(req);
   const [serviceResults, notificationsAndTipsResults] = await Promise.all([
     getServiceResultsForTips(req),
-    authProfileAndToken
-      ? fetchNotificationsAndTipsFromServices(authProfileAndToken)
-      : {},
+    fetchNotificationsAndTipsFromServices(authProfileAndToken),
   ]);
 
-  if (
-    featureToggle.amsNotificationsIsActive &&
-    authProfileAndToken?.profile.id &&
-    authProfileAndToken.profile.profileType === 'private'
-  ) {
-    // Nothing in this flow depends on this so it does not have to be awaited
-    storeNotificationsResponses(
-      authProfileAndToken.profile.id,
-      notificationsAndTipsResults,
-      { updateLastLoginDate: true }
-    ).catch((error) => {
-      captureException(error);
-    });
-  }
+  // The current flow is independent from storing the notifications. Therefore, we do not await
+  storeNotificationsForAmsAppUsers(
+    authProfileAndToken,
+    notificationsAndTipsResults
+  );
 
   const contentTips = getContentTips(serviceResults, authProfileAndToken);
   const notificationsAndTips = getTipsAndNotificationsFromApiResults(
@@ -234,6 +225,7 @@ const SERVICES_INDEX = {
   VERGUNNINGEN,
   WMO,
   JEUGD,
+  WONEN,
   WPI_AANVRAGEN,
   WPI_BBZ,
   WPI_SPECIFICATIES,
@@ -317,6 +309,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     WPI_SPECIFICATIES,
     WPI_TONK,
     WPI_TOZO,
+    WONEN,
     JEUGD,
     KTO,
   },
@@ -368,6 +361,31 @@ export const servicesTipsByProfileType = {
     tipsOmit as Array<keyof CommercialServices>
   ),
 };
+
+async function storeNotificationsForAmsAppUsers(
+  authProfileAndToken: AuthProfileAndToken | null,
+  notificationsAndTipsResults: Partial<
+    Record<keyof ServiceList, NotificationsAndTipsResponse>
+  >
+) {
+  if (
+    featureToggle.amsNotificationsIsActive &&
+    authProfileAndToken?.profile.id &&
+    authProfileAndToken.profile.profileType === 'private'
+  ) {
+    const resultsWithoutMaintenanceNotifications = omit(
+      notificationsAndTipsResults,
+      ['maintenance']
+    );
+    await storeNotificationsResponses(
+      authProfileAndToken.profile.id,
+      resultsWithoutMaintenanceNotifications,
+      { updateLastLoginDate: true }
+    ).catch((error) => {
+      captureException(error);
+    });
+  }
+}
 
 export function loadServices(
   req: Request,
@@ -466,4 +484,5 @@ async function getServiceResultsForTips(req: Request) {
 export const forTesting = {
   CMS_CONTENT,
   getServiceResultsForTips,
+  storeNotificationsForAmsAppUsers,
 };

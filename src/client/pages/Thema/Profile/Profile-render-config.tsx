@@ -19,6 +19,11 @@ export const ProfileRoutes = [
   ...(themaConfig.BRP.contactenPage?.route.path
     ? [
         {
+          route: routeConfig.detailPageVvE.path,
+          Component: VvEDetail,
+          isActive: featureToggle[themaIdBRP].wonenActive,
+        },
+        {
           route: themaConfig.BRP.contactenPage.route.path,
           Component: ContactmomentenListPage,
           isActive: FeatureToggle.contactmomentenActive,

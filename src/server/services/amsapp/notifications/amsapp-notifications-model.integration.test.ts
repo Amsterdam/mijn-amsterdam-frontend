@@ -216,16 +216,19 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
     it('is ordered on created_at for offset/limit to work properly', async () => {
       const model = await import('./amsapp-notifications-model.ts');
 
-      const insertQuery = `INSERT INTO ${NOTIFICATIONS_TABLE_NAME} (profile_id, date_created) VALUES ($1, $2)`;
+      const insertQuery = `INSERT INTO ${NOTIFICATIONS_TABLE_NAME} (id, profile_id, date_created) VALUES ($1, $2, $3)`;
       await pool.query(insertQuery, [
+        'id-1',
         '1',
         new Date('2020-01-01T01:00:00.000Z'),
       ]);
       await pool.query(insertQuery, [
+        'id-2',
         '2',
         new Date('2020-01-01T00:00:00.000Z'),
       ]);
       await pool.query(insertQuery, [
+        'id-3',
         '3',
         new Date('2020-01-01T02:00:00.000Z'),
       ]);

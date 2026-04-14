@@ -4,6 +4,7 @@
     "routes": [
       "get-amsapp-survey:standard",
       "post-amsapp-survey-response:standard",
+      "get-amsapp-surveys:standard",
       "post-amsapp-administratienummer:standard",
       "get-belastingen:standard",
       "get-bezwaren-documenten:standard",
@@ -73,6 +74,7 @@
       "get-bank-account:standard",
       "post-bank-account:standard",
       "get-powerbrowser-bb-zaak-adres:standard",
+      "get-powerbrowser-bb-zaak-wb-transport:standard",
       "post-powerbrowser-search-requests:standard",
       "post-powerbrowser-zaak-status:standard",
       "get-powerbrowser-bb-zaak-attachment-download:standard",
@@ -86,7 +88,8 @@
       "post-zorgned-persoonsgegevens:standard",
       "post-zorgned-aanvragen:standard",
       "post-zorgned-document:standard",
-      "get-search-config:standard"
+      "get-search-config:standard",
+      "get-zwd-vve:standard"
     ]
   },
   {

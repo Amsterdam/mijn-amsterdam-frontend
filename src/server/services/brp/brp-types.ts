@@ -185,18 +185,20 @@ export type Adres = {
 export type PersoonBasis = {
   geboortedatum: string | null;
   geboortedatumFormatted?: string | null;
-  overlijdensdatum?: string | null;
-  overlijdensdatumFormatted?: string | null;
   geboortelandnaam: string | null;
   geboorteplaatsnaam: string | null;
   geslachtsnaam: string | null;
+  naamgebruik: string | null;
   omschrijvingAdellijkeTitel: string | null;
   opgemaakteNaam: string | null;
+  overlijdensdatum?: string | null;
+  overlijdensdatumFormatted?: string | null;
   voornamen: string | null;
   voorvoegselGeslachtsnaam: string | null;
 };
 
 export type Persoon = PersoonBasis & {
+  aanschrijfwijze: string | null;
   bsn: string | null;
   gemeentenaamInschrijving: string | null;
   omschrijvingBurgerlijkeStaat: 'Ongehuwd' | null;
@@ -230,8 +232,12 @@ export type BrpFrontend = {
   verbintenis: Verbintenis | null;
   kinderen: Kind[];
   ouders: Ouder[];
-  adres: Adres | null;
+  adres: AdresFrontend | null;
   adresHistorisch: Adres[];
   fetchUrlAantalIngeschrevenPersonen: string | null;
   aantalIngeschrevenPersonen: number | null;
+};
+
+type AdresFrontend = Adres & {
+  vveNaam?: string|undefined;
 };

@@ -246,6 +246,47 @@ export const caseTypePB = {
   Splitsingsvergunning: 'Splitsingsvergunning',
 } as const;
 
+export type CaseTypeVergunningenOrPB = CaseTypeVergunningen | CaseTypePB;
+
+export const missingDocumentsEmailByCaseType = {
+  'TVM - RVV - Object': null,
+  'Evenement melding': null,
+  'Evenement vergunning': null,
+  'E-RVV - TVM': null,
+  'Flyeren-Sampling': null,
+  Straatartiesten: null,
+  'Aanbieden van diensten': null,
+  Nachtwerkontheffing: null,
+  'Zwaar verkeer': null,
+  'RVV - Hele stad': null,
+  'RVV Sloterweg': null,
+  'Werk en vervoer op straat': null,
+
+  // VTH case types, they will get their own email address, but for now we use the same as the Toeristische Verhuur email address
+  'Ligplaatsvergunning woonboot': 'bedandbreakfast@amsterdam.nl',
+  'Ligplaatsvergunning bedrijfsvaartuig': 'bedandbreakfast@amsterdam.nl',
+  Omzettingsvergunning: 'bedandbreakfast@amsterdam.nl',
+  Samenvoegingsvergunning: 'bedandbreakfast@amsterdam.nl',
+  'Onttrekkingsvergunning voor sloop': 'bedandbreakfast@amsterdam.nl',
+  'Onttrekkingsvergunning voor ander gebruik': 'bedandbreakfast@amsterdam.nl',
+  Woningvormingsvergunning: 'bedandbreakfast@amsterdam.nl',
+  'Voorraadvergunning tweede woning': 'bedandbreakfast@amsterdam.nl',
+  Splitsingsvergunning: 'bedandbreakfast@amsterdam.nl',
+  VOB: 'bedandbreakfast@amsterdam.nl',
+} satisfies Record<CaseTypeVergunningenOrPB, string | null>;
+
+export function getMissingDocumentsEmailForCaseType(
+  caseType: string | null | undefined
+): string | undefined {
+  if (!caseType) {
+    return undefined;
+  }
+
+  const email =
+    missingDocumentsEmailByCaseType[caseType as CaseTypeVergunningenOrPB];
+  return email ?? undefined;
+}
+
 export type CaseTypePBKey = keyof typeof caseTypePB;
 export type CaseTypePB = (typeof caseTypePB)[CaseTypePBKey];
 export type GetCaseTypePB<T extends CaseTypePBKey> = (typeof caseTypePB)[T];
@@ -256,6 +297,10 @@ type Ligplaatsvergunning = PowerBrowserZaakBase &
     reason: string | null;
     vesselKind: string | null;
     vesselName: string | null;
+    vesselDraft: string | null;
+    vesselLength: string | null;
+    vesselWidth: string | null;
+    vesselHeight: string | null;
   };
 
 export type LigplaatsWoonbootvergunning = Ligplaatsvergunning & {

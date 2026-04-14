@@ -9,8 +9,12 @@ updates:
     directory: '/'
     schedule:
       interval: 'weekly'
+    cooldown:
+      default-days: 7
   - package-ecosystem: 'npm'
     directory: '/'
+    cooldown:
+      default-days: 7
     schedule:
       interval: 'weekly'
     ignore:

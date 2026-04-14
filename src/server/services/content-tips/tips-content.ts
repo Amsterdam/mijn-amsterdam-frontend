@@ -271,7 +271,7 @@ export const contentTips: ContentTipSource[] = [
     reason: 'U ziet deze tip omdat u een Vergunning bed & breakfast hebt',
     link: {
       title: 'U leest hier wat de voorwaarden zijn',
-      to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/woonruimte-verhuren/vergunning-aanvragen-bed-breakfast/',
+      to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/woonruimte-verhuren/vergunning-aanvragen-voor-bed-breakfast/',
     },
   },
   {

@@ -20,10 +20,12 @@ import {
   getFailedDependencies,
   type ApiResponsePromise,
 } from '../../../universal/helpers/api.ts';
-import { omit, pick } from '../../../universal/helpers/utils.ts';
+import { defaultDateTimeFormat } from '../../../universal/helpers/date.ts';
+import { isNumeric, omit, pick } from '../../../universal/helpers/utils.ts';
 import camelize from '../../helpers/camelize.ts';
 import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
+import { captureMessage } from '../monitoring.ts';
 
 export async function fetchUserFeedbackSurvey(
   surveyId: Survey['unique_code'] = SURVEY_ID_INLINE_KTO,
@@ -97,6 +99,16 @@ export async function saveUserFeedback(
 ): ApiResponsePromise<SaveUserFeedbackResponse> {
   const surveyEntryPayload = getSurveyEntryPayload(data);
 
+  const hasAnswer = surveyEntryPayload.answers.some((answer) => {
+    if (!answer.answer) {
+      return false;
+    }
+    const answer_ = answer.answer.trim();
+    // If the answer is a number, we don't want to count it as an answer for the purpose of firing the 'KTO Submission' alert.
+    // We're not immediately interested in the rating of submissions, but rather answers with meaningful content that are submitted.
+    return answer_ ? !isNumeric(answer_) : false;
+  });
+
   const requestConfig = getCustomApiConfig(sourceApiConfig, {
     formatUrl: ({ url }) => `${url}/${surveyId}/versions/${version}/entries`,
     method: 'POST',
@@ -104,7 +116,17 @@ export async function saveUserFeedback(
     enableCache: false,
   });
 
-  return requestData<SaveUserFeedbackResponse>(requestConfig);
+  const response = await requestData<SaveUserFeedbackResponse>(requestConfig);
+
+  if (response.status === 'OK' && hasAnswer) {
+    // There is an alert called 'KTO Submission' -
+    // that requires this log line to be able to fire.
+    captureMessage('A userfeedback survey has been submitted', {
+      properties: { hasAnswer },
+    });
+  }
+
+  return response;
 }
 
 async function fetchFeedbackSurveyEntries(
@@ -128,14 +150,27 @@ async function fetchFeedbackSurveyEntries(
         return entry.survey_unique_code === surveyId;
       });
       const entries = entriesBySurvey.map((entry) => {
-        return {
+        const surveyEntryFrontend: SurveyEntryFrontend = {
+          id: entry.id,
           answers: Object.fromEntries(
             entry.answers.map((answer) => [answer.question, answer.answer])
           ),
           dateCreated: entry.created_at,
-          metadata: entry.metadata,
+          dateCreatedFormatted: defaultDateTimeFormat(entry.created_at),
+          maErrors: (entry.metadata.maErrors ||
+            []) as SurveyEntryFrontend['maErrors'],
+          maThemas: (entry.metadata.maThemas || []) as string[],
+          browserTitle: (entry.metadata.browserTitle ||
+            'Onbekende paginatitel') as string,
+          metadata: omit(entry.metadata, [
+            'maThemas',
+            'maErrors',
+            'browserTitle',
+          ]),
           entryPoint: entry.entry_point,
         };
+
+        return surveyEntryFrontend;
       });
 
       return {

@@ -95,6 +95,7 @@ function transformDocumenten(documenten: ZorgnedDocument[]) {
     };
     if (document.bestandsnaam) {
       doc.filename = document.bestandsnaam;
+      doc.download = document.bestandsnaam;
     }
 
     documents.push(doc);
@@ -119,9 +120,9 @@ function transformZorgnedAanvraag(
 ): ZorgnedAanvraagTransformed {
   const toegewezenProduct = beschiktProduct.toegewezenProduct;
   const toewijzingen = toegewezenProduct?.toewijzingen ?? [];
-  const toewijzing = toewijzingen.pop();
+  const toewijzing = toewijzingen.at(-1);
   const leveringen = toewijzing?.leveringen ?? [];
-  const levering = leveringen.pop();
+  const levering = leveringen.at(-1);
 
   const leveringsVorm =
     (toegewezenProduct?.leveringsvorm?.toUpperCase() as LeveringsVorm) ?? '';
@@ -148,6 +149,7 @@ function transformZorgnedAanvraag(
       false
     ),
     procesIdentificatie: aanvraag.procesIdentificatie ?? null,
+    procesMeldingIdentificatie: aanvraag.procesMelding?.identificatie ?? null,
     datumAanvraag: aanvraag.datumAanvraag,
     datumBeginLevering: levering?.begindatum ?? null,
     datumBesluit: aanvraag.beschikking.datumAfgifte ?? '', // See bug: MIJN-11809

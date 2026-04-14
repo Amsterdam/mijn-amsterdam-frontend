@@ -27,7 +27,7 @@ import type { ApiSuccessResponse } from '../../../universal/helpers/api.ts';
 import { apiErrorResult } from '../../../universal/helpers/api.ts';
 import * as request from '../../helpers/source-api-request.ts';
 import { ZORGNED_AV_API_CONFIG_KEY } from '../hli/hli-service-config.ts';
-import { ZORGNED_JZD_API_CONFIG_KEY } from '../wmo/wmo-service-config.ts';
+import { ZORGNED_JZD_API_CONFIG_KEY } from '../jzd/wmo/wmo-config.ts';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -126,7 +126,9 @@ describe('zorgned-service', () => {
           ZORGNED_JZD_AANVRAGEN as unknown as ZorgnedResponseDataSource
         )
         .every((a) => {
-          expect(Object.keys(a).sort().join(',')).toMatchInlineSnapshot(`"beschikkingNummer,beschiktProductIdentificatie,betrokkenen,datumAanvraag,datumBeginLevering,datumBesluit,datumEindeGeldigheid,datumEindeLevering,datumIngangGeldigheid,datumOpdrachtLevering,datumToewijzing,documenten,id,isActueel,leverancier,leverancierIdentificatie,leveringsVorm,prettyID,procesAanvraagOmschrijving,procesIdentificatie,productIdentificatie,productsoortCode,resultaat,titel"`);
+          expect(Object.keys(a).sort().join(',')).toMatchInlineSnapshot(
+            `"beschikkingNummer,beschiktProductIdentificatie,betrokkenen,datumAanvraag,datumBeginLevering,datumBesluit,datumEindeGeldigheid,datumEindeLevering,datumIngangGeldigheid,datumOpdrachtLevering,datumToewijzing,documenten,id,isActueel,leverancier,leverancierIdentificatie,leveringsVorm,prettyID,procesAanvraagOmschrijving,procesIdentificatie,procesMeldingIdentificatie,productIdentificatie,productsoortCode,resultaat,titel"`
+          );
         });
     });
 
@@ -150,6 +152,7 @@ describe('zorgned-service', () => {
         documenten: [
           {
             datePublished: '2026-03-09T12:23:27',
+            download: 'Schermafbeelding 2024-03-14 191232.jpg',
             filename: 'Schermafbeelding 2024-03-14 191232.jpg',
             id: 'E1532692',
             title: 'kopie bankpas',
@@ -157,6 +160,7 @@ describe('zorgned-service', () => {
           },
           {
             datePublished: '2026-03-09T12:19:19',
+            download: 'ADW beheer.png',
             filename: 'ADW beheer.png',
             id: 'E1532685',
             title: 'bankafschrift',
@@ -164,6 +168,7 @@ describe('zorgned-service', () => {
           },
           {
             datePublished: '2026-03-09T12:16:29',
+            download: 'Leeg document.docx',
             filename: 'Leeg document.docx',
             id: 'E1532678',
             title: 'beschikking',
@@ -171,6 +176,7 @@ describe('zorgned-service', () => {
           },
           {
             datePublished: '2026-03-09T12:15:17',
+            download: 'lege mail.msg',
             filename: 'lege mail.msg',
             id: 'E1532671',
             title: 'beschikking toekenning',
@@ -178,6 +184,7 @@ describe('zorgned-service', () => {
           },
           {
             datePublished: '2026-02-05T17:22:33.737',
+            download: 'BR4072158.pdf',
             filename: 'BR4072158.pdf',
             id: 'B4072158',
             title: 'Besluit: toekenning Hulp bij de zorg voor uw kind',
@@ -196,6 +203,7 @@ describe('zorgned-service', () => {
         productsoortCode: 'WRA',
         resultaat: 'toegewezen',
         titel: 'ALLE DOCUMENTEN TEST: woonruimteaanpassing (in behandeling)',
+        procesMeldingIdentificatie: null,
       });
     });
 
@@ -205,6 +213,20 @@ describe('zorgned-service', () => {
           null as unknown as ZorgnedResponseDataSource
         )
       ).toStrictEqual([]);
+    });
+
+    test('should not mutate source or result arrays', () => {
+      const response: ZorgnedResponseDataSource =
+        ZORGNED_JZD_AANVRAGEN as unknown as ZorgnedResponseDataSource;
+
+      const responseSnapshot = structuredClone(response);
+
+      const r1 = forTesting.transformZorgnedAanvragen(response);
+      const r1Snapshot = structuredClone(r1);
+      const r2 = forTesting.transformZorgnedAanvragen(response);
+
+      expect(response).toEqual(responseSnapshot);
+      expect(r2).toEqual(r1Snapshot);
     });
   });
 
@@ -262,6 +284,7 @@ describe('zorgned-service', () => {
     );
 
     expect(result).toStrictEqual({
+      code: 500,
       content: null,
       message: 'Zorgned document download - no valid response data provided',
       status: 'ERROR',
@@ -469,6 +492,7 @@ describe('zorgned-service', () => {
             procesAanvraagOmschrijving: null,
             productIdentificatie: 'WRA',
             procesIdentificatie: null,
+            procesMeldingIdentificatie: null,
             productsoortCode: 'WRA',
             resultaat: 'toegewezen',
             titel: 'woonruimteaanpassing (in behandeling)',
@@ -694,6 +718,7 @@ describe('fetchRelatedPersons', async () => {
             bestandsnaam: 'ABC.pdf',
           },
         ],
+        procesIdentificatie: '',
       },
       {
         identificatie: '1234',
@@ -713,6 +738,7 @@ describe('fetchRelatedPersons', async () => {
             bestandsnaam: 'XYZ.pdf',
           },
         ],
+        procesIdentificatie: '',
       },
       {
         identificatie: '456',
@@ -732,6 +758,7 @@ describe('fetchRelatedPersons', async () => {
           beschikkingNummer: 0,
           beschikteProducten: [],
         },
+        procesIdentificatie: '',
       },
     ];
 
@@ -752,6 +779,7 @@ describe('fetchRelatedPersons', async () => {
           documenten: [
             {
               datePublished: '2025-03-01T00:00:00',
+              download: 'DEF.pdf',
               filename: 'DEF.pdf',
               id: 'DEF',
               title: 'Verzoek: meer informatie over aanvraag',
@@ -759,6 +787,7 @@ describe('fetchRelatedPersons', async () => {
             },
             {
               datePublished: '2025-02-01T00:00:00',
+              download: 'XYZ.pdf',
               filename: 'XYZ.pdf',
               id: 'XYZ',
               title: 'Besluit: wijziging goedgekeurd',
@@ -766,6 +795,7 @@ describe('fetchRelatedPersons', async () => {
             },
             {
               datePublished: '2025-01-01T00:00:00',
+              download: 'ABC.pdf',
               filename: 'ABC.pdf',
               id: 'ABC',
               title: 'Besluit: aanvraag goedgekeurd',
@@ -856,6 +886,7 @@ describe('fetchRelatedPersons', async () => {
               bestandsnaam: 'HIJ.pdf',
             },
           ],
+          procesIdentificatie: '',
         },
       ];
       const transformed =
@@ -871,6 +902,7 @@ describe('fetchRelatedPersons', async () => {
           documenten: [
             {
               datePublished: '2025-05-29T00:00:00',
+              download: 'HIJ.pdf',
               filename: 'HIJ.pdf',
               id: 'HIJ',
               title: 'Besluit: aanvraag ander product goedgekeurd',
@@ -887,6 +919,7 @@ describe('fetchRelatedPersons', async () => {
           documenten: [
             {
               datePublished: '2025-01-01T00:00:00',
+              download: 'ABC.pdf',
               filename: 'ABC.pdf',
               id: 'ABC',
               title: 'Besluit: aanvraag goedgekeurd',

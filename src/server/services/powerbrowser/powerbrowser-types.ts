@@ -89,6 +89,11 @@ export type PBAdresLinkFields = PBRecordField<'FMT_CAPTION'>;
 
 export type PBAdresLinkRecord = PBRecord<'ADRESSEN', PBAdresLinkFields[]>;
 
+export type WbTransportConfig<fieldNames extends string = string> = {
+  prefix: string;
+  fields: ReadonlyArray<fieldNames>;
+};
+
 export const fieldMap: Partial<Record<PBZaakFields['fieldName'], string>> = {
   ZAAK_IDENTIFICATIE: 'zaaknummer',
   EINDDATUM: 'dateDecision',
@@ -153,6 +158,7 @@ export type PowerBrowserZaakTransformer<
   caseType: CaseTypeLiteral<T>;
   title: string;
   fetchZaakFilter: (fields: PBZaakFieldsByName) => boolean;
+  fetchWbTransportFields?: WbTransportConfig<string>;
   isVerleend: (
     zaak: Pick<PowerBrowserZaakBase, 'decision'> & Partial<T>
   ) => boolean;

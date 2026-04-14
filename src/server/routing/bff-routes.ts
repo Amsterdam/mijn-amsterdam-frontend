@@ -33,15 +33,12 @@ export const BffEndpoints = {
   // WPI Document download
   WPI_DOCUMENT_DOWNLOAD: '/services/wpi/document',
 
-  // LLV / Zorgned
-  LLV_DOCUMENT_DOWNLOAD: `/services/llv/document`,
-
   // Legacy login links (still used in other portals)
   LEGACY_LOGIN_API_LOGIN: '/api/login',
   LEGACY_LOGIN_API1_LOGIN: '/api1/login',
 
   // ErfpachtV2
-  ERFPACHT_DOSSIER_DETAILS: '/services/erfpacht/dossier/:dossierNummerUrlParam',
+  ERFPACHT_DOSSIER_DETAILS: '/services/erfpacht/dossier/:dossierId',
 
   // Powerbrowser (ToeristischeVerhuur->Bed&Breakfast)
   POWERBROWSER_DOCUMENT_DOWNLOAD: `/services/${hash('powerbrowser')}/documents/download`,

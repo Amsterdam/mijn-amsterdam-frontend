@@ -83,6 +83,5 @@ describe('erfpacht', () => {
     expect(getDossierNummerUrlParam('E1/B/EE/VWW/2')).toBe('E.1.B.EE.VWW.2');
     expect(getDossierNummerUrlParam('E3247/2')).toBe('E.3247.2');
     expect(getDossierNummerUrlParam('EW/99999/88888')).toBe('EW.99999.88888');
-    expect(getDossierNummerUrlParam(undefined)).toBeNull();
   });
 });

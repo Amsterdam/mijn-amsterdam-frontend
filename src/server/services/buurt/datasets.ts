@@ -1,4 +1,4 @@
-import type { AxiosResponse, AxiosResponseHeaders } from 'axios';
+import type { AxiosResponseHeaders } from 'axios';
 import { differenceInDays, format } from 'date-fns';
 import slug from 'slugme';
 import type Supercluster from 'supercluster';
@@ -13,6 +13,7 @@ import {
   dsoApiListUrl,
   getDsoApiEmbeddedResponse,
   transformGenericApiListResponse,
+  transformGenericApiListResponse_,
 } from './dso-helpers.ts';
 import { featureToggle } from '../../../client/components/MyArea/MyArea-thema-config.ts';
 import { Colors } from '../../../universal/config/colors.ts';
@@ -26,13 +27,21 @@ import type {
   FeatureType,
 } from '../../../universal/config/myarea-datasets.ts';
 import { DATASETS } from '../../../universal/config/myarea-datasets.ts';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+  type ApiResponse,
+} from '../../../universal/helpers/api.ts';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
 import { DAYS_IN_YEAR, ONE_SECOND_MS } from '../../config/app.ts';
-import type { DataRequestConfig } from '../../config/source-api.ts';
+import type {
+  DataRequestConfig,
+  DataRequestHeaders,
+} from '../../config/source-api.ts';
 import type FileCache from '../../helpers/file-cache.ts';
 import {
-  axiosRequest,
   getNextUrlFromLinkHeader,
+  requestData,
 } from '../../helpers/source-api-request.ts';
 
 const zIndexPane = {
@@ -117,8 +126,10 @@ export interface DatasetConfig {
   transformList?: (
     datasetId: DatasetId,
     config: DatasetConfig,
-    data: DsoApiResponse | WFSApiResponse
-  ) => DatasetFeatures;
+    data: DsoApiResponse | WFSApiResponse,
+    headers?: DataRequestHeaders,
+    status?: number
+  ) => unknown;
   // Response data transformer that is passed to axios transformData for the detailUrl response. If we haven't specified a detailUrl for a dataset.
   // The cached transformed response of the listUrl will be passed via the options.
   transformDetail?: (
@@ -148,6 +159,10 @@ export interface DatasetConfig {
   triesUntilConsiderdStale: number;
   // If disabled is true, the dataset will not be retrieved.
   disabled?: boolean;
+
+  customListRequestFunction?: (
+    requestConfig: DataRequestConfig
+  ) => Promise<ApiResponse<DatasetFeatures>>;
 }
 
 const SPORT_AANBIEDER_LIMIT = 2000;
@@ -177,7 +192,7 @@ export const datasetEndpoints: Record<
   evenementen: {
     listUrl: dsoApiListUrl('evenementen/evenementen'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/evenementen/evenementen/',
-    transformList: transformGenericApiListResponse,
+    transformList: transformGenericApiListResponse_,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
@@ -193,7 +208,7 @@ export const datasetEndpoints: Record<
     detailUrl: `https://${
       !IS_PRODUCTION ? 'acc.' : ''
     }api.data.amsterdam.nl/v1/bekendmakingen/bekendmakingen/`,
-    transformList: transformGenericApiListResponse,
+    transformList: transformGenericApiListResponse_,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     idKeyList: 'officielebekendmakingen_id',
@@ -245,7 +260,7 @@ export const datasetEndpoints: Record<
   zwembad: {
     listUrl: dsoApiListUrl('sport/zwembad'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/zwembad/',
-    transformList: transformGenericApiListResponse,
+    transformList: transformGenericApiListResponse_,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
@@ -344,7 +359,7 @@ export const datasetEndpoints: Record<
   openbaresportplek: {
     listUrl: dsoApiListUrl('sport/openbaresportplek'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/',
-    transformList: transformGenericApiListResponse,
+    transformList: transformGenericApiListResponse_,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
@@ -374,7 +389,7 @@ export const datasetEndpoints: Record<
     ),
     detailUrl:
       'https://api.data.amsterdam.nl/v1/bedrijveninvesteringszones/bedrijveninvesteringszones/',
-    transformList: transformGenericApiListResponse,
+    transformList: transformGenericApiListResponse_,
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.BEDRIJVENINVESTERINGSZONES,
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
@@ -420,45 +435,63 @@ export const datasetEndpoints: Record<
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
     idKeyList: 'id',
     requestConfig: {
-      request: fetchMeldingenBuurt,
       cancelTimeout: 30000,
     },
+    customListRequestFunction: fetchMeldingenBuurt,
   },
 };
 
 // This function retrieves a maximum of 5 `pages` with data from the meldingen api.
-export async function fetchMeldingenBuurt(requestConfig: DataRequestConfig) {
+export async function fetchMeldingenBuurt(
+  requestConfig: DataRequestConfig
+): Promise<ApiResponse<DatasetFeatures>> {
   const maxPages = 5;
 
   let nextRequestConfig = { ...requestConfig };
-  let response: AxiosResponse = await axiosRequest.request(nextRequestConfig);
+  let response = await requestData<MeldingenResponse>(nextRequestConfig);
   let responseIteration = 0;
-  let combinedResponseData: DatasetFeatures = response.data;
+  let combinedFeatures: DatasetFeatures = response.content?.features ?? [];
+
+  const errorResult = apiErrorResult(
+    'Failed to fetch meldingen buurt data',
+    null
+  );
+
+  if (response.status !== 'OK') {
+    return errorResult;
+  }
 
   while (true) {
-    if (response.headers?.link?.includes('rel="next"')) {
-      const nextUrl = getNextUrlFromLinkHeader(
-        response.headers as AxiosResponseHeaders
+    if (response.content?.nextUrl) {
+      const nextPage = new URL(response.content.nextUrl).searchParams.get(
+        'geopage'
       );
-      const nextPage = nextUrl?.searchParams.get('page');
 
       // Stop fetching next when reaching maxPages.
       if (
-        responseIteration === maxPages || // Safeguard if api response does not supply page parameter correctly
-        !nextUrl ||
-        (nextUrl && nextPage && parseInt(nextPage, 10) > maxPages)
+        responseIteration + 1 >= maxPages || // Safeguard if api response does not supply page parameter correctly
+        !response.content.nextUrl ||
+        (response.content.nextUrl &&
+          nextPage &&
+          parseInt(nextPage, 10) > maxPages)
       ) {
         break;
       }
 
       nextRequestConfig = {
         ...requestConfig,
-        url: nextUrl.toString(),
+        url: response.content.nextUrl,
       };
 
-      response = await axiosRequest.request<DatasetFeatures>(nextRequestConfig);
+      response = await requestData<MeldingenResponse>(nextRequestConfig);
 
-      combinedResponseData = combinedResponseData.concat(response.data);
+      if (response.status !== 'OK') {
+        return errorResult;
+      }
+
+      combinedFeatures = combinedFeatures.concat(
+        response.content?.features ?? []
+      );
 
       responseIteration++;
     } else {
@@ -467,9 +500,7 @@ export async function fetchMeldingenBuurt(requestConfig: DataRequestConfig) {
     }
   }
 
-  response.data = combinedResponseData;
-
-  return response;
+  return apiSuccessResult(combinedFeatures);
 }
 
 type MeldingBuurt = {
@@ -478,14 +509,18 @@ type MeldingBuurt = {
 };
 
 type BuurtFeature = WFSFeatureSource<MeldingBuurt>;
-
+type MeldingenResponse = {
+  features: DatasetFeatures;
+  nextUrl?: string;
+};
 export function transformMeldingenBuurtResponse(
   datasetId: DatasetId,
   config: DatasetConfig,
-  responseData: WFSApiResponse | DsoApiResponse
-): DatasetFeatures {
+  responseData: WFSApiResponse | DsoApiResponse,
+  headers: DataRequestHeaders = {}
+): MeldingenResponse {
   if (!responseData || !('features' in responseData)) {
-    return [];
+    return { features: [] };
   }
 
   const collection = responseData.features.map((sourceFeature_) => {
@@ -529,7 +564,15 @@ export function transformMeldingenBuurtResponse(
     return feature;
   });
 
-  return (collection ?? []) as DatasetFeatures;
+  const response: MeldingenResponse = {
+    features: (collection ?? []) as DatasetFeatures,
+  };
+
+  const nextUrl = getNextUrlFromLinkHeader(headers as AxiosResponseHeaders);
+  if (nextUrl) {
+    response.nextUrl = nextUrl.toString();
+  }
+  return response;
 }
 
 function transformMeldingDetailResponse(

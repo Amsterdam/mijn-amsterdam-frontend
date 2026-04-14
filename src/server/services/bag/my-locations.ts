@@ -4,8 +4,7 @@ import {
   DEFAULT_LAT,
   DEFAULT_LNG,
 } from '../../../universal/config/myarea-datasets.ts';
-import type {
-  ApiResponse_DEPRECATED} from '../../../universal/helpers/api.ts';
+import type { ApiResponse_DEPRECATED } from '../../../universal/helpers/api.ts';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -16,7 +15,7 @@ import { fetchBrp } from '../brp/brp.ts';
 import { getVestigingBagIds } from '../hr-kvk/hr-kvk-helpers.ts';
 import { fetchKVK } from '../hr-kvk/hr-kvk.ts';
 
-async function fetchPrivate(
+export async function fetchPrivate(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse_DEPRECATED<BAGLocationExtended[] | null>> {
   const BRP = await fetchBrp(authProfileAndToken);
@@ -24,7 +23,6 @@ async function fetchPrivate(
   if (BRP.status === 'OK') {
     if (isMokum(BRP.content)) {
       const BAGLocation = (await fetchBAG(BRP.content.adres))?.content;
-
       if (!BAGLocation?.latlng) {
         return apiSuccessResult([
           {
@@ -60,7 +58,7 @@ async function fetchPrivate(
   return apiDependencyError({ BRP });
 }
 
-async function fetchCommercial(
+export async function fetchCommercial(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse_DEPRECATED<BAGLocationExtended[] | null>> {
   const KVK = await fetchKVK(authProfileAndToken);

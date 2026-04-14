@@ -1,4 +1,4 @@
-import Decimal from 'decimal.js';
+import { Decimal } from 'decimal.js';
 import Mockdate from 'mockdate';
 
 import { fetchAfisDocument } from './afis-documents.ts';
@@ -137,6 +137,7 @@ describe('afis-facturen', async () => {
       debtClearingDateFormatted: null,
       documentDownloadLink:
         'http://bff-api-host/api/v1/services/afis/facturen/document?id=xx-encrypted-xx',
+      eMandateId: '',
       factuurDocumentId: '1234567890',
       factuurNummer: '1234567890',
       id: '1234567890-1234567890-2023-12-21t000000',
@@ -196,32 +197,32 @@ describe('afis-facturen', async () => {
     );
 
     const geannuleerdeInvoice = response.content?.facturen[0];
-    expect(geannuleerdeInvoice).toMatchInlineSnapshot(`
-      {
-        "afzender": "Lisan al Gaib inc.",
-        "amountOriginal": "0.00",
-        "amountOriginalFormatted": "€ 0,00",
-        "amountPayed": "0.00",
-        "amountPayedFormatted": "€ 0,00",
-        "datePublished": null,
-        "datePublishedFormatted": null,
-        "debtClearingDate": null,
-        "debtClearingDateFormatted": null,
-        "documentDownloadLink": "http://bff-api-host/api/v1/services/afis/facturen/document?id=xx-encrypted-xx",
-        "factuurDocumentId": "INV-2023-010",
-        "factuurNummer": "INV-2023-010",
-        "id": "inv-2023-010-inv-2023-010-2023-12-21t000000",
-        "link": {
-          "title": "Factuur INV-2023-010",
-          "to": "/facturen-en-betalen/factuur/afgehandeld/INV-2023-010",
-        },
-        "paylink": null,
-        "paymentDueDate": "2023-12-21T00:00:00",
-        "paymentDueDateFormatted": "21 december 2023",
-        "status": "geannuleerd",
-        "statusDescription": "€ 0,00 geannuleerd op null",
-      }
-    `);
+    expect(geannuleerdeInvoice).toStrictEqual({
+      afzender: 'Lisan al Gaib inc.',
+      amountOriginal: '0.00',
+      amountOriginalFormatted: '€ 0,00',
+      amountPayed: '0.00',
+      amountPayedFormatted: '€ 0,00',
+      datePublished: null,
+      datePublishedFormatted: null,
+      debtClearingDate: null,
+      debtClearingDateFormatted: null,
+      documentDownloadLink:
+        'http://bff-api-host/api/v1/services/afis/facturen/document?id=xx-encrypted-xx',
+      eMandateId: null,
+      factuurDocumentId: 'INV-2023-010',
+      factuurNummer: 'INV-2023-010',
+      id: 'inv-2023-010-inv-2023-010-2023-12-21t000000',
+      link: {
+        title: 'Factuur INV-2023-010',
+        to: '/facturen-en-betalen/factuur/afgehandeld/INV-2023-010',
+      },
+      paylink: null,
+      paymentDueDate: '2023-12-21T00:00:00',
+      paymentDueDateFormatted: '21 december 2023',
+      status: 'geannuleerd',
+      statusDescription: '€ 0,00 geannuleerd op null',
+    });
 
     const betaaldeInvoice = response.content?.facturen[1];
     expect(betaaldeInvoice?.status).toStrictEqual('geannuleerd');
@@ -426,6 +427,27 @@ describe('afis-facturen', async () => {
         ProfitCenterName: 'Profit Center 2',
         ReverseDocument: '',
         SEPAMandate: 'SEPA123',
+        PaymentTerms: '',
+      },
+      'factuur-in-termijnen': {
+        AccountingDocument: '124',
+        AccountingDocumentType: 'DG',
+        InvoiceReference: '',
+        AmountInBalanceTransacCrcy: '200.00',
+        ClearingDate: undefined,
+        DocumentReferenceID: '457',
+        DunningBlockingReason: '',
+        DunningLevel: 0,
+        IsCleared: false,
+        NetDueDate: '2023-12-22T00:00:00',
+        Paylink: 'http://example.com/pay',
+        PaymentMethod: 'X',
+        PostingDate: '2023-11-22T00:00:00',
+        AccountingDocumentCreationDate: '2023-11-22T00:00:00',
+        ProfitCenterName: 'Profit Center 2',
+        ReverseDocument: '',
+        SEPAMandate: '',
+        PaymentTerms: '0001',
       },
       'handmatig-betalen': {
         AccountingDocument: '124',
@@ -445,6 +467,7 @@ describe('afis-facturen', async () => {
         ProfitCenterName: 'Profit Center 2',
         ReverseDocument: '',
         SEPAMandate: 'SEPA123',
+        PaymentTerms: '',
       },
       'in-dispuut': {
         AccountingDocument: '125',
@@ -464,6 +487,7 @@ describe('afis-facturen', async () => {
         ProfitCenterName: 'Profit Center 3',
         ReverseDocument: '',
         SEPAMandate: '',
+        PaymentTerms: '',
       },
       'gedeeltelijke-betaling': openstaand,
       'overgedragen-aan-belastingen': {
@@ -484,6 +508,7 @@ describe('afis-facturen', async () => {
         ProfitCenterName: 'Profit Center 5',
         ReverseDocument: '',
         SEPAMandate: '',
+        PaymentTerms: '',
       },
       'geld-terug': {
         AccountingDocument: '128',
@@ -503,6 +528,7 @@ describe('afis-facturen', async () => {
         ProfitCenterName: 'Profit Center 6',
         ReverseDocument: '',
         SEPAMandate: '',
+        PaymentTerms: '',
       },
       betaald: {
         AccountingDocument: '129',
@@ -522,6 +548,7 @@ describe('afis-facturen', async () => {
         ProfitCenterName: 'Profit Center 7',
         ReverseDocument: '',
         SEPAMandate: '',
+        PaymentTerms: '',
       },
       geannuleerd: {
         AccountingDocument: '130',
@@ -541,6 +568,7 @@ describe('afis-facturen', async () => {
         ProfitCenterName: 'Profit Center 8',
         ReverseDocument: '123',
         SEPAMandate: '',
+        PaymentTerms: '',
       },
       herinnering: {
         AccountingDocument: '131',
@@ -560,6 +588,7 @@ describe('afis-facturen', async () => {
         ProfitCenterName: 'Profit Center 9',
         ReverseDocument: '',
         SEPAMandate: '',
+        PaymentTerms: '',
       },
       onbekend: {
         AccountingDocument: '132',
@@ -579,6 +608,7 @@ describe('afis-facturen', async () => {
         ProfitCenterName: 'Profit Center 10',
         ReverseDocument: '',
         SEPAMandate: '',
+        PaymentTerms: '',
       },
     };
 
@@ -597,9 +627,9 @@ describe('afis-facturen', async () => {
     });
 
     test('determineFactuurStatus determines Openstaande status description correctly', () => {
-      const statusDescriptions = Object.keys(sourceInvoices)
-        .filter((status) => !['betaald', 'geannuleerd'].includes(status))
-        .map((status) => {
+      const statusDescriptions = Object.entries(sourceInvoices)
+        .filter(([status]) => !['betaald', 'geannuleerd'].includes(status))
+        .map(([status, sourceInvoice]) => {
           const IS_CLEARED = false;
           const statusDescription =
             forTesting.determineFactuurStatusDescription(
@@ -608,6 +638,7 @@ describe('afis-facturen', async () => {
                 amountPayedFormatted: '€ 123,40',
                 amountOriginalFormatted: '€ 210,40',
                 debtClearingDateFormatted: '16 juni 2024',
+                eMandateId: sourceInvoice.SEPAMandate,
               } as AfisFactuur,
               IS_CLEARED
             );
@@ -619,6 +650,10 @@ describe('afis-facturen', async () => {
         [
           'automatische-incasso',
           '€ 210,40 wordt automatisch van uw rekening afgeschreven.',
+        ],
+        [
+          'factuur-in-termijnen',
+          'Uw factuur is nog niet geheel betaald. Maak het bedrag van de resterende termijn(en) over onder vermelding van de gegevens op uw factuur.',
         ],
         [
           'handmatig-betalen',
@@ -647,8 +682,8 @@ describe('afis-facturen', async () => {
 
     test('determineFactuurStatus determines Afgehandelde status description correctly', () => {
       const IS_CLEARED = true;
-      const statusDescriptions = Object.keys(sourceInvoices)
-        .filter((status) =>
+      const statusDescriptions = Object.entries(sourceInvoices)
+        .filter(([status]) =>
           [
             'betaald',
             'automatische-incasso',
@@ -656,7 +691,7 @@ describe('afis-facturen', async () => {
             'geannuleerd',
           ].includes(status)
         )
-        .map((status) => {
+        .map(([status, sourceInvoice]) => {
           const statusDescription =
             forTesting.determineFactuurStatusDescription(
               {
@@ -664,6 +699,7 @@ describe('afis-facturen', async () => {
                 amountPayedFormatted: '€ 123,40',
                 amountOriginalFormatted: '€ 210,40',
                 debtClearingDateFormatted: '16 juni 2024',
+                eMandateId: sourceInvoice.SEPAMandate,
               } as AfisFactuur,
               IS_CLEARED
             );

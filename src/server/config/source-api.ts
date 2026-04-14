@@ -1,6 +1,6 @@
 import https from 'node:https';
 
-import type { AxiosRequestConfig, AxiosResponse } from 'axios';
+import type { AxiosHeaderValue, AxiosRequestConfig } from 'axios';
 
 import {
   BFF_REQUEST_CACHE_ENABLED,
@@ -19,7 +19,6 @@ import { getCert } from '../helpers/cert.ts';
 import { getFromEnv } from '../helpers/env.ts';
 import { getHostNameFromUrl } from '../helpers/source-api-helpers.ts';
 import { featureToggle as featureToggleHLI } from '../services/hli/hli-service-config.ts';
-import { wpiAuthHeader } from '../services/wpi/api-service.ts';
 
 const RESET_AD_HOC_DEPENDENCY_REQUEST_CACHE_TTL_TIMEOUT_MS = ONE_HOUR_MS;
 export const FORCE_RENEW_CACHE_TTL_MS = 1;
@@ -38,7 +37,15 @@ export function setAdHocDependencyRequestCacheTtlMs(
   }, RESET_AD_HOC_DEPENDENCY_REQUEST_CACHE_TTL_TIMEOUT_MS);
 }
 
-export interface DataRequestConfig extends AxiosRequestConfig {
+export type DataRequestHeaders = Record<string, AxiosHeaderValue | undefined>;
+
+export type DataRequestResponseTransformer<S = any, T = unknown> = (
+  data: S,
+  headers: DataRequestHeaders,
+  status: number
+) => T;
+
+type DataRequestConfigBase = {
   cacheTimeout?: number;
   cancelTimeout?: number;
   postponeFetch?: boolean;
@@ -70,13 +77,25 @@ export interface DataRequestConfig extends AxiosRequestConfig {
    */
   passthroughOIDCToken?: boolean;
 
-  /**
-   * If you want to combine the responseData of multiple requests into on you can use this function.
-   * It will fire a next request right after the response succeeded, you can merge the response data.
-   * Mind you, the cancelTimeout might have to be increased because you'll probably make multiple requests pretending as one.
-   */
-  request?: <T>(requestConfig: DataRequestConfig) => Promise<AxiosResponse<T>>;
-}
+  transformResponse?: DataRequestResponseTransformer;
+};
+
+export const DATA_REQUEST_CONFIG_BASE_KEYS: (keyof DataRequestConfigBase)[] = [
+  'transformResponse',
+  'cancelTimeout',
+  'enableCache',
+  'postponeFetch',
+  'passthroughOIDCToken',
+  'cacheTimeout',
+  'formatUrl',
+  'cacheKey_UNSAFE',
+];
+
+export type DataRequestConfig = Omit<
+  AxiosRequestConfig,
+  'cancelToken' | 'transformResponse'
+> &
+  DataRequestConfigBase;
 
 // This means that every request that depends on the response of another will use the cached version of the response for a maximum of the given value.
 const apiCacheTTLMs = parseInt(
@@ -125,6 +144,10 @@ const postponeFetchContactmomenten =
 const httpsAgentConfigBFF = {
   cert: getCert('BFF_SERVER_CLIENT_CERT'),
   key: getCert('BFF_SERVER_CLIENT_KEY'),
+};
+
+export const wpiAuthHeader = {
+  'x-api-key': getFromEnv('BFF_WPI_API_KEY', true),
 };
 
 const ApiConfig_ = {

@@ -20,6 +20,7 @@ export const themaConfig = {
     title: THEMA_TITLE_BRP,
     featureToggle: {
       active: true,
+      wonenActive: isEnabled('WONEN.vve'),
       get aantalBewonersOpAdresTonenActive(): boolean {
         return (
           themaConfig[THEMA_ID_BRP].featureToggle.active &&
@@ -48,6 +49,11 @@ export const themaConfig = {
       route: {
         path: '/contactmomenten/:page?',
         documentTitle: `Alle contactmomenten | ${THEMA_TITLE_BRP}`,
+        trackingUrl: null,
+      },
+      detailPageVvE: {
+        path: '/persoonlijke-gegevens/vve',
+        documentTitle: `Mijn VvE | Mijn Amsterdam`,
         trackingUrl: null,
       },
     },

@@ -2,13 +2,15 @@ import type {
   ApiResponse,
   ApiResponse_DEPRECATED,
 } from '../../../universal/helpers/api.ts';
-import { apiSuccessResult } from '../../../universal/helpers/api.ts';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+} from '../../../universal/helpers/api.ts';
 import { dateSort } from '../../../universal/helpers/date.ts';
 import { pick } from '../../../universal/helpers/utils.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
-import type { SourceApiName } from '../../config/source-api.ts';
-import { getFromEnv } from '../../helpers/env.ts';
+import { wpiAuthHeader, type SourceApiName } from '../../config/source-api.ts';
 import {
   createSessionBasedCacheKey,
   getApiConfig,
@@ -48,10 +50,6 @@ export interface FetchConfig {
   filterResponse: FilterResponse;
   requestCacheKey: string;
 }
-
-export const wpiAuthHeader = {
-  'x-api-key': getFromEnv('BFF_WPI_API_KEY', true),
-};
 
 function createBsnPostBody(bsn: string) {
   return {
@@ -94,10 +92,8 @@ export async function fetchRequestProcess(
   const apiConfig = getApiConfig(fetchConfig.apiConfigName, {
     data: createBsnPostBody(authProfileAndToken.profile.id),
     cacheKey_UNSAFE: fetchConfig.requestCacheKey,
-    transformResponse: [
-      (response: ApiResponse<WpiRequestProcess[]>) =>
-        Array.isArray(response.content) ? response.content : [],
-    ],
+    transformResponse: (response: ApiResponse<WpiRequestProcess[]>) =>
+      Array.isArray(response.content) ? response.content : [],
   });
 
   const response = await requestData<WpiRequestProcess[]>(
@@ -174,7 +170,7 @@ export async function fetchEAanvragen(
     }
   );
 
-  if (about && response.status === 'OK' && response.content) {
+  if (about && response.status === 'OK' && Array.isArray(response.content)) {
     return apiSuccessResult(
       response.content.filter((requestProcess) =>
         about.includes(requestProcess.about as string)
@@ -182,7 +178,10 @@ export async function fetchEAanvragen(
     );
   }
 
-  return response;
+  return apiErrorResult(
+    `Failed to fetch ${about?.join(', ')} E-aanvragen`,
+    null
+  );
 }
 
 export async function fetchTozo(authProfileAndToken: AuthProfileAndToken) {
@@ -212,12 +211,14 @@ export function transformIncomSpecificationResponse(
   return {
     jaaropgaven:
       response.content?.jaaropgaven
+        .filter((jaaropgave) => !!jaaropgave?.datePublished)
         .map((jaaropgave) =>
           transformIncomeSpecificationItem(sessionID, jaaropgave)
         )
         .sort(dateSort('datePublished', 'desc')) ?? [],
     uitkeringsspecificaties:
       response.content?.uitkeringsspecificaties
+        .filter((specification) => !!specification?.datePublished)
         .map((specification) =>
           transformIncomeSpecificationItem(sessionID, specification)
         )
@@ -229,12 +230,14 @@ export async function fetchSpecificaties(
   authProfileAndToken: AuthProfileAndToken
 ) {
   const config = getApiConfig('WPI_SPECIFICATIES', {
-    transformResponse: (responseData) =>
+    transformResponse: (
+      responseData: ApiResponse<WpiIncomeSpecificationResponseData>
+    ) =>
       transformIncomSpecificationResponse(
         authProfileAndToken.profile.sid,
         responseData
       ),
-    data: createBsnPostBody(authProfileAndToken.profile.sid),
+    data: createBsnPostBody(authProfileAndToken.profile.id),
   });
   const response =
     await requestData<WpiIncomeSpecificationResponseDataTransformed>(
@@ -266,11 +269,14 @@ export async function fetchWpiNotifications(
   {
     const { status, content } = await fetchEAanvragen(authProfileAndToken);
 
-    if (status === 'OK') {
+    if (status === 'OK' && Array.isArray(content)) {
       const eAanvraagNotifications =
         content
           ?.filter((requestProcess) => {
-            return isRequestProcessActual(requestProcess.datePublished, today);
+            return (
+              !!requestProcess?.datePublished &&
+              isRequestProcessActual(requestProcess.datePublished, today)
+            );
           })
           .flatMap((requestProcess) => {
             const labels = getEAanvraagRequestProcessLabels(requestProcess);
@@ -318,7 +324,7 @@ export async function fetchWpiDocument(
       },
       headers: wpiAuthHeader,
       data: createBsnPostBody(authProfileAndToken.profile.id),
-      transformResponse: (documentResponseData) => {
+      transformResponse: (documentResponseData: NodeJS.ReadableStream) => {
         return {
           filename: 'Brief.pdf',
           mimetype: DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,

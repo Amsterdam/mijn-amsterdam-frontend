@@ -33,11 +33,10 @@ import {
 } from '../services/decos/decos-service.ts';
 import { fetchErfpachtDossiersDetail as fetchErfpachtDossiersDetail } from '../services/erfpacht/erfpacht.ts';
 import { hliRouter } from '../services/hli/hli-router.ts';
-import { fetchZorgnedLLVDocument } from '../services/jeugd/route-handlers.ts';
+import { jzdRouter } from '../services/jzd/jzd-router.ts';
 import { fetchDocument as fetchBBDocument } from '../services/powerbrowser/powerbrowser-service.ts';
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler.ts';
 import { userFeedbackRouter } from '../services/user-feedback/user-feedback.router.ts';
-import { wmoRouter } from '../services/wmo/wmo-router.ts';
 import { fetchWpiDocument } from '../services/wpi/api-service.ts';
 
 export const router = createBFFRouter({ id: 'router-protected' });
@@ -117,19 +116,12 @@ router.get(
 ////////////////////////////////////////////////////
 
 router.use(
-  wmoRouter.protected,
+  jzdRouter.protected,
   hliRouter.protected,
   brpRouter.protected,
   afisRouter.protected,
   bezwarenRouter.protected,
   userFeedbackRouter.protected
-);
-
-// LLV Zorgned Doc download
-attachDocumentDownloadRoute(
-  router,
-  BffEndpoints.LLV_DOCUMENT_DOWNLOAD,
-  fetchZorgnedLLVDocument
 );
 
 // Decos (Vergunningen, Horeca, Toeristische verhuur, Parkeren)
@@ -173,13 +165,10 @@ attachDocumentDownloadRoute(
 );
 router.get(
   BffEndpoints.ERFPACHT_DOSSIER_DETAILS,
-  async (
-    req: Request<{ dossierNummerUrlParam: string }>,
-    res: ResponseAuthenticated
-  ) => {
+  async (req: Request<{ dossierId: string }>, res: ResponseAuthenticated) => {
     const response = await fetchErfpachtDossiersDetail(
       res.locals.authProfileAndToken,
-      req.params.dossierNummerUrlParam
+      req.params.dossierId
     );
 
     return sendResponse(res, response);

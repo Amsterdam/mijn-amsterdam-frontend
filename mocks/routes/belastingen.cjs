@@ -1,5 +1,5 @@
-const settings = require('../settings.cjs');
 const BELASTINGEN = require('../fixtures/belastingen.json');
+const settings = require('../settings.cjs');
 
 module.exports = [
   {

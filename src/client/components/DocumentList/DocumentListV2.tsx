@@ -13,32 +13,30 @@ interface DocumentListProps<T extends GenericDocument = GenericDocument> {
   className?: string;
 }
 
-export default function DocumentListV2({
+export function DocumentListV2({
   documents,
   trackPath,
   columns,
   className,
 }: DocumentListProps) {
   const [colH1, colH2] = columns ?? ['Document', 'Datum'];
+  const visibleDocuments = documents.filter((document) =>
+    typeof document.isVisible !== 'undefined' ? document.isVisible : true
+  );
 
   return (
-    <Table className={classNames(styles.DocumentListV2, className)}>
-      {(colH1 || colH2) && (
-        <thead>
-          <tr>
-            {colH1 && <th>{colH1}</th>}
-            {colH2 && <th>{colH2}</th>}
-          </tr>
-        </thead>
-      )}
-      <tbody>
-        {documents
-          .filter((document) =>
-            typeof document.isVisible !== 'undefined'
-              ? document.isVisible
-              : true
-          )
-          .map((document) => (
+    <>
+      <Table className={classNames(styles.DocumentListV2, className)}>
+        {(colH1 || colH2) && (
+          <thead>
+            <tr>
+              {colH1 && <th>{colH1}</th>}
+              {colH2 && <th>{colH2}</th>}
+            </tr>
+          </thead>
+        )}
+        <tbody>
+          {visibleDocuments.map((document) => (
             <tr key={document.id}>
               <td>
                 <DocumentLink
@@ -54,7 +52,8 @@ export default function DocumentListV2({
               )}
             </tr>
           ))}
-      </tbody>
-    </Table>
+        </tbody>
+      </Table>
+    </>
   );
 }

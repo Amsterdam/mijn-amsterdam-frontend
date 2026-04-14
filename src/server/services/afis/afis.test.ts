@@ -118,7 +118,7 @@ describe('fetchIsKnownInAFIS ', () => {
       remoteApi
         .post(ROUTES.businesspartnerBSN)
         .reply(200, RESPONSE_BODIES.BSNFound);
-      remoteApi.get(ROUTES.facturen).times(8).reply(200, {});
+      remoteApi.get(ROUTES.facturen).times(9).reply(200, {});
 
       const response = await fetchIsKnownInAFIS(
         getAuthProfileAndToken('private')
@@ -152,7 +152,7 @@ describe('fetchIsKnownInAFIS ', () => {
       remoteApi
         .post(ROUTES.businesspartnerKVK)
         .reply(200, RESPONSE_BODIES.KVKFound);
-      remoteApi.get(ROUTES.facturen).times(8).reply(200, {});
+      remoteApi.get(ROUTES.facturen).times(9).reply(200, {});
 
       const response = await fetchIsKnownInAFIS(
         getAuthProfileAndToken('commercial')
@@ -202,6 +202,7 @@ describe('fetchIsKnownInAFIS ', () => {
 
       expect(response).toMatchInlineSnapshot(`
         {
+          "code": 500,
           "content": null,
           "message": "error retrieving doc",
           "status": "ERROR",

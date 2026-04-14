@@ -213,11 +213,13 @@ describe('Bezwaren', () => {
           },
           "failedDependencies": {
             "documents": {
+              "code": 500,
               "content": null,
               "message": "Nock: Disallowed net connect for "remote-api-host:80/bezwaren/zgw/v1/enkelvoudiginformatieobjecten?page=1&identifier=xxx"",
               "status": "ERROR",
             },
             "statussen": {
+              "code": 500,
               "content": null,
               "message": "Nock: Disallowed net connect for "remote-api-host:80/bezwaren/zgw/v1/statussen?zaak=http:%2F%2Fremote-api-host%2Fbezwaren%2Fzaken%2Fxxx"",
               "status": "ERROR",

@@ -114,10 +114,11 @@ function getAdres(verblijfplaats: VerblijfplaatsSource) {
 function getPersoonBasis(persoon: PersoonBasisSource): PersoonBasis {
   return {
     voornamen: persoon.naam?.voornamen ?? null,
+    voorvoegselGeslachtsnaam: persoon.naam?.voorvoegsel ?? null,
     geslachtsnaam: persoon.naam?.geslachtsnaam ?? null,
+    naamgebruik: persoon.naam?.aanduidingNaamgebruik?.omschrijving ?? null,
     omschrijvingAdellijkeTitel:
       persoon.naam?.adellijkeTitelPredicaat?.omschrijving ?? null,
-    voorvoegselGeslachtsnaam: persoon.naam?.voorvoegsel ?? null,
     opgemaakteNaam: persoon.naam?.volledigeNaam ?? null,
 
     geboortedatum: getDatum(persoon.geboorte?.datum),
@@ -180,10 +181,11 @@ function transformBenkBrpResponse(
           ]
         )
       : null;
-
+  const persoonBasis = getPersoonBasis(persoon);
   const responseContent: BrpFrontend = {
     persoon: {
-      ...getPersoonBasis(persoon),
+      ...persoonBasis,
+      aanschrijfwijze: persoon.adressering?.aanschrijfwijze?.naam ?? null,
       bsn: persoon.burgerservicenummer ?? null,
       gemeentenaamInschrijving:
         persoon.gemeenteVanInschrijving?.omschrijving ?? null,

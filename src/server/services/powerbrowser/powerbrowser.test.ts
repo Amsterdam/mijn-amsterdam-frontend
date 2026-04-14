@@ -3,6 +3,7 @@ import stream from 'node:stream';
 import Mockdate from 'mockdate';
 import { describe, expect } from 'vitest';
 
+import { SELECT_FIELDS_TRANSFORM_BASE } from './powerbrowser-field-transformers.ts';
 import {
   fetchPBZaken,
   fetchDocument,
@@ -547,6 +548,98 @@ describe('Powerbrowser service', () => {
         .reply(500, 'some-error');
 
       const result = await forTesting.fetchZaakAdres('test-zaak-id');
+      expect(result.status).toBe('ERROR');
+    });
+  });
+
+  describe('fetchZaakWbTransport', () => {
+    test('should fetch wbtransport fields successfully and prefix field names', async () => {
+      remoteApi
+        .post('/powerbrowser/Link/GFO_ZAKEN/WB_TRANSPORT/Table')
+        .query(true)
+        .reply(200, {
+          records: [
+            {
+              fields: [
+                { fieldName: 'K_MAINID', fieldValue: '123' },
+                { fieldName: 'NAAM_VAARTUIG', fieldValue: 'Test Vessel' },
+              ],
+            },
+          ],
+        });
+
+      const result = await forTesting.fetchZaakWbTransport('test-zaak-id', {
+        prefix: 'WB_',
+        fields: ['NAAM_VAARTUIG'],
+      });
+      expect(result.status).toBe('OK');
+      expect(result.content).toEqual([
+        { fieldName: 'WB_K_MAINID', fieldValue: '123' },
+        { fieldName: 'WB_NAAM_VAARTUIG', fieldValue: 'Test Vessel' },
+      ]);
+    });
+
+    test('that transformZaakRaw uses wbtransport fields and transforms them', async () => {
+      const wbTransportFields = [
+        { fieldName: 'WB_K_MAINID', fieldValue: '123' },
+        { fieldName: 'WB_NAAM_VAARTUIG', fieldValue: 'Test Vessel' },
+      ];
+
+      const minimalZaakTransformer = {
+        caseType: 'Test zaak',
+        title: 'Test zaak',
+        isVerleend: () => false,
+        transformFields: {
+          ...SELECT_FIELDS_TRANSFORM_BASE,
+          WB_NAAM_VAARTUIG: 'vesselName',
+        } as const,
+      } satisfies Partial<PowerBrowserZaakTransformer> as unknown as PowerBrowserZaakTransformer;
+
+      const zaakRaw = {
+        fmtCpn: 'test',
+        mainTableName: 'GFO_ZAKEN',
+        id: 'test-zaak-id',
+        fields: [],
+      } as unknown as PBZaakRecord;
+
+      const transformedZaak = forTesting.transformZaakRaw(
+        minimalZaakTransformer,
+        {
+          zaakRaw,
+          location: null,
+          documents: [],
+          statusDates: [],
+          wbTransportFields,
+        }
+      );
+
+      expect(transformedZaak.vesselName).toBe('Test Vessel');
+    });
+
+    test('should return empty list if no wbtransport fields found', async () => {
+      remoteApi
+        .post('/powerbrowser/Link/GFO_ZAKEN/WB_TRANSPORT/Table')
+        .query(true)
+        .reply(200, { records: [] });
+
+      const result = await forTesting.fetchZaakWbTransport('test-zaak-id', {
+        prefix: 'WB_',
+        fields: ['NAAM_VAARTUIG'],
+      });
+      expect(result.status).toBe('OK');
+      expect(result.content).toEqual([]);
+    });
+
+    test('should return an error if fetch fails', async () => {
+      remoteApi
+        .post('/powerbrowser/Link/GFO_ZAKEN/WB_TRANSPORT/Table')
+        .query(true)
+        .reply(500, 'some-error');
+
+      const result = await forTesting.fetchZaakWbTransport('test-zaak-id', {
+        prefix: 'WB_',
+        fields: ['NAAM_VAARTUIG'],
+      });
       expect(result.status).toBe('ERROR');
     });
   });

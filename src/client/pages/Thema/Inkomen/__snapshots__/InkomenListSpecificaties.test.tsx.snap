@@ -114,7 +114,13 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
                 >
                   <th
                     class="ams-table__header-cell"
-                    style="width: 75%;"
+                    style="width: 50%;"
+                  >
+                    Naam
+                  </th>
+                  <th
+                    class="ams-table__header-cell"
+                    style="width: 25%;"
                   >
                     Datum
                   </th>
@@ -135,6 +141,11 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
                   <td
                     class="ams-table__cell"
                   >
+                    Jaaropgave
+                  </td>
+                  <td
+                    class="ams-table__cell"
+                  >
                     04 januari 2019
                   </td>
                   <td
@@ -180,6 +191,11 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
                   <td
                     class="ams-table__cell"
                   >
+                    Jaaropgave
+                  </td>
+                  <td
+                    class="ams-table__cell"
+                  >
                     04 januari 2019
                   </td>
                   <td
@@ -222,6 +238,11 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
                 <tr
                   class="ams-table__row"
                 >
+                  <td
+                    class="ams-table__cell"
+                  >
+                    Jaaropgave
+                  </td>
                   <td
                     class="ams-table__cell"
                   >
@@ -267,6 +288,11 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
                 <tr
                   class="ams-table__row"
                 >
+                  <td
+                    class="ams-table__cell"
+                  >
+                    Jaaropgave
+                  </td>
                   <td
                     class="ams-table__cell"
                   >
@@ -518,13 +544,13 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                     class="ams-table__header-cell"
                     style="width: 50%;"
                   >
-                    Datum
+                    Regeling
                   </th>
                   <th
                     class="ams-table__header-cell"
                     style="width: 25%;"
                   >
-                    Regeling
+                    Datum
                   </th>
                   <th
                     class="ams-table__header-cell"
@@ -543,12 +569,12 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   <td
                     class="ams-table__cell"
                   >
-                    30 april 2019
+                    Bijzondere Bijstand
                   </td>
                   <td
                     class="ams-table__cell"
                   >
-                    Bijzondere Bijstand
+                    30 april 2019
                   </td>
                   <td
                     class="ams-table__cell"
@@ -590,6 +616,11 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 <tr
                   class="ams-table__row"
                 >
+                  <td
+                    class="ams-table__cell"
+                  >
+                    Bijzondere Bijstand
+                  </td>
                   <td
                     class="ams-table__cell"
                   >
@@ -598,11 +629,6 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   <td
                     class="ams-table__cell"
                   >
-                    Bijzondere Bijstand
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
                     <span
                       class="_DocumentLinkWrap_4ce874"
                     >
@@ -640,6 +666,11 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 <tr
                   class="ams-table__row"
                 >
+                  <td
+                    class="ams-table__cell"
+                  >
+                    Bijzondere Bijstand
+                  </td>
                   <td
                     class="ams-table__cell"
                   >
@@ -648,11 +679,6 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   <td
                     class="ams-table__cell"
                   >
-                    Bijzondere Bijstand
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
                     <span
                       class="_DocumentLinkWrap_4ce874"
                     >
@@ -690,6 +716,11 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 <tr
                   class="ams-table__row"
                 >
+                  <td
+                    class="ams-table__cell"
+                  >
+                    Bijzondere Bijstand
+                  </td>
                   <td
                     class="ams-table__cell"
                   >
@@ -698,11 +729,6 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   <td
                     class="ams-table__cell"
                   >
-                    Bijzondere Bijstand
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
                     <span
                       class="_DocumentLinkWrap_4ce874"
                     >
@@ -740,6 +766,11 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 <tr
                   class="ams-table__row"
                 >
+                  <td
+                    class="ams-table__cell"
+                  >
+                    Bijzondere Bijstand
+                  </td>
                   <td
                     class="ams-table__cell"
                   >
@@ -748,11 +779,6 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   <td
                     class="ams-table__cell"
                   >
-                    Bijzondere Bijstand
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
                     <span
                       class="_DocumentLinkWrap_4ce874"
                     >
@@ -790,6 +816,11 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 <tr
                   class="ams-table__row"
                 >
+                  <td
+                    class="ams-table__cell"
+                  >
+                    Bijzondere Bijstand
+                  </td>
                   <td
                     class="ams-table__cell"
                   >
@@ -798,11 +829,6 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   <td
                     class="ams-table__cell"
                   >
-                    Bijzondere Bijstand
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
                     <span
                       class="_DocumentLinkWrap_4ce874"
                     >
@@ -840,6 +866,11 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 <tr
                   class="ams-table__row"
                 >
+                  <td
+                    class="ams-table__cell"
+                  >
+                    Bijzondere Bijstand
+                  </td>
                   <td
                     class="ams-table__cell"
                   >
@@ -848,11 +879,6 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   <td
                     class="ams-table__cell"
                   >
-                    Bijzondere Bijstand
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
                     <span
                       class="_DocumentLinkWrap_4ce874"
                     >
@@ -890,6 +916,11 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 <tr
                   class="ams-table__row"
                 >
+                  <td
+                    class="ams-table__cell"
+                  >
+                    Bijzondere Bijstand
+                  </td>
                   <td
                     class="ams-table__cell"
                   >
@@ -898,11 +929,6 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   <td
                     class="ams-table__cell"
                   >
-                    Bijzondere Bijstand
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
                     <span
                       class="_DocumentLinkWrap_4ce874"
                     >
@@ -940,6 +966,11 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 <tr
                   class="ams-table__row"
                 >
+                  <td
+                    class="ams-table__cell"
+                  >
+                    Bijzondere Bijstand
+                  </td>
                   <td
                     class="ams-table__cell"
                   >
@@ -948,11 +979,6 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   <td
                     class="ams-table__cell"
                   >
-                    Bijzondere Bijstand
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
                     <span
                       class="_DocumentLinkWrap_4ce874"
                     >
@@ -990,6 +1016,11 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 <tr
                   class="ams-table__row"
                 >
+                  <td
+                    class="ams-table__cell"
+                  >
+                    Bijzondere Bijstand
+                  </td>
                   <td
                     class="ams-table__cell"
                   >
@@ -998,11 +1029,6 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   <td
                     class="ams-table__cell"
                   >
-                    Bijzondere Bijstand
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
                     <span
                       class="_DocumentLinkWrap_4ce874"
                     >
@@ -1040,6 +1066,11 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 <tr
                   class="ams-table__row"
                 >
+                  <td
+                    class="ams-table__cell"
+                  >
+                    Bijzondere Bijstand
+                  </td>
                   <td
                     class="ams-table__cell"
                   >
@@ -1048,11 +1079,6 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   <td
                     class="ams-table__cell"
                   >
-                    Bijzondere Bijstand
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
                     <span
                       class="_DocumentLinkWrap_4ce874"
                     >
@@ -1090,6 +1116,11 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 <tr
                   class="ams-table__row"
                 >
+                  <td
+                    class="ams-table__cell"
+                  >
+                    Bijzondere Bijstand
+                  </td>
                   <td
                     class="ams-table__cell"
                   >
@@ -1098,11 +1129,6 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   <td
                     class="ams-table__cell"
                   >
-                    Bijzondere Bijstand
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
                     <span
                       class="_DocumentLinkWrap_4ce874"
                     >
@@ -1140,6 +1166,11 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 <tr
                   class="ams-table__row"
                 >
+                  <td
+                    class="ams-table__cell"
+                  >
+                    Bijzondere Bijstand
+                  </td>
                   <td
                     class="ams-table__cell"
                   >
@@ -1148,11 +1179,6 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   <td
                     class="ams-table__cell"
                   >
-                    Bijzondere Bijstand
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
                     <span
                       class="_DocumentLinkWrap_4ce874"
                     >
@@ -1190,6 +1216,11 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 <tr
                   class="ams-table__row"
                 >
+                  <td
+                    class="ams-table__cell"
+                  >
+                    Bijzondere Bijstand
+                  </td>
                   <td
                     class="ams-table__cell"
                   >
@@ -1198,11 +1229,6 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   <td
                     class="ams-table__cell"
                   >
-                    Bijzondere Bijstand
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
                     <span
                       class="_DocumentLinkWrap_4ce874"
                     >
@@ -1240,6 +1266,11 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 <tr
                   class="ams-table__row"
                 >
+                  <td
+                    class="ams-table__cell"
+                  >
+                    Bijzondere Bijstand
+                  </td>
                   <td
                     class="ams-table__cell"
                   >
@@ -1248,11 +1279,6 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   <td
                     class="ams-table__cell"
                   >
-                    Bijzondere Bijstand
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
                     <span
                       class="_DocumentLinkWrap_4ce874"
                     >
@@ -1290,6 +1316,11 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 <tr
                   class="ams-table__row"
                 >
+                  <td
+                    class="ams-table__cell"
+                  >
+                    Bijzondere Bijstand
+                  </td>
                   <td
                     class="ams-table__cell"
                   >
@@ -1298,11 +1329,6 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   <td
                     class="ams-table__cell"
                   >
-                    Bijzondere Bijstand
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
                     <span
                       class="_DocumentLinkWrap_4ce874"
                     >
@@ -1340,6 +1366,11 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 <tr
                   class="ams-table__row"
                 >
+                  <td
+                    class="ams-table__cell"
+                  >
+                    Bijzondere Bijstand
+                  </td>
                   <td
                     class="ams-table__cell"
                   >
@@ -1348,11 +1379,6 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   <td
                     class="ams-table__cell"
                   >
-                    Bijzondere Bijstand
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
                     <span
                       class="_DocumentLinkWrap_4ce874"
                     >
@@ -1390,6 +1416,11 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 <tr
                   class="ams-table__row"
                 >
+                  <td
+                    class="ams-table__cell"
+                  >
+                    Bijzondere Bijstand
+                  </td>
                   <td
                     class="ams-table__cell"
                   >
@@ -1398,11 +1429,6 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   <td
                     class="ams-table__cell"
                   >
-                    Bijzondere Bijstand
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
                     <span
                       class="_DocumentLinkWrap_4ce874"
                     >
@@ -1440,6 +1466,11 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 <tr
                   class="ams-table__row"
                 >
+                  <td
+                    class="ams-table__cell"
+                  >
+                    Bijzondere Bijstand
+                  </td>
                   <td
                     class="ams-table__cell"
                   >
@@ -1448,11 +1479,6 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   <td
                     class="ams-table__cell"
                   >
-                    Bijzondere Bijstand
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
                     <span
                       class="_DocumentLinkWrap_4ce874"
                     >
@@ -1493,12 +1519,12 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   <td
                     class="ams-table__cell"
                   >
-                    11 april 2019
+                    Bijzondere Bijstand
                   </td>
                   <td
                     class="ams-table__cell"
                   >
-                    Bijzondere Bijstand
+                    11 april 2019
                   </td>
                   <td
                     class="ams-table__cell"

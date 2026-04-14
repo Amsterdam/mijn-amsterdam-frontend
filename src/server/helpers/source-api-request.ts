@@ -1,41 +1,38 @@
-import type {
-  AxiosResponse,
-  AxiosResponseHeaders} from 'axios';
-import axios, {
-  type AxiosResponseTransformer,
-} from 'axios';
+import type { AxiosError, AxiosRequestConfig } from 'axios';
+import { type AxiosResponseHeaders } from 'axios';
+import axios, { isAxiosError } from 'axios';
 import memoryCache from 'memory-cache';
 
-import { Deferred } from './deferred.ts';
 import {
   addRequestDataDebugging,
   addResponseDataDebugging,
 } from './source-api-debug.ts';
 import { getRequestConfigCacheKey } from './source-api-helpers.ts';
-import type {
-  ApiSuccessResponse} from '../../universal/helpers/api.ts';
+import { APP_MODE, IS_PRODUCTION } from '../../universal/config/env.ts';
 import {
   apiErrorResult,
   apiPostponeResult,
   apiSuccessResult,
-  type ApiErrorResponse,
+  type ApiResponse,
 } from '../../universal/helpers/api.ts';
+import { omit } from '../../universal/helpers/utils.ts';
 import type { AuthProfileAndToken } from '../auth/auth-types.ts';
 import type {
   ApiUrlEntries,
-  DataRequestConfig} from '../config/source-api.ts';
+  DataRequestConfig,
+  DataRequestResponseTransformer,
+} from '../config/source-api.ts';
 import {
+  DATA_REQUEST_CONFIG_BASE_KEYS,
+  DEFAULT_CANCEL_TIMEOUT_MS,
   DEFAULT_REQUEST_CACHE_TTL_MS,
   DEFAULT_REQUEST_CONFIG,
   FORCE_RENEW_CACHE_TTL_MS,
 } from '../config/source-api.ts';
-import {
-  debugCacheHit,
-  debugCacheKey,
-  debugResponse,
-  debugResponseError,
-} from '../debug.ts';
+import { debugCacheKey, debugResponse, debugResponseError } from '../debug.ts';
 import { captureException } from '../services/monitoring.ts';
+
+const useDescriptiveErrorMessages = !IS_PRODUCTION && APP_MODE !== 'unittest';
 
 export const axiosRequest = axios.create({
   responseType: 'json',
@@ -64,38 +61,62 @@ export interface RequestConfig<Source, Transformed> {
   format: (data: Source) => Transformed;
 }
 
-export async function requestData<T>(
-  passConfig: DataRequestConfig,
-  authProfileAndToken?: AuthProfileAndToken
-) {
+async function request({
+  cancelTimeout,
+  ...config
+}: AxiosRequestConfig & {
+  cancelTimeout: number;
+}) {
   const source = axios.CancelToken.source();
+  // Request is cancelled after x ms
+  const cancelTimeoutId = setTimeout(() => {
+    source.cancel('Request to source api timeout.');
+  }, cancelTimeout);
 
-  const config = {
+  return axiosRequest.request({ ...config, cancelToken: source.token }).then(
+    (response) => {
+      clearTimeout(cancelTimeoutId);
+      return response;
+    },
+    (error) => {
+      clearTimeout(cancelTimeoutId);
+      throw error;
+    }
+  );
+}
+
+export async function requestData<T>(
+  requestConfig: DataRequestConfig,
+  authProfileAndToken?: AuthProfileAndToken
+): Promise<ApiResponse<T>> {
+  const config: DataRequestConfig = {
     ...DEFAULT_REQUEST_CONFIG,
-    ...passConfig,
-    cancelToken: source.token,
+    ...requestConfig,
   };
 
   if (config.postponeFetch) {
     return apiPostponeResult(null);
   }
 
+  // Collect response transformers, if any are configured, and remove them from the config passed to axios.
+  // We don't want to cache the transformed response, only the original response from the source api.
+  const transformers: DataRequestResponseTransformer[] = [];
+
   if (config.transformResponse) {
-    const transformers: AxiosResponseTransformer[] = [];
-    config.transformResponse = transformers.concat(
-      axios.defaults.transformResponse ?? [],
-      config.transformResponse ?? []
-    );
+    if (Array.isArray(config.transformResponse)) {
+      transformers.push(...config.transformResponse);
+    } else {
+      transformers.push(config.transformResponse);
+    }
+    delete config.transformResponse;
   }
 
-  addResponseDataDebugging(config);
-  addRequestDataDebugging(config);
-
   // Shortcut to passing the JWT of the connected OIDC provider along with the request as Bearer token
-  // A configured Authorization header passed via { ... headers: { Authorization: 'xxx' }, ... } takes presedence.
+  // A configured Authorization header passed via { ... headers: { Authorization: 'xxx' }, ... } takes precedence.
   if (config.passthroughOIDCToken && authProfileAndToken?.token) {
     const headers = config?.headers ?? {};
     config.headers = Object.assign(
+      {},
       {
         Authorization: `Bearer ${authProfileAndToken.token}`,
       },
@@ -103,89 +124,92 @@ export async function requestData<T>(
     );
   }
 
+  const axiosRequestConfig: AxiosRequestConfig = omit(
+    config,
+    DATA_REQUEST_CONFIG_BASE_KEYS
+  );
+
+  // Add debugging transformers based on environment variables
+  // These transformers will log the raw response data and request config for requests that match certain terms defined in environment variables.
+  // These calls will be cached along with the original request, but since they only log the data and don't modify it, this should not affect the caching behavior.
+  addResponseDataDebugging(axiosRequestConfig);
+  addRequestDataDebugging(axiosRequestConfig);
+
   // Construct a cache key based on unique properties of a request
   const cacheKey = config.cacheKey_UNSAFE || getRequestConfigCacheKey(config);
 
   // Check if a cache key for this particular request exists
-  const cacheEntry = cache.get(cacheKey);
+  const cachedRequestPromise = cache.get(cacheKey) as ReturnType<
+    typeof request
+  > | null;
+
   const cacheTimeout = config.cacheTimeout ?? DEFAULT_REQUEST_CACHE_TTL_MS;
+  const shouldRenewCache = cacheTimeout === FORCE_RENEW_CACHE_TTL_MS;
+  const shouldUseCache = config.enableCache !== false;
 
-  if (
-    config.enableCache &&
-    cacheEntry !== null &&
-    cacheTimeout !== FORCE_RENEW_CACHE_TTL_MS
-  ) {
-    debugCacheHit(`Cache hit! ${config.url}`);
-    return cacheEntry.promise as Promise<
-      ApiSuccessResponse<T> | ApiErrorResponse<null>
-    >;
+  if (cachedRequestPromise && shouldRenewCache) {
+    cache.del(cacheKey);
   }
 
-  // Set the cache Deferred
-  if (config.enableCache && cacheKey && cacheTimeout > 0) {
-    // Debug the cache key to check if the cache key is set and uses the custom cache key if provided.
-    debugCacheKey(
-      `Caching ${config.url}${config.cacheKey_UNSAFE ? ` with custom cachekey ${config.cacheKey_UNSAFE}` : ''}, releases in ${cacheTimeout}ms`
-    );
-    cache.put(cacheKey, new Deferred<ApiSuccessResponse<T>>(), cacheTimeout);
-  }
+  const requestPromise =
+    !shouldRenewCache && shouldUseCache && cachedRequestPromise
+      ? cachedRequestPromise
+      : request({
+          ...axiosRequestConfig,
+          cancelTimeout: config.cancelTimeout ?? DEFAULT_CANCEL_TIMEOUT_MS,
+        });
 
-  let cancelTimeout;
+  const isServedFromCache = cache.get(cacheKey) !== null;
+
+  if (shouldUseCache && !isServedFromCache && cacheTimeout > 0) {
+    cache.put(cacheKey, requestPromise, cacheTimeout);
+  }
 
   try {
-    // Request is cancelled after x ms
-    cancelTimeout = setTimeout(() => {
-      source.cancel('Request to source api timeout.');
-    }, config.cancelTimeout!);
+    const response = await requestPromise;
 
-    let response: AxiosResponse<T>;
+    let responseDataTransformed = response.data;
 
-    if (config.request) {
-      response = await config.request<T>(config);
+    if (transformers.length > 0) {
+      responseDataTransformed = transformers.reduce((data, transformer) => {
+        return transformer(data, response.headers, response.status);
+      }, responseDataTransformed);
+    }
+    return apiSuccessResult(responseDataTransformed as T);
+  } catch (error_) {
+    // Delete the cache asap, we don't want to serve a cached error response on the next request.
+    cache.del(cacheKey);
+
+    const fromAxios = isAxiosError(error_);
+
+    let code: number = 500;
+    let errorMessage: string = '';
+    let stack: string | undefined = undefined;
+
+    if (fromAxios) {
+      const error = error_ as AxiosError;
+      code = error.status ?? error?.response?.status ?? code;
+      errorMessage = useDescriptiveErrorMessages
+        ? `AxiosError in requestData: ${error.message} for URL ${config.url}`
+        : error.message;
+      stack = error.stack;
     } else {
-      response = await axiosRequest.request<T>(config);
+      const error = error_ as Error;
+      errorMessage = useDescriptiveErrorMessages
+        ? `Error in requestData: ${error.message} for URL ${config.url}`
+        : error.message;
+      stack = error.stack;
     }
-
-    // Clears the timeout after the above request promise is settled
-    clearTimeout(cancelTimeout);
-
-    const responseData = apiSuccessResult<T>(response.data);
-
-    // Use the cached Deferred for resolving the response
-    if (config.enableCache && cache.get(cacheKey)) {
-      cache.get(cacheKey).resolve(responseData);
-    }
-
-    return responseData;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
-    const errorMessage = 'message' in error ? error.message : error.toString();
 
     debugResponse('[ERROR]: %s', errorMessage, config.url);
-    debugResponseError('[ERROR]: %o', error);
+    debugResponseError('[ERROR]: %o', error_);
 
-    captureException(error, {
-      properties: {
-        message: errorMessage,
-        data: error.response?.data,
-      },
-    });
+    const e = new Error(errorMessage);
+    e.stack = stack;
 
-    const statusCode = error.statusCode ?? error?.response?.status;
-    const responseData = apiErrorResult(
-      errorMessage,
-      null,
-      statusCode ? parseInt(statusCode, 10) : undefined
-    );
+    captureException(e);
 
-    if (cache.get(cacheKey)) {
-      // Resolve with error
-      cache.get(cacheKey).resolve(responseData);
-      // Remove entry from cache
-      cache.del(cacheKey);
-    }
-
-    return responseData;
+    return apiErrorResult(errorMessage, null, code);
   }
 }
 
@@ -206,6 +230,10 @@ export function findApiByRequestUrl(
 }
 
 export function getNextUrlFromLinkHeader(headers: AxiosResponseHeaders) {
+  if (!headers.link?.includes('rel="next"')) {
+    return null;
+  }
+
   // parse link header and get value of rel="next" url
   const links = headers.link.split(',');
   const next = links.find(
