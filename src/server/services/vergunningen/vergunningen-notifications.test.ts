@@ -23,10 +23,6 @@ vi.mock('./vergunningen', () => ({
   fetchVergunningen: vi.fn(),
 }));
 
-// vi.mock('./vergunningen-helpers', () => ({
-//   isExpiryNotificationDue: vi.fn(),
-// }));
-
 describe('vergunningen-notifications', () => {
   describe('createVergunningNotification', () => {
     beforeAll(() => {
