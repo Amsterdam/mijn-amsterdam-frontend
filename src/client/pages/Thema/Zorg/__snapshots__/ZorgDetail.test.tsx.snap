@@ -13,16 +13,8 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
         class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
       >
         <nav
-          aria-labelledby=":r7:"
           class="ams-breadcrumb"
         >
-          <h2
-            aria-hidden="true"
-            class="ams-visually-hidden"
-            id=":r7:"
-          >
-            Kruimelpad
-          </h2>
           <ol
             class="ams-breadcrumb__list"
           >
@@ -116,7 +108,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             >
               <li
                 aria-label="Status Afgerond"
-                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--collapsed ams-progress-list__step--completed"
+                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--completed"
               >
                 <div
                   class="ams-progress-list__indicator"
@@ -138,90 +130,61 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
-                    <button
-                      aria-controls=":r8:"
-                      aria-expanded="false"
-                      class="ams-progress-list__button"
-                      type="button"
+                    <span
+                      class="ams-visually-hidden"
                     >
-                      <span
-                        class="ams-icon ams-icon--heading-3 ams-progress-list__icon"
-                        hidden=""
-                      >
-                        <svg
-                          aria-hidden="true"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            clip-rule="evenodd"
-                            d="M2.5 7.911 12 17.5l9.5-9.589L20.102 6.5 12 14.677 3.898 6.5z"
-                            fill-rule="evenodd"
-                          />
-                        </svg>
-                      </span>
-                      <span
-                        class="ams-visually-hidden"
-                      >
-                        Klaar: 
-                      </span>
-                      Besluit
-                    </button>
+                      Klaar: 
+                    </span>
+                    Besluit
                   </h3>
-                  <div
-                    class="ams-progress-list__panel"
-                    id=":r8:"
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime="2022-01-15"
                   >
-                    <time
-                      class="_StepStatusDate_5b0b8a"
-                      datetime="2022-01-15"
-                    >
-                      15 januari 2022
-                    </time>
-                    <div>
-                      
+                    15 januari 2022
+                  </time>
+                  <div>
+                    
               
-                      <p
-                        class="ams-paragraph"
-                      >
-                        
-                U heeft recht op hulp bij het huishouden (geleverd) per 15 december 2021.
-              
-                      </p>
-                      
-              
-                      <p
-                        class="ams-paragraph"
-                      >
-                        
-                
-                    In de brief leest u ook hoe u bezwaar kunt maken, een klacht
-                    kan indienen of 
-                        <u>
-                          hoe u van aanbieder kunt wisselen.
-                        </u>
-                        
-                  
-              
-                      </p>
-                      
-            
-                    </div>
                     <p
                       class="ams-paragraph"
                     >
                       
+                U heeft recht op hulp bij het huishouden (geleverd) per 15 december 2021.
+              
+                    </p>
+                    
+              
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
+                
+                    In de brief leest u ook hoe u bezwaar kunt maken, een klacht
+                    kan indienen of 
+                      <u>
+                        hoe u van aanbieder kunt wisselen.
+                      </u>
+                      
+                  
+              
+                    </p>
+                    
             
-                      <strong>
-                        
+                  </div>
+                  <p
+                    class="ams-paragraph"
+                  >
+                    
+            
+                    <strong>
+                      
               U krijgt dit besluit per post.
             
-                      </strong>
-                      
+                    </strong>
+                    
           
-                    </p>
-                  </div>
+                  </p>
                 </div>
               </li>
               <li
@@ -265,54 +228,25 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
-                    <button
-                      aria-controls=":r9:"
-                      aria-expanded="true"
-                      class="ams-progress-list__button"
-                      type="button"
+                    <span
+                      class="ams-visually-hidden"
                     >
-                      <span
-                        class="ams-icon ams-icon--heading-3 ams-progress-list__icon"
-                        hidden=""
-                      >
-                        <svg
-                          aria-hidden="true"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            clip-rule="evenodd"
-                            d="M2.5 7.911 12 17.5l9.5-9.589L20.102 6.5 12 14.677 3.898 6.5z"
-                            fill-rule="evenodd"
-                          />
-                        </svg>
-                      </span>
-                      <span
-                        class="ams-visually-hidden"
-                      >
-                        Bezig: 
-                      </span>
-                      Levering gestart
-                    </button>
+                      Bezig: 
+                    </span>
+                    Levering gestart
                   </h3>
-                  <div
-                    class="ams-progress-list__panel"
-                    id=":r9:"
-                  >
-                    <time
-                      class="_StepStatusDate_5b0b8a"
-                      datetime=""
-                    />
-                    <div>
-                      <p
-                        class="ams-paragraph"
-                      >
-                        
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime=""
+                  />
+                  <div>
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
             Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (geleverd).
           
-                      </p>
-                    </div>
+                    </p>
                   </div>
                 </div>
               </li>
@@ -340,49 +274,20 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
-                    <button
-                      aria-controls=":ra:"
-                      aria-expanded="true"
-                      class="ams-progress-list__button"
-                      type="button"
-                    >
-                      <span
-                        class="ams-icon ams-icon--heading-3 ams-progress-list__icon"
-                        hidden=""
-                      >
-                        <svg
-                          aria-hidden="true"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            clip-rule="evenodd"
-                            d="M2.5 7.911 12 17.5l9.5-9.589L20.102 6.5 12 14.677 3.898 6.5z"
-                            fill-rule="evenodd"
-                          />
-                        </svg>
-                      </span>
-                      Levering gestopt
-                    </button>
+                    Levering gestopt
                   </h3>
-                  <div
-                    class="ams-progress-list__panel"
-                    id=":ra:"
-                  >
-                    <time
-                      class="_StepStatusDate_5b0b8a"
-                      datetime=""
-                    />
-                    <div>
-                      <p
-                        class="ams-paragraph"
-                      >
-                        
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime=""
+                  />
+                  <div>
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
             Niet van toepassing.
           
-                      </p>
-                    </div>
+                    </p>
                   </div>
                 </div>
               </li>
@@ -410,48 +315,19 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
-                    <button
-                      aria-controls=":rb:"
-                      aria-expanded="true"
-                      class="ams-progress-list__button"
-                      type="button"
-                    >
-                      <span
-                        class="ams-icon ams-icon--heading-3 ams-progress-list__icon"
-                        hidden=""
-                      >
-                        <svg
-                          aria-hidden="true"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            clip-rule="evenodd"
-                            d="M2.5 7.911 12 17.5l9.5-9.589L20.102 6.5 12 14.677 3.898 6.5z"
-                            fill-rule="evenodd"
-                          />
-                        </svg>
-                      </span>
-                      Einde recht
-                    </button>
+                    Einde recht
                   </h3>
-                  <div
-                    class="ams-progress-list__panel"
-                    id=":rb:"
-                  >
-                    <time
-                      class="_StepStatusDate_5b0b8a"
-                    />
-                    <div>
-                      <p
-                        class="ams-paragraph"
-                      >
-                        
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                  />
+                  <div>
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
             Uw recht op hulp bij het huishouden (geleverd) is beëindigd per 
           
-                      </p>
-                    </div>
+                    </p>
                   </div>
                 </div>
               </li>
@@ -477,16 +353,8 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
         class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
       >
         <nav
-          aria-labelledby=":rh:"
           class="ams-breadcrumb"
         >
-          <h2
-            aria-hidden="true"
-            class="ams-visually-hidden"
-            id=":rh:"
-          >
-            Kruimelpad
-          </h2>
           <ol
             class="ams-breadcrumb__list"
           >
@@ -580,7 +448,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             >
               <li
                 aria-label="Status Afgerond"
-                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--collapsed ams-progress-list__step--completed"
+                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--completed"
               >
                 <div
                   class="ams-progress-list__indicator"
@@ -602,81 +470,98 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
-                    <button
-                      aria-controls=":ri:"
-                      aria-expanded="false"
-                      class="ams-progress-list__button"
-                      type="button"
+                    <span
+                      class="ams-visually-hidden"
                     >
-                      <span
-                        class="ams-icon ams-icon--heading-3 ams-progress-list__icon"
-                        hidden=""
-                      >
-                        <svg
-                          aria-hidden="true"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            clip-rule="evenodd"
-                            d="M2.5 7.911 12 17.5l9.5-9.589L20.102 6.5 12 14.677 3.898 6.5z"
-                            fill-rule="evenodd"
-                          />
-                        </svg>
-                      </span>
-                      <span
-                        class="ams-visually-hidden"
-                      >
-                        Klaar: 
-                      </span>
-                      Besluit
-                    </button>
+                      Klaar: 
+                    </span>
+                    Besluit
                   </h3>
-                  <div
-                    class="ams-progress-list__panel"
-                    id=":ri:"
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime="2022-01-15"
                   >
-                    <time
-                      class="_StepStatusDate_5b0b8a"
-                      datetime="2022-01-15"
-                    >
-                      15 januari 2022
-                    </time>
-                    <div>
-                      
+                    15 januari 2022
+                  </time>
+                  <div>
+                    
               
-                      <p
-                        class="ams-paragraph"
-                      >
-                        
-                U heeft recht op hulp bij het huishouden (gestopt) per 15 december 2021.
-              
-                      </p>
-                      
-              
-                      <p
-                        class="ams-paragraph"
-                      >
-                        
-                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-              
-                      </p>
-                      
-            
-                    </div>
                     <p
                       class="ams-paragraph"
                     >
                       
+                U heeft recht op hulp bij het huishouden (gestopt) per 15 december 2021.
+              
+                    </p>
+                    
+              
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
+                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+              
+                    </p>
+                    
             
-                      <strong>
-                        
+                  </div>
+                  <p
+                    class="ams-paragraph"
+                  >
+                    
+            
+                    <strong>
+                      
               U heeft dit besluit per post ontvangen.
             
-                      </strong>
+                    </strong>
+                    
+          
+                  </p>
+                </div>
+              </li>
+              <li
+                aria-label="Status Afgerond"
+                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--completed"
+              >
+                <div
+                  class="ams-progress-list__indicator"
+                >
+                  <div
+                    class="ams-progress-list__marker"
+                  >
+                    <span
+                      class="ams-progress-list__marker-shape"
+                    />
+                  </div>
+                  <span
+                    class="ams-progress-list__connector"
+                  />
+                </div>
+                <div
+                  class="ams-progress-list__content"
+                >
+                  <h3
+                    class="ams-heading ams-heading--3 ams-progress-list__heading"
+                  >
+                    <span
+                      class="ams-visually-hidden"
+                    >
+                      Klaar: 
+                    </span>
+                    Levering gestart
+                  </h3>
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime=""
+                  />
+                  <div>
+                    <p
+                      class="ams-paragraph"
+                    >
                       
+            Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (gestopt).
           
                     </p>
                   </div>
@@ -684,7 +569,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               </li>
               <li
                 aria-label="Status Afgerond"
-                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--collapsed ams-progress-list__step--completed"
+                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--completed"
               >
                 <div
                   class="ams-progress-list__indicator"
@@ -706,130 +591,26 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
-                    <button
-                      aria-controls=":rj:"
-                      aria-expanded="false"
-                      class="ams-progress-list__button"
-                      type="button"
-                    >
-                      <span
-                        class="ams-icon ams-icon--heading-3 ams-progress-list__icon"
-                        hidden=""
-                      >
-                        <svg
-                          aria-hidden="true"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            clip-rule="evenodd"
-                            d="M2.5 7.911 12 17.5l9.5-9.589L20.102 6.5 12 14.677 3.898 6.5z"
-                            fill-rule="evenodd"
-                          />
-                        </svg>
-                      </span>
-                      <span
-                        class="ams-visually-hidden"
-                      >
-                        Klaar: 
-                      </span>
-                      Levering gestart
-                    </button>
-                  </h3>
-                  <div
-                    class="ams-progress-list__panel"
-                    id=":rj:"
-                  >
-                    <time
-                      class="_StepStatusDate_5b0b8a"
-                      datetime=""
-                    />
-                    <div>
-                      <p
-                        class="ams-paragraph"
-                      >
-                        
-            Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (gestopt).
-          
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <li
-                aria-label="Status Afgerond"
-                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--collapsed ams-progress-list__step--completed"
-              >
-                <div
-                  class="ams-progress-list__indicator"
-                >
-                  <div
-                    class="ams-progress-list__marker"
-                  >
                     <span
-                      class="ams-progress-list__marker-shape"
-                    />
-                  </div>
-                  <span
-                    class="ams-progress-list__connector"
-                  />
-                </div>
-                <div
-                  class="ams-progress-list__content"
-                >
-                  <h3
-                    class="ams-heading ams-heading--3 ams-progress-list__heading"
-                  >
-                    <button
-                      aria-controls=":rk:"
-                      aria-expanded="false"
-                      class="ams-progress-list__button"
-                      type="button"
+                      class="ams-visually-hidden"
                     >
-                      <span
-                        class="ams-icon ams-icon--heading-3 ams-progress-list__icon"
-                        hidden=""
-                      >
-                        <svg
-                          aria-hidden="true"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            clip-rule="evenodd"
-                            d="M2.5 7.911 12 17.5l9.5-9.589L20.102 6.5 12 14.677 3.898 6.5z"
-                            fill-rule="evenodd"
-                          />
-                        </svg>
-                      </span>
-                      <span
-                        class="ams-visually-hidden"
-                      >
-                        Klaar: 
-                      </span>
-                      Levering gestopt
-                    </button>
+                      Klaar: 
+                    </span>
+                    Levering gestopt
                   </h3>
-                  <div
-                    class="ams-progress-list__panel"
-                    id=":rk:"
-                  >
-                    <time
-                      class="_StepStatusDate_5b0b8a"
-                      datetime=""
-                    />
-                    <div>
-                      <p
-                        class="ams-paragraph"
-                      >
-                        
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime=""
+                  />
+                  <div>
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
             Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden (gestopt)
             meer krijgt.
           
-                      </p>
-                    </div>
+                    </p>
                   </div>
                 </div>
               </li>
@@ -874,56 +655,27 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
-                    <button
-                      aria-controls=":rl:"
-                      aria-expanded="true"
-                      class="ams-progress-list__button"
-                      type="button"
+                    <span
+                      class="ams-visually-hidden"
                     >
-                      <span
-                        class="ams-icon ams-icon--heading-3 ams-progress-list__icon"
-                        hidden=""
-                      >
-                        <svg
-                          aria-hidden="true"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            clip-rule="evenodd"
-                            d="M2.5 7.911 12 17.5l9.5-9.589L20.102 6.5 12 14.677 3.898 6.5z"
-                            fill-rule="evenodd"
-                          />
-                        </svg>
-                      </span>
-                      <span
-                        class="ams-visually-hidden"
-                      >
-                        Bezig: 
-                      </span>
-                      Einde recht
-                    </button>
+                      Bezig: 
+                    </span>
+                    Einde recht
                   </h3>
-                  <div
-                    class="ams-progress-list__panel"
-                    id=":rl:"
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime="2022-01-22"
                   >
-                    <time
-                      class="_StepStatusDate_5b0b8a"
-                      datetime="2022-01-22"
+                    22 januari 2022
+                  </time>
+                  <div>
+                    <p
+                      class="ams-paragraph"
                     >
-                      22 januari 2022
-                    </time>
-                    <div>
-                      <p
-                        class="ams-paragraph"
-                      >
-                        
+                      
             Uw recht op hulp bij het huishouden (gestopt) is beëindigd per 22 januari 2022
           
-                      </p>
-                    </div>
+                    </p>
                   </div>
                 </div>
               </li>
@@ -949,16 +701,8 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
         class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
       >
         <nav
-          aria-labelledby=":r2:"
           class="ams-breadcrumb"
         >
-          <h2
-            aria-hidden="true"
-            class="ams-visually-hidden"
-            id=":r2:"
-          >
-            Kruimelpad
-          </h2>
           <ol
             class="ams-breadcrumb__list"
           >
@@ -1091,87 +835,99 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
-                    <button
-                      aria-controls=":r3:"
-                      aria-expanded="true"
-                      class="ams-progress-list__button"
-                      type="button"
+                    <span
+                      class="ams-visually-hidden"
                     >
-                      <span
-                        class="ams-icon ams-icon--heading-3 ams-progress-list__icon"
-                        hidden=""
-                      >
-                        <svg
-                          aria-hidden="true"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            clip-rule="evenodd"
-                            d="M2.5 7.911 12 17.5l9.5-9.589L20.102 6.5 12 14.677 3.898 6.5z"
-                            fill-rule="evenodd"
-                          />
-                        </svg>
-                      </span>
-                      <span
-                        class="ams-visually-hidden"
-                      >
-                        Bezig: 
-                      </span>
-                      Besluit
-                    </button>
+                      Bezig: 
+                    </span>
+                    Besluit
                   </h3>
-                  <div
-                    class="ams-progress-list__panel"
-                    id=":r3:"
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime="2022-01-15"
                   >
-                    <time
-                      class="_StepStatusDate_5b0b8a"
-                      datetime="2022-01-15"
-                    >
-                      15 januari 2022
-                    </time>
-                    <div>
-                      
+                    15 januari 2022
+                  </time>
+                  <div>
+                    
               
-                      <p
-                        class="ams-paragraph"
-                      >
-                        
-                U heeft recht op hulp bij het huishouden (nog niet geleverd) per 15 januari 2022.
-              
-                      </p>
-                      
-              
-                      <p
-                        class="ams-paragraph"
-                      >
-                        
-                
-                    In de brief leest u ook hoe u bezwaar kunt maken, een klacht
-                    kan indienen of 
-                        <u>
-                          hoe u van aanbieder kunt wisselen.
-                        </u>
-                        
-                  
-              
-                      </p>
-                      
-            
-                    </div>
                     <p
                       class="ams-paragraph"
                     >
                       
+                U heeft recht op hulp bij het huishouden (nog niet geleverd) per 15 januari 2022.
+              
+                    </p>
+                    
+              
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
+                
+                    In de brief leest u ook hoe u bezwaar kunt maken, een klacht
+                    kan indienen of 
+                      <u>
+                        hoe u van aanbieder kunt wisselen.
+                      </u>
+                      
+                  
+              
+                    </p>
+                    
             
-                      <strong>
-                        
+                  </div>
+                  <p
+                    class="ams-paragraph"
+                  >
+                    
+            
+                    <strong>
+                      
               U krijgt dit besluit per post.
             
-                      </strong>
+                    </strong>
+                    
+          
+                  </p>
+                </div>
+              </li>
+              <li
+                aria-label="Toekomstige status"
+                class="_Step_5b0b8a ams-progress-list__step"
+              >
+                <div
+                  class="ams-progress-list__indicator"
+                >
+                  <div
+                    class="ams-progress-list__marker"
+                  >
+                    <span
+                      class="ams-progress-list__marker-shape"
+                    />
+                  </div>
+                  <span
+                    class="ams-progress-list__connector"
+                  />
+                </div>
+                <div
+                  class="ams-progress-list__content"
+                >
+                  <h3
+                    class="ams-heading ams-heading--3 ams-progress-list__heading"
+                  >
+                    Levering gestart
+                  </h3>
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime=""
+                  />
+                  <div>
+                    <p
+                      class="ams-paragraph"
+                    >
                       
+            Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (nog niet geleverd).
           
                     </p>
                   </div>
@@ -1201,119 +957,20 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
-                    <button
-                      aria-controls=":r4:"
-                      aria-expanded="true"
-                      class="ams-progress-list__button"
-                      type="button"
-                    >
-                      <span
-                        class="ams-icon ams-icon--heading-3 ams-progress-list__icon"
-                        hidden=""
-                      >
-                        <svg
-                          aria-hidden="true"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            clip-rule="evenodd"
-                            d="M2.5 7.911 12 17.5l9.5-9.589L20.102 6.5 12 14.677 3.898 6.5z"
-                            fill-rule="evenodd"
-                          />
-                        </svg>
-                      </span>
-                      Levering gestart
-                    </button>
+                    Levering gestopt
                   </h3>
-                  <div
-                    class="ams-progress-list__panel"
-                    id=":r4:"
-                  >
-                    <time
-                      class="_StepStatusDate_5b0b8a"
-                      datetime=""
-                    />
-                    <div>
-                      <p
-                        class="ams-paragraph"
-                      >
-                        
-            Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (nog niet geleverd).
-          
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <li
-                aria-label="Toekomstige status"
-                class="_Step_5b0b8a ams-progress-list__step"
-              >
-                <div
-                  class="ams-progress-list__indicator"
-                >
-                  <div
-                    class="ams-progress-list__marker"
-                  >
-                    <span
-                      class="ams-progress-list__marker-shape"
-                    />
-                  </div>
-                  <span
-                    class="ams-progress-list__connector"
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime=""
                   />
-                </div>
-                <div
-                  class="ams-progress-list__content"
-                >
-                  <h3
-                    class="ams-heading ams-heading--3 ams-progress-list__heading"
-                  >
-                    <button
-                      aria-controls=":r5:"
-                      aria-expanded="true"
-                      class="ams-progress-list__button"
-                      type="button"
+                  <div>
+                    <p
+                      class="ams-paragraph"
                     >
-                      <span
-                        class="ams-icon ams-icon--heading-3 ams-progress-list__icon"
-                        hidden=""
-                      >
-                        <svg
-                          aria-hidden="true"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            clip-rule="evenodd"
-                            d="M2.5 7.911 12 17.5l9.5-9.589L20.102 6.5 12 14.677 3.898 6.5z"
-                            fill-rule="evenodd"
-                          />
-                        </svg>
-                      </span>
-                      Levering gestopt
-                    </button>
-                  </h3>
-                  <div
-                    class="ams-progress-list__panel"
-                    id=":r5:"
-                  >
-                    <time
-                      class="_StepStatusDate_5b0b8a"
-                      datetime=""
-                    />
-                    <div>
-                      <p
-                        class="ams-paragraph"
-                      >
-                        
+                      
             Niet van toepassing.
           
-                      </p>
-                    </div>
+                    </p>
                   </div>
                 </div>
               </li>
@@ -1341,48 +998,19 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
-                    <button
-                      aria-controls=":r6:"
-                      aria-expanded="true"
-                      class="ams-progress-list__button"
-                      type="button"
-                    >
-                      <span
-                        class="ams-icon ams-icon--heading-3 ams-progress-list__icon"
-                        hidden=""
-                      >
-                        <svg
-                          aria-hidden="true"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            clip-rule="evenodd"
-                            d="M2.5 7.911 12 17.5l9.5-9.589L20.102 6.5 12 14.677 3.898 6.5z"
-                            fill-rule="evenodd"
-                          />
-                        </svg>
-                      </span>
-                      Einde recht
-                    </button>
+                    Einde recht
                   </h3>
-                  <div
-                    class="ams-progress-list__panel"
-                    id=":r6:"
-                  >
-                    <time
-                      class="_StepStatusDate_5b0b8a"
-                    />
-                    <div>
-                      <p
-                        class="ams-paragraph"
-                      >
-                        
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                  />
+                  <div>
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
             Uw recht op hulp bij het huishouden (nog niet geleverd) is beëindigd per 
           
-                      </p>
-                    </div>
+                    </p>
                   </div>
                 </div>
               </li>
@@ -1408,16 +1036,8 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
         class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
       >
         <nav
-          aria-labelledby=":rc:"
           class="ams-breadcrumb"
         >
-          <h2
-            aria-hidden="true"
-            class="ams-visually-hidden"
-            id=":rc:"
-          >
-            Kruimelpad
-          </h2>
           <ol
             class="ams-breadcrumb__list"
           >
@@ -1511,7 +1131,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             >
               <li
                 aria-label="Status Afgerond"
-                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--collapsed ams-progress-list__step--completed"
+                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--completed"
               >
                 <div
                   class="ams-progress-list__indicator"
@@ -1533,95 +1153,66 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
-                    <button
-                      aria-controls=":rd:"
-                      aria-expanded="false"
-                      class="ams-progress-list__button"
-                      type="button"
+                    <span
+                      class="ams-visually-hidden"
                     >
-                      <span
-                        class="ams-icon ams-icon--heading-3 ams-progress-list__icon"
-                        hidden=""
-                      >
-                        <svg
-                          aria-hidden="true"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            clip-rule="evenodd"
-                            d="M2.5 7.911 12 17.5l9.5-9.589L20.102 6.5 12 14.677 3.898 6.5z"
-                            fill-rule="evenodd"
-                          />
-                        </svg>
-                      </span>
-                      <span
-                        class="ams-visually-hidden"
-                      >
-                        Klaar: 
-                      </span>
-                      Besluit
-                    </button>
+                      Klaar: 
+                    </span>
+                    Besluit
                   </h3>
-                  <div
-                    class="ams-progress-list__panel"
-                    id=":rd:"
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime="2022-01-15"
                   >
-                    <time
-                      class="_StepStatusDate_5b0b8a"
-                      datetime="2022-01-15"
-                    >
-                      15 januari 2022
-                    </time>
-                    <div>
-                      
+                    15 januari 2022
+                  </time>
+                  <div>
+                    
               
-                      <p
-                        class="ams-paragraph"
-                      >
-                        
-                U heeft recht op hulp bij het huishouden (tijdelijk gestopt) per 15 december 2021.
-              
-                      </p>
-                      
-              
-                      <p
-                        class="ams-paragraph"
-                      >
-                        
-                
-                    In de brief leest u ook hoe u bezwaar kunt maken, een klacht
-                    kan indienen of 
-                        <u>
-                          hoe u van aanbieder kunt wisselen.
-                        </u>
-                        
-                  
-              
-                      </p>
-                      
-            
-                    </div>
                     <p
                       class="ams-paragraph"
                     >
                       
+                U heeft recht op hulp bij het huishouden (tijdelijk gestopt) per 15 december 2021.
+              
+                    </p>
+                    
+              
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
+                
+                    In de brief leest u ook hoe u bezwaar kunt maken, een klacht
+                    kan indienen of 
+                      <u>
+                        hoe u van aanbieder kunt wisselen.
+                      </u>
+                      
+                  
+              
+                    </p>
+                    
             
-                      <strong>
-                        
+                  </div>
+                  <p
+                    class="ams-paragraph"
+                  >
+                    
+            
+                    <strong>
+                      
               U krijgt dit besluit per post.
             
-                      </strong>
-                      
+                    </strong>
+                    
           
-                    </p>
-                  </div>
+                  </p>
                 </div>
               </li>
               <li
                 aria-label="Status Afgerond"
-                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--collapsed ams-progress-list__step--completed"
+                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--completed"
               >
                 <div
                   class="ams-progress-list__indicator"
@@ -1643,54 +1234,25 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
-                    <button
-                      aria-controls=":re:"
-                      aria-expanded="false"
-                      class="ams-progress-list__button"
-                      type="button"
+                    <span
+                      class="ams-visually-hidden"
                     >
-                      <span
-                        class="ams-icon ams-icon--heading-3 ams-progress-list__icon"
-                        hidden=""
-                      >
-                        <svg
-                          aria-hidden="true"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            clip-rule="evenodd"
-                            d="M2.5 7.911 12 17.5l9.5-9.589L20.102 6.5 12 14.677 3.898 6.5z"
-                            fill-rule="evenodd"
-                          />
-                        </svg>
-                      </span>
-                      <span
-                        class="ams-visually-hidden"
-                      >
-                        Klaar: 
-                      </span>
-                      Levering gestart
-                    </button>
+                      Klaar: 
+                    </span>
+                    Levering gestart
                   </h3>
-                  <div
-                    class="ams-progress-list__panel"
-                    id=":re:"
-                  >
-                    <time
-                      class="_StepStatusDate_5b0b8a"
-                      datetime=""
-                    />
-                    <div>
-                      <p
-                        class="ams-paragraph"
-                      >
-                        
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime=""
+                  />
+                  <div>
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
             Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (tijdelijk gestopt).
           
-                      </p>
-                    </div>
+                    </p>
                   </div>
                 </div>
               </li>
@@ -1735,54 +1297,25 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
-                    <button
-                      aria-controls=":rf:"
-                      aria-expanded="true"
-                      class="ams-progress-list__button"
-                      type="button"
+                    <span
+                      class="ams-visually-hidden"
                     >
-                      <span
-                        class="ams-icon ams-icon--heading-3 ams-progress-list__icon"
-                        hidden=""
-                      >
-                        <svg
-                          aria-hidden="true"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            clip-rule="evenodd"
-                            d="M2.5 7.911 12 17.5l9.5-9.589L20.102 6.5 12 14.677 3.898 6.5z"
-                            fill-rule="evenodd"
-                          />
-                        </svg>
-                      </span>
-                      <span
-                        class="ams-visually-hidden"
-                      >
-                        Bezig: 
-                      </span>
-                      Levering gestopt
-                    </button>
+                      Bezig: 
+                    </span>
+                    Levering gestopt
                   </h3>
-                  <div
-                    class="ams-progress-list__panel"
-                    id=":rf:"
-                  >
-                    <time
-                      class="_StepStatusDate_5b0b8a"
-                      datetime=""
-                    />
-                    <div>
-                      <p
-                        class="ams-paragraph"
-                      >
-                        
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime=""
+                  />
+                  <div>
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
             Niet van toepassing.
           
-                      </p>
-                    </div>
+                    </p>
                   </div>
                 </div>
               </li>
@@ -1810,48 +1343,19 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
-                    <button
-                      aria-controls=":rg:"
-                      aria-expanded="true"
-                      class="ams-progress-list__button"
-                      type="button"
-                    >
-                      <span
-                        class="ams-icon ams-icon--heading-3 ams-progress-list__icon"
-                        hidden=""
-                      >
-                        <svg
-                          aria-hidden="true"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            clip-rule="evenodd"
-                            d="M2.5 7.911 12 17.5l9.5-9.589L20.102 6.5 12 14.677 3.898 6.5z"
-                            fill-rule="evenodd"
-                          />
-                        </svg>
-                      </span>
-                      Einde recht
-                    </button>
+                    Einde recht
                   </h3>
-                  <div
-                    class="ams-progress-list__panel"
-                    id=":rg:"
-                  >
-                    <time
-                      class="_StepStatusDate_5b0b8a"
-                    />
-                    <div>
-                      <p
-                        class="ams-paragraph"
-                      >
-                        
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                  />
+                  <div>
+                    <p
+                      class="ams-paragraph"
+                    >
+                      
             Uw recht op hulp bij het huishouden (tijdelijk gestopt) is beëindigd per 
           
-                      </p>
-                    </div>
+                    </p>
                   </div>
                 </div>
               </li>
@@ -1877,16 +1381,8 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `
         class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
       >
         <nav
-          aria-labelledby=":r0:"
           class="ams-breadcrumb"
         >
-          <h2
-            aria-hidden="true"
-            class="ams-visually-hidden"
-            id=":r0:"
-          >
-            Kruimelpad
-          </h2>
           <ol
             class="ams-breadcrumb__list"
           >
@@ -2019,50 +1515,21 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `
                   <h3
                     class="ams-heading ams-heading--3 ams-progress-list__heading"
                   >
-                    <button
-                      aria-controls=":r1:"
-                      aria-expanded="true"
-                      class="ams-progress-list__button"
-                      type="button"
+                    <span
+                      class="ams-visually-hidden"
                     >
-                      <span
-                        class="ams-icon ams-icon--heading-3 ams-progress-list__icon"
-                        hidden=""
-                      >
-                        <svg
-                          aria-hidden="true"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            clip-rule="evenodd"
-                            d="M2.5 7.911 12 17.5l9.5-9.589L20.102 6.5 12 14.677 3.898 6.5z"
-                            fill-rule="evenodd"
-                          />
-                        </svg>
-                      </span>
-                      <span
-                        class="ams-visually-hidden"
-                      >
-                        Bezig: 
-                      </span>
-                      Levering gestart
-                    </button>
+                      Bezig: 
+                    </span>
+                    Levering gestart
                   </h3>
-                  <div
-                    class="ams-progress-list__panel"
-                    id=":r1:"
+                  <time
+                    class="_StepStatusDate_5b0b8a"
+                    datetime="2020-07-24"
                   >
-                    <time
-                      class="_StepStatusDate_5b0b8a"
-                      datetime="2020-07-24"
-                    >
-                      24 juli 2020
-                    </time>
-                    <div>
-                      De levering van uw thuizorg is gestart
-                    </div>
+                    24 juli 2020
+                  </time>
+                  <div>
+                    De levering van uw thuizorg is gestart
                   </div>
                 </div>
               </li>

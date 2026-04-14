@@ -13,16 +13,8 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
         class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
       >
         <nav
-          aria-labelledby=":r2:"
           class="ams-breadcrumb"
         >
-          <h2
-            aria-hidden="true"
-            class="ams-visually-hidden"
-            id=":r2:"
-          >
-            Kruimelpad
-          </h2>
           <ol
             class="ams-breadcrumb__list"
           >
@@ -366,16 +358,8 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
         class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
       >
         <nav
-          aria-labelledby=":r0:"
           class="ams-breadcrumb"
         >
-          <h2
-            aria-hidden="true"
-            class="ams-visually-hidden"
-            id=":r0:"
-          >
-            Kruimelpad
-          </h2>
           <ol
             class="ams-breadcrumb__list"
           >
@@ -483,9 +467,13 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   <span
                     class="ams-visually-hidden"
                   >
-                    Pagina 
+                    Pagina 1
                   </span>
-                  1
+                  <span
+                    aria-hidden="true"
+                  >
+                    1
+                  </span>
                 </a>
               </li>
               <li>
@@ -496,9 +484,13 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   <span
                     class="ams-visually-hidden"
                   >
-                    Ga naar pagina 
+                    Ga naar pagina 2
                   </span>
-                  2
+                  <span
+                    aria-hidden="true"
+                  >
+                    2
+                  </span>
                 </a>
               </li>
             </ol>
@@ -514,8 +506,6 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               </span>
               <span
                 aria-hidden="true"
-                class="ams-pagination__link-label"
-                hidden=""
               >
                 volgende
               </span>
@@ -1598,9 +1588,13 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   <span
                     class="ams-visually-hidden"
                   >
-                    Pagina 
+                    Pagina 1
                   </span>
-                  1
+                  <span
+                    aria-hidden="true"
+                  >
+                    1
+                  </span>
                 </a>
               </li>
               <li>
@@ -1611,9 +1605,13 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   <span
                     class="ams-visually-hidden"
                   >
-                    Ga naar pagina 
+                    Ga naar pagina 2
                   </span>
-                  2
+                  <span
+                    aria-hidden="true"
+                  >
+                    2
+                  </span>
                 </a>
               </li>
             </ol>
@@ -1629,8 +1627,6 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               </span>
               <span
                 aria-hidden="true"
-                class="ams-pagination__link-label"
-                hidden=""
               >
                 volgende
               </span>
