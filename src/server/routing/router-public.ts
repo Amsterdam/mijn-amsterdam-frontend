@@ -266,6 +266,7 @@ if (!IS_PRODUCTION) {
 
   router.all(BffEndpoints.PROXY, async (req, res) => {
     // This proxy route aims to closely mimic the server's behavior, making it appear as though the server itself initiated these requests.
+    // All functional headers needed are prefixed with 'x-ma-' to prevent conflicts. These are deleted before the request is sent to it's destination.
     const apiKeyName = 'x-ma-dev-api-key';
     const apiKey = req.headers[apiKeyName];
     if (apiKey !== PROXY_API_KEY) {
@@ -287,7 +288,7 @@ if (!IS_PRODUCTION) {
     axios({
       url,
       method: req.method,
-      headers: stripHeadersStartingWith(req.headers, ['x-ma-', 'x-ms-']),
+      headers: stripHeadersStartingWith(req.headers, ['x-ma-', 'cookie']),
       data: req.body,
       // Prevent parsing of responses.
       transformResponse: (res) => res,
