@@ -224,7 +224,7 @@ function sheetZaken(resultsByUser: ResultsByUser): SheetData {
   const rows = results.map(([username, data]) => {
     let zaken: any = [];
     for (const serviceName of decosZaakServices) {
-      const cont = data[serviceName].content;
+      const cont = data[serviceName].content || {};
       const unpacked = unpackZaken(cont);
       for (const zaak of unpacked) {
         zaken.push({ ...zaak, serviceName });
