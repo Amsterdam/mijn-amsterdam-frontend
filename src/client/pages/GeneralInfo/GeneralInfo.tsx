@@ -4,6 +4,7 @@ import {
   UnorderedList,
 } from '@amsterdam/design-system-react';
 
+import { GENERAL_INFO_PAGE_DOCUMENT_TITLE } from './GeneralInfo-routes.ts';
 import { MaLink, MaRouterLink } from '../../components/MaLink/MaLink.tsx';
 import { myAreaSectionProps } from '../../components/MyArea/InfoSection.tsx';
 import { PageContentCell, PageV2 } from '../../components/Page/Page.tsx';
@@ -165,7 +166,7 @@ export function GeneralInfo() {
     });
   return (
     <PageV2
-      heading="Dit kunt u zien in Mijn Amsterdam"
+      heading={GENERAL_INFO_PAGE_DOCUMENT_TITLE}
       redactedScope="full"
       showUserFeedback
       userFeedbackDetails={{

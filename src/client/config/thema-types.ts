@@ -80,7 +80,7 @@ export interface ThemaMenuItemTransformed<
 > extends Omit<ThemaMenuItem<ID>, 'title' | 'to' | 'isActive'> {
   title: string;
   to: string;
-  isActive?: boolean;
+  isActive: boolean;
 }
 
 type ThemaPageType =
