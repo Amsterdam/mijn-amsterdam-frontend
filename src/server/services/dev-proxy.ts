@@ -16,7 +16,7 @@ import { logger } from '../logging.ts';
  * x-ma-dev-api-key for authentication.
  * x-ma-proxy-target for where to send the request.
  *
- * Optional headers that are passed through start with 'x-ma-pass-'
+ * Optional headers passed through to the target server start with 'x-ma-pass-'.
  * When recieving these, we will send everything after that prefix as is.
  * For example: 'x-ma-pass-foo: bar' will be send as 'foo: bar'.
  *
