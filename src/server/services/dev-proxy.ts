@@ -6,9 +6,6 @@ import type { Request, Response } from 'express';
 import { getFromEnv } from '../helpers/env.ts';
 import { logger } from '../logging.ts';
 
-
-const PROXY_API_KEY = getFromEnv('MA_DEV_API_KEY', false);
-
 /** This proxy route handler is for sending requests to external systems -
  * that have us specifically whitelisted.
  * All functional headers needed are prefixed with 'x-ma-' to prevent conflicts.
@@ -31,9 +28,11 @@ const PROXY_API_KEY = getFromEnv('MA_DEV_API_KEY', false);
  *   --header 'x-ma-pass-api-key-for-target-server: x'
  */
 export async function devProxyHandler(req: Request, res: Response) {
+  const proxyApiKey = getFromEnv('MA_DEV_API_KEY', false);
+
   const apiKeyName = 'x-ma-dev-api-key';
   const apiKey = req.headers[apiKeyName];
-  if (apiKey !== PROXY_API_KEY) {
+  if (apiKey !== proxyApiKey) {
     return res
       .status(HttpStatusCode.Unauthorized)
       .send(`Invalid or missing header '${apiKeyName}'`);
