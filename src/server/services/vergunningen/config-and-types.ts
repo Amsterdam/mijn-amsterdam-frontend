@@ -243,7 +243,6 @@ export const caseTypePB = {
   OnttrekkingsvergunningSloop: 'Onttrekkingsvergunning voor sloop',
   VormenVanWoonruimte: 'Woningvormingsvergunning',
   OnttrekkingsvergunningTweedeWoning: 'Voorraadvergunning tweede woning',
-  Splitsingsvergunning: 'Splitsingsvergunning',
 } as const;
 
 export type CaseTypeVergunningenOrPB = CaseTypeVergunningen | CaseTypePB;
