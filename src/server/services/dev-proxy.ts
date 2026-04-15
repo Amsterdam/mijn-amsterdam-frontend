@@ -1,8 +1,11 @@
-import type { Request, Response } from 'express';
-import axios, { HttpStatusCode } from 'axios';
-import { logger } from '../logging.ts';
-import { getFromEnv } from '../helpers/env.ts';
 import type { IncomingHttpHeaders } from 'node:http';
+
+import axios, { HttpStatusCode } from 'axios';
+import type { Request, Response } from 'express';
+
+import { getFromEnv } from '../helpers/env.ts';
+import { logger } from '../logging.ts';
+
 
 const PROXY_API_KEY = getFromEnv('MA_DEV_API_KEY', false);
 
