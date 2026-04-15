@@ -20,6 +20,7 @@ import { themaConfig as avgThemaConfig } from '../Thema/AVG/AVG-thema-config.ts'
 import { themaConfig as belastingenThemaConfig } from '../Thema/Belastingen/Belastingen-thema-config.ts';
 import { themaConfig as bezwarenThemaConfig } from '../Thema/Bezwaren/Bezwaren-thema-config.ts';
 import { themaConfig as bodemThemaConfig } from '../Thema/Bodem/Bodem-thema-config.ts';
+import { themaConfig as contactThemaConfig } from '../Thema/Contact/Contact-thema-config.ts';
 import { themaConfig as erfpachtThemaConfig } from '../Thema/Erfpacht/Erfpacht-thema-config.ts';
 import { themaConfig as hliThemaConfig } from '../Thema/HLI/HLI-thema-config.ts';
 import { themaConfig as horecaThemaConfig } from '../Thema/Horeca/Horeca-thema-config.ts';
@@ -66,6 +67,7 @@ export type SectionProps = {
 
 const sections: InfoSection_DEPRECATED[] = [
   myAreaSectionProps,
+  ...createDeprecatedInfoSection(contactThemaConfig),
   ...createDeprecatedInfoSection(afvalThemaConfig),
   ...createDeprecatedInfoSection(avgThemaConfig),
   ...createDeprecatedInfoSection(belastingenThemaConfig),

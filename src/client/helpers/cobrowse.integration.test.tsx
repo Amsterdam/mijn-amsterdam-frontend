@@ -1,39 +1,45 @@
 import type { ComponentType } from '@react-spring/web';
 import { act, render, screen } from '@testing-library/react';
-import { userEvent } from '@testing-library/user-event';
 import Mockdate from 'mockdate';
 import { generatePath } from 'react-router';
 import { describe, it } from 'vitest';
 
+import type {
+  ContactmonentResponseData,
+  ContactType,
+  KlantcontactFrontend,
+} from '../../server/services/salesforce/contactmomenten.types.ts';
 import type { AppState } from '../../universal/types/App.types.ts';
 import { DashboardRoute } from '../pages/Dashboard/Dashboard-routes.ts';
 import { Dashboard } from '../pages/Dashboard/Dashboard.tsx';
 import MockApp from '../pages/MockApp.tsx';
 import { MyNotificationsPage } from '../pages/MyNotifications/MyNotifications.tsx';
-import { themaConfig as themaAfis } from '../pages/Thema/Afis/Afis-thema-config.ts';
-import { themaConfig as themaBezwaren } from '../pages/Thema/Bezwaren/Bezwaren-thema-config.ts';
+import { themaConfig as themaConfigAfis } from '../pages/Thema/Afis/Afis-thema-config.ts';
+import { themaConfig as themaConfigBezwaren } from '../pages/Thema/Bezwaren/Bezwaren-thema-config.ts';
 import { BezwarenDetail } from '../pages/Thema/Bezwaren/BezwarenDetail.tsx';
 import { BezwarenList } from '../pages/Thema/Bezwaren/BezwarenList.tsx';
 import { BezwarenThema } from '../pages/Thema/Bezwaren/BezwarenThema.tsx';
-import { mapperContactmomentToMenuItem } from '../pages/Thema/Profile/private/Contactmomenten.config.ts';
-import { ContactmomentenListPage } from '../pages/Thema/Profile/private/ContactmomentenListPage.tsx';
+import { ContactmomentenListPage } from '../pages/Thema/Contact/ContactmomentenListPage.tsx';
+import { MijnContactThema } from '../pages/Thema/Contact/MijnContactThema.tsx';
 import { MijnGegevensThema } from '../pages/Thema/Profile/private/ProfilePrivate.tsx';
 import { themaConfig as themaVergunningen } from '../pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
 
 const testState = {
   KLANT_CONTACT: {
     status: 'OK',
-    content: [
-      {
-        subject: Object.entries(mapperContactmomentToMenuItem).find(
-          ([_, themaId]) => themaId === themaAfis.id
-        )?.[0],
-        themaKanaal: themaAfis.title, // We misuse this to keep things together
-      },
-      {
-        subject: themaVergunningen.id,
-      },
-    ],
+    content: {
+      klantcontacten: [
+        {
+          subject: 'Financiën',
+          contacttype: themaConfigAfis.title as ContactType, // We misuse this to keep things together
+        },
+        {
+          subject: themaVergunningen.id,
+          contacttype: 'Chat',
+        },
+      ] as KlantcontactFrontend[],
+      appointments: [],
+    } satisfies ContactmonentResponseData,
   },
   BRP: {
     status: 'OK',
@@ -55,11 +61,11 @@ const testState = {
     content: [
       {
         id: 'Not1',
-        title: `Notification ${themaBezwaren.title}`,
+        title: `Notification ${themaConfigBezwaren.title}`,
         description: 'Notificatie1',
         datePublished: '2020-07-24',
-        themaID: themaBezwaren.id,
-        themaTitle: themaBezwaren.title,
+        themaID: themaConfigBezwaren.id,
+        themaTitle: themaConfigBezwaren.title,
         link: {
           to: '/item-1',
           title: 'Linkje!',
@@ -147,7 +153,9 @@ describe('Cobrowse redacted components', () => {
     describe('Dashboard', () => {
       it('<MyThemasPanel />', async () => {
         await act(() => render(<Component component={Dashboard} />));
-        expect(screen.getByTestId(themaBezwaren.title)).toHaveClass('redacted');
+        expect(screen.getByTestId(themaConfigBezwaren.title)).toHaveClass(
+          'redacted'
+        );
         expect(screen.getByTestId(themaVergunningen.title)).not.toHaveClass(
           'redacted'
         );
@@ -157,7 +165,7 @@ describe('Cobrowse redacted components', () => {
         await act(() => render(<Component component={Dashboard} />));
         const listItems = screen.getAllByRole('listitem');
         const redactedNotification = listItems.find((li) =>
-          li.textContent?.includes(themaBezwaren.title)
+          li.textContent?.includes(themaConfigBezwaren.title)
         );
         expect(redactedNotification).toHaveClass('redacted');
         const nonRedactedNotification = listItems.find((li) =>
@@ -171,7 +179,7 @@ describe('Cobrowse redacted components', () => {
       await act(() => render(<Component component={MyNotificationsPage} />));
       const listItems = screen.getAllByRole('listitem');
       const redactedNotification = listItems.find((li) =>
-        li.textContent?.includes(themaBezwaren.title)
+        li.textContent?.includes(themaConfigBezwaren.title)
       );
       expect(redactedNotification).toHaveClass('redacted');
       const nonRedactedNotification = listItems.find((li) =>
@@ -193,7 +201,7 @@ describe('Cobrowse redacted components', () => {
 
       // Make sure the redacted is on the correct element and redacts the page content
       const cobrowseElemText = cobrowseElem?.innerText;
-      const textOnlyInElem = themaBezwaren.title;
+      const textOnlyInElem = themaConfigBezwaren.title;
       expect(cobrowseElemText).toContain(textOnlyInElem);
 
       const fullDocumentText = document.body.innerText;
@@ -214,40 +222,43 @@ describe('Cobrowse redacted components', () => {
       });
 
       it('Contactmomenten', async () => {
-        await act(() => render(<Component component={MijnGegevensThema} />));
-
-        const toonButton = screen.getByRole('button', {
-          name: 'Toon',
-        }) as HTMLElement;
-        const user = userEvent.setup();
-        await user.click(toonButton);
+        await act(() => render(<Component component={MijnContactThema} />));
 
         const contactmomentAfis = screen
           .getByRole('link', {
-            name: testState.KLANT_CONTACT.content?.[0].themaKanaal ?? '',
+            name:
+              testState.KLANT_CONTACT.content?.klantcontacten[0].contacttype ??
+              '',
           })
           .closest('tr');
         expect(contactmomentAfis).toHaveClass('redacted');
 
         const contactmomentVergunning = screen
-          .getByText(testState.KLANT_CONTACT.content?.[1].subject ?? '')
+          .getByText(
+            testState.KLANT_CONTACT.content?.klantcontacten[1].subject ?? ''
+          )
           .closest('tr');
         expect(contactmomentVergunning).not.toHaveClass('redacted');
       });
     });
+
     it('ContactmomentenList', async () => {
       await act(() =>
         render(<Component component={ContactmomentenListPage} />)
       );
       const contactmomentAfis = screen
         .getByRole('link', {
-          name: testState.KLANT_CONTACT.content?.[0].themaKanaal ?? '',
+          name:
+            testState.KLANT_CONTACT.content?.klantcontacten[0].contacttype ??
+            '',
         })
         .closest('tr');
       expect(contactmomentAfis).toHaveClass('redacted');
 
       const contactmomentVergunning = screen
-        .getByText(testState.KLANT_CONTACT.content?.[1].subject ?? '')
+        .getByText(
+          testState.KLANT_CONTACT.content?.klantcontacten[1].subject ?? ''
+        )
         .closest('tr');
       expect(contactmomentVergunning).not.toHaveClass('redacted');
     });
