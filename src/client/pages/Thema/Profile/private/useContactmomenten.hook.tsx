@@ -106,6 +106,6 @@ export function useContactmomenten() {
     title: 'Contactmomenten',
     breadcrumbs,
     routeParams,
-    listPageRoute: themaConfig.BRP.contactenPage.route.path,
+    listPageRoute: themaConfig.BRP.listPageContactmomenten.route.path,
   };
 }

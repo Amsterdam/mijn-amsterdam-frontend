@@ -17,20 +17,16 @@ export const ProfileRoutes = [
     route: themaConfig.KVK.route.path,
     Component: MijnBedrijfsGegevensThema,
   },
-  ...(themaConfig.BRP.contactenPage?.route.path
-    ? [
-        {
-          route: themaConfig.BRP.detailVvEPage.route.path,
-          Component: VvEDetail,
-          isActive: themaConfig.BRP.featureToggle.wonenActive,
-        },
-        {
-          route: themaConfig.BRP.contactenPage.route.path,
-          Component: ContactmomentenListPage,
-          isActive: FeatureToggle.contactmomentenActive,
-        },
-      ]
-    : []),
+  {
+    route: themaConfig.BRP.detailPageVvE.route.path,
+    Component: VvEDetail,
+    isActive: themaConfig.BRP.featureToggle.wonenActive,
+  },
+  {
+    route: themaConfig.BRP.listPageContactmomenten.route.path,
+    Component: ContactmomentenListPage,
+    isActive: FeatureToggle.contactmomentenActive,
+  },
 ];
 
 export const menuItems: ThemaMenuItem[] = [

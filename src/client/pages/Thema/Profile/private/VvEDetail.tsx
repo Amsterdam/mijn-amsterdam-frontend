@@ -69,7 +69,7 @@ function VveDetail({ vve }: VveDetailsProps) {
 export function VvEDetail() {
   const { vve, isLoading, isError, breadcrumbs } = useWonenThemaData();
   const { themaConfig } = useProfileData();
-  useHTMLDocumentTitle(themaConfig.BRP.detailVvEPage.route);
+  useHTMLDocumentTitle(themaConfig.BRP.detailPageVvE.route);
   return (
     <ThemaDetailPagina
       themaId={themaConfig.BRP.id}

@@ -4,12 +4,12 @@ import type {
   ThemaConfigBase,
 } from '../../../config/thema-types.ts';
 
-type WithListPageContacten = PageConfig<'contactenPage'>;
-type WithVvEDetailPage = PageConfig<'detailVvEPage'>;
+type WithListPageContactmomenten = PageConfig<'listPageContactmomenten'>;
+type WithDetailPageVvE = PageConfig<'detailPageVvE'>;
 
 type ProfileThemaConfig<ID = string> = ThemaConfigBase<ID> &
-  Partial<WithListPageContacten> &
-  Partial<WithVvEDetailPage>;
+  Partial<WithListPageContactmomenten> &
+  Partial<WithDetailPageVvE>;
 
 const THEMA_ID_BRP = 'BRP' as const;
 const THEMA_ID_KVK = 'KVK' as const;
@@ -47,14 +47,14 @@ export const themaConfig = {
       documentTitle: `${THEMA_TITLE_BRP} | Mijn Amsterdam`,
       trackingUrl: null,
     },
-    contactenPage: {
+    listPageContactmomenten: {
       route: {
         path: '/contactmomenten/:page?',
         documentTitle: `Alle contactmomenten | ${THEMA_TITLE_BRP}`,
         trackingUrl: null,
       },
     },
-    detailVvEPage: {
+    detailPageVvE: {
       route: {
         path: '/persoonlijke-gegevens/vve',
         documentTitle: `Mijn VvE | Mijn Amsterdam`,

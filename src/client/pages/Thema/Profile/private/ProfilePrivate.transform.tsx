@@ -184,7 +184,7 @@ const adres: ProfileLabels<
       if (adres?.vveNaam) {
         return (
           <MaRouterLink
-            href={themaConfig.BRP.detailVvEPage.route.path}
+            href={themaConfig.BRP.detailPageVvE.route.path}
             rel="noopener noreferrer"
           >
             {adres.vveNaam}
