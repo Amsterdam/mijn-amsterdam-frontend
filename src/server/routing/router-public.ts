@@ -315,9 +315,14 @@ if (!IS_PRODUCTION) {
 }
 
 function getPassthroughHeaders(req: Request) {
-  const headers = Object.entries(req.headers).filter(([name]) => {
-    return name.startsWith('x-ma-pass-');
-  });
+  const passthroughPrefix = 'x-ma-pass-';
+  const headers = Object.entries(req.headers)
+    .filter(([name]) => {
+      return name.startsWith(passthroughPrefix);
+    })
+    .map(([name, val]) => {
+      return [name.replace(passthroughPrefix, ''), val];
+    });
   return Object.fromEntries(headers);
 }
 
