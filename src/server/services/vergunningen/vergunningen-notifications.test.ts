@@ -108,7 +108,7 @@ describe('vergunningen-notifications', () => {
         ],
       } as unknown as DecosZaakFrontend;
 
-      it('should create a expiry notification with "vraag zonodig een nieuwe aan" link if end date is near', () => {
+      it('should create an expiry notification with "vraag zonodig een nieuwe aan" link if end date is near', () => {
         const notification = createNotificationDefault(vergunning, {
           themaID: themaConfig.id,
           themaTitle: themaConfig.title,
@@ -128,7 +128,7 @@ describe('vergunningen-notifications', () => {
         });
       });
 
-      it('should create a expiry notification without "vraag zonodig een nieuwe aan" link if end date is near', () => {
+      it('should create an expiry notification without "vraag zonodig een nieuwe aan" link if end date is near', () => {
         const notification = createNotificationDefault(
           { ...vergunning, caseType: 'BlaBla' },
           {
