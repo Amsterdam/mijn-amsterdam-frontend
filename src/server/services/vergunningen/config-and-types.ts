@@ -45,6 +45,7 @@ export const caseTypeVergunningen = {
   OnttrekkingsvergunningSloop: 'Onttrekkingsvergunning voor sloop',
   VormenVanWoonruimte: 'Woningvormingsvergunning',
   VOB: 'VOB',
+  Splitsingsvergunning: 'Splitsingsvergunning',
 
   TVMRVVObject: 'TVM - RVV - Object',
   EvenementMelding: 'Evenement melding',
@@ -200,6 +201,11 @@ export type OnttrekkingsvergunningSloopDecos = DecosZaakBase &
 export type VormenVanWoonruimteDecos = DecosZaakBase &
   WithLocation & {
     caseType: GetCaseType<'VormenVanWoonruimte'>;
+  };
+
+export type SplitsingsvergunningDecos = DecosZaakBase &
+  WithLocation & {
+    caseType: GetCaseType<'Splitsingsvergunning'>;
   };
 
 // TODO: MIJN-12357: Remove after move to Powerbrowser is finalized
