@@ -9,9 +9,28 @@ import { logger } from '../logging.ts';
 
 const PROXY_API_KEY = getFromEnv('MA_DEV_API_KEY', false);
 
+/** This proxy route handler is for sending requests to external systems -
+ * that have us specifically whitelisted.
+ * All functional headers needed are prefixed with 'x-ma-' to prevent conflicts.
+ *
+ * # Usage
+ *
+ * Supply the required headers:
+ * x-ma-dev-api-key for authentication.
+ * x-ma-proxy-target for where to send the request.
+ *
+ * Optional headers that are passed through start with 'x-ma-pass-'
+ * When recieving these, we will send everything after that prefix as is.
+ * For example: 'x-ma-pass-foo: bar' will be send as 'foo: bar'.
+ *
+ * ## Example request
+ *
+ * curl https://bff-server.nl/api/v1/proxy /
+ *   --header 'x-ma-dev-api-key: x'
+ *   --header 'x-ma-proxy-target: https://someserver.com/foo/bar/data'
+ *   --header 'x-ma-pass-api-key-for-target-server: x'
+ */
 export async function devProxyHandler(req: Request, res: Response) {
-  // This proxy route aims to closely mimic the server's behavior, making it appear as though the server itself initiated these requests.
-  // All functional headers needed are prefixed with 'x-ma-' to prevent conflicts.
   const apiKeyName = 'x-ma-dev-api-key';
   const apiKey = req.headers[apiKeyName];
   if (apiKey !== PROXY_API_KEY) {
