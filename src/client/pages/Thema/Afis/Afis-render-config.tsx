@@ -24,12 +24,12 @@ export const AfisRoutes = [
     isActive: themaConfig.featureToggle.active,
   },
   {
-    route: themaConfig.betaalVoorkeuren.route.path,
+    route: themaConfig.betaalVoorkeurenPage.route.path,
     Component: AfisBetaalVoorkeuren,
     isActive: themaConfig.featureToggle.active,
   },
   {
-    route: themaConfig.detailPageEMandate.route.path,
+    route: themaConfig.detailPageEMandatePage.route.path,
     Component: AfisEMandateDetail,
     isActive: themaConfig.featureToggle.emandates.active,
   },

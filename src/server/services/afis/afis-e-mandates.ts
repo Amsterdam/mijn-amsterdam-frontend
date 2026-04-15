@@ -528,7 +528,7 @@ function createEMandateSignRequestPayload(
   signRequestPayload: EMandateSignRequestPayload
 ): POMSignRequestUrlPayload {
   const returnUrl = generateFullApiUrlBFF(
-    themaConfig.detailPageEMandate.route.path,
+    themaConfig.detailPageEMandatePage.route.path,
     [
       // In development we mock the API responses from the payment provider, for convenience we add the creditor IBAN to the URL so we can determine in the mock API which response to return.
       IS_DEVELOPMENT ? { iban: creditor.iban } : {},

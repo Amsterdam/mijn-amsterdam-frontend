@@ -85,7 +85,7 @@ export function useAfisEMandatesApi() {
   const breadcrumbs = [
     ...useThemaBreadcrumbs(themaId),
     {
-      to: themaConfig.betaalVoorkeuren.route.path,
+      to: themaConfig.betaalVoorkeurenPage.route.path,
       title: titleBetaalvoorkeurenPage,
     },
   ];
