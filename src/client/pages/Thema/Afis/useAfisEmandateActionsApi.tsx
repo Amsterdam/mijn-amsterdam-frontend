@@ -30,7 +30,7 @@ function useRedirectUrlApi(
             if (response.content?.redirectUrl) {
               payloadStorage.add(
                 eMandate.id,
-                eMandate.eMandateIdSource?.toString() ?? '',
+                eMandate.eMandateIdSource || '',
                 response.content.statusCheckPayload,
                 init?.payload?.isReplacement === 'true'
               );

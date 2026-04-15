@@ -87,7 +87,9 @@ export function useAfisEMandatesApi() {
     ...useThemaBreadcrumbs(themaId),
     { to: routeConfig.betaalVoorkeuren.path, title: titleBetaalvoorkeurenPage },
   ];
-  const { id } = useParams<{ id: AfisEMandateFrontend['id'] }>();
+  const { id } = useParams<{
+    id: AfisEMandateFrontend['id'];
+  }>();
   const eMandate = eMandates.find((mandate) => mandate.id === id);
 
   return {
@@ -106,7 +108,7 @@ export function useAfisEMandatesApi() {
         mergePayloadIntoEmandateById(eMandateId, payload, eMandates)
       );
     },
-    title: titleEMandaatPage,
+    title: `${titleEMandaatPage}${eMandate?.creditorName ? ` - ${eMandate.creditorName}` : ''}`,
     fetchEMandates: () => {
       fetch();
     },

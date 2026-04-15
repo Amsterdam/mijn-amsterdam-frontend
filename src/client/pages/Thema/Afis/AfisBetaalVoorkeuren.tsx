@@ -38,14 +38,12 @@ type AfisBusinessPartnerProps = {
     >
   >;
   isLoading: boolean;
-  startCollapsed: boolean;
 };
 
 function AfisBusinessPartnerDetails({
   businesspartner,
   labels,
   isLoading,
-  startCollapsed = true,
 }: AfisBusinessPartnerProps) {
   const rows = businesspartner
     ? entries(labels)
@@ -210,7 +208,6 @@ export function AfisBetaalVoorkeuren() {
         businesspartner={businesspartnerDetails}
         labels={businessPartnerDetailsLabels}
         isLoading={!!(isLoadingBusinessPartnerDetails || isThemaPaginaLoading)}
-        startCollapsed={featureToggle.emandatesActive}
       />
       {payloadStorage.hasPayloads() && (
         <AfisEmandateRefetchInterval fetch={fetchEMandates} />

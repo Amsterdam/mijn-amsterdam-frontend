@@ -379,12 +379,25 @@ export type EmandateStatusCode = Prettify<keyof AfisEMandateStatusCodes>;
 
 export type AfisEMandateFrontend = {
   id: string;
-  eMandateIdSource: AfisEMandateSource['IMandateId'] | null;
+  eMandateIdSource: string | null;
   creditorName: string;
   creditorIBAN: string;
   creditorDescription?: string;
   status: EmandateStatusCode;
   displayStatus: string;
+  history: Array<
+    Pick<
+      AfisEMandateFrontend,
+      | 'dateValidFrom'
+      | 'dateValidFromFormatted'
+      | 'dateValidTo'
+      | 'dateValidToFormatted'
+      | 'status'
+      | 'eMandateIdSource'
+      | 'senderIBAN'
+      | 'senderName'
+    >
+  >;
 
   // Sender properties
   senderIBAN: string | null;

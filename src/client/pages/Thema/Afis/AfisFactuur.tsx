@@ -6,6 +6,7 @@ import {
   displayPropsTermijnenTable,
   routeConfig,
 } from './Afis-thema-config.ts';
+import { useAfisEmandateFactuurReferenceContent } from './AfisEmandateFactuurReference.tsx';
 import styles from './AfisFactuur.module.scss';
 import { getVragenOverFactuurText } from './AfisThema.tsx';
 import { getDocumentLink } from './useAfisFacturenApi.tsx';
@@ -63,6 +64,10 @@ function FactuurDetailContent({
   const factuur =
     facturen.find((f) => f.factuurNummer === factuurNummer) ?? null;
 
+  const eMandateRowset = useAfisEmandateFactuurReferenceContent(
+    factuur?.eMandateId
+  );
+
   if (isListPageLoading) {
     return <LoadingContent />;
   }
@@ -103,6 +108,7 @@ function FactuurDetailContent({
       content: factuur.statusDescription ?? '-',
       isVisible: factuur.status !== 'factuur-in-termijnen',
     },
+    ...(eMandateRowset ? [eMandateRowset] : []),
     {
       label: 'Termijnen',
       content: getTermijnenTable(factuur),

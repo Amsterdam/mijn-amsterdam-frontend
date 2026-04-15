@@ -125,16 +125,23 @@ export function AfisThema() {
   );
 
   const pageContentSecondary = (
-    <PageContentCell>
-      <MaButtonRouterLink
-        className="ams-mb-m"
-        variant="secondary"
-        href={routeConfig.betaalVoorkeuren.path}
-      >
-        Betaalvoorkeuren
-      </MaButtonRouterLink>
-      <AfisDisclaimer />
-    </PageContentCell>
+    <>
+      <PageContentCell>
+        <Heading level={2}>Betaalvoorkeuren</Heading>
+        <Paragraph className="ams-mb-s">
+          Facturatiegegevens bekijken en een automatische incasso instellen.
+        </Paragraph>
+        <MaButtonRouterLink
+          className="ams-mb-m"
+          variant="secondary"
+          href={routeConfig.betaalVoorkeuren.path}
+        >
+          Bekijk de gegevens
+        </MaButtonRouterLink>
+
+        <AfisDisclaimer />
+      </PageContentCell>
+    </>
   );
 
   const pageContentErrorAlert = (

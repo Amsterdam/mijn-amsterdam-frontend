@@ -12,7 +12,7 @@ import type { SomeOtherString } from '../../../universal/helpers/types.ts';
 type ApiFetchResponse<T> = Promise<ApiResponse<T>>;
 // Extend RequestInit to include a payload property. The body property always takes precedence over payload.
 // E.g: if both body and payload are provided, body will be used.
-type RequestInitWithPayload<P> = RequestInit & {
+export type RequestInitWithPayload<P> = RequestInit & {
   payload?: P;
 };
 

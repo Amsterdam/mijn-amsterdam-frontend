@@ -1,9 +1,8 @@
 import type {
   AfisEMandateCreditor,
-  EMandateReceiverSource} from './afis-types.ts';
-import {
-  type AfisEMandateSourceStatic,
+  EMandateReceiverSource,
 } from './afis-types.ts';
+import { type AfisEMandateSourceStatic } from './afis-types.ts';
 import { getFromEnv } from '../../helpers/env.ts';
 
 // Voor elke afdeling van de gemeente gebruiken we dezelfde gegevens.
@@ -87,6 +86,7 @@ export const EMANDATE_ENDDATE_INDICATOR = '9999';
 export const AFIS_EMANDATE_RECURRING_DATE_END = `${EMANDATE_ENDDATE_INDICATOR}-12-31T00:00:00`;
 export const AFIS_EMANDATE_COMPANY_NAME = 'Gemeente Amsterdam';
 export const AFIS_EMANDATE_SIGN_REQUEST_URL_VALIDITY_IN_DAYS = 1;
+export const SETTLE_TIME_AFTER_CREATING_BANK_ACCOUNT_IN_MS = 5000; // 5 seconds, this is to ensure that the bank account is created and available in the system before we create the e-mandate.
 
 export const afisEMandatePostbodyStatic: AfisEMandateSourceStatic = {
   PayType: getFromEnv('BFF_AFIS_EMANDATE_PAYTYPE') ?? '',

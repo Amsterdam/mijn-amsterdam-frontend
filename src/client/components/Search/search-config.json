@@ -660,6 +660,20 @@
       ],
       "profileTypes": ["private", "commercial"]
     },
+    {
+      "url": "/facturen-en-betalen/betaalvoorkeuren",
+      "displayTitle": "Betaalvoorkeuren",
+      "description": "Facturatiegegevens bekijken en een automatische incasso instellen.",
+      "keywords": [
+        "incasso",
+        "sepa",
+        "ideal",
+        "automatische incasso",
+        "debiteurnummer",
+        "debiteur"
+      ],
+      "profileTypes": ["private", "commercial"]
+    },
 
     {
       "url": "/buurt?datasetIds=[%22afvalcontainers%22]",

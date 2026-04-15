@@ -1,5 +1,6 @@
 import { HttpStatusCode } from 'axios';
-import { add, subDays } from 'date-fns';
+import { add } from 'date-fns';
+import { generatePath } from 'react-router';
 import slug from 'slugme';
 import thenBy from 'thenby';
 
@@ -15,6 +16,7 @@ import {
   afisEMandatePostbodyStatic,
   EMandateCreditorsGemeenteAmsterdam,
   eMandateReceiver,
+  SETTLE_TIME_AFTER_CREATING_BANK_ACCOUNT_IN_MS,
 } from './afis-e-mandates-config.ts';
 import {
   debugEmandates,
@@ -63,7 +65,7 @@ import {
   isoDateTimeFormatCompact,
 } from '../../../universal/helpers/date.ts';
 import { toDateFormatted } from '../../../universal/helpers/date.ts';
-import { sortByNumber } from '../../../universal/helpers/utils.ts';
+import { omit, sortByNumber } from '../../../universal/helpers/utils.ts';
 import type { AuthProfile } from '../../auth/auth-types.ts';
 import {
   encrypt,
@@ -158,6 +160,11 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
         `Error creating bank account - ${'message' in createBankAccountResponse ? createBankAccountResponse.message : ''}`
       );
     }
+    // Wait for 2 seconds to ensure that the bank account is created and available in the system before we create the e-mandate.
+    await new Promise((resolve) =>
+      setTimeout(resolve, SETTLE_TIME_AFTER_CREATING_BANK_ACCOUNT_IN_MS)
+    );
+    ////
   } else if (
     bankAccountExists &&
     !bankAccountResponse.content?.eMandateCollectionEnabled
@@ -335,7 +342,7 @@ function addEmandateApiUrls(
   businessPartnerId: BusinessPartnerId,
   eMandate: AfisEMandateFrontend,
   creditor: AfisEMandateCreditor,
-  afisEMandateSource?: AfisEMandateSource
+  afisEMandateSource: AfisEMandateSource | null
 ) {
   if (afisEMandateSource?.IMandateId) {
     eMandate.deactivateUrl = getEmandateApiUrl(
@@ -365,45 +372,86 @@ function transformEMandateSource(
   sessionID: SessionID,
   businessPartnerId: BusinessPartnerId,
   creditor: AfisEMandateCreditor,
-  afisEMandateSource?: AfisEMandateSource
+  eMandatesSource: AfisEMandateSource[]
 ): Readonly<AfisEMandateFrontend> {
-  const dateValidFrom = afisEMandateSource?.LifetimeFrom
-    ? isoDateFormat(afisEMandateSource.LifetimeFrom)
-    : null;
-  const dateValidFromFormatted = toDateFormatted(dateValidFrom);
+  const eMandatesSourceTransformed = eMandatesSource.map(
+    (afisEMandateSource) => {
+      const dateValidFrom = afisEMandateSource?.LifetimeFrom
+        ? isoDateFormat(afisEMandateSource.LifetimeFrom)
+        : null;
+      const dateValidFromFormatted = toDateFormatted(dateValidFrom);
 
-  const dateValidTo = afisEMandateSource?.LifetimeTo
-    ? isoDateFormat(afisEMandateSource.LifetimeTo)
-    : null;
-  const dateValidToFormatted = getEmandateValidityDateFormatted(dateValidTo);
-  const currentStatus = (afisEMandateSource?.Status.toString() ??
-    EMANDATE_STATUS_FRONTEND.OFF) as EmandateStatusFrontend;
+      const dateValidTo = afisEMandateSource?.LifetimeTo
+        ? isoDateFormat(afisEMandateSource.LifetimeTo)
+        : null;
+
+      const dateValidToFormatted =
+        getEmandateValidityDateFormatted(dateValidTo);
+      const currentStatus = (afisEMandateSource?.Status.toString() ??
+        EMANDATE_STATUS_FRONTEND.OFF) as EmandateStatusFrontend;
+
+      return {
+        dateValidFrom,
+        dateValidFromFormatted,
+        dateValidTo,
+        dateValidToFormatted,
+        currentStatus,
+        eMandateIdSource: afisEMandateSource.IMandateId.toString(),
+        senderIBAN: afisEMandateSource?.SndIban,
+        senderName: [afisEMandateSource?.SndName1, afisEMandateSource?.SndName2]
+          .filter(Boolean)
+          .join(' '), // Firstname + Lastname
+        status: getEmandateStatusFrontend(currentStatus, dateValidTo),
+      };
+    }
+  );
+
+  const lastEmandate =
+    eMandatesSourceTransformed.at(-1)?.status !== EMANDATE_STATUS_FRONTEND.OFF
+      ? eMandatesSourceTransformed.pop()
+      : null;
+  const lastEmandateSource =
+    (lastEmandate ? eMandatesSource.pop() : null) ?? null;
+
+  const {
+    dateValidFrom = null,
+    dateValidFromFormatted = null,
+    dateValidTo = null,
+    dateValidToFormatted = null,
+    currentStatus = EMANDATE_STATUS_FRONTEND.OFF,
+    eMandateIdSource = null,
+    senderIBAN = null,
+    senderName = null,
+    status = EMANDATE_STATUS_FRONTEND.OFF,
+  } = lastEmandate ?? {};
   const isActive = isEmandateActive(dateValidTo);
   const id = slug(creditor.name);
   const eMandate: AfisEMandateFrontend = {
     id,
-    eMandateIdSource: afisEMandateSource?.IMandateId ?? null,
+
+    eMandateIdSource,
+    senderIBAN: isActive ? senderIBAN : null,
+    senderName: isActive ? senderName : null,
+
     creditorName: creditor.name,
     creditorIBAN: creditor.iban,
     creditorDescription: creditor.description,
-    senderIBAN: (isActive ? afisEMandateSource?.SndIban : null) ?? null,
-    senderName: isActive
-      ? [afisEMandateSource?.SndName1, afisEMandateSource?.SndName2]
-          .filter(Boolean)
-          .join(' ')
-      : null, // Firstname + Lastname
+
     dateValidFrom,
     dateValidFromFormatted,
     dateValidTo,
     dateValidToFormatted,
-    status: getEmandateStatusFrontend(currentStatus, dateValidTo),
+    status,
     displayStatus: getEmandateDisplayStatus(
       currentStatus,
       dateValidTo,
       dateValidFromFormatted
     ),
+    history: eMandatesSourceTransformed
+      .map((eMandateCompact) => omit(eMandateCompact, ['currentStatus']))
+      .toSorted(sortByNumber('eMandateIdSource', 'desc')),
     link: {
-      to: `/facturen-en-betalen/betaalvoorkeuren/emandate/${id}`,
+      to: generatePath(routeConfig.detailPageEMandate.path, { id }),
       title: creditor.name,
     },
   };
@@ -413,17 +461,17 @@ function transformEMandateSource(
     businessPartnerId,
     eMandate,
     creditor,
-    afisEMandateSource
+    lastEmandateSource
   );
 
   return eMandate;
 }
 
-function getEMandateSourceByCreditor(
+function getEMandatesSourceByCreditor(
   sourceMandatesASC: AfisEMandateSource[],
   creditor: AfisEMandateCreditor
-): AfisEMandateSource | undefined {
-  return sourceMandatesASC.findLast((eMandateSource) => {
+): AfisEMandateSource[] {
+  return sourceMandatesASC.filter((eMandateSource) => {
     return eMandateSource.SndDebtorId === creditor.refId;
   });
 }
@@ -438,7 +486,7 @@ function transformEMandatesResponse(
   );
 
   return EMandateCreditorsGemeenteAmsterdam.map((creditor) => {
-    const afisEMandateSource = getEMandateSourceByCreditor(
+    const afisEMandatesSource = getEMandatesSourceByCreditor(
       sourceMandatesASC,
       creditor
     );
@@ -447,7 +495,7 @@ function transformEMandatesResponse(
       sessionID,
       businessPartnerId,
       creditor,
-      afisEMandateSource
+      afisEMandatesSource
     );
 
     return eMandate;
@@ -673,7 +721,7 @@ export async function deactivateEmandate(
   const now = new Date();
   // The PUT endpoint does not reply with data. Only a status.
   // So we derive the new status from the change payload.
-  const LifetimeTo = isoDateTimeFormatCompact(subDays(now, 1));
+  const LifetimeTo = isoDateTimeFormatCompact(now);
 
   function transformResponse() {
     const dateValidTo = isoDateFormat(now);
@@ -709,7 +757,7 @@ export const forTesting = {
   createEMandateSignRequestPayload,
   fetchEMandates,
   fetchEmandateSignRequestRedirectUrlFromPaymentProvider,
-  getEMandateSourceByCreditor,
+  getEMandateSourceByCreditor: getEMandatesSourceByCreditor,
   getSignRequestApiUrl,
   getEmandateApiUrl,
   handleEmandateLifeTimeUpdate: handleEmandateLifetimeUpdate,

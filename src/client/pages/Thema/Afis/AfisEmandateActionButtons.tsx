@@ -117,10 +117,10 @@ function ApiActionButton<T>({
 
 type AfisEMandateActionButtonsProps = {
   eMandate: AfisEMandateFrontend;
-  redirectUrlApi: BFFApiHook<AfisEMandateSignRequestResponse> & {
+  redirectUrlApi: BFFApiHook<AfisEMandateSignRequestResponse | null> & {
     requestRedirectUrl: (isActive: boolean) => void;
   };
-  deactivateApi: BFFApiHook<AfisEMandateStatusChangeResponse>;
+  deactivateApi: BFFApiHook<AfisEMandateStatusChangeResponse | null>;
 };
 
 export function AfisEMandateActionButtons({

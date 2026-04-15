@@ -11,12 +11,29 @@ import {
   useSignRequestStatusCheck,
 } from './useAfisEMandatesSignRequest.tsx';
 import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types.ts';
-import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import { Datalist } from '../../../components/Datalist/Datalist.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { Spinner } from '../../../components/Spinner/Spinner.tsx';
+import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
+import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
+
+const eMandateHistoryDisplayProps: DisplayProps<
+  AfisEMandateFrontend['history'][number]
+> = {
+  props: {
+    eMandateIdSource: 'Kenmerk',
+    dateValidFromFormatted: 'Vanaf',
+    dateValidToFormatted: 'Tot',
+    senderName: 'Naam rekeninghouder',
+    senderIBAN: 'Rekeningnummer',
+  },
+  colWidths: {
+    large: ['15%', '15%', '15%', '35%', '20%'],
+    small: ['50%', '0', '50%'],
+  },
+};
 
 type EMandateProps = {
   eMandate: AfisEMandateFrontend;
@@ -31,7 +48,6 @@ function EMandate({ eMandate }: EMandateProps) {
     hideError,
     lastActiveApi,
   } = useEmandateApis(eMandate);
-
   const signRequestStatusCheckApi = useSignRequestStatusCheck(eMandate);
 
   return (
@@ -64,10 +80,10 @@ function EMandate({ eMandate }: EMandateProps) {
       )}
       <Datalist
         rows={[
-          ...(!IS_PRODUCTION && eMandate.status === EMANDATE_STATUS_ACTIVE
+          ...(eMandate.status === EMANDATE_STATUS_ACTIVE
             ? [
                 {
-                  label: 'AFIS/SAP - ID',
+                  label: 'Kenmerk',
                   content: eMandate.eMandateIdSource,
                 },
               ]
@@ -134,36 +150,46 @@ function EMandate({ eMandate }: EMandateProps) {
             : []),
         ]}
       />
-      {signRequestStatusCheckApi.isRequestingStatusCheck ? (
-        <Paragraph>
-          <Spinner /> Mijn Amsterdam controleert de status van het E-Mandaat...
-        </Paragraph>
-      ) : signRequestStatusCheckApi.isPendingActivation ? (
-        <Alert headingLevel={4} heading="Status">
+      <div className="ams-mb-xl">
+        {signRequestStatusCheckApi.isRequestingStatusCheck ? (
           <Paragraph>
-            Wachten op bevestiging van het E-Mandaat voor{' '}
-            {eMandate.creditorName}. Dit kan enkele minuten duren.
+            <Spinner /> Mijn Amsterdam controleert de status van het
+            E-Mandaat...
           </Paragraph>
-          <Paragraph>
-            Zodra de bevestiging is ontvangen, zal het E-Mandaat actief
-            worden.{' '}
-          </Paragraph>
-          {signRequestStatusCheckApi.isTakingLong && (
+        ) : signRequestStatusCheckApi.isPendingActivation ? (
+          <Alert headingLevel={4} heading="Status">
             <Paragraph>
-              <Button
-                variant="secondary"
-                onClick={() => signRequestStatusCheckApi.cancel()}
-              >
-                Duurt het erg lang? Probeer het opnieuw.
-              </Button>
+              Wachten op bevestiging van het E-Mandaat voor{' '}
+              {eMandate.creditorName}. Dit kan enkele minuten duren.
             </Paragraph>
-          )}
-        </Alert>
-      ) : (
-        <AfisEMandateActionButtons
-          redirectUrlApi={redirectUrlApi}
-          deactivateApi={deactivateApi}
-          eMandate={eMandate}
+            <Paragraph>
+              Zodra de bevestiging is ontvangen, zal het E-Mandaat actief
+              worden.{' '}
+            </Paragraph>
+            {signRequestStatusCheckApi.isTakingLong && (
+              <Paragraph>
+                <Button
+                  variant="secondary"
+                  onClick={() => signRequestStatusCheckApi.cancel()}
+                >
+                  Duurt het erg lang? Probeer het opnieuw.
+                </Button>
+              </Paragraph>
+            )}
+          </Alert>
+        ) : (
+          <AfisEMandateActionButtons
+            redirectUrlApi={redirectUrlApi}
+            deactivateApi={deactivateApi}
+            eMandate={eMandate}
+          />
+        )}
+      </div>
+      {!!eMandate.history.length && (
+        <ThemaPaginaTable
+          zaken={eMandate.history}
+          title="Eerdere E-Mandaten"
+          displayProps={eMandateHistoryDisplayProps}
         />
       )}
     </PageContentCell>
@@ -192,17 +218,19 @@ export function AfisEMandateDetail() {
       zaak={eMandate}
       isError={hasEMandatesError}
       isLoading={isLoadingEMandates}
-      pageContentMain={
-        !!eMandate && (
-          <>
-            {payloadStorage.hasPayloads() && (
-              <AfisEmandateRefetchInterval fetch={fetchEMandates} />
-            )}
-            <EMandate eMandate={eMandate} />
-          </>
-        )
-      }
       breadcrumbs={breadcrumbs}
+      pageContentMain={
+        <>
+          {!!eMandate && (
+            <>
+              {payloadStorage.hasPayloads() && (
+                <AfisEmandateRefetchInterval fetch={fetchEMandates} />
+              )}
+              <EMandate eMandate={eMandate} />
+            </>
+          )}
+        </>
+      }
     />
   );
 }
