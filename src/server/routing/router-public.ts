@@ -1,6 +1,5 @@
-import type { IncomingHttpHeaders } from 'http';
 
-import axios, { HttpStatusCode, type AxiosResponse } from 'axios';
+import axios, { HttpStatusCode } from 'axios';
 import type { NextFunction, Request, Response } from 'express';
 import express from 'express';
 import proxy from 'express-http-proxy';
@@ -266,7 +265,7 @@ if (!IS_PRODUCTION) {
 
   router.all(BffEndpoints.PROXY, async (req, res) => {
     // This proxy route aims to closely mimic the server's behavior, making it appear as though the server itself initiated these requests.
-    // All functional headers needed are prefixed with 'x-ma-' to prevent conflicts. These are deleted before the request is sent to it's destination.
+    // All functional headers needed are prefixed with 'x-ma-' to prevent conflicts.
     const apiKeyName = 'x-ma-dev-api-key';
     const apiKey = req.headers[apiKeyName];
     if (apiKey !== PROXY_API_KEY) {
@@ -275,7 +274,7 @@ if (!IS_PRODUCTION) {
         .send(`Invalid or missing header '${apiKeyName}'`);
     }
 
-    const urlHeaderName = 'x-ma-proxy-url';
+    const urlHeaderName = 'x-ma-proxy-target';
     const url = req.headers[urlHeaderName];
     if (!url || typeof url !== 'string') {
       return res
@@ -288,20 +287,23 @@ if (!IS_PRODUCTION) {
     axios({
       url,
       method: req.method,
-      headers: stripHeadersStartingWith(req.headers, ['x-ma-', 'cookie']),
+      headers: getPassthroughHeaders(req),
       data: req.body,
       // Prevent parsing of responses.
       transformResponse: (res) => res,
+      // No errors, all statuscodes are valid and will be sent back. This also prevents json parsing on data when erroring.
+      validateStatus: () => true,
     })
       .then((incomingResponse) => {
-        sendProxyResponse(incomingResponse, res);
+        res
+          .status(incomingResponse.status)
+          .setHeaders(new Map(Object.entries(incomingResponse.headers)))
+          .send(incomingResponse.data);
       })
       .catch((err) => {
-        if (err.response) {
-          sendProxyResponse(err.response, res);
-        } else if (err.request) {
+        if (err.request) {
           res
-            .status(400)
+            .status(HttpStatusCode.BadRequest)
             .send(
               `Proxy: Request send to ${url} but no response has been recieved`
             );
@@ -312,25 +314,11 @@ if (!IS_PRODUCTION) {
   });
 }
 
-function stripHeadersStartingWith(
-  headers: IncomingHttpHeaders,
-  disallowedHeaders: string[]
-): IncomingHttpHeaders {
-  const clean = Object.entries(headers).filter(([name]) => {
-    for (const disallowedHeader of disallowedHeaders) {
-      if (name.startsWith(disallowedHeader)) {
-        return false;
-      }
-    }
-    return true;
+function getPassthroughHeaders(req: Request) {
+  const headers = Object.entries(req.headers).filter(([name]) => {
+    return name.startsWith('x-ma-pass-');
   });
-  return Object.fromEntries(clean);
-}
-
-function sendProxyResponse(incoming: AxiosResponse, outgoing: Response): void {
-  outgoing
-    .setHeaders(new Map(Object.entries(incoming.headers)))
-    .status(incoming.status);
+  return Object.fromEntries(headers);
 }
 
 export const legacyRouter = express.Router();
